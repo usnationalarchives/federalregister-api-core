@@ -1,5 +1,5 @@
 def clean_url(url)
-  if url =~ /https?:\/\//
+  if url =~ /^[a-z]+:\/\//
     url
   else
     "http://#{url}"
@@ -18,9 +18,12 @@ end
 
 namespace :db do
   task :import => :environment do
-    Entry.transaction do
-      Dir.glob("#{RAILS_ROOT}/data/mods/*.xml").each do |file_name|
-        doc = Nokogiri::XML(open(file_name))
+    Dir.glob("#{RAILS_ROOT}/data/mods/*.xml").each do |file_name|
+      doc = Nokogiri::XML(open(file_name))
+      
+      publication_date = doc.css('dateIssued').first.content
+      puts "importing #{publication_date}..."
+      Entry.transaction do
         
         doc.css('relatedItem').each do |entry_node|
           identifier = entry_node['ID']
@@ -32,7 +35,9 @@ namespace :db do
           
           entry = Entry.find_or_create_by_identifier(identifier)
           
+          entry.publication_date = publication_date
           entry.title = title
+          
           entry.document_number = entry_node.css('accessId').first.try(:content)
           entry.toc_subject = entry_node.css('tocSubject1').first.try(:content)
           
@@ -48,7 +53,6 @@ namespace :db do
             abstract
             dates
             length
-            searchTitle
             action
             contact
             dates
