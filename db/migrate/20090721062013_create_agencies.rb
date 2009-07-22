@@ -5,9 +5,10 @@ class CreateAgencies < ActiveRecord::Migration
       t.string  :name
       t.timestamps
     end
+    add_index :agencies, :name
   end
 
   def self.down
-    drop_table :fr_notices
+    drop_table :agencies
   end
 end
