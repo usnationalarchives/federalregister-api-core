@@ -9,6 +9,9 @@ class CreateEntries < ActiveRecord::Migration
       
       t.timestamps
     end
+    
+    add_index :entries, :identifier
+    add_index :entries, :document_number
   end
 
   def self.down
