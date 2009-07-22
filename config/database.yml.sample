@@ -1,0 +1,19 @@
+<% branch = `git branch`.match(/\* (.*)/)[1].split('-')[0] %>
+
+development:
+  adapter: mysql
+  host: 127.0.0.1
+  database: trifecta<%= branch %>_development
+  username: root
+
+test:
+  adapter: mysql
+  host: 127.0.0.1
+  database: trifecta<%= branch %>_test
+  username: root
+
+production:
+  adapter: mysql
+  host: 127.0.0.1
+  database: trifecta<%= branch %>_development
+  username: root
