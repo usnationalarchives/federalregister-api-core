@@ -86,6 +86,9 @@ ActiveRecord::Schema.define(:version => 20090722141043) do
   create_table "urls", :force => true do |t|
     t.string   "name"
     t.string   "type"
+    t.string   "content_type"
+    t.integer  "response_code"
+    t.float    "content_length"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

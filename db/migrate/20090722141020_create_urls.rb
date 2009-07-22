@@ -1,7 +1,10 @@
 class CreateUrls < ActiveRecord::Migration
   def self.up
     create_table :urls do |t|
-      t.string  :name, :type
+      t.string  :name, :type, :content_type
+      t.integer :response_code
+      t.float :content_length
+      
       t.timestamps
     end
     add_index :urls, :name
