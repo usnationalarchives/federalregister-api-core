@@ -26,3 +26,8 @@ config.action_mailer.delivery_method = :test
 # This is necessary if your schema can't be completely dumped by the schema dumper,
 # like if you have constraints or database-specific column types
 # config.active_record.schema_format = :sql
+
+# Add testing gems to config
+config.gem 'thoughtbot-shoulda', :lib => 'shoulda', :source => 'http://gems.github.com'
+config.gem 'seanhussey-woulda',  :lib => 'woulda',  :source => 'http://gems.github.com'
+config.gem 'floehopper-mocha',   :lib => 'mocha',   :source => 'http://gems.github.com'
