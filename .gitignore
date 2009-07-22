@@ -1,3 +1,4 @@
 tmp
 log
 data
+config/database.yml
