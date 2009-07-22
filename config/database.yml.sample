@@ -3,17 +3,17 @@
 development:
   adapter: mysql
   host: 127.0.0.1
-  database: trifecta<%= branch %>_development
+  database: trifecta_<%= branch %>_development
   username: root
 
 test:
   adapter: mysql
   host: 127.0.0.1
-  database: trifecta<%= branch %>_test
+  database: trifecta_<%= branch %>_test
   username: root
 
 production:
   adapter: mysql
   host: 127.0.0.1
-  database: trifecta<%= branch %>_development
+  database: trifecta_<%= branch %>_development
   username: root
