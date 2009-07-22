@@ -18,7 +18,8 @@ ActiveRecord::Schema.define(:version => 20090722141043) do
     t.datetime "updated_at"
   end
 
-  add_index "agencies", ["name"], :name => "index_agencies_on_name"
+  add_index "agencies", ["name", "parent_id"], :name => "index_agencies_on_name_and_parent_id"
+  add_index "agencies", ["parent_id", "name"], :name => "index_agencies_on_parent_id_and_name"
 
   create_table "agency_assignments", :force => true do |t|
     t.integer  "agency_id"
@@ -35,13 +36,13 @@ ActiveRecord::Schema.define(:version => 20090722141043) do
     t.text     "abstract"
     t.text     "contact"
     t.text     "dates"
+    t.text     "action"
     t.string   "type"
     t.string   "identifier"
     t.string   "link"
     t.string   "genre"
     t.string   "part_name"
     t.string   "citation"
-    t.string   "action"
     t.string   "granule_class"
     t.string   "document_number"
     t.string   "toc_subject"
@@ -54,6 +55,9 @@ ActiveRecord::Schema.define(:version => 20090722141043) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "entries", ["document_number"], :name => "index_entries_on_document_number"
+  add_index "entries", ["identifier"], :name => "index_entries_on_identifier"
 
   create_table "topic_assignments", :force => true do |t|
     t.integer  "topic_id"

@@ -5,7 +5,8 @@ class CreateAgencies < ActiveRecord::Migration
       t.string  :name
       t.timestamps
     end
-    add_index :agencies, :name
+    add_index :agencies, [:name, :parent_id]
+    add_index :agencies, [:parent_id, :name]
   end
 
   def self.down
