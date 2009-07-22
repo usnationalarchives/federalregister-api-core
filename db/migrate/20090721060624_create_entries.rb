@@ -1,11 +1,12 @@
 class CreateEntries < ActiveRecord::Migration
   def self.up
     create_table :entries do |t|
-      t.string  :type, :identifier, :link, :genre, :title, :part_name, :citation, :abstract
+      t.text :title, :abstract, :contact, :dates, :action
+      t.string  :type, :identifier, :link, :genre, :part_name, :citation
+      t.string  :granule_class, :document_number, :toc_subject, :toc_doc
       t.integer :length, :start_page, :end_page
-      t.string  :search_title, :granule_class, :document_number
-      t.string  :effective_date, :action, :dates, :contact
-      t.string  :toc_subject, :toc_doc
+      t.date :publication_date, :effective_date
+      
       t.timestamps
     end
   end
