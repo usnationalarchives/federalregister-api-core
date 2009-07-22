@@ -45,7 +45,7 @@ ActiveRecord::Schema.define(:version => 20090722141043) do
     t.string   "search_title"
     t.string   "granule_class"
     t.string   "document_number"
-    t.string   "effectiveDate"
+    t.string   "effective_date"
     t.string   "action"
     t.string   "dates"
     t.string   "contact"
