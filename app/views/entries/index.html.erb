@@ -1,0 +1,21 @@
+
+<p><%= @entries.count %> entries in <%= @month %> <%= @year %></p>
+<ul>
+<% @entries.group_by(&:month_year).each do |mnth_year, entries| %>
+  <li>
+    <%= mnth_year %>
+    <ul>
+    <% entries.group_by(&:day).each do |day, entries_by_day| %> 
+      <li><%= entries_by_day.first.publication_date.to_formatted_s(:day_date) %></li>
+      <li>
+        <ul>
+        <% entries_by_day.each do |entry| %>
+          <li><%= link_to truncate(entry.title, :length => 100), entry_path(entry) %></li>
+        <% end %>
+        </ul>
+      </li>
+    <% end %>
+    </ul>
+  </li>
+<% end %>
+</ul>
