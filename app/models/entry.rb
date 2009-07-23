@@ -7,4 +7,7 @@ class Entry < ActiveRecord::Base
   
   has_many :url_references
   has_many :urls, :through => :url_references
+  
+  has_many :place_determinations
+  has_many :places, :through => :place_determinations
 end
