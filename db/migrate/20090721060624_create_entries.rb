@@ -6,7 +6,7 @@ class CreateEntries < ActiveRecord::Migration
       t.string  :granule_class, :document_number, :toc_subject, :toc_doc
       t.integer :length, :start_page, :end_page
       t.date :publication_date, :effective_date
-      
+      t.datetime :places_determined_at
       t.timestamps
     end
     

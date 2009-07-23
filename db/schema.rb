@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090722141043) do
+ActiveRecord::Schema.define(:version => 20090723000346) do
 
   create_table "agencies", :force => true do |t|
     t.integer  "parent_id"
@@ -58,6 +58,24 @@ ActiveRecord::Schema.define(:version => 20090722141043) do
 
   add_index "entries", ["document_number"], :name => "index_entries_on_document_number"
   add_index "entries", ["identifier"], :name => "index_entries_on_identifier"
+
+  create_table "place_determinations", :force => true do |t|
+    t.integer "entry_id"
+    t.integer "place_id"
+    t.integer "confidence"
+  end
+
+  add_index "place_determinations", ["entry_id", "confidence"], :name => "index_place_determinations_on_entry_id_and_confidence"
+  add_index "place_determinations", ["place_id", "confidence"], :name => "index_place_determinations_on_place_id_and_confidence"
+
+  create_table "places", :force => true do |t|
+    t.string   "type"
+    t.string   "name"
+    t.float    "latitude"
+    t.float    "longitude"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "topic_assignments", :force => true do |t|
     t.integer  "topic_id"
