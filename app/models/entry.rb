@@ -10,4 +10,12 @@ class Entry < ActiveRecord::Base
   
   has_many :place_determinations
   has_many :places, :through => :place_determinations
+  
+  def month_year
+    publication_date.to_formatted_s(:month_year)
+  end
+  
+  def day
+    publication_date.strftime('%d')
+  end
 end
