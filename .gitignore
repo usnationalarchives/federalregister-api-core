@@ -2,3 +2,4 @@ tmp
 log
 data
 config/database.yml
+config/placemaker.yml
