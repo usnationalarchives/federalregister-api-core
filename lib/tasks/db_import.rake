@@ -18,7 +18,7 @@ end
 
 namespace :db do
   task :import => :environment do
-    Dir.glob("#{RAILS_ROOT}/data/mods/*.xml").each do |file_name|
+    Dir.glob("#{RAILS_ROOT}/data/mods/2009-*.xml").each do |file_name|
       doc = Nokogiri::XML(open(file_name))
       
       publication_date = doc.css('dateIssued').first.content
