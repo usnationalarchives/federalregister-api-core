@@ -5,16 +5,17 @@ task :extract_dates => :environment do
     puts entry.abstract
     dates = []
     
-    PotentialDateExtractor.extract(entry.abstract).each do |potential_date|
-      puts " => #{potential_date} [POTENTIAL]"
-      date = Chronic.parse(potential_date)#, :now => entry.publication_date)
-      if date
-        puts " => #{date.to_date} [ACTUAL]"
-        dates << date.to_date
+    Entry.transaction do
+      entry.referenced_dates = []
+      Date.set_today(entry.publication_date.to_s(:db)) do
+        PotentialDateExtractor.extract(entry.abstract).each do |potential_date|
+          date = Date.parse(potential_date)
+          context = entry.abstract.match(/\b.{0,100}#{Regexp.escape(potential_date)}.{0,100}\b/)[0]
+          entry.referenced_dates.create(:date => date, :string => potential_date, :context => context)
+        end
       end
     end
-    puts "\n\n"
-    # dates.uniq.sort.map{|d| puts " => #{d}"}
+    
     
   end
 end

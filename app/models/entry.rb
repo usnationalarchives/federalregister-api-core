@@ -42,6 +42,8 @@ class Entry < ActiveRecord::Base
   has_many :place_determinations
   has_many :places, :through => :place_determinations
   
+  has_many :referenced_dates, :dependent => :destroy
+  
   def month_year
     publication_date.to_formatted_s(:month_year)
   end

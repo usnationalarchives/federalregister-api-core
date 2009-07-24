@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090723000346) do
+ActiveRecord::Schema.define(:version => 20090724225458) do
 
   create_table "agencies", :force => true do |t|
     t.integer  "parent_id"
@@ -54,6 +54,7 @@ ActiveRecord::Schema.define(:version => 20090723000346) do
     t.date     "effective_date"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.datetime "places_determined_at"
   end
 
   add_index "entries", ["document_number"], :name => "index_entries_on_document_number"
@@ -69,13 +70,24 @@ ActiveRecord::Schema.define(:version => 20090723000346) do
   add_index "place_determinations", ["place_id", "confidence"], :name => "index_place_determinations_on_place_id_and_confidence"
 
   create_table "places", :force => true do |t|
-    t.string   "type"
+    t.string   "place_type"
     t.string   "name"
     t.float    "latitude"
     t.float    "longitude"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "referenced_dates", :force => true do |t|
+    t.integer  "entry_id"
+    t.date     "date"
+    t.string   "string"
+    t.string   "context"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "referenced_dates", ["entry_id", "date"], :name => "index_referenced_dates_on_entry_id_and_date"
 
   create_table "topic_assignments", :force => true do |t|
     t.integer  "topic_id"
