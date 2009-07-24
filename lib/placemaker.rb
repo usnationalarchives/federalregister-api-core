@@ -8,17 +8,17 @@ class Placemaker
     c = Curl::Easy.http_post("http://wherein.yahooapis.com/v1/document",
            Curl::PostField.content('documentContent', text),
            Curl::PostField.content('documentType', 'text/plain'),
+           Curl::PostField.content('autoDisambiguate', 'false'),
            Curl::PostField.content('appid', @application_id)
     )
     
     output = c.body_str
-    
     doc = Nokogiri::XML(output)
     
     places = []
     doc.css('placeDetails').each_with_index do |placedetail_node, i|
       place = Place.new
-      place.confidence = placedetail_node.css('confidence').first
+      place.confidence = placedetail_node.css('confidence').first.content
       placedetail_node.css('place').each do |place_node|
         place.id = place_node.css('woeId').first.content
         place.name = place_node.css('name').first.content
