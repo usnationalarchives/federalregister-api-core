@@ -70,18 +70,16 @@ namespace :db do
           primary_agency_name = agencies[0].try(:content)
           secondary_agency_name = agencies[1].try(:content)
           
-          agencies = []
           if primary_agency_name
             primary_agency = Agency.find_or_create_by_name_and_parent_id(normalize_name(primary_agency_name), nil)
-            agencies << primary_agency
             
             if secondary_agency_name
               secondary_agency = Agency.find_or_create_by_name_and_parent_id(normalize_name(secondary_agency_name), primary_agency.id)
-              
-              agencies << secondary_agency
+              entry.agency = secondary_agency
+            else
+              entry.agency = primary_agency
             end
           end
-          entry.agencies = agencies
           
           # Topics
           topics = []

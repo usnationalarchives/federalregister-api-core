@@ -18,7 +18,7 @@ task :update_urls => :environment do
       url.response_code = 404
       url.content_type = nil
       url.content_length = nil
-    rescue Curl::Err::TooManyRedirectsError, Curl::Err::ConnectionFailedError, Curl::Err::GotNothingError, Curl::Err::TimeoutError
+    rescue Curl::Err::TooManyRedirectsError, Curl::Err::ConnectionFailedError, Curl::Err::GotNothingError, Curl::Err::TimeoutError, Curl::Err::SSLConnectError
       url.response_code = 500
       url.content_type = nil
       url.content_length = nil
