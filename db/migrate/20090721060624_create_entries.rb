@@ -5,11 +5,13 @@ class CreateEntries < ActiveRecord::Migration
       t.string  :type, :identifier, :link, :genre, :part_name, :citation
       t.string  :granule_class, :document_number, :toc_subject, :toc_doc
       t.integer :length, :start_page, :end_page
+      t.belongs_to :agency
       t.date :publication_date, :effective_date
       t.datetime :places_determined_at
       t.timestamps
     end
     
+    add_index :entries, :agency_id
     add_index :entries, :identifier
     add_index :entries, :document_number
   end

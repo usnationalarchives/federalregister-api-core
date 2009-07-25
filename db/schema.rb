@@ -21,16 +21,6 @@ ActiveRecord::Schema.define(:version => 20090724225458) do
   add_index "agencies", ["name", "parent_id"], :name => "index_agencies_on_name_and_parent_id"
   add_index "agencies", ["parent_id", "name"], :name => "index_agencies_on_parent_id_and_name"
 
-  create_table "agency_assignments", :force => true do |t|
-    t.integer  "agency_id"
-    t.integer  "entry_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "agency_assignments", ["agency_id"], :name => "index_agency_assignments_on_agency_id"
-  add_index "agency_assignments", ["entry_id"], :name => "index_agency_assignments_on_entry_id"
-
   create_table "entries", :force => true do |t|
     t.text     "title"
     t.text     "abstract"
@@ -50,13 +40,15 @@ ActiveRecord::Schema.define(:version => 20090724225458) do
     t.integer  "length"
     t.integer  "start_page"
     t.integer  "end_page"
+    t.integer  "agency_id"
     t.date     "publication_date"
     t.date     "effective_date"
+    t.datetime "places_determined_at"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.datetime "places_determined_at"
   end
 
+  add_index "entries", ["agency_id"], :name => "index_entries_on_agency_id"
   add_index "entries", ["document_number"], :name => "index_entries_on_document_number"
   add_index "entries", ["identifier"], :name => "index_entries_on_identifier"
 
@@ -70,8 +62,8 @@ ActiveRecord::Schema.define(:version => 20090724225458) do
   add_index "place_determinations", ["place_id", "confidence"], :name => "index_place_determinations_on_place_id_and_confidence"
 
   create_table "places", :force => true do |t|
-    t.string   "place_type"
     t.string   "name"
+    t.string   "place_type"
     t.float    "latitude"
     t.float    "longitude"
     t.datetime "created_at"

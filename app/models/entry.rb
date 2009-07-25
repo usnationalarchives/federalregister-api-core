@@ -21,17 +21,17 @@
   length               :integer(4)
   start_page           :integer(4)
   end_page             :integer(4)
+  agency_id            :integer(4)
   publication_date     :date
   effective_date       :date
+  places_determined_at :datetime
   created_at           :datetime
   updated_at           :datetime
-  places_determined_at :datetime
 
 =end Schema Information
 
 class Entry < ActiveRecord::Base
-  has_many :agency_assignments
-  has_many :agencies, :through => :agency_assignments
+  belongs_to :agency
   
   has_many :topic_assignments
   has_many :topics, :through => :topic_assignments
