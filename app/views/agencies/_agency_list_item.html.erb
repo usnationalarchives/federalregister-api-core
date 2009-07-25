@@ -1,0 +1,11 @@
+<li>
+  <% add_javascript do %>
+    $(document).ready(function(){ 
+      agency_<%= agency.id %>_count = <%= agency.entry_count_by_week.to_json %>;
+      $('#agency_<%= agency.id %>').sparkline(agency_<%= agency.id %>_count, {type: 'bar', barSpacing: 0, barWidth: 3, barColor: '#ddd' }); //, chartRangeMin: 0, chartRangeMax: <%= chart_max %> } );
+      $('#agency_<%= agency.id %>').sparkline(agency_<%= agency.id %>_count, {type: 'line', lineColor: 'black', fillColor:false, composite:true }); //, chartRangeMin: 0, chartRangeMax: <%= chart_max %>} );
+    });
+  <% end %>
+  <%= link_to agency.name, agency_path(agency) %>
+  <span id="agency_<%= agency.id %>" class="composite_sparkline"></span>
+</li>
