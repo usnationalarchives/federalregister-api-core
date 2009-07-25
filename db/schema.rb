@@ -28,7 +28,6 @@ ActiveRecord::Schema.define(:version => 20090724225458) do
     t.text     "dates"
     t.text     "action"
     t.string   "type"
-    t.string   "identifier"
     t.string   "link"
     t.string   "genre"
     t.string   "part_name"
@@ -50,7 +49,6 @@ ActiveRecord::Schema.define(:version => 20090724225458) do
 
   add_index "entries", ["agency_id"], :name => "index_entries_on_agency_id"
   add_index "entries", ["document_number"], :name => "index_entries_on_document_number"
-  add_index "entries", ["identifier"], :name => "index_entries_on_identifier"
 
   create_table "place_determinations", :force => true do |t|
     t.integer "entry_id"

@@ -26,19 +26,19 @@ namespace :db do
       Entry.transaction do
         
         doc.css('relatedItem').each do |entry_node|
-          identifier = entry_node['ID']
-          next if identifier.nil?
+          document_number = entry_node.css('accessId').first.try(:content)
+          next if document_number.nil?
           
           title = entry_node.css('title').first.try(:content)
           next if title.blank? || title == 'Contents' || title == 'Reader Aids'
           
           
-          entry = Entry.find_or_create_by_identifier(identifier)
+          entry = Entry.find_or_create_by_document_number(document_number)
           
+          entry.document_number = document_number
           entry.publication_date = publication_date
           entry.title = title
           
-          entry.document_number = entry_node.css('accessId').first.try(:content)
           entry.toc_subject = entry_node.css('tocSubject1').first.try(:content)
           
           entry.citation = entry_node.css('identifier[type="preferred citation"]').first.try(:content)
