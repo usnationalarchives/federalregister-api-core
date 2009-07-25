@@ -3,8 +3,8 @@
  Table name: places
 
   id         :integer(4)      not null, primary key
-  place_type :string(255)
   name       :string(255)
+  place_type :string(255)
   latitude   :float
   longitude  :float
   created_at :datetime
