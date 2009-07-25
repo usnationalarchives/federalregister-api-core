@@ -5,6 +5,7 @@ class CreateReferencedDates < ActiveRecord::Migration
       t.date :date
       t.string :string
       t.string :context
+      t.boolean :prospective
       
       t.timestamps
     end
