@@ -20,7 +20,7 @@ task :extract_dates => :environment do
           end
           
           context = entry.abstract.match(/\b.{0,100}#{Regexp.escape(potential_date)}.{0,100}\b/)[0]
-          entry.referenced_dates.create(:date => date, :string => potential_date, :context => context)
+          entry.referenced_dates.create(:date => date, :string => potential_date, :context => context, :prospective => date > entry.publication_date)
         end
       end
     end

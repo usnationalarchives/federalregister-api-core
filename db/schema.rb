@@ -83,6 +83,7 @@ ActiveRecord::Schema.define(:version => 20090724225458) do
     t.date     "date"
     t.string   "string"
     t.string   "context"
+    t.boolean  "prospective"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
