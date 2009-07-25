@@ -43,6 +43,12 @@ class Entry < ActiveRecord::Base
   
   has_many :referenced_dates, :dependent => :destroy
   
+  before_save :slugify
+  
+  def to_param
+    slug
+  end
+  
   def month_year
     publication_date.to_formatted_s(:month_year)
   end
@@ -51,4 +57,14 @@ class Entry < ActiveRecord::Base
     publication_date.strftime('%d')
   end
 
+  def active
+    self.response_code == '200' ? true : false
+  end
+  #private
+  
+  def slugify
+    unless self.title.nil?
+      self.slug = "#{self.title.downcase.gsub(/&/, 'and').gsub(/[^a-z0-9]+/, '-')}"
+    end
+  end
 end
