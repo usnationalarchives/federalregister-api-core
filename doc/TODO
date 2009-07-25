@@ -1,0 +1,32 @@
+Bob:
+  /agencies
+    -finish sparkline
+    
+    /agencies/:slug
+      - name, parent/child agency
+      /:year/weekly/:week_num
+        - list of entries per week by agency
+      /:year/:month
+        - list of entries by month
+      /:year/:month/:day
+        - list of entries per day by agency
+      
+  /entries
+    
+  /entries/:year/weekly/:week
+    - list of entries per week
+  /entries/:year/:month/:day
+    - list of entries per day
+  /entries/:year/:month/:day/:slug
+    - entry data, map, similar, link to cal, topics
+    - entry view
+    
+    
+  /topics
+    /:year/:month/
+    /:year/:weekly/:week
+  
+  /topic/:topic
+  
+  /calendar/:year/:month?view=tri#:day
+  
