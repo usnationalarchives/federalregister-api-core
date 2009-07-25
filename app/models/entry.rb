@@ -9,7 +9,6 @@
   dates                :text
   action               :text
   type                 :string(255)
-  identifier           :string(255)
   link                 :string(255)
   genre                :string(255)
   part_name            :string(255)

@@ -2,7 +2,7 @@ class CreateEntries < ActiveRecord::Migration
   def self.up
     create_table :entries do |t|
       t.text :title, :abstract, :contact, :dates, :action
-      t.string  :type, :identifier, :link, :genre, :part_name, :citation
+      t.string  :type, :link, :genre, :part_name, :citation
       t.string  :granule_class, :document_number, :toc_subject, :toc_doc
       t.integer :length, :start_page, :end_page
       t.belongs_to :agency
@@ -12,7 +12,6 @@ class CreateEntries < ActiveRecord::Migration
     end
     
     add_index :entries, :agency_id
-    add_index :entries, :identifier
     add_index :entries, :document_number
   end
 
