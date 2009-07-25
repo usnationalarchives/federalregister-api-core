@@ -16,8 +16,9 @@ class Agency < ActiveRecord::Base
   def entry_count_by_week
     entry_counts = Entry.connection.select_all("
       SELECT WEEK(entries.publication_date) AS pub_week, COUNT(entries.id) AS entry_count
-      FROM entries, agencies, agency_assignments
-      WHERE entries.id = agency_assignments.entry_id && agency_assignments.agency_id = agencies.id && agencies.id = #{self.id}
+      FROM agencies
+      LEFT JOIN entries ON agencies.id = entries.agency_id
+      WHERE agencies.id = #{self.id}
       GROUP BY WEEK(entries.publication_date)
     ")
     counts = []
@@ -41,9 +42,8 @@ class Agency < ActiveRecord::Base
     Entry.connection.select_value("
       SELECT COUNT(*) AS entry_count
       FROM entries
-      JOIN agency_assignments ON agency_assignments.entry_id = entries.id
       GROUP BY agency_id, WEEK(entries.publication_date)
-      ORDER BY entry_count DESC
+      ORDER BY agency_id DESC
       LIMIT 1
     ")
   end
