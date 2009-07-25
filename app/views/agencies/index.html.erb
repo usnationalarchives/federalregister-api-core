@@ -1,12 +1,12 @@
 <ul>
 <% @agencies.each do |parent_agency|  %>
   <% sub_agencies = Agency.find(:all, :conditions => ['parent_id = ?', parent_agency.id], :order => 'name ASC') %>
-  <li><%= link_to parent_agency.name, agency_path(parent_agency) %></li>
+  <%= render :partial => 'agency_list_item', :locals => {:agency => parent_agency, :chart_max => @chart_max} %>  
   <li>
     <% unless sub_agencies.length == 0 %>
       <ul>
       <% sub_agencies.each do |agency| %>
-        <li><%= link_to agency.name, agency_path(agency) %></li>
+        <%= render :partial => 'agency_list_item', :locals => {:agency => agency, :chart_max => @chart_max} %>
       <% end %>
       </ul>
     <% end %>
