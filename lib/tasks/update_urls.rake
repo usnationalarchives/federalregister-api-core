@@ -1,5 +1,5 @@
 task :update_urls => :environment do
-  Url.find(:all, :conditions => ["updated_at < ?", 1.minute.ago]).each do |url|
+  Url.find(:all, :conditions => ["updated_at < ?", 1.day.ago]).each do |url|
     puts "checking #{url.name}..."
     begin
       c = Curl::Easy.new(url.name)
@@ -14,8 +14,16 @@ task :update_urls => :environment do
       url.content_type =  c.content_type
       url.content_length = c.downloaded_content_length > 0 ? c.downloaded_content_length : nil
     
-    rescue Curl::Err
+    rescue Curl::Err::HostResolutionError
       url.response_code = 404
+      url.content_type = nil
+      url.content_length = nil
+    rescue Curl::Err::TooManyRedirectsError, Curl::Err::ConnectionFailedError, Curl::Err::GotNothingError, Curl::Err::TimeoutError
+      url.response_code = 500
+      url.content_type = nil
+      url.content_length = nil
+    rescue Exception => e
+      raise e.inspect
     end
     
     if url.changed?
