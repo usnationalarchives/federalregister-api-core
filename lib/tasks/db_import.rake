@@ -8,6 +8,7 @@ end
 
 def normalize_name(name)
   name.sub!(/^U.S. /, '') # remove U.S. at beginning
+  name.sub!(/&/, 'and')
   
   if name !~ /[a-z]/ # ie all uppercase
     name.downcase.capitalize_most_words
