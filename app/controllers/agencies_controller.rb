@@ -1,7 +1,8 @@
 class AgenciesController < ApplicationController
   
   def index
-    @agencies = Agency.find(:all, :order => 'name ASC')
+    @agencies  = Agency.find(:all, :order => 'name ASC')
+    @chart_max = Agency.max_entry_count
   end
   
   def show

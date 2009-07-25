@@ -1,0 +1,77 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+  <title>Trifecta</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="description" content="..." />
+  <meta name="keywords" content="..." />
+  <meta name="author" content="..." />
+
+  <%= stylesheet_link_tag "screen", :media => :screen %>
+
+  <%= javascript_include_tag 'jquery.js'               %>
+  <%= javascript_include_tag 'jquery-ui.js'            %>
+  <%= javascript_include_tag 'jrails.js'               %>
+  <%= javascript_include_tag 'application.js'          %>
+  <%= javascript_include_tag 'jquery.sparkline.min.js' %>
+  
+  <%= yield :javascripts %>
+
+
+</head>
+<body>
+
+  <!-- WRAPPER -->
+  <div id="wrapper">
+
+    <!-- HEADER -->
+    <div id="header">
+      <div class="nav">
+        <ul>
+          <li></li>
+        </ul>
+      </div>
+    </div>
+  
+    <!-- HEADER end -->
+
+
+    <!-- MAIN -->
+    <div id="main" class="group">
+
+      <% unless flash[:notice].blank? %>
+        <div class="alert">
+          <p class="confirm"><%= h flash[:notice] %></p>
+        </div>
+      <% end %>
+
+      <% unless flash[:error].blank? %>
+      <div class="alert">
+        <p class="error"><%= h flash[:error] %></p>
+      </div>
+      <% end %>
+    
+      <!-- content -->
+      <div class="content">
+          <% if yield :title %>
+            <h1><%= yield :title %></h1>
+          <% end %>
+        
+          <%= yield %>
+      </div>
+      <!-- content end -->
+
+    </div>
+    <!-- MAIN end -->
+
+    <!-- FOOTER -->
+    <div id="footer">
+    </div>
+    <!-- FOOTER end -->
+
+  </div>
+  <!-- WRAPPER end -->
+
+</body>
+</html>

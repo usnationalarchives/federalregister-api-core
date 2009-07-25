@@ -51,4 +51,5 @@ class Entry < ActiveRecord::Base
   def day
     publication_date.strftime('%d')
   end
+
 end
