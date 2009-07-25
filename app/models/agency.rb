@@ -14,6 +14,12 @@ class Agency < ActiveRecord::Base
   has_many :agency_assignments
   has_many :entries, :through => :agency_assignments
   
+  before_create :slugify
+  
+  def to_param
+    slug
+  end
+  
   def entry_count_by_week
     entry_counts = Entry.connection.select_all("
       SELECT WEEK(entries.publication_date) AS pub_week, COUNT(entries.id) AS entry_count
@@ -48,4 +54,11 @@ class Agency < ActiveRecord::Base
       LIMIT 1
     ")
   end
+  
+  private
+  
+  def slugify
+    self.slug = "#{name.downcase.gsub(/[^a-z0-9]+/, '-')}"
+  end
+  
 end
