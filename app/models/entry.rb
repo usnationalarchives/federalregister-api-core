@@ -30,6 +30,16 @@
 =end Schema Information
 
 class Entry < ActiveRecord::Base
+  
+  DESCRIPTIONS = {
+    :notice => 'This section of the Federal Register contains documents other than rules 
+                or proposed rules that are applicable to the public. Notices of hearings 
+                and investigations, committee meetings, agency decisions and rulings, 
+                delegations of authority, filing of petitions and applications and agency 
+                statements of organization and functions are examples of documents 
+                appearing in this section.'
+  }
+  
   belongs_to :agency
   
   has_many :topic_assignments
@@ -45,9 +55,9 @@ class Entry < ActiveRecord::Base
   
   before_save :slugify
   
-  def to_param
-    slug
-  end
+  # def to_param
+  #   "#{document_number}"
+  # end
   
   def month_year
     publication_date.to_formatted_s(:month_year)
@@ -58,8 +68,17 @@ class Entry < ActiveRecord::Base
   end
 
   def active
-    self.response_code == '200' ? true : false
+    response_code == '200' ? true : false
   end
+  
+  def human_length
+    if length.blank? 
+      page_length = end_page - start_page == 0 ? 1 : end_page - start_page
+    else
+      page_length = length
+    end
+  end
+  
   #private
   
   def slugify
