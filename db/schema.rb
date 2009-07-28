@@ -116,6 +116,7 @@ ActiveRecord::Schema.define(:version => 20090724225458) do
     t.string   "content_type"
     t.integer  "response_code"
     t.float    "content_length"
+    t.string   "title"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
