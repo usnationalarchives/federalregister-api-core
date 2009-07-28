@@ -1,3 +1,9 @@
+<ul class='featured'>
+  <% @featured_agencies.each do |agency| %>
+    <li><%= link_to(agency.name, agency_path(agency)) %> (<%= pluralize(agency.entry_count_by_week(@week), 'entry') %>)</li>
+  <% end %>
+</ul>
+
 <ul>
 <% @agencies.each do |parent_agency|  %>
   <% sub_agencies = Agency.find(:all, :conditions => ['parent_id = ?', parent_agency.id], :order => 'name ASC') %>

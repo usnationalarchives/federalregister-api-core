@@ -9,13 +9,14 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090724225458) do
+ActiveRecord::Schema.define(:version => 20090725193849) do
 
   create_table "agencies", :force => true do |t|
     t.integer  "parent_id"
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "slug"
   end
 
   add_index "agencies", ["name", "parent_id"], :name => "index_agencies_on_name_and_parent_id"
@@ -45,6 +46,7 @@ ActiveRecord::Schema.define(:version => 20090724225458) do
     t.datetime "places_determined_at"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.text     "slug"
   end
 
   add_index "entries", ["agency_id"], :name => "index_entries_on_agency_id"
