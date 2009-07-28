@@ -79,7 +79,7 @@ class Entry < ActiveRecord::Base
     end
   end
   
-  #private
+  private
   
   def slugify
     unless self.title.nil?
