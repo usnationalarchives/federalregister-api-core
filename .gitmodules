@@ -4,3 +4,6 @@
 [submodule "vendor/plugins/jrails"]
 	path = vendor/plugins/jrails
 	url = git://github.com/aaronchi/jrails.git
+[submodule "vendor/plugins/later_dude"]
+	path = vendor/plugins/later_dude
+	url = git://github.com/clemens/later_dude.git
