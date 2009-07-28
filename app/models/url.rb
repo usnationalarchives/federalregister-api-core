@@ -8,6 +8,7 @@
   content_type   :string(255)
   response_code  :integer(4)
   content_length :float
+  title          :string(255)
   created_at     :datetime
   updated_at     :datetime
 
