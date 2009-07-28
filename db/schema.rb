@@ -55,6 +55,8 @@ ActiveRecord::Schema.define(:version => 20090725193849) do
   create_table "place_determinations", :force => true do |t|
     t.integer "entry_id"
     t.integer "place_id"
+    t.string  "string"
+    t.string  "context"
     t.integer "confidence"
   end
 
@@ -116,6 +118,7 @@ ActiveRecord::Schema.define(:version => 20090725193849) do
     t.string   "content_type"
     t.integer  "response_code"
     t.float    "content_length"
+    t.string   "title"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

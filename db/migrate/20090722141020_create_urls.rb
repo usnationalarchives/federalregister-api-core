@@ -4,6 +4,7 @@ class CreateUrls < ActiveRecord::Migration
       t.string  :name, :type, :content_type
       t.integer :response_code
       t.float :content_length
+      t.string :title
       
       t.timestamps
     end

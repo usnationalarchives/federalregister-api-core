@@ -10,7 +10,18 @@ def normalize_name(name)
   name.sub!(/^U.S. /, '') # remove U.S. at beginning
   name.sub!(/&/, 'and')
   
-  if name !~ /[a-z]/ # ie all uppercase
+  # fix spelling
+  name.sub!(/Departnent/, 'Department')
+  name.sub!(/Afffairs/, 'Affairs')
+  
+  # remove parentheticals
+  name.sub!(/\(.*\)/, '')
+  name.sub!(/\[.*\]/, '')
+  
+  # remove garbage at the end
+  name.sub!(/\W+$/, '')
+  
+  if name !~ /[a-z]/ || /[A-Z]{5,}/ # ie all uppercase
     name.downcase.capitalize_most_words
   else
     name
