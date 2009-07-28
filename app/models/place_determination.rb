@@ -5,6 +5,8 @@
   id         :integer(4)      not null, primary key
   entry_id   :integer(4)
   place_id   :integer(4)
+  string     :string(255)
+  context    :string(255)
   confidence :integer(4)
 
 =end Schema Information

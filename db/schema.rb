@@ -53,6 +53,8 @@ ActiveRecord::Schema.define(:version => 20090724225458) do
   create_table "place_determinations", :force => true do |t|
     t.integer "entry_id"
     t.integer "place_id"
+    t.string  "string"
+    t.string  "context"
     t.integer "confidence"
   end
 
