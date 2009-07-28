@@ -1,49 +1,47 @@
-<!-- title                :text
-identifier           :string(255)
-link                 :string(255)
-genre                :string(255)
-part_name            :string(255)
+<!-- 
 citation             :string(255)
-granule_class        :string(255)
 document_number      :string(255)
 toc_subject          :string(255)
 toc_doc              :string(255)
-length               :integer(4)
-start_page           :integer(4)
-end_page             :integer(4)
-publication_date     :date
-effective_date       :date
-created_at           :datetime
-updated_at           :datetime
+
 places_determined_at :datetime -->
 
 <h2><%= @entry.title %></h2>
 <ul class='meta'>
   <li><%= @entry.publication_date.to_formatted_s(:pretty) %></li>
   <li>
-  <% @entry.agencies.each do |agency| %>
-    <%= link_to(agency.name, agency_path(agency) ) %><% unless agency == @entry.agencies.last %> :: <% end %>
-  <% end %>
+    <%= display_agencies_for_entries(@entry) %>
   </li>
 </ul>
 
 <ul class='details'>
-  <% if !@entry.dates.nil?         %><li>Dates:         <%= @entry.dates                   %></li><% end %>
-  <% if !@entry.action.nil?        %><li>Action:        <%= @entry.action.titlecase        %></li><% end %>
-  <% if !@entry.type.nil?          %><li>Type:          <%= @entry.type                    %></li><% end %>
-  <% if !@entry.genre.nil?         %><li>Genre:         <%= @entry.genre.titlecase         %></li><% end %>
-  <% if !@entry.part_name.nil?     %><li>Part Name:     <%= @entry.part_name               %></li><% end %>
-  <% if !@entry.granule_class.nil? %><li>Granule Class: <%= @entry.granule_class.titlecase %></li><% end %>
+  <li>
+    Federal Register Document Number: <%= @entry.document_number %> 
+    (<%= link_to 'html', 
+         "http://www.gpo.gov/fdsys/granule/FR-#{@entry.publication_date}/#{@entry.document_number}" %>, 
+     <%= link_to 'text', 
+          "http://www.gpo.gov/fdsys/pkg/FR-#{@entry.publication_date}/html/#{@entry.document_number}.htm" %>,
+     <%= link_to 'pdf', 
+          "http://www.gpo.gov/fdsys/pkg/FR-#{@entry.publication_date}/pdf/#{@entry.document_number}.pdf" %>)
+  </li>
+  <% if !@entry.dates.nil?          %><li>Dates:          <%= @entry.dates                   %></li><% end %>
+  <% if !@entry.effective_date.nil? %><li>Effective Date: <%= @entry.effective_date          %></li><% end %>
+  <% if !@entry.action.nil?         %><li>Action:         <%= @entry.action.titlecase        %></li><% end %>
+  <% if !@entry.type.nil?           %><li>Type:           <%= @entry.type                    %></li><% end %>
+  <% if !@entry.genre.nil?          %><li>Genre:          <%= @entry.genre.titlecase         %></li><% end %>
+  <% if !@entry.part_name.nil?      %><li>Part Name:      <%= @entry.part_name               %></li><% end %>
+  <% if !@entry.granule_class.nil?  %><li>Granule Class:  <%= @entry.granule_class.titlecase %></li><% end %>
 </ul>
 
 <% unless @entry.url_references.blank? %>
   <ul class='references'>
-  <% @entry.url_references.group_by(&:active).each do |active, url_references| %>
+  <% urls = @entry.url_references.map{|ref| ref.url} %>
+  <% urls.group_by(&:active).each do |active, urls| %>
     <li>
       <%= active ? 'Active' : 'Broken' %>
       <ul>
-      <% url_references.each do |url_reference| %>  
-        <li><% url_reference.url.name %></li>
+      <% urls.each do |url| %>  
+        <li><%= link_to url.name, "#{url.name}" %></li>
       <% end %>
       </ul>
     </li>
@@ -52,6 +50,18 @@ places_determined_at :datetime -->
 <% end %>
 
 <p class='abstract'><%= @entry.abstract %></p>
+
+<ul class='document'>
+  <li>Length:     <%= pluralize(@entry.human_length, 'page') %></li>
+  <li>Start Page: <%= @entry.start_page                      %></li>
+  <li>End Page:   <%= @entry.end_page                        %></li>
+</ul>
+
+<ul class='date_reference'>
+  <% @entry.referenced_dates.each do |date| %>
+    <li><%= date %></li>
+  <% end %>
+</ul>  
 
 <div class='sidebar'>
   <% unless @entry.contact.blank? %>
@@ -64,3 +74,5 @@ places_determined_at :datetime -->
     <p><%= @entry.topics.join(' ') %></p>
   <% end %>
 </div>
+
+<%= calendar_view(@entry, :tri) %>
