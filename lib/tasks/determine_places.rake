@@ -7,11 +7,13 @@ task :determine_places => :environment do
     # previous_date = nil
     
     Entry.transaction do
+      next if entry.abstract.blank?
+      
       # clear out existing place determinations
       entry.place_determinations = []
       
       # fetch new place determinations
-      places = placemaker.places("#{entry.title} #{entry.abstract}")
+      places = placemaker.places(entry.abstract)
       
       places.each do |place|
         p = Place.find_or_create_by_id(place.id)
@@ -21,7 +23,8 @@ task :determine_places => :environment do
         p.latitude = place.latitude
         p.save
         
-        entry.place_determinations.create(:place_id => p.id, :confidence => place.confidence)
+        context = entry.abstract.match(/\b.{0,100}#{Regexp.escape(place.string)}.{0,100}\b/)[0]
+        entry.place_determinations.create(:place_id => p.id, :confidence => place.confidence, :string => place.string, :context => context)
       end
       
       entry.places_determined_at = Time.now

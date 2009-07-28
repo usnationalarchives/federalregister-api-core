@@ -3,6 +3,7 @@ class CreatePlaceDeterminations < ActiveRecord::Migration
     create_table :place_determinations do |t|
       t.belongs_to :entry
       t.belongs_to :place
+      t.string :string, :context
       t.integer :confidence
     end
     
