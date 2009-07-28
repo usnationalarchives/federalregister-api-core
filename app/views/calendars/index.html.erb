@@ -1,0 +1,18 @@
+<%= pluralize(@referenced_dates.count, 'date') %>
+
+<% if @day.nil? %>
+  <%= dates_calendar_view(@referenced_dates, @year, @month) %>
+<% end %>
+
+<ul>
+<% @referenced_dates.group_by(&:date).each do |date, referenced_dates| %>
+  <li id='date_<%= date %>' class='calendar_date'>
+    <%= date.to_formatted_s(:pretty) %>
+    <ul>
+    <% referenced_dates.each do |referenced_date| %>
+      <li><%= link_to(referenced_date.entry.title, entry_path(referenced_date.entry) ) %></li>
+    <% end %>
+    </ul>
+  </li>
+<% end %>
+</ul>
