@@ -5,7 +5,7 @@ class EntriesController < ApplicationController
     @month = params[:month] || Time.now.strftime("%m")
     @day   = params[:day]   || Time.now.strftime("%d")
     
-    @entries = Entry.find(:all, :conditions => ['publication_date >= ?', "#{@year}-#{@month}-#{@days}"], :order => 'publication_date DESC')
+    @entries = Entry.find(:all, :conditions => ['publication_date = ?', "#{@year}-#{@month}-#{@day}"], :order => 'publication_date DESC')
   end
   
   def show
