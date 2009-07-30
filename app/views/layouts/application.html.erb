@@ -7,7 +7,9 @@
   <meta name="description" content="..." />
   <meta name="keywords" content="..." />
   <meta name="author" content="..." />
-
+  
+  <%= stylesheet_link_tag "reset", :media => :screen %>
+  <%= stylesheet_link_tag "typography", :media => :screen %>
   <%= stylesheet_link_tag "screen", :media => :screen %>
 
   <%= javascript_include_tag 'jquery.js'               %>
@@ -28,9 +30,11 @@
 
     <!-- HEADER -->
     <div id="header">
+      <h1>Trifecta</h1>
       <div class="nav">
         <ul>
-          <li></li>
+          <li><div class="btn"><a href="#">Agency</a></div></li>
+          <li><div class="btn"><a href="#">Date</a></div></li>
         </ul>
       </div>
     </div>

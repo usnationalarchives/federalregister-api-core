@@ -1,4 +1,79 @@
-.foo
-  color: red
-  .poop
-    color: brown
+!btn_height = 31px
+
+body 
+  :background #eeeded
+  :margin 0
+#wrapper
+  :border 1px solid #aaa
+#header
+  :background  #efeeee url(/images/header-bg.png) repeat-x bottom left
+  :height 6em
+  h1
+    :color #003399
+    :float left
+    :line-height 96px
+    :margin-left 1em
+  .nav
+    :display block
+    :float right
+    :height 35px
+    :margin 2em 0 0 0
+    :width 200px
+    a 
+      :color #777778 
+      :padding-left .8em
+    ul
+      :margin 0
+      :width 100%
+      li
+        :list-style-type none
+#main
+  :margin 2em
+  ul
+    li
+      :list-style-type none  
+  .mod
+    :width 50em
+    .meta
+      li 
+        :float left
+        :margin-right 1.5em
+        &:last-child
+          :list-style-type disc
+    .details
+      :clear both
+  table.calendar 
+    :float left
+    :margin-right 1em
+    th.current
+      :color red
+#footer
+  :background  #5a5a5a
+  :clear both
+  :min-height 10em
+  :border-top 4px solid #9b9b9b 
+  
+  
+.btn
+  :display block
+  :height = !btn_height
+  :float left
+  :background url(/images/btn_cap.png) no-repeat right top
+  :padding 0 10px 0 0
+  :margin 0 10px 0 0
+  :z-index 9999  
+  a,
+  input
+    :display block
+    :float left
+    :width auto
+    :height = !btn_height
+    :padding 0 2px 0 8px
+    :line-height = !btn_height
+    :background url(/images/btn_bg.png) no-repeat left top
+    :color #fff
+    :text-decoration none
+    :border none
+    &:hover
+      :color #fff !important
+      :text-decoration underline  
