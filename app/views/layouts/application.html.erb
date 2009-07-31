@@ -43,7 +43,7 @@
 
 
     <!-- MAIN -->
-    <div id="main" class="group">
+    <div id="main" class="group<%= ' foo' if yield :sidebar %>">
 
       <% unless flash[:notice].blank? %>
         <div class="alert">
@@ -62,8 +62,18 @@
           <% if yield :title %>
             <h1><%= yield :title %></h1>
           <% end %>
-        
-          <%= yield %>
+          
+          <div class="col1">
+            <%= yield %>
+          </div>
+          
+          <% if yield :sidebar %>
+          <div class="col2">
+            <div class="sidebar">
+              <%= yield :sidebar %>
+            </div>
+          </div>
+          <% end %>
       </div>
       <!-- content end -->
 
