@@ -5,62 +5,65 @@ toc_subject          :string(255)
 toc_doc              :string(255)
 places_determined_at :datetime -->
 
-<h2><%= @entry.title %></h2>
-
-<div class="mod group">
-  <div class="meta">
-    <ul class='meta'>
-      <li><%= @entry.publication_date.to_formatted_s(:pretty) %></li>
-      <li>
-        <%= display_agencies_for_entries(@entry) %>
-      </li>
-    </ul>
-  </div>
-  <div class="details">
-    <ul class='details'>
-      <li>
-        <strong>Federal Register Document Number:</strong> <%= @entry.document_number %> 
-        (<% [:html, :text, :pdf].each do |format| %>
-         <%= link_to format, @entry.source_url(format), :class => format %>
-         <% end %>)
-      </li>
-      <% if !@entry.dates.nil?          %><li><strong>Dates:</strong>          <%= @entry.dates                   %></li><% end %>
-      <% if !@entry.effective_date.nil? %><li><strong>Effective Date:</strong> <%= @entry.effective_date          %></li><% end %>
-      <% if !@entry.action.nil?         %><li><strong>Action:</strong>         <%= @entry.action.titlecase        %></li><% end %>
-      <% if !@entry.type.nil?           %><li><strong>Type: </strong>          <%= @entry.type                    %></li><% end %>
-      <% if !@entry.genre.nil?          %><li><strong>Genre:</strong>          <%= @entry.genre.titlecase         %></li><% end %>
-      <% if !@entry.part_name.nil?      %><li><strong>Part Name:</strong>      <%= @entry.part_name               %></li><% end %>
-      <% if !@entry.granule_class.nil?  %><li><strong>Granule Class:</strong>  <%= @entry.granule_class.titlecase %></li><% end %>
-    </ul>
-  </div>
-</div>
-
-
-
-<% unless @entry.url_references.blank? %>
-  <ul class='references'>
-  <% urls = @entry.url_references.map{|ref| ref.url} %>
-  <% urls.group_by(&:active).each do |active, urls| %>
-    <li>
-      <%= active ? 'Active' : 'Broken' %>
-      <ul>
-      <% urls.each do |url| %>  
-        <li><%= link_to url.name, "#{url.name}" %></li>
-      <% end %>
+<h2 class="group">Title - <span class="title"><%= @entry.title %></span></h2>
+<div class="wrapper">
+  <div class="mod group">
+    <h3>Info</h3>
+    <div class="meta">
+      <ul class='meta'>
+        <li><%= @entry.publication_date.to_formatted_s(:pretty) %></li>
+        <li>
+          <%= display_agencies_for_entries(@entry) %>
+        </li>
       </ul>
-    </li>
-  <% end  %>
+    </div>
+    <div class="details">
+      <h3>Details</h3>
+      <ul class='details'>
+        <li>
+          <strong>Federal Register Document Number:</strong> <%= @entry.document_number %> 
+          (<% [:html, :text, :pdf].each do |format| %>
+           <%= link_to format, @entry.source_url(format), :class => format %>
+           <% end %>)
+        </li>
+        <% if !@entry.dates.nil?          %><li><strong>Dates:</strong>          <%= @entry.dates                   %></li><% end %>
+        <% if !@entry.effective_date.nil? %><li><strong>Effective Date:</strong> <%= @entry.effective_date          %></li><% end %>
+        <% if !@entry.action.nil?         %><li><strong>Action:</strong>         <%= @entry.action.titlecase        %></li><% end %>
+        <% if !@entry.type.nil?           %><li><strong>Type: </strong>          <%= @entry.type                    %></li><% end %>
+        <% if !@entry.genre.nil?          %><li><strong>Genre:</strong>          <%= @entry.genre.titlecase         %></li><% end %>
+        <% if !@entry.part_name.nil?      %><li><strong>Part Name:</strong>      <%= @entry.part_name               %></li><% end %>
+        <% if !@entry.granule_class.nil?  %><li><strong>Granule Class:</strong>  <%= @entry.granule_class.titlecase %></li><% end %>
+      </ul>
+    </div>
+  </div>
+
+
+
+  <% unless @entry.url_references.blank? %>
+    <ul class='references'>
+    <% urls = @entry.url_references.map{|ref| ref.url} %>
+    <% urls.group_by(&:active).each do |active, urls| %>
+      <li>
+        <%= active ? 'Active' : 'Broken' %>
+        <ul>
+        <% urls.each do |url| %>  
+          <li><%= link_to url.name, "#{url.name}" %></li>
+        <% end %>
+        </ul>
+      </li>
+    <% end  %>
+    </ul>
+  <% end %>
+
+  <p class='abstract'><%= @entry.abstract %></p>
+
+  <h3>Document</h3>
+  <ul class='document'>
+    <li>Length:     <%= pluralize(@entry.human_length, 'page') %></li>
+    <li>Start Page: <%= @entry.start_page                      %></li>
+    <li>End Page:   <%= @entry.end_page                        %></li>
   </ul>
-<% end %>
-
-<p class='abstract'><%= @entry.abstract %></p>
-
-<ul class='document'>
-  <li>Length:     <%= pluralize(@entry.human_length, 'page') %></li>
-  <li>Start Page: <%= @entry.start_page                      %></li>
-  <li>End Page:   <%= @entry.end_page                        %></li>
-</ul>
-
+</div>
 <ul class='date_reference'>
   <% @entry.referenced_dates.each do |date| %>
     <li><%= date %></li>
