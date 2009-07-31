@@ -2,7 +2,7 @@ class CalendarsController < ApplicationController
   
   def index
     @year  = params[:year].to_i  || Time.now.strftime("%Y")
-    @month = params[:month].to_i || Time.now.strftime("%m")
+    @month = params[:month].to_i
     @day   = params[:day]
     
     if @day.nil?
