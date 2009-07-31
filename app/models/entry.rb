@@ -80,4 +80,17 @@ class Entry < ActiveRecord::Base
   def slug
     "#{self.title.downcase.gsub(/&/, 'and').gsub(/[^a-z0-9]+/, '-')}"
   end
+  
+  def source_url(format)
+    format = format.to_sym
+    
+    case format
+    when :html
+      base_url = "http://www.gpo.gov/fdsys/granule/FR-#{publication_date}/#{document_number}"
+    when :text
+      base_url = "http://www.gpo.gov/fdsys/pkg/FR-#{publication_date}/html/#{document_number}.htm"
+    when :pdf
+      base_url =  "http://www.gpo.gov/fdsys/pkg/FR-#{publication_date}/pdf/#{document_number}.pdf"
+    end
+  end
 end
