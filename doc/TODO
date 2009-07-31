@@ -33,3 +33,14 @@ Bob:
   
   /calendar/:year/:month?view=tri#:day
   
+
+Andrew:
+  store source URLs
+  start downloading all full text
+  modify placemaker to use full text?
+  more work on full text conversion
+  agency data entry
+  add agency type, short_name, description, contact_info
+  import agencies
+  link to regulations.gov
+  scrape comments from regulation.gov?
