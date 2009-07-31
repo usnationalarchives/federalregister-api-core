@@ -7,7 +7,7 @@ places_determined_at :datetime -->
 
 <h2><%= @entry.title %></h2>
 
-<div class="mod">
+<div class="mod group">
   <div class="meta">
     <ul class='meta'>
       <li><%= @entry.publication_date.to_formatted_s(:pretty) %></li>
@@ -19,18 +19,18 @@ places_determined_at :datetime -->
   <div class="details">
     <ul class='details'>
       <li>
-        Federal Register Document Number: <%= @entry.document_number %> 
+        <strong>Federal Register Document Number:</strong> <%= @entry.document_number %> 
         (<% [:html, :text, :pdf].each do |format| %>
          <%= link_to format, @entry.source_url(format), :class => format %>
          <% end %>)
       </li>
-      <% if !@entry.dates.nil?          %><li>Dates:          <%= @entry.dates                   %></li><% end %>
-      <% if !@entry.effective_date.nil? %><li>Effective Date: <%= @entry.effective_date          %></li><% end %>
-      <% if !@entry.action.nil?         %><li>Action:         <%= @entry.action.titlecase        %></li><% end %>
-      <% if !@entry.type.nil?           %><li>Type:           <%= @entry.type                    %></li><% end %>
-      <% if !@entry.genre.nil?          %><li>Genre:          <%= @entry.genre.titlecase         %></li><% end %>
-      <% if !@entry.part_name.nil?      %><li>Part Name:      <%= @entry.part_name               %></li><% end %>
-      <% if !@entry.granule_class.nil?  %><li>Granule Class:  <%= @entry.granule_class.titlecase %></li><% end %>
+      <% if !@entry.dates.nil?          %><li><strong>Dates:</strong>          <%= @entry.dates                   %></li><% end %>
+      <% if !@entry.effective_date.nil? %><li><strong>Effective Date:</strong> <%= @entry.effective_date          %></li><% end %>
+      <% if !@entry.action.nil?         %><li><strong>Action:</strong>         <%= @entry.action.titlecase        %></li><% end %>
+      <% if !@entry.type.nil?           %><li><strong>Type: </strong>          <%= @entry.type                    %></li><% end %>
+      <% if !@entry.genre.nil?          %><li><strong>Genre:</strong>          <%= @entry.genre.titlecase         %></li><% end %>
+      <% if !@entry.part_name.nil?      %><li><strong>Part Name:</strong>      <%= @entry.part_name               %></li><% end %>
+      <% if !@entry.granule_class.nil?  %><li><strong>Granule Class:</strong>  <%= @entry.granule_class.titlecase %></li><% end %>
     </ul>
   </div>
 </div>

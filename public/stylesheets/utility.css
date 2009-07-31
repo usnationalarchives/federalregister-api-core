@@ -1,0 +1,16 @@
+/* self-clearing floats: add .group class to parents with floats */
+.group:after {
+	content: ".";
+	display: block;
+	height: 0;
+	clear: both;	
+	visibility: hidden;
+	}
+*:first-child+html .group { /* IE7 */
+	min-height: 1px;
+	}
+* html .group { /* IE6 */
+	height: 1%;
+	}
+	
+	
