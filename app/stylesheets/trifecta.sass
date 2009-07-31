@@ -7,21 +7,22 @@ body
   :border 1px solid #aaa
 #header
   :background  #efeeee url(/images/header-bg.png) repeat-x bottom left
-  :height 75px
+  :height 123px
   h1
     :color #003399
-    :float left
     :line-height 75px
-    :margin 0 0 0 1em
+    :margin 0
+    :padding-left 1em
   .nav
+    :background  #d9dadc url(/images/nv-bg.png) repeat-x bottom left
+    :border-top 1px solid #d0d6e0
+    :border-bottom 1px solid #d0d6e0
     :display block
-    :float right
-    :height 35px
-    :margin 2em 0 0 0
-    :width 50%
+    :height 48px
+    :padding-left 3em  
     ul
-      :margin 0
-      :float right
+      :height 48px
+      :margin 8px 0 0 0
       li
         :list-style-type none
         a 
@@ -33,11 +34,27 @@ body
             :color #000 !important
 #main
   :margin 2em
+  .content
+    :margin-right 1em
+    .col1
+      :float left
+      :margin-left 1em
+      :width 70%
+    .col2
+      :float right
+      :width 25%
+  h2
+    :border-bottom 1px solid red   
+    :display block
+    :font 150% "Lucida Grande", "Trebuchet MS", Verdana, sans-serif
+    span.title
+      :font 75% "Lucida Grande", "Trebuchet MS", Verdana, sans-serif
+      :font-variant small-caps
   ul
     li
       :list-style-type none  
   .mod
-    :width 50em
+  .sidebar
   table.calendar 
     :float left
     :margin-right 1em

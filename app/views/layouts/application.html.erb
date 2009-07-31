@@ -29,21 +29,21 @@
   <div id="wrapper">
 
     <!-- HEADER -->
-    <div id="header" class="group">
+    <div id="header">
       <h1>Trifecta</h1>
       <div class="nav">
-        <ul class="group">
+        <ul>
           <li><div class="btn"><a href="#">Agency</a></div></li>
           <li><div class="btn"><a href="#">Test</a></div></li>
         </ul>
-      </div>
+      </div>      
     </div>
-  
-    <!-- HEADER end -->
+
+  <!-- HEADER end -->
 
 
     <!-- MAIN -->
-    <div id="main" class="group">
+    <div id="main" class="group<%= ' foo' if yield :sidebar %>">
 
       <% unless flash[:notice].blank? %>
         <div class="alert">
@@ -62,8 +62,18 @@
           <% if yield :title %>
             <h1><%= yield :title %></h1>
           <% end %>
-        
-          <%= yield %>
+          
+          <div class="col1">
+            <%= yield %>
+          </div>
+          
+          <% if yield :sidebar %>
+          <div class="col2">
+            <div class="sidebar">
+              <%= yield :sidebar %>
+            </div>
+          </div>
+          <% end %>
       </div>
       <!-- content end -->
 
