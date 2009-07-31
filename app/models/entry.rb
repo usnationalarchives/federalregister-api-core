@@ -22,10 +22,12 @@
   end_page             :integer(4)
   agency_id            :integer(4)
   publication_date     :date
-  effective_date       :date
   places_determined_at :datetime
   created_at           :datetime
   updated_at           :datetime
+  slug                 :text
+  full_text            :text
+  full_text_raw        :text
 
 =end Schema Information
 

@@ -7,6 +7,7 @@
   name       :string(255)
   created_at :datetime
   updated_at :datetime
+  slug       :string(255)
 
 =end Schema Information
 

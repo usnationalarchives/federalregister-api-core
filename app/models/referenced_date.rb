@@ -2,14 +2,14 @@
 
  Table name: referenced_dates
 
-  id          :integer(4)      not null, primary key
-  entry_id    :integer(4)
-  date        :date
-  string      :string(255)
-  context     :string(255)
-  prospective :boolean(1)
-  created_at  :datetime
-  updated_at  :datetime
+  id         :integer(4)      not null, primary key
+  entry_id   :integer(4)
+  date       :date
+  string     :string(255)
+  context    :string(255)
+  created_at :datetime
+  updated_at :datetime
+  date_type  :string(255)
 
 =end Schema Information
 
