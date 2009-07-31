@@ -20,12 +20,9 @@ places_determined_at :datetime -->
     <ul class='details'>
       <li>
         Federal Register Document Number: <%= @entry.document_number %> 
-        (<%= link_to 'html', 
-             "http://www.gpo.gov/fdsys/granule/FR-#{@entry.publication_date}/#{@entry.document_number}" %>, 
-         <%= link_to 'text', 
-              "http://www.gpo.gov/fdsys/pkg/FR-#{@entry.publication_date}/html/#{@entry.document_number}.htm" %>,
-         <%= link_to 'pdf', 
-              "http://www.gpo.gov/fdsys/pkg/FR-#{@entry.publication_date}/pdf/#{@entry.document_number}.pdf" %>)
+        (<% [:html, :text, :pdf].each do |format| %>
+         <%= link_to format, @entry.source_url(format), :class => format %>
+         <% end %>)
       </li>
       <% if !@entry.dates.nil?          %><li>Dates:          <%= @entry.dates                   %></li><% end %>
       <% if !@entry.effective_date.nil? %><li>Effective Date: <%= @entry.effective_date          %></li><% end %>
