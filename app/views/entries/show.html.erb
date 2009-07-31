@@ -71,12 +71,6 @@ places_determined_at :datetime -->
 	<%= abstract %>
 </p>
 
-<ul class='date_reference'>
-<% @entry.referenced_dates.each do |date| %>
-  <li><%= date.date %></li>
-<% end %>
-</ul> 
-
 <%=
   if @entry.full_text_raw 
     # FIXME: move out of view!
@@ -116,7 +110,7 @@ places_determined_at :datetime -->
   
   <h3>Document</h3>
   <ul class='document'>
-    <li>Length:     <%= pluralize(@entry.human_length, 'page') %></li>
+    <li>Length:     <%= link_to pluralize(@entry.human_length, 'page'), citation_path(@entry) %></li>
     <li>Start Page: <%= @entry.start_page                      %></li>
     <li>End Page:   <%= @entry.end_page                        %></li>
   </ul>
