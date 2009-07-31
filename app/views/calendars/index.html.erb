@@ -1,4 +1,4 @@
-<%= pluralize(@referenced_dates.count, 'date') %>
+<%= pluralize(@referenced_dates.length, 'date') %>
 
 <% if @day.nil? %>
   <%= dates_calendar_view(@referenced_dates, @year, @month) %>
