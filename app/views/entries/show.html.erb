@@ -81,6 +81,10 @@ places_determined_at :datetime -->
 
   <% unless @entry.topics.blank? %>
     <h3>Topics:</h3>
-    <p><%= @entry.topics.join(' ') %></p>
+    <ul>
+      <% @entry.topics.each do |topic| %>
+        <li><%= link_to topic.name, topic_path(topic) %></li>
+      <% end %>
+    </ul>  
   <% end %>
 <% end %>
