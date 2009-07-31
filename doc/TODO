@@ -12,7 +12,10 @@ Bob:
         - list of entries per day by agency
       
   /entries
-    
+  
+  /citation/:volume/:page [redirect to entry if only one]
+    (all references to pages should link to citation)
+  
   /entries/:year/weekly/:week
     - list of entries per week
   /entries/:year/:month/:day
