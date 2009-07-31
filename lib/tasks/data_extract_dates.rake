@@ -9,7 +9,7 @@ namespace :data do
         dates = []
         
         Entry.transaction do
-          entry.referenced_dates = []
+          ReferencedDate.delete_all(:entry_id => entry.id, :date_type => ["ExtractedPriorDate", "ExtractedFutureDate"])
           Date.set_today(entry.publication_date.to_s(:db)) do
             PotentialDateExtractor.extract(entry.abstract).each do |potential_date|
               begin 
@@ -23,7 +23,14 @@ namespace :data do
               end
               
               context = entry.abstract.match(/\b.{0,100}#{Regexp.escape(potential_date)}.{0,100}\b/)[0]
-              entry.referenced_dates.create(:date => date, :string => potential_date, :context => context, :prospective => date > entry.publication_date)
+              
+              if date <= entry.publication_date
+                date_type = "ExtractedPriorDate"
+              else
+                date_type = "ExtractedFutureDate"
+              end
+              
+              entry.referenced_dates.create(:date => date, :string => potential_date, :context => context, :date_type => date_type)
             end
           end
         end

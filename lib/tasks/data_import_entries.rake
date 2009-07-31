@@ -35,7 +35,11 @@ namespace :data do
       Dir.glob("#{RAILS_ROOT}/data/mods/2009-*.xml").each do |file_name|
         doc = Nokogiri::XML(open(file_name))
         
-        publication_date = doc.css('dateIssued').first.content
+        publication_date = doc.css('dateIssued').first.try(:content)
+        if !publication_date
+          puts "skipping #{file_name} [no dateIssued!]"
+          next
+        end
         puts "importing #{publication_date}..."
         Entry.transaction do
         
@@ -58,7 +62,15 @@ namespace :data do
             entry.citation = entry_node.css('identifier[type="preferred citation"]').first.try(:content)
             entry.start_page = entry_node.css('extent[unit="pages"] start').first.try(:content)
             entry.end_page = entry_node.css('extent[unit="pages"] end').first.try(:content)
-            entry.comment_period_ends_on = entry_node.css('commentDate').first.try(:content)
+            
+            %w(effectiveDate commentDate).each do |date_tag_name|
+              date = entry_node.css(date_tag_name).first.try(:content)
+              if date
+                type = date_tag_name.capitalize_first
+                entry.referenced_dates.find_or_create_by_date_and_date_type(date, type)
+              end
+            end
+            
             # Basic Attributes
             TAGS_TO_IMPORT = %w{
               type
@@ -72,7 +84,6 @@ namespace :data do
               contact
               dates
               tocDoc
-              effectiveDate
             }
             
             TAGS_TO_IMPORT.each do |tag_name|
