@@ -59,9 +59,17 @@ places_determined_at :datetime -->
   <% end  %>
   </ul>
 <% end %>
-<h3>Abstract</h3>
-<p class='abstract'><%= @entry.abstract %></p>
 
+<h3>Abstract</h3>
+<p class='abstract'>
+	<% 
+	  abstract = @entry.abstract 
+	  @entry.referenced_dates.each do |date|
+	  	abstract.gsub!(/#{Regexp.escape(date.string)}/, link_to(date.string, calendar_by_ymd_path(date)) )
+	  end
+	%>
+	<%= abstract %>
+</p>
 
 <ul class='date_reference'>
 <% @entry.referenced_dates.each do |date| %>
@@ -103,6 +111,7 @@ places_determined_at :datetime -->
       <% end %>
     </ul>  
   <% end %>
+
   
   <h3>Document</h3>
   <ul class='document'>
@@ -111,4 +120,21 @@ places_determined_at :datetime -->
     <li>End Page:   <%= @entry.end_page                        %></li>
   </ul>
   
+
+  <% unless @entry.places.blank? %>
+	<h3>Entries Close By</h3>
+	<% 
+		distance = 10 
+		entry_limit = 10
+		total_entries = @entry.entries_within(distance, :count => true)
+	%>
+	<ul>
+	<% @entry.entries_within(distance, :limit => entry_limit).each do |entry| %>
+	  <li><%= link_to truncate(entry.title, 100), entry_path(entry) %></li>
+	<% end %>
+	</ul>
+	<%# TODO: add real link here %>
+	<%= link_to "View #{total_entries-entry_limit} more entries with #{distance} miles", '#' %>
+  <% end %>
+
 <% end %>
