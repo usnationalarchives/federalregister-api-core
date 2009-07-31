@@ -7,26 +7,30 @@ body
   :border 1px solid #aaa
 #header
   :background  #efeeee url(/images/header-bg.png) repeat-x bottom left
-  :height 6em
+  :height 75px
   h1
     :color #003399
     :float left
-    :line-height 96px
-    :margin-left 1em
+    :line-height 75px
+    :margin 0 0 0 1em
   .nav
     :display block
     :float right
     :height 35px
     :margin 2em 0 0 0
     :width 200px
-    a 
-      :color #777778 
-      :padding-left .8em
     ul
       :margin 0
       :width 100%
       li
         :list-style-type none
+        a 
+          :color #777778 
+          :line-height 31px
+          :padding-left 1em
+          &:hover
+            :text-decoration none
+            :color #000 !important
 #main
   :margin 2em
   ul
@@ -34,18 +38,14 @@ body
       :list-style-type none  
   .mod
     :width 50em
-    .meta
-      li 
-        :float left
-        :margin-right 1.5em
-        &:last-child
-          :list-style-type disc
-    .details
-      :clear both
   table.calendar 
     :float left
     :margin-right 1em
+    :width 1em
+    th
+      :background none
     th.current
+      :border-bottom 2px solid red
       :color red
 #footer
   :background  #5a5a5a
