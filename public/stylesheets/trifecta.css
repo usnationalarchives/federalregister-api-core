@@ -12,14 +12,14 @@ body {
 /* line 8, ../../app/stylesheets/trifecta.sass */
 #header {
   background: #efeeee url(/images/header-bg.png) repeat-x bottom left;
-  height: 6em;
+  height: 75px;
 }
 /* line 11, ../../app/stylesheets/trifecta.sass */
 #header h1 {
   color: #003399;
   float: left;
-  line-height: 96px;
-  margin-left: 1em;
+  line-height: 75px;
+  margin: 0 0 0 1em;
 }
 /* line 16, ../../app/stylesheets/trifecta.sass */
 #header .nav {
@@ -30,52 +30,51 @@ body {
   width: 200px;
 }
 /* line 22, ../../app/stylesheets/trifecta.sass */
-#header .nav a {
-  color: #777778;
-  padding-left: .8em;
-}
-/* line 25, ../../app/stylesheets/trifecta.sass */
 #header .nav ul {
   margin: 0;
   width: 100%;
 }
-/* line 28, ../../app/stylesheets/trifecta.sass */
+/* line 25, ../../app/stylesheets/trifecta.sass */
 #header .nav ul li {
   list-style-type: none;
 }
+/* line 27, ../../app/stylesheets/trifecta.sass */
+#header .nav ul li a {
+  color: #777778;
+  line-height: 31px;
+  padding-left: 1em;
+}
+/* line 31, ../../app/stylesheets/trifecta.sass */
+#header .nav ul li a:hover {
+  text-decoration: none;
+  color: #000 !important;
+}
 
-/* line 30, ../../app/stylesheets/trifecta.sass */
+/* line 34, ../../app/stylesheets/trifecta.sass */
 #main {
   margin: 2em;
 }
-/* line 33, ../../app/stylesheets/trifecta.sass */
+/* line 37, ../../app/stylesheets/trifecta.sass */
 #main ul li {
   list-style-type: none;
 }
-/* line 35, ../../app/stylesheets/trifecta.sass */
+/* line 39, ../../app/stylesheets/trifecta.sass */
 #main .mod {
   width: 50em;
 }
-/* line 38, ../../app/stylesheets/trifecta.sass */
-#main .mod .meta li {
-  float: left;
-  margin-right: 1.5em;
-}
 /* line 41, ../../app/stylesheets/trifecta.sass */
-#main .mod .meta li:last-child {
-  list-style-type: disc;
-}
-/* line 43, ../../app/stylesheets/trifecta.sass */
-#main .mod .details {
-  clear: both;
-}
-/* line 45, ../../app/stylesheets/trifecta.sass */
 #main table.calendar {
   float: left;
   margin-right: 1em;
+  width: 1em;
 }
-/* line 48, ../../app/stylesheets/trifecta.sass */
+/* line 45, ../../app/stylesheets/trifecta.sass */
+#main table.calendar th {
+  background: none;
+}
+/* line 47, ../../app/stylesheets/trifecta.sass */
 #main table.calendar th.current {
+  border-bottom: 2px solid red;
   color: red;
 }
 
