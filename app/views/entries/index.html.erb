@@ -1,5 +1,5 @@
 
-<p><%= @entries.count %> entries in <%= @month %> <%= @year %></p>
+<p><%= @entries.length %> entries in <%= @month %> <%= @year %></p>
 <ul>
 <% @entries.group_by(&:month_year).each do |mnth_year, entries| %>
   <li>
