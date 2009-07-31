@@ -1,6 +1,6 @@
 namespace :data do
   namespace :download do
-    namespace :entries => :environment do
+    task :entries => :environment do
       require "open-uri"
       
       date = Date.today + 1
