@@ -81,27 +81,49 @@ body {
   font: 75% "Lucida Grande", "Trebuchet MS", Verdana, sans-serif;
   font-variant: small-caps;
 }
-/* line 54, ../../app/stylesheets/trifecta.sass */
+/* line 53, ../../app/stylesheets/trifecta.sass */
+#main h3 {
+  background-color: darkorange;
+  color: white;
+  padding: .2em;
+}
+/* line 58, ../../app/stylesheets/trifecta.sass */
 #main ul li {
   list-style-type: none;
 }
-/* line 58, ../../app/stylesheets/trifecta.sass */
+/* line 60, ../../app/stylesheets/trifecta.sass */
+#main dl.fixed {
+  width: 600px;
+}
+/* line 62, ../../app/stylesheets/trifecta.sass */
+#main dl.fixed dt {
+  clear: left;
+  float: left;
+  text-align: right;
+  width: 40%;
+}
+/* line 67, ../../app/stylesheets/trifecta.sass */
+#main dl.fixed dd {
+  float: left;
+  width: 55%;
+}
+/* line 72, ../../app/stylesheets/trifecta.sass */
 #main table.calendar {
   float: left;
   margin-right: 1em;
   width: 1em;
 }
-/* line 62, ../../app/stylesheets/trifecta.sass */
+/* line 76, ../../app/stylesheets/trifecta.sass */
 #main table.calendar th {
   background: none;
 }
-/* line 64, ../../app/stylesheets/trifecta.sass */
+/* line 78, ../../app/stylesheets/trifecta.sass */
 #main table.calendar th.current {
   border-bottom: 2px solid red;
   color: red;
 }
 
-/* line 67, ../../app/stylesheets/trifecta.sass */
+/* line 81, ../../app/stylesheets/trifecta.sass */
 #footer {
   background: #5a5a5a;
   clear: both;
@@ -109,7 +131,7 @@ body {
   border-top: 4px solid #9b9b9b;
 }
 
-/* line 74, ../../app/stylesheets/trifecta.sass */
+/* line 88, ../../app/stylesheets/trifecta.sass */
 .btn {
   display: block;
   height: 31px;
@@ -119,7 +141,7 @@ body {
   margin: 0 10px 0 0;
   z-index: 9999;
 }
-/* line 82, ../../app/stylesheets/trifecta.sass */
+/* line 96, ../../app/stylesheets/trifecta.sass */
 .btn a,
 .btn input {
   display: block;
@@ -133,7 +155,7 @@ body {
   text-decoration: none;
   border: none;
 }
-/* line 94, ../../app/stylesheets/trifecta.sass */
+/* line 108, ../../app/stylesheets/trifecta.sass */
 .btn a:hover,
 .btn input:hover {
   color: #fff !important;
