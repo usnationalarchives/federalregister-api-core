@@ -1,4 +1,5 @@
 ActionController::Routing::Routes.draw do |map|
+  map.resources :topics
   
   map.connect 'agencies/:year/weekly/:week', :controller => 'agencies',
                                              :action     => 'index',
