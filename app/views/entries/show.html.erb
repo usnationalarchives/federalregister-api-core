@@ -6,7 +6,8 @@ toc_doc              :string(255)
 places_determined_at :datetime -->
 
 <h2 class="group">Title - <span class="title"><%= @entry.title %></span></h2>
-<div class="wrapper">
+
+<div class="col1">
   <div class="mod group">
     <h3>Info</h3>
     <div class="meta">
@@ -40,6 +41,7 @@ places_determined_at :datetime -->
 
 
   <% unless @entry.url_references.blank? %>
+    <h3>References</h3>
     <ul class='references'>
     <% urls = @entry.url_references.map{|ref| ref.url} %>
     <% urls.group_by(&:active).each do |active, urls| %>
@@ -54,7 +56,7 @@ places_determined_at :datetime -->
     <% end  %>
     </ul>
   <% end %>
-
+  <h3>Abstract</h3>
   <p class='abstract'><%= @entry.abstract %></p>
 
   <h3>Document</h3>
@@ -63,23 +65,26 @@ places_determined_at :datetime -->
     <li>Start Page: <%= @entry.start_page                      %></li>
     <li>End Page:   <%= @entry.end_page                        %></li>
   </ul>
-</div>
+  
 <ul class='date_reference'>
   <% @entry.referenced_dates.each do |date| %>
     <li><%= date %></li>
   <% end %>
-</ul>  
-
-<div class='sidebar'>
-  <% unless @entry.contact.blank? %>
-    <h3>Contact:</h3>
-    <p><%= @entry.contact %></p>
-  <% end %>
-  
-  <% unless @entry.topics.blank? %>
-    <h3>Topics:</h3>
-    <p><%= @entry.topics.join(' ') %></p>
-  <% end %>
-</div>
+</ul> 
 
 <%= calendar_view(@entry, :tri) %>
+ 
+</div>
+<div class="col2">
+  <div class='sidebar'>
+    <% unless @entry.contact.blank? %>
+      <h3>Contact:</h3>
+      <p><%= @entry.contact %></p>
+    <% end %>
+  
+    <% unless @entry.topics.blank? %>
+      <h3>Topics:</h3>
+      <p><%= @entry.topics.join(' ') %></p>
+    <% end %>
+  </div>
+</div>
