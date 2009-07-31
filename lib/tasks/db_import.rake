@@ -56,6 +56,7 @@ namespace :db do
           entry.citation = entry_node.css('identifier[type="preferred citation"]').first.try(:content)
           entry.start_page = entry_node.css('extent[unit="pages"] start').first.try(:content)
           entry.end_page = entry_node.css('extent[unit="pages"] end').first.try(:content)
+          entry.comment_period_ends_on = entry_node.css('commentDate').first.try(:content)
           # Basic Attributes
           TAGS_TO_IMPORT = %w{
             type
