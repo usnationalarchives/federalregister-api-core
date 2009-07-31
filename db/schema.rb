@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090731024147) do
+ActiveRecord::Schema.define(:version => 20090731154234) do
 
   create_table "agencies", :force => true do |t|
     t.integer  "parent_id"
@@ -42,12 +42,10 @@ ActiveRecord::Schema.define(:version => 20090731024147) do
     t.integer  "end_page"
     t.integer  "agency_id"
     t.date     "publication_date"
-    t.date     "effective_date"
     t.datetime "places_determined_at"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.text     "slug"
-    t.date     "comment_period_ends_on"
     t.text     "full_text"
     t.text     "full_text_raw"
   end
@@ -80,9 +78,9 @@ ActiveRecord::Schema.define(:version => 20090731024147) do
     t.date     "date"
     t.string   "string"
     t.string   "context"
-    t.boolean  "prospective"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "date_type"
   end
 
   add_index "referenced_dates", ["entry_id", "date"], :name => "index_referenced_dates_on_entry_id_and_date"
