@@ -2,6 +2,7 @@
 
 <% if @day.nil? %>
   <%= dates_calendar_view(@referenced_dates, @year, @month) %>
+  <% add_javascript(:src => 'calendar') %>
 <% end %>
 
 <ul>
