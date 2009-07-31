@@ -12,28 +12,28 @@ body {
 /* line 8, ../../app/stylesheets/trifecta.sass */
 #header {
   background: #efeeee url(/images/header-bg.png) repeat-x bottom left;
-  height: 75px;
+  height: 123px;
 }
 /* line 11, ../../app/stylesheets/trifecta.sass */
 #header h1 {
   color: #003399;
-  float: left;
   line-height: 75px;
-  margin: 0 0 0 1em;
+  margin: 0;
+  padding-left: 1em;
 }
 /* line 16, ../../app/stylesheets/trifecta.sass */
 #header .nav {
+  background: #d9dadc url(/images/nv-bg.png) repeat-x bottom left;
+  border-top: 1px solid #d0d6e0;
+  border-bottom: 1px solid #d0d6e0;
   display: block;
-  float: right;
-  height: 35px;
-  margin: 2em 0 0 0;
-  width: 50%;
+  height: 48px;
+  padding-left: 3em;
 }
-/* line 22, ../../app/stylesheets/trifecta.sass */
+/* line 23, ../../app/stylesheets/trifecta.sass */
 #header .nav ul {
-  margin: 0;
-  float: right;
-  min-width: 200px;
+  height: 48px;
+  margin: 8px 0 0 0;
 }
 /* line 26, ../../app/stylesheets/trifecta.sass */
 #header .nav ul li {
