@@ -53,11 +53,14 @@ class Entry < ActiveRecord::Base
   has_many :place_determinations
   has_many :places, :through => :place_determinations
   
+  acts_as_mappable :through => :places
+  
   has_many :referenced_dates, :dependent => :destroy
   
   # def to_param
   #   "#{document_number}"
   # end
+
   
   def month_year
     publication_date.to_formatted_s(:month_year)
@@ -97,6 +100,25 @@ class Entry < ActiveRecord::Base
       base_url = "http://www.gpo.gov/fdsys/pkg/FR-#{publication_date}/html/#{document_number}.htm"
     when :pdf
       base_url =  "http://www.gpo.gov/fdsys/pkg/FR-#{publication_date}/pdf/#{document_number}.pdf"
+    end
+  end
+
+  def entries_within(distance, options={})
+    limit = options.delete(:limit) || 10
+    count = options.delete(:count) || false
+    
+    if count
+      entry_count = 0
+      places.each do |place|
+        entry_count = entry_count + Entry.count_within(distance, :origin => place.location)
+      end
+      entry_count
+    else
+      entries = []
+      places.each do |place|
+        entries << Entry.find_within(distance, :origin => place.location, :limit => limit, :order => 'distance')
+      end
+      entries.uniq.sort{|e| e.publication_date}[0..9].flatten
     end
   end
 end
