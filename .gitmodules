@@ -7,3 +7,6 @@
 [submodule "vendor/plugins/later_dude"]
 	path = vendor/plugins/later_dude
 	url = git://github.com/clemens/later_dude.git
+[submodule "vendor/plugins/geokit-rails"]
+	path = vendor/plugins/geokit-rails
+	url = git://github.com/andre/geokit-rails.git
