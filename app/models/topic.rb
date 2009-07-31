@@ -12,4 +12,10 @@
 class Topic < ActiveRecord::Base
   has_many :topic_assignments
   has_many :entries, :through => :topic_assignments
+
+  def to_param
+    name
+  end
+  
 end
+
