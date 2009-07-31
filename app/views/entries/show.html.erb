@@ -5,7 +5,7 @@ toc_subject          :string(255)
 toc_doc              :string(255)
 places_determined_at :datetime -->
 
-<% title 'Entries' %>
+<%# title 'Entries' %>
 
 <h3>Title</h3>
 <p><%= @entry.title %></p>
@@ -62,12 +62,6 @@ places_determined_at :datetime -->
 <h3>Abstract</h3>
 <p class='abstract'><%= @entry.abstract %></p>
 
-<h3>Document</h3>
-<ul class='document'>
-  <li>Length:     <%= pluralize(@entry.human_length, 'page') %></li>
-  <li>Start Page: <%= @entry.start_page                      %></li>
-  <li>End Page:   <%= @entry.end_page                        %></li>
-</ul>
 
 <ul class='date_reference'>
 <% @entry.referenced_dates.each do |date| %>
@@ -91,4 +85,12 @@ places_determined_at :datetime -->
       <% end %>
     </ul>  
   <% end %>
+  
+  <h3>Document</h3>
+  <ul class='document'>
+    <li>Length:     <%= pluralize(@entry.human_length, 'page') %></li>
+    <li>Start Page: <%= @entry.start_page                      %></li>
+    <li>End Page:   <%= @entry.end_page                        %></li>
+  </ul>
+  
 <% end %>
