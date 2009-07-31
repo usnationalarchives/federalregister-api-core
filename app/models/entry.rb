@@ -51,6 +51,8 @@ class Entry < ActiveRecord::Base
   has_many :place_determinations
   has_many :places, :through => :place_determinations
   
+  acts_as_mappable :through => :places
+  
   has_many :referenced_dates, :dependent => :destroy
   
   # def to_param
