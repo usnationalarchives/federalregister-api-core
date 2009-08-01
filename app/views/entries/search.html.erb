@@ -9,7 +9,7 @@
   <thead>
     <tr>
       <th>Date</th>
-      <th>Type</th>
+      <th>Action</th>
       <th>Title</th>
       <th>Agency</th>
     </tr>
@@ -18,7 +18,7 @@
     <% @entries.each do |entry| %>
     <tr>
       <td><%= entry.publication_date %></td>
-      <td><%= entry.genre.capitalize_first %></td>
+      <td><%= entry.action %></td>
       <td><%= link_to truncate(entry.title, :length => 100), entry_path(entry) %></td>
       <td><%= link_to entry.agency.try(:name), agency_path(entry.agency) %></td>
     </tr>

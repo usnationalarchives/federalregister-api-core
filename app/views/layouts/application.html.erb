@@ -22,7 +22,7 @@
   
   <%= yield :javascripts %>
 
-
+  <%= yield :feeds %>
 </head>
 <body>
 
@@ -33,10 +33,10 @@
     <div id="header">
       <h1>trifecta</h1>
       <div class="nav">
-        <form action="/entries/search" method="get">
+        <form action="<%= entries_search_path %>" method="get">
           Search <%= text_field_tag :q, @search_term %>
           <%= submit_tag 'Search' %>
-        </form>        
+        </form>     
         <ul>
           <li><a href="#">Agency</a> | </li>
           <li><a href="#">Date</a> |</li>
