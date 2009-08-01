@@ -25,19 +25,29 @@ body.bp
 form.bp
   +blueprint-form
 
-// Page layout can be done using mixins applied to your semantic classes and IDs:
-body.three-col
-  #container
+body
+  #header
     +container
-  #header, #footer
-    +column(!blueprint_grid_columns)
-  #sidebar
-    // One third of the grid columns, rounding down. With 24 cols, this is 8.
-    !sidebar_columns = floor(!blueprint_grid_columns / 3)
-    +column(!sidebar_columns)
-  #content
-    // Two thirds of the grid columns, rounding up.
-    // With 24 cols, this is 16.
-    !content_columns = ceil(2 * !blueprint_grid_columns / 3)
-    // true means it's the last column in the row
-    +column(!content_columns, true)
+    h1
+      +column(6)
+    .nav
+      +column(16, true)
+  #main
+    +container
+    .content
+      .col1
+        +column(24,true)
+  &.sidebar
+    .content
+      .col1
+        +column(16)
+      .col2  
+        +column(8, true)
+  #footer
+    +container
+    .sitemap
+      +column(4)
+    .legal
+      +column(16)
+    .somethingelse
+      +column(4,true)
