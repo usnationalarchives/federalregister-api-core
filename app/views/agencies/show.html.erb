@@ -1,4 +1,6 @@
-<h2><%= @agency.name %></h2>
+<% title @agency.name %>
+
+<% feed_autodiscovery agency_path(@agency, :format => :rss) %>
 
 <p><%= pluralize(@agency.entries.count, 'entry') %></p>
 

@@ -5,4 +5,7 @@ module ApplicationHelper
     content_for :title, text
   end
   
+  def feed_autodiscovery(feed_url, title = 'RSS')
+    content_for :feeds, content_tag(:link, nil, :rel => 'alternate', :type => 'application/rss+xml', :title => title, :href => feed_url)
+  end
 end
