@@ -1713,7 +1713,6 @@ body #header .nav {
 }
 /* line 36, ../../app/stylesheets/screen.sass */
 body #main .content {
-  padding-top: 2em;
   width: 950px;
   margin: 0 auto;
   overflow: hidden;
@@ -1723,7 +1722,7 @@ body #main .content {
 body #main .content {
   display: block;
 }
-/* line 39, ../../app/stylesheets/screen.sass */
+/* line 38, ../../app/stylesheets/screen.sass */
 body #main .content .col1 {
   display: inline;
   float: left;
@@ -1734,7 +1733,7 @@ body #main .content .col1 {
 * html body #main .content .col1 {
   overflow-x: hidden;
 }
-/* line 43, ../../app/stylesheets/screen.sass */
+/* line 42, ../../app/stylesheets/screen.sass */
 body #main.cols .content .col1 {
   padding-left: 40px;
   display: inline;
@@ -1746,7 +1745,7 @@ body #main.cols .content .col1 {
 * html body #main.cols .content .col1 {
   overflow-x: hidden;
 }
-/* line 46, ../../app/stylesheets/screen.sass */
+/* line 45, ../../app/stylesheets/screen.sass */
 body #main.cols .content .col2 {
   padding-right: 40px;
   display: inline;
@@ -1758,7 +1757,7 @@ body #main.cols .content .col2 {
 * html body #main.cols .content .col2 {
   overflow-x: hidden;
 }
-/* line 49, ../../app/stylesheets/screen.sass */
+/* line 48, ../../app/stylesheets/screen.sass */
 body #footer {
   width: 950px;
   margin: 0 auto;
@@ -1769,7 +1768,7 @@ body #footer {
 body #footer {
   display: block;
 }
-/* line 51, ../../app/stylesheets/screen.sass */
+/* line 50, ../../app/stylesheets/screen.sass */
 body #footer .sitemap {
   display: inline;
   float: left;
@@ -1780,7 +1779,7 @@ body #footer .sitemap {
 * html body #footer .sitemap {
   overflow-x: hidden;
 }
-/* line 53, ../../app/stylesheets/screen.sass */
+/* line 52, ../../app/stylesheets/screen.sass */
 body #footer .legal {
   display: inline;
   float: left;
@@ -1791,7 +1790,7 @@ body #footer .legal {
 * html body #footer .legal {
   overflow-x: hidden;
 }
-/* line 55, ../../app/stylesheets/screen.sass */
+/* line 54, ../../app/stylesheets/screen.sass */
 body #footer .somethingelse {
   display: inline;
   float: left;

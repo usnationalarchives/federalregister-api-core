@@ -1,1 +1,15 @@
-<h1>Over 1,000,000 pages finally searchable.</h1>
+<h1 class="span-24">Over 1,000,000 pages finally searchable.</h1>
+
+<div class="currentevents span-22 push-1">
+  <h2 class="icon cal">Today's entries <span>(<%= @entries.length %>)</span></h2>
+  <div class="daily">
+    <ul>
+    <% @entries.each do |entry| %>
+      <li>
+        <%= link_to truncate(entry.title, :length => 100), entry_path(entry), :class => "entry" %>
+        <%= link_to entry.agency.name, agency_path(entry.agency), :class => "agency" %>
+      </li>
+    <% end %>
+    </ul>
+  </div>
+</div>
