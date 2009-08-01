@@ -29,6 +29,9 @@
   full_text            :text
   full_text_raw        :text
   delta                :boolean(1)      default(TRUE), not null
+  source_text_url      :string(255)
+  primary_agency_raw   :string(255)
+  secondary_agency_raw :string(255)
 
 =end Schema Information
 
