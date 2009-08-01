@@ -29,20 +29,23 @@ body
   #header
     +container
     h1
-      +column(6)
+      +column(7)
     .nav
       +column(16, true)
   #main
     .content
+      :padding-top 2em  
       +container
       .col1
         +column(23,true)
-  &.sidebar
-    .content
-      .col1
-        +column(16)
-      .col2  
-        +column(8, true)
+    &.cols
+      .content
+        .col1
+          +prepend(1)
+          +column(15)
+        .col2 
+          +append(1)
+          +column(7, true)
   #footer
     +container
     .sitemap
