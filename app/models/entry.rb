@@ -28,6 +28,7 @@
   slug                 :text
   full_text            :text
   full_text_raw        :text
+  delta                :boolean(1)      default(TRUE), not null
 
 =end Schema Information
 
