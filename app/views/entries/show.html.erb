@@ -60,16 +60,17 @@ places_determined_at :datetime -->
   </ul>
 <% end %>
 
-<h3>Abstract</h3>
-<p class='abstract'>
-	<% 
-	  abstract = @entry.abstract 
-	  @entry.referenced_dates.each do |date|
-	  	abstract.gsub!(/#{Regexp.escape(date.string)}/, link_to(date.string, calendar_by_ymd_path(date)) )
-	  end
-	%>
-	<%= abstract %>
-</p>
+<% if @entry.abstract %>
+  <h3>Abstract</h3>
+  <p class='abstract'>
+    <%= 
+      abstract = @entry.abstract 
+      @entry.referenced_dates.each do |date|
+        abstract.gsub!(/#{Regexp.escape(date.string)}/, link_to(date.string, calendar_by_ymd_path(date)) )
+      end
+      abstract %>
+  </p>
+<% end %>
 
 <%=
   if @entry.full_text_raw 
