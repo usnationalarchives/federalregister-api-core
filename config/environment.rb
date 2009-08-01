@@ -21,7 +21,8 @@ Rails::Initializer.run do |config|
   config.gem "haml", :version => '2.2.2'
   config.gem "chriseppstein-compass", :lib => 'compass', :version => '0.8.8'
   config.gem "geokit", :lib => 'geokit', :version => '1.4.1'
-
+  config.gem 'mislav-will_paginate', :version => '2.3.11', :lib => 'will_paginate'
+  
   # Only load the plugins named here, in the order given (default is alphabetical).
   # :all can be used as a placeholder for all plugins not explicitly named
   # config.plugins = [ :exception_notification, :ssl_requirement, :all ]
