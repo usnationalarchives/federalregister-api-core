@@ -11,6 +11,11 @@ module PathHelper
     "/calendar/#{date.date.to_formatted_s(:ymd)}/"
   end
   
+  def citation_path(entry)
+    citation = entry.citation.split(' ')
+    "/citation/#{citation.first}/#{citation.last}"
+  end
+  
   private
   
   def path_to_url(path)
