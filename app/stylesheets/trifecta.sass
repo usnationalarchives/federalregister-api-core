@@ -7,7 +7,8 @@ body
 #header
   :background #eaeaea url(/images/header_bg.png) repeat-x bottom left
   :border-left 1px solid #27338b  
-  :border-right 1px solid #27338b    
+  :border-right 1px solid #27338b
+  :height 125px    
   h1
     :color #737374
     :font 330% Georgia,"Times New Roman",Serif
@@ -15,14 +16,16 @@ body
     span
       :color #cf8227
   .nav
-    :height 99px
-    ul
+    form
       :float right
-      :margin 35px 0 0 0
+      :margin 10px 20px 0 0
+    ul
+      :clear both
+      :float right
+      :margin 10px 20px 0 0
       li
         :float left
         :list-style-type none
-        :margin-right 10px
         :color #797979
         :font 140% "Lucida Grande", "Trebuchet MS", Verdana, sans-serif        
         a
@@ -39,18 +42,44 @@ body
   :border-right 1px solid #27338b 
   &.sidebar
   .content
-    
     :background #eaeaea
     :min-height 600px
+    :padding-top 2em          
     h1
       :color #3e8417
       :font 330% Georgia,"Times New Roman",Serif
-      :padding-top .5em
+      :padding .5em 0
       :text-align center 
-      :width 100%    
+      :width 100%
     .col1
     .col2
       .sidebar
+    .currentevents 
+      :height 100px
+      :overflow hidden  
+      h2
+        :margin-bottom 0
+      .daily
+        :height 50px
+        :margin 0
+      ul
+        :margin 0
+        li
+          :list-style none
+          :height 120px
+          a
+            :padding-left 60px 
+            :font 140% Georgia,"Times New Roman",Serif
+            :text-decoration none 
+            &.entry
+              :color #555
+              :float left
+            &.agency
+              :clear both
+              :float left
+              :font-style italic
+          & a:hover
+            :color #cf8227
   dl.fixed
     :width 600px
     dt
@@ -70,7 +99,12 @@ body
     th.current
       :border-bottom 2px solid red
       :color red
-      
+.icon
+  :padding 5px 0 5px 55px
+  :background-repeat no-repeat
+  &.cal
+    :background-image url(/images/icons/calendar_small.png)
+    :background-position top left  
 #footer
   :background  #5a5a5a
   :clear both
