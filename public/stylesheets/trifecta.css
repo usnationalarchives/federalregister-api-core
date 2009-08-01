@@ -1,186 +1,105 @@
+/* line 1, ../../app/stylesheets/trifecta.sass */
+html {
+  background: #27338b url(/images/bg.gif);
+}
+
 /* line 3, ../../app/stylesheets/trifecta.sass */
 body {
-  background: #eeeded;
-  margin: 0;
+  background: #27338b url(/images/bg_overlay.png) no-repeat top center;
 }
+
 
 /* line 6, ../../app/stylesheets/trifecta.sass */
-#wrapper {
-  border: 1px solid #aaa;
-}
-
-/* line 8, ../../app/stylesheets/trifecta.sass */
 #header {
-  background: #efeeee url(/images/header-bg.png) repeat-x bottom left;
-  height: 123px;
+  background: #eaeaea url(/images/header_bg.png) repeat-x bottom left;
+  border-left: 1px solid #27338b;
+  border-right: 1px solid #27338b;
 }
-/* line 11, ../../app/stylesheets/trifecta.sass */
+/* line 10, ../../app/stylesheets/trifecta.sass */
 #header h1 {
-  color: #003399;
-  line-height: 75px;
-  margin: 0;
-  padding-left: 1em;
+  color: #737374;
+  font: 330% Georgia,"Times New Roman",Serif;
+  padding: 20px 0 0 40px;
+}
+/* line 14, ../../app/stylesheets/trifecta.sass */
+#header h1 span {
+  color: #cf8227;
 }
 /* line 16, ../../app/stylesheets/trifecta.sass */
 #header .nav {
-  background: #d9dadc url(/images/nv-bg.png) repeat-x bottom left;
-  border-top: 1px solid #d0d6e0;
-  border-bottom: 1px solid #d0d6e0;
-  display: block;
-  height: 48px;
-  padding-left: 3em;
+  height: 99px;
 }
-/* line 23, ../../app/stylesheets/trifecta.sass */
+/* line 18, ../../app/stylesheets/trifecta.sass */
 #header .nav ul {
-  height: 48px;
-  margin: 8px 0 0 0;
+  float: right;
+  margin: 35px 0 0 0;
 }
-/* line 26, ../../app/stylesheets/trifecta.sass */
+/* line 21, ../../app/stylesheets/trifecta.sass */
 #header .nav ul li {
+  float: left;
   list-style-type: none;
+  margin-right: 10px;
+  color: #797979;
+  font: 140% "Lucida Grande", "Trebuchet MS", Verdana, sans-serif;
 }
-/* line 28, ../../app/stylesheets/trifecta.sass */
+/* line 27, ../../app/stylesheets/trifecta.sass */
 #header .nav ul li a {
-  color: #777778;
-  line-height: 31px;
-  padding-left: 1em;
+  color: #797979;
+  font: 100% "Lucida Grande", "Trebuchet MS", Verdana, sans-serif;
+  text-decoration: none;
+  text-transform: uppercase;
 }
 /* line 32, ../../app/stylesheets/trifecta.sass */
 #header .nav ul li a:hover {
-  text-decoration: none;
-  color: #000 !important;
+  color: #344391;
+  border-bottom: 3px solid #344391;
 }
 
-/* line 35, ../../app/stylesheets/trifecta.sass */
+/* line 36, ../../app/stylesheets/trifecta.sass */
 #main {
-  margin: 2em;
+  border-left: 1px solid #27338b;
+  border-right: 1px solid #27338b;
 }
-/* line 37, ../../app/stylesheets/trifecta.sass */
+/* line 40, ../../app/stylesheets/trifecta.sass */
 #main .content {
-  margin-right: 1em;
+  padding: 20px;
+  background: #eaeaea;
+  min-height: 600px;
 }
-/* line 39, ../../app/stylesheets/trifecta.sass */
-#main .content .col1 {
-  float: left;
-  margin-left: 1em;
-  width: 70%;
-}
-/* line 43, ../../app/stylesheets/trifecta.sass */
-#main .content .col2 {
-  float: right;
-  width: 25%;
-}
-/* line 46, ../../app/stylesheets/trifecta.sass */
-#main h2 {
-  border-bottom: 1px solid red;
-  display: block;
-  font: 150% "Lucida Grande", "Trebuchet MS", Verdana, sans-serif;
-}
-/* line 50, ../../app/stylesheets/trifecta.sass */
-#main h2 span.title {
-  font: 75% "Lucida Grande", "Trebuchet MS", Verdana, sans-serif;
-  font-variant: small-caps;
-}
-/* line 53, ../../app/stylesheets/trifecta.sass */
-#main h3 {
-  color: #666;
-  padding: .2em;
-}
-/* line 57, ../../app/stylesheets/trifecta.sass */
-#main ul li {
-  list-style-type: none;
-}
-/* line 59, ../../app/stylesheets/trifecta.sass */
-#main dl.fixed {
-  width: 600px;
-}
-/* line 61, ../../app/stylesheets/trifecta.sass */
-#main dl.fixed dt {
-  clear: left;
-  float: left;
-  text-align: right;
-  width: 40%;
-}
-/* line 66, ../../app/stylesheets/trifecta.sass */
-#main dl.fixed dd {
-  float: left;
-  width: 55%;
-}
-/* line 71, ../../app/stylesheets/trifecta.sass */
-#main table.calendar {
-  float: left;
-  margin-right: 1em;
-  width: 1em;
-}
-/* line 75, ../../app/stylesheets/trifecta.sass */
-#main table.calendar th {
-  background: none;
-}
-/* line 77, ../../app/stylesheets/trifecta.sass */
-#main table.calendar th.current {
-  border-bottom: 2px solid red;
-  color: red;
+/* line 45, ../../app/stylesheets/trifecta.sass */
+#main .content h1 {
+  color: #3e8417;
+  font: 330% Georgia,"Times New Roman",Serif;
 }
 
-/* line 80, ../../app/stylesheets/trifecta.sass */
+/* line 52, ../../app/stylesheets/trifecta.sass */
 #footer {
   background: #5a5a5a;
   clear: both;
   min-height: 10em;
   border-top: 4px solid #9b9b9b;
 }
-/* line 85, ../../app/stylesheets/trifecta.sass */
+/* line 57, ../../app/stylesheets/trifecta.sass */
 #footer .sitemap {
   padding: 2em;
 }
-/* line 87, ../../app/stylesheets/trifecta.sass */
+/* line 59, ../../app/stylesheets/trifecta.sass */
 #footer .sitemap h4 {
   color: #fff;
   font: 175% serif;
   margin: 0 0 0 0;
 }
-/* line 91, ../../app/stylesheets/trifecta.sass */
+/* line 63, ../../app/stylesheets/trifecta.sass */
 #footer .sitemap ul {
   margin: 0 0 0 1em;
 }
-/* line 93, ../../app/stylesheets/trifecta.sass */
+/* line 65, ../../app/stylesheets/trifecta.sass */
 #footer .sitemap ul li {
   list-style-type: none;
 }
-/* line 95, ../../app/stylesheets/trifecta.sass */
+/* line 67, ../../app/stylesheets/trifecta.sass */
 #footer .sitemap ul li a {
   color: #989898;
   font-size: 125%;
   text-decoration: none;
-}
-
-/* line 100, ../../app/stylesheets/trifecta.sass */
-.btn {
-  display: block;
-  height: 31px;
-  float: left;
-  background: url(/images/btn_cap.png) no-repeat right top;
-  padding: 0 10px 0 0;
-  margin: 0 10px 0 0;
-  z-index: 9999;
-}
-/* line 108, ../../app/stylesheets/trifecta.sass */
-.btn a,
-.btn input {
-  display: block;
-  float: left;
-  width: auto;
-  height: 31px;
-  padding: 0 2px 0 8px;
-  line-height: 31px;
-  background: url(/images/btn_bg.png) no-repeat left top;
-  color: #fff;
-  text-decoration: none;
-  border: none;
-}
-/* line 120, ../../app/stylesheets/trifecta.sass */
-.btn a:hover,
-.btn input:hover {
-  color: #fff !important;
-  text-decoration: underline;
 }
