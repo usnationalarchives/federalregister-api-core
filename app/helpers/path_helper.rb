@@ -6,4 +6,9 @@ module PathHelper
   def calendar_by_ymd_path(date)
     "/calendar/#{date.date.to_formatted_s(:ymd)}/"
   end
+  
+  def citation_path(entry)
+    citation = entry.citation.split(' ')
+    "/citation/#{citation.first}/#{citation.last}"
+  end
 end
