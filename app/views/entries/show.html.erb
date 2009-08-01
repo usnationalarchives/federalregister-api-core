@@ -110,7 +110,7 @@ places_determined_at :datetime -->
   
   <h3>Document</h3>
   <ul class='document'>
-    <li>Length:     <%#= link_to pluralize(@entry.human_length, 'page'), citation_path(@entry) %></li>
+    <li>Length:     <%= link_to pluralize(@entry.human_length, 'page'), citation_path(@entry) %></li>
     <li>Start Page: <%= @entry.start_page                      %></li>
     <li>End Page:   <%= @entry.end_page                        %></li>
   </ul>
