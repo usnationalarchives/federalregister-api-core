@@ -35,6 +35,8 @@ Bob:
   
 
 Andrew:
+  fix import (breaks on 3/06/09)
+  import all entries
   store source URLs
   start downloading all full text
   modify placemaker to use full text?
@@ -43,4 +45,8 @@ Andrew:
   add agency type, short_name, description, contact_info
   import agencies
   link to regulations.gov
-  scrape comments from regulation.gov?
+  maximum of one instance of a given extracted date per entry
+  API
+    RSS
+    Custom DTD?
+    icalendars
