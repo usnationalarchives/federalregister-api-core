@@ -58,6 +58,19 @@ class Entry < ActiveRecord::Base
   
   has_many :referenced_dates, :dependent => :destroy
   
+  
+  define_index do
+    # fields
+    indexes title, :sortable => true
+    indexes full_text_raw
+    indexes agency.name, :as => :agency, :sortable => true
+    
+    # attributes
+    has start_page, end_page, publication_date
+    
+    # enable delta indexing
+    set_property :delta => true
+  end
   # def to_param
   #   "#{document_number}"
   # end
