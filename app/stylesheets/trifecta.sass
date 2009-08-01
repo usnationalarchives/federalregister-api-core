@@ -39,7 +39,7 @@ body
   :border-right 1px solid #27338b 
   &.sidebar
   .content
-
+    
     :background #eaeaea
     :min-height 600px
     h1
@@ -51,6 +51,25 @@ body
     .col1
     .col2
       .sidebar
+  dl.fixed
+    :width 600px
+    dt
+      :clear left
+      :float left
+      :text-align right
+      :width 25%
+    dd
+      :float left
+      :width 55%      
+  table.calendar 
+    :float left
+    :margin-right 1em
+    :width 1em
+    th
+      :background none
+    th.current
+      :border-bottom 2px solid red
+      :color red
       
 #footer
   :background  #5a5a5a
