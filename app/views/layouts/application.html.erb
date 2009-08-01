@@ -2,7 +2,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-  <title>Trifecta</title>
+  <title>Trifecta | <%= yield :title %></title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <meta name="description" content="..." />
   <meta name="keywords" content="..." />
@@ -37,8 +37,11 @@
           <li><a href="#">Date</a> |</li>
           <li><a href="#">Entries</a> | </li>
           <li><a href="#">About</a> | </li>
-          <li><a href="#">Buncha bullshit</a><li>                              
         </ul>
+        <form action="/entries/search" method="get">
+          Search <%= text_field_tag :q, @search_term %>
+          <%= submit_tag 'Search' %>
+        </form>
       </div>      
     </div>
 
