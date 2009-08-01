@@ -21,7 +21,7 @@
   
   <%= yield :javascripts %>
 
-
+  <%= yield :feeds %>
 </head>
 <body>
 
@@ -38,7 +38,7 @@
           <li><a href="#">Entries</a> | </li>
           <li><a href="#">About</a></li>
         </ul>
-        <form action="/entries/search" method="get">
+        <form action="<%= entries_search_path %>" method="get">
           Search <%= text_field_tag :q, @search_term %>
           <%= submit_tag 'Search' %>
         </form>

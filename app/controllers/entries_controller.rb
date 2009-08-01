@@ -5,6 +5,10 @@ class EntriesController < ApplicationController
   end
   
   def index
+    @entries = Entry.find(:all, :limit => 200, :order => "publication_date DESC")
+  end
+  
+  def by_date
     @year = params[:year]   || Time.now.strftime("%Y")
     @month = params[:month] || Time.now.strftime("%m")
     @day   = params[:day]   || Time.now.strftime("%d")

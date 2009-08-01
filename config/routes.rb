@@ -7,7 +7,9 @@ ActionController::Routing::Routes.draw do |map|
                                              :week       => /\d{1,2}/
   
   map.resources :agencies
-  map.connect 'entries/search', :controller => 'entries', :action => 'search'
+  map.entries 'entries', :controller => 'entries', :action => 'index'
+  
+  map.entries_search 'entries/search', :controller => 'entries', :action => 'search'
   map.entry 'entries/:year/:month/:day/:document_number/:slug', :controller => 'entries',
                                                                 :action     => 'show',
                                                                 :year       => /\d{4}/,
@@ -16,7 +18,7 @@ ActionController::Routing::Routes.draw do |map|
                                                
   
   map.entries_by_date 'entries/:year/:month/:day', :controller => 'entries',
-                                                   :action     => 'index',
+                                                   :action     => 'by_date',
                                                    :year       => /\d{4}/,
                                                    :month      => /\d{1,2}/,
                                                    :day        => /\d{1,2}/
