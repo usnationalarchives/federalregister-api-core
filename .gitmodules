@@ -10,3 +10,6 @@
 [submodule "vendor/plugins/geokit-rails"]
 	path = vendor/plugins/geokit-rails
 	url = git://github.com/andre/geokit-rails.git
+[submodule "vendor/plugins/thinking-sphinx"]
+	path = vendor/plugins/thinking-sphinx
+	url = git://github.com/freelancing-god/thinking-sphinx.git
