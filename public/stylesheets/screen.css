@@ -1711,15 +1711,15 @@ body #header .nav {
 * html body #header .nav {
   overflow-x: hidden;
 }
-/* line 35, ../../app/stylesheets/screen.sass */
-body #main {
+/* line 36, ../../app/stylesheets/screen.sass */
+body #main .content {
   width: 950px;
   margin: 0 auto;
   overflow: hidden;
   display: inline-block;
 }
 /* line 5, ../../../../../../../../Library/Ruby/Gems/1.8/gems/chriseppstein-compass-0.8.8/frameworks/compass/stylesheets/compass/utilities/general/_hacks.sass */
-body #main {
+body #main .content {
   display: block;
 }
 /* line 38, ../../app/stylesheets/screen.sass */
@@ -1727,7 +1727,7 @@ body #main .content .col1 {
   display: inline;
   float: left;
   margin-right: 0;
-  width: 950px;
+  width: 910px;
 }
 /* line 97, ../../../../../../../../Library/Ruby/Gems/1.8/gems/chriseppstein-compass-0.8.8/frameworks/blueprint/stylesheets/blueprint/modules/_grid.sass */
 * html body #main .content .col1 {

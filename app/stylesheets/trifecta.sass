@@ -1,8 +1,9 @@
 html
-  :background #27338b url(/images/bg.gif)
+  :background #27338b url(/images/bg3.gif)
 body
-  :background #27338b url(/images/bg_overlay.png) no-repeat top center
+  :background url(/images/bg_overlay2.png) no-repeat top center
 #wrapper
+  :background url(/images/wrapper_bg.png) repeat-y top center
 #header
   :background #eaeaea url(/images/header_bg.png) repeat-x bottom left
   :border-left 1px solid #27338b  
@@ -38,13 +39,15 @@ body
   :border-right 1px solid #27338b 
   &.sidebar
   .content
-    :padding 20px   
 
     :background #eaeaea
     :min-height 600px
     h1
       :color #3e8417
-      :font 330% Georgia,"Times New Roman",Serif     
+      :font 330% Georgia,"Times New Roman",Serif
+      :padding-top .5em
+      :text-align center 
+      :width 100%    
     .col1
     .col2
       .sidebar
