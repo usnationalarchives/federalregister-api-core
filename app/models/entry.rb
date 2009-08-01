@@ -69,7 +69,7 @@ class Entry < ActiveRecord::Base
     has start_page, end_page, publication_date
     
     # enable delta indexing
-    set_property :delta => true
+    # set_property :delta => true
   end
   # def to_param
   #   "#{document_number}"
