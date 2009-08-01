@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090731154234) do
+ActiveRecord::Schema.define(:version => 20090801153452) do
 
   create_table "agencies", :force => true do |t|
     t.integer  "parent_id"
@@ -48,6 +48,7 @@ ActiveRecord::Schema.define(:version => 20090731154234) do
     t.text     "slug"
     t.text     "full_text"
     t.text     "full_text_raw"
+    t.boolean  "delta",                :default => true, :null => false
   end
 
   add_index "entries", ["agency_id"], :name => "index_entries_on_agency_id"
