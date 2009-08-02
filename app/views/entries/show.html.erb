@@ -66,6 +66,7 @@ places_determined_at :datetime -->
     <%= 
       abstract = @entry.abstract 
       @entry.referenced_dates.each do |date|
+        next if date.string.blank?
         abstract.gsub!(/#{Regexp.escape(date.string)}/, link_to(date.string, calendar_by_ymd_path(date)) )
       end
       abstract %>
