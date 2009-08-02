@@ -1,9 +1,9 @@
-<h1 class="span-24">Over 1,000,000 pages finally searchable.</h1>
+<h1 class="">Over 1,000,000 pages finally searchable.</h1>
 
-<div class="currentevents span-22 push-1">
-  <h2 class="icon cal">Today's entries <span>(<%= @entries.length %>)</span></h2>
+<div class="currentevents span-13 icon cal">
+  <h2>Today's entries <span>(<%= @entries.length %>)</span></h2>
   <div class="daily">
-    <ul>
+    <ul class="items">
     <% @entries.each do |entry| %>
       <li>
         <%= link_to truncate(entry.title, :length => 100), entry_path(entry), :class => "entry" %>
@@ -13,3 +13,10 @@
     </ul>
   </div>
 </div>
+
+<% content_for :sidebar do %>
+  <h2>Featured Agencies</h2>
+  <% @featured_agencies.each do |agency| %>
+    <p><%= agency.name %></p>
+  <% end %>
+<% end %>
