@@ -17,7 +17,7 @@
   <%= javascript_include_tag 'jrails.js'               %>
   <%= javascript_include_tag 'application.js'          %>
   <%= javascript_include_tag 'jquery.sparkline.min.js' %>
-  <%= javascript_include_tag 'easySlider1.5.js' %>
+  <%= javascript_include_tag 'jquery.tools.min.js' %>
   <%#= javascript_include_tag 'calendar.js' %>
   
   <%= yield :javascripts %>
@@ -32,7 +32,7 @@
     <!-- HEADER -->
     <div id="header">
       <h1>trifecta</h1>
-      <div class="nav">
+      <div class="nav group">
         <form action="<%= entries_search_path %>" method="get">
           Search <%= text_field_tag :q, @search_term %>
           <%= submit_tag 'Search' %>

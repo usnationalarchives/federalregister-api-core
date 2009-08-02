@@ -5,22 +5,27 @@ body
 #wrapper
   :background url(/images/wrapper_bg.png) repeat-y top center
 #header
-  :background #eaeaea url(/images/header_bg.png) repeat-x bottom left
+  :background url(/images/header_bg3.png) repeat-x bottom left
+  //:background #eaeaea url(/images/header_bg.png) repeat-x bottom left
+  //:border-top 10px solid #666
   :border-left 1px solid #27338b  
   :border-right 1px solid #27338b
-  :height 125px    
+  :height 80px    
+  :padding 0 0 20px 0
+  :position relative
+  :z-index 9999
   h1
     :color #737374
+    :float left
     :font 330% Georgia,"Times New Roman",Serif
     :padding 20px 0 0 40px
     span
       :color #cf8227
   .nav
+    :float right
     form
-      :float right
       :margin 10px 20px 0 0
     ul
-      :clear both
       :float right
       :margin 10px 20px 0 0
       li
@@ -38,48 +43,58 @@ body
             :border-bottom 3px solid #344391
           
 #main
+  :background url(/images/main_bg.png) repeat-x top left
   :border-left 1px solid #27338b
-  :border-right 1px solid #27338b 
+  :border-right 1px solid #27338b
+  :clear both 
+  :margin-top -9px !important
   &.sidebar
   .content
     :background #eaeaea
     :min-height 600px
-    :padding-top 2em          
     h1
       :color #3e8417
       :font 330% Georgia,"Times New Roman",Serif
       :padding .5em 0
-      :text-align center 
       :width 100%
     .col1
     .col2
       .sidebar
     .currentevents 
       :height 100px
-      :overflow hidden  
+      :vertical-align text-top  
       h2
+        //:background-color #007acb      
+        :color #007acb
+        :border-bottom 2px solid #007acb
         :margin-bottom 0
       .daily
-        :height 50px
-        :margin 0
-      ul
-        :margin 0
-        li
-          :list-style none
-          :height 120px
-          a
-            :padding-left 60px 
-            :font 140% Georgia,"Times New Roman",Serif
-            :text-decoration none 
-            &.entry
-              :color #555
-              :float left
-            &.agency
-              :clear both
-              :float left
-              :font-style italic
-          & a:hover
-            :color #cf8227
+        :height 100px
+        :width 400px
+        :margin 10px 0 0 0
+        :position relative
+        :overflow hidden    
+        ul.items
+          :margin 0
+          :width 10000em
+          :position absolute
+          li
+            :float left
+            :list-style none
+            :height 100px
+            :width 400px  
+            a
+              :font 140% Georgia,"Times New Roman",Serif
+              :text-decoration none 
+              &.entry
+                :color #555
+                :float left
+              &.agency
+                :clear both
+                :float left
+                :font-style italic
+            & a:hover
+              :color #cf8227
   dl.fixed
     :width 600px
     dt
@@ -100,11 +115,11 @@ body
       :border-bottom 2px solid red
       :color red
 .icon
-  :padding 5px 0 5px 55px
+  :padding 5px 0 5px 60px
   :background-repeat no-repeat
   &.cal
     :background-image url(/images/icons/calendar_small.png)
-    :background-position top left  
+    :background-position top left 
 #footer
   :background  #5a5a5a
   :clear both

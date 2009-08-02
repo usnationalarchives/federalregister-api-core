@@ -27,11 +27,8 @@ form.bp
 
 body
   #header
-    +container
     h1
-      +column(7)
     .nav
-      +column(16, true)
   #main
     .content
       +container
@@ -43,10 +40,10 @@ body
           +prepend(1)
           +column(15)
         .col2 
+          +prepend(1)
           +append(1)
-          +column(7, true)
+          +column(6, true)
   #footer
-    +container
     .sitemap
       +column(4)
     .legal
