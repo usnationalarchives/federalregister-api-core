@@ -35,5 +35,24 @@ $(document).ready(function() {
         // onSeek: function() { 
         //     this.getItems().fadeTo(300, 1); 
         // } 
-    }); 
+    });
+
+	$("li.tooltip span.help_text").hide();
+	$("li.tooltip a").each(function(){
+		//console.log($(this).closest('li').children('span.help_text').html());
+		help_text = $(this).closest('li').children('span.help_text').html()
+	 	$(this).qtip({
+		   content: {
+		   		text: help_text
+		   },
+		   style: { 
+		      	tip: 'topLeft',
+		   		border: {
+				   		width: 3,
+				        radius: 8,
+				        color: '#6699CC'
+				   }
+		   }
+		});
+	});
 });
