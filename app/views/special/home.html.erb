@@ -16,16 +16,23 @@
 </div>
 
 <% content_for :sidebar do %>
-  <h2>Featured Agencies</h2>
-  <ul class='featured_agencies'>
-  <% @featured_agencies.each do |agency| %>
-    <li class='tooltip'>
-		<%= link_to agency.sidebar_name, agency_path(agency) %>
-		<span class='count'><%= agency.entries.count %></span>
-		<span class='help_text'><%= agency.name %></span>
-	</li>
-  <% end %>
-  </ul>
+  <h2>Featured Agencies Reporting</h2>
+	<ul id='featured_agency_buttons'>
+		<li id='month'  ><%= link_to '30 days', '#' %></li>
+		<li id='quarter'><%= link_to '90 days', '#' %></li>
+		<li id='year'   ><%= link_to '1 Year',  '#' %></li>
+	</ul>
+  <% %w(month quarter year).each do |range_type| %>
+  	<ul id='agency_count_<%= range_type %>' class='featured_agencies'>
+	  <% @featured_agencies.each do |agency| %>
+	    <li class='tooltip'>
+			<%= link_to agency.sidebar_name, agency_path(agency) %>
+			<span class='count'><%= agency.entry_counts_since(range_type) %></span>
+			<span class='help_text'><%= agency.name %></span>
+		</li>
+	  <% end %>
+	  </ul>
+	<% end %>
 <% end %>
 
 <% content_for :precolumn do %>

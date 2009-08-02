@@ -65,6 +65,19 @@ class Agency < ActiveRecord::Base
     counts
   end
   
+  def entry_counts_since(range_type)
+    date = case range_type
+      when 'month'
+        1.month.ago
+      when 'quarter'
+        3.months.ago
+      when 'year'
+        1.year.ago
+      end
+    
+    entries.count(:conditions => ["publication_date >= ?", date])
+  end
+  
   def self.max_entry_count
     Entry.connection.select_value("
       SELECT COUNT(*) AS entry_count
