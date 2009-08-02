@@ -7,7 +7,7 @@ namespace :data do
       
       Entry.find_in_batches(:conditions => "places_determined_at IS NULL AND abstract IS NOT NULL") do |entry_group|
         entry_group.each do |entry|
-          puts "determining places for #{entry.document_number}"
+          puts "determining places for #{entry.document_number} (#{entry.publication_date})"
           # previous_date = nil
         
           Entry.transaction do
