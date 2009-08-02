@@ -1679,6 +1679,17 @@ form.bp textarea {
 }
 
 /* line 33, ../../app/stylesheets/screen.sass */
+body #main .precolumn {
+  width: 950px;
+  margin: 0 auto;
+  overflow: hidden;
+  display: inline-block;
+}
+/* line 5, ../../../../../../../../Library/Ruby/Gems/1.8/gems/chriseppstein-compass-0.8.8/frameworks/compass/stylesheets/compass/utilities/general/_hacks.sass */
+body #main .precolumn {
+  display: block;
+}
+/* line 35, ../../app/stylesheets/screen.sass */
 body #main .content {
   width: 950px;
   margin: 0 auto;
@@ -1689,7 +1700,7 @@ body #main .content {
 body #main .content {
   display: block;
 }
-/* line 35, ../../app/stylesheets/screen.sass */
+/* line 37, ../../app/stylesheets/screen.sass */
 body #main .content .col1 {
   display: inline;
   float: left;
@@ -1700,7 +1711,7 @@ body #main .content .col1 {
 * html body #main .content .col1 {
   overflow-x: hidden;
 }
-/* line 39, ../../app/stylesheets/screen.sass */
+/* line 41, ../../app/stylesheets/screen.sass */
 body #main.cols .content .col1 {
   padding-left: 40px;
   display: inline;
@@ -1712,7 +1723,7 @@ body #main.cols .content .col1 {
 * html body #main.cols .content .col1 {
   overflow-x: hidden;
 }
-/* line 42, ../../app/stylesheets/screen.sass */
+/* line 44, ../../app/stylesheets/screen.sass */
 body #main.cols .content .col2 {
   padding-left: 40px;
   padding-right: 40px;
@@ -1725,7 +1736,7 @@ body #main.cols .content .col2 {
 * html body #main.cols .content .col2 {
   overflow-x: hidden;
 }
-/* line 47, ../../app/stylesheets/screen.sass */
+/* line 49, ../../app/stylesheets/screen.sass */
 body #footer .sitemap {
   display: inline;
   float: left;
@@ -1736,7 +1747,7 @@ body #footer .sitemap {
 * html body #footer .sitemap {
   overflow-x: hidden;
 }
-/* line 49, ../../app/stylesheets/screen.sass */
+/* line 51, ../../app/stylesheets/screen.sass */
 body #footer .legal {
   display: inline;
   float: left;
@@ -1747,7 +1758,7 @@ body #footer .legal {
 * html body #footer .legal {
   overflow-x: hidden;
 }
-/* line 51, ../../app/stylesheets/screen.sass */
+/* line 53, ../../app/stylesheets/screen.sass */
 body #footer .somethingelse {
   display: inline;
   float: left;
