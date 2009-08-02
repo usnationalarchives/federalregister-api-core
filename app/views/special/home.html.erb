@@ -1,7 +1,5 @@
-
-
 <div class="currentevents span-15">
-  <h2 class=" icon cal">Today's entries <span>(<%= @entries.length %>)</span></h2>
+  <h2 class="icon cal">Today's entries <span>(<%= @entries.length %>)</span></h2>
   <div class="daily">
     <ul class="items">
     <% @entries.each_with_index do |entry, i| %>
@@ -16,11 +14,11 @@
 </div>
 
 <% content_for :sidebar do %>
-  <h2>Featured Agencies Reporting</h2>
-	<ul id='featured_agency_buttons'>
-		<li id='month'  ><%= link_to '30 days', '#' %></li>
-		<li id='quarter'><%= link_to '90 days', '#' %></li>
-		<li id='year'   ><%= link_to '1 Year',  '#' %></li>
+  <h2 class="icon agency">Featured</h2>
+	<ul id='featured_agency_buttons' class="group">
+		<li id='month'  ><div class="btn"><%= link_to '30 days', '#' %></div></li>
+		<li id='quarter'><div class="btn"><%= link_to '90 days', '#' %></div></li>
+		<li id='year'   ><div class="btn"><%= link_to '1 Year',  '#' %></div></li>
 	</ul>
   <% %w(month quarter year).each do |range_type| %>
   	<ul id='agency_count_<%= range_type %>' class='featured_agencies'>

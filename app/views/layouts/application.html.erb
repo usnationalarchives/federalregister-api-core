@@ -11,6 +11,7 @@
   <%= stylesheet_link_tag "screen", :media => :screen %>
   <%= stylesheet_link_tag "trifecta", :media => :screen %>
   <%= stylesheet_link_tag "utility", :media => :screen %>
+  <%= stylesheet_link_tag "rainbows", :media => :screen %>
 
   <%= javascript_include_tag 'jquery.js'                %>
   <%= javascript_include_tag 'jquery-ui.js'             %>
@@ -19,7 +20,8 @@
   <%= javascript_include_tag 'jquery.sparkline.min.js'  %>
   <%= javascript_include_tag 'jquery.tools.min.js'      %>
   <%= javascript_include_tag 'jquery.qtip-1.0.0-rc3.js' %>	
-  
+  <%= javascript_include_tag 'rainbows.js' %>	
+
   <%= yield :javascripts %>
 
   <%= yield :feeds %>
@@ -33,10 +35,13 @@
     <div id="header">
       <h1>trifecta</h1>
       <div class="nav group">
-        <form action="<%= entries_search_path %>" method="get">
-          Search <%= text_field_tag :q, @search_term %>
-          <%= submit_tag 'Search' %>
-        </form>     
+        <div class="search">
+          <form action="<%= entries_search_path %>" method="get">
+            <!-- Search  -->
+            <%= text_field_tag :q, @search_term %>
+            <%= submit_tag 'Search' %>
+          </form> 
+        </div>    
         <ul>
           <li><a href="#">Agency</a> | </li>
           <li><a href="#">Date</a> |</li>

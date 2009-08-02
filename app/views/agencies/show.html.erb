@@ -1,5 +1,5 @@
 <% title @agency.name %>
-
+<h1 class="icon agency"><%= @agency.name %></h1>
 <% feed_autodiscovery agency_path(@agency, :format => :rss) %>
 
 <p><%= pluralize(@agency.entries.count, 'entry') %></p>
@@ -25,3 +25,7 @@
   </li>
 <% end %>
 </ul>
+
+<% content_for :sidebar do %>
+  <h2>Maybe those word graphs</h2>
+<% end %>

@@ -1,4 +1,4 @@
-<!-- 
+  <!-- 
 citation             :string(255)
 document_number      :string(255)
 toc_subject          :string(255)
@@ -9,6 +9,19 @@ places_determined_at :datetime -->
 
 <h3>Title</h3>
 <p><%= @entry.title %></p>
+
+<% if @entry.abstract %>
+  <h3>Abstract</h3>
+  <p class='abstract'>
+    <%= 
+      abstract = @entry.abstract 
+      @entry.referenced_dates.each do |date|
+        next if date.string.blank?
+        abstract.gsub!(/#{Regexp.escape(date.string)}/, link_to(date.string, calendar_by_ymd_path(date)) )
+      end
+      abstract %>
+  </p>
+<% end %>
 
 <div class="mod group">
   <h3>Info</h3>
@@ -60,18 +73,6 @@ places_determined_at :datetime -->
   </ul>
 <% end %>
 
-<% if @entry.abstract %>
-  <h3>Abstract</h3>
-  <p class='abstract'>
-    <%= 
-      abstract = @entry.abstract 
-      @entry.referenced_dates.each do |date|
-        next if date.string.blank?
-        abstract.gsub!(/#{Regexp.escape(date.string)}/, link_to(date.string, calendar_by_ymd_path(date)) )
-      end
-      abstract %>
-  </p>
-<% end %>
 
 <%=
   if @entry.full_text_raw 
@@ -95,7 +96,7 @@ places_determined_at :datetime -->
 
 <% content_for :sidebar do %>
   <% unless @entry.contact.blank? %>
-    <h3>Contact:</h3>
+    <h3 class="icon contact">Contact:</h3>
     <p><%= @entry.contact %></p>
   <% end %>
 
