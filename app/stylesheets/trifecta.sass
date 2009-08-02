@@ -4,6 +4,12 @@ body
   :background url(/images/bg_overlay2.png) no-repeat top center
 #wrapper
   :background url(/images/wrapper_bg.png) repeat-y top center
+  :min-height 100%
+  :margin-bottom -150px
+  :position relative
+  .clearfooter
+    :clear both
+    :height 150px  
 #header
   :background url(/images/header_bg3.png) repeat-x bottom left
   //:background #eaeaea url(/images/header_bg.png) repeat-x bottom left
@@ -29,10 +35,11 @@ body
       :float right
       :margin 10px 20px 0 0
       li
-        :float left
-        :list-style-type none
         :color #797979
-        :font 140% "Lucida Grande", "Trebuchet MS", Verdana, sans-serif        
+        :float left
+        :font 140% "Lucida Grande", "Trebuchet MS", Verdana, sans-serif     
+        :list-style-type none
+        :margin-right 5px
         a
           :color #797979
           :font 100% "Lucida Grande", "Trebuchet MS", Verdana, sans-serif
@@ -47,11 +54,12 @@ body
   :border-left 1px solid #27338b
   :border-right 1px solid #27338b
   :clear both 
-  :margin-top -9px !important
+  :margin-top -9px !important    
   &.sidebar
   .content
     :background #eaeaea
     :min-height 600px
+    :padding-top 20px
     .precolumn
       .infobox
         :padding 1em 0
@@ -81,6 +89,10 @@ body
         :color #ff8400
         :margin-bottom 10px
     .col1
+      h1
+        :border-bottom 2px solid #ff8400      
+        :color #ff8400
+        :margin-bottom 10px
     .col2
       .sidebar
     .currentevents 
@@ -154,18 +166,21 @@ body
   &.cal
     :background-image url(/images/icons/calendar_small.png)
     :background-position top left 
-
+  &.agency
+    :background-image url(/images/icons/agency_small2.png)
+    :background-position top left 
 hr.ornament
-  :background url(/images/hr_bg.png) no-repeat top center
+  :background url(/images/hr_bg2.png) no-repeat top center
   :border none
   :display block
-  :padding 20px 0
+  :padding 5px 0
     
 #footer
   :background  #5a5a5a
-  :clear both
-  :min-height 10em
   :border-top 4px solid #9b9b9b 
+  :clear both
+  :height 150px
+  :position relative
   .sitemap
     :padding 2em
     h4
