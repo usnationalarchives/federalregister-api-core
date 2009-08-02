@@ -17,9 +17,15 @@
 
 <% content_for :sidebar do %>
   <h2>Featured Agencies</h2>
+  <ul class='featured_agencies'>
   <% @featured_agencies.each do |agency| %>
-    <p><%= agency.name %></p>
+    <li class='tooltip'>
+		<%= link_to agency.sidebar_name, agency_path(agency) %>
+		<span class='count'><%= agency.entries.count %></span>
+		<span class='help_text'><%= agency.name %></span>
+	</li>
   <% end %>
+  </ul>
 <% end %>
 
 <% content_for :precolumn do %>
@@ -38,7 +44,7 @@
       <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p> 
     </div>
     
-    <div class="column span-14  prepend-1 append-1 last">
+    <div class="column span-14 prepend-1 append-1 last">
       <h2>Maybe some graph here?</h2>
       <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p> 
     </div>
