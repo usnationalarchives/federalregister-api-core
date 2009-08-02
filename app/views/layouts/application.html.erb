@@ -71,7 +71,9 @@
           <% end %>
           
           <% if yield :precolumn %>
-            <%= yield :precolumn %>
+            <div class="precolumn">
+              <%= yield :precolumn %>
+            </div>
           <% end %>
           
           <div class="col1">
@@ -87,9 +89,17 @@
           <% end %>
       </div>
       <!-- content end -->
-
+      
+      
     </div>
     <!-- MAIN end -->
+
+    <div class="clearfooter"></div>
+
+
+  </div>
+  <!-- WRAPPER end -->
+
 
     <!-- FOOTER -->
     <div id="footer">
@@ -104,8 +114,6 @@
     </div>
     <!-- FOOTER end -->
 
-  </div>
-  <!-- WRAPPER end -->
 
 </body>
 </html>

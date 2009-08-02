@@ -1,8 +1,12 @@
+<div><h1 class="icon agency">Featured Agencies</h1></div>
+
 <ul class='featured'>
   <% @featured_agencies.each do |agency| %>
     <li><%= link_to(agency.name, agency_path(agency)) %> (<%= pluralize(agency.entry_count_by_week(@week), 'entry') %>)</li>
   <% end %>
 </ul>
+
+<h1 class="icon agency">All Agencies</h1>
 
 <ul>
 <% @agencies.each do |parent_agency|  %>
@@ -19,3 +23,18 @@
   </li>
 <% end %>
 </ul>
+
+<% content_for :sidebar do %>
+  <h2>Poop</h2>
+<% end %>
+
+<% content_for :precolumn do %>
+  <div class="column span-4 prepend-1">
+    <h2>Some text</h2>
+    <p>Description</p>
+  </div>
+  <div class="column span-4 prepend-1">
+    <h2>Graph </h2>
+    <p>Description</p>
+  </div>    
+<% end %>
