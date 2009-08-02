@@ -32,7 +32,7 @@ namespace :data do
   namespace :import do
     desc "Import entries XML file(s) into the database"
     task :entries => :environment do
-      Dir.glob("#{RAILS_ROOT}/data/mods/2009-03*.xml").each do |file_name|
+      Dir.glob("#{RAILS_ROOT}/data/mods/*.xml").sort.each do |file_name|
         doc = Nokogiri::XML(open(file_name))
         
         publication_date = doc.css('dateIssued').first.try(:content)

@@ -12,6 +12,7 @@
       <th>Action</th>
       <th>Title</th>
       <th>Agency</th>
+      <th>Extract</th>
     </tr>
   </thead>
   <tbody>
@@ -20,7 +21,8 @@
       <td><%= entry.publication_date %></td>
       <td><%= entry.action %></td>
       <td><%= link_to truncate(entry.title, :length => 100), entry_path(entry) %></td>
-      <td><%= link_to entry.agency.try(:name), agency_path(entry.agency) %></td>
+      <td><%= link_to(entry.agency.try(:name), agency_path(entry.agency)) if entry.agency %></td>
+      <td><%= entry.excerpts.full_text_raw %></td>
     </tr>
     <% end %>
   </tbody>

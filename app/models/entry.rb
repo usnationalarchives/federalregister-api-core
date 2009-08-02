@@ -71,6 +71,11 @@ class Entry < ActiveRecord::Base
     # attributes
     has start_page, end_page, publication_date
     
+    set_property :field_weights => {
+      "title" => 100,
+      "abstract" => 50,
+      "full_text_raw" => 25
+    }
     # enable delta indexing
     # set_property :delta => true
   end

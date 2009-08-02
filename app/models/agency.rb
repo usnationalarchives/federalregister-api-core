@@ -24,6 +24,11 @@ class Agency < ActiveRecord::Base
     Agency.find_by_id(parent_id) unless parent_id.nil?
   end
   
+  def sidebar_name
+    # FIXME: remove downcase and capitalize_most_words - just fixing agency wierdness for now
+    self.name.downcase.capitalize_most_words.gsub(/^Department of(?: the)? /,'')
+  end
+  
   def entry_count_by_week(week = 0)
     if week == 0
       where_clause = "WHERE agencies.id = #{self.id}"
@@ -58,6 +63,19 @@ class Agency < ActiveRecord::Base
       counts = entry_counts.empty? ? 0 : entry_counts.first['entry_count'].to_i
     end
     counts
+  end
+  
+  def entry_counts_since(range_type)
+    date = case range_type
+      when 'month'
+        1.month.ago
+      when 'quarter'
+        3.months.ago
+      when 'year'
+        1.year.ago
+      end
+    
+    entries.count(:conditions => ["publication_date >= ?", date])
   end
   
   def self.max_entry_count

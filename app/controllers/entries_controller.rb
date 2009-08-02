@@ -1,7 +1,12 @@
 class EntriesController < ApplicationController
   def search
     @search_term = params[:q]
-    @entries = Entry.search(@search_term, :page => params[:page], :sort => 'agency')
+    
+    @entries = Entry.search(
+      @search_term,
+      :page => params[:page],
+      :order => "@relevance DESC, publication_date DESC"
+    )
   end
   
   def index
