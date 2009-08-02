@@ -32,7 +32,7 @@ namespace :data do
   namespace :import do
     desc "Import entries XML file(s) into the database"
     task :entries => :environment do
-      Dir.glob("#{RAILS_ROOT}/data/mods/2009-*.xml").each do |file_name|
+      Dir.glob("#{RAILS_ROOT}/data/mods/2009-03*.xml").each do |file_name|
         doc = Nokogiri::XML(open(file_name))
         
         publication_date = doc.css('dateIssued').first.try(:content)
@@ -93,19 +93,19 @@ namespace :data do
             # Agency 
             agencies = entry_node.css('agency')
             
-            primary_agency_name = agencies[0].try(:content)
-            secondary_agency_name = agencies[1].try(:content)
+            entry.primary_agency_raw = agencies[0].try(:content)
+            entry.secondary_agency_raw = agencies[1].try(:content)
             
-            if primary_agency_name
-              primary_agency = Agency.find_or_create_by_name_and_parent_id(normalize_name(primary_agency_name), nil)
-              
-              if secondary_agency_name
-                secondary_agency = Agency.find_or_create_by_name_and_parent_id(normalize_name(secondary_agency_name), primary_agency.id)
-                entry.agency = secondary_agency
-              else
-                entry.agency = primary_agency
-              end
-            end
+            # if primary_agency_name
+            #   primary_agency = Agency.find_or_create_by_name_and_parent_id(normalize_name(primary_agency_name), nil)
+            #   
+            #   if secondary_agency_name
+            #     secondary_agency = Agency.find_or_create_by_name_and_parent_id(normalize_name(secondary_agency_name), primary_agency.id)
+            #     entry.agency = secondary_agency
+            #   else
+            #     entry.agency = primary_agency
+            #   end
+            # end
             
             # Topics
             topics = []
