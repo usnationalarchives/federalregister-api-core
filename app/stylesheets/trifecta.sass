@@ -29,8 +29,24 @@ body
       :color #cf8227
   .nav
     :float right
-    form
-      :margin 10px 20px 0 0
+    .search
+      :background url(/images/search_bg.png) no-repeat top left
+      :height 25px
+      :width 220px
+      form
+        :height 25px
+        :width 200px      
+        :margin 10px 20px 0 0
+        input#q
+          :border none
+          :display block
+          :float left
+          :height 18px
+          :margin 5px 0 0 10px 
+          :padding 0
+          :width 175px
+        input
+          :display none
     ul
       :float right
       :margin 10px 20px 0 0
@@ -84,25 +100,46 @@ body
               :width 48%
           span.around
             :color #f00
-      h2
-        :border-bottom 2px solid #ff8400      
-        :color #ff8400
-        :margin-bottom 10px
+    h2
+      :border-top 2px solid #007acb
+      :border-bottom 2px solid #007acb
+      :color #007acb
+      :margin-bottom 0 
     .col1
       h1
         :border-bottom 2px solid #ff8400      
+        :border-top 2px solid #ff8400      
         :color #ff8400
-        :margin-bottom 10px
+        :margin-bottom 10px      
     .col2
       .sidebar
+        ul
+          li
+            :list-style-type none
+        h2
+          :border-color #ff8400
+          :color #ff8400
+          :margin-bottom 10px
+        ul#featured_agency_buttons
+          :margin 0 0 10px 0
+          li
+            :border 1px solid #747d87
+            :float left
+            :margin-right 13px
+            :-moz-border-radius 5px
+            :-webkit-border-radius 5px
+            a
+              :color #747d87
+              :display block
+              :font-weight bold
+              :padding 3px 10px
+              :text-decoration none
+              &:hover
+                :background #747d87
+                :color #fff
     .currentevents 
       :height 100px
       :vertical-align text-top  
-      h2
-        //:background-color #007acb      
-        :color #007acb
-        :border-bottom 2px solid #007acb
-        :margin-bottom 0
       .daily
         :height 30em
         :width 590px
@@ -169,6 +206,11 @@ body
   &.agency
     :background-image url(/images/icons/agency_small2.png)
     :background-position top left 
+  &.contact
+    :background-image url(/images/icons/contact_small.png)
+    :background-position top left 
+    :padding 32px 0 0 60px
+
 hr.ornament
   :background url(/images/hr_bg2.png) no-repeat top center
   :border none
