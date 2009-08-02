@@ -1,11 +1,12 @@
 
 
-<div class="currentevents span-13 icon cal">
-  <h2>Today's entries <span>(<%= @entries.length %>)</span></h2>
+<div class="currentevents span-15">
+  <h2 class=" icon cal">Today's entries <span>(<%= @entries.length %>)</span></h2>
   <div class="daily">
     <ul class="items">
-    <% @entries.each do |entry| %>
+    <% @entries.each_with_index do |entry, i| %>
       <li>
+        <p class="number"><%= i+1 %></p>
         <%= link_to truncate(entry.title, :length => 100), entry_path(entry), :class => "entry" %>
         <%= link_to entry.agency.name, agency_path(entry.agency), :class => "agency" %>
       </li>
