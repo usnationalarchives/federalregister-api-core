@@ -92,28 +92,39 @@ body
         :border-bottom 2px solid #007acb
         :margin-bottom 0
       .daily
-        :height 100px
-        :width 500px
+        :height 30em
+        :width 590px
         :margin 10px 0 0 0
         :position relative
         :overflow hidden    
         ul.items
           :margin 0
-          :width 10000em
+          :height 10000em
           :position absolute
           li
             :float left
-            :list-style none
-            :height 100px
-            :width 500px  
+            :height 6em
+            :width 590px  
+            p.number
+              :color #ccc
+              :float left
+              :font-family Arial, "MS Trebuchet", sans-serif
+              :font-size 6em
+              :font-weight bold
+              :line-height 1
+              :margin 0 15px 0 0
+              :text-align right
+              :width 75px
+              :vertical-align text-top
             a
               :font 140% Georgia,"Times New Roman",Serif
               :text-decoration none 
+              :width 500px
               &.entry
                 :color #555
                 :float left
+                :margin-top 5px
               &.agency
-                :clear both
                 :float left
                 :font-style italic
             & a:hover
