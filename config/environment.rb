@@ -22,6 +22,10 @@ Rails::Initializer.run do |config|
   config.gem "chriseppstein-compass", :lib => 'compass', :version => '0.8.8'
   config.gem "geokit", :lib => 'geokit', :version => '1.4.1'
   config.gem 'mislav-will_paginate', :version => '2.3.11', :lib => 'will_paginate'
+
+  # disabled as requires C library to install...the Locator module will return a fake result if not installed
+  # config.gem "geoip_city", :version => '0.2.0'
+  
   
   # Only load the plugins named here, in the order given (default is alphabetical).
   # :all can be used as a placeholder for all plugins not explicitly named
