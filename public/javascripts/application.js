@@ -16,7 +16,7 @@ $(document).ready(function() {
     $("div.daily").scrollable({ 
              
         // items are auto-scrolled in 2 secnod interval 
-        interval: 4000, 
+        interval: 4000,   
          
         // when last item is encountered go back to first item 
         loop: true,  

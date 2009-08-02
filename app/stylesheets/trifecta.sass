@@ -52,11 +52,30 @@ body
   .content
     :background #eaeaea
     :min-height 600px
-    h1
-      :color #3e8417
-      :font 330% Georgia,"Times New Roman",Serif
-      :padding .5em 0
-      :width 100%
+    .precolumn
+      .infobox
+        :padding 1em 0
+        p
+          :clear both    
+          :color #3e8417
+          :font 330% Georgia,"Times New Roman",Serif
+          :margin 0
+          :text-align center
+          :width 100%
+          &.stats
+            span.num
+              :display block
+              :float left
+              :margin-right 20px
+              :text-align right
+              :width 45%
+            span.stat
+              :display block
+              :float left
+              :text-align left  
+              :width 45%
+          span.around
+            :color #f00
     .col1
     .col2
       .sidebar
@@ -70,7 +89,7 @@ body
         :margin-bottom 0
       .daily
         :height 100px
-        :width 400px
+        :width 500px
         :margin 10px 0 0 0
         :position relative
         :overflow hidden    
@@ -82,7 +101,7 @@ body
             :float left
             :list-style none
             :height 100px
-            :width 400px  
+            :width 500px  
             a
               :font 140% Georgia,"Times New Roman",Serif
               :text-decoration none 

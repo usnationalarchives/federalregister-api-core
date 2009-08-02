@@ -70,6 +70,10 @@
             <h1><%= yield :title %></h1>
           <% end %>
           
+          <% if yield :precolumn %>
+            <%= yield :precolumn %>
+          <% end %>
+          
           <div class="col1">
             <%= yield %>
           </div>
