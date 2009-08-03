@@ -1,5 +1,3 @@
-<%= @map.to_html %>
+<% add_javascript do @map.to_js end%>
 
-<div class='user_location_map'>
-  <%= @map.div %>
-</div>
+<div id="map" style="width: 950px; height: 400px"></div>
