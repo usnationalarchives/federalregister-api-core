@@ -1,5 +1,11 @@
-<% title @agency.name %>
-<h1 class="icon agency"><%= @agency.name %></h1>
+<%# title @agency.name %>
+
+<% content_for :precolumn do %>
+  <div class="span-23 prepend-1">
+    <h1 class="icon agency"><%= @agency.name %></h1>
+  </div>
+<% end %>
+
 <% feed_autodiscovery agency_path(@agency, :format => :rss) %>
 
 <p><%= pluralize(@agency.entries.count, 'entry') %></p>
