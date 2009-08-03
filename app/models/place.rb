@@ -16,7 +16,7 @@ class Place < ActiveRecord::Base
   attr_accessor :distance
   
   has_many :place_determinations
-  has_many :entrys, :through => :place_determinations
+  has_many :entries, :through => :place_determinations
   
   acts_as_mappable :lat_column_name => :latitude,
                    :lng_column_name => :longitude
@@ -26,14 +26,18 @@ class Place < ActiveRecord::Base
   end
   
   def find_places_within(dist)
-    Place.find(:all, :origin => location, :within => dist)
+    Place.find_within(dist, :origin => location)
   end
   
-  # def find_entries_within(dist)
-  #   places = find_places_within(dist)
-  #   entries = []
-  #   places.each do |place|
-  #     entries << place.entry
-  #   end
-  # end
+  def self.find_near(loc, dist = 100)
+    find_within(dist, :origin => loc)
+  end
+  
+  def entry_list
+    list = []
+    entries.each do |entry|
+      list << entry.title
+    end
+    list.join(', ')
+  end
 end
