@@ -53,13 +53,13 @@ body {
   width: 220px;
 }
 /* line 36, ../../app/stylesheets/trifecta.sass */
-#header .nav .search form {
+#header .nav .search form.search {
   height: 25px;
   width: 200px;
   margin: 10px 20px 0 0;
 }
 /* line 40, ../../app/stylesheets/trifecta.sass */
-#header .nav .search form input#q {
+#header .nav .search form.search input#q {
   border: none;
   display: block;
   float: left;
@@ -69,7 +69,7 @@ body {
   width: 175px;
 }
 /* line 48, ../../app/stylesheets/trifecta.sass */
-#header .nav .search form input {
+#header .nav .search form.search input {
   display: none;
 }
 /* line 50, ../../app/stylesheets/trifecta.sass */
