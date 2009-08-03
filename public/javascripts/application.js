@@ -46,12 +46,14 @@ $(document).ready(function() {
   
   $("ul.featured_agencies").hide();
   $("ul#agency_count_month").show();
-  $("ul#featured_agency_buttons").each(function(){
-    $(this).children('a').bind('click', function(){
-      el = $(this);
-      //$("ul.featured_agencies").hide();
-      console.log(el);//$("ul#agency_count_"+el.closest('li').attr('id')));
-      //$("ul#agency_count_"+el.closest('li').attr('id')).show();
-    })
+  $("ul#featured_agency_buttons a").bind('click', function(){
+    el = $(this);
+    $("ul.featured_agencies").hide();
+    $("ul#agency_count_"+el.closest('li').attr('id')).show();
+    $("ul#featured_agency_buttons li").each(function() {
+      $(this).removeClass('on');
+    });
+    el.closest('li').addClass('on');
+    return false;
   });
 });

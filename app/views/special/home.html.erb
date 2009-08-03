@@ -16,9 +16,9 @@
 <% content_for :sidebar do %>
   <h2 class="icon agency">Featured</h2>
 	<ul id='featured_agency_buttons' class="group">
-		<li class="on" id='month'  ><div class="btn"><%= link_to '30 days', '#' %></div></li>
-		<li id='quarter'><div class="btn"><%= link_to '90 days', '#' %></div></li>
-		<li id='year'   ><div class="btn"><%= link_to '1 Year',  '#' %></div></li>
+		<li class="on" id='month' ><div class="btn"><%= link_to '30 days', '#' %></div></li>
+		<li id='quarter'          ><div class="btn"><%= link_to '90 days', '#' %></div></li>
+		<li id='year'             ><div class="btn"><%= link_to '1 Year',  '#' %></div></li>
 	</ul>
   <% %w(month quarter year).each do |range_type| %>
   	<ul id='agency_count_<%= range_type %>' class='featured_agencies'>
