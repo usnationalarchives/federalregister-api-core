@@ -7,6 +7,10 @@ places_determined_at :datetime -->
 
 <%# title 'Entries' %>
 
+<% content_for :precolumn do %>
+  <h1>View Entry</h1>
+<% end %>
+
 <h3>Title</h3>
 <p><%= @entry.title %></p>
 
