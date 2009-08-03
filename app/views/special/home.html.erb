@@ -16,7 +16,7 @@
 <% content_for :sidebar do %>
   <h2 class="icon agency">Featured</h2>
 	<ul id='featured_agency_buttons' class="group">
-		<li id='month'  ><div class="btn"><%= link_to '30 days', '#' %></div></li>
+		<li class="on" id='month'  ><div class="btn"><%= link_to '30 days', '#' %></div></li>
 		<li id='quarter'><div class="btn"><%= link_to '90 days', '#' %></div></li>
 		<li id='year'   ><div class="btn"><%= link_to '1 Year',  '#' %></div></li>
 	</ul>
@@ -37,18 +37,15 @@
           
     <div class="infobox">
       <p>The Federal Register at your fingertips.</p>
-      <p>View by <a href="">date.</a>
-      <p>View by <a href="">agency.</a>
-      <p>View by <a href="">type.</a>
-      <p>View by <a href="">location.</a>
-      <p class="stats group"><span class="num">1,000,000+</span><span class="stat"> printed pages.</span></p>
-      <p class="stats group"><span class="num">130,000+</span><span class="stat"> notices.</span></p>
-      <p class="">Find out what's happening <span class="around">around you.</span></p>    
+      <p>View by <a href="">date</a>, <a href="">agency</a>, <a href="">type</a>, <a href="">location</a>.</p>
+      <!-- <p class="stats group"><span class="num">1,000,000+</span><span class="stat"> printed pages.</span></p>
+         <p class="stats group"><span class="num">130,000+</span><span class="stat"> notices.</span></p>
+         <p class="">Find out what's happening <span class="around">around you.</span></p>    --> 
     </div>
     
     <hr class="ornament" />
         
-    <div class="column span-7 push-1">
+    <!-- <div class="column span-7 push-1">
       <h2>Top ten agencies by entries</h2>
       <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p> 
     </div>
@@ -56,6 +53,6 @@
     <div class="column span-14 prepend-1 append-1 last">
       <h2>Maybe some graph here?</h2>
       <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p> 
-    </div>
+    </div> -->
     
 <% end %>
