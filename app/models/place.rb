@@ -16,9 +16,6 @@ class Place < ActiveRecord::Base
   cattr_accessor :distance_grouping, :distance_grouping_increment
   attr_accessor :distance
   
-  DISTANCE_GROUPING           = 100
-  DISTANCE_GROUPING_INCREMENT = 5
-  
   has_many :place_determinations
   has_many :entries, :through => :place_determinations
   
