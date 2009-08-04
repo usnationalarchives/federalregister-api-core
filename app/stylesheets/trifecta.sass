@@ -70,7 +70,23 @@ body
   :border-left 1px solid #27338b
   :border-right 1px solid #27338b
   :clear both 
-  :margin-top -9px !important    
+  :margin-top -9px !important
+  h1
+    :border-bottom 2px solid #ff8400      
+    :border-top 2px solid #ff8400      
+    :color #ff8400
+    :margin-bottom 10px    
+  h2
+    :border-top 2px solid #007acb
+    :border-bottom 2px solid #007acb
+    :color #007acb
+    :margin-bottom 0   
+  h3
+    :border-bottom 1px solid #aaa
+    :color #333
+    :font 1.2em Georgia,"Times New Roman",Serif    
+    :font-variant small-caps
+  h4    
   &.sidebar
   .content
     :background #eaeaea
@@ -81,11 +97,12 @@ body
         :padding 1em 0
         p
           :clear both    
-          :color #3e8417
           :font 330% Georgia,"Times New Roman",Serif
           :margin 0
           :text-align center
           :width 100%
+          &.fed
+            :color #3e8417
           &.stats
             span.num
               :display block
@@ -100,17 +117,7 @@ body
               :width 48%
           span.around
             :color #f00
-    h2
-      :border-top 2px solid #007acb
-      :border-bottom 2px solid #007acb
-      :color #007acb
-      :margin-bottom 0 
     .col1
-      h1
-        :border-bottom 2px solid #ff8400      
-        :border-top 2px solid #ff8400      
-        :color #ff8400
-        :margin-bottom 10px      
     .col2
       .sidebar
         ul
