@@ -7,27 +7,18 @@
 </ul>
 
 <h3>All Agencies</h3>
+<p class="filterBy floatLeft">Filter by name:</p>
 <ul class="btn filter group">
   <li><a>A-C</a></li>
   <li><a href="#">D</a></li>
-  <li><a href="#">E-H</a></li>
-  <li><a href="#">I-L</a></li>
-  <li><a href="#">M-O</a></li>
+  <li><a href="#">E-F</a></li>
+  <li><a href="#">G-N</a></li>
+  <li><a href="#">O-Z</a></li>
 </ul>
-  
+
 <ul>
-<% @agencies.each do |parent_agency|  %>
-  <% sub_agencies = Agency.find(:all, :conditions => ['parent_id = ?', parent_agency.id], :order => 'name ASC') %>
-  <li>
-  <%= render :partial => 'agency_list_item', :locals => {:agency => parent_agency, :chart_max => @chart_max} %>  
-    <% unless sub_agencies.length == 0 %>
-      <ul>
-      <% sub_agencies.each do |agency| %>
-        <li><%= render :partial => 'agency_list_item', :locals => {:agency => agency, :chart_max => @chart_max} %></li>
-      <% end %>
-      </ul>
-    <% end %>
-  </li>
+<% @agencies.each do |agency|  %>
+  <li><%= render :partial => 'agency_list_item', :locals => {:agency => agency, :chart_max => @chart_max} %></li>
 <% end %>
 </ul>
 
