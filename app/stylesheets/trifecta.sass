@@ -1,7 +1,7 @@
 html
   :background #27338b url(/images/bg3.gif)
 body
-  :background url(/images/bg_overlay2.png) no-repeat top center
+  //:background url(/images/bg_overlay2.png) no-repeat top center
 #wrapper
   :background url(/images/wrapper_bg.png) repeat-y top center
   :min-height 100%
@@ -90,7 +90,6 @@ body
   ul
     li
       :list-style-type none
-  
   &.sidebar
   .content
     :background #eaeaea
@@ -147,27 +146,6 @@ body
           :border-color #ff8400
           :color #ff8400
           :margin-bottom 10px
-        ul#featured_agency_buttons
-          :margin 0 0 10px 0
-          li
-            :border 1px solid #747d87
-            :float left
-            :margin-right 13px
-            :-moz-border-radius 5px
-            :-webkit-border-radius 5px
-            a
-              :color #747d87
-              :display block
-              :font-weight bold
-              :padding 3px 10px
-              :text-decoration none
-              &:hover
-                :background #747d87
-                :color #fff
-            &.on
-              a
-                :background #747d87
-                :color #fff 
     .currentevents 
       :height 100px
       :vertical-align text-top  
@@ -210,6 +188,27 @@ body
                 :font-style italic
             & a:hover
               :color #cf8227
+  ul.btn
+    :margin 0 0 10px 0
+    li
+      :border 1px solid #747d87
+      :float left
+      :margin-right 13px
+      :-moz-border-radius 5px
+      :-webkit-border-radius 5px
+      a
+        :color #747d87
+        :display block
+        :font-weight bold
+        :padding 3px 10px
+        :text-decoration none
+        &:hover
+          :background #747d87
+          :color #fff
+      &.on
+        a
+          :background #747d87
+          :color #fff               
   dl.fixed
     :width 600px
     dt
