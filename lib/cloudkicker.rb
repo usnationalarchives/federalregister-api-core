@@ -18,6 +18,8 @@ module Cloudkicker
       
       js << "   var cloudmade = new CM.Tiles.CloudMade.Web({key: '#{CLOUDMADE_API_KEY}', styleId: #{@style_id}});"
       js << "   var map = new CM.Map('#{map_id}', cloudmade);"
+      # TODO: disable mouse zoom should be an option in an map options class
+      js << "   map.disableScrollWheelZoom();"
       js << "   map.setCenter(new CM.LatLng(#{@lat}, #{@long}), #{@zoom});"
       if @map_control
         js << '   var topRight = new CM.ControlPosition(CM.TOP_RIGHT, new CM.Size(10, 10));'
@@ -55,13 +57,17 @@ module Cloudkicker
     def add_marker
       js = []
       js << "   var myMarkerLatLng = new CM.LatLng(#{@lat},#{@long});"
-      js << '   var myMarker = new CM.Marker(myMarkerLatLng, '
-      if @title != ''
-        js << {:title => @title}.to_json
-      else
-        js << "     {}"
-      end
-      js << '   );'
+      
+      js << '   var icon = new CM.Icon();'
+      js << '   icon.image  = "/images/map_marker.png";'
+      js << '   icon.iconSize = new CM.Size(29, 48);'
+      js << '   icon.iconAnchor = new CM.Point(20, 48);'
+      
+      js << '   var myMarker = new CM.Marker(myMarkerLatLng, {'
+      js << "     title: '#{@title}',"
+      js << "     icon: icon"
+      js << '   });'
+      
       js << "map.openInfoWindow(myMarkerLatLng, \"Hello world\", {maxWidth: 400});"
       js << ''
       # js << '   map.setCenter(myMarkerLatLng, 14);'
