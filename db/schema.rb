@@ -46,9 +46,9 @@ ActiveRecord::Schema.define(:version => 20090801191754) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.text     "slug"
-    t.text     "full_text"
-    t.text     "full_text_raw"
-    t.boolean  "delta",                :default => true, :null => false
+    t.text     "full_text",            :limit => 16777215
+    t.text     "full_text_raw",        :limit => 16777215
+    t.boolean  "delta",                                    :default => true, :null => false
     t.string   "source_text_url"
     t.string   "primary_agency_raw"
     t.string   "secondary_agency_raw"
