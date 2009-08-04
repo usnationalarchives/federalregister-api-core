@@ -33,11 +33,4 @@ class Place < ActiveRecord::Base
     find_within(dist, :origin => loc)
   end
   
-  def entry_list
-    list = []
-    entries.each do |entry|
-      list << entry.title
-    end
-    list.join(', ')
-  end
 end
