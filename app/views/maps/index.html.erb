@@ -1,0 +1,20 @@
+<% add_javascript do @map.to_js end%>
+
+<div id="map" style="width: 950px; height: 400px"></div>
+
+<h2>Entries within <%= pluralize(@dist, 'mile') %> of <%= @user_location.city %>, <%= @user_location.region %></h2>
+
+<ul>
+<% @places.sort_by_distance_from(Place.new(:latitude => @lat, :longitude => @long)).group_by(&:distance_groups).each do |distance, places| %>
+    <li>
+      Within <%= pluralize(distance, 'miles') %>
+      <% places.each do |place| %>
+      <ul>
+        <% place.entries.each do |entry| %>
+          <li><%= link_to entry.title, entry_path(entry) %></li>
+        <% end %>
+      </ul>
+      <% end %>
+    </li>
+<% end %>
+</ul>

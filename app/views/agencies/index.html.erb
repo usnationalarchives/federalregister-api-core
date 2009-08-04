@@ -1,12 +1,7 @@
-<div><h3>Featured Agencies</h3></div>
+<%= render :partial => 'agencies/featured', :locals => {:featured_agencies => @featured_agencies} %>
 
-<ul class='featured'>
-  <% @featured_agencies.each do |agency| %>
-    <li><%= link_to(agency.name, agency_path(agency)) %> (<%= pluralize(agency.entry_count_by_week(@week), 'entry') %>)</li>
-  <% end %>
-</ul>
+<h2>All Agencies</h2>
 
-<h3>All Agencies</h3>
 <p class="filterBy floatLeft">Filter by name:</p>
 <ul class="btn filter group">
   <li><a href="#">A-C</a></li>
