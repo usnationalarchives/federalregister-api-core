@@ -4,12 +4,18 @@ class MapsController < ApplicationController
   
   def index
     @user_location = remote_location
-    lat  = @user_location.latitude
-    long = @user_location.longitude
-    @places = Place.find_near([lat,long])
+    @lat  = @user_location.latitude
+    @long = @user_location.longitude
+    @dist = 50
     
-    @map = Cloudkicker::Map.new( :lat      => lat, 
-                                 :long     => long,
+    # set this to group the results in the view
+    Place.distance_grouping           = @dist
+    Place.distance_grouping_increment = 5
+      
+    @places = Place.find_near([@lat,@long], @dist)
+    
+    @map = Cloudkicker::Map.new( :lat      => @lat, 
+                                 :long     => @long,
                                  :zoom     => 8,
                                  :style_id => 1714
                                 )
