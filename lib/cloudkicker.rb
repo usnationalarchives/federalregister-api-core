@@ -55,11 +55,14 @@ module Cloudkicker
     def add_marker
       js = []
       js << "   var myMarkerLatLng = new CM.LatLng(#{@lat},#{@long});"
-      js << '   var myMarker = new CM.Marker(myMarkerLatLng, {'
+      js << '   var myMarker = new CM.Marker(myMarkerLatLng, '
       if @title != ''
-        js << "     title: \"#{@title}\" "
+        js << {:title => @title}.to_json
+      else
+        js << "     {}"
       end
-      js << '   });'
+      js << '   );'
+      js << "map.openInfoWindow(myMarkerLatLng, \"Hello world\", {maxWidth: 400});"
       js << ''
       # js << '   map.setCenter(myMarkerLatLng, 14);'
       js << '   map.addOverlay(myMarker);'
