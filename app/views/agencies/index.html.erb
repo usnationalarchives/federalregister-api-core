@@ -1,4 +1,4 @@
-<div><h1 class="icon agency">Featured Agencies</h1></div>
+<div><h3>Featured Agencies</h3></div>
 
 <ul class='featured'>
   <% @featured_agencies.each do |agency| %>
@@ -6,8 +6,15 @@
   <% end %>
 </ul>
 
-<h1 class="icon agency">All Agencies</h1>
-
+<h3>All Agencies</h3>
+<ul class="btn filter group">
+  <li><a>A-C</a></li>
+  <li><a href="#">D</a></li>
+  <li><a href="#">E-H</a></li>
+  <li><a href="#">I-L</a></li>
+  <li><a href="#">M-O</a></li>
+</ul>
+  
 <ul>
 <% @agencies.each do |parent_agency|  %>
   <% sub_agencies = Agency.find(:all, :conditions => ['parent_id = ?', parent_agency.id], :order => 'name ASC') %>
