@@ -123,7 +123,21 @@ body
             :color #f00
     .col1
       .fulltextWrapper
+        :border 1px solid #ccc
+        :-moz-border-radius 3px
+        :-webkit-border-radius 3px                    
+        :height 400px
+        :margin-bottom 20px
         :overflow auto
+        pre
+          :background-color #fff
+          :margin 0
+          :padding 10px
+          :white-space pre-wrap     
+          :white-space -moz-pre-wrap
+          :white-space -pre-wrap 
+          :white-space -o-pre-wrap  
+          :word-wrap break-word       
     .col2
       .sidebar
         ul
@@ -202,14 +216,15 @@ body
       :clear left
       :float left
       :text-align right
-      :width 25%
+      :width 45%
     dd
       :float left
-      :width 55%      
+      :width 45%      
   table.calendar 
     :float left
+    :height 200px
     :margin-right 1em
-    :width 1em
+    :width 47%
     th
       :background none
     th.current
