@@ -9,14 +9,15 @@
 <h3>All Agencies</h3>
 <p class="filterBy floatLeft">Filter by name:</p>
 <ul class="btn filter group">
-  <li><a>A-C</a></li>
+  <li><a href="#">A-C</a></li>
   <li><a href="#">D</a></li>
   <li><a href="#">E-F</a></li>
   <li><a href="#">G-N</a></li>
   <li><a href="#">O-Z</a></li>
+  <li><a href="#">ALL A-Z</a></li>  
 </ul>
 
-<ul>
+<ul class="agencyList">
 <% @agencies.each do |agency|  %>
   <li><%= render :partial => 'agency_list_item', :locals => {:agency => agency, :chart_max => @chart_max} %></li>
 <% end %>

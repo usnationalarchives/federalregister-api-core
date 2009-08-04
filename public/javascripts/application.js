@@ -16,7 +16,7 @@ $(document).ready(function() {
         // make animation a little slower than the default 
         speed: 600
     });
-
+    
   /*                                   */
   /* Tooltips for featured agency list */
   /*                                   */
