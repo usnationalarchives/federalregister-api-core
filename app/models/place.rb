@@ -13,7 +13,11 @@
 =end Schema Information
 
 class Place < ActiveRecord::Base
+  cattr_accessor :distance_grouping, :distance_grouping_increment
   attr_accessor :distance
+  
+  DISTANCE_GROUPING           = 100
+  DISTANCE_GROUPING_INCREMENT = 5
   
   has_many :place_determinations
   has_many :entries, :through => :place_determinations
@@ -33,4 +37,23 @@ class Place < ActiveRecord::Base
     find_within(dist, :origin => loc)
   end
   
+  # use only when you've used geokit to add the distance method as an attr_accessor
+  # ie it's added by methods like sort_by_distance_from
+  def distance_groups
+    cieling = distance.ceil
+    dist    = Place.distance_grouping_increment
+    num     = Place.distance_grouping_increment
+    
+    while num <= Place.distance_grouping
+      if cieling > num
+        dist = num
+        num = num + Place.distance_grouping_increment
+      else
+        dist = num
+        break
+      end
+    end
+    
+    dist
+  end
 end
