@@ -7,12 +7,6 @@ places_determined_at :datetime -->
 
 <%# title 'Entries' %>
 
-<% content_for :precolumn do %>
-  <div class="span-22 append-1 prepend-1">
-    <h2>View Entry</h2>
-  </div>
-<% end %>
-
 <h3>Title</h3>
 <p><%= @entry.title %></p>
 
@@ -79,9 +73,9 @@ places_determined_at :datetime -->
   </ul>
 <% end %>
 
-
+<% if @entry.full_text_raw %>
+<h3>Full text</h3>
 <%=
-  if @entry.full_text_raw 
     # FIXME: move out of view!
     text = @entry.full_text_raw
     text.sub!(/.*^-{71}$/m, '')
@@ -96,7 +90,8 @@ places_determined_at :datetime -->
     text.gsub!(/((\d+) CFR (\d+)(?:\.(\d))?)/, '<a href="http://frwebgate.access.gpo.gov/cgi-bin/get-cfr.cgi?YEAR=current&TITLE=\2&PART=\3&SECTION=\4&SUBPART=&TYPE=TEXT">\1</a>')
     text.gsub!(/((\d+) FR (\d+))/, '<a href="/citation/\2/\3" class="fr">\1</a>')
     text
-  end %>
+  %>
+<% end %>
 
 <%= calendar_view(@entry, :tri) %>
 
