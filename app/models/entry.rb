@@ -138,9 +138,9 @@ class Entry < ActiveRecord::Base
     else
       entries = []
       places.each do |place|
-        entries << Entry.find_within(distance, :origin => place.location, :limit => limit, :order => 'distance')
+        entries += Entry.find_within(distance, :origin => place.location, :limit => limit, :order => 'distance')
       end
-      entries.uniq.sort{|e| e.publication_date}[0..9].flatten
+      entries.uniq.sort_by{|e| e.publication_date}[0..9].flatten
     end
   end
 end

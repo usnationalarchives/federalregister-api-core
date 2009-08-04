@@ -1,6 +1,12 @@
 module CalendarHelper
-  def calendar_view(entry, type = :single, start_month = Time.now.strftime('%m').to_i, context = :future)
+  def calendar_view(entry, options = {})
+    options.symbolize_keys!
     
+    type = options[:type] || :tri
+    context = options[:context] || :future
+    
+    year = entry.publication_date.year
+    start_month = entry.publication_date.month
     months = [start_month]
     
     if type == :tri
@@ -15,7 +21,7 @@ module CalendarHelper
     
     html = ''
     months.each do |month|
-      html << calendar_for(2009, month, &entry_events_proc(entry, date_range))
+      html << calendar_for(year, month, &entry_events_proc(entry, date_range))
     end
     html 
   end
