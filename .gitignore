@@ -5,3 +5,4 @@ config/database.yml
 config/placemaker.yml
 config/development.sphinx.conf
 db/sphinx
+config/initializers/cloudkicker_config.rb
