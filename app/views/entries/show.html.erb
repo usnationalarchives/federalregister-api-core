@@ -75,7 +75,8 @@ places_determined_at :datetime -->
 
 <% if @entry.full_text_raw %>
 <h3>Full text</h3>
-<%=
+<div class="fulltextWrapper span-15">
+  <pre><%=
     # FIXME: move out of view!
     text = @entry.full_text_raw
     text.sub!(/.*^-{71}$/m, '')
@@ -89,15 +90,24 @@ places_determined_at :datetime -->
     text.gsub!(/((\d+) U\.?S\.?C\.? (\d+))/, '<a href="http://frwebgate.access.gpo.gov/cgi-bin/getdoc.cgi?dbname=browse_usc&docid=Cite:+\2USC\3" class="usc external" target="_blank">\1</a>')
     text.gsub!(/((\d+) CFR (\d+)(?:\.(\d))?)/, '<a href="http://frwebgate.access.gpo.gov/cgi-bin/get-cfr.cgi?YEAR=current&TITLE=\2&PART=\3&SECTION=\4&SUBPART=&TYPE=TEXT">\1</a>')
     text.gsub!(/((\d+) FR (\d+))/, '<a href="/citation/\2/\3" class="fr">\1</a>')
+
+    text.sub!(/<\/pre>.*/m, '')
+    
+    text.sub!(/\A\s+/, '')
+    text.sub!(/\s+\Z/, '')
     text
-  %>
+  -%>
+  </pre>
+</div>
 <% end %>
 
+<h3>Important Dates</h3>
 <%= calendar_view(@entry, {:type => :tri}) %>
 
 <% content_for :sidebar do %>
   <% unless @entry.contact.blank? %>
-    <h3 class="icon contact">Contact:</h3>
+    <!-- <h3 class="icon contact">Contact:</h3> -->
+    <h3>Contact:</h3>
     <p><%= @entry.contact %></p>
   <% end %>
 
