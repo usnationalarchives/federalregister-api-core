@@ -143,4 +143,13 @@ class Entry < ActiveRecord::Base
       entries.uniq.sort_by{|e| e.publication_date}[0..9].flatten
     end
   end
+  
+  def self.find_near(loc, dist = 100)
+    places  = Place.find_places_near(loc, dist)
+    entries = []
+    places.each do |place|
+      entries << place.entry
+    end
+    entries
+  end
 end

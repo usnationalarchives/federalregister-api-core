@@ -44,6 +44,9 @@ ActionController::Routing::Routes.draw do |map|
   map.connect 'citation/:volume/:page', :controller => 'citations',
                                         :action     => 'index',
                                         :volume     => /\d{2}/
+
+  map.connect 'maps/', :controller => 'maps',
+                       :action     => 'index'
                                          
   map.root :controller => 'special', :action => 'home'
 end
