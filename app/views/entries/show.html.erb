@@ -98,7 +98,7 @@ places_determined_at :datetime -->
     text
   end %>
 
-<%= calendar_view(@entry, :tri) %>
+<%= calendar_view(@entry, {:type => :tri}) %>
 
 <% content_for :sidebar do %>
   <% unless @entry.contact.blank? %>
