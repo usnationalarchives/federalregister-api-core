@@ -1,8 +1,9 @@
 class EntriesController < ApplicationController
   include Geokit::Geocoders
   def search
-    @topics = Topic.all
-    @agencies = Agency.all
+    # FIXME: topics & agencies need to be more limited...
+    @topics = Topic.all(:limit => 100, :order => :name)
+    @agencies = Agency.all(:limit => 100, :order => :name)
     
     with = {}
     
