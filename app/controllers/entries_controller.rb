@@ -1,10 +1,6 @@
 class EntriesController < ApplicationController
   include Geokit::Geocoders
   def search
-    # FIXME: topics & agencies need to be more limited...
-    @topics = Topic.all(:limit => 100, :order => :name)
-    @agencies = Agency.all(:limit => 100, :order => :name)
-    
     with = {}
     
     @search_term = params[:q]
@@ -47,6 +43,21 @@ class EntriesController < ApplicationController
       :order => order,
       :with => with
     )
+    
+    respond_to do |wants|
+      wants.html do
+        # FIXME: topics & agencies need to be more limited...
+        @topics = Topic.all(:limit => 100, :order => :name)
+        @agencies = Agency.all(:limit => 100, :order => :name)
+        
+        render :action => 'search'
+      end
+      
+      wants.rss do 
+        @feed_name = 'GovPulse Search Results'
+        render :action => 'index'
+      end
+    end
   end
   
   def index
