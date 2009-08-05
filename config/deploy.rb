@@ -97,8 +97,7 @@ after "deploy",                   "deploy:cleanup"
 after "deploy:cleanup",           "deploy:set_rake_path"
 after "deploy:set_rake_path",     "deploy:install_gems"
 after "deploy:install_gems",      "deploy:migrate"
-after "deploy:migrate",           "deploy:load_default_data"
-after "deploy:load_default_data", "passenger:restart"
+after "deploy:migrate",           "passenger:restart"
 
 
 #############################################################
@@ -153,8 +152,9 @@ end
 namespace :deploy do
   desc "Set Symlinks for Static Files (like database.yml)"
   task :update_config, :roles => [:app] do
-    sudo "ln -sf #{shared_path}/config/database.yml #{release_path}/config/database.yml"
-    sudo "ln -sf #{shared_path}/config/placemaker.yml #{release_path}/config/placemaker.yml"
+    %w(database.yml placemaker.yml google_maps.yml).each do |file|
+      sudo "ln -sf #{shared_path}/config/#{file} #{release_path}/config/#{file}"
+    end
     sudo "ln -sf #{shared_path}/log #{release_path}/log"
     sudo "ln -sf #{shared_path}/data #{release_path}/data"
   end 

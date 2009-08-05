@@ -1,5 +1,16 @@
 <% title "Search Results for '#{h @search_term}'" %>
 
+<%# TODO: HELP-DESIGN: style me! %>
+<form method="get">
+  Keywords: <%= text_field_tag :q, @search_term %><br />
+  Near: <%= text_field_tag :near, params[:near] %> (eg '94118', 'San Francisco', etc) (Within: <%= text_field_tag :within, params[:within] %> miles)<br />
+  Agency: <%= select_tag 'agency_id', options_for_select([''] + @agencies.collect{ |agency| [agency.name, agency.id.to_s] }, :selected => params[:agency_id]) %><br />
+  Topic: <%= select_tag 'topic_ids', options_for_select([''] + @topics.collect{ |topic| [topic.name, topic.id.to_s] }, :selected => params[:topic_ids]) %><br />
+  Publication Date From: <%= text_field_tag :publication_date_greater_than, params[:publication_date_greater_than] %>
+    To: <%= text_field_tag :publication_date_less_than, params[:publication_date_less_than] %> (eg '01/01/09', 'a year ago', 'yesterday')<br />
+  Order: <%= select_tag 'order', options_for_select([['Date', 'date'], ['Relevance', 'relevance']], :selected => params[:order]) %> <br />
+  <%= submit_tag 'Search' %>
+ </form>
 
 <%= page_entries_info @entries %>
 
@@ -22,6 +33,7 @@
       <td><%= entry.action %></td>
       <td><%= link_to truncate(entry.title, :length => 100), entry_path(entry) %></td>
       <td><%= link_to(entry.agency.try(:name), agency_path(entry.agency)) if entry.agency %></td>
+      <%# TODO: remove ugly crap from excerpts %>
       <td><%= entry.excerpts.full_text_raw %></td>
     </tr>
     <% end %>
@@ -29,3 +41,9 @@
 </table>
 
 <%= will_paginate @entries %>
+
+<% content_for :sidebar do %>
+  <h3>Other Formats</h3>
+  <%# TODO: HELP-DESIGN: HELP-COPY: Need RSS icon, some text here %>
+  <p>Subscribe to an <%= link_to 'RSS Feed', params.merge(:format => :rss, :order => 'date') %> of these search results.</p>
+<% end %>

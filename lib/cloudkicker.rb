@@ -48,7 +48,9 @@ module Cloudkicker
       @map   = options.delete(:map)
       @lat   = options.delete(:lat)
       @long  = options.delete(:long)
+      @id    = self.object_id
       @title = options.delete(:title) || ''
+      @info  = options.delete(:info)  || ''
       add_marker
     end
     
@@ -56,22 +58,28 @@ module Cloudkicker
     
     def add_marker
       js = []
-      js << "   var myMarkerLatLng = new CM.LatLng(#{@lat},#{@long});"
+      js << "   var myMarkerLatLng_#{@id} = new CM.LatLng(#{@lat},#{@long});"
       
       js << '   var icon = new CM.Icon();'
       js << '   icon.image  = "/images/map_marker.png";'
-      js << '   icon.iconSize = new CM.Size(29, 48);'
+      js << '   icon.iconSize = new CM.Size(31, 48);'
+      js << '   icon.shadow  = "/images/map_marker_shadow.png";'
+      js << '   icon.shadowSize = new CM.Size(31, 48);'
       js << '   icon.iconAnchor = new CM.Point(20, 48);'
       
-      js << '   var myMarker = new CM.Marker(myMarkerLatLng, {'
+      js << "   var myMarker_#{@id} = new CM.Marker(myMarkerLatLng_#{@id}, {"
       js << "     title: '#{@title}',"
       js << "     icon: icon"
       js << '   });'
       
-      js << "map.openInfoWindow(myMarkerLatLng, \"Hello world\", {maxWidth: 400});"
+      # Add listener to marker
+      js << "   CM.Event.addListener(myMarker_#{@id}, 'click', function(latlng) {"
+      js << "     map.openInfoWindow(myMarkerLatLng_#{@id}, '#{@info}', {maxWidth: 400, pixelOffset: new CM.Size(-8,-50)});"
+      js << '   });'
+      
       js << ''
       # js << '   map.setCenter(myMarkerLatLng, 14);'
-      js << '   map.addOverlay(myMarker);'
+      js << "   map.addOverlay(myMarker_#{@id});"
       @map.markers << js.join("\n")
     end
   end
