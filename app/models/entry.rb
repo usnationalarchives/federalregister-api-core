@@ -61,7 +61,6 @@ class Entry < ActiveRecord::Base
   
   has_many :referenced_dates, :dependent => :destroy
   
-  
   define_index do
     # fields
     indexes title, :sortable => true
@@ -69,16 +68,24 @@ class Entry < ActiveRecord::Base
     indexes agency.name, :as => :agency, :sortable => true
     
     # attributes
-    has start_page, end_page, publication_date
+    has topics(:id), :as => :topic_ids
+    has places(:id), :as => :place_ids
+    
+    has agency_id
+    has publication_date
     
     set_property :field_weights => {
       "title" => 100,
       "abstract" => 50,
       "full_text_raw" => 25
     }
-    # enable delta indexing
-    # set_property :delta => true
   end
+  
+  sphinx_scope(:by_title) { |title|
+    {:conditions => {:title => title}}
+  }
+  
+  
   # def to_param
   #   "#{document_number}"
   # end
