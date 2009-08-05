@@ -1,9 +1,8 @@
 html
-  :background #27338b url(/images/bg3.gif)
+  /:background #27338b  url(/images/bg3.gif)
+  :background url(/images/left_bg.png) repeat-y top left 
 body
-  //:background url(/images/bg_overlay2.png) no-repeat top center
-#wrapper
-  :background url(/images/wrapper_bg.png) repeat-y top center
+  :background url(/images/right_bg.png) repeat-y top right  
   :min-height 100%
   :margin-bottom -150px
   :position relative
@@ -11,24 +10,31 @@ body
     :clear both
     :height 150px  
 #header
-  :background url(/images/header_bg3.png) repeat-x bottom left
+  //:background url(/images/header_bg3.png) repeat-x bottom left
   //:background #eaeaea url(/images/header_bg.png) repeat-x bottom left
+  :background url(/images/header_bg8.png) repeat-x top left
   //:border-top 10px solid #666
   :border-left 1px solid #27338b  
   :border-right 1px solid #27338b
-  :height 80px    
-  :padding 0 0 20px 0
+  :height 295px    
   :position relative
   :z-index 9999
-  h1
-    :color #737374
+  .type
+    :background url(/images/header_type.png) no-repeat top left
+    :display block
     :float left
-    :font 330% Georgia,"Times New Roman",Serif
-    :padding 20px 0 0 40px
-    span
-      :color #cf8227
-  .nav
+    :height 81px
+    :width 367px    
+    h1
+      :margin-left -9999px
+  .capitol
+    :background url(/images/header_capitol.png) no-repeat top left
+    :display block
     :float right
+    :height 242px  
+    :width 690px
+  .nav
+    :float left
     .search
       :background url(/images/search_bg.png) no-repeat top left
       :height 25px
@@ -92,7 +98,6 @@ body
       :list-style-type none
   &.sidebar
   .content
-    :background #eaeaea
     :min-height 600px
     :padding-top 20px
     .precolumn
