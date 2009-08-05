@@ -16,6 +16,7 @@ Rails::Initializer.run do |config|
 
   # Specify gems that this application depends on and have them installed with rake gems:install
   config.gem "nokogiri", :version => '1.3.2'
+  config.gem "chronic", :version => '0.2.3'
   config.gem "zilkey-active_api", :lib => 'active_api', :version => '0.2.0'
   config.gem "curb", :version => '0.4.4.0'
   config.gem "haml", :version => '2.2.2'
