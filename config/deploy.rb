@@ -152,9 +152,15 @@ end
 namespace :deploy do
   desc "Set Symlinks for Static Files (like database.yml)"
   task :update_config, :roles => [:app] do
+<<<<<<< HEAD
     %w(database.yml placemaker.yml google_maps.yml).each do |file|
       sudo "ln -sf #{shared_path}/config/#{file} #{release_path}/config/#{file}"
     end
+=======
+    sudo "ln -sf #{shared_path}/config/database.yml #{release_path}/config/database.yml"
+    sudo "ln -sf #{shared_path}/config/placemaker.yml #{release_path}/config/placemaker.yml"
+    sudo "ln -sf #{shared_path}/config/cloudkicker_config.rb #{release_path}/config/initializers/cloudkicker_config.rb"
+>>>>>>> Add symlink to deploy task for cloudkicker config
     sudo "ln -sf #{shared_path}/log #{release_path}/log"
     sudo "ln -sf #{shared_path}/data #{release_path}/data"
   end 
