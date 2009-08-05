@@ -23,8 +23,8 @@ class MapsController < ApplicationController
       Cloudkicker::Marker.new( :map   => @map, 
                                :lat   => place.latitude,
                                :long  => place.longitude, 
-                               :title => 'Click to display entries for this location.'
-                               #render_to_string(:partial => 'entry_marker_tooltip', :locals => {:place => place} )
+                               :title => 'Click to display entries for this location.',
+                               :info  => render_to_string(:partial => 'entry_marker_tooltip', :locals => {:place => place} )
                              )
     end
   end

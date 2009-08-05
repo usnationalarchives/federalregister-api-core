@@ -97,8 +97,7 @@ after "deploy",                   "deploy:cleanup"
 after "deploy:cleanup",           "deploy:set_rake_path"
 after "deploy:set_rake_path",     "deploy:install_gems"
 after "deploy:install_gems",      "deploy:migrate"
-after "deploy:migrate",           "deploy:load_default_data"
-after "deploy:load_default_data", "passenger:restart"
+after "deploy:migrate",           "passenger:restart"
 
 
 #############################################################
