@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090801191754) do
+ActiveRecord::Schema.define(:version => 20090805225811) do
 
   create_table "agencies", :force => true do |t|
     t.integer  "parent_id"
@@ -46,9 +46,9 @@ ActiveRecord::Schema.define(:version => 20090801191754) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.text     "slug"
-    t.text     "full_text",            :limit => 16777215
-    t.text     "full_text_raw",        :limit => 16777215
-    t.boolean  "delta",                                    :default => true, :null => false
+    t.text     "full_text",            :limit => 2147483647
+    t.text     "full_text_raw",        :limit => 2147483647
+    t.boolean  "delta",                                      :default => true, :null => false
     t.string   "source_text_url"
     t.string   "primary_agency_raw"
     t.string   "secondary_agency_raw"
@@ -103,8 +103,10 @@ ActiveRecord::Schema.define(:version => 20090801191754) do
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "group_name"
   end
 
+  add_index "topics", ["group_name"], :name => "index_topics_on_group_name"
   add_index "topics", ["name"], :name => "index_topics_on_name"
 
   create_table "url_references", :force => true do |t|
