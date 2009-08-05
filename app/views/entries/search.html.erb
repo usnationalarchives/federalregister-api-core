@@ -8,6 +8,8 @@
   Topic: <%= select_tag 'topic_ids', options_for_select([''] + @topics.collect{ |topic| [topic.name, topic.id.to_s] }, :selected => params[:topic_ids]) %><br />
   Publication Date From: <%= text_field_tag :publication_date_greater_than, params[:publication_date_greater_than] %>
     To: <%= text_field_tag :publication_date_less_than, params[:publication_date_less_than] %> (eg '01/01/09', 'a year ago', 'yesterday')<br />
+  Order: <%= select_tag 'order', options_for_select([['Date', 'date'], ['Relevance', 'relevance']], :selected => params[:order]) %> <br />
+  <%= submit_tag 'Search' %>
  </form>
 
 <%= page_entries_info @entries %>

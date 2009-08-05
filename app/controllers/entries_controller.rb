@@ -37,9 +37,14 @@ class EntriesController < ApplicationController
       with[:publication_date] = Range.new(start_date.midnight.to_f.to_i,end_date.midnight.to_f.to_i)
     end
     
+    order = "publication_date DESC, @relevance DESC"
+    if params[:order] == 'relevance'
+      order = "@relevance DESC, publication_date DESC"
+    end
+    
     @entries = Entry.search(@search_term, 
       :page => params[:page] || 1,
-      :order => "@relevance DESC, publication_date DESC",
+      :order => order,
       :with => with
     )
   end
