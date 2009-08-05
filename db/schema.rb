@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090805225811) do
+ActiveRecord::Schema.define(:version => 20090805232420) do
 
   create_table "agencies", :force => true do |t|
     t.integer  "parent_id"
@@ -104,8 +104,10 @@ ActiveRecord::Schema.define(:version => 20090805225811) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "group_name"
+    t.integer  "entries_count", :default => 0
   end
 
+  add_index "topics", ["entries_count"], :name => "index_topics_on_entries_count"
   add_index "topics", ["group_name"], :name => "index_topics_on_group_name"
   add_index "topics", ["name"], :name => "index_topics_on_name"
 
