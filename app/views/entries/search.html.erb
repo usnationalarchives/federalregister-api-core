@@ -31,6 +31,7 @@
       <td><%= entry.action %></td>
       <td><%= link_to truncate(entry.title, :length => 100), entry_path(entry) %></td>
       <td><%= link_to(entry.agency.try(:name), agency_path(entry.agency)) if entry.agency %></td>
+      <%# TODO: remove ugly crap from excerpts %>
       <td><%= entry.excerpts.full_text_raw %></td>
     </tr>
     <% end %>
