@@ -1,5 +1,4 @@
 html
-  /:background #27338b  url(/images/bg3.gif)
   :background url(/images/left_bg.png) repeat-y top left 
 body
   :background url(/images/right_bg.png) repeat-y top right  
@@ -10,13 +9,10 @@ body
     :clear both
     :height 150px  
 #header
-  //:background url(/images/header_bg3.png) repeat-x bottom left
-  //:background #eaeaea url(/images/header_bg.png) repeat-x bottom left
-  :background url(/images/header_bg8.png) repeat-x top left
-  //:border-top 10px solid #666
+  :background url(/images/header_bg9.png) repeat-x top left
   :border-left 1px solid #27338b  
   :border-right 1px solid #27338b
-  :height 295px    
+  :height 121px    
   :position relative
   :z-index 9999
   .type
@@ -31,45 +27,49 @@ body
     :background url(/images/header_capitol.png) no-repeat top left
     :display block
     :float right
-    :height 242px  
-    :width 690px
-  .nav
-    :float left
-    .search
-      :background url(/images/search_bg.png) no-repeat top left
+    :height 121px  
+    :width 345px
+.nav
+  :background-color #005b81
+  :float left
+  :padding 5px 0
+  :width 100%
+  .search
+    :background url(/images/search_bg.png) no-repeat top left
+    :float right
+    :height 25px
+    :width 220px
+    form
       :height 25px
-      :width 220px
-      form
-        :height 25px
-        :width 200px      
-        :margin 10px 20px 0 0
-        input#q
-          :border none
-          :display block
-          :float left
-          :height 18px
-          :margin 5px 0 0 10px 
-          :padding 0
-          :width 175px
-        input
-          :display none
-    ul
-      :float right
-      :margin 10px 20px 0 0
-      li
-        :color #797979
+      :width 200px      
+      :margin 0 20px 0 0
+      input#q
+        :border none
+        :display block
         :float left
-        :font 140% "Lucida Grande", "Trebuchet MS", Verdana, sans-serif     
-        :list-style-type none
-        :margin-right 5px
-        a
-          :color #797979
-          :font 100% "Lucida Grande", "Trebuchet MS", Verdana, sans-serif
-          :text-decoration none
-          :text-transform uppercase
-          &:hover
-            :color #344391
-            :border-bottom 3px solid #344391
+        :height 18px
+        :margin 5px 0 0 10px 
+        :padding 0
+        :width 175px
+      input
+        :display none
+  ul
+    :float left
+    :margin 10px 20px 0 0
+    li
+      :color #797979
+      :float left
+      :font 140% "Lucida Grande", "Trebuchet MS", Verdana, sans-serif     
+      :list-style-type none
+      :margin-right 5px
+      a
+        :color #797979
+        :font 100% "Lucida Grande", "Trebuchet MS", Verdana, sans-serif
+        :text-decoration none
+        :text-transform uppercase
+        &:hover
+          :color #344391
+          :border-bottom 3px solid #344391
           
 #main
   :background url(/images/main_bg.png) repeat-x top left
