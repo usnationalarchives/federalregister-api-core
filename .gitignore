@@ -6,3 +6,4 @@ config/placemaker.yml
 config/development.sphinx.conf
 config/initializers/cloudkicker_config.rb
 db/sphinxconfig/initializers/cloudkicker_config.rb
+db/sphinx/
