@@ -31,7 +31,7 @@ class Place < ActiveRecord::Base
   end
   
   def self.find_near(loc, dist = 100)
-    find_within(dist, :origin => loc)
+    find_within(dist, :origin => loc, :limit => 50)
   end
   
   # use only when you've used geokit to add the distance method as an attr_accessor
