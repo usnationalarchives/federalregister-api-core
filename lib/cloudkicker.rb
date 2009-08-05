@@ -74,7 +74,8 @@ module Cloudkicker
       
       # Add listener to marker
       js << "   CM.Event.addListener(myMarker_#{@id}, 'click', function(latlng) {"
-      js << "     map.openInfoWindow(myMarkerLatLng_#{@id}, '#{@info.gsub(/'/,"\\'")}', {maxWidth: 400, pixelOffset: new CM.Size(-8,-50)});"
+      # TODO single quotes should be esacaped not deleted. Escaping doesn't seem to be working at the moment though... clearly missing something
+      js << "     map.openInfoWindow(myMarkerLatLng_#{@id}, '#{@info.gsub(/'/,"")}', {maxWidth: 400, pixelOffset: new CM.Size(-8,-50)});"
       js << '   });'
       
       js << ''
