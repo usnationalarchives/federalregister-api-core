@@ -11,6 +11,6 @@
 =end Schema Information
 
 class TopicAssignment < ActiveRecord::Base
-  belongs_to :topic
+  belongs_to :topic, :counter_cache => :entries_count
   belongs_to :entry
 end
