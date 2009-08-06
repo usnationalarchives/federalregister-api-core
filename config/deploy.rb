@@ -155,6 +155,7 @@ namespace :deploy do
     %w(database.yml placemaker.yml google_maps.yml).each do |file|
       sudo "ln -sf #{shared_path}/config/#{file} #{release_path}/config/#{file}"
     end
+    sudo "ln -sf #{shared_path}/config/cloudkicker_config.rb #{release_path}/config/initializers/cloudkicker_config.rb"
     sudo "ln -sf #{shared_path}/log #{release_path}/log"
     sudo "ln -sf #{shared_path}/data #{release_path}/data"
   end 
@@ -220,6 +221,7 @@ end
 #############################################################
 # Check for Existing Database
 #############################################################
+
 namespace :database do
   desc "Check to see if database exists"
   task :check_database_existence do
