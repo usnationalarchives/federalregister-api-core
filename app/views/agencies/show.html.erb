@@ -8,6 +8,7 @@
 
 <% feed_autodiscovery agency_path(@agency, :format => :rss) %>
 
+<h2>Entries since <%= @year_range %></h2>
 <p><%= pluralize(@agency.entries.count, 'entry') %></p>
 
 <ul>
@@ -33,5 +34,11 @@
 </ul>
 
 <% content_for :sidebar do %>
-  <h2>Maybe those word graphs</h2>
+  <h3>Maybe those word graphs</h3>
+  
+  <% unless @places.blank? %>
+  <h3>Places Mentioned</h3>
+    <% add_javascript { @map.to_js } %>
+    <div id="map" class="small_map"></div>
+  <% end %>
 <% end %>
