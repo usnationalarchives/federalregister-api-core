@@ -1,0 +1,34 @@
+<% if !@places.nil? %>
+  <% add_javascript { @map.to_js } %>
+  <% content_for :precolumn do %>
+    <div id="map" class='large_map'></div>
+  <% end %>
+<% end %>
+
+<h2>Entries mentioning <%= @location.name %></h2>
+
+<ul>
+<% @entries.each do |entry| %>
+  <li><%= link_to entry.title, entry_path(entry) %></li>
+<% end %>
+</ul>
+
+<% if !@places.nil? %>
+  <h2>Entries mentioning places within <%= pluralize(@dist, 'mile') %> of <%= @location.name %></h2>
+
+  <%= render :partial => 'maps/entries_by_distance', :locals => {:entry_places => @places, :lat => @lat, :long => @long} %>
+<% end %>
+
+<% content_for :sidebar do %>
+  <% unless @entries.blank? %>
+    <h3>Agencies active within <%= pluralize(@dist, 'mile') %></h3>
+    
+    <ul>
+      <% @active_agencies.each do |agency| %>
+      <li>
+        <%= link_to(agency.name, agency_path(agency) ) %>
+      </li>
+      <% end %>
+    </ul>
+  <% end %>
+<% end %>

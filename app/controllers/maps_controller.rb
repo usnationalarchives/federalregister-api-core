@@ -3,9 +3,9 @@ class MapsController < ApplicationController
   include Cloudkicker
   
   def index
-    @user_location = remote_location
-    @lat  = @user_location.latitude
-    @long = @user_location.longitude
+    @location = remote_location
+    @lat  = @location.latitude
+    @long = @location.longitude
     @dist = 50
     
     # set this to group the results in the view
@@ -23,8 +23,9 @@ class MapsController < ApplicationController
                                :lat   => place.latitude,
                                :long  => place.longitude, 
                                :title => 'Click to display entries for this location.',
-                               :info  => render_to_string(:partial => 'entry_marker_tooltip', :locals => {:place => place} ),
+                               :info  => render_to_string(:partial => 'entry_marker_tooltip', :locals => {:place => place} )
                              )
     end
   end
+  
 end

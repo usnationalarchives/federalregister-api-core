@@ -1,21 +1,18 @@
-<% add_javascript { @map.to_js } %>
-
-<div id="map" style="width: 950px; height: 400px"></div>
-
-<h2>Entries within <%= pluralize(@dist, 'mile') %> of <%= @user_location.city %>, <%= @user_location.region %></h2>
-
-<ul>
-<% @places.sort_by_distance_from(Place.new(:latitude => @lat, :longitude => @long)).group_by(&:distance_groups).each do |distance, places| %>
-    <li>
-      Within <%= pluralize(distance, 'miles') %>
-      <ul>
-        <% places.map(&:entries).flatten.sort_by{|e| e.publication_date}.reverse.each do |entry| %>
-          <li>
-            <span class='entry_date'><%= entry.publication_date.to_s %></span>
-            <%= link_to entry.title, entry_path(entry) %>
-          </li>
-        <% end %>
-      </ul>
-    </li>
+<% if !@places.nil? %>
+  <% add_javascript { @map.to_js } %>
+  <% content_for :precolumn do %>
+    <div id="map" class='large_map'></div>
+  <% end %>
 <% end %>
-</ul>
+
+
+<h2>Entries within <%= pluralize(@dist, 'mile') %> of <%= @location.city %>, <%= @location.region %></h2>
+
+<% if !@places.nil? %>
+  <%= render :partial => 'maps/entries_by_distance', :locals => {:entry_places => @places, :lat => @lat, :long => @long} %>
+<% else %>  
+  <p>
+    Unfortunately were were not able to find any entries within 
+    <%= pluralize(@dist, 'mile') %> of <%= @location.city %>, <%= @location.region %>
+  </p>
+<% end %>
