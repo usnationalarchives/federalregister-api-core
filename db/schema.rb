@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090805232420) do
+ActiveRecord::Schema.define(:version => 20090806000514) do
 
   create_table "agencies", :force => true do |t|
     t.integer  "parent_id"
@@ -98,6 +98,12 @@ ActiveRecord::Schema.define(:version => 20090805232420) do
 
   add_index "topic_assignments", ["entry_id"], :name => "index_topic_assignments_on_entry_id"
   add_index "topic_assignments", ["topic_id"], :name => "index_topic_assignments_on_topic_id"
+
+  create_table "topic_groups", :id => false, :force => true do |t|
+    t.string  "group_name"
+    t.string  "name"
+    t.integer "entries_count", :limit => 32, :precision => 32, :scale => 0
+  end
 
   create_table "topics", :force => true do |t|
     t.string   "name"
