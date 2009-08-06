@@ -110,6 +110,11 @@ class Entry < ActiveRecord::Base
     "#{self.title.downcase.gsub(/&/, 'and').gsub(/[^a-z0-9]+/, '-')}"
   end
   
+  
+  def comments_close_date
+    referenced_dates.find(:first, :conditions => {:date_type => 'CommentDate'}).try(:date)
+  end
+  
   def effective_date
     referenced_dates.find(:first, :conditions => {:date_type => 'EffectiveDate'}).try(:date)
   end
