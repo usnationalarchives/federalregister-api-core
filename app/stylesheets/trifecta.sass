@@ -264,22 +264,37 @@ body
     :margin 0
     :padding 0
     li
-      :background #ddd url(/images/count_bg.png) no-repeat -500px top
-      :border 1px solid #dc6b00
+      :background #eef
+      :border-left 1px solid transparent
+      :border-right 1px solid transparent
+      :-moz-border-radius 5px
+      :-webkit-border-radius 5px
+      :color #343434
       :margin 0 0 5px 0
-      :padding 3px 5px
+      :padding 0 5px
       :position relative
       a
         :color #343434
         :font-weight bold
         :text-decoration none
-      .bg
-        :background-color #f00
+      .info
         :display block
         :height 24px
+        :line-height 24px
+        :position relative
+        :z-index 5555
+      .bg
+        :background url(/images/count_bg4.png) repeat-x left top      
+        :border 1px solid #83bbd9        
+        :-moz-border-radius 5px
+        :-webkit-border-radius 5px        
+        :display block
+        :height 22px
         :left 0    
         :position absolute
         :top 0
+        :z-index 1111
+        
   dl.fixed
     :width 600px
     dt
