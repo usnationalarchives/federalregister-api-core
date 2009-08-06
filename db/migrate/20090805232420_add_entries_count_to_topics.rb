@@ -3,10 +3,7 @@ class AddEntriesCountToTopics < ActiveRecord::Migration
     add_column :topics, :entries_count, :integer, :default => 0
     add_index :topics, :entries_count
     
-    Topic.reset_column_information
-    Topic.find(:all).each do |t|
-      Topic.update_counters t.id, :entries_count => t.entries.length
-    end
+    execute "UPDATE topics SET entries_count = (SELECT count(*) from topic_assignments where topic_id = topics.id)"
   end
 
   def self.down
