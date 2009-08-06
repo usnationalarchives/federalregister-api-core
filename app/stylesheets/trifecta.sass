@@ -83,24 +83,45 @@ body
     :color #ff8400
     :margin-bottom 10px    
   h2
-    :border-top 2px solid #007acb
-    :border-bottom 2px solid #007acb
-    :color #007acb
-    :margin-bottom 0   
+    :font 2em Georgia,"Times New Roman",Serif
+    :border-bottom 1px solid black
+    :color black
+    :margin 10px 0 0 0   
   h3
     :border-bottom 1px solid #aaa
     :color #333
     :font 1.2em Georgia,"Times New Roman",Serif    
     :font-variant small-caps
-  h4    
+    :margin 10px 0
+  h4
+  h5
+    :color #333
+    :font 1.1em sans-serif
+    :padding 0
+    :margin 0 0 5px 0
   ul
+    :padding 10px 0 0 0
     li
       :list-style-type none
+      :padding 0 0 5px 0
+      ul
+        :padding 0
+    li.group
+      :padding 0 0 15px 0
   &.sidebar
   .content
     :min-height 600px
     :padding-top 20px
     .precolumn
+      .large_map
+        :width 900px
+        :height 400px
+        :margin-left auto
+        :margin-right auto
+        div.wml-text-background
+          :opacity 1
+        div.wml-copyright-text
+          :width 900px
       .infobox
         :padding 1em 0
         p
@@ -153,6 +174,8 @@ body
           :border-color #ff8400
           :color #ff8400
           :margin-bottom 10px
+        h3 + ul
+          :padding 0
     .currentevents 
       :height 100px
       :vertical-align text-top  
