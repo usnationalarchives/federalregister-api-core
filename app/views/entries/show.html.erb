@@ -91,14 +91,14 @@ places_determined_at :datetime -->
   <% unless @entry.contact.blank? %>
     <!-- <h3 class="icon contact">Contact:</h3> -->
     <h3>Contact</h3>
-    <p><%= @entry.contact %></p>
+    <p><%= auto_link @entry.contact %></p>
   <% end %>
 
   <% unless @entry.topics.blank? %>
     <h3>Topics:</h3>
     <ul>
       <% @entry.topics.each do |topic| %>
-        <li><%= link_to topic.name, topic_path(topic) %></li>
+        <li><%= link_to topic.name, topic_group_path(topic.group_name) %></li>
       <% end %>
     </ul>  
   <% end %>
