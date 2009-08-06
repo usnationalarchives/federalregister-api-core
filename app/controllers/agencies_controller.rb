@@ -14,6 +14,7 @@ class AgenciesController < ApplicationController
                                   :limit => 100)
     
     @agency = Agency.find_by_slug(params[:id], :include => :entries)
+    @entries = @agency.entries.all(:limit => 100, :order => "entries.publication_date DESC")
                                 
     @map_entries = @agency.entries.select{|e| e.publication_date > Date.parse(1.year.ago.to_s)}
     @places = []
@@ -22,7 +23,7 @@ class AgenciesController < ApplicationController
       @places +=  entry.places.usable
       logger.info "PLACES: #{entry.places.inspect}"
     end
-
+    
     @map = Cloudkicker::Map.new( :style_id => 1714,
                                  :bounds   => true,
                                  :points   => @places
