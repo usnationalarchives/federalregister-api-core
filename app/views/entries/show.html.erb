@@ -32,30 +32,15 @@ places_determined_at :datetime -->
        <% end %>)
        </dd>
        
-      <% if !@entry.dates.nil?          %><dt>Dates:</dt>          <dd><%= text_with_links(@entry, @entry.dates) %></dd><% end %>
-      <% if !@entry.effective_date.nil? %><dt>Effective Date:</dt> <dd><%= @entry.effective_date                 %></dd><% end %>
-      <% if !@entry.action.nil?         %><dt>Action:</dt>         <dd><%= @entry.action.titlecase               %></dd><% end %>
-      <% if !@entry.type.nil?           %><dt>Type: </dt>          <dd><%= @entry.type                           %></dd><% end %>
-      <% if !@entry.genre.nil?          %><dt>Genre:</dt>          <dd><%= @entry.genre.titlecase                %></dd><% end %>
-      <% if !@entry.part_name.nil?      %><dt>Part Name:</dt>      <dd><%= @entry.part_name                      %></dd><% end %>
-      <% if !@entry.granule_class.nil?  %><dt>Granule Class:</dt>  <dd><%= @entry.granule_class.titlecase        %></dd><% end %>
+      <% if !@entry.dates.nil?               %><dt>Dates:</dt>          <dd><%= text_with_links(@entry, @entry.dates) %></dd><% end %>
+      <% if !@entry.effective_date.nil?      %><dt>Effective Date:</dt> <dd><%= @entry.effective_date                 %></dd><% end %>
+      <% if !@entry.comments_close_date.nil? %><dt>Comments Close:</dt> <dd><%= @entry.comments_close_date            %></dd><% end %>
+      <% if !@entry.action.nil?              %><dt>Action:</dt>         <dd><%= @entry.action.titlecase               %></dd><% end %>
+      <% if !@entry.type.nil?                %><dt>Type: </dt>          <dd><%= @entry.type                           %></dd><% end %>
+      <% if !@entry.genre.nil?               %><dt>Genre:</dt>          <dd><%= @entry.genre.titlecase                %></dd><% end %>
+      <% if !@entry.part_name.nil?           %><dt>Part Name:</dt>      <dd><%= @entry.part_name                      %></dd><% end %>
+      <% if !@entry.granule_class.nil?       %><dt>Granule Class:</dt>  <dd><%= @entry.granule_class.titlecase        %></dd><% end %>
     </dl>
-  </div>
-</div>
-
-<div class="mod group">
-  <div class="details">
-    <h3>Important Dates</h3>
-    <dl class='fixed details group'>
-      <% if @entry.comments_close_date %>
-        <dt>Comments Close</dt>
-        <dd><%= @entry.comments_close_date %></dd>
-      <% end %>
-      <% if @entry.effective_date %>
-        <dt>Rule Effective</dt>
-        <dd><%= @entry.effective_date %></dd>
-      <% end %>
-    </ul>
   </div>
 </div>
 
@@ -106,14 +91,14 @@ places_determined_at :datetime -->
   <% unless @entry.contact.blank? %>
     <!-- <h3 class="icon contact">Contact:</h3> -->
     <h3>Contact</h3>
-    <p><%= @entry.contact %></p>
+    <p><%= auto_link @entry.contact %></p>
   <% end %>
 
   <% unless @entry.topics.blank? %>
     <h3>Topics:</h3>
     <ul>
       <% @entry.topics.each do |topic| %>
-        <li><%= link_to topic.name, topic_path(topic) %></li>
+        <li><%= link_to topic.name, topic_group_path(topic.group_name) %></li>
       <% end %>
     </ul>  
   <% end %>

@@ -63,9 +63,10 @@ class Entry < ActiveRecord::Base
   
   define_index do
     # fields
-    indexes title, :sortable => true
+    indexes title
+    indexes abstract
     indexes full_text_raw
-    indexes agency.name, :as => :agency, :sortable => true
+    indexes agency.name, :as => :agency_name
     
     # attributes
     has topics(:id), :as => :topic_ids
@@ -77,7 +78,8 @@ class Entry < ActiveRecord::Base
     set_property :field_weights => {
       "title" => 100,
       "abstract" => 50,
-      "full_text_raw" => 25
+      "full_text_raw" => 25,
+      "agency_name" => 10
     }
   end
   
