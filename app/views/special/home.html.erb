@@ -1,5 +1,9 @@
 <div class="currentevents span-15">
-  <h2 class="icon cal">Today's entries <span>(<%= @entries.length %>)</span></h2>
+  
+  <div class="header">
+    <h2>Today's entries <span>(<%= @entries.length %>)</span></h2>
+  </div>
+    
   <div class="daily">
     <ul class="items">
     <% @entries.each_with_index do |entry, i| %>
