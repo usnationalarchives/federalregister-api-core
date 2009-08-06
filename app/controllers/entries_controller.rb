@@ -65,7 +65,7 @@ class EntriesController < ApplicationController
   end
   
   def by_date
-    @year = params[:year]   || Time.now.strftime("%Y")
+    @year  = params[:year]  || Time.now.strftime("%Y")
     @month = params[:month] || Time.now.strftime("%m")
     @day   = params[:day]   || Time.now.strftime("%d")
     

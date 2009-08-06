@@ -9,4 +9,10 @@ module EntryHelper
       agencies.join(' :: ')
     end
   end
+  
+  def text_with_links(entry, text)
+    text = add_date_links(entry, text)
+    text = add_citation_links(text)
+    text
+  end
 end
