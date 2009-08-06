@@ -8,35 +8,7 @@
 
 <% feed_autodiscovery agency_path(@agency, :format => :rss) %>
 
-<h2>
-  <%= @agency.entries.count < 100 ? 'All' : "Most Recent 100" %>
-  Entries
-  <% if @agency.entries.count >= 100 %>
-    <span><%= link_to "view all", entries_search_path(:agency_id => @agency.id) %></span>
-  <% end %>
-</h2>
-
-<ul>
-<% @agency.entries.group_by(&:month_year).each do |mnth_year, entries| %>
-  <li>
-    <% year  = entries.first.publication_date.strftime("%Y") %>
-    <% month = entries.first.publication_date.strftime("%m") %>
-    <%= link_to mnth_year, "/entries/#{year}/#{month}" %>
-    <ul>
-    <% entries.group_by(&:publication_date).each do |pub_date, entries| %>  
-      <li>
-        <%= pub_date.to_formatted_s(:day_date) %>
-        <ul>
-          <% entries.each do |entry| %>  
-            <li><%= link_to truncate(entry.title, :length => 100), entry_path(entry) %></li>
-          <% end %>
-        </ul> 
-      </li>
-    <% end %>
-    </ul>
-  </li>
-<% end %>
-</ul>
+<%= render :partial => 'entries/list', :locals => {:entries => @entries, :search_params => {:agency_id => @agency.id}} %>
 
 <% content_for :sidebar do %>
   <% unless @places.blank? %>

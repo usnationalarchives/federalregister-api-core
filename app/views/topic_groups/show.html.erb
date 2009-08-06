@@ -1,0 +1,12 @@
+<% title @topic_group.name %>
+
+<% if @topic_group.topics.size > 1 %>
+<p>This topic summarizes the following topics from the Federal Register:</p>
+<ul>
+<% @topic_group.topics.each do |topic| %>
+  <li><%= topic.name %></li>
+<% end %>
+</ul>
+<% end %>
+
+<%= render :partial => "entries/list", :locals => {:entries => @entries, :search_params => {:topic_group => @topic_group.group_name}} %>
