@@ -81,11 +81,6 @@ class Entry < ActiveRecord::Base
     }
   end
   
-  sphinx_scope(:by_title) { |title|
-    {:conditions => {:title => title}}
-  }
-  
-  
   # def to_param
   #   "#{document_number}"
   # end
