@@ -1,16 +1,21 @@
 <div class="header"><h2>Featured</h2></div>
+
 <ul id='featured_agency_buttons' class="group btn">
   <li class="on" id='month' ><%= link_to '30 days', '#' %></li>
   <li id='quarter'          ><%= link_to '90 days', '#' %></li>
   <li id='year'             ><%= link_to '1 Year',  '#' %></li>
 </ul>
+
 <% %w(month quarter year).each do |range_type| %>
-  <ul id='agency_count_<%= range_type %>' class='featured_agencies'>
+  <ul id='agency_count_<%= range_type %>' class='featured_agencies count'>
   <% featured_agencies.each do |agency| %>
-    <li class='tooltip'>
-    <%= link_to agency.sidebar_name, agency_path(agency) %>
-    <span class='count'><%= agency.entry_counts_since(range_type) %></span>
-    <span class='help_text'><%= agency.name %></span>
+  <li class='tooltip'>
+    <div class="info">
+      <%= link_to agency.sidebar_name, agency_path(agency) %>
+      <span class='count'><%= agency.entry_counts_since(range_type) %></span>
+      <span class='help_text'><%= agency.name %></span>
+    </div>
+    <span class="bg"></span>
   </li>
   <% end %>
   </ul>
