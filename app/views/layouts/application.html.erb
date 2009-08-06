@@ -11,7 +11,6 @@
   <%= stylesheet_link_tag "screen", :media => :screen %>
   <%= stylesheet_link_tag "trifecta", :media => :screen %>
   <%= stylesheet_link_tag "utility", :media => :screen %>
-  <%= stylesheet_link_tag "rainbows", :media => :screen %>
 
   <%= javascript_include_tag 'jquery.js'                %>
   <%= javascript_include_tag 'jquery-ui.js'             %>
@@ -33,8 +32,14 @@
 
     <!-- HEADER -->
     <div id="header">
-      <h1>trifecta</h1>
-      <div class="nav group">
+      <div class="capitol"></div>      
+      
+      <div class="type">
+        <h1>gov<span>pulse</span></h1>
+      </div>
+
+    </div>
+      <div class="nav">
         <div class="search">
           <form action="<%= entries_search_path %>" method="get">
             <!--Search--> 
@@ -48,9 +53,7 @@
           <li><a href="#">Entries</a> | </li>
           <li><a href="#">About</a></li>
         </ul>
-      </div>      
-    </div>
-
+      </div>
   <!-- HEADER end -->
 
 
