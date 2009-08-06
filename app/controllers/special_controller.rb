@@ -2,7 +2,8 @@ class SpecialController < ApplicationController
   
   def home
     # stuff here
-    @entries = Entry.all(:conditions => ['publication_date = ?', Date.today])
+    @last_date = Entry.last.publication_date
+    @entries = Entry.all(:conditions => ['publication_date = ?', @last_date])
     @featured_agencies = Agency.featured
     
     date_range = [Date.today, Date.today + 1]
