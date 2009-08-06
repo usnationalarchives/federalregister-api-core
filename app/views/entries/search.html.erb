@@ -2,14 +2,28 @@
 
 <%# TODO: HELP-DESIGN: style me! %>
 <form method="get">
-  Keywords: <%= text_field_tag :q, @search_term %><br />
-  Near: <%= text_field_tag :near, params[:near] %> (eg '94118', 'San Francisco', etc) (Within: <%= text_field_tag :within, params[:within] %> miles)<br />
-  Agency: <%= select_tag 'agency_id', options_for_select([''] + @agencies.collect{ |agency| [agency.name, agency.id.to_s] }, :selected => params[:agency_id]) %><br />
-  Topic: <%= select_tag 'topic_ids', options_for_select([''] + @topics.collect{ |topic| [topic.name, topic.id.to_s] }, :selected => params[:topic_ids]) %><br />
-  Publication Date From: <%= text_field_tag :publication_date_greater_than, params[:publication_date_greater_than] %>
-    To: <%= text_field_tag :publication_date_less_than, params[:publication_date_less_than] %> (eg '01/01/09', 'a year ago', 'yesterday')<br />
-  Order: <%= select_tag 'order', options_for_select([['Date', 'date'], ['Relevance', 'relevance']], :selected => params[:order]) %> <br />
-  <%= submit_tag 'Search' %>
+  <ul>
+    <li><label>Keywords:</label><%= text_field_tag :q, @search_term %></li>
+    
+    <li><label>Near:</label> <%= text_field_tag :near, params[:near] %> (eg '94118', 'San Francisco', etc) (Within: <%= text_field_tag :within, params[:within] %> miles)</li>
+    
+    <li><label>Agency:</label><%= select_tag 'agency_id', options_for_select([''] + @agencies.collect{ |agency| [agency.name, agency.id.to_s] }, :selected => params[:agency_id]) %></li>
+    
+  <li><label>Topic:</label><%= select_tag 'topic_ids', options_for_select([''] + @topics.collect{ |topic| [topic.name, topic.id.to_s] }, :selected => params[:topic_ids]) %></li>
+  
+  <li>
+    <fieldset>
+      <legend>Publication Date</legend>
+      <ul>
+        <li><label>From:</label><%= text_field_tag :publication_date_greater_than, params[:publication_date_greater_than] %></li>
+        <li><label>To:</label><%= text_field_tag :publication_date_less_than, params[:publication_date_less_than] %> (eg '01/01/09', 'a year ago', 'yesterday')</li>
+      </ul>
+    </fieldset>
+  </li>
+  
+  <li><label>Order:</label><%= select_tag 'order', options_for_select([['Date', 'date'], ['Relevance', 'relevance']], :selected => params[:order]) %> </li>
+  
+  <div class="btn"><%= submit_tag 'Search' %></div>
  </form>
 
 <%= page_entries_info @entries %>
