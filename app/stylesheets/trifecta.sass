@@ -1,15 +1,14 @@
 html
-  :background url(/images/left_bg.png) repeat-y top left 
+  :background url(/images/main_bg_left.png) repeat-y top left 
 body
-  :background url(/images/right_bg.png) repeat-y top right  
+  :background url(/images/main_bg_right.png) repeat-y top right  
   :min-height 100%
   :margin-bottom -150px
   :position relative
-  .clearfooter
-    :clear both
-    :height 150px  
+#wrapper
+  :background url(/images/header_bottomshadow.png) repeat-x left 171px
 #header
-  :background url(/images/header_bg9.png) repeat-x top left
+  :background url(/images/header_bg.png) repeat-x top left
   :border-left 1px solid #27338b  
   :border-right 1px solid #27338b
   :height 121px    
@@ -20,6 +19,7 @@ body
     :display block
     :float left
     :height 81px
+    :margin 30px 0 0 40px
     :width 367px    
     h1
       :margin-left -9999px
@@ -29,15 +29,19 @@ body
     :float right
     :height 121px  
     :width 345px
-.nav
+#nav
   :background-color #005b81
+  :border-bottom 10px solid #39505e
   :float left
-  :padding 5px 0
+  :height 30px
+  :padding 5px 0 
   :width 100%
   .search
     :background url(/images/search_bg.png) no-repeat top left
     :float right
     :height 25px
+    :margin 3px 0 0 0
+    :padding 0 10px 0 0    
     :width 220px
     form
       :height 25px
@@ -55,24 +59,22 @@ body
         :display none
   ul
     :float left
-    :margin 10px 20px 0 0
+    :margin 5px 0 0 0
+    :padding 0 0 0 40px
     li
-      :color #797979
+      :color #aaa
       :float left
       :font 140% "Lucida Grande", "Trebuchet MS", Verdana, sans-serif     
       :list-style-type none
       :margin-right 5px
       a
-        :color #797979
+        :color #fff
         :font 100% "Lucida Grande", "Trebuchet MS", Verdana, sans-serif
         :text-decoration none
         :text-transform uppercase
         &:hover
-          :color #344391
-          :border-bottom 3px solid #344391
-          
+          :color #fa6900          
 #main
-  :background url(/images/main_bg.png) repeat-x top left
   :border-left 1px solid #27338b
   :border-right 1px solid #27338b
   :clear both 
@@ -81,12 +83,11 @@ body
     :border-bottom 2px solid #ff8400      
     :border-top 2px solid #ff8400      
     :color #ff8400
-    :margin-bottom 10px    
+    :margin 0 0 10px 0
   h2
     :font 2em Georgia,"Times New Roman",Serif
-    :border-bottom 1px solid black
-    :color black
-    :margin 10px 0 0 0   
+    :color #46565c
+    :margin 0   
   h3
     :border-bottom 1px solid #aaa
     :color #333
@@ -99,6 +100,13 @@ body
     :font 1.1em sans-serif
     :padding 0
     :margin 0 0 5px 0
+  a
+    :border none
+    :outline none  
+    &:link
+    &:visited
+    &:hover
+    &:active
   ul
     :padding 10px 0 0 0
     li
@@ -112,6 +120,12 @@ body
     li
       :padding 0
   &.sidebar
+  .header
+    :background #fff url(/images/main_hX_bg.png) repeat-x left bottom
+    :border 1px solid #bdbcbd
+    :-moz-border-radius 5px
+    :-webkit-border-radius 5px    
+    :padding 10px 10px
   .content
     :min-height 600px
     :padding-top 20px
@@ -176,7 +190,6 @@ body
         h2
           :border-color #ff8400
           :color #ff8400
-          :margin-bottom 10px
         h3 + ul
           :padding 0
         .small_map  
@@ -186,9 +199,9 @@ body
       :height 100px
       :vertical-align text-top  
       .daily
-        :height 30em
+        :height 32em
         :width 590px
-        :margin 10px 0 0 0
+        :margin 0 0 0 0
         :position relative
         :overflow hidden    
         ul.items
@@ -265,19 +278,23 @@ body
     th.current
       :border-bottom 2px solid red
       :color red
-.icon
-  :padding 5px 0 5px 60px
-  :background-repeat no-repeat
-  &.cal
-    :background-image url(/images/icons/calendar_small.png)
-    :background-position top left 
-  &.agency
-    :background-image url(/images/icons/agency_small2.png)
-    :background-position top left 
-  &.contact
-    :background-image url(/images/icons/contact_small.png)
-    :background-position top left 
-    :padding 32px 0 0 60px
+  .icon
+    :padding 5px 0 5px 60px
+    :background-repeat no-repeat
+    &.cal
+      :background-image url(/images/icons/calendar_small.png)
+      :background-position 10px top
+      :margin 0
+      :padding 0 0 15px 87px
+    &.agency
+      :background-image url(/images/icons/agency_small2.png)
+      :background-position top left 
+      :margin 0
+      :padding 0 0 10px 65px
+    &.contact
+      :background-image url(/images/icons/contact_small.png)
+      :background-position top left 
+      :padding 32px 0 0 60px
 
 hr.ornament
   :background url(/images/hr_bg2.png) no-repeat top center

@@ -13,15 +13,13 @@
 
 class Agency < ActiveRecord::Base
   has_many :entries
+  has_many :children, :class_name => 'Agency', :foreign_key => 'parent_id'
+  belongs_to :parent, :class_name => 'Agency'
   
   before_create :slugify
   
   def to_param
     slug
-  end
-  
-  def parent
-    Agency.find_by_id(parent_id) unless parent_id.nil?
   end
   
   def sidebar_name
