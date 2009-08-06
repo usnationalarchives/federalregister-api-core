@@ -9,4 +9,10 @@ module EntryHelper
       agencies.join(' :: ')
     end
   end
+  
+  def abstract_with_links(entry)
+    abstract = add_date_links(entry.abstract, entry)
+    abstract = add_citation_links(abstract)
+    abstract
+  end
 end

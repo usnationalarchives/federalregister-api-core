@@ -8,8 +8,13 @@
 
 <% feed_autodiscovery agency_path(@agency, :format => :rss) %>
 
-<h2>Entries since <%= @year_range %></h2>
-<p><%= pluralize(@agency.entries.count, 'entry') %></p>
+<h2>
+  <%= @agency.entries.count < 100 ? 'All' : "Most Recent 100" %>
+  Entries
+  <% if @agency.entries.count >= 100 %>
+    <span><%= link_to "view all", entries_search_path(:agency_id => @agency.id) %></span>
+  <% end %>
+</h2>
 
 <ul>
 <% @agency.entries.group_by(&:month_year).each do |mnth_year, entries| %>
@@ -34,10 +39,8 @@
 </ul>
 
 <% content_for :sidebar do %>
-  <h3>Maybe those word graphs</h3>
-  
   <% unless @places.blank? %>
-  <h3>Places Mentioned</h3>
+  <h3>Recently Mentioned Places</h3>
     <% add_javascript { @map.to_js } %>
     <div id="map" class="small_map"></div>
   <% end %>

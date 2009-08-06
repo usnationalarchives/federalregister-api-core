@@ -13,13 +13,7 @@ places_determined_at :datetime -->
 <% if @entry.abstract %>
   <h3>Abstract</h3>
   <p class='abstract'>
-    <%= 
-      abstract = @entry.abstract 
-      @entry.referenced_dates.each do |date|
-        next if date.string.blank?
-        abstract.gsub!(/#{Regexp.escape(date.string)}/, link_to(date.string, calendar_by_ymd_path(date)) )
-      end
-      abstract %>
+    <%= abstract_with_links(@entry) %>
   </p>
 <% end %>
 
@@ -87,10 +81,7 @@ places_determined_at :datetime -->
     text.gsub!(/\s+\[\[Page \d+\]\]\s*/m, " ")
     # text.gsub!(/\n\n([A-Z].*(?:\n^\S.*)*)/, "\n\n<h3>\\1</h3>")
     # text.gsub!(/^    (.+(?:\n^\S.*)*)/, "<p>\\1</p>\n")
-    text.gsub!(/((\d+) U\.?S\.?C\.? (\d+))/, '<a href="http://frwebgate.access.gpo.gov/cgi-bin/getdoc.cgi?dbname=browse_usc&docid=Cite:+\2USC\3" class="usc external" target="_blank">\1</a>')
-    text.gsub!(/((\d+) CFR (\d+)(?:\.(\d+))?)/, '<a href="http://frwebgate.access.gpo.gov/cgi-bin/get-cfr.cgi?YEAR=current&TITLE=\2&PART=\3&SECTION=\4&SUBPART=&TYPE=TEXT">\1</a>')
-    text.gsub!(/((\d+) FR (\d+))/, '<a href="/citation/\2/\3" class="fr">\1</a>')
-
+    text = add_citation_link(text)
     text.sub!(/<\/pre>.*/m, '')
     
     text.sub!(/\A\s+/, '')
