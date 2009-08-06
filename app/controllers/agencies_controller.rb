@@ -8,7 +8,36 @@ class AgenciesController < ApplicationController
   end
   
   def show
-    @agency = Agency.find_by_slug(params[:id], :include => :entries, :order => 'entries.publication_date DESC')
+    @agency = Agency.find_by_slug(params[:id], 
+                                  :include => :entries,
+                                  :order => 'entries.publication_date DESC',
+                                  :limit => 100)
+    
+    @agency = Agency.find_by_slug(params[:id], :include => :entries)
+                                
+    @map_entries = @agency.entries.select{|e| e.publication_date > Date.parse(1.year.ago.to_s)}
+    @places = []
+    logger.info "ENTRY COUNT #{@map_entries.size}"
+    @map_entries.each do |entry|
+      @places +=  entry.places.usable
+      logger.info "PLACES: #{entry.places.inspect}"
+    end
+
+    @map = Cloudkicker::Map.new( :style_id => 1714,
+                                 :bounds   => true,
+                                 :points   => @places
+                               )
+    @places.each do |place|
+      Cloudkicker::Marker.new( :map   => @map, 
+                               :lat   => place.latitude,
+                               :long  => place.longitude, 
+                               :title => 'Click to view location info',
+                               :info  => render_to_string(:partial => 'maps/place_marker_tooltip', :locals => {:place => place} ),
+                               :info_max_width => 200
+                             )
+    end
+    
+    
     
     respond_to do |wants|
       wants.html

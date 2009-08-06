@@ -1,7 +1,7 @@
 class LocationsController < ApplicationController
   
   def index
-    @location = Place.find_by_id(params[:id])
+    @location = Place.find(params[:id])
     @lat   = @location.latitude
     @long  = @location.longitude
     
@@ -12,7 +12,11 @@ class LocationsController < ApplicationController
     
     
     @entries = @location.entries  
-    @places = Place.find_near([@lat,@long], :within => @dist)
+    @places = Place.find_near([@lat,@long], :within => @dist, 
+                              :include => {:entries => :agency}, 
+                              :conditions => ['entries.publication_date > ?', Time.now - 3.years.ago],
+                              :order => 'entries.publication_date', 
+                              :limit => 50)
     
     if !@places.nil?
       @map = Cloudkicker::Map.new( :style_id   => 1714,
@@ -33,7 +37,9 @@ class LocationsController < ApplicationController
       @active_agencies = []
       @places.each do |place|
         place.entries.each do |entry|
-         @active_agencies << entry.agency
+          if entry.agency
+            @active_agencies << entry.agency
+          end
         end
       end
       @active_agencies = @active_agencies.sort_by{|a| a.name}.uniq
