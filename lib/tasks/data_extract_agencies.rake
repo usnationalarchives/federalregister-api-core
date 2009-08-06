@@ -1,4 +1,3 @@
-
 def soundex(string)
   copy = string.upcase.tr '^A-Z', ''
   return nil if copy.empty?
@@ -51,6 +50,7 @@ def find_agency(name, agencies)
   
   cleaned_name = cleanup_name(name)
   to_match = soundex(cleaned_name)
+  return nil if to_match.blank?
   
   selected_agency = nil
   min_closeness = 3
@@ -75,7 +75,7 @@ namespace :data do
       
       all_agencies = Agency.all
       
-      Entry.find_in_batches do |entry_group|
+      Entry.find_in_batches(:conditions => {:agency_id => nil}) do |entry_group|
         entry_group.each do |entry|
           if entry.primary_agency_raw
             parent_agency = find_agency(entry.primary_agency_raw, all_agencies)
