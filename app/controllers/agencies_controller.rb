@@ -8,14 +8,13 @@ class AgenciesController < ApplicationController
   end
   
   def show
-    @year_range = 3.year.ago
     @agency = Agency.find_by_slug(params[:id], 
-                                  :include => :entries, 
-                                  :conditions => ['entries.publication_date > ?', @year_range],
-                                  :order => 'entries.publication_date DESC')
+                                  :include => :entries,
+                                  :order => 'entries.publication_date DESC',
+                                  :limit => 100)
     
-    @year_range = Date.parse(@year_range.to_s).to_formatted_s(:month_year) 
-    
+    @agency = Agency.find_by_slug(params[:id], :include => :entries)
+                                
     @map_entries = @agency.entries.select{|e| e.publication_date > Date.parse(1.year.ago.to_s)}
     @places = []
     logger.info "ENTRY COUNT #{@map_entries.size}"

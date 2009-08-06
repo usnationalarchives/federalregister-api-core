@@ -14,7 +14,7 @@
 </ul>
 
 <% if !@places.nil? %>
-  <h2>Entries mentioning places within <%= pluralize(@dist, 'mile') %> of <%= @location.name %></h2>
+  <h2>Entries mentioning places within <%= pluralize(@dist, 'mile') %> of the center of <%= @location.name %></h2>
 
   <%= render :partial => 'maps/entries_by_distance', :locals => {:entry_places => @places, :lat => @lat, :long => @long} %>
 <% end %>
