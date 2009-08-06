@@ -81,7 +81,7 @@ places_determined_at :datetime -->
     text.gsub!(/\s+\[\[Page \d+\]\]\s*/m, " ")
     # text.gsub!(/\n\n([A-Z].*(?:\n^\S.*)*)/, "\n\n<h3>\\1</h3>")
     # text.gsub!(/^    (.+(?:\n^\S.*)*)/, "<p>\\1</p>\n")
-    text = add_citation_link(text)
+    text = add_citation_links(text)
     text.sub!(/<\/pre>.*/m, '')
     
     text.sub!(/\A\s+/, '')
