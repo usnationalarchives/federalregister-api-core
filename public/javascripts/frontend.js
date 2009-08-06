@@ -1,31 +1,30 @@
 $(document).ready(function() {
   
-  var bg_width = 500;
-  var li_width = 230;
-  
-  $("ul.count:last").each(function(){
+  $("ul.count").each(function(){
     var max = find_max($(this));
-    li_width = $("ul.count").width();
+    var val = 0;
+    var percent_of_width = 0;
     
     $(this).find("li").each(function(){
-      var i = parseInt( $(this).find(".count").html() );
-      var p = i / max;
-      var offset = Math.round(bg_width - (li_width * p));
-      //$(this).find(".bg").css("width", Math.round(p*100) + "%" );
-      
-      $(this).css("background-position", -offset + "px top" );
-    })
+      val = parseInt( $(this).find(".count").html() );
+      percent_of_width = Math.round((val / max) * 100);
+      $(this).find(".bg").animate({"width": percent_of_width + "%"}, 1500 );
+    });
     
   });
+  
+  
+  
 });
 
 function find_max(list){
   var max = 0;
-
+  var val = 0;
+  
   $(list).find(".count").each(function(){
-    var i = parseInt( $(this).html() );
-    if(i > max)
-      max = i; 
+    val = parseInt( $(this).html() );
+    if(val > max)
+      max = val; 
   });
   
   return max;  
