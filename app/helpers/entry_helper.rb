@@ -1,5 +1,5 @@
 module EntryHelper
-  def display_agencies_for_entries(entry)
+  def display_agencies_for_entry(entry)
     if entry.agency
       agencies = []
       unless entry.agency_id.nil? || entry.agency.parent_id.nil?

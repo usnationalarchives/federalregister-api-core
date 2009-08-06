@@ -16,6 +16,10 @@ module PathHelper
     "/citation/#{citation.first}/#{citation.last}"
   end
   
+  def locations_path(place)
+    "/locations/#{place.slug}/#{place.id}"
+  end
+  
   private
   
   def path_to_url(path)

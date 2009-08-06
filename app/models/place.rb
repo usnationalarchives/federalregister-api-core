@@ -23,6 +23,10 @@ class Place < ActiveRecord::Base
   
   acts_as_mappable :lat_column_name => :latitude,
                    :lng_column_name => :longitude
+
+  def slug
+    "#{self.name.downcase.gsub(/&/, 'and').gsub(/[^a-z0-9]+/, '-')}"
+  end
                    
   def location 
     @location = [latitude, longitude]

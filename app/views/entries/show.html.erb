@@ -29,7 +29,7 @@ places_determined_at :datetime -->
     <ul class='meta'>
       <li><%= @entry.publication_date.to_formatted_s(:pretty) %></li>
       <li>
-        <%= display_agencies_for_entries(@entry) %>
+        <%= display_agencies_for_entry(@entry) %>
       </li>
     </ul>
   </div>
