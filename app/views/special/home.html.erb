@@ -17,6 +17,29 @@
   </div>
 </div>
 
+<% if !@closing_soon.empty? %>
+  <div>
+    <h3>Comments Closing Soon</h3>
+    <ul>
+    <% @closing_soon.each do |date| %>
+      <li><%= link_to date.entry.title, entry_path(date.entry) %></li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<% if !@recently_opened.empty? %>
+  <div>
+    <h3>Comments Recently Opened</h3>
+    <ul>
+    <% @recently_opened.each do |date| %>
+      <li><%= link_to date.entry.title, entry_path(date.entry) %></li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>
+
+
 <% content_for :sidebar do %>
   <%= render :partial => 'agencies/featured', :locals => {:featured_agencies => @featured_agencies} %>
 <% end %>
