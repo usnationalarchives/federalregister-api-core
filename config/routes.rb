@@ -1,5 +1,5 @@
 ActionController::Routing::Routes.draw do |map|
-  map.resources :topics
+  map.resources :topic_groups, :as => "topics"
   
   map.connect 'agencies/:year/weekly/:week', :controller => 'agencies',
                                              :action     => 'index',
