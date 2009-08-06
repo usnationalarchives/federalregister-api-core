@@ -1,7 +1,7 @@
 <h2>
-  <%= entries.count < 100 ? 'All' : "Most Recent 100" %>
+  <%= entries.size < 100 ? 'All' : "Most Recent 100" %>
   Entries
-  <% if entries.count >= 100 %>
+  <% if entries.size > 100 %>
     <span><%= link_to "view all", entries_search_path(search_params) %></span>
   <% end %>
 </h2>
