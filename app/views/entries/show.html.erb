@@ -129,21 +129,10 @@ places_determined_at :datetime -->
   </ul>
   
 
-  <% unless @entry.places.blank? %>
-  <h3>Recent Nearby Entries</h3>
-  <% 
-    distance = 10 
-    entry_limit = 10
-    # total_entries = @entry.entries_within(distance, :count => true)
-  %>
-  <%# HELP-DESIGN: format these sidebar items %>
-  <ul>
-  <% @entry.entries_within(distance, :limit => entry_limit).each do |entry| %>
-    <li><%= link_to truncate(entry.title, 100), entry_path(entry) %></li>
-  <% end %>
-  </ul>
-  <%# TODO: add real link here %>
-  <%# link_to "View #{total_entries-entry_limit} more entries with #{distance} miles", '#' %>
+  <% unless @entry.places.usable.blank? %>
+  <h3>Places Mentioned</h3>
+    <% add_javascript { @map.to_js } %>
+    <div id="map" style="width: 230px; height: 350px"></div>
   <% end %>
 
 <% end %>
