@@ -6,7 +6,6 @@ body
   :margin-bottom -150px
   :position relative
 #wrapper
-  :background url(/images/header_bottomshadow.png) repeat-x left 171px
 #header
   :background url(/images/header_bg.png) repeat-x top left
   :border-left 1px solid #27338b  
@@ -79,8 +78,7 @@ body
         &:hover
           :color #fa6900          
 #main
-  :border-left 1px solid #27338b
-  :border-right 1px solid #27338b
+  :background url(/images/header_bottomshadow.png) repeat-x left top
   :clear both 
   :margin-top -9px !important
   h1
@@ -169,7 +167,7 @@ body
             :color #f00
     .col1
       .filterBy
-        :margin 3px 10px 0 0
+        :margin 13px 10px 0 0
       .fulltextWrapper
         :border 1px solid #ccc
         :-moz-border-radius 3px
@@ -261,7 +259,42 @@ body
       &.on
         a
           :background #747d87
-          :color #fff               
+          :color #fff
+  ul.count
+    :margin 0
+    :padding 0
+    li
+      :background #eef
+      :border-left 1px solid transparent
+      :border-right 1px solid transparent
+      :-moz-border-radius 5px
+      :-webkit-border-radius 5px
+      :color #343434
+      :margin 0 0 5px 0
+      :padding 0 5px
+      :position relative
+      a
+        :color #343434
+        :font-weight bold
+        :text-decoration none
+      .info
+        :display block
+        :height 24px
+        :line-height 24px
+        :position relative
+        :z-index 5555
+      .bg
+        :background url(/images/count_bg4.png) repeat-x left top      
+        :border 1px solid #83bbd9        
+        :-moz-border-radius 5px
+        :-webkit-border-radius 5px        
+        :display block
+        :height 22px
+        :left 0    
+        :position absolute
+        :top 0
+        :z-index 1111
+        
   dl.fixed
     :width 600px
     dt
