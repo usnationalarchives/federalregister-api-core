@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090806150900) do
+ActiveRecord::Schema.define(:version => 20090806172351) do
 
   create_table "agencies", :force => true do |t|
     t.integer  "parent_id"
@@ -17,6 +17,10 @@ ActiveRecord::Schema.define(:version => 20090806150900) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "slug"
+    t.string   "agency_type"
+    t.string   "short_name"
+    t.text     "description"
+    t.text     "more_information"
   end
 
   add_index "agencies", ["name", "parent_id"], :name => "index_agencies_on_name_and_parent_id"
