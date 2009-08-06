@@ -14,6 +14,7 @@
 class Topic < ActiveRecord::Base
   has_many :topic_assignments
   has_many :entries, :through => :topic_assignments
+  belongs_to :topic_group, :foreign_key => :group_name
 
   def to_param
     name
