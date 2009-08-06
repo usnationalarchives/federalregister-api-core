@@ -9,10 +9,9 @@ class MapsController < ApplicationController
     @dist = 50
     
     # set this to group the results in the view
-    Place.distance_grouping           = @dist
     Place.distance_grouping_increment = 5
       
-    @places = Place.find_near([@lat,@long], @dist)
+    @places = Place.find_near([@lat,@long], :within => @dist)
     
     @map = Cloudkicker::Map.new( :lat      => @lat, 
                                  :long     => @long,
@@ -24,7 +23,7 @@ class MapsController < ApplicationController
                                :lat   => place.latitude,
                                :long  => place.longitude, 
                                :title => 'Click to display entries for this location.',
-                               :info  => render_to_string(:partial => 'entry_marker_tooltip', :locals => {:place => place} )
+                               :info  => render_to_string(:partial => 'entry_marker_tooltip', :locals => {:place => place} ),
                              )
     end
   end

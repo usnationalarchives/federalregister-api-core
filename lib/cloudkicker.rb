@@ -1,12 +1,15 @@
 module Cloudkicker
   class Map
     def initialize(options={})
-      @lat         = options.delete(:lat)         || 37.778605
-      @long        = options.delete(:long)        || -122.391369
-      @map_control = options.delete(:map_control) || true
-      @zoom        = options.delete(:zoom)        || 10
-      @style_id    = options.delete(:style_id)    || 2
-      @markers     = []
+      @lat          = options.delete(:lat)         || 37.778605
+      @long         = options.delete(:long)        || -122.391369
+      @map_control  = options.delete(:map_control) || true
+      @zoom         = options.delete(:zoom)        || 10
+      @style_id     = options.delete(:style_id)    || 2
+      @bounds       = options.delete(:bounds)      || false
+      @bound_points = options.delete(:points)      || 0
+      @bound_zoom   = options.delete(:bound_zoom)  || 2 #used when only a single point is passed to bound_points
+      @markers      = []
     end
     
     def to_js(map_id='map')
@@ -20,7 +23,18 @@ module Cloudkicker
       js << "   var map = new CM.Map('#{map_id}', cloudmade);"
       # TODO: disable mouse zoom should be an option in an map options class
       js << "   map.disableScrollWheelZoom();"
-      js << "   map.setCenter(new CM.LatLng(#{@lat}, #{@long}), #{@zoom});"
+      
+      if @bounds 
+        if @bound_points.size > 1
+          js << "   map.zoomToBounds(#{bounding_box(@bound_points)})"
+        elsif @bound_points.size == 1
+          js << "   map.setCenter(new CM.LatLng(#{@bound_points.first.latitude}, #{@bound_points.first.longitude}), #{@bound_zoom});"
+        else
+          raise "You must provide at least one point (via :bound_points) if you are using :bounds => true"
+        end
+      else
+        js << "   map.setCenter(new CM.LatLng(#{@lat}, #{@long}), #{@zoom});"
+      end
       if @map_control
         js << '   var topRight = new CM.ControlPosition(CM.TOP_RIGHT, new CM.Size(10, 10));'
         js << '   map.addControl(new CM.LargeMapControl(), topRight);'
@@ -38,6 +52,34 @@ module Cloudkicker
     def markers
       @markers
     end
+    
+    def bounding_box(points)
+      # lats  = []
+      # longs = []
+      # points.each do |point|
+      #   lats  << point.latitude
+      #   longs << point.longitude
+      # end
+      # 
+      # max_lat = lats.max
+      # min_lat = lats.min
+      # max_long = longs.max
+      # min_long = longs.min
+      # 
+      # north_east_lat  = max_lat  + (max_lat  - min_lat)
+      # north_east_long = max_long + (max_long - min_long)
+      # 
+      # south_west_lat  = min_lat  - (max_lat  - min_lat)
+      # south_west_long = min_long - (max_long - min_long)
+      
+      cloud_map_points = []
+    
+      points.each do |point|
+        cloud_map_points << "new CM.LatLng(#{point.latitude}, #{point.longitude})"
+      end
+      
+      "new CM.LatLngBounds(#{cloud_map_points.join(',')})"
+    end
   end
   
   class Marker
@@ -51,6 +93,7 @@ module Cloudkicker
       @id    = self.object_id
       @title = options.delete(:title) || ''
       @info  = options.delete(:info)  || ''
+      @max_width = options.delete(:info_max_width) || 400
       add_marker
     end
     
@@ -75,7 +118,7 @@ module Cloudkicker
       # Add listener to marker
       js << "   CM.Event.addListener(myMarker_#{@id}, 'click', function(latlng) {"
       # TODO single quotes should be esacaped not deleted. Escaping doesn't seem to be working at the moment though... clearly missing something
-      js << "     map.openInfoWindow(myMarkerLatLng_#{@id}, '#{@info.gsub(/'/,"")}', {maxWidth: 400, pixelOffset: new CM.Size(-8,-50)});"
+      js << "     map.openInfoWindow(myMarkerLatLng_#{@id}, '#{@info.gsub(/'/,"")}', {maxWidth: #{@max_width}, pixelOffset: new CM.Size(-8,-50)});"
       js << '   });'
       
       js << ''

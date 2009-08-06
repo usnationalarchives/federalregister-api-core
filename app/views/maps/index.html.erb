@@ -8,13 +8,14 @@
 <% @places.sort_by_distance_from(Place.new(:latitude => @lat, :longitude => @long)).group_by(&:distance_groups).each do |distance, places| %>
     <li>
       Within <%= pluralize(distance, 'miles') %>
-      <% places.each do |place| %>
       <ul>
-        <% place.entries.each do |entry| %>
-          <li><%= link_to entry.title, entry_path(entry) %></li>
+        <% places.map(&:entries).flatten.sort_by{|e| e.publication_date}.reverse.each do |entry| %>
+          <li>
+            <span class='entry_date'><%= entry.publication_date.to_s %></span>
+            <%= link_to entry.title, entry_path(entry) %>
+          </li>
         <% end %>
       </ul>
-      <% end %>
     </li>
 <% end %>
 </ul>
