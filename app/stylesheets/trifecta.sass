@@ -1,18 +1,14 @@
 html
-  :background url(/images/left_bg.png) repeat-y top left 
+  :background url(/images/main_bg_left.png) repeat-y top left 
 body
-  :background url(/images/right_bg.png) repeat-y top right  
+  :background url(/images/main_bg_right.png) repeat-y top right  
   :min-height 100%
   :margin-bottom -150px
   :position relative
-  .clearfooter
-    :clear both
-    :height 150px  
 #wrapper
   :background url(/images/header_bottomshadow.png) repeat-x left 171px
-  
 #header
-  :background url(/images/header_bg9.png) repeat-x top left
+  :background url(/images/header_bg.png) repeat-x top left
   :border-left 1px solid #27338b  
   :border-right 1px solid #27338b
   :height 121px    
@@ -23,6 +19,7 @@ body
     :display block
     :float left
     :height 81px
+    :margin 30px 0 0 40px
     :width 367px    
     h1
       :margin-left -9999px
@@ -32,17 +29,19 @@ body
     :float right
     :height 121px  
     :width 345px
-.nav
+#nav
   :background-color #005b81
   :border-bottom 10px solid #39505e
   :float left
   :height 30px
-  :padding 5px 0
+  :padding 5px 0 
   :width 100%
   .search
     :background url(/images/search_bg.png) no-repeat top left
     :float right
     :height 25px
+    :margin 3px 0 0 0
+    :padding 0 10px 0 0    
     :width 220px
     form
       :height 25px
@@ -60,7 +59,8 @@ body
         :display none
   ul
     :float left
-    :margin 10px 20px 0 0
+    :margin 5px 0 0 0
+    :padding 0 0 0 40px
     li
       :color #797979
       :float left
@@ -68,7 +68,7 @@ body
       :list-style-type none
       :margin-right 5px
       a
-        :color #797979
+        :color #fff
         :font 100% "Lucida Grande", "Trebuchet MS", Verdana, sans-serif
         :text-decoration none
         :text-transform uppercase
