@@ -10,9 +10,9 @@ module EntryHelper
     end
   end
   
-  def abstract_with_links(entry)
-    abstract = add_date_links(entry.abstract, entry)
-    abstract = add_citation_links(abstract)
-    abstract
+  def text_with_links(entry, text)
+    text = add_date_links(entry, text)
+    text = add_citation_links(text)
+    text
   end
 end
