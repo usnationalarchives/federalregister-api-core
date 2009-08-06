@@ -1,11 +1,17 @@
 $(document).ready(function() {
-    
+      
   $("ul.filter li a").bind("click", function(e){
     e.preventDefault();
-    $("ul.agencyList li").hide().find("a:regex('^[" + $(this).html() + "]')").parent().show();
+    $("ul.filter li").removeClass("on");
+    $(this).parent().addClass("on");
+    if($(this).parent().hasClass("all"))
+      $("ul.agencyList li").show()
+    else
+      $("ul.agencyList li").hide().find("a:regex('^[" + $(this).html() + "]')").parent().show();
   });
 
-  
+  $("ul.filter li:first a").trigger("click");
+
 });
 
 jQuery.extend(  

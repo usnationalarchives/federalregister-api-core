@@ -33,11 +33,11 @@ body
     :height 121px  
     :width 345px
 #nav
-  :background url(/images/nav_bg.png) repeat-x top left
+  :background-color #005b81
+  :border-bottom 10px solid #39505e
   :float left
-  :height 92px
+  :height 30px
   :padding 5px 0 
-  :position absolute
   :width 100%
   .search
     :background url(/images/search_bg.png) no-repeat top left
@@ -78,8 +78,9 @@ body
         &:hover
           :color #fa6900          
 #main
+  :background url(/images/header_bottomshadow.png) repeat-x left top
   :clear both 
-  :margin-top 55px
+  :margin-top -9px !important
   h1
     :border-bottom 2px solid #ff8400      
     :border-top 2px solid #ff8400      
@@ -166,7 +167,7 @@ body
             :color #f00
     .col1
       .filterBy
-        :margin 3px 10px 0 0
+        :margin 13px 10px 0 0
       .fulltextWrapper
         :border 1px solid #ccc
         :-moz-border-radius 3px
@@ -258,7 +259,27 @@ body
       &.on
         a
           :background #747d87
-          :color #fff               
+          :color #fff
+  ul.count
+    :margin 0
+    :padding 0
+    li
+      :background #ddd url(/images/count_bg.png) no-repeat -500px top
+      :border 1px solid #dc6b00
+      :margin 0 0 5px 0
+      :padding 3px 5px
+      :position relative
+      a
+        :color #343434
+        :font-weight bold
+        :text-decoration none
+      .bg
+        :background-color #f00
+        :display block
+        :height 24px
+        :left 0    
+        :position absolute
+        :top 0
   dl.fixed
     :width 600px
     dt
