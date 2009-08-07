@@ -119,17 +119,16 @@ body {
   clear: both;
   margin-top: -9px !important;
 }
-/* line 84, ../../app/stylesheets/trifecta.sass */
+/* line 85, ../../app/stylesheets/trifecta.sass */
 #main h1 {
-  border-bottom: 2px solid #ff8400;
-  border-top: 2px solid #ff8400;
   color: #ff8400;
-  margin: 0 0 10px 0;
+  font: 2.5em Georgia,"Times New Roman",Serif;
+  margin: 0 0 0 0;
 }
 /* line 89, ../../app/stylesheets/trifecta.sass */
 #main h2 {
-  font: 2em Georgia,"Times New Roman",Serif;
   color: #ff8400;
+  font: 2em Georgia,"Times New Roman",Serif;
   margin: 0;
 }
 /* line 94, ../../app/stylesheets/trifecta.sass */
