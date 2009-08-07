@@ -96,12 +96,55 @@ class EntriesController < ApplicationController
     @month = params[:month] || Time.now.strftime("%m")
     @day   = params[:day]   || Time.now.strftime("%d")
     
-    @entries = Entry.find(:all, :conditions => ['publication_date = ?', "#{@year}-#{@month}-#{@day}"], :order => 'publication_date DESC')
+    @publication_date = Date.parse("#{@year}-#{@month}-#{@day}")
+    @agencies = Agency.all(
+        :include => :entries,
+        :conditions => ['publication_date = ?', @publication_date],
+        :order => "entries.title"
+    )
+    @entries_without_agency = Entry.all(
+      :conditions => ['entries.agency_id IS NULL && entries.publication_date = ?', @publication_date],
+      :order => "entries.title"
+    )
+    @entry_count = Entry.count(:conditions => ['entries.publication_date = ?', @publication_date])
+    
+    @places = Place.usable.all(
+      :include => :entries,
+      :conditions => ['entries.publication_date = ?', @publication_date]
+    )
+    
+    @labels = []
+    @values = []
+    @agencies.sort_by{|a| a.entries.size}.reverse[0,10].each do |agency|
+      @labels << "#{agency.name}"
+      @values << agency.entries.size
+    end
+    
+    if @values.sum < @entry_count
+      count = (@entry_count - @values.sum)
+      @labels << "Other"
+      @values << count
+    end
+    
+    if !@places.blank?
+      @map = Cloudkicker::Map.new( :style_id => 1714,
+                                   :bounds   => true,
+                                   :points   => @places
+                                 )
+      @places.each do |place|
+        Cloudkicker::Marker.new( :map   => @map, 
+                                 :lat   => place.latitude,
+                                 :long  => place.longitude, 
+                                 :title => 'Click to view location info',
+                                 :info  => render_to_string(:partial => 'maps/place_with_entries_marker_tooltip', :locals => {:place => place} ),
+                                 :info_max_width => 200
+                               )
+      end
+    end
   end
   
   def show
-    @entry = Entry.find_by_document_number(params[:document_number])
-    raise "Entry doesn't exist" if @entry.nil?
+    @entry = Entry.find_by_document_number!(params[:document_number])
     
     if !@entry.places.usable.blank?
       
