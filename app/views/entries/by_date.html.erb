@@ -1,9 +1,19 @@
 <% feed_autodiscovery entries_path(:format => :rss) %>
 
+<% content_for :precolumn do %>
+  <h1>Entries</h1>
+<% end %>
+
+<div class="header group">
 <h2>
   Entries for <%= @publication_date.to_formatted_s(:pretty) %>
   <span>(<%= pluralize(@entry_count, 'entry') %>)</span>
 </h2>
+<%# TODO HELP-RUBY link these %>
+<%= link_to 'Prev', '',:class => "icon arrow prev floatLeft" %>
+<%= link_to 'Next', '',:class => "icon arrow next floatRight" %>
+</div>
+
 
 <ul>
 <% @agencies.group_by{|a| a.parent_id || a.id}.each do |parent_agency_id, agencies| %>
