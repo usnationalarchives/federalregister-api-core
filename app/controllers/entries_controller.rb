@@ -5,6 +5,8 @@ class EntriesController < ApplicationController
     
     @search_term = params[:q]
     
+    errors = []
+    
     @near = params[:near]
     if params[:place_id]
       @place = Place.find(params[:place_id])
@@ -18,10 +20,12 @@ class EntriesController < ApplicationController
       
         location = Rails.cache.fetch("location_of: '#{@near}'") { Geokit::Geocoders::GoogleGeocoder.geocode(@near) }
       
-        # TODO: send error message to user on invalid location
-      
-        place_ids = Place.find(:all, :select => "id", :origin => location, :within => within).map &:id
-        with[:place_ids] = place_ids
+        if location.lat
+          place_ids = Place.find(:all, :select => "id", :origin => location, :within => within).map &:id
+          with[:place_ids] = place_ids
+        else
+          errors << 'We could not understand your location.'
+        end
       end
     end
     
@@ -35,16 +39,33 @@ class EntriesController < ApplicationController
     end
     
     if !params[:publication_date_greater_than].blank? || !params[:publication_date_less_than].blank?
-      # TODO: send error message to user on invalid dates
-      start_date = Chronic.parse(params[:publication_date_greater_than], :context => :past) || DateTime.parse('1994-01-01')
-      end_date = Chronic.parse(params[:publication_date_less_than], :context => :past) || DateTime.parse('2100-01-01')
-      with[:publication_date] = Range.new(start_date.midnight.to_f.to_i,end_date.midnight.to_f.to_i)
+      @start_date = Chronic.parse(params[:publication_date_greater_than], :context => :past)
+      
+      if ! params[:publication_date_greater_than].blank? && @start_date.nil?
+        errors << 'We could not understand your start date.'
+      end
+      
+      @end_date = Chronic.parse(params[:publication_date_less_than], :context => :past)
+      if ! params[:publication_date_less_than].blank? && @end_date.nil?
+        errors << 'We could not understand your end date.'
+      end
+      
+      @start_date ||= DateTime.parse('1994-01-01')
+      @end_date ||= Entry.last.publication_date.to_datetime
+      
+      with[:publication_date] = Range.new(@start_date.midnight.to_f.to_i,@end_date.midnight.to_f.to_i)
+    end
+    
+    unless errors.blank?
+      flash[:error] = "<ul>#{errors.map{|e| "<li>#{e}</li>"}}</ul>"
     end
     
     order = "publication_date DESC, @relevance DESC"
     if params[:order] == 'relevance'
       order = "@relevance DESC, publication_date DESC"
     end
+    
+    # raise with.inspect
     
     @entries = Entry.search(@search_term, 
       :page => params[:page] || 1,

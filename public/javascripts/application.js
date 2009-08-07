@@ -21,10 +21,10 @@ $(document).ready(function() {
   /* Tooltips for featured agency list */
   /*                                   */
   
-  $("li.tooltip span.help_text").hide();
-  $("li.tooltip a").each(function(){
+  $("li.tooltip .info span.help_text").hide();
+  $("li.tooltip .info a").each(function(){
     //console.log($(this).closest('li').children('span.help_text').html());
-    help_text = $(this).closest('li').children('span.help_text').html()
+    help_text = $(this).siblings("span.help_text").html();
     $(this).qtip({
        content: {
           text: help_text

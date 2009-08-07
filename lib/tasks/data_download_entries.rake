@@ -10,8 +10,8 @@ namespace :data do
         date = date - 1
         next if date.wday == 6 || date.wday == 0
         
-        url = "http://www.gpo.gov:80/fdsys/pkg/FR-#{date}/mods.xml"
-        path = "data/mods/#{date}.xml"
+        url = "http://www.gpo.gov:80/fdsys/pkg/FR-#{date.to_s(:db)}/mods.xml"
+        path = "data/mods/#{date.to_s(:db)}.xml"
         
         if File.exists?(path)
           puts "skipping #{date}"
