@@ -105,10 +105,14 @@ body
     :margin 0 0 5px 0
   a
     :border none
+    :color #005b81
     :outline none  
+    :text-decoration none
     &:link
     &:visited
+      :color #fa6900
     &:hover
+      :color #39505e
     &:active
   ul
     :padding 10px 0 0 0
@@ -129,6 +133,10 @@ body
     :-moz-border-radius 5px
     :-webkit-border-radius 5px    
     :padding 10px 10px
+    h1 
+      :float left
+    a.options
+      :float right
   .content
     :min-height 600px
     :padding-top 20px
@@ -333,7 +341,16 @@ body
       :background-image url(/images/icons/contact_small.png)
       :background-position top left 
       :padding 32px 0 0 60px
-
+    &.arrow
+      :background-image url(/images/arrow.png)
+      :background-position left 1px
+      :margin 10px 0 0 0
+      :padding 0 0 0 20px    
+      :width 80px
+      &.open  
+        :background-position left -15px
+      &:visited
+        :color #005b81
 hr.ornament
   :background url(/images/hr_bg2.png) no-repeat top center
   :border none
