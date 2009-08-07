@@ -21,25 +21,21 @@ places_determined_at :datetime -->
   <div class="details">
     <h3>Details</h3>
     <dl class='fixed details group'>
-      <dt>Publication Date</dt>
-      <dd><%= @entry.publication_date.to_formatted_s(:pretty) %></dd>
-      <dt>Publishing Agencies</dt>
-      <dd><%= display_agencies_for_entry(@entry) %></dd>
-      <dt>Federal Register Document Number:</dt> 
-      <dd><%= @entry.document_number %> 
-      (<% [:html, :text, :pdf].each do |format| %>
-       <%= link_to format, @entry.source_url(format), :class => format %>
-       <% end %>)
-       </dd>
-       
-      <% if !@entry.dates.nil?               %><dt>Dates:</dt>          <dd><%= text_with_links(@entry, @entry.dates) %></dd><% end %>
-      <% if !@entry.effective_date.nil?      %><dt>Effective Date:</dt> <dd><%= @entry.effective_date                 %></dd><% end %>
-      <% if !@entry.comments_close_date.nil? %><dt>Comments Close:</dt> <dd><%= @entry.comments_close_date            %></dd><% end %>
-      <% if !@entry.action.nil?              %><dt>Action:</dt>         <dd><%= @entry.action.titlecase               %></dd><% end %>
-      <% if !@entry.type.nil?                %><dt>Type: </dt>          <dd><%= @entry.type                           %></dd><% end %>
-      <% if !@entry.genre.nil?               %><dt>Genre:</dt>          <dd><%= @entry.genre.titlecase                %></dd><% end %>
-      <% if !@entry.part_name.nil?           %><dt>Part Name:</dt>      <dd><%= @entry.part_name                      %></dd><% end %>
-      <% if !@entry.granule_class.nil?       %><dt>Granule Class:</dt>  <dd><%= @entry.granule_class.titlecase        %></dd><% end %>
+      <% if !@entry.publication_date.blank?    %><dt>Publication Date:</dt>                 <dd><%= @entry.publication_date.to_formatted_s(:pretty) %></dd><% end %>
+      <% if !@entry.document_number.blank?     %><dt>Federal Register Document Number:</dt>
+        <dd><%= @entry.document_number %> (<% [:html, :text, :pdf].each do |format| %>
+                                               <%= link_to format, @entry.source_url(format), :class => format %>
+                                           <% end %>)</dd><% end %>
+      <% agency = display_agencies_for_entry(@entry) %>
+      <% if !agency.blank?                     %><dt>Publishing Agency:</dt><dd><%= display_agencies_for_entry(@entry)              %></dd><% end %>
+      <% if !@entry.dates.blank?               %><dt>Dates:</dt>            <dd><%= text_with_links(@entry, @entry.dates)           %></dd><% end %>
+      <% if !@entry.effective_date.blank?      %><dt>Effective Date:</dt>   <dd><%= @entry.effective_date                           %></dd><% end %>
+      <% if !@entry.comments_close_date.blank? %><dt>Comments Close:</dt>   <dd><%= @entry.comments_close_date                      %></dd><% end %>
+      <% if !@entry.action.blank?              %><dt>Action:</dt>           <dd><%= @entry.action.titlecase                         %></dd><% end %>
+      <% if !@entry.type.blank?                %><dt>Type: </dt>            <dd><%= @entry.type                                     %></dd><% end %>
+      <% if !@entry.genre.blank?               %><dt>Genre:</dt>            <dd><%= @entry.genre.titlecase                          %></dd><% end %>
+      <% if !@entry.part_name.blank?           %><dt>Part Name:</dt>        <dd><%= @entry.part_name                                %></dd><% end %>
+      <% if !@entry.granule_class.blank?       %><dt>Granule Class:</dt>    <dd><%= @entry.granule_class.titlecase                  %></dd><% end %>
     </dl>
   </div>
 </div>
