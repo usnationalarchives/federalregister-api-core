@@ -51,35 +51,22 @@
   </li>
 
   <%= submit_tag 'Search', :class => 'btn' %>
- </form>
+</form>
 
 <%= page_entries_info @entries %>
 
 <%= will_paginate @entries %>
-
-<table>
-  <thead>
-    <tr>
-      <th>Date</th>
-      <th>Action</th>
-      <th>Title</th>
-      <th>Agency</th>
-      <th>Extract</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @entries.each do |entry| %>
-    <tr>
-      <td><%= entry.publication_date %></td>
-      <td><%= entry.action %></td>
-      <td><%= link_to entry.excerpts.title, entry_path(entry) %></td>
-      <td><%= entry.agency ? link_to(entry.agency.name, agency_path(entry.agency)) : entry.primary_agency_raw %></td>
-      <td><%= entry.excerpts.full_text_raw.blank? ? entry.excerpts.abstract : entry.excerpts.full_text_raw %></td>
-    </tr>
-    <% end %>
-  </tbody>
-</table>
-
+<ol>
+  <% @entries.each do |entry| %>
+  <li>
+    <h4 class="title"><%= link_to entry.excerpts.title, entry_path(entry) %></h4>
+    <span class="date"><%= entry.publication_date %></span>
+    <span class="excepts"><%= entry.excerpts.full_text_raw.blank? ? entry.excerpts.abstract : entry.excerpts.full_text_raw %></span>
+    <br />
+    <span class="agency"><%= entry.agency ? link_to(entry.agency.name, agency_path(entry.agency)) : entry.primary_agency_raw %></span>
+  </li>
+  <% end %>
+</ol>
 <%= will_paginate @entries %>
 
 <% content_for :sidebar do %>
