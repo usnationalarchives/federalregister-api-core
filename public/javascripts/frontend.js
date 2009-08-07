@@ -27,8 +27,7 @@ $(document).ready(function() {
       var li = $(this)
       var text = li.text();
       var name = text.replace(/ \(\d+\)/,'');
-      var count = text.replace(/.*\(|\).*/g,'') / 7
-      console.log(count);
+      var count = text.replace(/.*\(|\).*/g,'') / 7;
       tagcloud.addNode(new Node(name, count));
     });
   
