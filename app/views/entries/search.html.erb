@@ -27,6 +27,11 @@
     </li>
   
     <li><label>Order:</label><%= select_tag 'order', options_for_select([['Date', 'date'], ['Relevance', 'relevance']], :selected => params[:order]) %> </li>
+
+    
+    <li><label>Agency:</label><%= select_tag 'agency_id', options_for_select([''] + @agencies.collect{ |agency| [agency.name, agency.id.to_s] }, :selected => params[:agency_id]) %></li>
+    
+  
   <li>
     <fieldset>
       <legend>Publication Date</legend>
