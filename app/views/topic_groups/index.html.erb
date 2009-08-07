@@ -6,7 +6,7 @@
   <h2>By Letter</h2>
 </div>
 
-<ul>
+<ul class="btn small">
 <% @letters.each do |letter| %>
   <li><%= link_to letter.upcase, topic_groups_by_letter_path(letter) %></li>
 <% end %>

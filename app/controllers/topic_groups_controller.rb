@@ -1,7 +1,6 @@
 class TopicGroupsController < ApplicationController
   def index
-    @letters = Topic.connection.select_values("SELECT DISTINCT(LEFT(group_name, 1)) as letter FROM topic_groups ORDER BY letter")
-    @popular_topic_groups = TopicGroup.find(:all, :order => 'entries_count DESC', :limit => 100).sort_by(&:name)
+    redirect_to topic_groups_by_letter_url('a')
   end
   
   def show
@@ -43,6 +42,9 @@ class TopicGroupsController < ApplicationController
   
   def by_letter
     @letter = params[:letter]
+    @letters = ('a' .. 'z')
+    
+    @popular_topic_groups = TopicGroup.find(:all, :order => 'entries_count DESC', :limit => 100).sort_by(&:name)
     
     @topic_groups = TopicGroup.all(:conditions => ["group_name LIKE ?", "#{@letter}%"], :order => "topic_groups.name")
   end

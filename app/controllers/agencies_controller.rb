@@ -3,7 +3,11 @@ class AgenciesController < ApplicationController
   def index
     @agencies  = Agency.find(:all, :order => 'name ASC')
     @chart_max = Agency.max_entry_count
-    @featured_agencies = Agency.featured
+    @featured_agencies = Agency.featured.find(:all, :select => "agencies.*,
+        (SELECT count(*) FROM entries WHERE agency_id = agencies.id AND publication_date > '#{30.days.ago.to_s(:db)}') AS num_entries_month,
+        (SELECT count(*) FROM entries WHERE agency_id = agencies.id AND publication_date > '#{90.days.ago.to_s(:db)}') AS num_entries_quarter,
+        (SELECT count(*) FROM entries WHERE agency_id = agencies.id AND publication_date > '#{365.days.ago.to_s(:db)}') AS num_entries_year"
+    )
     @week = params[:week].to_i || Time.now.strftime("%W").to_i
   end
   

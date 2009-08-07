@@ -97,6 +97,19 @@ class EntriesController < ApplicationController
     @day   = params[:day]   || Time.now.strftime("%d")
     
     @publication_date = Date.parse("#{@year}-#{@month}-#{@day}")
+    
+    @prev_date = Entry.find(:first,
+        :select => 'publication_date',
+        :conditions => ["publication_date < ?", @publication_date],
+        :order => 'publication_date DESC'
+    ).try(:publication_date)
+    
+    @next_date = Entry.find(:first,
+        :select => 'publication_date',
+        :conditions => ["publication_date > ?", @publication_date],
+        :order => 'publication_date'
+    ).try(:publication_date)
+    
     @agencies = Agency.all(
         :include => :entries,
         :conditions => ['publication_date = ?', @publication_date],
@@ -107,6 +120,10 @@ class EntriesController < ApplicationController
       :order => "entries.title"
     )
     @entry_count = Entry.count(:conditions => ['entries.publication_date = ?', @publication_date])
+    
+    if @entry_count == 0
+      raise ActiveRecord::RecordNotFound
+    end
     
     @places = Place.usable.all(
       :include => :entries,

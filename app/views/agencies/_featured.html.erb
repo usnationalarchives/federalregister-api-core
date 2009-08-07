@@ -12,7 +12,7 @@
   <li class='tooltip'>
     <div class="info">
       <%= link_to agency.sidebar_name, agency_path(agency) %>
-      <span class='count'><%= agency.entry_counts_since(range_type) %></span>
+      <span class='count'><%= agency["num_entries_#{range_type}"] %></span>
       <span class='help_text'><%= agency.name %></span>
     </div>
     <span class="bg"></span>
