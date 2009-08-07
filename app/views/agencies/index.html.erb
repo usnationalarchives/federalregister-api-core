@@ -1,10 +1,12 @@
-<%= render :partial => 'agencies/featured', :locals => {:featured_agencies => @featured_agencies} %>
+
+<% content_for :precolumn do %>
+  <h1>Explore Agencies</h1>
+<% end %>
 
 <div class="header">
-  <h2>All Agencies</h2>
+  <h2>By Name</h2>
 </div>
 
-<p class="filterBy floatLeft">Filter by name:</p>
 <ul class="btn filter group">
   <li><a href="#">A-C</a></li>
   <li><a href="#">D</a></li>
@@ -21,16 +23,16 @@
 </ul>
 
 <% content_for :sidebar do %>
-  <h2>Maybe those word graphs</h2>
+  <%= render :partial => 'agencies/featured', :locals => {:featured_agencies => @featured_agencies} %>  
 <% end %>
 
-<% content_for :precolumn do %>
-  <div class="column span-4 prepend-1">
+<%# content_for :precolumn do %>
+  <!-- <div class="column span-4 prepend-1">
     <h2>Some text</h2>
     <p>Description</p>
   </div>
   <div class="column span-4 prepend-1">
     <h2>Graph </h2>
     <p>Description</p>
-  </div>    
-<% end %>
+  </div>    --> 
+<%# end %>

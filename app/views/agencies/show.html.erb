@@ -2,10 +2,9 @@
 <%# title @agency.name %>
 
 <% content_for :precolumn do %>
-  <div class="header group">
-    <h1><%= @agency.name %></h1>
-  </div>
+  <h1><%= @agency.name %></h1>
 <% end %>
+
 
 <% feed_autodiscovery agency_path(@agency, :format => :rss) %>
 
@@ -13,7 +12,9 @@
 
 <% content_for :sidebar do %>
   <% unless @places.blank? %>
-  <h3>Recently Mentioned Places</h3>
+    <div class="header">
+      <h2>Recent Places</h2>
+    </div>
     <% add_javascript { @map.to_js } %>
     <div id="map" class="small_map"></div>
   <% end %>

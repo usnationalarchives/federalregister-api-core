@@ -6,9 +6,9 @@ toc_doc              :string(255)
 places_determined_at :datetime -->
 
 <%# title 'Entries' %>
-
-<h3>Title</h3>
-<h4><%= @entry.title %></h4>
+<% content_for :precolumn do %>
+  <h1><%= @entry.title %></h1>
+<% end %>
 
 <% if @entry.abstract %>
   <h3>Abstract</h3>

@@ -93,13 +93,17 @@ body
   :clear both 
   :margin-top -9px !important
   h1  
-    :color #ff8400
-    :font 2.5em Georgia,"Times New Roman",Serif    
-    :margin 0 0 0 0
+    /:color #ff8400
+    :color #46565c
+    :font 2.5em Georgia,"Times New Roman",Serif
+    :font-variant small-caps        
+    :margin 0 0 20px 0
+    :text-align center
   h2
     :color #46565c  
     :font 2em Georgia,"Times New Roman",Serif
     /:color #46565c
+    :font-variant small-caps
     :margin 0   
   h3
     :border-bottom 1px solid #aaa
@@ -126,11 +130,15 @@ body
     &:active
   ul
     :padding 10px 0 0 0
+    :margin 0
     li
       :list-style-type none
       :padding 0 0 5px 0
       ul
         :padding 0
+        :margin-left 15px
+        ul
+          :margin-left 15px
     li.group
       :padding 0 0 15px 0
   ul.btn
@@ -142,14 +150,14 @@ body
     :border 1px solid #bdbcbd
     :-moz-border-radius 5px
     :-webkit-border-radius 5px    
-    :padding 10px 10px
+    :padding 3px 10px
     h1 
       :float left
     a.options
       :float right
   .content
     :min-height 600px
-    :padding-top 20px
+    :padding 20px 0
     .precolumn
       .large_map
         :width 900px
