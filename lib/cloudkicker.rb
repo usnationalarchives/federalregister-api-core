@@ -93,6 +93,9 @@ module Cloudkicker
       @id    = self.object_id
       @title = options.delete(:title) || ''
       @info  = options.delete(:info)  || ''
+      
+      
+      @info.gsub!(/\s+/, ' ')
       @max_width = options.delete(:info_max_width) || 400
       add_marker
     end
