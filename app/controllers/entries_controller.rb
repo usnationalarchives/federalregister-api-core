@@ -108,6 +108,10 @@ class EntriesController < ApplicationController
     )
     @entry_count = Entry.count(:conditions => ['entries.publication_date = ?', @publication_date])
     
+    if @entry_count == 0
+      raise ActiveRecord::RecordNotFound
+    end
+    
     @places = Place.usable.all(
       :include => :entries,
       :conditions => ['entries.publication_date = ?', @publication_date]
