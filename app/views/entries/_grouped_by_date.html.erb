@@ -1,0 +1,19 @@
+<% entries.group_by(&:month_year).each do |mnth_year, entries| %>
+  <li>
+    <% year  = entries.first.publication_date.strftime("%Y") %>
+    <% month = entries.first.publication_date.strftime("%m") %>
+    <%= link_to mnth_year, "/entries/#{year}/#{month}" %>
+    <ul>
+    <% entries.group_by(&:publication_date).each do |pub_date, entries| %>  
+      <li>
+        <%= pub_date.to_formatted_s(:day_date) %>
+        <ul>
+          <% entries.each do |entry| %>  
+            <li><%= link_to truncate(entry.title, :length => 100), entry_path(entry) %></li>
+          <% end %>
+        </ul> 
+      </li>
+    <% end %>
+    </ul>
+  </li>
+<% end %>

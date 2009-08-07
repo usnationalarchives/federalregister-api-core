@@ -1,0 +1,9 @@
+<div class="header">
+  <h2>
+    <%= entries.size < 100 ? 'All' : "Most Recent 100" %>
+    Entries
+    <% if entries.size > 100 %>
+      <span><%= link_to "view all", entries_search_path(search_params) %></span>
+    <% end %>
+  </h2>
+</div>

@@ -42,7 +42,7 @@ ActionController::Routing::Routes.draw do |map|
                                              :month      => /\d{1,2}/,
                                              :day        => /\d{1,2}/
   
-  map.connect  'calendar/:year/:month', :controller => 'calendars',
+  map.calendar_month  'calendar/:year/:month', :controller => 'calendars',
                                         :action     => 'index',
                                         :year       => /\d{4}/,
                                         :month      => /\d{1,2}/
@@ -51,11 +51,11 @@ ActionController::Routing::Routes.draw do |map|
                                         :action     => 'index',
                                         :volume     => /\d{2}/
 
-  map.connect 'maps', :controller => 'maps',
-                      :action     => 'index'
+  map.maps 'maps', :controller => 'maps',
+            :action     => 'index'
                                    
   map.locations_path 'locations/:slug/:id', :controller => 'locations', :action => 'index'
                                          
   map.root :controller => 'special', :action => 'home'
-  map.connect 'about', :controller => 'special', :action => 'about'
+  map.about 'about', :controller => 'special', :action => 'about'
 end
