@@ -152,7 +152,7 @@ end
 namespace :deploy do
   desc "Set Symlinks for Static Files (like database.yml)"
   task :update_config, :roles => [:app] do
-    %w(database.yml placemaker.yml google_maps.yml production.sphinx.conf).each do |file|
+    %w(database.yml api_keys.yml production.sphinx.conf).each do |file|
       sudo "ln -sf #{shared_path}/config/#{file} #{release_path}/config/#{file}"
     end
     sudo "ln -sf #{shared_path}/config/cloudkicker_config.rb #{release_path}/config/initializers/cloudkicker_config.rb"
