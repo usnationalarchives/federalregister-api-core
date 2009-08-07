@@ -6,8 +6,13 @@ $(document).ready(function() {
     
       $(this).find("li").each(function(){
         val = parseInt( $(this).find(".count").html() );
-        percent_of_width = Math.round((val / max) * 100);
-        $(this).find(".bg").animate({"width": percent_of_width + "%"}, 1500 );
+        
+        //ie doesn't like 0 / max
+        if(val > 0)
+          percent_of_width = Math.round((val / max) * 100) + "%";
+        
+        $(this).find(".bg").animate({"width": percent_of_width}, 1500 );
+        //$(this).find(".bg").css("width", percent_of_width);
       });
   });
 });
