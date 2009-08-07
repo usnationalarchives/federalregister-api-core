@@ -1,12 +1,21 @@
+<% content_for :precolumn do %>
+  <h1>Explore Topics</h1>
+<% end %>
 
-<h2>Topics by Letter</h2>
+<div class="header">
+  <h2>By Letter</h2>
+</div>
+
 <ul>
 <% @letters.each do |letter| %>
   <li><%= link_to letter.upcase, topic_groups_by_letter_path(letter) %></li>
 <% end %>
 </ul>
 
-<h2>Popular Topics</h2>
+<div class="header">
+  <h2>Popular</h2>
+</div>
+
 <ul class="tag_cloud">
 <%
   counts = @popular_topic_groups.map(&:entries_count)
@@ -25,3 +34,6 @@
   <li class="<%= class_name %>"><%= link_to topic_group.name, topic_group_path(topic_group) %></li>
 <% end %>
 </ul>
+
+<% content_for :sidebar do %>
+<% end %>
