@@ -16,6 +16,9 @@ class Agency < ActiveRecord::Base
   has_many :children, :class_name => 'Agency', :foreign_key => 'parent_id'
   belongs_to :parent, :class_name => 'Agency'
   
+  # grab cabinet level agencies (departments) as these are top producing
+  named_scope :featured, :conditions => ['name LIKE ?', 'Department%']
+  
   before_create :slugify
   
   def to_param
@@ -84,11 +87,6 @@ class Agency < ActiveRecord::Base
       ORDER BY agency_id DESC
       LIMIT 1
     ")
-  end
-  
-  def self.featured
-    # grab cabinet level agencies (departments) as these are top producing
-    agencies = Agency.all(:conditions => ['name LIKE ?', 'Department%'])
   end
   
   private
