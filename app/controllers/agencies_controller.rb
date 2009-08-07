@@ -13,16 +13,9 @@ class AgenciesController < ApplicationController
                                   :order => 'entries.publication_date DESC',
                                   :limit => 100)
     
-    @agency = Agency.find_by_slug(params[:id], :include => :entries)
-    @entries = @agency.entries.all(:limit => 100, :order => "entries.publication_date DESC")
-                                
-    @map_entries = @agency.entries.select{|e| e.publication_date > Date.parse(1.year.ago.to_s)}
-    @places = []
-    logger.info "ENTRY COUNT #{@map_entries.size}"
-    @map_entries.each do |entry|
-      @places +=  entry.places.usable
-      logger.info "PLACES: #{entry.places.inspect}"
-    end
+    @agency = Agency.find_by_slug(params[:id])
+    @entries = @agency.entries.all(:limit => 100, :include => :places, :order => "entries.publication_date DESC")
+    @places = @entries.map{|e| e.places}.flatten.uniq.select{|p| p.usable?}
     
     @map = Cloudkicker::Map.new( :style_id => 1714,
                                  :bounds   => true,
