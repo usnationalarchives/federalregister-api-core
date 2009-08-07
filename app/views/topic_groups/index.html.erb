@@ -2,7 +2,7 @@
 <h2>Topics by Letter</h2>
 <ul>
 <% @letters.each do |letter| %>
-  <li><%= link_to letter, topic_groups_by_letter_path(letter.downcase) %></li>
+  <li><%= link_to letter.upcase, topic_groups_by_letter_path(letter) %></li>
 <% end %>
 </ul>
 
