@@ -2,9 +2,6 @@ tmp
 log
 data
 config/database.yml
-config/placemaker.yml
-config/google_maps.yml
+config/api_keys.yml
 config/development.sphinx.conf
-config/initializers/cloudkicker_config.rb
-db/sphinxconfig/initializers/cloudkicker_config.rb
 db/sphinx/
