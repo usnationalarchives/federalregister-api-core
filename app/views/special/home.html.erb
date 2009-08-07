@@ -1,7 +1,9 @@
 <div class="currentevents span-15">
   
-  <div class="header">
+  <div class="header group">
     <h2><%= link_to "Today's entries", entries_by_date_path(@last_date) %> <span>(<%= @entries.length %>)</span></h2>
+    <%= link_to 'Prev', '',:class => "icon arrow prev floatLeft" %>
+    <%= link_to 'Next', '',:class => "icon arrow next floatRight" %>
   </div>
     
   <div class="daily group">
