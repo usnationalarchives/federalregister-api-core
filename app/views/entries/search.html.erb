@@ -9,7 +9,10 @@
     <li class="simple"><label>Keywords:</label><%= text_field_tag :q, @search_term %></li>
     
     <% if @topic %>
-      <li class="simple"><label>Topic:</label><%= @topic.name %></li>
+      <li class="simple">
+        <label>Topic:</label><%= @topic.name %>
+        <%= hidden_field_tag :topic_id, params[:topic_id] %>
+      </li>
     <% end %>
     
     <li class="simple"><label>Agency:</label><%= select_tag 'agency_id', options_for_select([''] + @agencies.collect{ |agency| [agency.name, agency.id.to_s] }, :selected => params[:agency_id]) %></li>
@@ -19,7 +22,9 @@
         <legend>Location</legend>
         <ul>
       <% if @place %>
-          <li><label>In:</label><%= @place.name %></li>
+          <li><label>In:</label><%= @place.name %>
+            <%= hidden_field_tag :place_id, params[:place_id] %>
+          </li>
         <% else %>
           <li><label>Near:</label> <%= text_field_tag :near, params[:near] %> (eg '94118', 'San Francisco', etc) (Within: <%= text_field_tag :within, params[:within] %> miles)</li>
       <% end %>
