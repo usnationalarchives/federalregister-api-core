@@ -1,7 +1,7 @@
 class TopicGroupsController < ApplicationController
   def index
     @letters = Topic.connection.select_values("SELECT DISTINCT(LEFT(group_name, 1)) as letter FROM topic_groups ORDER BY letter")
-    @popular_topic_groups = TopicGroup.find(:all, :order => 'entries_count DESC', :limit => 50).sort_by(&:name)
+    @popular_topic_groups = TopicGroup.find(:all, :order => 'entries_count DESC', :limit => 100).sort_by(&:name)
   end
   
   def show
