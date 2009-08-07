@@ -7,17 +7,22 @@
   <h2>Topics starting with <%= @letter %></h2>
 </div>
 
-<ul>
+<ul class="btn small group">
 <% @letters.each do |letter| %>
   <li class="<%='on' if letter == @letter %>"><%= link_to letter.upcase, topic_groups_by_letter_path(letter) %></li>
 <% end %>
 </ul>
 
-<ul>
-<% @topic_groups.each do |topic_group| %>
-  <li><%= link_to topic_group.name, topic_group_path(topic_group) %> (<%= topic_group.entries_count %>)</li>
+<% unless @topic_groups.length == 0 %>
+  <ul>
+  <% @topic_groups.each do |topic_group| %>
+    <li><%= link_to topic_group.name, topic_group_path(topic_group) %> (<%= topic_group.entries_count %>)</li>
+  <% end %>
+  </ul>
+<% else %>
+  <p>No Entries Found</p>
 <% end %>
-</ul>
+
 
 <% content_for :sidebar do %>
   <div class="header">
