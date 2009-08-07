@@ -13,13 +13,15 @@
 =end Schema Information
 
 class Place < ActiveRecord::Base
+  UNUSABLE_PLACES = [23424977]
+  
   cattr_accessor :distance_grouping_increment
   attr_accessor :distance
   
   has_many :place_determinations
   has_many :entries, :through => :place_determinations
   
-  named_scope :usable, :conditions => ['places.id NOT IN (?)', [23424977]]
+  named_scope :usable, :conditions => ['places.id NOT IN (?)', UNUSABLE_PLACES]
   
   acts_as_mappable :lat_column_name => :latitude,
                    :lng_column_name => :longitude
@@ -27,7 +29,11 @@ class Place < ActiveRecord::Base
   def slug
     "#{self.name.downcase.gsub(/&/, 'and').gsub(/[^a-z0-9]+/, '-')}"
   end
-                   
+  
+  def usable?
+    ! UNUSABLE_PLACES.include?(id)
+  end
+  
   def location 
     @location = [latitude, longitude]
   end
