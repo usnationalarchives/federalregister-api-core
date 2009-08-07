@@ -519,16 +519,15 @@ body {
   -webkit-border-radius: 5px;
   font-weight: bold;
   height: 30px;
-  line-height: 30px;
   padding: 5px;
   *padding: 0;
 }
-/* line 375, ../../app/stylesheets/trifecta.sass */
+/* line 374, ../../app/stylesheets/trifecta.sass */
 #main input.btn:hover {
   background: url(/images/btn_bg2_hover.png) repeat-x left 50%;
 }
 
-/* line 377, ../../app/stylesheets/trifecta.sass */
+/* line 376, ../../app/stylesheets/trifecta.sass */
 hr.ornament {
   background: url(/images/hr_bg2.png) no-repeat top center;
   border: none;
@@ -537,13 +536,13 @@ hr.ornament {
   padding: 5px 0;
 }
 
-/* line 385, ../../app/stylesheets/trifecta.sass */
+/* line 384, ../../app/stylesheets/trifecta.sass */
 form li span {
   color: #6e6e6e;
   vertical-align: middle;
 }
 
-/* line 388, ../../app/stylesheets/trifecta.sass */
+/* line 387, ../../app/stylesheets/trifecta.sass */
 #footer {
   background: #5a5a5a;
   border-top: 4px solid #9b9b9b;
@@ -551,37 +550,37 @@ form li span {
   height: 150px;
   position: relative;
 }
-/* line 394, ../../app/stylesheets/trifecta.sass */
+/* line 393, ../../app/stylesheets/trifecta.sass */
 #footer .sitemap {
   padding: 2em;
 }
-/* line 396, ../../app/stylesheets/trifecta.sass */
+/* line 395, ../../app/stylesheets/trifecta.sass */
 #footer .sitemap h4 {
   color: #fff;
   font: 175% serif;
   margin: 0 0 0 0;
 }
-/* line 400, ../../app/stylesheets/trifecta.sass */
+/* line 399, ../../app/stylesheets/trifecta.sass */
 #footer .sitemap ul {
   margin: 0 0 0 1em;
 }
-/* line 402, ../../app/stylesheets/trifecta.sass */
+/* line 401, ../../app/stylesheets/trifecta.sass */
 #footer .sitemap ul li {
   list-style-type: none;
 }
-/* line 404, ../../app/stylesheets/trifecta.sass */
+/* line 403, ../../app/stylesheets/trifecta.sass */
 #footer .sitemap ul li a {
   color: #989898;
   font-size: 125%;
   text-decoration: none;
 }
 
-/* line 409, ../../app/stylesheets/trifecta.sass */
+/* line 408, ../../app/stylesheets/trifecta.sass */
 .floatLeft {
   float: left;
 }
 
-/* line 412, ../../app/stylesheets/trifecta.sass */
+/* line 411, ../../app/stylesheets/trifecta.sass */
 ul.tag_cloud {
   font-size: 1.1em;
   line-height: 1.32em;
@@ -614,7 +613,7 @@ ul.tag_cloud .xl {
 ul.tag_cloud .xxl {
   font-size: 2.2em;
 }
-/* line 414, ../../app/stylesheets/trifecta.sass */
+/* line 413, ../../app/stylesheets/trifecta.sass */
 ul.tag_cloud li {
   float: left;
 }
