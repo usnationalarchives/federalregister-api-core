@@ -8,6 +8,7 @@ body
   :margin-bottom -150px
   :position relative
 #wrapper
+  :background url(/images/header_bottomshadow.png) repeat-x left 161px
 #header
   :background url(/images/header_bg.png) repeat-x top left
   :border-left 1px solid #27338b  
@@ -81,7 +82,7 @@ body
           :color #fa6900   
 .shadow
   :background url(/images/header_bg2.png) repeat-x top left
-  :display block
+  :display inline-block
   :height 68px
   :position absolute
   :top 161px
@@ -219,7 +220,7 @@ body
       :height 100px
       :vertical-align text-top  
       .daily
-        :height 13em
+        :height 7em
         :width 590px
         :margin 0 0 0 0
         :position relative
@@ -242,12 +243,13 @@ body
               :line-height 1
               :margin 0 15px 0 0
               :text-align right
-              :width 75px
+              :width 115px
               :vertical-align text-top
             a
               :font 140% Georgia,"Times New Roman",Serif
+              :padding-left 15px
               :text-decoration none 
-              :width 500px
+              :width 95%
               &.entry
                 :color #555
                 :float left
@@ -288,8 +290,9 @@ body
       :-moz-border-radius 5px
       :-webkit-border-radius 5px
       :color #343434
+      :font-size .8em
+      :height 10px
       :margin 0 0 5px 0
-      :padding 0 5px
       :position relative
       a
         :color #343434
@@ -297,17 +300,18 @@ body
         :text-decoration none
       .info
         :display block
-        :height 24px
-        :line-height 24px
+        :height 15px
+        :line-height 16px
+        :margin-left 10px
         :position relative
         :z-index 5555
       .bg
-        :background url(/images/count_bg4.png) repeat-x left top      
+        :background url(/images/count_bg.png) repeat-x left top      
         :border 1px solid #83bbd9        
         :-moz-border-radius 5px
         :-webkit-border-radius 5px        
         :display block
-        :height 22px
+        :height 15px
         :left 0    
         :position absolute
         :top 0
@@ -363,12 +367,13 @@ body
   input.btn
     :background url(/images/btn_bg2.png) repeat-x bottom left
     :border 1px solid #83bbd9
+    :cursor pointer
     :-moz-border-radius 5px
     :-webkit-border-radius 5px   
     :font-weight bold     
     :height 30px
-    :line-height 30px
     :padding 5px
+    :*padding 0
     &:hover
       :background url(/images/btn_bg2_hover.png) repeat-x left 50%
 hr.ornament
@@ -377,7 +382,11 @@ hr.ornament
   :display block
   :margin 20px 0
   :padding 5px 0
-
+form
+  li
+    span
+      :color #6e6e6e
+      :vertical-align middle
 #footer
   :background  #5a5a5a
   :border-top 4px solid #9b9b9b 
