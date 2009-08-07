@@ -94,11 +94,14 @@ body
   :margin-top -9px !important
   h1  
     /:color #ff8400
+    :background url(/images/txt_hX_bg.png) no-repeat bottom middle
     :color #46565c
     :font 2.5em Georgia,"Times New Roman",Serif
     :font-variant small-caps        
     :margin 0 0 20px 0
     :text-align center
+    &.noMargin
+      :margin 0
   h2
     :color #46565c  
     :font 2em Georgia,"Times New Roman",Serif
@@ -293,6 +296,14 @@ body
         a
           :background #747d87
           :color #fff
+    &.small
+      li
+        :margin-right 1px 
+        :width 19px
+        :height 20px
+        a
+          :padding 1px 2px 
+          :text-align center
   ul.count
     :margin 0
     :padding 0
@@ -373,10 +384,21 @@ body
       :margin 10px 0 0 0
       :padding 0 0 0 20px    
       :width 80px
-      &.open  
+      &.next
+        :background-position right 2px   
+        :padding 0 20px 0 0
+        &.floatRight
+          :float right
+          :width auto
+      &.open
         :background-position left -15px
       &:visited
         :color #005b81
+      &.prev
+        :background-position left -30px 
+        &.floatLeft
+          :float left
+          :width auto
   input.btn
     :background url(/images/btn_bg2.png) repeat-x bottom left
     :border 1px solid #83bbd9
@@ -390,11 +412,11 @@ body
     &:hover
       :background url(/images/btn_bg2_hover.png) repeat-x left 50%
 hr.ornament
-  :background url(/images/hr_bg2.png) no-repeat top center
+  :background url(/images/hr_bg3.png) no-repeat top center
   :border none
   :display block
-  :margin 20px 0
-  :padding 5px 0
+  :margin 0 0 20px 0
+  :padding 30px 0
 form
   li
     span
