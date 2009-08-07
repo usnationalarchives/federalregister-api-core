@@ -9,9 +9,14 @@
   Entries for <%= @publication_date.to_formatted_s(:pretty) %>
   <span>(<%= pluralize(@entry_count, 'entry') %>)</span>
 </h2>
-<%# TODO HELP-RUBY link these %>
-<%= link_to 'Prev', '',:class => "icon arrow prev floatLeft" %>
-<%= link_to 'Next', '',:class => "icon arrow next floatRight" %>
+
+<% if @prev_date %>
+  <%= link_to 'Prev', entries_by_date_path(@prev_date), :class => "icon arrow prev floatLeft" %>
+<% end %>
+
+<% if @next_date %>
+  <%= link_to 'Next', entries_by_date_path(@next_date), :class => "icon arrow next floatRight" %>
+<% end %>
 </div>
 
 
