@@ -1,4 +1,11 @@
-<% title "Topics starting with '#{@letter}'" %>
+<%# title "Topics starting with '#{@letter}'" %>
+<% content_for :precolumn do %>
+  <h1>Explore Topics</h1>
+<% end %>
+
+<div class="header">
+  <h2>Topics starting with <%= @letter %></h2>
+</div>
 
 <ul>
 <% @topic_groups.each do |topic_group| %>
