@@ -35,8 +35,8 @@
       <fieldset>
         <legend>Publication Date</legend>
         <ul>
-          <li class="simple"><label>From:</label><%= text_field_tag :publication_date_greater_than, params[:publication_date_greater_than] %></li>
-          <li class="simple"><label>To:</label><%= text_field_tag :publication_date_less_than, params[:publication_date_less_than] %> (eg '01/01/09', '1 year ago', 'yesterday')</li>
+          <li class="simple"><label>From:</label><%= text_field_tag :publication_date_greater_than, @start_date.try(:to_date) %></li>
+          <li class="simple"><label>To:</label><%= text_field_tag :publication_date_less_than, @end_date.try(:to_date) %> (eg '01/01/09', '1 year ago', 'yesterday')</li>
         </ul>
       </fieldset>
     </li>
@@ -85,5 +85,5 @@
 <% content_for :sidebar do %>
   <h3>Other Formats</h3>
   <%# TODO: HELP-DESIGN: HELP-COPY: Need RSS icon, some text here %>
-  <p>Subscribe to an <%= link_to 'RSS Feed', params.merge(:format => :rss, :order => 'date') %> of these search results.</p>
+  <p>Subscribe to an <%= link_to 'RSS Feed', params.merge(:format => :rss, :order => 'date', :publication_date_less_than => nil) %> of these search results.</p>
 <% end %>
