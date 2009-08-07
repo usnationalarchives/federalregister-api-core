@@ -6,18 +6,23 @@ class EntriesController < ApplicationController
     @search_term = params[:q]
     
     @near = params[:near]
-    unless @near.blank?
-      within = params[:within].to_i
-      if within <= 0 || within >= 500
-        within = 500
+    if params[:place_id]
+      @place = Place.find(params[:place_id])
+      with[:place_ids] = @place.id
+    else
+      unless @near.blank?
+        within = params[:within].to_i
+        if within <= 0 || within >= 500
+          within = 500
+        end
+      
+        location = Rails.cache.fetch("location_of: '#{@near}'") { Geokit::Geocoders::GoogleGeocoder.geocode(@near) }
+      
+        # TODO: send error message to user on invalid location
+      
+        place_ids = Place.find(:all, :select => "id", :origin => location, :within => within).map &:id
+        with[:place_ids] = place_ids
       end
-      
-      location = Rails.cache.fetch("location_of: '#{@near}'") { Geokit::Geocoders::GoogleGeocoder.geocode(@near) }
-      
-      # TODO: send error message to user on invalid location
-      
-      place_ids = Place.find(:all, :select => "id", :origin => location, :within => within).map &:id
-      with[:place_ids] = place_ids
     end
     
     [:agency_id, :topic_ids].each do |attribute|
