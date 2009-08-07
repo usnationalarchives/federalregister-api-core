@@ -21,7 +21,9 @@
   <%= javascript_include_tag 'jquery.tools.min.js'      %>
   <%= javascript_include_tag 'jquery.qtip-1.0.0-rc3.js' %>
   <%= javascript_include_tag 'jquery.filter.js'         %>
-  <%= javascript_include_tag 'frontend.js'         %>
+  <%= javascript_include_tag 'frontend.js'              %>
+  <%= javascript_include_tag 'jquery.toggleDisabled.js' %>
+  <%= javascript_include_tag 'jquery.horizontalCount.js'%>
 
   <%= yield :javascripts %>
 
@@ -78,7 +80,7 @@
       <!-- content -->
       <div class="content">
           <% if yield :title %>
-            <div class="header"><h1><%= yield :title %></h1></div>
+            <div class="header group"><h1><%= yield :title %></h1></div>
           <% end %>
           
           <% if yield :precolumn %>
