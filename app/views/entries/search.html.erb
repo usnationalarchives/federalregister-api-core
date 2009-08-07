@@ -1,15 +1,17 @@
 <% title "Search Results for '#{h @search_term}'" %>
 
+<div class="header group"><h1>Search</h1><a href="#" class="options icon arrow closed">Show Options</a></div>
+
 <%# TODO: HELP-DESIGN: style me! %>
 <form method="get">
   <ul>
-    <li><label>Keywords:</label><%= text_field_tag :q, @search_term %></li>
+    <li class="simple"><label>Keywords:</label><%= text_field_tag :q, @search_term %></li>
     
     <% if @topic %>
-      <li><label>Topic:</label><%= @topic.name %></li>
+      <li class="simple"><label>Topic:</label><%= @topic.name %></li>
     <% end %>
     
-    <li><label>Agency:</label><%= select_tag 'agency_id', options_for_select([''] + @agencies.collect{ |agency| [agency.name, agency.id.to_s] }, :selected => params[:agency_id]) %></li>
+    <li class="simple"><label>Agency:</label><%= select_tag 'agency_id', options_for_select([''] + @agencies.collect{ |agency| [agency.name, agency.id.to_s] }, :selected => params[:agency_id]) %></li>
     
     <li>
       <fieldset>
@@ -32,26 +34,17 @@
         </ul>
       </fieldset>
     </li>
-  
+    
+    <li>
+      <fieldset>
+        <legend>Options</legend>
+        <ul>  
     <li><label>Order:</label><%= select_tag 'order', options_for_select([['Date', 'date'], ['Relevance', 'relevance']], :selected => params[:order]) %> </li>
-
-    
-    <li><label>Agency:</label><%= select_tag 'agency_id', options_for_select([''] + @agencies.collect{ |agency| [agency.name, agency.id.to_s] }, :selected => params[:agency_id]) %></li>
-    
-  
-  <li>
-    <fieldset>
-      <legend>Publication Date</legend>
-      <ul>
-        <li><label>From:</label><%= text_field_tag :publication_date_greater_than, params[:publication_date_greater_than] %></li>
-        <li><label>To:</label><%= text_field_tag :publication_date_less_than, params[:publication_date_less_than] %> (eg '01/01/09', 'a year ago', 'yesterday')</li>
-      </ul>
+    </ul>
     </fieldset>
   </li>
-  
-  <li><label>Order:</label><%= select_tag 'order', options_for_select([['Date', 'date'], ['Relevance', 'relevance']], :selected => params[:order]) %> </li>
-  
-  <div class="btn"><%= submit_tag 'Search' %></div>
+
+  <%= submit_tag 'Search', class => 'btn' %>
  </form>
 
 <%= page_entries_info @entries %>
