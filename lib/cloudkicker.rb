@@ -1,15 +1,16 @@
 module Cloudkicker
   class Map
     def initialize(options={})
-      @lat          = options.delete(:lat)         || 37.778605
-      @long         = options.delete(:long)        || -122.391369
-      @map_control  = options.delete(:map_control) || true
-      @zoom         = options.delete(:zoom)        || 10
-      @style_id     = options.delete(:style_id)    || 2
-      @bounds       = options.delete(:bounds)      || false
-      @bound_points = options.delete(:points)      || 0
-      @bound_zoom   = options.delete(:bound_zoom)  || 2 #used when only a single point is passed to bound_points
-      @markers      = []
+      @lat              = options.delete(:lat)              || 37.778605
+      @long             = options.delete(:long)             || -122.391369
+      @map_control      = options.delete(:map_control)      || true
+      @map_control_type = options.delete(:map_control_type) || :large
+      @zoom             = options.delete(:zoom)             || 10
+      @style_id         = options.delete(:style_id)         || 2
+      @bounds           = options.delete(:bounds)           || false
+      @bound_points     = options.delete(:points)           || 0
+      @bound_zoom       = options.delete(:bound_zoom)       || 2 #used when only a single point is passed to bound_points
+      @markers          = []
     end
     
     def to_js(map_id='map')
@@ -37,7 +38,12 @@ module Cloudkicker
       end
       if @map_control
         js << '   var topRight = new CM.ControlPosition(CM.TOP_RIGHT, new CM.Size(10, 10));'
-        js << '   map.addControl(new CM.LargeMapControl(), topRight);'
+        case @map_control_type.to_sym
+        when :large
+          js << '   map.addControl(new CM.LargeMapControl(), topRight);'
+        when :small
+          js << '   map.addControl(new CM.SmallMapControl(), topRight);'
+        end
       end
       
       @markers.each do |marker|
