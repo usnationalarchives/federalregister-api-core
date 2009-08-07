@@ -2,21 +2,24 @@
   
   <div class="header group">
     <h2><%= link_to "Today's entries", entries_by_date_path(@last_date) %> <span>(<%= @entries.length %>)</span></h2>
-    <%= link_to 'Prev', '',:class => "icon arrow prev floatLeft" %>
-    <%= link_to 'Next', '',:class => "icon arrow next floatRight" %>
+    <%#= link_to 'Prev', '',:class => "icon arrow prev floatLeft", :id => "slidePrev" %>
+    <%#= link_to 'Next', '',:class => "icon arrow next floatRight", :id => "slideNext" %>
   </div>
-    
-  <div class="daily group">
-    <ul class="items">
-    <% @entries.each_with_index do |entry, i| %>
-      <li>
-        <!-- <p class="number"><%= i+1 %></p> -->
-        <%= link_to truncate(entry.title, :length => 100), entry_path(entry), :class => "entry" %>
-        <%= link_to(entry.agency.name, agency_path(entry.agency), :class => "agency") if entry.agency %>
-      </li>
-    <% end %>
-    </ul>
+  
+  <div class="header slide">
+    <div class="daily group">
+      <ul class="items">
+      <% @entries.each_with_index do |entry, i| %>
+        <li>
+          <!-- <p class="number"><%= i+1 %></p> -->
+          <%= link_to truncate(entry.title, :length => 100), entry_path(entry), :class => "entry" %>
+          <%= link_to(entry.agency.name, agency_path(entry.agency), :class => "agency") if entry.agency %>
+        </li>
+      <% end %>
+      </ul>
+    </div>
   </div>
+  
 </div>
 
 <% if !@closing_soon.empty? %>
