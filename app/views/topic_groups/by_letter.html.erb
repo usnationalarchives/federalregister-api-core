@@ -1,7 +1,28 @@
 <% title "Topics starting with '#{@letter}'" %>
 
 <ul>
+<% @letters.each do |letter| %>
+  <li class="<%='on' if letter == @letter %>"><%= link_to letter.upcase, topic_groups_by_letter_path(letter) %></li>
+<% end %>
+</ul>
+
+<ul>
 <% @topic_groups.each do |topic_group| %>
   <li><%= link_to topic_group.name, topic_group_path(topic_group) %> (<%= topic_group.entries_count %>)</li>
 <% end %>
 </ul>
+
+<% content_for :sidebar do %>
+  <div class="header">
+    <h2>Popular Topics</h2>
+  </div>
+
+  <div class="tag_cloud">
+    <div id="fancy_tag_cloud" style="position: relative; width: 230px; height: 230px; overflow: hidden"></div>
+    <ul>
+    <% @popular_topic_groups.each do |topic_group| %>
+      <li><%= link_to topic_group.name, topic_group_path(topic_group) %> (<%= topic_group.entries_count %>)</li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>
