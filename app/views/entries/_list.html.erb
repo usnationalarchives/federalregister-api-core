@@ -1,30 +1,14 @@
-<div class="header">
-  <h2>
-    <%= entries.size < 100 ? 'All' : "Most Recent 100" %>
-    Entries
-    <% if entries.size > 100 %>
-      <span><%= link_to "view all", entries_search_path(search_params) %></span>
-    <% end %>
-  </h2>
-</div>
+<% list_type ||= nil %>
+<%= render :partial => 'entries/list_header', :locals => {:entries => entries} %>
+
 <ul>
-<% entries.group_by(&:month_year).each do |mnth_year, entries| %>
-  <li>
-    <% year  = entries.first.publication_date.strftime("%Y") %>
-    <% month = entries.first.publication_date.strftime("%m") %>
-    <%= link_to mnth_year, "/entries/#{year}/#{month}" %>
-    <ul>
-    <% entries.group_by(&:publication_date).each do |pub_date, entries| %>  
-      <li>
-        <%= pub_date.to_formatted_s(:day_date) %>
-        <ul>
-          <% entries.each do |entry| %>  
-            <li><%= link_to truncate(entry.title, :length => 100), entry_path(entry) %></li>
-          <% end %>
-        </ul> 
-      </li>
+  <% if list_type %>
+    <% if list_type == 'topic' %>
+      <%= render :partial => 'entries/grouped_by_topic',  :locals => {:entries => entries, :topics => topics}%>
+    <% elsif list_type == 'agency' %>
+      <%= render :partial => 'entries/grouped_by_agency', :locals => {:entries => entries} %>
     <% end %>
-    </ul>
-  </li>
-<% end %>
+  <% else %>
+    <%= render :partial => 'entries/grouped_by_date', :locals => {:entries => entries}%>
+  <% end %>
 </ul>

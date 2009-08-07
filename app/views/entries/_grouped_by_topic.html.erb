@@ -1,0 +1,20 @@
+<% topics.each do |topic| %>
+  <li>
+    <h3 id='<%=topic.name%>'><%= topic.name %> <span class='top'><%= link_to 'back to top', "#top" %></h3>
+    <ul>
+    <% entries.select{|e| e.topic_ids.include?(topic.id)}.group_by(&:publication_date).each do |pub_date, entries| %>  
+      <li>
+        <%= pub_date.to_formatted_s(:pretty) %>
+        <ul>
+          <% entries.each do |entry| %>  
+            <li><%= link_to truncate(entry.title, :length => 100), entry_path(entry) %></li>
+          <% end %>
+        </ul> 
+      </li>
+    <% end %>
+    <% if entries.select{|e| e.topic_ids.include?(topic.id)}.empty? %>
+      <li>No entries exist with this topic in the most recent 100 entries</li>
+    <% end %>
+    </ul>
+  </li>
+<% end %>
