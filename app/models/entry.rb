@@ -46,6 +46,7 @@ class Entry < ActiveRecord::Base
                 appearing in this section.'
   }
   
+  GRANULE_CLASS_TYPES = ['RULE', 'PRORULE', 'NOTICE', 'PRESDOCU', 'UNKNOWN']
   belongs_to :agency
   
   has_many :topic_assignments
@@ -60,6 +61,10 @@ class Entry < ActiveRecord::Base
   acts_as_mappable :through => :places
   
   has_many :referenced_dates, :dependent => :destroy
+  
+  def granule_class 
+    self['granule_class'] == '' ? 'UNKNOWN' : self['granule_class']
+  end
   
   define_index do
     # fields
