@@ -9,43 +9,48 @@
     <li class="simple"><label>Keywords:</label><%= text_field_tag :q, @search_term %></li>
     
     <% if @topic %>
-      <li class="simple"><label>Topic:</label><%= @topic.name %></li>
+      <li class="simple">
+        <label>Topic:</label><%= @topic.name %>
+        <%= hidden_field_tag :topic_id, params[:topic_id] %>
+      </li>
     <% end %>
     
     <li class="simple"><label>Agency:</label><%= select_tag 'agency_id', options_for_select([''] + @agencies.collect{ |agency| [agency.name, agency.id.to_s] }, :selected => params[:agency_id]) %></li>
     
-    <li>
+    <li class="<%= 'simple' unless params[:place_id].blank? && params[:near].blank? %>">
       <fieldset>
         <legend>Location</legend>
         <ul>
-      <% if @place %>
-          <li><label>In:</label><%= @place.name %></li>
+        <% if @place %>
+          <li class="simple"><label>In:</label><%= @place.name %>
+            <%= hidden_field_tag :place_id, params[:place_id] %>
+          </li>
         <% else %>
-          <li><label>Near:</label> <%= text_field_tag :near, params[:near] %> (eg '94118', 'San Francisco', etc) (Within: <%= text_field_tag :within, params[:within] %> miles)</li>
-      <% end %>
+          <li class="simple"><label>Near:</label> <%= text_field_tag :near, params[:near] %> (eg '94118', 'San Francisco', etc) (Within: <%= text_field_tag :within, params[:within] %> miles)</li>
+        <% end %>
       </ul>
     </li>
     
-    <li>
+    <li class="<%= 'simple' unless params[:publication_date_greater_than].blank? && params[:publication_date_less_than].blank? %>">
       <fieldset>
         <legend>Publication Date</legend>
         <ul>
-          <li><label>From:</label><%= text_field_tag :publication_date_greater_than, params[:publication_date_greater_than] %></li>
-          <li><label>To:</label><%= text_field_tag :publication_date_less_than, params[:publication_date_less_than] %> (eg '01/01/09', 'a year ago', 'yesterday')</li>
+          <li class="simple"><label>From:</label><%= text_field_tag :publication_date_greater_than, params[:publication_date_greater_than] %></li>
+          <li class="simple"><label>To:</label><%= text_field_tag :publication_date_less_than, params[:publication_date_less_than] %> (eg '01/01/09', 'a year ago', 'yesterday')</li>
         </ul>
       </fieldset>
     </li>
     
-    <li>
+    <li class="<%= 'simple' if params[:order] == 'relevance' %>">
       <fieldset>
         <legend>Options</legend>
         <ul>  
-    <li><label>Order:</label><%= select_tag 'order', options_for_select([['Date', 'date'], ['Relevance', 'relevance']], :selected => params[:order]) %> </li>
-    </ul>
+          <li class="simple"><label>Order:</label><%= select_tag 'order', options_for_select([['Date', 'date'], ['Relevance', 'relevance']], :selected => params[:order]) %> </li>
+        </ul>
     </fieldset>
   </li>
 
-  <%= submit_tag 'Search', class => 'btn' %>
+  <%= submit_tag 'Search', :class => 'btn' %>
  </form>
 
 <%= page_entries_info @entries %>

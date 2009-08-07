@@ -1,3 +1,5 @@
+@import compass/utilities/general.sass
+
 html
   :background url(/images/main_bg_left.png) repeat-y top left 
 body
@@ -399,3 +401,8 @@ hr.ornament
 
 .floatLeft
   :float left
+
+ul.tag_cloud
+  +tag-cloud(1.1em)
+  li
+    :float left
