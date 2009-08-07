@@ -1,6 +1,8 @@
-<p>View other entries mentioning <%= link_to place.name, locations_path(place) %></p>
+<ul>
+  <li>View other entries mentioning <%= link_to place.name, locations_path(place) %><li>
 
-<p>
-  Today's entries mentioning
-  <%= entry_list(place) %>
-</p>
+  <li>
+    Today's entries mentioning
+    <%= entry_list(place) %>
+  <li>
+</ul>

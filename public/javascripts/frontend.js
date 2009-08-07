@@ -20,7 +20,7 @@ $(document).ready(function() {
     $("form li:not('.simple')").toggle().find("li").children(":not(label)").toggleDisabled();
   });
   
-  if ($('.tag_cloud')) {
+  $('.tag_cloud').each(function(){
     $('.tag_cloud ul').hide();
     var tagcloud = new TagCloud(document.getElementById('fancy_tag_cloud'),'descending',[{r:255,g:255,b:0},{r:0,g:0,b:255}],[{r:255,g:255,b:0},{r:0,g:0,b:255}], '/topics/');
     $('.tag_cloud li').each(function(){
@@ -32,5 +32,5 @@ $(document).ready(function() {
     });
   
     tagcloud.draw();
-  }
+  });
 });
