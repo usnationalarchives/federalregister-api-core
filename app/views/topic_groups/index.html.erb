@@ -7,8 +7,21 @@
 </ul>
 
 <h2>Popular Topics</h2>
-<ul>
+<ul class="tag_cloud">
+<%
+  counts = @popular_topic_groups.map(&:entries_count)
+  min = counts.min
+  max = counts.max
+  
+  classes = %w(xxs xs s m l xl xxl)
+  range = max-min
+%>
+
 <% @popular_topic_groups.each do |topic_group| %>
-  <li><%= link_to topic_group.name, topic_group_path(topic_group) %> (<%= topic_group.entries_count %>)</li>
+  <% 
+    beyond_minimum = topic_group.entries_count - min
+    class_name = classes[Math.log(((beyond_minimum.to_f / range) * 1000)+1).to_i]
+  %>
+  <li class="<%= class_name %>"><%= link_to topic_group.name, topic_group_path(topic_group) %></li>
 <% end %>
 </ul>
