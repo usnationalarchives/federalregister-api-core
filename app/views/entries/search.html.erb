@@ -27,7 +27,21 @@
     </li>
   
     <li><label>Order:</label><%= select_tag 'order', options_for_select([['Date', 'date'], ['Relevance', 'relevance']], :selected => params[:order]) %> </li>
-  </ul>
+
+  
+  <li>
+    <fieldset>
+      <legend>Publication Date</legend>
+      <ul>
+        <li><label>From:</label><%= text_field_tag :publication_date_greater_than, params[:publication_date_greater_than] %></li>
+        <li><label>To:</label><%= text_field_tag :publication_date_less_than, params[:publication_date_less_than] %> (eg '01/01/09', 'a year ago', 'yesterday')</li>
+      </ul>
+    </fieldset>
+  </li>
+  
+  <li><label>Order:</label><%= select_tag 'order', options_for_select([['Date', 'date'], ['Relevance', 'relevance']], :selected => params[:order]) %> </li>
+  
+>>>>>>> ea4d2f888d1a018d5d527634c5877a2561a07384:app/views/entries/search.html.erb
   <div class="btn"><%= submit_tag 'Search' %></div>
  </form>
 
