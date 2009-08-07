@@ -8,6 +8,7 @@ body
   :margin-bottom -150px
   :position relative
 #wrapper
+  :background url(/images/header_bottomshadow.png) repeat-x left 161px
 #header
   :background url(/images/header_bg.png) repeat-x top left
   :border-left 1px solid #27338b  
@@ -81,7 +82,7 @@ body
           :color #fa6900   
 .shadow
   :background url(/images/header_bg2.png) repeat-x top left
-  :display block
+  :display inline-block
   :height 68px
   :position absolute
   :top 161px
@@ -363,12 +364,14 @@ body
   input.btn
     :background url(/images/btn_bg2.png) repeat-x bottom left
     :border 1px solid #83bbd9
+    :cursor pointer
     :-moz-border-radius 5px
     :-webkit-border-radius 5px   
     :font-weight bold     
     :height 30px
     :line-height 30px
     :padding 5px
+    :*padding 0
     &:hover
       :background url(/images/btn_bg2_hover.png) repeat-x left 50%
 hr.ornament
@@ -377,7 +380,11 @@ hr.ornament
   :display block
   :margin 20px 0
   :padding 5px 0
-
+form
+  li
+    span
+      :color #6e6e6e
+      :vertical-align middle
 #footer
   :background  #5a5a5a
   :border-top 4px solid #9b9b9b 
