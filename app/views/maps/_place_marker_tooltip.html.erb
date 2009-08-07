@@ -1,7 +1,5 @@
-<%= agency ||= nil -%>
-View other entries mentioning <%= link_to place.name, locations_path(place) -%>
-<% if !agency.nil? -%>
-  <%# TODO: Add link to agency + location  %>
-  View search results containing this 
-  <%#= link_to "agency and #{place.name}", search_entries_path(:agency_id => agency.id, :place_id => place.id) -%>
-<% end -%>                                                  
+View other entries mentioning <%= link_to place.name, locations_path(place) %>
+<% if @agency %>
+  View search results containing this <%= link_to "agency and #{place.name}",
+      entries_search_path(:agency_id => @agency.id, :place_id => place.id) %>
+<% end %>

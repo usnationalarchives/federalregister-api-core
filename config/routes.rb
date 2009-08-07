@@ -1,5 +1,11 @@
 ActionController::Routing::Routes.draw do |map|
+  map.topic_groups_by_letter '/topics/:letter',
+      :requirements => {:letter => /[a-z]/},
+      :controller => "topic_groups",
+      :action => "by_letter"
+  
   map.resources :topic_groups, :as => "topics"
+  
   
   map.connect 'agencies/:year/weekly/:week', :controller => 'agencies',
                                              :action     => 'index',
