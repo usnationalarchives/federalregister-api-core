@@ -2,11 +2,12 @@ namespace :data do
   namespace :update do
     desc "Check all URLs to see if they are up, what their content type is, etc"
     task :urls => :environment do
-      Url.find_in_batches(:conditions => ["urls.updated_at IS NULL OR updated_at >= ?", 1.week.ago]) do |url_group|
+      Url.find_in_batches(:conditions => ["urls.updated_at IS NULL OR updated_at < ?", 1.day.ago]) do |url_group|
         url_group.each do |url|
           puts "checking #{url.name}..."
           begin
             c = Curl::Easy.new(url.name)
+            c.timeout = 60
             c.follow_location = true
             c.max_redirects = 5
             c.timeout = 5
