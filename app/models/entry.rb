@@ -112,6 +112,9 @@ class Entry < ActiveRecord::Base
     "#{self.title.downcase.gsub(/&/, 'and').gsub(/[^a-z0-9]+/, '-')}"
   end
   
+  def agency_parent_id
+    agency.try(:parent_id).nil? ? agency_id : agency.parent_id
+  end
   
   def comments_close_date
     referenced_dates.find(:first, :conditions => {:date_type => 'CommentDate'}).try(:date)
