@@ -20,6 +20,10 @@ module PathHelper
     "/locations/#{place.slug}/#{place.id}"
   end
   
+  def entries_by_date_path(date)
+    "/entries/#{date.year}/#{sprintf "%02d", date.month}/#{sprintf "%02d", date.day}"
+  end
+  
   private
   
   def path_to_url(path)
