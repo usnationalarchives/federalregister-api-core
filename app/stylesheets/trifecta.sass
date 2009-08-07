@@ -1,3 +1,5 @@
+@import compass/utilities/general.sass
+
 html
   :background url(/images/main_bg_left.png) repeat-y top left 
 body
@@ -6,11 +8,12 @@ body
   :margin-bottom -150px
   :position relative
 #wrapper
+  :background url(/images/header_bottomshadow.png) repeat-x left 161px
 #header
   :background url(/images/header_bg.png) repeat-x top left
   :border-left 1px solid #27338b  
   :border-right 1px solid #27338b
-  :height 121px    
+  :height 121px   
   :position relative
   :z-index 9999
   .type
@@ -76,19 +79,26 @@ body
         :text-decoration none
         :text-transform uppercase
         &:hover
-          :color #fa6900          
+          :color #fa6900   
+.shadow
+  :background url(/images/header_bg2.png) repeat-x top left
+  :display inline-block
+  :height 68px
+  :position absolute
+  :top 161px
+  :width 100%
 #main
-  :background url(/images/header_bottomshadow.png) repeat-x left top
+  /TODO THIS IS NOT RIGHT
+  /:background url(/images/header_bottomshadow.png) repeat-x left top
   :clear both 
   :margin-top -9px !important
-  h1
-    :border-bottom 2px solid #ff8400      
-    :border-top 2px solid #ff8400      
+  h1  
     :color #ff8400
-    :margin 0 0 10px 0
+    :font 2.5em Georgia,"Times New Roman",Serif    
+    :margin 0 0 0 0
   h2
+    :color #46565c  
     :font 2em Georgia,"Times New Roman",Serif
-    :color #ff8400
     /:color #46565c
     :margin 0   
   h3
@@ -105,10 +115,14 @@ body
     :margin 0 0 5px 0
   a
     :border none
+    :color #005b81
     :outline none  
+    :text-decoration none
     &:link
     &:visited
+      :color #fa6900
     &:hover
+      :color #39505e
     &:active
   ul
     :padding 10px 0 0 0
@@ -129,6 +143,10 @@ body
     :-moz-border-radius 5px
     :-webkit-border-radius 5px    
     :padding 10px 10px
+    h1 
+      :float left
+    a.options
+      :float right
   .content
     :min-height 600px
     :padding-top 20px
@@ -191,8 +209,8 @@ body
           li
             :list-style-type none
         h2
-          :border-color #ff8400
-          :color #ff8400
+          /:border-color #ff8400
+          /:color #ff8400
         h3 + ul
           :padding 0
         .small_map  
@@ -202,7 +220,7 @@ body
       :height 100px
       :vertical-align text-top  
       .daily
-        :height 32em
+        :height 7em
         :width 590px
         :margin 0 0 0 0
         :position relative
@@ -225,12 +243,13 @@ body
               :line-height 1
               :margin 0 15px 0 0
               :text-align right
-              :width 75px
+              :width 115px
               :vertical-align text-top
             a
               :font 140% Georgia,"Times New Roman",Serif
+              :padding-left 15px
               :text-decoration none 
-              :width 500px
+              :width 95%
               &.entry
                 :color #555
                 :float left
@@ -271,8 +290,9 @@ body
       :-moz-border-radius 5px
       :-webkit-border-radius 5px
       :color #343434
+      :font-size .8em
+      :height 10px
       :margin 0 0 5px 0
-      :padding 0 5px
       :position relative
       a
         :color #343434
@@ -280,17 +300,18 @@ body
         :text-decoration none
       .info
         :display block
-        :height 24px
-        :line-height 24px
+        :height 15px
+        :line-height 16px
+        :margin-left 10px
         :position relative
         :z-index 5555
       .bg
-        :background url(/images/count_bg4.png) repeat-x left top      
+        :background url(/images/count_bg.png) repeat-x left top      
         :border 1px solid #83bbd9        
         :-moz-border-radius 5px
         :-webkit-border-radius 5px        
         :display block
-        :height 22px
+        :height 15px
         :left 0    
         :position absolute
         :top 0
@@ -333,14 +354,39 @@ body
       :background-image url(/images/icons/contact_small.png)
       :background-position top left 
       :padding 32px 0 0 60px
-
+    &.arrow
+      :background-image url(/images/arrow.png)
+      :background-position left 1px
+      :margin 10px 0 0 0
+      :padding 0 0 0 20px    
+      :width 80px
+      &.open  
+        :background-position left -15px
+      &:visited
+        :color #005b81
+  input.btn
+    :background url(/images/btn_bg2.png) repeat-x bottom left
+    :border 1px solid #83bbd9
+    :cursor pointer
+    :-moz-border-radius 5px
+    :-webkit-border-radius 5px   
+    :font-weight bold     
+    :height 30px
+    :padding 5px
+    :*padding 0
+    &:hover
+      :background url(/images/btn_bg2_hover.png) repeat-x left 50%
 hr.ornament
   :background url(/images/hr_bg2.png) no-repeat top center
   :border none
   :display block
   :margin 20px 0
   :padding 5px 0
-    
+form
+  li
+    span
+      :color #6e6e6e
+      :vertical-align middle
 #footer
   :background  #5a5a5a
   :border-top 4px solid #9b9b9b 
@@ -364,3 +410,8 @@ hr.ornament
 
 .floatLeft
   :float left
+
+ul.tag_cloud
+  +tag-cloud(1.1em)
+  li
+    :float left

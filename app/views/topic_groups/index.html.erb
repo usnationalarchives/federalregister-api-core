@@ -6,9 +6,14 @@
 <% end %>
 </ul>
 
-<h2>Popular Topics</h2>
-<ul>
-<% @popular_topic_groups.each do |topic_group| %>
-  <li><%= link_to topic_group.name, topic_group_path(topic_group) %> (<%= topic_group.entries_count %>)</li>
+<% content_for :sidebar do %>
+  <div class="tag_cloud">
+    <h2>Popular Topics</h2>
+    <div id="fancy_tag_cloud" style="position: relative; width: 230px; height: 230px; overflow: hidden"></div>
+    <ul>
+    <% @popular_topic_groups.each do |topic_group| %>
+      <li><%= link_to topic_group.name, topic_group_path(topic_group) %> (<%= topic_group.entries_count %>)</li>
+    <% end %>
+    </ul>
+  </div>
 <% end %>
-</ul>
