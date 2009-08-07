@@ -27,8 +27,6 @@
     </li>
   
     <li><label>Order:</label><%= select_tag 'order', options_for_select([['Date', 'date'], ['Relevance', 'relevance']], :selected => params[:order]) %> </li>
-
-  
   <li>
     <fieldset>
       <legend>Publication Date</legend>
@@ -41,7 +39,6 @@
   
   <li><label>Order:</label><%= select_tag 'order', options_for_select([['Date', 'date'], ['Relevance', 'relevance']], :selected => params[:order]) %> </li>
   
->>>>>>> ea4d2f888d1a018d5d527634c5877a2561a07384:app/views/entries/search.html.erb
   <div class="btn"><%= submit_tag 'Search' %></div>
  </form>
 
