@@ -57,10 +57,13 @@
 </ul>
 
 <% content_for :sidebar do %>
-  <h3>Top Agencies Reporting</h3>
-  <%= pie_3d_chart(:alt => 'Top Agencies Reporting', :legend => @labels, :truncate_legend => '30', :counts => true, :legend_location => 'bottom', :data => @values, :size => ['230','350'], :color_range => ['005b81','c5eef5'], :transparent_bg => true) %>
   
-  <% unless @map.nil? %>
+  <% unless @data.blank? %>
+    <h3>Top Agencies Reporting</h3>
+    <%= pie_3d_chart(:alt => 'Top Agencies Reporting', :legend => @labels, :truncate_legend => '30', :counts => true, :legend_location => 'bottom', :data => @values, :size => ['230','350'], :color_range => ['005073','84cedb'], :transparent_bg => true) %>
+  <% end %>
+  
+  <% unless @map.blank? %>
     <h3>Locations Mentioned<h3>
     <% add_javascript { @map.to_js } %>
     <div id="map" class='small_map'></div>
