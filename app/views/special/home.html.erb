@@ -1,10 +1,12 @@
 <div class="currentevents span-15">
   
-  <div class="header">
-    <h2>Today's entries <span>(<%= @entries.length %>)</span></h2>
+  <div class="header group">
+    <h2><%= link_to "Today's entries", entries_by_date_path(@last_date) %> <span>(<%= @entries.length %>)</span></h2>
+    <%= link_to 'Prev', '',:class => "icon arrow prev floatLeft" %>
+    <%= link_to 'Next', '',:class => "icon arrow next floatRight" %>
   </div>
     
-  <div class="daily">
+  <div class="daily group">
     <ul class="items">
     <% @entries.each_with_index do |entry, i| %>
       <li>
@@ -19,7 +21,9 @@
 
 <% if !@closing_soon.empty? %>
   <div>
-    <h3>Comments Closing Soon</h3>
+    <div class="header">
+      <h2>Comments Closing Soon</h2>
+    </div>
     <ul>
     <% @closing_soon.each do |date| %>
       <li><%= link_to date.entry.title, entry_path(date.entry) %></li>
@@ -30,7 +34,9 @@
 
 <% if !@recently_opened.empty? %>
   <div>
-    <h3>Comments Recently Opened</h3>
+    <div class="header">
+      <h3>Comments Recently Opened</h3>
+    </div>
     <ul>
     <% @recently_opened.each do |date| %>
       <li><%= link_to date.entry.title, entry_path(date.entry) %></li>

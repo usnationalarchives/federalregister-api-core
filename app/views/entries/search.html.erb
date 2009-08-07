@@ -53,22 +53,23 @@
   <%= submit_tag 'Search', :class => 'btn' %>
 </form>
 
-<%= page_entries_info @entries %>
+<% if @entries %>
+  <%= page_entries_info @entries %>
 
-<%= will_paginate @entries %>
-<ol>
-  <% @entries.each do |entry| %>
-  <li>
-    <h4 class="title"><%= link_to entry.excerpts.title, entry_path(entry) %></h4>
-    <span class="date"><%= entry.publication_date %></span>
-    <span class="excepts"><%= entry.excerpts.full_text_raw.blank? ? entry.excerpts.abstract : entry.excerpts.full_text_raw %></span>
-    <br />
-    <span class="agency"><%= entry.agency ? link_to(entry.agency.name, agency_path(entry.agency)) : entry.primary_agency_raw %></span>
-  </li>
-  <% end %>
-</ol>
-<%= will_paginate @entries %>
-
+  <%= will_paginate @entries %>
+  <ol>
+    <% @entries.each do |entry| %>
+    <li>
+      <h4 class="title"><%= link_to entry.excerpts.title, entry_path(entry) %></h4>
+      <span class="date"><%= entry.publication_date %></span>
+      <span class="excepts"><%= entry.excerpts.full_text_raw.blank? ? entry.excerpts.abstract : entry.excerpts.full_text_raw %></span>
+      <br />
+      <span class="agency"><%= entry.agency ? link_to(entry.agency.name, agency_path(entry.agency)) : entry.primary_agency_raw %></span>
+    </li>
+    <% end %>
+  </ol>
+  <%= will_paginate @entries %>
+<% end %>
 <% content_for :sidebar do %>
   <h3>Other Formats</h3>
   <%# TODO: HELP-DESIGN: HELP-COPY: Need RSS icon, some text here %>
