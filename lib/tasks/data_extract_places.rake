@@ -2,8 +2,7 @@ namespace :data do
   namespace :extract do
     desc "Call out to Yahoo! Placemaker to geocode locations in our entries"
     task :places => :environment do 
-      placemaker_config = YAML::load(File.open("#{RAILS_ROOT}/config/placemaker.yml"))
-      placemaker = Placemaker.new(placemaker_config)
+      placemaker = Placemaker.new(:application_id => ENV['yahoo_placemaker_api_key'])
       
       Entry.find_in_batches(:conditions => "places_determined_at IS NULL AND abstract IS NOT NULL") do |entry_group|
         entry_group.each do |entry|
