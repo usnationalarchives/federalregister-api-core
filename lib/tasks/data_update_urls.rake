@@ -2,7 +2,7 @@ namespace :data do
   namespace :update do
     desc "Check all URLs to see if they are up, what their content type is, etc"
     task :urls => :environment do
-      Url.find(:all, :conditions => ["updated_at < ?", 1.minute.ago]).each do |url|
+      Url.find(:all, :conditions => ["urls.updated_at IS NULL OR updated_at >= ?", 1.week.ago]).each do |url|
         puts "checking #{url.name}..."
         begin
           c = Curl::Easy.new(url.name)
@@ -21,7 +21,7 @@ namespace :data do
           url.response_code = 404
           url.content_type = nil
           url.content_length = nil
-        rescue Curl::Err::TooManyRedirectsError, Curl::Err::ConnectionFailedError, Curl::Err::GotNothingError, Curl::Err::TimeoutError, Curl::Err::SSLConnectError
+        rescue Exception #Curl::Err::TooManyRedirectsError, Curl::Err::ConnectionFailedError, Curl::Err::GotNothingError, Curl::Err::TimeoutError, Curl::Err::SSLConnectError
           url.response_code = 500
           url.content_type = nil
           url.content_length = nil
