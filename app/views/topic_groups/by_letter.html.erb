@@ -1,0 +1,7 @@
+<% title "Topics starting with '#{@letter}'" %>
+
+<ul>
+<% @topic_groups.each do |topic_group| %>
+  <li><%= link_to topic_group.name, topic_group_path(topic_group) %> (<%= topic_group.entries_count %>)</li>
+<% end %>
+</ul>

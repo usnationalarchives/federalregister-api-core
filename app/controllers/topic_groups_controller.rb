@@ -1,6 +1,6 @@
 class TopicGroupsController < ApplicationController
   def index
-    @topics = TopicGroup.find(:all, :order => 'entries_count', :limit => 50)
+    @popular_topic_groups = TopicGroup.find(:all, :order => 'entries_count DESC', :limit => 50)
   end
   
   def show
@@ -10,5 +10,11 @@ class TopicGroupsController < ApplicationController
         :joins => :topics,
         :order => "entries.publication_date DESC",
         :limit => 100)
+  end
+  
+  def by_letter
+    @letter = params[:letter]
+    
+    @topic_groups = TopicGroup.all(:conditions => ["group_name LIKE ?", "#{@letter}%"])
   end
 end
