@@ -4,13 +4,15 @@
 <form method="get">
   
   Keywords: <%= text_field_tag :q, @search_term %><br />
+  <% if @topic %>
+  Topic: <%= @topic.name %><br />
+  <% end %>
   <% if @place %>
   In: <%= @place.name %><br />
   <% else %>
   Near: <%= text_field_tag :near, params[:near] %> (eg '94118', 'San Francisco', etc) (Within: <%= text_field_tag :within, params[:within] %> miles)<br />
   <% end %>
   Agency: <%= select_tag 'agency_id', options_for_select([''] + @agencies.collect{ |agency| [agency.name, agency.id.to_s] }, :selected => params[:agency_id]) %><br />
-  Topic: <%= select_tag 'topic_ids', options_for_select([''] + @topics.collect{ |topic| [topic.name, topic.id.to_s] }, :selected => params[:topic_ids]) %><br />
   Publication Date From: <%= text_field_tag :publication_date_greater_than, params[:publication_date_greater_than] %>
     To: <%= text_field_tag :publication_date_less_than, params[:publication_date_less_than] %> (eg '01/01/09', 'a year ago', 'yesterday')<br />
   Order: <%= select_tag 'order', options_for_select([['Date', 'date'], ['Relevance', 'relevance']], :selected => params[:order]) %> <br />

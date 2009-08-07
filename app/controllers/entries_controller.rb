@@ -25,10 +25,13 @@ class EntriesController < ApplicationController
       end
     end
     
-    [:agency_id, :topic_ids].each do |attribute|
-      unless params[attribute].blank?
-        with[attribute] = params[attribute]
-      end
+    if params[:agency_id]
+      with[:agency_id] = params[:agency_id]
+    end
+    
+    if params[:topic_id]
+      @topic = Topic.find(params[:topic_id])
+      with[:agency_ids] = params[:topic_id]
     end
     
     if !params[:publication_date_greater_than].blank? || !params[:publication_date_less_than].blank?
@@ -51,9 +54,7 @@ class EntriesController < ApplicationController
     
     respond_to do |wants|
       wants.html do
-        # FIXME: topics & agencies need to be more limited...
-        @topics = Topic.all(:limit => 100, :order => :name)
-        @agencies = Agency.all(:limit => 100, :order => :name)
+        @agencies = Agency.all(:order => :name)
         
         render :action => 'search'
       end
