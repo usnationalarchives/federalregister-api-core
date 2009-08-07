@@ -127,7 +127,7 @@ body {
 }
 /* line 89, ../../app/stylesheets/trifecta.sass */
 #main h2 {
-  color: #ff8400;
+  color: #46565c;
   font: 2em Georgia,"Times New Roman",Serif;
   margin: 0;
 }
@@ -281,11 +281,6 @@ body {
 #main .content .col2 .sidebar ul li {
   list-style-type: none;
 }
-/* line 201, ../../app/stylesheets/trifecta.sass */
-#main .content .col2 .sidebar h2 {
-  border-color: #ff8400;
-  color: #ff8400;
-}
 /* line 204, ../../app/stylesheets/trifecta.sass */
 #main .content .col2 .sidebar h3 + ul {
   padding: 0;
@@ -302,7 +297,7 @@ body {
 }
 /* line 212, ../../app/stylesheets/trifecta.sass */
 #main .content .currentevents .daily {
-  height: 32em;
+  height: 13em;
   width: 590px;
   margin: 0 0 0 0;
   position: relative;
