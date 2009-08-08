@@ -73,7 +73,7 @@ class Entry < ActiveRecord::Base
     # fields
     indexes title
     indexes abstract
-    indexes entry_detail.full_text_raw
+    indexes entry_detail.full_text_raw, :as => :full_text_raw
     indexes agency.name, :as => :agency_name
     
     # attributes
