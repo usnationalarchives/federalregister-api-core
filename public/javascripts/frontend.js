@@ -1,11 +1,5 @@
 $(document).ready(function() {
 
-  // $("a#slideNext").bind("click", function(e){
-  //   e.preventDefault();
-  // })
-  // $("a#slidePrev").bind("click", function(e){
-  //   e.preventDefault();
-  // })  
   /***********************************  
   * SEARCH FILTER
   **********************************/
