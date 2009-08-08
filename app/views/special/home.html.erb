@@ -1,4 +1,14 @@
-<div class="currentevents span-15 group">
+<% content_for :precolumn do %>
+          
+    <div class="infobox">
+      <p class="fed">The Federal Register at your fingertips.</p>
+      <p>View by <a href="">date</a>, <a href="">agency</a>, <a href="">type</a>, <a href="">location</a>.</p>
+    </div>
+    
+    <hr class="ornament" />
+<% end %>
+
+<div class="currentevents group">
   
   <div class="header group">
     <h2><%= link_to "Today's entries", entries_by_date_path(@last_date) %> <span>(<%= @entries.length %>)</span></h2>
@@ -21,10 +31,8 @@
 </div>
 
 <% if !@closing_soon.empty? %>
-  <div>
-    <div class="header">
-      <h2>Comments Closing Soon</h2>
-    </div>
+  <div class="clear marginTop">
+    <h2>Comments Closing Soon</h2>
     <ul>
     <% @closing_soon.each do |date| %>
       <li><%= link_to date.entry.title, entry_path(date.entry) %></li>
@@ -34,10 +42,8 @@
 <% end %>
 
 <% if !@recently_opened.empty? %>
-  <div>
-    <div class="header">
-      <h3>Comments Recently Opened</h3>
-    </div>
+  <div class="clear marginTop">
+    <h2>Comments Recently Opened</h2>
     <ul>
     <% @recently_opened.each do |date| %>
       <li><%= link_to date.entry.title, entry_path(date.entry) %></li>
@@ -51,26 +57,3 @@
   <%= render :partial => 'agencies/featured', :locals => {:featured_agencies => @featured_agencies} %>
 <% end %>
 
-<% content_for :precolumn do %>
-          
-    <div class="infobox">
-      <p class="fed">The Federal Register at your fingertips.</p>
-      <p>View by <a href="">date</a>, <a href="">agency</a>, <a href="">type</a>, <a href="">location</a>.</p>
-      <!-- <p class="stats group"><span class="num">1,000,000+</span><span class="stat"> printed pages.</span></p>
-         <p class="stats group"><span class="num">130,000+</span><span class="stat"> notices.</span></p>
-         <p class="">Find out what's happening <span class="around">around you.</span></p>    --> 
-    </div>
-    
-    <hr class="ornament" />
-        
-    <!-- <div class="column span-7 push-1">
-      <h2>Top ten agencies by entries</h2>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p> 
-    </div>
-    
-    <div class="column span-14 prepend-1 append-1 last">
-      <h2>Maybe some graph here?</h2>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p> 
-    </div> -->
-    
-<% end %>
