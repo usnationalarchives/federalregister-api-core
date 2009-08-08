@@ -621,44 +621,61 @@ form li span {
 }
 
 /* line 438, ../../app/stylesheets/trifecta.sass */
-#footer {
+body #footer {
   background: #5a5a5a;
   border-top: 4px solid #9b9b9b;
   clear: both;
   height: 150px;
+  padding: 2em 0 0 0;
   position: relative;
 }
-/* line 444, ../../app/stylesheets/trifecta.sass */
-#footer .sitemap {
-  padding: 2em;
+/* line 445, ../../app/stylesheets/trifecta.sass */
+body #footer h4 {
+  color: #aaa;
+  text-align: center;
 }
-/* line 446, ../../app/stylesheets/trifecta.sass */
-#footer .sitemap h4 {
+/* line 448, ../../app/stylesheets/trifecta.sass */
+body #footer .sitemap {
+  padding: 2em 0 0 2em;
+}
+/* line 450, ../../app/stylesheets/trifecta.sass */
+body #footer .sitemap h4 {
   color: #fff;
   font: 175% serif;
   margin: 0 0 0 0;
 }
-/* line 450, ../../app/stylesheets/trifecta.sass */
-#footer .sitemap ul {
+/* line 454, ../../app/stylesheets/trifecta.sass */
+body #footer .sitemap ul {
+  float: left;
   margin: 0 0 0 1em;
 }
-/* line 452, ../../app/stylesheets/trifecta.sass */
-#footer .sitemap ul li {
+/* line 457, ../../app/stylesheets/trifecta.sass */
+body #footer .sitemap ul li {
   list-style-type: none;
 }
-/* line 454, ../../app/stylesheets/trifecta.sass */
-#footer .sitemap ul li a {
+/* line 459, ../../app/stylesheets/trifecta.sass */
+body #footer .sitemap ul li a {
   color: #989898;
   font-size: 125%;
   text-decoration: none;
 }
+/* line 463, ../../app/stylesheets/trifecta.sass */
+body #footer .legal {
+  padding: 2em 0 0 0;
+}
+/* line 465, ../../app/stylesheets/trifecta.sass */
+body #footer .legal h4 {
+  color: #fff;
+  font: 125% serif;
+  text-align: center;
+}
 
-/* line 459, ../../app/stylesheets/trifecta.sass */
+/* line 469, ../../app/stylesheets/trifecta.sass */
 .floatLeft {
   float: left;
 }
 
-/* line 462, ../../app/stylesheets/trifecta.sass */
+/* line 472, ../../app/stylesheets/trifecta.sass */
 ul.tag_cloud {
   font-size: 1.1em;
   line-height: 1.32em;
@@ -691,7 +708,7 @@ ul.tag_cloud .xl {
 ul.tag_cloud .xxl {
   font-size: 2.2em;
 }
-/* line 464, ../../app/stylesheets/trifecta.sass */
+/* line 474, ../../app/stylesheets/trifecta.sass */
 ul.tag_cloud li {
   float: left;
 }
