@@ -83,7 +83,7 @@ class EntriesController < ApplicationController
       end
       
       wants.rss do 
-        @feed_name = 'GovPulse Search Results'
+        @feed_name = 'govpulse Search Results'
         render :action => 'index'
       end
     end
