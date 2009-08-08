@@ -100,7 +100,7 @@ body
     :font 2.5em Georgia,"Times New Roman",Serif
     :font-variant small-caps        
     :margin 0 0 10px 0
-    :padding 0 0 54px 0
+    :padding 0 0 60px 0
     :text-align center
     &.noMargin
       :margin 0
@@ -136,9 +136,9 @@ body
     :text-decoration none
     &:link
     &:visited
-      :color #fa6900
+      :color #7d7d7d
     &:hover
-      :color #39505e
+      :color #cf8227
     &:active
   ul
     /:padding 10px 0 0 0
@@ -167,6 +167,7 @@ body
     :margin 0 0 10px 0    
     :padding 3px 10px
     h1 
+      :background-image none
       :float left
     a.options
       :float right
@@ -194,7 +195,9 @@ body
           :text-align center
           :width 100%
           &.fed
-            :color #3e8417
+            :color #46565C
+            &.alt
+              :color #fa6900
           &.stats
             span.num
               :display block
@@ -275,6 +278,7 @@ body
             :float left
             :height 6em
             :list-style-type none
+            :width 100%
             p.number
               :float left
               :font-family Arial, "MS Trebuchet", sans-serif
@@ -298,8 +302,8 @@ body
                 :color #999
                 :float left
                 :font-style italic
-            & a:hover
-              :color #cf8227
+              &:hover
+                :color #cf8227
   ul.btn
     :margin 10px 0 10px 0
     li
