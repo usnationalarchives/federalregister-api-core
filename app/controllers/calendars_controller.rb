@@ -1,4 +1,5 @@
 class CalendarsController < ApplicationController
+  caches_page :index
   
   def index
     @year  = params[:year].to_i  || Time.now.strftime("%Y")

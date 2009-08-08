@@ -1,4 +1,6 @@
 class EntriesController < ApplicationController
+  caches_page :index, :by_date, :show
+  
   include Geokit::Geocoders
   def search
     with = {}
