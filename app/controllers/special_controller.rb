@@ -4,7 +4,11 @@ class SpecialController < ApplicationController
     # stuff here
     @last_date = Entry.find(:first, :select => "publication_date", :order => "publication_date DESC").publication_date
     @entries = Entry.all(:conditions => ['publication_date = ?', @last_date])
-    @featured_agencies = Agency.featured
+    @featured_agencies = Agency.featured.find(:all, :select => "agencies.*,
+        (SELECT count(*) FROM entries WHERE agency_id = agencies.id AND publication_date > '#{30.days.ago.to_s(:db)}') AS num_entries_month,
+        (SELECT count(*) FROM entries WHERE agency_id = agencies.id AND publication_date > '#{90.days.ago.to_s(:db)}') AS num_entries_quarter,
+        (SELECT count(*) FROM entries WHERE agency_id = agencies.id AND publication_date > '#{365.days.ago.to_s(:db)}') AS num_entries_year"
+    )
     
     date_range = [Date.today, Date.today + 7]
     @closing_soon = ReferencedDate.find(:all, 
