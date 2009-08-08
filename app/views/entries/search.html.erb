@@ -50,10 +50,11 @@
         </ul>
     </fieldset>
   </li>
+  </ul>
   <%= submit_tag 'Search', :class => 'btn' %>
 </form>
 
-<% if @entries %>
+<% if @entries.size > 0 %>
   
   <div class="search_info group">
     <%= page_entries_info @entries %>
@@ -74,10 +75,13 @@
     </li>
     <% end %>
   </ol>
-  
-  <%= will_paginate @entries %>
-  
+  <div class="search_info group">
+    <%= will_paginate @entries %>
+  </div>
+<% else %>
+<p>No entries were found.</p>
 <% end %>
+
 <% content_for :sidebar do %>
   <h3>Other Formats</h3>
   <%# TODO: HELP-DESIGN: HELP-COPY: Need RSS icon, some text here %>
