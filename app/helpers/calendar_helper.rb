@@ -27,7 +27,7 @@ module CalendarHelper
   end
   
   def dates_calendar_view(dates, year, month)
-    calendar_for(year, month, &dates_events_proc(dates))
+    calendar_for(year, month, :calendar_class => 'group calendar', &dates_events_proc(dates))
   end
   
   def entry_events_proc(entry, date_range)
