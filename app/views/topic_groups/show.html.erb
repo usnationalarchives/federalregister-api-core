@@ -12,6 +12,7 @@
 <%= render :partial => "entries/list", :locals => {:list_type => 'topic', :topics => @topic_group.topics, :entries => @entries, :search_params => {:topic_group => @topic_group.group_name}} %>
 
 <% content_for :sidebar do %>
+  <%# TODO HELP-DESIGN make wrappers and slide these up %>
   <% unless @agency_values.blank? %>
     <h3>Agencies Using this Group</h3>
     <div class='chart size_<%=@agency_values.size%>'><%= pie_3d_chart(:alt => 'Agencies using this Topic Group', :legend => @agency_labels, :truncate_legend => '30', :counts => true, :legend_location => 'bottom', :data => @agency_values, :size => ['230','350'], :color_range => ['005073','84cedb'], :transparent_bg => true) %></div>
