@@ -1,5 +1,5 @@
 $(document).ready(function() {
-  
+
   /***********************************  
   * SEARCH FILTER
   **********************************/
@@ -19,6 +19,8 @@ $(document).ready(function() {
     
     $("form li:not('.simple')").toggle().find("li").children(":not(label)").toggleDisabled();
   });
+  
+  
   
   // This needs to be fixed to use a proper slug - may require url rewriting.
   $('.tag_cloud').each(function(){
