@@ -26,7 +26,8 @@
             <%= hidden_field_tag :place_id, params[:place_id] %>
           </li>
         <% else %>
-          <li class="simple"><label>Near:</label> <%= text_field_tag :near, params[:near] %> (eg '94118', 'San Francisco', etc) (Within: <%= text_field_tag :within, params[:within] %> miles)</li>
+          <li class="simple"><label>Near:</label> <%= text_field_tag :near, params[:near] %> (eg '94118', 'San Francisco', etc)</li> 
+          <li class="simple"><label>Within:</label> <%= text_field_tag :within, params[:within] %> miles</li>
         <% end %>
       </ul>
     </li>
@@ -49,27 +50,38 @@
         </ul>
     </fieldset>
   </li>
-
+  </ul>
   <%= submit_tag 'Search', :class => 'btn' %>
 </form>
 
-<% if @entries %>
-  <%# page_entries_info @entries %>
-
-  <%# will_paginate @entries %>
-  <ol>
+<% if @entries.size > 0 %>
+  
+  <div class="search_info group">
+    <p class="entries"><%= page_entries_info @entries %></p>
+    <%= will_paginate @entries %>
+  </div>
+  
+  <ol class="results">
     <% @entries.each do |entry| %>
     <li>
       <h4 class="title"><%= link_to entry.excerpts.title, entry_path(entry) %></h4>
-      <span class="date"><%= entry.publication_date %></span>
-      <span class="excepts"><%= entry.excerpts.full_text_raw.blank? ? entry.excerpts.abstract : entry.excerpts.full_text_raw %></span>
-      <br />
-      <span class="agency"><%= entry.agency ? link_to(entry.agency.name, agency_path(entry.agency)) : entry.primary_agency_raw %></span>
+      
+      <div class="result_info">
+        <span class="date"><%= entry.publication_date %></span>
+        <span class="excepts"><%= entry.excerpts.full_text_raw.blank? ? entry.excerpts.abstract : entry.excerpts.full_text_raw %></span>
+        <br />
+        <span class="agency"><%= entry.agency ? link_to(entry.agency.name, agency_path(entry.agency)) : entry.primary_agency_raw %></span>
+      </div>  
     </li>
     <% end %>
   </ol>
-  <%# will_paginate @entries %>
+  <div class="search_info group">
+    <%= will_paginate @entries %>
+  </div>
+<% else %>
+<p>No entries were found.</p>
 <% end %>
+
 <% content_for :sidebar do %>
   <h3>Other Formats</h3>
   <%# TODO: HELP-DESIGN: HELP-COPY: Need RSS icon, some text here %>

@@ -158,7 +158,7 @@ body
       :padding 0
   &.sidebar
   .header
-    :background #fff url(/images/main_hX_bg.png) repeat-x left bottom
+    :background #fff url(/images/main_hX_bg3.png) repeat-x left bottom
     :border 1px solid #bdbcbd
     :-moz-border-radius 5px
     :-webkit-border-radius 5px
@@ -253,9 +253,11 @@ body
     .currentevents 
       :vertical-align text-top  
       .header
+        :margin 0
         :position relative
         :z-index 9999
       .slide
+        :margin-top -10px
         :z-index 5555
       .daily
         :height 7em
@@ -363,6 +365,34 @@ body
         :top 0
         :z-index 1111
         
+  .search_info
+    p.entries
+      :float left
+      :margin 20px 0 0 0  
+    .pagination
+      :float right
+      :margin 20px 0 0 0
+      :*padding-bottom 2px      
+      a
+        :border 1px solid #aaa
+        :padding 1px 3px
+        &.next_page,
+        &.prev_page 
+          :border none
+        &:hover
+          :background #39505e
+          :color #fff
+  ol.results
+    :clear both
+    :margin 10px 0 0 0
+    li
+      :list-style-type none
+      :margin 0 0 20px 0
+      .result_info
+        :padding 0 0 0 15px
+        .date
+          :color #565656
+          :font-weight bold
   dl.fixed
     :width 600px
     dt
@@ -485,6 +515,8 @@ body #footer
       :text-align center
 .floatLeft
   :float left
+.marginTop
+  :margin-top 10px
 ul.tag_cloud
   +tag-cloud(1.1em)
   li
