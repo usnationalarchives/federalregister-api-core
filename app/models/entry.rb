@@ -140,11 +140,11 @@ class Entry < ActiveRecord::Base
     
     case format
     when :html
-      base_url = "http://www.gpo.gov/fdsys/granule/FR-#{publication_date}/#{document_number}"
+      base_url = "http://www.gpo.gov/fdsys/granule/FR-#{publication_date.to_s(:db)}/#{document_number}"
     when :text
-      base_url = "http://www.gpo.gov/fdsys/pkg/FR-#{publication_date}/html/#{document_number}.htm"
+      base_url = "http://www.gpo.gov/fdsys/pkg/FR-#{publication_date.to_s(:db)}/html/#{document_number}.htm"
     when :pdf
-      base_url =  "http://www.gpo.gov/fdsys/pkg/FR-#{publication_date}/pdf/#{document_number}.pdf"
+      base_url =  "http://www.gpo.gov/fdsys/pkg/FR-#{publication_date.to_s(:db)}/pdf/#{document_number}.pdf"
     end
   end
 
