@@ -2,7 +2,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-  <title>GovPulse | <%= yield :title %></title>
+  <title>GovPulse<%= "| #{yield :title}" if yield(:title) %></title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <meta name="description" content="..." />
   <meta name="keywords" content="..." />

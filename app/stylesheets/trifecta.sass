@@ -122,7 +122,8 @@ body
     :border-bottom 1px solid #aaa
     :font 1.2em Georgia,"Times New Roman",Serif    
     :font-variant small-caps
-    :margin 0    
+    :margin 0 0 5px
+    :float left   
   h5
     :color #333
     :font 1.1em sans-serif
@@ -151,6 +152,7 @@ body
         :margin-left 15px
         ul
           :margin-left 15px
+          :clear left
     li.group
       :padding 0 0 15px 0
   ul.btn
@@ -244,6 +246,12 @@ body
               :margin 0
               li
                 :margin-left 10px
+        div.tag_cloud
+          div.fancy
+            :position relative
+            :width 230px 
+            :height 230px 
+            :overflow hidden
     .currentevents 
       :vertical-align text-top  
       .header
