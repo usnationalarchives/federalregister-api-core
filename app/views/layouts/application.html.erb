@@ -24,7 +24,7 @@
   <%= javascript_include_tag 'frontend.js'              %>
   <%= javascript_include_tag 'jquery.toggleDisabled.js' %>
   <%= javascript_include_tag 'jquery.horizontalCount.js'%>
-  <%= javascript_include_tag 'tagcloud.js'%>
+  <%= javascript_include_tag 'tagcloud.js' %>
 
   <%= yield :javascripts %>
 
@@ -53,12 +53,12 @@
           </form> 
         </div>    
         <ul>
-          <li><a href="/agencies/" title="Agencies">Agency</a> / </li>
-          <li><a href="/calendars/" title="Date">Date</a> /</li>
-          <li><a href="/entries/search" title="Search Entries">Entries</a> / </li>
-          <li><a href="/locations/" title="View entries by location">Location</a> / </li>
-          <li><a href="/topics/" title="Explore entries by topic">Topics</a> / </li>
-          <li><a href="/about/" title="About govpulse">About</a></li>
+          <li><%= link_to 'Agencies', agencies_path, :title => "Browse by Agency" %> / </li>
+          <li><%= link_to 'Date', calendar_month_path(Date.today.year, sprintf("%02d", Date.today.month))%> /</li>
+          <li><%= link_to 'Entries', entries_search_path, :title => 'Search Entries' %> / </li>
+          <li><%= link_to 'Location', maps_path, :title => "View entries by location" %> / </li>
+          <li><%= link_to 'Topics', topic_groups_path, :title => "Browse by Topic" %> / </li>
+          <li><%= link_to 'About', about_path, :title => "About the project" %></li>
         </ul>
       </div>      
   <!-- HEADER end -->
@@ -114,14 +114,7 @@
 
     <!-- FOOTER -->
     <div id="footer">
-      <div class="sitemap">
-        <h4>Sitemap</h4>
-        <ul>
-          <li><a href="#">Agencies</a></li>
-          <li><a href="#">Date</a></li>
-          <li><a href="#">Stuff</a></li>
-        </ul>  
-      </div>  
+      <h4>Copyright 2009 , Trifecta Studios™</h4>
     </div>
     <!-- FOOTER end -->
 
