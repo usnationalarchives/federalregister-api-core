@@ -1,4 +1,5 @@
 class TopicGroupsController < ApplicationController
+  
   def index
     redirect_to topic_groups_by_letter_url('a')
   end
