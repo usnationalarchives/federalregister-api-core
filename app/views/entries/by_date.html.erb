@@ -59,7 +59,7 @@
   
   <% unless @data.blank? %>
     <h3>Top Agencies Reporting</h3>
-    <%= pie_3d_chart(:alt => 'Top Agencies Reporting', :legend => @labels, :truncate_legend => '30', :counts => true, :legend_location => 'bottom', :data => @values, :size => ['230','350'], :color_range => ['005073','84cedb'], :transparent_bg => true) %>
+     <div class='chart size_<%=@data.size%>'><%= pie_3d_chart(:alt => 'Top Agencies Reporting', :legend => @labels, :truncate_legend => '30', :counts => true, :legend_location => 'bottom', :data => @values, :size => ['230','350'], :color_range => ['005073','84cedb'], :transparent_bg => true) %></div>
   <% end %>
   
   <% unless @map.blank? %>
