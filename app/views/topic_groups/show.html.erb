@@ -14,11 +14,11 @@
 <% content_for :sidebar do %>
   <% unless @agency_values.blank? %>
     <h3>Agencies Using this Group</h3>
-    <%= pie_3d_chart(:alt => 'Agencies using this Topic Group', :legend => @agency_labels, :truncate_legend => '30', :counts => true, :legend_location => 'bottom', :data => @agency_values, :size => ['230','350'], :color_range => ['005073','84cedb'], :transparent_bg => true) %>
+    <div class='chart size_<%=@agency_values.size%>'><%= pie_3d_chart(:alt => 'Agencies using this Topic Group', :legend => @agency_labels, :truncate_legend => '30', :counts => true, :legend_location => 'bottom', :data => @agency_values, :size => ['230','350'], :color_range => ['005073','84cedb'], :transparent_bg => true) %></div>
   <% end %>
   
   <% unless @granule_values.blank? %>
     <h3>Recent Entry Types for Group</h3>
-    <%= pie_3d_chart(:alt => 'Entry Type for Recent Entries', :legend => @granule_labels, :truncate_legend => '30', :counts => true, :legend_location => 'bottom', :data => @granule_values, :size => ['230','200'], :color_range => ['005073','84cedb'], :transparent_bg => true) %>
+     <div class='chart size_<%=@granule_values.size%>'><%= pie_3d_chart(:alt => 'Entry Type for Recent Entries', :legend => @granule_labels, :truncate_legend => '30', :counts => true, :legend_location => 'bottom', :data => @granule_values, :size => ['230','200'], :color_range => ['005073','84cedb'], :transparent_bg => true) %></div>
   <% end %>
 <% end %>
