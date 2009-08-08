@@ -1713,30 +1713,28 @@ body #main .content .col1 {
 }
 /* line 41, ../../app/stylesheets/screen.sass */
 body #main.cols .content .col1 {
-  padding-left: 40px;
   display: inline;
   float: left;
   margin-right: 10px;
-  width: 590px;
+  width: 630px;
 }
 /* line 97, ../../../../../../../../Library/Ruby/Gems/1.8/gems/chriseppstein-compass-0.8.8/frameworks/blueprint/stylesheets/blueprint/modules/_grid.sass */
 * html body #main.cols .content .col1 {
   overflow-x: hidden;
 }
-/* line 44, ../../app/stylesheets/screen.sass */
+/* line 43, ../../app/stylesheets/screen.sass */
 body #main.cols .content .col2 {
   padding-left: 40px;
-  padding-right: 40px;
   display: inline;
   float: left;
   margin-right: 0;
-  width: 230px;
+  width: 270px;
 }
 /* line 97, ../../../../../../../../Library/Ruby/Gems/1.8/gems/chriseppstein-compass-0.8.8/frameworks/blueprint/stylesheets/blueprint/modules/_grid.sass */
 * html body #main.cols .content .col2 {
   overflow-x: hidden;
 }
-/* line 49, ../../app/stylesheets/screen.sass */
+/* line 47, ../../app/stylesheets/screen.sass */
 body #footer .sitemap {
   display: inline;
   float: left;
@@ -1747,7 +1745,7 @@ body #footer .sitemap {
 * html body #footer .sitemap {
   overflow-x: hidden;
 }
-/* line 51, ../../app/stylesheets/screen.sass */
+/* line 49, ../../app/stylesheets/screen.sass */
 body #footer .legal {
   display: inline;
   float: left;
@@ -1758,7 +1756,7 @@ body #footer .legal {
 * html body #footer .legal {
   overflow-x: hidden;
 }
-/* line 53, ../../app/stylesheets/screen.sass */
+/* line 51, ../../app/stylesheets/screen.sass */
 body #footer .somethingelse {
   display: inline;
   float: left;
@@ -1770,7 +1768,7 @@ body #footer .somethingelse {
   overflow-x: hidden;
 }
 
-/* line 57, ../../app/stylesheets/screen.sass */
+/* line 55, ../../app/stylesheets/screen.sass */
 span.match {
   font-weight: bold;
 }
