@@ -12,11 +12,6 @@ class AgenciesController < ApplicationController
   end
   
   def show
-    @agency = Agency.find_by_slug(params[:id], 
-                                  :include => :entries,
-                                  :order => 'entries.publication_date DESC',
-                                  :limit => 100)
-    
     @agency = Agency.find_by_slug(params[:id])
     @entries = @agency.entries.all(:limit => 100, :include => :places, :order => "entries.publication_date DESC")
     @places = @entries.map{|e| e.places}.flatten.uniq.select{|p| p.usable?}
@@ -35,7 +30,19 @@ class AgenciesController < ApplicationController
                              )
     end
     
+    @granule_labels = []
+    @granule_values = []
+    @entries.group_by(&:granule_class).each do |granule_class, entries|
+      @granule_labels << granule_class
+      @granule_values << entries.size
+    end
     
+    # TODO: fix the craziness!
+    @popular_topic_groups = Topic.find(:all, :select => "topics.group_name AS id, topics.name, COUNT(*) AS entries_count",
+        :conditions => ["entries.agency_id = ?", @agency.id],
+        :joins => :entries,
+        :group => "topics.group_name",
+        :order => "LENGTH(topics.name)")
     
     respond_to do |wants|
       wants.html
