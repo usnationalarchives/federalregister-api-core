@@ -94,11 +94,13 @@ body
   :margin-top -9px !important
   h1  
     /:color #ff8400
-    :background url(/images/txt_hX_bg.png) no-repeat bottom middle
+    :background url(/images/hr_bg3.png) no-repeat bottom center
+    /:background url(/images/txt_hX_bg.png) no-repeat bottom middle
     :color #46565c
     :font 2.5em Georgia,"Times New Roman",Serif
     :font-variant small-caps        
-    :margin 0 0 20px 0
+    :margin 0 0 10px 0
+    :padding 0 0 54px 0
     :text-align center
     &.noMargin
       :margin 0
@@ -120,7 +122,8 @@ body
     :border-bottom 1px solid #aaa
     :font 1.2em Georgia,"Times New Roman",Serif    
     :font-variant small-caps
-    :margin 0    
+    :margin 0 0 5px
+    :float left   
   h5
     :color #333
     :font 1.1em sans-serif
@@ -149,6 +152,7 @@ body
         :margin-left 15px
         ul
           :margin-left 15px
+          :clear left
     li.group
       :padding 0 0 15px 0
   ul.btn
@@ -230,7 +234,7 @@ body
           li
             :list-style-type none
         h2
-          /:border-color #ff8400
+          :border-bottom 1px solid #46565C
           /:color #ff8400
         h3 + ul
           :padding 0
@@ -242,6 +246,12 @@ body
               :margin 0
               li
                 :margin-left 10px
+        div.tag_cloud
+          div.fancy
+            :position relative
+            :width 230px 
+            :height 230px 
+            :overflow hidden
     .currentevents 
       :vertical-align text-top  
       .header
@@ -249,11 +259,11 @@ body
         :position relative
         :z-index 9999
       .slide
+        :background #eee
         :margin-top -10px
         :z-index 5555
       .daily
         :height 7em
-        :width 590px
         :margin 10px 0 0 0
         :position relative
         :overflow hidden    
@@ -265,7 +275,6 @@ body
             :float left
             :height 6em
             :list-style-type none
-            :width 590px  
             p.number
               :float left
               :font-family Arial, "MS Trebuchet", sans-serif
@@ -284,7 +293,7 @@ body
               &.entry
                 :color #005B81
                 :float left
-                :margin-top 5px
+                :margin-top 10px
               &.agency
                 :color #999
                 :float left
