@@ -47,6 +47,9 @@ class Entry < ActiveRecord::Base
   }
   
   GRANULE_CLASS_TYPES = ['RULE', 'PRORULE', 'NOTICE', 'PRESDOCU', 'UNKNOWN']
+  
+  has_one :entry_detail
+  
   belongs_to :agency
   
   has_many :topic_assignments
@@ -70,7 +73,7 @@ class Entry < ActiveRecord::Base
     # fields
     indexes title
     indexes abstract
-    indexes full_text_raw
+    indexes entry_detail.full_text_raw, :as => :full_text_raw
     indexes agency.name, :as => :agency_name
     
     # attributes
@@ -88,10 +91,13 @@ class Entry < ActiveRecord::Base
     }
   end
   
-  # def to_param
-  #   "#{document_number}"
-  # end
-
+  def full_text_raw
+    entry_detail.full_text_raw
+  end
+  
+  def full_text_raw=(val)
+    entry_detail.full_text_raw=val
+  end
   
   def month_year
     publication_date.to_formatted_s(:month_year)
@@ -134,11 +140,11 @@ class Entry < ActiveRecord::Base
     
     case format
     when :html
-      base_url = "http://www.gpo.gov/fdsys/granule/FR-#{publication_date}/#{document_number}"
+      base_url = "http://www.gpo.gov/fdsys/granule/FR-#{publication_date.to_s(:db)}/#{document_number}"
     when :text
-      base_url = "http://www.gpo.gov/fdsys/pkg/FR-#{publication_date}/html/#{document_number}.htm"
+      base_url = "http://www.gpo.gov/fdsys/pkg/FR-#{publication_date.to_s(:db)}/html/#{document_number}.htm"
     when :pdf
-      base_url =  "http://www.gpo.gov/fdsys/pkg/FR-#{publication_date}/pdf/#{document_number}.pdf"
+      base_url =  "http://www.gpo.gov/fdsys/pkg/FR-#{publication_date.to_s(:db)}/pdf/#{document_number}.pdf"
     end
   end
 
