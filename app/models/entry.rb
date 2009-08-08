@@ -46,7 +46,14 @@ class Entry < ActiveRecord::Base
                 appearing in this section.'
   }
   
-  GRANULE_CLASS_TYPES = ['RULE', 'PRORULE', 'NOTICE', 'PRESDOCU', 'UNKNOWN']
+  GRANULE_CLASS_TYPES = {
+    'RULE'     => 'Rule', 
+    'PRORULE'  => 'Proposed Rule', 
+    'NOTICE'   => 'Notice', 
+    'PRESDOCU' => 'Presidential Document', 
+    'UNKNOWN'  => 'Unknown',
+    ''         => 'Unknown'
+  }
   
   has_one :entry_detail
   
@@ -66,7 +73,7 @@ class Entry < ActiveRecord::Base
   has_many :referenced_dates, :dependent => :destroy
   
   def granule_class 
-    self['granule_class'] == '' ? 'UNKNOWN' : self['granule_class']
+    GRANULE_CLASS_TYPES[self['granule_class']]
   end
   
   define_index do
