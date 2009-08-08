@@ -495,46 +495,47 @@ body {
 }
 /* line 356, ../../app/stylesheets/trifecta.sass */
 #main table.calendar {
-  float: left;
   height: 200px;
-  margin-right: 1em;
-  width: 47%;
+  margin: 10px auto;
+  width: 50%;
 }
-/* line 361, ../../app/stylesheets/trifecta.sass */
+/* line 360, ../../app/stylesheets/trifecta.sass */
 #main table.calendar th {
   background: none;
 }
-/* line 363, ../../app/stylesheets/trifecta.sass */
+/* line 362, ../../app/stylesheets/trifecta.sass */
 #main table.calendar th.current {
-  border-bottom: 2px solid red;
-  color: red;
+  border-bottom: 1px solid grey;
+  color: #005073;
+  font-size: 1.5em;
+  text-align: center;
 }
-/* line 366, ../../app/stylesheets/trifecta.sass */
+/* line 367, ../../app/stylesheets/trifecta.sass */
 #main .icon {
   padding: 5px 0 5px 60px;
   background-repeat: no-repeat;
 }
-/* line 369, ../../app/stylesheets/trifecta.sass */
+/* line 370, ../../app/stylesheets/trifecta.sass */
 #main .icon.cal {
   background-image: url(/images/icons/calendar_small.png);
   background-position: 10px top;
   margin: 0;
   padding: 0 0 15px 87px;
 }
-/* line 374, ../../app/stylesheets/trifecta.sass */
+/* line 375, ../../app/stylesheets/trifecta.sass */
 #main .icon.agency {
   background-image: url(/images/icons/agency_small2.png);
   background-position: top left;
   margin: 0;
   padding: 0 0 10px 65px;
 }
-/* line 379, ../../app/stylesheets/trifecta.sass */
+/* line 380, ../../app/stylesheets/trifecta.sass */
 #main .icon.contact {
   background-image: url(/images/icons/contact_small.png);
   background-position: top left;
   padding: 32px 0 0 60px;
 }
-/* line 383, ../../app/stylesheets/trifecta.sass */
+/* line 384, ../../app/stylesheets/trifecta.sass */
 #main .icon.arrow {
   background-image: url(/images/arrow.png);
   background-position: left 1px;
@@ -542,34 +543,34 @@ body {
   padding: 0 0 0 20px;
   width: 80px;
 }
-/* line 389, ../../app/stylesheets/trifecta.sass */
+/* line 390, ../../app/stylesheets/trifecta.sass */
 #main .icon.arrow.next {
   background-position: right 2px;
   padding: 0 20px 0 0;
 }
-/* line 392, ../../app/stylesheets/trifecta.sass */
+/* line 393, ../../app/stylesheets/trifecta.sass */
 #main .icon.arrow.next.floatRight {
   float: right;
   width: auto;
 }
-/* line 395, ../../app/stylesheets/trifecta.sass */
+/* line 396, ../../app/stylesheets/trifecta.sass */
 #main .icon.arrow.open {
   background-position: left -15px;
 }
-/* line 397, ../../app/stylesheets/trifecta.sass */
+/* line 398, ../../app/stylesheets/trifecta.sass */
 #main .icon.arrow:visited {
   color: #005b81;
 }
-/* line 399, ../../app/stylesheets/trifecta.sass */
+/* line 400, ../../app/stylesheets/trifecta.sass */
 #main .icon.arrow.prev {
   background-position: left -30px;
 }
-/* line 401, ../../app/stylesheets/trifecta.sass */
+/* line 402, ../../app/stylesheets/trifecta.sass */
 #main .icon.arrow.prev.floatLeft {
   float: left;
   width: auto;
 }
-/* line 404, ../../app/stylesheets/trifecta.sass */
+/* line 405, ../../app/stylesheets/trifecta.sass */
 #main input.btn {
   background: url(/images/btn_bg2.png) repeat-x bottom left;
   border: 1px solid #83bbd9;
@@ -581,12 +582,12 @@ body {
   padding: 5px;
   *padding: 0;
 }
-/* line 414, ../../app/stylesheets/trifecta.sass */
+/* line 415, ../../app/stylesheets/trifecta.sass */
 #main input.btn:hover {
   background: url(/images/btn_bg2_hover.png) repeat-x left 50%;
 }
 
-/* line 416, ../../app/stylesheets/trifecta.sass */
+/* line 417, ../../app/stylesheets/trifecta.sass */
 hr.ornament {
   background: url(/images/hr_bg3.png) no-repeat top center;
   border: none;
@@ -595,13 +596,13 @@ hr.ornament {
   padding: 30px 0;
 }
 
-/* line 424, ../../app/stylesheets/trifecta.sass */
+/* line 425, ../../app/stylesheets/trifecta.sass */
 form li span {
   color: #6e6e6e;
   vertical-align: middle;
 }
 
-/* line 427, ../../app/stylesheets/trifecta.sass */
+/* line 428, ../../app/stylesheets/trifecta.sass */
 #footer {
   background: #5a5a5a;
   border-top: 4px solid #9b9b9b;
@@ -609,70 +610,70 @@ form li span {
   height: 150px;
   position: relative;
 }
-/* line 433, ../../app/stylesheets/trifecta.sass */
+/* line 434, ../../app/stylesheets/trifecta.sass */
 #footer .sitemap {
   padding: 2em;
 }
-/* line 435, ../../app/stylesheets/trifecta.sass */
+/* line 436, ../../app/stylesheets/trifecta.sass */
 #footer .sitemap h4 {
   color: #fff;
   font: 175% serif;
   margin: 0 0 0 0;
 }
-/* line 439, ../../app/stylesheets/trifecta.sass */
+/* line 440, ../../app/stylesheets/trifecta.sass */
 #footer .sitemap ul {
   margin: 0 0 0 1em;
 }
-/* line 441, ../../app/stylesheets/trifecta.sass */
+/* line 442, ../../app/stylesheets/trifecta.sass */
 #footer .sitemap ul li {
   list-style-type: none;
 }
-/* line 443, ../../app/stylesheets/trifecta.sass */
+/* line 444, ../../app/stylesheets/trifecta.sass */
 #footer .sitemap ul li a {
   color: #989898;
   font-size: 125%;
   text-decoration: none;
 }
 
-/* line 448, ../../app/stylesheets/trifecta.sass */
+/* line 449, ../../app/stylesheets/trifecta.sass */
 .floatLeft {
   float: left;
 }
 
-/* line 451, ../../app/stylesheets/trifecta.sass */
+/* line 452, ../../app/stylesheets/trifecta.sass */
 ul.tag_cloud {
   font-size: 1.1em;
   line-height: 1.32em;
 }
-/* line 5, ../../../../../../../../Library/Ruby/Gems/1.8/gems/chriseppstein-compass-0.8.8/frameworks/compass/stylesheets/compass/utilities/general/_tag_cloud.sass */
+/* line 5, ../../../../../../usr/local/ruby-enterprise-1.8.6-20090610/lib/ruby/gems/1.8/gems/chriseppstein-compass-0.8.8/frameworks/compass/stylesheets/compass/utilities/general/_tag_cloud.sass */
 ul.tag_cloud .xxs, ul.tag_cloud .xs, ul.tag_cloud .s, ul.tag_cloud .l, ul.tag_cloud .xl, ul.tag_cloud .xxl {
   line-height: 1.32em;
 }
-/* line 7, ../../../../../../../../Library/Ruby/Gems/1.8/gems/chriseppstein-compass-0.8.8/frameworks/compass/stylesheets/compass/utilities/general/_tag_cloud.sass */
+/* line 7, ../../../../../../usr/local/ruby-enterprise-1.8.6-20090610/lib/ruby/gems/1.8/gems/chriseppstein-compass-0.8.8/frameworks/compass/stylesheets/compass/utilities/general/_tag_cloud.sass */
 ul.tag_cloud .xxs {
   font-size: 0.55em;
 }
-/* line 9, ../../../../../../../../Library/Ruby/Gems/1.8/gems/chriseppstein-compass-0.8.8/frameworks/compass/stylesheets/compass/utilities/general/_tag_cloud.sass */
+/* line 9, ../../../../../../usr/local/ruby-enterprise-1.8.6-20090610/lib/ruby/gems/1.8/gems/chriseppstein-compass-0.8.8/frameworks/compass/stylesheets/compass/utilities/general/_tag_cloud.sass */
 ul.tag_cloud .xs {
   font-size: 0.733em;
 }
-/* line 11, ../../../../../../../../Library/Ruby/Gems/1.8/gems/chriseppstein-compass-0.8.8/frameworks/compass/stylesheets/compass/utilities/general/_tag_cloud.sass */
+/* line 11, ../../../../../../usr/local/ruby-enterprise-1.8.6-20090610/lib/ruby/gems/1.8/gems/chriseppstein-compass-0.8.8/frameworks/compass/stylesheets/compass/utilities/general/_tag_cloud.sass */
 ul.tag_cloud .s {
   font-size: 0.825em;
 }
-/* line 13, ../../../../../../../../Library/Ruby/Gems/1.8/gems/chriseppstein-compass-0.8.8/frameworks/compass/stylesheets/compass/utilities/general/_tag_cloud.sass */
+/* line 13, ../../../../../../usr/local/ruby-enterprise-1.8.6-20090610/lib/ruby/gems/1.8/gems/chriseppstein-compass-0.8.8/frameworks/compass/stylesheets/compass/utilities/general/_tag_cloud.sass */
 ul.tag_cloud .l {
   font-size: 1.467em;
 }
-/* line 15, ../../../../../../../../Library/Ruby/Gems/1.8/gems/chriseppstein-compass-0.8.8/frameworks/compass/stylesheets/compass/utilities/general/_tag_cloud.sass */
+/* line 15, ../../../../../../usr/local/ruby-enterprise-1.8.6-20090610/lib/ruby/gems/1.8/gems/chriseppstein-compass-0.8.8/frameworks/compass/stylesheets/compass/utilities/general/_tag_cloud.sass */
 ul.tag_cloud .xl {
   font-size: 1.65em;
 }
-/* line 17, ../../../../../../../../Library/Ruby/Gems/1.8/gems/chriseppstein-compass-0.8.8/frameworks/compass/stylesheets/compass/utilities/general/_tag_cloud.sass */
+/* line 17, ../../../../../../usr/local/ruby-enterprise-1.8.6-20090610/lib/ruby/gems/1.8/gems/chriseppstein-compass-0.8.8/frameworks/compass/stylesheets/compass/utilities/general/_tag_cloud.sass */
 ul.tag_cloud .xxl {
   font-size: 2.2em;
 }
-/* line 453, ../../app/stylesheets/trifecta.sass */
+/* line 454, ../../app/stylesheets/trifecta.sass */
 ul.tag_cloud li {
   float: left;
 }
