@@ -1,12 +1,14 @@
+<% content_for :precolumn do %>
+  <h1>Entries within <%= pluralize(@dist, 'mile') %> of <%= @location.city %>, <%= @location.region %></h1>
+<% end %>
+
+
 <% if !@places.nil? %>
   <% add_javascript { @map.to_js } %>
   <% content_for :precolumn do %>
     <div id="map" class='large_map'></div>
   <% end %>
 <% end %>
-
-
-<h2>Entries within <%= pluralize(@dist, 'mile') %> of <%= @location.city %>, <%= @location.region %></h2>
 
 <% if !@places.nil? %>
   <%= render :partial => 'maps/entries_by_distance', :locals => {:entry_places => @places, :lat => @lat, :long => @long} %>
