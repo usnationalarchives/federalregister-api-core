@@ -8,14 +8,30 @@
 
 <% feed_autodiscovery agency_path(@agency, :format => :rss) %>
 
-<%= render :partial => 'entries/list', :locals => {:entries => @entries, :search_params => {:agency_id => @agency.id}} %>
+<%= render :partial => 'entries/list', :locals => {:list_type => 'agency', :entries => @entries, :search_params => {:agency_id => @agency.id}} %>
 
 <% content_for :sidebar do %>
+  <% unless @granule_values.blank? %>
+    <h3>Recent Entry Types for Agency</h3>
+     <div class='chart size_<%=@granule_values.size%>'><%= pie_3d_chart(:alt => 'Entry Type for Recent Entries', :legend => @granule_labels, :truncate_legend => '30', :counts => true, :legend_location => 'bottom', :data => @granule_values, :size => ['230','200'], :color_range => ['005073','84cedb'], :transparent_bg => true) %></div>
+  <% end %>
+
   <% unless @places.blank? %>
-    <div class="header">
-      <h2>Recent Places</h2>
-    </div>
+    <h3>Recent Places Mentioned</h3>
     <% add_javascript { @map.to_js } %>
     <div id="map" class="small_map"></div>
+  <% end %>
+  
+  <% unless @popular_topic_groups.blank? %>
+    <h3>Popular Topics for this Agency</h3>
+
+    <div class="tag_cloud">
+      <div id="fancy_tag_cloud" class="fancy"></div>
+      <ul>
+      <% @popular_topic_groups.each do |topic_group| %>
+        <li><%= link_to topic_group.name, topic_group_path(topic_group) %> (<%= topic_group.entries_count %>)</li>
+      <% end %>
+      </ul>
+    </div>
   <% end %>
 <% end %>
