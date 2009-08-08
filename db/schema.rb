@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090807161346) do
+ActiveRecord::Schema.define(:version => 20090808000159) do
 
   create_table "agencies", :force => true do |t|
     t.integer  "parent_id"
@@ -50,9 +50,7 @@ ActiveRecord::Schema.define(:version => 20090807161346) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.text     "slug"
-    t.text     "full_text",            :limit => 2147483647
-    t.text     "full_text_raw",        :limit => 2147483647
-    t.boolean  "delta",                                      :default => true, :null => false
+    t.boolean  "delta",                :default => true, :null => false
     t.string   "source_text_url"
     t.string   "primary_agency_raw"
     t.string   "secondary_agency_raw"
@@ -62,6 +60,13 @@ ActiveRecord::Schema.define(:version => 20090807161346) do
   add_index "entries", ["citation"], :name => "index_entries_on_citation"
   add_index "entries", ["document_number"], :name => "index_entries_on_document_number"
   add_index "entries", ["publication_date", "agency_id"], :name => "index_entries_on_publication_date_and_agency_id"
+
+  create_table "entry_details", :force => true do |t|
+    t.integer "entry_id"
+    t.text    "full_text_raw", :limit => 2147483647
+  end
+
+  add_index "entry_details", ["entry_id"], :name => "index_entry_details_on_entry_id"
 
   create_table "place_determinations", :force => true do |t|
     t.integer "entry_id"

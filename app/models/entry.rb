@@ -47,6 +47,9 @@ class Entry < ActiveRecord::Base
   }
   
   GRANULE_CLASS_TYPES = ['RULE', 'PRORULE', 'NOTICE', 'PRESDOCU', 'UNKNOWN']
+  
+  has_one :entry_detail
+  
   belongs_to :agency
   
   has_many :topic_assignments
@@ -70,7 +73,7 @@ class Entry < ActiveRecord::Base
     # fields
     indexes title
     indexes abstract
-    indexes full_text_raw
+    indexes entry_detail.full_text_raw
     indexes agency.name, :as => :agency_name
     
     # attributes
@@ -88,10 +91,13 @@ class Entry < ActiveRecord::Base
     }
   end
   
-  # def to_param
-  #   "#{document_number}"
-  # end
-
+  def full_text_raw
+    entry_detail.full_text_raw
+  end
+  
+  def full_text_raw=(val)
+    entry_detail.full_text_raw=val
+  end
   
   def month_year
     publication_date.to_formatted_s(:month_year)
