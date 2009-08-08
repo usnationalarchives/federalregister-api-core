@@ -159,7 +159,8 @@ body
     :background #fff url(/images/main_hX_bg.png) repeat-x left bottom
     :border 1px solid #bdbcbd
     :-moz-border-radius 5px
-    :-webkit-border-radius 5px    
+    :-webkit-border-radius 5px
+    :margin 0 0 10px 0    
     :padding 3px 10px
     h1 
       :float left
@@ -435,6 +436,13 @@ form
     span
       :color #6e6e6e
       :vertical-align middle
+
+.panel
+  :display none
+  :padding-top 2em
+  &.on
+    :display block
+
 body #footer
   :background  #5a5a5a
   :border-top 4px solid #9b9b9b 
@@ -468,7 +476,6 @@ body #footer
       :text-align center
 .floatLeft
   :float left
-
 ul.tag_cloud
   +tag-cloud(1.1em)
   li
