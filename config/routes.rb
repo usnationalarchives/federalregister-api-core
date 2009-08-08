@@ -57,5 +57,7 @@ ActionController::Routing::Routes.draw do |map|
   map.locations_path 'locations/:slug/:id', :controller => 'locations', :action => 'index'
                                          
   map.root :controller => 'special', :action => 'home'
+  
   map.about 'about', :controller => 'special', :action => 'about'
+  
 end

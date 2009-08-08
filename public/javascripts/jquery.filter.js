@@ -11,7 +11,17 @@ $(document).ready(function() {
   });
 
   $("ul.filter li:first a").trigger("click");
-
+  
+  $("ul.about li a").bind("click", function(e){
+    e.preventDefault();
+    $("ul.about li").removeClass("on");
+    $(this).parent().addClass("on");
+    
+    $(".panel:not("+ $(this).attr('href') +")").removeClass("on").hide();
+    $( $(this).attr('href') ).show().addClass("on");
+        
+  });
+  
 });
 
 jQuery.extend(  
