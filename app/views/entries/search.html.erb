@@ -47,16 +47,16 @@
         <ul>  
           <li class="simple"><label>Order:</label><%= select_tag 'order', options_for_select([['Date', 'date'], ['Relevance', 'relevance']], :selected => params[:order]) %> </li>
         </ul>
-    </fieldset>
-  </li>
-
+      </fieldset>
+    </li>
+  </ul>
   <%= submit_tag 'Search', :class => 'btn' %>
 </form>
 
-<% if @entries %>
-  <%# page_entries_info @entries %>
+<% if @entries.size > 0 %>
+  <%= page_entries_info @entries %>
 
-  <%# will_paginate @entries %>
+  <%= will_paginate @entries %>
   <ol>
     <% @entries.each do |entry| %>
     <li>
@@ -68,8 +68,11 @@
     </li>
     <% end %>
   </ol>
-  <%# will_paginate @entries %>
+  <%= will_paginate @entries %>
+<% else %>
+<p>No entries were found.</p>
 <% end %>
+
 <% content_for :sidebar do %>
   <h3>Other Formats</h3>
   <%# TODO: HELP-DESIGN: HELP-COPY: Need RSS icon, some text here %>
