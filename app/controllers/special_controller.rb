@@ -1,4 +1,5 @@
 class SpecialController < ApplicationController
+  caches_page :home
   
   def home
     # stuff here
