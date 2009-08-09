@@ -67,13 +67,18 @@ class EntriesController < ApplicationController
       order = "@relevance DESC, publication_date DESC"
     end
     
-    # raise with.inspect
-    
     @entries = Entry.search(@search_term, 
       :page => params[:page] || 1,
       :order => order,
       :with => with
     )
+    
+    # TODO: FIXME: Ugly hack to get total pages to be within bounds
+    if @entries.total_pages > 50
+      def @entries.total_pages
+        50
+      end
+    end
     
     respond_to do |wants|
       wants.html do
