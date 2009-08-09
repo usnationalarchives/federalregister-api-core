@@ -12,7 +12,7 @@ class AgenciesController < ApplicationController
   end
   
   def show
-    @agency = Agency.find_by_slug(params[:id])
+    @agency = Agency.find_by_slug!(params[:id])
     @entries = @agency.entries.all(:limit => 100, :include => :places, :order => "entries.publication_date DESC")
     @places = @entries.map{|e| e.places}.flatten.uniq.select{|p| p.usable?}
     
