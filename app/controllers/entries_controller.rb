@@ -16,7 +16,7 @@ class EntriesController < ApplicationController
     else
       unless @near.blank?
         within = params[:within].to_i
-        if within <= 0 || within >= 500
+        if within < 0 || within >= 500
           within = 500
         end
       
