@@ -2,7 +2,7 @@
 # Set Basics
 #############################################################
 
-set :application, "trifecta"
+set :application, "govpulse"
 set :user, "deploy"
 set :port, 5034
 
