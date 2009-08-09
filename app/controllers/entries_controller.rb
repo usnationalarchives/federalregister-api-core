@@ -26,10 +26,14 @@ class EntriesController < ApplicationController
         end
         
         location = Rails.cache.fetch("location_of: '#{@near}'") { Geokit::Geocoders::GoogleGeocoder.geocode(@near) }
-
+        
         if location.lat
           places = Place.find(:all, :select => "id", :origin => location, :within => @within)
           with[:place_ids] = places.map{|p| p.id}
+          
+          if places.size > 4096
+            errors << 'We found too many locations near your location; please reduce the scope of your search'
+          end
         else
           errors << 'We could not understand your location.'
         end
