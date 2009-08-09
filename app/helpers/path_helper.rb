@@ -24,6 +24,10 @@ module PathHelper
     "/entries/#{date.year}/#{sprintf "%02d", date.month}/#{sprintf "%02d", date.day}"
   end
   
+  def topic_group_path(group_name)
+    clean_group_name = group_name.sub(/ /, '-')
+    "/topics/#{clean_group_name}"
+  end
   private
   
   def path_to_url(path)

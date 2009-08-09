@@ -5,7 +5,9 @@ class TopicGroupsController < ApplicationController
   end
   
   def show
-    @topic_group = TopicGroup.find_by_name!(params[:id])
+    group_name = params[:id]
+    group_name.gsub!(/_|-/, ' ')
+    @topic_group = TopicGroup.find_by_group_name!(params[:id])
     @entries = Entry.find(:all,
         :conditions => {:topics => {:group_name => @topic_group.group_name}},
         :joins => :topics,
