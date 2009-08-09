@@ -38,7 +38,7 @@ class AgenciesController < ApplicationController
     end
     
     # TODO: fix the craziness!
-    @popular_topic_groups = Topic.find(:all, :select => "topics.group_name AS id, topics.name, COUNT(*) AS entries_count",
+    @popular_topic_groups = Topic.find(:all, :select => "topics.group_name AS group_name, topics.name, COUNT(*) AS entries_count",
         :conditions => ["entries.agency_id = ?", @agency.id],
         :joins => :entries,
         :group => "topics.group_name",
