@@ -5,6 +5,17 @@ The Federal Register at your fingertips.
  
 http://govpulse.us
 
+* The source code is available on Github at [http://github.com/trifecta/govpulse](http://github.com/trifecta/govpulse).
+* Code bugs can be filed at Lighthouse, via [http://govpulse.lighthouseapp.com/projects/35087-govpulseus/overview](http://govpulse.lighthouseapp.com/projects/35087-govpulseus/overview).
+* Problems, suggestions, etc can also be filed at Tender, via [http://govpulse.tenderapp.com/discussions](http://govpulse.tenderapp.com/discussions)
+
+About
+------------
+
+This project was created for the Apps for America 2 contest and as a way for us to use our talents to help others participate in their government.
+
+When we embarked on the creation of this site in our spare time, 3 weeks before the Apps for America 2 deadline, we knew that the open source software community would be essential to us realizing our dream. We are deeply indebted to all those who toil everyday to create incredible software and freely share it with the world. We are proud to have toiled along side them and thankful for their efforts to enable us to build a new app and tools we can release back into the community. It is our hope that this app continues to celebrate that spirit and gives back to that community, to the people of the US, and the world.
+
 Installation
 ------------
 
