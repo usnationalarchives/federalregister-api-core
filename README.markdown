@@ -23,7 +23,7 @@ Then:
     rake db:create
     rake db:migrate
 
-To fetch data, you'll need to run the follwing tasks
+To fetch data, you'll need to run the following tasks
 
     rake data:download:entries
     rake data:download:full_text
@@ -39,7 +39,7 @@ Contact us at govpulse@gmail.com if you run into any trouble; we'll revise these
 License
 -------
 
-govpulse is released under the Affero GPL v3, which requires that the source code be made available to any network user of the application. So while we encourage you to fork and run your own copies of this application, any changes you make need to be shared with the larger community.  Note that this does not allow the use of the govpulse name or logo.
+govpulse is released under the Affero GPL v3, which requires that the source code be made available to any network user of the application. So while we encourage you to fork and run your own copies of this application, any changes you make need to be shared with their users.  Note that this does not allow the use of the govpulse name or logo.
 
 govpulse itself is copyrighted by David Augustine, Robert Burbach, and Andrew Carpenter.
 
