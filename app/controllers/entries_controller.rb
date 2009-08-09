@@ -15,15 +15,20 @@ class EntriesController < ApplicationController
       with[:place_ids] = @place.id
     else
       unless @near.blank?
-        within = params[:within].to_i
-        if within < 0 || within >= 500
-          within = 500
+        @within = params[:within]
+        if params[:within].blank?
+          @within = 100
+        else
+          @within = params[:within].to_i
+          if @within < 0 || @within >= 200
+            @within = 200
+          end
         end
-      
+        
         location = Rails.cache.fetch("location_of: '#{@near}'") { Geokit::Geocoders::GoogleGeocoder.geocode(@near) }
 
         if location.lat
-          places = Place.find(:all, :select => "id", :origin => location, :within => within)
+          places = Place.find(:all, :select => "id", :origin => location, :within => @within)
           with[:place_ids] = places.map{|p| p.id}
         else
           errors << 'We could not understand your location.'

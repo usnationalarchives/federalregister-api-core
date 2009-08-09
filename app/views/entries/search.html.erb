@@ -27,7 +27,7 @@
           </li>
         <% else %>
           <li class="simple"><label>Near:</label> <%= text_field_tag :near, params[:near] %> (eg '94118', 'San Francisco', etc)</li> 
-          <li class="simple"><label>Within:</label> <%= text_field_tag :within, params[:within] %> miles</li>
+          <li class="simple"><label>Within:</label> <%= text_field_tag :within, @within %> miles</li>
         <% end %>
       </ul>
     </li>
