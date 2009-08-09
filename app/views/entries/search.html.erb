@@ -69,7 +69,12 @@
       
       <div class="result_info">
         <span class="date"><%= entry.publication_date %></span>
-        <span class="excepts"><%= entry.excerpts.full_text_raw.blank? ? entry.excerpts.abstract : entry.excerpts.full_text_raw %></span>
+        <span class="excepts"><%= 
+          if @search_term.blank? || entry.excerpts.full_text_raw.blank?
+            entry.excerpts.abstract
+          else
+            entry.excerpts.full_text_raw
+          end %></span>
         <br />
         <span class="agency"><%= entry.agency ? link_to(entry.agency.name, agency_path(entry.agency)) : entry.primary_agency_raw %></span>
       </div>  
