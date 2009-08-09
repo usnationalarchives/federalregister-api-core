@@ -257,7 +257,7 @@ function TagCloud(cntr,sstyle,carray,chighlight,urlstub)
 		var c = new Circle(x,y,r,randomMember(colors))
 		addToGridPos(x,y,c)
 		drawn.push(c)
-		renderCircle(c,nd.name)
+		renderCircle(c,nd.name, nd.slug)
 
 	}
 	
@@ -279,7 +279,7 @@ function TagCloud(cntr,sstyle,carray,chighlight,urlstub)
 		return false
 	 }
 
-	function renderCircle(c,name)
+	function renderCircle(c,name, slug)
 	{	
 		var cvs = null
 		if(isIE)
@@ -306,7 +306,7 @@ function TagCloud(cntr,sstyle,carray,chighlight,urlstub)
 			});
 			
 			YAHOO.util.Event.addListener(eventdiv, 'click', function(evt) {
-				document.location=url+name
+				document.location=url+slug
 			});
 			
 			YAHOO.util.Event.addListener(eventdiv, 'mouseover', function(evt) {
@@ -343,7 +343,7 @@ function TagCloud(cntr,sstyle,carray,chighlight,urlstub)
 					hideAbout()
 				}
 				cvs.onclick = function(e) {
-					document.location=url+name
+					document.location=url+slug
 				}
 				cvs.style.cursor = 'pointer'
 				cvs.style.left = c.x - c.r + 'px'
@@ -450,10 +450,11 @@ function TagCloud(cntr,sstyle,carray,chighlight,urlstub)
 
 }
 
-function Node(nm,sz)
+function Node(nm,sz,sl)
 {
 	this.size = sz
 	this.name = nm
+	this.slug = sl
 }
 
 
