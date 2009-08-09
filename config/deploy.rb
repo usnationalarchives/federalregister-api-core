@@ -2,7 +2,7 @@
 # Set Basics
 #############################################################
 
-set :application, "govpulse"
+set :application, "trifecta"
 set :user, "deploy"
 set :port, 5034
 
@@ -48,7 +48,8 @@ set :sql_file_path,  "#{shared_path}/db/#{remote_db_name}_#{Time.now}.sql"
 # SCM Settings
 #############################################################
 set :scm,              :git          
-set :github_user_repo, 'trifecta'      
+set :github_user_repo, 'trifecta'
+set :github_project_repo, 'govpulse'
 set :deploy_via,       :remote_cache 
 
 
@@ -77,7 +78,7 @@ set :git_enable_submodules, true
 if deploy_via == :remote_cache
 
   set :deploy_via, :remote_cache
-  set :repository, "git@github.com:#{github_user_repo}/#{application}.git"
+  set :repository, "git@github.com:#{github_user_repo}/#{github_project_repo}.git"
   set :github_username, 'trifecta'
 
 elsif deploy_via == :copy
