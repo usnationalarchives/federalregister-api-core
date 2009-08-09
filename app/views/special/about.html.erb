@@ -2,16 +2,15 @@
   <h1>About this site</h1>
   
   <ul class="btn about">
-    <li class="on"><a href="#why">Why we did it</a></li>
-    <li><a href="#fr">Federal Register</a></li>
-    <li><a href="#what">What we did</a></li>
+    <li class="on"><a href="#what">What we did</a></li>
+    <li><a href="#why">Why we did it</a></li>
     <li><a href="#how">How we did it</a></li>
     <li><a href="#who">Who we are</a></li>
   </ul> 
  
 <% end %>
 
-<div class="panel on" id="why">
+<div class="panel on" id="what">
 <h2>About govpulse</h2>
 <p>To the average US citizen it can often seem that their government works in leaps and bounds, with new legislation or debates on legislation leaping to the fore. Yet every day the thousands of employees of the U.S Government go to work for the people of the country. Each day agencies release hundreds of proposed rules and regulations, meeting notices, final rules, and changes to existing rules in the form of the Federal Register. However in their current format they are difficult to find and to process in meaningful ways.</p>
 
@@ -19,13 +18,11 @@
 
 <p>The Federal Registrar was created to inform citizens of their rights and obligations, document the actions of Federal agencies, and to provide a forum for public participation in the democratic process. Additionally it provides access to a wide range of Federal benefits and opportunities for funding</p>
 
-<p>We like to think of the Federal Register as the pulse of government. It is our goal to see the hard work of the men and women that make up our government more robustly presented and thus encourage the people of the US to more fully participate.</p>
-
-<p>
+<p>We like to think of the Federal Register as the pulse of government. It is our goal to see the hard work of the men and women that make up our government more robustly presented and thus encourage the people of the US to more fully participate. </p>
 
 </div>
 
-<div class="panel" id="fr">
+<div class="panel" id="why">
 
 <h2>Federal Register</h2>
 
@@ -47,48 +44,34 @@
 
 </div>
 
-<div class="panel" id="what">
-  <h2>Usability &amp; Data Manipulation</h2>
-  
-  <p>While the Federal Register provides a wealth of information about the workings of our government, a variety of steps were needed to clean up the data to make it accessible:</p>
-  
-  <ul class="bullets">
-    <li>We consolidated the list of agencies (dealing with the vast number of typographical errors - over 30+ spellings of the word 'department' alone!).</li>
-    <li>We embedded links to other Federal Register entries, the Code of Federal regulation, the United States Code, etc., making the next step to understanding an entry only a click away.</li>
-    <li>We geocoded the abstracts of every entry since 1994; allowing you to see the context and areas in which your government is acting.</li>
-    <li>We extracted relevant dates such comments clsoing soon and effective date and put them on a calendar. This increases your ability to contriubute to your governmnent. (Every agency must respond to all relevant comments!)</li>
-    <li>We provide RSS feeds by agency, topic, or any custom search. Keep track of what's important to you!</li>
-  </ul>
-  
-  <p>This site is still a work in progress, but we hope that with the help of the larger development community these features can be extended.</p>
-</div>
 <div class="panel" id="how">
 
 <h2>Serious technology</h2>
   
-<p>When we embarked on the creation of this site 3 weeks before the Apps for America 2 deadline we knew that the open source software community would be essential to us realizing our dream. We are deeply indebted to all those who toil everyday to create incredible software and freely share it with the world. We are proud to have toiled along side them and thankful for their efforts to enable us to build a new app and tools we can release back into the community. It is our hope that this app continues to celebrate that spirit and gives back to that community, to the people of the US, and the world.</p>
+<p>When we embarked on the creation of this site in our spare time, 3 weeks before the Apps for America 2 deadline, we knew that the open source software community would be essential to us realizing our dream. We are deeply indebted to all those who toil everyday to create incredible software and freely share it with the world. We are proud to have toiled along side them and thankful for their efforts to enable us to build a new app and tools we can release back into the community. It is our hope that this app continues to celebrate that spirit and gives back to that community, to the people of the US, and the world.</p>
 
-<p>Technologies used:</p>
+<ul>
+  <li>The source code is available on Github at <a href='http://github.com/trifecta/govpulse'>http://github.com/trifecta/govpulse</a>.</li>
+  <li>Code bugs can be filed at Lighthouse, via <a href='http://govpulse.lighthouseapp.com/projects/35087-govpulseus/overview'>http://govpulse.lighthouseapp.com/projects/35087-govpulseus/overview</a>.</li>
+  <li>Problems, suggestions, etc can also be filed at Tender, via <a href='http://govpulse.tenderapp.com/discussions'>http://govpulse.tenderapp.com/discussions</a>.</li>
+</ul>
 
-<ul class="bullets">
+<p>List of technologies used (get ready, it's a long one!)</p>
+
+<ol>
 <li>Ruby</li>
 <li>Ruby on Rails</li>
 
 <li>Thinking sphinx</li>
+<li>Searchlogic</li>
 
 <li>Compass, Blueprint, Sass &amp; Haml</li>
 
 <li>Cloudmade APIs</li>
-<li>Yahoo Placemaker</li>
-<li>Google Maps Geocoding API</li>
-<li>Google Charts</li>
 
 <li>Geokit &amp; geokit-rails</li>
 <li>Maxmind ip database</li>
-
-<li>jQuery</li>
-
-</ul>
+</ol>
 
 </div>
 
@@ -96,9 +79,7 @@
 
 <h2>We are not robots</h2>
   
-<p>We are three developers that have a passion for building web applications that make a difference in the lives of people. By day we work to make further our Educational system. By night, well we do other stuff. Like this app.</p>
-
-<p>You can follow our progress on Twitter <a href="http://twitter.com/govpulse">@govpulse</a>.</p>
+<p>We are three developers that have a passion for building web applications that make a difference in the lives of people. By day we work to further our Educational system. By night, well we do other stuff. Like this app.</p>
 
 <div class="span-6 prepend-1">
   <h3>Andrew</h3> 
