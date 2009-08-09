@@ -21,23 +21,23 @@ class EntriesController < ApplicationController
         end
       
         location = Rails.cache.fetch("location_of: '#{@near}'") { Geokit::Geocoders::GoogleGeocoder.geocode(@near) }
-      
+
         if location.lat
-          place_ids = Place.find(:all, :select => "id", :origin => location, :within => within).map &:id
-          with[:place_ids] = place_ids
+          places = Place.find(:all, :select => "id", :origin => location, :within => within)
+          with[:place_ids] = places.map{|p| p.id}
         else
           errors << 'We could not understand your location.'
         end
       end
     end
     
-    if params[:agency_id]
+    unless params[:agency_id].blank?
       with[:agency_id] = params[:agency_id]
     end
     
-    if params[:topic_id]
+    unless params[:topic_id].blank?
       @topic = Topic.find(params[:topic_id])
-      with[:agency_ids] = params[:topic_id]
+      with[:topic_ids] = params[:topic_id]
     end
     
     if !params[:publication_date_greater_than].blank? || !params[:publication_date_less_than].blank?
@@ -67,7 +67,7 @@ class EntriesController < ApplicationController
       order = "@relevance DESC, publication_date DESC"
     end
     
-    if (!@search_term.blank?) || with.values.any?{|v| ! v.blank?}
+    if errors.size == 0 && (!@search_term.blank?) || with.values.any?{|v| ! v.blank?}
       @entries = Entry.search(@search_term, 
         :page => params[:page] || 1,
         :order => order,
