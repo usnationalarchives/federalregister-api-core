@@ -127,7 +127,7 @@ class Entry < ActiveRecord::Base
   end
   
   def slug
-    "#{self.title.downcase.gsub(/&/, 'and').gsub(/[^a-z0-9]+/, '-')}"
+    self.title.downcase.gsub(/&/, 'and').gsub(/[^a-z0-9]+/, '-').slice(0,100)
   end
   
   def agency_parent_id
