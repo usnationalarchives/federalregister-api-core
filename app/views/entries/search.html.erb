@@ -54,7 +54,8 @@
   <%= submit_tag 'Search', :class => 'btn' %>
 </form>
 
-<% if @entries.size > 0 %>
+<% if @entries %>
+  <% if @entries.size > 0 %>
   
   <div class="search_info group">
     <p class="entries"><%= page_entries_info @entries %></p>
@@ -78,10 +79,10 @@
   <div class="search_info group">
     <%= will_paginate @entries %>
   </div>
-<% else %>
-<p>No entries were found.</p>
+  <% else %>
+    <p>No entries were found.</p>
+  <% end %>
 <% end %>
-
 <% content_for :sidebar do %>
   <h3>Other Formats</h3>
   <%# TODO: HELP-DESIGN: HELP-COPY: Need RSS icon, some text here %>
