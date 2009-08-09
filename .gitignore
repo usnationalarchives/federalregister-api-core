@@ -3,5 +3,6 @@ log
 data
 config/database.yml
 config/api_keys.yml
+config/newrelic.yml
 config/development.sphinx.conf
 db/sphinx/
