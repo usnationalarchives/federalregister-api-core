@@ -1,4 +1,5 @@
 class LocationsController < ApplicationController
+  caches_page :index
   
   def index
     @location = Place.find(params[:id])
