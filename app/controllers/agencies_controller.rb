@@ -14,38 +14,39 @@ class AgenciesController < ApplicationController
   def show
     @agency = Agency.find_by_slug!(params[:id])
     @entries = @agency.entries.all(:limit => 100, :include => :places, :order => "entries.publication_date DESC")
-    @places = @entries.map{|e| e.places}.flatten.uniq.select{|p| p.usable?}
-    
-    @map = Cloudkicker::Map.new( :style_id => 1714,
-                                 :bounds   => true,
-                                 :points   => @places
-                               )
-    @places.each do |place|
-      Cloudkicker::Marker.new( :map   => @map, 
-                               :lat   => place.latitude,
-                               :long  => place.longitude, 
-                               :title => 'Click to view location info',
-                               :info  => render_to_string(:partial => 'maps/place_marker_tooltip', :locals => {:place => place} ),
-                               :info_max_width => 200
-                             )
-    end
-    
-    @granule_labels = []
-    @granule_values = []
-    @entries.group_by(&:granule_class).each do |granule_class, entries|
-      @granule_labels << granule_class
-      @granule_values << entries.size
-    end
-    
-    # TODO: fix the craziness!
-    @popular_topic_groups = Topic.find(:all, :select => "topics.group_name AS group_name, topics.name, COUNT(*) AS entries_count",
-        :conditions => ["entries.agency_id = ?", @agency.id],
-        :joins => :entries,
-        :group => "topics.group_name",
-        :order => "LENGTH(topics.name)")
     
     respond_to do |wants|
-      wants.html
+      wants.html do
+        @places = @entries.map{|e| e.places}.flatten.uniq.select{|p| p.usable?}
+
+        @map = Cloudkicker::Map.new( :style_id => 1714,
+                                     :bounds   => true,
+                                     :points   => @places
+                                   )
+        @places.each do |place|
+          Cloudkicker::Marker.new( :map   => @map, 
+                                   :lat   => place.latitude,
+                                   :long  => place.longitude, 
+                                   :title => 'Click to view location info',
+                                   :info  => render_to_string(:partial => 'maps/place_marker_tooltip', :locals => {:place => place} ),
+                                   :info_max_width => 200
+                                 )
+        end
+
+        @granule_labels = []
+        @granule_values = []
+        @entries.group_by(&:granule_class).each do |granule_class, entries|
+          @granule_labels << granule_class
+          @granule_values << entries.size
+        end
+
+        # TODO: fix the craziness!
+        @popular_topic_groups = Topic.find(:all, :select => "topics.group_name AS group_name, topics.name, COUNT(*) AS entries_count",
+            :conditions => ["entries.agency_id = ?", @agency.id],
+            :joins => :entries,
+            :group => "topics.group_name",
+            :order => "LENGTH(topics.name)")
+      end
       
       wants.rss do
         @feed_name = "govpulse: #{@agency.name}"
