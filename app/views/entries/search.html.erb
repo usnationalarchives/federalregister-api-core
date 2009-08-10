@@ -1,6 +1,6 @@
 <%# TODO HELP-RUBY do this better %>
 <% content_for :precolumn do %>
-  <h1>Search <%= @search_term? "Results for '#{h @search_term}'" : '' %></h1>
+  <h1>Search <%= @search_term.blank? ? 'Entries' : "Results for '#{h @search_term}'" %></h1>
 <% end %>
 
 <div class="header search group">
