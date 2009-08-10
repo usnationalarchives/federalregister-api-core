@@ -21,7 +21,7 @@ places_determined_at :datetime -->
   <div class="details">
     <h3>Details</h3>
     <dl class='fixed details group'>
-      <% if !@entry.publication_date.blank?    %><dt>Publication Date:</dt>                 <dd><%= @entry.publication_date.to_formatted_s(:pretty) %></dd><% end %>
+      <% if !@entry.publication_date.blank?    %><dt>Publication Date:</dt>                 <dd><%= link_to @entry.publication_date.to_formatted_s(:pretty), entries_by_date_path(@entry.publication_date) %></dd><% end %>
       <% if !@entry.document_number.blank?     %><dt>Federal Register Document Number:</dt>
         <dd><%= @entry.document_number %> (<% [:html, :text, :pdf].each do |format| %>
                                                <%= link_to format, @entry.source_url(format), :class => format %>
