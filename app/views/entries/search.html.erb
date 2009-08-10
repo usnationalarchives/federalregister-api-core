@@ -1,9 +1,7 @@
 <%# TODO HELP-RUBY do this better %>
-<% if(@search_term) %>
-    <% title "Search Results for '#{h @search_term}'"%>
-  <% else %>
-    <% title "Search" %>
-<% end %>  
+<% content_for :precolumn do %>
+  <h1>Search <%= @search_term? "Results for '#{h @search_term}'" : '' %></h1>
+<% end %>
 
 <div class="header search group">
 <a href="#" class="options icon arrow closed">Show Options</a>
