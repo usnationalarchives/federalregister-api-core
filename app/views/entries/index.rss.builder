@@ -2,10 +2,11 @@ xml.instruct!
 
 xml.rss "version" => "2.0", "xmlns:dc" => "http://purl.org/dc/elements/1.1/" do
   xml.channel do
-
+    @entries ||= []
+    
     xml.title       @feed_name
     xml.link        root_url
-    xml.pubDate     CGI.rfc1123_date @entries.first.publication_date.to_time if @entries.any?
+    xml.pubDate     CGI.rfc1123_date @entries.first.publication_date.to_time if @entries.size > 0
     xml.description @feed_description
 
     @entries.each do |entry|
