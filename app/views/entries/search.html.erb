@@ -1,7 +1,12 @@
-<%# TODO HELP-DESIGN i know this needs to change %>
-<%# title "Search Results for '#{h @search_term}'" %>
+<%# TODO HELP-RUBY do this better %>
+<% if(@search_term) %>
+    <% title "Search Results for '#{h @search_term}'"%>
+  <% else %>
+    <% title "Search" %>
+<% end %>  
 
-<div class="header group"><h1>Search</h1><a href="#" class="options icon arrow closed">Show Options</a></div>
+<div class="header search group">
+<a href="#" class="options icon arrow closed">Show Options</a>
 
 <%# TODO: HELP-DESIGN: style me! %>
 <form method="get">
@@ -53,6 +58,8 @@
   </ul>
   <%= submit_tag 'Search', :class => 'btn' %>
 </form>
+
+</div>
 
 <% if @entries %>
   <% if @entries.size > 0 %>

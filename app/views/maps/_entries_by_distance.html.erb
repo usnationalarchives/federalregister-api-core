@@ -1,7 +1,7 @@
 <ul>
 <% entry_places.sort_by_distance_from(Place.new(:latitude => lat, :longitude => long)).group_by(&:distance_groups).each do |distance, places| %>
     <li class='group'>
-      <h5>Within <%= pluralize(distance, 'miles') %></h5>
+      <h3>Within <%= pluralize(distance, 'miles') %></h3>
       <ul>
         <% places.map(&:entries).flatten.sort_by{|e| e.publication_date}.reverse.each do |entry| %>
           <li>

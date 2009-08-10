@@ -118,12 +118,16 @@ body
     :font 1.2em Georgia,"Times New Roman",Serif    
     :font-variant small-caps
     :margin 10px 0
+    span.top
+      :float right
   h4
     :border-bottom 1px solid #aaa
     :font 1.2em Georgia,"Times New Roman",Serif    
     :font-variant small-caps
     :margin 0 0 5px
-    :float left   
+    :float left 
+    h4.title
+      :float none
   h5
     :color #333
     :font 1.1em sans-serif
@@ -173,6 +177,8 @@ body
       :float right
     &.slide
       :margin-top -5px
+    &.search
+      :padding 10px
   .content
     :min-height 600px
     :padding 20px 0
@@ -420,6 +426,9 @@ body
       :color #005073
       :font-size 1.5em
       :text-align center
+    td.day
+      a
+        :font-weight bold
   .icon
     :padding 5px 0 5px 60px
     :background-repeat no-repeat
@@ -527,3 +536,13 @@ ul.tag_cloud
   +tag-cloud(1.1em)
   li
     :float left
+
+#tagcloud_label
+  :background #005b81
+  :border 2px solid #bde3f1
+  :-moz-border-radius 5px
+  :-webkit-border-radius 5px   
+  :color #bde3f1 !important
+  :font 14px Georgia,"Times New Roman",Serif !important
+  :font-variant small-caps    
+  :padding 5px
