@@ -163,9 +163,10 @@ class EntriesController < ApplicationController
     end
     
     if !@places.blank?
-      @map = Cloudkicker::Map.new( :style_id          => 1714,
-                                   :bounds            => true,
-                                   :points            => @places
+      @map = Cloudkicker::Map.new( :style_id => 1714,
+                                   :zoom     => 1,
+                                   :lat      => @places.map(&:latitude).average,
+                                   :long     => @places.map(&:longitude).average
                                  )
       @places.each do |place|
         Cloudkicker::Marker.new( :map   => @map, 
@@ -188,8 +189,9 @@ class EntriesController < ApplicationController
       @places = @entry.places.usable
     
       @map = Cloudkicker::Map.new( :style_id => 1714,
-                                   :bounds   => true,
-                                   :points   => @places
+                                   :zoom     => 1,
+                                   :lat      => @places.map(&:latitude).average,
+                                   :long     => @places.map(&:longitude).average
                                  )
       @places.each do |place|
         Cloudkicker::Marker.new( :map   => @map, 
