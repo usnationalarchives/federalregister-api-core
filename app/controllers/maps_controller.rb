@@ -1,18 +1,31 @@
 class MapsController < ApplicationController
   include Locator
   include Cloudkicker
+  include Geokit::Geocoders
   
   def index
-    @location = remote_location
-    @lat  = @location.latitude
-    @long = @location.longitude
+    if params[:location].nil? 
+      @location = remote_location
+      @lat  = @location.latitude
+      @long = @location.longitude
+      @display_location = "#{@location.city}, #{@location.region}"
+    else
+      @location = GoogleGeocoder.geocode(params[:location])
+      @lat  = @location.lat
+      @long = @location.lng
+      @display_location = "#{@location.city}, #{@location.state}"
+    end
     @dist = 50
     
     # set this to group the results in the view
     Place.distance_grouping_increment = 5
       
-    @places = Place.find_near([@lat,@long], :within => @dist)
-    
+    @places = Place.usable.find_near([@lat,@long], :within => @dist, 
+                               :include => {:entries => :agency}, 
+                               :conditions => ['entries.publication_date > ?', 3.years.ago],
+                               :order => 'entries.publication_date', 
+                               :limit => 50)
+   
     @map = Cloudkicker::Map.new( :lat      => @lat, 
                                  :long     => @long,
                                  :zoom     => 8,
@@ -26,6 +39,23 @@ class MapsController < ApplicationController
                                :info  => render_to_string(:partial => 'entry_marker_tooltip', :locals => {:place => place} )
                              )
     end
+    
+    @entries = @places.map{|place| place.entries.map{|e| e} }.flatten
+    
+    @granule_labels = []
+    @granule_values = []
+    @entries.uniq.group_by(&:granule_class).each do |granule_class, entries|
+      @granule_labels << granule_class
+      @granule_values << entries.size
+    end
+    
+    @active_agencies = []
+    @entries.each do |entry|
+      if entry.agency
+        @active_agencies << entry.agency
+      end
+    end
+    @active_agencies = @active_agencies.sort_by{|a| a.name}.uniq
   end
   
 end
