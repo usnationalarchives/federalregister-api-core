@@ -25,4 +25,12 @@ module CitationsHelper
     end
     text
   end
+  
+  def add_location_links(entry, text)
+    entry.place_determinations.each do |place_determination|
+      next if place_determination.string.blank?
+      text.gsub!(/#{Regexp.escape(place_determination.string)}/, link_to(place_determination.string, locations_path(place_determination.place)) )
+    end
+    text
+  end
 end
