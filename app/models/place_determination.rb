@@ -14,4 +14,8 @@
 class PlaceDetermination < ActiveRecord::Base
   belongs_to :entry
   belongs_to :place
+  
+  def usable?
+   ! Place::UNUSABLE_PLACES.include?(place_id)
+  end
 end
