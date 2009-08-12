@@ -13,7 +13,7 @@
 =end Schema Information
 
 class Place < ActiveRecord::Base
-  UNUSABLE_PLACES = [23424977]
+  UNUSABLE_PLACES = [23424977,2393620]
   
   cattr_accessor :distance_grouping_increment
   attr_accessor :distance
@@ -48,7 +48,7 @@ class Place < ActiveRecord::Base
       :within => 100,
       :limit => 50
     }
-    opts = defaults.merge(options.slice(:within,:limit,:include,:order)).merge({:origin => origin})
+    opts = defaults.merge(options.slice(:within,:limit,:include,:order,:conditions)).merge({:origin => origin})
     
     find(:all, opts)
   end
