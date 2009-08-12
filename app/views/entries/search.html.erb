@@ -1,6 +1,6 @@
 <%# TODO HELP-RUBY do this better %>
 <% content_for :precolumn do %>
-  <h1>Search <%= @search_term? "Results for '#{h @search_term}'" : '' %></h1>
+  <h1>Search <%= @search_term.blank? ? 'Entries' : "Results for '#{h @search_term}'" %></h1>
 <% end %>
 
 <div class="header search group">
@@ -93,8 +93,11 @@
     <p>No entries were found.</p>
   <% end %>
 <% end %>
-<% content_for :sidebar do %>
-  <h3>Other Formats</h3>
-  <%# TODO: HELP-DESIGN: HELP-COPY: Need RSS icon, some text here %>
-  <p>Subscribe to an <%= link_to 'RSS Feed', params.merge(:format => :rss, :order => 'date', :publication_date_less_than => nil) %> of these search results.</p>
+
+<% if @entries && @entries.size > 0 %>
+  <% content_for :sidebar do %>
+    <h3>Other Formats</h3>
+    <%# TODO: HELP-DESIGN: HELP-COPY: Need RSS icon, some text here %>
+    <p>Subscribe to an <%= link_to 'RSS Feed', params.merge(:format => :rss, :order => 'date', :publication_date_less_than => nil) %> of these search results.</p>
+  <% end %>
 <% end %>
