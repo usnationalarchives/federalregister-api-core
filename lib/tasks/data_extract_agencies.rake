@@ -75,7 +75,7 @@ namespace :data do
       
       all_agencies = Agency.all
       
-      Entry.find_in_batches(:conditions => {:agency_id => nil}) do |entry_group|
+      Entry.find_in_batches(:conditions => {:agency_id => nil, :publication_date => Entry.latest_publication_date}) do |entry_group|
         entry_group.each do |entry|
           if entry.primary_agency_raw
             parent_agency = find_agency(entry.primary_agency_raw, all_agencies)
