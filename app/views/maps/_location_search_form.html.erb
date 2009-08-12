@@ -1,4 +1,4 @@
-<% @display_location ||= "#{location.city}, #{location.region}" %>
+<% @display_location ||= "#{location.city}, #{location.region}" if location %>
 
 <div class='search'>
   <% form_tag maps_path, :method => :GET do %>
