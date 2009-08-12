@@ -154,6 +154,11 @@ body
           :clear left
     li.group
       :padding 0 0 15px 0
+    &.indent
+      :padding-left 25px
+    &.bullets
+      li
+        :list-style-type disc
   ul.btn
     li
       :padding 0
@@ -225,6 +230,7 @@ body
         :overflow auto
         pre
           :background-color #fff
+          :font-size 1.1em
           :margin 0
           :padding 10px
           :white-space pre-wrap     
@@ -251,6 +257,26 @@ body
               :margin 0
               li
                 :margin-left 10px
+        .search
+          :background url(/images/search_bg.png) no-repeat top left
+          :height 25px
+          :margin 10px 0 0 0
+          :padding 0 10px 20px 0    
+          :width 220px
+          form
+            :height 25px
+            :width 200px      
+            :margin 0 20px 0 0
+            input#location
+              :border none
+              :display block
+              :float left
+              :height 18px
+              :margin 5px 0 0 10px 
+              :padding 0
+              :width 175px
+            input
+              :display none
         div.tag_cloud
           div.fancy
             :position relative
@@ -424,6 +450,8 @@ body
     td.day
       a
         :font-weight bold
+        &:visited
+          :color #b48144
   .icon
     :padding 5px 0 5px 60px
     :background-repeat no-repeat
@@ -527,6 +555,8 @@ body #footer
   :float left
 .marginTop
   :margin-top 10px
+.marginBottom
+  :margin-bottom 10px !important  
 ul.tag_cloud
   +tag-cloud(1.1em)
   li
