@@ -52,7 +52,7 @@ ActionController::Routing::Routes.draw do |map|
                                         :volume     => /\d{2}/
 
   map.maps 'maps', :controller => 'maps',
-            :action     => 'index'
+                   :action     => 'index'
                                    
   map.locations_path 'locations/:slug/:id', :controller => 'locations', :action => 'index'
                                          

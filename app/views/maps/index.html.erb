@@ -1,5 +1,5 @@
 <% content_for :precolumn do %>
-  <h1>Entries within <%= pluralize(@dist, 'mile') %> of <%= @location.city %>, <%= @location.region %></h1>
+  <h1>Recent entries mentioning places within <%= pluralize(@dist, 'mile') %> of the center of <%= @display_location %></h1>
 <% end %>
 
 
@@ -12,6 +12,28 @@
 
 <% if !@places.nil? %>
   <%= render :partial => 'maps/entries_by_distance', :locals => {:entry_places => @places, :lat => @lat, :long => @long} %>
+  
+  <% content_for :sidebar do %>
+    <h3>View Other Entries Near</h3>
+    <%= render :partial => 'maps/location_search_form', :locals => {:location => @location} %>
+    
+    <% unless @entries.blank? %>
+      <h3>Agencies active within <%= pluralize(@dist, 'mile') %></h3>
+
+      <ul>
+        <% @active_agencies.each do |agency| %>
+        <li>
+          <%= link_to(agency.name, agency_path(agency) ) %>
+        </li>
+        <% end %>
+      </ul>
+    <% end %>
+    
+    <% unless @granule_values.blank? %>
+      <h3>Recent Entry Types Near Here</h3>
+       <div class='chart size_<%=@granule_values.size%>'><%= pie_3d_chart(:alt => 'Entry Type for Recent Entries', :legend => @granule_labels, :truncate_legend => '30', :counts => true, :legend_location => 'bottom', :data => @granule_values, :size => ['230','200'], :color_range => ['005073','84cedb'], :transparent_bg => true) %></div>
+    <% end %>
+  <% end %>
 <% else %>  
   <p>
     Unfortunately were were not able to find any entries within 
