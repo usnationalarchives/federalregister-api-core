@@ -4,11 +4,16 @@
   <h1>Explore by date</h1>
 <% end %>
 
-<div class='header'>
+<div class='header group'>
   <h2>
     Entries for <%= @referenced_dates.first.date.to_formatted_s(:month_year) %>
     <span>(<%= pluralize(@entries.size, 'entry') %>)<span>
   </h2>
+  
+  <%# TODO HELP-RUBY see entries/by_date to see these in action %>
+  <a href="" class="icon arrow prev floatLeft">Prev</a> 
+  <a href="" class="icon arrow next floatRight">Next</a>
+  
 </div>
 
 <% if @day.nil? %>
