@@ -21,7 +21,12 @@
         <li>
           <!-- <p class="number"><%= i+1 %></p> -->
           <%= link_to truncate(entry.title, :length => 100), entry_path(entry), :class => "entry" %>
-          <%= link_to(entry.agency.name, agency_path(entry.agency), :class => "agency") if entry.agency %>
+          <% if entry.agency %>
+            <%= link_to(entry.agency.name, agency_path(entry.agency), :class => "agency") %>
+          <% else %>
+            <%# TODO: HELP-DESIGN: clean up styles so no <a> tag is necessary %>
+            <a class="agency"><%= entry.primary_agency_raw.downcase.capitalize_most_words %></a>
+          <% end %>
         </li>
       <% end %>
       </ul>
