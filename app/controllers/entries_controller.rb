@@ -62,7 +62,7 @@ class EntriesController < ApplicationController
       end
       
       @start_date ||= DateTime.parse('1994-01-01')
-      @end_date ||= Entry.last.publication_date.to_datetime
+      @end_date ||= Entry.latest_publication_date
       
       with[:publication_date] = Range.new(@start_date.midnight.to_f.to_i,@end_date.midnight.to_f.to_i)
     end
