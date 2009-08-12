@@ -1,9 +1,11 @@
 <ul>
 <% entry_places.sort_by_distance_from(Place.new(:latitude => lat, :longitude => long)).group_by(&:distance_groups).each do |distance, places| %>
+    <% entries = places.map(&:recent_entries).flatten %>
+    <% if entries.size > 0%>
     <li class='group'>
       <h3>Within <%= pluralize(distance, 'miles') %></h3>
       <ul>
-        <% places.map(&:entries).flatten.sort_by{|e| e.publication_date}.reverse.each do |entry| %>
+        <% entries.sort_by{|e| e.publication_date}.reverse.each do |entry| %>
           <li>
             <span class='entry_date'><%= entry.publication_date.to_s %></span>
             <%= link_to truncate(entry.title, :length => 80), entry_path(entry), :title => entry.title %>
@@ -11,5 +13,6 @@
         <% end %>
       </ul>
     </li>
+    <% end %>
 <% end %>
 </ul>

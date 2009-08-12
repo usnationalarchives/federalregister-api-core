@@ -5,16 +5,18 @@
   <% end %>
 <% end %>
 
-<h2>Entries mentioning <%= @location.name %></h2>
+<h2>Most Recent Entries mentioning <%= @location.name %></h2>
 
 <ul>
 <% @entries.each do |entry| %>
-  <li><%= link_to entry.title, entry_path(entry) %></li>
+  <li>
+    <span class='entry_date'><%= entry.publication_date.to_s %></span>
+    <%= link_to truncate(entry.title, :length => 80), entry_path(entry) %></li>
 <% end %>
 </ul>
 
 <% if !@places.nil? %>
-  <h2>Entries mentioning places within <%= pluralize(@dist, 'mile') %> of the center of <%= @location.name %></h2>
+  <h2>Most Recent Entries mentioning places within <%= pluralize(@dist, 'mile') %> of the center of <%= @location.name %></h2>
 
   <%= render :partial => 'maps/entries_by_distance', :locals => {:entry_places => @places, :lat => @lat, :long => @long} %>
 <% end %>
