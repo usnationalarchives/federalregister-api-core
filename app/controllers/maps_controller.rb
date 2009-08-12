@@ -21,11 +21,19 @@ class MapsController < ApplicationController
     Place.distance_grouping_increment = 5
       
     @places = Place.usable.find_near([@lat,@long], :within => @dist, 
-                               :include => {:entries => :agency}, 
-                               :conditions => ['entries.publication_date > ?', 3.years.ago],
-                               :order => 'entries.publication_date', 
                                :limit => 50)
-   
+    
+    local_entries = Entry.find(:all,
+      :conditions => {:place_determinations => {:place_id => @places}},
+      :include => [:place_determinations, :agency],
+      :order => "publication_date DESC",
+      :limit => 50
+    )
+
+    @places.each do |place|
+      place['recent_entries'] = local_entries.select{|e| e.place_determinations.map{|pd| pd.place_id}.include?(place.id) }
+    end
+
     @map = Cloudkicker::Map.new( :lat      => @lat, 
                                  :long     => @long,
                                  :zoom     => 8,
