@@ -182,4 +182,8 @@ class Entry < ActiveRecord::Base
     end
     entries
   end
+  
+  def self.latest_publication_date
+    find(:first, :select => "publication_date", :order => "publication_date DESC").publication_date
+  end
 end

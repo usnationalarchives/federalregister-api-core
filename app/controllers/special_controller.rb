@@ -3,7 +3,7 @@ class SpecialController < ApplicationController
   
   def home
     # stuff here
-    @last_date = Entry.find(:first, :select => "publication_date", :order => "publication_date DESC").publication_date
+    @last_date = Entry.latest_publication_date
     @entries = Entry.all(:conditions => ['publication_date = ?', @last_date], :include => :agency)
     @featured_agencies = Agency.featured.find(:all, :select => "agencies.*,
         (SELECT count(*) FROM entries WHERE agency_id = agencies.id AND publication_date > '#{30.days.ago.to_s(:db)}') AS num_entries_month,
