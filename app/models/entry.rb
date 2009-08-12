@@ -72,6 +72,8 @@ class Entry < ActiveRecord::Base
   
   has_many :referenced_dates, :dependent => :destroy
   
+  after_create :create_entry_detail
+  
   def granule_class 
     GRANULE_CLASS_TYPES[self['granule_class']]
   end
@@ -185,5 +187,11 @@ class Entry < ActiveRecord::Base
   
   def self.latest_publication_date
     find(:first, :select => "publication_date", :order => "publication_date DESC").publication_date
+  end
+  
+  private
+  
+  def create_entry_detail
+    entry_detail.create
   end
 end
