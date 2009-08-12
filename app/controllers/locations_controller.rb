@@ -11,13 +11,20 @@ class LocationsController < ApplicationController
     # set this to group the results in the view
     Place.distance_grouping_increment = 5
     
+    @entries = Entry.all(:conditions => {:place_determinations => {:place_id => @location}}, :joins => :place_determinations, :limit => 50, :order => "publication_date DESC")
     
-    @entries = @location.entries  
-    @places = Place.find_near([@lat,@long], :within => @dist, 
-                              :include => {:entries => :agency}, 
-                              :conditions => ['entries.publication_date > ?', Time.now - 3.years.ago],
-                              :order => 'entries.publication_date', 
-                              :limit => 50)
+    @places = Place.find_near([@lat,@long], :within => @dist)
+    
+    local_entries = Entry.find(:all,
+      :conditions => {:place_determinations => {:place_id => @places}},
+      :include => [:place_determinations, :agency],
+      :order => "publication_date DESC",
+      :limit => 50
+    )
+    
+    @places.each do |place|
+      place['recent_entries'] = local_entries.select{|e| e.place_determinations.map{|pd| pd.place_id}.include?(place.id) }
+    end
     
     if !@places.nil?
       @map = Cloudkicker::Map.new( :style_id   => 1714,
@@ -36,14 +43,14 @@ class LocationsController < ApplicationController
       end
 
       @active_agencies = []
-      @places.each do |place|
-        place.entries.each do |entry|
-          if entry.agency
-            @active_agencies << entry.agency
-          end
+      
+      
+      [local_entries, @entries].flatten.each do |entry|
+        if entry.agency
+          @active_agencies << entry.agency
         end
       end
-      @active_agencies = @active_agencies.sort_by{|a| a.name}.uniq
+      @active_agencies = @active_agencies.uniq
     end
     
   end
