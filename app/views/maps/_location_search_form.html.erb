@@ -1,0 +1,8 @@
+<% @display_location ||= "#{location.city}, #{location.region}" %>
+
+<div class='search'>
+  <% form_tag maps_path, :method => :GET do %>
+    <%= text_field_tag :location, @display_location %>
+    <%= submit_tag 'Go' %>
+  <% end %>
+</div>

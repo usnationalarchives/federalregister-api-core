@@ -15,7 +15,7 @@ class LocationsController < ApplicationController
     @entries = @location.entries  
     @places = Place.find_near([@lat,@long], :within => @dist, 
                               :include => {:entries => :agency}, 
-                              :conditions => ['entries.publication_date > ?', Time.now - 3.years.ago],
+                              :conditions => ['entries.publication_date > ?', 3.years.ago],
                               :order => 'entries.publication_date', 
                               :limit => 50)
     

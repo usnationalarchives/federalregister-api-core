@@ -19,7 +19,7 @@ class SpecialController < ApplicationController
                                         :limit => 10
                                        )
 
-    date_range = [Date.today - 7, Date.today]                                   
+    date_range = [Date.today - 7, Date.today]
     @recently_opened = ReferencedDate.find(:all, 
                                            :include => {:entry => :agency}, 
                                            :conditions => {:date_type => 'CommentDate', 
@@ -28,6 +28,7 @@ class SpecialController < ApplicationController
                                                           },
                                            :order => 'date ASC',
                                            :limit => 10
-                                          )                                   
+                                          )
+    @location = remote_location
   end                 
 end
