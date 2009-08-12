@@ -29,7 +29,7 @@ class LocationsController < ApplicationController
     if !@places.nil?
       @map = Cloudkicker::Map.new( :style_id   => 1714,
                                    :bounds     => true,
-                                   :points     => @places,
+                                   :points     => [@location]
                                    :bound_zoom => 7
                                  )
       @places.each do |place|
