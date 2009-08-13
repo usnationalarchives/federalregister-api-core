@@ -13,7 +13,7 @@ class CalendarsController < ApplicationController
       @referenced_dates = ReferencedDate.find(:all, :include => {:entry => :agency}, :conditions => ['date = ?', Date.new(@year, @month, @day.to_i)], :order => 'date ASC' )
     end
     
-    @entries = @referenced_dates.map{|rf| rf.entry}.uniq
+    @entries = @referenced_dates.map{|rf| rf.entry}#.uniq
     
     agencies_and_entry_counts = []
     @entries.group_by(&:agency_id).each do |agency_id, entries|
@@ -36,7 +36,7 @@ class CalendarsController < ApplicationController
     
     @granule_labels = []
     @granule_values = []
-    @entries.group_by(&:granule_class).each do |granule_class, entries|
+    @entries.uniq.group_by(&:granule_class).each do |granule_class, entries|
       @granule_labels << granule_class
       @granule_values << entries.size
     end
