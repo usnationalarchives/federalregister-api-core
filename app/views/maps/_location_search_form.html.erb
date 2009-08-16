@@ -3,6 +3,6 @@
 <div class='search'>
   <% form_tag maps_path, :method => :GET do %>
     <%= text_field_tag :location, @display_location %>
-    <%= submit_tag 'Go' %>
+    <%= submit_tag 'Go', :class => "btn" %>
   <% end %>
 </div>
