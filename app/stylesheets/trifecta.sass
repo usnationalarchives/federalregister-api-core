@@ -258,25 +258,26 @@ body
               li
                 :margin-left 10px
         .search
-          :background url(/images/search_bg.png) no-repeat top left
+          /:background url(/images/search_bg.png) no-repeat top left
           :height 25px
-          :margin 10px 0 0 0
-          :padding 0 10px 20px 0    
-          :width 220px
+          :margin 10px 0 20px 0
+          :padding 0 10px 0 0    
           form
-            :height 25px
-            :width 200px      
-            :margin 0 20px 0 0
             input#location
-              :border none
+              :border 2px solid #6e6e6e
+              :-moz-border-radius 15px
+              :-webkit-border-radius 15px
               :display block
               :float left
-              :height 18px
-              :margin 5px 0 0 10px 
-              :padding 0
-              :width 175px
-            input
-              :display none
+              :height 15px
+              :margin 5px 5px 0 0 
+              :padding 6px 10px
+              :line-height 25px
+              :width 165px
+              &:focus
+                :outline none
+            input.btn
+              :float left
         div.tag_cloud
           div.fancy
             :position relative
