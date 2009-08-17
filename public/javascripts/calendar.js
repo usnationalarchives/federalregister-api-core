@@ -31,7 +31,7 @@ $(document).ready(function(){
     return false;
   });
   
-  $('.precolumn .header a .cal_link').bind('click', function() {
+  $('.precolumn .header a.icon.cal').bind('click', function() {
     $('div.entry_calendars').toggle();
     return false;
   });
