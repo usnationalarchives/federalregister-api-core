@@ -33,7 +33,6 @@ $(document).ready(function() {
       var name = text.replace(/ \(\d+\)/,'');
       var count = text.replace(/.*\(|\).*/g,'') / 7;
       var slug = $(li.find('a').get(0)).attr('href').replace(/.*\/topics\//,'');
-      console.log(slug);
       tagcloud.addNode(new Node(name, count, slug));
     });
   
