@@ -6,9 +6,9 @@
   <div class="header group">
   <h2>
     <%= pluralize(@entry_count, 'entry') %> published on this day
+    <%= link_to( '', '#', :class => "icon cal floatRight", :title => "Click to show calendars" ) %>
   </h2>
 
-  <%= link_to( image_tag('/images/ical.gif', :class => 'cal_link small_icon'), '#') %>
   
   <% if @prev_date %>
     <%= link_to 'Prev', entries_by_date_path(@prev_date), :class => "icon arrow prev floatLeft" %>
