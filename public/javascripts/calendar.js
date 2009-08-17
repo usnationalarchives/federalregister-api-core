@@ -1,8 +1,10 @@
 $(document).ready(function(){
 
-  /* showing the first list of dates in month */
-  first_date = $('.dayWithEvents a').get(0);
-  show_date(first_date);
+  if( $('.dayWithEvents a').get(0) ) {
+    /* showing the first list of dates in month */
+    first_date = $('.dayWithEvents a').get(0);
+    show_date(first_date);
+  }
   
   $('.dayWithEvents a').bind('click', function() {
     hide_dates();
@@ -22,6 +24,17 @@ $(document).ready(function(){
     $(this).text('view all');
     return false;
   });
+  
+  /* adding ajax to calendar for the entries page */
+  $('.dayWithEntries a').bind('click', function() {
+    rewrite_url(this);
+    return false;
+  });
+  
+  $('.precolumn .header a .cal_link').bind('click', function() {
+    $('div.entry_calendars').toggle();
+    return false;
+  });
 });
 
 function hide_dates() {
@@ -31,22 +44,27 @@ function hide_dates() {
 }
 
 function show_date(el) {
-  id = $(el).attr('href').replace(/.*#event_/, '')
+  id = $(el).attr('href').replace(/.*#event_/, '');
   date_to_show = $('#date_'+id);
   date_to_show.show();
 }
 
 function hide_extra_entries(el) {
-  id = '#' + $(el).attr('href').replace(/.*#/, '')
+  id = '#' + $(el).attr('href').replace(/.*#/, '');
   $(id).hide();
 }
 
 function show_extra_entries(el) {
-  id = '#' + $(el).attr('href').replace(/.*#/, '')
+  id = '#' + $(el).attr('href').replace(/.*#/, '');
   $(id).show();
 }
 
 function change_link(el) {
   $(el).closest('span').toggleClass('more');
-  $(el).closest('span').toggleClass('less')
+  $(el).closest('span').toggleClass('less');
+}
+
+function rewrite_url(el) {
+  date = $(el).attr('href').replace(/.*#entry_/, '');
+  window.location.href = '/entries/'+date;
 }
