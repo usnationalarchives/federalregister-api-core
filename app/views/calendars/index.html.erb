@@ -1,5 +1,3 @@
-<%# TODO HELP-RUBY can we go next/prev on the calendar page %>
-<%# title 'Explore by date' %>
 <% content_for :precolumn do %>
   <h1>Events by Date</h1>
 <% end %>
@@ -10,9 +8,13 @@
     <span>(<%= pluralize(@entries.size, 'entry') %> with events)<span>
   </h2>
   
-  <%# TODO HELP-RUBY see entries/by_date to see these in action %>
-  <!-- <a href="" class="icon arrow prev floatLeft">Prev</a> 
-    <a href="" class="icon arrow next floatRight">Next</a> -->
+  <% if @prev_date %>
+    <%= link_to 'Prev', events_path(@prev_date), :class => "icon arrow prev floatLeft" %>
+  <% end %>
+
+  <% if @next_date %>
+    <%= link_to 'Next', events_path(@next_date), :class => "icon arrow next floatRight" %>
+  <% end %>
   
 </div>
 

@@ -47,6 +47,11 @@ ActionController::Routing::Routes.draw do |map|
                                         :year       => /\d{4}/,
                                         :month      => /\d{1,2}/
 
+  map.events_month 'events/:year/:month', :controller => 'calendars',
+                                          :action     => 'index',
+                                          :year       => /\d{4}/,
+                                          :month      => /\d{1,2}/
+
   map.connect 'citation/:volume/:page', :controller => 'citations',
                                         :action     => 'index',
                                         :volume     => /\d{2}/
