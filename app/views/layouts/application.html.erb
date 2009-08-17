@@ -84,6 +84,10 @@
             <h1><%= yield :title %></h1>
           <% end %>
           
+          <% if yield :search_form %>
+            <form method="get">
+          <% end %>    
+              
           <% if yield :precolumn %>
             <div class="precolumn">
               <%= yield :precolumn %>
@@ -101,6 +105,11 @@
             </div>
           </div>
           <% end %>
+          
+          <% if yield :search_form %>
+            </form>
+          <% end %>    
+          
       </div>
       <!-- content end -->
       
