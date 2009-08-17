@@ -5,13 +5,12 @@
 
 <div class="header">
   <h2>Topics starting with <%= @letter %></h2>
-</div>
-
 <ul class="btn small group">
 <% @letters.each do |letter| %>
   <li class="<%='on' if letter == @letter %>"><%= link_to letter.upcase, topic_groups_by_letter_path(letter) %></li>
 <% end %>
 </ul>
+</div>
 
 <% unless @topic_groups.length == 0 %>
   <ul>
