@@ -5,7 +5,7 @@
       <p class="fed alt">A million pages finally accessible.</p>      
     </div>
     
-    <hr class="ornament" />
+    <div class="ornament" />
 <% end %>
 
 <div class="currentevents group">
@@ -59,7 +59,7 @@
 
 
 <% content_for :sidebar do %>
-  <h2>View Entries Near</h2>
+  <h3>View Entries Near</h3>
   <%= render :partial => 'maps/location_search_form', :locals => {:location => nil} %>
   
   <%= render :partial => 'agencies/featured', :locals => {:featured_agencies => @featured_agencies} %>

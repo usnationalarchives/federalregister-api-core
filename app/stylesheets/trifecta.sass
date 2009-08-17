@@ -3,12 +3,12 @@
 html
   :background url(/images/main_bg_left.png) repeat-y top left 
 body
-  :background url(/images/main_bg_right.png) repeat-y top right  
+  :background url(/images/main_bg_right2.png) repeat-y top right  
   :min-height 100%
   :margin-bottom -150px
   :position relative
 #wrapper
-  :background url(/images/header_bottomshadow.png) repeat-x left 161px
+  :background url(/images/header_bottomshadow4.png) repeat-x left 161px
 #header
   :background url(/images/header_bg.png) repeat-x top left
   :border-left 1px solid #27338b  
@@ -43,13 +43,13 @@ body
   :padding 5px 0 
   :width 100%
   .search
-    :background url(/images/search_bg.png) no-repeat top left
     :float right
     :height 25px
-    :margin 3px 0 0 0
-    :padding 0 10px 0 0    
+    :margin 4px 0 0 0
+    :padding 0 0 0 0    
     :width 220px
     form
+      :background url(/images/search_bg3.png) no-repeat top right
       :height 25px
       :width 200px      
       :margin 0 20px 0 0
@@ -57,12 +57,24 @@ body
         :border none
         :display block
         :float left
-        :height 18px
+        :height 15px
+        :*height 17px
         :margin 5px 0 0 10px 
+        :*margin 4px 0 0 10px 
         :padding 0
-        :width 175px
-      input
-        :display none
+        :width 165px
+        &:focus
+          :outline none
+      input.search_btn
+        :background url(/images/icon_search.png) no-repeat top right
+        :border none
+        :cursor pointer  
+        :float left 
+        :height 20px
+        :margin 3px 0 0 0
+        :padding 0
+        :outline none
+        :width 15px   
   ul
     :float left
     :margin 5px 0 0 0
@@ -106,13 +118,15 @@ body
     :font-variant small-caps
     :margin 0   
     span
-      :font-size .6em
+      :font-size .6em  
   h3
     :border-bottom 1px solid #aaa
     :color #333
     :font 1.2em Georgia,"Times New Roman",Serif    
     :font-variant small-caps
     :margin 10px 0
+    &:first-child
+      :margin-top 0
     span.top
       :float right
   h4
@@ -188,6 +202,7 @@ body
         :height 400px
         :margin-left auto
         :margin-right auto
+        :margin-bottom 20px
         div.wml-text-background
           :opacity 1
         div.wml-copyright-text
@@ -244,6 +259,9 @@ body
           :display none
         span.more, span.less
           :float right
+      ul.entries
+        h2
+          :margin-bottom 15px
     .col2
       .sidebar
         :padding-right 5px
@@ -264,25 +282,27 @@ body
               li
                 :margin-left 10px
         .search
-          :background url(/images/search_bg.png) no-repeat top left
+          /:background url(/images/search_bg.png) no-repeat top left
           :height 25px
-          :margin 10px 0 0 0
-          :padding 0 10px 20px 0    
-          :width 220px
+          :margin 10px 0 20px 0
+          :padding 0 10px 0 0    
           form
-            :height 25px
-            :width 200px      
-            :margin 0 20px 0 0
             input#location
-              :border none
+              :border 2px solid #6e6e6e
+              :-moz-border-radius 15px
+              :-webkit-border-radius 15px
               :display block
               :float left
-              :height 18px
-              :margin 5px 0 0 10px 
-              :padding 0
-              :width 175px
-            input
-              :display none
+              :height 15px
+              :margin 5px 5px 0 0 
+              :padding 6px 10px
+              :line-height 15px
+              :width 165px
+              &:focus
+                :outline none
+            input.btn
+              :float left
+              :padding 2px 4px
         div.tag_cloud
           div.fancy
             :position relative
@@ -508,18 +528,25 @@ body
     :*padding 0
     &:hover
       :background url(/images/btn_bg2_hover.png) repeat-x left 50%
-hr.ornament
+div.ornament
   :background url(/images/hr_bg3.png) no-repeat top center
-  :border none
   :display block
+  :height 60px
   :margin 0 0 20px 0
-  :padding 30px 0
 form
+  input.labelHighlight 
+    :color #aeaeae !important
   li
     span
       :color #6e6e6e
       :vertical-align middle
-
+.col2 li fieldset
+  label
+    :font-weight bold
+    :width 35px
+  span
+    :display block
+    :padding-left 47px
 .panel
   :display none
   :padding-top 2em
@@ -563,6 +590,7 @@ body #footer
   :margin-top 10px
 .marginBottom
   :margin-bottom 10px !important  
+  
 ul.tag_cloud
   +tag-cloud(1.1em)
   li
