@@ -13,4 +13,5 @@
 	height: 1%;
 	}
 	
-	
+/* fix for IE displaying tag cloud */	
+v\:* { behavior: url(#default#VML); position: absolute}	
