@@ -6,7 +6,7 @@
 
 <div class="header">
   <h2>By Name</h2>
-</div>
+
 
 <ul class="btn filter group">
   <li class="all"><a href="#">ALL</a></li>    
@@ -16,7 +16,7 @@
   <li><a href="#">G-N</a></li>
   <li><a href="#">O-Z</a></li>
 </ul>
-
+</div>
 <ul class="agencyList">
 <% @agencies.each do |agency|  %>
   <li><%= render :partial => 'agency_list_item', :locals => {:agency => agency, :chart_max => @chart_max} %></li>
