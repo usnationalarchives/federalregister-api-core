@@ -25,6 +25,7 @@
   <%= javascript_include_tag 'jquery.toggleDisabled.js' %>
   <%= javascript_include_tag 'jquery.horizontalCount.js'%>
   <%= javascript_include_tag 'tagcloud.js' %>
+  <%= javascript_include_tag 'jquery.labelify.js' %>
 
   <%= yield :javascripts %>
 
@@ -48,7 +49,7 @@
         <div class="search">
           <form action="<%= entries_search_path %>" method="get">
             <!--Search--> 
-            <%= text_field_tag :q, @search_term %>
+            <%= text_field_tag :q, @search_term,  :title => "Search govpulse" %>
             <%= submit_tag '', :class => "search_btn" %>
           </form> 
         </div>    
