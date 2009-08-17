@@ -13,14 +13,7 @@
 </ul>
 
 <% content_for :sidebar do %>
-  <h2>Popular Topics</h2>
-
-  <div class="tag_cloud">
-    <div id="fancy_tag_cloud" class="fancy"></div>
-    <ul>
-    <% @popular_topic_groups.each do |topic_group| %>
-      <li><%= link_to topic_group.name, topic_group_path(topic_group.group_name) %> (<%= topic_group.entries_count %>)</li>
-    <% end %>
-    </ul>
-  </div>
+  <%= render :partial => 'topics_tagcloud' %>
 <% end %>
+
+
