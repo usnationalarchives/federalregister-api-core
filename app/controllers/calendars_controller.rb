@@ -3,7 +3,7 @@ class CalendarsController < ApplicationController
   
   def index
     @year  = params[:year].to_i  || Time.now.strftime("%Y")
-    @month = params[:month].to_i
+    @month = params[:month].to_i || Time.now.strftime("%m")
     @day   = params[:day]
     
     if @day.nil?
@@ -12,6 +12,20 @@ class CalendarsController < ApplicationController
     else                                                  
       @referenced_dates = ReferencedDate.find(:all, :include => {:entry => :agency}, :conditions => ['date = ?', Date.new(@year, @month, @day.to_i)], :order => 'date ASC' )
     end
+    
+    @publication_date = Date.parse("#{@year}-#{@month}-01")
+    
+    @prev_date = ReferencedDate.find(:first,
+        :select => 'date',
+        :conditions => ["date < ?", @publication_date],
+        :order => 'date DESC'
+    ).try(:date)
+    
+    @next_date = ReferencedDate.find(:first,
+        :select => 'date',
+        :conditions => ["date > ?", @publication_date + 1.month],
+        :order => 'date'
+    ).try(:date)
     
     @entries = @referenced_dates.map{|rf| rf.entry}#.uniq
     

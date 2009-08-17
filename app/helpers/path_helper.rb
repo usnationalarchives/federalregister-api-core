@@ -11,6 +11,14 @@ module PathHelper
     "/calendar/#{date.date.to_formatted_s(:ymd)}/"
   end
   
+  def events_path(date)
+    if date.class == Date
+      "/events/#{date.to_formatted_s(:year_month)}/"      
+    else
+      "/events/#{date.date.to_formatted_s(:year_month)}/"
+    end
+  end
+  
   def citation_path(entry)
     citation = entry.citation.split(' ')
     "/citation/#{citation.first}/#{citation.last}"
