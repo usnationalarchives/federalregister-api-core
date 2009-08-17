@@ -1,7 +1,7 @@
 <% @display_location ||= "#{location.city}, #{location.region}" if location %>
 
 <div class='search'>
-  <% form_tag maps_path, :method => :GET do %>
+  <% form_tag maps_path, :method => :GET, :class => "group" do %>
     <%= text_field_tag :location, @display_location %>
     <%= submit_tag 'Go', :class => "btn" %>
   <% end %>
