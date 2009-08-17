@@ -874,7 +874,7 @@ body #footer .legal h4 {
   margin-bottom: 10px !important;
 }
 
-/* line 594, ../../app/stylesheets/trifecta.sass */
+/* line 595, ../../app/stylesheets/trifecta.sass */
 ul.tag_cloud {
   font-size: 1.1em;
   line-height: 1.32em;
@@ -907,12 +907,12 @@ ul.tag_cloud .xl {
 ul.tag_cloud .xxl {
   font-size: 2.2em;
 }
-/* line 596, ../../app/stylesheets/trifecta.sass */
+/* line 597, ../../app/stylesheets/trifecta.sass */
 ul.tag_cloud li {
   float: left;
 }
 
-/* line 598, ../../app/stylesheets/trifecta.sass */
+/* line 599, ../../app/stylesheets/trifecta.sass */
 #tagcloud_label {
   background: #005b81;
   border: 2px solid #bde3f1;
