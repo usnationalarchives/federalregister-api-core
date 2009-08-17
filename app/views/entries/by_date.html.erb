@@ -3,21 +3,28 @@
 <% content_for :precolumn do %>
   <h1>Entries for <%= @publication_date.to_formatted_s(:pretty) %></h1>
 
+  <div class="header group">
+  <h2>
+    <%= pluralize(@entry_count, 'entry') %> published on this day
+  </h2>
 
-<div class="header group">
-<h2>
-  <%= pluralize(@entry_count, 'entry') %> published on this day
-</h2>
+  <%= link_to( image_tag('/images/ical.gif', :class => 'cal_link small_icon'), '#') %>
+  
+  <% if @prev_date %>
+    <%= link_to 'Prev', entries_by_date_path(@prev_date), :class => "icon arrow prev floatLeft" %>
+  <% end %>
 
-<% if @prev_date %>
-  <%= link_to 'Prev', entries_by_date_path(@prev_date), :class => "icon arrow prev floatLeft" %>
+  <% if @next_date %>
+    <%= link_to 'Next', entries_by_date_path(@next_date), :class => "icon arrow next floatRight" %>
+  <% end %>
+  </div>
+
+  <div class="entry_calendars">
+    <%= entries_calendar_view(@year, @month) %>
+    <% add_javascript(:src => 'calendar') %>
+  </div>
 <% end %>
 
-<% if @next_date %>
-  <%= link_to 'Next', entries_by_date_path(@next_date), :class => "icon arrow next floatRight" %>
-<% end %>
-</div>
-<% end %>
 
 <ul>
 <% @agencies.group_by{|a| a.parent_id || a.id}.each do |parent_agency_id, agencies| %>
