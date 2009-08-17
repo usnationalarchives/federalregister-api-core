@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" <% if yield :tagcloud %> xmlns:v="urn:schemas-microsoft-com:vml" <% end %> >
 <head>
   <title>govpulse<%= " | #{yield :title}" if yield(:title) %></title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -25,6 +25,7 @@
   <%= javascript_include_tag 'jquery.toggleDisabled.js' %>
   <%= javascript_include_tag 'jquery.horizontalCount.js'%>
   <%= javascript_include_tag 'tagcloud.js' %>
+  <%= javascript_include_tag 'jquery.labelify.js' %>
 
   <%= yield :javascripts %>
 
@@ -48,8 +49,8 @@
         <div class="search">
           <form action="<%= entries_search_path %>" method="get">
             <!--Search--> 
-            <%= text_field_tag :q, @search_term %>
-            <%= submit_tag 'Search' %>
+            <%= text_field_tag :q, @search_term,  :title => "Search govpulse" %>
+            <%= submit_tag '', :class => "search_btn" %>
           </form> 
         </div>    
         <ul>
@@ -84,6 +85,10 @@
             <h1><%= yield :title %></h1>
           <% end %>
           
+          <% if yield :search_form %>
+            <form method="get">
+          <% end %>    
+              
           <% if yield :precolumn %>
             <div class="precolumn">
               <%= yield :precolumn %>
@@ -101,6 +106,11 @@
             </div>
           </div>
           <% end %>
+          
+          <% if yield :search_form %>
+            </form>
+          <% end %>    
+          
       </div>
       <!-- content end -->
       

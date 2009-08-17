@@ -1,63 +1,22 @@
-<%# TODO HELP-RUBY do this better %>
+<%# TODO HELP-RUBY do this better? %>
+<% content_for :search_form %>
+
 <% content_for :precolumn do %>
   <h1>Search <%= @search_term.blank? ? 'Entries' : "Results for '#{h @search_term}'" %></h1>
 <% end %>
 
-<div class="header search group">
-<a href="#" class="options icon arrow closed">Show Options</a>
 
-<%# TODO: HELP-DESIGN: style me! %>
-<form method="get">
+
+<div class="header search group">
   <ul>
     <li class="simple"><label>Keywords:</label><%= text_field_tag :q, @search_term %></li>
     
-    <% if @topic %>
-      <li class="simple">
-        <label>Topic:</label><%= @topic.name %>
-        <%= hidden_field_tag :topic_id, params[:topic_id] %>
-      </li>
-    <% end %>
-    
     <li class="simple"><label>Agency:</label><%= select_tag 'agency_id', options_for_select([''] + @agencies.collect{ |agency| [agency.name, agency.id.to_s] }, :selected => params[:agency_id]) %></li>
-    
-    <li class="<%= 'simple' unless params[:place_id].blank? && params[:near].blank? %>">
-      <fieldset>
-        <legend>Location</legend>
-        <ul>
-        <% if @place %>
-          <li class="simple"><label>In:</label><%= @place.name %>
-            <%= hidden_field_tag :place_id, params[:place_id] %>
-          </li>
-        <% else %>
-          <li class="simple"><label>Near:</label> <%= text_field_tag :near, params[:near] %> (eg '94118', 'San Francisco', etc)</li> 
-          <li class="simple"><label>Within:</label> <%= text_field_tag :within, @within %> miles</li>
-        <% end %>
-      </ul>
-    </li>
-    
-    <li class="<%= 'simple' unless params[:publication_date_greater_than].blank? && params[:publication_date_less_than].blank? %>">
-      <fieldset>
-        <legend>Publication Date</legend>
-        <ul>
-          <li class="simple"><label>From:</label><%= text_field_tag :publication_date_greater_than, @start_date.try(:to_date) %></li>
-          <li class="simple"><label>To:</label><%= text_field_tag :publication_date_less_than, @end_date.try(:to_date) %> (eg '01/01/09', '1 year ago', 'yesterday')</li>
-        </ul>
-      </fieldset>
-    </li>
-    
-    <li class="<%= 'simple' if params[:order] == 'relevance' %>">
-      <fieldset>
-        <legend>Options</legend>
-        <ul>  
-          <li class="simple"><label>Order:</label><%= select_tag 'order', options_for_select([['Date', 'date'], ['Relevance', 'relevance']], :selected => params[:order]) %> </li>
-        </ul>
-    </fieldset>
-  </li>
   </ul>
+  
   <%= submit_tag 'Search', :class => 'btn' %>
-</form>
-
 </div>
+
 
 <% if @entries %>
   <% if @entries.size > 0 %>
@@ -94,10 +53,56 @@
   <% end %>
 <% end %>
 
+<% content_for :sidebar do %>
 <% if @entries && @entries.size > 0 %>
-  <% content_for :sidebar do %>
     <h3>Other Formats</h3>
     <%# TODO: HELP-DESIGN: HELP-COPY: Need RSS icon, some text here %>
     <p>Subscribe to an <%= link_to 'RSS Feed', params.merge(:format => :rss, :order => 'date', :publication_date_less_than => nil) %> of these search results.</p>
-  <% end %>
 <% end %>
+
+<h3>Advanced Search</h3>
+<ul>
+    <% if @topic %>
+      <li class="simple">
+        <label>Topic:</label><%= @topic.name %>
+        <%= hidden_field_tag :topic_id, params[:topic_id] %>
+      </li>
+    <% end %>
+    
+    <li class="<%= 'simple' unless params[:place_id].blank? && params[:near].blank? %>">
+      <fieldset>
+        <legend>Location</legend>
+        <ul>
+        <% if @place %>
+          <li class="simple"><label>In:</label><%= @place.name %>
+            <%= hidden_field_tag :place_id, params[:place_id] %>
+          </li>
+        <% else %>
+          <li class="simple"><label>Near:</label> <%= text_field_tag :near, params[:near] %> <span>(eg '94118', 'Seattle', etc.)</span></li> 
+          <li class="simple"><label>Within:</label> <%= text_field_tag :within, @within %>   <span>miles</span></li>
+        <% end %>
+      </ul>
+    </li>
+    
+    <li class="<%= 'simple' unless params[:publication_date_greater_than].blank? && params[:publication_date_less_than].blank? %>">
+      <fieldset>
+        <legend>Publication Date</legend>
+        <ul>
+          <li class="simple"><label>From:</label><%= text_field_tag :publication_date_greater_than, @start_date.try(:to_date) %></li>
+          <li class="simple"><label>To:</label><%= text_field_tag :publication_date_less_than, @end_date.try(:to_date) %><span> (eg '01/01/09', '1 year ago', 'yesterday', etc.)</span></li>
+        </ul>
+      </fieldset>
+    </li>
+    
+    <li class="<%= 'simple' if params[:order] == 'relevance' %>">
+      <fieldset>
+        <legend>Options</legend>
+        <ul>  
+          <li class="simple"><label>Order:</label><%= select_tag 'order', options_for_select([['Date', 'date'], ['Relevance', 'relevance']], :selected => params[:order]) %> </li>
+        </ul>
+    </fieldset>
+  </li>
+</ul>
+<% end %>
+
+
