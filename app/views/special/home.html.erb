@@ -4,14 +4,18 @@
       <p class="fed">The Federal Register at your fingertips.</p>
       <p class="fed alt">A million pages finally accessible.</p>      
     </div>
+    
+    <hr class="ornament" />
+<% end %>
 
-    <div class="currentevents group">
+<div class="currentevents group">
   
-      <div class="header">
-        <h2><%= link_to "Current Issue is #{@last_date}", entries_by_date_path(@last_date) %> <span>(<%= @entries.length %> entries)</span></h2>
-      </div>
-      
-      <div class="daily group">
+  <div class="header group">
+    <h2><%= link_to "Current Issue is #{@last_date}", entries_by_date_path(@last_date) %> <span>(<%= @entries.length %> entries)</span></h2>
+  </div>
+  
+  <div class="header slide">
+    <div class="daily group">
       <ul class="items">
       <% @entries.each_with_index do |entry, i| %>
         <li>
@@ -27,14 +31,11 @@
       <% end %>
       </ul>
     </div>
+  </div>
   
-    </div>
-    
-              <hr class="ornament" />
+</div>
 
-<% end %>
-
-<% if @closing_soon.empty? %>
+<% if !@closing_soon.empty? %>
   <div class="clear marginTop">
     <h2>Comments Closing Soon</h2>
     <ul class="indent">
@@ -58,7 +59,7 @@
 
 
 <% content_for :sidebar do %>
-  <h3>View Entries Near</h3>
+  <h2>View Entries Near</h2>
   <%= render :partial => 'maps/location_search_form', :locals => {:location => nil} %>
   
   <%= render :partial => 'agencies/featured', :locals => {:featured_agencies => @featured_agencies} %>
