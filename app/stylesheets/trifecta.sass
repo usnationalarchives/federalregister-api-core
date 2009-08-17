@@ -3,12 +3,12 @@
 html
   :background url(/images/main_bg_left.png) repeat-y top left 
 body
-  :background url(/images/main_bg_right.png) repeat-y top right  
+  :background url(/images/main_bg_right2.png) repeat-y top right  
   :min-height 100%
   :margin-bottom -150px
   :position relative
 #wrapper
-  :background url(/images/header_bottomshadow.png) repeat-x left 161px
+  :background url(/images/header_bottomshadow4.png) repeat-x left 161px
 #header
   :background url(/images/header_bg.png) repeat-x top left
   :border-left 1px solid #27338b  
@@ -43,13 +43,13 @@ body
   :padding 5px 0 
   :width 100%
   .search
-    :background url(/images/search_bg.png) no-repeat top left
     :float right
     :height 25px
-    :margin 3px 0 0 0
-    :padding 0 10px 0 0    
+    :margin 4px 0 0 0
+    :padding 0 0 0 0    
     :width 220px
     form
+      :background url(/images/search_bg2.png) no-repeat top right
       :height 25px
       :width 200px      
       :margin 0 20px 0 0
@@ -57,12 +57,22 @@ body
         :border none
         :display block
         :float left
-        :height 18px
+        :height 15px
         :margin 5px 0 0 10px 
         :padding 0
-        :width 175px
-      input
-        :display none
+        :width 165px
+        &:focus
+          :outline none
+      input.search_btn
+        :background url(/images/icon_search.png) no-repeat top right
+        :border none
+        :cursor pointer  
+        :float left 
+        :height 20px
+        :margin 2px 0 0 0
+        :padding 0
+        :outline none
+        :width 15px   
   ul
     :float left
     :margin 5px 0 0 0
@@ -284,6 +294,7 @@ body
                 :outline none
             input.btn
               :float left
+              :padding 2px 4px
         div.tag_cloud
           div.fancy
             :position relative
