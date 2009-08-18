@@ -284,11 +284,15 @@ body {
   padding: 10px;
 }
 /* line 196, ../../app/stylesheets/trifecta.sass */
+#main .header.calendar {
+  position: relative;
+}
+/* line 198, ../../app/stylesheets/trifecta.sass */
 #main .content {
   min-height: 600px;
   padding: 20px 0;
 }
-/* line 200, ../../app/stylesheets/trifecta.sass */
+/* line 202, ../../app/stylesheets/trifecta.sass */
 #main .content .precolumn .large_map {
   width: 900px;
   height: 400px;
@@ -296,19 +300,19 @@ body {
   margin-right: auto;
   margin-bottom: 20px;
 }
-/* line 206, ../../app/stylesheets/trifecta.sass */
+/* line 208, ../../app/stylesheets/trifecta.sass */
 #main .content .precolumn .large_map div.wml-text-background {
   opacity: 1;
 }
-/* line 208, ../../app/stylesheets/trifecta.sass */
+/* line 210, ../../app/stylesheets/trifecta.sass */
 #main .content .precolumn .large_map div.wml-copyright-text {
   width: 900px;
 }
-/* line 210, ../../app/stylesheets/trifecta.sass */
+/* line 212, ../../app/stylesheets/trifecta.sass */
 #main .content .precolumn .infobox {
   padding: 1em 0;
 }
-/* line 212, ../../app/stylesheets/trifecta.sass */
+/* line 214, ../../app/stylesheets/trifecta.sass */
 #main .content .precolumn .infobox p {
   clear: both;
   font: 330% Georgia,"Times New Roman",Serif;
@@ -316,15 +320,15 @@ body {
   text-align: center;
   width: 100%;
 }
-/* line 218, ../../app/stylesheets/trifecta.sass */
+/* line 220, ../../app/stylesheets/trifecta.sass */
 #main .content .precolumn .infobox p.fed {
   color: #46565C;
 }
-/* line 220, ../../app/stylesheets/trifecta.sass */
+/* line 222, ../../app/stylesheets/trifecta.sass */
 #main .content .precolumn .infobox p.fed.alt {
   color: #fa6900;
 }
-/* line 223, ../../app/stylesheets/trifecta.sass */
+/* line 225, ../../app/stylesheets/trifecta.sass */
 #main .content .precolumn .infobox p.stats span.num {
   display: block;
   float: left;
@@ -332,54 +336,59 @@ body {
   text-align: right;
   width: 48%;
 }
-/* line 229, ../../app/stylesheets/trifecta.sass */
+/* line 231, ../../app/stylesheets/trifecta.sass */
 #main .content .precolumn .infobox p.stats span.stat {
   display: block;
   float: left;
   text-align: left;
   width: 48%;
 }
-/* line 234, ../../app/stylesheets/trifecta.sass */
+/* line 236, ../../app/stylesheets/trifecta.sass */
 #main .content .precolumn .infobox p span.around {
   color: #f00;
 }
-/* line 236, ../../app/stylesheets/trifecta.sass */
+/* line 238, ../../app/stylesheets/trifecta.sass */
 #main .content .precolumn div.entry_calendars {
   width: 850px;
   margin: 0 auto;
   display: none;
 }
-/* line 240, ../../app/stylesheets/trifecta.sass */
+/* line 242, ../../app/stylesheets/trifecta.sass */
 #main .content .precolumn div.entry_calendars div.search {
   width: 100%;
   margin: 0 auto;
 }
-/* line 243, ../../app/stylesheets/trifecta.sass */
+/* line 245, ../../app/stylesheets/trifecta.sass */
 #main .content .precolumn div.entry_calendars div.search form {
   width: 100%;
   color: #005073;
   font-size: 1.5em;
 }
-/* line 247, ../../app/stylesheets/trifecta.sass */
+/* line 249, ../../app/stylesheets/trifecta.sass */
+#main .content .precolumn div.entry_calendars div.search form #search {
+  height: 15px;
+  *margin: 10px 0 0 0;
+}
+/* line 252, ../../app/stylesheets/trifecta.sass */
 #main .content .precolumn div.entry_calendars .group {
   float: left;
   width: 250px;
   margin: 0 30px 30px 0;
   *margin: 0 15px 30px 0;
 }
-/* line 252, ../../app/stylesheets/trifecta.sass */
+/* line 257, ../../app/stylesheets/trifecta.sass */
 #main .content .precolumn div.entry_calendars .group tbody {
   height: 135px;
 }
-/* line 254, ../../app/stylesheets/trifecta.sass */
+/* line 259, ../../app/stylesheets/trifecta.sass */
 #main .content .precolumn div.entry_calendars .group tbody > * {
   height: auto !important;
 }
-/* line 257, ../../app/stylesheets/trifecta.sass */
+/* line 262, ../../app/stylesheets/trifecta.sass */
 #main .content .col1 .filterBy {
   margin: 13px 10px 0 0;
 }
-/* line 259, ../../app/stylesheets/trifecta.sass */
+/* line 264, ../../app/stylesheets/trifecta.sass */
 #main .content .col1 .fulltextWrapper {
   border: 1px solid #ccc;
   -moz-border-radius: 3px;
@@ -388,7 +397,7 @@ body {
   margin-bottom: 20px;
   overflow: auto;
 }
-/* line 266, ../../app/stylesheets/trifecta.sass */
+/* line 271, ../../app/stylesheets/trifecta.sass */
 #main .content .col1 .fulltextWrapper pre {
   background-color: #fff;
   font-size: 1.1em;
@@ -400,123 +409,109 @@ body {
   white-space: -o-pre-wrap;
   word-wrap: break-word;
 }
-/* line 276, ../../app/stylesheets/trifecta.sass */
+/* line 281, ../../app/stylesheets/trifecta.sass */
 #main .content .col1 .calendar_date {
   display: none;
 }
-/* line 278, ../../app/stylesheets/trifecta.sass */
+/* line 283, ../../app/stylesheets/trifecta.sass */
 #main .content .col1 .calendar_date .extra {
   display: none;
 }
-/* line 280, ../../app/stylesheets/trifecta.sass */
+/* line 285, ../../app/stylesheets/trifecta.sass */
 #main .content .col1 .calendar_date span.more, #main .content .col1 .calendar_date span.less {
   float: right;
 }
-/* line 283, ../../app/stylesheets/trifecta.sass */
+/* line 288, ../../app/stylesheets/trifecta.sass */
 #main .content .col1 ul.entries h2 {
   margin-bottom: 15px;
 }
-/* line 286, ../../app/stylesheets/trifecta.sass */
+/* line 291, ../../app/stylesheets/trifecta.sass */
 #main .content .col2 .sidebar {
   padding-right: 5px;
 }
-/* line 289, ../../app/stylesheets/trifecta.sass */
+/* line 294, ../../app/stylesheets/trifecta.sass */
 #main .content .col2 .sidebar ul li {
   list-style-type: none;
 }
-/* line 291, ../../app/stylesheets/trifecta.sass */
+/* line 296, ../../app/stylesheets/trifecta.sass */
 #main .content .col2 .sidebar h2 {
   border-bottom: 1px solid #46565C;
 }
-/* line 294, ../../app/stylesheets/trifecta.sass */
+/* line 299, ../../app/stylesheets/trifecta.sass */
 #main .content .col2 .sidebar h3 + ul {
   padding: 0;
 }
-/* line 296, ../../app/stylesheets/trifecta.sass */
+/* line 301, ../../app/stylesheets/trifecta.sass */
 #main .content .col2 .sidebar .small_map {
   width: 230px;
   height: 350px;
 }
-/* line 300, ../../app/stylesheets/trifecta.sass */
+/* line 305, ../../app/stylesheets/trifecta.sass */
 #main .content .col2 .sidebar .small_map div.wml-info-window-content ul {
   margin: 0;
 }
-/* line 302, ../../app/stylesheets/trifecta.sass */
+/* line 307, ../../app/stylesheets/trifecta.sass */
 #main .content .col2 .sidebar .small_map div.wml-info-window-content ul li {
   margin-left: 10px;
 }
-/* line 304, ../../app/stylesheets/trifecta.sass */
+/* line 309, ../../app/stylesheets/trifecta.sass */
 #main .content .col2 .sidebar .search {
   height: 25px;
   margin: 10px 0 20px 0;
   padding: 0 10px 0 0;
 }
-/* line 310, ../../app/stylesheets/trifecta.sass */
-#main .content .col2 .sidebar .search form input#location {
-  border: 2px solid #6e6e6e;
-  -moz-border-radius: 15px;
-  -webkit-border-radius: 15px;
-  display: block;
-  float: left;
-  height: 15px;
-  margin: 5px 5px 0 0;
-  padding: 6px 10px;
-  line-height: 15px;
-  width: 165px;
+/* line 315, ../../app/stylesheets/trifecta.sass */
+#main .content .col2 .sidebar .search form input {
+  margin: 0;
 }
-/* line 321, ../../app/stylesheets/trifecta.sass */
-#main .content .col2 .sidebar .search form input#location:focus {
+/* line 317, ../../app/stylesheets/trifecta.sass */
+#main .content .col2 .sidebar .search form input:focus {
   outline: none;
 }
-/* line 323, ../../app/stylesheets/trifecta.sass */
-#main .content .col2 .sidebar .search form input.btn {
-  float: left;
-  padding: 2px 4px;
-}
-/* line 327, ../../app/stylesheets/trifecta.sass */
+/* line 320, ../../app/stylesheets/trifecta.sass */
 #main .content .col2 .sidebar div.tag_cloud div.fancy {
   position: relative;
   width: 230px;
   height: 230px;
   overflow: hidden;
 }
-/* line 332, ../../app/stylesheets/trifecta.sass */
+/* line 325, ../../app/stylesheets/trifecta.sass */
 #main .content .currentevents {
   vertical-align: text-top;
 }
-/* line 334, ../../app/stylesheets/trifecta.sass */
+/* line 327, ../../app/stylesheets/trifecta.sass */
 #main .content .currentevents .header {
   margin: 0;
   position: relative;
   z-index: 9999;
 }
-/* line 338, ../../app/stylesheets/trifecta.sass */
+/* line 331, ../../app/stylesheets/trifecta.sass */
 #main .content .currentevents .slide {
   background: #eee;
   margin-top: -10px;
   z-index: 5555;
 }
-/* line 342, ../../app/stylesheets/trifecta.sass */
+/* line 335, ../../app/stylesheets/trifecta.sass */
 #main .content .currentevents .daily {
   height: 7em;
   margin: 10px 0 0 0;
   position: relative;
   overflow: hidden;
 }
-/* line 347, ../../app/stylesheets/trifecta.sass */
+/* line 340, ../../app/stylesheets/trifecta.sass */
 #main .content .currentevents .daily ul.items {
   margin: 0;
   height: 10000em;
   position: absolute;
 }
-/* line 351, ../../app/stylesheets/trifecta.sass */
+/* line 344, ../../app/stylesheets/trifecta.sass */
 #main .content .currentevents .daily ul.items li {
   float: left;
   height: 6em;
   list-style-type: none;
   width: 100%;
 }
-/* line 356, ../../app/stylesheets/trifecta.sass */
+/* line 349, ../../app/stylesheets/trifecta.sass */
 #main .content .currentevents .daily ul.items li p.number {
   float: left;
   font-family: Arial, "MS Trebuchet", sans-serif;
@@ -528,34 +523,34 @@ body {
   width: 115px;
   vertical-align: text-top;
 }
-/* line 366, ../../app/stylesheets/trifecta.sass */
+/* line 359, ../../app/stylesheets/trifecta.sass */
 #main .content .currentevents .daily ul.items li a {
   font: 140% Georgia,"Times New Roman",Serif;
   padding-left: 15px;
   text-decoration: none;
   width: 95%;
 }
-/* line 371, ../../app/stylesheets/trifecta.sass */
+/* line 364, ../../app/stylesheets/trifecta.sass */
 #main .content .currentevents .daily ul.items li a.entry {
   color: #005B81;
   float: left;
   margin-top: 10px;
 }
-/* line 375, ../../app/stylesheets/trifecta.sass */
+/* line 368, ../../app/stylesheets/trifecta.sass */
 #main .content .currentevents .daily ul.items li a.agency {
   color: #999;
   float: left;
   font-style: italic;
 }
-/* line 379, ../../app/stylesheets/trifecta.sass */
+/* line 372, ../../app/stylesheets/trifecta.sass */
 #main .content .currentevents .daily ul.items li a:hover {
   color: #cf8227;
 }
-/* line 381, ../../app/stylesheets/trifecta.sass */
+/* line 374, ../../app/stylesheets/trifecta.sass */
 #main ul.btn {
   margin: 10px 0 10px 0;
 }
-/* line 383, ../../app/stylesheets/trifecta.sass */
+/* line 376, ../../app/stylesheets/trifecta.sass */
 #main ul.btn li {
   border: 1px solid #747d87;
   float: left;
@@ -563,7 +558,7 @@ body {
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
 }
-/* line 389, ../../app/stylesheets/trifecta.sass */
+/* line 382, ../../app/stylesheets/trifecta.sass */
 #main ul.btn li a {
   color: #747d87;
   display: block;
@@ -571,33 +566,33 @@ body {
   padding: 3px 10px;
   text-decoration: none;
 }
-/* line 395, ../../app/stylesheets/trifecta.sass */
+/* line 388, ../../app/stylesheets/trifecta.sass */
 #main ul.btn li a:hover {
   background: #747d87;
   color: #fff;
 }
-/* line 399, ../../app/stylesheets/trifecta.sass */
+/* line 392, ../../app/stylesheets/trifecta.sass */
 #main ul.btn li.on a {
   background: #747d87;
   color: #fff;
 }
-/* line 403, ../../app/stylesheets/trifecta.sass */
+/* line 396, ../../app/stylesheets/trifecta.sass */
 #main ul.btn.small li {
   margin-right: 1px;
   width: 19px;
   height: 20px;
 }
-/* line 407, ../../app/stylesheets/trifecta.sass */
+/* line 400, ../../app/stylesheets/trifecta.sass */
 #main ul.btn.small li a {
   padding: 1px 2px;
   text-align: center;
 }
-/* line 410, ../../app/stylesheets/trifecta.sass */
+/* line 403, ../../app/stylesheets/trifecta.sass */
 #main ul.count {
   margin: 0;
   padding: 0;
 }
-/* line 413, ../../app/stylesheets/trifecta.sass */
+/* line 406, ../../app/stylesheets/trifecta.sass */
 #main ul.count li {
   background: #eef;
   border-left: 1px solid transparent;
@@ -610,13 +605,13 @@ body {
   margin: 0 0 5px 0;
   position: relative;
 }
-/* line 424, ../../app/stylesheets/trifecta.sass */
+/* line 417, ../../app/stylesheets/trifecta.sass */
 #main ul.count li a {
   color: #343434;
   font-weight: bold;
   text-decoration: none;
 }
-/* line 428, ../../app/stylesheets/trifecta.sass */
+/* line 421, ../../app/stylesheets/trifecta.sass */
 #main ul.count li .info {
   display: block;
   height: 15px;
@@ -625,7 +620,7 @@ body {
   position: relative;
   z-index: 5555;
 }
-/* line 435, ../../app/stylesheets/trifecta.sass */
+/* line 428, ../../app/stylesheets/trifecta.sass */
 #main ul.count li .bg {
   background: url(/images/count_bg.png) repeat-x left top;
   border: 1px solid #83bbd9;
@@ -638,121 +633,122 @@ body {
   top: 0;
   z-index: 1111;
 }
-/* line 448, ../../app/stylesheets/trifecta.sass */
+/* line 441, ../../app/stylesheets/trifecta.sass */
 #main .search_info p.entries {
   float: left;
   margin: 20px 0 0 0;
 }
-/* line 451, ../../app/stylesheets/trifecta.sass */
+/* line 444, ../../app/stylesheets/trifecta.sass */
 #main .search_info .pagination {
   float: right;
   margin: 20px 0 0 0;
   *padding-bottom: 2px;
 }
-/* line 455, ../../app/stylesheets/trifecta.sass */
+/* line 448, ../../app/stylesheets/trifecta.sass */
 #main .search_info .pagination a {
   border: 1px solid #aaa;
   padding: 1px 3px;
 }
-/* line 458, ../../app/stylesheets/trifecta.sass */
+/* line 451, ../../app/stylesheets/trifecta.sass */
 #main .search_info .pagination a.next_page,
 #main .search_info .pagination a.prev_page {
   border: none;
 }
-/* line 461, ../../app/stylesheets/trifecta.sass */
+/* line 454, ../../app/stylesheets/trifecta.sass */
 #main .search_info .pagination a:hover {
   background: #39505e;
   color: #fff;
 }
-/* line 464, ../../app/stylesheets/trifecta.sass */
+/* line 457, ../../app/stylesheets/trifecta.sass */
 #main ol.results {
   clear: both;
   margin: 10px 0 0 0;
 }
-/* line 467, ../../app/stylesheets/trifecta.sass */
+/* line 460, ../../app/stylesheets/trifecta.sass */
 #main ol.results li {
   list-style-type: none;
   margin: 0 0 20px 0;
 }
-/* line 470, ../../app/stylesheets/trifecta.sass */
+/* line 463, ../../app/stylesheets/trifecta.sass */
 #main ol.results li .result_info {
   padding: 0 0 0 15px;
 }
-/* line 472, ../../app/stylesheets/trifecta.sass */
+/* line 465, ../../app/stylesheets/trifecta.sass */
 #main ol.results li .result_info .date {
   color: #565656;
   font-weight: bold;
 }
-/* line 475, ../../app/stylesheets/trifecta.sass */
+/* line 468, ../../app/stylesheets/trifecta.sass */
 #main dl.fixed {
   width: 600px;
 }
-/* line 477, ../../app/stylesheets/trifecta.sass */
+/* line 470, ../../app/stylesheets/trifecta.sass */
 #main dl.fixed dt {
   clear: left;
   float: left;
   text-align: right;
   width: 45%;
 }
-/* line 482, ../../app/stylesheets/trifecta.sass */
+/* line 475, ../../app/stylesheets/trifecta.sass */
 #main dl.fixed dd {
   float: left;
   width: 45%;
 }
-/* line 485, ../../app/stylesheets/trifecta.sass */
+/* line 478, ../../app/stylesheets/trifecta.sass */
 #main table.calendar {
   height: 200px;
   margin: 10px auto;
   width: 50%;
 }
-/* line 489, ../../app/stylesheets/trifecta.sass */
+/* line 482, ../../app/stylesheets/trifecta.sass */
 #main table.calendar th {
   background: none;
 }
-/* line 491, ../../app/stylesheets/trifecta.sass */
+/* line 484, ../../app/stylesheets/trifecta.sass */
 #main table.calendar th.current {
   border-bottom: 1px solid grey;
   color: #005073;
   font-size: 1.5em;
   text-align: center;
 }
-/* line 497, ../../app/stylesheets/trifecta.sass */
+/* line 490, ../../app/stylesheets/trifecta.sass */
 #main table.calendar td.day a {
   font-weight: bold;
 }
-/* line 499, ../../app/stylesheets/trifecta.sass */
+/* line 492, ../../app/stylesheets/trifecta.sass */
 #main table.calendar td.day a:visited {
   color: #b48144;
 }
-/* line 501, ../../app/stylesheets/trifecta.sass */
+/* line 494, ../../app/stylesheets/trifecta.sass */
 #main .icon {
   padding: 5px 0 5px 60px;
   background-repeat: no-repeat;
 }
-/* line 504, ../../app/stylesheets/trifecta.sass */
+/* line 497, ../../app/stylesheets/trifecta.sass */
 #main .icon.cal {
   background-image: url(/images/ical_small.gif);
   background-position: left top;
   height: 24px;
-  margin: 0;
-  *margin: -27px 0 0 0;
   padding: 0;
+  position: absolute;
+  top: 5px;
+  right: 10px;
   width: 24px;
 }
-/* line 512, ../../app/stylesheets/trifecta.sass */
+/* line 506, ../../app/stylesheets/trifecta.sass */
 #main .icon.agency {
   background-image: url(/images/icons/agency_small2.png);
   background-position: top left;
   margin: 0;
   padding: 0 0 10px 65px;
 }
-/* line 517, ../../app/stylesheets/trifecta.sass */
+/* line 511, ../../app/stylesheets/trifecta.sass */
 #main .icon.contact {
   background-image: url(/images/icons/contact_small.png);
   background-position: top left;
   padding: 32px 0 0 60px;
 }
-/* line 521, ../../app/stylesheets/trifecta.sass */
+/* line 515, ../../app/stylesheets/trifecta.sass */
 #main .icon.arrow {
   background-image: url(/images/arrow.png);
   background-position: left 2px;
@@ -760,51 +756,51 @@ body {
   padding: 0 0 0 20px;
   width: 80px;
 }
-/* line 527, ../../app/stylesheets/trifecta.sass */
+/* line 521, ../../app/stylesheets/trifecta.sass */
 #main .icon.arrow.next {
   background-position: right 2px;
   padding: 0 20px 0 0;
 }
-/* line 530, ../../app/stylesheets/trifecta.sass */
+/* line 524, ../../app/stylesheets/trifecta.sass */
 #main .icon.arrow.next.floatRight {
   float: right;
   width: auto;
 }
-/* line 533, ../../app/stylesheets/trifecta.sass */
+/* line 527, ../../app/stylesheets/trifecta.sass */
 #main .icon.arrow.open {
   background-position: left -15px;
 }
-/* line 535, ../../app/stylesheets/trifecta.sass */
+/* line 529, ../../app/stylesheets/trifecta.sass */
 #main .icon.arrow:visited {
   color: #005b81;
 }
-/* line 537, ../../app/stylesheets/trifecta.sass */
+/* line 531, ../../app/stylesheets/trifecta.sass */
 #main .icon.arrow.prev {
   background-position: left -30px;
 }
-/* line 539, ../../app/stylesheets/trifecta.sass */
+/* line 533, ../../app/stylesheets/trifecta.sass */
 #main .icon.arrow.prev.floatLeft {
   float: left;
   width: auto;
 }
-/* line 542, ../../app/stylesheets/trifecta.sass */
+/* line 536, ../../app/stylesheets/trifecta.sass */
 #main input.btn {
-  background: url(/images/btn_bg2.png) repeat-x bottom left;
+  background: #d9f0fc url(/images/btn_bg2.png) repeat-x left bottom;
   border: 1px solid #83bbd9;
   cursor: pointer;
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
   font-weight: bold;
-  height: 30px;
+  *height: 28px;
   padding: 5px;
-  *padding: 0;
+  *padding: 0 3px;
 }
-/* line 552, ../../app/stylesheets/trifecta.sass */
+/* line 546, ../../app/stylesheets/trifecta.sass */
 #main input.btn:hover {
   background: url(/images/btn_bg2_hover.png) repeat-x left 50%;
 }
 
-/* line 554, ../../app/stylesheets/trifecta.sass */
+/* line 548, ../../app/stylesheets/trifecta.sass */
 div.ornament {
   background: url(/images/hr_bg3.png) no-repeat top center;
   display: block;
@@ -812,38 +808,38 @@ div.ornament {
   margin: 0 0 20px 0;
 }
 
-/* line 560, ../../app/stylesheets/trifecta.sass */
+/* line 554, ../../app/stylesheets/trifecta.sass */
 form input.labelHighlight {
   color: #aeaeae !important;
 }
-/* line 563, ../../app/stylesheets/trifecta.sass */
+/* line 557, ../../app/stylesheets/trifecta.sass */
 form li span {
   color: #6e6e6e;
   vertical-align: middle;
 }
 
-/* line 567, ../../app/stylesheets/trifecta.sass */
+/* line 561, ../../app/stylesheets/trifecta.sass */
 .col2 li fieldset label {
   font-weight: bold;
   width: 35px;
 }
-/* line 570, ../../app/stylesheets/trifecta.sass */
+/* line 564, ../../app/stylesheets/trifecta.sass */
 .col2 li fieldset span {
   display: block;
   padding-left: 47px;
 }
 
-/* line 573, ../../app/stylesheets/trifecta.sass */
+/* line 567, ../../app/stylesheets/trifecta.sass */
 .panel {
   display: none;
   padding-top: 2em;
 }
-/* line 576, ../../app/stylesheets/trifecta.sass */
+/* line 570, ../../app/stylesheets/trifecta.sass */
 .panel.on {
   display: block;
 }
 
-/* line 579, ../../app/stylesheets/trifecta.sass */
+/* line 573, ../../app/stylesheets/trifecta.sass */
 body #footer {
   background: #5a5a5a;
   border-top: 4px solid #9b9b9b;
@@ -852,106 +848,106 @@ body #footer {
   padding: 2em 0 0 0;
   position: relative;
 }
-/* line 586, ../../app/stylesheets/trifecta.sass */
+/* line 580, ../../app/stylesheets/trifecta.sass */
 body #footer h4 {
   color: #aaa;
   text-align: center;
 }
-/* line 589, ../../app/stylesheets/trifecta.sass */
+/* line 583, ../../app/stylesheets/trifecta.sass */
 body #footer .sitemap {
   padding: 2em 0 0 2em;
 }
-/* line 591, ../../app/stylesheets/trifecta.sass */
+/* line 585, ../../app/stylesheets/trifecta.sass */
 body #footer .sitemap h4 {
   color: #fff;
   font: 175% serif;
   margin: 0 0 0 0;
 }
-/* line 595, ../../app/stylesheets/trifecta.sass */
+/* line 589, ../../app/stylesheets/trifecta.sass */
 body #footer .sitemap ul {
   float: left;
   margin: 0 0 0 1em;
 }
-/* line 598, ../../app/stylesheets/trifecta.sass */
+/* line 592, ../../app/stylesheets/trifecta.sass */
 body #footer .sitemap ul li {
   list-style-type: none;
 }
-/* line 600, ../../app/stylesheets/trifecta.sass */
+/* line 594, ../../app/stylesheets/trifecta.sass */
 body #footer .sitemap ul li a {
   color: #989898;
   font-size: 125%;
   text-decoration: none;
 }
-/* line 604, ../../app/stylesheets/trifecta.sass */
+/* line 598, ../../app/stylesheets/trifecta.sass */
 body #footer .legal {
   padding: 2em 0 0 0;
 }
-/* line 606, ../../app/stylesheets/trifecta.sass */
+/* line 600, ../../app/stylesheets/trifecta.sass */
 body #footer .legal h4 {
   color: #fff;
   font: 125% serif;
   text-align: center;
 }
 
-/* line 610, ../../app/stylesheets/trifecta.sass */
+/* line 604, ../../app/stylesheets/trifecta.sass */
 .floatLeft {
   float: left;
 }
 
-/* line 612, ../../app/stylesheets/trifecta.sass */
+/* line 606, ../../app/stylesheets/trifecta.sass */
 .floatRight {
   float: right;
 }
 
-/* line 614, ../../app/stylesheets/trifecta.sass */
+/* line 608, ../../app/stylesheets/trifecta.sass */
 .marginTop {
   margin-top: 10px;
 }
 
-/* line 616, ../../app/stylesheets/trifecta.sass */
+/* line 610, ../../app/stylesheets/trifecta.sass */
 .marginBottom {
   margin-bottom: 10px !important;
 }
 
-/* line 619, ../../app/stylesheets/trifecta.sass */
+/* line 613, ../../app/stylesheets/trifecta.sass */
 ul.tag_cloud {
   font-size: 1.1em;
   line-height: 1.32em;
 }
-/* line 5, ../../../../../../usr/local/ruby-enterprise-1.8.6-20090610/lib/ruby/gems/1.8/gems/chriseppstein-compass-0.8.8/frameworks/compass/stylesheets/compass/utilities/general/_tag_cloud.sass */
+/* line 5, ../../../../../../../../Library/Ruby/Gems/1.8/gems/chriseppstein-compass-0.8.8/frameworks/compass/stylesheets/compass/utilities/general/_tag_cloud.sass */
 ul.tag_cloud .xxs, ul.tag_cloud .xs, ul.tag_cloud .s, ul.tag_cloud .l, ul.tag_cloud .xl, ul.tag_cloud .xxl {
   line-height: 1.32em;
 }
-/* line 7, ../../../../../../usr/local/ruby-enterprise-1.8.6-20090610/lib/ruby/gems/1.8/gems/chriseppstein-compass-0.8.8/frameworks/compass/stylesheets/compass/utilities/general/_tag_cloud.sass */
+/* line 7, ../../../../../../../../Library/Ruby/Gems/1.8/gems/chriseppstein-compass-0.8.8/frameworks/compass/stylesheets/compass/utilities/general/_tag_cloud.sass */
 ul.tag_cloud .xxs {
   font-size: 0.55em;
 }
-/* line 9, ../../../../../../usr/local/ruby-enterprise-1.8.6-20090610/lib/ruby/gems/1.8/gems/chriseppstein-compass-0.8.8/frameworks/compass/stylesheets/compass/utilities/general/_tag_cloud.sass */
+/* line 9, ../../../../../../../../Library/Ruby/Gems/1.8/gems/chriseppstein-compass-0.8.8/frameworks/compass/stylesheets/compass/utilities/general/_tag_cloud.sass */
 ul.tag_cloud .xs {
   font-size: 0.733em;
 }
-/* line 11, ../../../../../../usr/local/ruby-enterprise-1.8.6-20090610/lib/ruby/gems/1.8/gems/chriseppstein-compass-0.8.8/frameworks/compass/stylesheets/compass/utilities/general/_tag_cloud.sass */
+/* line 11, ../../../../../../../../Library/Ruby/Gems/1.8/gems/chriseppstein-compass-0.8.8/frameworks/compass/stylesheets/compass/utilities/general/_tag_cloud.sass */
 ul.tag_cloud .s {
   font-size: 0.825em;
 }
-/* line 13, ../../../../../../usr/local/ruby-enterprise-1.8.6-20090610/lib/ruby/gems/1.8/gems/chriseppstein-compass-0.8.8/frameworks/compass/stylesheets/compass/utilities/general/_tag_cloud.sass */
+/* line 13, ../../../../../../../../Library/Ruby/Gems/1.8/gems/chriseppstein-compass-0.8.8/frameworks/compass/stylesheets/compass/utilities/general/_tag_cloud.sass */
 ul.tag_cloud .l {
   font-size: 1.467em;
 }
-/* line 15, ../../../../../../usr/local/ruby-enterprise-1.8.6-20090610/lib/ruby/gems/1.8/gems/chriseppstein-compass-0.8.8/frameworks/compass/stylesheets/compass/utilities/general/_tag_cloud.sass */
+/* line 15, ../../../../../../../../Library/Ruby/Gems/1.8/gems/chriseppstein-compass-0.8.8/frameworks/compass/stylesheets/compass/utilities/general/_tag_cloud.sass */
 ul.tag_cloud .xl {
   font-size: 1.65em;
 }
-/* line 17, ../../../../../../usr/local/ruby-enterprise-1.8.6-20090610/lib/ruby/gems/1.8/gems/chriseppstein-compass-0.8.8/frameworks/compass/stylesheets/compass/utilities/general/_tag_cloud.sass */
+/* line 17, ../../../../../../../../Library/Ruby/Gems/1.8/gems/chriseppstein-compass-0.8.8/frameworks/compass/stylesheets/compass/utilities/general/_tag_cloud.sass */
 ul.tag_cloud .xxl {
   font-size: 2.2em;
 }
-/* line 621, ../../app/stylesheets/trifecta.sass */
+/* line 615, ../../app/stylesheets/trifecta.sass */
 ul.tag_cloud li {
   float: left;
 }
 
-/* line 623, ../../app/stylesheets/trifecta.sass */
+/* line 617, ../../app/stylesheets/trifecta.sass */
 #tagcloud_label {
   background: #005b81;
   border: 2px solid #bde3f1;
