@@ -192,6 +192,6 @@ class Entry < ActiveRecord::Base
   private
   
   def create_entry_detail
-    entry_detail.create
+    entry_detail = EntryDetail.create(:entry_id => self.id)
   end
 end
