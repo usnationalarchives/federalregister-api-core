@@ -11,7 +11,7 @@
 <div class="currentevents group">
   
   <div class="header group">
-    <h2><%= link_to "Current Issue is #{@last_date.to_formmated_s(:pretty)}", entries_by_date_path(@last_date) %> <span>(<%= @entries.length %> entries)</span></h2>
+    <h2><%= link_to "Current Issue is #{@last_date.to_formatted_s(:pretty)}", entries_by_date_path(@last_date) %> <span>(<%= @entries.length %> entries)</span></h2>
   </div>
   
   <div class="header slide">
