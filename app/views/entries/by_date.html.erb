@@ -3,11 +3,12 @@
 <% content_for :precolumn do %>
   <h1>Entries for <%= @publication_date.to_formatted_s(:pretty) %></h1>
 
-  <div class="header group">
+  <div class="header group calendar">
   <h2>
     <%= pluralize(@entry_count, 'entry') %> published on this day
-    <%= link_to( '', '#', :class => "icon cal floatRight", :title => "Click to show calendars" ) %>
   </h2>
+  
+  <%= link_to( '', '#', :class => "icon cal", :title => "Click to show calendars" ) %>
 
   <% if @prev_date %>
     <%= link_to 'Prev', entries_by_date_path(@prev_date), :class => "icon arrow prev floatLeft" %>
@@ -26,7 +27,6 @@
         <%= submit_tag 'Go', :class => "btn" %>
       <% end %>
     </div>
-    <div class='clear'></div>
     
     <%= entries_calendar_view(@year, @month) %>
     <% add_javascript(:src => 'calendar') %>
