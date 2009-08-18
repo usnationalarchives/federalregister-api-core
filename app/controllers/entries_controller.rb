@@ -111,9 +111,20 @@ class EntriesController < ApplicationController
   end
   
   def by_date
-    @year  = params[:year]  || Time.now.strftime("%Y")
-    @month = params[:month] || Time.now.strftime("%m")
-    @day   = params[:day]   || Time.now.strftime("%d")
+    if params[:search]
+      time = Chronic.parse(params[:search], :context => :past)
+      raise ActiveRecord::RecordNotFound unless !time.nil?
+      @year  = time.year
+      @month = time.month || 1
+      @day   = time.day || 1
+    else
+      @year  = params[:year]  || Time.now.strftime("%Y")
+      @month = params[:month] || Time.now.strftime("%m")
+      @day   = params[:day]   || Time.now.strftime("%d")
+    end
+    
+    @show_calendars = params[:show_calendars]
+      
     
     @publication_date = Date.parse("#{@year}-#{@month}-#{@day}")
     
