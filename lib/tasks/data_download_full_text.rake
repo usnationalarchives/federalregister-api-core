@@ -2,7 +2,7 @@ namespace :data do
   namespace :download do
     desc "Download full text of entries and store in entries.full_text_raw"
     task :full_text => :environment do
-      Entry.all(:conditions => {:publication_date => Date.today}).each do |entry|
+      Entry.all(:conditions => {:publication_date => Entry.latest_publication_date}).each do |entry|
         entry_detail = entry.entry_detail
         next unless entry_detail.full_text_raw.nil?
         url = entry.source_url(:text)
