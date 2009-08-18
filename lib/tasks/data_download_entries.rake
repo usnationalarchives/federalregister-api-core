@@ -4,7 +4,7 @@ namespace :data do
       require "open-uri"
       
       date = Date.today + 1
-      end_date = Date.parse('1994-01-01')
+      end_date = Entry.latest_publication_date
       
       while(date >= end_date)
         date = date - 1
