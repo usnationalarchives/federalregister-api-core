@@ -32,7 +32,7 @@ namespace :data do
   namespace :import do
     desc "Import entries XML file(s) into the database"
     task :entries => :environment do
-      Dir.glob("#{RAILS_ROOT}/data/mods/*.xml").sort.reverse.each do |file_name|
+      Dir.glob("#{RAILS_ROOT}/data/mods/*.xml").sort.each do |file_name|
         doc = Nokogiri::XML(open(file_name))
         
         publication_date = doc.css('dateIssued').first.try(:content)
@@ -40,6 +40,12 @@ namespace :data do
           puts "skipping #{file_name} [no dateIssued!]"
           next
         end
+        
+        if Date.parse(publication_date) <= Entry.latest_publication_date
+          puts "done!"
+          exit
+        end
+        
         puts "importing #{publication_date}..."
         Entry.transaction do
         
