@@ -35,6 +35,12 @@ $(document).ready(function(){
     $('div.entry_calendars').toggle();
     return false;
   });
+  
+  show_calendars = window.location.href.replace(/.*\?show_calendars=/, '');
+  show_calendars = show_calendars.replace(/\&.*/, '')
+  if(show_calendars == 'true') {
+    $('div.entry_calendars').show();
+  }
 });
 
 function hide_dates() {
@@ -66,5 +72,6 @@ function change_link(el) {
 
 function rewrite_url(el) {
   date = $(el).attr('href').replace(/.*#entry_/, '');
+  console.log(date);
   window.location.href = '/entries/'+date;
 }

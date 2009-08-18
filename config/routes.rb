@@ -34,6 +34,10 @@ ActionController::Routing::Routes.draw do |map|
                                                     :action     => 'index',
                                                     :year       => /\d{4}/,
                                                     :week       => /\d{1,2}/
+                                                    
+  map.entries_date_search 'entries/explore', :controller => 'entries',
+                                             :action     => 'by_date'
+                                       
   map.resources :entries                                                  
   
   map.connect  'calendar/:year/:month/:day', :controller => 'calendars',

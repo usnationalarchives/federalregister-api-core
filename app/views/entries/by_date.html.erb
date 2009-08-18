@@ -9,7 +9,6 @@
     <%= link_to( '', '#', :class => "icon cal floatRight", :title => "Click to show calendars" ) %>
   </h2>
 
-  
   <% if @prev_date %>
     <%= link_to 'Prev', entries_by_date_path(@prev_date), :class => "icon arrow prev floatLeft" %>
   <% end %>
@@ -20,6 +19,15 @@
   </div>
 
   <div class="entry_calendars">
+    <div class='search'>
+      <% form_tag entries_exploration_path, :method => :GET, :class => "group" do %>
+        Explore entries in recent months or search for a date:
+        <%= text_field_tag :search, '', :title => "(eg 'last month', 'November 2', 'last October')" %>
+        <%= submit_tag 'Go', :class => "btn" %>
+      <% end %>
+    </div>
+    <div class='clear'></div>
+    
     <%= entries_calendar_view(@year, @month) %>
     <% add_javascript(:src => 'calendar') %>
   </div>
