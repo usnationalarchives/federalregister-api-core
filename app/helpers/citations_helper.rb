@@ -1,10 +1,10 @@
 module CitationsHelper
   def add_citation_links(text)
-    text.gsub!(/((\d+) U\.?S\.?C\.? (\d+))/, '<a href="http://frwebgate.access.gpo.gov/cgi-bin/getdoc.cgi?dbname=browse_usc&docid=Cite:+\2USC\3" class="usc external" target="_blank">\1</a>')
-    text.gsub!(/((\d+) CFR (\d+)(?:\.(\d+))?)/, '<a href="http://frwebgate.access.gpo.gov/cgi-bin/get-cfr.cgi?YEAR=current&TITLE=\2&PART=\3&SECTION=\4&SUBPART=&TYPE=TEXT" class="cfr external" target="_blank">\1</a>')
-    text.gsub!(/((\d+) FR (\d+))/, '<a href="/citation/\2/\3" class="fr">\1</a>')
-    text.gsub!(/((\d+) FR (\d+))/, '<a href="/citation/\2/\3" class="fr">\1</a>')
-    text.gsub!(/(Pub\. L\. (\d+)-(\d+))/) do
+    text.gsub!(/((\d+)\s+U\.?S\.?C\.?\s+(\d+))/, '<a href="http://frwebgate.access.gpo.gov/cgi-bin/getdoc.cgi?dbname=browse_usc&docid=Cite:+\2USC\3" class="usc external" target="_blank">\1</a>')
+    text.gsub!(/((\d+)\s+CFR\s+(\d+)(?:\.(\d+))?)/, '<a href="http://frwebgate.access.gpo.gov/cgi-bin/get-cfr.cgi?YEAR=current&TITLE=\2&PART=\3&SECTION=\4&SUBPART=&TYPE=TEXT" class="cfr external" target="_blank">\1</a>')
+    text.gsub!(/((\d+)\s+FR\s+(\d+))/, '<a href="/citation/\2/\3" class="fr">\1</a>')
+    text.gsub!(/((\d+)\s+FR\s+(\d+))/, '<a href="/citation/\2/\3" class="fr">\1</a>')
+    text.gsub!(/(Pub\.\s+L\.\s+(\d+)-(\d+))/) do
       full = $1
       congress = $2
       law = $3
