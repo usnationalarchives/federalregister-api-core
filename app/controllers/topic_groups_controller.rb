@@ -10,7 +10,7 @@ class TopicGroupsController < ApplicationController
     @topic_group = TopicGroup.find_by_group_name!(params[:id])
     @entries = Entry.find(:all,
         :conditions => {:topics => {:group_name => @topic_group.group_name}},
-        :joins => :topics,
+        :include => :topics,
         :order => "entries.publication_date DESC",
         :limit => 100)
     
