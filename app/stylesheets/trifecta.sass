@@ -193,6 +193,8 @@ body
       :margin-top -5px
     &.search
       :padding 10px
+    &.calendar
+      :position relative
   .content
     :min-height 600px
     :padding 20px 0
@@ -234,16 +236,20 @@ body
           span.around
             :color #f00
       div.entry_calendars
-        :width 850px
+        :display none      
         :margin 0 auto
-        :display none
+        :width 850px        
         div.search 
-          :width 100%
           :margin 0 auto
+          :width 100%          
           form
-            :width 100%
             :color #005073
             :font-size 1.5em
+            :text-align center
+            :width 100%            
+            #search
+              :height 15px
+              :*margin 10px 0 0 0
         .group
           :float left
           :width 250px
@@ -307,22 +313,10 @@ body
           :margin 10px 0 20px 0
           :padding 0 10px 0 0    
           form
-            input#location
-              :border 2px solid #6e6e6e
-              :-moz-border-radius 15px
-              :-webkit-border-radius 15px
-              :display block
-              :float left
-              :height 15px
-              :margin 5px 5px 0 0 
-              :padding 6px 10px
-              :line-height 15px
-              :width 165px
+            input
+              :margin 0
               &:focus
                 :outline none
-            input.btn
-              :float left
-              :padding 2px 4px
         div.tag_cloud
           div.fancy
             :position relative
@@ -505,9 +499,10 @@ body
       :background-image url(/images/ical_small.gif)
       :background-position left top
       :height 24px
-      :margin 0
-      :*margin -27px 0 0 0
       :padding 0
+      :position absolute
+      :top 5px
+      :right 10px
       :width 24px
     &.agency
       :background-image url(/images/icons/agency_small2.png)
@@ -540,15 +535,15 @@ body
           :float left
           :width auto
   input.btn
-    :background url(/images/btn_bg2.png) repeat-x bottom left
+    :background #d9f0fc url(/images/btn_bg2.png) repeat-x left bottom
     :border 1px solid #83bbd9
     :cursor pointer
     :-moz-border-radius 5px
     :-webkit-border-radius 5px   
     :font-weight bold     
-    :height 30px
+    :*height 28px    
     :padding 5px
-    :*padding 0
+    :*padding 0 3px
     &:hover
       :background url(/images/btn_bg2_hover.png) repeat-x left 50%
 div.ornament
