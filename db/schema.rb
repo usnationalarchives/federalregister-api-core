@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090808000159) do
+ActiveRecord::Schema.define(:version => 20090822205756) do
 
   create_table "agencies", :force => true do |t|
     t.integer  "parent_id"
@@ -59,6 +59,7 @@ ActiveRecord::Schema.define(:version => 20090808000159) do
   add_index "entries", ["agency_id", "publication_date"], :name => "index_entries_on_agency_id_and_publication_date"
   add_index "entries", ["citation"], :name => "index_entries_on_citation"
   add_index "entries", ["document_number"], :name => "index_entries_on_document_number"
+  add_index "entries", ["id", "publication_date"], :name => "index_entries_on_id_and_publication_date"
   add_index "entries", ["publication_date", "agency_id"], :name => "index_entries_on_publication_date_and_agency_id"
 
   create_table "entry_details", :force => true do |t|
@@ -77,7 +78,9 @@ ActiveRecord::Schema.define(:version => 20090808000159) do
   end
 
   add_index "place_determinations", ["entry_id", "confidence"], :name => "index_place_determinations_on_entry_id_and_confidence"
+  add_index "place_determinations", ["entry_id", "place_id"], :name => "index_place_determinations_on_entry_id_and_place_id"
   add_index "place_determinations", ["place_id", "confidence"], :name => "index_place_determinations_on_place_id_and_confidence"
+  add_index "place_determinations", ["place_id", "entry_id"], :name => "index_place_determinations_on_place_id_and_entry_id"
 
   create_table "places", :force => true do |t|
     t.string   "name"
@@ -107,8 +110,8 @@ ActiveRecord::Schema.define(:version => 20090808000159) do
     t.datetime "updated_at"
   end
 
-  add_index "topic_assignments", ["entry_id"], :name => "index_topic_assignments_on_entry_id"
-  add_index "topic_assignments", ["topic_id"], :name => "index_topic_assignments_on_topic_id"
+  add_index "topic_assignments", ["entry_id", "topic_id"], :name => "index_topic_assignments_on_entry_id_and_topic_id"
+  add_index "topic_assignments", ["topic_id", "entry_id"], :name => "index_topic_assignments_on_topic_id_and_entry_id"
 
   create_table "topic_groups", :id => false, :force => true do |t|
     t.string  "group_name"
@@ -125,7 +128,8 @@ ActiveRecord::Schema.define(:version => 20090808000159) do
   end
 
   add_index "topics", ["entries_count"], :name => "index_topics_on_entries_count"
-  add_index "topics", ["group_name"], :name => "index_topics_on_group_name"
+  add_index "topics", ["group_name", "id"], :name => "group_name"
+  add_index "topics", ["group_name", "id"], :name => "index_topics_on_group_name_and_id"
   add_index "topics", ["name"], :name => "index_topics_on_name"
 
   create_table "url_references", :force => true do |t|
