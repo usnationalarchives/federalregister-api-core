@@ -1,4 +1,5 @@
 <% title "Most Recent Entries mentioning #{@location.name}", :body => false %>
+<% feed_autodiscovery url_for(params.merge(:format => :rss)) %>
 
 <% if !@places.nil? %>
   <% add_javascript { @map.to_js } %>
