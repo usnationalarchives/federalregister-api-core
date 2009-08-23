@@ -1,14 +1,4 @@
-  <!-- 
-citation             :string(255)
-document_number      :string(255)
-toc_subject          :string(255)
-toc_doc              :string(255)
-places_determined_at :datetime -->
-
-<%# title 'Entries' %>
-<% content_for :precolumn do %>
-  <h1><%= @entry.title %></h1>
-<% end %>
+<% title @entry.title %>
 
 <% if @entry.abstract %>
   <h3>Abstract</h3>

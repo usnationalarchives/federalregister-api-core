@@ -1,10 +1,4 @@
-<%# TODO HELP-DESIGN do something with this %>
-<%# title @agency.name %>
-
-<% content_for :precolumn do %>
-  <h1><%= @agency.name %></h1>
-<% end %>
-
+<% title @agency.name, :body => :precolumn %>
 
 <% feed_autodiscovery agency_path(@agency, :format => :rss) %>
 
