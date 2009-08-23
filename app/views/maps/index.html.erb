@@ -1,7 +1,4 @@
-<% content_for :precolumn do %>
-  <h1>Recent entries mentioning places within <%= pluralize(@dist, 'mile') %> of the center of <%= @display_location %></h1>
-<% end %>
-
+<% title "Recent entries mentioning places within #{ pluralize(@dist, 'mile') } of the center of #{ @display_location } " %>
 
 <% if !@places.nil? %>
   <% add_javascript { @map.to_js } %>

@@ -1,3 +1,5 @@
+<% title "Most Recent Entries mentioning #{@location.name}", :body => false %>
+
 <% if !@places.nil? %>
   <% add_javascript { @map.to_js } %>
   <% content_for :precolumn do %>

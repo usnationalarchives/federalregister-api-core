@@ -1,9 +1,7 @@
 <%# TODO HELP-RUBY do this better? %>
 <% content_for :search_form %>
 
-<% content_for :precolumn do %>
-  <h1>Search <%= @search_term.blank? ? 'Entries' : "Results for '#{h @search_term}'" %></h1>
-<% end %>
+<% title @search_term.blank? ? 'Search Entries' : "Search Results for '#{h @search_term}'" %>
 
 
 
