@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090822205756) do
+ActiveRecord::Schema.define(:version => 20090823180848) do
 
   create_table "agencies", :force => true do |t|
     t.integer  "parent_id"
@@ -21,6 +21,10 @@ ActiveRecord::Schema.define(:version => 20090822205756) do
     t.string   "short_name"
     t.text     "description"
     t.text     "more_information"
+    t.integer  "entries_count"
+    t.text     "entries_1_year_weekly"
+    t.text     "entries_5_years_monthly"
+    t.text     "entries_all_years_quarterly"
   end
 
   add_index "agencies", ["name", "parent_id"], :name => "index_agencies_on_name_and_parent_id"
@@ -128,7 +132,6 @@ ActiveRecord::Schema.define(:version => 20090822205756) do
   end
 
   add_index "topics", ["entries_count"], :name => "index_topics_on_entries_count"
-  add_index "topics", ["group_name", "id"], :name => "group_name"
   add_index "topics", ["group_name", "id"], :name => "index_topics_on_group_name_and_id"
   add_index "topics", ["name"], :name => "index_topics_on_name"
 
