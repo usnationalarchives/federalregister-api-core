@@ -16,7 +16,7 @@ class LocationsController < ApplicationController
     @places = Place.find_near([@lat,@long], :within => @dist)
     
     local_entries = Entry.find(:all,
-      :conditions => {:place_determinations => {:place_id => @places}},
+      :conditions => {:place_determinations => {:place_id => @places - [@location]}},
       :include => [:place_determinations, :agency],
       :order => "publication_date DESC",
       :limit => 50
