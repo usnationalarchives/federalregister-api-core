@@ -45,10 +45,16 @@ module PathHelper
     "/entries/explore"
   end
   
-  def topic_group_path(group_name)
+  def topic_group_path(group_name, options = {})
     clean_group_name = group_name.sub(/ /, '-')
-    "/topics/#{clean_group_name}"
+    path = "/topics/#{clean_group_name}"
+    if options[:format]
+      path += '.' + options[:format].to_s
+    end
+    
+    path
   end
+  
   private
   
   def path_to_url(path)
