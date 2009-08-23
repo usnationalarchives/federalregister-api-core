@@ -1,8 +1,8 @@
 <% feed_autodiscovery entries_path(:format => :rss) %>
 
-<% content_for :precolumn do %>
-  <h1>Entries for <%= @publication_date.to_formatted_s(:pretty) %></h1>
+<% title "Entries for #{@publication_date.to_formatted_s(:pretty)}" %>
 
+<% content_for :precolumn do %>
   <div class="header group calendar">
   <h2>
     <%= pluralize(@entry_count, 'entry') %> published on this day
