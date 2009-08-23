@@ -93,7 +93,7 @@ class EntriesController < ApplicationController
     
     respond_to do |wants|
       wants.html do
-        @agencies = Agency.all(:order => :name)
+        @agencies = Agency.all(:conditions => "entries_count > 0", :order => :name)
         
         render :action => 'search'
       end
