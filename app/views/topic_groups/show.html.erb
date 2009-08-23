@@ -1,4 +1,5 @@
 <% title @topic_group.name %>
+<% feed_autodiscovery topic_group_path(@topic_group.name, :format => :rss) %>
 
 <% if @topic_group.topics.size > 1 %>
   <h3 id='top'>This topic summarizes the following topics from the Federal Register:</h3>
