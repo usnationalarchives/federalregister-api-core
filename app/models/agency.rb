@@ -30,42 +30,6 @@ class Agency < ActiveRecord::Base
     self.name.downcase.capitalize_most_words.gsub(/^Department of(?: the)? /,'')
   end
   
-  def entry_count_by_week(week = 0)
-    if week == 0
-      where_clause = "WHERE agencies.id = #{self.id}"
-    else
-      where_clause = "WHERE agencies.id = #{self.id} && WEEK(entries.publication_date) = #{week}"
-    end
-    
-    entry_counts = Entry.connection.select_all("
-      SELECT WEEK(entries.publication_date) AS pub_week, COUNT(entries.id) AS entry_count
-      FROM agencies
-      LEFT JOIN entries ON agencies.id = entries.agency_id
-      #{where_clause}
-      GROUP BY WEEK(entries.publication_date)
-    ")
-    
-    counts = []
-    if week == 0
-      week_count = 1
-      weeks_to_date = Time.now.strftime('%U').to_i
-      entry_counts.each do |entry_count|
-        pub_week = entry_count['pub_week'].to_i
-        while week_count <= pub_week
-          counts << (week_count == pub_week ? entry_count['entry_count'].to_i : 0)
-          week_count = week_count + 1
-        end
-      end
-      while week_count < weeks_to_date
-        counts << 0
-        week_count = week_count + 1
-      end
-    else
-      counts = entry_counts.empty? ? 0 : entry_counts.first['entry_count'].to_i
-    end
-    counts
-  end
-  
   def entry_counts_since(range_type)
     date = case range_type
       when 'month'
@@ -79,14 +43,13 @@ class Agency < ActiveRecord::Base
     entries.count(:conditions => ["publication_date >= ?", date])
   end
   
-  def self.max_entry_count
-    Entry.connection.select_value("
-      SELECT COUNT(*) AS entry_count
-      FROM entries
-      GROUP BY agency_id, WEEK(entries.publication_date)
-      ORDER BY agency_id DESC
-      LIMIT 1
-    ")
+  def descendant_ids
+    descendant_ids = child_ids
+    children.each do |child_agency|
+      descendant_ids += child_agency.descendant_ids
+    end
+    
+    descendant_ids
   end
   
   private
