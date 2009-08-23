@@ -26,8 +26,6 @@
   created_at           :datetime
   updated_at           :datetime
   slug                 :text
-  full_text            :text(2147483647
-  full_text_raw        :text(2147483647
   delta                :boolean(1)      default(TRUE), not null
   source_text_url      :string(255)
   primary_agency_raw   :string(255)

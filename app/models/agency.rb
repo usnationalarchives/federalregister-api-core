@@ -2,12 +2,20 @@
 
  Table name: agencies
 
-  id         :integer(4)      not null, primary key
-  parent_id  :integer(4)
-  name       :string(255)
-  created_at :datetime
-  updated_at :datetime
-  slug       :string(255)
+  id                          :integer(4)      not null, primary key
+  parent_id                   :integer(4)
+  name                        :string(255)
+  created_at                  :datetime
+  updated_at                  :datetime
+  slug                        :string(255)
+  agency_type                 :string(255)
+  short_name                  :string(255)
+  description                 :text
+  more_information            :text
+  entries_count               :integer(4)
+  entries_1_year_weekly       :text
+  entries_5_years_monthly     :text
+  entries_all_years_quarterly :text
 
 =end Schema Information
 
