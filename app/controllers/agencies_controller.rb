@@ -2,7 +2,7 @@ class AgenciesController < ApplicationController
   caches_page :index, :show
   def index
     @agencies  = Agency.find(:all, :conditions => "entries_count > 0", :order => 'name ASC')
-    @weekly_chart_max = @agencies.map{|a| JSON::parse(a.entries_1_year_weekly).map(&:to_i).max}.max
+    @weekly_chart_max = @agencies.map{|a| ActiveSupport::JSON::decode(a.entries_1_year_weekly).map(&:to_i).max}.max
     @featured_agencies = Agency.featured.find(:all, :select => "agencies.*,
         (SELECT count(*) FROM entries WHERE agency_id = agencies.id AND publication_date > '#{30.days.ago.to_s(:db)}') AS num_entries_month,
         (SELECT count(*) FROM entries WHERE agency_id = agencies.id AND publication_date > '#{90.days.ago.to_s(:db)}') AS num_entries_quarter,
