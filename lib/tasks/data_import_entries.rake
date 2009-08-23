@@ -43,7 +43,7 @@ namespace :data do
         
         if Date.parse(publication_date) <= Entry.latest_publication_date
           puts "done!"
-          exit
+          break
         end
         
         puts "importing #{publication_date}..."
