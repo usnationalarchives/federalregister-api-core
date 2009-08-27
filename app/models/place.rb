@@ -18,7 +18,7 @@ class Place < ActiveRecord::Base
   cattr_accessor :distance_grouping_increment
   attr_accessor :distance
   
-  has_many :place_determinations
+  has_many :place_determinations, :conditions => "place_determinations.confidence >= #{PlaceDetermination::MIN_CONFIDENCE}"
   has_many :entries, :through => :place_determinations
   
   named_scope :usable, :conditions => ['places.id NOT IN (?)', UNUSABLE_PLACES]
