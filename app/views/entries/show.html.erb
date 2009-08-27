@@ -80,10 +80,19 @@
 
 <% content_for :sidebar do %>
   <h3>Take Action</h3>
-  <ul>
-    <li><%= link_to_twitter(@entry)  %></li>
-    <li><%= link_to_facebook(@entry) %></li>
+  <ul class='social'>
+    <li id='twitter'    ><%= link_to_twitter(@entry)         %></li>
+    <li id='facebook'   ><%= link_to_facebook(@entry)        %></li>
+    <li id='digg'       ><%= link_to_digg(@entry)            %></li>
+    <li id='reddit'     ><%= link_to_reddit(@entry)          %></li>
   </ul>
+  <p>
+    Or share a tiny url:
+    <span class='social' id='tiny_pulse'> 
+      <%= link_to short_entry_url(@entry), short_entry_url(@entry) %> 
+      <%= clippy(short_entry_url(@entry)) %>
+    </span>
+  </p>
 
   <% unless @entry.contact.blank? %>
     <!-- <h3 class="icon contact">Contact:</h3> -->
