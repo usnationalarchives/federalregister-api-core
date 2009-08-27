@@ -63,7 +63,7 @@ class Entry < ActiveRecord::Base
   has_many :url_references
   has_many :urls, :through => :url_references
   
-  has_many :place_determinations
+  has_many :place_determinations, :conditions => "place_determinations.confidence >= #{PlaceDetermination::MIN_CONFIDENCE}"
   has_many :places, :through => :place_determinations
   
   acts_as_mappable :through => :places
