@@ -4,9 +4,14 @@
 <head>
   <title>govpulse<%= " | #{yield :title}" if yield(:title) %></title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <meta name="description" content="..." />
-  <meta name="keywords" content="..." />
-  <meta name="author" content="..." />
+  <meta name="keywords" content="government federal register executive rulings notices govpulse" />
+  <meta name="author" content="Andrew Carpenter, Bob Burbach, Dave Augustine" />
+  
+  <%# Facebook uses these for parsing when someone adds a link  %>
+  <meta name="title" content="<%= @entry.title if @entry %>" />
+  <meta name="description" content="<%= truncate(@entry.abstract, :length => 300) if @entry %>" />
+  <link rel="image_src" href="http://www.govpulse.com/images/fbdisplay.jpg" />
+  <meta name="medium" content="news" />
   
   <%= stylesheet_link_tag "screen", :media => :screen %>
   <%= stylesheet_link_tag "trifecta", :media => :screen %>
@@ -26,6 +31,7 @@
   <%= javascript_include_tag 'jquery.horizontalCount.js'%>
   <%= javascript_include_tag 'tagcloud.js' %>
   <%= javascript_include_tag 'jquery.labelify.js' %>
+
 
   <%= yield :javascripts %>
 

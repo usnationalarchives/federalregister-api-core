@@ -2,6 +2,7 @@ class EntriesController < ApplicationController
   caches_page :index, :by_date, :show
   
   include Geokit::Geocoders
+  
   def search
     with = {}
     
@@ -214,5 +215,10 @@ class EntriesController < ApplicationController
                                )
       end
     end
+  end
+  
+  def tiny_pulse
+    entry = Entry.find_by_document_number!(params[:document_number])
+    redirect_to entry_path(entry)
   end
 end
