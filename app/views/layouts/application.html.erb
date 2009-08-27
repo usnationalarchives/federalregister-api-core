@@ -8,8 +8,8 @@
   <meta name="author" content="Andrew Carpenter, Bob Burbach, Dave Augustine" />
   
   <%# Facebook uses these for parsing when someone adds a link  %>
-  <meta name="title" content="<%= @entry.title if @entry %>" />
-  <meta name="description" content="<%= truncate(@entry.abstract, :length => 300) if @entry %>" />
+  <%= content_tag(:meta, nil, :name => 'title', :content => @entry.title) if @entry %>
+  <%= content_tag(:meta, nil, :name => 'description', :content => truncate(strip_tags(@entry.abstract), :length => 300)) if @entry %>
   <link rel="image_src" href="http://www.govpulse.us/images/fbdisplay.jpg" />
   <meta name="medium" content="news" />
   
