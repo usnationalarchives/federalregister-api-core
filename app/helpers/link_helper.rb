@@ -1,7 +1,7 @@
 module LinkHelper
   def link_to_twitter(entry)
     twitter_url = 'http://twitter.com/home?'
-    message = "From the Federal Register: "
+    message = "Make your voice heard! "
     hash_tag = "%23itsourgovt"
     status = "status=#{message} #{short_entry_url(entry)} #{hash_tag}"
     href = twitter_url + status
