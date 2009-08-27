@@ -13,7 +13,7 @@ class MapsController < ApplicationController
       @location = GoogleGeocoder.geocode(params[:location])
       @lat  = @location.lat
       @long = @location.lng
-      @display_location = "#{@location.city}, #{@location.state}"
+      @display_location = "#{@location.full_address}"
     end
     @dist = 50
     
