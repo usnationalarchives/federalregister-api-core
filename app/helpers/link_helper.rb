@@ -49,7 +49,7 @@ module LinkHelper
     return "<a href='http://www.reddit.com/submit' title='submit to reddit' class='reddit_link'>Reddit this</a>"
   end
   
-  def clippy(text, bgcolor='#FFFFFF')
+  def clippy(text, bgcolor='#E8F8FC')
     html = <<-EOF
       <object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000"
               width="14"
