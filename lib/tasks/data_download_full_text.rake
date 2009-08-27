@@ -7,24 +7,27 @@ namespace :data do
         next unless entry_detail.full_text_raw.nil?
         url = entry.source_url(:text)
         puts "downloading full text for #{entry.document_number} (#{entry.publication_date})"
+        full_text = nil
+        
         c = Curl::Easy.new(url)
         c.http_get
-        if c.response_code != 200
-          url = url + 'l' # sometimes the URL ends in .html, sometimes in .htm
-          c = Curl::Easy.new()
-          c.http_get
         
-          if c.response_code != 200
-            puts "\tnot found!"
-            next
+        15.times do
+          if c.response_code == 200 && c.body_str !~ /^<html xmlns/
+            full_text = c.body_str
+            break
+          else
+            sleep 0.5
           end
         end
-        entry.source_text_url = url
-        entry.save
         
-        entry_detail.full_text_raw = c.body_str
-        entry_detail.save
-      
+        if full_text
+          entry.source_text_url = url
+          entry.save
+        
+          entry_detail.full_text_raw = c.body_str
+          entry_detail.save
+        end
       end
     end
   end
