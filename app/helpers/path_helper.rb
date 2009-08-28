@@ -24,8 +24,8 @@ module PathHelper
     "/citation/#{citation.first}/#{citation.last}"
   end
   
-  def locations_path(place)
-    "/locations/#{place.slug}/#{place.id}"
+  def place_path(place)
+    "/places/#{place.slug}/#{place.id}"
   end
   
   def entries_by_date_path(date, options={})
