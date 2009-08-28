@@ -60,17 +60,17 @@ module LinkHelper
       <param name="quality" value="high" />
       <param name="scale" value="noscale" />
       <param NAME="FlashVars" value="text=#{text}">
-      <param name="bgcolor" value="#{bgcolor}">
+      <param name="wmode" value="transparent"> 
       <embed src="/flash/clippy.swf"
              width="110"
              height="14"
              name="clippy"
              quality="high"
+             wmode="transparent" 
              allowScriptAccess="always"
              type="application/x-shockwave-flash"
              pluginspage="http://www.macromedia.com/go/getflashplayer"
              FlashVars="text=#{text}"
-             bgcolor="#{bgcolor}"
       />
       </object>
     EOF
