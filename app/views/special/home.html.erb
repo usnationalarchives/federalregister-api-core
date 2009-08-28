@@ -8,6 +8,8 @@
     <div class="ornament" />
 <% end %>
 
+<h3>The Pulse of Government Near <%= @location.name %> (<%= link_to 'change', edit_location_path %>)</h3>
+
 <% if !@closing_soon.empty? %>
   <div class="clear marginTop">
     <h2>Comments Closing Soon</h2>

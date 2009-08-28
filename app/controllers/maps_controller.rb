@@ -5,7 +5,7 @@ class MapsController < ApplicationController
   
   def index
     if params[:location].nil? 
-      @location = remote_location
+      @location = current_location
       @lat  = @location.latitude
       @long = @location.longitude
       @display_location = "#{@location.city}, #{@location.region}"

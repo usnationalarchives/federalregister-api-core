@@ -29,6 +29,6 @@ class SpecialController < ApplicationController
                                            :order => 'date ASC',
                                            :limit => 10
                                           )
-    @location = remote_location
+    @location = current_location
   end                 
 end
