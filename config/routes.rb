@@ -40,6 +40,8 @@ ActionController::Routing::Routes.draw do |map|
                                        
   map.resources :entries                                                  
   
+  map.resource :location, :only => [:update, :edit]
+  
   map.connect  'calendar/:year/:month/:day', :controller => 'calendars',
                                              :action     => 'index',
                                              :year       => /\d{4}/,
