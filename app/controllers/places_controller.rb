@@ -1,5 +1,5 @@
-class LocationsController < ApplicationController
-  caches_page :index
+class PlacesController < ApplicationController
+  caches_page :show
   
   def show
     @location = Place.find(params[:id])
