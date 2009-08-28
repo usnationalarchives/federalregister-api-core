@@ -5,15 +5,53 @@ html
 body
   :background url(/images/main_bg_right2.png) repeat-y top right  
   :min-height 100%
-  :margin-bottom -150px
+  :margin-bottom -174px
   :position relative
 #wrapper
   :background url(/images/header_bottomshadow4.png) repeat-x left 161px
+#ticker
+  :background url(/images/ticker_bg.png) no-repeat left top
+  :height 30px
+  :margin 0 auto
+  :position relative
+  :width 833px
+  .pulse
+    :height 26px
+    :position absolute
+    :top 3px
+    :width 147px
+    &.left
+      :background url(/images/ticker_pulse_left.png) no-repeat 2px top
+    &.right
+      :background url(/images/ticker_pulse_right.png) no-repeat -2px top      
+      :right 0
+  .daily
+    :height 30px
+    :margin 0 auto
+    :position relative    
+    :overflow hidden    
+    :width 560px
+    ul
+      :height 30px
+      :margin 0
+      :position absolute
+      :width 99999px
+      li 
+        :float left
+        :line-height 30px
+        :list-style none
+        :text-align center        
+        :width 560px
+        a 
+          :color #6e6e6e
+          :text-decoration none
+          &:hover 
+            :color #fa6900
 #header
-  :background url(/images/header_bg.png) repeat-x top left
+  :background #f5f8f9 url(/images/header_bg.png) repeat-x bottom left
   :border-left 1px solid #27338b  
   :border-right 1px solid #27338b
-  :height 121px   
+  :height 151px   
   :position relative
   :z-index 9999
   .type
@@ -21,7 +59,7 @@ body
     :display block
     :float left
     :height 61px
-    :margin 30px 0 0 40px
+    :margin 30px 0 0 20px
     :width 277px    
     a
       :display block
@@ -30,22 +68,24 @@ body
     h1
       :text-indent -9999px
   .capitol
-    :background url(/images/header_capitol.png) no-repeat top left
+    :background url(/images/header_capitol3.png) no-repeat  60px top
     :display block
-    :float right
+    :position absolute
+    :right 0
+    :bottom 0
     :height 121px  
     :width 345px
 #nav
   :background-color #005b81
-  :border-bottom 10px solid #39505e
+  :border-bottom 5px solid #39505e
   :float left
-  :height 30px
-  :padding 5px 0 
+  :height 25px
+  :padding 3px 0 5px 0 
   :width 100%
   .search
     :float right
     :height 25px
-    :margin 4px 0 0 0
+    :margin 2px 0 0 0
     :padding 0 0 0 0    
     :width 220px
     form
@@ -77,8 +117,8 @@ body
         :width 15px   
   ul
     :float left
-    :margin 5px 0 0 0
-    :padding 0 0 0 40px
+    :margin 2px 0 0 0
+    :padding 0 0 0 20px
     li
       :color #aaa
       :float left
@@ -87,7 +127,7 @@ body
       :margin-right 5px
       a
         :color #fff
-        :font 100% "Lucida Grande", "Trebuchet MS", Verdana, sans-serif
+        :font .8em "Lucida Grande", "Trebuchet MS", Verdana, sans-serif
         :text-decoration none
         :text-transform uppercase
         &:hover
