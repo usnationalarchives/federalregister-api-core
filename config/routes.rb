@@ -63,7 +63,7 @@ ActionController::Routing::Routes.draw do |map|
   map.maps 'maps', :controller => 'maps',
                    :action     => 'index'
                                    
-  map.locations_path 'locations/:slug/:id.:format', :controller => 'locations', :action => 'show'
+  map.places 'places/:slug/:id.:format', :controller => 'places', :action => 'show'
                                          
   map.root :controller => 'special', :action => 'home'
   
