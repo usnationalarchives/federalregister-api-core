@@ -41,7 +41,20 @@
 
   <!-- WRAPPER -->
   <div id="wrapper" class="group">
-
+    
+    <!-- TICKER -->
+    <div id="ticker">
+      <div class="daily group">
+          <ul class="items">
+          <%# @entries.each_with_index do |entry, i| %>
+            <li>
+              <%#= link_to truncate(entry.title, :length => 200), entry_path(entry), :class => "entry" %>
+            </li>
+          <%# end %>
+          </ul>
+      </div>
+    </div>
+    
     <!-- HEADER -->
     <div id="header">
       <div class="capitol"></div>      

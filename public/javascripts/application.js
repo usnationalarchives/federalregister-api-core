@@ -3,19 +3,19 @@
 $(document).ready(function() {
   
     // initialize scrollable  
-    $("div.daily").scrollable({ 
-             
-        // items are auto-scrolled in 2 secnod interval 
-        interval: 4000,   
-        
-        vertical: true,
-         
-        // when last item is encountered go back to first item 
-        loop: true,  
-         
-        // make animation a little slower than the default 
-        speed: 600
-    });
+    // $("div.daily").scrollable({ 
+    //              
+    //         // items are auto-scrolled in 2 secnod interval 
+    //         interval: 4000,   
+    //         
+    //         vertical: false,
+    //          
+    //         // when last item is encountered go back to first item 
+    //         loop: true,  
+    //          
+    //         // make animation a little slower than the default 
+    //         speed: 600
+    //     });
     
   /*                                   */
   /* Tooltips for featured agency list */
