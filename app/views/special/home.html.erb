@@ -8,33 +8,6 @@
     <div class="ornament" />
 <% end %>
 
-<div class="currentevents group">
-  
-  <div class="header group">
-    <h2><%= link_to "Current Issue is #{@last_date.to_formatted_s(:pretty)}", entries_by_date_path(@last_date) %> <span>(<%= @entries.length %> entries)</span></h2>
-  </div>
-  
-  <div class="header slide">
-    <div class="daily group">
-      <ul class="items">
-      <% @entries.each_with_index do |entry, i| %>
-        <li>
-          <!-- <p class="number"><%= i+1 %></p> -->
-          <%= link_to truncate(entry.title, :length => 100), entry_path(entry), :class => "entry" %>
-          <% if entry.agency %>
-            <%= link_to(entry.agency.name, agency_path(entry.agency), :class => "agency") %>
-          <% else %>
-            <%# TODO: HELP-DESIGN: clean up styles so no <a> tag is necessary %>
-            <a class="agency"><%= entry.primary_agency_raw.downcase.capitalize_most_words %></a>
-          <% end %>
-        </li>
-      <% end %>
-      </ul>
-    </div>
-  </div>
-  
-</div>
-
 <% if !@closing_soon.empty? %>
   <div class="clear marginTop">
     <h2>Comments Closing Soon</h2>
