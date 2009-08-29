@@ -28,8 +28,9 @@ ActionController::Routing::Routes.draw do |map|
                                                    :year       => /\d{4}/,
                                                    :month      => /\d{1,2}/,
                                                    :day        => /\d{1,2}/
-                                                   
-                                              
+  map.current_headlines 'entries/current-headlines', :controller => 'entries',
+                                                     :action     => 'current_headlines'
+
   map.entries_by_week 'entries/:year/weekly/:week', :controller => 'entries',
                                                     :action     => 'index',
                                                     :year       => /\d{4}/,
