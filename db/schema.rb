@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090823180848) do
+ActiveRecord::Schema.define(:version => 20090829164610) do
 
   create_table "agencies", :force => true do |t|
     t.integer  "parent_id"
@@ -81,10 +81,8 @@ ActiveRecord::Schema.define(:version => 20090823180848) do
     t.integer "confidence"
   end
 
-  add_index "place_determinations", ["entry_id", "confidence"], :name => "index_place_determinations_on_entry_id_and_confidence"
-  add_index "place_determinations", ["entry_id", "place_id"], :name => "index_place_determinations_on_entry_id_and_place_id"
-  add_index "place_determinations", ["place_id", "confidence"], :name => "index_place_determinations_on_place_id_and_confidence"
-  add_index "place_determinations", ["place_id", "entry_id"], :name => "index_place_determinations_on_place_id_and_entry_id"
+  add_index "place_determinations", ["entry_id", "confidence", "place_id"], :name => "index_place_determinations_on_entry_id_and_place_id"
+  add_index "place_determinations", ["place_id", "confidence", "entry_id"], :name => "index_place_determinations_on_place_id_and_entry_id"
 
   create_table "places", :force => true do |t|
     t.string   "name"
