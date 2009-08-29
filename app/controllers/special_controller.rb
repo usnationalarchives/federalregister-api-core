@@ -10,24 +10,30 @@ class SpecialController < ApplicationController
         (SELECT count(*) FROM entries WHERE agency_id = agencies.id AND publication_date > '#{365.days.ago.to_s(:db)}') AS num_entries_year"
     )
     
-    date_range = [Date.today, Date.today + 7]
+    @location = current_location
+    @places = Place.find_near(@location)
+    
     @closing_soon = ReferencedDate.find(:all, 
-                                        :include => {:entry => :agency}, 
-                                        :conditions => {:date_type => 'CommentDate', :date => date_range[0]..date_range[1]},
+                                        :include => {:entry => :agency},
+                                        :joins => {:entry => :place_determinations},
+                                        :conditions => {
+                                          :date_type => 'CommentDate',
+                                          :place_determinations => { :place_id => @places },
+                                          :date => (Date.today .. Date.today + 360)
+                                        },
                                         :order => 'date ASC',
                                         :limit => 10
                                        )
 
-    date_range = [Date.today - 7, Date.today]
-    @recently_opened = ReferencedDate.find(:all, 
-                                           :include => {:entry => :agency}, 
-                                           :conditions => {:date_type => 'CommentDate', 
-                                                           :date => date_range[0]..date_range[1],
-                                                           :entries => {:publication_date => date_range[0]..date_range[1]}
-                                                          },
-                                           :order => 'date ASC',
-                                           :limit => 10
-                                          )
-    @location = current_location
-  end                 
+     @recent_entries = Entry.find(:all,
+                                   :include => :agency,
+                                   :joins => :place_determinations,
+                                   :conditions => {
+                                     :place_determinations => { :place_id => @places },
+                                     :publication_date => (Date.today - 90 .. Date.today)
+                                   },
+                                   :order => 'entries.publication_date DESC',
+                                   :limit => 20
+                                  )
+  end
 end
