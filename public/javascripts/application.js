@@ -1,23 +1,29 @@
 // Place your application-specific JavaScript functions and classes here
 // This file is automatically included by javascript_include_tag :defaults
 $(document).ready(function() {
-  
-    //initialize scrollable  
-    $("div.daily").scrollable({ 
-                 
-            // items are auto-scrolled in 4 secnod interval 
-            interval: 4000,   
-            
-            horizontal: true,
-             
-            // when last item is encountered go back to first item 
-            loop: true,  
-             
-            // make animation a little slower than the default 
-            speed: 600,
-            
-            clickable: false
-        });
+  //initialize scrollable
+  $.ajax({
+    url: "/entries/current-headlines",
+    success: function(html){
+      var ticker = $("div.daily");
+      ticker.append(html);
+    
+      //initialize scrollable
+      ticker.scrollable({ 
+         interval: 4000,   // items are auto-scrolled in 4 secnod interval 
+         horizontal: true,
+         loop: true,       // when last item is encountered go back to first item
+         speed: 600,       // make animation a little slower than the default
+         clickable: false
+      });
+      
+      // The size here is correct.
+      // alert(ticker.data("scrollable").getSize());
+      
+      // This does nothing.
+      // ticker.data("scrollable").next();
+    }
+  });
     
   /*                                   */
   /* Tooltips for featured agency list */
