@@ -25,6 +25,9 @@
 <% end %>
 
 <% content_for :sidebar do %>
+  <h3>View Other Entries Near</h3>
+  <%= render :partial => 'maps/location_search_form', :locals => {:location => @location} %>
+
   <% unless @entries.blank? %>
     <h3>Agencies active within <%= pluralize(@dist, 'mile') %></h3>
     
