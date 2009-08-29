@@ -241,7 +241,7 @@ body {
   color: #46565c;
   font: 2em Georgia,"Times New Roman",Serif;
   font-variant: small-caps;
-  margin: 0;
+  margin: 0 0 1em 0;
 }
 /* line 170, ../../app/stylesheets/trifecta.sass */
 #main h2 span {
