@@ -115,8 +115,7 @@ class EntriesController < ApplicationController
     @entries = Entry.all(
         :include => :agency,
         :conditions => {:publication_date => Entry.latest_publication_date},
-        :order => "entries.start_page",
-        :limit => 5 # FIXME: should not be limited
+        :order => "entries.start_page"
     )
     render :layout => false
   end
