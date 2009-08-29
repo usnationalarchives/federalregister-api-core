@@ -1,0 +1,7 @@
+<ul class="items">
+<% @entries.each do |entry| %>
+  <li>
+    <%= link_to truncate(entry.title, :length => 97), entry_path(entry), :class => "entry" %>
+  </li>
+<% end %>
+</ul>
