@@ -21,12 +21,12 @@
   </div>
 <% end %>
 
-<% if !@recently_opened.empty? %>
+<% if !@recent_entries.empty? %>
   <div class="clear marginTop">
-    <h2>Comments Recently Opened</h2>
+    <h2>Recent Entries</h2>
     <ul class="indent">
-    <% @recently_opened.each do |date| %>
-      <li><%= link_to date.entry.title, entry_path(date.entry) %></li>
+    <% @recent_entries.each do |entry| %>
+      <li><%= link_to entry.title, entry_path(entry) %></li>
     <% end %>
     </ul>
   </div>
