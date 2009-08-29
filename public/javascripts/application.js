@@ -1,27 +1,32 @@
 // Place your application-specific JavaScript functions and classes here
 // This file is automatically included by javascript_include_tag :defaults
+$(window).unload( function () {
+  var scrollable = $("div.daily").data("scrollable");
+  index = scrollable.getIndex();
+  $.cookie('ticker_index', index)
+});
+
 $(document).ready(function() {
   //initialize scrollable
   $.ajax({
     url: "/entries/current-headlines",
     success: function(html){
+      var index = $.cookie('ticker_index') || 0;
+      
       var ticker = $("div.daily");
       ticker.append(html);
     
       //initialize scrollable
-      ticker.scrollable({ 
+      scrollable = ticker.scrollable({ 
+         size: 1,
          interval: 4000,   // items are auto-scrolled in 4 secnod interval 
          horizontal: true,
          loop: true,       // when last item is encountered go back to first item
          speed: 600,       // make animation a little slower than the default
-         clickable: false
+         clickable: false,
+         api : true
       });
-      
-      // The size here is correct.
-      // alert(ticker.data("scrollable").getSize());
-      
-      // This does nothing.
-      // ticker.data("scrollable").next();
+      scrollable.setPage(index);
     }
   });
     
