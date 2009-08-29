@@ -23,6 +23,7 @@
   <%= javascript_include_tag 'jrails.js'                %>
   <%= javascript_include_tag 'application.js'           %>
   <%= javascript_include_tag 'jquery.sparkline.min.js'  %>
+  <%= javascript_include_tag 'jquery.cookie.js'  %>
   <%= javascript_include_tag 'jquery.tools.min.js'      %>
   <%= javascript_include_tag 'jquery.qtip-1.0.0-rc3.js' %>
   <%= javascript_include_tag 'jquery.filter.js'         %>
@@ -53,7 +54,7 @@
           <ul class="items">
           <% @ticker_entries.each_with_index do |entry, i| %>
             <li>
-              <%= link_to truncate(entry.title, :length => 97), entry_path(entry), :class => "entry" %>
+              <%= link_to truncate("#{i} - #{entry.title}", :length => 97), entry_path(entry), :class => "entry" %>
             </li>
           <% end %>
           </ul>
