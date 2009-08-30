@@ -1,25 +1,52 @@
 $(document).ready(function() {
+  
+  //initialize scrollable for ticker 
+  $("div.daily").scrollable({ 
+             
+          // items are auto-scrolled in 2.5 second interval 
+          interval: 2500,   
+        
+          horizontal: true,
+         
+          // when last item is encountered go back to first item 
+          loop: true,  
+         
+          // make animation a little slower than the default 
+          speed: 600,
+        
+          clickable: false
+      });
+  
+  //init tooltips for ticker
+  $("ul.items li a.entry").each(function(){
+    
+    $(this).qtip({
+      content: $(this).parent().children('div.tip'),
+      position: {
+          corner: {
+             target: 'bottomMiddle',
+             tooltip: 'topMiddle'
+          }
+      },
+      style: {
+       name: 'light',
+       padding: 5,
+       width: 530,
+       border: {
+         width: 7,
+         radius: 5,
+         color: '#ddd'
+         },
+      tip: { // Now an object instead of a string
+         corner: 'topMiddle', // We declare our corner within the object using the corner sub-option
+         color: '#ddd'
+        }   
+      }
+      
+    });
+  });
 
-  /***********************************  
-  * SEARCH FILTER
-  **********************************/
- //hide and disable the form on entry
- // $("form li:not('.simple')").toggle().find("li").children(":not(label)").disable();
- // 
- // //when the button is clicked - change the button text, toggle the open class, and show/hide enable/disable
- //  $("a.options").bind("click", function(e){
- //    e.preventDefault();
- //    
- //    if($(this).hasClass("open"))
- //      $(this).html($(this).html().replace('Hide', "Show"));
- //    else
- //      $(this).html($(this).html().replace('Show', "Hide"));
- //      
- //    $(this).toggleClass("open");
- //    
- //    $("form li:not('.simple')").toggle().find("li").children(":not(label)").toggleDisabled();
- //  });
- //  
+  
   
   $(":text").labelify({ labelledClass: "labelHighlight" });
   

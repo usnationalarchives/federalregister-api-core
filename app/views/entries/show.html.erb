@@ -79,7 +79,16 @@
 
 
 <% content_for :sidebar do %>
-  <h3>Take Action</h3>
+
+  <h3>Speak Up</h3>
+  <h5>Your <%= pluralize(@senators.size, 'Senator').split(' ')[1] %></h5>
+  <%= render :partial => 'congressional_members', :locals => {:members => @senators} %>
+
+  <h5>Your <%= pluralize(@reps.size, 'Representative').split(' ')[1] %></h5>
+  <%= render :partial => 'congressional_members', :locals => {:members => @reps} %>
+  
+  
+  <h3>Gather a Crowd</h3>
   <ul class='social'>
     <li id='twitter'    ><%= link_to_twitter(@entry)         %></li>
     <li id='facebook'   ><%= link_to_facebook(@entry)        %></li>
