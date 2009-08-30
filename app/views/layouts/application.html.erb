@@ -48,22 +48,6 @@
     <!-- HEADER -->
     <div id="header">
       
-      <!-- TICKER -->
-      <div id="ticker">
-        <div class="daily group">
-          <ul class="items">
-          <% @ticker_entries.each_with_index do |entry, i| %>
-            <li>
-              <%= link_to truncate("#{i} - #{entry.title}", :length => 97), entry_path(entry), :class => "entry" %>
-            </li>
-          <% end %>
-          </ul>
-        </div>
-        
-        <div class="pulse left"></div>
-        <div class="pulse right"></div>
-      </div>
-      
       <div class="capitol"></div>      
       
       <div class="type">
@@ -152,7 +136,34 @@
       <h4>Copyright 2009</h4>
     </div>
     <!-- FOOTER end -->
+    
+    <div id="ticker_container">
+      <!-- TICKER -->
+      <div id="ticker">
+        <span class="date">Entries for <%= @last_date.to_formatted_s(:pretty) %></span>        
+        <div class="daily group">
+          <ul class="items">
+          <% @ticker_entries.each_with_index do |entry, i| %>
+            <li>    
+              <%= link_to truncate("#{i+1} - #{entry.title}", :length => 97), entry_path(entry), :class => "entry tip" %>          
+              <div class="tip">
+                <p>Entry <%= i + 1 %> of <%= @ticker_entries.length + 1 %> for <%= @last_date.to_formatted_s(:pretty) %></p>
+                <p><strong>Full Title</strong>: <%= entry.title %></p>
+                <% if entry.agency %>
+                  <p><strong>Agency Name</strong>: <%= entry.agency.name %></p>
+                <% end %>
+              </div>
+            </li>
+          <% end %>
+          </ul>
+        </div>
 
+
+        <div class="pulse left"></div>
+        <div class="pulse right"></div>
+      </div>  
+    </div>
+    
 <script type="text/javascript">
 var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
 document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));

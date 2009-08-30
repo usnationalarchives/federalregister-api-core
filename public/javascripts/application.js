@@ -7,6 +7,8 @@ $(window).unload( function () {
 });
 
 $(document).ready(function() {
+
+
     var items = $("div.daily .items")
     var index = $.cookie('ticker_index') || 0;
     
@@ -28,9 +30,9 @@ $(document).ready(function() {
         clickable: false,
         api : true
     });
+    
     scrollable.setPage(index);
-    
-    
+        
   /*                                   */
   /* Tooltips for featured agency list */
   /*                                   */
@@ -54,47 +56,51 @@ $(document).ready(function() {
     });
   });
   
-  /*                                    */
-  /* Hide and show featured agency list */
-  /*                                    */
-  
-  // $("ul.featured_agencies").attr('position', 'absolute').attr('left', '-9999px');
-  // // $("ul#agency_count_entries_1_year_weekly").show();
-  // $("ul#featured_agency_buttons a").bind('click', function(){
-  //     el = $(this);
-  //     // $("ul.featured_agencies").hide();
-  //     // $("ul#agency_count_"+el.closest('li').attr('id')).show();
-  //     // $("ul#agency_count_"+el.closest('li').attr('id')).find("span.composite_sparkline").each(function(){
-  //     //   $(this).show();
-  //     // });
-  //     $("ul#featured_agency_buttons li").each(function() {
-  //       $(this).removeClass('on');
-  //     });
-  //     el.closest('li').addClass('on');
-  //     return false;
-  //   });
-  
-  // $("div.featured_agencies").scrollable({
-  //   navi:"ul#featured_agency_buttons",
-  //   naviItem:'li a'
-  // });
-  
   var agency_scrollable = $("div.featured_agencies").scrollable({ 
-      size: 1,
-      vertical: false,
-      api: true,
-      clickable: false
+    size: 1,
+    vertical: false,
+    api: true,
+    clickable: false
   });
   
   $("ul#featured_agency_buttons a").bind('click', function(){
-      el = $(this);
-      el.preventDefault;
-      index = el.attr('href').replace(/.*#/, '');
-      agency_scrollable.seekTo(index);
-      $(el).parent().siblings().removeClass("on");
-      $(el).parent().addClass("on");
-      console.log(agency_scrollable.getItems());
-      console.log(agency_scrollable.getPageIndex());
-      console.log(agency_scrollable.getConf());
-    });
+    el = $(this);
+    el.preventDefault;
+    index = el.attr('href').replace(/.*#/, '');
+    agency_scrollable.seekTo(index);
+    $(el).parent().siblings().removeClass("on");
+    $(el).parent().addClass("on");
+    console.log(agency_scrollable.getItems());
+    console.log(agency_scrollable.getPageIndex());
+    console.log(agency_scrollable.getConf());
+  });
+  
+  
+  /*                                            */
+  /* Hide and show congressional member details */
+  /*                                            */
+  
+  $("ul.congressional_members li.member_info a").bind('click', function() {
+    el = $(this);
+    
+    li = el.closest('li');
+    id = el.attr('href');
+    var detail_span = $("ul.congressional_members span"+id);
+    
+    if(li.hasClass('more') ) {
+      detail_span.show();
+      el.text('(hide details)');
+      li.toggleClass('more');
+      li.toggleClass('less');
+    }
+    else if(li.hasClass('less')) {
+      detail_span.hide();
+      el.text('(view details)');
+      li.toggleClass('more');
+      li.toggleClass('less');
+    }
+    
+    return false;
+  });
+  
 });
