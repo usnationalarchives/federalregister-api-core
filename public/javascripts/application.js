@@ -82,7 +82,6 @@ $(document).ready(function() {
   var agency_scrollable = $("div.featured_agencies").scrollable({ 
       size: 1,
       vertical: false,
-      items:'div.featured_agencies .items',
       api: true,
       clickable: false
   });
@@ -92,6 +91,8 @@ $(document).ready(function() {
       el.preventDefault;
       index = el.attr('href').replace(/.*#/, '');
       agency_scrollable.seekTo(index);
+      $(el).parent().siblings().removeClass("on");
+      $(el).parent().addClass("on");
       console.log(agency_scrollable.getItems());
       console.log(agency_scrollable.getPageIndex());
       console.log(agency_scrollable.getConf());
