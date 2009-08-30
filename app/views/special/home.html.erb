@@ -2,11 +2,26 @@
           
     <div class="infobox">
       <p class="fed">The Federal Register at your fingertips.</p>
+      <p class='copy'>
+        The Federal Register is the official journal of the federal government of the United States. In it, you'll 
+        find any kind of proposal, notification, or solicitation for data that a federal agency puts out. It's the 
+        pulse of your government.
+      </p>
+      <p class='copy'> 
+        For much of it's existence the Federal Register has had no easily accessible form. 
+        <span class='gray'>gov</span><span class='orange'>pulse</span> seeks to change this and enable you to respond to your government. We give you a 
+        way to browse the Register (from 1994 on) and use filters to decide what is important to you. And then act on it.
+      </p>
       <p class="fed alt">A million pages finally accessible.</p>      
     </div>
     
-    <div class="ornament" />
+    <!-- <div class="ornament" /> -->
+    
+    
 <% end %>
+
+<h3>View Entries Near</h3>
+<%= render :partial => 'maps/location_search_form', :locals => {:location => nil} %>
 
 <% if !@closing_soon.empty? %>
   <div class="clear marginTop">
@@ -33,16 +48,20 @@
 
 <% content_for :sidebar do %>
   <h3>Vote for govpulse!</h3>
-  <p><a href="http://labs-beta.sunlightlabs.com/aa2judging/" title="Apps for America 2 Voting Page" class="vote"><img src="/images/vote.png" alt="Vote Govpulse"/></a>We are pleased to announce that <a href="http://www.programmableweb.com/mashup/govpulse" title="govpulse" class="govpulse">gov<span>pulse</span></a> has been selected as a finalist in the <a href="http://sunlightlabs.com/contests/appsforamerica2/" title="Apps for America 2: The Data.gov Challenge">Apps for America 2</a> contest by <a href="http://www.sunlightlabs.com/" title="Sunlight Labs">Sunlight Labs</a>!</p>
+  <p>
+    <a href="http://labs-beta.sunlightlabs.com/aa2judging/" title="Apps for America 2 Voting Page" class="vote"><img src="/images/vote.png" alt="Vote Govpulse"/></a>
+    We are pleased to announce that 
+    <a href="http://www.programmableweb.com/mashup/govpulse" title="govpulse" class="govpulse">gov<span>pulse</span></a> 
+    has been selected as a finalist in the 
+    <a href="http://sunlightlabs.com/contests/appsforamerica2/" title="Apps for America 2: The Data.gov Challenge">Apps for America 2</a> 
+    contest by <a href="http://www.sunlightlabs.com/" title="Sunlight Labs">Sunlight Labs</a>!
+  </p>
   <p>Please take the a moment to <strong>vote for us</strong>!  Here's how:</p>
   <ol>
     <li><a href="http://sunlightlabs.com/blog/2009/08/24/apps-america-finalists/" title="Sunlight Labs: Blog - The Apps for America Finalists"><strong>Register at Sunlight Labs.</strong></a>  It's quick and unobtrusive, no surveys to fill out and no spam to receive; just a username, email and password needed.</li>
     <li><a href="http://labs-beta.sunlightlabs.com/aa2judging/" title="Apps for America 2 Voting Page"><strong>Vote for govpulse!</strong></a> It's that easy.</li>
   </ol>
 
-  <h3>View Entries Near</h3>
-  <%= render :partial => 'maps/location_search_form', :locals => {:location => nil} %>
-  
   <%= render :partial => 'agencies/pulse', :locals => {:featured_agencies => @featured_agencies} %>
 <% end %>
 
