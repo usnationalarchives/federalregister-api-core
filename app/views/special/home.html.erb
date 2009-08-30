@@ -26,7 +26,7 @@
 <% if !@closing_soon.empty? %>
   <div class="clear marginTop">
     <h2>Comments Closing Soon</h2>
-    <ul class="indent">
+    <ul class="indent marginTop">
     <% @closing_soon.each do |date| %>
       <li><%= link_to date.entry.title, entry_path(date.entry) %></li>
     <% end %>
@@ -37,7 +37,7 @@
 <% if !@recently_opened.empty? %>
   <div class="clear marginTop">
     <h2>Comments Recently Opened</h2>
-    <ul class="indent">
+    <ul class="indent marginTop">
     <% @recently_opened.each do |date| %>
       <li><%= link_to date.entry.title, entry_path(date.entry) %></li>
     <% end %>
@@ -47,6 +47,9 @@
 
 
 <% content_for :sidebar do %>
+  <h3>View Entries Near</h3>
+  <%= render :partial => 'maps/location_search_form', :locals => {:location => nil} %>
+  
   <h3>Vote for govpulse!</h3>
   <p>
     <a href="http://labs-beta.sunlightlabs.com/aa2judging/" title="Apps for America 2 Voting Page" class="vote"><img src="/images/vote.png" alt="Vote Govpulse"/></a>
@@ -58,7 +61,7 @@
   </p>
   <p>Please take the a moment to <strong>vote for us</strong>!  Here's how:</p>
   <ol>
-    <li><a href="http://sunlightlabs.com/blog/2009/08/24/apps-america-finalists/" title="Sunlight Labs: Blog - The Apps for America Finalists"><strong>Register at Sunlight Labs.</strong></a>  It's quick and unobtrusive, no surveys to fill out and no spam to receive; just a username, email and password needed.</li>
+    <li><a href="http://labs-beta.sunlightlabs.com/accounts/register/" title="Register for an account at Sunlight Labs"><strong>Register at Sunlight Labs.</strong></a>  It's quick and unobtrusive, no surveys to fill out and no spam to receive; just a username, email and password needed. Subsequent profile information is <i>not</i> needed for voting.</li>
     <li><a href="http://labs-beta.sunlightlabs.com/aa2judging/" title="Apps for America 2 Voting Page"><strong>Vote for govpulse!</strong></a> It's that easy.</li>
   </ol>
 

@@ -8,29 +8,50 @@ body
   :margin-bottom -174px
   :position relative
 #wrapper
-  :background url(/images/header_bottomshadow4.png) repeat-x left 161px
+  :background url(/images/header_bottomshadow4.png) repeat-x left 189px
+#ticker_container
+  :height 30px
+  :position absolute  
+  :top 0 
+  :width 100%
+  :z-index 5999  
 #ticker
   :background url(/images/ticker_bg.png) no-repeat left top
   :height 30px
   :margin 0 auto
-  :position relative
-  :width 833px
+  :position relative  
+  :width 950px
   .pulse
     :height 26px
     :position absolute
     :top 3px
     :width 147px
     &.left
-      :background url(/images/ticker_pulse_left.png) no-repeat 2px top
+      :background url(/images/ticker_pulse_left2.png) no-repeat 2px top
     &.right
-      :background url(/images/ticker_pulse_right.png) no-repeat -2px top      
+      :background url(/images/ticker_pulse_right2.png) no-repeat -2px top      
       :right 0
+  div.tip
+    :display none
+  .counter
+    :left 115px
+    :position absolute
+    :top 5px
+  .date
+    :border-right 1px solid #ccc
+    :color #636363
+    :float left
+    :font-weight bold
+    :height 29px    
+    :line-height 30px
+    :margin 0 10px 0 100px    
+    :padding-right 10px
   .daily
     :height 30px
-    :margin 0 auto
+    :float left
     :position relative    
     :overflow hidden    
-    :width 560px
+    :width 600px
     ul
       :height 30px
       :margin 0
@@ -38,12 +59,11 @@ body
       :width 99999px
       li 
         :float left
+        :height 30px
         :line-height 30px
         :list-style none
-        :text-align center        
-        :width 560px
+        :width 600px
         a 
-          :color #6e6e6e
           :text-decoration none
           &:hover 
             :color #fa6900
@@ -53,13 +73,15 @@ body
   :border-right 1px solid #27338b
   :height 151px   
   :position relative
-  :z-index 9999
+  :z-index 5999
   .type
     :background url(/images/header_type.png) no-repeat top left
     :display block
     :float left
     :height 61px
-    :margin 30px 0 0 20px
+    :left 20px
+    :position absolute    
+    :top 60px    
     :width 277px    
     a
       :display block
@@ -166,7 +188,7 @@ body
     :color #46565c  
     :font 2em Georgia,"Times New Roman",Serif
     :font-variant small-caps
-    :margin 0   
+    :margin 0 0 1em 0  
     span
       :font-size .6em  
   h3
@@ -418,6 +440,11 @@ body
         span.social
           :display block
           :width 290px
+        ul.congressional_members
+          :padding 0 0 0 10px
+          li.member_info
+            span.member_details
+              :display none
     .currentevents 
       :vertical-align text-top  
       .header
