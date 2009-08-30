@@ -149,7 +149,9 @@
               <div class="tip">
                 <p>Entry <%= i + 1 %> of <%= @ticker_entries.length + 1 %> for <%= @last_date.to_formatted_s(:pretty) %></p>
                 <p><strong>Full Title</strong>: <%= entry.title %></p>
-                <p><strong>Agency Name</strong>: <%= entry.agency.name %></p>
+                <% if entry.agency %>
+                  <p><strong>Agency Name</strong>: <%= entry.agency.name %></p>
+                <% end %>
               </div>
             </li>
           <% end %>
