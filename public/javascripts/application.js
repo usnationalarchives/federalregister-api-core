@@ -1,23 +1,6 @@
 // Place your application-specific JavaScript functions and classes here
 // This file is automatically included by javascript_include_tag :defaults
 $(document).ready(function() {
-  
-    //initialize scrollable  
-    $("div.daily").scrollable({ 
-                 
-            // items are auto-scrolled in 4 secnod interval 
-            interval: 4000,   
-            
-            horizontal: true,
-             
-            // when last item is encountered go back to first item 
-            loop: true,  
-             
-            // make animation a little slower than the default 
-            speed: 600,
-            
-            clickable: false
-        });
     
   /*                                   */
   /* Tooltips for featured agency list */
