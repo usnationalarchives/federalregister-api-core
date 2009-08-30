@@ -573,7 +573,7 @@ body {
   position: absolute;
   top: 0;
   left: 0;
-  z-index: 9999;
+  z-index: 5999;
 }
 /* line 390, ../../app/stylesheets/trifecta.sass */
 #main .content .col2 .sidebar div.featured_agencies a.agencyHidden {
