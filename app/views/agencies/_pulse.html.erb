@@ -21,7 +21,7 @@
 <% %w(entries_1_year_weekly entries_5_years_monthly entries_all_years_quarterly).each do |range_type| %>
   <ul id='agency_count_<%= range_type %>' class='pulse_list'>
     <% featured_agencies.each do |agency| %>
-    <li class='tooltip'>
+    <li>
       <div class="info">
         <% add_javascript do %>
           $(document).ready(function(){ 
@@ -32,7 +32,6 @@
         <% end %>
         <%= link_to agency.sidebar_name, agency_path(agency), :class => 'agencyHidden' %>
         <span id="agency_<%= agency.id %>_<%= range_type %>" class="composite_sparkline" title="<%= range_type %>"></span>
-        <span class='help_text'><%= agency.name %></span>
       </div>
     </li>
     <% end %>
