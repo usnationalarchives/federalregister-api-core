@@ -1,0 +1,28 @@
+<h3>Entries by Department Over Past</h3>
+
+<ul id='featured_agency_buttons' class="group btn">
+  <li class="on" id='entries_1_year_weekly' ><%= link_to 'Past 12 months, weekly', '#' %></li>
+  <li id='entries_5_years_monthly'          ><%= link_to 'Past 5 years, monthly',  '#' %></li>
+  <li id='entries_all_years_quarterly'      ><%= link_to 'All years, quarterly',   '#' %></li>
+</ul>
+
+<% %w(entries_1_year_weekly entries_5_years_monthly entries_all_years_quarterly).each do |range_type| %>
+  <ul id='agency_count_<%= range_type %>' class='featured_agencies'>
+  <% featured_agencies.each do |agency| %>
+  <li class='tooltip'>
+    <div class="info">
+      <% add_javascript do %>
+        $(document).ready(function(){ 
+          agency_<%= agency.id %>_<%= range_type %>_count = <%= agency.send(range_type.to_sym) %>;
+          $('#agency_<%= agency.id %>_<%= range_type %>').sparkline(agency_<%= agency.id %>_<%= range_type %>_count, {type: 'bar', barSpacing: 0, barWidth: 3, barColor: '#ddd' }); //, chartRangeMin: 0, chartRangeMax: <%#= chart_max %> } );
+          $('#agency_<%= agency.id %>_<%= range_type %>').sparkline(agency_<%= agency.id %>_<%= range_type %>_count, {type: 'line', lineColor: 'black', fillColor:false, composite:true }); //, chartRangeMin: 0, chartRangeMax: <%#= chart_max %>} );
+        });
+      <% end %>
+      <%= link_to agency.name, agency_path(agency) %>
+      <span id="agency_<%= agency.id %>_<%= range_type %>" class="composite_sparkline" title="<%= range_type %>"></span>
+      <span class='help_text'><%= agency.name %></span>
+    </div>
+  </li>
+  <% end %>
+  </ul>
+<% end %>
