@@ -58,16 +58,19 @@ $(document).ready(function() {
   /* Hide and show featured agency list */
   /*                                    */
   
-  $("ul.featured_agencies").hide();
-  $("ul#agency_count_month").show();
+  $("ul.featured_agencies").attr('position', 'absolute').attr('left', '-9999px');
+  // $("ul#agency_count_entries_1_year_weekly").show();
   $("ul#featured_agency_buttons a").bind('click', function(){
-    el = $(this);
-    $("ul.featured_agencies").hide();
-    $("ul#agency_count_"+el.closest('li').attr('id')).show();
-    $("ul#featured_agency_buttons li").each(function() {
-      $(this).removeClass('on');
+      el = $(this);
+      // $("ul.featured_agencies").hide();
+      // $("ul#agency_count_"+el.closest('li').attr('id')).show();
+      // $("ul#agency_count_"+el.closest('li').attr('id')).find("span.composite_sparkline").each(function(){
+      //   $(this).show();
+      // });
+      $("ul#featured_agency_buttons li").each(function() {
+        $(this).removeClass('on');
+      });
+      el.closest('li').addClass('on');
+      return false;
     });
-    el.closest('li').addClass('on');
-    return false;
-  });
 });
