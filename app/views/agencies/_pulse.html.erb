@@ -1,11 +1,14 @@
 <h3>Departmental Pulse</h3>
 
 <ul id='featured_agency_buttons' class="group btn">
-  <li class="on" id='entries_1_year_weekly' ><%= link_to '12 months by week', '#' %></li>
-  <li id='entries_5_years_monthly'          ><%= link_to '5 years by month',  '#' %></li>
-  <li id='entries_all_years_quarterly'      ><%= link_to 'All by quarter',    '#' %></li>
+  <li class="on" id='entries_1_year_weekly' ><%= link_to '12 months by week', '#0' %></li>
+  <li id='entries_5_years_monthly'          ><%= link_to '5 years by month',  '#1' %></li>
+  <li id='entries_all_years_quarterly'      ><%= link_to 'All by quarter',    '#2' %></li>
 </ul>
 
+
+<div class='featured_agencies'>
+  <div class='items'>
 <% %w(entries_1_year_weekly entries_5_years_monthly entries_all_years_quarterly).each do |range_type| %>
   <ul id='agency_count_<%= range_type %>' class='featured_agencies'>
   <% featured_agencies.each do |agency| %>
@@ -26,3 +29,5 @@
   <% end %>
   </ul>
 <% end %>
+  </div>
+</div>
