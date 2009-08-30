@@ -203,6 +203,10 @@ body
     &:hover
       :color #cf8227
     &:active
+  span.gray
+    :color #7D7D7D
+  span.orange
+    :color #fa6900
   ul
     /:padding 10px 0 0 0
     :padding 0
@@ -261,16 +265,22 @@ body
           :width 900px
       .infobox
         :padding 1em 0
+        :border thin solid lightgray
+        :margin 0 0 20px 0
         p
           :clear both    
-          :font 330% Georgia,"Times New Roman",Serif
           :margin 0
           :text-align center
-          :width 100%
           &.fed
+            :width 100%
+            :font 250% Georgia,"Times New Roman",Serif
             :color #46565C
             &.alt
               :color #fa6900
+          &.copy
+            :width 700px
+            :text-align justify
+            :margin 10px auto
           &.stats
             span.num
               :display block
@@ -441,14 +451,14 @@ body
     li
       :border 1px solid #747d87
       :float left
-      :margin-right 13px
+      :margin-right 5px
       :-moz-border-radius 5px
       :-webkit-border-radius 5px
       a
         :color #747d87
         :display block
         :font-weight bold
-        :padding 3px 10px
+        :padding 0 5px
         :text-decoration none
         &:hover
           :background #747d87
