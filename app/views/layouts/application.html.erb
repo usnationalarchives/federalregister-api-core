@@ -23,6 +23,7 @@
   <%= javascript_include_tag 'jrails.js'                %>
   <%= javascript_include_tag 'application.js'           %>
   <%= javascript_include_tag 'jquery.sparkline.min.js'  %>
+  <%= javascript_include_tag 'jquery.cookie.js'  %>
   <%= javascript_include_tag 'jquery.tools.min.js'      %>
   <%= javascript_include_tag 'jquery.qtip-1.0.0-rc3.js' %>
   <%= javascript_include_tag 'jquery.filter.js'         %>
@@ -143,8 +144,8 @@
         <div class="daily group">
           <ul class="items">
           <% @ticker_entries.each_with_index do |entry, i| %>
-            <li>              
-              <%= link_to truncate(entry.title, :length => 97), entry_path(entry), :class => "entry tip" %>
+            <li>    
+              <%= link_to truncate("#{i+1} - #{entry.title}", :length => 97), entry_path(entry), :class => "entry tip" %>          
               <div class="tip">
                 <p>Entry <%= i + 1 %> of <%= @ticker_entries.length + 1 %> for <%= @last_date.to_formatted_s(:pretty) %></p>
                 <p><strong>Full Title</strong>: <%= entry.title %></p>
