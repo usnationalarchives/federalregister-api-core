@@ -51,13 +51,6 @@
       <!-- TICKER -->
       <div id="ticker">
         <div class="daily group">
-          <ul class="items">
-          <% @ticker_entries.each_with_index do |entry, i| %>
-            <li>
-              <%= link_to truncate("#{i} - #{entry.title}", :length => 97), entry_path(entry), :class => "entry" %>
-            </li>
-          <% end %>
-          </ul>
         </div>
         
         <div class="pulse left"></div>

@@ -111,6 +111,15 @@ class EntriesController < ApplicationController
     @entries = Entry.find(:all, :limit => 200, :order => "publication_date DESC")
   end
   
+  def current_headlines
+    @entries = Entry.all(
+        :include => :agency,
+        :conditions => {:publication_date => Entry.latest_publication_date},
+        :order => "entries.start_page"
+    )
+    render :layout => false
+  end
+  
   def by_date
     if params[:search]
       time = Chronic.parse(params[:search], :context => :past)
