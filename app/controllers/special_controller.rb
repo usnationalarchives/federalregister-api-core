@@ -9,6 +9,7 @@ class SpecialController < ApplicationController
         (SELECT count(*) FROM entries WHERE agency_id = agencies.id AND publication_date > '#{90.days.ago.to_s(:db)}') AS num_entries_quarter,
         (SELECT count(*) FROM entries WHERE agency_id = agencies.id AND publication_date > '#{365.days.ago.to_s(:db)}') AS num_entries_year"
     )
+    @location = current_location
     
     date_range = [Date.today, Date.today + 7]
     @closing_soon = ReferencedDate.find(:all, 

@@ -1171,31 +1171,31 @@ ul.tag_cloud {
   font-size: 1.1em;
   line-height: 1.32em;
 }
-/* line 5, ../../../../../../usr/local/ruby-enterprise-1.8.6-20090610/lib/ruby/gems/1.8/gems/chriseppstein-compass-0.8.8/frameworks/compass/stylesheets/compass/utilities/general/_tag_cloud.sass */
+/* line 5, ../../../../../../../usr/local/lib/ruby/gems/1.8/gems/chriseppstein-compass-0.8.8/frameworks/compass/stylesheets/compass/utilities/general/_tag_cloud.sass */
 ul.tag_cloud .xxs, ul.tag_cloud .xs, ul.tag_cloud .s, ul.tag_cloud .l, ul.tag_cloud .xl, ul.tag_cloud .xxl {
   line-height: 1.32em;
 }
-/* line 7, ../../../../../../usr/local/ruby-enterprise-1.8.6-20090610/lib/ruby/gems/1.8/gems/chriseppstein-compass-0.8.8/frameworks/compass/stylesheets/compass/utilities/general/_tag_cloud.sass */
+/* line 7, ../../../../../../../usr/local/lib/ruby/gems/1.8/gems/chriseppstein-compass-0.8.8/frameworks/compass/stylesheets/compass/utilities/general/_tag_cloud.sass */
 ul.tag_cloud .xxs {
   font-size: 0.55em;
 }
-/* line 9, ../../../../../../usr/local/ruby-enterprise-1.8.6-20090610/lib/ruby/gems/1.8/gems/chriseppstein-compass-0.8.8/frameworks/compass/stylesheets/compass/utilities/general/_tag_cloud.sass */
+/* line 9, ../../../../../../../usr/local/lib/ruby/gems/1.8/gems/chriseppstein-compass-0.8.8/frameworks/compass/stylesheets/compass/utilities/general/_tag_cloud.sass */
 ul.tag_cloud .xs {
   font-size: 0.733em;
 }
-/* line 11, ../../../../../../usr/local/ruby-enterprise-1.8.6-20090610/lib/ruby/gems/1.8/gems/chriseppstein-compass-0.8.8/frameworks/compass/stylesheets/compass/utilities/general/_tag_cloud.sass */
+/* line 11, ../../../../../../../usr/local/lib/ruby/gems/1.8/gems/chriseppstein-compass-0.8.8/frameworks/compass/stylesheets/compass/utilities/general/_tag_cloud.sass */
 ul.tag_cloud .s {
   font-size: 0.825em;
 }
-/* line 13, ../../../../../../usr/local/ruby-enterprise-1.8.6-20090610/lib/ruby/gems/1.8/gems/chriseppstein-compass-0.8.8/frameworks/compass/stylesheets/compass/utilities/general/_tag_cloud.sass */
+/* line 13, ../../../../../../../usr/local/lib/ruby/gems/1.8/gems/chriseppstein-compass-0.8.8/frameworks/compass/stylesheets/compass/utilities/general/_tag_cloud.sass */
 ul.tag_cloud .l {
   font-size: 1.467em;
 }
-/* line 15, ../../../../../../usr/local/ruby-enterprise-1.8.6-20090610/lib/ruby/gems/1.8/gems/chriseppstein-compass-0.8.8/frameworks/compass/stylesheets/compass/utilities/general/_tag_cloud.sass */
+/* line 15, ../../../../../../../usr/local/lib/ruby/gems/1.8/gems/chriseppstein-compass-0.8.8/frameworks/compass/stylesheets/compass/utilities/general/_tag_cloud.sass */
 ul.tag_cloud .xl {
   font-size: 1.65em;
 }
-/* line 17, ../../../../../../usr/local/ruby-enterprise-1.8.6-20090610/lib/ruby/gems/1.8/gems/chriseppstein-compass-0.8.8/frameworks/compass/stylesheets/compass/utilities/general/_tag_cloud.sass */
+/* line 17, ../../../../../../../usr/local/lib/ruby/gems/1.8/gems/chriseppstein-compass-0.8.8/frameworks/compass/stylesheets/compass/utilities/general/_tag_cloud.sass */
 ul.tag_cloud .xxl {
   font-size: 2.2em;
 }

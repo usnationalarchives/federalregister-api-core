@@ -1,52 +1,31 @@
 module Locator
-  def remote_location(ip = request.remote_ip)
-    begin
-      require 'ostruct'
-      require 'geoip_city'
-      
-      db = GeoIPCity::Database.new('/opt/GeoIP/share/GeoIP/GeoLiteCity.dat')
-      
-      result = db.look_up(ip)
-      
-      if result
-        OpenStruct.new(result)
+  require 'geoip'
+  
+  def current_location(ip = request.remote_ip)
+    unless @current_location
+      if session[:location]
+        @current_location = Geokit::GeoLoc.new session[:location]
       else
-        OpenStruct.new({
-          :longitude=>-122.073196411133,
-          :country_code3=>"USA",
-          :country_name=>"United States",
-          :area_code=>650,
-          :city=>"Mountain View",
-          :region=>"CA",
-          :latitude=>37.3973999023438,
-          :country_code=>"US",
-          :dma_code=>807
-        })
+        @current_location = Geokit::Geocoders::GeoIp::do_geocode(ip)
+        if ! @current_location.success?
+          @current_location = default_location
+        end
+        
+        session[:location] = @current_location.to_hash
       end
-    rescue MissingSourceFile => e
-      OpenStruct.new({
-        :longitude=>-122.073196411133,
-        :country_code3=>"USA",
-        :country_name=>"United States",
-        :area_code=>650,
-        :city=>"Mountain View",
-        :region=>"CA",
-        :latitude=>37.3973999023438,
-        :country_code=>"US",
-        :dma_code=>807
-      })
-    rescue Errno::ENOENT => e
-      OpenStruct.new({
-        :longitude=>-122.073196411133,
-        :country_code3=>"USA",
-        :country_name=>"United States",
-        :area_code=>650,
-        :city=>"Mountain View",
-        :region=>"CA",
-        :latitude=>37.3973999023438,
-        :country_code=>"US",
-        :dma_code=>807
-      })
     end
+    
+    @current_location
+  end
+  
+  private
+  
+  def default_location
+    Geokit::GeoLoc.new(
+      :lng   => -122.073196411133,
+      :lat   => 37.3973999023438,
+      :city  => "Mountain View",
+      :state => "CA"
+    )
   end
 end
