@@ -8,7 +8,7 @@ $(document).ready(function() {
     $("ul.filter li").removeClass("on");
     $(this).parent().addClass("on");
     
-    $("ul.filter li.livesearch input").attr("value", "Filter for agencies");
+    $("ul.filter li.livesearch input").attr("value", "Filter agencies");
     
     if($(this).parent().hasClass("all"))
       $("ul.agencyList li").show()
