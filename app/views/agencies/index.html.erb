@@ -26,7 +26,7 @@
     <li><a href="#">E-F</a></li>
     <li><a href="#">G-N</a></li>
     <li><a href="#">O-Z</a></li>
-    <li class="livesearch"><input title="Filter for agencies"></li>  
+    <li class="livesearch"><input title="Filter agencies"></li>  
   </ul>
 </div>
 
@@ -37,16 +37,5 @@
 </ul>
 
 <% content_for :sidebar do %>
-  <%#= render :partial => 'agencies/pulse', :locals => {:featured_agencies => @featured_agencies} %>
+  <%= render :partial => 'agencies/pulse', :locals => {:featured_agencies => @featured_agencies} %>
 <% end %>
-
-<%# content_for :precolumn do %>
-  <!-- <div class="column span-4 prepend-1">
-    <h2>Some text</h2>
-    <p>Description</p>
-  </div>
-  <div class="column span-4 prepend-1">
-    <h2>Graph </h2>
-    <p>Description</p>
-  </div>    --> 
-<%# end %>
