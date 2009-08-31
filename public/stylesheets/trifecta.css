@@ -426,24 +426,24 @@ body {
 /* line 288, ../../app/stylesheets/trifecta.sass */
 #main .content .precolumn .infobox {
   padding: 1em 0;
-  border: thin solid lightgray;
   margin: 0 0 20px 0;
 }
-/* line 292, ../../app/stylesheets/trifecta.sass */
+/* line 291, ../../app/stylesheets/trifecta.sass */
 #main .content .precolumn .infobox p {
   clear: both;
   margin: 0;
   text-align: center;
 }
-/* line 296, ../../app/stylesheets/trifecta.sass */
+/* line 295, ../../app/stylesheets/trifecta.sass */
 #main .content .precolumn .infobox p.fed {
   width: 100%;
   font: 250% Georgia,"Times New Roman",Serif;
   color: #46565C;
 }
-/* line 300, ../../app/stylesheets/trifecta.sass */
+/* line 299, ../../app/stylesheets/trifecta.sass */
 #main .content .precolumn .infobox p.fed.alt {
   color: #fa6900;
+  font-size: 200%;
 }
 /* line 302, ../../app/stylesheets/trifecta.sass */
 #main .content .precolumn .infobox p.copy {
