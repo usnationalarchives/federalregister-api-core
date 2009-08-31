@@ -44,6 +44,8 @@ ActionController::Routing::Routes.draw do |map|
   map.connect 'e/:document_number', :controller => 'entries',
                                     :action     => 'tiny_pulse'
   
+  map.resource :location, :only => [:update, :edit]
+  
   map.connect  'calendar/:year/:month/:day', :controller => 'calendars',
                                              :action     => 'index',
                                              :year       => /\d{4}/,
@@ -67,7 +69,7 @@ ActionController::Routing::Routes.draw do |map|
   map.maps 'maps', :controller => 'maps',
                    :action     => 'index'
                                    
-  map.locations_path 'locations/:slug/:id.:format', :controller => 'locations', :action => 'show'
+  map.places 'places/:slug/:id.:format', :controller => 'places', :action => 'show'
                                          
   map.root :controller => 'special', :action => 'home'
   
