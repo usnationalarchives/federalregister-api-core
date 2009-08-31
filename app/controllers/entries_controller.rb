@@ -108,7 +108,14 @@ class EntriesController < ApplicationController
   end
   
   def index
-    @entries = Entry.find(:all, :limit => 200, :order => "publication_date DESC")
+    respond_to do |wants|
+      wants.html do
+        redirect_to entries_by_date_path(Entry.latest_publication_date)
+      end
+      wants.rss do
+        @entries = Entry.find(:all, :limit => 200, :order => "publication_date DESC")
+      end
+    end
   end
   
   def current_headlines
