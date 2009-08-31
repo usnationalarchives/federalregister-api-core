@@ -43,7 +43,7 @@ body
     :float left
     :font-weight bold
     :height 29px    
-    :line-height 30px
+    :line-height 29px
     :margin 0 10px 0 100px    
     :padding-right 10px
   .daily
@@ -60,10 +60,11 @@ body
       li 
         :float left
         :height 30px
-        :line-height 30px
+        :line-height 29px
         :list-style none
         :width 600px
         a 
+          :color #005B81
           :text-decoration none
           &:hover 
             :color #fa6900
@@ -688,6 +689,29 @@ body #footer
       :color #fff
       :font 125% serif
       :text-align center
+
+.qtip-content
+  :border 1px solid #ccc
+  .tip
+    :padding 1em  
+    .entry
+      :background #f0f0f0
+      :color #c0c0c0
+      :font-size 50px
+      :font-weight bold
+      :margin 0
+      :text-align center
+    dl
+      dt
+        :border-bottom 1px solid #ccc
+        :color #fa6900
+        :font-weight bold
+        :margin-bottom 2px
+        :padding-bottom 2px
+        :text-transform uppercase
+      dd
+        :color #39505e
+        :margin 0 0 1em 1em
 .floatLeft
   :float left
 .floatRight
@@ -696,7 +720,6 @@ body #footer
   :margin-top 10px
 .marginBottom
   :margin-bottom 10px !important  
-  
 ul.tag_cloud
   +tag-cloud(1.1em)
   li

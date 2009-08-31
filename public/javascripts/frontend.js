@@ -1,22 +1,5 @@
 $(document).ready(function() {
   
-  //initialize scrollable for ticker 
-  $("div.daily").scrollable({ 
-             
-          // items are auto-scrolled in 2.5 second interval 
-          interval: 2500,   
-        
-          horizontal: true,
-         
-          // when last item is encountered go back to first item 
-          loop: true,  
-         
-          // make animation a little slower than the default 
-          speed: 600,
-        
-          clickable: false
-      });
-  
   //init tooltips for ticker
   $("ul.items li a.entry").each(function(){
     
