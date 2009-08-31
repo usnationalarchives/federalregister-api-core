@@ -46,6 +46,9 @@ namespace :data do
           break
         end
         
+        volume = doc.css('volume').first.try(:content)
+        issue  = doc.css('issue').first.try(:content)
+        
         puts "importing #{publication_date}..."
         Entry.transaction do
         
@@ -59,9 +62,11 @@ namespace :data do
             
             entry = Entry.find_or_create_by_document_number(document_number)
             
-            entry.document_number = document_number
+            entry.document_number  = document_number
             entry.publication_date = publication_date
-            entry.title = title
+            entry.title            = title
+            entry.volume           = volume
+            entry.issue            = issue
             
             entry.toc_subject = entry_node.css('tocSubject1').first.try(:content)
             
