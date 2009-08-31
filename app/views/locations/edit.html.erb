@@ -1,0 +1,10 @@
+<% title 'Change my Location' %>
+
+<% if @message %>
+  <p class="error"><%= @message %></p>
+<% end %>
+
+<% form_for @location, :url => location_path, :html_options => {:method => :put} do |f| %>
+  <%= f.text_field :name, :title => "(eg '94118', 'Seattle', etc)" %>
+  <%= submit_tag 'Go', :class => "btn" %>
+<% end %>
