@@ -35,6 +35,18 @@ module Locator
         :country_code=>"US",
         :dma_code=>807
       })
+    rescue Errno::ENOENT => e
+      OpenStruct.new({
+        :longitude=>-122.073196411133,
+        :country_code3=>"USA",
+        :country_name=>"United States",
+        :area_code=>650,
+        :city=>"Mountain View",
+        :region=>"CA",
+        :latitude=>37.3973999023438,
+        :country_code=>"US",
+        :dma_code=>807
+      })
     end
   end
 end
