@@ -1,5 +1,19 @@
 <% title "Recent entries mentioning places within #{ pluralize(@dist, 'mile') } of the center of #{ @display_location } " %>
 
+<% content_for :precolumn do %>
+  <div class="infobox">
+    <p class='copy'>
+      Entries in the Federal Register are most often about activities or proposed activities in a variety of places. Here 
+      you can explore entries within <%= pluralize(@dist, 'mile') %> of a given location. Using the tools below you can 
+      see what agencies are active in a given location as well as search other locations.
+    <p class='copy'>
+      Additionally clicking on any pin in the map displays the locations name as well as a list of entries at that location. 
+      The box displayed by clicking on a map pin enables the further exploration that location (click on the location name), or 
+      a particular entry (click on the entry title).
+    </p>
+  </div>
+<% end %>
+
 <% if !@places.nil? %>
   <% add_javascript { @map.to_js } %>
   <% content_for :precolumn do %>

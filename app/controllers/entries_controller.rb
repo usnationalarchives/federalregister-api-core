@@ -190,6 +190,19 @@ class EntriesController < ApplicationController
                                )
       end
     end
+    
+    @granule_labels = []
+    @granule_values = []
+    @entries = []
+    @agencies.each do |agency|
+      @entries << agency.entries
+    end
+    @entries << @entries_without_agency
+    @entries = @entries.flatten
+    @entries.group_by(&:granule_class).each do |granule_class, entries|
+      @granule_labels << granule_class
+      @granule_values << entries.size
+    end
   end
   
   def show
