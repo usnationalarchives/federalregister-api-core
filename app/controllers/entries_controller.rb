@@ -1,5 +1,5 @@
 class EntriesController < ApplicationController
-  caches_page :index, :by_date, :show
+  caches_page :index, :by_date, :show, :current_headlines
   
   include Geokit::Geocoders
   
