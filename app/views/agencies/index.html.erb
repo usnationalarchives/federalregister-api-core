@@ -1,8 +1,8 @@
 <% title 'Browse by Agency', :body => :precolumn %>
-
 <div class="header">
   <h2>By Name</h2>
 
+<%= raise Agency.all.inspect%>
 
 <ul class="btn filter group">
   <li class="all"><a href="#">ALL</a></li>    
@@ -11,6 +11,7 @@
   <li><a href="#">E-F</a></li>
   <li><a href="#">G-N</a></li>
   <li><a href="#">O-Z</a></li>
+  <li><input class="livesearch" title="Filter for agencies"></li>
 </ul>
 </div>
 <ul class="agencyList">

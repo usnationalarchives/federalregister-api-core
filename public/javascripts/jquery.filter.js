@@ -22,6 +22,12 @@ $(document).ready(function() {
         
   });
   
+  $("ul.filter li input.livesearch").bind("keyup", function(e){
+    $("ul.filter li").removeClass("on");
+    $(this).parent().addClass("on");
+    $("ul.agencyList li").hide().find("a:regex('^[" + $(this).html() + "]')").parent().show();
+  });
+  
 });
 
 jQuery.extend(  
