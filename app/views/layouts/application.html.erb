@@ -43,8 +43,6 @@
   <!-- WRAPPER -->
   <div id="wrapper" class="group">
     
-
-    
     <!-- HEADER -->
     <div id="header">
       
@@ -55,27 +53,8 @@
       </div>
 
     </div>
-      <div id="nav">
-        <div class="search">
-          <form action="<%= entries_search_path %>" method="get">
-            <!--Search--> 
-            <%= text_field_tag :q, @search_term,  :title => "Search govpulse" %>
-            <%= submit_tag '', :class => "search_btn" %>
-          </form> 
-        </div>    
-        <ul>
-          <% @last_date ||= Entry.latest_publication_date %>
-          <li><%= link_to 'Home', root_path %> / </li>
-          <li><%= link_to 'By Agency', agencies_path, :title => "Browse by Agency" %> / </li>
-          <li><%= link_to 'By Date Published', entries_by_date_path(@last_date), :title => "Browse by Date" %> / </li>          
-          <li><%= link_to 'By Event Date', events_month_path(Date.today.year, sprintf("%02d", Date.today.month)), :title => "Browse by Event Date" %> /</li>
-          <li><%= link_to 'By Topic', topic_groups_path, :title => "Browse by Topic" %> / </li>
-          <li><%= link_to 'By Location', maps_path, :title => "View entries by location" %> / </li>
-          <li><%= link_to 'Search', entries_search_path, :title => 'Search Entries' %> / </li>
-          <li><%= link_to 'About', about_path, :title => "About the project" %></li>
-        </ul>
-      </div>      
-  <!-- HEADER end -->
+    <%= render :partial => 'layouts/navigation', :locals => {:last_date => @last_date, :search_term => @search_term} %>
+    <!-- HEADER end -->
   
     <!-- MAIN -->
     <div id="main" class="group<%= ' cols' if yield :sidebar %>">
@@ -119,10 +98,8 @@
           <% if yield :search_form %>
             </form>
           <% end %>    
-          
       </div>
       <!-- content end -->
-      
       
     </div>
     <!-- MAIN end -->
@@ -131,26 +108,18 @@
   <!-- WRAPPER end -->
 
 
-    <!-- FOOTER -->
-    <div id="footer">
-      <h4>Copyright 2009</h4>
-    </div>
-    <!-- FOOTER end -->
+  <!-- FOOTER -->
+  <div id="footer">
+    <%= render :partial => 'layouts/footer' %>
+  </div>
+  <!-- FOOTER end -->
     
-    <div id="ticker_container">
-      <!-- TICKER -->
-      <div id="ticker">
-      </div>  
-    </div>
+  <div id="ticker_container">
+    <!-- TICKER -->
+    <div id="ticker">
+    </div>  
+  </div>
     
-<script type="text/javascript">
-var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
-document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
-</script>
-<script type="text/javascript">
-try {
-var pageTracker = _gat._getTracker("UA-10151599-1");
-pageTracker._trackPageview();
-} catch(err) {}</script>
+  <%= render :partial => 'layouts/google_analytics' %>  
 </body>
 </html>
