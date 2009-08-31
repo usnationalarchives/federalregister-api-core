@@ -63,8 +63,9 @@ ActionController::Routing::Routes.draw do |map|
                                           :month      => /\d{1,2}/
 
   map.connect 'citation/:volume/:page', :controller => 'citations',
-                                        :action     => 'index',
-                                        :volume     => /\d{2}/
+                                        :action     => 'show',
+                                        :volume     => /\d{2}/,
+                                        :page     => /\d+/
 
   map.maps 'maps', :controller => 'maps',
                    :action     => 'index'
