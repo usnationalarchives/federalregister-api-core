@@ -1,4 +1,5 @@
 class AgenciesController < ApplicationController
+    
   caches_page :index, :show
   def index
     @agencies  = Agency.find(:all, :conditions => "entries_count > 0", :order => 'name ASC')
