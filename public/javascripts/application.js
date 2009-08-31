@@ -7,29 +7,28 @@ $(window).unload( function () {
 });
 
 $(document).ready(function() {
-    var items = $("div.daily .items")
-    var index = $.cookie('ticker_index') || 0;
+  //initialize scrollable
+  $.ajax({
+    url: "/entries/current-headlines",
+    success: function(html){
+      var index = $.cookie('ticker_index') || 0;
+      
+      var ticker = $("div.daily");
+      ticker.append(html);
     
-    //initialize scrollable  
-    scrollable = $("div.daily").scrollable({ 
-        size: 1,
-        
-        // items are auto-scrolled in 4 secnod interval 
-        interval: 4000,   
-        
-        horizontal: true,
-         
-        // when last item is encountered go back to first item 
-        loop: true,  
-         
-        // make animation a little slower than the default 
-        speed: 600,
-        
-        clickable: false,
-        api : true
-    });
-    scrollable.setPage(index);
-    
+      //initialize scrollable
+      scrollable = ticker.scrollable({ 
+         size: 1,
+         interval: 4000,   // items are auto-scrolled in 4 secnod interval 
+         horizontal: true,
+         loop: true,       // when last item is encountered go back to first item
+         speed: 600,       // make animation a little slower than the default
+         clickable: false,
+         api : true
+      });
+      scrollable.setPage(index);
+    }
+  });
     
   /*                                   */
   /* Tooltips for featured agency list */
