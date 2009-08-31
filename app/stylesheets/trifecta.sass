@@ -227,6 +227,10 @@ body
     &:hover
       :color #cf8227
     &:active
+  span.gray
+    :color #7D7D7D
+  span.orange
+    :color #fa6900
   ul
     /:padding 10px 0 0 0
     :padding 0
@@ -285,16 +289,22 @@ body
           :width 900px
       .infobox
         :padding 1em 0
+        :margin 0 0 20px 0
         p
           :clear both    
-          :font 330% Georgia,"Times New Roman",Serif
           :margin 0
           :text-align center
-          :width 100%
           &.fed
+            :width 100%
+            :font 250% Georgia,"Times New Roman",Serif
             :color #46565C
             &.alt
               :color #fa6900
+              :font-size 200%
+          &.copy
+            :width 700px
+            :text-align justify
+            :margin 10px auto
           &.stats
             span.num
               :display block
@@ -391,6 +401,27 @@ body
               :margin 0
               &:focus
                 :outline none
+        div.featured_agencies
+          :position relative
+          :overflow hidden
+          :width 345px
+          :height 414px
+          ul.staticAgencyList
+            :position absolute
+            :top 0
+            :left 0
+            :z-index 5999
+          a.agencyHidden
+            :visibility hidden
+          div.items
+            :width 5000px
+            :position absolute
+            :clear both
+            &.pulses
+              :width 1300px
+            ul.pulse_list
+              :float left
+              :width 345px
         div.tag_cloud
           div.fancy
             :position relative
@@ -411,6 +442,11 @@ body
         span.social
           :display block
           :width 290px
+        ul.congressional_members
+          :padding 0 0 0 10px
+          li.member_info
+            span.member_details
+              :display none
     .currentevents 
       :vertical-align text-top  
       .header
@@ -465,14 +501,14 @@ body
     li
       :border 1px solid #747d87
       :float left
-      :margin-right 13px
+      :margin-right 5px
       :-moz-border-radius 5px
       :-webkit-border-radius 5px
       a
         :color #747d87
         :display block
         :font-weight bold
-        :padding 3px 10px
+        :padding 0 5px
         :text-decoration none
         &:hover
           :background #747d87
