@@ -11,6 +11,12 @@ class EntriesController < ApplicationController
     errors = []
     
     @near = params[:near]
+    
+    if !params[:volume].blank? && !params[:page].blank?
+      redirect_to "/citation/#{params[:volume]}/#{params[:page]}"
+      return
+    end
+    
     if params[:place_id]
       @place = Place.find(params[:place_id])
       with[:place_ids] = @place.id
