@@ -1,6 +1,7 @@
 module LayoutHelper
-  def add_controller_class(controller_name)
-    col_class = controller_name == 'special' ? 'home' : ''
-    col_class
+  def add_column_class(column_class)
+    content_for :column_class do
+      "#{column_class}"
+    end
   end
 end

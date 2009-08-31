@@ -525,6 +525,25 @@ body
         a
           :padding 1px 2px 
           :text-align center
+    li.livesearch 
+      :line-height 18px
+      :height 18px
+      input
+        :border none
+        :color #747d87  
+        :font-weight bold
+        :margin 0 5px
+        :padding 0
+        :background transparent
+        :width 114px
+        :height 18px
+        &:focus
+          :outline none
+      &.on 
+        :border-width 2px    
+        :height 16px  
+        :line-height 14px   
+          
   ul.count
     :margin 0
     :padding 0
@@ -669,7 +688,7 @@ body
     :padding 5px
     :*padding 0 3px
     &:hover
-      :background url(/images/btn_bg2_hover.png) repeat-x left 50%
+      :background url(/images/btn_bg2_hover.png) repeat-x left 50%     
 div.ornament
   :background url(/images/hr_bg3.png) no-repeat top center
   :display block
@@ -728,13 +747,6 @@ body #footer
       dd
         :color #39505e
         :margin 0 0 1em 1em
-input.livesearch 
-  :border none
-  :height 14px
-  :line-height 14px
-  :margin 0 5px
-  :padding 3px 2px 0 2px
-  :width 100px
 .floatLeft
   :float left
 .floatRight
