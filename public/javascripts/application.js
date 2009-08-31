@@ -13,25 +13,25 @@ $(document).ready(function() {
     var index = $.cookie('ticker_index') || 0;
     
     //initialize scrollable  
-    // scrollable = $("div.daily").scrollable({ 
-    //     size: 1,
-    //     
-    //     // items are auto-scrolled in 4 secnod interval 
-    //     interval: 4000,   
-    //     
-    //     horizontal: true,
-    //      
-    //     // when last item is encountered go back to first item 
-    //     loop: true,  
-    //      
-    //     // make animation a little slower than the default 
-    //     speed: 600,
-    //     
-    //     clickable: false,
-    //     api : true
-    // });
-    // 
-    // scrollable.setPage(index);
+    scrollable = $("div.daily").scrollable({ 
+        size: 1,
+        
+        // items are auto-scrolled in 4 secnod interval 
+        interval: 4000,   
+        
+        horizontal: true,
+         
+        // when last item is encountered go back to first item 
+        loop: true,  
+         
+        // make animation a little slower than the default 
+        speed: 600,
+        
+        clickable: false,
+        api : true
+    });
+    
+    scrollable.setPage(index);
         
   /*                                   */
   /* Tooltips for featured agency list */

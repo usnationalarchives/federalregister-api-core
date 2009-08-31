@@ -3,9 +3,9 @@
 html
   :background url(/images/main_bg_left.png) repeat-y top left 
 body
-  :background url(/images/main_bg_right2.png) repeat-y top right  
+  :background url(/images/main_bg_right.png) repeat-y top right  
   :min-height 100%
-  :margin-bottom -174px
+  :margin-bottom -150px
   :position relative
 #wrapper
   :background url(/images/header_bottomshadow4.png) repeat-x left 189px
@@ -16,7 +16,7 @@ body
   :width 100%
   :z-index 5999  
 #ticker
-  :background url(/images/ticker_bg.png) no-repeat left top
+  :background url(/images/ticker_bg3.png) no-repeat left top
   :height 30px
   :margin 0 auto
   :position relative  
@@ -91,12 +91,12 @@ body
     h1
       :text-indent -9999px
   .capitol
-    :background url(/images/header_capitol3.png) no-repeat  60px top
+    :background url(/images/header_capitol4.png) no-repeat  60px bottom
     :display block
     :position absolute
     :right 0
     :bottom 0
-    :height 121px  
+    :height 100%  
     :width 345px
 #nav
   :background-color #005b81
@@ -189,7 +189,7 @@ body
     :color #46565c  
     :font 2em Georgia,"Times New Roman",Serif
     :font-variant small-caps
-    :margin 0 0 1em 0  
+    :margin 0 0 .5em 0  
     span
       :font-size .6em  
   h3
@@ -242,7 +242,7 @@ body
     li.group
       :padding 0 0 15px 0
     &.indent
-      :padding-left 25px
+      :padding-left 1.5em
     &.bullets
       li
         :list-style-type disc
@@ -662,41 +662,20 @@ body #footer
   :background  #5a5a5a
   :border-top 4px solid #9b9b9b 
   :clear both
-  :height 150px
+  :height 100px
   :padding 2em 0 0 0
-  :position relative
+  :position absolute
+  :width 100%
   h4
     :color #aaa
     :text-align center
-  .sitemap
-    :padding 2em 0 0 2em
-    h4
-      :color #fff
-      :font 175% serif
-      :margin 0 0 0 0
-    ul
-      :float left
-      :margin 0 0 0 1em
-      li
-        :list-style-type none
-        a
-          :color #989898
-          :font-size 125%
-          :text-decoration none
-  .legal
-    :padding 2em 0 0 0
-    h4
-      :color #fff
-      :font 125% serif
-      :text-align center
-
+    
 .qtip-content
   :border 1px solid #ccc
   .tip
-    :padding 1em  
+    :padding 1em 1em 0 1em
     .entry
-      :background #f0f0f0
-      :color #c0c0c0
+      :color #dedede
       :font-size 50px
       :font-weight bold
       :margin 0
