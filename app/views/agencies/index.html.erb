@@ -1,18 +1,35 @@
-<% title 'Browse by Agency', :body => :precolumn %>
+<% add_column_class('home') %>
+
+<% title 'Explore by Agency', :body => :precolumn %>
+<% content_for :precolumn do %>
+          
+    <div class="infobox">
+      <p class='copy'>
+        Everyday federal agencies make entries into the Federal Register. The sparklines (small graphs) allow you to
+        see the activity for each agency by week for 12 months, allowing you to take the pulse of each agency. You can 
+        also use the search box to filter the list and quickly find any agency you care to look for!
+      </p>
+      <p class='copy'> 
+        Selecting an agency will allow you to take a more in depth view of where each agency is active, its recent 
+        entries into the Register, and the most common topics covered by that agency.
+      </p>
+    </div>
+<% end %>
+
 
 <div class="header">
   <h2>By Name</h2>
 
-
-<ul class="btn filter group">
-  <li class="all"><a href="#">ALL</a></li>    
-  <li><a href="#">A-C</a></li>
-  <li><a href="#">D</a></li>
-  <li><a href="#">E-F</a></li>
-  <li><a href="#">G-N</a></li>
-  <li><a href="#">O-Z</a></li>
-</ul>
+  <ul class="btn filter group">
+    <li class="all"><a href="#">ALL</a></li>    
+    <li><a href="#">A-C</a></li>
+    <li><a href="#">D</a></li>
+    <li><a href="#">E-F</a></li>
+    <li><a href="#">G-N</a></li>
+    <li><a href="#">O-Z</a></li>
+  </ul>
 </div>
+
 <ul class="agencyList">
 <% @agencies.each do |agency|  %>
   <li><%= render :partial => 'agency_list_item', :locals => {:agency => agency, :chart_max => @weekly_chart_max} %></li>
@@ -20,7 +37,7 @@
 </ul>
 
 <% content_for :sidebar do %>
-  <%= render :partial => 'agencies/featured', :locals => {:featured_agencies => @featured_agencies} %>  
+  <%= render :partial => 'agencies/pulse', :locals => {:featured_agencies => @featured_agencies} %>
 <% end %>
 
 <%# content_for :precolumn do %>

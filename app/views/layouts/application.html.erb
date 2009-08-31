@@ -104,12 +104,12 @@
             </div>
           <% end %>
           
-          <div class="col1 <%= add_controller_class(controller.controller_name) %>">
+          <div class="col1 <%= yield :column_class %>">
             <%= yield %>
           </div>
           
           <% if yield :sidebar %>
-          <div class="col2 <%= add_controller_class(controller.controller_name) %>">
+          <div class="col2 <%= yield :column_class %>">
             <div class="sidebar">
               <%= yield :sidebar %>
             </div>
