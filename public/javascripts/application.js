@@ -2,8 +2,7 @@
 // This file is automatically included by javascript_include_tag :defaults
 $(window).unload( function () {
   var scrollable = $("div.daily").data("scrollable");
-  index = scrollable.getIndex();
-  $.cookie('ticker_index', index)
+  $.cookie('ticker_index', scrollable.getIndex());
 });
 
 $(document).ready(function() {
@@ -12,8 +11,8 @@ $(document).ready(function() {
     url: "/entries/current-headlines",
     success: function(html){
       var index = $.cookie('ticker_index') || 0;
+      $('#ticker').replaceWith(html);
       var ticker = $("div.daily");
-      ticker.append(html);
     
       //initialize scrollable
       var scrollable = ticker.scrollable({ 
@@ -25,7 +24,8 @@ $(document).ready(function() {
          clickable: false,
          api : true
       });
-      scrollable.setPage(index);
+      scrollable.setPage(index,0);
+      
     }
   });
         
