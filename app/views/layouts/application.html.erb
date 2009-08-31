@@ -48,15 +48,6 @@
     <!-- HEADER -->
     <div id="header">
       
-      <!-- TICKER -->
-      <div id="ticker">
-        <div class="daily group">
-        </div>
-        
-        <div class="pulse left"></div>
-        <div class="pulse right"></div>
-      </div>
-      
       <div class="capitol"></div>      
       
       <div class="type">
@@ -76,7 +67,7 @@
           <% @last_date ||= Entry.latest_publication_date %>
           <li><%= link_to 'Home', root_path %> / </li>
           <li><%= link_to 'By Agency', agencies_path, :title => "Browse by Agency" %> / </li>
-          <li><%= link_to 'By Date Published', entries_by_date_path(@last_date, :show_calendars => true), :title => "Browse by Date" %> / </li>          
+          <li><%= link_to 'By Date Published', entries_by_date_path(@last_date), :title => "Browse by Date" %> / </li>          
           <li><%= link_to 'By Event Date', events_month_path(Date.today.year, sprintf("%02d", Date.today.month)), :title => "Browse by Event Date" %> /</li>
           <li><%= link_to 'By Topic', topic_groups_path, :title => "Browse by Topic" %> / </li>
           <li><%= link_to 'By Location', maps_path, :title => "View entries by location" %> / </li>
@@ -113,12 +104,12 @@
             </div>
           <% end %>
           
-          <div class="col1">
+          <div class="col1 <%= yield :column_class %>">
             <%= yield %>
           </div>
           
           <% if yield :sidebar %>
-          <div class="col2">
+          <div class="col2 <%= yield :column_class %>">
             <div class="sidebar">
               <%= yield :sidebar %>
             </div>
@@ -145,7 +136,20 @@
       <h4>Copyright 2009</h4>
     </div>
     <!-- FOOTER end -->
+    
+    <div id="ticker_container">
+      <!-- TICKER -->
+      <div id="ticker">
+        <span class="date">Entries for <%= @last_date.to_formatted_s(:pretty) %></span>        
+        <div class="daily group">
+        </div>
 
+
+        <div class="pulse left"></div>
+        <div class="pulse right"></div>
+      </div>  
+    </div>
+    
 <script type="text/javascript">
 var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
 document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));

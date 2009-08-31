@@ -199,6 +199,19 @@ class EntriesController < ApplicationController
                                )
       end
     end
+    
+    @granule_labels = []
+    @granule_values = []
+    @entries = []
+    @agencies.each do |agency|
+      @entries << agency.entries
+    end
+    @entries << @entries_without_agency
+    @entries = @entries.flatten
+    @entries.group_by(&:granule_class).each do |granule_class, entries|
+      @granule_labels << granule_class
+      @granule_values << entries.size
+    end
   end
   
   def show
@@ -224,6 +237,9 @@ class EntriesController < ApplicationController
                                )
       end
     end
+    members_of_congress = Sunlight::Legislator.all_in_zipcode(94110)
+    @senators = members_of_congress.reject{|l| l.title != 'Sen'}
+    @reps     = members_of_congress.reject{|l| l.title != 'Rep'}
   end
   
   def tiny_pulse
