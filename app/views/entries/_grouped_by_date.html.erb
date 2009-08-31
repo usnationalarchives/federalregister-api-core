@@ -9,7 +9,7 @@
         <h4><%= link_to pub_date.to_formatted_s(:day_date), entries_by_date_path(pub_date) %></h4>
         <ul>
           <% entries.each do |entry| %>  
-            <li><%= link_to truncate(entry.title, :length => 100), entry_path(entry) %></li>
+            <li><%= link_to entry.title, entry_path(entry) %></li>
           <% end %>
         </ul> 
       </li>

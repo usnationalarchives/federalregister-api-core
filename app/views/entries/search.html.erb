@@ -3,6 +3,29 @@
 
 <% title @search_term.blank? ? 'Search Entries' : "Search Results for '#{h @search_term}'" %>
 
+<% if @search_term.blank? %>
+  <% content_for :precolumn do %>
+    <div class="infobox">
+      <p class='copy'>
+        The ability to search the Federal Register is an important feature. <span class='gray'>gov</span><span class='orange'>pulse</span> 
+        has imported the entire digitalized version of the Federal Register (available since 1994) and indexed the full 
+        text of the entries, some as long as 280 pages! All search parameters can be used simultaneously allowing the 
+        contruction of powerful queries.
+      <p class='copy'> 
+        The basic search allows the exploration of entries by keywords (any word found in the text) and by agency. The 
+        advanced search features in the right column allow more powerful searches. Entries can be searched by entering 
+        a location and an optional distance from that location, for example within 50 miles of Ann Arbor, Michigan.
+        Entries can also be searched by publication date ranges.
+      </p>
+      <p class='copy'> 
+        Searches also possess the ability to be sorted by the date of the entries or by their relevance to the complete 
+        search parameters. And finally because keyword searches really only make sense in context, any entry returned by 
+        a keyword search contains a short snippet of the text surrounding the keyword so that you are better able to choose 
+        which entries to view.
+      </p>
+    </div>
+  <% end %>
+<% end %>
 
 
 <div class="header search group">

@@ -12,12 +12,11 @@ $(document).ready(function() {
     url: "/entries/current-headlines",
     success: function(html){
       var index = $.cookie('ticker_index') || 0;
-      
       var ticker = $("div.daily");
       ticker.append(html);
     
       //initialize scrollable
-      scrollable = ticker.scrollable({ 
+      var scrollable = ticker.scrollable({ 
          size: 1,
          interval: 4000,   // items are auto-scrolled in 4 secnod interval 
          horizontal: true,
@@ -29,7 +28,7 @@ $(document).ready(function() {
       scrollable.setPage(index);
     }
   });
-    
+        
   /*                                   */
   /* Tooltips for featured agency list */
   /*                                   */
@@ -53,20 +52,51 @@ $(document).ready(function() {
     });
   });
   
-  /*                                    */
-  /* Hide and show featured agency list */
-  /*                                    */
+  var agency_scrollable = $("div.featured_agencies").scrollable({ 
+    size: 1,
+    vertical: false,
+    api: true,
+    clickable: false
+  });
   
-  $("ul.featured_agencies").hide();
-  $("ul#agency_count_month").show();
   $("ul#featured_agency_buttons a").bind('click', function(){
     el = $(this);
-    $("ul.featured_agencies").hide();
-    $("ul#agency_count_"+el.closest('li').attr('id')).show();
-    $("ul#featured_agency_buttons li").each(function() {
-      $(this).removeClass('on');
-    });
-    el.closest('li').addClass('on');
+    el.preventDefault;
+    index = el.attr('href').replace(/.*#/, '');
+    agency_scrollable.seekTo(index);
+    $(el).parent().siblings().removeClass("on");
+    $(el).parent().addClass("on");
+    console.log(agency_scrollable.getItems());
+    console.log(agency_scrollable.getPageIndex());
+    console.log(agency_scrollable.getConf());
+  });
+  
+  
+  /*                                            */
+  /* Hide and show congressional member details */
+  /*                                            */
+  
+  $("ul.congressional_members li.member_info a").bind('click', function() {
+    el = $(this);
+    
+    li = el.closest('li');
+    id = el.attr('href');
+    var detail_span = $("ul.congressional_members span"+id);
+    
+    if(li.hasClass('more') ) {
+      detail_span.show();
+      el.text('(hide details)');
+      li.toggleClass('more');
+      li.toggleClass('less');
+    }
+    else if(li.hasClass('less')) {
+      detail_span.hide();
+      el.text('(view details)');
+      li.toggleClass('more');
+      li.toggleClass('less');
+    }
+    
     return false;
   });
+  
 });
