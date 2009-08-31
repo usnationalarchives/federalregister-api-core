@@ -145,13 +145,19 @@
           <ul class="items">
           <% @ticker_entries.each_with_index do |entry, i| %>
             <li>    
-              <%= link_to truncate("#{i+1} - #{entry.title}", :length => 97), entry_path(entry), :class => "entry tip" %>          
+              <%= link_to truncate("##{i+1} - #{entry.title}", :length => 97), entry_path(entry), :class => "entry tip" %>          
               <div class="tip">
-                <p>Entry <%= i + 1 %> of <%= @ticker_entries.length + 1 %> for <%= @last_date.to_formatted_s(:pretty) %></p>
-                <p><strong>Full Title</strong>: <%= entry.title %></p>
-                <% if entry.agency %>
-                  <p><strong>Agency Name</strong>: <%= entry.agency.name %></p>
-                <% end %>
+                <dl>
+                  <dt>Full Title:</dt>
+                  <dd><%= entry.title %></dd>
+                  <% if entry.agency %>
+                    <dt>Agency:</dt>
+                    <dd><%= entry.agency.name %></dd>
+                  <% end %>
+                    <dt>Date Entered:</dt>
+                    <dd><%= @last_date.to_formatted_s(:pretty) %></dd>
+                </dl>            
+                <p class="entry">Entry <%= i + 1 %> of <%= @ticker_entries.length + 1 %></p>
               </div>
             </li>
           <% end %>
