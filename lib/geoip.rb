@@ -8,6 +8,7 @@ module Geokit
       GEOIP_TO_GEOKIT = {
         :city      => :city,
         :region    => :state,
+        :country_code => :country_code,
         :zip       => :zip,
         :latitude  => :lat,
         :longitude => :lng
