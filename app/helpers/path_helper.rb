@@ -7,6 +7,14 @@ module PathHelper
     path_to_url(entry_path(entry))
   end
   
+  def short_entry_path(entry)
+    "/e/#{entry.document_number}"
+  end
+  
+  def short_entry_url(entry)
+    path_to_url(short_entry_path(entry))
+  end
+  
   def calendar_by_ymd_path(date)
     "/calendar/#{date.date.to_formatted_s(:ymd)}/"
   end
@@ -24,8 +32,8 @@ module PathHelper
     "/citation/#{citation.first}/#{citation.last}"
   end
   
-  def locations_path(place)
-    "/locations/#{place.slug}/#{place.id}"
+  def place_path(place)
+    "/places/#{place.slug}/#{place.id}"
   end
   
   def entries_by_date_path(date, options={})

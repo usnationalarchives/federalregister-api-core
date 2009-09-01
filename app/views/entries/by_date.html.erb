@@ -3,6 +3,18 @@
 <% title "Entries for #{@publication_date.to_formatted_s(:pretty)}" %>
 
 <% content_for :precolumn do %>
+  <div class="infobox">
+    <p class='copy'>
+      The Federal Register is published every day of the week, excluding weekends and holidays. The Register contains 
+      an assortment of notices, proposed rules, final rules, requests for information and presidential documents. 
+    </p>
+    <p class='copy'> 
+      You'll find today's entries listed below by agency, with the locations mentioned located on a map for you. You may 
+      also navigate to any date by clicking on the calendar icon below to display calendars for recent months as well
+      as a search box.
+    </p>
+  </div>
+
   <div class="header group calendar">
   <h2>
     <%= pluralize(@entry_count, 'entry') %> published on this day
@@ -81,5 +93,10 @@
     <h3>Locations Mentioned<h3>
     <% add_javascript { @map.to_js } %>
     <div id="map" class='small_map'></div>
+  <% end %>
+  
+  <% unless @granule_values.blank? %>
+    <h3>Today's Entry Types</h3>
+    <div class='chart size_<%=@granule_values.size%>'><%= pie_3d_chart(:alt => 'Entry Type for Recent Entries', :legend => @granule_labels, :truncate_legend => '30', :counts => true, :legend_location => 'bottom', :data => @granule_values, :size => ['230','200'], :color_range => ['005073','84cedb'], :transparent_bg => true) %></div>
   <% end %>
 <% end %>

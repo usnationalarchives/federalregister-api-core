@@ -12,6 +12,9 @@
 =end Schema Information
 
 class PlaceDetermination < ActiveRecord::Base
+  MIN_CONFIDENCE = 9
+  default_scope :conditions => "place_determinations.confidence >= #{MIN_CONFIDENCE}"
+  
   belongs_to :entry
   belongs_to :place
   

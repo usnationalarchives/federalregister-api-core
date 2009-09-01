@@ -5,15 +5,13 @@ class MapsController < ApplicationController
   
   def index
     if params[:location].nil? 
-      @location = remote_location
-      @lat  = @location.latitude
-      @long = @location.longitude
-      @display_location = "#{@location.city}, #{@location.region}"
+      @location = current_location
+      @lat  = @location.lat
+      @long = @location.lng
     else
       @location = GoogleGeocoder.geocode(params[:location])
       @lat  = @location.lat
       @long = @location.lng
-      @display_location = "#{@location.city}, #{@location.state}"
     end
     @dist = 50
     

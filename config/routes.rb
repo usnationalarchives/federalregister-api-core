@@ -28,17 +28,23 @@ ActionController::Routing::Routes.draw do |map|
                                                    :year       => /\d{4}/,
                                                    :month      => /\d{1,2}/,
                                                    :day        => /\d{1,2}/
-                                                   
-                                              
+  map.current_headlines 'entries/current-headlines', :controller => 'entries',
+                                                     :action     => 'current_headlines'
+
   map.entries_by_week 'entries/:year/weekly/:week', :controller => 'entries',
                                                     :action     => 'index',
                                                     :year       => /\d{4}/,
                                                     :week       => /\d{1,2}/
-                                                    
+
   map.entries_date_search 'entries/explore', :controller => 'entries',
                                              :action     => 'by_date'
                                        
-  map.resources :entries                                                  
+  map.resources :entries     
+  
+  map.connect 'e/:document_number', :controller => 'entries',
+                                    :action     => 'tiny_pulse'
+  
+  map.resource :location, :only => [:update, :edit], :member => {:congress => :get}
   
   map.connect  'calendar/:year/:month/:day', :controller => 'calendars',
                                              :action     => 'index',
@@ -57,13 +63,14 @@ ActionController::Routing::Routes.draw do |map|
                                           :month      => /\d{1,2}/
 
   map.connect 'citation/:volume/:page', :controller => 'citations',
-                                        :action     => 'index',
-                                        :volume     => /\d{2}/
+                                        :action     => 'show',
+                                        :volume     => /\d{2}/,
+                                        :page     => /\d+/
 
   map.maps 'maps', :controller => 'maps',
                    :action     => 'index'
                                    
-  map.locations_path 'locations/:slug/:id.:format', :controller => 'locations', :action => 'show'
+  map.places 'places/:slug/:id.:format', :controller => 'places', :action => 'show'
                                          
   map.root :controller => 'special', :action => 'home'
   
