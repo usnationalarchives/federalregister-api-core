@@ -36,7 +36,7 @@ module Geokit
           else
             return GeoLoc.new
           end
-        rescue
+        rescue Exception, LoadError
           logger.error "Caught an error during HostIp geocoding call: "+$!
           return GeoLoc.new
         end
