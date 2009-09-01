@@ -1,0 +1,7 @@
+<div id="congress">
+  <h5>Your <%= pluralize(@senators.size, 'Senator').split(' ')[1] %> (<%= link_to 'change location', edit_location_path %>)</h5>
+  <%= render :partial => 'locations/congressional_members', :locals => {:members => @senators} %>
+
+  <h5>Your <%= pluralize(@reps.size, 'Representative').split(' ')[1] %> (<%= link_to 'change location', edit_location_path %>)</h5>
+  <%= render :partial => 'locations/congressional_members', :locals => {:members => @reps} %>
+</div>

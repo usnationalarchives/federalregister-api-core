@@ -44,7 +44,7 @@ ActionController::Routing::Routes.draw do |map|
   map.connect 'e/:document_number', :controller => 'entries',
                                     :action     => 'tiny_pulse'
   
-  map.resource :location, :only => [:update, :edit]
+  map.resource :location, :only => [:update, :edit], :member => {:congress => :get}
   
   map.connect  'calendar/:year/:month/:day', :controller => 'calendars',
                                              :action     => 'index',
@@ -63,8 +63,9 @@ ActionController::Routing::Routes.draw do |map|
                                           :month      => /\d{1,2}/
 
   map.connect 'citation/:volume/:page', :controller => 'citations',
-                                        :action     => 'index',
-                                        :volume     => /\d{2}/
+                                        :action     => 'show',
+                                        :volume     => /\d{2}/,
+                                        :page     => /\d+/
 
   map.maps 'maps', :controller => 'maps',
                    :action     => 'index'

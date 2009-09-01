@@ -1,15 +1,17 @@
 class CitationsController < ApplicationController
-  def index
-    volume = params[:volume]
-    page   = params[:page]
+  def show
+    @volume = params[:volume].to_i
+    @page   = params[:page].to_i
     
-    fr_citation = "#{volume} FR #{page}"
-    @entries = Entry.find(:all, :conditions => ['citation = ?', fr_citation] )
+    @entries = Entry.all(:conditions => "volume = #{@volume} AND start_page <= #{@page} AND end_page >= #{@page}", :order => "entries.end_page")
     
-    if @entries.size == 1
+    case @entries.size
+    when 1
       redirect_to entry_url(@entries.first)
+    when 0
+      render :action => 'show_none'
     else
-      render
+      render :action => 'show_multiple'
     end
   end
 end

@@ -11,6 +11,12 @@ class EntriesController < ApplicationController
     errors = []
     
     @near = params[:near]
+    
+    if !params[:volume].blank? && !params[:page].blank?
+      redirect_to "/citation/#{params[:volume]}/#{params[:page]}"
+      return
+    end
+    
     if params[:place_id]
       @place = Place.find(params[:place_id])
       with[:place_ids] = @place.id
@@ -244,9 +250,6 @@ class EntriesController < ApplicationController
                                )
       end
     end
-    members_of_congress = Sunlight::Legislator.all_in_zipcode(94110)
-    @senators = members_of_congress.reject{|l| l.title != 'Sen'}
-    @reps     = members_of_congress.reject{|l| l.title != 'Rep'}
   end
   
   def tiny_pulse
