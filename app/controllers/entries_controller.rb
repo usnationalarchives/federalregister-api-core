@@ -1,7 +1,8 @@
 class EntriesController < ApplicationController
-  caches_page :index, :by_date, :show
+  caches_page :index, :by_date, :show, :current_headlines
   
   include Geokit::Geocoders
+  
   def search
     with = {}
     
@@ -10,6 +11,12 @@ class EntriesController < ApplicationController
     errors = []
     
     @near = params[:near]
+    
+    if !params[:volume].blank? && !params[:page].blank?
+      redirect_to "/citation/#{params[:volume]}/#{params[:page]}"
+      return
+    end
+    
     if params[:place_id]
       @place = Place.find(params[:place_id])
       with[:place_ids] = @place.id
@@ -107,7 +114,23 @@ class EntriesController < ApplicationController
   end
   
   def index
-    @entries = Entry.find(:all, :limit => 200, :order => "publication_date DESC")
+    respond_to do |wants|
+      wants.html do
+        redirect_to entries_by_date_path(Entry.latest_publication_date)
+      end
+      wants.rss do
+        @entries = Entry.find(:all, :limit => 200, :order => "publication_date DESC")
+      end
+    end
+  end
+  
+  def current_headlines
+    @entries = Entry.all(
+        :include => :agency,
+        :conditions => {:publication_date => Entry.latest_publication_date},
+        :order => "entries.start_page"
+    )
+    render :layout => false
   end
   
   def by_date
@@ -189,6 +212,19 @@ class EntriesController < ApplicationController
                                )
       end
     end
+    
+    @granule_labels = []
+    @granule_values = []
+    @entries = []
+    @agencies.each do |agency|
+      @entries << agency.entries
+    end
+    @entries << @entries_without_agency
+    @entries = @entries.flatten
+    @entries.group_by(&:granule_class).each do |granule_class, entries|
+      @granule_labels << granule_class
+      @granule_values << entries.size
+    end
   end
   
   def show
@@ -214,5 +250,10 @@ class EntriesController < ApplicationController
                                )
       end
     end
+  end
+  
+  def tiny_pulse
+    entry = Entry.find_by_document_number!(params[:document_number])
+    redirect_to entry_path(entry)
   end
 end
