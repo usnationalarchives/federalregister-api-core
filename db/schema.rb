@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090831230437) do
+ActiveRecord::Schema.define(:version => 20090829164610) do
 
   create_table "agencies", :force => true do |t|
     t.integer  "parent_id"
@@ -66,7 +66,7 @@ ActiveRecord::Schema.define(:version => 20090831230437) do
   add_index "entries", ["document_number"], :name => "index_entries_on_document_number"
   add_index "entries", ["id", "publication_date"], :name => "index_entries_on_id_and_publication_date"
   add_index "entries", ["publication_date", "agency_id"], :name => "index_entries_on_publication_date_and_agency_id"
-  add_index "entries", ["volume", "start_page", "end_page"], :name => "index_entries_on_volume_and_start_page_and_end_page"
+  add_index "entries", ["start_page", "end_page"], :name => "index_entries_on_volume_and_start_page_and_end_page"
 
   create_table "entry_details", :force => true do |t|
     t.integer "entry_id"
