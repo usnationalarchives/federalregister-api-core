@@ -257,7 +257,7 @@ body
         :padding-left 1.5em
     &.bullets
       li
-        :list-style-type disc
+        :list-style-type disc !important
     &.raquo
       li
         :background url(/images/raquo3.png) no-repeat 4px 6px
@@ -277,6 +277,8 @@ body
     h1 
       :background-image none
       :float left
+    h2
+      :margin-bottom 0
     a.options
       :float right
     &.slide
@@ -751,7 +753,6 @@ form
     :display block
     :padding-left 47px
 .panel
-  :display none
   :padding-top 2em
   &.on
     :display block
