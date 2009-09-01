@@ -52,7 +52,7 @@
   <% parent_agency = agencies.pop %>
   <li class="parent_agency">
     <h3><%= link_to parent_agency.name, agency_path(parent_agency) %> (<%= parent_agency.entries.size%>)</h3>
-    <ul>
+    <ul class="raquo indent">
     <% parent_agency.entries.each do |entry| %>
       <li><%= link_to truncate(entry.title, :length => 100), entry_path(entry) %></li>
     <% end %>
@@ -73,7 +73,7 @@
   <% if @entries_without_agency.size > 0 %>
   <li class="parent_agency">
     <h3>Other Entries (<%= @entries_without_agency.size %>)</h3>
-    <ul>
+    <ul class="raquo indent">
     <% @entries_without_agency.each do |entry| %>
       <li><%= link_to truncate(entry.title, :length => 100), entry_path(entry) %></li>
     <% end %>

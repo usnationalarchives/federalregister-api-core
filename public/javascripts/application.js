@@ -26,6 +26,9 @@ $(document).ready(function() {
       });
       scrollable.setPage(index,0);
       
+      //init the tooltips for the now loaded list of items
+      loadToolTips();
+      
     }
   });
         
@@ -100,3 +103,35 @@ $(document).ready(function() {
   });
   
 });
+
+function loadToolTips() {
+        
+  //init tooltips for ticker
+  $("ul.items li a.entry").each(function(){
+    
+    $(this).qtip({
+      content: $(this).parent().children('div.tip'),
+      position: {
+          corner: {
+             target: 'bottomMiddle',
+             tooltip: 'topMiddle'
+          }
+      },
+      style: {
+       name: 'light',
+       padding: 5,
+       width: 530,
+       border: {
+         width: 7,
+         radius: 5,
+         color: '#ddd'
+         },
+      tip: { // Now an object instead of a string
+         corner: 'topMiddle', // We declare our corner within the object using the corner sub-option
+         color: '#ddd'
+        }   
+      }
+      
+    });
+  });
+}

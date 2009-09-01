@@ -1,4 +1,4 @@
-<ul class="entries">
+<ul class="entries indent">
 <% entry_places.sort_by_distance_from(Place.new(:latitude => lat, :longitude => long)).group_by(&:distance_groups).each do |distance, places| %>
     <% entries = places.map(&:recent_entries).flatten %>
     <% if entries.size > 0%>
