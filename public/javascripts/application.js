@@ -38,7 +38,6 @@ $(document).ready(function() {
   
   $("li.tooltip .info span.help_text").hide();
   $("li.tooltip .info a").each(function(){
-    //console.log($(this).closest('li').children('span.help_text').html());
     help_text = $(this).siblings("span.help_text").html();
     $(this).qtip({
        content: {
@@ -69,9 +68,6 @@ $(document).ready(function() {
     agency_scrollable.seekTo(index);
     $(el).parent().siblings().removeClass("on");
     $(el).parent().addClass("on");
-    console.log(agency_scrollable.getItems());
-    console.log(agency_scrollable.getPageIndex());
-    console.log(agency_scrollable.getConf());
   });
   
   
