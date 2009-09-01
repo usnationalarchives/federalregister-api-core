@@ -3,11 +3,11 @@
     <% year  = entries.first.publication_date.strftime("%Y") %>
     <% month = entries.first.publication_date.strftime("%m") %>
     <h3><%= mnth_year %></h3>
-    <ul>
+    <ul class="indent">
     <% entries.group_by(&:publication_date).each do |pub_date, entries| %>  
       <li>
         <h4><%= link_to pub_date.to_formatted_s(:day_date), entries_by_date_path(pub_date) %></h4>
-        <ul>
+        <ul class="indent raquo">
           <% entries.each do |entry| %>  
             <li><%= link_to entry.title, entry_path(entry) %></li>
           <% end %>

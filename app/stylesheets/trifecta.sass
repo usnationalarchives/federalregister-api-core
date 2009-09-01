@@ -32,6 +32,12 @@ body
     &.right
       :background url(/images/ticker_pulse_right2.png) no-repeat -2px top      
       :right 0
+  p.loading
+    :color #333333
+    :height 29px
+    :line-height 29px
+    :margin 0
+    :text-align center
   div.tip
     :display none
   .counter
@@ -240,17 +246,23 @@ body
       :padding 0 0 5px 0
       ul
         :padding 0
-        :margin-left 15px
+        /:margin-left 15px
         ul
-          :margin-left 15px
+          /:margin-left 15px
           :clear left
     li.group
       :padding 0 0 15px 0
     &.indent
-      :padding-left 1.5em
+      li
+        :padding-left 1.5em
     &.bullets
       li
         :list-style-type disc
+    &.raquo
+      li
+        :background url(/images/raquo3.png) no-repeat 4px 6px
+      li.agency
+        :background none
   ul.btn
     li
       :padding 0

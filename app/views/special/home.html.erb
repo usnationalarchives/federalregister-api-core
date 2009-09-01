@@ -24,7 +24,7 @@
 <% if !@closing_soon.empty? %>
   <div class="clear marginTop">
     <h2>Comments Closing Soon</h2>
-    <ul class="indent marginTop">
+    <ul class="indent marginTop raquo">
     <% @closing_soon.each do |date| %>
       <li><%= link_to date.entry.title, entry_path(date.entry) %></li>
     <% end %>
