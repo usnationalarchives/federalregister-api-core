@@ -87,15 +87,18 @@
 
 
 <% content_for :sidebar do %>
-  <h3>Speak Up</h3>
+  <h3>
+    Speak Up 
+    <span class='small_link'>(<%= link_to 'change location', edit_location_path %>)</span>
+  </h3> 
   
   <% if !@entry.comment_url.blank? && (@entry.comments_close_date.nil? || @entry.comments_close_date >= Date.today) %>
     <p><%= link_to "Submit a formal comment", @entry.comment_url %>. The agency is required to respond in a future FR entry.</p>
   <% end %>
   <div id="congress">
-    <h5>Your Senators (<%= link_to 'change location', edit_location_path %>)</h5>
+    <h5>Your Senators</h5>
     <p>loading...</p>
-    <h5>Your Representative (<%= link_to 'change location', edit_location_path %>)</h5>
+    <h5>Your Representative</h5>
     <p>loading...</p>
   </div>
 
