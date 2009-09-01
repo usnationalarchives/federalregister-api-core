@@ -26,6 +26,7 @@ Rails::Initializer.run do |config|
   config.gem "fastercsv", :version => '1.4.0'
   config.gem "amatch", :version => '0.2.3'
   
+  config.gem "patron", :version => "0.4.2"
   # sunlight gem and dependencies
   config.gem "json", :version => '1.1.7'
   config.gem "ym4r", :version => '0.6.1'
