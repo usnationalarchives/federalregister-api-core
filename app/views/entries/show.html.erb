@@ -23,7 +23,7 @@
       <% if !@entry.document_number.blank?     %><dt>Federal Register Document Number:</dt>
         <dd><%= @entry.document_number %> (<% [:html, :text, :pdf].each do |format| %>
                                                <%= link_to format, @entry.source_url(format), :class => format %>
-                                           <% end %>)</dd><% end %>
+                                           <% end %><%= link_to( 'regulations.gov', "http://www.regulations.gov/search/Regs/home.html#documentDetail?R=#{@entry.regulationsdotgov_id}") unless @entry.regulationsdotgov_id.blank? %>)</dd><% end %>
       <% agency = display_agencies_for_entry(@entry) %>
       <% if !agency.blank?                     %><dt>Publishing Agency:</dt><dd><%= display_agencies_for_entry(@entry)              %></dd><% end %>
       <% if !@entry.dates.blank?               %><dt>Dates:</dt>            <dd><%= text_with_links(@entry, @entry.dates)           %></dd><% end %>
@@ -88,6 +88,10 @@
 
 <% content_for :sidebar do %>
   <h3>Speak Up</h3>
+  
+  <% if !@entry.comment_url.blank? && (@entry.comments_close_date.nil? || @entry.comments_close_date >= Date.today) %>
+    <p><%= link_to "Submit a formal comment", @entry.comment_url %>. The agency is required to respond in a future FR entry.</p>
+  <% end %>
   <div id="congress">
     <h5>Your Senators (<%= link_to 'change location', edit_location_path %>)</h5>
     <p>loading...</p>
