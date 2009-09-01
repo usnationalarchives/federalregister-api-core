@@ -1,44 +1,30 @@
+<% add_column_class('home') %>
 <% content_for :precolumn do %>
           
     <div class="infobox">
       <p class="fed">The Federal Register at your fingertips.</p>
+      <p class='copy'>
+        The Federal Register is the official journal of the federal government of the United States. In it, you'll 
+        find any kind of proposal, notification, or solicitation for data that a federal agency puts out. It's the 
+        pulse of your government.
+      </p>
+      <p class='copy'> 
+        For much of it's existence the Federal Register has had no easily accessible form. 
+        <span class='gray'>gov</span><span class='orange'>pulse</span> seeks to change this and enable you to respond to your government. We give you a 
+        way to browse the Register (from 1994 on) and use filters to decide what is important to you. And then act on it.
+      </p>
       <p class="fed alt">A million pages finally accessible.</p>      
     </div>
     
-    <div class="ornament" />
 <% end %>
 
-<div class="currentevents group">
-  
-  <div class="header group">
-    <h2><%= link_to "Current Issue is #{@last_date.to_formatted_s(:pretty)}", entries_by_date_path(@last_date) %> <span>(<%= @entries.length %> entries)</span></h2>
-  </div>
-  
-  <div class="header slide">
-    <div class="daily group">
-      <ul class="items">
-      <% @entries.each_with_index do |entry, i| %>
-        <li>
-          <!-- <p class="number"><%= i+1 %></p> -->
-          <%= link_to truncate(entry.title, :length => 100), entry_path(entry), :class => "entry" %>
-          <% if entry.agency %>
-            <%= link_to(entry.agency.name, agency_path(entry.agency), :class => "agency") %>
-          <% else %>
-            <%# TODO: HELP-DESIGN: clean up styles so no <a> tag is necessary %>
-            <a class="agency"><%= entry.primary_agency_raw.downcase.capitalize_most_words %></a>
-          <% end %>
-        </li>
-      <% end %>
-      </ul>
-    </div>
-  </div>
-  
-</div>
+<h3>View Entries Near</h3>
+<%= render :partial => 'maps/location_search_form', :locals => {:location => nil} %>
 
 <% if !@closing_soon.empty? %>
   <div class="clear marginTop">
     <h2>Comments Closing Soon</h2>
-    <ul class="indent">
+    <ul class="indent marginTop">
     <% @closing_soon.each do |date| %>
       <li><%= link_to date.entry.title, entry_path(date.entry) %></li>
     <% end %>
@@ -49,7 +35,7 @@
 <% if !@recently_opened.empty? %>
   <div class="clear marginTop">
     <h2>Comments Recently Opened</h2>
-    <ul class="indent">
+    <ul class="indent marginTop">
     <% @recently_opened.each do |date| %>
       <li><%= link_to date.entry.title, entry_path(date.entry) %></li>
     <% end %>
@@ -59,9 +45,21 @@
 
 
 <% content_for :sidebar do %>
-  <h3>View Entries Near</h3>
-  <%= render :partial => 'maps/location_search_form', :locals => {:location => nil} %>
-  
-  <%= render :partial => 'agencies/featured', :locals => {:featured_agencies => @featured_agencies} %>
+  <h3>Vote for govpulse!</h3>
+  <p>
+    <a href="http://labs-beta.sunlightlabs.com/aa2judging/" title="Apps for America 2 Voting Page" class="vote"><img src="/images/vote.png" alt="Vote Govpulse"/></a>
+    We are pleased to announce that 
+    <a href="http://www.programmableweb.com/mashup/govpulse" title="govpulse" class="govpulse">gov<span>pulse</span></a> 
+    has been selected as a finalist in the 
+    <a href="http://sunlightlabs.com/contests/appsforamerica2/" title="Apps for America 2: The Data.gov Challenge">Apps for America 2</a> 
+    contest by <a href="http://www.sunlightlabs.com/" title="Sunlight Labs">Sunlight Labs</a>!
+  </p>
+  <p>Please take the a moment to <strong>vote for us</strong>!  Here's how, please read all the instructions as it is not the most intuitive system:</p>
+  <ol>
+    <li><a href="http://labs-beta.sunlightlabs.com/accounts/register/" title="Register for an account at Sunlight Labs" target="_blank"><strong>Register at Sunlight Labs.</strong></a>  It's quick and unobtrusive, no surveys to fill out and no spam to receive; <strong>just a username, email and password needed</strong>. Subsequent profile information is <i>not</i> needed for voting.  The registration page will open in a <strong>*new* window</strong>.  Once you have made an account, just close it and move on to step 2. </li>
+    <li><a href="http://labs-beta.sunlightlabs.com/aa2judging/" title="Apps for America 2 Voting Page"><strong>Vote for govpulse!</strong></a> Choose govpulse from the list and click Vote.</li>
+  </ol>
+  <p>Voting ends <strong>September 7th</strong>, so vote soon!</p>
+  <%= render :partial => 'agencies/pulse', :locals => {:featured_agencies => @featured_agencies} %>
 <% end %>
 

@@ -4,9 +4,14 @@
 <head>
   <title>govpulse<%= " | #{yield :title}" if yield(:title) %></title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <meta name="description" content="..." />
-  <meta name="keywords" content="..." />
-  <meta name="author" content="..." />
+  <meta name="keywords" content="government federal register executive rulings notices govpulse" />
+  <meta name="author" content="Andrew Carpenter, Bob Burbach, Dave Augustine" />
+  
+  <%# Facebook uses these for parsing when someone adds a link  %>
+  <%= content_tag(:meta, nil, :name => 'title', :content => @entry.title) if @entry %>
+  <%= content_tag(:meta, nil, :name => 'description', :content => truncate(strip_tags(@entry.abstract), :length => 300)) if @entry %>
+  <link rel="image_src" href="http://www.govpulse.us/images/fbdisplay.jpg" />
+  <meta name="medium" content="news" />
   
   <%= stylesheet_link_tag "screen", :media => :screen %>
   <%= stylesheet_link_tag "trifecta", :media => :screen %>
@@ -18,6 +23,7 @@
   <%= javascript_include_tag 'jrails.js'                %>
   <%= javascript_include_tag 'application.js'           %>
   <%= javascript_include_tag 'jquery.sparkline.min.js'  %>
+  <%= javascript_include_tag 'jquery.cookie.js'  %>
   <%= javascript_include_tag 'jquery.tools.min.js'      %>
   <%= javascript_include_tag 'jquery.qtip-1.0.0-rc3.js' %>
   <%= javascript_include_tag 'jquery.filter.js'         %>
@@ -27,6 +33,7 @@
   <%= javascript_include_tag 'tagcloud.js' %>
   <%= javascript_include_tag 'jquery.labelify.js' %>
 
+
   <%= yield :javascripts %>
 
   <%= yield :feeds %>
@@ -35,9 +42,10 @@
 
   <!-- WRAPPER -->
   <div id="wrapper" class="group">
-
+    
     <!-- HEADER -->
     <div id="header">
+      
       <div class="capitol"></div>      
       
       <div class="type">
@@ -45,26 +53,8 @@
       </div>
 
     </div>
-      <div id="nav">
-        <div class="search">
-          <form action="<%= entries_search_path %>" method="get">
-            <!--Search--> 
-            <%= text_field_tag :q, @search_term,  :title => "Search govpulse" %>
-            <%= submit_tag '', :class => "search_btn" %>
-          </form> 
-        </div>    
-        <ul>
-          <% @last_date ||= Entry.latest_publication_date %>
-          <li><%= link_to 'By Agency', agencies_path, :title => "Browse by Agency" %> / </li>
-          <li><%= link_to 'By Date Published', entries_by_date_path(@last_date, :show_calendars => true), :title => "Browse by Date" %> / </li>          
-          <li><%= link_to 'By Event Date', events_month_path(Date.today.year, sprintf("%02d", Date.today.month)), :title => "Browse by Event Date" %> /</li>
-          <li><%= link_to 'By Topic', topic_groups_path, :title => "Browse by Topic" %> / </li>
-          <li><%= link_to 'By Location', maps_path, :title => "View entries by location" %> / </li>
-          <li><%= link_to 'Search', entries_search_path, :title => 'Search Entries' %> / </li>
-          <li><%= link_to 'About', about_path, :title => "About the project" %></li>
-        </ul>
-      </div>      
-  <!-- HEADER end -->
+    <%= render :partial => 'layouts/navigation', :locals => {:last_date => @last_date, :search_term => @search_term} %>
+    <!-- HEADER end -->
   
     <!-- MAIN -->
     <div id="main" class="group<%= ' cols' if yield :sidebar %>">
@@ -84,7 +74,7 @@
       <!-- content -->
       <div class="content">
           <% if yield :search_form %>
-            <form method="get">
+            <form method="get" action="/entries/search">
           <% end %>    
               
           <% if yield :precolumn %>
@@ -93,12 +83,12 @@
             </div>
           <% end %>
           
-          <div class="col1">
+          <div class="col1 <%= yield :column_class %>">
             <%= yield %>
           </div>
           
           <% if yield :sidebar %>
-          <div class="col2">
+          <div class="col2 <%= yield :column_class %>">
             <div class="sidebar">
               <%= yield :sidebar %>
             </div>
@@ -108,10 +98,8 @@
           <% if yield :search_form %>
             </form>
           <% end %>    
-          
       </div>
       <!-- content end -->
-      
       
     </div>
     <!-- MAIN end -->
@@ -120,20 +108,18 @@
   <!-- WRAPPER end -->
 
 
-    <!-- FOOTER -->
-    <div id="footer">
-      <h4>Copyright 2009</h4>
-    </div>
-    <!-- FOOTER end -->
-
-<script type="text/javascript">
-var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
-document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
-</script>
-<script type="text/javascript">
-try {
-var pageTracker = _gat._getTracker("UA-10151599-1");
-pageTracker._trackPageview();
-} catch(err) {}</script>
+  <!-- FOOTER -->
+  <div id="footer">
+    <%= render :partial => 'layouts/footer' %>
+  </div>
+  <!-- FOOTER end -->
+    
+  <div id="ticker_container">
+    <!-- TICKER -->
+    <div id="ticker">
+    </div>  
+  </div>
+    
+  <%= render :partial => 'layouts/google_analytics' %>  
 </body>
 </html>

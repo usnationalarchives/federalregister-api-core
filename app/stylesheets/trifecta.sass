@@ -3,25 +3,87 @@
 html
   :background url(/images/main_bg_left.png) repeat-y top left 
 body
-  :background url(/images/main_bg_right2.png) repeat-y top right  
+  :background url(/images/main_bg_right.png) repeat-y top right  
   :min-height 100%
   :margin-bottom -150px
   :position relative
 #wrapper
-  :background url(/images/header_bottomshadow4.png) repeat-x left 161px
+  :background url(/images/header_bottomshadow4.png) repeat-x left 189px
+#ticker_container
+  :height 30px
+  :position absolute  
+  :top 0 
+  :width 100%
+  :z-index 5999  
+#ticker
+  :background url(/images/ticker_bg3.png) no-repeat left top
+  :height 30px
+  :margin 0 auto
+  :position relative  
+  :width 950px
+  .pulse
+    :height 26px
+    :position absolute
+    :top 3px
+    :width 147px
+    &.left
+      :background url(/images/ticker_pulse_left2.png) no-repeat 2px top
+      :left 0
+    &.right
+      :background url(/images/ticker_pulse_right2.png) no-repeat -2px top      
+      :right 0
+  div.tip
+    :display none
+  .counter
+    :left 115px
+    :position absolute
+    :top 5px
+  .date
+    :border-right 1px solid #ccc
+    :color #636363
+    :float left
+    :font-weight bold
+    :height 29px    
+    :line-height 29px
+    :margin 0 10px 0 100px    
+    :padding-right 10px
+  .daily
+    :height 30px
+    :float left
+    :position relative    
+    :overflow hidden    
+    :width 600px
+    ul
+      :height 30px
+      :margin 0
+      :position absolute
+      :width 99999px
+      li 
+        :float left
+        :height 30px
+        :line-height 29px
+        :list-style none
+        :width 600px
+        a 
+          :color #005B81
+          :text-decoration none
+          &:hover 
+            :color #fa6900
 #header
-  :background url(/images/header_bg.png) repeat-x top left
+  :background #f5f8f9 url(/images/header_bg.png) repeat-x bottom left
   :border-left 1px solid #27338b  
   :border-right 1px solid #27338b
-  :height 121px   
+  :height 151px   
   :position relative
-  :z-index 9999
+  :z-index 5999
   .type
     :background url(/images/header_type.png) no-repeat top left
     :display block
     :float left
     :height 61px
-    :margin 30px 0 0 40px
+    :left 20px
+    :position absolute    
+    :top 60px    
     :width 277px    
     a
       :display block
@@ -30,22 +92,24 @@ body
     h1
       :text-indent -9999px
   .capitol
-    :background url(/images/header_capitol.png) no-repeat top left
+    :background url(/images/header_capitol4.png) no-repeat  60px bottom
     :display block
-    :float right
-    :height 121px  
+    :position absolute
+    :right 0
+    :bottom 0
+    :height 100%  
     :width 345px
 #nav
   :background-color #005b81
-  :border-bottom 10px solid #39505e
+  :border-bottom 5px solid #39505e
   :float left
-  :height 30px
-  :padding 5px 0 
+  :height 25px
+  :padding 3px 0 5px 0 
   :width 100%
   .search
     :float right
     :height 25px
-    :margin 4px 0 0 0
+    :margin 2px 0 0 0
     :padding 0 0 0 0    
     :width 220px
     form
@@ -77,8 +141,8 @@ body
         :width 15px   
   ul
     :float left
-    :margin 5px 0 0 0
-    :padding 0 0 0 40px
+    :margin 2px 0 0 0
+    :padding 0 0 0 20px
     li
       :color #aaa
       :float left
@@ -87,7 +151,7 @@ body
       :margin-right 5px
       a
         :color #fff
-        :font 100% "Lucida Grande", "Trebuchet MS", Verdana, sans-serif
+        :font .8em "Lucida Grande", "Trebuchet MS", Verdana, sans-serif
         :text-decoration none
         :text-transform uppercase
         &:hover
@@ -102,6 +166,16 @@ body
 #main
   :clear both 
   :margin-top -9px !important
+  .govpulse
+    :color #5b5b5b
+    span
+      :color #fa6900
+    &:hover
+      :color #5b5b5b
+    
+  .vote
+    :float left
+    :margin 0 10px 0 0
   h1  
     :background url(/images/hr_bg3.png) no-repeat bottom center
     :color #46565c
@@ -116,7 +190,7 @@ body
     :color #46565c  
     :font 2em Georgia,"Times New Roman",Serif
     :font-variant small-caps
-    :margin 0   
+    :margin 0 0 .5em 0  
     span
       :font-size .6em  
   h3
@@ -153,6 +227,10 @@ body
     &:hover
       :color #cf8227
     &:active
+  span.gray
+    :color #7D7D7D
+  span.orange
+    :color #fa6900
   ul
     /:padding 10px 0 0 0
     :padding 0
@@ -169,7 +247,7 @@ body
     li.group
       :padding 0 0 15px 0
     &.indent
-      :padding-left 25px
+      :padding-left 1.5em
     &.bullets
       li
         :list-style-type disc
@@ -194,11 +272,29 @@ body
     &.search
       :padding 10px
     &.calendar
-      :position relative
+      :position relative    
   .content
     :min-height 600px
     :padding 20px 0
     .precolumn
+      ul.agency_precolumn
+        li
+          :float left
+          :margin 0 20px 20px 0
+        li#col1
+          :width 270px
+          div.pulses
+            :height 70px
+        ul
+          li
+            :clear both
+            :margin 0
+      div.tag_cloud
+        div.fancy
+          :position relative
+          :width 230px 
+          :height 230px 
+          :overflow hidden
       .large_map
         :width 900px
         :height 400px
@@ -209,18 +305,32 @@ body
           :opacity 1
         div.wml-copyright-text
           :width 900px
+      .medium_map  
+        :width 390px 
+        :height 320px
+        div.wml-info-window-content
+          ul
+            :margin 0
+            li
+              :margin-left 10px
       .infobox
         :padding 1em 0
+        :margin 0 0 20px 0
         p
           :clear both    
-          :font 330% Georgia,"Times New Roman",Serif
           :margin 0
           :text-align center
-          :width 100%
           &.fed
+            :width 100%
+            :font 250% Georgia,"Times New Roman",Serif
             :color #46565C
             &.alt
               :color #fa6900
+              :font-size 200%
+          &.copy
+            :width 700px
+            :text-align justify
+            :margin 10px auto
           &.stats
             span.num
               :display block
@@ -300,8 +410,9 @@ body
         h3 + ul
           :padding 0
         .small_map  
-          :width 230px 
+          :width 250px 
           :height 350px
+          :margin 0 0 10px 7px
           div.wml-info-window-content
             ul
               :margin 0
@@ -317,12 +428,52 @@ body
               :margin 0
               &:focus
                 :outline none
+        div.featured_agencies
+          :position relative
+          :overflow hidden
+          :width 345px
+          :height 414px
+          ul.staticAgencyList
+            :position absolute
+            :top 0
+            :left 0
+            :z-index 5999
+          a.agencyHidden
+            :visibility hidden
+          div.items
+            :width 5000px
+            :position absolute
+            :clear both
+            &.pulses
+              :width 1300px
+            ul.pulse_list
+              :float left
+              :width 345px
         div.tag_cloud
           div.fancy
             :position relative
             :width 230px 
             :height 230px 
             :overflow hidden
+        ul.social
+          li
+            :padding 5px 0 5px 30px 
+          li#twitter
+            :background url(/images/social/tweeter_24x24.png) no-repeat top left
+          li#facebook
+            :background url(/images/social/facebook_24x24.png) no-repeat top left
+          li#digg
+            :background url(/images/social/digg_24x24.png) no-repeat top left
+          li#reddit
+            :background url(/images/social/reddit_24x24.png) no-repeat top left
+        span.social
+          :display block
+          :width 290px
+        ul.congressional_members
+          :padding 0 0 0 10px
+          li.member_info
+            span.member_details
+              :display none
     .currentevents 
       :vertical-align text-top  
       .header
@@ -377,14 +528,14 @@ body
     li
       :border 1px solid #747d87
       :float left
-      :margin-right 13px
+      :margin-right 5px
       :-moz-border-radius 5px
       :-webkit-border-radius 5px
       a
         :color #747d87
         :display block
         :font-weight bold
-        :padding 3px 10px
+        :padding 0 5px
         :text-decoration none
         &:hover
           :background #747d87
@@ -401,6 +552,28 @@ body
         a
           :padding 1px 2px 
           :text-align center
+    li.livesearch 
+      :background #fff    
+      :-moz-border-radius 0
+      :-webkit-border-radius 0  
+      :float right  
+      :height 18px    
+      :line-height 16px
+      input
+        :border none
+        :color #747d87  
+        :margin 0 5px
+        :padding 0
+        :background transparent
+        :width 114px
+        :height 18px
+        &:focus
+          :outline none
+      &.on 
+        :border-width 2px    
+        :height 16px  
+        :line-height 14px   
+          
   ul.count
     :margin 0
     :padding 0
@@ -545,7 +718,7 @@ body
     :padding 5px
     :*padding 0 3px
     &:hover
-      :background url(/images/btn_bg2_hover.png) repeat-x left 50%
+      :background url(/images/btn_bg2_hover.png) repeat-x left 50%     
 div.ornament
   :background url(/images/hr_bg3.png) no-repeat top center
   :display block
@@ -575,33 +748,54 @@ body #footer
   :background  #5a5a5a
   :border-top 4px solid #9b9b9b 
   :clear both
-  :height 150px
   :padding 2em 0 0 0
-  :position relative
+  :position absolute
+  :width 100%
+  :color #FFFFFF
+  a
+    :color #CF8227
+  a.hover
+    :color #005B81
   h4
     :color #aaa
     :text-align center
-  .sitemap
-    :padding 2em 0 0 2em
-    h4
-      :color #fff
-      :font 175% serif
-      :margin 0 0 0 0
-    ul
-      :float left
-      :margin 0 0 0 1em
-      li
-        :list-style-type none
-        a
-          :color #989898
-          :font-size 125%
-          :text-decoration none
-  .legal
-    :padding 2em 0 0 0
-    h4
-      :color #fff
-      :font 125% serif
+  ul
+    li
+      :list-style none
+  div.right
+    :width 300px
+    :float right
+    :margin 0 25px 10px 0
+  ul.contact
+    li
+      :padding 5px 0 5px 30px 
+      a
+        :padding 0 0 3px 0
+    li#twitter
+      :background url(/images/social/tweeter_24x24.png) no-repeat top left
+    li#facebook
+      :background url(/images/social/facebook_24x24.png) no-repeat top left 
+.qtip-content
+  :border 1px solid #ccc
+  .tip
+    :padding 1em 1em 0 1em
+    .entry
+      :color #dedede
+      :font-size 50px
+      :font-weight bold
+      :margin 0
       :text-align center
+    dl
+      dt
+        :border-bottom 1px solid #ccc
+        :color #fa6900
+        :font-weight bold
+        :margin-bottom 2px
+        :padding-bottom 2px
+        :text-transform uppercase
+      dd
+        :color #39505e
+        :margin 0 0 1em 1em
 .floatLeft
   :float left
 .floatRight
@@ -610,7 +804,6 @@ body #footer
   :margin-top 10px
 .marginBottom
   :margin-bottom 10px !important  
-  
 ul.tag_cloud
   +tag-cloud(1.1em)
   li

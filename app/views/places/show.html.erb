@@ -1,10 +1,10 @@
-<% title "Most Recent Entries mentioning #{@location.name}", :body => false %>
+<% title "Explore #{@location.name}"%>
 <% feed_autodiscovery url_for(params.merge(:format => :rss)) %>
 
 <% if !@places.nil? %>
   <% add_javascript { @map.to_js } %>
   <% content_for :precolumn do %>
-      <div id="map" class='large_map'></div>    
+    <div id="map" class='large_map'></div>    
   <% end %>
 <% end %>
 
@@ -25,6 +25,9 @@
 <% end %>
 
 <% content_for :sidebar do %>
+  <h3>View Other Entries Near</h3>
+  <%= render :partial => 'maps/location_search_form', :locals => {:location => @location} %>
+
   <% unless @entries.blank? %>
     <h3>Agencies active within <%= pluralize(@dist, 'mile') %></h3>
     
