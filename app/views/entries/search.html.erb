@@ -24,15 +24,18 @@
         which entries to view.
       </p>
     </div>
+    
   <% end %>
 <% end %>
-
 
 <div class="header search group">
   <ul>
     <li class="simple"><label>Keywords:</label><%= text_field_tag :q, @search_term %></li>
     
     <li class="simple"><label>Agency:</label><%= select_tag 'agency_id', options_for_select([''] + @agencies.collect{ |agency| [agency.name, agency.id.to_s] }, :selected => params[:agency_id]) %></li>
+    
+    <li class="simple"><label>Citation:</label>
+      <%= render :partial => 'citations/form' %></li>
   </ul>
   
   <%= submit_tag 'Search', :class => 'btn' %>
