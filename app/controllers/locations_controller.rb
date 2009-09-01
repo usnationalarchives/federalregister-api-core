@@ -22,9 +22,9 @@ class LocationsController < ApplicationController
         Sunlight::Legislator.all_for(:latitude => current_location.lat, :longitude => current_location.lng)
       end
       
-      @senators = members_of_congress.values_at(:senior_senator, :junior_senator)
-      @reps     = members_of_congress.values_at(:representative)
-    
+      @senators = members_of_congress.values_at(:senior_senator, :junior_senator).reject &:nil?
+      @reps     = members_of_congress.values_at(:representative).reject &:nil?
+      
       render :layout => false
     else
       render :text => ''
