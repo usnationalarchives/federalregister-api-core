@@ -250,9 +250,6 @@ class EntriesController < ApplicationController
                                )
       end
     end
-    members_of_congress = Sunlight::Legislator.all_in_zipcode(94110)
-    @senators = members_of_congress.reject{|l| l.title != 'Sen'}
-    @reps     = members_of_congress.reject{|l| l.title != 'Rep'}
   end
   
   def tiny_pulse
