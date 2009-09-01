@@ -1,5 +1,13 @@
 <% title @entry.title %>
 
+<% content_for :javascripts do %>
+<script>
+  $(document).ready(function() {
+    $('#congress').load('/location/congress');
+  });
+</script>
+<% end %>
+
 <% if @entry.abstract %>
   <h3>Abstract</h3>
   <p class='abstract'>
@@ -79,15 +87,14 @@
 
 
 <% content_for :sidebar do %>
-
   <h3>Speak Up</h3>
-  <h5>Your <%= pluralize(@senators.size, 'Senator').split(' ')[1] %></h5>
-  <%= render :partial => 'congressional_members', :locals => {:members => @senators} %>
+  <div id="congress">
+    <h5>Your Senators (<%= link_to 'change location', edit_location_path %>)</h5>
+    <p>loading...</p>
+    <h5>Your Representative (<%= link_to 'change location', edit_location_path %>)</h5>
+    <p>loading...</p>
+  </div>
 
-  <h5>Your <%= pluralize(@reps.size, 'Representative').split(' ')[1] %></h5>
-  <%= render :partial => 'congressional_members', :locals => {:members => @reps} %>
-  
-  
   <h3>Gather a Crowd</h3>
   <ul class='social'>
     <li id='twitter'    ><%= link_to_twitter(@entry)         %></li>
