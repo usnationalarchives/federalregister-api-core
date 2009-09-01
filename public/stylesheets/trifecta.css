@@ -612,11 +612,14 @@ body {
   padding-right: 5px;
 }
 /* line 418, ../../app/stylesheets/trifecta.sass */
-#main .content .col2 .sidebar span.small_link {
-  float: right;
+#main .content .col2 .sidebar .hAction {
   position: relative;
-  top: -16px;
+}
+/* line 420, ../../app/stylesheets/trifecta.sass */
+#main .content .col2 .sidebar .hAction span.small_link {
   font-size: 85%;
+  position: absolute;
+  right: 0;
 }
 /* line 425, ../../app/stylesheets/trifecta.sass */
 #main .content .col2 .sidebar ul li {
