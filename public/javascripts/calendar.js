@@ -72,6 +72,5 @@ function change_link(el) {
 
 function rewrite_url(el) {
   date = $(el).attr('href').replace(/.*#entry_/, '');
-  console.log(date);
   window.location.href = '/entries/'+date;
 }
