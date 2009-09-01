@@ -79,7 +79,7 @@ $(document).ready(function() {
   /* Hide and show congressional member details */
   /*                                            */
   
-  $("ul.congressional_members li.member_info a").bind('click', function() {
+  $("ul.congressional_members li.member_info a").live('click', function() {
     el = $(this);
     
     li = el.closest('li');
