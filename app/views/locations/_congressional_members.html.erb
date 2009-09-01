@@ -6,11 +6,11 @@
     <%= link_to('(view details)', "##{member.fec_id}") %>
     <span id='<%= member.fec_id %>' class='member_details'>
       <ul>
-        <% if member.phone             %><li>Phone:     <%= member.phone                                       %></li><% end %>
-        <% if member.fax               %><li>Fax:       <%= member.fax                                         %></li><% end %>
-        <% if member.website           %><li>Website:   <%= link_to(member.website, member.website)            %></li><% end %>
-        <% if member.email             %><li>Email:     <%= member.email                                       %></li><% end %>
-        <% if member.congress_office   %><li>Address:   <%= member.congress_office                             %></li><% end %>
+        <% if !member.phone.blank?           %><li>Phone:     <%= member.phone                                       %></li><% end %>
+        <% if !member.fax.blank?             %><li>Fax:       <%= member.fax                                         %></li><% end %>
+        <% if !member.website.blank?         %><li>Website:   <%= link_to(member.website, member.website)            %></li><% end %>
+        <% if !member.email.blank?           %><li>Email:     <%= member.email                                       %></li><% end %>
+        <% if !member.congress_office.blank? %><li>Address:   <%= member.congress_office                             %></li><% end %>
       </ul>
     </span>  
   </li>

@@ -17,10 +17,14 @@ class LocationsController < ApplicationController
   end
   
   def congress
-    members_of_congress = Sunlight::Legislator.all_for(:latitude => current_location.lat, :longitude => current_location.lng)
-    @senators = members_of_congress.values_at(:senior_senator, :junior_senator)
-    @reps     = members_of_congress.values_at(:representative)
+    if current_location.is_us?
+      members_of_congress = Sunlight::Legislator.all_for(:latitude => current_location.lat, :longitude => current_location.lng)
+      @senators = members_of_congress.values_at(:senior_senator, :junior_senator)
+      @reps     = members_of_congress.values_at(:representative)
     
-    render :layout => false
+      render :layout => false
+    else
+      render :text => ''
+    end
   end
 end
