@@ -53,15 +53,15 @@
   <ol class="results">
     <% @entries.each do |entry| %>
     <li>
-      <h4 class="title"><%= link_to entry.excerpts.title, entry_path(entry) %></h4>
+      <h4 class="title"><%= link_to sanitize(entry.excerpts.title, :tags => %w(span), :attributes => %w(class)), entry_path(entry) %></h4>
       
       <div class="result_info">
         <span class="date"><%= entry.publication_date %></span>
         <span class="excepts"><%= 
           if @search_term.blank? || entry.excerpts.full_text_raw.blank?
-            entry.excerpts.abstract
+            sanitize entry.excerpts.abstract, :tags => %w(span), :attributes => %w(class)
           else
-            entry.excerpts.full_text_raw
+            sanitize entry.excerpts.full_text_raw, :tags => %w(span), :attributes => %w(class)
           end %></span>
         <br />
         <span class="agency"><%= entry.agency ? link_to(entry.agency.name, agency_path(entry.agency)) : entry.primary_agency_raw %></span>
