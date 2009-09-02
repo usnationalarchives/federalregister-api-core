@@ -16,17 +16,17 @@ $(document).ready(function() {
       $("ul.agencyList li").hide().find("a:regex('^[" + $(this).html() + "]')").parent().show();
   });
 
-  $("ul.filter li:first a").trigger("click");
-  
-  $("ul.about li a").bind("click", function(e){
-    e.preventDefault();
-    $("ul.about li").removeClass("on");
-    $(this).parent().addClass("on");
-    
-    $(".panel:not("+ $(this).attr('href') +")").removeClass("on").hide();
-    $( $(this).attr('href') ).show().addClass("on");
-        
-  });
+  // $("ul.filter li:first a").trigger("click");
+  //   
+  //   $("ul.about li a").bind("click", function(e){
+  //     e.preventDefault();
+  //     $("ul.about li").removeClass("on");
+  //     $(this).parent().addClass("on");
+  //     
+  //     $(".panel:not("+ $(this).attr('href') +")").removeClass("on").hide();
+  //     $( $(this).attr('href') ).show().addClass("on");
+  //         
+  //   });
   
   $("ul.filter li.livesearch input").bind("keyup", function(e){
     $("ul.agencyList li").hide().find("a:regex('\\b" + $(this).attr("value") + "')").parent().show();
