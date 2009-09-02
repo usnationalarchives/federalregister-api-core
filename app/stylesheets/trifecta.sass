@@ -257,7 +257,7 @@ body
         :padding-left 1.5em
     &.bullets
       li
-        :list-style-type disc
+        :list-style-type disc !important
     &.raquo
       li
         :background url(/images/raquo3.png) no-repeat 4px 6px
@@ -277,6 +277,8 @@ body
     h1 
       :background-image none
       :float left
+    h2
+      :margin-bottom 0
     a.options
       :float right
     &.slide
@@ -413,12 +415,12 @@ body
     .col2
       .sidebar
         :padding-right 5px
-        span.small_link
-          :float right
+        .hAction
           :position relative
-          :top -16px
-          :font-size 85%
-          &a
+          span.small_link            
+            :font-size 85%
+            :position absolute
+            :right 0
         ul
           li
             :list-style-type none
@@ -436,16 +438,6 @@ body
               :margin 0
               li
                 :margin-left 10px
-        .search
-          /:background url(/images/search_bg.png) no-repeat top left
-          :height 25px
-          :margin 10px 0 20px 0
-          :padding 0 10px 0 0    
-          form
-            input
-              :margin 0
-              &:focus
-                :outline none
         div.featured_agencies
           :position relative
           :overflow hidden
@@ -492,6 +484,16 @@ body
           li.member_info
             span.member_details
               :display none
+    .search
+      /:background url(/images/search_bg.png) no-repeat top left
+      :height 25px
+      :margin 10px 0 20px 0
+      :padding 0 10px 0 0    
+      form
+        input
+          :margin 0
+          &:focus
+            :outline none          
     .currentevents 
       :vertical-align text-top  
       .header
@@ -757,7 +759,6 @@ form
     :display block
     :padding-left 47px
 .panel
-  :display none
   :padding-top 2em
   &.on
     :display block

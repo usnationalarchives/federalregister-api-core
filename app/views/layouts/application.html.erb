@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" <% if yield :tagcloud %> xmlns:v="urn:schemas-microsoft-com:vml" <% end %> >
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" <% if yield :tagcloud || :pulse %> xmlns:v="urn:schemas-microsoft-com:vml" <% end %> >
 <head>
   <title>govpulse<%= " | #{yield :title}" if yield(:title) %></title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
