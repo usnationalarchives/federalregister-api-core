@@ -2,7 +2,7 @@
 
 <p>Which of the following entries are you looking for?</p>
 
-<ul>
+<ul class="indent raquo">
 <% @entries.each do |entry| %>
   <li><%= link_to(entry.title, entry_path(entry)) %></li>
 <% end %>
