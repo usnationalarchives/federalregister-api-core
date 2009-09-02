@@ -87,7 +87,7 @@
 
 
 <% content_for :sidebar do %>
-  <h3>
+  <h3 class="hAction">
     Speak Up 
     <span class='small_link'>(<%= link_to 'change location', edit_location_path %>)</span>
   </h3> 
@@ -97,9 +97,9 @@
   <% end %>
   <div id="congress">
     <h5>Your Senators</h5>
-    <p>loading...</p>
+    <p class="loading">Loading<img src="/images/ticker_loading.gif" alt="loading" /></p>
     <h5>Your Representative</h5>
-    <p>loading...</p>
+    <p class="loading">Loading<img src="/images/ticker_loading.gif" alt="loading" /></p>
   </div>
 
   <h3>Gather a Crowd</h3>
