@@ -1186,8 +1186,8 @@ body #footer ul.contact li#facebook {
 }
 /* line 801, ../../app/stylesheets/trifecta.sass */
 .qtip-content .tip .entry {
-  color: #dedede;
-  font-size: 50px;
+  color: #ccc;
+  float: right;
   font-weight: bold;
   margin: 0;
   text-align: center;

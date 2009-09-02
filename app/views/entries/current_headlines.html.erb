@@ -6,6 +6,7 @@
       <li>    
         <%= link_to truncate("##{i+1} - #{entry.title}", :length => 97), entry_path(entry), :class => "entry tip" %>          
         <div class="tip">
+          <p class="entry">Entry <%= i + 1 %> of <%= @entries.size %></p>          
           <dl>
             <dt>Full Title:</dt>
             <dd><%= entry.title %></dd>
@@ -16,7 +17,6 @@
               <dt>Date Entered:</dt>
               <dd><%= entry.publication_date.to_formatted_s(:pretty) %></dd>
           </dl>            
-          <p class="entry">Entry <%= i + 1 %> of <%= @entries.size %></p>
         </div>
       </li>
     <% end %>
