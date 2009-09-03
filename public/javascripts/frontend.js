@@ -2,16 +2,21 @@ $(document).ready(function() {
   
   $("#feedback").bind("click", function(){
     $("html").animate({scrollTop: 0}, 400);
+    $("#tender_window").parent().addClass("modal");
+    $("#tender_closer").one("click", function(){
+      $("#tender_window").parent().removeClass("modal");
+    });
   });
 
-  $("#feedback").bind("mouseenter", function(){
-    $(this).animate({left: -5}, 200);
-  });
   
+  $("#feedback").bind("mouseenter", function(){
+    $(this).animate({left: -5}, 200); 
+  });
+ 
   $("#feedback").bind("mouseleave", function(){
     $(this).animate({left: -10}, 200);
   });
-  
+   
   $(":text").labelify({ labelledClass: "labelHighlight" });
   
   // This needs to be fixed to use a proper slug - may require url rewriting.

@@ -172,6 +172,7 @@ body
 #votegovpulse
   :background #bee9f1
   :border-bottom 1px solid #6690a1
+  :*margin-top 10px
   :padding 5px
   :text-align center   
   a
@@ -194,6 +195,8 @@ body
   .vote
     :float left
     :margin 0 10px 0 0
+    &.big 
+      :margin-bottom 15px
   h1  
     :background url(/images/hr_bg3.png) no-repeat bottom center
     :color #46565c
@@ -234,6 +237,9 @@ body
     :font 1.1em sans-serif
     :padding 0
     :margin 0 0 5px 0
+  p.votecenter
+    :font-size 1.5em
+    :text-align center
   a
     :border none
     :color #005b81
@@ -306,6 +312,8 @@ body
       .votepane 
         :margin 0 auto
         :width 50%
+        ol
+          :*padding-left 10px
       ul.agency_precolumn
         li
           :float left
@@ -843,6 +851,13 @@ body #footer
     :background-position left -102px
 #tender_window
   :z-index 999999 !important
+.modal
+  :background url(/images/modal_bg.png)
+  :height 100%
+  :position absolute
+  :top 0
+  :width 100%
+  :z-index 99999
 .floatLeft
   :float left
 .floatRight
@@ -851,6 +866,8 @@ body #footer
   :margin-top 10px
 .marginBottom
   :margin-bottom 10px !important  
+.paddingLeft
+  :padding-left 10px
 ul.tag_cloud
   +tag-cloud(1.1em)
   li
