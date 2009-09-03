@@ -32,5 +32,5 @@ class SpecialController < ApplicationController
                                         :order => 'publication_date DESC',
                                         :limit => 10
                                         )
-  end                 
+    end                 
 end
