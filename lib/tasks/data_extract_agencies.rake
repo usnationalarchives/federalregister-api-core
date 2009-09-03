@@ -11,7 +11,7 @@ def cleanup_name(n)
   return '' if n.blank?
   
   name = "#{n}"
-  # name.gsub!(/(?:U\b\.?S\b\.?|united states)/i, '') # remove U.S.
+  name.gsub!(/(?:U\b\.?S\b\.?|united states)/i, '') # remove U.S.
   
   name.downcase!
   
