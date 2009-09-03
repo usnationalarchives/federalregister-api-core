@@ -44,6 +44,16 @@
   </div>
 <% end %>
 
+<% if !@recent_proposed_rules.empty? %>
+<div class="clear marginTop">
+  <h2>Newly Proposed Rules</h2>
+  <ul class="indent marginTop raquo">
+  <% @recent_proposed_rules.each do |proprule| %>
+    <li><%= link_to proprule.title, entry_path(proprule)%></li>
+  <% end %>
+  </ul>
+</div>
+<% end %>
 
 <% content_for :sidebar do %>
   <h3>Vote for govpulse!</h3>
