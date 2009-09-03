@@ -1,8 +1,16 @@
 $(document).ready(function() {
   
+  $("#feedback").bind("click", function(){
+    $("html").animate({scrollTop: 0}, 400);
+  });
 
-
+  $("#feedback").bind("mouseenter", function(){
+    $(this).animate({left: -5}, 200);
+  });
   
+  $("#feedback").bind("mouseleave", function(){
+    $(this).animate({left: -10}, 200);
+  });
   
   $(":text").labelify({ labelledClass: "labelHighlight" });
   
