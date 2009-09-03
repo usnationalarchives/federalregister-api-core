@@ -26,5 +26,11 @@ class SpecialController < ApplicationController
                                            :limit => 10
                                           )
     #@location = remote_location
+    
+    #HELP-RUBY this isn't very helpful unless the comment date is < current date
+    @recent_proposed_rules = Entry.all( :conditions => {:granule_class => 'PRORULE'},
+                                        :order => 'publication_date DESC',
+                                        :limit => 10
+                                        )
   end                 
 end
