@@ -75,5 +75,6 @@ ActionController::Routing::Routes.draw do |map|
   map.root :controller => 'special', :action => 'home'
   
   map.about 'about', :controller => 'special', :action => 'about'
+  map.vote 'vote', :controller => 'special', :action => 'vote'
   
 end

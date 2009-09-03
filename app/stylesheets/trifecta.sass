@@ -8,7 +8,7 @@ body
   :margin-bottom -150px
   :position relative
 #wrapper
-  :background url(/images/header_bottomshadow4.png) repeat-x left 189px
+  :background url(/images/header_bottomshadow4.png) repeat-x left 220px
 #ticker_container
   :height 30px
   :position absolute  
@@ -169,6 +169,19 @@ body
   :position absolute
   :top 161px
   :width 100%
+#votegovpulse
+  :background #bee9f1
+  :border-bottom 1px solid #6690a1
+  :padding 5px
+  :text-align center   
+  a
+    :float none
+    :padding 5px 0 0 0
+  p
+    :margin 0 10px 0 0
+  .votecontent
+    :margin 0 auto
+    :width 800px
 #main
   :clear both 
   :margin-top -9px !important
@@ -177,8 +190,7 @@ body
     span
       :color #fa6900
     &:hover
-      :color #5b5b5b
-    
+      :color #5b5b5b    
   .vote
     :float left
     :margin 0 10px 0 0
@@ -291,6 +303,9 @@ body
     :min-height 600px
     :padding 20px 0
     .precolumn
+      .votepane 
+        :margin 0 auto
+        :width 50%
       ul.agency_precolumn
         li
           :float left
@@ -828,10 +843,6 @@ body #footer
     :background-position left -102px
 #tender_window
   :z-index 999999 !important
-
-#votegovpulse
-
-
 .floatLeft
   :float left
 .floatRight
