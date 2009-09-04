@@ -10,7 +10,7 @@
         pulse of your government.
       </p>
       <p class='copy'> 
-        For much of it's existence the Federal Register has had no easily accessible form. 
+        For much of its existence the Federal Register has had no easily accessible form. 
         <span class='gray'>gov</span><span class='orange'>pulse</span> seeks to change this and enable you to respond to your government. We give you a 
         way to browse the Register (from 1994 on) and use filters to decide what is important to you. And then act on it.
       </p>
@@ -44,11 +44,21 @@
   </div>
 <% end %>
 
+<% if !@recent_proposed_rules.empty? %>
+<div class="clear marginTop">
+  <h2>Newly Proposed Rules</h2>
+  <ul class="indent marginTop raquo">
+  <% @recent_proposed_rules.each do |proprule| %>
+    <li><%= link_to proprule.title, entry_path(proprule)%></li>
+  <% end %>
+  </ul>
+</div>
+<% end %>
 
 <% content_for :sidebar do %>
   <h3>Vote for govpulse!</h3>
   <p>
-    <a href="http://labs-beta.sunlightlabs.com/aa2judging/" title="Apps for America 2 Voting Page" class="vote"><img src="/images/vote.png" alt="Vote Govpulse"/></a>
+    <a href="http://sunlightlabs.com/aa2judging/" title="Apps for America 2 Voting Page" class="vote big"><img src="/images/vote.png" alt="Vote Govpulse"/></a>
     We are pleased to announce that 
     <a href="http://www.programmableweb.com/mashup/govpulse" title="govpulse" class="govpulse">gov<span>pulse</span></a> 
     has been selected as a finalist in the 
@@ -57,8 +67,8 @@
   </p>
   <p>Please take the a moment to <strong>vote for us</strong>!  Here's how, please read all the instructions as it is not the most intuitive system:</p>
   <ol>
-    <li><a href="http://labs-beta.sunlightlabs.com/accounts/register/" title="Register for an account at Sunlight Labs" target="_blank"><strong>Register at Sunlight Labs.</strong></a>  It's quick and unobtrusive, no surveys to fill out and no spam to receive; <strong>just a username, email and password needed</strong>. Subsequent profile information is <i>not</i> needed for voting.  The registration page will open in a <strong>*new* window</strong>.  Once you have made an account, just close it and move on to step 2. </li>
-    <li><a href="http://labs-beta.sunlightlabs.com/aa2judging/" title="Apps for America 2 Voting Page"><strong>Vote for govpulse!</strong></a> A new page will open when you <a href="http://labs-beta.sunlightlabs.com/aa2judging/" title="Apps for America 2 Voting Page">click here</a> to start step 2. Choose govpulse from the list and click Vote.</li>
+    <li><a href="http://sunlightlabs.com/accounts/login/?next=/aa2judging/" title="Register for an account at Sunlight Labs"><strong>Register at Sunlight Labs.</strong></a>  It's quick and unobtrusive, no surveys to fill out and no spam to receive; <strong>just a username, email and password needed</strong>. Subsequent profile information is <i>not</i> needed for voting.  The registration page will open in a <strong>*new* window</strong>.  Once you have made an account, just close it and move on to step 2. </li>
+    <li><a href="http://sunlightlabs.com/aa2judging/" title="Apps for America 2 Voting Page"><strong>Vote for govpulse!</strong></a> A new page will open when you <a href="http://sunlightlabs.com/aa2judging/" title="Apps for America 2 Voting Page">click here</a> to start step 2. Choose govpulse from the list and click Vote.</li>
   </ol>
   <p>Voting ends <strong>September 7th</strong>, so vote soon!</p>
   <%= render :partial => 'agencies/pulse', :locals => {:featured_agencies => @featured_agencies} %>
