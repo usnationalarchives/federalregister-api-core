@@ -2,7 +2,9 @@ namespace :data do
   namespace :extract do
     desc "Scrape regulations.gov for id, comment URL"
     task :regulationsdotgov_id => :environment do
-      Entry.find_each(:conditions => "regulationsdotgov_id IS NULL && publication_date > '2009-08-01'") do |entry|
+      date = ENV['DATE_TO_IMPORT'].blank? ? Date.today : Date.parse(ENV['DATE_TO_IMPORT'])
+      
+      Entry.find_each(:conditions => {:publication_date => date}) do |entry|
         doc_id = entry.document_number
         post_data = "5|0|16|http://www.regulations.gov/search/Regs/|AB0B7193CC1148EFEEB8D5771D3EBF33|gov.egov.erule.gwt.module.regs.client.service.SearchResultsService|getSearchResultsByRelevance|gov.egov.erule.gwt.module.regs.client.model.SearchQueryModel|java.lang.String|gov.egov.erule.gwt.module.regs.client.model.SearchQueryModel/2404117451|com.extjs.gxt.ui.client.data.RpcMap/3441186752|searchFields|java.lang.String/2004016611|#{doc_id}|documentType|0|recordsPerPage|25|Ne=11+8+8053+8098+8074+8066+8084+1&Ntt=E9-14714&Ntk=All&Ntx=mode+matchall&N=0|1|2|3|4|2|5|6|7|1|8|3|9|10|11|12|10|13|14|10|15|16|"
                     "5|0|7|http://www.regulations.gov/search/Regs/|AB0B7193CC1148EFEEB8D5771D3EBF33|gov.egov.erule.gwt.module.regs.client.service.SearchResultsService|getSearchResultsByRelevance|gov.egov.erule.gwt.module.regs.client.model.SearchQueryModel|java.lang.String|N=0&Ne=11+8+8053+8098+8074+8066+8084+1&Ntt=E9-15277&Ntk=All&Ntx=mode+matchall|1|2|3|4|2|5|6|0|7|"
