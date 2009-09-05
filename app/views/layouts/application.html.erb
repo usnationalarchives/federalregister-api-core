@@ -1,6 +1,14 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" <% if yield :tagcloud || :pulse %> xmlns:v="urn:schemas-microsoft-com:vml" <% end %> >
+
+<!--[if IE]><!-->
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" xmlns:v="urn:schemas-microsoft-com:vml">
+<!-- <![endif]-->
+
+<!--[if !IE]><!-->
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<!-- <![endif]-->
+
 <head>
   <title>govpulse<%= " | #{yield :title}" if yield(:title) %></title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -49,7 +57,7 @@
       <div class="capitol"></div>      
       
       <div class="type">
-        <a href="/" title="govpulse home"><h1>gov<span>pulse</span></h1></a>
+        <h1><a href="/" title="govpulse home">gov<span>pulse</span></a></h1>
       </div>
 
     </div>
