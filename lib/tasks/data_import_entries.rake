@@ -43,11 +43,6 @@ namespace :data do
         next
       end
       
-      if Date.parse(publication_date) <= Entry.latest_publication_date
-        puts "done!"
-        break
-      end
-      
       volume = doc.css('volume').first.try(:content)
       
       puts "importing #{publication_date}..."
