@@ -4,6 +4,7 @@
 class ApplicationController < ActionController::Base
   helper :all # include all helpers, all the time
   include PathHelper
+  include RouteBuilder
   
   protect_from_forgery # See ActionController::RequestForgeryProtection for details
   
