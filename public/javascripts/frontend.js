@@ -3,8 +3,19 @@ $(document).ready(function() {
   $("#feedback").bind("click", function(){
     $("html").animate({scrollTop: 0}, 400);
     $("#tender_window").parent().addClass("modal");
+    
+    $(".wml-marker").each(function(){
+      $(this).data("oldzindex", $(this).css("z-index")).css("z-index", 1);
+    });
+    
+    $(".wml-large-map-control").css("z-index", 1);
+    
     $("#tender_closer").one("click", function(){
       $("#tender_window").parent().removeClass("modal");
+      $(".wml-large-map-control").css("z-index", 200000);      
+      $(".wml-marker").each(function(){
+        $(this).css("z-index", $(this).data("oldzindex"));
+      });   
     });
   });
 
