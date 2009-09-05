@@ -1,7 +1,7 @@
 $(document).ready(function() {
   
   $("#feedback").bind("click", function(){
-    $("html").animate({scrollTop: 0}, 400);
+    $("html, body").animate({scrollTop: 0}, 400);
     $("#tender_window").parent().addClass("modal");
     
     $(".wml-marker").each(function(){
