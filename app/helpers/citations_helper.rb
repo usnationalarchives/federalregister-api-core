@@ -30,7 +30,7 @@ module CitationsHelper
   def add_date_links(entry, text)
     entry.referenced_dates.each do |date|
       next if date.string.blank?
-      text.gsub!(/#{Regexp.escape(date.string)}/, link_to(date.string, calendar_by_ymd_path(date)) )
+      text.gsub!(/#{Regexp.escape(date.string)}/, link_to(date.string, events_path(date)) )
     end
     text
   end
