@@ -34,8 +34,7 @@ module RouteBuilder
   add_route :events do |date|
     {
       :year            => date.strftime('%Y'),
-      :month           => date.strftime('%m'),
-      :day             => date.strftime('%d'),
+      :month           => date.strftime('%m')
     }
   end
   
