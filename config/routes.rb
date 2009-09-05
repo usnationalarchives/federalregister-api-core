@@ -5,7 +5,7 @@ ActionController::Routing::Routes.draw do |map|
   map.vote 'vote', :controller => 'special', :action => 'vote'
   
   # ENTRIES
-  map.entries 'entries', :controller => 'entries', :action => 'index'
+  map.entries 'entries.:format', :controller => 'entries', :action => 'index'
   
   map.entries_search 'entries/search', :controller => 'entries', :action => 'search'
   map.entry 'entries/:year/:month/:day/:document_number/:slug', :controller => 'entries',
