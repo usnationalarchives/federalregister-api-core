@@ -6,12 +6,6 @@ ActionController::Routing::Routes.draw do |map|
   
   map.resources :topic_groups, :as => "topics"
   
-  
-  map.connect 'agencies/:year/weekly/:week', :controller => 'agencies',
-                                             :action     => 'index',
-                                             :year       => /\d{4}/,
-                                             :week       => /\d{1,2}/
-  
   map.resources :agencies
   map.entries 'entries', :controller => 'entries', :action => 'index'
   
@@ -28,41 +22,24 @@ ActionController::Routing::Routes.draw do |map|
                                                    :year       => /\d{4}/,
                                                    :month      => /\d{1,2}/,
                                                    :day        => /\d{1,2}/
+  
   map.current_headlines 'entries/current-headlines', :controller => 'entries',
                                                      :action     => 'current_headlines'
-
-  map.entries_by_week 'entries/:year/weekly/:week', :controller => 'entries',
-                                                    :action     => 'index',
-                                                    :year       => /\d{4}/,
-                                                    :week       => /\d{1,2}/
 
   map.entries_date_search 'entries/explore', :controller => 'entries',
                                              :action     => 'by_date'
                                        
-  map.resources :entries     
-  
-  map.connect 'e/:document_number', :controller => 'entries',
+  map.short_entry 'e/:document_number', :controller => 'entries',
                                     :action     => 'tiny_pulse'
   
   map.resource :location, :only => [:update, :edit], :member => {:congress => :get}
   
-  map.connect  'calendar/:year/:month/:day', :controller => 'calendars',
-                                             :action     => 'index',
-                                             :year       => /\d{4}/,
-                                             :month      => /\d{1,2}/,
-                                             :day        => /\d{1,2}/
-  
-  map.calendar_month  'calendar/:year/:month', :controller => 'calendars',
-                                        :action     => 'index',
-                                        :year       => /\d{4}/,
-                                        :month      => /\d{1,2}/
-
-  map.events_month 'events/:year/:month', :controller => 'calendars',
+  map.events 'events/:year/:month', :controller => 'calendars',
                                           :action     => 'index',
                                           :year       => /\d{4}/,
                                           :month      => /\d{1,2}/
 
-  map.connect 'citation/:volume/:page', :controller => 'citations',
+  map.citation 'citation/:volume/:page', :controller => 'citations',
                                         :action     => 'show',
                                         :volume     => /\d{2}/,
                                         :page     => /\d+/
@@ -70,7 +47,7 @@ ActionController::Routing::Routes.draw do |map|
   map.maps 'maps', :controller => 'maps',
                    :action     => 'index'
                                    
-  map.places 'places/:slug/:id.:format', :controller => 'places', :action => 'show'
+  map.place 'places/:slug/:id.:format', :controller => 'places', :action => 'show'
                                          
   map.root :controller => 'special', :action => 'home'
   
