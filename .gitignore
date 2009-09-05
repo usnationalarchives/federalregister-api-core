@@ -5,4 +5,5 @@ config/database.yml
 config/api_keys.yml
 config/newrelic.yml
 config/development.sphinx.conf
+public/sitemap*
 db/sphinx/
