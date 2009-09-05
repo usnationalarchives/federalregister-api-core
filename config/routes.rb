@@ -1,12 +1,10 @@
 ActionController::Routing::Routes.draw do |map|
-  map.topic_groups_by_letter '/topics/:letter',
-      :requirements => {:letter => /[a-z]/},
-      :controller => "topic_groups",
-      :action => "by_letter"
+  # SPECIAL PAGES
+  map.root :controller => 'special', :action => 'home'
+  map.about 'about', :controller => 'special', :action => 'about'
+  map.vote 'vote', :controller => 'special', :action => 'vote'
   
-  map.resources :topic_groups, :as => "topics"
-  
-  map.resources :agencies
+  # ENTRIES
   map.entries 'entries', :controller => 'entries', :action => 'index'
   
   map.entries_search 'entries/search', :controller => 'entries', :action => 'search'
@@ -30,28 +28,37 @@ ActionController::Routing::Routes.draw do |map|
                                              :action     => 'by_date'
                                        
   map.short_entry 'e/:document_number', :controller => 'entries',
-                                    :action     => 'tiny_pulse'
+                                        :action     => 'tiny_pulse'
   
-  map.resource :location, :only => [:update, :edit], :member => {:congress => :get}
   
+  map.citation 'citation/:volume/:page', :controller => 'citations',
+                                         :action     => 'show',
+                                         :volume     => /\d{2}/,
+                                         :page     => /\d+/
+
+  # EVENTS
   map.events 'events/:year/:month', :controller => 'calendars',
                                           :action     => 'index',
                                           :year       => /\d{4}/,
                                           :month      => /\d{1,2}/
+  
+  # TOPICS
+  map.topic_groups_by_letter '/topics/:letter',
+      :requirements => {:letter => /[a-z]/},
+      :controller => "topic_groups",
+      :action => "by_letter"
+  
+  map.resources :topic_groups, :as => "topics", :only => [:index, :show]
 
-  map.citation 'citation/:volume/:page', :controller => 'citations',
-                                        :action     => 'show',
-                                        :volume     => /\d{2}/,
-                                        :page     => /\d+/
-
+  
+  # AGENCIES
+  map.resources :agencies, :only => [:index, :show]
+  
+  # PLACES
   map.maps 'maps', :controller => 'maps',
                    :action     => 'index'
-                                   
   map.place 'places/:slug/:id.:format', :controller => 'places', :action => 'show'
-                                         
-  map.root :controller => 'special', :action => 'home'
   
-  map.about 'about', :controller => 'special', :action => 'about'
-  map.vote 'vote', :controller => 'special', :action => 'vote'
-  
+  # LOCATION
+  map.resource :location, :only => [:update, :edit], :member => {:congress => :get}
 end
