@@ -17,7 +17,7 @@ class Topic < ActiveRecord::Base
   belongs_to :topic_group, :foreign_key => :group_name
 
   def to_param
-    name
+    group_name.gsub(/ /, '-')
   end
   
   before_save :generate_group_name
