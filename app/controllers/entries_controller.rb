@@ -119,7 +119,8 @@ class EntriesController < ApplicationController
         redirect_to entries_by_date_path(Entry.latest_publication_date)
       end
       wants.rss do
-        @entries = Entry.find(:all, :limit => 200, :order => "publication_date DESC")
+        @feed_name = 'govpulse Latest Entries'
+        @entries = Entry.find(:all, :conditions => {:publication_date => Entry.latest_publication_date})
       end
     end
   end
