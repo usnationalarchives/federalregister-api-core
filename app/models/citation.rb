@@ -9,6 +9,32 @@ class Citation < ActiveRecord::Base
   belongs_to :source_entry, :class_name => "Entry"
   belongs_to :cited_entry,  :class_name => "Entry"
     
+  def url
+    case citation_type
+    when 'USC'
+      "http://frwebgate.access.gpo.gov/cgi-bin/getdoc.cgi?dbname=browse_usc&docid=Cite:+#{part_1}USC#{part_2}"
+    when 'CFR'
+      "http://frwebgate.access.gpo.gov/cgi-bin/get-cfr.cgi?YEAR=current&TITLE=#{part_1}&PART=#{part_2}&SECTION=#{part_3}&SUBPART=&TYPE=TEXT"
+    when 'FR'
+      "/citation/#{part_1}/#{part_2}" if part_1.to_i >= 59
+    when 'PL' 
+      "http://frwebgate.access.gpo.gov/cgi-bin/getdoc.cgi?dbname=#{part_1}_cong_public_laws&docid=f:publ#{sprintf("%03d",part_2.to_i)}.#{part_1}" if part_1 >= 104
+    end
+  end
+  
+  def name
+    case citation_type
+    when 'USC'
+      "#{part_1} U.S.C. #{part_2}"
+    when 'CFR'
+      "#{part_1} CFR #{part_2}"
+    when 'FR'
+      "#{part_1} FR #{part_2}"
+    when 'PL'
+      
+    end
+  end
+  
   def self.extract!(entry)
     text = entry.full_text_raw
     CITATION_TYPES.each_pair do |citation_type, regexp|
