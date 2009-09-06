@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090905191200) do
+ActiveRecord::Schema.define(:version => 20090906042043) do
 
   create_table "agencies", :force => true do |t|
     t.integer  "parent_id"
@@ -39,6 +39,7 @@ ActiveRecord::Schema.define(:version => 20090905191200) do
     t.string  "part_3"
   end
 
+  add_index "citations", ["cited_entry_id", "citation_type", "source_entry_id"], :name => "cited_citation_source"
   add_index "citations", ["source_entry_id", "citation_type", "cited_entry_id"], :name => "source_citation_cited"
 
   create_table "entries", :force => true do |t|
