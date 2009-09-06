@@ -27,7 +27,7 @@ class Citation < ActiveRecord::Base
     when 'USC'
       "#{part_1} U.S.C. #{part_2}"
     when 'CFR'
-      "#{part_1} CFR #{part_2}"
+      "#{part_1} CFR #{part_2}" + (part_3.blank? ? '' : ".#{part_3}")
     when 'FR'
       "#{part_1} FR #{part_2}"
     when 'PL'
