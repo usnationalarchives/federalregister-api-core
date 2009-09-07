@@ -24,4 +24,6 @@
     </ul>
   <% end %>
   
+  <%= render :partial => 'topics_tagcloud', :locals => {:topic_groups => @related_topic_groups, :title => 'Related Topics'} %>
+  
 <% end %>
