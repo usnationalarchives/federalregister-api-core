@@ -66,6 +66,20 @@ class Entry < ActiveRecord::Base
   has_many :place_determinations, :conditions => "place_determinations.confidence >= #{PlaceDetermination::MIN_CONFIDENCE}"
   has_many :places, :through => :place_determinations
   
+  has_many :citations, :foreign_key => :source_entry_id
+  has_many :cited_entries,
+           :class_name => 'Entry',
+           :through => :citations,
+           :source => :cited_entry
+  
+  has_many :references,
+           :class_name => 'Citation',
+           :foreign_key => :cited_entry_id
+  has_many :referencing_entries,
+           :class_name => 'Entry',
+           :through => :references,
+           :source => :source_entry
+  
   acts_as_mappable :through => :places
   
   has_many :referenced_dates, :dependent => :destroy
@@ -185,6 +199,10 @@ class Entry < ActiveRecord::Base
   
   def self.latest_publication_date
     find(:first, :select => "publication_date", :order => "publication_date DESC").publication_date
+  end
+  
+  def self.find_all_by_citation(volume, page)
+    all(:conditions => ["volume = ? AND start_page <= ? AND end_page >= ?", volume.to_i, page.to_i, page.to_i], :order => "entries.end_page")
   end
   
   private

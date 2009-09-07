@@ -142,9 +142,26 @@
   
 
   <% unless @entry.places.usable.blank? %>
-  <h3>Places Mentioned</h3>
+    <h3>Places Mentioned</h3>
     <% add_javascript { @map.to_js } %>
     <div id="map" style="width: 230px; height: 350px"></div>
   <% end %>
 
+  <% unless true || @entry.citations.blank? %>
+    <h3>Citations</h3>
+    <ul>
+    <% @entry.citations.each do |citation| %>
+      <li><%= link_to_if citation.url, citation.name, citation.url %><%= ": #{citation.cited_entry.title}" if citation.cited_entry%></li>
+    <% end %>
+    </ul>
+  <% end %>
+  
+  <% unless true || @entry.referencing_entries.blank? %>
+    <h3>Entries Referencing This</h3>
+    <ul>
+    <% @entry.referencing_entries.each do |entry| %>
+      <li><%= link_to entry.citation, entry_path(entry) %>: <%= entry.title %> (<%= entry.publication_date %>)</li>
+    <% end %>
+    </ul>
+  <% end %>
 <% end %>

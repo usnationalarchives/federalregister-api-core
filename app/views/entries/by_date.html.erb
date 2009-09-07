@@ -33,7 +33,7 @@
 
   <div class="entry_calendars">
     <div class='search'>
-      <% form_tag entries_exploration_path, :method => :GET, :class => "group" do %>
+      <% form_tag entries_date_search_path, :method => :GET, :class => "group" do %>
         Explore entries in recent months or search for a date:
         <%= text_field_tag :search, '', :title => "(eg 'last month', 'November 2', 'last October')" %>
         <%= submit_tag 'Go', :class => "btn" %>
