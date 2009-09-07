@@ -21,8 +21,9 @@ class AgenciesController < ApplicationController
         @places = @entries.map{|e| e.places}.flatten.uniq.select{|p| p.usable?}
 
         @map = Cloudkicker::Map.new( :style_id => 1714,
-                                     :bounds   => true,
-                                     :points   => @places
+                                     :zoom     => 2,
+                                     :lat      => @places.map(&:latitude).average,
+                                     :long     => @places.map(&:longitude).average
                                    )
         @places.each do |place|
           Cloudkicker::Marker.new( :map   => @map, 

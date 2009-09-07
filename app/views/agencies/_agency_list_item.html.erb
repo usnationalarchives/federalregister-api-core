@@ -1,9 +1,2 @@
-<% add_javascript do %>
-  $(document).ready(function(){ 
-    agency_<%= agency.id %>_count = <%= agency.entries_1_year_weekly %>;
-    $('#agency_<%= agency.id %>').sparkline(agency_<%= agency.id %>_count, {type: 'bar', barSpacing: 0, barWidth: 3, barColor: '#ddd' }); //, chartRangeMin: 0, chartRangeMax: <%= chart_max %> } );
-    $('#agency_<%= agency.id %>').sparkline(agency_<%= agency.id %>_count, {type: 'line', lineColor: 'black', fillColor:false, composite:true }); //, chartRangeMin: 0, chartRangeMax: <%= chart_max %>} );
-  });
-<% end %>
 <%= link_to agency.name, agency_path(agency) %>
-<span id="agency_<%= agency.id %>" class="composite_sparkline" title="Entries per week"></span>
+<%= sparkline(:data => ActiveSupport::JSON::decode(agency.entries_1_year_weekly).map(&:to_i), :alt => "#{human_range(entries_1_year_weekly)} for #{agency.name}" ) %>

@@ -54,18 +54,19 @@ $(document).ready(function() {
     });
   });
   
-  var agency_scrollable = $("div.featured_agencies").scrollable({ 
+  var agency_scrollable = $(".viewport").scrollable({ 
     size: 1,
-    vertical: false,
+    vertical: true,
     api: true,
     clickable: false
   });
   
-  $("ul#featured_agency_buttons a").bind('click', function(){
+  $("ul#featured_agency_buttons a").bind('click', function(event){
     el = $(this);
-    el.preventDefault;
+    event.preventDefault();
     index = el.attr('href').replace(/.*#/, '');
-    agency_scrollable.seekTo(index);
+    $('ul.counts').animate({top:-(index*30)}, 'fast');
+    // agency_scrollable.seekTo(index);
     $(el).parent().siblings().removeClass("on");
     $(el).parent().addClass("on");
   });

@@ -35,7 +35,3 @@
   <li><%= render :partial => 'agency_list_item', :locals => {:agency => agency, :chart_max => @weekly_chart_max} %></li>
 <% end %>
 </ul>
-
-<% content_for :sidebar do %>
-  <%= render :partial => 'agencies/pulse', :locals => {:featured_agencies => @featured_agencies} %>
-<% end %>
