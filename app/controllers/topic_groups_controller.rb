@@ -17,30 +17,41 @@ class TopicGroupsController < ApplicationController
             :order => "entries.publication_date DESC",
             :limit => 100)
         
-        agencies_and_entry_counts = []
-        @entries.group_by(&:agency_id).each do |agency_id, entries|
-          next if agency_id.blank?
-          agencies_and_entry_counts << [Agency.find(agency_id), entries.size]
-        end
-    
+        agencies = Agency.all(:select => 'agencies.*, count(*) AS entries_count',
+          :joins => {:entries => :topics},
+          :conditions => {:entries => {:topics => {:group_name => group_name}}},
+          :group => "agencies.id",
+          :order => 'entries_count DESC'
+        )
+
         @agency_labels = []
         @agency_values = []
-        agencies_and_entry_counts.sort_by{|a| a[1]}.reverse[0,10].each do |agency, count|
+        agencies[0,10].each do |agency|
           @agency_labels << "#{agency.sidebar_name}"
-          @agency_values << count
+          @agency_values << agency.entries_count
         end
 
-        if @agency_values.sum < @entries.size
-          count = (@entries.size - @agency_values.sum)
+        total_entries = agencies.sum(&:entries_count)
+        total_in_top_ten = @agency_values.sum
+        if total_in_top_ten < total_entries
+          count = (total_entries - total_in_top_ten)
           @agency_labels << "Other"
           @agency_values << count
         end
     
         @granule_labels = []
         @granule_values = []
-        @entries.group_by(&:granule_class).each do |granule_class, entries|
-          @granule_labels << granule_class
-          @granule_values << entries.size
+        
+        by_granule_class = Entry.all(
+          :select => 'granule_class, count(*) AS count',
+          :joins  => :topics,
+          :conditions => {:topics => {:group_name => group_name}},
+          :group => 'granule_class',
+          :order => 'count DESC'
+        )
+        by_granule_class.each do |summary|
+          @granule_labels << summary.granule_class
+          @granule_values << summary.count.to_i
         end
       end
       wants.rss do
