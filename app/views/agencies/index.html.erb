@@ -32,6 +32,6 @@
 
 <ul class="agencyList indent raquo">
 <% @agencies.each do |agency|  %>
-  <li><%= render :partial => 'agency_list_item', :locals => {:agency => agency, :chart_max => @weekly_chart_max} %></li>
+  <li><%= render :partial => 'agency_list_item', :locals => {:agency => agency} %></li>
 <% end %>
 </ul>
