@@ -72,30 +72,30 @@ namespace :data do
   namespace :extract do
     desc "Assign agencies to entries based on raw agency names"
     task :agencies => :environment do 
+      date = ENV['DATE_TO_IMPORT'].blank? ? Date.today : Date.parse(ENV['DATE_TO_IMPORT'])
       
       all_agencies = Agency.all
       
-      Entry.find_in_batches(:conditions => {:agency_id => nil, :publication_date => Entry.latest_publication_date}) do |entry_group|
-        entry_group.each do |entry|
-          if entry.primary_agency_raw
-            parent_agency = find_agency(entry.primary_agency_raw, all_agencies)
-          end
-          
-          if parent_agency
-            child_agency = find_agency(entry.secondary_agency_raw, parent_agency.children)
-            
-            entry.agency = child_agency || parent_agency
-          else
-            entry.agency = find_agency(entry.secondary_agency_raw, all_agencies)
-          end
-          
-          if entry.agency_id.nil?
-            puts "NO MATCH FOR '#{cleanup_name entry.primary_agency_raw}' OR '#{cleanup_name entry.secondary_agency_raw}'"
-            entry.agency = nil
-          end
-          
-          entry.save
+      
+      Entry.find_each(:conditions => {:publication_date => date}) do |entry|
+        if entry.primary_agency_raw
+          parent_agency = find_agency(entry.primary_agency_raw, all_agencies)
         end
+        
+        if parent_agency
+          child_agency = find_agency(entry.secondary_agency_raw, parent_agency.children)
+          
+          entry.agency = child_agency || parent_agency
+        else
+          entry.agency = find_agency(entry.secondary_agency_raw, all_agencies)
+        end
+        
+        if entry.agency_id.nil?
+          puts "NO MATCH FOR '#{cleanup_name entry.primary_agency_raw}' OR '#{cleanup_name entry.secondary_agency_raw}'"
+          entry.agency = nil
+        end
+        
+        entry.save
       end
     end
   end

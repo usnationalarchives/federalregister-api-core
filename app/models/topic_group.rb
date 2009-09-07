@@ -12,4 +12,8 @@ class TopicGroup < ActiveRecord::Base
   set_primary_key :group_name
   
   has_many :topics, :foreign_key => :group_name
+  
+  def to_param
+    group_name.gsub(/ /, '-')
+  end
 end

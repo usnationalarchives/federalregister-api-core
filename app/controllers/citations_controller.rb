@@ -3,7 +3,7 @@ class CitationsController < ApplicationController
     @volume = params[:volume].to_i
     @page   = params[:page].to_i
     
-    @entries = Entry.all(:conditions => "volume = #{@volume} AND start_page <= #{@page} AND end_page >= #{@page}", :order => "entries.end_page")
+    @entries = Entry.find_all_by_citation(@volume, @page)
     
     case @entries.size
     when 1
