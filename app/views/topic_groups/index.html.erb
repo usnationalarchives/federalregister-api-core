@@ -13,7 +13,7 @@
 </div>
 
 <% content_for :sidebar do %>
-  <%= render :partial => 'topics_tagcloud' %>
+  <%= render :partial => 'topics_tagcloud', :locals => {:topic_groups => @popular_topic_groups, :title => 'Popular Topics'} %>
 <% end %>
 
 
