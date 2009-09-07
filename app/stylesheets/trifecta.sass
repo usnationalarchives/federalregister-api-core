@@ -486,26 +486,23 @@ body
               li
                 :margin-left 10px
         div.featured_agencies
-          :position relative
-          :overflow hidden
           :width 345px
-          :height 414px
-          ul.staticAgencyList
-            :position absolute
-            :top 0
-            :left 0
-            :z-index 5999
-          a.agencyHidden
-            :visibility hidden
-          div.items
-            :width 5000px
-            :position absolute
-            :clear both
-            &.pulses
-              :width 1300px
-            ul.pulse_list
-              :float left
-              :width 345px
+          ul.entry_counts
+            li
+              :clear left
+              a
+                :float left
+              div.viewport
+                :position relative
+                :height 25px
+                :overflow hidden
+                ul
+                  :float left
+                  :height 75px
+                  :position absolute
+                  :top 0
+                  li
+                    :height 25px
         div.tag_cloud
           div.fancy
             :position relative

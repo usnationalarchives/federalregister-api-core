@@ -10,34 +10,18 @@
 
 
 <div class='featured_agencies'>
-  
-  <ul class="staticAgencyList">
+  <ul class="entry_counts">
     <% @featured_agencies.each do |agency| %>
       <li>
         <%= link_to agency.sidebar_name, agency_path(agency) %>
+        <div class='viewport'>
+          <ul class='counts'>
+          <% %w(entries_1_year_weekly entries_5_years_monthly entries_all_years_quarterly).each do |range_type| %>
+            <li><%= sparkline(:data => ActiveSupport::JSON::decode(agency.send(range_type.to_sym)).map(&:to_i), :alt => "#{human_range(range_type)} for #{agency.name}" ) %></li>
+          <% end %>
+          </ul>
+        </div>
       </li>
     <% end %>
   </ul>
-    
-  <div class='items pulses'>
-<% %w(entries_1_year_weekly entries_5_years_monthly entries_all_years_quarterly).each do |range_type| %>
-  <ul id='agency_count_<%= range_type %>' class='pulse_list'>
-    <% featured_agencies.each do |agency| %>
-    <li>
-      <div class="info">
-        <% add_javascript do %>
-          $(document).ready(function(){ 
-            agency_<%= agency.id %>_<%= range_type %>_count = <%= agency.send(range_type.to_sym) %>;
-            $('#agency_<%= agency.id %>_<%= range_type %>').sparkline(agency_<%= agency.id %>_<%= range_type %>_count, {type: 'bar', barSpacing: 0, barWidth: 2.5, barColor: '#ddd' }); //, chartRangeMin: 0, chartRangeMax: <%#= chart_max %> } );
-            $('#agency_<%= agency.id %>_<%= range_type %>').sparkline(agency_<%= agency.id %>_<%= range_type %>_count, {type: 'line', lineColor: 'black', fillColor:false, composite:true }); //, chartRangeMin: 0, chartRangeMax: <%#= chart_max %>} );
-          });
-        <% end %>
-        <%= link_to agency.sidebar_name, agency_path(agency), :class => 'agencyHidden' %>
-        <span id="agency_<%= agency.id %>_<%= range_type %>" class="composite_sparkline" title="<%= range_type %>"></span>
-      </div>
-    </li>
-    <% end %>
-  </ul>
-<% end %>
-  </div>
 </div>

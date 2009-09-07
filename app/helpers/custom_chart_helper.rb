@@ -86,6 +86,83 @@ module CustomChartHelper
     end
   end
   
+  class Sparkline
+    include ActionView::Helpers::TextHelper
+    
+    def initialize(args={})
+      options = args.dup
+      @line_color       = options.delete(:line_color) || '000000'
+      @background_color = options.delete(:bg_color) || 'CCCCCC'
+      @marker_color     = options.delete(:marker_color) || 'FA6900'
+      @marker_size      = options.delete(:marker_size) || 3.0
+      @size             = options.delete(:size) || [135,25]
+      @data             = options.delete(:data)
+      @data_max         = @data.max
+      @fill             = options.delete(:fill) || true
+    end
+
+    def to_s
+      url = 'http://chart.apis.google.com/chart'
+      url << "?cht=ls"
+      url << "&chd=t:#{text_encode(@data)}"
+      
+      # fill area & chart markers
+      if @fill
+        url << "&chm=B,#{@background_color},0,0,0#{build_chart_markers}"
+      end
+      
+      #line style
+      url << "&chls=1,1,0"
+      url << "&chco=#{@line_color}"
+      
+      #chart size
+      url << "&chs=#{@size.join('x')}"
+      
+      #chart legend margin - used to create padding for min and max dots
+      url << "&chma=5,5,5,5"
+      
+      url
+    end
+    
+    
+    def text_encode(data)
+    begin
+      encoded_data = []
+      @data.each do |point|
+        @foo = point
+        encoded_data << (point > 0 ? (100 * (point.to_f / @data_max.to_f)).to_i : point)
+      end
+      @data = encoded_data
+      @max  = @data.max
+      @min  = @data.min
+      @data.join(',')
+    rescue FloatDomainError
+      raise "#{@foo.inspect}--#{@data.inspect}"
+    end
+    end
+    
+    def build_chart_markers
+      return '' if @min == 0 && @min == @max
+      markers = []
+      min_marked = false
+      max_marked = false
+      @data.each_with_index do |point, index|
+        if point == @max && !max_marked
+          markers << "o,#{@marker_color},0,#{index},#{@marker_size},1"
+          max_marked = true
+        elsif point == @min && !min_marked
+          markers << "o,#{@marker_color},0,#{index},#{@marker_size},1"
+          min_marked = true
+        end
+      end
+      return "|" + markers.join('|')
+    end
+  end
+  
+  def sparkline(options={})
+    image_tag( Sparkline.new(options).to_s, :alt => options[:alt], :class => 'chart sparkline')
+  end
+  
   def pie_3d_chart(options={})
     image_tag( Pie3D.new(options).to_s, :alt => options[:title] || options[:alt], :class => 'chart pie3d')
   end
