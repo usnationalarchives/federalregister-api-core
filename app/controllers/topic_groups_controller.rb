@@ -17,31 +17,60 @@ class TopicGroupsController < ApplicationController
             :order => "entries.publication_date DESC",
             :limit => 100)
         
-        agencies_and_entry_counts = []
-        @entries.group_by(&:agency_id).each do |agency_id, entries|
-          next if agency_id.blank?
-          agencies_and_entry_counts << [Agency.find(agency_id), entries.size]
-        end
-    
+        # AGENCIES
+        agencies = Agency.all(:select => 'agencies.*, count(*) AS entries_count',
+          :joins => {:entries => :topics},
+          :conditions => {:entries => {:topics => {:group_name => group_name}}},
+          :group => "agencies.id",
+          :order => 'entries_count DESC'
+        )
+
         @agency_labels = []
         @agency_values = []
-        agencies_and_entry_counts.sort_by{|a| a[1]}.reverse[0,10].each do |agency, count|
+        agencies[0,10].each do |agency|
           @agency_labels << "#{agency.sidebar_name}"
-          @agency_values << count
+          @agency_values << agency.entries_count
         end
 
-        if @agency_values.sum < @entries.size
-          count = (@entries.size - @agency_values.sum)
+        total_entries = agencies.sum(&:entries_count)
+        total_in_top_ten = @agency_values.sum
+        if total_in_top_ten < total_entries
+          count = (total_entries - total_in_top_ten)
           @agency_labels << "Other"
           @agency_values << count
         end
-    
+        
+        # GRANULE CLASSES
         @granule_labels = []
         @granule_values = []
-        @entries.group_by(&:granule_class).each do |granule_class, entries|
-          @granule_labels << granule_class
-          @granule_values << entries.size
+        
+        by_granule_class = Entry.all(
+          :select => 'granule_class, count(*) AS count',
+          :joins  => :topics,
+          :conditions => {:topics => {:group_name => group_name}},
+          :group => 'granule_class',
+          :order => 'count DESC'
+        )
+        by_granule_class.each do |summary|
+          @granule_labels << summary.granule_class
+          @granule_values << summary.count.to_i
         end
+        
+        # RELATED TOPICS
+        @related_topic_groups = Topic.find_by_sql(["SELECT topics.*, COUNT(*) AS entries_count
+        FROM topics AS our_topics
+        LEFT JOIN topic_assignments AS our_topic_assignments
+          ON our_topic_assignments.topic_id = our_topics.id
+        LEFT JOIN topic_assignments
+          ON topic_assignments.entry_id = our_topic_assignments.entry_id
+        LEFT JOIN topics
+          ON topics.id = topic_assignments.topic_id
+        WHERE our_topics.group_name = ?
+          AND topics.group_name != ?
+        GROUP BY topics.group_name
+        ORDER BY entries_count DESC, LENGTH(topics.name)
+        LIMIT 100", group_name, group_name])
+        
       end
       wants.rss do
         @feed_name = "govpulse: #{@topic_group.name}"
