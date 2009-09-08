@@ -49,7 +49,9 @@ class Entry < ActiveRecord::Base
     'PRORULE'  => 'Proposed Rule', 
     'NOTICE'   => 'Notice', 
     'PRESDOCU' => 'Presidential Document', 
+    'CORRECT'  => 'Correction',
     'UNKNOWN'  => 'Unknown',
+    'SUNSHINE' => 'Unknown',
     ''         => 'Unknown'
   }
   
