@@ -34,14 +34,23 @@ class AgenciesController < ApplicationController
                                    :info_max_width => 200
                                  )
         end
-
+        
+        # GRANULE CLASSES
         @granule_labels = []
         @granule_values = []
-        @entries.group_by(&:granule_class).each do |granule_class, entries|
-          @granule_labels << granule_class
-          @granule_values << entries.size
+        
+        by_granule_class = Entry.all(
+          :select => 'granule_class, count(*) AS count',
+          :conditions => {:agency_id => [@agency.id] + @agency.descendant_ids},
+          :group => 'granule_class',
+          :order => 'count DESC'
+        )
+        by_granule_class.each do |summary|
+          @granule_labels << summary.granule_class
+          @granule_values << summary.count.to_i
         end
-
+        
+        
         # TODO: fix the craziness!
         @popular_topic_groups = Topic.find(:all, :select => "topics.group_name, topics.name, COUNT(*) AS entries_count",
             :conditions => ["topics.group_name != '' AND entries.agency_id = ?", @agency.id,],
