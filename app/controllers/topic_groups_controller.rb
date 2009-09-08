@@ -67,6 +67,7 @@ class TopicGroupsController < ApplicationController
           ON topics.id = topic_assignments.topic_id
         WHERE our_topics.group_name = ?
           AND topics.group_name != ?
+          AND topics.group_name != ''
         GROUP BY topics.group_name
         ORDER BY entries_count DESC, LENGTH(topics.name)
         LIMIT 100", group_name, group_name])

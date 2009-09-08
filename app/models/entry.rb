@@ -58,7 +58,7 @@ class Entry < ActiveRecord::Base
   belongs_to :agency
   
   has_many :topic_assignments
-  has_many :topics, :through => :topic_assignments
+  has_many :topics, :through => :topic_assignments, :conditions => "topics.group_name != ''"
   
   has_many :url_references
   has_many :urls, :through => :url_references
