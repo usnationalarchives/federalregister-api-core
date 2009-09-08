@@ -1,7 +1,7 @@
 <% title @topic_group.name %>
-<% feed_autodiscovery topic_group_path(@topic_group.name, :format => :rss) %>
+<% feed_autodiscovery topic_group_path(@topic_group, :format => :rss) %>
 
-<%= render :partial => "entries/list", :locals => {:entries => @entries, :search_params => {:topic_group => @topic_group.group_name}} %>
+<%= render :partial => "entries/list", :locals => {:entries => @entries, :search_params => {:topic_group => @topic_group}} %>
 
 <% content_for :sidebar do %>
   <%# TODO HELP-DESIGN make wrappers and slide these up %>

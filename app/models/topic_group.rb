@@ -14,6 +14,6 @@ class TopicGroup < ActiveRecord::Base
   has_many :topics, :foreign_key => :group_name
   
   def to_param
-    group_name.gsub(/ /, '-')
+    group_name.gsub(/ |\//, '-')
   end
 end
