@@ -122,16 +122,6 @@
     <h3>Contact</h3>
     <p><%= auto_link @entry.contact %></p>
   <% end %>
-
-  <% unless @entry.topics.blank? %>
-    <h3>Topics:</h3>
-    <ul>
-      <% @entry.topics.each do |topic| %>
-        <li><%= link_to topic.name, topic_group_path(topic.group_name) %></li>
-      <% end %>
-    </ul>  
-  <% end %>
-
   
   <h3>Document</h3>
   <ul class='document'>
@@ -140,7 +130,15 @@
     <li>End Page:   <%= @entry.end_page     %></li>
   </ul>
   
-
+  <% unless @entry.topics.blank? %>
+  <h3>Related Topics</h3>
+  <ul>
+    <% @entry.topics.each do |topic| %>
+      <li><%= link_to topic.name, topic_group_path(topic) %></li>
+    <% end %>
+  </ul>
+  <% end %>
+  
   <% unless @entry.places.usable.blank? %>
     <h3>Places Mentioned</h3>
     <% add_javascript { @map.to_js } %>
