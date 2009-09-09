@@ -18,43 +18,21 @@ class TopicGroupsController < ApplicationController
             :limit => 100)
         
         # AGENCIES
-        agencies = Agency.all(:select => 'agencies.*, count(*) AS entries_count',
+        @agencies = Agency.all(:select => 'agencies.*, count(*) AS entries_count',
           :joins => {:entries => :topics},
           :conditions => {:entries => {:topics => {:group_name => group_name}}},
           :group => "agencies.id",
           :order => 'entries_count DESC'
         )
-
-        @agency_labels = []
-        @agency_values = []
-        agencies[0,10].each do |agency|
-          @agency_labels << "#{agency.sidebar_name}"
-          @agency_values << agency.entries_count
-        end
-
-        total_entries = agencies.sum(&:entries_count)
-        total_in_top_ten = @agency_values.sum
-        if total_in_top_ten < total_entries
-          count = (total_entries - total_in_top_ten)
-          @agency_labels << "Other"
-          @agency_values << count
-        end
         
         # GRANULE CLASSES
-        @granule_labels = []
-        @granule_values = []
-        
-        by_granule_class = Entry.all(
+        @granule_classes = Entry.all(
           :select => 'granule_class, count(*) AS count',
           :joins  => :topics,
           :conditions => {:topics => {:group_name => group_name}},
           :group => 'granule_class',
           :order => 'count DESC'
         )
-        by_granule_class.each do |summary|
-          @granule_labels << summary.granule_class
-          @granule_values << summary.count.to_i
-        end
         
         # RELATED TOPICS
         @related_topic_groups = Topic.find_by_sql(["SELECT topics.*, COUNT(*) AS entries_count

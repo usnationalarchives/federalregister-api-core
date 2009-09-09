@@ -5,14 +5,14 @@
 
 <% content_for :sidebar do %>
   <%# TODO HELP-DESIGN make wrappers and slide these up %>
-  <% unless @agency_values.blank? %>
+  <% unless @agencies.blank? %>
     <h3>Agencies Using this Topic</h3>
-    <div class='chart size_<%=@agency_values.size%>'><%= pie_3d_chart(:alt => 'Agencies using this Topic Group', :legend => @agency_labels, :truncate_legend => '30', :counts => true, :legend_location => 'bottom', :data => @agency_values, :size => ['230','350'], :color_range => ['005073','84cedb'], :transparent_bg => true) %></div>
+    <div class='chart size_<%=@agencies.size%>'><%= pie_3d_chart(:alt => 'Agencies using this Topic Group', :truncate_legend => '30', :counts => true, :legend_location => 'bottom', :records => @agencies, :value_method => :entries_count, :legend_method => :name, :max => 10, :size => ['230','350'], :color_range => ['005073','84cedb'], :transparent_bg => true) %></div>
   <% end %>
   
-  <% unless @granule_values.blank? %>
+  <% unless @granule_classes.blank? %>
     <h3>Entry Types for Topic</h3>
-     <div class='chart size_<%=@granule_values.size%>'><%= pie_3d_chart(:alt => 'Entry Type for Recent Entries', :legend => @granule_labels, :truncate_legend => '30', :counts => true, :legend_location => 'bottom', :data => @granule_values, :size => ['230','200'], :color_range => ['005073','84cedb'], :transparent_bg => true) %></div>
+     <div class='chart size_<%=@granule_classes.size%>'><%= pie_3d_chart(:alt => 'Entry Types', :truncate_legend => '30', :counts => true, :legend_location => 'bottom', :records => @granule_classes, :value_method => :count, :legend_method => :granule_class, :size => ['230','200'], :color_range => ['005073','84cedb'], :transparent_bg => true) %></div>
   <% end %>
   
   <% if @topic_group.topics.size > 1 %>

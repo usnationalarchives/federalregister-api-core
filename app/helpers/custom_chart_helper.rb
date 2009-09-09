@@ -1,4 +1,6 @@
 module CustomChartHelper
+  Infinity = 1.0/0
+  
   class Pie3D
     include ActionView::Helpers::TextHelper
     
@@ -14,6 +16,22 @@ module CustomChartHelper
       @size            = options.delete(:size) || [500,200]
       @data            = options.delete(:data)
       @counts          = options.delete(:counts) || false
+      
+      if options[:records]
+        @data = options[:records].sort_by{|r| r.send(options[:value_method]).to_i}.reverse.map(&options[:value_method]).map(&:to_i)
+        @legend = options[:records].map(&options[:legend_method])
+        
+        if options[:max]
+          other_data = @data.slice(options[:max] .. @data.size)
+          @data = @data.slice(0..options[:max]-1)
+          @legend = @legend.slice(0..options[:max]-1)
+          
+          if other_data
+            @data << other_data.sum
+            @legend << 'Other'
+          end
+        end
+      end
     end
 
     def to_s
