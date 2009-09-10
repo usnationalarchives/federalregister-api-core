@@ -145,7 +145,7 @@
     <div id="map" style="width: 230px; height: 350px"></div>
   <% end %>
 
-  <% unless true || @entry.citations.blank? %>
+  <% unless @entry.citations.blank? %>
     <h3>Citations</h3>
     <ul>
     <% @entry.citations.each do |citation| %>
@@ -154,7 +154,7 @@
     </ul>
   <% end %>
   
-  <% unless true || @entry.referencing_entries.blank? %>
+  <% unless @entry.referencing_entries.blank? %>
     <h3>Entries Referencing This</h3>
     <ul>
     <% @entry.referencing_entries.each do |entry| %>
