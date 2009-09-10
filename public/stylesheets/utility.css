@@ -7,7 +7,7 @@
 	visibility: hidden;
 	}
 *:first-child+html .group { /* IE7 */
-	min-height: 1px;
+	min-height: 1%;
 	}
 * html .group { /* IE6 */
 	height: 1%;
@@ -15,3 +15,7 @@
 	
 /* fix for IE displaying tag cloud */	
 v\:* { behavior: url(#default#VML); position: absolute}	
+
+.clear {
+	clear:both;
+	}

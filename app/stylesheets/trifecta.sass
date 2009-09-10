@@ -10,7 +10,7 @@ body
   :margin-bottom -150px
   :position relative
 #wrapper
-  :background url(/images/header_bottomshadow4.png) repeat-x left 220px
+  :background url(/images/header_bottomshadow4.png) repeat-x left 180px
   :_background none
 #ticker_container
   :height 30px
@@ -326,6 +326,7 @@ body
     :-webkit-border-radius 5px
     :margin 0 0 10px 0    
     :padding 3px 10px
+    :_min-height 1px !important
     h1 
       :background-image none
       :float left
@@ -338,7 +339,9 @@ body
     &.search
       :padding 10px
     &.calendar
-      :position relative    
+      :position relative 
+    &.controls
+      :*height 70px
   .content
     :min-height 600px
     :padding 20px 0
@@ -424,6 +427,7 @@ body
         :width 850px        
         div.search 
           :margin 0 auto
+          :*margin-bottom 1em
           :width 100%          
           form
             :color #005073
@@ -440,8 +444,6 @@ body
           :*margin 0 15px 30px 0 
           tbody
             :height 135px
-            & > *
-              :height auto !important
     .col1
       .filterBy
         :margin 13px 10px 0 0
@@ -500,13 +502,17 @@ body
         div.featured_agencies
           :width 345px
           ul.entry_counts
+            :*margin-top 1em
             li
               :clear left
               a
                 :float left
-                :height 25px
+                :height 20px
+                :margin-top 3px
                 :line-height 25px
               div.viewport
+                :*float left
+                :width 135px
                 :position relative
                 :height 25px
                 :overflow hidden
@@ -620,7 +626,10 @@ body
       a
         :color #747d87
         :display block
+        :*font-size 10px
+        :*font-weight normal
         :font-weight bold
+        :*line-height 20px
         :padding 0 5px
         :text-decoration none
         &:hover
@@ -808,7 +817,8 @@ body
     :-moz-border-radius 5px
     :-webkit-border-radius 5px   
     :font-weight bold     
-    :*height 28px    
+    :*height 28px
+    :margin-bottom .5em    
     :padding 5px
     :*padding 0 3px
     &:hover
