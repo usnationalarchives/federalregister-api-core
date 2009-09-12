@@ -1,0 +1,18 @@
+<% title "Citations for: #{@entry.title}" %>
+
+<div>
+  <ul>
+  <% @entry.citations.each do |citation| %>
+    <li><%= link_to_if citation.url, citation.name, citation.url %><%= ": #{citation.cited_entry.title}" if citation.cited_entry%></li>
+  <% end %>
+  </ul>
+</div>
+
+<div>
+  <h2>Entries Referencing This</h2>
+  <ul>
+  <% @entry.referencing_entries.each do |entry| %>
+    <li><%= link_to entry.citation, entry_path(entry) %>: <%= entry.title %> (<%= entry.publication_date %>)</li>
+  <% end %>
+  </ul>
+</div>
