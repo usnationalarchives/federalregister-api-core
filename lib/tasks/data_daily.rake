@@ -7,6 +7,8 @@ namespace :data do
     data:extract:places
     data:extract:regulationsdotgov_id
     data:update:agencies
+    data:cache:expire
     thinking_sphinx:index
+    sitemap:refresh
   )
 end
