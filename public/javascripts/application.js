@@ -22,7 +22,8 @@ $(document).ready(function() {
          loop: true,       // when last item is encountered go back to first item
          speed: 600,       // make animation a little slower than the default
          clickable: false,
-         api : true
+         api : true,
+         keyboard: false
       });
       scrollable.setPage(index,0);
       
