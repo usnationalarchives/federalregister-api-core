@@ -16,7 +16,7 @@ namespace :data do
       locations.each do |location|
         path = "#{public_dir}/#{location}"
         puts "deleting #{path}"
-        `rm -rf #{path}`
+        `sudo rm -rf #{path}`
       end
     end
   end
