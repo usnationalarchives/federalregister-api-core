@@ -16,11 +16,10 @@
 <% end %>
 
 
-<div class="header">
+<div class="header group">
   <h2>By Name</h2>
-
   <ul class="btn filter group">
-    <li class="all"><a href="#">ALL</a></li>    
+    <li class="all on"><a href="#">ALL</a></li>    
     <li><a href="#">A-C</a></li>
     <li><a href="#">D</a></li>
     <li><a href="#">E-F</a></li>
@@ -30,7 +29,7 @@
   </ul>
 </div>
 
-<ul class="agencyList indent raquo">
+<ul class="agencyList indent raquo clear">
 <% @agencies.each do |agency|  %>
   <li><%= render :partial => 'agency_list_item', :locals => {:agency => agency} %></li>
 <% end %>
