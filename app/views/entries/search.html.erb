@@ -30,9 +30,9 @@
 
 <div class="header  group">
   <ul>
-    <li class="simple"><label>Keywords:</label><%= text_field_tag :q, @search_term %></li>
+    <li class="simple"><label>Keywords:</label><%= text_field_tag :q, @search.search_term %></li>
     
-    <li class="simple"><label>Agency:</label><%= select_tag 'agency_id', options_for_select([''] + @agencies.collect{ |agency| [agency.name, agency.id.to_s] }, :selected => params[:agency_id]) %></li>
+    <li class="simple"><label>Agency:</label><%= select_tag 'agency_id', options_for_select([''] + @agencies.collect{ |agency| [agency.name, agency.id.to_s] }, :selected => @search.agency_id) %></li>
     
     <li class="simple"><label>Citation:</label>
       <%= render :partial => 'citations/form' %></li>
@@ -42,16 +42,14 @@
 </div>
 
 
-<% if @entries %>
-  <% if @entries.size > 0 %>
-  
+<% if @search.entries.size > 0 %>
   <div class="search_info group">
-    <p class="entries"><%= page_entries_info @entries %></p>
-    <%= will_paginate @entries %>
+    <p class="entries"><%= page_entries_info @search.entries %></p>
+    <%= will_paginate @search.entries %>
   </div>
   
   <ol class="results">
-    <% @entries.each do |entry| %>
+    <% @search.entries.each do |entry| %>
     <li>
       <h4 class="title"><%= link_to sanitize(entry.excerpts.title, :tags => %w(span), :attributes => %w(class)), entry_path(entry) %></h4>
       
@@ -70,15 +68,14 @@
     <% end %>
   </ol>
   <div class="search_info group">
-    <%= will_paginate @entries %>
+    <%= will_paginate @search.entries %>
   </div>
-  <% else %>
-    <p>No entries were found.</p>
-  <% end %>
+<% else %>
+  <p>No entries were found.</p>
 <% end %>
 
 <% content_for :sidebar do %>
-<% if @entries && @entries.size > 0 %>
+<% if @search.entries && @search.entries.size > 0 %>
     <h3>Other Formats</h3>
     <%# TODO: HELP-DESIGN: HELP-COPY: Need RSS icon, some text here %>
     <p>Subscribe to an <%= link_to 'RSS Feed', params.merge(:format => :rss, :order => 'date', :publication_date_less_than => nil) %> of these search results.</p>
