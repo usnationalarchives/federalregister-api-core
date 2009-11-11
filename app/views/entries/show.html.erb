@@ -149,7 +149,10 @@
     <h3>Citations</h3>
     <ul>
     <% @entry.citations.each do |citation| %>
-      <li><%= link_to_if citation.url, citation.name, citation.url %><%= ": #{citation.cited_entry.title}" if citation.cited_entry%></li>
+      <li>
+        <%= link_to_if citation.url, citation.name, citation.url %><%= ": #{citation.cited_entry.title} (#{citation.cited_entry.publication_date})" if citation.cited_entry%>
+        <%= render( :partial => 'tip', :locals => {:entry => citation.cited_entry} ) if citation.cited_entry %>
+      </li>
     <% end %>
     </ul>
   <% end %>
@@ -158,7 +161,10 @@
     <h3>Entries Referencing This</h3>
     <ul>
     <% @entry.referencing_entries.each do |entry| %>
-      <li><%= link_to entry.citation, entry_path(entry) %>: <%= entry.title %> (<%= entry.publication_date %>)</li>
+      <li>
+        <%= link_to entry.citation, entry_path(entry) %>: <%= entry.title %> (<%= entry.publication_date %>)
+        <%= render( :partial => 'tip', :locals => {:entry => entry} ) %></li>
+      </li>
     <% end %>
     </ul>
   <% end %>
