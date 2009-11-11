@@ -14,7 +14,7 @@ ActionController::Routing::Routes.draw do |map|
                                                                 :month      => /\d{1,2}/,
                                                                 :day        => /\d{1,2}/
                                                
-  map.entry_citation_path 'citations/:year/:month/:day/:document_number/:slug', :controller => 'entries',
+  map.entry_citation 'citations/:year/:month/:day/:document_number/:slug', :controller => 'entries',
                                                                                 :action     => 'citations',
                                                                                 :year       => /\d{4}/,
                                                                                 :month      => /\d{1,2}/,
