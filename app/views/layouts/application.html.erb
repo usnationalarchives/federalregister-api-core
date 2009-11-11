@@ -1,13 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-<!--[if IE]><!-->
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" xmlns:v="urn:schemas-microsoft-com:vml">
-<!-- <![endif]-->
-
-<!--[if !IE]><!-->
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
-<!-- <![endif]-->
 
 <head>
   <title>govpulse<%= " | #{yield :title}" if yield(:title) %></title>
@@ -66,26 +60,6 @@
   
     <!-- MAIN -->
     <div id="main" class="group<%= ' cols' if yield :sidebar %>">
-
-      
-      <div id="votegovpulse">
-        
-      <div class="votecontent">
-      <p>
-        <a href="http://sunlightlabs.com/aa2judging/" title="Vote for govpulse" class="vote"><img src="/images/vote_small.png" alt="Vote Govpulse"/></a>
-        We are pleased to announce that 
-    <a href="http://www.programmableweb.com/mashup/govpulse" title="govpulse" class="govpulse">gov<span>pulse</span></a> 
-    has been selected as a finalist in the 
-    <a href="http://sunlightlabs.com/contests/appsforamerica2/" title="Apps for America 2: The Data.gov Challenge">Apps for America 2</a> 
-    contest by <a href="http://www.sunlightlabs.com/" title="Sunlight Labs">Sunlight Labs</a>! </p>
-    
-    <p><strong>Please visit the <a href="/vote/" title="Learn how to vote for govpulse">voting page</a> for more information.</strong>
-    
-    Voting ends September 7th, so vote soon!</p>
-    
-    </div>
-    
-      </div>
       
       <% unless flash[:notice].blank? %>
         <div class="alert">

@@ -70,10 +70,10 @@ ActiveRecord::Schema.define(:version => 20090908134858) do
     t.string   "source_text_url"
     t.string   "primary_agency_raw"
     t.string   "secondary_agency_raw"
-    t.integer  "volume"
     t.string   "regulationsdotgov_id"
     t.string   "comment_url"
     t.datetime "checked_regulationsdotgov_at"
+    t.integer  "volume"
   end
 
   add_index "entries", ["agency_id", "granule_class"], :name => "index_entries_on_agency_id_and_granule_class"
@@ -83,7 +83,7 @@ ActiveRecord::Schema.define(:version => 20090908134858) do
   add_index "entries", ["document_number"], :name => "index_entries_on_document_number"
   add_index "entries", ["id", "publication_date"], :name => "index_entries_on_id_and_publication_date"
   add_index "entries", ["publication_date", "agency_id"], :name => "index_entries_on_publication_date_and_agency_id"
-  add_index "entries", ["start_page", "end_page"], :name => "index_entries_on_volume_and_start_page_and_end_page"
+  add_index "entries", ["volume", "start_page", "end_page"], :name => "index_entries_on_volume_and_start_page_and_end_page"
 
   create_table "entry_details", :force => true do |t|
     t.integer "entry_id"
