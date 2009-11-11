@@ -1,101 +1,17 @@
 class EntriesController < ApplicationController
   caches_page :by_date, :show, :current_headlines
   
-  include Geokit::Geocoders
   
   def search
-    with = {}
-    
-    @search_term = params[:q]
-    
-    errors = []
-    
-    @near = params[:near]
-    
     if !params[:volume].blank? && !params[:page].blank?
       redirect_to "/citation/#{params[:volume]}/#{params[:page]}"
       return
     end
     
-    if params[:place_id]
-      @place = Place.find(params[:place_id])
-      with[:place_ids] = @place.id
-    else
-      unless @near.blank?
-        @within = params[:within]
-        if params[:within].blank?
-          @within = 100
-        else
-          @within = params[:within].to_i
-          if @within < 0 || @within >= 200
-            @within = 200
-          end
-        end
-        
-        location = Rails.cache.fetch("location_of: '#{@near}'") { Geokit::Geocoders::GoogleGeocoder.geocode(@near) }
-        
-        if location.lat
-          places = Place.find(:all, :select => "id", :origin => location, :within => @within)
-          with[:place_ids] = places.map{|p| p.id}
-          
-          if places.size > 4096
-            errors << 'We found too many locations near your location; please reduce the scope of your search'
-          end
-        else
-          errors << 'We could not understand your location.'
-        end
-      end
-    end
+    @search = EntrySearch.new(params)
     
-    unless params[:agency_id].blank?
-      with[:agency_id] = params[:agency_id]
-    end
-    
-    unless params[:topic_id].blank?
-      @topic = Topic.find(params[:topic_id])
-      with[:topic_ids] = params[:topic_id]
-    end
-    
-    if !params[:publication_date_greater_than].blank? || !params[:publication_date_less_than].blank?
-      @start_date = Chronic.parse(params[:publication_date_greater_than], :context => :past)
-      
-      if ! params[:publication_date_greater_than].blank? && @start_date.nil?
-        errors << 'We could not understand your start date.'
-      end
-      
-      @end_date = Chronic.parse(params[:publication_date_less_than], :context => :past)
-      if ! params[:publication_date_less_than].blank? && @end_date.nil?
-        errors << 'We could not understand your end date.'
-      end
-      
-      @start_date ||= DateTime.parse('1994-01-01')
-      @end_date ||= Entry.latest_publication_date
-      
-      with[:publication_date] = Range.new(@start_date.midnight.to_f.to_i,@end_date.midnight.to_f.to_i)
-    end
-    
-    unless errors.blank?
-      flash[:error] = "<ul>#{errors.map{|e| "<li>#{e}</li>"}}</ul>"
-    end
-    
-    order = "publication_date DESC, @relevance DESC"
-    if params[:order] == 'relevance'
-      order = "@relevance DESC, publication_date DESC"
-    end
-    
-    if errors.size == 0 && (!@search_term.blank?) || with.values.any?{|v| ! v.blank?}
-      @entries = Entry.search(@search_term, 
-        :page => params[:page] || 1,
-        :order => order,
-        :with => with
-      )
-    end
-    
-    # TODO: FIXME: Ugly hack to get total pages to be within bounds
-    if @entries && @entries.total_pages > 50
-      def @entries.total_pages
-        50
-      end
+    unless @search.valid?
+      flash[:error] = "<ul>#{@search.errors.map{|e| "<li>#{e}</li>"}}</ul>"
     end
     
     respond_to do |wants|
