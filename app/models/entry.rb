@@ -136,9 +136,9 @@ class Entry < ActiveRecord::Base
   
   def human_length
     if length.blank? 
-      page_length = end_page - start_page == 0 ? 1 : end_page - start_page
+      end_page - start_page + 1
     else
-      page_length = length
+      length
     end
   end
   
