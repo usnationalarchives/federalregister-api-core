@@ -1,0 +1,4 @@
+<li>
+  <%= link_to referencing_entry.citation, entry_path(referencing_entry) %>: <%= referencing_entry.title %> (<%= referencing_entry.publication_date %>)
+  <%= render( :partial => 'tip', :locals => {:entry => referencing_entry} ) %></li>
+</li>
