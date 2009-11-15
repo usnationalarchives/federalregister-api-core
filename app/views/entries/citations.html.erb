@@ -1,15 +1,23 @@
 <% title "Citations for: #{@entry.title}" %>
+<% add_javascript :src => 'citations' %>
+
+<div class="header group">
+  <ul class="citation_controls btn group">
+    <li class="citations"><a href="#citations">Citations</a></li>
+    <li class="referencing_entries"><a href="#referencing_entries">Entries referencing this</a></li>
+  </ul>
+</div>
 
 <div id="citations">
   <h2>Citations</h2>
-  <ul>
+  <ul class="citation-right_tip">
     <%= render :partial => 'citation', :collection => @entry.citations %>
   </ul>
 </div>
 
 <div id="referencing_entries">
   <h2>Entries Referencing This</h2>
-  <ul>
+  <ul class="citation-right_tip">
     <%= render :partial => "referencing_entry", :collection =>  @entry.referencing_entries %>
   </ul>
 </div>

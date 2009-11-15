@@ -272,6 +272,9 @@ body
     &:hover
       :color #cf8227
     &:active
+    &.raquo
+      :background url(/images/raquo3.png) no-repeat 0 5px
+      :padding 0 0 0 10px 
   span.gray
     :color #7D7D7D
   span.orange
@@ -314,6 +317,10 @@ body
       &.raquo
         li
           :background-position 4px 13px
+    &.citation,
+    &.citation-right_tip 
+      div.tip
+        :display none
   ul.btn
     li
       :padding 0
