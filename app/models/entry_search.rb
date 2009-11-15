@@ -1,7 +1,7 @@
 class EntrySearch
   include Geokit::Geocoders
   
-  attr_reader :errors, :topic, :agency_id, :search_term
+  attr_reader :errors, :topic, :agency, :search_term, :start_date, :end_date
   
   def initialize(options)
     options ||= {}
@@ -19,23 +19,21 @@ class EntrySearch
       @topic = Topic.find(options[:topic_id])
     end
     
-    if options[:ageny_id].present?
+    if options[:agency_id].present?
       @agency = Agency.find(options[:agency_id])
     end
     
     if options[:publication_date_greater_than].present?
       @start_date = Chronic.parse(options[:publication_date_greater_than], :context => :past)
       errors << 'We could not understand your start date.' if @start_date.nil?
-    else
-      @start_date = DateTime.parse('1994-01-01')
     end
+    @start_date ||= DateTime.parse('1994-01-01')
     
     if options[:publication_date_less_than].present?
       @end_date = Chronic.parse(options[:publication_date_less_than], :context => :past)
       errors << 'We could not understand your end date.' if @end_date.nil?
-    else
-      @end_date ||= Entry.latest_publication_date
     end
+    @end_date ||= Entry.latest_publication_date
     
     
     @order = if options[:order] == 'relevance'
