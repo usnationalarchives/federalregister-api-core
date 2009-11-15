@@ -32,7 +32,7 @@
   <ul>
     <li class="simple"><label>Keywords:</label><%= text_field_tag :q, @search.search_term %></li>
     
-    <li class="simple"><label>Agency:</label><%= select_tag 'agency_id', options_for_select([''] + @agencies.collect{ |agency| [agency.name, agency.id.to_s] }, :selected => @search.agency_id) %></li>
+    <li class="simple"><label>Agency:</label><%= select_tag 'agency_id', options_for_select([''] + @agencies.collect{ |agency| [agency.name, agency.id.to_s] }, :selected => @search.agency.try(:id).try(:to_s)) %></li>
     
     <li class="simple"><label>Citation:</label>
       <%= render :partial => 'citations/form' %></li>
@@ -101,7 +101,7 @@
           </li>
         <% else %>
           <li class="simple"><label>Near:</label> <%= text_field_tag :near, params[:near] %> <span>(eg '94118', 'Seattle', etc.)</span></li> 
-          <li class="simple"><label>Within:</label> <%= text_field_tag :within, @within %>   <span>miles</span></li>
+          <li class="simple"><label>Within:</label> <%= text_field_tag :within, params[:within] %>   <span>miles</span></li>
         <% end %>
       </ul>
     </li>
@@ -110,8 +110,8 @@
       <fieldset>
         <legend>Publication Date</legend>
         <ul>
-          <li class="simple"><label>From:</label><%= text_field_tag :publication_date_greater_than, @start_date.try(:to_date) %></li>
-          <li class="simple"><label>To:</label><%= text_field_tag :publication_date_less_than, @end_date.try(:to_date) %><span> (eg '01/01/09', '1 year ago', 'yesterday', etc.)</span></li>
+          <li class="simple"><label>From:</label><%= text_field_tag :publication_date_greater_than, @search.start_date.try(:to_date) %></li>
+          <li class="simple"><label>To:</label><%= text_field_tag :publication_date_less_than, @search.end_date.try(:to_date) %><span> (eg '01/01/09', '1 year ago', 'yesterday', etc.)</span></li>
         </ul>
       </fieldset>
     </li>
