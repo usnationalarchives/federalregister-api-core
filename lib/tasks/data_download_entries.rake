@@ -11,15 +11,24 @@ namespace :data do
       if File.exists?(path)
         puts "skipping #{date}"
         next
-      else
-        puts "downloading #{date}"
       end
     
+      puts "downloading #{date}"
       File.open(path, File::WRONLY|File::TRUNC|File::CREAT) do |out|
         open(url) do |remote|
           remote.each_line {|line| out.puts line}
         end
       end
+      
+      doc = Nokogiri::XML(open(path))
+
+      publication_date = doc.css('dateIssued').first.try(:content)
+      if !publication_date
+        puts "ERROR! not a valid file!"
+        FileUtils.rm path
+        exit
+      end
+      
     end
   end
 end
