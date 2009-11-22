@@ -1,0 +1,5 @@
+<li>
+  <%= link_to_if citation.url, citation.name, citation.url, :class => "#{'tip' if citation.cited_entry}" %>
+  <span><%= ": #{citation.cited_entry.title} (#{citation.cited_entry.publication_date})" if citation.cited_entry%></span>
+  <%= render( :partial => 'tip', :locals => {:entry => citation.cited_entry} ) if citation.cited_entry %>
+</li>

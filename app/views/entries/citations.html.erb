@@ -1,0 +1,26 @@
+<% title "Citations for: #{@entry.title}" %>
+<% add_javascript :src => 'citations' %>
+
+<div class="header group">
+  <h2>Explore citations and references</h2>
+  <ul class="citation_controls btn group filter">
+    <li class="all"><a href="#all">All</a></li>
+    <li class="citations"><a href="#citations">Citations</a></li>
+    <li class="referencing_entries"><a href="#referencing_entries">Entries referencing this</a></li>
+    <li class="livesearch"><input title="Filter citations" class="labelHighlight"/></li>
+  </ul>
+</div>
+
+<div id="citations">
+  <h3>Citations</h3>
+  <ul class="citation-right_tip">
+    <%= render :partial => 'citation', :collection => @entry.citations %>
+  </ul>
+</div>
+
+<div id="referencing_entries">
+  <h3>Entries Referencing This</h3>
+  <ul class="citation-right_tip">
+    <%= render :partial => "referencing_entry", :collection =>  @entry.referencing_entries %>
+  </ul>
+</div>
