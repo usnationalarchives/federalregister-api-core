@@ -5,19 +5,7 @@
     <% @entries.each_with_index do |entry, i| %>
       <li>    
         <%= link_to truncate("##{i+1} - #{entry.title}", :length => 97), entry_path(entry), :class => "entry tip" %>          
-        <div class="tip">
-          <p class="entry">Entry <%= i + 1 %> of <%= @entries.size %></p>          
-          <dl>
-            <dt>Full Title:</dt>
-            <dd><%= entry.title %></dd>
-            <% if entry.agency %>
-              <dt>Agency:</dt>
-              <dd><%= entry.agency.name %></dd>
-            <% end %>
-              <dt>Date Entered:</dt>
-              <dd><%= entry.publication_date.to_formatted_s(:pretty) %></dd>
-          </dl>            
-        </div>
+        <%= render :partial => "tip", :locals => {:entry => entry, :size => @entries.size, :i => i} %>
       </li>
     <% end %>
     </ul>
