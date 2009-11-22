@@ -144,21 +144,26 @@
     <div id="map" style="width: 230px; height: 350px"></div>
   <% end %>
 
-  <% unless true || @entry.citations.blank? %>
+  <% if @entry.citations.present? %>
     <h3>Citations</h3>
-    <ul>
-    <% @entry.citations.each do |citation| %>
-      <li><%= link_to_if citation.url, citation.name, citation.url %><%= ": #{citation.cited_entry.title}" if citation.cited_entry%></li>
-    <% end %>
+    <% max_citations = 3 %>
+    <ul class="citation">
+      <%= render :partial => 'citation', :collection => @entry.citations.slice(0,max_citations) %>
     </ul>
+    <% if @entry.citations.size > max_citations %>
+      <%= link_to 'See all', entry_citation_path(@entry, :anchor => "citations"), :class => "raquo" %>
+    <% end %>
+    
   <% end %>
   
-  <% unless true || @entry.referencing_entries.blank? %>
+  <% if @entry.referencing_entries.present? %>
     <h3>Entries Referencing This</h3>
-    <ul>
-    <% @entry.referencing_entries.each do |entry| %>
-      <li><%= link_to entry.citation, entry_path(entry) %>: <%= entry.title %> (<%= entry.publication_date %>)</li>
-    <% end %>
+    <% max_citations = 3 %>
+    <ul class="citation">
+      <%= render :partial => "referencing_entry", :collection =>  @entry.referencing_entries.slice(0,max_citations) %>
     </ul>
+    <% if @entry.referencing_entries.size > max_citations %>
+      <%= link_to 'See all', entry_citation_path(@entry, :anchor => "referencing_entries") %>
+    <% end %>
   <% end %>
 <% end %>

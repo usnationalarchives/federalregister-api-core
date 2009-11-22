@@ -253,6 +253,10 @@ class EntriesController < ApplicationController
     end
   end
   
+  def citations
+    @entry = Entry.find_by_document_number!(params[:document_number])
+  end
+  
   def tiny_pulse
     entry = Entry.find_by_document_number!(params[:document_number])
     redirect_to entry_path(entry)
