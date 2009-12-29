@@ -2,34 +2,39 @@
 
  Table name: entries
 
-  id                   :integer(4)      not null, primary key
-  title                :text
-  abstract             :text
-  contact              :text
-  dates                :text
-  action               :text
-  type                 :string(255)
-  link                 :string(255)
-  genre                :string(255)
-  part_name            :string(255)
-  citation             :string(255)
-  granule_class        :string(255)
-  document_number      :string(255)
-  toc_subject          :string(255)
-  toc_doc              :string(255)
-  length               :integer(4)
-  start_page           :integer(4)
-  end_page             :integer(4)
-  agency_id            :integer(4)
-  publication_date     :date
-  places_determined_at :datetime
-  created_at           :datetime
-  updated_at           :datetime
-  slug                 :text
-  delta                :boolean(1)      default(TRUE), not null
-  source_text_url      :string(255)
-  primary_agency_raw   :string(255)
-  secondary_agency_raw :string(255)
+  id                           :integer(4)      not null, primary key
+  title                        :text
+  abstract                     :text
+  contact                      :text
+  dates                        :text
+  action                       :text
+  type                         :string(255)
+  link                         :string(255)
+  genre                        :string(255)
+  part_name                    :string(255)
+  citation                     :string(255)
+  granule_class                :string(255)
+  document_number              :string(255)
+  toc_subject                  :string(255)
+  toc_doc                      :string(255)
+  length                       :integer(4)
+  start_page                   :integer(4)
+  end_page                     :integer(4)
+  agency_id                    :integer(4)
+  publication_date             :date
+  places_determined_at         :datetime
+  created_at                   :datetime
+  updated_at                   :datetime
+  slug                         :text
+  delta                        :boolean(1)      default(TRUE), not null
+  source_text_url              :string(255)
+  primary_agency_raw           :string(255)
+  secondary_agency_raw         :string(255)
+  volume                       :integer(4)
+  regulationsdotgov_id         :string(255)
+  comment_url                  :string(255)
+  checked_regulationsdotgov_at :datetime
+  full_xml_added_at            :datetime
 
 =end Schema Information
 
