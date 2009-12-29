@@ -1,3 +1,17 @@
+=begin Schema Information
+
+ Table name: citations
+
+  id              :integer(4)      not null, primary key
+  source_entry_id :integer(4)
+  cited_entry_id  :integer(4)
+  citation_type   :string(255)
+  part_1          :string(255)
+  part_2          :string(255)
+  part_3          :string(255)
+
+=end Schema Information
+
 class Citation < ActiveRecord::Base
   CITATION_TYPES = {
     'USC' => /(\d+)\s+U\.?S\.?C\.?\s+(\d+)/,
