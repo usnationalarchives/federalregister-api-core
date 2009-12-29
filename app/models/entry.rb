@@ -175,7 +175,11 @@ class Entry < ActiveRecord::Base
       base_url =  "http://www.gpo.gov/fdsys/pkg/FR-#{publication_date.to_s(:db)}/pdf/#{document_number}.pdf"
     end
   end
-
+  
+  def xml_location
+    "#{RAILS_ROOT}/data/xml/" + document_number.sub(/-/,'').scan(/.{0,3}/).reject(&:blank?).join('/') + '.xml'
+  end
+  
   def entries_within(distance, options={})
     limit = options.delete(:limit) || 10
     count = options.delete(:count) || false
