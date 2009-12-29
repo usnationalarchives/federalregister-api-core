@@ -30,7 +30,7 @@ end
 
 namespace :data do
   namespace :import do
-    desc "Import entries XML file(s) into the database"
+    desc "Import entries MODS file(s) into the database"
     task :entries => :environment do
       date = ENV['DATE_TO_IMPORT'].blank? ? Date.today : Date.parse(ENV['DATE_TO_IMPORT'])
       
