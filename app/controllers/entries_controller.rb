@@ -2,6 +2,8 @@ class EntriesController < ApplicationController
   caches_page :by_date, :show, :current_headlines
   
   include Geokit::Geocoders
+  include XmlTransformer
+  helper_method :transform_xml
   
   def search
     with = {}
