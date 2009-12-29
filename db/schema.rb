@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20091102093720) do
+ActiveRecord::Schema.define(:version => 20091229173900) do
 
   create_table "agencies", :force => true do |t|
     t.integer  "parent_id"
@@ -70,10 +70,11 @@ ActiveRecord::Schema.define(:version => 20091102093720) do
     t.string   "source_text_url"
     t.string   "primary_agency_raw"
     t.string   "secondary_agency_raw"
+    t.integer  "volume"
     t.string   "regulationsdotgov_id"
     t.string   "comment_url"
     t.datetime "checked_regulationsdotgov_at"
-    t.integer  "volume"
+    t.datetime "full_xml_added_at"
   end
 
   add_index "entries", ["agency_id", "granule_class"], :name => "index_entries_on_agency_id_and_granule_class"
@@ -81,9 +82,11 @@ ActiveRecord::Schema.define(:version => 20091102093720) do
   add_index "entries", ["agency_id", "publication_date"], :name => "index_entries_on_agency_id_and_publication_date"
   add_index "entries", ["citation"], :name => "index_entries_on_citation"
   add_index "entries", ["document_number"], :name => "index_entries_on_document_number"
+  add_index "entries", ["full_xml_added_at"], :name => "index_entries_on_full_xml_added_at"
+  add_index "entries", ["id", "agency_id"], :name => "index_entries_on_id_and_agency_id"
   add_index "entries", ["id", "publication_date"], :name => "index_entries_on_id_and_publication_date"
   add_index "entries", ["publication_date", "agency_id"], :name => "index_entries_on_publication_date_and_agency_id"
-  add_index "entries", ["volume", "start_page", "end_page"], :name => "index_entries_on_volume_and_start_page_and_end_page"
+  add_index "entries", ["start_page", "end_page"], :name => "index_entries_on_volume_and_start_page_and_end_page"
 
   create_table "entry_details", :force => true do |t|
     t.integer "entry_id"
@@ -123,6 +126,17 @@ ActiveRecord::Schema.define(:version => 20091102093720) do
   end
 
   add_index "referenced_dates", ["entry_id", "date"], :name => "index_referenced_dates_on_entry_id_and_date"
+
+  create_table "search_subscriptions", :force => true do |t|
+    t.integer  "user_id"
+    t.string   "title"
+    t.string   "frequency"
+    t.string   "search_params"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "search_subscriptions", ["user_id"], :name => "index_search_subscriptions_on_user_id"
 
   create_table "topic_assignments", :force => true do |t|
     t.integer  "topic_id"
