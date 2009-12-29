@@ -54,7 +54,9 @@
   </ul>
 <% end %>
 
-<% if @entry.full_text_raw %>
+<% if @entry.has_full_xml? %>
+  <%= transform_xml(@entry.full_xml, 'entries/_full_text.html.xslt') %>
+<% elsif @entry.full_text_raw %>
 <h3>Full text</h3>
 <div class="fulltextWrapper span-16">
   <pre><%=

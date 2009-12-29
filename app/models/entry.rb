@@ -127,6 +127,14 @@ class Entry < ActiveRecord::Base
     entry_detail.full_text_raw=val
   end
   
+  def has_full_xml?
+    !full_xml_added_at.nil?
+  end
+  
+  def full_xml
+    File.read(xml_location)
+  end
+  
   def month_year
     publication_date.to_formatted_s(:month_year)
   end
