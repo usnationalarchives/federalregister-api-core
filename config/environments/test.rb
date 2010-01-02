@@ -31,3 +31,4 @@ config.action_mailer.delivery_method = :test
 config.gem 'thoughtbot-shoulda', :lib => 'shoulda', :source => 'http://gems.github.com'
 config.gem 'seanhussey-woulda',  :lib => 'woulda',  :source => 'http://gems.github.com'
 config.gem 'floehopper-mocha',   :lib => 'mocha',   :source => 'http://gems.github.com'
+config.gem 'rails-test-serving', :version => '0.1.4.2', :lib => 'rails_test_serving'
