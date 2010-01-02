@@ -1,4 +1,5 @@
 require 'rubygems'
+require 'monkeyspecdoc'
 require 'rails_test_serving'
 RailsTestServing.boot
 
