@@ -59,11 +59,50 @@
   </xsl:template>
 
   <xsl:template match="GPOTABLE">
+    <xsl:variable name="number_of_columns"><xsl:value-of select="@COLS"/></xsl:variable>
     <table>
-      <xsl:attribute name="class">
-        <xsl:value-of select="name()"/>      
-      </xsl:attribute>
-      <xsl:apply-templates/>
+      <thead>
+        <xsl:if test="count(BOXHD/CHED[@H = '1']) > 0">
+          <tr>
+            <xsl:for-each select="BOXHD/CHED[@H=1]">
+              <th><xsl:value-of select="text()" /></th>
+            </xsl:for-each>
+          </tr>
+        </xsl:if>
+        <xsl:if test="count(BOXHD/CHED[@H = '2']) > 0">
+          <tr>
+            <xsl:for-each select="BOXHD/CHED[@H = '2']">
+              <th><xsl:value-of select="text()" /></th>
+            </xsl:for-each>
+          </tr>
+        </xsl:if>
+        <xsl:if test="count(BOXHD/CHED[@H = '3']) > 0">
+          <tr>
+            <xsl:for-each select="BOXHD/CHED[@H = '3']">
+              <th><xsl:value-of select="text()" /></th>
+            </xsl:for-each>
+          </tr>
+        </xsl:if>
+      </thead>
+      
+      <tbody>
+        <xsl:for-each select="ROW">
+          <tr>
+            <xsl:apply-templates />
+          </tr>
+        </xsl:for-each>
+        <xsl:for-each select="TNOTE | TDESC | SIGDAT">
+          <tr>
+            <xsl:attribute name="class">
+              <xsl:value-of select="name()"/>
+            </xsl:attribute>
+            <td>
+              <xsl:attribute name="colspan">4</xsl:attribute>
+              <xsl:apply-templates/>
+            </td>
+          </tr>
+        </xsl:for-each>
+      </tbody>
     </table>
   </xsl:template>
 
@@ -75,48 +114,6 @@
         <xsl:call-template name="apply-span"/>
       </xsl:otherwise>
     </xsl:choose>    
-  </xsl:template>
-  
-  <xsl:template match="ROW">
-    <tr>
-      <xsl:apply-templates/>
-    </tr>
-  </xsl:template>
-  
-  
-  <xsl:template match="TNOTE | TDESC | SIGDAT">
-    <tr>
-      <td>
-        <xsl:attribute name="colspan">9999</xsl:attribute>
-        <xsl:attribute name="class">
-          <xsl:value-of select="name()"/>
-        </xsl:attribute>
-        <xsl:apply-templates/>
-      </td>
-    </tr>
-  </xsl:template>
-  
-  <xsl:template match="BOXHD">
-    <thead>
-      <tr>
-        <xsl:for-each select="CHED">
-          <th><xsl:value-of select="text()" /></th>
-        </xsl:for-each>
-        <!-- <xsl:for-each select="CHED[@H=1]">
-          <th>
-            <xsl:attribute name="colspan">
-              FOOBARBAZ
-            </xsl:attribute>
-            <xsl:value-of select="text()" />
-          </th>
-        </xsl:for-each> -->
-      </tr>
-      <!-- <tr>
-        <xsl:for-each select="CHED[@H=2]">
-          <th><xsl:value-of select="text()" /></th>
-        </xsl:for-each>
-      </tr> -->
-    </thead>
   </xsl:template>
   
   <!-- <xsl:template match="CHED">
