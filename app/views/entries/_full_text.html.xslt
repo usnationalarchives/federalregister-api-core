@@ -65,7 +65,13 @@
         <xsl:if test="count(BOXHD/CHED[@H = '1']) > 0">
           <tr>
             <xsl:for-each select="BOXHD/CHED[@H=1]">
-              <th><xsl:value-of select="text()" /></th>
+              <th>
+                <xsl:variable name="colspan"><xsl:value-of select="count(following-sibling::CHED[@H >1][count(preceding-sibling::CHED[@H = 1][1] | current()) = 1])" /></xsl:value-of>
+                <xsl:if test="$colspan > 1">
+                  <xsl:attribute name="colspan"><xsl:value-of select="$colspan" /></xsl:attribute>
+                </xsl:if>
+                <xsl:apply-templates/>
+              </th>
             </xsl:for-each>
           </tr>
         </xsl:if>
@@ -97,7 +103,7 @@
               <xsl:value-of select="name()"/>
             </xsl:attribute>
             <td>
-              <xsl:attribute name="colspan">4</xsl:attribute>
+              <xsl:attribute name="colspan"><xsl:value-of select="$number_of_columns" /></xsl:attribute>
               <xsl:apply-templates/>
             </td>
           </tr>

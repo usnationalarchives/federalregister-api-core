@@ -67,18 +67,18 @@ class EntryFullTextTransformationTest < ActiveSupport::TestCase
     end
   end
   
-  context "complex table header" do
+  context "two-level table header" do
     setup do
       process <<-XML
         <GPOTABLE COLS="5">
           <BOXHD>
-            <CHED H="1" />
+            <CHED H="1"></CHED>
             <CHED H="1">California</CHED>
             <CHED H="2">Population</CHED>
             <CHED H="2">Area</CHED>
             <CHED H="1">Oregon</CHED>
             <CHED H="2">Population</CHED>
-            <CHED H="2">Area</CHED>
+            <CHED H="2">Area<EM>1</EM></CHED>
           </BOXHD>
         </GPOTABLE>
       XML
@@ -93,16 +93,54 @@ class EntryFullTextTransformationTest < ActiveSupport::TestCase
         assert_select header_rows.first, "th", 3
       end
     end
-    # 
-    # should "span multiple columns in some cells" do
-    #   assert_select "table thead tr" do |heade|
-    # end
     
-    should "have four headers in the second header row" do
+    should "span multiple columns in some cells" do
       assert_select "table thead tr" do |header_rows|
-        assert_select header_rows.second, "th", 4
+        assert_select header_rows.first, "th:nth-of-type(1)[colspan]", 0
+        assert_select header_rows.first, "th:nth-of-type(2)[colspan=2]"
+        assert_select header_rows.first, "th:nth-of-type(3)[colspan=2]"
       end
     end
+    
+    should_eventually "span multiple rows in some cells" do 
+      assert_select "th:first-of-type[rowspan=2]"
+    end
+  end
+  
+  context "three-level table header" do
+    setup do
+      process <<-XML
+        <GPOTABLE COLS="5">
+          <BOXHD>
+            <CHED H="1">System designation</CHED>
+            <CHED H="1">Light source composition</CHED>
+            <CHED H="1">Photometry requirements reference</CHED>
+            <CHED H="2">Table XVIII</CHED>
+            <CHED H="3">Upper beam mechanical and visual aim</CHED>
+            <CHED H="2">Tables XIX-a, XIX-b, XIX-c</CHED>
+            <CHED H="3">Lower beam mech aim</CHED>
+            <CHED H="3">Lower beam visual aim</CHED>
+          </BOXHD>
+        </GPOTABLE>
+      XML
+    end
+    
+    should "have three header rows" do
+      assert_select "table thead tr", 3
+    end
+      
+    should "have three headers in the first header row" do
+      assert_select "table thead tr" do |header_rows|
+        assert_select header_rows.first, "th", 3
+      end
+    end
+    
+    # should "span multiple columns in some cells" do
+    #   assert_select "table thead tr" do |header_rows|
+    #     assert_select header_rows.second, "th:nth-of-type(3)[colspan=2]"
+    #     assert_select header_rows.second, "th:nth-of-type(4)[colspan=2]"
+    #   end
+    # end
   end
   
   context "complex table body" do
