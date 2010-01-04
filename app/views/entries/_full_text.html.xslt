@@ -62,39 +62,27 @@
     <xsl:variable name="number_of_columns"><xsl:value-of select="@COLS"/></xsl:variable>
     <table>
       <thead>
-        <xsl:if test="count(BOXHD/CHED[@H = '1']) > 0">
-          <tr>
-            <xsl:for-each select="BOXHD/CHED[@H=1]">
-              <th>
-                <xsl:variable name="colspan"><xsl:value-of select="count(following-sibling::CHED[@H >1][count(preceding-sibling::CHED[@H = 1][1] | current()) = 1])" /></xsl:value-of>
-                <xsl:if test="$colspan > 1">
-                  <xsl:attribute name="colspan"><xsl:value-of select="$colspan" /></xsl:attribute>
-                </xsl:if>
-                <xsl:apply-templates/>
-              </th>
-            </xsl:for-each>
-          </tr>
-        </xsl:if>
-        <xsl:if test="count(BOXHD/CHED[@H = '2']) > 0">
-          <tr>
-            <xsl:for-each select="BOXHD/CHED[@H = '2']">
-              <th><xsl:value-of select="text()" /></th>
-            </xsl:for-each>
-          </tr>
-        </xsl:if>
-        <xsl:if test="count(BOXHD/CHED[@H = '3']) > 0">
-          <tr>
-            <xsl:for-each select="BOXHD/CHED[@H = '3']">
-              <th><xsl:value-of select="text()" /></th>
-            </xsl:for-each>
-          </tr>
-        </xsl:if>
+        <xsl:call-template name="header_row">
+          <xsl:with-param name="level" select="1" />
+        </xsl:call-template>
+        <xsl:call-template name="header_row">
+          <xsl:with-param name="level" select="2" />
+        </xsl:call-template>
+        <xsl:call-template name="header_row">
+          <xsl:with-param name="level" select="3" />
+        </xsl:call-template>
+        <xsl:call-template name="header_row">
+          <xsl:with-param name="level" select="4" />
+        </xsl:call-template>
       </thead>
       
       <tbody>
         <xsl:for-each select="ROW">
           <tr>
             <xsl:apply-templates />
+            <xsl:call-template name="empty_table_cell">
+              <xsl:with-param name="how_many" select="$number_of_columns - (count(ENT) + sum(ENT/@A))"/>
+            </xsl:call-template>
           </tr>
         </xsl:for-each>
         <xsl:for-each select="TNOTE | TDESC | SIGDAT">
@@ -111,7 +99,51 @@
       </tbody>
     </table>
   </xsl:template>
-
+  
+  <xsl:template name="header_row">
+    <xsl:param name="level" />
+    <xsl:variable name="number_of_headers">
+      <xsl:value-of select="BOXHD/CHED[not(preceding-sibling::CHED/@H > @H or following-sibling::CHED/@H > @H)]/@H"/>
+    </xsl:variable>
+    
+    <xsl:if test="count(BOXHD/CHED[@H = $level]) > 0">
+      <tr>
+        <xsl:for-each select="BOXHD/CHED[@H=$level]">
+          <xsl:call-template name="header_cell">
+            <xsl:with-param name="number_of_headers" select="$number_of_headers" />
+            <xsl:with-param name="level" select="$level" />
+          </xsl:call-template>
+        </xsl:for-each>
+      </tr>
+    </xsl:if>
+  </xsl:template>
+  
+  <xsl:template name="header_cell">
+    <xsl:param name="number_of_headers" />
+    <xsl:param name="level" />
+    <th>
+      <xsl:variable name="descendants" select="following-sibling::CHED[@H >1][count(preceding-sibling::CHED[@H = 1][1] | current()) = 1]"/>
+      <xsl:variable name="number_of_headers_under_this" select="count($descendants)" />
+      
+      <xsl:if test="$number_of_headers_under_this > 1">
+        <xsl:attribute name="colspan"><xsl:value-of select="$number_of_headers_under_this" /></xsl:attribute>
+      </xsl:if>
+      <xsl:if test="$number_of_headers_under_this = 0 and (1 + $number_of_headers - $level) > 1">
+        <xsl:attribute name="rowspan"><xsl:value-of select="1 + $number_of_headers - $level" /></xsl:attribute>
+      </xsl:if>
+      <xsl:apply-templates/>
+    </th>
+  </xsl:template>
+  
+  <xsl:template name="header_cell_colspan">
+    
+  </xsl:template>
+  
+  <!-- <xsl:template name="descendant_header_cells">
+    <xsl:variable name="descendants" select="following-sibling::CHED[@H >1][count(preceding-sibling::CHED[@H = 1][1] | current()) = 1]"/>
+    <xsl:value-of select="$descendants"/>
+  </xsl:template> -->
+  
   <xsl:template match="TTITLE">
     <xsl:choose>
       <xsl:when test="not(node())">
@@ -121,12 +153,6 @@
       </xsl:otherwise>
     </xsl:choose>    
   </xsl:template>
-  
-  <!-- <xsl:template match="CHED">
-    <th>
-      <xsl:apply-templates/>
-    </th>
-  </xsl:template> -->
   
   <xsl:template match="ENT">
     <td>
@@ -142,6 +168,19 @@
     </td>
   </xsl:template>
 
+  <xsl:template name="empty_table_cell">
+    <xsl:param name="how_many">1</xsl:param>
+    <xsl:if test="$how_many &gt; 0">
+      <!-- Add empty cell. -->
+      <td class="empty">&nbsp;</td>
+
+      <!-- Print remaining ($how_many - 1) cells. -->
+      <xsl:call-template name="empty_table_cell">
+        <xsl:with-param name="how_many" select="$how_many - 1"/>
+      </xsl:call-template>
+    </xsl:if>
+  </xsl:template>
+  
   <xsl:template match="E">
     <span>
       <xsl:attribute name="class">E-<xsl:value-of select="@T"/></xsl:attribute>  
