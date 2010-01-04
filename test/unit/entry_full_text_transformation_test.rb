@@ -70,7 +70,7 @@ class EntryFullTextTransformationTest < ActiveSupport::TestCase
   context "two-level table header" do
     setup do
       process <<-XML
-        <GPOTABLE COLS="5">
+        <GPOTABLE COLS="6">
           <BOXHD>
             <CHED H="1"></CHED>
             <CHED H="1">California</CHED>
@@ -79,6 +79,8 @@ class EntryFullTextTransformationTest < ActiveSupport::TestCase
             <CHED H="1">Oregon</CHED>
             <CHED H="2">Population</CHED>
             <CHED H="2">Area<EM>1</EM></CHED>
+            <CHED H="1">Total</CHED>
+            <CHED H="2">Population</CHED>
           </BOXHD>
         </GPOTABLE>
       XML
@@ -88,9 +90,9 @@ class EntryFullTextTransformationTest < ActiveSupport::TestCase
       assert_select "table thead tr", 2
     end
       
-    should "have three headers in the first header row" do
+    should "have four headers in the first header row" do
       assert_select "table thead tr" do |header_rows|
-        assert_select header_rows.first, "th", 3
+        assert_select header_rows.first, "th", 4
       end
     end
     
@@ -99,11 +101,13 @@ class EntryFullTextTransformationTest < ActiveSupport::TestCase
         assert_select header_rows.first, "th:nth-of-type(1)[colspan]", 0
         assert_select header_rows.first, "th:nth-of-type(2)[colspan=2]"
         assert_select header_rows.first, "th:nth-of-type(3)[colspan=2]"
+        assert_select header_rows.first, "th:nth-of-type(4)[colspan]", 0
       end
     end
     
-    should_eventually "span multiple rows in some cells" do 
-      assert_select "th:first-of-type[rowspan=2]"
+    should "span multiple rows in some cells" do
+      assert_select "th:nth-of-type(1)[rowspan=2]"
+      assert_select "th:nth-of-type(4)[rowspan]", 0
     end
   end
   
@@ -112,14 +116,17 @@ class EntryFullTextTransformationTest < ActiveSupport::TestCase
       process <<-XML
         <GPOTABLE COLS="5">
           <BOXHD>
-            <CHED H="1">System designation</CHED>
-            <CHED H="1">Light source composition</CHED>
-            <CHED H="1">Photometry requirements reference</CHED>
-            <CHED H="2">Table XVIII</CHED>
-            <CHED H="3">Upper beam mechanical and visual aim</CHED>
-            <CHED H="2">Tables XIX-a, XIX-b, XIX-c</CHED>
-            <CHED H="3">Lower beam mech aim</CHED>
-            <CHED H="3">Lower beam visual aim</CHED>
+            <CHED H="1">A</CHED>
+            <CHED H="1">B</CHED>
+            <CHED H="2">BA</CHED>
+            <CHED H="2">BB</CHED>
+            <CHED H="3">BBA</CHED>
+            <CHED H="3">BBB</CHED>
+            <CHED H="2">BC</CHED>
+            <CHED H="1">C</CHED>
+            <CHED H="2">CA</CHED>
+            <CHED H="3">CAA</CHED>
+            <CHED H="2">CB</CHED>
           </BOXHD>
         </GPOTABLE>
       XML
@@ -135,14 +142,45 @@ class EntryFullTextTransformationTest < ActiveSupport::TestCase
       end
     end
     
-    # should "span multiple columns in some cells" do
-    #   assert_select "table thead tr" do |header_rows|
-    #     assert_select header_rows.second, "th:nth-of-type(3)[colspan=2]"
-    #     assert_select header_rows.second, "th:nth-of-type(4)[colspan=2]"
-    #   end
-    # end
+    should_eventually "span multiple columns in some cells" do
+      assert_select "table thead tr" do |header_rows|
+        assert_select header_rows.second, "th:not([colspan])", 2
+        assert_select header_rows.second, "th:nth-of-type(3)[colspan=4]"
+      end
+    end
   end
   
+  context "insane table header" do
+    setup do
+      # /e/E7-23571
+      process <<-XML
+        <GPOTABLE CDEF="s20,10C,10C,10C,10C" COLS="5" OPTS="L4,i1">
+          <TTITLE>
+            <E T="04">Table 10.&#x2014;Chronic Risk from Exposure to Cupboard (5.25 g) Strips for 24 hours/day</E>
+          </TTITLE>
+          <BOXHD>
+            <CHED H="1">Study</CHED>
+            <CHED H="2">POD Type</CHED>
+            <CHED H="3">POD (mg/m<E T="51">3</E>)</CHED>
+            <CHED H="4">Home ID</CHED>
+            <CHED H="4">CD avg &#xF7; 12</CHED>
+            <CHED H="1">Rat 2-Year Inhalation</CHED>
+            <CHED H="2">BMDL<E T="52">10</E>
+            </CHED>
+            <CHED H="3">0.078</CHED>
+            <CHED H="4">RBC</CHED>
+            <CHED H="3">0.41</CHED>
+            <CHED H="4">brain</CHED>
+            <CHED H="2">BMDL<E T="52">20</E>
+            </CHED>
+            <CHED H="3">0.196</CHED>
+            <CHED H="4">RBC</CHED>
+          </BOXHD>
+        </GPOTABLE>
+      XML
+    end
+  end
+
   context "complex table body" do
     setup do 
       process <<-XML
@@ -191,4 +229,64 @@ class EntryFullTextTransformationTest < ActiveSupport::TestCase
     end
   end
   
+  context "table with missing cells" do 
+    setup do 
+      process <<-XML
+      <GPOTABLE CDEF="s25,12,12,12" COLS="4" OPTS="L2,i1">
+        <BOXHD>
+          <CHED H="1">A</CHED>
+          <CHED H="1">B</CHED>
+          <CHED H="1">C</CHED>
+          <CHED H="1">D</CHED>
+        </BOXHD>
+        <ROW>
+          <ENT>Content</ENT>
+          <ENT>Content</ENT>
+          <ENT>Content</ENT>
+          <ENT>Content</ENT>
+        </ROW>
+        <ROW>
+          <ENT>Content</ENT>
+          <ENT>Content</ENT>
+          <ENT>Content</ENT>
+        </ROW>
+        <ROW>
+          <ENT>Content</ENT>
+          <ENT>Content</ENT>
+        </ROW>
+        <ROW>
+          <ENT>Content</ENT>
+        </ROW>
+        <ROW>
+        </ROW>
+      </GPOTABLE>
+      XML
+    end
+    
+    should "have 4 content cells in the first row" do
+      assert_select 'tbody tr:nth-of-type(1) td:not(.empty)', {:count => 4, :text => "Content"}
+      assert_select 'tbody tr:nth-of-type(1) td.empty',       {:count => 0, :text => ""}
+    end
+    
+    should "have 3 content cells and 1 empty cell in the second row" do
+      assert_select 'tbody tr:nth-of-type(2) td:not(.empty)', {:count => 3, :text => "Content"}
+      assert_select 'tbody tr:nth-of-type(2) td.empty',       {:count => 1, :text => ""}
+    end
+    
+    should "have 2 content cells and 2 empty cells in the third row" do
+      assert_select 'tbody tr:nth-of-type(3) td:not(.empty)', {:count => 2, :text => "Content"}
+      assert_select 'tbody tr:nth-of-type(3) td.empty',       {:count => 2, :text => ""}
+    end
+    
+    should "have 1 content cell and 3 empty cells in the fourth row" do
+      assert_select 'tbody tr:nth-of-type(4) td:not(.empty)', {:count => 1, :text => "Content"}
+      assert_select 'tbody tr:nth-of-type(4) td.empty',       {:count => 3, :text => ""}
+    end
+    
+    should "have 4 empty cells in the fifth row" do
+      assert_select 'tbody tr:nth-of-type(5) td:not(.empty)', {:count => 0, :text => "Content"}
+      assert_select 'tbody tr:nth-of-type(5) td.empty',       {:count => 4, :text => ""}
+    end
+    
+  end
 end
