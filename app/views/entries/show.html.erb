@@ -146,7 +146,7 @@
     <div id="map" style="width: 230px; height: 350px"></div>
   <% end %>
 
-  <% if false && @entry.citations.present? %>
+  <% if @entry.citations.present? %>
     <h3>Citations</h3>
     <% max_citations = 3 %>
     <ul class="citation">
@@ -158,7 +158,7 @@
     
   <% end %>
   
-  <% if false && @entry.referencing_entries.present? %>
+  <% if @entry.referencing_entries.present? %>
     <h3>Entries Referencing This</h3>
     <% max_citations = 3 %>
     <ul class="citation">
