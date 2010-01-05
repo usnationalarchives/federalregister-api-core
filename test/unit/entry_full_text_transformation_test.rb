@@ -28,11 +28,10 @@ class EntryFullTextTransformationTest < ActiveSupport::TestCase
          <HD SOURCE="HD3">Header 3</HD>
          <HD SOURCE="HD4">Header 4</HD>
        XML
-     
-       assert_select "h3", :text => 'Header 1'
-       assert_select "h4", :text => 'Header 2'
-       assert_select "h5", :text => 'Header 3'
-       assert_select "h6", :text => 'Header 4'
+       assert_select "h3[id]", :text => 'Header 1 &#x2191;'
+       assert_select "h4[id]", :text => 'Header 2 &#x2191;'
+       assert_select "h5[id]", :text => 'Header 3 &#x2191;'
+       assert_select "h6[id]", :text => 'Header 4 &#x2191;'
     end
   end
   

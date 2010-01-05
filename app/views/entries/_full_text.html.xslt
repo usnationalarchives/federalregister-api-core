@@ -40,8 +40,27 @@
 			.TRPRTPAGE, .TDPRTPAGE {width:100%;}
 
         </style>
+        <xsl:if test="count(//HD[@SOURCE='HD1' or @SOURCE = 'HD2' or @SOURCE = 'HD3' or @SOURCE = 'HD4']) > 0">
+          <ul id="table_of_contents">
+            <h3>Table of Contents</h3>
+            <xsl:apply-templates mode="table_of_contents" />
+          </ul>
+        </xsl:if>
         <xsl:apply-templates/>
         <xsl:apply-templates mode="footnotes" />
+  </xsl:template>
+  
+  <xsl:template match="HD[@SOURCE='HD1' or @SOURCE = 'HD2' or @SOURCE = 'HD3' or @SOURCE = 'HD4']" mode="table_of_contents">
+    <li>
+      <xsl:attribute name="style">padding-left: <xsl:value-of select="number(translate(@SOURCE, 'HD', '')) * 10" />px</xsl:attribute>
+      <a>
+        <xsl:attribute name="href">#<xsl:value-of select="generate-id()" /></xsl:attribute>
+        <xsl:apply-templates/>
+      </a>
+    </li>
+  </xsl:template>
+  <xsl:template mode="table_of_contents" match="*[name(.) != 'HD']|text()">
+    <xsl:apply-templates mode="table_of_contents"/>
   </xsl:template>
   
   <!-- Tags being Ignored -->
@@ -206,11 +225,18 @@
   
   <xsl:template match="HD[@SOURCE = 'HED']"></xsl:template>
   
-  <xsl:template match="HD[@SOURCE = 'HD1']">
-    <h3><xsl:apply-templates/></h3>
+  <xsl:template match="HD[@SOURCE='HD1' or @SOURCE = 'HD2' or @SOURCE = 'HD3' or @SOURCE = 'HD4']">
+    <xsl:element name="{concat('h', number(translate(@SOURCE, 'HD', '')) + 2)}">
+      <xsl:attribute name="id">
+        <xsl:value-of select="generate-id()"/>
+      </xsl:attribute>
+      <xsl:apply-templates/>
+      <xsl:text> </xsl:text>
+      <a href="#table_of_contents">&#8593;</a>
+    </h3>
   </xsl:template>
   
-  <xsl:template match="HD[@SOURCE = 'HD2']">
+  <!-- <xsl:template match="HD[@SOURCE = 'HD2']">
     <h4><xsl:apply-templates/></h4>
   </xsl:template>
   
@@ -220,7 +246,7 @@
   
   <xsl:template match="HD[@SOURCE = 'HD4']">
     <h6><xsl:apply-templates/></h6>
-  </xsl:template>
+  </xsl:template> -->
   
   <xsl:template match="P">
     <p><xsl:apply-templates/></p>
