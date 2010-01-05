@@ -64,7 +64,7 @@
   </xsl:template>
   
   <!-- Tags being Ignored -->
-  <xsl:template match="AGENCY | SUBAGY | AGY | SUM | ACT | FTNT | FRDOC | BILCOD | CNTNTS | UNITNAME | INCLUDES | EDITOR | EAR | FRDOCBP | HRULE | FTREF | NOLPAGES | OLPAGES">
+  <xsl:template match="AGENCY | SUBAGY | AGY | SUM | ACT | EFFDATE | CFR | DEPDOC | RIN | SUBJECT | FURINF | FTNT | FRDOC | BILCOD | CNTNTS | UNITNAME | INCLUDES | EDITOR | EAR | FRDOCBP | HRULE | FTREF | NOLPAGES | OLPAGES">
   </xsl:template>
 
   <xsl:template match="PTS | AIDS">
