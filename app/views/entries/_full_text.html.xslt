@@ -78,6 +78,13 @@
   </xsl:template>
 
   <xsl:template match="GPOTABLE">
+    
+    <xsl:for-each select="TTITLE">
+      <h5 class="table_title">
+        <xsl:apply-templates />
+      </h5>
+    </xsl:for-each>
+
     <xsl:variable name="number_of_columns"><xsl:value-of select="@COLS"/></xsl:variable>
     <table>
       <thead>
@@ -166,16 +173,6 @@
     <xsl:variable name="descendants" select="following-sibling::CHED[@H >1][count(preceding-sibling::CHED[@H = 1][1] | current()) = 1]"/>
     <xsl:value-of select="$descendants"/>
   </xsl:template> -->
-  
-  <xsl:template match="TTITLE">
-    <xsl:choose>
-      <xsl:when test="not(node())">
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:call-template name="apply-span"/>
-      </xsl:otherwise>
-    </xsl:choose>    
-  </xsl:template>
   
   <xsl:template match="ENT">
     <td>
