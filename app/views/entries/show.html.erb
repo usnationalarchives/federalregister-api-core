@@ -153,7 +153,7 @@
       <%= render :partial => 'citation', :collection => @entry.citations.slice(0,max_citations) %>
     </ul>
     <% if @entry.citations.size > max_citations %>
-      <%= link_to 'See all', entry_citation_path(@entry, :anchor => "citations"), :class => "raquo" %>
+      <%= link_to "See all (#{@entry.citations.size})", entry_citation_path(@entry, :anchor => "citations"), :class => "raquo" %>
     <% end %>
     
   <% end %>
@@ -165,7 +165,7 @@
       <%= render :partial => "referencing_entry", :collection =>  @entry.referencing_entries.slice(0,max_citations) %>
     </ul>
     <% if @entry.referencing_entries.size > max_citations %>
-      <%= link_to 'See all', entry_citation_path(@entry, :anchor => "referencing_entries") %>
+      <%= link_to "See all (#{@entry.referencing_entries.size})", entry_citation_path(@entry, :anchor => "referencing_entries") %>
     <% end %>
   <% end %>
 <% end %>
