@@ -218,9 +218,9 @@ class EntryFullTextTransformationTest < ActiveSupport::TestCase
     
     context "note rows" do
       should "have a particular class" do
-        assert_select "table tbody tr.TNOTE", 2
-        assert_select "table tbody tr.SIGDAT", 1
-        assert_select "table tbody tr.TDESC", 1
+        assert_select "table tfoot tr.TNOTE", 2
+        assert_select "table tfoot tr.SIGDAT", 1
+        assert_select "table tfoot tr.TDESC", 1
       end
     
       should "span all columns" do
