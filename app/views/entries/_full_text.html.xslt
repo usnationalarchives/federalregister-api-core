@@ -44,10 +44,18 @@
           <ul id="table_of_contents">
             <h3>Table of Contents</h3>
             <xsl:apply-templates mode="table_of_contents" />
+            <xsl:if test="count(//FTNT) > 0">
+              <li style="padding-left: 10px"><a href="#footnotes">Footnotes</a></li>
+            </xsl:if>
           </ul>
         </xsl:if>
         <xsl:apply-templates/>
-        <xsl:apply-templates mode="footnotes" />
+        <xsl:if test="count(//FTNT) > 0">
+          <div id="footnotes">
+            <h3>Footnotes <a href="#table_of_contents">&#8593;</a></h3>
+            <xsl:apply-templates mode="footnotes" />
+          </div>
+        </xsl:if>
   </xsl:template>
   
   <xsl:template match="HD[@SOURCE='HD1' or @SOURCE = 'HD2' or @SOURCE = 'HD3' or @SOURCE = 'HD4']" mode="table_of_contents">
