@@ -55,7 +55,7 @@
 <% end %>
 
 <% if @entry.has_full_xml? %>
-  <%= transform_xml(@entry.full_xml, 'entries/_full_text.html.xslt') %>
+  <%= add_citation_links(transform_xml(@entry.full_xml, 'entries/_full_text.html.xslt').to_s) %>
 <% elsif @entry.full_text_raw %>
 <h3>Full text</h3>
 <div class="fulltextWrapper span-16">
