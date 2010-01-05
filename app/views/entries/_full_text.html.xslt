@@ -76,6 +76,21 @@
         </xsl:call-template>
       </thead>
       
+      <xsl:if test="count(TNOTE | TDESC | SIGDAT) > 0">
+        <tfoot>
+          <xsl:for-each select="TNOTE | TDESC | SIGDAT">
+            <tr>
+              <xsl:attribute name="class">
+                <xsl:value-of select="name()"/>
+              </xsl:attribute>
+              <td>
+                <xsl:attribute name="colspan"><xsl:value-of select="$number_of_columns" /></xsl:attribute>
+                <xsl:apply-templates/>
+              </td>
+            </tr>
+          </xsl:for-each>
+        </tfoot>
+      </xsl:if>
       <tbody>
         <xsl:for-each select="ROW">
           <tr>
@@ -83,17 +98,6 @@
             <xsl:call-template name="empty_table_cell">
               <xsl:with-param name="how_many" select="$number_of_columns - (count(ENT) + sum(ENT/@A))"/>
             </xsl:call-template>
-          </tr>
-        </xsl:for-each>
-        <xsl:for-each select="TNOTE | TDESC | SIGDAT">
-          <tr>
-            <xsl:attribute name="class">
-              <xsl:value-of select="name()"/>
-            </xsl:attribute>
-            <td>
-              <xsl:attribute name="colspan"><xsl:value-of select="$number_of_columns" /></xsl:attribute>
-              <xsl:apply-templates/>
-            </td>
           </tr>
         </xsl:for-each>
       </tbody>
