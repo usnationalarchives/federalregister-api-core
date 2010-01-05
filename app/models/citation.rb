@@ -52,6 +52,8 @@ class Citation < ActiveRecord::Base
   def self.extract!(entry)
     text = entry.full_text_raw
     entry.citations.delete
+    return if entry.blank?
+    
     CITATION_TYPES.each_pair do |citation_type, regexp|
       text.scan(regexp) do |part_1, part_2, part_3|
         attributes = {:source_entry_id => entry.id, :citation_type => citation_type, :part_1 => part_1, :part_2 => part_2, :part_3 => part_3}
