@@ -202,6 +202,7 @@
   </xsl:template>
   
   <xsl:template match="E">
+    <xsl:text> </xsl:text>
     <span>
       <xsl:attribute name="class">E-<xsl:value-of select="@T"/></xsl:attribute>  
       <xsl:apply-templates/>	
@@ -271,7 +272,7 @@
         <xsl:value-of select="name()"/><xsl:text> </xsl:text><xsl:value-of select="name(parent::*)"/>-<xsl:value-of select="name()"/>
       </xsl:attribute>
       <xsl:apply-templates/>
-    </span>	
+    </span>
   </xsl:template>
   
   <xsl:template match="SU[count(ancestor::GPOTABLE) > 0]">
