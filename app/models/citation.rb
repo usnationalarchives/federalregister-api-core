@@ -31,8 +31,8 @@ class Citation < ActiveRecord::Base
       "http://frwebgate.access.gpo.gov/cgi-bin/get-cfr.cgi?YEAR=current&TITLE=#{part_1}&PART=#{part_2}&SECTION=#{part_3}&SUBPART=&TYPE=TEXT"
     when 'FR'
       "/citation/#{part_1}/#{part_2}" if part_1.to_i >= 59
-    when 'PL' 
-      "http://frwebgate.access.gpo.gov/cgi-bin/getdoc.cgi?dbname=#{part_1}_cong_public_laws&docid=f:publ#{sprintf("%03d",part_2.to_i)}.#{part_1}" if part_1 >= 104
+    when 'PL'
+      "http://frwebgate.access.gpo.gov/cgi-bin/getdoc.cgi?dbname=#{part_1}_cong_public_laws&docid=f:publ#{sprintf("%03d",part_2.to_i)}.#{part_1}" if part_1.to_i >= 104
     end
   end
   
@@ -45,7 +45,7 @@ class Citation < ActiveRecord::Base
     when 'FR'
       "#{part_1} FR #{part_2}"
     when 'PL'
-      
+      "Public Law #{part_1}-#{part_2}"
     end
   end
   
