@@ -2,34 +2,39 @@
 
  Table name: entries
 
-  id                   :integer(4)      not null, primary key
-  title                :text
-  abstract             :text
-  contact              :text
-  dates                :text
-  action               :text
-  type                 :string(255)
-  link                 :string(255)
-  genre                :string(255)
-  part_name            :string(255)
-  citation             :string(255)
-  granule_class        :string(255)
-  document_number      :string(255)
-  toc_subject          :string(255)
-  toc_doc              :string(255)
-  length               :integer(4)
-  start_page           :integer(4)
-  end_page             :integer(4)
-  agency_id            :integer(4)
-  publication_date     :date
-  places_determined_at :datetime
-  created_at           :datetime
-  updated_at           :datetime
-  slug                 :text
-  delta                :boolean(1)      default(TRUE), not null
-  source_text_url      :string(255)
-  primary_agency_raw   :string(255)
-  secondary_agency_raw :string(255)
+  id                           :integer(4)      not null, primary key
+  title                        :text
+  abstract                     :text
+  contact                      :text
+  dates                        :text
+  action                       :text
+  type                         :string(255)
+  link                         :string(255)
+  genre                        :string(255)
+  part_name                    :string(255)
+  citation                     :string(255)
+  granule_class                :string(255)
+  document_number              :string(255)
+  toc_subject                  :string(255)
+  toc_doc                      :string(255)
+  length                       :integer(4)
+  start_page                   :integer(4)
+  end_page                     :integer(4)
+  agency_id                    :integer(4)
+  publication_date             :date
+  places_determined_at         :datetime
+  created_at                   :datetime
+  updated_at                   :datetime
+  slug                         :text
+  delta                        :boolean(1)      default(TRUE), not null
+  source_text_url              :string(255)
+  primary_agency_raw           :string(255)
+  secondary_agency_raw         :string(255)
+  volume                       :integer(4)
+  regulationsdotgov_id         :string(255)
+  comment_url                  :string(255)
+  checked_regulationsdotgov_at :datetime
+  full_xml_added_at            :datetime
 
 =end Schema Information
 
@@ -122,6 +127,14 @@ class Entry < ActiveRecord::Base
     entry_detail.full_text_raw=val
   end
   
+  def has_full_xml?
+    !full_xml_added_at.nil?
+  end
+  
+  def full_xml
+    File.read(xml_location)
+  end
+  
   def month_year
     publication_date.to_formatted_s(:month_year)
   end
@@ -170,7 +183,11 @@ class Entry < ActiveRecord::Base
       base_url =  "http://www.gpo.gov/fdsys/pkg/FR-#{publication_date.to_s(:db)}/pdf/#{document_number}.pdf"
     end
   end
-
+  
+  def xml_location
+    "#{RAILS_ROOT}/data/xml/" + document_number.sub(/-/,'').scan(/.{0,3}/).reject(&:blank?).join('/') + '.xml'
+  end
+  
   def entries_within(distance, options={})
     limit = options.delete(:limit) || 10
     count = options.delete(:count) || false
