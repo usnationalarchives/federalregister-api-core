@@ -11,6 +11,10 @@ set :use_sudo, true
 
 set :keep_releases, 15
 
+# this is more important when normalizing multiple servers
+# but is implemented in a very simple way (ie poorly)
+set :normalize_asset_timestamps, false
+
 #############################################################
 # Set Branch
 #############################################################
