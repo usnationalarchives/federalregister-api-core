@@ -5,12 +5,13 @@
 
 <% content_for :sidebar do %>
   <%# TODO HELP-DESIGN make wrappers and slide these up %>
-  <% unless @agencies.blank? %>
+  <% related_agencies = @topic_group.related_agencies_cache %>
+  <% unless related_agencies.blank? %>
     <h3>Agencies Using this Topic</h3>
-    <div class='chart size_<%=@agencies.size%>'><%= pie_3d_chart(:alt => 'Agencies using this Topic Group', :truncate_legend => '30', :counts => true, :legend_location => 'bottom', :records => @agencies, :value_method => :entries_count, :legend_method => :name, :max => 10, :size => ['230','350'], :color_range => ['005073','84cedb'], :transparent_bg => true) %></div>
+    <div class='chart size_<%=related_agencies.size%>'><%= pie_3d_chart(:alt => 'Agencies using this Topic Group', :truncate_legend => '30', :counts => true, :legend_location => 'bottom', :records => related_agencies, :value_method => 'entries_count', :legend_method => 'name', :max => 10, :size => ['230','350'], :color_range => ['005073','84cedb'], :transparent_bg => true) %></div>
   <% end %>
   
-  <% unless @granule_classes.blank? %>
+  <% if @granule_classes.present? %>
     <h3>Entry Types for Topic</h3>
      <div class='chart size_<%=@granule_classes.size%>'><%= pie_3d_chart(:alt => 'Entry Types', :truncate_legend => '30', :counts => true, :legend_location => 'bottom', :records => @granule_classes, :value_method => :count, :legend_method => :granule_class, :size => ['230','200'], :color_range => ['005073','84cedb'], :transparent_bg => true) %></div>
   <% end %>
@@ -24,6 +25,5 @@
     </ul>
   <% end %>
   
-  <%= render :partial => 'topics_tagcloud', :locals => {:topic_groups => @related_topic_groups, :title => 'Related Topics'} %>
-  
+  <%= render :partial => 'topics_tagcloud', :locals => {:topic_groups => @topic_group.related_topics_cache, :title => 'Related Topics'} %>
 <% end %>
