@@ -51,7 +51,7 @@
   </div>
   
   <ol class="results">
-    <% @entries.each do |entry| %>
+    <% @entries.reject(&:nil?).each do |entry| %>
     <li>
       <h4 class="title"><%= link_to sanitize(entry.excerpts.title, :tags => %w(span), :attributes => %w(class)), entry_path(entry) %></h4>
       
