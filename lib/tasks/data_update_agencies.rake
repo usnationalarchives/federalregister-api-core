@@ -21,7 +21,7 @@ namespace :data do
         agency.entries_count = agency.entries.count
         
         to_summarize.each_pair do |field, date_ranges|
-          agency[field] = date_ranges.map{|range| Entry.count(:conditions => {:agency_id => agency.descendant_ids + [agency.id], :publication_date => range}) }.to_json
+          agency[field] = date_ranges.map{|range| Entry.count(:conditions => {:agency_id => agency.descendant_ids + [agency.id], :publication_date => range}) }
         end
         
         agency.save(false)
