@@ -1,17 +1,10 @@
 @import compass/utilities/general.sass
-
-html
-  :background url(/images/main_bg_left.png) repeat-y top left 
-  :_background none
 body
-  :background url(/images/main_bg_right.png) repeat-y top right  
-  :_background none
   :min-height 100%
   :margin-bottom -150px
   :position relative
 #wrapper
   :background url(/images/header_bottomshadow4.png) repeat-x left 180px
-  :_background none
 #ticker_container
   :height 30px
   :position absolute  
@@ -20,8 +13,6 @@ body
   :z-index 5999  
 #ticker
   :background url(/images/ticker_bg3.png) no-repeat left top
-  :_background-image none
-  :_filter progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/images/ticker_bg3.png', sizingMethod='image')
   :height 30px
   :margin 0 auto
   :position relative  
@@ -33,13 +24,9 @@ body
     :width 147px
     &.left
       :background url(/images/ticker_pulse_left2.png) no-repeat 2px top
-      :_background-image none
-      :_filter progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/images/ticker_pulse_left2.png', sizingMethod='image')
       :left 0
     &.right
       :background url(/images/ticker_pulse_right2.png) no-repeat -2px top
-      :_background-image none
-      :_filter progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/images/ticker_pulse_right2.png', sizingMethod='image')            
       :right 0
   p.loading
     :color #333333
@@ -93,8 +80,6 @@ body
   :z-index 5999
   .type
     :background url(/images/header_type.png) no-repeat top left
-    :_background-image none
-    :_filter progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/images/header_type.png', sizingMethod='image')          
     :display block
     :float left
     :height 61px
@@ -110,12 +95,9 @@ body
       :text-indent -9999px
   .capitol
     :background url(/images/header_capitol4.png) no-repeat  60px bottom
-    :_background-image none
-    :_filter progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/images/header_capitol4.png', sizingMethod='image')      
     :display block
     :position absolute
     :right 0
-    :_right -60px 
     :bottom 0
     :height 100%  
     :width 345px
@@ -134,8 +116,6 @@ body
     :width 220px
     form
       :background url(/images/search_bg3.png) no-repeat top right
-      :_background-image none
-      :_filter progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/images/search_bg3.png', sizingMethod='image')
       :height 25px
       :width 200px      
       :margin 0 20px 0 0
@@ -144,17 +124,13 @@ body
         :display block
         :float left
         :height 15px
-        :*height 17px
         :margin 5px 0 0 10px 
-        :*margin 4px 0 0 10px 
         :padding 0
         :width 165px
         &:focus
           :outline none
       input.search_btn
         :background url(/images/icon_search.png) no-repeat top right
-        :_background-image none
-        :_filter progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/images/icon_search.png', sizingMethod='image')        
         :border none
         :cursor pointer  
         :float left 
@@ -182,26 +158,11 @@ body
           :color #fa6900   
 .shadow
   :background url(/images/header_bg2.png) repeat-x top left
-  :_background none
   :display inline-block
   :height 68px
   :position absolute
   :top 161px
   :width 100%
-#votegovpulse
-  :background #bee9f1
-  :border-bottom 1px solid #6690a1
-  :*margin-top 10px
-  :padding 5px
-  :text-align center   
-  a
-    :float none
-    :padding 5px 0 0 0
-  p
-    :margin 0 10px 0 0
-  .votecontent
-    :margin 0 auto
-    :width 800px
 #main
   :clear both 
   :margin-top -9px !important
@@ -218,8 +179,6 @@ body
       :margin-bottom 15px
   h1  
     :background url(/images/hr_bg3.png) no-repeat bottom center
-    :_background-image none
-    :_filter progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/images/hr_bg3.png', sizingMethod='image')    
     :color #46565c
     :font 2.5em Georgia,"Times New Roman",Serif
     :font-variant small-caps        
@@ -303,8 +262,6 @@ body
     &.raquo
       li
         :background url(/images/raquo3.png) no-repeat 4px 6px
-        :_background-image none
-        :_filter progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/images/raquo3.png', sizingMethod='image')        
       li.agency
         :background none
     &.agencyList
@@ -327,13 +284,11 @@ body
   &.sidebar
   .header
     :background #fff url(/images/main_hX_bg3.png) repeat-x left bottom
-    :_background none
     :border 1px solid #bdbcbd
     :-moz-border-radius 5px
     :-webkit-border-radius 5px
     :margin 0 0 10px 0    
     :padding 3px 10px
-    :_min-height 1px !important
     h1 
       :background-image none
       :float left
@@ -347,8 +302,6 @@ body
       :padding 10px
     &.calendar
       :position relative 
-    &.controls
-      :*height 70px
   .content
     :min-height 600px
     :padding 20px 0
@@ -356,8 +309,6 @@ body
       .votepane 
         :margin 0 auto
         :width 50%
-        ol
-          :*padding-left 10px
       ul.agency_precolumn
         li
           :float left
@@ -434,7 +385,6 @@ body
         :width 850px        
         div.search 
           :margin 0 auto
-          :*margin-bottom 1em
           :width 100%          
           form
             :color #005073
@@ -443,12 +393,10 @@ body
             :width 100%            
             #search
               :height 15px
-              :*margin 10px 0 0 0
         .group
           :float left
           :width 250px
           :margin 0 30px 30px 0
-          :*margin 0 15px 30px 0 
           tbody
             :height 135px
     .col1
@@ -509,7 +457,6 @@ body
         div.featured_agencies
           :width 345px
           ul.entry_counts
-            :*margin-top 1em
             li
               :clear left
               a
@@ -541,20 +488,12 @@ body
             :padding 5px 0 5px 30px 
           li#twitter
             :background url(/images/social/tweeter_24x24.png) no-repeat top left
-            :_background-image none
-            :_filter progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/images/tweeter_24x24.png', sizingMethod='image')  
           li#facebook
             :background url(/images/social/facebook_24x24.png) no-repeat top left
-            :_background-image none
-            :_filter progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/images/facebook_24x24.png', sizingMethod='image')              
           li#digg
             :background url(/images/social/digg_24x24.png) no-repeat top left
-            :_background-image none
-            :_filter progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/images/digg_24x24.png', sizingMethod='image')                 
           li#reddit
             :background url(/images/social/reddit_24x24.png) no-repeat top left
-            :_background-image none
-            :_filter progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/images/reddit_24x24.png', sizingMethod='image')            
         span.social
           :display block
           :width 290px
@@ -633,10 +572,7 @@ body
       a
         :color #747d87
         :display block
-        :*font-size 10px
-        :*font-weight normal
         :font-weight bold
-        :*line-height 20px
         :padding 0 5px
         :text-decoration none
         &:hover
@@ -703,7 +639,6 @@ body
         :z-index 5555
       .bg
         :background url(/images/count_bg.png) repeat-x left top
-        :_background none      
         :border 1px solid #83bbd9        
         :-moz-border-radius 5px
         :-webkit-border-radius 5px        
@@ -721,7 +656,6 @@ body
     .pagination
       :float right
       :margin 20px 0 0 0
-      :*padding-bottom 2px      
       a
         :border 1px solid #aaa
         :padding 1px 3px
@@ -782,21 +716,15 @@ body
       :width 24px
     &.agency
       :background-image url(/images/icons/agency_small2.png)
-      :_background-image none
-      :_filter progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/images/agency_small2.png', sizingMethod='image')            
       :background-position top left 
       :margin 0
       :padding 0 0 10px 65px
     &.contact
       :background-image url(/images/icons/contact_small.png)
-      :_background-image none
-      :_filter progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/images/contact_small.png', sizingMethod='image')          
       :background-position top left 
       :padding 32px 0 0 60px
     &.arrow
       :background-image url(/images/arrow.png)
-      :_background-image none
-      :_filter progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/images/arrow.png', sizingMethod='image')           
       :background-position left 2px
       :margin 10px 0 0 0
       :padding 0 0 0 20px    
@@ -818,22 +746,17 @@ body
           :width auto
   input.btn
     :background #d9f0fc url(/images/btn_bg2.png) repeat-x left bottom
-    :_background-image none
     :border 1px solid #83bbd9
     :cursor pointer
     :-moz-border-radius 5px
     :-webkit-border-radius 5px   
     :font-weight bold     
-    :*height 28px
     :margin-bottom .5em    
     :padding 5px
-    :*padding 0 3px
     &:hover
       :background url(/images/btn_bg2_hover.png) repeat-x left 50%     
 div.ornament
   :background url(/images/hr_bg3.png) no-repeat top center
-  :_background-image none
-  :_filter progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/images/hr_bg3.png', sizingMethod='image')     
   :display block
   :height 60px
   :margin 0 0 20px 0
@@ -874,6 +797,10 @@ body #footer
   ul
     li
       :list-style none
+  div.left
+    :width 300px
+    :float left
+    :margin 0 0 10px 25px
   div.right
     :width 300px
     :float right
@@ -885,12 +812,8 @@ body #footer
         :padding 0 0 3px 0
     li#twitter
       :background url(/images/social/tweeter_24x24.png) no-repeat top left
-      :_background-image none
-      :_filter progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/images/tweeter_24x24.png', sizingMethod='image')       
     li#facebook
       :background url(/images/social/facebook_24x24.png) no-repeat top left 
-      :_background-image none
-      :_filter progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/images/facebook_24x24.png', sizingMethod='image')        
 .qtip-content
   :border 1px solid #ccc
   .tip
@@ -915,8 +838,6 @@ body #footer
 
 #feedback  
   :background url(/images/feedback.png) no-repeat left top
-  :_background-image none
-  :_filter progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/images/feedback.png', sizingMethod='image')   
   :bottom 20px
   :height 102px  
   :left -10px
@@ -929,8 +850,6 @@ body #footer
   :z-index 999999 !important
 .modal
   :background url(/images/modal_bg.png)
-  :_background-image none
-  :_filter progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/images/modal_bg.png', sizingMethod='scale')     
   :height 100%
   :position absolute
   :top 0

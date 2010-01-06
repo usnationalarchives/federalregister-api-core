@@ -4,7 +4,7 @@
 <% content_for :precolumn do %>
           
     <div class="infobox">
-      <p class="fed">The Federal Register at your fingertips.</p>
+      <h1>The Federal Register at your fingertips.</h1>
       <p class='copy'>
         The Federal Register is the official journal of the federal government of the United States. In it, you'll 
         find any kind of proposal, notification, or solicitation for data that a federal agency puts out. It's the 
@@ -15,13 +15,8 @@
         <span class='gray'>gov</span><span class='orange'>pulse</span> seeks to change this and enable you to respond to your government. We give you a 
         way to browse the Register (from 1994 on) and use filters to decide what is important to you. And then act on it.
       </p>
-      <p class="fed alt">A million pages finally accessible.</p>      
     </div>
-    
 <% end %>
-
-<h3>View Entries Near</h3>
-<%= render :partial => 'maps/location_search_form', :locals => {:location => nil} %>
 
 <% if !@closing_soon.empty? %>
   <div class="clear marginTop">
