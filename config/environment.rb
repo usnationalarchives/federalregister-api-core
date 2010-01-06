@@ -25,6 +25,7 @@ Rails::Initializer.run do |config|
   config.gem 'mislav-will_paginate', :version => '2.3.11', :lib => 'will_paginate'
   config.gem "fastercsv", :version => '1.4.0'
   config.gem "amatch", :version => '0.2.3'
+  config.gem "rubyzip", :lib => 'zip/zip', :version => '0.9.1'
   
   config.gem "patron", :version => "0.4.2"
   # sunlight gem and dependencies
