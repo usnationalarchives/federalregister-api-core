@@ -219,7 +219,7 @@
   
   <xsl:template match="GPH/GID">
     <span class="GID">		
-      [IMAGE ONLY IN PDF:<xsl:text> </xsl:text><xsl:value-of select="."/>] 
+      [The GPO has not yet made images accessible. Image <xsl:text> </xsl:text><xsl:value-of select="."/>] <br />
     </span>
   </xsl:template>
    
