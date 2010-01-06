@@ -254,8 +254,13 @@
     <h6><xsl:apply-templates/></h6>
   </xsl:template> -->
   
-  <xsl:template match="P">
-    <p><xsl:apply-templates/></p>
+  <xsl:template match="P | FP">
+    <p>
+      <xsl:attribute name="class">
+        <xsl:value-of select="name()"/><xsl:text> </xsl:text><xsl:value-of select="@SOURCE"/>
+      </xsl:attribute>
+      <xsl:apply-templates/>
+    </p>
   </xsl:template>
   
   <!-- Default Template Handling -->
