@@ -29,6 +29,8 @@ namespace :data do
         
           entry_detail.full_text_raw = c.body_str
           entry_detail.save
+          
+          Citation.extract!(entry)
         end
       end
     end

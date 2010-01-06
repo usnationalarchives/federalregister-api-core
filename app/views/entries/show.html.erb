@@ -54,7 +54,12 @@
   </ul>
 <% end %>
 
-<% if @entry.full_text_raw %>
+<% if @entry.has_full_xml? %>
+  <%=
+   html = transform_xml(@entry.full_xml, 'entries/_full_text.html.xslt').to_s
+   html = auto_link(html, :href_options => { :class => 'external' })
+   add_citation_links(html) %>
+<% elsif @entry.full_text_raw %>
 <h3>Full text</h3>
 <div class="fulltextWrapper span-16">
   <pre><%=
@@ -151,7 +156,7 @@
       <%= render :partial => 'citation', :collection => @entry.citations.slice(0,max_citations) %>
     </ul>
     <% if @entry.citations.size > max_citations %>
-      <%= link_to 'See all', entry_citation_path(@entry, :anchor => "citations"), :class => "raquo" %>
+      <%= link_to "See all (#{@entry.citations.size})", entry_citation_path(@entry, :anchor => "citations"), :class => "raquo" %>
     <% end %>
     
   <% end %>
@@ -163,7 +168,7 @@
       <%= render :partial => "referencing_entry", :collection =>  @entry.referencing_entries.slice(0,max_citations) %>
     </ul>
     <% if @entry.referencing_entries.size > max_citations %>
-      <%= link_to 'See all', entry_citation_path(@entry, :anchor => "referencing_entries") %>
+      <%= link_to "See all (#{@entry.referencing_entries.size})", entry_citation_path(@entry, :anchor => "referencing_entries") %>
     <% end %>
   <% end %>
 <% end %>

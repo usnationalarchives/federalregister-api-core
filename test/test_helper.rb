@@ -1,4 +1,10 @@
+require 'rubygems'
+require 'monkeyspecdoc'
+require 'rails_test_serving'
+RailsTestServing.boot
+
 ENV["RAILS_ENV"] = "test"
+
 require File.expand_path(File.dirname(__FILE__) + "/../config/environment")
 require 'test_help'
 
