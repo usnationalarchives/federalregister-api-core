@@ -37,23 +37,6 @@
   </div>
 </div>
 
-<% if @entry.url_references.present? %>
-  <h3>References</h3>
-  <ul class='references'>
-  <% urls = @entry.url_references.map{|ref| ref.url} %>
-  <% urls.group_by(&:active).each do |active, urls| %>
-    <li>
-      <%= active ? 'Active' : 'Broken' %>
-      <ul>
-      <% urls.each do |url| %>  
-        <li><%= link_to url.name, "#{url.name}" %></li>
-      <% end %>
-      </ul>
-    </li>
-  <% end  %>
-  </ul>
-<% end %>
-
 <% if @entry.has_full_xml? %>
   <%=
    html = transform_xml(@entry.full_xml, 'entries/_full_text.html.xslt').to_s
@@ -89,6 +72,22 @@
 </div>
 <% end %>
 
+<% if @entry.url_references.present? %>
+  <h3>References</h3>
+  <ul class='references'>
+  <% urls = @entry.url_references.map{|ref| ref.url} %>
+  <% urls.group_by(&:active).each do |active, urls| %>
+    <li>
+      <%= active ? 'Active' : 'Broken' %>
+      <ul>
+      <% urls.each do |url| %>  
+        <li><%= link_to url.name, "#{url.name}" %></li>
+      <% end %>
+      </ul>
+    </li>
+  <% end  %>
+  </ul>
+<% end %>
 
 <% content_for :sidebar do %>
   <h3 class="hAction">
