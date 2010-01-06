@@ -93,7 +93,7 @@
 <% content_for :sidebar do %>
   <h3 class="hAction">
     Speak Up 
-    <span class='small_link'>(<%= link_to 'change location', edit_location_path %>)</span>
+    <!-- <span class='small_link'>(<%= link_to 'change location', edit_location_path %>)</span> -->
   </h3> 
   
   <% if @entry.comment_url.present? && (@entry.comments_close_date.nil? || @entry.comments_close_date >= Date.today) %>
