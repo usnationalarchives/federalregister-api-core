@@ -11,6 +11,8 @@
 class TopicGroup < ActiveRecord::Base
   set_primary_key :group_name
   
+  serializable_column :related_topics_cache, :related_agencies_cache
+  
   has_many :topics, :foreign_key => :group_name
   
   def to_param

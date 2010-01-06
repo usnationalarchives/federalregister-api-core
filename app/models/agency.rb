@@ -29,7 +29,7 @@ class Agency < ActiveRecord::Base
   
   before_create :slugify
   
-  serializable_column :entries_1_year_weekly, :entries_5_years_monthly, :entries_all_years_quarterly
+  serializable_column :entries_1_year_weekly, :entries_5_years_monthly, :entries_all_years_quarterly, :related_topics_cache
   
   def to_param
     slug

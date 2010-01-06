@@ -1,2 +1,2 @@
 <%= link_to agency.name, agency_path(agency) %>
-<%= sparkline(:data => ActiveSupport::JSON::decode(agency.entries_1_year_weekly).map(&:to_i), :alt => "#{human_range(agency.entries_1_year_weekly)} for #{agency.name}" ) %>
+<%= sparkline(:data => agency.entries_1_year_weekly.map(&:to_i), :alt => "#{human_range(agency.entries_1_year_weekly)} for #{agency.name}" ) %>

@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20091229173900) do
+ActiveRecord::Schema.define(:version => 20100106153019) do
 
   create_table "agencies", :force => true do |t|
     t.integer  "parent_id"
@@ -25,6 +25,7 @@ ActiveRecord::Schema.define(:version => 20091229173900) do
     t.text     "entries_1_year_weekly"
     t.text     "entries_5_years_monthly"
     t.text     "entries_all_years_quarterly"
+    t.text     "related_topics_cache"
   end
 
   add_index "agencies", ["name", "parent_id"], :name => "index_agencies_on_name_and_parent_id"
@@ -151,7 +152,9 @@ ActiveRecord::Schema.define(:version => 20091229173900) do
   create_table "topic_groups", :id => false, :force => true do |t|
     t.string  "group_name"
     t.string  "name"
-    t.integer "entries_count", :limit => 32, :precision => 32, :scale => 0
+    t.integer "entries_count",          :limit => 32, :precision => 32, :scale => 0
+    t.text    "related_topics_cache"
+    t.text    "related_agencies_cache"
   end
 
   create_table "topics", :force => true do |t|
@@ -159,7 +162,9 @@ ActiveRecord::Schema.define(:version => 20091229173900) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "group_name"
-    t.integer  "entries_count", :default => 0
+    t.integer  "entries_count",          :default => 0
+    t.text     "related_topics_cache"
+    t.text     "related_agencies_cache"
   end
 
   add_index "topics", ["entries_count"], :name => "index_topics_on_entries_count"
