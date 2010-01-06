@@ -19,7 +19,13 @@
   <%= stylesheet_link_tag "trifecta", :media => :screen %>
   <%= stylesheet_link_tag "utility", :media => :screen %>
   <%= stylesheet_link_tag "form", :media => :screen %>
-  
+  <!--[if IE 6]>
+    <%= stylesheet_link_tag "ie6", :media => :screen %>
+  <![endif]-->
+  <!--[if lte IE 7]>
+    <%= stylesheet_link_tag "ie", :media => :screen %>
+  <![endif]-->  
+    
   <%= javascript_include_tag 'jquery.js'                %>
   <%= javascript_include_tag 'jquery-ui.js'             %>
   <%= javascript_include_tag 'jrails.js'                %>
