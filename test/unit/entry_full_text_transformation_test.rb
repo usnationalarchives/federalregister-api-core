@@ -20,6 +20,21 @@ end
 class EntryFullTextTransformationTest < ActiveSupport::TestCase
   include EntryFullTextTransformationTestHelpers
   
+  context 'table of figures' do 
+    setup do
+      process <<-XML
+        <GPOTABLE COLS="2"><TTITLE>First Figure</TTITLE></GPOTABLE>
+        <GPOTABLE COLS="2"><TTITLE>Second Figure</TTITLE></GPOTABLE>
+        <GPOTABLE COLS="2"><TTITLE /></GPOTABLE>
+        <GPOTABLE COLS="2"></GPOTABLE>
+      XML
+    end
+    
+    should "not include tables without a TTITLE" do
+      assert_select "#table_of_figures + ul li", 2
+    end
+  end
+  
   context 'headers' do
     should "become h* tags, downgraded two levels" do
       process <<-XML
@@ -62,6 +77,41 @@ class EntryFullTextTransformationTest < ActiveSupport::TestCase
             assert_select row, "td", 2
           end
         end
+      end
+    end
+  end
+  
+  context "table titles" do
+    context "with content" do
+      setup do
+        process <<-XML
+          <GPOTABLE COLS="02">
+            <TTITLE>Table name</TTITLE>
+          </GPOTABLE>
+        XML
+      end
+    
+      should "be added as an H5 before the table" do
+        assert_select "h5 + table"
+        assert_select "h5", :content => "Table name"
+      end
+    
+      should "have an id" do
+        assert_select "h5[id]"
+      end
+    end
+    
+    context "without content" do
+      setup do
+        process <<-XML
+          <GPOTABLE COLS="02">
+            <TTITLE />
+          </GPOTABLE>
+        XML
+      end
+      
+      should "not be added" do
+        assert_select "h5", 0
       end
     end
   end
