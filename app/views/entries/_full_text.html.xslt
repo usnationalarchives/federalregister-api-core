@@ -50,10 +50,10 @@
           </ul>
         </xsl:if>
         
-        <xsl:if test="count(//GPOTABLE/TTITLE) > 0">
+        <xsl:if test="count(//GPOTABLE/TTITLE[descendant::text()]) > 0">
           <h3 id="table_of_figures">Table of Figures</h3>
           <ul>
-            <xsl:for-each select="//GPOTABLE/TTITLE">
+            <xsl:for-each select="//GPOTABLE/TTITLE[descendant::text()]">
               <li>
                 <a>
                   <xsl:attribute name="href">#<xsl:value-of select="generate-id()" /></xsl:attribute>
@@ -103,7 +103,7 @@
 
   <xsl:template match="GPOTABLE">
     
-    <xsl:for-each select="TTITLE">
+    <xsl:for-each select="TTITLE[descendant::text()]">
       <h5>
         <xsl:attribute name="class">table_title</xsl:attribute>
         <xsl:attribute name="id"><xsl:value-of select="generate-id()" /></xsl:attribute>
