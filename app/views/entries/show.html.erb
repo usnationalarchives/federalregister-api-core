@@ -1,11 +1,11 @@
 <% title @entry.title %>
 
 <% content_for :javascripts do %>
-<!-- <script>
+<script>
   $(document).ready(function() {
     $('#congress').load('/location/congress');
   });
-</script> -->
+</script>
 <% end %>
 
 <% if @entry.abstract %>
@@ -92,18 +92,18 @@
 <% content_for :sidebar do %>
   <h3 class="hAction">
     Speak Up 
-    <!-- <span class='small_link'>(<%= link_to 'change location', edit_location_path %>)</span> -->
+    <span class='small_link'>(<%= link_to 'change location', edit_location_path %>)</span>
   </h3> 
   
   <% if @entry.comment_url.present? && (@entry.comments_close_date.nil? || @entry.comments_close_date >= Date.today) %>
     <p><%= link_to "Submit a formal comment", @entry.comment_url %>. The agency is required to respond in a future FR entry.</p>
   <% end %>
-  <!-- <div id="congress">
+  <div id="congress">
     <h5>Your Senators</h5>
     <p class="loading">Loading<img src="/images/ticker_loading.gif" alt="loading" /></p>
     <h5>Your Representative</h5>
     <p class="loading">Loading<img src="/images/ticker_loading.gif" alt="loading" /></p>
-  </div> -->
+  </div>
 
   <h3>Gather a Crowd</h3>
   <ul class='social'>
@@ -121,7 +121,6 @@
   </p>
 
   <% if @entry.contact.present? %>
-    <!-- <h3 class="icon contact">Contact:</h3> -->
     <h3>Contact</h3>
     <p><%= auto_link @entry.contact %></p>
   <% end %>
