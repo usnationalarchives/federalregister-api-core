@@ -95,20 +95,22 @@
 
     <xsl:variable name="number_of_columns"><xsl:value-of select="@COLS"/></xsl:variable>
     <table>
-      <thead>
-        <xsl:call-template name="header_row">
-          <xsl:with-param name="level" select="1" />
-        </xsl:call-template>
-        <xsl:call-template name="header_row">
-          <xsl:with-param name="level" select="2" />
-        </xsl:call-template>
-        <xsl:call-template name="header_row">
-          <xsl:with-param name="level" select="3" />
-        </xsl:call-template>
-        <xsl:call-template name="header_row">
-          <xsl:with-param name="level" select="4" />
-        </xsl:call-template>
-      </thead>
+      <xsl:if test="BOXHD/CHED/text()">
+        <thead>
+          <xsl:call-template name="header_row">
+            <xsl:with-param name="level" select="1" />
+          </xsl:call-template>
+          <xsl:call-template name="header_row">
+            <xsl:with-param name="level" select="2" />
+          </xsl:call-template>
+          <xsl:call-template name="header_row">
+            <xsl:with-param name="level" select="3" />
+          </xsl:call-template>
+          <xsl:call-template name="header_row">
+            <xsl:with-param name="level" select="4" />
+          </xsl:call-template>
+        </thead>
+      </xsl:if>
       
       <xsl:if test="count(TNOTE | TDESC | SIGDAT) > 0">
         <tfoot>

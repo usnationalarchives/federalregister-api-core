@@ -66,6 +66,31 @@ class EntryFullTextTransformationTest < ActiveSupport::TestCase
     end
   end
   
+  context "empty table header" do
+    setup do
+      process <<-XML
+        <GPOTABLE COLS="02">
+          <TTITLE>Major Diagnostic Categories (MDCs)</TTITLE>
+          <BOXHD>
+            <CHED H="1"/>
+            <CHED H="1"/>
+          </BOXHD>
+          <ROW>
+            <ENT I="01">1</ENT>
+            <ENT>Diseases and Disorders of the Nervous System.</ENT>
+          </ROW>
+        </GPOTABLE>
+      XML
+    end
+    
+    should "have no thead" do
+      assert_select "table thead", 0
+    end
+    
+    should "have a tbody" do
+      assert_select "table tbody tr", 1
+    end
+  end
   context "two-level table header" do
     setup do
       process <<-XML
