@@ -232,11 +232,18 @@
   </xsl:template>
   
   <xsl:template match="E">
-    <xsl:text> </xsl:text>
+    <xsl:variable name="preceding_text" select="preceding-sibling::node()[1][self::text()]" />
+    <xsl:if test="contains(',.abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ', substring($preceding_text, string-length($preceding_text)))">
+      <xsl:text> </xsl:text>
+    </xsl:if>
     <span>
       <xsl:attribute name="class">E-<xsl:value-of select="@T"/></xsl:attribute>  
       <xsl:apply-templates/>	
     </span>
+    <xsl:variable name="following_text" select="following-sibling::node()[1][self::text()]" />
+    <xsl:if test="contains('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ', substring($following_text,1,1))">
+      <xsl:text> </xsl:text>
+    </xsl:if>
   </xsl:template>
   
   <xsl:template match="GPH/GID">
