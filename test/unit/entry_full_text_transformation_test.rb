@@ -303,6 +303,40 @@ class EntryFullTextTransformationTest < ActiveSupport::TestCase
     end
   end
   
+  context "table with empty rows" do
+    setup do
+      process <<-XML
+        <GPOTABLE COLS="4">
+          <ROW RUL="s">
+            <ENT I="25"/>
+            <ENT/>
+            <ENT/>
+            <ENT/>
+            <ENT/>
+          </ROW>
+          <ROW RUL="s">
+            <ENT I="25"></ENT>
+          </ROW>
+          <ROW>
+            <ENT I="01">All hospitals</ENT>
+            <ENT>3,517</ENT>
+            <ENT>$9,996</ENT>
+            <ENT>$10,158</ENT>
+            <ENT>1.6</ENT>
+          </ROW>
+          <ROW RUL="s">
+            <ENT I="25"/>
+          </ROW>
+        </GPOTABLE>
+      XML
+    end
+    
+    should "only include rows that have text" do
+      assert_select "tbody tr", 1
+    end
+      
+  end
+  
   context "table with missing cells" do 
     setup do 
       process <<-XML
@@ -355,11 +389,6 @@ class EntryFullTextTransformationTest < ActiveSupport::TestCase
     should "have 1 content cell and 3 empty cells in the fourth row" do
       assert_select 'tbody tr:nth-of-type(4) td:not(.empty)', {:count => 1, :text => "Content"}
       assert_select 'tbody tr:nth-of-type(4) td.empty',       {:count => 3, :text => ""}
-    end
-    
-    should "have 4 empty cells in the fifth row" do
-      assert_select 'tbody tr:nth-of-type(5) td:not(.empty)', {:count => 0, :text => "Content"}
-      assert_select 'tbody tr:nth-of-type(5) td.empty',       {:count => 4, :text => ""}
     end
     
   end

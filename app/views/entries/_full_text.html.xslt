@@ -148,7 +148,7 @@
         </tfoot>
       </xsl:if>
       <tbody>
-        <xsl:for-each select="ROW">
+        <xsl:for-each select="ROW[descendant::ENT/text()]">
           <tr>
             <xsl:apply-templates />
             <xsl:call-template name="empty_table_cell">
