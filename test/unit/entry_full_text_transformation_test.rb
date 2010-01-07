@@ -20,6 +20,65 @@ end
 class EntryFullTextTransformationTest < ActiveSupport::TestCase
   include EntryFullTextTransformationTestHelpers
   
+  context 'emphasized text' do
+    should 'add spaces around it when surrounded by word characters' do
+      process <<-XML
+        <P>John's<E T="03">ex parte</E>rules</P>
+      XML
+      assert_select "P", :html => "John's <span class=\"E-03\">ex parte</span> rules"
+    end
+    
+    should 'add a space before it when preceded by a comma or a space' do
+      process <<-XML
+        <P>or,<E T="03">decision</E>.<E T="03">decision</E></P>
+      XML
+      assert_select "P", :html => "or, <span class=\"E-03\">decision</span>. <span class=\"E-03\">decision</span>"
+    end
+    
+    should 'add a space before it when preceded by a word character' do
+      process <<-XML
+        <P>John'S<E T="03">decision</E>.</P>
+      XML
+      assert_select "P", :html => "John'S <span class=\"E-03\">decision</span>."
+    end
+    
+    should 'not add a space before it when not preceded by a word character' do
+      process <<-XML
+        <P>John's "<E T="03">decision</E>".</P>
+      XML
+      assert_select "P", :html => "John's \"<span class=\"E-03\">decision</span>\"."
+    end
+    
+    should 'include a space after it when followed by a word character' do
+      process <<-XML
+        <P>--<E T="03">text</E>is not a good idea</P>
+      XML
+      assert_select "P", :html => "--<span class=\"E-03\">text</span> is not a good idea"
+    end
+    
+    should 'not include a space after it when followed by a non-word character' do
+      process <<-XML
+        <P><E T="03">text</E>--is not a good idea</P>
+      XML
+      assert_select "P", :html => "<span class=\"E-03\">text</span>--is not a good idea"
+    end
+  end
+  
+  context 'table of figures' do 
+    setup do
+      process <<-XML
+        <GPOTABLE COLS="2"><TTITLE>First Figure</TTITLE></GPOTABLE>
+        <GPOTABLE COLS="2"><TTITLE>Second Figure</TTITLE></GPOTABLE>
+        <GPOTABLE COLS="2"><TTITLE /></GPOTABLE>
+        <GPOTABLE COLS="2"></GPOTABLE>
+      XML
+    end
+    
+    should "not include tables without a TTITLE" do
+      assert_select "#table_of_figures + ul li", 2
+    end
+  end
+  
   context 'headers' do
     should "become h* tags, downgraded two levels" do
       process <<-XML
@@ -66,6 +125,66 @@ class EntryFullTextTransformationTest < ActiveSupport::TestCase
     end
   end
   
+  context "table titles" do
+    context "with content" do
+      setup do
+        process <<-XML
+          <GPOTABLE COLS="02">
+            <TTITLE>Table name</TTITLE>
+          </GPOTABLE>
+        XML
+      end
+    
+      should "be added as an H5 before the table" do
+        assert_select "h5 + table"
+        assert_select "h5", :content => "Table name"
+      end
+    
+      should "have an id" do
+        assert_select "h5[id]"
+      end
+    end
+    
+    context "without content" do
+      setup do
+        process <<-XML
+          <GPOTABLE COLS="02">
+            <TTITLE />
+          </GPOTABLE>
+        XML
+      end
+      
+      should "not be added" do
+        assert_select "h5", 0
+      end
+    end
+  end
+  
+  context "empty table header" do
+    setup do
+      process <<-XML
+        <GPOTABLE COLS="02">
+          <TTITLE>Major Diagnostic Categories (MDCs)</TTITLE>
+          <BOXHD>
+            <CHED H="1"/>
+            <CHED H="1"/>
+          </BOXHD>
+          <ROW>
+            <ENT I="01">1</ENT>
+            <ENT>Diseases and Disorders of the Nervous System.</ENT>
+          </ROW>
+        </GPOTABLE>
+      XML
+    end
+    
+    should "have no thead" do
+      assert_select "table thead", 0
+    end
+    
+    should "have a tbody" do
+      assert_select "table tbody tr", 1
+    end
+  end
   context "two-level table header" do
     setup do
       process <<-XML
@@ -228,6 +347,40 @@ class EntryFullTextTransformationTest < ActiveSupport::TestCase
     end
   end
   
+  context "table with empty rows" do
+    setup do
+      process <<-XML
+        <GPOTABLE COLS="4">
+          <ROW RUL="s">
+            <ENT I="25"/>
+            <ENT/>
+            <ENT/>
+            <ENT/>
+            <ENT/>
+          </ROW>
+          <ROW RUL="s">
+            <ENT I="25"></ENT>
+          </ROW>
+          <ROW>
+            <ENT I="01">All hospitals</ENT>
+            <ENT>3,517</ENT>
+            <ENT>$9,996</ENT>
+            <ENT>$10,158</ENT>
+            <ENT>1.6</ENT>
+          </ROW>
+          <ROW RUL="s">
+            <ENT I="25"/>
+          </ROW>
+        </GPOTABLE>
+      XML
+    end
+    
+    should "only include rows that have text" do
+      assert_select "tbody tr", 1
+    end
+      
+  end
+  
   context "table with missing cells" do 
     setup do 
       process <<-XML
@@ -280,11 +433,6 @@ class EntryFullTextTransformationTest < ActiveSupport::TestCase
     should "have 1 content cell and 3 empty cells in the fourth row" do
       assert_select 'tbody tr:nth-of-type(4) td:not(.empty)', {:count => 1, :text => "Content"}
       assert_select 'tbody tr:nth-of-type(4) td.empty',       {:count => 3, :text => ""}
-    end
-    
-    should "have 4 empty cells in the fifth row" do
-      assert_select 'tbody tr:nth-of-type(5) td:not(.empty)', {:count => 0, :text => "Content"}
-      assert_select 'tbody tr:nth-of-type(5) td.empty',       {:count => 4, :text => ""}
     end
     
   end

@@ -41,14 +41,30 @@
 
         </style>
         <xsl:if test="count(//HD[@SOURCE='HD1' or @SOURCE = 'HD2' or @SOURCE = 'HD3' or @SOURCE = 'HD4']) > 0">
-          <ul id="table_of_contents">
-            <h3>Table of Contents</h3>
+          <h3 id="table_of_contents">Table of Contents</h3>
+          <ul>
             <xsl:apply-templates mode="table_of_contents" />
             <xsl:if test="count(//FTNT) > 0">
               <li style="padding-left: 10px"><a href="#footnotes">Footnotes</a></li>
             </xsl:if>
           </ul>
         </xsl:if>
+        
+        <xsl:if test="count(//GPOTABLE/TTITLE[descendant::text()]) > 0">
+          <h3 id="table_of_figures">Table of Figures</h3>
+          <ul>
+            <xsl:for-each select="//GPOTABLE/TTITLE[descendant::text()]">
+              <li>
+                <a>
+                  <xsl:attribute name="href">#<xsl:value-of select="generate-id()" /></xsl:attribute>
+                  <xsl:apply-templates />
+                </a>
+              </li>
+            </xsl:for-each>
+          </ul>
+        </xsl:if>
+        
+        
         <xsl:apply-templates/>
         <xsl:if test="count(//FTNT) > 0">
           <div id="footnotes">
@@ -87,28 +103,34 @@
 
   <xsl:template match="GPOTABLE">
     
-    <xsl:for-each select="TTITLE">
-      <h5 class="table_title">
+    <xsl:for-each select="TTITLE[descendant::text()]">
+      <h5>
+        <xsl:attribute name="class">table_title</xsl:attribute>
+        <xsl:attribute name="id"><xsl:value-of select="generate-id()" /></xsl:attribute>
         <xsl:apply-templates />
+        <xsl:text> </xsl:text>
+        <a href="#table_of_figures">&#8593;</a>
       </h5>
     </xsl:for-each>
 
     <xsl:variable name="number_of_columns"><xsl:value-of select="@COLS"/></xsl:variable>
     <table>
-      <thead>
-        <xsl:call-template name="header_row">
-          <xsl:with-param name="level" select="1" />
-        </xsl:call-template>
-        <xsl:call-template name="header_row">
-          <xsl:with-param name="level" select="2" />
-        </xsl:call-template>
-        <xsl:call-template name="header_row">
-          <xsl:with-param name="level" select="3" />
-        </xsl:call-template>
-        <xsl:call-template name="header_row">
-          <xsl:with-param name="level" select="4" />
-        </xsl:call-template>
-      </thead>
+      <xsl:if test="BOXHD/CHED/text()">
+        <thead>
+          <xsl:call-template name="header_row">
+            <xsl:with-param name="level" select="1" />
+          </xsl:call-template>
+          <xsl:call-template name="header_row">
+            <xsl:with-param name="level" select="2" />
+          </xsl:call-template>
+          <xsl:call-template name="header_row">
+            <xsl:with-param name="level" select="3" />
+          </xsl:call-template>
+          <xsl:call-template name="header_row">
+            <xsl:with-param name="level" select="4" />
+          </xsl:call-template>
+        </thead>
+      </xsl:if>
       
       <xsl:if test="count(TNOTE | TDESC | SIGDAT) > 0">
         <tfoot>
@@ -126,7 +148,7 @@
         </tfoot>
       </xsl:if>
       <tbody>
-        <xsl:for-each select="ROW">
+        <xsl:for-each select="ROW[descendant::ENT/text()]">
           <tr>
             <xsl:apply-templates />
             <xsl:call-template name="empty_table_cell">
@@ -210,16 +232,23 @@
   </xsl:template>
   
   <xsl:template match="E">
-    <xsl:text> </xsl:text>
+    <xsl:variable name="preceding_text" select="preceding-sibling::node()[1][self::text()]" />
+    <xsl:if test="contains(',.abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ', substring($preceding_text, string-length($preceding_text)))">
+      <xsl:text> </xsl:text>
+    </xsl:if>
     <span>
       <xsl:attribute name="class">E-<xsl:value-of select="@T"/></xsl:attribute>  
       <xsl:apply-templates/>	
     </span>
+    <xsl:variable name="following_text" select="following-sibling::node()[1][self::text()]" />
+    <xsl:if test="contains('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ', substring($following_text,1,1))">
+      <xsl:text> </xsl:text>
+    </xsl:if>
   </xsl:template>
   
   <xsl:template match="GPH/GID">
     <span class="GID">		
-      [IMAGE ONLY IN PDF:<xsl:text> </xsl:text><xsl:value-of select="."/>] 
+      [The GPO has not yet made images accessible. Image <xsl:text> </xsl:text><xsl:value-of select="."/>] <br />
     </span>
   </xsl:template>
    
@@ -254,8 +283,13 @@
     <h6><xsl:apply-templates/></h6>
   </xsl:template> -->
   
-  <xsl:template match="P">
-    <p><xsl:apply-templates/></p>
+  <xsl:template match="P | FP">
+    <p>
+      <xsl:attribute name="class">
+        <xsl:value-of select="name()"/><xsl:text> </xsl:text><xsl:value-of select="@SOURCE"/>
+      </xsl:attribute>
+      <xsl:apply-templates/>
+    </p>
   </xsl:template>
   
   <!-- Default Template Handling -->
