@@ -20,6 +20,50 @@ end
 class EntryFullTextTransformationTest < ActiveSupport::TestCase
   include EntryFullTextTransformationTestHelpers
   
+  context 'emphasized text' do
+    should 'add spaces around it when surrounded by word characters' do
+      process <<-XML
+        <P>John's<E T="03">ex parte</E>rules</P>
+      XML
+      assert_select "P", :html => "John's <span class=\"E-03\">ex parte</span> rules"
+    end
+    
+    should 'add a space before it when preceded by a comma or a space' do
+      process <<-XML
+        <P>or,<E T="03">decision</E>.<E T="03">decision</E></P>
+      XML
+      assert_select "P", :html => "or, <span class=\"E-03\">decision</span>. <span class=\"E-03\">decision</span>"
+    end
+    
+    should 'add a space before it when preceded by a word character' do
+      process <<-XML
+        <P>John'S<E T="03">decision</E>.</P>
+      XML
+      assert_select "P", :html => "John'S <span class=\"E-03\">decision</span>."
+    end
+    
+    should 'not add a space before it when not preceded by a word character' do
+      process <<-XML
+        <P>John's "<E T="03">decision</E>".</P>
+      XML
+      assert_select "P", :html => "John's \"<span class=\"E-03\">decision</span>\"."
+    end
+    
+    should 'include a space after it when followed by a word character' do
+      process <<-XML
+        <P>--<E T="03">text</E>is not a good idea</P>
+      XML
+      assert_select "P", :html => "--<span class=\"E-03\">text</span> is not a good idea"
+    end
+    
+    should 'not include a space after it when followed by a non-word character' do
+      process <<-XML
+        <P><E T="03">text</E>--is not a good idea</P>
+      XML
+      assert_select "P", :html => "<span class=\"E-03\">text</span>--is not a good idea"
+    end
+  end
+  
   context 'table of figures' do 
     setup do
       process <<-XML
