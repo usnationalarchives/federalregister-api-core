@@ -2,8 +2,8 @@ ActionController::Routing::Routes.draw do |map|
   # SPECIAL PAGES
   map.root :controller => 'special', :action => 'home'
   map.about 'about', :controller => 'special', :action => 'about'
-  map.vote 'vote', :controller => 'special', :action => 'vote'
-  
+  map.vote 'contact', :controller => 'special', :action => 'contact'
+
   # ENTRIES
   map.entries 'entries.:format', :controller => 'entries', :action => 'index'
   
