@@ -1,157 +1,61 @@
-/* line 19, ../../../../../../../../Library/Ruby/Gems/1.8/gems/chriseppstein-compass-0.8.8/frameworks/blueprint/stylesheets/blueprint/_ie.sass */
-body {
-  text-align: center;
-}
-/* line 32, ../../../../../../../../Library/Ruby/Gems/1.8/gems/chriseppstein-compass-0.8.8/frameworks/blueprint/stylesheets/blueprint/_ie.sass */
-* html body legend {
-  margin: 0px -8px 16px 0;
-  padding: 0;
-}
-/* line 36, ../../../../../../../../Library/Ruby/Gems/1.8/gems/chriseppstein-compass-0.8.8/frameworks/blueprint/stylesheets/blueprint/_ie.sass */
-html>body p code {
-  *white-space: normal;
-}
-
-/* line 51, ../../../../../../../../Library/Ruby/Gems/1.8/gems/chriseppstein-compass-0.8.8/frameworks/blueprint/stylesheets/blueprint/_ie.sass */
-.container {
+/* line 15, ../../app/stylesheets/ie.sass */
+#header, #main, #footer {
   text-align: left;
 }
 
-/* line 53, ../../../../../../../../Library/Ruby/Gems/1.8/gems/chriseppstein-compass-0.8.8/frameworks/blueprint/stylesheets/blueprint/_ie.sass */
-ol {
-  margin-left: 2em;
-}
-
-/* line 55, ../../../../../../../../Library/Ruby/Gems/1.8/gems/chriseppstein-compass-0.8.8/frameworks/blueprint/stylesheets/blueprint/_ie.sass */
-sup {
-  vertical-align: text-top;
-}
-
-/* line 57, ../../../../../../../../Library/Ruby/Gems/1.8/gems/chriseppstein-compass-0.8.8/frameworks/blueprint/stylesheets/blueprint/_ie.sass */
-sub {
-  vertical-align: text-bottom;
-}
-
-/* line 59, ../../../../../../../../Library/Ruby/Gems/1.8/gems/chriseppstein-compass-0.8.8/frameworks/blueprint/stylesheets/blueprint/_ie.sass */
-hr {
-  margin: -8px auto 11px;
-}
-
-/* line 61, ../../../../../../../../Library/Ruby/Gems/1.8/gems/chriseppstein-compass-0.8.8/frameworks/blueprint/stylesheets/blueprint/_ie.sass */
-img {
-  -ms-interpolation-mode: bicubic;
-}
-
-/* line 63, ../../../../../../../../Library/Ruby/Gems/1.8/gems/chriseppstein-compass-0.8.8/frameworks/blueprint/stylesheets/blueprint/_ie.sass */
-fieldset {
-  padding-top: 0;
-}
-
-/* line 66, ../../../../../../../../Library/Ruby/Gems/1.8/gems/chriseppstein-compass-0.8.8/frameworks/blueprint/stylesheets/blueprint/_ie.sass */
-input.text {
-  margin: 0.5em 0;
-  background-color: #fff;
-  border: 1px solid #bbb;
-}
-/* line 70, ../../../../../../../../Library/Ruby/Gems/1.8/gems/chriseppstein-compass-0.8.8/frameworks/blueprint/stylesheets/blueprint/_ie.sass */
-input.text:focus {
-  border: 1px solid #666;
-}
-/* line 72, ../../../../../../../../Library/Ruby/Gems/1.8/gems/chriseppstein-compass-0.8.8/frameworks/blueprint/stylesheets/blueprint/_ie.sass */
-input.title {
-  margin: 0.5em 0;
-  background-color: #fff;
-  border: 1px solid #bbb;
-}
-/* line 76, ../../../../../../../../Library/Ruby/Gems/1.8/gems/chriseppstein-compass-0.8.8/frameworks/blueprint/stylesheets/blueprint/_ie.sass */
-input.title:focus {
-  border: 1px solid #666;
-}
-/* line 78, ../../../../../../../../Library/Ruby/Gems/1.8/gems/chriseppstein-compass-0.8.8/frameworks/blueprint/stylesheets/blueprint/_ie.sass */
-input.checkbox {
-  position: relative;
-  top: 0.25em;
-}
-/* line 81, ../../../../../../../../Library/Ruby/Gems/1.8/gems/chriseppstein-compass-0.8.8/frameworks/blueprint/stylesheets/blueprint/_ie.sass */
-input.radio {
-  position: relative;
-  top: 0.25em;
-}
-/* line 84, ../../../../../../../../Library/Ruby/Gems/1.8/gems/chriseppstein-compass-0.8.8/frameworks/blueprint/stylesheets/blueprint/_ie.sass */
-input.button {
-  position: relative;
-  top: 0.25em;
-}
-
-/* line 87, ../../../../../../../../Library/Ruby/Gems/1.8/gems/chriseppstein-compass-0.8.8/frameworks/blueprint/stylesheets/blueprint/_ie.sass */
-textarea {
-  margin: 0.5em 0;
-}
-
-/* line 89, ../../../../../../../../Library/Ruby/Gems/1.8/gems/chriseppstein-compass-0.8.8/frameworks/blueprint/stylesheets/blueprint/_ie.sass */
-select {
-  margin: 0.5em 0;
-}
-
-/* line 91, ../../../../../../../../Library/Ruby/Gems/1.8/gems/chriseppstein-compass-0.8.8/frameworks/blueprint/stylesheets/blueprint/_ie.sass */
-button {
-  position: relative;
-  top: 0.25em;
-}
-
-/* line 16, ../../app/stylesheets/ie.sass */
+/* line 17, ../../app/stylesheets/ie.sass */
 #nav .search form input#q {
   height: 17px;
   margin: 4px 0 0 10px;
 }
 
-/* line 19, ../../app/stylesheets/ie.sass */
+/* line 20, ../../app/stylesheets/ie.sass */
 #main .header.controls {
   height: 70px;
 }
 
-/* line 21, ../../app/stylesheets/ie.sass */
+/* line 22, ../../app/stylesheets/ie.sass */
 #main .content .precolumn .votepane ol {
   padding-left: 10px;
 }
 
-/* line 23, ../../app/stylesheets/ie.sass */
+/* line 24, ../../app/stylesheets/ie.sass */
 #main .content div.entry_calendars div.search {
   margin-bottom: 1em;
 }
-/* line 25, ../../app/stylesheets/ie.sass */
+/* line 26, ../../app/stylesheets/ie.sass */
 #main .content div.entry_calendars div.search form #search {
   margin: 10px 0 0 0;
 }
 
-/* line 27, ../../app/stylesheets/ie.sass */
+/* line 28, ../../app/stylesheets/ie.sass */
 #main .content div.entry_calendars .group {
   margin: 0 15px 30px 0;
 }
 
-/* line 29, ../../app/stylesheets/ie.sass */
+/* line 30, ../../app/stylesheets/ie.sass */
 #main .content .col2 .sidebar div.featured_agencies ul.entry_counts {
   margin-top: 1em;
 }
 
-/* line 31, ../../app/stylesheets/ie.sass */
+/* line 32, ../../app/stylesheets/ie.sass */
 #main .content .col2 .sidebar div.featured_agencies ul.entry_counts li div.viewport {
   float: left;
 }
 
-/* line 33, ../../app/stylesheets/ie.sass */
+/* line 34, ../../app/stylesheets/ie.sass */
 #main ul.btn li a {
   font-size: 10px;
   font-weight: normal;
   line-height: 20px;
 }
 
-/* line 37, ../../app/stylesheets/ie.sass */
+/* line 38, ../../app/stylesheets/ie.sass */
 #main .search_info .pagination {
   padding-bottom: 2px;
 }
 
-/* line 39, ../../app/stylesheets/ie.sass */
+/* line 40, ../../app/stylesheets/ie.sass */
 #main input.btn {
   height: 28px;
   padding: 0 3px;
