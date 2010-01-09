@@ -35,6 +35,7 @@
   comment_url                  :string(255)
   checked_regulationsdotgov_at :datetime
   full_xml_added_at            :datetime
+  regulation_id_number         :string(255)
 
 =end Schema Information
 
