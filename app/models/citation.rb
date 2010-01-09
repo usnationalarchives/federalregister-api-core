@@ -52,7 +52,7 @@ class Citation < ActiveRecord::Base
   def self.extract!(entry)
     text = entry.full_text_raw
     entry.citations.delete
-    return if entry.blank?
+    return if text.blank?
     
     CITATION_TYPES.each_pair do |citation_type, regexp|
       text.scan(regexp) do |part_1, part_2, part_3|
