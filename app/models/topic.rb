@@ -2,12 +2,14 @@
 
  Table name: topics
 
-  id            :integer(4)      not null, primary key
-  name          :string(255)
-  created_at    :datetime
-  updated_at    :datetime
-  group_name    :string(255)
-  entries_count :integer(4)      default(0)
+  id                     :integer(4)      not null, primary key
+  name                   :string(255)
+  created_at             :datetime
+  updated_at             :datetime
+  group_name             :string(255)
+  entries_count          :integer(4)      default(0)
+  related_topics_cache   :text
+  related_agencies_cache :text
 
 =end Schema Information
 
