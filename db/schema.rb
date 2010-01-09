@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100106153019) do
+ActiveRecord::Schema.define(:version => 20100109011125) do
 
   create_table "agencies", :force => true do |t|
     t.integer  "parent_id"
@@ -76,6 +76,7 @@ ActiveRecord::Schema.define(:version => 20100106153019) do
     t.string   "comment_url"
     t.datetime "checked_regulationsdotgov_at"
     t.datetime "full_xml_added_at"
+    t.string   "regulation_id_number"
   end
 
   add_index "entries", ["agency_id", "granule_class"], :name => "index_entries_on_agency_id_and_granule_class"
@@ -87,6 +88,7 @@ ActiveRecord::Schema.define(:version => 20100106153019) do
   add_index "entries", ["id", "agency_id"], :name => "index_entries_on_id_and_agency_id"
   add_index "entries", ["id", "publication_date"], :name => "index_entries_on_id_and_publication_date"
   add_index "entries", ["publication_date", "agency_id"], :name => "index_entries_on_publication_date_and_agency_id"
+  add_index "entries", ["regulation_id_number"], :name => "index_entries_on_regulation_id_number"
   add_index "entries", ["start_page", "end_page"], :name => "index_entries_on_volume_and_start_page_and_end_page"
 
   create_table "entry_details", :force => true do |t|
