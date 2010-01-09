@@ -16,6 +16,7 @@
   entries_1_year_weekly       :text
   entries_5_years_monthly     :text
   entries_all_years_quarterly :text
+  related_topics_cache        :text
 
 =end Schema Information
 
