@@ -2,9 +2,11 @@
 
  Table name: topic_groups
 
-  group_name    :string(255)     primary key
-  name          :string(255)
-  entries_count :integer(32)
+  group_name             :string(255)     primary key
+  name                   :string(255)
+  entries_count          :integer(32)
+  related_topics_cache   :text
+  related_agencies_cache :text
 
 =end Schema Information
 
