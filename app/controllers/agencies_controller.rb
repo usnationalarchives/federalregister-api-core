@@ -14,7 +14,7 @@ class AgenciesController < ApplicationController
   
   def show
     @agency = Agency.find_by_slug!(params[:id])
-    @entries = @agency.entries.all(:limit => 100, :include => :places, :order => "entries.publication_date DESC")
+    @entries = @agency.entries.all(:limit => 50, :include => :places, :order => "entries.publication_date DESC")
     
     respond_to do |wants|
       wants.html do
