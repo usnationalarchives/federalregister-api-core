@@ -15,7 +15,7 @@ class TopicGroupsController < ApplicationController
             :conditions => {:topics => {:group_name => @topic_group.group_name}},
             :include => :topics,
             :order => "entries.publication_date DESC",
-            :limit => 100)
+            :limit => 50)
         
         # GRANULE CLASSES
         @granule_classes = Entry.all(
