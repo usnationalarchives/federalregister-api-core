@@ -4,6 +4,8 @@
 
 <%= render :partial => 'entries/list', :locals => {:list_type => 'agency', :entries => @entries, :search_params => {:agency_id => @agency.id}} %>
 
+<%= render :partial => 'entries/most_cited', :locals => {:entries => @most_cited_entries} %>
+
 <% content_for :precolumn do %>
 
   <div class="span-7 prepend-bottom">
