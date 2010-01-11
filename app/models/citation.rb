@@ -21,7 +21,7 @@ class Citation < ActiveRecord::Base
   }
   
   belongs_to :source_entry, :class_name => "Entry"
-  belongs_to :cited_entry,  :class_name => "Entry"
+  belongs_to :cited_entry,  :class_name => "Entry", :counter_cache => "citing_entries_count"
     
   def url
     case citation_type
@@ -51,7 +51,7 @@ class Citation < ActiveRecord::Base
   
   def self.extract!(entry)
     text = entry.full_text_raw
-    entry.citations.delete
+    entry.citations.destroy_all
     return if text.blank?
     
     CITATION_TYPES.each_pair do |citation_type, regexp|
@@ -67,7 +67,7 @@ class Citation < ActiveRecord::Base
             entries = Entry.find_all_by_citation(part_1, part_2)
           
             if entries.size == 1
-              citation.cited_entry_id = entries.first.id
+              citation.cited_entry = entries.first
             end
           end
           
