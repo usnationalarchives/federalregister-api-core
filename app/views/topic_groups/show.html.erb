@@ -3,6 +3,8 @@
 
 <%= render :partial => "entries/list", :locals => {:entries => @entries, :search_params => {:topic_group => @topic_group}} %>
 
+<%= render :partial => 'entries/most_cited', :locals => {:entries => @most_cited_entries} %>
+
 <% content_for :sidebar do %>
   <%# TODO HELP-DESIGN make wrappers and slide these up %>
   <% related_agencies = @topic_group.related_agencies_cache %>
