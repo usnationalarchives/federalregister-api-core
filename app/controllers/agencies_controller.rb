@@ -15,9 +15,9 @@ class AgenciesController < ApplicationController
   def show
     @agency = Agency.find_by_slug!(params[:id])
     @entries = @agency.entries.all(:limit => 50, :include => :places, :order => "entries.publication_date DESC")
-    
     respond_to do |wants|
       wants.html do
+        @most_cited_entries = @agency.entries.all(:conditions => "citing_entries_count > 0", :order => "citing_entries_count DESC, publication_date DESC", :limit => 50)
         @places = @entries.map{|e| e.places}.flatten.uniq.select{|p| p.usable?}
 
         @map = Cloudkicker::Map.new( :style_id => 1714,

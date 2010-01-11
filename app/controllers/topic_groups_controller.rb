@@ -11,6 +11,12 @@ class TopicGroupsController < ApplicationController
 
     respond_to do |wants|
       wants.html do
+        @most_cited_entries = Entry.all(
+          :conditions => ["topics.group_name = ? AND entries.citing_entries_count > 0", @topic_group.group_name],
+          :joins => :topics,
+          :order => "citing_entries_count DESC, publication_date DESC",
+          :limit => 50
+        )
         @entries = Entry.find(:all,
             :conditions => {:topics => {:group_name => @topic_group.group_name}},
             :include => :topics,
