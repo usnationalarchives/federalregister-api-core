@@ -1,4 +1,4 @@
-<% title "Citations for: #{@entry.title}" %>
+<% title "Citations for: #{link_to @entry.title, entry_path(@entry)}" %>
 <% add_javascript :src => 'citations' %>
 
 <div class="header group">
