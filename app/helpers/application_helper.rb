@@ -3,7 +3,7 @@ module ApplicationHelper
   def title(text, options = {})
     options.symbolize_keys!
     
-    content_for :title, text
+    content_for :title, strip_tags(text)
     unless options[:body] == false
       content_for :precolumn, content_tag(:h1, text)
     end
