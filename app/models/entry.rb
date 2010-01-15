@@ -61,20 +61,24 @@ class Entry < ActiveRecord::Base
     ''         => 'Unknown'
   }
   
-  has_one :entry_detail
+  has_one :entry_detail, :dependent => :destroy
   
   belongs_to :agency
   
-  has_many :topic_assignments
+  has_many :topic_assignments, :dependent => :destroy
   has_many :topics, :through => :topic_assignments, :conditions => "topics.group_name != ''", :order => 'topics.name'
   
-  has_many :url_references
+  has_many :url_references, :dependent => :destroy
   has_many :urls, :through => :url_references
   
-  has_many :place_determinations, :conditions => "place_determinations.confidence >= #{PlaceDetermination::MIN_CONFIDENCE}"
+  has_many :place_determinations,
+           :conditions => "place_determinations.confidence >= #{PlaceDetermination::MIN_CONFIDENCE}",
+           :dependent => :destroy
   has_many :places, :through => :place_determinations
   
-  has_many :citations, :foreign_key => :source_entry_id
+  has_many :citations,
+           :foreign_key => :source_entry_id,
+           :dependent => :destroy
   has_many :cited_entries,
            :class_name => 'Entry',
            :through => :citations,
@@ -82,7 +86,8 @@ class Entry < ActiveRecord::Base
   
   has_many :references,
            :class_name => 'Citation',
-           :foreign_key => :cited_entry_id
+           :foreign_key => :cited_entry_id,
+           :dependent => :nullify
   has_many :referencing_entries,
            :class_name => 'Entry',
            :through => :references,
