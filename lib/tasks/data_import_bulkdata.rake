@@ -56,7 +56,7 @@ namespace :data do
           raw_frdoc = entry_node.css('FRDOC').first.try(:content)
           
           if raw_frdoc.present?
-            document_number = /FR Doc.\s*([^ ]+)/i.match(raw_frdoc).try(:[], 1)
+            document_number = /FR Doc.\s*([^ ;]+)/i.match(raw_frdoc).try(:[], 1)
             if document_number.blank?
               puts "Document number not found for #{raw_frdoc}"
             end
