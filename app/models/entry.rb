@@ -97,6 +97,7 @@ class Entry < ActiveRecord::Base
   
   has_many :referenced_dates, :dependent => :destroy
   
+  before_save :set_document_file_path
   after_create :create_entry_detail
   
   def granule_class 
@@ -232,7 +233,11 @@ class Entry < ActiveRecord::Base
   
   private
   
+  def set_document_file_path
+    self.document_file_path = document_number.sub(/-/,'').scan(/.{0,3}/).reject(&:blank?).join('/') if document_number.present?
+  end
+  
   def create_entry_detail
-    entry_detail = EntryDetail.create(:entry_id => self.id)
+    self.entry_detail = EntryDetail.create(:entry_id => self.id)
   end
 end
