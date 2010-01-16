@@ -195,6 +195,10 @@ class Entry < ActiveRecord::Base
     "#{RAILS_ROOT}/data/xml/" + document_number.sub(/-/,'').scan(/.{0,3}/).reject(&:blank?).join('/') + '.xml'
   end
   
+  def text_location
+    "#{RAILS_ROOT}/data/text/" + document_file_path + '.txt'
+  end
+  
   def entries_within(distance, options={})
     limit = options.delete(:limit) || 10
     count = options.delete(:count) || false
