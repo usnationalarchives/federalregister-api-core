@@ -43,9 +43,9 @@ role :db , domain, {:primary => true}
 # Database Settings
 #############################################################
 
-set :remote_db_name, "trifecta_production"
+set :remote_db_name, "trifecta_deploy_development"
 set :db_path,        "#{shared_path}/db"
-set :sql_file_path,  "#{shared_path}/db/#{remote_db_name}_#{Time.now}.sql"
+set :sql_file_path,  "#{shared_path}/db/#{remote_db_name}_#{Time.now.utc.strftime("%Y%m%d%H%M%S")}.sql"
 
 
 #############################################################
@@ -246,7 +246,7 @@ namespace :database do
         puts db_exists
       end
     end
-    return db_exists
+    db_exists
   end
 end
 
