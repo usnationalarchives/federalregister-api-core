@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100116170145) do
+ActiveRecord::Schema.define(:version => 20100117214210) do
 
   create_table "agencies", :force => true do |t|
     t.integer  "parent_id"
@@ -75,11 +75,11 @@ ActiveRecord::Schema.define(:version => 20100116170145) do
     t.string   "regulationsdotgov_id"
     t.string   "comment_url"
     t.datetime "checked_regulationsdotgov_at"
-    t.datetime "full_xml_added_at"
+    t.datetime "full_xml_updated_at"
     t.string   "regulation_id_number"
     t.integer  "citing_entries_count",         :default => 0
     t.string   "document_file_path"
-    t.datetime "full_text_added_at"
+    t.datetime "full_text_updated_at"
   end
 
   add_index "entries", ["agency_id", "granule_class"], :name => "index_entries_on_agency_id_and_granule_class"
@@ -89,8 +89,8 @@ ActiveRecord::Schema.define(:version => 20100116170145) do
   add_index "entries", ["citation"], :name => "index_entries_on_citation"
   add_index "entries", ["citing_entries_count"], :name => "index_entries_on_citing_entries_count"
   add_index "entries", ["document_number"], :name => "index_entries_on_document_number"
-  add_index "entries", ["full_text_added_at"], :name => "index_entries_on_full_text_added_at"
-  add_index "entries", ["full_xml_added_at"], :name => "index_entries_on_full_xml_added_at"
+  add_index "entries", ["full_text_updated_at"], :name => "index_entries_on_full_text_added_at"
+  add_index "entries", ["full_xml_updated_at"], :name => "index_entries_on_full_xml_added_at"
   add_index "entries", ["id", "agency_id"], :name => "index_entries_on_id_and_agency_id"
   add_index "entries", ["id", "publication_date"], :name => "index_entries_on_id_and_publication_date"
   add_index "entries", ["publication_date", "agency_id"], :name => "index_entries_on_publication_date_and_agency_id"

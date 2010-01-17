@@ -42,13 +42,13 @@
    html = transform_xml(@entry.full_xml, 'entries/_full_text.html.xslt').to_s
    html = auto_link(html, :href_options => { :class => 'external' })
    add_citation_links(html) %>
-<% elsif @entry.full_text_raw %>
+<% elsif @entry.full_text %>
 <h3>Full text</h3>
 <div class="fulltextWrapper span-16">
   <pre><%=
     # FIXME: move out of view!
     text = truncate(
-      @entry.full_text_raw,
+      @entry.full_text,
       :length => 120000,
       :omission => "<br /><br /><br />[ENTRY TRUNCATED: " + link_to('view full text', @entry.source_url(:text)) + "]</pre>"
     )

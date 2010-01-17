@@ -58,10 +58,10 @@
       <div class="result_info">
         <span class="date"><%= entry.publication_date %></span>
         <span class="excepts"><%= 
-          if @search_term.blank? || entry.excerpts.full_text_raw.blank?
+          if @search_term.blank? || entry.excerpts.full_text.blank?
             sanitize entry.excerpts.abstract, :tags => %w(span), :attributes => %w(class)
           else
-            sanitize entry.excerpts.full_text_raw, :tags => %w(span), :attributes => %w(class)
+            sanitize entry.excerpts.full_text, :tags => %w(span), :attributes => %w(class)
           end %></span>
         <br />
         <span class="agency"><%= entry.agency ? link_to(entry.agency.name, agency_path(entry.agency)) : entry.primary_agency_raw %></span>

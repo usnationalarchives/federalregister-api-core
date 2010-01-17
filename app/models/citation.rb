@@ -50,7 +50,7 @@ class Citation < ActiveRecord::Base
   end
   
   def self.extract!(entry)
-    text = entry.full_text_raw
+    text = entry.full_text
     entry.citations.destroy_all
     return if text.blank?
     
