@@ -74,10 +74,8 @@ namespace :data do
             end
           end
         
-          File.makedirs(File.dirname(entry.xml_location))
-        
-          entry_node.write_xml_to(File.open(entry.xml_location, 'w'))
-          entry.touch(:full_xml_added_at)
+          xml.full_xml = entry_node.to_s
+          xml.save
         end
       end
     end

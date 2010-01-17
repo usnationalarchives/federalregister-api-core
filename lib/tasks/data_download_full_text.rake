@@ -25,10 +25,8 @@ namespace :data do
         
         if full_text
           entry.source_text_url = url
+          entry.full_text = c.body_str
           entry.save
-        
-          entry_detail.full_text_raw = c.body_str
-          entry_detail.save
           
           Citation.extract!(entry)
         end

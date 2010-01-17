@@ -100,6 +100,9 @@ class Entry < ActiveRecord::Base
   before_save :set_document_file_path
   after_create :create_entry_detail
   
+  file_attribute(:full_xml)  {"#{RAILS_ROOT}/data/xml/"  + document_file_path + '.xml'}
+  file_attribute(:full_text) {"#{RAILS_ROOT}/data/text/" + document_file_path + '.txt'}
+  
   def granule_class 
     GRANULE_CLASS_TYPES[self['granule_class']]
   end
@@ -126,20 +129,8 @@ class Entry < ActiveRecord::Base
     }
   end
   
-  def full_text_raw
-    entry_detail.full_text_raw
-  end
-  
-  def full_text_raw=(val)
-    entry_detail.full_text_raw=val
-  end
-  
   def has_full_xml?
-    !full_xml_added_at.nil?
-  end
-  
-  def full_xml
-    File.read(xml_location)
+    full_xml_added_at.present?
   end
   
   def month_year
@@ -189,14 +180,6 @@ class Entry < ActiveRecord::Base
     when :pdf
       base_url =  "http://www.gpo.gov/fdsys/pkg/FR-#{publication_date.to_s(:db)}/pdf/#{document_number}.pdf"
     end
-  end
-  
-  def xml_location
-    "#{RAILS_ROOT}/data/xml/" + document_number.sub(/-/,'').scan(/.{0,3}/).reject(&:blank?).join('/') + '.xml'
-  end
-  
-  def text_location
-    "#{RAILS_ROOT}/data/text/" + document_file_path + '.txt'
   end
   
   def entries_within(distance, options={})
