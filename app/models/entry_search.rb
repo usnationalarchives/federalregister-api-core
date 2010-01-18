@@ -61,14 +61,14 @@ class EntrySearch
     )
     facets = {}
     if with[:agency_id].blank?
-      agency_facets = raw_facets[:agency_id].to_a.sort_by{|a,b| b}.reverse.reject{|id, count| id == 0}.map do |id, count|
+      agency_facets = raw_facets[:agency_id].to_a.sort_by{|a,b| b}.reverse.reject{|id, count| id == 0}.slice(0,25).map do |id, count|
         [Agency.find(id), count]
       end
       facets[:agencies] = agency_facets if agency_facets.size > 1
     end
     
     if with[:topic_ids].blank?
-      topic_facets = raw_facets[:topic_ids].to_a.sort_by{|a,b| b}.reverse.reject{|id, count| id == 0}.map do |id, count|
+      topic_facets = raw_facets[:topic_ids].to_a.sort_by{|a,b| b}.reverse.reject{|id, count| id == 0}.slice(0,25).map do |id, count|
         [Topic.find(id), count]
       end
       facets[:topics] = topic_facets if topic_facets.size > 1
