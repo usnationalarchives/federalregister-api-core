@@ -761,19 +761,44 @@ div.ornament
   :height 60px
   :margin 0 0 20px 0
 form
+  ul.searchform label
+    :text-align right
+    :width 5em
   input.labelHighlight 
     :color #aeaeae !important
   li
     span
       :color #6e6e6e
       :vertical-align middle
-.col2 li fieldset
+      &.under
+        :display block
+        :padding-left 72px
+  li
+    label.nextto 
+      :clear none
+      :display inline
+      :float none
+      :margin-left 10px
+      :margin-right 10px
+      :width auto
+    input.miles
+      :width 50px
+  
+.col2
   label
     :font-weight bold
     :width 35px
+  input, select, span
+    :float left
   span
-    :display block
-    :padding-left 47px
+    :padding 5px
+  select
+    :margin-top 8px
+  input.pagenumber
+    :margin-left 15px
+    :width 75px
+  input.btn
+    :margin-left 15px
 .panel
   :padding-top 2em
   &.on
