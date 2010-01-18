@@ -111,7 +111,7 @@ class Entry < ActiveRecord::Base
     # fields
     indexes title
     indexes abstract
-    indexes entry_detail.full_text_raw, :as => :full_text_raw
+    indexes "LOAD_FILE(CONCAT('#{RAILS_ROOT}/data/', document_file_path, '.txt'))", :as => :full_text
     indexes agency.name, :as => :agency_name
     
     # attributes
@@ -124,7 +124,7 @@ class Entry < ActiveRecord::Base
     set_property :field_weights => {
       "title" => 100,
       "abstract" => 50,
-      "full_text_raw" => 25,
+      "full_text" => 25,
       "agency_name" => 10
     }
   end
