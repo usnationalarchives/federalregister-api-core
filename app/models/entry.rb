@@ -113,7 +113,7 @@ class Entry < ActiveRecord::Base
     indexes abstract
     indexes "LOAD_FILE(CONCAT('#{RAILS_ROOT}/data/text/', document_file_path, '.txt'))", :as => :full_text
     indexes agency.name, :as => :agency_name
-    indexes part_name, :facet => true
+    indexes granule_class, :facet => true
     
     # attributes
     has topics(:id), :as => :topic_ids, :facet => true
