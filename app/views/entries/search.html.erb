@@ -9,11 +9,11 @@
     
     <li class="simple"><label>Agency:</label><%= select_tag 'agency_id', options_for_select([''] + @agencies.collect{ |agency| [agency.name, agency.id.to_s] }, :selected => @search.agency.try(:id).try(:to_s)) %></li>
     
-    
-      <% if @topic %>
+      <% if @search.topic %>
         <li class="simple">
-          <label>Topic:</label><%= @topic.name %>
+          <label>Topic:</label><%= @search.topic.name %>
           <%= hidden_field_tag :topic_id, params[:topic_id] %>
+          <%= link_to '[X]', params.except(:topic_id) %>
         </li>
       <% end %>
 
@@ -94,6 +94,40 @@
     <%# TODO: HELP-DESIGN: HELP-COPY: Need RSS icon, some text here %>
     <p>Subscribe to an <%= link_to 'RSS Feed', params.merge(:format => :rss, :order => 'date', :publication_date_less_than => nil) %> of these search results.</p>
     <% feed_autodiscovery url_for(params.merge(:format => :rss, :order => 'date', :publication_date_less_than => nil)) %>
+  <% end %>
+  
+  <% part_name_facets = @search.facets[:part_name] %>
+  <% agency_facets = @search.facets[:agencies] %>
+  <% topic_facets = @search.facets[:topics] %>
+  <% if part_name_facets || agency_facets || topic_facets %>
+    <h3>Limit the Results</h3>
+    <% if part_name_facets %>
+      <h4>Type</h4>
+      <ul>
+      <% part_name_facets.each do |part_name, count| %>
+        <li><%= link_to "#{part_name} (#{count})", params.merge(:part_name => part_name) %></li>
+      <% end %>
+      </ul>
+    <% end %>
+    
+    <% if agency_facets %>
+      <h4>Agency</h4>
+      <ul>
+      <% agency_facets.each do |agency, count| %>
+        <li><%= link_to "#{agency.name} (#{count})", params.merge(:agency_id => agency.id) %></li>
+      <% end %>
+      </ul>
+    <% end %>
+    
+    <% if topic_facets %>
+      <h4>Topic</h4>
+      <ul>
+      <% topic_facets.each do |topic, count| %>
+        <li><%= link_to "#{topic.name} (#{count})", params.merge(:topic_id => topic.id) %></li>
+      <% end %>
+      </ul>
+    <% end %>
+    
   <% end %>
 <% end %>
 
