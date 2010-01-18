@@ -1,6 +1,8 @@
 class EntriesController < ApplicationController
   caches_page :by_date, :show, :current_headlines
   
+  include XmlTransformer
+  helper_method :transform_xml
   
   def search
     if !params[:volume].blank? && !params[:page].blank?
@@ -167,6 +169,10 @@ class EntriesController < ApplicationController
                                )
       end
     end
+  end
+  
+  def citations
+    @entry = Entry.find_by_document_number!(params[:document_number])
   end
   
   def tiny_pulse

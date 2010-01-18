@@ -11,6 +11,10 @@ set :use_sudo, true
 
 set :keep_releases, 15
 
+# this is more important when normalizing multiple servers
+# but is implemented in a very simple way (ie poorly)
+set :normalize_asset_timestamps, false
+
 #############################################################
 # Set Branch
 #############################################################
@@ -39,9 +43,9 @@ role :db , domain, {:primary => true}
 # Database Settings
 #############################################################
 
-set :remote_db_name, "trifecta_production"
+set :remote_db_name, "trifecta_deploy_development"
 set :db_path,        "#{shared_path}/db"
-set :sql_file_path,  "#{shared_path}/db/#{remote_db_name}_#{Time.now}.sql"
+set :sql_file_path,  "#{shared_path}/db/#{remote_db_name}_#{Time.now.utc.strftime("%Y%m%d%H%M%S")}.sql"
 
 
 #############################################################
@@ -242,7 +246,7 @@ namespace :database do
         puts db_exists
       end
     end
-    return db_exists
+    db_exists
   end
 end
 
@@ -290,3 +294,9 @@ namespace :database do
   end
 
 end #end namspace
+
+namespace :filesystem do
+  task :load_remote do
+    run_locally("rsync --verbose  --progress --stats --compress -e 'ssh -p #{port}' --recursive --times --perms --links #{user}@#{domain}:#{deploy_to}/shared/data data")
+  end
+end

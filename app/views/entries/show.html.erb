@@ -19,49 +19,36 @@
   <div class="details">
     <h3>Details</h3>
     <dl class='fixed details group'>
-      <% if !@entry.publication_date.blank?    %><dt>Publication Date:</dt>                 <dd><%= link_to @entry.publication_date.to_formatted_s(:pretty), entries_by_date_path(@entry.publication_date) %></dd><% end %>
-      <% if !@entry.document_number.blank?     %><dt>Federal Register Document Number:</dt>
-        <dd><%= @entry.document_number %> (<% [:html, :text, :pdf].each do |format| %>
-                                               <%= link_to format, @entry.source_url(format), :class => format %>
-                                           <% end %><%= link_to( 'regulations.gov', "http://www.regulations.gov/search/Regs/home.html#documentDetail?R=#{@entry.regulationsdotgov_id}") unless @entry.regulationsdotgov_id.blank? %>)</dd><% end %>
+      <% if @entry.publication_date.present?    %><dt>Publication Date:</dt>                 <dd><%= link_to @entry.publication_date.to_formatted_s(:pretty), entries_by_date_path(@entry.publication_date) %></dd><% end %>
+      <% if @entry.document_number.present?     %><dt>Federal Register Document Number:</dt> <dd><%= @entry.document_number %></dd><% end %>
       <% agency = display_agencies_for_entry(@entry) %>
-      <% if !agency.blank?                     %><dt>Publishing Agency:</dt><dd><%= display_agencies_for_entry(@entry)              %></dd><% end %>
-      <% if !@entry.dates.blank?               %><dt>Dates:</dt>            <dd><%= text_with_links(@entry, @entry.dates)           %></dd><% end %>
-      <% if !@entry.effective_date.blank?      %><dt>Effective Date:</dt>   <dd><%= @entry.effective_date                           %></dd><% end %>
-      <% if !@entry.comments_close_date.blank? %><dt>Comments Close:</dt>   <dd><%= @entry.comments_close_date                      %></dd><% end %>
-      <% if !@entry.action.blank?              %><dt>Action:</dt>           <dd><%= @entry.action.titlecase                         %></dd><% end %>
-      <% if !@entry.type.blank?                %><dt>Type: </dt>            <dd><%= @entry.type                                     %></dd><% end %>
-      <% if !@entry.genre.blank?               %><dt>Genre:</dt>            <dd><%= @entry.genre.titlecase                          %></dd><% end %>
-      <% if !@entry.part_name.blank?           %><dt>Part Name:</dt>        <dd><%= @entry.part_name                                %></dd><% end %>
-      <% if !@entry.granule_class.blank?       %><dt>Granule Class:</dt>    <dd><%= @entry.granule_class.titlecase                  %></dd><% end %>
+      <% if agency.present?                     %><dt>Publishing Agency:</dt><dd><%= display_agencies_for_entry(@entry)              %></dd><% end %>
+      <% if @entry.dates.present?               %><dt>Dates:</dt>            <dd><%= text_with_links(@entry, @entry.dates)           %></dd><% end %>
+      <% if @entry.effective_date.present?      %><dt>Effective Date:</dt>   <dd><%= @entry.effective_date                           %></dd><% end %>
+      <% if @entry.comments_close_date.present? %><dt>Comments Close:</dt>   <dd><%= @entry.comments_close_date                      %></dd><% end %>
+      <% if @entry.action.present?              %><dt>Action:</dt>           <dd><%= @entry.action.titlecase                         %></dd><% end %>
+      <% if @entry.type.present?                %><dt>Type: </dt>            <dd><%= @entry.type                                     %></dd><% end %>
+      <% if @entry.genre.present?               %><dt>Genre:</dt>            <dd><%= @entry.genre.titlecase                          %></dd><% end %>
+      <% if @entry.part_name.present?           %><dt>Part Name:</dt>        <dd><%= @entry.part_name                                %></dd><% end %>
+      <% if @entry.granule_class.present?       %><dt>Granule Class:</dt>    <dd><%= @entry.granule_class.titlecase                  %></dd><% end %>
+      <% if @entry.document_number.present?     %><dt>Other Formats:</dt>    <dd><%= %w(html text pdf).map{|format| link_to format, @entry.source_url(format), :class => format }.join(" | ") %>
+                                                                                 <%= ' | ' + link_to( 'regulations.gov', "http://www.regulations.gov/search/Regs/home.html#documentDetail?R=#{@entry.regulationsdotgov_id}") if @entry.regulationsdotgov_id.present? %></dd><% end %>
     </dl>
   </div>
 </div>
 
-<% unless @entry.url_references.blank? %>
-  <h3>References</h3>
-  <ul class='references'>
-  <% urls = @entry.url_references.map{|ref| ref.url} %>
-  <% urls.group_by(&:active).each do |active, urls| %>
-    <li>
-      <%= active ? 'Active' : 'Broken' %>
-      <ul>
-      <% urls.each do |url| %>  
-        <li><%= link_to url.name, "#{url.name}" %></li>
-      <% end %>
-      </ul>
-    </li>
-  <% end  %>
-  </ul>
-<% end %>
-
-<% if @entry.full_text_raw %>
+<% if @entry.has_full_xml? %>
+  <%=
+   html = transform_xml(@entry.full_xml, 'entries/_full_text.html.xslt').to_s
+   html = auto_link(html, :href_options => { :class => 'external' })
+   add_citation_links(html) %>
+<% elsif @entry.full_text %>
 <h3>Full text</h3>
 <div class="fulltextWrapper span-16">
   <pre><%=
     # FIXME: move out of view!
     text = truncate(
-      @entry.full_text_raw,
+      @entry.full_text,
       :length => 120000,
       :omission => "<br /><br /><br />[ENTRY TRUNCATED: " + link_to('view full text', @entry.source_url(:text)) + "]</pre>"
     )
@@ -85,6 +72,22 @@
 </div>
 <% end %>
 
+<% if @entry.url_references.present? %>
+  <h3>References</h3>
+  <ul class='references'>
+  <% urls = @entry.url_references.map{|ref| ref.url} %>
+  <% urls.group_by(&:active).each do |active, urls| %>
+    <li>
+      <%= active ? 'Active' : 'Broken' %>
+      <ul>
+      <% urls.each do |url| %>  
+        <li><%= link_to url.name, "#{url.name}" %></li>
+      <% end %>
+      </ul>
+    </li>
+  <% end  %>
+  </ul>
+<% end %>
 
 <% content_for :sidebar do %>
   <h3 class="hAction">
@@ -92,7 +95,7 @@
     <span class='small_link'>(<%= link_to 'change location', edit_location_path %>)</span>
   </h3> 
   
-  <% if !@entry.comment_url.blank? && (@entry.comments_close_date.nil? || @entry.comments_close_date >= Date.today) %>
+  <% if @entry.comment_url.present? && (@entry.comments_close_date.nil? || @entry.comments_close_date >= Date.today) %>
     <p><%= link_to "Submit a formal comment", @entry.comment_url %>. The agency is required to respond in a future FR entry.</p>
   <% end %>
   <div id="congress">
@@ -117,8 +120,7 @@
     </span>
   </p>
 
-  <% unless @entry.contact.blank? %>
-    <!-- <h3 class="icon contact">Contact:</h3> -->
+  <% if @entry.contact.present? %>
     <h3>Contact</h3>
     <p><%= auto_link @entry.contact %></p>
   <% end %>
@@ -130,7 +132,7 @@
     <li>End Page:   <%= @entry.end_page     %></li>
   </ul>
   
-  <% unless @entry.topics.blank? %>
+  <% if @entry.topics.present? %>
   <h3>Related Topics</h3>
   <ul>
     <% @entry.topics.each do |topic| %>
@@ -139,27 +141,32 @@
   </ul>
   <% end %>
   
-  <% unless @entry.places.usable.blank? %>
+  <% if @entry.places.usable.present? %>
     <h3>Places Mentioned</h3>
     <% add_javascript { @map.to_js } %>
     <div id="map" style="width: 230px; height: 350px"></div>
   <% end %>
 
-  <% unless true || @entry.citations.blank? %>
+  <% if @entry.citations.present? %>
     <h3>Citations</h3>
-    <ul>
-    <% @entry.citations.each do |citation| %>
-      <li><%= link_to_if citation.url, citation.name, citation.url %><%= ": #{citation.cited_entry.title}" if citation.cited_entry%></li>
-    <% end %>
+    <% max_citations = 3 %>
+    <ul class="citation">
+      <%= render :partial => 'citation', :collection => @entry.citations.slice(0,max_citations) %>
     </ul>
+    <% if @entry.citations.size > max_citations %>
+      <%= link_to "See all (#{@entry.citations.size})", entry_citation_path(@entry, :anchor => "citations"), :class => "raquo" %>
+    <% end %>
+    
   <% end %>
   
-  <% unless true || @entry.referencing_entries.blank? %>
+  <% if @entry.referencing_entries.present? %>
     <h3>Entries Referencing This</h3>
-    <ul>
-    <% @entry.referencing_entries.each do |entry| %>
-      <li><%= link_to entry.citation, entry_path(entry) %>: <%= entry.title %> (<%= entry.publication_date %>)</li>
-    <% end %>
+    <% max_citations = 3 %>
+    <ul class="citation">
+      <%= render :partial => "referencing_entry", :collection =>  @entry.referencing_entries.slice(0,max_citations) %>
     </ul>
+    <% if @entry.referencing_entries.size > max_citations %>
+      <%= link_to "See all (#{@entry.referencing_entries.size})", entry_citation_path(@entry, :anchor => "referencing_entries") %>
+    <% end %>
   <% end %>
 <% end %>
