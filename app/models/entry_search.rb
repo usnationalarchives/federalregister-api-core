@@ -59,7 +59,8 @@ class EntrySearch
     @entries = Entry.search(@search_term, 
       :page => @page,
       :order => @order,
-      :with => with
+      :with => with,
+      :match_mode => :extended
     )
     
     # TODO: FIXME: Ugly hack to get total pages to be within bounds
