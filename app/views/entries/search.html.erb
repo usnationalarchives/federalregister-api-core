@@ -6,7 +6,7 @@
 <div class="header  group">
   <ul class="searchform">
     <li class="simple"><label>Keywords:</label><%= text_field_tag :q, @search.search_term %></li>
-    
+    <li class="simple"><label>Type:</label><%= select_tag :granule_class, options_for_select([''] + Entry::GRANULE_CLASS_TYPES.values.to_a.reject{|name| name == 'Unknown'}, :selected => @search.granule_class) %>
     <li class="simple"><label>Agency:</label><%= select_tag 'agency_id', options_for_select([''] + @agencies.collect{ |agency| [agency.name, agency.id.to_s] }, :selected => @search.agency.try(:id).try(:to_s)) %></li>
     
       <% if @search.topic %>
@@ -97,16 +97,18 @@
     <% feed_autodiscovery url_for(params.merge(:format => :rss, :order => 'date', :publication_date_less_than => nil)) %>
   <% end %>
   
-  <% part_name_facets = @search.facets[:part_name] %>
+  <% granule_class_facets = @search.facets[:granule_classes] %>
   <% agency_facets = @search.facets[:agencies] %>
   <% topic_facets = @search.facets[:topics] %>
-  <% if part_name_facets || agency_facets || topic_facets %>
+  <% if granule_class_facets || agency_facets || topic_facets %>
+  
     <h3>Limit the Results</h3>
-    <% if part_name_facets %>
+    <% if granule_class_facets %>
       <h4>Type</h4>
+
       <ul class="raquo indent">
-      <% part_name_facets.each do |part_name, count| %>
-        <li><%= link_to "#{part_name} (#{count})", params.merge(:part_name => part_name) %></li>
+      <% granule_class_facets.each do |granule_class, count| %>
+        <li><%= link_to "#{granule_class} (#{count})", params.merge(:granule_class => granule_class) %></li>
       <% end %>
       </ul>
     <% end %>
