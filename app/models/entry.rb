@@ -111,7 +111,7 @@ class Entry < ActiveRecord::Base
     # fields
     indexes title
     indexes abstract
-    indexes "LOAD_FILE(CONCAT('#{RAILS_ROOT}/data/', document_file_path, '.txt'))", :as => :full_text
+    indexes "LOAD_FILE(CONCAT('#{RAILS_ROOT}/data/text/', document_file_path, '.txt'))", :as => :full_text
     indexes agency.name, :as => :agency_name
     
     # attributes
