@@ -294,3 +294,9 @@ namespace :database do
   end
 
 end #end namspace
+
+namespace :filesystem do
+  task :load_remote do
+    run_locally("rsync --verbose  --progress --stats --compress -e 'ssh -p #{port}' --recursive --times --perms --links #{user}@#{domain}:#{deploy_to}/shared/data data")
+  end
+end
