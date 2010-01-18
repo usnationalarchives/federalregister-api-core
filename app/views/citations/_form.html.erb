@@ -1,4 +1,3 @@
 <%= select_tag :volume,
       options_for_select([['Volume','']] + (59..74).map {|v| ["#{v} (#{v+1935})", v.to_s] },params[:volume] ) %>
-<span>FR</span>
-<%= text_field_tag :page, params[:page], :title => 'page number' %>
+      <%= text_field_tag :page, params[:page], :title => 'Page Number', :class => 'pagenumber' %>
