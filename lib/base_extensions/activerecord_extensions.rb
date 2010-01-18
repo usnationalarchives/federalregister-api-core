@@ -1,6 +1,7 @@
 class ActiveRecord::SerializationError < StandardError; end
 
 class ActiveRecord::Base
+  # TODO: pluginize
   def self.serializable_column(*attributes)
     
     attributes.each do |attribute|
@@ -28,6 +29,7 @@ class ActiveRecord::Base
     end
   end
   
+  # TODO: pluginize
   def self.file_attribute(attribute, &filename_generator)
     require 'ftools'
     
