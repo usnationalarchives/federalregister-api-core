@@ -2,7 +2,7 @@ class EntrySearch
   include Geokit::Geocoders
   extend ActiveSupport::Memoizable
   
-  attr_reader :errors, :topic, :agency, :search_term, :start_date, :end_date
+  attr_reader :errors, :topic, :agency, :search_term, :start_date, :end_date, :granule_class
   
   def initialize(options)
     options ||= {}
@@ -22,6 +22,10 @@ class EntrySearch
     
     if options[:agency_id].present?
       @agency = Agency.find(options[:agency_id])
+    end
+    
+    if options[:granule_class].present?
+      @granule_class = options[:granule_class]
     end
     
     if options[:publication_date_greater_than].present?
@@ -52,9 +56,9 @@ class EntrySearch
   def facets
     raw_facets = Entry.facets(@search_term,
       :with => with,
+      :conditions => conditions,
       :match_mode => :extended
     )
-    
     facets = {}
     if with[:agency_id].blank?
       agency_facets = raw_facets[:agency_id].to_a.sort_by{|a,b| b}.reverse.reject{|id, count| id == 0}.map do |id, count|
@@ -70,15 +74,21 @@ class EntrySearch
       facets[:topics] = topic_facets if topic_facets.size > 1
     end
     
-    if with[:part_name].blank?
-      part_name_facets = facets[:part_name]
-      raw_facets[:part_name] = part_name_facets if part_name_facets && part_name_facets.size > 1
+    if conditions[:granule_class].blank?
+      granule_class_facets = raw_facets[:granule_class]
+      facets[:granule_classes] = granule_class_facets# if granule_class_facets && granule_class_facets.size > 1
     end
     
     facets
   end
   memoize :facets
   
+  def conditions
+    conditions = {}
+    conditions[:granule_class] = @granule_class if @granule_class.present?
+    conditions
+  end
+  memoize :conditions
   def with
     with = {}
     
@@ -97,6 +107,7 @@ class EntrySearch
       :page => @page,
       :order => @order,
       :with => with,
+      :conditions => conditions,
       :match_mode => :extended
     )
     
