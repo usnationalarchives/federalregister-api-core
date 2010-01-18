@@ -783,8 +783,22 @@ form
       :width auto
     input.miles
       :width 50px
-  
-.col2
+#main form a.topic
+  :background #dedede url(/images/topic_destroy.png) no-repeat 5px 4px
+  :border 1px solid #dedede
+  :-moz-border-radius 5px
+  :-webkit-border-radius 5px
+  :border-radius 5px; /* future proofing */
+  :-khtml-border-radius 5px; /* for old Konqueror browsers */
+  :color #333
+  :display block
+  :float left 
+  :margin-right 5px
+  :padding 3px 10px 3px 25px
+  &:hover
+    :background-color #cdcdcd
+    :background-position 5px -96px
+#main .col2
   label
     :font-weight bold
     :width 35px
@@ -799,6 +813,10 @@ form
     :width 75px
   input.btn
     :margin-left 15px
+  h4 
+    :border none
+    :float none
+    :font-weight bold
 .panel
   :padding-top 2em
   &.on
