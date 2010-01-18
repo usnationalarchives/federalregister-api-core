@@ -1,4 +1,4 @@
-<% if topic_groups.size > 0 %>
+<% if topic_groups && topic_groups.size > 0 %>
 <%# TODO HELP-RUBY do this better %>
 <% content_for :tagcloud %>
 
@@ -7,7 +7,7 @@
     <div id="fancy_tag_cloud" class="fancy"></div>
     <ul>
     <% topic_groups.each do |topic_group| %>
-      <li><%= link_to topic_group.name, topic_group_path(topic_group.group_name) %> (<%= topic_group.entries_count %>)</li>
+      <li><%= link_to topic_group['name'], topic_group_path(:id => topic_group['group_name']) %> (<%= topic_group['entries_count'] %>)</li>
     <% end %>
     </ul>
   </div>

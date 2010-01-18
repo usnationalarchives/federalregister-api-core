@@ -11,19 +11,17 @@ class TopicGroupsController < ApplicationController
 
     respond_to do |wants|
       wants.html do
+        @most_cited_entries = Entry.all(
+          :conditions => ["topics.group_name = ? AND entries.citing_entries_count > 0", @topic_group.group_name],
+          :joins => :topics,
+          :order => "citing_entries_count DESC, publication_date DESC",
+          :limit => 50
+        )
         @entries = Entry.find(:all,
             :conditions => {:topics => {:group_name => @topic_group.group_name}},
             :include => :topics,
             :order => "entries.publication_date DESC",
-            :limit => 100)
-        
-        # AGENCIES
-        @agencies = Agency.all(:select => 'agencies.*, count(*) AS entries_count',
-          :joins => {:entries => :topics},
-          :conditions => {:entries => {:topics => {:group_name => group_name}}},
-          :group => "agencies.id",
-          :order => 'entries_count DESC'
-        )
+            :limit => 50)
         
         # GRANULE CLASSES
         @granule_classes = Entry.all(
@@ -33,22 +31,6 @@ class TopicGroupsController < ApplicationController
           :group => 'granule_class',
           :order => 'count DESC'
         )
-        
-        # RELATED TOPICS
-        @related_topic_groups = Topic.find_by_sql(["SELECT topics.*, COUNT(*) AS entries_count
-        FROM topics AS our_topics
-        LEFT JOIN topic_assignments AS our_topic_assignments
-          ON our_topic_assignments.topic_id = our_topics.id
-        LEFT JOIN topic_assignments
-          ON topic_assignments.entry_id = our_topic_assignments.entry_id
-        LEFT JOIN topics
-          ON topics.id = topic_assignments.topic_id
-        WHERE our_topics.group_name = ?
-          AND topics.group_name != ?
-          AND topics.group_name != ''
-        GROUP BY topics.group_name
-        ORDER BY entries_count DESC, LENGTH(topics.name)
-        LIMIT 100", group_name, group_name])
         
       end
       wants.rss do

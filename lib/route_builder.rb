@@ -35,6 +35,16 @@ module RouteBuilder
     }
   end
   
+  add_route :entry_citation do |entry|
+    {
+      :year            => entry.publication_date.strftime('%Y'),
+      :month           => entry.publication_date.strftime('%m'),
+      :day             => entry.publication_date.strftime('%d'),
+      :document_number => entry.document_number,
+      :slug            => entry.slug
+    }
+  end
+  
   add_route :short_entry do |entry|
     host = 'govpulse.us' if RAILS_ENV == 'production'
     {
