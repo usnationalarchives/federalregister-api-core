@@ -130,7 +130,7 @@ class Entry < ActiveRecord::Base
   end
   
   def has_full_xml?
-    full_xml_added_at.present?
+    full_xml_updated_at.present?
   end
   
   def month_year

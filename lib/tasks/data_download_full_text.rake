@@ -6,7 +6,7 @@ namespace :data do
       
       Entry.all(:conditions => {:publication_date => date}).each do |entry|
         entry_detail = entry.entry_detail
-        next if entry.full_text_added_at.present?
+        next if entry.full_text_updated_at.present?
         url = entry.source_url(:text)
         puts "downloading full text for #{entry.document_number} (#{entry.publication_date})"
         full_text = nil
