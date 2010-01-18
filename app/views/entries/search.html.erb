@@ -4,7 +4,7 @@
 <% title @search_term.blank? ? 'Search Entries' : "Search Results for '#{h @search_term}'" %>
 
 <div class="header  group">
-  <ul>
+  <ul class="searchform">
     <li class="simple"><label>Keywords:</label><%= text_field_tag :q, @search.search_term %></li>
     
     <li class="simple"><label>Agency:</label><%= select_tag 'agency_id', options_for_select([''] + @agencies.collect{ |agency| [agency.name, agency.id.to_s] }, :selected => @search.agency.try(:id).try(:to_s)) %></li>
@@ -18,31 +18,31 @@
       <% end %>
 
       <li class="<%= 'simple' unless params[:place_id].blank? && params[:near].blank? %>">
-        <fieldset>
-          <legend>Location</legend>
           <ul>
           <% if @place %>
             <li class="simple"><label>In:</label><%= @place.name %>
               <%= hidden_field_tag :place_id, params[:place_id] %>
             </li>
           <% else %>
-            <li class="simple"><label>Near:</label> <%= text_field_tag :near, params[:near] %> <span>(eg '94118', 'Seattle', etc.)</span></li> 
-            <li class="simple"><label>Within:</label> <%= text_field_tag :within, params[:within] %>   <span>miles</span></li>
+            <li class="simple">
+              <label>Near:</label> <%= text_field_tag :near, params[:near], :title => "(eg '94118', 'Seattle', etc.)" %>
+              <label class="nextto">Within:</label> <%= text_field_tag :within, params[:within], :title => "Miles", :class => "miles" %>            
+            </li> 
           <% end %>
         </ul>
       </li>
 
       <li class="<%= 'simple' unless params[:publication_date_greater_than].blank? && params[:publication_date_less_than].blank? %>">
-        <fieldset>
-          <legend>Publication Date</legend>
           <ul>
-            <li class="simple"><label>From:</label><%= text_field_tag :publication_date_greater_than, @search.start_date.try(:to_date) %></li>
-            <li class="simple"><label>To:</label><%= text_field_tag :publication_date_less_than, @search.end_date.try(:to_date) %><span> (eg '01/01/09', '1 year ago', 'yesterday', etc.)</span></li>
+            <li class="simple">
+              <label>From:</label><%= text_field_tag :publication_date_greater_than, @search.start_date.try(:to_date) %>
+              <label class="nextto">To:</label><%= text_field_tag :publication_date_less_than, @search.end_date.try(:to_date) %>
+              <span class="under">(eg '01/01/09', '1 year ago', 'yesterday', etc.)</span>         
+              </li>
           </ul>
-        </fieldset>
       </li>
 
-      <li class="simple"><label>Order:</label><%= select_tag 'order', options_for_select([['Date', 'date'], ['Relevance', 'relevance']], :selected => params[:order]) %></li>
+      <li class="simple"><label>Order By:</label><%= select_tag 'order', options_for_select([['Date', 'date'], ['Relevance', 'relevance']], :selected => params[:order]) %></li>
   </ul>
   
   <%= submit_tag 'Search', :class => 'btn' %>
@@ -83,11 +83,12 @@
 
 <% content_for :sidebar do %>
   <h3>Know what you're looking for?</h3>
-  <ul>
-    <li class="simple"><label>Citation:</label>
-      <%= render :partial => 'citations/form' %>
-    </li>
-  </ul>
+    <ul>
+      <li class="simple">
+        <%= render :partial => 'citations/form' %>
+        <%= submit_tag 'Go', :class => 'btn' %>
+      </li>
+    </ul>
   
   <% if @search.entries && @search.entries.size > 0 %>
     <h3>Other Formats</h3>
