@@ -1,3 +1,17 @@
+=begin Schema Information
+
+ Table name: citations
+
+  id              :integer(4)      not null, primary key
+  source_entry_id :integer(4)
+  cited_entry_id  :integer(4)
+  citation_type   :string(255)
+  part_1          :string(255)
+  part_2          :string(255)
+  part_3          :string(255)
+
+=end Schema Information
+
 class Citation < ActiveRecord::Base
   CITATION_TYPES = {
     'USC' => /(\d+)\s+U\.?S\.?C\.?\s+(\d+)/,
@@ -7,7 +21,7 @@ class Citation < ActiveRecord::Base
   }
   
   belongs_to :source_entry, :class_name => "Entry"
-  belongs_to :cited_entry,  :class_name => "Entry"
+  belongs_to :cited_entry,  :class_name => "Entry", :counter_cache => "citing_entries_count"
     
   def url
     case citation_type
@@ -17,8 +31,8 @@ class Citation < ActiveRecord::Base
       "http://frwebgate.access.gpo.gov/cgi-bin/get-cfr.cgi?YEAR=current&TITLE=#{part_1}&PART=#{part_2}&SECTION=#{part_3}&SUBPART=&TYPE=TEXT"
     when 'FR'
       "/citation/#{part_1}/#{part_2}" if part_1.to_i >= 59
-    when 'PL' 
-      "http://frwebgate.access.gpo.gov/cgi-bin/getdoc.cgi?dbname=#{part_1}_cong_public_laws&docid=f:publ#{sprintf("%03d",part_2.to_i)}.#{part_1}" if part_1 >= 104
+    when 'PL'
+      "http://frwebgate.access.gpo.gov/cgi-bin/getdoc.cgi?dbname=#{part_1}_cong_public_laws&docid=f:publ#{sprintf("%03d",part_2.to_i)}.#{part_1}" if part_1.to_i >= 104
     end
   end
   
@@ -31,12 +45,15 @@ class Citation < ActiveRecord::Base
     when 'FR'
       "#{part_1} FR #{part_2}"
     when 'PL'
-      
+      "Public Law #{part_1}-#{part_2}"
     end
   end
   
   def self.extract!(entry)
-    text = entry.full_text_raw
+    text = entry.full_text
+    entry.citations.destroy_all
+    return if text.blank?
+    
     CITATION_TYPES.each_pair do |citation_type, regexp|
       text.scan(regexp) do |part_1, part_2, part_3|
         attributes = {:source_entry_id => entry.id, :citation_type => citation_type, :part_1 => part_1, :part_2 => part_2, :part_3 => part_3}
@@ -50,7 +67,7 @@ class Citation < ActiveRecord::Base
             entries = Entry.find_all_by_citation(part_1, part_2)
           
             if entries.size == 1
-              citation.cited_entry_id = entries.first.id
+              citation.cited_entry = entries.first
             end
           end
           

@@ -32,6 +32,64 @@ $(document).ready(function() {
       
     }
   });
+  
+  //init tooltips for short citation list
+  $(".citation a.tip").each(function(){
+    
+    $(this).qtip({
+      content: $(this).siblings("div.tip"),
+      position: {
+          corner: {
+             target: 'bottomMiddle',
+             tooltip: 'topMiddle'
+          }
+      },
+      style: {
+       name: 'light',
+       padding: 5,
+       width: 530,
+       border: {
+         width: 7,
+         radius: 5,
+         color: '#ddd'
+         },
+      tip: { // Now an object instead of a string
+         corner: 'topMiddle', // We declare our corner within the object using the corner sub-option
+         color: '#ddd'
+        }   
+      }
+      
+    });
+  });  
+       
+  //init tooltips for citation page
+  $(".citation-right_tip a.tip").each(function(){
+    
+    $(this).qtip({
+      content: $(this).siblings("div.tip"),
+      position: {
+          corner: {
+             target: 'rightMiddle',
+             tooltip: 'leftMiddle'
+          }
+      },
+      style: {
+       name: 'light',
+       padding: 5,
+       width: 530,
+       border: {
+         width: 7,
+         radius: 5,
+         color: '#ddd'
+         },
+      tip: { // Now an object instead of a string
+         corner: 'leftMiddle', // We declare our corner within the object using the corner sub-option
+         color: '#ddd'
+        }   
+      }
+      
+    });
+  });         
         
   /*                                   */
   /* Tooltips for featured agency list */
@@ -39,11 +97,8 @@ $(document).ready(function() {
   
   $("li.tooltip .info span.help_text").hide();
   $("li.tooltip .info a").each(function(){
-    help_text = $(this).siblings("span.help_text").html();
     $(this).qtip({
-       content: {
-          text: help_text
-       },
+       content: $(this).closest('div.tip') ,
        style: { 
             tip: 'topLeft',
           border: {

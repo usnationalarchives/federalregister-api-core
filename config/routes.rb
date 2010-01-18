@@ -2,8 +2,8 @@ ActionController::Routing::Routes.draw do |map|
   # SPECIAL PAGES
   map.root :controller => 'special', :action => 'home'
   map.about 'about', :controller => 'special', :action => 'about'
-  map.vote 'vote', :controller => 'special', :action => 'vote'
-  
+  map.vote 'contact', :controller => 'special', :action => 'contact'
+
   # ENTRIES
   map.entries 'entries.:format', :controller => 'entries', :action => 'index'
   
@@ -14,7 +14,12 @@ ActionController::Routing::Routes.draw do |map|
                                                                 :month      => /\d{1,2}/,
                                                                 :day        => /\d{1,2}/
                                                
-  
+  map.entry_citation 'citations/:year/:month/:day/:document_number/:slug', :controller => 'entries',
+                                                                                :action     => 'citations',
+                                                                                :year       => /\d{4}/,
+                                                                                :month      => /\d{1,2}/,
+                                                                                :day        => /\d{1,2}/
+
   map.entries_by_date 'entries/:year/:month/:day', :controller => 'entries',
                                                    :action     => 'by_date',
                                                    :year       => /\d{4}/,

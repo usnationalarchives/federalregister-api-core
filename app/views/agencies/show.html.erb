@@ -4,6 +4,8 @@
 
 <%= render :partial => 'entries/list', :locals => {:list_type => 'agency', :entries => @entries, :search_params => {:agency_id => @agency.id}} %>
 
+<%= render :partial => 'entries/most_cited', :locals => {:entries => @most_cited_entries} %>
+
 <% content_for :precolumn do %>
 
   <div class="span-7 prepend-bottom">
@@ -44,16 +46,17 @@
   </div>
     
   <div class="span-6 last prepend-bottom">  
-    <% unless @popular_topic_groups.blank? %>
+    <% if @agency.related_topics_cache.present? %>
         <h3>Popular Topics for this Agency</h3>
         <div class="tag_cloud">
           <div id="fancy_tag_cloud" class="fancy"></div>
           <ul>
-          <% @popular_topic_groups.each do |topic_group| %>
-            <li><%= link_to topic_group.name, topic_group_path(topic_group) %> (<%= topic_group.entries_count %>)</li>
+          <% @agency.related_topics_cache.each do |topic_group| %>
+            <li><%= link_to topic_group['name'], topic_group_path(topic_group['param']) %> (<%= topic_group['count'] %>)</li>
           <% end %>
           </ul>
         </div>
+    <% else %>DIAF
     <% end %>
   </div>
   

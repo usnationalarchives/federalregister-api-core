@@ -2,34 +2,40 @@
 
  Table name: entries
 
-  id                   :integer(4)      not null, primary key
-  title                :text
-  abstract             :text
-  contact              :text
-  dates                :text
-  action               :text
-  type                 :string(255)
-  link                 :string(255)
-  genre                :string(255)
-  part_name            :string(255)
-  citation             :string(255)
-  granule_class        :string(255)
-  document_number      :string(255)
-  toc_subject          :string(255)
-  toc_doc              :string(255)
-  length               :integer(4)
-  start_page           :integer(4)
-  end_page             :integer(4)
-  agency_id            :integer(4)
-  publication_date     :date
-  places_determined_at :datetime
-  created_at           :datetime
-  updated_at           :datetime
-  slug                 :text
-  delta                :boolean(1)      default(TRUE), not null
-  source_text_url      :string(255)
-  primary_agency_raw   :string(255)
-  secondary_agency_raw :string(255)
+  id                           :integer(4)      not null, primary key
+  title                        :text
+  abstract                     :text
+  contact                      :text
+  dates                        :text
+  action                       :text
+  type                         :string(255)
+  link                         :string(255)
+  genre                        :string(255)
+  part_name                    :string(255)
+  citation                     :string(255)
+  granule_class                :string(255)
+  document_number              :string(255)
+  toc_subject                  :string(255)
+  toc_doc                      :string(255)
+  length                       :integer(4)
+  start_page                   :integer(4)
+  end_page                     :integer(4)
+  agency_id                    :integer(4)
+  publication_date             :date
+  places_determined_at         :datetime
+  created_at                   :datetime
+  updated_at                   :datetime
+  slug                         :text
+  delta                        :boolean(1)      default(TRUE), not null
+  source_text_url              :string(255)
+  primary_agency_raw           :string(255)
+  secondary_agency_raw         :string(255)
+  volume                       :integer(4)
+  regulationsdotgov_id         :string(255)
+  comment_url                  :string(255)
+  checked_regulationsdotgov_at :datetime
+  full_xml_added_at            :datetime
+  regulation_id_number         :string(255)
 
 =end Schema Information
 
@@ -55,20 +61,24 @@ class Entry < ActiveRecord::Base
     ''         => 'Unknown'
   }
   
-  has_one :entry_detail
+  has_one :entry_detail, :dependent => :destroy
   
   belongs_to :agency
   
-  has_many :topic_assignments
+  has_many :topic_assignments, :dependent => :destroy
   has_many :topics, :through => :topic_assignments, :conditions => "topics.group_name != ''", :order => 'topics.name'
   
-  has_many :url_references
+  has_many :url_references, :dependent => :destroy
   has_many :urls, :through => :url_references
   
-  has_many :place_determinations, :conditions => "place_determinations.confidence >= #{PlaceDetermination::MIN_CONFIDENCE}"
+  has_many :place_determinations,
+           :conditions => "place_determinations.confidence >= #{PlaceDetermination::MIN_CONFIDENCE}",
+           :dependent => :destroy
   has_many :places, :through => :place_determinations
   
-  has_many :citations, :foreign_key => :source_entry_id
+  has_many :citations,
+           :foreign_key => :source_entry_id,
+           :dependent => :destroy
   has_many :cited_entries,
            :class_name => 'Entry',
            :through => :citations,
@@ -76,7 +86,8 @@ class Entry < ActiveRecord::Base
   
   has_many :references,
            :class_name => 'Citation',
-           :foreign_key => :cited_entry_id
+           :foreign_key => :cited_entry_id,
+           :dependent => :nullify
   has_many :referencing_entries,
            :class_name => 'Entry',
            :through => :references,
@@ -86,7 +97,11 @@ class Entry < ActiveRecord::Base
   
   has_many :referenced_dates, :dependent => :destroy
   
+  before_save :set_document_file_path
   after_create :create_entry_detail
+  
+  file_attribute(:full_xml)  {"#{RAILS_ROOT}/data/xml/"  + document_file_path + '.xml'}
+  file_attribute(:full_text) {"#{RAILS_ROOT}/data/text/" + document_file_path + '.txt'}
   
   def granule_class 
     GRANULE_CLASS_TYPES[self['granule_class']]
@@ -96,7 +111,7 @@ class Entry < ActiveRecord::Base
     # fields
     indexes title
     indexes abstract
-    indexes entry_detail.full_text_raw, :as => :full_text_raw
+    indexes "LOAD_FILE(CONCAT('#{RAILS_ROOT}/data/text/', document_file_path, '.txt'))", :as => :full_text
     indexes agency.name, :as => :agency_name
     
     # attributes
@@ -109,17 +124,13 @@ class Entry < ActiveRecord::Base
     set_property :field_weights => {
       "title" => 100,
       "abstract" => 50,
-      "full_text_raw" => 25,
+      "full_text" => 25,
       "agency_name" => 10
     }
   end
   
-  def full_text_raw
-    entry_detail.full_text_raw
-  end
-  
-  def full_text_raw=(val)
-    entry_detail.full_text_raw=val
+  def has_full_xml?
+    full_xml_updated_at.present?
   end
   
   def month_year
@@ -136,9 +147,9 @@ class Entry < ActiveRecord::Base
   
   def human_length
     if length.blank? 
-      page_length = end_page - start_page == 0 ? 1 : end_page - start_page
+      end_page - start_page + 1
     else
-      page_length = length
+      length
     end
   end
   
@@ -170,7 +181,7 @@ class Entry < ActiveRecord::Base
       base_url =  "http://www.gpo.gov/fdsys/pkg/FR-#{publication_date.to_s(:db)}/pdf/#{document_number}.pdf"
     end
   end
-
+  
   def entries_within(distance, options={})
     limit = options.delete(:limit) || 10
     count = options.delete(:count) || false
@@ -209,7 +220,11 @@ class Entry < ActiveRecord::Base
   
   private
   
+  def set_document_file_path
+    self.document_file_path = document_number.sub(/-/,'').scan(/.{0,3}/).reject(&:blank?).join('/') if document_number.present?
+  end
+  
   def create_entry_detail
-    entry_detail = EntryDetail.create(:entry_id => self.id)
+    self.entry_detail = EntryDetail.create(:entry_id => self.id)
   end
 end

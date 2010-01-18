@@ -16,6 +16,7 @@
   entries_1_year_weekly       :text
   entries_5_years_monthly     :text
   entries_all_years_quarterly :text
+  related_topics_cache        :text
 
 =end Schema Information
 
@@ -28,6 +29,8 @@ class Agency < ActiveRecord::Base
   named_scope :featured, :conditions => ['name LIKE ?', 'Department%']
   
   before_create :slugify
+  
+  serializable_column :entries_1_year_weekly, :entries_5_years_monthly, :entries_all_years_quarterly, :related_topics_cache
   
   def to_param
     slug
