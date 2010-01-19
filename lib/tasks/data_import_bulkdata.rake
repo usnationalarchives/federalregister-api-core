@@ -74,8 +74,8 @@ namespace :data do
             end
           end
         
-          xml.full_xml = entry_node.to_s
-          xml.save
+          entry.full_xml = entry_node.to_s
+          entry.save
         end
       end
     end
