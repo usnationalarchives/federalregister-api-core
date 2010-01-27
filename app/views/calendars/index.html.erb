@@ -56,7 +56,7 @@
             </div>
             <% if entry_count > 5 %>
               <div id="<%= date_type %>_<%= date.to_s(:db) %>" class='extra'>
-                <% referenced_dates[4..entry_count].each do |referenced_date| %>
+                <% referenced_dates[5..entry_count].each do |referenced_date| %>
                   <li><%= link_to(referenced_date.entry.title, entry_path(referenced_date.entry) ) %></li>
                 <% end %>
               </div>
