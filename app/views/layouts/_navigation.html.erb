@@ -9,10 +9,10 @@
   <ul>
     <% last_date ||= Entry.latest_publication_date %>
     <li><%= link_to 'Agencies', agencies_path, :title => "Browse by Agency" %> / </li>
-    <li><%= link_to 'Dates Published', entries_path, :title => "Browse by Date" %> / </li>          
     <!-- <li><%= link_to 'Event Dates', events_path(Date.today), :title => "Browse by Event Date" %> /</li> -->
     <li><%= link_to 'Topics', topic_groups_path, :title => "Browse by Topic" %> / </li>
     <li><%= link_to 'Locations', maps_path, :title => "View entries by location" %> / </li>
+    <li><%= link_to 'Dates Published', entries_path, :title => "Browse by Date" %> / </li>
     <li><%= link_to 'Search', entries_search_path, :title => 'Search Entries' %> / </li>
     <li><%= link_to 'About', about_path, :title => "About the project" %></li>
   </ul>
