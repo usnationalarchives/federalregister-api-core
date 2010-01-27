@@ -60,3 +60,10 @@
   height: 28px;
   padding: 0 3px;
 }
+
+/* line 43, ../../app/stylesheets/ie.sass */
+#main form  li label.nextto {
+  position: relative;
+  top: 7px;
+  vertical-align: top;
+}
