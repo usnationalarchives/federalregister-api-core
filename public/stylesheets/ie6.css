@@ -1,0 +1,151 @@
+/* line 1, ../../app/stylesheets/ie6.sass */
+#wrapper {
+  background: none;
+}
+
+/* line 3, ../../app/stylesheets/ie6.sass */
+#ticker {
+  background-image: none;
+  filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/images/ticker_bg3.png', sizingMethod='image');
+}
+
+/* line 6, ../../app/stylesheets/ie6.sass */
+#ticker .pulse.left {
+  background-image: none;
+  filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/images/ticker_pulse_left2.png', sizingMethod='image');
+}
+
+/* line 9, ../../app/stylesheets/ie6.sass */
+#ticker .pulse.right {
+  background-image: none;
+  filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/images/ticker_pulse_right2.png', sizingMethod='image');
+}
+
+/* line 12, ../../app/stylesheets/ie6.sass */
+#header .type {
+  background-image: none;
+  filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/images/header_type.png', sizingMethod='image');
+}
+
+/* line 15, ../../app/stylesheets/ie6.sass */
+#header .capitol {
+  background-image: none;
+  filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/images/header_capitol4.png', sizingMethod='image');
+  right: -60px;
+}
+
+/* line 19, ../../app/stylesheets/ie6.sass */
+#nav .search form {
+  background-image: none;
+  filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/images/search_bg3.png', sizingMethod='image');
+}
+/* line 22, ../../app/stylesheets/ie6.sass */
+#nav .search form input.search_btn {
+  background-image: none;
+  filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/images/icon_search.png', sizingMethod='image');
+}
+
+/* line 25, ../../app/stylesheets/ie6.sass */
+.shadow {
+  background: none;
+}
+
+/* line 27, ../../app/stylesheets/ie6.sass */
+#main h1 {
+  background-image: none;
+  filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/images/hr_bg3.png', sizingMethod='image');
+}
+
+/* line 30, ../../app/stylesheets/ie6.sass */
+#main ul .raquo li {
+  background-image: none;
+  filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/images/raquo3.png', sizingMethod='image');
+}
+
+/* line 33, ../../app/stylesheets/ie6.sass */
+#main .header {
+  background: none;
+  min-height: 1px !important;
+}
+
+/* line 36, ../../app/stylesheets/ie6.sass */
+#main .content .col2 .sidebar ul.social li#twitter {
+  background-image: none;
+  filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/images/tweeter_24x24.png', sizingMethod='image');
+}
+
+/* line 39, ../../app/stylesheets/ie6.sass */
+#main .content .col2 .sidebar ul.social li#facebook {
+  background-image: none;
+  filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/images/facebook_24x24.png', sizingMethod='image');
+}
+
+/* line 42, ../../app/stylesheets/ie6.sass */
+#main .content .col2 .sidebar ul.social li#digg {
+  background-image: none;
+  filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/images/digg_24x24.png', sizingMethod='image');
+}
+
+/* line 45, ../../app/stylesheets/ie6.sass */
+#main .content .col2 .sidebar ul.social li#reddit {
+  background-image: none;
+  filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/images/reddit_24x24.png', sizingMethod='image');
+}
+
+/* line 48, ../../app/stylesheets/ie6.sass */
+#main ul.count li .bg {
+  background: none;
+}
+
+/* line 50, ../../app/stylesheets/ie6.sass */
+#main .icon.agency {
+  background-image: none;
+  filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/images/agency_small2.png', sizingMethod='image');
+}
+
+/* line 53, ../../app/stylesheets/ie6.sass */
+#main .icon.contact {
+  background-image: none;
+  filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/images/contact_small.png', sizingMethod='image');
+}
+
+/* line 56, ../../app/stylesheets/ie6.sass */
+#main .icon.arrow {
+  background-image: none;
+  filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/images/arrow.png', sizingMethod='image');
+}
+
+/* line 59, ../../app/stylesheets/ie6.sass */
+#main input.btn {
+  background-image: none;
+}
+
+/* line 61, ../../app/stylesheets/ie6.sass */
+div.ornament {
+  background-image: none;
+  filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/images/hr_bg3.png', sizingMethod='image');
+}
+
+/* line 64, ../../app/stylesheets/ie6.sass */
+body #footer ul.contact li#twitter {
+  background-image: none;
+  filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/images/tweeter_24x24.png', sizingMethod='image');
+}
+
+/* line 67, ../../app/stylesheets/ie6.sass */
+body #footer ul.contact li#facebook {
+  background-image: none;
+  filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/images/facebook_24x24.png', sizingMethod='image');
+}
+
+/* line 70, ../../app/stylesheets/ie6.sass */
+#feedback {
+  background-image: none;
+  filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/images/feedback.png', sizingMethod='image');
+}
+
+/* line 73, ../../app/stylesheets/ie6.sass */
+.modal {
+  background-image: none;
+  filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/images/modal_bg.png', sizingMethod='scale');
+}
