@@ -1,5 +1,5 @@
 <div id="ticker">
-  <span class="date">Entries for <%= link_to @entries.first.publication_date.to_formatted_s(:pretty), events_path(Date.today) %></span>        
+  <span class="date">Entries for <%= link_to @entries.first.publication_date.to_formatted_s(:pretty), '/entries' %></span>        
   <div class="daily group">
     <ul class="items">
     <% @entries.each_with_index do |entry, i| %>
