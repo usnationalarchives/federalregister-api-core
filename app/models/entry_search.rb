@@ -8,6 +8,7 @@ class EntrySearch
     options ||= {}
     @errors = []
     @search_term = options[:q] unless options[:q].blank?
+    @num_parameters = options.except("action", "controller").size
     
     if options[:place_id].present?
       @place = Place.find(options[:place_id])
@@ -51,6 +52,10 @@ class EntrySearch
   
   def valid?
     @errors.empty?
+  end
+  
+  def blank?
+    @num_parameters == 0
   end
   
   def facets
