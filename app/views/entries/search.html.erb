@@ -48,37 +48,38 @@
   <%= submit_tag 'Search', :class => 'btn' %>
 </div>
 
-
-<% if @search.entries.size > 0 %>
-  <div class="search_info group">
-    <p class="entries"><%= page_entries_info @search.entries %></p>
-    <%= will_paginate @search.entries %>
-  </div>
+<% unless @search.blank? %>
+  <% if @search.entries.size > 0 %>
+    <div class="search_info group">
+      <p class="entries"><%= page_entries_info @search.entries %></p>
+      <%= will_paginate @search.entries %>
+    </div>
   
-  <ol class="results">
-    <% @search.entries.each do |entry| %>
-    <li>
-      <h4 class="title"><%= link_to sanitize(entry.excerpts.title, :tags => %w(span), :attributes => %w(class)), entry_path(entry) %></h4>
+    <ol class="results">
+      <% @search.entries.each do |entry| %>
+      <li>
+        <h4 class="title"><%= link_to sanitize(entry.excerpts.title, :tags => %w(span), :attributes => %w(class)), entry_path(entry) %></h4>
       
-      <div class="result_info">
-        <span class="date"><%= entry.publication_date %></span>
-        <span class="excepts"><%= 
-          if @search_term.blank? || entry.excerpts.full_text.blank?
-            sanitize entry.excerpts.abstract, :tags => %w(span), :attributes => %w(class)
-          else
-            sanitize entry.excerpts.full_text, :tags => %w(span), :attributes => %w(class)
-          end %></span>
-        <br />
-        <span class="agency"><%= entry.agency ? link_to(entry.agency.name, agency_path(entry.agency)) : entry.primary_agency_raw %></span>
-      </div>  
-    </li>
-    <% end %>
-  </ol>
-  <div class="search_info group">
-    <%= will_paginate @search.entries %>
-  </div>
-<% else %>
-  <p>No entries were found.</p>
+        <div class="result_info">
+          <span class="date"><%= entry.publication_date %></span>
+          <span class="excepts"><%= 
+            if @search_term.blank? || entry.excerpts.full_text.blank?
+              sanitize entry.excerpts.abstract, :tags => %w(span), :attributes => %w(class)
+            else
+              sanitize entry.excerpts.full_text, :tags => %w(span), :attributes => %w(class)
+            end %></span>
+          <br />
+          <span class="agency"><%= entry.agency ? link_to(entry.agency.name, agency_path(entry.agency)) : entry.primary_agency_raw %></span>
+        </div>  
+      </li>
+      <% end %>
+    </ol>
+    <div class="search_info group">
+      <%= will_paginate @search.entries %>
+    </div>
+  <% else %>
+    <p>No entries were found.</p>
+  <% end %>
 <% end %>
 
 <% content_for :sidebar do %>
@@ -97,40 +98,42 @@
     <% feed_autodiscovery url_for(params.merge(:format => :rss, :order => 'date', :publication_date_less_than => nil)) %>
   <% end %>
   
-  <% granule_class_facets = @search.facets[:granule_classes] %>
-  <% agency_facets = @search.facets[:agencies] %>
-  <% topic_facets = @search.facets[:topics] %>
-  <% if granule_class_facets || agency_facets || topic_facets %>
+  <% unless @search.blank? %>
+    <% granule_class_facets = @search.facets[:granule_classes] %>
+    <% agency_facets = @search.facets[:agencies] %>
+    <% topic_facets = @search.facets[:topics] %>
+    <% if granule_class_facets || agency_facets || topic_facets %>
   
-    <h3>Limit the Results</h3>
-    <% if granule_class_facets %>
-      <h4>Type</h4>
+      <h3>Limit the Results</h3>
+      <% if granule_class_facets %>
+        <h4>Type</h4>
 
-      <ul class="raquo indent">
-      <% granule_class_facets.each do |granule_class, count| %>
-        <li><%= link_to "#{granule_class} (#{count})", params.merge(:granule_class => granule_class) %></li>
+        <ul class="raquo indent">
+        <% granule_class_facets.each do |granule_class, count| %>
+          <li><%= link_to "#{granule_class} (#{count})", params.merge(:granule_class => granule_class) %></li>
+        <% end %>
+        </ul>
       <% end %>
-      </ul>
-    <% end %>
     
-    <% if agency_facets %>
-      <h4>Agency</h4>
-      <ul class="raquo indent">
-      <% agency_facets.each do |agency, count| %>
-        <li><%= link_to "#{agency.name} (#{count})", params.merge(:agency_id => agency.id) %></li>
+      <% if agency_facets %>
+        <h4>Agency</h4>
+        <ul class="raquo indent">
+        <% agency_facets.each do |agency, count| %>
+          <li><%= link_to "#{agency.name} (#{count})", params.merge(:agency_id => agency.id) %></li>
+        <% end %>
+        </ul>
       <% end %>
-      </ul>
-    <% end %>
     
-    <% if topic_facets %>
-      <h4>Topic</h4>
-      <ul class="raquo indent">
-      <% topic_facets.each do |topic, count| %>
-        <li><%= link_to "#{topic.name} (#{count})", params.merge(:topic_id => topic.id) %></li>
+      <% if topic_facets %>
+        <h4>Topic</h4>
+        <ul class="raquo indent">
+        <% topic_facets.each do |topic, count| %>
+          <li><%= link_to "#{topic.name} (#{count})", params.merge(:topic_id => topic.id) %></li>
+        <% end %>
+        </ul>
       <% end %>
-      </ul>
-    <% end %>
     
+    <% end %>
   <% end %>
 <% end %>
 
