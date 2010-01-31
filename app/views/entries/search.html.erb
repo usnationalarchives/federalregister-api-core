@@ -91,14 +91,14 @@
       </li>
     </ul>
   
-  <% if @search.entries && @search.entries.size > 0 %>
-    <h3>Other Formats</h3>
-    <%# TODO: HELP-DESIGN: HELP-COPY: Need RSS icon, some text here %>
-    <p>Subscribe to an <%= link_to 'RSS Feed', params.merge(:format => :rss, :order => 'date', :publication_date_less_than => nil) %> of these search results.</p>
-    <% feed_autodiscovery url_for(params.merge(:format => :rss, :order => 'date', :publication_date_less_than => nil)) %>
-  <% end %>
-  
   <% unless @search.blank? %>
+    <% if @search.entries && @search.entries.size > 0 %>
+      <h3>Other Formats</h3>
+      <%# TODO: HELP-DESIGN: HELP-COPY: Need RSS icon, some text here %>
+      <p>Subscribe to an <%= link_to 'RSS Feed', params.merge(:format => :rss, :order => 'date', :publication_date_less_than => nil) %> of these search results.</p>
+      <% feed_autodiscovery url_for(params.merge(:format => :rss, :order => 'date', :publication_date_less_than => nil)) %>
+    <% end %>
+  
     <% granule_class_facets = @search.facets[:granule_classes] %>
     <% agency_facets = @search.facets[:agencies] %>
     <% topic_facets = @search.facets[:topics] %>
