@@ -13,38 +13,41 @@ namespace :data do
         sess.base_url = "http://www.regulations.gov"
 
         entry.checked_regulationsdotgov_at = Time.now
-        resp = sess.post("/search/Regs/searchResults", post_data, {"Content-Type" => 'text/x-gwt-rpc; charset=utf-8'})
-        if resp.status == 200
-          json = resp.body
-          json.sub!(/^\/\/OK/, '')
+        begin
+          resp = sess.post("/search/Regs/searchResults", post_data, {"Content-Type" => 'text/x-gwt-rpc; charset=utf-8'})
+          if resp.status == 200
+            json = resp.body
+            json.sub!(/^\/\/OK/, '')
 
-          details = JSON::parse(json)[-3]
-          sid_title_loc = details.index("sid")
+            details = JSON::parse(json)[-3]
+            sid_title_loc = details.index("sid")
           
-          if sid_title_loc
-            sid = details[sid_title_loc.to_i + 1]
-            entry.regulationsdotgov_id = sid
-            puts "FOUND: #{doc_id} => #{sid}"
+            if sid_title_loc
+              sid = details[sid_title_loc.to_i + 1]
+              entry.regulationsdotgov_id = sid
+              puts "FOUND: #{doc_id} => #{sid}"
             
-            if sid
-              post_data = "5|0|6|http://www.regulations.gov/search/Regs/|446B4F0F2748178C5DF14A4C3603154A|gov.egov.erule.gwt.module.regs.client.service.SubmitCommentService|getSubmitCommentModel|java.lang.String|#{sid}|1|2|3|4|1|5|6|"
-              resp = sess.post("/search/Regs/submitComment", post_data, {"Content-Type" => 'text/x-gwt-rpc; charset=utf-8'})
+              if sid
+                post_data = "5|0|6|http://www.regulations.gov/search/Regs/|446B4F0F2748178C5DF14A4C3603154A|gov.egov.erule.gwt.module.regs.client.service.SubmitCommentService|getSubmitCommentModel|java.lang.String|#{sid}|1|2|3|4|1|5|6|"
+                resp = sess.post("/search/Regs/submitComment", post_data, {"Content-Type" => 'text/x-gwt-rpc; charset=utf-8'})
 
-              json = resp.body
-              json.sub!(/^\/\/OK/, '')
+                json = resp.body
+                json.sub!(/^\/\/OK/, '')
 
-              details = JSON::parse(json)[-3]
-              if details.include?('is_comment')
-                puts "can comment on #{sid}!"
-                entry.comment_url = "http://www.regulations.gov/search/Regs/home.html#submitComment?R=#{sid}"
+                details = JSON::parse(json)[-3]
+                if details.include?('is_comment')
+                  puts "can comment on #{sid}!"
+                  entry.comment_url = "http://www.regulations.gov/search/Regs/home.html#submitComment?R=#{sid}"
+                end
               end
             end
+          else
+            puts "Could not locate #{doc_id}"
           end
-        else
-          puts "Could not locate #{doc_id}"
+          entry.save(false)
+        rescue => e
+          puts e
         end
-        entry.save(false)
-        
       end
     end
   end
