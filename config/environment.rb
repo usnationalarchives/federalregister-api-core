@@ -33,6 +33,7 @@ Rails::Initializer.run do |config|
   config.gem "ym4r", :version => '0.6.1'
   config.gem 'sunlight', :version => '1.0.1'
   config.gem 'thinking-sphinx', :version => '1.3.14', :lib => 'thinking_sphinx'
+  config.gem 'hoptoad_notifier', :version => '2.1.3'
 
   # disabled as requires C library to install...the Locator module will return a fake result if not installed
   # config.gem "geoip_city", :version => '0.2.0'

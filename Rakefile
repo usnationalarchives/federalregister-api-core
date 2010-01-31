@@ -12,3 +12,8 @@ begin
   require 'thinking_sphinx/tasks'
 rescue LoadError
 end
+
+begin
+  require 'hoptoad_notifier/tasks'
+rescue LoadError
+end
