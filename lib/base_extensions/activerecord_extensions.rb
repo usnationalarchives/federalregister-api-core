@@ -34,6 +34,7 @@ class ActiveRecord::Base
     require 'ftools'
     
     path_method = "#{attribute}_file_path"
+    has_method = "has_#{attribute}?"
     define_method path_method do
       instance_eval(&filename_generator)
     end
@@ -56,8 +57,15 @@ class ActiveRecord::Base
     end
 
     define_method attribute do
+      if self.send(has_method)
+        path = self.send(path_method)
+        File.read(path)
+      end
+    end
+    
+    define_method "has_#{attribute}?" do
       path = self.send(path_method)
-      File.read(path)
+      File.exists?(path)
     end
   end
   
