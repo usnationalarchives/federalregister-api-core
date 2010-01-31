@@ -130,10 +130,6 @@ class Entry < ActiveRecord::Base
     }
   end
   
-  def has_full_xml?
-    full_xml_updated_at.present?
-  end
-  
   def month_year
     publication_date.to_formatted_s(:month_year)
   end
