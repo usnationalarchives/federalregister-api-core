@@ -33,41 +33,24 @@ module CalendarHelper
   def entries_calendar_view(year, month)
     year = year.to_i
     month = month.to_i
-    if Entry.count(:conditions => ['publication_date >= ?', "#{year}-#{month + 1}-01"]) > 0
-      month_1     = month - 1
-      bump_year_1 = month_1 > 0 ? (month_1 < 13 ? 0 : 1) : -1
-      year_1      = year + bump_year_1
-      month_1     = month_1 > 0 ? (month_1 < 13 ? month_1 : 1) : 12
-      
-      month_2     = month + 1
-      bump_year_2 = month_2 > 0 ? (month_2 < 13 ? 0 : 1) : -1
-      year_2      = year + bump_year_2
-      month_2     = month_2 > 0 ? (month_2 < 13 ? month_2 : 1) : 12
-      
-      dates = [[year_1,month_1], [year, month], [year_2, month_2]]
+    start_date = Date.parse("#{year}-#{month}-01")
+    if Entry.count(:conditions => ['publication_date >= ?', start_date.months_since(1)]) > 0
+      dates = [start_date.months_ago(1), start_date, start_date.months_since(1)]
     else
-      #TODO Need to only show days in the next month that we have entries for. i.e. looking at July you should not see links for all of Aug
-      month_1     = month - 1
-      bump_year_1 = month_1 > 0 ? (month_1 < 13 ? 0 : 1) : -1
-      year_1      = year + bump_year_1
-      month_1     = month_1 > 0 ? (month_1 < 13 ? month_1 : 1) : 12
-      
-      month_2 = month_1 - 1
-      year_2  = year_1
-      
-      dates = [[year_2, month_2], [year_1, month_1], [year, month]]
+      dates = [start_date.months_ago(2), start_date.months_ago(1), start_date]
     end
+    
     html = ''
-    dates.each do |year, month|
-      end_of_month = Date.parse("#{year}-#{month}-01").end_of_month
+    dates.each do |date|
+      end_of_month = date.end_of_month
       last_pub = Entry.find(:first, 
                             :conditions => ['publication_date >= ? && publication_date <= ?', 
-                                            "#{year}-#{month}-01",
+                                            date,
                                             end_of_month
                                            ],
                             :order => 'publication_date DESC'
                            )
-      html << calendar_for(year, month, :current_month => "%B %Y", :calendar_class => 'group calendar', &entries_proc(end_of_month, last_pub))
+      html << calendar_for(date.year, date.month, :current_month => "%B %Y", :calendar_class => 'group calendar', &entries_proc(end_of_month, last_pub))
     end
     html
   end
