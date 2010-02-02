@@ -5,7 +5,7 @@
           
     <div class="infobox">
       <h1>The Federal Register at your fingertips.</h1>
-      <p class='copy'>
+      <!-- <p class='copy'>
         The Federal Register is the official journal of the federal government of the United States. In it, you'll 
         find any kind of proposal, notification, or solicitation for data that a federal agency puts out. It's the 
         pulse of your government.
@@ -14,44 +14,91 @@
         For much of its existence the Federal Register has had no easily accessible form. 
         <span class='gray'>gov</span><span class='orange'>pulse</span> seeks to change this and enable you to respond to your government. We give you a 
         way to browse the Register (from 1994 on) and use filters to decide what is important to you. And then act on it.
-      </p>
+      </p> -->
     </div>
 <% end %>
 
 <% if !@closing_soon.empty? %>
   <div class="clear marginTop">
-    <h2>Comments Closing Soon</h2>
-    <ul class="indent marginTop raquo">
-    <% @closing_soon.each do |date| %>
-      <li><%= link_to date.entry.title, entry_path(date.entry) %></li>
+    <h2>Comments Closing In Next 7 Days</h2>
+    <ul class="indent marginTop recent_prorule">
+    <% @closing_soon.each do |agency| %>
+      <li>
+        <%= link_to agency.name, agency_path(agency) %> <span class='details'>(<%= agency.entries.size %>)</span>
+        <ul class="raquo">
+          <% agency.entries.each do |entry| %>
+            <li><%= link_to entry.title, entry_path(entry) %></li>
+          <% end %>
+        </ul>
+      </li>
     <% end %>
-    </ul>
   </div>
 <% end %>
 
 <% if !@recently_opened.empty? %>
   <div class="clear marginTop">
-    <h2>Comments Recently Opened</h2>
-    <ul class="indent marginTop raquo">
-    <% @recently_opened.each do |date| %>
-      <li><%= link_to date.entry.title, entry_path(date.entry) %></li>
+    <h2>Comments Opened in Last 7 Days</h2>
+    <ul class="indent marginTop recent_prorule">
+    <% @recently_opened.each do |agency| %>
+      <li>
+        <%= link_to agency.name, agency_path(agency) %> <span class='details'>(<%= agency.entries.size %>)</span>
+        <ul class="raquo">
+          <% agency.entries.each do |entry| %>
+            <li><%= link_to entry.title, entry_path(entry) %></li>
+          <% end %>
+        </ul>
+      </li>
     <% end %>
-    </ul>
   </div>
 <% end %>
 
-<% if !@recent_proposed_rules.empty? %>
+
+<% if !@effective_this_week.empty? %>
+  <div class="clear marginTop">
+    <h2>Rules Taking Effect In Next 7 Days</h2>
+    <ul class="indent marginTop recent_prorule">
+    <% @effective_this_week.each do |agency| %>
+      <li>
+        <%= link_to agency.name, agency_path(agency) %> <span class='details'>(<%= agency.entries.size %>)</span>
+        <ul class="raquo">
+          <% agency.entries.each do |entry| %>
+            <li><%= link_to entry.title, entry_path(entry) %></li>
+          <% end %>
+        </ul>
+      </li>
+    <% end %>
+  </div>
+<% end %>
+
+<% if !@recent_proposed_rules_by_agency.empty? %>
 <div class="clear marginTop">
-  <h2>Newly Proposed Rules</h2>
-  <ul class="indent marginTop raquo">
-  <% @recent_proposed_rules.each do |proprule| %>
-    <li><%= link_to proprule.title, entry_path(proprule)%></li>
+  <h2>Rules Proposed in Last 7 Days</h2>
+  <ul class="indent marginTop recent_prorule">
+  <% @recent_proposed_rules_by_agency.each do |agency| %>
+    <li>
+      <%= link_to agency.name, agency_path(agency) %> <span class='details'>(<%= agency.entries.size %>)</span>
+      <ul class="raquo">
+        <% agency.entries.each do |proprule| %>
+          <li><%= link_to proprule.title, entry_path(proprule) %></li>
+        <% end %>
+      </ul>
+    </li>
   <% end %>
   </ul>
 </div>
 <% end %>
 
+
 <% content_for :sidebar do %>
+  <h3>View Entries Near</h3>
+  <%= render :partial => 'maps/location_search_form', :locals => {:location => nil} %>
+  
+  <% if @places.present? %>
+    <h3>Entries Near You</h3>
+    <% add_javascript { @map.to_js } %>
+    <div id="map" style="width: 230px; height: 350px"></div>
+  <% end %>
+
   <%= render :partial => 'agencies/pulse', :locals => {:featured_agencies => @featured_agencies} %>
 <% end %>
 
