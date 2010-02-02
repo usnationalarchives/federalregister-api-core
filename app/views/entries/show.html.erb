@@ -33,6 +33,9 @@
       <% if @entry.granule_class.present?       %><dt>Granule Class:</dt>    <dd><%= @entry.granule_class.titlecase                  %></dd><% end %>
       <% if @entry.document_number.present?     %><dt>Other Formats:</dt>    <dd><%= %w(html text pdf).map{|format| link_to format, @entry.source_url(format), :class => format }.join(" | ") %>
                                                                                  <%= ' | ' + link_to( 'regulations.gov', "http://www.regulations.gov/search/Regs/home.html#documentDetail?R=#{@entry.regulationsdotgov_id}") if @entry.regulationsdotgov_id.present? %></dd><% end %>
+      <dt>Length:</dt>    <dd><%= @entry.human_length %></dd>
+      <dt>Start Page:</dt><dd><%= @entry.start_page   %></dd>
+      <dt>End Page:</dt>  <dd><%= @entry.end_page     %></dd>
     </dl>
   </div>
 </div>
@@ -124,13 +127,6 @@
     <h3>Contact</h3>
     <p><%= auto_link @entry.contact %></p>
   <% end %>
-  
-  <h3>Document</h3>
-  <ul class='document'>
-    <li>Length:     <%= @entry.human_length %></li>
-    <li>Start Page: <%= @entry.start_page   %></li>
-    <li>End Page:   <%= @entry.end_page     %></li>
-  </ul>
   
   <% if @entry.topics.present? %>
   <h3>Related Topics</h3>
