@@ -100,8 +100,8 @@ class Entry < ActiveRecord::Base
   before_save :set_document_file_path
   after_create :create_entry_detail
   
-  file_attribute(:full_xml)  {"#{RAILS_ROOT}/data/xml/"  + document_file_path + '.xml'}
-  file_attribute(:full_text) {"#{RAILS_ROOT}/data/text/" + document_file_path + '.txt'}
+  file_attribute(:full_xml)  {"#{RAILS_ROOT}/data/xml/#{document_file_path}.xml"}
+  file_attribute(:full_text) {"#{RAILS_ROOT}/data/text/#{document_file_path}.txt"}
   
   def granule_class 
     GRANULE_CLASS_TYPES[self['granule_class']]
