@@ -19,7 +19,7 @@ Rails::Initializer.run do |config|
   config.gem "chronic", :version => '0.2.3'
   config.gem "zilkey-active_api", :lib => 'active_api', :version => '0.2.0'
   config.gem "curb", :version => '0.4.4.0'
-  config.gem "haml", :version => '2.2.2'
+  config.gem "haml", :version => '2.2.14'
   config.gem "chriseppstein-compass", :lib => 'compass', :version => '0.8.8'
   config.gem "geokit", :lib => 'geokit', :version => '1.4.1'
   config.gem 'mislav-will_paginate', :version => '2.3.11', :lib => 'will_paginate'
