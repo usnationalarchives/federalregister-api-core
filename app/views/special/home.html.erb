@@ -92,13 +92,7 @@
 <% content_for :sidebar do %>
   <h3>View Entries Near</h3>
   <%= render :partial => 'maps/location_search_form', :locals => {:location => nil} %>
-  
-  <% if @places.present? %>
-    <h3>Entries Near You</h3>
-    <% add_javascript { @map.to_js } %>
-    <div id="map" style="width: 230px; height: 350px"></div>
-  <% end %>
-
+  <iframe src="/location/places" width="345" height="400" />
   <%= render :partial => 'agencies/pulse', :locals => {:featured_agencies => @featured_agencies} %>
 <% end %>
 
