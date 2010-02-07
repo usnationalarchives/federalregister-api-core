@@ -20,13 +20,13 @@
 
 <% if !@closing_soon.empty? %>
   <div class="clear marginTop">
-    <h2>Comments Closing In Next 7 Days</h2>
+    <h2>Comments Closing In Next 7 Days (<%= @closing_soon.map{|a,e| e.size}.sum %>)</h2>
     <ul class="indent marginTop recent_prorule">
-    <% @closing_soon.each do |agency| %>
+    <% @closing_soon.each do |agency, entries| %>
       <li>
-        <%= link_to agency.name, agency_path(agency) %> <span class='details'>(<%= agency.entries.size %>)</span>
+        <%= link_to agency.name, agency_path(agency) %> <span class='details'>(<%= entries.size %>)</span>
         <ul class="raquo">
-          <% agency.entries.each do |entry| %>
+          <% entries.each do |entry| %>
             <li><%= link_to entry.title, entry_path(entry) %></li>
           <% end %>
         </ul>
@@ -37,13 +37,13 @@
 
 <% if !@recently_opened.empty? %>
   <div class="clear marginTop">
-    <h2>Comments Opened in Last 7 Days</h2>
+    <h2>Comments Opened in Last 7 Days (<%= @recently_opened.map{|a,e| e.size}.sum %>)</h2>
     <ul class="indent marginTop recent_prorule">
-    <% @recently_opened.each do |agency| %>
+    <% @recently_opened.each do |agency, entries| %>
       <li>
-        <%= link_to agency.name, agency_path(agency) %> <span class='details'>(<%= agency.entries.size %>)</span>
+        <%= link_to agency.name, agency_path(agency) %> <span class='details'>(<%= entries.size %>)</span>
         <ul class="raquo">
-          <% agency.entries.each do |entry| %>
+          <% entries.each do |entry| %>
             <li><%= link_to entry.title, entry_path(entry) %></li>
           <% end %>
         </ul>
@@ -55,13 +55,13 @@
 
 <% if !@effective_this_week.empty? %>
   <div class="clear marginTop">
-    <h2>Rules Taking Effect In Next 7 Days</h2>
+    <h2>Rules Taking Effect In Next 7 Days (<%= @effective_this_week.map{|a,e| e.size}.sum %>)</h2>
     <ul class="indent marginTop recent_prorule">
-    <% @effective_this_week.each do |agency| %>
+    <% @effective_this_week.each do |agency, entries| %>
       <li>
-        <%= link_to agency.name, agency_path(agency) %> <span class='details'>(<%= agency.entries.size %>)</span>
+        <%= link_to agency.name, agency_path(agency) %> <span class='details'>(<%= entries.size %>)</span>
         <ul class="raquo">
-          <% agency.entries.each do |entry| %>
+          <% entries.each do |entry| %>
             <li><%= link_to entry.title, entry_path(entry) %></li>
           <% end %>
         </ul>
@@ -72,13 +72,13 @@
 
 <% if !@recent_proposed_rules_by_agency.empty? %>
 <div class="clear marginTop">
-  <h2>Rules Proposed in Last 7 Days</h2>
+  <h2>Rules Proposed in Last 7 Days (<%= @recent_proposed_rules_by_agency.map{|a,e| e.size}.sum %>)</h2>
   <ul class="indent marginTop recent_prorule">
-  <% @recent_proposed_rules_by_agency.each do |agency| %>
+  <% @recent_proposed_rules_by_agency.each do |agency, entries| %>
     <li>
-      <%= link_to agency.name, agency_path(agency) %> <span class='details'>(<%= agency.entries.size %>)</span>
+      <%= link_to agency.name, agency_path(agency) %> <span class='details'>(<%= entries.size %>)</span>
       <ul class="raquo">
-        <% agency.entries.each do |proprule| %>
+        <% entries.each do |proprule| %>
           <li><%= link_to proprule.title, entry_path(proprule) %></li>
         <% end %>
       </ul>
