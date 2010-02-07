@@ -155,6 +155,12 @@ $(document).ready(function() {
     return false;
   });
   
+  $(".social li a").click(function(){
+    var type = $(this).parent().attr('id');
+    var path = location.pathname + "/" + type + "/";
+    pageTracker._trackPageview(path);
+    return true;
+  });
 });
 
 function loadToolTips() {
