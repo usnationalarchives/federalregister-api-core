@@ -1,10 +1,10 @@
 <ul>
-  <li>View other entries mentioning <%= link_to place.name, place_path(place) %></li>
+  <li>View other entries mentioning <%= link_to place.name, place_path(place), :target => "_top" %></li>
 
 <% if @agency %>
   <li>
     View search results containing this 
-    <%= link_to "agency and #{place.name}", entries_search_path(:agency_id => @agency.id, :place_id => place.id) %>
+    <%= link_to "agency and #{place.name}", entries_search_path(:agency_id => @agency.id, :place_id => place.id), :target => "_top" %>
   </li>
 <% end %>
 </ul>
