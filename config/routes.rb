@@ -65,5 +65,5 @@ ActionController::Routing::Routes.draw do |map|
   map.place 'places/:slug/:id.:format', :controller => 'places', :action => 'show'
   
   # LOCATION
-  map.resource :location, :only => [:update, :edit], :member => {:congress => :get}
+  map.resource :location, :only => [:update, :edit], :member => {:congress => :get, :places => :get}
 end
