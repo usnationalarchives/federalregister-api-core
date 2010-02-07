@@ -155,9 +155,9 @@ $(document).ready(function() {
     return false;
   });
   
-  $(".social li a").click(function(){
-    var type = $(this).parent().attr('id');
-    var path = location.pathname + "/" + type + "/";
+  $("a[href^=http]").click(function(){
+    var url = $(this).attr('href');
+    var path = "/external/" + url;
     pageTracker._trackPageview(path);
     return true;
   });
