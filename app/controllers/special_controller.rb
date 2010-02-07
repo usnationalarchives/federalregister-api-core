@@ -2,9 +2,7 @@ class SpecialController < ApplicationController
   caches_page :home
   
   def home
-    @last_date = Entry.latest_publication_date
     @featured_agencies = Agency.featured.all
-    @location = current_location
     
     next_week = Date.today .. Date.today + 7.days
     this_week = Date.today - 7.days .. Date.today
