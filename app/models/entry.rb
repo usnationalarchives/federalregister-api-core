@@ -96,6 +96,8 @@ class Entry < ActiveRecord::Base
   acts_as_mappable :through => :places
   
   has_many :referenced_dates, :dependent => :destroy
+  has_one :comments_close_date, :class_name => "ReferencedDate", :conditions => {:date_type => 'CommentDate'}
+  has_one :effective_date, :class_name => "ReferencedDate", :conditions => {:date_type => 'EffectiveDate'}
   
   before_save :set_document_file_path
   after_create :create_entry_detail
@@ -158,12 +160,12 @@ class Entry < ActiveRecord::Base
     agency.try(:parent_id).nil? ? agency_id : agency.parent_id
   end
   
-  def comments_close_date
-    referenced_dates.find(:first, :conditions => {:date_type => 'CommentDate'}).try(:date)
+  def comments_close_on
+    comments_close_date.try(:date)
   end
   
-  def effective_date
-    referenced_dates.find(:first, :conditions => {:date_type => 'EffectiveDate'}).try(:date)
+  def effective_on
+    effective_date.try(:date)
   end
   
   def source_url(format)

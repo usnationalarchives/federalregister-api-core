@@ -24,8 +24,8 @@
       <% agency = display_agencies_for_entry(@entry) %>
       <% if agency.present?                     %><dt>Publishing Agency:</dt><dd><%= display_agencies_for_entry(@entry)              %></dd><% end %>
       <% if @entry.dates.present?               %><dt>Dates:</dt>            <dd><%= text_with_links(@entry, @entry.dates)           %></dd><% end %>
-      <% if @entry.effective_date.present?      %><dt>Effective Date:</dt>   <dd><%= @entry.effective_date                           %></dd><% end %>
-      <% if @entry.comments_close_date.present? %><dt>Comments Close:</dt>   <dd><%= @entry.comments_close_date                      %></dd><% end %>
+      <% if @entry.effective_on.present?        %><dt>Effective Date:</dt>   <dd><%= @entry.effective_on                             %></dd><% end %>
+      <% if @entry.comments_close_on.present?   %><dt>Comments Close:</dt>   <dd><%= @entry.comments_close_on                        %></dd><% end %>
       <% if @entry.action.present?              %><dt>Action:</dt>           <dd><%= @entry.action.titlecase                         %></dd><% end %>
       <% if @entry.type.present?                %><dt>Type: </dt>            <dd><%= @entry.type                                     %></dd><% end %>
       <% if @entry.genre.present?               %><dt>Genre:</dt>            <dd><%= @entry.genre.titlecase                          %></dd><% end %>
@@ -98,7 +98,7 @@
     <span class='small_link'>(<%= link_to 'change location', edit_location_path %>)</span>
   </h3> 
   
-  <% if @entry.comment_url.present? && (@entry.comments_close_date.nil? || @entry.comments_close_date >= Date.today) %>
+  <% if @entry.comment_url.present? && (@entry.comments_close_on.nil? || @entry.comments_close_on >= Date.today) %>
     <p><%= link_to "Submit a formal comment", @entry.comment_url %>. The agency is required to respond in a future FR entry.</p>
   <% end %>
   <div id="congress">
