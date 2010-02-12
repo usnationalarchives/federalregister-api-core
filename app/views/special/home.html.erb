@@ -2,25 +2,12 @@
 <% add_column_class('home') %>
 
 <% content_for :precolumn do %>
-          
-    <div class="infobox">
-      <h1>The Federal Register at your fingertips.</h1>
-      <!-- <p class='copy'>
-        The Federal Register is the official journal of the federal government of the United States. In it, you'll 
-        find any kind of proposal, notification, or solicitation for data that a federal agency puts out. It's the 
-        pulse of your government.
-      </p>
-      <p class='copy'> 
-        For much of its existence the Federal Register has had no easily accessible form. 
-        <span class='gray'>gov</span><span class='orange'>pulse</span> seeks to change this and enable you to respond to your government. We give you a 
-        way to browse the Register (from 1994 on) and use filters to decide what is important to you. And then act on it.
-      </p> -->
-    </div>
+  <h1>The Federal Register at your fingertips.</h1>
 <% end %>
 
 <% if !@closing_soon.empty? %>
-  <div class="clear marginTop">
-    <h2>Comments Closing In Next 7 Days (<%= @closing_soon.map{|a,e| e.size}.sum %>)</h2>
+  <div class="clear marginBottom widget">
+    <h2 class="header">Comments Closing In Next 7 Days (<%= @closing_soon.map{|a,e| e.size}.sum %>)</h2>
     <ul class="indent marginTop recent_prorule">
     <% @closing_soon.each do |agency, entries| %>
       <li>
@@ -36,8 +23,8 @@
 <% end %>
 
 <% if !@recently_opened.empty? %>
-  <div class="clear marginTop">
-    <h2>Comments Opened in Last 7 Days (<%= @recently_opened.map{|a,e| e.size}.sum %>)</h2>
+  <div class="clear widget">
+    <h2 class="header">Comments Opened in Last 7 Days (<%= @recently_opened.map{|a,e| e.size}.sum %>)</h2>
     <ul class="indent marginTop recent_prorule">
     <% @recently_opened.each do |agency, entries| %>
       <li>
@@ -54,8 +41,8 @@
 
 
 <% if !@effective_this_week.empty? %>
-  <div class="clear marginTop">
-    <h2>Rules Taking Effect In Next 7 Days (<%= @effective_this_week.map{|a,e| e.size}.sum %>)</h2>
+  <div class="clear widget">
+    <h2 class="header">Rules Taking Effect In Next 7 Days (<%= @effective_this_week.map{|a,e| e.size}.sum %>)</h2>
     <ul class="indent marginTop recent_prorule">
     <% @effective_this_week.each do |agency, entries| %>
       <li>
@@ -71,8 +58,8 @@
 <% end %>
 
 <% if !@recent_proposed_rules_by_agency.empty? %>
-<div class="clear marginTop">
-  <h2>Rules Proposed in Last 7 Days (<%= @recent_proposed_rules_by_agency.map{|a,e| e.size}.sum %>)</h2>
+<div class="clear widget">
+  <h2 class="header">Rules Proposed in Last 7 Days (<%= @recent_proposed_rules_by_agency.map{|a,e| e.size}.sum %>)</h2>
   <ul class="indent marginTop recent_prorule">
   <% @recent_proposed_rules_by_agency.each do |agency, entries| %>
     <li>
@@ -90,9 +77,13 @@
 
 
 <% content_for :sidebar do %>
-  <h3>View Entries Near</h3>
-  <%= render :partial => 'maps/location_search_form', :locals => {:location => nil} %>
-  <iframe src="/location/places" width="345" height="400" frameborder="0"></iframe>
+  
+  <div class="widget_map">
+    <iframe src="/location/places" width="325" height="400" frameborder="0"></iframe>
+    <div class="home_search">
+      <%= render :partial => 'maps/location_search_form', :locals => {:location => nil} %>
+    </div>
+  </div>
   <%= render :partial => 'agencies/pulse', :locals => {:featured_agencies => @featured_agencies} %>
 <% end %>
 
