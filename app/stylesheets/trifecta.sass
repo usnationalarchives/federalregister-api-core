@@ -305,20 +305,39 @@ body
       :padding 10px
     &.calendar
       :position relative 
+  .widget
+    :border 1px solid #bdbcbd
+    :border-top none
+    :-moz-border-radius 5px
+    :-webkit-border-radius 5px  
+    :margin-bottom 10px
+    .header
+      :margin-bottom 0
   .content
     :min-height 600px
     :padding 20px 0
     ul.recent_prorule
-      :height 250px
+      :max-height 250px
       :overflow auto
+      :padding 0 10px 10px 10px
       li
+        :border-top 1px solid #ddd
         :font-size 1.2em
+        :padding-top 10px
+        &:first-child 
+          :border none
+        a
+          :font-weight bold
         span.details
           :font-size 12px
         ul
           li
+            :border none
             :font-size 12px
-            :margin-left 100px
+            :padding-top 0
+            a
+              :font-weight normal
+            
     .precolumn
       .votepane 
         :margin 0 auto
@@ -346,9 +365,8 @@ body
         :height 400px
         :margin-left auto
         :margin-right auto
-        :margin-bottom 20px
         div.wml-text-background
-          :opacity 1
+          :opacity 0
         div.wml-copyright-text
           :width 900px
       .medium_map  
@@ -905,6 +923,41 @@ body #footer
         :color #39505e
         :margin 0 0 1em 1em
 
+.home_search #location,
+.location_search #location
+  :border 1px solid #cbc8c0
+  :-moz-border-radius 5px
+  :-webkit-border-radius 5px 
+  :height 16px
+  :width 195px
+
+#main .col2 .home_search .btn,
+.location_search .btn
+  :margin-left 5px
+  :*font-size 11px
+  :*width 112px
+
+.widget_map 
+  :background #e5ebee
+  :border 1px solid #e5ebee
+  :-moz-border-radius 3px
+  :-webkit-border-radius 3px  
+  :padding 10px 10px 5px 10px
+  :width 325px
+
+.widget_map.large 
+  :-moz-border-radius 10px
+  :-webkit-border-radius 10px 
+  :padding 12px 10px 5px 10px
+  :width 900px
+
+.location_search
+  :float right
+  :margin-top 5px
+    
+div.wml-text-background
+  :opacity 0
+  
 #feedback  
   :background url(/images/feedback.png) no-repeat left top
   :bottom 20px

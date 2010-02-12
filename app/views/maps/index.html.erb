@@ -17,16 +17,19 @@
 <% if !@places.nil? %>
   <% add_javascript { @map.to_js } %>
   <% content_for :precolumn do %>
-    <div id="map" class='large_map'></div>
+    <div class="widget_map large group">
+      <div id="map" class='large_map'></div>
+      <div class="location_search">
+        <%= render :partial => 'maps/location_search_form', :locals => {:location => @location} %>
+      </div>          
+    </div>
   <% end %>
 <% end %>
 
 <% if !@places.nil? %>
   <%= render :partial => 'maps/entries_by_distance', :locals => {:entry_places => @places, :lat => @lat, :long => @long} %>
   
-  <% content_for :sidebar do %>
-    <h3>View Other Entries Near</h3>
-    <%= render :partial => 'maps/location_search_form', :locals => {:location => @location} %>
+  <% content_for :sidebar do %>    
     
     <% unless @entries.blank? %>
       <h3>Agencies active within <%= pluralize(@dist, 'mile') %></h3>
