@@ -1,6 +1,5 @@
-<div class='search'>
-  <% form_tag maps_path, :method => :GET, :class => "group" do %>
-    <%= text_field_tag :location, @location.try(:name), :title => "(eg '94118', 'Seattle', etc)" %>
-    <%= submit_tag 'Go', :class => "btn" %>
-  <% end %>
-</div>
+
+<% form_tag maps_path, :method => :GET, :class => "group" do %>
+  <%= text_field_tag :location, @location.try(:name), :title => "(eg '94118', 'Seattle', etc)" %>
+  <%= submit_tag 'Go', :class => "btn" %>
+<% end %>
