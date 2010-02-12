@@ -6,7 +6,7 @@
 <% end %>
 
 <% if !@closing_soon.empty? %>
-  <div class="clear marginTop widget">
+  <div class="clear marginBottom widget">
     <h2 class="header">Comments Closing In Next 7 Days (<%= @closing_soon.map{|a,e| e.size}.sum %>)</h2>
     <ul class="indent marginTop recent_prorule">
     <% @closing_soon.each do |agency, entries| %>
@@ -23,7 +23,7 @@
 <% end %>
 
 <% if !@recently_opened.empty? %>
-  <div class="clear marginTop widget">
+  <div class="clear widget">
     <h2 class="header">Comments Opened in Last 7 Days (<%= @recently_opened.map{|a,e| e.size}.sum %>)</h2>
     <ul class="indent marginTop recent_prorule">
     <% @recently_opened.each do |agency, entries| %>
@@ -41,7 +41,7 @@
 
 
 <% if !@effective_this_week.empty? %>
-  <div class="clear marginTop widget">
+  <div class="clear widget">
     <h2 class="header">Rules Taking Effect In Next 7 Days (<%= @effective_this_week.map{|a,e| e.size}.sum %>)</h2>
     <ul class="indent marginTop recent_prorule">
     <% @effective_this_week.each do |agency, entries| %>
@@ -58,7 +58,7 @@
 <% end %>
 
 <% if !@recent_proposed_rules_by_agency.empty? %>
-<div class="clear marginTop widget">
+<div class="clear widget">
   <h2 class="header">Rules Proposed in Last 7 Days (<%= @recent_proposed_rules_by_agency.map{|a,e| e.size}.sum %>)</h2>
   <ul class="indent marginTop recent_prorule">
   <% @recent_proposed_rules_by_agency.each do |agency, entries| %>
@@ -77,11 +77,13 @@
 
 
 <% content_for :sidebar do %>
-  <h3>View Entries Near</h3>
-  <div class="home_search">
-    <%= render :partial => 'maps/location_search_form', :locals => {:location => nil} %>
+  
+  <div class="widget_map">
+    <iframe src="/location/places" width="325" height="400" frameborder="0"></iframe>
+    <div class="home_search">
+      <%= render :partial => 'maps/location_search_form', :locals => {:location => nil} %>
+    </div>
   </div>
-  <iframe src="/location/places" width="345" height="400" frameborder="0"></iframe>
   <%= render :partial => 'agencies/pulse', :locals => {:featured_agencies => @featured_agencies} %>
 <% end %>
 
