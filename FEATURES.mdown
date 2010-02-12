@@ -1,0 +1,47 @@
+* comments closing soon
+* newly proposed rules
+* browse by agency
+    * sparklines of activity (last year, 5 years, 15 years)
+    * map of recent activity
+    * graphic of most popular topics for this agency
+    * pie chart by entry type
+    * identification of most cited entries from this agency
+* browse by topic
+    * graphic of most popular agencies for this topic
+    * pie chart by entry type
+    * identification of other, related topics based on similar usage in the FR
+    * identification of most cited entries with the topic
+    * when appropriate combining multiple historic GPO topics
+* browse by location
+    * default to user's current location using IP geolocation
+    * ability to save preferred location
+* browse by publication date
+    * calendar tool to switch date
+    * map of locations mentions
+    * pie chart by entry type
+* search by
+    * keyword (including word stemming)
+    * location (including customizable distance)
+    * entry type
+    * date published (allows use of english-language terms, like "a year ago")
+    * agency
+    * citation
+* search results include
+    * context around search term
+    * publication date, agency, etc
+* RSS feeds for any search result, agency, etc
+* regulations.gov integration
+    * URL identification
+    * determination of whether comments are accepted there
+* hyperlink references to CFR, FR, PL, and USC
+    * citations extracted, analyzed
+* location extraction using Yahoo's Placemaker service
+* identification of a user's congressional delegation based on saved location
+* scrolling headline ticker
+* tools to share entries
+    * tiny URL for every entry (one click to copy to clipboard)
+    * share on twitter, facebook, digg, reddit
+* search engine optimization
+    * daily XML sitemap generation for all 500,000 pages, including ping of all major engines when updated
+    * URLs include article title
+    * use of semantic XHTML
