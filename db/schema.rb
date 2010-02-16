@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100117214210) do
+ActiveRecord::Schema.define(:version => 20100216061734) do
 
   create_table "agencies", :force => true do |t|
     t.integer  "parent_id"
@@ -96,13 +96,6 @@ ActiveRecord::Schema.define(:version => 20100117214210) do
   add_index "entries", ["regulation_id_number"], :name => "index_entries_on_regulation_id_number"
   add_index "entries", ["volume", "start_page", "end_page"], :name => "index_entries_on_volume_and_start_page_and_end_page"
 
-  create_table "entry_details", :force => true do |t|
-    t.integer "entry_id"
-    t.text    "full_text_raw", :limit => 2147483647
-  end
-
-  add_index "entry_details", ["entry_id"], :name => "index_entry_details_on_entry_id"
-
   create_table "place_determinations", :force => true do |t|
     t.integer "entry_id"
     t.integer "place_id"
@@ -134,6 +127,7 @@ ActiveRecord::Schema.define(:version => 20100117214210) do
   end
 
   add_index "referenced_dates", ["entry_id", "date"], :name => "index_referenced_dates_on_entry_id_and_date"
+  add_index "referenced_dates", ["entry_id", "date_type", "date"], :name => "foo"
 
   create_table "search_subscriptions", :force => true do |t|
     t.integer  "user_id"
@@ -224,7 +218,7 @@ ActiveRecord::Schema.define(:version => 20100117214210) do
   add_index "user_lists", ["user_id"], :name => "index_user_lists_on_user_id"
 
   create_table "users", :force => true do |t|
-    t.string   "login"
+    t.string   "login",                              :null => false
     t.string   "email",                              :null => false
     t.string   "crypted_password",                   :null => false
     t.string   "password_salt",                      :null => false
@@ -239,7 +233,7 @@ ActiveRecord::Schema.define(:version => 20100117214210) do
     t.string   "current_login_ip"
     t.string   "last_login_ip"
     t.datetime "created_at"
-    t.datetime "updated_at",                         :null => false
+    t.datetime "updated_at"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email"
