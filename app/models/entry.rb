@@ -61,8 +61,6 @@ class Entry < ActiveRecord::Base
     ''         => 'Unknown'
   }
   
-  has_one :entry_detail, :dependent => :destroy
-  
   belongs_to :agency
   
   has_many :topic_assignments, :dependent => :destroy
@@ -100,7 +98,6 @@ class Entry < ActiveRecord::Base
   has_one :effective_date, :class_name => "ReferencedDate", :conditions => {:date_type => 'EffectiveDate'}
   
   before_save :set_document_file_path
-  after_create :create_entry_detail
   
   file_attribute(:full_xml)  {"#{RAILS_ROOT}/data/xml/#{document_file_path}.xml"}
   file_attribute(:full_text) {"#{RAILS_ROOT}/data/text/#{document_file_path}.txt"}
@@ -221,9 +218,5 @@ class Entry < ActiveRecord::Base
   
   def set_document_file_path
     self.document_file_path = document_number.sub(/-/,'').scan(/.{0,3}/).reject(&:blank?).join('/') if document_number.present?
-  end
-  
-  def create_entry_detail
-    self.entry_detail = EntryDetail.create(:entry_id => self.id)
   end
 end
