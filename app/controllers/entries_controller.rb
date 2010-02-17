@@ -13,7 +13,7 @@ class EntriesController < ApplicationController
     @search = EntrySearch.new(params)
     
     unless @search.valid?
-      flash[:error] = "<ul>#{@search.errors.map{|e| "<li>#{e}</li>"}}</ul>"
+      flash.now[:error] = "<ul>#{@search.errors.map{|e| "<li>#{e}</li>"}}</ul>"
     end
     
     respond_to do |wants|
