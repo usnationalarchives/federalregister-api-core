@@ -164,6 +164,7 @@ namespace :deploy do
     sudo "ln -sf #{shared_path}/log #{release_path}/log"
     sudo "ln -sf #{shared_path}/data #{release_path}/data"
     sudo "ln -sf #{shared_path}/db/sphinx #{release_path}/db/sphinx"
+    sudo "ln -sf #{shared_path}/sitemaps #{release_path}/public/sitemaps"
   end 
 end
 
