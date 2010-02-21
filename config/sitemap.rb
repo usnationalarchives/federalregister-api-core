@@ -37,7 +37,8 @@ SitemapGenerator::Sitemap.add_links do |sitemap|
   ('a' .. 'z').each do |letter|
     sitemap.add topic_groups_by_letter_path(letter), :priority => 0.25
   end
-  TopicGroup.find_each do |topic_group|
+  
+  TopicGroup.find_each(:conditions => "group_name != ''") do |topic_group|
     sitemap.add topic_group_path(topic_group)
   end
   
