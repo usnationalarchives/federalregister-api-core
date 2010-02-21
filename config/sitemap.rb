@@ -1,5 +1,6 @@
 # Set the host name for URL creation
 SitemapGenerator::Sitemap.default_host = "http://govpulse.us"
+SitemapGenerator::Sitemap.subdirectory = "sitemaps"
 
 SitemapGenerator::Sitemap.add_links do |sitemap|
   # Put links creation logic here.
