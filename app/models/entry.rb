@@ -56,9 +56,7 @@ class Entry < ActiveRecord::Base
     'NOTICE'   => 'Notice', 
     'PRESDOCU' => 'Presidential Document', 
     'CORRECT'  => 'Correction',
-    'UNKNOWN'  => 'Unknown',
-    'SUNSHINE' => 'Unknown',
-    ''         => 'Unknown'
+    'UNKNOWN'  => 'Unknown'
   }
   
   belongs_to :agency
