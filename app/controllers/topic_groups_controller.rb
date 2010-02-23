@@ -22,9 +22,7 @@ class TopicGroupsController < ApplicationController
             :include => :topics,
             :order => "entries.publication_date DESC",
             :limit => 50)
-        
-        # GRANULE CLASSES
-        @granule_classes = Entry.all(
+        @entry_types = Entry.all(
           :select => 'granule_class, count(*) AS count',
           :joins  => :topics,
           :conditions => {:topics => {:group_name => group_name}},
