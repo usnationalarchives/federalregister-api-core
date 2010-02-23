@@ -35,19 +35,19 @@ class AgenciesController < ApplicationController
                                  )
         end
         
-        # GRANULE CLASSES
-        @granule_labels = []
-        @granule_values = []
+        # Entry types
+        @entry_type_labels = []
+        @entry_type_values = []
         
-        by_granule_class = Entry.all(
+        by_entry_type = Entry.all(
           :select => 'granule_class, count(*) AS count',
           :conditions => {:agency_id => [@agency.id] + @agency.descendant_ids},
           :group => 'granule_class',
           :order => 'count DESC'
         )
-        by_granule_class.each do |summary|
-          @granule_labels << summary.granule_class
-          @granule_values << summary.count.to_i
+        by_entry_type.each do |summary|
+          @entry_type_labels << summary.entry_type
+          @entry_type_values << summary.count.to_i
         end
       end
       

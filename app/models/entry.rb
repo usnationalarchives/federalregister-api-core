@@ -50,7 +50,7 @@ class Entry < ActiveRecord::Base
                 appearing in this section.'
   }
   
-  GRANULE_CLASS_TYPES = {
+  ENTRY_TYPES = {
     'RULE'     => 'Rule', 
     'PRORULE'  => 'Proposed Rule', 
     'NOTICE'   => 'Notice', 
@@ -100,8 +100,8 @@ class Entry < ActiveRecord::Base
   file_attribute(:full_xml)  {"#{RAILS_ROOT}/data/xml/#{document_file_path}.xml"}
   file_attribute(:full_text) {"#{RAILS_ROOT}/data/text/#{document_file_path}.txt"}
   
-  def granule_class 
-    GRANULE_CLASS_TYPES[self['granule_class']]
+  def entry_type 
+    ENTRY_TYPES[granule_class]
   end
   
   define_index do

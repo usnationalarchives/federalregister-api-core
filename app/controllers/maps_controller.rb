@@ -48,11 +48,11 @@ class MapsController < ApplicationController
     
     @entries = @places.map{|place| place.entries.map{|e| e} }.flatten
     
-    @granule_labels = []
-    @granule_values = []
-    @entries.uniq.group_by(&:granule_class).each do |granule_class, entries|
-      @granule_labels << granule_class
-      @granule_values << entries.size
+    @entry_type_labels = []
+    @entry_type_values = []
+    @entries.uniq.group_by(&:entry_type).each do |entry_type, entries|
+      @entry_type_labels << entry_type
+      @entry_type_values << entries.size
     end
     
     @active_agencies = []
