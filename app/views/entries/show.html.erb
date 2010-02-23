@@ -30,7 +30,7 @@
       <% if @entry.type.present?                %><dt>Type: </dt>            <dd><%= @entry.type                                     %></dd><% end %>
       <% if @entry.genre.present?               %><dt>Genre:</dt>            <dd><%= @entry.genre.titlecase                          %></dd><% end %>
       <% if @entry.part_name.present?           %><dt>Part Name:</dt>        <dd><%= @entry.part_name                                %></dd><% end %>
-      <% if @entry.granule_class.present?       %><dt>Granule Class:</dt>    <dd><%= @entry.granule_class.titlecase                  %></dd><% end %>
+      <% if @entry.entry_type.present?          %><dt>Entry Type:</dt>       <dd><%= @entry.entry_type                               %></dd><% end %>
       <% if @entry.document_number.present?     %><dt>Other Formats:</dt>    <dd><%= %w(html text pdf).map{|format| link_to format, @entry.source_url(format), :class => format }.join(" | ") %>
                                                                                  <%= ' | ' + link_to( 'regulations.gov', "http://www.regulations.gov/search/Regs/home.html#documentDetail?R=#{@entry.regulationsdotgov_id}") if @entry.regulationsdotgov_id.present? %></dd><% end %>
       <dt>Length:</dt>    <dd><%= @entry.human_length %></dd>
