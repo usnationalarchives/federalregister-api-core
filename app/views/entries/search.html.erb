@@ -6,7 +6,7 @@
 <div class="header  group">
   <ul class="searchform">
     <li class="simple"><label>Keywords:</label><%= text_field_tag :q, @search.search_term %></li>
-    <li class="simple"><label>Type:</label><%= select_tag :granule_class, options_for_select([''] + Entry::GRANULE_CLASS_TYPES.values.to_a.reject{|name| name == 'Unknown'}, :selected => @search.granule_class) %>
+    <li class="simple"><label>Type:</label><%= select_tag :granule_class, options_for_select([''] + Entry::ENTRY_TYPES.except('Unknown').map{|key, value| [value, key]}, :selected => @search.granule_class) %>
     <li class="simple"><label>Agency:</label><%= select_tag 'agency_id', options_for_select([''] + @agencies.collect{ |agency| [agency.name, agency.id.to_s] }, :selected => @search.agency.try(:id).try(:to_s)) %></li>
     
       <% if @search.topic %>
@@ -110,7 +110,7 @@
 
         <ul class="raquo indent">
         <% granule_class_facets.each do |granule_class, count| %>
-          <li><%= link_to "#{granule_class} (#{count})", params.merge(:granule_class => granule_class) %></li>
+          <li><%= link_to "#{Entry::ENTRY_TYPES[granule_class]} (#{count})", params.merge(:granule_class => granule_class) %></li>
         <% end %>
         </ul>
       <% end %>
