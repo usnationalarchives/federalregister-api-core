@@ -50,11 +50,7 @@
 <div class="fulltextWrapper span-16">
   <pre><%=
     # FIXME: move out of view!
-    text = truncate(
-      @entry.full_text,
-      :length => 120000,
-      :omission => "<br /><br /><br />[ENTRY TRUNCATED: " + link_to('view full text', @entry.source_url(:text)) + "]</pre>"
-    )
+    text = @entry.full_text
     
     text.sub!(/.*^-{71}$/m, '')
     text.gsub!(/<\/?INF>/, '')
