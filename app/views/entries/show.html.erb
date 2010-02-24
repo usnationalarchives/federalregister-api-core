@@ -89,21 +89,6 @@
 <% end %>
 
 <% content_for :sidebar do %>
-  <h3 class="hAction">
-    Speak Up 
-    <span class='small_link'>(<%= link_to 'change location', edit_location_path %>)</span>
-  </h3> 
-  
-  <% if @entry.comment_url.present? && (@entry.comments_close_on.nil? || @entry.comments_close_on >= Date.today) %>
-    <p><%= link_to "Submit a formal comment", @entry.comment_url %>. The agency is required to respond in a future FR entry.</p>
-  <% end %>
-  <div id="congress">
-    <h5>Your Senators</h5>
-    <p class="loading">Loading<img src="/images/ticker_loading.gif" alt="loading" /></p>
-    <h5>Your Representative</h5>
-    <p class="loading">Loading<img src="/images/ticker_loading.gif" alt="loading" /></p>
-  </div>
-
   <h3>Gather a Crowd</h3>
   <ul class='social'>
     <li id='twitter'    ><%= link_to_twitter(@entry)         %></li>
@@ -119,6 +104,22 @@
     </span>
   </p>
 
+  <h3 class="hAction">
+    Speak Up 
+    <span class='small_link'>(<%= link_to 'change location', edit_location_path %>)</span>
+  </h3> 
+  
+  <% if @entry.comment_url.present? && (@entry.comments_close_on.nil? || @entry.comments_close_on >= Date.today) %>
+    <p><%= link_to "Submit a formal comment", @entry.comment_url %>. The agency is required to respond in a future FR entry.</p>
+  <% end %>
+  <div id="congress">
+    <h5>Your Senators</h5>
+    <p class="loading">Loading<img src="/images/ticker_loading.gif" alt="loading" /></p>
+    <h5>Your Representative</h5>
+    <p class="loading">Loading<img src="/images/ticker_loading.gif" alt="loading" /></p>
+  </div>
+  
+  
   <% if @entry.contact.present? %>
     <h3>Contact</h3>
     <p><%= auto_link @entry.contact %></p>
