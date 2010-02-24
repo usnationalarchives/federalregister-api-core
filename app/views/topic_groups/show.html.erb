@@ -19,7 +19,7 @@
   <% end %>
   
   <% if @topic_group.topics.size > 1 %>
-    <h3>This topic summarizes the following topics from the Federal Register:</h3>
+    <h3>"<%= @topic_group.name %>" combines the following topics from the Federal Register:</h3>
     <ul>
     <% @topic_group.topics.each do |topic| %>
       <li><%= topic.name %></li>
