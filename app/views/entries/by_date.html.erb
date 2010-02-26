@@ -17,7 +17,7 @@
 
   <div class="header group calendar controls">
   <h2>
-    <%= pluralize(@entries.count, 'entry') %> published on this day
+    <%= pluralize(@entries.size, 'entry') %> published on this day
   </h2>
   
   <%= link_to( '', '#', :class => "icon cal", :title => "Click to show calendars" ) %>
@@ -94,5 +94,5 @@
   <%= render :partial => 'entries/charts/by_type', :locals => {:entries => @entries} %>
   
   <h3>Top Agencies Reporting</h3>
-  <%= render :partial => 'entries/charts/by_agency', :locals => {:agencies => @agencies, :entry_count => @entries.count} %>
+  <%= render :partial => 'entries/charts/by_agency', :locals => {:agencies => @agencies, :entry_count => @entries.size} %>
 <% end %>
