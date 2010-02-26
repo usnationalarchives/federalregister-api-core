@@ -212,6 +212,22 @@ class Entry < ActiveRecord::Base
     all(:conditions => ["volume = ? AND start_page <= ? AND end_page >= ?", volume.to_i, page.to_i, page.to_i], :order => "entries.end_page")
   end
   
+  def self.first_publication_date_before(date)
+    Entry.find(:first,
+        :select => 'publication_date',
+        :conditions => ["publication_date < ?", date],
+        :order => 'publication_date DESC'
+    ).try(:publication_date)
+  end
+  
+  def self.first_publication_date_after(date)
+    Entry.find(:first,
+        :select => 'publication_date',
+        :conditions => ["publication_date > ?", date],
+        :order => 'publication_date'
+    ).try(:publication_date)
+  end
+  
   private
   
   def set_document_file_path

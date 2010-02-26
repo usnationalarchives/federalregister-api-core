@@ -62,22 +62,7 @@ class EntriesController < ApplicationController
     @year  = params[:year]  || Time.now.strftime("%Y")
     @month = params[:month] || Time.now.strftime("%m")
     @day   = params[:day]   || Time.now.strftime("%d")
-    
-    @show_calendars = params[:show_calendars]
-    
     @publication_date = Date.parse("#{@year}-#{@month}-#{@day}")
-    
-    @prev_date = Entry.find(:first,
-        :select => 'publication_date',
-        :conditions => ["publication_date < ?", @publication_date],
-        :order => 'publication_date DESC'
-    ).try(:publication_date)
-    
-    @next_date = Entry.find(:first,
-        :select => 'publication_date',
-        :conditions => ["publication_date > ?", @publication_date],
-        :order => 'publication_date'
-    ).try(:publication_date)
     
     @agencies = Agency.all(
         :include => :entries,
@@ -88,9 +73,8 @@ class EntriesController < ApplicationController
       :conditions => ['entries.agency_id IS NULL && entries.publication_date = ?', @publication_date],
       :order => "entries.title"
     )
-    @entry_count = Entry.count(:conditions => ['entries.publication_date = ?', @publication_date])
     
-    if @entry_count == 0
+    if @agencies.size == 0 && @entries_without_agency.size == 0
       raise ActiveRecord::RecordNotFound
     end
     
@@ -99,19 +83,7 @@ class EntriesController < ApplicationController
       :conditions => ['entries.publication_date = ?', @publication_date]
     )
     
-    @labels = []
-    @values = []
-    @agencies.sort_by{|a| a.entries.size}.reverse[0,10].each do |agency|
-      @labels << "#{agency.name}"
-      @values << agency.entries.size
-    end
-    
-    if @values.sum < @entry_count
-      count = (@entry_count - @values.sum)
-      @labels << "Other"
-      @values << count
-    end
-    
+    # Map
     if !@places.blank?
       @map = Cloudkicker::Map.new( :style_id => 1714,
                                    :zoom     => 1,
@@ -129,18 +101,7 @@ class EntriesController < ApplicationController
       end
     end
     
-    @entry_type_labels = []
-    @entry_type_values = []
-    @entries = []
-    @agencies.each do |agency|
-      @entries << agency.entries
-    end
-    @entries << @entries_without_agency
-    @entries = @entries.flatten
-    @entries.group_by(&:entry_type).each do |entry_type, entries|
-      @entry_type_labels << entry_type
-      @entry_type_values << entries.size
-    end
+    @entries = @agencies.inject([]) {|set, agency| set += agency.entries} + @entries_without_agency
   end
   
   def show
