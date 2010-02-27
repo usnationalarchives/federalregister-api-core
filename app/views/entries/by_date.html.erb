@@ -54,7 +54,7 @@
     <h3><%= link_to parent_agency.name, agency_path(parent_agency) %> (<%= parent_agency.entries.size%>)</h3>
     <ul class="raquo indent">
     <% parent_agency.entries.each do |entry| %>
-      <li><%= link_to truncate(entry.title, :length => 100), entry_path(entry) %></li>
+      <li><%= link_to entry_title(entry), entry_path(entry) %></li>
     <% end %>
     
     <% agencies.each do |agency| %>
@@ -62,7 +62,7 @@
         <h4><%= link_to agency.name, agency_path(agency) %> (<%= agency.entries.size%>)</h4>
         <ul>
           <% agency.entries.each do |entry| %> 
-            <li><%= link_to truncate(entry.title, :length => 100), entry_path(entry) %></li>
+            <li><%= link_to entry_title(entry), entry_path(entry) %></li>
           <% end %>
         </ul>
       </li>
@@ -75,7 +75,7 @@
     <h3>Other Entries (<%= @entries_without_agency.size %>)</h3>
     <ul class="raquo indent">
     <% @entries_without_agency.each do |entry| %>
-      <li><%= link_to truncate(entry.title, :length => 100), entry_path(entry) %></li>
+      <li><%= link_to entry_title(entry), entry_path(entry) %></li>
     <% end %>
     </ul>
   </li>
