@@ -18,4 +18,12 @@ module EntryHelper
     text = add_citation_links(text)
     text
   end
+  
+  def entry_title(entry)
+    title = truncate(entry.title, :length => 100)
+    if entry.entry_type != 'Unknown'
+      title = "#{title} (#{entry.entry_type})"
+    end
+    title
+  end
 end
