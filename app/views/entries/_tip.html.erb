@@ -9,7 +9,11 @@
       <dt>Agency:</dt>
       <dd><%= entry.agency.name %></dd>
     <% end %>
-      <dt>Date Entered:</dt>
-      <dd><%= entry.publication_date.to_formatted_s(:pretty) %></dd>
+    <dt>Date Entered:</dt>
+    <dd><%= entry.publication_date.to_formatted_s(:pretty) %></dd>
+    <% if entry.entry_type != 'Unknown' %>
+      <dt>Type:</dt>
+      <dd><%= entry.entry_type %></dd>
+    <% end %>
   </dl>
 </div>
