@@ -48,7 +48,7 @@
 
 <ul>
 <% @agencies.group_by{|a| a.parent_id || a.id}.each do |parent_agency_id, agencies| %>
-  <% agencies = agencies.sort{|a| (a.id == parent_agency_id) ? 1 : 0 } %>
+  <% agencies = agencies.sort_by{|a| (a.id == parent_agency_id) ? 1 : 0 } %>
   <% parent_agency = agencies.pop %>
   <li class="parent_agency">
     <h3><%= link_to parent_agency.name, agency_path(parent_agency) %> (<%= parent_agency.entries.size%>)</h3>
