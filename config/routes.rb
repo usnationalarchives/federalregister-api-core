@@ -39,8 +39,10 @@ ActionController::Routing::Routes.draw do |map|
   map.citation 'citation/:volume/:page', :controller => 'citations',
                                          :action     => 'show',
                                          :volume     => /\d{2}/,
-                                         :page     => /\d+/
-
+                                         :page       => /\d+/
+  map.citation_search 'citation/search', :controller => 'citations',
+                                         :action     => 'search'
+  
   # EVENTS
   map.events 'events/:year/:month', :controller => 'calendars',
                                           :action     => 'index',
