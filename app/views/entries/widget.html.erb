@@ -1,0 +1,49 @@
+<div id="widget_wrapper">
+  <ul>
+  <% @search.entries.each do |entry| %>
+    <li class="<%= cycle('even', 'odd') %>">
+      <%= link_to truncate(entry.title, :length => 70), entry_path(entry), :class => 'title' %>
+      
+      <div class="arrowholder">
+        <a class="arrow" href="#"></a>
+      </div>
+
+      <div class="full">
+    
+        <dl>
+          <dt>Title</dt>
+          <dd><%= link_to truncate(entry.title, :length => 200), entry_path(entry) %></dd>
+          
+          <% if entry.agency %>
+          <dt>Agency</dt>
+          <dd><%= entry.agency.name %></dd>
+          <% end %>
+          
+          <dt>Date</dt>
+          <dd><%= entry.publication_date %></dd>
+          
+          <% if entry.entry_type != 'Unknown' %>
+          <dt>Type</dt>
+          <dd><%= entry.entry_type %></dd>
+          <% end %>
+          
+          <dt>Abstract</dt>
+          <dd><%= if entry.excerpts.full_text.blank?
+                    sanitize entry.excerpts.abstract, :tags => %w(span), :attributes => %w(class)
+                  else
+                    sanitize entry.excerpts.full_text, :tags => %w(span), :attributes => %w(class)
+                  end
+              %></dd>
+        </dl>
+      </div>
+    </li>
+  <% end %>
+  </ul>
+  <div id="info_pane">
+    <div id="widget_nav">
+      <a href="#" title="Back" id="back">Back</a> <a href="#" title="View Entry" id="view_entry">View entry</a>
+    </div>
+    <div id="info_content">
+    </div>  
+  </div>
+</div>
