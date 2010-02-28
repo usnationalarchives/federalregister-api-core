@@ -80,33 +80,23 @@
     
       <!-- content -->
       <div class="content">
-        
-        
-          <% if yield :search_form %>
-            <form method="get" action="/entries/search">
-          <% end %>    
-              
-          <% if yield :precolumn %>
-            <div class="precolumn">
-              <%= yield :precolumn %>
-            </div>
-          <% end %>
-          
-          <div class="col1 <%= yield :column_class %>">
-            <%= yield %>
+        <% if yield :precolumn %>
+          <div class="precolumn">
+            <%= yield :precolumn %>
           </div>
-          
-          <% if yield :sidebar %>
-          <div class="col2 <%= yield :column_class %>">
-            <div class="sidebar">
-              <%= yield :sidebar %>
-            </div>
+        <% end %>
+        
+        <div class="col1 <%= yield :column_class %>">
+          <%= yield %>
+        </div>
+        
+        <% if yield :sidebar %>
+        <div class="col2 <%= yield :column_class %>">
+          <div class="sidebar">
+            <%= yield :sidebar %>
           </div>
-          <% end %>
-          
-          <% if yield :search_form %>
-            </form>
-          <% end %>    
+        </div>
+        <% end %>
       </div>
       <!-- content end -->
       
