@@ -31,6 +31,14 @@ class EntriesController < ApplicationController
     end
   end
   
+  caches_action :widget, :cache_path => Proc.new { |request| request.params }
+  def widget
+    params[:per_page] = 5
+    @search = EntrySearch.new(params)
+    
+    render :layout => 'widget'
+  end
+  
   def index
     respond_to do |wants|
       wants.html do

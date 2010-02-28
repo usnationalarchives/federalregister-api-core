@@ -2,13 +2,14 @@ class EntrySearch
   include Geokit::Geocoders
   extend ActiveSupport::Memoizable
   
-  attr_reader :errors, :topic, :agency, :search_term, :start_date, :end_date, :granule_class
+  attr_reader :errors, :topic, :agency, :search_term, :start_date, :end_date, :granule_class, :per_page
   
   def initialize(options)
     options ||= {}
     @errors = []
     @search_term = options[:q] unless options[:q].blank?
     @num_parameters = options.except("action", "controller").size
+    @per_page = options[:per_page] || 20
     
     if options[:place_id].present?
       @place = Place.find(options[:place_id])
@@ -110,6 +111,7 @@ class EntrySearch
     
     @entries = Entry.search(@search_term, 
       :page => @page,
+      :per_page => @per_page,
       :order => @order,
       :with => with,
       :conditions => conditions,

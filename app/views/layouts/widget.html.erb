@@ -1,0 +1,81 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+  <%= jquery_include_tag %>
+  <script type="text/javascript" charset="utf-8">
+    $(document).ready(function() {
+      //max-height: 210px
+      
+      $(".arrowholder, a.arrow").bind("click", function(e){
+          e.preventDefault();
+
+         $("#info_content").html( $(this).closest("li").find("div.full").html() );
+         $("#view_entry").attr('href', $("#info_content a:first").attr('href')); 
+         $("#info_content").scrollTop(0);
+         
+         $("#widget_wrapper").animate({left: -320}, 500);
+      });
+      
+      $("#back").bind("click", function(e){
+        e.preventDefault();
+        $("#widget_wrapper").animate({left: 0}, 300); 
+      });
+    });
+  </script>
+  <style>
+    html,body,div,span,applet,object,iframe,
+    h1,h2,h3,h4,h5,h6,p,blockquote,pre,
+    a,abbr,acronym,address,big,cite,code,
+    del,dfn,em,font,img,ins,kbd,q,s,samp,
+    small,strike,strong,sub,sup,tt,var,
+    dl,dt,dd,ol,ul,li,
+    fieldset,form,label,legend,
+    caption,tbody,tfoot,thead { margin:0;padding:0;border:0; }
+    
+    a { color:#43688f;text-decoration:none; } 
+    a:hover { text-decoration:underline; } 
+    body { font-family:"Helvetica Neue",Arial,Helvetica,sans-serif;font-size:13px;padding:10px 0 0 0; } 
+    #widget_container { background: #e8ecef; border: 1px solid #d4d9df; -moz-border-radius: 10px; -webkit-border-radius: 10px; border-radius: 10px; /* future proofing */ -khtml-border-radius: 10px; /* for old Konqueror browsers */ overflow:hidden;padding:8px 8px 28px 8px;position:relative;width:304px;margin:0 auto; }
+    #widget_container ul { border:1px solid #c4d0d8;list-style:none;position:relative;width:302px; }
+    #widget_container ul li { background: white; border-bottom:1px solid #ededed;height:39px;padding:5px 25px 5px 5px;position:relative; }
+    #widget_container ul li .arrowholder { cursor:pointer;display:block;height:50px;position:absolute;right:0;top:0;width:25px; }
+    #widget_container ul li a.arrow { background:url(/images/widget/sprite.png) no-repeat -225px 0;display:block;height:14px;outline:0;position:absolute;right:5px;top:18px;width:14px;}
+    #widget_container ul li:hover,
+    #widget_container ul li.hover  { background:#f1f1f1; }
+    #widget_container ul li:hover a.arrow,
+    #widget_container ul li.hover a.arrow { background: url(/images/widget/sprite.png) no-repeat -225px -26px; } 
+    #widget_container ul li:hover .arrowholder,
+    #widget_container ul li.hover .arrowholder { background-color:#ececec; } 
+    #widget_container ul li .full { display:none; } 
+    #widget_wrapper { position:relative;width:640px; } 
+    #widget_content { padding:10px;display:block;left:320px;position:absolute;top:0;width:290px; } 
+    #widget_footer { bottom:0;height:28px;position:absolute;width:304px;text-indent:-9999px; }
+    #widget_footer a.govpulse { background:url(/images/widget/sprite.png) no-repeat 0 0;bottom:3px;display:block;height:22px;left:0;position:absolute;width:105px; }
+    #widget_footer a.search_results { background:url(/images/widget/sprite.png) no-repeat 0 -47px;bottom:8px; _bottom: 3px; display:block;height:12px;position:absolute;right:1px;width:129px; } 
+    #widget_container #info_pane { display:block;height: 250px; left:320px;position:absolute;top:0;width:310px;font-family:"Helvetica Neue",Arial,Helvetica,sans-serif;font-size:12px; }
+    #widget_container #info_content { background: #fff; border: 1px solid #d4d9df; height: 210px; overflow: auto; padding:10px; width: 282px;}
+    #widget_container #info_content dt { border-bottom:1px solid #ccc;/*color:#fa6900;*/
+    color:#39505e;font-weight:bold;margin-bottom:2px;padding-bottom:2px;text-transform:uppercase; }
+    #widget_container #info_content dd { color:#39505e;margin:0 0 1em 0; }
+    #widget_nav { height:20px; width: 305px; } 
+    #widget_nav #back { background:url(/images/widget/sprite.png) no-repeat -104px    0;display:block;height:11px;float:left;margin-top: 2px; outline:none;text-indent:-9999px;width:46px; } 
+    #widget_nav #back:hover { background-position:-104px -26px; }
+    #widget_nav #view_entry { background:url(/images/widget/sprite.png) no-repeat -150px 0;display:block;height:13px;float:right;margin: 1px 3px 0 0; outline:none;text-indent:-9999px;width:75px; } 
+    #widget_nav #view_entry:hover { background-position:-150px -26px; } 
+    #widget_nav #back:active,
+    #widget_nav #view_entry:active { outline:none; } 
+    span.match { font-weight: bold; }
+  </style>
+</head>
+<body>
+  <div id="widget_container">
+    <%= yield %>
+    <div id="widget_footer">
+      <a href="http://govpulse.us" title="govpulse" class="govpulse">gov<span>pulse</span></a>
+      <%= link_to 'Your Federal Register', entries_search_path(params.except(:action, :controller, :per_page)), :class => 'search_results' %>
+    </div>
+  </div>
+  
+</body>
+</html>
