@@ -31,9 +31,10 @@ class EntriesController < ApplicationController
     end
   end
   
-  caches_action :widget, :cache_path => Proc.new { |request| request.params }
+  caches_action :widget, :cache_path => Proc.new { |request| request.params.delete_if{|key, val| val.blank?} }
   def widget
     params[:per_page] = 5
+    params[:order] = :date
     @search = EntrySearch.new(params)
     
     render :layout => 'widget'
