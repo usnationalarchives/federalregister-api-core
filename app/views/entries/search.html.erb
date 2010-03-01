@@ -99,7 +99,7 @@
       <% feed_autodiscovery url_for(params.merge(:format => :rss, :order => 'date', :publication_date_less_than => nil)) %>
       
       <%# TODO: HELP-DESIGN: HELP-COPY: instructions etc? %>
-      <p>Embed these results as a <%= link_to 'widget', entries_widget_path(params.except(:controller, :action)) %></p>
+      <p>Embed these results as a <%= link_to 'widget', entries_widget_path(params.except(:controller, :action, :commit, :order, :publication_date_less_than, :publication_date_greater_than).reject{|key, val| val.blank?}) %></p>
     <% end %>
   
     <% granule_class_facets = @search.facets[:granule_classes] %>
