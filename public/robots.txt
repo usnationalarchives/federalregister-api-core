@@ -1,4 +1,4 @@
-Sitemap: http://govpulse.us/sitemap_index.xml.gz
+Sitemap: http://govpulse.us/sitemaps/sitemap_index.xml.gz
 
 User-Agent: *
 Disallow: /location

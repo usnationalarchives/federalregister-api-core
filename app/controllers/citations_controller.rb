@@ -14,4 +14,8 @@ class CitationsController < ApplicationController
       render :action => 'show_multiple'
     end
   end
+  
+  def search
+    redirect_to citation_url(params[:volume].to_i, params[:page].to_i)
+  end
 end

@@ -8,18 +8,18 @@
 <% content_for :sidebar do %>
   <%# TODO HELP-DESIGN make wrappers and slide these up %>
   <% related_agencies = @topic_group.related_agencies_cache %>
-  <% unless related_agencies.blank? %>
+  <% if related_agencies.present? %>
     <h3>Agencies Using this Topic</h3>
     <div class='chart size_<%=related_agencies.size%>'><%= pie_3d_chart(:alt => 'Agencies using this Topic Group', :truncate_legend => '30', :counts => true, :legend_location => 'bottom', :records => related_agencies, :value_method => 'entries_count', :legend_method => 'name', :max => 10, :size => ['230','350'], :color_range => ['005073','84cedb'], :transparent_bg => true) %></div>
   <% end %>
   
-  <% if @granule_classes.present? %>
+  <% if @entry_types.present? %>
     <h3>Entry Types for Topic</h3>
-     <div class='chart size_<%=@granule_classes.size%>'><%= pie_3d_chart(:alt => 'Entry Types', :truncate_legend => '30', :counts => true, :legend_location => 'bottom', :records => @granule_classes, :value_method => :count, :legend_method => :granule_class, :size => ['230','200'], :color_range => ['005073','84cedb'], :transparent_bg => true) %></div>
+     <div class='chart size_<%=@entry_types.size%>'><%= pie_3d_chart(:alt => 'Entry Types', :truncate_legend => '30', :counts => true, :legend_location => 'bottom', :records => @entry_types, :value_method => :count, :legend_method => :entry_type, :size => ['230','200'], :color_range => ['005073','84cedb'], :transparent_bg => true) %></div>
   <% end %>
   
   <% if @topic_group.topics.size > 1 %>
-    <h3>This topic summarizes the following topics from the Federal Register:</h3>
+    <h3>"<%= @topic_group.name %>" combines the following topics from the Federal Register:</h3>
     <ul>
     <% @topic_group.topics.each do |topic| %>
       <li><%= topic.name %></li>

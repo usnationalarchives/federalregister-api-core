@@ -1,0 +1,27 @@
+<%
+  labels = []
+  values = []
+  agencies.sort_by{|a| a.entries.size}.reverse[0,10].each do |agency|
+    labels << "#{agency.name}"
+    values << agency.entries.size
+  end
+  
+  if values.sum < entry_count
+    count = (entry_count - values.sum)
+    labels << "Other"
+    values << count
+  end
+%>
+<div class='chart size_<%=values.size%>'>
+  <%= pie_3d_chart(
+                    :alt             => 'Top Agencies Reporting',
+                    :legend          => labels,
+                    :truncate_legend => '30',
+                    :counts          => true,
+                    :legend_location => 'bottom',
+                    :data            => values,
+                    :size            => ['230','350'],
+                    :color_range     => ['005073','84cedb'],
+                    :transparent_bg  => true
+                  ) %>
+</div>
