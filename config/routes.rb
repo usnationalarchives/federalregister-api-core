@@ -25,13 +25,13 @@ ActionController::Routing::Routes.draw do |map|
                                                    :year       => /\d{4}/,
                                                    :month      => /\d{1,2}/,
                                                    :day        => /\d{1,2}/
+  map.entries_date_search 'entries/date_search', :controller => 'entries',
+                                                 :action     => 'date_search'
+
   
   map.current_headlines 'entries/current-headlines', :controller => 'entries',
                                                      :action     => 'current_headlines'
 
-  map.entries_date_search 'entries/explore', :controller => 'entries',
-                                             :action     => 'by_date'
-                                       
   map.short_entry 'e/:document_number', :controller => 'entries',
                                         :action     => 'tiny_pulse'
   
@@ -39,8 +39,10 @@ ActionController::Routing::Routes.draw do |map|
   map.citation 'citation/:volume/:page', :controller => 'citations',
                                          :action     => 'show',
                                          :volume     => /\d{2}/,
-                                         :page     => /\d+/
-
+                                         :page       => /\d+/
+  map.citation_search 'citation/search', :controller => 'citations',
+                                         :action     => 'search'
+  
   # EVENTS
   map.events 'events/:year/:month', :controller => 'calendars',
                                           :action     => 'index',

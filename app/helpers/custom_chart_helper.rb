@@ -19,8 +19,8 @@ module CustomChartHelper
       
       if options[:records]
         records = options[:records].sort_by{|r| r.send('[]', options[:value_method]).to_i}.reverse
-        @data = records.map{|r| r.send('[]', options[:value_method]).to_i }
-        @legend = records.map{|r| r.send('[]', options[:legend_method]) }
+        @data = records.map{|r| (r.respond_to?(options[:value_method]) ? r.send(options[:value_method]) : r.send('[]', options[:value_method])).to_i }
+        @legend = records.map{|r| r.respond_to?(options[:legend_method]) ? r.send(options[:legend_method]) : r.send('[]', options[:legend_method]) }
         
         if options[:max]
           other_data = @data.slice(options[:max] .. @data.size)

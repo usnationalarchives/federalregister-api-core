@@ -1,0 +1,22 @@
+<% 
+  @entry_type_labels = []
+  @entry_type_values = []
+  @entries.group_by(&:entry_type).each do |entry_type, entries|
+    @entry_type_labels << entry_type
+    @entry_type_values << entries.size
+  end
+%>
+<div class='chart size_<%=@entry_type_values.size%>'>
+  <%= pie_3d_chart(
+                      :alt             => 'Entry Type for Recent Entries',
+                      :legend          => @entry_type_labels,
+                      :truncate_legend => '30',
+                      :counts          => true,
+                      :legend_location => 'bottom',
+                      :data            => @entry_type_values,
+                      :size            => ['230','200'],
+                      :color_range     => ['005073','84cedb'],
+                      :transparent_bg  => true
+                  )
+  %>
+</div>

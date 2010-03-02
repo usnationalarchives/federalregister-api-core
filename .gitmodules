@@ -12,4 +12,4 @@
 	url = git://github.com/andre/geokit-rails.git
 [submodule "vendor/plugins/sitemap_generator"]
 	path = vendor/plugins/sitemap_generator
-	url = git://github.com/adamsalter/sitemap_generator-plugin.git
+	url = git://github.com/trifecta/sitemap_generator.git
