@@ -50,15 +50,13 @@ class Entry < ActiveRecord::Base
                 appearing in this section.'
   }
   
-  GRANULE_CLASS_TYPES = {
+  ENTRY_TYPES = {
     'RULE'     => 'Rule', 
     'PRORULE'  => 'Proposed Rule', 
     'NOTICE'   => 'Notice', 
     'PRESDOCU' => 'Presidential Document', 
     'CORRECT'  => 'Correction',
-    'UNKNOWN'  => 'Unknown',
-    'SUNSHINE' => 'Unknown',
-    ''         => 'Unknown'
+    'UNKNOWN'  => 'Unknown'
   }
   
   belongs_to :agency
@@ -102,8 +100,8 @@ class Entry < ActiveRecord::Base
   file_attribute(:full_xml)  {"#{RAILS_ROOT}/data/xml/#{document_file_path}.xml"}
   file_attribute(:full_text) {"#{RAILS_ROOT}/data/text/#{document_file_path}.txt"}
   
-  def granule_class 
-    GRANULE_CLASS_TYPES[self['granule_class']]
+  def entry_type 
+    ENTRY_TYPES[granule_class]
   end
   
   define_index do
@@ -212,6 +210,22 @@ class Entry < ActiveRecord::Base
   
   def self.find_all_by_citation(volume, page)
     all(:conditions => ["volume = ? AND start_page <= ? AND end_page >= ?", volume.to_i, page.to_i, page.to_i], :order => "entries.end_page")
+  end
+  
+  def self.first_publication_date_before(date)
+    Entry.find(:first,
+        :select => 'publication_date',
+        :conditions => ["publication_date < ?", date],
+        :order => 'publication_date DESC'
+    ).try(:publication_date)
+  end
+  
+  def self.first_publication_date_after(date)
+    Entry.find(:first,
+        :select => 'publication_date',
+        :conditions => ["publication_date > ?", date],
+        :order => 'publication_date'
+    ).try(:publication_date)
   end
   
   private

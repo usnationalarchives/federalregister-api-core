@@ -6,10 +6,11 @@
     $('#congress').load('/location/congress');
   });
 </script>
+<link rev="canonical" type="text/html" href="<%= short_entry_url(@entry) %>" />
 <% end %>
 
 <% if @entry.abstract %>
-  <h3>Abstract</h3>
+  <h3>Summary</h3>
   <p class='abstract'>
     <%= text_with_links(@entry, @entry.abstract) %>
   </p>
@@ -30,7 +31,7 @@
       <% if @entry.type.present?                %><dt>Type: </dt>            <dd><%= @entry.type                                     %></dd><% end %>
       <% if @entry.genre.present?               %><dt>Genre:</dt>            <dd><%= @entry.genre.titlecase                          %></dd><% end %>
       <% if @entry.part_name.present?           %><dt>Part Name:</dt>        <dd><%= @entry.part_name                                %></dd><% end %>
-      <% if @entry.granule_class.present?       %><dt>Granule Class:</dt>    <dd><%= @entry.granule_class.titlecase                  %></dd><% end %>
+      <% if @entry.entry_type.present?          %><dt>Entry Type:</dt>       <dd><%= @entry.entry_type                               %></dd><% end %>
       <% if @entry.document_number.present?     %><dt>Other Formats:</dt>    <dd><%= %w(html text pdf).map{|format| link_to format, @entry.source_url(format), :class => format }.join(" | ") %>
                                                                                  <%= ' | ' + link_to( 'regulations.gov', "http://www.regulations.gov/search/Regs/home.html#documentDetail?R=#{@entry.regulationsdotgov_id}") if @entry.regulationsdotgov_id.present? %></dd><% end %>
       <dt>Length:</dt>    <dd><%= @entry.human_length %></dd>
@@ -50,11 +51,7 @@
 <div class="fulltextWrapper span-16">
   <pre><%=
     # FIXME: move out of view!
-    text = truncate(
-      @entry.full_text,
-      :length => 120000,
-      :omission => "<br /><br /><br />[ENTRY TRUNCATED: " + link_to('view full text', @entry.source_url(:text)) + "]</pre>"
-    )
+    text = @entry.full_text
     
     text.sub!(/.*^-{71}$/m, '')
     text.gsub!(/<\/?INF>/, '')
@@ -93,21 +90,6 @@
 <% end %>
 
 <% content_for :sidebar do %>
-  <h3 class="hAction">
-    Speak Up 
-    <span class='small_link'>(<%= link_to 'change location', edit_location_path %>)</span>
-  </h3> 
-  
-  <% if @entry.comment_url.present? && (@entry.comments_close_on.nil? || @entry.comments_close_on >= Date.today) %>
-    <p><%= link_to "Submit a formal comment", @entry.comment_url %>. The agency is required to respond in a future FR entry.</p>
-  <% end %>
-  <div id="congress">
-    <h5>Your Senators</h5>
-    <p class="loading">Loading<img src="/images/ticker_loading.gif" alt="loading" /></p>
-    <h5>Your Representative</h5>
-    <p class="loading">Loading<img src="/images/ticker_loading.gif" alt="loading" /></p>
-  </div>
-
   <h3>Gather a Crowd</h3>
   <ul class='social'>
     <li id='twitter'    ><%= link_to_twitter(@entry)         %></li>
@@ -123,6 +105,22 @@
     </span>
   </p>
 
+  <h3 class="hAction">
+    Speak Up 
+    <span class='small_link'>(<%= link_to 'change location', edit_location_path %>)</span>
+  </h3> 
+  
+  <% if @entry.comment_url.present? && (@entry.comments_close_on.nil? || @entry.comments_close_on >= Date.today) %>
+    <p><%= link_to "Submit a formal comment", @entry.comment_url %>. The agency is required to respond in a future FR entry.</p>
+  <% end %>
+  <div id="congress">
+    <h5>Your Senators</h5>
+    <p class="loading">Loading<img src="/images/ticker_loading.gif" alt="loading" /></p>
+    <h5>Your Representative</h5>
+    <p class="loading">Loading<img src="/images/ticker_loading.gif" alt="loading" /></p>
+  </div>
+  
+  
   <% if @entry.contact.present? %>
     <h3>Contact</h3>
     <p><%= auto_link @entry.contact %></p>

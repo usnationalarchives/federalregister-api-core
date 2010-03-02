@@ -1,8 +1,5 @@
 module CalendarHelper
-  def dates_calendar_view(dates, year, month)
-    calendar_for(year.to_i, month.to_i, :calendar_class => 'group calendar', &dates_events_proc(dates))
-  end
-  
+  # for the entries by date page
   def entries_calendar_view(year, month)
     year = year.to_i
     month = month.to_i
@@ -20,17 +17,6 @@ module CalendarHelper
     html
   end
   
-  def dates_events_proc(dates)
-    events = dates.map{|e| e.date}
-    lambda do |day|
-      if events.include?(day)
-        [link_to(day.day, "#event_#{day.to_s(:db)}"), { :class => "dayWithEvents" }]
-      else
-        day.day
-      end
-    end
-  end
-  
   def entries_proc(date)
     published_dates = Entry.find_as_array(
       :select => "distinct(publication_date) AS publication_date",
@@ -39,9 +25,25 @@ module CalendarHelper
     
     lambda do |date|
       if published_dates.include?(date)
-        [link_to(date.day, "#entry_#{date.to_s(:ymd)}"), { :class => "dayWithEntries" }]
+        [link_to(date.day, entries_by_date_path(date))]
       else
         date.day
+      end
+    end
+  end
+  
+  # for the calendar page
+  def dates_calendar_view(dates, year, month)
+    calendar_for(year.to_i, month.to_i, :calendar_class => 'group calendar', &dates_events_proc(dates))
+  end
+  
+  def dates_events_proc(dates)
+    events = dates.map{|e| e.date}
+    lambda do |day|
+      if events.include?(day)
+        [link_to(day.day, "#event_#{day.to_s(:db)}"), { :class => "dayWithEvents" }]
+      else
+        day.day
       end
     end
   end

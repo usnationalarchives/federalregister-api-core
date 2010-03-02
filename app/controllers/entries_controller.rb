@@ -52,35 +52,17 @@ class EntriesController < ApplicationController
     render :layout => false
   end
   
+  def date_search
+    date = Chronic.parse(params[:search], :context => :past)
+    raise ActiveRecord::RecordNotFound if date.nil?
+    redirect_to entries_by_date_url(date)
+  end
+  
   def by_date
-    if params[:search]
-      time = Chronic.parse(params[:search], :context => :past)
-      raise ActiveRecord::RecordNotFound unless !time.nil?
-      @year  = time.year
-      @month = time.month || 1
-      @day   = time.day || 1
-    else
-      @year  = params[:year]  || Time.now.strftime("%Y")
-      @month = params[:month] || Time.now.strftime("%m")
-      @day   = params[:day]   || Time.now.strftime("%d")
-    end
-    
-    @show_calendars = params[:show_calendars]
-      
-    
+    @year  = params[:year]  || Time.now.strftime("%Y")
+    @month = params[:month] || Time.now.strftime("%m")
+    @day   = params[:day]   || Time.now.strftime("%d")
     @publication_date = Date.parse("#{@year}-#{@month}-#{@day}")
-    
-    @prev_date = Entry.find(:first,
-        :select => 'publication_date',
-        :conditions => ["publication_date < ?", @publication_date],
-        :order => 'publication_date DESC'
-    ).try(:publication_date)
-    
-    @next_date = Entry.find(:first,
-        :select => 'publication_date',
-        :conditions => ["publication_date > ?", @publication_date],
-        :order => 'publication_date'
-    ).try(:publication_date)
     
     @agencies = Agency.all(
         :include => :entries,
@@ -91,9 +73,8 @@ class EntriesController < ApplicationController
       :conditions => ['entries.agency_id IS NULL && entries.publication_date = ?', @publication_date],
       :order => "entries.title"
     )
-    @entry_count = Entry.count(:conditions => ['entries.publication_date = ?', @publication_date])
     
-    if @entry_count == 0
+    if @agencies.size == 0 && @entries_without_agency.size == 0
       raise ActiveRecord::RecordNotFound
     end
     
@@ -102,19 +83,7 @@ class EntriesController < ApplicationController
       :conditions => ['entries.publication_date = ?', @publication_date]
     )
     
-    @labels = []
-    @values = []
-    @agencies.sort_by{|a| a.entries.size}.reverse[0,10].each do |agency|
-      @labels << "#{agency.name}"
-      @values << agency.entries.size
-    end
-    
-    if @values.sum < @entry_count
-      count = (@entry_count - @values.sum)
-      @labels << "Other"
-      @values << count
-    end
-    
+    # Map
     if !@places.blank?
       @map = Cloudkicker::Map.new( :style_id => 1714,
                                    :zoom     => 1,
@@ -132,18 +101,7 @@ class EntriesController < ApplicationController
       end
     end
     
-    @granule_labels = []
-    @granule_values = []
-    @entries = []
-    @agencies.each do |agency|
-      @entries << agency.entries
-    end
-    @entries << @entries_without_agency
-    @entries = @entries.flatten
-    @entries.group_by(&:granule_class).each do |granule_class, entries|
-      @granule_labels << granule_class
-      @granule_values << entries.size
-    end
+    @entries = @agencies.inject([]) {|set, agency| set += agency.entries} + @entries_without_agency
   end
   
   def show
@@ -177,6 +135,6 @@ class EntriesController < ApplicationController
   
   def tiny_pulse
     entry = Entry.find_by_document_number!(params[:document_number])
-    redirect_to entry_path(entry)
+    redirect_to entry_path(entry), :status=>:moved_permanently
   end
 end
