@@ -8,6 +8,7 @@ ActionController::Routing::Routes.draw do |map|
   map.entries 'entries.:format', :controller => 'entries', :action => 'index'
   
   map.entries_search 'entries/search', :controller => 'entries', :action => 'search'
+  map.entries_widget 'entries/widget', :controller => 'entries', :action => 'widget'
   map.entry 'entries/:year/:month/:day/:document_number/:slug', :controller => 'entries',
                                                                 :action     => 'show',
                                                                 :year       => /\d{4}/,
