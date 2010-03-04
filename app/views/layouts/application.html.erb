@@ -99,6 +99,8 @@
         <% end %>
       </div>
       <!-- content end -->
+
+      <%= yield :widget %>
       
     </div>
     <!-- MAIN end -->
@@ -121,6 +123,7 @@
       <div class="pulse right"></div>      
     </div>  
   </div>
+  
     
   <%= render :partial => 'layouts/google_analytics' %>  
   <%= render :partial => 'layouts/tender_support' %>  

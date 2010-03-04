@@ -1,11 +1,6 @@
-// Place your application-specific JavaScript functions and classes here
-// This file is automatically included by javascript_include_tag :defaults
-$(window).unload( function () {
-  var scrollable = $("div.daily").data("scrollable");
-  $.cookie('ticker_index', scrollable.getIndex());
-});
 
 $(document).ready(function() {
+
   //initialize scrollable
   $('#ticker').each(function(){
     $.ajax({
@@ -30,11 +25,16 @@ $(document).ready(function() {
       
         //init the tooltips for the now loaded list of items
         loadToolTips();
+        
+        $(scrollable).bind('onSeek', function(event) {
+          $.cookie('ticker_index', scrollable.getIndex());
+        });
       
       }
     });
   });
   
+
   //init tooltips for short citation list
   $(".citation a.tip").each(function(){
     
