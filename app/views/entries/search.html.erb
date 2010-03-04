@@ -100,7 +100,7 @@
       <% feed_autodiscovery url_for(params.merge(:format => :rss, :order => 'date', :publication_date_less_than => nil)) %>
       
       <%# TODO: HELP-DESIGN: HELP-COPY: instructions etc? %>
-      <%= link_to 'Embed these results as a widget on your website', entries_widget_path(params.except(:controller, :action, :commit, :order, :publication_date_less_than, :publication_date_greater_than).reject{|key, val| val.blank?}), :class => 'icon_widget spawn_modal', :id => 'widget_info' %>
+      <%= link_to 'Embed these results as a widget on your website', entries_widget_path(params.except(:controller, :action, :commit, :order, :publication_date_less_than, :publication_date_greater_than).reject{|key, val| val.blank?}), :class => 'icon_widget spawn_modal', :id => 'widget' %>
     <% end %>
   
     <% granule_class_facets = @search.facets[:granule_classes] %>
@@ -141,15 +141,19 @@
   <% end %>
 <% end %>
 
-<div id="widget_info" class="modal-box">
-  <h1>Embed a Widget</h1>
-  <p>Copy and paste the following code to have a widget of your search results on your page</p>
-  <textarea name="Name" rows="8" cols="40" disabled="disabled">
+<% content_for :widget do %>
+<div id="modal_widget" class="modal_box">
+  <div class="modal_box_content">
+    <h1>Embed a Widget</h1>
+    <p>Copy and paste the following code to have a widget of your search results on your page</p>
+    <textarea name="Name" rows="8" cols="40" disabled="disabled">
     
-    Code
+      Code
     
-    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
     
-  </textarea>
-  <a href="" class="cancel">Close</a>
+    </textarea>
+    <a href="" class="cancel">Close</a>
+  </div>
 </div>
+<% end %>
