@@ -994,14 +994,29 @@ div.wml-text-background
   :-border-radius 10px
   :-moz-border-radius 10px
   :-webkit-border-radius 10px
-  :display none
+  :display block
   :margin 50px auto
   :padding 10px
-  :width 516px
+  :position relative
+  :width 673px
   .modal_box_content
     :background #fff
-    :border 1px solid #ccc
     :padding 1em
+    a.cancel
+      :background url(/images/cross.png) no-repeat left 1px
+      :font-weight bold
+      :padding-left 20px
+      :position absolute
+      :right 10px
+      :top 10px
+    textarea
+      :border-color #999
+      :float left
+      :height 265px
+      :margin-right 15px
+      :width 300px
+    .preview
+      :float left
     fieldset
       :border none
       :margin 0
