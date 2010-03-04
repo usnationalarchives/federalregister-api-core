@@ -46,8 +46,7 @@ $(document).ready(function() {
   });
    
   //$(":text").labelify({ labelledClass: "labelHighlight" });
-  
-  $(":text").inlineFormElements();
+  //$(":text").inlineFormElements();
   
   
   // This needs to be fixed to use a proper slug - may require url rewriting.
