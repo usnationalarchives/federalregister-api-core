@@ -22,16 +22,16 @@ $(document).ready(function() {
   //modal open and close
   $(".spawn_modal").bind("click", function(e){
     e.preventDefault();
-    console.log("click");
     var modal_id = $(this).attr("id");
     var modal_node = $("#modal_" + modal_id);
     
+    $("html, body").animate({scrollTop: 0}, 400);
+    
     $(modal_node).show().wrap("<div class='modal'></div>");
     
-    $(modal_node).find("a.cancel").bind("click", function(e){
-      e.preventDefault();
-      console.log($(modal_node).parent());
-      $(modal_node).parent().remove().end().hide();
+    $(modal_node).find("a.cancel").one("click", function(e){
+      e.preventDefault(); 
+      $(modal_node).unwrap().hide();
     });
     
   });
