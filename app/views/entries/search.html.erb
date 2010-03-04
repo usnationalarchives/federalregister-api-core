@@ -142,18 +142,15 @@
 <% end %>
 
 <% content_for :widget do %>
-<div id="modal_widget" class="modal_box">
+<div id="modal_widget" class="modal_box group">
   <div class="modal_box_content">
     <h1>Embed a Widget</h1>
-    <p>Copy and paste the following code to have a widget of your search results on your page</p>
-    <textarea name="Name" rows="8" cols="40" disabled="disabled">
-    
-      Code
-    
-      Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-    
-    </textarea>
-    <a href="" class="cancel">Close</a>
+    <p>You can now embed a govpulse widget onto your own website!  5 of the highest rated items found in your search will be delivered automatically to the visitors of your site.  Stay up to date with entries that matter most to you or your users!</p>
+    <textarea readonly="readonly">&lt;iframe src="<%= entries_widget_path(params.except(:controller, :action, :commit, :order, :publication_date_less_than, :publication_date_greater_than).reject{|key, val| val.blank?})%>" name="govpulse_widget" id="govpulse_widget" scrolling="none" frameborder="0" width="322px" height="300px"&gt;</textarea>
+    <div class="preview">
+      <iframe src="<%= entries_widget_path(params.except(:controller, :action, :commit, :order, :publication_date_less_than, :publication_date_greater_than).reject{|key, val| val.blank?})%>" name="govpulse_widget" id="govpulse_widget" frameborder="0" width="322px" height="300px"></iframe>
+    </div>  
+    <a href="" class="cancel">Close Window</a>
   </div>
 </div>
 <% end %>
