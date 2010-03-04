@@ -1484,9 +1484,9 @@ div.wml-text-background {
 }
 /* line 1005, ../../app/stylesheets/trifecta.sass */
 #main .modal_box .modal_box_content a.cancel {
-  background: url(/images/cross.png) no-repeat left 1px;
+  background: url(/images/cross.png) no-repeat right 2px;
   font-weight: bold;
-  padding-left: 20px;
+  padding-right: 20px;
   position: absolute;
   right: 10px;
   top: 10px;
