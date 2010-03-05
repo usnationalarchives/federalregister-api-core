@@ -958,6 +958,16 @@ body #footer
 div.wml-text-background
   :opacity 0
   
+.icon_rss
+  :background url(/images/rss_icon.gif) no-repeat left 1px
+  :display block
+  :margin-bottom 10px
+  :padding-left 40px
+.icon_widget
+  :background url(/images/widget_icon.gif) no-repeat left 1px
+  :display block
+  :height 40px
+  :padding-left 40px
 #feedback  
   :background url(/images/feedback.png) no-repeat left top
   :bottom 20px
@@ -977,6 +987,45 @@ div.wml-text-background
   :top 0
   :width 100%
   :z-index 99999
+
+#main .modal_box
+  :background #fff
+  :border 5px solid #DDDDDD
+  :-border-radius 10px
+  :-moz-border-radius 10px
+  :-webkit-border-radius 10px
+  :display block
+  :margin 50px auto
+  :padding 10px
+  :position relative
+  :width 673px
+  .modal_box_content
+    :background #fff
+    :padding 1em
+    a.cancel
+      :background url(/images/cross.png) no-repeat right 2px
+      :font-weight bold
+      :padding-right 20px
+      :position absolute
+      :right 10px
+      :top 10px
+    textarea
+      :border-color #999
+      :float left
+      :height 265px
+      :margin-right 15px
+      :width 300px
+    .preview
+      :float left
+    fieldset
+      :border none
+      :margin 0
+    h3
+      :border-bottom 1px solid #ccc
+      :color #fa6900
+      :font-family "Helvetica Neue",Arial,Helvetica,sans-serif
+      :font-weight bold
+  
 .floatLeft
   :float left
 .floatRight

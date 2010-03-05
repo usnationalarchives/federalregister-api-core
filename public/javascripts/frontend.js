@@ -18,6 +18,23 @@ $(document).ready(function() {
       });   
     });
   });
+  
+  //modal open and close
+  $(".spawn_modal").bind("click", function(e){
+    e.preventDefault();
+    var modal_id = $(this).attr("id");
+    var modal_node = $("#modal_" + modal_id);
+    
+    $("html, body").animate({scrollTop: 0}, 400);
+    
+    $(modal_node).show().wrap("<div class='modal'></div>");
+    
+    $(modal_node).find("a.cancel").one("click", function(e){
+      e.preventDefault(); 
+      $(modal_node).unwrap().hide();
+    });
+    
+  });
 
   
   $("#feedback").bind("mouseenter", function(){
@@ -28,7 +45,9 @@ $(document).ready(function() {
     $(this).animate({left: -10}, 200);
   });
    
-  $(":text").labelify({ labelledClass: "labelHighlight" });
+  //$(":text").labelify({ labelledClass: "labelHighlight" });
+  //$(":text").inlineFormElements();
+  
   
   // This needs to be fixed to use a proper slug - may require url rewriting.
   $('.tag_cloud').each(function(){
