@@ -39,7 +39,7 @@
   <%= javascript_include_tag 'jquery.toggleDisabled.js'   %>
   <%= javascript_include_tag 'jquery.horizontalCount.js'  %>
   <%= javascript_include_tag 'tagcloud.js'                %>
-  <%= javascript_include_tag 'jquery.labelify.js'         %>
+  <%= javascript_include_tag 'jquery.inlinelabel.js'         %>
 
   <%= yield :javascripts %>
 
@@ -99,6 +99,8 @@
         <% end %>
       </div>
       <!-- content end -->
+
+      <%= yield :widget %>
       
     </div>
     <!-- MAIN end -->
@@ -121,6 +123,7 @@
       <div class="pulse right"></div>      
     </div>  
   </div>
+  
     
   <%= render :partial => 'layouts/google_analytics' %>  
   <%= render :partial => 'layouts/tender_support' %>  
