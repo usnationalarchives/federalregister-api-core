@@ -21,19 +21,20 @@ $(document).ready(function() {
   
   //modal open and close
   $(".spawn_modal").bind("click", function(e){
-    e.preventDefault();
-    var modal_id = $(this).attr("id");
-    var modal_node = $("#modal_" + modal_id);
+    if( !($.browser.msie && $.browser.version == 6) ){
+      e.preventDefault();
+      var modal_id = $(this).attr("id");
+      var modal_node = $("#modal_" + modal_id);
     
-    $("html, body").animate({scrollTop: 0}, 400);
+      $("html, body").animate({scrollTop: 0}, 400);
     
-    $(modal_node).show().wrap("<div class='modal'></div>");
+      $(modal_node).show().wrap("<div class='modal'></div>");
     
-    $(modal_node).find("a.cancel").one("click", function(e){
-      e.preventDefault(); 
-      $(modal_node).unwrap().hide();
-    });
-    
+      $(modal_node).find("a.cancel").one("click", function(e){
+        e.preventDefault(); 
+        $(modal_node).unwrap().hide();
+      });
+    }
   });
 
   
