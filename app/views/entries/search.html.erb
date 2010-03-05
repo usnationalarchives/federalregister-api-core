@@ -25,7 +25,7 @@
             </li>
           <% else %>
             <li class="simple">
-              <label>Near:</label> <%= text_field_tag :near, params[:near], :title => "(eg '94118', 'Seattle', etc.)" %>
+              <label>Near:</label> <%= text_field_tag :near, params[:near], :title => "(eg '94118', 'Seattle', etc.)" %> 
               <label class="nextto">Within:</label> <%= text_field_tag :within, params[:within], :title => "Miles", :class => "miles" %>            
             </li> 
           <% end %>
@@ -94,12 +94,13 @@
   <% unless @search.blank? %>
     <% if @search.entries && @search.entries.size > 0 %>
       <h3>Other Formats</h3>
-      <%# TODO: HELP-DESIGN: HELP-COPY: Need RSS icon, some text here %>
-      <p>Subscribe to an <%= link_to 'RSS Feed', params.merge(:format => :rss, :order => 'date', :publication_date_less_than => nil) %> of these search results.</p>
+
+      <%= link_to 'Subscribe to an RSS Feed of these search results.', params.merge(:format => :rss, :order => 'date', :publication_date_less_than => nil), :class => 'icon_rss' %>
+      
       <% feed_autodiscovery url_for(params.merge(:format => :rss, :order => 'date', :publication_date_less_than => nil)) %>
       
       <%# TODO: HELP-DESIGN: HELP-COPY: instructions etc? %>
-      <p>Embed these results as a <%= link_to 'widget', entries_widget_path(params.except(:controller, :action, :commit, :order, :publication_date_less_than, :publication_date_greater_than).reject{|key, val| val.blank?}) %></p>
+      <%= link_to 'Embed these results as a widget on your website', entries_widget_path(params.except(:controller, :action, :commit, :order, :publication_date_less_than, :publication_date_greater_than).reject{|key, val| val.blank?}), :class => 'icon_widget spawn_modal', :id => 'widget' %>
     <% end %>
   
     <% granule_class_facets = @search.facets[:granule_classes] %>
@@ -140,4 +141,16 @@
   <% end %>
 <% end %>
 
-
+<% content_for :widget do %>
+<div id="modal_widget" class="modal_box group">
+  <div class="modal_box_content">
+    <h1>Embed a Widget</h1>
+    <p>You can now embed a govpulse widget onto your own website!  5 of the highest rated items found in your search will be delivered automatically to the visitors of your site.  Stay up to date with entries that matter most to you or your users!</p>
+    <textarea readonly="readonly">&lt;iframe src="<%= entries_widget_path(params.except(:controller, :action, :commit, :order, :publication_date_less_than, :publication_date_greater_than).reject{|key, val| val.blank?})%>" name="govpulse_widget" id="govpulse_widget" scrolling="none" frameborder="0" width="322px" height="300px"&gt;&lt;iframe&gt;</textarea>
+    <div class="preview">
+      <iframe src="<%= entries_widget_path(params.except(:controller, :action, :commit, :order, :publication_date_less_than, :publication_date_greater_than).reject{|key, val| val.blank?})%>" name="govpulse_widget" id="govpulse_widget" frameborder="0" width="322px" height="300px"></iframe>
+    </div>  
+    <a href="" class="cancel">Close Window</a>
+  </div>
+</div>
+<% end %>
