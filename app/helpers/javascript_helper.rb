@@ -3,7 +3,7 @@ module JavascriptHelper
     if RAILS_ENV == 'development'
       javascript_include_tag 'jquery'
     else
-      javascript_include_tag 'http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js'
+      javascript_include_tag 'http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js'
     end
   end
   
