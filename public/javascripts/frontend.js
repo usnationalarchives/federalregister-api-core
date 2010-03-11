@@ -31,9 +31,7 @@ $(document).ready(function() {
       
       $("#footer").after("<div class='modal'></div>");
       $(modal_node).show().centerScreen();
-
       $("body").css("overflow","hidden");
-            
       $(".modal").width( $("body").width() )
                  .height( $("body").height() );
                  

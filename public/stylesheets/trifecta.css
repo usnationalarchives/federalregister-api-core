@@ -1482,19 +1482,24 @@ div.wml-text-background {
   -moz-border-radius: 10px;
   -webkit-border-radius: 10px;
   display: none;
+}
+
+
+/* line 1009, ../../app/stylesheets/trifecta.sass */
+>>>>>>> 47091a5... undo that last push, not ready.:app/stylesheets/trifecta.sass {
   padding: 10px;
   position: absolute;
   top: 20px;
   width: 673px;
   z-index: 9999;
 }
-/* line 1011, ../../app/stylesheets/trifecta.sass */
-.modal_box .modal_box_content {
+/* line 1015, ../../app/stylesheets/trifecta.sass */
+>>>>>>> 47091a5... undo that last push .modal_box_content, not ready.:app/stylesheets/trifecta.sass .modal_box_content {
   background: #fff;
   padding: 1em;
 }
-/* line 1014, ../../app/stylesheets/trifecta.sass */
-.modal_box .modal_box_content h1 {
+/* line 1018, ../../app/stylesheets/trifecta.sass */
+>>>>>>> 47091a5... undo that last push .modal_box_content h1, not ready.:app/stylesheets/trifecta.sass .modal_box_content h1 {
   color: #46565c;
   font: 2.5em Georgia,"Times New Roman",Serif;
   font-variant: small-caps;
@@ -1502,28 +1507,28 @@ div.wml-text-background {
   padding: 0 0 0 0;
   text-align: center;
 }
-/* line 1021, ../../app/stylesheets/trifecta.sass */
-.modal_box .modal_box_content a {
+/* line 1025, ../../app/stylesheets/trifecta.sass */
+>>>>>>> 47091a5... undo that last push .modal_box_content a, not ready.:app/stylesheets/trifecta.sass .modal_box_content a {
   border: none;
   color: #005b81;
   outline: none;
   text-decoration: none;
 }
-/* line 1027, ../../app/stylesheets/trifecta.sass */
-.modal_box .modal_box_content a:visited {
+/* line 1031, ../../app/stylesheets/trifecta.sass */
+>>>>>>> 47091a5... undo that last push .modal_box_content a:visited, not ready.:app/stylesheets/trifecta.sass .modal_box_content a:visited {
   color: #7d7d7d;
 }
-/* line 1029, ../../app/stylesheets/trifecta.sass */
-.modal_box .modal_box_content a:hover {
+/* line 1033, ../../app/stylesheets/trifecta.sass */
+>>>>>>> 47091a5... undo that last push .modal_box_content a:hover, not ready.:app/stylesheets/trifecta.sass .modal_box_content a:hover {
   color: #cf8227;
 }
-/* line 1032, ../../app/stylesheets/trifecta.sass */
-.modal_box .modal_box_content a.raquo {
+/* line 1036, ../../app/stylesheets/trifecta.sass */
+>>>>>>> 47091a5... undo that last push .modal_box_content a.raquo, not ready.:app/stylesheets/trifecta.sass .modal_box_content a.raquo {
   background: url(/images/raquo3.png) no-repeat 0 5px;
   padding: 0 0 0 10px;
 }
-/* line 1035, ../../app/stylesheets/trifecta.sass */
-.modal_box .modal_box_content a.cancel {
+/* line 1039, ../../app/stylesheets/trifecta.sass */
+>>>>>>> 47091a5... undo that last push .modal_box_content a.cancel, not ready.:app/stylesheets/trifecta.sass .modal_box_content a.cancel {
   background: url(/images/cross.png) no-repeat right 2px;
   font-weight: bold;
   padding-right: 20px;
@@ -1531,57 +1536,76 @@ div.wml-text-background {
   right: 10px;
   top: 10px;
 }
-/* line 1042, ../../app/stylesheets/trifecta.sass */
-.modal_box .modal_box_content textarea {
+/* line 1046, ../../app/stylesheets/trifecta.sass */
+>>>>>>> 47091a5... undo that last push .modal_box_content textarea, not ready.:app/stylesheets/trifecta.sass .modal_box_content textarea {
   border-color: #999;
   float: left;
   height: 265px;
   margin-right: 15px;
   width: 300px;
 }
-/* line 1048, ../../app/stylesheets/trifecta.sass */
-.modal_box .modal_box_content .preview {
+/* line 1052, ../../app/stylesheets/trifecta.sass */
+>>>>>>> 47091a5... undo that last push .modal_box_content .preview, not ready.:app/stylesheets/trifecta.sass .modal_box_content .preview {
   float: left;
 }
-/* line 1050, ../../app/stylesheets/trifecta.sass */
-.modal_box .modal_box_content fieldset {
+/* line 1054, ../../app/stylesheets/trifecta.sass */
+>>>>>>> 47091a5... undo that last push .modal_box_content fieldset, not ready.:app/stylesheets/trifecta.sass .modal_box_content fieldset {
   border: none;
   margin: 0;
 }
-/* line 1053, ../../app/stylesheets/trifecta.sass */
-.modal_box .modal_box_content h3 {
+/* line 1057, ../../app/stylesheets/trifecta.sass */
+>>>>>>> 47091a5... undo that last push .modal_box_content h3, not ready.:app/stylesheets/trifecta.sass .modal_box_content h3 {
   border-bottom: 1px solid #ccc;
   color: #fa6900;
   font-family: "Helvetica Neue",Arial,Helvetica,sans-serif;
   font-weight: bold;
 }
 
-/* line 1059, ../../app/stylesheets/trifecta.sass */
+/* line 1063, ../../app/stylesheets/trifecta.sass */
+.modal_instructions .center {
+  margin: 0 auto;
+  width: 650px;
+}
+/* line 1066, ../../app/stylesheets/trifecta.sass */
+.modal_instructions textarea {
+  border-color: #999;
+  float: left;
+  height: 265px;
+  margin-right: 15px;
+  width: 300px;
+  float: left;
+}
+/* line 1073, ../../app/stylesheets/trifecta.sass */
+.modal_instructions .preview {
+  float: left;
+}
+
+/* line 1075, ../../app/stylesheets/trifecta.sass */
 .floatLeft {
   float: left;
 }
 
-/* line 1061, ../../app/stylesheets/trifecta.sass */
+/* line 1077, ../../app/stylesheets/trifecta.sass */
 .floatRight {
   float: right;
 }
 
-/* line 1063, ../../app/stylesheets/trifecta.sass */
+/* line 1079, ../../app/stylesheets/trifecta.sass */
 .marginTop {
   margin-top: 10px;
 }
 
-/* line 1065, ../../app/stylesheets/trifecta.sass */
+/* line 1081, ../../app/stylesheets/trifecta.sass */
 .marginBottom {
   margin-bottom: 10px !important;
 }
 
-/* line 1067, ../../app/stylesheets/trifecta.sass */
+/* line 1083, ../../app/stylesheets/trifecta.sass */
 .paddingLeft {
   padding-left: 10px;
 }
 
-/* line 1069, ../../app/stylesheets/trifecta.sass */
+/* line 1085, ../../app/stylesheets/trifecta.sass */
 ul.tag_cloud {
   font-size: 1.1em;
   line-height: 1.32em;
@@ -1614,12 +1638,12 @@ ul.tag_cloud .xl {
 ul.tag_cloud .xxl {
   font-size: 2.2em;
 }
-/* line 1071, ../../app/stylesheets/trifecta.sass */
+/* line 1087, ../../app/stylesheets/trifecta.sass */
 ul.tag_cloud li {
   float: left;
 }
 
-/* line 1073, ../../app/stylesheets/trifecta.sass */
+/* line 1089, ../../app/stylesheets/trifecta.sass */
 #tagcloud_label {
   background: #005b81;
   border: 2px solid #bde3f1;
