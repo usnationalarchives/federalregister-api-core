@@ -7,7 +7,7 @@
 
 <% if !@closing_soon.empty? %>
   <div class="clear marginBottom widget">
-    <h2 class="header">Comments Closing In Next 7 Days (<%= @closing_soon.map{|a,e| e.size}.sum %>)</h2>
+    <h2 class="header flatBottom">Comments Closing In Next 7 Days (<%= @closing_soon.map{|a,e| e.size}.sum %>)</h2>
     <ul class="indent marginTop recent_prorule">
     <% @closing_soon.each do |agency, entries| %>
       <li>
@@ -24,7 +24,7 @@
 
 <% if !@recently_opened.empty? %>
   <div class="clear widget">
-    <h2 class="header">Comments Opened in Last 7 Days (<%= @recently_opened.map{|a,e| e.size}.sum %>)</h2>
+    <h2 class="header flatBottom">Comments Opened in Last 7 Days (<%= @recently_opened.map{|a,e| e.size}.sum %>)</h2>
     <ul class="indent marginTop recent_prorule">
     <% @recently_opened.each do |agency, entries| %>
       <li>
@@ -42,7 +42,7 @@
 
 <% if !@effective_this_week.empty? %>
   <div class="clear widget">
-    <h2 class="header">Rules Taking Effect In Next 7 Days (<%= @effective_this_week.map{|a,e| e.size}.sum %>)</h2>
+    <h2 class="header flatBottom">Rules Taking Effect In Next 7 Days (<%= @effective_this_week.map{|a,e| e.size}.sum %>)</h2>
     <ul class="indent marginTop recent_prorule">
     <% @effective_this_week.each do |agency, entries| %>
       <li>
@@ -59,7 +59,7 @@
 
 <% if !@recent_proposed_rules_by_agency.empty? %>
 <div class="clear widget">
-  <h2 class="header">Rules Proposed in Last 7 Days (<%= @recent_proposed_rules_by_agency.map{|a,e| e.size}.sum %>)</h2>
+  <h2 class="header flatBottom">Rules Proposed in Last 7 Days (<%= @recent_proposed_rules_by_agency.map{|a,e| e.size}.sum %>)</h2>
   <ul class="indent marginTop recent_prorule">
   <% @recent_proposed_rules_by_agency.each do |agency, entries| %>
     <li>
