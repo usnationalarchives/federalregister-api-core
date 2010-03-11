@@ -99,8 +99,7 @@
       
       <% feed_autodiscovery url_for(params.merge(:format => :rss, :order => 'date', :publication_date_less_than => nil)) %>
       
-      <%# TODO: HELP-DESIGN: HELP-COPY: instructions etc? %>
-      <%= link_to 'Embed these results as a widget on your website', entries_widget_path(params.except(:controller, :action, :commit, :order, :publication_date_less_than, :publication_date_greater_than).reject{|key, val| val.blank?}), :class => 'icon_widget spawn_modal', :id => 'widget' %>
+      <%= link_to 'Embed these results as a widget on your website', widget_instructions_path(params.except(:action, :controller)), :class => 'icon_widget spawn_modal', :id => 'widget' %>
     <% end %>
   
     <% granule_class_facets = @search.facets[:granule_classes] %>
@@ -140,7 +139,9 @@
     <% end %>
   <% end %>
 <% end %>
-
+<!--
+  entries_widget_path(params.except(:controller, :action, :commit, :order, :publication_date_less_than, :publication_date_greater_than).reject{|key, val| val.blank?})
+-->
 <% content_for :widget do %>
 <div id="modal_widget" class="modal_box group">
   <div class="modal_box_content">
