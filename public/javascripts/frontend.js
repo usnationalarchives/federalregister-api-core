@@ -32,10 +32,13 @@ $(document).ready(function() {
       
       $("#footer").after("<div class='modal'></div>");
       $(modal_node).show().centerScreen();
-      
+
+      $("body").css("overflow","hidden");
+            
       $(".modal").width( $("body").width() )
                  .height( $("body").height() );
-      $("body").css("overflow","hidden");
+                 
+
       
       $(modal_node).find("a.cancel").add(".modal").one("click", function(e){
         e.preventDefault(); 
