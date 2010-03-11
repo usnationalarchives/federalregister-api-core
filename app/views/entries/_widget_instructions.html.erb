@@ -1,8 +1,8 @@
 <div class="modal_instructions">
     <h1>Embed a Widget</h1>
-    <p>You can now embed a GovPulse widget onto your own website!  5 of the highest rated items found in your search will be delivered automatically to the visitors of your site.  Stay up to date with entries that matter most to you or your users! <%= link_to 'Click here for a bookmarkable version of these instructions.', widget_instructions_path(params.except(:controller, :action)), :class => 'raquo' -%></p>
+    <p>You can now embed a GovPulse widget onto your own website!  5 of the most recent articles found in your search will be delivered automatically to the visitors of your site.  Stay up to date with entries that matter most to you or your users! <%= link_to 'Click here for a bookmarkable version of these instructions.', widget_instructions_path(params.except(:controller, :action)), :class => 'raquo' if permalink -%></p>
     <div class="center group">
-      <textarea readonly="readonly">&lt;iframe src="<%= entries_widget_path(params.except(:controller, :action, :commit, :order, :publication_date_less_than, :publication_date_greater_than).reject{|key, val| val.blank?})%>" name="govpulse_widget" id="govpulse_widget" scrolling="none" frameborder="0" width="322px" height="300px"&gt;&lt;/iframe&gt;</textarea>
+      <textarea readonly="readonly">&lt;iframe src="<%= entries_widget_url(params.except(:controller, :action, :commit, :order, :publication_date_less_than, :publication_date_greater_than).reject{|key, val| val.blank?})%>" name="govpulse_widget" id="govpulse_widget" scrolling="none" frameborder="0" width="322px" height="300px"&gt;&lt;/iframe&gt;</textarea>
       <div class="preview">
         <iframe src="<%= entries_widget_path(params.except(:controller, :action, :commit, :order, :publication_date_less_than, :publication_date_greater_than).reject{|key, val| val.blank?})%>" name="govpulse_widget" id="govpulse_widget" frameborder="0" width="322px" height="300px"></iframe>
       </div>
