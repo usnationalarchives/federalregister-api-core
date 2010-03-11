@@ -21,22 +21,30 @@ $(document).ready(function() {
   
   //modal open and close
   $(".spawn_modal").bind("click", function(e){
+    
     if( !($.browser.msie && $.browser.version == 6) ){
       e.preventDefault();
+      pageTracker._trackPageview('/entries/widget_modal');
       var modal_id = $(this).attr("id");
       var modal_node = $("#modal_" + modal_id);
-    
+      
       $("html, body").animate({scrollTop: 0}, 400);
-    
-      $(modal_node).show().wrap("<div class='modal'></div>");
-    
-      $(modal_node).find("a.cancel").one("click", function(e){
+      
+      $("#footer").after("<div class='modal'></div>");
+      $(modal_node).show().centerScreen();
+      
+      $(".modal").width( $("body").width() )
+                 .height( $("body").height() );
+      $("body").css("overflow","hidden");
+      
+      $(modal_node).find("a.cancel").add(".modal").one("click", function(e){
         e.preventDefault(); 
-        $(modal_node).unwrap().hide();
+        $(modal_node).hide();
+        $(".modal").remove();
+        $("body").css("overflow","auto");
       });
     }
   });
-
   
   $("#feedback").bind("mouseenter", function(){
     $(this).animate({left: -5}, 200); 
@@ -66,3 +74,19 @@ $(document).ready(function() {
     tagcloud.draw();
   });
 });
+
+//http://groups.google.com/group/jquery-en/browse_thread/thread/a890828a14d86737
+//modified by DMA to use outerHeight, outerWidth
+jQuery.fn.centerScreen = function(loaded) {
+  var obj = this;
+  if(!loaded) {
+    obj.css('left', $(window).width()/2-this.outerWidth()/2);
+    $(window).resize(function(){ 
+      obj.centerScreen(!loaded); 
+      });} else {
+        obj.stop();
+        obj.animate({ 
+          left: $(window).width()/2-this.outerWidth()/2}, 200, 'linear');
+        $(".modal_bg").width( $("body").width() );
+      }
+}
