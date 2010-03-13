@@ -1,11 +1,17 @@
 # Methods added to this helper will be available to all templates in the application.
 module ApplicationHelper
+  def set_content_for(name, content = nil, &block)
+    ivar = "@content_for_#{name}"
+    instance_variable_set(ivar, nil)
+    content_for(name, content, &block)
+  end
+  
   def title(text, options = {})
     options.symbolize_keys!
     
-    content_for :title, strip_tags(text)
+    set_content_for :title, strip_tags(text)
     unless options[:body] == false
-      content_for :precolumn, content_tag(:h1, text)
+      set_content_for :precolumn, content_tag(:h1, text)
     end
   end
   
