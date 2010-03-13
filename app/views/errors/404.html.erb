@@ -1,0 +1,6 @@
+<% title "The page you were looking for doesn't exist." %>
+<p>You may have mistyped the address or the page may have moved.</p>
+
+<% content_for :page_tracker do %>
+pageTracker._trackPageview("/404.html?page=" + document.location.pathname + document.location.search + "&from=" + document.referrer);
+<% end %>
