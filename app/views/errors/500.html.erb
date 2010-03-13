@@ -1,0 +1,6 @@
+<% title "We're sorry, but something went wrong." %>
+<p>We've been notified about this issue and we'll take a look at it shortly.</p>
+
+<% content_for :page_tracker do %>
+pageTracker._trackPageview("/500.html?page=" + document.location.pathname + document.location.search + "&from=" + document.referrer);
+<% end %>

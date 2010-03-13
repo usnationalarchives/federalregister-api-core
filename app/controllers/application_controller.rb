@@ -11,4 +11,20 @@ class ApplicationController < ActionController::Base
   
   # Scrub sensitive parameters from your log
   filter_parameter_logging :password, :password_confirmation
+  
+  private
+  
+  rescue_from Exception, :with => :server_error
+  def server_error(exception)
+    notify_hoptoad(exception)
+    
+    request.format = :html
+    render :template => "errors/500", :status => 500
+  end
+  
+  rescue_from ActiveRecord::RecordNotFound, ActionController::RoutingError, :with => :record_not_found
+  def record_not_found
+    request.format = :html
+    render :template => "errors/404", :status => 404
+  end
 end
