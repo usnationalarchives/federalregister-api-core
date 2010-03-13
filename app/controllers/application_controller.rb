@@ -14,7 +14,7 @@ class ApplicationController < ActionController::Base
   
   private
   
-  rescue_from Exception, :with => :server_error
+  rescue_from Exception, :with => :server_error if RAILS_ENV != 'development'
   def server_error(exception)
     notify_hoptoad(exception)
     
@@ -22,7 +22,7 @@ class ApplicationController < ActionController::Base
     render :template => "errors/500", :status => 500
   end
   
-  rescue_from ActiveRecord::RecordNotFound, ActionController::RoutingError, :with => :record_not_found
+  rescue_from ActiveRecord::RecordNotFound, ActionController::RoutingError, :with => :record_not_found if RAILS_ENV != 'development'
   def record_not_found
     request.format = :html
     render :template => "errors/404", :status => 404
