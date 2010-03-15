@@ -4,3 +4,7 @@ test:
   morphology: stem_en
 production:
   morphology: stem_en
+  searchd_log_file: /var/www/apps/govpulse/shared/log/searchd.log
+  query_log_file: /var/www/apps/govpulse/shared/log/searchd.query.log
+  pid_file: /var/www/apps/govpulse/shared/tmp/searchd.pid
+  searchd_file_path: /var/www/apps/govpulse/shared/db/sphinx/production
