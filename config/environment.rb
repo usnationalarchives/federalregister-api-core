@@ -29,7 +29,7 @@ Rails::Initializer.run do |config|
   
   config.gem "patron", :version => "0.4.2"
   # sunlight gem and dependencies
-  config.gem "json", :version => '1.1.7'
+  config.gem "json", :version => '1.1.9'
   config.gem "ym4r", :version => '0.6.1'
   config.gem 'sunlight', :version => '1.0.1'
   config.gem 'thinking-sphinx', :version => '1.3.14', :lib => 'thinking_sphinx'
@@ -59,5 +59,4 @@ Rails::Initializer.run do |config|
   # config.i18n.default_locale = :de
   
   config.cache_store = :file_store, "#{RAILS_ROOT}/tmp/cache"
-  
 end
