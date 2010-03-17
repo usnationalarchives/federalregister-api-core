@@ -1,13 +1,25 @@
+# deploy recipes - need to do `sudo gem install thunder_punch`
+require 'critical_juncture/thunder_punch'
+# thinking sphinx cap tasks
+require 'thinking_sphinx/deploy/capistrano'
+# hoptoad deploy notifications, etc
+require 'hoptoad_notifier/capistrano'
+
 #############################################################
 # Set Basics
 #############################################################
 
-set :application, "trifecta"
+set :application, "govpulse"
 set :user, "deploy"
-set :port, 5034
+ssh_options[:keys] = [File.join(ENV["HOME"], ".ssh", "govpulse-prod-provision")]
+#ssh_options[:keys] = [File.join(ENV["HOME"], ".ssh", "id_rsa_govpulse_prod1")]
+#set :port, 5034
+
+set :ec2_config_location, File.join(File.dirname(__FILE__), "ec2_config.yml")
 
 ssh_options[:paranoid] = false
 set :use_sudo, true
+default_run_options[:pty] = true
 
 set :keep_releases, 15
 
@@ -31,7 +43,8 @@ end
 
 set :rails_env,  "production"                           
 set :deploy_to,  "/var/www/apps/#{application}" 
-set :domain,     "209.20.65.22"                
+set :domain,     "204.236.234.36" #gp1_ec2 -- ec2-204-236-234-36.compute-1.amazonaws.com
+#set :domain,     "ec2-184-73-30-246.compute-1.amazonaws.com" #gp2_ec2
 set :url,        "#{domain}"     
 set :server_url, "#{domain}"
 
@@ -43,7 +56,7 @@ role :db , domain, {:primary => true}
 # Database Settings
 #############################################################
 
-set :remote_db_name, "trifecta_deploy_development"
+set :remote_db_name, "govpulse_production"
 set :db_path,        "#{shared_path}/db"
 set :sql_file_path,  "#{shared_path}/db/#{remote_db_name}_#{Time.now.utc.strftime("%Y%m%d%H%M%S")}.sql"
 
@@ -102,7 +115,8 @@ after "deploy",                   "deploy:cleanup"
 after "deploy:cleanup",           "deploy:set_rake_path"
 after "deploy:set_rake_path",     "deploy:install_gems"
 after "deploy:install_gems",      "deploy:migrate"
-after "deploy:migrate",           "passenger:restart"
+after "deploy:migrate",           "thinking_sphinx:restart"
+after "thinking_sphinx:restart",  "passenger:restart"
 
 
 #############################################################
@@ -125,6 +139,8 @@ namespace :deploy do
     sudo "mkdir -p #{deploy_to}/releases"
     sudo "mkdir -p #{deploy_to}/shared/log"
     sudo "mkdir -p #{deploy_to}/shared/data"
+    sudo "mkdir -p #{deploy_to}/shared/tmp"
+    sudo "mkdir -p #{deploy_to}/shared/db/sphinx/production"
     sudo "chown -R #{user}:#{user} #{deploy_to}"
     sudo "touch #{deploy_to}/shared/log/#{rails_env}.log"
     sudo "chmod 0666 #{deploy_to}/shared/log/#{rails_env}.log"
@@ -176,7 +192,7 @@ end
 namespace :deploy do
   desc "Install Missing Gems"
   task :install_gems, :roles => [:app] do
-    run "cd #{release_path}; sudo #{rake_path} RAILS_ENV=#{rails_env} gems:install --trace"
+    run "cd #{release_path}; #{sudo} #{rake_path} RAILS_ENV=#{rails_env} gems:install --trace"
   end
 end
 
@@ -301,5 +317,3 @@ namespace :filesystem do
     run_locally("rsync --verbose  --progress --stats --compress -e 'ssh -p #{port}' --recursive --times --perms --links #{user}@#{domain}:#{deploy_to}/shared/data data")
   end
 end
-
-require 'hoptoad_notifier/capistrano'
