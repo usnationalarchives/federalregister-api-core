@@ -34,7 +34,8 @@ Rails::Initializer.run do |config|
   config.gem 'sunlight', :version => '1.0.1'
   config.gem 'thinking-sphinx', :version => '1.3.14', :lib => 'thinking_sphinx'
   config.gem 'hoptoad_notifier', :version => '2.1.3'
-
+  config.gem "aws-s3", :lib => "aws/s3", :version => '0.6.2'
+  config.gem 'paperclip', :version => '2.3.1.1'
   # disabled as requires C library to install...the Locator module will return a fake result if not installed
   # config.gem "geoip_city", :version => '0.2.0'
   
