@@ -1,6 +1,7 @@
 tmp
 log
 data
+config/amazon.yml
 config/database.yml
 config/api_keys.yml
 config/newrelic.yml
