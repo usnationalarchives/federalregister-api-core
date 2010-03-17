@@ -88,6 +88,8 @@ class Entry < ActiveRecord::Base
            :class_name => 'Entry',
            :through => :references,
            :source => :source_entry
+  has_many :graphics,
+           :class_name => 'EntryGraphic'
   
   acts_as_mappable :through => :places
   
