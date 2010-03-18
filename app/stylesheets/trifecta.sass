@@ -111,38 +111,7 @@ body
   :float left
   :height 25px
   :padding 3px 0 5px 0 
-  :width 100%
-  .search
-    :float right
-    :height 25px
-    :margin 2px 0 0 0
-    :padding 0 0 0 0    
-    :width 220px
-    form
-      :background url(/images/search_bg3.png) no-repeat top right
-      :height 25px
-      :width 200px      
-      :margin 0 20px 0 0
-      input#q
-        :border none
-        :display block
-        :float left
-        :height 15px
-        :margin 5px 0 0 10px 
-        :padding 0
-        :width 165px
-        &:focus
-          :outline none
-      input.search_btn
-        :background url(/images/icon_search.png) no-repeat top right
-        :border none
-        :cursor pointer  
-        :float left 
-        :height 20px
-        :margin 3px 0 0 0
-        :padding 0
-        :outline none
-        :width 15px   
+  :width 100%  
   ul
     :float left
     :margin 2px 0 0 0
@@ -159,7 +128,44 @@ body
         :text-decoration none
         :text-transform uppercase
         &:hover
-          :color #fa6900   
+          :color #fa6900  
+  .search
+    :float right
+    :height 25px
+    :margin 2px 0 0 0
+    :padding 0 0 0 0    
+    :width 220px
+    form
+      :background url(/images/search_bg3.png) no-repeat top right
+      :height 25px
+      :width 200px      
+      :margin 0 20px 0 0
+      ul
+        :margin 0
+        :padding 0
+        li
+          :font-size 100%
+        input#q
+          :border none
+          :display block
+          :float left
+          :height 15px
+          :margin 5px 0 0 10px 
+          :padding 0
+          :width 165px
+          &:focus
+            :outline none
+        input.search_btn
+          :background url(/images/icon_search.png) no-repeat right 50%
+          :border none
+          :cursor pointer  
+          :height 23px
+          :padding 0
+          :position absolute
+          :right -15px
+          :top -5px
+          :outline none
+          :width 12px 
 .shadow
   :background url(/images/header_bg2.png) repeat-x top left
   :display inline-block

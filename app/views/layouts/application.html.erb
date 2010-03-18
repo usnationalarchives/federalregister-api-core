@@ -28,6 +28,7 @@
   
   <%= jquery_include_tag %>
   <%= jquery_ui_include_tag %>
+  <%= javascript_include_tag 'jquery.inlinelabel.js'      %>      
   <%= javascript_include_tag 'jrails.js'                  %>
   <%= javascript_include_tag 'application.js'             %>
   <%= javascript_include_tag 'jquery.sparkline.min.js'    %>
@@ -39,7 +40,6 @@
   <%= javascript_include_tag 'jquery.toggleDisabled.js'   %>
   <%= javascript_include_tag 'jquery.horizontalCount.js'  %>
   <%= javascript_include_tag 'tagcloud.js'                %>
-  <%= javascript_include_tag 'jquery.inlinelabel.js'         %>
 
   <%= yield :javascripts %>
 
@@ -124,7 +124,6 @@
     </div>  
   </div>
   
-    
   <%= render :partial => 'layouts/google_analytics' %>  
   <%= render :partial => 'layouts/tender_support' %>  
 
