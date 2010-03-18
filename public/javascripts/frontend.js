@@ -53,8 +53,7 @@ $(document).ready(function() {
   });
    
   //$(":text").labelify({ labelledClass: "labelHighlight" });
-  //$(":text").inlineFormElements();
-  
+  $("input.inlineHint").inlinelabel();
   
   // This needs to be fixed to use a proper slug - may require url rewriting.
   $('.tag_cloud').each(function(){

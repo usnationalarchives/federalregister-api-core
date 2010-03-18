@@ -25,8 +25,8 @@
             </li>
           <% else %>
             <li class="simple">
-              <label>Near:</label> <%= text_field_tag :near, params[:near], :title => "(eg '94118', 'Seattle', etc.)" %> 
-              <label class="nextto">Within:</label> <%= text_field_tag :within, params[:within], :title => "Miles", :class => "miles" %>            
+              <label>Near:</label> <%= text_field_tag :near, params[:near], :title => "(eg '94118', 'Seattle')", :class => 'inlineHint'  %> 
+              <label class="nextto">Within:</label> <%= text_field_tag :within, params[:within], :title => "Miles", :class => "miles", :class => 'inlineHint'  %>            
             </li> 
           <% end %>
         </ul>

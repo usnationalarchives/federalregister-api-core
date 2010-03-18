@@ -1,9 +1,13 @@
 <div id="nav">
   <div class="search">
     <form action="<%= entries_search_path %>" method="get">
-      <!--Search--> 
-      <%= text_field_tag :q, search_term,  :title => "Search govpulse" %>
-      <%= submit_tag '', :class => "search_btn" %>
+      <ul>
+        <li>
+          <!--Search--> 
+          <%= text_field_tag :q, search_term,  :title => "Search govpulse", :class => 'inlineHint' %>
+          <%= submit_tag '', :class => "search_btn" %>
+        </li>
+      </ul>
     </form> 
   </div>    
   <ul>
