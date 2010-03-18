@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100223154750) do
+ActiveRecord::Schema.define(:version => 20100316151731) do
 
   create_table "agencies", :force => true do |t|
     t.integer  "parent_id"
@@ -95,6 +95,27 @@ ActiveRecord::Schema.define(:version => 20100223154750) do
   add_index "entries", ["publication_date", "agency_id"], :name => "index_entries_on_publication_date_and_agency_id"
   add_index "entries", ["regulation_id_number"], :name => "index_entries_on_regulation_id_number"
   add_index "entries", ["volume", "start_page", "end_page"], :name => "index_entries_on_volume_and_start_page_and_end_page"
+
+  create_table "graphic_usages", :force => true do |t|
+    t.integer "graphic_id"
+    t.integer "entry_id"
+  end
+
+  add_index "graphic_usages", ["entry_id", "graphic_id"], :name => "index_graphic_usages_on_entry_id_and_graphic_id"
+  add_index "graphic_usages", ["graphic_id", "entry_id"], :name => "index_graphic_usages_on_graphic_id_and_entry_id"
+
+  create_table "graphics", :force => true do |t|
+    t.string   "identifier"
+    t.integer  "usage_count",          :default => 0, :null => false
+    t.string   "graphic_file_name"
+    t.string   "graphic_content_type"
+    t.integer  "graphic_file_size"
+    t.datetime "graphic_updated_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "graphics", ["identifier"], :name => "index_graphics_on_identifier", :unique => true
 
   create_table "place_determinations", :force => true do |t|
     t.integer "entry_id"
