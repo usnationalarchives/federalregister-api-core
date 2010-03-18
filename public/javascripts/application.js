@@ -162,6 +162,7 @@ $(document).ready(function() {
     pageTracker._trackPageview(path);
     return true;
   });
+  
 });
 
 function loadToolTips() {
