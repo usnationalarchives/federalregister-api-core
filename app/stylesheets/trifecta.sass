@@ -821,16 +821,21 @@ form
       &.under
         :display block
         :padding-left 72px
-  li
-    label.nextto 
-      :clear none
-      :display inline
+  li.nextto 
+    :clear none
+    :display inline
+    :float left
+    :width auto
+    label
+      :display block
+      :float left
+      
+    input
       :float none
-      :margin-left 10px
-      :margin-right 10px
-      :width auto
-    input.miles
-      :width 50px
+  input.miles
+    :width 50px
+form ul.searchform > li 
+  :clear both
 #main form a.topic
   :background #dedede url(/images/topic_destroy.png) no-repeat 5px 4px
   :border 1px solid #dedede

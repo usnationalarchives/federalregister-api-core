@@ -47,8 +47,11 @@
   		};
   		
   		var parseCSS = function(property){
+  		  //all this crud is necessary for IE8 to not blow up
         typeof(property) == 'string' ? property.replace('/D+','') : '';
-  		  return parseInt(property, 10);
+        var propInt = parseInt(property, 10);
+        isNaN(propInt) ? propInt = 0 : propInt;
+  		  return propInt;
   		};
   		
       var inlineItem = getInlineItem();
