@@ -29,16 +29,16 @@
         var input_pos        = $(input).position();
 
         //get the hint set up
-        var hint_line_height = $(input).outerHeight() - parseCSS($(input).css("border-top-width"));
-        var hint_css_left    = parseCSS(input_pos.left) + parseCSS($(input).css("marginLeft")) + parseCSS($(input).css("border-left-width")) + 5;
-        var hint_css_top     = parseCSS(input_pos.top) + parseCSS($(input).css("marginTop")) + parseCSS($(input).css("border-top-width"));
+        var hint_line_height = $(input).outerHeight() - parseCSS($(input).css("borderTopWidth"));
+        var hint_css_left    = parseCSS(input_pos.left) + parseCSS($(input).css("marginLeft")) + parseCSS($(input).css("borderLeftWidth")) + 5;
+        var hint_css_top     = parseCSS(input_pos.top) + parseCSS($(input).css("marginTop")) + parseCSS($(input).css("borderTopWidth"));
                 
         //would like to just add a class but not sure how best to do that yet since so much has to change
         $(hint).css("position","absolute")
                .css("color", "#aeaeae")
                .css("margin", "0")
-               .css("font-size", "12px")
-               .css("line-height", hint_line_height + "px")
+               .css("fontSize", "12px")
+               .css("lineHeight", hint_line_height + "px")
                .css("left", hint_css_left)
                .css("top", hint_css_top);
 
@@ -47,8 +47,8 @@
   		};
   		
   		var parseCSS = function(property){
-  		  var cleanProperty = parseInt(property);
-  		  return cleanProperty == NaN ? 0 : cleanProperty;
+        typeof(property) == 'string' ? property.replace('/D+','') : '';
+  		  return parseInt(property, 10);
   		};
   		
       var inlineItem = getInlineItem();
