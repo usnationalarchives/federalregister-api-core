@@ -24,21 +24,27 @@
               <%= hidden_field_tag :place_id, params[:place_id] %>
             </li>
           <% else %>
-            <li class="simple">
+            <li class="nextto">
               <label>Near:</label> <%= text_field_tag :near, params[:near], :title => "(eg '94118', 'Seattle')", :class => 'inlineHint'  %> 
-              <label class="nextto">Within:</label> <%= text_field_tag :within, params[:within], :title => "Miles", :class => "miles", :class => 'inlineHint'  %>            
-            </li> 
+            </li>
+            <li class="nextto">  
+              <label>Within:</label> <%= text_field_tag :within, params[:within], :title => "Miles", :class => "miles", :class => 'inlineHint'  %> 
+            </li>             
           <% end %>
         </ul>
       </li>
 
       <li class="<%= 'simple' unless params[:publication_date_greater_than].blank? && params[:publication_date_less_than].blank? %>">
           <ul>
-            <li class="simple">
+            <li class="nextto">
               <label>From:</label><%= text_field_tag :publication_date_greater_than, @search.start_date.try(:to_date) %>
+            </li>
+            <li class="nextto">  
               <label class="nextto">To:</label><%= text_field_tag :publication_date_less_than, @search.end_date.try(:to_date) %>
+            </li>
+            <li class="clear">  
               <span class="under">(eg '01/01/09', '1 year ago', 'yesterday', etc.)</span>         
-              </li>
+            </li>
           </ul>
       </li>
 
