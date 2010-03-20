@@ -63,7 +63,8 @@ class EntrySearch
     raw_facets = Entry.facets(@search_term,
       :with => with,
       :conditions => conditions,
-      :match_mode => :extended
+      :match_mode => :extended,
+      :facets => [:granule_class, :agency_id]
     )
     facets = {}
     if with[:agency_id].blank?
@@ -108,23 +109,23 @@ class EntrySearch
   memoize :with
   
   def entries
+    unless defined?(@entries)
+      @entries = Entry.search(@search_term, 
+        :page => @page,
+        :per_page => @per_page,
+        :order => @order,
+        :with => with,
+        :conditions => conditions,
+        :match_mode => :extended
+      )
     
-    @entries = Entry.search(@search_term, 
-      :page => @page,
-      :per_page => @per_page,
-      :order => @order,
-      :with => with,
-      :conditions => conditions,
-      :match_mode => :extended
-    )
-    
-    # TODO: FIXME: Ugly hack to get total pages to be within bounds
-    if @entries && @entries.total_pages > 50
-      def @entries.total_pages
-        50
+      # TODO: FIXME: Ugly hack to get total pages to be within bounds
+      if @entries && @entries.total_pages > 50
+        def @entries.total_pages
+          50
+        end
       end
     end
-    
     @entries
   end
   
