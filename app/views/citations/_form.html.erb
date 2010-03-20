@@ -1,6 +1,6 @@
 <% form_for :citation, :url => citation_search_path, :html => {:method => :get} do %>
   <%= select_tag :volume,
-        options_for_select([['Volume','']] + (59..74).map {|v| ["#{v} (#{v+1935})", v.to_s] },params[:volume] ) %>
-  <%= text_field_tag :page, params[:page], :title => 'Page Number', :class => 'pagenumber' %>
+        options_for_select([['Volume','75']] + (59..75).map {|v| ["#{v} (#{v+1935})", v.to_s] },params[:volume] ) %>
+  <%= text_field_tag :page, local_assigns[:page] || params[:page], :title => 'Page Number', :class => 'pagenumber' %>
   <%= submit_tag 'Go', :class => 'btn' %>
 <% end %>
