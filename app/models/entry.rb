@@ -230,6 +230,10 @@ class Entry < ActiveRecord::Base
         :order => 'publication_date'
     ).try(:publication_date)
   end
+
+  def hasType?
+    self.entry_type != 'Unknown'
+  end
   
   private
   

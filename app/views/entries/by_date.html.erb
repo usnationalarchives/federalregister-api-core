@@ -51,18 +51,24 @@
   <% agencies = agencies.sort_by{|a| (a.id == parent_agency_id) ? 1 : 0 } %>
   <% parent_agency = agencies.pop %>
   <li class="parent_agency">
-    <h3><%= link_to parent_agency.name, agency_path(parent_agency) %> (<%= parent_agency.entries.size%>)</h3>
+    <h3><%= link_to parent_agency.name, agency_path(parent_agency) %> <span class="entry_count"><%= pluralize( parent_agency.entries.size ," entry") %></span></h3>
     <ul class="raquo indent">
     <% parent_agency.entries.each do |entry| %>
-      <li><%= link_to entry_title(entry), entry_path(entry) %></li>
+      <li>
+        <%= link_to entry_title(entry), entry_path(entry) %>
+        <p class="info"><span class="type"><%= entry.entry_type if entry.hasType? %></span> <span class="pages"><%= pluralize(entry.human_length," page") %></span></p>
+      </li>
     <% end %>
     
     <% agencies.each do |agency| %>
       <li class="agency">
-        <h4><%= link_to agency.name, agency_path(agency) %> (<%= agency.entries.size%>)</h4>
+        <h4><%= link_to agency.name, agency_path(agency) %> <span class="entry_count"><%= pluralize( parent_agency.entries.size ," entry") %></span></h4>
         <ul>
           <% agency.entries.each do |entry| %> 
-            <li><%= link_to entry_title(entry), entry_path(entry) %></li>
+            <li class="raquo indent">
+              <%= link_to entry_title(entry), entry_path(entry) %>
+              <p class="info"><span class="type"><%= entry.entry_type if entry.hasType? %></span> <span class="pages"><%= pluralize(entry.human_length," page") %></span></p>
+            </li>
           <% end %>
         </ul>
       </li>
@@ -72,8 +78,8 @@
 <% end %>
   <% if @entries_without_agency.size > 0 %>
   <li class="parent_agency">
-    <h3>Other Entries (<%= @entries_without_agency.size %>)</h3>
-    <ul class="raquo indent">
+    <h3>Other Entries <span class="entry_count"><%= pluralize( @entries_without_agency.size ," entry") %></span></h3>
+    <ul class="">
     <% @entries_without_agency.each do |entry| %>
       <li><%= link_to entry_title(entry), entry_path(entry) %></li>
     <% end %>

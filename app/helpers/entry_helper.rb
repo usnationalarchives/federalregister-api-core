@@ -20,10 +20,6 @@ module EntryHelper
   end
   
   def entry_title(entry)
-    title = truncate(entry.title, :length => 100)
-    if entry.entry_type != 'Unknown'
-      title = "#{title} (#{entry.entry_type})"
-    end
-    title
+    truncate(entry.title, :length => 100)
   end
 end

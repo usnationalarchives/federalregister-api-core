@@ -12,9 +12,8 @@
 
 (function($) {
 
- $.fn.inlinelabel = function(options) {
-		var opt = $.extend({
-		}, options);
+ jQuery.fn.inlinelabel = function(options) {
+		//var opt = $.extend({}, options);
 					
     return $(this).each(function() {
       
