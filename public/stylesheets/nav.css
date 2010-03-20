@@ -55,8 +55,9 @@
 /* line 39, ../../app/stylesheets/nav.sass */
 #nav .search form ul li {
   font-size: 100%;
+  position: relative;
 }
-/* line 41, ../../app/stylesheets/nav.sass */
+/* line 42, ../../app/stylesheets/nav.sass */
 #nav .search form ul input#q {
   border: none;
   display: block;
@@ -66,11 +67,11 @@
   padding: 0;
   width: 165px;
 }
-/* line 49, ../../app/stylesheets/nav.sass */
+/* line 50, ../../app/stylesheets/nav.sass */
 #nav .search form ul input#q:focus {
   outline: none;
 }
-/* line 51, ../../app/stylesheets/nav.sass */
+/* line 52, ../../app/stylesheets/nav.sass */
 #nav .search form ul input.search_btn {
   background: url(/images/icon_search.png) no-repeat right 50%;
   border: none;
