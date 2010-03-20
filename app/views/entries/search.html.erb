@@ -93,7 +93,7 @@
   <h3>Know what you're looking for?</h3>
     <ul>
       <li class="simple">
-        <%= render :partial => 'citations/form' %>
+        <%= render :partial => 'citations/form', :locals => {:page => ''} %>
       </li>
     </ul>
   
@@ -119,7 +119,7 @@
 
         <ul class="raquo indent">
         <% granule_class_facets.each do |granule_class, count| %>
-          <li><%= link_to "#{Entry::ENTRY_TYPES[granule_class]} (#{count})", params.merge(:granule_class => granule_class) %></li>
+          <li><%= link_to "#{Entry::ENTRY_TYPES[granule_class]} (#{count})", params.merge(:granule_class => granule_class).except(:page) %></li>
         <% end %>
         </ul>
       <% end %>
@@ -128,7 +128,7 @@
         <h4>Agency</h4>
         <ul class="raquo indent">
         <% agency_facets.each do |agency, count| %>
-          <li><%= link_to "#{agency.name} (#{count})", params.merge(:agency_id => agency.id) %></li>
+          <li><%= link_to "#{agency.name} (#{count})", params.merge(:agency_id => agency.id).except(:page) %></li>
         <% end %>
         </ul>
       <% end %>
@@ -137,7 +137,7 @@
         <h4>Topic</h4>
         <ul class="raquo indent">
         <% topic_facets.each do |topic, count| %>
-          <li><%= link_to "#{topic.name} (#{count})", params.merge(:topic_id => topic.id) %></li>
+          <li><%= link_to "#{topic.name} (#{count})", params.merge(:topic_id => topic.id).except(:page) %></li>
         <% end %>
         </ul>
       <% end %>

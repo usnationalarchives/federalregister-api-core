@@ -27,8 +27,8 @@ namespace :data do
             Curl::Easy.download(entry.source_url(:pdf), pdf_file_loc)
           
             puts "\textracting images from pdf..."
-            output = `pdfimages #{pdf_file_loc} #{dir}/`
-            Dir.glob("#{dir}/*.pbm").each_with_index do |extracted_file,i|
+            output = `pdfimages #{pdf_file_loc} #{dir}/extracted_graphic`
+            Dir.glob("#{dir}/extracted_graphic*").sort.each_with_index do |extracted_file,i|
               identifier = identifiers[i]
               puts "\thandling #{identifier}..."
           
