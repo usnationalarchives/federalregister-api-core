@@ -1,0 +1,103 @@
+/* line 1, ../../app/stylesheets/ticker.sass */
+#ticker_container {
+  height: 30px;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  z-index: 5999;
+}
+
+/* line 7, ../../app/stylesheets/ticker.sass */
+#ticker {
+  background: url(/images/ticker_bg3.png) no-repeat left top;
+  height: 30px;
+  margin: 0 auto;
+  position: relative;
+  width: 950px;
+}
+/* line 13, ../../app/stylesheets/ticker.sass */
+#ticker .pulse {
+  height: 26px;
+  position: absolute;
+  top: 3px;
+  width: 147px;
+}
+/* line 18, ../../app/stylesheets/ticker.sass */
+#ticker .pulse.left {
+  background: url(/images/ticker_pulse_left2.png) no-repeat 2px top;
+  left: 0;
+}
+/* line 21, ../../app/stylesheets/ticker.sass */
+#ticker .pulse.right {
+  background: url(/images/ticker_pulse_right2.png) no-repeat -2px top;
+  right: 0;
+}
+/* line 24, ../../app/stylesheets/ticker.sass */
+#ticker p.loading {
+  color: #333333;
+  height: 29px;
+  line-height: 29px;
+  margin: 0;
+  text-align: center;
+}
+/* line 30, ../../app/stylesheets/ticker.sass */
+#ticker div.tip {
+  display: none;
+}
+/* line 32, ../../app/stylesheets/ticker.sass */
+#ticker .counter {
+  left: 115px;
+  position: absolute;
+  top: 5px;
+}
+/* line 36, ../../app/stylesheets/ticker.sass */
+#ticker .date {
+  border-right: 1px solid #ccc;
+  color: #636363;
+  float: left;
+  font-weight: bold;
+  height: 29px;
+  line-height: 29px;
+  margin: 0 10px 0 100px;
+  padding-right: 10px;
+}
+/* line 45, ../../app/stylesheets/ticker.sass */
+#ticker .date a {
+  color: #005B81;
+}
+/* line 47, ../../app/stylesheets/ticker.sass */
+#ticker .date a:hover {
+  color: #FA6900;
+}
+/* line 49, ../../app/stylesheets/ticker.sass */
+#ticker .daily {
+  height: 30px;
+  float: left;
+  position: relative;
+  overflow: hidden;
+  width: 560px;
+}
+/* line 55, ../../app/stylesheets/ticker.sass */
+#ticker .daily ul {
+  height: 30px;
+  margin: 0;
+  position: absolute;
+  width: 99999px;
+}
+/* line 60, ../../app/stylesheets/ticker.sass */
+#ticker .daily ul li {
+  float: left;
+  height: 30px;
+  line-height: 29px;
+  list-style: none;
+  width: 560px;
+}
+/* line 66, ../../app/stylesheets/ticker.sass */
+#ticker .daily ul li a {
+  color: #005B81;
+  text-decoration: none;
+}
+/* line 69, ../../app/stylesheets/ticker.sass */
+#ticker .daily ul li a:hover {
+  color: #fa6900;
+}

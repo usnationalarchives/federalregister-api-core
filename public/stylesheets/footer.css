@@ -1,0 +1,71 @@
+/* line 2, ../../app/stylesheets/footer.sass */
+body #footer {
+  background: #5a5a5a;
+  border-top: 4px solid #9b9b9b;
+  clear: both;
+  padding: 2em 0 0 0;
+  position: absolute;
+  width: 100%;
+  color: #FFFFFF;
+}
+/* line 10, ../../app/stylesheets/footer.sass */
+body #footer a {
+  color: #CF8227;
+}
+/* line 12, ../../app/stylesheets/footer.sass */
+body #footer a.hover {
+  color: #005B81;
+}
+/* line 14, ../../app/stylesheets/footer.sass */
+body #footer a.gravycones {
+  background: url(/images/gravycones.png) no-repeat left top;
+  color: #333;
+  display: block;
+  height: 46px;
+  line-height: 46px;
+  padding-left: 90px;
+  text-decoration: none;
+  width: 180px;
+}
+/* line 23, ../../app/stylesheets/footer.sass */
+body #footer a.gravycones:hover {
+  background-position: left -46px;
+  color: #b1a7a7;
+}
+/* line 26, ../../app/stylesheets/footer.sass */
+body #footer h4 {
+  color: #aaa;
+  text-align: center;
+}
+/* line 30, ../../app/stylesheets/footer.sass */
+body #footer ul li {
+  list-style: none;
+}
+/* line 32, ../../app/stylesheets/footer.sass */
+body #footer div.left {
+  width: 300px;
+  float: left;
+  margin: 0 0 10px 25px;
+}
+/* line 36, ../../app/stylesheets/footer.sass */
+body #footer div.right {
+  width: 300px;
+  float: right;
+  margin: 0 25px 10px 0;
+}
+/* line 41, ../../app/stylesheets/footer.sass */
+body #footer ul.contact li {
+  padding: 5px 0 5px 30px;
+}
+/* line 43, ../../app/stylesheets/footer.sass */
+body #footer ul.contact li a {
+  padding: 0 0 3px 0;
+}
+/* line 45, ../../app/stylesheets/footer.sass */
+body #footer ul.contact li#twitter {
+  background: url(/images/social/tweeter_24x24.png) no-repeat top left;
+}
+/* line 47, ../../app/stylesheets/footer.sass */
+body #footer ul.contact li#facebook {
+  background: url(/images/social/facebook_24x24.png) no-repeat top left;
+}
