@@ -1,0 +1,80 @@
+.modal
+  :background url(/images/modal_bg.png)
+  :height 100%
+  :position absolute
+  :top 0
+  :width 100%
+  :z-index 8888
+
+.modal_box
+  :background #fff
+  :border 5px solid #DDDDDD
+  :-border-radius 10px
+  :-moz-border-radius 10px
+  :-webkit-border-radius 10px
+  :display none
+  :padding 10px
+  :position absolute
+  :top 20px
+  :width 673px
+  :z-index 9999
+  .modal_box_content
+    :background #fff
+    :padding 1em
+    h1  
+      :color #46565c
+      :font 2.5em Georgia,"Times New Roman",Serif
+      :font-variant small-caps        
+      :margin 0 0 10px 0
+      :padding 0 0 0 0
+      :text-align center
+    a
+      :border none
+      :color #005b81
+      :outline none  
+      :text-decoration none
+      &:link
+      &:visited
+        :color #7d7d7d
+      &:hover
+        :color #cf8227
+      &:active
+      &.raquo
+        :background url(/images/raquo3.png) no-repeat 0 5px
+        :padding 0 0 0 10px          
+    a.cancel
+      :background url(/images/cross.png) no-repeat right 2px
+      :font-weight bold
+      :padding-right 20px
+      :position absolute
+      :right 10px
+      :top 10px
+    textarea
+      :border-color #999
+      :float left
+      :height 265px
+      :margin-right 15px
+      :width 300px
+    .preview
+      :float left
+    fieldset
+      :border none
+      :margin 0
+    h3
+      :border-bottom 1px solid #ccc
+      :color #fa6900
+      :font-family "Helvetica Neue",Arial,Helvetica,sans-serif
+      :font-weight bold
+.modal_instructions 
+  .center
+    :margin 0 auto
+    :width 650px
+  textarea
+    :border-color #999
+    :float left
+    :height 265px
+    :margin-right 15px
+    :width 300px  
+    :float left
+  .preview
+    :float left
