@@ -62,7 +62,7 @@
     
     <% agencies.each do |agency| %>
       <li class="agency">
-        <h4><%= link_to agency.name, agency_path(agency) %> <span class="entry_count"><%= pluralize( parent_agency.entries.size ," entry") %></span></h4>
+        <h4><%= link_to agency.name, agency_path(agency) %> <span class="entry_count"><%= pluralize( agency.entries.size ," entry") %></span></h4>
         <ul>
           <% agency.entries.each do |entry| %> 
             <li class="raquo indent">
