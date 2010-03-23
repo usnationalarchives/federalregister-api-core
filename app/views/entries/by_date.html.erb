@@ -50,24 +50,47 @@
 <% @agencies.group_by{|a| a.parent_id || a.id}.each do |parent_agency_id, agencies| %>
   <% agencies = agencies.sort_by{|a| (a.id == parent_agency_id) ? 1 : 0 } %>
   <% parent_agency = agencies.pop %>
-  <li class="parent_agency">
+  <li class="parent_agency group open">
+    <a class="showhide" href="#">Hide This Agencies Entries</a>
     <h3><%= link_to parent_agency.name, agency_path(parent_agency) %> <span class="entry_count"><%= pluralize( parent_agency.entries.size ," entry") %></span></h3>
-    <ul class="raquo indent">
+    <ul class="raquo indent clear">
     <% parent_agency.entries.each do |entry| %>
       <li>
-        <%= link_to entry_title(entry), entry_path(entry) %>
-        <p class="info"><span class="type"><%= entry.entry_type if entry.hasType? %></span> <span class="pages"><%= pluralize(entry.human_length," page") %></span></p>
+        <%= link_to entry.title, entry_path(entry) %>
+        
+        <dl class="group">
+            <dt>Comments</dt>
+            <dd>Open</dd>
+            
+            <dt>Type</dt>
+            <dd><%= entry.entry_type if entry.has_type? %></dd>
+            
+            <dt>Length</dt>
+            <dd><%= pluralize(entry.human_length, " page") %></dd>
+            
+            <dt>Cited</dt>
+            <dd><%= pluralize(entry.citing_entries_count, " times") %></dd>
+            
+            <dt>Locations</dt>
+            <dd><%= pluralize(entry.citing_entries_count, " places") %></dd>            
+        </dl>
+                
+        <% if entry.abstract? %>
+          <p><%= entry.abstract %></p>
+        <% end %>
       </li>
     <% end %>
     
     <% agencies.each do |agency| %>
       <li class="agency">
+        <a class="showhide" href="#">Hide This Agencies Entries</a>        
         <h4><%= link_to agency.name, agency_path(agency) %> <span class="entry_count"><%= pluralize( parent_agency.entries.size ," entry") %></span></h4>
-        <ul>
+        <ul class="raquo indent clear">
           <% agency.entries.each do |entry| %> 
-            <li class="raquo indent">
+            <li>
+              <a class="showhide" href="#">Hide This Agencies Entries</a>
               <%= link_to entry_title(entry), entry_path(entry) %>
-              <p class="info"><span class="type"><%= entry.entry_type if entry.hasType? %></span> <span class="pages"><%= pluralize(entry.human_length," page") %></span></p>
+              <p class="info"><span class="type"><%= entry.entry_type if entry.has_type? %></span> <span class="pages"><%= pluralize(entry.human_length," page") %></span></p>
             </li>
           <% end %>
         </ul>
@@ -77,7 +100,8 @@
   </li>
 <% end %>
   <% if @entries_without_agency.size > 0 %>
-  <li class="parent_agency">
+  <li class="parent_agency open">
+    <a class="showhide" href="#">Hide This Agencies Entries</a>    
     <h3>Other Entries <span class="entry_count"><%= pluralize( @entries_without_agency.size ," entry") %></span></h3>
     <ul class="">
     <% @entries_without_agency.each do |entry| %>
