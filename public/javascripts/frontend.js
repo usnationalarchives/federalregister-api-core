@@ -52,6 +52,11 @@ $(document).ready(function() {
     $(this).animate({left: -10}, 200);
   });
    
+  $(".showhide").bind('click', function(event) {
+    event.preventDefault();
+    $(this).siblings("ul").toggle().end().parent().toggleClass("open");
+  }); 
+   
   //$("input.inlineHint").inlinelabel();
   
   // This needs to be fixed to use a proper slug - may require url rewriting.

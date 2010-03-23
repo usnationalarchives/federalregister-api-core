@@ -104,9 +104,6 @@ body
     :color #005b81
     :outline none  
     :text-decoration none
-    &:link
-    &:visited
-      :color #7d7d7d
     &:hover, &:focus
       :color #cf8227
     &:active
@@ -131,15 +128,41 @@ body
           /:margin-left 15px
           :clear left
     li.parent_agency
-      :margin-bottom 15px
+      :margin-bottom 5px
+      :position relative
+      &.group
+        :padding 0
+      ul 
+        :margin-top 5px
+        li
+          :margin-bottom 10px
+      .showhide
+        :background url(/images/openCloseArrow.gif) no-repeat left 5px
+        :cursor pointer
+        :display inline
+        :height 20px
+        :left 0
+        :position absolute
+        :text-indent -9999px
+        :width 15px
+        :z-index 9999
+        &:hover, &:active
+          :background-position left -245px        
+      &.open .showhide
+        :background-position left -495px
+      &.open .showhide:hover,  &.open .showhide:active
+        :background-position left -745px
       h3, h4
         :border-bottom 1px solid #bbb
+        :float left
         :font-family "Arial"
         :font-weight bold
-        :padding 1px 0
+        :margin-top 0
+        :padding 1px 0 1px 15px
         :position relative
+        :width 100%
         .entry_count
-          :color #999
+          :color #6e6e6e
           :font-family "Tahoma", "Arial"
           :font-size 10px
           :font-weight normal
@@ -149,17 +172,45 @@ body
           :text-transform uppercase
       h4
         :float none
-      p.info
-        :color #ddd
+      p 
+        :line-height 20px
         :margin-bottom 0
-        .type, .pages
-          :text-transform uppercase
-        .type
-          :margin-right 15px
-      li:hover >
-        p.info 
-          .type, .pages
-            :color #999
+      dl
+        :color #7C9AA7
+        :margin 5px 0
+        :opacity .45
+        :text-transform uppercase
+        dt
+          :background rgba(171,199,222,.45)
+          :border 1px solid #ABC7DE
+          :border-radius 2px
+          :-moz-border-radius 2px
+          :-moz-border-radius-topright 0
+          :-moz-border-radius-bottomright 0
+          :-webkit-border-radius 2px
+          :-webkit-border-top-right-radius 0
+          :-webkit-border-bottom-right-radius 0          
+          :float left
+          :font-size 9px
+          :font-weight bold
+          :line-height 18px
+          :padding 0 5px          
+        dd  
+          :border 1px solid #ABC7DE
+          :border-left none
+          :border-radius 2px
+          :-moz-border-radius 2px
+          :-moz-border-radius-topleft 0
+          :-moz-border-radius-bottomleft 0   
+          :-webkit-border-radius 2px
+          :-webkit-border-top-left-radius 0
+          :-webkit-border-bottom-left-radius 0                 
+          :float left
+          :margin-left 0
+          :margin-right 10px
+          :padding 0 5px
+      li:hover >  dl
+        :opacity .85
     li.group
       :padding 0 0 15px 0
     &.indent
