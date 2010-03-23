@@ -805,12 +805,18 @@ div.ornament
 form
   ul.searchform
     :position relative
+    li.advanced 
+      input#all, input#exact, input#ignore
+        :width 340px
+      input.boolean
+        :width 110px
     span.advanced 
       :float right
+      :display block
       a
         :position absolute
         :top 10px
-        :right 20px
+        :right 10px
   ul.searchform label
     :text-align right
     :width 10em
