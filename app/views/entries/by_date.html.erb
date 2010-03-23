@@ -51,7 +51,7 @@
   <% agencies = agencies.sort_by{|a| (a.id == parent_agency_id) ? 1 : 0 } %>
   <% parent_agency = agencies.pop %>
   <li class="parent_agency">
-    <h3><%= link_to parent_agency.name, agency_path(parent_agency) %> <span class="entry_count"><%= pluralize( parent_agency.entries.size ," entry") %></span></h3>
+    <h3><%= link_to parent_agency.name, agency_path(parent_agency) %> <span class="entry_count"><%= pluralize( parent_agency.entries.size + agencies.sum{|a| a.entries.size} ," entry") %></span></h3>
     <ul class="raquo indent">
     <% parent_agency.entries.each do |entry| %>
       <li>
