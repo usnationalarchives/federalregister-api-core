@@ -20,7 +20,7 @@ module Paperclip
       def darkness
         output = Paperclip.run("identify -format '%[mean],%[max]' #{File.expand_path(@file.path)}")
         mean, max = output.split(',')
-        mean.to_f / max.to_f
+        1 - (mean.to_f / max.to_f)
       end
   end
 end
