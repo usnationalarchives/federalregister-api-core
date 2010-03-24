@@ -19,7 +19,8 @@ class Graphic < ActiveRecord::Base
   has_many :entries, :through => :usages
   
   has_attached_file :graphic,
-                    :styles => { :thumb => "100", :small => "150", :medium => "245", :large => "580" },
+                    :styles => { :thumb => ["100", :gif], :small => ["150", :gif], :medium => ["245", :gif], :large => ["580", :gif], :full_size => ["", :gif] },
+                    :processors => [:auto_inverter],
                     :storage => :s3,
                     :s3_credentials => "#{Rails.root}/config/amazon.yml",
                     :s3_alias_url => 'http://graphics.govpulse.us',
