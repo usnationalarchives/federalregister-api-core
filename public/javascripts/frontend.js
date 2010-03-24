@@ -74,6 +74,7 @@ $(document).ready(function() {
   $('ul.searchform span.advanced a').bind('click', function(e){
     e.preventDefault();
     $('ul.searchform li.advanced').toggleClass('hidden');
+    toggle_keyword_input();
   });
   
   $('ul.searchform li.advanced input').bind('focus', function(e){
@@ -104,10 +105,23 @@ jQuery.fn.centerScreen = function(loaded) {
       }
 }
 
+function toggle_keyword_input() {
+  $('ul.searchform span.advanced a').html();
+  if( $('ul.searchform li#keywords label').html = '' ) {
+    $('ul.searchform li#keywords label').html('Keywords:');
+    $('ul.searchform span.advanced a').html('Advanced Search');
+  }
+  else {
+    $('ul.searchform span.advanced a').html('Simple Search');
+    $('ul.searchform li#keywords label').html('');
+  }
+}
+
 function constuct_sphinx_query() {
   var query = '';
   
-  exact_terms   = $('ul.searchform li.advanced input#exact').val();
+  all_terms   = $('ul.searchform li.advanced input#all').val();
+  exact_terms = $('ul.searchform li.advanced input#exact').val();
   
   boolean_terms = $('ul.searchform li.advanced input.boolean[value != ""]').map(function() {
     return $(this).val();
@@ -118,7 +132,8 @@ function constuct_sphinx_query() {
     ignore_terms = " -" + $('ul.searchform li.advanced input#ignore').val().split(" ").join(" -");
   }
   
-  if( exact_terms   != '' ) { query =  '"' + exact_terms   + '" '; }
+  if( all_terms     != '' ) { query = all_terms + ' '; }
+  if( exact_terms   != '' ) { query += '"' + exact_terms + '" '; }
   if( boolean_terms != '' ) { query += "(" + boolean_terms + ') '; }
   query += ignore_terms
   
