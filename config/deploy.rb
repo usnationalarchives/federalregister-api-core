@@ -177,6 +177,7 @@ namespace :deploy do
       sudo "ln -sf #{shared_path}/config/#{file} #{release_path}/config/#{file}"
     end
     sudo "ln -sf #{shared_path}/config/cloudkicker_config.rb #{release_path}/config/initializers/cloudkicker_config.rb"
+    sudo "ln -sf #{shared_path}/config/amazon.yml #{release_path}/config/amazon.yml"
     sudo "ln -sf #{shared_path}/log #{release_path}/log"
     sudo "ln -sf #{shared_path}/data #{release_path}/data"
     sudo "ln -sf #{shared_path}/db/sphinx #{release_path}/db/sphinx"
