@@ -40,7 +40,13 @@
 			.TRPRTPAGE, .TDPRTPAGE {width:100%;}
 
         </style>
-        <xsl:if test="count(//HD[@SOURCE='HD1' or @SOURCE = 'HD2' or @SOURCE = 'HD3' or @SOURCE = 'HD4']) > 0">
+        
+        <xsl:for-each select="//SUM">
+          <h3 id="summary">Summary</h3>
+          <xsl:apply-templates />
+        </xsl:for-each>
+        
+        <xsl:if test="count(//HD[@SOURCE='HD1' or @SOURCE = 'HD2' or @SOURCE = 'HD3' or @SOURCE = 'HD4']) > 2">
           <h3 id="table_of_contents">Table of Contents</h3>
           <ul>
             <xsl:apply-templates mode="table_of_contents" />
@@ -88,7 +94,7 @@
   </xsl:template>
   
   <!-- Tags being Ignored -->
-  <xsl:template match="AGENCY | SUBAGY | AGY | SUM | ACT | EFFDATE | CFR | DEPDOC | RIN | SUBJECT | FURINF | FTNT | FRDOC | BILCOD | CNTNTS | UNITNAME | INCLUDES | EDITOR | EAR | FRDOCBP | HRULE | FTREF | NOLPAGES | OLPAGES">
+  <xsl:template match="AGENCY | SUBAGY | AGY | SUM | ACT | EFFDATE | CFR | DEPDOC | RIN | SUBJECT  | FTNT | FRDOC | BILCOD | CNTNTS | UNITNAME | INCLUDES | EDITOR | EAR | FRDOCBP | HRULE | FTREF | NOLPAGES | OLPAGES">
   </xsl:template>
 
   <xsl:template match="PTS | AIDS">
