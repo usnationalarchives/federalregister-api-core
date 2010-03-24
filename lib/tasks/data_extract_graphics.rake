@@ -30,8 +30,9 @@ namespace :data do
             entries.each do |entry|
               doc = Nokogiri::XML(open(entry.full_xml_file_path))
               graphic_ids = doc.css('GID').map{|node| node.content}
-            
+              
               graphic_ids.each do |identifier|
+                puts "dealing with #{identifier}..."
                 extracted_graphic = extracted_graphics.shift
               
                 graphic = Graphic.find_by_identifier(identifier)
