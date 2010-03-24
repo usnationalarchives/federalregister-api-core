@@ -52,6 +52,16 @@ $(document).ready(function() {
     $(this).animate({left: -10}, 200);
   });
    
+  $(".showhide").bind('click', function(event) {
+    event.preventDefault();
+    
+    var items = $(this).siblings("ul").find("li:not('.agency')");
+    var agencies = $(this).siblings("ul").find("li.agency");
+    
+    $(this).parent().add(agencies).toggleClass("open");
+    $(items).toggle()
+  }); 
+   
   //$("input.inlineHint").inlinelabel();
   
   // This needs to be fixed to use a proper slug - may require url rewriting.
