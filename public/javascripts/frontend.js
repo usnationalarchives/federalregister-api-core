@@ -62,6 +62,7 @@ $(document).ready(function() {
     $(items).toggle()
   }); 
    
+  //$(":text").labelify({ labelledClass: "labelHighlight" });
   //$("input.inlineHint").inlinelabel();
   
   // This needs to be fixed to use a proper slug - may require url rewriting.
@@ -79,6 +80,23 @@ $(document).ready(function() {
   
     tagcloud.draw();
   });
+  
+  $('ul.searchform span.advanced a').bind('click', function(e){
+    e.preventDefault();
+    $('ul.searchform li.advanced').toggleClass('hidden');
+    toggle_keyword_input();
+  });
+  
+  $('ul.searchform li.advanced input').bind('focus', function(e){
+    $('ul.searchform li.advanced input').bind('keyup', function(e){
+      $('ul.searchform li input#q').val(constuct_sphinx_query());
+    });
+  });
+  
+  $('ul.searchform li.advanced input').bind('blur', function(e){
+    $('ul.searchform li.advanced input').unbind('keyup');
+  });
+  
 });
 
 //http://groups.google.com/group/jquery-en/browse_thread/thread/a890828a14d86737
@@ -95,4 +113,38 @@ jQuery.fn.centerScreen = function(loaded) {
           left: $(window).width()/2-this.outerWidth()/2}, 200, 'linear');
         $(".modal_bg").width( $("body").width() );
       }
+}
+
+function toggle_keyword_input() {
+  if( $('ul.searchform li#keywords label').html() == '' ) {
+    $('ul.searchform li#keywords label').html('Keywords:');
+    $('ul.searchform span.advanced a').html('Advanced Search');
+  }
+  else {
+    $('ul.searchform span.advanced a').html('Simple Search');
+    $('ul.searchform li#keywords label').html('');
+  }
+}
+
+function constuct_sphinx_query() {
+  var query = '';
+  
+  all_terms   = $('ul.searchform li.advanced input#all').val();
+  exact_terms = $('ul.searchform li.advanced input#exact').val();
+  
+  boolean_terms = $('ul.searchform li.advanced input.boolean[value != ""]').map(function() {
+    return $(this).val();
+  }).get().join(' | ');
+  
+  ignore_terms = '';
+  if( $('ul.searchform li.advanced input#ignore').val() != '' ){
+    ignore_terms = " -" + $('ul.searchform li.advanced input#ignore').val().split(" ").join(" -");
+  }
+  
+  if( all_terms     != '' ) { query = all_terms + ' '; }
+  if( exact_terms   != '' ) { query += '"' + exact_terms + '" '; }
+  if( boolean_terms != '' ) { query += "(" + boolean_terms + ') '; }
+  query += ignore_terms
+  
+  return query;
 }

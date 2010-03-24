@@ -5,7 +5,18 @@
 <% form_for :search, :url => entries_search_path, :html => {:method => :get} do %>
 <div class="header group">
   <ul class="searchform">
-    <li class="simple"><label>Keywords:</label><%= text_field_tag :q, @search.search_term %></li>
+    <li class="simple" id="keywords"><label>Keywords:</label><%= text_field_tag :q, @search.search_term %></li>
+    
+    <span class='advanced'><a href='#'>Advanced Search</a></span>
+    
+    <li class="advanced hidden"><label>All of these words:</label>  <%= text_field_tag :all %></li>
+    <li class="advanced hidden"><label>Exact word or phrase:</label><%= text_field_tag :exact %></li>
+    <li class="advanced hidden">
+      <label>One or more of these words:</label>
+      <%= text_field_tag :boolean_1, {}, :class => 'boolean' %> <span class="alignTextBox">OR</span> <%= text_field_tag :boolean_2, {}, :class => 'boolean' %> <span class="alignTextBox">OR</span> <%= text_field_tag :boolean_3, {}, :class => 'boolean' %>
+    </li>
+    <li class="advanced hidden"><label>None of these words:</label><%= text_field_tag :ignore %></li>
+    
     <li class="simple"><label>Type:</label><%= select_tag :granule_class, options_for_select([''] + Entry::ENTRY_TYPES.except('Unknown').map{|key, value| [value, key]}, :selected => @search.granule_class) %>
     <li class="simple"><label>Agency:</label><%= select_tag 'agency_id', options_for_select([''] + @agencies.collect{ |agency| [agency.name, agency.id.to_s] }, :selected => @search.agency.try(:id).try(:to_s)) %></li>
     
@@ -27,7 +38,7 @@
             <li class="nextto">
               <label>Near:</label> <%= text_field_tag :near, params[:near], :title => "(eg '94118', 'Seattle')", :class => 'inlineHint'  %> 
             </li>
-            <li class="nextto">  
+            <li class="nextto auto">  
               <label>Within:</label> <%= text_field_tag :within, params[:within], :title => "Miles", :class => "miles", :class => 'inlineHint'  %> 
             </li>             
           <% end %>
@@ -39,8 +50,8 @@
             <li class="nextto">
               <label>From:</label><%= text_field_tag :publication_date_greater_than, @search.start_date.try(:to_date) %>
             </li>
-            <li class="nextto">  
-              <label class="nextto">To:</label><%= text_field_tag :publication_date_less_than, @search.end_date.try(:to_date) %>
+            <li class="nextto auto">  
+              <label>To:</label><%= text_field_tag :publication_date_less_than, @search.end_date.try(:to_date) %>
             </li>
             <li class="clear">  
               <span class="under">(eg '01/01/09', '1 year ago', 'yesterday', etc.)</span>         
