@@ -53,7 +53,7 @@ $(document).ready(function() {
   });
    
   //$(":text").labelify({ labelledClass: "labelHighlight" });
-  $("input.inlineHint").inlinelabel();
+  //$("input.inlineHint").inlinelabel();
   
   // This needs to be fixed to use a proper slug - may require url rewriting.
   $('.tag_cloud').each(function(){
@@ -106,8 +106,7 @@ jQuery.fn.centerScreen = function(loaded) {
 }
 
 function toggle_keyword_input() {
-  $('ul.searchform span.advanced a').html();
-  if( $('ul.searchform li#keywords label').html = '' ) {
+  if( $('ul.searchform li#keywords label').html() == '' ) {
     $('ul.searchform li#keywords label').html('Keywords:');
     $('ul.searchform span.advanced a').html('Advanced Search');
   }

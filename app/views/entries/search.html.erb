@@ -13,7 +13,7 @@
     <li class="advanced hidden"><label>Exact word or phrase:</label><%= text_field_tag :exact %></li>
     <li class="advanced hidden">
       <label>One or more of these words:</label>
-      <%= text_field_tag :boolean_1, {}, :class => 'boolean' %> OR <%= text_field_tag :boolean_2, {}, :class => 'boolean' %> OR <%= text_field_tag :boolean_3, {}, :class => 'boolean' %>
+      <%= text_field_tag :boolean_1, {}, :class => 'boolean' %> <span class="alignTextBox">OR</span> <%= text_field_tag :boolean_2, {}, :class => 'boolean' %> <span class="alignTextBox">OR</span> <%= text_field_tag :boolean_3, {}, :class => 'boolean' %>
     </li>
     <li class="advanced hidden"><label>None of these words:</label><%= text_field_tag :ignore %></li>
     
