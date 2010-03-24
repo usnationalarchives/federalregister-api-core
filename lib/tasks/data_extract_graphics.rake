@@ -2,48 +2,50 @@ namespace :data do
   namespace :extract do
     task :graphics => :environment do
       require 'tmpdir'
-      specified_date = ENV['DATE_TO_IMPORT']
+      date = ENV['DATE_TO_IMPORT'] || Date.today
       
-      if specified_date && specified_date =~ /^\d{4}$/
-        conditions = {:publication_date => Date.parse("#{specified_date}-01-01")..Date.parse("#{specified_date}-12-31")}
+      if date =~ /^\d{4}$/
+        dates = Entry.find_as_array(
+          :select => "distinct(publication_date) AS publication_date",
+          :conditions => {:publication_date => Date.parse("#{date}-01-01") .. Date.parse("#{date}-12-31")},
+          :order => "publication_date DESC"
+        )
       else
-        date = Date.parse(specified_date) || Date.parse(ENV['DATE_TO_IMPORT'])
-        conditions = {:publication_date => date}
+        dates = [date]
       end
-      Entry.find_each(:conditions => conditions) do |entry|
-        if entry.has_full_xml?
-          puts "evaluating #{entry.document_number}"
+      
+      dates.each do |date|
+        entries = Entry.all(:conditions => {:publication_date => date}, :order => "entries.id")
+        if entries.size > 0 && entries.all?(&:has_full_xml?)
           Dir.mktmpdir("entry_graphics") do |dir|
-            doc = Nokogiri::XML(open(entry.full_xml_file_path))
-            identifiers = doc.css('GID').map{|node| node.content}
-            if identifiers.blank?
-              puts "\tno graphics! skipping!"
-              next
-            end
-            
-            pdf_file_loc = "#{dir}/entry.pdf"
-            url = entry.source_url(:pdf)
-            puts "\tdownloading #{url}..."
-            Curl::Easy.download(entry.source_url(:pdf), pdf_file_loc)
+            # Download PDF of all entries for a given date
+            pdf_file_loc = "#{dir}/entries.pdf"
+            url = "http://www.gpo.gov:80/fdsys/pkg/FR-#{date}/pdf/FR-#{date}.pdf"
+            Curl::Easy.download(url, pdf_file_loc)
           
-            puts "\textracting images from pdf..."
+            # Extract all graphics
             output = `pdfimages #{pdf_file_loc} #{dir}/extracted_graphic`
-            Dir.glob("#{dir}/extracted_graphic*").sort.each_with_index do |extracted_file,i|
-              identifier = identifiers[i]
-              puts "\thandling #{identifier}..."
+            extracted_graphics = Dir.glob("#{dir}/extracted_graphic*").sort
           
-              graphic = Graphic.find_by_identifier(identifier)
-              unless graphic
-                converted_file_path = "#{dir}/#{i}.gif"
-                `convert #{extracted_file} #{converted_file_path}`
-                graphic = Graphic.new(:graphic => File.open(converted_file_path), :identifier => identifier)
+            entries.each do |entry|
+              doc = Nokogiri::XML(open(entry.full_xml_file_path))
+              graphic_ids = doc.css('GID').map{|node| node.content}
+            
+              graphic_ids.each do |identifier|
+                extracted_graphic = extracted_graphics.shift
+              
+                graphic = Graphic.find_by_identifier(identifier)
+                unless graphic
+                  graphic = Graphic.new(:graphic => File.open(extracted_graphic), :identifier => identifier)
+                end
+              
+                graphic.entries << entry unless graphic.entry_ids.include?(entry.id)
+                graphic.save!
               end
-            
-              graphic.entries << entry unless graphic.entry_ids.include?(entry.id)
-            
-              graphic.save!
             end
           end
+        else
+          puts "cannot process #{date}; all entries must have XML"
         end
       end
     end
