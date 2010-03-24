@@ -231,8 +231,8 @@ class Entry < ActiveRecord::Base
     ).try(:publication_date)
   end
 
-  def hasType?
-    self.entry_type != 'Unknown'
+  def has_type?
+    entry_type != 'Unknown'
   end
   
   private
