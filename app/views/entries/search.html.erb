@@ -5,10 +5,11 @@
 <% form_for :search, :url => entries_search_path, :html => {:method => :get} do %>
 <div class="header group">
   <ul class="searchform">
-    <li class="simple"><label>Keywords:</label><%= text_field_tag :q, @search.search_term %></li>
+    <li class="simple" id="keywords"><label>Keywords:</label><%= text_field_tag :q, @search.search_term %></li>
     
     <span class='advanced'><a href='#'>Advanced Search</a></span>
     
+    <li class="advanced hidden"><label>All of these words:</label>  <%= text_field_tag :all %></li>
     <li class="advanced hidden"><label>Exact word or phrase:</label><%= text_field_tag :exact %></li>
     <li class="advanced hidden">
       <label>One or more of these words:</label>
