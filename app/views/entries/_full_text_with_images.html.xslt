@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1" ?>
-<xsl:stylesheet version="1.0" xmlns="http://www.w3.org/1999/xhtml" 
-  xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
   
   <xsl:variable name="gpocollection">Federal Register</xsl:variable>
   <xsl:variable name="frnumber" select="FEDREG/NO"/>
@@ -43,7 +42,6 @@
         </style>
         
         <xsl:for-each select="//SUM">
-          <h3 id="summary">Summary</h3>
           <xsl:apply-templates />
         </xsl:for-each>
         
@@ -114,7 +112,11 @@
   <!-- Tags being Ignored -->
   <xsl:template match="AGENCY | SUBAGY | AGY | ACT | EFFDATE | CFR | DEPDOC | RIN | SUBJECT | FURINF | FTNT | FRDOC | BILCOD | CNTNTS | UNITNAME | INCLUDES | EDITOR | EAR | FRDOCBP | HRULE | FTREF | NOLPAGES | OLPAGES">
   </xsl:template>
-
+  
+  <xsl:template match="FURINF">
+    <xsl:apply-templates/>
+  </xsl:template>
+  
   <xsl:template match="PTS | AIDS">
     <hr/>
     <xsl:call-template name="apply-span"/>
@@ -295,17 +297,27 @@
   
   <xsl:template match="HD[@SOURCE = 'HED']"></xsl:template>
   
-  <xsl:template match="HD[@SOURCE='HD1' or @SOURCE = 'HD2' or @SOURCE = 'HD3' or @SOURCE = 'HD4']">
-    <xsl:element name="{concat('h', number(translate(@SOURCE, 'HD', '')) + 2)}">
+  <xsl:template match="HD[@SOURCE='HED' or @SOURCE='HD1' or @SOURCE = 'HD2' or @SOURCE = 'HD3' or @SOURCE = 'HD4']">
+    <xsl:element name="{concat('h', ((number(translate(@SOURCE, 'HD', '')) or 0) + 3))}">
       <xsl:attribute name="id">
         <xsl:value-of select="generate-id()"/>
       </xsl:attribute>
-      <xsl:apply-templates/>
+      <xsl:choose>
+        <xsl:when test="@SOURCE = 'HED'">
+          <xsl:variable name="lower">abcdefghijklmnopqrstuvwxyz</xsl:variable>
+          <xsl:variable name="upper">ABCDEFGHIJKLMNOPQRSTUVWXYZ</xsl:variable>
+          <xsl:value-of select="concat(substring(text(),1,1), translate(substring(text(),2),$upper,$lower))" />
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:apply-templates/>
+        </xsl:otherwise>
+      </xsl:choose>
       <xsl:text> </xsl:text>
-      <a href="#table_of_contents">&#8593;</a>
+      <xsl:if test="count(//HD[@SOURCE='HD1' or @SOURCE = 'HD2' or @SOURCE = 'HD3' or @SOURCE = 'HD4']) > 2">
+        <a href="#table_of_contents">&#8593;</a>
+      </xsl:if>
     </h3>
-  </xsl:template>
-  
+  </xsl:template>  
   <!-- <xsl:template match="HD[@SOURCE = 'HD2']">
     <h4><xsl:apply-templates/></h4>
   </xsl:template>
