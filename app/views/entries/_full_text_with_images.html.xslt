@@ -271,7 +271,7 @@
       </xsl:attribute>
       
       <xsl:attribute name="href">
-        <xsl:value-of select="concat('http://graphics.govpulse.us/', text(), '/original.gif')" />
+        <xsl:value-of select="concat('http://graphics.govpulse.us/', text(), '/full_size.gif')" />
       </xsl:attribute>
       <img class="entry_graphic">
         <xsl:attribute name="src">
