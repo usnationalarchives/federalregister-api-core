@@ -59,8 +59,8 @@
         <%= link_to entry.title, entry_path(entry) %>
         
         <dl class="group">
-            <dt>Comments</dt>
-            <dd>Open</dd>
+            <!-- <dt>Comments</dt>
+                        <dd>Open</dd> -->
             
             <dt>Type</dt>
             <dd><%= entry.entry_type if entry.has_type? %></dd>
@@ -68,11 +68,11 @@
             <dt>Length</dt>
             <dd><%= pluralize(entry.human_length, " page") %></dd>
             
-            <dt>Cited</dt>
-            <dd><%= pluralize(entry.citing_entries_count, " times") %></dd>
+            <!-- <dt>Cited</dt>
+            <dd><%#= pluralize(entry.citing_entries_count, " times") %></dd>
             
             <dt>Locations</dt>
-            <dd><%= pluralize(entry.citing_entries_count, " places") %></dd>            
+            <dd><%#= pluralize(entry.citing_entries_count, " places") %></dd>  -->           
         </dl>
                 
         <% if entry.abstract? %>
