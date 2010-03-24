@@ -4,14 +4,23 @@ module Paperclip
     # Modifies the command ImageMagick's +convert+ options to invert if necessary
     def transformation_command
       trans = super
-      trans << " -negate" if darkness > 60
+      
+      if attachment.instance.inverted.nil?
+        attachment.instance.inverted = darkness > 0.6
+      end
+      
+      if attachment.instance.inverted?
+        trans << " -negate" if attachment.instance.inverted?
+      end
+      
       trans
     end
     
     private
       def darkness
-        output = Paperclip.run("identify -verbose -colorspace gray #{File.expand_path(@file.path)}")
-        darkness = (1 - output[/ mean: ([.0-9]+)/,1].to_f) * 100
+        output = Paperclip.run("identify -format '%[mean],%[max]' #{File.expand_path(@file.path)}")
+        mean, max = output.split(',')
+        mean.to_f / max.to_f
       end
   end
 end
