@@ -41,7 +41,13 @@
 			.entry_graphic_link {display: block}
       ul.table_of_graphics li { display: inline}
         </style>
-        <xsl:if test="count(//HD[@SOURCE='HD1' or @SOURCE = 'HD2' or @SOURCE = 'HD3' or @SOURCE = 'HD4']) > 0">
+        
+        <xsl:for-each select="//SUM">
+          <h3 id="summary">Summary</h3>
+          <xsl:apply-templates />
+        </xsl:for-each>
+        
+        <xsl:if test="count(//HD[@SOURCE='HD1' or @SOURCE = 'HD2' or @SOURCE = 'HD3' or @SOURCE = 'HD4']) > 2">
           <h3 id="table_of_contents">Table of Contents</h3>
           <ul class="table_of_contents">
             <xsl:apply-templates mode="table_of_contents" />
@@ -106,7 +112,7 @@
   </xsl:template>
   
   <!-- Tags being Ignored -->
-  <xsl:template match="AGENCY | SUBAGY | AGY | SUM | ACT | EFFDATE | CFR | DEPDOC | RIN | SUBJECT | FURINF | FTNT | FRDOC | BILCOD | CNTNTS | UNITNAME | INCLUDES | EDITOR | EAR | FRDOCBP | HRULE | FTREF | NOLPAGES | OLPAGES">
+  <xsl:template match="AGENCY | SUBAGY | AGY | ACT | EFFDATE | CFR | DEPDOC | RIN | SUBJECT | FURINF | FTNT | FRDOC | BILCOD | CNTNTS | UNITNAME | INCLUDES | EDITOR | EAR | FRDOCBP | HRULE | FTREF | NOLPAGES | OLPAGES">
   </xsl:template>
 
   <xsl:template match="PTS | AIDS">
@@ -271,7 +277,7 @@
       </xsl:attribute>
       
       <xsl:attribute name="href">
-        <xsl:value-of select="concat('http://graphics.govpulse.us/', text(), '/original.gif')" />
+        <xsl:value-of select="concat('http://graphics.govpulse.us/', text(), '/full_size.gif')" />
       </xsl:attribute>
       <img class="entry_graphic">
         <xsl:attribute name="src">

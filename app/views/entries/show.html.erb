@@ -9,38 +9,6 @@
 <link rev="canonical" type="text/html" href="<%= short_entry_url(@entry) %>" />
 <% end %>
 
-<% if @entry.abstract %>
-  <h3>Summary</h3>
-  <p class='abstract'>
-    <%= text_with_links(@entry, @entry.abstract) %>
-  </p>
-<% end %>
-
-<div class="mod group">
-  <div class="details">
-    <h3>Details</h3>
-    <dl class='fixed details group'>
-      <% if @entry.publication_date.present?    %><dt>Publication Date:</dt>                 <dd><%= link_to @entry.publication_date.to_formatted_s(:pretty), entries_by_date_path(@entry.publication_date) %></dd><% end %>
-      <% if @entry.document_number.present?     %><dt>Federal Register Document Number:</dt> <dd><%= @entry.document_number %></dd><% end %>
-      <% agency = display_agencies_for_entry(@entry) %>
-      <% if agency.present?                     %><dt>Publishing Agency:</dt><dd><%= display_agencies_for_entry(@entry)              %></dd><% end %>
-      <% if @entry.dates.present?               %><dt>Dates:</dt>            <dd><%= text_with_links(@entry, @entry.dates)           %></dd><% end %>
-      <% if @entry.effective_on.present?        %><dt>Effective Date:</dt>   <dd><%= @entry.effective_on                             %></dd><% end %>
-      <% if @entry.comments_close_on.present?   %><dt>Comments Close:</dt>   <dd><%= @entry.comments_close_on                        %></dd><% end %>
-      <% if @entry.action.present?              %><dt>Action:</dt>           <dd><%= @entry.action.titlecase                         %></dd><% end %>
-      <% if @entry.type.present?                %><dt>Type: </dt>            <dd><%= @entry.type                                     %></dd><% end %>
-      <% if @entry.genre.present?               %><dt>Genre:</dt>            <dd><%= @entry.genre.titlecase                          %></dd><% end %>
-      <% if @entry.part_name.present?           %><dt>Part Name:</dt>        <dd><%= @entry.part_name                                %></dd><% end %>
-      <% if @entry.entry_type.present?          %><dt>Entry Type:</dt>       <dd><%= @entry.entry_type                               %></dd><% end %>
-      <% if @entry.document_number.present?     %><dt>Other Formats:</dt>    <dd><%= %w(html text pdf).map{|format| link_to format, @entry.source_url(format), :class => format }.join(" | ") %>
-                                                                                 <%= ' | ' + link_to( 'regulations.gov', "http://www.regulations.gov/search/Regs/home.html#documentDetail?R=#{@entry.regulationsdotgov_id}") if @entry.regulationsdotgov_id.present? %></dd><% end %>
-      <dt>Length:</dt>    <dd><%= @entry.human_length %></dd>
-      <dt>Start Page:</dt><dd><%= @entry.start_page   %></dd>
-      <dt>End Page:</dt>  <dd><%= @entry.end_page     %></dd>
-    </dl>
-  </div>
-</div>
-
 <% if @entry.has_full_xml? %>
   <%=
    if @entry.graphic_usages.count > 0
@@ -51,6 +19,14 @@
    html = auto_link(html, :href_options => { :class => 'external' })
    add_citation_links(html) %>
 <% elsif @entry.full_text %>
+
+<% if @entry.abstract %>
+  <h3>Summary</h3>
+  <p class='abstract'>
+    <%= text_with_links(@entry, @entry.abstract) %>
+  </p>
+<% end %>
+
 <h3>Full text</h3>
 <div class="fulltextWrapper span-16">
   <pre><%=
@@ -117,6 +93,26 @@
   <% if @entry.comment_url.present? && (@entry.comments_close_on.nil? || @entry.comments_close_on >= Date.today) %>
     <p><%= link_to "Submit a formal comment", @entry.comment_url %>. The agency is required to respond in a future FR entry.</p>
   <% end %>
+  
+  <div class="">
+    <h3>Details</h3>
+    <dl class=''>
+      <% if @entry.publication_date.present?    %><dt>Publication Date:</dt>                 <dd><%= link_to @entry.publication_date.to_formatted_s(:pretty), entries_by_date_path(@entry.publication_date) %></dd><% end %>
+      <% if @entry.document_number.present?     %><dt>Document Number:</dt> <dd><%= @entry.document_number %></dd><% end %>
+      <% agency = display_agencies_for_entry(@entry) %>
+      <% if agency.present?                     %><dt>Publishing Agency:</dt><dd><%= display_agencies_for_entry(@entry)              %></dd><% end %>
+      <% if @entry.dates.present?               %><dt>Dates:</dt>            <dd><%= text_with_links(@entry, @entry.dates)           %></dd><% end %>
+      <% if @entry.effective_on.present?        %><dt>Effective Date:</dt>   <dd><%= @entry.effective_on                             %></dd><% end %>
+      <% if @entry.comments_close_on.present?   %><dt>Comments Close:</dt>   <dd><%= @entry.comments_close_on                        %></dd><% end %>
+      <% if @entry.action.present?              %><dt>Action:</dt>           <dd><%= @entry.action.titlecase                         %></dd><% end %>
+      <% if @entry.type.present?                %><dt>Type: </dt>            <dd><%= @entry.type                                     %></dd><% end %>
+      <% if @entry.entry_type.present?          %><dt>Entry Type:</dt>       <dd><%= @entry.entry_type                               %></dd><% end %>
+      <% if @entry.document_number.present?     %><dt>Other Formats:</dt>    <dd><%= %w(html text pdf).map{|format| link_to format, @entry.source_url(format), :class => format }.join(" | ") %>
+                                                                                 <%= ' | ' + link_to( 'regulations.gov', "http://www.regulations.gov/search/Regs/home.html#documentDetail?R=#{@entry.regulationsdotgov_id}") if @entry.regulationsdotgov_id.present? %></dd><% end %>
+      <dt>Page:</dt>      <dd><%= @entry.start_page %><%= "-#{@entry.end_page}" if @entry.end_page != @entry.start_page %> (<%= pluralize @entry.human_length, 'page' %>)</dd>
+    </dl>
+  </div>
+  
   <div id="congress">
     <h5>Your Senators</h5>
     <p class="loading">Loading<img src="/images/ticker_loading.gif" alt="loading" /></p>
