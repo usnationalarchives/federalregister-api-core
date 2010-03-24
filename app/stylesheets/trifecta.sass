@@ -136,6 +136,18 @@ body
         :margin-top 5px
         li
           :margin-bottom 10px
+          &.agency
+            :position relative
+            .showhide
+              :background-position left 5px 
+              :left 19px
+              :*top 15px
+              &:hover, &:active
+                :background-position left -245px              
+            &.open .showhide
+              :background-position left -495px
+            &.open .showhide:hover,  &.open .showhide:active
+              :background-position left -745px  
       .showhide
         :background url(/images/openCloseArrow.gif) no-repeat left 5px
         :cursor pointer
@@ -147,14 +159,13 @@ body
         :width 15px
         :z-index 9999
         &:hover, &:active
-          :background-position left -245px        
+          :background-position left -245px       
       &.open .showhide
         :background-position left -495px
       &.open .showhide:hover,  &.open .showhide:active
         :background-position left -745px
       h3, h4
         :border-bottom 1px solid #bbb
-        :float left
         :font-family "Arial"
         :font-weight bold
         :margin-top 0
