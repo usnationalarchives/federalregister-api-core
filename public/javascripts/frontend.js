@@ -54,7 +54,12 @@ $(document).ready(function() {
    
   $(".showhide").bind('click', function(event) {
     event.preventDefault();
-    $(this).siblings("ul").toggle().end().parent().toggleClass("open");
+    
+    var items = $(this).siblings("ul").find("li:not('.agency')");
+    var agencies = $(this).siblings("ul").find("li.agency");
+    
+    $(this).parent().add(agencies).toggleClass("open");
+    $(items).toggle()
   }); 
    
   //$("input.inlineHint").inlinelabel();
