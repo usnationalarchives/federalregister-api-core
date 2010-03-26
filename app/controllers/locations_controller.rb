@@ -32,7 +32,11 @@ class LocationsController < ApplicationController
     
     if @location.success
       session[:location] = @location.to_hash
-      redirect_to params[:redirect_to] || root_url
+      if params[:redirect_to].present?
+        redirect_to params[:redirect_to]
+      else 
+        redirect_to root_url
+      end
     else
       @message = 'We could not understand that location.'
       @location = current_location
@@ -51,7 +55,7 @@ class LocationsController < ApplicationController
       
       render :layout => false
     rescue
-      render :text => ''
+      render :nothing => true
     end
   end
 end
