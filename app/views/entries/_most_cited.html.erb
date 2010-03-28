@@ -1,6 +1,6 @@
 <% if entries.present? %>
   <div class="header"><h2>Most Cited Entries</h2></div>
-  <ul>
+  <ul class="raquo indent">
   <% entries.each do |entry| %>
     <li><%= link_to entry.title, entry_path(entry) %><br />
       <%= entry.publication_date %>; <%= link_to pluralize(entry.citing_entries_count, 'citation'), entry_citation_path(entry, :anchor => 'referencing_entries') %>
