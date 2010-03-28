@@ -6,7 +6,7 @@ body
 .hidden 
   :display none
 #wrapper
-  :background url(/images/header_bottomshadow4.png) repeat-x left 180px
+  :background url(/images/header_bottomshadow4.png) repeat-x left 175px
 #header
   :background #f5f8f9 url(/images/header_bg.png) repeat-x bottom left
   :border-left 1px solid #27338b  
@@ -59,27 +59,30 @@ body
     :margin 0 10px 0 0
     &.big 
       :margin-bottom 15px
-  h1  
+  h1
+    :border-top 3px double #999
+    :border-bottom 3px double #999
     :color #46565c
     :font 2.5em Georgia,"Times New Roman",Serif
-    :font-variant small-caps        
-    :margin 0 0 10px 0
-    :padding 0 0 0 0
+    :line-height 1.6em
+    :margin 10px 0
+    :padding 10px
     :text-align center
     &.noMargin
       :margin 0
   h2
+    :border-top 3px double #999
+    :border-bottom 3px double #999  
     :color #46565c  
-    :font 2em Georgia,"Times New Roman",Serif
-    :font-variant small-caps
     :margin 0 0 .5em 0  
+    :padding 5px 0
     span
       :font-size .6em  
   h3
     :border-bottom 1px solid #aaa
     :color #333
     :font 1.4em Georgia,"Times New Roman",Serif    
-    :font-variant small-caps
+
     :margin 10px 0
     &:first-child
       :margin-top 0
@@ -88,7 +91,7 @@ body
   h4
     :border-bottom 1px solid #aaa
     :font 1.2em Georgia,"Times New Roman",Serif    
-    :font-variant small-caps
+
     :margin 0 0 5px
     :float left 
     &.title
@@ -267,6 +270,7 @@ body
       :background-image none
       :float left
     h2
+      :border none
       :margin-bottom 0
     a.options
       :float right
@@ -452,9 +456,9 @@ body
             :list-style-type none
         h2
           :border-bottom 1px solid #46565C
-          /:color #ff8400
         h3
           :font-size 1.2em
+          :padding-bottom 5px          
         h3 + ul
           :padding 0
         div.featured_agencies

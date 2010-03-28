@@ -6,7 +6,6 @@
 <%= render :partial => 'entries/most_cited', :locals => {:entries => @most_cited_entries} %>
 
 <% content_for :sidebar do %>
-  <%# TODO HELP-DESIGN make wrappers and slide these up %>
   <% related_agencies = @topic_group.related_agencies_cache %>
   <% if related_agencies.present? %>
     <h3>Agencies Using this Topic</h3>
