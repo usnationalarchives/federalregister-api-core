@@ -65,6 +65,16 @@ $(document).ready(function() {
   //$(":text").labelify({ labelledClass: "labelHighlight" });
   //$("input.inlineHint").inlinelabel();
   
+  $(".tab_container .nav a").bind('click', function(event) {
+    event.preventDefault();
+    var item = $(this).attr("href");
+    $(this).parent().siblings().removeClass("on")
+    $(this).parent().addClass("on");
+    $('.tab_content_wrapper').scrollTo($(item));
+  });
+  
+  $(".tab_container .nav li:first-child a").trigger("click");
+  
   // This needs to be fixed to use a proper slug - may require url rewriting.
   $('.tag_cloud').each(function(){
     $('.tag_cloud ul').hide();

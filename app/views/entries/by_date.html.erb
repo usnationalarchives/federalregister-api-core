@@ -3,18 +3,32 @@
 <% title "Entries for #{@publication_date.to_formatted_s(:pretty)}" %>
 
 <% content_for :precolumn do %>
-  <div class="infobox">
-    <p class='copy'>
-      The Federal Register is published every day of the week, excluding weekends and holidays. The Register contains 
-      an assortment of notices, proposed rules, final rules, requests for information and presidential documents. 
-    </p>
-    <p class='copy'> 
-      You'll find today's entries listed below by agency, with the locations mentioned located on a map for you. You may 
-      also navigate to any date by clicking on the calendar icon below to display calendars for recent months as well
-      as a search box.
-    </p>
-  </div>
 
+  <div class="tab_container">
+  
+    <ul class="nav">
+      <li><a href="#map">Map</a></li>
+      <li><a href="#viz">Visualizations</a></li>
+    </ul>  
+    
+    <div class="tab_content_container roundbox">
+      <div class="tab_content_wrapper">
+        <div class="tab_content" id="map">
+          <% if @map.present? %>
+            <% add_javascript { @map.to_js } %>
+            <div id="map" class='widescreen_map'></div>
+          <% end %>
+        </div>
+      
+        <div class="tab_content" id="viz">
+          <%= render :partial => 'entries/charts/by_type', :locals => {:entries => @entries} %>
+          <%= render :partial => 'entries/charts/by_agency', :locals => {:agencies => @agencies, :entry_count => @entries.size} %>
+        </div>  
+      </div>
+    </div>  
+  
+  </div>
+  
   <div class="header group calendar controls">
   <h2>
     <%= pluralize(@entries.size, 'entry') %> published on this day
@@ -117,18 +131,3 @@
   </li>
   <% end %>
 </ul>
-
-<% content_for :sidebar do %>
-  
-  <% if @map.present? %>
-    <h3>Locations Mentioned</h3>
-    <% add_javascript { @map.to_js } %>
-    <div id="map" class='small_map'></div>
-  <% end %>
-  
-  <h3>Today's Entry Types</h3>
-  <%= render :partial => 'entries/charts/by_type', :locals => {:entries => @entries} %>
-  
-  <h3>Top Agencies Reporting</h3>
-  <%= render :partial => 'entries/charts/by_agency', :locals => {:agencies => @agencies, :entry_count => @entries.size} %>
-<% end %>
