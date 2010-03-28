@@ -1,7 +1,7 @@
 .tab_container {
  display: block;
  height: 340px; 
- margin: 0 0 15px 0;
+ margin: 15px 0;
  position: relative;
 }
 
@@ -35,10 +35,11 @@
   }
 .tab_content {
   height: 320px;
-  padding-bottom: 10px;
   margin-bottom: 10px;
+  overflow: hidden;
+  padding-bottom: 10px;  
 }
 
 .tab_content img {
   float: left;
-  }
+}

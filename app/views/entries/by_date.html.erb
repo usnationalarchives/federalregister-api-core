@@ -9,6 +9,7 @@
     <ul class="nav">
       <li><a href="#map">Map</a></li>
       <li><a href="#viz">Visualizations</a></li>
+      <li><a href="#help">Help</a></li>
     </ul>  
     
     <div class="tab_content_container roundbox">
@@ -23,7 +24,19 @@
         <div class="tab_content" id="viz">
           <%= render :partial => 'entries/charts/by_type', :locals => {:entries => @entries} %>
           <%= render :partial => 'entries/charts/by_agency', :locals => {:agencies => @agencies, :entry_count => @entries.size} %>
+        </div>
+        
+        <div class="tab_content" id="help">
+          <p class='copy'>
+            The Federal Register is published every day of the week, excluding weekends and holidays. The Register contains 
+            an assortment of notices, proposed rules, final rules, requests for information and presidential documents. 
+          </p>
+          <p class='copy'> 
+            You'll find today's entries listed below by agency, with the locations mentioned located on a map for you. You may 
+            also navigate to any date by clicking on the calendar icon below to display calendars for recent months as well
+            as a search box.</p>
         </div>  
+          
       </div>
     </div>  
   
