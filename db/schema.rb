@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100316151731) do
+ActiveRecord::Schema.define(:version => 20100324123754) do
 
   create_table "agencies", :force => true do |t|
     t.integer  "parent_id"
@@ -113,6 +113,7 @@ ActiveRecord::Schema.define(:version => 20100316151731) do
     t.datetime "graphic_updated_at"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "inverted"
   end
 
   add_index "graphics", ["identifier"], :name => "index_graphics_on_identifier", :unique => true

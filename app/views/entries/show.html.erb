@@ -94,6 +94,13 @@
     <p><%= link_to "Submit a formal comment", @entry.comment_url %>. The agency is required to respond in a future FR entry.</p>
   <% end %>
   
+  <div id="congress">
+    <h5>Your Senators</h5>
+    <p class="loading">Loading<img src="/images/ticker_loading.gif" alt="loading" /></p>
+    <h5>Your Representative</h5>
+    <p class="loading">Loading<img src="/images/ticker_loading.gif" alt="loading" /></p>
+  </div>
+  
   <div class="">
     <h3>Details</h3>
     <dl class=''>
@@ -112,14 +119,6 @@
       <dt>Page:</dt>      <dd><%= @entry.start_page %><%= "-#{@entry.end_page}" if @entry.end_page != @entry.start_page %> (<%= pluralize @entry.human_length, 'page' %>)</dd>
     </dl>
   </div>
-  
-  <div id="congress">
-    <h5>Your Senators</h5>
-    <p class="loading">Loading<img src="/images/ticker_loading.gif" alt="loading" /></p>
-    <h5>Your Representative</h5>
-    <p class="loading">Loading<img src="/images/ticker_loading.gif" alt="loading" /></p>
-  </div>
-  
   
   <% if @entry.contact.present? %>
     <h3>Contact</h3>
