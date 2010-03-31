@@ -17,7 +17,6 @@ SitemapGenerator::Sitemap.add_links do |sitemap|
   
   # SPECIAL PAGES
   sitemap.add about_path, :priority => 1
-  sitemap.add vote_path,  :priority => 0.75
   
   # ENTRIES
   Entry.find_each do |entry|
