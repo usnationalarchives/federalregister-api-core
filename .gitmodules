@@ -10,6 +10,3 @@
 [submodule "vendor/plugins/geokit-rails"]
 	path = vendor/plugins/geokit-rails
 	url = git://github.com/andre/geokit-rails.git
-[submodule "vendor/plugins/sitemap_generator"]
-	path = vendor/plugins/sitemap_generator
-	url = git://github.com/trifecta/sitemap_generator.git
