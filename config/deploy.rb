@@ -65,7 +65,7 @@ set :sql_file_path,  "#{shared_path}/db/#{remote_db_name}_#{Time.now.utc.strftim
 # SCM Settings
 #############################################################
 set :scm,              :git          
-set :github_user_repo, 'trifecta'
+set :github_user_repo, 'criticaljuncture'
 set :github_project_repo, 'govpulse'
 set :deploy_via,       :remote_cache 
 
@@ -96,7 +96,7 @@ if deploy_via == :remote_cache
 
   set :deploy_via, :remote_cache
   set :repository, "git@github.com:#{github_user_repo}/#{github_project_repo}.git"
-  set :github_username, 'trifecta'
+  set :github_username, 'criticaljuncture'
 
 elsif deploy_via == :copy
 
