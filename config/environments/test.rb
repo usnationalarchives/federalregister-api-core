@@ -33,3 +33,6 @@ config.gem 'seanhussey-woulda',  :lib => 'woulda',  :source => 'http://gems.gith
 config.gem 'floehopper-mocha',   :lib => 'mocha',   :source => 'http://gems.github.com'
 config.gem 'rails-test-serving', :version => '0.1.4.2', :lib => 'rails_test_serving'
 config.gem 'jgre-monkeyspecdoc', :lib => 'monkeyspecdoc',    :version => '0.9.5'
+
+config.gem "rspec", :lib => false, :version => "1.3.0"
+config.gem "rspec-rails", :lib => false, :version => "1.3.2"
