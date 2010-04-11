@@ -4,6 +4,10 @@ ENV["RAILS_ENV"] ||= 'test'
 require File.expand_path(File.join(File.dirname(__FILE__),'..','config','environment'))
 require 'spec/autorun'
 require 'spec/rails'
+require "shoulda" 
+require "shoulda/autoload_macros" 
+require "shoulda/assertions" 
+require "shoulda/rails"
 
 # Uncomment the next line to use webrat's matchers
 #require 'webrat/integrations/rspec-rails'
