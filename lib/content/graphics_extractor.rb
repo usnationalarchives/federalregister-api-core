@@ -11,9 +11,7 @@ module Content
     
     def perform
       raise MissingXML.new unless File.exists?(entry_bulkdata_path)
-      # Dir.mktmpdir("entry_graphics").each do |tmp_dir|
-      dir = Dir.mktmpdir("entry_graphics")
-      [dir].each do |tmp_dir|
+      Dir.mktmpdir("entry_graphics").each do |tmp_dir|
         images.group_by(&:document_number).each do |document_number, images|
           entry = Entry.new(document_number, :base_dir => tmp_dir)
           images.each do |image|
