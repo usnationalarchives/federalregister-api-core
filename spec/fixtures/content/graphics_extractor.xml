@@ -3,7 +3,10 @@
   <NEWPART>
     <RULES>
       <RULE>
-        <PRTPAGE P="4658"/>
+          <P>Lorem ipsum<PRTPAGE P="4658"/> dolor</P>
+        <FTNT>
+          <P>Footnote broken<PRTPAGE/>across two pages.</P>
+        </FTNT>
         <FRDOC>[FR Doc. 2010-1223 Filed 1-27-10; 8:45 am]</FRDOC>
       </RULE>
       

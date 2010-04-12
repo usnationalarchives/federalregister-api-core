@@ -53,14 +53,14 @@ module Content
         if first_node_with_content.name == 'PRTPAGE'
           first_node_with_content['P'].to_i
         else
-          entry_node.xpath('(preceding::PRTPAGE)[last()]').first['P'].to_i
+          entry_node.xpath('(preceding::PRTPAGE[count(ancestor::FTNT) = 0])[last()]').first['P'].to_i
         end
       end
       
       private
       
       def page_node
-        @image_node.xpath('(preceding::PRTPAGE)[last()]').first
+        @image_node.xpath('(preceding::PRTPAGE[count(ancestor::FTNT) = 0])[last()]').first
       end
       memoize :page_node
       
