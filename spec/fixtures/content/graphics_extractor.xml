@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FEDREG xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="FRMergedXML.xsd">
+  <NEWPART>
+    <RULES>
+      <RULE>
+        <PRTPAGE P="4658"/>
+        <FRDOC>[FR Doc. 2010-1223 Filed 1-27-10; 8:45 am]</FRDOC>
+      </RULE>
+      
+      <RULE>
+        <P>lorem</P>
+        <GPH DEEP="593" SPAN="3">
+          <GID>FIRST.000</GID>
+        </GPH>
+        <GPH>
+          <PRTPAGE P="4659"/>
+          <GID>SECOND.000</GID>
+        </GPH>
+        <GPH>
+          <GID>THIRD.000</GID>
+        </GPH>
+        <FRDOC>[FR Doc. 2010-1289 Filed 1-27-10; 8:45 am]</FRDOC>
+      </RULE>
+    </RULES>
+  </NEWPART>
+</FEDREG>
