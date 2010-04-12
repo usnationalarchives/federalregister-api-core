@@ -7,7 +7,7 @@ module EntryFullTextTransformationTestHelpers
   # provide sample bulkdata XML and return the transformed version
   def process(xml)
     @html = transform_xml("<RULE>#{xml}</RULE>", "entries/_full_text.html.xslt")
-  end 
+  end
   
   # include the standard rails view testing support
   include ActionController::Assertions::SelectorAssertions

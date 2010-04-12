@@ -19,7 +19,7 @@ Spork.prefork do
   require "shoulda/rails"
   
   # Uncomment the next line to use webrat's matchers
-  #require 'webrat/integrations/rspec-rails'
+  require 'webrat/integrations/rspec-rails'
   
   Dir[File.expand_path(File.join(File.dirname(__FILE__),'support','**','*.rb'))].each {|f| require f}
 
