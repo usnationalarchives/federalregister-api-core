@@ -19,12 +19,12 @@ class ApplicationController < ActionController::Base
     notify_hoptoad(exception)
     
     request.format = :html
-    render :template => "errors/500", :status => 500
+    render :template => "errors/500.html.erb", :status => 500
   end
   
   rescue_from ActiveRecord::RecordNotFound, ActionController::RoutingError, :with => :record_not_found if RAILS_ENV != 'development'
   def record_not_found
     request.format = :html
-    render :template => "errors/404", :status => 404
+    render :template => "errors/404.html.erb", :status => 404
   end
 end
