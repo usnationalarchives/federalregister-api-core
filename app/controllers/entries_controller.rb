@@ -1,9 +1,6 @@
 class EntriesController < ApplicationController
   caches_page :by_date, :show, :current_headlines
   
-  include XmlTransformer
-  helper_method :transform_xml
-  
   def search
     if !params[:volume].blank? && !params[:page].blank?
       redirect_to "/citation/#{params[:volume]}/#{params[:page]}"
