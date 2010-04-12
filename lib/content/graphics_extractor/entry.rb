@@ -28,15 +28,13 @@ module Content
       memoize :pdf_images_by_page
       
       def associate_image(image)
-        puts "Processing #{image.identifier} (##{image.num_prior_images_on_page + 1} on page #{image.page_number}) for #{entry.document_number} [#{pdf_file_path}]"
-        graphic = Graphic.find_by_identifier(image.identifier)
-        if graphic.nil?
+        puts "Processing #{image.identifier} (##{image.num_prior_images_on_page + 1} on page #{image.page_number}) for #{entry.document_number}"
+        graphic = Graphic.find_by_identifier(image.identifier) || Graphic.new(:identifier => image.identifier)
+        
+        if graphic.graphic.nil?
           pdf_image = pdf_images_by_page[(image.page_number - image.entry_start_page)][ image.num_prior_images_on_page ]
           if pdf_image
-            graphic = Graphic.new(:graphic => File.open(pdf_image.file_path), :identifier => image.identifier)
-          else
-            puts "\timage not extracted! #{pdf_images_by_page.inspect}"
-            return
+            graphic.graphic = File.open(pdf_image.file_path)
           end
         end
         
