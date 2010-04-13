@@ -52,7 +52,7 @@ class AgenciesController < ApplicationController
       end
       
       wants.rss do
-        @feed_name = "govpulse: #{@agency.name}"
+        @feed_name = "Federal Register: #{@agency.name}"
         @feed_description = "Recent Federal Register entries from #{@agency.name}."
         @entries = @agency.entries.all(:include => [:topics, :agency], :order => "publication_date DESC", :limit => 20)
         render :template => 'entries/index.rss.builder'

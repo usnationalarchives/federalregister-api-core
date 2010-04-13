@@ -4,15 +4,14 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" xmlns:v="urn:schemas-microsoft-com:vml">
 
 <head>
-  <title>govpulse<%= " | #{yield :title}" if yield(:title) %></title>
+  <title>Federal Register<%= " | #{yield :title}" if yield(:title) %></title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <meta name="keywords" content="government federal register executive rulings notices govpulse" />
-  <meta name="author" content="Andrew Carpenter, Bob Burbach, Dave Augustine" />
+  <meta name="keywords" content="government federal register executive rulings notices" />
   
   <%# Facebook uses these for parsing when someone adds a link  %>
   <%= content_tag(:meta, nil, :name => 'title', :content => @entry.title) if @entry %>
   <%= content_tag(:meta, nil, :name => 'description', :content => truncate(strip_tags(@entry.abstract), :length => 300)) if @entry %>
-  <link rel="image_src" href="http://www.govpulse.us/images/fbdisplay.jpg" />
+  <link rel="image_src" href="http://fr2.criticaljuncture.org/images/fbdisplay.jpg" />
   <meta name="medium" content="news" />
   
   <%= stylesheet_link_tag "screen",     :media => :screen %>
@@ -60,8 +59,8 @@
       
       <div class="capitol"></div>      
       
-      <div class="type">
-        <h1><a href="/" title="govpulse home">gov<span>pulse</span></a></h1>
+      <div class="typeXXX">
+        <h1><a href="/" title="govpulse home">Federal Register</a></h1>
       </div>
 
     </div>
