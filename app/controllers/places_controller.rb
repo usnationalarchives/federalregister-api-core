@@ -57,7 +57,7 @@ class PlacesController < ApplicationController
       end
       
       wants.rss do
-        @feed_name = "govpulse: #{@location.name}"
+        @feed_name = "Federal Register: #{@location.name}"
         @feed_description = "Recent Federal Register entries about #{@location.name}."
         render :template => 'entries/index.rss.builder'
       end

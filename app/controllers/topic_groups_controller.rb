@@ -32,7 +32,7 @@ class TopicGroupsController < ApplicationController
         
       end
       wants.rss do
-        @feed_name = "govpulse: #{@topic_group.name}"
+        @feed_name = "Federal Register: #{@topic_group.name}"
         @feed_description = "Recent Federal Register entries about #{@topic_group.name}."
         @entries = Entry.find(:all,
             :conditions => {:topics => {:group_name => @topic_group.group_name}},
