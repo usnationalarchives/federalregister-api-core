@@ -22,7 +22,7 @@ class EntriesController < ApplicationController
       
       wants.rss do 
         @entries ||= []
-        @feed_name = 'govpulse Search Results'
+        @feed_name = 'Federal Register Search Results'
         render :action => 'index'
       end
     end
@@ -43,7 +43,7 @@ class EntriesController < ApplicationController
         redirect_to entries_by_date_path(Entry.latest_publication_date)
       end
       wants.rss do
-        @feed_name = 'govpulse Latest Entries'
+        @feed_name = 'Federal Register Latest Entries'
         @entries = Entry.find(:all, :conditions => {:publication_date => Entry.latest_publication_date})
       end
     end
