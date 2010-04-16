@@ -46,7 +46,7 @@ module RouteBuilder
   end
   
   add_route :short_entry do |entry|
-    host = 'govpulse.us' if RAILS_ENV == 'production'
+    host = 'fr2.criticaljuncture.org' if RAILS_ENV == 'production'
     {
       :document_number => entry.document_number,
       :host => host
