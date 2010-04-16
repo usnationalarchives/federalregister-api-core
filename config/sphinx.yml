@@ -9,5 +9,5 @@ production:
   index_exact_words: 1
   searchd_log_file: /var/www/apps/fr2/shared/log/searchd.log
   query_log_file: /var/www/apps/fr2/shared/log/searchd.query.log
-  pid_file: /var/www/apps/govpulse/fr2/tmp/searchd.pid
+  pid_file: /var/www/apps/fr2/shared/tmp/searchd.pid
   searchd_file_path: /var/www/apps/fr2/shared/db/sphinx/production
