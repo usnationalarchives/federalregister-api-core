@@ -27,4 +27,4 @@ config.action_view.cache_template_loading            = true
 # Enable threaded mode
 # config.threadsafe!
 
-config.action_controller.asset_host = "http://assets%d.govpulse.us"
+config.action_controller.asset_host = "http://assets%d.fr2.criticaljuncture.org"
