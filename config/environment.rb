@@ -12,7 +12,7 @@ Rails::Initializer.run do |config|
   # -- all .rb files in that directory are automatically loaded.
 
   # Add additional load paths for your own custom dirs
-  # config.load_paths += %W( #{RAILS_ROOT}/extras )
+  config.load_paths += %W( #{RAILS_ROOT}/lib/content )
 
   # Specify gems that this application depends on and have them installed with rake gems:install
   config.gem "nokogiri", :version => '1.3.2'
