@@ -9,7 +9,7 @@ require 'hoptoad_notifier/capistrano'
 # Set Basics
 #############################################################
 
-set :application, "govpulse"
+set :application, "fr2"
 set :user, "deploy"
 ssh_options[:keys] = [File.join(ENV["HOME"], ".ssh", "govpulse-prod-provision")]
 #ssh_options[:keys] = [File.join(ENV["HOME"], ".ssh", "id_rsa_govpulse_prod1")]
@@ -43,8 +43,7 @@ end
 
 set :rails_env,  "production"                           
 set :deploy_to,  "/var/www/apps/#{application}" 
-set :domain,     "204.236.234.36" #gp1_ec2 -- ec2-204-236-234-36.compute-1.amazonaws.com
-#set :domain,     "ec2-184-73-30-246.compute-1.amazonaws.com" #gp2_ec2
+set :domain,     "184.73.189.26" #fr1_ec2 -- ec2-184-73-5-183.compute-1.amazonaws.com
 set :url,        "#{domain}"     
 set :server_url, "#{domain}"
 
@@ -56,7 +55,7 @@ role :db , domain, {:primary => true}
 # Database Settings
 #############################################################
 
-set :remote_db_name, "govpulse_production"
+set :remote_db_name, "fr2_production"
 set :db_path,        "#{shared_path}/db"
 set :sql_file_path,  "#{shared_path}/db/#{remote_db_name}_#{Time.now.utc.strftime("%Y%m%d%H%M%S")}.sql"
 
@@ -66,7 +65,7 @@ set :sql_file_path,  "#{shared_path}/db/#{remote_db_name}_#{Time.now.utc.strftim
 #############################################################
 set :scm,              :git          
 set :github_user_repo, 'criticaljuncture'
-set :github_project_repo, 'govpulse'
+set :github_project_repo, 'fr2'
 set :deploy_via,       :remote_cache 
 
 
