@@ -3,7 +3,7 @@ module EntryImporter::CFR
   provides :cfr_title, :cfr_part
   
   def cfr_node
-    mods_node.xpath('./xmlns:extension/xmlns:cfr').first
+    mods_node.xpath('./xmlns:extension/xmlns:cfr').first if mods_node
   end
   
   def cfr_title
