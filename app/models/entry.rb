@@ -106,7 +106,6 @@ class Entry < ActiveRecord::Base
   before_save :set_document_file_path
   
   has_many :section_assignments
-  has_many :sections, :through => :section_assignments
   
   file_attribute(:full_xml)  {"#{RAILS_ROOT}/data/xml/#{document_file_path}.xml"}
   file_attribute(:full_text) {"#{RAILS_ROOT}/data/text/#{document_file_path}.txt"}
@@ -241,6 +240,26 @@ class Entry < ActiveRecord::Base
 
   def has_type?
     entry_type != 'Unknown'
+  end
+  
+  def sections
+  
+  end
+  
+  def section_ids
+    section_assignments.map(&:section_id)
+  end
+  
+  def section_ids=(ids)
+    ids = ids.map(&:to_i)
+    to_add = ids - section_ids
+    to_remove = section_ids - ids
+    
+    self.section_assignments = (self.section_assignments).reject{|sa| to_remove.include?(sa.section_id) }
+    
+    to_add.each do |section_id|
+      self.section_assignments << SectionAssignment.new(:section_id => section_id)
+    end
   end
   
   private
