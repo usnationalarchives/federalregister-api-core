@@ -1,5 +1,6 @@
 class EntryImporter
   include EntryImporter::CFR
+  include EntryImporter::Sections
   
   def self.process_all_by_date(date, *attributes)
     if date =~ /^\d{4}$/
