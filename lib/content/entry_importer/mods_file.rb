@@ -21,8 +21,9 @@ class EntryImporter
     def document
       Curl::Easy.download(url, file_path) unless File.exists?(file_path)
       doc = Nokogiri::XML(open(file_path))
-
-      publication_date = doc.root.xpath('./xmlns:originInfo/xmlns:dateIssued').first.try(:content)
+      
+      publication_date = doc.root.xpath('./xmlns:originInfo/xmlns:dateIssued').first.try(:content) if doc.root
+      
       if !publication_date
         # File.delete(file_path)
         raise "Mods file not published"
