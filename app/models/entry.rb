@@ -30,12 +30,17 @@
   source_text_url              :string(255)
   primary_agency_raw           :string(255)
   secondary_agency_raw         :string(255)
-  volume                       :integer(4)
   regulationsdotgov_id         :string(255)
   comment_url                  :string(255)
   checked_regulationsdotgov_at :datetime
-  full_xml_added_at            :datetime
+  volume                       :integer(4)
+  full_xml_updated_at          :datetime
   regulation_id_number         :string(255)
+  citing_entries_count         :integer(4)      default(0)
+  document_file_path           :string(255)
+  full_text_updated_at         :datetime
+  cfr_title                    :string(255)
+  cfr_part                     :string(255)
 
 =end Schema Information
 
