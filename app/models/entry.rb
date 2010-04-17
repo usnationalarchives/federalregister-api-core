@@ -100,6 +100,9 @@ class Entry < ActiveRecord::Base
   
   before_save :set_document_file_path
   
+  has_many :section_assignments
+  has_many :sections, :through => :section_assignments
+  
   file_attribute(:full_xml)  {"#{RAILS_ROOT}/data/xml/#{document_file_path}.xml"}
   file_attribute(:full_text) {"#{RAILS_ROOT}/data/text/#{document_file_path}.txt"}
   
