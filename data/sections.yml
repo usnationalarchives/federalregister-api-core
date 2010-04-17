@@ -1,0 +1,56 @@
+- id: 1
+  name: Money
+  cfr_titles:
+  - 2
+  - 12
+  - 20
+  - 13
+  - 18
+  - 16
+  - 17
+  - 26
+  - 31
+- id: 2
+  name: Environment
+  cfr_titles:
+  - 10
+  - 9
+  - 7
+  - 29
+  - 36
+  - 40
+  - 50
+  - 30
+  - 43
+- id: 3
+  name: World
+  cfr_titles:
+  - 15
+  - 19
+  - 8
+  - 22
+  - 32
+  - 6
+- id: 4
+  name: Science & Technology
+  cfr_titles:
+  - 14
+  - 47
+  - 34
+- id: 5
+  name: Business & Industry
+  cfr_titles:
+  - 10
+  - 9
+  - 7
+  - 29
+  - 36
+  - 40
+  - 50
+  - 30
+  - 43
+- id: 6
+  name: Health & Medicine
+  cfr_titles:
+  - 21
+  
