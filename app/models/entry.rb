@@ -30,12 +30,17 @@
   source_text_url              :string(255)
   primary_agency_raw           :string(255)
   secondary_agency_raw         :string(255)
-  volume                       :integer(4)
   regulationsdotgov_id         :string(255)
   comment_url                  :string(255)
   checked_regulationsdotgov_at :datetime
-  full_xml_added_at            :datetime
+  volume                       :integer(4)
+  full_xml_updated_at          :datetime
   regulation_id_number         :string(255)
+  citing_entries_count         :integer(4)      default(0)
+  document_file_path           :string(255)
+  full_text_updated_at         :datetime
+  cfr_title                    :string(255)
+  cfr_part                     :string(255)
 
 =end Schema Information
 
@@ -99,6 +104,8 @@ class Entry < ActiveRecord::Base
   has_one :effective_date, :class_name => "ReferencedDate", :conditions => {:date_type => 'EffectiveDate'}
   
   before_save :set_document_file_path
+  
+  has_many :section_assignments
   
   file_attribute(:full_xml)  {"#{RAILS_ROOT}/data/xml/#{document_file_path}.xml"}
   file_attribute(:full_text) {"#{RAILS_ROOT}/data/text/#{document_file_path}.txt"}
@@ -233,6 +240,26 @@ class Entry < ActiveRecord::Base
 
   def has_type?
     entry_type != 'Unknown'
+  end
+  
+  def sections
+  
+  end
+  
+  def section_ids
+    section_assignments.map(&:section_id)
+  end
+  
+  def section_ids=(ids)
+    ids = ids.map(&:to_i)
+    to_add = ids - section_ids
+    to_remove = section_ids - ids
+    
+    self.section_assignments = (self.section_assignments).reject{|sa| to_remove.include?(sa.section_id) }
+    
+    to_add.each do |section_id|
+      self.section_assignments << SectionAssignment.new(:section_id => section_id)
+    end
   end
   
   private

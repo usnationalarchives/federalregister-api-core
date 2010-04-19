@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100324123754) do
+ActiveRecord::Schema.define(:version => 20100416235032) do
 
   create_table "agencies", :force => true do |t|
     t.integer  "parent_id"
@@ -80,6 +80,8 @@ ActiveRecord::Schema.define(:version => 20100324123754) do
     t.integer  "citing_entries_count",         :default => 0
     t.string   "document_file_path"
     t.datetime "full_text_updated_at"
+    t.string   "cfr_title"
+    t.string   "cfr_part"
   end
 
   add_index "entries", ["agency_id", "citing_entries_count"], :name => "index_entries_on_agency_id_and_citing_entries_count"
@@ -161,6 +163,13 @@ ActiveRecord::Schema.define(:version => 20100324123754) do
   end
 
   add_index "search_subscriptions", ["user_id"], :name => "index_search_subscriptions_on_user_id"
+
+  create_table "section_assignments", :force => true do |t|
+    t.integer "entry_id"
+    t.integer "section_id"
+  end
+
+  add_index "section_assignments", ["section_id", "entry_id"], :name => "index_section_assignments_on_section_id_and_entry_id"
 
   create_table "topic_assignments", :force => true do |t|
     t.integer  "topic_id"
