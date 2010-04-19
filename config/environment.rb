@@ -12,7 +12,7 @@ Rails::Initializer.run do |config|
   # -- all .rb files in that directory are automatically loaded.
 
   # Add additional load paths for your own custom dirs
-  # config.load_paths += %W( #{RAILS_ROOT}/extras )
+  config.load_paths += %W( #{RAILS_ROOT}/lib/content )
 
   # Specify gems that this application depends on and have them installed with rake gems:install
   config.gem "nokogiri", :version => '1.3.2'
@@ -37,6 +37,8 @@ Rails::Initializer.run do |config|
   config.gem "aws-s3", :lib => "aws/s3", :version => '0.6.2'
   config.gem 'paperclip', :version => '2.3.1.1'
   config.gem 'stevedore', :version => '0.0.1'
+  config.gem 'active_hash', :version => '0.7.9'
+  
   # disabled as requires C library to install...the Locator module will return a fake result if not installed
   # config.gem "geoip_city", :version => '0.2.0'
   
