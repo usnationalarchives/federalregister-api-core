@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100416235032) do
+ActiveRecord::Schema.define(:version => 20100419193355) do
 
   create_table "agencies", :force => true do |t|
     t.integer  "parent_id"
@@ -152,6 +152,25 @@ ActiveRecord::Schema.define(:version => 20100416235032) do
 
   add_index "referenced_dates", ["entry_id", "date"], :name => "index_referenced_dates_on_entry_id_and_date"
   add_index "referenced_dates", ["entry_id", "date_type", "date"], :name => "foo"
+
+  create_table "regulatory_plan_events", :force => true do |t|
+    t.integer "regulatory_plan_id"
+    t.string  "date"
+    t.string  "action"
+    t.string  "fr_citation"
+  end
+
+  add_index "regulatory_plan_events", ["regulatory_plan_id"], :name => "index_regulatory_plan_events_on_regulatory_plan_id"
+
+  create_table "regulatory_plans", :force => true do |t|
+    t.string "regulation_id_number"
+    t.string "issue"
+    t.text   "title"
+    t.text   "abstract"
+    t.string "priority_category"
+  end
+
+  add_index "regulatory_plans", ["regulation_id_number", "issue"], :name => "index_regulatory_plans_on_regulation_id_number_and_issue"
 
   create_table "search_subscriptions", :force => true do |t|
     t.integer  "user_id"

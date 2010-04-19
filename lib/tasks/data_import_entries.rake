@@ -65,7 +65,8 @@ namespace :data do
         entry.toc_subject = entry_node.css('tocSubject1').first.try(:content)
         
         entry.citation = entry_node.css('identifier[type="preferred citation"]').first.try(:content)
-        entry.regulation_id_number = entry_node.css('identifier[type="regulation ID number"]').first.try(:content)
+        regulation_id_number = entry_node.css('identifier[type="regulation ID number"]').first.try(:content)
+        entry.regulation_id_number = regulation_id_number.sub!(/RIN /, '') if regulation_id_number.present?
         entry.start_page = entry_node.css('extent[unit="pages"] start').first.try(:content)
         entry.end_page = entry_node.css('extent[unit="pages"] end').first.try(:content)
         
