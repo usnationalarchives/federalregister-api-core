@@ -172,15 +172,32 @@ end
 namespace :deploy do
   desc "Set Symlinks for Static Files (like database.yml)"
   task :update_config, :roles => [:app] do
+    command = []
+    
     %w(database.yml api_keys.yml production.sphinx.conf newrelic.yml).each do |file|
-      sudo "ln -sf #{shared_path}/config/#{file} #{release_path}/config/#{file}"
+      command << "#{sudo} ln -sf #{shared_path}/config/#{file} #{release_path}/config/#{file}"
     end
-    sudo "ln -sf #{shared_path}/config/cloudkicker_config.rb #{release_path}/config/initializers/cloudkicker_config.rb"
-    sudo "ln -sf #{shared_path}/config/amazon.yml #{release_path}/config/amazon.yml"
-    sudo "ln -sf #{shared_path}/log #{release_path}/log"
-    sudo "ln -sf #{shared_path}/data #{release_path}/data"
-    sudo "ln -sf #{shared_path}/db/sphinx #{release_path}/db/sphinx"
-    sudo "ln -sf #{shared_path}/sitemaps #{release_path}/public/sitemaps"
+    
+    command << "#{sudo} ln -sf #{shared_path}/config/cloudkicker_config.rb #{release_path}/config/initializers/cloudkicker_config.rb"
+    command << "#{sudo} ln -sf #{shared_path}/config/amazon.yml #{release_path}/config/amazon.yml"
+    command << "#{sudo} ln -sf #{shared_path}/log #{release_path}/log"
+    
+    # don't symlink data directory directly!
+    
+    %w(bulkdata mods regulatory_plans text xml).each do |folder|
+      command << <<-BASH
+        if [ -d "#{shared_path}/data/#{folder}" ]; then
+          mkdir -p "#{shared_path}/data/#{folder}"
+        fi
+      BASH
+      
+      command << "#{sudo} ln -sf #{shared_path}/data/#{folder} #{release_path}/data/#{folder}"
+    end
+    
+    command << "#{sudo} ln -sf #{shared_path}/db/sphinx #{release_path}/db/sphinx"
+    command << "#{sudo} ln -sf #{shared_path}/sitemaps #{release_path}/public/sitemaps"
+    
+    run command.join(' && ')
   end 
 end
 
