@@ -262,6 +262,10 @@ class Entry < ActiveRecord::Base
     end
   end
   
+  def most_recent_regulatory_plan
+    RegulatoryPlan.first(:conditions => ["regulation_id_number = ?", regulation_id_number], :order => "regulatory_plans.issue DESC")
+  end
+  
   private
   
   def set_document_file_path
