@@ -13,3 +13,6 @@
 [submodule "vendor/plugins/sitemap_generator"]
 	path = vendor/plugins/sitemap_generator
 	url = git@github.com:criticaljuncture/sitemap_generator
+[submodule "vendor/plugins/cookbooks"]
+	path = vendor/plugins/cookbooks
+	url = git@github.com:criticaljuncture/cookbooks.git
