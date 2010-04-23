@@ -56,7 +56,6 @@ ActionController::Routing::Routes.draw do |map|
       :action => "by_letter"
   
   map.resources :topic_groups, :as => "topics", :only => [:index, :show]
-
   
   # AGENCIES
   map.resources :agencies, :only => [:index, :show]
@@ -68,4 +67,7 @@ ActionController::Routing::Routes.draw do |map|
   
   # LOCATION
   map.resource :location, :only => [:update, :edit], :member => {:congress => :get, :places => :get}
+
+  # SECTIONS
+  map.section ':slug', :controller => "sections", :action => "show"
 end

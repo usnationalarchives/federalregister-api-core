@@ -1,5 +1,6 @@
 - id: 1
   name: Money
+  slug: money
   cfr_titles:
   - 2
   - 12
@@ -12,6 +13,7 @@
   - 31
 - id: 2
   name: Environment
+  slug: environment
   cfr_titles:
   - 10
   - 9
@@ -24,6 +26,7 @@
   - 43
 - id: 3
   name: World
+  slug: world
   cfr_titles:
   - 15
   - 19
@@ -33,12 +36,14 @@
   - 6
 - id: 4
   name: Science & Technology
+  slug: science-and-technology
   cfr_titles:
   - 14
   - 47
   - 34
 - id: 5
   name: Business & Industry
+  slug: business-and-industry
   cfr_titles:
   - 10
   - 9
@@ -51,6 +56,7 @@
   - 43
 - id: 6
   name: Health & Medicine
+  slug: health-and-medicine
   cfr_titles:
   - 21
   
