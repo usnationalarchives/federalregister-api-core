@@ -75,6 +75,12 @@ module RouteBuilder
     }
   end
   
+  add_route :section do |section|
+    {
+      :slug => section.slug
+    }
+  end
+  
   # keep at bottom of module
   def self.included(base)
     instance_methods.each do |method|
