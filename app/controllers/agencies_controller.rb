@@ -14,6 +14,7 @@ class AgenciesController < ApplicationController
   
   def show
     @agency = Agency.find_by_slug!(params[:id])
+    @significant_entries = @agency.entries.significant.all(:conditions => {:publication_date => (3.month.ago .. Date.today)})
     @entries = @agency.entries.all(:limit => 50, :include => :places, :order => "entries.publication_date DESC")
     respond_to do |wants|
       wants.html do
