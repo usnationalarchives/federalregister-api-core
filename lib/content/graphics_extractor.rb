@@ -1,5 +1,8 @@
 module Content
   class GraphicsExtractor
+    require "content/graphics_extractor/entry"
+    require "content/graphics_extractor/image"
+    
     class MissingXML < StandardError; end
     require 'tmpdir'
     
@@ -13,7 +16,7 @@ module Content
       raise MissingXML.new unless File.exists?(entry_bulkdata_path)
       Dir.mktmpdir("entry_graphics").each do |tmp_dir|
         images.group_by(&:document_number).each do |document_number, images|
-          entry = Entry.new(document_number, :base_dir => tmp_dir)
+          entry = Content::GraphicsExtractor::Entry.new(document_number, :base_dir => tmp_dir)
           images.each do |image|
             entry.associate_image(image)
           end
