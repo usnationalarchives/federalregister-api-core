@@ -185,11 +185,11 @@ namespace :deploy do
     # don't symlink data directory directly!
     
     %w(bulkdata mods regulatory_plans text xml).each do |folder|
-      command << <<-BASH
-        if [ -d "#{shared_path}/data/#{folder}" ]; then
-          mkdir -p "#{shared_path}/data/#{folder}"
-        fi
-      BASH
+      # command << <<-BASH
+      #   if [ -d "#{shared_path}/data/#{folder}" ]; then
+      #     mkdir -p "#{shared_path}/data/#{folder}"
+      #   fi
+      # BASH
       
       command << "#{sudo} ln -sf #{shared_path}/data/#{folder} #{release_path}/data/#{folder}"
     end
