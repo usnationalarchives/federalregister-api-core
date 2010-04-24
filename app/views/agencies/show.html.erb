@@ -2,6 +2,14 @@
 
 <% feed_autodiscovery agency_path(@agency, :format => :rss) %>
 
+
+<% if @significant_entries.present? %>
+  <h3>Recent Articles on Significant Regulations</h3>
+  <ul>
+    <%= render :partial => 'entries/grouped_by_date', :locals => {:entries => @significant_entries}%>
+  </ul>
+<% end %>
+
 <%= render :partial => 'entries/list', :locals => {:list_type => 'agency', :entries => @entries, :search_params => {:agency_id => @agency.id}} %>
 
 <%= render :partial => 'entries/most_cited', :locals => {:entries => @most_cited_entries} %>
