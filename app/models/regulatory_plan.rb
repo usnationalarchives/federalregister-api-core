@@ -12,6 +12,6 @@ class RegulatoryPlan < ActiveRecord::Base
            :foreign_key => :regulation_id_number
   
   def self.current_issue
-    RegulatoryPlan.first(:select => :issue, :order => "issue DESC").issue
+    RegulatoryPlan.first(:select => :issue, :order => "issue DESC").try(:issue)
   end
 end
