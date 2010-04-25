@@ -1,5 +1,5 @@
-module EntryImporter::Sections
-  extend EntryImporter::Utils
+module Content::EntryImporter::Sections
+  extend Content::EntryImporter::Utils
   provides :section_ids
   
   def section_ids
