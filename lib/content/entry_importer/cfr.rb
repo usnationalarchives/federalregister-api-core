@@ -1,5 +1,5 @@
-module EntryImporter::CFR
-  extend EntryImporter::Utils
+module Content::EntryImporter::CFR
+  extend Content::EntryImporter::Utils
   provides :cfr_title, :cfr_part
   
   def cfr_node

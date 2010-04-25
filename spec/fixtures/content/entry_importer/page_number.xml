@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FEDREG xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="FRMergedXML.xsd">
+  <UNITNAME>Rules and Regulations</UNITNAME>
+  <RULES>
+    <RULE>
+      <PREAMB>
+        <PRTPAGE P="101"/>
+        <P>Entry starting on its own page and extending on to a second</P>
+        <PRTPAGE P="102"/>
+      </PREAMB>
+      <FRDOC>[FR Doc. ABC-001 Filed 12-28-08; 8:45 am]</FRDOC>
+    </RULE>
+    <RULE>
+      <PREAMB>
+        <P>Entry starting on an existing page and not extending</P>
+      </PREAMB>
+      <FRDOC>[FR Doc. ABC-002 Filed 12-28-08; 8:45 am]</FRDOC>
+    </RULE>
+    <RULE>
+      <PREAMB>
+        <P>Entry starting on an existing page extending on to its own page.</P>
+      </PREAMB>
+      <PRTPAGE P="103"/>
+      <FRDOC>[FR Doc. ABC-002 Filed 12-28-08; 8:45 am]</FRDOC>
+    </RULE>
+  </RULES>
+</FEDREG>
+    
