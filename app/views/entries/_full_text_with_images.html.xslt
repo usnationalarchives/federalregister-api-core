@@ -78,7 +78,7 @@
                   <xsl:attribute name="href">#<xsl:value-of select="generate-id()" /></xsl:attribute>
                   <img>
                     <xsl:attribute name="src">
-                      <xsl:value-of select="concat('http://graphics.fr2.criticaljuncture.org/', text(), '/thumb.gif')" />
+                      <xsl:value-of select="concat('http://graphics.govpulse.us/', text(), '/thumb.gif')" />
                     </xsl:attribute>
                   </img>
                 </a>
@@ -279,11 +279,11 @@
       </xsl:attribute>
       
       <xsl:attribute name="href">
-        <xsl:value-of select="concat('http://graphics.fr2.criticaljuncture.org/', text(), '/full_size.gif')" />
+        <xsl:value-of select="concat('http://graphics.govpulse.us/', text(), '/full_size.gif')" />
       </xsl:attribute>
       <img class="entry_graphic">
         <xsl:attribute name="src">
-          <xsl:value-of select="concat('http://graphics.fr2.criticaljuncture.org/', text(), '/large.gif')" />
+          <xsl:value-of select="concat('http://graphics.govpulse.us/', text(), '/large.gif')" />
         </xsl:attribute>
       </img>
     </a>
