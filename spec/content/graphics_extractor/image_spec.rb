@@ -40,12 +40,4 @@ describe Content::GraphicsExtractor::Image do
       @images.third.num_prior_images_on_page.should  == 1
     end
   end
-  
-  describe "#entry_start_page" do
-    it "use a node with content" do
-      @images.first.entry_start_page.should == 4658
-      @images.second.entry_start_page.should == 4658
-      @images.third.entry_start_page.should == 4658
-    end
-  end
 end

@@ -47,16 +47,6 @@ module Content
         count
       end
       
-      # TODO: this should eventually be moved to the initial entry import
-      def entry_start_page
-        first_node_with_content = entry_node.xpath(".//*[text()]").first
-        if first_node_with_content.name == 'PRTPAGE'
-          first_node_with_content['P'].to_i
-        else
-          entry_node.xpath('(preceding::PRTPAGE[count(ancestor::FTNT) = 0])[last()]').first['P'].to_i
-        end
-      end
-      
       private
       
       def page_node
