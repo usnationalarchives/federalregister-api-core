@@ -31,10 +31,13 @@ module Content
         puts "Processing #{image.identifier} (##{image.num_prior_images_on_page + 1} on page #{image.page_number}) for #{entry.document_number}"
         graphic = Graphic.find_by_identifier(image.identifier) || Graphic.new(:identifier => image.identifier)
         
-        if graphic.graphic.nil?
-          pdf_image = pdf_images_by_page[(image.page_number - image.entry_start_page)][ image.num_prior_images_on_page ]
+        pdf_page_number = (image.page_number - entry.start_page)+1
+        unless graphic.graphic.file?
+          pdf_image = pdf_images_by_page[pdf_page_number][ image.num_prior_images_on_page ]
           if pdf_image
             graphic.graphic = File.open(pdf_image.file_path)
+          else
+            puts "\tpdf image on page (#{pdf_page_number}) not present (images on #{pdf_images_by_page.keys.sort.join(', ')})"
           end
         end
         
