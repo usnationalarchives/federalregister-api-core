@@ -24,7 +24,7 @@ class Graphic < ActiveRecord::Base
                     :processors => [:auto_inverter],
                     :storage => :s3,
                     :s3_credentials => "#{Rails.root}/config/amazon.yml",
-                    :s3_alias_url => 'http://graphics.fr2.criticaljuncture.org',
-                    :bucket => 'graphics.fr2.criticaljuncture.org',
+                    :s3_alias_url => 'http://graphics.govpulse.us',
+                    :bucket => 'graphics.govpulse.us',
                     :path => ":identifier/:style.:extension"
 end
