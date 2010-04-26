@@ -22,7 +22,19 @@ pool :fr2 do
       repo File.join(File.dirname(__FILE__) , "chef_cloud")
       
       recipe "apache2"
-      attributes :apache2 => {:listen_ports => ["80"]}
+      attributes :apache => {
+                                :listen_ports   => ["80"], 
+                                :server_name    => 'test.fr2.criticaljuncture.org',
+                                #:server_aliases => 'www.something',
+                                :docroot        => '/var/www/apps/fr2/current/public',
+                                :name           => 'fr2',
+                                :enable_mods    => ["rewrite", "deflate", "expires"]
+                             }
+                             
+      attributes :params => {
+                              :name => 'fr2',
+                            }
+                             
     end
     
     security_group "web" do
