@@ -1,1 +1,35 @@
 <%= title @section.name %>
+
+<h2>Comment Period</h2>
+<h3>Closing Soon</h3>
+<ul>
+  <% @section.entries.comments_closing.each do |entry| %>
+  <li><%= link_to entry.title, entry_path(entry) %></li>
+  <% end %>
+</ul>
+
+<h3>Opening</h3>
+<ul>
+  <% @section.entries.comments_opening.each do |entry| %>
+  <li><%= link_to entry.title, entry_path(entry) %></li>
+  <% end %>
+</ul>
+
+
+<h2><%= @publication_date %> Entries</h2>
+<ul class="raquo indent">
+<% @section.entries.published_on(@publication_date).each do |entry| %>
+  <%= link_to entry.title, entry_path(entry) %>
+  <dl class="group">
+    <dt>Type</dt>
+    <dd><%= entry.entry_type if entry.has_type? %></dd>
+
+    <dt>Length</dt>
+    <dd><%= pluralize(entry.human_length, "page") %></dd>
+    <% if entry.agency %>
+      <dt>Agency</dt>
+      <dd><%= link_to entry.agency.name, agency_path(entry.agency) %></dd>
+    <% end %>
+  </dl>
+<% end %>
+</ul>

@@ -123,6 +123,24 @@ class Entry < ActiveRecord::Base
   
   named_scope :significant, :joins => :current_regulatory_plan, :conditions => { :regulatory_plans => {:priority_category => RegulatoryPlan::SIGNIFICANT_PRIORITY_CATEGORIES} }
   
+  def self.published_on(publication_date)
+    scoped(:conditions => {:entries => {:publication_date => publication_date}})
+  end
+  
+  def self.comments_closing(range = (Date.today .. Date.today + 7.days))
+    scoped(
+      :joins => :comments_close_date,
+      :conditions => {:referenced_dates => {:date => range}}
+    )
+  end
+  
+  def self.comments_opening(range = (Date.today - 7.days .. Date.today))
+    scoped(
+      :joins => :comments_close_date,
+      :conditions => {:entries => {:publication_date => range}}
+    )
+  end
+  
   def entry_type 
     ENTRY_TYPES[granule_class]
   end
