@@ -12,7 +12,9 @@
   </head>
   <body>
     <header>
-      <h1>FR2 Admin<%= " | #{yield :title}" if yield(:title) %></h1>
+      <% if yield(:title)%>
+        <h1><%= yield(:title) %></h1>
+      <% end %>
       <nav>
         <ul>
           <li>Home</li>
