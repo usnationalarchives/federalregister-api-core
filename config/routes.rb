@@ -1,4 +1,15 @@
 ActionController::Routing::Routes.draw do |map|
+  # ADMIN
+  map.namespace :admin do |admin|
+    admin.home '', :controller => "special", :action => "home"
+    admin.resources :agencies
+    admin.resources :sections
+    
+    admin.resources :issues do |issue|
+      issue.resources :unknown_agencies
+    end
+  end
+  
   # SPECIAL PAGES
   map.root :controller => 'special', :action => 'home'
   map.widget_instructions 'widget_instructions', :controller => 'special', :action => 'widget_instructions'
