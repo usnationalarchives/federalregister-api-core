@@ -44,7 +44,7 @@
 
 =end Schema Information
 
-class Entry < ActiveRecord::Base
+class Entry < ApplicationModel
   
   DESCRIPTIONS = {
     :notice => 'This section of the Federal Register contains documents other than rules 
