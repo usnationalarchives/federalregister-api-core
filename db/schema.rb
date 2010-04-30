@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100419193355) do
+ActiveRecord::Schema.define(:version => 20100430143823) do
 
   create_table "agencies", :force => true do |t|
     t.integer  "parent_id"
@@ -30,6 +30,13 @@ ActiveRecord::Schema.define(:version => 20100419193355) do
 
   add_index "agencies", ["name", "parent_id"], :name => "index_agencies_on_name_and_parent_id"
   add_index "agencies", ["parent_id", "name"], :name => "index_agencies_on_parent_id_and_name"
+
+  create_table "alternative_agency_names", :force => true do |t|
+    t.integer "agency_id"
+    t.string  "name"
+  end
+
+  add_index "alternative_agency_names", ["agency_id"], :name => "index_alternative_agency_names_on_agency_id"
 
   create_table "citations", :force => true do |t|
     t.integer "source_entry_id"
