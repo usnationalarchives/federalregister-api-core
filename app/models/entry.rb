@@ -122,6 +122,8 @@ class Entry < ApplicationModel
            :conditions => {:regulatory_plans => {:issue => RegulatoryPlan.current_issue} }
   
   named_scope :significant, :joins => :current_regulatory_plan, :conditions => { :regulatory_plans => {:priority_category => RegulatoryPlan::SIGNIFICANT_PRIORITY_CATEGORIES} }
+  named_scope :with_agency_name, :conditions => "entries.primary_agency_raw IS NOT NULL"
+  named_scope :without_agency_assigned, :conditions => {:agency_id => nil}
   
   def self.published_on(publication_date)
     scoped(:conditions => {:entries => {:publication_date => publication_date}})
