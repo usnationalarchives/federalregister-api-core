@@ -16,3 +16,6 @@
 [submodule "vendor/plugins/validation_reflection"]
 	path = vendor/plugins/validation_reflection
 	url = git://github.com/redinger/validation_reflection.git
+[submodule "vendor/plugins/more"]
+	path = vendor/plugins/more
+	url = git://github.com/cloudhead/more.git
