@@ -10,7 +10,7 @@
 
 =end Schema Information
 
-class TopicAssignment < ActiveRecord::Base
+class TopicAssignment < ApplicationModel
   belongs_to :topic, :counter_cache => :entries_count
   belongs_to :entry
 end
