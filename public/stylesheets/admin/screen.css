@@ -99,10 +99,3 @@
 .clearfix { display: inline-block; }
 * html .clearfix { height: 1%; }
 .clearfix { display: block; }
-header, footer {
-  display: inline;
-  float: left;
-  position: relative;
-  margin-left: 10px;
-  margin-right: 10px;
-}
