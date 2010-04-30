@@ -2,13 +2,26 @@
 <html lang="en"> 
   <head> 
     <meta charset="utf-8">
-    <%= stylesheet_link_tag "admin/grid",               :media => :screen %>
+    <%= stylesheet_link_tag "reset",                    :media => :screen %>
+    <%= stylesheet_link_tag "text" ,                    :media => :screen %>
+    <%= stylesheet_link_tag "960",                      :media => :screen %>
     <%= stylesheet_link_tag "admin/formtastic",         :media => :screen %>
     <%= stylesheet_link_tag "admin/formtastic_changes", :media => :screen %>
     <%= stylesheet_link_tag "admin/screen",             :media => :screen %>
     <title>FR2 Admin<%= " | #{yield :title}" if yield(:title) %></title>
   </head>
   <body>
+    <header>
+      <h1>FR2 Admin<%= " | #{yield :title}" if yield(:title) %></h1>
+      <nav>
+        <ul>
+          <li>Home</li>
+        </ul>
+      </nav>
+    </header>
     <%= yield %>
+    <footer>
+      
+    </footer>
   </body>
 </html>
