@@ -26,7 +26,7 @@ Rails::Initializer.run do |config|
   config.gem "fastercsv", :version => '1.4.0'
   config.gem "amatch", :version => '0.2.3'
   config.gem "rubyzip", :lib => 'zip/zip', :version => '0.9.1'
-  
+  config.gem "formtastic", :version => "0.9.8"
   config.gem "patron", :version => "0.4.2"
   # sunlight gem and dependencies
   config.gem "json"

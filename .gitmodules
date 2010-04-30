@@ -13,3 +13,6 @@
 [submodule "vendor/plugins/sitemap_generator"]
 	path = vendor/plugins/sitemap_generator
 	url = git@github.com:criticaljuncture/sitemap_generator
+[submodule "vendor/plugins/validation_reflection"]
+	path = vendor/plugins/validation_reflection
+	url = git://github.com/redinger/validation_reflection.git
