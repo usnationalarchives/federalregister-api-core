@@ -1,4 +1,4 @@
-class RegulatoryPlan < ActiveRecord::Base
+class RegulatoryPlan < ApplicationModel
   SIGNIFICANT_PRIORITY_CATEGORIES = ['Economically Significant', 'Other Significant']
   
   file_attribute(:full_xml)  {"#{RAILS_ROOT}/data/regulatory_plans/#{issue}/#{regulation_id_number}.xml"}

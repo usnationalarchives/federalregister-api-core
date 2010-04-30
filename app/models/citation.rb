@@ -12,7 +12,7 @@
 
 =end Schema Information
 
-class Citation < ActiveRecord::Base
+class Citation < ApplicationModel
   CITATION_TYPES = {
     'USC' => /(\d+)\s+U\.?S\.?C\.?\s+(\d+)/,
     'CFR' => /(\d+)\s+CFR\s+(\d+)(?:\.(\d+))?/,

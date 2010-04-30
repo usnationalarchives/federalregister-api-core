@@ -20,7 +20,7 @@
 
 =end Schema Information
 
-class Agency < ActiveRecord::Base
+class Agency < ApplicationModel
   has_many :entries
   has_many :children, :class_name => 'Agency', :foreign_key => 'parent_id'
   belongs_to :parent, :class_name => 'Agency'
