@@ -9,3 +9,4 @@
 /config/ec2_config.yml
 /public/sitemap*
 /db/sphinx/
+.DS_Store
