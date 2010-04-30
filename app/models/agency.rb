@@ -24,6 +24,7 @@ class Agency < ApplicationModel
   has_many :entries
   has_many :children, :class_name => 'Agency', :foreign_key => 'parent_id'
   belongs_to :parent, :class_name => 'Agency'
+  has_many :alternative_agency_names
   
   # grab cabinet level agencies (departments) as these are top producing
   named_scope :featured, :conditions => ['name LIKE ?', 'Department%']
