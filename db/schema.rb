@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100430143823) do
+ActiveRecord::Schema.define(:version => 20100501154800) do
 
   create_table "agencies", :force => true do |t|
     t.integer  "parent_id"
@@ -89,6 +89,7 @@ ActiveRecord::Schema.define(:version => 20100430143823) do
     t.datetime "full_text_updated_at"
     t.string   "cfr_title"
     t.string   "cfr_part"
+    t.string   "headline"
   end
 
   add_index "entries", ["agency_id", "citing_entries_count"], :name => "index_entries_on_agency_id_and_citing_entries_count"
@@ -196,6 +197,15 @@ ActiveRecord::Schema.define(:version => 20100430143823) do
   end
 
   add_index "section_assignments", ["section_id", "entry_id"], :name => "index_section_assignments_on_section_id_and_entry_id"
+
+  create_table "section_highlights", :force => true do |t|
+    t.integer "section_id"
+    t.integer "entry_id"
+    t.integer "position"
+    t.date    "publication_date"
+  end
+
+  add_index "section_highlights", ["section_id", "entry_id"], :name => "index_section_highlights_on_section_id_and_entry_id"
 
   create_table "topic_assignments", :force => true do |t|
     t.integer  "topic_id"

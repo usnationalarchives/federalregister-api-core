@@ -20,7 +20,10 @@ class Admin::Issues::UnknownAgenciesController < AdminController
     @alternative_agency_name.name = @unknown_agency_name
     
     if @alternative_agency_name.save
-      # process entries
+      @entries.each do |entry|
+        Content::EntryImporter.new(:entry => entry).update_attributes(:agency_id, :section_ids)
+      end
+      
       redirect_to admin_issue_unknown_agencies_url(@publication_date.to_s(:db))
     else
       render :action => :edit
