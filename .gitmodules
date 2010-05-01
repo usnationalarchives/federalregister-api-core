@@ -19,3 +19,6 @@
 [submodule "vendor/plugins/more"]
 	path = vendor/plugins/more
 	url = git://github.com/cloudhead/more.git
+[submodule "vendor/plugins/acts_as_list"]
+	path = vendor/plugins/acts_as_list
+	url = git://github.com/rails/acts_as_list.git
