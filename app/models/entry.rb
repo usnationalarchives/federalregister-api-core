@@ -106,6 +106,7 @@ class Entry < ApplicationModel
   before_save :set_document_file_path
   
   has_many :section_assignments
+  has_many :section_highlights
   
   file_attribute(:full_xml)  {"#{RAILS_ROOT}/data/xml/#{document_file_path}.xml"}
   file_attribute(:full_text) {"#{RAILS_ROOT}/data/text/#{document_file_path}.txt"}
@@ -168,6 +169,10 @@ class Entry < ApplicationModel
       "full_text" => 25,
       "agency_name" => 10
     }
+  end
+  
+  def headline
+    self[:headline] || title
   end
   
   def month_year
@@ -297,6 +302,12 @@ class Entry < ApplicationModel
   
   def most_recent_regulatory_plan
     RegulatoryPlan.first(:conditions => ["regulation_id_number = ?", regulation_id_number], :order => "regulatory_plans.issue DESC")
+  end
+  
+  def significant?
+    if most_recent_regulatory_plan
+      most_recent_regulatory_plan.significant?
+    end
   end
   
   private

@@ -14,4 +14,8 @@ class RegulatoryPlan < ApplicationModel
   def self.current_issue
     RegulatoryPlan.first(:select => :issue, :order => "issue DESC").try(:issue)
   end
+  
+  def significant?
+    priority_category.include?(RegulatoryPlan::SIGNIFICANT_PRIORITY_CATEGORIES)
+  end
 end
