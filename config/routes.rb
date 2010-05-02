@@ -58,12 +58,6 @@ ActionController::Routing::Routes.draw do |map|
   map.citation_search 'citation/search', :controller => 'citations',
                                          :action     => 'search'
   
-  # EVENTS
-  map.events 'events/:year/:month', :controller => 'calendars',
-                                          :action     => 'index',
-                                          :year       => /\d{4}/,
-                                          :month      => /\d{1,2}/
-  
   # TOPICS
   map.topic_groups_by_letter '/topics/:letter',
       :requirements => {:letter => /[a-z]/},
