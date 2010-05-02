@@ -100,7 +100,7 @@ class Entry < ApplicationModel
   has_many :agency_name_assignments, :order => "agency_name_assignments.position"
   has_many :agency_names, :through => :agency_name_assignments, :dependent => :delete_all
   has_many :agency_assignments, :order => "agency_assignments.position", :dependent => :delete_all
-  has_many :agencies, :through => :agency_assignments
+  has_many :agencies, :through => :agency_assignments, :order => "agency_assignments.position"
   
   has_many :referenced_dates, :dependent => :destroy
   has_one :comments_close_date, :class_name => "ReferencedDate", :conditions => {:date_type => 'CommentDate'}
@@ -274,6 +274,7 @@ class Entry < ApplicationModel
   
   # TODO: remove this method when no longer called
   def agency
+    ActiveSupport::Deprecation.warn("Entry#agency is deprecated. Entries are now associated with multiple agencies.")
     agencies.first
   end
   

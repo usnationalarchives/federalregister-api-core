@@ -101,7 +101,7 @@ class EntrySearch
     
     with[:place_ids] = @place_ids if @place_ids.present?
     with[:topic_ids] = @topic.id if @topic 
-    with[:agency_id] = @agency.id if @agency
+    with[:agency_ids] = @agency.id if @agency
     with[:publication_date] = Range.new(@start_date.midnight.to_f.to_i, @end_date.midnight.to_f.to_i)
     
     with
