@@ -6,7 +6,12 @@ module Content
     include Content::EntryImporter::Agencies
   
     def self.process_all_by_date(date, *attributes)
-      if date =~ /^\d{4}$/
+      if date == 'all'
+        dates = Entry.find_as_array(
+          :select => "distinct(publication_date) AS publication_date",
+          :order => "publication_date"
+        )
+      elsif date =~ /^\d{4}$/
         dates = Entry.find_as_array(
           :select => "distinct(publication_date) AS publication_date",
           :conditions => {:publication_date => Date.parse("#{date}-01-01") .. Date.parse("#{date}-12-31")},

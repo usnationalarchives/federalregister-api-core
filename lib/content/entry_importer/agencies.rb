@@ -1,20 +1,13 @@
 module Content::EntryImporter::Agencies
   extend Content::EntryImporter::Utils
-  provides :agency_id
+  provides :agency_name_assignments
   
-  def agency_id
-    if entry.secondary_agency_raw
-      find_agency_id_by_name(entry.secondary_agency_raw)
-    else
-      find_agency_id_by_name(entry.primary_agency_raw)
+  def agency_name_assignments
+    mods_node.xpath('./xmlns:extension/xmlns:agency').map do |agency_node|
+      name = agency_node.content()
+      agency_name = AgencyName.find_or_create_by_name(name)
+      
+      AgencyNameAssignment.new(:agency_name => agency_name, :position => agency_node['order'])
     end
   end
-  
-  private
-    
-    def find_agency_id_by_name(name)
-      if name
-        Agency.find_by_name(primary_agency_raw).try(:id) || AlternativeAgencyName.find_by_name(primary_agency_raw).try(:agency_id)
-      end
-    end
 end
