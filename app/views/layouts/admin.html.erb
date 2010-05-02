@@ -15,11 +15,24 @@
       <% if yield(:title)%>
         <h1><%= yield(:title) %></h1>
       <% end %>
-      <nav>
+      
+      <% if current_user %>
+      <nav class="primary">
         <ul>
-          <li>Home</li>
+          <li><%= link_to 'Home', admin_home_path %></li>
+          <li><%= link_to 'Agency Names', admin_agency_names_path %></li>
+          <li><%= link_to 'Users', admin_users_path %></li>
         </ul>
       </nav>
+      
+      <nav class="utility">
+        <p>Hi, <%= current_user.first_name %>!</p>
+        <ul>
+          <li><%= link_to 'Change Password', edit_admin_user_password_path(current_user) %></li>
+          <li><%= link_to 'Logout', admin_logout_path %></li>
+        </ul>
+      </nav>
+      <% end %>
     </header>
     
     <% if flash[:notice] %>

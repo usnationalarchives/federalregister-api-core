@@ -12,6 +12,15 @@ ActionController::Routing::Routes.draw do |map|
         section.resources :highlights, :controller => "issues/sections/highlights"
       end
     end
+    
+    admin.resources :password_resets
+    admin.resources :users do |user|
+      user.resource :password, :controller => "users/passwords"
+    end
+    
+    admin.resource :user_session
+    admin.login  'login',  :controller => "user_sessions", :action => "new"
+    admin.logout 'logout', :controller => "user_sessions", :action => "destroy"
   end
   
   # SPECIAL PAGES
