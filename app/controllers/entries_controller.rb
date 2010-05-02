@@ -51,7 +51,7 @@ class EntriesController < ApplicationController
   
   def current_headlines
     @entries = Entry.all(
-        :include => :agency,
+        :include => :agencies,
         :conditions => {:publication_date => Entry.latest_publication_date},
         :order => "entries.start_page"
     )
