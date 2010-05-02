@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100502144301) do
+ActiveRecord::Schema.define(:version => 20100502203541) do
 
   create_table "agencies", :force => true do |t|
     t.integer  "parent_id"
@@ -38,7 +38,7 @@ ActiveRecord::Schema.define(:version => 20100502144301) do
   end
 
   add_index "agency_assignments", ["agency_id", "entry_id"], :name => "index_agency_assignments_on_agency_id_and_entry_id"
-  add_index "agency_assignments", ["entry_id", "agency_id"], :name => "index_agency_assignments_on_entry_id_and_agency_id", :unique => true
+  add_index "agency_assignments", ["entry_id", "agency_id"], :name => "index_agency_assignments_on_entry_id_and_agency_id"
 
   create_table "agency_name_assignments", :force => true do |t|
     t.integer "entry_id"
@@ -47,7 +47,7 @@ ActiveRecord::Schema.define(:version => 20100502144301) do
   end
 
   add_index "agency_name_assignments", ["agency_name_id", "entry_id"], :name => "index_agency_name_assignments_on_agency_name_id_and_entry_id"
-  add_index "agency_name_assignments", ["entry_id", "agency_name_id"], :name => "index_agency_name_assignments_on_entry_id_and_agency_name_id", :unique => true
+  add_index "agency_name_assignments", ["entry_id", "agency_name_id"], :name => "index_agency_name_assignments_on_entry_id_and_agency_name_id"
 
   create_table "agency_names", :force => true do |t|
     t.string  "name",            :null => false
@@ -303,15 +303,14 @@ ActiveRecord::Schema.define(:version => 20100502144301) do
   add_index "user_lists", ["user_id"], :name => "index_user_lists_on_user_id"
 
   create_table "users", :force => true do |t|
-    t.string   "login",                              :null => false
-    t.string   "email",                              :null => false
-    t.string   "crypted_password",                   :null => false
-    t.string   "password_salt",                      :null => false
-    t.string   "persistence_token",                  :null => false
-    t.string   "single_access_token",                :null => false
-    t.string   "perishable_token",                   :null => false
-    t.integer  "login_count",         :default => 0, :null => false
-    t.integer  "failed_login_count",  :default => 0, :null => false
+    t.string   "email",                                 :null => false
+    t.string   "crypted_password"
+    t.string   "password_salt"
+    t.string   "persistence_token",                     :null => false
+    t.string   "single_access_token",                   :null => false
+    t.string   "perishable_token",                      :null => false
+    t.integer  "login_count",         :default => 0,    :null => false
+    t.integer  "failed_login_count",  :default => 0,    :null => false
     t.datetime "last_request_at"
     t.datetime "current_login_at"
     t.datetime "last_login_at"
@@ -319,10 +318,14 @@ ActiveRecord::Schema.define(:version => 20100502144301) do
     t.string   "last_login_ip"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "creator_id"
+    t.integer  "updater_id"
+    t.string   "first_name"
+    t.string   "last_name"
+    t.boolean  "active",              :default => true
   end
 
   add_index "users", ["email"], :name => "index_users_on_email"
-  add_index "users", ["login"], :name => "index_users_on_login"
   add_index "users", ["perishable_token"], :name => "index_users_on_perishable_token"
 
 end

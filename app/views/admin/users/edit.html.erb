@@ -1,0 +1,5 @@
+<% title "Edit User" %>
+
+<% semantic_form_for @user, :url => admin_user_path(@user) do |f| %>
+  <%= render :partial => "form", :locals => {:f => f} %>
+<% end %>
