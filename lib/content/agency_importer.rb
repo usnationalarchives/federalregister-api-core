@@ -2,7 +2,6 @@ module Content
   class AgencyImporter
     def perform
       Agency.connection.execute("TRUNCATE agencies")
-#      Entry.execute("UPDATE entries SET agency_id = NULL")
       
       agencies_with_parents = {}
       FasterCSV.foreach("data/gpo_agencies.csv", :headers => :first_row) do |line|

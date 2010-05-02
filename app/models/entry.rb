@@ -64,8 +64,6 @@ class Entry < ApplicationModel
     'UNKNOWN'  => 'Unknown'
   }
   
-  belongs_to :agency
-  
   has_many :topic_assignments, :dependent => :destroy
   has_many :topics, :through => :topic_assignments, :conditions => "topics.group_name != ''", :order => 'topics.name'
   
@@ -99,6 +97,11 @@ class Entry < ApplicationModel
   
   acts_as_mappable :through => :places
   
+  has_many :agency_name_assignments, :order => "agency_name_assignments.position"
+  has_many :agency_names, :through => :agency_name_assignments, :dependent => :delete_all
+  has_many :agency_assignments, :order => "agency_assignments.position", :dependent => :delete_all
+  has_many :agencies, :through => :agency_assignments
+  
   has_many :referenced_dates, :dependent => :destroy
   has_one :comments_close_date, :class_name => "ReferencedDate", :conditions => {:date_type => 'CommentDate'}
   has_one :effective_date, :class_name => "ReferencedDate", :conditions => {:date_type => 'EffectiveDate'}
@@ -123,8 +126,6 @@ class Entry < ApplicationModel
            :conditions => {:regulatory_plans => {:issue => RegulatoryPlan.current_issue} }
   
   named_scope :significant, :joins => :current_regulatory_plan, :conditions => { :regulatory_plans => {:priority_category => RegulatoryPlan::SIGNIFICANT_PRIORITY_CATEGORIES} }
-  named_scope :with_agency_name, :conditions => "entries.primary_agency_raw IS NOT NULL"
-  named_scope :without_agency_assigned, :conditions => {:agency_id => nil}
   
   def self.published_on(publication_date)
     scoped(:conditions => {:entries => {:publication_date => publication_date}})
@@ -153,14 +154,13 @@ class Entry < ApplicationModel
     indexes title
     indexes abstract
     indexes "LOAD_FILE(CONCAT('#{RAILS_ROOT}/data/text/', document_file_path, '.txt'))", :as => :full_text
-    indexes agency.name, :as => :agency_name
     indexes granule_class, :facet => true
     
     # attributes
+    has agencies(:id), :as => :agency_ids, :facet => true
     has topics(:id), :as => :topic_ids, :facet => true
     has places(:id), :as => :place_ids
     
-    has agency_id, :facet => true
     has publication_date
     
     set_property :field_weights => {
@@ -197,10 +197,6 @@ class Entry < ApplicationModel
   
   def slug
     self.title.downcase.gsub(/&/, 'and').gsub(/[^a-z0-9]+/, '-').slice(0,100)
-  end
-  
-  def agency_parent_id
-    agency.try(:parent_id).nil? ? agency_id : agency.parent_id
   end
   
   def comments_close_on
@@ -275,7 +271,12 @@ class Entry < ApplicationModel
         :order => 'publication_date'
     ).try(:publication_date)
   end
-
+  
+  # TODO: remove this method when no longer called
+  def agency
+    agencies.first
+  end
+  
   def has_type?
     entry_type != 'Unknown'
   end
@@ -307,6 +308,12 @@ class Entry < ApplicationModel
   def significant?
     if most_recent_regulatory_plan
       most_recent_regulatory_plan.significant?
+    end
+  end
+  
+  def recalculate_agencies!
+    self.agency_assignments = agency_name_assignments.map do |agency_name_assignment|
+      agency_name_assignment.create_agency_assignment
     end
   end
   

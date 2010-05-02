@@ -3,13 +3,14 @@ ActionController::Routing::Routes.draw do |map|
   map.namespace :admin do |admin|
     admin.home '', :controller => "special", :action => "home"
     admin.resources :agencies
+    admin.resources :agency_names, :collection => {:unprocessed => :get}
+    
     admin.resources :sections
     
     admin.resources :issues do |issue|
       issue.resources :sections, :controller => "issues/sections" do |section|
         section.resources :highlights, :controller => "issues/sections/highlights"
       end
-      issue.resources :unknown_agencies, :controller => "issues/unknown_agencies"
     end
   end
   

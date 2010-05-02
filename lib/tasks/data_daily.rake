@@ -4,7 +4,6 @@ namespace :data do
     data:import:entries
     data:import:bulkdata
     data:download:full_text
-    data:extract:agencies
     data:extract:places
     data:extract:regulationsdotgov_id
     data:cache:update:all
@@ -20,7 +19,6 @@ namespace :data do
     data:import:entries
     data:import:bulkdata
     data:download:full_text
-    data:extract:agencies
     data:extract:places
     data:extract:regulationsdotgov_id
     )
