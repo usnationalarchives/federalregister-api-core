@@ -1,3 +1,15 @@
+=begin Schema Information
+
+ Table name: section_highlights
+
+  id               :integer(4)      not null, primary key
+  section_id       :integer(4)
+  entry_id         :integer(4)
+  position         :integer(4)
+  publication_date :date
+
+=end Schema Information
+
 class SectionHighlight < ApplicationModel
   belongs_to :section
   belongs_to :entry

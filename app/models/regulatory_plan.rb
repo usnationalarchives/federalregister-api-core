@@ -1,3 +1,16 @@
+=begin Schema Information
+
+ Table name: regulatory_plans
+
+  id                   :integer(4)      not null, primary key
+  regulation_id_number :string(255)
+  issue                :string(255)
+  title                :text
+  abstract             :text
+  priority_category    :string(255)
+
+=end Schema Information
+
 class RegulatoryPlan < ApplicationModel
   SIGNIFICANT_PRIORITY_CATEGORIES = ['Economically Significant', 'Other Significant']
   
