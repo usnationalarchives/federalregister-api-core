@@ -1,9 +1,21 @@
-namespace :content do
-  namespace :agencies do
-    desc "Import official GPO agency list"
-    task :agencies => :environment do
-      date = ENV['DATE_TO_IMPORT'] || Date.today
-      Content::EntryImporter.process_all_by_date(date, :agency_name_assignments)
-    end
+namespace :data do
+  task :daily => %w(
+    data:daily:quick
+    
+    data:cache:update:all
+    data:cache:expire
+    tmp:cache:clear
+    thinking_sphinx:index
+    sitemap:refresh
+  )
+  
+  namespace :daily do 
+    task :quick => %w(
+    content:entries:import
+    data:import:bulkdata
+    data:download:full_text
+    data:extract:places
+    data:extract:regulationsdotgov_id
+    )
   end
 end
