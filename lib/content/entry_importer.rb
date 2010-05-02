@@ -1,9 +1,13 @@
 module Content
   class EntryImporter
+    include Content::EntryImporter::BasicData
+    include Content::EntryImporter::Agencies
     include Content::EntryImporter::CFR
     include Content::EntryImporter::PageNumber
+    include Content::EntryImporter::ReferencedDates
     include Content::EntryImporter::Sections
-    include Content::EntryImporter::Agencies
+    include Content::EntryImporter::Topics
+    include Content::EntryImporter::Urls
   
     def self.process_all_by_date(date, *attributes)
       if date == 'all'
@@ -25,12 +29,17 @@ module Content
         puts "handling #{date}"
         ModsFile.new(date).document_numbers.each do |document_number|
           importer = EntryImporter.new(:date => date, :document_number => document_number)
-          importer.update_attributes(*attributes)
+          
+          if attributes == [:all]
+            importer.update_all_provided_attributes
+          else
+            importer.update_attributes(*attributes)
+          end
         end
       end
     end
   
-    attr_accessor :date, :document_number, :mods_node, :bulkdata_node, :entry
+    attr_accessor :date, :document_number, :bulkdata_node, :entry
     def initialize(options = {})
       options.symbolize_keys!
       if options[:entry]
@@ -44,21 +53,21 @@ module Content
         @entry = Entry.find_by_document_number(@document_number) || Entry.new(:document_number => @document_number, :publication_date => @date)
       end
       
-      if options[:mods_node]
-        @mods_node = options[:mods_node]
-      end
-    
       if options[:bulkdata_node]
         @bulkdata_node = options[:bulkdata_node]
       end
     end
     
+    def mods_file
+      @mods_file ||= ModsFile.new(@date)
+    end
+    
     def mods_node
-      @mods_node ||= ModsFile.new(@date).find_entry_node_by_document_number(@document_number)
+      @mods_node ||= mods_file.find_entry_node_by_document_number(@document_number)
     end
     
     def update_all_provided_attributes
-      set_attributes(*self.provided)
+      update_attributes(*self.provided)
     end
   
     def update_attributes(*attribute_names)

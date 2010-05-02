@@ -34,6 +34,11 @@ class Content::EntryImporter::ModsFile
   end
   memoize :document
   
+  def volume
+    document.css('volume').first.try(:content)
+  end
+  memoize :volume
+  
   def find_entry_node_by_document_number(document_number)
     document.xpath("./xmlns:relatedItem[@ID='id-#{document_number}']").first
   end

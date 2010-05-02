@@ -1,5 +1,11 @@
 namespace :content do
   namespace :entries do
+    desc "Import all entry data"
+    task :import => :environment do
+      date = ENV['DATE_TO_IMPORT'] || Date.today
+      Content::EntryImporter.process_all_by_date(date, :all)
+    end
+    
     namespace :import do
       desc "Extract CFR information into entries"
       task :cfr => :environment do
