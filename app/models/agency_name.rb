@@ -1,3 +1,14 @@
+=begin Schema Information
+
+ Table name: agency_names
+
+  id              :integer(4)      not null, primary key
+  name            :string(255)     not null
+  agency_assigned :boolean(1)
+  agency_id       :integer(4)
+
+=end Schema Information
+
 class AgencyName < ApplicationModel
   belongs_to :agency
   has_many :agency_name_assignments
