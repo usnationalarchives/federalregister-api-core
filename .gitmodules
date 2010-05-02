@@ -22,3 +22,6 @@
 [submodule "vendor/plugins/acts_as_list"]
 	path = vendor/plugins/acts_as_list
 	url = git://github.com/rails/acts_as_list.git
+[submodule "vendor/plugins/userstamp"]
+	path = vendor/plugins/userstamp
+	url = git://github.com/delynn/userstamp.git
