@@ -27,7 +27,7 @@ class Agency < ApplicationModel
   belongs_to :parent, :class_name => 'Agency'
   
   # grab cabinet level agencies (departments) as these are top producing
-  named_scope :featured, :conditions => ['name LIKE ?', 'Department%']
+  named_scope :featured, :conditions => ['name LIKE ?', '%Department']
   
   before_create :slugify
   
@@ -53,15 +53,6 @@ class Agency < ApplicationModel
       end
     
     entries.count(:conditions => ["publication_date >= ?", date])
-  end
-  
-  def descendant_ids
-    descendant_ids = child_ids
-    children.each do |child_agency|
-      descendant_ids += child_agency.descendant_ids
-    end
-    
-    descendant_ids
   end
   
   private
