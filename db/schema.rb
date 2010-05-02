@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100501154800) do
+ActiveRecord::Schema.define(:version => 20100502144301) do
 
   create_table "agencies", :force => true do |t|
     t.integer  "parent_id"
@@ -31,12 +31,33 @@ ActiveRecord::Schema.define(:version => 20100501154800) do
   add_index "agencies", ["name", "parent_id"], :name => "index_agencies_on_name_and_parent_id"
   add_index "agencies", ["parent_id", "name"], :name => "index_agencies_on_parent_id_and_name"
 
-  create_table "alternative_agency_names", :force => true do |t|
+  create_table "agency_assignments", :force => true do |t|
+    t.integer "entry_id"
     t.integer "agency_id"
-    t.string  "name"
+    t.integer "position"
   end
 
-  add_index "alternative_agency_names", ["agency_id"], :name => "index_alternative_agency_names_on_agency_id"
+  add_index "agency_assignments", ["agency_id", "entry_id"], :name => "index_agency_assignments_on_agency_id_and_entry_id"
+  add_index "agency_assignments", ["entry_id", "agency_id"], :name => "index_agency_assignments_on_entry_id_and_agency_id", :unique => true
+
+  create_table "agency_name_assignments", :force => true do |t|
+    t.integer "entry_id"
+    t.integer "agency_name_id"
+    t.integer "position"
+  end
+
+  add_index "agency_name_assignments", ["agency_name_id", "entry_id"], :name => "index_agency_name_assignments_on_agency_name_id_and_entry_id"
+  add_index "agency_name_assignments", ["entry_id", "agency_name_id"], :name => "index_agency_name_assignments_on_entry_id_and_agency_name_id", :unique => true
+
+  create_table "agency_names", :force => true do |t|
+    t.string  "name",            :null => false
+    t.boolean "agency_assigned"
+    t.integer "agency_id"
+  end
+
+  add_index "agency_names", ["agency_id", "name"], :name => "index_agency_names_on_agency_id_and_name"
+  add_index "agency_names", ["name", "agency_id"], :name => "index_agency_names_on_name_and_agency_id"
+  add_index "agency_names", ["name"], :name => "index_agency_names_on_name", :unique => true
 
   create_table "citations", :force => true do |t|
     t.integer "source_entry_id"
@@ -68,7 +89,6 @@ ActiveRecord::Schema.define(:version => 20100501154800) do
     t.integer  "length"
     t.integer  "start_page"
     t.integer  "end_page"
-    t.integer  "agency_id"
     t.date     "publication_date"
     t.datetime "places_determined_at"
     t.datetime "created_at"
@@ -76,8 +96,6 @@ ActiveRecord::Schema.define(:version => 20100501154800) do
     t.text     "slug"
     t.boolean  "delta",                        :default => true, :null => false
     t.string   "source_text_url"
-    t.string   "primary_agency_raw"
-    t.string   "secondary_agency_raw"
     t.string   "regulationsdotgov_id"
     t.string   "comment_url"
     t.datetime "checked_regulationsdotgov_at"
@@ -92,17 +110,17 @@ ActiveRecord::Schema.define(:version => 20100501154800) do
     t.string   "headline"
   end
 
-  add_index "entries", ["agency_id", "citing_entries_count"], :name => "index_entries_on_agency_id_and_citing_entries_count"
-  add_index "entries", ["agency_id", "granule_class"], :name => "index_entries_on_agency_id_and_granule_class"
-  add_index "entries", ["agency_id", "id"], :name => "index_entries_on_agency_id_and_id"
-  add_index "entries", ["agency_id", "publication_date"], :name => "index_entries_on_agency_id_and_publication_date"
   add_index "entries", ["citation"], :name => "index_entries_on_citation"
+  add_index "entries", ["citing_entries_count"], :name => "index_entries_on_agency_id_and_citing_entries_count"
   add_index "entries", ["citing_entries_count"], :name => "index_entries_on_citing_entries_count"
   add_index "entries", ["document_number"], :name => "index_entries_on_document_number"
   add_index "entries", ["full_text_updated_at"], :name => "index_entries_on_full_text_added_at"
   add_index "entries", ["full_xml_updated_at"], :name => "index_entries_on_full_xml_added_at"
+  add_index "entries", ["granule_class"], :name => "index_entries_on_agency_id_and_granule_class"
   add_index "entries", ["id", "publication_date"], :name => "index_entries_on_id_and_publication_date"
-  add_index "entries", ["publication_date", "agency_id"], :name => "index_entries_on_publication_date_and_agency_id"
+  add_index "entries", ["id"], :name => "index_entries_on_agency_id_and_id"
+  add_index "entries", ["publication_date"], :name => "index_entries_on_agency_id_and_publication_date"
+  add_index "entries", ["publication_date"], :name => "index_entries_on_publication_date_and_agency_id"
   add_index "entries", ["regulation_id_number"], :name => "index_entries_on_regulation_id_number"
   add_index "entries", ["volume", "start_page", "end_page"], :name => "index_entries_on_volume_and_start_page_and_end_page"
 

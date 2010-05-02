@@ -1,0 +1,22 @@
+<% title 'All Agency Names' %>
+
+<table>
+  <thead>
+    <tr>
+      <th>Agency Name</th>
+      <th>Processed?</th>
+      <th>Assigned Agency</th>
+      <th># Articles</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @agency_names.each do |agency_name| %>
+      <tr>
+        <td><%= link_to agency_name.name, edit_admin_agency_name_path(agency_name) %></td>
+        <td><%= agency_name.unprocessed? ? 'NO' : 'yes' %></td>
+        <td><%= agency_name.agency.try(:name) %></td>
+        <td><%= agency_name.entries_count %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
