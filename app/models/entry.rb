@@ -20,7 +20,6 @@
   length                       :integer(4)
   start_page                   :integer(4)
   end_page                     :integer(4)
-  agency_id                    :integer(4)
   publication_date             :date
   places_determined_at         :datetime
   created_at                   :datetime
@@ -28,8 +27,6 @@
   slug                         :text
   delta                        :boolean(1)      default(TRUE), not null
   source_text_url              :string(255)
-  primary_agency_raw           :string(255)
-  secondary_agency_raw         :string(255)
   regulationsdotgov_id         :string(255)
   comment_url                  :string(255)
   checked_regulationsdotgov_at :datetime
@@ -41,6 +38,7 @@
   full_text_updated_at         :datetime
   cfr_title                    :string(255)
   cfr_part                     :string(255)
+  headline                     :string(255)
 
 =end Schema Information
 
