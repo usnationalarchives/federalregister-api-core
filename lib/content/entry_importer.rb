@@ -15,6 +15,13 @@ module Content
           :select => "distinct(publication_date) AS publication_date",
           :order => "publication_date"
         )
+      elsif date =~ /^>/
+        date = Date.parse(date.sub(/^>/, ''))
+        dates = Entry.find_as_array(
+          :select => "distinct(publication_date) AS publication_date",
+          :conditions => {:publication_date => date .. Date.today},
+          :order => "publication_date"
+        )
       elsif date =~ /^\d{4}$/
         dates = Entry.find_as_array(
           :select => "distinct(publication_date) AS publication_date",
