@@ -1,0 +1,18 @@
+<% title "Extracting events from '#{@entry.title}'" %>
+
+<ul>
+<% @places.each do |place| %>
+  <li><%= place.name %></li>
+<% end %>
+</ul>
+
+<ul>
+<% @entry.places.each do |place| %>
+  <li><%= place.name %></li>
+<% end %>
+</ul>
+
+<div>
+<%= link_events(@entry.full_text, @dates) %>
+</div>
+

@@ -18,7 +18,7 @@ class PotentialDateExtractor
   YEAR = "\\b(?:\\d{4}|\\d{2})\\b"
   
   FORMATS = [
-    MONTH + JUNK + DAY,
+    # MONTH + JUNK + DAY,
     MONTH + JUNK + DAY + JUNK + YEAR,
     MONTH_NUMBER + '/' + DAY + '/' + YEAR,
   ]
