@@ -1,23 +1,30 @@
 class UpdateUsers < ActiveRecord::Migration
   def self.up
-    add_column :users, :creator_id, :integer
-    add_column :users, :updater_id, :integer
-    add_column :users, :first_name, :string
-    add_column :users, :last_name, :string
-    add_column :users, :active, :boolean, :default => true
-    change_column :users, :crypted_password, :string, :null => true
-    change_column :users, :password_salt, :string, :null => true
-    remove_column :users, :login
+    create_table "users", :force => true do |t|
+      t.string   "email",                                 :null => false
+      t.string   "crypted_password"
+      t.string   "password_salt"
+      t.string   "persistence_token",                     :null => false
+      t.string   "single_access_token",                   :null => false
+      t.string   "perishable_token",                      :null => false
+      t.integer  "login_count",         :default => 0,    :null => false
+      t.integer  "failed_login_count",  :default => 0,    :null => false
+      t.datetime "last_request_at"
+      t.datetime "current_login_at"
+      t.datetime "last_login_at"
+      t.string   "current_login_ip"
+      t.string   "last_login_ip"
+      t.datetime "created_at"
+      t.datetime "updated_at"
+      t.integer  "creator_id"
+      t.integer  "updater_id"
+      t.string   "first_name"
+      t.string   "last_name"
+      t.boolean  "active",              :default => true
+    end
   end
 
   def self.down
-    add_column :users, :login, :string
-    change_column :users, :crypted_password, :string, :null => false
-    change_column :users, :password_salt, :string, :null => false
-    remove_column :users, :active
-    remove_column :users, :last_name
-    remove_column :users, :first_name
-    remove_column :users, :updater_id
-    remove_column :users, :creator_id
+    drop_table :users
   end
 end
