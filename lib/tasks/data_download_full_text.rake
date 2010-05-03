@@ -5,7 +5,7 @@ namespace :data do
       date = ENV['DATE_TO_IMPORT'].blank? ? Date.today : Date.parse(ENV['DATE_TO_IMPORT'])
       
       Entry.all(:conditions => {:publication_date => date}).each do |entry|
-        next if entry.full_text_updated_at.present?
+        # next if entry.full_text_updated_at.present?
         url = entry.source_url(:text)
         puts "downloading full text for #{entry.document_number} (#{entry.publication_date})"
         full_text = nil
