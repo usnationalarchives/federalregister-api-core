@@ -38,8 +38,8 @@ Rails::Initializer.run do |config|
   config.gem 'active_hash', :version => '0.7.9'
   config.gem 'less', :version => '1.2.21'
   
+  config.gem 'bcrypt-ruby', :version => '2.1.2', :lib => "bcrypt"
   config.gem 'authlogic', :version => '2.1.3'
-  config.gem 'bcrypt-ruby', :version => '2.1.2'
   
   # disabled as requires C library to install...the Locator module will return a fake result if not installed
   # config.gem "geoip_city", :version => '0.2.0'
