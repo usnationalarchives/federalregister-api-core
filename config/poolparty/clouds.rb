@@ -20,8 +20,17 @@ pool :fr2 do
     chef :solo do
       repo File.join(File.dirname(__FILE__) , "chef_cloud")
       
+      recipe "apt"
+      recipe "ubuntu"
       recipe "apache2"
-      attributes :apache => {
+      recipe "passenger_enterprise"
+      recipe "passenger_enterprise::apache2"
+      
+      attributes  :lsb    => {
+                                  :code_name  => 'karmic',
+                                  :ec2_region => 'us-east-1'
+                             },
+                  :apache => {
                                 :listen_ports   => ["80"], 
                                 :server_name    => 'test.fr2.criticaljuncture.org',
                                 #:server_aliases => 'www.something',
@@ -29,10 +38,6 @@ pool :fr2 do
                                 :name           => 'fr2',
                                 :enable_mods    => ["rewrite", "deflate", "expires"]
                              }
-                             
-      attributes :params => {
-                              :name => 'fr2',
-                            }
                              
     end
     
