@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100503234756) do
+ActiveRecord::Schema.define(:version => 20100504141414) do
 
   create_table "agencies", :force => true do |t|
     t.integer  "parent_id"
@@ -109,6 +109,8 @@ ActiveRecord::Schema.define(:version => 20100503234756) do
     t.string   "cfr_part"
     t.string   "curated_title"
     t.string   "curated_abstract"
+    t.integer  "lede_photo_id"
+    t.text     "lede_photo_candidates"
   end
 
   add_index "entries", ["citation"], :name => "index_entries_on_citation"
@@ -146,6 +148,15 @@ ActiveRecord::Schema.define(:version => 20100503234756) do
   end
 
   add_index "graphics", ["identifier"], :name => "index_graphics_on_identifier", :unique => true
+
+  create_table "lede_photos", :force => true do |t|
+    t.string   "credit"
+    t.string   "credit_url"
+    t.string   "photo_file_name"
+    t.string   "photo_content_type"
+    t.integer  "photo_file_size"
+    t.datetime "photo_updated_at"
+  end
 
   create_table "place_determinations", :force => true do |t|
     t.integer "entry_id"
