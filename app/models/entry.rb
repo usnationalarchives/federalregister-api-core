@@ -169,8 +169,17 @@ class Entry < ApplicationModel
     }
   end
   
-  def headline
-    self[:headline] || title
+  def agencies_exluding_parents
+    parent_agency_ids = agencies.map(&:parent_id).compact
+    agencies.reject{|a| parent_agency_ids.include?(a.id) }
+  end
+  
+  def curated_title
+    self[:curated_title] || title
+  end
+  
+  def summary
+    self[:summary] || abstract
   end
   
   def month_year
