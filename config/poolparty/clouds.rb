@@ -8,8 +8,7 @@ pool :fr2 do
     image_id "ami-bb709dd2" #Ubuntu 9.10 Karmic Canonical, ubuntu@
     availability_zones ['us-east-1b']
     instances 1
-    
-    #disable :haproxy
+    instance_type 'm1.small'
     
     # attach the ebs volumes
     # ebs_volumes do
