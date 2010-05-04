@@ -9,12 +9,6 @@ class Admin::Issues::Sections::HighlightsController < AdminController
     @section_highlight.save!
   end
   
-  def edit
-    @publication_date = Date.parse(params[:issue_id])
-    @section = Section.find_by_slug(params[:section_id])
-    @section_highlight = SectionHighlight.find_by_publication_date_and_section_id_and_entry_id!(@publication_date, @section, params[:id])
-  end
-  
   def update
     @publication_date = Date.parse(params[:issue_id])
     @section = Section.find_by_slug(params[:section_id])
