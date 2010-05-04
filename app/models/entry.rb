@@ -178,8 +178,8 @@ class Entry < ApplicationModel
     self[:curated_title] || title
   end
   
-  def summary
-    self[:summary] || abstract
+  def curated_abstract
+    self[:curated_abstract] || abstract
   end
   
   def month_year
