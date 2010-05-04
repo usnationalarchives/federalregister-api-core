@@ -1,1 +1,1 @@
-<li data-entry-id="<%= highlighted_entry.id %>"><%= link_to highlighted_entry.curated_title, edit_admin_issue_section_highlight_path(@publication_date.to_s(:db), @section, highlighted_entry) %> <a class="remove">[remove]</a></li>
+<li data-entry-id="<%= highlighted_entry.id %>"><%= link_to highlighted_entry.curated_title, edit_admin_issue_entry_path(@publication_date.to_s(:db), highlighted_entry.document_number) %> <a class="remove">[remove]</a></li>
