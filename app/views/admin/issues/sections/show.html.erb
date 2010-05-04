@@ -61,7 +61,7 @@ dt.highlighted {
 
 <dl>
 <% @section.entries.published_on(@publication_date).each do |entry| %>
-  <dt data-entry-id="<%= entry.id %>" class="<%= 'highlighted' if @highlighted_entries.include?(entry) %>"><%= entry.title %></dt>
+  <dt data-entry-id="<%= entry.id %>" class="<%= 'highlighted' if @highlighted_entries.include?(entry) %>"><%= entry.curated_title %></dt>
   <% if entry.significant? %>
     <dd>Economically Significant</dd>
   <% end %>
