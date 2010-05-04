@@ -1,5 +1,14 @@
 <%= title @section.name %>
 
+<div id="top-articles" class="featured">
+  <%= render :partial => "primary_entry", :object => @highlighted_entries.first %>
+  <%= render :partial => 'entry_with_abstract', :collection => @highlighted_entries[1,3], :as => :entry %>
+</div>
+
+<div id="additional-articles" class="featured">
+  <%= render :partial => 'entry_with_abstract', :collection => @highlighted_entries[4,100], :as => :entry %>
+</div>
+
 <h2>Comment Period</h2>
 <h3>Closing Soon</h3>
 <ul>
@@ -17,19 +26,21 @@
 
 
 <h2><%= @publication_date %> Entries</h2>
-<ul class="raquo indent">
-<% @section.entries.published_on(@publication_date).each do |entry| %>
-  <%= link_to entry.title, entry_path(entry) %>
-  <dl class="group">
-    <dt>Type</dt>
-    <dd><%= entry.entry_type if entry.has_type? %></dd>
 
-    <dt>Length</dt>
-    <dd><%= pluralize(entry.human_length, "page") %></dd>
-    <% if entry.agency %>
-      <dt>Agency</dt>
-      <dd><%= link_to entry.agency.name, agency_path(entry.agency) %></dd>
-    <% end %>
-  </dl>
+<% @section.entries.published_on(@publication_date).each do |entry| %>
+  <article>
+    <h1><%= link_to entry.title, entry_path(entry) %></h1>
+    <dl class="group">
+      <dt>Type</dt>
+      <dd><%= entry.entry_type if entry.has_type? %></dd>
+      
+      <dt>Length</dt>
+      <dd><%= pluralize(entry.human_length, "page") %></dd>
+      
+      <% if entry.agency %>
+        <dt>Agency</dt>
+        <dd><%= link_to entry.agency.name, agency_path(entry.agency) %></dd>
+      <% end %>
+    </dl>
+  </article>
 <% end %>
-</ul>
