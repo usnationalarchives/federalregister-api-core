@@ -4,7 +4,7 @@
 <script>
 $(document).ready(function(){
   var base_url = window.location;
-  $('dt:not(.highlighted)').live('click', function(){
+  $('article:not(.highlighted)').live('click', function(){
     var entry = $(this);
     $.ajax({
       url: base_url + '/highlights',
@@ -24,7 +24,7 @@ $(document).ready(function(){
       data: '',
       success: function() {
         item.remove();
-        $('dt[data-entry-id=' + entry_id + ']').removeClass('highlighted');
+        $('article[data-entry-id=' + entry_id + ']').removeClass('highlighted');
       }
     });
   });
@@ -45,7 +45,7 @@ $(document).ready(function(){
 });
 </script>
 <style>
-dt.highlighted {
+article.highlighted {
   color: gray;
 }
 </style>
@@ -59,12 +59,16 @@ dt.highlighted {
 
 <h2>Entries in this section on <%= @publication_date %></h2>
 
-<dl>
+<div id="entries">
 <% @section.entries.published_on(@publication_date).each do |entry| %>
-  <dt data-entry-id="<%= entry.id %>" class="<%= 'highlighted' if @highlighted_entries.include?(entry) %>"><%= entry.curated_title %></dt>
-  <% if entry.significant? %>
-    <dd>Economically Significant</dd>
-  <% end %>
-  <dd>Length: <%= pluralize entry.human_length, 'page' %></dd>
+  <article data-entry-id="<%= entry.id %>" class="<%= 'highlighted' if @highlighted_entries.include?(entry) %>">
+    <h1><%= entry.curated_title %></h1>
+    <p>
+      <% if entry.significant? %>
+        <span class="significant">Economically Significant</span>
+      <% end %>
+      Length: <%= pluralize entry.human_length, 'page' %>
+    </p>
+  </article>
 <% end %>
-</dl>
+</div>
