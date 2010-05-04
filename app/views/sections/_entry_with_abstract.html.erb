@@ -2,5 +2,5 @@
   <h1><%= entry.curated_title %></h1>
   <p class="metadata"><%= entry.agencies_exluding_parents.map{|a| link_to a.name, agency_path(a) }.to_sentence %> on <time datetime="<%= entry.publication_date.to_s(:iso) %>"><%= entry.publication_date %></time></p>
   
-  <p class="summary"><%= entry.summary %></p>
+  <p class="summary"><%= entry.curated_abstract %></p>
 </article>
