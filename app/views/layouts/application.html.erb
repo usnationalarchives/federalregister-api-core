@@ -58,11 +58,15 @@
   <div id="wrapper" class="group">
     
     <!-- HEADER -->
-    <div id="header">
+    <header>
       
-      <h1><a href="/" title="govpulse home">Federal Register</a></h1>
-
-    </div>
+      <hgroup>
+        <h1><a href="/" title="govpulse home">The Federal Register</a></h1>
+        <h2>Newspaper of the United States Government</h2>
+      </hgroup>
+      
+    </header>
+    
     <%= render :partial => 'layouts/navigation', :locals => {:last_date => @last_date, :search_term => @search_term} %>
     <!-- HEADER end -->
   
@@ -118,14 +122,6 @@
   </div>
   <!-- FOOTER end -->
     
-  <div id="ticker_container">
-    <!-- TICKER -->
-    <div id="ticker">
-      <p class="loading">Loading most recent entries<img src="/images/ticker_loading.gif" alt="loading" /></p>
-      <div class="pulse left"></div>
-      <div class="pulse right"></div>      
-    </div>  
-  </div>
   
   <%= render :partial => 'layouts/google_analytics' %>  
   <%= render :partial => 'layouts/tender_support' %>  
