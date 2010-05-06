@@ -14,7 +14,7 @@
 
 =end Schema Information
 
-class Url < ActiveRecord::Base
+class Url < ApplicationModel
   has_many :url_references
   has_many :entries, :through => :url_references
   

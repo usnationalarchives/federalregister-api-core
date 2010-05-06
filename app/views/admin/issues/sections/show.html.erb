@@ -1,0 +1,70 @@
+<% title @section.name %>
+
+<% add_javascript do %>
+<script>
+$(document).ready(function(){
+  var base_url = window.location;
+  $('dt:not(.highlighted)').live('click', function(){
+    var entry = $(this);
+    $.ajax({
+      url: base_url + '/highlights',
+      type: 'POST',
+      data: "section_highlight[entry_id]=" + $(this).attr('data-entry-id'),
+      success: function(response) {
+        entry.addClass('highlighted');
+      }
+    })
+  });
+  $("ul#highlighted .remove").live('click', function() {
+    var item = $(this).parent();
+    var entry_id = item.attr('data-entry-id');
+    $.ajax({
+      url: base_url + '/highlights/' + entry_id,
+      type: 'DELETE',
+      data: '',
+      success: function() {
+        item.remove();
+        $('dt[data-entry-id=' + entry_id + ']').removeClass('highlighted');
+      }
+    });
+  });
+  $("ul#highlighted").sortable({
+    stop: function(event, ui) {
+      var entry_id = ui.item.attr('data-entry-id');
+      var position = ui.item.prevAll('li').size() + 1;
+      $.ajax({
+        url: base_url + '/highlights/' + entry_id,
+        type: 'PUT',
+        data: "section_highlight[new_position]=" + position,
+        success: function() {
+          entry.addClass('highlighted');
+        }
+      })
+    }
+  });
+});
+</script>
+<style>
+dt.highlighted {
+  color: gray;
+}
+</style>
+<% end %>
+
+<h2>Highlighted Entries</h2>
+<ul id="highlighted">
+<%= render :partial => "highlighted_entry", :collection => @highlighted_entries %>
+</ul>
+
+
+<h2>Entries in this section on <%= @publication_date %></h2>
+
+<dl>
+<% @section.entries.published_on(@publication_date).each do |entry| %>
+  <dt data-entry-id="<%= entry.id %>" class="<%= 'highlighted' if @highlighted_entries.include?(entry) %>"><%= entry.curated_title %></dt>
+  <% if entry.significant? %>
+    <dd>Economically Significant</dd>
+  <% end %>
+  <dd>Length: <%= pluralize entry.human_length, 'page' %></dd>
+<% end %>
+</dl>

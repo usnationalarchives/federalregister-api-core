@@ -13,7 +13,7 @@
 
 =end Schema Information
 
-class Topic < ActiveRecord::Base
+class Topic < ApplicationModel
   has_many :topic_assignments
   has_many :entries, :through => :topic_assignments
   belongs_to :topic_group, :foreign_key => :group_name

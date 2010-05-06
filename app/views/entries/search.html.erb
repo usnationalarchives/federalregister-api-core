@@ -87,7 +87,7 @@
               sanitize entry.excerpts.full_text, :tags => %w(span), :attributes => %w(class)
             end %></span>
           <br />
-          <span class="agency"><%= entry.agency ? link_to(entry.agency.name, agency_path(entry.agency)) : entry.primary_agency_raw %></span>
+          <span class="agency"><%= entry.agencies.map{|agency| link_to(agency.name, agency_path(agency))}.join(' :: ') %></span>
         </div>  
       </li>
       <% end %>

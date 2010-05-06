@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100419193355) do
+ActiveRecord::Schema.define(:version => 20100503234756) do
 
   create_table "agencies", :force => true do |t|
     t.integer  "parent_id"
@@ -30,6 +30,34 @@ ActiveRecord::Schema.define(:version => 20100419193355) do
 
   add_index "agencies", ["name", "parent_id"], :name => "index_agencies_on_name_and_parent_id"
   add_index "agencies", ["parent_id", "name"], :name => "index_agencies_on_parent_id_and_name"
+
+  create_table "agency_assignments", :force => true do |t|
+    t.integer "entry_id"
+    t.integer "agency_id"
+    t.integer "position"
+  end
+
+  add_index "agency_assignments", ["agency_id", "entry_id"], :name => "index_agency_assignments_on_agency_id_and_entry_id"
+  add_index "agency_assignments", ["entry_id", "agency_id"], :name => "index_agency_assignments_on_entry_id_and_agency_id"
+
+  create_table "agency_name_assignments", :force => true do |t|
+    t.integer "entry_id"
+    t.integer "agency_name_id"
+    t.integer "position"
+  end
+
+  add_index "agency_name_assignments", ["agency_name_id", "entry_id"], :name => "index_agency_name_assignments_on_agency_name_id_and_entry_id"
+  add_index "agency_name_assignments", ["entry_id", "agency_name_id"], :name => "index_agency_name_assignments_on_entry_id_and_agency_name_id"
+
+  create_table "agency_names", :force => true do |t|
+    t.string  "name",            :null => false
+    t.boolean "agency_assigned"
+    t.integer "agency_id"
+  end
+
+  add_index "agency_names", ["agency_id", "name"], :name => "index_agency_names_on_agency_id_and_name"
+  add_index "agency_names", ["name", "agency_id"], :name => "index_agency_names_on_name_and_agency_id"
+  add_index "agency_names", ["name"], :name => "index_agency_names_on_name", :unique => true
 
   create_table "citations", :force => true do |t|
     t.integer "source_entry_id"
@@ -61,7 +89,6 @@ ActiveRecord::Schema.define(:version => 20100419193355) do
     t.integer  "length"
     t.integer  "start_page"
     t.integer  "end_page"
-    t.integer  "agency_id"
     t.date     "publication_date"
     t.datetime "places_determined_at"
     t.datetime "created_at"
@@ -69,8 +96,6 @@ ActiveRecord::Schema.define(:version => 20100419193355) do
     t.text     "slug"
     t.boolean  "delta",                        :default => true, :null => false
     t.string   "source_text_url"
-    t.string   "primary_agency_raw"
-    t.string   "secondary_agency_raw"
     t.string   "regulationsdotgov_id"
     t.string   "comment_url"
     t.datetime "checked_regulationsdotgov_at"
@@ -82,19 +107,21 @@ ActiveRecord::Schema.define(:version => 20100419193355) do
     t.datetime "full_text_updated_at"
     t.string   "cfr_title"
     t.string   "cfr_part"
+    t.string   "curated_title"
+    t.string   "curated_abstract"
   end
 
-  add_index "entries", ["agency_id", "citing_entries_count"], :name => "index_entries_on_agency_id_and_citing_entries_count"
-  add_index "entries", ["agency_id", "granule_class"], :name => "index_entries_on_agency_id_and_granule_class"
-  add_index "entries", ["agency_id", "id"], :name => "index_entries_on_agency_id_and_id"
-  add_index "entries", ["agency_id", "publication_date"], :name => "index_entries_on_agency_id_and_publication_date"
   add_index "entries", ["citation"], :name => "index_entries_on_citation"
+  add_index "entries", ["citing_entries_count"], :name => "index_entries_on_agency_id_and_citing_entries_count"
   add_index "entries", ["citing_entries_count"], :name => "index_entries_on_citing_entries_count"
   add_index "entries", ["document_number"], :name => "index_entries_on_document_number"
   add_index "entries", ["full_text_updated_at"], :name => "index_entries_on_full_text_added_at"
   add_index "entries", ["full_xml_updated_at"], :name => "index_entries_on_full_xml_added_at"
+  add_index "entries", ["granule_class"], :name => "index_entries_on_agency_id_and_granule_class"
   add_index "entries", ["id", "publication_date"], :name => "index_entries_on_id_and_publication_date"
-  add_index "entries", ["publication_date", "agency_id"], :name => "index_entries_on_publication_date_and_agency_id"
+  add_index "entries", ["id"], :name => "index_entries_on_agency_id_and_id"
+  add_index "entries", ["publication_date"], :name => "index_entries_on_agency_id_and_publication_date"
+  add_index "entries", ["publication_date"], :name => "index_entries_on_publication_date_and_agency_id"
   add_index "entries", ["regulation_id_number"], :name => "index_entries_on_regulation_id_number"
   add_index "entries", ["volume", "start_page", "end_page"], :name => "index_entries_on_volume_and_start_page_and_end_page"
 
@@ -190,6 +217,15 @@ ActiveRecord::Schema.define(:version => 20100419193355) do
 
   add_index "section_assignments", ["section_id", "entry_id"], :name => "index_section_assignments_on_section_id_and_entry_id"
 
+  create_table "section_highlights", :force => true do |t|
+    t.integer "section_id"
+    t.integer "entry_id"
+    t.integer "position"
+    t.date    "publication_date"
+  end
+
+  add_index "section_highlights", ["section_id", "entry_id"], :name => "index_section_highlights_on_section_id_and_entry_id"
+
   create_table "topic_assignments", :force => true do |t|
     t.integer  "topic_id"
     t.integer  "entry_id"
@@ -268,15 +304,14 @@ ActiveRecord::Schema.define(:version => 20100419193355) do
   add_index "user_lists", ["user_id"], :name => "index_user_lists_on_user_id"
 
   create_table "users", :force => true do |t|
-    t.string   "login",                              :null => false
-    t.string   "email",                              :null => false
-    t.string   "crypted_password",                   :null => false
-    t.string   "password_salt",                      :null => false
-    t.string   "persistence_token",                  :null => false
-    t.string   "single_access_token",                :null => false
-    t.string   "perishable_token",                   :null => false
-    t.integer  "login_count",         :default => 0, :null => false
-    t.integer  "failed_login_count",  :default => 0, :null => false
+    t.string   "email",                                 :null => false
+    t.string   "crypted_password"
+    t.string   "password_salt"
+    t.string   "persistence_token",                     :null => false
+    t.string   "single_access_token",                   :null => false
+    t.string   "perishable_token",                      :null => false
+    t.integer  "login_count",         :default => 0,    :null => false
+    t.integer  "failed_login_count",  :default => 0,    :null => false
     t.datetime "last_request_at"
     t.datetime "current_login_at"
     t.datetime "last_login_at"
@@ -284,10 +319,14 @@ ActiveRecord::Schema.define(:version => 20100419193355) do
     t.string   "last_login_ip"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "creator_id"
+    t.integer  "updater_id"
+    t.string   "first_name"
+    t.string   "last_name"
+    t.boolean  "active",              :default => true
   end
 
   add_index "users", ["email"], :name => "index_users_on_email"
-  add_index "users", ["login"], :name => "index_users_on_login"
   add_index "users", ["perishable_token"], :name => "index_users_on_perishable_token"
 
 end

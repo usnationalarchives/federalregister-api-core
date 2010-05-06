@@ -1,0 +1,12 @@
+<% title 'Editing Entry' %>
+
+<% semantic_form_for @section_highlight, :url => admin_issue_section_highlight_path(@publication_date.to_s(:db), @section, @section_highlight.entry_id) do |f| %>
+  <% f.inputs do %>
+    <%= f.input :curated_title %>
+    <%= f.input :curated_abstract, :as => :text %>
+  <% end %>
+  
+  <% f.buttons do %>
+    <%= f.commit_button 'Save' %>
+  <% end %>
+<% end %>
