@@ -1,0 +1,12 @@
+<% title "Processing '#{@agency_name.name}'" %>
+
+<% semantic_form_for @agency_name, :url => admin_agency_name_path(@agency_name) do |f| %>
+  <% f.inputs do %>
+    <%= f.input :agency_id, :as => :select, :collection => Agency.all %>
+  <% end %>
+  
+  <% f.buttons do %>
+    <%= f.commit_button %>
+    <%= link_to 'Cancel', unprocessed_admin_agency_names_path %>
+  <% end %>
+<% end %>

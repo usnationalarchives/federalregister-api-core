@@ -53,13 +53,6 @@ module RouteBuilder
     }
   end
   
-  add_route :events do |date|
-    {
-      :year            => date.strftime('%Y'),
-      :month           => date.strftime('%m')
-    }
-  end
-  
   add_route :place do |place|
     {
       :slug => place.slug,

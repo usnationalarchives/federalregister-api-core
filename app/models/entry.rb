@@ -20,7 +20,6 @@
   length                       :integer(4)
   start_page                   :integer(4)
   end_page                     :integer(4)
-  agency_id                    :integer(4)
   publication_date             :date
   places_determined_at         :datetime
   created_at                   :datetime
@@ -28,8 +27,6 @@
   slug                         :text
   delta                        :boolean(1)      default(TRUE), not null
   source_text_url              :string(255)
-  primary_agency_raw           :string(255)
-  secondary_agency_raw         :string(255)
   regulationsdotgov_id         :string(255)
   comment_url                  :string(255)
   checked_regulationsdotgov_at :datetime
@@ -41,10 +38,11 @@
   full_text_updated_at         :datetime
   cfr_title                    :string(255)
   cfr_part                     :string(255)
+  headline                     :string(255)
 
 =end Schema Information
 
-class Entry < ActiveRecord::Base
+class Entry < ApplicationModel
   
   DESCRIPTIONS = {
     :notice => 'This section of the Federal Register contains documents other than rules 
@@ -63,8 +61,6 @@ class Entry < ActiveRecord::Base
     'CORRECT'  => 'Correction',
     'UNKNOWN'  => 'Unknown'
   }
-  
-  belongs_to :agency
   
   has_many :topic_assignments, :dependent => :destroy
   has_many :topics, :through => :topic_assignments, :conditions => "topics.group_name != ''", :order => 'topics.name'
@@ -99,6 +95,11 @@ class Entry < ActiveRecord::Base
   
   acts_as_mappable :through => :places
   
+  has_many :agency_name_assignments, :order => "agency_name_assignments.position"
+  has_many :agency_names, :through => :agency_name_assignments, :dependent => :delete_all
+  has_many :agency_assignments, :order => "agency_assignments.position", :dependent => :delete_all
+  has_many :agencies, :through => :agency_assignments, :order => "agency_assignments.position"
+  
   has_many :referenced_dates, :dependent => :destroy
   has_one :comments_close_date, :class_name => "ReferencedDate", :conditions => {:date_type => 'CommentDate'}
   has_one :effective_date, :class_name => "ReferencedDate", :conditions => {:date_type => 'EffectiveDate'}
@@ -106,6 +107,7 @@ class Entry < ActiveRecord::Base
   before_save :set_document_file_path
   
   has_many :section_assignments
+  has_many :section_highlights
   
   file_attribute(:full_xml)  {"#{RAILS_ROOT}/data/xml/#{document_file_path}.xml"}
   file_attribute(:full_text) {"#{RAILS_ROOT}/data/text/#{document_file_path}.txt"}
@@ -150,14 +152,13 @@ class Entry < ActiveRecord::Base
     indexes title
     indexes abstract
     indexes "LOAD_FILE(CONCAT('#{RAILS_ROOT}/data/text/', document_file_path, '.txt'))", :as => :full_text
-    indexes agency.name, :as => :agency_name
     indexes granule_class, :facet => true
     
     # attributes
+    has agencies(:id), :as => :agency_ids, :facet => true
     has topics(:id), :as => :topic_ids, :facet => true
     has places(:id), :as => :place_ids
     
-    has agency_id, :facet => true
     has publication_date
     
     set_property :field_weights => {
@@ -166,6 +167,19 @@ class Entry < ActiveRecord::Base
       "full_text" => 25,
       "agency_name" => 10
     }
+  end
+  
+  def agencies_exluding_parents
+    parent_agency_ids = agencies.map(&:parent_id).compact
+    agencies.reject{|a| parent_agency_ids.include?(a.id) }
+  end
+  
+  def curated_title
+    self[:curated_title] || title
+  end
+  
+  def curated_abstract
+    self[:curated_abstract] || abstract
   end
   
   def month_year
@@ -190,10 +204,6 @@ class Entry < ActiveRecord::Base
   
   def slug
     self.title.downcase.gsub(/&/, 'and').gsub(/[^a-z0-9]+/, '-').slice(0,100)
-  end
-  
-  def agency_parent_id
-    agency.try(:parent_id).nil? ? agency_id : agency.parent_id
   end
   
   def comments_close_on
@@ -268,7 +278,13 @@ class Entry < ActiveRecord::Base
         :order => 'publication_date'
     ).try(:publication_date)
   end
-
+  
+  # TODO: remove this method when no longer called
+  def agency
+    ActiveSupport::Deprecation.warn("Entry#agency is deprecated. Entries are now associated with multiple agencies.")
+    agencies.first
+  end
+  
   def has_type?
     entry_type != 'Unknown'
   end
@@ -295,6 +311,18 @@ class Entry < ActiveRecord::Base
   
   def most_recent_regulatory_plan
     RegulatoryPlan.first(:conditions => ["regulation_id_number = ?", regulation_id_number], :order => "regulatory_plans.issue DESC")
+  end
+  
+  def significant?
+    if most_recent_regulatory_plan
+      most_recent_regulatory_plan.significant?
+    end
+  end
+  
+  def recalculate_agencies!
+    self.agency_assignments = agency_name_assignments.map do |agency_name_assignment|
+      agency_name_assignment.create_agency_assignment
+    end
   end
   
   private

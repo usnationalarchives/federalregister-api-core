@@ -15,7 +15,7 @@
 
 =end Schema Information
 
-class Graphic < ActiveRecord::Base
+class Graphic < ApplicationModel
   has_many :usages, :class_name => "GraphicUsage"
   has_many :entries, :through => :usages
   

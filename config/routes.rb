@@ -1,4 +1,31 @@
 ActionController::Routing::Routes.draw do |map|
+  # ADMIN
+  map.namespace :admin do |admin|
+    admin.home '', :controller => "special", :action => "home"
+    admin.resources :agencies
+    admin.resources :agency_names, :collection => {:unprocessed => :get}
+    
+    admin.resources :sections
+    
+    admin.resources :issues do |issue|
+      issue.resources :eventful_entries, :controller => "issues/eventful_entries" do |entry|
+        entry.resources :events, :controler => "issues/eventful_entries/events"
+      end
+      issue.resources :sections, :controller => "issues/sections" do |section|
+        section.resources :highlights, :controller => "issues/sections/highlights"
+      end
+    end
+    
+    admin.resources :password_resets
+    admin.resources :users do |user|
+      user.resource :password, :controller => "users/passwords"
+    end
+    
+    admin.resource :user_session
+    admin.login  'login',  :controller => "user_sessions", :action => "new"
+    admin.logout 'logout', :controller => "user_sessions", :action => "destroy"
+  end
+  
   # SPECIAL PAGES
   map.root :controller => 'special', :action => 'home'
   map.widget_instructions 'widget_instructions', :controller => 'special', :action => 'widget_instructions'
@@ -42,12 +69,6 @@ ActionController::Routing::Routes.draw do |map|
                                          :page       => /\d+/
   map.citation_search 'citation/search', :controller => 'citations',
                                          :action     => 'search'
-  
-  # EVENTS
-  map.events 'events/:year/:month', :controller => 'calendars',
-                                          :action     => 'index',
-                                          :year       => /\d{4}/,
-                                          :month      => /\d{1,2}/
   
   # TOPICS
   map.topic_groups_by_letter '/topics/:letter',

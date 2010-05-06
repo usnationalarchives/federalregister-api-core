@@ -5,9 +5,9 @@
   <dl>
     <dt>Full Title:</dt>
     <dd><%= entry.title %></dd>
-    <% if entry.agency %>
-      <dt>Agency:</dt>
-      <dd><%= entry.agency.name %></dd>
+    <% if entry.agencies.present? %>
+      <dt><%= entry.agencies.size > 1 ? 'Agencies' : 'Agency' %>:</dt>
+      <dd><%= entry.agencies.map{|a| a.name}.join(' :: ') %></dd>
     <% end %>
     <dt>Date Entered:</dt>
     <dd><%= entry.publication_date.to_formatted_s(:pretty) %></dd>

@@ -12,7 +12,7 @@
 
 =end Schema Information
 
-class Place < ActiveRecord::Base
+class Place < ApplicationModel
   UNUSABLE_PLACES = [23424977,2393620]
   
   cattr_accessor :distance_grouping_increment
