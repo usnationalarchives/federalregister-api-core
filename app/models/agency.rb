@@ -20,13 +20,14 @@
 
 =end Schema Information
 
-class Agency < ActiveRecord::Base
-  has_many :entries
+class Agency < ApplicationModel
+  has_many :agency_assignments
+  has_many :entries, :through => :agency_assignments
   has_many :children, :class_name => 'Agency', :foreign_key => 'parent_id'
   belongs_to :parent, :class_name => 'Agency'
   
   # grab cabinet level agencies (departments) as these are top producing
-  named_scope :featured, :conditions => ['name LIKE ?', 'Department%']
+  named_scope :featured, :conditions => ['name LIKE ?', '%Department']
   
   before_create :slugify
   
@@ -52,15 +53,6 @@ class Agency < ActiveRecord::Base
       end
     
     entries.count(:conditions => ["publication_date >= ?", date])
-  end
-  
-  def descendant_ids
-    descendant_ids = child_ids
-    children.each do |child_agency|
-      descendant_ids += child_agency.descendant_ids
-    end
-    
-    descendant_ids
   end
   
   private

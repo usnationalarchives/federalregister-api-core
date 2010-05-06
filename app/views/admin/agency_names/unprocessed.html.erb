@@ -1,0 +1,11 @@
+<% title 'Unprocessed Agency Names' %>
+
+<% if @unprocessed_agency_names.present? %>
+  <ul>
+  <% @unprocessed_agency_names.each do |agency_name| %>
+    <li><%= link_to agency_name.name, edit_admin_agency_name_path(agency_name) %></li>
+  <% end %>
+  </ul>
+<% else %>
+  <h3>No unprocessed agency names</h3>
+<% end %>

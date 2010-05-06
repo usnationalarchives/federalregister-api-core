@@ -1,0 +1,12 @@
+<% f.inputs do %>
+  <%= f.input :first_name %>
+  <%= f.input :last_name %>
+  <%= f.input :email %>
+  <% unless f.object.new_record? %>
+    <%= f.input :active %>
+  <% end %>
+<% end %>
+
+<% f.buttons do %>
+  <%= f.commit_button %>
+<% end %>

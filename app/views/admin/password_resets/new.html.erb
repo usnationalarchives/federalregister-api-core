@@ -1,0 +1,13 @@
+<% title 'Forgot Password' %>
+
+<p>Enter your email address below and instructions to reset your password will be emailed to you:</p>
+
+<% semantic_form_for :user, :url => admin_password_resets_path do |f| %>
+  <% f.inputs do %>
+    <%= f.input :email, :required => true %>
+  <% end %>
+  
+  <% f.buttons do %>
+    <%= f.commit_button "Send me a link to reset my password" %>
+  <% end %>
+<% end %> 

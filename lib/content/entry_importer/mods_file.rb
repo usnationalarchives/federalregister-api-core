@@ -14,7 +14,10 @@ class Content::EntryImporter::ModsFile
   end
 
   def file_path
-    "#{Rails.root}/data/mods/#{@date.to_s(:iso)}.xml"
+    if @date.class != Date
+      raise @date.inspect
+    end
+    "#{Rails.root}/data/mods/#{@date.to_s(:db)}.xml"
   end
 
   def document
@@ -30,6 +33,11 @@ class Content::EntryImporter::ModsFile
     doc.root
   end
   memoize :document
+  
+  def volume
+    document.css('volume').first.try(:content)
+  end
+  memoize :volume
   
   def find_entry_node_by_document_number(document_number)
     document.xpath("./xmlns:relatedItem[@ID='id-#{document_number}']").first

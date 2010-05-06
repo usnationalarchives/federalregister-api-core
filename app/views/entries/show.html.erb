@@ -108,8 +108,7 @@
     <dl class=''>
       <% if @entry.publication_date.present?    %><dt>Publication Date:</dt>                 <dd><%= link_to @entry.publication_date.to_formatted_s(:pretty), entries_by_date_path(@entry.publication_date) %></dd><% end %>
       <% if @entry.document_number.present?     %><dt>Document Number:</dt> <dd><%= @entry.document_number %></dd><% end %>
-      <% agency = display_agencies_for_entry(@entry) %>
-      <% if agency.present?                     %><dt>Publishing Agency:</dt><dd><%= display_agencies_for_entry(@entry)              %></dd><% end %>
+      <% if @entry.agencies.present?            %><dt>Publishing <%= @entry.agencies.size > 1 ? 'Agencies' : 'Agency' %></dt><dd><%= @entry.agencies.map{|a| link_to(a.name, agency_path(a))}.join(" :: ")%></dd><% end %>
       <% if @entry.dates.present?               %><dt>Dates:</dt>            <dd><%= text_with_links(@entry, @entry.dates)           %></dd><% end %>
       <% if @entry.effective_on.present?        %><dt>Effective Date:</dt>   <dd><%= @entry.effective_on                             %></dd><% end %>
       <% if @entry.comments_close_on.present?   %><dt>Comments Close:</dt>   <dd><%= @entry.comments_close_on                        %></dd><% end %>

@@ -11,7 +11,7 @@
 
 =end Schema Information
 
-class PlaceDetermination < ActiveRecord::Base
+class PlaceDetermination < ApplicationModel
   MIN_CONFIDENCE = 9
   default_scope :conditions => "place_determinations.confidence >= #{MIN_CONFIDENCE}"
   

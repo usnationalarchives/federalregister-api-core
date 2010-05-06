@@ -1,0 +1,58 @@
+<!doctype html> 
+<html lang="en"> 
+  <head> 
+    <meta charset="utf-8">
+    <%= stylesheet_link_tag "reset",                    :media => :screen %>
+    <%= stylesheet_link_tag "text" ,                    :media => :screen %>
+    <%= stylesheet_link_tag "960",                      :media => :screen %>
+    <%= stylesheet_link_tag "admin/formtastic",         :media => :screen %>
+    <%= stylesheet_link_tag "admin/formtastic_changes", :media => :screen %>
+    <%= stylesheet_link_tag "admin/screen",             :media => :screen %>
+    <title>FR2 Admin<%= " | #{yield :title}" if yield(:title) %></title>
+  </head>
+  <body>
+    <header>
+      <% if yield(:title)%>
+        <h1><%= yield(:title) %></h1>
+      <% end %>
+      
+      <% if current_user %>
+      <nav class="primary">
+        <ul>
+          <li><%= link_to 'Home', admin_home_path %></li>
+          <li><%= link_to 'Agency Names', admin_agency_names_path %></li>
+          <li><%= link_to 'Users', admin_users_path %></li>
+        </ul>
+      </nav>
+      
+      <nav class="utility">
+        <p>Hi, <%= current_user.first_name %>!</p>
+        <ul>
+          <li><%= link_to 'Change Password', edit_admin_user_password_path(current_user) %></li>
+          <li><%= link_to 'Logout', admin_logout_path %></li>
+        </ul>
+      </nav>
+      <% end %>
+    </header>
+    
+    <% if flash[:notice] %>
+    <div class="flash notice">
+      <%= flash[:notice]%>
+    </div>
+    <% end %>
+
+    <% if flash[:error] %>
+    <div class="flash error">
+      <%= flash[:error]%>
+    </div>
+    <% end %>
+    
+    <%= yield %>
+    <footer>
+      
+    </footer>
+    <%= jquery_include_tag %>
+    <%= jquery_ui_include_tag %>
+    <%= yield :javascripts %>
+  </body>
+</html>

@@ -13,6 +13,6 @@
 
 =end Schema Information
 
-class ReferencedDate < ActiveRecord::Base
+class ReferencedDate < ApplicationModel
   belongs_to :entry
 end

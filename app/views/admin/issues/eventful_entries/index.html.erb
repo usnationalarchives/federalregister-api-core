@@ -1,0 +1,16 @@
+<% title 'Entries with events' %>
+
+<table>
+  <thead>
+    <tr>
+      <th>Title</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @entries.each do |entry| %>
+      <tr>
+        <td><%= link_to entry.title, admin_issue_eventful_entry_path(@publication_date.to_s(:iso), entry.document_number) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

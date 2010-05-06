@@ -1,12 +1,7 @@
 namespace :data do
   task :daily => %w(
-    data:download:entries
-    data:import:entries
-    data:import:bulkdata
-    data:download:full_text
-    data:extract:agencies
-    data:extract:places
-    data:extract:regulationsdotgov_id
+    data:daily:quick
+    
     data:cache:update:all
     data:cache:expire
     tmp:cache:clear
@@ -16,11 +11,9 @@ namespace :data do
   
   namespace :daily do 
     task :quick => %w(
-    data:download:entries
-    data:import:entries
+    content:entries:import
     data:import:bulkdata
     data:download:full_text
-    data:extract:agencies
     data:extract:places
     data:extract:regulationsdotgov_id
     )

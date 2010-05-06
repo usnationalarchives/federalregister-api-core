@@ -10,7 +10,7 @@
 
 =end Schema Information
 
-class TopicGroup < ActiveRecord::Base
+class TopicGroup < ApplicationModel
   set_primary_key :group_name
   
   serializable_column :related_topics_cache, :related_agencies_cache
