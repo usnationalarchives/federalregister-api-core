@@ -1,23 +1,34 @@
 <!doctype html> 
 <html lang="en"> 
-  <head> 
-    <meta charset="utf-8">
-    <%= stylesheet_link_tag "reset",                    :media => :screen %>
-    <%= stylesheet_link_tag "text" ,                    :media => :screen %>
-    <%= stylesheet_link_tag "960",                      :media => :screen %>
-    <%= stylesheet_link_tag "admin/formtastic",         :media => :screen %>
-    <%= stylesheet_link_tag "admin/formtastic_changes", :media => :screen %>
-    <%= stylesheet_link_tag "admin/screen",             :media => :screen %>
-    <title>FR2 Admin<%= " | #{yield :title}" if yield(:title) %></title>
-  </head>
-  <body>
+<head> 
+  <title>FR2 Admin<%= " | #{yield :title}" if yield(:title) %></title>
+  <meta charset="utf-8">
+  
+  <%= stylesheet_link_tag "reset",                    :media => :screen %>
+  <%= stylesheet_link_tag "text" ,                    :media => :screen %>
+  <%= stylesheet_link_tag "admin/grid",               :media => :screen %>
+  <%= stylesheet_link_tag "admin/formtastic",         :media => :screen %>
+  <%= stylesheet_link_tag "admin/formtastic_changes", :media => :screen %>
+  <%= stylesheet_link_tag "admin/screen",             :media => :screen %>
+  
+  <!-- <script type="text/javascript" src="http://use.typekit.com/qbb7wou.js"></script>
+  <script type="text/javascript">try{Typekit.load();}catch(e){}</script> -->
+  
+</head>
+<body>
+    
+  <!-- WRAPPER -->
+  <div id="wrapper" class="container_12">
+    
+    <!-- HEADER -->
     <header>
-      <% if yield(:title)%>
-        <h1><%= yield(:title) %></h1>
-      <% end %>
+      <hgroup>
+        <h1><a href="/" title="govpulse home">The Federal Register</a></h1>
+        <h2>Newspaper of the United States Government</h2>
+      </hgroup>
       
       <% if current_user %>
-      <nav class="primary">
+      <nav class="primary grid_12">
         <ul>
           <li><%= link_to 'Home', admin_home_path %></li>
           <li><%= link_to 'Agency Names', admin_agency_names_path %></li>
@@ -35,6 +46,8 @@
       <% end %>
     </header>
     
+    <hr />
+    
     <% if flash[:notice] %>
     <div class="flash notice">
       <%= flash[:notice]%>
@@ -47,6 +60,10 @@
     </div>
     <% end %>
     
+     <% if yield(:title)%>
+        <h1 class="grid_11 push_1"><%= yield(:title) %></h1>
+      <% end %>
+    
     <%= yield %>
     <footer>
       
@@ -54,5 +71,11 @@
     <%= jquery_include_tag %>
     <%= jquery_ui_include_tag %>
     <%= yield :javascripts %>
-  </body>
+    
+    <script>
+      (function(){document.body.appendChild(document.createElement('script')).src='http://gridder.andreehansson.se/releases/latest/960.gridder.js';})();
+    </script>
+  
+  </div> <!-- wrapper end -->
+</body>
 </html>

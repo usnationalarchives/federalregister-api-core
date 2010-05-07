@@ -12,3 +12,23 @@ The following style may be *conditionally* included for improved support on olde
 form.formtastic fieldset ol li fieldset legend { margin-left: -6px;}
 
 --------------------------------------------------------------------------------------------------*/
+@import "grid";
+
+form.formtastic fieldset {
+  clear:both;
+  display: block;
+}
+
+form.formtastic fieldset.buttons {
+  padding:0;
+  margin: 10px 0;
+}
+
+form.formtastic fieldset.inputs ol, form fieldset.buttons ol {
+  .grid_12;
+  .push_1;
+}
+
+form.formtastic fieldset.inputs li, form.formtastic fieldset.buttons li {
+  display: block;
+}
