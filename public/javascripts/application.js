@@ -1,38 +1,5 @@
 $(document).ready(function() {
 
-  //initialize scrollable
-  $('#ticker').each(function(){
-    $.ajax({
-      url: "/entries/current-headlines",
-      success: function(html){
-        var index = $.cookie('ticker_index') || 0;
-        $('#ticker').replaceWith(html);
-        var ticker = $("div.daily");
-    
-        //initialize scrollable
-        var scrollable = ticker.scrollable({ 
-           size: 1,
-           interval: 4000,   // items are auto-scrolled in 4 secnod interval 
-           horizontal: true,
-           loop: true,       // when last item is encountered go back to first item
-           speed: 600,       // make animation a little slower than the default
-           clickable: false,
-           api : true,
-           keyboard: false
-        });
-        scrollable.setPage(index,0);
-      
-        //init the tooltips for the now loaded list of items
-        loadToolTips();
-        
-        $(scrollable).bind('onSeek', function(event) {
-          $.cookie('ticker_index', scrollable.getIndex());
-        });
-      
-      }
-    });
-  });
-  
 
   //init tooltips for short citation list
   $(".citation a.tip").each(function(){
