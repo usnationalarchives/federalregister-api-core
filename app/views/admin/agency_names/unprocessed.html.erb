@@ -1,11 +1,22 @@
-<% title 'Unprocessed Agency Names' %>
+<% title 'Agency Name Assignment' %>
+
+<%= render :partial => 'agency_names_nav' %>
 
 <% if @unprocessed_agency_names.present? %>
-  <ul>
-  <% @unprocessed_agency_names.each do |agency_name| %>
-    <li><%= link_to agency_name.name, edit_admin_agency_name_path(agency_name) %></li>
-  <% end %>
-  </ul>
+  <table class='grid_10 push_1'>
+    <thead>
+      <tr>
+        <th class='grid_5'>Agency Name</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @unprocessed_agency_names.each do |agency_name| %>
+        <tr>
+          <td><%= link_to agency_name.name, edit_admin_agency_name_path(agency_name) %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
 <% else %>
-  <h3>No unprocessed agency names</h3>
+  <p>No unprocessed agency names</p>
 <% end %>
