@@ -6,6 +6,11 @@ module ApplicationHelper
     content_for(name, content, &block)
   end
   
+  def super_title(text, options = {})
+    options.symbolize_keys!
+    set_content_for :super_title, text
+  end
+  
   def title(text, options = {})
     options.symbolize_keys!
     
@@ -13,6 +18,12 @@ module ApplicationHelper
     unless options[:body] == false
       set_content_for :precolumn, content_tag(:h1, text)
     end
+  end
+  
+  def nav_secondary(text, options = {})
+    options.symbolize_keys!
+    
+    set_content_for :nav_secondary, text
   end
   
   def feed_autodiscovery(feed_url, title = 'RSS')

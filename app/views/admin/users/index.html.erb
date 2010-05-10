@@ -1,8 +1,9 @@
-<% title 'Users' %>
+<% super_title 'Users' %>
+<% title 'All' %>
 
-<%= link_to "New User", new_admin_user_path %>
+<% nav_secondary(render :partial => 'nav') %>
 
-<table>
+<table class='grid_10 push_2 sortable' summary="All Users">
   <thead>
     <tr>
       <th>First Name</th>
@@ -14,7 +15,7 @@
   </thead>
   <tbody>
     <% @users.each do |user| %>
-      <tr>
+      <tr class="<%= cycle("", "odd") %>">
         <td><%= user.first_name %></td>
         <td><%= user.last_name %></td>
         <td><%= user.email %></td>
