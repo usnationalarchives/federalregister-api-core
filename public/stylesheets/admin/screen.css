@@ -128,7 +128,7 @@ header {
 }
 header hgroup {
   float: left;
-  margin: 30px 0 0 15px;
+  margin: 50px 0 50px 15px;
 }
 header h1 {
   font-size: 3.15em;
@@ -153,17 +153,13 @@ header h2 {
   margin-left: 10px;
 }
 #user_session_remember_me_input { width: 400px; }
-nav.primary ul { list-style: none; }
-nav.utility ul { list-style: none; }
-nav.primary ul li { display: inline-block; }
-nav.utility ul li { display: inline-block; }
-nav.utility {
-  position: absolute;
-  top: 15px;
-  left: 833px;
-  width: 300px;
-}
-nav.utility p {
-  float: left;
-  display: inline;
+dt.highlighted { color: gray; }
+div#content {
+  width: 960px;
+  border: thin solid #cccccc;
+  border-top: none;
+  top: -20px;
+  height: 100%;
+  min-height: 500px;
+  margin: 0;
 }
