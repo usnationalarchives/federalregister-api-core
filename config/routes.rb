@@ -13,7 +13,7 @@ ActionController::Routing::Routes.draw do |map|
       issue.resources :eventful_entries, :controller => "issues/eventful_entries" do |entry|
         entry.resources :events, :controler => "issues/eventful_entries/events"
       end
-      issue.resources :sections, :controller => "issues/sections" do |section|
+      issue.resources :sections, :controller => "issues/sections", :member => {:preview => :get} do |section|
         section.resources :highlights, :controller => "issues/sections/highlights"
       end
     end
