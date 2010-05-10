@@ -129,7 +129,7 @@ class Entry < ApplicationModel
   
   named_scope :significant, :joins => :current_regulatory_plan, :conditions => { :regulatory_plans => {:priority_category => RegulatoryPlan::SIGNIFICANT_PRIORITY_CATEGORIES} }
   
-  validates_length_of :curated_abstract, :maximum => 255, :allow_blank => true
+  validate :curated_attributes_are_not_too_long
   
   def self.published_on(publication_date)
     scoped(:conditions => {:entries => {:publication_date => publication_date}})
@@ -340,4 +340,13 @@ class Entry < ApplicationModel
   def set_document_file_path
     self.document_file_path = document_number.sub(/-/,'').scan(/.{0,3}/).reject(&:blank?).join('/') if document_number.present?
   end
+  
+  def curated_attributes_are_not_too_long
+    [:curated_title, :curated_abstract].each do |attribute|
+      if self[attribute].present? && self[attribute].size > 255
+        errors.add(attribute, "exceeds 255 characters")
+      end
+    end
+  end
+  
 end
