@@ -1,17 +1,18 @@
-<% title 'Agency Name Assignment' %>
+<% super_title 'Agency Name Assignment' %>
+<% title 'Unprocessed Agencies' %>
 
-<%= render :partial => 'agency_names_nav' %>
+<% nav_secondary(render :partial => 'nav') %>
 
 <% if @unprocessed_agency_names.present? %>
-  <table class='grid_10 push_1'>
+  <table class='grid_10 push_2 sortable'>
     <thead>
       <tr>
-        <th class='grid_5'>Agency Name</th>
+        <th>Agency Name</th>
       </tr>
     </thead>
     <tbody>
       <% @unprocessed_agency_names.each do |agency_name| %>
-        <tr>
+        <tr class="<%= cycle("even", "odd") %>">
           <td><%= link_to agency_name.name, edit_admin_agency_name_path(agency_name) %></td>
         </tr>
       <% end %>

@@ -1,9 +1,9 @@
-<% title 'Agency Name Assignment' %>
-<span class='clear'></span>
+<% super_title 'Agency Name Assignment' %>
+<% title 'All Agencies' %>
 
-<%= render :partial => 'agency_names_nav' %>
+<% nav_secondary(render :partial => 'nav') %>
 
-<table class='grid_10 push_1'>
+<table class='grid_10 push_2 sortable'>
   <thead>
     <tr>
       <th>Agency Name</th>
@@ -14,7 +14,7 @@
   </thead>
   <tbody>
     <% @agency_names.each do |agency_name| %>
-      <tr>
+      <tr class="<%= cycle("even", "odd") %>">
         <td><%= link_to agency_name.name, edit_admin_agency_name_path(agency_name) %></td>
         <td><%= agency_name.unprocessed? ? 'NO' : 'yes' %></td>
         <td><%= agency_name.agency.try(:name) %></td>
