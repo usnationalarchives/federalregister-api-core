@@ -25,6 +25,12 @@ namespace :content do
       task :agencies => :environment do
         entry_importer(:agency_name_assignments)
       end
+      
+      desc "Import graphics"
+      task :graphics => :environment do
+        date = ENV['DATE_TO_IMPORT'] || Date.today
+        Content::GraphicsExtractor.new(date).perform
+      end
     end
   end
 end
