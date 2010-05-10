@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100504141414) do
+ActiveRecord::Schema.define(:version => 20100510144531) do
 
   create_table "agencies", :force => true do |t|
     t.integer  "parent_id"
@@ -156,6 +156,11 @@ ActiveRecord::Schema.define(:version => 20100504141414) do
     t.string   "photo_content_type"
     t.integer  "photo_file_size"
     t.datetime "photo_updated_at"
+    t.string   "url"
+    t.integer  "crop_width"
+    t.integer  "crop_height"
+    t.integer  "crop_x"
+    t.integer  "crop_y"
   end
 
   create_table "place_determinations", :force => true do |t|

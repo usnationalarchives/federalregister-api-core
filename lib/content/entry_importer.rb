@@ -3,6 +3,8 @@ module Content
     include Content::EntryImporter::BasicData
     include Content::EntryImporter::Agencies
     include Content::EntryImporter::CFR
+    include Content::EntryImporter::FullXml
+    include Content::EntryImporter::LedePhotoCandidates
     include Content::EntryImporter::PageNumber
     include Content::EntryImporter::ReferencedDates
     include Content::EntryImporter::Sections

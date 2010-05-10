@@ -42,6 +42,7 @@
 
 =end Schema Information
 
+require 'flickr'
 class Entry < ApplicationModel
   
   DESCRIPTIONS = {
@@ -110,6 +111,8 @@ class Entry < ApplicationModel
   has_many :section_highlights
   belongs_to :lede_photo
   
+  accepts_nested_attributes_for :lede_photo
+  
   file_attribute(:full_xml)  {"#{RAILS_ROOT}/data/xml/#{document_file_path}.xml"}
   file_attribute(:full_text) {"#{RAILS_ROOT}/data/text/#{document_file_path}.txt"}
   
@@ -125,6 +128,8 @@ class Entry < ApplicationModel
            :conditions => {:regulatory_plans => {:issue => RegulatoryPlan.current_issue} }
   
   named_scope :significant, :joins => :current_regulatory_plan, :conditions => { :regulatory_plans => {:priority_category => RegulatoryPlan::SIGNIFICANT_PRIORITY_CATEGORIES} }
+  
+  validates_length_of :curated_abstract, :maximum => 255, :allow_blank => true
   
   def self.published_on(publication_date)
     scoped(:conditions => {:entries => {:publication_date => publication_date}})
@@ -324,6 +329,10 @@ class Entry < ApplicationModel
     self.agency_assignments = agency_name_assignments.map do |agency_name_assignment|
       agency_name_assignment.create_agency_assignment
     end
+  end
+  
+  def lede_photo_candidates
+    self[:lede_photo_candidates] ? YAML::load(self[:lede_photo_candidates]) : nil
   end
   
   private

@@ -10,6 +10,7 @@
   <%= stylesheet_link_tag "admin/formtastic",         :media => :screen %>
   <%= stylesheet_link_tag "admin/formtastic_changes", :media => :screen %>
   <%= stylesheet_link_tag "admin/screen",             :media => :screen %>
+  <%= stylesheet_link_tag "admin/jquery.Jcrop.css",   :media => :screen %>
   
   <!-- <script type="text/javascript" src="http://use.typekit.com/qbb7wou.js"></script>
   <script type="text/javascript">try{Typekit.load();}catch(e){}</script> -->
@@ -72,10 +73,11 @@
     <%= jquery_ui_include_tag %>
     <%= yield :javascripts %>
     
+    <!-- >
     <script>
       (function(){document.body.appendChild(document.createElement('script')).src='http://gridder.andreehansson.se/releases/latest/960.gridder.js';})();
     </script>
-  
+    -->
   </div> <!-- wrapper end -->
 </body>
 </html>

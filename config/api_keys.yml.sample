@@ -3,3 +3,6 @@ yahoo_placemaker: your-yahoo-placemaker-api-key
 cloudmade: your-cloudmake-api-key
 hoptoad: your-hoptoad-api-key
 sunlight: your-sunlight-api-key
+open_calais: your-open-calais-api-key
+flickr: your-flickr-api-key
+flickr_secret: your-flickr-secret
