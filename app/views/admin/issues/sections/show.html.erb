@@ -4,10 +4,12 @@
 
 <% nav_secondary(render :partial => 'nav', :locals => {:sections => @sections, :publication_date => @publication_date}) %>
 
+<%= link_to 'Preview', preview_admin_issue_section_path(@publication_date.to_s(:db), @section) %>
+
 <h3 class='grid_10'>Highlighted Entries</h3>
 
 <ul id="highlighted" class='grid_10'>
-<%= render :partial => "highlighted_entry", :collection => @highlighted_entries %>
+  <%= render :partial => "highlighted_entry", :collection => @highlighted_entries %>
 </ul>
 
 
