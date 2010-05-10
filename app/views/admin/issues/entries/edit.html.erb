@@ -65,11 +65,11 @@
   <%= hidden_field_tag :redirect_to, params[:redirect_to] || request.referer %>
   
   <% f.fields_for :lede_photo_attributes do |lede_photo| %>
-    <%= lede_photo.text_field :url %>
-    <%= lede_photo.text_field :crop_x %>
-    <%= lede_photo.text_field :crop_y %>
-    <%= lede_photo.text_field :crop_width %>
-    <%= lede_photo.text_field :crop_height %>
+    <%= lede_photo.hidden_field :url %>
+    <%= lede_photo.hidden_field :crop_x %>
+    <%= lede_photo.hidden_field :crop_y %>
+    <%= lede_photo.hidden_field :crop_width %>
+    <%= lede_photo.hidden_field :crop_height %>
   <% end %>
   
   <% f.inputs do %>
