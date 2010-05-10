@@ -1,65 +1,19 @@
+<% super_title 'Sections' %>
 <% title @section.name %>
+<% add_javascript :src => 'admin/issues_sections_highlights' %>
 
-<% add_javascript do %>
-<script>
-$(document).ready(function(){
-  var base_url = window.location;
-  $('article:not(.highlighted)').live('click', function(){
-    var entry = $(this);
-    $.ajax({
-      url: base_url + '/highlights',
-      type: 'POST',
-      data: "section_highlight[entry_id]=" + $(this).attr('data-entry-id'),
-      success: function(response) {
-        entry.addClass('highlighted');
-      }
-    })
-  });
-  $("ul#highlighted .remove").live('click', function() {
-    var item = $(this).parent();
-    var entry_id = item.attr('data-entry-id');
-    $.ajax({
-      url: base_url + '/highlights/' + entry_id,
-      type: 'DELETE',
-      data: '',
-      success: function() {
-        item.remove();
-        $('article[data-entry-id=' + entry_id + ']').removeClass('highlighted');
-      }
-    });
-  });
-  $("ul#highlighted").sortable({
-    stop: function(event, ui) {
-      var entry_id = ui.item.attr('data-entry-id');
-      var position = ui.item.prevAll('li').size() + 1;
-      $.ajax({
-        url: base_url + '/highlights/' + entry_id,
-        type: 'PUT',
-        data: "section_highlight[new_position]=" + position,
-        success: function() {
-          entry.addClass('highlighted');
-        }
-      })
-    }
-  });
-});
-</script>
-<style>
-article.highlighted {
-  color: gray;
-}
-</style>
-<% end %>
+<% nav_secondary(render :partial => 'nav', :locals => {:sections => @sections, :publication_date => @publication_date}) %>
 
-<h2>Highlighted Entries</h2>
-<ul id="highlighted">
+<h3 class='grid_10'>Highlighted Entries</h3>
+
+<ul id="highlighted" class='grid_10'>
 <%= render :partial => "highlighted_entry", :collection => @highlighted_entries %>
 </ul>
 
 
-<h2>Entries in this section on <%= @publication_date %></h2>
+<h3 class='grid_10 push_2'>Entries in this section on <%= @publication_date %></h3>
 
-<div id="entries">
+<div class='grid_10 push_2'>
 <% @section.entries.published_on(@publication_date).each do |entry| %>
   <article data-entry-id="<%= entry.id %>" class="<%= 'highlighted' if @highlighted_entries.include?(entry) %>">
     <h1><%= entry.curated_title %></h1>

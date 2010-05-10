@@ -136,7 +136,7 @@ form.formtastic fieldset.inputs ol {
   position: relative;
   margin-left: 10px;
   margin-right: 10px;
-  left: 80px;
+  left: 160px;
 }
 form fieldset.buttons ol {
   display: inline;
@@ -144,7 +144,7 @@ form fieldset.buttons ol {
   position: relative;
   margin-left: 10px;
   margin-right: 10px;
-  left: 80px;
+  left: 160px;
 }
 form.formtastic fieldset.inputs li { display: block; }
 form.formtastic fieldset.buttons li { display: block; }

@@ -7,13 +7,13 @@
   <%= stylesheet_link_tag "reset",                    :media => :screen %>
   <%= stylesheet_link_tag "text" ,                    :media => :screen %>
   <%= stylesheet_link_tag "admin/grid",               :media => :screen %>
+  <%= stylesheet_link_tag "admin/buttons",            :media => :screen %>
   <%= stylesheet_link_tag "admin/formtastic",         :media => :screen %>
   <%= stylesheet_link_tag "admin/formtastic_changes", :media => :screen %>
   <%= stylesheet_link_tag "admin/screen",             :media => :screen %>
   <%= stylesheet_link_tag "admin/jquery.Jcrop.css",   :media => :screen %>
-  
-  <!-- <script type="text/javascript" src="http://use.typekit.com/qbb7wou.js"></script>
-  <script type="text/javascript">try{Typekit.load();}catch(e){}</script> -->
+  <%= stylesheet_link_tag "admin/navigation",         :media => :screen %>
+  <%= stylesheet_link_tag "admin/tablesorter",        :media => :screen %>
   
 </head>
 <body>
@@ -24,60 +24,79 @@
     <!-- HEADER -->
     <header>
       <hgroup>
-        <h1><a href="/" title="govpulse home">The Federal Register</a></h1>
-        <h2>Newspaper of the United States Government</h2>
+        <h1><a href="/" title="govpulse home">Federal Register :: Admin</a></h1>
       </hgroup>
       
       <% if current_user %>
       <nav class="primary grid_12">
         <ul>
-          <li><%= link_to 'Home', admin_home_path %></li>
-          <li><%= link_to 'Agency Names', admin_agency_names_path %></li>
-          <li><%= link_to 'Users', admin_users_path %></li>
+          <li><%= link_to 'Home', admin_home_path, :class => "button tan home" %></li>
+          <li><%= link_to 'Agency Names', admin_agency_names_path, :class => "button tan" %></li>
+          <li><%= link_to 'Users', admin_users_path, :class => "button tan" %></li>
+          <li><%= link_to 'Sections', admin_issue_sections_path(Entry.last.publication_date.to_s(:mdy_dash)), :class => "button tan" %></li>
         </ul>
       </nav>
       
-      <nav class="utility">
+      <nav class="utility grid_12">
         <p>Hi, <%= current_user.first_name %>!</p>
         <ul>
-          <li><%= link_to 'Change Password', edit_admin_user_password_path(current_user) %></li>
-          <li><%= link_to 'Logout', admin_logout_path %></li>
+          <li><%= link_to 'Change Password', edit_admin_user_password_path(current_user), :class => "button small tan" %></li>
+          <li><%= link_to 'Logout', admin_logout_path, :class => "button small tan" %></li>
         </ul>
       </nav>
       <% end %>
     </header>
     
-    <hr />
-    
-    <% if flash[:notice] %>
-    <div class="flash notice">
-      <%= flash[:notice]%>
-    </div>
-    <% end %>
-
-    <% if flash[:error] %>
-    <div class="flash error">
-      <%= flash[:error]%>
-    </div>
-    <% end %>
-    
-     <% if yield(:title)%>
-        <h1 class="grid_11 push_1"><%= yield(:title) %></h1>
+    <div id='content' class="grid_12">
+      <% if yield(:super_title) %>
+        <h1 class="grid_12"><%= yield(:super_title) %></h1>
       <% end %>
     
-    <%= yield %>
+      <% if yield(:nav_secondary) %>
+        <nav class="secondary grid_2">
+          <ul>
+            <%= yield(:nav_secondary) %>
+          </ul>
+        </nav>
+      <% end %>
+    
+      <% if flash[:notice] %>
+      <div class="flash notice grid_10 push_1">
+        <%= flash[:notice]%>
+      </div>
+      <% end %>
+
+      <% if flash[:error] %>
+      <div class="flash error grid_10 push_1">
+        <%= flash[:error]%>
+      </div>
+      <% end %>
+    
+      <% if yield(:title)%>
+       <h1 class="grid_9"><%= yield(:title) %></h1>
+      <% end %>
+    
+      <%= yield %>
+      
+    </div> <!-- content end -->
+    
     <footer>
       
     </footer>
+    
     <%= jquery_include_tag %>
     <%= jquery_ui_include_tag %>
+    <%= javascript_include_tag 'jquery.tablesorter' %>
+    <%= javascript_include_tag 'admin/admin' %>
+    
     <%= yield :javascripts %>
     
-    <!-- >
-    <script>
+    <!-- <script>
       (function(){document.body.appendChild(document.createElement('script')).src='http://gridder.andreehansson.se/releases/latest/960.gridder.js';})();
-    </script>
-    -->
+    </script> -->
+    
+    <script type="text/javascript" src="http://use.typekit.com/qbb7wou.js"></script>
+    <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
   </div> <!-- wrapper end -->
 </body>
 </html>
