@@ -1,4 +1,4 @@
 <article id="primary">
-  <img src="" />
+  <%= image_tag(primary_entry.lede_photo.photo.url(:large)) if primary_entry.lede_photo %>
   <h1><%= primary_entry.curated_title %></h1>
 </article>

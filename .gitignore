@@ -8,5 +8,6 @@
 /config/development.sphinx.conf
 /config/ec2_config.yml
 /public/sitemap*
+/public/system
 /db/sphinx/
 .DS_Store

@@ -1,7 +1,77 @@
 <% title 'Editing Entry' %>
 
+<% add_javascript do %>
+  <style>
+    #preview {width:100px;height:100px;overflow:hidden;margin-left:5px; }
+  </style>
+  
+  <%= javascript_include_tag 'jquery.Jcrop.js' %>
+  <script>
+  $(document).ready(function(){
+    function showPreview(coords) {
+      var rx = 100 / coords.w;
+      var ry = 100 / coords.h;
+
+      $('#preview img').css({
+        width: Math.round(rx * 500) + 'px',
+        height: Math.round(ry * 370) + 'px',
+        marginLeft: '-' + Math.round(rx * coords.x) + 'px',
+        marginTop: '-' + Math.round(ry * coords.y) + 'px'
+      });
+    }
+    
+    $('#candidates li img').live('click', function() {
+      var src = $(this).attr('src').replace(/_m\./, '.');
+      $('#entry_lede_photo_attributes_url').val(src);
+      $('#preview').val(src);
+      $('#crop-box').html('<img src="' + src + '" />')
+      $('#preview').html('<img src="' + src + '" />');
+      
+      $('#crop-box img').Jcrop({
+        onChange: showPreview,
+        onSelect: function(c){
+          showPreview(c);
+          $('#entry_lede_photo_attributes_crop_x').val(c.x);
+          $('#entry_lede_photo_attributes_crop_y').val(c.y);
+          $('#entry_lede_photo_attributes_crop_width').val(c.w);
+          $('#entry_lede_photo_attributes_crop_height').val(c.h);
+        },
+        aspectRatio: 1,
+        bgColor: 'yellow',
+        bgOpacity: .8,
+      });
+    });
+  });
+  </script>
+<% end %>
+
+<div id="candidates">
+<% @entry.lede_photo_candidates.slice(0..0).each do |topic, photos| %>
+  <h2><%= topic %></h2>
+  <ul>
+  <% photos.slice(0..2).each do |photo| %>
+    <li><%= image_tag photo.url('m') %></li>
+  <% end %>
+  </ul>
+<% end %>
+</div>
+
+<div id="crop-box"></div>
+<div id="preview">
+  <%= image_tag(@entry.lede_photo.photo.url(:medium)) if @entry.lede_photo %>
+</div>
+
 <% semantic_form_for @entry, :url => admin_issue_entry_path(@publication_date.to_s(:db), @entry.document_number) do |f| %>
   <%= hidden_field_tag :redirect_to, params[:redirect_to] || request.referer %>
+  
+  <% f.fields_for :lede_photo_attributes do |lede_photo| %>
+    <%= lede_photo.text_field :url %>
+    <%= lede_photo.text_field :crop_x %>
+    <%= lede_photo.text_field :crop_y %>
+    <%= lede_photo.text_field :crop_width %>
+    <%= lede_photo.text_field :crop_height %>
+  <% end %>
+  
   <% f.inputs do %>
     <%= f.input :curated_title %>
     <%= f.input :curated_abstract, :as => :text %>
