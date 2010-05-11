@@ -28,8 +28,37 @@ namespace :content do
       
       desc "Import graphics"
       task :graphics => :environment do
-        date = ENV['DATE_TO_IMPORT'] || Date.today
-        Content::GraphicsExtractor.new(date).perform
+        # evetually logic needs to be moved into entryimporter...
+        date = ENV['DATE_TO_IMPORT']
+        
+        if date.nil?
+          dates = [Date.today]
+        elsif date == 'all'
+          dates = Entry.find_as_array(
+            :select => "distinct(publication_date) AS publication_date",
+            :order => "publication_date"
+          )
+        elsif date =~ /^>/
+          date = Date.parse(date.sub(/^>/, ''))
+          dates = Entry.find_as_array(
+            :select => "distinct(publication_date) AS publication_date",
+            :conditions => {:publication_date => date .. Date.today},
+            :order => "publication_date"
+          )
+        elsif date =~ /^\d{4}$/
+          dates = Entry.find_as_array(
+            :select => "distinct(publication_date) AS publication_date",
+            :conditions => {:publication_date => Date.parse("#{date}-01-01") .. Date.parse("#{date}-12-31")},
+            :order => "publication_date"
+          )
+        else
+          raise "INVALID FORMAT"
+        end
+        
+        dates.each do |date|
+          Content::GraphicsExtractor.new(date).perform
+        end
+        
       end
     end
   end
