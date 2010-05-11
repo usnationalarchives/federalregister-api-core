@@ -9,7 +9,7 @@ module Content
     attr_reader :date
     
     def initialize(date)
-      @date = date == String ? Date.parse(date) : date
+      @date = date.class == String ? Date.parse(date) : date
     end
     
     def perform
