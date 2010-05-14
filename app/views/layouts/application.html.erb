@@ -1,131 +1,66 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" xmlns:v="urn:schemas-microsoft-com:vml">
-
-<head>
-  <title>Federal Register<%= " | #{yield :title}" if yield(:title) %></title>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <meta name="keywords" content="government federal register executive rulings notices" />
+<!DOCTYPE html>
+  <head>
+    <title>Federal Register<%= " | #{yield :title}" if yield(:title) %></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="keywords" content="government federal register executive rulings notices" />
   
-  <%# Facebook uses these for parsing when someone adds a link  %>
-  <%= content_tag(:meta, nil, :name => 'title', :content => @entry.title) if @entry %>
-  <%= content_tag(:meta, nil, :name => 'description', :content => truncate(strip_tags(@entry.abstract), :length => 300)) if @entry %>
-  <link rel="image_src" href="http://fr2.criticaljuncture.org/images/fbdisplay.jpg" />
-  <meta name="medium" content="news" />
-  
-  <%= stylesheet_link_tag "screen",     :media => :screen %>
-  <%= stylesheet_link_tag "trifecta",   :media => :screen %>
-  <%= stylesheet_link_tag "nav",        :media => :screen %> 
-  <%= stylesheet_link_tag "ticker",     :media => :screen %>   
-  <%= stylesheet_link_tag "utility",    :media => :screen %>
-  <%= stylesheet_link_tag "form",       :media => :screen %>
-  <%= stylesheet_link_tag "modal",      :media => :screen %>
-  <%= stylesheet_link_tag "footer",     :media => :screen %>
-  <%= stylesheet_link_tag "grid",       :media => :screen %>
-  
-  <!--[if IE 6]>
-    <%= stylesheet_link_tag "ie6", :media => :screen %>
-  <![endif]-->
-  <!--[if lte IE 7]>
-    <%= stylesheet_link_tag "ie", :media => :screen %>
-  <![endif]-->  
-  
-  <%= jquery_include_tag %>
-  <%= jquery_ui_include_tag %>
-  <%= javascript_include_tag 'jquery.inlinelabel.js'      %>      
-  <%= javascript_include_tag 'jrails.js'                  %>
-  <%= javascript_include_tag 'application.js'             %>
-  <%= javascript_include_tag 'jquery.sparkline.min.js'    %>
-  <%= javascript_include_tag 'jquery.cookie.js'           %>
-  <%= javascript_include_tag 'jquery.tools.min.js'        %>
-  <%= javascript_include_tag 'jquery.qtip-1.0.0-rc3.js'   %>
-  <%= javascript_include_tag 'jquery.filter.js'           %>
-  <%= javascript_include_tag 'frontend.js'                %>
-  <%= javascript_include_tag 'jquery.toggleDisabled.js'   %>
-  <%= javascript_include_tag 'jquery.horizontalCount.js'  %>
-  <%= javascript_include_tag 'tagcloud.js'                %>
-
-  <script type="text/javascript" src="http://use.typekit.com/qbb7wou.js"></script>
-  <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
-
-  <%= yield :javascripts %>
-
-  <%= yield :feeds %>
-</head>
-<body>
-
-  <!-- WRAPPER -->
-  <div id="wrapper" class="group">
+    <%# Facebook uses these for parsing when someone adds a link  %>
+    <%= content_tag(:meta, nil, :name => 'title', :content => @entry.title) if @entry %>
+    <%= content_tag(:meta, nil, :name => 'description', :content => truncate(strip_tags(@entry.abstract), :length => 300)) if @entry %>
+    <link rel="image_src" href="http://fr2.criticaljuncture.org/images/fbdisplay.jpg" />
+    <meta name="medium" content="news" />
     
-    <!-- HEADER -->
-    <header>
+    <%= stylesheet_link_tag "reset", :media => :screen %>
+    <%= stylesheet_link_tag "grid", :media => :screen %>    
+    <%= stylesheet_link_tag "text", :media => :screen %>    
+    <%= stylesheet_link_tag "screen", :media => :screen %>
+    
+    <!--[if IE 6]>
+      <%= stylesheet_link_tag "ie6", :media => :screen %>
+    <![endif]-->
+    <!--[if lte IE 7]>
+      <%= stylesheet_link_tag "ie", :media => :screen %>
+    <![endif]-->  
+  
+    <script type="text/javascript" src="http://use.typekit.com/qbb7wou.js"></script>
+    <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+
+    <%#= yield :javascripts %>
+    <%= yield :feeds %>
+  
+  </head>
+
+  <body>
+    <header>   
+      <div id="issue_and_search_bar">
+        <div class="container_12">
+          <div id="seal"></div>
+          <p>Current Issue: May 13, 2010</p>
+          <form action="<%= entries_search_path %>" method="get">
+          </form>
+        </div> <!-- END container_12 -->
+      </div> <!-- END issue and search bar -->
       
-      <hgroup>
+      <%= render :partial => 'layouts/navigation', :locals => {:last_date => @last_date, :search_term => @search_term} %>    
+      
+      <hgroup class="container_12">
         <h1><a href="/" title="govpulse home">The Federal Register</a></h1>
         <h2>Newspaper of the United States Government</h2>
       </hgroup>
       
     </header>
     
-    <%= render :partial => 'layouts/navigation', :locals => {:last_date => @last_date, :search_term => @search_term} %>
-    <!-- HEADER end -->
-  
-    <!-- MAIN -->
-    <div id="main" class="group<%= ' cols' if yield :sidebar %>">
+    <div id="main" class="container_12">
       
-      <% unless flash[:notice].blank? %>
-        <div class="alert">
-          <div class="confirm"><%= flash[:notice] %></div>
-        </div>
-      <% end %>
-
-      <% unless flash[:error].blank? %>
-      <div class="alert">
-        <div class="error"><%= flash[:error] %></div>
-      </div>
-      <% end %>
+      <%= yield %>
     
-      <!-- content -->
-      <div class="content">
-        <% if yield :precolumn %>
-          <div class="precolumn">
-            <%= yield :precolumn %>
-          </div>
-        <% end %>
-        
-        <div class="col1 <%= yield :column_class %>">
-          <%= yield %>
-        </div>
-        
-        <% if yield :sidebar %>
-        <div class="col2 <%= yield :column_class %>">
-          <div class="sidebar">
-            <%= yield :sidebar %>
-          </div>
-        </div>
-        <% end %>
-      </div>
-      <!-- content end -->
-
-      
     </div>
-    <!-- MAIN end -->
 
-  </div>
-  <!-- WRAPPER end -->
-
-  <%= yield :widget %>
-
-  <!-- FOOTER -->
-  <div id="footer">
-    <%= render :partial => 'layouts/footer' %>
-  </div>
-  <!-- FOOTER end -->
+    <footer>
+      <%= render :partial => 'layouts/footer' %>
+    <footer>
+            
+    <%= render :partial => 'layouts/google_analytics' %>  
     
-  
-  <%= render :partial => 'layouts/google_analytics' %>  
-  <%= render :partial => 'layouts/tender_support' %>  
-
-</body>
+  </body>
 </html>

@@ -63,6 +63,9 @@ class Entry < ApplicationModel
     'UNKNOWN'  => 'Unknown'
   }
   
+  has_many :topic_name_assignments, :dependent => :destroy
+  has_many :topic_names, :through => :topic_name_assignments
+  
   has_many :topic_assignments, :dependent => :destroy
   has_many :topics, :through => :topic_assignments, :conditions => "topics.group_name != ''", :order => 'topics.name'
   
