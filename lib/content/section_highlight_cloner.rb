@@ -1,5 +1,5 @@
 module Content
-  class SectionAssignmentCloner
+  class SectionHighlightCloner
     def clone(date)
       
       if SectionHighlight.find_by_publication_date(date).nil?
