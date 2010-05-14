@@ -14,6 +14,7 @@
     <%= stylesheet_link_tag "grid", :media => :screen %>    
     <%= stylesheet_link_tag "text", :media => :screen %>    
     <%= stylesheet_link_tag "screen", :media => :screen %>
+    <%= stylesheet_link_tag "header", :media => :screen %>
     
     <!--[if IE 6]>
       <%= stylesheet_link_tag "ie6", :media => :screen %>
@@ -33,7 +34,7 @@
   <body>
     <header>   
       <div id="issue_and_search_bar">
-        <div class="container_12">
+        <div class="container">
           <div id="seal"></div>
           <p>Current Issue: May 13, 2010</p>
           <form action="<%= entries_search_path %>" method="get">
@@ -43,14 +44,14 @@
       
       <%= render :partial => 'layouts/navigation', :locals => {:last_date => @last_date, :search_term => @search_term} %>    
       
-      <hgroup class="container_12">
-        <h1><a href="/" title="govpulse home">The Federal Register</a></h1>
-        <h2>Newspaper of the United States Government</h2>
+      <hgroup class="container">
+        <h1><a href="/" title="Federal Register Home">The Federal Register</a></h1>
+        <h2>The Daily Journal of the United States Government</h2>
       </hgroup>
       
     </header>
     
-    <div id="main" class="container_12">
+    <div id="main" class="container">
       
       <%= yield %>
     

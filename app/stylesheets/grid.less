@@ -1,308 +1,125 @@
 /*
-	Variable Grid System.
-	Learn more ~ http://www.spry-soft.com/grids/
-	Based on 960 Grid System - http://960.gs/
+	960 Grid System ~ Core CSS.
+	Learn more ~ http://960.gs/
 
 	Licensed under GPL and MIT.
 */
 
-
-/* Containers
-----------------------------------------------------------------------------------------------------*/
-.container_12 {
-	margin-left: auto;
-	margin-right: auto;
+/* `Containers
+------------------------------------*/
+.container {
+	margin: 0 auto;
 	width: 960px;
 }
 
-/* Grid >> Global
-----------------------------------------------------------------------------------------------------*/
-
-.grid_1,
-.grid_2,
-.grid_3,
-.grid_4,
-.grid_5,
-.grid_6,
-.grid_7,
-.grid_8,
-.grid_9,
-.grid_10,
-.grid_11,
-.grid_12 {
-	display:inline;
+/* `Grid >> Global
+------------------------------------*/
+.grid {
+	display: inline;
 	float: left;
 	position: relative;
 	margin-left: 10px;
 	margin-right: 10px;
 }
 
-/* Grid >> Children (Alpha ~ First, Omega ~ Last)
-----------------------------------------------------------------------------------------------------*/
-
-.alpha {
-	margin-left: 0;
-}
-
-.omega {
-	margin-right: 0;
-}
-
-/* Grid >> 12 Columns
-----------------------------------------------------------------------------------------------------*/
-
-.grid_1 {
-	width:60px;
-}
-
-.grid_2 {
-	width:140px;
-}
-
-.grid_3 {
-	width:220px;
-}
-
-.grid_4 {
-	width:300px;
-}
-
-.grid_5 {
-	width:380px;
-}
-
-.grid_6 {
-	width:460px;
-}
-
-.grid_7 {
-	width:540px;
-}
-
-.grid_8 {
-	width:620px;
-}
-
-.grid_9 {
-	width:700px;
-}
-
-.grid_10 {
-	width:780px;
-}
-
-.grid_11 {
-	width:860px;
-}
-
-.grid_12 {
-	width:940px;
-}
-
-
-
-/* Prefix Extra Space >> 12 Columns
-----------------------------------------------------------------------------------------------------*/
-
-.prefix_1 {
-	padding-left:80px;
-}
-
-.prefix_2 {
-	padding-left:160px;
-}
-
-.prefix_3 {
-	padding-left:240px;
-}
-
-.prefix_4 {
-	padding-left:320px;
-}
-
-.prefix_5 {
-	padding-left:400px;
-}
-
-.prefix_6 {
-	padding-left:480px;
-}
-
-.prefix_7 {
-	padding-left:560px;
-}
-
-.prefix_8 {
-	padding-left:640px;
-}
-
-.prefix_9 {
-	padding-left:720px;
-}
-
-.prefix_10 {
-	padding-left:800px;
-}
-
-.prefix_11 {
-	padding-left:880px;
-}
-
-
-
-/* Suffix Extra Space >> 12 Columns
-----------------------------------------------------------------------------------------------------*/
-
-.suffix_1 {
-	padding-right:80px;
-}
-
-.suffix_2 {
-	padding-right:160px;
-}
-
-.suffix_3 {
-	padding-right:240px;
-}
-
-.suffix_4 {
-	padding-right:320px;
-}
-
-.suffix_5 {
-	padding-right:400px;
-}
-
-.suffix_6 {
-	padding-right:480px;
-}
-
-.suffix_7 {
-	padding-right:560px;
-}
-
-.suffix_8 {
-	padding-right:640px;
-}
-
-.suffix_9 {
-	padding-right:720px;
-}
-
-.suffix_10 {
-	padding-right:800px;
-}
-
-.suffix_11 {
-	padding-right:880px;
-}
-
-
-
-/* Push Space >> 12 Columns
-----------------------------------------------------------------------------------------------------*/
-
-.push_0 {
-  left:0px;
-}
-.push_1 {
-	left:80px;
-}
-
-.push_2 {
-	left:160px;
-}
-
-.push_3 {
-	left:240px;
-}
-
-.push_4 {
-	left:320px;
-}
-
-.push_5 {
-	left:400px;
-}
-
-.push_6 {
-	left:480px;
-}
-
-.push_7 {
-	left:560px;
-}
-
-.push_8 {
-	left:640px;
-}
-
-.push_9 {
-	left:720px;
-}
-
-.push_10 {
-	left:800px;
-}
-
-.push_11 {
-	left:880px;
-}
-
-
-
-/* Pull Space >> 12 Columns
-----------------------------------------------------------------------------------------------------*/
-
-.pull_1 {
-	left:-80px;
-}
-
-.pull_2 {
-	left:-160px;
-}
-
-.pull_3 {
-	left:-240px;
-}
-
-.pull_4 {
-	left:-320px;
-}
-
-.pull_5 {
-	left:-400px;
-}
-
-.pull_6 {
-	left:-480px;
-}
-
-.pull_7 {
-	left:-560px;
-}
-
-.pull_8 {
-	left:-640px;
-}
-
-.pull_9 {
-	left:-720px;
-}
-
-.pull_10 {
-	left:-800px;
-}
-
-.pull_11 {
-	left:-880px;
-}
-
-/* Clear Floated Elements
-----------------------------------------------------------------------------------------------------*/
-
-/* http://sonspring.com/journal/clearing-floats */
-
+/* `Children
+------------------------------------*/
+.alpha { margin-left: 0;  }
+.omega { margin-right: 0; }
+
+/* `Grid
+------------------------------------*/
+.grid_1  { .grid; width: 40px;  }
+.grid_2  { .grid; width: 100px; }
+.grid_3  { .grid; width: 160px; }
+.grid_4  { .grid; width: 220px; }
+.grid_5  { .grid; width: 280px; }
+.grid_6  { .grid; width: 340px; }
+.grid_7  { .grid; width: 400px; }
+.grid_8  { .grid; width: 460px; }
+.grid_9  { .grid; width: 520px; }
+.grid_10 { .grid; width: 580px; }
+.grid_11 { .grid; width: 640px; }
+.grid_12 { .grid; width: 700px; }
+.grid_13 { .grid; width: 760px; }
+.grid_14 { .grid; width: 820px; }
+.grid_15 { .grid; width: 880px; }
+.grid_16 { .grid; width: 940px; }
+
+/* `Prefix
+------------------------------------*/
+.prefix_1  { padding-left: 60px;  }
+.prefix_2  { padding-left: 120px; }
+.prefix_3  { padding-left: 180px; }
+.prefix_4  { padding-left: 240px; }
+.prefix_5  { padding-left: 300px; }
+.prefix_6  { padding-left: 360px; }
+.prefix_7  { padding-left: 420px; }
+.prefix_8  { padding-left: 480px; }
+.prefix_9  { padding-left: 540px; }
+.prefix_10 { padding-left: 600px; }
+.prefix_11 { padding-left: 660px; }
+.prefix_12 { padding-left: 720px; }
+.prefix_13 { padding-left: 780px; }
+.prefix_14 { padding-left: 840px; }
+.prefix_15 { padding-left: 900px; }
+
+/* `Suffix
+------------------------------------*/
+.suffix_1  { padding-right: 60px;  }
+.suffix_2  { padding-right: 120px; }
+.suffix_3  { padding-right: 180px; }
+.suffix_4  { padding-right: 240px; }
+.suffix_5  { padding-right: 300px; }
+.suffix_6  { padding-right: 360px; }
+.suffix_7  { padding-right: 420px; }
+.suffix_8  { padding-right: 480px; }
+.suffix_9  { padding-right: 540px; }
+.suffix_10 { padding-right: 600px; }
+.suffix_11 { padding-right: 660px; }
+.suffix_12 { padding-right: 720px; }
+.suffix_13 { padding-right: 780px; }
+.suffix_14 { padding-right: 840px; }
+.suffix_15 { padding-right: 900px; }
+
+/* `Push
+------------------------------------*/
+.push_1  { left: 60px;  }
+.push_2  { left: 120px; }
+.push_3  { left: 180px; }
+.push_4  { left: 240px; }
+.push_5  { left: 300px; }
+.push_6  { left: 360px; }
+.push_7  { left: 420px; }
+.push_8  { left: 480px; }
+.push_9  { left: 540px; }
+.push_10 { left: 600px; }
+.push_11 { left: 660px; }
+.push_12 { left: 720px; }
+.push_13 { left: 780px; }
+.push_14 { left: 840px; }
+.push_15 { left: 900px; }
+
+/* `Pull
+------------------------------------*/
+.pull_1  { left: -60px;  }
+.pull_2  { left: -120px; }
+.pull_3  { left: -180px; }
+.pull_4  { left: -240px; }
+.pull_5  { left: -300px; }
+.pull_6  { left: -360px; }
+.pull_7  { left: -420px; }
+.pull_8  { left: -480px; }
+.pull_9  { left: -540px; }
+.pull_10 { left: -600px; }
+.pull_11 { left: -660px; }
+.pull_12 { left: -720px; }
+.pull_13 { left: -780px; }
+.pull_14 { left: -840px; }
+.pull_15 { left: -900px; }
+
+/* `Clear
+------------------------------------*/
 .clear {
 	clear: both;
 	display: block;
@@ -310,29 +127,4 @@
 	visibility: hidden;
 	width: 0;
 	height: 0;
-}
-
-/* http://perishablepress.com/press/2008/02/05/lessons-learned-concerning-the-clearfix-css-hack */
-
-.clearfix:after {
-	clear: both;
-	content: ' ';
-	display: block;
-	font-size: 0;
-	line-height: 0;
-	visibility: hidden;
-	width: 0;
-	height: 0;
-}
-
-.clearfix {
-	display: inline-block;
-}
-
-* html .clearfix {
-	height: 1%;
-}
-
-.clearfix {
-	display: block;
 }
