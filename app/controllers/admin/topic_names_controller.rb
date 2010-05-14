@@ -10,7 +10,7 @@ class Admin::TopicNamesController < AdminController
   end
   
   def unprocessed
-    @unprocessed_topic_names = TopicName.unprocessed
+    @topic_names = TopicName.unprocessed.paginate(:page => params[:page])
   end
   
   def edit
@@ -19,24 +19,16 @@ class Admin::TopicNamesController < AdminController
   
   def update
     @topic_name = TopicName.find(params[:id])
-    
-    # agency_id = params[:topic_name][:agency_id]
-    # 
-    # if agency_id.present?
-    #   @topic_name.agency_assigned = true
-    #   @topic_name.agency_id = agency_id
-    # else
-    #   @topic_name.agency_assigned = false
-    # end
-    
-    @topic_name.save!
-    flash[:notice] = 'Successfully saved'
-    
-    next_topic_name = TopicName.unprocessed.first
-    if next_topic_name
-      redirect_to edit_admin_topic_name_path(next_topic_name)
+    if @topic_name.update_attributes(params[:topic_name])
+      flash[:notice] = 'Successfully saved'
+      next_topic_name = TopicName.unprocessed.first(:conditions => ["topic_names.name > ?", @topic_name.name])
+      if next_topic_name
+        redirect_to edit_admin_topic_name_path(next_topic_name)
+      else
+        redirect_to unprocessed_admin_topic_names_path
+      end
     else
-      redirect_to unprocessed_admin_topic_names_path
+      render :action => :edit
     end
   end
 end
