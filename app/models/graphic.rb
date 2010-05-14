@@ -20,11 +20,11 @@ class Graphic < ApplicationModel
   has_many :entries, :through => :usages
   
   has_attached_file :graphic,
-                    :styles => { :thumb => ["100", :gif], :small => ["150", :gif], :medium => ["245", :gif], :large => ["580", :gif], :full_size => ["", :gif] },
+                    :styles => { :thumb => ["100", :gif], :small => ["150", :gif], :medium => ["245", :gif], :large => ["580", :gif], :original => ["", :gif] },
                     :processors => [:auto_inverter],
                     :storage => :s3,
                     :s3_credentials => "#{Rails.root}/config/amazon.yml",
-                    :s3_alias_url => 'http://graphics.govpulse.us',
-                    :bucket => 'graphics.govpulse.us',
+                    :s3_alias_url => 'http://graphics.federalregister.gov.s3.amazonaws.com/',
+                    :bucket => 'graphics.federalregister.gov',
                     :path => ":identifier/:style.:extension"
 end
