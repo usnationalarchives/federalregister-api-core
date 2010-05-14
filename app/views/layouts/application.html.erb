@@ -34,6 +34,7 @@
     <header>   
       <div id="issue_and_search_bar">
         <div class="container_12">
+          <div id="seal"></div>
           <p>Current Issue: May 13, 2010</p>
           <form action="<%= entries_search_path %>" method="get">
           </form>
@@ -45,14 +46,13 @@
       <hgroup class="container_12">
         <h1><a href="/" title="govpulse home">The Federal Register</a></h1>
         <h2>Newspaper of the United States Government</h2>
-        <div id="seal"></div>
       </hgroup>
       
     </header>
     
-    <div id="main">
-    
-      <%yield%>
+    <div id="main" class="container_12">
+      
+      <%= yield %>
     
     </div>
 
