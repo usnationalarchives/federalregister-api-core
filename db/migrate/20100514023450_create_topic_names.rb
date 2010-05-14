@@ -2,13 +2,14 @@ class CreateTopicNames < ActiveRecord::Migration
   def self.up
     create_table :topic_names do |t|
       t.string :name
-      t.datetime :processed_at
+      t.boolean :void, :default => false
       t.integer :entries_count, :default => 0
+      t.integer :topics_count, :default => 0
       
       t.timestamps
     end
     add_index :topic_names, :name
-    add_index :topic_names, :valid
+    add_index :topic_names, [:void, :topics_count]
     
     create_table :topic_name_assignments do |t|
       t.integer :entry_id
