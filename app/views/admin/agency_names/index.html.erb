@@ -8,7 +8,7 @@
     <tr>
       <th>Agency Name</th>
       <th>Processed?</th>
-      <th>Assigned Agency</th>
+      <th>Assigned Topics</th>
       <th># Articles</th>
     </tr>
   </thead>
@@ -16,7 +16,7 @@
     <% @agency_names.each do |agency_name| %>
       <tr class="<%= cycle("even", "odd") %>">
         <td><%= link_to agency_name.name, edit_admin_agency_name_path(agency_name) %></td>
-        <td><%= agency_name.unprocessed? ? 'NO' : 'yes' %></td>
+        <td><%= agency_name.processed? ? 'NO' : 'yes' %></td>
         <td><%= agency_name.agency.try(:name) %></td>
         <td><%= agency_name.entries_count %></td>
       </tr>

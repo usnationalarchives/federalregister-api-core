@@ -1,31 +1,43 @@
 <%= title @section.name %>
 
-<div id="top-articles" class="featured">
-  <%= render :partial => 'sections/primary_entry', :object => @highlighted_entries.first %>
-  <%= render :partial => 'sections/entry_with_abstract', :collection => @highlighted_entries[1,3], :as => :entry %>
+<h1 class="title"><span><%= @section.name %></span></h1>
+
+<div class="alpha grid_7 suffix_1">
+
+  <% if @highlighted_entries.present? %>
+  <div id="top-articles" class="featured">
+    <%#= render :partial => 'sections/primary_entry', :object => @highlighted_entries.first %>
+    <%= render :partial => 'sections/entry_with_abstract', :collection => @highlighted_entries[1,3], :as => :entry %>
+  </div>
+
+  <div id="fading-articles" class="featured">
+    <%= render :partial => 'sections/entry_with_abstract', :collection => @highlighted_entries[4,100], :as => :entry %>
+  </div>
+
+  <% else %>
+    <p>No articles highlighted.</p>
+  <% end %>
+
 </div>
 
-<div id="fading-articles" class="featured">
-  <%= render :partial => 'sections/entry_with_abstract', :collection => @highlighted_entries[4,100], :as => :entry %>
+<div class="omega grid_4">
+  <h2>Comment Period</h2>
+  <h3>Closing Soon</h3>
+  <ul>
+    <% @section.entries.comments_closing.each do |entry| %>
+    <li><%= link_to entry.title, entry_path(entry) %></li>
+    <% end %>
+  </ul>
+
+  <h3>Opening</h3>
+  <ul>
+    <% @section.entries.comments_opening.each do |entry| %>
+    <li><%= link_to entry.title, entry_path(entry) %></li>
+    <% end %>
+  </ul>
 </div>
 
-<h2>Comment Period</h2>
-<h3>Closing Soon</h3>
-<ul>
-  <% @section.entries.comments_closing.each do |entry| %>
-  <li><%= link_to entry.title, entry_path(entry) %></li>
-  <% end %>
-</ul>
-
-<h3>Opening</h3>
-<ul>
-  <% @section.entries.comments_opening.each do |entry| %>
-  <li><%= link_to entry.title, entry_path(entry) %></li>
-  <% end %>
-</ul>
-
-
-<h2><%= @publication_date %> Entries</h2>
+<h2 class="clear"><%= @publication_date %> Entries</h2>
 
 <% @section.entries.published_on(@publication_date).each do |entry| %>
   <article>

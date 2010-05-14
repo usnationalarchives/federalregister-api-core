@@ -1,23 +1,7 @@
-<div id="nav">
-  <div class="search">
-    <form action="<%= entries_search_path %>" method="get">
-      <ul>
-        <li>
-          <!--Search--> 
-          <%= text_field_tag :q, search_term,  :title => "Search", :class => 'inlineHint' %>
-          <%= submit_tag '', :class => "search_btn" %>
-        </li>
-      </ul>
-    </form> 
-  </div>    
-  <ul>
-    <!-- <li><%= link_to 'Agencies', agencies_path, :title => "Browse by Agency" %> / </li>
-    <li><%= link_to 'Topics', topic_groups_path, :title => "Browse by Topic" %> / </li>
-    <li><%= link_to 'Locations', maps_path, :title => "View entries by location" %> / </li>
-    <li><%= link_to 'Dates Published', entries_path, :title => "Browse by Date" %> / </li>
-    <li><%= link_to 'Search', entries_search_path, :title => 'Search Entries' %></li> -->
-    <% Section.all.each do |section| %>
-      <li><%= link_to section.name, section_path(section) %></li>
-    <% end %>
-  </ul>
-</div>
+<nav> 
+    <ul>
+      <% Section.all.each do |section| %>
+        <li><%= link_to section.name, section_path(section) %></li>
+      <% end %>
+    </ul>
+</nav>
