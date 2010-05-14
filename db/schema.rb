@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100510144531) do
+ActiveRecord::Schema.define(:version => 20100514023450) do
 
   create_table "agencies", :force => true do |t|
     t.integer  "parent_id"
@@ -260,6 +260,26 @@ ActiveRecord::Schema.define(:version => 20100510144531) do
     t.text    "related_agencies_cache"
   end
 
+  create_table "topic_name_assignments", :force => true do |t|
+    t.integer  "entry_id"
+    t.integer  "topic_name_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "topic_name_assignments", ["entry_id", "topic_name_id"], :name => "index_topic_name_assignments_on_entry_id_and_topic_name_id"
+  add_index "topic_name_assignments", ["topic_name_id", "entry_id"], :name => "index_topic_name_assignments_on_topic_name_id_and_entry_id"
+
+  create_table "topic_names", :force => true do |t|
+    t.string   "name"
+    t.boolean  "valid"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "topic_names", ["name"], :name => "index_topic_names_on_name"
+  add_index "topic_names", ["valid"], :name => "index_topic_names_on_valid"
+
   create_table "topics", :force => true do |t|
     t.string   "name"
     t.datetime "created_at"
@@ -273,6 +293,18 @@ ActiveRecord::Schema.define(:version => 20100510144531) do
   add_index "topics", ["entries_count"], :name => "index_topics_on_entries_count"
   add_index "topics", ["group_name", "id"], :name => "index_topics_on_group_name_and_id"
   add_index "topics", ["name"], :name => "index_topics_on_name"
+
+  create_table "topics_topic_names", :force => true do |t|
+    t.integer  "topic_id"
+    t.integer  "topic_name_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "creator_id"
+    t.integer  "updater_id"
+  end
+
+  add_index "topics_topic_names", ["topic_id", "topic_name_id"], :name => "index_topics_topic_names_on_topic_id_and_topic_name_id"
+  add_index "topics_topic_names", ["topic_name_id", "topic_id"], :name => "index_topics_topic_names_on_topic_name_id_and_topic_id"
 
   create_table "url_references", :force => true do |t|
     t.integer  "url_id"
