@@ -20,7 +20,6 @@ module Content
         topic_name = TopicName.find_by_name(topic_text)
         if topic_name
           topic_name.topics = [topic]
-          topic_name.processed_at = Time.zone.now
           topic_name.save
         end
         
