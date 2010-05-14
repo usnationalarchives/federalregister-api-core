@@ -1,6 +1,7 @@
 namespace :data do
   task :daily => %w(
     data:daily:quick
+    data:extract:regulationsdotgov_id
     
     data:cache:update:all
     data:cache:expire
@@ -19,7 +20,6 @@ namespace :data do
     content:entries:import:graphics
     
     data:extract:places
-    data:extract:regulationsdotgov_id
     )
   end
 end
