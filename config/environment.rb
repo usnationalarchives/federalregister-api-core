@@ -42,6 +42,8 @@ Rails::Initializer.run do |config|
   config.gem 'authlogic', :version => '2.1.3'
   config.gem 'calais', :version => '0.0.9'
   config.gem 'flickraw', :version => '0.8.1', :lib => false
+  config.gem 'searchlogic', :version => '2.4.12'
+  config.gem 'will_paginate', :version => '2.3.11'
   
   # disabled as requires C library to install...the Locator module will return a fake result if not installed
   # config.gem "geoip_city", :version => '0.2.0'

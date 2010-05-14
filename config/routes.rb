@@ -5,6 +5,9 @@ ActionController::Routing::Routes.draw do |map|
     admin.resources :agencies
     admin.resources :agency_names, :collection => {:unprocessed => :get}
     
+    admin.resources :topic_names, :collection => {:unprocessed => :get}
+    
+    
     admin.resources :sections
     
     admin.resources :issues do |issue|
