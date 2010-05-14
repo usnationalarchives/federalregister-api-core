@@ -1,3 +1,22 @@
+=begin Schema Information
+
+ Table name: lede_photos
+
+  id                 :integer(4)      not null, primary key
+  credit             :string(255)
+  credit_url         :string(255)
+  photo_file_name    :string(255)
+  photo_content_type :string(255)
+  photo_file_size    :integer(4)
+  photo_updated_at   :datetime
+  url                :string(255)
+  crop_width         :integer(4)
+  crop_height        :integer(4)
+  crop_x             :integer(4)
+  crop_y             :integer(4)
+
+=end Schema Information
+
 class LedePhoto < ApplicationModel
   has_many :entries
   has_attached_file :photo,
