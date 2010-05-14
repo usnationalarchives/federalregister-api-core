@@ -9,9 +9,13 @@ header #issue_and_search_bar {
 
 header nav {
   border-top: 2px solid @golden;
+  overflow: hidden;
   }
 header nav ul {
+  margin-left: auto;
+  margin-right: auto;
   overflow: hidden;
+  width: 785px;
   }
   
 header nav ul li {
@@ -20,6 +24,7 @@ header nav ul li {
   float: left;
   font-family: helvetica, sans-serif;
   list-style: none;
+  margin-left: 30px;
   padding-top: 3px;
   }
 header nav ul li.on { 
@@ -29,8 +34,11 @@ header nav ul li:hover,
 header nav ul li:focus {
   border-top: 5px solid @golden;
   }  
+header nav ul li:first-child {
+  margin-left: 0;
+  }  
 header nav ul li a {
-  color: #231F20;
+  color: #6d6e71;
   text-decoration: none;
   text-transform: uppercase;
   }
@@ -38,6 +46,7 @@ header hgroup {
   background: url(/images/logotype.png) no-repeat left top;
   display: block;
   height: 64px;
+  margin: 0 0 30px 0;
   position: relative;
   text-indent: -9999px;
   width: 543px;
@@ -48,7 +57,29 @@ header hgroup {
   display: block;
   height: 331px;
   position: absolute;
-  top: -83px;
-  right: -175px;
+  top: 0;
+  right: 100px;
   width: 436px;  
+  z-index: -1;
   }    
+  
+  
+h1.title {
+  background: #5697cf url(/images/header_bg.png) repeat-x left top;
+  color: #5697cf;
+  line-height: 25px;
+  font-size: 33px;
+  font-weight: bold;
+  letter-spacing: 0px;
+  margin-left: -999px;
+  margin-bottom: 50px;
+  padding-left: 999px;
+  padding-right: 25px;
+  text-align: right;
+  text-transform: uppercase;
+}   
+
+h1.title span {
+  background: #fff;
+  padding: 0 10px;
+  }  
