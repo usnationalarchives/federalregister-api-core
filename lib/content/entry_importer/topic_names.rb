@@ -1,8 +1,8 @@
-module Content::EntryImporter::Topics
+module Content::EntryImporter::TopicNames
   extend Content::EntryImporter::Utils
-  provides :topics
+  provides :topic_names
   
-  def topics
+  def topic_names
     topics = []
     mods_node.css('subject topic').each do |topic_node|
       
@@ -13,10 +13,10 @@ module Content::EntryImporter::Topics
       
       topic_names.each do |name|
         next if name.length == 1 # one character topic names help no one
-        topics << Topic.find_or_create_by_name(name)
+        topic_names << TopicName.find_or_create_by_name(name)
       end
     end
     
-    topics
+    topic_names
   end
 end
