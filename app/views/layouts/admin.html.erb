@@ -32,6 +32,7 @@
         <ul>
           <li><%= link_to 'Home', admin_home_path, :class => "button tan home" %></li>
           <li><%= link_to 'Agency Names', admin_agency_names_path, :class => "button tan" %></li>
+          <li><%= link_to 'Topic Names', admin_topic_names_path, :class => "button tan" %></li>
           <li><%= link_to 'Users', admin_users_path, :class => "button tan" %></li>
           <li><%= link_to 'Sections', admin_issue_sections_path(Entry.last.publication_date.to_s(:mdy_dash)), :class => "button tan" %></li>
         </ul>
