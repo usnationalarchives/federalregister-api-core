@@ -8,7 +8,7 @@ module Content
     include Content::EntryImporter::PageNumber
     include Content::EntryImporter::ReferencedDates
     include Content::EntryImporter::Sections
-    include Content::EntryImporter::Topics
+    include Content::EntryImporter::TopicNames
     include Content::EntryImporter::Urls
   
     def self.process_all_by_date(date, *attributes)
