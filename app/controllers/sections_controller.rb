@@ -1,8 +1,7 @@
 class SectionsController < ApplicationController
+  include Shared::SectionsControllerUtilities
   
   def show
-    @section = Section.find_by_slug(params[:slug]) or raise ActiveRecord::RecordNotFound
-    @publication_date = Entry.latest_publication_date
-    @highlighted_entries = @section.highlighted_entries(@publication_date)
+    prepare_for_show(params[:slug], Entry.latest_publication_date)
   end
 end

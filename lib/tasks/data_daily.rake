@@ -12,6 +12,9 @@ namespace :data do
   namespace :daily do 
     task :quick => %w(
     content:entries:import
+    content:section_highlights:clone
+    content:entries:import:graphics
+    
     data:import:bulkdata
     data:download:full_text
     data:extract:places
