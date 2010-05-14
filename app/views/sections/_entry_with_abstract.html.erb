@@ -1,13 +1,13 @@
 <article>
   
-  <div class="grid_8 alpha push_3">
+  <div class="grid_8 alpha <%= cycle('push_3','')%>">
     <h1><%= link_to entry.curated_title, entry_path(entry) %></h1>
     <%# HELP-RUBY i know granule class is not what we want %>
     <p class="metadata">A <%= entry.granule_class %> by <%= entry.agencies_exluding_parents.map{|a| link_to a.name, agency_path(a) }.to_sentence %> on <time datetime="<%= entry.publication_date.to_s(:iso) %>"><%= entry.publication_date %></time></p>
     <p class="summary"><%= entry.curated_abstract %></p>
   </div>
   
-  <div class="grid_2 omega pull_8 ">
+  <div class="grid_2 omega <%= cycle('pull_8','')%>">
     <%  if entry.lede_photo  %>
       <figure>
           <%= image_tag(entry.lede_photo.photo.url(:small)) %>
