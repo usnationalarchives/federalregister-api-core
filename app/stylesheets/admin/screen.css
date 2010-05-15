@@ -90,29 +90,67 @@
 .clearfix { display: inline-block; }
 * html .clearfix { height: 1%; }
 .clearfix { display: block; }
-form.formtastic fieldset {
-  clear: both;
+header {
   display: block;
+  width: 100%;
 }
-form.formtastic fieldset.buttons {
-  padding: 0;
-  margin: 10px 0;
+header hgroup {
+  float: left;
+  margin: 50px 0 50px 15px;
 }
-form.formtastic fieldset.inputs ol {
+header h1 {
+  font-size: 3.15em;
+  font-family: "bookman-1", "bookman-2", sans-serif;
+  margin-bottom: 0.1em;
+}
+header h1 a {
+  color: #444444;
+  text-decoration: none;
+  left: 0px;
+}
+header h1 a:visited {
+  color: #444444;
+  text-decoration: none;
+  left: 0px;
+}
+header h2 {
+  color: #c69967;
+  float: left;
+  font-family: "etica-1", "etica-2", sans-serif;
+  font-size: 1.5em;
+  margin-left: 10px;
+}
+#user_session_remember_me_input { width: 400px; }
+dt.highlighted { color: gray; }
+div#content {
+  width: 960px;
+  border: thin solid #cccccc;
+  border-top: none;
+  top: -20px;
+  height: 100%;
+  min-height: 500px;
+  margin: 0;
+}
+article.highlighted { color: gray; }
+#preview {
+  width: 100px;
+  height: 100px;
+  overflow: hidden;
+  margin-left: 5px;
+}
+.center_content {
   display: inline;
   float: left;
   position: relative;
   margin-left: 10px;
   margin-right: 10px;
-  left: 160px;
 }
-form fieldset.buttons ol {
+.center_content #lede_photo_flow {
   display: inline;
   float: left;
   position: relative;
   margin-left: 10px;
   margin-right: 10px;
-  left: 160px;
 }
-form.formtastic fieldset.inputs li { display: block; }
-form.formtastic fieldset.buttons li { display: block; }
+.flow { height: 200px; }
+.ContentFlow { width: 700px; }
