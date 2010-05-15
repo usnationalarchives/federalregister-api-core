@@ -224,6 +224,13 @@ header #issue_and_search_bar {
   height: 30px;
   margin-bottom: 2px;
 }
+header #issue_and_search_bar p {
+  color: #919191;
+  font-family: "Helvetica Neue", "Helvetica", sans-serif;
+  font-size: 12px;
+  line-height: 30px;
+  margin: 0;
+}
 header nav {
   border-top: 2px solid #e4a529;
   overflow: hidden;
