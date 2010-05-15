@@ -7,27 +7,12 @@
 
 <% nav_secondary(render :partial => 'admin/issues/sections/nav', :locals => {:sections => @sections, :publication_date => @publication_date}) %>
 
+<input type="text" id="custom_tag">
 <div class='center_content'>
   
   <div id='lede_photo_flow'>
-  <% [@entry.lede_photo_candidates.first].each do |topic, photos| %>
-    <div id='<%= topic.downcase %>_flow' class="ContentFlow">
-        <div class="loadIndicator"><div class="indicator"></div></div>
-        <div class="flow">
-            <% photos.each do |photo| %>
-            <div class="item">
-              <%= image_tag photo.url('m'), 'data-owner-id' => photo.owner_id, :class => 'content', :title => '' %>
-              <div class="caption"><%= topic %></div>
-            </div>
-            <% end %>
-        </div>
-        <div class="globalCaption"><%= topic %></div>
-        <div class="scrollbar">
-          <div class="slider">
-            <div class="position"></div>
-          </div>
-        </div>
-    </div>
+  <% @entry.lede_photo_candidates[0,2].each do |topic, photos| %>
+    <%= render :partial => "admin/photo_candidates/topic", :locals => {:topic => topic, :photos => photos } %>
   <% end %>
   </div>
   
