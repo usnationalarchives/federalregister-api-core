@@ -12,7 +12,7 @@
           <%= image_tag(entry.lede_photo.photo.url(:small)) %>
           <%# TODO HELP-RUBY photo caption - make this real %>
           <figcaption> 
-            Photo: DarkSlayer555
+            Photo: <%= link_to entry.lede_photo.credit, entry.lede_photo.credit_url %>
           </figcaption>
       </figure>
     <% end -%>
