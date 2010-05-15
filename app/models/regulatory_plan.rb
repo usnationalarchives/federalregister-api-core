@@ -29,6 +29,6 @@ class RegulatoryPlan < ApplicationModel
   end
   
   def significant?
-    priority_category.include?(RegulatoryPlan::SIGNIFICANT_PRIORITY_CATEGORIES)
+    RegulatoryPlan::SIGNIFICANT_PRIORITY_CATEGORIES.include?(priority_category)
   end
 end
