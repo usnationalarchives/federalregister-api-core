@@ -14,6 +14,7 @@ $(document).ready(function(){
   $('#candidates li img').live('click', function() {
     var src = $(this).attr('src').replace(/_m\./, '.');
     $('#entry_lede_photo_attributes_url').val(src);
+    $('#entry_lede_photo_attributes_flickr_owner_id').val($(this).attr('data-owner-id'));
     $('#preview').val(src);
     $('#crop-box').html('<img src="' + src + '" />')
     $('#preview').html('<img src="' + src + '" />');

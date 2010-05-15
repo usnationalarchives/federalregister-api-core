@@ -5,6 +5,7 @@
 <% add_javascript :src => 'jquery.Jcrop'                     %>
 <% add_javascript :src => '../ContentFlow/contentflow', :load => '../ContentFlow/ContentFlowAddOn_white'%>
 
+<<<<<<< HEAD
 <% nav_secondary(render :partial => 'admin/issues/sections/nav', :locals => {:sections => @sections, :publication_date => @publication_date}) %>
 
 <div class='center_content'>
@@ -28,6 +29,48 @@
           </div>
         </div>
     </div>
+=======
+      $('#preview img').css({
+        width: Math.round(rx * 500) + 'px',
+        height: Math.round(ry * 370) + 'px',
+        marginLeft: '-' + Math.round(rx * coords.x) + 'px',
+        marginTop: '-' + Math.round(ry * coords.y) + 'px'
+      });
+    }
+    
+    $('#candidates li img').live('click', function() {
+      var src = $(this).attr('src').replace(/_m\./, '.');
+      $('#entry_lede_photo_attributes_url').val(src);
+      $('#entry_lede_photo_attributes_flickr_owner_id').val($(this).attr('data-owner-id'));
+      $('#preview').val(src);
+      $('#crop-box').html('<img src="' + src + '" />')
+      $('#preview').html('<img src="' + src + '" />');
+      
+      $('#crop-box img').Jcrop({
+        onChange: showPreview,
+        onSelect: function(c){
+          showPreview(c);
+          $('#entry_lede_photo_attributes_crop_x').val(c.x);
+          $('#entry_lede_photo_attributes_crop_y').val(c.y);
+          $('#entry_lede_photo_attributes_crop_width').val(c.w);
+          $('#entry_lede_photo_attributes_crop_height').val(c.h);
+        },
+        aspectRatio: 1,
+        bgColor: 'yellow',
+        bgOpacity: .8,
+      });
+    });
+  });
+  </script>
+<% end %>
+
+<div id="candidates">
+<% @entry.lede_photo_candidates.slice(0..0).each do |topic, photos| %>
+  <h2><%= topic %></h2>
+  <ul>
+  <% photos.slice(0..2).each do |photo| %>
+    <li><%= image_tag photo.url('m'), 'data-owner-id' => photo.owner_id %></li>
+>>>>>>> 21f7864ffae3a0e98f66b78ea637d3e5049b361e
   <% end %>
   </div>
   
@@ -54,6 +97,7 @@
     <%= lede_photo.hidden_field :crop_y %>
     <%= lede_photo.hidden_field :crop_width %>
     <%= lede_photo.hidden_field :crop_height %>
+    <%= lede_photo.hidden_field :flickr_owner_id %>
   <% end %>
   
   <% f.inputs do %>

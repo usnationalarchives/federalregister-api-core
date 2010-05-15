@@ -2,12 +2,12 @@
 
 <h1 class="title"><span><%= @section.name %></span></h1>
 
-<div class="alpha grid_7 suffix_1">
+<div id="content_area">
 
   <% if @highlighted_entries.present? %>
   <div id="top-articles" class="featured">
     <%#= render :partial => 'sections/primary_entry', :object => @highlighted_entries.first %>
-    <%= render :partial => 'sections/entry_with_abstract', :collection => @highlighted_entries[1,3], :as => :entry %>
+    <%= render :partial => 'sections/entry_with_abstract', :collection => @highlighted_entries[0,3], :as => :entry %>
   </div>
 
   <div id="fading-articles" class="featured">
@@ -20,7 +20,26 @@
 
 </div>
 
-<div class="omega grid_4">
+<aside>
+  
+  <section>
+    <p><strong>Science and Technology</strong>... A description of what this section is and why it is important. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+  </section>
+  
+  <section>
+    <h1><span>Stats</span></h1>
+    <ul>
+      <li><strong>1000</strong> Something</li>
+      <li><strong>200</strong> Something</li>
+      <li><strong>32</strong> Something</li>
+      <li><strong>43</strong> Something</li>
+    </ul>  
+  </section>
+  
+  <section>
+    <h1><span>What's Hot</span></h1>
+  </section>
+  
   <h2>Comment Period</h2>
   <h3>Closing Soon</h3>
   <ul>
@@ -35,7 +54,8 @@
     <li><%= link_to entry.title, entry_path(entry) %></li>
     <% end %>
   </ul>
-</div>
+  
+</aside>
 
 <h2 class="clear"><%= @publication_date %> Entries</h2>
 
