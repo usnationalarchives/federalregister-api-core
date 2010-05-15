@@ -1,0 +1,281 @@
+ContenFolw ChangeLog
+====================
+
+version 1.0.2 (2010/02/19)
+-------------------------
+ * fixed IE bug on reflection generation
+
+version 1.0.1 (2010/02/18)
+-------------------------
+ * fixed bug with addItem
+ * fixed CSS 'type' error
+   Thanks to Nicolas Rudas
+ * added AJAX example
+
+version 1.0 (2010/02/09)
+-------------------------
+ 
+ Beware: Because of a major restructuring, this release will break with older 
+         AddOns and possibly with user defined configurations. If you have 
+         defined your own calculation methods (calcSize, calcCoordinates, 
+         calcRelativeItemPosition, calcZIndex or calcFontSize) you have to 
+         rework them.
+         If you use AddOns please update to the new version of the AddOn.
+
+ * moved to relative return values for the following methods:
+   calcSize := returns values ranging from 0.0 - 1.0
+   calcCoordinates := returns values ranging from -1.0 to 1.0
+   calcRelativeItemPosition := returns values ranging from -1.0 to 1.0
+
+ * changed the paramters of the following methods:
+   calcStepWidth   : ( diff )
+   calcSize        : ( item ) 
+   calcCoordinates : ( item ) 
+   calcRelativeItemPosition : ( item ) 
+   calcZIndex      : ( item ) 
+   calcFontSize    : ( item ) 
+
+ * added the following properties to the item object:
+   next, position, pre, relativePosition, relativePositionNormed, side, size 
+
+ * better image scaling in IE7 (bicubic interpolation)
+
+ * changed landscapeScaleFactor default value to 1.33
+
+ * moved from 20 to 25 redraws/recalculations/frames per second 
+
+ * refined calculation of flow size
+
+ * speedup by internel code cleanup
+
+ * unified AddOn configuration
+
+ * renamed 'container' to 'Container'
+
+ * documentation update
+
+
+ * addeded direct usage of image tags as items
+
+ * added support for transparent PNGs on IE6
+
+ * added touch handling on iPhone
+   Dragging of the whole Flow and the scrollbar works now on the iPhone
+
+ * added onDrawItem method
+
+ * added fluid opacity change
+   - option: endOpacity
+   - method: calcOpacity
+
+ * added fixItemSize option
+
+ * added reflectionGap option 
+ 
+ * added scaleFactorPortrait option
+
+ * automatic scrolling to item will now be supressed if the onclickInactiveItem
+   method returns 'false'
+
+ * added conf object to flow
+
+
+ * removed server side reflections
+   - removed reflectionType option
+     reflectionHeight = 0 deactivetes the reflection
+   - removed negativeMarginOnFloat option
+   - removed reflectionServerSrc option
+
+ * removed obsolete contentPosition option
+
+
+ * fixed FF drag problem
+ 
+ * fixed addItem method
+
+ * fixed rmItem method
+
+    
+
+version 0.7.2 (2009/10/01)
+-------------------------
+ * fixed possible conflict with jquery, prototype
+ * fixed Konqueror 4 init bug
+ * fixed iPhone init bug 
+ * fixed IE 6,7,8 / mootools compatibility
+   thanks to Michael Birchler
+ * fixed IE6 scalefactor bug
+ * simplified internal click event handling
+ * added 'return' key to call the onclickActiveItem method
+
+version 0.7 (2009/04/09)
+------------------------
+ Beware: Because of a major restructuring, this release will break with older 
+         AddOns and possibly with user defined configurations. If you have 
+         defined your own methods (i.e. calcCoordinates or onclickActiveItem) 
+         you have to move the definitions into the configuration object.
+         If you use AddOns please update to the new version of the AddOn.
+
+         In any other case you can use the new version without any modification.
+          
+ * moved user definable method definitions to configuration
+ * speedup by reducing number of calculations
+ * flow element will now be centered within ContentFlow element
+ * better handling of large images by Canvas supporting Browsers (all except IE)
+ * removed reflectionOverlay option
+ * removed set* methods to set methods
+ * removed getConfig method
+ * added cursermove style to slider
+ * added "left" and "right" to position keywords (same as 'pre' and 'next')
+
+ * added optional 'useAddOns' attribute to ContentFlow (X)HTML element
+ * added optional deactivation of mousewheel
+ * added revers mousewheel scrolling
+ * added optional deactivation of keyboard 
+ * added optional deactivation of drag 'n throw 
+
+ * added keys option
+ * added verticalFlow option
+ * added contentPosition option
+ * added relativeItemPosition option 
+
+ * added onReachTarget method
+ * added onMoveTo method
+ * added onMakeInactive method 
+ * added onclickInactiveItem method
+
+ * fixed reload bug in Firefox 3 (Gecko 1.9)
+ * fixed keyboard actions on FireFox (Gecko) and Safari (WebKit)
+ * fixed refelctions on iPhone
+ * fixed bug in moveTo method
+ * fixed item positioning 
+ * fixed bug if 'scrollInFrom' was set to 'none' 
+ * fixed disappearing position label
+
+ * structure cleanup
+
+
+version 0.6 (2008/09/27)
+------------------------
+ This release contains major changes and could break with previous versions.
+ But most times it can be used as a drop-in replacement. 
+
+ * added AddOn System
+
+ * handles now 'href' and 'target' attributes of 'item' and 'content' items
+   by default
+
+ * will respect style-height attributes of ContentFlow and flow elements
+   (has to be defined on the element it self)
+
+ * moved fancyScrollbar to AddOn
+
+ * added optional 'label' element to item (will be used as slider label)
+   (great for time lines)
+
+ * scrollbar will be hidden until loader is hidden
+
+ * default loader height fixed
+
+ * switched from array based structure to object based structure for items
+ 
+ * switched from index based calculations to global position based calculations
+
+ * merged mycontentflow.css into contentflow.css and and added mycontentflow.css.example
+ 
+ * new Initialization System
+   - init when DOM is fully loaded
+   - auto init of flows
+   - auto loading of stylesheets
+   - auto load of AddOns
+   - background init of images
+
+ * changed calculation methods
+   - added calcCoordinates
+   - added calcRelativeItemPosition
+   - removed calcPosition
+
+ * new methods
+   - onMakeActive
+   - onclickPreButton
+   - onclickNextButton
+
+ * new options
+   - useAddOns
+   - circularFlow
+   - activeElement
+
+ * enhanced options 
+   - added scaleFactorLandscape option value "max"
+   - flowDragFriction deactivates drag 'n throw if set to '0'
+   - scrollWheelSpeed deactivates scrollwheel if set to '0'
+
+ * internal restructuring and cleanup
+
+ * removed unneeded images
+
+ * switched to yuicompressor for javascript compression
+
+ * squashed many bugs
+
+
+version 0.5.3 (2008/05/22)
+------------------------
+ * resize bug fixed 
+ * renamed maxHeight configuration option to maxItemHeight
+
+version 0.5.2 (2008/05/21)
+------------------------
+ * bugfixes
+
+version 0.5.1 (2008/05/18)
+------------------------
+ * bugfixes
+
+version 0.5 (2008/05/18)
+------------------------
+ * if reflections are used images scale nicer and scrolling is more fluid
+   in Firefox, Safari and Opera (or any other browser which knows about 'canvas')
+ * added fancy scrollbar (with pre and next button)
+ * added maxHeight conf property
+   (if set content will be scaled depending on maxHeight)
+ * moveTo method can handle keywords like 'pre', 'next', 'start' or 'end'
+ * code cleanup
+
+version 0.4 (2008/02/12)
+------------------------
+ * dynamically add and remove items !
+ * caption of item is now optional
+ * added setter for: clickActiveItem, calcSize, calcPosition, calcZIndex, calcFontSize
+ * added getter for: config, activeItem, numberOfItems
+ * squashed some bugs
+ * some clean up
+
+version 0.3 (2008/01/26)
+------------------------
+ * revamp of reflection handling:
+   - added client side reflection generation !!!
+     YES! Browser generated reflections without flash!
+   - bedder handling of reflection sizes
+   - bedder handling of server side reflection sources
+   - bedder handling of overlays in IE6
+   - removed unneeded options
+   - added more flexible options
+   - fix positioning of items in IE6
+ * fixed resize event handling in IE
+ * fixed slider-position element handling in IE6
+ * fixed some minor bugs
+   
+version 0.2 (2008/01/22)
+------------------------
+ * handles now node-object and node-id string on object creation
+ * configuration options are now given as configuration object
+ * auto initialization on window load
+ * auto detection of usage of load indicator, global caption and scrollbar
+ * removed obsolete configuration options
+ * minor cleanups
+
+version 0.1 (2008/01/10)
+------------------------
+ * initial release
+
