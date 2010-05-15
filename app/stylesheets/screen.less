@@ -2,8 +2,12 @@
 
 body {
   color: #363636;
-  font-family: "Helvetica", "Helvetica Neue", sans-serif;
+  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+  font-weight: 300;
   font-size: 14px; }
+
+strong {
+  font-weight: 500; }
 
 p {
   line-height: 22px; }
@@ -21,8 +25,9 @@ p {
   width: 436px;  
   z-index: -1; }    
   
-h1.title {
+.title {
   background: #5697cf url(/images/header_bg.png) repeat-x left top;
+  clear: both;
   color: #5697cf;
   line-height: 25px;
   font-weight: bold;
@@ -33,13 +38,13 @@ h1.title {
   text-align: right;
   text-transform: uppercase; }   
 
-h1.title span {
+.title span {
   background: #fff;
   padding: 0 10px; 
   margin: 0 25px 0 0; }
   
 article h1 { 
-  font-family: "gloriola-display-thin-1","gloriola-display-thin-2";
+  font-family: "gloriola-web-1","gloriola-web-2",sans-serif;
   font-size: 20px;  
   font-weight: normal;
   line-height: 25px;  
@@ -90,6 +95,9 @@ section h1 span {
   padding: 0 5px; 
   margin: 0 0 0 10px; }  
 
+section.stats ul {
+  list-style: none; }  
+
 #content_area {
   .alpha;
   .grid_11;
@@ -118,4 +126,7 @@ article.with_photo.on_right .photo {
   }
 article.with_photo.on_right .info {
   .alpha;
-  }         
+  }
+
+#top-articles article:last-child {
+  border-bottom: 0; }            

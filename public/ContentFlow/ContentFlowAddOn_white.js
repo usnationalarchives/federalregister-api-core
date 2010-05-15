@@ -13,7 +13,8 @@ new ContentFlowAddOn ('white', {
     },
 	
 	ContentFlowConf: {
-        reflectionColor: "#ffffff" // none, transparent, overlay or hex RGB CSS style #RRGGBB
+        reflectionColor: "#ffffff", // none, transparent, overlay or hex RGB CSS style #RRGGBB
+        onclickActiveItem: prepare_to_crop_image
 	}
 
 });
