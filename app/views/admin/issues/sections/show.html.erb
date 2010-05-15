@@ -3,10 +3,9 @@
 
 <% add_javascript :src => 'admin/issues_sections_highlights' %>
 
-
 <% nav_secondary(render :partial => 'nav', :locals => {:sections => @sections, :publication_date => @publication_date}) %>
 
-<%= link_to 'Preview', preview_admin_issue_section_path(@publication_date.to_s(:db), @section) %>
+<%= link_to 'Preview', preview_admin_issue_section_path(@publication_date.to_s(:db), @section), :target => "_blank" %>
 
 <h3 class='grid_10'>Highlighted Entries</h3>
 
