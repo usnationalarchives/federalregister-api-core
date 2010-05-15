@@ -7,15 +7,7 @@
   </div>
   
   <div class="photo">
-    <%  if entry.lede_photo  %>
-      <figure>
-          <%= image_tag(entry.lede_photo.photo.url(:small)) %>
-          <%# TODO HELP-RUBY photo caption - make this real %>
-          <figcaption> 
-            Photo: <%= link_to entry.lede_photo.credit, entry.lede_photo.credit_url %>
-          </figcaption>
-      </figure>
-    <% end -%>
+    <%= render(:partial => "sections/lede_photo", :object => entry.lede_photo) if entry.lede_photo %>
   </div>
   
 </article>
