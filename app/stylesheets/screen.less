@@ -1,3 +1,5 @@
+@import 'grid.css';
+
 body {
   color: #363636;
   font-family: "Helvetica", "Helvetica Neue", sans-serif;
@@ -5,6 +7,9 @@ body {
 
 p {
   line-height: 22px; }
+
+#main { 
+  .container; }
 
 #seal {
   background: url(/images/seal.png) no-repeat left top;
@@ -69,7 +74,8 @@ article figcaption {
   font-size: 10px; }   
   
 section {
-  text-align: right; }  
+  text-align: right;
+  margin-bottom: 50px; }  
   
 section h1 {
   background: #5697cf url(/images/header_bg.png) repeat-x left top;
@@ -82,4 +88,34 @@ section h1 {
 section h1 span {
   background: #fff;
   padding: 0 5px; 
-  margin: 0 0 0 10px; }   
+  margin: 0 0 0 10px; }  
+
+#content_area {
+  .alpha;
+  .grid_11;
+  .suffix_1; }
+
+aside {
+  .grid_4;
+  .omega; }
+  
+article.with_photo .info {
+  .grid_8;
+  }
+article.with_photo .photo {
+  .grid_3;
+  }
+article.with_photo.on_left .photo {
+  .pull_8;
+  .omega;
+  }
+article.with_photo.on_left .info {
+  .push_3;
+  .alpha;
+  }  
+article.with_photo.on_right .photo {
+  .omega;
+  }
+article.with_photo.on_right .info {
+  .alpha;
+  }         
