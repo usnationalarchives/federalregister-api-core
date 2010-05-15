@@ -1,1 +1,2 @@
 page.insert_html :bottom, '#highlighted', :partial => 'admin/issues/sections/highlighted_entry', :object => @section_highlight.entry
+page.visual_effect :highlight, dom_id(@section_highlight.entry), :duration => 5
