@@ -16,10 +16,11 @@ module JavascriptHelper
   end
   
   def add_javascript(options={})
-    content_for :javascripts do 
+    partial = options.delete(:partial) || nil
+    content_for :javascripts do
       if options[:src]
-        javascript_include_tag(options[:src])
-      elsif options[:partial]
+        javascript_include_tag(options[:src], options[:load] || '')
+      elsif partial
         render options
       else
         content = yield
