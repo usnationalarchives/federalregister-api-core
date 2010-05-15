@@ -39,19 +39,19 @@
           <p>Current Issue: May 13, 2010</p>
           <form action="<%= entries_search_path %>" method="get">
           </form>
-        </div> <!-- END container_12 -->
+        </div>
       </div> <!-- END issue and search bar -->
       
       <%= render :partial => 'layouts/navigation', :locals => {:last_date => @last_date, :search_term => @search_term} %>    
       
-      <hgroup class="container">
+      <hgroup>
         <h1><a href="/" title="Federal Register Home">The Federal Register</a></h1>
         <h2>The Daily Journal of the United States Government</h2>
       </hgroup>
       
     </header>
     
-    <div id="main" class="container">
+    <div id="main">
       
       <%= yield %>
     

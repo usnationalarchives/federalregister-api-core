@@ -21,7 +21,7 @@ class LedePhoto < ApplicationModel
   attr_reader :flickr_owner_id
   has_many :entries
   has_attached_file :photo,
-                    :styles => { :small => ["150", :jpg], :medium => ["245", :jpg], :large => ["580", :jpg], :full_size => ["", :jpg] },
+                    :styles => { :small => ["140", :jpg], :medium => ["245", :jpg], :large => ["580", :jpg], :full_size => ["", :jpg] },
                     :processors => [:thumbnail]
   
   before_save :download_and_crop_file
