@@ -6,7 +6,7 @@
   
   <%= stylesheet_link_tag "reset",                    :media => :screen %>
   <%= stylesheet_link_tag "text" ,                    :media => :screen %>
-  <%= stylesheet_link_tag "grid",                     :media => :screen %>
+  <%= stylesheet_link_tag "admin/grid",               :media => :screen %>
   <%= stylesheet_link_tag "admin/buttons",            :media => :screen %>
   <%= stylesheet_link_tag "ContentFlow/contentflow",  :media => :screen %>
   <%= stylesheet_link_tag "admin/formtastic",         :media => :screen %>
@@ -85,20 +85,20 @@
     <footer>
       
     </footer>
-    
-    <%= jquery_include_tag %>
-    <%= jquery_ui_include_tag %>
-    <%= javascript_include_tag 'jquery.tablesorter' %>
-    <%= javascript_include_tag 'admin/admin' %>
-    
-    <%= yield :javascripts %>
-    
-    <!-- <script>
-      (function(){document.body.appendChild(document.createElement('script')).src='http://gridder.andreehansson.se/releases/latest/960.gridder.js';})();
-    </script> -->
-    
-    <script type="text/javascript" src="http://use.typekit.com/qbb7wou.js"></script>
-    <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
   </div> <!-- wrapper end -->
+  
+  <%= jquery_include_tag %>
+  <%= jquery_ui_include_tag %>
+  <%= javascript_include_tag 'jquery.tablesorter' %>
+  <%= javascript_include_tag 'admin/admin' %>
+  
+  <%= yield :javascripts %>
+  
+  <!-- <script>
+    (function(){document.body.appendChild(document.createElement('script')).src='http://gridder.andreehansson.se/releases/latest/960.gridder.js';})();
+  </script> -->
+  
+  <script type="text/javascript" src="http://use.typekit.com/qbb7wou.js"></script>
+  <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
 </body>
 </html>

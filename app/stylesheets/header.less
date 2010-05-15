@@ -1,0 +1,64 @@
+@import 'grid.less';
+
+@golden: #e4a529;
+
+header {
+  margin-bottom: 30px; }
+
+header #issue_and_search_bar {
+  background: #636363;
+  background: rgba(99,99,99 .3);
+  height: 30px;
+  margin-bottom: 2px;
+  }  
+header nav {
+  border-top: 2px solid @golden;
+  overflow: hidden;
+  }
+header nav ul {
+  margin-left: auto;
+  margin-right: auto;
+  overflow: hidden;
+  width: 785px;
+  }
+header nav ul li {
+  border-top: 5px solid transparent;
+  display: block;
+  float: left;
+  font-size: 12px;
+  list-style: none;
+  margin-left: 30px;
+  padding-top: 3px;
+  }
+header nav ul li.on { 
+  border-top: 5px solid @golden;  
+  }  
+header nav ul li:hover,
+header nav ul li:focus {
+  border-top: 5px solid @golden;
+  }  
+header nav ul li:first-child {
+  margin-left: 0;
+  }  
+header nav ul li a {
+  color: #6d6e71;
+  text-decoration: none;
+  text-transform: uppercase;
+  }
+header hgroup {
+  background: url(/images/logotype.png) no-repeat left top;
+  .container;
+  display: block;
+  height: 64px;
+  position: relative;
+  text-indent: -9999px;
+  }
+header hgroup h1,
+header hgroup h2 {
+  float: left;
+  }
+header hgroup h1 a {
+  display: block; 
+  height: 64px;   
+  width: 543px;    
+  }  
