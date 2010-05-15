@@ -21,12 +21,17 @@
   <div>
   <% @section.entries.published_on(@publication_date).each do |entry| %>
     <article data-entry-id="<%= entry.id %>" class="<%= 'highlighted' if @highlighted_entries.include?(entry) %>">
-      <h1><%= entry.curated_title %></h1>
+      <h1 title="<%= entry.abstract.gsub(/"/, '&quot;') %>"><%= entry.curated_title %></h1>
       <p>
+        <span class="length">Length: <%= pluralize entry.human_length, 'page' %></span>
+        <span class="entry_type">Type: <%= entry.entry_type %></span>
         <% if entry.significant? %>
           <span class="significant">Economically Significant</span>
         <% end %>
-        Length: <%= pluralize entry.human_length, 'page' %>
+        
+        <% if entry.graphics.count > 0 %>
+          <span class="graphics">Contains Graphics</span>
+        <% end %>
       </p>
     </article>
   <% end %>
