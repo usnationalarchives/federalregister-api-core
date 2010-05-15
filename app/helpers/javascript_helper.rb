@@ -19,7 +19,7 @@ module JavascriptHelper
     partial = options.delete(:partial) || nil
     content_for :javascripts do
       if options[:src]
-        javascript_include_tag(options[:src], options[:load] || '')
+        javascript_include_tag(options.delete(:src), options)
       elsif partial
         render options
       else
