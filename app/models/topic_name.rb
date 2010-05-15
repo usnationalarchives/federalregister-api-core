@@ -1,3 +1,17 @@
+=begin Schema Information
+
+ Table name: topic_names
+
+  id            :integer(4)      not null, primary key
+  name          :string(255)
+  created_at    :datetime
+  updated_at    :datetime
+  entries_count :integer(4)      default(0)
+  void          :boolean(1)
+  topics_count  :integer(4)      default(0)
+
+=end Schema Information
+
 class TopicName < ApplicationModel
   has_many :topic_name_assignments
   has_many :entries, :through => :topic_name_assignments
