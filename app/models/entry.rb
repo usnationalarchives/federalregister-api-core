@@ -38,7 +38,10 @@
   full_text_updated_at         :datetime
   cfr_title                    :string(255)
   cfr_part                     :string(255)
-  headline                     :string(255)
+  curated_title                :string(255)
+  curated_abstract             :string(255)
+  lede_photo_id                :integer(4)
+  lede_photo_candidates        :text
 
 =end Schema Information
 
