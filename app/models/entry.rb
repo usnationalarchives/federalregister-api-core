@@ -335,7 +335,7 @@ class Entry < ApplicationModel
   end
   
   def lede_photo_candidates
-    self[:lede_photo_candidates] ? YAML::load(self[:lede_photo_candidates]) : nil
+    self[:lede_photo_candidates] ? YAML::load(self[:lede_photo_candidates]) : []
   end
   
   private

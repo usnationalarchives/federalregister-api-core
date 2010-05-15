@@ -1,59 +1,43 @@
-<% title 'Editing Entry' %>
+<% super_title 'Sections' %>
+<% title "Editing Entry" %>
 
-<% add_javascript do %>
-  <style>
-    #preview {width:100px;height:100px;overflow:hidden;margin-left:5px; }
-  </style>
+<% add_javascript :src => 'admin/issues_entries_lede_photos' %>
+<% add_javascript :src => 'jquery.Jcrop'                     %>
+<% add_javascript :src => '../ContentFlow/contentflow', :load => '../ContentFlow/ContentFlowAddOn_white'%>
+
+<% nav_secondary(render :partial => 'admin/issues/sections/nav', :locals => {:sections => @sections, :publication_date => @publication_date}) %>
+
+<div class='center_content'>
   
-  <%= javascript_include_tag 'jquery.Jcrop.js' %>
-  <script>
-  $(document).ready(function(){
-    function showPreview(coords) {
-      var rx = 100 / coords.w;
-      var ry = 100 / coords.h;
-
-      $('#preview img').css({
-        width: Math.round(rx * 500) + 'px',
-        height: Math.round(ry * 370) + 'px',
-        marginLeft: '-' + Math.round(rx * coords.x) + 'px',
-        marginTop: '-' + Math.round(ry * coords.y) + 'px'
-      });
-    }
-    
-    $('#candidates li img').live('click', function() {
-      var src = $(this).attr('src').replace(/_m\./, '.');
-      $('#entry_lede_photo_attributes_url').val(src);
-      $('#preview').val(src);
-      $('#crop-box').html('<img src="' + src + '" />')
-      $('#preview').html('<img src="' + src + '" />');
-      
-      $('#crop-box img').Jcrop({
-        onChange: showPreview,
-        onSelect: function(c){
-          showPreview(c);
-          $('#entry_lede_photo_attributes_crop_x').val(c.x);
-          $('#entry_lede_photo_attributes_crop_y').val(c.y);
-          $('#entry_lede_photo_attributes_crop_width').val(c.w);
-          $('#entry_lede_photo_attributes_crop_height').val(c.h);
-        },
-        aspectRatio: 1,
-        bgColor: 'yellow',
-        bgOpacity: .8,
-      });
-    });
-  });
-  </script>
-<% end %>
-
-<div id="candidates">
-<% @entry.lede_photo_candidates.slice(0..0).each do |topic, photos| %>
-  <h2><%= topic %></h2>
-  <ul>
-  <% photos.slice(0..2).each do |photo| %>
-    <li><%= image_tag photo.url('m') %></li>
+  <div id='lede_photo_flow'>
+  <% [@entry.lede_photo_candidates.first].each do |topic, photos| %>
+    <div id='<%= topic.downcase %>_flow' class="ContentFlow">
+        <div class="loadIndicator"><div class="indicator"></div></div>
+        <div class="flow">
+            <% photos.each do |photo| %>
+            <div class="item">
+              <%= image_tag photo.url('m'), :class => 'content', :title => '' %>
+              <div class="caption"><%= topic %></div>
+            </div>
+            <% end %>
+        </div>
+        <div class="globalCaption"><%= topic %></div>
+        <div class="scrollbar">
+          <div class="slider">
+            <div class="position"></div>
+          </div>
+        </div>
+    </div>
   <% end %>
-  </ul>
-<% end %>
+  </div>
+  
+  <table class='clearfix'>
+    <% @entry.lede_photo_candidates.each do |topic, photos| %>
+    <tr>
+      <td><%= link_to topic, '' %></td>
+    </tr>
+    <% end %>
+  </table>
 </div>
 
 <div id="crop-box"></div>

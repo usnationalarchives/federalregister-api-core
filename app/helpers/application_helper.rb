@@ -1,6 +1,7 @@
 # Methods added to this helper will be available to all templates in the application.
 module ApplicationHelper
   def set_content_for(name, content = nil, &block)
+    # clears out the existing content_for so that its set rather than appended to
     ivar = "@content_for_#{name}"
     instance_variable_set(ivar, nil)
     content_for(name, content, &block)
@@ -20,9 +21,7 @@ module ApplicationHelper
     end
   end
   
-  def nav_secondary(text, options = {})
-    options.symbolize_keys!
-    
+  def nav_secondary(text)
     set_content_for :nav_secondary, text
   end
   
