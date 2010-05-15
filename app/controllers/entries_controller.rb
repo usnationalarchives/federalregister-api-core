@@ -76,7 +76,8 @@ class EntriesController < ApplicationController
         :order => "entries.title"
     )
     @entries_without_agency = Entry.all(
-      :conditions => ['entries.agency_id IS NULL && entries.publication_date = ?', @publication_date],
+      :joins => :agencies,
+      :conditions => ['agencies.id IS NULL && entries.publication_date = ?', @publication_date],
       :order => "entries.title"
     )
     

@@ -3,7 +3,8 @@
 
 <% add_javascript :src => 'admin/issues_entries_lede_photos' %>
 <% add_javascript :src => 'jquery.Jcrop'                     %>
-<% add_javascript :src => '../ContentFlow/contentflow', :load => '../ContentFlow/ContentFlowAddOn_white'%>
+<% add_javascript :src => '../ContentFlow/contentflow' %>
+<% add_javascript :src => '../ContentFlow/ContentFlowAddOn_white' %>
 
 <% nav_secondary(render :partial => 'admin/issues/sections/nav', :locals => {:sections => @sections, :publication_date => @publication_date}) %>
 
@@ -43,8 +44,8 @@
   <% end %>
   
   <% f.inputs do %>
-    <%= f.input :curated_title %>
-    <%= f.input :curated_abstract, :as => :text %>
+    <%= f.input :curated_title, :hint => "Original: <em>#{f.object.title}</em>" %>
+    <%= f.input :curated_abstract, :as => :text, :hint => "Original: <em>#{truncate(f.object.abstract, 250)}</em>" %>
   <% end %>
   
   <% f.buttons do %>
