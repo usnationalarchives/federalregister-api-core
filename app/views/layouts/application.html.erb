@@ -36,7 +36,7 @@
       <div id="issue_and_search_bar">
         <div class="container">
           <div id="seal"></div>
-          <p>Current Issue: May 13, 2010</p>
+          <p>Current Issue: <%= Entry.latest_publication_date.to_s(:wday_and_pretty_date) %></p>
           <form action="<%= entries_search_path %>" method="get">
           </form>
         </div>
