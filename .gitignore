@@ -15,5 +15,6 @@
 /public/stylesheets/admin/navigation.css
 /public/stylesheets/admin/screen.css
 /public/stylesheets/admin/tablesorter.css
+/public/stylesheets/admin/grid.css
 /db/sphinx/
 .DS_Store
