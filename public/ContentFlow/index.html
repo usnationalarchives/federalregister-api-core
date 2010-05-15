@@ -1,0 +1,113 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+    <link rel="stylesheet" title="Standard" href="styles.css" type="text/css" media="screen" />
+
+    <script language="JavaScript" type="text/javascript" src="contentflow.js"></script>
+    <script tyle="text/javascript">
+        var cf = new ContentFlow('contentFlow', {reflectionColor: "#000000"});
+    </script>
+</head>
+<body>
+
+    <h1 id="title"><img src="title.png"/></h1>
+    <h3 style="text-align: center; margin: 10px 0 30px 0; text-decoration: none;">version 1.0.2</h3>
+    
+    <ul id="menu">
+        <li><a href="index.html">start</a></li>
+        <li><a href="docu.html">documentation</a></li>
+        <li><a href="changelog.html">changelog</a></li>
+        <li><a href="license.html">license</a></li>
+        <li><a href="mailto:contentflow@jacksasylum.eu">contact</a></li>
+    </ul>
+    
+    <div class="maincontent">
+
+        <p>
+        ContentFlow is a flexible flow written in javascript, which can handle any kind of content.
+        It's distributed under the <a href="licens.html">MIT License</a>.
+        </p>
+
+        <p>
+        With ContentFlow it is now possible to have any number of flows within one web page.
+        Each separately configurable, satisfying different visual needs.
+        </p>
+        <p>
+        It's easy to implement and to extend. 
+        You are free to define your own methods for displaying content and interacting with it.
+        You can control all aspects of the flow without loosing the ease of use.
+        </p>
+        <p>
+        ContentFlow can handle different kinds of control, like keyboard and mouse, and can be used with and without a reflection.
+        For a complete list of features and compatibilities take a look at the <a href="http://www.jacksasylum.eu/ContentFlow/features.html">feature list</a>.
+        </p>
+
+    <!-- ===== FLOW ===== -->
+    <div id="contentFlow" class="ContentFlow">
+        <!-- should be place before flow so that contained images will be loaded first -->
+        <div class="loadIndicator"><div class="indicator"></div></div>
+
+        <div class="flow">
+
+            <div class="item">
+                <img class="content" src="pics/pic0.png"/>
+                <div class="caption">pic0: some stripes</div>
+            </div>
+            <div class="item">
+                <img class="content" src="pics/pic1.png"/>
+                <div class="caption">pic1: some stripes</div>
+            </div>
+            <div class="item">
+                <img class="content" src="pics/pic2.png"/>
+                <div class="caption">pic2: some stripes</div>
+            </div>
+            <div class="item">
+                <img class="content" src="pics/pic1.png"/>
+                <div class="caption">pic1: some stripes</div>
+            </div>
+
+            <div class="item">
+                <img class="content" src="pics/pic0.png"/>
+                <div class="caption">pic0: some stripes</div>
+            </div>
+            <div class="item">
+                <img class="content" src="pics/pic1.png"/>
+                <div class="caption">pic1: some stripes</div>
+            </div>
+            <div class="item">
+                <img class="content" src="pics/pic2.png"/>
+                <div class="caption">pic2: some stripes</div>
+            </div>
+            <div class="item">
+                <img class="content" src="pics/pic1.png"/>
+                <div class="caption">pic1: some stripes</div>
+            </div>
+
+            <div class="item">
+                <img class="content" src="pics/pic0.png"/>
+                <div class="caption">pic0: some stripes</div>
+            </div>
+            <div class="item">
+                <img class="content" src="pics/pic1.png"/>
+                <div class="caption">pic1: some stripes</div>
+            </div>
+            <div class="item">
+                <img class="content" src="pics/pic2.png"/>
+                <div class="caption">pic2: some stripes</div>
+            </div>
+            <div class="item">
+                <img class="content" src="pics/pic1.png"/>
+                <div class="caption">pic1: some stripes</div>
+            </div>
+
+        </div>
+        <div class="globalCaption"></div>
+        <div class="scrollbar">
+            <div class="slider"><div class="position"></div></div>
+        </div>
+
+    </div>
+
+</body>
+</html>

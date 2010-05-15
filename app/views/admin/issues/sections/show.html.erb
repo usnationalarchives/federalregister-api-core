@@ -1,6 +1,8 @@
 <% super_title 'Sections' %>
 <% title @section.name %>
+
 <% add_javascript :src => 'admin/issues_sections_highlights' %>
+
 
 <% nav_secondary(render :partial => 'nav', :locals => {:sections => @sections, :publication_date => @publication_date}) %>
 
@@ -13,18 +15,25 @@
 </ul>
 
 
-<h3 class='grid_10 push_2'>Entries in this section on <%= @publication_date %></h3>
+<div class='center_content'>
+  <h3>Entries in this section on <%= @publication_date %></h3>
 
-<div class='grid_10 push_2'>
-<% @section.entries.published_on(@publication_date).each do |entry| %>
-  <article data-entry-id="<%= entry.id %>" class="<%= 'highlighted' if @highlighted_entries.include?(entry) %>">
-    <h1><%= entry.curated_title %></h1>
-    <p>
-      <% if entry.significant? %>
-        <span class="significant">Economically Significant</span>
-      <% end %>
-      Length: <%= pluralize entry.human_length, 'page' %>
-    </p>
-  </article>
-<% end %>
+  <div>
+  <% @section.entries.published_on(@publication_date).each do |entry| %>
+    <article data-entry-id="<%= entry.id %>" class="<%= 'highlighted' if @highlighted_entries.include?(entry) %>">
+      <h1 title="<%= entry.abstract.gsub(/"/, '&quot;') %>"><%= entry.curated_title %></h1>
+      <p>
+        <span class="length">Length: <%= pluralize entry.human_length, 'page' %></span>
+        <span class="entry_type">Type: <%= entry.entry_type %></span>
+        <% if entry.significant? %>
+          <span class="significant">Economically Significant</span>
+        <% end %>
+        
+        <% if entry.graphics.count > 0 %>
+          <span class="graphics">Contains Graphics</span>
+        <% end %>
+      </p>
+    </article>
+  <% end %>
+  </div>
 </div>

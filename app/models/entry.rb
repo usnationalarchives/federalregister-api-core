@@ -141,14 +141,14 @@ class Entry < ApplicationModel
     scoped(:conditions => {:entries => {:publication_date => publication_date}})
   end
   
-  def self.comments_closing(range = (Date.today .. Date.today + 7.days))
+  def self.comments_closing(range = (Date.today .. Date.today + 14.days))
     scoped(
       :joins => :comments_close_date,
       :conditions => {:referenced_dates => {:date => range}}
     )
   end
   
-  def self.comments_opening(range = (Date.today - 7.days .. Date.today))
+  def self.comments_opening(range = (Date.today - 14.days .. Date.today))
     scoped(
       :joins => :comments_close_date,
       :conditions => {:entries => {:publication_date => range}}
@@ -338,7 +338,7 @@ class Entry < ApplicationModel
   end
   
   def lede_photo_candidates
-    self[:lede_photo_candidates] ? YAML::load(self[:lede_photo_candidates]) : nil
+    self[:lede_photo_candidates] ? YAML::load(self[:lede_photo_candidates]) : []
   end
   
   private

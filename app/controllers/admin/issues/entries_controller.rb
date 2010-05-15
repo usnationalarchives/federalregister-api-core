@@ -1,5 +1,6 @@
 class Admin::Issues::EntriesController < AdminController
   def edit
+    @sections = Section.all
     @publication_date = Date.parse(params[:issue_id])
     @entry = Entry.published_on(@publication_date).find_by_document_number!(params[:id])
     @entry.curated_title = @entry.title unless @entry[:curated_title].present?

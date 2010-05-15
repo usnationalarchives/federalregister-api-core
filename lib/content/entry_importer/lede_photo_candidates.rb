@@ -6,7 +6,7 @@ module Content::EntryImporter::LedePhotoCandidates
   def lede_photo_candidates
     if false && entry.lede_photo_candidates
       entry.lede_photo_candidates
-    else
+    elsif entry.abstract.present?
       tags = SocialTagExtractor.new.extract(entry.abstract)
     
       suggestions = []

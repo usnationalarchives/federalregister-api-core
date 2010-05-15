@@ -1,0 +1,155 @@
+/*  ContentFlowAddOn_DEFAULT, version 1.0.2 
+ *  (c) 2008 - 2010 Sebastian Kutsch
+ *  <http://www.jacksasylum.eu/ContentFlow/>
+ *
+ *  This file is distributed under the terms of the MIT license.
+ *  (see http://www.jacksasylum.eu/ContentFlow/LICENSE)
+ *
+ *--------------------------------------------------------------------------*/
+
+/*
+ * This is an example file of an AddOn stylesheet. All values are the default
+ * values as they are found in 'mycontentflow.css'.
+ *
+ * It should give you a good idea which elements of the ContentFlow you can
+ * style and how to excess them.
+ *
+ * To use this stylesheet follow this guideline:
+ *
+ * 1. Create a new AddOn and use the addStylesheet method in the init method.
+ *    Take a look at ContentFlowAddOn_DEFAULT.js to know how.
+ *    So a minimal AddOn file just to apply this stylesheet would look like this:
+ *      new ContentFlowAddOn ('ADDONNAME', {
+ *          init: function () { this.addStylesheet(); }
+ *      });
+ *
+ * 2. Rename all class definitions '.ContentFlowAddOn_DEFAULT' to
+ *    '.ContentFlowAddOn_ADDONNAME'.
+ *    Where ADDONNAME is the name of your AddOn.
+ *
+ * 3. Make the changes you like
+ *
+ * 4. Reload your page :-)
+ * 
+ */
+
+/* ========== ContentFlow ========== */
+/*
+ * Within this file you can adjust the styling of ContentFlow
+ * to your personal needs. The default styling is the same as found on the 
+ * project page.
+ *
+ */
+
+.ContentFlowAddOn_DEFAULT {
+}
+
+    /* ----- styling of items ----- */
+    .ContentFlowAddOn_DEFAULT .flow .item.active {
+        cursor: pointer;
+    }
+        .ContentFlowAddOn_DEFAULT .flow .item .caption {
+            font-size: 100%;
+            font-weight: bold;
+            text-align: center;
+            color: white;
+            max-height: 30%;
+            bottom: 10%;
+            background: url(img/1x1_0.5_black.png);
+            width: 100%;
+        }
+        * html .ContentFlowAddOn_DEFAULT .flow .item .caption {
+            background-image: none;
+            filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(enabled=true, sizingMethod=scale, src='img/1x1_0.5_black.png');
+        }
+            .ContentFlowAddOn_DEFAULT .flow .item .caption a,
+            .ContentFlowAddOn_DEFAULT .flow .item .caption a:link,
+            .ContentFlowAddOn_DEFAULT .flow .item .caption a:visited,
+            .ContentFlowAddOn_DEFAULT .flow .item .caption a:active,
+            .ContentFlowAddOn_DEFAULT .flow .item .caption a:hover {
+                text-decoration: none;
+                color: white;
+                font-style: italic;
+                font-size: 0.8em;
+            }
+            .ContentFlowAddOn_DEFAULT .flow .item .caption a:hover {
+                text-decoration: underline;
+            }
+        .ContentFlowAddOn_DEFAULT .flow .item.active .caption {
+            /*display: block;*/ /* uncomment to show caption inside item */
+        }
+
+    /* ----- scrollbar ----- */
+    .ContentFlowAddOn_DEFAULT .scrollbar {
+        width: 50%;
+        margin: 0px auto;
+        height: 16px;
+        background: url(img/scrollbar_white.png) left center repeat-x;
+        position: relative;
+    }
+
+        .ContentFlowAddOn_DEFAULT .scrollbar .slider {
+            width: 16px;
+            height: 16px;
+            background: url(img/slider_white.png) center center no-repeat;
+        }
+        
+        /* only for IE <= 6 and a alphatransparent slider image */
+        * html .ContentFlow .scrollbar .slider { background-image: none; }
+        * html .ContentFlow .scrollbar .slider .virtualSlider {
+            filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(enabled=true, sizingMethod=crop, src='img/slider_white.png');
+        }
+
+            .ContentFlowAddOn_DEFAULT .scrollbar .slider .position {
+                top: 120%;
+                font-size: 16px;
+                font-weight: bold;
+                color: silver
+            }
+
+    /* ----- global caption ----- */
+    .ContentFlowAddOn_DEFAULT .globalCaption {
+        text-align: center;
+        font-weight: bold;
+        color: white;
+        font-size: 14px;
+        height: 20px;
+        margin: 2em auto;
+    }
+        .ContentFlowAddOn_DEFAULT .globalCaption .caption {
+        }
+            .ContentFlowAddOn_DEFAULT .globalCaption .caption a,
+            .ContentFlowAddOn_DEFAULT .globalCaption .caption a:link,
+            .ContentFlowAddOn_DEFAULT .globalCaption .caption a:visited,
+            .ContentFlowAddOn_DEFAULT .globalCaption .caption a:active,
+            .ContentFlowAddOn_DEFAULT .globalCaption .caption a:hover {
+                text-decoration: none;
+                color: white;
+                font-style: italic;
+                font-size: 0.8em;
+            }
+
+            .ContentFlowAddOn_DEFAULT .globalCaption .caption a:hover {
+                text-decoration: underline;
+            }
+
+    /* ----- load indicator ----- */
+    .ContentFlowAddOn_DEFAULT .loadIndicator {
+        width: 100%;
+        height: 100%;
+        top: 0px;
+        left: 0px;
+        background: url(img/1x1_0.5_black.png);
+    }
+    * html .ContentFlowAddOn_DEFAULT .loadIndicator {
+        background-image: none;
+        filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(enabled=true, sizingMethod=scale, src='img/1x1_0.5_black.png');
+    }
+        .ContentFlowAddOn_DEFAULT .loadIndicator .indicator {
+            background: url(img/loader.gif) center center no-repeat;
+            width: 100%;
+            height: 100%;
+        }
+
+/* ================================= */
+

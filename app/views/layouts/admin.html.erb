@@ -6,12 +6,13 @@
   
   <%= stylesheet_link_tag "reset",                    :media => :screen %>
   <%= stylesheet_link_tag "text" ,                    :media => :screen %>
-  <%= stylesheet_link_tag "grid",                     :media => :screen %>
+  <%= stylesheet_link_tag "admin/grid",               :media => :screen %>
   <%= stylesheet_link_tag "admin/buttons",            :media => :screen %>
+  <%= stylesheet_link_tag "ContentFlow/contentflow",  :media => :screen %>
   <%= stylesheet_link_tag "admin/formtastic",         :media => :screen %>
   <%= stylesheet_link_tag "admin/formtastic_changes", :media => :screen %>
   <%= stylesheet_link_tag "admin/screen",             :media => :screen %>
-  <%= stylesheet_link_tag "admin/jquery.Jcrop.css",   :media => :screen %>
+  <%= stylesheet_link_tag "admin/jquery.Jcrop",       :media => :screen %>
   <%= stylesheet_link_tag "admin/navigation",         :media => :screen %>
   <%= stylesheet_link_tag "admin/tablesorter",        :media => :screen %>
   
@@ -24,7 +25,7 @@
     <!-- HEADER -->
     <header>
       <hgroup>
-        <h1><a href="/" title="govpulse home">Federal Register :: Admin</a></h1>
+        <h1><a href="/" title="federal register home">Federal Register :: Admin</a></h1>
       </hgroup>
       
       <% if current_user %>
@@ -33,7 +34,7 @@
           <li><%= link_to 'Home', admin_home_path, :class => "button tan home" %></li>
           <li><%= link_to 'Agency Names', admin_agency_names_path, :class => "button tan" %></li>
           <li><%= link_to 'Topic Names', admin_topic_names_path, :class => "button tan" %></li>
-          <li><%= link_to 'Users', admin_users_path, :class => "button tan" %></li>
+          <li><%= link_to 'Users', admin_users_path, :class => "button tan users" %></li>
           <li><%= link_to 'Sections', admin_issue_sections_path(Entry.last.publication_date.to_s(:mdy_dash)), :class => "button tan" %></li>
         </ul>
       </nav>
@@ -84,20 +85,20 @@
     <footer>
       
     </footer>
-    
-    <%= jquery_include_tag %>
-    <%= jquery_ui_include_tag %>
-    <%= javascript_include_tag 'jquery.tablesorter' %>
-    <%= javascript_include_tag 'admin/admin' %>
-    
-    <%= yield :javascripts %>
-    
-    <!-- <script>
-      (function(){document.body.appendChild(document.createElement('script')).src='http://gridder.andreehansson.se/releases/latest/960.gridder.js';})();
-    </script> -->
-    
-    <script type="text/javascript" src="http://use.typekit.com/qbb7wou.js"></script>
-    <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
   </div> <!-- wrapper end -->
+  
+  <%= jquery_include_tag %>
+  <%= jquery_ui_include_tag %>
+  <%= javascript_include_tag 'jquery.tablesorter' %>
+  <%= javascript_include_tag 'admin/admin' %>
+  
+  <%= yield :javascripts %>
+  
+  <!-- <script>
+    (function(){document.body.appendChild(document.createElement('script')).src='http://gridder.andreehansson.se/releases/latest/960.gridder.js';})();
+  </script> -->
+  
+  <script type="text/javascript" src="http://use.typekit.com/qbb7wou.js"></script>
+  <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
 </body>
 </html>

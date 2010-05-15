@@ -3,7 +3,7 @@
 
 <% nav_secondary(render :partial => 'nav') %>
 
-<table class='grid_10 push_2 sortable' summary="All Users">
+<table class='center_content sortable' summary="All Users">
   <thead>
     <tr>
       <th>First Name</th>
@@ -15,7 +15,7 @@
   </thead>
   <tbody>
     <% @users.each do |user| %>
-      <tr class="<%= cycle("", "odd") %>">
+      <tr class="<%= cycle("even", "odd") %>">
         <td><%= user.first_name %></td>
         <td><%= user.last_name %></td>
         <td><%= user.email %></td>

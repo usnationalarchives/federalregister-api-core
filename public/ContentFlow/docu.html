@@ -1,0 +1,1023 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+    <link rel="stylesheet" title="Standard" href="styles.css" type="text/css" media="screen" />
+</head>
+<body>
+
+    <h1 id="title"><img src="title.png"/></h1>
+    <h3 style="text-align: center; margin: 10px 0 30px 0; text-decoration: none;">version 1.0.2</h3>
+
+    <ul id="menu">
+        <li><a href="index.html">start</a></li>
+        <li><a href="docu.html">documentation</a></li>
+        <li><a href="changelog.html">changelog</a></li>
+        <li><a href="license.html">license</a></li>
+        <li><a href="mailto:contentflow@jacksasylum.eu">contact</a></li>
+    </ul>
+
+    <div class="maincontent">
+
+<style>
+    .tab {
+        padding: 10px;
+        border: 1px solid #222;
+        float: left;
+        font-size: 18px;
+        background-color: #222;
+        margin-right: 5px;
+    }
+
+    .tabItem {
+        display: none; 
+        border: 1px solid #222; 
+        padding: 2em; 
+        margin-bottom: 2em;
+    }
+</style>
+<script>
+    window.activeTab = null;
+    window.activeTabs = [];
+    function toggleTab(tabblock, tab) {
+        var at = window.activeTabs[tabblock]
+
+        at.style.borderBottomColor = "#222";
+        at.style.backgroundColor = "#222";
+        at.content.style.display = "none";
+
+        window.activeTabs[tabblock] = tab;
+        at = window.activeTabs[tabblock]
+
+        at.style.borderBottomColor = "#000";
+        at.style.backgroundColor = "#000";
+        at.content.style.display = "block";
+    }
+    window.initTabs = [];
+</script>
+
+
+
+    <div class="maincontent">
+
+    
+        <div class="totop">
+    <a href="" id="usageSub" onclick="return switchBlock('usage')">Usage</a>
+    <a href="" id="optionsSub" onclick="return switchBlock('options')">Options</a>
+    <a href="" id="methodsSub" onclick="return switchBlock('methods')">Methods</a>
+    <a href="" id="objectsSub" onclick="return switchBlock('objects')">Objects</a>
+    <a href="" id="keywordsSub" onclick="return switchBlock('keywords')">position Keywords</a>
+</div>
+
+            <div id="usageBlock" class="block">
+        <div id="Usage" name="Usage"></div>
+        
+            <div style="margin-bottom: -1px; z-imdex: 100; width: 100%;">
+<a href="#" onclick="toggleTab('usage', this.firstChild); return false;"><div id="basicTab" class="tab" >Basic usage</div></a><a href="#" onclick="toggleTab('usage', this.firstChild); return false;"><div id="advancedTab" class="tab" >Advanced usage</div></a><a href="#" onclick="toggleTab('usage', this.firstChild); return false;"><div id="linksTab" class="tab" >Items as links</div></a><a href="#" onclick="toggleTab('usage', this.firstChild); return false;"><div id="fullTab" class="tab" >Full usage</div></a><a href="#" onclick="toggleTab('usage', this.firstChild); return false;"><div id="confTab" class="tab" >Configuration</div></a>        <div class="clear"></div>
+    </div>
+    <script>
+       var w = window.initTabs || initTabs;
+       w.push( function () {
+            var t = ["basic","advanced","links","full","conf"];
+            var tabs = [];
+            for (var i=0; i<t.length; i++) {
+                tabs[i] = document.getElementById(t[i]+"Tab");
+                tabs[i].content = document.getElementById(t[i]);
+            }
+
+            if (tabs[0].content) {
+                //window.activeTab = tabs[0];
+                //toggleTab(tabs[0]);
+                window.activeTabs['usage'] = tabs[0];
+                toggleTab('usage', tabs[0]);
+            }
+       }
+    );
+
+    </script>
+
+        <!-- BASIC USAGE -->
+        <div id="basic" class="tabItem">
+                    <ol>
+                <li>
+                    First extract all files in the same directory.
+                    <ul>
+                        <li>To run ContentFlow you only need : 'contentflow.js', 'contentflow.css' and the 'img' directory.</li>
+                    </ul>
+                </li>
+
+                <div name="init" id="init"></div>
+                <li>
+                    Now load the ContentFlow script by adding the following code to the head of your html file:
+                    <pre><code>
+        &lt;script language="JavaScript" type="text/javascript" src="PATH/contentflow.js"&gt;&lt;/script&gt;
+                    </code></pre>
+                    Where PATH is the path to the directory where you extracted ContentFlow to.
+                </li>
+
+                <li>
+                Create the needed (X)HTML structure. The minimal (X)HTML structure needed is something like this:
+                <pre><code>
+        &lt;div class="ContentFlow"&gt;
+            &lt;div class="loadIndicator"&gt;&lt;div class="indicator"&gt;&lt;/div&gt;&lt;/div&gt;
+            &lt;div class="flow"&gt;
+                &lt;img class="item" src="someImageFile.jpg" title="Your_Image_Title"/&gt;
+                <b>&lt;!-- <i>Add as many items as you like.</i> --&gt;</b>
+            &lt;/div&gt;
+            &lt;div class="globalCaption"&gt;&lt;/div&gt;
+            &lt;div class="scrollbar"&gt;&lt;div class="slider"&gt;&lt;div class="position"&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;
+        &lt;/div&gt;
+                </code></pre>
+            </li>
+
+            <li>
+                That's it. Nothing more to do.
+            </li>
+            </ol>
+        </div>
+
+        <!-- ITEMS AS LINKS -->
+        <div id="links" class="tabItem">
+                    <p>To utilize an item as a link just add an href attribute to the item or the content tag like this:</p>
+                <pre><code>
+        &lt;div class="ContentFlow"&gt;
+            &lt;div class="flow"&gt;
+                &lt;div class="item" <b>href="YOUR_URL"</b>&gt;&lt;img class="content" src="someImageFile.jpg"/&gt;&lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+                </code></pre>
+
+                or even
+
+                <pre><code>
+        &lt;div class="ContentFlow"&gt;
+            &lt;div class="flow"&gt;
+                &lt;img class="item" <b>href="YOUR_URL"</b> src="someImageFile.jpg"/&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+                </code></pre>
+
+            <p>To be standard compliant just use an anker-tag as the item tag:</p>  
+                <pre><code>
+        &lt;div class="ContentFlow"&gt;
+            &lt;div class="flow"&gt;
+                &lt;<b>a</b> class="item" href="YOUR_URL"&gt;&lt;img class="content" src="someImageFile.jpg"/&gt;&lt;/<b>a</b>&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+                </code></pre>
+            <p><u>Beware:</u> <i><a href="http://www.w3.org/TR/html401/struct/links.html#h-12.2.2" target="_blank">In this case no element within the item may contain any ankors !!!</a></i></p>
+
+            <p>You can even use the target attribute to open the link in a new window:</p>  
+                <pre><code>
+        &lt;div class="ContentFlow"&gt;
+            &lt;div class="flow"&gt;
+                &lt;a class="item" href="YOUR_URL" <b>target="_blank"</b> &gt;&lt;img class="content" src="someImageFile.jpg"/&gt;&lt;/a&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+                </code></pre>
+        </div>
+
+        <!-- ADVANCED USAGE -->
+        <div id="advanced" class="tabItem">
+                        <h3>Basic principles</h3>
+                The direct usage of an image tag as an item is a simplified form of the default HTML structure and will be converted internally.
+                <pre><code>
+        &lt;img class="item" src="someImageFile.jpg" title="Your_Image_Title"/&gt;
+                </code></pre>
+                
+                corresponds to
+
+                <pre><code>
+        &lt;div class="item"&gt;
+            &lt;img class="content" src="someImageFile.jpg"/&gt;
+            &lt;div class="caption"&gt;Your_Image_Title&lt;/div&gt;
+        &lt;/div&gt;
+                </code></pre>
+
+                Not only images can be used as a content, but basicly any HTML elements you like.
+
+                <p>
+                ContentFlow is very flexible, so if you don't like having the <b>loadIndicator</b>, the <b>globalCaption</b> or the <b>scrollbar</b> just remove them.
+                ContentFlow will utilize them if it detects them.<br/>
+                So the very basic HTML structure is something like this:
+                
+                </p>
+                <pre><code>
+        &lt;div class="ContentFlow"&gt;
+            &lt;div class="flow"&gt;
+                &lt;img class="item" src="someImageFile.jpg"/&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+                </code></pre>
+
+                <h3>What about styling?</h3>
+                <p>
+                    If you want to change some styling you can do this globaly. Just rename the file '<b>mycontentflow.css.example</b>' to '<b>mycontentflow.css</b>', make the changes you like and you are ready to go.<br/>
+                    For example, if you have a white background, I already have done the work for you. Just use the  <a href="        addons.php        ">'<b>white</b>' AddOn</a>. To utilze it just download it, extract it into the same directory as '<b>contentflow.js</b>' and add the <b>load</b> attribute to the script tag:
+                </p>
+                    <code><pre>
+
+        &lt;script language="JavaScript" type="text/javascript" src="ContentFlow/contentflow.js" <b>load="<i>white</i>"</b>&gt;&lt;/script&gt;
+                    </pre></code>
+
+                    <h3>Configuration</h3>
+                    <p>It's quite easy to change the <a href="            javascript: switchBlock('config','');
+        ">configuration</a> of ContentFlow. 
+                        If you just want to fiddle with the configuration the fastest way is to create a new ContentFlow object in javascript:
+                    </p>
+                    <pre><code>
+        &lt;script&gt;
+            var myNewFlow = new ContentFlow('myFantasicFlow', { OPTION_1: value_1, OPTION_2: value_2, ... , OPTION_N: value_N } ) ;
+        &lt;/script&gt;
+                    </code></pre>
+
+                    <p>
+                    So let's say you want to disable the reflection (set reflectionHeight to 0) and don't want the flow to wrap around at the end (set circularFlow to false).
+                    You have to give the ContentFlow tag an id (let's call it 'myFantasicFlow') and insert the following script tag somewhere in your page:
+                    </p>
+                    <pre><code>
+        &lt;script&gt;
+            var myNewFlow = new ContentFlow('myFantasicFlow', { reflectionHeight: 0, circularFlow: false } ) ;
+        &lt;/script&gt;
+                    </code></pre>
+        </div>
+
+        <!-- FULL USAGE -->
+        <div id="full" class="tabItem">
+        
+            <h3>Files</h3>
+            <dl>
+                <dt>mycontentflow.css.example</dt>
+                <dd>This is an example file which will help you to style your ContentFlow globaly. Rename it to 'mycontentflow.css' to utilize it.  </dd>
+                <dt>ContentflowAddOn_DEFAULT.js &amp; ContentflowAddOn_DEFAULT.css</dt>
+                <dd>This are example files from which you can build your own <a href="        addons.php        ">AddOn</a>.</dt>
+            </dl>
+
+            <h3>Script tag</h3>
+            <p>
+                By adding the 'load' attribute to the script tag you can load one or more <a href="        addons.php        ">AddOn</a>. 
+                The AddOns have to be given in the form of a space separated list and are loaded in the same order as given.
+            </p>
+
+            <pre><code>
+        &lt;script language="JavaScript" type="text/javascript" src="PATH/contentflow.js" <b>load="SomeAddOnName SomeOtherAddOnName"</b> &gt;&lt;/script&gt;
+            </code></pre>
+
+            <p style="font-size:0.9em">
+                Where PATH is the path to the directory where you extracted ContentFlow to.<br/>
+                <i>'contentflow.js'</i> is a compressed (using <a href="http://developer.yahoo.com/yui/compressor/">yuicompressor</a>) version of <i>'contentflow_src.js'</i>. 
+                If you run in any problem with the compressed version, just change <i>'contentflow.js'</i> to <i>'contentflow_src.js'</i> (and drop me note).
+            </p>
+
+
+            <h3>(X)HTML</h3>
+            <div name="loader" id="loader"></div>
+            <p>
+                This code example shows all (X)HTML elements and element attributes ContentFlow knows about:
+            </p>
+            <pre><code>
+        &lt;div id="myFantasticFlow" class="ContentFlow" useAddOns="AddOns1 AddOn2 ..."&gt;
+            &lt;div class="loadIndicator"&gt;&lt;div class="indicator"&gt;&lt;/div&gt;&lt;/div&gt;
+            
+            &lt;div class="flow"&gt;
+                &lt;div class="item" href="URL" target="TARGET" &gt;
+                    &lt;img class="content" src="someImageFile.jpg" href="URL" target="TARGET" /&gt; 
+                    &lt;div class="caption"&gt;foobar&lt;/div&gt;
+                    &lt;div class="label"&gt;Slider Label&lt;/div&gt;
+                &lt;/div&gt;
+                <b>(<i>Add as many items as you like.</i>)</b>
+            &lt;/div&gt;
+
+            &lt;div class="globalCaption"&gt;&lt;/div&gt;
+            &lt;div class="scrollbar"&gt;
+                &lt;div class="preButton"&gt;&lt;/div&gt;
+                &lt;div class="nextButton"&gt;&lt;/div&gt;
+                &lt;div class="slider"&gt;&lt;div class="position"&gt;&lt;/div&gt;&lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+            </code></pre>
+            <p>
+                The '<u>loadIndicator</u>', '<u>caption</u>', '<u>label</u>', '<u>globalCaption</u>', '<u>scrollbar</u>', '<u>preButton</u>', '<u>nextButton</u>', '<u>slider</u> and '<u>position</u>' elements are <u>optional</u>.
+                ContentFlow will auto detect and utilize them if they exist.
+            </p>
+            <dl>
+                <div name="useAddOns" id="useAddOns"></div>
+                <dt>ContentFlow</dt>
+                <dd>Main ContentFlow wrapper. All elements of class 'ContentFlow' will be initialized.<br/>
+                    If style attribute 'height' is set, maxItemHeight will be set accordingly.<br/>
+                    <i><b>If the attribute 'useAddOns' is given only the listed AddOns will be used for this ContentFlow.</b></i>
+                </dd>
+
+                <dt>flow</dt>
+                <dd>Wrapper around all flow items.<br/>
+                    If style attribute 'height' is set, maxItemHeight will be set accordingly.
+                </dd> 
+                <dl>
+                    <div name="item" id="item"></div>
+                    <dt>item</dt>
+                    <dd>
+                        If you want to use an item as a <b>link</b>, just add an <b>'href'</b> attribute to the <u>item</u> or it's <u>content</u>. A <b>'target'</b> attribute will be taken into account.
+                    </dd>
+                    <dl>
+                        <dt>content</dt>
+                        <dd>The actual content of an item. Can be anything.<br/>
+                            If the content element is not an image, beware that the item itself will be scaled and <u>not</u> the content!
+                        </dd>
+                        <div name="caption" id="caption"></div>
+                        <dt>caption<dt>
+                        <dd>If exists will be used as the caption text of the item.<br/>
+                            By default it is hidden and will be used for the global caption.<br/>
+                            Can contain any HTML content.<br/>
+                            To utilize the caption as a link, just make the whole caption a link (use an a-tag instead of a div-tag) or put a link inside it.
+                        </dd>
+                        <dt>label<dt>
+                        <dd>
+                            If exists and <u>position</u> element exists, it will be used as the position text label.<br/>
+                            It's great to use the scrollbar as a timeline.
+                        </dd>
+                    </dl>
+                </dl>
+
+                <dt>loadIndicator<dt>
+                <dd>If exists will show a loading indicator, while images are loaded.</dd>
+
+                <dt>globalCaption<dt>
+                <dd>If exists and caption element of active item exists will show the caption of the active item.</dd>
+
+                <div name="scrollbar" id="scrollbar"></div>
+                <dt>scrollbar<dt>
+                <dd>If exists will show a clickable scrollbar.</dd>
+                <dl>
+                    <dt>slider<dt>
+                    <dd>If exists will show a dragable  button on the slider.</dd>
+                    <dl>
+                        <dt>position<dt>
+                        <dd>If exists will show position label. Defaults to the item number.</dd>
+                    </dl>
+                </dl>
+
+                <div name="buttons" id="buttons"></div>
+                <dt>preButton<dt>
+                <dd>This element can be anywhere within the ContentFlow. If exists it will fire the onclickPreButton method.<br/>
+                    By default it will move the flow to the previous item.
+                </dd>
+                <dt>nextButton<dt>
+                <dd>This element can be anywhere within the ContentFlow. If exists it will fire the onclickNextButton method.<br/>
+                    By default it will move the flow to the next item.
+                </dd>
+            </dl>
+
+
+            <h3>Configuration</h3>
+            <p>
+                You can configure each ContentFlow independently or globally. Take a look at the 
+                <a href="            javascript: switchBlock('config','');
+        ">configuration</a>  and <a href="            javascript: switchBlock('options','');
+        ">options</a> 
+                descriptions for an explanation.
+            </p>
+
+        </div>
+
+        <div id="conf" class="tabItem">
+            
+        <p>
+        If you want to adjust ContentFlow to your needs you have two possibilities. First you can use an <a href="        addons.php        ">AddOn</a> or you can use a runtime configuration.
+        </p>
+
+        <!-- addon conf -->
+        <h3>AddOn configuration</h3>
+        I think, that is the more convenient method.
+        <ol>
+            <li>Copy the file 'ContentFlowAddOn_DEAFULT.js' to 'ContentFlowAddOn_MyAddOn.js'</li>
+            <li>Change the name of the AddOn (first line of code in the AddOn file) to 'MyAddOn'</li>
+            <li>Make the changes you like.</li>
+            <li>
+            Add the 'load' attribute to the script-tag which loads ContentFlow. Now add any AddOns you would like to use as a space separated list.<br/>
+            It should now look like this:
+            <pre><code>
+    &lt;script language="JavaScript" type="text/javascript" src="PATH/contentflow.js" <b>load="MyAddOn"</b> &gt;&lt;/script&gt;
+            </code></pre>
+            </li>
+            <li>Reload your page :-)</li>
+        </ol>
+
+        <!-- runtime conf -->
+        <div name="runtime" id="runtime"></div>
+        <h3>Runtime configuration</h3>
+        <p>
+            Create a new Object from the Class ContentFlow and pass the element containing the flow as its parameter, like this:
+        </p>
+        <pre><code>
+    &lt;script language="JavaScript" type="text/javascript"&gt;
+        var myNewFlow = new ContentFlow('myFantasicFlow'[, OPTIONS ]);
+    &lt;/script&gt;
+        </code></pre>
+        <dl>
+            <dt>OPTIONS</dt>
+            <dd>is an optional <a href="            javascript: switchBlock('objects','#confObj');
+        ">configuration data object</a> where co can define the <a href="            javascript: switchBlock('options','#options');
+        ">options.</a></dd>
+            <!--<dt>initOnLoad</dt>-->
+            <!--<dd>is optional. If set to 'false' no auto initialization on 'window.load' will happen. You have to use the public method init() instead. <u>Default:</u> true</dd>-->
+        </dl>
+        </div>
+
+    
+    </div>
+            <div id="configBlock" class="block">
+        <h2>Configuration</h2>
+        <p>
+        If you want to adjust ContentFlow to your needs you have two possibilities. First you can use a <a href="        addons.php        ">AddOn</a> or you can use a runtime configuration.
+        </p>
+
+        <!-- addon conf -->
+        <h3>AddOn configuration</h3>
+        I think, that is the more convenient method.
+        <ol>
+            <li>Copy the file 'ContentFlowAddOn_DEAFULT.js' to 'ContentFlowAddOn_MyAddOn.js'</li>
+            <li>Change the name of the AddOn (first line of code in the AddOn file) to 'MyAddOn'</li>
+            <li>Make the changes you like.</li>
+            <li>
+            Add the 'load' attribute to the script-tag which loads ContentFlow. Now add any AddOns you would like to use as a space separated list.<br/>
+            It should now look like this:
+            <pre><code>
+    &lt;script language="JavaScript" type="text/javascript" src="PATH/contentflow.js" <b>load="MyAddOn"</b> &gt;&lt;/script&gt;
+            </code></pre>
+            </li>
+            <li>Reload your page :-)</li>
+        </ol>
+
+        <!-- runtime conf -->
+        <div name="runtime" id="runtime"></div>
+        <h3>Runtime configuration</h3>
+        <p>
+            Create a new Object from the Class ContentFlow and pass the element containing the flow as its parameter, like this:
+        </p>
+        <pre><code>
+    var myNewFlow = new ContentFlow('myFantasicFlow'[, OPTIONS ]);
+        </code></pre>
+        <dl>
+            <dt>OPTIONS</dt>
+            <dd>is an optional <a href="            javascript: switchBlock('objects','#confObj');
+        ">configuration data object</a> where you can define the <a href="            javascript: switchBlock('options','#options');
+        ">options.</a></dd>
+            <!--<dt>initOnLoad</dt>-->
+            <!--<dd>is optional. If set to 'false' no auto initialization on 'window.load' will happen. You have to use the public method init() instead. <u>Default:</u> true</dd>-->
+        </dl>
+    </div>
+            <div id="optionsBlock" class="block">
+        
+            <div style="margin-bottom: -1px; z-imdex: 100; width: 100%;">
+<a href="#" onclick="toggleTab('options', this.firstChild); return false;"><div id="genericTab" class="tab" >Generic</div></a><a href="#" onclick="toggleTab('options', this.firstChild); return false;"><div id="itemsTab" class="tab" >Items</div></a><a href="#" onclick="toggleTab('options', this.firstChild); return false;"><div id="flowTab" class="tab" >Flow interaction</div></a><a href="#" onclick="toggleTab('options', this.firstChild); return false;"><div id="eventsTab" class="tab" >Events</div></a><a href="#" onclick="toggleTab('options', this.firstChild); return false;"><div id="calcTab" class="tab" >Calculations</div></a>        <div class="clear"></div>
+    </div>
+    <script>
+       var w = window.initTabs || initTabs;
+       w.push( function () {
+            var t = ["generic","items","flow","events","calc"];
+            var tabs = [];
+            for (var i=0; i<t.length; i++) {
+                tabs[i] = document.getElementById(t[i]+"Tab");
+                tabs[i].content = document.getElementById(t[i]);
+            }
+
+            if (tabs[0].content) {
+                //window.activeTab = tabs[0];
+                //toggleTab(tabs[0]);
+                window.activeTabs['options'] = tabs[0];
+                toggleTab('options', tabs[0]);
+            }
+       }
+    );
+
+    </script>
+<!--
+        <p>The options can be given on manual object creation in the form of a <a href="            javascript: switchBlock('objects','#conf');
+        ">data object</a>, set with the <a href="            javascript: switchBlock('methods','');
+        ">setConfig method</a> or set within an AddOn.</p>
+
+        <p>The following options can be used:</p>
+-->
+        <div id="generic" class="tabItem">
+        <dl id="options" style="font-family: sans-serif">
+            <div name="useAddOns" id="useAddOns"></div>
+            <dt><span>useAddOns</span> := string | array (default: all)</dt>
+            <dd>Addons this ContentFlow should use (all, none, [AddOn1, ... , AddOnN])</dd>
+            <dt><span>loadingTimeout</span> := int (default: 30000)</dt>
+            <dd>Grace time in milliseconds for images to load.</dd>
+
+            <div name="circularFlow" id="circularFlow"></div>
+            <dt><span>circularFlow</span> := bool (default: true)</dt>
+            <dd>Should the Flow wrap around?</dt>
+            <dt><span>verticalFlow</span> := bool (default: false)</dt>
+            <dd>Will turn the ContentFlow 90 degree counterclockwise.<br/>
+                This will automatically swap calculated positions and sizes where needed. You do not have to adjust any calculations or sizes. Should work with any AddOn outof the box.
+            </dd>
+            <div name="opacity" id="opacity"></div>
+            <dt><span>visibleItems</span> := int (default: 0)</dt>
+            <dd>Number of items to show on either side of the active Item. If set to '0' it will be set to the square root of the number of items in the flow.</dd>
+            <dt><span>endOpacity</span> := float (default: 1)</dt>
+            <dd>The opacity of the last visible item on either side. The opacity of each item will be calculated by the 'calcOpacity' function.</dd>
+            <dt><span>startItem</span> := string | int (default: center)</dt>
+            <dd>Active Content item to start with. Can be either a <a href="            javascript: switchBlock('keywords','#pkw');
+        ">position keyword</a> or an integer.</dd>
+            <dt><span>scrollInFrom</span> := string | int (default: pre)</dt>
+            <dd>Flow will start scrolling on load from this item. Can be either a <a href="            javascript: switchBlock('keywords','#pkw');
+        ">position keyword</a>, "none" or an integer. If set to "none" the flow will not scroll in.</dd>
+
+        </dl>
+        </div>
+        <div id="flow" class="tabItem">
+        <dl>
+            <dt><span>flowSpeedFactor</span> := float (default: 1.0)</dt>
+            <dd>A flowSpeedFactor &gt; 1 will speedup the scrollspeed, while a factor between 0 and 1 will slow it down</dd>
+            <div name="drag" id="drag"></div>
+            <dt><span>flowDragFriction</span> := float (default: 1.0)</dt>
+            <dd>Determines how hard it is to drag the flow.<br/>
+                If set to '0' dragging of the flow is deactivated.
+            </dd>
+            <div name="wheel" id="wheel"></div>
+            <dt><span>scrollWheelSpeed</span> := float (default: 1.0)</dt>
+            <dd>Scales by how many items the flow will be moved with one usage of the mousewheel.<br/>
+                Negative values will reverse the scroll direction.<br/>
+                If set to '0' scrolling with the mouse wheel is deactivated.
+            </dd>
+            <div name="keys" id="keys"></div>
+            <dt><span>keys</span> := object (default: see below)</dt>
+            <dd>Defines the keyCodes and the functions, which are triggerd on a keydown event within the ContentFlow. All defined functions are bound to the ContentFlow object.</br/>
+                To disable this functionality set keys = {} (empty object).<br/>
+                Default setting:
+                <code><pre style="font-family: monospace">
+
+    {
+        13: function () { this._onclickActiveItem(this._activeItem) }, // return/enter key
+        37: function () { this.moveTo('pre') },         // left arrow
+        38: function () { this.moveTo('visibleNext') }, // up arrow
+        39: function () { this.moveTo('next') },        // right arrow
+        40: function () { this.moveTo('visiblePre') }   // down arrow
+    }
+                </pre></code>
+            </dd>
+
+        </dl>
+        </div>
+        <div id="items" class="tabItem">
+        <dl>
+            <div name="reflection" id="reflection"></div>
+
+            <dt><span>reflectionHeight</span> := float (default: 0.5)</dt>
+            <dd>Set the size of the reflection image relative to the original image</dd>
+
+            <dt><span>reflectionGap</span> := float (default: 0.0)</dt>
+            <dd>Set the size of the gap between the image and the reflection image relative to the original image size</dd>
+
+            <dt><span>reflectionColor</span> := string (default: transparent)</dt>
+            <dd>Set the "surface"-color of the reflection. Can be "none", "transparent", or #RRGGBB (hex RGB values)<br/>
+                If set to 'overlay' the image given by the option 'reflectionOverlaySrc' will be lain over the reflection.
+            </dd>
+
+            <dt><span>scaleFactor</span> := float (default: 1.0)</dt>
+            <dd>Factor by which the <u>item</u> will be scaled.</dd>
+
+            <dt><span>scaleFactorLandscape</span> := float | string (default: 1.0)</dt>
+            <dd>float := Factor to scale <u>content images</u> in landscape format by.<br/>
+                string := if set to 'max' the height of an landscape image content will be set to the height of the item.
+            </dd>
+            <dt><span>scaleFactorPortrait</span> := float | string (default: 1.0)</dt>
+            <dd>float := Factor to scale <u>content images</u> in portrait format by.<br/>
+                string := if set to 'max' the width of an portait image content will be set to the width of the item.
+            </dd>
+
+            <dt><span>fixItemSize</span> := bool (default: false)</dt>
+            <dd>Fixes the item size, to the calculated size. No adjustments will be done. Images will be croped if bigger.</dd>
+
+            <dt><span>maxItemHeight</span> := int (default: 0)</dt>
+            <dd>Maximum item height in px. If set to a value greater than '0' the item size will be calculated from this value instead relative to the width of the ContentFlow.
+
+            <dt><span>relativeItemPosition</span> := string (deafult: top center)</dt>
+            <dd>Position of item relative to it's coordinate.<br/>
+                It can contain the keywords top/above, bottom/below, left, right and center.<br/>
+                So by default the item will be placed above the coordinate point and centered horizontally.<br/>
+                If set this option overrides the calcRelativeItemPosition option!
+            </dd>
+
+
+
+
+
+<!--
+            <dt><span>activeElement</span> := string (default: content)</dt>
+            <dd>This determents which part of each item will be handle the click events<br/>
+            can be 'content' or 'item'|'element'
+            </dd>
+-->
+
+        </dl>
+        </div>
+        <div id="events" class="tabItem">
+        <dl>
+            <div style="background-color: #222; padding: 1em 0.5em; margin: 1em auto">
+                These functions will be bound to the ContenFlow object, so 'this' refers to the ContentFlow!
+            </div>
+            <div name="caItem" id="caItem"></div>
+            <dt><span>onclickInactiveItem</span> := function(obj item)</dt>
+            <dd>called if an inactive item is clicked.</dd>
+
+            <dt><span>onclickActiveItem</span> := function(obj item)</dt>
+            <dd>called if the active item is clicked.</dd>
+            
+            <dt><span>onMakeInactive</span> := function(obj item)</dt>
+            <dd>called if the active item becomes an inactive item.</dd>
+
+            <dt><span>onMakeActive</span> := function(obj item)</dt>
+            <dd>called if an item becomes the active item.</dd>
+            
+            <dt><span>onMoveTo</span> := function(obj item)</dt>
+            <dd>called each time a new target is set i.e by calling the moveTo method.<br/>
+            </dd>
+
+            <dt><span>onReachTarget</span> := function(obj item)</dt>
+            <dd>called if the target item becomes the active item.</dd>
+            
+            <dt><span>onclickPreButton</span> := function(event event)</dt>
+            <dd>called if the 'pre' button item is clicked.</dd>
+            
+            <dt><span>onclickNextButton</span> := function(event event)</dt>
+            <dd>called if the 'next' button item is clicked.</dd>
+
+<!--            <dt><span>onDrawItem</span> := function(obj item, float relativePosition, float relativePositionNormed, int side, obj size)</dt>-->
+            <dt><span>onDrawItem</span> := function(obj item)</dt>
+            <dd>called when ever an item is redrawn. Use with caution, because this method is easily called many thousend times !</dd>
+        </dl>
+        </div>
+
+        <div id="calc" class="tabItem">
+        <dl>
+            <div style="background-color: #222; padding: 1em 0.5em; margin: 1em auto">
+                These functions will be bound to the ContenFlow object, so 'this' refers to the ContentFlow!
+            </div>
+
+            <dt><span>calcStepWidth</span> := function(float diff)</dt>
+            <dd>called to set the calculation function of the width of each step to get the next position of the flow.<br/>
+                The function will be bound to the ContenFlow object, so 'this' refers to the ContentFlow!<br/>
+                float <b>'diff'</b> := targetItemPosition - currentPosition
+                returns: float
+            </dd>
+
+            <dt><span>calcSize</span> :=function(obj item)</dt>
+            <dd>called to set the calculation function of the size of a visible item<br/>
+                returns an object of type size := {width: w, height: h}<br/>
+            </dd>
+            
+            <dt><span>calcCoordinates</span> := function(obj item)</dt>
+            <dd>called to calculate the position of an item element within the flow<br/>
+                returns an object of type position := {x: x, y: y}<br/>
+            </dd>
+            
+            <dt><span>calcRelativeItemPosition</span> := function(obj item)</dt>
+            <dd>called to calculate the position of an item relative to it's coordinates<br/>
+                Beware: this function will be overridden by the 'relativeItemPosition' option!<br/>
+                returns an object of type position := {x: x, y: y}<br/>
+            </dd>
+
+            <dt><span>calcZIndex</span> := function(obj item)</dt>
+            <dd>called to set the calculation function of the z-index of each item. The z-index is only valid within the flow itself.<br/>
+                returns: int z (-32768 &le; z &le; 32768)
+            </dt>
+
+            <dt><span>calcFontSize</span> := function(obj item)</dt>
+            <dd>called to set the calculation function of the relative font-size of an item<br/>
+                returns: float fs (0.0 &le; fs)
+            </dt>
+            <dt><span>calcOpacity</span> := function(obj item)</dt>
+            <dd>called to calculate the opacity of each item.<br/>
+                returns: float o (0.0 &le; opacity &le; 1.0)
+            </dd>
+        </dl>
+</div>
+    </div>
+            <div id="methodsBlock" class="block">
+        <h2 id="Methods" name="Methods"></h2>
+            <div style="margin-bottom: -1px; z-imdex: 100; width: 100%;">
+<a href="#" onclick="toggleTab('methods', this.firstChild); return false;"><div id="methodsTab" class="tab" >Methods</div></a>        <div class="clear"></div>
+    </div>
+    <script>
+       var w = window.initTabs || initTabs;
+       w.push( function () {
+            var t = ["methods"];
+            var tabs = [];
+            for (var i=0; i<t.length; i++) {
+                tabs[i] = document.getElementById(t[i]+"Tab");
+                tabs[i].content = document.getElementById(t[i]);
+            }
+
+            if (tabs[0].content) {
+                //window.activeTab = tabs[0];
+                //toggleTab(tabs[0]);
+                window.activeTabs['methods'] = tabs[0];
+                toggleTab('methods', tabs[0]);
+            }
+       }
+    );
+
+    </script>
+        <div id="methods" class="tabItem">
+        <p>The following object methods are public.</p>
+        <dl>
+            <dt>setConfig(obj OPTIONS)</dt>
+            <dd>called to set options after object creation</dd>
+
+            <dt>getItem(int index)</dt>
+            <dd>returns the 'item' object at given index</dd>
+
+            <dt>getActiveItem()</dt>
+            <dd>called to get the currently active item.
+                returns the 'item' object of the active item.
+            </dd>
+
+            <dt>getNumberOfItems()</dt>
+            <dd>called to get the number of items currently in the flow</dd>
+
+            <dt>moveTo(int index | float pos | string keyword | obj item)</dt>
+            <dd>called to scroll to item.<br/>
+                'index' := scroll to item with index 'index'<br/>
+                'pos' := scroll to position 'pos'<br/>
+                'keyword' := scroll to position given by <a href="#pkw">position keyword</a>
+                'item' := scroll to item
+            </dd>
+
+            <dt>resize()</dt>
+            <dd>called to reinitialize the size of the flow items, after the size of the flow has changed.<br/>Is called if window is resized.</dd>
+            
+            <div name="addItem" id="addItem"></div>
+            <dt>addItem(DOMnode element, int|string index)</dt>
+            <dd>called to add a new item 'element' to the flow at the position index. The element has to be a valid item element. So it must have at least this structure:<br/>
+                &lt;div class="item"&gt;&lt;img class="content" src="url/to/image"/&gt;&lt;/div&gt;<br/>
+                The index has to be an integer or one of the strings 'first', 'start', 'last' or 'end'.<br/>
+                returns: int index (index position of added item)
+            </dd>
+
+            <dt>rmItem([int index])</dt>
+            <dd>called to remove an item from the flow. If the parameter index is given the element at the index position 'index' will be removed, else the currently active item will be removed.
+                returns: DOMnode el (cleaned item node) 
+            </dd>
+
+        </dl>
+        </div>
+    </div>
+            <div id="keywordsBlock" class="block">
+        <h2 id="pkw" name="pkw"></h2>
+            <div style="margin-bottom: -1px; z-imdex: 100; width: 100%;">
+<a href="#" onclick="toggleTab('keywords', this.firstChild); return false;"><div id="keywordsTab" class="tab" >position keywords</div></a>        <div class="clear"></div>
+    </div>
+    <script>
+       var w = window.initTabs || initTabs;
+       w.push( function () {
+            var t = ["keywords"];
+            var tabs = [];
+            for (var i=0; i<t.length; i++) {
+                tabs[i] = document.getElementById(t[i]+"Tab");
+                tabs[i].content = document.getElementById(t[i]);
+            }
+
+            if (tabs[0].content) {
+                //window.activeTab = tabs[0];
+                //toggleTab(tabs[0]);
+                window.activeTabs['keywords'] = tabs[0];
+                toggleTab('keywords', tabs[0]);
+            }
+       }
+    );
+
+    </script>
+        <div id="keywords" class="tabItem">
+        <dl>
+            <dt>'start', 'first'</dt>
+            <dd>first item</dd>
+            <dt>'end', 'last'</dt>
+            <dd>last item</dd>
+            <dt>'middle', 'center'</dt>
+            <dd>item in the middle</dd>
+            <dt>'pre', 'previous', 'left'</dt>
+            <dd>previous item</dd>
+            <dt>'next', 'right'</dt>
+            <dd>next item</dd>
+            <dt>'visible', 'visiblePre' 'visibleLeft'</dt>
+            <dd>leftmost visible item</dd>
+            <dt>'visibleNext', 'visibleRight'</dt>
+            <dd>rightmost visible item</dd>
+        </dl>
+        <p>Where ever you can use a position keyword you can also use an integer for an exact position. A sanity check will be done automatically.</p>
+</div>
+    </div>
+            <div id="objectsBlock" class="block">
+
+            <div style="margin-bottom: -1px; z-imdex: 100; width: 100%;">
+<a href="#" onclick="toggleTab('objects', this.firstChild); return false;"><div id="cfg_objTab" class="tab" >ContentFlowGlobal</div></a><a href="#" onclick="toggleTab('objects', this.firstChild); return false;"><div id="cf_objTab" class="tab" >ContentFlow</div></a><a href="#" onclick="toggleTab('objects', this.firstChild); return false;"><div id="item_objTab" class="tab" >Item</div></a><a href="#" onclick="toggleTab('objects', this.firstChild); return false;"><div id="conf_objTab" class="tab" >Configuration</div></a>        <div class="clear"></div>
+    </div>
+    <script>
+       var w = window.initTabs || initTabs;
+       w.push( function () {
+            var t = ["cfg_obj","cf_obj","item_obj","conf_obj"];
+            var tabs = [];
+            for (var i=0; i<t.length; i++) {
+                tabs[i] = document.getElementById(t[i]+"Tab");
+                tabs[i].content = document.getElementById(t[i]);
+            }
+
+            if (tabs[0].content) {
+                //window.activeTab = tabs[0];
+                //toggleTab(tabs[0]);
+                window.activeTabs['objects'] = tabs[0];
+                toggleTab('objects', tabs[0]);
+            }
+       }
+    );
+
+    </script>
+
+        <div id="cfg_obj" class="tabItem">
+        <p>ContentFlowGlobal is a globaly accessible object.
+        <code><pre style="font-family: monospace">
+
+        {
+            Flows   := [
+                          ContentFlowObj_0,
+                          ContentFlowObj_1,
+                          ...
+                       ], 
+
+            AddOns  := {
+                         AddOnName: AddOnObj,
+                         ...
+                       },
+
+            Browser := {
+                        Opera := bool,
+                        IE := bool,
+                        IE6 := bool,
+                        IE7 := bool,
+                        IE8 := bool,
+                        WebKit := bool,
+                        iPhone := bool,
+                        Chrome := bool,
+                        Safari := bool,
+                        Konqueror := bool,
+                        Konqueror4 := bool,
+                        Gecko := bool,
+                        Gecko19 := bool
+                       },
+
+            getAddOnConf := function (AddOnName),
+            
+            setAddOnConf := function (AddOnName, confObj)
+
+        }
+        </pre></code>
+        </div>
+
+        <div id="cf_obj" class="tabItem">
+        <p>This is the basic structure of a ContentFlow object.</p>
+        <code><pre style="font-family: monospace">
+
+        {
+            Container       := DOM-Element      // DOM element of the '.ContentFlow' element
+            Flow            := DOM-Element      // DOM element of the '.flow' element
+            Scrollbar       := DOM-Element      // DOM element of the '.scrollbar' element
+            Slider          := DOM-Element      // DOM element of the '.slider' element
+            items           := Array            // [ item0, item1, ... , itemN ]
+            conf            := conf obj         // object containing the configuration options
+            Browser         := obj              // ContentFlowGlobal.Browser
+        }
+        </pre></code>
+
+        </div>
+<!--
+        <div id="gui_obj" class="tabItem">
+        <p>A GUI element is a extended DOM object, with the following attributes.</p>
+        <code><pre style="font-family: monospace">
+
+        {
+            Dimensions := {
+                            height: int, //px
+                            width: int //px
+                          },
+            center := {
+                        x: int, //px
+                        y: int //px
+                      }
+        }
+        </pre></code>
+        </div>
+
+-->
+        <div id="conf_obj" class="tabItem">
+        <div name="conf" id="conf"></div>
+        <p>The <a href="            javascript: switchBlock('options','');
+        ">options</a> can be passed to the ContentFlow on creation, 
+            by the <a href="            javascript: switchBlock('methods','');
+        ">setConfig method</a> or 
+            by an  <a href="        addons.php        ">AddOn</a> in the form of a data object.</p>
+        <div name="confObj" id="confObj"></div>
+        <code><pre style="font-family: monospace">
+
+        {
+            option1: value,
+            option2: value,
+            .
+            .
+            .
+            lastOption: value   // beware: last option must not end with a comma !
+        }
+        </pre></code>
+        </div>
+    
+
+        <div id="item_obj" class="tabItem">
+        <p>An 'item' object represents an item within the ContentFlow and has the following structure.</p>
+        <code><pre style="font-family: monospace">
+
+        {
+            element             := DOM-ELEMENT  // DOM element of the item
+            pre                 := item obj     // the previous item
+            next                := item obj     // the next item
+            content             := DOM-ELEMENT  // DOM element of the item content
+            caption             := DOM-ELEMENT  // DOM element of the item caption
+            label               := DOM-ELEMENT  // DOM element of the item label
+            index               := int          // index of item
+            position            := float        // position on the internel position axis  
+            relativePosition    := float        // relative position of item 
+                                                //     (-visibleItems &le; relativePosition &le; visibleItems)
+            relativePositionNormed  := float    // normed relative position of item 
+                                                //     (-1 &le; relativePosition &le; 1) 
+            side                := int          // left,center,right (-1,0,1)
+            size                := size obj     // size object as returned by calcSize 
+                                                //     {width: float, height: float} (0 &le; width, height &le; 1)
+           <!-- 
+                                                //     {x: float, y: float} (0 &le; x,y &le; 1)
+            coordinates         := position obj // relative coordinates within the Flow-element
+                                                //     {x: float, y: float} (-1 &le; x,y &le; 1)
+            relativeItemPosition := position obj// 
+            zIndex              := int          // relative zIndex of the item
+            fontSize            := float        // relative font size (0&le; fontSize &le; 1)
+            opacity             := float        // opacity of the item (0&le; fontSize &le; 1)
+-->
+        }
+        </pre></code>
+        </div>
+
+    </div>
+
+        
+    
+
+    </div>
+
+    
+    <!-- last 23 lines -->
+    <script>
+        var activeBlock;
+        var activeTab = null;
+        function switchBlock(ID, hash) {
+            if (!ID) ID = "usage";
+            switch (show) {
+            case 'usage':
+            case 'config':
+            case 'options':
+            case 'methods':
+            case 'keywords':
+            case 'objects':
+                IDSUB = ID+"Sub";
+                ID = ID+"Block";
+                break;
+            default:
+                IDSUB = "usageSub";
+                ID = "usageBlock";
+            }
+            if (activeBlock) activeBlock.style.display = "none";
+            if (activeTab) {
+                activeTab.style.color = "silver";
+                activeTab.style.fontSize = "100%";
+            }
+            activeBlock = document.getElementById(ID);
+            activeTab = document.getElementById(IDSUB);
+            if (activeBlock) activeBlock.style.display = "block";
+            if (activeTab) {
+                activeTab.style.color = "white";
+                activeTab.style.fontSize = "125%";
+                
+            }
+            if (hash)
+                window.location.hash = hash;
+
+            return false;
+        }
+        if (!show) var show = "usage";
+        switchBlock(show);
+
+        for (var i=window.initTabs.length; i>0; i--) {
+            window.initTabs[i-1]();
+        }
+    </script>
+</body>
+</html>
