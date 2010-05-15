@@ -26,7 +26,7 @@
     <p><strong>Science and Technology</strong>... A description of what this section is and why it is important. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
   </section>
   
-  <section>
+  <section class="stats">
     <h1><span>Stats</span></h1>
     <ul>
       <li><strong>1000</strong> Something</li>
@@ -57,7 +57,9 @@
   
 </aside>
 
-<h2 class="clear"><%= @publication_date %> Entries</h2>
+<hr />
+
+<h2><span><%= @publication_date %></span></h2>
 
 <% @section.entries.published_on(@publication_date).each do |entry| %>
   <article>
