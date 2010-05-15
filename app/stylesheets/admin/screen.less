@@ -1,4 +1,36 @@
-@import "grid";
+@import "../grid";
+
+
+header {
+  display: block;
+  width: 100%;
+}
+
+header hgroup {
+  float: left;
+  margin: 50px 0 50px 15px;
+}
+
+header h1 {
+  font-size: 3.15em;
+  font-family: "bookman-1","bookman-2",sans-serif;
+  margin-bottom: .1em;
+}
+
+header h1 a,
+header h1 a:visited {
+  color: #444444;  
+  text-decoration: none;
+  .push_0;  
+}
+
+header h2 {
+  color: #c69967;
+  float: left;
+  font-family: "etica-1","etica-2",sans-serif;
+  font-size: 1.5em;
+  margin-left: 10px;
+}
 
 #user_session_remember_me_input {
   width:400px;
@@ -20,4 +52,26 @@ div#content {
 
 article.highlighted {
   color: gray;
+}
+
+#preview {
+  width:100px;
+  height:100px;
+  overflow:hidden;
+  margin-left:5px; 
+}
+
+.center_content {
+  .grid_10;
+}
+
+.center_content #lede_photo_flow {
+  .grid_9;
+}
+
+.flow {
+  height:200px;
+}
+.ContentFlow {
+  width:700px;
 }

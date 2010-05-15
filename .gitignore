@@ -9,5 +9,11 @@
 /config/ec2_config.yml
 /public/sitemap*
 /public/system
+/public/stylesheets/admin/formtastic.css
+/public/stylesheets/admin/formtastic_changes.css
+/public/stylesheets/admin/jquery.Jcrop.css
+/public/stylesheets/admin/navigation.css
+/public/stylesheets/admin/screen.css
+/public/stylesheets/admin/tablesorter.css
 /db/sphinx/
 .DS_Store
