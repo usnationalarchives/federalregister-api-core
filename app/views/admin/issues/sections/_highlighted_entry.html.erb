@@ -2,5 +2,6 @@
   <%# image_tag(entry.lede_photo.photo_url) if entry.lede_photo_id %>
   <%= image_tag(highlighted_entry.lede_photo.photo.url(:small)) if highlighted_entry.lede_photo %>
   <%= link_to highlighted_entry.curated_title, edit_admin_issue_entry_path(highlighted_entry.publication_date.to_s(:db), highlighted_entry.document_number) %>
+  <span class="date"><%= highlighted_entry.publication_date %></span>
   <a class="remove">[remove]</a>
 </li>
