@@ -7,7 +7,7 @@ ActionController::Routing::Routes.draw do |map|
     
     admin.resources :topic_names, :collection => {:unprocessed => :get}
     
-    
+    admin.resources :photo_candidates, :only => :show
     admin.resources :sections
     
     admin.resources :issues do |issue|
