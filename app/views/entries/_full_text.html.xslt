@@ -255,8 +255,8 @@
   </xsl:template>
   
   <xsl:template match="GPH/GID">
-    <span class="GID">		
-      [The GPO has not yet made images accessible. Image <xsl:text> </xsl:text><xsl:value-of select="."/>] <br />
+    <span class="GID">
+      [Image <xsl:text> </xsl:text><xsl:value-of select="."/><xsl:text> </xsl:text> not available] <br />
     </span>
   </xsl:template>
    
