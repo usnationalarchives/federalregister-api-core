@@ -413,3 +413,45 @@ article.with_photo.on_right .info { margin-left: 0; }
   padding-left: 30px;
   text-transform: uppercase;
 }
+.comments li {
+  display: inline;
+  float: left;
+  position: relative;
+  margin-left: 10px;
+  margin-right: 10px;
+  width: 220px;
+  margin-bottom: 20px;
+}
+.comments .card {
+  background: rgba(238, 238, 238, 0.5);
+  padding: 40px 10px 40px 10px;
+  position: relative;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+}
+.comments .card .type {
+  background: #ffffff;
+  -moz-border-radius-bottomright: 5px;
+  -webkit-border-bottom-right-radius: 5px;
+  -khtml-border-bottom-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  color: #e4a529;
+  font: "Helvetica Neue", "Helvetica", sans-serif;
+  font-size: 150%;
+  font-weight: bold;
+  left: 0;
+  padding: 0 10px 5px 0;
+  position: absolute;
+  top: 0;
+}
+.comments li date {
+  bottom: 0;
+  color: #cccccc;
+  font: "Helvetica Neue", "Helvetica", sans-serif;
+  font-size: 150%;
+  font-weight: bold;
+  right: 10px;
+  position: absolute;
+  text-transform: uppercase;
+}
