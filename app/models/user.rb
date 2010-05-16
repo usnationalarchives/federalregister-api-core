@@ -42,7 +42,7 @@ class User < ApplicationModel
   validates_presence_of :first_name, :last_name
   
   validates_confirmation_of :password
-  validates_length_of :password, :minimum => 8, :allow_nil => true
+  validates_length_of :password, :minimum => 6, :allow_nil => true
   validates_format_of :password, :with => /[a-z]/i, :allow_nil => true, :message => "must include a letter"
   validates_format_of :password, :with => /[0-9]/, :allow_nil => true, :message => "must include a number"
   
