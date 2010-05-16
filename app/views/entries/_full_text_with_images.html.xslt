@@ -78,7 +78,9 @@
                   <xsl:attribute name="href">#<xsl:value-of select="generate-id()" /></xsl:attribute>
                   <img>
                     <xsl:attribute name="src">
-                      <xsl:value-of select="concat('http://graphics.federalregister.gov.s3.amazonaws.com/', text(), '/thumb.gif')" />
+                      <xsl:call-template name="graphic_url">
+                        <xsl:with-param name="size" select="'thumb'" />
+                      </xsl:call-template>
                     </xsl:attribute>
                   </img>
                 </a>
@@ -279,11 +281,15 @@
       </xsl:attribute>
       
       <xsl:attribute name="href">
-        <xsl:value-of select="concat('http://graphics.federalregister.gov.s3.amazonaws.com/', text(), '/original.gif')" />
+        <xsl:call-template name="graphic_url">
+          <xsl:with-param name="size" select="'original'" />
+        </xsl:call-template>
       </xsl:attribute>
       <img class="entry_graphic">
         <xsl:attribute name="src">
-          <xsl:value-of select="concat('http://graphics.federalregister.gov.s3.amazonaws.com/', text(), '/large.gif')" />
+          <xsl:call-template name="graphic_url">
+            <xsl:with-param name="size" select="'large'" />
+          </xsl:call-template>
         </xsl:attribute>
       </img>
     </a>
@@ -397,5 +403,43 @@
   
   <xsl:template mode="footnotes" match="*[name(.) != 'FTNT']|text()">
     <xsl:apply-templates mode="footnotes"/>
+  </xsl:template>
+  
+  <xsl:template name="graphic_url">
+    <xsl:param name="size" />
+    
+    <xsl:variable name="image_id">
+      <xsl:call-template name="globalReplace">
+        <xsl:with-param name="outputString" select="."/>
+        <xsl:with-param name="target" select="'#'"/>
+        <xsl:with-param name="replacement" select="'%23'"/>
+      </xsl:call-template>
+    </xsl:variable>
+    
+    <xsl:value-of select="concat('http://graphics.federalregister.gov.s3.amazonaws.com/', $image_id, '/', $size, '.gif')" />
+  </xsl:template>
+  
+  <xsl:template name="globalReplace">
+    <xsl:param name="outputString"/>
+    <xsl:param name="target"/>
+    <xsl:param name="replacement"/>
+    <xsl:choose>
+      <xsl:when test="contains($outputString,$target)">
+
+        <xsl:value-of select=
+          "concat(substring-before($outputString,$target),
+                 $replacement)"/>
+        <xsl:call-template name="globalReplace">
+          <xsl:with-param name="outputString" 
+               select="substring-after($outputString,$target)"/>
+          <xsl:with-param name="target" select="$target"/>
+          <xsl:with-param name="replacement" 
+               select="$replacement"/>
+        </xsl:call-template>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:value-of select="$outputString"/>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
 </xsl:stylesheet>
