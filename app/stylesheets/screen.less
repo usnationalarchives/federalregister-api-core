@@ -1,5 +1,18 @@
 @import 'grid.css';
 
+.rounded_corners (@radius: 5px) {
+  -moz-border-radius: @radius;
+  -webkit-border-radius: @radius;
+  border-radius: @radius;
+}
+
+.box_transition {
+     -moz-transition: all 0.3s ease-out;  /* FF3.7+ */
+       -o-transition: all 0.3s ease-out;  /* Opera 10.5 */
+  -webkit-transition: all 0.3s ease-out;  /* Saf3.2+, Chrome */
+}
+
+
 body {
   color: #363636;
   font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
@@ -21,7 +34,7 @@ p {
   height: 331px;
   position: absolute;
   top: 0;
-  right: 100px;
+  right: -300px;
   width: 436px;  
   z-index: -1; }    
   
@@ -73,11 +86,33 @@ article {
 article figure {
   background: #e6e6e6;
   float: left;  
-  padding: 10px; } 
-  
+  padding: 10px;
+  position: relative; } 
+
 article figcaption {
-  font-size: 10px; }   
-  
+  background: #000;
+  background: rgba(0,0,0, .0);
+  bottom: 15px;
+  color: #fff;
+  color: rgba(255,255,255, 0);
+  font-size: 10px;
+  padding: 0 5px;
+  position: absolute;
+  width: 130px; 
+  }   
+article figcaption a {
+  color: rgba(255,255,255, 0);
+}  
+article figure:hover figcaption {  
+  background: rgba(0,0,0, .7);
+  .box_transition;
+  color: rgba(255,255,255, 1);  
+  }
+article figure:hover figcaption a {
+  .box_transition;  
+  color: rgba(255,255,255, 1);
+  }
+    
 section {
   text-align: right;
   margin-bottom: 50px; }  
@@ -108,25 +143,36 @@ aside {
   .omega; }
   
 article.with_photo .info {
-  .grid_8;
-  }
+  .grid_8; }
 article.with_photo .photo {
-  .grid_3;
-  }
+  .grid_3; }
 article.with_photo.on_left .photo {
   .pull_8;
-  .omega;
-  }
+  .omega; }
 article.with_photo.on_left .info {
   .push_3;
-  .alpha;
-  }  
+  .alpha; }  
 article.with_photo.on_right .photo {
-  .omega;
-  }
+  .omega; }
 article.with_photo.on_right .info {
-  .alpha;
-  }
+  .alpha; }
 
 #top-articles article:last-child {
-  border-bottom: 0; }            
+  border-bottom: 0; }
+  
+.button {
+  background: #e6e6e6;
+  color: #6e6e6e;
+  font-weight: bold;
+  padding: 12px 10px 7px;
+  .rounded_corners(5px);
+  text-decoration: none;  
+  }
+
+.button.rss {
+  background-image: url(/images/rss_icon_line.png);
+  background-position: 10px 11px;
+  background-repeat: no-repeat;
+  padding-left: 30px;
+    
+  }             

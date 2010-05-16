@@ -9,8 +9,9 @@ header #issue_and_search_bar {
   background: #636363;
   background: rgba(99,99,99 .3);
   height: 30px;
-  margin-bottom: 2px;
-  } 
+  margin-bottom: 2px; } 
+header #issue_and_search_bar .container {
+  position: relative; }  
   
 header #issue_and_search_bar p {
   color: #919191;  
@@ -18,7 +19,24 @@ header #issue_and_search_bar p {
   font-size: 12px;
   line-height: 30px;
   margin: 0; }
-   
+
+header #issue_and_search_bar form {
+  position: absolute;
+  right: 0;
+  top: 3px; }
+header #issue_and_search_bar form input {
+  border: 1px solid #919191; }
+  
+header #issue_and_search_bar form input.search_btn {
+  background: #737373;
+  color: #fff;
+  cursor: pointer;
+  font-family: "Arial", "Helvetica", sans-serif;
+  text-transform: uppercase;
+  padding: 0px;
+  }
+header #issue_and_search_bar form label {
+  display: none; }
 header nav {
   border-top: 2px solid @golden;
   margin-bottom: 5px;
