@@ -214,6 +214,7 @@ header #issue_and_search_bar {
   height: 30px;
   margin-bottom: 2px;
 }
+header #issue_and_search_bar .container { position: relative; }
 header #issue_and_search_bar p {
   color: #919191;
   font-family: "Helvetica Neue", "Helvetica", sans-serif;
@@ -221,8 +222,24 @@ header #issue_and_search_bar p {
   line-height: 30px;
   margin: 0;
 }
+header #issue_and_search_bar form {
+  position: absolute;
+  right: 0;
+  top: 3px;
+}
+header #issue_and_search_bar form input { border: 1px solid #919191; }
+header #issue_and_search_bar form input.search_btn {
+  background: #737373;
+  color: #ffffff;
+  cursor: pointer;
+  font-family: "Arial", "Helvetica", sans-serif;
+  text-transform: uppercase;
+  padding: 0px;
+}
+header #issue_and_search_bar form label { display: none; }
 header nav {
   border-top: 2px solid #e4a529;
+  margin-bottom: 5px;
   overflow: hidden;
 }
 header nav ul {
@@ -238,7 +255,6 @@ header nav ul li {
   font-size: 12px;
   list-style: none;
   margin-left: 30px;
-  padding-top: 3px;
 }
 header nav ul li.on { border-top: 5px solid #e4a529; }
 header nav ul li:hover { border-top: 5px solid #e4a529; }

@@ -38,10 +38,13 @@
           <div id="seal"></div>
           <p>Current Issue: <%= Entry.latest_publication_date.to_s(:wday_and_pretty_date) %></p>
           <form action="<%= entries_search_path %>" method="get">
+            <label for="q">Search the Federal Register</label>
+            <%= text_field_tag :q, nil,  :placeholder =>  "Search Articles" %>
+            <%= submit_tag 'Go', :class => "search_btn" %>
           </form>
         </div>
       </div> <!-- END issue and search bar -->
-      
+
       <%= render :partial => 'layouts/navigation', :locals => {:last_date => @last_date, :search_term => @search_term} %>    
       
       <hgroup>

@@ -272,13 +272,15 @@ ActiveRecord::Schema.define(:version => 20100514023450) do
 
   create_table "topic_names", :force => true do |t|
     t.string   "name"
-    t.boolean  "valid"
+    t.boolean  "void",          :default => false
+    t.integer  "entries_count", :default => 0
+    t.integer  "topics_count",  :default => 0
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   add_index "topic_names", ["name"], :name => "index_topic_names_on_name"
-  add_index "topic_names", ["valid"], :name => "index_topic_names_on_valid"
+  add_index "topic_names", ["void", "topics_count"], :name => "index_topic_names_on_void_and_topics_count"
 
   create_table "topics", :force => true do |t|
     t.string   "name"
@@ -373,8 +375,5 @@ ActiveRecord::Schema.define(:version => 20100514023450) do
     t.string   "last_name"
     t.boolean  "active",              :default => true
   end
-
-  add_index "users", ["email"], :name => "index_users_on_email"
-  add_index "users", ["perishable_token"], :name => "index_users_on_perishable_token"
 
 end
