@@ -51,6 +51,8 @@ namespace :content do
             :conditions => {:publication_date => Date.parse("#{date}-01-01") .. Date.parse("#{date}-12-31")},
             :order => "publication_date"
           )
+        elsif date =~ /^\d{4}-\d{2}-\2{2}$/
+          dates = [date]
         else
           raise "INVALID FORMAT"
         end
