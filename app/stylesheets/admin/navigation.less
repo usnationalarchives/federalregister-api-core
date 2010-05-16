@@ -1,9 +1,9 @@
 @import "grid";
 
-nav.primary ul, nav.utility ul, nav.secondary ul {
+nav.primary ul, nav.utility ul, nav.secondary ul, nav#issue_entry_edit ul {
   list-style:none;
 }
-nav.primary ul li, nav.utility ul li {
+nav.primary ul li, nav.utility ul li, nav#issue_entry_edit ul li {
   display: inline-block;
 }
 
@@ -69,4 +69,25 @@ nav.secondary ul {
 
 nav.secondary ul li {
   margin: 0px;
+}
+
+nav#issue_entry_edit{
+  height:35px;
+  -webkit-border-top-left-radius: 3px;
+  -webkit-border-top-right-radius: 3px;
+  -moz-border-radius-topleft: 3px;
+  -moz-border-radius-topright: 3px;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+  background: -webkit-gradient(linear, left top, left bottom, from(#BFBFBF), to(#7F7F7F));
+  background: -moz-linear-gradient(top,  #BFBFBF,  #7F7F7F);
+}
+
+nav#issue_entry_edit ul {
+  width:150px;
+  padding-top:5px;
+  margin: 5px auto;
+}
+nav#issue_entry_edit ul li {
+  margin-left:0px;
 }

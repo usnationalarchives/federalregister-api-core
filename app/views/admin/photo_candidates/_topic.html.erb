@@ -1,4 +1,4 @@
-<div id='<%= topic.underscore %>_flow' class="ContentFlow">
+<div id='<%= topic.split(' ').each{|t| t.downcase}.join('_') %>_flow' class="ContentFlow topic_photo_flow">
     <div class="loadIndicator"><div class="indicator"></div></div>
     <div class="flow">
         <% photos.each do |photo| %>
