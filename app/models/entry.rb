@@ -117,7 +117,7 @@ class Entry < ApplicationModel
   has_many :section_highlights
   belongs_to :lede_photo
   
-  accepts_nested_attributes_for :lede_photo
+  accepts_nested_attributes_for :lede_photo, :reject_if => Proc.new{|attr| attr["url"].blank? }
   
   file_attribute(:full_xml)  {"#{RAILS_ROOT}/data/xml/#{document_file_path}.xml"}
   file_attribute(:full_text) {"#{RAILS_ROOT}/data/text/#{document_file_path}.txt"}
