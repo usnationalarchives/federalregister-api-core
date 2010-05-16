@@ -8,6 +8,7 @@ class Admin::Issues::EntriesController < AdminController
   end
   
   def update
+    @sections = Section.all
     @publication_date = Date.parse(params[:issue_id])
     @entry = Entry.published_on(@publication_date).find_by_document_number!(params[:id])
     
