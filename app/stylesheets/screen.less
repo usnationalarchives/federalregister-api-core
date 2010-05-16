@@ -180,15 +180,18 @@ article.with_photo.on_right .info {
   background: #e6e6e6;
   color: #6e6e6e;
   font-weight: bold;
-  padding: 12px 10px 7px;
+  margin-bottom: 15px;
+  padding: 10px 10px 7px;
   .rounded_corners(5px);
   text-decoration: none;  
+  text-transform: uppercase;
   }
 
 .button.rss {
   background-image: url(/images/rss_icon_line.png);
-  background-position: 10px 11px;
+  background-position: 10px 10px;
   background-repeat: no-repeat;
+  font-size: 15px;
   padding-left: 30px;
   }
 
@@ -207,34 +210,37 @@ article.with_photo.on_right .info {
   .grid_4;
   margin-bottom: 20px;
   }
+.comments li.alpha {
+  clear:left;
+  }  
 .comments .card {
-  background: rgba(238,238,238,.5);
-  padding: 40px 10px 40px 10px;
+  background: rgba(238,238,238,.4);
+  padding: 10px 10px 40px 10px;
   position: relative;
   .rounded_corners(5px);  
   }
-.comments .card .type {
-  background: #fff;
+.comments .card:hover {
+  -ms-filter: "progid:DXImageTransform.Microsoft.dropshadow(OffX=0, OffY=0, Color='#000000')"; /* IE8 */
+  -moz-box-shadow: 0 0 10px rgba(0,0,0,.2); /* FF3.5+ */
+  -webkit-box-shadow: 0 0 10px rgba(0,0,0,.2); /* Saf3+, Chrome */
+  box-shadow: 0 0 10px rgba(0,0,0,.2); /* Standard. Opera 10.5, IE9 */
+  }  
+.comments li date {
+  bottom: 5px;
+  -moz-border-radius-topleft: 5px; /* FF1+ */
+  -webkit-border-top-left-radius: 5px; /* Saf3+, Chrome */
+  -khtml-border-top-left-radius: 5px; /* Konqueror */
+  border-top-left-radius: 5px; /* Standard. IE9 */
   -moz-border-radius-bottomright: 5px; /* FF1+ */
   -webkit-border-bottom-right-radius: 5px; /* Saf3+, Chrome */
   -khtml-border-bottom-right-radius: 5px; /* Konqueror */
   border-bottom-right-radius: 5px; /* Standard. IE9 */
-  color: #e4a529;
-  font: "Helvetica Neue", "Helvetica", sans-serif;
-  font-size: 150%;
-  font-weight: bold;  
-  left: 0;
-  padding: 0 10px 5px 0;
-  position: absolute;
-  top: 0;
-  }  
-.comments li date {
-  bottom: 0;
-  color: #ccc;
-  font: "Helvetica Neue", "Helvetica", sans-serif;
+  color: #ddd;
+  font: "gloriola-web-1","gloriola-web-2",sans-serif;
   font-size: 150%;
   font-weight: bold;
-  right: 10px;
+  padding-left: 10px;
+  left: 00px;
   position: absolute;  
   text-transform: uppercase;
   }        
