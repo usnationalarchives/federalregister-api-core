@@ -230,14 +230,14 @@ p { line-height: 22px; }
   height: 331px;
   position: absolute;
   top: 0;
-  right: -300px;
+  right: -100px;
   width: 436px;
   z-index: -1;
 }
 .title {
   background: #5697cf url(/images/header_bg.png) repeat-x left top;
+  color: #3d6e99;
   clear: both;
-  color: #5697cf;
   line-height: 25px;
   font-weight: bold;
   letter-spacing: 0px;
@@ -249,6 +249,7 @@ p { line-height: 22px; }
 }
 .title span {
   background: #ffffff;
+  color: #5697cf;
   padding: 0 10px;
   margin: 0 25px 0 0;
 }
@@ -271,6 +272,7 @@ article .metadata {
   margin-bottom: 25px;
 }
 article .metadata a { color: #7a838a; }
+article .summary { margin-bottom: 0; }
 article {
   border-bottom: 1px solid #e6e6e6;
   overflow: hidden;
@@ -371,7 +373,6 @@ article.with_photo.on_left .info {
 }
 article.with_photo.on_right .photo { margin-right: 0; }
 article.with_photo.on_right .info { margin-left: 0; }
-#top-articles article:last-child { border-bottom: 0; }
 .button {
   background: #e6e6e6;
   color: #6e6e6e;
