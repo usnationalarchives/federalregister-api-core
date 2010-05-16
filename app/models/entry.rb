@@ -144,14 +144,16 @@ class Entry < ApplicationModel
   def self.comments_closing(range = (Date.today .. Date.today + 14.days))
     scoped(
       :joins => :comments_close_date,
-      :conditions => {:referenced_dates => {:date => range}}
+      :conditions => {:referenced_dates => {:date => range}},
+      :order => "referenced_dates.date"
     )
   end
   
   def self.comments_opening(range = (Date.today - 14.days .. Date.today))
     scoped(
       :joins => :comments_close_date,
-      :conditions => {:entries => {:publication_date => range}}
+      :conditions => {:entries => {:publication_date => range}},
+      :order => "referenced_dates.date"
     )
   end
   
