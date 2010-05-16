@@ -219,6 +219,7 @@ body {
   font-size: 14px;
 }
 strong { font-weight: 500; }
+a { color: #849bb0; }
 p { line-height: 22px; }
 #main {
   margin: 0 auto;
@@ -309,6 +310,19 @@ article figure:hover figcaption a {
   -o-transition: all 0.3s ease-out;
   -webkit-transition: all 0.3s ease-out;
   color: #ffffff;
+}
+article dl { margin-bottom: 0; }
+article dl dt {
+  display: inline;
+  text-transform: uppercase;
+}
+article dl dd {
+  display: inline;
+  text-transform: uppercase;
+}
+article dl dd {
+  font-weight: bold;
+  padding-right: 10px;
 }
 section {
   text-align: right;
