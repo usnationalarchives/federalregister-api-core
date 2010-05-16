@@ -207,6 +207,7 @@ var ContentFlowGlobal = {
                 CF.init();
             }
         }
+        
     }
 
 };
@@ -2581,4 +2582,3 @@ if (!window.removeEvent) {
 
 /* ==================== start it all up ==================== */
 ContentFlowGlobal.init();
-
