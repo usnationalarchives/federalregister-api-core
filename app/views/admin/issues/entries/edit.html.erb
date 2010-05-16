@@ -1,5 +1,5 @@
 <% super_title 'Sections' %>
-<% title "Editing Entry" %>
+<% title "Editing :: #{@entry.curated_title || @entry.title}" %>
 
 <% add_javascript :src => 'admin/issues_entries_lede_photos' %>
 <% add_javascript :src => 'jquery.Jcrop'                     %>
@@ -8,47 +8,54 @@
 
 <% nav_secondary(render :partial => 'admin/issues/sections/nav', :locals => {:sections => @sections, :publication_date => @publication_date}) %>
 
-<input type="text" id="custom_tag">
 <div class='center_content'>
+  <nav id='issue_entry_edit'>
+    <ul>
+      <li><%= link_to 'Content', '', :id => 'content', :class => 'button small grey active' %></li>
+      <li><%= link_to 'Photo', '',   :id => 'photo',   :class => 'button small grey' %></li>
+    </ul>
+    <input type="text" id="custom_tag">
+  </nav>
   
-  <div id='lede_photo_flow'>
-  <% @entry.lede_photo_candidates[0,2].each do |topic, photos| %>
-    <%= render :partial => "admin/photo_candidates/topic", :locals => {:topic => topic, :photos => photos } %>
-  <% end %>
+  
+  <div class='bordered_wrapper'>
+    <div id='entry_content'>
+      <% semantic_form_for @entry, :url => admin_issue_entry_path(@publication_date.to_s(:db), @entry.document_number) do |f| %>
+        <%= hidden_field_tag :redirect_to, params[:redirect_to] || request.referer %>
+
+        <% f.fields_for :lede_photo_attributes do |lede_photo| %>
+          <%= lede_photo.hidden_field :url %>
+          <%= lede_photo.hidden_field :crop_x %>
+          <%= lede_photo.hidden_field :crop_y %>
+          <%= lede_photo.hidden_field :crop_width %>
+          <%= lede_photo.hidden_field :crop_height %>
+          <%= lede_photo.hidden_field :flickr_owner_id %>
+        <% end %>
+
+        <% f.inputs do %>
+          <%= f.input :curated_title, :hint => "Original: <em>#{f.object.title}</em>" %>
+          <%= f.input :curated_abstract, :as => :text, :hint => "Original: <em>#{truncate(f.object.abstract, 250)}</em>" %>
+        <% end %>
+
+        <% f.buttons do %>
+          <%= f.commit_button 'Save' %>
+        <% end %>
+      <% end %>
+    </div>
+    
+    <div id='photo_content'>
+      <div id='lede_photo_flow'>
+      <% @entry.lede_photo_candidates.each do |topic, photos| %>
+        <%= render(:partial => "admin/photo_candidates/topic", :locals => {:topic => topic, :photos => photos }) unless photos.count == 0 %>
+      <% end %>
+      </div>
+    
+      <span class='clear'></span>
+      
+      <div id="crop-box"></div>
+      <div id="preview">
+        <%= image_tag(@entry.lede_photo.photo.url(:medium)) if @entry.lede_photo %>
+      </div>
+    </div>
   </div>
-  
-  <table class='clearfix'>
-    <% @entry.lede_photo_candidates.each do |topic, photos| %>
-    <tr>
-      <td><%= link_to topic, '' %></td>
-    </tr>
-    <% end %>
-  </table>
 </div>
-
-<div id="crop-box"></div>
-<div id="preview">
-  <%= image_tag(@entry.lede_photo.photo.url(:medium)) if @entry.lede_photo %>
-</div>
-
-<% semantic_form_for @entry, :url => admin_issue_entry_path(@publication_date.to_s(:db), @entry.document_number) do |f| %>
-  <%= hidden_field_tag :redirect_to, params[:redirect_to] || request.referer %>
-  
-  <% f.fields_for :lede_photo_attributes do |lede_photo| %>
-    <%= lede_photo.hidden_field :url %>
-    <%= lede_photo.hidden_field :crop_x %>
-    <%= lede_photo.hidden_field :crop_y %>
-    <%= lede_photo.hidden_field :crop_width %>
-    <%= lede_photo.hidden_field :crop_height %>
-    <%= lede_photo.hidden_field :flickr_owner_id %>
-  <% end %>
-  
-  <% f.inputs do %>
-    <%= f.input :curated_title, :hint => "Original: <em>#{f.object.title}</em>" %>
-    <%= f.input :curated_abstract, :as => :text, :hint => "Original: <em>#{truncate(f.object.abstract, 250)}</em>" %>
-  <% end %>
-  
-  <% f.buttons do %>
-    <%= f.commit_button 'Save' %>
-  <% end %>
-<% end %>

@@ -48,7 +48,7 @@
 /* color styles 
 ---------------------------------------------- */
 
-/* gray */
+/* tan */
 .tan {
   color: #FFF;
   border: solid 1px #B58C5E;
@@ -70,9 +70,34 @@
   filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#C69967', endColorstr='#E5AE7C');
 }
 
+/* grey */
+.grey {
+  color: #FFF;
+  border: solid 1px #666666;
+  background: #666666;
+  background: -webkit-gradient(linear, left top, left bottom, from(#BFBFBF), to(#7F7F7F));
+  background: -moz-linear-gradient(top,  #BFBFBF,  #7F7F7F);
+  filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#BFBFBF', endColorstr='#7F7F7F');
+}
+
+.grey.active {
+  background: -webkit-gradient(linear, left top, left bottom, from(#7F7F7F), to(#BFBFBF));
+  background: -moz-linear-gradient(top,  #7F7F7F,  #BFBFBF);
+  filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#7F7F7F', endColorstr='#BFBFBF');
+}
+
+.grey:active {
+  background: -webkit-gradient(linear, left top, left bottom, from(#7F7F7F), to(#BFBFBF));
+  background: -moz-linear-gradient(top,  #7F7F7F,  #BFBFBF);
+  filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#7F7F7F', endColorstr='#BFBFBF');
+}
+
 
 /* icon styles 
 ---------------------------------------------- */
 .home {
   background: url(/images/admin/icons/home.png) no-repeat 5px 6px;
+}
+.users {
+  background: url(/images/admin/icons/users.png) no-repeat 5px 5px;
 }
