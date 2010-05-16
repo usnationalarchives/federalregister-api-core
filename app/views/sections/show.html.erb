@@ -23,10 +23,11 @@
 <aside>
   
   <section>
+    
+    <a href="#" class="button rss">Subscribe</a>
+    
     <p><strong>Science and Technology</strong>... A description of what this section is and why it is important. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-    
-    <a href="#" class="button rss">Subscribe to this section</a>
-    
+        
   </section>
   
   <section class="stats">
@@ -48,6 +49,50 @@
   
   <h2 class="title">Comment Period <span>Closing Soon</span></h2>
 
+  <ul class="comments clearfix">
+    <li class="alpha"> 
+      <div class="card"> 
+        <a href="/entries/2010/03/16/2010-5647/automotive-fuel-ratings-certification-and-posting">Automotive Fuel Ratings, Certification and Posting</a> 
+        <date>05/21/2010</date> 
+      </div> 
+    </li> 
+    
+    <li class=""> 
+      <div class="card"> 
+        <a href="/entries/2010/03/25/2010-6391/fixed-assets-member-business-loans-and-regulatory-flexibility-program">Fixed Assets, Member Business Loans, and Regulatory Flexibility Program</a> 
+        <date>05/24/2010</date> 
+      </div> 
+    </li> 
+    
+    <li class=""> 
+      <div class="card"> 
+        <a href="/entries/2010/03/29/2010-6439/fiduciary-duties-at-federal-credit-unions-mergers-and-conversions-of-insured-credit-unions">Fiduciary Duties at Federal Credit Unions; Mergers and Conversions of Insured Credit Unions</a> 
+        <date>05/28/2010</date> 
+      </div> 
+    </li> 
+    
+    <li class="omega"> 
+      <div class="card"> 
+        <a href="/entries/2010/04/07/2010-7889/equal-access-to-justice-act-implementation">Equal Access to Justice Act Implementation</a> 
+        <date>05/24/2010</date> 
+      </div> 
+    </li> 
+    
+    <li class="alpha"> 
+      <div class="card"> 
+        <a href="/entries/2010/04/19/2010-8911/amendment-of-the-temporary-liquidity-guarantee-program-to-extend-the-transaction-account-guarantee-p">Amendment of the Temporary Liquidity Guarantee Program To Extend the Transaction Account Guarantee Program With Opportunity To Opt Out</a> 
+        <date>05/19/2010</date> 
+      </div> 
+    </li> 
+    
+    <li class=""> 
+      <div class="card"> 
+        <a href="/entries/2010/04/26/2010-9434/surety-bond-guarantee-program-disaster-and-miscellaneous-amendments">Surety Bond Guarantee Program; Disaster and Miscellaneous Amendments</a> 
+        <date>05/26/2010</date> 
+      </div> 
+    </li>
+  </ul>
+  
   <ul class="comments">
     <% @section.entries.comments_closing.each do |entry| %>
     <li class="<%= cycle('alpha','','','omega') %>">
