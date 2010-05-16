@@ -43,41 +43,28 @@
     <h1><span>What's Hot</span></h1>
   </section>
   
-  <h2>Comment Period</h2>
-  <h3>Closing Soon</h3>
+</aside>
+
+  
+  <h2 class="title">Comment Period <span>Closing Soon</span></h2>
   <ul>
     <% @section.entries.comments_closing.each do |entry| %>
-    <li><%= link_to entry.title, entry_path(entry) %></li>
+    <li class="grid_4 <%= cycle('alpha','','','omega') %>"><%= link_to entry.title, entry_path(entry) %></li>
     <% end %>
   </ul>
 
-  <h3>Opening</h3>
+  <h2 class="title">Comment Period <span>Opening</span></h2>
   <ul>
     <% @section.entries.comments_opening.each do |entry| %>
     <li><%= link_to entry.title, entry_path(entry) %></li>
     <% end %>
   </ul>
-  
-</aside>
 
-<hr />
-
-<h2><span><%= @publication_date %></span></h2>
+<h2 class="title">Articles published on <span><%= @publication_date %></span></h2>
 
 <% @section.entries.published_on(@publication_date).each do |entry| %>
   <article>
     <h1><%= link_to entry.title, entry_path(entry) %></h1>
-    <dl class="group">
-      <dt>Type</dt>
-      <dd><%= entry.entry_type if entry.has_type? %></dd>
-      
-      <dt>Length</dt>
-      <dd><%= pluralize(entry.human_length, "page") %></dd>
-      
-      <% if entry.agency %>
-        <dt>Agency</dt>
-        <dd><%= link_to entry.agency.name, agency_path(entry.agency) %></dd>
-      <% end %>
-    </dl>
+    <p>A <%= pluralize(entry.human_length, "page") %> <%= entry.entry_type if entry.has_type? %> by <%= link_to entry.agency.name, agency_path(entry.agency) %></p>
   </article>
 <% end %>
