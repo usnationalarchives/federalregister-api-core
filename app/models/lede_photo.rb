@@ -58,7 +58,7 @@ class LedePhoto < ApplicationModel
   private
   
     def get_credit_info_from_flickr
-      if @flickr_owner_id
+      if @flickr_owner_id.present?
         person = Flickr::Person.new(@flickr_owner_id)
         self.credit = person.real_name.present? ? person.real_name : person.user_name
         self.credit_url = person.profile_url
