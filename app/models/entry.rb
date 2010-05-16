@@ -183,7 +183,7 @@ class Entry < ApplicationModel
   
   def agencies_exluding_parents
     parent_agency_ids = agencies.map(&:parent_id).compact
-    agencies.reject{|a| parent_agency_ids.include?(a.id) }.sort.uniq
+    agencies.reject{|a| parent_agency_ids.include?(a.id) }.uniq
   end
   
   def curated_title
