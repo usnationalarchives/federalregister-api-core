@@ -48,12 +48,30 @@ function css_show(object) {
   $(object).css('left', '0px');
 }
 
-$(document).ready(function(){
+function generate_photo_toc() {
+  $('#lede_photo_candidate_topics').remove();
   
+  var cycle_class = 'even';
+  
+  var photos = $('#lede_photo_flow .ContentFlow').map(function() {
+    var id = $(this).attr('id').replace(/_flow$/, '');
+    var name = $(this).find('.caption').first().html();
+    
+    if (cycle_class == 'odd'){
+      cycle_class = 'even';
+    }
+    else {
+      cycle_class = 'odd';
+    }
+    
+    return '<li class="topic_link ' + cycle_class + '" id="' + id + '">' + name + '</li>';
+  }).get();
+  
+  $('#crop-box').before('<ul id="lede_photo_candidate_topics">' + photos.join('') + '</ul>')
+}
+$(document).ready(function(){
   // get photo flow off the screen initially so tabs function properly
   css_hide( $('#lede_photo_flow') );
-  // get tags off screen as well
-  $('#lede_photo_candidate_topics').hide();
   
   $("#issue_entry_edit ul li a#content").bind('click', function(e) {
     e.preventDefault();
@@ -63,8 +81,7 @@ $(document).ready(function(){
       $(this).addClass('active');
       
       // hide photos and show edit fields
-      $('#lede_photo_flow').hide();
-      $('#lede_photo_candidate_topics').hide();
+      $('#photo_content').hide();
       $('#entry_content').show();
     }
   });
@@ -82,8 +99,8 @@ $(document).ready(function(){
       
       // hide edit fields and show photos
       $('#entry_content').hide();
-      $('#lede_photo_flow').show();
-      $('#lede_photo_candidate_topics').show();
+      $('#photo_content').show();
+      generate_photo_toc();
     }
   });
   
@@ -95,7 +112,7 @@ $(document).ready(function(){
   // show first topic
   css_show( $('.topic_photo_flow:first') );
   
-  $(".topic_link").bind('click', function(e){
+  $(".topic_link").live('click', function(e){
     e.preventDefault();
     var topic_flow_id = '#' + $(this).attr('id') + '_flow'
     $('.topic_photo_flow').each(function() {
@@ -106,18 +123,23 @@ $(document).ready(function(){
   
   $("#custom_tag").change(function() {
     var tag = $(this).val()
+    $(this).val('');
     
     $.ajax({
       url: "/admin/photo_candidates/" + tag,
       success: function(data, textStatus, XMLHttpRequest){
         $('#lede_photo_flow').prepend(data);
+        
+        generate_photo_toc();
+        
         var new_cf = $('#lede_photo_flow .ContentFlow').first();
-        var ajax_cf = new ContentFlow(new_cf.attr('id'), false);
+        var ajax_cf = new ContentFlow(new_cf.attr('id'), {onclickActiveItem: prepare_to_crop_image});
         ajax_cf.init();
         
-        new_cf.find('img').each(function(index, value){
-          ajax_cf.addItem($(value), 'last');
-        });
+        $('.topic_link').first().click();
+        // new_cf.find('img').each(function(index, value){
+        //   ajax_cf.addItem($(value), 'last');
+        // });
       }
     });
   });
