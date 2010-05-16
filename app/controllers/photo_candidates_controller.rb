@@ -1,4 +1,4 @@
-class PhotoCandidatesController < AdminController
+class Admin::PhotoCandidatesController < AdminController
   def show
     tag_name = params[:id]
     photos = Flickr.new.search(tag_name)
