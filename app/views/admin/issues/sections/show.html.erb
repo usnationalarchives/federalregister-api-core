@@ -7,20 +7,20 @@
 
 <%= link_to 'Preview', preview_admin_issue_section_path(@publication_date.to_s(:db), @section), :target => "_blank" %>
 
-<h3 class='grid_10'>Highlighted Entries</h3>
 
-<ul id="highlighted" class='grid_10'>
-  <%= render :partial => "highlighted_entry", :collection => @highlighted_entries %>
-</ul>
+<div class='center_content_alt'>
+  <h3>Highlighted Entries</h3>
 
+  <ul id="highlighted">
+    <%= render :partial => "highlighted_entry", :collection => @highlighted_entries %>
+  </ul>
 
-<div class='center_content'>
   <h3>Entries in this section on <%= @publication_date %></h3>
 
-  <div>
+  <div class='article_list'>
   <% @section.entries.published_on(@publication_date).each do |entry| %>
     <article data-entry-id="<%= entry.id %>" class="<%= 'highlighted' if @highlighted_entries.include?(entry) %>">
-      <h1 title="<%= entry.abstract.gsub(/"/, '&quot;') %>"><%= entry.curated_title %></h1>
+      <h4 title="<%= entry.abstract.gsub(/"/, '&quot;') %>"><%= entry.curated_title %></h4>
       <p>
         <span class="length">Length: <%= pluralize entry.human_length, 'page' %></span>
         <span class="entry_type">Type: <%= entry.entry_type %></span>

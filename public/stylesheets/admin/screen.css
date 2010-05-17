@@ -100,6 +100,11 @@
 .clearfix { display: inline-block; }
 * html .clearfix { height: 1%; }
 .clearfix { display: block; }
+ul { list-style: none; }
+h4 {
+  font-weight: normal;
+  margin-bottom: 10px;
+}
 header {
   display: block;
   width: 100%;
@@ -148,7 +153,7 @@ article.highlighted { color: gray; }
   overflow: hidden;
   margin-left: 5px;
 }
-.center_content {
+.center_content, .center_content_alt {
   display: inline;
   float: left;
   position: relative;
@@ -212,3 +217,10 @@ table#lede_photo_candidate_topics tr.odd { background-color: #f2f2f2; }
   font-size: 16px;
   padding-bottom: 2px;
 }
+.highlighted_entry a.title {
+  font-size: 19px;
+  margin-bottom: 10px;
+  text-decoration: none;
+  color: #000000;
+}
+div.article_list article { margin-left: 30px; }
