@@ -9,6 +9,10 @@
     <%= content_tag(:meta, nil, :name => 'description', :content => truncate(strip_tags(@entry.abstract), :length => 300)) if @entry %>
     <link rel="image_src" href="http://fr2.criticaljuncture.org/images/fbdisplay.jpg" />
     <meta name="medium" content="news" />
+  
+    <!--[if lt IE 9]>
+    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
     
     <%= stylesheet_link_tag "reset", :media => :screen %>
     <%= stylesheet_link_tag "grid", :media => :screen %>    
