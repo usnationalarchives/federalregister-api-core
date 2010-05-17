@@ -7,7 +7,7 @@ module Content::EntryImporter::ReferencedDates
     %w(effectiveDate commentDate).each do |date_tag_name|
       date = mods_node.css(date_tag_name).first.try(:content)
       if date
-        referenced_dates << ReferencedDate.new(:date => date, :date_type => type)
+        referenced_dates << ReferencedDate.new(:date => date, :date_type => date_tag_name.capitalize_first)
       end
     end
     
