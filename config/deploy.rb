@@ -115,7 +115,8 @@ after "deploy:cleanup",           "deploy:set_rake_path"
 after "deploy:set_rake_path",     "deploy:install_gems"
 after "deploy:install_gems",      "deploy:migrate"
 after "deploy:migrate",           "thinking_sphinx:restart"
-after "thinking_sphinx:restart",  "passenger:restart"
+after "thinking_sphinx:restart",  "less:generate"
+after "less:generate",            "passenger:restart"
 
 
 #############################################################
@@ -302,6 +303,13 @@ namespace :database do
     end
   end #end task :backup
 end #end namspace 
+
+namespace :less do
+  desc "Compile .css files from .less sources"
+  task :generate do
+    run "cd #{release_path}; #{rake_path} RAILS_ENV=#{rails_env} more:generate"
+  end
+end
 
 #############################################################
 # Load Remote Staging Database to Local Machine
