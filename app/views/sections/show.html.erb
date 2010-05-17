@@ -54,26 +54,36 @@
   <h2 class="title">Comment Period <span>Closing Soon</span></h2>
   
   <ul class="comments">
-    <% @section.entries.comments_closing.each do |entry| %>
-    <li class="<%= cycle('alpha','','','omega') %>">
-      <div class="card">
-        <%= link_to entry.title, entry_path(entry) %>
-        <date><%= entry.comments_close_date.date %></date>
-      </div>
-    </li>
+    <% @section.entries.comments_closing.group_by(&:toc_subject).each do |toc_subject, entries| %>
+      <h3><%= toc_subject || 'Other' %></h3>
+      <ul class="comments">
+      <% entries.each do |entry| %>
+        <li class="<%= cycle('alpha','','','omega') %>">
+          <div class="card">
+            <%= link_to (entry.toc_doc || entry.curated_title), entry_path(entry) %>
+            <date><%= entry.comments_close_date.date %></date>
+          </div>
+        </li>
+      <% end %>
+      </ul>
     <% end %>
+
   </ul>
 
   <h2 class="title">Comment Period <span>Opening</span></h2>
-  <ul class="comments">
-    <% @section.entries.comments_opening.each do |entry| %>
-    <li class="<%= cycle('alpha','','','omega') %>">
-      <div class="card">
-        <%= link_to entry.title, entry_path(entry) %>
-        <date><%= entry.comments_close_date.date %></date>
-    </li>
+  <% @section.entries.comments_opening.group_by(&:toc_subject).each do |toc_subject, entries| %>
+    <h3><%= toc_subject || 'Other' %></h3>
+    <ul class="comments">
+    <% entries.each do |entry| %>
+      <li class="<%= cycle('alpha','','','omega') %>">
+        <div class="card">
+          <%= link_to (entry.toc_doc || entry.curated_title), entry_path(entry) %>
+          <date><%= entry.comments_close_date.date %></date>
+        </div>
+      </li>
     <% end %>
-  </ul>
+    </ul>
+  <% end %>
 
 <h2 class="title">Articles published on <span><%= @publication_date %></span></h2>
 
