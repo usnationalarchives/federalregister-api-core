@@ -8,6 +8,17 @@
 /config/development.sphinx.conf
 /config/ec2_config.yml
 /public/sitemap*
+/public/stylesheets/grid.css
+/public/stylesheets/header.css
+/public/stylesheets/reset.css
+/public/stylesheets/screen.css
+/public/stylesheets/text.css
+/public/stylesheets/utilities.css
+/public/stylesheets/admin/formtastic_changes.css
+/public/stylesheets/admin/grid.css
+/public/stylesheets/admin/screen.css
+/public/stylesheets/admin/navigation.css
+/public/stylesheets/admin/tablesorter.css
 /public/system
 /db/sphinx/
 .DS_Store
