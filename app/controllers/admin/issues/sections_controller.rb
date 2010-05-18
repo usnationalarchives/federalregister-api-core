@@ -15,6 +15,7 @@ class Admin::Issues::SectionsController < AdminController
   
   def preview
     prepare_for_show(params[:id], Date.parse(params[:issue_id]))
+    @preview = true
     render :template => "sections/show", :layout => "application"
   end
 end

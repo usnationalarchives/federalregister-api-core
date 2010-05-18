@@ -3,5 +3,6 @@ class SectionsController < ApplicationController
   
   def show
     prepare_for_show(params[:slug], Entry.latest_publication_date)
+    @preview = false
   end
 end
