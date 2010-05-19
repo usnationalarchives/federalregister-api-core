@@ -1,5 +1,5 @@
 <% super_title 'Sections' %>
-<% title "Editing :: #{@entry.curated_title || @entry.title}" %>
+<% title "#{@entry.curated_title || @entry.title}" %>
 
 <% add_javascript :src => 'admin/issues_entries_lede_photos' %>
 <% add_javascript :src => 'jquery.Jcrop'                     %>
@@ -9,16 +9,20 @@
 <% nav_secondary(render :partial => 'admin/issues/sections/nav', :locals => {:sections => @sections, :publication_date => @publication_date}) %>
 
 <div class='center_content'>
-  <nav id='issue_entry_edit'>
-    <ul>
-      <li><%= link_to 'Content', '', :id => 'content', :class => 'button small grey active' %></li>
-      <li><%= link_to 'Photo', '',   :id => 'photo',   :class => 'button small grey' %></li>
-    </ul>
-    <input type="text" id="custom_tag">
-  </nav>
-  
   
   <div class='bordered_wrapper'>
+    <div id='photo_content'>
+      <div id='lede_photo_flow'>
+      </div>
+      
+      <div id="crop-box"></div>
+      <div id="preview">
+        <%= image_tag(@entry.lede_photo.photo.url(:medium)) if @entry.lede_photo %>
+      </div>
+      
+      <input type="text" id="custom_tag">
+    </div>
+    
     <div id='entry_content'>
       <% semantic_form_for @entry, :url => admin_issue_entry_path(@publication_date.to_s(:db), @entry.document_number) do |f| %>
         <%= hidden_field_tag :redirect_to, params[:redirect_to] || request.referer %>
@@ -43,19 +47,5 @@
       <% end %>
     </div>
     
-    <div id='photo_content'>
-      <div id='lede_photo_flow'>
-      <% @entry.lede_photo_candidates.each do |topic, photos| %>
-        <%= render(:partial => "admin/photo_candidates/topic", :locals => {:topic => topic, :photos => photos }) unless photos.count == 0 %>
-      <% end %>
-      </div>
-    
-      <span class='clear'></span>
-      
-      <div id="crop-box"></div>
-      <div id="preview">
-        <%= image_tag(@entry.lede_photo.photo.url(:medium)) if @entry.lede_photo %>
-      </div>
-    </div>
   </div>
 </div>
