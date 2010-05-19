@@ -6,7 +6,11 @@ class Admin::Issues::Sections::HighlightsController < AdminController
     @section_highlight.section = @section
     @section_highlight.publication_date = @publication_date
     
-    @section_highlight.save!
+    if @section_highlight.save
+      render
+    else
+      render :status => 409
+    end
   end
   
   def update
