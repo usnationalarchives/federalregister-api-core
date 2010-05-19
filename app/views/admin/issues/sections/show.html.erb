@@ -20,7 +20,7 @@
   <div class='article_list'>
   <% @section.entries.published_on(@publication_date).each do |entry| %>
     <article data-entry-id="<%= entry.id %>" class="<%= 'highlighted' if @highlighted_entries.include?(entry) %>">
-      <h4 title="<%= entry.abstract.gsub(/"/, '&quot;') %>"><%= entry.curated_title %></h4>
+      <%= content_tag(:h4, entry.curated_title, :title => entry.abstract) %>
       <p>
         <span class="length">Length: <%= pluralize entry.human_length, 'page' %></span>
         <span class="entry_type">Type: <%= entry.entry_type %></span>
