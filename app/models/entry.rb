@@ -39,7 +39,7 @@
   cfr_title                    :string(255)
   cfr_part                     :string(255)
   curated_title                :string(255)
-  curated_abstract             :string(255)
+  curated_abstract             :string(500)
   lede_photo_id                :integer(4)
   lede_photo_candidates        :text
 
