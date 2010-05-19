@@ -78,18 +78,15 @@ article.highlighted {
   .grid_9;
 }
 
-.center_content #lede_photo_flow, .center_content #entry_content {
-  .grid_9;
+.bordered_wrapper {
+  .push_2;
+  .grid_10;
+  border: thin solid #CCC;
+  margin-left:0px;
 }
 
-.bordered_wrapper {
-  border: thin solid #CCC;
-  border-top:none;
-  top:-20px;
-  width:720px;
-  height:100%;
-  min-height:300px;
-  margin:0;
+.center_content .bordered_wrapper #entry_content {
+  border-top:thin solid #CCC;
 }
 
 .flow {
@@ -114,8 +111,11 @@ form.formtastic.entry fieldset ol li {
 form.formtastic.entry fieldset.buttons ol li {
   margin-bottom:0px;
 }
-form.formtastic.entry textarea {
-  height:150px;
+form.formtastic.entry fieldset ol li.string input, form.formtastic fieldset ol li.text textarea {
+  width:500px;
+}
+form.formtastic fieldset ol li.text textarea {
+  height:200px;
 }
 
 #custom_tag {
@@ -159,4 +159,8 @@ table#lede_photo_candidate_topics tr.odd {
 
 div.article_list article {
   margin-left:30px;
+}
+
+div.topic_photo_flow {
+  margin:0px auto;
 }
