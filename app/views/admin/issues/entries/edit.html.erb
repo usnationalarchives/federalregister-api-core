@@ -34,7 +34,7 @@
 
         <% f.inputs do %>
           <%= f.input :curated_title, :hint => "Original: <em>#{f.object.title}</em>" %>
-          <%= f.input :curated_abstract, :as => :text, :hint => "Original: <em>#{truncate(f.object.abstract, 250)}</em>" %>
+          <%= f.input :curated_abstract, :as => :text, :hint => "Original: <em>#{f.object.abstract}</em>" %>
         <% end %>
 
         <% f.buttons do %>

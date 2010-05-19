@@ -350,10 +350,12 @@ class Entry < ApplicationModel
   end
   
   def curated_attributes_are_not_too_long
-    [:curated_title, :curated_abstract].each do |attribute|
-      if self[attribute].present? && self[attribute].size > 255
-        errors.add(attribute, "exceeds 255 characters")
-      end
+    if self[:curated_title].present? && self[attribute].size > 255
+      errors.add(:curated_title, "exceeds 255 characters")
+    end
+    
+    if self[:curated_abstract].present? && self[attribute].size > 500
+      errors.add(:curated_abstract, "exceeds 500 characters")
     end
   end
   
