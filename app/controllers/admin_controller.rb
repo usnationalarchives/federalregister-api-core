@@ -44,7 +44,7 @@ class AdminController < ApplicationController
   
   def require_no_user
     if current_user
-      redirect_back_or_default root_url
+      redirect_back_or_default admin_home_url
       return false
     end
   end
