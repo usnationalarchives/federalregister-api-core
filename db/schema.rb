@@ -94,7 +94,7 @@ ActiveRecord::Schema.define(:version => 20100519012022) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.text     "slug"
-    t.boolean  "delta",                        :default => true, :null => false
+    t.boolean  "delta",                                       :default => true, :null => false
     t.string   "source_text_url"
     t.string   "regulationsdotgov_id"
     t.string   "comment_url"
@@ -102,13 +102,13 @@ ActiveRecord::Schema.define(:version => 20100519012022) do
     t.integer  "volume"
     t.datetime "full_xml_updated_at"
     t.string   "regulation_id_number"
-    t.integer  "citing_entries_count",         :default => 0
+    t.integer  "citing_entries_count",                        :default => 0
     t.string   "document_file_path"
     t.datetime "full_text_updated_at"
     t.string   "cfr_title"
     t.string   "cfr_part"
     t.string   "curated_title"
-    t.string   "curated_abstract"
+    t.string   "curated_abstract",             :limit => 500
     t.integer  "lede_photo_id"
     t.text     "lede_photo_candidates"
   end
