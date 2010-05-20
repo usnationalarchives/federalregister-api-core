@@ -3,7 +3,8 @@
 
 <% add_javascript :src => 'admin/issues_entries_lede_photos' %>
 <% add_javascript :src => 'jquery.Jcrop'                     %>
-<% add_javascript :src => '../ContentFlow/contentflow' %>
+<% add_javascript :src => 'admin/jqModal'                    %>
+<% add_javascript :src => '../ContentFlow/contentflow'       %>
 <% add_javascript :src => '../ContentFlow/ContentFlowAddOn_white' %>
 
 <% nav_secondary(render :partial => 'admin/issues/sections/nav', :locals => {:sections => @sections, :publication_date => @publication_date}) %>
@@ -13,11 +14,9 @@
   <div class='bordered_wrapper'>
     <div id='photo_content'>
       <div id='lede_photo_flow'>
-      </div>
-      
-      <div id="crop-box"></div>
-      <div id="preview">
-        <%= image_tag(@entry.lede_photo.photo.url(:medium)) if @entry.lede_photo %>
+        <div id='blank_flow' class="ContentFlow topic_photo_flow ContentFlowAddOn_white">
+            <div class="loadIndicator"><div class="indicator"></div></div>
+        </div>
       </div>
       
       <input type="text" id="custom_tag">
