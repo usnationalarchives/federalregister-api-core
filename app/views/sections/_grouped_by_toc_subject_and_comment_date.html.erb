@@ -1,4 +1,5 @@
-<% entries.group_by(&:toc_subject).each do |toc_subject, subject_entries| %>
+<%# TODO: FIX-ME: the below sorting is totally nasty... %>
+<% entries.group_by(&:toc_subject).sort{|a,b| (a.first || 'ZZZZZ') <=> (b.first || 'ZZZZZ') }.each do |toc_subject, subject_entries| %>
   <span class="clear"></span> <%# HELP-DESIGN: I don't get why this solves my problem, but Bob told me to do it and it works!!! %>
   
   <h3 class="grid_4 alpha "><%= toc_subject || 'Other' %></h3>
