@@ -52,7 +52,7 @@
 
   <%# TODO HELP-RUBY i want a doubly nested grouping. the date should only appear once. i tried and failed.  %>
   
-  <div class="comment_period_list">
+  <!-- <div class="comment_period_list">
     <h2 class="title_bar"><span class="small_stack">Comment <span>Period</span></span><span class="large_flow">Closing Soon</span></h2>
     <% @section.entries.comments_closing.group_by(&:toc_subject).each do |toc_subject, entries| %>
         <h3 class="grid_4 alpha"><%= toc_subject || 'Other' %></h3>
@@ -65,23 +65,17 @@
         <% end %>
       </ul>
     <% end %>
-  </div>
+  </div> -->
   
   <%# TODO HELP-RUBY i want a doubly nested grouping below. the date should only appear once. i tried and failed.  %>
+  <div class="comment_period_list">
+    <h2 class="title_bar"><span class="small_stack">Comment <span>Period</span></span><span class="large_flow">Closing Soon</span></h2>
+    <%= render :partial => "sections/grouped_by_toc_subject_and_comment_date", :locals => {:entries => @section.entries.comments_closing } %>
+  </div>
   
   <div class="comment_period_list">
     <h2 class="title_bar"><span class="small_stack">Comment <span>Period</span></span><span class="large_flow">Opening</span></h2>
-    <% @section.entries.comments_opening.group_by(&:toc_subject).each do |toc_subject, entries| %>
-      <h3 class="grid_4 alpha "><%= toc_subject || 'Other' %></h3>
-      <ul class="comments grid_12 omega">
-        <% entries.each do |entry| %>
-          <li>
-              <div class="grid_2 alpha date"><date><%= entry.comments_close_date.date %></date></div>
-              <%= link_to (entry.toc_doc || entry.curated_title), entry_path(entry), :class => 'grid_9 omega' %>
-          </li>
-        <% end %>
-      </ul>
-    <% end %>
+    <%= render :partial => "sections/grouped_by_toc_subject_and_comment_date", :locals => {:entries => @section.entries.comments_opening } %>
   </div>
   
 <h2 class="title_bar"><span class="small_stack">Articles <span>published on</span></span> <span class="large_flow"><%= @publication_date %></span></h2>

@@ -15,6 +15,7 @@
   <%= stylesheet_link_tag "admin/jquery.Jcrop",       :media => :screen %>
   <%= stylesheet_link_tag "admin/navigation",         :media => :screen %>
   <%= stylesheet_link_tag "admin/tablesorter",        :media => :screen %>
+  <%= stylesheet_link_tag "admin/jqModal",            :media => :screen %>
   
 </head>
 <body>
@@ -90,6 +91,18 @@
       
     </footer>
   </div> <!-- wrapper end -->
+  
+  <div class='jqmOverlay'></div>
+  <div class='modal jqmWindow'>
+    <div id='crop_area'>
+      <div id="crop-box"></div>
+      <div id="preview">
+        <% if @entry.present? %>
+          <%= image_tag(@entry.lede_photo.photo.url(:medium)) if @entry.lede_photo %>
+        <% end %>
+      </div>
+    </div>
+  </div>
   
   <%= jquery_include_tag %>
   <%= jquery_ui_include_tag %>
