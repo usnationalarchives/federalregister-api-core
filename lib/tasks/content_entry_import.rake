@@ -11,6 +11,11 @@ namespace :content do
     end
     
     namespace :import do
+      desc "Extract referenced dates"
+      task :referenced_dates => :environment do
+        entry_importer(:referenced_dates)
+      end
+      
       desc "Extract lede photo candidates"
       task :lede_photo_candidates => :environment do
         entry_importer(:lede_photo_candidates)
