@@ -25,6 +25,12 @@ a {color: #849bb0;}
 p {
   line-height: 22px; }
 
+.comment_period_list h3 {
+  font-family: "apertura-condensed-1","apertura-condensed-2",sans-serif;
+  font-size: 1.5em;
+  text-align: right;
+}
+
 #main { 
   .container; }
 
@@ -45,10 +51,7 @@ p {
   line-height: 25px;
   font-weight: bold;
   letter-spacing: 0px;
-  margin-left: -999px;
   margin-bottom: 50px;
-  padding-left: 999px;
-  text-align: right;
   text-transform: uppercase; }   
 
 .title span {
@@ -56,6 +59,12 @@ p {
   color: #5697cf;
   padding: 0 10px; 
   margin: 0 25px 0 0; }
+  
+h1.title {
+  margin-left: -999px;
+  padding-left: 999px;
+  text-align: right;
+  }  
   
 article h1 { 
   font-family: "gloriola-web-1","gloriola-web-2",sans-serif;
@@ -122,7 +131,9 @@ article figure:hover figcaption a {
   color: #fff;  
   color: rgba(255,255,255, 1);
   }
-
+#fading-articles article:last-child {
+  border-bottom: none;
+  }
 article dl {
   margin-bottom: 0;
 }
@@ -136,6 +147,8 @@ article dl dd {
   font-weight: bold;
   padding-right: 10px;
   }
+
+
    
 section {
   text-align: right;
@@ -210,9 +223,16 @@ article.with_photo.on_right .info {
   padding-left: 30px;
   text-transform: uppercase;
   }
-  
+
+.comments {
+  margin-top: 7px;
+}  
 .comments li {
-  margin-bottom: 20px;
+  margin:0;
+  list-style-type: none;
+  margin-bottom: 10px;
+  overflow: auto;
+  padding: 0;
   }
 .comments li.alpha {
   clear:left;
@@ -235,13 +255,38 @@ article.with_photo.on_right .info {
   box-shadow: 0 0 10px rgba(0,0,0,.2); /* Standard. Opera 10.5, IE9 */
   }  
 .comments li .date {
-  bottom: 5px;
-  color: #ddd;
-  font: "gloriola-web-1","gloriola-web-2",sans-serif;
-  font-size: 150%;
+  color: #bdbdbd;
   font-weight: bold;
-  padding-left: 10px;
-  left: 00px;
-  position: absolute;  
-  text-transform: uppercase;
+  line-height: 21px;
   }
+.comments li .date date {
+  display: block;
+  font-size: 1.3em;
+  text-align: right;
+  }
+
+.title_bar {
+  border-top: 3px solid #385f82;
+  clear: both;
+  font-family: "apertura-condensed-1","apertura-condensed-2",sans-serif;
+  padding-top: 10px;
+}
+
+.title_bar .small_stack {
+  color: #385f82;
+  display: inline-block;
+  font-size: 15px;
+  line-height: 15px;
+  margin-right: 10px;
+  text-align: right;
+  text-transform: uppercase;
+  font-variant: small-caps;
+  }
+.title_bar .small_stack span {
+  display: block;
+  }  
+.title_bar .large_flow {
+  color: #5696cf;
+  font-size: 37px;
+  text-transform: uppercase;
+}   
