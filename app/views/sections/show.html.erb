@@ -50,42 +50,41 @@
   
 </aside>
 
+  <%# TODO HELP-RUBY i want a doubly nested grouping. the date should only appear once. i tried and failed.  %>
   
-  <h2 class="title">Comment Period <span>Closing Soon</span></h2>
-  
-  <ul class="comments">
+  <div class="comment_period_list">
+    <h2 class="title_bar"><span class="small_stack">Comment <span>Period</span></span><span class="large_flow">Closing Soon</span></h2>
     <% @section.entries.comments_closing.group_by(&:toc_subject).each do |toc_subject, entries| %>
-      <h3><%= toc_subject || 'Other' %></h3>
-      <ul class="comments">
-      <% entries.each do |entry| %>
-        <li class="<%= cycle('alpha','','','omega') %>">
-          <div class="card">
-            <%= link_to (entry.toc_doc || entry.curated_title), entry_path(entry) %>
-            <date><%= entry.comments_close_date.date %></date>
-          </div>
-        </li>
-      <% end %>
+        <h3 class="grid_4 alpha"><%= toc_subject || 'Other' %></h3>
+        <ul class="comments grid_12 omega">
+        <% entries.each do |entry| %>
+          <li>
+              <div class="grid_2 alpha date"><date><%= entry.comments_close_date.date %></date></div>
+              <%= link_to (entry.toc_doc || entry.curated_title), entry_path(entry), :class => 'grid_9 omega' %>
+          </li>
+        <% end %>
       </ul>
     <% end %>
-
-  </ul>
-
-  <h2 class="title">Comment Period <span>Opening</span></h2>
-  <% @section.entries.comments_opening.group_by(&:toc_subject).each do |toc_subject, entries| %>
-    <h3><%= toc_subject || 'Other' %></h3>
-    <ul class="comments">
-    <% entries.each do |entry| %>
-      <li class="<%= cycle('alpha','','','omega') %>">
-        <div class="card">
-          <%= link_to (entry.toc_doc || entry.curated_title), entry_path(entry) %>
-          <date><%= entry.comments_close_date.date %></date>
-        </div>
-      </li>
+  </div>
+  
+  <%# TODO HELP-RUBY i want a doubly nested grouping below. the date should only appear once. i tried and failed.  %>
+  
+  <div class="comment_period_list">
+    <h2 class="title_bar"><span class="small_stack">Comment <span>Period</span></span><span class="large_flow">Opening</span></h2>
+    <% @section.entries.comments_opening.group_by(&:toc_subject).each do |toc_subject, entries| %>
+      <h3 class="grid_4 alpha "><%= toc_subject || 'Other' %></h3>
+      <ul class="comments grid_12 omega">
+        <% entries.each do |entry| %>
+          <li>
+              <div class="grid_2 alpha date"><date><%= entry.comments_close_date.date %></date></div>
+              <%= link_to (entry.toc_doc || entry.curated_title), entry_path(entry), :class => 'grid_9 omega' %>
+          </li>
+        <% end %>
+      </ul>
     <% end %>
-    </ul>
-  <% end %>
-
-<h2 class="title">Articles published on <span><%= @publication_date %></span></h2>
+  </div>
+  
+<h2 class="title_bar"><span class="small_stack">Articles <span>published on</span></span> <span class="large_flow"><%= @publication_date %></span></h2>
 
 <% @section.entries.published_on(@publication_date).each do |entry| %>
   <article>
