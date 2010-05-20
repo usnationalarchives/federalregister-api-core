@@ -40,7 +40,7 @@ p {
   
 .title {
   background: #5697cf url(/images/header_bg.png) repeat-x left top;
-  color: #3d6e99;
+  color: #fff;
   clear: both;
   line-height: 25px;
   font-weight: bold;
@@ -101,20 +101,25 @@ article figcaption {
   color: #fff;
   color: rgba(255,255,255, 0);
   font-size: 10px;
+  left: 10px;
   padding: 0 5px;
   position: absolute;
   width: 130px; 
   }   
 article figcaption a {
+  color: #fff;
   color: rgba(255,255,255, 0);
 }  
 article figure:hover figcaption {  
+  background: #000;
   background: rgba(0,0,0, .7);
   .box_transition;
+  color: #fff;
   color: rgba(255,255,255, 1);  
   }
 article figure:hover figcaption a {
-  .box_transition;  
+  .box_transition;
+  color: #fff;  
   color: rgba(255,255,255, 1);
   }
 
@@ -207,14 +212,18 @@ article.with_photo.on_right .info {
   }
   
 .comments li {
-  .grid_4;
   margin-bottom: 20px;
   }
 .comments li.alpha {
   clear:left;
+  margin-left: 0;
+  }  
+.comments li.omega {
+  margin-right: 0;
   }  
 .comments .card {
-  background: rgba(238,238,238,.4);
+  background: #fff;
+  border: 1px solid #f1f1f1;
   padding: 10px 10px 40px 10px;
   position: relative;
   .rounded_corners(5px);  
@@ -225,16 +234,8 @@ article.with_photo.on_right .info {
   -webkit-box-shadow: 0 0 10px rgba(0,0,0,.2); /* Saf3+, Chrome */
   box-shadow: 0 0 10px rgba(0,0,0,.2); /* Standard. Opera 10.5, IE9 */
   }  
-.comments li date {
+.comments li .date {
   bottom: 5px;
-  -moz-border-radius-topleft: 5px; /* FF1+ */
-  -webkit-border-top-left-radius: 5px; /* Saf3+, Chrome */
-  -khtml-border-top-left-radius: 5px; /* Konqueror */
-  border-top-left-radius: 5px; /* Standard. IE9 */
-  -moz-border-radius-bottomright: 5px; /* FF1+ */
-  -webkit-border-bottom-right-radius: 5px; /* Saf3+, Chrome */
-  -khtml-border-bottom-right-radius: 5px; /* Konqueror */
-  border-bottom-right-radius: 5px; /* Standard. IE9 */
   color: #ddd;
   font: "gloriola-web-1","gloriola-web-2",sans-serif;
   font-size: 150%;
@@ -243,4 +244,4 @@ article.with_photo.on_right .info {
   left: 00px;
   position: absolute;  
   text-transform: uppercase;
-  }        
+  }
