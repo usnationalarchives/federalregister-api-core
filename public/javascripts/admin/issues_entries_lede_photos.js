@@ -19,6 +19,9 @@ function prepare_to_crop_image(item) {
   $('#crop-box').html('<img src="' + src + '" />')
   $('#preview').html('<img src="' + src + '" />');
   
+  $('.modal').jqmShow();
+  $('fieldset#photo_preview').remove();
+  
   $('#crop-box img').Jcrop({
     onChange: showPreview,
     onSelect: function(c){
@@ -34,36 +37,26 @@ function prepare_to_crop_image(item) {
   });
 }
 
-function generate_photo_toc() {
-  $('#lede_photo_candidate_topics').remove();
-  
-  var cycle_class = 'even';
-  
-  var photos = $('#lede_photo_flow .ContentFlow').map(function() {
-    var id = $(this).attr('id').replace(/_flow$/, '');
-    var name = $(this).find('.caption').first().html();
-    
-    if (cycle_class == 'odd'){
-      cycle_class = 'even';
-    }
-    else {
-      cycle_class = 'odd';
-    }
-    
-    return '<li class="topic_link ' + cycle_class + '" id="' + id + '">' + name + '</li>';
-  }).get();
-  
-  $('#crop-box').before('<ul id="lede_photo_candidate_topics">' + photos.join('') + '</ul>')
-}
 $(document).ready(function(){
+  $('.modal').jqm({modal: true});
+  $('.jqmOverlay').live('click', function(){
+    $('.modal').jqmHide();
+    $('#preview').clone().prependTo('form.formtastic.entry');
+    $('form.formtastic.entry div#preview').removeAttr('id').attr('id', 'entry_photo_preview').wrap('<fieldset id="photo_preview" class="inputs"><ol><li>');
+    $('fieldset#photo_preview ol li div#entry_photo_preview').before('<label for="entry_photo_preview">Photo</label>');
+  });
   
   $("#custom_tag").change(function() {
     var tag = $(this).val()
     $(this).val('');
     
+    $('.topic_photo_flow:first').hide();
+    $('#blank_flow').show();
+    
     $.ajax({
       url: "/admin/photo_candidates/" + tag,
       success: function(data, textStatus, XMLHttpRequest){
+        $('#blank_flow').hide();
         $('#lede_photo_flow').prepend(data);
         
         var new_cf = $('#lede_photo_flow .ContentFlow').first();
