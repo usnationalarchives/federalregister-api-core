@@ -1,4 +1,7 @@
 class Section < ApplicationModel
+  has_many :agencies_sections
+  has_many :agencies, :through => :agencies_sections
+  
   validates_uniqueness_of :title
   validates_uniqueness_of :slug
   validates_format_of :slug, :with => /^[a-z-]+$/
