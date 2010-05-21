@@ -1,10 +1,7 @@
 <% f.inputs do %>
   <%= f.input :title %>
   <%= f.input :slug, :hint => "only letters and dashes", :label => "URL Portion" %>
-  <li class="string optional" id="section_agency_name_input">
-    <label for="section_agency_name">Agency</label>
-    <input id="section_agency_name" maxlength="255" name="" size="50" type="text" value="" />
-  </li>
+  <%= f.input :agencies, :as => "autocomplete", :source_data_url => "/admin/agencies.json" %>
   <%= f.input :description %>
   <%= f.input :relevant_cfr_sections, :hint => "examples: '10 CFR', '11 CFR 100-199' ", :label => "Relevant CFR sections" %>
 <% end %>
