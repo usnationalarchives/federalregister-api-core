@@ -1,28 +1,26 @@
-@import "_mixins";
+/******************************
 
+GENERAL
+
+******************************/
+
+html{
+font-size:100%;
+min-height:101%;
+}
 
 body {
-color: #363636;
+color: #666;
 font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
 font-weight: 300;
-font-size: 14px;
+font-size:62.5%;
 }
 
-strong {
-font-weight: 500;
-}
-a {
-color: #849bb0;
-}
-p {
-line-height: 22px;
-}
+/******************************
 
-.comment_period_list h3 {
-font-family: "apertura-condensed-1","apertura-condensed-2",sans-serif;
-font-size: 1em;
-text-align: right;
-}
+DECORATIONS
+
+******************************/
 
 #seal {
 background: url(/images/seal.png) no-repeat left top;
@@ -34,7 +32,13 @@ right: -100px;
 width: 436px;
 z-index: -1;
 }
-  
+
+/******************************
+
+TITLE STYLES
+
+******************************/
+
 .title {
 background: #5697cf url(/images/header_bg.png) repeat-x left top;
 color: #fff;
@@ -58,7 +62,52 @@ margin-left: -999px;
 padding-left: 999px;
 text-align: right;
 }
-  
+
+/* stacked left words, big right word */
+
+.title_bar {
+border-top: 3px solid #385f82;
+clear: both;
+font-family: "apertura-condensed-1","apertura-condensed-2",sans-serif;
+padding-top: 10px;
+}
+
+.title_bar .small_stack {
+color: #385f82;
+display: inline-block;
+font-size: 15px;
+line-height: 15px;
+margin-right: 10px;
+text-align: right;
+text-transform: uppercase;
+font-variant: small-caps;
+}
+
+.title_bar .small_stack span {
+display: block;
+}
+
+.title_bar .large_flow {
+color: #5696cf;
+font-size: 37px;
+text-transform: uppercase;
+}
+
+
+/******************************
+
+SECTION
+
+******************************/
+
+
+article {
+border-bottom: 1px solid #e6e6e6;
+overflow: hidden;
+margin-bottom: 25px;
+padding-bottom: 25px;
+} 
+
 article h1 {
 font-family: "gloriola-web-1","gloriola-web-2",sans-serif;
 font-size: 20px;
@@ -87,14 +136,43 @@ color: #7a838a;
 article .summary {
 margin-bottom: 0;
 }
-  
-article {
-border-bottom: 1px solid #e6e6e6;
-overflow: hidden;
-margin-bottom: 25px;
-padding-bottom: 25px;
+
+article.with_photo .info {
+display: inline;
+float: left;
+position: relative;
+margin-left: 10px;
+margin-right: 10px;
+width: 460px;
 }
-  
+
+article.with_photo .photo {
+display: inline;
+float: left;
+position: relative;
+margin-left: 10px;
+margin-right: 10px;
+width: 160px;
+}
+
+article.with_photo.on_left .photo {
+left: -480px;
+margin-right: 0;
+}
+
+article.with_photo.on_left .info {
+left: 180px;
+margin-left: 0;
+}
+
+article.with_photo.on_right .photo {
+margin-right: 0;
+}
+
+article.with_photo.on_right .info {
+margin-left: 0;
+}
+
 article figure {
 background: #e6e6e6;
 float: left;
@@ -114,25 +192,34 @@ padding: 0 5px;
 position: absolute;
 width: 130px;
 }
+
 article figcaption a {
 color: #fff;
 color: rgba(255,255,255, 0);
 }
+
 article figure:hover figcaption {
 background: #000;
 background: rgba(0,0,0, .7);
-  .box_transition;
+-moz-transition: all 0.3s ease-out;  /* FF3.7+ */
+-o-transition: all 0.3s ease-out;  /* Opera 10.5 */
+-webkit-transition: all 0.3s ease-out;  /* Saf3.2+, Chrome */
 color: #fff;
 color: rgba(255,255,255, 1);
 }
+
 article figure:hover figcaption a {
-  .box_transition;
+-moz-transition: all 0.3s ease-out;  /* FF3.7+ */
+-o-transition: all 0.3s ease-out;  /* Opera 10.5 */
+-webkit-transition: all 0.3s ease-out;  /* Saf3.2+, Chrome */;
 color: #fff;
 color: rgba(255,255,255, 1);
 }
+
 #fading-articles article:last-child {
 border-bottom: none;
 }
+
 article dl {
 margin-bottom: 0;
 }
@@ -142,12 +229,19 @@ article dl dd {
 display: inline;
 text-transform: uppercase;
 }
+
 article dl dd {
 font-weight: bold;
 padding-right: 10px;
 }
 
 
+
+/******************************
+
+SIDEBAR
+
+******************************/
    
 section {
 text-align: right;
@@ -173,45 +267,21 @@ section.stats ul {
 list-style: none;
 }
 
-  
-article.with_photo .info {
-display: inline;
-float: left;
-position: relative;
-margin-left: 10px;
-margin-right: 10px;
-width: 460px;
-}
-article.with_photo .photo {
-display: inline;
-float: left;
-position: relative;
-margin-left: 10px;
-margin-right: 10px;
-width: 160px;
-}
-article.with_photo.on_left .photo {
-left: -480px;
-margin-right: 0;
-}
-article.with_photo.on_left .info {
-left: 180px;
-margin-left: 0;
-}
-article.with_photo.on_right .photo {
-margin-right: 0;
-}
-article.with_photo.on_right .info {
-margin-left: 0;
-}
-  
+/******************************
+
+BUTTONS / ICONS
+
+******************************/
+
 .button {
 background: #e6e6e6;
 color: #6e6e6e;
 font-weight: bold;
 margin-bottom: 15px;
 padding: 10px 10px 7px;
-  .rounded_corners(5px);
+-moz-border-radius: 5px;
+-webkit-border-radius: 5px;
+border-radius: 5px;
 text-decoration: none;
 text-transform: uppercase;
 }
@@ -235,6 +305,12 @@ padding-left: 30px;
 text-transform: uppercase;
 }
 
+/******************************
+
+COMMENT PERIOD CLOSING
+
+******************************/
+
 .comments li {
 margin: 0;
 list-style-type: none;
@@ -242,59 +318,32 @@ margin-bottom: 10px;
 overflow: auto;
 padding: 0;
 }
+
 .comments li.alpha {
 clear: left;
 margin-left: 0;
 }
+
 .comments li.omega {
 margin-right: 0;
 }
-.comments .card {
-background: #fff;
-border: 1px solid #f1f1f1;
-padding: 10px 10px 40px 10px;
-position: relative;
-  .rounded_corners(5px);
-}
-.comments .card:hover {
--ms-filter: "progid:DXImageTransform.Microsoft.dropshadow(OffX=0, OffY=0, Color='#000000')"; /* IE8 */
-  -moz-box-shadow: 0 0 10px rgba(0,0,0,.2); /* FF3.5+ */
-  -webkit-box-shadow: 0 0 10px rgba(0,0,0,.2); /* Saf3+, Chrome */
-  box-shadow: 0 0 10px rgba(0,0,0,.2); /* Standard. Opera 10.5, IE9 */
-}
+
 .comments li .date {
 color: #bdbdbd;
 font-weight: bold;
 line-height: 21px;
 }
+
 .comments li .date date {
 display: block;
 font-size: 1.2em;
 text-align: right;
 }
 
-.title_bar {
-border-top: 3px solid #385f82;
-clear: both;
+.comment_period_list h3 {
 font-family: "apertura-condensed-1","apertura-condensed-2",sans-serif;
-padding-top: 10px;
+font-size: 1em;
+text-align: right;
 }
 
-.title_bar .small_stack {
-color: #385f82;
-display: inline-block;
-font-size: 15px;
-line-height: 15px;
-margin-right: 10px;
-text-align: right;
-text-transform: uppercase;
-font-variant: small-caps;
-}
-.title_bar .small_stack span {
-display: block;
-}
-.title_bar .large_flow {
-color: #5696cf;
-font-size: 37px;
-text-transform: uppercase;
-}
+
