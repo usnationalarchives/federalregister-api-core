@@ -1,7 +1,7 @@
 <% f.inputs do %>
   <%= f.input :title %>
   <%= f.input :slug, :hint => "only letters and dashes", :label => "URL Portion" %>
-  <%= f.input :agencies, :as => "autocomplete", :source_data_url => "/admin/agencies.json" %>
+  <%= f.input :agencies, :as => :autocomplete, :source_data_url => "/admin/agencies.json" %>
   <%= f.input :description %>
   <%= f.input :relevant_cfr_sections, :hint => "examples: '10 CFR', '11 CFR 100-199' ", :label => "Relevant CFR sections" %>
 <% end %>
