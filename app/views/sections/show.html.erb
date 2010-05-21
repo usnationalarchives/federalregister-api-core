@@ -1,6 +1,6 @@
-<%= title @section.name %>
+<%= title @section.title %>
 
-<h1 class="title"><span><%= @section.name %></span></h1>
+<h1 class="title"><span><%= @section.title %></span></h1>
 
 <div id="content_area">
 
@@ -30,7 +30,7 @@
   
   <section class="info">
         
-    <p><strong>Science and Technology</strong>... A description of what this section is and why it is important. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+    <p><%= @section.description %></p>
         
   </section>
   

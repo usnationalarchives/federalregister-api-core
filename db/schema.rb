@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100519012022) do
+ActiveRecord::Schema.define(:version => 20100521024842) do
 
   create_table "agencies", :force => true do |t|
     t.integer  "parent_id"
@@ -30,6 +30,18 @@ ActiveRecord::Schema.define(:version => 20100519012022) do
 
   add_index "agencies", ["name", "parent_id"], :name => "index_agencies_on_name_and_parent_id"
   add_index "agencies", ["parent_id", "name"], :name => "index_agencies_on_parent_id_and_name"
+
+  create_table "agencies_sections", :force => true do |t|
+    t.integer  "section_id"
+    t.integer  "agency_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "creator_id"
+    t.integer  "updater_id"
+  end
+
+  add_index "agencies_sections", ["agency_id", "section_id"], :name => "index_agencies_sections_on_agency_id_and_section_id"
+  add_index "agencies_sections", ["section_id", "agency_id"], :name => "index_agencies_sections_on_section_id_and_agency_id"
 
   create_table "agency_assignments", :force => true do |t|
     t.integer "entry_id"
@@ -241,6 +253,18 @@ ActiveRecord::Schema.define(:version => 20100519012022) do
   end
 
   add_index "section_highlights", ["section_id", "entry_id"], :name => "index_section_highlights_on_section_id_and_entry_id"
+
+  create_table "sections", :force => true do |t|
+    t.string   "title"
+    t.string   "slug"
+    t.integer  "position"
+    t.text     "description"
+    t.text     "relevant_cfr_sections"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "creator_id"
+    t.integer  "updater_id"
+  end
 
   create_table "topic_assignments", :force => true do |t|
     t.integer  "topic_id"
