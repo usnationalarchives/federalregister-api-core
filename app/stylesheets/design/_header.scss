@@ -1,0 +1,60 @@
+#issue_and_search_bar {
+  background: #636363;
+  background: rgba(99,99,99, 0.3);
+  }
+
+#issue_and_search_bar p {
+  color: #919191;  
+  font-size: 12px;
+  line-height: 30px;  
+  }
+
+#issue_and_search_bar form input {
+  border: 1px solid #919191; 
+  }
+
+#issue_and_search_bar form input.search_btn {
+  background: #737373;
+  color: #fff;
+  cursor: pointer;
+  font-family: "Arial", "Helvetica", sans-serif;
+  text-transform: uppercase;
+  }  
+
+#preview_indicator {
+  background: red;
+  color: #fff;
+  font-weight: bold;
+  line-height: 30px;
+  text-transform: uppercase;  
+  }
+
+header nav {
+  border-top: 2px solid #e4a529;
+  }
+
+header nav li {
+  border-top: 5px solid #fff;
+  font-size: 12px;
+  list-style: none;
+  }   
+
+header nav li.on {
+  border-top: 5px solid #e4a529;
+  }
+
+header nav li:hover,
+header nav li:focus {
+  border-top: 5px solid #e4a529;
+  } 
+  
+header nav ul li a {
+  color: #6d6e71;
+  text-decoration: none;
+  text-transform: uppercase;
+  } 
+
+header hgroup {
+  background: url(/images/logotype.png) no-repeat left top;
+  text-indent: -9999px;
+  }

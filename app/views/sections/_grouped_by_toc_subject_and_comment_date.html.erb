@@ -1,16 +1,16 @@
 <%# TODO: FIX-ME: the below sorting is totally nasty... %>
 <% entries.group_by(&:toc_subject).sort{|a,b| (a.first || 'ZZZZZ') <=> (b.first || 'ZZZZZ') }.each do |toc_subject, subject_entries| %>  
-  <h3 class="grid_4 alpha "><%= toc_subject || 'Other' %></h3>
-  <ul class="comments grid_12 omega">
+  <h3><%= toc_subject || 'Other' %></h3>
+  <ul class="comments">
     
     <% subject_entries.group_by{|e| e.comments_close_date.date}.each do |comment_close_date, entries| %>
       <% entries.each_with_index do |entry, i| %>
       <li>
           <% if i == 0 %>
-          <div class="grid_2 alpha date"><date><%= comment_close_date %></date></div>
+          <div class="date"><date><%= comment_close_date %></date></div>
           <% end %>
           
-          <%= link_to (entry.toc_doc || entry.curated_title), entry_path(entry), :class => "grid_10 omega #{'push_2 alpha' if i > 0}" %>
+          <%= link_to (entry.toc_doc || entry.curated_title), entry_path(entry), :class => "#{'not_first' if i > 0}" %>
       </li>
       <% end %>
     <% end %>
