@@ -1,0 +1,20 @@
+<% title @section.title %>
+
+<div class="center_content">
+  <%= link_to 'Edit', edit_admin_section_path(@section) %>
+  <dl>
+    <dt>Description</dt>
+    <dd><%= @section.description %></dd>
+  
+    <dt>Agencies</dt>
+    
+    <dt>CFR Ranges</dt>
+    <dd>
+      <ul>
+      <% @section.cfr_citation_ranges.each do |cfr_range| %>
+        <li><%= cfr_range.name %></li>
+      <% end %>
+      </ul>
+    </dd>
+  </dl>
+</div>
