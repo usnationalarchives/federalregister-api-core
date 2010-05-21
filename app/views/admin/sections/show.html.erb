@@ -7,14 +7,13 @@
     <dd><%= @section.description %></dd>
   
     <dt>Agencies</dt>
+    <% @section.agencies.each do |agency| %>
+      <dd><%= agency.name %></dd>
+    <% end %>
     
     <dt>CFR Ranges</dt>
-    <dd>
-      <ul>
-      <% @section.cfr_citation_ranges.each do |cfr_range| %>
-        <li><%= cfr_range.name %></li>
-      <% end %>
-      </ul>
-    </dd>
+    <% @section.cfr_citation_ranges.each do |cfr_range| %>
+      <dd><%= cfr_range.name %></dd>
+    <% end %>
   </dl>
 </div>
