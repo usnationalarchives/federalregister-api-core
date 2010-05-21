@@ -2,8 +2,20 @@
 <% title 'All Agencies' %>
 
 <% nav_secondary(render :partial => 'nav') %>
+<% super_title 'Topic Name Assignment' %>
 
-<table class='center_content sortable'>
+<% semantic_form_for @search do |f| %>
+  <% f.inputs do %>
+    <%= f.input :name_contains %>
+  <% end %>
+  <% f.buttons do %>
+    <%= f.commit_button 'Search' %>
+  <% end %>
+<% end %>
+
+<%= will_paginate @agency_names %>
+
+<table class='center_content'>
   <thead>
     <tr>
       <th>Agency Name</th>
@@ -16,9 +28,9 @@
     <% @agency_names.each do |agency_name| %>
       <tr class="<%= cycle("even", "odd") %>">
         <td><%= link_to agency_name.name, edit_admin_agency_name_path(agency_name) %></td>
-        <td><%= agency_name.processed? ? 'NO' : 'yes' %></td>
+        <td><%= agency_name.unprocessed? ? 'NO' : 'yes' %></td>
         <td><%= agency_name.agency.try(:name) %></td>
-        <td><%= agency_name.entries_count %></td>
+        <td><%= agency_name.entries.count %></td>
       </tr>
     <% end %>
   </tbody>
