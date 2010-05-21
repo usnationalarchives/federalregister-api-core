@@ -2,8 +2,7 @@
 
 <% semantic_form_for @topic_name, :url => admin_topic_name_path(@topic_name) do |f| %>
   <% f.inputs do %>
-    <%= f.input :topic_ids, :as => :select, :input_html => {:multiple => true}, :include_blank => false, :collection => Topic.all %>
-    <%= f.hidden_field 'topic_ids[]', :value => '' %>
+    <%= f.input :topics, :as => :autocomplete, :source_data_url => admin_topics_path(:format => :json) %>
     <%= f.input :void %>
   <% end %>
   

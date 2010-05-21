@@ -1,0 +1,14 @@
+<% title "#{@publication_date} Issue" %>
+<% nav_secondary(render :partial => 'admin/issues/sections/nav', :locals => {:sections => @sections, :publication_date => @publication_date}) %>
+
+<div class="center_content">
+  <section>
+    <h1>Entries not assigned to a section</h1>
+    
+    <% @entries_without_sections.each do |entry| %>
+      <article>
+        <h1><%= entry.curated_title %></h1>
+      </article>
+    <% end %>
+  </section>
+</div>
