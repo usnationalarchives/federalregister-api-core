@@ -44,6 +44,8 @@ Rails::Initializer.run do |config|
   config.gem 'searchlogic', :version => '2.4.12'
   config.gem 'will_paginate', :version => '2.3.11'
   config.gem 'haml', :version => '3.0.4'
+  config.gem 'compass', :version => '0.10.1'
+  config.gem 'compass-960-plugin', :version => '0.9.13', :lib => false
   
   # disabled as requires C library to install...the Locator module will return a fake result if not installed
   # config.gem "geoip_city", :version => '0.2.0'
