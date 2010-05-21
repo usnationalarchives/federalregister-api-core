@@ -1,0 +1,14 @@
+// Modeling Chris Eppstein's Modular Setup
+
+
+// RESET
+@import "compass/reset";
+
+// LIBRARY - (variables, mixins, etc.)
+@import "library";
+
+// REAL WORK
+@import "layout";
+@import "design";
+@import "text";
+
