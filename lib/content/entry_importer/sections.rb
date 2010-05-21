@@ -3,6 +3,6 @@ module Content::EntryImporter::Sections
   provides :section_ids
   
   def section_ids
-    Section.all.select{|s| s.cfr_titles.include?(cfr_title.to_i)}.map(&:id)
+    Section.all.select{|s| s.cfr_citation_ranges.any?{|range| range.include?(cfr_title, cfr_part)}}.map(&:id)
   end
 end
