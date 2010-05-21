@@ -28,6 +28,7 @@ class Admin::TopicNamesController < AdminController
         redirect_to unprocessed_admin_topic_names_path
       end
     else
+      flash.now[:error] = 'There was a problem.'
       render :action => :edit
     end
   end

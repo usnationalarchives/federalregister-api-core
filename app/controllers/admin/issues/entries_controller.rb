@@ -16,6 +16,7 @@ class Admin::Issues::EntriesController < AdminController
       flash[:notice] = 'Successfully saved.'
       redirect_to params[:redirect_to]
     else
+      flash.now[:error] = 'There was a problem.'
       render :action => :edit
     end
   end
