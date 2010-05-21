@@ -1,11 +1,10 @@
 class Admin::AgencyNamesController < AdminController
   def index
-    @agency_names = AgencyName.all(
-      :select => "agency_names.*, COUNT(agency_name_assignments.id) AS entries_count",
-      :joins => :agency_name_assignments,
-      :order => "agency_names.name",
-      :group => "agency_names.id"
-    )
+    search_options = params[:search] || {}
+    search_options['order'] ||= 'ascend_by_name'
+    @search = AgencyName.searchlogic(search_options)
+    
+    @agency_names = @search.paginate(:page => params[:page])
   end
   
   def unprocessed
@@ -31,7 +30,7 @@ class Admin::AgencyNamesController < AdminController
     @agency_name.save!
     flash[:notice] = 'Successfully saved'
     
-    next_agency_name = AgencyName.unprocessed.first
+    next_agency_name = AgencyName.unprocessed.first(:conditions => ["agency_names.name > ?", @agency_name.name])
     if next_agency_name
       redirect_to edit_admin_agency_name_path(next_agency_name)
     else
