@@ -1,0 +1,17 @@
+<% title "Manage Sections" %>
+
+<table class="center_content">
+  <thead>
+    <tr>
+      <th>Name</th>
+    </tr>
+  </thead>
+  <tbody>
+  <% @sections.each do |section| %>
+    <tr>
+      <td><%= section.title %></td>
+      <td><%= link_to 'Edit', edit_admin_section_path(section) %>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
