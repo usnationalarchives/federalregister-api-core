@@ -38,7 +38,7 @@
   <body>
     <header>   
       <div id="issue_and_search_bar">
-        <div class="container">
+        <div class="container_16">
           <div id="seal"></div>
           <p>Current Issue: <%= Entry.latest_publication_date.to_s(:wday_and_pretty_date) %></p>
           <% if @preview %>
@@ -54,14 +54,14 @@
 
       <%= render :partial => 'layouts/navigation', :locals => {:last_date => @last_date, :search_term => @search_term} %>    
       
-      <hgroup class="container">
+      <hgroup class="container_16">
         <h1><a href="/" title="Federal Register Home">The Federal Register</a></h1>
         <h2>The Daily Journal of the United States Government</h2>
       </hgroup>
       
     </header>
     
-    <div id="main">
+    <div id="main" class="container_16">
       
       <%= yield %>
     
