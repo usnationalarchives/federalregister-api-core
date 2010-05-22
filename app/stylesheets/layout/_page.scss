@@ -8,10 +8,13 @@
   @include alpha;  
   }
   
-aside {
+#sidebar {
   @include grid(4, 16);
   @include omega;
   }
+
+
+/* COMMENT PERIOD LISTING */
 
 .comment_period_list h3 {
   @include grid(4, 16);
