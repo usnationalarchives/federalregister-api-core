@@ -1,5 +1,7 @@
 module Content
   class RegulatoryPlanImporter
+    require 'ftools'
+    
     def self.import_all_by_publication_date(issue)
       url = "http://www.reginfo.gov/public/do/eAgendaMain?operation=OPERATION_GET_AGENCY_RULE_LIST&currentPubId=#{issue}&agencyCd=0000"
       puts url
@@ -36,6 +38,7 @@ module Content
     end
   
     def document
+      File.makedirs(File.dirname(file_path))
       Curl::Easy.download(url, file_path) unless File.exists?(file_path)
       doc = Nokogiri::XML(open(file_path))
       doc.root
