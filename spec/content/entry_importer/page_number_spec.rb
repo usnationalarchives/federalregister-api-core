@@ -9,7 +9,7 @@ describe Content::EntryImporter::PageNumber do
   context "multi-page document starting on its own page" do
     before(:each) do
       bulkdata_node = @bulkdata_root.xpath('.//RULE[1]').first
-      @importer = Content::EntryImporter.new(Date.today, "ABC-001", :mods_node => true, :bulkdata_node => bulkdata_node)
+      @importer = Content::EntryImporter.new(:date => Date.today, :document_number => "ABC-001", :mods_node => true, :bulkdata_node => bulkdata_node)
     end
     
     describe ".start_page" do
@@ -25,7 +25,7 @@ describe Content::EntryImporter::PageNumber do
   context "single-page document neither starting nor ending on its own page" do
     before(:each) do
       bulkdata_node = @bulkdata_root.xpath('.//RULE[2]').first
-      @importer = Content::EntryImporter.new(Date.today, "ABC-002", :mods_node => true, :bulkdata_node => bulkdata_node)
+      @importer = Content::EntryImporter.new(:date => Date.today, :document_number => "ABC-002", :mods_node => true, :bulkdata_node => bulkdata_node)
     end
     
     describe ".start_page" do
@@ -41,7 +41,7 @@ describe Content::EntryImporter::PageNumber do
   context "multi-page document not starting on its own page" do
     before(:each) do
       bulkdata_node = @bulkdata_root.xpath('.//RULE[3]').first
-      @importer = Content::EntryImporter.new(Date.today, "ABC-003", :mods_node => true, :bulkdata_node => bulkdata_node)
+      @importer = Content::EntryImporter.new(:date => Date.today, :document_number => "ABC-003", :mods_node => true, :bulkdata_node => bulkdata_node)
     end
     
     describe ".start_page" do
