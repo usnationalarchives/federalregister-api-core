@@ -14,13 +14,6 @@ module Html5Helper
     end
   end
   
-  def wrap_html5_content(tag_name, content, options)
-    html = content_tag(tag_name, options.except(:id, :class)) do
-      options[:class] = add_class(options[:class], tag_name)
-      content_tag(:div, content, options)
-    end
-  end
-  
   HTML5_TAGS.each do |tag_name|
     eval <<-RUBY
       def #{tag_name}_tag(*args, &proc)
@@ -35,6 +28,13 @@ module Html5Helper
   end
   
   private
+  
+  def wrap_html5_content(tag_name, content, options)
+    html = content_tag(tag_name, options.except(:id, :class)) do
+      options[:class] = add_class(options[:class], tag_name)
+      content_tag(:div, content, options)
+    end
+  end
   
   def add_class(original, to_add)
     if original.present?
