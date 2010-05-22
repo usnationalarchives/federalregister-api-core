@@ -1,60 +1,98 @@
+#header {
+  margin-bottom: 30px;
+  }
+
 #issue_and_search_bar {
   background: #636363;
   background: rgba(99,99,99, 0.3);
+  height: 30px;
+  margin-bottom: 2px;
   }
 
 #issue_and_search_bar p {
   color: #919191;  
   font-size: 12px;
-  line-height: 30px;  
-  }
+  line-height: 30px;
+  margin: 0;
+  }  
 
+#issue_and_search_bar form  {
+  position: absolute;
+  right: 0;
+  top: 3px;
+  }
+  
 #issue_and_search_bar form input {
   border: 1px solid #919191; 
   }
-
+  
 #issue_and_search_bar form input.search_btn {
   background: #737373;
   color: #fff;
   cursor: pointer;
   font-family: "Arial", "Helvetica", sans-serif;
+  padding: 0;
   text-transform: uppercase;
-  }  
+  }
+
+#issue_and_search_bar form label {
+  display: none; }
 
 #preview_indicator {
   background: red;
   color: #fff;
   font-weight: bold;
   line-height: 30px;
-  text-transform: uppercase;  
+  left: 400px;
+  padding: 0 20px;
+  position: absolute;
+  text-transform: uppercase;
+  top: 0;
+  }
+  
+#primary_nav {
+  border-top: 2px solid $golden;
+  margin-bottom: 5px;
+  overflow: hidden; 
   }
 
-header nav {
-  border-top: 2px solid #e4a529;
-  }
-
-header nav li {
+#primary_nav li {
   border-top: 5px solid #fff;
+  display: block;
   font-size: 12px;
+  float: left;
   list-style: none;
-  }   
-
-header nav li.on {
-  border-top: 5px solid #e4a529;
+  margin-left: 30px;
+  }
+  
+#primary_nav li:first-child {
+  margin-left: 0;
   }
 
-header nav li:hover,
-header nav li:focus {
-  border-top: 5px solid #e4a529;
+#primary_nav li:hover,
+#primary_nav li:focus,
+#primary_nav li.on {
+  border-top: 5px solid $golden;
   } 
   
-header nav ul li a {
+#primary_nav a {
   color: #6d6e71;
   text-decoration: none;
   text-transform: uppercase;
-  } 
+  }    
 
-header hgroup {
-  background: url(/images/logotype.png) no-repeat left top;
-  text-indent: -9999px;
+#header_logo {
+  @include replace-text-with-dimensions('logotype.png', 0, 0);
+  width: 960px;
+  }
+
+#header_logo h1,
+#header_logo h2 {
+  float: left;
+  }
+
+#header_logo a {
+  display: block; 
+  height: 64px;   
+  width: 543px;    
   }
