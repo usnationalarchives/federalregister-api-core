@@ -39,15 +39,20 @@ SECTION
 
 
 .article {
-border-bottom: 1px solid #e6e6e6;
 overflow: hidden;
 margin-bottom: 25px;
 padding-bottom: 25px;
 } 
+.article h1 {
+  border-top: 3px solid #cecece;
+  padding-top: 20px;
   
+}
 .article .metadata {
+border-bottom: 3px solid #cecece;
 color: #7a838a;
 font-size: 1.2em;
+padding-bottom: 20px;
 }
   
 .article .metadata a {
