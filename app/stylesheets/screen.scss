@@ -7,12 +7,12 @@
 // LIBRARY - (variables, mixins, etc.)
 @import "library";
 
+//TYPOGRAPHY
+@import "typography";
+
 // REAL WORK
 @import "layout";
 @import "design";
-
-//TYPOGRAPHY
-@import "typography";
 
 //ENHANCEMENTS
 @import "enhancements";

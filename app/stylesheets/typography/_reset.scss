@@ -89,14 +89,21 @@ h6{
 }
 /*LINKS
 -------------------------------------------------------- */
+a {
+  color: $dark_blue;
+  text-decoration: none;
+}
+a:hover {
+  color: $golden;
+}  
 p a{
-	color:#333;
+	color: $powder_blue;
 }
 p a:hover{
 	text-decoration:none;
 }
 h1 a{
-	color:$body_type_color;
+	color: $dark_blue;
 }
 h1 a:hover{
 	text-decoration:none;
