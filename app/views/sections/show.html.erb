@@ -46,15 +46,32 @@
   
 <% end -%>
 
-<% section_tag(:class => 'comment_period_list') do %>  
-  <h2 class="title_bar"><span class="small_stack">Comment <span>Period</span></span><span class="large_flow">Closing Soon</span></h2>
-  <%= render :partial => "sections/grouped_by_toc_subject_and_comment_date", :locals => {:entries => @section.entries.comments_closing } %>
-<% end -%>
+<div id="comments-closing-opening">
   
-<% section_tag(:class => 'comment_period_list') do %>  
-  <h2 class="title_bar"><span class="small_stack">Comment <span>Period</span></span><span class="large_flow">Opening</span></h2>
-  <%= render :partial => "sections/grouped_by_toc_subject_and_comment_date", :locals => {:entries => @section.entries.comments_opening } %>
-<% end -%>
+  <div class="header-nav title_bar">
+    <span class="small_stack">Comment <span>Period</span></span>
+    <ul id="comments-closing-opening-links" class="tabs-nav">
+      <li class="tab" id="tabs-opening"><a href="#comment-period-closing">Closing Soon</a></li>
+      <li class="tab" id="tabs-closing"><a href="#comment-period-opening">Opening Soon</a></li>
+    </ul>
+  </div>
+    
+  <div id="comments-closing-opening-body" class="tabs-body">
+    <div class="closing tabs-panel" id='comment-period-closing'>
+      <% section_tag(:class => 'comment_period_list') do %>  
+        <h2 class="title_bar"><span class="small_stack">Comment <span>Period</span></span><span class="large_flow">Closing Soon</span></h2>
+        <%= render :partial => "sections/grouped_by_toc_subject_and_comment_date", :locals => {:entries => @section.entries.comments_closing } %>
+      <% end -%>
+    </div>
+    
+    <div class="opening tabs-panel" id='comment-period-opening'>
+      <% section_tag(:class => 'comment_period_list') do %>  
+        <h2 class="title_bar"><span class="small_stack">Comment <span>Period</span></span><span class="large_flow">Opening</span></h2>
+        <%= render :partial => "sections/grouped_by_toc_subject_and_comment_date", :locals => {:entries => @section.entries.comments_opening } %>
+      <% end -%>
+    </div>
+  </div>
+</div>
 
 <% section_tag(:class => 'articles_published_by_day') do %>    
   <h2 class="title_bar"><span class="small_stack">Articles <span>published on</span></span> <span class="large_flow"><%= @publication_date %></span></h2>

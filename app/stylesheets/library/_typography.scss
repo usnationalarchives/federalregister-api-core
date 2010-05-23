@@ -1,3 +1,11 @@
 @mixin basic_font {
   font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
 }
+
+@mixin type_kit_font_1 {
+  font-family: "apertura-condensed-1","apertura-condensed-2",sans-serif;
+}
+
+@mixin type_kit_font_2 {
+  font-family: "gloriola-web-1","gloriola-web-2",sans-serif;
+}

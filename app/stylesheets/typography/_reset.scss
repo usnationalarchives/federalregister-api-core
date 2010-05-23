@@ -48,59 +48,69 @@ p.drop:first-letter{
 /*HEADINGS
 -------------------------------------------------------- */
 h1{
-	color:#000;
-	font-size:3em;
+	color:$body_type_color;
+	font-size:4em;
 	margin-bottom:0.6em;
-	line-height:1.2em;
+	line-height:1.2;
 }
 h2{
-	color:#000;
-	font-size:2em;
+	color:$body_type_color;
+	font-size:2.4em;
 	margin-bottom:0.9em;
-	line-height:0.9em;
+	line-height:0.9;
 }
 h3{
-	color:#000;
-	font-size:1.5em;
+	color:$body_type_color;
+	font-size:1.6em;
+	font-weight: 400;
 	margin-bottom:1.2em;
-	line-height:1.2em;
+	line-height:1.2;
 }
 h4{
-	color:#000;
-	font-size:1.2em;
+	color:$body_type_color;
+	font-size:1.4em;
+	font-weight: 400;
 	margin-bottom:1.5em;
-	line-height:1.5em;
+	line-height:1.5;
 }
 h5{
-	color:#000;
-	font-size:1em;
+	color:$body_type_color;
+	font-size:1.2em;
+	font-weight: 400;
 	margin-bottom:1.8em;
 	line-height:1.8em;
 }
 h6{
-	color:#000;
-	font-size:1em;
+	color:$body_type_color;
+	font-size:1.2em;
+	font-weight: 400;
 	margin-bottom:1.8em;
 	line-height:1.8em;
 }
 /*LINKS
 -------------------------------------------------------- */
 p a{
-	color:#000;
+	color:#333;
 }
 p a:hover{
 	text-decoration:none;
 }
 h1 a{
-	color:#000;
+	color:$body_type_color;
 }
 h1 a:hover{
 	text-decoration:none;
 }
 li a{
-	color:#000;
+	color:$body_type_color;
 }
 li a:hover{
+	text-decoration:none;
+}
+dl a{
+	color:$body_type_color;
+}
+dl a:hover{
 	text-decoration:none;
 }
 /*ALL THE TRIMMINGS
@@ -241,7 +251,7 @@ ul li{
 ul li.caption{ /* Apply this class to the first list item in a list to give it a caption */
 	font-variant:small-caps;
 	list-style:none;
-	color:#000;
+	color:$body_type_color;
 }
 li > ul, li > ol{
 	margin-bottom:0;
