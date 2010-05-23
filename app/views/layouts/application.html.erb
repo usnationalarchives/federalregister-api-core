@@ -15,18 +15,8 @@
     <![endif]-->
     
     <%= stylesheet_link_tag "reset", :media => :screen %>
-    <%#= stylesheet_link_tag "grid", :media => :screen %>    
-    <%#= stylesheet_link_tag "text", :media => :screen %>    
     <%= stylesheet_link_tag "screen", :media => :screen %>
-    <%#= stylesheet_link_tag "header", :media => :screen %>
     
-    <!--[if IE 6]>
-      <%= stylesheet_link_tag "ie6", :media => :screen %>
-    <![endif]-->
-    <!--[if lte IE 7]>
-      <%= stylesheet_link_tag "ie", :media => :screen %>
-    <![endif]-->  
-  
     <script type="text/javascript" src="http://use.typekit.com/qbb7wou.js"></script>
     <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
 
@@ -70,6 +60,11 @@
     <% end -%>
             
     <%= render :partial => 'layouts/google_analytics' %>  
+    
+    <script src="javascripts/jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="javascripts/jquery.history.js" type="text/javascript" charset="utf-8"></script>
+    <script src="javascripts/jquery.tabs.js" type="text/javascript" charset="utf-8"></script>
+    <script src="javascripts/sectionpage.js" type="text/javascript" charset="utf-8"></script>
     
   </body>
 </html>

@@ -19,24 +19,19 @@
 .comment_period_list h3 {
   @include grid(4, 16);
   @include alpha;
-  } 
-
-.comment_period_list ul {
-  @include grid(12, 16);
-  @include omega;  
   }
-
+  
 .comment_period_list .date {
   @include grid(2, 16);
   @include alpha;
   }
-
-.comment_period_list li a {
+  
+.comment_period_list ul {
   @include grid(10, 16);
-  @include omega;
-  }  
-
-.comment_period_list li a.not_first {
-  @include grid-prefix(2, 16);
-  @include alpha;  
+  @include omega;  
+  }
+  
+.grouped_comments_by_date {
+  @include grid(12, 16);
+  @include omega;  
   }

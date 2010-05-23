@@ -10,7 +10,7 @@ min-height:101%;
 }
 
 body {
-color: #666;
+color: $body_type_color;
 }
 
 /******************************
@@ -52,15 +52,11 @@ text-decoration: none;
   
 .article .metadata {
 color: #7a838a;
-margin-bottom: 25px;
+font-size: 1.2em;
 }
   
 .article .metadata a {
 color: #7a838a;
-}
-
-.article .summary {
-margin-bottom: 0;
 }
 
 .article.with_photo .info {
@@ -142,10 +138,6 @@ color: #fff;
 color: rgba(255,255,255, 1);
 }
 
-#fading-articles .article:last-child {
-border-bottom: none;
-}
-
 .article dl {
 margin-bottom: 0;
 }
@@ -221,13 +213,13 @@ padding-left: 30px;
 }
 
 .comments_close {
-background: url(/images/comment_icon.png) no-repeat left top;
+background: url(/images/comment_icon.png) no-repeat left 3px;
 color: #6e6e6e;
 font-size: 12px;
 line-height: 20px;
 font-weight: bold;
-margin: 15px 0 0 0;
-padding-left: 30px;
+margin: 20px 0 0 0;
+padding: 0 0 5px 30px;
 text-transform: uppercase;
 }
 
@@ -236,7 +228,10 @@ text-transform: uppercase;
 COMMENT PERIOD CLOSING
 
 ******************************/
-
+#comments-closing-opening {
+  clear: both;
+  }
+  
 .comments li {
 margin: 0;
 list-style-type: none;
@@ -245,19 +240,11 @@ overflow: auto;
 padding: 0;
 }
 
-.comments li.alpha {
-clear: left;
-margin-left: 0;
-}
-
-.comments li.omega {
-margin-right: 0;
-}
-
-.comments li .date {
+.grouped_comments_by_date .date {
 color: #bdbdbd;
-font-size: 1.2em;
+font-size: 1.4em;
 font-weight: bold;
+line-height: 1.5;
 text-align: right;
 }
 
@@ -272,5 +259,3 @@ font-size: 1.4em;
 line-height: 1.5;
 text-align: right;
 }
-
-
