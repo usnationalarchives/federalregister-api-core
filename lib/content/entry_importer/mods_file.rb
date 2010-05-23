@@ -14,9 +14,6 @@ class Content::EntryImporter::ModsFile
   end
 
   def file_path
-    if @date.class != Date
-      raise @date.inspect
-    end
     "#{Rails.root}/data/mods/#{@date.to_s(:db)}.xml"
   end
 
