@@ -342,3 +342,5 @@ namespace :filesystem do
     run_locally("rsync --verbose  --progress --stats --compress -e 'ssh -p #{port}' --recursive --times --perms --links #{user}@#{domain}:#{deploy_to}/shared/data data")
   end
 end
+
+require 'hoptoad_notifier/capistrano'
