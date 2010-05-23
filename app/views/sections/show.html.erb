@@ -2,7 +2,7 @@
 
 <h1 class="title"><span><%= @section.title %></span></h1>
 
-<div id="content_area" class="alpha grid_11 suffix_1">
+<div id="content_area">
 
   <% if @highlighted_entries.present? %>
   <div id="top-articles" class="featured">
@@ -20,21 +20,17 @@
 
 </div>
 
-<aside class="grid_4 omega">
+<% aside_tag(:id => 'sidebar') do %>        
   
-  
-  <section class="share">
+  <% section_tag(:class => 'share') do %>  
     <a href="#" class="button rss">Subscribe</a>
+  <% end -%>
   
-  </section>
-  
-  <section class="info">
-        
+  <% section_tag(:class => 'info') do %>          
     <p><%= @section.description %></p>
-        
-  </section>
+  <% end -%>
   
-  <section class="stats">
+  <% section_tag(:class => 'stats') do %>  
     <h1><span>Stats</span></h1>
     <ul>
       <li><strong>1000</strong> Something</li>
@@ -42,36 +38,54 @@
       <li><strong>32</strong> Something</li>
       <li><strong>43</strong> Something</li>
     </ul>  
-  </section>
+  <% end -%>
   
-  <section>
+  <% section_tag(:class => 'whats_hot') do %>  
     <h1><span>What's Hot</span></h1>
-  </section>
+  <% end -%>
   
-</aside>
+<% end -%>
 
-  <div class="comment_period_list">
-    <h2 class="title_bar"><span class="small_stack">Comment <span>Period</span></span><span class="large_flow">Closing Soon</span></h2>
-    <%= render :partial => "sections/grouped_by_toc_subject_and_comment_date", :locals => {:entries => @section.entries.comments_closing } %>
-  </div>
+<div id="comments-closing-opening">
   
-  <div class="comment_period_list">
-    <h2 class="title_bar"><span class="small_stack">Comment <span>Period</span></span><span class="large_flow">Opening</span></h2>
-    <%= render :partial => "sections/grouped_by_toc_subject_and_comment_date", :locals => {:entries => @section.entries.comments_opening } %>
+  <div class="header-nav title_bar">
+    <span class="small_stack">Comment <span>Period</span></span>
+    <ul id="comments-closing-opening-links" class="tabs-nav">
+      <li class="tab" id="tabs-opening"><a href="#comment-period-closing">Closing Soon</a></li>
+      <li class="tab" id="tabs-closing"><a href="#comment-period-opening">Opening Soon</a></li>
+    </ul>
   </div>
-  
-<h2 class="title_bar"><span class="small_stack">Articles <span>published on</span></span> <span class="large_flow"><%= @publication_date %></span></h2>
+    
+  <div id="comments-closing-opening-body" class="tabs-body">
+    <div class="closing tabs-panel" id='comment-period-closing'>
+      <% section_tag(:class => 'comment_period_list') do %>  
+        <h2 class="title_bar"><span class="small_stack">Comment <span>Period</span></span><span class="large_flow">Closing Soon</span></h2>
+        <%= render :partial => "sections/grouped_by_toc_subject_and_comment_date", :locals => {:entries => @section.entries.comments_closing } %>
+      <% end -%>
+    </div>
+    
+    <div class="opening tabs-panel" id='comment-period-opening'>
+      <% section_tag(:class => 'comment_period_list') do %>  
+        <h2 class="title_bar"><span class="small_stack">Comment <span>Period</span></span><span class="large_flow">Opening</span></h2>
+        <%= render :partial => "sections/grouped_by_toc_subject_and_comment_date", :locals => {:entries => @section.entries.comments_opening } %>
+      <% end -%>
+    </div>
+  </div>
+</div>
 
-<% @section.entries.published_on(@publication_date).each do |entry| %>
-  <article>
-    <h1><%= link_to entry.title, entry_path(entry) %></h1>
-    <dl>
-      <dt>Length</dt>
-      <dd><%= pluralize(entry.human_length, "page") %></dd>
-      <dt>Type</dt>
-      <dd><%= entry.entry_type if entry.has_type? %></dd>
-      <dt>Agency</dt>
-      <dd><%= link_to entry.agency.name, agency_path(entry.agency) %></dd>
-    </dl>  
-  </article>
-<% end %>
+<% section_tag(:class => 'articles_published_by_day') do %>    
+  <h2 class="title_bar"><span class="small_stack">Articles <span>published on</span></span> <span class="large_flow"><%= @publication_date %></span></h2>
+  <% @section.entries.published_on(@publication_date).each do |entry| %>
+    <% article_tag do %>  
+      <h1><%= link_to entry.title, entry_path(entry) %></h1>
+      <dl>
+        <dt>Length</dt>
+        <dd><%= pluralize(entry.human_length, "page") %></dd>
+        <dt>Type</dt>
+        <dd><%= entry.entry_type if entry.has_type? %></dd>
+        <dt>Agency</dt>
+        <dd><%= link_to entry.agency.name, agency_path(entry.agency) %></dd>
+      </dl>  
+    <% end -%>
+  <% end %>
+<% end -%>
