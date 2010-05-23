@@ -93,35 +93,27 @@
 </div>
 
 <% aside_tag(:id => 'sidebar') do %>
+  <% section_tag(:class => 'description') do %>
+    <p>This Federal Register article has been enhanced in a number of ways.  Places, references, citations, images and more have been prepared.</p>
+  <% end -%>
+
   <% if @entry.comment_url.present? && (@entry.comments_close_on.nil? || @entry.comments_close_on >= Date.today) %>
     <% section_tag(:class => 'comment') do %>
-      <div class="title_bar">
-        <h2><span class="small_stack">You<span>Can</span></span><span class="large_flow">Participate</span></h2>
-      </div>
-      
-      
+      <h1><span>Participate</span></h1>
       <p>The agency is required to respond in a future Federal Register article.</p>
-      
       <%= link_to "Submit a formal comment", @entry.comment_url, :class => 'comments_close', :target => '_blank' %>
     <% end %>
   <% end -%>
 
   <% section_tag(:class => 'other_versions') do %>
-  <div class="title_bar">
-    <h2><span class="small_stack">View<span> in other</span></span><span class="large_flow">Formats</span></h2>
-  </div>
-    
+    <h1><span>Formats</span></h1>
     <p>This article is available in the following formats: </p>
-    
     <%= %w(html pdf xml).map{|format| link_to "#{format}", @entry.source_url(format), :class => "button list #{format}" } %>
   <% end -%>
 
 
   <% section_tag(:class => 'other_versions') do %>
-  <div class="title_bar">
-    <h2><span class="small_stack">Pass it<span> along &amp;</span></span><span class="large_flow">Share</span></h2>
-  </div>
-    
+    <h1><span>Share</span></h1>
     <p>Share this article via your social network of choice. <%= link_to short_entry_url(@entry), short_entry_url(@entry) %> 
     <%= clippy(short_entry_url(@entry)) %></p>
     
