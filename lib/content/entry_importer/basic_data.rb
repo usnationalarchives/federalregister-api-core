@@ -15,7 +15,13 @@ module Content::EntryImporter::BasicData
   end
   
   def toc_doc
-    simple_node_value('tocDoc')
+    val = simple_node_value('tocDoc')
+    
+    if val
+      val.sub!(/, $/, '').strip!
+    end
+    
+    val
   end
   
   def citation
