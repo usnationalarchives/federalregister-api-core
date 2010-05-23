@@ -1,1 +1,28 @@
-Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+<div class="wrapper">
+  
+  <div class="grid_2 alpha">
+    <h2>Home</h2>
+    <ul>
+      <li><a href="/" title="Home">Home</a></li>
+    </ul>  
+  </div>
+    
+  <div class="grid_2">
+    <h2>Sections</h2>
+    <% nav_tag(:id => "site_map_nav") do %>
+      <ul>
+        <% Section.all.each do |section| %>
+          <li><%= link_to section.title, section_path(section) %></li>
+        <% end %>
+      </ul>
+    <% end -%>  
+  </div>
+  
+  <div class="grid_2">
+    <h2>Learn</h2>
+    <ul>
+      <li><a href="/" title="Home">About the FR</a></li>
+    </ul>  
+  </div>
+    
+</div>
