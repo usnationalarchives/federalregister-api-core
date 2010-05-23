@@ -16,6 +16,17 @@ line-height: 1.8em;
 
 /******************************
 
+Enhanced Fonts for elements
+
+******************************/
+
+h1 {
+  @include type_kit_font_2;
+}
+
+
+/******************************
+
 TITLE STYLES
 
 ******************************/
@@ -54,8 +65,11 @@ clear: both;
 margin: 2em 0;
 padding-top: 10px;
 }
+#sidebar .title_bar {
+  margin-top: 0;
+}
 
-.title_bar .small_stack {
+.small_stack {
 color: $dark_blue;
 display: inline-block;
 font-size: .6em;
@@ -66,11 +80,11 @@ text-transform: uppercase;
 font-variant: small-caps;
 }
 
-.title_bar .small_stack span {
+.small_stack span {
 display: block;
 }
 
-.title_bar .large_flow {
+.large_flow {
 color: $powder_blue;
 font-size: 1.4em;
 text-transform: uppercase;
@@ -83,13 +97,20 @@ ARTICLES
 
 ******************************/
 
-.article h1 {
-@include type_kit_font_2;
+#entries .article h1 {
+  font-size: 2.4em;
+  line-height: 1.6;
+}
+
+#sections .article h1 {
 font-size: 1.8em;
 font-weight: normal;
 line-height: 1.4;
-margin-bottom: 0;
 }
+
+#sections .article h1 + .metadata {
+  margin-top: -1em;
+  }
 
 .article .metadata {
 font-size: 1.4em;

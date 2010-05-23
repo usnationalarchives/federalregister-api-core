@@ -5,7 +5,7 @@ module LinkHelper
     hash_tag = "%23gov20"
     status = "status=#{message} #{short_entry_url(entry)} #{hash_tag}"
     href = twitter_url + status
-    link_to('Tweet this', href, :target => :blank, :title => 'share on twitter')
+    link_to('Twitter', href, :target => :blank, :title => 'Twitter', :class => 'button list')
   end
   
   def link_to_facebook(entry)
@@ -22,7 +22,7 @@ module LinkHelper
       </script>"
     end
 
-    return "<a href='http://www.facebook.com/share.php' title='share on facebook' class='fb_link'>Share on Facebook</a>"
+    return "<a href='http://www.facebook.com/share.php' title='Facebook' class='button list fb_link'>Facebook</a>"
   end
   
   def link_to_digg(entry)
@@ -31,7 +31,7 @@ module LinkHelper
     description = entry.abstract.nil? ? '' : truncate(entry.abstract, :length => 347) #digg max of 350
     media       = 'news'
     href        = "http://digg.com/submit?url=#{url}&title=#{title}&bodytext=#{description}&media=#{media}"
-    link_to('Digg this', href, :target => :blank, :title => 'share on digg')
+    link_to('Digg', href, :target => :blank, :title => 'Digg', :class => 'button list')
   end
   
   def link_to_reddit(entry)
@@ -46,7 +46,7 @@ module LinkHelper
         });
       </script>"
     end
-    return "<a href='http://www.reddit.com/submit' title='submit to reddit' class='reddit_link'>Reddit this</a>"
+    return "<a href='http://www.reddit.com/submit' title='Reddit' class='button list reddit_link'>Reddit</a>"
   end
   
   def clippy(text, bgcolor='#E8F8FC')
