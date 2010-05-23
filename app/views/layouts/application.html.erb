@@ -9,23 +9,23 @@
     <%= content_tag(:meta, nil, :name => 'description', :content => truncate(strip_tags(@entry.abstract), :length => 300)) if @entry %>
     <link rel="image_src" href="http://fr2.criticaljuncture.org/images/fbdisplay.jpg" />
     <meta name="medium" content="news" />
-  
+    
+    <script type="text/javascript" src="http://use.typekit.com/qbb7wou.js"></script>
+    <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+      
     <!--[if lt IE 9]>
     <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
     
     <%= stylesheet_link_tag "reset", :media => :screen %>
     <%= stylesheet_link_tag "screen", :media => :screen %>
-    <%= stylesheet_link_tag "ui.notify.css", :media => :screen %>
-    
-    <script type="text/javascript" src="http://use.typekit.com/qbb7wou.js"></script>
-    <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
 
     <script type="text/javascript" src="/javascripts/enhance.js"></script>	
     <script type="text/javascript">
     	enhance({
     		loadStyles: [
-    			'/stylesheets/enhancements.css'
+    			'/stylesheets/enhancements.css',
+    			'/stylesheets/ui.notify.css'
     		],	
     		loadScripts: [
     			'/javascripts/jquery.js',
