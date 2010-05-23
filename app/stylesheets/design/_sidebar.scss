@@ -1,0 +1,29 @@
+/******************************
+
+SIDEBAR
+
+******************************/
+   
+#sidebar .section {
+text-align: right;
+margin-bottom: 50px;
+}
+  
+#sidebar .section h1 {
+background: #5697cf url(/images/header_bg.png) repeat-x left top;
+color: #5697cf;
+font-size: 16px;
+line-height: 13px;
+text-align: left;
+text-transform: uppercase;
+}
+  
+#sidebar .section h1 span {
+background: #fff;
+padding: 0 5px;
+margin: 0 0 0 10px;
+}
+
+#sidebar .section.stats ul {
+list-style: none;
+}

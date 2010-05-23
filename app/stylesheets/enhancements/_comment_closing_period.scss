@@ -1,0 +1,36 @@
+/******************************
+
+COMMENT PERIOD CLOSING ENHANCEMENTS
+
+******************************/  
+#comments-closing-opening h2 {
+  display: none;
+  }
+
+#comments-closing-opening .header-nav {
+  border-top: 3px solid $dark_blue;
+  }
+
+#comments-closing-opening .header-nav.title_bar {
+  margin: 4.8em 0;
+  }
+#comments-closing-opening .header-nav .tabs-nav {
+  display: inline;
+  }  
+#comments-closing-opening .header-nav .tabs-nav li {
+  display: inline;
+  margin-right: 10px;
+}
+#comments-closing-opening .header-nav .tabs-nav .tabs-selected a {
+  color: $powder_blue;
+  }
+#comments-closing-opening .header-nav .tabs-nav a {
+  color: #CCC;
+  font-size: 2.8em;
+  text-transform: uppercase;
+  text-decoration: none;
+  }  
+
+#comments-closing-opening .header-nav.title_bar .small_stack {
+    font-size: 1.3em;
+}
