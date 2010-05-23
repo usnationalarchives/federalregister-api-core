@@ -1,20 +1,57 @@
+/******************************
+
+SETUP
+
+******************************/
+
 #main {
   @include grid_system(16);
   }
+  
 
-#content_area {
+/******************************
+
+SECTION VIEW
+
+******************************/
+
+#sections #content_area {
   @include grid(11, 16);
   @include grid-suffix(1);
   @include alpha;  
   }
   
-#sidebar {
+#sections #sidebar {
   @include grid(4, 16);
   @include omega;
   }
 
 
-/* COMMENT PERIOD LISTING */
+
+/******************************
+
+ENTRIES
+
+******************************/
+
+#entries #content_area {
+  @include grid(10, 16);
+  @include grid-suffix(1);
+  @include alpha;
+}
+
+#entries #sidebar {
+  @include grid(5, 16);
+  @include omega;
+  }
+
+
+
+/******************************
+
+COMMENT PERIOD ENDING
+
+******************************/
 
 .comment_period_list h3 {
   @include grid(4, 16);

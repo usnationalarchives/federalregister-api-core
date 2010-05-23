@@ -1,169 +1,137 @@
 <% title @entry.title %>
 
 <h1 class="title"><span><%= @entry.entry_type %></span></h1>
-<h1><%= @entry.title %></h1>
 
-<% content_for :javascripts do %>
-<script>
-  $(document).ready(function() {
-    $('#congress').load('/location/congress');
-  });
-</script>
-<link rev="canonical" type="text/html" href="<%= short_entry_url(@entry) %>" />
-<% end %>
-
-<%= render :partial => 'timeline', :locals => {:regulatory_plan => @entry.most_recent_regulatory_plan} if @entry.most_recent_regulatory_plan %>
-
-<% if @entry.has_full_xml? %>
-  <%=
-   if @entry.graphic_usages.count > 0
-     html = transform_xml(@entry.full_xml, 'entries/_full_text_with_images.html.xslt').to_s
-   else
-     html = transform_xml(@entry.full_xml, 'entries/_full_text.html.xslt').to_s
-   end
-   html = auto_link(html, :href_options => { :class => 'external' })
-   add_citation_links(html) %>
-<% elsif @entry.full_text %>
-
-<% if @entry.abstract %>
-  <h3>Summary</h3>
-  <p class='abstract'>
-    <%= text_with_links(@entry, @entry.abstract) %>
-  </p>
-<% end %>
-
-<h3>Full text</h3>
-<div class="fulltextWrapper span-16">
-  <pre><%=
-    # FIXME: move out of view!
-    text = @entry.full_text
-    
-    text.sub!(/.*^-{71}$/m, '')
-    text.gsub!(/<\/?INF>/, '')
-    text.gsub!(/\[deg\]/, '&deg;')
-    text.gsub!(/<A HREF="[^"]+">\s*([^<]+)<\/A>/, 'http://\1')
-    text.gsub!(/^\[GRAPHIC\].*/, '')
-    text.gsub!(/\s+\[\[Page \d+\]\]\s*/m, " ")
-    # text.gsub!(/\n\n([A-Z].*(?:\n^\S.*)*)/, "\n\n<h3>\\1</h3>")
-    # text.gsub!(/^    (.+(?:\n^\S.*)*)/, "<p>\\1</p>\n")
-    text = add_citation_links(text)
-    text.sub!(/<\/pre>.*/m, '')
-    
-    text.sub!(/\A\s+/, '')
-    text.sub!(/\s+\Z/, '')
-    text
-  -%>
-  </pre>
-</div>
-<% end %>
-
-<% if @entry.url_references.present? %>
-  <h3>References</h3>
-  <ul class='references'>
-  <% urls = @entry.url_references.map{|ref| ref.url} %>
-  <% urls.group_by(&:active).each do |active, urls| %>
-    <li>
-      <%= active ? 'Active' : 'Broken' %>
-      <ul>
-      <% urls.each do |url| %>  
-        <li><%= link_to url.name, "#{url.name}" %></li>
-      <% end %>
-      </ul>
-    </li>
-  <% end  %>
-  </ul>
-<% end %>
-
-<% content_for :sidebar do %>
-  <h3>Gather a Crowd</h3>
-  <ul class='social'>
-    <li id='twitter'    ><%= link_to_twitter(@entry)         %></li>
-    <li id='facebook'   ><%= link_to_facebook(@entry)        %></li>
-    <li id='digg'       ><%= link_to_digg(@entry)            %></li>
-    <li id='reddit'     ><%= link_to_reddit(@entry)          %></li>
-  </ul>
-  <p>
-    Or share a tiny url:
-    <span class='social' id='tiny_pulse'> 
-      <%= link_to short_entry_url(@entry), short_entry_url(@entry) %> 
-      <%= clippy(short_entry_url(@entry)) %>
-    </span>
-  </p>
-
-  <h3 class="hAction">
-    Speak Up 
-    <span class='small_link'>(<%= link_to 'change location', edit_location_path %>)</span>
-  </h3> 
+<div id="content_area">
   
   <% if @entry.comment_url.present? && (@entry.comments_close_on.nil? || @entry.comments_close_on >= Date.today) %>
-    <p><%= link_to "Submit a formal comment", @entry.comment_url %>. The agency is required to respond in a future FR entry.</p>
-  <% end %>
-  
-  <div id="congress">
-    <h5>Your Senators</h5>
-    <p class="loading">Loading<img src="/images/ticker_loading.gif" alt="loading" /></p>
-    <h5>Your Representative</h5>
-    <p class="loading">Loading<img src="/images/ticker_loading.gif" alt="loading" /></p>
+  <div id="flash_message">
+    <p>This article has a comment period that ends in <%= pluralize (@entry.comments_close_date.date - Entry.latest_publication_date), 'day' %>
+    (<%= @entry.comments_close_date.date %>)</p>
   </div>
+  <% end -%>
   
-  <div class="">
-    <h3>Details</h3>
-    <dl class=''>
-      <% if @entry.publication_date.present?    %><dt>Publication Date:</dt>                 <dd><%= link_to @entry.publication_date.to_formatted_s(:pretty), entries_by_date_path(@entry.publication_date) %></dd><% end %>
-      <% if @entry.document_number.present?     %><dt>Document Number:</dt> <dd><%= @entry.document_number %></dd><% end %>
-      <% if @entry.agencies.present?            %><dt>Publishing <%= @entry.agencies.size > 1 ? 'Agencies' : 'Agency' %></dt><dd><%= @entry.agencies.map{|a| link_to(a.name, agency_path(a))}.join(" :: ")%></dd><% end %>
-      <% if @entry.dates.present?               %><dt>Dates:</dt>            <dd><%= text_with_links(@entry, @entry.dates)           %></dd><% end %>
-      <% if @entry.effective_on.present?        %><dt>Effective Date:</dt>   <dd><%= @entry.effective_on                             %></dd><% end %>
-      <% if @entry.comments_close_on.present?   %><dt>Comments Close:</dt>   <dd><%= @entry.comments_close_on                        %></dd><% end %>
-      <% if @entry.action.present?              %><dt>Action:</dt>           <dd><%= @entry.action.titlecase                         %></dd><% end %>
-      <% if @entry.type.present?                %><dt>Type: </dt>            <dd><%= @entry.type                                     %></dd><% end %>
-      <% if @entry.entry_type.present?          %><dt>Entry Type:</dt>       <dd><%= @entry.entry_type                               %></dd><% end %>
-      <% if @entry.document_number.present?     %><dt>Other Formats:</dt>    <dd><%= %w(html text pdf).map{|format| link_to format, @entry.source_url(format), :class => format }.join(" | ") %>
-                                                                                 <%= ' | ' + link_to( 'regulations.gov', "http://www.regulations.gov/search/Regs/home.html#documentDetail?R=#{@entry.regulationsdotgov_id}") if @entry.regulationsdotgov_id.present? %></dd><% end %>
-      <dt>Page:</dt>      <dd><%= @entry.start_page %><%= "-#{@entry.end_page}" if @entry.end_page != @entry.start_page %> (<%= pluralize @entry.human_length, 'page' %>)</dd>
-    </dl>
-  </div>
-  
-  <% if @entry.contact.present? %>
-    <h3>Contact</h3>
-    <p><%= auto_link @entry.contact %></p>
-  <% end %>
-  
-  <% if @entry.topics.present? %>
-  <h3>Related Topics</h3>
-  <ul>
-    <% @entry.topics.each do |topic| %>
-      <li><%= link_to topic.name, topic_group_path(topic) %></li>
-    <% end %>
-  </ul>
-  <% end %>
-  
-  <% if @entry.places.usable.present? %>
-    <h3>Places Mentioned</h3>
-    <% add_javascript { @map.to_js } %>
-    <div id="map" style="width: 230px; height: 350px"></div>
-  <% end %>
+  <% article_tag do %>
 
-  <% if @entry.citations.present? %>
-    <h3>Citations</h3>
-    <% max_citations = 3 %>
-    <ul class="citation">
-      <%= render :partial => 'citation', :collection => @entry.citations.slice(0,max_citations) %>
-    </ul>
-    <% if @entry.citations.size > max_citations %>
-      <%= link_to "See all (#{@entry.citations.size})", entry_citation_path(@entry, :anchor => "citations"), :class => "raquo" %>
+    <h1><%= @entry.title %></h1>
+    <p class="metadata">A <%= @entry.entry_type %> by <%= @entry.agencies_exluding_parents.map{|a| "the #{link_to a.name, agency_path(a)}" }.to_sentence %> on   
+      <%# TODO HELP-RUBY date_tag is plopped outside the P tag. maybe make datetag a span instead? %>
+      <%#= date_tag(entry.publication_date, :datetime => entry.publication_date.to_s(:iso)) %>
+    </p>
+       
+    <% content_for :javascripts do %>
+    <link rev="canonical" type="text/html" href="<%= short_entry_url(@entry) %>" />
     <% end %>
+
+    <%= render :partial => 'timeline', :locals => {:regulatory_plan => @entry.most_recent_regulatory_plan} if @entry.most_recent_regulatory_plan %>
+
+    <% if @entry.has_full_xml? %>
+      <%=
+       if @entry.graphic_usages.count > 0
+         html = transform_xml(@entry.full_xml, 'entries/_full_text_with_images.html.xslt').to_s
+       else
+         html = transform_xml(@entry.full_xml, 'entries/_full_text.html.xslt').to_s
+       end
+       html = auto_link(html, :href_options => { :class => 'external' })
+       add_citation_links(html) %>
+    <% elsif @entry.full_text %>
+
+    <% if @entry.abstract %>
+      <% section_tag(:class => 'summary') do %>
+        <h3>Summary</h3>
+        <p class='abstract'>
+          <%= text_with_links(@entry, @entry.abstract) %>
+        </p>
+      <% end -%>
+    <% end %>
+
+    <h3>Full text</h3>
+    <div class="fulltextWrapper">
+      <pre><%=
+        # FIXME: move out of view!
+        text = @entry.full_text
     
-  <% end %>
-  
-  <% if @entry.referencing_entries.present? %>
-    <h3>Entries Referencing This</h3>
-    <% max_citations = 3 %>
-    <ul class="citation">
-      <%= render :partial => "referencing_entry", :collection =>  @entry.referencing_entries.slice(0,max_citations) %>
-    </ul>
-    <% if @entry.referencing_entries.size > max_citations %>
-      <%= link_to "See all (#{@entry.referencing_entries.size})", entry_citation_path(@entry, :anchor => "referencing_entries") %>
+        text.sub!(/.*^-{71}$/m, '')
+        text.gsub!(/<\/?INF>/, '')
+        text.gsub!(/\[deg\]/, '&deg;')
+        text.gsub!(/<A HREF="[^"]+">\s*([^<]+)<\/A>/, 'http://\1')
+        text.gsub!(/^\[GRAPHIC\].*/, '')
+        text.gsub!(/\s+\[\[Page \d+\]\]\s*/m, " ")
+        # text.gsub!(/\n\n([A-Z].*(?:\n^\S.*)*)/, "\n\n<h3>\\1</h3>")
+        # text.gsub!(/^    (.+(?:\n^\S.*)*)/, "<p>\\1</p>\n")
+        text = add_citation_links(text)
+        text.sub!(/<\/pre>.*/m, '')
+    
+        text.sub!(/\A\s+/, '')
+        text.sub!(/\s+\Z/, '')
+        text
+      -%>
+      </pre>
+    </div>
+
+
+    <% if @entry.url_references.present? %>
+      <h3>References</h3>
+      <ul class='references'>
+      <% urls = @entry.url_references.map{|ref| ref.url} %>
+      <% urls.group_by(&:active).each do |active, urls| %>
+        <li>
+          <%= active ? 'Active' : 'Broken' %>
+          <ul>
+          <% urls.each do |url| %>  
+            <li><%= link_to url.name, "#{url.name}" %></li>
+          <% end %>
+          </ul>
+        </li>
+      <% end  %>
+      </ul>
     <% end %>
-  <% end %>
+
+    <% end %>
+
+  <% end -%>
+</div>
+
+<% aside_tag(:id => 'sidebar') do %>
+  <% if @entry.comment_url.present? && (@entry.comments_close_on.nil? || @entry.comments_close_on >= Date.today) %>
+    <% section_tag(:class => 'comment') do %>
+      <div class="title_bar">
+        <h2><span class="small_stack">You<span>Can</span></span><span class="large_flow">Participate</span></h2>
+      </div>
+      
+      
+      <p>The agency is required to respond in a future Federal Register article.</p>
+      
+      <%= link_to "Submit a formal comment", @entry.comment_url, :class => 'comments_close', :target => '_blank' %>
+    <% end %>
+  <% end -%>
+
+  <% section_tag(:class => 'other_versions') do %>
+  <div class="title_bar">
+    <h2><span class="small_stack">View<span> in other</span></span><span class="large_flow">Formats</span></h2>
+  </div>
+    
+    <p>This article is available in the following formats: </p>
+    
+    <%= %w(html pdf xml).map{|format| link_to "#{format}", @entry.source_url(format), :class => "button list #{format}" } %>
+  <% end -%>
+
+
+  <% section_tag(:class => 'other_versions') do %>
+  <div class="title_bar">
+    <h2><span class="small_stack">Pass it<span> along &amp;</span></span><span class="large_flow">Share</span></h2>
+  </div>
+    
+    <p>Share this article via your social network of choice. <%= link_to short_entry_url(@entry), short_entry_url(@entry) %> 
+    <%= clippy(short_entry_url(@entry)) %></p>
+    
+    <%= link_to_twitter(@entry) %>
+    <%= link_to_facebook(@entry) %>
+    <%= link_to_digg(@entry) %>
+    <%= link_to_reddit(@entry) %>
+    <a href="#" class="button list email">E-Mail</a>
+
+  <% end -%>
+
+  
 <% end %>
