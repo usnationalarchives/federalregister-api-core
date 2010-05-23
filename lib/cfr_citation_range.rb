@@ -40,14 +40,14 @@ class CfrCitationRange
       line = remove_excess_whitespace(line)
       
       if line.present?
-        match_data = line.match(/^(\d+) CFR(?: (\d+)-(\d+))?$/)
+        match_data = line.match(/^(\d+) CFR(?: (\d+)(?:-(\d+))?)?$/)
         
         raise InvalidFormat.new("could not parse line #{line_number}") unless match_data
         
         range = CfrCitationRange.new()
         range.title = match_data[1].try(:to_i)
         range.part_start = match_data[2].try(:to_i)
-        range.part_end = match_data[3].try(:to_i)
+        range.part_end = match_data[3].try(:to_i) || match_data[2].try(:to_i)
         
         range
       else

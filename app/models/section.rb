@@ -4,7 +4,7 @@ class Section < ApplicationModel
   
   validates_uniqueness_of :title
   validates_uniqueness_of :slug
-  validates_format_of :slug, :with => /^[a-z-]+$/
+  validates_format_of :slug, :with => /^[a-z0-9-]+$/
   
   validate :cfr_format_is_valid
   
@@ -22,6 +22,10 @@ class Section < ApplicationModel
   
   def cfr_citation_ranges
     @ranges ||= CfrCitationRange::Parser.new(relevant_cfr_sections).ranges
+  end
+  
+  def should_include_entry?(entry)
+    cfr_citation_ranges.any?{|range| range.includes?(entry.cfr_title, entry.cfr_part)} || (agencies & entry.agencies).size > 0
   end
   
   private
