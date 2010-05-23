@@ -10,6 +10,7 @@ min-height:101%;
 }
 
 body {
+background: url(/images/seal.png) no-repeat right top;  
 color: $body_type_color;
 }
 
@@ -43,12 +44,6 @@ overflow: hidden;
 margin-bottom: 25px;
 padding-bottom: 25px;
 } 
-
-.article h1 a {
-border: none;
-color: #d49931;
-text-decoration: none;
-}
   
 .article .metadata {
 color: #7a838a;
@@ -56,7 +51,7 @@ font-size: 1.2em;
 }
   
 .article .metadata a {
-color: #7a838a;
+color: darken(#7a838a, 20%);
 }
 
 .article.with_photo .info {
