@@ -1,0 +1,8 @@
+aside section {
+  @include transition($default-transition-property, 0.5s, ease-out);
+  @include opacity(.4);
+  }
+aside section:hover {
+  @include transition($default-transition-property, 0.5s, ease-in);
+  @include opacity(1);
+}
