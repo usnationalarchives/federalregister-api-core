@@ -1,0 +1,12 @@
+#footer {
+
+}
+
+#footer h2 {
+  font-size: 1.4em;
+  @include text-shadow(#ccc, 1px, 1px, 1px);
+  text-transform: uppercase;
+  }
+#footer ul {
+  list-style: none;
+  }

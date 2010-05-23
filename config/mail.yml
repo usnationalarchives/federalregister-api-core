@@ -1,0 +1,6 @@
+address: "mail.fr2.criticaljuncture.org"
+port: 25
+domain: "fr2.criticaljuncture.org"
+user_name: "noreply@fr2.criticaljuncture.org"
+password: "cJfK#JVG"
+authentication: plain
