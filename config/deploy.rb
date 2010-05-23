@@ -175,7 +175,7 @@ namespace :deploy do
   task :update_config, :roles => [:app] do
     command = []
     
-    %w(database.yml api_keys.yml production.sphinx.conf newrelic.yml).each do |file|
+    %w(database.yml api_keys.yml mail.yml production.sphinx.conf newrelic.yml).each do |file|
       command << "#{sudo} ln -sf #{shared_path}/config/#{file} #{release_path}/config/#{file}"
     end
     
@@ -342,3 +342,5 @@ namespace :filesystem do
     run_locally("rsync --verbose  --progress --stats --compress -e 'ssh -p #{port}' --recursive --times --perms --links #{user}@#{domain}:#{deploy_to}/shared/data data")
   end
 end
+
+require 'hoptoad_notifier/capistrano'
