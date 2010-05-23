@@ -15,18 +15,8 @@
     <![endif]-->
     
     <%= stylesheet_link_tag "reset", :media => :screen %>
-    <%= stylesheet_link_tag "grid", :media => :screen %>    
-    <%= stylesheet_link_tag "text", :media => :screen %>    
     <%= stylesheet_link_tag "screen", :media => :screen %>
-    <%= stylesheet_link_tag "header", :media => :screen %>
     
-    <!--[if IE 6]>
-      <%= stylesheet_link_tag "ie6", :media => :screen %>
-    <![endif]-->
-    <!--[if lte IE 7]>
-      <%= stylesheet_link_tag "ie", :media => :screen %>
-    <![endif]-->  
-  
     <script type="text/javascript" src="http://use.typekit.com/qbb7wou.js"></script>
     <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
 
@@ -36,42 +26,45 @@
   </head>
 
   <body id="<%= controller.controller_name %>" class="<%= controller.action_name %>">
-    <header>   
-      <div id="issue_and_search_bar">
-        <div class="container_16">
-          <div id="seal"></div>
-          <p>Current Issue: <%= Entry.latest_publication_date.to_s(:wday_and_pretty_date) %></p>
-          <% if @preview %>
-            <span id="preview_indicator">Preview Mode</span>
-          <% end %>
-          <form action="<%= entries_search_path %>" method="get">
-            <label for="q">Search the Federal Register</label>
-            <%= text_field_tag :q, nil,  :placeholder =>  "Search Articles" %>
-            <%= submit_tag 'Go', :class => "search_btn" %>
-          </form>
-        </div>
-      </div> <!-- END issue and search bar -->
+    <% header_tag(:id => "header") do %>
+        <div id="issue_and_search_bar">
+          <div>
+            <p>Current Issue: <%= Entry.latest_publication_date.to_s(:wday_and_pretty_date) %></p>
+            <% if @preview %>
+              <span id="preview_indicator">Preview Mode</span>
+            <% end %>
+            <form action="<%= entries_search_path %>" method="get">
+              <label for="q">Search the Federal Register</label>
+              <%= text_field_tag :q, nil,  :placeholder =>  "Search Articles" %>
+              <%= submit_tag 'Go', :class => "search_btn" %>
+            </form>
+          </div>
+        </div> <!-- END issue and search bar -->
 
-      <%= render :partial => 'layouts/navigation', :locals => {:last_date => @last_date, :search_term => @search_term} %>    
-      
-      <hgroup class="container_16">
-        <h1><a href="/" title="Federal Register Home">The Federal Register</a></h1>
-        <h2>The Daily Journal of the United States Government</h2>
-      </hgroup>
-      
-    </header>
+        <%= render :partial => 'layouts/navigation', :locals => {:last_date => @last_date, :search_term => @search_term} %>    
+        
+        <% hgroup_tag(:id => "header_logo") do %>        
+            <h1><a href="/" title="Federal Register Home">The Federal Register</a></h1>
+            <h2>The Daily Journal of the United States Government</h2>
+        <% end -%>
+        
+    <% end -%>
     
-    <div id="main" class="container_16">
-      
+    
+    <div id="main">
       <%= yield %>
-    
     </div>
 
-    <footer>
+    <% footer_tag(:id => "footer") do %>        
       <%= render :partial => 'layouts/footer' %>
-    <footer>
+    <% end -%>
             
     <%= render :partial => 'layouts/google_analytics' %>  
+    
+    <script src="javascripts/jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="javascripts/jquery.history.js" type="text/javascript" charset="utf-8"></script>
+    <script src="javascripts/jquery.tabs.js" type="text/javascript" charset="utf-8"></script>
+    <script src="javascripts/sectionpage.js" type="text/javascript" charset="utf-8"></script>
     
   </body>
 </html>

@@ -1,0 +1,37 @@
+#main {
+  @include grid_system(16);
+  }
+
+#content_area {
+  @include grid(11, 16);
+  @include grid-suffix(1);
+  @include alpha;  
+  }
+  
+#sidebar {
+  @include grid(4, 16);
+  @include omega;
+  }
+
+
+/* COMMENT PERIOD LISTING */
+
+.comment_period_list h3 {
+  @include grid(4, 16);
+  @include alpha;
+  }
+  
+.comment_period_list .date {
+  @include grid(2, 16);
+  @include alpha;
+  }
+  
+.comment_period_list ul {
+  @include grid(10, 16);
+  @include omega;  
+  }
+  
+.grouped_comments_by_date {
+  @include grid(12, 16);
+  @include omega;  
+  }

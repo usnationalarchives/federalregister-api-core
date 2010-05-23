@@ -1,0 +1,102 @@
+/******************************
+
+SETUP
+
+******************************/
+html{
+font-size:100%;
+}
+
+body {
+@include basic_font;
+font-weight: 300;
+font-size:62.5%;
+line-height: 1.8em;
+}
+
+/******************************
+
+TITLE STYLES
+
+******************************/
+
+.title {
+background: #5697cf url(/images/header_bg.png) repeat-x left top;
+color: #fff;
+clear: both;
+line-height: .8em;
+font-size: 2.5em;
+font-weight: bold;
+letter-spacing: 0px;
+margin-bottom: 50px;
+text-transform: uppercase;
+}
+
+.title span {
+background: #fff;
+color: $powder_blue;
+padding: 0 10px;
+margin: 0 25px 0 0;
+}
+  
+h1.title {
+margin-left: -999px;
+padding-left: 999px;
+text-align: right;
+}
+
+/* stacked left words, big right word */
+
+.title_bar {
+border-top: 3px solid $dark_blue;
+clear: both;
+@include type_kit_font_1;
+margin: 2em 0;
+padding-top: 10px;
+}
+
+.title_bar .small_stack {
+color: $dark_blue;
+display: inline-block;
+font-size: .6em;
+line-height: 1em;
+margin-right: 1em;
+text-align: right;
+text-transform: uppercase;
+font-variant: small-caps;
+}
+
+.title_bar .small_stack span {
+display: block;
+}
+
+.title_bar .large_flow {
+color: $powder_blue;
+font-size: 1.4em;
+text-transform: uppercase;
+}
+
+
+/******************************
+
+ARTICLES
+
+******************************/
+
+.article h1 {
+@include type_kit_font_2;
+font-size: 1.8em;
+font-weight: normal;
+line-height: 1.4;
+margin-bottom: 0;
+}
+
+.article .metadata {
+font-size: 1.4em;
+}
+.articles_published_by_day .article h1 {
+  font-size: 1.6em;
+}
+.articles_published_by_day .article dl {
+  font-size: 1.2em;
+  }
