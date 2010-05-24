@@ -3,7 +3,8 @@ module Content::EntryImporter::Agencies
   provides :agency_name_assignments
   
   def agency_name_assignments
-    mods_node.xpath('./xmlns:extension/xmlns:agency').map do |agency_node|
+    entry.agency_name_assignments = []
+    agency_name_assignments = mods_node.xpath('./xmlns:extension/xmlns:agency').map do |agency_node|
       name = agency_node.content()
       agency_name = AgencyName.find_or_create_by_name(name)
       
