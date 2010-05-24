@@ -89,4 +89,15 @@ describe Html5Helper do
       section_tag_output.strip.should == html5_tag_output.strip
     end
   end
+  
+  describe "inline tags" do
+    describe "date_tag" do
+      it "outputs a span instead of a div" do
+        output = eval_erb <<-ERB
+          <% date_tag(:class => "start") do %>10/15/2010<% end %>
+        ERB
+        output.strip.should == '<date><span class="date start">10/15/2010</span></date>'
+      end
+    end
+  end
 end
