@@ -14,27 +14,11 @@ class AgenciesController < ApplicationController
   
   def show
     @agency = Agency.find_by_slug!(params[:id])
-    @significant_entries = @agency.entries.significant.all(:conditions => {:publication_date => (3.month.ago .. Date.today)})
-    @entries = @agency.entries.all(:limit => 50, :include => :places, :order => "entries.publication_date DESC")
+    @entries = @agency.entries.all(:limit => 50, :include => :places, :order => "entries.publication_date DESC", :group => "entries.id")
     respond_to do |wants|
       wants.html do
-        @most_cited_entries = @agency.entries.all(:conditions => "citing_entries_count > 0", :order => "citing_entries_count DESC, publication_date DESC", :limit => 50)
-        @places = @entries.map{|e| e.places}.flatten.uniq.select{|p| p.usable?}
-
-        @map = Cloudkicker::Map.new( :style_id => 1714,
-                                     :zoom     => 2,
-                                     :lat      => @places.map(&:latitude).average,
-                                     :long     => @places.map(&:longitude).average
-                                   )
-        @places.each do |place|
-          Cloudkicker::Marker.new( :map   => @map, 
-                                   :lat   => place.latitude,
-                                   :long  => place.longitude, 
-                                   :title => 'Click to view location info',
-                                   :info  => render_to_string(:partial => 'maps/place_marker_tooltip', :locals => {:place => place} ),
-                                   :info_max_width => 200
-                                 )
-        end
+        @most_cited_entries = @agency.entries.all(:conditions => "citing_entries_count > 0", :order => "citing_entries_count DESC, publication_date DESC", :limit => 50, :group => "entries.id")
+        @significant_entries = @agency.entries.significant.all(:conditions => {:publication_date => (3.month.ago .. Date.today)}, :group => "entries.id")
         
         # Entry types
         @entry_type_labels = []
