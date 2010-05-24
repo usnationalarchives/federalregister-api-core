@@ -14,59 +14,22 @@
 
 <%= render :partial => 'entries/most_cited', :locals => {:entries => @most_cited_entries} %>
 
-<% content_for :precolumn do %>
-
-  <div class="span-7 prepend-bottom">
-      <h3>Activity</h3>
-      <div class='items pulses'>
-        <ul id='agency_activity' class='pulse_list'>
-        <% %w(entries_1_year_weekly entries_5_years_monthly entries_all_years_quarterly).each do |range_type| %>
-          <li>
-            <%= human_range(range_type) %>
-            <% add_javascript do %>
-              $(document).ready(function(){ 
-                agency_<%= @agency.id %>_<%= range_type %>_count = <%= @agency.send(range_type.to_sym) %>;
-                $('#agency_<%= @agency.id %>_<%= range_type %>').sparkline(agency_<%= @agency.id %>_<%= range_type %>_count, {type: 'bar', barSpacing: 0, barWidth: 2.5, barColor: '#ddd' }); //, chartRangeMin: 0, chartRangeMax: <%#= chart_max %> } );
-                $('#agency_<%= @agency.id %>_<%= range_type %>').sparkline(agency_<%= @agency.id %>_<%= range_type %>_count, {type: 'line', lineColor: 'black', fillColor:false, composite:true }); //, chartRangeMin: 0, chartRangeMax: <%#= chart_max %>} );
-              });
-            <% end %>
-            <span id="agency_<%= @agency.id %>_<%= range_type %>" class="composite_sparkline" title="<%= range_type %>"></span>
-          </li>
-        <% end %>
-        </ul>
-      </div>
-  
-  
-      <% unless @entry_type_values.blank? %>
-        <h3>Recent Entry Types for Agency</h3>
-        <div class='chart size_<%=@entry_type_values.size%>'><%= pie_3d_chart(:alt => 'Entry Type for Recent Entries', :legend => @entry_type_labels, :truncate_legend => '30', :counts => true, :legend_location => 'bottom', :data => @entry_type_values, :size => ['230','200'], :color_range => ['005073','84cedb'], :transparent_bg => true) %></div>
+<div class="span-7 prepend-bottom">
+    <h3>Activity</h3>
+    <div class='items pulses'>
+      <ul id='agency_activity' class='pulse_list'>
+      <% %w(entries_1_year_weekly entries_5_years_monthly entries_all_years_quarterly).each do |range_type| %>
+        <li>
+          <%= human_range(range_type) %>
+          <%= sparkline(:data => @agency.send(range_type).map(&:to_i), :alt => "counts of number of articles" ) %>
+        </li>
       <% end %>
+      </ul>
+    </div>
 
-  </div>
-  
-  
-  <div class="span-10 prepend-bottom">
-    <% unless @places.blank? %>
-        <h3>Recent Places Mentioned</h3>
-        <% add_javascript { @map.to_js } %>
-        <div id="map" class="medium_map"></div>
+    <% unless @entry_type_values.blank? %>
+      <h3>Recent Entry Types for Agency</h3>
+      <div class='chart size_<%=@entry_type_values.size%>'><%= pie_3d_chart(:alt => 'Entry Type for Recent Entries', :legend => @entry_type_labels, :truncate_legend => '30', :counts => true, :legend_location => 'bottom', :data => @entry_type_values, :size => ['230','200'], :color_range => ['005073','84cedb'], :transparent_bg => true) %></div>
     <% end %>
-  </div>
-    
-  <div class="span-6 last prepend-bottom">  
-    <% if @agency.related_topics_cache.present? %>
-        <h3>Popular Topics for this Agency</h3>
-        <div class="tag_cloud">
-          <div id="fancy_tag_cloud" class="fancy"></div>
-          <ul>
-          <% @agency.related_topics_cache.each do |topic_group| %>
-            <li><%= link_to topic_group['name'], topic_group_path(topic_group['param']) %> (<%= topic_group['count'] %>)</li>
-          <% end %>
-          </ul>
-        </div>
-    <% else %>
-    <% end %>
-  </div>
-  
-    
-<% end %>
+
+</div>
