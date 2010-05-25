@@ -3,7 +3,7 @@
     <div class="flow">
         <% photos.each do |photo| %>
         <div class="item">
-          <%= image_tag photo.url('m'), 'data-owner-id' => photo.owner_id, :class => 'content', :title => '' %>
+          <%= image_tag photo.url('m'), 'data-photo-id' => photo.id, :class => 'content', :title => '' %>
           <div class="caption"><%= topic %></div>
         </div>
         <% end %>
