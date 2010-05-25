@@ -1,4 +1,4 @@
-<% title "#{@publication_date} Issue" %>
+<% super_title "#{@publication_date} Issue" %>
 <% nav_secondary(render :partial => 'admin/issues/sections/nav', :locals => {:sections => @sections, :publication_date => @publication_date}) %>
 
 <% add_javascript do %>
@@ -8,7 +8,7 @@
       // $(this)
       var form = $($(this).closest('form'));
       form.find('img').remove();
-      form.prepend('<img src="/images/ui/ui-anim_basic_16x16.gif">')
+      form.find('h4').prepend('<img src="/images/ui/ui-anim_basic_16x16.gif">')
       $.ajax({
         url: form.attr('action'),
         data: form.serialize(),
@@ -23,20 +23,22 @@
 <% end %>
 
 <div class="center_content">
-  <section>
-    <h1>Entries not assigned to a section</h1>
+  <% html5_tag('section') do %>
+    <h3 class='section_title'><span>entries not assigned to a section</span></h3>
     
     <% @entries_without_sections.each do |entry| %>
-      <%= content_tag(:h3, link_to(entry.curated_title, edit_admin_issue_entry_path(@publication_date.to_s(:iso), entry.document_number)), :title => entry.abstract )%>
-      <% form_for entry, :url => admin_issue_entry_path(@publication_date.to_s(:iso), entry.document_number) do |f| %>
-        <input type="hidden" name="entry[section_ids][]" value="">
-        <% @sections.each do |section| %>
-          <label>
-            <input type="checkbox" name="entry[section_ids][]" value="<%= section.id %>" />
-            <%= section.title %>
-          </label>
+      <% html5_tag('article', :id => 'article_list' ) do %>
+        <% form_for entry, :url => admin_issue_entry_path(@publication_date.to_s(:iso), entry.document_number) do |f| %>
+          <%= content_tag(:h4, link_to(entry.curated_title, edit_admin_issue_entry_path(@publication_date.to_s(:iso), entry.document_number)), :title => entry.abstract )%>
+          <input type="hidden" name="entry[section_ids][]" value="">
+          <% @sections.each do |section| %>
+            <label>
+              <input type="checkbox" name="entry[section_ids][]" value="<%= section.id %>" />
+              <%= section.title %>
+            </label>
+          <% end %>
         <% end %>
       <% end %>
     <% end %>
-  </section>
+  <% end %>
 </div>
