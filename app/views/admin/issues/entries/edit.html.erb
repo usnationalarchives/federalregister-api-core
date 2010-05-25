@@ -38,6 +38,7 @@
         <% f.inputs do %>
           <%= f.input :curated_title, :hint => "Original: <em>#{f.object.title}</em>" %>
           <%= f.input :curated_abstract, :as => :text, :hint => "Original: <em>#{f.object.abstract}</em>" %>
+          <%= f.input :sections, :as => :check_boxes %>
         <% end %>
 
         <% f.buttons do %>
