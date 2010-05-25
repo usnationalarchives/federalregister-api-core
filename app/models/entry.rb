@@ -45,7 +45,7 @@
 
 =end Schema Information
 
-require 'flickr'
+# require 'flickr'
 class Entry < ApplicationModel
   
   DESCRIPTIONS = {

@@ -97,4 +97,5 @@ ActionController::Routing::Routes.draw do |map|
 
   # SECTIONS
   map.section ':slug', :controller => "sections", :action => "show"
+  map.about_section ':slug/about', :controller => "sections", :action => "about"
 end
