@@ -5,7 +5,7 @@ module Content
       
       attr_reader :entry
       def initialize(document_number, options)
-        @entry = ::Entry.find_by_document_number!(document_number)
+        @entry = ::Entry.find_by_document_number(document_number)
         @base_dir = options[:base_dir]
       end
       

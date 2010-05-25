@@ -1,6 +1,6 @@
 module Html5Helper
-  HTML5_TAGS = %w(article aside canvas date details figcaption figure footer header hgroup mark menu nav section summary time )
-  
+  BLOCK_HTML5_TAGS = %w(article aside canvas details figcaption figure footer header hgroup menu nav section summary)
+  INLINE_HTML5_TAGS = %w(date mark time)
   def html5_tag(tag_name, *args, &block)
     options = args.extract_options!
     options.symbolize_keys!
@@ -14,15 +14,10 @@ module Html5Helper
     end
   end
   
-  HTML5_TAGS.each do |tag_name|
+  (BLOCK_HTML5_TAGS + INLINE_HTML5_TAGS).each do |tag_name|
     eval <<-RUBY
       def #{tag_name}_tag(*args, &proc)
-        
-        if block_given?
-          html5_tag(:#{tag_name}, *args, &proc)
-        else
-          html5_tag(:#{tag_name}, *args)
-        end
+        html5_tag(:#{tag_name}, *args, &proc)
       end
     RUBY
   end
@@ -30,9 +25,11 @@ module Html5Helper
   private
   
   def wrap_html5_content(tag_name, content, options)
+    html_tag_name = options.delete(:as) || INLINE_HTML5_TAGS.include?(tag_name.to_s) ? 'span' : 'div'
+    
     html = content_tag(tag_name, options.except(:id, :class)) do
       options[:class] = add_class(options[:class], tag_name)
-      content_tag(:div, content, options)
+      content_tag(html_tag_name, content, options)
     end
   end
   

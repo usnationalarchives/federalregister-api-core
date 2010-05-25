@@ -102,8 +102,8 @@ class Entry < ApplicationModel
   
   acts_as_mappable :through => :places
   
-  has_many :agency_name_assignments, :order => "agency_name_assignments.position"
-  has_many :agency_names, :through => :agency_name_assignments, :dependent => :delete_all
+  has_many :agency_name_assignments, :order => "agency_name_assignments.position", :dependent => :delete_all
+  has_many :agency_names, :through => :agency_name_assignments
   has_many :agency_assignments, :order => "agency_assignments.position", :dependent => :delete_all
   has_many :agencies, :through => :agency_assignments, :order => "agency_assignments.position"
   
