@@ -4,33 +4,40 @@
   <title>FR2 Admin<%= " | #{yield :title}" if yield(:title) %></title>
   <meta charset="utf-8">
   
-  <%= stylesheet_link_tag "reset",                    :media => :screen %>
-  <%= stylesheet_link_tag "text" ,                    :media => :screen %>
-  <%= stylesheet_link_tag "jquery-ui" ,               :media => :screen %>
-  <%= stylesheet_link_tag "admin/grid",               :media => :screen %>
-  <%= stylesheet_link_tag "admin/buttons",            :media => :screen %>
+  <%= stylesheet_link_tag "admin/screen",                    :media => :screen %>
+  <%= stylesheet_link_tag "admin/jqModal",                   :media => :screen %>
+  <%= stylesheet_link_tag "admin/buttons",                   :media => :screen %>
+  <%= stylesheet_link_tag "admin/formtastic",                :media => :screen %>
   <%= stylesheet_link_tag "../ContentFlow/contentflow_src",  :media => :screen %>
-  <%= stylesheet_link_tag "admin/formtastic",         :media => :screen %>
-  <%= stylesheet_link_tag "admin/formtastic_changes", :media => :screen %>
-  <%= stylesheet_link_tag "admin/screen",             :media => :screen %>
-  <%= stylesheet_link_tag "admin/jquery.Jcrop",       :media => :screen %>
-  <%= stylesheet_link_tag "admin/navigation",         :media => :screen %>
-  <%= stylesheet_link_tag "admin/tablesorter",        :media => :screen %>
-  <%= stylesheet_link_tag "admin/jqModal",            :media => :screen %>
+  
+  <%#= stylesheet_link_tag "reset",                    :media => :screen %>
+  <%#= stylesheet_link_tag "text" ,                    :media => :screen %>
+  <%#= stylesheet_link_tag "jquery-ui" ,               :media => :screen %>
+  <%#= stylesheet_link_tag "admin/grid",               :media => :screen %>
+  
+  
+  
+  <%#= stylesheet_link_tag "admin/formtastic_changes", :media => :screen %>
+  <%#= stylesheet_link_tag "admin/screen",             :media => :screen %>
+  <%#= stylesheet_link_tag "admin/jquery.Jcrop",       :media => :screen %>
+  <%#= stylesheet_link_tag "admin/navigation",         :media => :screen %>
+  <%#= stylesheet_link_tag "admin/tablesorter",        :media => :screen %>
+  
+  
   
 </head>
 <body>
     
   <!-- WRAPPER -->
-  <div id="wrapper" class="container_12">
+  <div id="wrapper">
     
     <!-- HEADER -->
     <header>
       <hgroup>
-        <h1><a href="/" title="federal register home">Federal Register :: Admin</a></h1>
+        <h1><a href="/" title="federal register admin home">Federal Register :: Admin</a></h1>
       </hgroup>
       
-      <nav class="primary grid_12">
+      <nav class="primary">
         <ul>
           <% if current_user %>
           <li><%= link_to 'Home', admin_home_path, :class => "button tan home" %></li>
@@ -43,7 +50,7 @@
         </ul>
       </nav>
       
-      <nav class="utility grid_12">
+      <nav class="utility">
         <% if current_user %>
         <p>Hi, <%= current_user.first_name %>!</p>
         <% end %>
@@ -56,13 +63,13 @@
       </nav>
     </header>
     
-    <div id='content' class="grid_12">
+    <div id='content'>
       <% if yield(:super_title) %>
-        <h1 class="grid_12"><%= yield(:super_title) %></h1>
+        <h2><%= yield(:super_title) %></h2>
       <% end %>
     
       <% if yield(:nav_secondary) %>
-        <nav class="secondary grid_2">
+        <nav class="secondary">
           <ul>
             <%= yield(:nav_secondary) %>
           </ul>
@@ -82,7 +89,7 @@
       <% end %>
     
       <% if yield(:title)%>
-       <h1 class="grid_9"><%= yield(:title) %></h1>
+       <h3><%= yield(:title) %></h3>
       <% end %>
     
       <%= yield %>
