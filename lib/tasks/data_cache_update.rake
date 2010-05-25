@@ -57,14 +57,6 @@ namespace :data do
           to_summarize.each_pair do |field, date_ranges|
             agency[field] = date_ranges.map{|range| Entry.count(:conditions => {:agency_assignments => {:agency_id => agency.id}, :entries => {:publication_date => range}}, :joins => :agency_assignments) }
           end
-        
-          # TODO: fix the craziness!
-          agency.related_topics_cache = Topic.find(:all, :select => "topics.group_name, topics.name, COUNT(*) AS entries_count",
-              :conditions => ["topics.group_name != '' AND agency_assignments.agency_id = ?", agency],
-              :joins => {:entries => :agency_assignments},
-              :group => "topics.group_name",
-              :order => "LENGTH(topics.name)").map{|topic| {"name" => topic.name, "param" => topic.to_param, "count" => topic.entries_count} }
-        
           agency.save!
         end
       end
