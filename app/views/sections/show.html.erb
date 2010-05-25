@@ -23,7 +23,7 @@
 <% aside_tag(:id => 'sidebar') do %>        
   
   <% section_tag(:class => 'subscribe') do %>  
-    <a href="#" class="button rss">Subscribe</a>
+    <%= link_to 'Subscribe', section_path(@section, :format => :rss), :class => 'button rss' %>
   <% end -%>
   
   <% section_tag(:class => 'info') do %>          
