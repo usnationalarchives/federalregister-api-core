@@ -1,0 +1,29 @@
+/* Entry Edit */
+
+form.formtastic.entry {
+  margin-top:20px;
+  width:720px;
+}
+form.formtastic.entry fieldset {
+  width:700px;
+}
+form.formtastic.entry fieldset.inputs ol, form fieldset.buttons ol {
+  left:0px;
+  padding-left:0px;
+}
+form.formtastic.entry fieldset ol li {
+  @include grid(10, 12);
+}
+form.formtastic.entry fieldset.buttons ol li {
+  margin-bottom:0px;
+}
+form.formtastic.entry fieldset ol li.string input, form.formtastic.entry fieldset ol li.text textarea {
+  width:550px;
+}
+form.formtastic fieldset ol li.text textarea {
+  height:200px;
+}
+form.formtastic fieldset > ol > li p.inline-hints {
+  font-size:1em;
+  width:550px;
+}
