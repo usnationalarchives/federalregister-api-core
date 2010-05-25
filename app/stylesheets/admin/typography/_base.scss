@@ -1,0 +1,25 @@
+/******************************
+
+SETUP
+
+******************************/
+html{
+  font-size:100%;
+}
+
+body {
+  @include basic_font;
+  font-weight: 300;
+  font-size:0.9em;
+  line-height: 1.8em;
+}
+
+/******************************
+
+Enhanced Fonts for elements
+
+******************************/
+
+h1 {
+  @include type_kit_font_2;
+}

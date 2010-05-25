@@ -1,14 +1,13 @@
 <% super_title 'Sections' %>
-<% title @section.title %>
+<%# title @section.title %>
 
 <% add_javascript :src => 'admin/issues_sections_highlights' %>
 
 <% nav_secondary(render :partial => 'nav', :locals => {:sections => @sections, :publication_date => @publication_date}) %>
 
-<%= link_to 'Preview', preview_admin_issue_section_path(@publication_date.to_s(:db), @section), :target => "_blank" %>
-
-
 <div class='center_content'>
+  <%= link_to 'Preview', preview_admin_issue_section_path(@publication_date.to_s(:db), @section), :target => "_blank", :class => 'preview button mini grey' %>
+  
   <h3>Highlighted Entries</h3>
 
   <ul id="highlighted">
@@ -17,9 +16,9 @@
 
   <h3>Entries in this section on <%= @publication_date %></h3>
 
-  <div class='article_list'>
+  <div id='article_list'>
   <% @section.entries.published_on(@publication_date).each do |entry| %>
-    <article data-entry-id="<%= entry.id %>" class="<%= 'highlighted' if @highlighted_entries.include?(entry) %>">
+    <% html5_tag('article', "data-entry-id" => entry.id, :class => "#{'highlighted' if @highlighted_entries.include?(entry)}") do %>
       <%= content_tag(:h4, entry.curated_title, :title => entry.abstract) %>
       <p>
         <span class="length">Length: <%= pluralize entry.human_length, 'page' %></span>
@@ -32,7 +31,10 @@
           <span class="graphics">Contains Graphics</span>
         <% end %>
       </p>
-    </article>
+      <% unless @highlighted_entries.include?(entry) %>
+        <a class="add button grey mini">highlight</a>
+      <% end %>
+    <% end %>
   <% end %>
   </div>
 </div>
