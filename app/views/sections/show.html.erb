@@ -27,7 +27,10 @@
   <% end -%>
   
   <% section_tag(:class => 'info') do %>          
-    <p><%= @section.description %></p>
+    <p>
+      <%= @section.description %>
+      <%= link_to "Learn more about this section", about_section_path(@section) %>
+    </p>
   <% end -%>
   
   <% section_tag(:class => 'stats') do %>  
