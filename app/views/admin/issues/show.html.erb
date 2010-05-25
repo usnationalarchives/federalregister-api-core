@@ -1,14 +1,14 @@
-<% title "#{@publication_date} Issue" %>
+<% super_title "#{@publication_date} Issue" %>
 <% nav_secondary(render :partial => 'admin/issues/sections/nav', :locals => {:sections => @sections, :publication_date => @publication_date}) %>
 
 <div class="center_content">
-  <section>
-    <h1>Entries not assigned to a section</h1>
+  <% html5_tag('section') do %>
+    <h3 class='section_title'><span>entries not assigned to a section</span></h3>
     
     <% @entries_without_sections.each do |entry| %>
-      <article>
-        <h1><%= entry.curated_title %></h1>
-      </article>
+      <% html5_tag('article', :id => 'article_list' ) do %>
+        <h4><%= entry.curated_title %></h4>
+      <% end %>
     <% end %>
-  </section>
+  <% end %>
 </div>
