@@ -5,16 +5,16 @@
 
 <% nav_secondary(render :partial => 'nav', :locals => {:sections => @sections, :publication_date => @publication_date}) %>
 
-<div class='center_content'>
+<div class='center_content preview'>
   <%= link_to 'Preview', preview_admin_issue_section_path(@publication_date.to_s(:db), @section), :target => "_blank", :class => 'preview button mini grey' %>
   
-  <h3>Highlighted Entries</h3>
+  <h3 class='section_title'><span>highlighted entries</span></h3>
 
   <ul id="highlighted">
     <%= render :partial => "highlighted_entry", :collection => @highlighted_entries %>
   </ul>
 
-  <h3>Entries in this section on <%= @publication_date %></h3>
+  <h3 class='section_title'><span>entries in this section on <span class='small text'><%= @publication_date %></span></span></h3>
 
   <div id='article_list'>
   <% @section.entries.published_on(@publication_date).each do |entry| %>

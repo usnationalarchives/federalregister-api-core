@@ -15,7 +15,7 @@ div#content {
   margin:0;
   position:relative;
   left:-10px;
-  top:-21px;
+  top:-25px;
   width:968px;
 }
 
@@ -25,9 +25,20 @@ article.highlighted {
 
 .center_content {
   @include grid(10, 12);
+  @include grid-prefix(2);
   position:relative;
   top:-20px;
 }
+
+.center_content.preview {
+  top:-39px;
+}
+
+.center_content section {
+  position:relative;
+  top:-20px;
+}
+
 
 .center_content_alt {
   @include grid(9, 12);
@@ -46,7 +57,8 @@ article.highlighted {
 div.center_content a.preview {
   @include float_right;
   position:relative;
-  top:-23px;
+  top:-53px;
+  margin-bottom:-27px;
 }
 
 .flow {
