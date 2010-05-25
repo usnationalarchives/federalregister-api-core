@@ -1,0 +1,35 @@
+h4 {
+  font-weight:normal;
+  margin-bottom:10px;
+}
+
+header {
+  display: block;
+  width: 100%;
+}
+
+header hgroup {
+  float: left;
+  margin: 50px 0 50px 15px;
+}
+
+header h1 {
+  font-size: 3.15em;
+  font-family: "bookman-1","bookman-2",sans-serif;
+  margin-bottom: .1em;
+}
+
+header h1 a,
+header h1 a:visited {
+  color: #444444;  
+  text-decoration: none;
+  left:0px;  
+}
+
+header h2 {
+  color: #c69967;
+  float: left;
+  font-family: "etica-1","etica-2",sans-serif;
+  font-size: 1.5em;
+  margin-left: 10px;
+}
