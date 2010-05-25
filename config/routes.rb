@@ -96,6 +96,6 @@ ActionController::Routing::Routes.draw do |map|
   map.resource :location, :only => [:update, :edit], :member => {:congress => :get, :places => :get}
 
   # SECTIONS
-  map.section ':slug', :controller => "sections", :action => "show"
+  map.section ':slug.:format', :controller => "sections", :action => "show"
   map.about_section ':slug/about', :controller => "sections", :action => "about"
 end
