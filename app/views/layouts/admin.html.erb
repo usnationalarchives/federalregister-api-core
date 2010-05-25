@@ -40,12 +40,12 @@
       <nav class="primary">
         <ul>
           <% if current_user %>
-          <li><%= link_to 'Home', admin_home_path, :class => "button tan home" %></li>
-          <li><%= link_to 'Sections', admin_sections_path, :class => "button tan" %></li>
-          <li><%= link_to 'Agency Names', admin_agency_names_path, :class => "button tan" %></li>
-          <li><%= link_to 'Topic Names', admin_topic_names_path, :class => "button tan" %></li>
-          <li><%= link_to 'Users', admin_users_path, :class => "button tan users" %></li>
-          <li><%= link_to 'Current Issue', admin_issue_path(Entry.last.publication_date.to_s(:mdy_dash)), :class => "button tan" %></li>
+          <li><%= link_to 'Home', admin_home_path, :class => "button golden home" %></li>
+          <li><%= link_to 'Sections', admin_sections_path, :class => "button golden" %></li>
+          <li><%= link_to 'Agency Names', admin_agency_names_path, :class => "button golden" %></li>
+          <li><%= link_to 'Topic Names', admin_topic_names_path, :class => "button golden" %></li>
+          <li><%= link_to 'Users <div class="users icon"></div>', admin_users_path, :class => "button golden" %></li>
+          <li><%= link_to 'Current Issue', admin_issue_path(Entry.last.publication_date.to_s(:mdy_dash)), :class => "button golden" %></li>
           <% end %>
         </ul>
       </nav>
@@ -56,8 +56,8 @@
         <% end %>
         <ul>
           <% if current_user %>
-          <li><%= link_to 'Change Password', edit_admin_user_password_path(current_user), :class => "button small tan" %></li>
-          <li><%= link_to 'Logout', admin_logout_path, :class => "button small tan" %></li>
+          <li><%= link_to 'Change Password', edit_admin_user_password_path(current_user), :class => "button small grey" %></li>
+          <li><%= link_to 'Logout', admin_logout_path, :class => "button small grey" %></li>
           <% end %>
         </ul>
       </nav>
