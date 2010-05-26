@@ -336,6 +336,14 @@
     <h6><xsl:apply-templates/></h6>
   </xsl:template> -->
   
+  <xsl:template match="PRTPAGE">
+    <span class="page">
+      <xsl:attribute name="id">
+        <xsl:value-of select="concat('page_', @P)" />
+      </xsl:attribute>
+    </span>
+  </xsl:template>
+  
   <xsl:template match="P | FP">
     <p>
       <xsl:attribute name="class">
