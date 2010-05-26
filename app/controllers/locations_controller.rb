@@ -43,19 +43,4 @@ class LocationsController < ApplicationController
       render :action => 'edit'
     end
   end
-  
-  def congress
-    begin
-      members_of_congress = Rails.cache.fetch("legislators_for #{current_location.lat}, #{current_location.lng}") do
-        Sunlight::Legislator.all_for(:latitude => current_location.lat, :longitude => current_location.lng)
-      end
-      
-      @senators = members_of_congress.values_at(:senior_senator, :junior_senator).reject &:nil?
-      @reps     = members_of_congress.values_at(:representative).reject &:nil?
-      
-      render :layout => false
-    rescue
-      render :nothing => true
-    end
-  end
 end
