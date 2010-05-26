@@ -66,7 +66,7 @@ ActionController::Routing::Routes.draw do |map|
                                                      :action     => 'current_headlines'
 
   map.short_entry 'e/:document_number', :controller => 'entries',
-                                        :action     => 'tiny_pulse'
+                                        :action     => 'tiny_url'
   
   
   map.citation 'citation/:volume/:page', :controller => 'citations',
