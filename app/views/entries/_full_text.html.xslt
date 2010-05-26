@@ -37,7 +37,8 @@
 			.ENT {font-size:8pt;padding:5px;}
 			.TNOTE {font-size:8pt;padding-left:15px;}
 			.TRPRTPAGE, .TDPRTPAGE {width:100%;}
-
+			.entry_graphic_link {display: block}
+      ul.table_of_graphics li { display: inline}
         </style>
         
         <xsl:for-each select="//SUM">
@@ -46,7 +47,7 @@
         
         <xsl:if test="count(//HD[@SOURCE='HD1' or @SOURCE = 'HD2' or @SOURCE = 'HD3' or @SOURCE = 'HD4']) > 2">
           <h3 id="table_of_contents">Table of Contents</h3>
-          <ul>
+          <ul class="table_of_contents">
             <xsl:apply-templates mode="table_of_contents" />
             <xsl:if test="count(//FTNT) > 0">
               <li style="padding-left: 10px"><a href="#footnotes">Footnotes</a></li>
@@ -55,8 +56,8 @@
         </xsl:if>
         
         <xsl:if test="count(//GPOTABLE/TTITLE[descendant::text()]) > 0">
-          <h3 id="table_of_figures">Table of Figures</h3>
-          <ul>
+          <h3 id="table_of_tables">Tables</h3>
+          <ul class="table_of_tables">
             <xsl:for-each select="//GPOTABLE/TTITLE[descendant::text()]">
               <li>
                 <a>
@@ -68,6 +69,25 @@
           </ul>
         </xsl:if>
         
+        <xsl:if test="count(//GPH/GID[descendant::text()]) > 0">
+          <h3 id="table_of_graphics">Graphics</h3>
+          <ul class="table_of_graphics">
+            <xsl:for-each select="//GPH/GID[descendant::text()]">
+              <li>
+                <a>
+                  <xsl:attribute name="href">#<xsl:value-of select="generate-id()" /></xsl:attribute>
+                  <img>
+                    <xsl:attribute name="src">
+                      <xsl:call-template name="graphic_url">
+                        <xsl:with-param name="size" select="'thumb'" />
+                      </xsl:call-template>
+                    </xsl:attribute>
+                  </img>
+                </a>
+              </li>
+            </xsl:template>
+          </ul>
+        </xsl:if>
         
         <xsl:apply-templates/>
         <xsl:if test="count(//FTNT) > 0">
@@ -92,7 +112,7 @@
   </xsl:template>
   
   <!-- Tags being Ignored -->
-  <xsl:template match="AGENCY | SUBAGY | AGY | SUM | ACT | EFFDATE | CFR | DEPDOC | RIN | SUBJECT  | FTNT | FRDOC | BILCOD | CNTNTS | UNITNAME | INCLUDES | EDITOR | EAR | FRDOCBP | HRULE | FTREF | NOLPAGES | OLPAGES">
+  <xsl:template match="AGENCY | SUBAGY | AGY | ACT | EFFDATE | CFR | DEPDOC | RIN | SUBJECT | FURINF | FTNT | FRDOC | BILCOD | CNTNTS | UNITNAME | INCLUDES | EDITOR | EAR | FRDOCBP | HRULE | FTREF | NOLPAGES | OLPAGES">
   </xsl:template>
   
   <xsl:template match="FURINF">
@@ -117,7 +137,7 @@
         <xsl:attribute name="id"><xsl:value-of select="generate-id()" /></xsl:attribute>
         <xsl:apply-templates />
         <xsl:text> </xsl:text>
-        <a href="#table_of_figures">&#8593;</a>
+        <a href="#table_of_tables">&#8593;</a>
       </h5>
     </xsl:for-each>
 
@@ -255,9 +275,24 @@
   </xsl:template>
   
   <xsl:template match="GPH/GID">
-    <span class="GID">
-      [Image <xsl:text> </xsl:text><xsl:value-of select="."/><xsl:text> </xsl:text> not available] <br />
-    </span>
+    <a class="entry_graphic_link">
+      <xsl:attribute name="id">
+        <xsl:value-of select="generate-id()" />
+      </xsl:attribute>
+      
+      <xsl:attribute name="href">
+        <xsl:call-template name="graphic_url">
+          <xsl:with-param name="size" select="'original'" />
+        </xsl:call-template>
+      </xsl:attribute>
+      <img class="entry_graphic">
+        <xsl:attribute name="src">
+          <xsl:call-template name="graphic_url">
+            <xsl:with-param name="size" select="'large'" />
+          </xsl:call-template>
+        </xsl:attribute>
+      </img>
+    </a>
   </xsl:template>
    
   <xsl:template match="STARS">
@@ -265,6 +300,8 @@
       <xsl:text>* * * * *</xsl:text>
     </span>
   </xsl:template>
+  
+  <xsl:template match="HD[@SOURCE = 'HED']"></xsl:template>
   
   <xsl:template match="HD[@SOURCE='HED' or @SOURCE='HD1' or @SOURCE = 'HD2' or @SOURCE = 'HD3' or @SOURCE = 'HD4']">
     <xsl:element name="{concat('h', ((number(translate(@SOURCE, 'HD', '')) or 0) + 3))}">
@@ -286,8 +323,7 @@
         <a href="#table_of_contents">&#8593;</a>
       </xsl:if>
     </h3>
-  </xsl:template>
-  
+  </xsl:template>  
   <!-- <xsl:template match="HD[@SOURCE = 'HD2']">
     <h4><xsl:apply-templates/></h4>
   </xsl:template>
@@ -367,5 +403,43 @@
   
   <xsl:template mode="footnotes" match="*[name(.) != 'FTNT']|text()">
     <xsl:apply-templates mode="footnotes"/>
+  </xsl:template>
+  
+  <xsl:template name="graphic_url">
+    <xsl:param name="size" />
+    
+    <xsl:variable name="image_id">
+      <xsl:call-template name="globalReplace">
+        <xsl:with-param name="outputString" select="."/>
+        <xsl:with-param name="target" select="'#'"/>
+        <xsl:with-param name="replacement" select="'%23'"/>
+      </xsl:call-template>
+    </xsl:variable>
+    
+    <xsl:value-of select="concat('http://graphics.federalregister.gov.s3.amazonaws.com/', $image_id, '/', $size, '.gif')" />
+  </xsl:template>
+  
+  <xsl:template name="globalReplace">
+    <xsl:param name="outputString"/>
+    <xsl:param name="target"/>
+    <xsl:param name="replacement"/>
+    <xsl:choose>
+      <xsl:when test="contains($outputString,$target)">
+
+        <xsl:value-of select=
+          "concat(substring-before($outputString,$target),
+                 $replacement)"/>
+        <xsl:call-template name="globalReplace">
+          <xsl:with-param name="outputString" 
+               select="substring-after($outputString,$target)"/>
+          <xsl:with-param name="target" select="$target"/>
+          <xsl:with-param name="replacement" 
+               select="$replacement"/>
+        </xsl:call-template>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:value-of select="$outputString"/>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
 </xsl:stylesheet>
