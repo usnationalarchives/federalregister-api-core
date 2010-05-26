@@ -95,34 +95,6 @@ $(document).ready(function() {
     $(el).parent().addClass("on");
   });
   
-  
-  /*                                            */
-  /* Hide and show congressional member details */
-  /*                                            */
-  
-  $("ul.congressional_members li.member_info a").live('click', function() {
-    el = $(this);
-    
-    li = el.closest('li');
-    id = el.attr('href');
-    var detail_span = $("ul.congressional_members span"+id);
-    
-    if(li.hasClass('more') ) {
-      detail_span.show();
-      el.text('(hide details)');
-      li.toggleClass('more');
-      li.toggleClass('less');
-    }
-    else if(li.hasClass('less')) {
-      detail_span.hide();
-      el.text('(view details)');
-      li.toggleClass('more');
-      li.toggleClass('less');
-    }
-    
-    return false;
-  });
-  
   $("a[href^=http]").click(function(){
     var url = $(this).attr('href');
     var path = "/external/" + url;
