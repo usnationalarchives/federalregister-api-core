@@ -12,25 +12,31 @@ COMMENT PERIOD CLOSING ENHANCEMENTS
   }
 
 #comments-closing-opening .header-nav.title_bar {
-  margin: 4.8em 0;
+  margin: 4.8em 0 0;
+  padding-top: 0;
   }
 #comments-closing-opening .header-nav .tabs-nav {
-  display: inline;
+  display: inline-block;
   }  
 #comments-closing-opening .header-nav .tabs-nav li {
-  display: inline;
+  display: inline-block;
   margin-right: 10px;
+  padding-top: 5px;
 }
+#comments-closing-opening .header-nav .tabs-nav li:hover,
+#comments-closing-opening .header-nav .tabs-nav .tabs-selected {
+  background: url(/images/tab_select.png) no-repeat 50% top;
+  }
 #comments-closing-opening .header-nav .tabs-nav .tabs-selected a {
   color: $powder_blue;
   }
 #comments-closing-opening .header-nav .tabs-nav a {
   color: #CCC;
-  font-size: 2.8em;
+  font-size: 1em;
   text-transform: uppercase;
   text-decoration: none;
   }  
 
 #comments-closing-opening .header-nav.title_bar .small_stack {
-    font-size: 1.3em;
+    font-size: .5em;
 }
