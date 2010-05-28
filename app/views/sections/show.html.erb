@@ -61,14 +61,14 @@
     
   <div id="comments-closing-opening-body" class="tabs-body">
     <div class="closing tabs-panel" id='comment-period-closing'>
-      <% section_tag(:class => 'comment_period_list') do %>  
+      <% section_tag(:class => 'three_col_list comments') do %>  
         <h2 class="title_bar"><span class="small_stack">Comment <span>Period</span></span><span class="large_flow">Closing Soon</span></h2>
         <%= render :partial => "sections/grouped_by_toc_subject_and_comment_date", :locals => {:entries => @section.entries.comments_closing } %>
       <% end -%>
     </div>
     
     <div class="opening tabs-panel" id='comment-period-opening'>
-      <% section_tag(:class => 'comment_period_list') do %>  
+      <% section_tag(:class => 'three_col_list comments') do %>  
         <h2 class="title_bar"><span class="small_stack">Comment <span>Period</span></span><span class="large_flow">Opening</span></h2>
         <%= render :partial => "sections/grouped_by_toc_subject_and_comment_date", :locals => {:entries => @section.entries.comments_opening } %>
       <% end -%>
