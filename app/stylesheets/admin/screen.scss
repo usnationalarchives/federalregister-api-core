@@ -1,0 +1,64 @@
+// BASE
+@import "base";
+
+// LIBRARY - (variables, mixins, etc.)
+@import "../library";
+
+// TYPOGRAPHY
+@import "typography";
+
+// REAL WORK
+@import "layout";
+@import "design";
+
+
+
+#wrapper {
+  @include grid_system(12);
+}
+
+ul {
+  list-style:none;
+}
+
+ul li {
+  font-size:1em;
+}
+
+dt {
+  font-weight: bold;
+}
+
+@mixin float_right {
+  float:right;
+}
+
+
+h3.section_title {
+  text-align: left;
+  background:#5697CF url(/images/header_bg.png) repeat-x 0% 0%;
+  height:15px;
+}
+
+.section_title span {
+  background: #fff;
+  color: $powder_blue;
+  padding: 0 10px 0 0;
+  margin: 0 25px 0 0;
+  font-variant:small-caps;
+  font-weight:bold;
+  position:relative;
+  top:-8px;
+}
+
+span.small.text {
+  top:5%;
+  font-size:75%;
+  margin-right:0;
+  padding-right:0;
+}
+
+h4 {
+  font-weight:normal;
+  margin-bottom:10px;
+}

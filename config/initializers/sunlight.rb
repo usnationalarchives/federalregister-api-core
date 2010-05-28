@@ -1,1 +1,0 @@
-Sunlight::Base.api_key = ENV['sunlight_api_key']

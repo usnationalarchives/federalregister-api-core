@@ -3,31 +3,34 @@ require 'flickraw'
 
 class Flickr
   class Photo
-    attr_accessor :id, :title, :owner_id, :farm, :server, :secret
+    attr_accessor :id, :title, :owner, :farm, :server, :secret
     
     def initialize(attributes)
       @id    = attributes["id"]
       @title = attributes["title"]
-      @owner_id = attributes["owner"]
+      @owner = attributes["owner"]
       @farm = attributes["farm"]
       @server = attributes["server"]
       @secret = attributes["secret"]
     end
     
-    def owner
-      @owner ||= Person.new(owner_id)
+    def creator
+      @creator ||= Person.new(owner)
     end
     
     def url(size)
       FlickRaw.send("url_#{size}", self)
+    end
+    
+    def self.find_by_id(id)
+      Photo.new(flickr.photos.getInfo(:photo_id => id))
     end
   end
   
   class Person
     attr_accessor :real_name, :user_name, :location, :profile_url
     
-    def initialize(person_id)
-      attributes = flickr.people.getInfo(:user_id => person_id)
+    def initialize(attributes)
       @real_name = attributes["realname"]
       @user_name = attributes["username"]
       @location = attributes["location"]

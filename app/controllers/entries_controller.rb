@@ -140,7 +140,7 @@ class EntriesController < ApplicationController
     @entry = Entry.find_by_document_number!(params[:document_number])
   end
   
-  def tiny_pulse
+  def tiny_url
     entry = Entry.find_by_document_number!(params[:document_number])
     redirect_to entry_path(entry), :status=>:moved_permanently
   end
