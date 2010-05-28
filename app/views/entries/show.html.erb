@@ -15,13 +15,23 @@
 
     <h1><%= @entry.title %></h1>
     <p class="metadata">A <%= @entry.entry_type %> by <%= @entry.agencies_exluding_parents.map{|a| "the #{link_to a.name, agency_path(a)}" }.to_sentence %> on   
-      <%= date_tag(@entry.publication_date, :datetime => @entry.publication_date.to_s(:iso)) %>
+      <%= link_to date_tag(@entry.publication_date, :datetime => @entry.publication_date.to_s(:iso)), entries_by_date_path(@entry.publication_date) %>
     </p>
+    
+    <div class="box">
+    
+      <%= %w(pdf xml).map{|format| link_to "#{format.upcase}", @entry.source_url(format), :class => "button list #{format}" } %>      
+      <%= link_to_twitter(@entry) %>
+      <%= link_to_facebook(@entry) %>
+      <%= link_to_reddit(@entry) %>
+      <%= link_to_digg(@entry) %>
+      <a href="#" class="button list email">E-Mail</a>
+    </div>
        
     <% content_for :javascripts do %>
-    <link rev="canonical" type="text/html" href="<%= short_entry_url(@entry) %>" />
+      <link rev="canonical" type="text/html" href="<%= short_entry_url(@entry) %>" />
     <% end %>
-
+    
     <%= render :partial => 'timeline', :locals => {:regulatory_plan => @entry.most_recent_regulatory_plan} if @entry.most_recent_regulatory_plan %>
 
     <% if @entry.has_full_xml? %>
@@ -93,36 +103,21 @@
 
 <% aside_tag(:id => 'sidebar') do %>
   <% section_tag(:class => 'description') do %>
-    <p>This Federal Register article has been enhanced in a number of ways.  Places, references, citations, images and more have been prepared.</p>
+    <div class="padding">
+      <p>This Federal Register article has been enhanced in a number of ways.  Places, references, citations, images and more have been prepared.</p>      
+    </div>
   <% end -%>
 
   <% if @entry.comment_url.present? && (@entry.comments_close_on.nil? || @entry.comments_close_on >= Date.today) %>
     <% section_tag(:class => 'comment') do %>
-      <h1><span>Participate</span></h1>
-      <p>The agency is required to respond in a future Federal Register article.</p>
-      <%= link_to "Submit a formal comment", @entry.comment_url, :class => 'comments_close', :target => '_blank' %>
+      <h1 class="title_bar">Share</h1>      
+      <div class="padding">
+        <p>The agency is required to respond in a future Federal Register article.</p>
+        <%= link_to "Submit a formal comment", @entry.comment_url, :class => 'comments_close', :target => '_blank' %>
+      </div>
     <% end %>
   <% end -%>
 
-  <% section_tag(:class => 'other_versions') do %>
-    <h1><span>Formats</span></h1>
-    <p>This article is available in the following formats: </p>
-    <%= %w(html pdf xml).map{|format| link_to "#{format}", @entry.source_url(format), :class => "button list #{format}" } %>
-  <% end -%>
-
-
-  <% section_tag(:class => 'other_versions') do %>
-    <h1><span>Share</span></h1>
-    <p>Share this article via your social network of choice. <%= link_to short_entry_url(@entry), short_entry_url(@entry) %> 
-    <%= clippy(short_entry_url(@entry)) %></p>
-    
-    <%= link_to_twitter(@entry) %>
-    <%= link_to_facebook(@entry) %>
-    <%= link_to_digg(@entry) %>
-    <%= link_to_reddit(@entry) %>
-    <a href="#" class="button list email">E-Mail</a>
-
-  <% end -%>
 
   
 <% end %>
