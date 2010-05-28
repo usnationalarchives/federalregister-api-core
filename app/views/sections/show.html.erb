@@ -31,7 +31,7 @@
   <% end -%>
   
   <% section_tag(:class => 'stats') do %>  
-    <h1><span>Stats</span></h1>
+    <h1 class="title_bar">Stats</h1>
     <ul>
       <li><strong>1000</strong> Something</li>
       <li><strong>200</strong> Something</li>
@@ -41,7 +41,7 @@
   <% end -%>
   
   <% section_tag(:class => 'whats_hot') do %>  
-    <h1><span>What's Hot</span></h1>
+    <h1 class="title_bar">What's Hot</h1>
   <% end -%>
   
 <% end -%>
@@ -78,14 +78,7 @@
   <% @section.entries.published_on(@publication_date).each do |entry| %>
     <% article_tag do %>  
       <h1><%= link_to entry.title, entry_path(entry) %></h1>
-      <dl>
-        <dt>Length</dt>
-        <dd><%= pluralize(entry.human_length, "page") %></dd>
-        <dt>Type</dt>
-        <dd><%= entry.entry_type if entry.has_type? %></dd>
-        <dt>Agency</dt>
-        <dd><%= link_to entry.agency.name, agency_path(entry.agency) %></dd>
-      </dl>  
+      <%= link_to date_tag(entry.publication_date, :datetime => entry.publication_date.to_s(:iso)), entries_by_date_path(entry.publication_date) %>
     <% end -%>
   <% end %>
 <% end -%>
