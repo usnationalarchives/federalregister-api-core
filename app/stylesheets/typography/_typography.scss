@@ -3,16 +3,18 @@
 SETUP
 
 ******************************/
-html{
+/*html{
 font-size:100%;
 }
 
 body {
 @include basic_font;
-font-weight: 300;
 font-size:62.5%;
 line-height: 1.8em;
 }
+*/
+
+
 
 /******************************
 
@@ -20,10 +22,23 @@ Enhanced Fonts for elements
 
 ******************************/
 
-h1 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   @include type_kit_font_2;
 }
 
+a {
+  color: $dark_blue; }
+
+a:focus,
+a:hover {
+  color: darken($dark_blue_complement, 10%);
+  text-decoration: none;
+}
 
 /******************************
 
@@ -35,9 +50,11 @@ TITLE STYLES
 background: #5697cf url(/images/header_bg.png) repeat-x left top;
 color: #fff;
 clear: both;
-line-height: .8em;
-font-size: 2.5em;
+line-height: .9;
+font-size: 2.4em;
 font-weight: bold;
+height: 21px;
+@include type_kit_font_1;
 letter-spacing: 0px;
 margin-bottom: 50px;
 text-transform: uppercase;
@@ -61,9 +78,12 @@ text-align: right;
 .title_bar {
 border-top: 3px solid $dark_blue;
 clear: both;
+color: $powder_blue;
+font-size: 2em;
 @include type_kit_font_1;
 margin: 2em 0;
 padding-top: 10px;
+text-transform: uppercase;
 }
 #sidebar .title_bar {
   margin-top: 0;
@@ -72,7 +92,7 @@ padding-top: 10px;
 .small_stack {
 color: $dark_blue;
 display: inline-block;
-font-size: .6em;
+font-size: .5em;
 line-height: 1em;
 margin-right: 1em;
 text-align: right;
@@ -84,12 +104,18 @@ font-variant: small-caps;
 display: block;
 }
 
-.large_flow {
-color: $powder_blue;
-font-size: 1.4em;
-text-transform: uppercase;
-}
 
+/******************************
+
+SIDEBAR
+
+******************************/
+
+#sidebar .title_bar {
+  font-size: 1.5em;
+  margin: 0 0 1em;
+  padding: .3em 0 0 0;
+}
 
 /******************************
 
@@ -108,16 +134,10 @@ font-weight: normal;
 line-height: 1.4;
 }
 
-#sections .article h1 + .metadata {
-  margin-top: -1em;
-  }
-
-.article .metadata {
-font-size: 1.4em;
+#entries h2, 
+#entries h3,
+#entries h4,
+#entries h5,
+#entries h6 {
+  margin-top: 1em;
 }
-.articles_published_by_day .article h1 {
-  font-size: 1.6em;
-}
-.articles_published_by_day .article dl {
-  font-size: 1.2em;
-  }

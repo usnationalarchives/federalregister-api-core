@@ -3,14 +3,8 @@
 GENERAL
 
 ******************************/
-
-html{
-font-size:100%;
-min-height:101%;
-}
-
 body {
-background: url(/images/seal.png) no-repeat right top;  
+background: url(/images/seal.png) no-repeat right top;
 color: $body_type_color;
 }
 
@@ -39,19 +33,19 @@ SECTION
 
 
 .article {
-overflow: hidden;
+overflow: hidden; /* less awkward self-clear */
 margin-bottom: 25px;
 padding-bottom: 25px;
 } 
-.article h1 {
-border-top: 3px solid #cecece;
-padding-top: 20px;  
+
+#sections .article {
+  border-bottom: 1px dotted #cdcdcd;
 }
+
 .article .metadata {
-border-bottom: 3px solid #cecece;
 color: #7a838a;
-font-size: 1.2em;
-padding-bottom: 20px;
+font-size: 1em;
+margin-bottom: 1em;
 }
   
 .article .metadata a {
@@ -173,7 +167,7 @@ padding: 0;
 
 .grouped_comments_by_date .date {
 color: #bdbdbd;
-font-size: 1.4em;
+font-size: 1em;
 font-weight: bold;
 line-height: 1.5;
 text-align: right;
@@ -186,7 +180,7 @@ line-height: 1.5;
 .comment_period_list h3 {
 clear: both;
 font-family: "apertura-condensed-1","apertura-condensed-2",sans-serif;
-font-size: 1.4em;
+font-size: 1em;
 line-height: 1.5;
 text-align: right;
 }
@@ -195,3 +189,24 @@ text-align: right;
   clear: both;
 }
 
+/******************************
+
+ARTICLE VIEW 
+
+******************************/
+#entries .metadata {
+}
+
+.box {
+  border-bottom: 1px solid #dadada;    
+  border-top: 1px solid #dadada;  
+  padding: 1em 0;
+}
+
+.box .button {
+  margin-bottom: 0;
+}
+
+.box .button:first-child {
+  margin-left: 25px;
+}
