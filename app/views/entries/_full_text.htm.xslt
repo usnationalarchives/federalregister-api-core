@@ -71,10 +71,10 @@
         
         <xsl:if test="count(//GPH/GID[descendant::text()]) > 0">
           <h3 id="table_of_graphics">Graphics</h3>
-          <ul class="table_of_graphics">
+          <ul class="table_of_graphics thumbs noscript">
             <xsl:for-each select="//GPH/GID[descendant::text()]">
               <li>
-                <a>
+                <a class="thumb">
                   <xsl:attribute name="href">#<xsl:value-of select="generate-id()" /></xsl:attribute>
                   <img>
                     <xsl:attribute name="src">
@@ -335,14 +335,6 @@
   <xsl:template match="HD[@SOURCE = 'HD4']">
     <h6><xsl:apply-templates/></h6>
   </xsl:template> -->
-  
-  <xsl:template match="PRTPAGE">
-    <span class="page">
-      <xsl:attribute name="id">
-        <xsl:value-of select="concat('page_', @P)" />
-      </xsl:attribute>
-    </span>
-  </xsl:template>
   
   <xsl:template match="P | FP">
     <p>
