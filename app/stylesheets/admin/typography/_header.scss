@@ -1,0 +1,9 @@
+h2 {
+  @include grid(12,12);
+  margin-top:15px;
+  margin-bottom:15px;
+}
+
+h3 {
+  @include grid(10,12);
+}

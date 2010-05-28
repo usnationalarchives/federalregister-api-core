@@ -18,7 +18,7 @@
 =end Schema Information
 
 class LedePhoto < ApplicationModel
-  attr_reader :flickr_owner_id
+  attr_reader :flickr_photo_id
   has_many :entries
   has_attached_file :photo,
                     :styles => { :small => ["140", :jpg], :medium => ["245", :jpg], :large => ["580", :jpg], :full_size => ["", :jpg] },
@@ -51,17 +51,17 @@ class LedePhoto < ApplicationModel
     end
   end
   
-  def flickr_owner_id=(owner_id)
-    @flickr_owner_id = owner_id
+  def flickr_photo_id=(photo_id)
+    @flickr_photo_id = photo_id
   end
   
   private
   
     def get_credit_info_from_flickr
-      if @flickr_owner_id.present?
-        person = Flickr::Person.new(@flickr_owner_id)
-        self.credit = person.real_name.present? ? person.real_name : person.user_name
-        self.credit_url = person.profile_url
+      if @flickr_photo_id.present?
+        photo = Flickr::Photo.find_by_id(@flickr_photo_id)
+        self.credit = photo.creator.real_name.present? ? photo.creator.real_name : photo.creator.user_name
+        self.credit_url = photo.url('photopage')
       end
     
       true
