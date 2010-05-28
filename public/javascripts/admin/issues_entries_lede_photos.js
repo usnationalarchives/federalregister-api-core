@@ -14,7 +14,7 @@ function prepare_to_crop_image(item) {
   var img = $(item.content).first();
   var src = img.attr('src').replace(/_m\./, '.');
   $('#entry_lede_photo_attributes_url').val(src);
-  $('#entry_lede_photo_attributes_flickr_owner_id').val(img.attr('data-owner-id'));
+  $('#entry_lede_photo_attributes_flickr_photo_id').val(img.attr('data-photo-id'));
   $('#preview').val(src);
   $('#crop-box').html('<img src="' + src + '" />')
   $('#preview').html('<img src="' + src + '" />');

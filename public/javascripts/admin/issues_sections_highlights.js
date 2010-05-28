@@ -1,11 +1,12 @@
 $(document).ready(function(){
   var base_url = window.location;
-  $('article:not(.highlighted)').live('click', function(){
-    var entry = $(this);
+  $('article a.add').live('click', function(){
+    var entry = $(this).closest('div.article');
+    $(this).hide();
     $.ajax({
       url: base_url + '/highlights',
       type: 'POST',
-      data: "section_highlight[entry_id]=" + $(this).attr('data-entry-id'),
+      data: "section_highlight[entry_id]=" + entry.attr('data-entry-id'),
       success: function(response) {
         entry.addClass('highlighted');
       }
@@ -20,7 +21,8 @@ $(document).ready(function(){
       data: '',
       success: function() {
         item.remove();
-        $('article[data-entry-id=' + entry_id + ']').removeClass('highlighted');
+        $('article[data-entry-id=' + entry_id + '] div.article').removeClass('highlighted');
+        $('article[data-entry-id=' + entry_id + '] div.article').append('<a class="add button grey mini">highlight</a>')
       }
     });
   });

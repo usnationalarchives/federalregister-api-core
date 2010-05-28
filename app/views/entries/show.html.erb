@@ -36,11 +36,7 @@
 
     <% if @entry.has_full_xml? %>
       <%=
-       if @entry.graphic_usages.count > 0
-         html = transform_xml(@entry.full_xml, 'entries/_full_text_with_images.html.xslt').to_s
-       else
-         html = transform_xml(@entry.full_xml, 'entries/_full_text.html.xslt').to_s
-       end
+       html = transform_xml(@entry.full_xml, 'entries/_full_text.html.xslt').to_s
        html = auto_link(html, :href_options => { :class => 'external' })
        add_citation_links(html) %>
     <% elsif @entry.full_text %>
