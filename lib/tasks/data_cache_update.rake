@@ -1,8 +1,10 @@
 namespace :data do
   namespace :cache do
     namespace :update do
+      desc "update all caches"
       task :all => [:topics, :agencies]
       
+      desc "update topic cache"
       task :topics => :environment do
         Topic.find_each do |topic|
           puts "updating topic #{topic.id}.."
@@ -32,7 +34,8 @@ namespace :data do
           topic.save!
         end
       end
-    
+      
+      desc "update agency cache"
       task :agencies => :environment do
         to_summarize = {}
       
