@@ -2,53 +2,96 @@ class EntrySearch
   include Geokit::Geocoders
   extend ActiveSupport::Memoizable
   
-  attr_reader :errors, :topic, :agency, :search_term, :start_date, :end_date, :granule_class, :per_page
+  class Facet
+    attr_reader :id, :name, :count, :on
+    def initialize(id, name, count, on)
+      @id = id
+      @name = name
+      @count = count
+      @on = on
+    end
+    
+    def on?
+      @on
+    end
+  end
   
-  def initialize(options)
-    options ||= {}
+  class FacetCalculator
+    def initialize(options)
+      @search = options[:search]
+      @model = options[:model]
+      @facet_name = options[:facet_name]
+      @name_attribute = options[:name_attribute] || :name
+    end
+    
+    def raw_facets
+      Entry.facets(@search.term,
+        :with => @search.with.except(@facet_name),
+        :conditions => @search.conditions,
+        :match_mode => :extended,
+        :facets => [@facet_name]
+      )[@facet_name]
+    end
+    
+    def all
+      id_to_name = @model.find_as_hash(:select => "id, #{@name_attribute} AS name", :conditions => {:id => raw_facets.keys})
+      
+      search_value_for_this_facet = @search.send(@facet_name)
+      facets = raw_facets.to_a.reverse.reject{|id, count| id == 0}.map do |id, count|
+        Facet.new(id, id_to_name[id.to_s], count, id.to_s == search_value_for_this_facet)
+      end
+      
+      facets.sort_by{|f| [0-f.count, f.name]}
+    end
+  end
+  
+  SUPPORTED_ORDERS = %w(Relevant Newest Oldest)
+  
+  attr_reader :errors, :with, :order
+  attr_accessor :term
+  
+  [:agency_ids, :section_ids, :topic_ids].each do |attr|
+    define_method attr do
+      @with[attr]
+    end
+    
+    define_method "#{attr}=" do |val|
+      @with[attr] = val
+    end
+  end
+  
+  def initialize(options = {})
+    options.symbolize_keys!
     @errors = []
-    @search_term = options[:q] unless options[:q].blank?
+    @with = {}
+    
+    @term = options[:term]
     @num_parameters = options.except("action", "controller").size
-    @per_page = options[:per_page] || 20
+    @per_page = 20
+    @end_date = Entry.latest_publication_date
+    @start_date = DateTime.parse('1994-01-01')
     
-    if options[:place_id].present?
-      @place = Place.find(options[:place_id])
-      @place_ids = [ @place.id ]
-    else
-      locate_places(options[:near], options[:within])
-    end
-    
-    if options[:topic_id].present?
-      @topic = Topic.find(options[:topic_id])
-    end
-    
-    if options[:agency_id].present?
-      @agency = Agency.find(options[:agency_id])
-    end
-    
-    if options[:granule_class].present?
-      @granule_class = options[:granule_class]
-    end
-    
-    if options[:publication_date_greater_than].present?
-      @start_date = Chronic.parse(options[:publication_date_greater_than], :context => :past)
-      errors << 'We could not understand your start date.' if @start_date.nil?
-    end
-    @start_date ||= DateTime.parse('1994-01-01')
-    
-    if options[:publication_date_less_than].present?
-      @end_date = Chronic.parse(options[:publication_date_less_than], :context => :past)
-      errors << 'We could not understand your end date.' if @end_date.nil?
-    end
-    @end_date ||= Entry.latest_publication_date
-    
-    
-    @order = if options[:order] == 'relevance'
-              "@relevance DESC, publication_date DESC"
-            else
-              "publication_date DESC, @relevance DESC"
-            end
+    @order = options[:order] || 'relevant'
     @page = options[:page] || 1
+    
+    self.conditions = options[:conditions] || {}
+  end
+  
+  def conditions=(conditions)
+    conditions.each_pair do |key, val|
+      self.send("#{key}=", val)
+    end
+  end
+  
+  def order_clause
+    case @order
+    when 'newest'
+      "publication_date DESC, @relevance DESC"
+    when 'oldest'
+      "publication_date ASC, @relevance DESC"
+    else
+      "@relevance DESC, publication_date DESC"
+    end
   end
   
   def valid?
@@ -59,36 +102,20 @@ class EntrySearch
     @num_parameters == 0
   end
   
-  def facets
-    raw_facets = Entry.facets(@search_term,
-      :with => with,
-      :conditions => conditions,
-      :match_mode => :extended,
-      :facets => [:granule_class, :agency_id]
-    )
-    facets = {}
-    if with[:agency_id].blank?
-      agency_facets = raw_facets[:agency_id].to_a.sort_by{|a,b| b}.reverse.reject{|id, count| id == 0}.slice(0,25).map do |id, count|
-        [Agency.find(id), count]
-      end
-      facets[:agencies] = agency_facets if agency_facets.size > 1
-    end
-    
-    if with[:topic_ids].blank?
-      topic_facets = raw_facets[:topic_ids].to_a.sort_by{|a,b| b}.reverse.reject{|id, count| id == 0}.slice(0,25).map do |id, count|
-        [Topic.find(id), count]
-      end
-      facets[:topics] = topic_facets if topic_facets.size > 1
-    end
-    
-    if conditions[:granule_class].blank?
-      granule_class_facets = raw_facets[:granule_class]
-      facets[:granule_classes] = granule_class_facets# if granule_class_facets && granule_class_facets.size > 1
-    end
-    
-    facets
+  def agency_facets
+    FacetCalculator.new(:search => self, :model => Agency, :facet_name => :agency_ids).all
   end
-  memoize :facets
+  memoize :agency_facets
+  
+  def section_facets
+    FacetCalculator.new(:search => self, :model => Section, :facet_name => :section_ids, :name_attribute => :title).all
+  end
+  memoize :section_facets
+  
+  def topic_facets
+    FacetCalculator.new(:search => self, :model => Topic, :facet_name => :topic_ids).all
+  end
+  memoize :topic_facets
   
   def conditions
     conditions = {}
@@ -96,27 +123,17 @@ class EntrySearch
     conditions
   end
   memoize :conditions
-  def with
-    with = {}
-    
-    with[:place_ids] = @place_ids if @place_ids.present?
-    with[:topic_ids] = @topic.id if @topic 
-    with[:agency_ids] = @agency.id if @agency
-    with[:publication_date] = Range.new(@start_date.midnight.to_f.to_i, @end_date.midnight.to_f.to_i)
-    
-    with
-  end
-  memoize :with
   
   def entries
     unless defined?(@entries)
-      @entries = Entry.search(@search_term, 
+      @entries = Entry.search(@term, 
         :page => @page,
         :per_page => @per_page,
-        :order => @order,
+        :order => order_clause,
         :with => with,
         :conditions => conditions,
-        :match_mode => :extended
+        :match_mode => :extended,
+        :sort_mode => :extended
       )
     
       # TODO: FIXME: Ugly hack to get total pages to be within bounds
@@ -131,33 +148,33 @@ class EntrySearch
   
   private
   
-  def locate_places(near, within)
-    return if near.blank?
-    
-    if within.blank?
-      within = 100
-    else
-      within = within.to_i
-      if within < 0 || within >= 200
-        within = 200
-      end
-    end
-    
-    location = fetch_location(near)
-    
-    if location.lat
-      places = Place.find(:all, :select => "id", :origin => location, :within => within)
-      @place_ids = places.map{|p| p.id}
-      
-      if places.size > 4096
-        @errors << 'We found too many locations near your location; please reduce the scope of your search'
-      end
-    else
-      @errors << 'We could not understand your location.'
-    end
-  end
-  
-  def fetch_location(location)
-    Rails.cache.fetch("location_of: '#{location}'") { Geokit::Geocoders::GoogleGeocoder.geocode(location) }
-  end
+  # def locate_places(near, within)
+  #   return if near.blank?
+  #   
+  #   if within.blank?
+  #     within = 100
+  #   else
+  #     within = within.to_i
+  #     if within < 0 || within >= 200
+  #       within = 200
+  #     end
+  #   end
+  #   
+  #   location = fetch_location(near)
+  #   
+  #   if location.lat
+  #     places = Place.find(:all, :select => "id", :origin => location, :within => within)
+  #     @place_ids = places.map{|p| p.id}
+  #     
+  #     if places.size > 4096
+  #       @errors << 'We found too many locations near your location; please reduce the scope of your search'
+  #     end
+  #   else
+  #     @errors << 'We could not understand your location.'
+  #   end
+  # end
+  # 
+  # def fetch_location(location)
+  #   Rails.cache.fetch("location_of: '#{location}'") { Geokit::Geocoders::GoogleGeocoder.geocode(location) }
+  # end
 end
