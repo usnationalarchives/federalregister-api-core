@@ -3,8 +3,8 @@ module Content
     def perform
       Agency.connection.execute("TRUNCATE agencies")
       Agency.connection.execute("TRUNCATE agency_assignments")
-      Agency.connection.execute("TRUNCATE agency_names")
-      Agency.connection.execute("TRUNCATE agency_name_assignments")
+      # Agency.connection.execute("TRUNCATE agency_names")
+      # Agency.connection.execute("TRUNCATE agency_name_assignments")
       
       agencies_with_parents = {}
       FasterCSV.foreach("data/gpo_agencies.csv", :headers => :first_row) do |line|

@@ -4,5 +4,10 @@ namespace :content do
     task :import => :environment do
       Content::AgencyImporter.new.perform
     end
+    
+    desc "Match agency names"
+    task :match_names => :environment do
+      Content::NameMatcher::Agencies.new.perform
+    end
   end
 end
