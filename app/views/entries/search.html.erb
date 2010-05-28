@@ -1,160 +1,69 @@
-<%# TODO HELP-RUBY do this better? %>
-<% content_for :search_form %>
+<% title @search.term.blank? ? 'Search Articles' : "Search Results for '#{h @search.term}'" %>
+<% form_for :conditions, :url => entries_search_path, :html => {:method => :get} do |f| %>
+  <%= f.text_field :term %>
+  <%= f.submit 'Search' %>
+<% end %>
 
-<% title @search_term.blank? ? 'Search Entries' : "Search Results for '#{h @search_term}'" %>
-<% form_for :search, :url => entries_search_path, :html => {:method => :get} do %>
-<div class="header group">
-  <ul class="searchform">
-    <li class="simple" id="keywords"><label>Keywords:</label><%= text_field_tag :q, @search.search_term %></li>
-    
-    <span class='advanced'><a href='#'>Advanced Search</a></span>
-    
-    <li class="advanced hidden"><label>All of these words:</label>  <%= text_field_tag :all %></li>
-    <li class="advanced hidden"><label>Exact word or phrase:</label><%= text_field_tag :exact %></li>
-    <li class="advanced hidden">
-      <label>One or more of these words:</label>
-      <%= text_field_tag :boolean_1, {}, :class => 'boolean' %> <span class="alignTextBox">OR</span> <%= text_field_tag :boolean_2, {}, :class => 'boolean' %> <span class="alignTextBox">OR</span> <%= text_field_tag :boolean_3, {}, :class => 'boolean' %>
-    </li>
-    <li class="advanced hidden"><label>None of these words:</label><%= text_field_tag :ignore %></li>
-    
-    <li class="simple"><label>Type:</label><%= select_tag :granule_class, options_for_select([''] + Entry::ENTRY_TYPES.except('Unknown').map{|key, value| [value, key]}, :selected => @search.granule_class) %>
-    <li class="simple"><label>Agency:</label><%= select_tag 'agency_id', options_for_select([''] + @agencies.collect{ |agency| [agency.name, agency.id.to_s] }, :selected => @search.agency.try(:id).try(:to_s)) %></li>
-    
-      <% if @search.topic %>
-        <li class="simple clearfix">
-          <label>Topic:</label>
-          <%= hidden_field_tag :topic_id, params[:topic_id] %>
-          <%= link_to @search.topic.name, params.except(:topic_id), :class => "topic", :title => "Remove this topic" %>
-        </li>
-      <% end %>
-
-      <li class="<%= 'simple' unless params[:place_id].blank? && params[:near].blank? %>">
-          <ul>
-          <% if @place %>
-            <li class="simple"><label>In:</label><%= @place.name %>
-              <%= hidden_field_tag :place_id, params[:place_id] %>
-            </li>
-          <% else %>
-            <li class="nextto">
-              <label>Near:</label> <%= text_field_tag :near, params[:near], :title => "(eg '94118', 'Seattle')", :class => 'inlineHint'  %> 
-            </li>
-            <li class="nextto auto">  
-              <label>Within:</label> <%= text_field_tag :within, params[:within], :title => "Miles", :class => "miles", :class => 'inlineHint'  %> 
-            </li>             
-          <% end %>
-        </ul>
+<% if @search.entries.size > 0 %>
+  <div class="search_info group">
+    <p class="entries"><%= page_entries_info @search.entries %></p>
+    <%= will_paginate @search.entries %>
+  </div>
+  
+  <ul>
+    <% EntrySearch::SUPPORTED_ORDERS.each do |order| %>
+      <li class="<%= 'on' if @search.order == order.downcase %>">
+        <%= link_to order, params.merge(:order => order.downcase) %>
       </li>
-
-      <li class="<%= 'simple' unless params[:publication_date_greater_than].blank? && params[:publication_date_less_than].blank? %>">
-          <ul>
-            <li class="nextto">
-              <label>From:</label><%= text_field_tag :publication_date_greater_than, @search.start_date.try(:to_date) %>
-            </li>
-            <li class="nextto auto">  
-              <label>To:</label><%= text_field_tag :publication_date_less_than, @search.end_date.try(:to_date) %>
-            </li>
-            <li class="clear">  
-              <span class="under">(eg '01/01/09', '1 year ago', 'yesterday', etc.)</span>         
-            </li>
-          </ul>
-      </li>
-
-      <li class="simple"><label>Order By:</label><%= select_tag 'order', options_for_select([['Date', 'date'], ['Relevance', 'relevance']], :selected => params[:order]) %></li>
+    <% end %>
   </ul>
+  <h3>Other Formats</h3>
+
+  <%= link_to 'Subscribe to an RSS Feed of these search results.', params.merge(:format => :rss, :order => 'date', :publication_date_less_than => nil), :class => 'icon_rss' %>
   
-  <%= submit_tag 'Search', :class => 'btn' %>
-</div>
+  <% feed_autodiscovery url_for(params.merge(:format => :rss, :order => 'date', :publication_date_less_than => nil)) %>
+  
+  <%= link_to 'Embed these results as a widget on your website', widget_instructions_path(params.except(:action, :controller)), :class => 'icon_widget spawn_modal', :id => 'widget' %>
+
+  <ol class="results">
+    <% @search.entries.each do |entry| %>
+    <li>
+      <h4 class="title"><%= link_to sanitize(entry.excerpts.title, :tags => %w(span), :attributes => %w(class)), entry_path(entry) %></h4>
+    
+      <div class="result_info">
+        <span class="date"><%= entry.publication_date %></span>
+        <span class="excepts"><%= 
+          if @search.term.blank? || entry.excerpts.full_text.blank?
+            sanitize entry.excerpts.abstract, :tags => %w(span), :attributes => %w(class)
+          else
+            sanitize entry.excerpts.full_text, :tags => %w(span), :attributes => %w(class)
+          end %></span>
+        <br />
+        <span class="agency"><%= entry.agencies.map{|agency| link_to(agency.name, agency_path(agency))}.join(' :: ') %></span>
+      </div>  
+    </li>
+    <% end %>
+  </ol>
+  <div class="search_info group">
+    <%= will_paginate @search.entries %>
+  </div>
+<% else %>
+  <p>No entries were found.</p>
 <% end %>
 
-<% if @search.present? %>
-  <% if @search.entries.size > 0 %>
-    <div class="search_info group">
-      <p class="entries"><%= page_entries_info @search.entries %></p>
-      <%= will_paginate @search.entries %>
-    </div>
-  
-    <ol class="results">
-      <% @search.entries.each do |entry| %>
-      <li>
-        <h4 class="title"><%= link_to sanitize(entry.excerpts.title, :tags => %w(span), :attributes => %w(class)), entry_path(entry) %></h4>
-      
-        <div class="result_info">
-          <span class="date"><%= entry.publication_date %></span>
-          <span class="excepts"><%= 
-            if @search.search_term.blank? || entry.excerpts.full_text.blank?
-              sanitize entry.excerpts.abstract, :tags => %w(span), :attributes => %w(class)
-            else
-              sanitize entry.excerpts.full_text, :tags => %w(span), :attributes => %w(class)
-            end %></span>
-          <br />
-          <span class="agency"><%= entry.agencies.map{|agency| link_to(agency.name, agency_path(agency))}.join(' :: ') %></span>
-        </div>  
-      </li>
-      <% end %>
-    </ol>
-    <div class="search_info group">
-      <%= will_paginate @search.entries %>
-    </div>
-  <% else %>
-    <p>No entries were found.</p>
-  <% end %>
-<% end %>
+<h3>Know what you're looking for?</h3>
+  <ul>
+    <li class="simple">
+      <%= render :partial => 'citations/form', :locals => {:page => ''} %>
+    </li>
+  </ul>
 
-<% content_for :sidebar do %>
-  <h3>Know what you're looking for?</h3>
-    <ul>
-      <li class="simple">
-        <%= render :partial => 'citations/form', :locals => {:page => ''} %>
-      </li>
-    </ul>
+<% unless @search.blank? %>
+  <h3>Limit the Results</h3>
+  <%= render :partial => "search_facets", :locals => {:facets => @search.section_facets,  :name => "Section",  :attribute => :section_ids}%>
+  <%= render :partial => "search_facets", :locals => {:facets => @search.agency_facets,   :name => "Agency",   :attribute => :agency_ids}%>
+  <%= render :partial => "search_facets", :locals => {:facets => @search.topic_facets,    :name => "Topic",    :attribute => :topic_ids}%>
   
-  <% unless @search.blank? %>
-    <% if @search.entries && @search.entries.size > 0 %>
-      <h3>Other Formats</h3>
-
-      <%= link_to 'Subscribe to an RSS Feed of these search results.', params.merge(:format => :rss, :order => 'date', :publication_date_less_than => nil), :class => 'icon_rss' %>
-      
-      <% feed_autodiscovery url_for(params.merge(:format => :rss, :order => 'date', :publication_date_less_than => nil)) %>
-      
-      <%= link_to 'Embed these results as a widget on your website', widget_instructions_path(params.except(:action, :controller)), :class => 'icon_widget spawn_modal', :id => 'widget' %>
-    <% end %>
-  
-    <% granule_class_facets = @search.facets[:granule_classes] %>
-    <% agency_facets = @search.facets[:agencies] %>
-    <% topic_facets = @search.facets[:topics] %>
-    <% if granule_class_facets || agency_facets || topic_facets %>
-  
-      <h3>Limit the Results</h3>
-      <% if granule_class_facets %>
-        <h4>Type</h4>
-
-        <ul class="raquo indent">
-        <% granule_class_facets.each do |granule_class, count| %>
-          <li><%= link_to "#{Entry::ENTRY_TYPES[granule_class]} (#{count})", params.merge(:granule_class => granule_class).except(:page) %></li>
-        <% end %>
-        </ul>
-      <% end %>
-    
-      <% if agency_facets %>
-        <h4>Agency</h4>
-        <ul class="raquo indent">
-        <% agency_facets.each do |agency, count| %>
-          <li><%= link_to "#{agency.name} (#{count})", params.merge(:agency_id => agency.id).except(:page) %></li>
-        <% end %>
-        </ul>
-      <% end %>
-    
-      <% if topic_facets %>
-        <h4>Topic</h4>
-        <ul class="raquo indent">
-        <% topic_facets.each do |topic, count| %>
-          <li><%= link_to "#{topic.name} (#{count})", params.merge(:topic_id => topic.id).except(:page) %></li>
-        <% end %>
-        </ul>
-      <% end %>
-    
-    <% end %>
-  <% end %>
 <% end %>
 
 <% content_for :widget do %>
