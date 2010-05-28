@@ -25,6 +25,14 @@ width: 436px;
 z-index: -1;
 }
 
+.faux_col {
+  @include linear-gradient(color-stops(#f1f1f1, #fff 20%));
+  @include border-radius(5px);
+  color: #666;
+  margin-bottom: -1000px;
+  padding: 1em 1em 1000px 1em;
+  }
+
 /******************************
 
 SECTION
