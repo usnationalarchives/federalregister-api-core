@@ -15,7 +15,7 @@
         <div class='viewport'>
           <ul class='counts'>
           <% %w(entries_1_year_weekly entries_5_years_monthly entries_all_years_quarterly).each do |range_type| %>
-            <li><%= sparkline(:data => agency.send(range_type.to_sym).map(&:to_i), :alt => "#{human_range(range_type)} for #{agency.name}" ) %></li>
+            <li><%= sparkline(:data => (agency.send(range_type.to_sym) || []).map(&:to_i), :alt => "#{human_range(range_type)} for #{agency.name}" ) %></li>
           <% end %>
           </ul>
         </div>
