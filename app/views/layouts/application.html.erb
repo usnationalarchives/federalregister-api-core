@@ -55,8 +55,8 @@
               <span id="preview_indicator">Preview Mode</span>
             <% end %>
             <form action="<%= entries_search_path %>" method="get">
-              <label for="q">Search the Federal Register</label>
-              <%= text_field_tag :q, nil,  :placeholder =>  "Search Articles" %>
+              <label for="term">Search the Federal Register</label>
+              <%= text_field_tag 'conditions[term]', nil, :placeholder =>  "Search Articles" %>
               <%= submit_tag 'Go', :class => "search_btn" %>
             </form>
           </div>
