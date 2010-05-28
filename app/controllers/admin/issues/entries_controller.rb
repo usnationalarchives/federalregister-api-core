@@ -13,8 +13,12 @@ class Admin::Issues::EntriesController < AdminController
     @entry = Entry.published_on(@publication_date).find_by_document_number!(params[:id])
     
     if @entry.update_attributes(params[:entry])
-      flash[:notice] = 'Successfully saved.'
-      redirect_to params[:redirect_to]
+      if request.xhr?
+        render :nothing => true
+      else
+        flash[:notice] = 'Successfully saved.'
+        redirect_to params[:redirect_to]
+      end
     else
       flash.now[:error] = 'There was a problem.'
       render :action => :edit
