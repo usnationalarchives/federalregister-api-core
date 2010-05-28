@@ -1,4 +1,5 @@
-<% title @agency.name, :body => :precolumn %>
+<% title @agency.name %>
+<h1 class="title"><span><%= @agency.name %></span></h1>
 
 <% feed_autodiscovery agency_path(@agency, :format => :rss) %>
 

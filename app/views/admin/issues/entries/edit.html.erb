@@ -32,12 +32,13 @@
           <%= lede_photo.hidden_field :crop_y %>
           <%= lede_photo.hidden_field :crop_width %>
           <%= lede_photo.hidden_field :crop_height %>
-          <%= lede_photo.hidden_field :flickr_owner_id %>
+          <%= lede_photo.hidden_field :flickr_photo_id %>
         <% end %>
 
         <% f.inputs do %>
           <%= f.input :curated_title, :hint => "Original: <em>#{f.object.title}</em>" %>
           <%= f.input :curated_abstract, :as => :text, :hint => "Original: <em>#{f.object.abstract}</em>" %>
+          <%= f.input :sections, :as => :check_boxes %>
         <% end %>
 
         <% f.buttons do %>
