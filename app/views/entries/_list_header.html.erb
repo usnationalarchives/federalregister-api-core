@@ -1,9 +1,5 @@
-<div class="header">
-  <h2>
-    <%= entries.size < 50 ? 'All' : "Most Recent 50" %>
-    Entries
-    <% if entries.size > 50 %>
-      <span><%= link_to "view all", entries_search_path(search_params) %></span>
-    <% end %>
-  </h2>
-</div>
+<h2 class="title_bar"><span class="small_stack">Listing<span> Of <%= entries.size < 50 ? 'All' : "50" %> </span></span>Recent Articles</h2>
+
+<% if entries.size > 50 %>
+  <span><%= link_to "view all", entries_search_path(search_params) %></span>
+<% end %>
