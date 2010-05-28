@@ -1,0 +1,13 @@
+<% if facets.size > 1 %>
+  <h4><%= name %></h4>
+  <ul class="raquo indent">
+  <% facets.each do |facet| %>
+    <li class="<%= 'on' if facet.on? %>">
+      <%= link_to "#{facet.name} (#{facet.count})", params.recursive_merge(:search => {:page => nil, attribute => facet.id}) %>
+      <% if facet.on? %>
+        <%= link_to 'remove', params.recursive_merge(:search => {:page => nil, attribute => nil})%>
+      <% end %>
+    </li>
+  <% end %>
+  </ul>
+<% end %>
