@@ -3,26 +3,49 @@
 
 <% feed_autodiscovery agency_path(@agency, :format => :rss) %>
 
-<div class="">
     
-
-    
-    <div class="grid_16 alpha omega">
-      <div class="quotebox">
-        <div class="grid_10 alpha">
-        <h1>Description</h1>
+    <div class="group">
+        <div class="grid_3 alpha">
+          <h2>Description</h2>
+        </div>
+        
+        <div class="grid_9">
         <p>Whereas the Department of Defense is charged with military actions abroad, the Department of Homeland Security works in the civilian sphere to protect the United States within, at, and outside its borders. Its stated goal is to prepare for, prevent, and respond to domestic emergencies, particularly terrorism.[4] On March 1, 2003, DHS absorbed the Immigration and Naturalization Service and assumed its duties. In doing so, it divided the enforcement and services functions into two separate and new agencies: Immigration and Customs Enforcement and Citizenship and Immigration Services. Additionally, the border enforcement functions of the INS, the U.S. Customs Service, and the Animal and Plant Health Inspection Service were consolidated into a new agency under DHS: U.S. Customs and Border Protection. The Federal Protective Service falls under the National Protection and Programs Directorate.</p>
 
         <p>With more than 200,000 employees, DHS is the third largest Cabinet department, after the Departments of Defense and Veterans Affairs.[5] Homeland security policy is coordinated at the White House by the Homeland Security Council. Other agencies with significant homeland security responsibilities include the Departments of Health and Human Services, Justice, and Energy.</p>
-        </div>
-            <img src="http://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/US_Department_of_Homeland_Security_Seal.svg/200px-US_Department_of_Homeland_Security_Seal.svg.png" style="float: right"/>
-
       </div>
+      
+      <div class="grid_4 omega">
+        <img src="http://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/US_Department_of_Homeland_Security_Seal.svg/200px-US_Department_of_Homeland_Security_Seal.svg.png" style="float: right"/>
+      </div>
+    
     </div>
+    
+    <div class="group">  
+      <div class="grid_3 alpha" style="clear:both">
+        <h2>Vital Stats</h2>
+      </div>
+      
+      <div class="grid_6">
+        <% unless @entry_type_values.blank? %>
+          <div class='chart size_<%=@entry_type_values.size%>' style="margin-top: -60px"><%= pie_3d_chart(:alt => 'Entry Type for Recent Entries', :legend => @entry_type_labels, :truncate_legend => '30', :counts => true, :legend_location => 'right', :data => @entry_type_values, :size => ['300','200'], :color_range => ['005073','84cedb'], :transparent_bg => true) %></div>
+        <% end %>
+      </div>
+      
+    <div class='grid_6 omega'>
+      <ul id='agency_activity' class='pulse_list'>
+      <% %w(entries_1_year_weekly entries_5_years_monthly entries_all_years_quarterly).each do |range_type| %>
+        <li>
+          <%= human_range(range_type) %>
+          <%= sparkline(:data => @agency.send(range_type).map(&:to_i), :alt => "counts of number of articles" ) %>
+        </li>
+      <% end %>
+      </ul>
+    </div>
+  </div>
 
 
     
-</div>
 
 <div class="clearfix" style="clear:both" ></div>
 
