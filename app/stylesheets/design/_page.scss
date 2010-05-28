@@ -151,12 +151,8 @@ padding-right: 10px;
 COMMENT PERIOD CLOSING
 
 ******************************/
-#comments-closing-opening {
-  clear: both;
-  }
-#comments-closing-opening .header-nav {
-  display: none;
-  }
+#comments-closing-opening { clear: both; }
+#comments-closing-opening .header-nav { display: none; }
 .comments li {
 margin: 0;
 list-style-type: none;
@@ -165,48 +161,43 @@ overflow: auto;
 padding: 0;
 }
 
-.grouped_comments_by_date .date {
-color: #bdbdbd;
-font-size: 1em;
-font-weight: bold;
-line-height: 1.5;
-text-align: right;
-}
-
-.comments li a {
-line-height: 1.5;
-}
-
-.comment_period_list h3 {
-clear: both;
-font-family: "apertura-condensed-1","apertura-condensed-2",sans-serif;
-font-size: 1em;
-line-height: 1.5;
-text-align: right;
-}
-
-#comments-closing-opening .group {
+.group {
   clear: both;
-}
+  margin-bottom: 2em;
+  overflow: hidden;
+  }
 
 /******************************
 
 ARTICLE VIEW 
 
 ******************************/
-#entries .metadata {
-}
 
 .box {
   border-bottom: 1px solid #dadada;    
   border-top: 1px solid #dadada;  
   padding: 1em 0;
-}
+  }
 
 .box .button {
   margin-bottom: 0;
-}
+  }
 
 .box .button:first-child {
   margin-left: 25px;
+  }
+
+/******************************
+
+AGENCY VIEW 
+
+******************************/
+
+.quotebox {
+  @include linear-gradient(color-stops(#eee  30%, #fff));
+  @include border-radius(3px);
+  padding: 2em;
 }
+.quotebox > p:last-child {
+  margin-bottom: 0;
+  }

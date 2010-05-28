@@ -1,14 +1,12 @@
 <% list_type ||= nil %>
 <%= render :partial => 'entries/list_header', :locals => {:entries => entries} %>
 
-<ul>
-  <% if list_type %>
-    <% if list_type == 'topic' %>
-      <%= render :partial => 'entries/grouped_by_topic',  :locals => {:entries => entries, :topics => topics}%>
-    <% elsif list_type == 'agency' %>
-      <%= render :partial => 'entries/grouped_by_date', :locals => {:entries => entries} %>
-    <% end %>
-  <% else %>
-    <%= render :partial => 'entries/grouped_by_date', :locals => {:entries => entries}%>
+<% if list_type %>
+  <% if list_type == 'topic' %>
+    <%= render :partial => 'entries/grouped_by_topic',  :locals => {:entries => entries, :topics => topics}%>
+  <% elsif list_type == 'agency' %>
+    <%= render :partial => 'entries/grouped_by_date', :locals => {:entries => entries} %>
   <% end %>
-</ul>
+<% else %>
+  <%= render :partial => 'entries/grouped_by_date', :locals => {:entries => entries}%>
+<% end %>

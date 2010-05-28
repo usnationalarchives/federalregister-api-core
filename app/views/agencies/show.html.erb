@@ -3,34 +3,38 @@
 
 <% feed_autodiscovery agency_path(@agency, :format => :rss) %>
 
+<div class="">
+    
+
+    
+    <div class="grid_16 alpha omega">
+      <div class="quotebox">
+        <div class="grid_10 alpha">
+        <h1>Description</h1>
+        <p>Whereas the Department of Defense is charged with military actions abroad, the Department of Homeland Security works in the civilian sphere to protect the United States within, at, and outside its borders. Its stated goal is to prepare for, prevent, and respond to domestic emergencies, particularly terrorism.[4] On March 1, 2003, DHS absorbed the Immigration and Naturalization Service and assumed its duties. In doing so, it divided the enforcement and services functions into two separate and new agencies: Immigration and Customs Enforcement and Citizenship and Immigration Services. Additionally, the border enforcement functions of the INS, the U.S. Customs Service, and the Animal and Plant Health Inspection Service were consolidated into a new agency under DHS: U.S. Customs and Border Protection. The Federal Protective Service falls under the National Protection and Programs Directorate.</p>
+
+        <p>With more than 200,000 employees, DHS is the third largest Cabinet department, after the Departments of Defense and Veterans Affairs.[5] Homeland security policy is coordinated at the White House by the Homeland Security Council. Other agencies with significant homeland security responsibilities include the Departments of Health and Human Services, Justice, and Energy.</p>
+        </div>
+            <img src="http://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/US_Department_of_Homeland_Security_Seal.svg/200px-US_Department_of_Homeland_Security_Seal.svg.png" style="float: right"/>
+
+      </div>
+    </div>
+
+
+    
+</div>
+
+<div class="clearfix" style="clear:both" ></div>
 
 <% if @significant_entries.present? %>
-  <h3>Recent Articles on Significant Regulations</h3>
-  <ul>
+  <div class="group">
+    <h2 class="title_bar"><span class="small_stack">Most <span>Recent</span></span> Significant Regulations</h2>
     <%= render :partial => 'entries/grouped_by_date', :locals => {:entries => @significant_entries}%>
-  </ul>
+  </div>
 <% end %>
 
 <%= render :partial => 'entries/list', :locals => {:list_type => 'agency', :entries => @entries, :search_params => {:agency_id => @agency.id}} %>
 
 <%= render :partial => 'entries/most_cited', :locals => {:entries => @most_cited_entries} %>
 
-<div class="span-7 prepend-bottom">
-    <h3>Activity</h3>
-    <div class='items pulses'>
-      <ul id='agency_activity' class='pulse_list'>
-      <% %w(entries_1_year_weekly entries_5_years_monthly entries_all_years_quarterly).each do |range_type| %>
-        <li>
-          <%= human_range(range_type) %>
-          <%= sparkline(:data => @agency.send(range_type).map(&:to_i), :alt => "counts of number of articles" ) %>
-        </li>
-      <% end %>
-      </ul>
-    </div>
 
-    <% unless @entry_type_values.blank? %>
-      <h3>Recent Entry Types for Agency</h3>
-      <div class='chart size_<%=@entry_type_values.size%>'><%= pie_3d_chart(:alt => 'Entry Type for Recent Entries', :legend => @entry_type_labels, :truncate_legend => '30', :counts => true, :legend_location => 'bottom', :data => @entry_type_values, :size => ['230','200'], :color_range => ['005073','84cedb'], :transparent_bg => true) %></div>
-    <% end %>
-
-</div>
