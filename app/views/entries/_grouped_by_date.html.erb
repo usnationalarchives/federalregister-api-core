@@ -1,19 +1,17 @@
+<div class="section three_col_list">
 <% entries.group_by(&:month_year).each do |mnth_year, entries| %>
-  <li>
     <% year  = entries.first.publication_date.strftime("%Y") %>
     <% month = entries.first.publication_date.strftime("%m") %>
     <h3><%= mnth_year %></h3>
-    <ul class="indent">
+    <div class="grouped_by_date">
     <% entries.group_by(&:publication_date).each do |pub_date, entries| %>  
-      <li>
-        <h4><%= link_to pub_date.to_formatted_s(:day_date), entries_by_date_path(pub_date) %></h4>
-        <ul class="indent raquo">
-          <% entries.each do |entry| %>  
-            <li><%= link_to entry.title, entry_path(entry) %></li>
-          <% end %>
-        </ul> 
-      </li>
+      <div class="date"><%= link_to pub_date.to_formatted_s(:day_date), entries_by_date_path(pub_date) %></div>
+      <ul class="comments">
+        <% entries.each do |entry| %>  
+          <li><%= link_to entry.title, entry_path(entry) %></li>
+        <% end %>
+      </ul> 
     <% end %>
-    </ul>
-  </li>
+    </div>
 <% end %>
+</div>

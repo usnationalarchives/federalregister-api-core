@@ -47,26 +47,42 @@ ENTRIES
 
 /******************************
 
-COMMENT PERIOD ENDING
+THREE COL LIST
 
 ******************************/
 
-.comment_period_list h3 {
-  @include grid(4, 16);
-  @include alpha;
-  }
-  
-.comment_period_list .date {
+.three_col_list h3 {
   @include grid(2, 16);
   @include alpha;
   }
-  
-.comment_period_list ul {
-  @include grid(10, 16);
+.three_col_list .date {
+  @include grid(2, 16);
+  @include alpha;
+  }
+.three_col_list ul {
+  @include grid(12, 16);
   @include omega;  
   }
+.three_col_list .grouped_by_date {
+  @include grid(14, 16);
+  @include omega;
+  }
+
+/******************************
+
+THREE COL LIST - COMMENT PERIOD LIST
+
+******************************/  
   
-.grouped_comments_by_date {
+.three_col_list.comments ul {
+  @include grid(10, 16);
+  @include omega;
+  }  
+.three_col_list.comments h3 {
+  @include grid(4, 16);
+  @include alpha;
+  }   
+.three_col_list.comments .grouped_by_date {
   @include grid(12, 16);
   @include omega;  
   }

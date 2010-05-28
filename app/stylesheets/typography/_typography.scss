@@ -79,9 +79,9 @@ text-align: right;
 border-top: 3px solid $dark_blue;
 clear: both;
 color: $powder_blue;
-font-size: 2em;
+font-size: 2.3em;
 @include type_kit_font_1;
-margin: 2em 0;
+margin: 2em 0 1em;
 padding-top: 10px;
 text-transform: uppercase;
 }
@@ -92,9 +92,9 @@ text-transform: uppercase;
 .small_stack {
 color: $dark_blue;
 display: inline-block;
-font-size: .5em;
+font-size: .4em;
 line-height: 1em;
-margin-right: 1em;
+margin-right: .5em;
 text-align: right;
 text-transform: uppercase;
 font-variant: small-caps;
@@ -115,6 +115,38 @@ SIDEBAR
   font-size: 1.5em;
   margin: 0 0 1em;
   padding: .3em 0 0 0;
+}
+
+/******************************
+
+THREE COL LIST
+
+******************************/
+
+.three_col_list h3 {
+clear: both;
+font-size: 1.2em;
+line-height: 1.45;
+text-align: right;
+}
+
+.three_col_list.comments h3 {
+}
+
+.comments .grouped_by_date .date {
+  font-weight: bold;
+
+}
+
+.comments .grouped_by_date .date {
+  color: #bdbdbd;
+  font-size: 1.3em;
+  line-height: 1.15;
+  text-align: center;
+}
+
+.comments li a {
+line-height: 1.5;
 }
 
 /******************************
