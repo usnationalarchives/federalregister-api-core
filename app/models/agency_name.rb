@@ -15,11 +15,12 @@ class AgencyName < ApplicationModel
   has_many :entries, :through => :agency_name_assignments
   
   validates_presence_of :name
+  validate :does_not_have_agency_if_void
   
   before_create :assign_agency_if_exact_match
   after_update :update_agency_assignments_if_agency_changed
   
-  named_scope :unprocessed, :conditions => {:agency_assigned => nil}, :order => "agency_names.name"
+  named_scope :unprocessed, :conditions => {:void => false, :agency_id => nil}, :order => "agency_names.name"
   
   def self.find_or_create_by_name(name)
     cleaned_name = name.sub(/\W+$/, '')
@@ -27,11 +28,14 @@ class AgencyName < ApplicationModel
   end
   
   def unprocessed?
-    agency_assigned.nil?
+    (!void?) && agency_id.nil?
   end
   
-  
   private
+  
+  def does_not_have_agency_if_void
+    errors.add(:agency_id, "must be blank if void") if (void? && agency_id.present?)
+  end
   
   def assign_agency_if_exact_match
     

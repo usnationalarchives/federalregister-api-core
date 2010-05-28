@@ -316,7 +316,7 @@ class Entry < ApplicationModel
   end
   
   def recalculate_agencies!
-    self.agency_assignments = agency_name_assignments.map do |agency_name_assignment|
+    agency_name_assignments.map do |agency_name_assignment|
       agency_name_assignment.create_agency_assignment
     end
   end
