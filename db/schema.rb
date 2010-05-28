@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100523172316) do
+ActiveRecord::Schema.define(:version => 20100526135034) do
 
   create_table "agencies", :force => true do |t|
     t.integer  "parent_id"
@@ -62,9 +62,11 @@ ActiveRecord::Schema.define(:version => 20100523172316) do
   add_index "agency_name_assignments", ["entry_id", "agency_name_id"], :name => "index_agency_name_assignments_on_entry_id_and_agency_name_id"
 
   create_table "agency_names", :force => true do |t|
-    t.string  "name",            :null => false
-    t.boolean "agency_assigned"
-    t.integer "agency_id"
+    t.string   "name",                          :null => false
+    t.integer  "agency_id"
+    t.boolean  "void",       :default => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "agency_names", ["agency_id", "name"], :name => "index_agency_names_on_agency_id_and_name"
