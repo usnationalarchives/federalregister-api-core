@@ -2,7 +2,7 @@
 <% entries.group_by(&:toc_subject).sort{|a,b| (a.first || 'ZZZZZ') <=> (b.first || 'ZZZZZ') }.each do |toc_subject, subject_entries| %>  
   <div class="group">
     <h3><%= toc_subject || 'Other' %></h3>
-    <div class="grouped_comments_by_date">  
+    <div class="grouped_by_date">  
       <% subject_entries.group_by{|e| e.comments_close_date.date}.each do |comment_close_date, entries| %>
         <div class="date"><date><%= comment_close_date %></date></div>
         <ul class="comments">
