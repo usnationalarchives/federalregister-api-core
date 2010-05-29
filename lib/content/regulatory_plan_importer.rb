@@ -4,9 +4,9 @@ module Content
     
     def self.import_all_by_publication_date(issue)
       url = "http://www.reginfo.gov/public/do/eAgendaMain?operation=OPERATION_GET_AGENCY_RULE_LIST&currentPubId=#{issue}&agencyCd=0000"
-      puts url
-      response = Curl::Easy.http_get(url)
-      doc = Nokogiri::HTML(response.body_str)
+      path = "#{Rails.root}/data/regulatory_plans/#{issue}/index.html"
+      download_url_to(url, path)
+      doc = Nokogiri::HTML(File.read(path))
     
       regulation_id_numbers = doc.css('td a.pageSubNavTxt').map{|a| a.content().gsub(/\s*/, '') }
       regulation_id_numbers.each do |regulation_id_number|
@@ -38,8 +38,7 @@ module Content
     end
   
     def document
-      File.makedirs(File.dirname(file_path))
-      Curl::Easy.download(url, file_path) unless File.exists?(file_path)
+      self.class.download_url_to(url, file_path)
       doc = Nokogiri::XML(open(file_path))
       doc.root
     end
@@ -72,6 +71,15 @@ module Content
       
         @regulatory_plan.events.to_a.find{|e| e.action == action and e.date == date && e.fr_citation == fr_citation} || RegulatoryPlanEvent.new(:action => action, :date => date, :fr_citation => fr_citation)
       end
+    end
+    
+    def self.download_url_to(url, path)
+      File.makedirs(File.dirname(path))
+      unless File.exists?(path)
+        puts "downloading #{url}..."
+        Curl::Easy.download(url, path) 
+      end
+      
     end
   end
 end
