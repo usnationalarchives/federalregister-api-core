@@ -1,0 +1,15 @@
+<li>
+  <h4><%= link_to sanitize(entry.excerpts.title, :tags => %w(span), :attributes => %w(class)), entry_path(entry) %></h4>
+
+  <div class="result_info">
+    <span class="date"><%= entry.publication_date %></span>
+    <span class="excepts"><%= 
+      if @search.term.blank? || entry.excerpts.full_text.blank?
+        sanitize entry.excerpts.abstract, :tags => %w(span), :attributes => %w(class)
+      else
+        sanitize entry.excerpts.full_text, :tags => %w(span), :attributes => %w(class)
+      end %></span>
+    <br />
+    <span class="agency"><%= entry.agencies_exluding_parents.map{|agency| link_to(agency.name, agency_path(agency))}.join(' :: ') %></span>
+  </div>  
+</li>
