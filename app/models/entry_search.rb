@@ -3,12 +3,13 @@ class EntrySearch
   extend ActiveSupport::Memoizable
   
   class Facet
-    attr_reader :id, :name, :count, :on
-    def initialize(id, name, count, on)
-      @id = id
-      @name = name
-      @count = count
-      @on = on
+    attr_reader :value, :name, :count, :on, :condition
+    def initialize(options)
+      @value      = options[:value]
+      @name       = options[:name]
+      @count      = options[:count]
+      @on         = options[:on]
+      @condition  = options[:condition]
     end
     
     def on?
@@ -38,7 +39,13 @@ class EntrySearch
       
       search_value_for_this_facet = @search.send(@facet_name)
       facets = raw_facets.to_a.reverse.reject{|id, count| id == 0}.map do |id, count|
-        Facet.new(id, id_to_name[id.to_s], count, id.to_s == search_value_for_this_facet)
+        Facet.new(
+          :value      => id, 
+          :name       => id_to_name[id.to_s],
+          :count      => count,
+          :on         => id.to_s == search_value_for_this_facet.to_s,
+          :condition  => @facet_name
+        )
       end
       
       facets.sort_by{|f| [0-f.count, f.name]}
@@ -56,14 +63,18 @@ class EntrySearch
     end
     
     define_method "#{attr}=" do |val|
-      @with[attr] = val
+      if val.present?
+        @with[attr] = val
+      end
     end
   end
   
   [:start_date, :end_date].each do |attr|
     define_method "#{attr}=" do |val|
-      instance_variable_set("@#{attr}", val)
-      @with[:publication_date] = Date.parse(@start_date).to_time .. Date.parse(@end_date).to_time
+      if val.present?
+        instance_variable_set("@#{attr}", val)
+        @with[:publication_date] = Date.parse(@start_date).to_time .. Date.parse(@end_date).to_time
+      end
     end
   end
   
@@ -143,10 +154,23 @@ class EntrySearch
   
   def count_in_last_n_days(n)
     Entry.search_count(@term, 
-      :with => with.merge(:publication_date => (n.days.ago .. Time.current)),
+      :with => with.merge(:publication_date => (n.days.ago.to_time.midnight .. Time.current.midnight)),
       :conditions => conditions,
       :match_mode => :extended
     )
+  end
+  
+  def date_facets
+    [30,90,365].map do |n|
+      value = n.days.ago.to_date.to_s
+      Facet.new(
+        :value      => value,
+        :name       => "Past #{n} days",
+        :count      => count_in_last_n_days(n),
+        :on         => start_date == value,
+        :condition  => :start_date
+      )
+    end
   end
   
   def conditions
