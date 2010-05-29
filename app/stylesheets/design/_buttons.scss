@@ -18,18 +18,21 @@ padding: 10px;
 text-decoration: none;
 text-transform: uppercase;
 }
-
+.button.notext {
+text-indent: -9999px;
+}
 .button.list {
   margin-right: 10px;
 }
-
 .button.rss {
 background-image: url(/images/rss_icon_line.png);
 background-position: 10px 10px;
 background-repeat: no-repeat;
 padding: 10px 10px 7px 30px;
+}            
+.button.notext.rss {
+padding: 10px 10px 4px 25px;
 }
-
 .comments_close {
 background: url(/images/comment_icon.png) no-repeat left top;
 color: #6e6e6e;
@@ -38,6 +41,16 @@ font-weight: bold;
 margin: 20px 0 0 0;
 padding: 0 0 5px 30px;
 text-transform: uppercase;
+}
+.button.widget {
+background-image: url(/images/widget_icon_line.png);
+background-position: 10px 12px;
+background-repeat: no-repeat;
+padding: 10px 10px 7px 30px;  
+}
+.button.notext.widget {
+background-position: 10px 10px;
+padding: 10px 10px 4px 25px;
 }
 
 #clippy {
