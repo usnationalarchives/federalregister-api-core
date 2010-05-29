@@ -54,8 +54,8 @@ class EntrySearch
   
   SUPPORTED_ORDERS = %w(Relevant Newest Oldest)
   
-  attr_reader :errors, :with, :order, :start_date, :end_date
-  attr_accessor :term
+  attr_reader :errors, :with, :order, :start_date, :end_date, :type
+  attr_accessor :term, :type
   
   [:agency_ids, :section_ids, :topic_ids].each do |attr|
     define_method attr do
@@ -135,6 +135,26 @@ class EntrySearch
   end
   memoize :topic_facets
   
+  def type_facets
+    raw_facets = Entry.facets(term,
+      :with => with,
+      :conditions => conditions.except(:granule_class),
+      :match_mode => :extended,
+      :facets => [:granule_class]
+    )[:granule_class]
+    
+    search_value_for_this_facet = self.type
+    facets = raw_facets.to_a.reverse.reject{|id, count| id == 0}.map do |id, count|
+      Facet.new(
+        :value      => id, 
+        :name       => Entry::ENTRY_TYPES[id],
+        :count      => count,
+        :on         => id.to_s == search_value_for_this_facet.to_s,
+        :condition  => :type
+      )
+    end
+  end
+  
   def date_distribution
     dist = Entry.facets(term,
       :with => with.except(:publication_date),
@@ -175,7 +195,7 @@ class EntrySearch
   
   def conditions
     conditions = {}
-    conditions[:granule_class] = @granule_class if @granule_class.present?
+    conditions[:granule_class] = @type if @type.present?
     conditions
   end
   memoize :conditions
