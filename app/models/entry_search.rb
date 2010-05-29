@@ -63,7 +63,7 @@ class EntrySearch
   [:start_date, :end_date].each do |attr|
     define_method "#{attr}=" do |val|
       instance_variable_set("@#{attr}", Date.parse(val))
-      @with['publication_date'] = @start_date.to_time .. @end_date.to_time
+      @with[:publication_date] = @start_date.to_time .. @end_date.to_time
     end
   end
   
@@ -126,7 +126,7 @@ class EntrySearch
   
   def date_distribution
     dist = Entry.facets(term,
-      :with => with,
+      :with => with.except(:publication_date),
       :conditions => conditions,
       :match_mode => :extended,
       :facets => [:year_month]
