@@ -59,6 +59,8 @@
   </ul>
 
 <% unless @search.blank? %>
+  <%= sparkline(:data => @search.date_distribution.to_a.sort_by{|date, count| date}.map{|date, count| count}, :alt => "Monthl Distribution" ) %>
+  
   <h3>Limit the Results</h3>
   <%= render :partial => "search_facets", :locals => {:facets => @search.section_facets,  :name => "Section",  :attribute => :section_ids}%>
   <%= render :partial => "search_facets", :locals => {:facets => @search.agency_facets,   :name => "Agency",   :attribute => :agency_ids}%>
