@@ -64,7 +64,9 @@
   <h3>Limit the Results</h3>
   <ul>
   <% [30, 60, 365].each do |n| %>
-    <li><%= link_to "Past #{n} days (#{@search.count_in_last_n_days(n)})", params.recursive_merge(:conditions => {:page => nil, :start_date => n.days.ago.to_date}) %></li>
+    <li class="<%= 'on' if @search.start_date == n.days.ago.to_date.to_s %>">
+      <%= link_to "Past #{n} days (#{@search.count_in_last_n_days(n)})", params.recursive_merge(:page => nil, :conditions => {:start_date => n.days.ago.to_date}) %>
+    </li>
   <% end %>
   </ul>
   

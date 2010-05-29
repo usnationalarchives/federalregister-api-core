@@ -62,8 +62,8 @@ class EntrySearch
   
   [:start_date, :end_date].each do |attr|
     define_method "#{attr}=" do |val|
-      instance_variable_set("@#{attr}", Date.parse(val))
-      @with[:publication_date] = @start_date.to_time .. @end_date.to_time
+      instance_variable_set("@#{attr}", val)
+      @with[:publication_date] = Date.parse(@start_date).to_time .. Date.parse(@end_date).to_time
     end
   end
   
@@ -75,8 +75,8 @@ class EntrySearch
     @term = options[:term]
     @num_parameters = options.except("action", "controller").size
     @per_page = 20
-    @start_date = Date.parse('1994-01-01')
-    @end_date = Entry.latest_publication_date
+    @start_date = '1994-01-01'
+    @end_date = Entry.latest_publication_date.to_s(:db)
     
     @order = options[:order] || 'relevant'
     @page = options[:page] || 1
