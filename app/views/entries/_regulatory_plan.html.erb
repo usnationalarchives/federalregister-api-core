@@ -1,0 +1,3 @@
+<h3>Related regulatory plan: <%= link_to regulatory_plan.title, regulatory_plan_path(regulatory_plan) %></h3>
+
+<%= render :partial => 'regulatory_plans/timeline', :locals => {:regulatory_plan => regulatory_plan} %>

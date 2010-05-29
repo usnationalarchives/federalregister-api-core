@@ -6,7 +6,7 @@
     <tr>
       <td><%= event.action %></td>
       <td><%= event.date %></td>
-      <td><%= event.fr_citation %></td>
+      <td><%= add_citation_links(event.fr_citation) %></td>
     </tr>
   <% end %>
   </table>

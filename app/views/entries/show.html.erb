@@ -32,8 +32,8 @@
       <link rev="canonical" type="text/html" href="<%= short_entry_url(@entry) %>" />
     <% end %>
     
-    <%= render :partial => 'timeline', :locals => {:regulatory_plan => @entry.most_recent_regulatory_plan} %>
-
+    <%= render( :partial => "regulatory_plan", :object => @entry.most_recent_regulatory_plan ) if @entry.most_recent_regulatory_plan %>
+    
     <% if @entry.has_full_xml? %>
       <%=
        html = transform_xml(@entry.full_xml, 'entries/_full_text.html.xslt').to_s
