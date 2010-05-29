@@ -54,7 +54,7 @@ class EntrySearch
   
   SUPPORTED_ORDERS = %w(Relevant Newest Oldest)
   
-  attr_reader :errors, :with, :order, :start_date, :end_date, :type
+  attr_reader :errors, :with, :order, :start_date, :end_date, :type, :location, :within
   attr_accessor :term, :type
   
   [:agency_ids, :section_ids, :topic_ids].each do |attr|
@@ -73,7 +73,41 @@ class EntrySearch
     define_method "#{attr}=" do |val|
       if val.present?
         instance_variable_set("@#{attr}", val)
-        @with[:publication_date] = Date.parse(@start_date).to_time .. Date.parse(@end_date).to_time
+        
+        begin
+          Date.parse(val)
+        rescue
+          @errors << "Could not understand #{attr.to_s.humanize.downcase}."
+        else
+          @with[:publication_date] = Date.parse(@start_date).to_time .. Date.parse(@end_date).to_time
+        end
+      end
+    end
+  end
+  
+  def within=(val)
+    if val.present?
+      @within = val
+      if val.to_i < 1 && val.to_i > 200
+        @errors < "range must be between 1 and 200 miles."
+      end
+    end
+  end
+  
+  def location=(val)
+    if val.present?
+      @location = val
+      loc = fetch_location(val)
+      
+      if loc.lat
+        places = Place.find(:all, :select => "id", :origin => loc, :within => within)
+        @with[:place_ids] = places.map{|p| p.id}
+        
+        if places.size > 4096
+          @errors << 'We found too many locations near your location; please reduce the scope of your search'
+        end
+      else
+        @errors << 'We could not understand your location.'
       end
     end
   end
@@ -83,12 +117,11 @@ class EntrySearch
     @errors = []
     @with = {}
     
-    @term = options[:term]
-    @num_parameters = options.except("action", "controller").size
+    # Set some defaults...
     @per_page = 20
     @start_date = '1994-01-01'
     @end_date = Entry.latest_publication_date.to_s(:db)
-    
+    @within = '25'
     @order = options[:order] || 'relevant'
     @page = options[:page] || 1
     
@@ -96,9 +129,12 @@ class EntrySearch
   end
   
   def conditions=(conditions)
-    conditions.each_pair do |key, val|
-      self.send("#{key}=", val)
+    [:agency_ids, :section_ids, :topic_ids, :term, :type, :within, :location].each do |attr|
+      if conditions[attr].present?
+        self.send("#{attr}=", conditions[attr])
+      end
     end
+    
   end
   
   def order_clause
@@ -114,10 +150,6 @@ class EntrySearch
   
   def valid?
     @errors.empty?
-  end
-  
-  def blank?
-    @num_parameters == 0
   end
   
   def agency_facets
@@ -226,33 +258,7 @@ class EntrySearch
   
   private
   
-  # def locate_places(near, within)
-  #   return if near.blank?
-  #   
-  #   if within.blank?
-  #     within = 100
-  #   else
-  #     within = within.to_i
-  #     if within < 0 || within >= 200
-  #       within = 200
-  #     end
-  #   end
-  #   
-  #   location = fetch_location(near)
-  #   
-  #   if location.lat
-  #     places = Place.find(:all, :select => "id", :origin => location, :within => within)
-  #     @place_ids = places.map{|p| p.id}
-  #     
-  #     if places.size > 4096
-  #       @errors << 'We found too many locations near your location; please reduce the scope of your search'
-  #     end
-  #   else
-  #     @errors << 'We could not understand your location.'
-  #   end
-  # end
-  # 
-  # def fetch_location(location)
-  #   Rails.cache.fetch("location_of: '#{location}'") { Geokit::Geocoders::GoogleGeocoder.geocode(location) }
-  # end
+  def fetch_location(location)
+    Rails.cache.fetch("location_of: '#{location}'") { Geokit::Geocoders::GoogleGeocoder.geocode(location) }
+  end
 end
