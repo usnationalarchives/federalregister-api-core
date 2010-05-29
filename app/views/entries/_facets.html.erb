@@ -1,0 +1,6 @@
+<% if facets.size > 1 %>
+  <h4><%= name %></h4>
+  <ul>
+    <%= render :partial => "facet", :collection => facets %>
+  </ul>
+<% end %>
