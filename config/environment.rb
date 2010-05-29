@@ -19,7 +19,7 @@ Rails::Initializer.run do |config|
   config.gem "chronic", :version => '0.2.3'
   config.gem "curb", :version => '0.4.4.0'
   config.gem "geokit", :lib => 'geokit', :version => '1.4.1'
-  config.gem 'mislav-will_paginate', :version => '2.3.11', :lib => 'will_paginate'
+  config.gem 'will_paginate', :version => '2.3.14', :lib => 'will_paginate'
   config.gem "fastercsv", :version => '1.4.0'
   config.gem "amatch", :version => '0.2.3'
   config.gem "rubyzip", :lib => 'zip/zip', :version => '0.9.1'
