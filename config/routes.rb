@@ -96,7 +96,12 @@ ActionController::Routing::Routes.draw do |map|
   
   # LOCATION
   map.resource :location, :only => [:update, :edit], :member => {:places => :get}
-
+  
+  # REGULATIONS
+  map.regulatory_plan 'regulations/:regulation_id_number/:slug',
+                      :controller => 'regulatory_plans',
+                      :action     => 'show'
+  
   # SECTIONS
   map.section ':slug.:format', :controller => "sections", :action => "show"
   map.about_section ':slug/about', :controller => "sections", :action => "about"

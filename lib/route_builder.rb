@@ -74,6 +74,13 @@ module RouteBuilder
     }
   end
   
+  add_route :regulatory_plan do |regulatory_plan|
+    {
+      :regulation_id_number => regulatory_plan.regulation_id_number,
+      :slug => regulatory_plan.slug
+    }
+  end
+  
   # keep at bottom of module
   def self.included(base)
     instance_methods.each do |method|

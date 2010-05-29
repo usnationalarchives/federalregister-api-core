@@ -1,0 +1,21 @@
+<% title @regulatory_plan.title %>
+
+<h1 class="title"><span>Regulation <%= @regulatory_plan.regulation_id_number %></span></h1>
+
+<article>
+  <h1><%= @regulatory_plan.title %></h1>
+  
+  <div class="abstract"><%= @regulatory_plan.abstract %></div>
+  
+  <%= render :partial => 'regulatory_plans/timeline', :locals => {:regulatory_plan => @regulatory_plan} %>
+  
+  <h3>Federal Register Activity</h3>
+  <p class="entries"><%= page_entries_info @entries %></p>
+  <%= will_paginate @entries %>
+  <ul>
+    <% @entries.each do |entry| %>
+    <li><%= entry.publication_date %>: <%= entry.entry_type %> <%= link_to entry.title, entry_path(entry) %></li>
+    <% end %>
+  </ul>
+  <%= will_paginate @entries %>
+</article>
