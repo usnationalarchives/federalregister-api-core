@@ -17,6 +17,7 @@
     <%= f.submit 'Search' %>
   </div>
 
+  <% unless @search.blank? %>
   <div class="search_info titlebar">
   
     <div class="article_count">
@@ -37,7 +38,6 @@
       <%= link_to 'Widget', widget_instructions_path(params.except(:action, :controller)), :class => 'button widget spawn_modal notext', :id => 'widget' %>
     </div>
   </div>
-
 
   <div class="filters">
     <h3>Limit the results</h3>
@@ -68,6 +68,7 @@
       <p>No articles were found.</p>
     <% end %>
   </div>
+  <% end %>
 <% end %>
 
 <% content_for :widget do %>
