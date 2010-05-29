@@ -44,9 +44,10 @@
           <li><%= sparkline(:data => @search.date_distribution.to_a.sort_by{|date, count| date}.map{|date, count| count}, :alt => "Monthly Distribution" ) %></li>      
         </ul>
       
-        <%= render :partial => "facets", :locals => {:facets => @search.section_facets,  :name => "Section",  :attribute => :section_ids}%>
-        <%= render :partial => "facets", :locals => {:facets => @search.agency_facets,   :name => "Agency",   :attribute => :agency_ids}%>
-        <%= render :partial => "facets", :locals => {:facets => @search.topic_facets,    :name => "Topic",    :attribute => :topic_ids}%>
+        <%= render :partial => "facets", :locals => {:facets => @search.type_facets,     :name => "Type"    }%>
+        <%= render :partial => "facets", :locals => {:facets => @search.section_facets,  :name => "Section" }%>
+        <%= render :partial => "facets", :locals => {:facets => @search.agency_facets,   :name => "Agency"  }%>
+        <%= render :partial => "facets", :locals => {:facets => @search.topic_facets,    :name => "Topic"   }%>
       
       <% end %>
     </div>
