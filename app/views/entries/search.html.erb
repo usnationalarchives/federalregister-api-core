@@ -1,5 +1,5 @@
 <% title @search.term.blank? ? 'Search Articles' : "Search Results for '#{h @search.term}'" %>
-<% form_for :conditions, :url => entries_search_path, :html => {:method => :get} do |f| %>
+<% form_for :conditions, @search, :url => entries_search_path, :html => {:method => :get} do |f| %>
   <%= f.text_field :term %>
   <%= f.submit 'Search' %>
 <% end %>
