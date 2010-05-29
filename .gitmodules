@@ -22,3 +22,6 @@
 [submodule "vendor/plugins/userstamp"]
 	path = vendor/plugins/userstamp
 	url = git://github.com/delynn/userstamp.git
+[submodule "vendor/plugins/cookbooks"]
+	path = vendor/plugins/cookbooks
+	url = git@github.com:criticaljuncture/cookbooks.git
