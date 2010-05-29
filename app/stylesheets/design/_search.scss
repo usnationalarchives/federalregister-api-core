@@ -1,0 +1,104 @@
+/******************************
+
+PAGE ELEMENTS
+
+******************************/
+
+.search_bar {
+  background: #eee;
+  @include border-top-left-radius(5px);
+  @include border-top-right-radius(5px);  
+  padding: 1em 0;
+  }
+.search_bar label {
+  color: #bdbdbd;
+  @include type_kit_font_1;
+  font-size: 1.5em;
+  margin: 0 0 0 1em;
+  text-transform: uppercase;  
+  }
+.search_bar #conditions_term {
+  border: 1px solid #ccc;
+  padding: .5em;
+  }
+.search_bar .commit {
+  
+  }
+
+.search_info {
+  background: lighten(#385F82, 61%);
+  border-top: 3px solid #385F82;
+  @include border-bottom-left-radius(5px);
+  @include border-bottom-right-radius(5px);  
+  margin-bottom: 1em;
+  padding: 1em;
+  position: relative;
+  }  
+.search_info ul {
+  @include horizontal-list;
+  }
+.search_info .button {
+  margin-bottom: 0;
+  }
+.search_info .actions {
+  position: absolute;
+  right: 1em;
+  top: 1em;  
+  }
+
+#entries.search .search_info .title_bar {
+  border-top: none;
+  margin-top: 0;
+  padding-top: 0;
+  }
+
+/******************************
+
+RESULTS
+
+******************************/
+
+ol.results {
+  list-style-type: none;
+  }
+ol.results li {
+  margin-bottom: 4em;
+  }
+
+
+
+
+/******************************
+
+RESULTS
+
+******************************/
+
+.filters h4 {
+  color: #bdbdbd;
+  @include type_kit_font_1;
+  font-size: 1.3em;
+  line-height: 1.15;
+  text-transform: uppercase;
+  }  
+.filters ul {
+  border-bottom: 1px solid #eee;
+  list-style-type: none;
+  margin-bottom: 2em;
+  padding-bottom: 2em;
+  }
+.filters li {
+  clear: both;
+  margin-bottom: .3em;
+  position: relative;
+  overflow: hidden;
+  }
+.filters li a {
+  display: block;
+  font-size: .9em;
+  font-weight: bold;
+  }  
+.filters .count {
+  color: #ccc;
+  text-align: right;
+  }  
