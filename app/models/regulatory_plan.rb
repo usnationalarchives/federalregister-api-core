@@ -29,4 +29,8 @@ class RegulatoryPlan < ApplicationModel
   def significant?
     RegulatoryPlan::SIGNIFICANT_PRIORITY_CATEGORIES.include?(priority_category)
   end
+  
+  def slug
+    self.title.downcase.gsub(/&/, 'and').gsub(/[^a-z0-9]+/, '-').slice(0,100)
+  end
 end
