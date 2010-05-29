@@ -1,11 +1,13 @@
-<h3>Regulatory Timeline</h3>
+<% if regulatory_plan.try(:events).present? %>
+  <h3>Regulatory Timeline</h3>
 
-<table>
-<% regulatory_plan.events.each do |event| %>
-  <tr>
-    <td><%= event.action %></td>
-    <td><%= event.date %></td>
-    <td><%= event.fr_citation %></td>
-  </tr>
+  <table>
+  <% regulatory_plan.events.each do |event| %>
+    <tr>
+      <td><%= event.action %></td>
+      <td><%= event.date %></td>
+      <td><%= event.fr_citation %></td>
+    </tr>
+  <% end %>
+  </table>
 <% end %>
-</table>
