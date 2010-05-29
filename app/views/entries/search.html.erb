@@ -4,7 +4,7 @@
 
 
 <div class="search_bar">
-    <% form_for :conditions, :url => entries_search_path, :html => {:method => :get} do |f| %>
+    <% form_for :conditions, @search, :url => entries_search_path, :html => {:method => :get} do |f| %>
       <label>Find</label>
       <%= f.text_field :term %>
       <%= f.submit 'Search' %>
@@ -38,13 +38,23 @@
   
 
   <div class="filters">
-    
-  <% unless @search.blank? %>
-    <%= render :partial => "search_facets", :locals => {:facets => @search.section_facets,  :name => "Section",  :attribute => :section_ids}%>
-    <%= render :partial => "search_facets", :locals => {:facets => @search.agency_facets,   :name => "Agency",   :attribute => :agency_ids}%>
-    <%= render :partial => "search_facets", :locals => {:facets => @search.topic_facets,    :name => "Topic",    :attribute => :topic_ids}%>
-  <% end %>
+    <% unless @search.blank? %>
+      <%= sparkline(:data => @search.date_distribution.to_a.sort_by{|date, count| date}.map{|date, count| count}, :alt => "Monthl Distribution" ) %>
 
+      <h3>Limit the Results</h3>
+      <ul>
+      <% [30, 60, 365].each do |n| %>
+        <li class="<%= 'on' if @search.start_date == n.days.ago.to_date.to_s %>">
+          <%= link_to "Past #{n} days (#{@search.count_in_last_n_days(n)})", params.recursive_merge(:page => nil, :conditions => {:start_date => n.days.ago.to_date}) %>
+        </li>
+      <% end %>
+      </ul>
+
+      <%= render :partial => "search_facets", :locals => {:facets => @search.section_facets,  :name => "Section",  :attribute => :section_ids}%>
+      <%= render :partial => "search_facets", :locals => {:facets => @search.agency_facets,   :name => "Agency",   :attribute => :agency_ids}%>
+      <%= render :partial => "search_facets", :locals => {:facets => @search.topic_facets,    :name => "Topic",    :attribute => :topic_ids}%>
+
+    <% end %>
   </div>
   
   
@@ -77,7 +87,6 @@
 <% end %>
 
 </div>
-
 
 <% content_for :widget do %>
 <div id="modal_widget" class="modal_box group">

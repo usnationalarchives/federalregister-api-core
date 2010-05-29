@@ -47,7 +47,7 @@ class EntrySearch
   
   SUPPORTED_ORDERS = %w(Relevant Newest Oldest)
   
-  attr_reader :errors, :with, :order
+  attr_reader :errors, :with, :order, :start_date, :end_date
   attr_accessor :term
   
   [:agency_ids, :section_ids, :topic_ids].each do |attr|
@@ -60,6 +60,13 @@ class EntrySearch
     end
   end
   
+  [:start_date, :end_date].each do |attr|
+    define_method "#{attr}=" do |val|
+      instance_variable_set("@#{attr}", val)
+      @with[:publication_date] = Date.parse(@start_date).to_time .. Date.parse(@end_date).to_time
+    end
+  end
+  
   def initialize(options = {})
     options.symbolize_keys!
     @errors = []
@@ -68,8 +75,8 @@ class EntrySearch
     @term = options[:term]
     @num_parameters = options.except("action", "controller").size
     @per_page = 20
-    @end_date = Entry.latest_publication_date
-    @start_date = DateTime.parse('1994-01-01')
+    @start_date = '1994-01-01'
+    @end_date = Entry.latest_publication_date.to_s(:db)
     
     @order = options[:order] || 'relevant'
     @page = options[:page] || 1
@@ -116,6 +123,31 @@ class EntrySearch
     FacetCalculator.new(:search => self, :model => Topic, :facet_name => :topic_ids).all
   end
   memoize :topic_facets
+  
+  def date_distribution
+    dist = Entry.facets(term,
+      :with => with.except(:publication_date),
+      :conditions => conditions,
+      :match_mode => :extended,
+      :facets => [:year_month]
+    )[:year_month]
+    
+    (1994..Date.today.year).each do |year|
+      (1..12).each do |month|
+        dist[sprintf("%d/%02d",year, month)] ||= 0
+      end
+    end
+    
+    dist
+  end
+  
+  def count_in_last_n_days(n)
+    Entry.search_count(@term, 
+      :with => with.merge(:publication_date => (n.days.ago .. Time.current)),
+      :conditions => conditions,
+      :match_mode => :extended
+    )
+  end
   
   def conditions
     conditions = {}
