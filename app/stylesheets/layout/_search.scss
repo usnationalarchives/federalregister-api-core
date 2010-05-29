@@ -1,0 +1,26 @@
+.result_set {
+  @include grid(11, 16);
+  @include grid-prefix(1);
+  @include omega;
+}
+
+.filters {
+  @include grid(4, 16);
+  @include alpha;
+}
+ 
+.article_count {
+  @include grid(5, 16);
+  @include alpha;
+  }
+
+.facet_name {
+  @include grid(3, 16);
+  @include alpha;
+  @include omega;
+  }
+.count {
+  @include grid(1, 16);
+  @include alpha;
+  @include omega;
+  }  
