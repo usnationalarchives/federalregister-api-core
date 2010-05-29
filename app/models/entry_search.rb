@@ -47,7 +47,7 @@ class EntrySearch
   
   SUPPORTED_ORDERS = %w(Relevant Newest Oldest)
   
-  attr_reader :errors, :with, :order
+  attr_reader :errors, :with, :order, :start_date, :end_date
   attr_accessor :term
   
   [:agency_ids, :section_ids, :topic_ids].each do |attr|
@@ -60,6 +60,13 @@ class EntrySearch
     end
   end
   
+  [:start_date, :end_date].each do |attr|
+    define_method "#{attr}=" do |val|
+      instance_variable_set("@#{attr}", Date.parse(val))
+      @with['publication_date'] = @start_date.to_time .. @end_date.to_time
+    end
+  end
+  
   def initialize(options = {})
     options.symbolize_keys!
     @errors = []
@@ -68,8 +75,8 @@ class EntrySearch
     @term = options[:term]
     @num_parameters = options.except("action", "controller").size
     @per_page = 20
+    @start_date = Date.parse('1994-01-01')
     @end_date = Entry.latest_publication_date
-    @start_date = DateTime.parse('1994-01-01')
     
     @order = options[:order] || 'relevant'
     @page = options[:page] || 1
@@ -132,6 +139,14 @@ class EntrySearch
     end
     
     dist
+  end
+  
+  def count_in_last_n_days(n)
+    Entry.search_count(@term, 
+      :with => with.merge(:publication_date => (n.days.ago .. Time.current)),
+      :conditions => conditions,
+      :match_mode => :extended
+    )
   end
   
   def conditions
