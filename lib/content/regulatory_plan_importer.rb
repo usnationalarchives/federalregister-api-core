@@ -29,16 +29,12 @@ module Content
       @regulatory_plan.save
     end
   
-    def url
-      "http://www.reginfo.gov/public/do/eAgendaViewRule?pubId=#{issue}&RIN=#{regulation_id_number}&operation=OPERATION_EXPORT_XML"
-    end
-  
     def file_path
       @regulatory_plan.full_xml_file_path
     end
   
     def document
-      self.class.download_url_to(url, file_path)
+      self.class.download_url_to(@regulatory_plan.source_url(:xml), file_path)
       doc = Nokogiri::XML(open(file_path))
       doc.root
     end

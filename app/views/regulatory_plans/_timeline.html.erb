@@ -5,7 +5,7 @@
   <% regulatory_plan.events.each do |event| %>
     <tr>
       <td><%= event.action %></td>
-      <td><%= event.date %></td>
+      <td><%= fuzzy_date_formatter(event.date) %></td>
       <td><%= add_citation_links(event.fr_citation) %></td>
     </tr>
   <% end %>
