@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100526135034) do
+ActiveRecord::Schema.define(:version => 20100529213941) do
 
   create_table "agencies", :force => true do |t|
     t.integer  "parent_id"
@@ -26,6 +26,10 @@ ActiveRecord::Schema.define(:version => 20100526135034) do
     t.text     "entries_5_years_monthly"
     t.text     "entries_all_years_quarterly"
     t.text     "related_topics_cache"
+    t.string   "logo_file_name"
+    t.string   "logo_content_type"
+    t.integer  "logo_file_size"
+    t.datetime "logo_updated_at"
   end
 
   add_index "agencies", ["name", "parent_id"], :name => "index_agencies_on_name_and_parent_id"

@@ -29,7 +29,12 @@ class Agency < ApplicationModel
   # grab cabinet level agencies (departments) as these are top producing
   named_scope :featured, :conditions => ['name LIKE ?', '%Department']
   
-  before_create :slugify
+  has_attached_file :logo,
+                    :styles => { :thumb => "100", :small => "140", :medium => "245", :large => "580", :full_size => "" },
+                    :processors => [:thumbnail]
+  
+  before_validation :slugify
+  validates_uniqueness_of :name, :slug
   
   serializable_column :entries_1_year_weekly, :entries_5_years_monthly, :entries_all_years_quarterly, :related_topics_cache
   

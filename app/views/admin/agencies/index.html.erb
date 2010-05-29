@@ -1,0 +1,31 @@
+<% semantic_form_for @search, :url => admin_agencies_path, :method => :get do |f| %>
+  <% f.inputs do %>
+    <%= f.input :name_contains %>
+  <% end %>
+  
+  <% f.buttons do %>
+    <%= f.commit_button 'Search' %>
+  <% end %>
+<% end %>
+<%= page_entries_info @agencies %>
+
+<%= will_paginate @entries %>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Parent</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @agencies.each do |agency| %>
+    <tr>
+      <td><%= agency.name %></td>
+      <td><%= agency.parent.try(:name) %></td>
+      <td><%= link_to 'Edit', edit_admin_agency_path(agency) %></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+<%= will_paginate @entries %>
