@@ -168,6 +168,7 @@ class Entry < ApplicationModel
     indexes title
     indexes abstract
     indexes "LOAD_FILE(CONCAT('#{RAILS_ROOT}/data/text/', document_file_path, '.txt'))", :as => :full_text
+    indexes "EXTRACT(YEAR_MONTH FROM publication_date)", :as => :year_month, :facet => true
     indexes granule_class, :facet => true
     
     # attributes
@@ -187,6 +188,12 @@ class Entry < ApplicationModel
     }
   end
   
+  # TODO: FIXME: This is gross.
+  # Thinking-Sphinx doesn't support facets on calculated columns...but this gets around that. heh.
+  define_method "EXTRACT(YEAR_MONTH FROM publication_date)" do
+    publication_date.to_s(:year_month)
+  end
+  
   def agencies_exluding_parents
     parent_agency_ids = agencies.map(&:parent_id).compact
     agencies.reject{|a| parent_agency_ids.include?(a.id) }.uniq
@@ -202,6 +209,10 @@ class Entry < ApplicationModel
   
   def month_year
     publication_date.to_formatted_s(:month_year)
+  end
+  
+  def year_month
+    '200112'
   end
   
   def day
