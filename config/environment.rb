@@ -28,13 +28,13 @@ Rails::Initializer.run do |config|
   # sunlight gem and dependencies
   config.gem "json"
   config.gem "ym4r", :version => '0.6.1'
+  
   config.gem 'thinking-sphinx', :version => '1.3.14', :lib => 'thinking_sphinx'
   config.gem 'hoptoad_notifier', :version => '2.1.3'
   config.gem "aws-s3", :lib => "aws/s3", :version => '0.6.2'
   config.gem 'paperclip', :version => '2.3.1.1'
   config.gem 'stevedore', :version => '0.0.1'
   config.gem 'active_hash', :version => '0.7.9'
-  
   config.gem 'bcrypt-ruby', :version => '2.1.2', :lib => "bcrypt"
   config.gem 'authlogic', :version => '2.1.3'
   config.gem 'calais', :version => '0.0.9'

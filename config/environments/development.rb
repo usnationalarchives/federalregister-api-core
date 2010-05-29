@@ -17,4 +17,7 @@ config.action_controller.perform_caching             = false
 # config.action_mailer.raise_delivery_errors = false
 config.action_mailer.default_url_options = {:host => 'fr2.local'}
 
+# ec2
+config.gem 'poolparty', :version => '1.6.8'
+
 config.gem "thunder_punch", :lib => false
