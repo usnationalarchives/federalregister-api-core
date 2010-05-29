@@ -2,7 +2,6 @@
 
 <h1 class="title"><span><%= @search.term.blank? ? 'Search Articles' : "Search Results for '#{h @search.term}'" %></span></h1>
 
-
 <div class="search_bar">
     <% form_for :conditions, @search, :url => entries_search_path, :html => {:method => :get} do |f| %>
       <label>Find</label>
@@ -15,7 +14,7 @@
   <div class="search_info titlebar">
     
     <div class="article_count">
-      <h2 class="title_bar"><span class="small_stack">Articles <span>Found</span></span><%= @search.entries.total_entries %></h2>
+      <h2 class="title_bar"><span class="small_stack">Articles <span>Found</span></span><%= number_with_delimiter @search.entries.total_entries %></h2>
     </div>
     
     <ul class="ordering">
@@ -33,59 +32,37 @@
     </div>
   </div>
   
-
+  
   <div class="filters">
     <% unless @search.blank? %>
 
-      <h4>Limit the Results</h4>
+      <h4>Limit the results</h4>
+      <h4>Date</h4>
       <ul>
-      <% [30, 60, 365].each do |n| %>
-        <li class="<%= 'on' if @search.start_date == n.days.ago.to_date.to_s %>">
-          <%= link_to "Past #{n} days (#{@search.count_in_last_n_days(n)})", params.recursive_merge(:page => nil, :conditions => {:start_date => n.days.ago.to_date}) %>
-        </li>
-      <% end %>
-      <%# TODO HELP-RUBY i know this doesn't go here. just wanted to stash it somewhere  %>
-      <li><%= sparkline(:data => @search.date_distribution.to_a.sort_by{|date, count| date}.map{|date, count| count}, :alt => "Monthl Distribution" ) %></li>      
+        <%= render :partial => "facet", :collection => @search.date_facets %>
+        
+        <%# TODO HELP-RUBY i know this doesn't go here. just wanted to stash it somewhere  %>
+        <li><%= sparkline(:data => @search.date_distribution.to_a.sort_by{|date, count| date}.map{|date, count| count}, :alt => "Monthly Distribution" ) %></li>      
       </ul>
-
       
-      <%= render :partial => "search_facets", :locals => {:facets => @search.section_facets,  :name => "Section",  :attribute => :section_ids}%>
-      <%= render :partial => "search_facets", :locals => {:facets => @search.agency_facets,   :name => "Agency",   :attribute => :agency_ids}%>
-      <%= render :partial => "search_facets", :locals => {:facets => @search.topic_facets,    :name => "Topic",    :attribute => :topic_ids}%>
-
+      <%= render :partial => "facets", :locals => {:facets => @search.section_facets,  :name => "Section",  :attribute => :section_ids}%>
+      <%= render :partial => "facets", :locals => {:facets => @search.agency_facets,   :name => "Agency",   :attribute => :agency_ids}%>
+      <%= render :partial => "facets", :locals => {:facets => @search.topic_facets,    :name => "Topic",    :attribute => :topic_ids}%>
+      
     <% end %>
   </div>
   
+  <div class="result_set">
   
-<div class="result_set">
-
-  <ol class="results">
-    <% @search.entries.each do |entry| %>
-    <li>
-      <h4><%= link_to sanitize(entry.excerpts.title, :tags => %w(span), :attributes => %w(class)), entry_path(entry) %></h4>
-    
-      <div class="result_info">
-        <span class="date"><%= entry.publication_date %></span>
-        <span class="excepts"><%= 
-          if @search.term.blank? || entry.excerpts.full_text.blank?
-            sanitize entry.excerpts.abstract, :tags => %w(span), :attributes => %w(class)
-          else
-            sanitize entry.excerpts.full_text, :tags => %w(span), :attributes => %w(class)
-          end %></span>
-        <br />
-        <span class="agency"><%= entry.agencies.map{|agency| link_to(agency.name, agency_path(agency))}.join(' :: ') %></span>
-      </div>  
-    </li>
-    <% end %>
-  </ol>
+    <ol class="results">
+      <%= render :partial => 'result', :collection => @search.entries, :as => :entry %>
+    </ol>
   
     <%= will_paginate @search.entries %>
-
+  </div>
 <% else %>
   <p>No entries were found.</p>
 <% end %>
-
-</div>
 
 <% content_for :widget do %>
 <div id="modal_widget" class="modal_box group">
