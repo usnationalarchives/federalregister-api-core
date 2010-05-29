@@ -117,6 +117,23 @@ class EntrySearch
   end
   memoize :topic_facets
   
+  def date_distribution
+    dist = Entry.facets(term,
+      :with => with,
+      :conditions => conditions,
+      :match_mode => :extended,
+      :facets => [:year_month]
+    )[:year_month]
+    
+    (1994..Date.today.year).each do |year|
+      (1..12).each do |month|
+        dist[sprintf("%d/%02d",year, month)] ||= 0
+      end
+    end
+    
+    dist
+  end
+  
   def conditions
     conditions = {}
     conditions[:granule_class] = @granule_class if @granule_class.present?
