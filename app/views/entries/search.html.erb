@@ -15,10 +15,7 @@
   <div class="search_info titlebar">
     
     <div class="article_count">
-      <%# TODO HELP-RUBY how do i get the total number in here. aka where does page_entries_info live?  %>
-      <h2 class="title_bar"><span class="small_stack">Articles <span>Found</span></span>52</h2>
-      <!-- <h2 class="title_bar"><span class="small_stack">Filtered <span>Search has</span></span>52</h2> -->
-      <%#= page_entries_info @search.entries.count %>
+      <h2 class="title_bar"><span class="small_stack">Articles <span>Found</span></span><%= @search.entries.total_entries %></h2>
     </div>
     
     <ul class="ordering">
