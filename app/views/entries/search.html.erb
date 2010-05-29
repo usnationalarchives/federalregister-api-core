@@ -62,6 +62,12 @@
   <%= sparkline(:data => @search.date_distribution.to_a.sort_by{|date, count| date}.map{|date, count| count}, :alt => "Monthl Distribution" ) %>
   
   <h3>Limit the Results</h3>
+  <ul>
+  <% [30, 60, 365].each do |n| %>
+    <li><%= link_to "Past #{n} days (#{@search.count_in_last_n_days(n)})", params.recursive_merge(:conditions => {:page => nil, :start_date => n.days.ago.to_date}) %></li>
+  <% end %>
+  </ul>
+  
   <%= render :partial => "search_facets", :locals => {:facets => @search.section_facets,  :name => "Section",  :attribute => :section_ids}%>
   <%= render :partial => "search_facets", :locals => {:facets => @search.agency_facets,   :name => "Agency",   :attribute => :agency_ids}%>
   <%= render :partial => "search_facets", :locals => {:facets => @search.topic_facets,    :name => "Topic",    :attribute => :topic_ids}%>
