@@ -154,6 +154,7 @@ class EntrySearch
       )
     end
   end
+  memoize :type_facets
   
   def date_distribution
     dist = Entry.facets(term,
@@ -192,6 +193,7 @@ class EntrySearch
       )
     end
   end
+  memoize :date_facets
   
   def conditions
     conditions = {}
