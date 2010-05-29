@@ -37,11 +37,11 @@ ActionController::Routing::Routes.draw do |map|
   map.widget_instructions 'widget_instructions', :controller => 'special', :action => 'widget_instructions'
 
   # ENTRIES
-  map.entries 'entries.:format', :controller => 'entries', :action => 'index'
+  map.entries 'articles.:format', :controller => 'entries', :action => 'index'
   
-  map.entries_search 'entries/search', :controller => 'entries', :action => 'search'
-  map.entries_widget 'entries/widget', :controller => 'entries', :action => 'widget'
-  map.entry 'entries/:year/:month/:day/:document_number/:slug', :controller => 'entries',
+  map.entries_search 'articles/search', :controller => 'entries', :action => 'search'
+  map.entries_widget 'articles/widget', :controller => 'entries', :action => 'widget'
+  map.entry 'articles/:year/:month/:day/:document_number/:slug', :controller => 'entries',
                                                                 :action     => 'show',
                                                                 :year       => /\d{4}/,
                                                                 :month      => /\d{1,2}/,
@@ -53,21 +53,23 @@ ActionController::Routing::Routes.draw do |map|
                                                                                 :month      => /\d{1,2}/,
                                                                                 :day        => /\d{1,2}/
 
-  map.entries_by_date 'entries/:year/:month/:day', :controller => 'entries',
+  map.entries_by_date 'articles/:year/:month/:day', :controller => 'entries',
                                                    :action     => 'by_date',
                                                    :year       => /\d{4}/,
                                                    :month      => /\d{1,2}/,
                                                    :day        => /\d{1,2}/
-  map.entries_date_search 'entries/date_search', :controller => 'entries',
+  map.entries_date_search 'articles/date_search', :controller => 'entries',
                                                  :action     => 'date_search'
 
   
-  map.current_headlines 'entries/current-headlines', :controller => 'entries',
+  map.current_headlines 'articles/current-headlines', :controller => 'entries',
                                                      :action     => 'current_headlines'
 
-  map.short_entry 'e/:document_number', :controller => 'entries',
+  map.short_entry 'a/:document_number', :controller => 'entries',
                                         :action     => 'tiny_url'
-  
+  # Backwards compatability, at least for now...
+  map.connect 'e/:document_number',     :controller => 'entries',
+                                        :action     => 'tiny_url'
   
   map.citation 'citation/:volume/:page', :controller => 'citations',
                                          :action     => 'show',
