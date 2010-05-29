@@ -12,13 +12,13 @@
         </div>
         
         <div class="grid_9">
-        <p>Whereas the Department of Defense is charged with military actions abroad, the Department of Homeland Security works in the civilian sphere to protect the United States within, at, and outside its borders. Its stated goal is to prepare for, prevent, and respond to domestic emergencies, particularly terrorism. On March 1, 2003, DHS absorbed the Immigration and Naturalization Service and assumed its duties. In doing so, it divided the enforcement and services functions into two separate and new agencies: Immigration and Customs Enforcement and Citizenship and Immigration Services. Additionally, the border enforcement functions of the INS, the U.S. Customs Service, and the Animal and Plant Health Inspection Service were consolidated into a new agency under DHS: U.S. Customs and Border Protection. The Federal Protective Service falls under the National Protection and Programs Directorate.</p>
-
-        <p>With more than 200,000 employees, DHS is the third largest Cabinet department, after the Departments of Defense and Veterans Affairs. Homeland security policy is coordinated at the White House by the Homeland Security Council. Other agencies with significant homeland security responsibilities include the Departments of Health and Human Services, Justice, and Energy.</p>
-      </div>
+          <%= simple_format @agency.description %>
+        </div>
       
       <div class="grid_4 omega">
-        <img src="http://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/US_Department_of_Homeland_Security_Seal.svg/200px-US_Department_of_Homeland_Security_Seal.svg.png" style="float: right"/>
+        <% if @agency.logo_file_name.present? %>
+          <%= image_tag @agency.logo.url(:medium) %>
+        <% end %>
       </div>
     
     </div>
