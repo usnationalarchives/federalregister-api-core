@@ -2,66 +2,66 @@
 
 <h1 class="title"><span><%= @search.term.blank? ? 'Search Articles' : "Search Results for '#{h @search.term}'" %></span></h1>
 
-<div class="search_bar">
-    <% form_for :conditions, @search, :url => entries_search_path, :html => {:method => :get} do |f| %>
-      <label>Find</label>
-      <%= f.text_field :term %>
-      <%= f.submit 'Search' %>
-    <% end %>
-</div>
-
-<% if @search.entries.size > 0 %>
-  <div class="search_info titlebar">
-    
-    <div class="article_count">
-      <h2 class="title_bar"><span class="small_stack">Articles <span>Found</span></span><%= number_with_delimiter @search.entries.total_entries %></h2>
-    </div>
-    
-    <ul class="ordering">
-      <% EntrySearch::SUPPORTED_ORDERS.each do |order| %>
-        <li class="<%= 'on' if @search.order == order.downcase %>">
-          <%= link_to order, params.merge(:order => order.downcase), :class => 'button list' %>
-        </li>
-      <% end %>
-    </ul>
-    
-    <div class="actions">
-      <%= link_to 'Subscribe', params.merge(:format => :rss, :order => 'date', :publication_date_less_than => nil), :class => 'button notext rss' %>
-      <% feed_autodiscovery url_for(params.merge(:format => :rss, :order => 'date', :publication_date_less_than => nil)) %>
-      <%= link_to 'Widget', widget_instructions_path(params.except(:action, :controller)), :class => 'button widget spawn_modal notext', :id => 'widget' %>
-    </div>
+<% form_for :conditions, @search, :url => entries_search_path, :html => {:method => :get} do |f| %>
+  <div class="search_bar">
+    <label>Find</label>
+    <%= f.text_field :term %>
+    <%= f.submit 'Search' %>
   </div>
-  
-  
-  <div class="filters">
-    <% unless @search.blank? %>
 
-      <h4>Limit the results</h4>
-      <h4>Date</h4>
-      <ul>
-        <%= render :partial => "facet", :collection => @search.date_facets %>
-        
-        <%# TODO HELP-RUBY i know this doesn't go here. just wanted to stash it somewhere  %>
-        <li><%= sparkline(:data => @search.date_distribution.to_a.sort_by{|date, count| date}.map{|date, count| count}, :alt => "Monthly Distribution" ) %></li>      
+  <% if @search.entries.size > 0 %>
+    <div class="search_info titlebar">
+    
+      <div class="article_count">
+        <h2 class="title_bar"><span class="small_stack">Articles <span>Found</span></span><%= number_with_delimiter @search.entries.total_entries %></h2>
+      </div>
+    
+      <ul class="ordering">
+        <% EntrySearch::SUPPORTED_ORDERS.each do |order| %>
+          <li class="<%= 'on' if @search.order == order.downcase %>">
+            <%= link_to order, params.merge(:order => order.downcase), :class => 'button list' %>
+          </li>
+        <% end %>
       </ul>
+    
+      <div class="actions">
+        <%= link_to 'Subscribe', params.merge(:format => :rss, :order => 'date', :publication_date_less_than => nil), :class => 'button notext rss' %>
+        <% feed_autodiscovery url_for(params.merge(:format => :rss, :order => 'date', :publication_date_less_than => nil)) %>
+        <%= link_to 'Widget', widget_instructions_path(params.except(:action, :controller)), :class => 'button widget spawn_modal notext', :id => 'widget' %>
+      </div>
+    </div>
+  
+  
+    <div class="filters">
+      <% unless @search.blank? %>
+
+        <h4>Limit the results</h4>
+        <h4>Date</h4>
+        <ul>
+          <%= render :partial => "facet", :collection => @search.date_facets %>
+        
+          <%# TODO HELP-RUBY i know this doesn't go here. just wanted to stash it somewhere  %>
+          <li><%= sparkline(:data => @search.date_distribution.to_a.sort_by{|date, count| date}.map{|date, count| count}, :alt => "Monthly Distribution" ) %></li>      
+        </ul>
       
-      <%= render :partial => "facets", :locals => {:facets => @search.section_facets,  :name => "Section",  :attribute => :section_ids}%>
-      <%= render :partial => "facets", :locals => {:facets => @search.agency_facets,   :name => "Agency",   :attribute => :agency_ids}%>
-      <%= render :partial => "facets", :locals => {:facets => @search.topic_facets,    :name => "Topic",    :attribute => :topic_ids}%>
+        <%= render :partial => "facets", :locals => {:facets => @search.section_facets,  :name => "Section",  :attribute => :section_ids}%>
+        <%= render :partial => "facets", :locals => {:facets => @search.agency_facets,   :name => "Agency",   :attribute => :agency_ids}%>
+        <%= render :partial => "facets", :locals => {:facets => @search.topic_facets,    :name => "Topic",    :attribute => :topic_ids}%>
       
-    <% end %>
-  </div>
+      <% end %>
+    </div>
   
-  <div class="result_set">
+    <div class="result_set">
   
-    <ol class="results">
-      <%= render :partial => 'result', :collection => @search.entries, :as => :entry %>
-    </ol>
+      <ol class="results">
+        <%= render :partial => 'result', :collection => @search.entries, :as => :entry %>
+      </ol>
   
-    <%= will_paginate @search.entries %>
-  </div>
-<% else %>
-  <p>No entries were found.</p>
+      <%= will_paginate @search.entries %>
+    </div>
+  <% else %>
+    <p>No entries were found.</p>
+  <% end %>
 <% end %>
 
 <% content_for :widget do %>
