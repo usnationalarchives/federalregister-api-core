@@ -152,6 +152,10 @@ class EntrySearch
     @errors.empty?
   end
   
+  def blank?
+    [with, conditions, term].all?(&:blank?)
+  end
+  
   def agency_facets
     FacetCalculator.new(:search => self, :model => Agency, :facet_name => :agency_ids).all
   end
