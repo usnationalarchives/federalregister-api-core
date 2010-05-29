@@ -1,5 +1,7 @@
 <% title "Multiple entries were found for '#{@volume} FR #{@page}'" %>
 
+<h1 class="title"><span><%= "#{@volume} FR #{@page}" %></span></h1>
+
 <p>Which of the following entries are you looking for?</p>
 
 <ul class="indent raquo">
@@ -7,8 +9,3 @@
   <li><%= link_to(entry.title, entry_path(entry)) %></li>
 <% end %>
 </ul>
-
-<br />
-<div class="infobox">
-  <p class='copy'>Federal Register citations are by volume and page number.  Volume maps directly to the year of publication, with 1994 being 59, and 2009 being 74.</p>
-</div>
