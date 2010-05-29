@@ -5,12 +5,27 @@
 <article>
   <h1><%= @regulatory_plan.title %></h1>
   
-  <div class="abstract"><%= @regulatory_plan.abstract %></div>
+  <ul>
+    <li><%= link_to "Official home", @regulatory_plan.source_url(:html) %></li>
+    <li><%= link_to "XML", @regulatory_plan.source_url(:xml) %></li>
+  </ul>
+  
+  <p>Regulatory plan current as of <%= issue_season(@regulatory_plan) %>
+  <dl>
+    <% %w(abstract statement_of_need legal_basis alternatives costs_and_benefits risks ).each do |attribute| %>
+      <% value = @regulatory_plan.send(attribute) %>
+      <% if value.present? %>
+        <dt><%= attribute.humanize %></dt><dd><%= value %></dd>
+      <% end %>
+    <% end %>
+  </dl>
   
   <%= render :partial => 'regulatory_plans/timeline', :locals => {:regulatory_plan => @regulatory_plan} %>
   
   <h3>Federal Register Activity</h3>
-  <p class="entries"><%= page_entries_info @entries %></p>
+  
+  <p class="entries"><%= page_entries_info @entries, :entry_name => 'article' %></p>
+  
   <%= will_paginate @entries %>
   <ul>
     <% @entries.each do |entry| %>
