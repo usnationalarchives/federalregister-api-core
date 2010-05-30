@@ -26,6 +26,6 @@ module ApplicationHelper
   end
   
   def feed_autodiscovery(feed_url, title = 'RSS')
-    content_for :feeds, content_tag(:link, nil, :rel => 'alternate', :type => 'application/rss+xml', :title => title, :href => feed_url)
+    content_for :feeds, tag(:link, nil, :rel => 'alternate', :type => 'application/rss+xml', :title => title, :href => feed_url)
   end
 end
