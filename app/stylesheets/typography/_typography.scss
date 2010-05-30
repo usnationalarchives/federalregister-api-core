@@ -46,7 +46,7 @@ TITLE STYLES
 
 ******************************/
 
-.title {
+h1.title {
 background: #5697cf url(/images/header_bg.png) repeat-x left top;
 color: #fff;
 clear: both;
@@ -60,7 +60,7 @@ margin-bottom: 50px;
 text-transform: uppercase;
 }
 
-.title span {
+h1.title span {
 background: #fff;
 color: $powder_blue;
 padding: 0 10px;
