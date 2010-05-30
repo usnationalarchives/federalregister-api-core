@@ -40,7 +40,6 @@ Rails::Initializer.run do |config|
   config.gem 'calais', :version => '0.0.9'
   config.gem 'flickraw', :version => '0.8.1', :lib => false
   config.gem 'searchlogic', :version => '2.4.12'
-  config.gem 'will_paginate', :version => '2.3.11'
   config.gem 'haml', :version => '3.0.4'
   config.gem 'compass', :version => '0.10.1'
   config.gem 'compass-960-plugin', :version => '0.9.13', :lib => false
