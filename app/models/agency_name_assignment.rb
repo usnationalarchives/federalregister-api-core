@@ -11,15 +11,15 @@
 
 class AgencyNameAssignment < ApplicationModel
   belongs_to :agency_name
-  belongs_to :entry
+  belongs_to :assignable, :polymorphic => true
   
-  acts_as_list :scope => :entry_id
+  acts_as_list :scope => 'assignable_id = #{assignable_id} AND assignable_type = \'#{assignable_type}\''
   
   after_create :create_agency_assignment
   
   def create_agency_assignment
     if agency_name.agency_id
-      AgencyAssignment.create!(:agency_id => agency_name.agency_id, :entry_id => entry_id, :position => position)
+      AgencyAssignment.create!(:agency_id => agency_name.agency_id, :assignable => assignable, :position => position)
     end
   end
 end
