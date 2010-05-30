@@ -16,7 +16,7 @@ module CitationsHelper
       end
       
       text.gsub!(/RIN (\w{4}-\w{4})/) do
-        link_to "RIN #{$1}", short_regulation_path(:regulation_id_number => $1)
+        link_to "RIN #{$1}", short_regulatory_plan_path(:regulation_id_number => $1)
       end
       
       text.gsub!(/(Pub(?:lic|\.)\s+L(?:aw|\.)\.\s+(\d+)-(\d+))/) do
