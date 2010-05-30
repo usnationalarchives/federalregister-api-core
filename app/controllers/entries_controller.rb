@@ -24,6 +24,12 @@ class EntriesController < ApplicationController
     end
   end
   
+  def search_facet
+    @search = EntrySearch.new(params)
+    facets = @search.send(params[:facet] + "_facets")
+    render :partial => "facet", :collection => facets, :layout => nil
+  end
+  
   caches_action :widget, :cache_path => Proc.new { |request| request.params.delete_if{|key, val| val.blank?} }
   def widget
     params[:per_page] = 5
