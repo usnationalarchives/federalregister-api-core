@@ -18,7 +18,7 @@
   
   <p>Regulatory plan current as of <%= issue_season(@regulatory_plan) %>
   <dl>
-    <% %w(abstract statement_of_need legal_basis alternatives costs_and_benefits risks ).each do |attribute| %>
+    <% %w(abstract statement_of_need legal_basis alternatives costs_and_benefits risks).each do |attribute| %>
       <% value = @regulatory_plan.send(attribute) %>
       <% if value.present? %>
         <dt><%= attribute.humanize %></dt><dd><%= add_citation_links(value) %></dd>
@@ -26,7 +26,84 @@
     <% end %>
   </dl>
   
+  <dl>
+    <% %w(major regulatory_flexibility_analysis_required energy_affected).each do |attribute| %>
+      <% value = @regulatory_plan.send(attribute) %>
+      <% if value.present? %>
+        <%# HELP-DESIGN: icons might be nice for these guys; they are all Yes/No/Undetermined %>
+        <dt><%= attribute.humanize %></dt><dd><%= value %></dd>
+      <% end %>
+    <% end %>
+  </dl>
+  
+  <% if @regulatory_plan.legal_authorizations.present? %>
+  <h3>Legal Authority</h3>
+  <ul>
+    <% @regulatory_plan.legal_authorizations.each do |authorization| %>
+    <li><%= add_citation_links(authorization) %></li>
+    <% end %>
+  </ul>
+  <% end %>
+  
+  <% if @regulatory_plan.cfr_citations.present? %>
+  <h3>Related CFR Content</h3>
+  <ul>
+    <% @regulatory_plan.cfr_citations.each do |cfr_citation| %>
+    <li><%= add_citation_links(cfr_citation) %></li>
+    <% end %>
+  </ul>
+  <% end %>
+
+  <% if @regulatory_plan.small_entities_affected.present? %>
+  <h3>Small Entities Affected</h3>
+  <ul>
+    <% @regulatory_plan.small_entities_affected.each do |entity| %>
+    <li><%= entity %></li>
+    <% end %>
+  </ul>
+  <% end %>
+  
   <%= render :partial => 'regulatory_plans/timeline', :locals => {:regulatory_plan => @regulatory_plan} %>
+  
+  <% if @regulatory_plan.contacts.present? %>
+    <h3>Contacts</h3>
+    <% @regulatory_plan.contacts.each do |contact| %>
+    <div class="vcard">
+      <div class="fn">
+        <span class="given-name"><%= contact.first_name %></span>
+        <span class="family-name"><%= contact.last_name %></span>
+      </div>
+      
+      <% if contact.title.present? %>
+      <div class="title"><%= contact.title %></div>
+      <% end %>
+      
+      <% if contact.phone.present? %>
+      <div class="tel">
+       <span>Phone</span> <%= contact.phone %>
+      </div>
+      <% end %>
+      
+      <% if contact.fax.present?%>
+      <div class="tel">
+        <span class="type">Fax</span> <%= contact.fax %>
+      </div>
+      <% end %>
+      <% if contact.email.present? %>
+        <div>Email: 
+         <%= mail_to contact.email, contact.email, :class => "email" %>
+        </div>
+      <% end %>
+      
+      <div class="adr">
+        <div class="street-address"><%= contact.street_address %></div>
+        <span class="locality"><%= contact.city %></span>
+        <span class="region"><%= contact.state%></span>
+        <span class="postal-code"><%= contact.zip %></span>
+      </div>
+    </div>
+    <% end %>
+  <% end %>
   
   <h3>Federal Register Activity</h3>
   
