@@ -105,7 +105,7 @@ ActionController::Routing::Routes.draw do |map|
   map.regulatory_plan_search 'regulations/search',
                       :controller => 'regulatory_plans',
                       :action     => 'search'
-  map.short_regulation 'r/:regulation_id_number', :controller => 'regulatory_plans',
+  map.short_regulatory_plan 'r/:regulation_id_number', :controller => 'regulatory_plans',
                                              :action     => 'tiny_url'
 
   # SECTIONS
