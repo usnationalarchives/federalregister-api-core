@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100530140331) do
+ActiveRecord::Schema.define(:version => 20100530170241) do
 
   create_table "agencies", :force => true do |t|
     t.integer  "parent_id"
@@ -48,22 +48,24 @@ ActiveRecord::Schema.define(:version => 20100530140331) do
   add_index "agencies_sections", ["section_id", "agency_id"], :name => "index_agencies_sections_on_section_id_and_agency_id"
 
   create_table "agency_assignments", :force => true do |t|
-    t.integer "entry_id"
+    t.integer "assignable_id"
     t.integer "agency_id"
     t.integer "position"
+    t.string  "assignable_type"
   end
 
-  add_index "agency_assignments", ["agency_id", "entry_id"], :name => "index_agency_assignments_on_agency_id_and_entry_id"
-  add_index "agency_assignments", ["entry_id", "agency_id"], :name => "index_agency_assignments_on_entry_id_and_agency_id"
+  add_index "agency_assignments", ["agency_id", "assignable_id"], :name => "index_agency_assignments_on_agency_id_and_entry_id"
+  add_index "agency_assignments", ["assignable_type", "assignable_id", "agency_id"], :name => "index_agency_assignments_on_assignable_and_agency_id"
 
   create_table "agency_name_assignments", :force => true do |t|
-    t.integer "entry_id"
+    t.integer "assignable_id"
     t.integer "agency_name_id"
     t.integer "position"
+    t.string  "assignable_type"
   end
 
-  add_index "agency_name_assignments", ["agency_name_id", "entry_id"], :name => "index_agency_name_assignments_on_agency_name_id_and_entry_id"
-  add_index "agency_name_assignments", ["entry_id", "agency_name_id"], :name => "index_agency_name_assignments_on_entry_id_and_agency_name_id"
+  add_index "agency_name_assignments", ["agency_name_id", "assignable_id"], :name => "index_agency_name_assignments_on_agency_name_id_and_entry_id"
+  add_index "agency_name_assignments", ["assignable_type", "assignable_id", "agency_name_id"], :name => "index_agency_name_assignments_on_assignable_and_agency_name_id"
 
   create_table "agency_names", :force => true do |t|
     t.string   "name",                          :null => false

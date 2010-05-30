@@ -10,6 +10,12 @@
     <li><%= link_to "XML", @regulatory_plan.source_url(:xml) %></li>
   </ul>
   
+  <ul>
+  <% @regulatory_plan.agencies.each do |agency| %>
+    <li><%= link_to agency.name, agency_path(agency) %></li>
+  <% end %>
+  </ul>
+  
   <p>Regulatory plan current as of <%= issue_season(@regulatory_plan) %>
   <dl>
     <% %w(abstract statement_of_need legal_basis alternatives costs_and_benefits risks ).each do |attribute| %>

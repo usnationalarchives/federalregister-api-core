@@ -11,7 +11,8 @@
 
 class AgencyAssignment < ApplicationModel
   belongs_to :agency
-  belongs_to :entry
+  belongs_to :assignable, :polymorphic => true
+  belongs_to :entry, :foreign_key => :assignable_id
   
-  acts_as_list :scope => :entry_id
+  acts_as_list :scope => 'assignable_id = #{assignable_id} AND assignable_type = \'#{assignable_type}\''
 end
