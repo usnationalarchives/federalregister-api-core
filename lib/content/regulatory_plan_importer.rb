@@ -23,7 +23,7 @@ module Content
     end
   
     def perform
-      %w(title abstract priority_category events).each do |attr|
+      %w(title abstract priority_category events agency_name_assignments).each do |attr|
         @regulatory_plan.send("#{attr}=", self.send(attr))
       end
       @regulatory_plan.save
@@ -49,6 +49,17 @@ module Content
   
     def priority_category
       document.xpath('.//PRIORITY_CATEGORY').first.content
+    end
+    
+    def agency_name_assignments
+      @regulatory_plan.agency_name_assignments = []
+      assignments = document.xpath('.//AGENCY/NAME').map do |agency_node|
+        name = agency_node.content()
+        agency_name = AgencyName.find_or_create_by_name(name)
+        AgencyNameAssignment.new(:agency_name => agency_name)
+      end
+      
+      assignments.reverse
     end
   
     def events

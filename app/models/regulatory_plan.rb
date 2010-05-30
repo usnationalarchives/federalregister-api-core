@@ -24,6 +24,12 @@ class RegulatoryPlan < ApplicationModel
            :primary_key => :regulation_id_number,
            :foreign_key => :regulation_id_number
   
+  has_many :agency_name_assignments, :as => :assignable
+  has_many :agency_names, :through => :agency_name_assignments
+  
+  has_many :agency_assignments, :as => :assignable
+  has_many :agencies, :through => :agency_assignments
+  
   def self.current_issue
     RegulatoryPlan.first(:select => :issue, :order => "issue DESC").try(:issue)
   end
