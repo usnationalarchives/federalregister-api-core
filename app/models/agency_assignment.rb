@@ -2,10 +2,11 @@
 
  Table name: agency_assignments
 
-  id        :integer(4)      not null, primary key
-  entry_id  :integer(4)
-  agency_id :integer(4)
-  position  :integer(4)
+  id              :integer(4)      not null, primary key
+  assignable_id   :integer(4)
+  agency_id       :integer(4)
+  position        :integer(4)
+  assignable_type :string(255)
 
 =end Schema Information
 
