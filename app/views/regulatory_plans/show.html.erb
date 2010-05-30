@@ -8,6 +8,7 @@
   <ul>
     <li><%= link_to "Official home", @regulatory_plan.source_url(:html) %></li>
     <li><%= link_to "XML", @regulatory_plan.source_url(:xml) %></li>
+    <li><%= link_to "Short URL", short_regulatory_plan_path(@regulatory_plan) %></li>
   </ul>
   
   <ul>
@@ -53,7 +54,16 @@
     <% end %>
   </ul>
   <% end %>
-
+  
+  <% if @regulatory_plan.government_levels_affected.present? %>
+  <h3>Government Levels Affected</h3>
+  <ul>
+    <% @regulatory_plan.government_levels_affected.each do |level| %>
+    <li><%= level %></li>
+    <% end %>
+  </ul>
+  <% end %>
+  
   <% if @regulatory_plan.small_entities_affected.present? %>
   <h3>Small Entities Affected</h3>
   <ul>
