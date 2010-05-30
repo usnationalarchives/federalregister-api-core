@@ -42,7 +42,6 @@ class AgencyName < ApplicationModel
     agency = Agency.find_by_name(name) || Agency.find_by_name(alternative_name)
     if agency
       self.agency = agency
-      self.agency_assigned = true
     end
     
     true
