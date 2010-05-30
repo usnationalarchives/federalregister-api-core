@@ -1,6 +1,9 @@
 <% if facets.size > 1 %>
   <h4><%= name %></h4>
   <ul>
-    <%= render :partial => "facet", :collection => facets[0,15] %>
+    <%= render :partial => "facet", :collection => facets[0,10] %>
+    <% if facets.size > 10 %>
+      <li><a href="#" class="load_facet" data-facet-name="<%= facets.first.condition.to_s.sub(/_ids?/, '') %>">[more]</a></li>
+    <% end %>
   </ul>
 <% end %>
