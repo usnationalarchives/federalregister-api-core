@@ -26,19 +26,25 @@ class EntrySearch
     end
     
     def raw_facets
-      Entry.facets(@search.term,
+      sphinx_search = ThinkingSphinx::Search.new(@search.term,
         :with => @search.with.except(@facet_name),
         :conditions => @search.conditions,
-        :match_mode => :extended,
-        :facets => [@facet_name]
-      )[@facet_name]
+        :match_mode => :extended
+      )
+      
+      client = sphinx_search.send(:client)
+      client.group_function = :attr
+      client.group_by = @facet_name.to_s
+      client.limit = 5000
+      
+      query = sphinx_search.send(:query)
+      result = client.query(query, '*')[:matches].map{|m| [m[:attributes]["@groupby"], m[:attributes]["@count"]]}
     end
     
     def all
-      id_to_name = @model.find_as_hash(:select => "id, #{@name_attribute} AS name", :conditions => {:id => raw_facets.keys})
-      
+      id_to_name = @model.find_as_hash(:select => "id, #{@name_attribute} AS name")#, :conditions => {:id => raw_facets.keys})
       search_value_for_this_facet = @search.send(@facet_name)
-      facets = raw_facets.to_a.reverse.reject{|id, count| id == 0}.map do |id, count|
+      facets = raw_facets.reverse.reject{|id, count| id == 0}.map do |id, count|
         Facet.new(
           :value      => id, 
           :name       => id_to_name[id.to_s],
@@ -193,16 +199,24 @@ class EntrySearch
   memoize :type_facets
   
   def date_distribution
-    dist = Entry.facets(term,
+    sphinx_search = ThinkingSphinx::Search.new(term,
       :with => with.except(:publication_date),
       :conditions => conditions,
-      :match_mode => :extended,
-      :facets => [:year_month]
-    )[:year_month]
+      :match_mode => :extended
+    )
+    
+    client = sphinx_search.send(:client)
+    client.group_function = :month
+    client.group_by = "publication_date"
+    client.limit = 5000
+    
+    query = sphinx_search.send(:query)
+    dist = {}
+    client.query(query, '*')[:matches].each{|m| dist[m[:attributes]["@groupby"].to_s] = m[:attributes]["@count"] }
     
     (1994..Date.today.year).each do |year|
       (1..12).each do |month|
-        dist[sprintf("%d/%02d",year, month)] ||= 0
+        dist[sprintf("%d%02d",year, month)] ||= 0
       end
     end
     
@@ -245,6 +259,9 @@ class EntrySearch
         :per_page => @per_page,
         :order => order_clause,
         :with => with,
+        # :select => "SQL_NO_CACHE *",
+        :select => "id, title, publication_date, document_number, document_file_path, abstract",
+        :include => :agencies,
         :conditions => conditions,
         :match_mode => :extended,
         :sort_mode => :extended
