@@ -12,6 +12,32 @@
 =end Schema Information
 
 class RegulatoryPlan < ApplicationModel
+  class Contact
+    def initialize(node)
+      @node = node
+    end
+    
+    SINGLE_VALUE_METHODS_TO_CSS = {
+      :first_name                               => 'FIRST_NAME',
+      :last_name                                => 'LAST_NAME',
+      :title                                    => 'TITLE',
+      :agency_name                              => 'AGENCY NAME',
+      :phone                                    => 'PHONE',
+      :fax                                      => 'FAX',
+      :email                                    => 'EMAIL',
+      :street_address                           => 'STREET_ADDRESS',
+      :city                                     => 'CITY',
+      :state                                    => 'STATE',
+      :zip                                      => 'ZIP',
+    }
+
+    SINGLE_VALUE_METHODS_TO_CSS.each do |method, selector|
+      define_method method do 
+        @node.css(selector).first.try(:content)
+      end
+    end
+  end
+  
   extend ActiveSupport::Memoizable
   
   SIGNIFICANT_PRIORITY_CATEGORIES = ['Economically Significant', 'Other Significant']
@@ -53,25 +79,43 @@ class RegulatoryPlan < ApplicationModel
     end
   end
   
-  def statement_of_need
-    simple_node_value('STMT_OF_NEED')
+  SINGLE_VALUE_METHODS_TO_CSS = {
+    :statement_of_need                        => 'STMT_OF_NEED',
+    :legal_basis                              => 'LEGAL_BASIS',
+    :alternatives                             => 'ALTERNATIVES',
+    :costs_and_benefits                       => 'COSTS_AND_BENEFITS',
+    :risks                                    => 'RISKS',
+    :major                                    => 'MAJOR',
+    :regulatory_flexibility_analysis_required => 'RFA_REQUIRED',
+    :energy_affected                          => 'ENERGY_AFFECTED',
+    :international_interest                   => 'INTERNATIONAL_INTEREST',
+  }
+
+  SINGLE_VALUE_METHODS_TO_CSS.each do |method, selector|
+    define_method method do 
+      root_node.css(selector).first.try(:content)
+    end
+    memoize method
   end
   
-  def legal_basis
-    simple_node_value('LEGAL_BASIS')
+  MULTI_VALUE_METHODS_TO_CSS = {
+    :small_entities_affected                  => 'SMALL_ENTITY',
+    :government_levels_affected               => 'GOVT_LEVEL',
+    :cfr_citations                            => 'CFR',
+    :legal_authorizations                     => 'LEGAL_AUTHORITY'
+  }
+  
+  MULTI_VALUE_METHODS_TO_CSS.each do |method, selector|
+    define_method method do 
+      root_node.css(selector).map(&:content)
+    end
+    memoize method
   end
   
-  def alternatives
-    simple_node_value('ALTERNATIVES')
+  def contacts
+    root_node.css('CONTACT').map{|node| Contact.new(node)}
   end
-  
-  def costs_and_benefits
-    simple_node_value('COSTS_AND_BENEFITS')
-  end
-  
-  def risks
-    simple_node_value('RISKS')
-  end
+  memoize :contacts
   
   private
   
@@ -80,9 +124,7 @@ class RegulatoryPlan < ApplicationModel
   end
   
   def simple_node_value(css_selector)
-    if root_node
-      root_node.css(css_selector).first.try(:content)
-    end
+    root_node.css(css_selector).try(:content)
   end
   memoize :simple_node_value
   
