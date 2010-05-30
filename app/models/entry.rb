@@ -172,11 +172,11 @@ class Entry < ApplicationModel
     indexes granule_class, :facet => true
     
     # attributes
-    has agencies(:id), :as => :agency_ids,  :facet => true
-    has topics(:id),   :as => :topic_ids,   :facet => true
-    has sections(:id), :as => :section_ids, :facet => true
+    has agency_assignments(:agency_id), :as => :agency_ids,  :facet => true
+    has topic_assignments(:topic_id),   :as => :topic_ids,   :facet => true
+    has section_assignments(:section_id), :as => :section_ids, :facet => true
     
-    has places(:id), :as => :place_ids
+    has place_determinations(:place_id), :as => :place_ids
     
     has publication_date
     
