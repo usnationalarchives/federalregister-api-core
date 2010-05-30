@@ -1,3 +1,20 @@
+=begin Schema Information
+
+ Table name: sections
+
+  id                    :integer(4)      not null, primary key
+  title                 :string(255)
+  slug                  :string(255)
+  position              :integer(4)
+  description           :text
+  relevant_cfr_sections :text
+  created_at            :datetime
+  updated_at            :datetime
+  creator_id            :integer(4)
+  updater_id            :integer(4)
+
+=end Schema Information
+
 class Section < ApplicationModel
   has_many :agencies_sections
   has_many :agencies, :through => :agencies_sections, :order => "agencies.name"
