@@ -17,6 +17,10 @@
   entries_5_years_monthly     :text
   entries_all_years_quarterly :text
   related_topics_cache        :text
+  logo_file_name              :string(255)
+  logo_content_type           :string(255)
+  logo_file_size              :integer(4)
+  logo_updated_at             :datetime
 
 =end Schema Information
 
