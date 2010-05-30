@@ -1,6 +1,7 @@
 module CitationsHelper
   def add_citation_links(text)
     if text.present?
+      text = text.dup
       text.gsub!(/((\d+)\s+U\.?S\.?C\.?\s+(\d+))/, '<a href="http://frwebgate.access.gpo.gov/cgi-bin/getdoc.cgi?dbname=browse_usc&docid=Cite:+\2USC\3" class="usc external" target="_blank">\1</a>')
       text.gsub!(/((\d+)\s+CFR\s+(\d+)(?:\.(\d+))?)/, '<a href="http://frwebgate.access.gpo.gov/cgi-bin/get-cfr.cgi?YEAR=current&TITLE=\2&PART=\3&SECTION=\4&SUBPART=&TYPE=TEXT" class="cfr external" target="_blank">\1</a>')
       text.gsub!(/((\d+)\s+FR\s+(\d+))/) do
@@ -13,7 +14,11 @@ module CitationsHelper
           $1
         end
       end
-    
+      
+      text.gsub!(/RIN (\w{4}-\w{4})/) do
+        link_to "RIN #{$1}", short_regulation_path(:regulation_id_number => $1)
+      end
+      
       text.gsub!(/(Pub(?:lic|\.)\s+L(?:aw|\.)\.\s+(\d+)-(\d+))/) do
         full = $1
         congress = $2
@@ -28,7 +33,7 @@ module CitationsHelper
       text
     else
       text
-    end
+    end 
   end
   
   def add_date_links(entry, text)

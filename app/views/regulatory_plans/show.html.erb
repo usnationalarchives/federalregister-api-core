@@ -21,7 +21,7 @@
     <% %w(abstract statement_of_need legal_basis alternatives costs_and_benefits risks ).each do |attribute| %>
       <% value = @regulatory_plan.send(attribute) %>
       <% if value.present? %>
-        <dt><%= attribute.humanize %></dt><dd><%= value %></dd>
+        <dt><%= attribute.humanize %></dt><dd><%= add_citation_links(value) %></dd>
       <% end %>
     <% end %>
   </dl>
