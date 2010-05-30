@@ -2,7 +2,7 @@ module RegulatoryPlanHelper
   def fuzzy_date_formatter(date)
     case date
     when nil
-      ni
+      nil
     when /\d{4}-\d{2}-00/
       Date.parse(date.next).to_s(:month_year)
     when /\d{4}-\d{2}-\d{2}/
