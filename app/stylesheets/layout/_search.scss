@@ -2,6 +2,7 @@
   @include grid(11, 16);
   @include grid-prefix(1);
   @include omega;
+  margin-bottom: 2em;
 }
 
 .filters {

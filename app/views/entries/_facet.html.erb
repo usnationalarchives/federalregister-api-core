@@ -1,7 +1,7 @@
 <li class="<%= 'on' if facet.on? %>">
+  <% if facet.on? %>
+    <%= link_to 'Remove Filter', params.recursive_merge(:page => nil, :conditions => {facet.condition => nil}), :title => 'Remove Filter', :class => 'remove' %>
+  <% end %>
    <%= link_to "#{facet.name}", params.recursive_merge(:page => nil, :conditions => {facet.condition => facet.value}), :class => 'facet_name' %>
    <span class='count'><%= number_with_delimiter facet.count %></span>
-  <% if facet.on? %>
-    <%= link_to 'remove', params.recursive_merge(:page => nil, :conditions => {facet.condition => nil})%>
-  <% end %>
 </li>
