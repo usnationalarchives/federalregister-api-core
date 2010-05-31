@@ -29,7 +29,10 @@ background-image: url(/images/rss_icon_line.png);
 background-position: 10px 10px;
 background-repeat: no-repeat;
 padding: 10px 10px 7px 30px;
-}            
+}
+.rss:hover {
+  background-position: 10px -20px;
+  }            
 .button.notext.rss {
 padding: 10px 10px 4px 25px;
 }
@@ -52,7 +55,10 @@ padding: 10px 10px 7px 30px;
 background-position: 10px 10px;
 padding: 10px 10px 4px 25px;
 }
-
+.widget:hover,
+.widget.notext:hover {
+  background-position: 10px -20px;
+  }
 #clippy {
   display: inline-block;
 }

@@ -1,5 +1,6 @@
 <% if entries.present? %>
-  <div class="header"><h2>Most Cited Entries</h2></div>
+<h2 class="title_bar"><span class="small_stack"> <span>Most</span></span>Cited Articles</h2>
+
   <ul class="raquo indent">
   <% entries.each do |entry| %>
     <li><%= link_to entry.title, entry_path(entry) %><br />

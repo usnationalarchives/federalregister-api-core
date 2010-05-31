@@ -5,53 +5,35 @@
 
     
     <div class="group">
-        <div class="grid_3 alpha">
-          <div class="faux_col">
-            <h2>Description</h2>
-          </div>
-        </div>
         
-        <div class="grid_9">
+        <div class="grid_9 alpha suffix_1">
+          <% if @agency.logo_file_name.present? %>
+            <%= image_tag @agency.logo.url(:medium), :width => 100, :height => 100, :style => "float:left; margin-right: 1em; margin-bottom: 10px;" %>
+          <% end %>
+          
           <%= simple_format @agency.description %>
+
         </div>
       
-      <div class="grid_4 omega">
-        <% if @agency.logo_file_name.present? %>
-          <%= image_tag @agency.logo.url(:medium) %>
-        <% end %>
-      </div>
-    
-    </div>
-    
-    <div class="group">  
-      <div class="grid_3 alpha">
-        <div class="faux_col">
-          <h2>Vital Stats</h2>
+        <div class="grid_6 omega">
+          <% unless @entry_type_values.blank? %>
+            <div class='chart size_<%=@entry_type_values.size%>' style="margin-top: -60px"><%= pie_3d_chart(:alt => 'Entry Type for Recent Entries', :legend => @entry_type_labels, :truncate_legend => '30', :counts => true, :legend_location => 'right', :data => @entry_type_values, :size => ['300','200'], :color_range => ['005073','84cedb'], :transparent_bg => true) %></div>
+          <% end %>
+          
+          <ul id='agency_activity' class='pulse_list'>
+          <% %w(entries_1_year_weekly entries_5_years_monthly entries_all_years_quarterly).each do |range_type| %>
+            <li>
+              <%= human_range(range_type) %>
+              <%= sparkline(:data => @agency.send(range_type).map(&:to_i), :alt => "counts of number of articles" ) %>
+            </li>
+          <% end %>
+          </ul>
+          
         </div>
-      </div>
-      
-      <div class="grid_6">
-        <% unless @entry_type_values.blank? %>
-          <div class='chart size_<%=@entry_type_values.size%>' style="margin-top: -60px"><%= pie_3d_chart(:alt => 'Entry Type for Recent Entries', :legend => @entry_type_labels, :truncate_legend => '30', :counts => true, :legend_location => 'right', :data => @entry_type_values, :size => ['300','200'], :color_range => ['005073','84cedb'], :transparent_bg => true) %></div>
-        <% end %>
-      </div>
-      
-    <div class='grid_6 omega'>
-      <ul id='agency_activity' class='pulse_list'>
-      <% %w(entries_1_year_weekly entries_5_years_monthly entries_all_years_quarterly).each do |range_type| %>
-        <li>
-          <%= human_range(range_type) %>
-          <%= sparkline(:data => @agency.send(range_type).map(&:to_i), :alt => "counts of number of articles" ) %>
-        </li>
-      <% end %>
-      </ul>
-    </div>
-  </div>
-
-
     
+    </div>
 
-<div class="clearfix" style="clear:both" ></div>
+
 
 <% if @significant_entries.present? %>
   <div class="group">
