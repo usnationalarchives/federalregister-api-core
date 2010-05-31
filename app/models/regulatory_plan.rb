@@ -50,7 +50,7 @@ class RegulatoryPlan < ApplicationModel
            :primary_key => :regulation_id_number,
            :foreign_key => :regulation_id_number
   
-  has_many :agency_name_assignments, :as => :assignable
+  has_many :agency_name_assignments, :as => :assignable, :dependent => :destroy
   has_many :agency_names, :through => :agency_name_assignments
   
   has_many :agency_assignments, :as => :assignable
