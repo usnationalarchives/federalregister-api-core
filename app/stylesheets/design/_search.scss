@@ -5,7 +5,7 @@ PAGE ELEMENTS
 ******************************/
 
 .search_bar {
-  background: #eee;
+  background: lighten(#385F82, 61%);
   @include border-top-left-radius(5px);
   @include border-top-right-radius(5px);  
   padding: 1em 0;
@@ -26,18 +26,22 @@ PAGE ELEMENTS
   }
 
 .search_info {
-  background: lighten(#385F82, 61%);
+  background: #eee;
   border-top: 3px solid #385F82;
   @include border-bottom-left-radius(5px);
   @include border-bottom-right-radius(5px);  
   margin-bottom: 1em;
   padding: 1em;
   position: relative;
-  }  
+  }
+.search_info h2 {
+
+  }    
 .search_info ul {
   @include horizontal-list;
   }
 .search_info .button {
+  background-color: #f9f9f9;
   margin-bottom: 0;
   }
 .search_info .actions {
@@ -48,7 +52,8 @@ PAGE ELEMENTS
 
 #entries.search .search_info .title_bar {
   border-top: none;
-  margin-top: 0;
+  margin-bottom: 0;
+  margin-top: 7px;
   padding-top: 0;
   }
 
@@ -62,15 +67,29 @@ ol.results {
   list-style-type: none;
   }
 ol.results li {
-  margin-bottom: 4em;
+  border-bottom: 1px solid #EEEEEE;
+  margin-bottom: 2em;
+  padding-bottom: 2em;
   }
-
-
+ol.results li:last-child {
+  border: none;
+  }  
+ol.results li .date {
+  color: #bdbdbd;
+  @include type_kit_font_1;
+  font-size: 1.3em;
+  line-height: 1.15;
+  text-transform: uppercase;
+  }
+.result_set .pagination .current {
+  background-color: #B88659;
+  border-color: #CCCCCC;
+  }
 
 
 /******************************
 
-RESULTS
+FILTERS
 
 ******************************/
 
@@ -97,8 +116,31 @@ RESULTS
   display: block;
   font-size: .9em;
   font-weight: bold;
-  }  
+  }
+.filters li a.remove {
+  background: url(/images/remove.png) no-repeat left top;
+  color: #385F82;
+  height: 12px;
+  left: 0;
+  position: absolute;
+  text-indent: -9999px;
+  top: 3px;
+  width: 12px;
+  }
+.filters li a.remove:hover {
+  background-position: left -50px;
+  }    
+.filters li.on .facet_name {
+  color: #363636;
+  padding-left: 17px;
+  width: 143px;
+  }   
 .filters .count {
   color: #ccc;
+  float: right;
   text-align: right;
   }  
+.filters .zip {
+  border: 1px solid #ccc;
+  width: 75px;
+}  
