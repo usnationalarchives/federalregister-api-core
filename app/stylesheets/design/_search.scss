@@ -4,7 +4,6 @@ PAGE ELEMENTS
 
 ******************************/
 
-.errors, 
 .search_bar {
   background: #f1f1f1;
   @include border-radius(5px);  
@@ -64,10 +63,7 @@ PAGE ELEMENTS
   padding: 0;
   text-transform: uppercase;
   }
-.search_info {
-  background: #F6F9FB;
-  @include border-top-left-radius(10px);
-  @include border-top-right-radius(10px);  
+.search_info {  
   border-bottom: 3px solid #385F82;
   margin-bottom: 1em;
   padding: 0 1em;
@@ -130,7 +126,7 @@ ol.results li .date {
   }
 
 .match {
-  background: rgba(255,255,0,.2);
+    background: rgba(255,255,0,.2);
   @include border-radius(5px);
   padding: 1px 5px;
   }
@@ -151,8 +147,8 @@ FILTERS
 .filters ul {
   border-bottom: 1px solid #eee;
   list-style-type: none;
-  margin-bottom: 2em;
-  padding-bottom: 2em;
+  margin-bottom: 1em;
+  padding-bottom: 1em;
   }
 .filters li {
   clear: both;
@@ -200,12 +196,17 @@ ERRORS
 ******************************/
 
 .errors {
-  background: #ebd8b6;
+
 }
 .errors li{
+  @include border-radius(5px);  
+  overflow: hidden;  
+  background: #ebd8b6 url(/images/error2.png) no-repeat 1em top;
   color: #777777;
   @include type_kit_font_1;
   font-size: 1.5em;
-  list-style: none;  
-  text-transform: uppercase;
+  line-height: 20px;    
+  list-style: none;
+  margin-bottom: 1em;
+  padding: .75em 2.5em .5em;  
   }
