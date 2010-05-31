@@ -5,9 +5,9 @@ class AgenciesController < ApplicationController
     @agencies  = Agency.all(:order => 'name ASC')
     @weekly_chart_max = @agencies.map{|a| a.entries_1_year_weekly.map(&:to_i).max}.max
     @featured_agencies = Agency.featured.find(:all, :select => "agencies.*,
-        (SELECT count(*) FROM entries JOIN agency_assignments ON agency_assignments.entry_id = entries.id WHERE agency_assignments.agency_id = agencies.id AND publication_date > '#{30.days.ago.to_s(:db)}') AS num_entries_month,
-        (SELECT count(*) FROM entries JOIN agency_assignments ON agency_assignments.entry_id = entries.id WHERE agency_assignments.agency_id = agencies.id AND publication_date > '#{90.days.ago.to_s(:db)}') AS num_entries_quarter,
-        (SELECT count(*) FROM entries JOIN agency_assignments ON agency_assignments.entry_id = entries.id WHERE agency_assignments.agency_id = agencies.id AND publication_date > '#{365.days.ago.to_s(:db)}') AS num_entries_year"
+        (SELECT count(*) FROM entries JOIN agency_assignments ON agency_assignments.assignable_id = entries.id AND agency_assignments.assignable_type = 'Entry' WHERE agency_assignments.agency_id = agencies.id AND publication_date > '#{30.days.ago.to_s(:db)}') AS num_entries_month,
+        (SELECT count(*) FROM entries JOIN agency_assignments ON agency_assignments.assignable_id = entries.id AND agency_assignments.assignable_type = 'Entry' WHERE agency_assignments.agency_id = agencies.id AND publication_date > '#{90.days.ago.to_s(:db)}') AS num_entries_quarter,
+        (SELECT count(*) FROM entries JOIN agency_assignments ON agency_assignments.assignable_id = entries.id AND agency_assignments.assignable_type = 'Entry' WHERE agency_assignments.agency_id = agencies.id AND publication_date > '#{365.days.ago.to_s(:db)}') AS num_entries_year"
     )
     @week = params[:week].to_i || Time.now.strftime("%W").to_i
   end
@@ -26,7 +26,7 @@ class AgenciesController < ApplicationController
         
         by_entry_type = Entry.all(
           :select => 'granule_class, count(*) AS count',
-          :conditions => {:agency_assignments => {:agency_id => @agency.id}},
+          :conditions => {:agency_assignments => {:assignable_id => @agency.id, :assignable_type => "Entry"}},
           :joins => :agency_assignments,
           :group => 'granule_class',
           :order => 'count DESC'
