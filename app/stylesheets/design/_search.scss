@@ -5,51 +5,90 @@ PAGE ELEMENTS
 ******************************/
 
 .search_bar {
-  background: lighten(#385F82, 61%);
-  @include border-top-left-radius(5px);
-  @include border-top-right-radius(5px);  
-  padding: 1em 0;
-  }
-.search_bar label {
-  color: #bdbdbd;
-  @include type_kit_font_1;
-  font-size: 1.5em;
-  margin: 0 0 0 1em;
-  text-transform: uppercase;  
-  }
-.search_bar #conditions_term {
-  border: 1px solid #ccc;
-  padding: .5em;
-  }
-.search_bar .commit {
-  
-  }
-
-.search_info {
-  background: #eee;
-  border-top: 3px solid #385F82;
-  @include border-bottom-left-radius(5px);
-  @include border-bottom-right-radius(5px);  
+  background: #f1f1f1;
+  @include border-radius(5px);  
   margin-bottom: 1em;
   padding: 1em;
-  position: relative;
+  overflow: hidden;
+  position: relative;  
   }
-.search_info h2 {
-
-  }    
-.search_info ul {
-  @include horizontal-list;
-  }
-.search_info .button {
-  background-color: #f9f9f9;
-  margin-bottom: 0;
-  }
-.search_info .actions {
+.search_bar .actions {
   position: absolute;
   right: 1em;
   top: 1em;  
   }
-
+.search_bar .button {
+ background-color: #fff;
+  }    
+  
+.search_bar label,
+.search_bar .label {
+  color: #777777;
+  display: block;
+  float: left;
+  @include type_kit_font_1;
+  font-size: 1.5em;
+  line-height: 25px;
+  margin-top: 3px;
+  }
+.search_bar label {
+  margin-right: .5em;
+  }  
+.search_bar .label {
+  margin-left: .5em;
+  margin-right: .5em;  
+  }  
+.search_bar #conditions_term {
+  border: 1px solid #ccc;
+  display: block;
+  float: left;
+  padding: .5em;
+  }
+.search_bar #conditions_type {
+  display: block;
+  float: left;
+  margin-top: 4px;
+  }  
+.search_bar #conditions_submit {
+  background: #65be5f;
+  border: 1px solid #eee;
+  color: #fff;
+  display: block;
+  float: left;  
+  @include border-radius(10px);
+  @include type_kit_font_1;
+  font-size: 1.5em;
+  height: 27px;
+  margin: 3px 0 0 .5em;
+  padding: 0;
+  text-transform: uppercase;
+  }
+.search_info {  
+  border-bottom: 3px solid #385F82;
+  margin-bottom: 1em;
+  padding: 0 1em;
+  position: relative;
+  overflow: hidden;
+  }
+.search_info ul {
+  bottom: 0;
+  @include horizontal-list;
+  position: absolute;
+  right: 1em;
+  }
+.search_info li {
+  padding-bottom: 7px;
+  }
+.search_info li a {
+  color: #BDBDBD;
+  }    
+.search_info li.on {
+  background: url(/images/tab_select_bottom.png) no-repeat 50% bottom;
+  font-weight: bold;
+  } 
+.search_info li.on a {
+  color: #385F82;
+  }
 #entries.search .search_info .title_bar {
   border-top: none;
   margin-bottom: 0;
@@ -86,6 +125,11 @@ ol.results li .date {
   border-color: #CCCCCC;
   }
 
+.match {
+    background: rgba(255,255,0,.2);
+  @include border-radius(5px);
+  padding: 1px 5px;
+  }
 
 /******************************
 
@@ -103,8 +147,8 @@ FILTERS
 .filters ul {
   border-bottom: 1px solid #eee;
   list-style-type: none;
-  margin-bottom: 2em;
-  padding-bottom: 2em;
+  margin-bottom: 1em;
+  padding-bottom: 1em;
   }
 .filters li {
   clear: both;
@@ -144,3 +188,25 @@ FILTERS
   border: 1px solid #ccc;
   width: 75px;
 }  
+
+/******************************
+
+ERRORS
+
+******************************/
+
+.errors {
+
+}
+.errors li{
+  @include border-radius(5px);  
+  overflow: hidden;  
+  background: #ebd8b6 url(/images/error2.png) no-repeat 1em top;
+  color: #777777;
+  @include type_kit_font_1;
+  font-size: 1.5em;
+  line-height: 20px;    
+  list-style: none;
+  margin-bottom: 1em;
+  padding: .75em 2.5em .5em;  
+  }
