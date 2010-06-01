@@ -1,20 +1,20 @@
 #header {
+  background: url(/images/top_of_page.png) repeat-x left top;
   margin-bottom: 33px;
   }
 
 #issue_and_search_bar {
-  background: #636363;
-  background: rgba(99,99,99, 0.4);
-  height: 30px;
+/*  background: #636363;
+  background: rgba(99,99,99, 0.4);*/
+  height: 40px;
   margin-bottom: 2px;
   }
 
 #issue_and_search_bar p {
-  color: #919191;  
-  color: rgba(99,99,99, 1);
-  font-size: 12px;
-  line-height: 30px;
+  color: #fff;  
+  line-height: 42px;
   margin: 0;
+  @include text-shadow(#8f8e8e, 1px, 1px);
   }  
 
 #issue_and_search_bar form  {
@@ -52,16 +52,19 @@
   }
   
 #primary_nav {
-  border-top: 2px solid $golden;
-  margin-bottom: 5px;
+/*  border-top: 2px solid $golden;*/
+  margin-bottom: 3em;
   overflow: hidden; 
   }
-
+#primary_nav ul {
+  height: 27px;
+  margin-bottom: 0;
+}
 #primary_nav li {
-  border-top: 5px solid #fff;
   display: block;
   font-size: 12px;
   float: left;
+  line-height: 27px;
   list-style: none;
   margin-left: 30px;
   }
@@ -73,7 +76,7 @@
 #primary_nav li:hover,
 #primary_nav li:focus,
 #primary_nav li.on {
-  border-top: 5px solid $golden;
+/*  border-top: 5px solid $golden;*/
   } 
   
 #primary_nav a {
