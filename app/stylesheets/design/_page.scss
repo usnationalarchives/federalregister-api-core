@@ -184,6 +184,7 @@ ARTICLE VIEW
 .box {
   border-bottom: 1px solid #dadada;    
   border-top: 1px solid #dadada;  
+  overflow: hidden;
   padding: 1em 0;
   }
 
@@ -193,6 +194,11 @@ ARTICLE VIEW
 
 .box .button:first-child {
   margin-left: 25px;
+  }
+
+#entries .box h4 {
+  display: inline;
+  margin: 0 1em 0 0;
   }
 
 /******************************
@@ -209,3 +215,54 @@ AGENCY VIEW
 .quotebox > p:last-child {
   margin-bottom: 0;
   }
+
+
+
+/******************************
+
+TABLES
+
+******************************/
+#entries .table_title {
+  @include linear-gradient(color-stops(#f8f8f8, #cdcdcd));
+  border: 1px solid #eee;  
+  border-bottom: 1px solid #bbb;
+  @include border-top-left-radius(5px);
+  @include border-top-right-radius(5px);
+  color: #363636;
+  margin-bottom: 0;
+  padding: .5em;
+  @include text-shadow(#ddd, 1px, 1px, 1px);  
+  }
+#entries table {
+  border-collapse:separate;
+  border: 1px solid #eee;  
+  border-top: none;
+  width: 100%;
+  }
+#entries table td {
+  @include linear-gradient(color-stops(#fff 80%,#f8f8f8));
+  border-left: 1px solid #fff;
+  border-right: 1px solid #eee;  
+  border-top: 1px solid #fff;
+  border-bottom: 1px solid #eee; 
+  padding: .5em 1.618em .5em .5em;
+  }
+#entries table tr:hover td {
+  background: #F6F9FB;
+  /*@include linear-gradient(color-stops(#fff 20%,#f8f8f8));*/
+  border-left: 1px solid lighten(#F6F9FB, 2%);  
+  border-right: 1px solid darken(#F6F9FB, 2%);
+  }  
+#entries table thead th {
+  background: #F6F9FB;
+  @include linear-gradient(color-stops(#F6F9FB,#e8ebed));
+  border-top: 1px solid #fff;
+  border-bottom: 3px double #e6e6f0;
+  border-left: 1px solid #fff;
+  border-right: 1px solid #cdcdef;
+  color: $dark_blue;
+  font-size: .9em;
+  padding: .5em;
+  @include text-shadow(#fff, 1px, 1px, 1px);
+  } 
