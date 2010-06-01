@@ -56,6 +56,26 @@ class RegulatoryPlan < ApplicationModel
   has_many :agency_assignments, :as => :assignable
   has_many :agencies, :through => :agency_assignments
   
+  define_index do
+    # Will require a index rebuild when new regulatory plan issue comes in...
+    where "regulatory_plans.issue = '#{RegulatoryPlan.current_issue}'"
+    
+    # fields
+    indexes title
+    indexes abstract
+    indexes "LOAD_FILE(CONCAT('#{RAILS_ROOT}/data/regulatory_plans/', issue, '/', regulation_id_number, '.xml'))", :as => :full_text
+    indexes priority_category, :facet => true
+    
+    # attributes
+    has agency_assignments(:agency_id), :as => :agency_ids
+    
+    set_property :field_weights => {
+      "title" => 100,
+      "abstract" => 50,
+      "full_text" => 25,
+    }
+  end
+  
   def self.current_issue
     RegulatoryPlan.first(:select => :issue, :order => "issue DESC").try(:issue)
   end

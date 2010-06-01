@@ -1,0 +1,51 @@
+<% title @search.term.blank? ? 'Search Regulations' : "Search Results for '#{h @search.term}'" %>
+
+<h1 class="title"><span><%= @search.term.blank? ? 'Search Regulations' : "Search Results for '#{h @search.term}'" %></span></h1>
+
+<% unless @search.valid? %>
+<ul class="errors">
+  <% @search.errors.each do |err| %>
+  <li><%= err %></li>
+  <% end %>
+</ul>
+<% end %>
+
+<% form_for :conditions, @search, :url => regulatory_plan_search_path, :html => {:method => :get} do |f| %>
+  <div class="search_bar">
+    <label>Find</label>
+    <%= f.text_field :term %>
+    <span class="label">in</span>
+    <select name="some_name" id="conditions_type">
+      <option value="option1">Articles</option>
+      <option value="option2">Regulations</option>
+    </select>
+    <%= f.submit 'Go', :class => 'button' %>
+    
+  </div>
+
+  <% unless @search.blank? %>
+
+  <div class="filters">
+    <%= render :partial => "entries/facets", :locals => {:facets => @search.agency_facets,   :name => "Agency"  }%>
+  </div>
+
+  <div class="result_set">
+    <% if @search.results.present? %>
+      <div class="search_info titlebar">
+
+        <div class="article_count">
+          <h2 class="title_bar"><span class="small_stack">Regulations <span>Found</span></span><%= number_with_delimiter @search.results.total_entries %></h2>
+        </div>
+
+      </div>
+    
+      <ol class="results">
+        <%= render :partial => 'result', :collection => @search.results, :as => :regulatory_plan %>
+      </ol>
+      <%= will_paginate @search.results %>
+    <% else %>
+      <p>No regulations were found.</p>
+    <% end %>
+  </div>
+  <% end %>
+<% end %>
