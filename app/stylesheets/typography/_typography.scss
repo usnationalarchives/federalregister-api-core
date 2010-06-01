@@ -21,6 +21,9 @@ line-height: 1.8em;
 Enhanced Fonts for elements
 
 ******************************/
+body {
+  @include type_kit_font_3;
+  }
 
 h1,
 h2,
@@ -38,6 +41,11 @@ a:focus,
 a:hover {
   color: darken($dark_blue_complement, 10%);
   text-decoration: none;
+}
+
+p {
+  @include type_kit_font_3;
+  font-size: 1.1em;
 }
 
 /******************************
