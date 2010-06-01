@@ -1,0 +1,14 @@
+<li>
+  <h4><%= link_to sanitize(regulatory_plan.excerpts.title, :tags => %w(span), :attributes => %w(class)), regulatory_plan_path(regulatory_plan) %></h4>
+
+  <div class="result_info">
+    <span class="excepts"><%= 
+      if regulatory_plan.excerpts.abstract.present?
+        sanitize regulatory_plan.excerpts.abstract, :tags => %w(span), :attributes => %w(class)
+      else
+        sanitize regulatory_plan.abstract, :tags => %w(span), :attributes => %w(class)
+      end %></span>
+    <br />
+    <span class="agency"><%= regulatory_plan.agencies.map{|agency| link_to(agency.name, agency_path(agency))}.join(' :: ') %></span>
+  </div>  
+</li>
