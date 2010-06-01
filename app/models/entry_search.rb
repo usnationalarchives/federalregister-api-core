@@ -135,7 +135,7 @@ class EntrySearch
   end
   
   def conditions=(conditions)
-    [:agency_ids, :section_ids, :topic_ids, :term, :type, :within, :location].each do |attr|
+    [:agency_ids, :section_ids, :topic_ids, :term, :type, :within, :location, :start_date, :end_date].each do |attr|
       if conditions[attr].present?
         self.send("#{attr}=", conditions[attr])
       end
