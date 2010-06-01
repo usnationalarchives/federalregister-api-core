@@ -52,11 +52,11 @@
   </div>
 
   <div class="result_set">
-    <% if @search.entries.present? %>
+    <% if @search.results.present? %>
       <div class="search_info titlebar">
 
         <div class="article_count">
-          <h2 class="title_bar"><span class="small_stack">Articles <span>Found</span></span><%= number_with_delimiter @search.entries.total_entries %></h2>
+          <h2 class="title_bar"><span class="small_stack">Articles <span>Found</span></span><%= number_with_delimiter @search.results.total_entries %></h2>
         </div>
 
         <ul class="ordering">
@@ -69,9 +69,9 @@
       </div>
     
       <ol class="results">
-        <%= render :partial => 'result', :collection => @search.entries, :as => :entry %>
+        <%= render :partial => 'result', :collection => @search.results, :as => :entry %>
       </ol>
-      <%= will_paginate @search.entries %>
+      <%= will_paginate @search.results %>
     <% else %>
       <p>No articles were found.</p>
     <% end %>
