@@ -4,7 +4,7 @@
 
 <div id="content_area">
   
-  <% if (@entry.comments_close_on.nil? || @entry.comments_close_on >= Date.today) %>
+  <% if (@entry.comments_close_on.present? && @entry.comments_close_on >= Date.today) %>
   <div id="flash_message">
     <p>This article has a comment period that ends in <%= pluralize (@entry.comments_close_date.date - Entry.latest_publication_date), 'day' %>
     (<%= @entry.comments_close_date.date %>)</p>
@@ -110,7 +110,7 @@
     </div>
   <% end -%>
 
-  <% if (@entry.comments_close_on.nil? || @entry.comments_close_on >= Date.today) %>
+  <% if (@entry.comments_close_on.present? && @entry.comments_close_on >= Date.today && @entry.comment_url) %>
     <% section_tag(:class => 'comment') do %>
       <h1 class="title_bar">Submit a formal comment</h1>      
       <div class="padding">
