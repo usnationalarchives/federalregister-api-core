@@ -1,6 +1,4 @@
 class EntriesController < ApplicationController
-  caches_page :by_date, :show, :current_headlines
-  
   def search
     if !params[:volume].blank? && !params[:page].blank?
       redirect_to "/citation/#{params[:volume]}/#{params[:page]}"
@@ -30,7 +28,6 @@ class EntriesController < ApplicationController
     render :partial => "facet", :collection => facets, :layout => nil
   end
   
-  caches_action :widget, :cache_path => Proc.new { |request| request.params.delete_if{|key, val| val.blank?} }
   def widget
     params[:per_page] = 5
     params[:order] = :date

@@ -1,6 +1,4 @@
 class AgenciesController < ApplicationController
-    
-  caches_page :index, :show
   def index
     @agencies  = Agency.all(:order => 'name ASC')
     @weekly_chart_max = @agencies.map{|a| a.entries_1_year_weekly.map(&:to_i).max}.max
