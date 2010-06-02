@@ -1,0 +1,14 @@
+<% if topics && topics.size > 0 %>
+<%# TODO HELP-RUBY do this better %>
+<% content_for :tagcloud %>
+
+  <h3><%= title %></h3>
+  <div class="tag_cloud">
+    <div id="fancy_tag_cloud" class="fancy"></div>
+    <ul>
+    <% topics.each do |topic| %>
+      <li><%= link_to topic['name'], topic_path(:id => topic['slug']) %> (<%= topic['entries_count'] %>)</li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>
