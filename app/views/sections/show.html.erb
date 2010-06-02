@@ -81,7 +81,7 @@
   <% @section.entries.published_on(@publication_date).each do |entry| %>
     <% article_tag do %>  
       <h1><%= link_to entry.title, entry_path(entry) %></h1>
-      <%= link_to date_tag(entry.publication_date, :datetime => entry.publication_date.to_s(:iso)), entries_by_date_path(entry.publication_date) %>
+      <%= entry.agencies_exluding_parents.map{|a| link_to a.name, agency_path(a) }.to_sentence %>
     <% end -%>
   <% end %>
 <% end -%>
