@@ -34,11 +34,11 @@ SitemapGenerator::Sitemap.add_links do |sitemap|
   
   # TOPICS
   ('a' .. 'z').each do |letter|
-    sitemap.add topic_groups_by_letter_path(letter), :priority => 0.25
+    sitemap.add topics_by_letter_path(letter), :priority => 0.25
   end
   
-  TopicGroup.find_each(:conditions => "group_name != ''") do |topic_group|
-    sitemap.add topic_group_path(topic_group)
+  Topic.find_each do |topic|
+    sitemap.add topic_path(topic)
   end
   
   # AGENCIES

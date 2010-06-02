@@ -7,13 +7,13 @@
 
 <ul class="btn small">
 <% @letters.each do |letter| %>
-  <li><%= link_to letter.upcase, topic_groups_by_letter_path(letter) %></li>
+  <li><%= link_to letter.upcase, topics_by_letter_path(letter) %></li>
 <% end %>
 </ul>
 </div>
 
 <% content_for :sidebar do %>
-  <%= render :partial => 'topics_tagcloud', :locals => {:topic_groups => @popular_topic_groups, :title => 'Popular Topics'} %>
+  <%= render :partial => 'topics_tagcloud', :locals => {:topics => @popular_topics, :title => 'Popular Topics'} %>
 <% end %>
 
 
