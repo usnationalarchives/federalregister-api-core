@@ -70,7 +70,7 @@ class Entry < ApplicationModel
   has_many :topic_names, :through => :topic_name_assignments
   
   has_many :topic_assignments, :dependent => :destroy
-  has_many :topics, :through => :topic_assignments, :conditions => "topics.group_name != ''", :order => 'topics.name'
+  has_many :topics, :through => :topic_assignments, :order => 'topics.name'
   
   has_many :url_references, :dependent => :destroy
   has_many :urls, :through => :url_references
