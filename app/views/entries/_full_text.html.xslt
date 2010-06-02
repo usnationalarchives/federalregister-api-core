@@ -8,39 +8,7 @@
   <xsl:variable name="frunitname" select="FEDREG/UNITNAME"/> 
     
   <xsl:template match="/">
-      <style type="text/css">
-        h4 { float: none !important;}
-        th,td {border: 1px solid black;}
-		  /* General */	
-		  .E-04 {margin-left:3pt;margin-right:3pt;font-weight:bold;}
-		  .E-03, .URL {font-style:italic;}
-		  .E-52 {font-size:6pt;vertical-align:sub;}
-		  .APP {margin-top:12pt;margin-bottom:0pt;font-weight:bolder;font-size:12pt;display:block;width:100%;text-align:center;}
-		  .SU, .E-51, .FTREF {font-size:6pt;vertical-align:top;}
-		  
-			/* Content, Separate Parts in this Issue, Reader Aids Reference*/		
-			.AGCY-HD, .PTS-HED, .PTS-HD, .AIDS-HED {margin-top:12pt;margin-bottom:0pt;font-weight:bolder;font-size:12pt;display:block;}
-			.CAT-HD {margin-top:4pt;margin-bottom:0pt;font-weight:bolder;font-size:8pt;display:block;}
-			.SEE-HED {font-style:italic;}
-			.SEE {margin-top:1pt;margin-bottom:0pt;display:block;}
-			.SJ {display:block;}			
-			.SJDENT {margin-left:10pt;display:block;}
-			.SUBSJ {margin-left:20pt;display:block;}			
-			.SSJDENT {margin-left:35pt;display:block;}
-			.PTS, .AIDS {font-family:sans-serif;font-size:10pt;}
-			
-			/* GPO Tables */
-			.GPOTABLE {margin-top:10pt;margin-bottom:10pt;display:block;border-collapse:collapse;empty-cells:show;
-			border-bottom-style:solid;border-top-style:solid;border-width:1px; border-color:black;}
-			.GPOTABLE-TTITLE {text-align:center}			
-			.CHED {font-size:8pt;padding:5px;font-weight:bold;border-top-style:solid;border-bottom-style:solid;border-width:1px; border-color:black;}
-			.ENT {font-size:8pt;padding:5px;}
-			.TNOTE {font-size:8pt;padding-left:15px;}
-			.TRPRTPAGE, .TDPRTPAGE {width:100%;}
-			.entry_graphic_link {display: block}
-      ul.table_of_graphics li { display: inline}
-        </style>
-        
+
         <xsl:for-each select="//SUM">
           <xsl:apply-templates />
         </xsl:for-each>
