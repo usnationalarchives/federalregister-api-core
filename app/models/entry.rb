@@ -159,6 +159,10 @@ class Entry < ApplicationModel
     )
   end
   
+  def self.most_recent(n = 10)
+    scoped(:order => "publication_date DESC", :limit => n)
+  end
+  
   def entry_type 
     ENTRY_TYPES[granule_class]
   end
