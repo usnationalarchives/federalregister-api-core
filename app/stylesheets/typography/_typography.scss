@@ -32,7 +32,16 @@ h4,
 h5,
 h6 {
   @include type_kit_font_2;
-}
+  }
+
+#entries.show h2,
+#entries.show h3,
+#entries.show h4,
+#entries.show h5,
+#entries.show h6 {
+  clear: both;
+  }
+
 
 a {
   color: $dark_blue; }
