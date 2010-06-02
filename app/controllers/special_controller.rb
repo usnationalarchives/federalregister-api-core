@@ -1,6 +1,4 @@
 class SpecialController < ApplicationController
-  caches_page :home
-  
   def home
     @featured_agencies = Agency.featured.all
     
