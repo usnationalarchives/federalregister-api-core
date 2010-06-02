@@ -10,5 +10,14 @@
       end %></span>
     <br />
     <span class="agency"><%= regulatory_plan.agencies.map{|agency| link_to(agency.name, agency_path(agency))}.join(' :: ') %></span>
-  </div>  
+    
+    <% entries = regulatory_plan.entries.most_recent(5) %>
+    <% if entries.present? %>
+      <ul>
+        <% entries.each do |entry| %>
+          <li><%= link_to entry.title, entry_path(entry) %></li>
+        <% end %>
+      </ul>
+    <% end %>
+  </div>
 </li>
