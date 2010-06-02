@@ -17,7 +17,7 @@
 
   <div class="header group calendar controls">
   <h2>
-    <%= pluralize(@entries.size, 'entry') %> published on this day
+    <%= pluralize(@entries.count, 'entry') %> published on this day
   </h2>
   
   <%= link_to( '', '#', :class => "icon cal", :title => "Click to show calendars" ) %>
@@ -52,7 +52,7 @@
   <% parent_agency = agencies.pop %>
   <li class="parent_agency group open">
     <a class="showhide" href="#">Hide This Agencies Entries</a>
-    <h3><%= link_to parent_agency.name, agency_path(parent_agency) %> <span class="entry_count"><%= pluralize( parent_agency.entries.size + agencies.sum{|a| a.entries.size} ,"entry") %></span></h3>
+    <h3><%= link_to parent_agency.name, agency_path(parent_agency) %> <span class="entry_count"><%= pluralize( parent_agency.entries.count + agencies.sum{|a| a.entries.count} ,"entry") %></span></h3>
     <ul class="raquo indent">
     <% parent_agency.entries.each do |entry| %>
       <li>
@@ -76,7 +76,7 @@
       <li class="agency open">
 
         <a class="showhide" href="#">Hide This Agencies Entries</a>        
-        <h4><%= link_to agency.name, agency_path(agency) %> <span class="entry_count"><%= pluralize( agency.entries.size ,"entry") %></span></h4>
+        <h4><%= link_to agency.name, agency_path(agency) %> <span class="entry_count"><%= pluralize( agency.entries.count ,"entry") %></span></h4>
         <ul class="raquo indent">
           <% agency.entries.each do |entry| %> 
             <li>
@@ -96,10 +96,10 @@
     </ul>
   </li>
 <% end %>
-  <% if @entries_without_agency.size > 0 %>
+  <% if @entries_without_agency.count > 0 %>
   <li class="parent_agency open">
     <a class="showhide" href="#">Hide This Agencies Entries</a>    
-    <h3>Other Entries <span class="entry_count"><%= pluralize( @entries_without_agency.size , "entry") %></span></h3>
+    <h3>Other Entries <span class="entry_count"><%= pluralize( @entries_without_agency.count , "entry") %></span></h3>
     <ul class="raquo indent">
     <% @entries_without_agency.each do |entry| %>
       <li>
@@ -130,5 +130,5 @@
   <%= render :partial => 'entries/charts/by_type', :locals => {:entries => @entries} %>
   
   <h3>Top Agencies Reporting</h3>
-  <%= render :partial => 'entries/charts/by_agency', :locals => {:agencies => @agencies, :entry_count => @entries.size} %>
+  <%= render :partial => 'entries/charts/by_agency', :locals => {:agencies => @agencies, :entry_count => @entries.count} %>
 <% end %>
