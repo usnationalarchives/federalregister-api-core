@@ -28,7 +28,8 @@ class ApplicationSearch
       sphinx_search = ThinkingSphinx::Search.new(@search.term,
         :with => @search.with.except(@facet_name),
         :conditions => @search.conditions,
-        :match_mode => :extended
+        :match_mode => :extended,
+        :classes => [@search.model]
       )
       
       client = sphinx_search.send(:client)
@@ -37,7 +38,7 @@ class ApplicationSearch
       client.limit = 5000
       
       query = sphinx_search.send(:query)
-      result = client.query(query, '*')[:matches].map{|m| [m[:attributes]["@groupby"], m[:attributes]["@count"]]}
+      result = client.query(query, sphinx_search.send(:indexes))[:matches].map{|m| [m[:attributes]["@groupby"], m[:attributes]["@count"]]}
     end
     
     def all
