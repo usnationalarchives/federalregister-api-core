@@ -14,12 +14,12 @@
   <div class="search_bar">
     <label>Find</label>
     <%= f.text_field :term %>
-    <span class="label">in</span>
+    <!-- <span class="label">in</span>
     <select name="some_name" id="conditions_type">
       <option value="option1">Articles</option>
       <option value="option2">Regulations</option>
-    </select>
-    <%= f.submit 'Go', :class => 'button' %>
+    </select> -->
+    <%= f.submit 'Search', :class => '' %>
     
     <div class="actions">
       <%= link_to 'Subscribe', params.merge(:format => :rss, :order => 'date', :publication_date_less_than => nil), :class => 'button notext rss' %>

@@ -17,7 +17,7 @@
       
         <div class="grid_6 omega">
           <% unless @entry_type_values.blank? %>
-            <div class='chart size_<%=@entry_type_values.size%>' style="margin-top: -60px"><%= pie_3d_chart(:alt => 'Entry Type for Recent Entries', :legend => @entry_type_labels, :truncate_legend => '30', :counts => true, :legend_location => 'right', :data => @entry_type_values, :size => ['300','200'], :color_range => ['005073','84cedb'], :transparent_bg => true) %></div>
+            <div class='chart size_<%=@entry_type_values.size%>' style="margin-top: -50px"><%= pie_3d_chart(:alt => 'Entry Type for Recent Entries', :legend => @entry_type_labels, :truncate_legend => '30', :counts => true, :legend_location => 'right', :data => @entry_type_values, :size => ['300','200'], :color_range => ['005073','84cedb'], :transparent_bg => true) %></div>
           <% end %>
           
           <ul id='agency_activity' class='pulse_list'>
