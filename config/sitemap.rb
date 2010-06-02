@@ -13,10 +13,12 @@ SitemapGenerator::Sitemap.add_links do |sitemap|
   #
   # Defaults: :priority => 0.5, :changefreq => 'weekly', 
   #           :lastmod => Time.now, :host => default_host
-
   
-  # SPECIAL PAGES
-  sitemap.add about_path, :priority => 1
+  # SECTIONS
+  Section.find_each do |section|
+    sitemap.add section_path(section)
+    sitemap.add about_section_path(section)
+  end
   
   # ENTRIES
   Entry.find_each do |entry|
@@ -25,11 +27,6 @@ SitemapGenerator::Sitemap.add_links do |sitemap|
   
   Entry.connection.select_values("SELECT DISTINCT(publication_date) FROM entries").each do |date|
     sitemap.add entries_by_date_path(Date.parse(date))
-  end
-  
-  # EVENTS
-  ReferencedDate.connection.select_values("SELECT DISTINCT(date) FROM referenced_dates").each do |date|
-    sitemap.add events_path(Date.parse(date))
   end
   
   # TOPICS
@@ -45,6 +42,11 @@ SitemapGenerator::Sitemap.add_links do |sitemap|
   sitemap.add agencies_path
   Agency.find_each do |agency|
     sitemap.add agency_path(agency)
+  end
+  
+  # REGULATIONS
+  RegulatoryPlan.find_each do |regulatory_plan|
+    sitemap.add regulatory_plan_path(regulatory_plan)
   end
   
   # PLACES
