@@ -80,12 +80,12 @@ ActionController::Routing::Routes.draw do |map|
                                          :action     => 'search'
   
   # TOPICS
-  map.topic_groups_by_letter '/topics/:letter',
+  map.topics_by_letter '/topics/:letter',
       :requirements => {:letter => /[a-z]/},
-      :controller => "topic_groups",
+      :controller => "topics",
       :action => "by_letter"
   
-  map.resources :topic_groups, :as => "topics", :only => [:index, :show]
+  map.resources :topics, :as => "topics", :only => [:index, :show]
   
   # AGENCIES
   map.resources :agencies, :only => [:index, :show]
