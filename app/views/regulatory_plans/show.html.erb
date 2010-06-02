@@ -19,7 +19,7 @@
   
   <p>Regulatory plan current as of <%= issue_season(@regulatory_plan) %>
   <dl>
-    <% %w(abstract statement_of_need legal_basis alternatives costs_and_benefits risks).each do |attribute| %>
+    <% %w(priority_category abstract statement_of_need legal_basis alternatives costs_and_benefits risks).each do |attribute| %>
       <% value = @regulatory_plan.send(attribute) %>
       <% if value.present? %>
         <dt><%= attribute.humanize %></dt><dd><%= add_citation_links(value) %></dd>
