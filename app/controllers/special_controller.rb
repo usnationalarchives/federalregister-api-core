@@ -3,7 +3,8 @@ class SpecialController < ApplicationController
   
   def home
     @featured_agencies = Agency.featured.all
-    
+    @sections          = Section.all
+
     next_week = Date.today .. Date.today + 7.days
     this_week = Date.today - 7.days .. Date.today
     @closing_soon = Entry.find(:all,
