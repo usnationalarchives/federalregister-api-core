@@ -53,7 +53,7 @@ module Content
     
     def agency_name_assignments
       @regulatory_plan.agency_name_assignments = []
-      assignments = document.xpath('.//AGENCY/NAME').map do |agency_node|
+      assignments = document.css('AGENCY NAME, PARENT_AGENCY NAME').map do |agency_node|
         name = agency_node.content()
         agency_name = AgencyName.find_or_create_by_name(name)
         AgencyNameAssignment.new(:agency_name => agency_name)

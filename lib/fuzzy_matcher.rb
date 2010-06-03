@@ -6,7 +6,7 @@ class FuzzyMatcher
   def initialize(options={})
     options.symbolize_keys!
     @label_method = options[:label_method] || :to_s
-    @stopwords = options[:stopwords] || %w(and by the a an of in on to for s etc)
+    @stopwords = options[:stopwords] || %w(and by the a an of in on to for s etc) + (options[:additional_stopwords] || [])
     @max_distance = options[:max_distance].try(:to_i) || 3
     
     self.candidates = options[:candidates] if options[:candidates]

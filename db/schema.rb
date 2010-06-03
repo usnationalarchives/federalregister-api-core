@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100530170241) do
+ActiveRecord::Schema.define(:version => 20100602045956) do
 
   create_table "agencies", :force => true do |t|
     t.integer  "parent_id"
@@ -285,14 +285,6 @@ ActiveRecord::Schema.define(:version => 20100530170241) do
   add_index "topic_assignments", ["entry_id", "topic_id"], :name => "index_topic_assignments_on_entry_id_and_topic_id"
   add_index "topic_assignments", ["topic_id", "entry_id"], :name => "index_topic_assignments_on_topic_id_and_entry_id"
 
-  create_table "topic_groups", :id => false, :force => true do |t|
-    t.string  "group_name"
-    t.string  "name"
-    t.integer "entries_count",          :limit => 32, :precision => 32, :scale => 0
-    t.text    "related_topics_cache"
-    t.text    "related_agencies_cache"
-  end
-
   create_table "topic_name_assignments", :force => true do |t|
     t.integer  "entry_id"
     t.integer  "topic_name_id"
@@ -318,15 +310,15 @@ ActiveRecord::Schema.define(:version => 20100530170241) do
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "group_name"
+    t.string   "slug"
     t.integer  "entries_count",          :default => 0
     t.text     "related_topics_cache"
     t.text     "related_agencies_cache"
   end
 
   add_index "topics", ["entries_count"], :name => "index_topics_on_entries_count"
-  add_index "topics", ["group_name", "id"], :name => "index_topics_on_group_name_and_id"
   add_index "topics", ["name"], :name => "index_topics_on_name"
+  add_index "topics", ["slug", "id"], :name => "index_topics_on_group_name_and_id"
 
   create_table "topics_topic_names", :force => true do |t|
     t.integer  "topic_id"
