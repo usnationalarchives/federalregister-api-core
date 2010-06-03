@@ -20,7 +20,6 @@ class AgencyName < ApplicationModel
   validate :does_not_have_agency_if_void
   
   before_create :assign_agency_if_exact_match
-  after_update :update_agency_assignments_if_agency_changed
   
   named_scope :unprocessed, :conditions => {:void => false, :agency_id => nil}, :order => "agency_names.name"
   
@@ -72,15 +71,5 @@ class AgencyName < ApplicationModel
     alternative_name.sub!(/^(\w+) (?:of|on|for)(?: the)? (.*)/i, '\2 \1')
     
     alternative_name
-  end
-  
-  def update_agency_assignments_if_agency_changed
-    if agency_id_changed?
-      entries.each do |entry|
-        entry.recalculate_agencies!
-      end
-    end
-    
-    true
   end
 end

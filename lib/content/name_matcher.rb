@@ -1,7 +1,7 @@
 module Content
   class NameMatcher
     def matcher
-      @matcher ||= FuzzyMatcher.new(:candidates => candidates, :label_method => :name)
+      @matcher ||= FuzzyMatcher.new(:candidates => candidates, :label_method => :name, :additional_stopwords => %w(department committee bureau) )
     end
     
     def perform
