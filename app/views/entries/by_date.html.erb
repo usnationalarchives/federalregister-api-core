@@ -1,25 +1,14 @@
 <% feed_autodiscovery entries_path(:format => :rss) %>
 
 <% title "Entries for #{@publication_date.to_formatted_s(:pretty)}" %>
+<h1 class="title"><span><%= @publication_date %> Issue</span></h1>
 
-<% content_for :precolumn do %>
-  <div class="infobox">
-    <p class='copy'>
-      The Federal Register is published every day of the week, excluding weekends and holidays. The Register contains 
-      an assortment of notices, proposed rules, final rules, requests for information and presidential documents. 
-    </p>
-    <p class='copy'> 
-      You'll find today's entries listed below by agency, with the locations mentioned located on a map for you. You may 
-      also navigate to any date by clicking on the calendar icon below to display calendars for recent months as well
-      as a search box.
-    </p>
-  </div>
-
-  <div class="header group calendar controls">
+<% if false %>
+<div class="header group calendar controls">
   <h2>
-    <%= pluralize(@entries.count, 'entry') %> published on this day
+    <%= pluralize(@entries.count, 'article') %> published on this day
   </h2>
-  
+
   <%= link_to( '', '#', :class => "icon cal", :title => "Click to show calendars" ) %>
 
   <% if @prev_date %>
@@ -29,96 +18,61 @@
   <% if @next_date %>
     <%= link_to 'Next', entries_by_date_path(@next_date), :class => "icon arrow next floatRight" %>
   <% end %>
-  </div>
+</div>
 
-  <div class="entry_calendars">
-    <div class='search'>
-      <% form_tag entries_date_search_path, :method => :GET, :class => "group" do %>
-        Explore entries in recent months or search for a date:
-        <%= text_field_tag :search, '', :title => "(eg 'last month', 'November 2', 'last October')" %>
-        <%= submit_tag 'Go', :class => "btn" %>
-      <% end %>
-    </div>
-    
-    <%= entries_calendar_view(@year, @month) %>
-    <% add_javascript(:src => 'calendar') %>
+<div class="entry_calendars">
+  <div class='search'>
+    <% form_tag entries_date_search_path, :method => :GET, :class => "group" do %>
+      Explore entries in recent months or search for a date:
+      <%= text_field_tag :search, '', :title => "(eg 'last month', 'November 2', 'last October')" %>
+      <%= submit_tag 'Go', :class => "btn" %>
+    <% end %>
   </div>
+  
+  <%= entries_calendar_view(@year, @month) %>
+  <% add_javascript(:src => 'calendar') %>
+</div>
 <% end %>
 
-
-<ul>
-<% @agencies.group_by{|a| a.parent_id || a.id}.each do |parent_agency_id, agencies| %>
-  <% agencies = agencies.sort_by{|a| (a.id == parent_agency_id) ? 1 : 0 } %>
-  <% parent_agency = agencies.pop %>
-  <li class="parent_agency group open">
-    <a class="showhide" href="#">Hide This Agencies Entries</a>
-    <h3><%= link_to parent_agency.name, agency_path(parent_agency) %> <span class="entry_count"><%= pluralize( parent_agency.entries.count + agencies.sum{|a| a.entries.count} ,"entry") %></span></h3>
-    <ul class="raquo indent">
-    <% parent_agency.entries.each do |entry| %>
-      <li>
-        <%= link_to entry.title, entry_path(entry) %>
-        
-        <dl class="group">
-            <dt>Type</dt>
-            <dd><%= entry.entry_type if entry.has_type? %></dd>
-            
-            <dt>Length</dt>
-            <dd><%= pluralize(entry.human_length, "page") %></dd>          
-        </dl>
-                
-        <% if entry.abstract? %>
-          <p><%= entry.abstract %></p>
+<% @agencies.each do |agency| %>
+  <h2><%= agency.name %></h2>
+  <% agency.entries.group_by(&:entry_type).each do |type, entries_by_type| %>
+    <h3><%= type.pluralize %></h3>
+    <dl>
+    <% entries_by_type.group_by(&:toc_subject).each do |toc_subject, entries_by_toc_subject| %>
+      <% if toc_subject.present? %>
+        <dt><%= toc_subject %></dt>
+        <% entries_by_toc_subject.sort_by(&:toc_doc).each do |entry| %>
+        <dd>
+          <%= link_to entry.toc_doc, entry_path(entry) %>
+        </dd>
         <% end %>
-      </li>
+      <% else %>
+        <% entries_by_toc_subject.sort_by(&:toc_doc).each do |entry| %>
+        <dt>
+          <%= link_to entry.title, entry_path(entry) %>
+        </dt>
+        <% end %>
+      <% end %>
     <% end %>
-    
-    <% agencies.each do |agency| %>
-      <li class="agency open">
-
-        <a class="showhide" href="#">Hide This Agencies Entries</a>        
-        <h4><%= link_to agency.name, agency_path(agency) %> <span class="entry_count"><%= pluralize( agency.entries.count ,"entry") %></span></h4>
-        <ul class="raquo indent">
-          <% agency.entries.each do |entry| %> 
-            <li>
-              <%= link_to entry_title(entry), entry_path(entry) %>
-              <dl class="group">
-                  <dt>Type</dt>
-                  <dd><%= entry.entry_type if entry.has_type? %></dd>
-
-                  <dt>Length</dt>
-                  <dd><%= pluralize(entry.human_length, "page") %></dd>          
-              </dl>
-            </li>
-          <% end %>
-        </ul>
-      </li>
-    <% end %>
-    </ul>
-  </li>
-<% end %>
-  <% if @entries_without_agency.count > 0 %>
-  <li class="parent_agency open">
-    <a class="showhide" href="#">Hide This Agencies Entries</a>    
-    <h3>Other Entries <span class="entry_count"><%= pluralize( @entries_without_agency.count , "entry") %></span></h3>
-    <ul class="raquo indent">
-    <% @entries_without_agency.each do |entry| %>
-      <li>
-        <%= link_to entry_title(entry), entry_path(entry) %>
-        <dl class="group">
-            <dt>Type</dt>
-            <dd><%= entry.entry_type if entry.has_type? %></dd>
-            
-            <dt>Length</dt>
-            <dd><%= pluralize(entry.human_length, "page") %></dd>          
-        </dl>
-      </li>
-    <% end %>
-    </ul>
-  </li>
+    </dl>
   <% end %>
-</ul>
+<% end %>
 
-<% content_for :sidebar do %>
+<% if @entries_without_agency.present? %>
+  <%# THESE SHOULD NOT EXIST AT LAUNCH; NO STYLE NECESSARY %>
+  <h2>Entries without agencies</h2>
+  <% @entries_without_agency.group_by(&:agency_names).each do |agency_names, entries| %>
+    <h3><%= agency_names.map(&:name).to_sentence %></h2>
+    <ul>
+    <% entries.each do |entry| %>
+      <%= link_to entry.title, entry_path(entry) %>
+    <% end %>
+    </ul>
+  <% end %>
+<% end %>
+
+<% if false %>
   
   <% if @map.present? %>
     <h3>Locations Mentioned</h3>
