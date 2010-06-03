@@ -1,6 +1,4 @@
 class PlacesController < ApplicationController
-  caches_page :show
-  
   def show
     @location = Place.find(params[:id])
     @entries = Entry.all(:conditions => {:place_determinations => {:place_id => @location}}, :joins => :place_determinations, :limit => 50, :order => "publication_date DESC")
