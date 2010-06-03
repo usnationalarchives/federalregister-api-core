@@ -216,7 +216,35 @@ AGENCY VIEW
   margin-bottom: 0;
   }
 
+/******************************
 
+HOME PAGE 
+
+******************************/
+
+.newsbox {
+  background: #fcfcfc;
+  border: 1px solid #ccc;
+  @include box-shadow(#ccc, 0, 0, 5px);
+  @include border-radius(5px);
+  margin-bottom: 1em;
+  padding: 1em;
+  }
+
+.newsbox h2 {
+  border-bottom: 1px solid #ccc;
+  margin-bottom: .5em;
+  }
+.newsbox ul {
+  color: darken(#E4A529, 10%);
+  margin-bottom: 0;
+  padding-left: 1em;
+  }
+.newsbox ul li {
+  list-style: disc;
+  list-style-position: outside;
+  margin-bottom: .5em;
+  }
 
 /******************************
 
