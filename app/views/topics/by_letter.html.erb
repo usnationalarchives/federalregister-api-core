@@ -1,4 +1,4 @@
-<%# title "Topics starting with '#{@letter}'" %>
+<% title "Topics starting with '#{@letter}'" %>
 <% content_for :precolumn do %>
   <h1>Explore Topics</h1>
   
@@ -18,21 +18,17 @@
   <h2>Topics starting with <%= @letter %></h2>
 <ul class="btn small group">
 <% @letters.each do |letter| %>
-  <li class="<%='on' if letter == @letter %>"><%= link_to letter.upcase, topic_groups_by_letter_path(letter) %></li>
+  <li class="<%='on' if letter == @letter %>"><%= link_to letter.upcase, topics_by_letter_path(letter) %></li>
 <% end %>
 </ul>
 </div>
 
-<% unless @topic_groups.length == 0 %>
-  <ul class="raquo indent">
-  <% @topic_groups.each do |topic_group| %>
-    <li><%= link_to topic_group.name, topic_group_path(topic_group.group_name) %> (<%= topic_group.entries_count %>)</li>
+<ul class="raquo indent">
+  <% @topics.each do |topic| %>
+    <li><%= link_to topic.name, topic_path(topic) %> (<%= topic.entries_count %>)</li>
   <% end %>
-  </ul>
-<% else %>
-  <p>No Entries Found</p>
-<% end %>
+</ul>
 
 <% content_for :sidebar do %>
-  <%= render :partial => 'topics_tagcloud', :locals => {:topic_groups => @popular_topic_groups, :title => 'Popular Topics'} %>
+  <%= render :partial => 'topics_tagcloud', :locals => {:topics => @popular_topics, :title => 'Popular Topics'} %>
 <% end %>

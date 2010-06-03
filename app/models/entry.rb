@@ -70,7 +70,7 @@ class Entry < ApplicationModel
   has_many :topic_names, :through => :topic_name_assignments
   
   has_many :topic_assignments, :dependent => :destroy
-  has_many :topics, :through => :topic_assignments, :conditions => "topics.group_name != ''", :order => 'topics.name'
+  has_many :topics, :through => :topic_assignments, :order => 'topics.name'
   
   has_many :url_references, :dependent => :destroy
   has_many :urls, :through => :url_references
@@ -102,7 +102,7 @@ class Entry < ApplicationModel
   
   acts_as_mappable :through => :places
   
-  has_many :agency_name_assignments, :as => :assignable, :order => "agency_name_assignments.position", :dependent => :delete_all
+  has_many :agency_name_assignments, :as => :assignable, :order => "agency_name_assignments.position", :dependent => :destroy
   has_many :agency_names, :through => :agency_name_assignments
   has_many :agency_assignments, :as => :assignable, :order => "agency_assignments.position", :dependent => :delete_all
   has_many :agencies, :through => :agency_assignments, :order => "agency_assignments.position"
@@ -159,6 +159,10 @@ class Entry < ApplicationModel
     )
   end
   
+  def self.most_recent(n = 10)
+    scoped(:order => "publication_date DESC", :limit => n)
+  end
+  
   def entry_type 
     ENTRY_TYPES[granule_class]
   end
@@ -168,7 +172,7 @@ class Entry < ApplicationModel
     indexes title
     indexes abstract
     indexes "LOAD_FILE(CONCAT('#{RAILS_ROOT}/data/text/', document_file_path, '.txt'))", :as => :full_text
-    indexes granule_class, :facet => true
+    indexes granule_class, :as => :type, :facet => true
     
     # attributes
     has agency_assignments(:agency_id), :as => :agency_ids

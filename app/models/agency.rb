@@ -27,8 +27,8 @@
 class Agency < ApplicationModel
   has_many :agency_assignments
   
-  has_many :entry_agency_assignments, :class_name => "AgencyAssignment", :conditions => {:assignable_type => "Entry"}
-  has_many :entries, :through => :entry_agency_assignments, :source => :entry
+  has_many :entry_agency_assignments, :class_name => "AgencyAssignment", :conditions => "agency_assignments.assignable_type = 'Entry'"
+  has_many :entries, :through => :entry_agency_assignments
   
   has_many :regulatory_plan_agency_assignments, :class_name => "AgencyAssignment", :conditions => {:assignable_type => "RegulatoryPlan"}
   has_many :regulatory_plans, :through => :regulatory_plan_agency_assignments, :source => :regulatory_plan

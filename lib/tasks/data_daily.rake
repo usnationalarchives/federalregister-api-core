@@ -4,7 +4,6 @@ namespace :data do
     data:extract:regulationsdotgov_id
     
     data:cache:update:all
-    data:cache:expire
     tmp:cache:clear
     thinking_sphinx:index
     sitemap:refresh
