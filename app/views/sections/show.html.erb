@@ -81,7 +81,7 @@
   <% @section.entries.published_on(@publication_date).each do |entry| %>
     <% article_tag do %>  
       <h1><%= link_to entry.title, entry_path(entry) %></h1>
-      <%= entry.agencies_exluding_parents.map{|a| link_to a.name, agency_path(a) }.to_sentence %>
+      <%= agency_names(entry) %>
     <% end -%>
   <% end %>
 <% end -%>
