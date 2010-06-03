@@ -1,9 +1,29 @@
 <% feed_autodiscovery entries_path(:format => :rss) %>
 <% add_column_class('home') %>
 
-<% content_for :precolumn do %>
-  <h1>The Federal Register at your fingertips.</h1>
-<% end %>
+
+<% @sections.each do |section| %>
+<div class="grid_8 <%= cycle('alpha','omega') %>">
+  <div class="newsbox">
+    <h2><%= link_to section.title, section_path(section) %></h2>
+      <% entries = section.highlighted_entries[0..2] %>
+      <% if entries %>
+        <ul>
+        <% entries.each do |entry| %>
+          <li><%= link_to entry.title, entry_path(entry) %></li>
+          <%#= render :partial => 'special/entry_with_abstract', :locals => {:entry => entry} %>    
+        <% end -%>
+        
+        <li><%= link_to 'See more', section_path(section) %></li>
+                
+        </ul>
+        
+        
+      <% end %>
+    </div>
+</div>  
+<% end -%>
+
 
 <% if !@closing_soon.empty? %>
   <div class="clear marginBottom widget">
