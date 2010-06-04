@@ -200,6 +200,57 @@ ARTICLE VIEW
   display: inline;
   margin: 0 1em 0 0;
   }
+  
+#entries.show .header_column h1  {
+  border-top: 3px solid $dark_blue;
+  clear: both;
+  color: $powder_blue;
+  font-size: 1.5em;
+  @include type_kit_font_1;
+  margin: 3px 0 1em;
+  padding-top: 0;
+  text-align: right;
+  text-transform: uppercase;
+  }
+
+#entries.show .header_column h2 {
+  border-bottom: 1px solid #ccc;
+  border-top: 1px solid #ccc;
+  font-size: 1.3em;
+  line-height: 1.5em;
+  margin-top: .2em;
+  padding: 1em 0;
+  }
+
+#entries.show .body_column {
+  margin-bottom: 4em;
+  }  
+
+#entries.show .body_column h3 {
+  font-size: 1.2em;
+  line-height: 1.5em;
+  }
+#entries.show .body_column h3:first-child {
+  margin-top: 0;
+  }
+#entries.show .table_of_contents {
+  font-size:1.1em;
+  list-style-type: none;
+  margin-left: 1em;
+  }
+#entries.show .table_of_contents li {
+  margin-bottom: .5em;
+  }
+#entries.show .table_of_contents .level_1 {
+  
+  }
+#entries.show .table_of_contents .level_2 {
+  margin-left: 1em;
+  }
+
+#entries.show .table_of_contents .level_3 {
+  margin-left: 2em;
+  }  
 
 /******************************
 
