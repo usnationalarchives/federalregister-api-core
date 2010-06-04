@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1" ?>
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
-  <xsl:variable name="table_of_contents" select="0" />
   <xsl:variable name="gpocollection">Federal Register</xsl:variable>
   <xsl:variable name="frnumber" select="FEDREG/NO"/>
   <xsl:variable name="frvolume" select="FEDREG/VOL"/>
@@ -12,19 +11,23 @@
           <xsl:apply-templates />
         </xsl:for-each>
         
-        <xsl:if test="count(//HD[@SOURCE='HED' or @SOURCE='HD1' or @SOURCE = 'HD2' or @SOURCE = 'HD3' or @SOURCE = 'HD4']) > 2">
-          <xsl:variable name="table_of_contents" select="1" />
-          <h3 id="table_of_contents">Table of Contents</h3>
-          <ul class="table_of_contents">
-            <xsl:apply-templates mode="table_of_contents" />
-            <xsl:if test="count(//FTNT) > 0">
-              <li style="padding-left: 10px"><a href="#footnotes">Footnotes</a></li>
-            </xsl:if>
-          </ul>
-        </xsl:if>
+        <xsl:call-template name="manual_header">
+          <xsl:with-param name="id" select="'table_of_contents'" />
+          <xsl:with-param name="name" select="'Table of Contents'" />
+        </xsl:call-template>
+        
+        <ul class="table_of_contents">
+          <xsl:apply-templates mode="table_of_contents" />
+          <xsl:if test="count(//FTNT) > 0">
+            <li style="padding-left: 10px"><a href="#footnotes">Footnotes</a></li>
+          </xsl:if>
+        </ul>
         
         <xsl:if test="count(//GPOTABLE/TTITLE[descendant::text()]) > 0">
-          <h3 id="table_of_tables">Tables</h3>
+          <xsl:call-template name="manual_header">
+            <xsl:with-param name="id" select="'table_of_tables'" />
+            <xsl:with-param name="name" select="'Tables'" />
+          </xsl:call-template>
           <ul class="table_of_tables">
             <xsl:for-each select="//GPOTABLE/TTITLE[descendant::text()]">
               <li>
@@ -38,7 +41,11 @@
         </xsl:if>
         
         <xsl:if test="count(//GPH/GID[descendant::text()]) > 0">
-          <h3 id="table_of_graphics">Graphics</h3>
+          <xsl:call-template name="manual_header">
+            <xsl:with-param name="id" select="'table_of_graphics'" />
+            <xsl:with-param name="name" select="'Graphics'" />
+          </xsl:call-template>
+          
           <ul class="table_of_graphics thumbs noscript">
             <xsl:for-each select="//GPH/GID[descendant::text()]">
               <li>
@@ -317,18 +324,34 @@
       <xsl:choose>
         <xsl:when test="@SOURCE = 'HED'">
           <xsl:call-template name="capitalize_first">
-            <xsl:with-param name="string" select="text()" />
+            <xsl:with-param name="string" select="translate(text(), ':', '')" />
           </xsl:call-template>
         </xsl:when>
         <xsl:otherwise>
-          <xsl:apply-templates/>
+          <xsl:apply-templates />
         </xsl:otherwise>
       </xsl:choose>
       <xsl:text> </xsl:text>
-      <xsl:if test="$table_of_contents = 1">
-        <a href="#table_of_contents">&#8593;</a>
+      <xsl:if test="text() != 'SUMMARY:'">
+        <a href="#table_of_contents" class="back_to_top">Back to Top</a>
       </xsl:if>
     </xsl:element>
+  </xsl:template>
+  
+  <xsl:template name="manual_header">
+    <xsl:param name="name" />
+    <xsl:param name="id" />
+    
+    <xsl:value-of disable-output-escaping="yes" select="'&lt;/div&gt;'" />
+    <div class="header_column">
+      <h3>
+        <xsl:attribute name="id">
+          <xsl:value-of select="$id" />
+        </xsl:attribute>
+        <xsl:value-of select="$name" />
+      </h3>
+    </div>
+    <xsl:value-of disable-output-escaping="yes" select="'&lt;div class=&quot;body_column&quot; &gt;'" />
   </xsl:template>
   <!-- <xsl:template match="HD[@SOURCE = 'HD2']">
     <h4><xsl:apply-templates/></h4>
