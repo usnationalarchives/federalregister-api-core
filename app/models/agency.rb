@@ -33,6 +33,7 @@ class Agency < ApplicationModel
   has_many :regulatory_plan_agency_assignments, :class_name => "AgencyAssignment", :conditions => {:assignable_type => "RegulatoryPlan"}
   has_many :regulatory_plans, :through => :regulatory_plan_agency_assignments, :source => :regulatory_plan
   
+  has_many :sub_agencies, :class_name => 'Agency', :foreign_key => 'parent_id'
   has_many :children, :class_name => 'Agency', :foreign_key => 'parent_id'
   belongs_to :parent, :class_name => 'Agency'
   
