@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="ISO-8859-1" ?>
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
-  
+  <xsl:variable name="table_of_contents" select="0" />
   <xsl:variable name="gpocollection">Federal Register</xsl:variable>
   <xsl:variable name="frnumber" select="FEDREG/NO"/>
   <xsl:variable name="frvolume" select="FEDREG/VOL"/>
@@ -8,12 +8,12 @@
   <xsl:variable name="frunitname" select="FEDREG/UNITNAME"/> 
     
   <xsl:template match="/">
-
         <xsl:for-each select="//SUM">
           <xsl:apply-templates />
         </xsl:for-each>
         
-        <xsl:if test="count(//HD[@SOURCE='HD1' or @SOURCE = 'HD2' or @SOURCE = 'HD3' or @SOURCE = 'HD4']) > 2">
+        <xsl:if test="count(//HD[@SOURCE='HED' or @SOURCE='HD1' or @SOURCE = 'HD2' or @SOURCE = 'HD3' or @SOURCE = 'HD4']) > 2">
+          <xsl:variable name="table_of_contents" select="1" />
           <h3 id="table_of_contents">Table of Contents</h3>
           <ul class="table_of_contents">
             <xsl:apply-templates mode="table_of_contents" />
@@ -58,45 +58,57 @@
         </xsl:if>
         
         <xsl:apply-templates/>
+        
         <xsl:if test="count(//FTNT) > 0">
           <div id="footnotes">
             <h3>Footnotes <a href="#table_of_contents">&#8593;</a></h3>
             <xsl:apply-templates mode="footnotes" />
           </div>
         </xsl:if>
+        
+        <xsl:value-of disable-output-escaping="yes" select="'&lt;/div&gt;'" />
   </xsl:template>
   
-  <xsl:template match="HD[@SOURCE='HD1' or @SOURCE = 'HD2' or @SOURCE = 'HD3' or @SOURCE = 'HD4']" mode="table_of_contents">
-    <li>
-      <xsl:attribute name="class">level_<xsl:value-of select="number(translate(@SOURCE, 'HD', ''))" /></xsl:attribute>
-      <a>
-        <xsl:attribute name="href">#<xsl:value-of select="generate-id()" /></xsl:attribute>
-        <xsl:apply-templates/>
-      </a>
-    </li>
+  <xsl:template match="HD[@SOURCE='HED' or @SOURCE='HD1' or @SOURCE = 'HD2' or @SOURCE = 'HD3' or @SOURCE = 'HD4']" mode="table_of_contents">
+    <xsl:choose>
+      <xsl:when test="text() = 'AGENCY:' or text() = 'ACTION:' or text() = 'SUMMARY:'"></xsl:when>
+      <xsl:otherwise>
+        <li>
+          <xsl:attribute name="class">
+            <xsl:text>level_</xsl:text>
+            <xsl:call-template name="header_level">
+              <xsl:with-param name="source" select="@SOURCE" />
+            </xsl:call-template>
+          </xsl:attribute>
+          <a>
+            <xsl:attribute name="href">#<xsl:value-of select="generate-id()" /></xsl:attribute>
+            <xsl:choose>
+              <xsl:when test="@SOURCE = 'HED'">
+                <xsl:call-template name="capitalize_first">
+                  <xsl:with-param name="string" select="translate(text(), ':', '')" />
+                </xsl:call-template>
+              </xsl:when>
+              <xsl:otherwise>
+                <xsl:apply-templates/>
+              </xsl:otherwise>
+            </xsl:choose>
+          </a>
+        </li>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
   <xsl:template mode="table_of_contents" match="*[name(.) != 'HD']|text()">
     <xsl:apply-templates mode="table_of_contents"/>
   </xsl:template>
   
   <!-- Tags being Ignored -->
-  <xsl:template match="AGENCY | SUBAGY | AGY | ACT | EFFDATE | CFR | DEPDOC | RIN | SUBJECT | FURINF | FTNT | FRDOC | BILCOD | CNTNTS | UNITNAME | INCLUDES | EDITOR | EAR | FRDOCBP | HRULE | FTREF | NOLPAGES | OLPAGES">
+  <xsl:template match="AGENCY | SUBAGY | AGY | ACT | EFFDATE | CFR | DEPDOC | RIN | SUBJECT | FURINF | FTNT | FRDOC | BILCOD | SUM | CNTNTS | UNITNAME | INCLUDES | EDITOR | EAR | FRDOCBP | HRULE | FTREF | NOLPAGES | OLPAGES">
   </xsl:template>
   
   <xsl:template match="FURINF">
     <xsl:apply-templates/>
   </xsl:template>
   
-  <xsl:template match="PTS | AIDS">
-    <hr/>
-    <xsl:call-template name="apply-span"/>
-  </xsl:template>
-     
-  <xsl:template match="SIG/FP | SIG/NAME | SIG/TITLE">
-    <xsl:call-template name="apply-span"/>
-    <p class="P-NMRG" />
-  </xsl:template>
-
   <xsl:template match="GPOTABLE">
     
     <xsl:for-each select="TTITLE[descendant::text()]">
@@ -272,26 +284,52 @@
   <xsl:template match="HD[@SOURCE = 'HED']"></xsl:template>
   
   <xsl:template match="HD[@SOURCE='HED' or @SOURCE='HD1' or @SOURCE = 'HD2' or @SOURCE = 'HD3' or @SOURCE = 'HD4']">
-    <xsl:element name="{concat('h', ((number(translate(@SOURCE, 'HD', '')) or 0) + 3))}">
+    <xsl:variable name="level">
+      <xsl:call-template name="header_level">
+        <xsl:with-param name="source" select="@SOURCE" />
+      </xsl:call-template>
+    </xsl:variable>
+    
+    <xsl:choose>
+      <xsl:when test="3 > $level">
+        <xsl:value-of disable-output-escaping="yes" select="'&lt;/div&gt;'" />
+        <div class="header_column">
+          <xsl:call-template name="header" />
+        </div>
+        <xsl:value-of disable-output-escaping="yes" select="'&lt;div class=&quot;body_column&quot; &gt;'" />
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:call-template name="header" />
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+  
+  <xsl:template name="header">
+    <xsl:variable name="level">
+      <xsl:call-template name="header_level">
+        <xsl:with-param name="source" select="@SOURCE" />
+      </xsl:call-template>
+    </xsl:variable>
+    <xsl:element name="{concat('h', $level)}">
       <xsl:attribute name="id">
         <xsl:value-of select="generate-id()"/>
       </xsl:attribute>
       <xsl:choose>
         <xsl:when test="@SOURCE = 'HED'">
-          <xsl:variable name="lower">abcdefghijklmnopqrstuvwxyz</xsl:variable>
-          <xsl:variable name="upper">ABCDEFGHIJKLMNOPQRSTUVWXYZ</xsl:variable>
-          <xsl:value-of select="concat(substring(text(),1,1), translate(substring(text(),2),$upper,$lower))" />
+          <xsl:call-template name="capitalize_first">
+            <xsl:with-param name="string" select="text()" />
+          </xsl:call-template>
         </xsl:when>
         <xsl:otherwise>
           <xsl:apply-templates/>
         </xsl:otherwise>
       </xsl:choose>
       <xsl:text> </xsl:text>
-      <xsl:if test="count(//HD[@SOURCE='HD1' or @SOURCE = 'HD2' or @SOURCE = 'HD3' or @SOURCE = 'HD4']) > 2">
+      <xsl:if test="$table_of_contents = 1">
         <a href="#table_of_contents">&#8593;</a>
       </xsl:if>
-    </h3>
-  </xsl:template>  
+    </xsl:element>
+  </xsl:template>
   <!-- <xsl:template match="HD[@SOURCE = 'HD2']">
     <h4><xsl:apply-templates/></h4>
   </xsl:template>
@@ -311,31 +349,6 @@
       </xsl:attribute>
       <xsl:apply-templates/>
     </p>
-  </xsl:template>
-  
-  <!-- Default Template Handling -->
-  <xsl:template match="*" priority="-10">
-    <xsl:choose>
-      <xsl:when test="not(node())">
-        <!--  DEBUG: Enable to detect empty tags.
-        <span>
-          [EMPTY-NODE <xsl:value-of select="name()"/>]  
-        </span>
-        -->
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:call-template name="apply-span"/>
-      </xsl:otherwise>
-    </xsl:choose>
-  </xsl:template>
- 
-  <xsl:template name="apply-span">
-    <span>
-      <xsl:attribute name="class">
-        <xsl:value-of select="name()"/><xsl:text> </xsl:text><xsl:value-of select="name(parent::*)"/>-<xsl:value-of select="name()"/>
-      </xsl:attribute>
-      <xsl:apply-templates/>
-    </span>
   </xsl:template>
   
   <xsl:template match="SU[count(ancestor::GPOTABLE) > 0]">
@@ -377,8 +390,8 @@
     <xsl:param name="size" />
     
     <xsl:variable name="image_id">
-      <xsl:call-template name="globalReplace">
-        <xsl:with-param name="outputString" select="."/>
+      <xsl:call-template name="global_replace">
+        <xsl:with-param name="output_string" select="."/>
         <xsl:with-param name="target" select="'#'"/>
         <xsl:with-param name="replacement" select="'%23'"/>
       </xsl:call-template>
@@ -387,27 +400,42 @@
     <xsl:value-of select="concat('http://graphics.federalregister.gov.s3.amazonaws.com/', $image_id, '/', $size, '.gif')" />
   </xsl:template>
   
-  <xsl:template name="globalReplace">
-    <xsl:param name="outputString"/>
+  <xsl:template name="capitalize_first">
+    <xsl:param name="string"/>
+    <xsl:variable name="lower">abcdefghijklmnopqrstuvwxyz</xsl:variable>
+    <xsl:variable name="upper">ABCDEFGHIJKLMNOPQRSTUVWXYZ</xsl:variable>
+    <xsl:value-of select="concat(substring($string,1,1), translate(substring($string,2),$upper,$lower))" />
+  </xsl:template>
+  
+  <xsl:template name="global_replace">
+    <xsl:param name="output_string"/>
     <xsl:param name="target"/>
     <xsl:param name="replacement"/>
     <xsl:choose>
-      <xsl:when test="contains($outputString,$target)">
+      <xsl:when test="contains($output_string,$target)">
 
         <xsl:value-of select=
-          "concat(substring-before($outputString,$target),
+          "concat(substring-before($output_string,$target),
                  $replacement)"/>
-        <xsl:call-template name="globalReplace">
-          <xsl:with-param name="outputString" 
-               select="substring-after($outputString,$target)"/>
+        <xsl:call-template name="global_replace">
+          <xsl:with-param name="output_string" 
+               select="substring-after($output_string,$target)"/>
           <xsl:with-param name="target" select="$target"/>
           <xsl:with-param name="replacement" 
                select="$replacement"/>
         </xsl:call-template>
       </xsl:when>
       <xsl:otherwise>
-        <xsl:value-of select="$outputString"/>
+        <xsl:value-of select="$output_string"/>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
+  
+  <xsl:template name="header_level">
+    <xsl:param name="source" />
+    <xsl:choose>
+      <xsl:when test="$source = 'HED'">1</xsl:when>
+      <xsl:otherwise><xsl:value-of select="number(translate($source, 'HD', '')) + 1" />
+    </xsl:otherwise>
+  </xsl:choose>
 </xsl:stylesheet>
