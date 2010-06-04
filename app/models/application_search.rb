@@ -119,4 +119,16 @@ class ApplicationSearch
   def find_options
     {}
   end
+  
+  def count
+    model.search_count(@term, :match_mode => :extended)
+  end
+  
+  def entry_count
+    EntrySearch.new(:conditions => {:term => @term}).count
+  end
+  
+  def regulatory_plan_count
+    RegulatoryPlanSearch.new(:conditions => {:term => @term}).count
+  end
 end
