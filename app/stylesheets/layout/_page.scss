@@ -39,27 +39,24 @@ ENTRIES
   @include grid(10, 16);
   @include grid-suffix(1);
   @include alpha;
-}
-
+  }
+#metadata_content_area {
+  margin-bottom: 2em;
+  }
 #entries #sidebar {
   @include grid(5, 16);
   @include omega;
   }
 
-#entries.show h3 {
-  
-  @include grid(3, 16);
+#entries.show .header_column {
+  @include grid(4, 16);
   @include alpha;
-  
-  position: relative;
-  left: -180px;
-  width: 0;
-  margin: 0;
+  clear: both;
   }
-#fulltext_content_area {
+
+#entries.show .body_column {
   @include grid(8, 16);
-  @include grid-prefix(3,16);
-  @include alpha;
+  @include omega;
   }
 
 /******************************
