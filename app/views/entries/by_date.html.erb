@@ -35,8 +35,19 @@
 <% end %>
 
 <% @agencies.each do |agency| %>
-  <h2><%= agency.name %></h2>
-  <% agency.entries.group_by(&:entry_type).each do |type, entries_by_type| %>
+  <h2 id="<%= dom_id(agency) %>"><%= agency.name %></h2>
+  
+  <% sub_agencies_on_this_page = agency.children & @agencies %>
+  <% if sub_agencies_on_this_page.present? %>
+    <ul>
+      <% sub_agencies_on_this_page.each do |sub_agency| %>
+        <li>See <%= link_to sub_agency.name, '#' + dom_id(sub_agency) %></li>
+      <% end %>
+    </ul>
+  <% end %>
+  
+  <% entries = agency.entries.select{|entry| entry.agencies_excluding_parents.include?(agency) }%>
+  <% entries.group_by(&:entry_type).each do |type, entries_by_type| %>
     <h3><%= type.pluralize %></h3>
     <dl>
     <% entries_by_type.group_by(&:toc_subject).each do |toc_subject, entries_by_toc_subject| %>
