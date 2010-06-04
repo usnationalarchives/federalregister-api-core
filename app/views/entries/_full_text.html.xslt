@@ -68,7 +68,7 @@
   
   <xsl:template match="HD[@SOURCE='HD1' or @SOURCE = 'HD2' or @SOURCE = 'HD3' or @SOURCE = 'HD4']" mode="table_of_contents">
     <li>
-      <xsl:attribute name="style">padding-left: <xsl:value-of select="number(translate(@SOURCE, 'HD', '')) * 10" />px</xsl:attribute>
+      <xsl:attribute name="class">level_<xsl:value-of select="number(translate(@SOURCE, 'HD', ''))" /></xsl:attribute>
       <a>
         <xsl:attribute name="href">#<xsl:value-of select="generate-id()" /></xsl:attribute>
         <xsl:apply-templates/>
