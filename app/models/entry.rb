@@ -173,6 +173,7 @@ class Entry < ApplicationModel
     indexes abstract
     indexes "LOAD_FILE(CONCAT('#{RAILS_ROOT}/data/text/', document_file_path, '.txt'))", :as => :full_text
     indexes granule_class, :as => :type, :facet => true
+    indexes regulation_id_number
     
     # attributes
     has agency_assignments(:agency_id), :as => :agency_ids
@@ -190,7 +191,7 @@ class Entry < ApplicationModel
     }
   end
   
-  def agencies_exluding_parents
+  def agencies_excluding_parents
     parent_agency_ids = agencies.map(&:parent_id).compact
     agencies.reject{|a| parent_agency_ids.include?(a.id) }.uniq
   end
