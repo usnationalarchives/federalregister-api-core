@@ -17,6 +17,8 @@
     <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
     
+    <%= yield :head %>
+    
     <%= stylesheet_link_tag "reset", :media => :screen %>
     <%= stylesheet_link_tag "screen", :media => :screen %>
 
@@ -36,7 +38,9 @@
     			'/javascripts/jquery.notify.js',
           '/javascripts/search.js',
     			'/javascripts/sectionpage.js',
-    			'/javascripts/frontend.js'
+    			'/javascripts/frontend.js',
+    			'/javascripts/jquery.jcarousel.min.js',
+    			'/javascripts/homepage.js'
     		]
     	});   
     </script>
