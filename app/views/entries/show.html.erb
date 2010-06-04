@@ -120,6 +120,12 @@
     <% end %>
   <% end -%>
 
-
-  
+  <% if @entry.topics.present? %>
+  <h3>Related Topics</h3>
+  <ul>
+    <% @entry.topics.each do |topic| %>
+      <li><%= link_to topic.name, topic_path(topic) %></li>
+    <% end %>
+  </ul>
+  <% end %>
 <% end %>
