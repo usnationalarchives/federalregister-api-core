@@ -17,7 +17,7 @@ class RegulatoryPlanSearch < ApplicationSearch
   end
   
   def conditions=(conditions)
-    [:agency_ids, :term].each do |attr|
+    [:agency_ids, :term, :priority_category].each do |attr|
       if conditions[attr].present?
         self.send("#{attr}=", conditions[attr])
       end
@@ -36,7 +36,7 @@ class RegulatoryPlanSearch < ApplicationSearch
   memoize :agency_facets
   
   def priority_category_facets
-    raw_facets = Entry.facets(term,
+    raw_facets = RegulatoryPlan.facets(term,
       :with => with,
       :conditions => conditions.except(:priority_category),
       :match_mode => :extended,
@@ -50,7 +50,7 @@ class RegulatoryPlanSearch < ApplicationSearch
         :name       => name,
         :count      => count,
         :on         => name == search_value_for_this_facet.to_s,
-        :condition  => :type
+        :condition  => :priority_category
       )
     end
   end
