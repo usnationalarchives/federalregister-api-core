@@ -1,13 +1,14 @@
 <% if regulatory_plan.try(:events).present? %>
   <h3>Regulatory Timeline</h3>
-
-  <table>
+  
+  <%# HELP-DESIGN: ideally these would stack up next to each other and you could scroll left %>
+  <ul class="timeline">
   <% regulatory_plan.events.each do |event| %>
-    <tr>
-      <td><%= add_citation_links(event.action) %></td>
-      <td><%= fuzzy_date_formatter(event.date) %></td>
-      <td><%= add_citation_links(event.fr_citation) %></td>
-    </tr>
+    <li class="timeline_item">
+      <div><%= fuzzy_date_formatter(event.date) %></div>
+      <div><%= add_citation_links(event.action) %></div>
+      <div><%= add_citation_links(event.fr_citation) %></div>
+    </li>
   <% end %>
-  </table>
+  </ul>
 <% end %>
