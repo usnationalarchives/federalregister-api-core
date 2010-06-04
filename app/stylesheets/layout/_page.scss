@@ -34,7 +34,8 @@ ENTRIES
 
 ******************************/
 
-#entries #content_area {
+#entries #content_area,
+#entries #metadata_content_area {
   @include grid(10, 16);
   @include grid-suffix(1);
   @include alpha;
@@ -43,6 +44,22 @@ ENTRIES
 #entries #sidebar {
   @include grid(5, 16);
   @include omega;
+  }
+
+#entries.show h3 {
+  
+  @include grid(3, 16);
+  @include alpha;
+  
+  position: relative;
+  left: -180px;
+  width: 0;
+  margin: 0;
+  }
+#fulltext_content_area {
+  @include grid(8, 16);
+  @include grid-prefix(3,16);
+  @include alpha;
   }
 
 /******************************
