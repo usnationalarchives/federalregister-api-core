@@ -10,17 +10,12 @@
 </ul>
 <% end %>
 
-<% form_for :conditions, @search, :url => regulatory_plan_search_path, :html => {:method => :get} do |f| %>
+<% form_for :conditions, @search, :url => regulatory_plans_search_path, :html => {:method => :get} do |f| %>
+  <%= render :partial => "search/tabs", :locals => {:search => @search, :selected => :regulatory_plans}%>
   <div class="search_bar">
     <label>Find</label>
     <%= f.text_field :term %>
-    <span class="label">in</span>
-    <select name="some_name" id="conditions_type">
-      <option value="option1">Articles</option>
-      <option value="option2">Regulations</option>
-    </select>
-    <%= f.submit 'Go', :class => 'button' %>
-    
+    <%= f.submit 'Search', :class => '' %>
   </div>
 
   <% unless @search.blank? %>
