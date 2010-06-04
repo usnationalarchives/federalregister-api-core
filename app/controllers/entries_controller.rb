@@ -70,17 +70,18 @@ class EntriesController < ApplicationController
     @publication_date = Date.parse("#{@year}-#{@month}-#{@day}")
     
     @agencies = Agency.all(
-        :include => :entries,
-        :conditions => ['publication_date = ?', @publication_date],
-        :order => "entries.title"
+      :include => [:entries],
+      :conditions => ['publication_date = ?', @publication_date],
+      :order => "agencies.name, entries.title"
     )
+    Agency.preload_associations(@agencies, :sub_agencies)
+    Entry.preload_associations(@agencies.map(&:entries).flatten, :agencies)
+    
     @entries_without_agency = Entry.all(
       :joins => :agencies,
       :conditions => ['agencies.id IS NULL && entries.publication_date = ?', @publication_date],
       :order => "entries.title"
     )
-    # @entries = @agencies.inject([]) {|set, agency| set += agency.entries} + @entries_without_agency
-    # @entries = Entry.published_on(@publication_date).scoped(:order => "id")
   end
   
   def show
