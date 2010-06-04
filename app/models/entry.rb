@@ -173,6 +173,7 @@ class Entry < ApplicationModel
     indexes abstract
     indexes "LOAD_FILE(CONCAT('#{RAILS_ROOT}/data/text/', document_file_path, '.txt'))", :as => :full_text
     indexes granule_class, :as => :type, :facet => true
+    indexes regulation_id_number
     
     # attributes
     has agency_assignments(:agency_id), :as => :agency_ids
