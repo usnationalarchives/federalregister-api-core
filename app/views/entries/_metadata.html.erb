@@ -1,0 +1,3 @@
+<p class="metadata">A <%= entry.entry_type %> by <%= agency_names(entry) %> on
+  <%= link_to date_tag(entry.publication_date, :datetime => entry.publication_date.to_s(:iso)), entries_by_date_path(entry.publication_date) %>
+</p>
