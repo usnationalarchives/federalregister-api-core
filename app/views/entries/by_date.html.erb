@@ -37,7 +37,7 @@
 <% @agencies.each do |agency| %>
   <h2 id="<%= dom_id(agency) %>"><%= agency.name %></h2>
   
-  <% sub_agencies_on_this_page = agency.sub_agencies & @agencies %>
+  <% sub_agencies_on_this_page = agency.children & @agencies %>
   <% if sub_agencies_on_this_page.present? %>
     <ul>
       <% sub_agencies_on_this_page.each do |sub_agency| %>
