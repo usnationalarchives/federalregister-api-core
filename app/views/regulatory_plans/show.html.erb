@@ -115,15 +115,9 @@
     <% end %>
   <% end %>
   
-  <h3>Federal Register Activity</h3>
-  
-  <p class="entries"><%= page_entries_info @entries, :entry_name => 'article' %></p>
-  
-  <%= will_paginate @entries %>
-  <ul>
-    <% @entries.each do |entry| %>
-    <li><%= entry.publication_date %>: <%= entry.entry_type %> <%= link_to entry.title, entry_path(entry) %></li>
-    <% end %>
-  </ul>
-  <%= will_paginate @entries %>
+  <% count = @regulatory_plan.entries.count %>
+  <% if count > 0 %>
+    <h3>Federal Register Activity</h3>
+    <p><%= link_to "#{pluralize(count, "articles")} found", entries_search_path(:conditions => {:regulation_id_number => @regulatory_plan.regulation_id_number})%>
+  <% end %>
 </article>
