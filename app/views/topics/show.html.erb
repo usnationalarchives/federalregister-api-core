@@ -5,17 +5,15 @@
 
 <%= render :partial => 'entries/most_cited', :locals => {:entries => @most_cited_entries} %>
 
-<% content_for :sidebar do %>
-  <% related_agencies = @topic.related_agencies_cache %>
-  <% if related_agencies.present? %>
-    <h3>Agencies Using this Topic</h3>
-    <div class='chart size_<%=related_agencies.size%>'><%= pie_3d_chart(:alt => 'Agencies using this Topic Group', :truncate_legend => '30', :counts => true, :legend_location => 'bottom', :records => related_agencies, :value_method => 'entries_count', :legend_method => 'name', :max => 10, :size => ['230','350'], :color_range => ['005073','84cedb'], :transparent_bg => true) %></div>
-  <% end %>
-  
-  <% if @entry_types.present? %>
-    <h3>Entry Types for Topic</h3>
-     <div class='chart size_<%=@entry_types.size%>'><%= pie_3d_chart(:alt => 'Entry Types', :truncate_legend => '30', :counts => true, :legend_location => 'bottom', :records => @entry_types, :value_method => :count, :legend_method => :entry_type, :size => ['230','200'], :color_range => ['005073','84cedb'], :transparent_bg => true) %></div>
-  <% end %>
-  
-  <%= render :partial => 'topics_tagcloud', :locals => {:topics => @topic.related_topics_cache, :title => 'Related Topics'} %>
+<% related_agencies = @topic.related_agencies_cache %>
+<% if related_agencies.present? %>
+  <h3>Agencies Using this Topic</h3>
+  <div class='chart size_<%=related_agencies.size%>'><%= pie_3d_chart(:alt => 'Agencies using this Topic Group', :truncate_legend => '30', :counts => true, :legend_location => 'bottom', :records => related_agencies, :value_method => 'entries_count', :legend_method => 'name', :max => 10, :size => ['230','350'], :color_range => ['005073','84cedb'], :transparent_bg => true) %></div>
 <% end %>
+
+<% if @entry_types.present? %>
+  <h3>Entry Types for Topic</h3>
+   <div class='chart size_<%=@entry_types.size%>'><%= pie_3d_chart(:alt => 'Entry Types', :truncate_legend => '30', :counts => true, :legend_location => 'bottom', :records => @entry_types, :value_method => :count, :legend_method => :entry_type, :size => ['230','200'], :color_range => ['005073','84cedb'], :transparent_bg => true) %></div>
+<% end %>
+
+<%= render :partial => 'topics_tagcloud', :locals => {:topics => @topic.related_topics_cache, :title => 'Related Topics'} %>
