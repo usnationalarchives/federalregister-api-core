@@ -66,7 +66,13 @@
   <div class="result_set">
     <% if @search.results.present? %>
       <div class="search_info titlebar">
-
+        <% if @search.regulatory_plan %>
+          <div id="additional_filter">
+            Limited to regulation <%= link_to @search.regulatory_plan.title, regulatory_plan_path(@search.regulatory_plan)%>
+            (<%= link_to 'Remove', params.recursive_merge(:page => nil, :conditions => {:regulation_id_number => nil}), :title => 'Remove Filter', :class => 'remove' %>)
+          </div>
+        <% end %>
+        
         <div class="article_count">
           <h2 class="title_bar"><span class="small_stack">Articles <span>Found</span></span><%= number_with_delimiter @search.results.total_entries %></h2>
         </div>
