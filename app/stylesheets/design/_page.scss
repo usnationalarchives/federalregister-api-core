@@ -222,13 +222,51 @@ HOME PAGE
 
 ******************************/
 
+.top_news_promo {
+  border: 1px solid #ccc;
+  margin-bottom: 1em;
+  overflow: hidden;
+  padding: 1em;
+  }
+.promo_content_area {
+  display: block;
+  height: 170px;
+  overflow: hidden;
+  width: 580px;
+  }
+.top_news_promo ul.news_items {
+  height: 170px;
+  margin-bottom: 0;
+  width: 2000px;
+  }  
+.top_news_promo ul.news_items li {
+  display: block;
+  height: 170px;
+  overflow: hidden;
+  }
+.top_news_promo ul.news_items li {
+  float: left;
+  }
+
+.top_news_promo ul.nav {
+  border-top: 1px solid #ccc;
+  clear: both;
+  margin: 0 auto;
+  }
+
+.top_news_promo ul.nav li {
+  display: inline;
+  list-style: none;
+  }
+
 .newsbox {
   background: #fcfcfc;
   border: 1px solid #ccc;
   @include box-shadow(#ccc, 0, 0, 5px);
   @include border-radius(5px);
   margin-bottom: 1em;
-  padding: 1em;
+  padding: 1em 1em 3em;
+  position: relative;
   }
 
 .newsbox h2 {
@@ -246,6 +284,12 @@ HOME PAGE
   margin-bottom: .5em;
   }
 
+.newsbox .see_more {
+  bottom: 1em;
+  position: absolute;
+  left: 1em;
+  }  
+  
 /******************************
 
 TABLES
