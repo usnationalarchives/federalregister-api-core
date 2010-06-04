@@ -1,125 +1,41 @@
 <% title @entry.title %>
 
+<% content_for :head do %>
+ <link rev="canonical" type="text/html" href="<%= short_entry_url(@entry) %>" />
+<% end %>
+
+
 <h1 class="title"><span><%= @entry.entry_type %></span></h1>
 
-<div id="content_area">
   
-  <% if (@entry.comments_close_on.present? && @entry.comments_close_on >= Date.today) %>
+<% if (@entry.comments_close_on.present? && @entry.comments_close_on >= Date.today) %>
   <div id="flash_message">
     <p>This article has a comment period that ends in <%= pluralize (@entry.comments_close_date.date - Entry.latest_publication_date), 'day' %>
     (<%= @entry.comments_close_date.date %>)</p>
   </div>
-  <% end -%>
-  
-  <% article_tag do %>
+<% end -%>
 
+<% article_tag do %>
+  
+  <div id="metadata_content_area">
+  
     <h1><%= @entry.title %></h1>
-    <p class="metadata">A <%= @entry.entry_type %> by <%= agency_names(@entry) %> on
-      <%= link_to date_tag(@entry.publication_date, :datetime => @entry.publication_date.to_s(:iso)), entries_by_date_path(@entry.publication_date) %>
-    </p>
-    <div class="box">
-    
-      <div class="grid_4 alpha">
-        <h4>Download</h4>
-        <%= %w(pdf xml).map{|format| link_to "#{format.upcase}", @entry.source_url(format), :class => "button list social #{format}" } %>
-      </div>
-      <div class="grid_6 omega">
-        <h4>Share This</h4>
-        <%= link_to_twitter(@entry) %>
-        <%= link_to_facebook(@entry) %>
-        <%= link_to_reddit(@entry) %>
-        <%= link_to_digg(@entry) %>
-        <a href="#" class="button list social email">E-Mail</a>
-      </div>
-      
-    </div>
-       
-    <% content_for :javascripts do %>
-      <link rev="canonical" type="text/html" href="<%= short_entry_url(@entry) %>" />
-    <% end %>
-    
+    <%= render :partial => "metadata", :locals => {:entry => @entry} %>
+    <%= render :partial => 'download_and_share', :locals => {:entry => @entry} %>
     <%= render( :partial => "regulatory_plan", :object => @entry.most_recent_regulatory_plan ) if @entry.most_recent_regulatory_plan %>
     
-    <% if @entry.has_full_xml? %>
-      <%=
-       html = transform_xml(@entry.full_xml, 'entries/_full_text.html.xslt').to_s
-       html = auto_link(html, :href_options => { :class => 'external' })
-       add_citation_links(html) %>
-    <% elsif @entry.full_text %>
+  </div> <!-- end content area -->
 
-    <% if @entry.abstract %>
-      <% section_tag(:class => 'summary') do %>
-        <h3>Summary</h3>
-        <p class='abstract'>
-          <%= text_with_links(@entry, @entry.abstract) %>
-        </p>
-      <% end -%>
-    <% end %>
+  <%= render :partial => 'aside', :locals => {:entry => @entry} %>
+  
+  <div id="fulltext_content_area">
+  
+    <%= render :partial => 'full_text', :locals => {:entry => @entry} %>
 
-    <h3>Full text</h3>
-    <div class="fulltextWrapper">
-      <pre><%=
-        # FIXME: move out of view!
-        text = @entry.full_text
-    
-        text.sub!(/.*^-{71}$/m, '')
-        text.gsub!(/<\/?INF>/, '')
-        text.gsub!(/\[deg\]/, '&deg;')
-        text.gsub!(/<A HREF="[^"]+">\s*([^<]+)<\/A>/, 'http://\1')
-        text.gsub!(/^\[GRAPHIC\].*/, '')
-        text.gsub!(/\s+\[\[Page \d+\]\]\s*/m, " ")
-        # text.gsub!(/\n\n([A-Z].*(?:\n^\S.*)*)/, "\n\n<h3>\\1</h3>")
-        # text.gsub!(/^    (.+(?:\n^\S.*)*)/, "<p>\\1</p>\n")
-        text = add_citation_links(text)
-        text.sub!(/<\/pre>.*/m, '')
-    
-        text.sub!(/\A\s+/, '')
-        text.sub!(/\s+\Z/, '')
-        text
-      -%>
-      </pre>
-    </div>
+  </div> <!-- end content area -->  
+  
+<% end %> <!-- end article tag -->
 
-
-    <% if @entry.url_references.present? %>
-      <h3>References</h3>
-      <ul class='references'>
-      <% urls = @entry.url_references.map{|ref| ref.url} %>
-      <% urls.group_by(&:active).each do |active, urls| %>
-        <li>
-          <%= active ? 'Active' : 'Broken' %>
-          <ul>
-          <% urls.each do |url| %>  
-            <li><%= link_to url.name, "#{url.name}" %></li>
-          <% end %>
-          </ul>
-        </li>
-      <% end  %>
-      </ul>
-    <% end %>
-
-    <% end %>
-
-  <% end -%>
 </div>
 
-<% aside_tag(:id => 'sidebar') do %>
-  <% section_tag(:class => 'description') do %>
-    <div class="padding">
-      <p>This Federal Register article has been enhanced in a number of ways.  Places, references, citations, images and more have been prepared.</p>      
-    </div>
-  <% end -%>
 
-  <% if (@entry.comments_close_on.present? && @entry.comments_close_on >= Date.today && @entry.comment_url) %>
-    <% section_tag(:class => 'comment') do %>
-      <h1 class="title_bar">Submit a formal comment</h1>      
-      <div class="padding">
-        <p>The agency is required to respond in a future Federal Register article.</p>
-        <%= link_to "Submit a formal comment", @entry.comment_url, :class => 'button', :target => '_blank' %>
-      </div>
-    <% end %>
-  <% end -%>
-
-
-  
-<% end %>

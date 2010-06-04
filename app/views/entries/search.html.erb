@@ -11,6 +11,18 @@
 <% end %>
 
 <% form_for :conditions, @search, :url => entries_search_path, :html => {:method => :get} do |f| %>
+    
+    <ul class="tabs">
+      <li>
+        <a href="#">Articles <span class="number_of_results">120</span></a>
+      </li>
+      <li class="on">
+        <a href="#">Events <span class="number_of_results">12,000</span></a>
+      </li>
+      <li>
+        <a href="#">Regulations <span class="number_of_results">2,349</span></a>
+      </li>
+    </ul>
   <div class="search_bar">
     <label>Find</label>
     <%= f.text_field :term %>
