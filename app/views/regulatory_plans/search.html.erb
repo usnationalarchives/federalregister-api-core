@@ -26,6 +26,7 @@
   <% unless @search.blank? %>
 
   <div class="filters">
+    <%= render :partial => "entries/facets", :locals => {:facets => @search.priority_category_facets,   :name => "Priority Category"  }%>
     <%= render :partial => "entries/facets", :locals => {:facets => @search.agency_facets,   :name => "Agency"  }%>
   </div>
 

@@ -4,7 +4,7 @@ class EntrySearch < ApplicationSearch
   SUPPORTED_ORDERS = %w(Relevant Newest Oldest)
   
   attr_reader :order, :start_date, :end_date, :type, :location, :within
-  attr_accessor :type
+  attr_accessor :type, :regulation_id_number
   
   [:agency_ids, :section_ids, :topic_ids].each do |attr|
     define_method attr do
@@ -73,7 +73,7 @@ class EntrySearch < ApplicationSearch
   end
   
   def conditions=(conditions)
-    [:agency_ids, :section_ids, :topic_ids, :term, :type, :within, :location, :start_date, :end_date].each do |attr|
+    [:agency_ids, :section_ids, :topic_ids, :term, :type, :regulation_id_number, :within, :location, :start_date, :end_date].each do |attr|
       if conditions[attr].present?
         self.send("#{attr}=", conditions[attr])
       end
@@ -82,7 +82,8 @@ class EntrySearch < ApplicationSearch
   
   def conditions
     conditions = {}
-    conditions[:type] = @type if @type.present?
+    conditions[:type] = "\"#{@type}\"" if @type.present?
+    conditions[:regulation_id_number] = "\"#{@regulation_id_number}\"" if @regulation_id_number.present?
     conditions
   end
   
@@ -179,6 +180,13 @@ class EntrySearch < ApplicationSearch
     end
   end
   memoize :date_facets
+  
+  def regulatory_plan
+    if @regulation_id_number
+      RegulatoryPlan.find_by_regulation_id_number(@regulation_id_number)
+    end
+  end
+  memoize :regulatory_plan
   
   private
   
