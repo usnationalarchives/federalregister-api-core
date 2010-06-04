@@ -1,11 +1,5 @@
   <% aside_tag(:id => 'sidebar') do %>
-    <% section_tag(:class => 'description') do %>
-      <div class="padding">
-        <p>This Federal Register article has been enhanced in a number of ways.  Places, references, citations, images and more have been prepared.</p>      
-      </div>
-    <% end -%>
-
-    <% if (entry.comments_close_on.present? && entry.comments_close_on >= Date.today && @entry.comment_url) %>
+    <% if (@entry.comments_close_on.present? && @entry.comments_close_on >= Date.today) %>
       <% section_tag(:class => 'comment') do %>
         <h1 class="title_bar">Submit a formal comment</h1>      
         <div class="padding">
