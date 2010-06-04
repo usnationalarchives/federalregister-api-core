@@ -31,6 +31,14 @@
 
 <ul class="agencyList indent raquo clear">
 <% @agencies.each do |agency|  %>
-  <li><%= render :partial => 'agency_list_item', :locals => {:agency => agency} %></li>
+  <li><%= render :partial => 'agency_list_item', :locals => {:agency => agency} %>
+    <% if agency.children.present? %>
+      <ul>
+        <% agency.children.each do |sub_agency| %>
+          <li><%= render :partial => 'agency_list_item', :locals => {:agency => sub_agency} %></li>
+        <% end %> 
+      </ul>
+    <% end %>
+  </li>
 <% end %>
 </ul>
