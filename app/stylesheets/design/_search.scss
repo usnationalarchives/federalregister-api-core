@@ -29,6 +29,7 @@ PAGE ELEMENTS
   }
 .tabs li a {
   color: #666;
+  @include type_kit_font_1;
   margin-bottom: .5em;
   padding: 1em 1em 0 1em;
   }  
