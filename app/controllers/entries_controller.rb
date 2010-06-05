@@ -25,7 +25,7 @@ class EntriesController < ApplicationController
   def search_facet
     @search = EntrySearch.new(params)
     facets = @search.send(params[:facet] + "_facets")
-    render :partial => "facet", :collection => facets, :layout => nil
+    render :partial => "search/facet", :collection => facets, :layout => nil
   end
   
   def widget
