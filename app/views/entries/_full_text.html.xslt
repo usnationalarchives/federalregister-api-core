@@ -7,22 +7,23 @@
   <xsl:variable name="frunitname" select="FEDREG/UNITNAME"/> 
     
   <xsl:template match="/">
+      <xsl:value-of disable-output-escaping="yes" select="'&lt;div class=&quot;body_column&quot; &gt;'" />
         <xsl:for-each select="//SUM">
           <xsl:apply-templates />
         </xsl:for-each>
+        <xsl:if test="count(//HD) > 0">
+          <xsl:call-template name="manual_header">
+            <xsl:with-param name="id" select="'table_of_contents'" />
+            <xsl:with-param name="name" select="'Table of Contents'" />
+          </xsl:call-template>
         
-        <xsl:call-template name="manual_header">
-          <xsl:with-param name="id" select="'table_of_contents'" />
-          <xsl:with-param name="name" select="'Table of Contents'" />
-        </xsl:call-template>
-        
-        <ul class="table_of_contents">
-          <xsl:apply-templates mode="table_of_contents" />
-          <xsl:if test="count(//FTNT) > 0">
-            <li class="level_1"><a href="#footnotes">Footnotes</a></li>
-          </xsl:if>
-        </ul>
-        
+          <ul class="table_of_contents">
+            <xsl:apply-templates mode="table_of_contents" />
+            <xsl:if test="count(//FTNT) > 0">
+              <li class="level_1"><a href="#footnotes">Footnotes</a></li>
+            </xsl:if>
+          </ul>
+        </xsl:if>
         <xsl:if test="count(//GPOTABLE/TTITLE[descendant::text()]) > 0">
           <xsl:call-template name="manual_header">
             <xsl:with-param name="id" select="'table_of_tables'" />
