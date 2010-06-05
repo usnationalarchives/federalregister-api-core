@@ -32,7 +32,7 @@
   <div class="filters">
     <h4>Date</h4>
     <ul>
-      <%= render :partial => "facet", :collection => @search.date_facets %>
+      <%= render :partial => "search/facet", :collection => @search.date_facets %>
     
       <%# TODO HELP-RUBY i know this doesn't go here. just wanted to stash it somewhere  %>
       <!-- <li><%#= sparkline(:data => @search.date_distribution.to_a.sort_by{|date, count| date}.map{|date, count| count}, :alt => "Monthly Distribution" ) %></li> -->      
