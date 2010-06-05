@@ -1,39 +1,14 @@
 class RegulatoryPlanSearch < ApplicationSearch
-  attr_accessor :priority_category
-  [:agency_ids].each do |attr|
-    define_method attr do
-      @with[attr]
-    end
-    
-    define_method "#{attr}=" do |val|
-      if val.present?
-        @with[attr] = val
-      end
-    end
-  end
-  
-  def model
-    RegulatoryPlan
-  end
-  
-  def conditions=(conditions)
-    [:agency_ids, :term, :priority_category].each do |attr|
-      if conditions[attr].present?
-        self.send("#{attr}=", conditions[attr])
-      end
-    end
-  end
-  
-  def conditions
-    conditions = {}
-    conditions[:priority_category] = "\"#{@priority_category}\"" if @priority_category.present?
-    conditions
-  end
+  define_filter :agency_ids,  :sphinx_type => :with
   
   def agency_facets
     FacetCalculator.new(:search => self, :model => Agency, :facet_name => :agency_ids).all
   end
   memoize :agency_facets
+  
+  define_filter :priority_category do |val|
+    val
+  end
   
   def priority_category_facets
     raw_facets = RegulatoryPlan.facets(term,
@@ -55,6 +30,10 @@ class RegulatoryPlanSearch < ApplicationSearch
     end
   end
   memoize :priority_category_facets
+  
+  def model
+    RegulatoryPlan
+  end
   
   private
   
