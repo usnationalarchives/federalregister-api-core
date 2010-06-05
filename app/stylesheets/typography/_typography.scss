@@ -32,6 +32,7 @@ h4,
 h5,
 h6 {
   @include type_kit_font_2;
+  font-weight: 600;
   }
 
 #entries.show h2,
@@ -53,8 +54,8 @@ a:hover {
 }
 
 p {
-  @include type_kit_font_3;
-  font-size: 1.1em;
+  @include type_kit_serif_headline;
+  font-size: 1.2em;
 }
 
 /******************************
