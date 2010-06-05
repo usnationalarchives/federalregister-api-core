@@ -201,38 +201,54 @@ ARTICLE VIEW
   margin: 0 1em 0 0;
   }
   
-#entries.show .header_column h1  {
-  border-top: 3px solid $dark_blue;
+#entries.show .header_column h1,
+#entries.show .header_column #table_of_contents,
+#entries.show .header_column #table_of_graphics
+  {
   clear: both;
   color: $powder_blue;
-  font-size: 1.5em;
+  font-size: 1.4em;
   @include type_kit_font_1;
-  margin: 3px 0 1em;
+  margin: 0 0 1em;
   padding-top: 0;
   text-align: right;
   text-transform: uppercase;
   }
 
 #entries.show .header_column h2 {
-  border-bottom: 1px solid #ccc;
-  border-top: 1px solid #ccc;
   font-size: 1.3em;
   line-height: 1.5em;
-  margin-top: .2em;
-  padding: 1em 0;
+  margin-top: 0;
+  text-align: right;
   }
 
+#entries.show .back_to_top {
+  color: #bbb;
+  font-size: .7em;
+  }
+
+#entries.show h1 .back_to_top,
+#entries.show h2 .back_to_top {
+  display: block;
+  }
 #entries.show .body_column {
   margin-bottom: 4em;
   }  
 
 #entries.show .body_column h3 {
-  font-size: 1.2em;
+  font-size: 1.3em;
   line-height: 1.5em;
   }
-#entries.show .body_column h3:first-child {
-  margin-top: 0;
+#entries.show .body_column h4 {
+  font-size: 1.2em;
+  line-height: 1.5;
   }
+#entries.show .body_column h3,
+#entries.show .body_column h4,
+#entries.show .body_column h5 {
+  margin: 2em 0 1em;
+  }
+
 #entries.show .table_of_contents {
   font-size:1.1em;
   list-style-type: none;
@@ -251,6 +267,10 @@ ARTICLE VIEW
 #entries.show .table_of_contents .level_3 {
   margin-left: 2em;
   }  
+
+#entries.show p + p {
+  text-indent: 2em;
+  }
 
 /******************************
 
