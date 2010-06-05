@@ -52,10 +52,10 @@
     </ul>
     <% end %>
     
-    <%= render :partial => "facets", :locals => {:facets => @search.type_facets,     :name => "Type"    }%>
-    <%= render :partial => "facets", :locals => {:facets => @search.section_facets,  :name => "Section" }%>
-    <%= render :partial => "facets", :locals => {:facets => @search.agency_facets,   :name => "Agency"  }%>
-    <%= render :partial => "facets", :locals => {:facets => @search.topic_facets,    :name => "Topic"   }%>
+    <%= render :partial => "search/facets", :locals => {:facets => @search.type_facets,     :name => "Type"    }%>
+    <%= render :partial => "search/facets", :locals => {:facets => @search.section_facets,  :name => "Section" }%>
+    <%= render :partial => "search/facets", :locals => {:facets => @search.agency_facets,   :name => "Agency"  }%>
+    <%= render :partial => "search/facets", :locals => {:facets => @search.topic_facets,    :name => "Topic"   }%>
   </div>
 
   <div class="result_set">
