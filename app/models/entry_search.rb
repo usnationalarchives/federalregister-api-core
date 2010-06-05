@@ -6,7 +6,7 @@ class EntrySearch < ApplicationSearch
   attr_reader :order, :type, :location, :within
   attr_accessor :type, :regulation_id_number
   
-  define_filter :regulation_id_number, :label => "Regulation" do |regulation_id_number|
+  define_filter :regulation_id_number, :label => "Regulation", :phrase => true do |regulation_id_number|
     RegulatoryPlan.find_by_regulation_id_number(regulation_id_number).try(:title)
   end
   
@@ -15,7 +15,7 @@ class EntrySearch < ApplicationSearch
     Section.find_by_id(section_id).try(:title)
   end
   define_filter :topic_ids,   :sphinx_type => :with
-  define_filter :type,        :sphinx_type => :conditions do |type|
+  define_filter :type,        :phrase => true do |type|
     Entry::ENTRY_TYPES[type]
   end
   
