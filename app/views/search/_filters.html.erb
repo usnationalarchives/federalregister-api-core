@@ -1,0 +1,10 @@
+<% if search.filters.present? %>
+<ul class="filters">
+  <% search.filters.each do |filter| %>
+  <li>
+    <%= filter.label %>: <%= filter.name %>
+    <%= link_to 'Remove', params.recursive_merge(:page => nil, :conditions => {filter.condition => nil}), :title => 'Remove Filter', :class => 'remove' %>
+  </li>
+  <% end %>
+</ul>
+<% end %>
