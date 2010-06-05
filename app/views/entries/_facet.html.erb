@@ -1,9 +1,9 @@
 <li class="<%= 'on' if facet.on? %>">
   <% if facet.on? %>
     <%# HELP-DESIGN: contents of span.remove should be shot offscreen and the remove icon should appear %>
-    <%= link_to "<span class=\"remove\">Remove</span> #{facet.name}", params.recursive_merge(:page => nil, :conditions => {facet.condition => nil})%>
+    <%= link_to "<span class=\"remove\">Remove</span> #{facet.name}", params.recursive_merge(:page => nil, :action => :search, :conditions => {facet.condition => nil})%>
   <% else %>
-    <%= link_to "#{facet.name}", params.recursive_merge(:page => nil, :conditions => {facet.condition => facet.value}), :class => 'facet_name' %>
+    <%= link_to "#{facet.name}", params.recursive_merge(:page => nil, :action => :search, :conditions => {facet.condition => facet.value}), :class => 'facet_name' %>
   <% end %>
   <span class='count'><%= number_with_delimiter facet.count %></span>
 </li>
