@@ -239,6 +239,10 @@ ARTICLE VIEW
   font-size: 1.3em;
   line-height: 1.5em;
   }
+#entries.show .body_column > h3:first-child {
+  margin-top: 0;
+}  
+  
 #entries.show .body_column h4 {
   font-size: 1.2em;
   line-height: 1.5;
