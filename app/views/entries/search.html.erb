@@ -80,12 +80,3 @@
   </div>
   <% end %>
 <% end %>
-
-<% content_for :widget do %>
-<div id="modal_widget" class="modal_box group">
-  <div class="modal_box_content">
-    <%= render :partial => 'widget_instructions', :locals => { :permalink => true } %>
-    <a href="" class="cancel">Close Window</a>
-  </div>
-</div>
-<% end %>
