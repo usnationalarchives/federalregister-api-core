@@ -34,8 +34,7 @@ ENTRIES
 
 ******************************/
 
-#entries #content_area,
-#entries #metadata_content_area {
+#entries #content_area {
   @include grid(10, 16);
   @include grid-suffix(1);
   @include alpha;

@@ -37,9 +37,8 @@ PAGE ELEMENTS
   background: #f1f1f1;
   @include border-top-left-radius(5px);
   @include border-top-right-radius(5px);
-  @include box-shadow(#aaa, 0, -1px, 3px);
   color: #385F82;
-  font-weight: bold;
+  font-weight: 700; /* TODO Look up proper weight */
   padding: .5em 1em 1em 1em;
   }
 .tabs .number_of_results {
@@ -202,8 +201,8 @@ FILTERS
   }
 .filters li a {
   display: block;
-  font-size: .9em;
-  font-weight: bold;
+  font-size: 1em; 
+  font-weight: 700;
   }
 .filters li a.remove {
   background: url(/images/remove.png) no-repeat left top;
