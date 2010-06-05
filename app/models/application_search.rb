@@ -2,13 +2,14 @@ class ApplicationSearch
   extend ActiveSupport::Memoizable
   
   class Filter
-    attr_reader :value, :name, :condition, :label, :sphinx_type, :sphinx_attribute
+    attr_reader :value, :condition, :label, :sphinx_type, :sphinx_attribute, :sphinx_value
     def initialize(options)
       @value        = options[:value]
       @name         = options[:name]
       @name_definer = options[:name_definer]
       @condition    = options[:condition]
       @sphinx_attribute = options[:sphinx_attribute] || @condition
+      @sphinx_value = options[:phrase] ? "\"#{options[:value]}\"" : options[:value]
       @sphinx_type  = options[:sphinx_type] || :conditions
       @label        = options[:label] || @condition.to_s.singularize.humanize
     end
@@ -128,7 +129,7 @@ class ApplicationSearch
   def conditions
     conditions = {}
     @filters.select{|f| f.sphinx_type == :conditions }.each do |filter|
-      conditions[filter.sphinx_attribute] = filter.value
+      conditions[filter.sphinx_attribute] = filter.sphinx_value
     end
     
     conditions
@@ -137,13 +138,12 @@ class ApplicationSearch
   def with
     with = {}
     @filters.select{|f| f.sphinx_type == :with }.each do |filter|
-      with[filter.sphinx_attribute] = filter.value
+      with[filter.sphinx_attribute] = filter.sphinx_value
     end
     with
   end
   
   def results
-    # raise [with,conditions].inspect
     unless defined?(@results)
       @results = model.search(@term,
         {
