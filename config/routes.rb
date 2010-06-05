@@ -99,12 +99,13 @@ ActionController::Routing::Routes.draw do |map|
   map.resource :location, :only => [:update, :edit], :member => {:places => :get}
   
   # REGULATIONS
-  map.regulatory_plan 'regulations/:regulation_id_number/:slug',
-                      :controller => 'regulatory_plans',
-                      :action     => 'show'
   map.regulatory_plans_search 'regulations/search',
                       :controller => 'regulatory_plans',
                       :action     => 'search'
+  map.regulatory_plans_search_facet 'regulations/search/facet', :controller => 'regulatory_plans', :action => 'search_facet'
+  map.regulatory_plan 'regulations/:regulation_id_number/:slug',
+                      :controller => 'regulatory_plans',
+                      :action     => 'show'
   map.short_regulatory_plan 'r/:regulation_id_number', :controller => 'regulatory_plans',
                                              :action     => 'tiny_url'
 
