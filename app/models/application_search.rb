@@ -1,14 +1,32 @@
 class ApplicationSearch
   extend ActiveSupport::Memoizable
   
+  class Filter
+    attr_reader :value, :name, :condition, :label, :sphinx_type, :sphinx_attribute
+    def initialize(options)
+      @value        = options[:value]
+      @name         = options[:name]
+      @name_definer = options[:name_definer]
+      @condition    = options[:condition]
+      @sphinx_attribute = options[:sphinx_attribute] || @condition
+      @sphinx_type  = options[:sphinx_type] || :conditions
+      @label        = options[:label] || @condition.to_s.singularize.humanize
+    end
+    
+    def name
+      @name ||= @name_definer.call(value)
+    end
+  end
+  
   class Facet
-    attr_reader :value, :name, :count, :on, :condition
+    attr_reader :value, :name, :condition, :count, :on
+
     def initialize(options)
       @value      = options[:value]
       @name       = options[:name]
+      @condition  = options[:condition]
       @count      = options[:count]
       @on         = options[:on]
-      @condition  = options[:condition]
     end
     
     def on?
@@ -60,12 +78,25 @@ class ApplicationSearch
   end
   
   attr_accessor :term
-  attr_reader :errors, :with
+  attr_reader :errors, :filters
+  
+  def self.define_filter(filter_name, options = {}, &name_definer)
+    attr_reader filter_name
+    
+    name_definer ||= Proc.new{|id| filter_name.to_s.sub(/_ids?$/,'').classify.constantize.find_by_id(id).try(:name) }
+    
+    define_method "#{filter_name}=" do |val|
+      if val.present?
+        instance_variable_set("@#{filter_name}", val)
+        add_filter options.merge(:value => val, :condition => filter_name, :name_definer => name_definer)
+      end
+    end
+  end
   
   def initialize(options = {})
     options.symbolize_keys!
     @errors = []
-    @with = {}
+    @filters = []
     
     # Set some defaults...
     @per_page = 20
@@ -74,6 +105,16 @@ class ApplicationSearch
     set_defaults(options)
     
     self.conditions = options[:conditions] || {}
+  end
+  
+  def conditions=(conditions)
+    conditions.to_a.reverse.each do |attr, val|
+      self.send("#{attr}=", val)
+    end
+  end
+  
+  def add_filter(options)
+    @filters << Filter.new(options)
   end
   
   def valid?
@@ -85,10 +126,24 @@ class ApplicationSearch
   end
   
   def conditions
-    {}
+    conditions = {}
+    @filters.select{|f| f.sphinx_type == :conditions }.each do |filter|
+      conditions[filter.sphinx_attribute] = filter.value
+    end
+    
+    conditions
+  end
+  
+  def with
+    with = {}
+    @filters.select{|f| f.sphinx_type == :with }.each do |filter|
+      with[filter.sphinx_attribute] = filter.value
+    end
+    with
   end
   
   def results
+    # raise [with,conditions].inspect
     unless defined?(@results)
       @results = model.search(@term,
         {
