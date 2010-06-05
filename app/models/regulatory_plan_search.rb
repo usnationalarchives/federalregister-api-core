@@ -6,7 +6,7 @@ class RegulatoryPlanSearch < ApplicationSearch
   end
   memoize :agency_facets
   
-  define_filter :priority_category do |val|
+  define_filter :priority_category, :phrase => true do |val|
     val
   end
   
