@@ -26,6 +26,8 @@
   </div>
 
   <div class="result_set">
+    <%= render :partial => "search/filters", :locals => {:search => @search} %>
+    
     <% if @search.results.present? %>
       <div class="search_info titlebar">
 
