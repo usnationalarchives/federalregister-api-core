@@ -7,22 +7,23 @@
   <xsl:variable name="frunitname" select="FEDREG/UNITNAME"/> 
     
   <xsl:template match="/">
+      <xsl:value-of disable-output-escaping="yes" select="'&lt;div class=&quot;body_column&quot; &gt;'" />
         <xsl:for-each select="//SUM">
           <xsl:apply-templates />
         </xsl:for-each>
+        <xsl:if test="count(//HD) > 0">
+          <xsl:call-template name="manual_header">
+            <xsl:with-param name="id" select="'table_of_contents'" />
+            <xsl:with-param name="name" select="'Table of Contents'" />
+          </xsl:call-template>
         
-        <xsl:call-template name="manual_header">
-          <xsl:with-param name="id" select="'table_of_contents'" />
-          <xsl:with-param name="name" select="'Table of Contents'" />
-        </xsl:call-template>
-        
-        <ul class="table_of_contents">
-          <xsl:apply-templates mode="table_of_contents" />
-          <xsl:if test="count(//FTNT) > 0">
-            <li style="padding-left: 10px"><a href="#footnotes">Footnotes</a></li>
-          </xsl:if>
-        </ul>
-        
+          <ul class="table_of_contents">
+            <xsl:apply-templates mode="table_of_contents" />
+            <xsl:if test="count(//FTNT) > 0">
+              <li class="level_1"><a href="#footnotes">Footnotes</a></li>
+            </xsl:if>
+          </ul>
+        </xsl:if>
         <xsl:if test="count(//GPOTABLE/TTITLE[descendant::text()]) > 0">
           <xsl:call-template name="manual_header">
             <xsl:with-param name="id" select="'table_of_tables'" />
@@ -67,10 +68,14 @@
         <xsl:apply-templates/>
         
         <xsl:if test="count(//FTNT) > 0">
-          <div id="footnotes">
-            <h3>Footnotes <a href="#table_of_contents">&#8593;</a></h3>
-            <xsl:apply-templates mode="footnotes" />
-          </div>
+            <xsl:call-template name="manual_header">
+              <xsl:with-param name="id" select="'footnotes'" />
+              <xsl:with-param name="name" select="'Footnotes'" />
+              <xsl:with-param name="back_to_top" select="1" />
+            </xsl:call-template>
+            <div id="footnotes">
+              <xsl:apply-templates mode="footnotes" />
+            </div>
         </xsl:if>
         
         <xsl:value-of disable-output-escaping="yes" select="'&lt;/div&gt;'" />
@@ -331,25 +336,34 @@
           <xsl:apply-templates />
         </xsl:otherwise>
       </xsl:choose>
-      <xsl:text> </xsl:text>
       <xsl:if test="text() != 'SUMMARY:'">
-        <a href="#table_of_contents" class="back_to_top">Back to Top</a>
+        <xsl:call-template name="back_to_top" />
       </xsl:if>
     </xsl:element>
+  </xsl:template>
+  
+  <xsl:template name="back_to_top">
+    <xsl:text> </xsl:text>
+    <a href="#table_of_contents" class="back_to_top">Back to Top</a>
   </xsl:template>
   
   <xsl:template name="manual_header">
     <xsl:param name="name" />
     <xsl:param name="id" />
+    <xsl:param name="back_to_top" />
     
     <xsl:value-of disable-output-escaping="yes" select="'&lt;/div&gt;'" />
     <div class="header_column">
-      <h3>
+      <h1>
         <xsl:attribute name="id">
           <xsl:value-of select="$id" />
         </xsl:attribute>
         <xsl:value-of select="$name" />
-      </h3>
+        
+        <xsl:if test="$back_to_top">
+          <xsl:call-template name="back_to_top" />
+        </xsl:if>
+      </h1>
     </div>
     <xsl:value-of disable-output-escaping="yes" select="'&lt;div class=&quot;body_column&quot; &gt;'" />
   </xsl:template>
