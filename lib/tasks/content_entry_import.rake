@@ -11,6 +11,16 @@ namespace :content do
     end
     
     namespace :import do
+      desc "Extract full text"
+      task :full_text => :environment do
+        entry_importer(:full_text)
+      end
+      
+      desc "Extract full xml & full_text"
+      task :full_xml_and_full_text => :environment do
+        entry_importer(:full_xml, :full_text)
+      end
+      
       desc "Extract referenced dates"
       task :referenced_dates => :environment do
         entry_importer(:referenced_dates)
