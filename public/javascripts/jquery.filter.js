@@ -7,7 +7,7 @@ $(document).ready(function() {
   $("#agencies li.livesearch input").bind("keyup", function(e){
     
     $("#agency_list > li").hide().find("a:regex('\\b" + $(this).attr("value") + "')").parent().show();
-    $("#agencies").trigger('filter');  
+    $("#agencies").trigger('filter', $(this).val());  
     
   }).bind("focus", function(e){
     
@@ -29,7 +29,7 @@ $(document).ready(function() {
     else
       $("#agency_list > li").hide().find("a:regex('^[" + $(this).html() + "]')").parent().show();
       
-    $("#agencies").trigger('filter', $(this).html() );  
+    $("#agencies").trigger('filter', $(this).text() );  
   });
   
   
@@ -50,7 +50,7 @@ $(document).ready(function() {
   
   $("#agencies").bind('filter', function( event, item ){
     $("#agency_count").html( $("#agency_list > li:visible").size() );
-    $("h1.title span").html( 'Agencies - ' + item );
+    $("h1.title span").text( 'Agencies - ' + item );
   });
 
 });
