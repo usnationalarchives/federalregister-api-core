@@ -2,7 +2,20 @@ $(document).ready(function() {
   
   //clear the live search so it's not confusing
   $("#agencies ul.filter li.livesearch input").removeAttr("value");
-      
+
+  
+  $("#agencies li.livesearch input").bind("keyup", function(e){
+    
+    $("#agency_list > li").hide().find("a:regex('\\b" + $(this).attr("value") + "')").parent().show();
+    $("#agencies").trigger('filter');  
+    
+  }).bind("focus", function(e){
+    
+    $("#agencies ul.filter li").removeClass("on");
+    $(this).parent().addClass("on");
+    
+  });
+
   $("#agencies ul.filter li a").bind("click", function(e){
     e.preventDefault();
     
@@ -16,30 +29,28 @@ $(document).ready(function() {
     else
       $("#agency_list > li").hide().find("a:regex('^[" + $(this).html() + "]')").parent().show();
       
-    $("#agencies").trigger('filter');  
+    $("#agencies").trigger('filter', $(this).html() );  
   });
   
   
-  
-  $("#agencies li.livesearch input").bind("keyup", function(e){
-    $("#agency_list > li").hide().find("a:regex('\\b" + $(this).attr("value") + "')").parent().show();
-    $("#agencies").trigger('filter');  
-  });
-  
-  
-  
+  $(".sub_agencies a").bind("click", function(e){
+    e.preventDefault();
     
-  $("#agencies li.livesearch input").bind("focus", function(e){
-    $("#agencies ul.filter li").removeClass("on");
+    if( $(this).parent().hasClass("show") ){
+      $("#agencies li > ul").show();
+    }else {
+      $("#agencies li > ul").hide();
+    }
+
+    $(".sub_agencies li").removeClass("on");
     $(this).parent().addClass("on");
+    
   });
   
   
-  
-  
-  $("#agencies").bind('filter', function(){
+  $("#agencies").bind('filter', function( event, item ){
     $("#agency_count").html( $("#agency_list > li:visible").size() );
-    console.log("filter event");
+    $("h1.title span").html( 'Agencies - ' + item );
   });
 
 });
