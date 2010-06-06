@@ -1,33 +1,31 @@
 <% title "Topics starting with '#{@letter}'" %>
-<% content_for :precolumn do %>
-  <h1>Explore Topics</h1>
-  
-  <div class="infobox">
-    <p class='copy'>
-      Federal agencies often add two or three topics to an entry they place in the Federal Register. In fact there are 
-      over 2700 topics in the digital versions of the Register! Because topic usage changes over time, and in order to 
-      make this large list easier to explore we've grouped those topics into smaller subsets.
-    <p class='copy'>
-      We've also grouped the topics by their first letter to further aid exploration. You can also explore the most 
-      popular topics in the organic topic cloud we've generated for the most commonly used topics.
-    </p>
-  </div>
-<% end %>
 
-<div class="header controls">
-  <h2>Topics starting with <%= @letter %></h2>
-<ul class="btn small group">
-<% @letters.each do |letter| %>
-  <li class="<%='on' if letter == @letter %>"><%= link_to letter.upcase, topics_by_letter_path(letter) %></li>
-<% end %>
-</ul>
+<h1 class="title"><span>Explore Topics</span></h1>
+
+<div class="filters">
+  <h4>Live Filter</h4>
+  <ul>
+    <li class="livesearch"><input title="Filter agencies"></li>  
+  </ul>
 </div>
 
-<ul class="raquo indent">
-  <% @topics.each do |topic| %>
-    <li><%= link_to topic.name, topic_path(topic) %> (<%= topic.entries_count %>)</li>
+
+<div class="result_set agency_list_container">
+  <ul class="letter_list">
+  <% @letters.each do |letter| %>
+    <li class="<%='on' if letter == @letter %>"><%= link_to letter.upcase, topics_by_letter_path(letter) %></li>
   <% end %>
-</ul>
+  </ul>
+
+  <div class="topic_count">
+    <h2 class="title_bar"><span class="small_stack">Topics <span>Found</span></span> <span id="topic_count"><%= @topics.count %></span></h2>
+  </div>
+  <ul>
+    <% @topics.each do |topic| %>
+      <li><%= link_to topic.name, topic_path(topic) %> (<%= topic.entries_count %>)</li>
+    <% end %>
+  </ul>
+</div>
 
 <% content_for :sidebar do %>
   <%= render :partial => 'topics_tagcloud', :locals => {:topics => @popular_topics, :title => 'Popular Topics'} %>

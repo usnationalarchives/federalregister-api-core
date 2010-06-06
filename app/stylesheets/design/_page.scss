@@ -333,10 +333,11 @@ AGENCY LIST
   }
 .agency_list_info li a {
   color: #BDBDBD;
+  text-transform: uppercase;
   }    
 .agency_list_info li.on {
   background: url(/images/tab_select_bottom.png) no-repeat 50% bottom;
-  font-weight: bold;
+  font-weight: 700;
   } 
 .agency_list_info li.on a {
   color: #385F82;
@@ -362,7 +363,29 @@ AGENCY VIEW
 .quotebox > p:last-child {
   margin-bottom: 0;
   }
+  
+  
+/******************************
 
+TOPIC LIST
+
+******************************/
+
+.letter_list {
+  @include horizontal-list;
+  }
+  
+.letter_list li {
+  padding-bottom: 7px;
+  }
+    
+.letter_list li.on {
+  background: url(/images/tab_select_bottom.png) no-repeat 50% bottom;
+  font-weight: 700;
+  }
+.topic_count h2 {
+  margin-top: 0;
+  }  
 /******************************
 
 HOME PAGE 
