@@ -230,23 +230,37 @@ ARTICLE VIEW
 #entries.show h1 .back_to_top,
 #entries.show h2 .back_to_top {
   display: block;
+  font-weight: normal;
   }
 #entries.show .body_column {
   margin-bottom: 4em;
   }  
 
 #entries.show .body_column h3 {
-  font-size: 1.3em;
+  border-bottom: 1px solid #999;
+  font-size: 1.2em;
+  font-weight: normal;
   line-height: 1.5em;
+  padding: 0.5em 0;
   }
 #entries.show .body_column > h3:first-child {
   margin-top: 0;
-}  
-  
+  padding-top: 0;
+  }  
+
+#entries.show .body_column h3,  
 #entries.show .body_column h4 {
+  border-bottom: 1px solid #999;
   font-size: 1.2em;
+  font-weight: normal;
   line-height: 1.5;
+  position: relative;
   }
+#entries.show .body_column .back_to_top {
+  position: absolute;
+  right: -60px;
+  bottom: -9px;
+  }  
 #entries.show .body_column h3,
 #entries.show .body_column h4,
 #entries.show .body_column h5 {
@@ -275,6 +289,64 @@ ARTICLE VIEW
 #entries.show p + p {
   text-indent: 2em;
   }
+  
+  
+/******************************
+
+AGENCY LIST 
+
+******************************/
+
+#agency_list li {
+  list-style-type: none;
+  }
+#agency_list li li {
+  background: url(/images/child_many.png) no-repeat left top;
+  padding: 0 1.618em;  
+  }  
+#agency_list li li:last-child {
+  background-image: url(/images/child_one.png);
+  }
+
+#agencies .agency_list_info .title_bar {
+  border-top: none;
+  margin-bottom: 0;
+  margin-top: 7px;
+  padding-top: 0;
+  } 
+
+.agency_list_info {  
+  border-bottom: 3px solid #385F82;
+  margin-bottom: 1em;
+  padding: 0 1em;
+  position: relative;
+  overflow: hidden;
+  }
+.agency_list_info ul {
+  bottom: 0;
+  @include horizontal-list;
+  position: absolute;
+  right: 1em;
+  }
+.agency_list_info li {
+  padding-bottom: 7px;
+  }
+.agency_list_info li a {
+  color: #BDBDBD;
+  }    
+.agency_list_info li.on {
+  background: url(/images/tab_select_bottom.png) no-repeat 50% bottom;
+  font-weight: bold;
+  } 
+.agency_list_info li.on a {
+  color: #385F82;
+  }
+
+
+.filters .livesearch input {
+  border: 1px solid #ccc;
+  width: 90%;
+  }  
 
 /******************************
 
