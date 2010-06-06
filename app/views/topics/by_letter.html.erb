@@ -21,15 +21,37 @@
   
   <div class="topic_count">
     <h2 class="title_bar"><span class="small_stack">Topics <span>Found</span></span> <span id="topic_count"><%= @topics.count %></span></h2>
+    <ul class="ordering">
+        <li>Alpha</li>
+        <li class="on">
+          <a class="asc" href="#asc">Asc</a>
+        </li>
+        <li>
+          <a class="dec" href="#dec">Dec</a>
+        </li>
+        <li>Popularity</li>
+        <li>
+          <a class="pop-asc" href="#pop-asc">Asc</a>
+        </li>
+        <li>
+          <a class="pop-dec" href="#pop-dec">Dec</a>
+        </li>
+    </ul>
   </div>
 
 
 
-  <ul>
+  <ul id="topic_list">
     <% @topics.each do |topic| %>
-      <li><span class="count"><%= topic.entries_count %></span> <%= link_to topic.name, topic_path(topic) %></li>
+      <li>
+        <span class="individual_topic_count"><%= topic.entries_count %></span> 
+        <%= link_to topic.name, topic_path(topic) %>
+      </li>
     <% end %>
   </ul>
+  
+  
+  
 </div>
 
 <% content_for :sidebar do %>
