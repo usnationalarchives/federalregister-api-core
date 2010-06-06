@@ -1,6 +1,8 @@
 <% title @topic.name %>
 <% feed_autodiscovery topic_path(@topic, :format => :rss) %>
 
+<h1 class="title"><span><%= @topic.name %></span></h1>
+
 <%= render :partial => "entries/list", :locals => {:entries => @entries, :search_params => {:topic => @topic}} %>
 
 <%= render :partial => 'entries/most_cited', :locals => {:entries => @most_cited_entries} %>
