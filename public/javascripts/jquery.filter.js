@@ -47,6 +47,13 @@ $(document).ready(function() {
     
   });
   
+  $(".agency_list_container .ordering a").bind('click', function(event) {
+    event.preventDefault();
+    $(this).hasClass("asc") ?  $("#agency_list>li").tsort() :  $("#agency_list>li").tsort({order:"desc"});
+    $(".agency_list_container .ordering li").removeClass("on");
+    $(this).parent().addClass("on");
+  });
+  
   
   $("#agencies").bind('filter', function( event, item ){
     $("#agency_count").html( $("#agency_list > li:visible").size() );
