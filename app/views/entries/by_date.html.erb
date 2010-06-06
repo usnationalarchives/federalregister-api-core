@@ -59,7 +59,7 @@
         </dd>
         <% end %>
       <% else %>
-        <% entries_by_toc_subject.sort_by(&:toc_doc).each do |entry| %>
+        <% entries_by_toc_subject.sort_by(&:title).each do |entry| %>
         <dt>
           <%= link_to entry.title, entry_path(entry) %>
         </dt>
