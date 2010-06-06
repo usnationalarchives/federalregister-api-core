@@ -124,10 +124,11 @@ PAGE ELEMENTS
   }
 .search_info li a {
   color: #BDBDBD;
+  text-transform: uppercase;
   }    
 .search_info li.on {
   background: url(/images/tab_select_bottom.png) no-repeat 50% bottom;
-  font-weight: bold;
+  font-weight: 700;
   } 
 .search_info li.on a {
   color: #385F82;
