@@ -1,44 +1,55 @@
 <% add_column_class('home') %>
+<% title 'Agency List' %>
 
-<% title 'Explore by Agency', :body => :precolumn %>
-<% content_for :precolumn do %>
-    <div class="infobox">
-      <p class='copy'>
-        Every day federal agencies make entries into the Federal Register. The sparklines (small graphs) next to each
-        agency allow you to see the activity for each agency by week for 12 months, allowing you to take the pulse of 
-        each agency. You can also use the search box to filter the list and quickly find any agency you care to look for!
-      </p>
-      <p class='copy'> 
-        Selecting an agency will allow you to take a more in depth view of where each agency is active, its recent 
-        entries into the Register, and the most common topics covered by that agency.
-      </p>
-    </div>
-<% end %>
+<h1 class="title"><span>Agency List</span></h1>
 
-
-<div class="header group">
-  <h2>By Name</h2>
-  <ul class="btn filter group">
+<div class="filters">
+  <h4>Alphabetical</h4>
+  <ul class="filter">
     <li class="all on"><a href="#">ALL</a></li>    
     <li><a href="#">A-C</a></li>
     <li><a href="#">D</a></li>
     <li><a href="#">E-F</a></li>
     <li><a href="#">G-N</a></li>
     <li><a href="#">O-Z</a></li>
+  </ul>
+  
+  <h4>Live Filter</h4>
+  <ul>
     <li class="livesearch"><input title="Filter agencies"></li>  
   </ul>
+  
 </div>
 
-<ul class="agencyList indent raquo clear">
-<% @agencies.each do |agency|  %>
-  <li><%= render :partial => 'agency_list_item', :locals => {:agency => agency} %>
-    <% if agency.children.present? %>
-      <ul>
-        <% agency.children.each do |sub_agency| %>
-          <li><%= render :partial => 'agency_list_item', :locals => {:agency => sub_agency} %></li>
-        <% end %> 
-      </ul>
-    <% end %>
-  </li>
-<% end %>
-</ul>
+<div class="result_set agency_list_container">
+
+  <div class="titlebar agency_list_info">
+    <div class="article_count">
+      <h2 class="title_bar"><span class="small_stack">Agencies <span>Found</span></span> <span id="agency_count"><%= @agencies.count %></span></h2>
+    </div>
+
+    <ul class="ordering">
+
+        <li class="on">
+          <a class="" href="">Ascending</a>
+        </li>
+        <li class="">
+          <a class="" href="">Descending</a>
+        </li>
+    </ul>
+  </div>  
+  
+  <ul id="agency_list">
+  <% @agencies.each do |agency|  %>
+    <li><%= render :partial => 'agency_list_item', :locals => {:agency => agency} %>
+      <% if agency.children.present? %>
+        <ul>
+          <% agency.children.each do |sub_agency| %>
+            <li><%= render :partial => 'agency_list_item', :locals => {:agency => sub_agency} %></li>
+          <% end %> 
+        </ul>
+      <% end %>
+    </li>
+  <% end %>
+  </ul>
+</div>
