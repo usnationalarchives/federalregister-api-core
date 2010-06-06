@@ -491,7 +491,49 @@ HOME PAGE
   display: inline;
   list-style: none;
   }
+#top_news_promo {
+  border: 5px solid #ececec;
+  @include border-radius(10px);
+  margin-bottom: 2em;
+}
+#top_news_promo ul.section_nav {
+  list-style: none;
+  margin-bottom: 0;
+  }
+#top_news_promo ul.section_nav li {
+  padding-right: 25px;
+  }
+#top_news_promo ul.section_nav li a {
+  background: url(/images/promo_nav_bg.png) repeat-x left bottom;
+  border: 1px solid #e5e5e5;
+  color: #5a5a5a;
+  display: block;
+  font-size: 1.3em;
+  line-height: 1.2;
+  padding: .5em 1em;
+  text-transform: uppercase;
+  }
 
+#top_news_promo ul.section_nav li.on {
+  background: url(/images/promo_nav_on.png) no-repeat left top;
+  padding-right: 0;
+  }
+
+#top_news_promo ul.section_nav li.on a {
+  color: #B88659;
+  border-right: none;
+  }
+
+#top_news_promo .news_items {
+  height: 270px;
+  margin-bottom: 0;
+  overflow: hidden;
+  }  
+#top_news_promo .news_items li {
+  height: 270px;
+  padding: 1em 0;
+  }  
+  
 .newsbox {
   background: #fcfcfc;
   border: 1px solid #ccc;
