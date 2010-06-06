@@ -3,6 +3,37 @@
 
 <h1 class="title"><span>Today's Issue</span></h1>
 
+<div class=" grid_14 alpha omega" id="top_news_promo">
+<div class="grid_4 alpha">
+  <ul class="section_nav">
+    <% @sections.each do |section| %>
+      <li>
+          <%= link_to section.title, section_path(section) %>
+      </li>  
+    <% end -%>
+  </ul>
+</div>
+<div class="grid_10 omega">
+  <ul class="news_items">
+    <% @sections.each do |section| %>
+      <li>
+          <% entry = section.highlighted_entries.first %>
+          <% if entry %>
+            <%= render :partial => 'special/entry_with_abstract', :locals => {:entry => entry} %>  
+            <div class="stats">
+              <p><span> <%= section.entries.count %></span> New Articles Today</p>
+              <p><span>12</span> Comment Periods Ending Soon</p>
+              
+            </div>    
+          <% end %>
+      </li>  
+    <% end -%>
+  </ul>
+</div>
+
+</div>  
+
+
 <div class=" grid_11 alpha omega" id="">
   <div class="top_news_promo">
     <div class="promo_content_area">
