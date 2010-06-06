@@ -371,21 +371,38 @@ TOPIC LIST
 
 ******************************/
 
+.topic_list_container .title_bar {
+  margin-bottom: 0;
+  }
+
 .letter_list {
   @include horizontal-list;
   }
   
 .letter_list li {
-  padding-bottom: 7px;
+  padding: 0 8.5px 7px 8.5px;
   }
-    
+.letter_list li:first-child {
+  padding-left: 8.5px;
+  }
+.letter_list li:last-child {
+  padding-right: 8.5px;
+  }    
 .letter_list li.on {
   background: url(/images/tab_select_bottom.png) no-repeat 50% bottom;
   font-weight: 700;
   }
+.topic_count {
+  margin-bottom: 2em;
+  }  
 .topic_count h2 {
   margin-top: 0;
   }  
+
+.topic_list_container ul {
+  list-style: none;
+  }
+  
 /******************************
 
 HOME PAGE 

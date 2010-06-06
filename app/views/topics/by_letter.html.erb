@@ -10,19 +10,24 @@
 </div>
 
 
-<div class="result_set agency_list_container">
+<div class="result_set topic_list_container">
+  
+  
   <ul class="letter_list">
   <% @letters.each do |letter| %>
     <li class="<%='on' if letter == @letter %>"><%= link_to letter.upcase, topics_by_letter_path(letter) %></li>
   <% end %>
-  </ul>
-
+  </ul>  
+  
   <div class="topic_count">
     <h2 class="title_bar"><span class="small_stack">Topics <span>Found</span></span> <span id="topic_count"><%= @topics.count %></span></h2>
   </div>
+
+
+
   <ul>
     <% @topics.each do |topic| %>
-      <li><%= link_to topic.name, topic_path(topic) %> (<%= topic.entries_count %>)</li>
+      <li><span class="count"><%= topic.entries_count %></span> <%= link_to topic.name, topic_path(topic) %></li>
     <% end %>
   </ul>
 </div>
