@@ -46,13 +46,11 @@ ENTRIES
   @include grid(5, 16);
   @include omega;
   }
-
 #entries.show .header_column {
   @include grid(4, 16);
   @include alpha;
   clear: both;
   }
-
 #entries.show .body_column {
   @include grid(8, 16);
   @include omega;

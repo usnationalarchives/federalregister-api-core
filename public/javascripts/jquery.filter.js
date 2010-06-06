@@ -1,28 +1,45 @@
 $(document).ready(function() {
   
   //clear the live search so it's not confusing
-  $("ul.filter li.livesearch input").removeAttr("value");
+  $("#agencies ul.filter li.livesearch input").removeAttr("value");
       
-  $("ul.filter li a").bind("click", function(e){
+  $("#agencies ul.filter li a").bind("click", function(e){
     e.preventDefault();
-    $("ul.filter li").removeClass("on");
+    
+    $("#agencies ul.filter li").removeClass("on");
     $(this).parent().addClass("on");
     
-    $("ul.filter li.livesearch input").attr("value", "Filter agencies");
+    $("#agencies li.livesearch input").attr("value", "Filter agencies");
     
     if($(this).parent().hasClass("all"))
-      $("ul.agencyList li").show()
+      $("#agency_list > li").show()
     else
-      $("ul.agencyList li").hide().find("a:regex('^[" + $(this).html() + "]')").parent().show();
+      $("#agency_list > li").hide().find("a:regex('^[" + $(this).html() + "]')").parent().show();
+      
+    $("#agencies").trigger('filter');  
   });
   
-  $("ul.filter li.livesearch input").bind("keyup", function(e){
-    $("ul.agencyList li").hide().find("a:regex('\\b" + $(this).attr("value") + "')").parent().show();
+  
+  
+  $("#agencies li.livesearch input").bind("keyup", function(e){
+    $("#agency_list > li").hide().find("a:regex('\\b" + $(this).attr("value") + "')").parent().show();
+    $("#agencies").trigger('filter');  
   });
+  
+  
+  
     
-  $("ul.filter li.livesearch input").bind("focus", function(e){
-    $("ul.filter li").removeClass("on");
+  $("#agencies li.livesearch input").bind("focus", function(e){
+    $("#agencies ul.filter li").removeClass("on");
     $(this).parent().addClass("on");
+  });
+  
+  
+  
+  
+  $("#agencies").bind('filter', function(){
+    $("#agency_count").html( $("#agency_list > li:visible").size() );
+    console.log("filter event");
   });
 
 });
