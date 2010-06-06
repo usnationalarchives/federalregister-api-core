@@ -157,9 +157,12 @@ ol.results li {
 ol.results li:last-child {
   border: none;
   }  
+ol.results h4 {
+  font-weight: normal;
+  }  
 ol.results li .date {
   color: #bdbdbd;
-  @include type_kit_font_1;
+  @include type_kit_font_3;
   font-size: 1.3em;
   line-height: 1.15;
   text-transform: uppercase;

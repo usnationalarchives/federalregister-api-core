@@ -97,3 +97,25 @@ THREE COL LIST - COMMENT PERIOD LIST
   @include grid(12, 16);
   @include omega;  
   }
+  
+
+/******************************
+
+CITATION LIST
+
+******************************/  
+
+.citation_list .citation_count {
+  @include grid(2, 16);
+  @include alpha;
+  
+  clear: both;
+  }
+.citation_list .date {
+  @include grid(2, 16)
+  }
+
+.citation_list .title {
+  @include grid(12, 16);
+  @include omega;
+  }  
