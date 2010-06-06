@@ -5,15 +5,11 @@ $(document).ready(function() {
 
   
   $("#agencies li.livesearch input").bind("keyup", function(e){
-    
     $("#agency_list > li").hide().find("a:regex('\\b" + $(this).attr("value") + "')").parent().show();
     $("#agencies").trigger('filter', $(this).val());  
-    
   }).bind("focus", function(e){
-    
     $("#agencies ul.filter li").removeClass("on");
     $(this).parent().addClass("on");
-    
   });
 
   $("#agencies ul.filter li a").bind("click", function(e){
@@ -60,18 +56,4 @@ $(document).ready(function() {
     $("h1.title span").text( 'Agencies - ' + item );
   });
 
-});
-
-jQuery.extend(  
-    jQuery.expr[':'], {  
-        regex: function(a, i, m, r) {  
-            var r = new RegExp(m[3], 'i');  
-            return r.test(jQuery(a).text());  
-        }  
-    }  
-);  
-
-jQuery.extend(
-  jQuery.expr[':'], {
-    Contains: "jQuery(a).text().toUpperCase().indexOf(m[3].toUpperCase())>=0"
 });

@@ -374,11 +374,9 @@ TOPIC LIST
 .topic_list_container .title_bar {
   margin-bottom: 0;
   }
-
 .letter_list {
   @include horizontal-list;
   }
-  
 .letter_list li {
   padding: 0 8.5px 7px 8.5px;
   }
@@ -394,14 +392,36 @@ TOPIC LIST
   }
 .topic_count {
   margin-bottom: 2em;
+  position: relative;
   }  
 .topic_count h2 {
   margin-top: 0;
   }  
-
 .topic_list_container ul {
   list-style: none;
   }
+.individual_topic_count {
+  color: #bdbdbd;
+  font-size: 1.3em;
+  font-weight: 700;
+  @include grid(1,16);  
+  line-height: 1.15;
+  text-align: right;
+  }  
+
+.topic_count .ordering {
+  @include horizontal_list;
+  position: absolute;
+  right: 0;
+  top: 0;
+  } 
+.topic_count .ordering li {
+  padding-top: 7px;
+  }
+.topic_count .ordering li.on {
+  background: url(/images/tab_select.png) no-repeat 50% top;
+  font-weight: 700;
+  }  
   
 /******************************
 
