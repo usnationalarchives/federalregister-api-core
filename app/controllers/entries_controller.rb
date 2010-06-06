@@ -82,6 +82,11 @@ class EntriesController < ApplicationController
       :conditions => ['agencies.id IS NULL && entries.publication_date = ?', @publication_date],
       :order => "entries.title"
     )
+    
+    if @agencies.blank? && @entries_without_agency.blank?
+      raise ActiveRecord::RecordNotFound
+    end
+    
   end
   
   def show
