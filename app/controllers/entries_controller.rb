@@ -78,10 +78,15 @@ class EntriesController < ApplicationController
     Entry.preload_associations(@agencies.map(&:entries).flatten, :agencies)
     
     @entries_without_agency = Entry.all(
-      :joins => :agencies,
+      :include => :agencies,
       :conditions => ['agencies.id IS NULL && entries.publication_date = ?', @publication_date],
       :order => "entries.title"
     )
+    
+    if @agencies.blank? && @entries_without_agency.blank?
+      raise ActiveRecord::RecordNotFound
+    end
+    
   end
   
   def show
