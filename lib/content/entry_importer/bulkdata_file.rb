@@ -10,7 +10,7 @@ class Content::EntryImporter::BulkdataFile
   end
 
   def file_path
-    "#{Rails.root}/data/bulkdata/#{@date.to_s(:iso)}.xml"
+    "#{Rails.root}/data/bulkdata/FR-#{@date.to_s(:iso)}.xml"
   end
 
   def document
@@ -20,7 +20,25 @@ class Content::EntryImporter::BulkdataFile
   end
   memoize :document
   
-  def find_entry_node_by_document_number(document_number)
-    document.xpath("./xmlns:relatedItem[@ID='id-#{document_number}']").first
+  def document_numbers_and_associated_nodes
+    ret = []
+    document.css('RULE, PRORULE, NOTICE, PRESDOCU').each do |entry_node|
+      raw_frdoc = entry_node.css('FRDOC').first.try(:content)
+      
+      if raw_frdoc.present?
+        document_number = /FR Doc.\s*([^ ;]+)/i.match(raw_frdoc).try(:[], 1)
+        if document_number.blank?
+          puts "Document number not found for #{raw_frdoc}"
+          next
+        end
+      else
+        puts "no FRDOC in #{entry_node.name} in #{file}"
+        next
+      end
+      
+      ret << [document_number, entry_node]
+    end
+    
+    ret
   end
 end

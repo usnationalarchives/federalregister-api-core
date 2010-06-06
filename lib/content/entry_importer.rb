@@ -3,6 +3,7 @@ module Content
     include Content::EntryImporter::BasicData
     include Content::EntryImporter::Agencies
     include Content::EntryImporter::CFR
+    include Content::EntryImporter::FullText
     include Content::EntryImporter::FullXml
     include Content::EntryImporter::LedePhotoCandidates
     include Content::EntryImporter::PageNumber
@@ -31,20 +32,34 @@ module Content
           :order => "publication_date"
         )
       else
-        dates = [date]
+        dates = [Date.parse(date)]
       end
     
       dates.each do |date|
         puts "handling #{date}"
-        ModsFile.new(date).document_numbers.each do |document_number|
-          importer = EntryImporter.new(:date => date, :document_number => document_number)
+        if date > Date.parse('2000-01-01')
+          BulkdataFile.new(date).document_numbers_and_associated_nodes.each do |document_number, bulkdata_node|
+            importer = EntryImporter.new(:date => date, :document_number => document_number, :bulkdata_node => bulkdata_node)
           
-          if attributes == [:all]
-            importer.update_all_provided_attributes
-          else
-            importer.update_attributes(*attributes)
+            if attributes == [:all]
+              importer.update_all_provided_attributes
+            else
+              importer.update_attributes(*attributes)
+            end
+          end
+        else
+          ModsFile.new(date).document_numbers.each do |document_number|
+            importer = EntryImporter.new(:date => date, :document_number => document_number)
+          
+            if attributes == [:all]
+              importer.update_all_provided_attributes
+            else
+              importer.update_attributes(*attributes)
+            end
           end
         end
+        
+        AgencyAssignment.recalculate!
       end
     end
   
