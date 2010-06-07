@@ -55,7 +55,15 @@ ENTRIES
   @include grid(8, 16);
   @include omega;
   }
-
+.metadata_list dt {
+  @include grid(4, 16);
+  @include alpha;
+  }  
+.metadata_list dd {
+  @include grid(4, 16);
+  @include omega;
+  }
+  
 /******************************
 
 THREE COL LIST
