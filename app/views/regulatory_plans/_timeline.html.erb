@@ -5,14 +5,16 @@
 
 <div class="body_column">
   <%# HELP-DESIGN: ideally these would stack up next to each other and you could scroll left %>
-  <ul class="timeline">
-  <% regulatory_plan.events.each do |event| %>
-    <li class="timeline_item">
-      <div><%= fuzzy_date_formatter(event.date) %></div>
-      <div><%= add_citation_links(event.action) %></div>
-      <div><%= add_citation_links(event.fr_citation) %></div>
-    </li>
-  <% end %>
-  </ul>
+  <div class="regulatory_timeline_container">
+    <ul class="timeline">
+    <% regulatory_plan.events.each do |event| %>
+      <li class="timeline_item">
+        <div><%= fuzzy_date_formatter(event.date) %></div>
+        <div><%= add_citation_links(event.action) %></div>
+        <div><%= add_citation_links(event.fr_citation) %></div>
+      </li>
+    <% end %>
+    </ul>
+  </div>
 </div>  
 <% end %>
