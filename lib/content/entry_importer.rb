@@ -32,19 +32,24 @@ module Content
           :order => "publication_date"
         )
       else
-        dates = [date]
+        dates = [date.is_a?(String) ? date : date.to_s(:iso)]
       end
     
       dates.each do |date|
         puts "handling #{date}"
         if date > '2000-01-01'
+          mods_doc_numbers = ModsFile.new(date).document_numbers
           BulkdataFile.new(date).document_numbers_and_associated_nodes.each do |document_number, bulkdata_node|
-            importer = EntryImporter.new(:date => date, :document_number => document_number, :bulkdata_node => bulkdata_node)
-          
-            if attributes == [:all]
-              importer.update_all_provided_attributes
+            if mods_doc_numbers.include?(document_number)
+              importer = EntryImporter.new(:date => date, :document_number => document_number, :bulkdata_node => bulkdata_node)
+            
+              if attributes == [:all]
+                importer.update_all_provided_attributes
+              else
+                importer.update_attributes(*attributes)
+              end
             else
-              importer.update_attributes(*attributes)
+              puts "skipping #{document_number}; not in mods file"
             end
           end
         else
