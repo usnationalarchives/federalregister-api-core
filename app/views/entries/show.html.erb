@@ -18,12 +18,20 @@
 <% article_tag do %>
   
   <div id="metadata_content_area">
-  
-    <h1><%= @entry.title %></h1>
-    <%= render :partial => "metadata", :locals => {:entry => @entry} %>
-    <%= render :partial => 'download_and_share', :locals => {:entry => @entry} %>
-    <%= render( :partial => "regulatory_plan", :object => @entry.most_recent_regulatory_plan ) if @entry.most_recent_regulatory_plan %>
-    
+      <%= render :partial => "header", :locals => {:entry => @entry} %>
+      <%= render :partial => 'download_and_share', :locals => {:entry => @entry} %>
+      <%= render :partial => "metadata", :locals => {:entry => @entry} %>
+      
+      <%= render( :partial => "regulatory_plan", :object => @entry.most_recent_regulatory_plan ) if @entry.most_recent_regulatory_plan %>
+      <% if @entry.topics.present? %>
+      <h3>Related Topics</h3>
+      <ul>
+        <% @entry.topics.each do |topic| %>
+          <li><%= link_to topic.name, topic_path(topic) %></li>
+        <% end %>
+      </ul>
+      <% end %>
+      
   </div> <!-- end content area -->
 
   <%= render :partial => 'aside', :locals => {:entry => @entry} %>
@@ -38,11 +46,3 @@
 
 </div>
 
-<% if @entry.topics.present? %>
-<h3>Related Topics</h3>
-<ul>
-  <% @entry.topics.each do |topic| %>
-    <li><%= link_to topic.name, topic_path(topic) %></li>
-  <% end %>
-</ul>
-<% end %>

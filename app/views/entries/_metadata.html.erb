@@ -1,3 +1,12 @@
-<p class="metadata">A <%= entry.entry_type %> by <%= agency_names(entry) %> on
-  <%= link_to date_tag(entry.publication_date, :datetime => entry.publication_date.to_s(:iso)), entries_by_date_path(entry.publication_date) %>
-</p>
+<dl class='metadata_list box'>
+  <% if entry.publication_date.present?    %>
+  <dt>Publication Date:</dt>                 <dd><%= link_to entry.publication_date.to_formatted_s(:pretty), entries_by_date_path(entry.publication_date) %></dd><% end %>
+  <% if entry.document_number.present?     %><dt>Document Number:</dt> <dd><%= entry.document_number %></dd><% end %>
+  <% if entry.dates.present?               %><dt>Dates:</dt>            <dd><%= text_with_links(entry, entry.dates)           %></dd><% end %>
+  <% if entry.effective_on.present?        %><dt>Effective Date:</dt>   <dd><%= entry.effective_on                             %></dd><% end %>
+  <% if entry.comments_close_on.present?   %><dt>Comments Close:</dt>   <dd><%= entry.comments_close_on                        %></dd><% end %>
+  <% if entry.action.present?              %><dt>Action:</dt>           <dd><%= entry.action.titlecase                         %></dd><% end %>
+  <% if entry.type.present?                %><dt>Type: </dt>            <dd><%= entry.type                                     %></dd><% end %>
+  <% if entry.entry_type.present?          %><dt>Entry Type:</dt>       <dd><%= entry.entry_type                               %></dd><% end %>
+  <dt>Page:</dt>      <dd><%= entry.start_page %><%= "-#{entry.end_page}" if entry.end_page != entry.start_page %> (<%= pluralize entry.human_length, 'page' %>)</dd>
+</dl>
