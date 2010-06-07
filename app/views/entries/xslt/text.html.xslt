@@ -59,5 +59,10 @@
       <xsl:apply-templates />
     </p>
   </xsl:template>
-  
+
+  <xsl:template match="FRDOC">
+    <p class="fr_doc">
+      <xsl:apply-templates />
+    </p>
+  </xsl:template>
 </xsl:stylesheet>

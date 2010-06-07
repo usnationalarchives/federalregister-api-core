@@ -3,6 +3,8 @@
 <% title "Entries for #{@publication_date.to_formatted_s(:pretty)}" %>
 <h1 class="title"><span><%= @publication_date %> Issue</span></h1>
 
+<%= link_to 'PDF', issue_pdf_url(@publication_date) %>
+
 <% if false %>
 <div class="header group calendar controls">
   <h2>
