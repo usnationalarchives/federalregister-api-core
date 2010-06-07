@@ -4,12 +4,13 @@ module Content::EntryImporter::Urls
   
   def urls
     urls = []
-    mods_node.css('urlRef').each do |url_ref|
-      url = clean_url(url_ref.content)
-      urls << Url.find_or_create_by_name(url)
-    end
-    
-    urls
+    # DISABLE, at least temporarily...
+    # mods_node.css('urlRef').each do |url_ref|
+    #   url = clean_url(url_ref.content)
+    #   urls << Url.find_or_create_by_name(url)
+    # end
+    # 
+    # urls
   end
   
   private
