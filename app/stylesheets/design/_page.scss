@@ -328,7 +328,28 @@ ARTICLE VIEW
 #entries.show p + p {
   text-indent: 2em;
   }
-  
+
+.regulatory_timeline_container {
+  display: block;
+  height: 130px;
+  overflow: auto;
+  width: 460px;  
+}  
+.timeline {
+  display: block;
+  list-style: none;
+  height: 80px;
+  width: 1000px;
+}  
+.timeline .timeline_item {
+  border-right: 1px solid #ccc;  
+  float: left;
+  height: 80px;
+  padding: 1em;
+  }
+.timeline .timeline_item:first-child {
+  border-left: 1px solid #ccc;
+  }
   
 /******************************
 
