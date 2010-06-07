@@ -181,9 +181,17 @@ ARTICLE VIEW
 
 ******************************/
 
+.article .metadata_list {
+  margin-bottom: 2em;
+  overflow: hidden;
+  }
+.metadata_list dt {
+  text-align: right;
+  }
+  
 .box {
   border-bottom: 1px solid #dadada;    
-  border-top: 1px solid #dadada;  
+  clear: both;
   overflow: hidden;
   padding: 1em 0;
   }
@@ -201,6 +209,11 @@ ARTICLE VIEW
   margin: 0 1em 0 0;
   }
   
+#entries.show .metadata {
+  font-size: 1.3em;
+  @include type_kit_font_3;
+  }
+  
 #entries.show .header_column h1,
 #entries.show .header_column #table_of_contents,
 #entries.show .header_column #table_of_graphics
@@ -214,7 +227,6 @@ ARTICLE VIEW
   text-align: right;
   text-transform: uppercase;
   }
-
 #entries.show .header_column h2 {
   font-size: 1.3em;
   line-height: 1.5em;
