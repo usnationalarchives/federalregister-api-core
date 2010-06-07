@@ -8,12 +8,7 @@
 <h1 class="title"><span><%= @entry.entry_type %></span></h1>
 
   
-<% if (@entry.comments_close_on.present? && @entry.comments_close_on >= Date.today) %>
-  <div id="flash_message">
-    <p>This article has a comment period that ends in <%= pluralize (@entry.comments_close_date.date - Entry.latest_publication_date), 'day' %>
-    (<%= @entry.comments_close_date.date %>)</p>
-  </div>
-<% end -%>
+
 
 <% article_tag do %>
   
@@ -22,19 +17,41 @@
       <%= render :partial => 'download_and_share', :locals => {:entry => @entry} %>
       <%= render :partial => "metadata", :locals => {:entry => @entry} %>
       
-      <%= render( :partial => "regulatory_plan", :object => @entry.most_recent_regulatory_plan ) if @entry.most_recent_regulatory_plan %>
-      <% if @entry.topics.present? %>
-      <h3>Related Topics</h3>
-      <ul>
+      <% if (@entry.comments_close_on.present? && @entry.comments_close_on >= Date.today) %>
+        <div id="flash_message">
+          <p>This article has a comment period that ends in <%= pluralize (@entry.comments_close_date.date - Entry.latest_publication_date), 'day' %>
+          (<%= @entry.comments_close_date.date %>)  <%= link_to "Submit a formal comment", @entry.comment_url, :class => 'button', :target => '_blank' %>
+          </p>
+        </div>
+      <% end -%>
+      
+  </div> <!-- end metadata_content_area -->
+
+      
+    <div class="header_column">
+      <h1>Summary</h1>
+    </div>
+    <div class="body_column">  
+      <p><%= @entry.abstract %></p>
+    </div>
+
+    <%= render( :partial => "regulatory_plan", :object => @entry.most_recent_regulatory_plan ) if @entry.most_recent_regulatory_plan %>
+    
+    <% if @entry.topics.present? %>
+    <div class="header_column">
+      <h1>Related Topics</h1>
+    </div>
+    <div class="body_column">
+      <ul class="table_of_contents">
         <% @entry.topics.each do |topic| %>
           <li><%= link_to topic.name, topic_path(topic) %></li>
         <% end %>
       </ul>
-      <% end %>
-      
-  </div> <!-- end content area -->
+    </div>
+    <% end %>
 
-  <%= render :partial => 'aside', :locals => {:entry => @entry} %>
+
+  <%#= render :partial => 'aside', :locals => {:entry => @entry} %>
   
   <div id="fulltext_content_area">
   
