@@ -388,6 +388,36 @@
     </p>
   </xsl:template>
   
+  <xsl:template match="SIG">
+    <p class="signature">
+      <xsl:apply-templates />
+    </p>
+  </xsl:template>
+  
+  <xsl:template match="DATED">
+    <cite class="signature_date">
+      <xsl:apply-templates />
+    </cite>
+  </xsl:template>
+  
+  <xsl:template match="NAME">
+    <span class="name">
+      <xsl:apply-templates />
+    </span>
+  </xsl:template>
+  
+  <xsl:template match="TITLE">
+    <span class="title">
+      <xsl:apply-templates />
+    </span>
+  </xsl:template>
+  
+  <xsl:template match="AMDPAR">
+    <p class="ammendment_part">
+      <xsl:apply-templates />
+    </p>
+  </xsl:template>
+  
   <xsl:template match="SU[count(ancestor::GPOTABLE) > 0]">
     <sup>
       <xsl:value-of select="text()"/>
