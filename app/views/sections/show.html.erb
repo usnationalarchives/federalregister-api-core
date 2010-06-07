@@ -34,23 +34,24 @@
     </ul>  
   <% end -%>
   
-  <% section_tag(:class => 'info') do %>          
+  <% section_tag(:class => 'featured_agency') do %>  
+    <h1 class="title_bar">Featured Agency</h1>
+    <% agency = Agency.find(226) %>
+    <% if agency.logo_file_name.present? %>
+      <%= image_tag agency.logo.url(:thumb), :style => "float:left; margin-right: 1em; margin-bottom: 10px;" %>
+    <% end %>
+    <h2><%= agency.name %></h2>
+    <p class="metadata"><%= agency.entry_counts_since('month') %> entries this month</p>
+  <% end -%>
+  
+  <% section_tag(:class => 'info') do %>
+    <h1 class="title_bar">About this section</h1>
     <p>
       <%= @section.description %>
       <%= link_to "Learn more about this section", about_section_path(@section) %>
     </p>
   <% end -%>
   
-  <% section_tag(:class => 'stats') do %>  
-    <h1 class="title_bar">Stats</h1>
-    <ul>
-      <li><strong>1000</strong> Something</li>
-      <li><strong>200</strong> Something</li>
-      <li><strong>32</strong> Something</li>
-      <li><strong>43</strong> Something</li>
-    </ul>  
-  <% end -%>
-
 <% end -%>
 
 <div id="comments-closing-opening">
