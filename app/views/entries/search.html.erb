@@ -59,7 +59,7 @@
   </div>
 
   <div class="result_set">
-    <%= render :partial => "search/filters", :locals => {:search => @search} %>
+    <%= render :partial => "search/filters", :locals => {:search => @search} if false %>
     
     <% if @search.results.present? %>
       <div class="search_info titlebar">
