@@ -1,15 +1,15 @@
-    <div class="box">
-      <div class="grid_4 alpha">
-        <h4>Download</h4>
-        <%= %w(pdf xml).map{|format| link_to "#{format.upcase}", entry.source_url(format), :class => "button list social #{format}" } %>
-      </div>
-      <div class="grid_6 omega">
-        <h4>Share This</h4>
-        <%= link_to_twitter(entry) %>
-        <%= link_to_facebook(entry) %>
-        <%= link_to_reddit(entry) %>
-        <%= link_to_digg(entry) %>
-        <%# TODO HELP-RUBY make this real %>
-        <a href="#" class="button list social email">E-Mail</a>
-      </div>
-    </div>
+<div class="box">
+  <h4>Download As</h4>
+  <%= link_to "PDF", entry.source_url('pdf') %>
+  <%= link_to "XML", entry.source_url('xml') %>
+  
+  <div class="grid_6 omega">
+    <h4>Share This</h4>
+    <%= link_to_twitter(entry) %>
+    <%= link_to_facebook(entry) %>
+    <%= link_to_reddit(entry) %>
+    <%= link_to_digg(entry) %>
+    <%# TODO HELP-RUBY make this real %>
+    <a href="#" class="button list social email">E-Mail</a>
+  </div>
+</div>
