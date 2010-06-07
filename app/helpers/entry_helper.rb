@@ -18,4 +18,8 @@ module EntryHelper
     end
     agencies.to_sentence
   end
+  
+  def issue_pdf_url(date)
+    "http://www.gpo.gov/fdsys/pkg/FR-#{date.to_s(:to_s)}/pdf/FR-#{date.to_s(:to_s)}.pdf"
+  end
 end
