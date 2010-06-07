@@ -15,7 +15,7 @@
   
       <%= link_to 'Read more >', entry_path(entry) %>
   
-      <% if entry.comments_close_date && entry.comments_close_date.date > @publication_date %>
+      <% if entry.comments_close_date && entry.comments_close_date.date > Date.today %>
         <p class="comments_close">
           Comment period ends soon!
         </p>
