@@ -86,7 +86,7 @@
   <% @section.entries.published_on(@publication_date).each do |entry| %>
     <% article_tag do %>  
       <h1><%= link_to entry.title, entry_path(entry) %></h1>
-      <%= agency_names(entry) %>
+      A <%= entry.entry_type %> by <%= agency_names(entry) %>
     <% end -%>
   <% end %>
 <% end -%>
