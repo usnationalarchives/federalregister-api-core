@@ -1,8 +1,9 @@
 <div class="box">
-  <h4>Download As</h4>
-  <%= link_to "PDF", entry.source_url('pdf') %>
-  <%= link_to "XML", entry_path(entry, :format => :xml) %>
-  
+  <div class="grid_4 alpha">
+    <h4>Download As</h4>
+    <%= link_to "PDF", entry.source_url('pdf') %>
+    <%= link_to "XML", entry_path(entry, :format => :xml) %>
+  </div>
   <div class="grid_6 omega">
     <h4>Share This</h4>
     <%= link_to_twitter(entry) %>
