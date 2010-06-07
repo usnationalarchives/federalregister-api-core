@@ -324,10 +324,13 @@ ARTICLE VIEW
 #entries.show .table_of_contents .level_3 {
   margin-left: 2em;
   }  
-
 #entries.show p + p {
   text-indent: 2em;
   }
+#entries.show .body_column:empty {
+  display: none;
+  margin: 0;
+  }  
 
 .regulatory_timeline_container {
   display: block;
@@ -367,7 +370,6 @@ AGENCY LIST
 #agency_list li li:last-child {
   background-image: url(/images/child_one.png);
   }
-
 #agencies .agency_list_info .title_bar {
   border-top: none;
   margin-bottom: 0;
@@ -402,8 +404,6 @@ AGENCY LIST
 .agency_list_info li.on a {
   color: #385F82;
   }
-
-
 .filters .livesearch input {
   border: 1px solid #ccc;
   width: 90%;
