@@ -92,24 +92,32 @@ class EntriesController < ApplicationController
   def show
     @entry = Entry.find_by_document_number!(params[:document_number])
     
-    if !@entry.places.usable.blank?
+    respond_to do |wants|
+      wants.html do
+        if !@entry.places.usable.blank?
+
+          @dist = 20
+          @places = @entry.places.usable
+
+          @map = Cloudkicker::Map.new( :style_id => 1714,
+                                       :zoom     => 1,
+                                       :lat      => @places.map(&:latitude).average,
+                                       :long     => @places.map(&:longitude).average
+                                     )
+          @places.each do |place|
+            Cloudkicker::Marker.new( :map   => @map, 
+                                     :lat   => place.latitude,
+                                     :long  => place.longitude, 
+                                     :title => 'Click to view location info',
+                                     :info  => render_to_string(:partial => 'maps/place_marker_tooltip', :locals => {:place => place} ),
+                                     :info_max_width => 200
+                                   )
+          end
+        end
+      end
       
-      @dist = 20
-      @places = @entry.places.usable
-    
-      @map = Cloudkicker::Map.new( :style_id => 1714,
-                                   :zoom     => 1,
-                                   :lat      => @places.map(&:latitude).average,
-                                   :long     => @places.map(&:longitude).average
-                                 )
-      @places.each do |place|
-        Cloudkicker::Marker.new( :map   => @map, 
-                                 :lat   => place.latitude,
-                                 :long  => place.longitude, 
-                                 :title => 'Click to view location info',
-                                 :info  => render_to_string(:partial => 'maps/place_marker_tooltip', :locals => {:place => place} ),
-                                 :info_max_width => 200
-                               )
+      wants.xml do
+        send_file @entry.full_xml_file_path, :filename => "#{@entry.document_number}.xml"
       end
     end
   end
