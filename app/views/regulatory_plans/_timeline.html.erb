@@ -1,6 +1,9 @@
 <% if regulatory_plan.try(:events).present? %>
-  <h3>Regulatory Timeline</h3>
-  
+<div class="header_column">
+  <h2>Regulatory Timeline</h2>
+</div>
+
+<div class="body_column">
   <%# HELP-DESIGN: ideally these would stack up next to each other and you could scroll left %>
   <ul class="timeline">
   <% regulatory_plan.events.each do |event| %>
@@ -11,4 +14,5 @@
     </li>
   <% end %>
   </ul>
+</div>  
 <% end %>

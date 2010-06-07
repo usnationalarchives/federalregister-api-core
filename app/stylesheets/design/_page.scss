@@ -184,12 +184,23 @@ ARTICLE VIEW
 #flash_message {
   @include border-radius(5px);  
   overflow: hidden;  
-  background: #ebd8b6 url(/images/error2.png) no-repeat 1em top;
-  color: #777777;
+  background: #F1F1F1;
+  color: #6E6E6E;
   margin-bottom: 1em;
-  padding: 1em 3em 1em;
+  padding: 1em;
+  position: relative;
   }
-
+#flash_message .button {
+  background: #c9e9cc;
+  color: #495e4b;
+  font-size: .75em;
+  margin: 0;
+  line-height: 46px;
+  padding: 0 1em;
+  position: absolute;
+  right: 0;
+  top: 0;
+  }
 #flash_message p {
   @include type_kit_font_1;
   font-size: 1.5em;
