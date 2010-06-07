@@ -26,6 +26,14 @@
     <%= link_to 'Subscribe', section_path(@section, :format => :rss), :class => 'button rss' %>
   <% end -%>
   
+  <% section_tag(:class => 'whats_hot') do %>  
+    <h1 class="title_bar">What's Hot</h1>
+    <ul>
+      <%# TODO HELP-RUBY make it real %>
+      <li><a href="#">Help me obiwan</a></li>
+    </ul>  
+  <% end -%>
+  
   <% section_tag(:class => 'info') do %>          
     <p>
       <%= @section.description %>
@@ -42,21 +50,17 @@
       <li><strong>43</strong> Something</li>
     </ul>  
   <% end -%>
-  
-  <% section_tag(:class => 'whats_hot') do %>  
-    <h1 class="title_bar">What's Hot</h1>
-  <% end -%>
-  
+
 <% end -%>
 
 <div id="comments-closing-opening">
   
   <div class="header-nav">
-    <h2 class="title_bar"><span class="small_stack">Upcoming<span>Article</span></span> Comment Periods </h2>
+    <h2 class="title_bar"><span class="small_stack"><span>Articles</span>With</span> Comments Requested</h2>
     
     <ul id="comments-closing-opening-links" class="tabs-nav">
-      <li class="tab" id="tabs-closing"><a href="#comment-period-opening">Opening Soon</a></li>
-      <li class="tab" id="tabs-opening"><a href="#comment-period-closing">Closing Soon</a></li>      
+      <li class="tab" id="tabs-opening"><a href="#comment-period-closing">Closing Soon</a></li>
+      <li class="tab" id="tabs-closing"><a href="#comment-period-opening">Newly Opened</a></li>       
     </ul>
   </div>
     
