@@ -42,7 +42,7 @@ ActionController::Routing::Routes.draw do |map|
   map.entries_search 'articles/search', :controller => 'entries', :action => 'search'
   map.entries_search_facet 'articles/search/facet', :controller => 'entries', :action => 'search_facet'
   map.entries_widget 'articles/widget', :controller => 'entries', :action => 'widget'
-  map.entry 'articles/:year/:month/:day/:document_number/:slug', :controller => 'entries',
+  map.entry 'articles/:year/:month/:day/:document_number/:slug.:format', :controller => 'entries',
                                                                 :action     => 'show',
                                                                 :year       => /\d{4}/,
                                                                 :month      => /\d{1,2}/,
