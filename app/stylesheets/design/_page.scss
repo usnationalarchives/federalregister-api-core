@@ -181,6 +181,23 @@ ARTICLE VIEW
 
 ******************************/
 
+#flash_message {
+  @include border-radius(5px);  
+  overflow: hidden;  
+  background: #ebd8b6 url(/images/error2.png) no-repeat 1em top;
+  color: #777777;
+  margin-bottom: 1em;
+  padding: 1em 3em 1em;
+  }
+
+#flash_message p {
+  @include type_kit_font_1;
+  font-size: 1.5em;
+  line-height: 20px;  
+  margin: 0;
+  padding: 0;
+  }
+
 .article .metadata_list {
   margin-bottom: 2em;
   overflow: hidden;
@@ -208,12 +225,7 @@ ARTICLE VIEW
   display: inline;
   margin: 0 1em 0 0;
   }
-  
-#entries.show .metadata {
-  font-size: 1.3em;
-  @include type_kit_font_3;
-  }
-  
+
 #entries.show .header_column h1,
 #entries.show .header_column #table_of_contents,
 #entries.show .header_column #table_of_graphics
