@@ -8,9 +8,9 @@
     
   <xsl:template match="/">
       <xsl:value-of disable-output-escaping="yes" select="'&lt;div class=&quot;body_column&quot; &gt;'" />
-        <xsl:for-each select="//SUM">
+        <!-- <xsl:for-each select="//SUM">
           <xsl:apply-templates />
-        </xsl:for-each>
+        </xsl:for-each> -->
         <xsl:if test="count(//HD) > 0">
           <xsl:call-template name="manual_header">
             <xsl:with-param name="id" select="'table_of_contents'" />
