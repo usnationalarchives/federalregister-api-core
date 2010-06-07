@@ -1,7 +1,7 @@
 <div class="box">
   <h4>Download As</h4>
   <%= link_to "PDF", entry.source_url('pdf') %>
-  <%= link_to "XML", entry.source_url('xml') %>
+  <%= link_to "XML", entry_path(entry, :format => :xml) %>
   
   <div class="grid_6 omega">
     <h4>Share This</h4>
@@ -9,6 +9,7 @@
     <%= link_to_facebook(entry) %>
     <%= link_to_reddit(entry) %>
     <%= link_to_digg(entry) %>
+    
     <%# TODO HELP-RUBY make this real %>
     <a href="#" class="button list social email">E-Mail</a>
   </div>
