@@ -61,7 +61,8 @@ background-position: 10px -20px;
   display: inline-block;
 }
 
-.button.social {
+.button.social,
+.button.format {
   background: none;
   @include border-radius(0);
   height: 24px;
@@ -75,5 +76,5 @@ background-position: 10px -20px;
 .button.social.facebook { background-image: url(/images/social/24px/facebook.png); }
 .button.social.reddit { background-image: url(/images/social/24px/reddit.png); }
 .button.social.twitter { background-image: url(/images/social/24px/twitter.png); }
-.button.social.pdf { background-image: url(/images/social/24px/button-light-blue.png); }
-.button.social.xml { background-image: url(/images/social/24px/button-light-blue.png); }
+.button.format.pdf { background-image: url(/images/icon_pdf.png); }
+.button.format.xml { background-image: url(/images/icon_xml.png); }
