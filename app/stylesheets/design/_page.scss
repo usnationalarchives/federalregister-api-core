@@ -611,7 +611,7 @@ HOME PAGE
   
 .newsbox {
   background: #fcfcfc;
-  border: 1px solid #ccc;
+  border: 5px solid #ececec;
   @include box-shadow(#ccc, 0, 0, 5px);
   @include border-radius(5px);
   margin-bottom: 1em;
