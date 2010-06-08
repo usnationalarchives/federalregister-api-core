@@ -219,11 +219,14 @@ BY DATE
 
 #entries.by_date h2 {
   margin-bottom: 0;
-  margin-top: 2em;
+  margin-top: 1em;
   }
+#entries.by_date h2:first-child {
+  margin-top: 0;
+  }  
 #entries.by_date h3 {
   font-size: 1.2em;
-  margin: 1em 0;
+  margin: .5em 0;
   text-transform: uppercase;
   }
 #entries.by_date dl,
@@ -234,3 +237,10 @@ BY DATE
 #entries.by_date ul {
   list-style: none;
   }
+#entries.by_date dt a {
+  font-weight: normal;
+  }
+#entries.by_date .see {
+  font-weight: 400;
+  font-style: italic;
+  }  
