@@ -20,20 +20,20 @@
   <% if @next_date %>
     <%= link_to 'Next', entries_by_date_path(@next_date), :class => "icon arrow next floatRight" %>
   <% end %>
-</div>
-
-<div class="entry_calendars">
-  <div class='search'>
-    <% form_tag entries_date_search_path, :method => :GET, :class => "group" do %>
-      Explore entries in recent months or search for a date:
-      <%= text_field_tag :search, '', :title => "(eg 'last month', 'November 2', 'last October')" %>
-      <%= submit_tag 'Go', :class => "btn" %>
-    <% end %>
   </div>
+
+  <div class="entry_calendars">
+    <div class='search'>
+      <% form_tag entries_date_search_path, :method => :GET, :class => "group" do %>
+        Explore entries in recent months or search for a date:
+        <%= text_field_tag :search, '', :title => "(eg 'last month', 'November 2', 'last October')" %>
+        <%= submit_tag 'Go', :class => "btn" %>
+      <% end %>
+    </div>
   
-  <%= entries_calendar_view(@year, @month) %>
-  <% add_javascript(:src => 'calendar') %>
-</div>
+    <%= entries_calendar_view(@year, @month) %>
+    <% add_javascript(:src => 'calendar') %>
+  </div>
 <% end %>
 
 <% @agencies.each do |agency| %>
@@ -79,7 +79,7 @@
     <h3><%= agency_names.map(&:name).to_sentence %></h2>
     <ul>
     <% entries.each do |entry| %>
-      <%= link_to entry.title, entry_path(entry) %>
+      <li><%= link_to entry.title, entry_path(entry) %></li>
     <% end %>
     </ul>
   <% end %>

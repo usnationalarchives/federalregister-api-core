@@ -126,4 +126,22 @@ CITATION LIST
 .citation_list .title {
   @include grid(12, 16);
   @include omega;
-  }  
+  }
+  
+  
+/******************************
+
+LIST BY DATE
+
+******************************/    
+
+/*#entries.by_date h3 {
+  @include grid(4,16);
+  @include alpha;
+  clear: both;
+  }
+
+#entries.by_date #main ul {
+  @include grid(12,16);
+  @include omega;
+  }*/
