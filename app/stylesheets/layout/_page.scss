@@ -47,22 +47,26 @@ ENTRIES
   @include omega;
   }
 #entries.show .header_column {
-  @include grid(4, 16);
+  @include grid(3, 16);
   @include alpha;
   clear: both;
   }
 #entries.show .body_column {
   @include grid(8, 16);
-  @include omega;
+  @include grid-suffix(1);
   }
-.metadata_list dt {
+#entries.show .notes_column {
+  @include grid(4, 16);
+  @include omega;
+  }  
+/*.metadata_list dt {
   @include grid(4, 16);
   @include alpha;
   }  
 .metadata_list dd {
   @include grid(4, 16);
   @include omega;
-  }
+  }*/
   
 /******************************
 
