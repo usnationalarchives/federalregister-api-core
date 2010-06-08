@@ -14,8 +14,6 @@
   
   <div id="metadata_content_area">
       <%= render :partial => "header", :locals => {:entry => @entry} %>
-      <%= render :partial => 'download_and_share', :locals => {:entry => @entry} %>
-      <%= render :partial => "metadata", :locals => {:entry => @entry} %>
       
       <% if (@entry.comments_close_on.present? && @entry.comments_close_on >= Date.today) %>
         <div id="flash_message">
@@ -24,6 +22,9 @@
           </p>
         </div>
       <% end -%>
+      
+      <%= render :partial => 'download_and_share', :locals => {:entry => @entry} %>
+      <%= render :partial => "metadata", :locals => {:entry => @entry} %>
       
   </div> <!-- end metadata_content_area -->
 
