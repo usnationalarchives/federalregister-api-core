@@ -12,11 +12,6 @@
       <!-- always start with a body_column div -->
       <xsl:value-of disable-output-escaping="yes" select="'&lt;div class=&quot;body_column&quot; &gt;'" />
       
-      <!-- then display the summary -->
-      <xsl:for-each select="//SUM">
-        <xsl:apply-templates />
-      </xsl:for-each>
-      
       <xsl:call-template name="table_of_contents" />
       <xsl:call-template name="table_of_graphics" />
       <xsl:call-template name="table_of_tables" />
