@@ -34,15 +34,18 @@
     </ul>  
   <% end -%>
   
-  <% section_tag(:class => 'featured_agency') do %>  
-    <h1 class="title_bar">Featured Agency</h1>
-    <% agency = Agency.find(226) %>
-    <% if agency.logo_file_name.present? %>
-      <%= image_tag agency.logo.url(:thumb), :style => "float:left; margin-right: 1em; margin-bottom: 10px;" %>
-    <% end %>
-    <h2><%= agency.name %></h2>
-    <p class="metadata"><%= agency.entry_counts_since('month') %> entries this month</p>
-  <% end -%>
+  <% if @agency %>
+    <% section_tag(:class => 'featured_agency') do %>  
+      <h1 class="title_bar">Featured Agency</h1>
+      <% if @agency.logo_file_name.present? %>
+        <%= image_tag @agency.logo.url(:thumb), :style => "float:left; margin-right: 1em; margin-bottom: 10px;" %>
+      <% end %>
+      <h2><%= link_to @agency.name, agency_path(@agency) %></h2>
+      <p class="metadata">
+        <%= link_to "#{@agency.entry_counts_since('month')} '#{ @section.title }' entries this month", entries_search_path(:conditions => {:agency_ids => @agency.id, :start_date => 1.month.ago.to_s(:db)}) %>
+      </p>
+    <% end -%>
+  <% end %>
   
   <% section_tag(:class => 'info') do %>
     <h1 class="title_bar">About this section</h1>
