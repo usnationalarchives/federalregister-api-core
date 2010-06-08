@@ -24,7 +24,6 @@
       <% end -%>
       
       <%= render :partial => 'download_and_share', :locals => {:entry => @entry} %>
-      <%= render :partial => "metadata", :locals => {:entry => @entry} %>
       
   </div> <!-- end metadata_content_area -->
 
@@ -35,6 +34,9 @@
     <div class="body_column">  
       <p><%= @entry.abstract %></p>
     </div>
+    <div class="notes_column">
+      <%= render :partial => "metadata", :locals => {:entry => @entry} %>
+    </div>  
 
     <%= render( :partial => "regulatory_plan", :object => @entry.most_recent_regulatory_plan ) if @entry.most_recent_regulatory_plan %>
     

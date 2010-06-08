@@ -1,4 +1,4 @@
-<dl class='metadata_list box'>
+<dl class='metadata_list'>
   <% if entry.publication_date.present?    %>
   <dt>Publication Date:</dt>                 <dd><%= link_to entry.publication_date.to_formatted_s(:pretty), entries_by_date_path(entry.publication_date) %></dd><% end %>
   <% if entry.document_number.present?     %><dt>Document Number:</dt> <dd><%= entry.document_number %></dd><% end %>
