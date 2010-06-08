@@ -31,27 +31,27 @@
   </xsl:template>
   
   <xsl:template match="SIG">
-    <p class="signature">
+    <div class="signature">
+      <xsl:apply-templates />
+    </div>
+  </xsl:template>
+  
+  <xsl:template match="DATED">
+    <p class="signature_date">
       <xsl:apply-templates />
     </p>
   </xsl:template>
   
-  <xsl:template match="DATED">
-    <cite class="signature_date">
-      <xsl:apply-templates />
-    </cite>
-  </xsl:template>
-  
   <xsl:template match="NAME">
-    <span class="name">
+    <p class="name">
       <xsl:apply-templates />
-    </span>
+    </p>
   </xsl:template>
   
   <xsl:template match="TITLE">
-    <span class="title">
+    <p class="title">
       <xsl:apply-templates />
-    </span>
+    </p>
   </xsl:template>
   
   <xsl:template match="AMDPAR">
