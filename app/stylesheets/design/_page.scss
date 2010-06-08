@@ -40,11 +40,16 @@ SECTION
 ******************************/
 
 
-.article {
+.featured .article {
 overflow: hidden; /* less awkward self-clear */
 margin-bottom: 25px;
 padding-bottom: 25px;
-} 
+}
+
+.articles_published_by_day .article {
+  margin-bottom: 1em;
+  padding-bottom: 1em;
+  }
 
 #sections .article {
   border-bottom: 1px dotted #cdcdcd;
@@ -53,7 +58,7 @@ padding-bottom: 25px;
 .article .metadata {
 color: #7a838a;
 font-size: 1em;
-margin-bottom: 1em;
+margin-bottom: .5em;
 }
   
 .article .metadata a {
@@ -163,6 +168,10 @@ padding-right: 10px;
 .section.featured_agency .metadata {
   font-size: 1em;
 }
+
+#sections div > .article:last-child {
+  border-bottom: none;
+  }
   
 /******************************
 

@@ -176,8 +176,8 @@ ARTICLES
   line-height: 1.6;
 }
 
-#sections .article h1 {
-font-size: 1.8em;
+.featured .article h1 {
+font-size: 1.3em;
 font-weight: normal;
 line-height: 1.4;
 }
@@ -209,4 +209,27 @@ CITATION LIST
 
 .citation_count span {
   display: block;
+  }
+
+/******************************
+
+BY DATE
+
+******************************/
+
+#entries.by_date h2 {
+  margin-bottom: 0;
+  margin-top: 2em;
+  }
+#entries.by_date h3 {
+  font-size: 1.2em;
+  margin: 1em 0;
+  text-transform: uppercase;
+  }
+#entries.by_date dl,
+#entries.by_date ul {
+  margin-left: 1em;
+  }
+#entries.by_date ul {
+  list-style: none;
   }
