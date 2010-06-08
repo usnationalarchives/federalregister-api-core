@@ -203,15 +203,15 @@ ARTICLE VIEW
 #flash_message {
   @include border-radius(5px);  
   overflow: hidden;  
-  background: #F1F1F1;
+  background: #E6E6E6;
   color: #6E6E6E;
   margin-bottom: 1em;
   padding: 1em;
   position: relative;
   }
 #flash_message .button {
-  background: #c9e9cc;
-  color: #495e4b;
+  background: #E4A529;
+  color: #fff;
   font-size: .75em;
   margin: 0;
   line-height: 46px;
@@ -229,11 +229,8 @@ ARTICLE VIEW
   }
 
 .article .metadata_list {
-  margin-bottom: 2em;
-  overflow: hidden;
-  }
-.metadata_list dt {
-  text-align: right;
+  position: absolute;
+  width: 200px;
   }
   
 .box {
@@ -254,6 +251,7 @@ ARTICLE VIEW
 #entries .box h4 {
   display: inline;
   margin: 0 1em 0 0;
+  vertical-align: text-top;
   }
 
 #entries.show .header_column h1,
@@ -349,6 +347,24 @@ ARTICLE VIEW
 #entries.show .body_column:empty {
   display: none;
   margin: 0;
+  }  
+
+#entries.show dt,
+#entries.show dd {
+  display: block;
+  }
+#entries.show dt {
+  text-align: left;
+  margin-top: .5em;
+  }
+#entries.show dt:first-child {
+  margin-top: 0;
+  }  
+#entries.show dd {
+  font-weight: normal;
+  margin: 0;
+  padding: 0;
+  text-transform: none;
   }  
 
 .regulatory_timeline_container {
