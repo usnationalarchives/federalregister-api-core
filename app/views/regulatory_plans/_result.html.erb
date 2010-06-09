@@ -12,12 +12,20 @@
     <span class="agency"><%= regulatory_plan.agencies.map{|agency| link_to(agency.name, agency_path(agency))}.join(' :: ') %></span>
     
     <% entries = regulatory_plan.entries.most_recent(5) %>
+    <% num_entries = regulatory_plan.entries.count %>
     <% if entries.present? %>
       <ul>
         <% entries.each do |entry| %>
-          <li><%= link_to entry.title, entry_path(entry) %></li>
+          <li>
+            <%= time_tag(entry.publication_date, :datetime => entry.publication_date.to_s(:iso)) %>
+            <span class="type"><%= entry.entry_type %></span>
+            <%= link_to entry.title, entry_path(entry) %>
+          </li>
         <% end %>
       </ul>
+      <% if num_entries > 5 %>
+        <%= link_to "See all #{num_entries} articles from this regulation.", entries_search_path(:conditions => {:regulation_id_number => regulatory_plan.regulation_id_number}) %>
+      <% end %>
     <% end %>
   </div>
 </li>

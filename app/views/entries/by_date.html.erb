@@ -3,6 +3,11 @@
 <% title "Entries for #{@publication_date.to_formatted_s(:pretty)}" %>
 <h1 class="title"><span><%= @publication_date %> Issue</span></h1>
 
+
+<%= link_to 'Download PDF', issue_pdf_url(@publication_date), :class => 'button' %>
+
+<div id="content_area">
+
 <% if false %>
 <div class="header group calendar controls">
   <h2>
@@ -18,25 +23,36 @@
   <% if @next_date %>
     <%= link_to 'Next', entries_by_date_path(@next_date), :class => "icon arrow next floatRight" %>
   <% end %>
-</div>
-
-<div class="entry_calendars">
-  <div class='search'>
-    <% form_tag entries_date_search_path, :method => :GET, :class => "group" do %>
-      Explore entries in recent months or search for a date:
-      <%= text_field_tag :search, '', :title => "(eg 'last month', 'November 2', 'last October')" %>
-      <%= submit_tag 'Go', :class => "btn" %>
-    <% end %>
   </div>
+
+  <div class="entry_calendars">
+    <div class='search'>
+      <% form_tag entries_date_search_path, :method => :GET, :class => "group" do %>
+        Explore entries in recent months or search for a date:
+        <%= text_field_tag :search, '', :title => "(eg 'last month', 'November 2', 'last October')" %>
+        <%= submit_tag 'Go', :class => "btn" %>
+      <% end %>
+    </div>
   
-  <%= entries_calendar_view(@year, @month) %>
-  <% add_javascript(:src => 'calendar') %>
-</div>
+    <%= entries_calendar_view(@year, @month) %>
+    <% add_javascript(:src => 'calendar') %>
+  </div>
 <% end %>
 
 <% @agencies.each do |agency| %>
-  <h2><%= agency.name %></h2>
-  <% agency.entries.group_by(&:entry_type).each do |type, entries_by_type| %>
+  <h2 id="<%= dom_id(agency) %>"><%= agency.name %></h2>
+  
+  <% sub_agencies_on_this_page = agency.children & @agencies %>
+  <% if sub_agencies_on_this_page.present? %>
+    <ul>
+      <% sub_agencies_on_this_page.each do |sub_agency| %>
+        <li><span class="see">See</span> <%= link_to sub_agency.name, '#' + dom_id(sub_agency) %></li>
+      <% end %>
+    </ul>
+  <% end %>
+  
+  <% entries = agency.entries.select{|entry| entry.agencies_excluding_parents.include?(agency) }%>
+  <% entries.group_by(&:entry_type).each do |type, entries_by_type| %>
     <h3><%= type.pluralize %></h3>
     <dl>
     <% entries_by_type.group_by(&:toc_subject).each do |toc_subject, entries_by_toc_subject| %>
@@ -48,7 +64,7 @@
         </dd>
         <% end %>
       <% else %>
-        <% entries_by_toc_subject.sort_by(&:toc_doc).each do |entry| %>
+        <% entries_by_toc_subject.sort_by(&:title).each do |entry| %>
         <dt>
           <%= link_to entry.title, entry_path(entry) %>
         </dt>
@@ -59,6 +75,10 @@
   <% end %>
 <% end %>
 
+
+
+
+
 <% if @entries_without_agency.present? %>
   <%# THESE SHOULD NOT EXIST AT LAUNCH; NO STYLE NECESSARY %>
   <h2>Entries without agencies</h2>
@@ -66,11 +86,13 @@
     <h3><%= agency_names.map(&:name).to_sentence %></h2>
     <ul>
     <% entries.each do |entry| %>
-      <%= link_to entry.title, entry_path(entry) %>
+      <li><%= link_to entry.title, entry_path(entry) %></li>
     <% end %>
     </ul>
   <% end %>
 <% end %>
+
+</div> <!-- END CONTENT AREA -->
 
 <% if false %>
   

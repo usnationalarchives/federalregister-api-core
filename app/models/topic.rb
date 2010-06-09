@@ -30,17 +30,10 @@ class Topic < ApplicationModel
     slug = self.name.downcase
     slug.gsub!(/[^a-z ]/,' ')
     slug.gsub!(/\b(?:and|by|the|a|an|of|in|on|to|for|s|etc|promotion)\b/, ' ')
-
-    slug.gsub!(/ {2,}/, ' ')
-    slug.gsub!(/^ /, '')
-    slug.gsub!(/ $/, '')
-
-    words = slug.split(' ').map {|w| w.singularize}
-    if words[0] == words[1]
-      words.pop
-    end
     
-    self.slug = words.join('-')
+    slug.gsub!(/ {2,}/, ' ')
+    
+    self.slug = slug.strip.gsub(/ /, '-')
   end
 end
 
