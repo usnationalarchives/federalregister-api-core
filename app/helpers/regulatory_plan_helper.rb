@@ -6,7 +6,7 @@ module RegulatoryPlanHelper
     when /\d{4}-\d{2}-00/
       Date.parse(date.next).to_s(:month_year)
     when /\d{4}-\d{2}-\d{2}/
-      Date.parse(date).to_s(:long_ordinal)
+      Date.parse(date).to_s(:short_ordinal)
     else
       date
     end
