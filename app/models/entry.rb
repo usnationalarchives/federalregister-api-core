@@ -143,7 +143,7 @@ class Entry < ApplicationModel
     scoped(:conditions => {:entries => {:publication_date => publication_date}})
   end
   
-  def self.comments_closing(range = (Date.today .. Date.today + 14.days))
+  def self.comments_closing(range = (Date.today .. Date.today + 7.days))
     scoped(
       :joins => :comments_close_date,
       :conditions => {:referenced_dates => {:date => range}},
@@ -151,7 +151,7 @@ class Entry < ApplicationModel
     )
   end
   
-  def self.comments_opening(range = (Date.today - 14.days .. Date.today))
+  def self.comments_opening(range = (Date.today - 7.days .. Date.today))
     scoped(
       :joins => :comments_close_date,
       :conditions => {:entries => {:publication_date => range}},
@@ -161,6 +161,18 @@ class Entry < ApplicationModel
   
   def self.most_recent(n = 10)
     scoped(:order => "publication_date DESC", :limit => n)
+  end
+  
+  # TODO: make this real
+  def self.popular(n = 5)
+    scoped(
+      :order => "RAND()",
+      :limit => 5,
+      :conditions => {
+        :granule_class => %w(RULE PRORULE NOTICE),
+        :publication_date => (1.month.ago .. Date.today)
+      }
+    ).scoped(:conditions => "length(title) < 90")
   end
   
   def entry_type 
