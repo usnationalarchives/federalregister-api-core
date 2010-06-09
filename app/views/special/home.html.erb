@@ -1,7 +1,7 @@
 <% feed_autodiscovery entries_path(:format => :rss) %>
 <% add_column_class('home') %>
 
-<h1 class="title"><span>Today's Issue</span></h1>
+<h1 class="title"><span><%= Entry.latest_publication_date.to_s(:wday_and_pretty_date) %></span></h1>
 
 <img src="/images/carouselcomp.png" />
 
