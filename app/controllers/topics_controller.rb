@@ -49,6 +49,6 @@ class TopicsController < ApplicationController
     
     @popular_topics = Topic.find(:all, :order => 'entries_count DESC', :limit => 100).sort_by(&:name)
     
-    @topics = Topic.all(:conditions => ["slug LIKE ?", "#{@letter}%"], :order => "topics.name")
+    @topics = Topic.all(:conditions => ["entries_count > 0 AND slug LIKE ?", "#{@letter}%"], :order => "topics.name")
   end
 end

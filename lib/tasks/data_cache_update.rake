@@ -17,16 +17,14 @@ namespace :data do
             ON topic_assignments.entry_id = our_topic_assignments.entry_id
           LEFT JOIN topics
             ON topics.id = topic_assignments.topic_id
-          WHERE our_topics.group_name = ?
-            AND topics.group_name != ?
-            AND topics.group_name != ''
-          GROUP BY topics.group_name
+          WHERE our_topics.id = ?
+            AND topics.id != ?
           ORDER BY entries_count DESC, LENGTH(topics.name)
-          LIMIT 100", topic.group_name, topic.group_name]).map{|t| {"name" => t.name, "group_name" => t.group_name, "entries_count" => t.entries_count} }
+          LIMIT 100", topic.id, topic.id]).map{|t| {"name" => t.name, "slug" => t.slug, "entries_count" => t.entries_count} }
         
           topic.related_agencies_cache = Agency.all(:select => 'agencies.*, count(*) AS entries_count',
             :joins => {:entries => :topics},
-            :conditions => {:entries => {:topics => {:group_name => topic.group_name}}},
+            :conditions => {:entries => {:topics => {:id => topic.id}}},
             :group => "agencies.id",
             :order => 'entries_count DESC'
           ).map{|agency| {"name" => agency.name, "entries_count" => agency.entries_count} }

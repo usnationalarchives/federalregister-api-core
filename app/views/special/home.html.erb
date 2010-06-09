@@ -1,11 +1,61 @@
 <% feed_autodiscovery entries_path(:format => :rss) %>
 <% add_column_class('home') %>
 
-<% content_for :precolumn do %>
-  <h1>The Federal Register at your fingertips.</h1>
-<% end %>
+<h1 class="title"><span>Today's Issue</span></h1>
 
-<% if !@closing_soon.empty? %>
+<img src="/images/carouselcomp.png" />
+
+<div class="learn">
+  <h2 class="title_bar">What's in the Federal Register?</h2>
+  <div class="grid_4 alpha">
+    <div class="notecard">
+    <h3>Notices</h3>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla hendrerit ullamcorper nisl vitae auctor. Aliquam pretium, lacus ac venenatis convallis, mi lorem vestibulum eros, vel pharetra.</p>
+    </div>
+  </div>
+  <div class="grid_4">
+    <div class="notecard">
+    <h3>Proposed Rules</h3>
+    <p>Official documents that announce and explain agencies' plans to address problems and accomplish goals.  Intent is to gather feedback from the public to produce better regulations.</p>
+    </div>
+  </div>
+  
+  <div class="grid_4">
+    <div class="notecard">  
+    <h3>Final Rules</h3>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum tincidunt, augue vitae euismod suscipit, urna metus vehicula risus, et convallis nibh lorem eu ipsum. Nunc mollis.</p>
+    </div>
+  </div>
+  
+  <div class="grid_4 omega">
+    <div class="notecard">
+    <h3>Presidential Documents</h3>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec pellentesque leo in est tristique eleifend tempor magna auctor. Pellentesque in turpis a ipsum vestibulum faucibus ut.</p>
+    </div>
+  </div>
+</div>
+
+<div class="section_news_boxes grid_16 alpha omega" style="clear:both">
+  <% @sections.each do |section| %>
+  <div class="grid_8 <%= cycle('alpha','omega')%>">
+      <div class="newsbox">
+        <h2 class="title_bar"><%= link_to section.title, section_path(section) %></h2>
+        <ul>
+          <% entries = section.highlighted_entries[1..3] %>
+          <% if entries %>
+            <% entries.each do |entry| %>
+              <li><%= link_to entry.title, entry_path(entry) %></li>
+            <% end -%>
+          <% end -%>  
+        </ul>
+        <%= link_to 'See more', section_path(section), :class => 'see_more awesome' %>
+      </div>
+    </div>  
+  <% end -%>  
+</div>
+
+
+<% if false #!@closing_soon.empty? %>
   <div class="clear marginBottom widget">
     <h2 class="header flatBottom">Comments Closing In Next 7 Days (<%= @closing_soon.map{|a,e| e.size}.sum %>)</h2>
     <ul class="indent marginTop recent_prorule">
@@ -22,7 +72,7 @@
   </div>
 <% end %>
 
-<% if !@recently_opened.empty? %>
+<% if false #!@recently_opened.empty? %>
   <div class="clear widget">
     <h2 class="header flatBottom">Comments Opened in Last 7 Days (<%= @recently_opened.map{|a,e| e.size}.sum %>)</h2>
     <ul class="indent marginTop recent_prorule">
@@ -40,7 +90,7 @@
 <% end %>
 
 
-<% if !@effective_this_week.empty? %>
+<% if false #!@effective_this_week.empty? %>
   <div class="clear widget">
     <h2 class="header flatBottom">Rules Taking Effect In Next 7 Days (<%= @effective_this_week.map{|a,e| e.size}.sum %>)</h2>
     <ul class="indent marginTop recent_prorule">
@@ -57,7 +107,7 @@
   </div>
 <% end %>
 
-<% if !@recent_proposed_rules_by_agency.empty? %>
+<% if false #!@recent_proposed_rules_by_agency.empty? %>
 <div class="clear widget">
   <h2 class="header flatBottom">Rules Proposed in Last 7 Days (<%= @recent_proposed_rules_by_agency.map{|a,e| e.size}.sum %>)</h2>
   <ul class="indent marginTop recent_prorule">

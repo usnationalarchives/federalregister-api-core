@@ -17,6 +17,8 @@
     <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
     
+    <%= yield :head %>
+    
     <%= stylesheet_link_tag "reset", :media => :screen %>
     <%= stylesheet_link_tag "screen", :media => :screen %>
 
@@ -25,18 +27,20 @@
     	enhance({
     		loadStyles: [
     			'/stylesheets/enhancements.css',
-    			'/stylesheets/ui.notify.css',
     			{'src': 'ie.css', 'iecondition': 'lte IE 8'}
     		],	
     		loadScripts: [
     			'/javascripts/jquery.js',
     			'/javascripts/jquery-ui.js',
+    			'/javascripts/jquery.utilities.js',
     			'/javascripts/jquery.history.js',
     			'/javascripts/jquery.tabs.js',
-    			'/javascripts/jquery.notify.js',
           '/javascripts/search.js',
     			'/javascripts/sectionpage.js',
-    			'/javascripts/frontend.js'
+    			'/javascripts/homepage.js',
+    			'/javascripts/agencylist.js',
+    			'/javascripts/jquery.tinysort.min.js',
+    			'/javascripts/topiclist.js'
     		]
     	});   
     </script>

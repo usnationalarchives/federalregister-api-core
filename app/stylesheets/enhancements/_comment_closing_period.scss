@@ -3,32 +3,39 @@
 COMMENT PERIOD CLOSING ENHANCEMENTS
 
 ******************************/  
-#comments-closing-opening h2 {
+#comments-closing-opening-body h2 {
   display: none;
   }
 
 #comments-closing-opening .header-nav {
   border-top: 3px solid $dark_blue;
+  position: relative;
   }
-
+#comments-closing-opening .header-nav h2 {
+  border-top: none;
+  margin-top: 0;
+  }
 #comments-closing-opening .header-nav.title_bar {
   margin: 4.8em 0 0;
   padding-top: 0;
   }
 #comments-closing-opening .header-nav .tabs-nav {
-  display: inline-block;
+  @include horizontal-list;
+  position: absolute;
+  right: 0;
+  top: 0;
   }  
 #comments-closing-opening .header-nav .tabs-nav li {
   display: inline-block;
-  margin-right: 10px;
-  padding-top: 5px;
+  padding-top: 7px;
   }
 #comments-closing-opening .header-nav .tabs-nav li:hover,
 #comments-closing-opening .header-nav .tabs-nav .tabs-selected {
   background: url(/images/tab_select.png) no-repeat 50% top;
   }
 #comments-closing-opening .header-nav .tabs-nav .tabs-selected a {
-  color: $powder_blue;
+  color: $dark_blue;
+  font-weight: 700;
   }
 #comments-closing-opening .header-nav .tabs-nav a {
   color: #CCC;

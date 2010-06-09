@@ -12,7 +12,17 @@
           <% end %>
           
           <%= simple_format @agency.description %>
-
+          <% if @agency.parent %>
+            <p>Parent agency: <%= link_to @agency.parent.name, agency_path(@agency.parent) %></p>
+          <% end %>
+          <% if @agency.children.present? %>
+            <h3>Sub-<%= @agency.children.size > 1 ? 'agency'.pluralize : 'agency' %></h3>
+            <ul>
+              <% @agency.children.each do |agency| %>
+                <li><%= link_to agency.name, agency_path(agency) %></li>
+              <% end %>
+            </ul>
+          <% end %>
         </div>
       
         <div class="grid_6 omega">
