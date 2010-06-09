@@ -163,6 +163,18 @@ class Entry < ApplicationModel
     scoped(:order => "publication_date DESC", :limit => n)
   end
   
+  # TODO: make this real
+  def self.popular(n = 5)
+    scoped(
+      :order => "RAND()",
+      :limit => 5,
+      :conditions => {
+        :granule_class => %w(RULE PRORULE NOTICE),
+        :publication_date => (1.month.ago .. Date.today)
+      }
+    ).scoped(:conditions => "length(title) < 90")
+  end
+  
   def entry_type 
     ENTRY_TYPES[granule_class]
   end
