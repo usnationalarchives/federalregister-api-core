@@ -38,13 +38,36 @@ ENTRIES
   @include grid(10, 16);
   @include grid-suffix(1);
   @include alpha;
-}
-
+  }
+#metadata_content_area {
+  margin-bottom: 4em;
+  }
 #entries #sidebar {
   @include grid(5, 16);
   @include omega;
   }
-
+#entries.show .header_column {
+  @include grid(3, 16);
+  @include alpha;
+  clear: both;
+  }
+#entries.show .body_column {
+  @include grid(8, 16);
+  @include grid-suffix(1);
+  }
+#entries.show .notes_column {
+  @include grid(4, 16);
+  @include omega;
+  }  
+/*.metadata_list dt {
+  @include grid(4, 16);
+  @include alpha;
+  }  
+.metadata_list dd {
+  @include grid(4, 16);
+  @include omega;
+  }*/
+  
 /******************************
 
 THREE COL LIST
@@ -86,3 +109,43 @@ THREE COL LIST - COMMENT PERIOD LIST
   @include grid(12, 16);
   @include omega;  
   }
+  
+
+/******************************
+
+CITATION LIST
+
+******************************/  
+
+.citation_list .citation_count {
+  @include grid(2, 16);
+  @include alpha;
+  
+  clear: both;
+  }
+.citation_list .date {
+  @include grid(2, 16)
+  }
+
+.citation_list .title {
+  @include grid(12, 16);
+  @include omega;
+  }
+  
+  
+/******************************
+
+LIST BY DATE
+
+******************************/    
+
+/*#entries.by_date h3 {
+  @include grid(4,16);
+  @include alpha;
+  clear: both;
+  }
+
+#entries.by_date #main ul {
+  @include grid(12,16);
+  @include omega;
+  }*/

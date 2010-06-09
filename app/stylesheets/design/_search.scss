@@ -4,9 +4,52 @@ PAGE ELEMENTS
 
 ******************************/
 
+.tabs {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  display: inline-block;
+}
+.tabs {
+  background: rgba(161, 181, 189, .5);
+  @include border-top-left-radius(5px);
+  @include border-top-right-radius(5px);
+  border-bottom: 10px solid #f1f1f1;
+  display: block;
+  font-size: 1.2em;
+  margin-bottom: -10px;
+  }
+.tabs li {
+  list-style-image: none;
+  list-style-type: none;
+  margin-left: 0px;
+  white-space: nowrap;
+  display: inline-block;
+  }
+.tabs li a {
+  color: #666;
+  @include type_kit_font_1;
+  margin-bottom: .5em;
+  padding: 1em 1em 0 1em;
+  }  
+.tabs .on a {
+  background: #f1f1f1;
+  @include border-top-left-radius(5px);
+  @include border-top-right-radius(5px);
+  color: #385F82;
+  font-weight: 700; /* TODO Look up proper weight */
+  padding: .5em 1em 1em 1em;
+  }
+.tabs .number_of_results {
+  font-weight: normal;
+  font-size: .8em;
+  margin: -5px 0 -5px 5px;
+  }
+  
 .search_bar {
   background: #f1f1f1;
-  @include border-radius(5px);  
+  @include border-radius(5px);
   margin-bottom: 1em;
   padding: 1em;
   overflow: hidden;
@@ -65,6 +108,7 @@ PAGE ELEMENTS
   }*/
 .search_info {  
   border-bottom: 3px solid #385F82;
+  clear: both;
   margin-bottom: 1em;
   padding: 0 1em;
   position: relative;
@@ -81,15 +125,16 @@ PAGE ELEMENTS
   }
 .search_info li a {
   color: #BDBDBD;
+  text-transform: uppercase;
   }    
 .search_info li.on {
   background: url(/images/tab_select_bottom.png) no-repeat 50% bottom;
-  font-weight: bold;
+  font-weight: 700;
   } 
 .search_info li.on a {
   color: #385F82;
   }
-#entries.search .search_info .title_bar {
+.search .search_info .title_bar {
   border-top: none;
   margin-bottom: 0;
   margin-top: 7px;
@@ -113,9 +158,12 @@ ol.results li {
 ol.results li:last-child {
   border: none;
   }  
+ol.results h4 {
+  font-weight: normal;
+  }  
 ol.results li .date {
   color: #bdbdbd;
-  @include type_kit_font_1;
+  @include type_kit_font_3;
   font-size: 1.3em;
   line-height: 1.15;
   text-transform: uppercase;
@@ -130,6 +178,11 @@ ol.results li .date {
   @include border-radius(5px);
   padding: 1px 5px;
   }
+
+.active_filter_list li {
+  background: #ccc;
+  padding: 1em;
+  }  
 
 /******************************
 
@@ -157,9 +210,8 @@ FILTERS
   overflow: hidden;
   }
 .filters li a {
-  display: block;
-  font-size: .9em;
-  font-weight: bold;
+  font-size: 1em; 
+  font-weight: 700;
   }
 .filters li a.remove {
   background: url(/images/remove.png) no-repeat left top;
@@ -187,7 +239,7 @@ FILTERS
 .filters .zip {
   border: 1px solid #ccc;
   width: 75px;
-}  
+  }  
 
 /******************************
 
@@ -195,9 +247,6 @@ ERRORS
 
 ******************************/
 
-.errors {
-
-}
 .errors li{
   @include border-radius(5px);  
   overflow: hidden;  

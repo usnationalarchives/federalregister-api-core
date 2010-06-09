@@ -1,0 +1,15 @@
+<ul class="tabs">
+  <% if selected == :entries %>
+    <li class="on"><%= link_to 'Articles', entries_search_path(:conditions => {:term => search.term}) %></li>
+  <% else %>
+    <li><%= link_to "Articles <span class=\"number_of_results\">#{number_with_delimiter search.entry_count}</span>", entries_search_path(:conditions => {:term => search.term}) %></li>
+  <% end %>
+  
+  <li><%= link_to_unimplemented "Events <span class=\"number_of_results\">42</span>" %></li>
+
+  <% if selected == :regulatory_plans %>
+    <li class="on"><%= link_to 'Regulations', regulatory_plans_search_path(:conditions => {:term => search.term}) %></li>
+  <% else %>
+    <li><%= link_to "Regulations <span class=\"number_of_results\">#{number_with_delimiter search.regulatory_plan_count}</span>", regulatory_plans_search_path(:conditions => {:term => search.term}) %></li>
+  <% end %>
+</ul>

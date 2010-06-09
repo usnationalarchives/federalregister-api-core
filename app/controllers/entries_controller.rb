@@ -25,7 +25,7 @@ class EntriesController < ApplicationController
   def search_facet
     @search = EntrySearch.new(params)
     facets = @search.send(params[:facet] + "_facets")
-    render :partial => "facet", :collection => facets, :layout => nil
+    render :partial => "search/facet", :collection => facets, :layout => nil
   end
   
   def widget
@@ -70,40 +70,54 @@ class EntriesController < ApplicationController
     @publication_date = Date.parse("#{@year}-#{@month}-#{@day}")
     
     @agencies = Agency.all(
-        :include => :entries,
-        :conditions => ['publication_date = ?', @publication_date],
-        :order => "entries.title"
+      :include => [:entries],
+      :conditions => ['publication_date = ?', @publication_date],
+      :order => "agencies.name, entries.title"
     )
+    Agency.preload_associations(@agencies, :children)
+    Entry.preload_associations(@agencies.map(&:entries).flatten, :agencies)
+    
     @entries_without_agency = Entry.all(
-      :joins => :agencies,
+      :include => :agencies,
       :conditions => ['agencies.id IS NULL && entries.publication_date = ?', @publication_date],
       :order => "entries.title"
     )
-    # @entries = @agencies.inject([]) {|set, agency| set += agency.entries} + @entries_without_agency
-    # @entries = Entry.published_on(@publication_date).scoped(:order => "id")
+    
+    if @agencies.blank? && @entries_without_agency.blank?
+      raise ActiveRecord::RecordNotFound
+    end
+    
   end
   
   def show
     @entry = Entry.find_by_document_number!(params[:document_number])
     
-    if !@entry.places.usable.blank?
+    respond_to do |wants|
+      wants.html do
+        if !@entry.places.usable.blank?
+
+          @dist = 20
+          @places = @entry.places.usable
+
+          @map = Cloudkicker::Map.new( :style_id => 1714,
+                                       :zoom     => 1,
+                                       :lat      => @places.map(&:latitude).average,
+                                       :long     => @places.map(&:longitude).average
+                                     )
+          @places.each do |place|
+            Cloudkicker::Marker.new( :map   => @map, 
+                                     :lat   => place.latitude,
+                                     :long  => place.longitude, 
+                                     :title => 'Click to view location info',
+                                     :info  => render_to_string(:partial => 'maps/place_marker_tooltip', :locals => {:place => place} ),
+                                     :info_max_width => 200
+                                   )
+          end
+        end
+      end
       
-      @dist = 20
-      @places = @entry.places.usable
-    
-      @map = Cloudkicker::Map.new( :style_id => 1714,
-                                   :zoom     => 1,
-                                   :lat      => @places.map(&:latitude).average,
-                                   :long     => @places.map(&:longitude).average
-                                 )
-      @places.each do |place|
-        Cloudkicker::Marker.new( :map   => @map, 
-                                 :lat   => place.latitude,
-                                 :long  => place.longitude, 
-                                 :title => 'Click to view location info',
-                                 :info  => render_to_string(:partial => 'maps/place_marker_tooltip', :locals => {:place => place} ),
-                                 :info_max_width => 200
-                               )
+      wants.xml do
+        send_file @entry.full_xml_file_path, :filename => "#{@entry.document_number}.xml"
       end
     end
   end
