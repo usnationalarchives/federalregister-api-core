@@ -206,7 +206,7 @@ ARTICLE VIEW
   background: #E6E6E6;
   color: #6E6E6E;
   margin-bottom: 1em;
-  padding: 1em;
+  padding: 1em 1em .75em 1em;
   position: relative;
   }
 #flash_message .button {
@@ -214,8 +214,7 @@ ARTICLE VIEW
   color: #fff;
   font-size: .75em;
   margin: 0;
-  line-height: 46px;
-  padding: 0 1em;
+  padding: 1em 1em .6em 1em;
   position: absolute;
   right: 0;
   top: 0;
@@ -626,19 +625,17 @@ HOME PAGE
   }  
   
 .newsbox {
-  background: #fcfcfc;
-  border: 5px solid #ececec;
-  @include box-shadow(#ccc, 0, 0, 5px);
   @include border-radius(5px);
   margin-bottom: 1em;
   padding: 1em 1em 3em;
   position: relative;
   }
-
 .newsbox h2 {
-  border-bottom: 1px solid #ccc;
-  margin-bottom: .5em;
-  }
+  margin-top: 0;
+  }  
+.newsbox h2 a {
+  color: #5697CF;
+  }  
 .newsbox ul {
   color: darken(#E4A529, 10%);
   margin-bottom: 0;
@@ -649,12 +646,6 @@ HOME PAGE
   list-style-position: outside;
   margin-bottom: .5em;
   }
-
-.newsbox .see_more {
-  bottom: 1em;
-  position: absolute;
-  left: 1em;
-  }  
   
 /******************************
 

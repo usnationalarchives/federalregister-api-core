@@ -5,13 +5,11 @@
 
 <img src="/images/carouselcomp.png" />
 
-
-
 <div class="section_news_boxes grid_16 alpha omega" style="clear:both">
   <% @sections.each do |section| %>
   <div class="grid_8 <%= cycle('alpha','omega')%>">
       <div class="newsbox">
-        <h2><%= link_to section.title, section_path(section) %></h2>
+        <h2 class="title_bar"><%= link_to section.title, section_path(section) %></h2>
         <ul>
           <% entries = section.highlighted_entries[1..3] %>
           <% if entries %>
