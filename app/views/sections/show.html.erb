@@ -29,9 +29,10 @@
   <% section_tag(:class => 'whats_hot') do %>  
     <h1 class="title_bar">What's Hot</h1>
     <ul>
-      <%# TODO HELP-RUBY make it real %>
-      <li><a href="#">Help me obiwan</a></li>
-    </ul>  
+      <% @popular_entries.each do |entry| %>
+        <li><%= link_to entry.title, entry_path(entry) %></li>
+      <% end %>
+    </ul>
   <% end -%>
   
   <% if @agency %>
