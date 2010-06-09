@@ -647,6 +647,26 @@ HOME PAGE
   margin-bottom: .5em;
   }
   
+.learn {
+  margin: 3em 0 4em 0;
+  overflow: hidden;
+  }
+.learn h2 {
+  margin-top: 0;
+  }
+.learn h3 {
+  font-size: 1.318em;
+  margin:.2em 0 .8em 0;
+  }  
+
+.notecard {
+  background: #ececec;
+  @include border-radius(10px);
+  height: 221px;
+  padding: 1em;
+  }  
+
+  
 /******************************
 
 TABLES
