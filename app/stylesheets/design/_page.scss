@@ -369,7 +369,7 @@ ARTICLE VIEW
 .regulatory_timeline_container {
   display: block;
   height: 130px;
-  overflow: auto;
+  /*overflow: auto; TODO-make this work  */ 
   width: 460px;  
 }  
 .timeline {
@@ -383,6 +383,7 @@ ARTICLE VIEW
   float: left;
   height: 80px;
   padding: 1em;
+  width: 100px;
   }
 .timeline .timeline_item:first-child {
   border-left: 1px solid #ccc;
