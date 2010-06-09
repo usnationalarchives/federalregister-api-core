@@ -627,6 +627,7 @@ HOME PAGE
   
 .newsbox {
   @include border-radius(5px);
+  height: 225px; /* TODO remove this height */
   margin-bottom: 1em;
   padding: 1em 1em 3em;
   position: relative;
