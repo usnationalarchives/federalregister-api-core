@@ -32,6 +32,7 @@ h4,
 h5,
 h6 {
   @include type_kit_font_2;
+  font-weight: 600;
   }
 
 #entries.show h2,
@@ -53,8 +54,8 @@ a:hover {
 }
 
 p {
-  @include type_kit_font_3;
-  font-size: 1.1em;
+  @include type_kit_serif_headline;
+  font-size: 1.2em;
 }
 
 /******************************
@@ -73,7 +74,7 @@ font-weight: bold;
 height: 21px;
 @include type_kit_font_1;
 letter-spacing: 0px;
-margin-bottom: 50px;
+margin-bottom: 1em;
 text-transform: uppercase;
 }
 
@@ -152,17 +153,10 @@ line-height: 1.45;
 text-align: right;
 }
 
-.three_col_list.comments h3 {
-}
-
-.comments .grouped_by_date .date {
-  font-weight: bold;
-
-}
-
 .comments .grouped_by_date .date {
   color: #bdbdbd;
   font-size: 1.3em;
+  font-weight: 700;  
   line-height: 1.15;
   text-align: center;
 }
@@ -182,8 +176,8 @@ ARTICLES
   line-height: 1.6;
 }
 
-#sections .article h1 {
-font-size: 1.8em;
+.featured .article h1 {
+font-size: 1.3em;
 font-weight: normal;
 line-height: 1.4;
 }
@@ -195,3 +189,58 @@ line-height: 1.4;
 #entries h6 {
   margin-top: 1em;
 }
+
+
+.metadata {
+  font-size: 1.3em;
+  @include type_kit_font_3;
+  }
+
+
+/******************************
+
+CITATION LIST
+
+******************************/
+
+.citation_count {
+  
+  }
+
+.citation_count span {
+  display: block;
+  }
+
+/******************************
+
+BY DATE
+
+******************************/
+
+#entries.by_date h2 {
+  margin-bottom: 0;
+  margin-top: 1em;
+  }
+#entries.by_date h2:first-child {
+  margin-top: 0;
+  }  
+#entries.by_date h3 {
+  font-size: 1.2em;
+  margin: .5em 0;
+  text-transform: uppercase;
+  }
+#entries.by_date dl,
+#entries.by_date #content_area ul {
+  font-size: 1.1em;
+  margin-left: 1em;
+  }
+#entries.by_date ul {
+  list-style: none;
+  }
+#entries.by_date dt a {
+  font-weight: normal;
+  }
+#entries.by_date .see {
+  font-weight: 400;
+  font-style: italic;
+  }  

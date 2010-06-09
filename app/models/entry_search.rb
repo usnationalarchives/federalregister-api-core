@@ -3,33 +3,49 @@ class EntrySearch < ApplicationSearch
   
   SUPPORTED_ORDERS = %w(Relevant Newest Oldest)
   
-  attr_reader :order, :start_date, :end_date, :type, :location, :within
-  attr_accessor :type
+  attr_reader :order, :type, :location, :within
+  attr_accessor :type, :regulation_id_number
   
-  [:agency_ids, :section_ids, :topic_ids].each do |attr|
-    define_method attr do
-      @with[attr]
-    end
-    
-    define_method "#{attr}=" do |val|
-      if val.present?
-        @with[attr] = val
-      end
-    end
+  define_filter :regulation_id_number, :label => "Regulation", :phrase => true do |regulation_id_number|
+    RegulatoryPlan.find_by_regulation_id_number(regulation_id_number).try(:title)
   end
   
-  [:start_date, :end_date].each do |attr|
-    define_method "#{attr}=" do |val|
-      if val.present?
-        instance_variable_set("@#{attr}", val)
-        
-        begin
-          Date.parse(val)
-        rescue
-          @errors << "Could not understand #{attr.to_s.humanize.downcase}."
-        else
-          @with[:publication_date] = Date.parse(@start_date).to_time .. Date.parse(@end_date).to_time
+  define_filter :agency_ids,  :sphinx_type => :with
+  define_filter :section_ids, :sphinx_type => :with do |section_id|
+    Section.find_by_id(section_id).try(:title)
+  end
+  define_filter :topic_ids,   :sphinx_type => :with
+  define_filter :type,        :phrase => true do |type|
+    Entry::ENTRY_TYPES[type]
+  end
+  
+  attr_reader :start_date
+  def start_date=(val)
+    if val.present?
+      @start_date = val
+      begin
+        parsed_val = Date.parse(val)
+      rescue
+        @errors << "Could not understand start date."
+      else
+        days_ago = [30,90,365].find do |n|
+          n.days.ago.to_date == parsed_val
         end
+        
+        if days_ago.present?
+          name = "in the last #{days_ago} days"
+        else
+          name = "since #{parsed_val}"
+        end
+        
+        add_filter(
+          :value => parsed_val.to_time .. Entry.latest_publication_date.to_time,
+          :name => name,
+          :condition => :start_date,
+          :label => "Date",
+          :sphinx_type => :with,
+          :sphinx_attribute => :publication_date
+        )
       end
     end
   end
@@ -61,7 +77,14 @@ class EntrySearch < ApplicationSearch
       
       if loc.lat
         places = Place.find(:all, :select => "id", :origin => loc, :within => within)
-        @with[:place_ids] = places.map{|p| p.id}
+        add_filter(
+          :value => places.map{|p| p.id},
+          :name => "#{val} within #{within} miles",
+          :condition => :location,
+          :sphinx_attribute => :place_ids,
+          :label => "Near",
+          :sphinx_type => :with
+        )
         
         if places.size > 4096
           @errors << 'We found too many locations near your location; please reduce the scope of your search'
@@ -72,19 +95,12 @@ class EntrySearch < ApplicationSearch
     end
   end
   
-  def conditions=(conditions)
-    [:agency_ids, :section_ids, :topic_ids, :term, :type, :within, :location, :start_date, :end_date].each do |attr|
-      if conditions[attr].present?
-        self.send("#{attr}=", conditions[attr])
-      end
-    end
-  end
-  
-  def conditions
-    conditions = {}
-    conditions[:type] = @type if @type.present?
-    conditions
-  end
+  # def conditions
+  #   conditions = {}
+  #   conditions[:type] = "\"#{@type}\"" if @type.present?
+  #   conditions[:regulation_id_number] = "\"#{@regulation_id_number}\"" if @regulation_id_number.present?
+  #   conditions
+  # end
   
   def order_clause
     case @order
@@ -180,11 +196,17 @@ class EntrySearch < ApplicationSearch
   end
   memoize :date_facets
   
+  def regulatory_plan
+    if @regulation_id_number
+      RegulatoryPlan.find_by_regulation_id_number(@regulation_id_number)
+    end
+  end
+  memoize :regulatory_plan
+  
   private
   
   def set_defaults(options)
     @start_date = '1994-01-01'
-    @end_date = Entry.latest_publication_date.to_s(:db)
     @within = '25'
     @order = options[:order] || 'relevant'
   end

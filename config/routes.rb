@@ -42,7 +42,7 @@ ActionController::Routing::Routes.draw do |map|
   map.entries_search 'articles/search', :controller => 'entries', :action => 'search'
   map.entries_search_facet 'articles/search/facet', :controller => 'entries', :action => 'search_facet'
   map.entries_widget 'articles/widget', :controller => 'entries', :action => 'widget'
-  map.entry 'articles/:year/:month/:day/:document_number/:slug', :controller => 'entries',
+  map.entry 'articles/:year/:month/:day/:document_number/:slug.:format', :controller => 'entries',
                                                                 :action     => 'show',
                                                                 :year       => /\d{4}/,
                                                                 :month      => /\d{1,2}/,
@@ -99,12 +99,13 @@ ActionController::Routing::Routes.draw do |map|
   map.resource :location, :only => [:update, :edit], :member => {:places => :get}
   
   # REGULATIONS
+  map.regulatory_plans_search 'regulations/search',
+                      :controller => 'regulatory_plans',
+                      :action     => 'search'
+  map.regulatory_plans_search_facet 'regulations/search/facet', :controller => 'regulatory_plans', :action => 'search_facet'
   map.regulatory_plan 'regulations/:regulation_id_number/:slug',
                       :controller => 'regulatory_plans',
                       :action     => 'show'
-  map.regulatory_plan_search 'regulations/search',
-                      :controller => 'regulatory_plans',
-                      :action     => 'search'
   map.short_regulatory_plan 'r/:regulation_id_number', :controller => 'regulatory_plans',
                                              :action     => 'tiny_url'
 
