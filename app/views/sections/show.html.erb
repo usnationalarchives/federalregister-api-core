@@ -26,36 +26,46 @@
     <%= link_to 'Subscribe', section_path(@section, :format => :rss), :class => 'button rss' %>
   <% end -%>
   
-  <% section_tag(:class => 'info') do %>          
+  <% section_tag(:class => 'whats_hot') do %>  
+    <h1 class="title_bar">What's Hot</h1>
+    <ul>
+      <% @popular_entries.each do |entry| %>
+        <li><%= link_to entry.title, entry_path(entry) %></li>
+      <% end %>
+    </ul>
+  <% end -%>
+  
+  <% if @agency %>
+    <% section_tag(:class => 'featured_agency') do %>  
+      <h1 class="title_bar">Featured Agency</h1>
+      <% if @agency.logo_file_name.present? %>
+        <%= image_tag @agency.logo.url(:thumb), :style => "float:left; margin-right: 1em; margin-bottom: 10px;" %>
+      <% end %>
+      <h2><%= link_to @agency.name, agency_path(@agency) %></h2>
+      <p class="metadata">
+        <%= link_to "#{@agency.entry_counts_since('month')} '#{ @section.title }' entries this month", entries_search_path(:conditions => {:agency_ids => @agency.id, :start_date => 1.month.ago.to_s(:db)}) %>
+      </p>
+    <% end -%>
+  <% end %>
+  
+  <% section_tag(:class => 'info') do %>
+    <h1 class="title_bar">About this section</h1>
     <p>
       <%= @section.description %>
       <%= link_to "Learn more about this section", about_section_path(@section) %>
     </p>
   <% end -%>
   
-  <% section_tag(:class => 'stats') do %>  
-    <h1 class="title_bar">Stats</h1>
-    <ul>
-      <li><strong>1000</strong> Something</li>
-      <li><strong>200</strong> Something</li>
-      <li><strong>32</strong> Something</li>
-      <li><strong>43</strong> Something</li>
-    </ul>  
-  <% end -%>
-  
-  <% section_tag(:class => 'whats_hot') do %>  
-    <h1 class="title_bar">What's Hot</h1>
-  <% end -%>
-  
 <% end -%>
 
 <div id="comments-closing-opening">
   
-  <div class="header-nav title_bar">
-    <span class="small_stack">Comment <span>Period</span></span>
+  <div class="header-nav">
+    <h2 class="title_bar"><span class="small_stack"><span>Articles</span>With</span> Comments Requested</h2>
+    
     <ul id="comments-closing-opening-links" class="tabs-nav">
       <li class="tab" id="tabs-opening"><a href="#comment-period-closing">Closing Soon</a></li>
-      <li class="tab" id="tabs-closing"><a href="#comment-period-opening">Opening Soon</a></li>
+      <li class="tab" id="tabs-closing"><a href="#comment-period-opening">Newly Opened</a></li>       
     </ul>
   </div>
     
@@ -81,7 +91,7 @@
   <% @section.entries.published_on(@publication_date).each do |entry| %>
     <% article_tag do %>  
       <h1><%= link_to entry.title, entry_path(entry) %></h1>
-      <%= agency_names(entry) %>
+      A <%= entry.entry_type %> by <%= agency_names(entry) %>
     <% end -%>
   <% end %>
 <% end -%>

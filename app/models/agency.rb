@@ -48,6 +48,8 @@ class Agency < ApplicationModel
   
   serializable_column :entries_1_year_weekly, :entries_5_years_monthly, :entries_all_years_quarterly, :related_topics_cache
   
+  named_scope :with_logo, :conditions => "agencies.logo_file_name IS NOT NULL"
+  
   def to_param
     slug
   end

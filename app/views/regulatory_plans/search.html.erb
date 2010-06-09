@@ -10,26 +10,24 @@
 </ul>
 <% end %>
 
-<% form_for :conditions, @search, :url => regulatory_plan_search_path, :html => {:method => :get} do |f| %>
+<% form_for :conditions, @search, :url => regulatory_plans_search_path, :html => {:method => :get} do |f| %>
+  <%= render :partial => "search/tabs", :locals => {:search => @search, :selected => :regulatory_plans}%>
   <div class="search_bar">
     <label>Find</label>
     <%= f.text_field :term %>
-    <span class="label">in</span>
-    <select name="some_name" id="conditions_type">
-      <option value="option1">Articles</option>
-      <option value="option2">Regulations</option>
-    </select>
-    <%= f.submit 'Go', :class => 'button' %>
-    
+    <%= f.submit 'Search', :class => '' %>
   </div>
 
   <% unless @search.blank? %>
 
   <div class="filters">
-    <%= render :partial => "entries/facets", :locals => {:facets => @search.agency_facets,   :name => "Agency"  }%>
+    <%= render :partial => "search/facets", :locals => {:facets => @search.priority_category_facets,   :name => "Priority Category"  }%>
+    <%= render :partial => "search/facets", :locals => {:facets => @search.agency_facets,   :name => "Agency"  }%>
   </div>
 
   <div class="result_set">
+    <%= render :partial => "search/filters", :locals => {:search => @search} %>
+    
     <% if @search.results.present? %>
       <div class="search_info titlebar">
 

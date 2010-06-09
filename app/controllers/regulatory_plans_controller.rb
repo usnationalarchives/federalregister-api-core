@@ -1,11 +1,16 @@
 class RegulatoryPlansController < ApplicationController
   def show
     @regulatory_plan = RegulatoryPlan.find_by_regulation_id_number(params[:regulation_id_number], :order => "issue DESC")
-    @entries = @regulatory_plan.entries.paginate(:per_page => 10, :page => params[:page])
   end
   
   def search
     @search = RegulatoryPlanSearch.new(params)
+  end
+  
+  def search_facet
+    @search = RegulatoryPlanSearch.new(params)
+    facets = @search.send(params[:facet] + "_facets")
+    render :partial => "search/facet", :collection => facets, :layout => nil
   end
   
   def tiny_url

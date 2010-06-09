@@ -19,6 +19,16 @@
   </div>
   
   <div class="grid_2">
+    <h2>Browse</h2>
+    <% nav_tag() do %>
+      <ul>
+        <li><%= link_to "Agencies", agencies_path %></li>
+        <li><%= link_to "Topics", topics_path %></li>
+      </ul>
+    <% end -%>  
+  </div>
+  
+  <div class="grid_2">
     <h2>Learn</h2>
     <ul>
       <li><a href="/" title="Home">About the FR</a></li>
