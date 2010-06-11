@@ -55,9 +55,6 @@ HOME PAGE
   overflow: hidden;
   width: 425px;
   }  
-#top_news_promo .news_items a {
-  white-space: nowrap;
-  }  
 #top_news_promo .news_items > li {
   height: 290px;
   padding: 1em 0;
@@ -78,22 +75,22 @@ HOME PAGE
 /* PROMO STATS */     
 .stats {
   border-top: 1px solid #ebebeb;
+  bottom: 0;
   @include apertura-condensed;
   font-weight: 700;
   height: 40px;
   list-style: none;
   margin: 2em 0 0 0;
   padding: 1em 0 0 0;
-  position: relative;
+  position: absolute;
   text-transform: uppercase;
+  width: 425px;
   }
 .stats li.left {
-  left: 0;
-  position: absolute;
+  float: left;
   }
 .stats li.right {
-  position: absolute;
-  right: 0;
+  float: right;
   }  
 .stats .total {
   color: #979797;  
