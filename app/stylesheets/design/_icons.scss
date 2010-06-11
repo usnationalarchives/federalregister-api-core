@@ -1,25 +1,24 @@
 .icon {
   display: block;
-  line-height: 64px;
-  padding-left: 74px;
-  @include sprite-background('/images/sectionicons-vertical.png', 386px, 64px);
+  padding-left: 40px;
+  @include sprite-background('/images/sectionicons-vertical-32.png', 386px, 32px);
   @include sprite-column(1);
   }
 .icon.money {
-  @include sprite-row(1, 64px, 32px);
+  @include sprite-row(1, 32px, 16px);
   }
 .icon.environment {
-  @include sprite-row(2, 64px, 32px);  
+  @include sprite-row(2, 32px, 16px);  
   }
 .icon.world {
-  @include sprite-row(3, 64px, 32px);  
+  @include sprite-row(3, 32px, 16px);  
   }
 .icon.science-and-technology {
-  @include sprite-row(4, 64px, 32px);
+  @include sprite-row(4, 32px, 16px);
   }  
 .icon.business-and-industry {
-  @include sprite-row(5, 64px, 32px);
+  @include sprite-row(5, 32px, 16px);
   }
 .icon.health-and-public-welfare {
-  @include sprite-row(6, 64px, 32px);
+  @include sprite-row(6, 32px, 16px);
   }
