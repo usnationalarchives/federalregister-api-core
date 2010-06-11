@@ -3,12 +3,12 @@
 
 <h1 class="title"><span><%= Entry.latest_publication_date.to_s(:wday_and_pretty_date) %></span></h1>
 
-<div class=" grid_14 alpha omega" id="top_news_promo">
+<div id="top_news_promo">
 
   <ul class="section_nav">
     <% @sections.each do |section| %>
-      <li>
-          <%= link_to section.title, section_path(section) %>
+      <li >
+          <%= link_to section.title, "#promo_#{section.to_param}" %>
       </li>  
     <% end -%>
   </ul>
@@ -16,15 +16,11 @@
 
   <ul class="news_items">
     <% @sections.each do |section| %>
-      <li>
+      <li id="promo_<%= section.to_param %>">
           <% entry = section.highlighted_entries.first %>
           <% if entry %>
             <%= render :partial => 'special/entry_with_abstract', :locals => {:entry => entry} %>  
-            <div class="stats">
-              <p><span> <%= section.entries.count %></span> New Articles Today</p>
-              <p><span>12</span> Comment Periods Ending Soon</p>
-              
-            </div>    
+            <%= render :partial => 'stats', :locals => {:section => section}  %>
           <% end %>
       </li>  
     <% end -%>
