@@ -3,6 +3,37 @@
 
 <h1 class="title"><span><%= Entry.latest_publication_date.to_s(:wday_and_pretty_date) %></span></h1>
 
+<div class=" grid_14 alpha omega" id="top_news_promo">
+
+  <ul class="section_nav">
+    <% @sections.each do |section| %>
+      <li>
+          <%= link_to section.title, section_path(section) %>
+      </li>  
+    <% end -%>
+  </ul>
+
+
+  <ul class="news_items">
+    <% @sections.each do |section| %>
+      <li>
+          <% entry = section.highlighted_entries.first %>
+          <% if entry %>
+            <%= render :partial => 'special/entry_with_abstract', :locals => {:entry => entry} %>  
+            <div class="stats">
+              <p><span> <%= section.entries.count %></span> New Articles Today</p>
+              <p><span>12</span> Comment Periods Ending Soon</p>
+              
+            </div>    
+          <% end %>
+      </li>  
+    <% end -%>
+  </ul>
+
+
+</div>  
+
+
 <img src="/images/carouselcomp.png" />
 
 <div class="learn">
@@ -10,7 +41,7 @@
   <div class="grid_4 alpha">
     <div class="notecard">
     <h3>Notices</h3>
-    <p>This category contains non-rulemaking documents that are applicable to the general public and named parties.  These documents include notices of public meetings, hearings, and investigations, environmental impact statements, proposed information collections, statements of organization, functions, and delegations, and other announcements of public interest. 
+    <p>This category contains non-rulemaking documents that are applicable to the general public and named parties.  These documents include notices of public meetings, hearings, investigations, grants and funding, environmental impact statements, information collections, statements of organization and functions, delegations, and other announcements of public interest.
     </p>
     </div>
   </div>
