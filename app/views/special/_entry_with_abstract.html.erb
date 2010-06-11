@@ -1,23 +1,18 @@
+<div class="news_content">
+  <h3><%= link_to entry.curated_title, entry_path(entry) %></h3>
+ 
+  <p class="metadata">A <%= entry.entry_type %> by <%= entry.agencies_excluding_parents.map{|a| link_to a.name, agency_path(a) }.to_sentence %> on 
+  <%= link_to date_tag(entry.publication_date, :datetime => entry.publication_date.to_s(:iso)), entries_by_date_path(entry.publication_date) %>
+  </p>
 
-   
-   <div class="photo grid_3 alpha">
-     <%= render(:partial => "special/lede_photo", :object => entry.lede_photo) if entry.lede_photo %>
-   </div>
+  <p class="summary"><%= render(:partial => "special/lede_photo", :object => entry.lede_photo) if entry.lede_photo %>
+  <%= truncate(entry.curated_abstract, 500) %></p>
 
-    <div class="grid_7 omega">
-      <h3><%= link_to entry.curated_title, entry_path(entry) %></h3>
-     
-      <p class="metadata">A <%= entry.entry_type %> by <%= entry.agencies_excluding_parents.map{|a| link_to a.name, agency_path(a) }.to_sentence %> on 
-      <%= link_to date_tag(entry.publication_date, :datetime => entry.publication_date.to_s(:iso)), entries_by_date_path(entry.publication_date) %>
-      </p>
-    
-      <p class="summary"><%= truncate(entry.curated_abstract, 500) %></p>
-  
-      <%= link_to 'Read more >', entry_path(entry) %>
-  
-      <% if entry.comments_close_date && entry.comments_close_date.date > Date.today %>
-        <p class="comments_close">
-          Comment period ends soon!
-        </p>
-      <% end %>
-  </div>
+  <%= link_to 'Read more >', entry_path(entry) %>
+
+  <% if entry.comments_close_date && entry.comments_close_date.date > Date.today %>
+    <p class="comments_close">
+      Comment period ends soon!
+    </p>
+  <% end %>
+</div>
