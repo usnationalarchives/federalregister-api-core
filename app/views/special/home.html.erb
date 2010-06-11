@@ -7,7 +7,8 @@
 
   <ul class="section_nav">
     <% @sections.each do |section| %>
-      <li >
+      <%# TODO HELP-RUBY do this better %>
+      <li class="<%= 'one_word' if section.title.split(' ').count == 1 %>">
           <%= link_to section.title, "#promo_#{section.to_param}" %>
       </li>  
     <% end -%>
