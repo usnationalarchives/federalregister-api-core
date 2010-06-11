@@ -220,7 +220,7 @@ ARTICLE VIEW
   top: 0;
   }
 #flash_message p {
-  @include type_kit_font_1;
+  @include apertura-condensed;
   font-size: 1.5em;
   line-height: 20px;  
   margin: 0;
@@ -260,7 +260,7 @@ ARTICLE VIEW
   clear: both;
   color: $powder_blue;
   font-size: 1.4em;
-  @include type_kit_font_1;
+  @include apertura-condensed;
   margin: 0 0 1em;
   padding-top: 0;
   text-align: right;
@@ -662,9 +662,9 @@ HOME PAGE
   }  
 
 .notecard {
-  background: #ececec;
+/*  background: #ececec;
   @include border-radius(10px);
-  height: 221px;
+  height: 221px;*/
   padding: 1em;
   }  
 
