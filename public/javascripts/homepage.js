@@ -1,8 +1,12 @@
 $(document).ready(function() {
-  // $('#rotating_news_area').jcarousel({
-  //     scroll: 1,
-  //     auto: 5,
-  //     wrap: 'circular'
-  //     });
+
+  $(".section_nav li a").bind('click', function(event) {
+    //event.preventDefault();
+    $(".section_nav li").removeClass("on");
+    $(this).parent().addClass("on");
+  });
+  
+  $(".section_nav li:first-child a").trigger("click");
+  
 });
 
