@@ -3,6 +3,34 @@
 
 <h1 class="title"><span><%= Entry.latest_publication_date.to_s(:wday_and_pretty_date) %></span></h1>
 
+<div id="top_news_promo">
+
+  <ul class="section_nav">
+    <% @sections.each do |section| %>
+      <%# TODO HELP-RUBY do this better %>
+      <li class="<%= 'one_word' if section.title.split(' ').count == 1 %>">
+          <%= link_to section.title, "#promo_#{section.to_param}" %>
+      </li>  
+    <% end -%>
+  </ul>
+
+
+  <ul class="news_items">
+    <% @sections.each do |section| %>
+      <li id="promo_<%= section.to_param %>">
+          <% entry = section.highlighted_entries.first %>
+          <% if entry %>
+            <%= render :partial => 'special/entry_with_abstract', :locals => {:entry => entry} %>  
+            <%= render :partial => 'stats', :locals => {:section => section}  %>
+          <% end %>
+      </li>  
+    <% end -%>
+  </ul>
+
+
+</div>  
+
+
 <img src="/images/carouselcomp.png" />
 
 <div class="learn">
@@ -10,27 +38,29 @@
   <div class="grid_4 alpha">
     <div class="notecard">
     <h3>Notices</h3>
-    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla hendrerit ullamcorper nisl vitae auctor. Aliquam pretium, lacus ac venenatis convallis, mi lorem vestibulum eros, vel pharetra.</p>
+    <p>This category contains non-rulemaking documents that are applicable to the general public and named parties.  These documents include notices of public meetings, hearings, investigations, grants and funding, environmental impact statements, information collections, statements of organization and functions, delegations, and other announcements of public interest.
+    </p>
     </div>
   </div>
   <div class="grid_4">
     <div class="notecard">
     <h3>Proposed Rules</h3>
-    <p>Official documents that announce and explain agencies' plans to address problems and accomplish goals.  Intent is to gather feedback from the public to produce better regulations.</p>
+    <p>This category contains proposed regulations. These documents announce and explain agencies’ plans solve problems and accomplish goals, and give interested persons an opportunity to submit comments to improve the final regulation. It also includes advance notices of proposed rulemaking, petitions for rulemaking, negotiated rulemakings, and various proposed determinations and interpretations.</p>
     </div>
   </div>
   
   <div class="grid_4">
     <div class="notecard">  
     <h3>Final Rules</h3>
-    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum tincidunt, augue vitae euismod suscipit, urna metus vehicula risus, et convallis nibh lorem eu ipsum. Nunc mollis.</p>
+    <p>This category contains regulations that apply to the general public and have final legal effect. It also includes interim final rules, direct final rules, and various determinations, interpretive rules, and policy statements.  The documents cite to the <em>Code of Federal Regulations</em>, which contains the codified text of final rules, and is published annually in 50 titles.</p>
     </div>
   </div>
   
   <div class="grid_4 omega">
     <div class="notecard">
     <h3>Presidential Documents</h3>
-    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec pellentesque leo in est tristique eleifend tempor magna auctor. Pellentesque in turpis a ipsum vestibulum faucibus ut.</p>
+    <p>This category contains documents signed by the President of the United States.  Documents include Executive Orders, Proclamations, Administrative Orders, Presidential Memoranda, and other issuances of the President that are required or directed to be published in the <em>Federal Register</em>.  
+    </p>
     </div>
   </div>
 </div>
@@ -38,8 +68,8 @@
 <div class="section_news_boxes grid_16 alpha omega" style="clear:both">
   <% @sections.each do |section| %>
   <div class="grid_8 <%= cycle('alpha','omega')%>">
-      <div class="newsbox">
-        <h2 class="title_bar"><%= link_to section.title, section_path(section) %></h2>
+      <div class="">
+        <h2 class="title_bar"><%= link_to section.title, section_path(section), :class => "icon #{section.to_param}" %></h2>
         <ul>
           <% entries = section.highlighted_entries[1..3] %>
           <% if entries %>

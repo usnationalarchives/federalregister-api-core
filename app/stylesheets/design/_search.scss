@@ -29,7 +29,7 @@ PAGE ELEMENTS
   }
 .tabs li a {
   color: #666;
-  @include type_kit_font_1;
+  @include apertura-condensed;
   margin-bottom: .5em;
   padding: 1em 1em 0 1em;
   }  
@@ -69,7 +69,7 @@ PAGE ELEMENTS
   color: #777777;
   display: block;
   float: left;
-  @include type_kit_font_1;
+  @include apertura-condensed;
   font-size: 1.5em;
   line-height: 25px;
   margin-top: 3px;
@@ -99,7 +99,7 @@ PAGE ELEMENTS
   display: block;
   float: left;  
   @include border-radius(10px);
-  @include type_kit_font_1;
+  @include apertura-condensed;
   font-size: 1.5em;
   height: 27px;
   margin: 3px 0 0 .5em;
@@ -163,7 +163,7 @@ ol.results h4 {
   }  
 ol.results li .date {
   color: #bdbdbd;
-  @include type_kit_font_3;
+  @include gesta;
   font-size: 1.3em;
   line-height: 1.15;
   text-transform: uppercase;
@@ -192,7 +192,7 @@ FILTERS
 
 .filters h4 {
   color: #bdbdbd;
-  @include type_kit_font_1;
+  @include apertura-condensed;
   font-size: 1.3em;
   line-height: 1.15;
   text-transform: uppercase;
@@ -252,7 +252,7 @@ ERRORS
   overflow: hidden;  
   background: #ebd8b6 url(/images/error2.png) no-repeat 1em top;
   color: #777777;
-  @include type_kit_font_1;
+  @include apertura-condensed;
   font-size: 1.5em;
   line-height: 20px;    
   list-style: none;
