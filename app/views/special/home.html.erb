@@ -9,7 +9,7 @@
     <% @sections.each do |section| %>
       <%# TODO HELP-RUBY do this better %>
       <li class="<%= 'one_word' if section.title.split(' ').count == 1 %>">
-          <%= link_to section.title, "#promo_#{section.to_param}" %>
+          <%= link_to section.title, "#promo_#{section.slug}" %>
       </li>  
     <% end -%>
   </ul>
@@ -17,7 +17,7 @@
 
   <ul class="news_items">
     <% @sections.each do |section| %>
-      <li id="promo_<%= section.to_param %>">
+      <li id="promo_<%= section.slug %>">
           <% entry = section.highlighted_entries.first %>
           <% if entry %>
             <%= render :partial => 'special/entry_with_abstract', :locals => {:entry => entry} %>  
@@ -69,7 +69,7 @@
   <% @sections.each do |section| %>
   <div class="grid_8 <%= cycle('alpha','omega')%>">
       <div class="">
-        <h2 class="title_bar"><%= link_to section.title, section_path(section), :class => "icon #{section.to_param}" %></h2>
+        <h2 class="title_bar"><%= link_to section.title, section_path(section), :class => "icon #{section.slug}" %></h2>
         <ul>
           <% entries = section.highlighted_entries[1..3] %>
           <% if entries %>
