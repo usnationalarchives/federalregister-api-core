@@ -32,7 +32,8 @@
       <h1>Summary</h1>
     </div>
     <div class="body_column">  
-      <p><%= @entry.abstract %></p>
+      <p><%= html = auto_link( @entry.abstract, :href_options => { :class => 'external' })
+              add_citation_links(html) %></p>
     </div>
     <div class="notes_column">
       <%= render :partial => "metadata", :locals => {:entry => @entry} %>
