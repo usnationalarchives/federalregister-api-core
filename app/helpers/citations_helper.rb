@@ -6,6 +6,7 @@ module CitationsHelper
       text = add_federal_register_links(text)
       text = add_regulatory_plan_links(text)
       text = add_public_law_links(text)
+      text = add_patent_links(text)
       
       text
     else
@@ -67,6 +68,13 @@ module CitationsHelper
     end
   end
   
+  def add_patent_links(text)
+    text = text.gsub(/Patent Number ([0-9,]+)/) do |str|
+      number = $1
+      link_to str, patent_url(number), :class => "patent external", :target => "_blank"
+    end
+  end
+  
   def add_date_links(entry, text)
     entry.referenced_dates.each do |date|
       next if date.string.blank?
@@ -82,4 +90,16 @@ module CitationsHelper
     end
     text
   end
+  
+  private
+  
+  def patent_url(number_possibly_with_commas)
+    number = number_possibly_with_commas.gsub(/,/,'')
+    "http://patft.uspto.gov/netacgi/nph-Parser?Sect2=PTO1&Sect2=HITOFF&p=1&u=/netahtml/PTO/search-bool.html&r=1&f=G&l=50&d=PALL&RefSrch=yes&Query=PN/#{number}"
+  end
+  
+  # def patent_application_url(number_possibly_with_commas)
+  #   number = number_possibly_with_commas.gsub(/,/,'')
+  #   "http://appft.uspto.gov/netacgi/nph-Parser?Sect1=PTO2&Sect2=HITOFF&p=1&u=/netahtml/PTO/search-adv.html&r=2&f=G&l=50&d=PG01&S1=(%22268,404%22.APN.)&OS=APN/%22#{number}%22"
+  # end
 end
