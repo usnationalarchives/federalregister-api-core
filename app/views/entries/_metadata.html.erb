@@ -7,7 +7,7 @@
   <% if entry.comments_close_on.present?    %><dt>Comments Close:</dt>   <dd><%= entry.comments_close_on                        %></dd><% end %>
   <% if entry.type.present?                 %><dt>Type: </dt>            <dd><%= entry.type                                     %></dd><% end %>
   <% if entry.entry_type.present?           %><dt>Entry Type:</dt>       <dd><%= entry.entry_type                               %></dd><% end %>
-                                              <dt>Page:</dt>             <dd><%= entry.start_page %><%= "-#{entry.end_page}" if entry.end_page != entry.start_page %> (<%= pluralize entry.human_length, 'page' %>)</dd>
+                                              <dt>Page:</dt>             <dd><%= number_with_delimiter entry.start_page %><%= "-#{number_with_delimiter entry.end_page}" if entry.end_page != entry.start_page %> (<%= pluralize entry.human_length, 'page' %>)</dd>
   <% if entry.cfr_title.present?            %><dt>CFR:</dt>              <dd><%= add_citation_links("#{entry.cfr_title} CFR #{entry.cfr_part}") %></dd><% end %>
   <% if entry.docket_id.present?            %><dt>Docket ID:</dt>        <dd><%= entry.docket_id %></dd><% end %>
   <% if entry.regulation_id_number.present? %><dt>RIN:</dt>              <dd><%= entry.most_recent_regulatory_plan ? link_to(entry.regulation_id_number,regulatory_plan_path(entry.most_recent_regulatory_plan)) : entry.regulation_id_number %></dd><% end %>
