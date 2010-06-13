@@ -4,14 +4,8 @@
   <p class="metadata">A <%= entry.entry_type %> by <%= entry.agencies_excluding_parents.map{|a| link_to a.name, agency_path(a) }.to_sentence %> on 
   <%= link_to date_tag(entry.publication_date, :datetime => entry.publication_date.to_s(:iso)), entries_by_date_path(entry.publication_date) %></p>
 
-  <p class="summary">
-  
-  <%# TODO HELP-RUBY the html5 helper closes tags it shouldn't I think %>
   <%= render(:partial => "special/lede_photo", :object => entry.lede_photo) if entry.lede_photo %>
-    
-  <%= truncate(entry.curated_abstract, 500) %>
-  
-  </p>
+  <p class="summary"><%= truncate(entry.curated_abstract, 500) %></p>
 
   <%= link_to 'Read more >', entry_path(entry), :class => 'read_more' %>
 
