@@ -21,6 +21,11 @@ namespace :content do
         entry_importer(:full_xml, :full_text)
       end
       
+      desc "Extract docket id"
+      task :docket_id => :environment do
+        entry_importer(:docket_id)
+      end
+      
       desc "Extract referenced dates"
       task :referenced_dates => :environment do
         entry_importer(:referenced_dates)
