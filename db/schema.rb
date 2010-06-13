@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100602045956) do
+ActiveRecord::Schema.define(:version => 20100613194124) do
 
   create_table "agencies", :force => true do |t|
     t.integer  "parent_id"
@@ -131,6 +131,7 @@ ActiveRecord::Schema.define(:version => 20100602045956) do
     t.string   "curated_abstract",             :limit => 500
     t.integer  "lede_photo_id"
     t.text     "lede_photo_candidates"
+    t.string   "docket_id"
   end
 
   add_index "entries", ["citation"], :name => "index_entries_on_citation"
