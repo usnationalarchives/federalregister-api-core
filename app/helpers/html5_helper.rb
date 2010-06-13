@@ -1,6 +1,6 @@
 module Html5Helper
-  BLOCK_HTML5_TAGS = %w(article aside canvas details figcaption figure footer header hgroup menu nav section summary)
-  INLINE_HTML5_TAGS = %w(date mark time)
+  BLOCK_HTML5_TAGS = %w(article aside canvas details figure footer header hgroup menu nav section summary)
+  INLINE_HTML5_TAGS = %w(date figcaption mark time)
   def html5_tag(tag_name, *args, &block)
     options = args.extract_options!
     options.symbolize_keys!
