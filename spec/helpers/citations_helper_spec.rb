@@ -99,4 +99,16 @@ describe CitationsHelper do
       add_public_law_links("P.L. 107-295").should == '<a href="http://frwebgate.access.gpo.gov/cgi-bin/getdoc.cgi?dbname=107_cong_public_laws&amp;docid=f:publ295.107" class="publ external" target="_blank">P.L. 107-295</a>'
     end
   end
+  
+  describe 'add_patent_links' do
+    it "supports 'Patent Number #'" do
+      add_patent_links('Patent Number 4,954,320').should == '<a href="http://patft.uspto.gov/netacgi/nph-Parser?Sect2=PTO1&amp;Sect2=HITOFF&amp;p=1&amp;u=/netahtml/PTO/search-bool.html&amp;r=1&amp;f=G&amp;l=50&amp;d=PALL&amp;RefSrch=yes&amp;Query=PN/4954320" class="patent external" target="_blank">Patent Number 4,954,320</a>'
+    end
+    
+    it "supports 'Patent Application Number 08/331,554'"
+  end
+  
+  describe 'add_navy_case_links' do
+    it "suppoirts 'Navy Case Number 97567'"
+  end
 end
