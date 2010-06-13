@@ -3,7 +3,7 @@
 
 <h1 class="title"><span><%= Entry.latest_publication_date.to_s(:wday_and_pretty_date) %></span></h1>
 
-<div id="top_news_promo">
+<div id="top_news_promo" class="grid_11 alpha">
 
   <ul class="section_nav">
     <% @sections.each do |section| %>
@@ -30,8 +30,9 @@
 
 </div>  
 
-
-<img src="/images/carouselcomp.png" />
+<div class="grid_5 omega">
+  <img src="/images/carouselcomp.png" />
+</div>
 
 <div class="learn">
   <h2 class="title_bar">What's in the Federal Register?</h2>

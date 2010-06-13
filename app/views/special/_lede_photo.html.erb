@@ -1,5 +1,5 @@
 <% figure_tag do %>
-  <%= image_tag(lede_photo.photo.url(:small)) %>
+  <%= image_tag(lede_photo.photo.url(:homepage)) %>
   <% if lede_photo.credit.present? %>
     <% figcaption_tag do %>
       Photo: <%= link_to lede_photo.credit, lede_photo.credit_url %>
