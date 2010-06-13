@@ -139,6 +139,10 @@ class Entry < ApplicationModel
   
   validate :curated_attributes_are_not_too_long
   
+  def self.published_today
+    published_on(Entry.latest_publication_date)
+  end
+  
   def self.published_on(publication_date)
     scoped(:conditions => {:entries => {:publication_date => publication_date}})
   end
