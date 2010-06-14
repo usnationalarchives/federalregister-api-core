@@ -23,11 +23,11 @@ describe CitationsHelper do
       add_cfr_links('10 CFR 100').should == '<a href="http://frwebgate.access.gpo.gov/cgi-bin/get-cfr.cgi?YEAR=current&amp;TITLE=10&amp;PART=100&amp;SECTION=&amp;SUBPART=&amp;TYPE=TEXT" class="cfr external" target="_blank">10 CFR 100</a>'
     end
     
-    it "supports '# CFR #'" do
+    it "supports '# CFR #.#'" do
       add_cfr_links('10 CFR 100.1').should == '<a href="http://frwebgate.access.gpo.gov/cgi-bin/get-cfr.cgi?YEAR=current&amp;TITLE=10&amp;PART=100&amp;SECTION=1&amp;SUBPART=&amp;TYPE=TEXT" class="cfr external" target="_blank">10 CFR 100.1</a>'
     end
     
-    it "supports '# C.F.R. #'" do
+    it "supports '# C.F.R. #.#'" do
       add_cfr_links('10 C.F.R. 100.1').should == '<a href="http://frwebgate.access.gpo.gov/cgi-bin/get-cfr.cgi?YEAR=current&amp;TITLE=10&amp;PART=100&amp;SECTION=1&amp;SUBPART=&amp;TYPE=TEXT" class="cfr external" target="_blank">10 C.F.R. 100.1</a>'
     end
     
