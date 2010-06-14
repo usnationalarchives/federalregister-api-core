@@ -9,7 +9,7 @@
 
   <%= link_to 'Read more >', entry_path(entry), :class => 'read_more' %>
 
-  <% if entry.comments_close_date && entry.comments_close_date.date > Date.today %>
+  <% if false && entry.comments_close_date && entry.comments_close_date.date > Date.today %>
     <p class="comments_close">
       Comment period ends soon!
     </p>
