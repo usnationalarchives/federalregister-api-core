@@ -9,7 +9,7 @@
     <% @sections.each do |section| %>
       <%# TODO HELP-RUBY do this better %>
       <li class="<%= 'one_word' if section.title.split(' ').count == 1 %>">
-          <%= link_to section.title, "#promo_#{section.to_param}" %>
+          <%= link_to section.title, "#promo_#{section.slug}" %>
       </li>  
     <% end -%>
   </ul>
@@ -17,7 +17,7 @@
 
   <ul class="news_items">
     <% @sections.each do |section| %>
-      <li id="promo_<%= section.to_param %>">
+      <li id="promo_<%= section.slug %>">
           <% entry = section.highlighted_entries.first %>
           <% if entry %>
             <%= render :partial => 'special/entry_with_abstract', :locals => {:entry => entry} %>  
@@ -70,7 +70,7 @@
   <% @sections.each do |section| %>
   <div class="grid_8 <%= cycle('alpha','omega')%>">
       <div class="">
-        <h2 class="title_bar"><%= link_to section.title, section_path(section), :class => "icon #{section.to_param}" %></h2>
+        <h2 class="title_bar"><%= link_to section.title, section_path(section), :class => "icon #{section.slug}" %></h2>
         <ul>
           <% entries = section.highlighted_entries[1..3] %>
           <% if entries %>
@@ -84,87 +84,3 @@
     </div>  
   <% end -%>  
 </div>
-
-
-<% if false #!@closing_soon.empty? %>
-  <div class="clear marginBottom widget">
-    <h2 class="header flatBottom">Comments Closing In Next 7 Days (<%= @closing_soon.map{|a,e| e.size}.sum %>)</h2>
-    <ul class="indent marginTop recent_prorule">
-    <% @closing_soon.each do |agency, entries| %>
-      <li>
-        <%= link_to agency.name, agency_path(agency) %> <span class='details'>(<%= entries.size %>)</span>
-        <ul class="raquo">
-          <% entries.each do |entry| %>
-            <li><%= link_to entry.title, entry_path(entry) %></li>
-          <% end %>
-        </ul>
-      </li>
-    <% end %>
-  </div>
-<% end %>
-
-<% if false #!@recently_opened.empty? %>
-  <div class="clear widget">
-    <h2 class="header flatBottom">Comments Opened in Last 7 Days (<%= @recently_opened.map{|a,e| e.size}.sum %>)</h2>
-    <ul class="indent marginTop recent_prorule">
-    <% @recently_opened.each do |agency, entries| %>
-      <li>
-        <%= link_to agency.name, agency_path(agency) %> <span class='details'>(<%= entries.size %>)</span>
-        <ul class="raquo">
-          <% entries.each do |entry| %>
-            <li><%= link_to entry.title, entry_path(entry) %></li>
-          <% end %>
-        </ul>
-      </li>
-    <% end %>
-  </div>
-<% end %>
-
-
-<% if false #!@effective_this_week.empty? %>
-  <div class="clear widget">
-    <h2 class="header flatBottom">Rules Taking Effect In Next 7 Days (<%= @effective_this_week.map{|a,e| e.size}.sum %>)</h2>
-    <ul class="indent marginTop recent_prorule">
-    <% @effective_this_week.each do |agency, entries| %>
-      <li>
-        <%= link_to agency.name, agency_path(agency) %> <span class='details'>(<%= entries.size %>)</span>
-        <ul class="raquo">
-          <% entries.each do |entry| %>
-            <li><%= link_to entry.title, entry_path(entry) %></li>
-          <% end %>
-        </ul>
-      </li>
-    <% end %>
-  </div>
-<% end %>
-
-<% if false #!@recent_proposed_rules_by_agency.empty? %>
-<div class="clear widget">
-  <h2 class="header flatBottom">Rules Proposed in Last 7 Days (<%= @recent_proposed_rules_by_agency.map{|a,e| e.size}.sum %>)</h2>
-  <ul class="indent marginTop recent_prorule">
-  <% @recent_proposed_rules_by_agency.each do |agency, entries| %>
-    <li>
-      <%= link_to agency.name, agency_path(agency) %> <span class='details'>(<%= entries.size %>)</span>
-      <ul class="raquo">
-        <% entries.each do |proprule| %>
-          <li><%= link_to proprule.title, entry_path(proprule) %></li>
-        <% end %>
-      </ul>
-    </li>
-  <% end %>
-  </ul>
-</div>
-<% end %>
-
-
-<% content_for :sidebar do %>
-  
-  <div class="widget_map">
-    <iframe src="/location/places" width="325" height="400" frameborder="0"></iframe>
-    <div class="home_search">
-      <%= render :partial => 'maps/location_search_form', :locals => {:location => nil} %>
-    </div>
-  </div>
-  <%= render :partial => 'agencies/pulse', :locals => {:featured_agencies => @featured_agencies} %>
-<% end %>
-
