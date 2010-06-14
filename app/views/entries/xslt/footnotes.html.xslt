@@ -6,26 +6,30 @@
       <xsl:value-of select="text()"/>
     </xsl:variable>
     <sup>
-      <a><xsl:attribute name="id">citation-<xsl:value-of select="$number"/></xsl:attribute><xsl:attribute name="href">#footnote-<xsl:value-of select="$number"/></xsl:attribute>
+      <a rel="footnote"><xsl:attribute name="id">citation-<xsl:value-of select="$number"/></xsl:attribute><xsl:attribute name="href">#footnote-<xsl:value-of select="$number"/></xsl:attribute>
         [<xsl:value-of select="$number"/>]
       </a>
     </sup>
   </xsl:template>
   
   <xsl:template match="SU[count(ancestor::FTNT) &gt; 0]">
-    <xsl:variable name="number">
-      <xsl:value-of select="text()"/>
-    </xsl:variable>
-    <a>
-      <xsl:attribute name="id">footnote-<xsl:value-of select="$number"/></xsl:attribute>
-      <xsl:attribute name="href">#citation-<xsl:value-of select="$number"/></xsl:attribute>
-      <xsl:value-of select="$number"/>
-    </a>
+    <xsl:value-of select="text()"/>
     <xsl:text>. </xsl:text>
   </xsl:template>
   
   <xsl:template mode="footnotes" match="FTNT">
-    <xsl:apply-templates/>
+    <xsl:variable name="number">
+      <xsl:value-of select="descendant::SU/text()"/>
+    </xsl:variable>
+    
+    <div class="footnote">
+      <xsl:attribute name="id">footnote-<xsl:value-of select="$number"/></xsl:attribute>
+      <xsl:apply-templates/>
+      <a class="back">
+        <xsl:attribute name="href">#citation-<xsl:value-of select="$number"/></xsl:attribute>
+        Back to Context
+      </a>
+    </div>
   </xsl:template>
   
   <xsl:template mode="footnotes" match="*[name(.) != 'FTNT']|text()">
