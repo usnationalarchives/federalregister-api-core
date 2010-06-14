@@ -18,12 +18,14 @@ HOME PAGE
 #top_news_promo ul.section_nav {
   display: block;
   float: left;
+  height: 316px;  
   list-style: none;
   margin-bottom: 0;
   width: 190px;
   }
 #top_news_promo ul.section_nav li {
   background: #f5f8f9 url(/images/promo_nav_bg.png) repeat-x left bottom;
+  height: 53px;
   width: 150px;  
   }
 #top_news_promo ul.section_nav li:first-child,  
