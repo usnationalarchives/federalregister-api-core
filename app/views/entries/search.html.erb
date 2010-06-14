@@ -1,6 +1,6 @@
-<% title @search.term.blank? ? 'Search Articles' : "Search Results for '#{h @search.term}'" %>
+<% title @search.term.blank? ? 'Article Search' : "Article Search Results for '#{h @search.term}'" %>
 
-<h1 class="title"><span><%= @search.term.blank? ? 'Search Articles' : "Search Results for '#{h @search.term}'" %></span></h1>
+<h1 class="title"><span>Search FR Articles</span></h1>
 
 <% unless @search.valid? %>
 <ul class="errors">
@@ -38,7 +38,7 @@
       <!-- <li><%#= sparkline(:data => @search.date_distribution.to_a.sort_by{|date, count| date}.map{|date, count| count}, :alt => "Monthly Distribution" ) %></li> -->      
     </ul>
     
-    <% form_for :conditions, @search, :url => entries_search_path, :html => {:method => :get} do |f| %>
+    <!-- <% form_for :conditions, @search, :url => entries_search_path, :html => {:method => :get} do |f| %>
     <h4>Near</h4>
     <ul>
       <li>
@@ -50,7 +50,7 @@
         <%= f.submit 'Go' %>
       </li>
     </ul>
-    <% end %>
+    <% end %> -->
     
     <%= render :partial => "search/facets", :locals => {:facets => @search.type_facets,     :name => "Type"    }%>
     <%= render :partial => "search/facets", :locals => {:facets => @search.section_facets,  :name => "Section" }%>
@@ -59,7 +59,7 @@
   </div>
 
   <div class="result_set">
-    <%= render :partial => "search/filters", :locals => {:search => @search} if false %>
+    <%= render :partial => "search/filters", :locals => {:search => @search} %>
     
     <% if @search.results.present? %>
       <div class="search_info titlebar">
