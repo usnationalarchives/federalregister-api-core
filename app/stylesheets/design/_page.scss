@@ -601,3 +601,18 @@ TABLES
   padding: .5em;
   @include text-shadow(#fff, 1px, 1px, 1px);
   } 
+
+/******************************
+
+FOOTNOTES
+
+******************************/
+#footnotediv {
+  background-color: #fff;
+  position: absolute;
+  width: 400px;
+  opacity: .9;
+  }
+#footnotediv .back {
+  display: none;
+}
