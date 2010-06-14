@@ -60,13 +60,17 @@
         <dt><%= toc_subject %></dt>
         <% entries_by_toc_subject.sort_by(&:toc_doc).each do |entry| %>
         <dd>
-          <%= link_to entry.toc_doc, entry_path(entry) %>
+          <%= link_to entry.toc_doc, entry_path(entry) %>,
+          <span class="pages"><%= entry.start_page %><%= "-#{entry.end_page}" if entry.end_page != entry.start_page %></span>
+          <span class="document_number">(<%= entry.document_number %>)</span>
         </dd>
         <% end %>
       <% else %>
         <% entries_by_toc_subject.sort_by(&:title).each do |entry| %>
         <dt>
-          <%= link_to entry.title, entry_path(entry) %>
+          <%= link_to entry.title, entry_path(entry) %>,
+          <span class="pages"><%= entry.start_page %><%= "-#{entry.end_page}" if entry.end_page != entry.start_page %></span>
+          <span class="document_number">(<%= entry.document_number %>)</span>
         </dt>
         <% end %>
       <% end %>
