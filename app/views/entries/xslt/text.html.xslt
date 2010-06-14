@@ -65,4 +65,17 @@
       <xsl:apply-templates />
     </p>
   </xsl:template>
+  
+  <xsl:template match="PRTPAGE">
+    <span class="printed_page">
+      <xsl:attribute name="id">
+        <xsl:text>page-</xsl:text><xsl:value-of select="@P" />
+      </xsl:attribute>
+      <xsl:attribute name="data-page">
+        <xsl:value-of select="@P" />
+      </xsl:attribute>
+<!--       Printed Page
+      <xsl:value-of select="format-number(@P, '###,###')" /> -->
+    </span>
+  </xsl:template>
 </xsl:stylesheet>
