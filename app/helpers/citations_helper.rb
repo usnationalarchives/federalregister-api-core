@@ -2,7 +2,7 @@ module CitationsHelper
   def add_citation_links(text)
     if text.present?
       text = add_usc_links(text)
-      
+      text = add_cfr_links(text)
       text = add_federal_register_links(text)
       text = add_regulatory_plan_links(text)
       text = add_public_law_links(text)
