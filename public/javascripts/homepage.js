@@ -6,8 +6,12 @@ $(document).ready(function() {
     $(this).parent().addClass("on");
     $(".news_items").scrollTo($(this).attr("href"));
   });
-  
-  $(".section_nav li:first-child a").trigger("click");
-  
+
+
+  var adjustedHigh = (parseFloat( $(".section_nav li").size()));
+  var numRand = Math.floor(Math.random()*adjustedHigh);  
+  $( $(".section_nav li a").get(numRand) ).trigger("click");
+
+    
 });
 
