@@ -147,7 +147,7 @@ class Entry < ApplicationModel
     scoped(:conditions => {:entries => {:publication_date => publication_date}})
   end
 
-  def self.published_with_last_week(range = (Date.today .. Date.today - 7.days))
+  def self.published_within_last_week(range = (Date.today .. Date.today - 7.days))
     scoped(:conditions => {:entries => {:publication_date => range}})
   end
   
