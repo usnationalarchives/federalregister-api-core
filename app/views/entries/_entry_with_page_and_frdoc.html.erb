@@ -1,0 +1,11 @@
+<%= link_to entry.toc_doc, entry_path(entry) %>
+<p class="details">
+  <span class="pages">
+    <% if entry.end_page == entry.start_page %>
+      Page <%= number_with_delimiter entry.start_page %>
+    <% else %>
+      Pages <%= number_with_delimiter entry.start_page %>-<%= number_with_delimiter entry.end_page %>
+    <% end %>
+  </span>
+  <span class="document_number">[FR DOC #: <%= entry.document_number %>)</span>
+</p>
