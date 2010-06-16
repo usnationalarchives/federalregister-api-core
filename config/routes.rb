@@ -1,4 +1,6 @@
 ActionController::Routing::Routes.draw do |map|
+  require "#{Rails.root}/config/routes_esi.rb"
+  
   # ADMIN
   map.namespace :admin do |admin|
     admin.home '', :controller => "special", :action => "home"
@@ -36,10 +38,11 @@ ActionController::Routing::Routes.draw do |map|
   map.root :controller => 'special', :action => 'home'
   map.widget_instructions 'widget_instructions', :controller => 'special', :action => 'widget_instructions'
 
+  # ENTRY SEARCH
+  map.entries_search 'articles/search', :controller => 'entries/search', :action => 'show'
+  
   # ENTRIES
   map.entries 'articles.:format', :controller => 'entries', :action => 'index'
-  
-  map.entries_search 'articles/search', :controller => 'entries', :action => 'search'
   map.entries_search_facet 'articles/search/facet', :controller => 'entries', :action => 'search_facet'
   map.entries_widget 'articles/widget', :controller => 'entries', :action => 'widget'
   map.entry 'articles/:year/:month/:day/:document_number/:slug.:format', :controller => 'entries',
