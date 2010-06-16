@@ -313,6 +313,10 @@ class Entry < ApplicationModel
     find(:first, :select => "publication_date", :order => "publication_date DESC").publication_date
   end
   
+  def self.latest_publication_dates(n)
+    find(:all, :select => "publication_date", :conditions => ["publication_date > ?", 1.months.ago], :group => "publication_date", :order => "publication_date DESC", :limit => n).map &:publication_date
+  end
+  
   def self.find_all_by_citation(volume, page)
     all(:conditions => ["volume = ? AND start_page <= ? AND end_page >= ?", volume.to_i, page.to_i, page.to_i], :order => "entries.end_page")
   end

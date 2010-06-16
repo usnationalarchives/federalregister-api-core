@@ -5,6 +5,7 @@ module Shared
       @publication_date = date
       @highlighted_entries = @section.highlighted_entries(@publication_date)
       @popular_entries = @section.entries.popular(5)
+      @dates_to_show = Entry.latest_publication_dates(5)
     end
   end
 end
