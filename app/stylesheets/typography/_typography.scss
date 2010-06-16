@@ -226,13 +226,13 @@ BY DATE
   }  
 #entries.by_date h3 {
   font-size: 1.2em;
-  margin: .5em 0;
+  margin: .5em 0 .5em 1em;
   text-transform: uppercase;
   }
 #entries.by_date dl,
 #entries.by_date #content_area ul {
   font-size: 1.1em;
-  margin-left: 1em;
+  margin-left: 2em;
   }
 #entries.by_date ul {
   list-style: none;
@@ -248,6 +248,7 @@ BY DATE
   @include gesta;
   font-size: .9em;
   font-weight: normal;
+  margin-top: -.4em;
   }  
 #entries.by_date .pages {
   font-style: italic;
