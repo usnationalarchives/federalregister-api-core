@@ -5,15 +5,53 @@ SIDEBAR
 ******************************/
    
 #sidebar .section {
-margin-bottom: 3em;
-position: relative;
-text-align: right;
-}
-
-#sidebar .section.stats ul {
-list-style: none;
-}
-
-#sidebar .section h1 {
+  margin-bottom: 1.5em;
+  position: relative;
+  }
+.section.subscribe .button {
+  margin-bottom: 0;
+  }  
   
-}
+  
+.section.whats_hot ol {
+  color: #ccc;
+  padding-left: 1em;
+  }
+.section.whats_hot li {
+  border-bottom: 1px dotted #ddd;
+  margin-bottom: .5em;
+  padding-bottom: .5em;
+  }
+.section.whats_hot li:last-child {
+  border-bottom: 0;
+  }  
+.section.whats_hot ul {
+  list-style: none;
+  }
+  
+  
+.section.featured_agency h2 {
+  font-size: 1em;
+  }
+.section.featured_agency .metadata {
+  font-size: 1em;
+  }
+  
+  
+.section.TOC h1 {
+  color: #60686A;
+  @include apertura-condensed;
+  font-size: 1em;
+  margin-bottom: .5em;
+  }  
+.section.TOC ul:last-child {
+  margin-bottom: 0;
+  }
+.section.TOC li {
+  border-bottom: 1px solid #b3c2cf;
+  list-style: none;
+  margin-left: 1em;
+  }
+.section.TOC li:last-child {
+  border-bottom: 0;
+  } 
