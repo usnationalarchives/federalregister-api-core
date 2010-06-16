@@ -37,7 +37,7 @@
 <% end %>
 
 <% @agencies.each do |agency| %>
-  <h2 id="<%= dom_id(agency) %>"><%= agency.name %></h2>
+  <h2 id="<%= dom_id(agency) %>" class="title_bar"><%= agency.name %></h2>
   
   <% sub_agencies_on_this_page = agency.children & @agencies %>
   <% if sub_agencies_on_this_page.present? %>
