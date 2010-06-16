@@ -22,11 +22,24 @@ class SectionsController < ApplicationController
       
       wants.rss do
         @feed_name = "Federal Register: #{@section.title} Section"
-        @feed_description = "Highlighted Federal Register entries from #{@section.title} Section."
-        @entries = @highlighted_entries
+        @feed_description = "Most Recent Federal Register articles from #{@section.title} Section."
+        @entries = @section.entries.published_on(@publication_date)
         render :template => 'entries/index.rss.builder'
       end
       
+    end
+  end
+  
+  def highlighted
+    @section = Section.find_by_slug(params[:slug]) or raise ActiveRecord::RecordNotFound
+    
+    respond_to do |wants|
+      wants.rss do
+        @feed_name = "Federal Register: Featured articles from the #{@section.title} Section"
+        @feed_description = "Featured Federal Register articles from #{@section.title} Section."
+        @entries = @section.highlighted_entries
+        render :template => 'entries/index.rss.builder'
+      end
     end
   end
   
