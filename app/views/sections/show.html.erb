@@ -20,19 +20,28 @@
 
 </div>
 
-<% aside_tag(:id => 'sidebar') do %>        
-  
+<% aside_tag(:id => 'sidebar') do %>  
+      
   <% section_tag(:class => 'subscribe') do %>  
     <%= link_to 'Subscribe', section_path(@section, :format => :rss), :class => 'button rss' %>
   <% end -%>
   
+  <% section_tag(:class => 'TOC pull_out') do %>  
+    <h1>Table of Contents</h1>
+    <ul>
+      <li><%= link_to 'Comment Periods Closing Soon ', '#comment-period-closing' %></li>
+      <li><%= link_to 'Comment Periods Recently Opened ', '#comment-period-opening' %></li>
+      <li><%= link_to 'Articles published in the past 7 days ', '#articles_published_by_day' %></li>
+    </ul>
+  <% end -%>  
+  
   <% section_tag(:class => 'whats_hot') do %>  
     <h1 class="title_bar">What's Hot</h1>
-    <ul>
+    <ol>
       <% @popular_entries.each do |entry| %>
         <li><%= link_to entry.title, entry_path(entry) %></li>
       <% end %>
-    </ul>
+    </ol>
   <% end -%>
   
   <% if @agency %>
@@ -86,7 +95,7 @@
   </div>
 </div>
 
-<% section_tag(:class => 'articles_published_by_day') do %>    
+<% section_tag(:class => 'articles_published_by_day',:id=> 'articles_published_by_day') do %>    
   <h2 class="title_bar"><span class="small_stack">Articles <span>published on</span></span> <span class="large_flow"><%= @publication_date %></span></h2>
   <% @section.entries.published_on(@publication_date).each do |entry| %>
     <% article_tag do %>  
