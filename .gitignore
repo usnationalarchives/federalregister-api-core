@@ -1,4 +1,5 @@
 .DS_Store
+.bundle
 /config/amazon.yml
 /config/api_keys.yml
 /config/database.yml
@@ -25,3 +26,4 @@
 /public/stylesheets/enhancements.css
 /public/system
 /tmp
+/config/mysql.yml
