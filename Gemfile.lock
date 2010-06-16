@@ -17,7 +17,7 @@ dependencies:
   rails: 
     group: 
     - :default
-    version: ~> 2.3.5
+    version: = 2.3.5
   haml: 
     group: 
     - :default
@@ -194,19 +194,19 @@ specs:
 - rake: 
     version: 0.8.7
 - activesupport: 
-    version: 2.3.8
+    version: 2.3.5
 - rack: 
-    version: 1.1.0
+    version: 1.0.1
 - actionpack: 
-    version: 2.3.8
+    version: 2.3.5
 - actionmailer: 
-    version: 2.3.8
+    version: 2.3.5
 - active_hash: 
     version: 0.7.9
 - activerecord: 
-    version: 2.3.8
+    version: 2.3.5
 - activeresource: 
-    version: 2.3.8
+    version: 2.3.5
 - after_commit: 
     version: 1.0.7
 - amatch: 
@@ -282,7 +282,7 @@ specs:
 - rack-test: 
     version: 0.5.4
 - rails: 
-    version: 2.3.8
+    version: 2.3.5
 - rails-test-serving: 
     version: 0.1.4.2
 - riddle: 
@@ -313,7 +313,7 @@ specs:
     version: 2.3.14
 - ym4r: 
     version: 0.6.1
-hash: 866c116658c6cb03d21ad7da25890a3d1be99731
+hash: 46278ad8415d3773581f21bfe823ef45fb83ec93
 sources: 
 - Rubygems: 
     uri: http://gemcutter.org
