@@ -4,7 +4,7 @@ backend default {
 }
 
 sub vcl_fetch {
-    if (req.url ~ "^/articles/search") {
+    if (req.url ~ "^/articles") {
         /* Do ESI processing */
         esi;
     }

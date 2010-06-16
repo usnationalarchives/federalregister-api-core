@@ -62,7 +62,7 @@
   
   <div id="fulltext_content_area">
   
-    <%= render :partial => 'full_text', :locals => {:entry => @entry} %>
+    <%= render :esi => entry_full_text_path(@entry) %>
 
   </div> <!-- end content area -->  
   
