@@ -1,32 +1,32 @@
 class EntriesController < ApplicationController
-  def search
-    if !params[:volume].blank? && !params[:page].blank?
-      redirect_to "/citation/#{params[:volume]}/#{params[:page]}"
-      return
-    end
-    
-    @search = EntrySearch.new(params)
-    
-    respond_to do |wants|
-      wants.html do
-        @agencies = Agency.all(:conditions => "entries_count > 0", :order => :name)
-        
-        render :action => 'search'
-      end
-      
-      wants.rss do 
-        @entries ||= []
-        @feed_name = 'Federal Register Search Results'
-        render :action => 'index'
-      end
-    end
-  end
-  
-  def search_facet
-    @search = EntrySearch.new(params)
-    facets = @search.send(params[:facet] + "_facets")
-    render :partial => "search/facet", :collection => facets, :layout => nil
-  end
+  # def search
+  #   if !params[:volume].blank? && !params[:page].blank?
+  #     redirect_to "/citation/#{params[:volume]}/#{params[:page]}"
+  #     return
+  #   end
+  #   
+  #   @search = EntrySearch.new(params)
+  #   
+  #   respond_to do |wants|
+  #     wants.html do
+  #       @agencies = Agency.all(:conditions => "entries_count > 0", :order => :name)
+  #       
+  #       render :action => 'search'
+  #     end
+  #     
+  #     wants.rss do 
+  #       @entries ||= []
+  #       @feed_name = 'Federal Register Search Results'
+  #       render :action => 'index'
+  #     end
+  #   end
+  # end
+  #   
+  # def search_facet
+  #   @search = EntrySearch.new(params)
+  #   facets = @search.send(params[:facet] + "_facets")
+  #   render :partial => "search/facet", :collection => facets, :layout => nil
+  # end
   
   def widget
     params[:per_page] = 5
