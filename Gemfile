@@ -1,6 +1,7 @@
 source :gemcutter
 source 'http://gems.github.com'
-gem 'rails', '~> 2.3.5'
+
+gem 'rails', '2.3.5'
 gem 'mysql', '2.7'
 
 gem 'nokogiri', '1.3.2'
