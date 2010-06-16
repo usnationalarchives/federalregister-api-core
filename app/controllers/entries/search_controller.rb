@@ -9,12 +9,12 @@ class Entries::SearchController < ApplicationController
   end
   
   def results
-    render :partial => "facets", :collection => facets, :layout => false
+    render :layout => false
   end
   
   def facets
     facets = @search.send(params[:facet] + "_facets")
-    render :partial => "facets", :collection => facets, :layout => false
+    render :partial => "search/facets", :locals => {:facets => facets, :name => params[:facet].capitalize_first}, :layout => false
   end
   
   private
