@@ -74,8 +74,15 @@ class EntriesController < ApplicationController
       :conditions => ['publication_date = ?', @publication_date],
       :order => "agencies.name, entries.title"
     )
+    
     Agency.preload_associations(@agencies, :children)
     Entry.preload_associations(@agencies.map(&:entries).flatten, :agencies)
+    
+    @agencies.each do |agency|
+      def agency.entries_excluding_subagency_entries
+        self.entries.select{|entry| entry.agencies_excluding_parents.include?(self) }
+      end
+    end
     
     @entries_without_agency = Entry.all(
       :include => :agencies,
