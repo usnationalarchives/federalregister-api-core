@@ -8,15 +8,11 @@ SIDEBAR
   margin-bottom: 1.5em;
   position: relative;
   }
-  
-
 .section.subscribe .button {
   margin-bottom: 0;
   }  
   
-#sidebar .section.stats ul {
-  list-style: none;
-  }
+  
 .section.whats_hot ol {
   color: #ccc;
   padding-left: 1em;
@@ -32,18 +28,16 @@ SIDEBAR
 .section.whats_hot ul {
   list-style: none;
   }
+  
+  
 .section.featured_agency h2 {
   font-size: 1em;
   }
 .section.featured_agency .metadata {
   font-size: 1em;
   }
-
-.section.TOC {
-  background: #f5f8f9;
-  border: 1px solid #b3c2cf;
-  padding: 1em;
-  }  
+  
+  
 .section.TOC h1 {
   color: #60686A;
   @include apertura-condensed;
