@@ -1,7 +1,7 @@
 source :gemcutter
 source 'http://gems.github.com'
 gem 'rails', '~> 2.3.5'
-gem 'mysql'
+gem 'mysql', '2.7'
 
 gem 'nokogiri', '1.3.2'
 gem 'chronic', '0.2.3'
