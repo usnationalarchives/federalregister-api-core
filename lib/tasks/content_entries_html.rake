@@ -1,12 +1,14 @@
 namespace :content do
   namespace :entries do
     namespace :html do
+      desc "Compile HTML for article full text"
       task :compile => :environment do
         require 'ftools'
         
         dates = Content.parse_dates(ENV['DATE'])
         
         dates.each do |date|
+          puts "compiling HTML for #{date}..."
           Entry.published_on(date).each do |entry|
             path = "#{RAILS_ROOT}/public/articles/#{entry.document_file_path}.html"
             File.makedirs(File.dirname(path))
