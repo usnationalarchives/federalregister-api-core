@@ -98,7 +98,10 @@
       <h1>Table of Contents</h1>
       <ul>
         <% @agencies.each do |agency| %>
-          <li><a href="#<%= dom_id(agency) %>"><%= agency.name %></a></li>
+          <li>
+            <a href="#<%= dom_id(agency) %>"><%= agency.name %></a> 
+            <span><%= rand(150) %></span>
+          </li>
         <% end -%>
       </ul>
     </div>
