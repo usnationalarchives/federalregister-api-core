@@ -253,11 +253,20 @@ BY DATE
   font-style: italic;
   }
 #entries.by_date .title_bar {
-  font-size: 1.7em;
+  font-size: .8em;
   margin-bottom: 1em;
+  padding: 5px 5em 0 0;
+  position: relative;
   }
+#entries.by_date .back_to_top {
+  font-size: 1em;
+  position: absolute;
+  right: 0;
+  text-transform: none;
+  top: 0;  
+  }  
 #meta_toc span {
-  background: #B3C2CF;
+  background: lighten(#B3C2CF, 10%);
   @include border-radius(5px);
   font-size: 11px;
   padding: 0 .5em;
