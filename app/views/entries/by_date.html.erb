@@ -3,9 +3,6 @@
 <% title "Entries for #{@publication_date.to_formatted_s(:pretty)}" %>
 <h1 class="title"><span><%= @publication_date %> Issue</span></h1>
 
-
-<%= link_to 'Download PDF', issue_pdf_url(@publication_date), :class => 'button' %>
-
 <div id="content_area">
 
 <% if false %>
@@ -76,9 +73,6 @@
 <% end %>
 
 
-
-
-
 <% if @entries_without_agency.present? %>
   <%# THESE SHOULD NOT EXIST AT LAUNCH; NO STYLE NECESSARY %>
   <h2>Entries without agencies</h2>
@@ -93,6 +87,24 @@
 <% end %>
 
 </div> <!-- END CONTENT AREA -->
+
+
+
+<%# TODO HELP-DESIGN move this to the top of the markup and then pull it over %>
+<% aside_tag(:id => 'sidebar') do %>  
+  <%= link_to 'Download PDF', issue_pdf_url(@publication_date), :class => 'button' %>
+    <% section_tag(:id => 'meta_toc') do %>
+    <div class="TOC pull_out">
+      <h1>Table of Contents</h1>
+      <ul>
+        <% @agencies.each do |agency| %>
+          <li><a href="#<%= dom_id(agency) %>"><%= agency.name %></a></li>
+        <% end -%>
+      </ul>
+    </div>
+  <% end -%>  
+<% end -%>
+
 
 <% if false %>
   
