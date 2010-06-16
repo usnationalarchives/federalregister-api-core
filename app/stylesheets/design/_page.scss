@@ -12,6 +12,11 @@ color: $body_type_color;
   white-space: nowrap;
   }
 
+.pull_out {
+  background: #f5f8f9;
+  border: 1px solid #b3c2cf;
+  padding: 1em;
+  }
 /******************************
 
 DECORATIONS
@@ -221,7 +226,9 @@ ARTICLE VIEW
   position: absolute;
   width: 200px;
   }
-  
+.article .metadata_list dt {
+  text-transform: none;
+  }  
 .box {
   border-bottom: 1px solid #dadada;    
   clear: both;
