@@ -13,40 +13,8 @@ Rails::Initializer.run do |config|
 
   # Add additional load paths for your own custom dirs
   # config.load_paths += %W(  )
-
-  # Specify gems that this application depends on and have them installed with rake gems:install
-  config.gem "nokogiri", :version => '1.3.2'
-  config.gem "chronic", :version => '0.2.3'
-  config.gem "curb", :version => '0.4.4.0'
-  config.gem "geokit", :lib => 'geokit', :version => '1.4.1'
-  config.gem 'will_paginate', :version => '2.3.14', :lib => 'will_paginate'
-  config.gem "fastercsv", :version => '1.4.0'
-  config.gem "amatch", :version => '0.2.3'
-  config.gem "rubyzip", :lib => 'zip/zip', :version => '0.9.1'
-  config.gem "formtastic", :version => "0.9.8"
-  config.gem "patron", :version => "0.4.2"
-  # sunlight gem and dependencies
-  config.gem "json"
-  config.gem "ym4r", :version => '0.6.1'
   
-  config.gem 'thinking-sphinx', :version => '1.3.14', :lib => 'thinking_sphinx'
-  config.gem 'hoptoad_notifier', :version => '2.1.3'
-  config.gem "aws-s3", :lib => "aws/s3", :version => '0.6.2'
-  config.gem 'paperclip', :version => '2.3.1.1'
-  config.gem 'stevedore', :version => '0.0.1'
-  config.gem 'active_hash', :version => '0.7.9'
-  config.gem 'bcrypt-ruby', :version => '2.1.2', :lib => "bcrypt"
-  config.gem 'authlogic', :version => '2.1.3'
-  config.gem 'calais', :version => '0.0.9'
-  config.gem 'flickraw', :version => '0.8.1', :lib => false
-  config.gem 'searchlogic', :version => '2.4.12'
-  config.gem 'haml', :version => '3.0.4'
-  config.gem 'compass', :version => '0.10.1'
-  config.gem 'compass-960-plugin', :version => '0.9.13', :lib => false
-  
-  # disabled as requires C library to install...the Locator module will return a fake result if not installed
-  # config.gem "geoip_city", :version => '0.2.0'
-  
+  # Gems go in RAILS_ROOT/Gemfile
   
   # Only load the plugins named here, in the order given (default is alphabetical).
   # :all can be used as a placeholder for all plugins not explicitly named
