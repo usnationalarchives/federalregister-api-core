@@ -246,9 +246,9 @@ BY DATE
   }
 #entries.by_date p.details {
   @include gesta;
-  font-size: 1em;
+  font-size: .9em;
   font-weight: normal;
   }  
-#meta_toc li a:first-child:first-letter{
-  color: red;
+#entries.by_date .pages {
+  font-style: italic;
   }
