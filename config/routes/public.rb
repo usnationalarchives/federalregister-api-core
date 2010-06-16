@@ -79,5 +79,6 @@ ActionController::Routing::Routes.draw do |map|
 
   # SECTIONS
   map.section ':slug.:format', :controller => "sections", :action => "show"
+  map.section_highlights ':slug/featured.:format', :controller => "sections", :action => "highlighted"
   map.about_section ':slug/about', :controller => "sections", :action => "about"
 end
