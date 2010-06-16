@@ -10,7 +10,7 @@ module SearchHelper
     else
       conditions[condition] = value
     end
-    params.recursive_merge(:page => nil, :action => :search, :conditions => conditions)
+    params.recursive_merge(:page => nil, :action => :show, :conditions => conditions)
   end
   
   def search_removing_filter(condition, value)
@@ -22,6 +22,6 @@ module SearchHelper
     else
       conditions[condition] = value
     end
-    params.recursive_merge(:page => nil, :action => :search, :conditions => conditions)
+    params.recursive_merge(:page => nil, :action => :show, :conditions => conditions)
   end
 end
