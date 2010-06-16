@@ -114,7 +114,8 @@ class ApplicationSearch
   end
   
   def add_filter(options)
-    options[:value].to_a.each do |val|
+    vals = (options[:value].is_a?(Array) ? options[:value] : [options[:value]])
+    vals.each do |val|
       @filters << Filter.new(options.merge(:value => val))
     end
   end
@@ -140,7 +141,7 @@ class ApplicationSearch
     with = {}
     @filters.select{|f| f.sphinx_type == :with }.each do |filter|
       with[filter.sphinx_attribute] ||= []
-      with[filter.sphinx_attribute] << filter.sphinx_value.to_i
+      with[filter.sphinx_attribute] << filter.sphinx_value
     end
     with
   end

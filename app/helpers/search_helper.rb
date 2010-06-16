@@ -20,7 +20,7 @@ module SearchHelper
       conditions[condition] ||= []
       conditions[condition] = conditions[condition] - [value.to_s]
     else
-      conditions[condition] = value
+      conditions[condition] = nil
     end
     params.recursive_merge(:page => nil, :action => :show, :conditions => conditions)
   end
