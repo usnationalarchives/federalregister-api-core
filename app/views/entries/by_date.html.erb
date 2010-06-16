@@ -60,13 +60,13 @@
         <dt><%= toc_subject %></dt>
         <% entries_by_toc_subject.sort_by(&:toc_doc).each do |entry| %>
         <dd>
-          <%= link_to entry.toc_doc, entry_path(entry) %>
+          <%= render :partial => 'entry_with_page_and_frdoc', :locals => {:entry => entry } %>
         </dd>
         <% end %>
       <% else %>
         <% entries_by_toc_subject.sort_by(&:title).each do |entry| %>
         <dt>
-          <%= link_to entry.title, entry_path(entry) %>
+          <%= render :partial => 'entry_with_page_and_frdoc', :locals => {:entry => entry } %>
         </dt>
         <% end %>
       <% end %>
