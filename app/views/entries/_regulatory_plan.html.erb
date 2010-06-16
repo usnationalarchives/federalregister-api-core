@@ -2,7 +2,7 @@
 <h1>Unified Agenda</h1>
 </div>
 <div class="body_column">
-  <%= link_to regulatory_plan.title, regulatory_plan_path(regulatory_plan) %>
+  <p><%= link_to regulatory_plan.title, regulatory_plan_path(regulatory_plan) %></p>
 </div>
   
 <%= render :partial => 'regulatory_plans/timeline', :locals => {:regulatory_plan => regulatory_plan} %>
