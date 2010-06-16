@@ -243,4 +243,10 @@ BY DATE
 #entries.by_date .see {
   font-weight: 400;
   font-style: italic;
+  }
+#entries.by_date p.details {
+  @include gesta;
+  font-size: 1em;
+  font-weight: normal;
   }  
+    
