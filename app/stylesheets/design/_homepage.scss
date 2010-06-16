@@ -18,42 +18,58 @@ HOME PAGE
 #top_news_promo ul.section_nav {
   display: block;
   float: left;
+  height: 318px;  
   list-style: none;
   margin-bottom: 0;
   width: 190px;
   }
 #top_news_promo ul.section_nav li {
   background: #f5f8f9 url(/images/promo_nav_bg.png) repeat-x left bottom;
+  height: 53px;
   width: 150px;  
   }
+#top_news_promo ul.section_nav li:first-child,  
+#top_news_promo ul.section_nav li:first-child a{
+  @include border-top-left-radius(5px);
+  }
+#top_news_promo ul.section_nav li:last-child,  
+#top_news_promo ul.section_nav li:last-child a{
+  @include border-bottom-left-radius(5px);
+  }    
 #top_news_promo ul.section_nav li a {
   border: 1px solid #e5e5e5;
   color: #5a5a5a;
   display: block;
   font-size: 1.3em;
-  height: 2em;
+  height: 37px;
   line-height: 1.1;
-  padding: .5em;
+  padding: 7px 8px;
   text-transform: uppercase;
   }
 #top_news_promo ul.section_nav li.one_word a {
-  line-height: 35px;
+  line-height: 40px;
   }  
 #top_news_promo ul.section_nav li.on {
   background-color: none;
-  background: url(/images/promo_nav_bg_on.png) no-repeat -2px top;
+  background: url(/images/promo_nav_bg_on.png) no-repeat -2px 1px;
   padding-right: 20px;
   }
 #top_news_promo ul.section_nav li.on a {
-  color: #B88659;
+  color: #e4a529;
   border-right: none;
   }
-
+  
+#top_news_promo ul.section_nav li a:hover,
+#top_news_promo ul.section_nav li a:focus {
+  color: #e4a529;
+  outline: none;
+  }
+  
 /* PROMO ITEMS */
 #top_news_promo .news_items {
   display: block;
   float: left;
-  height: 316px;
+  height: 318px;
   margin-bottom: 0;
   overflow: hidden;
   width: 425px;
@@ -65,12 +81,19 @@ HOME PAGE
   }
 #top_news_promo .news_items .metadata {
   font-size: 1em;
-  padding-bottom: 0;
+  padding-bottom: 1em;
   }  
 #top_news_promo .news_items .figure {
+  background: none;
   float: left;
   margin: 0 1em 0 0;
-  } 
+  padding :0;
+  }
+#top_news_promo .news_items .figcaption {
+  bottom: 7px;
+  left: 0;
+  width: 90px;
+  }
 #top_news_promo .news_content {
   overflow: hidden;
   }  
@@ -139,6 +162,7 @@ HOME PAGE
   }
   
 .learn {
+  clear: both;
   margin: 3em 0 4em 0;
   overflow: hidden;
   }
@@ -151,8 +175,7 @@ HOME PAGE
   }  
 
 .notecard {
-/*  background: #ececec;
+  background: #ececec;
   @include border-radius(10px);
-  height: 221px;*/
   padding: 1em;
   }  
