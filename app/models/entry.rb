@@ -139,8 +139,16 @@ class Entry < ApplicationModel
   
   validate :curated_attributes_are_not_too_long
   
+  def self.published_today
+    published_on(Entry.latest_publication_date)
+  end
+  
   def self.published_on(publication_date)
     scoped(:conditions => {:entries => {:publication_date => publication_date}})
+  end
+
+  def self.published_within_last_week(range = (Date.today .. Date.today - 7.days))
+    scoped(:conditions => {:entries => {:publication_date => range}})
   end
   
   def self.comments_closing(range = (Date.today .. Date.today + 7.days))
@@ -241,7 +249,15 @@ class Entry < ApplicationModel
   end
   
   def slug
-    self.title.downcase.gsub(/&/, 'and').gsub(/[^a-z0-9]+/, '-').slice(0,100)
+    words = self.title.downcase.gsub(/&/, 'and').split(/[^a-z0-9]+/).compact
+    words.inject('') do |str, word|
+      new_str = str == '' ? word : "#{str}-#{word}"
+      if new_str.length > 100
+        return str
+      else
+        str = new_str
+      end
+    end
   end
   
   def comments_close_on
