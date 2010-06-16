@@ -38,7 +38,7 @@
 
 <% @agencies.each do |agency| %>
   <div class="title_bar">
-    <h2 id="<%= dom_id(agency) %>"><%= agency.name %></h2>
+    <h2 id="<%= agency.slug %>"><%= agency.name %></h2>
     <a href="#entries" class="back_to_top">Back to Top</a>
   </div>
   
@@ -46,7 +46,7 @@
   <% if sub_agencies_on_this_page.present? %>
     <ul>
       <% sub_agencies_on_this_page.each do |sub_agency| %>
-        <li><span class="see">See</span> <%= link_to sub_agency.name, '#' + dom_id(sub_agency) %></li>
+        <li><span class="see">See</span> <%= link_to sub_agency.name, '#' + sub_agency.slug %></li>
       <% end %>
     </ul>
   <% end %>
@@ -101,7 +101,7 @@
       <ul>
         <% @agencies.each do |agency| %>
           <li>
-            <a href="#<%= dom_id(agency) %>"><%= agency.name %></a> 
+            <a href="#<%= agency.slug %>"><%= agency.name %></a> 
             <span><%= agency.entries_excluding_subagency_entries.count %></span>
           </li>
         <% end -%>
