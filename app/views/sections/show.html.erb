@@ -1,5 +1,8 @@
 <%= title @section.title %>
 
+<%= feed_autodiscovery section_highlights_path(@section, :format => :rss), "Featured Articles in #{@section.title}"%>
+<%= feed_autodiscovery section_path(@section, :format => :rss), "All Articles in #{@section.title}"%>
+
 <h1 class="title"><span><%= @section.title %></span></h1>
 
 <div id="content_area">
@@ -23,7 +26,7 @@
 <% aside_tag(:id => 'sidebar') do %>  
       
   <% section_tag(:class => 'subscribe') do %>  
-    <%= link_to 'Subscribe', section_path(@section, :format => :rss), :class => 'button rss' %>
+    <%= link_to 'Subscribe', section_highlights_path(@section, :format => :rss), :class => 'button rss' %>
   <% end -%>
   
   <% section_tag(:class => 'TOC pull_out') do %>  
