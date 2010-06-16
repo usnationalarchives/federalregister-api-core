@@ -252,3 +252,15 @@ BY DATE
 #entries.by_date .pages {
   font-style: italic;
   }
+#entries.by_date .title_bar {
+  font-size: 1.7em;
+  margin-bottom: 1em;
+  }
+#meta_toc span {
+  background: #B3C2CF;
+  @include border-radius(5px);
+  font-size: 11px;
+  padding: 0 .5em;
+  text-align: center;
+  width: 17px;
+  }
