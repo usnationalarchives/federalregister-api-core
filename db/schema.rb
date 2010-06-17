@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100616220438) do
+ActiveRecord::Schema.define(:version => 20100617003156) do
 
   create_table "agencies", :force => true do |t|
     t.integer  "parent_id"
@@ -56,6 +56,18 @@ ActiveRecord::Schema.define(:version => 20100616220438) do
 
   add_index "agency_assignments", ["agency_id", "assignable_id"], :name => "index_agency_assignments_on_agency_id_and_entry_id"
   add_index "agency_assignments", ["assignable_type", "assignable_id", "agency_id"], :name => "index_agency_assignments_on_assignable_and_agency_id"
+
+  create_table "agency_highlights", :force => true do |t|
+    t.integer "entry_id"
+    t.integer "agency_id"
+    t.date    "highlight_until"
+    t.boolean "published",       :default => false
+    t.string  "section_header"
+    t.string  "title"
+    t.string  "abstract"
+  end
+
+  add_index "agency_highlights", ["highlight_until"], :name => "index_agency_highlights_on_highlight_until"
 
   create_table "agency_name_assignments", :force => true do |t|
     t.integer "assignable_id"
