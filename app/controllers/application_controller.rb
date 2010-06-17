@@ -2,6 +2,7 @@
 # Likewise, all the methods added will be available for all controllers.
 
 class ApplicationController < ActionController::Base
+  session :disabled => true
   helper :all # include all helpers, all the time
   include RouteBuilder
   include ViewHelper
