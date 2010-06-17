@@ -1,4 +1,5 @@
 require 'yaml'
+require 'lib/base_extensions/hash_extensions.rb'
 
 def get_keys
   @amazon_keys     = File.open( File.join(File.dirname(__FILE__), '..', 'amazon.yml') ) { |yf| YAML::load( yf ) }
@@ -26,7 +27,7 @@ def chef_cloud_attributes
     :ec2    => true,
     :aws    => {
                 :ebs => {
-                          :volume_id => "vol-bf38f9d6"
+                          :volume_id => "vol-d5fe6ebc"
                         },
                 :accesskey => @amazon_keys['access_key_id'],
                 :secretkey => @amazon_keys['secret_access_key']
@@ -56,7 +57,8 @@ pool :fr2 do
     using :ec2
     keypair "/Users/rburbach/Documents/AWS/govpulse-production1.pem"
     user "ubuntu"
-    image_id "ami-bb709dd2" #Ubuntu 9.10 Karmic Canonical, ubuntu@
+    #image_id "ami-bb709dd2" #Ubuntu 9.10 Karmic Canonical, ubuntu@
+    image_id "ami-96c32bff" #FR2 base ami - single server - pre bundler
     availability_zones ['us-east-1b']
     instances 1
     instance_type 'm1.small'
@@ -92,8 +94,11 @@ pool :fr2 do
       
       recipe "apparmor"
       
-      
-      attributes chef_cloud_attributes
+      attributes chef_cloud_attributes.recursive_merge(
+        :passenger_enterprise => {
+                                    :pool_idle_time => 24*60*60
+                                 }
+        )
                              
     end
     
@@ -104,56 +109,65 @@ pool :fr2 do
     
   end
   
-  # cloud :demo_app_server do
-  #   # basic settings
-  #   using :ec2
-  #   keypair "/Users/rburbach/Documents/AWS/govpulse-production1.pem"
-  #   user "ubuntu"
-  #   image_id "ami-bb709dd2" #Ubuntu 9.10 Karmic Canonical, ubuntu@
-  #   availability_zones ['us-east-1b']
-  #   instances 1
-  #   instance_type 'm1.small'
-  #   
-  #   # attach the ebs volumes
-  #   ebs_volumes do
-  #     size 40
-  #     device "/dev/sdh"
-  #     snapshot_id "snap-1c7f3874" #TODO find a way to automate this as it's new everyday...!
-  #   end
-  #   
-  #   chef :solo do
-  #     repo File.join(File.dirname(__FILE__) , "chef_cloud")
-  #     
-  #     recipe "apt"
-  #     recipe "ubuntu"
-  #     recipe "ec2"
-  #     recipe "openssl"
-  #     # recipe "imagemagick"
-  #     #       
-  #     #       recipe "apache2"
-  #     #       recipe "passenger_enterprise"
-  #     #       recipe "passenger_enterprise::apache2"
-  #     #       
-  #     #       recipe 'rubygems'
-  #     
-  #     recipe "mysql::server"
-  #     recipe "mysql::server_ec2"
-  #     recipe "sphinx"
-  #     
-  #     # recipe "git"
-  #     #       recipe "capistrano"
-  #     #       recipe "rails"
-  #     
-  #     recipe "apparmor"
-  #     
-  #     attributes chef_cloud_attributes
-  #                            
-  #   end
-  #   
-  #   security_group "web" do
-  #     authorize :from_port => "22", :to_port => "22"
-  #     authorize :from_port => "80", :to_port => "80"
-  #   end
-  #   
-  # end
+  cloud :staging_server do
+    # basic settings
+    using :ec2
+    keypair "/Users/rburbach/Documents/AWS/govpulse-production1.pem"
+    user "ubuntu"
+    #image_id "ami-bb709dd2" #Ubuntu 9.10 Karmic Canonical, ubuntu@
+    image_id "ami-96c32bff" #FR2 base ami - single server - pre bundler
+    availability_zones ['us-east-1b']
+    instances 1
+    instance_type 'm1.small'
+    
+    # attach the ebs volumes
+    ebs_volumes do
+      size 40
+      device "/dev/sdh"
+      snapshot_id "snap-369cc75e" #TODO find a way to automate this as it's new everyday...!
+    end
+    
+    chef :solo do
+      repo File.join(File.dirname(__FILE__) , "chef_cloud")
+      
+      recipe "apt"
+      recipe "ubuntu"
+      recipe "ec2"
+      recipe "openssl"
+      recipe "imagemagick"
+      
+      recipe "apache2"
+      recipe "passenger_enterprise::apache2"
+      
+      recipe 'rubygems'
+      
+      recipe "mysql::server"
+      recipe "mysql::server_ec2"
+      recipe "sphinx"
+      
+      recipe "git"
+      recipe "capistrano"
+      recipe "rails"
+      
+      recipe "apparmor"
+      
+      attributes chef_cloud_attributes.recursive_merge(
+        :aws    => {
+                    :ebs => {
+                              :volume_id => "vol-690f9f00"
+                            }
+                   },
+        :passenger_enterprise => {
+                                    :pool_idle_time => 24*60*60
+                                 }
+        )
+                             
+    end
+    
+    security_group "web" do
+      authorize :from_port => "22", :to_port => "22"
+      authorize :from_port => "80", :to_port => "80"
+    end
+    
+  end
 end
