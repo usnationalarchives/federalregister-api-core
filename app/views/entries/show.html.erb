@@ -10,7 +10,7 @@
   
 
 
-<% article_tag do %>
+<% article_tag('data-internal-id' => @entry.id) do %>
   
   <div id="metadata_content_area">
       <%= render :partial => "header", :locals => {:entry => @entry} %>
@@ -69,4 +69,3 @@
 <% end %> <!-- end article tag -->
 
 </div>
-
