@@ -1,32 +1,32 @@
 class EntriesController < ApplicationController
-  def search
-    if !params[:volume].blank? && !params[:page].blank?
-      redirect_to "/citation/#{params[:volume]}/#{params[:page]}"
-      return
-    end
-    
-    @search = EntrySearch.new(params)
-    
-    respond_to do |wants|
-      wants.html do
-        @agencies = Agency.all(:conditions => "entries_count > 0", :order => :name)
-        
-        render :action => 'search'
-      end
-      
-      wants.rss do 
-        @entries ||= []
-        @feed_name = 'Federal Register Search Results'
-        render :action => 'index'
-      end
-    end
-  end
-  
-  def search_facet
-    @search = EntrySearch.new(params)
-    facets = @search.send(params[:facet] + "_facets")
-    render :partial => "search/facet", :collection => facets, :layout => nil
-  end
+  # def search
+  #   if !params[:volume].blank? && !params[:page].blank?
+  #     redirect_to "/citation/#{params[:volume]}/#{params[:page]}"
+  #     return
+  #   end
+  #   
+  #   @search = EntrySearch.new(params)
+  #   
+  #   respond_to do |wants|
+  #     wants.html do
+  #       @agencies = Agency.all(:conditions => "entries_count > 0", :order => :name)
+  #       
+  #       render :action => 'search'
+  #     end
+  #     
+  #     wants.rss do 
+  #       @entries ||= []
+  #       @feed_name = 'Federal Register Search Results'
+  #       render :action => 'index'
+  #     end
+  #   end
+  # end
+  #   
+  # def search_facet
+  #   @search = EntrySearch.new(params)
+  #   facets = @search.send(params[:facet] + "_facets")
+  #   render :partial => "search/facet", :collection => facets, :layout => nil
+  # end
   
   def widget
     params[:per_page] = 5
@@ -74,8 +74,15 @@ class EntriesController < ApplicationController
       :conditions => ['publication_date = ?', @publication_date],
       :order => "agencies.name, entries.title"
     )
+    
     Agency.preload_associations(@agencies, :children)
     Entry.preload_associations(@agencies.map(&:entries).flatten, :agencies)
+    
+    @agencies.each do |agency|
+      def agency.entries_excluding_subagency_entries
+        self.entries.select{|entry| entry.agencies_excluding_parents.include?(self) }
+      end
+    end
     
     @entries_without_agency = Entry.all(
       :include => :agencies,

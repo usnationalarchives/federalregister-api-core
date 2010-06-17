@@ -17,7 +17,7 @@ dependencies:
   rails: 
     group: 
     - :default
-    version: ~> 2.3.5
+    version: = 2.3.5
   haml: 
     group: 
     - :default
@@ -29,7 +29,7 @@ dependencies:
   mysql: 
     group: 
     - :default
-    version: ">= 0"
+    version: = 2.7
   authlogic: 
     group: 
     - :default
@@ -208,7 +208,7 @@ specs:
 - activeresource: 
     version: 2.3.5
 - after_commit: 
-    version: 1.0.6
+    version: 1.0.7
 - amatch: 
     version: 0.2.3
 - authlogic: 
@@ -224,23 +224,23 @@ specs:
 - bcrypt-ruby: 
     version: 2.1.2
 - highline: 
-    version: 1.5.0
+    version: 1.5.2
 - net-ssh: 
-    version: 2.0.20
+    version: 2.0.23
 - net-scp: 
     version: 1.0.2
 - net-sftp: 
-    version: 2.0.2
+    version: 2.0.4
 - net-ssh-gateway: 
     version: 1.0.1
 - capistrano: 
-    version: 2.5.5
+    version: 2.5.18
 - json_pure: 
     version: 1.4.3
 - rubyforge: 
     version: 2.0.4
 - hoe: 
-    version: 2.6.0
+    version: 2.6.1
 - chronic: 
     version: 0.2.3
 - haml: 
@@ -256,11 +256,11 @@ specs:
 - fastercsv: 
     version: 1.4.0
 - json: 
-    version: 1.2.0
+    version: 1.4.3
 - flickraw: 
     version: 0.8.1
 - floehopper-mocha: 
-    version: 0.9.5.20090201123802
+    version: 0.9.7.20090701124354
 - formtastic: 
     version: 0.9.8
 - geokit: 
@@ -270,7 +270,7 @@ specs:
 - jgre-monkeyspecdoc: 
     version: 0.9.5
 - mysql: 
-    version: 2.8.1
+    version: "2.7"
 - nokogiri: 
     version: 1.3.2
 - paperclip: 
@@ -280,7 +280,7 @@ specs:
 - poolparty: 
     version: 1.6.8
 - rack-test: 
-    version: 0.5.3
+    version: 0.5.4
 - rails: 
     version: 2.3.5
 - rails-test-serving: 
@@ -313,7 +313,7 @@ specs:
     version: 2.3.14
 - ym4r: 
     version: 0.6.1
-hash: a71f3bb6f7cbdf2f6615fefedfb38dd7df3f3d35
+hash: 46278ad8415d3773581f21bfe823ef45fb83ec93
 sources: 
 - Rubygems: 
     uri: http://gemcutter.org

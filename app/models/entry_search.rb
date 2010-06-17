@@ -130,8 +130,8 @@ class EntrySearch < ApplicationSearch
   
   def type_facets
     raw_facets = Entry.facets(term,
-      :with => with,
-      :conditions => conditions.except(:type),
+      :with_all => with,
+      :conditions => conditions,
       :match_mode => :extended,
       :facets => [:type]
     )[:type]
@@ -151,7 +151,7 @@ class EntrySearch < ApplicationSearch
   
   def date_distribution
     sphinx_search = ThinkingSphinx::Search.new(term,
-      :with => with.except(:publication_date),
+      :with_all => with,
       :conditions => conditions,
       :match_mode => :extended
     )
@@ -175,8 +175,8 @@ class EntrySearch < ApplicationSearch
   end
   
   def count_in_last_n_days(n)
-    Entry.search_count(@term, 
-      :with => with.merge(:publication_date => (n.days.ago.to_time.midnight .. Time.current.midnight)),
+    model.search_count(@term,
+      :with_all => with.merge(:publication_date => [n.days.ago.to_time.midnight .. Time.current.midnight]),
       :conditions => conditions,
       :match_mode => :extended
     )
@@ -206,7 +206,6 @@ class EntrySearch < ApplicationSearch
   private
   
   def set_defaults(options)
-    @start_date = '1994-01-01'
     @within = '25'
     @order = options[:order] || 'relevant'
   end

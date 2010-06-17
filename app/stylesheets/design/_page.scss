@@ -12,11 +12,13 @@ color: $body_type_color;
   white-space: nowrap;
   }
 
+/* TODO HELP-DESIGN rename this */
 .pull_out {
   background: #f5f8f9;
   border: 1px solid #b3c2cf;
   padding: 1em;
   }
+  
 /******************************
 
 DECORATIONS
@@ -598,6 +600,23 @@ TABLES
   padding: .5em;
   @include text-shadow(#fff, 1px, 1px, 1px);
   } 
+
+/******************************
+
+DAILY ISSUE
+
+******************************/
+
+#meta_toc li {
+  padding-right: 40px;
+  position: relative;
+  }
+
+#meta_toc li span {
+  position: absolute;
+  right: 0;
+  top: 0;
+  }
 
 /******************************
 

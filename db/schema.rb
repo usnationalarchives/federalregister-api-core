@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100613194124) do
+ActiveRecord::Schema.define(:version => 20100616220438) do
 
   create_table "agencies", :force => true do |t|
     t.integer  "parent_id"
@@ -147,6 +147,14 @@ ActiveRecord::Schema.define(:version => 20100613194124) do
   add_index "entries", ["publication_date"], :name => "index_entries_on_publication_date_and_agency_id"
   add_index "entries", ["regulation_id_number"], :name => "index_entries_on_regulation_id_number"
   add_index "entries", ["volume", "start_page", "end_page"], :name => "index_entries_on_volume_and_start_page_and_end_page"
+
+  create_table "entry_page_views", :force => true do |t|
+    t.integer  "entry_id"
+    t.datetime "created_at"
+    t.string   "remote_ip"
+  end
+
+  add_index "entry_page_views", ["entry_id"], :name => "index_entry_page_views_on_entry_id"
 
   create_table "graphic_usages", :force => true do |t|
     t.integer "graphic_id"

@@ -13,27 +13,7 @@ module Content
     include Content::EntryImporter::Urls
   
     def self.process_all_by_date(date, *attributes)
-      if date == 'all'
-        dates = Entry.find_as_array(
-          :select => "distinct(publication_date) AS publication_date",
-          :order => "publication_date"
-        )
-      elsif date =~ /^>/
-        date = Date.parse(date.sub(/^>/, ''))
-        dates = Entry.find_as_array(
-          :select => "distinct(publication_date) AS publication_date",
-          :conditions => {:publication_date => date .. Date.today},
-          :order => "publication_date"
-        )
-      elsif date =~ /^\d{4}$/
-        dates = Entry.find_as_array(
-          :select => "distinct(publication_date) AS publication_date",
-          :conditions => {:publication_date => Date.parse("#{date}-01-01") .. Date.parse("#{date}-12-31")},
-          :order => "publication_date"
-        )
-      else
-        dates = [date.is_a?(String) ? date : date.to_s(:iso)]
-      end
+      dates = Content.parse_dates(date)
     
       dates.each do |date|
         puts "handling #{date}"
