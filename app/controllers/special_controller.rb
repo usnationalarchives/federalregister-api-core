@@ -1,5 +1,6 @@
 class SpecialController < ApplicationController
   def home
+    expires_in 10.minutes, :public => true
     @sections = Section.all
   end
   
