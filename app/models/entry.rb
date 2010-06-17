@@ -42,6 +42,7 @@
   curated_abstract             :string(500)
   lede_photo_id                :integer(4)
   lede_photo_candidates        :text
+  docket_id                    :string(255)
 
 =end Schema Information
 
