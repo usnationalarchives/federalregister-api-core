@@ -30,8 +30,12 @@ class SectionsController < ApplicationController
     end
   end
   
+  def about
+    @section = Section.find_by_slug!(params[:slug])
+  end
+  
   def highlighted
-    @section = Section.find_by_slug(params[:slug]) or raise ActiveRecord::RecordNotFound
+    @section = Section.find_by_slug!(params[:slug])
     
     respond_to do |wants|
       wants.rss do
@@ -43,7 +47,22 @@ class SectionsController < ApplicationController
     end
   end
   
-  def about
-    @section = Section.find_by_slug(params[:slug])
+  def popular
+    @section = Section.find_by_slug!(params[:slug])
+    
+    respond_to do |wants|
+      wants.html do
+        @entries = @section.entries.popular(5)
+        render :layout => false
+      end
+      
+      wants.rss do
+        @entries = @section.entries.popular(10)
+        @feed_name = "Federal Register: Popular articles from the #{@section.title} Section"
+        @feed_description = "Popular Federal Register articles from #{@section.title} Section."
+        render :template => 'entries/index.rss.builder'
+      end
+    end
   end
+  
 end
