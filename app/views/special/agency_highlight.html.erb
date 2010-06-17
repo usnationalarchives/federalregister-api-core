@@ -1,0 +1,14 @@
+
+<%# HELP-DESIGN: no clue the hierarchy here... %>
+<h2><%= @agency_highlight.section_header %></h2>
+
+<h2>
+  <% if @agency_highlight.agency.logo_file_name.present? %>
+    <%= image_tag @agency_highlight.agency.logo.url(:thumb), :style => "float:left; margin-right: 1em; margin-bottom: 10px;" %>
+  <% end %>
+  <%= @agency_highlight.agency.name %>
+</h2>
+
+<h2><%= @agency_highlight.title %></h2>
+
+<p><%= @agency_highlight.abstract %></p>
