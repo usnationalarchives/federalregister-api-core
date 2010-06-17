@@ -4,11 +4,17 @@ backend default {
 }
 
 sub vcl_fetch {
-    if (req.url ~ "^/articles") {
+    if (req.url ~ "^/images" || req.url ~ "^/javascripts" || req.url ~ "^/flash") {
+        return(deliver);
+    }
+    else {
         /* Do ESI processing */
         esi;
     }
-    else {
-        return(deliver);
-    }
+}
+
+sub vcl_recv {
+    # Add a unique header containing the client address
+    remove req.http.X-Forwarded-For;
+    set    req.http.X-Forwarded-For = client.ip;
 }
