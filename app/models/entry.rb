@@ -121,6 +121,7 @@ class Entry < ApplicationModel
   belongs_to :lede_photo
   
   has_many :entry_page_views
+  has_one :agency_highlight
   
   accepts_nested_attributes_for :lede_photo, :reject_if => Proc.new{|attr| attr["url"].blank? }
   
