@@ -6,6 +6,9 @@ ActionController::Routing::Routes.draw do |map|
   # ENTRY SEARCH
   map.entries_search 'articles/search', :controller => 'entries/search', :action => 'show'
   
+  # ENTRY PAGE VIEW
+  map.entries_page_views 'articles/views', :controller => 'entries/page_views', :action => 'create'
+  
   # ENTRIES
   map.entries 'articles.:format', :controller => 'entries', :action => 'index'
   map.entries_search_facet 'articles/search/facet', :controller => 'entries', :action => 'search_facet'
@@ -79,6 +82,7 @@ ActionController::Routing::Routes.draw do |map|
 
   # SECTIONS
   map.section ':slug.:format', :controller => "sections", :action => "show"
-  map.section_highlights ':slug/featured.:format', :controller => "sections", :action => "highlighted"
+  map.highlighted_entries_section ':slug/featured.:format', :controller => "sections", :action => "highlighted"
+  map.popular_entries_section ':slug/popular.:format', :controller => "sections", :action => "popular"
   map.about_section ':slug/about', :controller => "sections", :action => "about"
 end
