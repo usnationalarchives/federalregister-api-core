@@ -1,24 +1,15 @@
 <div class="fulltextWrapper">
-  <% if @entry.has_full_xml? %>
+  <% if entry.has_full_xml? %>
     <%=
      html = transform_xml(entry.full_xml, 'entries/_full_text.html.xslt').to_s
      html = auto_link(html, :href_options => { :class => 'external' })
      add_citation_links(html) %>
   <% elsif entry.full_text %>
-    <% if entry.abstract %>
-      <% section_tag(:class => 'summary') do %>
-        <h3>Summary</h3>
-        <p class='abstract'>
-          <%= text_with_links(entry, entry.abstract) %>
-        </p>
-      <% end -%>
-    <% end %>
-  
     <h3>Full text</h3>
       <pre><%=
         # FIXME: move out of view!
-        text = @entry.full_text
-  
+        text = entry.full_text
+        
         text.sub!(/.*^-{71}$/m, '')
         text.gsub!(/<\/?INF>/, '')
         text.gsub!(/\[deg\]/, '&deg;')
@@ -29,7 +20,7 @@
         # text.gsub!(/^    (.+(?:\n^\S.*)*)/, "<p>\\1</p>\n")
         text = add_citation_links(text)
         text.sub!(/<\/pre>.*/m, '')
-  
+        
         text.sub!(/\A\s+/, '')
         text.sub!(/\s+\Z/, '')
         text
