@@ -1,0 +1,8 @@
+<% section_tag(:class => 'whats_hot') do %>  
+  <h1 class="title_bar">What's Hot</h1>
+  <ol>
+    <% @entries.each do |entry| %>
+      <li><%= link_to entry.title, entry_path(entry) %></li>
+    <% end %>
+  </ol>
+<% end -%>

@@ -1,5 +1,9 @@
 <%= title @section.title %>
 
+<%= feed_autodiscovery highlighted_entries_section_path(@section, :format => :rss), "Featured Articles in #{@section.title}"%>
+<%= feed_autodiscovery popular_entries_section_path(@section, :format => :rss), "Popular Articles in #{@section.title}"%>
+<%= feed_autodiscovery section_path(@section, :format => :rss), "All Articles in #{@section.title}"%>
+
 <h1 class="title"><span><%= @section.title %></span></h1>
 
 <div id="content_area">
@@ -23,7 +27,7 @@
 <% aside_tag(:id => 'sidebar') do %>  
       
   <% section_tag(:class => 'subscribe') do %>  
-    <%= link_to 'Subscribe', section_path(@section, :format => :rss), :class => 'button rss' %>
+    <%= link_to 'Subscribe', highlighted_entries_section_path(@section, :format => :rss), :class => 'button rss' %>
   <% end -%>
   
   <% section_tag(:class => 'TOC pull_out') do %>  
@@ -35,14 +39,7 @@
     </ul>
   <% end -%>  
   
-  <% section_tag(:class => 'whats_hot') do %>  
-    <h1 class="title_bar">What's Hot</h1>
-    <ol>
-      <% @popular_entries.each do |entry| %>
-        <li><%= link_to entry.title, entry_path(entry) %></li>
-      <% end %>
-    </ol>
-  <% end -%>
+  <%= render :esi => popular_entries_section_path(@section) %>
   
   <% if @agency %>
     <% section_tag(:class => 'featured_agency') do %>  
@@ -96,11 +93,6 @@
 </div>
 
 <% section_tag(:class => 'articles_published_by_day',:id=> 'articles_published_by_day') do %>    
-  <h2 class="title_bar"><span class="small_stack">Articles <span>published on</span></span> <span class="large_flow"><%= @publication_date %></span></h2>
-  <% @section.entries.published_on(@publication_date).each do |entry| %>
-    <% article_tag do %>  
-      <h1><%= link_to entry.title, entry_path(entry) %></h1>
-      A <%= entry.entry_type %> by <%= agency_names(entry) %>
-    <% end -%>
-  <% end %>
+  <%= render :partial => "entries_on_date", :collection => @dates_to_show, :as => :date %>
+  <p><%= link_to 'Search', entries_search_path(:conditions => {:section_ids => @section.id}) %> to see older articles.</p>
 <% end -%>

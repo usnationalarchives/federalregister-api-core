@@ -139,6 +139,17 @@ LIST BY DATE
 
 ******************************/    
 
+
+/*#meta_toc a {
+  @include grid(4,16);
+  @include alpha;
+  clear: both;
+  }
+#meta_toc span {
+  @include grid(1,16);
+  @include omega;
+  }*/
+
 /*#entries.by_date h3 {
   @include grid(4,16);
   @include alpha;
