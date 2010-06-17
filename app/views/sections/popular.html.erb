@@ -2,7 +2,7 @@
   <h1 class="title_bar">What's Hot</h1>
   <ol>
     <% @entries.each do |entry| %>
-      <li><%= link_to entry.title, entry_path(entry) %></li>
+      <li><%= link_to truncate(entry.title, 110), entry_path(entry) %></li>
     <% end %>
   </ol>
 <% end -%>
