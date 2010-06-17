@@ -3,15 +3,12 @@
 <% title "Entries for #{@publication_date.to_formatted_s(:pretty)}" %>
 <h1 class="title"><span><%= @publication_date %> Issue</span></h1>
 
-
-<%= link_to 'Download PDF', issue_pdf_url(@publication_date), :class => 'button' %>
-
 <div id="content_area">
 
 <% if false %>
 <div class="header group calendar controls">
   <h2>
-    <%= pluralize(@entries.count, 'article') %> published on this day
+    <%#= pluralize(@articles.count, 'article') %> published on this day
   </h2>
 
   <%= link_to( '', '#', :class => "icon cal", :title => "Click to show calendars" ) %>
@@ -40,19 +37,21 @@
 <% end %>
 
 <% @agencies.each do |agency| %>
-  <h2 id="<%= dom_id(agency) %>"><%= agency.name %></h2>
+  <div class="title_bar">
+    <h2 id="<%= agency.slug %>"><%= agency.name %></h2>
+    <a href="#entries" class="back_to_top">Back to Top</a>
+  </div>
   
   <% sub_agencies_on_this_page = agency.children & @agencies %>
   <% if sub_agencies_on_this_page.present? %>
     <ul>
       <% sub_agencies_on_this_page.each do |sub_agency| %>
-        <li><span class="see">See</span> <%= link_to sub_agency.name, '#' + dom_id(sub_agency) %></li>
+        <li><span class="see">See</span> <%= link_to sub_agency.name, '#' + sub_agency.slug %></li>
       <% end %>
     </ul>
   <% end %>
   
-  <% entries = agency.entries.select{|entry| entry.agencies_excluding_parents.include?(agency) }%>
-  <% entries.group_by(&:entry_type).each do |type, entries_by_type| %>
+  <% agency.entries_excluding_subagency_entries.group_by(&:entry_type).each do |type, entries_by_type| %>
     <h3><%= type.pluralize %></h3>
     <dl>
     <% entries_by_type.group_by(&:toc_subject).each do |toc_subject, entries_by_toc_subject| %>
@@ -76,9 +75,6 @@
 <% end %>
 
 
-
-
-
 <% if @entries_without_agency.present? %>
   <%# THESE SHOULD NOT EXIST AT LAUNCH; NO STYLE NECESSARY %>
   <h2>Entries without agencies</h2>
@@ -93,6 +89,27 @@
 <% end %>
 
 </div> <!-- END CONTENT AREA -->
+
+
+
+<%# TODO HELP-DESIGN move this to the top of the markup and then pull it over %>
+<% aside_tag(:id => 'sidebar') do %>  
+  <%= link_to 'Download PDF', issue_pdf_url(@publication_date), :class => 'button' %>
+    <% section_tag(:id => 'meta_toc') do %>
+    <div class="TOC pull_out">
+      <h1>Table of Contents</h1>
+      <ul>
+        <% @agencies.each do |agency| %>
+          <li>
+            <a href="#<%= agency.slug %>"><%= agency.name %></a> 
+            <span><%= agency.entries_excluding_subagency_entries.count %></span>
+          </li>
+        <% end -%>
+      </ul>
+    </div>
+  <% end -%>  
+<% end -%>
+
 
 <% if false %>
   

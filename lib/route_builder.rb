@@ -35,6 +35,10 @@ module RouteBuilder
     }
   end
   
+  def entry_full_text_path(entry)
+    "/articles/#{entry.document_file_path}.html"
+  end
+  
   add_route :entry_citation do |entry|
     {
       :year            => entry.publication_date.strftime('%Y'),

@@ -1,0 +1,43 @@
+<% title @search.term.blank? ? 'Article Search' : "Article Search Results for '#{h @search.term}'" %>
+
+<h1 class="title"><span>Search FR Articles</span></h1>
+
+<% unless @search.valid? %>
+<ul class="errors">
+  <% @search.errors.each do |err| %>
+  <li><%= err %></li>
+  <% end %>
+</ul>
+<% end %>
+
+<%= render :esi => entries_search_header_path(params.except(:action)) %>
+
+<% unless @search.blank? %>
+
+  <div class="filters">
+    <%= render :esi => entries_search_facets_path(params.except(:action).merge(:facet => 'date')) unless @search.start_date.present? %>
+    <%# TODO HELP-RUBY i know this doesn't go here. just wanted to stash it somewhere  %>
+    <!-- <li><%#= sparkline(:data => @search.date_distribution.to_a.sort_by{|date, count| date}.map{|date, count| count}, :alt => "Monthly Distribution" ) %></li> -->
+    
+    <%= render :esi => entries_search_facets_path(params.except(:action).merge(:facet => 'type')) %>
+    <%= render :esi => entries_search_facets_path(params.except(:action).merge(:facet => 'section')) %>
+    <%= render :esi => entries_search_facets_path(params.except(:action).merge(:facet => 'agency')) %>
+    <%= render :esi => entries_search_facets_path(params.except(:action).merge(:facet => 'topic')) %>
+    
+    <% form_for :conditions, @search, :url => entries_search_path, :html => {:method => :get} do |f| %>
+    <h4>Near</h4>
+    <ul>
+      <li>
+        <% params[:conditions].except(:location, :within).keys.each do |attr| %>
+          <%= f.hidden_field attr, :id => '' %>
+        <% end %>
+        <%= f.text_field :location, :placeholder =>  "Zip Code", :class => 'zip' %>
+        <%= f.select :within, %w(5 10 25 50 100 200).map{|n| ["#{n} miles", n]} %>
+        <%= f.submit 'Go' %>
+      </li>
+    </ul>
+    <% end %>
+  </div>
+  
+  <%= render :esi => entries_search_results_path(params.except(:action)) %>
+<% end %>
