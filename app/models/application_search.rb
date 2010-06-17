@@ -45,7 +45,7 @@ class ApplicationSearch
     
     def raw_facets
       sphinx_search = ThinkingSphinx::Search.new(@search.term,
-        :with => @search.with.except(@facet_name),
+        :with_all => @search.with,
         :conditions => @search.conditions,
         :match_mode => :extended,
         :classes => [@search.model]
@@ -55,7 +55,6 @@ class ApplicationSearch
       client.group_function = :attr
       client.group_by = @facet_name.to_s
       client.limit = 5000
-      
       query = sphinx_search.send(:query)
       result = client.query(query, sphinx_search.send(:indexes))[:matches].map{|m| [m[:attributes]["@groupby"], m[:attributes]["@count"]]}
     end
@@ -69,7 +68,7 @@ class ApplicationSearch
           :value      => id, 
           :name       => id_to_name[id.to_s],
           :count      => count,
-          :on         => id.to_s == search_value_for_this_facet.to_s,
+          :on         => search_value_for_this_facet.to_a.include?(id.to_s),
           :condition  => @facet_name
         )
       end
@@ -115,7 +114,10 @@ class ApplicationSearch
   end
   
   def add_filter(options)
-    @filters << Filter.new(options)
+    vals = (options[:value].is_a?(Array) ? options[:value] : [options[:value]])
+    vals.each do |val|
+      @filters << Filter.new(options.merge(:value => val))
+    end
   end
   
   def valid?
@@ -138,7 +140,8 @@ class ApplicationSearch
   def with
     with = {}
     @filters.select{|f| f.sphinx_type == :with }.each do |filter|
-      with[filter.sphinx_attribute] = filter.sphinx_value
+      with[filter.sphinx_attribute] ||= []
+      with[filter.sphinx_attribute] << filter.sphinx_value
     end
     with
   end
@@ -150,7 +153,7 @@ class ApplicationSearch
           :page => @page,
           :per_page => @per_page,
           :order => order_clause,
-          :with => with,
+          :with_all => with,
           :conditions => conditions,
           :match_mode => :extended,
           :sort_mode => :extended

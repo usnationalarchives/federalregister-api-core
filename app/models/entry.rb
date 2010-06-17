@@ -42,6 +42,7 @@
   curated_abstract             :string(500)
   lede_photo_id                :integer(4)
   lede_photo_candidates        :text
+  docket_id                    :string(255)
 
 =end Schema Information
 
@@ -119,6 +120,8 @@ class Entry < ApplicationModel
   has_many :section_highlights
   belongs_to :lede_photo
   
+  has_many :entry_page_views
+  
   accepts_nested_attributes_for :lede_photo, :reject_if => Proc.new{|attr| attr["url"].blank? }
   
   file_attribute(:full_xml)  {"#{RAILS_ROOT}/data/xml/#{document_file_path}.xml"}
@@ -171,16 +174,15 @@ class Entry < ApplicationModel
     scoped(:order => "publication_date DESC", :limit => n)
   end
   
-  # TODO: make this real
-  def self.popular(n = 5)
+  def self.popular(n = 10, since = 1.month.ago)
     scoped(
-      :order => "RAND()",
-      :limit => 5,
-      :conditions => {
-        :granule_class => %w(RULE PRORULE NOTICE),
-        :publication_date => (1.month.ago .. Date.today)
-      }
-    ).scoped(:conditions => "length(title) < 90")
+      :select => "entries.id, entries.title, entries.document_number, entries.publication_date, entries.abstract, count(distinct(remote_ip)) AS num_views",
+      :joins => :entry_page_views,
+      :conditions => ["entry_page_views.created_at > ?", since],
+      :group => "entries.id",
+      :order => "num_views DESC",
+      :limit => n
+    )
   end
   
   def entry_type 
@@ -311,6 +313,10 @@ class Entry < ApplicationModel
   
   def self.latest_publication_date
     find(:first, :select => "publication_date", :order => "publication_date DESC").publication_date
+  end
+  
+  def self.latest_publication_dates(n)
+    find(:all, :select => "publication_date", :conditions => ["publication_date > ?", 1.months.ago], :group => "publication_date", :order => "publication_date DESC", :limit => n).map &:publication_date
   end
   
   def self.find_all_by_citation(volume, page)
