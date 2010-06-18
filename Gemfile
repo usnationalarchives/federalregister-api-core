@@ -39,8 +39,8 @@ gem 'compass-960-plugin', '0.9.13', :require => false
 group :development do
   # bundler requires these gems in development
   # gem 'rails-footnotes'
-  gem 'poolparty', '1.6.8'
-  gem "thunder_punch", :require => false
+  # gem 'poolparty', '1.6.8'
+  # gem "thunder_punch", :require => false
 end
 
 group :test do
