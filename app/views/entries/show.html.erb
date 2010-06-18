@@ -57,9 +57,12 @@
   <%#= render :partial => 'aside', :locals => {:entry => @entry} %>
   
   <div id="fulltext_content_area">
-  
-    <%= render :esi => entry_full_text_path(@entry) %>
-
+    
+    <% if RAILS_ENV == 'development' %>
+      <%= render :partial => 'full_text', :locals => {:entry => @entry} %>
+    <% else %>
+      <%= render :esi => entry_full_text_path(@entry) %>
+    <% end %>
   </div> <!-- end content area -->  
   
 <% end %> <!-- end article tag -->
