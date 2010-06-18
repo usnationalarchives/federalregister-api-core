@@ -10,7 +10,7 @@
       <ul class="ordering">
         <% EntrySearch::SUPPORTED_ORDERS.each do |order| %>
           <li class="<%= 'on' if @search.order == order.downcase %>">
-            <%= link_to order, params.merge(:order => order.downcase), :class => '' %>
+            <%= link_to order, params.merge(:order => order.downcase, :action => :show), :class => '' %>
           </li>
         <% end %>
       </ul>
@@ -19,7 +19,7 @@
     <ol class="results">
       <%= render :partial => 'result', :collection => @search.results, :as => :entry %>
     </ol>
-    <%= will_paginate @search.results %>
+    <%= will_paginate @search.results, :params => {:action => :show} %>
   <% else %>
     <p>No articles were found.</p>
   <% end %>
