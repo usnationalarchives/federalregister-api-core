@@ -16,16 +16,20 @@
   </xsl:template>
   
   <xsl:template match="STARS">
-    <span class="STARS">		
+    <span class="STARS">
       <xsl:text>* * * * *</xsl:text>
     </span>
   </xsl:template>
   
   <xsl:template match="P | FP">
     <p>
-      <xsl:attribute name="class">
-        <xsl:value-of select="name()"/><xsl:text> </xsl:text><xsl:value-of select="@SOURCE"/>
+      <xsl:attribute name="id">
+        <xsl:value-of select="concat('p-', count(preceding::*[name(.) = 'P' or name(.) = 'FP'])+1)" />
       </xsl:attribute>
+      
+      <xsl:if test="name(.) = 'FP'">
+        <xsl:attribute name="class">flush</xsl:attribute>
+      </xsl:if>
       <xsl:apply-templates/>
     </p>
   </xsl:template>
