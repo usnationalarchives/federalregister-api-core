@@ -171,7 +171,9 @@ pool :fr2 do
                               :elastic_ip => @elastic_ip
                             }
                    },
-        :varnish => {:elastic_ip => @elastic_ip},
+        :varnish => {
+                      :listen_port     => '80'
+                    },
         :passenger_enterprise => {
                                     :pool_idle_time => 24*60*60
                                  }
