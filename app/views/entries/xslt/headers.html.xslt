@@ -29,7 +29,7 @@
     </xsl:variable>
     <xsl:element name="{concat('h', $level)}">
       <xsl:attribute name="id">
-        <xsl:value-of select="generate-id()"/>
+        <xsl:value-of select="concat('h-', count(preceding::HD)+1)" />
       </xsl:attribute>
       <xsl:choose>
         <xsl:when test="@SOURCE = 'HED'">
