@@ -18,9 +18,6 @@
     <%= link_to(@agency.url) if @agency.url %>
     <%= simple_format @agency.description %>
     
-    <% if @agency.parent %>
-      <p>Parent agency: <%= link_to @agency.parent.name, agency_path(@agency.parent) %></p>
-    <% end %>
 
   <% end %>  
     
@@ -33,6 +30,15 @@
         <li><%= link_to 'Most Cited Articles', '#most_cited' %></li>
       </ul>
     <% end -%>
+    
+    <% if @agency.parent %>
+      <% section_tag(:class => 'parent_agencies') do %>  
+        <h1 class="title_bar">Parent Agency</h1>
+        <ul>
+          <li><%= link_to @agency.parent.name, agency_path(@agency.parent) %></li>
+        </ul>
+      <% end -%>
+    <% end %>
     
     <% if @agency.children.present? %>
       <% section_tag(:class => 'sub_agencies') do %>  
