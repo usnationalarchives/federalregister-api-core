@@ -138,6 +138,7 @@ namespace :deploy do
     sudo "mkdir -p #{deploy_to}/releases"
     sudo "mkdir -p #{deploy_to}/shared/log"
     sudo "mkdir -p #{deploy_to}/shared/data"
+    sudo "mkdir -p #{deploy_to}/shared/data/html"
     sudo "mkdir -p #{deploy_to}/shared/tmp"
     sudo "mkdir -p #{deploy_to}/shared/db/sphinx/production"
     sudo "chown -R #{user}:#{user} #{deploy_to}"
@@ -175,12 +176,12 @@ namespace :deploy do
     command = []
     
     %w(database.yml api_keys.yml mail.yml production.sphinx.conf newrelic.yml).each do |file|
-      command << "#{sudo} ln -sf #{shared_path}/config/#{file} #{release_path}/config/#{file}"
+      command << "ln -sf #{shared_path}/config/#{file} #{release_path}/config/#{file}"
     end
     
-    command << "#{sudo} ln -sf #{shared_path}/config/cloudkicker_config.rb #{release_path}/config/initializers/cloudkicker_config.rb"
-    command << "#{sudo} ln -sf #{shared_path}/config/amazon.yml #{release_path}/config/amazon.yml"
-    command << "#{sudo} ln -sf #{shared_path}/log #{release_path}/log"
+    command << "ln -sf #{shared_path}/config/cloudkicker_config.rb #{release_path}/config/initializers/cloudkicker_config.rb"
+    command << "ln -sf #{shared_path}/config/amazon.yml #{release_path}/config/amazon.yml"
+    command << "ln -sf #{shared_path}/log #{release_path}/log"
     
     # don't symlink data directory directly!
     
@@ -191,11 +192,12 @@ namespace :deploy do
       #   fi
       # BASH
       
-      command << "#{sudo} ln -sf #{shared_path}/data/#{folder} #{release_path}/data/#{folder}"
+      command << "ln -sf #{shared_path}/data/#{folder} #{release_path}/data/#{folder}"
     end
     
-    command << "#{sudo} ln -sf #{shared_path}/db/sphinx #{release_path}/db/sphinx"
-    command << "#{sudo} ln -sf #{shared_path}/sitemaps #{release_path}/public/sitemaps"
+    command << "ln -sf #{shared_path}/db/sphinx #{release_path}/db/sphinx"
+    command << "ln -sf #{shared_path}/sitemaps #{release_path}/public/sitemaps"
+    command << "ln -sf #{shared_path}/data/html #{release_path}/public/articles"
     
     run command.join(' && ')
   end 
