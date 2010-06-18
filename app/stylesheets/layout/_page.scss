@@ -132,6 +132,30 @@ CITATION LIST
   @include omega;
   }
   
+/******************************
+
+AGENCY VIEW
+
+******************************/  
+  
+#agencies #agency_description {
+  @include grid(10, 16);
+  @include grid-suffix(1);
+  @include alpha;
+  }
+#agencies #sidebar {
+  @include grid(5, 16);
+  @include omega;
+  }  
+#agencies .header.with_image img {
+  @include grid(2, 16);
+  @include alpha;
+  }
+
+#agencies .header.with_image h1 {
+  @include grid(8, 16);
+  @include omega;
+  }
   
 /******************************
 
