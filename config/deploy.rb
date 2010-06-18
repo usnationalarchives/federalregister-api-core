@@ -112,8 +112,8 @@ end
 after "deploy:update_code",       "deploy:update_config"
 after "deploy",                   "deploy:cleanup"
 after "deploy:cleanup",           "deploy:set_rake_path"
-after "deploy:set_rake_path",     "deploy:install_gems"
-after "deploy:install_gems",      "deploy:migrate"
+after "deploy:set_rake_path",     "deploy:fix_bundle"
+after "deploy:fix_bundle",        "deploy:migrate"
 after "deploy:migrate",           "thinking_sphinx:restart"
 after "thinking_sphinx:restart",  "passenger:restart"
 
@@ -234,6 +234,11 @@ end
 namespace :deploy do
   desc "Remove deploy:restart In Favor Of passenger:restart Task"
   task :restart do
+  end
+  
+  desc "Install and lock bundle"
+  task :fix_bundle do
+    run "cd #{current_path} && bundle install"
   end
 end
 
