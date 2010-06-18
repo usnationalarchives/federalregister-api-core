@@ -30,7 +30,8 @@
           </xsl:attribute>
           <a>
             <xsl:attribute name="href">
-              <xsl:value-of select="concat('#h-', count(preceding::HD)+1)" />
+              <xsl:text>#</xsl:text>
+              <xsl:call-template name="header_id" />
             </xsl:attribute>
             <xsl:choose>
               <xsl:when test="@SOURCE = 'HED'">
