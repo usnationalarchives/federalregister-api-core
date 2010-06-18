@@ -38,10 +38,6 @@ dependencies:
     group: 
     - :default
     version: = 2.4.12
-  poolparty: 
-    group: 
-    - :development
-    version: = 1.6.8
   rspec: 
     group: 
     - :test
@@ -180,12 +176,6 @@ dependencies:
     group: 
     - :default
     version: = 0.7.9
-  thunder_punch: 
-    group: 
-    - :development
-    version: ">= 0"
-    require: []
-
   nokogiri: 
     group: 
     - :default
@@ -223,18 +213,6 @@ specs:
     version: 0.6.2
 - bcrypt-ruby: 
     version: 2.1.2
-- highline: 
-    version: 1.5.2
-- net-ssh: 
-    version: 2.0.23
-- net-scp: 
-    version: 1.0.2
-- net-sftp: 
-    version: 2.0.4
-- net-ssh-gateway: 
-    version: 1.0.1
-- capistrano: 
-    version: 2.5.18
 - json_pure: 
     version: 1.4.3
 - rubyforge: 
@@ -277,8 +255,6 @@ specs:
     version: 2.3.1.1
 - patron: 
     version: 0.4.2
-- poolparty: 
-    version: 1.6.8
 - rack-test: 
     version: 0.5.4
 - rails: 
@@ -305,15 +281,13 @@ specs:
     version: 0.0.1
 - thinking-sphinx: 
     version: 1.3.14
-- thunder_punch: 
-    version: 0.0.4
 - webrat: 
     version: 0.7.0
 - will_paginate: 
     version: 2.3.14
 - ym4r: 
     version: 0.6.1
-hash: 46278ad8415d3773581f21bfe823ef45fb83ec93
+hash: 596cd093d90a37d6152a193fefdf0fc8897e9f73
 sources: 
 - Rubygems: 
     uri: http://gemcutter.org

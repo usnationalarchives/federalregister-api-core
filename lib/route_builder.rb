@@ -96,8 +96,11 @@ module RouteBuilder
     instance_methods.each do |method|
       next if method !~ /(?:_path|_url)$/
       
-      base.instance_eval do
-        helper_method method
+      # allow this module to be mixed in outside of controllers...
+      if base < ActionController::Base
+        base.instance_eval do
+          helper_method method
+        end
       end
     end
   end
