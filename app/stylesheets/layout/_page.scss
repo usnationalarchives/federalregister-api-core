@@ -46,16 +46,16 @@ ENTRIES
   @include grid(5, 16);
   @include omega;
   }
-#entries.show .header_column {
+.header_column {
   @include grid(3, 16);
   @include alpha;
   clear: both;
   }
-#entries.show .body_column {
+.body_column {
   @include grid(8, 16);
   @include grid-suffix(1);
   }
-#entries.show .notes_column {
+.notes_column {
   @include grid(4, 16);
   @include omega;
   }  
@@ -157,30 +157,10 @@ AGENCY VIEW
   @include omega;
   }
   
+  
 /******************************
 
-LIST BY DATE
+REGULATION VIEW
 
 ******************************/    
 
-
-/*#meta_toc a {
-  @include grid(4,16);
-  @include alpha;
-  clear: both;
-  }
-#meta_toc span {
-  @include grid(1,16);
-  @include omega;
-  }*/
-
-/*#entries.by_date h3 {
-  @include grid(4,16);
-  @include alpha;
-  clear: both;
-  }
-
-#entries.by_date #main ul {
-  @include grid(12,16);
-  @include omega;
-  }*/
