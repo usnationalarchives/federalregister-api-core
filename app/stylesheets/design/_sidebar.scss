@@ -38,6 +38,16 @@ SIDEBAR
   }
   
   
+.section li {
+  background: url(/images/bullet.png) no-repeat left 7px;
+  list-style: none;
+  margin-bottom: .2em;
+  padding-left: 10px;
+  }
+ .section li:last-child {
+   margin-bottom: 0;
+ } 
+  
 .TOC h1 {
   color: #60686A;
   @include apertura-condensed;
@@ -48,10 +58,11 @@ SIDEBAR
   margin-bottom: 0;
   }
 .TOC li {
+  background: none;
   border-bottom: 1px solid #b3c2cf;
   list-style: none;
   margin-top: 0.2em;
-  margin-left: 1em;
+  padding-left: 0;
   }
 .TOC li:last-child {
   border-bottom: 0;

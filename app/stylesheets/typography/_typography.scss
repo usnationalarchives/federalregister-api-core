@@ -99,13 +99,13 @@ clear: both;
 color: $powder_blue;
 font-size: 2.3em;
 @include apertura-condensed;
-margin: 2em 0 1em;
+margin: 1em 0 1em;
 padding-top: 10px;
 text-transform: uppercase;
 }
 #sidebar .title_bar {
   margin-top: 0;
-}
+  }
 
 .small_stack {
 color: $dark_blue;
@@ -136,9 +136,9 @@ SIDEBAR
 
 #sidebar .title_bar {
   font-size: 1.5em;
-  margin: 0 0 1em;
+  margin: 0 0 .5em;
   padding: .3em 0 0 0;
-}
+  }
 
 /******************************
 
