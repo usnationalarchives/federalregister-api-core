@@ -1,9 +1,11 @@
 class AgenciesController < ApplicationController
   def index
+    cache_for 1.day
     @agencies  = Agency.all(:order => 'name ASC', :include => :children)
   end
   
   def show
+    cache_for 1.day
     @agency = Agency.find_by_slug!(params[:id])
     @entries = @agency.entries.all(:limit => 50, :include => :places, :order => "entries.publication_date DESC", :group => "entries.id")
     respond_to do |wants|
