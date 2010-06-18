@@ -6,11 +6,11 @@
       <h5>
         <xsl:attribute name="class">table_title</xsl:attribute>
         <xsl:attribute name="id">
-          <xsl:value-of select="generate-id()"/>
+          <xsl:value-of select="concat('t-', count(preceding::GPOTABLE/TTITLE)+1)" />
         </xsl:attribute>
         <xsl:apply-templates/>
         <xsl:text> </xsl:text>
-        <a href="#table_of_tables">&#8593;</a>
+        <a href="#table_of_tables" class="back_to_table_index">Back to Top</a>
       </h5>
     </xsl:for-each>
     <xsl:variable name="number_of_columns">
@@ -147,7 +147,9 @@
         <xsl:for-each select="//GPOTABLE/TTITLE[descendant::text()]">
           <li>
             <a>
-              <xsl:attribute name="href">#<xsl:value-of select="generate-id()"/></xsl:attribute>
+              <xsl:attribute name="href">
+                <xsl:value-of select="concat('#t-', count(preceding::GPOTABLE/TTITLE)+1)" />
+              </xsl:attribute>
               <xsl:apply-templates/>
             </a>
           </li>
