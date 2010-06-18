@@ -8,6 +8,7 @@ end
 
 def chef_cloud_attributes
   get_keys
+  @app_server_port = "8080"
   return {
     :platform => "ubuntu",
     :bootstrap => {:chef => {:client_version => '0.8.16'}},
@@ -16,7 +17,8 @@ def chef_cloud_attributes
                     :ec2_region => 'us-east-1'
                },
     :apache => {
-                  :listen_ports   => ["80"], 
+                  :listen_ports   => [@app_server_port],
+                  :vhost_port     => @app_server_port, 
                   :server_name    => 'test.fr2.criticaljuncture.org',
                   #:server_aliases => 'www.something',
                   :web_dir        => '/var/www',
@@ -46,6 +48,11 @@ def chef_cloud_attributes
                },
     :capistrano => {
                     :deploy_user => 'deploy'
+                   },
+    :varnish    => {
+                    :version => '2.1.2',
+                    :proxy_host => '127.0.0.1',
+                    :proxy_port  => @app_server_port
                    }
   }
 end
@@ -120,11 +127,13 @@ pool :fr2 do
     instances 1
     instance_type 'm1.small'
     
+    elastic_ip ['184.73.190.17']
+    
     # attach the ebs volumes
     ebs_volumes do
       size 40
       device "/dev/sdh"
-      snapshot_id "snap-369cc75e" #TODO find a way to automate this as it's new everyday...!
+      snapshot_id "snap-58694d30" #TODO find a way to automate this as it's new everyday...!
     end
     
     chef :solo do
@@ -135,6 +144,8 @@ pool :fr2 do
       recipe "ec2"
       recipe "openssl"
       recipe "imagemagick"
+      
+      recipe "varnish"
       
       recipe "apache2"
       recipe "passenger_enterprise::apache2"
@@ -151,17 +162,21 @@ pool :fr2 do
       
       recipe "apparmor"
       
+      @elastic_ip = '184.73.190.17'
+      
       attributes chef_cloud_attributes.recursive_merge(
         :aws    => {
                     :ebs => {
-                              :volume_id => "vol-690f9f00"
+                              :volume_id => "vol-a346d5ca",
+                              :elastic_ip => @elastic_ip
                             }
                    },
+        :varnish => {:elastic_ip => @elastic_ip},
         :passenger_enterprise => {
                                     :pool_idle_time => 24*60*60
                                  }
         )
-                             
+            
     end
     
     security_group "web" do
