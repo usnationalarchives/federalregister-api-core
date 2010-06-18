@@ -28,6 +28,14 @@ sub vcl_recv {
         return (pass);
     }
     
+    /* Don't cache if host is fr2.local */
+    if (req.http.host ~ "\.local") {
+        return (pass);
+    }
+    
+    /* Prevent duplication of caches */
+    set req.http.host = "fr2.local";
+    
     /* Check to see if cached */
     return (lookup);
 }
