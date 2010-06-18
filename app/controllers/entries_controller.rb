@@ -1,5 +1,6 @@
 class EntriesController < ApplicationController
   def widget
+    cache_for 1.day
     params[:per_page] = 5
     params[:order] = :date
     @search = EntrySearch.new(params)
@@ -8,6 +9,7 @@ class EntriesController < ApplicationController
   end
   
   def index
+    cache_for 1.day
     respond_to do |wants|
       wants.html do
         redirect_to entries_by_date_path(Entry.latest_publication_date)
@@ -26,6 +28,8 @@ class EntriesController < ApplicationController
   end
   
   def by_date
+    cache_for 1.day
+    
     @year  = params[:year]  || Time.now.strftime("%Y")
     @month = params[:month] || Time.now.strftime("%m")
     @day   = params[:day]   || Time.now.strftime("%d")
@@ -59,6 +63,7 @@ class EntriesController < ApplicationController
   end
   
   def show
+    cache_for 1.day
     @entry = Entry.find_by_document_number!(params[:document_number])
     
     respond_to do |wants|
@@ -92,10 +97,12 @@ class EntriesController < ApplicationController
   end
   
   def citations
+    cache_for 1.day
     @entry = Entry.find_by_document_number!(params[:document_number])
   end
   
   def tiny_url
+    cache_for 1.day
     entry = Entry.find_by_document_number!(params[:document_number])
     redirect_to entry_path(entry), :status=>:moved_permanently
   end
