@@ -19,6 +19,16 @@ color: $body_type_color;
   padding: 1em;
   }
   
+li {
+  background: url(/images/bullet.png) no-repeat left 7px;
+  list-style: none;
+  margin-bottom: .2em;
+  padding-left: 10px;
+  }
+li:last-child {
+   margin-bottom: 0;
+ } 
+ 
 /******************************
 
 DECORATIONS
@@ -252,9 +262,9 @@ ARTICLE VIEW
   vertical-align: text-top;
   }
 
-#entries.show .header_column h1,
-#entries.show .header_column #table_of_contents,
-#entries.show .header_column #table_of_graphics
+.header_column h1,
+.header_column #table_of_contents,
+.header_column #table_of_graphics
   {
   clear: both;
   color: $powder_blue;
@@ -265,7 +275,7 @@ ARTICLE VIEW
   text-align: right;
   text-transform: uppercase;
   }
-#entries.show .header_column h2 {
+.header_column h2 {
   font-size: 1.3em;
   line-height: 1.5em;
   margin-top: 0;
@@ -470,6 +480,26 @@ AGENCY VIEW
   margin-bottom: 0;
   }
   
+/******************************
+
+REGULATION VIEW 
+
+******************************/  
+
+.split_list {
+  overflow: hidden;
+  }
+.split_list dt {
+  clear: both;
+  float: left;
+  width: 45%;
+  }
+.split_list dd {
+  display: inline;
+  float: left;
+  width: 45%;
+  }
+
   
 /******************************
 
