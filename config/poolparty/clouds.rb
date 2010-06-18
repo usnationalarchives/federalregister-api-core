@@ -133,7 +133,7 @@ pool :fr2 do
     ebs_volumes do
       size 40
       device "/dev/sdh"
-      snapshot_id "snap-58694d30" #TODO find a way to automate this as it's new everyday...!
+      snapshot_id "snap-2bd5f343" #TODO find a way to automate this as it's new everyday...!
     end
     
     chef :solo do
@@ -167,11 +167,13 @@ pool :fr2 do
       attributes chef_cloud_attributes.recursive_merge(
         :aws    => {
                     :ebs => {
-                              :volume_id => "vol-a346d5ca",
+                              :volume_id => "vol-708a1819",
                               :elastic_ip => @elastic_ip
                             }
                    },
-        :varnish => {:elastic_ip => @elastic_ip},
+        :varnish => {
+                      :listen_port     => '80'
+                    },
         :passenger_enterprise => {
                                     :pool_idle_time => 24*60*60
                                  }
