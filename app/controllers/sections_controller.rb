@@ -2,6 +2,8 @@ class SectionsController < ApplicationController
   include Shared::SectionsControllerUtilities
   
   def show
+    cache_for 1.day
+    
     prepare_for_show(params[:slug], Entry.latest_publication_date)
     @preview = false
     respond_to do |wants|
@@ -31,10 +33,12 @@ class SectionsController < ApplicationController
   end
   
   def about
+    cache_for 1.day
     @section = Section.find_by_slug!(params[:slug])
   end
   
   def highlighted
+    cache_for 1.day
     @section = Section.find_by_slug!(params[:slug])
     
     respond_to do |wants|
@@ -48,6 +52,7 @@ class SectionsController < ApplicationController
   end
   
   def popular
+    cache_for 1.hour
     @section = Section.find_by_slug!(params[:slug])
     
     respond_to do |wants|
