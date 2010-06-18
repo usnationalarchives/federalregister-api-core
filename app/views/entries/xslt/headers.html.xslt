@@ -29,7 +29,7 @@
     </xsl:variable>
     <xsl:element name="{concat('h', $level)}">
       <xsl:attribute name="id">
-        <xsl:value-of select="concat('h-', count(preceding::HD)+1)" />
+        <xsl:call-template name="header_id" />
       </xsl:attribute>
       <xsl:choose>
         <xsl:when test="@SOURCE = 'HED'">
@@ -77,6 +77,17 @@
       <xsl:when test="$source = 'HED'">1</xsl:when>
       <xsl:otherwise>
         <xsl:value-of select="number(translate($source, 'HD', '')) + 1" />
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+  
+  <xsl:template name="header_id">
+    <xsl:choose>
+      <xsl:when test="translate(text(),' ','') = 'ADDRESSES:'">
+        <xsl:text>addresses</xsl:text>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:value-of select="concat('h-', count(preceding::HD)+1)" />
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
