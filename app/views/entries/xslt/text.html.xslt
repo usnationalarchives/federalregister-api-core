@@ -99,7 +99,7 @@
     </p>
   </xsl:template>
   
-  <xsl:template match="PRTPAGE">
+  <xsl:template match="PRTPAGE[not(ancestor::FTNT)]">
     <span class="printed_page">
       <xsl:attribute name="id">
         <xsl:text>page-</xsl:text><xsl:value-of select="@P" />
