@@ -61,14 +61,6 @@ ActionController::Routing::Routes.draw do |map|
   # AGENCIES
   map.resources :agencies, :only => [:index, :show]
   
-  # PLACES
-  map.maps 'maps', :controller => 'maps',
-                   :action     => 'index'
-  map.place 'places/:slug/:id.:format', :controller => 'places', :action => 'show'
-  
-  # LOCATION
-  map.resource :location, :only => [:update, :edit], :member => {:places => :get}
-  
   # REGULATIONS
   map.regulatory_plans_search 'regulations/search',
                       :controller => 'regulatory_plans',
