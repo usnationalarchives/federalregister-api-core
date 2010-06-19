@@ -4,9 +4,12 @@
   
   <%# TODO HELP-RUBY yay ruby. these just work. if there is date is underdetermined nothing shows up %>
   <span>
-    <%= regulatory_plan.events.size %> 
-    <%= regulatory_plan.events.first.date %> - 
-    <%= regulatory_plan.events.last.date %>
+    <%= pluralize(regulatory_plan.events.size, "action") %> 
+    <%= regulatory_plan.events.first.date %>
+    <% if regulatory_plan.events.size > 1 %>
+       - 
+      <%= regulatory_plan.events.last.date || 'Undetermined' %>
+    <% end %>
   </span>
   
 </div>
