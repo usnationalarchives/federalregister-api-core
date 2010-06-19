@@ -1,6 +1,13 @@
 <% if regulatory_plan.try(:events).present? %>
 <div class="header_column">
   <h1>Timeline</h1>
+  
+  <span>
+    <%= regulatory_plan.events.size %> 
+    <%= regulatory_plan.events.first.date %> - 
+    <%= regulatory_plan.events.last.date %>
+  </span>
+  
 </div>
 
 <div class="body_column">
@@ -8,7 +15,7 @@
     <ul class="timeline_list handle">
     <% regulatory_plan.events.each do |event| %>
       <li class="timeline_item">
-        <div class="date"><%= event.date %></div>
+        <div class="date"><%= fuzzy_date_formatter event.date %></div>
         <ul>
           <% if event.action? %>
             <li><div class="action"><%= add_citation_links(event.action) %></div></li>
