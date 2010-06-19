@@ -9,6 +9,8 @@ $(document).ready(function() {
   new Dragdealer('timeline_control', {
     x: 1,
     xPrecision: content.offsetWidth,
+    steps: li_count - 2,
+    snap: true,
   	animationCallback: function(x, y)
   	{
   		var margin = x * (content.offsetWidth - mask.offsetWidth);
