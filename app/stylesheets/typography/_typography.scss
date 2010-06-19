@@ -54,6 +54,7 @@ a:hover {
 }
 
 p {
+  color: #363636;
   @include athelas;
   font-size: 1.2em;
 }
@@ -123,11 +124,6 @@ display: block;
 }
 
 
-.articles_published_by_day h1 {
-  font-size: 1.1em;
-  }
-
-
 /******************************
 
 SIDEBAR
@@ -174,7 +170,7 @@ ARTICLES
 .article h1 {
   font-size: 2em;
   line-height: 1.6;
-}
+  }
 
 .featured .article h1 {
 font-size: 1.3em;
@@ -195,6 +191,12 @@ line-height: 1.4;
   font-size: 1.3em;
   @include gesta;
   }
+
+
+.articles_published_by_day h1 {
+  font-size: 1.1em;
+  }
+
 
 
 /******************************
