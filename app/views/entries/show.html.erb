@@ -58,7 +58,7 @@
   
   <div id="fulltext_content_area">
     
-    <% if RAILS_ENV == 'development' %>
+    <% if RAILS_ENV == 'development' && false %>
       <%= render :partial => 'full_text', :locals => {:entry => @entry} %>
     <% else %>
       <%= render :esi => entry_full_text_path(@entry) %>
