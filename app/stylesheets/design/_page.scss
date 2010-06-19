@@ -4,9 +4,9 @@ GENERAL
 
 ******************************/
 body {
-background: url(/images/seal.png) no-repeat right top;
-color: $body_type_color;
-}
+  background: url(/images/seal.png) no-repeat right top;
+  color: $body_type_color;
+  }
 
 .read_more {
   white-space: nowrap;
@@ -19,16 +19,16 @@ color: $body_type_color;
   padding: 1em;
   }
 
-ul {
+ul.bullets {
   padding-left: 15px;
   }  
-ul li {
+ul.bullets  li {
   color: #9fafc4;
   list-style: square;
-  line-height: 1;
+  line-height: 1.25;
   margin-bottom: .75em;
   }
-li:last-child {
+.bullets li:last-child {
    margin-bottom: 0;
   } 
  
@@ -480,29 +480,32 @@ REGULATION VIEW
   width: 45%;
   }
 
-#timeline {
-  height: 100px;
+.timeline {
+  height: 155px;
 	position: relative;
-  width: 600px;
   overflow: hidden;
-}
+  width: 495px;
+  }
 .timeline_list {
-  cursor: pointer;
   display: block;
   list-style: none;
-  height: 100px;
+  height: 145px;
   position: absolute;
   width: 1000px;
   }  
 .timeline_item {
-  background: #f1f1f1;
+  background: #f9f9f9;
+  border: 1px solid #f1f1f1;
   float: left;
-  height: 80px;  
-  margin-right: .75em;
+  height: 125px;  
+  margin-right: 10px;
   list-style-type: none;
-  padding: .75em;
+  padding: 10px;
   width: 135px;
   }
+.timeline_item:hover {
+  @include box-shadow(#ccc, 0, 0, 5px)
+  }  
 .timeline_item .date {
   color: #e4a529;
   @include gesta;
@@ -519,14 +522,33 @@ REGULATION VIEW
   }  
 .timeline_item:last-child {
   background: #e4a529;
-  }  
+  margin-right: 0;
+  } 
 .timeline_item:last-child .date, 
 .timeline_item:last-child li,
 .timeline_item:last-child li .action {
   color: #fff;
   }
 
-
+.track {
+  background: url(/images/stripe.png);
+  @include border-radius(5px);
+  cursor: pointer;
+  height: 15px;
+  position: relative;
+  width: 495px;
+  }
+.track .handle {
+  background: #a19f9b;
+  @include border-radius(5px);
+  display: block;
+  height: 15px;
+  position: absolute;
+  width: 40px;
+  }
+.track .handle:hover {
+  background: $powder_blue;
+  }  
   
 /******************************
 

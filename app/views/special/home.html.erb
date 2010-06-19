@@ -65,7 +65,7 @@
   <div class="grid_8 <%= cycle('alpha','omega')%>">
       <div class="">
         <h2 class="title_bar"><%= link_to section.title, section_path(section), :class => "icon #{section.slug}" %></h2>
-        <ul>
+        <ul class="bullets">
           <% entries = section.highlighted_entries[1..3] %>
           <% if entries %>
             <% entries.each do |entry| %>
