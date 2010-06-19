@@ -143,7 +143,7 @@
         <xsl:with-param name="id" select="'table_of_tables'"/>
         <xsl:with-param name="name" select="'Tables'"/>
       </xsl:call-template>
-      <ul class="table_of_tables">
+      <ul class="table_of_tables bullets">
         <xsl:for-each select="//GPOTABLE/TTITLE[descendant::text()]">
           <li>
             <a>
