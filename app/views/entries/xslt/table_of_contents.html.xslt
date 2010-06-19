@@ -6,7 +6,7 @@
         <xsl:with-param name="id" select="'table_of_contents'"/>
         <xsl:with-param name="name" select="'Table of Contents'"/>
       </xsl:call-template>
-      <ul class="table_of_contents">
+      <ul class="bullets table_of_contents">
         <xsl:apply-templates mode="table_of_contents"/>
         <xsl:if test="count(//FTNT) &gt; 0">
           <li class="level_1">
