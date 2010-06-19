@@ -1,5 +1,6 @@
 class CitationsController < ApplicationController
   def show
+    cache_for 1.day
     @volume = params[:volume].to_i
     @page   = params[:page].to_i
     
