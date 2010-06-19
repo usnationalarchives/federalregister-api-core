@@ -36,7 +36,7 @@
     <xsl:choose>
       <xsl:when test="starts-with(text(),'&#x2022;')">
         <xsl:if test="not(preceding-sibling::*[name() != 'PRTPAGE'][1][starts-with(text(),'&#x2022;')])">
-          <xsl:value-of disable-output-escaping="yes" select="'&lt;ul&gt;'"/>
+          <xsl:value-of disable-output-escaping="yes" select="'&lt;ul class=&quot;bullets&quot;&gt;'"/>
         </xsl:if>
         <li>
           <xsl:attribute name="id">
