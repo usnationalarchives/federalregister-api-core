@@ -36,7 +36,7 @@
       <h1>Summary</h1>
     </div>
     <div class="body_column">
-      <p><%= @regulatory_plan.abstract %></p>
+      <p><%= add_citation_links(simple_format(auto_link(@regulatory_plan.abstract, :href_options => { :class => 'external' }))) %></p>
     </div>
   <% end -%>
   
@@ -49,7 +49,7 @@
         <% value = @regulatory_plan.send(attribute) %>
         <% if value.present? %>
           <dt><%= attribute.humanize %></dt>
-          <dd><%= add_citation_links(value) %></dd>
+          <dd><%= add_citation_links(simple_format(auto_link(value, :href_options => { :class => 'external' }))) %></dd>
         <% end %>
       <% end %>
       <% %w(major regulatory_flexibility_analysis_required energy_affected).each do |attribute| %>
