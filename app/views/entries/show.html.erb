@@ -45,7 +45,7 @@
       <h1>Related Topics</h1>
     </div>
     <div class="body_column">
-      <ul class="table_of_contents">
+      <ul class="bullets">
         <% @entry.topics.each do |topic| %>
           <li><%= link_to topic.name, topic_path(topic) %></li>
         <% end %>

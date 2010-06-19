@@ -89,7 +89,7 @@ var Dragdealer = function(wrapper, options)
 	{
 		return;
 	}
-	var handle = wrapper.getElementsByTagName('ul')[0];
+	var handle = wrapper.getElementsByTagName('div')[0];
 	if(!handle || handle.className.search(/(^|\s)handle(\s|$)/) == -1)
 	{
 		return;
