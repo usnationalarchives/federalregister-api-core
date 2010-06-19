@@ -2,8 +2,7 @@
   <% if entry.has_full_xml? %>
     <%=
      html = transform_xml(entry.full_xml, 'entries/_full_text.html.xslt').to_s
-     html = auto_link(html, :href_options => { :class => 'external' })
-     add_citation_links(html) %>
+     auto_link(html, :href_options => { :class => 'external' }) %>
   <% elsif entry.full_text %>
     <h3>Full text</h3>
       <pre><%=

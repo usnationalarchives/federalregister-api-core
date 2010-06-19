@@ -39,7 +39,7 @@
         <h1>Summary</h1>
       </div>
       <div class="body_column">
-        <p><%= add_citation_links(simple_format(auto_link(@regulatory_plan.abstract, :href_options => { :class => 'external' }))) %></p>
+        <%= format_regulation_text(@regulatory_plan.abstract) %>
       </div>
     <% end -%>
     
@@ -159,7 +159,7 @@
         <% value = @regulatory_plan.send(attribute) %>
         <% if value.present? %>
           <dt><%= attribute.humanize %></dt>
-          <dd><%= add_citation_links(simple_format(auto_link(value, :href_options => { :class => 'external' }))) %></dd>
+          <dd><%= format_regulation_text(value) %></dd>
         <% end %>
       <% end %>
       <% %w(major regulatory_flexibility_analysis_required energy_affected).each do |attribute| %>
@@ -173,4 +173,17 @@
     </dl>
   <% end -%>
   
+<<<<<<< HEAD
 <% end -%>
+=======
+  <% count = @regulatory_plan.entries.count %>
+  <% if count > 0 %>
+    <div class="header_column">
+      <h1>Federal Register Activity</h1>
+    </div>
+    <div class="body_column">
+      <p><%= link_to "#{pluralize(count, "article")} found", entries_search_path(:conditions => {:regulation_id_number => @regulatory_plan.regulation_id_number})%></p>
+    </div>
+  <% end %>
+</article>
+>>>>>>> d32fb8370d3555ab83a0c4dded6ae81e76755281
