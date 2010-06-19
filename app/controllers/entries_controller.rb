@@ -1,34 +1,6 @@
 class EntriesController < ApplicationController
-  # def search
-  #   if !params[:volume].blank? && !params[:page].blank?
-  #     redirect_to "/citation/#{params[:volume]}/#{params[:page]}"
-  #     return
-  #   end
-  #   
-  #   @search = EntrySearch.new(params)
-  #   
-  #   respond_to do |wants|
-  #     wants.html do
-  #       @agencies = Agency.all(:conditions => "entries_count > 0", :order => :name)
-  #       
-  #       render :action => 'search'
-  #     end
-  #     
-  #     wants.rss do 
-  #       @entries ||= []
-  #       @feed_name = 'Federal Register Search Results'
-  #       render :action => 'index'
-  #     end
-  #   end
-  # end
-  #   
-  # def search_facet
-  #   @search = EntrySearch.new(params)
-  #   facets = @search.send(params[:facet] + "_facets")
-  #   render :partial => "search/facet", :collection => facets, :layout => nil
-  # end
-  
   def widget
+    cache_for 1.day
     params[:per_page] = 5
     params[:order] = :date
     @search = EntrySearch.new(params)
@@ -37,6 +9,7 @@ class EntriesController < ApplicationController
   end
   
   def index
+    cache_for 1.day
     respond_to do |wants|
       wants.html do
         redirect_to entries_by_date_path(Entry.latest_publication_date)
@@ -48,15 +21,6 @@ class EntriesController < ApplicationController
     end
   end
   
-  def current_headlines
-    @entries = Entry.all(
-        :include => :agencies,
-        :conditions => {:publication_date => Entry.latest_publication_date},
-        :order => "entries.start_page"
-    )
-    render :layout => false
-  end
-  
   def date_search
     date = Chronic.parse(params[:search], :context => :past)
     raise ActiveRecord::RecordNotFound if date.nil?
@@ -64,6 +28,8 @@ class EntriesController < ApplicationController
   end
   
   def by_date
+    cache_for 1.day
+    
     @year  = params[:year]  || Time.now.strftime("%Y")
     @month = params[:month] || Time.now.strftime("%m")
     @day   = params[:day]   || Time.now.strftime("%d")
@@ -97,6 +63,7 @@ class EntriesController < ApplicationController
   end
   
   def show
+    cache_for 1.day
     @entry = Entry.find_by_document_number!(params[:document_number])
     
     respond_to do |wants|
@@ -130,10 +97,12 @@ class EntriesController < ApplicationController
   end
   
   def citations
+    cache_for 1.day
     @entry = Entry.find_by_document_number!(params[:document_number])
   end
   
   def tiny_url
+    cache_for 1.day
     entry = Entry.find_by_document_number!(params[:document_number])
     redirect_to entry_path(entry), :status=>:moved_permanently
   end
