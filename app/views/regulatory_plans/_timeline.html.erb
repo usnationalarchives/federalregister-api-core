@@ -4,17 +4,25 @@
 </div>
 
 <div class="body_column">
-  <%# HELP-DESIGN: ideally these would stack up next to each other and you could scroll left %>
-  <div class="regulatory_timeline_container">
-    <ul class="timeline">
+  <div id="timeline">
+    <ul class="timeline_list handle">
     <% regulatory_plan.events.each do |event| %>
       <li class="timeline_item">
-        <div><%= fuzzy_date_formatter(event.date) %></div>
-        <div><%= add_citation_links(event.action) %></div>
-        <div><%= add_citation_links(event.fr_citation) %></div>
+        <div class="date"><%= event.date %></div>
+        <ul>
+          <% if event.action? %>
+            <li><div class="action"><%= add_citation_links(event.action) %></div></li>
+          <% end -%>
+          <% if event.fr_citation? %>
+            <li><div class="citation"><%= add_citation_links(event.fr_citation) %></div></li>
+          <% end -%>
+        </ul>  
       </li>
     <% end %>
     </ul>
+    
+    
+    
   </div>
 </div>  
 <% end %>
