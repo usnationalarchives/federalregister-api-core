@@ -2,6 +2,7 @@
 <div class="header_column">
   <h1>Timeline</h1>
   
+  <%# TODO HELP-RUBY yay ruby. these just work. if there is date is underdetermined nothing shows up %>
   <span>
     <%= regulatory_plan.events.size %> 
     <%= regulatory_plan.events.first.date %> - 
@@ -11,12 +12,12 @@
 </div>
 
 <div class="body_column">
-  <div id="timeline">
-    <ul class="timeline_list handle">
+  <div id="scroll-mask" class="timeline">
+    <ul id="scroll-content" class="timeline_list">
     <% regulatory_plan.events.each do |event| %>
       <li class="timeline_item">
         <div class="date"><%= fuzzy_date_formatter event.date %></div>
-        <ul>
+        <ul class="bullets">
           <% if event.action? %>
             <li><div class="action"><%= add_citation_links(event.action) %></div></li>
           <% end -%>
@@ -26,10 +27,12 @@
         </ul>  
       </li>
     <% end %>
-    </ul>
-    
-    
-    
+    </ul>    
   </div>
+    
+  <div class="track dragdealer" id="timeline_control">
+    <div class="handle"></div>
+  </div>
+    
 </div>  
 <% end %>
