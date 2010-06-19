@@ -33,66 +33,23 @@
       <li><%= link_to agency.name, agency_path(agency) %></li>
     <% end %>
     </ul>
-  
-    <% if @regulatory_plan.abstract.present? %>
+    <%
+    [
+      ['Summary', 'abstract'],
+      ['Statement of need', 'statement_of_need'],
+      ['Legal Basis', 'legal_basis'],
+      ['Alternatives', 'alternatives'],
+      ['Costs and Benefits', 'costs_and_benefits'],
+      ['Risks', 'risks']
+    ].each do |label, method |
+      value = @regulatory_plan.send(method)
+      next if value.blank? %>
       <div class="header_column">
-        <h1>Summary</h1>
+        <h1><%= label %></h1>
       </div>
       <div class="body_column">
-        <%= format_regulation_text(@regulatory_plan.abstract) %>
+        <%= format_regulation_text(@regulatory_plan.send(method)) %>
       </div>
-    <% end -%>
-    
-    <% if @regulatory_plan.legal_authorizations.present? %>
-    <div class="header_column">
-      <h1>Legal Authority</h1>
-    </div>
-    <div class="body_column">
-      <ul class="bullets">
-        <% @regulatory_plan.legal_authorizations.each do |authorization| %>
-        <li><%= add_citation_links(authorization) %></li>
-        <% end %>
-      </ul>
-    </div>
-    <% end %>
-  
-    <% if @regulatory_plan.cfr_citations.present? %>
-    <div class="header_column">
-      <h1>Related CFR Content</h1>
-    </div>
-    <div class="body_column">
-      <ul class="bullets">
-        <% @regulatory_plan.cfr_citations.each do |cfr_citation| %>
-        <li><%= add_citation_links(cfr_citation) %></li>
-        <% end %>
-      </ul>
-    </div>
-    <% end %>
-  
-    <% if @regulatory_plan.government_levels_affected.present? %>
-    <div class="header_column">
-      <h1>Government Levels Affected</h1>
-    </div>
-    <div class="body_column">
-      <ul class="bullets">
-        <% @regulatory_plan.government_levels_affected.each do |level| %>
-        <li><%= level %></li>
-        <% end %>
-      </ul>
-    </div>
-    <% end %>
-  
-    <% if @regulatory_plan.small_entities_affected.present? %>
-    <div class="header_column">
-      <h1>Small Entities Affected</h1>
-    </div>
-    <div class="body_column">
-      <ul class="bullets">
-        <% @regulatory_plan.small_entities_affected.each do |entity| %>
-        <li><%= entity %></li>
-        <% end %>
-      </ul>
-    </div>
     <% end %>
   
     <%= render :esi => regulatory_plan_timeline_path(@regulatory_plan)%>
@@ -154,22 +111,64 @@
   </div> <!-- CONTENT_AREA END -->
   
   <% aside_tag(:id => 'sidebar') do %>
-    <dl class="metadata_list pull_out">
-      <% %w(priority_category statement_of_need legal_basis alternatives costs_and_benefits risks).each do |attribute| %>
-        <% value = @regulatory_plan.send(attribute) %>
-        <% if value.present? %>
-          <dt><%= attribute.humanize %></dt>
-          <dd><%= format_regulation_text(value) %></dd>
+    <% section_tag(:id => 'metadata') do %>
+      <dl class="metadata_list pull_out">
+        <% %w(priority_category major regulatory_flexibility_analysis_required energy_affected).each do |attribute| %>
+          <% value = @regulatory_plan.send(attribute) %>
+          <% if value.present? %>
+            <%# HELP-DESIGN: icons might be nice for these guys; they are all Yes/No/Undetermined %>
+            <dt><%= attribute.humanize %></dt>
+            <dd><%= value %></dd>
+          <% end %>
         <% end %>
+      </dl>
+    <% end -%>
+    
+    <% if @regulatory_plan.cfr_citations.present? %>    
+      <% section_tag(:id => 'related_cfr_content') do %>
+        <h1 class="title_bar">Related CFR Content</h1>
+        <ul class="bullets">
+          <% @regulatory_plan.cfr_citations.each do |cfr_citation| %>
+            <li><%= add_citation_links(cfr_citation) %></li>
+          <% end %>
+        </ul>
       <% end %>
-      <% %w(major regulatory_flexibility_analysis_required energy_affected).each do |attribute| %>
-        <% value = @regulatory_plan.send(attribute) %>
-        <% if value.present? %>
-          <%# HELP-DESIGN: icons might be nice for these guys; they are all Yes/No/Undetermined %>
-          <dt><%= attribute.humanize %></dt>
-          <dd><%= value %></dd>
-        <% end %>
+    <% end -%>
+    
+    <% if @regulatory_plan.legal_authorizations.present? %>
+      <% section_tag(:id => 'legal_authority') do %>
+        <h1 class="title_bar">Legal Authority</h1>
+        <ul class="bullets">
+          <% @regulatory_plan.legal_authorizations.each do |authorization| %>
+          <li><%= add_citation_links(authorization) %></li>
+          <% end %>
+        </ul>
       <% end %>
-    </dl>
-  <% end -%>
-<% end -%>
+    <% end -%>
+    
+    <% if @regulatory_plan.government_levels_affected.present? %>
+      <% section_tag(:id => 'gov_levels_affected') do %>
+        <h1 class="title_bar">Government Levels Affected</h1>
+        <ul class="bullets">
+          <% @regulatory_plan.government_levels_affected.each do |level| %>
+            <li><%= level %></li>
+          <% end %>
+        </ul>
+      <% end -%>  
+    <% end %>
+    
+    
+    <% if @regulatory_plan.small_entities_affected.present? %>
+      <% section_tag(:id => 'small_entities_affected') do %>
+        <h1 class="title_bar">Small Entities Affected</h1>
+        <ul class="bullets">
+          <% @regulatory_plan.small_entities_affected.each do |entity| %>
+          <li><%= entity %></li>
+          <% end %>
+        </ul>
+      <% end -%>
+    <% end %>
+    
+  <% end -%> <!-- end aside tag -->
+  
+<% end -%> <!-- end article tag -->
