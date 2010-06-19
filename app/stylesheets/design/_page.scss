@@ -18,16 +18,19 @@ color: $body_type_color;
   border: 1px solid #b3c2cf;
   padding: 1em;
   }
-  
-li {
-  background: url(/images/bullet.png) no-repeat left 7px;
-  list-style: none;
-  margin-bottom: .2em;
-  padding-left: 10px;
+
+ul {
+  padding-left: 15px;
+  }  
+ul li {
+  color: #9fafc4;
+  list-style: square;
+  line-height: 1;
+  margin-bottom: .75em;
   }
 li:last-child {
    margin-bottom: 0;
- } 
+  } 
  
 /******************************
 
@@ -387,29 +390,6 @@ ARTICLE VIEW
   text-transform: none;
   }  
 
-.regulatory_timeline_container {
-  display: block;
-  height: 130px;
-  /*overflow: auto; TODO-make this work  */ 
-  width: 460px;  
-}  
-.timeline {
-  display: block;
-  list-style: none;
-  height: 80px;
-  width: 1000px;
-}  
-.timeline .timeline_item {
-  border-right: 1px solid #ccc;  
-  float: left;
-  height: 80px;
-  padding: 1em;
-  width: 100px;
-  }
-.timeline .timeline_item:first-child {
-  border-left: 1px solid #ccc;
-  }
-  
 /******************************
 
 AGENCY LIST 
@@ -499,6 +479,53 @@ REGULATION VIEW
   float: left;
   width: 45%;
   }
+
+#timeline {
+  height: 100px;
+	position: relative;
+  width: 600px;
+  overflow: hidden;
+}
+.timeline_list {
+  cursor: pointer;
+  display: block;
+  list-style: none;
+  height: 100px;
+  position: absolute;
+  width: 1000px;
+  }  
+.timeline_item {
+  background: #f1f1f1;
+  float: left;
+  height: 80px;  
+  margin-right: .75em;
+  list-style-type: none;
+  padding: .75em;
+  width: 135px;
+  }
+.timeline_item .date {
+  color: #e4a529;
+  @include gesta;
+  font-size: 1.5em;
+  line-height: 1;
+  margin-bottom: .5em;
+  }
+.timeline_item .action {
+  color: #524e46;
+  line-height: 1.4;
+  }
+.timeline_item ul {
+  margin: 0;
+  }  
+.timeline_item:last-child {
+  background: #e4a529;
+  }  
+.timeline_item:last-child .date, 
+.timeline_item:last-child li,
+.timeline_item:last-child li .action {
+  color: #fff;
+  }
+
 
   
 /******************************
