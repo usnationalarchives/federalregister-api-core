@@ -1,10 +1,10 @@
 <% title @regulatory_plan.title %>
 
-<h1 class="title"><span>Regulation <%= @regulatory_plan.regulation_id_number %></span></h1>
+<h1 class="title"><span>Unified Agenda <%= @regulatory_plan.regulation_id_number %></span></h1>
 
 <article>
   <h1><%= @regulatory_plan.title %></h1>
-  <p class="metadata">Regulatory plan current as of <%= issue_season(@regulatory_plan) %>
+  <p class="metadata">Unified agenda current as of <%= issue_season(@regulatory_plan) %>
 
   <div class="box">
     <%# TODO HELP-DESIGN get this grid out of the view %>
