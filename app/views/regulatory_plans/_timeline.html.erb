@@ -3,9 +3,12 @@
   <h1>Timeline</h1>
   
   <span>
-    <%= regulatory_plan.events.size %> 
-    <%= regulatory_plan.events.first.date %> - 
-    <%= regulatory_plan.events.last.date %>
+    <%= pluralize(regulatory_plan.events.size, "action") %> 
+    <%= regulatory_plan.events.first.date %>
+    <% if regulatory_plan.events.size > 1 %>
+       - 
+      <%= regulatory_plan.events.last.date || 'Undetermined' %>
+    <% end %>
   </span>
   
 </div>
