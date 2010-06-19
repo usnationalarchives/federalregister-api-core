@@ -1,10 +1,11 @@
 class TopicsController < ApplicationController
-  
   def index
+    cache_for 1.day
     redirect_to topics_by_letter_url('a')
   end
   
   def show
+    cache_for 1.day
     @topic = Topic.find_by_slug!(params[:id])
 
     respond_to do |wants|
@@ -44,6 +45,7 @@ class TopicsController < ApplicationController
   end
   
   def by_letter
+    cache_for 1.day
     @letter = params[:letter]
     @letters = ('a' .. 'z')
     

@@ -21,6 +21,7 @@
   logo_content_type           :string(255)
   logo_file_size              :integer(4)
   logo_updated_at             :datetime
+  url                         :string(255)
 
 =end Schema Information
 
@@ -45,7 +46,7 @@ class Agency < ApplicationModel
   
   before_validation :slugify
   validates_uniqueness_of :name, :slug
-  
+  validates_format_of :url, :with => /^https?:\/\//, :allow_blank => true
   serializable_column :entries_1_year_weekly, :entries_5_years_monthly, :entries_all_years_quarterly, :related_topics_cache
   
   named_scope :with_logo, :conditions => "agencies.logo_file_name IS NOT NULL"
