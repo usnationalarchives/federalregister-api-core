@@ -39,6 +39,9 @@
           <xsl:value-of disable-output-escaping="yes" select="'&lt;ul&gt;'"/>
         </xsl:if>
         <li>
+          <xsl:attribute name="id">
+            <xsl:call-template name="paragraph_id" />
+          </xsl:attribute>
           <xsl:apply-templates />
         </li>
         <xsl:if test="not(following-sibling::*[name() != 'PRTPAGE'][1][starts-with(text(),'&#x2022;')])">
@@ -48,7 +51,7 @@
       <xsl:otherwise>
         <p>
           <xsl:attribute name="id">
-            <xsl:value-of select="concat('p-', count(preceding::*[name(.) = 'P' or name(.) = 'FP'])+1)" />
+            <xsl:call-template name="paragraph_id" />
           </xsl:attribute>
       
           <xsl:if test="name(.) = 'FP'">
@@ -107,5 +110,9 @@
 <!--       Printed Page
       <xsl:value-of select="format-number(@P, '###,###')" /> -->
     </span>
+  </xsl:template>
+  
+  <xsl:template name="paragraph_id">
+    <xsl:value-of select="concat('p-', count(preceding::*[name(.) = 'P' or name(.) = 'FP'])+1)" />
   </xsl:template>
 </xsl:stylesheet>
