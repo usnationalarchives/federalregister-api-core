@@ -115,7 +115,7 @@
   </div>
   <% end %>
   
-  <%= render :partial => 'regulatory_plans/timeline', :locals => {:regulatory_plan => @regulatory_plan} %>
+  <%= render :esi => regulatory_plan_timeline_path(@regulatory_plan)%>
   
   <% if @regulatory_plan.contacts.present? %>
     <div class="header_column">
