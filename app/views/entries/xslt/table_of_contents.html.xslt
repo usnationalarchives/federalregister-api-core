@@ -29,7 +29,10 @@
             </xsl:call-template>
           </xsl:attribute>
           <a>
-            <xsl:attribute name="href">#<xsl:value-of select="generate-id()"/></xsl:attribute>
+            <xsl:attribute name="href">
+              <xsl:text>#</xsl:text>
+              <xsl:call-template name="header_id" />
+            </xsl:attribute>
             <xsl:choose>
               <xsl:when test="@SOURCE = 'HED'">
                 <xsl:call-template name="capitalize_first">
