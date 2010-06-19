@@ -3,7 +3,7 @@
   <xsl:template match="GPH/GID">
     <a class="entry_graphic_link">
       <xsl:attribute name="id">
-        <xsl:value-of select="generate-id()" />
+        <xsl:value-of select="concat('g-', count(preceding::GPH/GID)+1)" />
       </xsl:attribute>
       
       <xsl:attribute name="href">
@@ -46,7 +46,9 @@
         <xsl:for-each select="//GPH/GID[descendant::text()]">
           <li>
             <a class="thumb">
-              <xsl:attribute name="href">#<xsl:value-of select="generate-id()" /></xsl:attribute>
+              <xsl:attribute name="href">
+                <xsl:value-of select="concat('#g-', count(preceding::GPH/GID)+1)" />
+              </xsl:attribute>
               <img>
                 <xsl:attribute name="src">
                   <xsl:call-template name="graphic_url">
