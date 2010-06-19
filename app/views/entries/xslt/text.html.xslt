@@ -21,17 +21,43 @@
     </span>
   </xsl:template>
   
+  <xsl:template match="text()">
+    <xsl:choose>
+      <xsl:when test="parent::node()[name() = 'P' or name() = 'FP'] and starts-with(.,'&#x2022;')">
+        <xsl:value-of select="substring(.,2)" />
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:value-of select="." />
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+  
   <xsl:template match="P | FP">
-    <p>
-      <xsl:attribute name="id">
-        <xsl:value-of select="concat('p-', count(preceding::*[name(.) = 'P' or name(.) = 'FP'])+1)" />
-      </xsl:attribute>
+    <xsl:choose>
+      <xsl:when test="starts-with(text(),'&#x2022;')">
+        <xsl:if test="not(preceding-sibling::*[name() != 'PRTPAGE'][1][starts-with(text(),'&#x2022;')])">
+          <xsl:value-of disable-output-escaping="yes" select="'&lt;ul&gt;'"/>
+        </xsl:if>
+        <li>
+          <xsl:apply-templates />
+        </li>
+        <xsl:if test="not(following-sibling::*[name() != 'PRTPAGE'][1][starts-with(text(),'&#x2022;')])">
+          <xsl:value-of disable-output-escaping="yes" select="'&lt;/ul&gt;'"/>
+        </xsl:if>
+      </xsl:when>
+      <xsl:otherwise>
+        <p>
+          <xsl:attribute name="id">
+            <xsl:value-of select="concat('p-', count(preceding::*[name(.) = 'P' or name(.) = 'FP'])+1)" />
+          </xsl:attribute>
       
-      <xsl:if test="name(.) = 'FP'">
-        <xsl:attribute name="class">flush</xsl:attribute>
-      </xsl:if>
-      <xsl:apply-templates/>
-    </p>
+          <xsl:if test="name(.) = 'FP'">
+            <xsl:attribute name="class">flush</xsl:attribute>
+          </xsl:if>
+          <xsl:apply-templates/>
+        </p>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
   
   <xsl:template match="SIG">
