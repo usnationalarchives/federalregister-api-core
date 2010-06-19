@@ -20,13 +20,14 @@ body {
   }
 
 ul.bullets {
-  padding-left: 15px;
+  padding-left: 0;
   }  
 ul.bullets  li {
-  color: #9fafc4;
-  list-style: square;
+  background: url(/images/bullet.png) no-repeat left 4px;
+  list-style: none;
   line-height: 1.25;
   margin-bottom: .75em;
+  padding-left: 1em;
   }
 .bullets li:last-child {
    margin-bottom: 0;
@@ -164,7 +165,7 @@ color: #fff;
 color: rgba(255,255,255, 1);
 }
 
-.article dl {
+/*.article dl {
 margin-bottom: 0;
 }
 
@@ -177,7 +178,7 @@ text-transform: uppercase;
 .article dl dd {
 font-weight: bold;
 padding-right: 10px;
-}
+}*/ /* TODO look for def lists that this kills */
 
 #sections div > .article:last-child {
   border-bottom: none;
@@ -237,10 +238,6 @@ ARTICLE VIEW
   padding: 0;
   }
 
-.article .metadata_list {
-  position: absolute;
-  width: 200px;
-  }
 .article .metadata_list dt {
   text-transform: none;
   }  
@@ -250,11 +247,9 @@ ARTICLE VIEW
   overflow: hidden;
   padding: 1em 0;
   }
-
 .box .button {
   margin-bottom: 0;
   }
-
 .box .button:first-child {
   margin-left: 25px;
   }
@@ -364,18 +359,18 @@ ARTICLE VIEW
   font-weight: bold;
 }
 
-#entries.show dt,
-#entries.show dd {
+.metadata_list dt,
+.metadata_list dd {
   display: block;
   }
-#entries.show dt {
+.metadata_list dt {
   text-align: left;
   margin-top: .5em;
   }
-#entries.show dt:first-child {
+.metadata_list dt:first-child {
   margin-top: 0;
   }  
-#entries.show dd {
+.metadata_list dd {
   font-weight: normal;
   margin: 0;
   padding: 0;
@@ -508,7 +503,6 @@ REGULATION VIEW
   }
 .timeline_item .action {
   color: #524e46;
-  line-height: 1.4;
   }
 .timeline_item ul {
   margin: 0;
@@ -524,7 +518,7 @@ REGULATION VIEW
   }
 
 .track {
-  background: url(/images/stripe.png);
+  background:#f1f1f1;
   @include border-radius(5px);
   cursor: pointer;
   display: none;
