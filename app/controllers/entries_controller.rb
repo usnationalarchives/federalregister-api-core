@@ -82,6 +82,12 @@ class EntriesController < ApplicationController
   def tiny_url
     cache_for 1.day
     entry = Entry.find_by_document_number!(params[:document_number])
-    redirect_to entry_path(entry), :status=>:moved_permanently
+    url = entry_path(entry)
+    
+    if params[:anchor].present?
+      url += '#' + params[:anchor]
+    end
+    
+    redirect_to url, :status=>:moved_permanently
   end
 end
