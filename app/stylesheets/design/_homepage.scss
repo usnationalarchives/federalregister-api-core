@@ -13,7 +13,12 @@ HOME PAGE
   overflow: hidden;
   width: 645px;
 }
-
+#top_news_promo ul,
+#top_news_promo li {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  }
 /* PROMO NAV */
 #top_news_promo ul.section_nav {
   display: block;

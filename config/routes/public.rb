@@ -42,6 +42,8 @@ ActionController::Routing::Routes.draw do |map|
   # Backwards compatability, at least for now...
   map.connect 'e/:document_number',     :controller => 'entries',
                                         :action     => 'tiny_url'
+  map.short_entry_with_anchor 'a/:document_number/:anchor', :controller => 'entries',
+                                        :action     => 'tiny_url'
   
   map.citation 'citation/:volume/:page', :controller => 'citations',
                                          :action     => 'show',
@@ -60,14 +62,6 @@ ActionController::Routing::Routes.draw do |map|
   
   # AGENCIES
   map.resources :agencies, :only => [:index, :show]
-  
-  # PLACES
-  map.maps 'maps', :controller => 'maps',
-                   :action     => 'index'
-  map.place 'places/:slug/:id.:format', :controller => 'places', :action => 'show'
-  
-  # LOCATION
-  map.resource :location, :only => [:update, :edit], :member => {:places => :get}
   
   # REGULATIONS
   map.regulatory_plans_search 'regulations/search',

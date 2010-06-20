@@ -12,6 +12,10 @@ module RegulatoryPlanHelper
     end
   end
   
+  def format_regulation_text(text)
+    add_citation_links(simple_format(auto_link(text.strip, :href_options => { :class => 'external' })))
+  end
+  
   def issue_season(plan)
     (year, season) = plan.issue.match(/(\d{4})(\d{2})/)[1,2]
     

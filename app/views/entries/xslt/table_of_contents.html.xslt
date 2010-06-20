@@ -6,7 +6,7 @@
         <xsl:with-param name="id" select="'table_of_contents'"/>
         <xsl:with-param name="name" select="'Table of Contents'"/>
       </xsl:call-template>
-      <ul class="table_of_contents">
+      <ul class="bullets table_of_contents">
         <xsl:apply-templates mode="table_of_contents"/>
         <xsl:if test="count(//FTNT) &gt; 0">
           <li class="level_1">
@@ -29,7 +29,10 @@
             </xsl:call-template>
           </xsl:attribute>
           <a>
-            <xsl:attribute name="href">#<xsl:value-of select="generate-id()"/></xsl:attribute>
+            <xsl:attribute name="href">
+              <xsl:text>#</xsl:text>
+              <xsl:call-template name="header_id" />
+            </xsl:attribute>
             <xsl:choose>
               <xsl:when test="@SOURCE = 'HED'">
                 <xsl:call-template name="capitalize_first">
