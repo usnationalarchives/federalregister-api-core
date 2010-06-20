@@ -14,6 +14,9 @@ sub vcl_recv {
         return (pipe);
     }
     
+    /* Compression handled upstream; only want one in the cache */
+    remove req.http.Accept-Encoding;
+    
     /* Add a unique header containing the client address */
     remove req.http.X-Forwarded-For;
     set    req.http.X-Forwarded-For = client.ip;
