@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100617003156) do
+ActiveRecord::Schema.define(:version => 20100619234141) do
 
   create_table "agencies", :force => true do |t|
     t.integer  "parent_id"
@@ -30,6 +30,7 @@ ActiveRecord::Schema.define(:version => 20100617003156) do
     t.string   "logo_content_type"
     t.integer  "logo_file_size"
     t.datetime "logo_updated_at"
+    t.string   "url"
   end
 
   add_index "agencies", ["name", "parent_id"], :name => "index_agencies_on_name_and_parent_id"
@@ -167,6 +168,14 @@ ActiveRecord::Schema.define(:version => 20100617003156) do
   end
 
   add_index "entry_page_views", ["entry_id"], :name => "index_entry_page_views_on_entry_id"
+
+  create_table "events", :force => true do |t|
+    t.integer "entry_id"
+    t.date    "date"
+    t.string  "title"
+    t.integer "place_id"
+    t.boolean "remote_call_in_available"
+  end
 
   create_table "graphic_usages", :force => true do |t|
     t.integer "graphic_id"

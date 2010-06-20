@@ -29,4 +29,8 @@ class ApplicationController < ActionController::Base
     request.format = :html
     render :template => "errors/404.html.erb", :status => 404
   end
+  
+  def cache_for(time)
+    expires_in time, :public => true
+  end
 end
