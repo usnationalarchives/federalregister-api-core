@@ -428,6 +428,16 @@ ARTICLE VIEW
   right: 1em;  
   top: 1em;
   }  
+p[id]:hover .trigger_citation_box {
+  @include opacity(1);  
+  }  
+.trigger_citation_box {
+  @include replace-text-with-dimensions('icon_bookmark.png', 0, 0);
+  @include opacity(0.1);
+  position: absolute;
+  right: -2em;
+  top: .5em;
+  }
   
 /******************************
 
