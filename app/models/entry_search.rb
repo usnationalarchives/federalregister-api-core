@@ -19,7 +19,7 @@ class EntrySearch < ApplicationSearch
     Entry::ENTRY_TYPES[type]
   end
   
-  attr_reader :start_date
+  attr_reader :start_date, :end_date
   def start_date=(val)
     if val.present?
       @start_date = val
@@ -39,13 +39,23 @@ class EntrySearch < ApplicationSearch
         end
         
         add_filter(
-          :value => parsed_val.to_time .. Entry.latest_publication_date.to_time,
+          :value => parsed_val.to_time.utc.beginning_of_day .. end_date.utc.end_of_day,
           :name => name,
           :condition => :start_date,
           :label => "Date",
           :sphinx_type => :with,
           :sphinx_attribute => :publication_date
         )
+      end
+    end
+  end
+  
+  def end_date=(val)
+    if val.present?
+      begin
+        @end_date = Date.parse(val).to_time
+      rescue
+        @errors << "Could not understand start date."
       end
     end
   end
@@ -208,6 +218,7 @@ class EntrySearch < ApplicationSearch
   def set_defaults(options)
     @within = '25'
     @order = options[:order] || 'relevant'
+    @end_date = Entry.latest_publication_date.to_time
   end
   
   def fetch_location(location)
