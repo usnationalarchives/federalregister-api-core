@@ -15,7 +15,9 @@ sub vcl_recv {
     }
     
     /* Compression handled upstream; only want one in the cache */
-    remove req.http.Accept-Encoding;
+    if (req.http.Accept-Encoding) {
+        remove req.http.Accept-Encoding;
+    }
     
     /* Add a unique header containing the client address */
     remove req.http.X-Forwarded-For;
