@@ -42,6 +42,8 @@ ActionController::Routing::Routes.draw do |map|
   # Backwards compatability, at least for now...
   map.connect 'e/:document_number',     :controller => 'entries',
                                         :action     => 'tiny_url'
+  map.short_entry_with_anchor 'a/:document_number/:anchor', :controller => 'entries',
+                                        :action     => 'tiny_url'
   
   map.citation 'citation/:volume/:page', :controller => 'citations',
                                          :action     => 'show',
