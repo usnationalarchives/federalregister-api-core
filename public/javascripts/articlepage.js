@@ -48,16 +48,23 @@ $(document).ready(function() {
     }
   };
 
-  //TODO delegate events by binding once to the content area and inspecting the target
-  $(".body_column table[id], .body_column p[id], .body_column img[id], .body_column li[id]").bind('mouseenter', function(event) {
-      $(event.target).trigger("show_citation");
-  });
+  $(".body_column table[id], .body_column p[id], .body_column img[id], .body_column li[id]").css("position","relative").append("<a href='#' class='trigger_citation_box'></a>");
   
-  $(".body_column table[id], .body_column p[id], .body_column img[id], .body_column li[id]").bind('mouseleave', function(event) {
-      setTimeout(function() {
-        $(event.target).trigger("hide_citation");
-      }, 5000);
-  });  
+  //TODO delegate events by binding once to the content area and inspecting the target
+  // $(".body_column table[id], .body_column p[id], .body_column img[id], .body_column li[id]").bind('mouseenter', function(event) {
+  //     $(event.target).trigger("show_citation");
+  // });
+  
+  // $(".body_column table[id], .body_column p[id], .body_column img[id], .body_column li[id]").bind('mouseleave', function(event) {
+  //     setTimeout(function() {
+  //       $(event.target).trigger("hide_citation");
+  //     }, 5000);
+  // });  
+  
+  $(".trigger_citation_box").bind('click', function(event) {
+    event.preventDefault();
+    $(this).parent().trigger("show_citation");
+  });
   
   $(".sticky").live('click', function(event) {
     event.preventDefault();
