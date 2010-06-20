@@ -49,6 +49,9 @@ def chef_cloud_attributes
     :capistrano => {
                     :deploy_user => 'deploy'
                    },
+    :nginx      => {
+                    :varnish_proxy => true,
+                   },
     :varnish    => {
                     :version => '2.1.2',
                     :proxy_host => '127.0.0.1',
@@ -145,6 +148,7 @@ pool :fr2 do
       recipe "openssl"
       recipe "imagemagick"
       
+      recipe "nginx"
       recipe "varnish"
       
       recipe "apache2"
@@ -171,9 +175,6 @@ pool :fr2 do
                               :elastic_ip => @elastic_ip
                             }
                    },
-        :varnish => {
-                      :listen_port     => '80'
-                    },
         :passenger_enterprise => {
                                     :pool_idle_time => 24*60*60
                                  }
@@ -184,6 +185,7 @@ pool :fr2 do
     security_group "web" do
       authorize :from_port => "22", :to_port => "22"
       authorize :from_port => "80", :to_port => "80"
+      authorize :from_port => "8080", :to_port => "8080"
     end
     
   end
