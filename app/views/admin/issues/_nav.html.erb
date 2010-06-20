@@ -1,0 +1,8 @@
+<li><%= link_to 'Events', admin_issue_eventful_entries_path(publication_date.to_s(:mdy_dash)) %></li>
+<li>Sections
+  <ul>
+    <% sections.each do |section| %>
+      <li><%= link_to section.title, admin_issue_section_path(publication_date.to_s(:mdy_dash), section) %></li>
+    <% end %>
+  </ul>
+</li>

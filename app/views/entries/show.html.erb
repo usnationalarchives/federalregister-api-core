@@ -14,54 +14,51 @@
       <% if (@entry.comments_close_on.present? && @entry.comments_close_on >= Date.today) %>
         <div id="flash_message">
           <p>This article has a comment period that ends in <%= pluralize (@entry.comments_close_date.date - Entry.latest_publication_date), 'day' %>
-          (<%= @entry.comments_close_date.date %>)  <%= link_to "Submit a formal comment", @entry.comment_url, :class => 'button', :target => '_blank' %>
+          (<%= @entry.comments_close_date.date %>)  <%= link_to "Submit a formal comment", @entry.comment_url || '#addresses', :class => 'button', :target => '_blank' %>
           </p>
         </div>
       <% end -%>
       
       <%= render :partial => 'download_and_share', :locals => {:entry => @entry} %>
-      
   </div> <!-- end metadata_content_area -->
   
-    <div class="header_column">
-      <h1>Summary</h1>
-    </div>
-    <div class="body_column">  
-      <span class="printed_page" id="page-<%= @entry.start_page %>" data-page="<%= @entry.start_page %>">
-        <!-- Printed Page <%= number_with_delimiter @entry.start_page %> -->
-      </span>
-      
-      <p><%= html = auto_link( @entry.abstract, :href_options => { :class => 'external' })
-              add_citation_links(html) %></p>
-    </div>
-    <div class="notes_column">
-      <%= render :partial => "metadata", :locals => {:entry => @entry} %>
-    </div>  
-
+  <div id="content_area">
+    <%= render :partial => 'abstract', :locals => {:entry => @entry} %>
     <%= render( :partial => "regulatory_plan", :object => @entry.most_recent_regulatory_plan ) if @entry.most_recent_regulatory_plan %>
     
     <% if @entry.topics.present? %>
-    <div class="header_column">
-      <h1>Related Topics</h1>
-    </div>
-    <div class="body_column">
-      <ul class="table_of_contents">
-        <% @entry.topics.each do |topic| %>
-          <li><%= link_to topic.name, topic_path(topic) %></li>
-        <% end %>
-      </ul>
-    </div>
+      <div class="header_column">
+        <h1>Related Topics</h1>
+      </div>
+      <div class="body_column">
+        <ul class="bullets">
+          <% @entry.topics.each do |topic| %>
+            <li><%= link_to topic.name, topic_path(topic) %></li>
+          <% end %>
+        </ul>
+      </div>
     <% end %>
-
 
   <%#= render :partial => 'aside', :locals => {:entry => @entry} %>
   
   <div id="fulltext_content_area">
-  
-    <%= render :esi => entry_full_text_path(@entry) %>
-
+    
+    <% if RAILS_ENV == 'development' %>
+      <%= render :partial => 'full_text', :locals => {:entry => @entry} %>
+    <% else %>
+      <%= render :esi => entry_full_text_path(@entry) %>
+    <% end %>
   </div> <!-- end content area -->  
   
+  </div> <!-- content_area end -->
+  
+  <% aside_tag(:id => 'sidebar') do %>
+    <%= render :partial => "metadata", :locals => {:entry => @entry} %>
+  <% end -%>
+  
 <% end %> <!-- end article tag -->
+
+
+
 
 </div>

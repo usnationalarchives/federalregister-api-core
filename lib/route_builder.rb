@@ -85,6 +85,12 @@ module RouteBuilder
     }
   end
   
+  add_route :regulatory_plan_timeline do |regulatory_plan|
+    {
+      :regulation_id_number => regulatory_plan.regulation_id_number
+    }
+  end
+  
   add_route :short_regulatory_plan do |regulatory_plan|
     {
       :regulation_id_number => regulatory_plan.regulation_id_number,
