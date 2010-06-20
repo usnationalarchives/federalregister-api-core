@@ -108,7 +108,7 @@ class ApplicationSearch
   end
   
   def conditions=(conditions)
-    conditions.to_a.reverse.each do |attr, val|
+    conditions.to_a.each do |attr, val|
       self.send("#{attr}=", val)
     end
   end
