@@ -47,12 +47,19 @@ ENTRIES
   @include grid(11, 16);
   @include grid-suffix(1);  
   @include alpha;
+  position: relative;
   }
 #metadata_content_area {
   margin-bottom: 4em;
   }
 #entries #sidebar {
   @include grid(4, 16);
+  @include omega;
+  }
+
+#entries .citation_box {
+  @include grid(4, 16);
+  @include alpha;
   @include omega;
   }
 
