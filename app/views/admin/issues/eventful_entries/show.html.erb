@@ -1,18 +1,24 @@
 <% title "Extracting events from '#{@entry.title}'" %>
+<% add_javascript :src => 'admin/issues_eventful_entries' %>
 
-<ul>
-<% @places.each do |place| %>
-  <li><%= place.name %></li>
-<% end %>
-</ul>
+<%# HELP-DESIGN: i think it just might be possible to do this better... %>
+<style>
+  a.date {background-color: lightgreen;}
+  a.place {background-color: pink;}
+</style>
 
-<ul>
-<% @entry.places.each do |place| %>
-  <li><%= place.name %></li>
-<% end %>
-</ul>
-
+<%# HELP-DESIGN: ideally these would be in the second column, position fixed;
+      I don't care about source order, but wanted them at the top until styles were in place... %>
 <div>
-<%= link_events(@entry.full_text, @dates) %>
+  <ul id="existing_events">
+    <%= render :partial => "admin/events/list_item", :collection => @entry.events, :as => :event %>
+  </ul>
+  
+  <div id="form">
+  </div>
 </div>
 
+<%# HELP-DESIGN: ideally this would be in the first column, and styled somewhat like the actual acticle view %>
+<% article_tag('data-internal-id' => @entry.id) do %>
+  <%= link_places(link_events(@entry_text, @dates), @places) %>
+<% end %>
