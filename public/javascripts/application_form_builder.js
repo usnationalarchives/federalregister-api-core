@@ -1,3 +1,13 @@
+function add_date_picker(){
+  $(".formtastic .calendar input").datepicker({
+    yearRange: '-10:+4',
+    dateFormat: 'mm/dd/yy',
+    showOn: 'button',
+    buttonImage: '/images/calendar.png',
+    buttonImageOnly: true
+  });
+}
+
 $(function() {
   $('.formtastic .autocomplete').each(function(){
     var parent_li = $(this);
@@ -25,4 +35,7 @@ $(function() {
       $(this).remove();
     })
   });
+  
+  // CALENDAR SUPPORT
+  add_date_picker();
 });

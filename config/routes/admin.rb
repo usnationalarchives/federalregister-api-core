@@ -4,6 +4,8 @@ ActionController::Routing::Routes.draw do |map|
     admin.resources :agencies
     admin.resources :agency_names, :collection => {:unprocessed => :get}
     
+    admin.resources :events
+    
     admin.resources :topics
     admin.resources :topic_names, :collection => {:unprocessed => :get}
     
@@ -12,8 +14,9 @@ ActionController::Routing::Routes.draw do |map|
     admin.resources :agency_highlights
     
     admin.resources :issues do |issue|
+      issue.resources :entries, :controller => "issues/entries"
       issue.resources :eventful_entries, :controller => "issues/eventful_entries" do |entry|
-        entry.resources :events, :controler => "issues/eventful_entries/events"
+        entry.resources :events, :controller => "issues/eventful_entries/events"
       end
       issue.resources :sections, :controller => "issues/sections", :member => {:preview => :get} do |section|
         section.resources :highlights, :controller => "issues/sections/highlights"

@@ -1,0 +1,16 @@
+<li>
+  <dl>
+    <dt>Title</dt>
+    <dd><%= event.title %></dd>
+    
+    <dt>Date</dt>
+    <dd><%= event.date %></dd>
+    
+    <dt>Location</dt>
+    <dd><%= event.place.try(:name) %></dd>
+    
+    <dt>Remote Call-In?</dt>
+    <dd><%= event.remote_call_in_available ? 'Yes' : 'No' %></dd>
+  </dl>
+  <%= link_to 'delete', '#', :class => "delete", 'data-id' => event.id %>
+</li>
