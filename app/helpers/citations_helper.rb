@@ -83,14 +83,6 @@ module CitationsHelper
     text
   end
   
-  def add_location_links(entry, text)
-    entry.place_determinations.sort_by{|pd| pd.string}.reverse.each do |place_determination|
-      next if place_determination.string.blank? || !place_determination.usable?
-      text.gsub!(/#{Regexp.escape(place_determination.string)}/, content_tag(:a, place_determination.string, :href => place_path(place_determination.place)) )
-    end
-    text
-  end
-  
   private
   
   def patent_url(number_possibly_with_commas)

@@ -15,7 +15,7 @@
       <h1><%= @agency.name %></h1>
     </div>
 
-          
+    <%= link_to(@agency.url) if @agency.url %>
     <%= simple_format @agency.description %>
     
 

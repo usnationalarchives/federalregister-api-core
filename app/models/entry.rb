@@ -123,6 +123,8 @@ class Entry < ApplicationModel
   has_many :entry_page_views
   has_one :agency_highlight
   
+  has_many :events
+  
   accepts_nested_attributes_for :lede_photo, :reject_if => Proc.new{|attr| attr["url"].blank? }
   
   file_attribute(:full_xml)  {"#{RAILS_ROOT}/data/xml/#{document_file_path}.xml"}
