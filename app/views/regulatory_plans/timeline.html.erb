@@ -1,0 +1,40 @@
+<% if @regulatory_plan.try(:events).present? %>
+<div class="header_column">
+  <h1>Timeline</h1>
+  
+  <span>
+    <%= pluralize(@regulatory_plan.events.size, "action") %> 
+    <%= @regulatory_plan.events.first.date %>
+    <% if @regulatory_plan.events.size > 1 %>
+       - 
+      <%= @regulatory_plan.events.last.date || 'Undetermined' %>
+    <% end %>
+  </span>
+  
+</div>
+
+<div class="body_column">
+  <div id="scroll-mask" class="timeline">
+    <ul id="scroll-content" class="timeline_list">
+    <% @regulatory_plan.events.each do |event| %>
+      <li class="timeline_item">
+        <div class="date"><%= fuzzy_date_formatter event.date %></div>
+        <ul class="bullets">
+          <% if event.action? %>
+            <li><div class="action"><%= add_citation_links(event.action) %></div></li>
+          <% end -%>
+          <% if event.fr_citation? %>
+            <li><div class="citation"><%= add_citation_links(event.fr_citation) %></div></li>
+          <% end -%>
+        </ul>  
+      </li>
+    <% end %>
+    </ul>    
+  </div>
+    
+  <div class="track dragdealer" id="timeline_control">
+    <div class="handle"></div>
+  </div>
+    
+</div>  
+<% end %>

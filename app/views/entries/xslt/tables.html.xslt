@@ -2,21 +2,21 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
   
   <xsl:template match="GPOTABLE">
-    <xsl:for-each select="TTITLE[descendant::text()]">
-      <h5>
-        <xsl:attribute name="class">table_title</xsl:attribute>
-        <xsl:attribute name="id">
-          <xsl:value-of select="generate-id()"/>
-        </xsl:attribute>
-        <xsl:apply-templates/>
-        <xsl:text> </xsl:text>
-        <a href="#table_of_tables">&#8593;</a>
-      </h5>
-    </xsl:for-each>
     <xsl:variable name="number_of_columns">
       <xsl:value-of select="@COLS"/>
     </xsl:variable>
     <table>
+      <xsl:for-each select="TTITLE[descendant::text()]">
+        <caption>
+          <xsl:attribute name="class">table_title</xsl:attribute>
+          <xsl:attribute name="id">
+            <xsl:value-of select="concat('t-', count(preceding::GPOTABLE/TTITLE)+1)" />
+          </xsl:attribute>
+          <xsl:apply-templates/>
+          <xsl:text> </xsl:text>
+          <a href="#table_of_tables" class="back_to_table_index">Back to Top</a>
+        </caption>
+      </xsl:for-each>
       <xsl:if test="BOXHD/CHED/text()">
         <thead>
           <xsl:call-template name="header_row">
@@ -143,11 +143,13 @@
         <xsl:with-param name="id" select="'table_of_tables'"/>
         <xsl:with-param name="name" select="'Tables'"/>
       </xsl:call-template>
-      <ul class="table_of_tables">
+      <ul class="table_of_tables bullets">
         <xsl:for-each select="//GPOTABLE/TTITLE[descendant::text()]">
           <li>
             <a>
-              <xsl:attribute name="href">#<xsl:value-of select="generate-id()"/></xsl:attribute>
+              <xsl:attribute name="href">
+                <xsl:value-of select="concat('#t-', count(preceding::GPOTABLE/TTITLE)+1)" />
+              </xsl:attribute>
               <xsl:apply-templates/>
             </a>
           </li>

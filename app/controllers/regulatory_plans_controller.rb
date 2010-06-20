@@ -1,6 +1,13 @@
 class RegulatoryPlansController < ApplicationController
   def show
+    cache_for 1.day
     @regulatory_plan = RegulatoryPlan.find_by_regulation_id_number(params[:regulation_id_number], :order => "issue DESC")
+  end
+  
+  def timeline
+    cache_for 1.day
+    @regulatory_plan = RegulatoryPlan.find_by_regulation_id_number(params[:regulation_id_number], :order => "issue DESC")
+    render :layout => false
   end
   
   def search
