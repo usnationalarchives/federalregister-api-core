@@ -51,9 +51,11 @@ def chef_cloud_attributes
                    },
     :nginx      => {
                     :varnish_proxy => true,
+                    :varnish_proxy_host  => '127.0.0.1'
                    },
     :varnish    => {
                     :version => '2.1.2',
+                    :listen_address => '127.0.0.1',
                     :proxy_host => '127.0.0.1',
                     :proxy_port  => @app_server_port
                    }
