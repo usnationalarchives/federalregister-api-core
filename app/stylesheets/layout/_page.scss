@@ -55,6 +55,7 @@ ENTRIES
 #entries #sidebar {
   @include grid(4, 16);
   @include omega;
+  position: relative;  
   }
 
 #entries .citation_box {
