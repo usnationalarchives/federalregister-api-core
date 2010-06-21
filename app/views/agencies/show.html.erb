@@ -34,7 +34,7 @@
     <% if @agency.parent %>
       <% section_tag(:class => 'parent_agencies') do %>  
         <h1 class="title_bar">Parent Agency</h1>
-        <ul>
+        <ul class="bullets">
           <li><%= link_to @agency.parent.name, agency_path(@agency.parent) %></li>
         </ul>
       <% end -%>
@@ -43,7 +43,7 @@
     <% if @agency.children.present? %>
       <% section_tag(:class => 'sub_agencies') do %>  
         <h1 class="title_bar">Sub-<%= @agency.children.size > 1 ? 'agency'.pluralize : 'agency' %></h1>
-        <ul>
+        <ul class="bullets">
           <% @agency.children.each do |agency| %>
             <li><%= link_to agency.name, agency_path(agency) %></li>
           <% end %>
