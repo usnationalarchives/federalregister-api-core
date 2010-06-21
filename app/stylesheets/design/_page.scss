@@ -224,6 +224,7 @@ ARTICLE VIEW
   background: #E4A529;
   color: #fff;
   font-size: .75em;
+  font-weight: normal;
   margin: 0;
   padding: 1em 1em .6em 1em;
   position: absolute;
@@ -338,10 +339,10 @@ ARTICLE VIEW
 #entries.show .body_column p:first-child {
   text-indent: 0;
   }  
-#entries.show p {
+#fulltext_content_area p {
   text-indent: 2em;
   }
-#entries.show p.flush {
+#fulltext_content_area p.flush {
   text-indent: 0;
   }  
 #entries.show .body_column:empty {
