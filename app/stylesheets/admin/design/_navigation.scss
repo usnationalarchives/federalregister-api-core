@@ -1,4 +1,8 @@
-nav.primary ul, nav.utility ul, nav.secondary ul, nav#issue_entry_edit ul {
+#primary {
+  @include horizontal_list;
+  }
+
+/*nav.primary ul, nav.utility ul, nav.secondary ul, nav#issue_entry_edit ul {
   list-style:none;
 }
 nav.primary ul li, nav.utility ul li, nav#issue_entry_edit ul li {
@@ -93,4 +97,4 @@ nav#issue_entry_edit ul {
 }
 nav#issue_entry_edit ul li {
   margin-left:0px;
-}
+}*/

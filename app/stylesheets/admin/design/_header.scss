@@ -1,30 +1,27 @@
-header {
+#header {
+  background: url(/images/admin/header_bg.png) repeat-x left top;
   display: block;
-  width: 100%;
-}
-
-header hgroup {
+  height: 75px; 
+  }
+#inner_header{
+  margin: 0 auto;
+  position: relative;
+  width: 960px;
+  }  
+#header_logo {
+  @include replace-text-with-dimensions('admin/logotype.png', 0, 50%);
+  height: 65px;
+  }  
+#utility {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 400px;
+  }
+#utility p {
+  display: block;
   float: left;
-  margin: 50px 0 50px 15px;
-}
-
-header h1 {
-  font-size: 3.15em;
-  font-family: "bookman-1","bookman-2",sans-serif;
-  margin-bottom: .1em;
-}
-
-header h1 a,
-header h1 a:visited {
-  color: #444444;  
-  text-decoration: none;
-  left:0px;  
-}
-
-header h2 {
-  color: #c69967;
-  float: left;
-  font-family: "etica-1","etica-2",sans-serif;
-  font-size: 1.5em;
-  margin-left: 10px;
-}
+  }  
+#utility ul {
+  @include horizontal-list;
+  }
