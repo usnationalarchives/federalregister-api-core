@@ -1,0 +1,11 @@
+#main {
+  @include grid_system(16);
+  }  
+#content_area.has_sidebar {
+  @include grid(12, 16);
+  @include omega;
+  }
+#sidebar {
+  @include grid(4, 16);
+  @include alpha;
+  }
