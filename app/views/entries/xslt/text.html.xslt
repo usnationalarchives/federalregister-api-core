@@ -42,6 +42,9 @@
           <xsl:attribute name="id">
             <xsl:call-template name="paragraph_id" />
           </xsl:attribute>
+          <xsl:attribute name="data-page">
+            <xsl:call-template name="current_page" />
+          </xsl:attribute>
           <xsl:apply-templates />
         </li>
         <xsl:if test="not(following-sibling::*[name() != 'PRTPAGE'][1][starts-with(text(),'&#x2022;')])">
@@ -114,5 +117,9 @@
   
   <xsl:template name="paragraph_id">
     <xsl:value-of select="concat('p-', count(preceding::*[name(.) = 'P' or name(.) = 'FP'])+1)" />
+  </xsl:template>
+  
+  <xsl:template name="current_page">
+    <xsl:value-of select="preceding::PRTPAGE[not(ancestor::FTNT)][last()][@P]" />
   </xsl:template>
 </xsl:stylesheet>
