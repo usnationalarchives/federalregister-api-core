@@ -1,66 +1,35 @@
-#user_session_remember_me_input {
-  width:400px;
-}
+#main {
+  border: 1px solid #cc9325;
+  @include border-top-left-radius(5px);
+  @include border-top-right-radius(5px);
+  margin-top: 2em;
+  overflow: hidden;
+  }
+#primary ul {
+  background: #cc9325;
+  border-bottom: 2px solid darken(#cc9325, 10%);
+  margin: 0;
+  overflow: hidden;
+  padding: 1em;
+  }  
+#sidebar {
+  background: #eee;
+  display: block;
+  margin-bottom: -9999px;
+  padding-bottom: 9999px;
+  }
+#sidebar ul {
+  padding: 1em;
+  }
+
+/* VIVA BOB*/
 
 dt.highlighted {
   color: gray;
 }
-
-div#content {
-  @include grid(12,12);
-  border: thin solid #CCC;
-  border-top:none;
-  height:100%;
-  min-height:500px;
-  margin:0;
-  position:relative;
-  left:-10px;
-  top:-25px;
-  width:968px;
-}
-
 article.highlighted {
   color: gray;
 }
-
-.center_content {
-  @include grid(10, 12);
-  @include grid-prefix(2);
-  position:relative;
-  top:-20px;
-}
-
-.center_content.preview {
-  top:-39px;
-}
-
-.center_content section {
-  position:relative;
-  top:-20px;
-}
-
-
-.center_content_alt {
-  @include grid(9, 12);
-}
-
-.bordered_wrapper {
-  @include grid(10, 12);
-  border: thin solid #CCC;
-  margin-left:0px;
-}
-
-.center_content .bordered_wrapper #entry_content {
-  border-top:thin solid #CCC;
-}
-
-div.center_content a.preview {
-  @include float_right;
-  position:relative;
-  top:-53px;
-  margin-bottom:-27px;
-}
-
 .flow {
   height:200px;
 }
@@ -103,39 +72,6 @@ table#lede_photo_candidate_topics tr.odd {
   padding-bottom:2px;
 }
 
-ul#highlighted, div#article_list {
-  @include grid(9,12);
-  @include grid-prefix(1);
-}
-ul#highlighted li.highlighted_entry, div#article_list article {
-  position:relative;
-  margin-bottom:15px;
-}
-
-ul#highlighted li.highlighted_entry a.remove, div#article_list article a.add {
-  position:absolute;
-  left:-80px;
-  top:5px;
-}
-
-ul#highlighted li.highlighted_entry h4, div#article_list article h4 {
-  margin-bottom:0px;
-}
-
-ul#highlighted li.highlighted_entry h4 a.article_title {
-  font-size:1em;
-  text-decoration:none;
-  color:#000;
-}
-
-div#article_list article.highlighted h4, div#article_list article.highlighted p{
-  color:#808080;
-}
-
-div#article_list article p{
-  font-size:1em;
-}
-
 div.topic_photo_flow {
   margin:0px auto;
 }
@@ -158,12 +94,10 @@ div#blank_flow {
   display:none;
   height:230px;
 }
-
 .modal.jqmWindow {
   top:10%;
   width:675px;
 }
-
 #preview, #entry_photo_preview {
   width:100px;
   height:100px;

@@ -1,4 +1,4 @@
-<!doctype html> 
+<!DOCTYPE html>
 <html lang="en"> 
 <head> 
   <title>FR2 Admin<%= " | #{yield :title}" if yield(:title) %></title>
@@ -8,52 +8,19 @@
   <%= stylesheet_link_tag "admin/jqModal",                   :media => :screen %>
   <%= stylesheet_link_tag "admin/buttons",                   :media => :screen %>
   <%= stylesheet_link_tag "admin/formtastic",                :media => :screen %>
-  <%= stylesheet_link_tag "../ContentFlow/contentflow_src",  :media => :screen %>
-  
-  <%#= stylesheet_link_tag "reset",                    :media => :screen %>
-  <%#= stylesheet_link_tag "text" ,                    :media => :screen %>
-  <%#= stylesheet_link_tag "jquery-ui" ,               :media => :screen %>
-  <%#= stylesheet_link_tag "admin/grid",               :media => :screen %>
-  
-  
-  
-  <%#= stylesheet_link_tag "admin/formtastic_changes", :media => :screen %>
-  <%#= stylesheet_link_tag "admin/screen",             :media => :screen %>
-  <%#= stylesheet_link_tag "admin/jquery.Jcrop",       :media => :screen %>
-  <%#= stylesheet_link_tag "admin/navigation",         :media => :screen %>
-  <%#= stylesheet_link_tag "admin/tablesorter",        :media => :screen %>
-  
-  
+  <%= stylesheet_link_tag "../ContentFlow/contentflow_src",  :media => :screen %>  
   
 </head>
 <body>
-    
-  <!-- WRAPPER -->
-  <div id="wrapper">
-    
-    <!-- HEADER -->
-    <header>
-      <hgroup>
-        <h1><%= link_to 'Federal Register :: Admin', admin_home_path %></h1>
-      </hgroup>
+
+
+  <% header_tag(:id => "header") do %>
+    <div id="inner_header">
+      <% hgroup_tag(:id => "header_logo") do %>        
+        <h1><%= link_to 'Federal Register Admin', admin_home_path %></h1>
+      <% end -%>
       
-      <nav class="primary">
-        <ul>
-          <% if current_user %>
-          <li><%= link_to 'Home', admin_home_path, :class => "button golden home" %></li>
-          <li><%= link_to 'Sections', admin_sections_path, :class => "button golden" %></li>
-          <li><%= link_to 'Agencies', admin_agencies_path, :class => "button golden" %></li>
-          <li><%= link_to 'Agency Names', admin_agency_names_path, :class => "button golden" %></li>
-          <li><%= link_to 'Topic Names', admin_topic_names_path, :class => "button golden" %></li>
-          <li><%= link_to 'Users <div class="users icon"></div>', admin_users_path, :class => "button golden" %></li>
-          <li><%= link_to 'Events', admin_events_path, :class => "button golden" %></li>
-          <li><%= link_to 'Agency Highlights', admin_agency_highlights_path, :class => "button golden" %></li>
-          <li><%= link_to 'Current Issue', admin_issue_path(Entry.latest_publication_date.to_s(:mdy_dash)), :class => "button golden" %></li>
-          <% end %>
-        </ul>
-      </nav>
-      
-      <nav class="utility">
+      <nav id="utility">
         <% if current_user %>
         <p>Hi, <%= current_user.first_name %>!</p>
         <% end %>
@@ -64,45 +31,63 @@
           <% end %>
         </ul>
       </nav>
-    </header>
+    </div>
+  <% end -%>
     
-    <div id='content'>
+  <!-- MAIN -->
+  <div id="main">
+    
+    <% nav_tag(:id => 'primary' ) do %>
+      <ul>
+        <% if current_user %>
+        <li><%= link_to 'Home', admin_home_path, :class => "home" %></li>
+        <li><%= link_to 'Sections', admin_sections_path, :class => "" %></li>
+        <li><%= link_to 'Agencies', admin_agencies_path, :class => "" %></li>
+        <li><%= link_to 'Agency Names', admin_agency_names_path, :class => "" %></li>
+        <li><%= link_to 'Topic Names', admin_topic_names_path, :class => "" %></li>
+        <li><%= link_to 'Users <div class="users icon"></div>', admin_users_path, :class => "" %></li>
+        <li><%= link_to 'Events', admin_events_path, :class => "" %></li>
+        <li><%= link_to 'Agency Highlights', admin_agency_highlights_path, :class => "" %></li>
+        <li><%= link_to 'Current Issue', admin_issue_path(Entry.latest_publication_date.to_s(:mdy_dash)), :class => "" %></li>
+        <% end %>
+      </ul>
+    <% end -%>
+          
+    <% if yield(:nav_secondary) %>
+      <% nav_tag(:id => 'sidebar' ) do %>
+        <ul>
+          <%= yield(:nav_secondary) %>
+        </ul>
+      <% end -%>
+    <% end %>
+ 
+    <div id="content_area" class="<%= 'has_sidebar' if yield(:nav_secondary) %>">
+      
       <% if yield(:super_title) %>
         <h2><%= yield(:super_title) %></h2>
       <% end %>
-    
-      <% if yield(:nav_secondary) %>
-        <nav class="secondary">
-          <ul>
-            <%= yield(:nav_secondary) %>
-          </ul>
-        </nav>
-      <% end %>
-    
+
       <% if flash[:notice] %>
-      <div class="flash notice grid_10 push_1">
+      <div class="flash notice">
         <%= flash[:notice]%>
       </div>
       <% end %>
 
       <% if flash[:error] %>
-      <div class="flash error grid_10 push_1">
+      <div class="flash error">
         <%= flash[:error]%>
       </div>
       <% end %>
-    
+
       <% if yield(:title)%>
        <h3><%= yield(:title) %></h3>
       <% end %>
-    
+      
       <%= yield %>
       
-    </div> <!-- content end -->
-    
-    <footer>
+    </div><!-- content end -->
       
-    </footer>
-  </div> <!-- wrapper end -->
+  </div> <!-- MAIN end -->
   
   <div class='jqmOverlay'></div>
   <div class='modal jqmWindow'>
