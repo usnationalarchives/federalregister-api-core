@@ -374,8 +374,19 @@ ARTICLE VIEW
   padding: 0;
   text-transform: none;
   }  
-
-.citation_box { position: absolute; }
+.citable {
+  background: url(/images/icon_bookmark_fade.png) no-repeat right .5em;    
+  padding-right: 25px;
+  position: relative; 
+  width: 460px;
+  }
+.citable:hover {
+  background: url(/images/icon_bookmark.png) no-repeat right .5em;  
+  }  
+.citation_box { 
+  display: none;
+  position: absolute; 
+  }
 .citation_box ul { margin-bottom: 0; }  
 .citation_box li {
   padding-left: 25px;
@@ -401,6 +412,18 @@ p[id]:hover .trigger_citation_box {
   right: -2em;
   top: .5em;
   }
+
+#footnotediv {
+  background: #F5F8F9;
+  border: 1px solid #333;
+  @include box-shadow( #aaa, 1px, 1px, 10px);
+  opacity: 1;
+  padding: .25em;
+  }
+#footnotediv > * {
+  margin: 0;
+  padding: 0;
+  }  
   
 /******************************
 
