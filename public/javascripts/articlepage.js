@@ -23,10 +23,10 @@ $(document).ready(function() {
     setup: function( index ){
       var id = "citation_info_" + index;
       var index_el = $("#" + index);
-      var box = '<div id="' + id + '" class="pull_out citation_box"><a class="sticky" href="#">Keep this open</a><dl><dt class="cite_volume">Volume</dt><dd class="cite_volume">' + $(".metadata_list .volume").text() + '</dd><dt class="cite_page">Page</dt><dd class="cite_page">' + $(".metadata_list .page").text() + '</dd><dt class="cite_date">Date</dt><dd class="cite_date"></dd></dl><ul><li class="bookmark"><a href="#">Bookmark this paragraph</a></li><li class="twitter"><a href="#">Share this on Twitter</a></li><li class="facebook"><a href="#">Share this on Facebook</a></li><li class="digg"><a href="#">Share this on digg</a></li></ul></div>'
-      $("#content_area").append(box);
+      var box = '<div id="' + id + '" class="pull_out citation_box"><ul><li class="link"><a href="/a/'+ $(".doc_number").text() + '/#' + index +'">Link to this paragraph</a></li><li class="cite_volume"><strong>Citation</strong> ' + $(".metadata_list .volume").text() + ' FR ' + $(".metadata_list .page").text() + '</li><li class="cite_page"><strong>Page</strong> ' + $(".metadata_list .page").text() + '</li><li class="email"><a href="#">Email this</a></li><li class="twitter"><a href="#">Share this on Twitter</a></li><li class="facebook"><a href="#">Share this on Facebook</a></li><li class="digg"><a href="#">Share this on digg</a></li></ul></div>'
+      $("#sidebar").append(box);
       var id_el = $("#" + id); 
-      id_el.css({"top": index_el.position().top, "right": -id_el.width() }).data("id", index).data("sticky", false);
+      id_el.css({"top": index_el.position().top + 6, "right": 0}).data("id", index).data("sticky", false);
       this.cache[ index ] = id_el;
       return id;
     },
@@ -49,17 +49,6 @@ $(document).ready(function() {
   };
 
   $(".body_column table[id], .body_column p[id], .body_column img[id], .body_column li[id]").css("position","relative").append("<a href='#' class='trigger_citation_box'></a>");
-  
-  //TODO delegate events by binding once to the content area and inspecting the target
-  // $(".body_column table[id], .body_column p[id], .body_column img[id], .body_column li[id]").bind('mouseenter', function(event) {
-  //     $(event.target).trigger("show_citation");
-  // });
-  
-  // $(".body_column table[id], .body_column p[id], .body_column img[id], .body_column li[id]").bind('mouseleave', function(event) {
-  //     setTimeout(function() {
-  //       $(event.target).trigger("hide_citation");
-  //     }, 5000);
-  // });  
   
   $(".trigger_citation_box").bind('click', function(event) {
     event.preventDefault();

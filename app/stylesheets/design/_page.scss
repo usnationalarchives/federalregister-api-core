@@ -375,59 +375,22 @@ ARTICLE VIEW
   text-transform: none;
   }  
 
-.citation_box {
-  position: absolute;
-  }
-.citation_box dt {
-  clear: both;
-  float: left;
-  font-weight: 700;
-  margin-bottom: .5em;
-  padding-left: 25px;
-  }
-.citation_box dd {
-  float: left;
-  margin-bottom: .5em;
-  margin-left: .5em;
-  }  
-.citation_box dt.cite_volume {
-  background: url(/images/icon_volume.png) no-repeat left top;
-  }  
-.citation_box dt.cite_page {
-  background: url(/images/icon_page.png) no-repeat left top;
-  }  
-.citation_box dt.cite_date {
-  background: url(/images/icon_date.png) no-repeat left top;
-  }
-
-.citation_box ul {
-  clear: both;
-  }
+.citation_box { position: absolute; }
+.citation_box ul { margin-bottom: 0; }  
 .citation_box li {
   padding-left: 25px;
   list-style: none;
   margin-bottom: .5em;
-  }  
-.citation_box li.bookmark {
-  background: url(/images/icon_bookmark.png) no-repeat left top;
   }
-.citation_box li.twitter {
-  background: url(/images/icon_twitter.png) no-repeat left top;
-  
-  }
-.citation_box li.facebook {
-  background: url(/images/icon_facebook.png) no-repeat left top;
-  }
-.citation_box li.digg {
-  background: url(/images/icon_digg.png) no-repeat left top;
-  }
-.citation_box .sticky {
-  display: block;
-  @include replace-text-with-dimensions('icon_sticky.png', 0, 0);
-  position: absolute;
-  right: 1em;  
-  top: 1em;
-  }  
+.citation_box li:last-child { margin-bottom: 0 ;}  
+.citation_box li.bookmark { background: url(/images/icon_bookmark.png) no-repeat left top; }
+.citation_box li.twitter { background: url(/images/icon_twitter.png) no-repeat left top; }
+.citation_box li.facebook { background: url(/images/icon_facebook.png) no-repeat left top; }
+.citation_box li.digg { background: url(/images/icon_digg.png) no-repeat left top; }
+.citation_box li.cite_volume { background: url(/images/icon_volume.png) no-repeat left top; }
+.citation_box li.cite_page { background: url(/images/icon_page.png) no-repeat left top; }
+.citation_box li.link { background: url(/images/icon_link.png) no-repeat left top; }
+.citation_box li.email { background: url(/images/icon_email.png) no-repeat left top; }
 p[id]:hover .trigger_citation_box {
   @include opacity(1);  
   }  
