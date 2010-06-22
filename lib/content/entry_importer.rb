@@ -7,7 +7,7 @@ module Content
     include Content::EntryImporter::FullXml
     include Content::EntryImporter::LedePhotoCandidates
     include Content::EntryImporter::PageNumber
-    include Content::EntryImporter::ReferencedDates
+    include Content::EntryImporter::Events
     include Content::EntryImporter::Sections
     include Content::EntryImporter::TopicNames
     include Content::EntryImporter::Urls
