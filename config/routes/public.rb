@@ -52,6 +52,9 @@ ActionController::Routing::Routes.draw do |map|
   map.citation_search 'citation/search', :controller => 'citations',
                                          :action     => 'search'
   
+  # EVENT SEARCH
+  map.events_search 'events/search', :controller => 'events/search', :action => 'show'
+  
   # TOPICS
   map.topics_by_letter '/topics/:letter',
       :requirements => {:letter => /[a-z]/},
