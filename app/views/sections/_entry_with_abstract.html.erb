@@ -8,10 +8,10 @@
       
     <p class="summary"><%= truncate(entry.curated_abstract, 500) %></p>
     
-    <% if entry.comments_close_date && entry.comments_close_date.date > @publication_date %>
+    <% if entry.comments_close_on && entry.comments_close_on > @publication_date %>
       <p class="comments_close">
-        Comment period ends in <%= pluralize (entry.comments_close_date.date - @publication_date), 'day' %>
-        (<%= entry.comments_close_date.date %>)
+        Comment period ends in <%= pluralize (entry.comments_close_on - @publication_date), 'day' %>
+        (<%= entry.comments_close_on %>)
       </p>
     <% end %>
   </div>
