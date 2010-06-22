@@ -75,14 +75,6 @@ module CitationsHelper
     end
   end
   
-  def add_date_links(entry, text)
-    entry.referenced_dates.each do |date|
-      next if date.string.blank?
-      text.gsub!(/#{Regexp.escape(date.string)}/, content_tag(:a, date.string, :href => events_path(date)) )
-    end
-    text
-  end
-  
   private
   
   def patent_url(number_possibly_with_commas)

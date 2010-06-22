@@ -9,6 +9,6 @@
   <%= @agency_highlight.agency.name %>
 </h2>
 
-<h2><%= @agency_highlight.title %></h2>
+<h2><%= link_to @agency_highlight.title, entry_path(@agency_highlight.entry) %></h2>
 
 <p><%= @agency_highlight.abstract %></p>
