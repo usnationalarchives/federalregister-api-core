@@ -10,4 +10,10 @@ class ApplicationModel < ActiveRecord::Base
   def self.random_selection(n)
     scoped(:joins => "JOIN (SELECT ID FROM #{table_name} ORDER BY RAND() LIMIT #{n.to_i}) AS random_ids ON #{table_name}.id = random_ids.id")
   end
+  
+  def self.preload(*associations)
+    results = scoped()
+    Entry.preload_associations(results, associations)
+    results
+  end
 end
