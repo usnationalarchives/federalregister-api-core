@@ -1,9 +1,7 @@
 class EntrySearch < ApplicationSearch
   include Geokit::Geocoders
   
-  SUPPORTED_ORDERS = %w(Relevant Newest Oldest)
-  
-  attr_reader :order, :type
+  attr_reader :type
   attr_accessor :type, :regulation_id_number
   
   define_filter :regulation_id_number, :label => "Regulation", :phrase => true do |regulation_id_number|
@@ -80,6 +78,10 @@ class EntrySearch < ApplicationSearch
   #   conditions
   # end
   
+  def supported_orders
+    %w(Relevant Newest Oldest)
+  end
+  
   def order_clause
     case @order
     when 'newest'
@@ -108,7 +110,8 @@ class EntrySearch < ApplicationSearch
   
   def type_facets
     raw_facets = Entry.facets(term,
-      :with_all => with,
+      :with => with,
+      :with_all => with_all,
       :conditions => conditions,
       :match_mode => :extended,
       :facets => [:type]
@@ -129,7 +132,8 @@ class EntrySearch < ApplicationSearch
   
   def date_distribution
     sphinx_search = ThinkingSphinx::Search.new(term,
-      :with_all => with,
+      :with => with,
+      :with_all => with_all,
       :conditions => conditions,
       :match_mode => :extended
     )
@@ -154,7 +158,8 @@ class EntrySearch < ApplicationSearch
   
   def count_in_last_n_days(n)
     model.search_count(@term,
-      :with_all => with.merge(:publication_date => [n.days.ago.to_time.midnight .. Time.current.midnight]),
+      :with => with.merge(:publication_date => [n.days.ago.to_time.midnight .. Time.current.midnight]),
+      :with_all => with_all,
       :conditions => conditions,
       :match_mode => :extended
     )

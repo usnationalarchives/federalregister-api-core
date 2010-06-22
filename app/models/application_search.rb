@@ -45,7 +45,8 @@ class ApplicationSearch
     
     def raw_facets
       sphinx_search = ThinkingSphinx::Search.new(@search.term,
-        :with_all => @search.with,
+        :with => @search.with,
+        :with_all => @search.with_all,
         :conditions => @search.conditions,
         :match_mode => :extended,
         :classes => [@search.model]
@@ -76,7 +77,7 @@ class ApplicationSearch
     end
   end
   
-  attr_accessor :term
+  attr_accessor :term, :order
   attr_reader :errors, :filters
   
   def self.define_filter(filter_name, options = {}, &name_definer)

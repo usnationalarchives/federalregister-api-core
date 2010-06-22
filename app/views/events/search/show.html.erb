@@ -16,6 +16,7 @@
 <% unless @search.blank? %>
 
   <div class="filters">
+    <%= render :esi => url_for(params.merge(:action => :facets, :facet => 'type')) %>
     <%= render :esi => url_for(params.merge(:action => :facets, :facet => 'agency')) %>
     
     <%= render :partial => 'search/location_form', :locals => {:search => @search } %>
