@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100619234141) do
+ActiveRecord::Schema.define(:version => 20100622153919) do
 
   create_table "agencies", :force => true do |t|
     t.integer  "parent_id"
@@ -175,7 +175,10 @@ ActiveRecord::Schema.define(:version => 20100619234141) do
     t.string  "title"
     t.integer "place_id"
     t.boolean "remote_call_in_available"
+    t.string  "event_type"
   end
+
+  add_index "events", ["event_type"], :name => "index_events_on_event_type"
 
   create_table "graphic_usages", :force => true do |t|
     t.integer "graphic_id"
@@ -232,19 +235,6 @@ ActiveRecord::Schema.define(:version => 20100619234141) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
-
-  create_table "referenced_dates", :force => true do |t|
-    t.integer  "entry_id"
-    t.date     "date"
-    t.string   "string"
-    t.string   "context"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "date_type"
-  end
-
-  add_index "referenced_dates", ["entry_id", "date"], :name => "index_referenced_dates_on_entry_id_and_date"
-  add_index "referenced_dates", ["entry_id", "date_type", "date"], :name => "foo"
 
   create_table "regulatory_plan_events", :force => true do |t|
     t.integer "regulatory_plan_id"
