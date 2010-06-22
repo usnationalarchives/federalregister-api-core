@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100622153919) do
+ActiveRecord::Schema.define(:version => 20100622202450) do
 
   create_table "agencies", :force => true do |t|
     t.integer  "parent_id"
@@ -178,7 +178,10 @@ ActiveRecord::Schema.define(:version => 20100622153919) do
     t.string  "event_type"
   end
 
-  add_index "events", ["event_type"], :name => "index_events_on_event_type"
+  add_index "events", ["entry_id", "date"], :name => "index_events_on_entry_id_and_date"
+  add_index "events", ["event_type", "entry_id", "date"], :name => "index_events_on_event_type_and_entry_id_and_date"
+  add_index "events", ["event_type", "entry_id", "place_id"], :name => "index_events_on_event_type_and_entry_id_and_place_id"
+  add_index "events", ["event_type", "place_id", "entry_id"], :name => "index_events_on_event_type_and_place_id_and_entry_id"
 
   create_table "graphic_usages", :force => true do |t|
     t.integer "graphic_id"
