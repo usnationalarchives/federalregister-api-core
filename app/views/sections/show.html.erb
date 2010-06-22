@@ -1,7 +1,7 @@
 <%= title @section.title %>
 
 <%= feed_autodiscovery highlighted_entries_section_path(@section, :format => :rss), "Featured Articles in #{@section.title}"%>
-<%= feed_autodiscovery popular_entries_section_path(@section, :format => :rss), "Popular Articles in #{@section.title}"%>
+<%= feed_autodiscovery significant_entries_section_path(@section, :format => :rss), "Significant Articles in #{@section.title}"%>
 <%= feed_autodiscovery section_path(@section, :format => :rss), "All Articles in #{@section.title}"%>
 
 <h1 class="title"><span><%= @section.title %></span></h1>

@@ -80,6 +80,6 @@ ActionController::Routing::Routes.draw do |map|
   # SECTIONS
   map.section ':slug.:format', :controller => "sections", :action => "show"
   map.highlighted_entries_section ':slug/featured.:format', :controller => "sections", :action => "highlighted"
-  map.popular_entries_section ':slug/popular.:format', :controller => "sections", :action => "popular"
+  map.significant_entries_section ':slug/significant.:format', :controller => "sections", :action => "significant"
   map.about_section ':slug/about', :controller => "sections", :action => "about"
 end
