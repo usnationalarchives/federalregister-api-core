@@ -3,21 +3,23 @@ class EntrySearch < ApplicationSearch
   
   SUPPORTED_ORDERS = %w(Relevant Newest Oldest)
   
-  attr_reader :order, :type, :location, :within
+  attr_reader :order, :type
   attr_accessor :type, :regulation_id_number
   
   define_filter :regulation_id_number, :label => "Regulation", :phrase => true do |regulation_id_number|
     RegulatoryPlan.find_by_regulation_id_number(regulation_id_number).try(:title)
   end
   
-  define_filter :agency_ids,  :sphinx_type => :with
-  define_filter :section_ids, :sphinx_type => :with do |section_id|
+  define_filter :agency_ids,  :sphinx_type => :with_all
+  define_filter :section_ids, :sphinx_type => :with_all do |section_id|
     Section.find_by_id(section_id).try(:title)
   end
-  define_filter :topic_ids,   :sphinx_type => :with
+  define_filter :topic_ids,   :sphinx_type => :with_all
   define_filter :type,        :phrase => true do |type|
     Entry::ENTRY_TYPES[type]
   end
+  
+  define_place_filter :place_ids
   
   attr_reader :start_date, :end_date
   def start_date=(val)
@@ -69,40 +71,6 @@ class EntrySearch < ApplicationSearch
       :select => "id, title, publication_date, document_number, document_file_path, abstract",
       :include => :agencies,
     }
-  end
-  
-  def within=(val)
-    if val.present?
-      @within = val
-      if val.to_i < 1 && val.to_i > 200
-        @errors < "range must be between 1 and 200 miles."
-      end
-    end
-  end
-  
-  def location=(val)
-    if val.present?
-      @location = val
-      loc = fetch_location(val)
-      
-      if loc.lat
-        places = Place.find(:all, :select => "id", :origin => loc, :within => within)
-        add_filter(
-          :value => places.map{|p| p.id},
-          :name => "#{val} within #{within} miles",
-          :condition => :location,
-          :sphinx_attribute => :place_ids,
-          :label => "Near",
-          :sphinx_type => :with
-        )
-        
-        if places.size > 4096
-          @errors << 'We found too many locations near your location; please reduce the scope of your search'
-        end
-      else
-        @errors << 'We could not understand your location.'
-      end
-    end
   end
   
   # def conditions
@@ -219,9 +187,5 @@ class EntrySearch < ApplicationSearch
     @within = '25'
     @order = options[:order] || 'relevant'
     @end_date = Entry.latest_publication_date.to_time
-  end
-  
-  def fetch_location(location)
-    Rails.cache.fetch("location_of: '#{location}'") { Geokit::Geocoders::GoogleGeocoder.geocode(location) }
   end
 end
