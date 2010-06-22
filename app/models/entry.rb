@@ -168,7 +168,8 @@ class Entry < ApplicationModel
   def self.comments_opening(range = (Date.today - 7.days .. Date.today))
     scoped(
       :joins => :comments_close_date,
-      :conditions => {:entries => {:publication_date => range}},
+      # :conditions => {:entries => {:publication_date => range}},
+      :conditions => {:events => {:date => range}},
       :order => "events.date"
     )
   end
@@ -186,6 +187,10 @@ class Entry < ApplicationModel
       :order => "num_views DESC",
       :limit => n
     )
+  end
+  
+  def self.most_recent(n)
+    scoped(:order => "entries.publication_date DESC", :limit => n.to_i)
   end
   
   def entry_type 
