@@ -108,9 +108,9 @@ class Entry < ApplicationModel
   has_many :agency_assignments, :as => :assignable, :order => "agency_assignments.position", :dependent => :delete_all
   has_many :agencies, :through => :agency_assignments, :order => "agency_assignments.position"
   
-  has_many :referenced_dates, :dependent => :destroy
-  has_one :comments_close_date, :class_name => "ReferencedDate", :conditions => {:date_type => 'CommentDate'}
-  has_one :effective_date, :class_name => "ReferencedDate", :conditions => {:date_type => 'EffectiveDate'}
+  has_many :events, :dependent => :destroy
+  has_one :comments_close_date, :class_name => "Event", :conditions => {:event_type => 'CommentsClose'}
+  has_one :effective_date, :class_name => "Event", :conditions => {:event_type => 'EffectiveDate'}
   
   before_save :set_document_file_path
   
@@ -123,7 +123,7 @@ class Entry < ApplicationModel
   has_many :entry_page_views
   has_one :agency_highlight
   
-  has_many :events
+  has_many :events, :dependent => :destroy
   
   accepts_nested_attributes_for :lede_photo, :reject_if => Proc.new{|attr| attr["url"].blank? }
   
@@ -160,8 +160,8 @@ class Entry < ApplicationModel
   def self.comments_closing(range = (Date.today .. Date.today + 7.days))
     scoped(
       :joins => :comments_close_date,
-      :conditions => {:referenced_dates => {:date => range}},
-      :order => "referenced_dates.date"
+      :conditions => {:events => {:date => range}},
+      :order => "events.date"
     )
   end
   
@@ -169,7 +169,7 @@ class Entry < ApplicationModel
     scoped(
       :joins => :comments_close_date,
       :conditions => {:entries => {:publication_date => range}},
-      :order => "referenced_dates.date"
+      :order => "events.date"
     )
   end
   

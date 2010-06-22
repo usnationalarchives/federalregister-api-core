@@ -26,9 +26,9 @@ namespace :content do
         entry_importer(:docket_id)
       end
       
-      desc "Extract referenced dates"
-      task :referenced_dates => :environment do
-        entry_importer(:referenced_dates)
+      desc "Extract events"
+      task :events => :environment do
+        entry_importer(:events)
       end
       
       desc "Extract lede photo candidates"
