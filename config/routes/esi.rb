@@ -16,4 +16,6 @@ ActionController::Routing::Routes.draw do |map|
   map.regulatory_plan_timeline 'regulations/:regulation_id_number/timeline',
                                 :controller => 'regulatory_plans',
                                 :action     => 'timeline'
+  # SECTIONS
+  map.popular_entries_section ':slug/popular.:format', :controller => "sections", :action => "popular"
 end
