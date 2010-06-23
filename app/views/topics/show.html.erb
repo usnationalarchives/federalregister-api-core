@@ -3,6 +3,8 @@
 <% feed_autodiscovery significant_entries_topic_path(@topic, :format => :rss), "Significant Articles in this topic" %>
 
 <h1 class="title"><span><%= @topic.name %></span></h1>
+<%# HELP-DESIGN: this should be placed better... %>
+<%= link_to 'Subscribe', topic_path(@topic, :format => :rss), :class => 'button rss' %>
 
 <%= render :partial => "entries/list", :locals => {:entries => @entries, :search_params => {:topic => @topic}} %>
 
