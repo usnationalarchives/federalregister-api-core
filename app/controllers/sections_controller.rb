@@ -69,6 +69,8 @@ class SectionsController < ApplicationController
     cache_for 1.hour
     @section = Section.find_by_slug!(params[:slug])
     @entries = @section.entries.popular(5)
+    
+    render :layout => false
   end
   
 end
