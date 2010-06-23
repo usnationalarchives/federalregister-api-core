@@ -178,14 +178,14 @@ class Entry < ApplicationModel
     scoped(:order => "publication_date DESC", :limit => n)
   end
   
-  def self.popular(n = 10, since = 1.month.ago)
+  def self.popular(since = 1.month.ago)
     scoped(
       :select => "entries.id, entries.title, entries.document_number, entries.publication_date, entries.abstract, count(distinct(remote_ip)) AS num_views",
       :joins => :entry_page_views,
       :conditions => ["entry_page_views.created_at > ?", since],
       :group => "entries.id",
-      :order => "num_views DESC",
-      :limit => n
+      :having => "num_views > 0",
+      :order => "num_views DESC"
     )
   end
   
