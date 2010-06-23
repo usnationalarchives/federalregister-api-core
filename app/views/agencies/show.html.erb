@@ -1,7 +1,8 @@
 <% title @agency.name %>
 <h1 class="title"><span>Agency</span></h1>
 
-<% feed_autodiscovery agency_path(@agency, :format => :rss) %>
+<% feed_autodiscovery agency_path(@agency, :format => :rss), "Recent Articles from #{h @agency.name}" %>
+<% feed_autodiscovery significant_entries_agency_path(@agency, :format => :rss), "Recent Significant Articles from #{h @agency.name}" %>
 
 <div class="group">
   
