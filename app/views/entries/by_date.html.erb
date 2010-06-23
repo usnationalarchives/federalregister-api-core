@@ -1,4 +1,4 @@
-<% feed_autodiscovery entries_path(:format => :rss) %>
+<% feed_autodiscovery entries_path(:format => :rss), "Recent Articles from the Federal Register" %>
 
 <% title "Entries for #{@publication_date.to_formatted_s(:pretty)}" %>
 <h1 class="title"><span><%= @publication_date %> Issue</span></h1>
