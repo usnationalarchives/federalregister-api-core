@@ -158,7 +158,7 @@ class EntrySearch < ApplicationSearch
   
   def count_in_last_n_days(n)
     model.search_count(@term,
-      :with => with.merge(:publication_date => [n.days.ago.to_time.midnight .. Time.current.midnight]),
+      :with => with.merge(:publication_date => n.days.ago.to_time.midnight .. Time.current.midnight),
       :with_all => with_all,
       :conditions => conditions,
       :match_mode => :extended
