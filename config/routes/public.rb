@@ -11,6 +11,7 @@ ActionController::Routing::Routes.draw do |map|
   
   # ENTRIES
   map.entries 'articles.:format', :controller => 'entries', :action => 'index'
+  map.highlighted_entries 'articles/featured.:format', :controller => 'entries', :action => 'highlighted'
   map.entries_search_facet 'articles/search/facet', :controller => 'entries', :action => 'search_facet'
   map.entries_widget 'articles/widget', :controller => 'entries', :action => 'widget'
   map.entry 'articles/:year/:month/:day/:document_number/:slug.:format', :controller => 'entries',
