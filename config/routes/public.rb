@@ -4,7 +4,7 @@ ActionController::Routing::Routes.draw do |map|
   map.widget_instructions 'widget_instructions', :controller => 'special', :action => 'widget_instructions'
 
   # ENTRY SEARCH
-  map.entries_search 'articles/search', :controller => 'entries/search', :action => 'show'
+  map.entries_search 'articles/search.:format', :controller => 'entries/search', :action => 'show'
   
   # ENTRY PAGE VIEW
   map.entries_page_views 'articles/views', :controller => 'entries/page_views', :action => 'create'
@@ -54,7 +54,7 @@ ActionController::Routing::Routes.draw do |map|
                                          :action     => 'search'
   
   # EVENT SEARCH
-  map.events_search 'events/search', :controller => 'events/search', :action => 'show'
+  map.events_search 'events/search.:format', :controller => 'events/search', :action => 'show'
   
   # TOPICS
   map.topics_by_letter '/topics/:letter',
