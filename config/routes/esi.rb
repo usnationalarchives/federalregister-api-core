@@ -18,4 +18,5 @@ ActionController::Routing::Routes.draw do |map|
                                 :action     => 'timeline'
   # SECTIONS
   map.popular_entries_section ':slug/popular_entries.:format', :controller => "sections", :action => "popular_entries"
+  map.popular_topics_section ':slug/popular_topics.:format', :controller => "sections", :action => "popular_topics"
 end
