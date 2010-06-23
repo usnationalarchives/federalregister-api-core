@@ -62,9 +62,13 @@
   <div class="group" id="significant_regulations">
     <h2 class="title_bar"><span class="small_stack">Most <span>Recent</span></span> Significant Regulations</h2>
     <%= render :partial => 'entries/grouped_by_date', :locals => {:entries => @significant_entries}%>
+    <%# HELP-DESIGN: this should be placed better... %>
+    <%= link_to 'Subscribe', significant_entries_agency_path(@agency, :format => :rss), :class => 'button rss' %>
   </div>
 <% end %>
 
+<%# HELP-DESIGN: this should be placed better... %>
+<%= link_to 'Subscribe', agency_path(@agency, :format => :rss), :class => 'button rss' %>
 <%= render :partial => 'entries/list', :locals => {:list_type => 'agency', :entries => @entries, :search_params => {:agency_id => @agency.id}} %>
 
 <%= render :partial => 'entries/most_cited', :locals => {:entries => @most_cited_entries} %>

@@ -61,6 +61,9 @@
   </div>
 </div>
 
+<%# HELP-DESIGN: this should be placed better... %>
+<%= link_to 'Subscribe', highlighted_entries_path(:format => :rss), :class => 'button rss' %>
+
 <div class="section_news_boxes grid_16 alpha omega" style="clear:both">
   <% @sections.each do |section| %>
   <div class="grid_8 <%= cycle('alpha','omega')%>">
