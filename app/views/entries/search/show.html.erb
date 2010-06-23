@@ -1,4 +1,5 @@
 <% title @search.term.blank? ? 'Article Search' : "Article Search Results for '#{h @search.term}'" %>
+<%= feed_autodiscovery url_for(params.merge(:format => :rss)), "Federal Register: Search Results" %>
 
 <h1 class="title"><span>Search FR Articles</span></h1>
 
