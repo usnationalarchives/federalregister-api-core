@@ -2,6 +2,18 @@ class RegulatoryPlansController < ApplicationController
   def show
     cache_for 1.day
     @regulatory_plan = RegulatoryPlan.find_by_regulation_id_number(params[:regulation_id_number], :order => "issue DESC")
+    
+    respond_to do |wants|
+      wants.html do
+      end
+      
+      wants.rss do
+        @feed_name = "Federal Register: Recent articles about RIN #{@regulatory_plan.regulation_id_number}"
+        @feed_description = "Significant Federal Register articles about RIN #{@regulatory_plan.regulation_id_number}."
+        @entries = @regulatory_plan.entries.most_recent(20).preload(:topics, :agencies)
+        render :template => 'entries/index.rss.builder'
+      end
+    end
   end
   
   def timeline
