@@ -238,14 +238,6 @@ class Entry < ApplicationModel
     self[:curated_abstract] || abstract
   end
   
-  def month_year
-    publication_date.to_formatted_s(:month_year)
-  end
-  
-  def year_month
-    '200112'
-  end
-  
   def day
     publication_date.strftime('%d')
   end
