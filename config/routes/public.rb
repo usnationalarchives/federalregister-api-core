@@ -65,7 +65,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :topics, :as => "topics", :only => [:index, :show]
   
   # AGENCIES
-  map.resources :agencies, :only => [:index, :show]
+  map.resources :agencies, :only => [:index, :show], :member => {:significant_entries => :get}
   
   # REGULATIONS
   map.regulatory_plans_search 'regulations/search',
