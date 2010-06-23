@@ -63,9 +63,11 @@ ActionController::Routing::Routes.draw do |map|
       :action => "by_letter"
   
   map.resources :topics, :as => "topics", :only => [:index, :show]
-  
+  map.significant_entries_topic 'topics/:id/significant.:format', :controller => "topics", :action => "significant_entries"
+
   # AGENCIES
-  map.resources :agencies, :only => [:index, :show], :member => {:significant_entries => :get}
+  map.resources :agencies, :only => [:index, :show]
+  map.significant_entries_agency 'agencies/:id/significant.:format', :controller => "agencies", :action => "significant_entries"
   
   # REGULATIONS
   map.regulatory_plans_search 'regulations/search',

@@ -197,6 +197,12 @@ class Entry < ApplicationModel
     scoped(:order => "entries.publication_date DESC", :limit => n.to_i)
   end
   
+  def self.most_cited(n)
+    scoped(:conditions => "entries.citing_entries_count > 0",
+           :order => "citing_entries_count DESC, publication_date DESC",
+           :limit => n.to_i)
+  end
+  
   def entry_type 
     ENTRY_TYPES[granule_class]
   end

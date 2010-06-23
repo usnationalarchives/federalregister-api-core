@@ -51,7 +51,7 @@ class SectionsController < ApplicationController
     end
   end
   
-  def significant
+  def significant_entries
     cache_for 1.day
     @section = Section.find_by_slug!(params[:slug])
     
