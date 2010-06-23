@@ -189,6 +189,10 @@ class Entry < ApplicationModel
     )
   end
   
+  def self.highlighted
+    scoped(:joins => :section_highlights, :conditions => {:section_highlights => {:publication_date => latest_publication_date}})
+  end
+  
   def self.most_recent(n)
     scoped(:order => "entries.publication_date DESC", :limit => n.to_i)
   end
