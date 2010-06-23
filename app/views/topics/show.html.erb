@@ -1,5 +1,6 @@
 <% title @topic.name %>
-<% feed_autodiscovery topic_path(@topic, :format => :rss) %>
+<% feed_autodiscovery topic_path(@topic, :format => :rss), "Articles in this topic" %>
+<% feed_autodiscovery significant_entries_topic_path(@topic, :format => :rss), "Significant Articles in this topic" %>
 
 <h1 class="title"><span><%= @topic.name %></span></h1>
 
