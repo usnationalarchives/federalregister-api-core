@@ -11,7 +11,7 @@ require 'hoptoad_notifier/capistrano'
 
 set :application, "fr2"
 set :user, "deploy"
-ssh_options[:keys] = [File.join(ENV["HOME"], ".ssh", "govpulse-prod-provision")]
+ssh_options[:keys] = [File.join(ENV["HOME"], ".ssh", "fr_staging")]
 
 # use these settings for making AMIs with thunderpunch
 # set :user, "ubuntu"
@@ -47,7 +47,7 @@ end
 
 set :rails_env,  "production"                           
 set :deploy_to,  "/var/www/apps/#{application}" 
-set :domain,     "184.73.190.17" #"184.73.189.26" #fr1_ec2 -- ec2-184-73-5-183.compute-1.amazonaws.com
+set :domain,     "184.72.250.132" #"184.73.189.26" #fr1_ec2 -- ec2-184-73-5-183.compute-1.amazonaws.com
 set :url,        "#{domain}"     
 set :server_url, "#{domain}"
 
