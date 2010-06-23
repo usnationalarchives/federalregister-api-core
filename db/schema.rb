@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100622202450) do
+ActiveRecord::Schema.define(:version => 20100623134800) do
 
   create_table "agencies", :force => true do |t|
     t.integer  "parent_id"
@@ -256,6 +256,7 @@ ActiveRecord::Schema.define(:version => 20100622202450) do
     t.string "priority_category"
   end
 
+  add_index "regulatory_plans", ["issue", "regulation_id_number"], :name => "index_regulatory_plans_on_issue_and_regulation_id_number"
   add_index "regulatory_plans", ["regulation_id_number", "issue"], :name => "index_regulatory_plans_on_regulation_id_number_and_issue"
 
   create_table "search_subscriptions", :force => true do |t|
