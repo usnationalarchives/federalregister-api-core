@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100622202450) do
+ActiveRecord::Schema.define(:version => 20100624163735) do
 
   create_table "agencies", :force => true do |t|
     t.integer  "parent_id"
@@ -145,6 +145,7 @@ ActiveRecord::Schema.define(:version => 20100622202450) do
     t.integer  "lede_photo_id"
     t.text     "lede_photo_candidates"
     t.string   "docket_id"
+    t.datetime "raw_text_updated_at"
   end
 
   add_index "entries", ["citation"], :name => "index_entries_on_citation"
@@ -158,6 +159,7 @@ ActiveRecord::Schema.define(:version => 20100622202450) do
   add_index "entries", ["id"], :name => "index_entries_on_agency_id_and_id"
   add_index "entries", ["publication_date"], :name => "index_entries_on_agency_id_and_publication_date"
   add_index "entries", ["publication_date"], :name => "index_entries_on_publication_date_and_agency_id"
+  add_index "entries", ["raw_text_updated_at"], :name => "index_entries_on_raw_text_updated_at"
   add_index "entries", ["regulation_id_number"], :name => "index_entries_on_regulation_id_number"
   add_index "entries", ["volume", "start_page", "end_page"], :name => "index_entries_on_volume_and_start_page_and_end_page"
 
@@ -256,6 +258,7 @@ ActiveRecord::Schema.define(:version => 20100622202450) do
     t.string "priority_category"
   end
 
+  add_index "regulatory_plans", ["issue", "regulation_id_number"], :name => "index_regulatory_plans_on_issue_and_regulation_id_number"
   add_index "regulatory_plans", ["regulation_id_number", "issue"], :name => "index_regulatory_plans_on_regulation_id_number_and_issue"
 
   create_table "search_subscriptions", :force => true do |t|

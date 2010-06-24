@@ -42,7 +42,20 @@ class Section < ApplicationModel
   end
   
   def should_include_entry?(entry)
-    cfr_citation_ranges.any?{|range| range.includes?(entry.cfr_title, entry.cfr_part)} || (agencies & entry.agencies).size > 0
+    cfr_citation_ranges.any?{|range| range.includes?(entry.cfr_title, entry.cfr_part)} || (agencies & entry.agencies_excluding_parents).size > 0
+  end
+  
+  def popular_topics(n = 10, since = 1.month.ago)
+    entry_scope = self.entries.popular
+    sub_query = Entry.construct_finder_sql(entry_scope.current_scoped_methods[:find])
+    
+    Topic.scoped(
+      :select => "topics.id, topics.name, topics.slug, sum(popular_entries.num_views) AS total_views",
+      :joins => "INNER JOIN topic_assignments ON topic_assignments.topic_id = topics.id JOIN (#{sub_query}) AS popular_entries ON popular_entries.id = topic_assignments.entry_id",
+      :group => "topics.id",
+      :having => "total_views > 0",
+      :order => "total_views DESC"
+    )
   end
   
   private
