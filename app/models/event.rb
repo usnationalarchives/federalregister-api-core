@@ -35,7 +35,7 @@ class Event < ApplicationModel
   
   define_index do
     # fields
-    indexes "IFNULL(events.title, entries.title)", :as => :title
+    indexes "entries.title", :as => :title
     indexes entry.abstract
     indexes place.name, :as => :place
     indexes event_type, :as => :type, :facet => true

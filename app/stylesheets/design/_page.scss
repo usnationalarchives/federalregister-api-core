@@ -210,13 +210,15 @@ padding: 0;
 ARTICLE VIEW 
 
 ******************************/
-
+#metadata_content_area {
+  margin-bottom: 2em;
+  }
 #flash_message {
   @include border-radius(5px);  
   overflow: hidden;  
   background: #E6E6E6;
   color: #6E6E6E;
-  margin-bottom: 1em;
+  margin: 1em 0;
   padding: 1em 1em .75em 1em;
   position: relative;
   }
@@ -284,6 +286,23 @@ ARTICLE VIEW
   font-size: 1.3em;
   font-weight: 700;
   }
+#entries.show .metadata_share_bar {
+  border-bottom:1px solid #CCCCCC;
+  border-top:1px solid #CCCCCC;
+  margin:0.5em 0;
+  overflow:hidden;
+  padding:0.5em 0
+  }
+#entries.show .metadata_share_bar .metadata {
+  margin-bottom: 0;
+  padding-bottom: 0;
+  }
+#entries.show .metadata_share_bar .share {
+  text-align: right;
+  } 
+#entries.show .metadata_share_bar .share .button {
+  text-indent: 9999px;
+  }    
 #entries.show .back_to_top {
   color: #aaa;
   font-size: .8em;
@@ -294,10 +313,10 @@ ARTICLE VIEW
   display: block;
   font-weight: normal;
   }
-#entries.show .body_column {
-  margin-bottom: 4em;
+#entries.show .body_column,
+#entries.show .header_column {
+  margin-bottom: 2em;
   }  
-
 #entries.show .body_column h3,  
 #entries.show .body_column h4 {
   @include gesta;
