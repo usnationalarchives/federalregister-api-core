@@ -43,6 +43,7 @@
   lede_photo_id                :integer(4)
   lede_photo_candidates        :text
   docket_id                    :string(255)
+  raw_text_updated_at          :datetime
 
 =end Schema Information
 
