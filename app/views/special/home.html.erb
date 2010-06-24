@@ -59,6 +59,8 @@
     </p>
     </div>
   </div>
+  
+  <%= render :esi => entry_statistics_by_date_path(Entry.latest_publication_date) %>
 </div>
 
 <%# HELP-DESIGN: this should be placed better... %>

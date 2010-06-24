@@ -205,6 +205,10 @@ class Entry < ApplicationModel
            :limit => n.to_i)
   end
   
+  def self.of_type(type)
+    scoped(:conditions => {:granule_class => type})
+  end
+  
   def entry_type 
     ENTRY_TYPES[granule_class]
   end
