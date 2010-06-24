@@ -17,9 +17,7 @@
           (<%= @entry.comments_close_on %>)  <%= link_to "Submit a formal comment", @entry.comment_url || '#addresses', :class => 'button', :target => '_blank' %>
           </p>
         </div>
-      <% end -%>
-      
-      <%= render :partial => 'download_and_share', :locals => {:entry => @entry} %>
+      <% end -%>      
   </div> <!-- end metadata_content_area -->
   
   <div id="content_area">
@@ -53,6 +51,7 @@
   </div> <!-- content_area end -->
   
   <% aside_tag(:id => 'sidebar') do %>
+    <%= render :partial => 'download', :locals => {:entry => @entry} %>
     <%= render :partial => "metadata", :locals => {:entry => @entry} %>
   <% end -%>
   
