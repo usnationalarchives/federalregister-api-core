@@ -17,7 +17,7 @@ NAV
 #primary_nav {
   background: #e0e0e0;
   height: 40px;
-  margin-bottom: 5px;
+  margin-bottom: 2px;
   overflow: hidden; 
   }
 #primary_nav li {
@@ -45,12 +45,37 @@ SEARCH
 ******************************/
 
 #search_bar  {
+  border-top: 4px solid $golden; /* TODO cut border and make it the background because it antialised */
+  }
+#search_container {
+  margin: 0 auto;
+  position: relative;
+  width: 960px;
+  }  
+#search {
+  background: url(/images/search_bg.png) no-repeat left top;
+  height: 40px;
+  position: absolute;
+  right: 0;
+  top: -4px;
+  width: 260px;
+  }
+#search input[type='text'] {
+  border: 1px solid darken($golden, 10%);
+  @include border-radius(8px);
+  margin: 6px 0 0 25px;
+  padding: 5px;
+  }
 
+#search > label {
+  display: none;
   }
-#search input {
-  border: 1px solid #919191;
-  @include border-radius(5px);
-  }
+
+/******************************
+
+LOGO
+
+******************************/
    
 #header_logo {
   @include replace-text-with-dimensions('logotype.png', 0, 0);
