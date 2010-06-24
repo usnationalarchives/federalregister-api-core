@@ -56,7 +56,11 @@
           <xsl:attribute name="id">
             <xsl:call-template name="paragraph_id" />
           </xsl:attribute>
-      
+          
+          <xsl:attribute name="data-page">
+            <xsl:call-template name="current_page" />
+          </xsl:attribute>
+          
           <xsl:if test="name(.) = 'FP'">
             <xsl:attribute name="class">flush</xsl:attribute>
           </xsl:if>
@@ -120,6 +124,17 @@
   </xsl:template>
   
   <xsl:template name="current_page">
-    <xsl:value-of select="preceding::PRTPAGE[not(ancestor::FTNT)][last()][@P]" />
+    <xsl:variable name="current_page">
+      <xsl:value-of select="preceding::PRTPAGE[not(ancestor::FTNT)][1]/@P" />
+    </xsl:variable>
+    
+    <xsl:choose>
+      <xsl:when test="number($current_page)">
+        <xsl:value-of select="$current_page" />
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:value-of select="$first_page" />
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
 </xsl:stylesheet>
