@@ -1,13 +1,11 @@
 <div class="section three_col_list">
-<% entries.group_by(&:month_year).each do |mnth_year, entries| %>
-    <% year  = entries.first.publication_date.strftime("%Y") %>
-    <% month = entries.first.publication_date.strftime("%m") %>
-    <h3><%= mnth_year %></h3>
+<% entries.group_by{|e| e.publication_date.to_s(:year_month)}.sort_by{|date,entries| date}.reverse.each do |unused, entries| %>
+    <h3><%= entries.first.publication_date.to_s(:month_year) %></h3>
     <div class="grouped_by_date">
-    <% entries.group_by(&:publication_date).each do |pub_date, entries| %>  
+    <% entries.group_by{|e| e.publication_date}.sort_by{|date, entries| date}.reverse.each do |pub_date, entries| %>  
       <div class="date"><%= link_to pub_date.to_formatted_s(:day_date), entries_by_date_path(pub_date) %></div>
       <ul class="comments">
-        <% entries.each do |entry| %>  
+        <% entries.sort_by(&:title).each do |entry| %>  
           <li><%= link_to entry.title, entry_path(entry) %></li>
         <% end %>
       </ul> 

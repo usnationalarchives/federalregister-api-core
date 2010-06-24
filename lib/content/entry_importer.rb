@@ -1,10 +1,12 @@
 module Content
   class EntryImporter
+    # order here determines order of attributes when running :all
     include Content::EntryImporter::BasicData
     include Content::EntryImporter::Agencies
     include Content::EntryImporter::CFR
     include Content::EntryImporter::FullText
     include Content::EntryImporter::FullXml
+    include Content::EntryImporter::RawText
     include Content::EntryImporter::LedePhotoCandidates
     include Content::EntryImporter::PageNumber
     include Content::EntryImporter::Events
@@ -43,8 +45,6 @@ module Content
             end
           end
         end
-        
-        AgencyAssignment.recalculate!
       end
     end
   

@@ -14,8 +14,21 @@ var citation_info = {
   create: function( index ){
     var id = "citation_info_" + index;
     var index_el = $("#" + index);
-    var box = '<div id="' + id + '" class="pull_out citation_box"><ul><li class="link"><a href="/a/'+ $(".doc_number").text() + '/' + index +'">Link to this paragraph</a></li><li class="cite_volume"><strong>Citation</strong> ' + $(".metadata_list .volume").text() + ' FR ' + $(".metadata_list .page").text() + '</li><li class="cite_page"><strong>Page</strong> ' + $(".metadata_list .page").text() + '</li><li class="email"><a href="#">Email this</a></li><li class="twitter"><a href="#">Share this on Twitter</a></li><li class="facebook"><a href="#">Share this on Facebook</a></li><li class="digg"><a href="#">Share this on digg</a></li></ul></div>'
-    $("#sidebar").append(box);
+    
+    var next_header = index_el.nextAll('h1,h2,h3,h4,h5,h6').add(index_el.parentsUntil('#content_area').nextAll().find('h1,h2,h3,h4,h5,h6')).first();
+    var html = tmpl(this.template, {
+      page: index_el.attr('data-page'),
+      document_number: $(".doc_number").text(),
+      url: 'http://' + window.location.host + '/a/' + $(".doc_number").text() + '/' + index,
+      id: id,
+      volume: $(".metadata_list .volume").text(),
+      title: document.title,
+      content: index_el.text(),
+      next_header_text: next_header.text().replace(/ Back to Top/, ''),
+      next_header_anchor: next_header.attr('id')
+    });
+    
+    $("#sidebar").append(html);
     var id_el = $("#" + id); 
     id_el.css({"top": index_el.position().top + 6, "right": 0}).data("id", index).data("sticky", false);
     this.cache[ index ] = id_el;
@@ -32,7 +45,23 @@ var citation_info = {
   },
   hide: function( id ){
     this.cache[id].fadeOut();
-  }
+  },
+  template: [
+    '<div id="<%= id %>" class="pull_out citation_box">',
+    '  <ul>',
+    '    <li class="link">',
+    '      <a href="<%= url %>">Permalink</a>',
+    '    </li>',
+    '    <li class="cite_volume"><strong>Citation</strong> <%= volume %> FR <%= page %></li>',
+    '    <li class="cite_page"><strong>Page</strong> <%= page %></li>',
+    // '    <li class="email"><a href="#">Email this</a></li>',
+    '    <li class="twitter"><a href="http://twitter.com/home?status=<%= escape(url) %>">Share this on Twitter</a></li>',
+    '    <li class="facebook"><a href="javascript:unimplemented()">Share this on Facebook</a></li>',
+    '    <li class="digg"><a href="http://digg.com/submit?url=<%= escape(url) %>&title=<%= escape(title) %>&bodytext=<%= escape(content) %>&media=news">Share this on digg</a></li>',
+    '    <li><strong>Next</strong> <a href="#<%= next_header_anchor %>"><%= next_header_text %></a></li>',
+    '  </ul>',
+    '</div>'
+  ].join("\n")
 };
 
 $(document).ready(function() {

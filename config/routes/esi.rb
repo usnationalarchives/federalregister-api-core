@@ -16,6 +16,13 @@ ActionController::Routing::Routes.draw do |map|
   map.regulatory_plan_timeline 'regulations/:regulation_id_number/timeline',
                                 :controller => 'regulatory_plans',
                                 :action     => 'timeline'
+  
+  # REGULATORY PLAN SEARCH
+  map.regulatory_plan_search_header 'regulations/search/header', :controller => 'regulatory_plans/search', :action => 'header'
+  map.regulatory_plan_search_results 'regulations/search/results', :controller => 'regulatory_plans/search', :action => 'results'
+  map.regulatory_plan_search_facets 'regulations/search/facets/:facet', :controller => 'regulatory_plans/search', :action => 'facets'
+  
   # SECTIONS
-  map.popular_entries_section ':slug/popular.:format', :controller => "sections", :action => "popular"
+  map.popular_entries_section ':slug/popular_entries.:format', :controller => "sections", :action => "popular_entries"
+  map.popular_topics_section ':slug/popular_topics.:format', :controller => "sections", :action => "popular_topics"
 end

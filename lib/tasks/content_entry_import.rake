@@ -16,9 +16,14 @@ namespace :content do
         entry_importer(:full_text)
       end
       
-      desc "Extract full xml & full_text"
-      task :full_xml_and_full_text => :environment do
-        entry_importer(:full_xml, :full_text)
+      desc "Extract full_xml & raw_text"
+      task :full_xml_and_raw_text => :environment do
+        entry_importer(:full_xml, :raw_text)
+      end
+      
+      desc "Extract raw_text"
+      task :raw_text => :environment do
+        entry_importer(:raw_text)
       end
       
       desc "Extract docket id"
@@ -38,9 +43,22 @@ namespace :content do
       
       desc "Extract CFR information into entries"
       task :cfr => :environment do
-        entry_importer(:cfr_title, :cfr_part, :section_ids)
+        entry_importer(:cfr_title, :cfr_part)
       end
-    
+      
+      desc "Assign entries to sections"
+      task :sections => :environment do
+        # entry_importer(:sections)
+        sections = Section.all(:include => :agencies)
+        Content.parse_dates(ENV['DATE_TO_IMPORT']).each do |date|
+          puts "handling #{date}..."
+          Entry.published_on(date).scoped(:include => [:agencies, :sections]).each do |entry|
+            entry.section_ids = sections.select{|s| s.should_include_entry?(entry)}.map(&:id)
+            entry.save
+          end
+        end
+      end
+      
       desc "Extract agency information into entries"
       task :agencies => :environment do
         entry_importer(:agency_name_assignments)

@@ -16,7 +16,18 @@ class EntriesController < ApplicationController
       end
       wants.rss do
         @feed_name = 'Federal Register Latest Entries'
-        @entries = Entry.find(:all, :conditions => {:publication_date => Entry.latest_publication_date})
+        @entries = Entry.published_today.preload(:topics, :agencies)
+      end
+    end
+  end
+  
+  def highlighted
+    cache_for 1.day
+    respond_to do |wants|
+      wants.rss do
+        @feed_name = 'Featured Federal Register Articles'
+        @entries = Entry.highlighted.preload(:topics, :agencies)
+        render :template => 'entries/index.rss.builder'
       end
     end
   end

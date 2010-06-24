@@ -1,4 +1,5 @@
-<% feed_autodiscovery entries_path(:format => :rss) %>
+<% feed_autodiscovery entries_path(:format => :rss), "Recent Articles from the Federal Register" %>
+<% feed_autodiscovery highlighted_entries_path(:format => :rss), "Featured Articles from the Federal Register" %>
 <% add_column_class('home') %>
 
 <h1 class="title"><span><%= Entry.latest_publication_date.to_s(:wday_and_pretty_date) %></span></h1>
@@ -45,9 +46,10 @@
     <%# %>
   </div>
 
-  <h2 class="title_bar">New items in the FR</h2>
+<h2 class="title_bar">New items in the FR</h2>
 
-<div id="section_news_boxes" style="clear:both">
+<div id="section_news_boxes">
+  <%= link_to 'Subscribe', highlighted_entries_path(:format => :rss), :class => 'button rss' %>
   <% @sections.each do |section| %>
   <div class="fr_section_wrapper grid_8 <%= cycle('alpha','omega') %>">
       <div class="fr_section <%= section.slug %>">
