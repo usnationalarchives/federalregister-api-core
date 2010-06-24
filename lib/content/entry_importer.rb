@@ -45,8 +45,6 @@ module Content
             end
           end
         end
-        
-        AgencyAssignment.recalculate!
       end
     end
   
