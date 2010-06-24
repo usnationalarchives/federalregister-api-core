@@ -129,6 +129,7 @@ class Entry < ApplicationModel
   
   file_attribute(:full_xml)  {"#{RAILS_ROOT}/data/xml/#{document_file_path}.xml"}
   file_attribute(:full_text) {"#{RAILS_ROOT}/data/text/#{document_file_path}.txt"}
+  file_attribute(:raw_text)  {"#{RAILS_ROOT}/data/raw/#{document_file_path}.txt"}
   
   has_many :regulatory_plans,
            :primary_key => :regulation_id_number,
@@ -211,7 +212,7 @@ class Entry < ApplicationModel
     # fields
     indexes title
     indexes abstract
-    indexes "LOAD_FILE(CONCAT('#{RAILS_ROOT}/data/text/', document_file_path, '.txt'))", :as => :full_text
+    indexes "LOAD_FILE(CONCAT('#{RAILS_ROOT}/data/raw/', document_file_path, '.txt'))", :as => :full_text
     indexes granule_class, :as => :type, :facet => true
     indexes regulation_id_number
     
