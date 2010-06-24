@@ -62,6 +62,14 @@ module RouteBuilder
     }
   end
   
+  add_route :entry_statistics_by_date do |date|
+    {
+      :year            => date.strftime('%Y'),
+      :month           => date.strftime('%m'),
+      :day             => date.strftime('%d'),
+    }
+  end
+  
   add_route :section do |section|
     {
       :slug => section.slug
