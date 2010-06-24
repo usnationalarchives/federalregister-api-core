@@ -55,29 +55,24 @@
   </head>
 
   <body id="<%= controller.controller_name %>" class="<%= controller.action_name %>">
-    <% header_tag(:id => "header") do %>
-        <div id="issue_and_search_bar">
-          <div>
-            <p>Current Issue: <%= Entry.latest_publication_date.to_s(:wday_and_pretty_date) %></p>
-            <% if @preview %>
-              <span id="preview_indicator">Preview Mode</span>
-            <% end %>
-            <form action="<%= entries_search_path %>" method="get">
-              <label for="term">Search the Federal Register</label>
-              <%= text_field_tag 'conditions[term]', nil, :placeholder =>  "Search Articles" %>
-              <%= submit_tag 'Go', :class => "search_btn" %>
-            </form>
-          </div>
-        </div> <!-- END issue and search bar -->
-
-        <%= render :partial => 'layouts/navigation', :locals => {:last_date => @last_date, :search_term => @search_term} %>    
-        
-        <% hgroup_tag(:id => "header_logo") do %>        
-            <h1><a href="/" title="Federal Register Home">The Federal Register</a></h1>
-            <h2>The Daily Journal of the United States Government</h2>
-        <% end -%>
-        
+    
+    <% header_tag(:id => 'header') do %>
+      <%= render :partial => 'layouts/navigation', :locals => {:last_date => @last_date, :search_term => @search_term} %>    
+      
+      <div id="search_bar">
+        <form action="<%= entries_search_path %>" method="get" id="search_bar">
+          <label for="term">Search the Federal Register</label>
+          <%= text_field_tag 'conditions[term]', nil, :placeholder =>  "Search Articles" %>
+          <%= submit_tag 'Go', :class => "search_btn" %>
+        </form>
+      </div>  
+      
+      <% hgroup_tag(:id => "header_logo") do %>        
+          <h1><a href="/" title="Federal Register Home">The Federal Register</a></h1>
+          <h2>The Daily Journal of the United States Government</h2>
+      <% end -%>
     <% end -%>
+    
     
     
     <div id="main">

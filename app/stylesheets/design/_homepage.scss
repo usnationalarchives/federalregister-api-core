@@ -1,11 +1,9 @@
 /******************************
 
-HOME PAGE 
+PROMO BOX
 
 ******************************/
 
-
-/* PROMO BOX */
 #top_news_promo {
   border: 5px solid #ececec;
   @include border-radius(10px);
@@ -13,13 +11,12 @@ HOME PAGE
   overflow: hidden;
   width: 645px;
 }
-#top_news_promo ul,
-#top_news_promo li {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  }
-/* PROMO NAV */
+
+/******************************
+
+PROMO NAV
+
+******************************/
 #top_news_promo ul.section_nav {
   display: block;
   float: left;
@@ -70,7 +67,12 @@ HOME PAGE
   outline: none;
   }
   
-/* PROMO ITEMS */
+/******************************
+
+PROMO ITEMS
+
+******************************/
+  
 #top_news_promo .news_items {
   display: block;
   float: left;
@@ -103,7 +105,12 @@ HOME PAGE
   overflow: hidden;
   }  
 
-/* PROMO STATS */     
+/******************************
+
+PROMO STATS
+
+******************************/
+      
 .stats {
   border-top: 1px solid #ebebeb;
   bottom: 0;
@@ -138,10 +145,71 @@ HOME PAGE
   display: block;
   }  
   
+
+/******************************
+
+LEARN & CURRENT 
+
+******************************/
   
-  
-  
-  
+#learn .about {
+  margin-bottom: 1em;
+  padding: 0 0 0 100px;
+  }
+#learn .about.notices { background: url(/images/icon_notice.png) no-repeat left top; }
+#learn .about.proposed_rules { background: url(/images/icon_proposed.png) no-repeat left top;  }
+#learn .about.final_rules { background: url(/images/icon_final.png) no-repeat left top;  }
+#learn .about.presidential_documents { }  
+#learn p {
+  border-bottom: 3px solid #ECECEC;
+  }
+#learn .about:last-child p {
+  border-bottom: 0;
+  }  
+
+
+
+/******************************
+
+LEARN & CURRENT 
+
+******************************/  
+
+.fr_section {
+  padding: 0 45px;
+  }
+.fr_section.money {
+  background: url(/images/icon_money.png) no-repeat left top;
+  }
+.fr_section.environment {
+  background: url(/images/icon_environment.png) no-repeat left top;
+  }
+.fr_section.world {
+  background: url(/images/icon_world.png) no-repeat left top;
+  }
+.fr_section.science-and-technology {
+  background: url(/images/icon_science.png) no-repeat left top;
+  }  
+.fr_section.business-and-industry {
+  background: url(/images/icon_business.png) no-repeat left top;
+  }
+.fr_section.health-and-public-welfare {
+  background: url(/images/icon_health.png) no-repeat left top;
+  }
+.fr_section h2 {
+  border-bottom: 2px solid #464646;
+  @include apertura-condensed;
+  font-size: 1.5em;
+  margin-bottom: .5em;
+  text-transform: uppercase;
+  }
+.fr_section h2 a {
+  color: #464646;
+  }
+
+
+
+
 .newsbox {
   @include border-radius(5px);
   height: 225px; /* TODO remove this height */
