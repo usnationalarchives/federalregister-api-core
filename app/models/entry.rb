@@ -43,6 +43,7 @@
   lede_photo_id                :integer(4)
   lede_photo_candidates        :text
   docket_id                    :string(255)
+  raw_text_updated_at          :datetime
 
 =end Schema Information
 
@@ -129,6 +130,7 @@ class Entry < ApplicationModel
   
   file_attribute(:full_xml)  {"#{RAILS_ROOT}/data/xml/#{document_file_path}.xml"}
   file_attribute(:full_text) {"#{RAILS_ROOT}/data/text/#{document_file_path}.txt"}
+  file_attribute(:raw_text)  {"#{RAILS_ROOT}/data/raw/#{document_file_path}.txt"}
   
   has_many :regulatory_plans,
            :primary_key => :regulation_id_number,
@@ -178,19 +180,29 @@ class Entry < ApplicationModel
     scoped(:order => "publication_date DESC", :limit => n)
   end
   
-  def self.popular(n = 10, since = 1.month.ago)
+  def self.popular(since = 1.month.ago)
     scoped(
       :select => "entries.id, entries.title, entries.document_number, entries.publication_date, entries.abstract, count(distinct(remote_ip)) AS num_views",
       :joins => :entry_page_views,
       :conditions => ["entry_page_views.created_at > ?", since],
       :group => "entries.id",
-      :order => "num_views DESC",
-      :limit => n
+      :having => "num_views > 0",
+      :order => "num_views DESC"
     )
+  end
+  
+  def self.highlighted
+    scoped(:joins => :section_highlights, :conditions => {:section_highlights => {:publication_date => latest_publication_date}})
   end
   
   def self.most_recent(n)
     scoped(:order => "entries.publication_date DESC", :limit => n.to_i)
+  end
+  
+  def self.most_cited(n)
+    scoped(:conditions => "entries.citing_entries_count > 0",
+           :order => "citing_entries_count DESC, publication_date DESC",
+           :limit => n.to_i)
   end
   
   def entry_type 
@@ -201,7 +213,7 @@ class Entry < ApplicationModel
     # fields
     indexes title
     indexes abstract
-    indexes "LOAD_FILE(CONCAT('#{RAILS_ROOT}/data/text/', document_file_path, '.txt'))", :as => :full_text
+    indexes "LOAD_FILE(CONCAT('#{RAILS_ROOT}/data/raw/', document_file_path, '.txt'))", :as => :full_text
     indexes granule_class, :as => :type, :facet => true
     indexes regulation_id_number
     
@@ -232,14 +244,6 @@ class Entry < ApplicationModel
   
   def curated_abstract
     self[:curated_abstract] || abstract
-  end
-  
-  def month_year
-    publication_date.to_formatted_s(:month_year)
-  end
-  
-  def year_month
-    '200112'
   end
   
   def day

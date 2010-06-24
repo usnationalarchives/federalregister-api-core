@@ -122,7 +122,7 @@
     <xsl:if test="$how_many &gt; 0">
       <!-- Add empty cell. -->
       <td class="empty">
-        <xsl:text>&amp;nbsp;</xsl:text>
+        <xsl:text disable-output-escaping="yes">&amp;nbsp;</xsl:text>
       </td>
       <!-- Print remaining ($how_many - 1) cells. -->
       <xsl:call-template name="empty_table_cell">

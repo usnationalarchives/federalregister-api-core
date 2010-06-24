@@ -1,3 +1,17 @@
+=begin Schema Information
+
+ Table name: events
+
+  id                       :integer(4)      not null, primary key
+  entry_id                 :integer(4)
+  date                     :date
+  title                    :string(255)
+  place_id                 :integer(4)
+  remote_call_in_available :boolean(1)
+  event_type               :string(255)
+
+=end Schema Information
+
 class Event < ApplicationModel
   EVENT_TYPES_SINGULAR = {
     'PublicMeeting' => 'Public Meeting',
@@ -39,7 +53,7 @@ class Event < ApplicationModel
     indexes entry.abstract
     indexes place.name, :as => :place
     indexes event_type, :as => :type, :facet => true
-    indexes "LOAD_FILE(CONCAT('#{RAILS_ROOT}/data/text/', entries.document_file_path, '.txt'))", :as => :entry_full_text
+    indexes "LOAD_FILE(CONCAT('#{RAILS_ROOT}/data/raw/', entries.document_file_path, '.txt'))", :as => :entry_full_text
     
     # attributes
     has date

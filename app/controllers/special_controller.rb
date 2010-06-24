@@ -7,6 +7,10 @@ class SpecialController < ApplicationController
   def agency_highlight
     cache_for 10.minutes
     @agency_highlight = AgencyHighlight.random_choice
-    render :layout => false
+    if @agency_highlight.present?
+      render :layout => false
+    else
+      render :nothing => true
+    end
   end
 end

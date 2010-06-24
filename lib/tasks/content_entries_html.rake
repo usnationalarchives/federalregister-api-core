@@ -10,6 +10,7 @@ namespace :content do
         dates.each do |date|
           puts "compiling HTML for #{date}..."
           Entry.published_on(date).each do |entry|
+            Entry.connection.execute("SELECT NOW()") # keep MySQL connection alive; TODO: FIXME
             path = "#{RAILS_ROOT}/public/articles/#{entry.document_file_path}.html"
             File.makedirs(File.dirname(path))
             

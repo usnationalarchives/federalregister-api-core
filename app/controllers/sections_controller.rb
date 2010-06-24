@@ -51,7 +51,7 @@ class SectionsController < ApplicationController
     end
   end
   
-  def significant
+  def significant_entries
     cache_for 1.day
     @section = Section.find_by_slug!(params[:slug])
     
@@ -65,10 +65,20 @@ class SectionsController < ApplicationController
     end
   end
   
-  def popular
+  def popular_entries
     cache_for 1.hour
     @section = Section.find_by_slug!(params[:slug])
-    @entries = @section.entries.popular(5)
+    @entries = @section.entries.popular.limit(5)
+    
+    render :layout => false
+  end
+  
+  def popular_topics
+    cache_for 1.hour
+    @section = Section.find_by_slug!(params[:slug])
+    @topics = @section.popular_topics.limit(5)
+    
+    render :layout => false
   end
   
 end
