@@ -88,7 +88,7 @@ class ApplicationSearch
     define_method "#{filter_name}=" do |val|
       if val.present?
         instance_variable_set("@#{filter_name}", val)
-        add_filter options.merge(:value => val, :condition => filter_name, :name_definer => name_definer)
+        add_filter options.merge(:value => val, :condition => filter_name, :name_definer => name_definer, :name => options[:name])
       end
     end
   end

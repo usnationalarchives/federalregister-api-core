@@ -71,9 +71,8 @@ ActionController::Routing::Routes.draw do |map|
   
   # REGULATIONS
   map.regulatory_plans_search 'regulations/search',
-                      :controller => 'regulatory_plans',
-                      :action     => 'search'
-  map.regulatory_plans_search_facet 'regulations/search/facet', :controller => 'regulatory_plans', :action => 'search_facet'
+                      :controller => 'regulatory_plans/search',
+                      :action     => 'show'
   map.regulatory_plan 'regulations/:regulation_id_number/:slug',
                       :controller => 'regulatory_plans',
                       :action     => 'show'
