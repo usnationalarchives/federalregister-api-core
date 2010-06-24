@@ -62,7 +62,7 @@
     <% header_tag(:id => "header") do %>
         <div id="issue_and_search_bar">
           <div>
-            <p>Current Issue: <%= Entry.latest_publication_date.to_s(:wday_and_pretty_date) %></p>
+            <p>Current Issue: <%= link_to Entry.latest_publication_date.to_s(:wday_and_pretty_date), entries_by_date_path(Entry.latest_publication_date) %></p>
             <% if @preview %>
               <span id="preview_indicator">Preview Mode</span>
             <% end %>
