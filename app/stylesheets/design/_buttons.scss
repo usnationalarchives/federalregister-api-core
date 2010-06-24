@@ -20,8 +20,11 @@ text-transform: uppercase;
 text-indent: -9999px;
 }
 .button.list {
-  margin-right: 10px;
-}
+  margin: 0 .5em 0 0;
+  }
+.button.list:last-child {
+  margin: 0;
+  }  
 .button.rss {
 background-image: url(/images/rss_icon_line.png);
 background-position: 10px 10px;
@@ -35,7 +38,7 @@ padding: 10px 10px 7px 30px;
 padding: 10px 10px 4px 25px;
 }
 .comments_close {
-background: url(/images/comment_icon.png) no-repeat left top;
+background: url(/images/icon_comment.png) no-repeat left top;
 color: #6e6e6e;
 @include apertura-condensed;
 line-height: 19px;
