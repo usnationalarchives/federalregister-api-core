@@ -3,6 +3,9 @@
 
   <div class="result_info">
     <span class="date"><%= event.date %></span>
+    <% event.entry.sections.each do |section| %>
+      <span class="icon <%= section.slug %>"><%= section.title %></span>
+    <% end %>
     <span class="excepts"><%= 
       if event.excerpts.entry_full_text.present?
         sanitize event.excerpts.entry_full_text, :tags => %w(span), :attributes => %w(class)
