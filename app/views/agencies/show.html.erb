@@ -1,8 +1,7 @@
 <% title @agency.name %>
 <h1 class="title"><span>Agency</span></h1>
 
-<% feed_autodiscovery agency_path(@agency, :format => :rss), "Recent Articles from #{h @agency.name}" %>
-<% feed_autodiscovery significant_entries_agency_path(@agency, :format => :rss), "Recent Significant Articles from #{h @agency.name}" %>
+<% feed_autodiscovery agency_path(@agency, :format => :rss) %>
 
 <div class="group">
   
@@ -23,7 +22,7 @@
   <% end %>  
     
   <% aside_tag(:id => 'sidebar') do %>  
-    <% section_tag(:class => 'TOC pull_out') do %>  
+    <% section_tag(:class => 'TOC aside_box') do %>  
       <h1>Table of Contents</h1>
       <ul>
         <li><%= link_to 'Most Recent Significant Regulations', '#significant_regulations' %></li>
@@ -62,13 +61,9 @@
   <div class="group" id="significant_regulations">
     <h2 class="title_bar"><span class="small_stack">Most <span>Recent</span></span> Significant Regulations</h2>
     <%= render :partial => 'entries/grouped_by_date', :locals => {:entries => @significant_entries}%>
-    <%# HELP-DESIGN: this should be placed better... %>
-    <%= link_to 'Subscribe', significant_entries_agency_path(@agency, :format => :rss), :class => 'button rss' %>
   </div>
 <% end %>
 
-<%# HELP-DESIGN: this should be placed better... %>
-<%= link_to 'Subscribe', agency_path(@agency, :format => :rss), :class => 'button rss' %>
 <%= render :partial => 'entries/list', :locals => {:list_type => 'agency', :entries => @entries, :search_params => {:agency_id => @agency.id}} %>
 
 <%= render :partial => 'entries/most_cited', :locals => {:entries => @most_cited_entries} %>

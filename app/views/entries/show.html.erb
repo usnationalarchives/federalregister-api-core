@@ -12,7 +12,7 @@
       <%= render :partial => "header", :locals => {:entry => @entry} %>
       
       <% if (@entry.comments_close_on.present? && @entry.comments_close_on >= Date.today) %>
-        <div id="flash_message">
+        <div id="flash_message" class="comment">
           <p>This article has a comment period that ends in <%= pluralize (@entry.comments_close_on - Entry.latest_publication_date), 'day' %>
           (<%= @entry.comments_close_on %>)  <%= link_to "Submit a formal comment", @entry.comment_url || '#addresses', :class => 'button', :target => '_blank' %>
           </p>
@@ -48,8 +48,10 @@
   </div> <!-- content_area end -->
   
   <% aside_tag(:id => 'sidebar') do %>
+  <div class="aside_box">
     <%= render :partial => 'download', :locals => {:entry => @entry} %>
     <%= render :partial => "metadata", :locals => {:entry => @entry} %>
+  </div>  
   <% end -%>
   
 <% end %> <!-- end article tag -->
