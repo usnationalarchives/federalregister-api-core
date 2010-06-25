@@ -2,19 +2,24 @@ var citation_info = {
   cache: {},
   open: null,
   setup: function(  ){
-    $(".body_column > *[id^='p-'], .body_column > ul > li[id^='p-']").addClass("citable");
+    var anchor = "<span class='trigger'>Show citation box</span>"
+    $(".body_column > *[id^='p-'], .body_column > ul > li[id^='p-']").append(anchor).addClass("citable");
     var self = this;
+    
     $("#content_area").bind('click', function(event) {
-      if( $(event.target).hasClass("citable") ){
+      if( $(event.target).hasClass("trigger") ){
         event.preventDefault();
-        self.show( $(event.target).attr("id") );    
+        self.show( $(event.target).parent().attr("id") );    
       }
+    });
+    $(".close").live("click", function(event) {
+      event.preventDefault();
+      self.cache[ $(this).parent().data("id") ].hide();
     });
   },
   create: function( index ){
     var id = "citation_info_" + index;
     var index_el = $("#" + index);
-    
     var next_header = index_el.nextAll('h1,h2,h3,h4,h5,h6').add(index_el.parentsUntil('#content_area').nextAll().find('h1,h2,h3,h4,h5,h6')).first();
     var html = tmpl(this.template, {
       page: index_el.attr('data-page'),
@@ -60,6 +65,7 @@ var citation_info = {
     '    <li class="digg"><a href="http://digg.com/submit?url=<%= escape(url) %>&title=<%= escape(title) %>&bodytext=<%= escape(content) %>&media=news">Share this on digg</a></li>',
     '    <li><strong>Next</strong> <a href="#<%= next_header_anchor %>"><%= next_header_text %></a></li>',
     '  </ul>',
+    '  <a href="#" class="close" title="Close this citation">Close</a>',
     '</div>'
   ].join("\n")
 };
