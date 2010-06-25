@@ -64,8 +64,7 @@ background-position: 10px -20px;
   display: inline-block;
 }
 
-.button.social,
-.button.format {
+.button.social {
   background: none;
   @include border-radius(0);
   height: 24px;
@@ -73,6 +72,14 @@ background-position: 10px -20px;
   text-indent: -9999px;
   width: 24px;
 }
+
+.button.format {
+  border: none;
+  background-color: none;
+  background-repeat: no-repeat;
+  line-height: 24px;
+  padding-left: 30px;
+  }
 
 .button.social.digg { background-image: url(/images/social/24px/digg.png); }
 .button.social.email { background-image: url(/images/social/24px/email.png); }
