@@ -36,17 +36,14 @@
         </ul>
       </div>
     <% end %>
-
-  <%#= render :partial => 'aside', :locals => {:entry => @entry} %>
   
-  <div id="fulltext_content_area">
-    
-    <% if RAILS_ENV == 'development' %>
-      <%= render :partial => 'full_text', :locals => {:entry => @entry} %>
-    <% else %>
-      <%= render :esi => entry_full_text_path(@entry) %>
-    <% end %>
-  </div> <!-- end content area -->  
+    <div id="fulltext_content_area">
+      <% if RAILS_ENV == 'development' %>
+        <%= render :partial => 'full_text', :locals => {:entry => @entry} %>
+      <% else %>
+        <%= render :esi => entry_full_text_path(@entry) %>
+      <% end %>
+    </div> <!-- end fulltext_content_area area -->  
   
   </div> <!-- content_area end -->
   
