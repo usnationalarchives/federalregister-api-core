@@ -205,6 +205,10 @@ class Entry < ApplicationModel
            :limit => n.to_i)
   end
   
+  def self.of_type(type)
+    scoped(:conditions => {:granule_class => type})
+  end
+  
   def entry_type 
     ENTRY_TYPES[granule_class]
   end
@@ -324,7 +328,9 @@ class Entry < ApplicationModel
   end
   
   def self.latest_publication_date
-    find(:first, :select => "publication_date", :order => "publication_date DESC").publication_date
+    with_exclusive_scope do
+      Entry.find(:first, :select => "publication_date", :order => "publication_date DESC").publication_date
+    end
   end
   
   def self.latest_publication_dates(n)

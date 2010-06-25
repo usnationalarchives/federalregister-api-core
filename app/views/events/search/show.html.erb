@@ -1,7 +1,7 @@
 <% title @search.term.blank? ? 'Event Search' : "Event Search Results for '#{h @search.term}'" %>
 <% feed_autodiscovery url_for(params.merge(:format => :rss, :order => 'date', :publication_date_less_than => nil)) %>
 
-<h1 class="title"><span>Search FR Events</span></h1>
+<h1 class="title"><span>Search Events</span></h1>
 
 <% unless @search.valid? %>
 <ul class="errors">

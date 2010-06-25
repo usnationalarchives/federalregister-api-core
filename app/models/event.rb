@@ -47,6 +47,10 @@ class Event < ApplicationModel
     self['title'] || entry.title
   end
   
+  def entry_full_text
+    entry.raw_text
+  end
+  
   define_index do
     # fields
     indexes "entries.title", :as => :title

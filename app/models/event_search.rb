@@ -54,6 +54,6 @@ class EventSearch < ApplicationSearch
   private
   
   def set_defaults(options)
-    @order = options[:order] || 'relevant'
+    @order = options[:order] || 'newest'
   end
 end
