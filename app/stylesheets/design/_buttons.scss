@@ -75,10 +75,10 @@ background-position: 10px -20px;
 
 .button.format {
   border: none;
-  background-color: none;
+  background-color: #fff;
   background-repeat: no-repeat;
   line-height: 24px;
-  padding-left: 30px;
+  padding: 0 0 0 30px;
   }
 
 .button.social.digg { background-image: url(/images/social/24px/digg.png); }
@@ -86,5 +86,5 @@ background-position: 10px -20px;
 .button.social.facebook { background-image: url(/images/social/24px/facebook.png); }
 .button.social.reddit { background-image: url(/images/social/24px/reddit.png); }
 .button.social.twitter { background-image: url(/images/social/24px/twitter.png); }
-.button.format.pdf { background-image: url(/images/icon_pdf.png); }
-.button.format.xml { background-image: url(/images/icon_xml.png); }
+.button.format.pdf { background: url(/images/icon_pdf.png) no-repeat left 50%; }
+.button.format.xml { background: url(/images/icon_xml.png) no-repeat left 50%; }
