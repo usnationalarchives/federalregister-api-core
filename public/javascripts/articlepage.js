@@ -11,6 +11,10 @@ var citation_info = {
         event.preventDefault();
         self.show( $(event.target).parent().attr("id") );    
       }
+      if( $(event.target).hasClass("citable") ){
+        event.preventDefault();
+        self.show( $(event.target).attr("id") );    
+      }
     });
     $(".close").live("click", function(event) {
       event.preventDefault();
@@ -52,7 +56,7 @@ var citation_info = {
     this.cache[id].fadeOut();
   },
   template: [
-    '<div id="<%= id %>" class="pull_out citation_box">',
+    '<div id="<%= id %>" class="aside_box citation_box">',
     '  <ul>',
     '    <li class="link">',
     '      <a href="<%= url %>">Permalink</a>',
@@ -63,8 +67,13 @@ var citation_info = {
     '    <li class="twitter"><a href="http://twitter.com/home?status=<%= escape(url) %>">Share this on Twitter</a></li>',
     '    <li class="facebook"><a href="javascript:unimplemented()">Share this on Facebook</a></li>',
     '    <li class="digg"><a href="http://digg.com/submit?url=<%= escape(url) %>&title=<%= escape(title) %>&bodytext=<%= escape(content) %>&media=news">Share this on digg</a></li>',
-    '    <li><strong>Next</strong> <a href="#<%= next_header_anchor %>"><%= next_header_text %></a></li>',
     '  </ul>',
+    // TODO HELP ANYONE - Can we wrap an if around this? Shouldn't render anything if no next header.
+    '  <div class="header_navigation_separator">',
+    '    <ul>',
+    '       <li class="next"><a href="#<%= next_header_anchor %>"><%= next_header_text %></a></li>',
+    '   </ul>',
+    '  </div>',
     '  <a href="#" class="close" title="Close this citation">Close</a>',
     '</div>'
   ].join("\n")
