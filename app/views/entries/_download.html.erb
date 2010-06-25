@@ -1,4 +1,6 @@
-<%= link_to "Download Official PDF", entry.source_url('pdf'), :class => 'button format list pdf', :title => 'Download as PDF (Official Edition)' %>
-<%= link_to "Download XML", entry_path(entry, :format => :xml), :class => 'button format list xml', :title => 'Download article as XML' %>
+<div class="download_separator">
+  <%= link_to "Official PDF", entry.source_url('pdf'), :class => 'button format list pdf', :title => 'Download as PDF (Official Edition)' %>
+  <%= link_to "XML", entry_path(entry, :format => :xml), :class => 'button format list xml', :title => 'Download article as XML' %>
+</div>
 <%# TODO: HELP-DESIGN:  need stylin for short URL... %>
 <%# link_to "Short URL", short_entry_url(@entry) %>

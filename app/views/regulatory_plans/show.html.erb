@@ -1,5 +1,4 @@
 <% title @regulatory_plan.title %>
-<%= feed_autodiscovery regulatory_plan_path(@regulatory_plan, :format => :rss), "Recent Articles in RIN #{@regulatory_plan.regulation_id_number}"%>
 
 <h1 class="title"><span>Unified Agenda <%= @regulatory_plan.regulation_id_number %></span></h1>
 
@@ -107,8 +106,6 @@
       </div>
       <div class="body_column">
         <p><%= link_to "#{pluralize(count, "article")} found", entries_search_path(:conditions => {:regulation_id_number => @regulatory_plan.regulation_id_number})%></p>
-        <%# HELP-DESIGN: this should be placed better... %>
-        <%= link_to 'Subscribe', regulatory_plan_path(@regulatory_plan, :format => :rss), :class => 'button rss' %>
       </div>
     <% end %>
   
@@ -116,7 +113,7 @@
   
   <% aside_tag(:id => 'sidebar') do %>
     <% section_tag(:id => 'metadata') do %>
-      <dl class="metadata_list pull_out">
+      <dl class="metadata_list aside_box">
         <% %w(priority_category major regulatory_flexibility_analysis_required energy_affected).each do |attribute| %>
           <% value = @regulatory_plan.send(attribute) %>
           <% if value.present? %>
