@@ -395,14 +395,10 @@ ARTICLE VIEW
   text-transform: none;
   }  
 .citable {
-  background: url(/images/icon_bookmark_fade.png) no-repeat right .5em;    
   padding-right: 25px;
   position: relative; 
   width: 460px;
   }
-.citable:hover {
-  background: url(/images/icon_bookmark.png) no-repeat right .5em;  
-  }  
 .citation_box { 
   display: none;
   position: absolute; 
@@ -422,17 +418,23 @@ ARTICLE VIEW
 .citation_box li.cite_page { background: url(/images/icon_page.png) no-repeat left top; }
 .citation_box li.link { background: url(/images/icon_link.png) no-repeat left top; }
 .citation_box li.email { background: url(/images/icon_email.png) no-repeat left top; }
-p[id]:hover .trigger_citation_box {
-  @include opacity(1);  
-  }  
-.trigger_citation_box {
-  @include replace-text-with-dimensions('icon_bookmark.png', 0, 0);
-  @include opacity(0.1);
+.citation_box .close {
+  @include replace-text-with-dimensions('icon_close.png', 0, 0);
   position: absolute;
-  right: -2em;
+  right: 1em;
+  top: 1em;
+  }
+.trigger {
+  @include replace-text-with-dimensions('icon_bookmark.png', 0, 0);
+  @include opacity(.10);
+  cursor: pointer;
+  position: absolute;
+  left: 485px;
   top: .5em;
   }
-
+.citable:hover .trigger {
+  @include opacity(1);
+  }
 #footnotediv {
   background: #F5F8F9;
   border: 1px solid #333;
