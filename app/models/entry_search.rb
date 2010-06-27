@@ -39,11 +39,11 @@ class EntrySearch < ApplicationSearch
         end
         
         add_filter(
-          :value => parsed_val.to_time.utc.beginning_of_day .. end_date.utc.end_of_day,
+          :value => parsed_val.to_time.utc.beginning_of_day.to_i .. end_date.utc.end_of_day.to_i,
           :name => name,
           :condition => :start_date,
           :label => "Date",
-          :sphinx_type => :with,
+          :sphinx_type => :conditions,
           :sphinx_attribute => :publication_date
         )
       end
