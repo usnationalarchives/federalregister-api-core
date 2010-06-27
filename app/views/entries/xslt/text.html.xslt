@@ -32,7 +32,7 @@
     </xsl:choose>
   </xsl:template>
   
-  <xsl:template match="P | FP">
+  <xsl:template match="P | FP | AMDPAR">
     <xsl:choose>
       <xsl:when test="starts-with(text(),'&#x2022;')">
         <xsl:if test="not(preceding-sibling::*[name() != 'PRTPAGE'][1][starts-with(text(),'&#x2022;')])">
