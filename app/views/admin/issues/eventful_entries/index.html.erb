@@ -4,12 +4,14 @@
   <thead>
     <tr>
       <th>Title</th>
+      <th># Events</th>
     </tr>
   </thead>
   <tbody>
     <% @entries.each do |entry| %>
       <tr>
         <td><%= link_to entry.title, admin_issue_eventful_entry_path(@publication_date.to_s(:iso), entry.document_number) %></td>
+        <td><%= entry.events.count %></td>
       </tr>
     <% end %>
   </tbody>
