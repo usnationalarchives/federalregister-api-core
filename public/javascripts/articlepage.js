@@ -68,12 +68,13 @@ var citation_info = {
     '    <li class="facebook"><a href="javascript:unimplemented()">Share this on Facebook</a></li>',
     '    <li class="digg"><a href="http://digg.com/submit?url=<%= escape(url) %>&title=<%= escape(title) %>&bodytext=<%= escape(content) %>&media=news">Share this on digg</a></li>',
     '  </ul>',
-    // TODO HELP ANYONE - Can we wrap an if around this? Shouldn't render anything if no next header.
-    '  <div class="header_navigation_separator">',
-    '    <ul>',
-    '       <li class="next"><a href="#<%= next_header_anchor %>"><%= next_header_text %></a></li>',
-    '   </ul>',
-    '  </div>',
+    '  <% if (next_header_anchor) { %>',
+    '    <div class="header_navigation_separator">',
+    '      <ul>',
+    '         <li class="next"><a href="#<%= next_header_anchor %>"><%= next_header_text %></a></li>',
+    '     </ul>',
+    '    </div>',
+    '  <% } %>',
     '  <a href="#" class="close" title="Close this citation">Close</a>',
     '</div>'
   ].join("\n")
