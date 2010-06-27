@@ -35,5 +35,9 @@ Rails::Initializer.run do |config|
   # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}')]
   # config.i18n.default_locale = :de
   
+  config.action_controller.session = {
+    :cookie_only => true,
+    :path => '/admin',
+  }
   config.cache_store = :file_store, "#{RAILS_ROOT}/tmp/cache"
 end

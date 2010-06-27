@@ -1,6 +1,5 @@
 class AdminController < ApplicationController
   layout 'admin'
-  session :disabled => false
   
   before_filter :require_user
   helper_method :current_user_session, :current_user
