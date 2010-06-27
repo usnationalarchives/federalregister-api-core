@@ -16,9 +16,9 @@
   </xsl:template>
   
   <xsl:template match="STARS">
-    <span class="STARS">
+    <p class="stars">
       <xsl:text>* * * * *</xsl:text>
-    </span>
+    </p>
   </xsl:template>
   
   <xsl:template match="text()">
@@ -30,6 +30,14 @@
         <xsl:value-of select="." />
       </xsl:otherwise>
     </xsl:choose>
+  </xsl:template>
+  
+  <xsl:template match="SECTNO">
+    <p class="cfr_section">
+      <xsl:apply-templates />
+      <xsl:text> </xsl:text>
+      <xsl:value-of select="following::SUBJECT[text()]/text()" />
+    </p>
   </xsl:template>
   
   <xsl:template match="P | FP | AMDPAR">
@@ -95,7 +103,7 @@
   </xsl:template>
   
   <xsl:template match="AMDPAR">
-    <p class="ammendment_part">
+    <p class="amendment_part">
       <xsl:apply-templates />
     </p>
   </xsl:template>
