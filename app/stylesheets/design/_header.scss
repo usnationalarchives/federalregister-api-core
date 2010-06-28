@@ -43,16 +43,17 @@ NAV
 SEARCH
 
 ******************************/
+// HELP-DESIGN: scoped these to prevent namespace conflict on actual search pages
 
-#search_bar  {
+#header #search_bar  {
   border-top: 4px solid $golden; /* TODO cut border and make it the background because it antialised */
   }
-#search_container {
+#header #search_container {
   margin: 0 auto;
   position: relative;
   width: 960px;
   }  
-#search {
+#header #search {
   background: url(/images/search_bg.png) no-repeat left top;
   height: 40px;
   position: absolute;
@@ -60,14 +61,14 @@ SEARCH
   top: -4px;
   width: 260px;
   }
-#search input[type='text'] {
+#header #search input[type='text'] {
   border: 1px solid darken($golden, 10%);
   @include border-radius(8px);
   margin: 6px 0 0 25px;
   padding: 5px;
   }
 
-#search > label {
+#header #search > label {
   display: none;
   }
 

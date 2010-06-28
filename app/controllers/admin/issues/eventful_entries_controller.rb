@@ -3,7 +3,11 @@ class Admin::Issues::EventfulEntriesController < AdminController
     @publication_date = Date.parse(params[:issue_id])
     
     @entries = EntrySearch.new(
-      :conditions => {:term => '"public meeting"', :start_date => @publication_date.to_s, :end_date => @publication_date.to_s},
+      :conditions => {
+        :term => '"public meeting"',
+        :start_date => @publication_date.to_s(:db),
+        :end_date => @publication_date.to_s(:db)
+      },
       :per_page => 200,
       :match_mode => :extended
     ).results
@@ -18,7 +22,7 @@ class Admin::Issues::EventfulEntriesController < AdminController
 
     placemaker = Placemaker.new(:application_id => ENV['yahoo_placemaker_api_key'])
     if @entry.full_xml
-      @places = placemaker.places(@entry.full_xml[0,45000])
+      @places = []#placemaker.places(@entry.full_xml[0,45000])
     else
       @places = []
     end

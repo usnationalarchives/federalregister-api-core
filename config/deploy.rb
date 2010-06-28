@@ -25,7 +25,7 @@ ssh_options[:paranoid] = false
 set :use_sudo, true
 default_run_options[:pty] = true
 
-set :keep_releases, 10
+set :keep_releases, 3
 
 # this is more important when normalizing multiple servers
 # but is implemented in a very simple way (ie poorly)

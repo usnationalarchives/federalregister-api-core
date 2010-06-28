@@ -14,6 +14,7 @@ ActionController::Routing::Routes.draw do |map|
     admin.resources :agency_highlights
     
     admin.resources :issues do |issue|
+      issue.resource :approval, :controller => "issues/approvals"
       issue.resources :entries, :controller => "issues/entries"
       issue.resources :eventful_entries, :controller => "issues/eventful_entries" do |entry|
         entry.resources :events, :controller => "issues/eventful_entries/events"
