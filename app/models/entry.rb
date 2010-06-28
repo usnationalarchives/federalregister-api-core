@@ -191,8 +191,8 @@ class Entry < ApplicationModel
     )
   end
   
-  def self.highlighted
-    scoped(:joins => :section_highlights, :conditions => {:section_highlights => {:publication_date => latest_publication_date}})
+  def self.highlighted(date = IssueApproval.latest_publication_date)
+    scoped(:joins => :section_highlights, :conditions => {:section_highlights => {:publication_date => date}})
   end
   
   def self.most_recent(n)
