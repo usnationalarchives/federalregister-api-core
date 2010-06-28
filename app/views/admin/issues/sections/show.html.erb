@@ -3,6 +3,15 @@
 
 <% add_javascript :src => 'admin/issues_sections_highlights' %>
 
+<% semantic_remote_form_for SectionHighlight.new, :url => admin_issue_section_highlights_path(@publication_date.to_s(:db), @section) do |f| %>
+  <% f.inputs do %>
+    <%= f.input :entry_document_number %>
+  <% end %>
+  <% f.buttons do %>
+    <%= f.commit_button 'Highlight' %>
+  <% end %>
+<% end %>
+
 <% nav_secondary(render :partial => 'nav', :locals => {:sections => @sections, :publication_date => @publication_date}) %>
 
 <div class='center_content preview'>

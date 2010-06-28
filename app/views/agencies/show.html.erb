@@ -25,9 +25,17 @@
     <% section_tag(:class => 'TOC aside_box') do %>  
       <h1>Table of Contents</h1>
       <ul>
-        <li><%= link_to 'Most Recent Significant Regulations', '#significant_regulations' %></li>
-        <li><%= link_to 'Recent Articles', '#recent_articles' %></li>
-        <li><%= link_to 'Most Cited Articles', '#most_cited' %></li>
+        <% if @significant_entries.present? %>
+          <li><%= link_to 'Most Recent Significant Regulations', '#significant_regulations' %></li>
+        <% end %>
+        
+        <% if @entries.present?%>
+          <li><%= link_to 'Recent Articles', '#recent_articles' %></li>
+        <% end %>
+        
+        <% if @most_cited_entries.present? %>
+          <li><%= link_to 'Most Cited Articles', '#most_cited' %></li>
+        <% end %>
       </ul>
     <% end -%>
     
