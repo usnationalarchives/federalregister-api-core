@@ -433,6 +433,9 @@ p:target {
 .citable:hover .trigger {
   @include opacity(1);
   }
+.citable.on .trigger {
+  @include opacity(1);
+  }  
 #footnotediv {
   background: #F5F8F9;
   border: 1px solid #333;

@@ -50,10 +50,12 @@ var citation_info = {
       this.hide( this.open );
       }
     this.cache[id].fadeIn();
+    $("#" + id).addClass("on");
     this.open = id;
   },
   hide: function( id ){
     this.cache[id].fadeOut();
+    $("#" + id).removeClass("on")
   },
   template: [
     '<div id="<%= id %>" class="aside_box citation_box">',
@@ -61,7 +63,7 @@ var citation_info = {
     '    <li class="link">',
     '      <a href="<%= url %>">Permalink</a>',
     '    </li>',
-    '    <li class="cite_volume"><strong>Citation</strong> <%= volume %> FR <%= page %></li>',
+    '    <li class="cite_volume"><strong>Paragraph Citation</strong> <%= volume %> FR <%= page %></li>',
     '    <li class="cite_page"><strong>Page</strong> <%= page %></li>',
     // '    <li class="email"><a href="#">Email this</a></li>',
     '    <li class="twitter"><a href="http://twitter.com/home?status=<%= escape(url) %>">Share this on Twitter</a></li>',
