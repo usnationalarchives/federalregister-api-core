@@ -11,7 +11,7 @@
     <% @entries.each do |entry| %>
       <tr>
         <td><%= link_to entry.title, admin_issue_eventful_entry_path(@publication_date.to_s(:iso), entry.document_number) %></td>
-        <td><%= entry.events.count %></td>
+        <td><%= entry.events.public_meeting.count %></td>
       </tr>
     <% end %>
   </tbody>

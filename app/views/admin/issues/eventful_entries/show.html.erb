@@ -13,7 +13,7 @@
       I don't care about source order, but wanted them at the top until styles were in place... %>
 <div>
   <ul id="existing_events">
-    <%= render :partial => "admin/events/list_item", :collection => @entry.events, :as => :event %>
+    <%= render :partial => "admin/events/list_item", :collection => @entry.events.public_meeting, :as => :event %>
   </ul>
   
   <div id="form">
