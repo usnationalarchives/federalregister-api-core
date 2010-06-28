@@ -25,7 +25,7 @@
   <div class="entry_calendars">
     <div class='search'>
       <% form_tag entries_date_search_path, :method => :GET, :class => "group" do %>
-        Explore entries in recent months or search for a date:
+        Explore articles in recent months or search for a date:
         <%= text_field_tag :search, '', :title => "(eg 'last month', 'November 2', 'last October')" %>
         <%= submit_tag 'Go', :class => "btn" %>
       <% end %>
@@ -121,7 +121,7 @@
     <div id="map" class='small_map'></div>
   <% end %>
   
-  <h3>Today's Entry Types</h3>
+  <h3>Today's Article Types</h3>
   <%= render :partial => 'entries/charts/by_type', :locals => {:entries => @entries} %>
   
   <h3>Top Agencies Reporting</h3>
