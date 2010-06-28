@@ -22,7 +22,7 @@ class Admin::Issues::EventfulEntriesController < AdminController
 
     placemaker = Placemaker.new(:application_id => ENV['yahoo_placemaker_api_key'])
     if @entry.full_xml
-      @places = placemaker.places(@entry.full_xml[0,45000])
+      @places = []#placemaker.places(@entry.full_xml[0,45000])
     else
       @places = []
     end
