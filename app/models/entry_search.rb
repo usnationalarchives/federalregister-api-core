@@ -39,11 +39,11 @@ class EntrySearch < ApplicationSearch
         end
         
         add_filter(
-          :value => parsed_val.to_time.utc.beginning_of_day .. end_date.utc.end_of_day,
+          :value => parsed_val.to_time.utc.beginning_of_day.to_i .. end_date.utc.end_of_day.to_i,
           :name => name,
           :condition => :start_date,
           :label => "Date",
-          :sphinx_type => :with,
+          :sphinx_type => :conditions,
           :sphinx_attribute => :publication_date
         )
       end
@@ -118,7 +118,7 @@ class EntrySearch < ApplicationSearch
     )[:type]
     
     search_value_for_this_facet = self.type
-    facets = raw_facets.to_a.reverse.reject{|id, count| id == 0}.map do |id, count|
+    facets = raw_facets.to_a.reverse.reject{|id, count| id == 'UNKNOWN'}.map do |id, count|
       Facet.new(
         :value      => id, 
         :name       => Entry::ENTRY_TYPES[id],
