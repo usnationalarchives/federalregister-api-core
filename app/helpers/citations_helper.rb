@@ -42,7 +42,7 @@ module CitationsHelper
     text.gsub(/(\d+)\s+FR\s+(\d+)/) do |str|
       issue = $1
       page = $2
-      if issue.to_i >= 59
+      if issue.to_i >= 60 # we have 59, but not the page numbers so this feature doesn't help
         content_tag(:a, str, :href => "/citation/#{issue}/#{page}")
       else
         str
