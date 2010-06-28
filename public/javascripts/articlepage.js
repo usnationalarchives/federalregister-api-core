@@ -18,7 +18,8 @@ var citation_info = {
     });
     $(".close").live("click", function(event) {
       event.preventDefault();
-      self.cache[ $(this).parent().data("id") ].hide();
+      //self.cache[ $(this).parent().data("id") ].hide();
+      self.hide( $(this).parent().data("id") );
     });
   },
   create: function( index ){
