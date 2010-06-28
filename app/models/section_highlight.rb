@@ -22,4 +22,11 @@ class SectionHighlight < ApplicationModel
   def new_position=(new_pos)
     insert_at(new_pos)
   end
+  
+  attr_reader :entry_document_number
+  
+  def entry_document_number=(document_number)
+    @entry_document_number = document_number
+    self.entry = Entry.find_by_document_number(document_number)
+  end
 end

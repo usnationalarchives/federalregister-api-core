@@ -4,7 +4,7 @@ class SectionsController < ApplicationController
   def show
     cache_for 1.day
     
-    prepare_for_show(params[:slug], Entry.latest_publication_date)
+    prepare_for_show(params[:slug], IssueApproval.latest_publication_date)
     @preview = false
     respond_to do |wants|
       wants.html do
@@ -45,7 +45,7 @@ class SectionsController < ApplicationController
       wants.rss do
         @feed_name = "Federal Register: Featured articles from the '#{@section.title}' Section"
         @feed_description = "Featured Federal Register articles from the '#{@section.title}' Section."
-        @entries = @section.highlighted_entries.preload(:topics, :agencies)
+        @entries = @section.highlighted.entries.preload(:topics, :agencies)
         render :template => 'entries/index.rss.builder'
       end
     end

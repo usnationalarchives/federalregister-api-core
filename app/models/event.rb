@@ -35,6 +35,10 @@ class Event < ApplicationModel
   validates_presence_of :title, :place, :if => Proc.new{|e| e.event_type == 'PublicMeeting' || e.event_type == 'ClosedMeeting'}
   validates_inclusion_of :event_type, :in => EVENT_TYPES_SINGULAR.keys
   
+  def self.public_meeting
+    scoped(:conditions => {:event_type => "PublicMeeting"})
+  end
+  
   def agencies
     agency_assignments.map(:agency)
   end
