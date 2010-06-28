@@ -118,7 +118,7 @@ class EntrySearch < ApplicationSearch
     )[:type]
     
     search_value_for_this_facet = self.type
-    facets = raw_facets.to_a.reverse.reject{|id, count| id == 0}.map do |id, count|
+    facets = raw_facets.to_a.reverse.reject{|id, count| id == 'UNKNOWN'}.map do |id, count|
       Facet.new(
         :value      => id, 
         :name       => Entry::ENTRY_TYPES[id],
