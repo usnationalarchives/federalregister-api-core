@@ -1,16 +1,18 @@
 class Admin::EventsController < AdminController
   def index
-    @events = Event.all
+    @events = Event.public_meeting
   end
   
   def new
     @event = Event.new(params[:event])
+    @event.event_type = 'PublicMeeting'
     @event.title ||= @event.entry.try(:title)
     render :layout => !request.xhr?
   end
   
   def create
     @event = Event.new(params[:event])
+    @event.event_type = 'PublicMeeting'
     
     if @event.save
       if request.xhr?
