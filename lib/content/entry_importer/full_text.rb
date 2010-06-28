@@ -3,12 +3,13 @@ module Content::EntryImporter::FullText
   provides :full_text
   
   def full_text
-    download_url_and_check_for_error(source_url(:text))
+    download_url_and_check_for_error(entry.source_url(:text))
   end
   
   private
   
   def download_url_and_check_for_error(url)
+    content = ''
     15.times do
       c = Curl::Easy.new(url)
       c.http_get
