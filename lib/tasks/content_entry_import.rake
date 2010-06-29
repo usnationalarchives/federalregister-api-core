@@ -16,9 +16,14 @@ namespace :content do
         entry_importer(:full_text)
       end
       
-      desc "Extract full xml & full_text"
-      task :full_xml_and_full_text => :environment do
-        entry_importer(:full_xml, :full_text)
+      desc "Extract full_xml & raw_text"
+      task :full_xml_and_raw_text => :environment do
+        entry_importer(:full_xml, :raw_text)
+      end
+      
+      desc "Extract raw_text"
+      task :raw_text => :environment do
+        entry_importer(:raw_text)
       end
       
       desc "Extract docket id"
@@ -26,9 +31,9 @@ namespace :content do
         entry_importer(:docket_id)
       end
       
-      desc "Extract referenced dates"
-      task :referenced_dates => :environment do
-        entry_importer(:referenced_dates)
+      desc "Extract events"
+      task :events => :environment do
+        entry_importer(:events)
       end
       
       desc "Extract lede photo candidates"
@@ -38,9 +43,38 @@ namespace :content do
       
       desc "Extract CFR information into entries"
       task :cfr => :environment do
-        entry_importer(:cfr_title, :cfr_part, :section_ids)
+        entry_importer(:cfr_title, :cfr_part)
       end
-    
+      
+      desc "Import regulations.gov info"
+      task :regulations_dot_gov => :environment do
+        entry_importer(:checked_regulationsdotgov_at, :regulationsdotgov_id, :comment_url)
+      end
+      
+      namespace :regulations_dot_gov do
+        desc "Import regulations.gov info for entries missing it published in the last 3 weeks"
+        task :tardy => :environment do
+          entries = Entry.published_since(3.weeks.ago).scoped(:conditions => ["regulationsdotgov_id IS NULL AND checked_regulationsdotgov_at IS NULL OR checked_regulationsdotgov_at < ?", 1.day.ago])
+          entries.each do |entry|
+            importer = Content::EntryImporter.new(:entry => entry)
+            importer.update_attributes(:checked_regulationsdotgov_at, :regulationsdotgov_id, :comment_url)
+          end
+        end
+      end
+      
+      desc "Assign entries to sections"
+      task :sections => :environment do
+        # entry_importer(:sections)
+        sections = Section.all(:include => :agencies)
+        Content.parse_dates(ENV['DATE_TO_IMPORT']).each do |date|
+          puts "handling #{date}..."
+          Entry.published_on(date).scoped(:include => [:agencies, :sections]).each do |entry|
+            entry.section_ids = sections.select{|s| s.should_include_entry?(entry)}.map(&:id)
+            entry.save
+          end
+        end
+      end
+      
       desc "Extract agency information into entries"
       task :agencies => :environment do
         entry_importer(:agency_name_assignments)

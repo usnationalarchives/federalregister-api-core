@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100619234141) do
+ActiveRecord::Schema.define(:version => 20100628000452) do
 
   create_table "agencies", :force => true do |t|
     t.integer  "parent_id"
@@ -145,6 +145,7 @@ ActiveRecord::Schema.define(:version => 20100619234141) do
     t.integer  "lede_photo_id"
     t.text     "lede_photo_candidates"
     t.string   "docket_id"
+    t.datetime "raw_text_updated_at"
   end
 
   add_index "entries", ["citation"], :name => "index_entries_on_citation"
@@ -158,6 +159,7 @@ ActiveRecord::Schema.define(:version => 20100619234141) do
   add_index "entries", ["id"], :name => "index_entries_on_agency_id_and_id"
   add_index "entries", ["publication_date"], :name => "index_entries_on_agency_id_and_publication_date"
   add_index "entries", ["publication_date"], :name => "index_entries_on_publication_date_and_agency_id"
+  add_index "entries", ["raw_text_updated_at"], :name => "index_entries_on_raw_text_updated_at"
   add_index "entries", ["regulation_id_number"], :name => "index_entries_on_regulation_id_number"
   add_index "entries", ["volume", "start_page", "end_page"], :name => "index_entries_on_volume_and_start_page_and_end_page"
 
@@ -175,7 +177,13 @@ ActiveRecord::Schema.define(:version => 20100619234141) do
     t.string  "title"
     t.integer "place_id"
     t.boolean "remote_call_in_available"
+    t.string  "event_type"
   end
+
+  add_index "events", ["entry_id", "date"], :name => "index_events_on_entry_id_and_date"
+  add_index "events", ["event_type", "entry_id", "date"], :name => "index_events_on_event_type_and_entry_id_and_date"
+  add_index "events", ["event_type", "entry_id", "place_id"], :name => "index_events_on_event_type_and_entry_id_and_place_id"
+  add_index "events", ["event_type", "place_id", "entry_id"], :name => "index_events_on_event_type_and_place_id_and_entry_id"
 
   create_table "graphic_usages", :force => true do |t|
     t.integer "graphic_id"
@@ -198,6 +206,16 @@ ActiveRecord::Schema.define(:version => 20100619234141) do
   end
 
   add_index "graphics", ["identifier"], :name => "index_graphics_on_identifier", :unique => true
+
+  create_table "issue_approvals", :force => true do |t|
+    t.date     "publication_date"
+    t.integer  "creator_id"
+    t.integer  "updater_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "issue_approvals", ["publication_date"], :name => "index_issue_approvals_on_publication_date"
 
   create_table "lede_photos", :force => true do |t|
     t.string   "credit"
@@ -233,19 +251,6 @@ ActiveRecord::Schema.define(:version => 20100619234141) do
     t.datetime "updated_at"
   end
 
-  create_table "referenced_dates", :force => true do |t|
-    t.integer  "entry_id"
-    t.date     "date"
-    t.string   "string"
-    t.string   "context"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "date_type"
-  end
-
-  add_index "referenced_dates", ["entry_id", "date"], :name => "index_referenced_dates_on_entry_id_and_date"
-  add_index "referenced_dates", ["entry_id", "date_type", "date"], :name => "foo"
-
   create_table "regulatory_plan_events", :force => true do |t|
     t.integer "regulatory_plan_id"
     t.string  "date"
@@ -263,6 +268,7 @@ ActiveRecord::Schema.define(:version => 20100619234141) do
     t.string "priority_category"
   end
 
+  add_index "regulatory_plans", ["issue", "regulation_id_number"], :name => "index_regulatory_plans_on_issue_and_regulation_id_number"
   add_index "regulatory_plans", ["regulation_id_number", "issue"], :name => "index_regulatory_plans_on_regulation_id_number_and_issue"
 
   create_table "search_subscriptions", :force => true do |t|

@@ -5,7 +5,11 @@
     <li><%= link_to "Articles <span class=\"number_of_results\">#{number_with_delimiter search.entry_count}</span>", entries_search_path(:conditions => {:term => search.term}) %></li>
   <% end %>
   
-  <li><%= link_to_unimplemented "Events <span class=\"number_of_results\">42</span>" %></li>
+  <% if selected == :events %>
+    <li class="on"><%= link_to 'Events', events_search_path(:conditions => {:term => search.term}) %></li>
+  <% else %>
+    <li><%= link_to "Events <span class=\"number_of_results\">#{number_with_delimiter search.event_count}</span>", events_search_path(:conditions => {:term => search.term}) %></li>
+  <% end %>
 
   <% if selected == :regulatory_plans %>
     <li class="on"><%= link_to 'Regulations', regulatory_plans_search_path(:conditions => {:term => search.term}) %></li>
