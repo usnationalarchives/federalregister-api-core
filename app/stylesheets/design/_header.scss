@@ -63,13 +63,26 @@ SEARCH
   }
 #header #search input[type='text'] {
   border: 1px solid darken($golden, 10%);
-  @include border-radius(8px);
-  margin: 6px 0 0 25px;
+  @include border-top-left-radius(8px);
+  @include border-bottom-left-radius(8px);
+  height:13px;
+  left: 25px;
+  position: relative;
   padding: 5px;
+  top: 6px;
+  width: 175px;
   }
-
 #header #search > label {
   display: none;
+  }
+#header #search .search_btn {
+  background-color: #e4a529;
+  border: none;
+  cursor: pointer;
+  @include replace-text-with-dimensions('header_search_button.png', 0, 0);
+  left: 21px;
+  position: relative;
+  top: 6px;
   }
 
 /******************************
