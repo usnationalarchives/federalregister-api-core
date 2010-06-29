@@ -7,18 +7,9 @@ body {
   background: url(/images/seal.png) no-repeat right top;
   color: $body_type_color;
   }
-
 .read_more {
   white-space: nowrap;
   }
-
-/* TODO HELP-DESIGN rename this */
-.pull_out {
-  background: #f5f8f9;
-  border: 1px solid #b3c2cf;
-  padding: 1em;
-  }
-
 ul.bullets {
   padding-left: 0;
   }  
@@ -210,34 +201,39 @@ padding: 0;
 ARTICLE VIEW 
 
 ******************************/
-
+#metadata_content_area {
+  margin-bottom: 2em;
+  }
 #flash_message {
   @include border-radius(5px);  
-  overflow: hidden;  
   background: #E6E6E6;
   color: #6E6E6E;
-  margin-bottom: 1em;
-  padding: 1em 1em .75em 1em;
+  line-height: 20px;
+  margin: 1em 0;
+  overflow: hidden;  
   position: relative;
   }
 #flash_message .button {
-  background: #E4A529;
+  background: green;
   color: #fff;
-  font-size: .75em;
+  font-weight: normal;
   margin: 0;
-  padding: 1em 1em .6em 1em;
+  padding: 0 1em;
   position: absolute;
   right: 0;
   top: 0;
   }
 #flash_message p {
   @include apertura-condensed;
-  font-size: 1.5em;
   line-height: 20px;  
   margin: 0;
   padding: 0;
   }
-
+#flash_message.comment p {
+  background: url(/images/icon_comment.png) no-repeat 10px 14px;
+  line-height: 3em;
+  padding-left: 40px;
+  }  
 .article .metadata_list dt {
   text-transform: none;
   }  
@@ -283,6 +279,23 @@ ARTICLE VIEW
   font-size: 1.3em;
   font-weight: 700;
   }
+#entries.show .metadata_share_bar {
+  border-bottom:1px solid #CCCCCC;
+  border-top:1px solid #CCCCCC;
+  margin:0.5em 0;
+  overflow:hidden;
+  padding:0.5em 0
+  }
+#entries.show .metadata_share_bar .metadata {
+  margin-bottom: 0;
+  padding-bottom: 0;
+  }
+#entries.show .metadata_share_bar .share {
+  text-align: right;
+  } 
+#entries.show .metadata_share_bar .share .button {
+  text-indent: 9999px;
+  }    
 #entries.show .back_to_top {
   color: #aaa;
   font-size: .8em;
@@ -293,10 +306,10 @@ ARTICLE VIEW
   display: block;
   font-weight: normal;
   }
-#entries.show .body_column {
-  margin-bottom: 4em;
+#entries.show .body_column,
+#entries.show .header_column {
+  margin-bottom: 2em;
   }  
-
 #entries.show .body_column h3,  
 #entries.show .body_column h4 {
   @include gesta;
@@ -324,6 +337,13 @@ ARTICLE VIEW
 .body_column h5 {
   margin: 2em 0 1em;
   }
+/* TODO HELP-DESIGN add target styles, fadeout after a bit? */
+/*h1:target,  
+h2:target,
+h3:target,
+p:target {
+  background: $aside_box_background;
+  }  */
 #entries.show .body_column > h3:first-child {
   margin-top: 0;
   padding-top: 0;
@@ -338,25 +358,22 @@ ARTICLE VIEW
 #entries.show .body_column p:first-child {
   text-indent: 0;
   }  
-#entries.show p {
+#fulltext_content_area p {
   text-indent: 2em;
   }
-#entries.show p.flush {
+#fulltext_content_area p.flush {
   text-indent: 0;
   }  
 #entries.show .body_column:empty {
   display: none;
   margin: 0;
   }  
-
 .E-03 {
  font-style: italic; 
-}
-
+  }
 .E-04 {
   font-weight: bold;
-}
-
+  }
 .metadata_list dt,
 .metadata_list dd {
   display: block;
@@ -374,70 +391,80 @@ ARTICLE VIEW
   padding: 0;
   text-transform: none;
   }  
-
-.citation_box {
-  position: absolute;
+.citable {
+  padding-right: 25px;
+  position: relative; 
+  width: 460px;
   }
-.citation_box dt {
-  clear: both;
-  float: left;
-  font-weight: 700;
-  margin-bottom: .5em;
-  padding-left: 25px;
+.citation_box { 
+  display: none;
+  position: absolute; 
   }
-.citation_box dd {
-  float: left;
-  margin-bottom: .5em;
-  margin-left: .5em;
-  }  
-.citation_box dt.cite_volume {
-  background: url(/images/icon_volume.png) no-repeat left top;
-  }  
-.citation_box dt.cite_page {
-  background: url(/images/icon_page.png) no-repeat left top;
-  }  
-.citation_box dt.cite_date {
-  background: url(/images/icon_date.png) no-repeat left top;
-  }
-
-.citation_box ul {
-  clear: both;
-  }
+.citation_box ul { margin-bottom: 0; }  
 .citation_box li {
   padding-left: 25px;
   list-style: none;
   margin-bottom: .5em;
-  }  
-.citation_box li.bookmark {
-  background: url(/images/icon_bookmark.png) no-repeat left top;
   }
-.citation_box li.twitter {
-  background: url(/images/icon_twitter.png) no-repeat left top;
-  
-  }
-.citation_box li.facebook {
-  background: url(/images/icon_facebook.png) no-repeat left top;
-  }
-.citation_box li.digg {
-  background: url(/images/icon_digg.png) no-repeat left top;
-  }
-.citation_box .sticky {
-  display: block;
-  @include replace-text-with-dimensions('icon_sticky.png', 0, 0);
+.citation_box li:last-child { margin-bottom: 0 ;}  
+.citation_box li.bookmark { background: url(/images/icon_bookmark.png) no-repeat left top; }
+.citation_box li.twitter { background: url(/images/icon_twitter.png) no-repeat left top; }
+.citation_box li.facebook { background: url(/images/icon_facebook.png) no-repeat left top; }
+.citation_box li.digg { background: url(/images/icon_digg.png) no-repeat left top; }
+.citation_box li.cite_volume { background: url(/images/icon_volume.png) no-repeat left top; }
+.citation_box li.cite_page { background: url(/images/icon_page.png) no-repeat left top; }
+.citation_box li.link { background: url(/images/icon_link.png) no-repeat left top; }
+.citation_box li.email { background: url(/images/icon_email.png) no-repeat left top; }
+.citation_box li.next { background: url(/images/icon_next.png) no-repeat left 5px; }
+.citation_box .close {
+  @include replace-text-with-dimensions('icon_close.png', 0, 0);
   position: absolute;
-  right: 1em;  
+  right: 1em;
   top: 1em;
-  }  
-p[id]:hover .trigger_citation_box {
-  @include opacity(1);  
-  }  
-.trigger_citation_box {
+  }
+.trigger {
   @include replace-text-with-dimensions('icon_bookmark.png', 0, 0);
-  @include opacity(0.1);
+  @include opacity(.10);
+  cursor: pointer;
   position: absolute;
-  right: -2em;
+  left: 485px;
   top: .5em;
   }
+.citable:hover .trigger {
+  @include opacity(1);
+  }
+.citable.on .trigger {
+  @include opacity(1);
+  }  
+// HELP-DESIGN: in the PDF this has a big black bullet next to it /a/2010-15073
+p.amendment_part {
+}
+// HELP-DESIGN: I could convert this to a header if you prefer...
+p.cfr_section {
+  font-weight: bold;
+}
+// HELP-DESIGN: ideally some sort of graphical representation for the stars; again see /a/2010-15073
+p.stars {
+}
+// HELP-DESIGN: I added these and they work, but are a bit gross; see /a/2010-15021 for example
+.footnote p {
+  padding-bottom: 0;
+}
+.footnote .back {
+  display: block;
+  padding-bottom: 1em;
+}
+#footnotediv {
+  background: #F5F8F9;
+  border: 1px solid #333;
+  @include box-shadow( #aaa, 1px, 1px, 10px);
+  opacity: 1;
+  padding: .25em;
+  }
+#footnotediv > * {
+  margin: 0;
+  padding: 0;
+  }  
   
 /******************************
 

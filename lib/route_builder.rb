@@ -15,16 +15,6 @@ module RouteBuilder
     end
   end
   
-  def entries_path(options = {})
-    options.symbolize_keys!
-    
-    if options[:format] == :rss
-      'http://feeds.feedburner.com/GovPulseLatestEntries'
-    else
-      super
-    end
-  end
-  
   add_route :entry do |entry|
     {
       :year            => entry.publication_date.strftime('%Y'),
@@ -65,6 +55,14 @@ module RouteBuilder
   end
   
   add_route :entries_by_date do |date|
+    {
+      :year            => date.strftime('%Y'),
+      :month           => date.strftime('%m'),
+      :day             => date.strftime('%d'),
+    }
+  end
+  
+  add_route :entry_statistics_by_date do |date|
     {
       :year            => date.strftime('%Y'),
       :month           => date.strftime('%m'),
