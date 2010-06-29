@@ -16,7 +16,18 @@ class EntriesController < ApplicationController
       end
       wants.rss do
         @feed_name = 'Federal Register Latest Entries'
-        @entries = Entry.find(:all, :conditions => {:publication_date => Entry.latest_publication_date})
+        @entries = Entry.published_today.preload(:topics, :agencies)
+      end
+    end
+  end
+  
+  def highlighted
+    cache_for 1.day
+    respond_to do |wants|
+      wants.rss do
+        @feed_name = 'Featured Federal Register Articles'
+        @entries = Entry.highlighted.preload(:topics, :agencies)
+        render :template => 'entries/index.rss.builder'
       end
     end
   end
@@ -30,10 +41,7 @@ class EntriesController < ApplicationController
   def by_date
     cache_for 1.day
     
-    @year  = params[:year]  || Time.now.strftime("%Y")
-    @month = params[:month] || Time.now.strftime("%m")
-    @day   = params[:day]   || Time.now.strftime("%d")
-    @publication_date = Date.parse("#{@year}-#{@month}-#{@day}")
+    @publication_date = parse_date_from_params
     
     @agencies = Agency.all(
       :include => [:entries],
@@ -62,6 +70,22 @@ class EntriesController < ApplicationController
     
   end
   
+  def statistics_by_date
+    @publication_date = parse_date_from_params
+    entries = Entry.published_on(@publication_date)
+    
+    @total_count                  = entries.count
+    raise ActiveRecord::RecordNotFound if @total_count == 0
+    
+    @notice_count                 = entries.of_type('NOTICE').count
+    @proposed_rule_count          = entries.of_type('PRORULE').count
+    @rule_count                   = entries.of_type('RULE').count
+    @presidential_documents_count = entries.of_type('PRESDOCU').count
+    @significant_entries_count    = entries.significant.count
+    @total_pages                  = entries.maximum(:end_page) - entries.minimum(:start_page) + 1
+    render :layout => false
+  end
+  
   def show
     cache_for 1.day
     @entry = Entry.find_by_document_number!(params[:document_number])
@@ -82,12 +106,21 @@ class EntriesController < ApplicationController
   def tiny_url
     cache_for 1.day
     entry = Entry.find_by_document_number!(params[:document_number])
-    url = entry_path(entry)
+    url = entry_url(entry)
     
     if params[:anchor].present?
       url += '#' + params[:anchor]
     end
     
     redirect_to url, :status=>:moved_permanently
+  end
+  
+  private
+  
+  def parse_date_from_params
+    year  = params[:year]
+    month = params[:month]
+    day   = params[:day]
+    Date.parse("#{year}-#{month}-#{day}")
   end
 end

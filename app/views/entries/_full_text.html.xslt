@@ -2,6 +2,7 @@
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
   <xsl:output method="html" omit-xml-declaration="yes" />
   <xsl:include href="app/views/entries/xslt/utils.html.xslt" />
+  <xsl:include href="app/views/entries/xslt/ignore.html.xslt" />
   <xsl:include href="app/views/entries/xslt/headers.html.xslt" />
   <xsl:include href="app/views/entries/xslt/table_of_contents.html.xslt" />
   <xsl:include href="app/views/entries/xslt/tables.html.xslt" />
@@ -24,9 +25,5 @@
       
       <!-- and then close the body_column div -->
       <xsl:value-of disable-output-escaping="yes" select="'&lt;/div&gt;'" />
-  </xsl:template>
-  
-  <!-- Tags being Ignored -->
-  <xsl:template match="AGENCY | SUBAGY | AGY | ACT | CFR | DEPDOC | RIN | SUBJECT | FTNT | BILCOD | SUM | CNTNTS | UNITNAME | INCLUDES | EDITOR | EAR | FRDOCBP | HRULE | FTREF | NOLPAGES | OLPAGES">
   </xsl:template>
 </xsl:stylesheet>

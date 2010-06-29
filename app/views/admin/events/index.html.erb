@@ -1,12 +1,14 @@
-<% title 'Entries with events' %>
+<% title 'Public Meetings' %>
 
+<%= page_entries_info @events %>
+<%= will_paginate @events %>
 <table>
   <thead>
     <tr>
-      <th>Title</th>
-      <th>Event Date</th>
-      <th>Location</th>
-      <th>Article</th>
+      <th><%= order @search, :as => 'Title', :by => :title %></th>
+      <th><%= order @search, :as => 'Event Date', :by => :date %></th>
+      <th><%= order @search, :as => 'Location', :by => {:place => :name} %></th>
+      <th><%= order @search, :as => 'Article', :by => {:entry => :publication_date} %></th>
       <th></th>
     </tr>
   </thead>
@@ -16,7 +18,7 @@
         <td><%= event.title %></td>
         <td><%= event.date %></td>
         <td><%= event.place.name %></td>
-        <td><%= event.entry.document_number %> (<%= event.entry.publication_date %>)</td>
+        <td><%= link_to event.entry.document_number, entry_path(event.entry) %> (<%= event.entry.publication_date %>)</td>
         <td>
           <%= link_to 'Edit', edit_admin_event_path(event) %>
           <%= link_to 'Delete', admin_event_path(event), :method => "DELETE", :confirm => "Are you sure you want to delete this?" %>
@@ -25,3 +27,4 @@
     <% end %>
   </tbody>
 </table>
+<%= will_paginate @events %>

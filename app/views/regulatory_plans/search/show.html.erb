@@ -1,0 +1,23 @@
+<% title @search.term.blank? ? 'Regulation Search' : "Regulation Search Results for '#{h @search.term}'" %>
+
+<h1 class="title"><span>Search Regulations</span></h1>
+
+<% unless @search.valid? %>
+<ul class="errors">
+  <% @search.errors.each do |err| %>
+  <li><%= err %></li>
+  <% end %>
+</ul>
+<% end %>
+
+<%= render :esi => url_for(params.merge(:action => :header)) %>
+
+<% unless @search.blank? %>
+
+  <div class="filters">
+    <%= render :esi => url_for(params.merge(:action => :facets, :facet => 'priority_category')) %>
+    <%= render :esi => url_for(params.merge(:action => :facets, :facet => 'agency')) %>
+  </div>
+  
+  <%= render :esi => url_for(params.merge(:action => :results)) %>
+<% end %>

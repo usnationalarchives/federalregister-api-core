@@ -1,9 +1,7 @@
 namespace :data do
   task :daily => %w(
     data:daily:quick
-    data:extract:regulationsdotgov_id
-    
-    data:cache:update:all
+    content:entries:import:regulations_dot_gov:tardy
     tmp:cache:clear
     thinking_sphinx:index
     sitemap:refresh

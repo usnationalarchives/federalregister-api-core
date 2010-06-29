@@ -4,13 +4,14 @@ ActionController::Routing::Routes.draw do |map|
   map.widget_instructions 'widget_instructions', :controller => 'special', :action => 'widget_instructions'
 
   # ENTRY SEARCH
-  map.entries_search 'articles/search', :controller => 'entries/search', :action => 'show'
+  map.entries_search 'articles/search.:format', :controller => 'entries/search', :action => 'show'
   
   # ENTRY PAGE VIEW
   map.entries_page_views 'articles/views', :controller => 'entries/page_views', :action => 'create'
   
   # ENTRIES
   map.entries 'articles.:format', :controller => 'entries', :action => 'index'
+  map.highlighted_entries 'articles/featured.:format', :controller => 'entries', :action => 'highlighted'
   map.entries_search_facet 'articles/search/facet', :controller => 'entries', :action => 'search_facet'
   map.entries_widget 'articles/widget', :controller => 'entries', :action => 'widget'
   map.entry 'articles/:year/:month/:day/:document_number/:slug.:format', :controller => 'entries',
@@ -52,6 +53,9 @@ ActionController::Routing::Routes.draw do |map|
   map.citation_search 'citation/search', :controller => 'citations',
                                          :action     => 'search'
   
+  # EVENT SEARCH
+  map.events_search 'events/search.:format', :controller => 'events/search', :action => 'show'
+  
   # TOPICS
   map.topics_by_letter '/topics/:letter',
       :requirements => {:letter => /[a-z]/},
@@ -59,15 +63,16 @@ ActionController::Routing::Routes.draw do |map|
       :action => "by_letter"
   
   map.resources :topics, :as => "topics", :only => [:index, :show]
-  
+  map.significant_entries_topic 'topics/:id/significant.:format', :controller => "topics", :action => "significant_entries"
+
   # AGENCIES
   map.resources :agencies, :only => [:index, :show]
+  map.significant_entries_agency 'agencies/:id/significant.:format', :controller => "agencies", :action => "significant_entries"
   
   # REGULATIONS
   map.regulatory_plans_search 'regulations/search',
-                      :controller => 'regulatory_plans',
-                      :action     => 'search'
-  map.regulatory_plans_search_facet 'regulations/search/facet', :controller => 'regulatory_plans', :action => 'search_facet'
+                      :controller => 'regulatory_plans/search',
+                      :action     => 'show'
   map.regulatory_plan 'regulations/:regulation_id_number/:slug',
                       :controller => 'regulatory_plans',
                       :action     => 'show'
@@ -77,6 +82,6 @@ ActionController::Routing::Routes.draw do |map|
   # SECTIONS
   map.section ':slug.:format', :controller => "sections", :action => "show"
   map.highlighted_entries_section ':slug/featured.:format', :controller => "sections", :action => "highlighted"
-  map.popular_entries_section ':slug/popular.:format', :controller => "sections", :action => "popular"
+  map.significant_entries_section ':slug/significant.:format', :controller => "sections", :action => "significant"
   map.about_section ':slug/about', :controller => "sections", :action => "about"
 end

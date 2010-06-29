@@ -22,19 +22,27 @@
   <% end %>  
     
   <% aside_tag(:id => 'sidebar') do %>  
-    <% section_tag(:class => 'TOC pull_out') do %>  
+    <% section_tag(:class => 'TOC aside_box') do %>  
       <h1>Table of Contents</h1>
       <ul>
-        <li><%= link_to 'Most Recent Significant Regulations', '#significant_regulations' %></li>
-        <li><%= link_to 'Recent Articles', '#recent_articles' %></li>
-        <li><%= link_to 'Most Cited Articles', '#most_cited' %></li>
+        <% if @significant_entries.present? %>
+          <li><%= link_to 'Most Recent Significant Regulations', '#significant_regulations' %></li>
+        <% end %>
+        
+        <% if @entries.present?%>
+          <li><%= link_to 'Recent Articles', '#recent_articles' %></li>
+        <% end %>
+        
+        <% if @most_cited_entries.present? %>
+          <li><%= link_to 'Most Cited Articles', '#most_cited' %></li>
+        <% end %>
       </ul>
     <% end -%>
     
     <% if @agency.parent %>
       <% section_tag(:class => 'parent_agencies') do %>  
         <h1 class="title_bar">Parent Agency</h1>
-        <ul>
+        <ul class="bullets">
           <li><%= link_to @agency.parent.name, agency_path(@agency.parent) %></li>
         </ul>
       <% end -%>
@@ -43,7 +51,7 @@
     <% if @agency.children.present? %>
       <% section_tag(:class => 'sub_agencies') do %>  
         <h1 class="title_bar">Sub-<%= @agency.children.size > 1 ? 'agency'.pluralize : 'agency' %></h1>
-        <ul>
+        <ul class="bullets">
           <% @agency.children.each do |agency| %>
             <li><%= link_to agency.name, agency_path(agency) %></li>
           <% end %>

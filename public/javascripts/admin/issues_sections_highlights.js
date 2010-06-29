@@ -15,16 +15,18 @@ $(document).ready(function(){
   $("ul#highlighted .remove").live('click', function() {
     var item = $(this).parent();
     var entry_id = item.attr('data-entry-id');
-    $.ajax({
-      url: base_url + '/highlights/' + entry_id,
-      type: 'DELETE',
-      data: '',
-      success: function() {
-        item.remove();
-        $('article[data-entry-id=' + entry_id + '] div.article').removeClass('highlighted');
-        $('article[data-entry-id=' + entry_id + '] div.article').append('<a class="add button grey mini">highlight</a>')
-      }
-    });
+    if (confirm('Are you sure you wish to no longer highlight this article?')) {
+      $.ajax({
+        url: base_url + '/highlights/' + entry_id,
+        type: 'DELETE',
+        data: '',
+        success: function() {
+          item.remove();
+          $('article[data-entry-id=' + entry_id + '] div.article').removeClass('highlighted');
+          $('article[data-entry-id=' + entry_id + '] div.article').append('<a class="add button grey mini">highlight</a>')
+        }
+      });
+    }
   });
   $("ul#highlighted").sortable({
     stop: function(event, ui) {
