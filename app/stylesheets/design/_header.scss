@@ -1,44 +1,109 @@
+/******************************
+
+HEADER
+
+******************************/
+
 #header {
-  margin-bottom: 25px;
+  /* was margin-bottom 25px */
   }
 
-#issue_and_search_bar {
-  background: rgb(175,175,175);
-  background: rgba(99,99,99, 0.4);
-  height: 30px;
+/******************************
+
+NAV
+
+******************************/
+  
+#primary_nav {
+  background: #e0e0e0;
+  height: 40px;
   margin-bottom: 2px;
+  overflow: hidden; 
   }
+#primary_nav li {
+  background: url(/images/bullet.png) no-repeat left 17px;
+  display: block;
+  float: left;
+  line-height: 40px;
+  margin-right: 1em;
+  padding-left: 20px;  
+  }
+#primary_nav li:first-child {
+  background: none;
+  margin-left: 0;
+  padding-left: 0;
+  }
+#primary_nav a {
+  text-decoration: none;
+  text-transform: uppercase;
+  }   
 
-#issue_and_search_bar p {
-  color: #919191;  
-  color: rgba(99,99,99, 1);
-  font-size: 12px;
-  line-height: 30px;
-  margin: 0;
+/******************************
+
+SEARCH
+
+******************************/
+// HELP-DESIGN: scoped these to prevent namespace conflict on actual search pages
+
+#header #search_bar  {
+  border-top: 4px solid $golden; /* TODO cut border and make it the background because it antialised */
+  }
+#header #search_container {
+  margin: 0 auto;
+  position: relative;
+  width: 960px;
   }  
-
-#issue_and_search_bar form  {
+#header #search {
+  background: url(/images/search_bg.png) no-repeat left top;
+  height: 40px;
   position: absolute;
   right: 0;
-  top: 3px;
+  top: -4px;
+  width: 260px;
   }
-  
-#issue_and_search_bar form input {
-  border: 1px solid #919191; 
+#header #search input[type='text'] {
+  border: 1px solid darken($golden, 10%);
+  @include border-top-left-radius(8px);
+  @include border-bottom-left-radius(8px);
+  height:13px;
+  left: 25px;
+  position: relative;
+  padding: 5px;
+  top: 6px;
+  width: 175px;
   }
-  
-#issue_and_search_bar form input.search_btn {
-  background: #737373;
-  color: #fff;
+#header #search > label {
+  display: none;
+  }
+#header #search .search_btn {
+  background-color: #e4a529;
+  border: none;
   cursor: pointer;
-  font-family: "Arial", "Helvetica", sans-serif;
-  padding: 0;
-  text-transform: uppercase;
+  @include replace-text-with-dimensions('header_search_button.png', 0, 0);
+  left: 21px;
+  position: relative;
+  top: 6px;
   }
 
-#issue_and_search_bar form label {
-  display: none; }
+/******************************
 
+LOGO
+
+******************************/
+   
+#header_logo {
+  @include replace-text-with-dimensions('logotype.png', 0, 0);
+  width: 960px;
+  }
+#header_logo h1,
+#header_logo h2 {
+  float: left;
+  }
+#header_logo a {
+  display: block; 
+  height: 64px;   
+  width: 543px;    
+  }
 #preview_indicator {
   background: red;
   color: #fff;
@@ -49,51 +114,4 @@
   position: absolute;
   text-transform: uppercase;
   top: 0;
-  }
-  
-#primary_nav {
-  border-top: 2px solid $golden;
-  margin-bottom: 5px;
-  overflow: hidden; 
-  }
-
-#primary_nav li {
-  border-top: 5px solid #fff;
-  display: block;
-  font-size: 12px;
-  float: left;
-  list-style: none;
-  margin-left: 30px;
-  }
-  
-#primary_nav li:first-child {
-  margin-left: 0;
-  }
-
-#primary_nav li:hover,
-#primary_nav li:focus,
-#primary_nav li.on {
-  border-top: 5px solid $golden;
-  } 
-  
-#primary_nav a {
-  color: #6d6e71;
-  text-decoration: none;
-  text-transform: uppercase;
-  }    
-
-#header_logo {
-  @include replace-text-with-dimensions('logotype.png', 0, 0);
-  width: 960px;
-  }
-
-#header_logo h1,
-#header_logo h2 {
-  float: left;
-  }
-
-#header_logo a {
-  display: block; 
-  height: 64px;   
-  width: 543px;    
   }

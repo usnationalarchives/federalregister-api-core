@@ -1,23 +1,23 @@
 class EntrySearch < ApplicationSearch
   include Geokit::Geocoders
   
-  SUPPORTED_ORDERS = %w(Relevant Newest Oldest)
-  
-  attr_reader :order, :type, :location, :within
+  attr_reader :type
   attr_accessor :type, :regulation_id_number
   
   define_filter :regulation_id_number, :label => "Regulation", :phrase => true do |regulation_id_number|
     RegulatoryPlan.find_by_regulation_id_number(regulation_id_number).try(:title)
   end
   
-  define_filter :agency_ids,  :sphinx_type => :with
-  define_filter :section_ids, :sphinx_type => :with do |section_id|
+  define_filter :agency_ids,  :sphinx_type => :with_all
+  define_filter :section_ids, :sphinx_type => :with_all do |section_id|
     Section.find_by_id(section_id).try(:title)
   end
-  define_filter :topic_ids,   :sphinx_type => :with
+  define_filter :topic_ids,   :sphinx_type => :with_all
   define_filter :type,        :phrase => true do |type|
     Entry::ENTRY_TYPES[type]
   end
+  
+  define_place_filter :place_ids
   
   attr_reader :start_date, :end_date
   def start_date=(val)
@@ -39,11 +39,11 @@ class EntrySearch < ApplicationSearch
         end
         
         add_filter(
-          :value => parsed_val.to_time.utc.beginning_of_day .. end_date.utc.end_of_day,
+          :value => parsed_val.to_time.utc.beginning_of_day.to_i .. end_date.utc.end_of_day.to_i,
           :name => name,
           :condition => :start_date,
           :label => "Date",
-          :sphinx_type => :with,
+          :sphinx_type => :conditions,
           :sphinx_attribute => :publication_date
         )
       end
@@ -71,46 +71,16 @@ class EntrySearch < ApplicationSearch
     }
   end
   
-  def within=(val)
-    if val.present?
-      @within = val
-      if val.to_i < 1 && val.to_i > 200
-        @errors < "range must be between 1 and 200 miles."
-      end
-    end
-  end
-  
-  def location=(val)
-    if val.present?
-      @location = val
-      loc = fetch_location(val)
-      
-      if loc.lat
-        places = Place.find(:all, :select => "id", :origin => loc, :within => within)
-        add_filter(
-          :value => places.map{|p| p.id},
-          :name => "#{val} within #{within} miles",
-          :condition => :location,
-          :sphinx_attribute => :place_ids,
-          :label => "Near",
-          :sphinx_type => :with
-        )
-        
-        if places.size > 4096
-          @errors << 'We found too many locations near your location; please reduce the scope of your search'
-        end
-      else
-        @errors << 'We could not understand your location.'
-      end
-    end
-  end
-  
   # def conditions
   #   conditions = {}
   #   conditions[:type] = "\"#{@type}\"" if @type.present?
   #   conditions[:regulation_id_number] = "\"#{@regulation_id_number}\"" if @regulation_id_number.present?
   #   conditions
   # end
+  
+  def supported_orders
+    %w(Relevant Newest Oldest)
+  end
   
   def order_clause
     case @order
@@ -140,14 +110,15 @@ class EntrySearch < ApplicationSearch
   
   def type_facets
     raw_facets = Entry.facets(term,
-      :with_all => with,
+      :with => with,
+      :with_all => with_all,
       :conditions => conditions,
       :match_mode => :extended,
       :facets => [:type]
     )[:type]
     
     search_value_for_this_facet = self.type
-    facets = raw_facets.to_a.reverse.reject{|id, count| id == 0}.map do |id, count|
+    facets = raw_facets.to_a.reverse.reject{|id, count| id == 'UNKNOWN'}.map do |id, count|
       Facet.new(
         :value      => id, 
         :name       => Entry::ENTRY_TYPES[id],
@@ -161,7 +132,8 @@ class EntrySearch < ApplicationSearch
   
   def date_distribution
     sphinx_search = ThinkingSphinx::Search.new(term,
-      :with_all => with,
+      :with => with,
+      :with_all => with_all,
       :conditions => conditions,
       :match_mode => :extended
     )
@@ -186,7 +158,8 @@ class EntrySearch < ApplicationSearch
   
   def count_in_last_n_days(n)
     model.search_count(@term,
-      :with_all => with.merge(:publication_date => [n.days.ago.to_time.midnight .. Time.current.midnight]),
+      :with => with.merge(:publication_date => n.days.ago.to_time.midnight .. Time.current.midnight),
+      :with_all => with_all,
       :conditions => conditions,
       :match_mode => :extended
     )
@@ -219,9 +192,5 @@ class EntrySearch < ApplicationSearch
     @within = '25'
     @order = options[:order] || 'relevant'
     @end_date = Entry.latest_publication_date.to_time
-  end
-  
-  def fetch_location(location)
-    Rails.cache.fetch("location_of: '#{location}'") { Geokit::Geocoders::GoogleGeocoder.geocode(location) }
   end
 end

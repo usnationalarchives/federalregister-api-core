@@ -1,0 +1,14 @@
+<%= render :partial => "search/tabs", :locals => {:search => @search, :selected => :events}%>
+
+<div class="search_bar">
+  <% form_for :conditions, @search, :url => params.merge(:action => 'show'), :html => {:method => :get} do |f| %>
+    <label>Find</label>
+    <%= f.text_field :term %>
+    <%= f.submit 'Search' %>
+  <% end %>
+  
+  <div class="actions">
+    <%= link_to 'Subscribe', params.merge(:format => :rss, :order => 'date', :publication_date_less_than => nil), :class => 'button notext rss' %>
+  </div>
+  
+</div>

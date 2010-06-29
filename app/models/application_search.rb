@@ -45,7 +45,8 @@ class ApplicationSearch
     
     def raw_facets
       sphinx_search = ThinkingSphinx::Search.new(@search.term,
-        :with_all => @search.with,
+        :with => @search.with,
+        :with_all => @search.with_all,
         :conditions => @search.conditions,
         :match_mode => :extended,
         :classes => [@search.model]
@@ -62,7 +63,6 @@ class ApplicationSearch
     def all
       id_to_name = @model.find_as_hash(:select => "id, #{@name_attribute} AS name")#, :conditions => {:id => raw_facets.keys})
       search_value_for_this_facet = @search.send(@facet_name)
-      
       facets = raw_facets.reverse.reject{|id, count| id == 0}.map do |id, count|
         Facet.new(
           :value      => id, 
@@ -77,7 +77,7 @@ class ApplicationSearch
     end
   end
   
-  attr_accessor :term
+  attr_accessor :term, :order
   attr_reader :errors, :filters
   
   def self.define_filter(filter_name, options = {}, &name_definer)
@@ -88,7 +88,45 @@ class ApplicationSearch
     define_method "#{filter_name}=" do |val|
       if val.present?
         instance_variable_set("@#{filter_name}", val)
-        add_filter options.merge(:value => val, :condition => filter_name, :name_definer => name_definer)
+        add_filter options.merge(:value => val, :condition => filter_name, :name_definer => name_definer, :name => options[:name])
+      end
+    end
+  end
+  
+  def self.define_place_filter(sphinx_attribute)
+    attr_accessor :location, :within
+    
+    define_method :within= do |val|
+      if val.present?
+        @within = val
+        if val.to_i < 1 && val.to_i > 200
+          @errors < "range must be between 1 and 200 miles."
+        end
+      end
+    end
+
+    define_method :location= do |val|
+      if val.present?
+        @location = val
+        loc = fetch_location(val)
+
+        if loc.lat
+          places = Place.find(:all, :select => "id", :origin => loc, :within => within)
+          add_filter(
+            :value => [places.map{|p| p.id}], # deeply nested array keeps places together to avoid duplicate filters
+            :name => "#{val} within #{within} miles",
+            :condition => :location,
+            :sphinx_attribute => sphinx_attribute,
+            :label => "Near",
+            :sphinx_type => :with
+          )
+
+          if places.size > 4096
+            @errors << 'We found too many locations near your location; please reduce the scope of your search'
+          end
+        else
+          @errors << 'We could not understand your location.'
+        end
       end
     end
   end
@@ -108,7 +146,7 @@ class ApplicationSearch
   end
   
   def conditions=(conditions)
-    conditions.to_a.each do |attr, val|
+    conditions.to_a.reverse.each do |attr, val|
       self.send("#{attr}=", val)
     end
   end
@@ -146,6 +184,15 @@ class ApplicationSearch
     with
   end
   
+  def with_all
+    with = {}
+    @filters.select{|f| f.sphinx_type == :with_all }.each do |filter|
+      with[filter.sphinx_attribute] ||= []
+      with[filter.sphinx_attribute] << filter.sphinx_value
+    end
+    with
+  end
+  
   def results
     unless defined?(@results)
       @results = model.search(@term,
@@ -153,7 +200,8 @@ class ApplicationSearch
           :page => @page,
           :per_page => @per_page,
           :order => order_clause,
-          :with_all => with,
+          :with => with,
+          :with_all => with_all,
           :conditions => conditions,
           :match_mode => :extended,
           :sort_mode => :extended
@@ -186,7 +234,17 @@ class ApplicationSearch
     EntrySearch.new(:conditions => {:term => @term}).count
   end
   
+  def event_count
+    EventSearch.new(:conditions => {:term => @term}).count
+  end
+  
   def regulatory_plan_count
     RegulatoryPlanSearch.new(:conditions => {:term => @term}).count
+  end
+  
+  private
+  
+  def fetch_location(location)
+    Rails.cache.fetch("location_of: '#{location}'") { Geokit::Geocoders::GoogleGeocoder.geocode(location) }
   end
 end
