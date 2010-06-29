@@ -433,6 +433,9 @@ p:target {
 .citable:hover .trigger {
   @include opacity(1);
   }
+.citable.on .trigger {
+  @include opacity(1);
+  }  
 // HELP-DESIGN: in the PDF this has a big black bullet next to it /a/2010-15073
 p.amendment_part {
 }

@@ -36,16 +36,13 @@
 </div>
 
 
-  <h2 class="title_bar">What's in the Federal Register?</h2>
-  
-  <div id="learn">
-    <%= render :partial => 'about_fr_articles' %>
-  </div> <!-- END learn -->
+<h2 class="title_bar">What's in the Federal Register?</h2>
 
-  <div id="current_issue">
-    <%# %>
-  </div>
+<div id="learn">
+  <%= render :partial => 'about_fr_articles' %>
+</div> <!-- END learn -->
 
+<div id="current_issue">
   <%= render :esi => entry_statistics_by_date_path(Entry.latest_publication_date) %>
 </div>
 
