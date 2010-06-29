@@ -19,7 +19,7 @@ module CitationsHelper
       title = $1
       part = $2
       content_tag :a, str,
-          :href => "http://frwebgate.access.gpo.gov/cgi-bin/getdoc.cgi?dbname=browse_usc&docid=Cite:+#{title}USC#{part}",
+          :href => usc_url(title, part),
           :class => "usc external",
           :target => "_blank"
     end
@@ -32,7 +32,7 @@ module CitationsHelper
       section = $3
       subpart = $4
       content_tag :a, str,
-        :href => "http://frwebgate.access.gpo.gov/cgi-bin/get-cfr.cgi?YEAR=current&TITLE=#{title}&PART=#{part}&SECTION=#{section}&SUBPART=#{subpart}&TYPE=TEXT",
+        :href => cfr_url(title,part,section,subpart),
         :class => "cfr external",
         :target => "_blank"
     end
@@ -61,7 +61,7 @@ module CitationsHelper
       congress = $1
       law = $2
       if congress.to_i >= 104
-        content_tag :a, str, :href => "http://frwebgate.access.gpo.gov/cgi-bin/getdoc.cgi?dbname=#{congress}_cong_public_laws&docid=f:publ#{sprintf("%03d",law.to_i)}.#{congress}", :class => "publ external", :target => "_blank"
+        content_tag :a, str, :href => public_law_url(congress,law), :class => "publ external", :target => "_blank"
       else
         $1
       end
@@ -75,7 +75,17 @@ module CitationsHelper
     end
   end
   
-  private
+  def usc_url(title, part)
+    "http://frwebgate.access.gpo.gov/cgi-bin/getdoc.cgi?dbname=browse_usc&docid=Cite:+#{title}USC#{part}"
+  end
+  
+  def cfr_url(title, part, section='', subpart='')
+    "http://frwebgate.access.gpo.gov/cgi-bin/get-cfr.cgi?YEAR=current&TITLE=#{title}&PART=#{part}&SECTION=#{section}&SUBPART=#{subpart}&TYPE=TEXT"
+  end
+  
+  def public_law_url(congress, law)
+    "http://frwebgate.access.gpo.gov/cgi-bin/getdoc.cgi?dbname=#{congress}_cong_public_laws&docid=f:publ#{sprintf("%03d",law.to_i)}.#{congress}"
+  end
   
   def patent_url(number_possibly_with_commas)
     number = number_possibly_with_commas.gsub(/,/,'')
