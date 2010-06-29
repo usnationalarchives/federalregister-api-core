@@ -155,8 +155,8 @@ class Entry < ApplicationModel
     scoped(:conditions => {:entries => {:publication_date => publication_date}})
   end
 
-  def self.published_within_last_week(range = (Date.today .. Date.today - 7.days))
-    scoped(:conditions => {:entries => {:publication_date => range}})
+  def self.published_since(time)
+    scoped(:conditions => {:entries => {:publication_date => time .. Time.now}})
   end
   
   def self.comments_closing(range = (Date.today .. Date.today + 7.days))
