@@ -12,14 +12,12 @@
       <%= render :partial => "header", :locals => {:entry => @entry} %>
       
       <% if (@entry.comments_close_on.present? && @entry.comments_close_on >= Date.today) %>
-        <div id="flash_message">
-          <p>This article has a comment period that ends in <%= pluralize (@entry.comments_close_date.date - Entry.latest_publication_date), 'day' %>
-          (<%= @entry.comments_close_date.date %>)  <%= link_to "Submit a formal comment", @entry.comment_url || '#addresses', :class => 'button', :target => '_blank' %>
+        <div id="flash_message" class="comment">
+          <p>This article has a comment period that ends in <%= pluralize (@entry.comments_close_on - Entry.latest_publication_date), 'day' %>
+          (<%= @entry.comments_close_on %>)  <%= link_to "Submit a formal comment", @entry.comment_url || '#addresses', :class => 'button', :target => '_blank' %>
           </p>
         </div>
-      <% end -%>
-      
-      <%= render :partial => 'download_and_share', :locals => {:entry => @entry} %>
+      <% end -%>      
   </div> <!-- end metadata_content_area -->
   
   <div id="content_area">
@@ -38,22 +36,22 @@
         </ul>
       </div>
     <% end %>
-
-  <%#= render :partial => 'aside', :locals => {:entry => @entry} %>
   
-  <div id="fulltext_content_area">
-    
-    <% if RAILS_ENV == 'development' %>
-      <%= render :partial => 'full_text', :locals => {:entry => @entry} %>
-    <% else %>
-      <%= render :esi => entry_full_text_path(@entry) %>
-    <% end %>
-  </div> <!-- end content area -->  
+    <div id="fulltext_content_area">
+      <% if RAILS_ENV == 'development' %>
+        <%= render :partial => 'full_text', :locals => {:entry => @entry} %>
+      <% else %>
+        <%= render :esi => entry_full_text_path(@entry) %>
+      <% end %>
+    </div> <!-- end fulltext_content_area area -->  
   
   </div> <!-- content_area end -->
   
   <% aside_tag(:id => 'sidebar') do %>
+  <div class="aside_box">
+    <%= render :partial => 'download', :locals => {:entry => @entry} %>
     <%= render :partial => "metadata", :locals => {:entry => @entry} %>
+  </div>  
   <% end -%>
   
 <% end %> <!-- end article tag -->

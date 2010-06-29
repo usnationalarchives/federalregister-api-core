@@ -1,7 +1,8 @@
-<% feed_autodiscovery entries_path(:format => :rss) %>
+<% feed_autodiscovery entries_path(:format => :rss), "Recent Articles from the Federal Register" %>
+<% feed_autodiscovery highlighted_entries_path(:format => :rss), "Featured Articles from the Federal Register" %>
 <% add_column_class('home') %>
 
-<h1 class="title"><span><%= Entry.latest_publication_date.to_s(:wday_and_pretty_date) %></span></h1>
+<h1 class="title"><span><%= IssueApproval.latest_publication_date.try(:to_s, :wday_and_pretty_date) %></span></h1>
 
 <div id="top_news_promo" class="grid_11 alpha">
 
@@ -18,7 +19,7 @@
   <ul class="news_items">
     <% @sections.each do |section| %>
       <li id="promo_<%= section.slug %>">
-          <% entry = section.highlighted_entries.first %>
+          <% entry = section.entries.highlighted.first %>
           <% if entry %>
             <%= render :partial => 'special/entry_with_abstract', :locals => {:entry => entry} %>  
             <%= render :partial => 'stats', :locals => {:section => section}  %>
@@ -31,49 +32,36 @@
 </div>  
 
 <div class="grid_5 omega">
-  <!-- <img src="/images/carouselcomp.png" /> -->
   <%= render :esi => agency_highlight_path %>
 </div>
 
-<div class="learn">
-  <h2 class="title_bar">What's in the Federal Register?</h2>
-  <div class="grid_11 suffix_1 alpha">
 
-    <h3>Notices</h3>
-    <p>This category contains non-rulemaking documents that are applicable to the general public and named parties.  These documents include notices of public meetings, hearings, investigations, grants and funding, environmental impact statements, information collections, statements of organization and functions, delegations, and other announcements of public interest.
-    </p>
+<h2 class="title_bar">What's in the Federal Register?</h2>
 
-    <h3>Proposed Rules</h3>
-    <p>This category contains proposed regulations. These documents announce and explain agencies’ plans solve problems and accomplish goals, and give interested persons an opportunity to submit comments to improve the final regulation. It also includes advance notices of proposed rulemaking, petitions for rulemaking, negotiated rulemakings, and various proposed determinations and interpretations.</p>
+<div id="learn">
+  <%= render :partial => 'about_fr_articles' %>
+</div> <!-- END learn -->
 
-    <h3>Final Rules</h3>
-    <p>This category contains regulations that apply to the general public and have final legal effect. It also includes interim final rules, direct final rules, and various determinations, interpretive rules, and policy statements.  The documents cite to the <em>Code of Federal Regulations</em>, which contains the codified text of final rules, and is published annually in 50 titles.</p>
-    </div>
-
-  
-  <div class="grid_4 omega">
-    <div class="notecard">
-    <h3>Presidential Documents</h3>
-    <p>This category contains documents signed by the President of the United States.  Documents include Executive Orders, Proclamations, Administrative Orders, Presidential Memoranda, and other issuances of the President that are required or directed to be published in the <em>Federal Register</em>.  
-    </p>
-    </div>
-  </div>
+<div id="current_issue">
+  <%= render :esi => entry_statistics_by_date_path(Entry.latest_publication_date) %>
 </div>
 
-<div class="section_news_boxes grid_16 alpha omega" style="clear:both">
+<h2 class="title_bar">New items in the FR</h2>
+
+<div id="section_news_boxes">
+  <%= link_to 'Subscribe', highlighted_entries_path(:format => :rss), :class => 'button rss' %>
   <% @sections.each do |section| %>
-  <div class="grid_8 <%= cycle('alpha','omega')%>">
-      <div class="">
-        <h2 class="title_bar"><%= link_to section.title, section_path(section), :class => "icon #{section.slug}" %></h2>
+  <div class="fr_section_wrapper grid_8 <%= cycle('alpha','omega') %>">
+      <div class="fr_section <%= section.slug %>">
+        <h2><%= link_to section.title, section_path(section) %></h2>
         <ul class="bullets">
-          <% entries = section.highlighted_entries[1..3] %>
+          <% entries = section.entries.highlighted[1..3] %>
           <% if entries %>
             <% entries.each do |entry| %>
               <li><%= link_to entry.title, entry_path(entry) %></li>
             <% end -%>
           <% end -%>  
         </ul>
-        <%= link_to 'See more', section_path(section), :class => 'see_more awesome' %>
       </div>
     </div>  
   <% end -%>  

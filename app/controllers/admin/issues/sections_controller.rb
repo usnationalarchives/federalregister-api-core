@@ -10,7 +10,7 @@ class Admin::Issues::SectionsController < AdminController
     @sections = Section.all
     @publication_date = Date.parse(params[:issue_id])
     @section = Section.find_by_slug(params[:id])
-    @highlighted_entries = @section.highlighted_entries(@publication_date)
+    @highlighted_entries = @section.entries.highlighted(@publication_date)
   end
   
   def preview

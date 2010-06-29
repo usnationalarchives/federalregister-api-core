@@ -1,5 +1,5 @@
 module SearchHelper
-  PLURAL_FILTERS = [:topic_ids]
+  PLURAL_FILTERS = [:topic_ids, :agency_ids]
   
   def search_adding_filter(condition,value)
     conditions = params.dup[:conditions] || {}

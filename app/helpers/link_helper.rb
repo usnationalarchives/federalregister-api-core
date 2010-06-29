@@ -1,9 +1,8 @@
 module LinkHelper
   def link_to_twitter(entry)
     twitter_url = 'http://twitter.com/home?'
-    message = "Make your voice heard! "
     hash_tag = "%23gov20"
-    status = "status=#{message} #{short_entry_url(entry)} #{hash_tag}"
+    status = "status=#{short_entry_url(entry)} #{hash_tag}"
     href = twitter_url + status
     link_to('Twitter', href, :target => :blank, :title => 'Twitter', :class => 'button list social twitter')
   end

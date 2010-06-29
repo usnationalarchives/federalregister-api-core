@@ -113,7 +113,7 @@
   
   <% aside_tag(:id => 'sidebar') do %>
     <% section_tag(:id => 'metadata') do %>
-      <dl class="metadata_list pull_out">
+      <dl class="metadata_list aside_box">
         <% %w(priority_category major regulatory_flexibility_analysis_required energy_affected).each do |attribute| %>
           <% value = @regulatory_plan.send(attribute) %>
           <% if value.present? %>

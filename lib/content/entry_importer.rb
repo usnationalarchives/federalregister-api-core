@@ -1,16 +1,19 @@
 module Content
   class EntryImporter
+    # order here determines order of attributes when running :all
     include Content::EntryImporter::BasicData
     include Content::EntryImporter::Agencies
     include Content::EntryImporter::CFR
     include Content::EntryImporter::FullText
     include Content::EntryImporter::FullXml
+    include Content::EntryImporter::RawText
     include Content::EntryImporter::LedePhotoCandidates
     include Content::EntryImporter::PageNumber
-    include Content::EntryImporter::ReferencedDates
+    include Content::EntryImporter::Events
     include Content::EntryImporter::Sections
     include Content::EntryImporter::TopicNames
     include Content::EntryImporter::Urls
+    include Content::EntryImporter::RegulationsDotGov
   
     def self.process_all_by_date(date, *attributes)
       dates = Content.parse_dates(date)
@@ -43,8 +46,6 @@ module Content
             end
           end
         end
-        
-        AgencyAssignment.recalculate!
       end
     end
   
@@ -79,8 +80,17 @@ module Content
       update_attributes(*self.provided)
     end
   
+    def verbose?
+      ENV['VERBOSE'] == '1'
+    end
+    
+    def debug(text)
+      puts "**** " + text if verbose?
+    end
+    
     def update_attributes(*attribute_names)
       attribute_names.each do |attr|
+        puts "handling '#{attr}' for '#{document_number}' (#{date})" if verbose?
         @entry.send("#{attr}=", self.send(attr))
       end
       @entry.save!
