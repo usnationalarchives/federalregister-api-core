@@ -13,6 +13,7 @@ module Content
     include Content::EntryImporter::Sections
     include Content::EntryImporter::TopicNames
     include Content::EntryImporter::Urls
+    include Content::EntryImporter::RegulationsDotGov
   
     def self.process_all_by_date(date, *attributes)
       dates = Content.parse_dates(date)
@@ -79,8 +80,17 @@ module Content
       update_attributes(*self.provided)
     end
   
+    def verbose?
+      ENV['VERBOSE'] == '1'
+    end
+    
+    def debug(text)
+      puts "**** " + text if verbose?
+    end
+    
     def update_attributes(*attribute_names)
       attribute_names.each do |attr|
+        puts "handling '#{attr}' for '#{document_number}' (#{date})" if verbose?
         @entry.send("#{attr}=", self.send(attr))
       end
       @entry.save!

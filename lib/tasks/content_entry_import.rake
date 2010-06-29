@@ -46,6 +46,22 @@ namespace :content do
         entry_importer(:cfr_title, :cfr_part)
       end
       
+      desc "Import regulations.gov info"
+      task :regulations_dot_gov => :environment do
+        entry_importer(:checked_regulationsdotgov_at, :regulationsdotgov_id, :comment_url)
+      end
+      
+      namespace :regulations_dot_gov do
+        desc "Import regulations.gov info for entries missing it published in the last 3 weeks"
+        task :tardy => :environment do
+          entries = Entry.published_since(3.weeks.ago).scoped(:conditions => ["regulationsdotgov_id IS NULL AND checked_regulationsdotgov_at IS NULL OR checked_regulationsdotgov_at < ?", 1.day.ago])
+          entries.each do |entry|
+            importer = Content::EntryImporter.new(:entry => entry)
+            importer.update_attributes(:checked_regulationsdotgov_at, :regulationsdotgov_id, :comment_url)
+          end
+        end
+      end
+      
       desc "Assign entries to sections"
       task :sections => :environment do
         # entry_importer(:sections)
