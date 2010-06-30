@@ -54,7 +54,7 @@ class EntriesController < ApplicationController
     
     @agencies.each do |agency|
       def agency.entries_excluding_subagency_entries
-        self.entries.select{|entry| entry.agencies_excluding_parents.include?(self) }
+        self.entries.select{|entry| entry.agencies.excluding_parents.include?(self) }
       end
     end
     

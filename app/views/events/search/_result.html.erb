@@ -13,6 +13,6 @@
       <span class="location"><%= event.place.name %></span>
     <% end %>
     <br />
-    <span class="agency"><%= event.entry.agencies_excluding_parents.map{|agency| link_to(agency.name, agency_path(agency))}.join(' :: ') %></span>
+    <span class="agency"><%= event.entry.agencies.excluding_parents.map{|agency| link_to(agency.name, agency_path(agency))}.join(' :: ') %></span>
   </div>  
 </li>
