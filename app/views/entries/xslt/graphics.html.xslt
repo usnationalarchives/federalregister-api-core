@@ -45,6 +45,9 @@
       <ul class="table_of_graphics thumbs noscript">
         <xsl:for-each select="//GPH/GID[descendant::text()]">
           <li>
+            <xsl:if test="count(preceding::GID[descendant::text()]) mod 4 = 3">
+              <xsl:attribute name="class">clear</xsl:attribute>
+            </xsl:if>
             <a class="thumb">
               <xsl:attribute name="href">
                 <xsl:value-of select="concat('#g-', count(preceding::GPH/GID)+1)" />
