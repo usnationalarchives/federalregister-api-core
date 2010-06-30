@@ -287,15 +287,15 @@ class Entry < ApplicationModel
   end
   
   def source_url(format)
-    format = format.to_sym
-    
-    case format
+    case format.to_sym
+    when :mods
+      "http://www.gpo.gov/fdsys/granule/FR-#{publication_date.to_s(:iso)}/#{document_number}/mods.xml"
     when :html
-      base_url = "http://www.gpo.gov/fdsys/granule/FR-#{publication_date.to_s(:db)}/#{document_number}"
+      "http://www.gpo.gov/fdsys/granule/FR-#{publication_date.to_s(:db)}/#{document_number}"
     when :text
-      base_url = "http://www.gpo.gov/fdsys/pkg/FR-#{publication_date.to_s(:db)}/html/#{document_number}.htm"
+      "http://www.gpo.gov/fdsys/pkg/FR-#{publication_date.to_s(:db)}/html/#{document_number}.htm"
     when :pdf
-      base_url =  "http://www.gpo.gov/fdsys/pkg/FR-#{publication_date.to_s(:db)}/pdf/#{document_number}.pdf"
+      "http://www.gpo.gov/fdsys/pkg/FR-#{publication_date.to_s(:db)}/pdf/#{document_number}.pdf"
     end
   end
   
