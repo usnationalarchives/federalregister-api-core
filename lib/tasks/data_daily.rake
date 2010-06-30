@@ -3,6 +3,7 @@ namespace :data do
     data:daily:quick
     content:entries:import:regulations_dot_gov:tardy
     tmp:cache:clear
+    content:entries:html:compile
     thinking_sphinx:index
     sitemap:refresh
   )
@@ -13,7 +14,6 @@ namespace :data do
     content:entries:import
     
     content:entries:import:graphics
-    
     data:extract:places
     )
   end
