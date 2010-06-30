@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100628000452) do
+ActiveRecord::Schema.define(:version => 20100630151914) do
 
   create_table "agencies", :force => true do |t|
     t.integer  "parent_id"
@@ -169,6 +169,7 @@ ActiveRecord::Schema.define(:version => 20100628000452) do
     t.string   "remote_ip"
   end
 
+  add_index "entry_page_views", ["created_at"], :name => "index_entry_page_views_on_created_at"
   add_index "entry_page_views", ["entry_id"], :name => "index_entry_page_views_on_entry_id"
 
   create_table "events", :force => true do |t|
