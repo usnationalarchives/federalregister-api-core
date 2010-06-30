@@ -554,5 +554,6 @@ pool :fr2 do
       #authorize :from_port => "3306", :to_port => "3306"
     end
     
+    security_group "sphinx"
   end
 end
