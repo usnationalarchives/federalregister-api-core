@@ -16,9 +16,15 @@
       </ul>
     </div>
     
-    <ol class="results">
-      <%= render :partial => 'result', :collection => @search.results, :as => :event %>
-    </ol>
+    
+    <% @search.results.group_by(&:date).each do |date, events| %>
+      <h3><%= date %></h3>
+      
+      <ol class="results">
+        <%= render :partial => 'result', :collection => events, :as => :event %>
+      </ol>
+    <% end %>
+    
     <%= will_paginate @search.results, :params => {:action => :show} %>
   <% else %>
     <p>No events were found.</p>
