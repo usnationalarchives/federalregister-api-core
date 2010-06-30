@@ -20,7 +20,7 @@ class Graphic < ApplicationModel
   has_many :entries, :through => :usages
   
   has_attached_file :graphic,
-                    :styles => { :thumb => ["100", :gif], :small => ["150", :gif], :medium => ["245", :gif], :large => ["580", :gif], :original => ["", :gif] },
+                    :styles => { :thumb => ["100", :gif], :large => ["460", :gif], :original => ["", :gif] },
                     :processors => [:auto_inverter],
                     :storage => :s3,
                     :s3_credentials => "#{Rails.root}/config/amazon.yml",
