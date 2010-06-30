@@ -38,7 +38,7 @@ class Section < ApplicationModel
   end
   
   def should_include_entry?(entry)
-    cfr_citation_ranges.any?{|range| range.includes?(entry.cfr_title, entry.cfr_part)} || (agencies & entry.agencies_excluding_parents).size > 0
+    cfr_citation_ranges.any?{|range| range.includes?(entry.cfr_title, entry.cfr_part)} || (agencies & entry.agencies.excluding_parents).size > 0
   end
   
   def popular_topics(n = 10, since = 1.month.ago)
