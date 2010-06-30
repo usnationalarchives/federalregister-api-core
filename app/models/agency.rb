@@ -53,6 +53,12 @@ class Agency < ApplicationModel
   
   named_scope :with_logo, :conditions => "agencies.logo_file_name IS NOT NULL"
   
+  def self.excluding_parents
+    agencies = scoped()
+    parent_agency_ids = agencies.map(&:parent_id).compact
+    agencies.reject{|a| parent_agency_ids.include?(a.id) }.uniq
+  end
+  
   def to_param
     slug
   end

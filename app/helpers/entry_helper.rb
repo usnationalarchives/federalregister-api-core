@@ -5,7 +5,7 @@ module EntryHelper
   
   def agency_names(entry)
     if entry.agencies.present?
-      agencies = entry.agencies_excluding_parents.map{|a| "the #{link_to a.name, agency_path(a)}" }
+      agencies = entry.agencies.excluding_parents.map{|a| "the #{link_to a.name, agency_path(a)}" }
     else
       agencies = entry.agency_names.map(&:name)
     end
