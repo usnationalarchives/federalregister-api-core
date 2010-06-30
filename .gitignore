@@ -28,3 +28,4 @@
 /public/articles
 /tmp
 /config/mysql.yml
+/config/deploy_credentials.yml
