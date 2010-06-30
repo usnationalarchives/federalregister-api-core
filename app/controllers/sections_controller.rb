@@ -70,7 +70,7 @@ class SectionsController < ApplicationController
     @section = Section.find_by_slug!(params[:slug])
     @entries = @section.entries.popular.limit(5)
     
-    render :layout => false
+    render :template => "entries/popular", :layout => false
   end
   
   def popular_topics
