@@ -8,6 +8,7 @@ production:
   morphology: stem_en
   index_exact_words: 1
   address: ip-10-194-109-139.ec2.internal
+  port: 3312
   mem_limit: 528M
   searchd_log_file: /var/www/apps/fr2/shared/log/searchd.log
   query_log_file: /var/www/apps/fr2/shared/log/searchd.query.log
