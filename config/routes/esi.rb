@@ -1,6 +1,7 @@
 ActionController::Routing::Routes.draw do |map|
   # HOMEPAGE
   map.agency_highlight '/agency_highlight', :controller => 'special', :action => 'agency_highlight'
+  map.popular_entries '/popular_entries', :controller => 'special', :action => 'popular_entries'
   map.entry_statistics_by_date 'articles/:year/:month/:day/statistics', :controller => 'entries',
                                                    :action     => 'statistics_by_date',
                                                    :year       => /\d{4}/,

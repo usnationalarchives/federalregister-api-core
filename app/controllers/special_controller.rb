@@ -13,4 +13,11 @@ class SpecialController < ApplicationController
       render :nothing => true
     end
   end
+  
+  def popular_entries
+    cache_for 1.hour
+    @entries = Entry.popular.limit(5)
+    
+    render :template => "entries/popular", :layout => false
+  end
 end
