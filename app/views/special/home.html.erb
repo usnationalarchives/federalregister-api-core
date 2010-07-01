@@ -9,7 +9,7 @@
   <ul class="section_nav">
     <% @sections.each do |section| %>
       <%# TODO HELP-RUBY do this better %>
-      <li class="<%= 'one_word' if section.title.split(' ').count == 1 %>">
+      <li class="<%= 'one_word' if section.title.split(' ').count == 1 %> <%= section.slug %>">
           <%= link_to section.title, "#promo_#{section.slug}" %>
       </li>  
     <% end -%>
@@ -43,7 +43,10 @@
 </div> <!-- END learn -->
 
 <div id="current_issue">
-  <%= render :esi => entry_statistics_by_date_path(Entry.latest_publication_date) %>
+  <div class="aside_box">
+    <h1>Latest Issue</h1>
+    <%= render :esi => entry_statistics_by_date_path(Entry.latest_publication_date) %>
+  </div>
 </div>
 
 <h2 class="title_bar">New items in the FR</h2>

@@ -5,7 +5,6 @@ var citation_info = {
     var anchor = "<span class='trigger'>Show citation box</span>"
     $(".body_column > *[id^='p-'], .body_column > ul > li[id^='p-']").append(anchor).addClass("citable");
     var self = this;
-    
     $("#content_area").bind('click', function(event) {
       if( $(event.target).hasClass("trigger") ){
         event.preventDefault();
@@ -37,10 +36,9 @@ var citation_info = {
       next_header_text: next_header.text().replace(/ Back to Top/, ''),
       next_header_anchor: next_header.attr('id')
     });
-    
     $("#sidebar").append(html);
     var id_el = $("#" + id); 
-    id_el.css({"top": index_el.position().top + 6, "right": 0}).data("id", index).data("sticky", false);
+    id_el.css({"top": index_el.position().top + 6, "right": 0}).data("id", index);
     this.cache[ index ] = id_el;
     return id;
   },
