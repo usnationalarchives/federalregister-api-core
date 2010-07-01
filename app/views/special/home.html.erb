@@ -44,7 +44,7 @@
 </div> <!-- END learn -->
 
 <div id="current_issue">
-  <%= render :esi => entry_statistics_by_date_path(Entry.latest_publication_date) %>
+  <%= render :partial => "entries/statistics_by_date", :locals => {:issue => @issue} %>
 </div>
 
 <h2 class="title_bar">New items in the FR</h2>
