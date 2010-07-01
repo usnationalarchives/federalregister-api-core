@@ -54,7 +54,7 @@ class RegulatoryPlan < ApplicationModel
   has_many :agency_names, :through => :agency_name_assignments
   
   has_many :agency_assignments, :as => :assignable
-  has_many :agencies, :through => :agency_assignments
+  has_many :agencies, :through => :agency_assignments, :extend => Agency::AssociationExtensions
   
   define_index do
     # Will require a index rebuild when new regulatory plan issue comes in...
