@@ -19,14 +19,24 @@ class ApplicationController < ActionController::Base
   def server_error(exception)
     notify_hoptoad(exception)
     
-    request.format = :html
-    render :template => "errors/500.html.erb", :status => 500
+    # ESI routes should return correct status codes, but no error page
+    if params[:quiet]
+      render :nothing => true, :status => 500
+    else
+      request.format = :html
+      render :template => "errors/500.html.erb", :status => 500
+    end
   end
   
   rescue_from ActiveRecord::RecordNotFound, ActionController::RoutingError, :with => :record_not_found if RAILS_ENV != 'development'
   def record_not_found
-    request.format = :html
-    render :template => "errors/404.html.erb", :status => 404
+    # ESI routes should return correct status codes, but no error page
+    if params[:quiet]
+      render :nothing => true, :status => 404
+    else
+      request.format = :html
+      render :template => "errors/404.html.erb", :status => 404
+    end
   end
   
   def cache_for(time)
