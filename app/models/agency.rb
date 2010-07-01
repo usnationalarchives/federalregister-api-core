@@ -26,6 +26,14 @@
 =end Schema Information
 
 class Agency < ApplicationModel
+  module AssociationExtensions
+    def excluding_parents
+      agencies = self
+      parent_agency_ids = agencies.map(&:parent_id).compact
+      agencies.reject{|a| parent_agency_ids.include?(a.id) }.uniq
+    end
+  end
+  
   has_many :agency_assignments
   has_many :agencies_sections
   has_many :sections, :through => :agencies_sections
@@ -52,12 +60,6 @@ class Agency < ApplicationModel
   serializable_column :entries_1_year_weekly, :entries_5_years_monthly, :entries_all_years_quarterly, :related_topics_cache
   
   named_scope :with_logo, :conditions => "agencies.logo_file_name IS NOT NULL"
-  
-  def self.excluding_parents
-    agencies = scoped()
-    parent_agency_ids = agencies.map(&:parent_id).compact
-    agencies.reject{|a| parent_agency_ids.include?(a.id) }.uniq
-  end
   
   def to_param
     slug
