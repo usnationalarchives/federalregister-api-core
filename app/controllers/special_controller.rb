@@ -2,6 +2,7 @@ class SpecialController < ApplicationController
   def home
     cache_for 1.day
     @sections = Section.all
+    @issue = Issue.current
   end
   
   def agency_highlight

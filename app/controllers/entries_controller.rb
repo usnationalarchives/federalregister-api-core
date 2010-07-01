@@ -42,6 +42,7 @@ class EntriesController < ApplicationController
     cache_for 1.day
     
     @publication_date = parse_date_from_params
+    @issue = Issue.new(@publication_date)
     
     @agencies = Agency.all(
       :include => [:entries],
@@ -68,22 +69,6 @@ class EntriesController < ApplicationController
       raise ActiveRecord::RecordNotFound
     end
     
-  end
-  
-  def statistics_by_date
-    @publication_date = parse_date_from_params
-    entries = Entry.published_on(@publication_date)
-    
-    @total_count                  = entries.count
-    raise ActiveRecord::RecordNotFound if @total_count == 0
-    
-    @notice_count                 = entries.of_type('NOTICE').count
-    @proposed_rule_count          = entries.of_type('PRORULE').count
-    @rule_count                   = entries.of_type('RULE').count
-    @presidential_documents_count = entries.of_type('PRESDOCU').count
-    @significant_entries_count    = entries.significant.count
-    @total_pages                  = entries.maximum(:end_page) - entries.minimum(:start_page) + 1
-    render :layout => false
   end
   
   def show
