@@ -1,0 +1,6 @@
+<h1>What's Hot</h1>
+<ol>
+  <% @entries.each_with_index do |entry, index| %>
+    <li><span class="index"><%= index + 1 %></span><%= link_to truncate(entry.title, 110), entry_path(entry) %></li>
+  <% end %>
+</ol>
