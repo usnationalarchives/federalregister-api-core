@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100630151914) do
+ActiveRecord::Schema.define(:version => 20100701144235) do
 
   create_table "agencies", :force => true do |t|
     t.integer  "parent_id"
@@ -53,9 +53,11 @@ ActiveRecord::Schema.define(:version => 20100630151914) do
     t.integer "agency_id"
     t.integer "position"
     t.string  "assignable_type"
+    t.integer "agency_name_id"
   end
 
   add_index "agency_assignments", ["agency_id", "assignable_id"], :name => "index_agency_assignments_on_agency_id_and_entry_id"
+  add_index "agency_assignments", ["agency_name_id"], :name => "index_agency_assignments_on_agency_name_id"
   add_index "agency_assignments", ["assignable_type", "assignable_id", "agency_id"], :name => "index_agency_assignments_on_assignable_and_agency_id"
 
   create_table "agency_highlights", :force => true do |t|
@@ -317,10 +319,12 @@ ActiveRecord::Schema.define(:version => 20100630151914) do
     t.integer  "entry_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "topics_topic_name_id"
   end
 
   add_index "topic_assignments", ["entry_id", "topic_id"], :name => "index_topic_assignments_on_entry_id_and_topic_id"
   add_index "topic_assignments", ["topic_id", "entry_id"], :name => "index_topic_assignments_on_topic_id_and_entry_id"
+  add_index "topic_assignments", ["topics_topic_name_id"], :name => "index_topic_assignments_on_topics_topic_name_id"
 
   create_table "topic_name_assignments", :force => true do |t|
     t.integer  "entry_id"

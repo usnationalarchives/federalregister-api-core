@@ -68,6 +68,6 @@ end
 
 Spork.each_run do
   # This code will be run each time you run your specs.
-  Dir["#{Rails.root}/spec/factories/*.rb"].each {|f| load f} 
+  # Dir["#{Rails.root}/spec/factories/*.rb"].each {|f| load f} 
   
 end
