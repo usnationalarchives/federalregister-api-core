@@ -18,6 +18,11 @@ SETUP
   @include omega;
   }  
 
+.row {
+  margin-bottom: 2em;
+  overflow: hidden;
+  }
+
 /******************************
 
 SECTION VIEW
@@ -180,13 +185,18 @@ AGENCY VIEW
 HOMEPAGE
 
 ******************************/
+#top_news_promo {
+  @include grid(11, 16);
+  @include alpha;  
+  }
+
 .home #news {
-  @include grid(4, 16);
+  @include grid(5, 16);
   @include omega;
+  margin-left: 30px;
   }  
 .home #popular {
-  @include grid(4, 16);
-  @include grid-suffix(1);
+  @include grid(5, 16);
   @include alpha;  
   clear: both;
   }  
