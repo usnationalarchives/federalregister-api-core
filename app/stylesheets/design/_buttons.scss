@@ -81,10 +81,10 @@ background-position: 10px -20px;
   padding: 0 0 0 30px;
   }
 
-.button.social.digg { background-image: url(/images/social/24px/digg.png); }
-.button.social.email { background-image: url(/images/social/24px/email.png); }
-.button.social.facebook { background-image: url(/images/social/24px/facebook.png); }
-.button.social.reddit { background-image: url(/images/social/24px/reddit.png); }
-.button.social.twitter { background-image: url(/images/social/24px/twitter.png); }
+.button.social.digg { background-image: sprite-image('social/24px/digg.png'); }
+.button.social.email { background-image: sprite-image('social/24px/email.png'); }
+.button.social.facebook { background-image: sprite-image('social/24px/facebook.png'); }
+.button.social.reddit { background-image: sprite-image('social/24px/reddit.png'); }
+.button.social.twitter { background-image: sprite-image('social/24px/twitter.png'); }
 .button.format.pdf { background: url(/images/icon_pdf.png) no-repeat left 50%; }
 .button.format.xml { background: url(/images/icon_xml.png) no-repeat left 50%; }
