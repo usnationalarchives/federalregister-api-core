@@ -17,6 +17,19 @@ h6 {
   font-weight: 600;
   }
 
+.block {
+  background: $bookmark_red;
+  color: #fff;
+  @include apertura-condensed;
+  float: left;
+  font-size: 1.2em;
+  font-weight: 700;
+  line-height: 1;
+  margin: 0 0 1em;
+  padding: 0.3em .3em 0;
+  text-transform: uppercase;
+  }
+
 #entries.show h2,
 #entries.show h3,
 #entries.show h4,
