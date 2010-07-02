@@ -1,12 +1,31 @@
 /******************************
 
+CURRENT ISSUE
+
+******************************/
+#current_issue {
+  border: 1px solid #eee;
+  display: block;
+  margin: 1em 0 2em;
+  }
+#current_issue dl,
+#current_issue dt,
+#current_issue dd {
+  display: inline;
+  }
+#current_issue dd {
+  margin: 0 1em 0 0;
+  }  
+
+/******************************
+
 PROMO BOX
 
 ******************************/
 
 #top_news_promo {
-  border: 5px solid #ececec;
-  @include border-radius(10px);
+/*  border: 5px solid #ececec;
+  @include border-radius(10px);*/
   margin-bottom: 2em;
   overflow: hidden;
   width: 645px;
@@ -23,49 +42,48 @@ PROMO NAV
   height: 318px;  
   list-style: none;
   margin-bottom: 0;
-  width: 190px;
+  width: 180px;
   }
 #top_news_promo ul.section_nav li {
-  background: $aside_box_background url(/images/promo_nav_bg.png) repeat-x left bottom;
-  height: 53px;
-  width: 150px;  
+  margin-bottom: .5em;
   }
-#top_news_promo ul.section_nav li:first-child,  
-#top_news_promo ul.section_nav li:first-child a{
-  @include border-top-left-radius(5px);
-  }
-#top_news_promo ul.section_nav li:last-child,  
-#top_news_promo ul.section_nav li:last-child a{
-  @include border-bottom-left-radius(5px);
-  }    
 #top_news_promo ul.section_nav li a {
-  border: 1px solid #e5e5e5;
-  color: #5a5a5a;
+  background-position: 5px 50%;
+  background-repeat: no-repeat;
   display: block;
-  font-size: 1.3em;
-  height: 37px;
+  font-size: 1.2em;
+  height: 31px;
   line-height: 1.1;
-  padding: 7px 8px;
+  padding: 5px 0 5px 50px;
   text-transform: uppercase;
   }
+#top_news_promo ul.section_nav li.money a { background-image: url(/images/icon_money_50.png); }  
+#top_news_promo ul.section_nav li.environment a { background-image: url(/images/icon_environment_50.png); }
+#top_news_promo ul.section_nav li.world a { background-image: url(/images/icon_world_50.png); }  
+#top_news_promo ul.section_nav li.science-and-technology a { background-image: url(/images/icon_science_50.png); } 
+#top_news_promo ul.section_nav li.business-and-industry a { background-image: url(/images/icon_business_50.png); }  
+#top_news_promo ul.section_nav li.health-and-public-welfare a { background-image: url(/images/icon_health_50.png); } 
 #top_news_promo ul.section_nav li.one_word a {
-  line-height: 40px;
+  line-height: 31px;
   }  
 #top_news_promo ul.section_nav li.on {
   background-color: none;
-  background: url(/images/promo_nav_bg_on.png) no-repeat -2px 1px;
-  padding-right: 20px;
+  background: url(/images/promo_nav_bg_on_new.png) no-repeat right top;
+  padding-right: 14px;
   }
 #top_news_promo ul.section_nav li.on a {
-  color: #e4a529;
-  border-right: none;
+  background-color: $golden;
+  color: #fff;
   }
-  
-#top_news_promo ul.section_nav li a:hover,
-#top_news_promo ul.section_nav li a:focus {
-  color: #e4a529;
+#top_news_promo ul.section_nav li.on a:focus {
   outline: none;
-  }
+  }  
+#top_news_promo ul.section_nav li.money.on a { background-color: $golden; background-image: url(/images/icon_money_nav_on.png); }  
+#top_news_promo ul.section_nav li.environment.on a { background-color: $golden; background-image: url(/images/icon_environment_nav_on.png); }
+#top_news_promo ul.section_nav li.world.on a { background-color: $golden; background-image: url(/images/icon_world_nav_on.png); }  
+#top_news_promo ul.section_nav li.science-and-technology.on a { background-color: $golden; background-image: url(/images/icon_science_nav_on.png); } 
+#top_news_promo ul.section_nav li.business-and-industry.on a { background-color: $golden; background-image: url(/images/icon_business_nav_on.png); }  
+#top_news_promo ul.section_nav li.health-and-public-welfare.on a { background-color: $golden; background-image: url(/images/icon_health_nav_on.png); }
   
 /******************************
 
@@ -73,35 +91,42 @@ PROMO ITEMS
 
 ******************************/
   
-#top_news_promo .news_items {
+#top_news_promo #slideshow {
   display: block;
   float: left;
   height: 318px;
-  margin-bottom: 0;
+  margin: 0 0 0 20px;
   overflow: hidden;
+  position: relative;
   width: 425px;
   }  
-#top_news_promo .news_items > li {
-  height: 290px;
-  padding: 1em 0;
-  position: relative;
+#slideshow .handle {
+  cursor:pointer;
+  height: 318px;  
+  position:absolute;
+  width: 2550px;
   }
-#top_news_promo .news_items .metadata {
+#slideshow .handle > div {
+  float: left;
+  height: 318px;
+  width: 425px;
+  }
+#slideshow .metadata {
   font-size: 1em;
   padding-bottom: 1em;
   }  
-#top_news_promo .news_items .figure {
+#slideshow .figure {
   background: none;
   float: left;
   margin: 0 1em 0 0;
   padding :0;
   }
-#top_news_promo .news_items .figcaption {
+#slideshow .figcaption {
   bottom: 7px;
   left: 0;
   width: 90px;
   }
-#top_news_promo .news_content {
+#news_content {
   overflow: hidden;
   }  
 
@@ -148,21 +173,17 @@ PROMO STATS
 
 /******************************
 
-LEARN & CURRENT 
+LEARN 
 
 ******************************/
   
 #learn .about {
   margin-bottom: 1em;
-  padding: 0 0 0 100px;
   }
 #learn .about.notices { background: url(/images/icon_notice.png) no-repeat left top; }
 #learn .about.proposed_rules { background: url(/images/icon_proposed.png) no-repeat left top;  }
 #learn .about.final_rules { background: url(/images/icon_final.png) no-repeat left top;  }
 #learn .about.presidential_documents { }  
-#learn p {
-  border-bottom: 3px solid #ECECEC;
-  }
 #learn .about:last-child p {
   border-bottom: 0;
   }  
@@ -171,7 +192,7 @@ LEARN & CURRENT
 
 /******************************
 
-LEARN & CURRENT 
+CURRENT 
 
 ******************************/  
 
@@ -208,7 +229,11 @@ LEARN & CURRENT
   }
 
 
-
+/*
+*
+* OLD?
+*
+*/
 
 .newsbox {
   @include border-radius(5px);
@@ -250,5 +275,6 @@ LEARN & CURRENT
 .notecard {
   background: #ececec;
   @include border-radius(10px);
+  overflow: hidden;
   padding: 1em;
   }  
