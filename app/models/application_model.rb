@@ -18,7 +18,7 @@ class ApplicationModel < ActiveRecord::Base
   
   def self.preload(*associations)
     results = scoped()
-    Entry.preload_associations(results, associations)
+    preload_associations(results, associations)
     results
   end
 end
