@@ -179,21 +179,24 @@ AGENCY VIEW
 
 HOMEPAGE
 
-******************************/    
-
-#learn {
-  @include grid(11,16);
+******************************/
+.home #news {
+  @include grid(4, 16);
+  @include omega;
+  }  
+.home #popular {
+  @include grid(4, 16);
   @include grid-suffix(1);
-  @include alpha;
-  }
-
-#current_issue {
-  @include grid(4,16);
+  @include alpha;  
+  clear: both;
+  }  
+.home #agency_highlight {
+  @include grid(11, 16);
   @include omega;  
+  }  
+#learn .about {
+  @include grid(4,16);
   }
 #section_news_boxes {
   overflow: hidden;
-}  
-/*.fr_section_wrapper {
-  @include grid(8,16);
-  }*/
+  }  
