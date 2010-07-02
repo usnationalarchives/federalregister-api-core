@@ -19,8 +19,10 @@
   <% end -%>
 </div>
 
-<% section_tag(:id => 'popular') do %>
-  <%= render :esi => popular_entries_path %>
+<% section_tag(:id => 'popular', :class => 'with_icon') do %>
+  <div>
+    <%= render :esi => popular_entries_path %>
+  </div>
 <% end -%>
 
 <% section_tag(:id => 'agency_highlight') do %>

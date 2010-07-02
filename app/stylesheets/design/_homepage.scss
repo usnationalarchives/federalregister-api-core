@@ -202,6 +202,49 @@ NEWS
 
 /******************************
 
+WHATS HOT 
+
+******************************/
+
+.home #popular.with_icon {
+  background: url(/images/icon_whats_hot.png) no-repeat left top;
+  padding-left: 35px;
+  }
+.home #popular.with_icon h1 { /* TODO pull this into its own class to share with fr_sections below */
+  border-bottom: 2px solid #464646;
+  color: #464646;
+  @include apertura-condensed;
+  font-size: 1.5em;
+  margin: 0 0 .5em;
+  padding: 0;
+  text-transform: uppercase;
+  }
+.home #popular.with_icon ol {
+  list-style: none;
+  }  
+.home #popular.with_icon li {
+  border-bottom: 2px solid #EFEFEF;
+  @include min-height(40px);
+  margin-bottom: .5em;
+  padding-left: 2em;
+  position: relative;
+  }
+.home #popular.with_icon li:last-child {
+  border-bottom: 0;
+  }  
+.home #popular.with_icon .index {
+  color: #eee;  
+  @include apertura-condensed;
+  font-size: 2.8em;
+  font-weight: 700;
+  left: 0;
+  line-height: 1;
+  position: absolute;
+  top: 0;
+  }
+
+/******************************
+
 LEARN 
 
 ******************************/
