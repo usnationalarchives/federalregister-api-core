@@ -4,17 +4,36 @@ CURRENT ISSUE
 
 ******************************/
 #current_issue {
-  border: 1px solid #eee;
+  background: $pale_green url(/images/current_issue.png) no-repeat left top;
+  border: 1px solid $green;
   display: block;
+  height: 40px;
   margin: 1em 0 2em;
+  }
+#current_issue .issue {
+  color: #fff;
+  display: inline-block;
+  font-size: 1.2em;
+  line-height: 40px;
+  margin-right: 1em;
+  padding-left: 55px;
+  width: 125px;
+  }  
+#current_issue dl {
+  margin-bottom: 0;
   }
 #current_issue dl,
 #current_issue dt,
 #current_issue dd {
   display: inline;
   }
+#current_issue dt {
+  color: #636363;
+  text-transform: uppercase;
+  }  
 #current_issue dd {
   margin: 0 1em 0 0;
+  font-weight: 700;
   }  
 
 /******************************
@@ -24,12 +43,8 @@ PROMO BOX
 ******************************/
 
 #top_news_promo {
-/*  border: 5px solid #ececec;
-  @include border-radius(10px);*/
-  margin-bottom: 2em;
   overflow: hidden;
-  width: 645px;
-}
+  }
 
 /******************************
 
@@ -37,6 +52,7 @@ PROMO NAV
 
 ******************************/
 #top_news_promo ul.section_nav {
+  clear: both;
   display: block;
   float: left;
   height: 318px;  
@@ -100,13 +116,12 @@ PROMO ITEMS
   position: relative;
   width: 425px;
   }  
-#slideshow .handle {
-  cursor:pointer;
+#slideshow .container {
   height: 318px;  
   position:absolute;
   width: 2550px;
   }
-#slideshow .handle > div {
+#slideshow .container > div {
   float: left;
   height: 318px;
   width: 425px;
@@ -170,6 +185,17 @@ PROMO STATS
   display: block;
   }  
   
+/******************************
+
+NEWS 
+
+******************************/
+
+.celebrating {
+  @include replace-text-with-dimensions("celebrating_75.png", 0, 0);
+  clear: both;
+  margin: .5em 0;
+  }
 
 /******************************
 

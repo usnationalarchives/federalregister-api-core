@@ -1,4 +1,3 @@
-<%# HELP-DESIGN: needs style; I don't particularly care about the markup here... %>
 <dl class="statistics">
   <dt>Notices</dt>
   <dd><%= issue.notice_count %></dd>
@@ -15,7 +14,7 @@
   <% end %>
   
   <% if issue.significant_entries_count > 0 %>
-    <dt>Articles on significant regulations</dt>
+    <dt>Significant Regulations</dt>
     <dd><%= issue.significant_entries_count %></dd>
   <% end %>
   
