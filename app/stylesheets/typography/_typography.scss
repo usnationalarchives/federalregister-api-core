@@ -1,23 +1,5 @@
 /******************************
 
-SETUP
-
-******************************/
-/*html{
-font-size:100%;
-}
-
-body {
-@include basic_font;
-font-size:62.5%;
-line-height: 1.8em;
-}
-*/
-
-
-
-/******************************
-
 Enhanced Fonts for elements
 
 ******************************/
@@ -79,7 +61,7 @@ TITLE STYLES
 ******************************/
 
 h1.title {
-background: url("/images/header_bg.png") repeat-x scroll left -66px #5697CF;
+background: url("/images/header_bg.png") repeat-x scroll left top;
 color: #fff;
 clear: both;
 line-height: .9;
@@ -117,6 +99,13 @@ text-transform: uppercase;
 }
 #sidebar .title_bar {
   margin-top: 0;
+  }
+div.title_bar {
+  font-size: 1em;
+  position: relative;
+  }
+div.title_bar h2 {
+  @include apertura-condensed;
   }
 
 .small_stack {
