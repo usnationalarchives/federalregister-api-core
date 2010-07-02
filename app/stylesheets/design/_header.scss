@@ -15,18 +15,17 @@ NAV
 ******************************/
   
 #primary_nav {
-  background: #e0e0e0;
-  height: 40px;
-  margin-bottom: 2px;
-  overflow: hidden; 
+  background: rgba(55,68,78,.4);
+  border-top: 4px solid $golden;
+  }
+#primary_nav ul {
+  margin-bottom: 0;
   }
 #primary_nav li {
-  background: url(/images/bullet.png) no-repeat left 17px;
   display: block;
   float: left;
-  line-height: 40px;
+  line-height: 26px;
   margin-right: 1em;
-  padding-left: 20px;  
   }
 #primary_nav li:first-child {
   background: none;
@@ -34,6 +33,8 @@ NAV
   padding-left: 0;
   }
 #primary_nav a {
+  color: #fff;
+  @include text-shadow(#666, 1px, 1px, 1px);
   text-decoration: none;
   text-transform: uppercase;
   }   
@@ -46,19 +47,21 @@ SEARCH
 // HELP-DESIGN: scoped these to prevent namespace conflict on actual search pages
 
 #header #search_bar  {
-  border-top: 4px solid $golden; /* TODO cut border and make it the background because it antialised */
-  }
-#header #search_container {
   margin: 0 auto;
   position: relative;
   width: 960px;
+  }
+#header #search_container {
+  position: absolute;
+  right: 0;
+  top: -30px;
   }  
 #header #search {
   background: url(/images/search_bg.png) no-repeat left top;
   height: 40px;
   position: absolute;
   right: 0;
-  top: -4px;
+  top: 0;
   width: 260px;
   }
 #header #search input[type='text'] {
