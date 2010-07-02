@@ -78,7 +78,7 @@ PROMO NAV
 #top_news_promo ul.section_nav li.world a { background-image: url(/images/icon_world_50.png); }  
 #top_news_promo ul.section_nav li.science-and-technology a { background-image: url(/images/icon_science_50.png); } 
 #top_news_promo ul.section_nav li.business-and-industry a { background-image: url(/images/icon_business_50.png); }  
-#top_news_promo ul.section_nav li.health-and-public-welfare a { background-image: url(/images/icon_health_50.png); } 
+#top_news_promo ul.section_nav li.health-and-public-welfare a { background-image: url(/images/icon_health_50.png); background-position: 10px 50%; } 
 #top_news_promo ul.section_nav li.one_word a {
   line-height: 31px;
   }  
@@ -114,18 +114,21 @@ PROMO ITEMS
   margin: 0 0 0 20px;
   overflow: hidden;
   position: relative;
-  width: 425px;
+  width: 440px;
   }  
 #slideshow .container {
   height: 318px;  
   position:absolute;
-  width: 2550px;
+  width: 2640px;
   }
 #slideshow .container > div {
   float: left;
   height: 318px;
-  width: 425px;
+  width: 440px;
   }
+#slideshow .container > div > div {
+  padding-right: 15px;
+  }  
 #slideshow .metadata {
   font-size: 1em;
   padding-bottom: 1em;
