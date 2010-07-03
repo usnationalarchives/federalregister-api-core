@@ -9,15 +9,18 @@ $(document).ready(function() {
     
   var slideshow = new Dragdealer('slideshow',
   {
+    vertical: true,
+    horizontal: false,
   	steps: 6,
-  	loose: true
   });
+  
+  slideshow.disable();
     
   $(".section_nav a").bind('click', function(event) {
     event.preventDefault();
     $(".section_nav li").removeClass("on");
     $(this).parent().addClass("on");
-    slideshow.setStep( $(".section_nav li").index( $(this).parent() )  + 1 );
+    slideshow.setStep( 0, $(".section_nav li").index( $(this).parent() )  + 1 );
   });
     
   var adjustedHigh = (parseFloat( $(".section_nav li").size()));
