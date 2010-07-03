@@ -1,11 +1,12 @@
 <h1><%= @agency_highlight.section_header %></h1>
 
-<h2>
-  <% if @agency_highlight.agency.logo_file_name.present? %>
-    <%= image_tag @agency_highlight.agency.logo.url(:thumb), :style => "float:left; margin-right: 1em; margin-bottom: 10px;" %>
-  <% end %>
-  <%= @agency_highlight.agency.name %>
-</h2>
+<div class="logo_and_title">
+  <% if @agency_highlight.agency.logo_file_name.present? %>  
+    <%= image_tag @agency_highlight.agency.logo.url(:thumb) %>
+  <% end -%>
+  <%= link_to @agency_highlight.agency.name, agency_path(@agency_highlight.agency) %>
+</div>
+
 
 <h2><%= link_to @agency_highlight.title, entry_path(@agency_highlight.entry) %></h2>
 
