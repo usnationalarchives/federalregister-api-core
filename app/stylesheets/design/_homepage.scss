@@ -205,14 +205,13 @@ NEWS
 WHATS HOT 
 
 ******************************/
-.home .with_icon > div {
-  padding-left: 35px;
-  }
 .home #popular.with_icon > div {
   background: url(/images/icon_whats_hot.png) no-repeat left top;
+  padding-left: 35px;
   }
 .home #agency_highlight.with_icon > div {
-  background: url(/images/icon_highlighted_opportunity.png) no-repeat left top;
+  background: url(/images/icon_highlighted_opportunity.png) no-repeat 10px top;
+  padding-left: 70px;
   }  
 .home .with_icon h1 { /* TODO pull this into its own class to share with fr_sections below */
   border-bottom: 2px solid #464646;
