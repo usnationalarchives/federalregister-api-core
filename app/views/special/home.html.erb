@@ -25,8 +25,10 @@
   </div>
 <% end -%>
 
-<% section_tag(:id => 'agency_highlight') do %>
-  <%= render :esi => agency_highlight_path %>
+<% section_tag(:id => 'agency_highlight', :class => 'with_icon') do %>
+  <div>
+    <%= render :esi => agency_highlight_path %>
+  </div>
 <% end -%>
 
 <h2 class="title_bar">What's in the Federal Register?</h2>
