@@ -29,6 +29,7 @@ CURRENT ISSUE
   }
 #current_issue dt {
   color: #636363;
+  font-weight: 400;
   text-transform: uppercase;
   }  
 #current_issue dd {
@@ -58,10 +59,11 @@ PROMO NAV
   height: 318px;  
   list-style: none;
   margin-bottom: 0;
-  width: 180px;
+  width: 190px;
   }
 #top_news_promo ul.section_nav li {
   margin-bottom: .5em;
+  padding-right: 14px;
   }
 #top_news_promo ul.section_nav li a {
   background-position: 5px 50%;
@@ -85,7 +87,6 @@ PROMO NAV
 #top_news_promo ul.section_nav li.on {
   background-color: none;
   background: url(/images/promo_nav_bg_on_new.png) no-repeat right top;
-  padding-right: 14px;
   }
 #top_news_promo ul.section_nav li.on a {
   background-color: $golden;
@@ -258,12 +259,11 @@ AGENCY HIGHLIGHT
 ******************************/
 
 .logo_and_title {
-  background: #fafafa;
-  border: 1px solid #eee;
+  border-right: 2px solid #eee;
   display:inline;
   float:left;
-  margin-right:10px;
-  padding: 1em;
+  margin-right: 1em;
+  padding-right: 1em;
   width:100px;
   }
 
