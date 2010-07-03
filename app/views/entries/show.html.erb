@@ -23,19 +23,6 @@
   <div id="content_area">
     <%= render :partial => 'abstract', :locals => {:entry => @entry} %>
     <%= render( :partial => "regulatory_plan", :object => @entry.most_recent_regulatory_plan ) if @entry.most_recent_regulatory_plan %>
-    
-    <% if @entry.topics.present? %>
-      <div class="header_column">
-        <h1>Related Topics</h1>
-      </div>
-      <div class="body_column">
-        <ul class="bullets">
-          <% @entry.topics.each do |topic| %>
-            <li><%= link_to topic.name, topic_path(topic) %></li>
-          <% end %>
-        </ul>
-      </div>
-    <% end %>
   
     <div id="fulltext_content_area">
       <% if RAILS_ENV == 'development' %>
@@ -48,11 +35,22 @@
   </div> <!-- content_area end -->
   
   <% aside_tag(:id => 'sidebar') do %>
-  <div class="aside_box">
-    <%= render :partial => 'download', :locals => {:entry => @entry} %>
-    <%= render :partial => "metadata", :locals => {:entry => @entry} %>
-  </div>  
-  <% end -%>
+    <div class="aside_box">
+      <%= render :partial => 'download', :locals => {:entry => @entry} %>
+      <%= render :partial => "metadata", :locals => {:entry => @entry} %>
+    </div>  
+
+    <% if @entry.topics.present? %>
+      <% section_tag(:id => 'related_topics') do %>
+        <h1 class="title_bar">Related Topics</h1>
+        <ul class="bullets">
+          <% @entry.topics.each do |topic| %>
+            <li><%= link_to topic.name, topic_path(topic) %></li>
+          <% end %>
+        </ul>
+      <% end -%>
+    <% end %>  
+  <% end -%> <!-- end aside tag -->
   
 <% end %> <!-- end article tag -->
 

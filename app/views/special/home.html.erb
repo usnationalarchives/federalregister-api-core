@@ -11,15 +11,15 @@
 
 <div class="row">
   <% section_tag(:id => 'top_news_promo') do %>
-    <h1 class="block">Top Stories</h1>
     <%= render :partial => 'promo', :locals => {:sections => @sections}  %>
   <% end -%>
 
   <% section_tag(:id => 'news') do %>
-    <h1 class="block">News</h1>
     <%= render :partial => 'celebrating_75_years' %>
   <% end -%>
 </div>
+
+<h2 class="title_bar">Popular and Highlighted Articles</h2>
 
 <% section_tag(:id => 'popular', :class => 'with_icon') do %>
   <div>
