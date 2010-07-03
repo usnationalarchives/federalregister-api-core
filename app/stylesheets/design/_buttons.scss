@@ -26,13 +26,11 @@ text-indent: -9999px;
   margin: 0;
   }  
 .button.rss {
-background-image: url(/images/rss_icon_line.png);
-background-position: 10px 10px;
-background-repeat: no-repeat;
-padding: 10px 10px 7px 30px;
+background: url(/images/rss_icon_line.png) no-repeat right 10px;
+padding: 10px 25px 7px 10px;
 }
 .rss:hover {
-  background-position: 10px -20px;
+  background-position: right -20px;
   }            
 .button.notext.rss {
 padding: 10px 10px 4px 25px;
