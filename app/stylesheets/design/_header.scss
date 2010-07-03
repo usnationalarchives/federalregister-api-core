@@ -78,6 +78,9 @@ SEARCH
 #header #search > label {
   display: none;
   }
+#header #search .inline-hint {
+  @include gesta;
+  }  
 #header #search .search_btn {
   background-color: #e4a529;
   border: none;
