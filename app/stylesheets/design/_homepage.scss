@@ -106,7 +106,11 @@ PROMO NAV
 PROMO ITEMS
 
 ******************************/
-  
+#top_news_promo .aside_box {
+  clear: both;
+  overflow: hidden;
+  padding-left: 0;
+  }
 #top_news_promo #slideshow {
   display: block;
   float: left;
@@ -114,19 +118,20 @@ PROMO ITEMS
   margin: 0 0 0 20px;
   overflow: hidden;
   position: relative;
-  width: 440px;
+  width: 425px;
   }  
 #slideshow .container {
-  height: 318px;  
+  height: 1908px;  
   position:absolute;
-  width: 2640px;
+  width: 425px;
   }
 #slideshow .container > div {
-  float: left;
   height: 318px;
-  width: 440px;
+  position: relative;
+  width: 425px;
   }
-#slideshow .container > div > div {
+#slideshow .container > div > div,
+#slideshow .container > div > ul {
   padding-right: 15px;
   }  
 #slideshow .metadata {

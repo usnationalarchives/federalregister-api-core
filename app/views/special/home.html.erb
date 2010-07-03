@@ -11,10 +11,12 @@
 
 <div class="row">
   <% section_tag(:id => 'top_news_promo') do %>
+    <h1 class="block">Top Stories</h1>
     <%= render :partial => 'promo', :locals => {:sections => @sections}  %>
   <% end -%>
 
   <% section_tag(:id => 'news') do %>
+    <h1 class="block">News</h1>
     <%= render :partial => 'celebrating_75_years' %>
   <% end -%>
 </div>
@@ -39,7 +41,9 @@
 
 <div class="title_bar">
   <h2>New items in the FR</h2>
-  <%= link_to 'Subscribe', highlighted_entries_path(:format => :rss), :class => 'button rss' %>
+  <ul class="actions">
+    <%= link_to 'Subscribe', highlighted_entries_path(:format => :rss), :class => 'button rss' %>
+  </ul>
 </div>
 
 <div id="section_news_boxes">
