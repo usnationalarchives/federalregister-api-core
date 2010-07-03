@@ -26,7 +26,11 @@ module RouteBuilder
   end
   
   def entry_full_text_path(entry)
-    "/articles/#{entry.document_file_path}.html"
+    "/articles/html/#{entry.document_file_path}.html"
+  end
+  
+  def entry_xml_path(entry)
+    "/articles/xml/#{entry.document_file_path}.xml"
   end
   
   add_route :entry_citation do |entry|
