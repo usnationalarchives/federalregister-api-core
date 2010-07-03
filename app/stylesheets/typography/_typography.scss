@@ -120,6 +120,11 @@ div.title_bar {
 div.title_bar h2 {
   @include apertura-condensed;
   }
+.title_bar .actions {
+  position: absolute;
+  right: 0;
+  top: 0;
+  }
 
 .small_stack {
 color: $dark_blue;
