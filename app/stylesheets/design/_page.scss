@@ -769,6 +769,7 @@ DAILY ISSUE
 ******************************/
 
 #meta_toc li {
+  @include min-height(25px);
   padding-right: 40px;
   position: relative;
   }
