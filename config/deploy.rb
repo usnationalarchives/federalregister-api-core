@@ -201,7 +201,8 @@ namespace :deploy do
     
     command << "ln -sf #{shared_path}/db/sphinx #{release_path}/db/sphinx"
     command << "ln -sf #{shared_path}/sitemaps #{release_path}/public/sitemaps"
-    command << "ln -sf #{shared_path}/data/html #{release_path}/public/articles"
+    command << "ln -sf #{shared_path}/data/html #{release_path}/public/articles/html"
+    command << "ln -sf #{shared_path}/data/xml #{release_path}/public/articles/xml"
     
     run command.join(' && ')
   end 
