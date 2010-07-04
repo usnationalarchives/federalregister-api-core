@@ -33,8 +33,12 @@ padding: 10px 25px 7px 10px;
   background-position: right -20px;
   }            
 .button.notext.rss {
-padding: 10px 10px 4px 25px;
-}
+  background-position: 10px 10px;
+  padding: 10px 10px 4px 25px;
+  }
+.button.notext.rss:hover {
+  background-position: 10px -20px;
+  }  
 .comments_close {
 background: url(/images/icon_comment.png) no-repeat left top;
 color: #6e6e6e;
@@ -79,10 +83,10 @@ background-position: 10px -20px;
   padding: 0 0 0 30px;
   }
 
-.button.social.digg { background-image: sprite-image('social/24px/digg.png'); }
-.button.social.email { background-image: sprite-image('social/24px/email.png'); }
-.button.social.facebook { background-image: sprite-image('social/24px/facebook.png'); }
-.button.social.reddit { background-image: sprite-image('social/24px/reddit.png'); }
-.button.social.twitter { background-image: sprite-image('social/24px/twitter.png'); }
+.button.social.digg { background: sprite-image('social/24px/digg.png'); }
+.button.social.email { background: sprite-image('social/24px/email.png'); }
+.button.social.facebook { background: sprite-image('social/24px/facebook.png'); }
+.button.social.reddit { background: sprite-image('social/24px/reddit.png'); }
+.button.social.twitter { background: sprite-image('social/24px/twitter.png'); }
 .button.format.pdf { background: url(/images/icon_pdf.png) no-repeat left 50%; }
 .button.format.xml { background: url(/images/icon_xml.png) no-repeat left 50%; }
