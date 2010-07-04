@@ -1,25 +1,36 @@
 .icon {
   color: #5697CF;
-  display: block;
-  padding-left: 40px;
-  @include sprite-background('/images/sectionicons-vertical-32.png', 386px, 32px);
-  @include sprite-column(1);
+  @include inline-block;
+  @include hide-text;  
+  margin-right: 1em;
   }
 .icon.money {
-  @include sprite-row(1, 32px, 16px);
+  background: sprite-image('section_icons/icon_money.png') no-repeat;
+  height: image-height('section_icons/icon_money.png');
+  width: image-width('section_icons/icon_money.png');
   }
 .icon.environment {
-  @include sprite-row(2, 32px, 16px);  
+  background: sprite-image('section_icons/icon_environment.png') no-repeat; 
+  height:  image-height('section_icons/icon_environment.png');
+  width: image-width('section_icons/icon_environment.png');
   }
 .icon.world {
-  @include sprite-row(3, 32px, 16px);  
+  background: sprite-image('section_icons/icon_world.png') no-repeat;
+  height:  image-height('section_icons/icon_world.png');
+  width: image-width('section_icons/icon_world.png');  
   }
 .icon.science-and-technology {
-  @include sprite-row(4, 32px, 16px);
+  background: sprite-image('section_icons/icon_science.png') no-repeat;
+  height:  image-height('section_icons/icon_science.png');
+  width: image-width('section_icons/icon_science.png');
   }  
 .icon.business-and-industry {
-  @include sprite-row(5, 32px, 16px);
+  background: sprite-image('section_icons/icon_business.png') no-repeat;
+  height:  image-height('section_icons/icon_business.png');
+  width: image-width('section_icons/icon_business.png');  
   }
 .icon.health-and-public-welfare {
-  @include sprite-row(6, 32px, 16px);
+  background: sprite-image('section_icons/icon_health.png') no-repeat;
+  height:  image-height('section_icons/icon_health.png');
+  width: image-width('section_icons/icon_health.png');  
   }
