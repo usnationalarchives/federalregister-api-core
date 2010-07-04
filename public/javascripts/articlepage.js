@@ -71,7 +71,7 @@ var citation_info = {
     '    <li class="cite_page"><strong>Page</strong> <%= page %></li>',
     // '    <li class="email"><a href="#">Email this</a></li>',
     '    <li class="twitter"><a href="http://twitter.com/home?status=<%= escape(url) %>">Share this on Twitter</a></li>',
-    '    <li class="facebook"><a href="javascript:unimplemented()">Share this on Facebook</a></li>',
+    '    <li class="facebook"><a href="http://www.facebook.com/sharer.php?u=<%= escape(url) %>&t=<%= escape(title) %>">Share this on Facebook</a></li>',
     '    <li class="digg"><a href="http://digg.com/submit?url=<%= escape(url) %>&title=<%= escape(title) %>&bodytext=<%= escape(content) %>&media=news">Share this on digg</a></li>',
     '  </ul>',
     '  <% if (next_header_anchor) { %>',
