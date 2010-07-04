@@ -75,6 +75,21 @@ describe Entry do
     it "should not truncate in the middle of a word" do
       Entry.new(:title => "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed unt eiusmod tempor incididunt labore cumin").slug.should == 'lorem-ipsum-dolor-sit-amet-consectetur-adipisicing-elit-sed-unt-eiusmod-tempor-incididunt-labore'
     end
+  end
+  
+  describe 'destroy' do
+    it "should remove all agency_name_assignments" do
+      entry = Factory(:entry, :agency_names => [Factory(:agency_name), Factory(:agency_name)])
+      AgencyNameAssignment.count(:conditions => {:assignable_id => entry.id, :assignable_type => 'Entry'}).should == 2
+      entry.destroy
+      AgencyNameAssignment.count(:conditions => {:assignable_id => entry.id, :assignable_type => 'Entry'}).should == 0
+    end
     
+    it "should remove all agency_assignments" do
+      entry = Factory(:entry, :agency_names => [Factory(:agency_name), Factory(:agency_name)])
+      AgencyAssignment.count(:conditions => {:assignable_id => entry.id, :assignable_type => 'Entry'}).should == 2
+      entry.destroy
+      AgencyAssignment.count(:conditions => {:assignable_id => entry.id, :assignable_type => 'Entry'}).should == 0
+    end
   end
 end
