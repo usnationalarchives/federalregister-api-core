@@ -56,6 +56,9 @@ ActionController::Routing::Routes.draw do |map|
   # EVENT SEARCH
   map.events_search 'events/search.:format', :controller => 'events/search', :action => 'show'
   
+  # EVENT
+  map.event 'events/:id.:format', :controller => 'events', :action => 'show'
+  
   # TOPICS
   map.topics_by_letter '/topics/:letter',
       :requirements => {:letter => /[a-z]/},
