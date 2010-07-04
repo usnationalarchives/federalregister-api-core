@@ -26,9 +26,8 @@ module Content
             entry.associate_image(image)
           end
         end
+        `rm -r #{tmp_dir}`
       end
-      
-      `rm -r #{tmp_dir}`
     end
     
     def entry_bulkdata_path
