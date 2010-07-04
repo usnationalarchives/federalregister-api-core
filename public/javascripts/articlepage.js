@@ -43,6 +43,11 @@ var citation_info = {
     return id;
   },
   show: function( id ){
+    var node = $( '#' + id );
+    node.attr( 'id', '' );
+    window.location.hash = id;
+    node.attr( 'id', id );
+    
     if ( this.cache[id] == null )
       this.create( id );
     if ( this.open != null && this.open != id ){
