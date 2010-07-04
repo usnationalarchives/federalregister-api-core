@@ -13,5 +13,9 @@
       <span class="location"><%= event.place.name %></span>
     <% end %>
     <span class="agency"><%= event.entry.agencies.excluding_parents.map{|agency| link_to(agency.name, agency_path(agency))}.join(' :: ') %></span>
+    
+    <%# HELP-DESIGN: this should be placed/styled... %>
+    <%= link_to "Download Event", event_path(event, :format => :ics) %>
+    <%= link_to "Add to Calendar", event_path(event) %>
   </div>  
 </li>
