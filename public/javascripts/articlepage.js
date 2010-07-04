@@ -60,7 +60,7 @@ var citation_info = {
     '<div id="<%= id %>" class="aside_box citation_box">',
     '  <ul>',
     '    <li class="link">',
-    '      <a href="<%= url %>">Permalink</a>',
+    '      <a href="<%= url %>">Link to this paragraph</a>',
     '    </li>',
     '    <li class="cite_volume"><strong>Paragraph Citation</strong> <%= volume %> FR <%= page %></li>',
     '    <li class="cite_page"><strong>Page</strong> <%= page %></li>',
