@@ -13,8 +13,8 @@ h3,
 h4,
 h5,
 h6 {
-  @include gloriola-web;
-  font-weight: 600;
+  @include apertura-condensed; /* was gloriola */
+  font-weight: 700;
   }
 
 .block {
@@ -274,7 +274,7 @@ BY DATE
   font-style: italic;
   }
 #entries.by_date p.details {
-  @include gesta;
+  @include gesta; 
   font-size: .9em;
   font-weight: normal;
   margin-top: -.4em;

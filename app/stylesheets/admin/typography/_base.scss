@@ -13,13 +13,3 @@ body {
   font-size:0.9em;
   line-height: 1.8em;
 }
-
-/******************************
-
-Enhanced Fonts for elements
-
-******************************/
-
-h1 {
-  @include gloriola-web;
-}
