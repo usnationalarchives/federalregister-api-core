@@ -7,6 +7,7 @@
   agency_id       :integer(4)
   position        :integer(4)
   assignable_type :string(255)
+  agency_name_id  :integer(4)
 
 =end Schema Information
 
