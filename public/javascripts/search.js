@@ -13,4 +13,11 @@ $(document).ready(function(){
     
     return false;
   });
+  
+  $('body').append(['<div id="modal">',
+  '  <a href="#" class="jqmClose">Close</a>',
+  '  <p>Loading...</p>',
+  '</div>'].join("\n")
+  );
+  $('#modal').jqm({ajax:'@href', trigger:'a.add_to_calendar'});
 });
