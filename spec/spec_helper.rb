@@ -9,7 +9,7 @@ Spork.prefork do
   # if you change any configuration or code from libraries loaded here, you'll
   # need to restart spork for it take effect.
   
-  ENV["RAILS_ENV"] ||= 'test'
+  ENV["RAILS_ENV"] = 'test'
   require File.expand_path(File.join(File.dirname(__FILE__),'..','config','environment'))
   require 'spec/autorun'
   require 'spec/rails'
@@ -68,6 +68,6 @@ end
 
 Spork.each_run do
   # This code will be run each time you run your specs.
-  Dir["#{Rails.root}/spec/factories/*.rb"].each {|f| load f} 
+  # Dir["#{Rails.root}/spec/factories/*.rb"].each {|f| load f} 
   
 end
