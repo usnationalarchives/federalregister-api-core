@@ -1,4 +1,4 @@
-<li class="<%= event.type.to_camel_case %>">
+<li class="<%= event.type %>">
   <h4><%= link_to sanitize(event.excerpts.title, :tags => %w(span), :attributes => %w(class)), entry_path(event.entry) %></h4>
 
   <div class="result_info">
