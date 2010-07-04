@@ -3,13 +3,20 @@
   @include grid-prefix(1);
   @include omega;
   margin-bottom: 2em;
-}
+  }
 
 .filters {
   @include grid(4, 16);
   @include alpha;
-}
- 
+  }
+.events.result_set h3 {
+  @include grid(2, 16);
+  @include alpha;
+  }
+.events.result_set .results {
+  @include grid(9, 16);
+  @include omega;
+  }  
 .article_count {
   @include grid(5, 16);
   @include alpha;
@@ -24,4 +31,6 @@
   @include grid(1, 16);
   @include alpha;
   @include omega;
-  }  
+  }
+
+  
