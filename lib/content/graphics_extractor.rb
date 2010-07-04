@@ -27,6 +27,8 @@ module Content
           end
         end
       end
+      
+      `rm -r #{tmp_dir}`
     end
     
     def entry_bulkdata_path
