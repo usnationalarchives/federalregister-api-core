@@ -9,7 +9,7 @@ Spork.prefork do
   # if you change any configuration or code from libraries loaded here, you'll
   # need to restart spork for it take effect.
   
-  ENV["RAILS_ENV"] ||= 'test'
+  ENV["RAILS_ENV"] = 'test'
   require File.expand_path(File.join(File.dirname(__FILE__),'..','config','environment'))
   require 'spec/autorun'
   require 'spec/rails'
