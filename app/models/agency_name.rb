@@ -15,12 +15,13 @@ class AgencyName < ApplicationModel
   belongs_to :agency
   has_many :agency_name_assignments
   has_many :entries, :through => :agency_name_assignments
+  has_many :agency_assignments, :dependent => :destroy
   
   validates_presence_of :name
   validate :does_not_have_agency_if_void
   
   before_create :assign_agency_if_exact_match
-  
+  before_save :update_agency_assignments
   named_scope :unprocessed, :conditions => {:void => false, :agency_id => nil}, :order => "agency_names.name"
   
   def self.find_or_create_by_name(name)
@@ -33,6 +34,21 @@ class AgencyName < ApplicationModel
   end
   
   private
+  
+  def update_agency_assignments
+    if agency_id_changed? && agency_id_was.present?
+      if agency_id.present?
+        agency_assignments.each do |agency_assignment|
+          agency_assignment.agency_id = agency_id
+          agency_assignment.save!
+        end
+      else
+        agency_assignments.each do |agency_assignment|
+          agency_assignment.destroy
+        end
+      end
+    end
+  end
   
   def does_not_have_agency_if_void
     errors.add(:agency_id, "must be blank if void") if (void? && agency_id.present?)
