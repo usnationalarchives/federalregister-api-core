@@ -54,12 +54,12 @@ p {
   font-size: 1.2em;
   }
   
-#entries.show .body_column ul {
+#entries.show .body_column > ul {
   color: #363636;
   @include athelas;
   font-size: 1.2em;
   }  
-#entries.show .body_column ul li {
+#entries.show .body_column > ul li {
   background-position: left 6px;
   }
 #entries.show .body_column li p {
