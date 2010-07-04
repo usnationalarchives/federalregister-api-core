@@ -147,12 +147,12 @@ RESULTS
 ol.results {
   list-style-type: none;
   }
-ol.results li {
+ol.results > li {
   border-bottom: 1px solid #EEEEEE;
   margin-bottom: 2em;
   padding-bottom: 2em;
   }
-ol.results li:last-child {
+ol.results > li:last-child {
   border: none;
   }  
 ol.results h4 {
@@ -213,16 +213,29 @@ RESULTS - EVENTS
 
 ******************************/
 
-.result_set.events .results li {
-  padding-left: 40px;
+.result_set.events .results > li {
+  padding-left: 50px;
+  position: relative;
   }
-
-.result_set.events .results li.effective_date {
+.result_set.events .results > li.effective_date {
+  background: url('/images/event_types/effective.png') no-repeat;
+  }
+.result_set.events .results > li.comment_period.closing {
+  background: url('/images/event_types/closing.png') no-repeat;
+  }
+.result_set.events .results > li.comment_period.opening {
+  background: url('/images/event_types/opening.png') no-repeat;
+  }
+.result_set.events .results > li.public_meeting {
+  background: url('/images/event_types/meeting.png') no-repeat;
+  }
   
+.result_set.events .results .actions {
+  bottom: 0;
+  @include inline-list;
+  position: absolute;
+  right: 0;
   }
-.result_set.events .results li.comment_period.closing {}
-.result_set.events .results li.comment_period.opening {}
-.result_set.events .results li.public_meeting {}
 
 /******************************
 
