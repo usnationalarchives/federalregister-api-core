@@ -33,7 +33,7 @@ class Event < ApplicationModel
   belongs_to :entry
   belongs_to :place
   has_many :agency_assignments, :through => :entry, :foreign_key => "entries.id"
-  validates_presence_of :entry, :date, :event_type
+  validates_presence_of :date, :event_type
   validates_presence_of :title, :place, :if => Proc.new{|e| e.event_type == 'PublicMeeting' || e.event_type == 'ClosedMeeting'}
   validates_inclusion_of :event_type, :in => EVENT_TYPES_SINGULAR.keys
   
