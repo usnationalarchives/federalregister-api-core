@@ -107,7 +107,6 @@ PAGE ELEMENTS
   border-bottom: 3px solid #385F82;
   clear: both;
   margin-bottom: 1em;
-  padding: 0 1em;
   position: relative;
   overflow: hidden;
   }
@@ -170,14 +169,10 @@ ol.results li .date {
   background-color: #B88659;
   border-color: #CCCCCC;
   }
-
 .match {
   background: rgba(255,255,0,.2);
   @include border-radius(5px);
   padding: 1px 5px;
-  }
-
-.active_filter_list {
   }
 .active_filter_list li {
   background: #fee9d7;
@@ -209,6 +204,25 @@ ol.results li .date {
   top: .8em;
   width: 14px;
   }  
+
+
+
+/******************************
+
+RESULTS - EVENTS
+
+******************************/
+
+.result_set.events .results li {
+  padding-left: 40px;
+  }
+
+.result_set.events .results li.effective_date {
+  
+  }
+.result_set.events .results li.comment_period.closing {}
+.result_set.events .results li.comment_period.opening {}
+.result_set.events .results li.public_meeting {}
 
 /******************************
 

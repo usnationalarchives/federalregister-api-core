@@ -1,10 +1,7 @@
-<li class="<%= event.type %>">
+<li class="<%= event.type.sub(/\s+/, '_').downcase %>">
   <h4><%= link_to sanitize(event.excerpts.title, :tags => %w(span), :attributes => %w(class)), entry_path(event.entry) %></h4>
 
   <div class="result_info">
-    <% event.entry.sections.each do |section| %>
-      <span class="icon <%= section.slug %>"><%= section.title %></span>
-    <% end %>
     <span class="excerpts"><%= 
       if event.excerpts.entry_full_text.present?
         sanitize event.excerpts.entry_full_text, :tags => %w(span), :attributes => %w(class)
@@ -13,5 +10,10 @@
       <span class="location"><%= event.place.name %></span>
     <% end %>
     <span class="agency"><%= event.entry.agencies.excluding_parents.map{|agency| link_to(agency.name, agency_path(agency))}.join(' :: ') %></span>
+    <div class="sections">
+      <% event.entry.sections.each do |section| %>
+        <span class="icon <%= section.slug %>"><%= section.title %></span>
+      <% end %>
+    </div>
   </div>  
 </li>
