@@ -10,14 +10,14 @@
 </ul>
 <% end %>
 
-<%= render :esi => url_for(params.merge(:action => :header)) %>
+<%= render :esi => regulatory_plan_search_header_path(params.except(:action)) %>
 
 <% unless @search.blank? %>
 
   <div class="filters">
-    <%= render :esi => url_for(params.merge(:action => :facets, :facet => 'priority_category')) %>
-    <%= render :esi => url_for(params.merge(:action => :facets, :facet => 'agency')) %>
+    <%= render :esi => regulatory_plan_search_facets_path(params.except(:action).merge(:facet => 'priority_category')) %>
+    <%= render :esi => regulatory_plan_search_facets_path(params.except(:action).merge(:facet => 'agency')) %>
   </div>
   
-  <%= render :esi => url_for(params.merge(:action => :results)) %>
+  <%= render :esi => regulatory_plan_search_results_path(params.except(:action)) %>
 <% end %>
