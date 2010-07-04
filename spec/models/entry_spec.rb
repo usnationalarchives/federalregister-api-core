@@ -78,27 +78,18 @@ describe Entry do
   end
   
   describe 'destroy' do
-    before(:each) do
-      raise Agency.all.map(&:name).inspect
-      @agency_1 = Factory(:agency)
-      @agency_name_1 = Factory(:agency_name, :agency => @agency_1)
-      @agency_2 = Factory(:agency)
-      @agency_name_2 = Factory(:agency_name, :agency => @agency_2)
-      @entry = Factory(:entry, :agency_names => [@agency_name_1, @agency_name_2])
-    end
-    
     it "should remove all agency_name_assignments" do
-      entry_id = @entry.id
-      AgencyNameAssignment.count(:conditions => {:assignable_id => entry_id, :assignable_type => 'Entry'}).should == 2
-      @entry.destroy
-      AgencyNameAssignment.count(:conditions => {:assignable_id => entry_id, :assignable_type => 'Entry'}).should == 0
+      entry = Factory(:entry, :agency_names => [Factory(:agency_name), Factory(:agency_name)])
+      AgencyNameAssignment.count(:conditions => {:assignable_id => entry.id, :assignable_type => 'Entry'}).should == 2
+      entry.destroy
+      AgencyNameAssignment.count(:conditions => {:assignable_id => entry.id, :assignable_type => 'Entry'}).should == 0
     end
     
-    # it "should remove all agency_assignments" do
-    #   entry_id = @entry.id
-    #   AgencyAssignment.count(:conditions => {:assignable_id => entry_id, :assignable_type => 'Entry'}).should == 2
-    #   @entry.destroy
-    #   AgencyAssignment.count(:conditions => {:assignable_id => entry_id, :assignable_type => 'Entry'}).should == 0
-    # end
+    it "should remove all agency_assignments" do
+      entry = Factory(:entry, :agency_names => [Factory(:agency_name), Factory(:agency_name)])
+      AgencyAssignment.count(:conditions => {:assignable_id => entry.id, :assignable_type => 'Entry'}).should == 2
+      entry.destroy
+      AgencyAssignment.count(:conditions => {:assignable_id => entry.id, :assignable_type => 'Entry'}).should == 0
+    end
   end
 end
