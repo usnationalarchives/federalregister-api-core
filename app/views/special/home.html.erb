@@ -4,49 +4,30 @@
 
 <h1 class="title"><span><%= IssueApproval.latest_publication_date.try(:to_s, :wday_and_pretty_date) %></span></h1>
 
-<div id="current_issue">
-    <%= link_to 'Current Issue', entries_by_date_path(IssueApproval.latest_publication_date), :title => IssueApproval.latest_publication_date.to_s(:wday_and_pretty_date) %>
-    <%= render :partial => "entries/statistics_by_date", :locals => {:issue => @issue} %>
+<%= render :partial => "entries/statistics_by_date", :locals => {:issue => @issue} %>
+
+<div class="row">
+  <% section_tag(:id => 'top_news_promo') do %>
+    <%= render :partial => 'promo', :locals => {:sections => @sections}  %>
+  <% end -%>
+
+  <% section_tag(:id => 'news') do %>
+    <%= render :partial => 'celebrating_75_years' %>
+  <% end -%>
 </div>
 
-<div id="top_news_promo" class="grid_11 alpha">
+<h2 class="title_bar">Popular and Highlighted Articles</h2>
 
-  <ul class="section_nav">
-    <% @sections.each do |section| %>
-      <li class="<%= 'one_word' if section.title.split(' ').count == 1 %> <%= section.slug %>">
-          <%= link_to section.title, "#promo_#{section.slug}" %>
-      </li>  
-    <% end -%>
-  </ul>
-
-
-  <div id="slideshow" class="dragdealer">
-    <div class="handle">
-      <% @sections.each do |section| %>
-        <div id="promo_<%= section.slug %>">
-            <% entry = section.entries.highlighted.first %>
-            <% if entry %>
-              <%= render :partial => 'special/entry_with_abstract', :locals => {:entry => entry} %>  
-              <%= render :partial => 'stats', :locals => {:section => section}  %>
-            <% end %>
-        </div>  
-      <% end -%>
-    </div>
+<% section_tag(:id => 'popular', :class => 'with_icon') do %>
+  <div>
+    <%= render :esi => popular_entries_path %>
   </div>
-</div>  
-
-<% section_tag(:id => 'news') do %>
-  <h1>News</h1>
-  <p>Happy 75</p>
 <% end -%>
 
-<% section_tag(:id => 'popular') do %>
-  <h1>Popular</h1>
-  <%= render :esi => popular_entries_path %>
-<% end -%>
-
-<% section_tag(:id => 'agency_highlight') do %>
-  <%= render :esi => agency_highlight_path %>
+<% section_tag(:id => 'agency_highlight', :class => 'with_icon') do %>
+  <div>
+    <%= render :esi => agency_highlight_path %>
+  </div>
 <% end -%>
 
 <h2 class="title_bar">What's in the Federal Register?</h2>
@@ -57,7 +38,9 @@
 
 <div class="title_bar">
   <h2>New items in the FR</h2>
-  <%= link_to 'Subscribe', highlighted_entries_path(:format => :rss), :class => 'button rss' %>
+  <ul class="actions">
+    <%= link_to 'Subscribe', highlighted_entries_path(:format => :rss), :class => 'button rss' %>
+  </ul>
 </div>
 
 <div id="section_news_boxes">
