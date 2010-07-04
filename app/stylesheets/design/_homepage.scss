@@ -4,17 +4,37 @@ CURRENT ISSUE
 
 ******************************/
 #current_issue {
-  border: 1px solid #eee;
+  background: $pale_green url(/images/current_issue.png) no-repeat left top;
+  border: 1px solid $green;
   display: block;
+  height: 40px;
   margin: 1em 0 2em;
+  }
+#current_issue .issue {
+  color: #fff;
+  display: inline-block;
+  font-size: 1.2em;
+  line-height: 40px;
+  margin-right: 1em;
+  padding-left: 55px;
+  width: 125px;
+  }  
+#current_issue dl {
+  margin-bottom: 0;
   }
 #current_issue dl,
 #current_issue dt,
 #current_issue dd {
   display: inline;
   }
+#current_issue dt {
+  color: #636363;
+  font-weight: 400;
+  text-transform: uppercase;
+  }  
 #current_issue dd {
   margin: 0 1em 0 0;
+  font-weight: 700;
   }  
 
 /******************************
@@ -24,12 +44,8 @@ PROMO BOX
 ******************************/
 
 #top_news_promo {
-/*  border: 5px solid #ececec;
-  @include border-radius(10px);*/
-  margin-bottom: 2em;
   overflow: hidden;
-  width: 645px;
-}
+  }
 
 /******************************
 
@@ -37,15 +53,17 @@ PROMO NAV
 
 ******************************/
 #top_news_promo ul.section_nav {
+  clear: both;
   display: block;
   float: left;
   height: 318px;  
   list-style: none;
   margin-bottom: 0;
-  width: 180px;
+  width: 190px;
   }
 #top_news_promo ul.section_nav li {
   margin-bottom: .5em;
+  padding-right: 14px;
   }
 #top_news_promo ul.section_nav li a {
   background-position: 5px 50%;
@@ -62,14 +80,13 @@ PROMO NAV
 #top_news_promo ul.section_nav li.world a { background-image: url(/images/icon_world_50.png); }  
 #top_news_promo ul.section_nav li.science-and-technology a { background-image: url(/images/icon_science_50.png); } 
 #top_news_promo ul.section_nav li.business-and-industry a { background-image: url(/images/icon_business_50.png); }  
-#top_news_promo ul.section_nav li.health-and-public-welfare a { background-image: url(/images/icon_health_50.png); } 
+#top_news_promo ul.section_nav li.health-and-public-welfare a { background-image: url(/images/icon_health_50.png); background-position: 10px 50%; } 
 #top_news_promo ul.section_nav li.one_word a {
   line-height: 31px;
   }  
 #top_news_promo ul.section_nav li.on {
   background-color: none;
   background: url(/images/promo_nav_bg_on_new.png) no-repeat right top;
-  padding-right: 14px;
   }
 #top_news_promo ul.section_nav li.on a {
   background-color: $golden;
@@ -90,7 +107,12 @@ PROMO NAV
 PROMO ITEMS
 
 ******************************/
-  
+
+#top_news_promo .aside_box {
+  clear: both;
+  overflow: hidden;
+  padding-left: 0;
+  }
 #top_news_promo #slideshow {
   display: block;
   float: left;
@@ -100,17 +122,20 @@ PROMO ITEMS
   position: relative;
   width: 425px;
   }  
-#slideshow .handle {
-  cursor:pointer;
-  height: 318px;  
+#slideshow .container {
+  height: 1908px;  
   position:absolute;
-  width: 2550px;
-  }
-#slideshow .handle > div {
-  float: left;
-  height: 318px;
   width: 425px;
   }
+#slideshow .container > div {
+  height: 318px;
+  position: relative;
+  width: 425px;
+  }
+#slideshow .container > div > div,
+#slideshow .container > div > ul {
+  padding-right: 15px;
+  }  
 #slideshow .metadata {
   font-size: 1em;
   padding-bottom: 1em;
@@ -170,6 +195,83 @@ PROMO STATS
   display: block;
   }  
   
+/******************************
+
+NEWS 
+
+******************************/
+
+.celebrating {
+  @include replace-text-with-dimensions("celebrating_75.png", 0, 0);
+  clear: both;
+  margin: .5em 0;
+  }
+
+/******************************
+
+WHATS HOT 
+
+******************************/
+.home #popular.with_icon > div {
+  background: url(/images/icon_whats_hot.png) no-repeat left top;
+  padding-left: 35px;
+  }
+.home #agency_highlight.with_icon > div {
+  background: url(/images/icon_highlighted_opportunity.png) no-repeat 10px top;
+  padding-left: 70px;
+  }  
+.home .with_icon h1 { /* TODO pull this into its own class to share with fr_sections below */
+  border-bottom: 2px solid #464646;
+  color: #464646;
+  @include apertura-condensed;
+  font-size: 1.5em;
+  margin: 0 0 .5em;
+  padding: 0;
+  text-transform: uppercase;
+  }
+.home #popular.with_icon ol {
+  list-style: none;
+  }  
+.home #popular.with_icon li {
+  border-bottom: 2px solid #EFEFEF;
+  @include min-height(40px);
+  margin-bottom: .5em;
+  padding-left: 2em;
+  position: relative;
+  }
+.home #popular.with_icon li:last-child {
+  border-bottom: 0;
+  }  
+.home #popular.with_icon .index {
+  color: #eee;  
+  @include apertura-condensed;
+  font-size: 2.8em;
+  font-weight: 700;
+  left: 0;
+  line-height: 1;
+  position: absolute;
+  top: 0;
+  }
+
+/******************************
+
+AGENCY HIGHLIGHT 
+
+******************************/
+
+.logo_and_title {
+  border-right: 2px solid #eee;
+  display:inline;
+  float:left;
+  margin-right: 1em;
+  padding-right: 1em;
+  width:100px;
+  }
+
+.logo_and_title a {
+  display: block;
+  text-align: center;
+  }
 
 /******************************
 
