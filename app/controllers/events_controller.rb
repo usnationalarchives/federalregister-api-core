@@ -5,7 +5,11 @@ class EventsController < ApplicationController
     
     respond_to do |wants|
       wants.html do
-        
+        if request.xhr?
+          render :layout => false
+        else
+          render
+        end
       end
       wants.ics do
         cal = Calendar.new
