@@ -9,39 +9,74 @@
   height: image-height('icons/icon_money_50.png');
   width: image-width('icons/icon_money_50.png');
   }
+.icon.money.half_size {
+  background: sprite-image('icons/icon_money_50_half.png') no-repeat;
+  height: image-height('icons/icon_money_50_half.png');
+  width: image-width('icons/icon_money_50_half.png');
+  }  
 .icon.environment {
   background: sprite-image('icons/icon_environment_50.png') no-repeat; 
   height:  image-height('icons/icon_environment_50.png');
   width: image-width('icons/icon_environment_50.png');
+  }
+.icon.environment.half_size {
+  background: sprite-image('icons/icon_environment_50_half.png') no-repeat; 
+  height:  image-height('icons/icon_environment_50_half.png');
+  width: image-width('icons/icon_environment_50_half.png');
   }
 .icon.world {
   background: sprite-image('icons/icon_world_50.png') no-repeat;
   height:  image-height('icons/icon_world_50.png');
   width: image-width('icons/icon_world_50.png');  
   }
+.icon.world.half_size {
+  background: sprite-image('icons/icon_world_50_half.png') no-repeat;
+  height:  image-height('icons/icon_world_50_half.png');
+  width: image-width('icons/icon_world_50_half.png');  
+  }  
 .icon.science-and-technology {
   background: sprite-image('icons/icon_science_50.png') no-repeat;
   height:  image-height('icons/icon_science_50.png');
   width: image-width('icons/icon_science_50.png');
-  }  
+  }
+.icon.science-and-technology.half_size {
+  background: sprite-image('icons/icon_science_50_half.png') no-repeat;
+  height:  image-height('icons/icon_science_50_half.png');
+  width: image-width('icons/icon_science_50_half.png');  
+  }    
 .icon.business-and-industry {
   background: sprite-image('icons/icon_business_50.png') no-repeat;
   height:  image-height('icons/icon_business_50.png');
   width: image-width('icons/icon_business_50.png');  
   }
+.icon.business-and-industry.half_size {
+  background: sprite-image('icons/icon_business_50_half.png') no-repeat;
+  height:  image-height('icons/icon_business_50_half.png');
+  width: image-width('icons/icon_business_50_half.png');  
+  }  
 .icon.health-and-public-welfare {
   background: sprite-image('icons/icon_health_50.png') no-repeat;
   height:  image-height('icons/icon_health_50.png');
   width: image-width('icons/icon_health_50.png');  
   }
+.icon.health-and-public-welfare.half_size {
+  background: sprite-image('icons/icon_health_50_half.png') no-repeat;
+  height:  image-height('icons/icon_health_50_half.png');
+  width: image-width('icons/icon_health_50_half.png');  
+  }  
 .icon.download {
   background: sprite-image('icons/download.png') no-repeat;
   height:  image-height('icons/download.png');
   width: image-width('icons/download.png');  
   }
+.icon.download:hover {
+  background: sprite-image('icons/download_hover.png') no-repeat;
+  }  
 .icon.add_to_calendar {
   background: sprite-image('icons/add_to_calendar.png') no-repeat;
   height:  image-height('icons/add_to_calendar.png');
   width: image-width('icons/add_to_calendar.png');  
   }
-  
+.icon.add_to_calendar:hover {
+  background: sprite-image('icons/add_to_calendar_hover.png') no-repeat;
+  }
