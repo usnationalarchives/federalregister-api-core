@@ -39,7 +39,15 @@ padding: 10px 25px 7px 10px;
 .button.notext.rss:hover {
   background-position: 10px -20px;
   }  
-.comments_close {
+.button.add_to_calendar {
+  background: #fff sprite-image('icons/add_to_calendar_half.png', 10px, 10px, 30px) no-repeat;
+  height:  image-height('icons/add_to_calendar_half.png');
+  width: image-width('icons/add_to_calendar_half.png');
+  }
+.button.add_to_calendar:hover {
+  background: #fff sprite-image('icons/add_to_calendar_half_hover.png', 10px, 10px, 30px) no-repeat;
+  }  
+.comments_close { /* TODO this doesn't belong here */
 background: url(/images/icon_comment.png) no-repeat left top;
 color: #6e6e6e;
 @include apertura-condensed;
