@@ -10,6 +10,7 @@
 
 <%= render :partial => 'entries/most_cited', :locals => {:entries => @most_cited_entries} %>
 
+<% if false %>
 <% related_agencies = @topic.related_agencies_cache %>
 <% if related_agencies.present? %>
   <h3>Agencies Using this Topic</h3>
@@ -22,3 +23,4 @@
 <% end %>
 
 <%= render :partial => 'topics_tagcloud', :locals => {:topics => @topic.related_topics_cache, :title => 'Related Topics'} %>
+<% end %>
