@@ -13,10 +13,10 @@
 =end Schema Information
 
 class TopicName < ApplicationModel
-  has_many :topic_name_assignments
+  has_many :topic_name_assignments, :dependent => :destroy
   has_many :entries, :through => :topic_name_assignments
   
-  has_many :topics_topic_names
+  has_many :topics_topic_names, :dependent => :destroy
   has_many :topics, :through => :topics_topic_names
   
   default_scope :order => "topic_names.name"
@@ -31,6 +31,22 @@ class TopicName < ApplicationModel
   
   def unprocessed?
     !processed?
+  end
+  
+  def topic_ids=(ids)
+    ids = ids.map(&:to_i)
+    ids_to_remove = topic_ids - ids
+    ids_to_add = ids - topic_ids
+    
+    ids_to_remove.each do |topic_id|
+      topics_topic_names.to_a.find{|t| t.topic_id == topic_id}.destroy
+    end
+    
+    ids_to_add.each do |topic_id|
+      self.topics_topic_names.create(:topic_id => topic_id)
+    end
+    
+    ids
   end
   
   private

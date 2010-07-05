@@ -13,6 +13,8 @@
 =end Schema Information
 
 class Event < ApplicationModel
+  include Icalendar
+  
   EVENT_TYPES_SINGULAR = {
     'PublicMeeting' => 'Public Meeting',
     'ClosedMeeting' => 'Closed Meeting',
@@ -31,7 +33,7 @@ class Event < ApplicationModel
   belongs_to :entry
   belongs_to :place
   has_many :agency_assignments, :through => :entry, :foreign_key => "entries.id"
-  validates_presence_of :entry, :date, :event_type
+  validates_presence_of :date, :event_type
   validates_presence_of :title, :place, :if => Proc.new{|e| e.event_type == 'PublicMeeting' || e.event_type == 'ClosedMeeting'}
   validates_inclusion_of :event_type, :in => EVENT_TYPES_SINGULAR.keys
   
@@ -44,7 +46,7 @@ class Event < ApplicationModel
   end
   
   def type
-    Event::EVENT_TYPES_SINGULAR[event_type]
+    ::Event::EVENT_TYPES_SINGULAR[event_type]
   end
   
   def title
@@ -53,6 +55,16 @@ class Event < ApplicationModel
   
   def entry_full_text
     entry.raw_text
+  end
+  
+  def to_ics
+    ical_event = Icalendar::Event.new
+    ical_event.start = self.date
+    ical_event.end = self.date
+    ical_event.summary = "#{self.type}: #{self.title}"
+    ical_event.unique_id = "http://www.federalregister.gov/events/#{self.id}"
+    ical_event.description = self.entry.try(:abstract)
+    ical_event
   end
   
   define_index do

@@ -1,6 +1,6 @@
-<% title @search.term.blank? ? 'Regulation Search' : "Regulation Search Results for '#{h @search.term}'" %>
+<% title @search.term.blank? ? 'Unified Agenda Search' : "Unified Agenda Search Results for '#{h @search.term}'" %>
 
-<h1 class="title"><span>Search Regulations</span></h1>
+<h1 class="title"><span>Search the Unified Agenda</span></h1>
 
 <% unless @search.valid? %>
 <ul class="errors">
@@ -10,14 +10,14 @@
 </ul>
 <% end %>
 
-<%= render :esi => url_for(params.merge(:action => :header)) %>
+<%= render :esi => regulatory_plan_search_header_path(params.except(:action)) %>
 
 <% unless @search.blank? %>
 
   <div class="filters">
-    <%= render :esi => url_for(params.merge(:action => :facets, :facet => 'priority_category')) %>
-    <%= render :esi => url_for(params.merge(:action => :facets, :facet => 'agency')) %>
+    <%= render :esi => regulatory_plan_search_facets_path(params.except(:action).merge(:facet => 'priority_category')) %>
+    <%= render :esi => regulatory_plan_search_facets_path(params.except(:action).merge(:facet => 'agency')) %>
   </div>
   
-  <%= render :esi => url_for(params.merge(:action => :results)) %>
+  <%= render :esi => regulatory_plan_search_results_path(params.except(:action)) %>
 <% end %>

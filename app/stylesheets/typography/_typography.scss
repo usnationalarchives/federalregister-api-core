@@ -13,8 +13,8 @@ h3,
 h4,
 h5,
 h6 {
-  @include gloriola-web;
-  font-weight: 600;
+  @include apertura-condensed; /* was gloriola */
+  font-weight: 700;
   }
 
 .block {
@@ -54,12 +54,12 @@ p {
   font-size: 1.2em;
   }
   
-#entries.show .body_column ul {
+#entries.show .body_column > ul {
   color: #363636;
   @include athelas;
   font-size: 1.2em;
   }  
-#entries.show .body_column ul li {
+#entries.show .body_column > ul li {
   background-position: left 6px;
   }
 #entries.show .body_column li p {
@@ -119,6 +119,11 @@ div.title_bar {
   }
 div.title_bar h2 {
   @include apertura-condensed;
+  }
+.title_bar .actions {
+  position: absolute;
+  right: 0;
+  top: 0;
   }
 
 .small_stack {
@@ -253,7 +258,7 @@ BY DATE
   margin: .5em 0 .5em 1em;
   text-transform: uppercase;
   }
-#entries.by_date dl,
+#entries.by_date #content_area dl,
 #entries.by_date #content_area ul {
   font-size: 1.1em;
   margin-left: 2em;
@@ -269,7 +274,7 @@ BY DATE
   font-style: italic;
   }
 #entries.by_date p.details {
-  @include gesta;
+  @include gesta; 
   font-size: .9em;
   font-weight: normal;
   margin-top: -.4em;
