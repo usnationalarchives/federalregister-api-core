@@ -11,7 +11,7 @@
 =end Schema Information
 
 class AgencyNameAssignment < ApplicationModel
-  validates_presence_of :assignable, :agency_name
+  validates_presence_of :agency_name
 
   belongs_to :agency_name
   belongs_to :assignable, :polymorphic => true
