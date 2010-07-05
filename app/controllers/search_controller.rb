@@ -10,7 +10,11 @@ class SearchController < ApplicationController
   end
   
   def facets
-    facets = @search.send(params[:facet] + "_facets")
-    render :partial => "search/facets", :locals => {:facets => facets, :name => params[:facet].humanize.capitalize_first}, :layout => false
+    facets = @search.send(params[:facet] + "_facets").reject(&:on?)
+    if params[:all]
+      render :partial => "search/facet", :collection => facets, :as => :facet
+    else
+      render :partial => "search/facets", :locals => {:facets => facets, :name => params[:facet].humanize.capitalize_first}, :layout => false
+    end
   end
 end
