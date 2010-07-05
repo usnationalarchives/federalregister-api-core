@@ -163,10 +163,6 @@ ol.results li .date {
   line-height: 1.15;
   text-transform: uppercase;
   }
-.result_set .pagination .current {
-  background-color: #B88659;
-  border-color: #CCCCCC;
-  }
 .match {
   background: rgba(255,255,0,.2);
   @include border-radius(5px);
@@ -327,6 +323,26 @@ FILTERS
   border: 1px solid #ccc;
   width: 75px;
   }  
+
+/******************************
+
+PAGINATION
+
+******************************/
+div.pagination span,
+div.pagination a {
+  border: 1px solid #CCCCCC;
+  line-height: 1;
+  padding: .5em .5em .25em;
+}
+
+.result_set .pagination .current {
+  background-color: $golden;
+  color: #fff;
+  }
+div.pagination .disabled {
+  background-color: #ccc;
+  }
 
 /******************************
 
