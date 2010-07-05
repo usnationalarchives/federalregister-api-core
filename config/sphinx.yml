@@ -10,6 +10,7 @@ production:
   address: ip-10-194-109-139.ec2.internal
   port: 3312
   mem_limit: 528M
+  version: '0.9.9'
   searchd_log_file: /var/www/apps/fr2/shared/log/searchd.log
   query_log_file: /var/www/apps/fr2/shared/log/searchd.query.log
   pid_file: /var/www/apps/fr2/shared/tmp/searchd.pid
