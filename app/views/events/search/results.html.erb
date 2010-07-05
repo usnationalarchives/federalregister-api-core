@@ -18,11 +18,13 @@
     
     
     <% @search.results.group_by(&:date).each do |date, events| %>
-      <h3><%= date %></h3>
+      <div class="row">
+        <h3><%= date %></h3>
       
-      <ol class="results">
-        <%= render :partial => 'result', :collection => events, :as => :event %>
-      </ol>
+        <ol class="results">
+          <%= render :partial => 'result', :collection => events, :as => :event %>
+        </ol>
+      </div>
     <% end %>
     
     <%= will_paginate @search.results, :params => {:action => :show} %>
