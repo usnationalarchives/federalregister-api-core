@@ -14,7 +14,7 @@
 =end Schema Information
 
 class Topic < ApplicationModel
-  has_many :topic_assignments
+  has_many :topic_assignments, :dependent => :destroy
   has_many :entries, :through => :topic_assignments
   serializable_column :related_topics_cache, :related_agencies_cache
 

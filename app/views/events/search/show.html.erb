@@ -11,17 +11,17 @@
 </ul>
 <% end %>
 
-<%= render :esi => url_for(params.merge(:action => :header)) %>
+<%= render :esi => event_search_header_path(params.except(:action)) %>
 
 <% unless @search.blank? %>
 
   <div class="filters">
-    <%= render :esi => url_for(params.merge(:action => :facets, :facet => 'type')) %>
-    <%= render :esi => url_for(params.merge(:action => :facets, :facet => 'agency')) %>
+    <%= render :esi => event_search_facets_path(params.except(:action).merge(:facet => 'type')) %>
+    <%= render :esi => event_search_facets_path(params.except(:action).merge(:facet => 'agency')) %>
     
     <%= render :partial => 'search/location_form', :locals => {:search => @search } %>
 
   </div>
   
-  <%= render :esi => url_for(params.merge(:action => :results)) %>
+  <%= render :esi => event_search_results_path(params.except(:action)) %>
 <% end %>

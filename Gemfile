@@ -31,7 +31,8 @@ gem 'searchlogic', '2.4.12'
 gem 'haml', '3.0.4'
 gem 'compass', '0.10.1'
 gem 'compass-960-plugin', '0.9.13', :require => false
-gem 'lemonade'
+gem 'lemonade', '0.3.2'
+gem 'icalendar'
 
 # bundler requires these gems in all environments
 # gem 'nokogiri', '1.4.2'
