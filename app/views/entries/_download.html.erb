@@ -1,7 +1,7 @@
 <div class="download_separator">
   <%= link_to "Official PDF", entry.source_url('pdf'), :class => 'button format list pdf', :title => 'Download as PDF (Official Edition)' %>
   <% if entry.publication_date > Date.parse('2000-01-01') %>
-    <%= link_to "XML", entry_path(entry, :format => :xml), :class => 'button format list xml', :title => 'Download article as XML' %>
+    <%= link_to "XML", entry_xml_path(entry), :class => 'button format list xml', :title => 'Download article as XML' %>
   <% else %>
     <%= link_to "MODS", entry.source_url(:mods), :class => 'button format list xml', :title => 'Download MODS metadata' %>
   <% end %>
