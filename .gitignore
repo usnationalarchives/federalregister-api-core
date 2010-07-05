@@ -10,6 +10,7 @@
 /data
 /db/sphinx/
 /log
+/public/images/icons.png
 /public/sitemap*
 /public/stylesheets/admin/formtastic_changes.css
 /public/stylesheets/admin/grid.css

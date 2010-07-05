@@ -1,6 +1,21 @@
 <li class="<%= event.type.sub(/\s+/, '_').downcase %> event" data-event-id="<%= event.id %>">
   <h4><%= link_to sanitize(event.excerpts.title, :tags => %w(span), :attributes => %w(class)), entry_path(event.entry) %></h4>
+  <dl>
+    <dt>Type</dt>
+    <dd class="next"><%= event.type %></dd>
+    <dt>Agency</dt>
+    <% event.entry.agencies.excluding_parents.each do |agency| %>
+      <dd class="next"><%= link_to(agency.name, agency_path(agency)) %></dd>
+    <% end -%>
+    <% if event.entry.sections.size > 0 %>
+      <dt>Sections</dt>
+      <% event.entry.sections.each do |section| %>
+        <dd class="icon <%= section.slug %> half_size"><%= section.title %></dd>
+      <% end %>
+    <% end -%>
+  </dl>
 
+  
   <div class="result_info">
     <span class="excerpts"><%= 
       if event.excerpts.entry_full_text.present?
@@ -9,17 +24,11 @@
     <% if event.place %>
       <span class="location"><%= event.place.name %></span>
     <% end %>
-    <span class="agency"><%= event.entry.agencies.excluding_parents.map{|agency| link_to(agency.name, agency_path(agency))}.join(' :: ') %></span>
     
-    <div class="sections">
-      <% event.entry.sections.each do |section| %>
-        <span class="icon <%= section.slug %>"><%= section.title %></span>
-      <% end %>
-    </div>
-    
+
     <ul class="actions">
-      <li><%= link_to "Download Event", event_path(event, :format => :ics), :class => 'icon download' %></li>
-      <li><%= link_to "Add to Calendar", event_path(event), :class => 'icon add_to_calendar' %></li>
+      <li><%= link_to "Download Event", event_path(event, :format => :ics), :class => 'icon download', :title => 'Download Event' %></li>
+      <li><%= link_to "Add to Calendar", event_path(event), :class => 'icon add_to_calendar', :title => 'Add to Calendar' %></li>
     </ul>
     
   </div>  
