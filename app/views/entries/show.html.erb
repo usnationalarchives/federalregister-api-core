@@ -21,7 +21,7 @@
   </div> <!-- end metadata_content_area -->
   
   <div id="content_area">
-    <%= render :partial => 'abstract', :locals => {:entry => @entry} %>
+    <%= render(:partial => 'abstract', :locals => {:entry => @entry}) if @entry.abstract.present? %>
     <%= render( :partial => "regulatory_plan", :object => @entry.most_recent_regulatory_plan ) if @entry.most_recent_regulatory_plan %>
   
     <div id="fulltext_content_area">
