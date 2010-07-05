@@ -276,6 +276,7 @@ dd.next + dd.next {
   @include opacity(1);
   }    
 .result_set.regulations h5 {
+  color: $bookmark_red;
   font-size:1.1em;
   margin: 0 0 1em 0;
   }
