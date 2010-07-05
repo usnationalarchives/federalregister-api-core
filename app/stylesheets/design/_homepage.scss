@@ -29,6 +29,7 @@ CURRENT ISSUE
   }
 #current_issue dt {
   color: #636363;
+  font-weight: 400;
   text-transform: uppercase;
   }  
 #current_issue dd {
@@ -58,10 +59,11 @@ PROMO NAV
   height: 318px;  
   list-style: none;
   margin-bottom: 0;
-  width: 180px;
+  width: 190px;
   }
 #top_news_promo ul.section_nav li {
   margin-bottom: .5em;
+  padding-right: 14px;
   }
 #top_news_promo ul.section_nav li a {
   background-position: 5px 50%;
@@ -85,7 +87,6 @@ PROMO NAV
 #top_news_promo ul.section_nav li.on {
   background-color: none;
   background: url(/images/promo_nav_bg_on_new.png) no-repeat right top;
-  padding-right: 14px;
   }
 #top_news_promo ul.section_nav li.on a {
   background-color: $golden;
@@ -106,7 +107,12 @@ PROMO NAV
 PROMO ITEMS
 
 ******************************/
-  
+
+#top_news_promo .aside_box {
+  clear: both;
+  overflow: hidden;
+  padding-left: 0;
+  }
 #top_news_promo #slideshow {
   display: block;
   float: left;
@@ -114,19 +120,20 @@ PROMO ITEMS
   margin: 0 0 0 20px;
   overflow: hidden;
   position: relative;
-  width: 440px;
+  width: 425px;
   }  
 #slideshow .container {
-  height: 318px;  
+  height: 1908px;  
   position:absolute;
-  width: 2640px;
+  width: 425px;
   }
 #slideshow .container > div {
-  float: left;
   height: 318px;
-  width: 440px;
+  position: relative;
+  width: 425px;
   }
-#slideshow .container > div > div {
+#slideshow .container > div > div,
+#slideshow .container > div > ul {
   padding-right: 15px;
   }  
 #slideshow .metadata {
@@ -198,6 +205,72 @@ NEWS
   @include replace-text-with-dimensions("celebrating_75.png", 0, 0);
   clear: both;
   margin: .5em 0;
+  }
+
+/******************************
+
+WHATS HOT 
+
+******************************/
+.home #popular.with_icon > div {
+  background: url(/images/icon_whats_hot.png) no-repeat left top;
+  padding-left: 35px;
+  }
+.home #agency_highlight.with_icon > div {
+  background: url(/images/icon_highlighted_opportunity.png) no-repeat 10px top;
+  padding-left: 70px;
+  }  
+.home .with_icon h1 { /* TODO pull this into its own class to share with fr_sections below */
+  border-bottom: 2px solid #464646;
+  color: #464646;
+  @include apertura-condensed;
+  font-size: 1.5em;
+  margin: 0 0 .5em;
+  padding: 0;
+  text-transform: uppercase;
+  }
+.home #popular.with_icon ol {
+  list-style: none;
+  }  
+.home #popular.with_icon li {
+  border-bottom: 2px solid #EFEFEF;
+  @include min-height(40px);
+  margin-bottom: .5em;
+  padding-left: 2em;
+  position: relative;
+  }
+.home #popular.with_icon li:last-child {
+  border-bottom: 0;
+  }  
+.home #popular.with_icon .index {
+  color: #eee;  
+  @include apertura-condensed;
+  font-size: 2.8em;
+  font-weight: 700;
+  left: 0;
+  line-height: 1;
+  position: absolute;
+  top: 0;
+  }
+
+/******************************
+
+AGENCY HIGHLIGHT 
+
+******************************/
+
+.logo_and_title {
+  border-right: 2px solid #eee;
+  display:inline;
+  float:left;
+  margin-right: 1em;
+  padding-right: 1em;
+  width:100px;
+  }
+
+.logo_and_title a {
+  display: block;
+  text-align: center;
   }
 
 /******************************

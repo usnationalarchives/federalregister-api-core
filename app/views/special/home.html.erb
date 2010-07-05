@@ -4,10 +4,7 @@
 
 <h1 class="title"><span><%= IssueApproval.latest_publication_date.try(:to_s, :wday_and_pretty_date) %></span></h1>
 
-<div id="current_issue">
-    <%= link_to 'Current Issue', entries_by_date_path(IssueApproval.latest_publication_date), :title => IssueApproval.latest_publication_date.to_s(:wday_and_pretty_date), :class => 'issue'  %>
-    <%= render :partial => "entries/statistics_by_date", :locals => {:issue => @issue} %>
-</div>
+<%= render :partial => "entries/statistics_by_date", :locals => {:issue => @issue} %>
 
 <div class="row">
   <% section_tag(:id => 'top_news_promo') do %>
@@ -19,12 +16,18 @@
   <% end -%>
 </div>
 
-<% section_tag(:id => 'popular') do %>
-  <%= render :esi => popular_entries_path %>
+<h2 class="title_bar">Popular and Highlighted Articles</h2>
+
+<% section_tag(:id => 'popular', :class => 'with_icon') do %>
+  <div>
+    <%= render :esi => popular_entries_path %>
+  </div>
 <% end -%>
 
-<% section_tag(:id => 'agency_highlight') do %>
-  <%= render :esi => agency_highlight_path %>
+<% section_tag(:id => 'agency_highlight', :class => 'with_icon') do %>
+  <div>
+    <%= render :esi => agency_highlight_path %>
+  </div>
 <% end -%>
 
 <h2 class="title_bar">What's in the Federal Register?</h2>
@@ -35,7 +38,9 @@
 
 <div class="title_bar">
   <h2>New items in the FR</h2>
-  <%= link_to 'Subscribe', highlighted_entries_path(:format => :rss), :class => 'button rss' %>
+  <ul class="actions">
+    <%= link_to 'Subscribe', highlighted_entries_path(:format => :rss), :class => 'button rss' %>
+  </ul>
 </div>
 
 <div id="section_news_boxes">
