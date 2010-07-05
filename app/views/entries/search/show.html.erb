@@ -11,22 +11,22 @@
 </ul>
 <% end %>
 
-<%= render :esi => url_for(params.merge(:action => :header)) %>
+<%= render :esi => entries_search_header_path(params.except(:action)) %>
 
 <% unless @search.blank? %>
 
   <div class="filters">
-    <%= render :esi => url_for(params.merge(:action => :facets, :facet => 'date')) unless @search.start_date.present? %>
+    <%= render :esi => entries_search_facets_path(params.except(:action).merge(:facet => 'date')) unless @search.start_date.present? %>
     <%# TODO HELP-RUBY i know this doesn't go here. just wanted to stash it somewhere  %>
     <!-- <li><%#= sparkline(:data => @search.date_distribution.to_a.sort_by{|date, count| date}.map{|date, count| count}, :alt => "Monthly Distribution" ) %></li> -->
     
-    <%= render :esi => url_for(params.merge(:action => :facets, :facet => 'type')) %>
-    <%= render :esi => url_for(params.merge(:action => :facets, :facet => 'section')) %>
-    <%= render :esi => url_for(params.merge(:action => :facets, :facet => 'agency')) %>
-    <%= render :esi => url_for(params.merge(:action => :facets, :facet => 'topic')) %>
+    <%= render :esi => entries_search_facets_path(params.except(:action).merge(:facet => 'type')) %>
+    <%= render :esi => entries_search_facets_path(params.except(:action).merge(:facet => 'section')) %>
+    <%= render :esi => entries_search_facets_path(params.except(:action).merge(:facet => 'agency')) %>
+    <%= render :esi => entries_search_facets_path(params.except(:action).merge(:facet => 'topic')) %>
     
     <%= render :partial => 'search/location_form', :locals => {:search => @search } %>
   </div>
   
-  <%= render :esi => url_for(params.merge(:action => :results)) %>
+  <%= render :esi => entries_search_results_path(params.except(:action)) %>
 <% end %>

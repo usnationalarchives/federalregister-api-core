@@ -76,10 +76,7 @@ class EntriesController < ApplicationController
     @entry = Entry.find_by_document_number!(params[:document_number])
     
     respond_to do |wants|
-      wants.html      
-      wants.xml do
-        send_file @entry.full_xml_file_path, :filename => "#{@entry.document_number}.xml"
-      end
+      wants.html
     end
   end
   

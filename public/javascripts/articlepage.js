@@ -43,6 +43,11 @@ var citation_info = {
     return id;
   },
   show: function( id ){
+    var node = $( '#' + id );
+    node.attr( 'id', '' );
+    window.location.hash = id;
+    node.attr( 'id', id );
+    
     if ( this.cache[id] == null )
       this.create( id );
     if ( this.open != null && this.open != id ){
@@ -60,13 +65,13 @@ var citation_info = {
     '<div id="<%= id %>" class="aside_box citation_box">',
     '  <ul>',
     '    <li class="link">',
-    '      <a href="<%= url %>">Permalink</a>',
+    '      <a href="<%= url %>">Link to this paragraph</a>',
     '    </li>',
     '    <li class="cite_volume"><strong>Paragraph Citation</strong> <%= volume %> FR <%= page %></li>',
     '    <li class="cite_page"><strong>Page</strong> <%= page %></li>',
     // '    <li class="email"><a href="#">Email this</a></li>',
     '    <li class="twitter"><a href="http://twitter.com/home?status=<%= escape(url) %>">Share this on Twitter</a></li>',
-    '    <li class="facebook"><a href="javascript:unimplemented()">Share this on Facebook</a></li>',
+    '    <li class="facebook"><a href="http://www.facebook.com/sharer.php?u=<%= escape(url) %>&t=<%= escape(title) %>">Share this on Facebook</a></li>',
     '    <li class="digg"><a href="http://digg.com/submit?url=<%= escape(url) %>&title=<%= escape(title) %>&bodytext=<%= escape(content) %>&media=news">Share this on digg</a></li>',
     '  </ul>',
     '  <% if (next_header_anchor) { %>',

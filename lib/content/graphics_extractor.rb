@@ -26,6 +26,7 @@ module Content
             entry.associate_image(image)
           end
         end
+        `rm -r #{tmp_dir}`
       end
     end
     

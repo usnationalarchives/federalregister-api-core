@@ -21,10 +21,6 @@ jQuery.extend(
         if (i == 0) {
             jQuery.jQueryRandom = Math.floor(Math.random() * r.length);
         };
-        console.log(a);
-        console.log(i);
-        console.log(m);
-        console.log(r);
         return i == jQuery.jQueryRandom;
     }
 });

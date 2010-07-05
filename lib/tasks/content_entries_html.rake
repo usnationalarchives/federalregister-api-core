@@ -11,7 +11,7 @@ namespace :content do
           puts "compiling HTML for #{date}..."
           Entry.published_on(date).each do |entry|
             Entry.connection.execute("SELECT NOW()") # keep MySQL connection alive; TODO: FIXME
-            path = "#{RAILS_ROOT}/public/articles/#{entry.document_file_path}.html"
+            path = "#{RAILS_ROOT}/data/html/#{entry.document_file_path}.html"
             File.makedirs(File.dirname(path))
             
             val = Content.render_erb('entries/_full_text', {:entry => entry})
