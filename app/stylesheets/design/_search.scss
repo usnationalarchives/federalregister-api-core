@@ -89,20 +89,18 @@ PAGE ELEMENTS
   float: left;
   margin-top: 4px;
   }  
-/*.search_bar #conditions_submit {
-  background: #65be5f;
-  border: 1px solid #eee;
-  color: #fff;
-  display: block;
-  float: left;  
-  @include border-radius(10px);
-  @include apertura-condensed;
-  font-size: 1.5em;
-  height: 27px;
-  margin: 3px 0 0 .5em;
-  padding: 0;
-  text-transform: uppercase;
-  }*/
+.search_bar #conditions_submit {
+  background: sprite-image('icons/search_button.png') no-repeat;
+  border: none;
+  cursor: pointer;
+  height:  image-height('icons/search_button.png');
+  @include hide-text;
+  margin-left: -1px;
+  width: image-width('icons/search_button.png');
+  }
+.search_bar #conditions_submit:hover {
+  background: sprite-image('icons/search_button_hover.png') no-repeat;
+  }
 .search_info {  
   border-bottom: 3px solid #385F82;
   clear: both;
@@ -148,7 +146,7 @@ ol.results {
   list-style-type: none;
   }
 ol.results > li {
-  border-bottom: 1px solid #EEEEEE;
+  border-bottom: 2px solid #EEEEEE;
   margin-bottom: 2em;
   padding-bottom: 2em;
   }
@@ -192,8 +190,6 @@ ol.results li .date {
   margin-right: 1em;
   padding-left: 20px;
   }  
-.active_filter_list li .name {
-  }
 .active_filter_list li .remove {
   display: inline-block;
   @include replace-text('/images/icon_close.png', 0, 0);
@@ -204,11 +200,14 @@ ol.results li .date {
   width: 14px;
   }  
 
-
+.excerpts {
+  display: block;
+  margin: 0 0 1em 0;
+  }
 
 /******************************
 
-RESULTS - EVENTS
+RESULTS - EVENTS & REGULATIONS
 
 ******************************/
 
@@ -234,19 +233,30 @@ RESULTS - EVENTS
 .result_set.events .results > li.public_meeting {
   background: sprite-image('icons/meeting.png', 0 , 0, 300px) no-repeat;
   }
-.result_set.events .results dl {
+.result_set.events .results dl,
+.result_set.regulations .results dl {
   overflow: hidden;
   }
+.result_set.regulations dl {
+  margin-bottom: 0;
+  }  
 .result_set.events .results dt,
-.result_set.events .results dd {
+.result_set.events .results dd,
+.result_set.regulations .results dt,
+.result_set.regulations .results dd {
   float: left;
   }
-.result_set.events .results dt {
+.result_set.events .results dt,
+.result_set.regulations .results dt {
   clear: both;
   width: 4em;
   text-align: right;
   }
-.result_set.events .results dd.next {
+.result_set.regulations .results dt {
+  width: auto;
+  }  
+.result_set.events .results dd.next,
+.result_set.regulations .results dd.next {
   width: 320px;
   }
 dd.next + dd.next {
@@ -262,11 +272,33 @@ dd.next + dd.next {
   right: 0;
   @include opacity(.4);
   }
-
 .result_set.events .results > li:hover .actions {
   @include opacity(1);
+  }    
+.result_set.regulations h5 {
+  font-size:1.1em;
+  margin: 0 0 1em 0;
   }
-
+.article_list li {
+  border-bottom: 1px solid #EEEEEE;
+  list-style: none;
+  margin: 0 0 1em 0;
+  padding: 0 0 0 35px;
+  }
+.article_list li:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+  }  
+.article_list li.notice {
+  background: sprite-image('icons/icon_notice_50.png', 0, 4px, 100px) no-repeat;
+  }
+.article_list li.proposed_rule {
+  background: sprite-image('icons/icon_proposed_50.png', 0, 4px, 100px) no-repeat;
+  }
+.article_list li.rule {
+  background: sprite-image('icons/icon_final_50.png', 0, 4px, 100px) no-repeat;
+  }
 /******************************
 
 FILTERS
