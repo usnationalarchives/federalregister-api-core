@@ -1,14 +1,14 @@
 $(document).ready(function() {
   $('a.rss').live('click', function(){
     generate_dialog();
-    $('#rss_modal').jqmShow();
+    $('#modal').jqmShow();
     return false;
   })
   
   function generate_dialog(){
-    if ($('#rss_modal').size() == 0) {
+    if ($('#modal').size() == 0) {
       var template = [
-        '<div id="rss_modal">',
+        '<div id="modal">',
         '  <a href="#" class="jqmClose">Close</a>',
         '  <h3>Select a feed</h3>',
         '  <p>Select from the following feeds:</p>',
@@ -28,7 +28,7 @@ $(document).ready(function() {
         }
       });
       $('body').append(tmpl(template, {elements: elements}));
-      $('#rss_modal').jqm({modal: true, toTop: true});
+      $('#modal').jqm({modal: true, toTop: true});
     }
   }
 });
