@@ -24,7 +24,7 @@
         <% end %>
       </ul>
       <% if num_entries > 5 %>
-        <%= link_to "See all #{num_entries} articles from this regulation.", entries_search_path(:conditions => {:regulation_id_number => regulatory_plan.regulation_id_number}) %>
+        <%= link_to "See all #{num_entries} articles with RIN #{regulatory_plan.regulation_id_number}.", entries_search_path(:conditions => {:regulation_id_number => regulatory_plan.regulation_id_number}) %>
       <% end %>
     <% end %>
   </div>
