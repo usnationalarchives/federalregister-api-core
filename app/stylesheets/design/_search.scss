@@ -276,6 +276,7 @@ dd.next + dd.next {
   @include opacity(1);
   }    
 .result_set.regulations h5 {
+  color: $bookmark_red;
   font-size:1.1em;
   margin: 0 0 1em 0;
   }
@@ -329,7 +330,7 @@ FILTERS
   font-weight: 700;
   }
 .filters li a.remove {
-  background: url(/images/remove.png) no-repeat left top;
+  background: url(/images/  ) no-repeat left top;
   color: #385F82;
   height: 12px;
   left: 0;
@@ -385,7 +386,7 @@ ERRORS
 .errors li{
   @include border-radius(5px);  
   overflow: hidden;  
-  background: #ebd8b6 url(/images/error2.png) no-repeat 1em top;
+  background: #ebd8b6 url(/images/error.png) no-repeat 1em top;
   color: #777777;
   @include apertura-condensed;
   font-size: 1.5em;

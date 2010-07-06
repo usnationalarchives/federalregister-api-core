@@ -5,83 +5,66 @@ BUTTONS / ICONS
 ******************************/
 
 .button {
-background: #f1f1f1;
-@include border-radius(5px);
-color: #6e6e6e;
-display: inline-block;
-font-size: 1em;
-font-weight: bold;
-margin-bottom: 15px;
-padding: 10px;
-text-decoration: none;
-text-transform: uppercase;
-}
-.button.notext {
-text-indent: -9999px;
-}
-.button.list {
-  margin: 0 .5em 0 0;
+  background: #f1f1f1;
+  @include border-radius(5px);
+  color: #6e6e6e;
+  display: inline-block;
+  font-size: 1em;
+  font-weight: bold;
+  margin-bottom: 15px;
+  padding: 10px;
+  text-decoration: none;
+  text-transform: uppercase;
   }
-.button.list:last-child {
-  margin: 0;
-  }  
+.button.notext { text-indent: -9999px; }
+.button.list { margin: 0 .5em 0 0; }
+.button.list:last-child { margin: 0; }  
 .button.rss {
-background: url(/images/rss_icon_line.png) no-repeat right 10px;
-padding: 10px 25px 7px 10px;
-}
-.rss:hover {
-  background-position: right -20px;
-  }            
-.button.notext.rss {
-  background-position: 10px 10px;
-  padding: 10px 10px 4px 25px;
+  background: url(/images/rss_icon_line.png) no-repeat right 10px;
+  padding: 10px 25px 7px 10px;
   }
-.button.notext.rss:hover {
-  background-position: 10px -20px;
-  }  
+.rss:hover { background-position: right -20px; }            
+.button.notext.rss { background-position: 10px 10px; padding: 10px 10px 4px 25px; }
+.button.notext.rss:hover { background-position: 10px -20px; }  
 .button.add_to_calendar {
   background: #fff sprite-image('icons/add_to_calendar_half.png', 10px, 10px, 30px) no-repeat;
   height:  image-height('icons/add_to_calendar_half.png');
   width: image-width('icons/add_to_calendar_half.png');
   }
-.button.add_to_calendar:hover {
-  background: #fff sprite-image('icons/add_to_calendar_half_hover.png', 10px, 10px, 30px) no-repeat;
-  }  
+.button.add_to_calendar:hover { background: #fff sprite-image('icons/add_to_calendar_half_hover.png', 10px, 10px, 30px) no-repeat; }  
 .comments_close { /* TODO this doesn't belong here */
-background: url(/images/icon_comment.png) no-repeat left top;
-color: #6e6e6e;
-@include apertura-condensed;
-line-height: 19px;
-margin: 1em 0 0 0;
-padding: 0 0 5px 30px;
-text-transform: uppercase;
-}
+  background: sprite-image('icons/icon_comment.png', 0, 0, 20px) no-repeat;
+  color: #6e6e6e;
+  @include apertura-condensed;
+  line-height: 19px;
+  margin: 1em 0 0 0;
+  padding: 0 0 5px 30px;
+  text-transform: uppercase;
+  }
 .button.widget {
-background-image: url(/images/widget_icon_line.png);
-background-position: 10px 12px;
-background-repeat: no-repeat;
-padding: 10px 10px 7px 30px;  
-}
+  background-image: url(/images/widget_icon_line.png);
+  background-position: 10px 12px;
+  background-repeat: no-repeat;
+  padding: 10px 10px 7px 30px;  
+  }
 .button.notext.widget {
-background-position: 10px 10px;
-padding: 10px 10px 4px 25px;
-}
-.widget:hover,
-.widget.notext:hover {
-background-position: 10px -20px;
-}
+  background-position: 10px 10px;
+  padding: 10px 10px 4px 25px;
+  }
+  .widget:hover,
+  .widget.notext:hover { background-position: 10px -20px; }
+
 #clippy {
   display: inline-block;
-}
+  }
 
 .button.social {
   background: none;
-  @include border-radius(0);
   height: 24px;
   padding: 0;
   text-indent: -9999px;
   width: 24px;
-}
+  }
 
 .button.format {
   border: none;
@@ -96,5 +79,7 @@ background-position: 10px -20px;
 .button.social.facebook { background: sprite-image('social/24px/facebook.png'); }
 .button.social.reddit { background: sprite-image('social/24px/reddit.png'); }
 .button.social.twitter { background: sprite-image('social/24px/twitter.png'); }
-.button.format.pdf { background: url(/images/icon_pdf.png) no-repeat left 50%; }
-.button.format.xml { background: url(/images/icon_xml.png) no-repeat left 50%; }
+.button.format.pdf { background: sprite-image('icons/icon_pdf.png', 0, 0, 20px); }
+.button.format.xml { background: sprite-image('icons/icon_xml.png', 0, 0, 20px); }
+.button.format.external { background: sprite-image('icons/icon_external.png', 0, 4px, 20px); }
+.button.format.external:hover { background: sprite-image('icons/icon_external_hover.png', 0, 4px, 20px); }
