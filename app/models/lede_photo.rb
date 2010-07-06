@@ -22,7 +22,12 @@ class LedePhoto < ApplicationModel
   has_many :entries
   has_attached_file :photo,
                     :styles => { :homepage => ["100", :jpg], :small => ["140", :jpg], :medium => ["245", :jpg], :large => ["580", :jpg], :full_size => ["", :jpg] },
-                    :processors => [:thumbnail]
+                    :processors => [:thumbnail],
+                    :storage => :s3,
+                    :s3_credentials => "#{Rails.root}/config/amazon.yml",
+                    :s3_alias_url => 'http://lede-photos.federalregister.gov.s3.amazonaws.com/',
+                    :bucket => 'lede-photos.federalregister.gov',
+                    :path => ":id/:style.:extension"
   
   before_save :download_and_crop_file
   before_save :get_credit_info_from_flickr
