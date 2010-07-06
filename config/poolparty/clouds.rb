@@ -51,12 +51,13 @@ def chef_cloud_attributes(instance_type)
                 :secretkey => @amazon_keys['secret_access_key']
                },
     :mysql  => {
+                :database_name          => 'fr2_production',
                 :server_root_password   => @mysql_passwords['server_root_password'],
                 :server_repl_password   => @mysql_passwords['server_repl_password'],
                 :server_debian_password => @mysql_passwords['server_debian_password'],
                 :ec2_path               => "/vol/lib/mysql",
                 :ebs_vol_dev            => "/dev/sdh",
-                :ebs_vol_size           => 40
+                :ebs_vol_size           => 80
                },
     :rails  => {
                 :version     => "2.3.5",
@@ -398,7 +399,8 @@ pool :fr2 do
         :varnish => {
                       :storage_size      => '3G',
                       :app_proxy_host    => 'ip-10-243-41-203.ec2.internal',
-                      :static_proxy_host => 'ip-10-243-115-210.ec2.internal',
+                      #:static_proxy_host => 'ip-10-243-115-210.ec2.internal',
+                      :static_proxy_host => 'ip-10-245-106-31.ec2.internal' # monster worker
                     }
         )
             
@@ -475,6 +477,7 @@ pool :fr2 do
       repo File.join(File.dirname(__FILE__) , "chef_cloud")
       
       recipe "apt"
+      recipe 's3sync'
       recipe "ubuntu"
       recipe "openssl"
       
@@ -493,7 +496,8 @@ pool :fr2 do
         :chef => {
                    :roles => ['app']
                  },
-        :mysql => {:server_address  => 'ip-10-194-109-139.ec2.internal'}
+        :mysql => {:server_address  => 'ip-10-194-109-139.ec2.internal'},
+        :sphinx => {:server_address => 'ip-10-194-109-139.ec2.internal'}
         )
             
     end
@@ -555,5 +559,64 @@ pool :fr2 do
     end
     
     security_group "sphinx"
+  end
+  
+  cloud :static_server_large do
+    # basic settings
+    using :ec2
+    keypair "/Users/rburbach/Documents/AWS/FR2/gpoEC2.pem"
+    user "ubuntu"
+    #image_id "ami-6743ae0e" #Ubuntu 9.10 Karmic Canonical, ubuntu@ EBS-based 32bit
+    image_id "ami-7d43ae14" #Ubuntu 9.10 Karmic Canonical, ubuntu@ EBS-based 64bit
+    availability_zones ['us-east-1d']
+    instances 1
+    #instance_type 'm1.small'
+    instance_type 'c1.xlarge'
+    
+    #attach the ebs volumes
+    # ebs_volumes do
+    #   size 80
+    #   device "/dev/sdh"
+    # end
+    
+    chef :solo do
+      repo File.join(File.dirname(__FILE__) , "chef_cloud")
+      
+      recipe "apt"
+      recipe "ubuntu"
+      recipe "openssl"
+      recipe "imagemagick"
+      
+      recipe "mysql::client"
+
+      recipe "nginx"
+      
+      recipe 'ruby_enterprise'
+      recipe 'rubygems'
+      
+      recipe "git"
+      recipe "capistrano"
+      recipe "rails"
+      
+      attributes chef_cloud_attributes('test').recursive_merge(
+        :chef    => {
+                      :roles => ['static', 'worker']
+                    },
+        :nginx   => {
+                      :varnish_proxy => false,
+                      :gzip          => 'off',
+                      :listen_port   => '8080',
+                      :doc_root      => '/var/www/apps/fr2/current/public'
+                    },
+        :mysql => {:server_address  => 'ip-10-194-109-139.ec2.internal'}
+        )
+    end
+    
+    security_group "static" do
+      authorize :from_port => "22", :to_port => "22"
+      authorize :from_port => "8080", :to_port => "8080"
+    end
+    security_group "worker"
+    
   end
 end
