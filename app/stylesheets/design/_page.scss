@@ -57,10 +57,10 @@ SECTION
 
 
 .featured .article {
-overflow: hidden; /* less awkward self-clear */
-margin-bottom: 25px;
-padding-bottom: 25px;
-}
+  overflow: hidden; /* less awkward self-clear */
+  margin-bottom: 25px;
+  padding-bottom: 25px;
+  }
 
 .articles_published_by_day .article {
   margin-bottom: 1em;
@@ -114,48 +114,20 @@ margin-left: 0;
 }
 
 .figure {
-background: #e6e6e6;
-float: left;
-padding: 10px 10px 0;
-position: relative;
-}
+  background: #e6e6e6;
+  float: left;
+  padding: 10px 10px 0;
+  position: relative;
+  }
 
 .figcaption {
-background: #000;
-background: rgba(0,0,0, .0);
-bottom: 15px;
-color: #fff;
-color: rgba(255,255,255, 0);
-font-size: 10px;
-left: 10px;
-padding: 0 5px;
-position: absolute;
-width: 130px;
-}
-
-.figcaption a {
-color: #fff;
-color: rgba(255,255,255, 0);
-}
-
-.figure:hover .figcaption {
-background: #000;
-background: rgba(0,0,0, .7);
--moz-transition: all 0.3s ease-out;  /* FF3.7+ */
--o-transition: all 0.3s ease-out;  /* Opera 10.5 */
--webkit-transition: all 0.3s ease-out;  /* Saf3.2+, Chrome */
-color: #fff;
-color: rgba(255,255,255, 1);
-}
-
-.figure:hover .figcaption a {
--moz-transition: all 0.3s ease-out;  /* FF3.7+ */
--o-transition: all 0.3s ease-out;  /* Opera 10.5 */
--webkit-transition: all 0.3s ease-out;  /* Saf3.2+, Chrome */;
-color: #fff;
-color: rgba(255,255,255, 1);
-}
-
+  bottom: 15px;
+  font-size: .9em;
+  left: 10px;
+  padding: 0 5px;
+  position: absolute;
+  width: 130px;
+  }
 /*.article dl {
 margin-bottom: 0;
 }
@@ -279,25 +251,26 @@ ARTICLE VIEW
   margin-top: 0;
   text-align: right;
   }
-#entries.show .metadata {
+#entries.show .metadata,
+#regulatory_plans.show .metadata {
   font-size: 1.3em;
   font-weight: 700;
   }
-#entries.show .metadata_share_bar {
+.metadata_share_bar {
   border-bottom:1px solid #CCCCCC;
   border-top:1px solid #CCCCCC;
   margin:0.5em 0;
   overflow:hidden;
   padding:0.5em 0
   }
-#entries.show .metadata_share_bar .metadata {
+.metadata_share_bar .metadata {
   margin-bottom: 0;
   padding-bottom: 0;
   }
-#entries.show .metadata_share_bar .share {
+.metadata_share_bar .share {
   text-align: right;
   } 
-#entries.show .metadata_share_bar .share .button {
+.metadata_share_bar .share .button {
   text-indent: 9999px;
   }    
 #entries.show .back_to_top {
