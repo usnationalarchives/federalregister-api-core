@@ -411,28 +411,34 @@ p:target {
   margin-bottom: .5em;
   }
 .citation_box li:last-child { margin-bottom: 0 ;}  
-.citation_box li.bookmark { background: url(/images/icon_bookmark.png) no-repeat left top; }
-.citation_box li.twitter { background: url(/images/icon_twitter.png) no-repeat left top; }
-.citation_box li.facebook { background: url(/images/icon_facebook.png) no-repeat left top; }
-.citation_box li.digg { background: url(/images/icon_digg.png) no-repeat left top; }
-.citation_box li.cite_volume { background: url(/images/icon_volume.png) no-repeat left top; }
-.citation_box li.cite_page { background: url(/images/icon_page.png) no-repeat left top; }
-.citation_box li.link { background: url(/images/icon_link.png) no-repeat left top; }
-.citation_box li.email { background: url(/images/icon_email.png) no-repeat left top; }
-.citation_box li.next { background: url(/images/icon_next.png) no-repeat left 5px; }
+.citation_box li.bookmark { background: sprite-image('icons/icon_bookmark.png', 0, 0, 20px) no-repeat; }
+.citation_box li.twitter { background: sprite-image('icons/icon_twitter.png', 0, 0, 20px) no-repeat; }
+.citation_box li.facebook { background: sprite-image('icons/icon_facebook.png', 0, 0, 20px) no-repeat; }
+.citation_box li.digg { background: sprite-image('icons/icon_digg.png', 0, 0, 20px) no-repeat; }
+.citation_box li.cite_volume { background: sprite-image('icons/icon_volume.png', 0, 0, 20px) no-repeat;  }
+.citation_box li.cite_page { background: sprite-image('icons/icon_page.png', 0, 0, 20px) no-repeat;  }
+.citation_box li.link { background: sprite-image('icons/icon_link.png', 0, 0, 20px) no-repeat;  }
+.citation_box li.email { background: sprite-image('icons/icon_email.png', 0, 0, 20px) no-repeat; }
+.citation_box li.next { background: sprite-image('icons/icon_next.png', 0, 0, 20px) no-repeat; }
 .citation_box .close {
-  @include replace-text-with-dimensions('icon_close.png', 0, 0);
+  background: sprite-image('icons/icon_close.png', 0, 0, 20px) no-repeat;;
+  height: image-height('icons/icon_close.png');
+  @include hide-text;  
   position: absolute;
   right: 1em;
   top: 1em;
+  width: image-width('icons/icon_close.png');
   }
 .trigger {
-  @include replace-text-with-dimensions('icon_bookmark.png', 0, 0);
+  background: sprite-image('icons/icon_bookmark.png', 0, 0, 20px) no-repeat;;
+  height: image-height('icons/icon_bookmark.png');
+  @include hide-text;
   @include opacity(.10);
   cursor: pointer;
   position: absolute;
   left: 485px;
   top: .5em;
+  width: image-width('icons/icon_bookmark.png');  
   }
 .citable:hover .trigger {
   @include opacity(1);
