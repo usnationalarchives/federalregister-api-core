@@ -37,11 +37,13 @@
 }
 
 #modal {
+  background-color: white;
+  border: 5px solid #eee;
   display: none;
+  height: 300px;
+  left: 50%;    
+  padding: 1em;
   position: fixed;
   width: 400px;
-  height: 300px;
   top: 17%;
-  left: 50%;
-  background-color: white;
-}
+  }
