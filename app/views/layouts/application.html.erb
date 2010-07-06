@@ -14,7 +14,8 @@
     <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
       
     <!--[if lt IE 9]>
-    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+      <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+      <%= stylesheet_link_tag "ie", :media => :screen %>  
     <![endif]-->
     
     <%= yield :head %>
@@ -26,8 +27,7 @@
     <script type="text/javascript">
     	enhance({
     		loadStyles: [
-    			'/stylesheets/enhancements.css',
-    			{'src': 'ie.css', 'iecondition': 'lte IE 8'}
+    			'/stylesheets/enhancements.css'
     		],	
     		loadScripts: [
     			'/javascripts/jquery.js',
@@ -45,11 +45,11 @@
           '/javascripts/search.js',
           '/javascripts/rss.js',
           '/javascripts/articlepage.js',
-    			'/javascripts/sectionpage.js',
-    			'/javascripts/homepage.js',
-    			'/javascripts/agencylist.js',
-    			'/javascripts/topiclist.js',
-    			'/javascripts/timeline.js'
+          '/javascripts/sectionpage.js',    			
+          '/javascripts/agencylist.js',
+          '/javascripts/topiclist.js',
+          '/javascripts/timeline.js',
+    			'/javascripts/homepage.js'
     		]
     	});   
     </script>
