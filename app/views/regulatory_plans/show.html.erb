@@ -5,26 +5,22 @@
 <% article_tag do %>
   <div id="metadata_content_area">
     <h1><%= @regulatory_plan.title %></h1>
-    <p class="metadata">Unified agenda current as of <%= issue_season(@regulatory_plan) %>
-
-    <div class="box">
-      <%# TODO HELP-DESIGN get this grid out of the view %>
-      <div class="grid_4 alpha">
-        <h4>Download As</h4>
-        <%= link_to "XML", @regulatory_plan.source_url(:xml), :class => 'button format list xml', :title => 'Download unified agenda as XML' %>
+    
+      <div class="metadata_share_bar">
+        
+        <p class="metadata">Unified agenda current as of <%= issue_season(@regulatory_plan) %></p>
+        
+        <div class="share">
+          <%# TODO HELP-RUBY these don't work with reg plans yet %>
+          <%#= link_to_twitter(@regulatory_plan) %>
+          <%#= link_to_facebook(@regulatory_plan) %>
+          <%#= link_to_reddit(@regulatory_plan) %>
+          <%#= link_to_digg(@regulatory_plan) %>
+          <%# TODO HELP-RUBY make this real %>
+          <%# <a href="#" class="button list social email">E-Mail</a> %>
+        </div>
       </div>
-      <div class="grid_4">
-        <h4>Share This</h4>
-      </div>
-      <div class="grid_4">
-        <h4>Official Home</h4>
-        <%= link_to "Official home", @regulatory_plan.source_url(:html) %>
-      </div>
-
-      <%#= link_to "XML", @regulatory_plan.source_url(:xml) %></li>
-      <%#= link_to "Short URL", short_regulatory_plan_path(@regulatory_plan) %></li>
-
-    </div>
+      
   </div>
   
   <div id="content_area">  
@@ -113,16 +109,25 @@
   
   <% aside_tag(:id => 'sidebar') do %>
     <% section_tag(:id => 'metadata') do %>
-      <dl class="metadata_list aside_box">
+    <div class="aside_box">
+      <div class="download_separator">
+        <%= link_to "XML", @regulatory_plan.source_url(:xml), :class => 'button format list xml', :title => 'Download unified agenda as XML' %>
+        <%= link_to "Official home", @regulatory_plan.source_url(:html), :class => 'button format list external', :title => 'Visit official site for this agenda', :target => '_blank' %>
+      </div>
+      
+      <dl class="metadata_list">
         <% %w(priority_category major regulatory_flexibility_analysis_required energy_affected).each do |attribute| %>
           <% value = @regulatory_plan.send(attribute) %>
           <% if value.present? %>
-            <%# HELP-DESIGN: icons might be nice for these guys; they are all Yes/No/Undetermined %>
             <dt><%= attribute.humanize %></dt>
             <dd><%= value %></dd>
           <% end %>
         <% end %>
+        
+        <dt>Shorter URL</dt>
+        <dd><%= link_to  short_regulatory_plan_url(@regulatory_plan), short_regulatory_plan_path(@regulatory_plan) %></dd>
       </dl>
+    </div>
     <% end -%>
     
     <% if @regulatory_plan.cfr_citations.present? %>    
