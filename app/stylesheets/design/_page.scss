@@ -57,10 +57,10 @@ SECTION
 
 
 .featured .article {
-overflow: hidden; /* less awkward self-clear */
-margin-bottom: 25px;
-padding-bottom: 25px;
-}
+  overflow: hidden; /* less awkward self-clear */
+  margin-bottom: 25px;
+  padding-bottom: 25px;
+  }
 
 .articles_published_by_day .article {
   margin-bottom: 1em;
@@ -96,81 +96,29 @@ width: 160px;
 }
 
 .article.with_photo.on_left .photo {
-left: -480px;
-margin-right: 0;
-}
+  left: -480px;
+  margin-right: 0;
+  }
 
 .article.with_photo.on_left .info {
-left: 180px;
-margin-left: 0;
-}
-
-.article.with_photo.on_right .photo {
-margin-right: 0;
-}
-
-.article.with_photo.on_right .info {
-margin-left: 0;
-}
-
+  left: 180px;
+  margin-left: 0;
+  }
+.article.with_photo.on_right .photo { margin-right: 0; }
+.article.with_photo.on_right .info { margin-left: 0; }
 .figure {
-background: #e6e6e6;
-float: left;
-padding: 10px 10px 0;
-position: relative;
-}
-
+  background: #e6e6e6;
+  float: left;
+  padding: 1em;
+  position: relative;
+  }
 .figcaption {
-background: #000;
-background: rgba(0,0,0, .0);
-bottom: 15px;
-color: #fff;
-color: rgba(255,255,255, 0);
-font-size: 10px;
-left: 10px;
-padding: 0 5px;
-position: absolute;
-width: 130px;
-}
-
+  font-size: .9em;
+  width: 130px;
+  }
 .figcaption a {
-color: #fff;
-color: rgba(255,255,255, 0);
-}
-
-.figure:hover .figcaption {
-background: #000;
-background: rgba(0,0,0, .7);
--moz-transition: all 0.3s ease-out;  /* FF3.7+ */
--o-transition: all 0.3s ease-out;  /* Opera 10.5 */
--webkit-transition: all 0.3s ease-out;  /* Saf3.2+, Chrome */
-color: #fff;
-color: rgba(255,255,255, 1);
-}
-
-.figure:hover .figcaption a {
--moz-transition: all 0.3s ease-out;  /* FF3.7+ */
--o-transition: all 0.3s ease-out;  /* Opera 10.5 */
--webkit-transition: all 0.3s ease-out;  /* Saf3.2+, Chrome */;
-color: #fff;
-color: rgba(255,255,255, 1);
-}
-
-/*.article dl {
-margin-bottom: 0;
-}
-
-.article dl dt,
-.article dl dd {
-display: inline;
-text-transform: uppercase;
-}
-
-.article dl dd {
-font-weight: bold;
-padding-right: 10px;
-}*/ /* TODO look for def lists that this kills */
-
+  display: block;
+  }  
 #sections div > .article:last-child {
   border-bottom: none;
   }
@@ -230,7 +178,7 @@ ARTICLE VIEW
   padding: 0;
   }
 #flash_message.comment p {
-  background: url(/images/icon_comment.png) no-repeat 10px 14px;
+  background: sprite-image('icons/icon_comment.png', 10px, 14px, 20px) no-repeat;
   line-height: 3em;
   padding-left: 40px;
   }  
@@ -279,25 +227,26 @@ ARTICLE VIEW
   margin-top: 0;
   text-align: right;
   }
-#entries.show .metadata {
+#entries.show .metadata,
+#regulatory_plans.show .metadata {
   font-size: 1.3em;
   font-weight: 700;
   }
-#entries.show .metadata_share_bar {
+.metadata_share_bar {
   border-bottom:1px solid #CCCCCC;
   border-top:1px solid #CCCCCC;
   margin:0.5em 0;
   overflow:hidden;
   padding:0.5em 0
   }
-#entries.show .metadata_share_bar .metadata {
+.metadata_share_bar .metadata {
   margin-bottom: 0;
   padding-bottom: 0;
   }
-#entries.show .metadata_share_bar .share {
+.metadata_share_bar .share {
   text-align: right;
   } 
-#entries.show .metadata_share_bar .share .button {
+.metadata_share_bar .share .button {
   text-indent: 9999px;
   }    
 #entries.show .back_to_top {
@@ -411,28 +360,34 @@ p:target {
   margin-bottom: .5em;
   }
 .citation_box li:last-child { margin-bottom: 0 ;}  
-.citation_box li.bookmark { background: url(/images/icon_bookmark.png) no-repeat left top; }
-.citation_box li.twitter { background: url(/images/icon_twitter.png) no-repeat left top; }
-.citation_box li.facebook { background: url(/images/icon_facebook.png) no-repeat left top; }
-.citation_box li.digg { background: url(/images/icon_digg.png) no-repeat left top; }
-.citation_box li.cite_volume { background: url(/images/icon_volume.png) no-repeat left top; }
-.citation_box li.cite_page { background: url(/images/icon_page.png) no-repeat left top; }
-.citation_box li.link { background: url(/images/icon_link.png) no-repeat left top; }
-.citation_box li.email { background: url(/images/icon_email.png) no-repeat left top; }
-.citation_box li.next { background: url(/images/icon_next.png) no-repeat left 5px; }
+.citation_box li.bookmark { background: sprite-image('icons/icon_bookmark.png', 0, 0, 20px) no-repeat; }
+.citation_box li.twitter { background: sprite-image('icons/icon_twitter.png', 0, 0, 20px) no-repeat; }
+.citation_box li.facebook { background: sprite-image('icons/icon_facebook.png', 0, 0, 20px) no-repeat; }
+.citation_box li.digg { background: sprite-image('icons/icon_digg.png', 0, 0, 20px) no-repeat; }
+.citation_box li.cite_volume { background: sprite-image('icons/icon_volume.png', 0, 0, 20px) no-repeat;  }
+.citation_box li.cite_page { background: sprite-image('icons/icon_page.png', 0, 0, 20px) no-repeat;  }
+.citation_box li.link { background: sprite-image('icons/icon_link.png', 0, 0, 20px) no-repeat;  }
+.citation_box li.email { background: sprite-image('icons/icon_email.png', 0, 0, 20px) no-repeat; }
+.citation_box li.next { background: sprite-image('icons/icon_next.png', 0, 0, 20px) no-repeat; }
 .citation_box .close {
-  @include replace-text-with-dimensions('icon_close.png', 0, 0);
+  background: sprite-image('icons/icon_close.png', 0, 0, 20px) no-repeat;;
+  height: image-height('icons/icon_close.png');
+  @include hide-text;  
   position: absolute;
   right: 1em;
   top: 1em;
+  width: image-width('icons/icon_close.png');
   }
 .trigger {
-  @include replace-text-with-dimensions('icon_bookmark.png', 0, 0);
+  background: sprite-image('icons/icon_bookmark.png', 0, 0, 20px) no-repeat;;
+  height: image-height('icons/icon_bookmark.png');
+  @include hide-text;
   @include opacity(.10);
   cursor: pointer;
   position: absolute;
   left: 485px;
   top: .5em;
+  width: image-width('icons/icon_bookmark.png');  
   }
 .citable:hover .trigger {
   @include opacity(1);

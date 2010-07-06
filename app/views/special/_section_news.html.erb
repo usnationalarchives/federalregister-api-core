@@ -1,0 +1,16 @@
+<% sections.each do |section| %>
+  <div class="fr_section <%= section.slug %> <%= cycle('alpha', 'omega') %>">
+    
+    <h1><%= link_to section.title, section_path(section) %></h1>
+
+    <ul class="bullets">
+      <%# TODO HELP-RUBY should we make these 3 latest %>
+      <% entries = section.entries.highlighted[1..3] %>
+      <% if entries %>
+        <% entries.each do |entry| %>
+          <li><%= link_to entry.title, entry_path(entry) %></li>
+        <% end -%>
+      <% end -%>  
+    </ul>
+  </div>  
+<% end -%>  

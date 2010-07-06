@@ -4,19 +4,21 @@ Enhanced Fonts for elements
 
 ******************************/
 body {
+  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+  font-weight: 300;
+  }
+.wf-active body {
   @include gesta;
   }
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
+.wf-active h1,
+.wf-active h2,
+.wf-active h3,
+.wf-active h4,
+.wf-active h5,
+.wf-active h6 {
   @include apertura-condensed; /* was gloriola */
   font-weight: 700;
   }
-
 .block {
   background: $bookmark_red;
   color: #fff;
@@ -29,31 +31,22 @@ h6 {
   padding: 0.3em .3em 0;
   text-transform: uppercase;
   }
-
 #entries.show h2,
 #entries.show h3,
 #entries.show h4,
 #entries.show h5,
-#entries.show h6 {
-  clear: both;
-  }
-
-
-a {
-  color: $dark_blue; }
-
+#entries.show h6 { clear: both; }
+a { color: $dark_blue; }
 a:focus,
 a:hover {
   color: darken($dark_blue_complement, 10%);
   text-decoration: none;
-}
-
+  }
 p {
-  color: #363636;
+  color: #363636;  
   @include athelas;
   font-size: 1.2em;
-  }
-  
+  }  
 #entries.show .body_column > ul {
   color: #363636;
   @include athelas;
