@@ -96,53 +96,29 @@ width: 160px;
 }
 
 .article.with_photo.on_left .photo {
-left: -480px;
-margin-right: 0;
-}
+  left: -480px;
+  margin-right: 0;
+  }
 
 .article.with_photo.on_left .info {
-left: 180px;
-margin-left: 0;
-}
-
-.article.with_photo.on_right .photo {
-margin-right: 0;
-}
-
-.article.with_photo.on_right .info {
-margin-left: 0;
-}
-
+  left: 180px;
+  margin-left: 0;
+  }
+.article.with_photo.on_right .photo { margin-right: 0; }
+.article.with_photo.on_right .info { margin-left: 0; }
 .figure {
   background: #e6e6e6;
   float: left;
-  padding: 10px 10px 0;
+  padding: 1em;
   position: relative;
   }
-
 .figcaption {
-  bottom: 15px;
   font-size: .9em;
-  left: 10px;
-  padding: 0 5px;
-  position: absolute;
   width: 130px;
   }
-/*.article dl {
-margin-bottom: 0;
-}
-
-.article dl dt,
-.article dl dd {
-display: inline;
-text-transform: uppercase;
-}
-
-.article dl dd {
-font-weight: bold;
-padding-right: 10px;
-}*/ /* TODO look for def lists that this kills */
-
+.figcaption a {
+  display: block;
+  }  
 #sections div > .article:last-child {
   border-bottom: none;
   }
@@ -202,7 +178,7 @@ ARTICLE VIEW
   padding: 0;
   }
 #flash_message.comment p {
-  background: url(/images/icon_comment.png) no-repeat 10px 14px;
+  background: sprite-image('icons/icon_comment.png', 10px, 14px, 20px) no-repeat;
   line-height: 3em;
   padding-left: 40px;
   }  
