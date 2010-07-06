@@ -20,6 +20,23 @@ def chef_cloud_attributes(instance_type)
               when 'test'
                 'test.fr2.criticaljuncture.org'
               end
+
+  case instance_type
+  when 'staging'
+    @proxy_server_address    = '127.0.0.1'
+    @static_server_address   = '127.0.0.1'
+    @worker_server_address   = '127.0.0.1'
+    @database_server_address = '127.0.0.1'
+    @sphinx_server_address   = '127.0.0.1'
+    @app_server_address      = '127.0.0.1'
+  when 'test'
+    @proxy_server_address    = '10.194.207.96'  #'ip-10-194-207-96.ec2.internal'
+    @static_server_address   = '10.245.106.31'  #'ip-10-245-106-31.ec2.internal'
+    @worker_server_address   = '10.245.106.31'  #'ip-10-245-106-31.ec2.internal'
+    @database_server_address = '10.194.109.139' #'ip-10-194-109-139.ec2.internal'
+    @sphinx_server_address   = '10.194.109.139' #'ip-10-194-109-139.ec2.internal'
+    @app_server_address      = '10.243.41.203'  #'ip-10-243-41-203.ec2.internal'
+  end    
               
   return {
     :platform => "ubuntu",
@@ -51,6 +68,7 @@ def chef_cloud_attributes(instance_type)
                 :secretkey => @amazon_keys['secret_access_key']
                },
     :mysql  => {
+                :server_address         => @database_server_address,
                 :database_name          => 'fr2_production',
                 :server_root_password   => @mysql_passwords['server_root_password'],
                 :server_repl_password   => @mysql_passwords['server_repl_password'],
@@ -73,9 +91,9 @@ def chef_cloud_attributes(instance_type)
     :varnish    => {
                     :version           => '2.1.2',
                     :listen_address    => '127.0.0.1',
-                    :app_proxy_host    => '127.0.0.1',
+                    :app_proxy_host    => @app_server_address,
                     :app_proxy_port    => @app_server_port,
-                    :static_proxy_host => '127.0.0.1',
+                    :static_proxy_host => 'static.fr2.ec2.internal',
                     :static_proxy_port => @static_server_port,
                     :proxy_host_name   => @app_url
                    },
@@ -85,7 +103,12 @@ def chef_cloud_attributes(instance_type)
                                   :private_key => @deploy_credentials['private_key'],
                                   :authorized_keys => @deploy_credentials['authorized_keys']
                                  }
-                    }
+                    },
+                    :proxy_server  => {:ip => @proxy_server_address},
+                    :static_server => {:ip => @static_server_address},
+                    :worker_server => {:ip => @worker_server_address},
+                    :database      => {:ip => @database_server_address},
+                    :sphinx        => {:ip => @sphinx_server_address}
                    }
   }
 end
@@ -297,79 +320,79 @@ pool :fr2 do
     
   end
   
-  cloud :test_server do
-    # basic settings
-    using :ec2
-    keypair "/Users/rburbach/Documents/AWS/FR2/gpoEC2.pem"
-    user "ubuntu"
-    image_id "ami-bb709dd2" #Ubuntu 9.10 Karmic Canonical, ubuntu@
-    #image_id "ami-6ed43c07" #Staging complete stack - Varnish, Apache/Passenger, Rails, MySQL, Sphinx
-    availability_zones ['us-east-1d']
-    instances 1
-    instance_type 'm1.small'
-    
-    elastic_ip ['184.72.250.132']
-    
-    #attach the ebs volumes
-    ebs_volumes do
-      size 40
-      device "/dev/sdh"
-      snapshot_id "snap-bb143dd3" #TODO find a way to automate this as it's new everyday...!
-    end
-    
-    chef :solo do
-      repo File.join(File.dirname(__FILE__) , "chef_cloud")
-      
-      recipe "apt"
-      recipe "ubuntu"
-      recipe "ec2"
-      recipe "openssl"
-      recipe "imagemagick"
-      
-      recipe "nginx"
-      recipe "varnish"
-      
-      recipe "apache2"
-      recipe "passenger_enterprise::apache2"
-      
-      recipe 'rubygems'
-      
-      recipe "mysql::server"
-      recipe "mysql::server_ec2"
-      recipe "sphinx"
-      
-      recipe "git"
-      recipe "capistrano"
-      recipe "rails"
-      
-      recipe "apparmor"
-      
-      @elastic_ip = '184.72.250.132'
-      
-      attributes chef_cloud_attributes('test').recursive_merge(
-        :aws    => {
-                    :ebs => {
-                              :volume_id => "vol-e605998f",
-                              :elastic_ip => @elastic_ip
-                            }
-                   },
-        :varnish => {
-                      :storage_size => '250M',
-                    },
-        :passenger_enterprise => {
-                                    :pool_idle_time => 24*60*60
-                                 }
-        )
-            
-    end
-    
-    security_group "web" do
-      authorize :from_port => "22", :to_port => "22"
-      authorize :from_port => "80", :to_port => "80"
-      authorize :from_port => "8080", :to_port => "8080"
-    end
-    
-  end
+  # cloud :test_server do
+  #     # basic settings
+  #     using :ec2
+  #     keypair "/Users/rburbach/Documents/AWS/FR2/gpoEC2.pem"
+  #     user "ubuntu"
+  #     image_id "ami-bb709dd2" #Ubuntu 9.10 Karmic Canonical, ubuntu@
+  #     #image_id "ami-6ed43c07" #Staging complete stack - Varnish, Apache/Passenger, Rails, MySQL, Sphinx
+  #     availability_zones ['us-east-1d']
+  #     instances 1
+  #     instance_type 'm1.small'
+  #     
+  #     elastic_ip ['184.72.250.132']
+  #     
+  #     #attach the ebs volumes
+  #     ebs_volumes do
+  #       size 40
+  #       device "/dev/sdh"
+  #       snapshot_id "snap-bb143dd3" #TODO find a way to automate this as it's new everyday...!
+  #     end
+  #     
+  #     chef :solo do
+  #       repo File.join(File.dirname(__FILE__) , "chef_cloud")
+  #       
+  #       recipe "apt"
+  #       recipe "ubuntu"
+  #       recipe "ec2"
+  #       recipe "openssl"
+  #       recipe "imagemagick"
+  #       
+  #       recipe "nginx"
+  #       recipe "varnish"
+  #       
+  #       recipe "apache2"
+  #       recipe "passenger_enterprise::apache2"
+  #       
+  #       recipe 'rubygems'
+  #       
+  #       recipe "mysql::server"
+  #       recipe "mysql::server_ec2"
+  #       recipe "sphinx"
+  #       
+  #       recipe "git"
+  #       recipe "capistrano"
+  #       recipe "rails"
+  #       
+  #       recipe "apparmor"
+  #       
+  #       @elastic_ip = '184.72.250.132'
+  #       
+  #       attributes chef_cloud_attributes('test').recursive_merge(
+  #         :aws    => {
+  #                     :ebs => {
+  #                               :volume_id => "vol-e605998f",
+  #                               :elastic_ip => @elastic_ip
+  #                             }
+  #                    },
+  #         :varnish => {
+  #                       :storage_size => '250M',
+  #                     },
+  #         :passenger_enterprise => {
+  #                                     :pool_idle_time => 24*60*60
+  #                                  }
+  #         )
+  #             
+  #     end
+  #     
+  #     security_group "web" do
+  #       authorize :from_port => "22", :to_port => "22"
+  #       authorize :from_port => "80", :to_port => "80"
+  #       authorize :from_port => "8080", :to_port => "8080"
+  #     end
+  #     
+  #   end
   
   cloud :proxy_server do
     # basic settings
@@ -387,7 +410,9 @@ pool :fr2 do
       repo File.join(File.dirname(__FILE__) , "chef_cloud")
       
       recipe "apt"
+      recipe 's3sync'
       recipe "ubuntu"
+      recipe "openssl"
       
       recipe "nginx"
       recipe "varnish"
@@ -397,10 +422,7 @@ pool :fr2 do
                       :roles => ['proxy']
                     },
         :varnish => {
-                      :storage_size      => '3G',
-                      :app_proxy_host    => 'ip-10-243-41-203.ec2.internal',
-                      #:static_proxy_host => 'ip-10-243-115-210.ec2.internal',
-                      :static_proxy_host => 'ip-10-245-106-31.ec2.internal' # monster worker
+                      :storage_size => '3G',
                     }
         )
             
@@ -427,6 +449,7 @@ pool :fr2 do
       repo File.join(File.dirname(__FILE__) , "chef_cloud")
       
       recipe "apt"
+      recipe 's3sync'
       recipe "ubuntu"
       recipe "openssl"
       
@@ -480,6 +503,7 @@ pool :fr2 do
       recipe 's3sync'
       recipe "ubuntu"
       recipe "openssl"
+      recipe "imagemagick"
       
       recipe "mysql::client"
       
@@ -495,9 +519,7 @@ pool :fr2 do
       attributes chef_cloud_attributes('test').recursive_merge(
         :chef => {
                    :roles => ['app']
-                 },
-        :mysql => {:server_address  => 'ip-10-194-109-139.ec2.internal'},
-        :sphinx => {:server_address => 'ip-10-194-109-139.ec2.internal'}
+                 }
         )
             
     end
@@ -531,7 +553,7 @@ pool :fr2 do
       
       recipe "apt"
       recipe "ubuntu"
-      recipe "ec2"
+      recipe "openssl"
       
       recipe "mysql::server"
       recipe "mysql::server_ec2"
@@ -555,7 +577,6 @@ pool :fr2 do
     
     security_group "database" do
       authorize :from_port => "22", :to_port => "22"
-      #authorize :from_port => "3306", :to_port => "3306"
     end
     
     security_group "sphinx"
@@ -583,6 +604,7 @@ pool :fr2 do
       repo File.join(File.dirname(__FILE__) , "chef_cloud")
       
       recipe "apt"
+      recipe 's3sync'
       recipe "ubuntu"
       recipe "openssl"
       recipe "imagemagick"
@@ -607,8 +629,7 @@ pool :fr2 do
                       :gzip          => 'off',
                       :listen_port   => '8080',
                       :doc_root      => '/var/www/apps/fr2/current/public'
-                    },
-        :mysql => {:server_address  => 'ip-10-194-109-139.ec2.internal'}
+                    }
         )
     end
     
