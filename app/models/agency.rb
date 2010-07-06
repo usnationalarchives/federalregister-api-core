@@ -52,7 +52,12 @@ class Agency < ApplicationModel
   
   has_attached_file :logo,
                     :styles => { :thumb => "100", :small => "140", :medium => "245", :large => "580", :full_size => "" },
-                    :processors => [:thumbnail]
+                    :processors => [:thumbnail],
+                    :storage => :s3,
+                    :s3_credentials => "#{Rails.root}/config/amazon.yml",
+                    :s3_alias_url => 'http://agency-logos.federalregister.gov.s3.amazonaws.com/',
+                    :bucket => 'agency-logos.federalregister.gov',
+                    :path => ":id/:style.:extension"
   
   before_validation :slugify
   validates_uniqueness_of :name, :slug
