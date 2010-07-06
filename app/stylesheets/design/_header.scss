@@ -68,7 +68,7 @@ SEARCH
   @include border-bottom-left-radius(8px);
   height:13px;
   left: 25px;
-  position: relative;
+  position: absolute;
   padding: 5px;
   top: 6px;
   width: 175px;
@@ -85,8 +85,8 @@ SEARCH
   cursor: pointer;
   height:  image-height('icons/header_search_button.png');  
   @include hide-text;
-  left: 21px;
-  position: relative;
+  right: 21px;
+  position: absolute;
   top: 6px;
   width:  image-width('icons/header_search_button.png');    
   }
