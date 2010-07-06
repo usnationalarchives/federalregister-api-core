@@ -44,8 +44,6 @@ NAV
 SEARCH
 
 ******************************/
-// HELP-DESIGN: scoped these to prevent namespace conflict on actual search pages
-
 #header #search_bar  {
   margin: 0 auto;
   position: relative;
@@ -57,7 +55,7 @@ SEARCH
   top: -30px;
   }  
 #header #search {
-  background: url(/images/search_bg.png) no-repeat left top;
+  background: sprite-image('icons/search_bg.png', 0, 0, 50px) no-repeat;
   height: 40px;
   position: absolute;
   right: 0;
@@ -82,13 +80,15 @@ SEARCH
   @include gesta;
   }  
 #header #search .search_btn {
-  background-color: #e4a529;
+  background: #e4a529 sprite-image('icons/header_search_button.png', 0, 0, 50px) no-repeat;
   border: none;
   cursor: pointer;
-  @include replace-text-with-dimensions('header_search_button.png', 0, 0);
+  height:  image-height('icons/header_search_button.png');  
+  @include hide-text;
   left: 21px;
   position: relative;
   top: 6px;
+  width:  image-width('icons/header_search_button.png');    
   }
 
 /******************************
@@ -96,7 +96,6 @@ SEARCH
 LOGO
 
 ******************************/
-   
 #header_logo {
   @include replace-text-with-dimensions('logotype.png', 0, 0);
   width: 960px;
