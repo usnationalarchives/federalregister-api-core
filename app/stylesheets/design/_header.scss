@@ -15,6 +15,7 @@ NAV
 ******************************/
   
 #primary_nav {
+  background: url("/images/nav_bg.png");
   background: rgba(55,68,78,.4);
   border-top: 4px solid $golden;
   }
@@ -57,6 +58,7 @@ SEARCH
 #header #search {
   background: sprite-image('icons/search_bg.png', 0, 0, 50px) no-repeat;
   height: 40px;
+  overflow: hidden; /* TODO for IE */
   position: absolute;
   right: 0;
   top: 0;

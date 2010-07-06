@@ -1,10 +1,8 @@
-$(document).ready(function() {
-  if( $("#special.home").size() > 0 ){
-    var slideshow = new Dragdealer('slideshow',
-    {
-      vertical: true,
-      horizontal: false,
-    	steps: 6,
+jQuery(document).ready(function($) {
+  if( $("#special").hasClass("home") ){
+    var slideshow = new Dragdealer('slideshow', {
+      vertical: true,    	
+      steps: 6
     });
   
     slideshow.disable();
@@ -20,8 +18,5 @@ $(document).ready(function() {
     var numRand = Math.floor(Math.random()*adjustedHigh);  
     var item = $(".section_nav li a").get(numRand);
     $(item).trigger("click");
-
   }
-    
 });
-
