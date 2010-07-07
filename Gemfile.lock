@@ -301,7 +301,7 @@ specs:
     version: 2.3.14
 - ym4r: 
     version: 0.6.1
-hash: b7c3ed9f7933c74d7a57b4335e4cc946e2aae561
+hash: bf19af8097f62e48fa3df7d4f04f9573f9e897e3
 sources: 
 - Rubygems: 
     uri: http://gemcutter.org
