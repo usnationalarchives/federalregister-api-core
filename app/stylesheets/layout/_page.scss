@@ -31,7 +31,7 @@ SECTION VIEW
 
 #sections #content_area {
   @include grid(11, 16);
-  @include grid-suffix(1);
+  @include grid-suffix(1, 16);
   @include alpha;  
   }
   
@@ -82,7 +82,7 @@ REGULATION VIEW
 
 #regulatory_plans #content_area {
   @include grid(11, 16);
-  @include grid-suffix(1);  
+  @include grid-suffix(1, 16);  
   @include alpha;
   }
 #regulatory_plans #sidebar {
