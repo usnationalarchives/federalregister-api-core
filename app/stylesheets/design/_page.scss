@@ -21,7 +21,7 @@ ul.bullets  li {
   padding-left: 1em;
   }
 .bullets li:last-child {
-   margin-bottom: 0;
+  margin-bottom: 0;
   } 
  
 /******************************
@@ -31,15 +31,15 @@ DECORATIONS
 ******************************/
 
 #seal {
-background: url(/images/seal.png) no-repeat left top;
-display: block;
-height: 331px;
-position: absolute;
-top: 0;
-right: -100px;
-width: 436px;
-z-index: -1;
-}
+  background: url(/images/seal.png) no-repeat left top;
+  display: block;
+  height: 331px;
+  position: absolute;
+  top: 0;
+  right: -100px;
+  width: 436px;
+  z-index: -1;
+  }
 
 .faux_col {
   @include linear-gradient(color-stops(#f1f1f1, #fff 20%));
@@ -49,6 +49,29 @@ z-index: -1;
   padding: 1em 1em 1000px 1em;
   }
 
+/******************************
+
+LEGAL DISCLAIMER
+
+******************************/
+
+#disclaimer {
+  background: lighten($bookmark_red, 50%);
+  border: 1px solid $bookmark_red;
+  padding: .5em .5em .25em;
+  }
+#disclaimer h1 {
+  background: sprite-image('icons/disclaimer.png', 0, 0, 50px) no-repeat;
+  color: $bookmark_red;
+  font-size: 1em;
+  line-height: 20px;
+  margin-bottom: 0;
+  padding-left: 25px;
+  text-transform: uppercase;
+  }
+#disclaimer h1:hover {
+  text-decoration: underline;
+  }
 /******************************
 
 SECTION
