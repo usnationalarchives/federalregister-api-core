@@ -14,10 +14,12 @@ $(document).ready(function(){
     return false;
   });
   
-  $('body').append(['<div id="modal">',
-  '  <a href="#" class="jqmClose">Close</a>',
-  '  <p>Loading...</p>',
-  '</div>'].join("\n")
-  );
+  $('body#search.show').each(function(){
+    $('body').append(['<div id="modal">',
+    '  <a href="#" class="jqmClose">Close</a>',
+    '  <h3>Loading...</h3>',
+    '</div>'].join("\n")
+    );
+  })
   $('#modal').jqm({ajax:'@href', trigger:'a.add_to_calendar'});
 });
