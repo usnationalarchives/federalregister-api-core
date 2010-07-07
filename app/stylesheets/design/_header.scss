@@ -102,6 +102,10 @@ LOGO
   @include replace-text-with-dimensions('logotype.png', 0, 0);
   width: 960px;
   }
+#header_logo.beta {
+  @include replace-text-with-dimensions('logotype_beta.png', 0, 0);
+  width: 960px;  
+  }  
 #header_logo h1,
 #header_logo h2 {
   float: left;
