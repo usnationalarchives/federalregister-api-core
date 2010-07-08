@@ -108,6 +108,28 @@ $(document).ready(function() {
   
   citation_info.setup();
   
+  $(document).ready(function() {
+    $('#disclaimer a').click(function(){
+      generate_dialog();
+      $('#modal').centerScreen().jqmShow(); 
+      return false;
+  });
+
+    function generate_dialog(){
+      if ($('#modal').size() == 0) {
+        var html = [
+          '<div id="modal">',
+          '  <a href="#" class="jqmClose">Close</a>',
+          '  <h3>Legal Status Disclaimer</h3>',
+          '  <p>The content posted on this site, taken from the daily Federal Register (FR), is not an official, legal edition of the FR; it does not replace the official print or electronic versions of the FR. Each document posted on the site includes a link to the corresponding official FR PDF file.  For more information, see our <a href="/legal_status">Legal Status</a> page.</p>',
+          '</div>'
+        ].join("\n")
+
+        $('body').append(html);
+        $('#modal').jqm({modal: true, toTop: true});
+      }
+    }
+  });
 });
 
 
