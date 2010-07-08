@@ -17,7 +17,6 @@
 
 class Section < ApplicationModel
   has_many :section_assignments
-  has_many :entries, :through => :section_assignments
   
   has_many :section_highlights
   
@@ -29,6 +28,10 @@ class Section < ApplicationModel
   validates_format_of :slug, :with => /^[a-z0-9-]+$/
   
   validate :cfr_format_is_valid
+  
+  def entries
+    Entry.scoped(:conditions => {:section_assignments => {:section_id => id}}, :joins => :section_assignments)
+  end
   
   def to_param
     slug
