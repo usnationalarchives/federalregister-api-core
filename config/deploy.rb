@@ -14,7 +14,12 @@ set :ec2_config_location, File.join(File.dirname(__FILE__), "ec2_config.yml")
 
 set :application, "fr2"
 set :user, "deploy"
-ssh_options[:keys] = [File.join(ENV["HOME"], ".ssh", "fr_staging")]
+
+if File.exists?(File.join(ENV["HOME"], ".ssh", "fr_staging"))
+  ssh_options[:keys] = [File.join(ENV["HOME"], ".ssh", "fr_staging")]
+else
+  ssh_options[:keys] = [File.join(ENV["HOME"], ".ssh", "id_rsa")]
+end
 
 # use these settings for making AMIs with thunderpunch
 # set :user, "ubuntu"
@@ -72,7 +77,8 @@ task :production do
   role :static, "ec2-75-101-243-195.compute-1.amazonaws.com" #monster image
   role :worker, "ec2-75-101-243-195.compute-1.amazonaws.com", {:primary => true} #monster image
   role :app, "ec2-204-236-209-41.compute-1.amazonaws.com"
-  role :db , "ec2-184-73-60-158.compute-1.amazonaws.com", {:primary => true}
+  role :db, "ec2-184-73-60-158.compute-1.amazonaws.com", {:primary => true}
+  role :sphinx, "ec2-184-73-60-158.compute-1.amazonaws.com"
 end
 
 
@@ -125,23 +131,6 @@ set :git_enable_submodules, true
 
 
 #############################################################
-# Github
-#############################################################
-
-# if deploy_via == :remote_cache
-# 
-#   set :deploy_via, :remote_cache
-#   set :repository, "git@github.com:#{github_user_repo}/#{github_project_repo}.git"
-#   set :github_username, 'criticaljuncture'
-# 
-# elsif deploy_via == :copy
-# 
-#   set :copy_cache, true
-#   set :repository, '.git'
-# 
-# end
-
-#############################################################
 # Run Order
 #############################################################
 
@@ -156,14 +145,6 @@ after "deploy:migrate",           "sass:update_stylesheets"
 # after "thinking_sphinx:restart",  "passenger:restart"
 after "sass:update_stylesheets",  "passenger:restart"
 after "passenger:restart",        "varnish:clear_cache"
-
-#############################################################
-#                                                           #
-#                                                           #
-#                         Recipes                           #
-#                                                           #
-#                                                           #
-#############################################################
 
 
 #############################################################
@@ -191,6 +172,40 @@ set :custom_symlinks, {
   'db/sphinx'       => 'db/sphinx', 
   'public/sitemaps' => 'sitemaps'
 }
+
+
+#############################################################
+#                                                           #
+#                                                           #
+#                         Recipes                           #
+#                                                           #
+#                                                           #
+#############################################################
+
+
+#############################################################
+# Transfer raw files to sphinx server
+#############################################################
+
+namespace :sphinx do
+  task :rebuild_remote_index do
+    transfer_raw_files
+    find_and_execute_task('thinking_sphinx:configure')
+    transfer_sphinx_config
+    run_sphinx_indexer
+  end
+  
+  task :transfer_raw_files, :roles => [:worker] do
+    run "rsync --verbose  --progress --stats --compress --recursive --times --perms --links #{shared_path}/data/raw sphinx:#{shared_path}/data"
+  end
+  task :transfer_sphinx_config, :roles => [:worker] do
+    run "rsync --verbose  --progress --stats --compress --recursive --times --perms --links #{shared_path}/config/#{rails_env}.sphinx.conf sphinx:#{shared_path}/config/"
+  end
+  task :run_sphinx_indexer, :roles => [:sphinx] do
+    run "indexer --config #{shared_path}/config/#{rails_env}.sphinx.conf --all --rotate"
+  end
+end
+
 
 #############################################################
 # Get Remote Files
