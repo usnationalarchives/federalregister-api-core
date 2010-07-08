@@ -16,6 +16,11 @@
 =end Schema Information
 
 class Section < ApplicationModel
+  has_many :section_assignments
+  has_many :entries, :through => :section_assignments
+  
+  has_many :section_highlights
+  
   has_many :agencies_sections
   has_many :agencies, :through => :agencies_sections, :order => "agencies.name"
   
@@ -29,8 +34,8 @@ class Section < ApplicationModel
     slug
   end
   
-  def entries
-    Entry.scoped(:conditions => {:section_assignments => {:section_id => id}}, :joins => :section_assignments)
+  def highlighted_entries(publication_date = Entry.latest_publication_date)
+    Entry.scoped(:conditions => {:section_highlights => {:publication_date => publication_date, :section_id => id}}, :joins => :section_highlights, :order => "section_highlights.position")
   end
   
   def cfr_citation_ranges
