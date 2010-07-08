@@ -1,7 +1,7 @@
 $(document).ready(function() {
   $('a.rss').live('click', function(){
     generate_dialog();
-    $('#modal').jqmShow();
+    $('#modal').centerScreen().jqmShow(); 
     return false;
   })
   
