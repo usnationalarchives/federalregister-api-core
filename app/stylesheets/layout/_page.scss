@@ -29,13 +29,15 @@ SECTION VIEW
 
 ******************************/
 
-#sections #content_area {
+#sections #content_area,
+#topics #content_area {
   @include grid(11, 16);
   @include grid-suffix(1, 16);
   @include alpha;  
   }
   
-#sections #sidebar {
+#sections #sidebar,
+#topics #sidebar {
   @include grid(4, 16);
   @include omega;
   }
@@ -112,6 +114,16 @@ THREE COL LIST
   @include grid(14, 16);
   @include omega;
   }
+  
+  /* TODO do these better - see topic page */
+#topics .three_col_list .grouped_by_date {
+  @include grid(9, 16);
+  @include omega;
+  }
+#topics .three_col_list ul {
+  @include grid(7, 16); 
+  @include omega;  
+  }
 
 /******************************
 
@@ -153,6 +165,11 @@ CITATION LIST
   @include grid(12, 16);
   @include omega;
   }
+
+#topics .citation_list .title {
+  @include grid(7, 16);
+  @include omega;
+  } 
   
 /******************************
 
