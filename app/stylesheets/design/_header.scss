@@ -39,7 +39,12 @@ NAV
   text-decoration: none;
   text-transform: uppercase;
   }   
-
+#primary_nav a:hover,
+#primary_nav a:focus {
+  color: #fff;
+  @include text-shadow($golden, 1px, 1px, 1px);
+  }
+  
 /******************************
 
 SEARCH
