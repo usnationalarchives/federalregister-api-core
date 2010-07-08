@@ -35,6 +35,9 @@
   </div> <!-- content_area end -->
   
   <% aside_tag(:id => 'sidebar') do %>
+    
+    <%= render :partial => 'special/legal_disclaimer' %>
+  
     <div class="aside_box">
       <%= render :partial => 'download', :locals => {:entry => @entry} %>
       <%= render :partial => "metadata", :locals => {:entry => @entry} %>
