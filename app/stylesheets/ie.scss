@@ -1,6 +1,10 @@
 #primary_nav {
   background: url(/images/header_bg.png);
   }
+#primary_nav a:hover,
+#primary_nav a:focus {
+  text-decoration: underline;
+  }  
 #comments-closing-opening .header-nav .small_stack {
   float: left;
   margin-top: 10px;
@@ -14,3 +18,24 @@
   display: block;
   float: left;
   }
+#search .tabs li {
+  display: inline;
+  }
+/* TODO this is not a fix */  
+#search .active_filter_list li {
+  border-top-width: 4px;
+  }  
+#search .pagination {
+  padding-bottom: 2px;
+  } 
+#header #search_bar .search_btn,    
+#conditions_submit {
+  line-height: 0;
+  } 
+#footer a {
+  color: #fff;
+  }
+#footer a:hover,
+#footer a:focus {
+  border-bottom: 1px solid #fff;
+  }  

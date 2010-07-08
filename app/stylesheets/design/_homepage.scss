@@ -19,6 +19,10 @@ CURRENT ISSUE
   padding-left: 55px;
   width: 125px;
   }
+#current_issue .issue:hover,
+#current_issue .issue:focus {
+  text-decoration: underline;
+  }  
 #current_issue dl {
   margin-bottom: 0;
   }
