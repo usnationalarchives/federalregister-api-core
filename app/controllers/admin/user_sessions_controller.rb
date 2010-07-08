@@ -12,7 +12,7 @@ class Admin::UserSessionsController < AdminController
       flash[:notice] = "Login successful!"
       redirect_back_or_default admin_home_url
     else
-      flash[:error] = "Invalid username or password."
+      flash.now[:error] = "Invalid username or password."
       render :action => :new
     end
   end

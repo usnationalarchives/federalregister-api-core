@@ -83,8 +83,21 @@ ActionController::Routing::Routes.draw do |map|
                                              :action     => 'tiny_url'
 
   # SECTIONS
+  Section.all.each do |section|
+    map.with_options :slug => section.slug, :controller => "sections" do |section_map|
+      section_map.connect "#{section.slug}.:format",              :action => "show"
+      section_map.connect "#{section.slug}/about",                :action => "about"
+      section_map.connect "#{section.slug}/featured.:format",     :action => "highlighted"
+      section_map.connect "#{section.slug}/significant.:format",  :action => "significant"
+    end
+  end
+  
+  # page routing
+  map.page ':slug', :controller => "pages", :action => "show"
+  
+  # true section routes
+  map.about_section ":slug/about", :controller => "sections", :action => "about"
+  map.highlighted_entries_section ":slug/featured.:format", :controller => "sections", :action => "highlighted"
+  map.significant_entries_section ":slug/significant.:format", :controller => "sections", :action => "significant"
   map.section ':slug.:format', :controller => "sections", :action => "show"
-  map.highlighted_entries_section ':slug/featured.:format', :controller => "sections", :action => "highlighted"
-  map.significant_entries_section ':slug/significant.:format', :controller => "sections", :action => "significant"
-  map.about_section ':slug/about', :controller => "sections", :action => "about"
 end
