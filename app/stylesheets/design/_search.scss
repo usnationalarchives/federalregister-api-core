@@ -82,7 +82,8 @@ PAGE ELEMENTS
   border: 1px solid #ccc;
   display: block;
   float: left;
-  padding: .5em;
+  height: 15px;
+  padding: 5px;
   }
 .search_bar #conditions_type {
   display: block;
@@ -191,9 +192,10 @@ ol.results li .date {
   padding-left: 20px;
   }  
 .active_filter_list li .remove {
+  background: sprite-image('icons/icon_close.png', 0, 0, 50px) no-repeat;
   display: inline-block;
-  @include replace-text('/images/icon_close.png', 0, 0);
   height: 14px;
+  @include hide-text;  
   position: absolute;
   right: 1em;
   top: .8em;
@@ -374,7 +376,7 @@ div.pagination a {
   color: #fff;
   }
 div.pagination .disabled {
-  background-color: #ccc;
+  display: none;
   }
 
 /******************************

@@ -3,8 +3,8 @@
 <% feed_autodiscovery significant_entries_topic_path(@topic, :format => :rss), "Significant Articles in this topic" %>
 
 <h1 class="title"><span><%= @topic.name %></span></h1>
-<%# HELP-DESIGN: this should be placed better... %>
-<%= link_to 'Subscribe', topic_path(@topic, :format => :rss), :class => 'button rss' %>
+
+<div id="content_area">
 
 <%= render :partial => "entries/list", :locals => {:entries => @entries, :search_params => {:topic => @topic}} %>
 
@@ -24,3 +24,15 @@
 
 <%= render :partial => 'topics_tagcloud', :locals => {:topics => @topic.related_topics_cache, :title => 'Related Topics'} %>
 <% end %>
+</div>
+
+<% aside_tag(:id => "sidebar") do %>
+  <%= link_to 'Subscribe', topic_path(@topic, :format => :rss), :class => 'button rss' %>
+  <% section_tag(:class => 'TOC aside_box') do %>  
+    <h1>Table of Contents</h1>
+    <ul>
+      <li><%= link_to 'Recent Articles', '#recent_articles' %></li>
+      <li><%= link_to 'Most Cited Articles', '#most_cited' %></li>
+    </ul>
+  <% end -%>
+<% end -%>
