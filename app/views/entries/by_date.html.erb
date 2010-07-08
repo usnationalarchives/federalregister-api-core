@@ -40,7 +40,7 @@
 
 <% @agencies.each do |agency| %>
   <div class="title_bar">
-    <h2 id="<%= agency.slug %>"><%= agency.name %></h2>
+    <h2 id="<%= agency.slug %>"><%= link_to agency.name, agency_path(agency) %></h2>
     <a href="#entries" class="back_to_top">Back to Top</a>
   </div>
   
