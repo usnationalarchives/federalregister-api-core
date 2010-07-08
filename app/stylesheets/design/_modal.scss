@@ -18,6 +18,7 @@
     color: #333;
     border: 1px solid black;
     padding: 12px;
+    width: 600px;
 }
 
 .jqmOverlay { background-color: #000; }
@@ -40,10 +41,9 @@
   background-color: white;
   border: 5px solid #eee;
   display: none;
-  height: 300px;
-  left: 50%;    
+  height: 300px;  
   padding: 1em;
   position: fixed;
+  top: 5em;
   width: 400px;
-  top: 17%;
   }
