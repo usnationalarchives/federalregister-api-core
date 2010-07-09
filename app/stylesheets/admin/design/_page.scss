@@ -1,26 +1,34 @@
-#main {
-  border: 1px solid #cc9325;
-  @include border-top-left-radius(5px);
-  @include border-top-right-radius(5px);
-  margin-top: 2em;
-  overflow: hidden;
+body {
+  background: #f6f1e7;
   }
-#primary ul {
-  background: #cc9325;
-  border-bottom: 2px solid darken(#cc9325, 10%);
-  margin: 0;
-  overflow: hidden;
-  padding: 1em;
+
+ul {
+  list-style: none;
+  }
+  
+#content_area {
+  background: #fff;
+  @include border-radius(10px);
+  }
+
+.notice {
+  background: $aqua;
+  border: 1px solid $dark_aqua;
+  margin-bottom: 1em;
+  padding: .5em;
+  }
+
+.article_list a {
+  color: #477394;
+  }
+.article_list > li {
+  border-bottom: 1px solid #eee;
+  margin-bottom: 1em;
+  padding-bottom: 1em;
+  }
+.section_list {
+  @include horizontal-list;
   }  
-#sidebar {
-  background: #eee;
-  display: block;
-  margin-bottom: -9999px;
-  padding-bottom: 9999px;
-  }
-#sidebar ul {
-  padding: 1em;
-  }
 
 /* VIVA BOB*/
 
