@@ -29,7 +29,7 @@
 <% aside_tag(:id => "sidebar") do %>
   <%= link_to 'Subscribe', topic_path(@topic, :format => :rss), :class => 'button rss' %>
   <% section_tag(:class => 'TOC aside_box') do %>  
-    <h1>Table of Contents</h1>
+    <h1>On This Page</h1>
     <ul>
       <li><%= link_to 'Recent Articles', '#recent_articles' %></li>
       <li><%= link_to 'Most Cited Articles', '#most_cited' %></li>
