@@ -1,100 +1,10 @@
 #primary {
+  bottom: 1.5em;
+  position: absolute;
+  }
+#primary ul {
   @include horizontal_list;
   }
-
-/*nav.primary ul, nav.utility ul, nav.secondary ul, nav#issue_entry_edit ul {
-  list-style:none;
-}
-nav.primary ul li, nav.utility ul li, nav#issue_entry_edit ul li {
-  display: inline-block;
-}
-
-nav.primary {
-  @include grid(12,12);
-  left:0px;
-  padding-right:20px;
-  display:block;
-}
-
-nav.primary ul {
-  width:960px;
-  margin-left:-20px;
-  padding:5px;
-  -webkit-border-top-left-radius: 3px;
-  -webkit-border-top-right-radius: 3px;
-  -moz-border-radius-topleft: 3px;
-  -moz-border-radius-topright: 3px;
-  border-top-left-radius: 3px;
-  border-top-right-radius: 3px;
-  background: -webkit-gradient(linear, left top, left bottom, from(#D69829), to(#B27926));
-  background: -moz-linear-gradient(top,  #D69829,  #B27926);
-}
-
-nav.primary ul li {
-  margin-left:0px;
-}
-
-nav.utility {
-  position:absolute;
-  top:0px;
-  margin: 0px auto 0px -10px;
-  width:950px;
-  padding:0px;
-}
-
-nav.utility ul {
-  width:960px;
-  padding:5px;
-  -webkit-border-radius: 3px; 
-  -moz-border-radius: 3px;
-  border-radius: 3px;
-  background: -webkit-gradient(linear, left top, left bottom, from(#BFBFBF), to(#7F7F7F));
-  background: -moz-linear-gradient(top,  #BFBFBF,  #7F7F7F);
-}
-
-nav.utility ul li{
-  position:relative;
-  left:670px;
-  margin-left:10px;
-}
-
-nav.utility p {
-  position:relative;
-  float:left;
-  top:8px;
-  left:675px;
-  display:inline;
-}
-
-nav.secondary {
-  @include grid(2,12);
-}
-
-nav.secondary ul {
-  margin: 5px 0px 0px;
-}
-
-nav.secondary ul li {
-  margin: 0px;
-}
-
-nav#issue_entry_edit{
-  height:35px;
-  -webkit-border-top-left-radius: 3px;
-  -webkit-border-top-right-radius: 3px;
-  -moz-border-radius-topleft: 3px;
-  -moz-border-radius-topright: 3px;
-  border-top-left-radius: 3px;
-  border-top-right-radius: 3px;
-  background: -webkit-gradient(linear, left top, left bottom, from(#BFBFBF), to(#7F7F7F));
-  background: -moz-linear-gradient(top,  #BFBFBF,  #7F7F7F);
-}
-
-nav#issue_entry_edit ul {
-  width:150px;
-  padding-top:5px;
-  margin: 5px auto;
-}
-nav#issue_entry_edit ul li {
-  margin-left:0px;
-}*/
+#primary ul a {
+  color: #e9e9e9;
+  }  

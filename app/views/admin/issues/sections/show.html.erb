@@ -1,18 +1,26 @@
-<% super_title 'Sections' %>
+<%# super_title 'Sections' %>
 <%# title @section.title %>
 
 <% add_javascript :src => 'admin/issues_sections_highlights' %>
 
-<% semantic_remote_form_for SectionHighlight.new, :url => admin_issue_section_highlights_path(@publication_date.to_s(:db), @section) do |f| %>
-  <% f.inputs do %>
-    <%= f.input :entry_document_number %>
-  <% end %>
-  <% f.buttons do %>
-    <%= f.commit_button 'Highlight' %>
-  <% end %>
-<% end %>
+<% content_for :sidebar do %>
 
-<% nav_secondary(render :partial => 'nav', :locals => {:sections => @sections, :publication_date => @publication_date}) %>
+  <%= render :partial => 'nav', :locals => {:sections => @sections, :publication_date => @publication_date} %>
+  
+  <% section_tag(:class => 'module') do %>
+    <h1 class="title">Highlight A Document</h1>
+    <% semantic_remote_form_for SectionHighlight.new, :url => admin_issue_section_highlights_path(@publication_date.to_s(:db), @section) do |f| %>
+      <% f.inputs do %>
+        <%= f.input :entry_document_number %>
+      <% end %>
+      <% f.buttons do %>
+        <%= f.commit_button 'Highlight' %>
+      <% end %>
+    <% end %>
+  <% end -%>
+<% end -%>
+
+
 
 <div class='center_content preview'>
   <%= link_to 'Preview', preview_admin_issue_section_path(@publication_date.to_s(:db), @section), :target => "_blank", :class => 'preview button mini grey' %>
