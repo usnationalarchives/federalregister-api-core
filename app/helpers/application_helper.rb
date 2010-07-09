@@ -21,8 +21,8 @@ module ApplicationHelper
     end
   end
   
-  def nav_secondary(text)
-    set_content_for :nav_secondary, text
+  def sidebar(text)
+    set_content_for :sidebar, text
   end
   
   def feed_autodiscovery(feed_url, title = 'RSS')

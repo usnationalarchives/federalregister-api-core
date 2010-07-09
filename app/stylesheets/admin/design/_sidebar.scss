@@ -1,0 +1,21 @@
+.module {
+  background: #fff;
+  @include border-radius(10px);
+  margin-bottom: 1em;
+  }  
+.module .nav {
+  padding: 1em;
+  }
+.module .nav ul {
+  margin-bottom: 0;
+  }
+.module .nav ul > li {
+  border-bottom: 1px solid #ccc;
+  margin-bottom: .5em;
+  padding-bottom: .5em;
+  }
+.module .nav ul > li:last-child {
+  border-bottom: 0;
+  margin-bottom: 0;
+  padding-bottom: 0;
+  }  

@@ -1,8 +1,19 @@
-<li><%= link_to 'Events', admin_issue_eventful_entries_path(publication_date.to_s(:mdy_dash)) %></li>
-<li>Sections
-  <ul>
-    <% sections.each do |section| %>
-      <li><%= link_to section.title, admin_issue_section_path(publication_date.to_s(:mdy_dash), section) %></li>
-    <% end %>
-  </ul>
-</li>
+<% section_tag(:class => 'module') do %>
+  <h1 class="title">Events</h1>
+  <% nav_tag do %>
+    <ul>
+      <li><%= link_to 'Events', admin_issue_eventful_entries_path(publication_date.to_s(:mdy_dash)) %></li>
+    </ul>
+  <% end -%>
+<% end -%>
+
+<% section_tag(:class => 'module') do %>
+  <h1 class="title">Sections</h1>
+  <% nav_tag do %>
+    <ul>
+      <% sections.each do |section| %>
+        <li><%= link_to section.title, admin_issue_section_path(publication_date.to_s(:mdy_dash), section) %></li>
+      <% end %>
+    </ul>
+  <% end -%>
+<% end -%>
