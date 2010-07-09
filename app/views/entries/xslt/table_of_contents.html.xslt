@@ -33,16 +33,7 @@
               <xsl:text>#</xsl:text>
               <xsl:call-template name="header_id" />
             </xsl:attribute>
-            <xsl:choose>
-              <xsl:when test="@SOURCE = 'HED'">
-                <xsl:call-template name="capitalize_first">
-                  <xsl:with-param name="string" select="translate(text(), ':', '')"/>
-                </xsl:call-template>
-              </xsl:when>
-              <xsl:otherwise>
-                <xsl:apply-templates/>
-              </xsl:otherwise>
-            </xsl:choose>
+            <xsl:apply-templates/>
           </a>
         </li>
       </xsl:otherwise>
