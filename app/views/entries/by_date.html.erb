@@ -40,15 +40,17 @@
 
 <% @agencies.each do |agency| %>
   <div class="title_bar">
-    <h2 id="<%= agency.slug %>"><%= link_to agency.name, agency_path(agency) %></h2>
+    <%# HELP-DESIGN: the count here might need styling %>
+    <h2 id="<%= agency.slug %>"><%= link_to agency.name, agency_path(agency) %> <span class="count"><%= agency.entries.to_a.size %></span></h2>
     <a href="#entries" class="back_to_top">Back to Top</a>
   </div>
   
-  <% sub_agencies_on_this_page = agency.children & @agencies %>
+  <% sub_agencies_on_this_page = @agencies & agency.children %>
   <% if sub_agencies_on_this_page.present? %>
     <ul>
       <% sub_agencies_on_this_page.each do |sub_agency| %>
-        <li><span class="see">See</span> <%= link_to sub_agency.name, '#' + sub_agency.slug %></li>
+        <%# HELP-DESIGN: the count here should be styled %>
+        <li><span class="see">See</span> <%= link_to sub_agency.name, '#' + sub_agency.slug %> <span class="count"><%= sub_agency.entries.to_a.size %></span></li>
       <% end %>
     </ul>
   <% end %>
@@ -106,7 +108,7 @@
         <% @agencies.each do |agency| %>
           <li>
             <a href="#<%= agency.slug %>"><%= agency.name %></a> 
-            <span><%= agency.entries_excluding_subagency_entries.count %></span>
+            <span><%= agency.entries.to_a.size %></span>
           </li>
         <% end -%>
       </ul>
