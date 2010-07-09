@@ -7,7 +7,7 @@
 <% add_javascript :src => '../ContentFlow/contentflow'       %>
 <% add_javascript :src => '../ContentFlow/ContentFlowAddOn_white' %>
 
-<% nav_secondary(render :partial => 'admin/issues/sections/nav', :locals => {:sections => @sections, :publication_date => @publication_date}) %>
+<% sidebar(render :partial => 'admin/issues/sections/nav', :locals => {:sections => @sections, :publication_date => @publication_date}) %>
 
 <div class='center_content'>
   

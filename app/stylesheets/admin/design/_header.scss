@@ -1,22 +1,24 @@
 #header {
   background: url(/images/admin/header_bg.png) repeat-x left top;
   display: block;
-  height: 75px; 
+  height: image-height('admin/header_bg.png'); 
+  margin-bottom: 2em;
   }
 #inner_header{
+  height: image-height('admin/header_bg.png'); 
   margin: 0 auto;
   position: relative;
   width: 960px;
   }  
 #header_logo {
   @include replace-text-with-dimensions('admin/logotype.png', 0, 50%);
-  height: 65px;
+  position: relative;
+  top: 28px;
   }  
 #utility {
   position: absolute;
   right: 0;
-  top: 0;
-  width: 400px;
+  top: 1em;
   }
 #utility p {
   display: block;
@@ -24,4 +26,9 @@
   }  
 #utility ul {
   @include horizontal-list;
+  float: left;
+  }
+#utility ul li:first-child a {
+  border-right: 1px solid #fff;
+  padding-right: .5em;
   }
