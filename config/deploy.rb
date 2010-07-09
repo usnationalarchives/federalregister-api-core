@@ -1,7 +1,7 @@
 # thinking sphinx cap tasks
 require 'thinking_sphinx/deploy/capistrano'
 # hoptoad deploy notifications, etc
-require 'hoptoad_notifier/capistrano'
+#require 'hoptoad_notifier/capistrano'
 
 # deploy recipes - need to do `sudo gem install thunder_punch` - these should be required last
 require 'thunder_punch'
@@ -136,8 +136,7 @@ set :git_enable_submodules, true
 
 # Do not change below unless you know what you are doing!
 after "deploy:update_code",       "symlinks:create"
-after "symlinks:create",          "deploy:cleanup"
-after "deploy:cleanup",           "deploy:set_rake_path"
+after "symlinks:create",           "deploy:set_rake_path"
 after "deploy:set_rake_path",     "bundler:fix_bundle"
 after "bundler:fix_bundle",       "deploy:migrate"
 after "deploy:migrate",           "sass:update_stylesheets"
