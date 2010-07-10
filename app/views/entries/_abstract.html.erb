@@ -3,7 +3,7 @@
 </div>
 <div class="body_column">  
   <span class="printed_page" id="page-<%= entry.start_page %>" data-page="<%= entry.start_page %>">
-    <!-- Printed Page <%= number_with_delimiter @entry.start_page %> -->
+    <!-- Printed Page <%= @entry.start_page %> -->
   </span>
   
   <p><%= html = auto_link( entry.abstract, :href_options => { :class => 'external' })
