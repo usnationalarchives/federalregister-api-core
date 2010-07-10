@@ -1,9 +1,7 @@
 $(document).ready(function() {
   $("#search_bar #conditions_term").inlinelabel();
-  $(":first-child").addClass("firstchild");
-  $(":last-child").addClass("lastchild");
-  
-  
+  $("body").find(":first-child").addClass("firstchild");
+  $("body").find(":last-child").addClass("lastchild");  
 });
 
 

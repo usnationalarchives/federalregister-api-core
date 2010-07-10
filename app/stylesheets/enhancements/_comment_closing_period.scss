@@ -26,7 +26,7 @@ COMMENT PERIOD CLOSING ENHANCEMENTS
   top: 0;
   }  
 #comments-closing-opening .header-nav .tabs-nav li {
-  display: inline-block;
+  @include inline-block;
   padding-top: 7px;
   }
 #comments-closing-opening .header-nav .tabs-nav li:hover,

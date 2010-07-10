@@ -25,6 +25,7 @@ CURRENT ISSUE
   }  
 #current_issue dl {
   margin-bottom: 0;
+  line-height: 40px;
   }
 #current_issue dl,
 #current_issue dt,
@@ -48,6 +49,10 @@ PROMO BOX
 
 #top_news_promo {
   overflow: hidden;
+  }
+
+#top_news_promo h1 {
+  display: none;
   }
 
 /******************************
