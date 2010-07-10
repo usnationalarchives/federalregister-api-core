@@ -14,7 +14,8 @@
   margin-bottom: .5em;
   padding-bottom: .5em;
   }
-.module .nav ul > li:last-child {
+.module .nav ul > li:last-child,
+.module .nav ul > li.lastchild {
   border-bottom: 0;
   margin-bottom: 0;
   padding-bottom: 0;
