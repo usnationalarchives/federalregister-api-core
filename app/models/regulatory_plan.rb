@@ -42,7 +42,7 @@ class RegulatoryPlan < ApplicationModel
   
   SIGNIFICANT_PRIORITY_CATEGORIES = ['Economically Significant', 'Other Significant']
   
-  file_attribute(:full_xml)  {"#{RAILS_ROOT}/data/regulatory_plans/#{issue}/#{regulation_id_number}.xml"}
+  file_attribute(:full_xml)  {"#{RAILS_ROOT}/data/regulatory_plans/xml/#{issue}/#{regulation_id_number}.xml"}
   
   has_many :events,
            :class_name => "RegulatoryPlanEvent"
@@ -78,6 +78,10 @@ class RegulatoryPlan < ApplicationModel
   
   def self.current_issue
     RegulatoryPlan.first(:select => :issue, :order => "issue DESC").try(:issue)
+  end
+  
+  def self.in_current_issue
+    scoped(:conditions => {:issue => current_issue})
   end
   
   def significant?

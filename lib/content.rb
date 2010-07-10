@@ -27,16 +27,30 @@ module Content
   
   def self.render_erb(template_path, locals = {})
     view = ActionView::Base.new(Rails::Configuration.new.view_path, {})
-    [ActionView::Helpers::UrlHelper, ActionController::UrlWriter, ApplicationHelper, CitationsHelper, XsltHelper].each do |mod|
+    [ActionView::Helpers::UrlHelper, ActionController::UrlWriter, ApplicationHelper, Html5Helper, CitationsHelper, XsltHelper, RegulatoryPlanHelper].each do |mod|
       view.extend mod
     end
     
     class << view.class
       def default_url_options
-        {}
+        {:host => "federalregister.gov"}
       end
     end
     
-    view.render(:file => "#{template_path}.html.erb", :locals => locals)  
+    # Monkeypatching url_for to deal with this issue: https://rails.lighthouseapp.com/projects/8994/tickets/1560#ticket-1560-4
+    class << view
+      include RouteBuilder
+      def url_for_with_string_support(options)
+        if String === options
+          options
+        else
+          url_for_without_string_support(options)
+        end
+      end
+      
+      alias_method_chain :url_for, :string_support
+    end
+    
+    view.render(:file => "#{template_path}.html.erb", :locals => locals)
   end
 end

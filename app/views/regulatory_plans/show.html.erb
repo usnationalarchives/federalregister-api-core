@@ -8,7 +8,7 @@
     
       <div class="metadata_share_bar">
         
-        <p class="metadata">Unified agenda current as of <%= issue_season(@regulatory_plan) %></p>
+        <p class="metadata">Unified Agenda current as of <%= issue_season(@regulatory_plan) %></p>
         
         <div class="share">
           <%# TODO HELP-RUBY these don't work with reg plans yet %>
@@ -23,78 +23,28 @@
       
   </div>
   
-  <div id="content_area">  
+  <div id="content_area">
+    <%# HELP-DESIGN: these agencies need a bit of styling here... %>
     <ul>
     <% @regulatory_plan.agencies.each do |agency| %>
       <li><%= link_to agency.name, agency_path(agency) %></li>
     <% end %>
     </ul>
     
-    <%
-    [
-      ['Summary', 'abstract'],
-      ['Statement of need', 'statement_of_need'],
-      ['Legal Basis', 'legal_basis'],
-      ['Alternatives', 'alternatives'],
-      ['Costs and Benefits', 'costs_and_benefits'],
-      ['Risks', 'risks']
-    ].each do |label, method |
-      value = @regulatory_plan.send(method)
-      next if value.blank? %>
-      <div class="header_column">
-        <h1><%= label %></h1>
-      </div>
-      <div class="body_column">
-        <%= format_regulation_text(@regulatory_plan.send(method)) %>
-      </div>
+    <% if RAILS_ENV == 'development' %>
+      <%= render :partial => "full_text", :locals => {:regulatory_plan => @regulatory_plan} %>
+    <% else %>
+      <%= render :esi => regulatory_plan_full_text_path(@regulatory_plan) %>
     <% end %>
   
     <%= render :esi => regulatory_plan_timeline_path(@regulatory_plan)%>
-  
-    <% if @regulatory_plan.contacts.present? %>
-      <div class="header_column">
-        <h1>Contacts</h1>
-      </div>
-      <div class="body_column">
-        <% @regulatory_plan.contacts.each do |contact| %>
-        <div class="vcard">
-          <div class="fn">
-            <span class="given-name"><%= contact.first_name %></span>
-            <span class="family-name"><%= contact.last_name %></span>
-          </div>
-      
-          <% if contact.title.present? %>
-          <div class="title"><%= contact.title %></div>
-          <% end %>
-      
-          <% if contact.phone.present? %>
-          <div class="tel">
-           <span>Phone</span> <%= contact.phone %>
-          </div>
-          <% end %>
-      
-          <% if contact.fax.present?%>
-          <div class="tel">
-            <span class="type">Fax</span> <%= contact.fax %>
-          </div>
-          <% end %>
-          <% if contact.email.present? %>
-            <div>Email: 
-             <%= mail_to contact.email, contact.email, :class => "email" %>
-            </div>
-          <% end %>
-      
-          <div class="adr">
-            <div class="street-address"><%= contact.street_address %></div>
-            <span class="locality"><%= contact.city %></span>
-            <span class="region"><%= contact.state%></span>
-            <span class="postal-code"><%= contact.zip %></span>
-          </div>
-        </div>
-        <% end %>
-      </div>
+    
+    <% if RAILS_ENV == 'development' %>
+      <%= render :partial => "contacts", :locals => {:regulatory_plan => @regulatory_plan} %>
+    <% else %>
+      <%= render :esi => regulatory_plan_contacts_path(@regulatory_plan) %>
     <% end %>
-  
+    
     <% count = @regulatory_plan.entries.count %>
     <% if count > 0 %>
       <div class="header_column">
@@ -107,74 +57,10 @@
   
   </div> <!-- CONTENT_AREA END -->
   
-  <% aside_tag(:id => 'sidebar') do %>
-    <% section_tag(:id => 'metadata') do %>
-    <div class="aside_box">
-      <div class="download_separator">
-        <%= link_to "XML", @regulatory_plan.source_url(:xml), :class => 'button format list xml', :title => 'Download unified agenda as XML' %>
-        <%= link_to "Official home", @regulatory_plan.source_url(:html), :class => 'button format list external', :title => 'Visit official site for this agenda', :target => '_blank' %>
-      </div>
-      
-      <dl class="metadata_list">
-        <% %w(priority_category major regulatory_flexibility_analysis_required energy_affected).each do |attribute| %>
-          <% value = @regulatory_plan.send(attribute) %>
-          <% if value.present? %>
-            <dt><%= attribute.humanize %></dt>
-            <dd><%= value %></dd>
-          <% end %>
-        <% end %>
-        
-        <dt>Shorter URL</dt>
-        <dd><%= link_to  short_regulatory_plan_url(@regulatory_plan), short_regulatory_plan_path(@regulatory_plan) %></dd>
-      </dl>
-    </div>
-    <% end -%>
-    
-    <% if @regulatory_plan.cfr_citations.present? %>    
-      <% section_tag(:id => 'related_cfr_content') do %>
-        <h1 class="title_bar">Related CFR Content</h1>
-        <ul class="bullets">
-          <% @regulatory_plan.cfr_citations.each do |cfr_citation| %>
-            <li><%= add_citation_links(cfr_citation) %></li>
-          <% end %>
-        </ul>
-      <% end %>
-    <% end -%>
-    
-    <% if @regulatory_plan.legal_authorizations.present? %>
-      <% section_tag(:id => 'legal_authority') do %>
-        <h1 class="title_bar">Legal Authority</h1>
-        <ul class="bullets">
-          <% @regulatory_plan.legal_authorizations.each do |authorization| %>
-          <li><%= add_citation_links(authorization) %></li>
-          <% end %>
-        </ul>
-      <% end %>
-    <% end -%>
-    
-    <% if @regulatory_plan.government_levels_affected.present? %>
-      <% section_tag(:id => 'gov_levels_affected') do %>
-        <h1 class="title_bar">Government Levels Affected</h1>
-        <ul class="bullets">
-          <% @regulatory_plan.government_levels_affected.each do |level| %>
-            <li><%= level %></li>
-          <% end %>
-        </ul>
-      <% end -%>  
-    <% end %>
-    
-    
-    <% if @regulatory_plan.small_entities_affected.present? %>
-      <% section_tag(:id => 'small_entities_affected') do %>
-        <h1 class="title_bar">Small Entities Affected</h1>
-        <ul class="bullets">
-          <% @regulatory_plan.small_entities_affected.each do |entity| %>
-          <li><%= entity %></li>
-          <% end %>
-        </ul>
-      <% end -%>
-    <% end %>
-    
-  <% end -%> <!-- end aside tag -->
+  <% if RAILS_ENV == 'development' %>
+    <%= render :partial => "sidebar", :locals => {:regulatory_plan => @regulatory_plan} %>
+  <% else %>
+    <%= render :esi => regulatory_plan_sidebar_path(@regulatory_plan) %>
+  <% end %>
   
 <% end -%> <!-- end article tag -->
