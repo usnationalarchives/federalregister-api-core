@@ -40,6 +40,8 @@ class ApplicationController < ActionController::Base
   end
   
   def cache_for(time)
-    expires_in time, :public => true
+    if RAILS_ENV != 'development'
+      expires_in time, :public => true
+    end
   end
 end
