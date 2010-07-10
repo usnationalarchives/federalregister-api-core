@@ -12,5 +12,5 @@
 
 <h2><%= link_to @agency_highlight.title, entry_path(@agency_highlight.entry) %></h2>
 <p><%= @agency_highlight.abstract %></p>
-<%= link_to 'Read More', entry_path(@agency_highlight.entry) %>
+<%= link_to 'Read More', entry_path(@agency_highlight.entry), :class => 'read_more' %>
 </div>
