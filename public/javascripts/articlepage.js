@@ -74,13 +74,15 @@ var citation_info = {
     '    <li class="facebook"><a href="http://www.facebook.com/sharer.php?u=<%= escape(url) %>&t=<%= escape(title) %>">Share this on Facebook</a></li>',
     '    <li class="digg"><a href="http://digg.com/submit?url=<%= escape(url) %>&title=<%= escape(title) %>&bodytext=<%= escape(content) %>&media=news">Share this on digg</a></li>',
     '  </ul>',
-    '  <% if (next_header_anchor) { %>',
-    '    <div class="header_navigation_separator">',
-    '      <ul>',
-    '         <li class="next"><a href="#<%= next_header_anchor %>"><%= next_header_text %></a></li>',
-    '     </ul>',
-    '    </div>',
-    '  <% } %>',
+    '  <div class="header_navigation_separator">',
+    '    <ul>',
+    // HELP-DESIGN: needs style for the back to top icon
+    '      <li class="top"><a href="#table_of_contents">Back to top</a></li>',
+    '      <% if (next_header_anchor) { %>',
+    '        <li class="next"><a href="#<%= next_header_anchor %>"><%= next_header_text %></a></li>',
+    '      <% } %>',
+    '   </ul>',
+    '  </div>',
     '  <a href="#" class="close" title="Close this citation">Close</a>',
     '</div>'
   ].join("\n")
