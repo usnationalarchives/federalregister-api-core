@@ -26,13 +26,12 @@ module CitationsHelper
   end
   
   def add_cfr_links(text)
-    text.gsub(/(\d+)\s+(?:CFR|C\.F\.R\.)\s+(?:[Pp]arts?|[Ss]ections?|[Ss]ec\.|&#xA7;|&#xA7;\s*&#xA7;)?\s*(\d+)(?:\.(\d+)(?:\(([a-z])\))?)?/) do |str|
+    text.gsub(/(\d+)\s+(?:CFR|C\.F\.R\.)\s+(?:[Pp]arts?|[Ss]ections?|[Ss]ec\.|&#xA7;|&#xA7;\s*&#xA7;)?\s*(\d+)(?:\.(\d+))?/) do |str|
       title = $1
       part = $2
       section = $3
-      subpart = $4
       content_tag :a, str,
-        :href => cfr_url(title,part,section,subpart),
+        :href => cfr_url(title,part,section),
         :class => "cfr external",
         :target => "_blank"
     end
@@ -79,8 +78,8 @@ module CitationsHelper
     "http://frwebgate.access.gpo.gov/cgi-bin/getdoc.cgi?dbname=browse_usc&docid=Cite:+#{title}USC#{part}"
   end
   
-  def cfr_url(title, part, section='', subpart='')
-    "http://frwebgate.access.gpo.gov/cgi-bin/get-cfr.cgi?YEAR=current&TITLE=#{title}&PART=#{part}&SECTION=#{section}&SUBPART=#{subpart}&TYPE=TEXT"
+  def cfr_url(title, part, section='')
+    "http://frwebgate.access.gpo.gov/cgi-bin/get-cfr.cgi?YEAR=current&TITLE=#{title}&PART=#{part}&SECTION=#{section}&TYPE=TEXT"
   end
   
   def public_law_url(congress, law)
