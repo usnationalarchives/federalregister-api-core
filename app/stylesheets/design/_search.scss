@@ -9,7 +9,7 @@ PAGE ELEMENTS
   padding: 0;
   border: 0;
   outline: 0;
-  display: inline-block;
+  @include inline-block;
 }
 .tabs {
 /*  background: rgba(161, 181, 189, .5);
@@ -25,7 +25,7 @@ PAGE ELEMENTS
   list-style-type: none;
   margin-left: 0px;
   white-space: nowrap;
-  display: inline-block;
+  @include inline-block;
   }
 .tabs li a {
   color: #666;
@@ -151,7 +151,8 @@ ol.results > li {
   margin-bottom: 2em;
   padding-bottom: 2em;
   }
-ol.results > li:last-child {
+ol.results > li:last-child,
+ol.results > li.lastchild {
   border: none;
   }  
 ol.results h4 {
@@ -177,11 +178,13 @@ ol.results li .date {
 .active_filter_list li + li {
   border-top: 0;
   }  
-.active_filter_list li:first-child {
+.active_filter_list li:first-child,
+.active_filter_list li.firstchild {
   @include border-top-left-radius(5px);
   @include border-top-right-radius(5px);  
   }
-.active_filter_list li:last-child {
+.active_filter_list li:last-child,
+.active_filter_list li.lastchild {
   @include border-bottom-left-radius(5px);
   @include border-bottom-right-radius(5px);
   }
@@ -193,7 +196,7 @@ ol.results li .date {
   }  
 .active_filter_list li .remove {
   background: sprite-image('icons/icon_close.png', 0, 0, 50px) no-repeat;
-  display: inline-block;
+  @include inline-block;
   height: 14px;
   @include hide-text;  
   position: absolute;
@@ -288,7 +291,8 @@ dd.next + dd.next {
   margin: 0 0 1em 0;
   padding: 0 0 0 35px;
   }
-.article_list li:last-child {
+.article_list li:last-child,
+.article_list li.lastchild {
   border-bottom: none;
   margin-bottom: 0;
   padding-bottom: 0;

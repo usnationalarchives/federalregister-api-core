@@ -28,7 +28,8 @@
   @include horizontal-list;
   float: left;
   }
-#utility ul li:first-child a {
+#utility ul li:first-child a,
+#utility ul li.firstchild a {
   border-right: 1px solid #fff;
   padding-right: .5em;
   }

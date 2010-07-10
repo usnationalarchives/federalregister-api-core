@@ -6,12 +6,12 @@
   </p>
 
   <div class="share">
-    <%= link_to_twitter(entry) %>
-    <%= link_to_facebook(entry) %>
-    <%= link_to_reddit(entry) %>
-    <%= link_to_digg(entry) %>
-    <%# TODO HELP-RUBY make this real %>
-    <%# <a href="#" class="button list social email">E-Mail</a> %>
+    <ul class="actions">
+      <li><%= link_to_twitter(entry) %></li>
+      <li><%= link_to_facebook(entry) %></li>
+      <li><%= link_to_reddit(entry) %></li>
+      <li><%= link_to_digg(entry) %></li>
+    </ul>
   </div>
 </div>
 

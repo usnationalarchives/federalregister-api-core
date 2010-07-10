@@ -20,7 +20,8 @@ ul.bullets  li {
   margin-bottom: .75em;
   padding-left: 1em;
   }
-.bullets li:last-child {
+.bullets li:last-child,
+.bullets li.lastchild {
   margin-bottom: 0;
   } 
  
@@ -145,7 +146,8 @@ width: 160px;
 .figcaption a {
   display: block;
   }  
-#sections div > .article:last-child {
+#sections div > .article:last-child,
+#sections div > .article.lastchild  {
   border-bottom: none;
   }
   
@@ -220,7 +222,8 @@ ARTICLE VIEW
 .box .button {
   margin-bottom: 0;
   }
-.box .button:first-child {
+.box .button:first-child,
+.box .button.firstchild {
   margin-left: 25px;
   }
 
@@ -270,11 +273,14 @@ ARTICLE VIEW
   padding-bottom: 0;
   }
 .metadata_share_bar .share {
-  text-align: right;
-  } 
-.metadata_share_bar .share .button {
-  text-indent: 9999px;
-  }    
+  position: relative;
+  }
+.metadata_share_bar .share .actions {
+  @include horizontal-list;
+  position: absolute;
+  right: 0;
+  top: 0;
+  }   
 #entries.show .back_to_top {
   color: #aaa;
   font-size: .8em;
@@ -323,7 +329,8 @@ h3:target,
 p:target {
   background: $aside_box_background;
   }  */
-#entries.show .body_column > h3:first-child {
+#entries.show .body_column > h3:first-child,
+#entries.show .body_column > h3.firstchild {
   margin-top: 0;
   padding-top: 0;
   }
@@ -334,7 +341,8 @@ p:target {
 #entries.show .table_of_contents .level_3 {
   margin-left: 2em;
   }  
-#entries.show .body_column p:first-child {
+#entries.show .body_column p:first-child,
+#entries.show .body_column p.firstchild {
   text-indent: 0;
   }  
 #fulltext_content_area p {
@@ -361,7 +369,8 @@ p:target {
   text-align: left;
   margin-top: .5em;
   }
-.metadata_list dt:first-child {
+.metadata_list dt:first-child,
+.metadata_list dt.firstchild {
   margin-top: 0;
   }  
 .metadata_list dd {
@@ -385,7 +394,8 @@ p:target {
   list-style: none;
   margin-bottom: .5em;
   }
-.citation_box li:last-child { margin-bottom: 0 ;}  
+.citation_box li:last-child,
+.citation_box li.lastchild { margin-bottom: 0 ;}  
 .citation_box li.bookmark { background: sprite-image('icons/icon_bookmark.png', 0, 0, 50px) no-repeat; }
 .citation_box li.twitter { background: sprite-image('icons/icon_twitter.png', 0, 0, 50px) no-repeat; }
 .citation_box li.facebook { background: sprite-image('icons/icon_facebook.png', 0, 0, 50px) no-repeat; }
@@ -394,7 +404,7 @@ p:target {
 .citation_box li.cite_page { background: sprite-image('icons/icon_page.png', 0, 0, 50px) no-repeat;  }
 .citation_box li.link { background: sprite-image('icons/icon_link.png', 0, 0, 50px) no-repeat;  }
 .citation_box li.email { background: sprite-image('icons/icon_email.png', 0, 0, 50px) no-repeat; }
-.citation_box li.next { background: sprite-image('icons/icon_next.png', 0, 0, 50px) no-repeat; }
+.citation_box li.next { background: sprite-image('icons/icon_next.png', 0, 4px, 100px) no-repeat; }
 .citation_box .close {
   background: sprite-image('icons/icon_close.png', 0, 0, 50px) no-repeat;;
   height: image-height('icons/icon_close.png');
@@ -464,7 +474,8 @@ AGENCY LIST
   background: url(/images/child_many.png) no-repeat left top;
   padding: 0 1.618em;  
   }  
-#agency_list li li:last-child {
+#agency_list li li:last-child,
+#agency_list li li.lastchild  {
   background-image: url(/images/child_one.png);
   }
 #agencies .agency_list_info .title_bar {
@@ -516,8 +527,9 @@ AGENCY VIEW
   @include linear-gradient(color-stops(#eee  30%, #fff));
   @include border-radius(3px);
   padding: 2em;
-}
-.quotebox > p:last-child {
+  }
+.quotebox > p:last-child,
+.quotebox > p.lastchild  {
   margin-bottom: 0;
   }
   
@@ -582,13 +594,17 @@ REGULATION VIEW
   font-size: 1em;
   margin: 0;
   }  
-.timeline_item:last-child {
+.timeline_item:last-child,
+.timeline_item.lastchild {
   background: #e4a529;
   margin-right: 0;
   } 
 .timeline_item:last-child .date, 
 .timeline_item:last-child li,
-.timeline_item:last-child li .action {
+.timeline_item:last-child li .action,
+.timeline_item.lastchild .date, 
+.timeline_item.lastchild li,
+.timeline_item.lastchild li .action {
   color: #fff;
   }
 
@@ -629,10 +645,12 @@ TOPIC LIST
 .letter_list li {
   padding: 0 8.5px 7px 8.5px;
   }
-.letter_list li:first-child {
+.letter_list li:first-child,
+.letter_list li.firstchild {
   padding-left: 8.5px;
   }
-.letter_list li:last-child {
+.letter_list li:last-child,
+.letter_list li.lastchild {
   padding-right: 8.5px;
   }    
 .letter_list li.on {

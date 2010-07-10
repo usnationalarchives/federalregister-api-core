@@ -12,7 +12,7 @@ CURRENT ISSUE
   }
 #current_issue .issue {
   color: #fff;
-  display: inline-block;
+  @include inline-block;
   font-size: 1.2em;
   line-height: 40px;
   margin-right: 1em;
@@ -184,7 +184,7 @@ PROMO STATS
   }  
 .stats span {
   color: #c3c3c3;
-  display: inline-block;
+  @include inline-block;
   font-size: 1.1em;
   line-height: 1.1;
   }
@@ -234,7 +234,8 @@ WHATS HOT
   padding-left: 3em;
   position: relative;
   }
-.home #popular.with_icon li:last-child {
+.home #popular.with_icon li:last-child,
+.home #popular.with_icon li.last-child {
   border-bottom: 0;
   }  
 .home #popular.with_icon .index {
@@ -323,7 +324,8 @@ CURRENT
   background-position: left 5px;
   border-bottom: 2px solid #eee;
   }
-.fr_section ul.bullets li:last-child { border-bottom: none; }   
+.fr_section ul.bullets li:last-child,
+.fr_section ul.bullets li.lastchild { border-bottom: none; }   
 .fr_section ul.bullets a {
   font-size: 1.1em;
   line-height: 1.5; 
