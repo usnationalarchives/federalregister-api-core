@@ -8,7 +8,7 @@
       </xsl:call-template>
     </xsl:variable>
     <xsl:choose>
-      <xsl:when test="3 &gt; $level">
+      <xsl:when test="$level &lt; 3">
         <xsl:value-of disable-output-escaping="yes" select="'&lt;/div&gt;'"/>
         <div class="header_column">
           <xsl:call-template name="header"/>
@@ -32,7 +32,7 @@
         <xsl:call-template name="header_id" />
       </xsl:attribute>
       <xsl:apply-templates/>
-      <xsl:if test="text() != 'SUMMARY:'">
+      <xsl:if test="text() != 'SUMMARY:' and $level &lt; 3">
         <xsl:call-template name="back_to_top"/>
       </xsl:if>
     </xsl:element>
