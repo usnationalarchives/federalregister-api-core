@@ -28,7 +28,8 @@ NAV
   line-height: 26px;
   margin-right: 1em;
   }
-#primary_nav li:first-child {
+#primary_nav li:first-child,
+#primary_nav li.firstchild {
   background: none;
   margin-left: 0;
   padding-left: 0;
