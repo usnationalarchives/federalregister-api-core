@@ -35,10 +35,6 @@ describe CitationsHelper do
       add_cfr_links('10 C.F.R. Part 100.1').should == '<a class="cfr external" href="' + h(cfr_url('10','100','1')) + '" target="_blank">10 C.F.R. Part 100.1</a>'
     end
     
-    it "supports '# CFR #.#(#)'" do
-      add_cfr_links('18 CFR 806.22(f)').should == '<a class="cfr external" href="' + h(cfr_url('18','806','22', 'f')) + '" target="_blank">18 CFR 806.22(f)</a>'
-    end
-    
     it "supports '# C.F.R. parts #'" do
       add_cfr_links('10 C.F.R. parts 100').should == '<a class="cfr external" href="' + h(cfr_url('10', '100')) + '" target="_blank">10 C.F.R. parts 100</a>'
     end
