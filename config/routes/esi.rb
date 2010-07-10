@@ -27,5 +27,6 @@ ActionController::Routing::Routes.draw do |map|
     # SECTIONS
     quiet_map.popular_entries_section ':slug/popular_entries.:format', :controller => "sections", :action => "popular_entries"
     quiet_map.popular_topics_section ':slug/popular_topics.:format', :controller => "sections", :action => "popular_topics"
+    quiet_map.featured_agency_section ':slug/featured_agency.:format', :controller => "sections", :action => "featured_agency"
   end
 end
