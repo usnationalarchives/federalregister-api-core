@@ -6,21 +6,9 @@ class SectionsController < ApplicationController
     
     prepare_for_show(params[:slug], IssueApproval.latest_publication_date)
     @preview = false
+    
     respond_to do |wants|
-      wants.html do
-        @agency = Agency.with_logo.find(:all,
-                              :select => "agencies.*, count(entries.id) AS num_entries_this_month",
-                              :joins => {:entries => :sections},
-                              :conditions => {
-                                :sections => {:id => @section.id},
-                                :entries => {:publication_date => (1.month.ago .. Date.today)}
-                              },
-                              :group => "entries.id",
-                              :order => "num_entries_this_month DESC",
-                              :limit => 10
-        ).sort_by { rand }.first
-        render :action => :show
-      end
+      wants.html
       
       wants.rss do
         @feed_name = "Federal Register: '#{@section.title}' Section"
@@ -30,6 +18,24 @@ class SectionsController < ApplicationController
       end
       
     end
+  end
+  
+  def featured_agency
+    cache_for 5.minutes
+    @section = Section.find_by_slug!(params[:slug])
+    @agency = Agency.with_logo.find(:all,
+                          :select => "agencies.*, count(entries.id) AS num_entries_this_month",
+                          :joins => {:entries => :sections},
+                          :conditions => {
+                            :sections => {:id => @section.id},
+                            :entries => {:publication_date => (1.month.ago .. Date.today)}
+                          },
+                          :group => "entries.id",
+                          :order => "num_entries_this_month DESC",
+                          :limit => 10
+    ).sort_by { rand }.first
+    
+    render :layout => false
   end
   
   def about
