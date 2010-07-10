@@ -31,9 +31,7 @@
       <xsl:attribute name="id">
         <xsl:call-template name="header_id" />
       </xsl:attribute>
-      <xsl:choose>
-        <xsl:apply-templates/>
-      </xsl:choose>
+      <xsl:apply-templates/>
       <xsl:if test="text() != 'SUMMARY:'">
         <xsl:call-template name="back_to_top"/>
       </xsl:if>
