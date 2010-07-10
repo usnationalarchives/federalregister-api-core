@@ -93,6 +93,18 @@ module RouteBuilder
     }
   end
   
+  def regulatory_plan_full_text_path(regulatory_plan)
+    "/regulations/html/full_text/#{regulatory_plan.regulation_id_number}.html"
+  end
+  
+  def regulatory_plan_contacts_path(regulatory_plan)
+    "/regulations/html/contacts/#{regulatory_plan.regulation_id_number}.html"
+  end
+  
+  def regulatory_plan_sidebar_path(regulatory_plan)
+    "/regulations/html/sidebar/#{regulatory_plan.regulation_id_number}.html"
+  end
+  
   add_route :short_regulatory_plan do |regulatory_plan|
     {
       :regulation_id_number => regulatory_plan.regulation_id_number,
