@@ -19,7 +19,8 @@ SIDEBAR
   margin-bottom: .5em;
   padding-bottom: .5em;
   }
-.section.whats_hot li:last-child {
+.section.whats_hot li:last-child,
+.section.whats_hot li.lastchild {
   border-bottom: 0;
   }  
 .section.whats_hot ul {
@@ -52,7 +53,8 @@ SIDEBAR
   font-size: 1em;
   margin-bottom: .5em;
   }  
-.TOC ul:last-child {
+.TOC ul:last-child,
+.TOC ul.lastchild {
   margin-bottom: 0;
   }
 .TOC li {
@@ -62,6 +64,7 @@ SIDEBAR
   margin-top: 0.2em;
   padding-left: 0;
   }
-.TOC li:last-child {
+.TOC li:last-child,
+.TOC li.lastchild {
   border-bottom: 0;
   } 

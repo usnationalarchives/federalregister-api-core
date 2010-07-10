@@ -66,17 +66,20 @@
         <div id="search_container">
           <form action="<%= entries_search_path %>" method="get" id="search">
             <label for="term">Search the Federal Register</label>
-            <%= text_field_tag 'conditions[term]', nil, :title => 'Search Articles' %> <%# , :placeholder =>  "Search Articles" %>
+            <%= text_field_tag 'conditions[term]', nil, :title => 'Search Articles', :name => "term" %> <%# , :placeholder =>  "Search Articles" %>
             <%= submit_tag 'Go', :class => "search_btn" %>
           </form>
         </div>
       </div>  
       
-      <% hgroup_tag(:id => "header_logo") do %>        
+      <%# TODO: someday use the HTML5 helpers, but for now need the div outside, rather than inside and don't want to change globally, need to switch for validity %>
+      <div id ="header_logo" class="hgroup">
+        <hgroup>
           <h1><a href="/" title="Federal Register Home">The Federal Register</a></h1>
           <h2>The Daily Journal of the United States Government</h2>
-      <% end -%>
-
+        </hgroup>
+      </div>
+      
     <% end -%>
     
     

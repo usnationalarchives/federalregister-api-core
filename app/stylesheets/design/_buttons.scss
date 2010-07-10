@@ -8,7 +8,7 @@ BUTTONS / ICONS
   background: #f1f1f1;
   @include border-radius(5px);
   color: #6e6e6e;
-  display: inline-block;
+  @include inline-block;
   font-size: 1em;
   font-weight: bold;
   margin-bottom: 15px;
@@ -18,7 +18,8 @@ BUTTONS / ICONS
   }
 .button.notext { text-indent: -9999px; }
 .button.list { margin: 0 .5em 0 0; }
-.button.list:last-child { margin: 0; }  
+.button.list:last-child,
+.button.list.lastchild { margin: 0; }  
 .button.rss {
   background: url(/images/rss_icon_line.png) no-repeat right 10px;
   padding: 10px 25px 7px 10px;
@@ -55,14 +56,15 @@ BUTTONS / ICONS
   .widget.notext:hover { background-position: 10px -20px; }
 
 #clippy {
-  display: inline-block;
+  @include inline-block;
   }
 
 .button.social {
   background: none;
+  display: block;
   height: 24px;
   padding: 0;
-  text-indent: -9999px;
+  @include hide-text;
   width: 24px;
   }
 
