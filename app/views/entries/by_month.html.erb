@@ -1,0 +1,20 @@
+<%= 
+  calendar(
+      :year => @date.year,
+      :month => @date.month,
+      :table_class => "calendar",
+      :previous_month_text => link_to_unimplemented('&laquo; prev', :class => 'prev'),
+      :next_month_text =>     link_to_unimplemented('next &raquo;', :class => 'next'),
+      :abbrev => (0..0)
+  ) do |d|
+    if d.wday == 0 || d.wday == 6
+      [d.mday, {:class => "weekend"}]
+    elsif d == @current_date
+      [link_to(d.mday, entries_by_date_path(d)), {:class => "current" }]
+    elsif @entry_dates.include?(d)
+      [link_to(d.mday, entries_by_date_path(d)), {:class => "published" }]
+    else
+      [d.mday, {:class => "holiday"}]
+    end
+  end
+ %>

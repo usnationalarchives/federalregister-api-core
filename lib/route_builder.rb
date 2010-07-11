@@ -62,6 +62,13 @@ module RouteBuilder
     }
   end
   
+  add_route :entries_by_month do |date|
+    {
+      :year            => date.strftime('%Y'),
+      :month           => date.strftime('%m')
+    }
+  end
+    
   add_route :entries_by_date do |date|
     {
       :year            => date.strftime('%Y'),
