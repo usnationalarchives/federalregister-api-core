@@ -15,7 +15,7 @@ namespace :data do
     )
     
     task :catch_up => %w(
-      content:daily:quick
+      data:daily:quick
       content:entries:html:compile:all
     )
   end
