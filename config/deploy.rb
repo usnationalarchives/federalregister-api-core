@@ -164,7 +164,7 @@ set :custom_symlinks, {
   'data/text'             => 'data/text',
   'data/xml'              => 'data/xml',
   'data/raw'              => 'data/raw',
-  'data/html'             => 'data/html',
+  'data/entries'          => 'data/entries',
   
   'db/sphinx'       => 'db/sphinx', 
   'public/sitemaps' => 'sitemaps'
