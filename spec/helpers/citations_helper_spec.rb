@@ -114,7 +114,7 @@ describe CitationsHelper do
     end
     
     it 'should not interfere with existing HTML but add its own links' do
-      add_citation_links('<p><a href="#">10 CFR 100</a> and <em>alpha 101 CFR 10 beta</em></p>').should == ('<p><a href="#">10 CFR 100</a> and <em>alpha <a href="' +  h(cfr_url('101','10')) + '" class="cfr external" target="_blank">101 CFR 10</a> beta</em></p>')
+      add_citation_links('<p><a href="#">10 CFR 100</a> and (<em>hi</em>) <em>alpha</em> beta 101 CFR 10 omega</em></p>').should == ('<p><a href="#">10 CFR 100</a> and (<em>hi</em>) <em>alpha</em> beta <a class="cfr external" href="' +  h(cfr_url('101','10')) + '" target="_blank">101 CFR 10</a> omega</p>')
     end
   end
 end
