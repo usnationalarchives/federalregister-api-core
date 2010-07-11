@@ -7,37 +7,6 @@
 
 <div id="content_area">
 
-<% if false %>
-<div class="header group calendar controls">
-  <h2>
-    <%#= pluralize(@articles.count, 'article') %> published on this day
-  </h2>
-
-  <%= link_to( '', '#', :class => "icon cal", :title => "Click to show calendars" ) %>
-
-  <% if @prev_date %>
-    <%= link_to 'Prev', entries_by_date_path(@prev_date), :class => "icon arrow prev floatLeft" %>
-  <% end %>
-
-  <% if @next_date %>
-    <%= link_to 'Next', entries_by_date_path(@next_date), :class => "icon arrow next floatRight" %>
-  <% end %>
-  </div>
-
-  <div class="entry_calendars">
-    <div class='search'>
-      <% form_tag entries_date_search_path, :method => :GET, :class => "group" do %>
-        Explore articles in recent months or search for a date:
-        <%= text_field_tag :search, '', :title => "(eg 'last month', 'November 2', 'last October')" %>
-        <%= submit_tag 'Go', :class => "btn" %>
-      <% end %>
-    </div>
-  
-    <%= entries_calendar_view(@year, @month) %>
-    <% add_javascript(:src => 'calendar') %>
-  </div>
-<% end %>
-
 <% @agencies.each do |agency| %>
   <div class="title_bar">
     <%# HELP-DESIGN: the count here might need styling %>
@@ -98,6 +67,8 @@
 
 <%# TODO HELP-DESIGN move this to the top of the markup and then pull it over %>
 <% aside_tag(:id => 'sidebar') do %>  
+  <%= render :esi => entries_by_month_path(@publication_date, :current_date => @publication_date.to_s(:iso)) %>
+
     <% section_tag(:id => 'meta_toc') do %>
     <div class="TOC aside_box">
       

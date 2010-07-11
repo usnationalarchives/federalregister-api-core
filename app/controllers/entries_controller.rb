@@ -71,6 +71,19 @@ class EntriesController < ApplicationController
     
   end
   
+  def by_month
+    @date = Date.parse("#{params[:year]}-#{params[:month]}-01")
+    if params[:current_date]
+      @current_date = Date.parse(params[:current_date])
+    end
+    
+    @entry_dates = Entry.all(
+      :select => "distinct(publication_date)",
+      :conditions => {:publication_date => @date .. @date.end_of_month}
+    ).map(&:publication_date)
+    render :layout => false
+  end
+  
   def show
     cache_for 1.day
     @entry = Entry.find_by_document_number!(params[:document_number])
