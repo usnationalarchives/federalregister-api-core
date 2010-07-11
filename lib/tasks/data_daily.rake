@@ -3,7 +3,7 @@ namespace :data do
     data:daily:quick
     content:entries:import:regulations_dot_gov:tardy
     tmp:cache:clear
-    content:entries:html:compile
+    content:entries:html:compile:all
     thinking_sphinx:index
     sitemap:refresh
   )
