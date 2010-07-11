@@ -105,7 +105,7 @@ describe CitationsHelper do
   end
   
   describe 'add_navy_case_links' do
-    it "suppoirts 'Navy Case Number 97567'"
+    it "supports 'Navy Case Number 97567'"
   end
   
   describe 'adding links to HTML' do
@@ -114,7 +114,7 @@ describe CitationsHelper do
     end
     
     it 'should not interfere with existing HTML but add its own links' do
-      add_citation_links('<p><a href="#">10 CFR 100</a> and <em>101 CFR 10</em></p').should == ('<p><a href="#">10 CFR 100</a> and <em><a href="' +  h(cfr_url('101','10')) + '" class="cfr external" target="_blank">101 CFR 10</a></em></p>')
+      add_citation_links('<p><a href="#">10 CFR 100</a> and <em>alpha 101 CFR 10 beta</em></p>').should == ('<p><a href="#">10 CFR 100</a> and <em>alpha <a href="' +  h(cfr_url('101','10')) + '" class="cfr external" target="_blank">101 CFR 10</a> beta</em></p>')
     end
   end
 end

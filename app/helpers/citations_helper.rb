@@ -1,9 +1,9 @@
 module CitationsHelper
   def add_citation_links(html)
     if html.present?
-      doc = Nokogiri::HTML::DocumentFragment.parse(html)
+      doc = Nokogiri::HTML::DocumentFragment.parse(html.strip)
       doc.xpath(".//text()[not(ancestor::a)]").each do |text_node|
-        text = text_node.text
+        text = text_node.text.dup
         text = add_usc_links(text)
         text = add_cfr_links(text)
         text = add_federal_register_links(text)
@@ -11,7 +11,13 @@ module CitationsHelper
         text = add_public_law_links(text)
         text = add_patent_links(text)
         
-        text_node.swap(text) if text != text_node.text
+        # FIXME: this ugliness shouldn't be necessary, but seems to be
+        text_node.swap("<span class='dummy'>#{text}</span>") if text != text_node.text
+      end
+      
+      doc.css(".dummy").each do |dummy_node|
+        dummy_node.before(dummy_node.children.to_s)
+        dummy_node.unlink
       end
       
       doc.to_s
