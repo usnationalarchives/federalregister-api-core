@@ -1,16 +1,22 @@
 module CitationsHelper
-  def add_citation_links(text)
-    if text.present?
-      text = add_usc_links(text)
-      text = add_cfr_links(text)
-      text = add_federal_register_links(text)
-      text = add_regulatory_plan_links(text)
-      text = add_public_law_links(text)
-      text = add_patent_links(text)
+  def add_citation_links(html)
+    if html.present?
+      doc = Nokogiri::HTML::DocumentFragment.parse(html)
+      doc.xpath(".//text()[not(ancestor::a)]").each do |text_node|
+        text = text_node.text
+        text = add_usc_links(text)
+        text = add_cfr_links(text)
+        text = add_federal_register_links(text)
+        text = add_regulatory_plan_links(text)
+        text = add_public_law_links(text)
+        text = add_patent_links(text)
+        
+        text_node.swap(text) if text != text_node.text
+      end
       
-      text
+      doc.to_s
     else
-      text
+      html
     end 
   end
   
