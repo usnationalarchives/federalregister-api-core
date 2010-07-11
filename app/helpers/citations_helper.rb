@@ -12,12 +12,14 @@ module CitationsHelper
         text = add_patent_links(text)
         
         # FIXME: this ugliness shouldn't be necessary, but seems to be
-        text_node.swap("<span class='dummy'>#{text}</span>") if text != text_node.text
-      end
-      
-      doc.css(".dummy").each do |dummy_node|
-        dummy_node.before(dummy_node.children.to_s)
-        dummy_node.unlink
+        if text != text_node.text
+          dummy = text_node.add_previous_sibling(Nokogiri::XML::Node.new("dummy", doc))
+          Nokogiri::XML::Document.parse("<root>#{text}</root>").xpath("/root/node()").each do |node|
+            dummy.add_previous_sibling node
+          end
+          text_node.remove
+          dummy.remove
+        end
       end
       
       doc.to_s
