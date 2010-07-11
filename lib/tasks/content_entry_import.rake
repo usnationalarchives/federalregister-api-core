@@ -1,7 +1,7 @@
 namespace :content do
   namespace :entries do
     def entry_importer(*attributes)
-      date = ENV['DATE_TO_IMPORT'] || Date.today
+      date = ENV['DATE'] || Date.today
       Content::EntryImporter.process_all_by_date(date, *attributes)
     end
     
@@ -66,7 +66,7 @@ namespace :content do
       task :sections => :environment do
         # entry_importer(:sections)
         sections = Section.all(:include => :agencies)
-        Content.parse_dates(ENV['DATE_TO_IMPORT']).each do |date|
+        Content.parse_dates(ENV['DATE']).each do |date|
           puts "handling #{date}..."
           Entry.published_on(date).scoped(:include => [:agencies, :sections]).each do |entry|
             entry.section_ids = sections.select{|s| s.should_include_entry?(entry)}.map(&:id)
@@ -83,7 +83,7 @@ namespace :content do
       desc "Import graphics"
       task :graphics => :environment do
         # evetually logic needs to be moved into entryimporter...
-        date = ENV['DATE_TO_IMPORT']
+        date = ENV['DATE']
         
         if date.nil?
           dates = [Date.today]
