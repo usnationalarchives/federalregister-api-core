@@ -1,20 +1,22 @@
 namespace :data do
   task :daily => %w(
-    data:daily:quick
+    data:daily:catch_up
     content:entries:import:regulations_dot_gov:tardy
     tmp:cache:clear
-    content:entries:html:compile:all
-    thinking_sphinx:index
     sitemap:refresh
   )
   
   namespace :daily do 
     task :quick => %w(
-    content:section_highlights:clone
-    content:entries:import
+      content:section_highlights:clone
+      content:entries:import
+      content:entries:import:graphics
+      data:extract:places
+    )
     
-    content:entries:import:graphics
-    data:extract:places
+    task :catch_up => %w(
+      content:daily:quick
+      content:entries:html:compile:all
     )
   end
 end
