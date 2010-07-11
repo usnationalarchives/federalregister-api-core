@@ -24,7 +24,8 @@
     <%= stylesheet_link_tag "enhancements", :media => :screen %> <%# TODO fold this sheet into regular %>    
     <%= stylesheet_link_tag "print", :media => :print %>
     
-    <%= javascript_include_tag :all, :cache => true %>
+    <%# HELP-DESIGN: Don't combine JS files yet; need a strategy to get the JS to the static server... %>
+    <%= javascript_include_tag :all #, :cache => true %>
 
     <%= yield :feeds %>
   
