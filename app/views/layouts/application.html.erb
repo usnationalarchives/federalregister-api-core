@@ -25,7 +25,7 @@
     <%= stylesheet_link_tag "print", :media => :print %>
     
     <%# HELP-DESIGN: Don't combine JS files yet; need a strategy to get the JS to the static server... %>
-    <%= javascript_include_tag :all #, :cache => true %>
+    <%= javascript_include_tag :all %>
 
     <%= yield :feeds %>
   
