@@ -165,8 +165,6 @@ set :custom_symlinks, {
   'data/xml'              => 'data/xml',
   'data/raw'              => 'data/raw',
   'data/html'             => 'data/html',
-  'public/articles/html'  => 'data/html',
-  'public/articles/xml'   => 'data/xml',
   
   'db/sphinx'       => 'db/sphinx', 
   'public/sitemaps' => 'sitemaps'
