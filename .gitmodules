@@ -25,3 +25,6 @@
 [submodule "vendor/plugins/cookbooks"]
 	path = vendor/plugins/cookbooks
 	url = git@github.com:criticaljuncture/cookbooks.git
+[submodule "vendor/plugins/calendar_helper"]
+	path = vendor/plugins/calendar_helper
+	url = git://github.com/topfunky/calendar_helper.git
