@@ -1,5 +1,5 @@
 <div id="current_issue">
-    <%= link_to 'Current Issue', entries_by_date_path(IssueApproval.latest_publication_date), :title => IssueApproval.latest_publication_date.to_s(:wday_and_pretty_date), :class => 'issue'  %>
+    <%= link_to label, entries_by_date_path(IssueApproval.latest_publication_date), :title => IssueApproval.latest_publication_date.to_s(:wday_and_pretty_date), :class => 'issue'  %>
 
   <dl class="statistics">
     <dt>Notices</dt>
