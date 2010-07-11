@@ -4,7 +4,7 @@
 
 <h1 class="title"><span><%= IssueApproval.latest_publication_date.try(:to_s, :wday_and_pretty_date) %></span></h1>
 
-<%= render :partial => "entries/statistics_by_date", :locals => {:issue => @issue} %>
+<%= render :partial => "entries/statistics_by_date", :locals => {:issue => @issue, :label => "Current Issue"} %>
 
 <div class="row">
   <% section_tag(:id => 'top_news_promo') do %>
