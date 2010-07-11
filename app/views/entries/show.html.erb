@@ -21,7 +21,12 @@
   </div> <!-- end metadata_content_area -->
   
   <div id="content_area">
-    <%= render(:partial => 'abstract', :locals => {:entry => @entry}) if @entry.abstract.present? %>
+    <% if RAILS_ENV == 'development' %>
+      <%= render(:partial => 'abstract', :locals => {:entry => @entry}) %>
+    <% else %>
+      <%= render :esi => entry_abstract_path(@entry) %>
+    <% end %>
+    
     <%= render( :partial => "regulatory_plan", :object => @entry.most_recent_regulatory_plan ) if @entry.most_recent_regulatory_plan %>
   
     <div id="fulltext_content_area">
