@@ -16,8 +16,8 @@ $(document).ready(function(){
   
   $('body#search.show').each(function(){
     $('body').append(['<div id="modal">',
-    '  <a href="#" class="jqmClose">Close</a>',
-    '  <h3>Loading...</h3>',
+    '  <a href="#" class="jqmClose close">Close</a>',
+    '  <h3 class="title_bar">Loading...</h3>',
     '</div>'].join("\n")
     );
   })
