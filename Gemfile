@@ -33,6 +33,7 @@ gem 'compass', '0.10.1'
 gem 'compass-960-plugin', '0.9.13', :require => false
 gem 'lemonade', '0.3.2'
 gem 'icalendar'
+gem 'klarlack', '0.0.6'
 
 # bundler requires these gems in all environments
 # gem 'nokogiri', '1.4.2'
