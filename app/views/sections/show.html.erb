@@ -6,6 +6,11 @@
 
 <h1 class="title"><span><%= @section.title %></span></h1>
 
+<%# HELP-DESIGN: make this a (little) better %>
+<% if @preview %>
+<h1 id="preview_alert" style="background-color: pink; border: 2px solid red; align: center">This is only a preview!</h1>
+<% end %>
+
 <div id="content_area">
 
   <% if @highlighted_entries.present? %>
@@ -85,6 +90,6 @@
 </div>
 
 <% section_tag(:class => 'articles_published_by_day',:id=> 'articles_published_by_day') do %>    
-  <%= render :partial => "entries_on_date", :collection => @dates_to_show, :as => :date %>
+  <%= render :partial => "sections/entries_on_date", :collection => @dates_to_show, :as => :date %>
   <p><%= link_to 'Search', entries_search_path(:conditions => {:section_ids => @section.id}) %> to see older articles.</p>
 <% end -%>
