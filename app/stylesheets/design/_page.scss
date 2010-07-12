@@ -408,6 +408,9 @@ p:target {
   top: 1em;
   width: image-width('icons/icon_close.png');
   }
+.citation_box .close:hover {
+  background: sprite-image('icons/icon_close.png', 0, 0, 50px) no-repeat;;
+  }  
 .trigger {
   background: sprite-image('icons/icon_bookmark.png', 0, 0, 50px) no-repeat;;
   height: image-height('icons/icon_bookmark.png');
