@@ -25,12 +25,8 @@
 </div>
 
 <% aside_tag(:id => 'sidebar') do %>  
-      
-  <% section_tag(:class => 'subscribe') do %>  
-    <%= link_to 'Subscribe', highlighted_entries_section_path(@section, :format => :rss), :class => 'button rss' %>
-  <% end -%>
-  
-  <% section_tag(:class => 'TOC aside_box') do %>  
+       
+  <% section_tag(:class => 'TOC aside_box') do %>
     <h1>On This Page</h1>
     <ul>
       <li><%= link_to 'Comment Periods Closing Soon ', '#comment-period-closing' %></li>
@@ -38,6 +34,10 @@
       <li><%= link_to 'Articles published in the past 7 days ', '#articles_published_by_day' %></li>
     </ul>
   <% end -%>  
+  
+  <div class='aside_box subscribe'>  
+    <%= link_to 'Subscribe', highlighted_entries_section_path(@section, :format => :rss), :class => 'rss' %>
+  </div>
   
   <%= render :esi => popular_entries_section_path(@section) %>
   <%= render :esi => popular_topics_section_path(@section) %>
