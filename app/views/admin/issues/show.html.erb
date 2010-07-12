@@ -24,7 +24,10 @@
 
   <% if @issue_approval.present? %>
   <div class="notice">
-    <p>Issue approved on <%= @issue_approval.created_at %>. Any changes made at this time will go live without additional approval.</p>
+    <p>Issue approved on <%= @issue_approval.created_at %>
+      <% if @issue_approval.cache_manually_expired? %>
+        (and manually expired at <%= @issue_approval.updated_at %>)
+      <% end %>. Any changes made at this time may go live without additional approval. <%= link_to 'Expire Cache', admin_issue_approval_path(@publication_date.to_s(:db)), :method => :put %></p>
   </div>
     
   <% else %>
