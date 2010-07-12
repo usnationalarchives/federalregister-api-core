@@ -67,45 +67,47 @@ TITLE STYLES
 ******************************/
 
 h1.title {
-background: url("/images/header_bg.png") repeat-x scroll left top;
-color: #fff;
-clear: both;
-line-height: .9;
-font-size: 2.2em;
-font-weight: 700;
-height: 21px;
-letter-spacing: 0px;
-margin-bottom: 1em;
-}
-
+  background: url("/images/header_bg.png") repeat-x scroll left top;
+  color: #fff;
+  clear: both;
+  line-height: .9;
+  font-size: 2.2em;
+  font-weight: 700;
+  height: 21px;
+  letter-spacing: 0px;
+  margin-bottom: 1em;
+  }
 h1.title span {
-background: #fff;
-color: $powder_blue;
-padding: 0 10px;
-margin: 0 25px 0 0;
-}
-  
+  background: #fff;
+  color: $powder_blue;
+  padding: 0 10px;
+  margin: 0 25px 0 0;
+  }
 h1.title {
-margin-left: -999px;
-padding-left: 999px;
-text-align: right;
-}
+  margin-left: -999px;
+  padding-left: 999px;
+  text-align: right;
+  }
 
 /* stacked left words, big right word */
 
 .title_bar {
-border-top: 3px solid $dark_blue;
-clear: both;
-color: $powder_blue;
-font-size: 2.3em;
-@include apertura-condensed;
-margin: 1em 0 1em;
-padding-top: 10px;
-text-transform: uppercase;
-}
+  border-top: 3px solid $dark_blue;
+  clear: both;
+  color: $powder_blue;
+  font-size: 2.3em;
+  @include apertura-condensed;
+  margin: 1em 0 1em;
+  padding-top: 10px;
+  text-transform: uppercase;
+  }
 #sidebar .title_bar {
   margin-top: 0;
   }
+#modal .title_bar {
+  border-top: none;
+  margin: 0;
+  }  
 div.title_bar {
   font-size: 1em;
   position: relative;
@@ -118,21 +120,19 @@ div.title_bar h2 {
   right: 0;
   top: 0;
   }
-
 .small_stack {
-color: $dark_blue;
-display: inline-block;
-font-size: .4em;
-line-height: 1em;
-margin-right: .5em;
-text-align: right;
-text-transform: uppercase;
-font-variant: small-caps;
-}
-
+  color: $dark_blue;
+  @include inline-block;
+  font-size: .4em;
+  line-height: 1em;
+  margin-right: .5em;
+  text-align: right;
+  text-transform: uppercase;
+  font-variant: small-caps;
+  }
 .small_stack span {
-display: block;
-}
+  display: block;
+  }
 
 
 /******************************
@@ -154,11 +154,11 @@ THREE COL LIST
 ******************************/
 
 .three_col_list h3 {
-clear: both;
-font-size: 1.2em;
-line-height: 1.45;
-text-align: right;
-}
+  clear: both;
+  font-size: 1.2em;
+  line-height: 1.45;
+  text-align: right;
+  }
 
 .comments .grouped_by_date .date {
   color: #bdbdbd;
@@ -169,8 +169,8 @@ text-align: right;
 }
 
 .comments li a {
-line-height: 1.5;
-}
+  line-height: 1.5;
+  }
 
 /******************************
 
@@ -184,17 +184,17 @@ ARTICLES
   }
 
 .featured .article h1 {
-font-size: 1.3em;
-font-weight: normal;
-line-height: 1.4;
-}
+  font-size: 1.3em;
+  font-weight: normal;
+  line-height: 1.4;
+  }
 
 #entries h3,
 #entries h4,
 #entries h5,
 #entries h6 {
   margin-top: 1em;
-}
+  }
 
 
 .metadata {
@@ -202,12 +202,9 @@ line-height: 1.4;
   @include gesta;
   }
 
-
 .articles_published_by_day h1 {
   font-size: 1.1em;
   }
-
-
 
 /******************************
 
