@@ -5,7 +5,7 @@ namespace :data do
       require 'ftools'
       require 'open-uri'
       
-      date = ENV['DATE_TO_IMPORT'].blank? ? Date.today.to_s(:db) : ENV['DATE_TO_IMPORT']
+      date = ENV['DATE'].blank? ? Date.today.to_s(:db) : ENV['DATE']
       lax_mode = ENV['LAX'].blank? ? false : true
       
       url = 'http://www.gpo.gov:80/fdsys/bulkdata/FR/' + case date

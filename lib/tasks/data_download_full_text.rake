@@ -2,7 +2,7 @@ namespace :data do
   namespace :download do
     desc "Download full text of entries and store in entries.full_text_raw"
     task :full_text => :environment do
-      date = ENV['DATE_TO_IMPORT'].blank? ? Date.today : Date.parse(ENV['DATE_TO_IMPORT'])
+      date = ENV['DATE'].blank? ? Date.today : Date.parse(ENV['DATE'])
       
       Entry.all(:conditions => {:publication_date => date}).each do |entry|
         # next if entry.full_text_updated_at.present?
