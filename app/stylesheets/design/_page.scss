@@ -405,6 +405,7 @@ p:target {
 .citation_box li.link { background: sprite-image('icons/icon_link.png', 0, 0, 50px) no-repeat;  }
 .citation_box li.email { background: sprite-image('icons/icon_email.png', 0, 0, 50px) no-repeat; }
 .citation_box li.next { background: sprite-image('icons/icon_next.png', 0, 4px, 100px) no-repeat; }
+.citation_box li.top { background: sprite-image('icons/back_to_top.png', 0, 0, 100px) no-repeat; }
 .citation_box .close {
   background: sprite-image('icons/icon_close.png', 0, 0, 50px) no-repeat;;
   height: image-height('icons/icon_close.png');
