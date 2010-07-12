@@ -4,6 +4,13 @@ ActionController::Routing::Routes.draw do |map|
     quiet_map.agency_highlight '/agency_highlight', :controller => 'special', :action => 'agency_highlight'
     quiet_map.popular_entries '/popular_entries', :controller => 'special', :action => 'popular_entries'
     
+    # BY DATE
+    quiet_map.entries_by_month 'articles/\d', :controller => 'entries/search', :action => 'header'
+    quiet_map.entries_by_month 'articles/:year/:month', :controller => 'entries',
+                                                     :action     => 'by_month',
+                                                     :year       => /\d{4}/,
+                                                     :month      => /\d{1,2}/
+    
     # ENTRY SEARCH
     quiet_map.entries_search_header 'articles/search/header', :controller => 'entries/search', :action => 'header'
     quiet_map.entries_search_results 'articles/search/results', :controller => 'entries/search', :action => 'results'

@@ -26,7 +26,11 @@ module RouteBuilder
   end
   
   def entry_full_text_path(entry)
-    "/articles/html/#{entry.document_file_path}.html"
+    "/articles/html/full_text/#{entry.document_file_path}.html"
+  end
+  
+  def entry_abstract_path(entry)
+    "/articles/html/abstract/#{entry.document_file_path}.html"
   end
   
   def entry_xml_path(entry)
@@ -58,6 +62,13 @@ module RouteBuilder
     }
   end
   
+  add_route :entries_by_month do |date|
+    {
+      :year            => date.strftime('%Y'),
+      :month           => date.strftime('%m')
+    }
+  end
+    
   add_route :entries_by_date do |date|
     {
       :year            => date.strftime('%Y'),
