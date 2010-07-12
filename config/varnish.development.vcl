@@ -33,11 +33,6 @@ sub vcl_recv {
         return (pass);
     }
     
-    /* Don't cache if host is fr2.local */
-    if (req.http.host ~ "\.local") {
-        return (pass);
-    }
-    
     /* Prevent duplication of caches */
     set req.http.host = "fr2.local";
     
@@ -46,6 +41,8 @@ sub vcl_recv {
 }
 
 sub vcl_fetch {
+    unset beresp.http.Cache-Control;
+    
     /* Directly serve static content */
     if (req.url ~ "^/images" || req.url ~ "^/javascripts" || req.url ~ "^/flash" || req.url ~ "^/stylesheets" || req.url ~ "^/sitemaps") {
         return(deliver);
