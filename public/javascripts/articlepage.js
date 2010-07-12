@@ -17,7 +17,6 @@ var citation_info = {
     });
     $(".close").live("click", function(event) {
       event.preventDefault();
-      //self.cache[ $(this).parent().data("id") ].hide();
       self.hide( $(this).parent().data("id") );
     });
   },
@@ -76,7 +75,6 @@ var citation_info = {
     '  </ul>',
     '  <div class="header_navigation_separator">',
     '    <ul>',
-    // HELP-DESIGN: needs style for the back to top icon
     '      <li class="top"><a href="#table_of_contents">Back to top</a></li>',
     '      <% if (next_header_anchor) { %>',
     '        <li class="next"><a href="#<%= next_header_anchor %>"><%= next_header_text %></a></li>',
@@ -89,16 +87,6 @@ var citation_info = {
 };
 
 $(document).ready(function() {
-  //   if( $("#entries.show").size() > 0 ){
-  //     $("ul.table_of_graphics").before('<div id="gallery"><div id="controls"></div><div class="slideshow-container"><div id="loading"></div><div id="slideshow"></div><div id="caption"></div></div></div>');
-  //     $("ul.table_of_graphics").wrap("<div id='thumbs'></div>");
-  //    $('div.navigation').css({'width' : '200px', 'float' : 'left'});
-  //      var gallery = $('#thumbs').galleriffic({  
-  //        imageContainerSel:      '#slideshow',
-  //       controlsContainerSel:   '#controls'
-  //      });
-  // }
-  //   
   $('div.article[data-internal-id]').each(function(){
     var id = $(this).attr('data-internal-id');
     $.ajax({
@@ -110,29 +98,24 @@ $(document).ready(function() {
   
   citation_info.setup();
   
-  $(document).ready(function() {
-    $('#disclaimer a').click(function(){
-      generate_dialog();
-      $('#modal').centerScreen().jqmShow(); 
-      return false;
+  $('#disclaimer a').click(function(){
+    generate_dialog(); //won't this create and appened the modal everytime you click it?
+    $('#modal').centerScreen().jqmShow(); 
+    return false;
   });
 
-    function generate_dialog(){
-      if ($('#modal').size() == 0) {
-        var html = [
-          '<div id="modal">',
-          '  <a href="#" class="jqmClose">Close</a>',
-          '  <h3>Legal Status Disclaimer</h3>',
-          '  <p>The content posted on this site, taken from the daily Federal Register (FR), is not an official, legal edition of the FR; it does not replace the official print or electronic versions of the FR. Each document posted on the site includes a link to the corresponding official FR PDF file.  For more information, see our <a href="/legal_status">Legal Status</a> page.</p>',
-          '</div>'
-        ].join("\n")
+  function generate_dialog(){
+    if ($('#modal').size() == 0) {
+      var html = [
+        '<div id="modal">',
+        '  <a href="#" class="jqmClose close">Close</a>',
+        '  <h3 class="title_bar">Legal Status Disclaimer</h3>',
+        '  <p>The content posted on this site, taken from the daily Federal Register (FR), is not an official, legal edition of the FR; it does not replace the official print or electronic versions of the FR. Each document posted on the site includes a link to the corresponding official FR PDF file.  For more information, see our <a href="/legal_status">Legal Status</a> page.</p>',
+        '</div>'
+      ].join("\n")
 
-        $('body').append(html);
-        $('#modal').jqm({modal: true, toTop: true});
-      }
+      $('body').append(html);
+      $('#modal').jqm({modal: true, toTop: true});
     }
-  });
+  }
 });
-
-
-
