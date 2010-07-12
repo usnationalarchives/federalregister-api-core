@@ -10,11 +10,21 @@ NAV
 
 ******************************/
 #primary_nav {
-  background: url(/images/header_bg.png);
+  background: url(/images/nav_bg.png);
   }
 #primary_nav a:hover,
 #primary_nav a:focus {
   text-decoration: underline;
+  }
+
+#primary_nav .science-and-technology {
+  width: 80px;
+  }
+#primary_nav .business-and-industry {
+  width: 80px;
+  }
+#primary_nav .health-and-public-welfare {
+  width: 115px;
   }
   
 /******************************
@@ -26,7 +36,15 @@ HOMEPAGE
 #special.home #popular .header_with_icon {
   height: 40px;
   }  
-  
+
+#current_issue .statistics {
+  margin-left: 25px;
+  }  
+
+#slideshow .stats li span {
+  zoom: 1;
+  }
+    
 /******************************
 
 SECTION
