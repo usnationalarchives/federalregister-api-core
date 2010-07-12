@@ -10,4 +10,7 @@ namespace :varnish do
     `killall varnishd`
     puts "varnish shutting down..."
   end
+
+  desc "Restart varnish"
+  task :restart => [:stop, :start]
 end
