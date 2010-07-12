@@ -72,7 +72,7 @@ LEGAL DISCLAIMER
   }
 #disclaimer h1 a {
   color: $bookmark_red;
-}
+  }
 #disclaimer h1:hover {
   text-decoration: underline;
   }
@@ -81,7 +81,6 @@ LEGAL DISCLAIMER
 SECTION
 
 ******************************/
-
 
 .featured .article {
   overflow: hidden; /* less awkward self-clear */
@@ -96,37 +95,32 @@ SECTION
 
 #sections .article {
   border-bottom: 1px dotted #cdcdcd;
-}
-
+  }
 .article .metadata {
-color: #7a838a;
-font-size: 1em;
-margin-bottom: .5em;
-}
-
+  color: #7a838a;
+  font-size: 1em;
+  margin-bottom: .5em;
+  }
 .article.with_photo .info {
-display: inline;
-float: left;
-position: relative;
-margin-left: 10px;
-margin-right: 10px;
-width: 460px;
-}
-
+  display: inline;
+  float: left;
+  position: relative;
+  margin-left: 10px;
+  margin-right: 10px;
+  width: 460px;
+  }
 .article.with_photo .photo {
-display: inline;
-float: left;
-position: relative;
-margin-left: 10px;
-margin-right: 10px;
-width: 160px;
-}
-
+  display: inline;
+  float: left;
+  position: relative;
+  margin-left: 10px;
+  margin-right: 10px;
+  width: 160px;
+  }
 .article.with_photo.on_left .photo {
   left: -480px;
   margin-right: 0;
   }
-
 .article.with_photo.on_left .info {
   left: 180px;
   margin-left: 0;
@@ -159,13 +153,12 @@ COMMENT PERIOD CLOSING
 #comments-closing-opening { clear: both; }
 #comments-closing-opening .header-nav { display: none; }
 .comments li {
-margin: 0;
-list-style-type: none;
-margin-bottom: 10px;
-overflow: auto;
-padding: 0;
-}
-
+  margin: 0;
+  list-style-type: none;
+  margin-bottom: 10px;
+  overflow: auto;
+  padding: 0;
+  }
 .group {
   clear: both;
   margin-bottom: 2em;
@@ -763,6 +756,12 @@ TABLES
   @include text-shadow(#fff, 1px, 1px, 1px);
   } 
 
+#entries .calendar td {
+  padding: 0;
+  }
+#entries .calendar td a {
+  font-weight: 700;
+  }
 /******************************
 
 DAILY ISSUE

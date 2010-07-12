@@ -36,7 +36,8 @@ body {
 #entries.show h4,
 #entries.show h5,
 #entries.show h6 { clear: both; }
-a { color: $dark_blue; }
+
+a { color: $nytimes_blue; }
 a:focus,
 a:hover {
   color: darken($dark_blue_complement, 10%);
@@ -115,6 +116,9 @@ div.title_bar {
 div.title_bar h2 {
   @include apertura-condensed;
   }
+div.title_bar h2 a {
+  color: $powder_blue;
+  }  
 .title_bar .actions {
   position: absolute;
   right: 0;
@@ -244,7 +248,7 @@ BY DATE
 #entries.by_date h2.firstchild {
   margin-top: 0;
   }  
-#entries.by_date h3 {
+#entries.by_date #main h3 {
   font-size: 1.2em;
   margin: .5em 0 .5em 1em;
   text-transform: uppercase;
@@ -257,7 +261,7 @@ BY DATE
 #entries.by_date ul {
   list-style: none;
   }
-#entries.by_date dt a {
+#entries.by_date dt > a {
   font-weight: normal;
   }
 #entries.by_date .see {
@@ -287,7 +291,7 @@ BY DATE
   text-transform: none;
   top: 0;  
   }  
-#meta_toc span {
+.count_pill {
   background: lighten(#B3C2CF, 10%);
   @include border-radius(5px);
   font-size: 11px;
