@@ -8,7 +8,7 @@
   <% end %>
   
   <div class="actions">
-    <%= link_to 'Subscribe', events_search_path(params.except(:action).merge(:format => :ics, :order => 'date')), :class => 'button notext add_to_calendar' %>
+    <%= link_to 'Subscribe', events_search_path(params.except(:action).merge(:format => :ics, :order => 'date')), :class => 'add_to_calendar' %>
   </div>
   
 </div>
