@@ -18,12 +18,6 @@ BUTTONS / ICONS
 .button.list { margin: 0 .5em 0 0; }
 .button.list:last-child,
 .button.list.lastchild { margin: 0; }  
-.button.add_to_calendar {
-  background: #fff sprite-image('icons/add_to_calendar_half.png', 10px, 10px, 30px) no-repeat;
-  height:  image-height('icons/add_to_calendar_half.png');
-  width: image-width('icons/add_to_calendar_half.png');
-  }
-.button.add_to_calendar:hover { background: #fff sprite-image('icons/add_to_calendar_half_hover.png', 10px, 10px, 30px) no-repeat; }  
 .comments_close { /* TODO this doesn't belong here */
   background: sprite-image('icons/icon_comment.png', 0, 0, 20px) no-repeat;
   color: #6e6e6e;
@@ -78,6 +72,7 @@ BUTTONS / ICONS
 .button.social.reddit { background: sprite-image('social/24px/reddit.png', 0, 0, 50px); }
 .button.social.twitter { background: sprite-image('social/24px/twitter.png', 0, 0, 50px); }
 .button.format.pdf { background: sprite-image('icons/icon_pdf.png', 0, 0, 50px); }
+.button.format.pdf.small { background: sprite-image('icons/icon_pdf_small.png', 0, 0, 50px); line-height: 18px; padding-left: 17px; }
 .button.format.xml { background: sprite-image('icons/icon_xml.png', 0, 0, 50px); }
 .button.format.external { background: sprite-image('icons/icon_external.png', 0, 4px, 50px); }
 .button.format.external:hover { background: sprite-image('icons/icon_external_hover.png', 0, 4px, 20px); }
@@ -94,3 +89,14 @@ BUTTONS / ICONS
 .rss:hover {
   background: sprite-image('icons/icon_rss_hover.png', 0, 0, 50px) no-repeat;
   }
+  
+.add_to_calendar {
+  background: sprite-image('icons/add_to_calendar_half.png', 0, 0, 50px) no-repeat;
+  color: #6e6e6e;
+  font-size: 1.2em;
+  font-weight: bold;
+  line-height: image-height('icons/add_to_calendar_half.png');
+  padding: 5px 0 0 25px;
+  }
+.add_to_calendar:hover { background: sprite-image('icons/add_to_calendar_half_hover.png', 0, 0, 50px) no-repeat; }  
+  
