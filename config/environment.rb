@@ -12,7 +12,7 @@ Rails::Initializer.run do |config|
   # -- all .rb files in that directory are automatically loaded.
 
   # Add additional load paths for your own custom dirs
-  # config.load_paths += %W(  )
+  config.load_paths += %W( app/observers )
   
   # Gems go in RAILS_ROOT/Gemfile
   
@@ -25,7 +25,7 @@ Rails::Initializer.run do |config|
   # config.frameworks -= [ :active_record, :active_resource, :action_mailer ]
 
   # Activate observers that should always be running
-  # config.active_record.observers = :cacher, :garbage_collector, :forum_observer
+  config.active_record.observers = :issue_approval_observer
 
   # Set Time.zone default to the specified zone and make Active Record auto-convert to this zone.
   # Run "rake -D time" for a list of tasks for finding time zone names.
