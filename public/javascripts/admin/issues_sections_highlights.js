@@ -37,7 +37,7 @@ $(document).ready(function(){
         type: 'PUT',
         data: "section_highlight[new_position]=" + position,
         success: function() {
-          entry.addClass('highlighted');
+          $('#' + entry_id).addClass('highlighted');
         }
       })
     }
