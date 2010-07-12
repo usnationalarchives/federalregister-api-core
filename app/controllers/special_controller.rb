@@ -21,4 +21,9 @@ class SpecialController < ApplicationController
     
     render :template => "special/popular", :layout => false
   end
+  
+  def status
+    current_time_on_database = Entry.connection.select_values("SELECT NOW()").first
+    render :text => "Current time is: #{current_time_on_database}"
+  end
 end

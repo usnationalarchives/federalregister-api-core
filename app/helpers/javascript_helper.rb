@@ -9,7 +9,7 @@ module JavascriptHelper
   
   def jquery_ui_include_tag
     # if RAILS_ENV == 'development'
-      javascript_include_tag 'jquery-ui'
+      javascript_include_tag 'admin/jquery-ui'
     # else
     #   javascript_include_tag 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.6/jquery-ui.min.js'
     # end
