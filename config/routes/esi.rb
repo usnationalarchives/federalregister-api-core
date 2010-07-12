@@ -1,5 +1,7 @@
 ActionController::Routing::Routes.draw do |map|
   map.with_options(:quiet => true) do |quiet_map|
+    quiet_map.status '/status', :controller => "special", :action => "status"
+    
     # HOMEPAGE
     quiet_map.agency_highlight '/agency_highlight', :controller => 'special', :action => 'agency_highlight'
     quiet_map.popular_entries '/popular_entries', :controller => 'special', :action => 'popular_entries'
