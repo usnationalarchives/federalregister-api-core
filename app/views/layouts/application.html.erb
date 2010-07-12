@@ -13,15 +13,16 @@
     <script type="text/javascript" src="https://use.typekit.com/qbb7wou.js"></script>
     <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
       
-    <!--[if lt IE 9]>
-      <%= stylesheet_link_tag "ie", :media => :screen %>  
-    <![endif]-->
     
     <%= yield :head %>
     
     <%#= stylesheet_link_tag "reset", :media => :screen %>
     <%= stylesheet_link_tag "screen", :media => :screen %>
     <%= stylesheet_link_tag "print", :media => :print %>
+    
+    <!--[if lt IE 9]>
+      <%= stylesheet_link_tag "ie", :media => :screen %>  
+    <![endif]-->
     
     <%# HELP-DESIGN: Don't combine JS files yet; need a strategy to get the JS to the static server... %>
     <%= javascript_include_tag :all %>
