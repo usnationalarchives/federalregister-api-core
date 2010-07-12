@@ -1,4 +1,6 @@
-<% section_tag do %>
+<h1 class="title"><span>About the Federal Register</span></h1>
+
+<% section_tag(:id => 'content_area') do %>
 <h1 id="about">About FederalRegister.gov</h1>
 
 <p>The Office of the Federal Register (OFR) of the National Archives and Records Administration (NARA), and the U.S. Government Printing Office (GPO) jointly administer the FederalRegister.gov website.  The OFR/GPO partnership is developing an unofficial prototype of an XML-based edition of the daily Federal Register on this site.  In the prototype edition, Federal Register documents are organized and displayed in an easier to read format; we have also added various web tools and user aids designed to help people find material relevant to their interests.  We built this XML edition of the Federal Register to make it easier for citizens and communities to understand the regulatory process and to participate in Government decision-making.</p>
@@ -13,7 +15,7 @@
 <p>The Office of the Federal Register informs citizens of their rights and obligations, documents the actions of Federal agencies, and provides a forum for public participation in the democratic process.  Our publications provide access to a wide range of Federal benefits and opportunities for funding and contain comprehensive information about the various activities of the United States Government.  In addition, we administer the Electoral College for Presidential elections and the Constitutional amendment process.</p>
 
 <p>The Federal Register is updated daily by 6 a.m. and is published Monday through Friday, except Federal holidays, and consists of four types of entries.</p>
-<ul>
+<ul class="bullets">
   <li>Presidential Documents, including Executive orders and proclamations.</li>
   <li>Rules and Regulations, including policy statements and interpretations of rules.</li>
   <li>Proposed Rules, including petitions for rulemaking and other advance proposals.</li>
@@ -67,7 +69,7 @@ We are closed on Federal Holidays.</p>
 800 North Capitol Street, NW Suite 700 Washington DC 20001</p>
 
 <p>Use our North Capitol Street address for:</p>
-<ul>
+<ul class="bullets">
   <li>Pick-up and delivery by messenger or express courier</li>
   <li>Viewing public inspection documents in our reading room</li>
   <li>Appointments with our staff</li>
@@ -98,7 +100,7 @@ Telephone: 301-317-3953, 301-317-9635, 301-317-7940, and 301-317-9641<br />
 Fax: 301-317-6883</p>
 
 <h2>Directions to the Alternate OFR/GPO Work Site in Laurel, MD:</h2>
-<ul>
+<ul class="bullets">
   <li>From New York Ave in NW Washington, or the Washington Beltway (I-495), take the Baltimore-Washington Parkway north (MD-295).</li>
   <li>At the MD-197 (Laurel/Bowie) exit, take the ramp for Laurel 0.3 miles.</li>
   <li>Bear LEFT at Laurel/Bowie Road, and go 2.2 miles.</li>
@@ -107,13 +109,14 @@ Fax: 301-317-6883</p>
 </ul>
 
 <h2>Alternate Location in West Virginia at the NARA/OFR COOP Site</h2>
+
 <p>National Archives, Office of the Federal Register COOP Site<br />
 Building 494, Robert C. Byrd Hilltop Office Complex<br />
 610 State Route 956,  Rocket Center, WV, 26726<br />
 Telephone: 304-726-7800 (Operator), 304-726-7862, 304-726-7863</p>
 
 <h2>Directions to the NARA/OFR COOP Site in Rocket Center, WV:</h2>
-<ul>
+<ul class="bullets">
   <li>From the Washington Beltway (I-495):</li>
   <li>Take I-270 west toward Frederick</li>
   <li>Take exit 32 to merge onto I-70 west toward Hagerstown</li>
@@ -125,8 +128,9 @@ Telephone: 304-726-7800 (Operator), 304-726-7862, 304-726-7863</p>
 </ul>
 <% end -%>
 
-<% aside_tag do %>
-  <div class="aside_box">
+<% aside_tag(:id => 'sidebar') do %>
+  <div class="section TOC aside_box">
+    <h1 class="firstchild">On This Page</h1>
     <ul>
       <li><a href="#about">About FederalRegister.gov</a></li>
       <li><a href="#mission">Mission, Authority, and Vision for Public Participation</a></li>
