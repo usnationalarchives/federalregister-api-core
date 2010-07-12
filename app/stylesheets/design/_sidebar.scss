@@ -36,7 +36,11 @@ SIDEBAR
   background: $aside_box_background;
   border: 1px solid $aside_box_border;
   padding: 1em;
-  }  
+  }
+.aside_box.subscribe {
+  background: #fee9d7;
+  border: 1px solid #ff9f51;
+  }    
 .download_separator {
   border-bottom: 1px solid #ccc;
   margin-bottom: .5em;
