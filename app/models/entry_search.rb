@@ -19,7 +19,28 @@ class EntrySearch < ApplicationSearch
   
   define_place_filter :place_ids
   
-  attr_reader :start_date, :end_date
+  attr_reader :start_date, :end_date, :date
+  
+  def date=(val)
+    if val.present?
+      @date = val
+      begin
+        parsed_val = Date.parse(val)
+      rescue
+        @errors << "Could not understand publication date."
+      else
+        add_filter(
+          :value => parsed_val.to_time.utc.beginning_of_day.to_i .. parsed_val.to_time.utc.end_of_day.to_i,
+          :name => "on #{parsed_val}",
+          :condition => :date,
+          :label => "Published",
+          :sphinx_type => :conditions,
+          :sphinx_attribute => :publication_date
+        )
+      end
+    end
+  end
+  
   def start_date=(val)
     if val.present?
       @start_date = val
@@ -42,7 +63,7 @@ class EntrySearch < ApplicationSearch
           :value => parsed_val.to_time.utc.beginning_of_day.to_i .. end_date.utc.end_of_day.to_i,
           :name => name,
           :condition => :start_date,
-          :label => "Date",
+          :label => "Published",
           :sphinx_type => :conditions,
           :sphinx_attribute => :publication_date
         )
