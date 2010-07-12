@@ -5,6 +5,10 @@ $(document).ready(function() {
       trackState: true,
       srcPath: '/blank.html'
     });
+    
+    $(".TOC a").bind('click', function(event) {
+      $(window).scrollTop( $("#comments-closing-opening").offset().top);
+    });
   }
   
 });
