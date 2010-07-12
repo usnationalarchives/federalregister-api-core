@@ -30,14 +30,16 @@ SECTION VIEW
 ******************************/
 
 #sections #content_area,
-#topics #content_area {
+#topics #content_area,
+#pages #content_area {
   @include grid(11, 16);
   @include grid-suffix(1, 16);
   @include alpha;  
   }
   
 #sections #sidebar,
-#topics #sidebar {
+#topics #sidebar,
+#pages #sidebar {
   @include grid(4, 16);
   @include omega;
   }
