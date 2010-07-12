@@ -9,8 +9,7 @@
 
 <% @agencies.each do |agency| %>
   <div class="title_bar">
-    <%# HELP-DESIGN: the count here might need styling %>
-    <h2 id="<%= agency.slug %>"><%= link_to agency.name, agency_path(agency) %> <span class="count"><%= agency.entries.to_a.size %></span></h2>
+    <h2 id="<%= agency.slug %>"><%= link_to agency.name, agency_path(agency) %></h2>
     <a href="#entries" class="back_to_top">Back to Top</a>
   </div>
   
@@ -19,7 +18,7 @@
     <ul>
       <% sub_agencies_on_this_page.each do |sub_agency| %>
         <%# HELP-DESIGN: the count here should be styled %>
-        <li><span class="see">See</span> <%= link_to sub_agency.name, '#' + sub_agency.slug %> <span class="count"><%= sub_agency.entries.to_a.size %></span></li>
+        <li><span class="see">See</span> <%= link_to sub_agency.name, '#' + sub_agency.slug %> <span class="count_pill"><%= sub_agency.entries.to_a.size %></span></li>
       <% end %>
     </ul>
   <% end %>
@@ -79,7 +78,7 @@
         <% @agencies.each do |agency| %>
           <li>
             <a href="#<%= agency.slug %>"><%= agency.name %></a> 
-            <span><%= agency.entries.to_a.size %></span>
+            <span class="count_pill"><%= agency.entries.to_a.size %></span>
           </li>
         <% end -%>
       </ul>

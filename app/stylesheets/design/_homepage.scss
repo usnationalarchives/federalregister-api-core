@@ -143,10 +143,8 @@ PROMO ITEMS
   padding-bottom: 1em;
   }  
 #slideshow .figure {
-  background: none;
   float: left;
   margin: 0 1em 0 0;
-  padding :0;
   }
 #slideshow .figcaption {
   bottom: 7px;
@@ -203,11 +201,6 @@ NEWS
 
 ******************************/
 
-#news {
-  background: url(/images/news_bg.png) no-repeat;
-  height: image-height('news_bg.png');
-  position: relative;
-  }
 .celebrating {
   @include replace-text-with-dimensions("celebrating_75.png", 0, 0);
   clear: both;
@@ -222,12 +215,15 @@ NEWS
   top: 0;
   width: image-width('icons/banner_wrap.png');
   }  
-#news p {
-  color: #003768;
+/*#news p {
   @include gesta;
   line-height: 1.3;
   margin-top: 2.5em;
-  padding: 0 1em;
+  }*/
+.home #disclaimer {
+  float: left;
+  margin-left: 30px;
+  width: 265px;
   }
   
 /******************************
