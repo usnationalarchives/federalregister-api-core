@@ -68,13 +68,13 @@ SEARCH
   top: -47px;
   }  
 #header #search {
-  background: sprite-image('icons/search_bg.png', 0, 0, 50px) no-repeat;
-  height: image-height('icons/search_bg.png');
+  background: sprite-image('icons/search_bg_wide.png', 0, 0, 50px) no-repeat;
+  height: image-height('icons/search_bg_wide.png');
   overflow: hidden; /* TODO for IE */
   position: absolute;
   right: 0;
   top: 0;
-  width: image-width('icons/search_bg.png');
+  width: image-width('icons/search_bg_wide.png');
   }
 #header #search input[type='text'] {
   border: 1px solid darken($golden, 10%);
@@ -85,7 +85,7 @@ SEARCH
   position: absolute;
   padding: 5px;
   top: 6px;
-  width: 175px;
+  width: 150px;
   }
 #header #search > label {
   display: none;
@@ -99,18 +99,25 @@ SEARCH
   cursor: pointer;
   height:  image-height('icons/header_search_button.png');  
   @include hide-text;
-  right: 35px;
+  left: 185px;
   position: absolute;
   top: 6px;
   width:  image-width('icons/header_search_button.png');    
   }
-#header #browse {
-  bottom: 0;
-  @include horizontal-list;
-  left: 35px;
+#header #browse_container {
+  top: 7px;
+  right: 35px;
   position: absolute;
   }
-
+#header #browse_container a {
+  color: #fff;
+  display: block;
+  line-height: 1;
+  }
+#header #browse_container a:hover {
+  text-decoration: underline;
+  }
+  
 /******************************
 
 LOGO
