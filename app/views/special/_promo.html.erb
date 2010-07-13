@@ -13,10 +13,10 @@
     <div class="container handle">
       <% sections.each do |section| %>
         <div id="promo_<%= section.slug %>">
-            <% entry = section.highlighted_entries.first %>
+            <% entry = section.highlighted_entries(publication_date).first %>
             <% if entry %>
               <%= render :partial => 'special/entry_with_abstract', :locals => {:entry => entry} %>  
-              <%= render :partial => 'stats', :locals => {:section => section}  %>
+              <%= render :partial => 'special/stats', :locals => {:section => section}  %>
             <% end %>
         </div>  
       <% end -%>

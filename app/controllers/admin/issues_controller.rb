@@ -5,4 +5,13 @@ class Admin::IssuesController < AdminController
     @sections = Section.all
     @issue_approval = IssueApproval.find_by_publication_date(@publication_date)
   end
+  
+  def preview
+    @sections = Section.all
+    @issue = Issue.new(Date.parse(params[:id]))
+    @preview = true
+    @faux_controller = "special"
+    @faux_action = "home"
+    render :template => "special/home", :layout => 'application'
+  end
 end
