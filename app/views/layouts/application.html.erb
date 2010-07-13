@@ -12,11 +12,13 @@
     
     <script type="text/javascript" src="https://use.typekit.com/qbb7wou.js"></script>
     <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
-      
     
+    <!--[if lt IE 9]>
+    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
     <%= yield :head %>
     
-    <%#= stylesheet_link_tag "reset", :media => :screen %>
     <%= stylesheet_link_tag "screen", :media => :screen %>
     <%= stylesheet_link_tag "print", :media => :print %>
     
@@ -24,6 +26,11 @@
       <%= stylesheet_link_tag "ie", :media => :screen %>  
     <![endif]-->
     
+    <!--[if lt IE 7]>
+    <script src="http://ie7-js.googlecode.com/svn/version/2.1(beta4)/IE8.js"></script>
+    <%= stylesheet_link_tag "ie6", :media => :screen %>
+    <![endif]-->
+     
     <%# HELP-DESIGN: Don't combine JS files yet; need a strategy to get the JS to the static server... %>
     <%= javascript_include_tag :all %>
 
@@ -43,6 +50,10 @@
             <%= text_field_tag "conditions[term]", nil, :title => 'Search Articles' %> <%# , :placeholder =>  "Search Articles" %>
             <%= submit_tag 'Go', :class => "search_btn" %>
           </form>
+          <div id="browse_container">
+            <%= link_to "Browse Agencies", agencies_path %>
+            <%= link_to "Browse Topics", topics_path %>
+          </div>
         </div>
       </div>  
       

@@ -41,6 +41,8 @@
     <%= link_to 'Subscribe', highlighted_entries_section_path(@section, :format => :rss), :class => 'rss' %>
   </div>
   
+  <%= render :partial => 'special/legal_disclaimer' %>
+  
   <%= render :esi => popular_entries_section_path(@section) %>
   <%= render :esi => popular_topics_section_path(@section) %>
   
