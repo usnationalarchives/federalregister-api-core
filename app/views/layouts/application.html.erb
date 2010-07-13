@@ -31,7 +31,7 @@
   
   </head>
 
-  <body id="<%= controller.controller_name %>" class="<%= controller.action_name %>">
+  <body id="<%= @faux_controller || controller.controller_name %>" class="<%= @faux_action || controller.action_name %>">
     
     <% header_tag(:id => 'header') do %>
       <%= render :partial => 'layouts/navigation', :locals => {:last_date => @last_date, :search_term => @search_term} %>    
