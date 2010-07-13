@@ -6,10 +6,7 @@
 
 <h1 class="title"><span><%= @section.title %></span></h1>
 
-<%# HELP-DESIGN: make this a (little) better %>
-<% if @preview %>
-<h1 id="preview_alert" style="background-color: pink; border: 2px solid red; align: center">This is only a preview!</h1>
-<% end %>
+<%= render(:partial => "special/preview_warning") if @preview %>
 
 <div id="content_area">
 
