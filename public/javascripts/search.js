@@ -21,5 +21,5 @@ $(document).ready(function(){
     '</div>'].join("\n")
     );
   })
-  $('#modal').centerScreen().jqm({ajax:'@href', trigger:'a.add_to_calendar'});
+  $('#modal').centerScreen().jqm({ajax:'@href', trigger:'.results a.add_to_calendar'});
 });
