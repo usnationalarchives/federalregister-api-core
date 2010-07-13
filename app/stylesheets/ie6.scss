@@ -1,0 +1,24 @@
+@import "compass";
+
+#special #main #top_news_promo ul.section_nav li,
+#special #main #top_news_promo ul.section_nav li a,
+#special #main .with_icon .header_with_icon,
+#special #main .fr_section,
+#main #disclaimer h1,
+#main .rss  {
+  background-image: none;
+  padding-left: 0;
+  }
+.row {
+  clear: both;
+  }
+#sections #main .article {
+  border-bottom: none;
+  }
+#header h1 {
+  background-image: none;
+  filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/images/logotype.png', sizingMethod='image');
+  }
+#main .trigger {
+  display: none;
+  } 
