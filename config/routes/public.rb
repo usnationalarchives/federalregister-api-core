@@ -93,7 +93,7 @@ ActionController::Routing::Routes.draw do |map|
   end
   
   # page routing
-  map.page ':slug', :controller => "pages", :action => "show"
+  map.page ':path', :requirements => {:path => /[a-zA-Z_\/-]+/}, :controller => "pages", :action => "show"
   
   # true section routes
   map.about_section ":slug/about", :controller => "sections", :action => "about"
