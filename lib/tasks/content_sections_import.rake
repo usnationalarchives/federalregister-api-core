@@ -2,9 +2,7 @@ namespace :content do
   namespace :sections do 
     desc "import section configuration"
     task :import => :environment do
-      # ApplicationModel.connection.execute("TRUNCATE sections")
       ApplicationModel.connection.execute("TRUNCATE agencies_sections")
-      ApplicationModel.connection.execute("TRUNCATE section_assignments")
       
       sections = YAML::load(File.open("#{RAILS_ROOT}/data/sections.yml"))
       sections.each do |attributes|
@@ -28,15 +26,21 @@ namespace :content do
         end
       end
       
-      FasterCSV.foreach("data/sections_agencies.csv", :headers => :first_row) do |line|
-        agency = Agency.find_by_name!(line['agency_name'].strip)
-        %w(section_1_title section_2_title section_3_title).each do |name|
+      FasterCSV.foreach("data/agencies_sections.csv", :headers => :first_row) do |line|
+        agency = Agency.find_by_name(line['agency_name'].strip)
+        unless agency
+          puts "COULD NOT FIND #{line['agency_name']}"
+          next
+        end
+        
+        %w(section_1_title section_2_title).each do |name|
           if line[name].present?
             section = Section.find_by_title!(line[name])
-            section.agencies << agency
+            section.agencies << agency unless section.agencies.include?(agency)
           end
         end
       end
+            
     end
   end
 end
