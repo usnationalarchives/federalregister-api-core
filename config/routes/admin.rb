@@ -13,7 +13,7 @@ ActionController::Routing::Routes.draw do |map|
     admin.resources :sections
     admin.resources :agency_highlights
     
-    admin.resources :issues do |issue|
+    admin.resources :issues, :member => {:preview => :get} do |issue|
       issue.resource :approval, :controller => "issues/approvals"
       issue.resources :entries, :controller => "issues/entries"
       issue.resources :eventful_entries, :controller => "issues/eventful_entries" do |entry|

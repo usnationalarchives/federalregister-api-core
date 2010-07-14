@@ -44,4 +44,11 @@ class ApplicationController < ActionController::Base
       expires_in time, :public => true
     end
   end
+  
+  def template_exists?(template_name = default_template_name)
+    self.view_paths.find_template(template_name, response.template.template_format)
+  rescue ActionView::MissingTemplate
+    false
+  end
+  
 end

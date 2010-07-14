@@ -3,7 +3,5 @@
     <% Section.all.each do |section| %>
       <li class="<%= 'one_word' if section.title.split(' ').count == 1 %> <%= section.slug %>"><%= link_to section.title, section_path(section) %></li>
     <% end %>
-    <li><%= link_to "Browse <span>Agencies</span>", agencies_path %></li>
-    <li><%= link_to "Browse <span>Topics</span>", topics_path %></li>
   </ul>
 <% end -%>

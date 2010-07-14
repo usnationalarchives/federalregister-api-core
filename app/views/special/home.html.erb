@@ -2,20 +2,22 @@
 <% feed_autodiscovery highlighted_entries_path(:format => :rss), "Featured Articles from the Federal Register" %>
 <% add_column_class('home') %>
 
-<h1 class="title"><span><%= IssueApproval.latest_publication_date.try(:to_s, :wday_and_pretty_date) %></span></h1>
+<h1 class="title"><span><%= @issue.publication_date.try(:to_s, :wday_and_pretty_date) %></span></h1>
+
+<%= render(:partial => "special/preview_warning") if @preview %>
 
 <%= render :partial => "entries/statistics_by_date", :locals => {:issue => @issue, :label => "Current Issue"} %>
 
 <div class="row">
   <% section_tag(:id => 'top_news_promo') do %>
-    <%= render :partial => 'promo', :locals => {:sections => @sections}  %>
+    <%= render :partial => 'special/promo', :locals => {:sections => @sections, :publication_date => @issue.publication_date}  %>
   <% end -%>
 
   <% section_tag(:id => 'news') do %>
-    <%= render :partial => 'celebrating_75_years' %>
+    <%= render :partial => 'special/celebrating_75_years' %>
   <% end -%>
   
-  <%= render :partial => 'legal_disclaimer' %>
+  <%= render :partial => 'special/legal_disclaimer' %>
   
 </div>
 
@@ -31,10 +33,10 @@
 
 <div class="row">
   <% section_tag(:id => 'learn', :class => 'with_icon') do %>
-    <%= render :partial => 'about_fr_articles' %>
+    <%= render :partial => 'special/about_fr_articles' %>
   <% end -%>
 </div>
 
 <div class="row">
-  <%= render :partial => 'section_news', :locals => {:sections => @sections} %>
+  <%= render :partial => 'special/section_news', :locals => {:sections => @sections, :publication_date => @issue.publication_date} %>
 </div>
