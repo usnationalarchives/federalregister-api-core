@@ -27,13 +27,13 @@
     <p>Issue approved on <%= @issue_approval.created_at %>
       <% if @issue_approval.cache_manually_expired? %>
         (and manually expired at <%= @issue_approval.updated_at %>)
-      <% end %>. Any changes made at this time may go live without additional approval. <%= link_to 'Expire Cache', admin_issue_approval_path(@publication_date.to_s(:db)), :method => :put %></p>
+      <% end %>. Any changes made at this time may go live without additional approval. <%= link_to 'Expire Cache', admin_issue_approval_path(@publication_date.to_s(:iso)), :method => :put %></p>
   </div>
     
   <% else %>
-    <%= link_to 'Approve this issue', admin_issue_approval_path(@publication_date.to_s(:db)), :method => :post, :confirm => "Are you sure you wish to approve this issue?" %>
+    <%= link_to 'Approve this issue', admin_issue_approval_path(@publication_date.to_s(:iso)), :method => :post, :confirm => "Are you sure you wish to approve this issue?" %>
   <% end %>
-    
+  <%= link_to "Homepage Preview", preview_admin_issue_path(@publication_date.to_s(:iso)), :target => "_blank" %>
   <%# TODO HELP-DESIGN figure this out %>  
   <% title "Entries not assigned to a section" %>
   

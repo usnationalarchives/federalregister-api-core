@@ -5,7 +5,7 @@
 
     <ul class="bullets">
       <%# TODO HELP-RUBY should we make these 3 latest %>
-      <% entries = section.highlighted_entries[1..3] %>
+      <% entries = section.highlighted_entries(publication_date)[1..3] %>
       <% if entries %>
         <% entries.each do |entry| %>
           <li><%= link_to entry.title, entry_path(entry) %></li>
