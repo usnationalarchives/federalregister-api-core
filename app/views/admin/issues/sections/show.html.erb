@@ -40,6 +40,7 @@
       <p>
         <span class="length">Length: <%= pluralize entry.human_length, 'page' %></span>
         <span class="entry_type">Type: <%= entry.entry_type %></span>
+        <span class="document_number">Document Number: <%= link_to entry.document_number, entry_path(entry), :target => "_blank" %></span>
         <% if entry.significant? %>
           <span class="significant">Economically Significant</span>
         <% end %>
