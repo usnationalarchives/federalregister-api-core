@@ -122,8 +122,7 @@
       <xsl:attribute name="data-page">
         <xsl:value-of select="@P" />
       </xsl:attribute>
-<!--       Printed Page
-      <xsl:value-of select="format-number(@P, '###,###')" /> -->
+      <xsl:text> </xsl:text>
     </span>
   </xsl:template>
   
