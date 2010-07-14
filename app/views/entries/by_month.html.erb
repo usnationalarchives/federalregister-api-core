@@ -3,8 +3,8 @@
       :year => @date.year,
       :month => @date.month,
       :table_class => "calendar",
-      :previous_month_text => link_to_unimplemented('&laquo; prev', :class => 'prev'),
-      :next_month_text =>     link_to_unimplemented('next &raquo;', :class => 'next'),
+      :previous_month_text => link_to_if(@date.months_ago(1) > Entry.earliest_publication_date, '&laquo; prev', entries_by_month_path(@date.months_ago(1)), :class => 'nav prev'),
+      :next_month_text =>     link_to_if(@date.months_since(1) < Entry.latest_publication_date, 'next &raquo;', entries_by_month_path(@date.months_since(1)), :class => 'nav next'),
       :abbrev => (0..0)
   ) do |d|
     if d.wday == 0 || d.wday == 6
@@ -17,4 +17,4 @@
       [d.mday, {:class => "holiday"}]
     end
   end
- %>
+%>
