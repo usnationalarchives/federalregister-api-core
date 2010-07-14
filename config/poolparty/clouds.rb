@@ -35,7 +35,7 @@ def chef_cloud_attributes(instance_type)
     @worker_server_address   = '10.245.106.31'  #'ip-10-245-106-31.ec2.internal'
     @database_server_address = '10.194.109.139' #'ip-10-194-109-139.ec2.internal'
     @sphinx_server_address   = '10.194.109.139' #'ip-10-194-109-139.ec2.internal'
-    @app_server_address      = '10.243.41.203'  #'ip-10-243-41-203.ec2.internal'
+    @app_server_address      = ['10.243.41.203', '10.196.117.123', '10.202.162.96', '10.212.73.172']  #'ip-10-243-41-203.ec2.internal'
   end    
               
   return {
@@ -490,9 +490,10 @@ pool :fr2 do
     using :ec2
     keypair "/Users/rburbach/Documents/AWS/FR2/gpoEC2.pem"
     user "ubuntu"
-    image_id "ami-7d43ae14" #Ubuntu 9.10 Karmic Canonical, ubuntu@ EBS-based 64bit
+    #image_id "ami-7d43ae14" #Ubuntu 9.10 Karmic Canonical, ubuntu@ EBS-based 64bit
+    image_id "ami-de806bb7" #FR2 Basic App Server
     availability_zones ['us-east-1d']
-    instances 1
+    instances 4
     instance_type 'm1.large'
     
     
@@ -519,7 +520,19 @@ pool :fr2 do
       attributes chef_cloud_attributes('test').recursive_merge(
         :chef => {
                    :roles => ['app']
-                 }
+                 },
+        :passenger_enterprise => {
+                                   :pool_idle_time => 100000,
+                                   :max_requests   => 10000,
+                                   :max_pool_size  => 90
+                                 },
+        :apache => {
+                     :prefork => {
+                                  :startservers        => 128,
+                                  :minspareservers     => 32,
+                                  :maxspareservers     => 128
+                                 }
+                   }
         )
             
     end
