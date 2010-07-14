@@ -322,6 +322,12 @@ class Entry < ApplicationModel
     entries
   end
   
+  def self.earliest_publication_date
+    with_exclusive_scope do
+      Entry.find(:first, :select => "publication_date", :order => "publication_date").publication_date
+    end
+  end
+  
   def self.latest_publication_date
     with_exclusive_scope do
       Entry.find(:first, :select => "publication_date", :order => "publication_date DESC").publication_date
