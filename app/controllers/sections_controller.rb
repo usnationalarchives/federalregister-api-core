@@ -43,7 +43,7 @@ class SectionsController < ApplicationController
     @section = Section.find_by_slug!(params[:slug])
   end
   
-  def highlighted
+  def highlighted_entries
     cache_for 1.day
     @section = Section.find_by_slug!(params[:slug])
     
