@@ -10,7 +10,7 @@
     
     <div class="header group <%= @agency.logo_file_name.present? ? 'with_image' : 'without_image' %>">
       <% if @agency.logo_file_name.present? %>
-        <%= image_tag @agency.logo.url(:medium), :width => 100, :height => 100, :class => 'agency_seal' %>
+        <%= image_tag @agency.logo.url(:medium), :class => 'agency_seal' %>
       <% end %>
       <h1><%= @agency.name %></h1>
     </div>
