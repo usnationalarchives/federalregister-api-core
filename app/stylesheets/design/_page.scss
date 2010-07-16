@@ -353,12 +353,12 @@ p:target {
   list-style: none;
   margin: 0 10px 1em 0;
   }
-.table_of_graphics li.clear {
+.table_of_graphics li.start_of_row {
+  clear: both;
+  }
+.table_of_graphics li.end_of_row {
   margin-right: 0;
   }
-.table_of_graphics li.clear + li {
-  clear: both;
-  }  
 #fulltext_content_area p {
   text-indent: 2em;
   }

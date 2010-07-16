@@ -27,7 +27,7 @@
 </div>
 
 <% aside_tag(:id => "sidebar") do %>
-  <%= link_to 'Subscribe', topic_path(@topic, :format => :rss), :class => 'button rss' %>
+  
   <% section_tag(:class => 'TOC aside_box') do %>  
     <h1>On This Page</h1>
     <ul>
@@ -35,4 +35,10 @@
       <li><%= link_to 'Most Cited Articles', '#most_cited' %></li>
     </ul>
   <% end -%>
+  
+  <div class='aside_box subscribe'>  
+    <%= link_to 'Subscribe', topic_path(@topic, :format => :rss), :class => 'rss' %>
+  </div>
+  
+  <%= render :partial => 'special/legal_disclaimer' %>
 <% end -%>
