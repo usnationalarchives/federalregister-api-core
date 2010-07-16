@@ -10,7 +10,6 @@
   }
 .calendar .monthName {
   font-size: 1.3em;
-  
   }  
 .calendar td a {
   display: block;
@@ -26,7 +25,6 @@
 .calendar tbody td {
   border: 1px solid #fff;
   }
-   
 .calendar .weekend {
   background: #cdcdcd;
   } 
@@ -37,15 +35,15 @@
   background: $pale_green;
   }
 .calendar .published a:hover {
-  background: $green;  
-  color: #fff;
-  }  
-.calendar .current a {
+  background: $golden;  
   color: #fff;
   }  
 .calendar .current {
-  background: $golden;
+  background: $green;
   }
+.calendar .current a {
+  color: #fff;
+  }  
 .calendar .otherMonth {
   background: #eee;
   }  
