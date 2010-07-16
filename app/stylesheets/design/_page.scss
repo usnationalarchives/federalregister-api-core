@@ -24,7 +24,8 @@ ul.bullets  li {
 .bullets li.lastchild {
   margin-bottom: 0;
   } 
- 
+.skip_to_content { display: none; }
+
 /******************************
 
 DECORATIONS
@@ -61,6 +62,11 @@ LEGAL DISCLAIMER
   border: 1px solid $bookmark_red;
   padding: .5em .5em .25em;
   }
+.home  #disclaimer {
+  background: none;
+  border: none;
+  padding: 0;
+  }  
 #disclaimer h1 {
   background: sprite-image('icons/disclaimer.png', 0, 0, 50px) no-repeat;
   color: $bookmark_red;
@@ -76,6 +82,10 @@ LEGAL DISCLAIMER
 #disclaimer h1:hover {
   text-decoration: underline;
   }
+#print-disclaimer {
+  display: none;
+  }  
+  
 /******************************
 
 SECTION
@@ -330,14 +340,25 @@ p:target {
 #entries.show .table_of_contents .level_2 {
   margin-left: 1em;
   }
-
 #entries.show .table_of_contents .level_3 {
   margin-left: 2em;
   }  
 #entries.show .body_column p:first-child,
 #entries.show .body_column p.firstchild {
   text-indent: 0;
-  }  
+  }
+.table_of_graphics li {
+  background: none;
+  float: left;
+  list-style: none;
+  margin: 0 10px 1em 0;
+  }
+.table_of_graphics li.start_of_row {
+  clear: both;
+  }
+.table_of_graphics li.end_of_row {
+  margin-right: 0;
+  }
 #fulltext_content_area p {
   text-indent: 2em;
   }
@@ -715,7 +736,8 @@ TOPIC LIST
 TABLES
 
 ******************************/
-#entries .table_title {
+
+#entries.show .table_title {
   @include linear-gradient(color-stops(#f8f8f8, #cdcdcd));
   border: 1px solid #eee;  
   border-bottom: 1px solid #bbb;
@@ -726,13 +748,13 @@ TABLES
   padding: .5em;
   @include text-shadow(#ddd, 1px, 1px, 1px);  
   }
-#entries table {
+#entries.show table {
   border-collapse:separate;
   border: 1px solid #eee;  
   border-top: none;
   width: 100%;
   }
-#entries table td {
+#entries.show table td {
   @include linear-gradient(color-stops(#fff 80%,#f8f8f8));
   border-left: 1px solid #fff;
   border-right: 1px solid #eee;  
@@ -740,13 +762,13 @@ TABLES
   border-bottom: 1px solid #eee; 
   padding: .5em 1.618em .5em .5em;
   }
-#entries table tr:hover td {
+#entries.show table tr:hover td {
   background: #F6F9FB;
   /*@include linear-gradient(color-stops(#fff 20%,#f8f8f8));*/
   border-left: 1px solid lighten(#F6F9FB, 2%);  
   border-right: 1px solid darken(#F6F9FB, 2%);
   }  
-#entries table thead th {
+#entries.show table thead th {
   background: #F6F9FB;
   @include linear-gradient(color-stops(#F6F9FB,#e8ebed));
   border-top: 1px solid #fff;
@@ -759,12 +781,6 @@ TABLES
   @include text-shadow(#fff, 1px, 1px, 1px);
   } 
 
-#entries .calendar td {
-  padding: 0;
-  }
-#entries .calendar td a {
-  font-weight: 700;
-  }
 /******************************
 
 DAILY ISSUE

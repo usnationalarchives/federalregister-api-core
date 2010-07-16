@@ -1,8 +1,16 @@
 #modal,
 .back_to_top,
-.read_more {
+.read_more,
+.skip_to_content {
   display: none;
   }
 .section {
   border-bottom: 3px double #000;
+  }
+  
+#print-disclaimer {
+  border: 1px dotted #ccc;
+  font-size: 10px;
+  margin: 0 1em 1em 1em;
+  padding: 1em;
   }
