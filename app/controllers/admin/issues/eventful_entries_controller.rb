@@ -5,8 +5,7 @@ class Admin::Issues::EventfulEntriesController < AdminController
     @entries = EntrySearch.new(
       :conditions => {
         :term => '"public meeting"',
-        :start_date => @publication_date.to_s(:db),
-        :end_date => @publication_date.to_s(:db)
+        :date => @publication_date.to_s
       },
       :per_page => 200,
       :match_mode => :extended
