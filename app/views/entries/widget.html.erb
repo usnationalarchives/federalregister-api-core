@@ -2,7 +2,7 @@
   <ul>
   <% @search.entries.each do |entry| %>
     <li class="<%= cycle('even', 'odd') %>">
-      <%= link_to truncate(entry.title, :length => 70), entry_path(entry), :class => 'title' %>
+      <%= link_to truncate_words(entry.title, :length => 70), entry_path(entry), :class => 'title' %>
       
       <div class="arrowholder">
         <a class="arrow" href="#"></a>
@@ -12,7 +12,7 @@
     
         <dl>
           <dt>Title</dt>
-          <dd><%= link_to truncate(entry.title, :length => 200), entry_path(entry) %></dd>
+          <dd><%= link_to truncate_words(entry.title, :length => 200), entry_path(entry) %></dd>
           
           <% if entry.agency %>
           <dt>Agency</dt>

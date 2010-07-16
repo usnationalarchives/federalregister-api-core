@@ -1,6 +1,6 @@
 module EntryHelper
   def entry_title(entry)
-    truncate(entry.title, :length => 100)
+    truncate_words(entry.title, :length => 100)
   end
   
   def agency_names(entry)
