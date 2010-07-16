@@ -16,12 +16,7 @@ class Admin::Issues::EventfulEntriesController < AdminController
     @publication_date = Date.parse(params[:issue_id])
     @entry = Entry.published_on(@publication_date).find_by_document_number!(params[:id])
     
-    if RAILS_ENV == 'development'
-      @entry_text =  +
-        render_to_string( :partial => "entries/full_text", :locals => {:entry => @entry} )
-      @dates = PotentialDateExtractor.extract(@entry_text)
-    else
-    end
+    @entry_text = get_abstract(@entry) + get_full_text(@entry)
     
     placemaker = Placemaker.new(:application_id => ENV['yahoo_placemaker_api_key'])
     if @entry.full_xml
@@ -43,7 +38,7 @@ class Admin::Issues::EventfulEntriesController < AdminController
     if RAILS_ENV == 'developxment'
       render_to_string( :partial => "entries/abstract", :locals => {:entry => @entry} )
     else
-      c = Curl::Easy.new('http://static.fr2.ec2.internal/' + entry_abstract_path(entry))
+      c = Curl::Easy.new('http://static.fr2.ec2.internal' + entry_abstract_path(entry))
       c.http_get
       c.body_str
     end
@@ -53,7 +48,7 @@ class Admin::Issues::EventfulEntriesController < AdminController
     if RAILS_ENV == 'developmxent'
       render_to_string( :partial => "entries/full_text", :locals => {:entry => @entry} )
     else
-      c = Curl::Easy.new('http://static.fr2.ec2.internal/' + entry_full_text_path(entry))
+      c = Curl::Easy.new('http://static.fr2.ec2.internal' + entry_full_text_path(entry))
       c.http_get
       c.body_str
     end
