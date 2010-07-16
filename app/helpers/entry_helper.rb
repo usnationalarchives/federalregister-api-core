@@ -15,4 +15,13 @@ module EntryHelper
   def issue_pdf_url(date)
     "http://www.gpo.gov/fdsys/pkg/FR-#{date.to_s(:to_s)}/pdf/FR-#{date.to_s(:to_s)}.pdf"
   end
+  
+  def days_remaining(date)
+    num_days = @entry.comments_close_on - Date.today
+    if num_days > 0
+      "in " + pluralize(num_days, 'day')
+    else
+      'today'
+    end
+  end
 end

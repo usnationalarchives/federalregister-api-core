@@ -21,7 +21,8 @@
 
   <% end %>  
     
-  <% aside_tag(:id => 'sidebar') do %>  
+  <% aside_tag(:id => 'sidebar') do %>
+    
     <% section_tag(:class => 'TOC aside_box') do %>  
       <h1>On This Page</h1>
       <ul>
@@ -38,6 +39,12 @@
         <% end %>
       </ul>
     <% end -%>
+    
+    <div class='aside_box subscribe'>  
+      <%= link_to 'Subscribe', agency_path(@agency, :format => :rss), :class => 'rss' %>
+    </div>
+    
+    <%= render :partial => 'special/legal_disclaimer' %>
     
     <% if @agency.parent %>
       <% section_tag(:class => 'parent_agencies') do %>  
