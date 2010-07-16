@@ -39,6 +39,8 @@
       </ul>
     <% end -%>
     
+    <%= render :partial => 'special/legal_disclaimer' %>
+    
     <% if @agency.parent %>
       <% section_tag(:class => 'parent_agencies') do %>  
         <h1 class="title_bar">Parent Agency</h1>
