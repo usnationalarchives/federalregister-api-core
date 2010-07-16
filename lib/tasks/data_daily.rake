@@ -2,6 +2,7 @@ namespace :data do
   task :daily => %w(
     data:daily:catch_up
     content:entries:import:regulations_dot_gov:tardy
+    remote:sphinx:rebuild
     tmp:cache:clear
     sitemap:refresh
   )
