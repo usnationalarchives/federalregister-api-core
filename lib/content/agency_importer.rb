@@ -23,7 +23,12 @@ module Content
       end
       
       agencies_with_parents.each_pair do |agency, parent_name|
-        agency.parent = Agency.find_by_name(parent_name)
+        parent_agency = Agency.find_by_name(parent_name)
+        if parent_agency != agency
+          agency.parent = parent_agency
+        else
+          agency.parent = nil
+        end
         agency.save!
       end
     end
