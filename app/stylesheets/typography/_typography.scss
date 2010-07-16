@@ -127,7 +127,7 @@ div.title_bar h2 a {
   }
 .small_stack {
   color: $dark_blue;
-  @include inline-block;
+  display: inline-block;
   font-size: .4em;
   line-height: 1em;
   margin-right: .5em;
