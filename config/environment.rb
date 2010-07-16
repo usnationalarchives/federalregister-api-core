@@ -1,4 +1,5 @@
 # Be sure to restart your server when you modify this file
+ENV["RAILS_ASSET_ID"] = `git log -n 1 --pretty=format:%H`
 
 # Specifies gem version of Rails to use when vendor/rails is not present
 RAILS_GEM_VERSION = '2.3.5' unless defined? RAILS_GEM_VERSION
