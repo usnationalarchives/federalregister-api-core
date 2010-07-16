@@ -17,8 +17,8 @@ def chef_cloud_attributes(instance_type)
   @app_url  = case instance_type
               when 'staging'
                 'fr2.criticaljuncture.org'
-              when 'test'
-                'test.fr2.criticaljuncture.org'
+              when 'production'
+                'fr2.criticaljuncture.org'
               end
 
   case instance_type
@@ -29,7 +29,7 @@ def chef_cloud_attributes(instance_type)
     @database_server_address = '127.0.0.1'
     @sphinx_server_address   = '127.0.0.1'
     @app_server_address      = '127.0.0.1'
-  when 'test'
+  when 'production'
     @proxy_server_address    = '10.194.207.96'  #'ip-10-194-207-96.ec2.internal'
     @static_server_address   = '10.245.106.31'  #'ip-10-245-106-31.ec2.internal'
     @worker_server_address   = '10.245.106.31'  #'ip-10-245-106-31.ec2.internal'
@@ -85,8 +85,9 @@ def chef_cloud_attributes(instance_type)
                     :deploy_user => 'deploy'
                    },
     :nginx      => {
-                    :varnish_proxy       => true,
-                    :varnish_proxy_host  => '127.0.0.1'
+                    :varnish_proxy      => true,
+                    :varnish_proxy_host => '127.0.0.1',
+                    :host_name          => @app_url
                    },
     :varnish    => {
                     :version           => '2.1.2',
@@ -417,7 +418,7 @@ pool :fr2 do
       recipe "nginx"
       recipe "varnish"
       
-      attributes chef_cloud_attributes('test').recursive_merge(
+      attributes chef_cloud_attributes('production').recursive_merge(
         :chef    => {
                       :roles => ['proxy']
                     },
@@ -429,8 +430,9 @@ pool :fr2 do
     end
     
     security_group "proxy" do
-      authorize :from_port => "22", :to_port => "22"
-      authorize :from_port => "80", :to_port => "80"
+      authorize :from_port => "22",  :to_port => "22"
+      authorize :from_port => "80",  :to_port => "80"
+      authorize :from_port => "443", :to_port => "443"
     end
     
   end
@@ -464,7 +466,7 @@ pool :fr2 do
       recipe "capistrano"
       recipe "rails"
       
-      attributes chef_cloud_attributes('test').recursive_merge(
+      attributes chef_cloud_attributes('production').recursive_merge(
         :chef    => {
                       :roles => ['static', 'worker']
                     },
@@ -479,7 +481,7 @@ pool :fr2 do
     
     security_group "static" do
       authorize :from_port => "22", :to_port => "22"
-      authorize :from_port => "8080", :to_port => "8080"
+      #authorize :from_port => "8080", :to_port => "8080"
     end
     security_group "worker"
     
@@ -517,7 +519,7 @@ pool :fr2 do
       recipe "capistrano"
       recipe "rails"
       
-      attributes chef_cloud_attributes('test').recursive_merge(
+      attributes chef_cloud_attributes('production').recursive_merge(
         :chef => {
                    :roles => ['app']
                  },
@@ -539,7 +541,7 @@ pool :fr2 do
     
     security_group "app" do
       authorize :from_port => "22", :to_port => "22"
-      authorize :from_port => "8080", :to_port => "8080"
+      #authorize :from_port => "8080", :to_port => "8080"
     end
     
   end
@@ -565,6 +567,7 @@ pool :fr2 do
       repo File.join(File.dirname(__FILE__) , "chef_cloud")
       
       recipe "apt"
+      recipe 's3sync'
       recipe "ubuntu"
       recipe "openssl"
       
@@ -574,7 +577,7 @@ pool :fr2 do
       
       recipe "apparmor"
       
-      attributes chef_cloud_attributes('test').recursive_merge(
+      attributes chef_cloud_attributes('production').recursive_merge(
         :chef => {
                    :roles => ['database']
                  },
@@ -633,7 +636,7 @@ pool :fr2 do
       recipe "capistrano"
       recipe "rails"
       
-      attributes chef_cloud_attributes('test').recursive_merge(
+      attributes chef_cloud_attributes('production').recursive_merge(
         :chef    => {
                       :roles => ['static', 'worker']
                     },
@@ -648,7 +651,7 @@ pool :fr2 do
     
     security_group "static" do
       authorize :from_port => "22", :to_port => "22"
-      authorize :from_port => "8080", :to_port => "8080"
+      #authorize :from_port => "8080", :to_port => "8080"
     end
     security_group "worker"
     
