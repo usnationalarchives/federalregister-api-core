@@ -1,5 +1,6 @@
 class Admin::Issues::EventfulEntriesController < AdminController
   EVENT_PHRASES = ["public meeting", "public hearing", "town hall meeting", "web dialogue", "webinar"]
+  
   def index
     @publication_date = Date.parse(params[:issue_id])
     
@@ -18,6 +19,8 @@ class Admin::Issues::EventfulEntriesController < AdminController
     
     @entry_text = get_abstract(@entry) + get_full_text(@entry)
     
+    @dates = PotentialDateExtractor.extract(@entry_text)
+    
     placemaker = Placemaker.new(:application_id => ENV['yahoo_placemaker_api_key'])
     if @entry.full_xml
       begin
@@ -35,7 +38,7 @@ class Admin::Issues::EventfulEntriesController < AdminController
   private
   
   def get_abstract(entry)
-    if RAILS_ENV == 'developxment'
+    if RAILS_ENV == 'development'
       render_to_string( :partial => "entries/abstract", :locals => {:entry => @entry} )
     else
       c = Curl::Easy.new('http://static.fr2.ec2.internal:8080' + entry_abstract_path(entry))
@@ -45,7 +48,7 @@ class Admin::Issues::EventfulEntriesController < AdminController
   end
   
   def get_full_text(entry)
-    if RAILS_ENV == 'developmxent'
+    if RAILS_ENV == 'development'
       render_to_string( :partial => "entries/full_text", :locals => {:entry => @entry} )
     else
       c = Curl::Easy.new('http://static.fr2.ec2.internal:8080' + entry_full_text_path(entry))
