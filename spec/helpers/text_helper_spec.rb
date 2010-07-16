@@ -1,6 +1,10 @@
 describe TextHelper do
   include TextHelper
   describe 'truncate_words' do
+    it "returns nil if nil" do
+      truncate_words(nil, :length => 40).should == nil
+    end
+    
     it "does nothing if string is less than the number of characters" do
       truncate_words("Howdy partner", :length => 40).should == "Howdy partner"
     end
