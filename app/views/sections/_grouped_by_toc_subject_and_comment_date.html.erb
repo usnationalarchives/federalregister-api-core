@@ -7,8 +7,8 @@
         <div class="date"><date><%= comment_close_date %></date></div>
         <ul class="comments">
           <% entries.each_with_index do |entry, i| %>
-            <li>          
-                <%= link_to (entry.toc_doc || entry.curated_title), entry_path(entry), :class => "#{'not_first' if i > 0}" %>
+            <li>
+                <%= link_to (toc_subject.present? ? (entry.toc_doc || entry.curated_title) : entry.curated_title), entry_path(entry), :class => "#{'not_first' if i > 0}" %>
             </li>
           <% end %>
         </ul>
