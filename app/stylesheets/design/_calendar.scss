@@ -1,0 +1,49 @@
+.calendar {
+  border-collapse: separate;
+  width: 218px;
+  }
+.calendar td,
+.calendar th {
+  padding: 0;
+  text-align: center;
+  vertical-align: middle;
+  }
+.calendar .monthName {
+  font-size: 1.3em;
+  }  
+.calendar td a {
+  display: block;
+  font-weight: 700;
+  }
+.calendar abbr {
+  border-bottom: none;
+  }
+.calendar .dayName th {
+  border-top: 1px solid #333;  
+  border-bottom: 1px solid #333;
+  }
+.calendar tbody td {
+  border: 1px solid #fff;
+  }
+.calendar .weekend {
+  background: #cdcdcd;
+  } 
+.calendar .holiday {
+  
+  }   
+.calendar .published a {
+  background: $pale_green;
+  }
+.calendar .published a:hover {
+  background: $golden;  
+  color: #fff;
+  }  
+.calendar .current {
+  background: $green;
+  }
+.calendar .current a {
+  color: #fff;
+  }  
+.calendar .otherMonth {
+  background: #eee;
+  }  
