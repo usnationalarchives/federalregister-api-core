@@ -1,5 +1,6 @@
 module TextHelper
   def truncate_words(text, options)
+    return if text.nil?
     length = options[:length] || 30
     omission = options[:omission] || '...'
     
