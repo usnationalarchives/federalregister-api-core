@@ -38,7 +38,7 @@ class Admin::Issues::EventfulEntriesController < AdminController
     if RAILS_ENV == 'developxment'
       render_to_string( :partial => "entries/abstract", :locals => {:entry => @entry} )
     else
-      c = Curl::Easy.new('http://static.fr2.ec2.internal' + entry_abstract_path(entry))
+      c = Curl::Easy.new('http://static.fr2.ec2.internal:8080' + entry_abstract_path(entry))
       c.http_get
       c.body_str
     end
@@ -48,7 +48,7 @@ class Admin::Issues::EventfulEntriesController < AdminController
     if RAILS_ENV == 'developmxent'
       render_to_string( :partial => "entries/full_text", :locals => {:entry => @entry} )
     else
-      c = Curl::Easy.new('http://static.fr2.ec2.internal' + entry_full_text_path(entry))
+      c = Curl::Easy.new('http://static.fr2.ec2.internal:8080' + entry_full_text_path(entry))
       c.http_get
       c.body_str
     end
