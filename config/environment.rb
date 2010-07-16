@@ -1,4 +1,4 @@
-# Be sure to restart your server when you modify this file
+# Use deployed git commit hash as quick & easy cache busting strategy
 ENV["RAILS_ASSET_ID"] = `git log -n 1 --pretty=format:%H`
 
 # Specifies gem version of Rails to use when vendor/rails is not present
