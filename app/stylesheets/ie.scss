@@ -5,6 +5,7 @@
   }
   
 .title_bar .small_stack {
+  @include inline-block;
   margin-right: 0;
   zoom: 1;
   }  

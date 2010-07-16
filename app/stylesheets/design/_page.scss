@@ -24,7 +24,7 @@ ul.bullets  li {
 .bullets li.lastchild {
   margin-bottom: 0;
   } 
-.skip_to_content { display: none; }
+.skip_to_content { display: none; }textPlaceholder
 
 /******************************
 
@@ -262,7 +262,6 @@ ARTICLE VIEW
 #entries.show .metadata,
 #regulatory_plans.show .metadata {
   font-size: 1.3em;
-  font-weight: 700;
   }
 .metadata_share_bar {
   border-bottom:1px solid #CCCCCC;
@@ -586,8 +585,7 @@ REGULATION VIEW
   width: 1000px;
   }  
 .timeline_item {
-  background: #f9f9f9;
-  border: 1px solid #f1f1f1;
+  border: 1px solid #ccc;
   float: left;
   height: 150px;  
   margin-right: 10px;
@@ -614,7 +612,6 @@ REGULATION VIEW
   }  
 .timeline_item:last-child,
 .timeline_item.lastchild {
-  background: #e4a529;
   margin-right: 0;
   } 
 .timeline_item:last-child .date, 
@@ -623,8 +620,7 @@ REGULATION VIEW
 .timeline_item.lastchild .date, 
 .timeline_item.lastchild li,
 .timeline_item.lastchild li .action {
-  color: #fff;
-  }
+   }
 
 .track {
   background:#f1f1f1;
