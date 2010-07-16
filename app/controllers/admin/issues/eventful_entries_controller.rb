@@ -17,13 +17,13 @@ class Admin::Issues::EventfulEntriesController < AdminController
     @publication_date = Date.parse(params[:issue_id])
     @entry = Entry.published_on(@publication_date).find_by_document_number!(params[:id])
     
-    @entry_text = get_abstract(@entry) + get_full_text(@entry)
+    @entry_text = get_abstract(@entry) + get_full_text(@entry) || ''
     
     @dates = PotentialDateExtractor.extract(@entry_text)
     
     placemaker = Placemaker.new(:application_id => ENV['yahoo_placemaker_api_key'])
     begin
-      @places = placemaker.places(@entry.full_xml[0,45000]) || []
+      @places = placemaker.places(@entry_text[0,45000]) || []
     rescue Curl::Err::HostResolutionError => e
       if RAILS_ENV == 'development'
         @places = []
