@@ -30,8 +30,6 @@ a img { border: none; }
 
 /* Links */
 a:link, a:visited { background: transparent; font-weight: 700; text-decoration: underline;color:#333; }
-a:link[href^="http://"]:after, a[href^="http://"]:visited:after { content: " (" attr(href) ") "; font-size: 90%; }
-a[href^="http://"] {color:#000; }
 
 /* Table */
 table { margin: 1px; text-align:left; }
