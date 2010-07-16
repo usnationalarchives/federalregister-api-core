@@ -356,6 +356,9 @@ p:target {
 .table_of_graphics li.clear {
   margin-right: 0;
   }
+.table_of_graphics li.clear + li {
+  clear: both;
+  }  
 #fulltext_content_area p {
   text-indent: 2em;
   }
