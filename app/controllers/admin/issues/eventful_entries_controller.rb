@@ -24,7 +24,7 @@ class Admin::Issues::EventfulEntriesController < AdminController
     placemaker = Placemaker.new(:application_id => ENV['yahoo_placemaker_api_key'])
     if @entry.full_xml
       begin
-        @places = placemaker.places(@entry.full_xml[0,45000])
+        @places = placemaker.places(@entry.full_xml[0,45000]) || []
       rescue Curl::Err::HostResolutionError => e
         if RAILS_ENV == 'development'
           @places = []
