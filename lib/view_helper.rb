@@ -4,6 +4,7 @@ module ViewHelper
     include ActionView::Helpers::TextHelper
     
     # add other helpers here as needed
+    include TextHelper
   end
   
   private

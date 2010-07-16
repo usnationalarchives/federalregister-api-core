@@ -16,6 +16,6 @@ module EventsHelper
   end
   
   def event_abstract(event)
-    truncate(event.entry.try(:abstract), :length => 250)
+    truncate_words(event.entry.try(:abstract), :length => 250)
   end
 end

@@ -262,15 +262,9 @@ class Entry < ApplicationModel
   end
   
   def slug
-    words = self.title.downcase.gsub(/&/, 'and').split(/[^a-z0-9]+/).compact
-    words.inject('') do |str, word|
-      new_str = str == '' ? word : "#{str}-#{word}"
-      if new_str.length > 100
-        return str
-      else
-        str = new_str
-      end
-    end
+    clean_title = title.downcase.gsub(/[^a-z0-9& ]+/,'').gsub(/&/, 'and')
+    slug = view_helper.truncate_words(clean_title, :length => 100, :omission => '')
+    slug.gsub(/ /,'-')
   end
   
   def comments_close_on
