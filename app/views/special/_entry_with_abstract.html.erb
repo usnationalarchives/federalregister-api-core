@@ -5,7 +5,7 @@
   <%= link_to date_tag(entry.publication_date, :datetime => entry.publication_date.to_s(:iso)), entries_by_date_path(entry.publication_date) %></p>
 
   <%= render(:partial => "special/lede_photo", :object => entry.lede_photo) if entry.lede_photo %>
-  <p class="summary"><%= truncate(entry.curated_abstract, 500) %></p>
+  <p class="summary"><%= truncate_words(entry.curated_abstract, :length => 500) %></p>
 
   <%= link_to 'Read more >', entry_path(entry), :class => 'read_more' %>
 

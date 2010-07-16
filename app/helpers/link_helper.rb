@@ -26,8 +26,8 @@ module LinkHelper
   
   def link_to_digg(entry)
     url         = short_entry_url(entry)
-    title       = truncate(entry.title, :length => 72) #digg max of 75
-    description = entry.abstract.nil? ? '' : truncate(entry.abstract, :length => 347) #digg max of 350
+    title       = truncate_words(entry.title, :length => 75)
+    description = entry.abstract.nil? ? '' : truncate_words(entry.abstract, :length => 350)
     media       = 'news'
     href        = "http://digg.com/submit?url=#{url}&title=#{title}&bodytext=#{description}&media=#{media}"
     link_to('Digg', href, :target => :blank, :title => 'Digg', :class => 'button list social digg')
