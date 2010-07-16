@@ -26,6 +26,11 @@ namespace :content do
         entry_importer(:raw_text)
       end
       
+      desc "Extract pages"
+      task :pages => :environment do
+        entry_importer(:start_page, :end_page)
+      end
+      
       desc "Extract docket id"
       task :docket_id => :environment do
         entry_importer(:docket_id)
