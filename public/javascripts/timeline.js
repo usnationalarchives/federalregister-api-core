@@ -12,7 +12,6 @@ $(document).ready(function() {
       x: 1,
       xPrecision: content.offsetWidth,
       steps: li_count - 2,
-      snap: true,
     	animationCallback: function(x, y)
     	{
     		var margin = x * (content.offsetWidth - mask.offsetWidth);

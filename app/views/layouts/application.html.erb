@@ -53,7 +53,7 @@
         <div id="search_container">
           <form action="<%= entries_search_path %>" method="get" id="search">
             <label for="term">Search the Federal Register</label>
-            <%= text_field_tag "conditions[term]", nil, :title => 'Search Articles' %> <%# , :placeholder =>  "Search Articles" %>
+            <%= text_field_tag "conditions[term]", nil, :title => 'Search Articles', :placeholder =>  "Search Articles" %>
             <%= submit_tag 'Go', :class => "search_btn" %>
           </form>
           <div id="browse_container">
