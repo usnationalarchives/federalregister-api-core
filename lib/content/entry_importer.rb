@@ -8,7 +8,7 @@ module Content
     include Content::EntryImporter::FullXml
     include Content::EntryImporter::RawText
     include Content::EntryImporter::LedePhotoCandidates
-    include Content::EntryImporter::PageNumber
+    # include Content::EntryImporter::PageNumber
     include Content::EntryImporter::Events
     include Content::EntryImporter::Sections
     include Content::EntryImporter::TopicNames
