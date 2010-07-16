@@ -340,14 +340,22 @@ p:target {
 #entries.show .table_of_contents .level_2 {
   margin-left: 1em;
   }
-
 #entries.show .table_of_contents .level_3 {
   margin-left: 2em;
   }  
 #entries.show .body_column p:first-child,
 #entries.show .body_column p.firstchild {
   text-indent: 0;
-  }  
+  }
+.table_of_graphics li {
+  background: none;
+  float: left;
+  list-style: none;
+  margin: 0 10px 1em 0;
+  }
+.table_of_graphics li.clear {
+  margin-right: 0;
+  }
 #fulltext_content_area p {
   text-indent: 2em;
   }
