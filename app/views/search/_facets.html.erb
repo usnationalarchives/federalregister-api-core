@@ -7,4 +7,7 @@
       <li><a href="#" class="load_facet" data-facet-name="<%= facets.first.condition.to_s.sub(/_ids?/, '') %>">[more]</a></li>
     <% end %>
   </ul>
+<% else %>
+  <%# TODO HELP-RUBY I've added this to prevent layout issues.  It is appearing twice. %>
+  <h4>No further faceting available</h4>
 <% end %>
