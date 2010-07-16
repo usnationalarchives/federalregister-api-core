@@ -6,7 +6,7 @@
     <%= link_to date_tag(entry.publication_date, :datetime => entry.publication_date.to_s(:iso)), entries_by_date_path(entry.publication_date) %>
     </p>
       
-    <p class="summary"><%= truncate(entry.curated_abstract, 500) %></p>
+    <p class="summary"><%= truncate_words(entry.curated_abstract, :length => 500) %></p>
     
     <% if entry.comments_close_on && entry.comments_close_on > @publication_date %>
       <p class="comments_close">

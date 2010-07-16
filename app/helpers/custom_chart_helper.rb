@@ -73,7 +73,7 @@ module CustomChartHelper
     
     def prep_legend(legend)
       if @truncate_legend
-        legend = legend.map{|l| truncate(l, :length => @truncate_legend.to_i)}
+        legend = legend.map{|l| truncate_words(l, :length => @truncate_legend.to_i)}
       end
       if @counts
         legend_count = legend.zip(@data)
