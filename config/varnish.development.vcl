@@ -33,6 +33,9 @@ sub vcl_recv {
         return (pass);
     }
     
+    /* Pass everything on...for now */
+    return (pass);
+    
     /* Prevent duplication of caches */
     set req.http.host = "fr2.local";
     
