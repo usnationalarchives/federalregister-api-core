@@ -1,6 +1,9 @@
-<h1><%= event_title(@event) %></h1>
+<a class="jqmClose close" href="#">Close</a>  
+<h3 class="title_bar">Add an Event</h3>
 
-<ul>
+<h4><%= event_title(@event) %></h4>
+
+<ul class="bullets">
   <li><%= link_to 'Download iCalendar file', event_path(@event, :format => :ics), :target => "_blank" %></li>
   <li><%= link_to 'Google Calendar', add_google_event_url(@event), :target => "_blank" %></li>
   <li><%= link_to 'Windows Live Calendar', add_windows_live_event_url(@event), :target => "_blank" %></li>
