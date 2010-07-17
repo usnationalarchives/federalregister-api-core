@@ -24,12 +24,6 @@
   </div>
   
   <div id="content_area">
-    <%# HELP-DESIGN: these agencies need a bit of styling here... %>
-    <ul>
-    <% @regulatory_plan.agencies.each do |agency| %>
-      <li><%= link_to agency.name, agency_path(agency) %></li>
-    <% end %>
-    </ul>
     
     <% if RAILS_ENV == 'development' %>
       <%= render :partial => "full_text", :locals => {:regulatory_plan => @regulatory_plan} %>
