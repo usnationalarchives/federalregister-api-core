@@ -11,6 +11,11 @@ body {
 .wf-active body {
   @include gesta;
   }
+
+h1.title {
+  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+  }
+  
 .wf-active h1,
 .wf-active h2,
 .wf-active h3,
