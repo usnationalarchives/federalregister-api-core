@@ -1,10 +1,12 @@
-/* TODO test this thoroughly */
+@import "compass";
 
+/* TODO test this thoroughly */
 #main ul.bullets li {
   zoom: 1;
   }
   
 .title_bar .small_stack {
+  @include inline-block;
   margin-right: 0;
   zoom: 1;
   }  
