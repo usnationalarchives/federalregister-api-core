@@ -6,6 +6,12 @@ class ApplicationController < ActionController::Base
   include RouteBuilder
   include ViewHelper
   
+  before_filter :log_ip
+  
+  def log_ip
+    logger.info "XXXXXXXXXXXXXXXXXXXXXXXXXXXXX #{request.env['X-Forwarded-For']} XXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+  end
+  
   protect_from_forgery # See ActionController::RequestForgeryProtection for details
   
   include Locator
