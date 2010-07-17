@@ -84,6 +84,11 @@
     <% end -%>
     
     <%= render :partial => 'layouts/google_analytics' %>
+    <script type="text/javascript" charset="utf-8">
+      Tender = {
+        widgetToggles: $("#tender_toggler, .trigger_tender")
+      }
+    </script>
     <script src="https://federalregister.tenderapp.com/tender_widget.js" type="text/javascript"></script>
   </body>
 </html>
