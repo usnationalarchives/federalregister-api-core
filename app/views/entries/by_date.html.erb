@@ -70,17 +70,11 @@
   <% section_tag(:id => 'date_chooser') do %>
     <%= render :esi => entries_by_month_path(@publication_date, :current_date => @publication_date.to_s(:iso)) %>
     
-    <% if false%>
-    <% form_tag entries_date_search_path, :method => :get do %>
+    <% form_tag entries_date_search_path, :method => :get, :id => "date_selector" do %>
       <label>Go to a specific date:</label>
       <%= text_field_tag :search, '' %>
       <%= submit_tag 'Go' %>
     <% end %>
-    
-    <span class="error">We couldn't understand that date.</span>
-    <span class="error">There is no issue published on this date.</span>
-    <% end -%>
-    
   <% end -%>
   
   <% section_tag(:id => 'meta_toc') do %>
