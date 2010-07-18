@@ -6,9 +6,8 @@ CURRENT ISSUE
 #current_issue {
   background: $pale_green sprite-image('icons/current_issue.png') no-repeat;
   border: 1px solid $green;
-  display: block;
   height: 40px;
-  margin: 1em 0 2em;
+  margin-bottom: 2em;
   }
 #current_issue .issue {
   color: #fff;
