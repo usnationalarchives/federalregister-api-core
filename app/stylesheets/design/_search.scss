@@ -5,15 +5,9 @@ PAGE ELEMENTS
 ******************************/
 
 .tabs {
-  margin: 0;
-  padding: 0;
-  border: 0;
-  outline: 0;
-  @include inline-block;
-  }
-.tabs {
-  display: block;
+  margin-bottom: 0;
   font-size: 1.2em;
+  outline: 0;
   }
 .tabs li {
   list-style-image: none;
@@ -49,7 +43,7 @@ PAGE ELEMENTS
   background: #f1f1f1;
   @include border-radius(5px);
   margin-bottom: 1em;
-  padding: 1em;
+  padding: 1em 0;
   overflow: hidden;
   position: relative;  
   }
@@ -69,6 +63,7 @@ PAGE ELEMENTS
   @include apertura-condensed;
   font-size: 1.5em;
   line-height: 25px;
+  margin-left: 1em;
   margin-top: 3px;
   }
 .search_bar label {
@@ -353,8 +348,6 @@ FILTERS
   width: 143px;
   }   
 .filters .count {
-  color: #ccc;
-  float: right;
   text-align: right;
   }  
 .filters .zip {
