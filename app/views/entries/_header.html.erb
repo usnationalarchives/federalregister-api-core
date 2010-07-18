@@ -7,10 +7,10 @@
 
   <div class="share">
     <ul>
-      <li><%= link_to_twitter(entry) %></li>
-      <li><%= link_to_facebook(entry) %></li>
-      <li><%= link_to_reddit(entry) %></li>
-      <li><%= link_to_digg(entry) %></li>
+      <li><%= link_to_twitter("#{short_entry_url(entry)} #gov20") %></li>
+      <li><%= link_to_facebook(short_entry_url(entry), entry.title) %></li>
+      <li><%= link_to_reddit(short_entry_url(entry), entry.title) %></li>
+      <li><%= link_to_digg(short_entry_url(entry), entry.title, entry.abstract) %></li>
     </ul>
   </div>
 </div>
