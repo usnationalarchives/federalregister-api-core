@@ -13,7 +13,7 @@ $(document).ready(function() {
     $("h1.title span").text( 'Agencies - ' + item );
   });
   
-  $(".topic_list_container .ordering a").bind('click', function(event) {
+  $(".topic_list_container .actions a").bind('click', function(event) {
     event.preventDefault();
     
     switch( $(this).attr("href") ){
@@ -31,7 +31,7 @@ $(document).ready(function() {
         break;
     }
     
-    $(".topic_list_container .ordering li").removeClass("on");
+    $(this).parent().parent().find(".on").removeClass("on");
     $(this).parent().addClass("on");
   });
   

@@ -104,33 +104,12 @@ PAGE ELEMENTS
   position: relative;
   overflow: hidden;
   }
-.search_info ul {
-  bottom: 0;
-  @include horizontal-list;
-  position: absolute;
-  right: 1em;
-  }
-.search_info li {
-  padding-bottom: 7px;
-  }
-.search_info li a {
-  color: #BDBDBD;
-  text-transform: uppercase;
-  }    
-.search_info li.on {
-  background: url(/images/tab_select_bottom.png) no-repeat 50% bottom;
-  font-weight: 700;
-  } 
-.search_info li.on a {
-  color: #385F82;
-  }
 #search .search_info .title_bar {
   border-top: none;
   margin-bottom: 0;
   margin-top: 7px;
   padding-top: 0;
   }
-
 
 /******************************
 
@@ -300,6 +279,7 @@ dd.next + dd.next {
 .article_list li.rule {
   background: sprite-image('icons/icon_final_50.png', 0, 4px, 100px) no-repeat;
   }
+  
 /******************************
 
 FILTERS
@@ -307,7 +287,7 @@ FILTERS
 ******************************/
 
 .filters h4 {
-  color: #bdbdbd;
+  color: #585858;
   @include apertura-condensed;
   font-size: 1.3em;
   line-height: 1.15;
@@ -354,7 +334,7 @@ FILTERS
   border: 1px solid #ccc;
   width: 75px;
   }  
-
+ 
 /******************************
 
 PAGINATION
