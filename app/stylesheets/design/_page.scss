@@ -675,9 +675,6 @@ TOPIC LIST
   float: none;
   margin-left: 0;
   }  
-.filters .actions li.on {
-  padding-top: .25em;
-  }
 .filters .actions li:first-child,
 .filters .actions li.firstchild,
 .filters .actions li:last-child, 
@@ -804,7 +801,7 @@ HEADER ACTIONS
   }
 .actions li {
   margin-left: .5em;
-  padding: 0.15em 0.5em 0;
+  padding: 0.25em 0.5em 0;
   }
 .actions li:first-child,
 .actions li.firstchild {
@@ -823,7 +820,7 @@ HEADER ACTIONS
 .actions li.on.firstchild,
 .actions li:last-child, 
 .actions li.lastchild   {
-  padding: 0.15em 0.5em 0;
+  padding: 0.25em 0.5em 0;
   }  
 .actions li.on a {
   color: #fff;
