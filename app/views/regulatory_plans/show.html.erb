@@ -12,10 +12,10 @@
         
         <div class="share">
           <%# TODO HELP-RUBY these don't work with reg plans yet %>
-          <%#= link_to_twitter(@regulatory_plan) %>
-          <%#= link_to_facebook(@regulatory_plan) %>
-          <%#= link_to_reddit(@regulatory_plan) %>
-          <%#= link_to_digg(@regulatory_plan) %>
+          <%= link_to_twitter("#{short_regulatory_plan_url(@regulatory_plan)} #gov20") %>
+          <%= link_to_facebook(short_regulatory_plan_url(@regulatory_plan), @regulatory_plan.title) %>
+          <%= link_to_reddit(short_regulatory_plan_url(@regulatory_plan), @regulatory_plan.title) %>
+          <%= link_to_digg(short_regulatory_plan_url(@regulatory_plan), @regulatory_plan.title, @regulatory_plan.abstract) %>
           <%# TODO HELP-RUBY make this real %>
           <%# <a href="#" class="button list social email">E-Mail</a> %>
         </div>
