@@ -6,38 +6,44 @@ dependencies:
     version: = 0.7.5
     require: []
 
-  fastercsv: 
+  amazon-ec2: 
     group: 
     - :default
-    version: = 1.4.0
+    version: ">= 0"
+    require: []
+
   compass: 
     group: 
     - :default
     version: = 0.10.1
+  fastercsv: 
+    group: 
+    - :default
+    version: = 1.4.0
   rails: 
     group: 
     - :default
     version: = 2.3.5
-  haml: 
-    group: 
-    - :default
-    version: = 3.0.4
-  curb: 
-    group: 
-    - :default
-    version: = 0.4.4.0
-  mysql: 
-    group: 
-    - :default
-    version: = 2.7
-  authlogic: 
-    group: 
-    - :default
-    version: = 2.1.3
   searchlogic: 
     group: 
     - :default
     version: = 2.4.12
+  authlogic: 
+    group: 
+    - :default
+    version: = 2.1.3
+  mysql: 
+    group: 
+    - :default
+    version: = 2.7
+  curb: 
+    group: 
+    - :default
+    version: = 0.4.4.0
+  haml: 
+    group: 
+    - :default
+    version: = 3.0.4
   rspec: 
     group: 
     - :test
@@ -54,26 +60,26 @@ dependencies:
     version: ">= 0"
     require: 
     - woulda
-  thinking-sphinx: 
+  patron: 
     group: 
     - :default
-    version: = 1.3.14
-    require: 
-    - thinking_sphinx
-  formtastic: 
-    group: 
-    - :default
-    version: = 0.9.8
+    version: = 0.4.2
   geokit: 
     group: 
     - :default
     version: = 1.4.1
     require: 
     - geokit
-  patron: 
+  formtastic: 
     group: 
     - :default
-    version: = 0.4.2
+    version: = 0.9.8
+  thinking-sphinx: 
+    group: 
+    - :default
+    version: = 1.3.14
+    require: 
+    - thinking_sphinx
   floehopper-mocha: 
     group: 
     - :test
@@ -90,24 +96,24 @@ dependencies:
     group: 
     - :test
     version: = 0.7.0
-  json: 
+  lemonade: 
     group: 
     - :default
-    version: ">= 0"
+    version: = 0.3.2
+  paperclip: 
+    group: 
+    - :default
+    version: = 2.3.1.1
   will_paginate: 
     group: 
     - :default
     version: = 2.3.14
     require: 
     - will_paginate
-  paperclip: 
+  json: 
     group: 
     - :default
-    version: = 2.3.1.1
-  lemonade: 
-    group: 
-    - :default
-    version: = 0.3.2
+    version: ">= 0"
   jgre-monkeyspecdoc: 
     group: 
     - :test
@@ -118,42 +124,38 @@ dependencies:
     group: 
     - :test
     version: = 1.2.4
-  icalendar: 
+  ym4r: 
     group: 
     - :default
-    version: ">= 0"
+    version: = 0.6.1
   bcrypt-ruby: 
     group: 
     - :default
     version: = 2.1.2
     require: 
     - bcrypt
-  ym4r: 
+  icalendar: 
     group: 
     - :default
-    version: = 0.6.1
+    version: ">= 0"
+  klarlack: 
+    group: 
+    - :default
+    version: = 0.0.6
+  hoptoad_notifier: 
+    group: 
+    - :default
+    version: = 2.1.3
+  stevedore: 
+    group: 
+    - :default
+    version: = 0.0.1
   compass-960-plugin: 
     group: 
     - :default
     version: = 0.9.13
     require: []
 
-  stevedore: 
-    group: 
-    - :default
-    version: = 0.0.1
-  chronic: 
-    group: 
-    - :default
-    version: = 0.2.3
-  hoptoad_notifier: 
-    group: 
-    - :default
-    version: = 2.1.3
-  klarlack: 
-    group: 
-    - :default
-    version: = 0.0.6
   thoughtbot-shoulda: 
     group: 
     - :test
@@ -166,38 +168,38 @@ dependencies:
     version: = 0.1.4.2
     require: 
     - rails_test_serving
-  flickraw: 
+  active_hash: 
     group: 
     - :default
-    version: = 0.8.1
-    require: []
-
-  aws-s3: 
-    group: 
-    - :default
-    version: = 0.6.2
-    require: 
-    - aws/s3
+    version: = 0.7.9
   rubyzip: 
     group: 
     - :default
     version: = 0.9.1
     require: 
     - zip/zip
-  active_hash: 
+  aws-s3: 
     group: 
     - :default
-    version: = 0.7.9
-  thunder_punch: 
+    version: = 0.6.2
+    require: 
+    - aws/s3
+  flickraw: 
     group: 
     - :default
-    version: = 0.0.6
+    version: = 0.8.1
     require: []
 
   nokogiri: 
     group: 
     - :default
     version: = 1.3.2
+  thunder_punch: 
+    group: 
+    - :default
+    version: = 0.0.6
+    require: []
+
 specs: 
 - rake: 
     version: 0.8.7
@@ -219,14 +221,16 @@ specs:
     version: 1.0.7
 - amatch: 
     version: 0.2.3
+- xml-simple: 
+    version: 1.0.12
+- amazon-ec2: 
+    version: 0.9.15
 - authlogic: 
     version: 2.1.3
 - builder: 
     version: 2.1.2
 - mime-types: 
     version: "1.16"
-- xml-simple: 
-    version: 1.0.12
 - aws-s3: 
     version: 0.6.2
 - bcrypt-ruby: 
@@ -243,14 +247,6 @@ specs:
     version: 1.0.1
 - capistrano: 
     version: 2.5.19
-- json_pure: 
-    version: 1.4.3
-- rubyforge: 
-    version: 2.0.4
-- hoe: 
-    version: 2.6.1
-- chronic: 
-    version: 0.2.3
 - chunky_png: 
     version: 0.8.0
 - haml: 
@@ -327,7 +323,7 @@ specs:
     version: 2.3.14
 - ym4r: 
     version: 0.6.1
-hash: d05258f66d81059edab42538c04427e95b705db9
+hash: fbc73023395c6f7983e8941657346d9137a323b0
 sources: 
 - Rubygems: 
     uri: http://gemcutter.org
