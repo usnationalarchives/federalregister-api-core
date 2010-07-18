@@ -17,9 +17,7 @@ $(document).ready(function() {
     
     $("#agencies ul.filter li").removeClass("on");
     $(this).parent().addClass("on");
-    
-    $("#agencies li.livesearch input").attr("value", "Filter agencies");
-    
+        
     if($(this).parent().hasClass("all"))
       $("#agency_list > li").show()
     else
@@ -31,16 +29,9 @@ $(document).ready(function() {
   
   $(".sub_agencies a").bind("click", function(e){
     e.preventDefault();
-    
-    if( $(this).parent().hasClass("show") ){
-      $("#agencies li > ul").show();
-    }else {
-      $("#agencies li > ul").hide();
-    }
-
+    $(this).parent().hasClass("show") ? $("#agencies li > ul").show() : $("#agencies li > ul").hide();
     $(".sub_agencies li").removeClass("on");
     $(this).parent().addClass("on");
-    
   });
   
   $(".agency_list_container .ordering a").bind('click', function(event) {
