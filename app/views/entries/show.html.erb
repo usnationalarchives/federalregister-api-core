@@ -1,9 +1,5 @@
 <% title @entry.title %>
 
-<% content_for :head do %>
- <link rev="canonical" type="text/html" href="<%= short_entry_url(@entry) %>" />
-<% end %>
-
 <h1 class="title"><span><%= @entry.entry_type %></span></h1>
 
 <% article_tag('data-internal-id' => @entry.id) do %>
@@ -21,6 +17,8 @@
   </div> <!-- end metadata_content_area -->
   
   <% aside_tag(:id => 'sidebar') do %>
+    
+    <a href="#content_area" title="Skip the metadata" class="skip_to_content">Skip the metadata and jump to content</a>
     
     <%= render :partial => 'special/legal_disclaimer' %>
   
