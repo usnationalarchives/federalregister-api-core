@@ -279,7 +279,7 @@ ARTICLE VIEW
 .metadata_share_bar .share {
   position: relative;
   }
-.metadata_share_bar .share .actions {
+.metadata_share_bar .share ul {
   @include horizontal-list;
   position: absolute;
   right: 0;
@@ -811,7 +811,8 @@ HEADER ACTIONS
   color: #385F82;
   text-transform: uppercase;
   }  
-.actions li.on {
+.actions li.on,
+.actions li.tabs-selected {
   background: #385F82;
   @include border-radius(5px);
   font-weight: 700;
@@ -819,9 +820,12 @@ HEADER ACTIONS
 .actions li.on:first-child,
 .actions li.on.firstchild,
 .actions li:last-child, 
-.actions li.lastchild   {
+.actions li.lastchild,
+.actions li.tabs-selected:first-child,
+.actions li.tabs-selected.firstchild {
   padding: 0.25em 0.5em 0;
   }  
-.actions li.on a {
+.actions li.on a,
+.actions li.tabs-selected a {
   color: #fff;
   }  
