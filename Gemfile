@@ -5,7 +5,6 @@ gem 'rails', '2.3.5'
 gem 'mysql', '2.7'
 
 gem 'nokogiri', '1.3.2'
-gem 'chronic', '0.2.3'
 gem 'curb', '0.4.4.0'
 gem 'geokit', '1.4.1', :require => 'geokit'
 gem 'will_paginate', '2.3.14', :require => 'will_paginate'
@@ -35,6 +34,7 @@ gem 'lemonade', '0.3.2'
 gem 'icalendar'
 gem 'klarlack', '0.0.6'
 gem "thunder_punch", '0.0.6', :require => false
+gem "amazon-ec2", :require => false
 
 # bundler requires these gems in all environments
 # gem 'nokogiri', '1.4.2'
