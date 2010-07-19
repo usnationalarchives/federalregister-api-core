@@ -57,11 +57,28 @@ p {
   font-size: 1.2em;
   }  
 #entries.show .body_column > ul li {
-  background-position: left 6px;
+  background-position: left 8px;
+  line-height: 1.5;
   }
 #entries.show .body_column li p {
   font-size: 1em;
   line-height: 1.5;
+  }
+
+/******************************
+
+TYPE CONTROLS
+
+******************************/
+
+.sans .body_column p,
+#entries.show .sans .body_column > ul  {
+  @include gesta;
+  } 
+.increase,
+.decrease {
+  font-size: 1.4em;
+  font-weight: 700;
   }
   
 /******************************
