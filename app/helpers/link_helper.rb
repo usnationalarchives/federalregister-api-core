@@ -9,7 +9,7 @@ module LinkHelper
   end
   
   def link_to_digg(url, title, description)
-    href        = "http://digg.com/submit?url=#{CGI.escape url}&title=#{CGI.escape truncate_words(title, :length => 75)}&bodytext=#{CGI.escape truncate_words(description, :length => 350)}&media=news"
+    href        = "http://digg.com/submit?url=#{CGI.escape url}&title=#{CGI.escape truncate_words(title, :length => 75)}&bodytext=#{CGI.escape truncate_words(description || '', :length => 350)}&media=news"
     link_to('Digg', href, :target => :blank, :title => 'Digg', :class => 'button list social digg')
   end
   
