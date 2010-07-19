@@ -11,11 +11,9 @@ body {
 .wf-active body {
   @include gesta;
   }
-
 h1.title {
   font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
   }
-  
 .wf-active h1,
 .wf-active h2,
 .wf-active h3,
@@ -42,7 +40,6 @@ h1.title {
 #entries.show h4,
 #entries.show h5,
 #entries.show h6 { clear: both; }
-
 a { color: $nytimes_blue; }
 a:focus,
 a:hover {
@@ -60,11 +57,28 @@ p {
   font-size: 1.2em;
   }  
 #entries.show .body_column > ul li {
-  background-position: left 6px;
+  background-position: left 8px;
+  line-height: 1.5;
   }
 #entries.show .body_column li p {
   font-size: 1em;
   line-height: 1.5;
+  }
+
+/******************************
+
+TYPE CONTROLS
+
+******************************/
+
+.sans .body_column p,
+#entries.show .sans .body_column > ul  {
+  @include gesta;
+  } 
+.increase,
+.decrease {
+  font-size: 1.4em;
+  font-weight: 700;
   }
   
 /******************************
@@ -198,20 +212,16 @@ ARTICLES
   font-weight: normal;
   line-height: 1.4;
   }
-
 #entries h3,
 #entries h4,
 #entries h5,
 #entries h6 {
   margin-top: 1em;
   }
-
-
 .metadata {
   font-size: 1.3em;
   @include gesta;
   }
-
 .articles_published_by_day h1 {
   font-size: 1.1em;
   }
@@ -231,10 +241,6 @@ REGULATION VIEW
 CITATION LIST
 
 ******************************/
-
-.citation_count {
-  
-  }
 
 .citation_count span {
   display: block;
@@ -305,3 +311,40 @@ BY DATE
   text-align: center;
   width: 17px;
   }
+
+/******************************
+
+STATIC PAGES
+
+******************************/ 
+#pages #content_area h1 {
+  border-top: 2px solid #464646;
+  @include athelas;
+  margin: 1em 0 .5em;
+  }
+#pages #content_area h1:first-child,
+#pages #content_area h1.firstchild {
+  border-top: none;
+  margin-top: 0;
+  }  
+#pages #content_area h2 {
+  color: #464646;
+  margin: .5em 0 0;
+  }
+#pages #content_area ul.bullets {
+  @include athelas;
+  font-size: 1.2em;
+  }
+#pages #content_area ul.bullets li {
+  background-position: left 8px;
+  line-height: 1.5;
+  }
+#pages #content_area ul.bullets li strong {
+  text-transform: uppercase;
+  }
+#pages #content_area ul.bullets li ul {
+  margin-top: 0.75em;
+  }  
+#pages #content_area .aside_box {
+  margin-bottom: 1em;
+  }  

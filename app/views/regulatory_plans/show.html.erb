@@ -11,25 +11,20 @@
         <p class="metadata">Unified Agenda current as of <%= issue_season(@regulatory_plan) %></p>
         
         <div class="share">
-          <%# TODO HELP-RUBY these don't work with reg plans yet %>
-          <%#= link_to_twitter(@regulatory_plan) %>
-          <%#= link_to_facebook(@regulatory_plan) %>
-          <%#= link_to_reddit(@regulatory_plan) %>
-          <%#= link_to_digg(@regulatory_plan) %>
+          <ul>
+            <li><%= link_to_twitter("#{short_regulatory_plan_url(@regulatory_plan)} #gov20") %></li>
+            <li><%= link_to_facebook(short_regulatory_plan_url(@regulatory_plan), @regulatory_plan.title) %></li>
+            <li><%= link_to_reddit(short_regulatory_plan_url(@regulatory_plan), @regulatory_plan.title) %></li>
+            <li><%= link_to_digg(short_regulatory_plan_url(@regulatory_plan), @regulatory_plan.title, @regulatory_plan.abstract) %></li>
           <%# TODO HELP-RUBY make this real %>
           <%# <a href="#" class="button list social email">E-Mail</a> %>
+          </ul>
         </div>
       </div>
       
   </div>
   
   <div id="content_area">
-    <%# HELP-DESIGN: these agencies need a bit of styling here... %>
-    <ul>
-    <% @regulatory_plan.agencies.each do |agency| %>
-      <li><%= link_to agency.name, agency_path(agency) %></li>
-    <% end %>
-    </ul>
     
     <% if RAILS_ENV == 'development' %>
       <%= render :partial => "full_text", :locals => {:regulatory_plan => @regulatory_plan} %>

@@ -6,9 +6,9 @@
 <div class="body_column">
   
   <p>
-    <%= pluralize(@regulatory_plan.events.size, "action") %> from <%= @regulatory_plan.events.first.date %> 
+    <%= pluralize(@regulatory_plan.events.size, "action") %> from <%= fuzzy_date_formatter @regulatory_plan.events.first.date %> 
     <% if @regulatory_plan.events.size > 1 %> 
-      to <%= @regulatory_plan.events.last.date + "." || 'an undetermined date in the future.' %>
+      to <%= fuzzy_date_formatter @regulatory_plan.events.last.date + "." || 'an undetermined date in the future.' %>
     <% end %>
   </p>
 

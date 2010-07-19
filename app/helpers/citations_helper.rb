@@ -1,11 +1,12 @@
 module CitationsHelper
-  def add_citation_links(html)
+  def add_citation_links(html, options = {})
+    options[:date] ||= Date.today
     if html.present?
       doc = Nokogiri::HTML::DocumentFragment.parse(html.strip)
       doc.xpath(".//text()[not(ancestor::a)]").each do |text_node|
         text = text_node.text.dup
         text = add_usc_links(text)
-        text = add_cfr_links(text)
+        text = add_cfr_links(text,options[:date])
         text = add_federal_register_links(text)
         text = add_regulatory_plan_links(text)
         text = add_public_law_links(text)
@@ -36,18 +37,6 @@ module CitationsHelper
           :href => usc_url(title, part),
           :class => "usc external",
           :target => "_blank"
-    end
-  end
-  
-  def add_cfr_links(text)
-    text.gsub(/(\d+)\s+(?:CFR|C\.F\.R\.)\s+(?:[Pp]arts?|[Ss]ections?|[Ss]ec\.|&#xA7;|&#xA7;\s*&#xA7;)?\s*(\d+)(?:\.(\d+))?/) do |str|
-      title = $1
-      part = $2
-      section = $3
-      content_tag :a, str,
-        :href => cfr_url(title,part,section),
-        :class => "cfr external",
-        :target => "_blank"
     end
   end
   
@@ -90,10 +79,6 @@ module CitationsHelper
   
   def usc_url(title, part)
     "http://frwebgate.access.gpo.gov/cgi-bin/getdoc.cgi?dbname=browse_usc&docid=Cite:+#{title}USC#{part}"
-  end
-  
-  def cfr_url(title, part, section='')
-    "http://frwebgate.access.gpo.gov/cgi-bin/get-cfr.cgi?YEAR=current&TITLE=#{title}&PART=#{part}&SECTION=#{section}&TYPE=TEXT"
   end
   
   def public_law_url(congress, law)
