@@ -45,14 +45,12 @@ NAV
   color: #fff;
   @include text-shadow($golden, 1px, 1px, 1px);
   }
-#primary_nav .science-and-technology {
+#primary_nav .science-and-technology,
+#primary_nav .business-and-industry {
   width: 80px;
   }
-#primary_nav .business-and-industry {
-  width: 75px;
-  }
 #primary_nav .health-and-public-welfare {
-  width: 106px;
+  width: 115px;
   } 
   
 /******************************
@@ -80,6 +78,7 @@ SEARCH
   width: image-width('icons/search_bg_wide.png');
   }
 #header #search input[type='text'] {
+  background: #fff; /* for opera */
   border: 1px solid darken($golden, 10%);
   @include border-top-left-radius(8px);
   @include border-bottom-left-radius(8px);
@@ -109,9 +108,9 @@ SEARCH
   }
 #header #browse_container {
   top: 7px;
-  right: 30px;
+  right: 25px;
   position: absolute;
-  width: 100px;
+  width: 105px;
   }
 #header #browse_container a {
   color: #fff;
