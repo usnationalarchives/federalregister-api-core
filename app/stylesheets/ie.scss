@@ -90,11 +90,16 @@ SEARCH
 #search .tabs li {
   display: inline;
   }
+#search .search_bar {
+  padding-bottom: 0;
+  }
+  
 /* TODO this is not a fix */  
 #search .active_filter_list li {
   border-top-width: 4px;
   }  
 #search .pagination {
+  margin-bottom: 2em;  
   padding-bottom: 2px;
   } 
 #header #search_bar .search_btn,    
@@ -107,6 +112,14 @@ SEARCH
 #search li.location input.submit {
   line-height: 1;
   }
+.result_set.events .results .actions,
+.result_set.events .results > li:hover .actions {
+  filter: none;
+  }  
+.result_set.events .results .actions a {
+  display: block;
+  }
+ 
 /******************************
 
 TOPIC LIST
