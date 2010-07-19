@@ -188,7 +188,9 @@ ol.results li .date {
 RESULTS - EVENTS & REGULATIONS
 
 ******************************/
-
+.result_set {
+  margin-bottom: 2em;
+  }
 .result_set.events .row {
   border-bottom: 2px solid #ccc;
   }
@@ -233,10 +235,12 @@ RESULTS - EVENTS & REGULATIONS
 .result_set.regulations .results dt {
   width: auto;
   }  
-.result_set.events .results dd.next,
-.result_set.regulations .results dd.next {
-  width: 320px;
+.result_set.events .results dd.next {
+  width: 380px;
   }
+.result_set.regulations .results dd {
+  width: 480px;
+  }  
 dd.next + dd.next {
   padding-left: 4em;
   }  
@@ -248,7 +252,7 @@ dd.next + dd.next {
   @include inline-list;
   position: absolute;
   right: 0;
-  @include opacity(.4);
+  @include opacity(0.4);
   }
 .result_set.events .results > li:hover .actions {
   @include opacity(1);
@@ -262,7 +266,7 @@ dd.next + dd.next {
   border-bottom: 1px solid #EEEEEE;
   list-style: none;
   margin: 0 0 1em 0;
-  padding: 0 0 0 35px;
+  padding: 0 0 1em 35px;
   }
 .article_list li:last-child,
 .article_list li.lastchild {
