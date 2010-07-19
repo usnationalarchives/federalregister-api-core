@@ -11,11 +11,19 @@
     </li>  
   </ul>
   
-  <h4>By Letter</h4>
-  <ul class="actions">
-    <% @letters.each do |letter| %>
-      <li class="<%='on' if letter == @letter %>"><%= link_to letter.upcase, topics_by_letter_path(letter) %></li>
-    <% end %>
+  <h4>Alphabetical</h4>
+  <ul class="actions alpha">
+    <li class="all on"><a href="#">ALL</a></li>
+    <li><a href="#">A-B</a></li>
+    <li><a href="#">C</a></li>
+    <li><a href="#">D-E</a></li>
+    <li><a href="#">F</a></li>
+    <li><a href="#">G-J</a></li>
+    <li><a href="#">K-M</a></li>
+    <li><a href="#">N</a></li>
+    <li><a href="#">O-P</a></li>
+    <li><a href="#">Q-T</a></li>
+    <li><a href="#">U-Z</a></li>    
   </ul>
 </div>
 
