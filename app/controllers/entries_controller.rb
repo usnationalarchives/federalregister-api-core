@@ -98,8 +98,12 @@ class EntriesController < ApplicationController
     cache_for 1.day
     @entry = Entry.find_by_document_number!(params[:document_number])
     
-    respond_to do |wants|
-      wants.html
+    if @entry.slug != params[:slug]
+      redirect_to entry_path(@entry), :status => :moved_permanently
+    else
+      respond_to do |wants|
+        wants.html
+      end
     end
   end
   
