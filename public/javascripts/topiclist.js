@@ -10,7 +10,7 @@ $(document).ready(function() {
   
   $("#topic_list").bind('filter', function( event, item ){
     $("#topic_count").html( $("#topic_list > li:visible").size() );
-    $("h1.title span").text( 'Agencies - ' + item );
+    $("h1.title span").text( 'Topics - ' + item );
   });
   
   $(".topic_list_container .actions a").bind('click', function(event) {
