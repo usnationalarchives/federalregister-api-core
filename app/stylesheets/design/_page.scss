@@ -23,10 +23,20 @@ ul.bullets  li {
 .bullets li:last-child,
 .bullets li.lastchild {
   margin-bottom: 0;
-  } 
-  
+  }  
 .hide,  
 .skip_to_content { display: none; }
+
+#tender {
+  background: sprite-image("icons/tender.png", 0, 0, 100px) no-repeat;
+  display: block;
+  height: image-height("icons/tender.png");
+  @include hide-text;
+  position: absolute;
+  top: 100px;
+  right: 0;
+  width: image-width("icons/tender.png");
+  }
 
 /******************************
 
