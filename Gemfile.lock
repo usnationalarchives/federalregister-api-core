@@ -23,7 +23,7 @@ dependencies:
   rails: 
     group: 
     - :default
-    version: = 2.3.5
+    version: = 2.3.8
   searchlogic: 
     group: 
     - :default
@@ -204,19 +204,19 @@ specs:
 - rake: 
     version: 0.8.7
 - activesupport: 
-    version: 2.3.5
+    version: 2.3.8
 - rack: 
-    version: 1.0.1
+    version: 1.1.0
 - actionpack: 
-    version: 2.3.5
+    version: 2.3.8
 - actionmailer: 
-    version: 2.3.5
+    version: 2.3.8
 - active_hash: 
     version: 0.7.9
 - activerecord: 
-    version: 2.3.5
+    version: 2.3.8
 - activeresource: 
-    version: 2.3.5
+    version: 2.3.8
 - after_commit: 
     version: 1.0.7
 - amatch: 
@@ -292,7 +292,7 @@ specs:
 - rack-test: 
     version: 0.5.4
 - rails: 
-    version: 2.3.5
+    version: 2.3.8
 - rails-test-serving: 
     version: 0.1.4.2
 - riddle: 
@@ -323,7 +323,7 @@ specs:
     version: 2.3.14
 - ym4r: 
     version: 0.6.1
-hash: fbc73023395c6f7983e8941657346d9137a323b0
+hash: b27e4528eeef891ae2d7902d4cbdd106557ffaae
 sources: 
 - Rubygems: 
     uri: http://gemcutter.org
