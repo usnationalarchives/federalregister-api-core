@@ -4,7 +4,8 @@ SETUP
 
 ******************************/
 
-#main {
+#main,
+#footer > .wrapper {
   @include grid_system(16);
   }
 
@@ -55,10 +56,10 @@ ENTRIES
 #metadata_content_area {
   @include grid(16, 16);
   }
-#entries #content_area {
+#entries.show #content_area {
   left: -240px; /* PULL 4 */
   }  
-#entries #sidebar {
+#entries.show #sidebar {
   left: 720px; /* PUSH 12 */
   }  
 .metadata_share_bar .metadata {

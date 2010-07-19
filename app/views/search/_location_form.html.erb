@@ -1,7 +1,7 @@
 <% form_for :conditions, search, :html => {:method => :get} do |f| %>
 <h4>Near</h4>
 <ul>
-  <li>
+  <li class="location">
     <% params[:conditions].except(:location, :within).keys.each do |attr| %>
       <% if params[:conditions][attr].is_a?(Array)%>
         <% params[:conditions][attr].each do |val| %>
@@ -13,7 +13,7 @@
     <% end %>
     <%= f.text_field :location, :placeholder =>  "Zip Code", :class => 'zip' %>
     <%= f.select :within, %w(5 10 25 50 100 200).map{|n| ["#{n} miles", n]} %>
-    <%= f.submit 'Go' %>
+    <%= f.submit 'Go', :class => 'submit' %>
   </li>
 </ul>
 <% end %>

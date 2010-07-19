@@ -8,13 +8,13 @@ CURRENT ISSUE
   border: 1px solid $green;
   height: 40px;
   margin-bottom: 2em;
+  position: relative;
   }
 #current_issue .issue {
   color: #fff;
   @include inline-block;
   font-size: 1.2em;
   line-height: 40px;
-  margin-right: 1em;
   padding-left: 55px;
   width: 125px;
   }
@@ -22,9 +22,41 @@ CURRENT ISSUE
 #current_issue .issue:focus {
   text-decoration: underline;
   }  
-#current_issue dl {
+#current_issue ul {
+  @include inline_list;
   margin-bottom: 0;
-  line-height: 40px;
+  position: absolute;
+  left: 185px;
+  top: 10px;
+  }
+#current_issue ul li a {
+  color: $dark_green;
+  padding: 5px;
+  text-decoration: underline;
+  }  
+#current_issue ul li a:hover {
+  background: #f5f9ed;
+  @include border-radius(5px);
+  text-decoration: none;
+  }
+#current_issue ul li span {
+  font-weight: 700;
+  }
+#current_issue .other_dates {
+  color: $dark_green;
+  font-size: 1.2em;
+  line-height: 1;
+  position: absolute;
+  right: .5em;
+  text-align: right;
+  top: 5px;
+  width: 120px;
+  }
+.wf-active #current_issue .other_dates {
+  width: 105px;
+  }  
+#current_issue .other_dates:hover {
+  text-decoration: underline;
   }
 #current_issue dl,
 #current_issue dt,
@@ -32,14 +64,17 @@ CURRENT ISSUE
   display: inline;
   }
 #current_issue dt {
-  color: #636363;
+  color: $dark_green;
   font-weight: 400;
   }  
 #current_issue dd {
   margin: 0 1em 0 0;
   font-weight: 700;
   }  
-
+#current_issue dd,
+#current_issue dd a {
+  color: $dark_green;
+  }
 /******************************
 
 PROMO BOX
@@ -211,7 +246,7 @@ NEWS
   }
 .home #disclaimer {
   float: left;
-  margin-left: 30px;
+  margin-left: 10px;
   width: 265px;
   }
   

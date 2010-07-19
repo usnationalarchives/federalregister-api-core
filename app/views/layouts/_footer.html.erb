@@ -1,8 +1,8 @@
 <div class="wrapper">
   
-  <div class="grid_2 alpha">
+  <div class="grid_2">
     <h2>Home</h2>
-    <ul>
+    <ul class="bullets">
       <li><a href="/" title="Home">Home</a></li>
     </ul>  
   </div>
@@ -10,7 +10,7 @@
   <div class="grid_3">
     <h2>Sections</h2>
     <% nav_tag(:id => "site_map_nav") do %>
-      <ul>
+      <ul class="bullets">
         <% Section.all.each do |section| %>
           <li><%= link_to section.title, section_path(section) %></li>
         <% end %>
@@ -18,10 +18,10 @@
     <% end -%>  
   </div>
   
-  <div class="grid_3">
+  <div class="grid_2">
     <h2>Browse</h2>
     <% nav_tag() do %>
-      <ul>
+      <ul class="bullets">
         <li><%= link_to "Agencies", agencies_path %></li>
         <li><%= link_to "Topics", topics_path %></li>
       </ul>
@@ -30,7 +30,7 @@
   
   <div class="grid_3">
     <h2>Policy</h2>
-    <ul>
+    <ul class="bullets">
       <li><a href="/policy/about-us">About Us</a></li>
       <li><a href="/policy/legal-status">Legal Status</a></li>
       <li><a href="/policy/user-information">User Information</a></li>
@@ -44,7 +44,7 @@
   
   <div class="grid_3">
     <h2>Learn</h2>
-    <ul>
+    <ul class="bullets">
       <li><a href="/learn/about">About the Federal Register</a></li>
       <li><a href="/learn/ofr-services">OFR Publications &amp; Services</a></li>
       <li><a href="/learn/research">Document Drafting &amp; Research</a></li>
