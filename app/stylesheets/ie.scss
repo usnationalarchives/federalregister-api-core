@@ -33,6 +33,10 @@ NAV
 #primary_nav .health-and-public-welfare {
   width: 115px;
   }
+#header #browse_container {
+  right: 20px;
+  width: 110px;
+  }  
   
 /******************************
 
@@ -43,11 +47,6 @@ HOMEPAGE
 #special.home #popular .header_with_icon {
   height: 40px;
   }  
-
-#current_issue .statistics {
-  margin-left: 25px;
-  }  
-
 #slideshow .stats li span {
   zoom: 1;
   }
@@ -78,7 +77,6 @@ ARTICLE
 .citation_box li {
   zoom: 1;
   }
-
 .button {
   zoom: 1;
   }  
@@ -103,17 +101,18 @@ SEARCH
 #conditions_submit {
   line-height: 0;
   } 
-
+.filters .actions li {
+  zoom: 1;
+  }
+#search li.location input.submit {
+  line-height: 1;
+  }
 /******************************
 
-FOOTER
+TOPIC LIST
 
-******************************/  
-  
-#footer a {
-  color: #fff;
-  }
-#footer a:hover,
-#footer a:focus {
-  border-bottom: 1px solid #fff;
-  }  
+******************************/ 
+
+div.actions ul {
+  display: inline;
+  } 
