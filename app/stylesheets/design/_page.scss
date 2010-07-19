@@ -24,7 +24,9 @@ ul.bullets  li {
 .bullets li.lastchild {
   margin-bottom: 0;
   } 
-.skip_to_content { display: none; }textPlaceholder
+  
+.hide,  
+.skip_to_content { display: none; }
 
 /******************************
 
@@ -65,6 +67,7 @@ LEGAL DISCLAIMER
 .home  #disclaimer {
   background: none;
   border: none;
+  margin-left: 10px;
   padding: 0;
   }  
 #disclaimer h1 {
@@ -201,7 +204,10 @@ ARTICLE VIEW
   position: absolute;
   right: 0;
   top: 0;
-  }
+  }  
+#flash_message .button:hover {
+  background: $golden;
+  }  
 #flash_message p {
   @include apertura-condensed;
   line-height: 20px;  
@@ -233,13 +239,14 @@ ARTICLE VIEW
 #sidebar .aside_box {
   margin-bottom: 1em;
   }
-
+#sidebar .aside_box ul.bullets {
+  margin-bottom: 0;
+  }
 #entries .box h4 {
   display: inline;
   margin: 0 1em 0 0;
   vertical-align: text-top;
   }
-
 .header_column h1,
 .header_column #table_of_contents,
 .header_column #table_of_graphics
@@ -277,7 +284,7 @@ ARTICLE VIEW
 .metadata_share_bar .share {
   position: relative;
   }
-.metadata_share_bar .share .actions {
+.metadata_share_bar .share ul {
   @include horizontal-list;
   position: absolute;
   right: 0;
@@ -399,6 +406,7 @@ p:target {
   }
 .citation_box { 
   display: none;
+  @include box-shadow(#ccc, 1px, 1px, 5px);
   position: absolute; 
   }
 .citation_box ul { margin-bottom: 0; }  
@@ -495,39 +503,17 @@ AGENCY LIST
 #agency_list li li.lastchild  {
   background-image: url(/images/child_one.png);
   }
-#agencies .agency_list_info .title_bar {
+.agency_list_info .title_bar {
   border-top: none;
   margin-bottom: 0;
   margin-top: 7px;
   padding-top: 0;
   } 
-
 .agency_list_info {  
   border-bottom: 3px solid #385F82;
   margin-bottom: 1em;
-  padding: 0 1em;
   position: relative;
   overflow: hidden;
-  }
-.agency_list_info ul {
-  bottom: 0;
-  @include horizontal-list;
-  position: absolute;
-  right: 1em;
-  }
-.agency_list_info li {
-  padding-bottom: 7px;
-  }
-.agency_list_info li a {
-  color: #BDBDBD;
-  text-transform: uppercase;
-  }    
-.agency_list_info li.on {
-  background: url(/images/tab_select_bottom.png) no-repeat 50% bottom;
-  font-weight: 700;
-  } 
-.agency_list_info li.on a {
-  color: #385F82;
   }
 .filters .livesearch input {
   border: 1px solid #ccc;
@@ -650,26 +636,21 @@ TOPIC LIST
 
 ******************************/
 
+.topic_list_info .title_bar {
+  border-top: none;
+  margin-bottom: 0;
+  margin-top: 7px;
+  padding-top: 0;
+  } 
+.topic_list_info {  
+  border-bottom: 3px solid #385F82;
+  margin-bottom: 1em;
+  position: relative;
+  overflow: hidden;
+  }
+
 .topic_list_container .title_bar {
   margin-bottom: 0;
-  }
-.letter_list {
-  @include horizontal-list;
-  }
-.letter_list li {
-  padding: 0 8.5px 7px 8.5px;
-  }
-.letter_list li:first-child,
-.letter_list li.firstchild {
-  padding-left: 8.5px;
-  }
-.letter_list li:last-child,
-.letter_list li.lastchild {
-  padding-right: 8.5px;
-  }    
-.letter_list li.on {
-  background: url(/images/tab_select_bottom.png) no-repeat 50% bottom;
-  font-weight: 700;
   }
 .topic_count {
   margin-bottom: 2em;
@@ -679,32 +660,34 @@ TOPIC LIST
   margin-top: 0;
   }  
 .topic_list_container ul {
+  display: inline-block;
   list-style: none;
+  margin-right: 1em;
+  margin-bottom: 0;
   }
 .individual_topic_count {
-  color: #bdbdbd;
+  color: #565656;
   font-size: 1.3em;
   font-weight: 700;
   @include grid(1,16);  
   line-height: 1.15;
   text-align: right;
   }  
-
-.topic_count .ordering {
-  @include horizontal_list;
-  position: absolute;
-  right: 0;
-  top: 0;
-  } 
-.topic_count .ordering li {
-  padding-top: 7px;
+.filters .actions {
+  position: relative;
   }
-.topic_count .ordering li.on {
-  background: url(/images/tab_select.png) no-repeat 50% top;
-  font-weight: 700;
+.filters .actions li {
+  clear: none;
+  float: none;
+  margin-left: 0;
   }  
-  
-  
+.filters .actions li:first-child,
+.filters .actions li.firstchild,
+.filters .actions li:last-child, 
+.filters .actions li.lastchild   {
+  margin-left: 0;
+  padding: .25em .5em 0;
+  }
 /******************************
 
 TOPIC LIST
@@ -800,6 +783,7 @@ DAILY ISSUE
 FOOTNOTES
 
 ******************************/
+
 #footnotediv {
   background-color: #fff;
   position: absolute;
@@ -808,4 +792,46 @@ FOOTNOTES
   }
 #footnotediv .back {
   display: none;
-}
+  }
+
+/******************************
+
+HEADER ACTIONS
+
+******************************/
+.actions {
+  bottom: 5px;
+  @include horizontal_list;
+  position: absolute;
+  right: 0;
+  }
+.actions li {
+  margin-left: .5em;
+  padding: 0.25em 0.5em 0;
+  }
+.actions li:first-child,
+.actions li.firstchild {
+  margin-left: 0;
+  }  
+.actions li a {
+  color: #385F82;
+  text-transform: uppercase;
+  }  
+.actions li.on,
+.actions li.tabs-selected {
+  background: #385F82;
+  @include border-radius(5px);
+  font-weight: 700;
+  }
+.actions li.on:first-child,
+.actions li.on.firstchild,
+.actions li:last-child, 
+.actions li.lastchild,
+.actions li.tabs-selected:first-child,
+.actions li.tabs-selected.firstchild {
+  padding: 0.25em 0.5em 0;
+  }  
+.actions li.on a,
+.actions li.tabs-selected a {
+  color: #fff;
+  }  

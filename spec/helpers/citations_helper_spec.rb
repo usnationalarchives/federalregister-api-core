@@ -1,5 +1,6 @@
 describe CitationsHelper do
   include CitationsHelper
+  include Citations::CfrHelper
   
   describe 'add_usc_links' do
     it "supports '# USC #'" do
@@ -12,54 +13,6 @@ describe CitationsHelper do
     
     it "supports '39 U.S.C. 3632, 3633, or 3642'"
     it "supports '39 U.S.C. 3632, 3633, or 3642 and 39 CFR part 3015'"
-  end
-  
-  describe 'add_cfr_links' do
-    it "supports '# CFR #'" do
-      add_cfr_links('10 CFR 100').should == '<a class="cfr external" href="' + h(cfr_url('10','100')) + '" target="_blank">10 CFR 100</a>'
-    end
-    
-    it "supports '# CFR #'" do
-      add_cfr_links('10 CFR 100').should == '<a class="cfr external" href="' + h(cfr_url('10','100')) + '" target="_blank">10 CFR 100</a>'
-    end
-    
-    it "supports '# CFR #.#'" do
-      add_cfr_links('10 CFR 100.1').should == '<a class="cfr external" href="' + h(cfr_url('10', '100', '1')) + '" target="_blank">10 CFR 100.1</a>'
-    end
-    
-    it "supports '# C.F.R. #.#'" do
-      add_cfr_links('10 C.F.R. 100.1').should == '<a class="cfr external" href="' + h(cfr_url('10','100','1')) + '" target="_blank">10 C.F.R. 100.1</a>'
-    end
-    
-    it "supports '# C.F.R. Part #.#'" do
-      add_cfr_links('10 C.F.R. Part 100.1').should == '<a class="cfr external" href="' + h(cfr_url('10','100','1')) + '" target="_blank">10 C.F.R. Part 100.1</a>'
-    end
-    
-    it "supports '# C.F.R. parts #'" do
-      add_cfr_links('10 C.F.R. parts 100').should == '<a class="cfr external" href="' + h(cfr_url('10', '100')) + '" target="_blank">10 C.F.R. parts 100</a>'
-    end
-    
-    it "supports '# C.F.R. Sec. #'" do
-      add_cfr_links('10 C.F.R. Sec. 100').should == '<a class="cfr external" href="' + h(cfr_url('10', '100')) + '" target="_blank">10 C.F.R. Sec. 100</a>'
-    end
-    
-    it "supports '# C.F.R. &#xA7; #'" do
-      add_cfr_links('10 C.F.R. &#xA7; 100').should == '<a class="cfr external" href="' + h(cfr_url('10', '100')) + '" target="_blank">10 C.F.R. &#xA7; 100</a>'
-    end
-    
-    it "supports '# C.F.R. &#xA7;&#xA7; #'" do
-      add_cfr_links('10 C.F.R. &#xA7;&#xA7; 100').should == '<a class="cfr external" href="' + h(cfr_url('10','100')) + '" target="_blank">10 C.F.R. &#xA7;&#xA7; 100</a>'
-    end
-    
-    it "supports multiple citations like '# CFR #.# and # CFR #.#'" do
-      add_cfr_links('50 CFR 660.719 and 50 CFR 665.28').should == '<a class="cfr external" href="' + h(cfr_url('50','660','719')) + '" target="_blank">50 CFR 660.719</a> and <a class="cfr external" href="' + h(cfr_url('50','665','28')) + '" target="_blank">50 CFR 665.28</a>'
-    end
-    
-    it "supports missing the initial space: '49 CFR230.105(c)'"
-    it "supports '15 CFR parts 4 and 903'"
-    it "supports '33 CFR Parts 160, 161, 164, and 165'"
-    it "supports '18 CFR 385.214 or 385.211'"
-    it "supports '7 CFR 2.22, 2.80, and 371.3'"
   end
   
   describe 'add_regulatory_plan_links' do
@@ -109,12 +62,15 @@ describe CitationsHelper do
   end
   
   describe 'adding links to HTML' do
+    it "should call add_citation_links" do
+      add_cfr_links('15 CFR 801', Date.today).should == '<a class="cfr external" href="' + h(cfr_url(Date.today,'15','801')) + '" target="_blank">15 CFR 801</a>'
+    end
     it 'should not interfere with existing links' do
       add_citation_links('<a href="#">10 CFR 100</a>').should == '<a href="#">10 CFR 100</a>'
     end
     
     it 'should not interfere with existing HTML but add its own links' do
-      add_citation_links('<p><a href="#">10 CFR 100</a> and (<em>hi</em>) <em>alpha</em> beta 101 CFR 10 omega</em></p>').should == ('<p><a href="#">10 CFR 100</a> and (<em>hi</em>) <em>alpha</em> beta <a class="cfr external" href="' +  h(cfr_url('101','10')) + '" target="_blank">101 CFR 10</a> omega</p>')
+      add_citation_links('<p><a href="#">10 CFR 100</a> and (<em>hi</em>) <em>alpha</em> beta 10 CFR 10 omega</em></p>').should == ('<p><a href="#">10 CFR 100</a> and (<em>hi</em>) <em>alpha</em> beta <a class="cfr external" href="' +  h(cfr_url(Date.today, '10','10')) + '" target="_blank">10 CFR 10</a> omega</p>')
     end
   end
 end
