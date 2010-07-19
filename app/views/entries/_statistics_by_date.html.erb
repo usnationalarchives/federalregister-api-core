@@ -1,28 +1,19 @@
 <div id="current_issue">
     <%= link_to label, entries_by_date_path(issue.publication_date), :title => issue.publication_date.to_s(:wday_and_pretty_date), :class => 'issue'  %>
-
-  <dl class="statistics">
-    <dt>Notices</dt>
-    <dd><%= link_to issue.notice_count, entries_search_path(:conditions => {:type => "NOTICE", :date => issue.publication_date.to_s(:db)}) %></dd>
-
-    <dt>Proposed Rules</dt>
-    <dd><%= link_to issue.proposed_rule_count, entries_search_path(:conditions => {:type => "PRORULE", :date => issue.publication_date.to_s(:db)}) %></dd>
-
-    <dt>Rules</dt>
-    <dd><%= link_to issue.rule_count, entries_search_path(:conditions => {:type => "RULE", :date => issue.publication_date.to_s(:db)}) %></dd>
-  
+    
+  <ul class="statistics">
+    <li><%= link_to "<span>#{issue.notice_count}</span> Notices", entries_search_path(:conditions => {:type => "NOTICE", :date => issue.publication_date.to_s(:db)}) %></li>
+    <li><%= link_to "<span>#{issue.proposed_rule_count}</span> Proposed Rules", entries_search_path(:conditions => {:type => "PRORULE", :date => issue.publication_date.to_s(:db)}) %></li>
+    <li><%= link_to "<span>#{issue.rule_count}</span> Rules", entries_search_path(:conditions => {:type => "RULE", :date => issue.publication_date.to_s(:db)}) %></li>
     <% if issue.presidential_documents_count > 0 %>
-      <dt>Presidential Documents</dt>
-      <dd><%= link_to issue.presidential_documents_count, entries_search_path(:conditions => {:type => "PRESDOCU", :date => issue.publication_date.to_s(:db)}) %></dd>
-    <% end %>
-  
+      <li><%= link_to "<span>#{issue.presidential_documents_count}</span> Presidential Documents", entries_search_path(:conditions => {:type => "PRESDOCU", :date => issue.publication_date.to_s(:db)}) %></li>
+    <% end -%>
     <% if issue.significant_entries_count > 0 %>
-      <dt>Significant Regulations</dt>
-      <dd><%= issue.significant_entries_count %></dd>
-    <% end %>
+      <li><span><%= issue.significant_entries_count %></span> Significant Regulations</li>
+    <% end -%>
+    <li><span><%= issue.total_pages %></span> Pages</li>
+  </ul>
+  <%= link_to 'Browse this &amp; other dates', entries_by_date_path(issue.publication_date), :title => "Browse this & other dates", :class => 'other_dates'  %>
   
-    <dt>Total Pages</dt>
-    <dd><%= issue.total_pages %></dd>
-  </dl>
-
+  
 </div>

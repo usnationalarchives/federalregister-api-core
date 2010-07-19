@@ -67,6 +67,7 @@ LEGAL DISCLAIMER
 .home  #disclaimer {
   background: none;
   border: none;
+  margin-left: 10px;
   padding: 0;
   }  
 #disclaimer h1 {
@@ -235,13 +236,14 @@ ARTICLE VIEW
 #sidebar .aside_box {
   margin-bottom: 1em;
   }
-
+#sidebar .aside_box ul.bullets {
+  margin-bottom: 0;
+  }
 #entries .box h4 {
   display: inline;
   margin: 0 1em 0 0;
   vertical-align: text-top;
   }
-
 .header_column h1,
 .header_column #table_of_contents,
 .header_column #table_of_graphics

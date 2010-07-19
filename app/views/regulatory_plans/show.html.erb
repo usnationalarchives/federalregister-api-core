@@ -11,13 +11,14 @@
         <p class="metadata">Unified Agenda current as of <%= issue_season(@regulatory_plan) %></p>
         
         <div class="share">
-          <%# TODO HELP-RUBY these don't work with reg plans yet %>
-          <%= link_to_twitter("#{short_regulatory_plan_url(@regulatory_plan)} #gov20") %>
-          <%= link_to_facebook(short_regulatory_plan_url(@regulatory_plan), @regulatory_plan.title) %>
-          <%= link_to_reddit(short_regulatory_plan_url(@regulatory_plan), @regulatory_plan.title) %>
-          <%= link_to_digg(short_regulatory_plan_url(@regulatory_plan), @regulatory_plan.title, @regulatory_plan.abstract) %>
+          <ul>
+            <li><%= link_to_twitter("#{short_regulatory_plan_url(@regulatory_plan)} #gov20") %></li>
+            <li><%= link_to_facebook(short_regulatory_plan_url(@regulatory_plan), @regulatory_plan.title) %></li>
+            <li><%= link_to_reddit(short_regulatory_plan_url(@regulatory_plan), @regulatory_plan.title) %></li>
+            <li><%= link_to_digg(short_regulatory_plan_url(@regulatory_plan), @regulatory_plan.title, @regulatory_plan.abstract) %></li>
           <%# TODO HELP-RUBY make this real %>
           <%# <a href="#" class="button list social email">E-Mail</a> %>
+          </ul>
         </div>
       </div>
       
