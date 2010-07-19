@@ -7,6 +7,8 @@
     <%# Facebook uses these for parsing when someone adds a link  %>
     <%= tag(:meta, :name => 'title', :content => @entry.title) if @entry %>
     <%= tag(:meta, :name => 'description', :content => truncate_words(strip_tags(@entry.abstract), :length => 300)) if @entry %>
+    <link rel="Shortcut Icon" href="/favicon.ico">
+    <%# TODO HELP-RUBY for facebook image below, show curated image if present, should be 130wide max %>
     <link rel="image_src" href="http://fr2.criticaljuncture.org/images/fbdisplay.jpg" />
     <meta name="medium" content="news" />
     
