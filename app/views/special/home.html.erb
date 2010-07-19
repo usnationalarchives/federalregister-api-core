@@ -1,12 +1,12 @@
-<% feed_autodiscovery entries_path(:format => :rss), "Recent Articles from the Federal Register" %>
-<% feed_autodiscovery highlighted_entries_path(:format => :rss), "Featured Articles from the Federal Register" %>
+<% feed_autodiscovery entries_url(:format => :rss), "Recent Articles from the Federal Register" %>
+<% feed_autodiscovery highlighted_entries_url(:format => :rss), "Featured Articles from the Federal Register" %>
 <% add_column_class('home') %>
 
 <h1 class="title"><span><%= @issue.publication_date.try(:to_s, :wday_and_pretty_date) %></span></h1>
 
 <%= render(:partial => "special/preview_warning") if @preview %>
 
-<%= render :partial => "entries/statistics_by_date", :locals => {:issue => @issue, :label => "Current Issue"} %>
+<%= render :partial => "entries/statistics_by_date", :locals => {:issue => @issue, :label => "Current Issue", :other_dates => true} %>
 
 <div class="row">
   <% section_tag(:id => 'top_news_promo') do %>
