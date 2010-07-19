@@ -1,7 +1,7 @@
 class TopicsController < ApplicationController
   def index
     cache_for 1.day
-    redirect_to topics_by_letter_url('a')
+    @topics = Topic.all(:order => "topics.name", :conditions => "topics.entries_count > 0")
   end
   
   def show
