@@ -13,7 +13,8 @@
     <% end -%>
     <li><span><%= issue.total_pages %></span> Pages</li>
   </ul>
-  <%= link_to 'Browse this &amp; other dates', entries_by_date_path(issue.publication_date), :title => "Browse this & other dates", :class => 'other_dates'  %>
-  
+  <% if other_dates %>
+    <%= link_to 'Browse this &amp; other dates', entries_by_date_path(issue.publication_date), :title => "Browse this & other dates", :class => 'other_dates'  %>
+  <% end %>
   
 </div>
