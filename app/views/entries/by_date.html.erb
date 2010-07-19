@@ -17,7 +17,6 @@
   <% if sub_agencies_on_this_page.present? %>
     <ul>
       <% sub_agencies_on_this_page.each do |sub_agency| %>
-        <%# HELP-DESIGN: the count here should be styled %>
         <li><span class="see">See</span> <%= link_to sub_agency.name, '#' + sub_agency.slug %> <span class="count_pill"><%= sub_agency.entries.to_a.size %></span></li>
       <% end %>
     </ul>
