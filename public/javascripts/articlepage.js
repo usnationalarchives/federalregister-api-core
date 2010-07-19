@@ -98,12 +98,6 @@ $(document).ready(function() {
   
   citation_info.setup();
   
-  $('#disclaimer a').click(function(){
-    generate_dialog(); //won't this create and appened the modal everytime you click it?
-    $('#modal').centerScreen().jqmShow(); 
-    return false;
-  });
-  
   var font_size = 1;
   
   $(".increase").bind('click', function(event) {
@@ -133,19 +127,32 @@ $(document).ready(function() {
     event.preventDefault();
     $("#content_area").addClass("sans");
   });
-
-  function generate_dialog(){
+  
+  $("a[data-historic-citation-url]").bind('click', function(event) {
+    event.preventDefault();
+    display_modal('Multiple Versions Available',
+        '<p>Would you like the <a href="' + $(this).attr('href') + '" target="_blank"> current version</a> of ' + $(this).text() + ' or ' +
+        'the <a href="' + $(this).attr('data-historic-citation-url') + '" target="_blank">version as it existed at the time of publication</a>'
+    )
+  });
+  
+  $('#disclaimer a').bind('click', function(event){
+    event.preventDefault();
+    display_modal('Legal Status Disclaimer', '<p>The content posted on this site, taken from the daily Federal Register (FR), is not an official, legal edition of the FR; it does not replace the official print or electronic versions of the FR. Each document posted on the site includes a link to the corresponding official FR PDF file.  For more information, see our <a href="/legal_status">Legal Status</a> page.</p>')
+  });
+  
+  function display_modal(title, html){
     if ($('#modal').size() == 0) {
-      var html = [
-        '<div id="modal">',
-        '  <a href="#" class="jqmClose close">Close</a>',
-        '  <h3 class="title_bar">Legal Status Disclaimer</h3>',
-        '  <p>The content posted on this site, taken from the daily Federal Register (FR), is not an official, legal edition of the FR; it does not replace the official print or electronic versions of the FR. Each document posted on the site includes a link to the corresponding official FR PDF file.  For more information, see our <a href="/legal_status">Legal Status</a> page.</p>',
-        '</div>'
-      ].join("\n")
-
-      $('body').append(html);
-      $('#modal').jqm({modal: true, toTop: true});
+      $('body').append('<div id="modal"/>');
     }
+    $('#modal').html(
+      [
+        '<a href="#" class="jqmClose close">Close</a>',
+        '<h3 class="title_bar">' + title + '</h3>',
+        html,
+      ].join("\n")
+    )
+    $('#modal').jqm({modal: true, toTop: true});
+    $('#modal').centerScreen().jqmShow()
   }
 });
