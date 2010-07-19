@@ -1,11 +1,13 @@
 <h1 class="title"><span>User Information</span></h1>
 
-<h2>Special Features of the FederalRegister.gov Website</h2>
+<% section_tag(:id => 'content_area') do %>
+
+<h1>Special Features of the FederalRegister.gov Website</h1>
 
 <p>Each day Federal agencies publish numerous documents in the Federal Register, including proposed rules, final rules, public notices, and Presidential actions. However, the current print-based, official editions of the Federal Register display information in a dense format that makes it difficult to read and process documents in meaningful and innovative ways. We built the unofficial, XML-based Federal Register prototype on this site to overcome the technical limitations of the official editions and demonstrate how a new version can more effectively convey regulatory information to the public.   </p>
 
 <p>Key features of this site include:</p>
-<ul>
+<ul class="bullets">
   <li><strong>Articles:</strong> We display documents published in the Federal Register in a web newspaper format.  We call these documents “articles.”</li>
   <li><strong>News Sections:</strong> News Sections: Federal Register documents are organized into six main topical sections, characteristic of a web journal or newspaper (Money, Environment, World, Science &amp; Technology, Business &amp; Industry, and Health &amp; Public Welfare).  Selected and crowd-sourced articles are featured on news section pages based on user interest, agency input, and the OFR’s editorial judgment.</li>
   <li><strong>Agency Pages:</strong> Each major agency has its own “home page” with a description of its mission and selected information, such as “Significant Rules” as defined by E.O. 12866, and collections of the most recent articles and the most cited articles.</li>
@@ -27,3 +29,13 @@
   <li><strong>Statistics and Visualizations:</strong> We may use visual representations, such as graphs, charts, and maps, to display statistical information on agency activity and regulatory data.</li>
   <li><strong>Open Source Code and Data:</strong> Our commitment to open and transparent Government extends to sharing the underlying code of this website.  The various applications and tools on this site are built with open source software.  We in turn offer our code and applications to the open source community for public use, without restriction.    Each Federal Register document also includes a link to the corresponding raw XML file for free use in other applications.</li>
 </ul>
+<% end -%>
+
+<% aside_tag(:id => 'sidebar') do %>
+  <% section_tag(:id => 'relevant_links') do %>
+    <h1 class="title_bar">Relevant Links</h1>
+    <ul class="bullets">
+      <li><a href="http://www.reginfo.gov">RegInfo</a></li>
+    </ul>  
+  <% end -%>
+<% end -%>
