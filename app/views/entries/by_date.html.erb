@@ -1,9 +1,9 @@
-<% feed_autodiscovery entries_path(:format => :rss) %>
+<% feed_autodiscovery entries_url(:format => :rss) %>
 
 <% title "Entries for #{@publication_date.to_formatted_s(:pretty)}" %>
 <h1 class="title"><span><%= @publication_date %> Issue</span></h1>
 
-<%= render :partial => "statistics_by_date", :locals => {:issue => @issue, :label => @publication_date} %>
+<%= render :partial => "statistics_by_date", :locals => {:issue => @issue, :label => @publication_date, :other_dates => false} %>
 
 <div id="content_area">
 
@@ -17,7 +17,6 @@
   <% if sub_agencies_on_this_page.present? %>
     <ul>
       <% sub_agencies_on_this_page.each do |sub_agency| %>
-        <%# HELP-DESIGN: the count here should be styled %>
         <li><span class="see">See</span> <%= link_to sub_agency.name, '#' + sub_agency.slug %> <span class="count_pill"><%= sub_agency.entries.to_a.size %></span></li>
       <% end %>
     </ul>
@@ -70,17 +69,11 @@
   <% section_tag(:id => 'date_chooser') do %>
     <%= render :esi => entries_by_month_path(@publication_date, :current_date => @publication_date.to_s(:iso)) %>
     
-    <% if false%>
-    <% form_tag entries_date_search_path, :method => :get do %>
+    <% form_tag entries_date_search_path, :method => :get, :id => "date_selector" do %>
       <label>Go to a specific date:</label>
       <%= text_field_tag :search, '' %>
       <%= submit_tag 'Go' %>
     <% end %>
-    
-    <span class="error">We couldn't understand that date.</span>
-    <span class="error">There is no issue published on this date.</span>
-    <% end -%>
-    
   <% end -%>
   
   <% section_tag(:id => 'meta_toc') do %>

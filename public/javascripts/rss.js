@@ -14,7 +14,12 @@ $(document).ready(function() {
         '  <p>Select from the following feeds:</p>',
         '  <ul class="bullets">',
         '  <% elements.each(function(){ %>',
-        '    <li><a href="<%= this.href %>"><%= this.title %></a></li>',
+        '    <li>',
+        '      <a href="<%= this.href %>"><%= this.title %></a>',
+        '      <a href="http://add.my.yahoo.com/rss?url=<%= escape(this.href) %>"><img src="http://us.i1.yimg.com/us.yimg.com/i/us/my/addtomyyahoo4.gif" /></a>',
+        '      <a href="http://fusion.google.com/add?feedurl=<%= escape(this.href) %>"><img src="http://buttons.googlesyndication.com/fusion/add.gif" /></a>',
+        '      <a href="http://www.netvibes.com/subscribe.php?url=<%= escape(this.href) %>"><img src="http://www.netvibes.com/img/add2netvibes.gif" /></a>',
+        '    </li>',
         '  <% }); %>',
         '  </ul>',
         '</div>'

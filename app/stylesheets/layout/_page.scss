@@ -4,7 +4,8 @@ SETUP
 
 ******************************/
 
-#main {
+#main,
+#footer > .wrapper {
   @include grid_system(16);
   }
 
@@ -19,6 +20,7 @@ SETUP
   }  
 
 .row {
+  clear: both;
   margin-bottom: 3em;
   overflow: hidden;
   }
@@ -31,84 +33,67 @@ SECTION VIEW
 
 #sections #content_area,
 #topics #content_area,
-#pages #content_area {
+#pages #content_area,
+#entries #content_area,
+#regulatory_plans #content_area {
   @include grid(11, 16);
   @include grid-suffix(1, 16);
-  @include alpha;  
   }
   
 #sections #sidebar,
 #topics #sidebar,
-#pages #sidebar {
+#pages #sidebar,
+#entries #sidebar,
+#regulatory_plans #sidebar {
   @include grid(4, 16);
-  @include omega;
   }
-
-
 
 /******************************
 
 ENTRIES
 
 ******************************/
-
-#entries #content_area {
-  @include grid(11, 16);
-  @include grid-suffix(1, 16);  
-  @include alpha;
-  position: relative;
+#metadata_content_area {
+  @include grid(16, 16);
   }
-#entries #sidebar {
-  @include grid(4, 16);
-  @include omega;
-  position: relative;  
-  }
-
-#entries .citation_box {
-  @include grid(4, 16);
-  @include alpha;
-  @include omega;
-  }
+#entries.show #content_area {
+  left: -240px; /* PULL 4 */
+  }  
+#entries.show #sidebar {
+  left: 720px; /* PUSH 12 */
+  }  
 .metadata_share_bar .metadata {
   @include grid(12, 16);
-  @inclsude alpha;
+  @include alpha;
   }
 .metadata_share_bar .share {
   @include grid(4, 16);
   @include omega;  
   }
-
-/******************************
-
-REGULATION VIEW
-
-******************************/
-
-#regulatory_plans #content_area {
-  @include grid(11, 16);
-  @include grid-suffix(1, 16);  
-  @include alpha;
+#entries #content_area, 
+#entries #sidebar {
+  position: relative;  
   }
-#regulatory_plans #sidebar {
+#entries .citation_box {
   @include grid(4, 16);
+  @include alpha;
   @include omega;
   }
 
 /******************************
 
-THREE COL LIST
+THREE COL LIST of VARIOUS TYPES
 
 ******************************/
 
-.three_col_list h3 {
-  @include grid(2, 16);
-  @include alpha;
-  }
+.three_col_list h3,
 .three_col_list .date {
   @include grid(2, 16);
   @include alpha;
   }
-.three_col_list ul {
+.three_col_list ul,
+.three_col_list.comments .grouped_by_date,
+.citation_list .title  {
   @include grid(12, 16);
   @include omega;  
   }
@@ -122,17 +107,11 @@ THREE COL LIST
   @include grid(9, 16);
   @include omega;
   }
-#topics .three_col_list ul {
+#topics .three_col_list ul,
+#topics .citation_list .title {
   @include grid(7, 16); 
   @include omega;  
   }
-
-/******************************
-
-THREE COL LIST - COMMENT PERIOD LIST
-
-******************************/  
-  
 .three_col_list.comments ul {
   @include grid(10, 16);
   @include omega;
@@ -141,37 +120,14 @@ THREE COL LIST - COMMENT PERIOD LIST
   @include grid(4, 16);
   @include alpha;
   }   
-.three_col_list.comments .grouped_by_date {
-  @include grid(12, 16);
-  @include omega;  
-  }
-  
-
-/******************************
-
-CITATION LIST
-
-******************************/  
-
 .citation_list .citation_count {
   @include grid(2, 16);
   @include alpha;
-  
   clear: both;
   }
 .citation_list .date {
-  @include grid(2, 16)
+  @include grid(2, 16);
   }
-
-.citation_list .title {
-  @include grid(12, 16);
-  @include omega;
-  }
-
-#topics .citation_list .title {
-  @include grid(7, 16);
-  @include omega;
-  } 
   
 /******************************
 
@@ -182,50 +138,41 @@ AGENCY VIEW
 #agencies #agency_description {
   @include grid(10, 16);
   @include grid-suffix(1, 16);
-  @include alpha;
   }
 #agencies #sidebar {
   @include grid(5, 16);
-  @include omega;
   }  
 #agencies .header.with_image img {
   @include grid(2, 16);
   @include alpha;
   }
-
 #agencies .header.with_image h1 {
   @include grid(8, 16);
   @include omega;
   }
-  
   
 /******************************
 
 HOMEPAGE
 
 ******************************/
+#current_issue {
+  @include grid(16, 16);
+  }
 #top_news_promo {
   @include grid(11, 16);
-  @include alpha;  
   }
-
 .home #news {
   @include grid(5, 16);
-  @include omega;
-  margin-left: 30px;
   }  
-.home #popular {
-  @include grid(8, 16);
-  @include omega;  
-  }  
+.home #popular,
 .home #agency_highlight {
   @include grid(8, 16);
-  @include alpha;  
   }  
 .home #learn .about {
   @include grid(4,16);
   }
 .home .fr_section {
   @include grid(7, 16);
-  @include grid-prefix(1, 16);  
+  @include grid-prefix(1, 16);
   }

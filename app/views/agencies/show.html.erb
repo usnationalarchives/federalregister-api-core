@@ -1,7 +1,7 @@
 <% title @agency.name %>
 <h1 class="title"><span>View an Agency</span></h1>
 
-<% feed_autodiscovery agency_path(@agency, :format => :rss) %>
+<% feed_autodiscovery agency_url(@agency, :format => :rss) %>
 
 <div class="group">
   

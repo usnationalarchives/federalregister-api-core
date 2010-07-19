@@ -1,9 +1,5 @@
 <% title @entry.title %>
 
-<% content_for :head do %>
- <link rev="canonical" type="text/html" href="<%= short_entry_url(@entry) %>" />
-<% end %>
-
 <h1 class="title"><span><%= @entry.entry_type %></span></h1>
 
 <% article_tag('data-internal-id' => @entry.id) do %>
@@ -20,26 +16,9 @@
       <% end -%>      
   </div> <!-- end metadata_content_area -->
   
-  <div id="content_area">
-    <% if RAILS_ENV == 'development' %>
-      <%= render(:partial => 'abstract', :locals => {:entry => @entry}) %>
-    <% else %>
-      <%= render :esi => entry_abstract_path(@entry) %>
-    <% end %>
-    
-    <%= render( :partial => "regulatory_plan", :object => @entry.most_recent_regulatory_plan ) if @entry.most_recent_regulatory_plan %>
-  
-    <div id="fulltext_content_area">
-      <% if RAILS_ENV == 'development' %>
-        <%= render :partial => 'full_text', :locals => {:entry => @entry} %>
-      <% else %>
-        <%= render :esi => entry_full_text_path(@entry) %>
-      <% end %>
-    </div> <!-- end fulltext_content_area area -->  
-  
-  </div> <!-- content_area end -->
-  
   <% aside_tag(:id => 'sidebar') do %>
+    
+    <a href="#content_area" title="Skip the metadata" class="skip_to_content">Skip the metadata and jump to content</a>
     
     <%= render :partial => 'special/legal_disclaimer' %>
   
@@ -59,5 +38,24 @@
       <% end -%>
     <% end %>  
   <% end -%> <!-- end aside tag -->
+  
+  <div id="content_area">
+    <% if RAILS_ENV == 'development' %>
+      <%= render(:partial => 'abstract', :locals => {:entry => @entry}) %>
+    <% else %>
+      <%= render :esi => entry_abstract_path(@entry) %>
+    <% end %>
+    
+    <%= render( :partial => "regulatory_plan", :object => @entry.most_recent_regulatory_plan ) if @entry.most_recent_regulatory_plan %>
+  
+    <div id="fulltext_content_area">
+      <% if RAILS_ENV == 'development' %>
+        <%= render :partial => 'full_text', :locals => {:entry => @entry} %>
+      <% else %>
+        <%= render :esi => entry_full_text_path(@entry) %>
+      <% end %>
+    </div> <!-- end fulltext_content_area area -->  
+  
+  </div> <!-- content_area end -->
   
 <% end %> <!-- end article tag -->
