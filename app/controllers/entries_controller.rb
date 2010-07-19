@@ -33,9 +33,19 @@ class EntriesController < ApplicationController
   end
   
   def date_search
-    date = Chronic.parse(params[:search], :context => :past)
-    raise ActiveRecord::RecordNotFound if date.nil?
-    redirect_to entries_by_date_url(date)
+    begin
+      date = Date.parse(params[:search], :context => :past).try(:to_date )
+    rescue ArgumentError
+      render :text => "We couldn't understand that date.", :status => 422
+    end
+    
+    if date.present?
+      if Entry.published_on(date).count > 0
+        render :text => entries_by_date_path(date)
+      else
+        render :text => "There is no issue published on #{date}.", :status => 404
+      end
+    end
   end
   
   def by_date
@@ -88,8 +98,12 @@ class EntriesController < ApplicationController
     cache_for 1.day
     @entry = Entry.find_by_document_number!(params[:document_number])
     
-    respond_to do |wants|
-      wants.html
+    if @entry.slug != params[:slug]
+      redirect_to entry_path(@entry), :status => :moved_permanently
+    else
+      respond_to do |wants|
+        wants.html
+      end
     end
   end
   

@@ -5,15 +5,9 @@ PAGE ELEMENTS
 ******************************/
 
 .tabs {
-  margin: 0;
-  padding: 0;
-  border: 0;
-  outline: 0;
-  @include inline-block;
-  }
-.tabs {
-  display: block;
+  margin-bottom: 0;
   font-size: 1.2em;
+  outline: 0;
   }
 .tabs li {
   list-style-image: none;
@@ -49,7 +43,7 @@ PAGE ELEMENTS
   background: #f1f1f1;
   @include border-radius(5px);
   margin-bottom: 1em;
-  padding: 1em;
+  padding: 1em 0;
   overflow: hidden;
   position: relative;  
   }
@@ -69,6 +63,7 @@ PAGE ELEMENTS
   @include apertura-condensed;
   font-size: 1.5em;
   line-height: 25px;
+  margin-left: 1em;
   margin-top: 3px;
   }
 .search_bar label {
@@ -109,33 +104,12 @@ PAGE ELEMENTS
   position: relative;
   overflow: hidden;
   }
-.search_info ul {
-  bottom: 0;
-  @include horizontal-list;
-  position: absolute;
-  right: 1em;
-  }
-.search_info li {
-  padding-bottom: 7px;
-  }
-.search_info li a {
-  color: #BDBDBD;
-  text-transform: uppercase;
-  }    
-.search_info li.on {
-  background: url(/images/tab_select_bottom.png) no-repeat 50% bottom;
-  font-weight: 700;
-  } 
-.search_info li.on a {
-  color: #385F82;
-  }
 #search .search_info .title_bar {
   border-top: none;
   margin-bottom: 0;
   margin-top: 7px;
   padding-top: 0;
   }
-
 
 /******************************
 
@@ -214,7 +188,9 @@ ol.results li .date {
 RESULTS - EVENTS & REGULATIONS
 
 ******************************/
-
+.result_set {
+  margin-bottom: 2em;
+  }
 .result_set.events .row {
   border-bottom: 2px solid #ccc;
   }
@@ -259,10 +235,12 @@ RESULTS - EVENTS & REGULATIONS
 .result_set.regulations .results dt {
   width: auto;
   }  
-.result_set.events .results dd.next,
-.result_set.regulations .results dd.next {
-  width: 320px;
+.result_set.events .results dd.next {
+  width: 380px;
   }
+.result_set.regulations .results dd {
+  width: 480px;
+  }  
 dd.next + dd.next {
   padding-left: 4em;
   }  
@@ -274,7 +252,7 @@ dd.next + dd.next {
   @include inline-list;
   position: absolute;
   right: 0;
-  @include opacity(.4);
+  @include opacity(0.4);
   }
 .result_set.events .results > li:hover .actions {
   @include opacity(1);
@@ -288,7 +266,7 @@ dd.next + dd.next {
   border-bottom: 1px solid #EEEEEE;
   list-style: none;
   margin: 0 0 1em 0;
-  padding: 0 0 0 35px;
+  padding: 0 0 1em 35px;
   }
 .article_list li:last-child,
 .article_list li.lastchild {
@@ -305,6 +283,7 @@ dd.next + dd.next {
 .article_list li.rule {
   background: sprite-image('icons/icon_final_50.png', 0, 4px, 100px) no-repeat;
   }
+  
 /******************************
 
 FILTERS
@@ -312,7 +291,7 @@ FILTERS
 ******************************/
 
 .filters h4 {
-  color: #bdbdbd;
+  color: #585858;
   @include apertura-condensed;
   font-size: 1.3em;
   line-height: 1.15;
@@ -353,15 +332,13 @@ FILTERS
   width: 143px;
   }   
 .filters .count {
-  color: #ccc;
-  float: right;
   text-align: right;
   }  
 .filters .zip {
   border: 1px solid #ccc;
   width: 75px;
   }  
-
+ 
 /******************************
 
 PAGINATION
