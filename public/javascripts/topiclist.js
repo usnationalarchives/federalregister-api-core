@@ -8,10 +8,27 @@ $(document).ready(function() {
     $(this).parent().addClass("on");
   });
   
+  
+  $("#topics .filters .alpha li a").bind("click", function(e){
+    e.preventDefault();
+    
+    $("#topics .filters .alpha li").removeClass("on");
+    $(this).parent().addClass("on");
+        
+    if($(this).parent().hasClass("all"))
+      $("#topic_list > li").show()
+    else
+      $("#topic_list > li").hide().find("a:regex('^[" + $(this).html() + "]')").parent().show();
+      
+    $("#topic_list").trigger('filter', $(this).text() );  
+  });
+  
+  
   $("#topic_list").bind('filter', function( event, item ){
     $("#topic_count").html( $("#topic_list > li:visible").size() );
     $("h1.title span").text( 'Topics - ' + item );
   });
+  
   
   $(".topic_list_container .actions a").bind('click', function(event) {
     event.preventDefault();
@@ -34,5 +51,6 @@ $(document).ready(function() {
     $(this).parent().parent().find(".on").removeClass("on");
     $(this).parent().addClass("on");
   });
+  
   
 });
