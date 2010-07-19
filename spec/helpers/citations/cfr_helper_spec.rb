@@ -46,10 +46,6 @@ describe Citations::CfrHelper do
       add_cfr_links("26 CFR 1").should == "26 CFR 1"
     end
     
-    it "x" do
-      add_cfr_links("12 CFR 1805.201").should == ''
-    end
-    
     it "supports missing the initial space: '49 CFR230.105(c)'"
     it "supports '15 CFR parts 4 and 903'"
     it "supports '33 CFR Parts 160, 161, 164, and 165'"
@@ -90,17 +86,17 @@ describe Citations::CfrHelper do
     end
   end
   
-  describe "cfr_issue" do
+  describe "cfr_edition" do
     # The annual update cycle is as follows: titles 1-16 are revised as of January 1; titles 17-27 are revised as of April 1; titles 28-41 are revised as of July 1; and titles 42-50 are revised as of October 1.
-    it "returns the date's year if issue published after the date" do
-      cfr_issue(1,Date.parse("2010-01-01")).should == 2010
-      cfr_issue(1,Date.parse("2010-07-01")).should == 2010
-      cfr_issue(27,Date.parse("2010-06-30")).should == 2010
+    it "returns the date's year if issue published 3 months after the date" do
+      cfr_edition(1,Date.parse("2010-01-01")).should == 2009
+      cfr_edition(1,Date.parse("2010-07-01")).should == 2010
+      cfr_edition(27,Date.parse("2010-08-30")).should == 2010
     end
     it "returns the date's previous year if issue published after the date" do
-      cfr_issue(17,Date.parse("2010-01-01")).should == 2009
-      cfr_issue(17,Date.parse("2010-01-02")).should == 2009
-      cfr_issue(50,Date.parse("2010-07-01")).should == 2009
+      cfr_edition(17,Date.parse("2010-01-01")).should == 2009
+      cfr_edition(17,Date.parse("2010-01-02")).should == 2009
+      cfr_edition(50,Date.parse("2010-07-01")).should == 2009
     end
   end
 end
