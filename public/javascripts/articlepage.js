@@ -23,7 +23,7 @@ var citation_info = {
   create: function( index ){
     var id = "citation_info_" + index;
     var index_el = $("#" + index);
-    var next_header = index_el.nextAll('h1,h2,h3,h4,h5,h6').add(index_el.parentsUntil('#content_area').nextAll().find('h1,h2,h3,h4,h5,h6')).first();
+    var next_header = index_el.nextAll(':header').add(index_el.parentsUntil('#content_area').nextAll().find(':header')).first();
     var html = tmpl(this.template, {
       page: index_el.attr('data-page'),
       document_number: $(".doc_number").text(),
@@ -102,6 +102,36 @@ $(document).ready(function() {
     generate_dialog(); //won't this create and appened the modal everytime you click it?
     $('#modal').centerScreen().jqmShow(); 
     return false;
+  });
+  
+  var font_size = 1;
+  
+  $(".increase").bind('click', function(event) {
+    event.preventDefault();
+    font_size += 0.1;
+    $("#content_area").css("font-size", font_size + "em");
+  });
+  
+  $(".decrease").bind('click', function(event) {
+    event.preventDefault();
+    font_size -= 0.1;
+    $("#content_area").css("font-size", font_size + "em");
+  });
+  
+  $(".reset").bind('click', function(event) {
+    event.preventDefault();
+    font_size = 1;
+    $("#content_area").css("font-size", font_size + "em");
+  });
+  
+  $(".serif").bind('click', function(event) {
+    event.preventDefault();
+    $("#content_area").removeClass("sans");
+  });
+  
+  $(".sans").bind('click', function(event) {
+    event.preventDefault();
+    $("#content_area").addClass("sans");
   });
 
   function generate_dialog(){
