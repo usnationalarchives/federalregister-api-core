@@ -44,13 +44,4 @@ class TopicsController < ApplicationController
     end
   end
   
-  def by_letter
-    cache_for 1.day
-    @letter = params[:letter]
-    @letters = ('a' .. 'z')
-    
-    @popular_topics = Topic.find(:all, :order => 'entries_count DESC', :limit => 100).sort_by(&:name)
-    
-    @topics = Topic.all(:conditions => ["entries_count > 0 AND slug LIKE ?", "#{@letter}%"], :order => "topics.name")
-  end
 end
