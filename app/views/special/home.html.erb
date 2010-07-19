@@ -6,7 +6,7 @@
 
 <%= render(:partial => "special/preview_warning") if @preview %>
 
-<%= render :partial => "entries/statistics_by_date", :locals => {:issue => @issue, :label => "Current Issue", :other_issues => false} %>
+<%= render :partial => "entries/statistics_by_date", :locals => {:issue => @issue, :label => "Current Issue", :other_dates => false} %>
 
 <div class="row">
   <% section_tag(:id => 'top_news_promo') do %>
