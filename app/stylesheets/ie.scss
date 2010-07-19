@@ -99,6 +99,7 @@ SEARCH
   border-top-width: 4px;
   }  
 #search .pagination {
+  margin-bottom: 2em;  
   padding-bottom: 2px;
   } 
 #header #search_bar .search_btn,    
@@ -117,7 +118,8 @@ SEARCH
   }  
 .result_set.events .results .actions a {
   display: block;
-  }  
+  }
+ 
 /******************************
 
 TOPIC LIST
