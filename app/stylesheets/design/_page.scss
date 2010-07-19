@@ -204,7 +204,10 @@ ARTICLE VIEW
   position: absolute;
   right: 0;
   top: 0;
-  }
+  }  
+#flash_message .button:hover {
+  background: $golden;
+  }  
 #flash_message p {
   @include apertura-condensed;
   line-height: 20px;  
@@ -403,6 +406,7 @@ p:target {
   }
 .citation_box { 
   display: none;
+  @include box-shadow(#ccc, 1px, 1px, 5px);
   position: absolute; 
   }
 .citation_box ul { margin-bottom: 0; }  
@@ -662,7 +666,7 @@ TOPIC LIST
   margin-bottom: 0;
   }
 .individual_topic_count {
-  color: #bdbdbd;
+  color: #565656;
   font-size: 1.3em;
   font-weight: 700;
   @include grid(1,16);  
