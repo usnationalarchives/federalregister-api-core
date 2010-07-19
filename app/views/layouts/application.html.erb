@@ -86,9 +86,13 @@
     <% end -%>
     
     <%= render :partial => 'layouts/google_analytics' %>
+    
+    <a href="#" id="tender" class="trigger_tender">Site Feedback</a>
+    
     <script>
       Tender = {
-        widgetToggles: $("#tender_toggler, .trigger_tender")
+        hideToggle: true,
+        widgetToggles: $(".trigger_tender")
       }
     </script>
     <script src="https://federalregister.tenderapp.com/tender_widget.js"></script>
