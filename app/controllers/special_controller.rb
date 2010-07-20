@@ -23,6 +23,7 @@ class SpecialController < ApplicationController
   end
   
   def status
+    raise "not available"
     current_time_on_database = Entry.connection.select_values("SELECT NOW()").first
     render :text => "Current time is: #{current_time_on_database}"
   end
