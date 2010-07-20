@@ -1,5 +1,11 @@
 @import "compass";
 
+/* NARA Seal */
+body {
+  background-image: none;
+  filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/images/seal.png', sizingMethod='image');
+  }
+
 #special #main #top_news_promo ul.section_nav li,
 #special #main #top_news_promo ul.section_nav li a,
 #special #main .with_icon .header_with_icon,
@@ -15,10 +21,25 @@
 #sections #main .article {
   border-bottom: none;
   }
-#header h1 {
+#header_logo {
   background-image: none;
   filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/images/logotype.png', sizingMethod='image');
+  margin-left: 0;
+  }
+
+#header #search {
+  background-image: none;
+  filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/images/icons/search_bg_wide.png', sizingMethod='image');
+  }
+#header #search .search_btn {
+  background-image: none;
+  filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/images/icons/header_search_button.png', sizingMethod='image');  
   }
 #main .trigger {
   display: none;
-  } 
+  }
+  
+.metadata_share_bar,
+.font_control_wrapper {
+  @include clearfix;
+  }
