@@ -1,3 +1,7 @@
+# this is needed for running capistrano locally on a server
+# without it all our gems aren't avail to be loaded below
+require File.expand_path(File.join(File.dirname(__FILE__), "..", ".bundle", "environment"))
+
 # thinking sphinx cap tasks
 require 'thinking_sphinx/deploy/capistrano'
 # hoptoad deploy notifications, etc
@@ -52,11 +56,7 @@ set :migrate_target, :current
 # Set Branch
 #############################################################
 
-set(:branch) do
-  current_branch   = `git branch`.match(/\* (.*)/)[1]
-  specified_branch = Capistrano::CLI.ui.ask "Branch [#{current_branch}]: "
-  specified_branch == '' ? current_branch : specified_branch
-end
+set :branch, `git branch`.match(/\* (.*)/)[1]
 
 #############################################################
 # General Settings  
@@ -135,8 +135,11 @@ set :git_enable_submodules, true
 #############################################################
 
 # Do not change below unless you know what you are doing!
+# all deployment changes that affect app servers also must 
+# be put in the user-scripts files on s3!!!
+
 after "deploy:update_code",       "symlinks:create"
-after "symlinks:create",           "deploy:set_rake_path"
+after "symlinks:create",          "deploy:set_rake_path"
 after "deploy:set_rake_path",     "bundler:fix_bundle"
 after "bundler:fix_bundle",       "deploy:migrate"
 after "deploy:migrate",           "sass:update_stylesheets"
