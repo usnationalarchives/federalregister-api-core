@@ -60,11 +60,6 @@ ActionController::Routing::Routes.draw do |map|
   map.event 'events/:id.:format', :controller => 'events', :action => 'show'
   
   # TOPICS
-  map.topics_by_letter '/topics/:letter',
-      :requirements => {:letter => /[a-z]/},
-      :controller => "topics",
-      :action => "by_letter"
-  
   map.resources :topics, :as => "topics", :only => [:index, :show]
   map.significant_entries_topic 'topics/:id/significant.:format', :controller => "topics", :action => "significant_entries"
 
