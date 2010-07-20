@@ -21,12 +21,16 @@
     <a href="#content_area" title="Skip the metadata" class="skip_to_content">Skip the metadata and jump to content</a>
     
     <%= render :partial => 'special/legal_disclaimer' %>
-  
+    
+    <% section_tag(:id => 'font_controls') do %>
+      <%= render :partial => 'font_controls' %>
+    <% end -%>
+        
     <div class="aside_box">
       <%= render :partial => 'download', :locals => {:entry => @entry} %>
       <%= render :partial => "metadata", :locals => {:entry => @entry} %>
     </div>  
-
+    
     <% if @entry.topics.present? %>
       <% section_tag(:id => 'related_topics') do %>
         <h1 class="title_bar">Related Topics</h1>
