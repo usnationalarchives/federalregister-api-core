@@ -1,7 +1,7 @@
 <% nav_tag(:id => "primary_nav") do %>
   <ul>
     <% Section.all.each do |section| %>
-      <li class="<%= 'one_word' if section.title.split(' ').count == 1 %> <%= section.slug %>"><%= link_to section.title, section_path(section) %></li>
+      <li class=" <%= section.slug %> <%= 'one_word' if section.title.split(' ').count == 1 %> trick_ie6"><%= link_to section.title, section_path(section) %></li>
     <% end %>
   </ul>
 <% end -%>

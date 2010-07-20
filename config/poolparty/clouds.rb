@@ -424,6 +424,9 @@ pool :fr2 do
                     },
         :varnish => {
                       :storage_size => '3G',
+                    },
+        :nginx   => {
+                      :doc_root      => '/var/www/apps/fr2/current/public'
                     }
         )
             
