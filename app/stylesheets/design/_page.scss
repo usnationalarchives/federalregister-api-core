@@ -496,6 +496,45 @@ p.stars {
   padding: 0;
   }  
   
+#font_controls h1 {
+  float: left;
+  font-size: .9em;
+  line-height: 23px;
+  margin-right: 1em;
+  font-weight: 400;
+  }
+.wf-active #font_controls h1 {
+  font-size: 1em;
+  line-height: 28px;  
+  }  
+#font_controls ul {
+  @include horizontal_list;
+  display: inline;
+  }  
+#font_controls ul a {
+  display: block;
+  @include hide-text;
+  height: image-height("icons/font_increase.png");
+  width: image-width("icons/font_increase.png");
+  }
+#font_controls a.increase { background: sprite-image("icons/font_increase.png", 0, 0, 100px) no-repeat; }  
+#font_controls a.increase:hover { background: sprite-image("icons/font_increase_hover.png", 0, 0, 100px) no-repeat; }  
+#font_controls a.decrease { background: sprite-image("icons/font_decrease.png", 0, 0, 100px) no-repeat; }  
+#font_controls a.decrease:hover { background: sprite-image("icons/font_decrease_hover.png", 0, 0, 100px) no-repeat; }  
+#font_controls a.serif { background: sprite-image("icons/font_serif.png", 0, 0, 100px) no-repeat; }  
+#font_controls a.serif:hover,
+#font_controls a.serif:focus,
+#font_controls a.serif.on { background: sprite-image("icons/font_serif_hover.png", 0, 0, 100px) no-repeat; }  
+#font_controls a.sans { background: sprite-image("icons/font_sans.png", 0, 0, 100px) no-repeat; }  
+#font_controls a.sans:hover,
+#font_controls a.sans:focus,
+#font_controls a.sans.on { background: sprite-image("icons/font_sans_hover.png", 0, 0, 100px) no-repeat; }  
+.font_control_wrapper {
+  border:1px solid #CCCCCC;
+  padding:0.5em;
+  }
+
+
 /******************************
 
 AGENCY LIST 

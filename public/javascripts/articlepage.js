@@ -120,11 +120,15 @@ $(document).ready(function() {
   
   $(".serif").bind('click', function(event) {
     event.preventDefault();
+    $(this).addClass("on");
+    $(".sans").removeClass("on");
     $("#content_area").removeClass("sans");
   });
   
   $(".sans").bind('click', function(event) {
     event.preventDefault();
+    $(this).addClass("on");
+    $(".serif").removeClass("on");
     $("#content_area").addClass("sans");
   });
   
