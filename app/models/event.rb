@@ -14,6 +14,7 @@
 
 class Event < ApplicationModel
   include Icalendar
+  PUBLIC_MEETING_PHRASES = ["public meeting", "public hearing", "town hall meeting", "web dialogue", "webinar"]
   
   EVENT_TYPES_SINGULAR = {
     'PublicMeeting' => 'Public Meeting',
