@@ -137,7 +137,7 @@ $(document).ready(function() {
     display_modal('Multiple Versions Available',
         '<p>Would you like the <a href="' + $(this).attr('href') + '" target="_blank"> current version</a> of ' + $(this).text() + ' or ' +
         'the <a href="' + $(this).attr('data-historic-citation-url') + '" target="_blank">version as it existed at the time of publication</a>'
-    )
+    );
   });
   
   $('#disclaimer a').bind('click', function(event){
@@ -157,6 +157,6 @@ $(document).ready(function() {
       ].join("\n")
     )
     $('#modal').jqm({modal: true, toTop: true});
-    $('#modal').centerScreen().jqmShow()
+    $('#modal').centerScreen().jqmShow();
   }
 });
