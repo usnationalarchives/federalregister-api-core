@@ -82,6 +82,8 @@ class EntriesController < ApplicationController
   end
   
   def by_month
+    cache_for 1.day
+    
     @date = Date.parse("#{params[:year]}-#{params[:month]}-01")
     if params[:current_date]
       @current_date = Date.parse(params[:current_date])
