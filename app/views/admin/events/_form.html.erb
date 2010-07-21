@@ -2,9 +2,10 @@
 <%= f.semantic_errors :place %>
 
 <% f.inputs do %>
-  <%= f.input :title %>
-  <%= f.input :date, :as => :calendar %>
-  <li><label>Location</label>
+  <%= f.input :title, :input_html => { :size => '' } %>
+  <%= f.input :date, :as => :string, :input_html => { :size => '' } %>
+  <li class="location">
+    <label>Location</label>
     <%= f.hidden_field(:place_id) %>
     <span id="event_place_name"><%= f.object.place.try(:name) %></span>
   </li>
