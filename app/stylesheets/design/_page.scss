@@ -530,7 +530,8 @@ p.stars {
 #font_controls a.sans:focus,
 #font_controls a.sans.on { background: sprite-image("icons/font_sans_hover.png", 0, 0, 100px) no-repeat; }  
 .font_control_wrapper {
-  border:1px solid #CCCCCC;
+  background: #e4ecd8;
+  border:1px solid $dark_green;
   padding:0.5em;
   }
 
