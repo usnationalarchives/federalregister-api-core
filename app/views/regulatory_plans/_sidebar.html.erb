@@ -21,11 +21,11 @@
   </div>
   <% end -%>
   
-  <% if @regulatory_plan.agencies.present? %>
+  <% if regulatory_plan.agencies.present? %>
     <% section_tag(:id => 'agencies') do %>
       <h1 class="title_bar">Agencies</h1>
       <ul class="bullets">
-      <% @regulatory_plan.agencies.each do |agency| %>
+      <% regulatory_plan.agencies.each do |agency| %>
         <li><%= link_to agency.name, agency_path(agency) %></li>
       <% end %>
       </ul>

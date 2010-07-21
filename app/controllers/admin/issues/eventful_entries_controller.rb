@@ -1,16 +1,6 @@
 class Admin::Issues::EventfulEntriesController < AdminController
-  EVENT_PHRASES = ["public meeting", "public hearing", "town hall meeting", "web dialogue", "webinar"]
-  
   def index
-    @publication_date = Date.parse(params[:issue_id])
-    
-    @entries = EntrySearch.new(
-      :conditions => {
-        :term => "(#{EVENT_PHRASES.map{|phrase| "\"#{phrase}\""}.join('|')})",
-        :date => @publication_date.to_s
-      },
-      :per_page => 200
-    ).results
+    @issue = Issue.new(params[:issue_id])
   end
   
   def show
