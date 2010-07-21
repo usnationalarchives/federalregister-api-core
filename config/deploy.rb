@@ -10,12 +10,15 @@ require 'thinking_sphinx/deploy/capistrano'
 # deploy recipes - need to do `sudo gem install thunder_punch` - these should be required last
 require 'thunder_punch'
 
+load File.join(File.dirname(__FILE__), '..', 'lib', 'amazon_aws')
+set :ec2_config_location, File.join(File.dirname(__FILE__), "amazon.yml")
+
+ec2_config = YAML.load( File.open(ec2_config_location, 'r') )
+@ec2 = AmazonAws::EC2.new(ec2_config['access_key_id'], ec2_config['secret_access_key'])
+
 #############################################################
 # Set Basics
 #############################################################
-set :ec2_config_location, File.join(File.dirname(__FILE__), "ec2_config.yml")
-
-
 set :application, "fr2"
 set :user, "deploy"
 
@@ -71,12 +74,16 @@ set :deploy_to,  "/var/www/apps/#{application}"
 task :production do
   set :rails_env,  "production" 
   
+  instances = []
+  @ec2.instances.select{|i| i.groups.include?('app')}.each{|i| instances << i.dns_name}
+  
+  
   role :proxy, "ec2-184-72-241-172.compute-1.amazonaws.com"
   #role :static, "ec2-184-73-104-122.compute-1.amazonaws.com"
   #role :worker, "ec2-184-73-104-122.compute-1.amazonaws.com", {:primary => true}
   role :static, "ec2-75-101-243-195.compute-1.amazonaws.com" #monster image
   role :worker, "ec2-75-101-243-195.compute-1.amazonaws.com", {:primary => true} #monster image
-  role :app, "ec2-204-236-209-41.compute-1.amazonaws.com", "ec2-184-72-139-81.compute-1.amazonaws.com", "ec2-174-129-132-251.compute-1.amazonaws.com", "ec2-72-44-36-213.compute-1.amazonaws.com"
+  role :app, *instances
   role :db, "ec2-184-73-60-158.compute-1.amazonaws.com", {:primary => true}
   role :sphinx, "ec2-184-73-60-158.compute-1.amazonaws.com"
 end
