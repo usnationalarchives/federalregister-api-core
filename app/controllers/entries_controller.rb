@@ -41,7 +41,11 @@ class EntriesController < ApplicationController
     
     if date.present?
       if Entry.published_on(date).count > 0
-        render :text => entries_by_date_path(date)
+        if request.xhr?
+          render :text => entries_by_date_path(date)
+        else
+          redirect_to entries_by_date_url(date)
+        end
       else
         render :text => "There is no issue published on #{date}.", :status => 404
       end
