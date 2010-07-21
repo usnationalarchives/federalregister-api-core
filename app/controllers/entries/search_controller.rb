@@ -1,5 +1,6 @@
 class Entries::SearchController < SearchController
   def show
+    cache_for 1.day
     respond_to do |wants|
       wants.html
       wants.rss do

@@ -1,6 +1,7 @@
 class Events::SearchController < SearchController
   include Icalendar
   def show
+    cache_for 1.day
     respond_to do |wants|
       wants.html
       wants.ics do
