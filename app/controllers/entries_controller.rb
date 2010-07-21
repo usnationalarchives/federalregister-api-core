@@ -34,7 +34,7 @@ class EntriesController < ApplicationController
   
   def date_search
     begin
-      date = Date.parse(params[:search], :context => :past).try(:to_date )
+      date = Date.parse(params[:search] || '', :context => :past).try(:to_date )
     rescue ArgumentError
       render :text => "We couldn't understand that date.", :status => 422
     end
