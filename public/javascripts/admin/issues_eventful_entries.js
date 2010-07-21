@@ -43,6 +43,17 @@ $(document).ready(function(){
     
     return false;
   });
+  
+  var header_height = $("#header").height();
+  var position = $(window).scrollTop() - header_height;
+  
+  $(window).bind('scroll', function(event) {
+    position = $(window).scrollTop() - header_height;
+    if( position > 0 )
+      $(".events").css("top", $(window).scrollTop() - header_height);
+  });
+  
+  
 });
 
 function load_new_form(){
