@@ -11,6 +11,11 @@ namespace :content do
     end
     
     namespace :import do
+      desc "Extract Basic data"
+      task :basic_data => :environment do
+        entry_importer(:volume, :title, :toc_subject, :toc_doc, :citation, :regulation_id_number, :start_page, :end_page, :length, :type, :genre, :part_name, :granule_class, :abstract, :dates, :action, :contact, :docket_id)
+      end
+      
       desc "Extract full text"
       task :full_text => :environment do
         entry_importer(:full_text)

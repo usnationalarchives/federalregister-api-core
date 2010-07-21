@@ -5,13 +5,14 @@
 
 <div class="body_column">
   
+  <% if @regulatory_plan.events.first.date.present? %>
   <p>
     <%= pluralize(@regulatory_plan.events.size, "action") %> from <%= fuzzy_date_formatter @regulatory_plan.events.first.date %> 
-    <% if @regulatory_plan.events.size > 1 %> 
-      to <%= fuzzy_date_formatter @regulatory_plan.events.last.date + "." || 'an undetermined date in the future.' %>
+    <% if @regulatory_plan.events.size > 1 && @regulatory_plan.events.last.date.present? %> 
+      to <%= fuzzy_date_formatter @regulatory_plan.events.last.date %>
     <% end %>
   </p>
-
+  <% end %>
   
   <div id="scroll-mask" class="timeline">
     <ul id="scroll-content" class="timeline_list">
