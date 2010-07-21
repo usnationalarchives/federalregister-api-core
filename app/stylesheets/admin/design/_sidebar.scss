@@ -1,10 +1,14 @@
+#sidebar {
+  position: relative;
+  }
 .module {
   background: #fff;
   @include border-radius(10px);
   margin-bottom: 1em;
   }  
-.module .nav {
-  padding: 1em;
+.module .nav,
+.module #form {
+  padding: 0 1em;
   }
 .module .nav ul {
   margin-bottom: 0;
@@ -19,4 +23,21 @@
   border-bottom: 0;
   margin-bottom: 0;
   padding-bottom: 0;
+  }
+
+.module .string label,
+.module .calendar label,
+.module .location span  {
+  clear: both;
+  display: block;
+  }  
+.module #form .string input {
+  max-width: auto;
+  width: 90%;
+  }  
+.module #form .boolean label {
+  padding-left: 0;
+  }
+.module #form .buttons {
+  padding-left: 0;
   }  

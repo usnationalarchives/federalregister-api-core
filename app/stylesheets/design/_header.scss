@@ -19,11 +19,8 @@ NAV
   line-height: 16px;
   margin: .25em 2.5em .25em 0;
   }
-.wf_active #primary_nav li {
-  margin-top: .5em;
-  }  
-#primary_nav li.one_word {
-  line-height: 30px;
+.wf-active #primary_nav li {
+  margin-top: .35em;
   }
 #primary_nav li span {
   display: block;
@@ -35,8 +32,8 @@ NAV
   padding-left: 0;
   }
 #primary_nav a {
-  color: #fff;
-  @include text-shadow(#666, 1px, 1px, 1px);
+  color: $body_type_color;
+  @include text-shadow(#DDDDDD, 1px, 1px, 1px);
   text-decoration: none;
   text-transform: uppercase;
   }   

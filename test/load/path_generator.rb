@@ -73,6 +73,30 @@ class PathGenerator
     end
   end
   
+  def entries_search_paths(n)
+    ret = []
+    n.times do |i|
+      ret << entries_search_path(:conditions => {:term => random_search_phrase})
+    end
+    ret
+  end
+  
+  def regulatory_plans_search_paths(n)
+    ret = []
+    n.times do |i|
+      ret << regulatory_plans_search_path(:conditions => {:term => random_search_phrase})
+    end
+    ret
+  end
+  
+  def events_search_paths(n)
+    ret = []
+    n.times do |i|
+      ret << events_search_path(:conditions => {:term => random_search_phrase})
+    end
+    ret
+  end
+  
   def massage_to_n(array,n)
     if array.size == n
       array.sort_by{rand}
@@ -82,13 +106,22 @@ class PathGenerator
       massage_to_n(array * (n.to_f / array.size).ceil,n)
     end
   end
+  
+  private
+  
+  def random_search_phrase
+    search_phrases[rand(search_phrases.size)]
+  end
+  
+  def search_phrases
+    @phrases ||= File.read("#{Rails.root}/data/search_phrases.txt").split("\n")
+  end
 end
 
-puts PathGenerator.new.generate(1000,
+puts PathGenerator.new.generate(10000,
   {
-    :root          => 30,
-    :entry         => [60,2],
-    :agency        => 10,
-    :regulation    => 10,
+    :entries_search          => 4000,
+    :events_search           => 500,
+    :regulatory_plans_search => 500,
   }
 )

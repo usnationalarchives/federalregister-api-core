@@ -34,14 +34,18 @@ class EntriesController < ApplicationController
   
   def date_search
     begin
-      date = Date.parse(params[:search], :context => :past).try(:to_date )
+      date = Date.parse(params[:search] || '', :context => :past).try(:to_date )
     rescue ArgumentError
       render :text => "We couldn't understand that date.", :status => 422
     end
     
     if date.present?
       if Entry.published_on(date).count > 0
-        render :text => entries_by_date_path(date)
+        if request.xhr?
+          render :text => entries_by_date_path(date)
+        else
+          redirect_to entries_by_date_url(date)
+        end
       else
         render :text => "There is no issue published on #{date}.", :status => 404
       end
@@ -82,6 +86,8 @@ class EntriesController < ApplicationController
   end
   
   def by_month
+    cache_for 1.day
+    
     @date = Date.parse("#{params[:year]}-#{params[:month]}-01")
     if params[:current_date]
       @current_date = Date.parse(params[:current_date])
