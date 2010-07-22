@@ -13,7 +13,6 @@ $(document).ready(function(){
       complete: function(xmlHttp) {
         var status = xmlHttp.status;
         form.find('span.error').remove();
-        console.log(status);
         if (status == '200') {
           window.location = xmlHttp.responseText;
         } else if (status == '422' || status == '404' ) {
