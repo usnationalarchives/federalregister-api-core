@@ -4,6 +4,7 @@
 <%= link_to "Back to #{@entry.publication_date}", admin_issue_eventful_entries_path(@entry.publication_date.to_s(:db)) %>
 
 <%# HELP-DESIGN: i think it just might be possible to do this better... %>
+<%# TODO HELP-DESIGN add a third color for "public meeting" %>
 <style>
   a.date {background-color: lightgreen;}
   a.place {background-color: pink;}
