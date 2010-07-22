@@ -67,20 +67,24 @@
 <% aside_tag(:id => 'sidebar') do %>
   
   <% section_tag(:id => 'date_chooser') do %>
-    <%= render :esi => entries_by_month_path(@publication_date, :current_date => @publication_date.to_s(:iso)) %>
+    <div id="calendar_wrapper">
+      <%= render :esi => entries_by_month_path(@publication_date, :current_date => @publication_date.to_s(:iso)) %>
+    </div>
     
     <% form_tag entries_date_search_path, :method => :get, :id => "date_selector" do %>
       <label>Go to a specific date:</label>
-      <%= text_field_tag :search, '' %>
+      <%= text_field_tag :search, '', :placeholder => 'MM/DD/YYYY' %>
       <%= submit_tag 'Go' %>
     <% end %>
   <% end -%>
   
   <% section_tag(:id => 'meta_toc') do %>
     <div class="TOC aside_box">
+      <% if @publication_date > Date.parse('1995-01-01') %>
       <div class="download_separator">
         <%= link_to 'Download PDF', issue_pdf_url(@publication_date), :class => 'button format list pdf' %>        
-      </div>  
+      </div>
+      <% end %>
       <ul>
         <% @agencies.each do |agency| %>
           <li>
