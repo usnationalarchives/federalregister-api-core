@@ -14,7 +14,7 @@
     <%= link_to f.object.entry.document_number, entry_path(f.object.entry) %>
   </li>
   <% end %>
-  <%= f.input :remote_call_in_available %>
+  <%= f.input :remote_call_in_available, :label => "Remote access available" %>
 <% end %>
 
 <% f.buttons do %>
