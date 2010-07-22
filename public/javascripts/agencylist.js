@@ -30,9 +30,12 @@ $(document).ready(function() {
   
   $(".sub_agencies a").bind("click", function(e){
     e.preventDefault();
-    $(this).parent().hasClass("show") ? $("#agencies li > ul").show() : $("#agencies li > ul").hide();
-    $(".sub_agencies li").removeClass("on");
-    $(this).parent().addClass("on");
+    var parent = $(this).parent();
+    if( !parent.hasClass("on") ) {
+      $(".sub_agencies li").removeClass("on");
+      $(this).parent().toggleClass("on");
+      $("#agencies li > ul").toggle();
+    }
   });
   
   $(".agency_list_container .actions a").bind('click', function(e) {
