@@ -35,11 +35,31 @@ body {
   background-image: none;
   filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/images/icons/header_search_button.png', sizingMethod='image');  
   }
-#main .trigger {
-  display: none;
-  }
-  
+
 .metadata_share_bar,
-.font_control_wrapper {
+.font_control_wrapper,
+.aside_box {
   @include clearfix;
+  }
+.titlebar,
+.filters li,
+.search_info {
+  zoom: 1;
+  }
+.agency_list_info .article_count,
+.search_info .article_count {
+  display: inline;
+  }
+.agency_list_info .actions,
+.search_info .actions {
+  top: 0;
+  }  
+#main #content_area, 
+#main #sidebar {
+  margin: 0;
+}
+
+#main .citation_box li {
+  background-image: none;
+  padding-left: 0;
   }
