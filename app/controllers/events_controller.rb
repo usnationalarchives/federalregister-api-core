@@ -14,6 +14,7 @@ class EventsController < ApplicationController
       wants.ics do
         cal = Calendar.new
         cal.add_event(@event.to_ics)
+        cal.publish
         render :text => cal.to_ical
       end
     end
