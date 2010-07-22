@@ -10,7 +10,7 @@ class Events::SearchController < SearchController
         @search.results.each do |event|
           cal.add_event(event.to_ics)
         end
-        
+        cal.publish
         render :text => cal.to_ical
       end
     end
