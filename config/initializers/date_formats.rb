@@ -8,5 +8,5 @@ ActiveSupport::CoreExtensions::Date::Conversions::DATE_FORMATS.merge!(
   :default    => "%m/%d/%Y",
   :db_year    => "%Y-%m-%d",
   :year_month => "%Y/%m",
-  :short_ordinal => lambda { |time| time.strftime("%b #{time.day.ordinalize}, %Y") }
+  :short_ordinal => lambda { |time| time.strftime("%B #{time.day.ordinalize}, %Y") }
 )
