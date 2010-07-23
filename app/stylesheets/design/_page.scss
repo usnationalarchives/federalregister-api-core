@@ -4,7 +4,7 @@ GENERAL
 
 ******************************/
 body {
-  background: url(/images/seal.png) no-repeat right top;
+  background: image-url("seal.png") no-repeat right top;
   color: $body_type_color;
   }
 .read_more {
@@ -14,7 +14,7 @@ ul.bullets {
   padding-left: 0;
   }  
 ul.bullets  li {
-  background: url(/images/bullet.png) no-repeat left 4px;
+  background: image-url("bullet.png") no-repeat left 4px;
   list-style: none;
   line-height: 1.25;
   margin-bottom: .75em;
@@ -546,12 +546,12 @@ AGENCY LIST
   list-style-type: none;
   }
 #agency_list li li {
-  background: url(/images/child_many.png) no-repeat left top;
+  background: image-url("child_many.png") no-repeat left top;
   padding: 0 1.618em;  
   }  
 #agency_list li li:last-child,
 #agency_list li li.lastchild  {
-  background-image: url(/images/child_one.png);
+  background-image: image-url("child_one.png");
   }
 .agency_list_info .title_bar {
   border-top: none;
