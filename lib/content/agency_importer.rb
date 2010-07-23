@@ -11,12 +11,8 @@ module Content
         agency_data = line.to_hash
         
         puts "handing #{line['agency_name']}"
-        agency = Agency.find_by_name(line["agency_name"])
-        if agency.nil?
-          puts "\tNOT FOUND"
-          next
-        end
-        next
+        agency = Agency.find_by_or_create_by_name(line["agency_name"])
+        
         agency.description = line["description"]
         agency.active = line["active"] != "0"
         if line['cfr_citation'].present?
