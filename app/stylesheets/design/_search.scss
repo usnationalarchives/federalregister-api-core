@@ -313,19 +313,6 @@ FILTERS
   font-size: 1em; 
   font-weight: 700;
   }
-.filters li a.remove {
-  background: url(/images/  ) no-repeat left top;
-  color: #385F82;
-  height: 12px;
-  left: 0;
-  position: absolute;
-  text-indent: -9999px;
-  top: 3px;
-  width: 12px;
-  }
-.filters li a.remove:hover {
-  background-position: left -50px;
-  }    
 .filters li.on .facet_name {
   color: #363636;
   padding-left: 17px;
@@ -368,7 +355,7 @@ ERRORS
 .errors li{
   @include border-radius(5px);  
   overflow: hidden;  
-  background: #ebd8b6 url(/images/error.png) no-repeat 1em top;
+  background: #ebd8b6 image-url("error.png") no-repeat 1em top;
   color: #777777;
   @include apertura-condensed;
   font-size: 1.5em;
