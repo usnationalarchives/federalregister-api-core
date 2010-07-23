@@ -545,13 +545,17 @@ AGENCY LIST
 #agency_list li {
   list-style-type: none;
   }
+#agency_list li a {
+  display: block;
+  padding-top: 12px;
+  }
 #agency_list li li {
   background: image-url("child_many.png") no-repeat left top;
   padding: 0 1.618em;  
   }  
 #agency_list li li:last-child,
 #agency_list li li.lastchild  {
-  background-image: image-url("child_one.png");
+  background: image-url("child_one.png") no-repeat left top;
   }
 .agency_list_info .title_bar {
   border-top: none;
