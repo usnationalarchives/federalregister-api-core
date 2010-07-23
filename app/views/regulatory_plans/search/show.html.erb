@@ -12,12 +12,9 @@
 
 <%= render :esi => regulatory_plan_search_header_path(params.except(:action)) %>
 
-<% unless @search.blank? %>
+<div class="filters">
+  <%= render :esi => regulatory_plan_search_facets_path(params.except(:action).merge(:facet => 'priority_category')) %>
+  <%= render :esi => regulatory_plan_search_facets_path(params.except(:action).merge(:facet => 'agency')) %>
+</div>
 
-  <div class="filters">
-    <%= render :esi => regulatory_plan_search_facets_path(params.except(:action).merge(:facet => 'priority_category')) %>
-    <%= render :esi => regulatory_plan_search_facets_path(params.except(:action).merge(:facet => 'agency')) %>
-  </div>
-  
-  <%= render :esi => regulatory_plan_search_results_path(params.except(:action)) %>
-<% end %>
+<%= render :esi => regulatory_plan_search_results_path(params.except(:action)) %>
