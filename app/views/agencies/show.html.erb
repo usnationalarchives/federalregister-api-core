@@ -16,7 +16,7 @@
     </div>
 
     <%= link_to(@agency.url) if @agency.url %>
-    <%= simple_format @agency.description %>
+    <%= add_citation_links simple_format @agency.description %>
     
 
   <% end %>  
