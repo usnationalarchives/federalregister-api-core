@@ -2,14 +2,21 @@
 
 COMMENT PERIOD CLOSING ENHANCEMENTS
 
+TODO: Clean this all up.  We removed EnhanceJS and it is no longer clear & clean.
+
 ******************************/  
-#comments-closing-opening-body h2 {
+
+#comments-closing-opening > .header-nav {
   display: none;
   }
-#comments-closing-opening .header-nav {
+#comments-closing-opening.active > .header-nav {
   border-top: 3px solid $dark_blue;
+  display: block;
   position: relative;
   }
+.active #comments-closing-opening-body h2 {
+  display: none;
+  }  
 #comments-closing-opening .header-nav h2 {
   border-top: none;
   margin-top: 0;
@@ -24,3 +31,18 @@ COMMENT PERIOD CLOSING ENHANCEMENTS
 #comments-closing-opening .actions {
   top: 5px;
   }
+#comments-closing-opening.active .header-nav {
+  display: block;
+  }
+.tabs-body {
+  clear: both;
+  overflow: auto;
+  }
+.active .tabs-body .tabs-panel {
+  display: none;
+  overflow: auto;
+  }
+.active .tabs-body .tabs-panel-selected {
+  display: block;
+  }
+  
