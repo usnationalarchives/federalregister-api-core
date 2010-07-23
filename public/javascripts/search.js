@@ -14,12 +14,16 @@ $(document).ready(function(){
     return false;
   });
   
-  $('body#search.show').each(function(){
-    $('body').append(['<div id="modal">',
-    '  <a href="#" class="jqmClose close">Close</a>',
-    '  <h3 class="title_bar">Loading...</h3>',
-    '</div>'].join("\n")
-    );
-  })
+  
+  if( $(".result_set.events").size() > 0 ){
+    $('body#search.show').each(function(){
+      $('body').append(['<div id="modal">',
+      '  <a href="#" class="jqmClose close">Close</a>',
+      '  <h3 class="title_bar">Loading...</h3>',
+      '</div>'].join("\n")
+      );
+    });
+  }
+  
   $('#modal').centerScreen().jqm({ajax:'@href', trigger:'.results a.add_to_calendar'});
 });
