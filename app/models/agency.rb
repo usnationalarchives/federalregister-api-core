@@ -22,6 +22,8 @@
   logo_file_size              :integer(4)
   logo_updated_at             :datetime
   url                         :string(255)
+  active                      :boolean(1)
+  cfr_citation                :string(255)
 
 =end Schema Information
 
