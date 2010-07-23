@@ -326,7 +326,20 @@ AGENCY HIGHLIGHT
   float: left;
   width: 334px;
   }
-  
+
+/******************************
+
+History Movie
+
+******************************/
+
+.home #fr_movie.with_icon .header_with_icon {
+  background: sprite-image('icons/icon_movie.png', 0, 10px, 50px) no-repeat;  
+  margin-bottom: 1em;
+  overflow: hidden;
+  padding: 21px 0 0 3em;
+  }
+
 /******************************
 
 LEARN 
