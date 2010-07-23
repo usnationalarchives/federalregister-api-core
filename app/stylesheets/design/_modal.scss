@@ -41,13 +41,18 @@
   background-color: white;
   border: 5px solid #eee;
   display: none;
-  height: 300px;  
   padding: 1em;
   position: fixed;
   top: 5em;
-  width: 400px;
+  width: 500px;
   }
-
+#modal .horizontal {
+  @include horizontal-list;
+  margin-bottom: 2em;
+  }
+#modal li li {
+  background: none;
+  }  
 #modal .close {
   position: absolute;
   right: 1em;
