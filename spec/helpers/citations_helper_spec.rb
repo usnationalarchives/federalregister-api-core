@@ -1,6 +1,7 @@
 describe CitationsHelper do
   include CitationsHelper
   include Citations::CfrHelper
+  include HtmlHelper
   
   describe 'add_usc_links' do
     it "supports '# USC #'" do
