@@ -126,7 +126,7 @@ PROMO NAV
 #top_news_promo ul.section_nav li.one_word a { line-height: 31px; }  
 #top_news_promo ul.section_nav li.on {
   background-color: none;
-  background: url(/images/promo_nav_bg_on_new.png) no-repeat right top;
+  background: image-url("promo_nav_bg_on_new.png") no-repeat right top;
   }
 #top_news_promo ul.section_nav li.on a {
   background-color: $golden;
