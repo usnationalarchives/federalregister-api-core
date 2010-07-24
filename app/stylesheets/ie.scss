@@ -42,7 +42,9 @@ NAV
 HOMEPAGE
 
 ******************************/
-
+.home #popular.with_icon .header_with_icon {
+  margin-bottom: .5em;
+  }
 #special.home #popular .header_with_icon {
   height: 40px;
   }  
