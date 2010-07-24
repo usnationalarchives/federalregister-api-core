@@ -1,8 +1,10 @@
 $(document).ready(function () {
-
+    //clear the live search so it's not confusing
+    $("#topics li.livesearch input").val("").trigger("blur");
+  
     $("#topics li.livesearch input").bind("keyup",
     function (e) {
-        $("#topic_list > li").hide().find("a:regex('\b" + $(this).attr("value") + "')").parent().show();
+        $("#topic_list > li").hide().find("a:regex('\\b" + $(this).attr("value") + "')").parent().show();
         $("#topic_list").trigger('filter', $(this).val());
     }).bind("focus",
     function (e) {
