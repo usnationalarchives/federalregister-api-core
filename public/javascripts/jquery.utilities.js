@@ -41,4 +41,4 @@ jQuery.fn.centerScreen = function(loaded) {
       { left: $(window).width()/2-this.outerWidth()/2 }, 200, 'linear');
     }
     return obj;  
-  }
+  };
