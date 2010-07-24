@@ -1,4 +1,3 @@
-"use strict";
 $(document).ready(function () {
     //clear the live search so it's not confusing
     $("#agencies ul.filter li.livesearch input").val("");
