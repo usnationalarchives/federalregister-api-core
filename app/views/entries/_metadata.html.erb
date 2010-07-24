@@ -12,5 +12,5 @@
   <% if entry.docket_id.present?            %><dt>Docket ID:</dt>        <dd><%= entry.docket_id %></dd><% end %>
   <% if entry.regulation_id_number.present? %><dt>RIN:</dt>              <dd><%= entry.most_recent_regulatory_plan ? link_to(entry.regulation_id_number,regulatory_plan_path(entry.most_recent_regulatory_plan)) : entry.regulation_id_number %></dd><% end %>
   <% if entry.document_number.present?      %><dt>Document Number:</dt>  <dd class="doc_number"><%= entry.document_number %></dd><% end %>
-                                              <dt>Shorter URL:</dt>        <dd><%= link_to short_entry_url(entry),short_entry_url(entry) %></dd>
+                                              <dt>Shorter URL:</dt>        <dd><%= link_to short_entry_url(entry),short_entry_url(entry), :class => "shorter_url" %></dd>
 </dl>
