@@ -42,6 +42,9 @@ var citation_info = {
     return id;
   },
   show: function( id ){
+    var path = "/a/" + $(".doc_number").text() + "/citation_box";
+    pageTracker._trackPageview(path);
+    
     var node = $( '#' + id );
     node.attr( 'id', '' );
     window.location.hash = id;
