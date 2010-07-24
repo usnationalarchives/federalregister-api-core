@@ -29,6 +29,7 @@ $(document).ready(function () {
 
     $('#modal').centerScreen().jqm({
         ajax: '@href',
+        ajaxText: 'Loading...',
         trigger: '.results a.add_to_calendar'
     });
 });
