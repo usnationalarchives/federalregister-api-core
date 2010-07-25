@@ -154,8 +154,8 @@ after "bundler:fix_bundle",       "deploy:migrate"
 after "deploy:migrate",           "sass:update_stylesheets"
 # after "deploy:migrate",           "thinking_sphinx:restart"
 # after "thinking_sphinx:restart",  "passenger:restart"
-after "sass:update_stylesheets",  "javascript:combine_and_minify"
-after "javascript:combine_and_minify", "passenger:restart"
+# after "sass:update_stylesheets",  "javascript:combine_and_minify"
+after "sass:update_stylesheets", "passenger:restart"
 after "passenger:restart",        "varnish:clear_cache"
 
 
@@ -242,7 +242,7 @@ end
 
 namespace :javascript do
   task :combine_and_minify, :roles => [:static] do
-    run "cd #{current_path}; rm public/javascripts/all.js; juicer merge -s public/javascripts/*.js -o public/javascripts/all.js --force"
+    run "cd #{current_path} && rm public/javascripts/all.js && juicer merge -s public/javascripts/*.js --force -o tmp/all.js && mv tmp/all.js public/javascripts/all.js"
   end
 end
 
