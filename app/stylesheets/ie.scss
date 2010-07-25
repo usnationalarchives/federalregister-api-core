@@ -103,7 +103,7 @@ SEARCH
   display: inline;
   }
 #search .search_bar {
-  padding-bottom: 0;
+  *padding-bottom: 0; /* TODO remove hack */
   }
   
 /* TODO this is not a fix */  
