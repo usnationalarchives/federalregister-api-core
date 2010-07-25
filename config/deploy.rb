@@ -242,7 +242,7 @@ end
 
 namespace :javascript do
   task :combine_and_minify, :roles => [:static] do
-    run "cd #{current_path}; rm public/javascripts/all.js; juicer merge -s public/javascripts/*.js -o public/javascripts/all.js --force"
+    run "cd #{current_path} && rm public/javascripts/all.js && juicer merge -s public/javascripts/*.js --force -o tmp/all.js && mv tmp/all.js public/javascripts/all.js"
   end
 end
 
