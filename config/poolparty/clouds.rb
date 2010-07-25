@@ -6,6 +6,14 @@ def get_keys
   @mysql_passwords = File.open( File.join(File.dirname(__FILE__), '..', 'mysql.yml' ) ) { |yf| YAML::load( yf ) }
 end
 
+def munin_host(ip_addresses)
+  result = []
+  ip_addresses.each do |ip|
+    result << {:hostname => "ip-#{ip.gsub('.', '-')}" , :ipaddress => ip }
+  end
+  return result
+end
+
 def chef_cloud_attributes(instance_type)
   get_keys
   
@@ -35,7 +43,7 @@ def chef_cloud_attributes(instance_type)
     @worker_server_address   = '10.245.106.31'  #'ip-10-245-106-31.ec2.internal'
     @database_server_address = '10.194.109.139' #'ip-10-194-109-139.ec2.internal'
     @sphinx_server_address   = '10.194.109.139' #'ip-10-194-109-139.ec2.internal'
-    @app_server_address      = ['10.243.41.203', '10.196.117.123', '10.202.162.96', '10.212.73.172']  #'ip-10-243-41-203.ec2.internal'
+    @app_server_address      = ['10.243.41.203', '10.196.117.123', '10.202.162.96', '10.212.73.172', '10.251.83.111', '10.251.131.239', '10.251.49.171', '10.251.234.128']  #'ip-10-243-41-203.ec2.internal'
   end    
               
   return {
@@ -75,7 +83,10 @@ def chef_cloud_attributes(instance_type)
                 :server_debian_password => @mysql_passwords['server_debian_password'],
                 :ec2_path               => "/vol/lib/mysql",
                 :ebs_vol_dev            => "/dev/sdh",
-                :ebs_vol_size           => 80
+                :ebs_vol_size           => 80,
+                :tunable => {
+                              :query_cache_size => '40M'
+                            }
                },
     :rails  => {
                 :version     => "2.3.5",
@@ -110,6 +121,10 @@ def chef_cloud_attributes(instance_type)
                     :worker_server => {:ip => @worker_server_address},
                     :database      => {:ip => @database_server_address},
                     :sphinx        => {:ip => @sphinx_server_address}
+                   },
+    :munin      => {
+                    :nodes => munin_host(@app_server_address),
+                    :servers => munin_host(@proxy_server_address)
                    }
   }
 end
@@ -415,6 +430,9 @@ pool :fr2 do
       recipe "ubuntu"
       recipe "openssl"
       
+      recipe "munin::server"
+      recipe "munin::client"
+      
       recipe "nginx"
       recipe "varnish"
       
@@ -433,9 +451,10 @@ pool :fr2 do
     end
     
     security_group "proxy" do
-      authorize :from_port => "22",  :to_port => "22"
-      authorize :from_port => "80",  :to_port => "80"
-      authorize :from_port => "443", :to_port => "443"
+      authorize :from_port => "22",   :to_port => "22"
+      authorize :from_port => "80",   :to_port => "80"
+      authorize :from_port => "443",  :to_port => "443"
+      authorize :from_port => "4950", :to_port => "4950"
     end
     
   end
@@ -457,6 +476,8 @@ pool :fr2 do
       recipe 's3sync'
       recipe "ubuntu"
       recipe "openssl"
+      
+      recipe "munin::client"
       
       recipe "mysql::client"
 
@@ -498,7 +519,7 @@ pool :fr2 do
     #image_id "ami-7d43ae14" #Ubuntu 9.10 Karmic Canonical, ubuntu@ EBS-based 64bit
     image_id "ami-de806bb7" #FR2 Basic App Server
     availability_zones ['us-east-1d']
-    instances 4
+    instances 8
     instance_type 'm1.large'
     
     
@@ -510,6 +531,8 @@ pool :fr2 do
       recipe "ubuntu"
       recipe "openssl"
       recipe "imagemagick"
+      
+      recipe "munin::client"
       
       recipe "mysql::client"
       
@@ -529,7 +552,7 @@ pool :fr2 do
         :passenger_enterprise => {
                                    :pool_idle_time => 100000,
                                    :max_requests   => 10000,
-                                   :max_pool_size  => 90
+                                   :max_pool_size  => 70
                                  },
         :apache => {
                      :prefork => {
@@ -573,6 +596,8 @@ pool :fr2 do
       recipe 's3sync'
       recipe "ubuntu"
       recipe "openssl"
+      
+      recipe "munin::client"
       
       recipe "mysql::server"
       recipe "mysql::server_ec2"
@@ -627,6 +652,8 @@ pool :fr2 do
       recipe "ubuntu"
       recipe "openssl"
       recipe "imagemagick"
+      
+      recipe "munin::client"
       
       recipe "mysql::client"
 
