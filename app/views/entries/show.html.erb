@@ -10,7 +10,7 @@
       <% if (@entry.comments_close_on.present? && @entry.comments_close_on >= Date.today) %>
         <div id="flash_message" class="comment">
           <p>This article has a comment period that ends <%= days_remaining( @entry.comments_close_on ) %>
-          (<%= @entry.comments_close_on %>)  <%= link_to "Submit a formal comment", @entry.comment_url || '#addresses', :class => 'button', :target => '_blank' %>
+          (<%= @entry.comments_close_on %>)  <%= link_to "Submit a formal comment", @entry.comment_url || '#addresses', :class => 'button', :target => (@entry.comment_url ? '_blank' : '') %>
           </p>
         </div>
       <% end -%>      

@@ -17,8 +17,8 @@ module Content::EntryImporter::BasicData
   def toc_doc
     val = simple_node_value('tocDoc')
     
-    if val
-      val.sub!(/, $/, '').strip!
+    if val.present?
+      val = val.sub(/, $/, '').strip
     end
     
     val

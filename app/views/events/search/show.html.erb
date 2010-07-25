@@ -13,15 +13,11 @@
 
 <%= render :esi => event_search_header_path(params.except(:action)) %>
 
-<% unless @search.blank? %>
-
-  <div class="filters">
-    <%= render :esi => event_search_facets_path(params.except(:action).merge(:facet => 'type')) %>
-    <%= render :esi => event_search_facets_path(params.except(:action).merge(:facet => 'agency')) %>
-    
-    <%= render :partial => 'search/location_form', :locals => {:search => @search } %>
-
-  </div>
+<div class="filters">
+  <%= render :esi => event_search_facets_path(params.except(:action).merge(:facet => 'type')) %>
+  <%= render :esi => event_search_facets_path(params.except(:action).merge(:facet => 'agency')) %>
   
-  <%= render :esi => event_search_results_path(params.except(:action)) %>
-<% end %>
+  <%= render :partial => 'search/location_form', :locals => {:search => @search } %>
+</div>
+
+<%= render :esi => event_search_results_path(params.except(:action)) %>
