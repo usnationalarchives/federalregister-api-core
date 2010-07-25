@@ -12,10 +12,12 @@
   }
 .facet_name {
   @include grid(3, 16);
+  width: 150px;
   @include alpha;
   }
 .count {
   @include grid(1, 16);
+  width: 50px;
   @include omega;
   }  
 .events.result_set h3 {

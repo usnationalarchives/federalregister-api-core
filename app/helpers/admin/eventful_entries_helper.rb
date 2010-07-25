@@ -16,11 +16,23 @@ module Admin::EventfulEntriesHelper
     result
   end
   
+  # def link_places(text, places)
+  #   result = text.dup
+  #   places.each do |place|
+  #     result.gsub!(/#{Regexp.escape(place.string)}/) do |place_str|
+  #       link_to place.string, '#', :class => "place", 'data-id' => place.id, 'data-name' => place.name
+  #     end
+  #   end
+  #   result
+  # end
+  
   def link_places(text, places)
     result = text.dup
-    places.each do |place|
-      result.gsub!(/#{Regexp.escape(place.string)}/) do |place_str|
-        link_to place.string, '#', :class => "place", 'data-id' => place.id, 'data-name' => place.name
+    places.sort_by{|p| p.string.length }.reverse.each do |place|
+      result = modify_text_not_inside_anchor(result) do |text|
+        text.gsub(/#{Regexp.escape(place.string)}/) do |place_str|
+          link_to place.string, '#', :class => "place", 'data-id' => place.id, 'data-string' => place.string, 'data-name' => place.name
+        end
       end
     end
     result

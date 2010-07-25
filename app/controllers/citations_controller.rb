@@ -17,6 +17,10 @@ class CitationsController < ApplicationController
   end
   
   def search
-    redirect_to citation_url(params[:volume].to_i, params[:page].to_i)
+    if params[:volume].present? && params[:page].present?
+      redirect_to citation_url(params[:volume].to_i, params[:page].to_i)
+    else
+      render
+    end
   end
 end
