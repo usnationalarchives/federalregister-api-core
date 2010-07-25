@@ -126,7 +126,7 @@ PROMO NAV
 #top_news_promo ul.section_nav li.one_word a { line-height: 31px; }  
 #top_news_promo ul.section_nav li.on {
   background-color: none;
-  background: url(/images/promo_nav_bg_on_new.png) no-repeat right top;
+  background: image-url("promo_nav_bg_on_new.png") no-repeat right top;
   }
 #top_news_promo ul.section_nav li.on a {
   background-color: $golden;
@@ -160,17 +160,17 @@ PROMO ITEMS
   margin: 0 0 0 10px;
   overflow: hidden;
   position: relative;
-  width: 425px;
+  width: 423px;
   }  
 #slideshow .container {
   height: 1908px;  
   position:absolute;
-  width: 425px;
+  width: 423px;
   }
 #slideshow .container > div {
   height: 318px;
   position: relative;
-  width: 425px;
+  width: 423px;
   }
 #slideshow .metadata {
   font-size: 1em;
@@ -206,7 +206,7 @@ PROMO STATS
   padding: 1em 0 0 0;
   position: absolute;
   text-transform: uppercase;
-  width: 425px;
+  width: 423px;
   }
 .stats li.left {
   float: left;
@@ -256,10 +256,13 @@ WHATS HOT
 
 ******************************/
 .home #popular.with_icon .header_with_icon {
-  background: sprite-image('icons/icon_whats_hot.png',10px,0,50px) no-repeat;
-  margin-bottom: 1em;
-  padding: 21px 0 0 3em;
+  margin-bottom: 1.75em;
+  padding: 21px 0 0 0;
   }
+#popular {
+  background: sprite-image('icons/icon_whats_hot.png', 30px, 15px, 400px) no-repeat;
+  }
+  
 .home .with_icon h1,
 .home #news h1 { /* TODO pull this into its own class to share with fr_sections below */
   border-bottom: 2px solid #464646;
@@ -272,7 +275,6 @@ WHATS HOT
   }
 .home #popular.with_icon ol {
   list-style: none;
-  padding-left: 2em;
   }  
 .home #popular.with_icon li {
   border-bottom: 2px solid #EFEFEF;
@@ -304,7 +306,7 @@ AGENCY HIGHLIGHT
 
 ******************************/
 .home #agency_highlight.with_icon .header_with_icon {
-  background: sprite-image('icons/icon_highlighted_opportunity.png', 0, 20px) no-repeat;  
+  background: sprite-image('icons/icon_highlighted_opportunity.png', 0, 20px, 50px) no-repeat;  
   margin-bottom: 1em;
   overflow: hidden;
   padding: 21px 0 0 3em;
@@ -326,7 +328,22 @@ AGENCY HIGHLIGHT
   float: left;
   width: 334px;
   }
-  
+
+/******************************
+
+History Movie
+
+******************************/
+
+.home #fr_movie.with_icon .header_with_icon {
+  background: sprite-image('icons/icon_movie.png', 0, 20px, 50px) no-repeat;  
+  margin-bottom: 1em;
+  overflow: hidden;
+  padding: 21px 0 0 3em;
+  }
+#fr_movie object {
+  margin-left: 3em;
+  }
 /******************************
 
 LEARN 

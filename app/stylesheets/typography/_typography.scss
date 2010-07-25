@@ -83,7 +83,7 @@ TITLE STYLES
 ******************************/
 
 h1.title {
-  background: url("/images/header_bg.png") repeat-x scroll left top;
+  background: image-url("header_bg.png") repeat-x scroll left top;
   color: #fff;
   clear: both;
   line-height: .9;
@@ -120,7 +120,8 @@ h1.title {
 #sidebar .title_bar {
   margin-top: 0;
   }
-#modal .title_bar {
+#modal .title_bar,
+#exit_modal .title_bar {
   border-top: none;
   margin: 0;
   }  
