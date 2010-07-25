@@ -10,7 +10,7 @@ $(document).ready(function () {
         if ($('#modal').size() == 0) {
             var template = [
               '<div id="modal">',
-              '  <a href="#" class="jqmClose close">Close</a>',
+              '  <a href="#" class="jqmClose">Close</a>',
               '  <h3 class="title_bar">Select a feed</h3>',
               '  <p>Select from the following feeds:</p>',
               '  <ul class="bullets">',
