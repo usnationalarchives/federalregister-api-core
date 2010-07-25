@@ -153,7 +153,7 @@ SECTION
 .figure {
   background: #e6e6e6;
   float: left;
-  padding: 1em;
+  padding: .5em;
   position: relative;
   }
 .figcaption {
@@ -162,6 +162,9 @@ SECTION
   }
 .figcaption a {
   display: block;
+  }
+.article.with_photo.on_right .figure {
+  float: right;
   }  
 #sections div > .article:last-child,
 #sections div > .article.lastchild  {
