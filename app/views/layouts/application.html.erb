@@ -34,8 +34,12 @@
     <![endif]-->
      
     <%= javascript_include_tag :vendor %>
-    <%= javascript_include_tag :all %>
-
+    <% if RAILS_ENV == 'development' %>
+      <%= javascript_include_tag :all %>
+    <% else %>
+      <%= javascript_include_tag 'all.js' %>
+    <% end %>
+    
     <%= yield :feeds %>
   
   </head>
