@@ -165,9 +165,13 @@ HOMEPAGE
 .home #news {
   @include grid(5, 16);
   }  
-.home #popular,
-.home #agency_highlight {
+.home #agency_highlight,
+.home #fr_movie {
   @include grid(8, 16);
+  }  
+.home #popular {
+  @include grid(7, 16);
+  @include grid-prefix(1, 16);
   }  
 .home #learn .about {
   @include grid(4,16);
