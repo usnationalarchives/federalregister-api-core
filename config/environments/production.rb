@@ -23,12 +23,12 @@ config.log_level = :debug
 
 # Disable delivery errors, bad email addresses will be ignored
 # config.action_mailer.raise_delivery_errors = false
-config.action_mailer.default_url_options = {:host => 'fr2.criticaljuncture.org'}
+config.action_mailer.default_url_options = {:host => 'www.federalregister.gov'}
 
 # Enable threaded mode
 # config.threadsafe!
 
 # Commented out in as password protection is really annoying
-# config.action_controller.asset_host = "http://assets%d.fr2.criticaljuncture.org"
+config.action_controller.asset_host = "http://assets%d.federalregister.gov"
 
 # Put gems in Gemfile...
