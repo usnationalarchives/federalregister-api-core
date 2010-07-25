@@ -165,7 +165,7 @@ $(document).ready(function () {
         }
         $('#modal').html(
           [
-          '<a href="#" class="jqmClose close">Close</a>',
+          '<a href="#" class="jqmClose">Close</a>',
           '<h3 class="title_bar">' + title + '</h3>',
           html
           ].join("\n")
