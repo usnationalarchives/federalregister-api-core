@@ -20,7 +20,7 @@ $(document).ready(function () {
         $('body#search.show').each(function () {
             $('body').append([
               '<div id="modal">',
-              '  <a href="#" class="jqmClose close">Close</a>',
+              '  <a href="#" class="jqmClose">Close</a>',
               '  <h3 class="title_bar">Loading...</h3>',
               '</div>'].join("\n")
             );
