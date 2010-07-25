@@ -178,8 +178,7 @@ set :custom_symlinks, {
   'data/raw'              => 'data/raw',
   'data/entries'          => 'data/entries',
   
-  'db/sphinx'       => 'db/sphinx', 
-  'public/sitemaps' => 'sitemaps'
+  'db/sphinx'       => 'db/sphinx',
 }
 
 
