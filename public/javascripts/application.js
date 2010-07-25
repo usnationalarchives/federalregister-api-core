@@ -1,4 +1,3 @@
-"use strict";
 var jqmHandlers = {
     href: "",
     timer: "",
@@ -24,7 +23,7 @@ function generate_exit_dialog() {
 
         var template = [
         '<div id="exit_modal">',
-        '  <a href="#" class="jqmClose close">Close</a>',
+        '  <a href="#" class="jqmClose">Close</a>',
         '  <h3 class="title_bar">Notice</h3>',
         '  <h4>You are now leaving the FederalRegister.gov website.</h4>',
         '  <p>Click the link below to continue or wait 10 seconds to be transferred to:</p>',
@@ -54,6 +53,11 @@ $(document).ready(function () {
     $("input[placeholder]").textPlaceholder();
     $("body").find(":first-child").addClass("firstchild");
     $("body").find(":last-child").addClass("lastchild");
+    
+    $(".jqmClose").live('click', function (event) {
+      $(this).parent().jqmHide();
+    });
+    
     $("a[href^='http://www.flickr.com']").bind('click',
     function (event) {
         var timer;

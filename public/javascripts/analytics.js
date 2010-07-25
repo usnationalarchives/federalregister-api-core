@@ -8,7 +8,7 @@ $(document).ready(function(){
   });
   
   $("a.add_to_calendar").bind('click', function() {
-    var path = $(this).attr('href') + '/add_to_calendar'
+    var path = $(this).attr('href') + '/add_to_calendar';
     pageTracker._trackPageview(path);
   });
   
