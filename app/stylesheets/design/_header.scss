@@ -62,7 +62,7 @@ SEARCH
   }
 #header #search_container {
   position: absolute;
-  right: -25px;
+  right: -20px;
   top: -47px;
   }  
 #header #search {
@@ -104,15 +104,15 @@ SEARCH
   width:  image-width('icons/header_search_button.png');    
   }
 #header #browse_container {
-  top: 7px;
-  right: 25px;
+  top: 5px;
+  right: 27px;
   position: absolute;
   width: 105px;
   }
 #header #browse_container a {
   color: #fff;
   display: block;
-  line-height: 1;
+  line-height: 1.15;
   }
 #header #browse_container a:hover {
   text-decoration: underline;
