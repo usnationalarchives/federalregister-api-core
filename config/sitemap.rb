@@ -29,10 +29,7 @@ SitemapGenerator::Sitemap.add_links do |sitemap|
   end
   
   # TOPICS
-  ('a' .. 'z').each do |letter|
-    sitemap.add topics_by_letter_path(letter), :priority => 0.25
-  end
-  
+  sitemap.add topics_path
   Topic.find_each do |topic|
     sitemap.add topic_path(topic)
   end
@@ -44,12 +41,7 @@ SitemapGenerator::Sitemap.add_links do |sitemap|
   end
   
   # REGULATIONS
-  RegulatoryPlan.find_each do |regulatory_plan|
+    RegulatoryPlan.find_each do |regulatory_plan|
     sitemap.add regulatory_plan_path(regulatory_plan)
-  end
-  
-  # PLACES
-  Place.find_each do |place|
-    sitemap.add place_path(place), :priority => 0.25
   end
 end
