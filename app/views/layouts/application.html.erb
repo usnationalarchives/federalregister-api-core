@@ -33,7 +33,7 @@
     <%= stylesheet_link_tag "ie6", :media => :screen %>
     <![endif]-->
      
-    <%# HELP-DESIGN: Don't combine JS files yet; need a strategy to get the JS to the static server... %>
+    <%= javascript_include_tag :vendor %>
     <%= javascript_include_tag :all %>
 
     <%= yield :feeds %>
