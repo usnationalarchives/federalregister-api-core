@@ -2,13 +2,15 @@
 <h4>Near</h4>
 <ul>
   <li class="location">
-    <% params[:conditions].except(:location, :within).keys.each do |attr| %>
-      <% if params[:conditions][attr].is_a?(Array)%>
-        <% params[:conditions][attr].each do |val| %>
-          <%= f.hidden_field attr, :id => '', :value => val, :multiple => true %>
+    <% if params[:conditions] %>
+      <% params[:conditions].except(:location, :within).keys.each do |attr| %>
+        <% if params[:conditions][attr].is_a?(Array)%>
+          <% params[:conditions][attr].each do |val| %>
+            <%= f.hidden_field attr, :id => '', :value => val, :multiple => true %>
+          <% end %>
+        <% else%>
+          <%= f.hidden_field attr, :id => '' %>
         <% end %>
-      <% else%>
-        <%= f.hidden_field attr, :id => '' %>
       <% end %>
     <% end %>
     <%= f.text_field :location, :placeholder =>  "Zip Code", :class => 'zip' %>
