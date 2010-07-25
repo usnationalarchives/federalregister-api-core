@@ -26,7 +26,7 @@ def chef_cloud_attributes(instance_type)
               when 'staging'
                 'fr2.criticaljuncture.org'
               when 'production'
-                'fr2.criticaljuncture.org'
+                'www.federalregister.gov'
               end
 
   case instance_type
