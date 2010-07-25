@@ -2,15 +2,34 @@ $(document).ready(function () {
     $("input[placeholder]").textPlaceholder();
     $("body").find(":first-child").addClass("firstchild");
     $("body").find(":last-child").addClass("lastchild");
-    
     $("a[href^='http://www.flickr.com']").bind('click', function (event) {
-      console.log("click");
+      var timer;
       event.preventDefault();
       generate_exit_dialog();
       $("#exit_modal .flickr_link").attr("href", $(this).attr("href")).text( $(this).attr("href") );
+      jqmHandlers.setHref( $(this).attr("href") );
       $("#exit_modal").centerScreen().jqmShow();
     }); 
 });
+
+var jqmHandlers = {
+  href: "",
+  timer: "",
+  show: function ( hash ){
+    hash.w.show();
+    timer = setTimeout(function() {
+      window.location = href;
+    }, 10000);
+  },
+  hide: function ( hash ){
+    hash.w.hide();
+    hash.o.remove();
+    clearTimeout(timer);
+  },
+  setHref: function ( link ){
+    href = link;
+  }
+}
 
 function generate_exit_dialog() {
   if( $("#exit_modal").size() == 0 ) {
@@ -31,7 +50,9 @@ function generate_exit_dialog() {
     
     $('#exit_modal').jqm({
         modal: true,
-        toTop: true
+        toTop: true,
+        onShow: jqmHandlers.show,
+        onHide: jqmHandlers.hide
     });
   }
 }
