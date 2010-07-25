@@ -64,7 +64,7 @@ namespace :content do
       namespace :regulations_dot_gov do
         desc "Import regulations.gov info for entries missing it published in the last 3 weeks"
         task :tardy => :environment do
-          entries = Entry.published_since(3.weeks.ago).scoped(:conditions => ["regulationsdotgov_id IS NULL AND checked_regulationsdotgov_at IS NULL OR checked_regulationsdotgov_at < ?", 1.day.ago])
+          entries = Entry.published_since(3.weeks.ago).scoped(:conditions => ["comment_url IS NULL AND checked_regulationsdotgov_at IS NULL OR checked_regulationsdotgov_at < ?", 23.hours.ago])
           entries.each do |entry|
             importer = Content::EntryImporter.new(:entry => entry)
             importer.update_attributes(:checked_regulationsdotgov_at, :regulationsdotgov_id, :comment_url)

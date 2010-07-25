@@ -16,7 +16,7 @@
     </div>
 
     <%= link_to(@agency.url) if @agency.url %>
-    <%= simple_format @agency.description %>
+    <%= add_citation_links simple_format @agency.description %>
     
 
   <% end %>  
@@ -79,8 +79,9 @@
   </div>
 <% end %>
 
-<%= render :partial => 'entries/list', :locals => {:list_type => 'agency', :entries => @entries, :search_params => {:agency_id => @agency.id}} %>
-
+<% if @entries.present?%>
+  <%= render :partial => 'entries/list', :locals => {:list_type => 'agency', :entries => @entries, :search_params => {:agency_id => @agency.id}} %>
+<% end %>
 <%= render :partial => 'entries/most_cited', :locals => {:entries => @most_cited_entries} %>
 
 
