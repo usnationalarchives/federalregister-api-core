@@ -55,11 +55,6 @@ set :normalize_asset_timestamps, false
 
 set :migrate_target, :current
 
-#############################################################
-# Set Branch
-#############################################################
-
-set :branch, `git branch`.match(/\* (.*)/)[1]
 
 #############################################################
 # General Settings  
@@ -72,7 +67,8 @@ set :deploy_to,  "/var/www/apps/#{application}"
 #############################################################
 
 task :production do
-  set :rails_env,  "production" 
+  set :rails_env,  "production"
+  set :branch, 'production'
   
   instances = []
   @ec2.instances.select{|i| i.groups.include?('app')}.each{|i| instances << i.dns_name}
@@ -97,6 +93,7 @@ end
 
 task :staging do
   set :rails_env,  "production" 
+  set :branch, `git branch`.match(/\* (.*)/)[1]
   
   set :domain,     "184.72.250.132" #gpo fr2 staging
   set :url,        "#{domain}"
