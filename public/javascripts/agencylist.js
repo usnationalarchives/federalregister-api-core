@@ -31,7 +31,7 @@ $(document).ready(function () {
     });
 
 
-    $(".sub_agencies a").bind("click",
+    $("#agencies.index .sub_agencies a").bind("click",
     function (e) {
         e.preventDefault();
         var parent = $(this).parent();
