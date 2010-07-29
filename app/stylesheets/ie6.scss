@@ -1,48 +1,35 @@
 @import "compass";
+@import "library";
 
-/* NARA Seal */
-body {
-  background-image: none;
-  filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/images/seal.png', sizingMethod='image');
+/******************************
+
+GENERAL
+
+******************************/
+
+#main {
+  margin: 0 auto;
+  width: 960px;
   }
 
-#special #main #top_news_promo ul.section_nav li,
-#special #main #top_news_promo ul.section_nav li a,
-#special #main .with_icon .header_with_icon,
+/* turn off the icons */
 #special #main .fr_section,
 #main #disclaimer h1,
 #main .rss,
-#main .citation_box li  {
+#main .citation_box li,
+#main .external  {
   background-image: none;
   padding-left: 0;
   }
 #primary_nav li {
   background-image: none;
   }
-  
 .row {
   clear: both;
   }
 #sections #main .article {
   border-bottom: none;
   }
-#header_logo {
-  background-image: none;
-  filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/images/logotype.png', sizingMethod='image');
-  margin-left: 0;
-  }
-#header #search {
-  background-image: none;
-  filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/images/icons/search_bg_wide.png', sizingMethod='image');
-  }
-#header #search .search_btn {
-  background-image: none;
-  filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/images/icons/header_search_button.png', sizingMethod='image');  
-  }
-#news .celebrating {
-  background-image: none;
-  filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/images/celebrating_75.png', sizingMethod='image');  
-  }  
 .metadata_share_bar,
 .font_control_wrapper,
 .aside_box {
@@ -52,7 +39,88 @@ body {
 .filters li,
 .search_info {
   zoom: 1;
+  }  
+
+/******************************
+
+HEADER
+
+******************************/
+
+#header_logo {
+  background: image-url('ie6/logotype.png') no-repeat;
   }
+#header #search {
+  background-image: none;
+  filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/images/icons/search_bg_wide.png', sizingMethod='image');
+  }
+#header #search .search_btn {
+  background-image: none;
+  filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/images/icons/header_search_button.png', sizingMethod='image');  
+  }
+
+#search label {
+  display: none;
+  }
+
+/******************************
+
+HOMEPAGE
+
+******************************/
+
+#news .celebrating {  
+  background: image-url('ie6/celebrating_75.png') no-repeat;
+  }  
+#slideshow .stats {
+  display: none;
+  }
+#current_issue {
+  background: $pale_green image-url('ie6/current_issue.png') no-repeat;
+  }
+#popular {
+  background: image-url('ie6/icon_whats_hot.png') no-repeat 30px 15px;
+  }
+.home #agency_highlight.with_icon .header_with_icon {
+  background: image-url('ie6/icon_highlighted_opportunity.png') no-repeat 20px 50px;  
+  }
+.home #fr_movie.with_icon .header_with_icon {
+  background: image-url('ie6/icon_movie.png') no-repeat 0 10px;
+  }
+  
+#slideshow .container .news_content {
+  height: 318px;
+  position: relative;
+  width: 423px;
+  }
+.home #top_news_promo ul.section_nav li {
+  background-image: none;
+  }
+#top_news_promo ul.section_nav li.money a { background: image-url('ie6/icon_money_50.png') no-repeat 5px 5px; }  
+#top_news_promo ul.section_nav li.environment a { background: image-url('ie6/icon_environment_50.png') no-repeat 5px 5px; }
+#top_news_promo ul.section_nav li.world a { background: image-url('ie6/icon_world_50.png') no-repeat 5px 5px; }  
+#top_news_promo ul.section_nav li.science-and-technology a { background: image-url('ie6/icon_science_50.png') no-repeat 5px 5px; } 
+#top_news_promo ul.section_nav li.business-and-industry a { background: image-url('ie6/icon_business_50.png') no-repeat 5px 5px; }  
+#top_news_promo ul.section_nav li.health-and-public-welfare a { background: image-url('ie6/icon_health_50.png') no-repeat 10px 5px; } 
+#top_news_promo ul.section_nav li.one_word a { line-height: 31px; }  
+#top_news_promo ul.section_nav li.on {
+  background-color: none;
+  background: image-url("promo_nav_bg_on_new.png") no-repeat right top;
+  }
+#top_news_promo ul.section_nav li.money.on a { background: $golden image-url('ie6/icon_money_nav_on.png') no-repeat 5px 5px; }  
+#top_news_promo ul.section_nav li.environment.on a {background: $golden image-url('ie6/icon_environment_nav_on.png') no-repeat 5px 5px; }
+#top_news_promo ul.section_nav li.world.on a { background: $golden image-url('ie6/icon_world_nav_on.png') no-repeat 5px 5px; }  
+#top_news_promo ul.section_nav li.science-and-technology.on a { background: $golden image-url('ie6/icon_science_nav_on.png') no-repeat 5px 5px; } 
+#top_news_promo ul.section_nav li.business-and-industry.on a { background: $golden image-url('ie6/icon_business_nav_on.png') no-repeat 5px 5px; }  
+#top_news_promo ul.section_nav li.health-and-public-welfare.on a { background: $golden image-url('ie6/icon_health_nav_on.png') no-repeat 5px 5px; }
+
+  
+/******************************
+
+GENERAL PAGE ITEMS
+
+******************************/
+
 .agency_list_info .article_count,
 .search_info .article_count {
   display: inline;
@@ -65,6 +133,13 @@ body {
 #main #sidebar {
   margin: 0;
   }
-#slideshow .stats {
-  display: none;
+  
+/******************************
+
+MODAL
+
+******************************/
+
+#modal {
+  position: absolute;
   }
