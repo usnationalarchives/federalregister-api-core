@@ -12,7 +12,7 @@ class Admin::IssuesController < AdminController
   
   def preview
     @sections = Section.all
-    @issue = Issue.new(Date.parse(params[:id]))
+    @current_issue = @approved_issue = Issue.new(Date.parse(params[:id]))
     @preview = true
     @faux_controller = "special"
     @faux_action = "home"
