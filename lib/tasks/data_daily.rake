@@ -3,7 +3,7 @@ namespace :data do
     data:daily:catch_up
     content:entries:import:regulations_dot_gov:tardy
     remote:sphinx:rebuild
-    tmp:cache:clear
+    varnish:expire:everything
     sitemap:refresh
   )
   
