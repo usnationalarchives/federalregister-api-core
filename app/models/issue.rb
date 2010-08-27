@@ -9,8 +9,12 @@ class Issue
     end
   end
   
+  def self.approved
+    @approved ||= new(IssueApproval.latest_publication_date)
+  end
+  
   def self.current
-    new(IssueApproval.latest_publication_date)
+    @current ||= new(Entry.latest_publication_date)
   end
   
   def self.most_recent(n)
