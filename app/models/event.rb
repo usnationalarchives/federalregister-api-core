@@ -89,7 +89,7 @@ class Event < ApplicationModel
       "full_text" => 25,
     }
     
-    set_property :delta => true
+    set_property :delta => :delayed
   end
   
 end

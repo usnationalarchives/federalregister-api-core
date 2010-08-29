@@ -10,6 +10,7 @@ require 'rake/rdoctask'
 require 'tasks/rails'
 begin
   require 'thinking_sphinx/tasks'
+  require 'thinking_sphinx/deltas/delayed_delta/tasks'
 rescue LoadError
 end
 
