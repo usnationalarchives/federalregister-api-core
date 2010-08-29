@@ -9,6 +9,7 @@
   place_id                 :integer(4)
   remote_call_in_available :boolean(1)
   event_type               :string(255)
+  delta                    :boolean(1)      default(TRUE), not null
 
 =end Schema Information
 
@@ -87,6 +88,8 @@ class Event < ApplicationModel
       "abstract" => 50,
       "full_text" => 25,
     }
+    
+    set_property :delta => true
   end
   
 end
