@@ -8,6 +8,7 @@
   title                :text
   abstract             :text
   priority_category    :string(255)
+  delta                :boolean(1)      default(TRUE), not null
 
 =end Schema Information
 
@@ -74,6 +75,8 @@ class RegulatoryPlan < ApplicationModel
       "abstract" => 50,
       "full_text" => 25,
     }
+    
+    set_property :delta => true
   end
   
   def self.current_issue

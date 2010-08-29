@@ -235,6 +235,8 @@ class Entry < ApplicationModel
       "full_text" => 25,
       "agency_name" => 10
     }
+    
+    set_property :delta => true
   end
   
   def curated_title
