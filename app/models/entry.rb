@@ -236,7 +236,7 @@ class Entry < ApplicationModel
       "agency_name" => 10
     }
     
-    set_property :delta => true
+    set_property :delta => :delayed
   end
   
   def curated_title
