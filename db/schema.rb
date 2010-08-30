@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100723221507) do
+ActiveRecord::Schema.define(:version => 20100829195232) do
 
   create_table "agencies", :force => true do |t|
     t.integer  "parent_id"
@@ -108,6 +108,21 @@ ActiveRecord::Schema.define(:version => 20100723221507) do
   add_index "citations", ["cited_entry_id", "citation_type", "source_entry_id"], :name => "cited_citation_source"
   add_index "citations", ["source_entry_id", "citation_type", "cited_entry_id"], :name => "source_citation_cited"
 
+  create_table "delayed_jobs", :force => true do |t|
+    t.integer  "priority",   :default => 0
+    t.integer  "attempts",   :default => 0
+    t.text     "handler"
+    t.text     "last_error"
+    t.datetime "run_at"
+    t.datetime "locked_at"
+    t.datetime "failed_at"
+    t.string   "locked_by"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "delayed_jobs", ["priority", "run_at"], :name => "delayed_jobs_priority"
+
   create_table "entries", :force => true do |t|
     t.text     "title"
     t.text     "abstract"
@@ -155,6 +170,7 @@ ActiveRecord::Schema.define(:version => 20100723221507) do
   add_index "entries", ["citation"], :name => "index_entries_on_citation"
   add_index "entries", ["citing_entries_count"], :name => "index_entries_on_agency_id_and_citing_entries_count"
   add_index "entries", ["citing_entries_count"], :name => "index_entries_on_citing_entries_count"
+  add_index "entries", ["delta"], :name => "index_entries_on_delta"
   add_index "entries", ["document_number"], :name => "index_entries_on_document_number"
   add_index "entries", ["full_text_updated_at"], :name => "index_entries_on_full_text_added_at"
   add_index "entries", ["full_xml_updated_at"], :name => "index_entries_on_full_xml_added_at"
@@ -183,8 +199,10 @@ ActiveRecord::Schema.define(:version => 20100723221507) do
     t.integer "place_id"
     t.boolean "remote_call_in_available"
     t.string  "event_type"
+    t.boolean "delta",                    :default => true, :null => false
   end
 
+  add_index "events", ["delta"], :name => "index_events_on_delta"
   add_index "events", ["entry_id", "date"], :name => "index_events_on_entry_id_and_date"
   add_index "events", ["event_type", "entry_id", "date"], :name => "index_events_on_event_type_and_entry_id_and_date"
   add_index "events", ["event_type", "entry_id", "place_id"], :name => "index_events_on_event_type_and_entry_id_and_place_id"
@@ -266,13 +284,15 @@ ActiveRecord::Schema.define(:version => 20100723221507) do
   add_index "regulatory_plan_events", ["regulatory_plan_id"], :name => "index_regulatory_plan_events_on_regulatory_plan_id"
 
   create_table "regulatory_plans", :force => true do |t|
-    t.string "regulation_id_number"
-    t.string "issue"
-    t.text   "title"
-    t.text   "abstract"
-    t.string "priority_category"
+    t.string  "regulation_id_number"
+    t.string  "issue"
+    t.text    "title"
+    t.text    "abstract"
+    t.string  "priority_category"
+    t.boolean "delta",                :default => true, :null => false
   end
 
+  add_index "regulatory_plans", ["delta"], :name => "index_regulatory_plans_on_delta"
   add_index "regulatory_plans", ["issue", "regulation_id_number"], :name => "index_regulatory_plans_on_issue_and_regulation_id_number"
   add_index "regulatory_plans", ["regulation_id_number", "issue"], :name => "index_regulatory_plans_on_regulation_id_number_and_issue"
 
