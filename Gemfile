@@ -18,6 +18,7 @@ gem 'json'
 gem 'ym4r', '0.6.1'
 
 gem 'thinking-sphinx', '1.3.14', :require => 'thinking_sphinx'
+gem 'ts-delayed-delta', '1.1.0', :require => 'thinking_sphinx/deltas/delayed_delta'
 gem 'hoptoad_notifier', '2.1.3'
 gem 'aws-s3', '0.6.2', :require => 'aws/s3'
 gem 'paperclip', '2.3.1.1'
