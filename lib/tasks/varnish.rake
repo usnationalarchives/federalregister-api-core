@@ -13,4 +13,11 @@ namespace :varnish do
 
   desc "Restart varnish"
   task :restart => [:stop, :start]
+  
+  namespace :expire do
+    task :everything => :environment do
+      include CacheUtils
+      purge_cache(".*")
+    end
+  end
 end
