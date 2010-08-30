@@ -2,15 +2,15 @@
 <% feed_autodiscovery highlighted_entries_url(:format => :rss), "Featured Articles from the Federal Register" %>
 <% add_column_class('home') %>
 
-<h1 class="title"><span><%= @issue.publication_date.try(:to_s, :wday_and_pretty_date) %></span></h1>
+<h1 class="title"><span><%= @current_issue.publication_date.try(:to_s, :wday_and_pretty_date) %></span></h1>
 
 <%= render(:partial => "special/preview_warning") if @preview %>
 
-<%= render :partial => "entries/statistics_by_date", :locals => {:issue => @issue, :label => "Current Issue", :other_dates => true} %>
+<%= render :partial => "entries/statistics_by_date", :locals => {:issue => @current_issue, :label => "Current Issue", :other_dates => true} %>
 
 <div class="row">
   <% section_tag(:id => 'top_news_promo') do %>
-    <%= render :partial => 'special/promo', :locals => {:sections => @sections, :publication_date => @issue.publication_date}  %>
+    <%= render :partial => 'special/promo', :locals => {:sections => @sections, :publication_date => @approved_issue.publication_date}  %>
   <% end -%>
 
   <% section_tag(:id => 'news') do %>
@@ -41,5 +41,5 @@
 </div>
 
 <div class="row">
-  <%= render :partial => 'special/section_news', :locals => {:sections => @sections, :publication_date => @issue.publication_date} %>
+  <%= render :partial => 'special/section_news', :locals => {:sections => @sections, :publication_date => @approved_issue.publication_date} %>
 </div>
