@@ -1,4 +1,6 @@
 class Content::EntryImporter::ModsFile
+  class DownloadError < StandardError; end
+  
   extend ActiveSupport::Memoizable
   
   def initialize(date)
@@ -24,7 +26,7 @@ class Content::EntryImporter::ModsFile
     publication_date = doc.root.xpath('./xmlns:originInfo/xmlns:dateIssued').first.try(:content) if doc.root
     
     if !publication_date
-      raise "Mods file not published"
+      raise Content::EntryImporter::ModsFile::DownloadError
     end
 
     doc.root
