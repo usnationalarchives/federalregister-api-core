@@ -64,4 +64,5 @@ group :test do
   gem 'webrat', '0.7.0'
   gem 'factory_girl', '1.2.4'
   gem 'spork', '0.7.5', :require => false
+  gem 'timecop', '0.3.5'
 end
