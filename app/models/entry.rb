@@ -148,7 +148,7 @@ class Entry < ApplicationModel
   validate :curated_attributes_are_not_too_long
   
   def self.published_today
-    published_on(Entry.latest_publication_date)
+    Issue.current.entries
   end
   
   def self.published_on(publication_date)
@@ -324,14 +324,14 @@ class Entry < ApplicationModel
     end
   end
   
-  def self.latest_publication_date
-    with_exclusive_scope do
-      Entry.find(:first, :select => "publication_date", :order => "publication_date DESC").publication_date
-    end
-  end
-  
   def self.latest_publication_dates(n)
-    find(:all, :select => "publication_date", :conditions => ["publication_date > ?", 1.months.ago], :group => "publication_date", :order => "publication_date DESC", :limit => n).map &:publication_date
+    find(:all,
+         :select => "publication_date",
+         :conditions => ["publication_date <= ?", Issue.current.publication_date],
+         :group => "publication_date",
+         :order => "publication_date DESC",
+         :limit => n
+    ).map &:publication_date
   end
   
   def self.find_all_by_citation(volume, page)

@@ -212,6 +212,6 @@ class EntrySearch < ApplicationSearch
   def set_defaults(options)
     @within = '25'
     @order = options[:order] || 'relevant'
-    @end_date = Entry.latest_publication_date.to_time
+    @end_date = Issue.current.publication_date.to_time
   end
 end
