@@ -1,211 +1,215 @@
 --- 
 dependencies: 
-  spork: 
+  fastercsv: 
     group: 
-    - :test
-    version: = 0.7.5
-    require: []
-
+    - :default
+    version: = 1.4.0
+  compass: 
+    group: 
+    - :default
+    version: = 0.10.1
   amazon-ec2: 
     group: 
     - :default
     version: ">= 0"
     require: []
 
-  compass: 
+  spork: 
     group: 
-    - :default
-    version: = 0.10.1
-  fastercsv: 
-    group: 
-    - :default
-    version: = 1.4.0
+    - :test
+    version: = 0.7.5
+    require: []
+
   rails: 
     group: 
     - :default
     version: = 2.3.8
-  searchlogic: 
+  haml: 
     group: 
     - :default
-    version: = 2.4.12
-  authlogic: 
-    group: 
-    - :default
-    version: = 2.1.3
-  curb: 
-    group: 
-    - :default
-    version: = 0.4.4.0
-  mysql: 
-    group: 
-    - :default
-    version: = 2.7
+    version: = 3.0.4
   ts-delayed-delta: 
     group: 
     - :default
     version: = 1.1.0
     require: 
     - thinking_sphinx/deltas/delayed_delta
-  haml: 
+  mysql: 
     group: 
     - :default
-    version: = 3.0.4
+    version: = 2.7
+  curb: 
+    group: 
+    - :default
+    version: = 0.4.4.0
+  authlogic: 
+    group: 
+    - :default
+    version: = 2.1.3
+  searchlogic: 
+    group: 
+    - :default
+    version: = 2.4.12
+  timecop: 
+    group: 
+    - :test
+    version: = 0.3.5
+  amatch: 
+    group: 
+    - :default
+    version: = 0.2.3
   rspec: 
     group: 
     - :test
     version: = 1.3.0
     require: []
 
-  amatch: 
-    group: 
-    - :default
-    version: = 0.2.3
-  seanhussey-woulda: 
-    group: 
-    - :test
-    version: ">= 0"
-    require: 
-    - woulda
-  thinking-sphinx: 
-    group: 
-    - :default
-    version: = 1.3.14
-    require: 
-    - thinking_sphinx
-  formtastic: 
-    group: 
-    - :default
-    version: = 0.9.8
-  geokit: 
-    group: 
-    - :default
-    version: = 1.4.1
-    require: 
-    - geokit
-  patron: 
-    group: 
-    - :default
-    version: = 0.4.2
-  floehopper-mocha: 
-    group: 
-    - :test
-    version: ">= 0"
-    require: 
-    - mocha
   rspec-rails: 
     group: 
     - :test
     version: = 1.3.2
     require: []
 
-  webrat: 
+  floehopper-mocha: 
     group: 
     - :test
-    version: = 0.7.0
-  lemonade: 
-    group: 
-    - :default
-    version: = 0.3.2
-  paperclip: 
-    group: 
-    - :default
-    version: = 2.3.1.1
-  json: 
-    group: 
-    - :default
     version: ">= 0"
-  will_paginate: 
+    require: 
+    - mocha
+  patron: 
     group: 
     - :default
-    version: = 2.3.14
+    version: = 0.4.2
+  geokit: 
+    group: 
+    - :default
+    version: = 1.4.1
     require: 
-    - will_paginate
+    - geokit
+  formtastic: 
+    group: 
+    - :default
+    version: = 0.9.8
+  thinking-sphinx: 
+    group: 
+    - :default
+    version: = 1.3.14
+    require: 
+    - thinking_sphinx
+  seanhussey-woulda: 
+    group: 
+    - :test
+    version: ">= 0"
+    require: 
+    - woulda
+  factory_girl: 
+    group: 
+    - :test
+    version: = 1.2.4
   jgre-monkeyspecdoc: 
     group: 
     - :test
     version: = 0.9.5
     require: 
     - monkeyspecdoc
-  factory_girl: 
-    group: 
-    - :test
-    version: = 1.2.4
-  ym4r: 
+  will_paginate: 
     group: 
     - :default
-    version: = 0.6.1
+    version: = 2.3.14
+    require: 
+    - will_paginate
+  json: 
+    group: 
+    - :default
+    version: ">= 0"
+  paperclip: 
+    group: 
+    - :default
+    version: = 2.3.1.1
+  lemonade: 
+    group: 
+    - :default
+    version: = 0.3.2
+  webrat: 
+    group: 
+    - :test
+    version: = 0.7.0
+  icalendar: 
+    group: 
+    - :default
+    version: ">= 0"
   bcrypt-ruby: 
     group: 
     - :default
     version: = 2.1.2
     require: 
     - bcrypt
-  icalendar: 
+  ym4r: 
     group: 
     - :default
-    version: ">= 0"
-  klarlack: 
-    group: 
-    - :default
-    version: = 0.0.6
-  hoptoad_notifier: 
-    group: 
-    - :default
-    version: = 2.1.3
-  stevedore: 
-    group: 
-    - :default
-    version: = 0.0.1
-  compass-960-plugin: 
-    group: 
-    - :default
-    version: = 0.9.13
-    require: []
-
+    version: = 0.6.1
   thoughtbot-shoulda: 
     group: 
     - :test
     version: ">= 0"
     require: 
     - shoulda
-  rails-test-serving: 
-    group: 
-    - :test
-    version: = 0.1.4.2
-    require: 
-    - rails_test_serving
-  active_hash: 
+  compass-960-plugin: 
     group: 
     - :default
-    version: = 0.7.9
-  rubyzip: 
+    version: = 0.9.13
+    require: []
+
+  stevedore: 
     group: 
     - :default
-    version: = 0.9.1
-    require: 
-    - zip/zip
-  aws-s3: 
+    version: = 0.0.1
+  hoptoad_notifier: 
     group: 
     - :default
-    version: = 0.6.2
-    require: 
-    - aws/s3
+    version: = 2.1.3
+  klarlack: 
+    group: 
+    - :default
+    version: = 0.0.6
   flickraw: 
     group: 
     - :default
     version: = 0.8.1
     require: []
 
-  nokogiri: 
+  aws-s3: 
     group: 
     - :default
-    version: = 1.3.2
+    version: = 0.6.2
+    require: 
+    - aws/s3
+  rubyzip: 
+    group: 
+    - :default
+    version: = 0.9.1
+    require: 
+    - zip/zip
+  active_hash: 
+    group: 
+    - :default
+    version: = 0.7.9
+  rails-test-serving: 
+    group: 
+    - :test
+    version: = 0.1.4.2
+    require: 
+    - rails_test_serving
   thunder_punch: 
     group: 
     - :default
     version: = 0.0.6
     require: []
 
+  nokogiri: 
+    group: 
+    - :default
+    version: = 1.3.2
 specs: 
 - rake: 
     version: 0.8.7
@@ -224,7 +228,7 @@ specs:
 - activeresource: 
     version: 2.3.8
 - after_commit: 
-    version: 1.0.7
+    version: 1.0.8
 - amatch: 
     version: 0.2.3
 - xml-simple: 
@@ -327,6 +331,8 @@ specs:
     version: 1.3.14
 - thunder_punch: 
     version: 0.0.6
+- timecop: 
+    version: 0.3.5
 - ts-delayed-delta: 
     version: 1.1.0
 - webrat: 
@@ -335,7 +341,7 @@ specs:
     version: 2.3.14
 - ym4r: 
     version: 0.6.1
-hash: b038ea7318f9e1d2dd60ea0e09059c36a43029de
+hash: 1eb5692c5759d6ad933da0aff88749ffae5becf3
 sources: 
 - Rubygems: 
     uri: http://gemcutter.org
