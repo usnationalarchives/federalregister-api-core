@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100829195232) do
+ActiveRecord::Schema.define(:version => 20100831145100) do
 
   create_table "agencies", :force => true do |t|
     t.integer  "parent_id"
@@ -239,6 +239,13 @@ ActiveRecord::Schema.define(:version => 20100829195232) do
   end
 
   add_index "issue_approvals", ["publication_date"], :name => "index_issue_approvals_on_publication_date"
+
+  create_table "issues", :force => true do |t|
+    t.date     "publication_date"
+    t.datetime "completed_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "lede_photos", :force => true do |t|
     t.string   "credit"
