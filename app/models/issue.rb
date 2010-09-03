@@ -1,33 +1,44 @@
-class Issue
-  attr_accessor :publication_date
-  def initialize(publication_date)
-    case publication_date
-    when String
-      @publication_date = Date.parse(publication_date)
-    else
-      @publication_date = publication_date
-    end
+class Issue < ApplicationModel
+  has_many :entries,
+           :primary_key => :publication_date,
+           :foreign_key => :publication_date
+  
+  def self.completed
+    scoped(:conditions => "completed_at IS NOT NULL")
   end
   
   def self.approved
-    @approved ||= new(IssueApproval.latest_publication_date)
+    find_by_publication_date(IssueApproval.latest_publication_date)
   end
   
   def self.current
-    @current ||= new(Entry.latest_publication_date)
+    Issue.completed.last(:order => "publication_date")
   end
   
-  def self.most_recent(n)
-    dates = Entry.find_as_array(
-      :select => "distinct(publication_date) AS publication_date",
-      :order => "publication_date DESC",
-      :limit => 50
-    )
-    dates.map{|date| new(date) }
+  def self.most_recent(n = 50)
+    all(:order => "publication_date DESC", :limit => n).completed
   end
   
-  def entries
-    Entry.published_on(@publication_date)
+  def self.complete?(date)
+    issue = find_by_publication_date(date)
+    issue.try(:complete?) || false
+  end
+  
+  def to_param
+    publication_date.to_s(:db)
+  end
+  
+  def complete?
+    completed_at.present?
+  end
+  
+  def complete!
+    unless complete?
+      self.completed_at = Time.now
+      save!
+    end
+    
+    self
   end
   
   def notice_count
