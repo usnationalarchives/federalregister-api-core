@@ -1,11 +1,10 @@
-# this is needed for running capistrano locally on a server
-# without it all our gems aren't avail to be loaded below
-require File.expand_path(File.join(File.dirname(__FILE__), "..", ".bundle", "environment"))
+require "bundler"
+Bundler.setup(:default, :deployment)
 
 # thinking sphinx cap tasks
 require 'thinking_sphinx/deploy/capistrano'
 # hoptoad deploy notifications, etc
-#require 'hoptoad_notifier/capistrano'
+require 'hoptoad_notifier/capistrano'
 
 # deploy recipes - need to do `sudo gem install thunder_punch` - these should be required last
 require 'thunder_punch'
@@ -95,15 +94,12 @@ task :staging do
   set :rails_env,  "production" 
   set :branch, `git branch`.match(/\* (.*)/)[1]
   
-  set :domain,     "184.72.250.132" #gpo fr2 staging
-  set :url,        "#{domain}"
-  set :server_url, "#{domain}"
-  
-  role :proxy,  domain
-  role :static, domain
-  role :worker, domain
-  role :app,    domain
-  role :db ,    domain, {:primary => true}
+  role :proxy,  "ec2-184-72-211-214.compute-1.amazonaws.com"
+  role :static, "ec2-67-202-55-5.compute-1.amazonaws.com"
+  role :worker, "ec2-67-202-55-5.compute-1.amazonaws.com", {:primary => true}
+  role :app,    "ec2-184-73-104-109.compute-1.amazonaws.com"
+  role :db,     "ec2-184-73-88-22.compute-1.amazonaws.com", {:primary => true}
+  role :sphinx, "ec2-184-73-88-22.compute-1.amazonaws.com"
 end
 
 
