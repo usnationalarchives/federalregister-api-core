@@ -7,8 +7,7 @@
     <h3>Full text</h3>
       <pre><%=
         # FIXME: move out of view!
-        text = entry.full_text
-        
+        text = html_escape(entry.full_text)
         text.sub!(/.*^-{71}$/m, '')
         text.gsub!(/<\/?INF>/, '')
         text.gsub!(/\[deg\]/, '&deg;')
