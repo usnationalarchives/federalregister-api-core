@@ -34,12 +34,15 @@ gem 'compass-960-plugin', '0.9.13', :require => false
 gem 'lemonade', '0.3.2'
 gem 'icalendar'
 gem 'klarlack', '0.0.6'
-gem "thunder_punch", '0.0.6', :require => false
 gem "amazon-ec2", :require => false
 
 # bundler requires these gems in all environments
 # gem 'nokogiri', '1.4.2'
 # gem 'geokit'
+
+group :deployment do
+  gem "thunder_punch", '0.0.10', :require => false
+end
 
 group :development do
   # bundler requires these gems in development
