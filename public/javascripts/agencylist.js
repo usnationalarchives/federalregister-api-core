@@ -8,7 +8,6 @@ $(document).ready(function () {
         $("#agencies").trigger('filter', $(this).val());
     }).bind("focus",
     function (e) {
-        $("#agencies .filters .alpha li").removeClass("on");
         $(this).parent().addClass("on");
     });
 
@@ -31,7 +30,7 @@ $(document).ready(function () {
     });
 
 
-    $(".sub_agencies a").bind("click",
+    $("#agencies.index .sub_agencies a").bind("click",
     function (e) {
         e.preventDefault();
         var parent = $(this).parent();
