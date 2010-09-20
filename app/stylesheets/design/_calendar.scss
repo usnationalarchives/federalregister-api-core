@@ -30,6 +30,7 @@
   } 
 .calendar .late {
   background: lighten($bookmark_red, 50%);
+  cursor: pointer;
   }   
 .calendar .holiday {
   
@@ -49,4 +50,4 @@
   }  
 .calendar .otherMonth {
   background: #eee;
-  }
+  }  
