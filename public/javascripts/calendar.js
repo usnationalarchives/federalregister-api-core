@@ -5,6 +5,10 @@ $(document).ready(function () {
         return false;
     });
 
+    $('.calendar td.late').live('click', function() {
+        alert("Today's issue is currently unavailable; we apologize for any inconvenience.")
+    });
+    
     $('#date_selector').submit(function () {
         var form = $(this);
         var path = $(this).attr('action');
