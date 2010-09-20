@@ -17,9 +17,18 @@ class ApplicationModel < ActiveRecord::Base
     scoped(:limit => n)
   end
   
+  # Calculates the results immediately, so additional query filters cannot be appended
   def self.preload(*associations)
     results = scoped()
     preload_associations(results, associations)
     results
+  end
+  
+  # Force MySQL to join tables in provided order.
+  #   Calculates the results immediately, so additional query filters cannot be appended
+  def self.straight_join
+    sql = construct_finder_sql(self.current_scoped_methods[:find])
+    sql.sub!(/^SELECT/, 'SELECT STRAIGHT_JOIN')
+    find_by_sql(sql)
   end
 end

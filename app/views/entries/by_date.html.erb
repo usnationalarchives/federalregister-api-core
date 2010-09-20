@@ -50,7 +50,7 @@
   <%# THESE SHOULD NOT EXIST AT LAUNCH; NO STYLE NECESSARY %>
   <h2>Entries without agencies</h2>
   <% @entries_without_agency.group_by(&:agency_names).each do |agency_names, entries| %>
-    <h3><%= agency_names.map(&:name).to_sentence %></h2>
+    <h3><%= agency_names.map(&:name).to_sentence %></h3>
     <ul>
     <% entries.each do |entry| %>
       <li><%= link_to entry.title, entry_path(entry) %></li>
