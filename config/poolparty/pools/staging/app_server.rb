@@ -48,6 +48,9 @@ cloud :app_server do
                                 :maxspareservers     => 128
                                }
                  },
+      :sphinx => {
+                   :server_address => 'sphinx.fr2.ec2.internal'
+                 },
       :rails  => { :environment => "staging" }
       )
           
