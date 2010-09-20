@@ -19,5 +19,13 @@ namespace :varnish do
       include CacheUtils
       purge_cache(".*")
     end
+    
+    task :pages_warning_of_late_content => :environment do
+      include CacheUtils
+      include RouteBuilder
+      
+      purge_cache("/")
+      purge_cache("/articles/#{Date.today.strftime('%Y')}/#{Date.today.strftime('%m')}")
+    end
   end
 end
