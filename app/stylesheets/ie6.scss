@@ -13,7 +13,6 @@ GENERAL
   }
 
 /* turn off the icons */
-#special #main .fr_section,
 #main #disclaimer h1,
 #main .rss,
 #main .citation_box li,
@@ -21,7 +20,7 @@ GENERAL
   background-image: none;
   padding-left: 0;
   }
-#primary_nav li {
+#header #primary_nav li {
   background-image: none;
   }
 .row {
@@ -46,22 +45,25 @@ GENERAL
 HEADER
 
 ******************************/
-
+#primary_nav {
+  background: #b7c8cc;
+  }
 #header_logo {
   background: image-url('ie6/logotype.png') no-repeat;
   }
 #header #search {
-  background-image: none;
-  filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/images/icons/search_bg_wide.png', sizingMethod='image');
+  background: #b7c8cc image-url('ie6/search_bg_wide.png') no-repeat left 2px;
   }
 #header #search .search_btn {
   background-image: none;
   filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/images/icons/header_search_button.png', sizingMethod='image');  
   }
-
 #search label {
   display: none;
   }
+#search_container #browse_container {
+  top: 5px;
+  } 
 
 /******************************
 
@@ -95,7 +97,11 @@ HOMEPAGE
   }
 .home #top_news_promo ul.section_nav li {
   background-image: none;
+  width: 190px;
   }
+.home #top_news_promo ul.section_nav li a {
+  line-height: 1;
+  }  
 #top_news_promo ul.section_nav li.money a { background: image-url('ie6/icon_money_50.png') no-repeat 5px 5px; }  
 #top_news_promo ul.section_nav li.environment a { background: image-url('ie6/icon_environment_50.png') no-repeat 5px 5px; }
 #top_news_promo ul.section_nav li.world a { background: image-url('ie6/icon_world_50.png') no-repeat 5px 5px; }  
@@ -105,8 +111,11 @@ HOMEPAGE
 #top_news_promo ul.section_nav li.one_word a { line-height: 31px; }  
 #top_news_promo ul.section_nav li.on {
   background-color: none;
-  background: image-url("promo_nav_bg_on_new.png") no-repeat right top;
+  background: image-url("ie6/promo_nav_bg_on_new.png") no-repeat right top;
   }
+#top_news_promo ul.section_nav li.on a {
+  background-image: none;
+  }  
 #top_news_promo ul.section_nav li.money.on a { background: $golden image-url('ie6/icon_money_nav_on.png') no-repeat 5px 5px; }  
 #top_news_promo ul.section_nav li.environment.on a {background: $golden image-url('ie6/icon_environment_nav_on.png') no-repeat 5px 5px; }
 #top_news_promo ul.section_nav li.world.on a { background: $golden image-url('ie6/icon_world_nav_on.png') no-repeat 5px 5px; }  
@@ -114,6 +123,12 @@ HOMEPAGE
 #top_news_promo ul.section_nav li.business-and-industry.on a { background: $golden image-url('ie6/icon_business_nav_on.png') no-repeat 5px 5px; }  
 #top_news_promo ul.section_nav li.health-and-public-welfare.on a { background: $golden image-url('ie6/icon_health_nav_on.png') no-repeat 5px 5px; }
 
+#special .fr_section.money { background: image-url('ie6/icon_money.png') no-repeat 10px 0; }
+#special .fr_section.environment { background: image-url('ie6/icon_environment.png') no-repeat 10px 0; }
+#special .fr_section.world { background: image-url('ie6/icon_world.png') no-repeat 10px 0; }
+#special .fr_section.science-and-technology { background: image-url('ie6/icon_science.png') no-repeat 10px 0; }  
+#special .fr_section.business-and-industry { background: image-url('ie6/icon_business.png') no-repeat 10px 0; }
+#special .fr_section.health-and-public-welfare { background: image-url('ie6/icon_health.png') no-repeat 18px 0; }
   
 /******************************
 
@@ -132,6 +147,14 @@ GENERAL PAGE ITEMS
 #main #content_area, 
 #main #sidebar {
   margin: 0;
+  }
+#comments-closing-opening .header-nav {
+  display: none;
+  }
+#comments-closing-opening.active .header-nav {
+  border-top: 3px solid $dark_blue;
+  display: block;
+  position: relative;
   }
   
 /******************************
