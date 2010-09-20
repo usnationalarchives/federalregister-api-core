@@ -94,7 +94,7 @@ task :staging do
   set :rails_env,  "staging" 
   set :branch, `git branch`.match(/\* (.*)/)[1]
   
-  role :proxy,  "ec2-184-72-211-214.compute-1.amazonaws.com"
+  role :proxy,  "ec2-184-72-250-132.compute-1.amazonaws.com"
   role :static, "ec2-184-72-183-146.compute-1.amazonaws.com"
   role :worker, "ec2-184-72-183-146.compute-1.amazonaws.com", {:primary => true}
   role :app,    "ec2-174-129-84-43.compute-1.amazonaws.com"
