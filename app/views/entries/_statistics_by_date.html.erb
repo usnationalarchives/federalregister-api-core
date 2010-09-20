@@ -1,5 +1,5 @@
 <div id="current_issue">
-    <%= link_to label, entries_by_date_path(issue.publication_date), :title => issue.publication_date.to_s(:wday_and_pretty_date), :class => 'issue'  %>
+  <%= link_to label, entries_by_date_path(issue.publication_date), :title => issue.publication_date.to_s(:wday_and_pretty_date), :class => 'issue'  %>
     
   <ul class="statistics">
     <li><%= link_to "<span>#{issue.notice_count}</span> Notices", entries_search_path(:conditions => {:type => "NOTICE", :date => issue.publication_date.to_s(:db)}) %></li>
@@ -16,5 +16,4 @@
   <% if other_dates %>
     <%= link_to 'Browse this &amp; other dates', entries_by_date_path(issue.publication_date), :title => "Browse this & other dates", :class => 'other_dates'  %>
   <% end %>
-  
 </div>
