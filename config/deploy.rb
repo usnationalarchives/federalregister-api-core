@@ -91,15 +91,15 @@ end
 #############################################################
 
 task :staging do
-  set :rails_env,  "production" 
+  set :rails_env,  "staging" 
   set :branch, `git branch`.match(/\* (.*)/)[1]
   
-  role :proxy,  "ec2-184-72-211-214.compute-1.amazonaws.com"
-  role :static, "ec2-67-202-55-5.compute-1.amazonaws.com"
-  role :worker, "ec2-67-202-55-5.compute-1.amazonaws.com", {:primary => true}
-  role :app,    "ec2-184-73-104-109.compute-1.amazonaws.com"
-  role :db,     "ec2-184-73-88-22.compute-1.amazonaws.com", {:primary => true}
-  role :sphinx, "ec2-184-73-88-22.compute-1.amazonaws.com"
+  role :proxy,  "ec2-184-72-250-132.compute-1.amazonaws.com"
+  role :static, "ec2-184-72-183-146.compute-1.amazonaws.com"
+  role :worker, "ec2-184-72-183-146.compute-1.amazonaws.com", {:primary => true}
+  role :app,    "ec2-174-129-84-43.compute-1.amazonaws.com"
+  role :db,     "ec2-72-44-38-166.compute-1.amazonaws.com", {:primary => true}
+  role :sphinx, "ec2-72-44-38-166.compute-1.amazonaws.com"
 end
 
 
@@ -238,5 +238,3 @@ namespace :javascript do
     run "cd #{current_path} && rm public/javascripts/all.js && juicer merge -s public/javascripts/*.js --force -o tmp/all.js && mv tmp/all.js public/javascripts/all.js"
   end
 end
-
-#require 'hoptoad_notifier/capistrano'
