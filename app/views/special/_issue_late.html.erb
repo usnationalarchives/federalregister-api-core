@@ -1,4 +1,4 @@
-<div id="issue_late">
-  Today's issue is currently unavailable; we apologize for any inconvenience.
-  <%= link_to 'Browse this &amp; other dates', entries_by_date_path(Issue.current.publication_date), :title => "Browse past dates", :class => 'other_dates'  %>
+<div id="current_issue" class="error">
+  <h2 class="issue">Current Issue</h2>
+  <p>Today's issue is currently unavailable; we apologize for any inconvenience. <%= link_to 'Browse other dates.', entries_by_date_path(Issue.current.publication_date), :title => "Browse other dates."  %></p>
 </div>
