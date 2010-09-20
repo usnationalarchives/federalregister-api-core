@@ -9,6 +9,8 @@
   ) do |d|
     if d.wday == 0 || d.wday == 6
       [d.mday, {:class => "weekend"}]
+    elsif d == Date.today && Issue.current_issue_is_late?
+      [d.mday, {:class => "late" }]
     elsif d == @current_date
       [link_to(d.mday, entries_by_date_path(d)), {:class => "current" }]
     elsif @entry_dates.include?(d)
