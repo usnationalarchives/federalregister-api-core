@@ -10,6 +10,10 @@ CURRENT ISSUE
   margin-bottom: 2em;
   position: relative;
   }
+#current_issue.error {
+  background:  lighten($bookmark_red, 60%) sprite-image('icons/current_issue_error.png') no-repeat;
+  border-color: $bookmark_red;
+  }  
 #current_issue .issue {
   color: #fff;
   @include inline-block;
@@ -17,10 +21,20 @@ CURRENT ISSUE
   line-height: 40px;
   padding-left: 55px;
   width: 125px;
-  }
+  }            
 #current_issue .issue:hover,
 #current_issue .issue:focus {
   text-decoration: underline;
+  }
+#current_issue.error .issue {
+  color: $bookmark_red;
+  font-weight: normal;
+  line-height: 42px;
+  padding-left: 40px;
+  }
+#current_issue.error .issue:hover,
+#current_issue.error .issue:focus {
+  text-decoration: none;
   }  
 #current_issue ul {
   @include inline_list;
@@ -75,6 +89,20 @@ CURRENT ISSUE
 #current_issue dd a {
   color: $dark_green;
   }
+#current_issue.error .issue {
+  
+}
+#current_issue.error p {
+  @include gesta;
+  position: absolute;
+  left: 195px;
+  top: 10px;
+  }
+#current_issue.error p a {
+  text-decoration: underline;
+  }
+
+
 /******************************
 
 PROMO BOX
