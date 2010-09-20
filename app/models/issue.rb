@@ -24,6 +24,16 @@ class Issue < ApplicationModel
     issue.try(:complete?) || false
   end
   
+  def self.current_issue_is_late?
+    !Issue.completed.find_by_publication_date(Date.today) &&
+    (Time.current > Time.zone.parse("9AM")) &&
+    should_have_an_issue?(Date.today)
+  end
+  
+  def self.should_have_an_issue?(date)
+    !(date.wday == 0 || date.wday == 6 || Holiday.find_by_date(date))
+  end
+  
   def to_param
     publication_date.to_s(:db)
   end
