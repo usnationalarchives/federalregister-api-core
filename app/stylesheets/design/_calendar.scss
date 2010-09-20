@@ -28,6 +28,9 @@
 .calendar .weekend {
   background: #cdcdcd;
   } 
+.calendar .late {
+  background: lighten($bookmark_red, 50%);
+  }   
 .calendar .holiday {
   
   }   
