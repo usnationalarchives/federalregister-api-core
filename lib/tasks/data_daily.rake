@@ -25,7 +25,6 @@ namespace :data do
       data:daily:basic
       content:entries:html:compile:all
       content:entries:import:regulations_dot_gov:tardy
-      remote:sphinx:rebuild
       content:issues:mark_complete
       varnish:expire:everything
       sitemap:refresh
