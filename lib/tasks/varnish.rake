@@ -25,7 +25,7 @@ namespace :varnish do
       include RouteBuilder
       
       purge_cache("/")
-      purge_cache("/articles/#{Time.local.to_date.strftime('%Y')}/#{Time.local.to_date.strftime('%m')}")
+      purge_cache("/articles/#{Time.current.to_date.strftime('%Y')}/#{Time.current.to_date.strftime('%m')}")
     end
   end
 end
