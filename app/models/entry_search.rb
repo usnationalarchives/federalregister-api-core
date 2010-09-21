@@ -168,7 +168,7 @@ class EntrySearch < ApplicationSearch
     dist = {}
     client.query(query, '*')[:matches].each{|m| dist[m[:attributes]["@groupby"].to_s] = m[:attributes]["@count"] }
     
-    (1994..Time.local.to_date.year).each do |year|
+    (1994..Time.current.to_date.year).each do |year|
       (1..12).each do |month|
         dist[sprintf("%d%02d",year, month)] ||= 0
       end
