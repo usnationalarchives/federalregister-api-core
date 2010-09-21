@@ -35,11 +35,11 @@ module Content
     end
   
     def todays_import_is_complete?
-      Issue.complete?(Date.today)
+      Issue.complete?(Time.local.to_date)
     end
   
     def today_is_a_holiday?
-      Holiday.find_by_date(Date.today)
+      Holiday.find_by_date(Time.local.to_date)
     end
   
     def lock_file_already_exists?
@@ -58,8 +58,8 @@ module Content
     end
   
     def clean_up_old_data
-      mods_path = Content::EntryImporter::ModsFile.new(Date.today).path
-      bulk_path = Content::EntryImporter::BulkdataFile.new(Date.today).path
+      mods_path = Content::EntryImporter::ModsFile.new(Time.local.to_date).path
+      bulk_path = Content::EntryImporter::BulkdataFile.new(Time.local.to_date).path
     
       if File.exists?(mods_path) || File.exists?(bulk_path)
         File.makedirs("#{Rails.root}/data/import_issues/#{Time.now}")

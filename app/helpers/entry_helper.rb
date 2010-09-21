@@ -17,7 +17,7 @@ module EntryHelper
   end
   
   def days_remaining(date)
-    num_days = @entry.comments_close_on - Date.today
+    num_days = @entry.comments_close_on - Time.local.to_date
     if num_days > 0
       "in " + pluralize(num_days, 'day')
     else

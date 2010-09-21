@@ -2553,13 +2553,13 @@ module Citations::CfrHelper
    },
   }
   
-  def add_cfr_links(text, date = Date.today)
+  def add_cfr_links(text, date = Time.local.to_date)
     text.gsub(/(\d+)\s+(?:CFR|C\.F\.R\.)\s+(?:[Pp]arts?|[Ss]ections?|[Ss]ec\.|&#xA7;|&#xA7;\s*&#xA7;)?\s*(\d+)(?:\.(\d+))?/) do |str|
       title = $1
       part = $2
       section = $3
       
-      current_url  = cfr_url(Date.today, title, part, section)
+      current_url  = cfr_url(Time.local.to_date, title, part, section)
       historic_url = cfr_url(date, title, part, section)
       
       if current_url || historic_url
