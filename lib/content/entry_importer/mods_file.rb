@@ -26,6 +26,7 @@ class Content::EntryImporter::ModsFile
     publication_date = doc.root.xpath('./xmlns:originInfo/xmlns:dateIssued').first.try(:content) if doc.root
     
     if !publication_date
+      File.delete(file_path)
       raise Content::EntryImporter::ModsFile::DownloadError
     end
 
