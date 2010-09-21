@@ -9,7 +9,7 @@ module Content
       date = Date.parse(date.sub(/^>/, ''))
       dates = Entry.find_as_array(
         :select => "distinct(publication_date) AS publication_date",
-        :conditions => {:publication_date => date .. Date.today},
+        :conditions => {:publication_date => date .. Time.local.to_date},
         :order => "publication_date"
       )
     elsif date =~ /^\d{4}$/
@@ -21,7 +21,7 @@ module Content
     elsif date.present?
       dates = [date.is_a?(String) ? date : date.to_s(:iso)]
     else
-      dates = [Date.today]
+      dates = [Time.local.to_date]
     end
   end
   

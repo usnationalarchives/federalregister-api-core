@@ -3,43 +3,43 @@ describe Citations::CfrHelper do
   
   describe 'add_cfr_links' do
     it "supports '# CFR #'" do
-      add_cfr_links('10 CFR 100').should == '<a class="cfr external" href="' + h(cfr_url(Date.today,'10','100')) + '" target="_blank">10 CFR 100</a>'
+      add_cfr_links('10 CFR 100').should == '<a class="cfr external" href="' + h(cfr_url(Time.local.to_date,'10','100')) + '" target="_blank">10 CFR 100</a>'
     end
     
     it "supports '# CFR #'" do
-      add_cfr_links('10 CFR 100').should == '<a class="cfr external" href="' + h(cfr_url(Date.today,'10','100')) + '" target="_blank">10 CFR 100</a>'
+      add_cfr_links('10 CFR 100').should == '<a class="cfr external" href="' + h(cfr_url(Time.local.to_date,'10','100')) + '" target="_blank">10 CFR 100</a>'
     end
     
     it "supports '# CFR #.#'" do
-      add_cfr_links('10 CFR 100.1').should == '<a class="cfr external" href="' + h(cfr_url(Date.today,'10', '100', '1')) + '" target="_blank">10 CFR 100.1</a>'
+      add_cfr_links('10 CFR 100.1').should == '<a class="cfr external" href="' + h(cfr_url(Time.local.to_date,'10', '100', '1')) + '" target="_blank">10 CFR 100.1</a>'
     end
     
     it "supports '# C.F.R. #.#'" do
-      add_cfr_links('10 C.F.R. 100.1').should == '<a class="cfr external" href="' + h(cfr_url(Date.today,'10','100','1')) + '" target="_blank">10 C.F.R. 100.1</a>'
+      add_cfr_links('10 C.F.R. 100.1').should == '<a class="cfr external" href="' + h(cfr_url(Time.local.to_date,'10','100','1')) + '" target="_blank">10 C.F.R. 100.1</a>'
     end
     
     it "supports '# C.F.R. Part #.#'" do
-      add_cfr_links('10 C.F.R. Part 100.1').should == '<a class="cfr external" href="' + h(cfr_url(Date.today,'10','100','1')) + '" target="_blank">10 C.F.R. Part 100.1</a>'
+      add_cfr_links('10 C.F.R. Part 100.1').should == '<a class="cfr external" href="' + h(cfr_url(Time.local.to_date,'10','100','1')) + '" target="_blank">10 C.F.R. Part 100.1</a>'
     end
     
     it "supports '# C.F.R. parts #'" do
-      add_cfr_links('10 C.F.R. parts 100').should == '<a class="cfr external" href="' + h(cfr_url(Date.today,'10', '100')) + '" target="_blank">10 C.F.R. parts 100</a>'
+      add_cfr_links('10 C.F.R. parts 100').should == '<a class="cfr external" href="' + h(cfr_url(Time.local.to_date,'10', '100')) + '" target="_blank">10 C.F.R. parts 100</a>'
     end
     
     it "supports '# C.F.R. Sec. #'" do
-      add_cfr_links('10 C.F.R. Sec. 100').should == '<a class="cfr external" href="' + h(cfr_url(Date.today,'10', '100')) + '" target="_blank">10 C.F.R. Sec. 100</a>'
+      add_cfr_links('10 C.F.R. Sec. 100').should == '<a class="cfr external" href="' + h(cfr_url(Time.local.to_date,'10', '100')) + '" target="_blank">10 C.F.R. Sec. 100</a>'
     end
     
     it "supports '# C.F.R. &#xA7; #'" do
-      add_cfr_links('10 C.F.R. &#xA7; 100').should == '<a class="cfr external" href="' + h(cfr_url(Date.today,'10', '100')) + '" target="_blank">10 C.F.R. &#xA7; 100</a>'
+      add_cfr_links('10 C.F.R. &#xA7; 100').should == '<a class="cfr external" href="' + h(cfr_url(Time.local.to_date,'10', '100')) + '" target="_blank">10 C.F.R. &#xA7; 100</a>'
     end
     
     it "supports '# C.F.R. &#xA7;&#xA7; #'" do
-      add_cfr_links('10 C.F.R. &#xA7;&#xA7; 100').should == '<a class="cfr external" href="' + h(cfr_url(Date.today,'10','100')) + '" target="_blank">10 C.F.R. &#xA7;&#xA7; 100</a>'
+      add_cfr_links('10 C.F.R. &#xA7;&#xA7; 100').should == '<a class="cfr external" href="' + h(cfr_url(Time.local.to_date,'10','100')) + '" target="_blank">10 C.F.R. &#xA7;&#xA7; 100</a>'
     end
     
     it "supports multiple citations like '# CFR #.# and # CFR #.#'" do
-      add_cfr_links('10 CFR 660.719 and 10 CFR 665.28').should == '<a class="cfr external" href="' + h(cfr_url(Date.today,'10','660','719')) + '" target="_blank">10 CFR 660.719</a> and <a class="cfr external" href="' + h(cfr_url(Date.today,'10','665','28')) + '" target="_blank">10 CFR 665.28</a>'
+      add_cfr_links('10 CFR 660.719 and 10 CFR 665.28').should == '<a class="cfr external" href="' + h(cfr_url(Time.local.to_date,'10','660','719')) + '" target="_blank">10 CFR 660.719</a> and <a class="cfr external" href="' + h(cfr_url(Time.local.to_date,'10','665','28')) + '" target="_blank">10 CFR 665.28</a>'
     end
     
     it "does not support title 26" do
@@ -54,7 +54,7 @@ describe Citations::CfrHelper do
     
     describe "historical_context" do
       it "adds multiple URLs when in history" do
-        add_cfr_links('10 CFR 100', Date.parse('2007-06-01')).should == '<a class="cfr external" data-historic-citation-url="' + h(cfr_url(Date.parse('2007-06-01'), '10', '100')) + '" href="' + h(cfr_url(Date.today,'10','100')) + '" target="_blank">10 CFR 100</a>'
+        add_cfr_links('10 CFR 100', Date.parse('2007-06-01')).should == '<a class="cfr external" data-historic-citation-url="' + h(cfr_url(Date.parse('2007-06-01'), '10', '100')) + '" href="' + h(cfr_url(Time.local.to_date,'10','100')) + '" target="_blank">10 CFR 100</a>'
       end
     end
     
