@@ -159,7 +159,7 @@ class Entry < ApplicationModel
     scoped(:conditions => {:entries => {:publication_date => time .. Time.now}})
   end
   
-  def self.comments_closing(range = (Date.today .. Date.today + 7.days))
+  def self.comments_closing(range = (Time.local.to_date .. Time.local.to_date + 7.days))
     scoped(
       :joins => :comments_close_date,
       :conditions => {:events => {:date => range}},
@@ -167,7 +167,7 @@ class Entry < ApplicationModel
     )
   end
   
-  def self.comments_opening(range = (Date.today - 7.days .. Date.today))
+  def self.comments_opening(range = (Time.local.to_date - 7.days .. Time.local.to_date))
     scoped(
       :joins => :comments_close_date,
       # :conditions => {:entries => {:publication_date => range}},

@@ -2,7 +2,7 @@ namespace :content do
   namespace :section_highlights do
     desc "copy prior day's section assignments"
     task :clone => :environment do
-      date = ENV['DATE'] || Date.today
+      date = ENV['DATE'] || Time.local.to_date
       
       Content::SectionHighlightCloner.new.clone(date)
     end

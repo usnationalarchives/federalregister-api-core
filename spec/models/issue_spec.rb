@@ -3,17 +3,17 @@ require 'spec_helper'
 describe Issue do
   describe "complete?" do
     it "is not complete when no issue exists for a given date" do
-      Issue.complete?(Date.today).should be false
+      Issue.complete?(Time.local.to_date).should be false
     end
     
     it "is not complete when the issue does not have completed_at set" do
-      Issue.create!(:publication_date => Date.today)
-      Issue.complete?(Date.today).should be false
+      Issue.create!(:publication_date => Time.local.to_date)
+      Issue.complete?(Time.local.to_date).should be false
     end
     
     it "is complete when the issue does have completed_at set" do
-      issue = Issue.create!(:publication_date => Date.today, :completed_at => Time.now)
-      Issue.complete?(Date.today).should be true
+      issue = Issue.create!(:publication_date => Time.local.to_date, :completed_at => Time.now)
+      Issue.complete?(Time.local.to_date).should be true
     end
   end
   
