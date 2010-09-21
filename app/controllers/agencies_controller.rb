@@ -11,7 +11,7 @@ class AgenciesController < ApplicationController
       wants.html do
         @entries = EntrySearch.new(:conditions => {:agency_ids => [@agency.id]}, :order => "newest", :per_page => 50).results
         @most_cited_entries = @agency.entries.all(:conditions => "citing_entries_count > 0", :order => "citing_entries_count DESC, publication_date DESC", :limit => 50, :group => "entries.id")
-        @significant_entries = @agency.entries.significant.all(:conditions => {:publication_date => (3.month.ago .. Time.local.to_date)}, :group => "entries.id")
+        @significant_entries = @agency.entries.significant.all(:conditions => {:publication_date => (3.month.ago .. Time.current.to_date)}, :group => "entries.id")
         
         # Entry types
         @entry_type_labels = []
