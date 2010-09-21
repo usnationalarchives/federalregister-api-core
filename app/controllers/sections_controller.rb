@@ -28,7 +28,7 @@ class SectionsController < ApplicationController
                           :joins => {:entries => :sections},
                           :conditions => {
                             :sections => {:id => @section.id},
-                            :entries => {:publication_date => (1.month.ago .. Date.today)}
+                            :entries => {:publication_date => (1.month.ago .. Time.local.to_date)}
                           },
                           :group => "entries.id",
                           :order => "num_entries_this_month DESC",
