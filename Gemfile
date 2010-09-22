@@ -33,6 +33,7 @@ gem 'compass-960-plugin', '0.9.13', :require => false
 gem 'lemonade', '0.3.2'
 gem 'icalendar'
 gem 'klarlack', '0.0.6'
+gem 'system_timer', '1.0.0'
 gem "amazon-ec2", :require => false
 
 # bundler requires these gems in all environments
