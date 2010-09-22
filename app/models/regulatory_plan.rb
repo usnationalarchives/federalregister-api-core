@@ -76,8 +76,10 @@ class RegulatoryPlan < ApplicationModel
       "full_text" => 25,
     }
     
-    set_property :delta => :delayed
+    set_property :delta => ThinkingSphinx::Deltas::ManualDelta
   end
+  # this line must appear after the define_index block
+  include ThinkingSphinx::Deltas::ManualDelta::ActiveRecord
   
   def self.current_issue
     RegulatoryPlan.first(:select => :issue, :order => "issue DESC").try(:issue)
