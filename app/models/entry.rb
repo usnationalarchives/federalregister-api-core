@@ -68,6 +68,7 @@ class Entry < ApplicationModel
     'UNKNOWN'  => 'Unknown'
   }
   
+  belongs_to :issue, :foreign_key => :publication_date, :primary_key => :publication_date
   has_many :topic_name_assignments, :dependent => :destroy
   has_many :topic_names, :through => :topic_name_assignments
   
