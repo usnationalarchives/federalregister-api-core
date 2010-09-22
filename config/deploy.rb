@@ -212,9 +212,7 @@ namespace :sphinx do
     run "indexer --config #{shared_path}/config/#{rails_env}.sphinx.conf --all --rotate"
   end
   task :run_sphinx_delta_indexer, :roles => [:sphinx] do
-    [Entry, Event, RegulatoryPlan].each do |model|
-      run "indexer --config #{shared_path}/config/#{rails_env}.sphinx.conf --rotate #{model.delta_index_names.join(' ')}"
-    end
+    run "indexer --config #{shared_path}/config/#{rails_env}.sphinx.conf --rotate #{delta_index_names}"
   end
 end
 
