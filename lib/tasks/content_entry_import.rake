@@ -73,6 +73,7 @@ namespace :content do
         
         desc "Import regulations.gov info for entries missing it published today"
         task :only_missing => :environment do
+          puts "importing today's missing regulations.gov data"
           update_missing_regulationsdotgov_info(Time.current.to_date)
         end
         
