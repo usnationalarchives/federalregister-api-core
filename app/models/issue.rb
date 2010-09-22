@@ -25,9 +25,9 @@ class Issue < ApplicationModel
   end
   
   def self.current_issue_is_late?
-    !Issue.completed.find_by_publication_date(Date.today) &&
+    !Issue.completed.find_by_publication_date(Time.current.to_date) &&
     (Time.current > Time.zone.parse("9AM")) &&
-    should_have_an_issue?(Date.today)
+    should_have_an_issue?(Time.current.to_date)
   end
   
   def self.should_have_an_issue?(date)

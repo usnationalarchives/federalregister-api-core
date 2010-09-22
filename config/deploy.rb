@@ -76,13 +76,13 @@ task :production do
   role :proxy, "ec2-184-72-241-172.compute-1.amazonaws.com"
   #role :static, "ec2-184-73-104-122.compute-1.amazonaws.com"
   #role :worker, "ec2-184-73-104-122.compute-1.amazonaws.com", {:primary => true}
-  role :static, "ec2-75-101-243-195.compute-1.amazonaws.com" #monster image
-  role :worker, "ec2-75-101-243-195.compute-1.amazonaws.com", {:primary => true} #monster image
   #role :app, *instances
   role :app, "ec2-204-236-209-41.compute-1.amazonaws.com", "ec2-184-72-139-81.compute-1.amazonaws.com", "ec2-174-129-132-251.compute-1.amazonaws.com", "ec2-72-44-36-213.compute-1.amazonaws.com", "ec2-174-129-119-223.compute-1.amazonaws.com", "ec2-204-236-254-83.compute-1.amazonaws.com",
   "ec2-184-73-78-194.compute-1.amazonaws.com", "ec2-174-129-110-112.compute-1.amazonaws.com"
   role :db, "ec2-184-73-60-158.compute-1.amazonaws.com", {:primary => true}
   role :sphinx, "ec2-184-73-60-158.compute-1.amazonaws.com"
+  role :static, "ec2-75-101-243-195.compute-1.amazonaws.com" #monster image
+  role :worker, "ec2-75-101-243-195.compute-1.amazonaws.com", {:primary => true} #monster image
 end
 
 
@@ -95,11 +95,11 @@ task :staging do
   set :branch, `git branch`.match(/\* (.*)/)[1]
   
   role :proxy,  "ec2-184-72-250-132.compute-1.amazonaws.com"
-  role :static, "ec2-184-72-183-146.compute-1.amazonaws.com"
-  role :worker, "ec2-184-72-183-146.compute-1.amazonaws.com", {:primary => true}
   role :app,    "ec2-174-129-84-43.compute-1.amazonaws.com"
   role :db,     "ec2-72-44-38-166.compute-1.amazonaws.com", {:primary => true}
   role :sphinx, "ec2-72-44-38-166.compute-1.amazonaws.com"
+  role :static, "ec2-184-72-183-146.compute-1.amazonaws.com"
+  role :worker, "ec2-184-72-183-146.compute-1.amazonaws.com", {:primary => true}
 end
 
 
