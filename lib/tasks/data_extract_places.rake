@@ -2,7 +2,7 @@ namespace :data do
   namespace :extract do
     desc "Call out to Yahoo! Placemaker to geocode locations in our entries"
     task :places => :environment do 
-      date = ENV['DATE'].blank? ? Date.today : Date.parse(ENV['DATE'])
+      date = ENV['DATE'].blank? ? Time.current.to_date : Date.parse(ENV['DATE'])
       
       placemaker = Placemaker.new(:application_id => ENV['yahoo_placemaker_api_key'])
       

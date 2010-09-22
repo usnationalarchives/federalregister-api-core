@@ -1,7 +1,7 @@
 namespace :content do
   namespace :entries do
     def entry_importer(*attributes)
-      date = ENV['DATE'] || Date.today
+      date = ENV['DATE'] || Time.current.to_date
       Content::EntryImporter.process_all_by_date(date, *attributes)
     end
     
@@ -73,7 +73,7 @@ namespace :content do
         
         desc "Import regulations.gov info for entries missing it published today"
         task :only_missing => :environment do
-          update_missing_regulationsdotgov_info(Date.today)
+          update_missing_regulationsdotgov_info(Time.current.to_date)
         end
         
         desc "Import regulations.gov info for entries missing it published in the last 3 weeks"
@@ -106,7 +106,7 @@ namespace :content do
         date = ENV['DATE']
         
         if date.nil?
-          dates = [Date.today]
+          dates = [Time.current.to_date]
         elsif date == 'all'
           dates = Entry.find_as_array(
             :select => "distinct(publication_date) AS publication_date",
@@ -116,7 +116,7 @@ namespace :content do
           date = Date.parse(date.sub(/^>/, ''))
           dates = Entry.find_as_array(
             :select => "distinct(publication_date) AS publication_date",
-            :conditions => {:publication_date => date .. Date.today},
+            :conditions => {:publication_date => date .. Time.current.to_date},
             :order => "publication_date"
           )
         elsif date =~ /^\d{4}$/

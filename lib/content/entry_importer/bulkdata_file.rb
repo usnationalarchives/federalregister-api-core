@@ -20,6 +20,7 @@ class Content::EntryImporter::BulkdataFile
       Curl::Easy.download(url, path) unless File.exists?(path)
       doc = Nokogiri::XML(open(path))
     rescue
+      File.delete(path)
       raise Content::EntryImporter::BulkdataFile::DownloadError
     end
     doc.root
