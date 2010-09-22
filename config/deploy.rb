@@ -197,14 +197,16 @@ namespace :sphinx do
     run_sphinx_indexer
   end
   
+  task :rebuild_delta_index do
+    transfer_raw_files
+    run_sphinx_delta_indexer
+  end
+  
   task :transfer_raw_files, :roles => [:worker] do
     run "rsync --verbose  --progress --stats --compress --recursive --times --perms --links #{shared_path}/data/raw sphinx:#{shared_path}/data"
   end
   task :transfer_sphinx_config, :roles => [:worker] do
     run "rsync --verbose  --progress --stats --compress --recursive --times --perms --links #{shared_path}/config/#{rails_env}.sphinx.conf sphinx:#{shared_path}/config/"
-  end
-  task :run_sphinx_indexer, :roles => [:sphinx] do
-    run "indexer --config #{shared_path}/config/#{rails_env}.sphinx.conf --all --rotate"
   end
   task :run_sphinx_indexer, :roles => [:sphinx] do
     run "indexer --config #{shared_path}/config/#{rails_env}.sphinx.conf --all --rotate"
