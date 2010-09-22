@@ -18,3 +18,8 @@ begin
   require 'hoptoad_notifier/tasks'
 rescue LoadError
 end
+
+# begin
+#   require(File.join(File.dirname(__FILE__), 'config', 'poolparty', 'tasks'))
+# rescue LoadError
+# end
