@@ -210,9 +210,13 @@ PROMO ITEMS
   }
 #slideshow .figcaption {
   bottom: 7px;
+  display: block;
   left: 0;
   width: 90px;
   }
+#slideshow .figcaption a {
+  word-wrap: break-word;
+  }  
 #news_content {
   overflow: hidden;
   }  
