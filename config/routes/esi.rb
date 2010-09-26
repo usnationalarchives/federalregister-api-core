@@ -1,5 +1,5 @@
 ActionController::Routing::Routes.draw do |map|
-  map.with_options(:quiet => true) do |quiet_map|
+  map.with_options(:quiet => true, :method => :get) do |quiet_map|
     quiet_map.status '/status', :controller => "special", :action => "status"
     
     # HOMEPAGE
