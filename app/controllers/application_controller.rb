@@ -39,6 +39,16 @@ class ApplicationController < ActionController::Base
     end
   end
   
+  rescue_from ActionController::MethodNotAllowed, :with => :method_not_allowed
+  def method_not_allowed
+    if params[:quiet]
+      render :nothing => true, :status => 405
+    else
+      request.format = :html
+      render :template => "errors/405.html.erb", :status => 405
+    end
+  end
+  
   def cache_for(time)
     if RAILS_ENV != 'development'
       expires_in time, :public => true
