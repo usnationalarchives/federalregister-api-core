@@ -65,7 +65,8 @@ class Entry < ApplicationModel
     'NOTICE'   => 'Notice', 
     'PRESDOCU' => 'Presidential Document', 
     'CORRECT'  => 'Correction',
-    'UNKNOWN'  => 'Unknown'
+    'UNKNOWN'  => 'Unknown',
+    'SUNSHINE' => 'Sunshine Act Document'
   }
   
   belongs_to :issue, :foreign_key => :publication_date, :primary_key => :publication_date
