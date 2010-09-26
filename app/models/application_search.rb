@@ -140,7 +140,10 @@ class ApplicationSearch
     
     # Set some defaults...
     @per_page = 20
-    @page = options[:page] || 1
+    @page = options[:page].to_i
+    if @page < 1 || @page > 50
+      @page = 1
+    end
     
     set_defaults(options)
     
