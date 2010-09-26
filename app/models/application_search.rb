@@ -74,7 +74,7 @@ class ApplicationSearch
           :condition  => @facet_name
         )
       end
-      
+      facets = facets.compact
       facets.sort_by{|f| [0-f.count, f.name]}
     end
   end
