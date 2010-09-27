@@ -86,7 +86,23 @@
   </div>
 </div>
 
-<% section_tag(:class => 'articles_published_by_day',:id=> 'articles_published_by_day') do %>    
-  <%= render :partial => "sections/entries_on_date", :collection => @dates_to_show, :as => :date %>
+<% section_tag(:class => 'articles_published_by_day',:id=> 'articles_published_by_day') do %>
+  
+  <div class="header-nav">
+    <h2 class="title_bar"><span class="small_stack"><span>Articles</span>Published</span> Last Seven Days</h2>
+  
+    <ul id="articles_published_by_day-links" class="actions tabs-nav">
+      <% @dates_to_show.each_with_index do |date, index| %>
+        <li class="tab" id="bydate-<%= index %>"><a href="#articles_published_by_day-<%= index %>"><%= date %></a></li>   
+      <% end %>          
+    </ul>
+  </div>
+  
+  <div id="articles_published_by_day-body" class="tabs-body">
+    <% @dates_to_show.each_with_index do |date, index| %>
+      <%= render :partial => "sections/entries_on_date", :locals => { :date => date, :index => index } %>
+    <% end -%>    
+  </div>
+  
   <p><%= link_to 'Search', entries_search_path(:conditions => {:section_ids => @section.id}) %> to see older articles.</p>
 <% end -%>

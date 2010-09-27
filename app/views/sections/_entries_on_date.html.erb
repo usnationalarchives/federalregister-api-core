@@ -1,7 +1,9 @@
-<h2 class="title_bar"><span class="small_stack">Articles <span>published on</span></span> <span class="large_flow"><%= date %></span></h2>
-<% @section.entries.published_on(date).each do |entry| %>
-  <% article_tag do %>  
-    <h1><%= link_to entry.title, entry_path(entry) %></h1>
-    A <%= entry.entry_type %> by <%= agency_names(entry) %>
-  <% end -%>
-<% end %>
+<div id="articles_published_by_day-<%= index %>" data-date="<%= date %>" class="tabs-panel">
+  <h2 class="title_bar"><span class="small_stack">Articles <span>published on</span></span> <span class="large_flow"><%= date %></span></h2>
+  <% @section.entries.published_on(date).each do |entry| %>
+    <% article_tag do %>  
+      <h1><%= link_to entry.title, entry_path(entry) %></h1>
+      A <%= entry.entry_type %> by <%= agency_names(entry) %>
+    <% end -%>
+  <% end %>
+</div>
