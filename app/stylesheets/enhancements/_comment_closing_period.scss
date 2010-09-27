@@ -6,32 +6,40 @@ TODO: Clean this all up.  We removed EnhanceJS and it is no longer clear & clean
 
 ******************************/  
 
-#comments-closing-opening > .header-nav {
+#comments-closing-opening .header-nav,
+#articles_published_by_day .header-nav {
   display: none;
   }
-#comments-closing-opening.active > .header-nav {
+#comments-closing-opening.active .header-nav,
+#articles_published_by_day.active .header-nav {
   border-top: 3px solid $dark_blue;
   display: block;
   position: relative;
   }
-.active #comments-closing-opening-body h2 {
+.active #comments-closing-opening-body h2,
+.active #articles_published_by_day-body h2 {
   display: none;
   }  
-#comments-closing-opening .header-nav h2 {
+#comments-closing-opening .header-nav h2,
+#articles_published_by_day .header-nav h2 {
   border-top: none;
   margin-top: 0;
   }
-#comments-closing-opening .header-nav.title_bar {
+#comments-closing-opening .header-nav.title_bar,
+#articles_published_by_day .header-nav.title_bar {
   margin: 4.8em 0 0;
   padding-top: 0;
   }
-#comments-closing-opening .header-nav.title_bar .small_stack {
+#comments-closing-opening .header-nav.title_bar .small_stack,
+#articles_published_by_day .header-nav.title_bar .small_stack {
   font-size: .4em;
   }
-#comments-closing-opening .actions {
+#comments-closing-opening .actions,
+#articles_published_by_day .actions {
   top: 5px;
   }
-#comments-closing-opening.active .header-nav {
+#comments-closing-opening.active .header-nav,
+#articles_published_by_day.active .header-nav {
   display: block;
   }
 .tabs-body {
