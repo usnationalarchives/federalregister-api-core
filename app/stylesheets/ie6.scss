@@ -13,9 +13,6 @@ GENERAL
   }
 
 /* turn off the icons */
-#main #disclaimer h1,
-#main .rss,
-#main .citation_box li,
 #main .external  {
   background-image: none;
   padding-left: 0;
@@ -156,7 +153,35 @@ GENERAL PAGE ITEMS
   display: block;
   position: relative;
   }
-  
+#disclaimer h1 {
+  background: image-url('ie6/disclaimer.png') no-repeat left top;
+  }
+
+.button.format.pdf { background: image-url('ie6/icon_pdf.png') no-repeat left top; }
+.button.format.xml { background: image-url('ie6/icon_xml.png') no-repeat left top; }
+.citation_box li.twitter { background: image-url('ie6/icon_twitter.png') no-repeat; }
+.citation_box li.facebook { background: image-url('ie6/icon_facebook.png') no-repeat; }
+.citation_box li.digg { background: image-url('ie6/icon_digg.png') no-repeat; }
+.citation_box li.cite_volume { background: image-url('ie6/icon_volume.png') no-repeat;  }
+.citation_box li.cite_page { background: image-url('ie6/icon_page.png') no-repeat;  }
+.citation_box li.link { background: image-url('ie6/icon_link.png') no-repeat;  }
+.citation_box li.email { background: image-url('ie6/icon_email.png') no-repeat; }
+.citation_box li.next { background: image-url('ie6/icon_next.png') no-repeat; }
+.citation_box li.top { background: image-url('ie6/back_to_top.png') no-repeat; }
+.rss { background: image-url('ie6/icon_rss.png') no-repeat; }
+.rss:hover { background: image-url('ie6/icon_rss_hover.png') no-repeat;  }
+.comments_close { background: image-url('ie6/icon_comment.png') no-repeat; }
+
+/******************************
+
+SECTION
+
+******************************/
+
+.three_col_list.comments .group h3 {
+  width: 100px;
+  }
+
 /******************************
 
 MODAL
