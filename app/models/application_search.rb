@@ -47,7 +47,7 @@ class ApplicationSearch
       sphinx_search = ThinkingSphinx::Search.new(@search.term,
         :with => @search.with,
         :with_all => @search.with_all,
-        :conditions => @search.conditions,
+        :conditions => @search.sphinx_conditions,
         :match_mode => :extended,
         :classes => [@search.model]
       )
@@ -147,10 +147,15 @@ class ApplicationSearch
     
     set_defaults(options)
     
-    self.conditions = options[:conditions] || {}
+    self.conditions = (options[:conditions] || {}).reject{|key,val| ! self.respond_to?("#{key}=")}
+  end
+  
+  def conditions
+    @conditions
   end
   
   def conditions=(conditions)
+    @conditions = conditions
     conditions.to_a.reverse.each do |attr, val|
       self.send("#{attr}=", val)
     end
@@ -171,7 +176,7 @@ class ApplicationSearch
     [with, conditions, term].all?(&:blank?)
   end
   
-  def conditions
+  def sphinx_conditions
     conditions = {}
     @filters.select{|f| f.sphinx_type == :conditions }.each do |filter|
       conditions[filter.sphinx_attribute] = filter.sphinx_value
