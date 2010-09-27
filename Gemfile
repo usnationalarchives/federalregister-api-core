@@ -36,6 +36,8 @@ gem 'klarlack', '0.0.6'
 gem 'system_timer', '1.0.0'
 gem "amazon-ec2", :require => false
 
+gem "net-scp", '1.0.4'
+
 # bundler requires these gems in all environments
 # gem 'nokogiri', '1.4.2'
 # gem 'geokit'
