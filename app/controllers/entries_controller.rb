@@ -12,7 +12,7 @@ class EntriesController < ApplicationController
     cache_for 1.day
     respond_to do |wants|
       wants.html do
-        redirect_to entries_by_date_path(Entry.latest_publication_date)
+        redirect_to entries_by_date_path(Issue.current.publication_date)
       end
       wants.rss do
         @feed_name = 'Federal Register Latest Entries'
@@ -56,7 +56,7 @@ class EntriesController < ApplicationController
     cache_for 1.day
     
     @publication_date = parse_date_from_params
-    @issue = Issue.new(@publication_date)
+    @issue = Issue.find_by_publication_date(@publication_date)
     
     @agencies = Agency.all(
       :include => [:entries],

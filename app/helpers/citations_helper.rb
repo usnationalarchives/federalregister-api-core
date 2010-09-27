@@ -1,6 +1,6 @@
 module CitationsHelper
   def add_citation_links(html, options = {})
-    options[:date] ||= Date.today
+    options[:date] ||= Time.current.to_date
     if html.present?
       modify_text_not_inside_anchor(html) do |text|
         text = add_usc_links(text)
