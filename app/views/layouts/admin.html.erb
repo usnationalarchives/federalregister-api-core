@@ -41,7 +41,7 @@
           <li><%= link_to 'Events', admin_events_path, :class => "" %></li>
           <li><%= link_to 'Agency Highlights', admin_agency_highlights_path, :class => "" %></li>
           <li><%= link_to 'Recent Issues', admin_issues_path, :class => "" %></li>
-          <li><%= link_to 'Current Issue', admin_issue_path(Entry.latest_publication_date.to_s(:mdy_dash)), :class => "" %></li>
+          <li><%= link_to 'Current Issue', admin_issue_path(Issue.current.publication_date.to_s(:mdy_dash)), :class => "" %></li>
           <% end %>
         </ul>
       <% end -%>

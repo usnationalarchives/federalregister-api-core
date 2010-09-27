@@ -1,331 +1,164 @@
---- 
-dependencies: 
-  spork: 
-    group: 
-    - :test
-    version: = 0.7.5
-    require: []
+GEM
+  remote: http://rubygems.org/
+  remote: http://gems.github.com/
+  specs:
+    actionmailer (2.3.8)
+      actionpack (= 2.3.8)
+    actionpack (2.3.8)
+      activesupport (= 2.3.8)
+      rack (~> 1.1.0)
+    active_hash (0.7.9)
+      activesupport (>= 2.2.2)
+    activerecord (2.3.8)
+      activesupport (= 2.3.8)
+    activeresource (2.3.8)
+      activesupport (= 2.3.8)
+    activesupport (2.3.8)
+    after_commit (1.0.8)
+      activerecord (< 3.0.0)
+    amatch (0.2.3)
+    amazon-ec2 (0.9.15)
+      xml-simple (>= 1.0.12)
+    authlogic (2.1.3)
+      activesupport
+    aws-s3 (0.6.2)
+      builder
+      mime-types
+      xml-simple
+    bcrypt-ruby (2.1.2)
+    builder (2.1.2)
+    capistrano (2.5.19)
+      highline
+      net-scp (>= 1.0.0)
+      net-sftp (>= 2.0.0)
+      net-ssh (>= 2.0.14)
+      net-ssh-gateway (>= 1.0.0)
+    chunky_png (0.9.0)
+    compass (0.10.1)
+      haml (>= 3.0.4)
+    compass-960-plugin (0.9.13)
+      compass (>= 0.10.0.rc3)
+    curb (0.4.4.0)
+    factory_girl (1.2.4)
+    fastercsv (1.4.0)
+    flickraw (0.8.1)
+      json (>= 1.1.1)
+    floehopper-mocha (0.9.7.20090701124354)
+      rake
+    formtastic (0.9.8)
+      actionpack (>= 2.3.0)
+      activesupport (>= 2.3.0)
+    geokit (1.4.1)
+    haml (3.0.4)
+    highline (1.6.1)
+    hoptoad_notifier (2.1.3)
+      activesupport
+    icalendar (1.1.5)
+    jgre-monkeyspecdoc (0.9.5)
+    json (1.4.6)
+    klarlack (0.0.6)
+    lemonade (0.3.2)
+      chunky_png (>= 0.7.3)
+      compass (>= 0.10.0)
+      haml (>= 3.0.0)
+    mime-types (1.16)
+    mysql (2.7)
+    net-scp (1.0.3)
+      net-ssh (>= 1.99.1)
+    net-sftp (2.0.5)
+      net-ssh (>= 2.0.9)
+    net-ssh (2.0.23)
+    net-ssh-gateway (1.0.1)
+      net-ssh (>= 1.99.1)
+    nokogiri (1.3.2)
+    paperclip (2.3.1.1)
+    patron (0.4.2)
+    rack (1.1.0)
+    rack-test (0.5.4)
+      rack (>= 1.0)
+    rails (2.3.8)
+      actionmailer (= 2.3.8)
+      actionpack (= 2.3.8)
+      activerecord (= 2.3.8)
+      activeresource (= 2.3.8)
+      activesupport (= 2.3.8)
+      rake (>= 0.8.3)
+    rails-test-serving (0.1.4.2)
+    rake (0.8.7)
+    riddle (1.1.0)
+    rspec (1.3.0)
+    rspec-rails (1.3.2)
+      rack (>= 1.0.0)
+      rspec (>= 1.3.0)
+    rubyzip (0.9.1)
+    seanhussey-woulda (0.2.2)
+      thoughtbot-shoulda (>= 2.0.0)
+    searchlogic (2.4.12)
+      activerecord (>= 2.0.0)
+    spork (0.7.5)
+    stevedore (0.0.1)
+      activesupport
+    system_timer (1.0)
+    thinking-sphinx (1.3.14)
+      activerecord (>= 1.15.6)
+      after_commit (>= 1.0.5)
+      riddle (>= 1.0.8)
+    thoughtbot-shoulda (2.11.1)
+    thunder_punch (0.0.10)
+      capistrano (>= 2.5.5)
+    timecop (0.3.5)
+    webrat (0.7.0)
+      nokogiri (>= 1.2.0)
+      rack (>= 1.0)
+      rack-test (>= 0.5.3)
+    will_paginate (2.3.14)
+    xml-simple (1.0.12)
+    ym4r (0.6.1)
 
-  amazon-ec2: 
-    group: 
-    - :default
-    version: ">= 0"
-    require: []
+PLATFORMS
+  ruby
 
-  compass: 
-    group: 
-    - :default
-    version: = 0.10.1
-  fastercsv: 
-    group: 
-    - :default
-    version: = 1.4.0
-  rails: 
-    group: 
-    - :default
-    version: = 2.3.8
-  searchlogic: 
-    group: 
-    - :default
-    version: = 2.4.12
-  authlogic: 
-    group: 
-    - :default
-    version: = 2.1.3
-  mysql: 
-    group: 
-    - :default
-    version: = 2.7
-  curb: 
-    group: 
-    - :default
-    version: = 0.4.4.0
-  haml: 
-    group: 
-    - :default
-    version: = 3.0.4
-  rspec: 
-    group: 
-    - :test
-    version: = 1.3.0
-    require: []
-
-  amatch: 
-    group: 
-    - :default
-    version: = 0.2.3
-  seanhussey-woulda: 
-    group: 
-    - :test
-    version: ">= 0"
-    require: 
-    - woulda
-  patron: 
-    group: 
-    - :default
-    version: = 0.4.2
-  geokit: 
-    group: 
-    - :default
-    version: = 1.4.1
-    require: 
-    - geokit
-  formtastic: 
-    group: 
-    - :default
-    version: = 0.9.8
-  thinking-sphinx: 
-    group: 
-    - :default
-    version: = 1.3.14
-    require: 
-    - thinking_sphinx
-  floehopper-mocha: 
-    group: 
-    - :test
-    version: ">= 0"
-    require: 
-    - mocha
-  rspec-rails: 
-    group: 
-    - :test
-    version: = 1.3.2
-    require: []
-
-  webrat: 
-    group: 
-    - :test
-    version: = 0.7.0
-  lemonade: 
-    group: 
-    - :default
-    version: = 0.3.2
-  paperclip: 
-    group: 
-    - :default
-    version: = 2.3.1.1
-  will_paginate: 
-    group: 
-    - :default
-    version: = 2.3.14
-    require: 
-    - will_paginate
-  json: 
-    group: 
-    - :default
-    version: ">= 0"
-  jgre-monkeyspecdoc: 
-    group: 
-    - :test
-    version: = 0.9.5
-    require: 
-    - monkeyspecdoc
-  factory_girl: 
-    group: 
-    - :test
-    version: = 1.2.4
-  ym4r: 
-    group: 
-    - :default
-    version: = 0.6.1
-  bcrypt-ruby: 
-    group: 
-    - :default
-    version: = 2.1.2
-    require: 
-    - bcrypt
-  icalendar: 
-    group: 
-    - :default
-    version: ">= 0"
-  klarlack: 
-    group: 
-    - :default
-    version: = 0.0.6
-  hoptoad_notifier: 
-    group: 
-    - :default
-    version: = 2.1.3
-  stevedore: 
-    group: 
-    - :default
-    version: = 0.0.1
-  compass-960-plugin: 
-    group: 
-    - :default
-    version: = 0.9.13
-    require: []
-
-  thoughtbot-shoulda: 
-    group: 
-    - :test
-    version: ">= 0"
-    require: 
-    - shoulda
-  rails-test-serving: 
-    group: 
-    - :test
-    version: = 0.1.4.2
-    require: 
-    - rails_test_serving
-  active_hash: 
-    group: 
-    - :default
-    version: = 0.7.9
-  rubyzip: 
-    group: 
-    - :default
-    version: = 0.9.1
-    require: 
-    - zip/zip
-  aws-s3: 
-    group: 
-    - :default
-    version: = 0.6.2
-    require: 
-    - aws/s3
-  flickraw: 
-    group: 
-    - :default
-    version: = 0.8.1
-    require: []
-
-  nokogiri: 
-    group: 
-    - :default
-    version: = 1.3.2
-  thunder_punch: 
-    group: 
-    - :default
-    version: = 0.0.6
-    require: []
-
-specs: 
-- rake: 
-    version: 0.8.7
-- activesupport: 
-    version: 2.3.8
-- rack: 
-    version: 1.1.0
-- actionpack: 
-    version: 2.3.8
-- actionmailer: 
-    version: 2.3.8
-- active_hash: 
-    version: 0.7.9
-- activerecord: 
-    version: 2.3.8
-- activeresource: 
-    version: 2.3.8
-- after_commit: 
-    version: 1.0.7
-- amatch: 
-    version: 0.2.3
-- xml-simple: 
-    version: 1.0.12
-- amazon-ec2: 
-    version: 0.9.15
-- authlogic: 
-    version: 2.1.3
-- builder: 
-    version: 2.1.2
-- mime-types: 
-    version: "1.16"
-- aws-s3: 
-    version: 0.6.2
-- bcrypt-ruby: 
-    version: 2.1.2
-- highline: 
-    version: 1.6.1
-- net-ssh: 
-    version: 2.0.23
-- net-scp: 
-    version: 1.0.2
-- net-sftp: 
-    version: 2.0.4
-- net-ssh-gateway: 
-    version: 1.0.1
-- capistrano: 
-    version: 2.5.19
-- chunky_png: 
-    version: 0.8.0
-- haml: 
-    version: 3.0.4
-- compass: 
-    version: 0.10.1
-- compass-960-plugin: 
-    version: 0.9.13
-- curb: 
-    version: 0.4.4.0
-- factory_girl: 
-    version: 1.2.4
-- fastercsv: 
-    version: 1.4.0
-- json: 
-    version: 1.4.3
-- flickraw: 
-    version: 0.8.1
-- floehopper-mocha: 
-    version: 0.9.7.20090701124354
-- formtastic: 
-    version: 0.9.8
-- geokit: 
-    version: 1.4.1
-- hoptoad_notifier: 
-    version: 2.1.3
-- icalendar: 
-    version: 1.1.5
-- jgre-monkeyspecdoc: 
-    version: 0.9.5
-- klarlack: 
-    version: 0.0.6
-- lemonade: 
-    version: 0.3.2
-- mysql: 
-    version: "2.7"
-- nokogiri: 
-    version: 1.3.2
-- paperclip: 
-    version: 2.3.1.1
-- patron: 
-    version: 0.4.2
-- rack-test: 
-    version: 0.5.4
-- rails: 
-    version: 2.3.8
-- rails-test-serving: 
-    version: 0.1.4.2
-- riddle: 
-    version: 1.0.11
-- rspec: 
-    version: 1.3.0
-- rspec-rails: 
-    version: 1.3.2
-- rubyzip: 
-    version: 0.9.1
-- thoughtbot-shoulda: 
-    version: 2.11.1
-- seanhussey-woulda: 
-    version: 0.2.2
-- searchlogic: 
-    version: 2.4.12
-- spork: 
-    version: 0.7.5
-- stevedore: 
-    version: 0.0.1
-- thinking-sphinx: 
-    version: 1.3.14
-- thunder_punch: 
-    version: 0.0.6
-- webrat: 
-    version: 0.7.0
-- will_paginate: 
-    version: 2.3.14
-- ym4r: 
-    version: 0.6.1
-hash: b27e4528eeef891ae2d7902d4cbdd106557ffaae
-sources: 
-- Rubygems: 
-    uri: http://gemcutter.org
-- Rubygems: 
-    uri: http://gems.github.com
+DEPENDENCIES
+  active_hash (= 0.7.9)
+  amatch (= 0.2.3)
+  amazon-ec2
+  authlogic (= 2.1.3)
+  aws-s3 (= 0.6.2)
+  bcrypt-ruby (= 2.1.2)
+  compass (= 0.10.1)
+  compass-960-plugin (= 0.9.13)
+  curb (= 0.4.4.0)
+  factory_girl (= 1.2.4)
+  fastercsv (= 1.4.0)
+  flickraw (= 0.8.1)
+  floehopper-mocha
+  formtastic (= 0.9.8)
+  geokit (= 1.4.1)
+  haml (= 3.0.4)
+  hoptoad_notifier (= 2.1.3)
+  icalendar
+  jgre-monkeyspecdoc (= 0.9.5)
+  json
+  klarlack (= 0.0.6)
+  lemonade (= 0.3.2)
+  mysql (= 2.7)
+  nokogiri (= 1.3.2)
+  paperclip (= 2.3.1.1)
+  patron (= 0.4.2)
+  rails (= 2.3.8)
+  rails-test-serving (= 0.1.4.2)
+  rspec (= 1.3.0)
+  rspec-rails (= 1.3.2)
+  rubyzip (= 0.9.1)
+  seanhussey-woulda
+  searchlogic (= 2.4.12)
+  spork (= 0.7.5)
+  stevedore (= 0.0.1)
+  system_timer (= 1.0.0)
+  thinking-sphinx (= 1.3.14)
+  thoughtbot-shoulda
+  thunder_punch (= 0.0.10)
+  timecop (= 0.3.5)
+  webrat (= 0.7.0)
+  will_paginate (= 2.3.14)
+  ym4r (= 0.6.1)

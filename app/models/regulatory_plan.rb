@@ -8,6 +8,7 @@
   title                :text
   abstract             :text
   priority_category    :string(255)
+  delta                :boolean(1)      default(TRUE), not null
 
 =end Schema Information
 
@@ -74,7 +75,11 @@ class RegulatoryPlan < ApplicationModel
       "abstract" => 50,
       "full_text" => 25,
     }
+    
+    set_property :delta => ThinkingSphinx::Deltas::ManualDelta
   end
+  # this line must appear after the define_index block
+  include ThinkingSphinx::Deltas::ManualDelta::ActiveRecord
   
   def self.current_issue
     RegulatoryPlan.first(:select => :issue, :order => "issue DESC").try(:issue)
