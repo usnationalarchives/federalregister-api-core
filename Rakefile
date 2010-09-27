@@ -10,6 +10,7 @@ require 'rake/rdoctask'
 require 'tasks/rails'
 begin
   require 'thinking_sphinx/tasks'
+  require 'thinking_sphinx/deltas/delayed_delta/tasks'
 rescue LoadError
 end
 
@@ -17,3 +18,8 @@ begin
   require 'hoptoad_notifier/tasks'
 rescue LoadError
 end
+
+# begin
+#   require(File.join(File.dirname(__FILE__), 'config', 'poolparty', 'tasks'))
+# rescue LoadError
+# end

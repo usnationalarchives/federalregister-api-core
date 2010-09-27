@@ -1,6 +1,6 @@
 class Admin::Issues::EventfulEntriesController < AdminController
   def index
-    @issue = Issue.new(params[:issue_id])
+    @issue = Issue.find_by_publication_date(params[:issue_id])
   end
   
   def show
