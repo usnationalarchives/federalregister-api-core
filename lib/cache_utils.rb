@@ -7,6 +7,7 @@ module CacheUtils
     include Singleton
     
     def purge(regexp)
+      Rails.logger.info("Expiring from varnish: '#{regexp}'...")
       client.purge(:url, regexp)
     end
     

@@ -1,4 +1,6 @@
 class Content::EntryImporter::BulkdataFile
+  class DownloadError < StandardError; end
+  
   extend ActiveSupport::Memoizable
   
   def initialize(date)
@@ -9,13 +11,18 @@ class Content::EntryImporter::BulkdataFile
     "http://www.gpo.gov:80/fdsys/bulkdata/FR/#{@date.to_s(:year_month)}/FR-#{@date.to_s(:db)}.xml"
   end
 
-  def file_path
+  def path
     "#{Rails.root}/data/bulkdata/FR-#{@date.to_s(:iso)}.xml"
   end
 
   def document
-    Curl::Easy.download(url, file_path) unless File.exists?(file_path)
-    doc = Nokogiri::XML(open(file_path))
+    begin
+      Curl::Easy.download(url, path) unless File.exists?(path)
+      doc = Nokogiri::XML(open(path))
+    rescue
+      File.delete(path)
+      raise Content::EntryImporter::BulkdataFile::DownloadError
+    end
     doc.root
   end
   memoize :document
