@@ -172,6 +172,8 @@ GENERAL PAGE ITEMS
 .rss:hover { background: image-url('ie6/icon_rss_hover.png') no-repeat;  }
 .comments_close { background: image-url('ie6/icon_comment.png') no-repeat; }
 
+.pagination { clear: both; }
+
 /******************************
 
 SECTION
@@ -181,6 +183,45 @@ SECTION
 .three_col_list.comments .group h3 {
   width: 100px;
   }
+
+/******************************
+
+SEARCH
+
+******************************/
+
+.search_bar { height: 40px; }
+.search_bar #conditions_term { margin-left: 10px; }
+.active_filter_list li .type { background: image-url('ie6/icon_filter_50.png') no-repeat; }
+.result_set.events .results { width: 500px; }
+.result_set .row { border: none;}
+.result_set.events .results dd.next { width: 350px; }
+.result_set.events .results dd.next.lastchild { margin-left: 1.618em; }
+
+.search_bar .add_to_calendar { background: image-url('ie6/add_to_calendar_half.png') no-repeat left 3px; }
+.search_bar .add_to_calendar:hover { background: image-url('ie6/add_to_calendar_half_hover.png') no-repeat; } 
+.add_to_calendar { background: image-url('ie6/add_to_calendar.png') no-repeat; }
+.add_to_calendar:hover { background: image-url('ie6/add_to_calendar_hover.png') no-repeat; } 
+.icon.download { background: image-url('ie6/download.png') no-repeat; }
+.icon.download:hover { background: image-url('ie6/download_hover.png') no-repeat; }
+.result_set.events .results li.effective_date { background: image-url('ie6/effective.png') no-repeat; }
+.result_set.events .results li.comment_period.closing { background: image-url('ie6/closing.png') no-repeat; }
+.result_set.events .results li.comment_period.opening { background: image-url('ie6/opening.png') no-repeat; }
+.result_set.events .results li.public_meeting { background: image-url('ie6/meeting.png') no-repeat; }
+
+.icon_money_half_size { background: image-url('ie6/icon_money_50_half.png') no-repeat; width: 28px; }
+.icon_environment_half_size { background: image-url('ie6/icon_environment_50_half.png') no-repeat; width: 21px;}
+.icon_world_half_size { background: image-url('ie6/icon_world_50_half.png') no-repeat; width: 21px;}
+.icon_science-and-technology_half_size { background: image-url('ie6/icon_science_50_half.png') no-repeat; width: 22px; }
+.icon_business-and-industry_half_size { background: image-url('ie6/icon_business_50_half.png') no-repeat; width: 22px; }
+.icon_health-and-public-welfare_half_size { background: image-url('ie6/icon_health_50_half.png') no-repeat; width: 14px; }
+
+.article_list li.notice { background: image-url('ie6/icon_notice_50.png') no-repeat left 4px; }
+.article_list li.proposed_rule { background: image-url('ie6/icon_proposed_50.png') no-repeat left 4px; }
+.article_list li.rule { background: image-url('ie6/icon_final_50.png') no-repeat left 4px; }
+
+.regulations .results { width: auto; }
+.regulations .results li { border-bottom: 2px solid #eee; margin-bottom: 15px; padding-bottom: 15px; }
 
 /******************************
 
