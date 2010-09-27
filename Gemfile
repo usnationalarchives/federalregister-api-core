@@ -33,12 +33,16 @@ gem 'compass-960-plugin', '0.9.13', :require => false
 gem 'lemonade', '0.3.2'
 gem 'icalendar'
 gem 'klarlack', '0.0.6'
-gem "thunder_punch", '0.0.6', :require => false
+gem 'system_timer', '1.0.0'
 gem "amazon-ec2", :require => false
 
 # bundler requires these gems in all environments
 # gem 'nokogiri', '1.4.2'
 # gem 'geokit'
+
+group :deployment do
+  gem "thunder_punch", '0.0.10', :require => false
+end
 
 group :development do
   # bundler requires these gems in development
@@ -63,4 +67,5 @@ group :test do
   gem 'webrat', '0.7.0'
   gem 'factory_girl', '1.2.4'
   gem 'spork', '0.7.5', :require => false
+  gem 'timecop', '0.3.5'
 end

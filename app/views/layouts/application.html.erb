@@ -45,12 +45,10 @@
   </head>
 
   <body id="<%= @faux_controller || controller.controller_name %>" class="<%= @faux_action || controller.action_name %>">
-    
+        
     <a href="#main" title="Skip to Content" class="skip_to_content">Skip to Content</a>
     
-    <div id="print-disclaimer">
-      <%= render :partial => 'pages/policy/legal_status_disclaimer' %>    
-    </div>
+    <div id="print-disclaimer"></div>
     
     <% header_tag(:id => 'header') do %>
       <%= render :partial => 'layouts/navigation', :locals => {:last_date => @last_date, :search_term => @search_term} %>    
@@ -88,6 +86,7 @@
     <% footer_tag(:id => "footer") do %>        
       <%= render :partial => 'layouts/footer' %>
     <% end -%>
+
     
     <%= render :partial => 'layouts/google_analytics' %>
     

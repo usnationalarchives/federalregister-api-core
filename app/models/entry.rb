@@ -68,6 +68,7 @@ class Entry < ApplicationModel
     'UNKNOWN'  => 'Unknown'
   }
   
+  belongs_to :issue, :foreign_key => :publication_date, :primary_key => :publication_date
   has_many :topic_name_assignments, :dependent => :destroy
   has_many :topic_names, :through => :topic_name_assignments
   
@@ -148,7 +149,7 @@ class Entry < ApplicationModel
   validate :curated_attributes_are_not_too_long
   
   def self.published_today
-    published_on(Entry.latest_publication_date)
+    Issue.current.entries
   end
   
   def self.published_on(publication_date)
@@ -159,7 +160,7 @@ class Entry < ApplicationModel
     scoped(:conditions => {:entries => {:publication_date => time .. Time.now}})
   end
   
-  def self.comments_closing(range = (Date.today .. Date.today + 7.days))
+  def self.comments_closing(range = (Time.current.to_date .. Time.current.to_date + 7.days))
     scoped(
       :joins => :comments_close_date,
       :conditions => {:events => {:date => range}},
@@ -167,7 +168,7 @@ class Entry < ApplicationModel
     )
   end
   
-  def self.comments_opening(range = (Date.today - 7.days .. Date.today))
+  def self.comments_opening(range = (Time.current.to_date - 7.days .. Time.current.to_date))
     scoped(
       :joins => :comments_close_date,
       # :conditions => {:entries => {:publication_date => range}},
@@ -235,7 +236,11 @@ class Entry < ApplicationModel
       "full_text" => 25,
       "agency_name" => 10
     }
+    
+    set_property :delta => ThinkingSphinx::Deltas::ManualDelta
   end
+  # this line must appear after the define_index block
+  include ThinkingSphinx::Deltas::ManualDelta::ActiveRecord
   
   def curated_title
     self[:curated_title] || title
@@ -322,14 +327,14 @@ class Entry < ApplicationModel
     end
   end
   
-  def self.latest_publication_date
-    with_exclusive_scope do
-      Entry.find(:first, :select => "publication_date", :order => "publication_date DESC").publication_date
-    end
-  end
-  
   def self.latest_publication_dates(n)
-    find(:all, :select => "publication_date", :conditions => ["publication_date > ?", 1.months.ago], :group => "publication_date", :order => "publication_date DESC", :limit => n).map &:publication_date
+    find(:all,
+         :select => "publication_date",
+         :conditions => ["publication_date <= ?", Issue.current.publication_date],
+         :group => "publication_date",
+         :order => "publication_date DESC",
+         :limit => n
+    ).map &:publication_date
   end
   
   def self.find_all_by_citation(volume, page)

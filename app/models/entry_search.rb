@@ -168,7 +168,7 @@ class EntrySearch < ApplicationSearch
     dist = {}
     client.query(query, '*')[:matches].each{|m| dist[m[:attributes]["@groupby"].to_s] = m[:attributes]["@count"] }
     
-    (1994..Date.today.year).each do |year|
+    (1994..Time.current.to_date.year).each do |year|
       (1..12).each do |month|
         dist[sprintf("%d%02d",year, month)] ||= 0
       end
@@ -212,6 +212,6 @@ class EntrySearch < ApplicationSearch
   def set_defaults(options)
     @within = '25'
     @order = options[:order] || 'relevant'
-    @end_date = Entry.latest_publication_date.to_time
+    @end_date = Issue.current.publication_date.to_time
   end
 end

@@ -1,11 +1,10 @@
-# this is needed for running capistrano locally on a server
-# without it all our gems aren't avail to be loaded below
-require File.expand_path(File.join(File.dirname(__FILE__), "..", ".bundle", "environment"))
+require "bundler"
+Bundler.setup(:default, :deployment)
 
 # thinking sphinx cap tasks
 require 'thinking_sphinx/deploy/capistrano'
 # hoptoad deploy notifications, etc
-#require 'hoptoad_notifier/capistrano'
+require 'hoptoad_notifier/capistrano'
 
 # deploy recipes - need to do `sudo gem install thunder_punch` - these should be required last
 require 'thunder_punch'
@@ -77,13 +76,13 @@ task :production do
   role :proxy, "ec2-184-72-241-172.compute-1.amazonaws.com"
   #role :static, "ec2-184-73-104-122.compute-1.amazonaws.com"
   #role :worker, "ec2-184-73-104-122.compute-1.amazonaws.com", {:primary => true}
-  role :static, "ec2-75-101-243-195.compute-1.amazonaws.com" #monster image
-  role :worker, "ec2-75-101-243-195.compute-1.amazonaws.com", {:primary => true} #monster image
   #role :app, *instances
   role :app, "ec2-204-236-209-41.compute-1.amazonaws.com", "ec2-184-72-139-81.compute-1.amazonaws.com", "ec2-174-129-132-251.compute-1.amazonaws.com", "ec2-72-44-36-213.compute-1.amazonaws.com", "ec2-174-129-119-223.compute-1.amazonaws.com", "ec2-204-236-254-83.compute-1.amazonaws.com",
   "ec2-184-73-78-194.compute-1.amazonaws.com", "ec2-174-129-110-112.compute-1.amazonaws.com"
   role :db, "ec2-184-73-60-158.compute-1.amazonaws.com", {:primary => true}
   role :sphinx, "ec2-184-73-60-158.compute-1.amazonaws.com"
+  role :static, "ec2-75-101-243-195.compute-1.amazonaws.com" #monster image
+  role :worker, "ec2-75-101-243-195.compute-1.amazonaws.com", {:primary => true} #monster image
 end
 
 
@@ -92,18 +91,15 @@ end
 #############################################################
 
 task :staging do
-  set :rails_env,  "production" 
+  set :rails_env,  "staging" 
   set :branch, `git branch`.match(/\* (.*)/)[1]
   
-  set :domain,     "184.72.250.132" #gpo fr2 staging
-  set :url,        "#{domain}"
-  set :server_url, "#{domain}"
-  
-  role :proxy,  domain
-  role :static, domain
-  role :worker, domain
-  role :app,    domain
-  role :db ,    domain, {:primary => true}
+  role :proxy,  "ec2-184-72-250-132.compute-1.amazonaws.com"
+  role :app,    "ec2-174-129-84-43.compute-1.amazonaws.com"
+  role :db,     "ec2-72-44-38-166.compute-1.amazonaws.com", {:primary => true}
+  role :sphinx, "ec2-72-44-38-166.compute-1.amazonaws.com"
+  role :static, "ec2-184-72-183-146.compute-1.amazonaws.com"
+  role :worker, "ec2-184-72-183-146.compute-1.amazonaws.com", {:primary => true}
 end
 
 
@@ -201,6 +197,11 @@ namespace :sphinx do
     run_sphinx_indexer
   end
   
+  task :rebuild_delta_index do
+    transfer_raw_files
+    run_sphinx_delta_indexer
+  end
+  
   task :transfer_raw_files, :roles => [:worker] do
     run "rsync --verbose  --progress --stats --compress --recursive --times --perms --links #{shared_path}/data/raw sphinx:#{shared_path}/data"
   end
@@ -209,6 +210,9 @@ namespace :sphinx do
   end
   task :run_sphinx_indexer, :roles => [:sphinx] do
     run "indexer --config #{shared_path}/config/#{rails_env}.sphinx.conf --all --rotate"
+  end
+  task :run_sphinx_delta_indexer, :roles => [:sphinx] do
+    run "indexer --config #{shared_path}/config/#{rails_env}.sphinx.conf --rotate #{delta_index_names}"
   end
 end
 
@@ -242,5 +246,3 @@ namespace :javascript do
     run "cd #{current_path} && rm public/javascripts/all.js && juicer merge -s public/javascripts/*.js --force -o tmp/all.js && mv tmp/all.js public/javascripts/all.js"
   end
 end
-
-#require 'hoptoad_notifier/capistrano'

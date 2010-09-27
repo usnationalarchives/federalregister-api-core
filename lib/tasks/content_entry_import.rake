@@ -1,7 +1,7 @@
 namespace :content do
   namespace :entries do
     def entry_importer(*attributes)
-      date = ENV['DATE'] || Date.today
+      date = ENV['DATE'] || Time.current.to_date
       Content::EntryImporter.process_all_by_date(date, *attributes)
     end
     
@@ -62,13 +62,24 @@ namespace :content do
       end
       
       namespace :regulations_dot_gov do
-        desc "Import regulations.gov info for entries missing it published in the last 3 weeks"
-        task :tardy => :environment do
-          entries = Entry.published_since(3.weeks.ago).scoped(:conditions => ["comment_url IS NULL AND checked_regulationsdotgov_at IS NULL OR checked_regulationsdotgov_at < ?", 23.hours.ago])
+        def update_missing_regulationsdotgov_info(date)
+          entries = Entry.scoped(:conditions => {:publication_date => date}).
+                          scoped(:conditions => ["comment_url IS NULL AND checked_regulationsdotgov_at IS NULL OR checked_regulationsdotgov_at < ?", 30.minutes.ago])
           entries.each do |entry|
             importer = Content::EntryImporter.new(:entry => entry)
             importer.update_attributes(:checked_regulationsdotgov_at, :regulationsdotgov_id, :comment_url)
           end
+        end
+        
+        desc "Import regulations.gov info for entries missing it published today"
+        task :only_missing => :environment do
+          puts "importing today's missing regulations.gov data"
+          update_missing_regulationsdotgov_info(Time.current.to_date)
+        end
+        
+        desc "Import regulations.gov info for entries missing it published in the last 3 weeks"
+        task :tardy => :environment do
+          update_missing_regulationsdotgov_info(3.weeks.ago .. Time.now)
         end
       end
       
@@ -96,7 +107,7 @@ namespace :content do
         date = ENV['DATE']
         
         if date.nil?
-          dates = [Date.today]
+          dates = [Time.current.to_date]
         elsif date == 'all'
           dates = Entry.find_as_array(
             :select => "distinct(publication_date) AS publication_date",
@@ -106,7 +117,7 @@ namespace :content do
           date = Date.parse(date.sub(/^>/, ''))
           dates = Entry.find_as_array(
             :select => "distinct(publication_date) AS publication_date",
-            :conditions => {:publication_date => date .. Date.today},
+            :conditions => {:publication_date => date .. Time.current.to_date},
             :order => "publication_date"
           )
         elsif date =~ /^\d{4}$/
