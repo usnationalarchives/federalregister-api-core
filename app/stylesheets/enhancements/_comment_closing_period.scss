@@ -42,7 +42,7 @@ TODO: Clean this all up.  We removed EnhanceJS and it is no longer clear & clean
 #articles_published_by_day.active .header-nav {
   display: block;
   }
-.tabs-body {
+#comments-closing-opening .tabs-body {
   clear: both;
   overflow: auto;
   }
@@ -52,5 +52,40 @@ TODO: Clean this all up.  We removed EnhanceJS and it is no longer clear & clean
   }
 .active .tabs-body .tabs-panel-selected {
   display: block;
+  } 
+#articles_published_by_day .tabs-nav li {
+  list-style: none;
+  margin-bottom: 15px;
+  padding-right: image-width('icons/section_nav_selected.png');
+  }     
+#articles_published_by_day  .tabs-nav li.tabs-selected {
+  background: sprite-image('icons/section_nav_selected.png', 140px, 0, 50px) no-repeat;
   }
-  
+#articles_published_by_day  .tabs-nav li a {
+  background: #eee; /* TODO mvoe into colors */
+  display: block;
+  line-height: 70px;
+  padding: 0 15px;
+  text-align: center;
+  width: 110px;
+  }
+#articles_published_by_day  .tabs-nav li.tabs-selected a {
+  background-color: #dfb264;
+  color: #fff;
+  }
+#articles_published_by_day  .tabs-nav li.search {
+  margin-top: 30px;
+  }
+#articles_published_by_day  .tabs-nav li.search a {
+  background: transparent sprite-image('icons/icon_search.png', 0, 1px, 50px) no-repeat;
+  padding: 2px 0 0 0;
+  padding-left: image-width('icons/icon_search.png') + 10;
+  line-height: 1;
+  text-align: left;
+  }
+#articles_published_by_day  .tabs-nav li.search a:hover {
+  background: transparent sprite-image('icons/icon_search_hover.png', 0, 1px, 50px) no-repeat;
+  }
+#articles_published_by_day article:last-child .article {
+  border: none;
+  }  
