@@ -30,7 +30,7 @@
 class Agency < ApplicationModel
   module AssociationExtensions
     def excluding_parents
-      agencies = self
+      agencies = self.compact
       parent_agency_ids = agencies.map(&:parent_id).compact
       agencies.reject{|a| parent_agency_ids.include?(a.id) }.uniq
     end
