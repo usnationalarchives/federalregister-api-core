@@ -207,6 +207,16 @@ class EntrySearch < ApplicationSearch
   end
   memoize :regulatory_plan
   
+  def matching_entry_citation
+    if term.present?
+      term.scan(/^\s*(\d+)\s*F\.?R\.?\s*(\d+)\s*$/) do |volume, page|
+        return Citation.new(:citation_type => "FR", :part_1 => volume.to_i, :part_2 => page.to_i)
+      end
+    end
+    
+    return nil
+  end
+  
   private
   
   def set_defaults(options)
