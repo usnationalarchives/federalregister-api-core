@@ -1,6 +1,6 @@
 ActionController::Routing::Routes.draw do |map|
   map.namespace :admin do |admin|
-    admin.home '', :controller => "special", :action => "home"
+    admin.home '', :controller => "special", :action => "home", :conditions => {:method => :get}
     admin.resources :agencies
     admin.resources :agency_names, :collection => {:unprocessed => :get}
     
@@ -30,7 +30,7 @@ ActionController::Routing::Routes.draw do |map|
     end
     
     admin.resource :user_session
-    admin.login  'login',  :controller => "user_sessions", :action => "new"
-    admin.logout 'logout', :controller => "user_sessions", :action => "destroy"
+    admin.login  'login',  :controller => "user_sessions", :action => "new", :conditions => {:method => :get}
+    admin.logout 'logout', :controller => "user_sessions", :action => "destroy", :conditions => {:method => :get}
   end
 end
