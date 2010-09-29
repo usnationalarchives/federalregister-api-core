@@ -1,0 +1,11 @@
+<li>
+  <h4><%= link_to entry_title(entry), entry_path(entry) %></h4>
+
+  <div class="result_info">
+    <span class="date"><%= entry.publication_date %></span>
+    <span class="pages"><%= entry_page_range(entry) %></span>
+    <span class="excepts"><%= truncate_words(entry.abstract, :length => 200) %></span>
+    <br />
+    <span class="agency"><%= entry.agencies.excluding_parents.map{|agency| link_to(agency.name, agency_path(agency))}.join(' :: ') %></span>
+  </div>  
+</li>
