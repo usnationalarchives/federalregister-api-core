@@ -64,9 +64,8 @@ class Citation < ApplicationModel
           citation = Citation.new(attributes)
           
           if citation_type == 'FR' && part_1.to_i >= 59
-            entries = Entry.find_all_by_citation(part_1, part_2)
-          
-            if entries.size == 1
+            entries = citation.matching_fr_entries
+            if entries.count == 1
               citation.cited_entry = entries.first
             end
           end
@@ -75,5 +74,9 @@ class Citation < ApplicationModel
         end
       end
     end
+  end
+  
+  def matching_fr_entries
+    @matching_fr_entries ||= Entry.find_all_by_citation(part_1, part_2) if type == 'FR'
   end
 end
