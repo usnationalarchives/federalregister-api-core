@@ -1,5 +1,5 @@
 ActionController::Routing::Routes.draw do |map|
-  map.with_options(:quiet => true, :method => :get) do |quiet_map|
+  map.with_options(:quiet => true, :conditions => {:method => :get}) do |quiet_map|
     quiet_map.status '/status', :controller => "special", :action => "status"
     
     # HOMEPAGE
@@ -7,7 +7,6 @@ ActionController::Routing::Routes.draw do |map|
     quiet_map.popular_entries '/popular_entries', :controller => 'special', :action => 'popular_entries'
     
     # BY DATE
-    quiet_map.entries_by_month 'articles/\d', :controller => 'entries/search', :action => 'header'
     quiet_map.entries_by_month 'articles/:year/:month', :controller => 'entries',
                                                      :action     => 'by_month',
                                                      :year       => /\d{4}/,
