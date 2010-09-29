@@ -1,12 +1,6 @@
 <%= link_to entry.toc_doc || entry.title, entry_path(entry) %>
 <p class="details">
   <%= link_to 'PDF', entry.source_url(:pdf), :class => "button format list pdf small" %>
-  <span class="pages">
-    <% if entry.end_page == entry.start_page %>
-      Page <%= entry.start_page %>
-    <% else %>
-      Pages <%= entry.start_page %> - <%= entry.end_page %>
-    <% end %>
-  </span>
+  <span class="pages"><%= entry_page_range(entry) %></span>
   <span class="document_number">[FR DOC #: <%= entry.document_number %>]</span>
 </p>
