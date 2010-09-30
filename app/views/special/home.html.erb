@@ -33,6 +33,7 @@
     <object width="420" height="261"><param name="movie" value="http://www.youtube-nocookie.com/v/ADhP0KSmjkQ&amp;hl=en_US&amp;fs=1?rel=0"></param><param name="allowFullScreen" value="true"></param><param name="allowscriptaccess" value="always"></param><embed src="http://www.youtube-nocookie.com/v/ADhP0KSmjkQ&amp;hl=en_US&amp;fs=1?rel=0" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="420" height="261"></embed></object>
     
     <p>Know what you're looking for? <%= link_to 'Retrieve articles by citation', citation_search_path %></p>
+    <p><%= link_to 'Subscribe to daily feed', entries_url(:format => :rss), :class => 'rss' %></p>
     
   <% end -%>
 
