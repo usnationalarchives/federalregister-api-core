@@ -6,6 +6,7 @@
     <span class="pages"><%= entry_page_range(entry) %></span>
     <span class="excepts"><%= truncate_words(entry.abstract, :length => 200) %></span>
     <br />
+    <%= link_to 'PDF', entry.source_url('pdf'), :class => 'button format list pdf' %>
     <span class="agency"><%= entry.agencies.excluding_parents.map{|agency| link_to(agency.name, agency_path(agency))}.join(' :: ') %></span>
   </div>  
 </li>
