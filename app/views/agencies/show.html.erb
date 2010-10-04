@@ -16,8 +16,11 @@
     </div>
 
     <%= link_to(@agency.url) if @agency.url %>
-    <%= add_citation_links simple_format @agency.description %>
-    
+    <% if @agency.description.present? %>
+      <%= add_citation_links simple_format @agency.description %>
+    <% else %>
+      <p>Description coming soon.</p>
+    <% end %>
 
   <% end %>  
     
