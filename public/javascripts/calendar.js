@@ -1,9 +1,29 @@
 $(document).ready(function () {
+    function add_year_dropdown() {
+        var th = $('table.calendar .monthName');
+        console.log(th);
+        
+        var select_list = $("<select />");
+        var today = new Date();
+        for(var year = 1994; year <= today.getFullYear(); year++) {
+            var option = $("<option />");
+            option.append(year);
+            
+            if (th.hasClass('year_' + year)) {
+                option.attr('selected', 'selected');
+            }
+            select_list.append(option);
+        }
+        th.append(select_list);
+    }
+    
+    add_year_dropdown();
+    
     $('table.calendar .nav').live('click', function () {
-        $('#calendar_wrapper').load($(this).attr('href'));
+        $('#calendar_wrapper').load($(this).attr('href'), '', add_year_dropdown);
         return false;
     });
-
+    
     $('.calendar td.late').live('click', function() {
         alert("Today's issue is currently unavailable; we apologize for any inconvenience.")
     });
