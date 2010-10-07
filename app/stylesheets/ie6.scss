@@ -37,7 +37,7 @@ GENERAL
   zoom: 1;
   }  
 
-.aside_box { width: 625px; }
+#top_news_promo .aside_box { width: 625px; }
 
 /******************************
 
@@ -196,9 +196,10 @@ SECTION
 
 ******************************/
 
-.three_col_list.comments .group h3 {
-  width: 100px;
-  }
+.three_col_list.comments .group h3 { width: 100px; }
+#articles_published_by_day  .tabs-nav li.tabs-selected { background: image-url('icons/ie6/section_nav_selected.png') no-repeat 140px top; }
+#articles_published_by_day  .tabs-nav li.search a { background: image-url('icons/ie6/icon_search.png') no-repeat; }
+#articles_published_by_day  .tabs-nav li.search a:hover { background: image-url('icons/ie6/icon_search_hover.png') no-repeat; }
 
 /******************************
 
