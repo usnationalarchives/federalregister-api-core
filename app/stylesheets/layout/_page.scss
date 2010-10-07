@@ -39,13 +39,20 @@ SECTION VIEW
   @include grid(11, 16);
   @include grid-suffix(1, 16);
   }
-  
 #sections #sidebar,
 #topics #sidebar,
 #pages #sidebar,
 #entries #sidebar,
 #regulatory_plans #sidebar {
   @include grid(4, 16);
+  }
+#articles_published_by_day.active #articles_published_by_day-links {
+  @include grid(3, 16);
+  @include alpha;
+  }
+#articles_published_by_day.active #articles_published_by_day-body {
+  @include grid(13, 16);
+  @include omega;
   }
 
 /******************************
