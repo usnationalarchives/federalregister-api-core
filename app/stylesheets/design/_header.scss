@@ -74,7 +74,7 @@ SEARCH
   top: 0;
   width: image-width('icons/search_bg_wide.png');
   }
-#header #search input[type='text'] {
+#header #search #term {
   background: #fff; /* for opera */
   border: 1px solid darken($golden, 10%);
   @include border-top-left-radius(8px);
