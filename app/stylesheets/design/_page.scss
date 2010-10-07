@@ -430,16 +430,16 @@ p:target {
   }
 .citation_box li:last-child,
 .citation_box li.lastchild { margin-bottom: 0 ;}  
-.citation_box li.bookmark { background: sprite-image('icons/icon_bookmark.png', 0, 0, 50px) no-repeat; }
-.citation_box li.twitter { background: sprite-image('icons/icon_twitter.png', 0, 0, 50px) no-repeat; }
-.citation_box li.facebook { background: sprite-image('icons/icon_facebook.png', 0, 0, 50px) no-repeat; }
-.citation_box li.digg { background: sprite-image('icons/icon_digg.png', 0, 0, 50px) no-repeat; }
-.citation_box li.cite_volume { background: sprite-image('icons/icon_volume.png', 0, 0, 50px) no-repeat;  }
-.citation_box li.cite_page { background: sprite-image('icons/icon_page.png', 0, 0, 50px) no-repeat;  }
-.citation_box li.link { background: sprite-image('icons/icon_link.png', 0, 0, 50px) no-repeat;  }
-.citation_box li.email { background: sprite-image('icons/icon_email.png', 0, 0, 50px) no-repeat; }
-.citation_box li.next { background: sprite-image('icons/icon_next.png', 0, 4px, 100px) no-repeat; }
-.citation_box li.top { background: sprite-image('icons/back_to_top.png', 0, 0, 100px) no-repeat; }
+.citation_box li.bookmark { background: sprite-image('icons/citation_box/icon_bookmark.png', 0, 0, 50px) no-repeat; }
+.citation_box li.twitter { background: sprite-image('icons/citation_box/icon_twitter.png', 0, 0, 50px) no-repeat; }
+.citation_box li.facebook { background: sprite-image('icons/citation_box/icon_facebook.png', 0, 0, 50px) no-repeat; }
+.citation_box li.digg { background: sprite-image('icons/citation_box/icon_digg.png', 0, 0, 50px) no-repeat; }
+.citation_box li.cite_volume { background: sprite-image('icons/citation_box/icon_volume.png', 0, 0, 50px) no-repeat;  }
+.citation_box li.cite_page { background: sprite-image('icons/citation_box/icon_page.png', 0, 0, 50px) no-repeat;  }
+.citation_box li.link { background: sprite-image('icons/citation_box/icon_link.png', 0, 0, 50px) no-repeat;  }
+.citation_box li.email { background: sprite-image('icons/citation_box/icon_email.png', 0, 0, 50px) no-repeat; }
+.citation_box li.next { background: sprite-image('icons/citation_box/icon_next.png', 0, 4px, 100px) no-repeat; }
+.citation_box li.top { background: sprite-image('icons/citation_box/back_to_top.png', 0, 0, 100px) no-repeat; }
 .citation_box .close {
   background: sprite-image('icons/icon_close.png', 0, 0, 50px) no-repeat;;
   height: image-height('icons/icon_close.png');
@@ -453,15 +453,15 @@ p:target {
   background: sprite-image('icons/icon_close.png', 0, 0, 50px) no-repeat;
   }  
 .trigger {
-  background: sprite-image('icons/icon_bookmark.png', 0, 0, 50px) no-repeat;;
-  height: image-height('icons/icon_bookmark.png');
+  background: sprite-image('icons/citation_box/icon_bookmark.png', 0, 0, 50px) no-repeat;;
+  height: image-height('icons/citation_box/icon_bookmark.png');
   @include hide-text;
   @include opacity(.10);
   cursor: pointer;
   position: absolute;
   left: 485px;
   top: .5em;
-  width: image-width('icons/icon_bookmark.png');  
+  width: image-width('icons/citation_box/icon_bookmark.png');  
   }
 .citable:hover .trigger {
   @include opacity(1);
@@ -517,21 +517,21 @@ p.stars {
 #font_controls ul a {
   display: block;
   @include hide-text;
-  height: image-height("icons/font_increase.png");
-  width: image-width("icons/font_increase.png");
+  height: image-height("icons/font_controls/font_increase.png");
+  width: image-width("icons/font_controls/font_increase.png");
   }
-#font_controls a.increase { background: sprite-image("icons/font_increase.png", 0, 0, 100px) no-repeat; }  
-#font_controls a.increase:hover { background: sprite-image("icons/font_increase_hover.png", 0, 0, 100px) no-repeat; }  
-#font_controls a.decrease { background: sprite-image("icons/font_decrease.png", 0, 0, 100px) no-repeat; }  
-#font_controls a.decrease:hover { background: sprite-image("icons/font_decrease_hover.png", 0, 0, 100px) no-repeat; }  
-#font_controls a.serif { background: sprite-image("icons/font_serif.png", 0, 0, 100px) no-repeat; }  
+#font_controls a.increase { background: sprite-image("icons/font_controls/font_increase.png", 0, 0, 100px) no-repeat; }  
+#font_controls a.increase:hover { background: sprite-image("icons/font_controls/font_increase_hover.png", 0, 0, 100px) no-repeat; }  
+#font_controls a.decrease { background: sprite-image("icons/font_controls/font_decrease.png", 0, 0, 100px) no-repeat; }  
+#font_controls a.decrease:hover { background: sprite-image("icons/font_controls/font_decrease_hover.png", 0, 0, 100px) no-repeat; }  
+#font_controls a.serif { background: sprite-image("icons/font_controls/font_serif.png", 0, 0, 100px) no-repeat; }  
 #font_controls a.serif:hover,
 #font_controls a.serif:focus,
-#font_controls a.serif.on { background: sprite-image("icons/font_serif_hover.png", 0, 0, 100px) no-repeat; }  
-#font_controls a.sans { background: sprite-image("icons/font_sans.png", 0, 0, 100px) no-repeat; }  
+#font_controls a.serif.on { background: sprite-image("icons/font_controls/font_serif_hover.png", 0, 0, 100px) no-repeat; }  
+#font_controls a.sans { background: sprite-image("icons/font_controls/font_sans.png", 0, 0, 100px) no-repeat; }  
 #font_controls a.sans:hover,
 #font_controls a.sans:focus,
-#font_controls a.sans.on { background: sprite-image("icons/font_sans_hover.png", 0, 0, 100px) no-repeat; }  
+#font_controls a.sans.on { background: sprite-image("icons/font_controls/font_sans_hover.png", 0, 0, 100px) no-repeat; }  
 .font_control_wrapper {
   background: #e4ecd8;
   border:1px solid $dark_green;
