@@ -33,7 +33,7 @@
     <ul>
       <li><%= link_to 'Comment Periods Closing Soon ', '#comment-period-closing' %></li>
       <li><%= link_to 'Comment Periods Recently Opened ', '#comment-period-opening' %></li>
-      <li><%= link_to 'Articles published in the past 7 days ', '#articles_published_by_day' %></li>
+      <li><%= link_to 'Articles published in the past 5 days ', '#articles_published_by_day' %></li>
     </ul>
   <% end -%>  
   
@@ -88,7 +88,7 @@
 
 <% section_tag(:class => 'articles_published_by_day',:id=> 'articles_published_by_day') do %>
   
-    <h2 class="title_bar"><span class="small_stack"><span>Articles</span>Published</span> Last Five Days</h2>
+    <h2 class="title_bar"><span class="small_stack"><span>Browse</span>The</span> Last Five Days</h2>
     
     <ul id="articles_published_by_day-links" class="tabs-nav">
       <% @dates_to_show.each_with_index do |date, index| %>
