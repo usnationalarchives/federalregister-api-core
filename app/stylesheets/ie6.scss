@@ -167,6 +167,7 @@ GENERAL PAGE ITEMS
   }
 
 .button.format.pdf { background: image-url('icons/ie6/icon_pdf.png') no-repeat left top; }
+.button.format.pdf.small { background: image-url('icons/ie6/icon_pdf_small.png') no-repeat left top }
 .button.format.xml { background: image-url('icons/ie6/icon_xml.png') no-repeat left top; }
 .citation_box li.twitter { background: image-url('icons/ie6/icon_twitter.png') no-repeat; }
 .citation_box li.facebook { background: image-url('icons/ie6/icon_facebook.png') no-repeat; }
@@ -184,6 +185,8 @@ GENERAL PAGE ITEMS
 .pagination { clear: both; }
 
 .vcard .email { background: none; }
+
+#entries.by_date .back_to_top { right: 60px; }
 
 /******************************
 
