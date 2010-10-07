@@ -197,20 +197,20 @@ RESULTS - EVENTS & REGULATIONS
 .result_set.events .results {
   margin-bottom: 0;
   }
-.result_set.events .results > li {
+.result_set.events .results li {
   padding: 0 0 2.5em 50px;
   position: relative;
   }
-.result_set.events .results > li.effective_date {
+.result_set.events .results li.effective_date {
   background: sprite-image('icons/effective.png', 0 , 0, 300px) no-repeat;
   }
-.result_set.events .results > li.comment_period.closing {
+.result_set.events .results li.comment_period.closing {
   background: sprite-image('icons/closing.png', 0 , 0, 300px) no-repeat;
   }
-.result_set.events .results > li.comment_period.opening {
+.result_set.events .results li.comment_period.opening {
   background: sprite-image('icons/opening.png', 0 , 0, 300px) no-repeat;
   }
-.result_set.events .results > li.public_meeting {
+.result_set.events .results li.public_meeting {
   background: sprite-image('icons/meeting.png', 0 , 0, 300px) no-repeat;
   }
 .result_set.events .results dl,
