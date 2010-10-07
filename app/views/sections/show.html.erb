@@ -86,7 +86,22 @@
   </div>
 </div>
 
-<% section_tag(:class => 'articles_published_by_day',:id=> 'articles_published_by_day') do %>    
-  <%= render :partial => "sections/entries_on_date", :collection => @dates_to_show, :as => :date %>
-  <p><%= link_to 'Search', entries_search_path(:conditions => {:section_ids => @section.id}) %> to see older articles.</p>
+<% section_tag(:class => 'articles_published_by_day',:id=> 'articles_published_by_day') do %>
+  
+    <h2 class="title_bar"><span class="small_stack"><span>Articles</span>Published</span> Last Five Days</h2>
+    
+    <ul id="articles_published_by_day-links" class="tabs-nav">
+      <% @dates_to_show.each_with_index do |date, index| %>
+        <%# TODO HELP-RUBY instead of index we will probably want the href to be the data, but it didn't like -09/27/10 at the end  %>
+        <li class="tab" id="bydate-<%= index %>"><a href="#articles_published_by_day-<%= index %>"><%= date %></a></li>   
+      <% end %>
+      <li class="search"><%= link_to 'Search to see older articles.', entries_search_path(:conditions => {:section_ids => @section.id}) %></li>
+    </ul>
+      
+  <div id="articles_published_by_day-body" class="tabs-body">
+    <% @dates_to_show.each_with_index do |date, index| %>
+      <%= render :partial => "sections/entries_on_date", :locals => { :date => date, :index => index } %>
+    <% end -%>    
+  </div>
+  
 <% end -%>

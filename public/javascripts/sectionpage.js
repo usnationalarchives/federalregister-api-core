@@ -12,7 +12,15 @@ $(document).ready(function () {
         $(".TOC a").bind('click',
         function (event) {
             $(window).scrollTop($("#comments-closing-opening").offset().top);
-        });
+        });        
+    }
+    
+    if( $("#articles_published_by_day").size() > 0 ){    
+      $("#articles_published_by_day").addClass("active");
+      $("#articles_published_by_day").tabs({
+          trackState: true,
+          srcPath: '/blank.html'
+      });
     }
 
 });
