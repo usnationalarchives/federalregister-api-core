@@ -5,7 +5,7 @@ SETUP
 ******************************/
 
 #main,
-#footer > .wrapper {
+#footer .wrapper {
   @include grid_system(16);
   }
 
