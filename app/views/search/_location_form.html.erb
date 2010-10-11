@@ -5,10 +5,10 @@
     <% search.conditions.except("location", "within").each do |attr, vals| %>
       <% if vals.is_a?(Array)%>
         <% vals.each do |val| %>
-          <%= f.text_field attr, :id => '', :value => val, :multiple => true %>
+          <%= f.hidden_field attr, :id => '', :value => val, :multiple => true %>
         <% end %>
       <% else%>
-        <%= f.text_field attr, :id => '', :value => vals %>
+        <%= f.hidden_field attr, :id => '', :value => vals %>
       <% end %>
     <% end %>
     <%= f.text_field :location, :placeholder =>  "Zip Code", :class => 'zip' %>
