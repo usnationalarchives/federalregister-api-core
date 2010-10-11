@@ -145,12 +145,12 @@ PROMO NAV
   padding: 5px 0 5px 50px;
   text-transform: uppercase;
   }
-#top_news_promo ul.section_nav li.money a { background: sprite-image('icons/icon_money_50.png', 5px, 5px, 40px) no-repeat; }  
-#top_news_promo ul.section_nav li.environment a { background: sprite-image('icons/icon_environment_50.png', 5px, 5px, 40px) no-repeat; }
-#top_news_promo ul.section_nav li.world a { background: sprite-image('icons/icon_world_50.png', 5px, 5px, 40px) no-repeat; }  
-#top_news_promo ul.section_nav li.science-and-technology a { background: sprite-image('icons/icon_science_50.png', 5px, 5px, 40px) no-repeat; } 
-#top_news_promo ul.section_nav li.business-and-industry a { background: sprite-image('icons/icon_business_50.png', 5px, 5px, 40px) no-repeat; }  
-#top_news_promo ul.section_nav li.health-and-public-welfare a { background: sprite-image('icons/icon_health_50.png', 10px, 5px, 40px) no-repeat; } 
+#top_news_promo ul.section_nav li.money a { background: sprite-image('icons/section_icons/icon_money_50.png', 5px, 5px, 40px) no-repeat; }  
+#top_news_promo ul.section_nav li.environment a { background: sprite-image('icons/section_icons/icon_environment_50.png', 5px, 5px, 40px) no-repeat; }
+#top_news_promo ul.section_nav li.world a { background: sprite-image('icons/section_icons/icon_world_50.png', 5px, 5px, 40px) no-repeat; }  
+#top_news_promo ul.section_nav li.science-and-technology a { background: sprite-image('icons/section_icons/icon_science_50.png', 5px, 5px, 40px) no-repeat; } 
+#top_news_promo ul.section_nav li.business-and-industry a { background: sprite-image('icons/section_icons/icon_business_50.png', 5px, 5px, 40px) no-repeat; }  
+#top_news_promo ul.section_nav li.health-and-public-welfare a { background: sprite-image('icons/section_icons/icon_health_50.png', 10px, 5px, 40px) no-repeat; } 
 #top_news_promo ul.section_nav li.one_word a { line-height: 31px; }  
 #top_news_promo ul.section_nav li.on {
   background-color: none;
@@ -163,12 +163,12 @@ PROMO NAV
 #top_news_promo ul.section_nav li.on a:focus {
   outline: none;
   }  
-#top_news_promo ul.section_nav li.money.on a { background: $golden sprite-image('icons/icon_money_nav_on.png', 5px, 5px, 40px) no-repeat; }  
-#top_news_promo ul.section_nav li.environment.on a {background: $golden sprite-image('icons/icon_environment_nav_on.png', 5px, 5px, 40px) no-repeat; }
-#top_news_promo ul.section_nav li.world.on a { background: $golden sprite-image('icons/icon_world_nav_on.png', 5px, 5px, 40px) no-repeat; }  
-#top_news_promo ul.section_nav li.science-and-technology.on a { background: $golden sprite-image('icons/icon_science_nav_on.png', 5px, 5px, 40px) no-repeat; } 
-#top_news_promo ul.section_nav li.business-and-industry.on a { background: $golden sprite-image('icons/icon_business_nav_on.png', 5px, 5px, 40px) no-repeat; }  
-#top_news_promo ul.section_nav li.health-and-public-welfare.on a { background: $golden sprite-image('icons/icon_health_nav_on.png', 5px, 5px, 40px) no-repeat; }
+#top_news_promo ul.section_nav li.money.on a { background: $golden sprite-image('icons/section_icons/icon_money_nav_on.png', 5px, 5px, 40px) no-repeat; }  
+#top_news_promo ul.section_nav li.environment.on a {background: $golden sprite-image('icons/section_icons/icon_environment_nav_on.png', 5px, 5px, 40px) no-repeat; }
+#top_news_promo ul.section_nav li.world.on a { background: $golden sprite-image('icons/section_icons/icon_world_nav_on.png', 5px, 5px, 40px) no-repeat; }  
+#top_news_promo ul.section_nav li.science-and-technology.on a { background: $golden sprite-image('icons/section_icons/icon_science_nav_on.png', 5px, 5px, 40px) no-repeat; } 
+#top_news_promo ul.section_nav li.business-and-industry.on a { background: $golden sprite-image('icons/section_icons/icon_business_nav_on.png', 5px, 5px, 40px) no-repeat; }  
+#top_news_promo ul.section_nav li.health-and-public-welfare.on a { background: $golden sprite-image('icons/section_icons/icon_health_nav_on.png', 5px, 5px, 40px) no-repeat; }
   
 /******************************
 
@@ -373,7 +373,8 @@ History Movie
   overflow: hidden;
   padding: 21px 0 0 3em;
   }
-#fr_movie object {
+#fr_movie object,
+#fr_movie embed {
   margin-left: 3em;
   }
 /******************************
@@ -401,12 +402,12 @@ CURRENT
   margin-bottom: 1em;
   padding: 2em 0 0 3em;
   }
-.fr_section.money { background: sprite-image('icons/icon_money.png', 15px, 0, 300px) no-repeat; }
-.fr_section.environment { background: sprite-image('icons/icon_environment.png', 15px, 0, 300px) no-repeat; }
-.fr_section.world { background: sprite-image('icons/icon_world.png', 15px, 0, 300px) no-repeat; }
-.fr_section.science-and-technology { background: sprite-image('icons/icon_science.png', 15px, 0, 300px) no-repeat; }  
-.fr_section.business-and-industry { background: sprite-image('icons/icon_business.png', 15px, 0, 300px) no-repeat; }
-.fr_section.health-and-public-welfare { background: sprite-image('icons/icon_health.png', 25px, 0, 300px) no-repeat; }
+.fr_section.money { background: sprite-image('icons/section_icons/icon_money.png', 15px, 0, 300px) no-repeat; }
+.fr_section.environment { background: sprite-image('icons/section_icons/icon_environment.png', 15px, 0, 300px) no-repeat; }
+.fr_section.world { background: sprite-image('icons/section_icons/icon_world.png', 15px, 0, 300px) no-repeat; }
+.fr_section.science-and-technology { background: sprite-image('icons/section_icons/icon_science.png', 15px, 0, 300px) no-repeat; }  
+.fr_section.business-and-industry { background: sprite-image('icons/section_icons/icon_business.png', 15px, 0, 300px) no-repeat; }
+.fr_section.health-and-public-welfare { background: sprite-image('icons/section_icons/icon_health.png', 25px, 0, 300px) no-repeat; }
 .fr_section.alpha {
   clear: both;
   }

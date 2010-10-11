@@ -27,13 +27,10 @@ BUTTONS / ICONS
   text-transform: uppercase;
   }
 .jqmClose {
-  background: sprite-image('icons/icon_close_large.png', 0, 0, 50px) no-repeat;
-  height:  image-height('icons/icon_close_large.png');
+  background: sprite-image('icons/icon_close.png', 0, 0, 50px) no-repeat;
+  height:  image-height('icons/icon_close.png');
   @include hide-text;
-  width: image-width('icons/icon_close_large.png');
-  }
-.jqmClose:hover {
-  background: sprite-image('icons/icon_close_large_hover.png', 0, 0, 50px) no-repeat;
+  width: image-width('icons/icon_close.png');
   }
 #clippy {
   @include inline-block;

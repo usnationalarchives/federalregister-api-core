@@ -1,8 +1,6 @@
 $(document).ready(function () {
     function add_year_dropdown() {
-        var th = $('table.calendar .monthName');
-        console.log(th);
-        
+        var th = $('table.calendar .monthName');        
         var select_list = $("<select />");
         var today = new Date();
         for(var year = 1994; year <= today.getFullYear(); year++) {
