@@ -72,4 +72,5 @@ group :test do
   gem 'timecop', '0.3.5'
   
   gem 'cucumber', '0.9.2'
+  gem 'mechanize', '1.0.0'
 end
