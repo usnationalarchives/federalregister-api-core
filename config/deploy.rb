@@ -77,8 +77,7 @@ task :production do
   #role :static, "ec2-184-73-104-122.compute-1.amazonaws.com"
   #role :worker, "ec2-184-73-104-122.compute-1.amazonaws.com", {:primary => true}
   #role :app, *instances
-  role :app, "ec2-204-236-209-41.compute-1.amazonaws.com", "ec2-184-72-139-81.compute-1.amazonaws.com", "ec2-174-129-132-251.compute-1.amazonaws.com", "ec2-72-44-36-213.compute-1.amazonaws.com", "ec2-174-129-119-223.compute-1.amazonaws.com", "ec2-204-236-254-83.compute-1.amazonaws.com",
-  "ec2-184-73-78-194.compute-1.amazonaws.com", "ec2-174-129-110-112.compute-1.amazonaws.com"
+  role :app, "ec2-204-236-209-41.compute-1.amazonaws.com", "ec2-184-72-139-81.compute-1.amazonaws.com", "ec2-174-129-132-251.compute-1.amazonaws.com", "ec2-72-44-36-213.compute-1.amazonaws.com", "ec2-174-129-119-223.compute-1.amazonaws.com", "ec2-204-236-254-83.compute-1.amazonaws.com"
   role :db, "ec2-184-73-60-158.compute-1.amazonaws.com", {:primary => true}
   role :sphinx, "ec2-184-73-60-158.compute-1.amazonaws.com"
   role :static, "ec2-75-101-243-195.compute-1.amazonaws.com" #monster image
@@ -140,16 +139,14 @@ set :git_enable_submodules, true
 # all deployment changes that affect app servers also must 
 # be put in the user-scripts files on s3!!!
 
-after "deploy:update_code",       "symlinks:create"
-after "symlinks:create",          "deploy:set_rake_path"
-after "deploy:set_rake_path",     "bundler:fix_bundle"
-after "bundler:fix_bundle",       "deploy:migrate"
-after "deploy:migrate",           "sass:update_stylesheets"
-# after "deploy:migrate",           "thinking_sphinx:restart"
-# after "thinking_sphinx:restart",  "passenger:restart"
-# after "sass:update_stylesheets",  "javascript:combine_and_minify"
-after "sass:update_stylesheets", "passenger:restart"
-after "passenger:restart",        "varnish:clear_cache"
+after "deploy:update_code",            "symlinks:create"
+after "symlinks:create",               "deploy:set_rake_path"
+after "deploy:set_rake_path",          "bundler:fix_bundle"
+after "bundler:fix_bundle",            "deploy:migrate"
+after "deploy:migrate",                "sass:update_stylesheets"
+after "sass:update_stylesheets",       "javascript:combine_and_minify"
+after "javascript:combine_and_minify", "passenger:restart"
+after "passenger:restart",             "varnish:clear_cache"
 
 
 #############################################################
@@ -243,6 +240,6 @@ end
 
 namespace :javascript do
   task :combine_and_minify, :roles => [:static] do
-    run "cd #{current_path} && rm public/javascripts/all.js && juicer merge -s public/javascripts/*.js --force -o tmp/all.js && mv tmp/all.js public/javascripts/all.js"
+    run "rm #{current_path}/public/javascripts/all.js; juicer merge -s #{current_path}/public/javascripts/*.js --force -o #{current_path}/tmp/all.js && mv #{current_path}/tmp/all.js #{current_path}/public/javascripts/all.js"
   end
 end

@@ -30,7 +30,7 @@
     <![endif]-->
      
     <%= javascript_include_tag :vendor %>
-    <% if true %>
+    <% if RAILS_ENV == 'development' %>
       <%= javascript_include_tag :all %>
     <% else %>
       <%= javascript_include_tag 'all.js' %>
