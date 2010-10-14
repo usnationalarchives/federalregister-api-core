@@ -25,7 +25,7 @@ class Content::EntryImporter::ModsFile
       doc = Nokogiri::XML(open(file_path))
       raise Content::EntryImporter::ModsFile::DownloadError unless doc.root.name == "mods"
     rescue
-      File.delete(path)
+      File.delete(file_path)
       raise Content::EntryImporter::ModsFile::DownloadError
     end
     
