@@ -154,6 +154,15 @@ div.title_bar h2 a {
   display: block;
   }
 
+.fr_section h1 {
+  border-bottom: 2px solid $dark_grey;
+  @include apertura-condensed;
+  font-size: 1.5em;
+  margin-bottom: .5em;
+  text-transform: uppercase;
+  }
+.fr_section h1 a { color: $dark_grey; }
+.fr_section h1 a:hover { color: darken($dark_blue_complement, 10%); }
 
 /******************************
 
