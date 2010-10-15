@@ -359,7 +359,6 @@ ERRORS
 .errors li,
 .notice {
   @include border-radius(5px);  
-  overflow: hidden;  
   background: #ebd8b6 image-url("error.png") no-repeat 1em top;
   color: #777777;
   @include apertura-condensed;
@@ -367,13 +366,17 @@ ERRORS
   line-height: 20px;    
   list-style: none;
   margin-bottom: 1em;
+  overflow: hidden;  
   padding: .75em 2.5em .5em;  
   }
 .notice {
   float: left;
   font-size: 1em;  
-  margin-left: 10px;
+  overflow: hidden;
   }
+#citation.search {
+  margin-left: 10px;
+  }  
 .notice p {
   line-height: 30px;
   margin-left: 10px;
