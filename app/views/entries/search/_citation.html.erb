@@ -2,16 +2,24 @@
 <% if citation %>
   <div class="matching_citation">
     <% if citation.matching_fr_entries.present? %>
-      <p>
-         It looks like you were searching for the citation <strong><%= citation.name %></strong>.
+      
+      <div class="notice">
+        <p>It looks like you were searching for the citation <strong><%= citation.name %></strong>.
          We've found the following <%= pluralize(citation.matching_fr_entries.count, 'article') %>
-         on page <%= citation.part_2 %> of volume <%= citation.part_1 %>.
-      </p>
-      <ol>
-        <%= render :partial => 'citation_result', :collection => citation.matching_fr_entries, :as => :entry %>
-      </ol>
+         on page <%= citation.part_2 %> of volume <%= citation.part_1 %>.</p>
+      </div>
+      
+      <div class="aside_box clear">
+      
+        <ul class="bullets">
+          <%= render :partial => 'citation_result', :collection => citation.matching_fr_entries, :as => :entry %>
+        </ul>
+      
+      </div>
     <% else %>
-      <p>It looks like you were searching for the citation <strong><%= citation.name %></strong>. We were unable to find any articles with that citation. FederalRegister.gov covers articles published starting in January of 1994 (volumes 59-current).</p>
+      <div class="notice">
+        <p>It looks like you were searching for the citation <strong><%= citation.name %></strong>. We were unable to find any articles with that citation. FederalRegister.gov covers articles published starting in January of 1994 (volumes 59-current).</p>
+      </div>
     <% end %>
   </div>
 <% end %>
