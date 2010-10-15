@@ -1,0 +1,12 @@
+<div class="header_with_icon">
+  <h1>Features of this site</h1>
+</div>
+
+<ul class="bullets">
+  <li>Read the Federal Register by section.</li> 
+  <li>Subscribe to a search term, a section, an agency or <br/><%= link_to 'Subscribe to daily feed', entries_url(:format => :rss), :class => 'rss' %></li>
+  <li>Browse or search our article collection dating back to 1994, updated daily.</li>
+  <li>Know what you are looking for? <%= link_to 'Retrieve articles by citation.', citation_search_path %></li>
+  <li><%= link_to "Browse by agency", agencies_path %> or <%= link_to "explore by topic", topics_path %>.</li>
+  <li>Share a link to a specific paragraph in any article.</li>
+</ul>  
