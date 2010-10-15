@@ -173,17 +173,22 @@ HOMEPAGE
   @include grid(5, 16);
   }  
 .home #agency_highlight,
-.home #fr_movie {
+.home #fr_movie,
+.home #learn {
   @include grid(8, 16);
   }  
-.home #popular {
+.home #popular,
+.home .fr_section,
+.home #tools
+ {
   @include grid(7, 16);
   @include grid-prefix(1, 16);
+  }
+.home #learn #learn-links {
+  @include grid(3, 16);
+  @include alpha;
+  }
+.home #learn #learn-body {
+  @include grid(5, 16);
+  @include omega;
   }  
-.home #learn .about {
-  @include grid(4,16);
-  }
-.home .fr_section {
-  @include grid(7, 16);
-  @include grid-prefix(1, 16);
-  }
