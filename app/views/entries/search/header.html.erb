@@ -4,7 +4,7 @@
   
   <% form_for :conditions, @search, :url => entries_search_path, :html => {:method => :get} do |f| %>
     <label>Find</label>
-    <%= f.text_field :term %>
+    <%= f.text_field :term, :placeholder => 'Search term or citation' %>
     <%= f.submit 'Search' %>
   <% end %>
   
