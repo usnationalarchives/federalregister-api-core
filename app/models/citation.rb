@@ -77,6 +77,6 @@ class Citation < ApplicationModel
   end
   
   def matching_fr_entries
-    @matching_fr_entries ||= Entry.find_all_by_citation(part_1, part_2) if type == 'FR'
+    @matching_fr_entries ||= Entry.find_all_by_citation(part_1, part_2) if citation_type == 'FR'
   end
 end
