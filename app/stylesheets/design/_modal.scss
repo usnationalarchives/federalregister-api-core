@@ -38,6 +38,7 @@
 }
 
 #modal,
+#disclaimer_modal,
 #exit_modal {
   background-color: white;
   border: 5px solid #3F5B75;
@@ -58,7 +59,8 @@
   background: none;
   }  
 #modal .jqmClose,
-#exit_modal .jqmClose {
+#exit_modal .jqmClose,
+#disclaimer_modal .jqmClose {
   position: absolute;
   right: 1em;
   top: 1em;
