@@ -2,7 +2,8 @@
   calendar(
       :year => @date.year,
       :month => @date.month,
-      :table_class => "calendar",
+      # ugly hack to punch in data attributes
+      :table_class => "calendar\" data-calendar-year=\"#{@date.year}\" data-calendar-month=\"#{@date.month}",
       :previous_month_text => link_to_if(@date.months_ago(1) > Entry.earliest_publication_date, '&laquo; prev', entries_by_month_path(@date.months_ago(1)), :class => 'nav prev'),
       :next_month_text =>     link_to_if(@date.months_since(1) < Issue.current.publication_date, 'next &raquo;', entries_by_month_path(@date.months_since(1)), :class => 'nav next'),
       :abbrev => (0..0),
