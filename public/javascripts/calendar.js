@@ -6,8 +6,7 @@ $(document).ready(function () {
         for(var year = 1994; year <= today.getFullYear(); year++) {
             var option = $("<option />");
             option.append(year);
-            
-            if (th.hasClass('year_' + year)) {
+            if ( $(".calendar").attr("data-calendar-year") == year ) {
                 option.attr('selected', 'selected');
             }
             select_list.append(option);
@@ -22,6 +21,13 @@ $(document).ready(function () {
         return false;
     });
     
+    $('table.calendar select').live('change', function() {
+      console.log( '/articles/' + $(this).val() + '/' + $(".calendar").attr("data-calendar-month") );
+      $('#calendar_wrapper').load('/articles/' + $(this).val() + '/' + $(".calendar").attr("data-calendar-month"),'', add_year_dropdown);
+      return false;
+    });
+    
+        
     $('.calendar td.late').live('click', function() {
         alert("Today's issue is currently unavailable; we apologize for any inconvenience.")
     });
