@@ -22,7 +22,6 @@ $(document).ready(function () {
     });
     
     $('table.calendar select').live('change', function() {
-      console.log( '/articles/' + $(this).val() + '/' + $(".calendar").attr("data-calendar-month") );
       $('#calendar_wrapper').load('/articles/' + $(this).val() + '/' + $(".calendar").attr("data-calendar-month"),'', add_year_dropdown);
       return false;
     });
