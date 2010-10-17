@@ -88,7 +88,7 @@ class ApplicationSearch
     name_definer ||= Proc.new{|id| filter_name.to_s.sub(/_ids?$/,'').classify.constantize.find_by_id(id).try(:name) }
     
     define_method "#{filter_name}=" do |val|
-      if val.present?
+      if val.present?# && val.is_a?(String)
         instance_variable_set("@#{filter_name}", val)
         add_filter options.merge(:value => val, :condition => filter_name, :name_definer => name_definer, :name => options[:name])
       end
@@ -99,7 +99,7 @@ class ApplicationSearch
     attr_accessor :location, :within
     
     define_method :within= do |val|
-      if val.present?
+      if val.present? && val.is_a?(String)
         @within = val
         if val.to_i < 1 && val.to_i > 200
           @errors < "range must be between 1 and 200 miles."
