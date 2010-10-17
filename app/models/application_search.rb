@@ -108,7 +108,7 @@ class ApplicationSearch
     end
 
     define_method :location= do |val|
-      if val.present?
+      if val.present? && val.is_a?(String)
         @location = val
         loc = fetch_location(val)
 
