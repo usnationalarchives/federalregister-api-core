@@ -178,12 +178,12 @@ class ApplicationSearch
   end
   
   def sphinx_conditions
-    conditions = {}
+    sphinx_conditions = {}
     @filters.select{|f| f.sphinx_type == :conditions }.each do |filter|
-      conditions[filter.sphinx_attribute] = filter.sphinx_value
+      sphinx_conditions[filter.sphinx_attribute] = filter.sphinx_value
     end
     
-    conditions
+    sphinx_conditions
   end
   
   def with
@@ -213,7 +213,7 @@ class ApplicationSearch
           :order => order_clause,
           :with => with,
           :with_all => with_all,
-          :conditions => conditions,
+          :conditions => sphinx_conditions,
           :match_mode => :extended,
           :sort_mode => :extended
         }.merge(find_options)

@@ -14,7 +14,7 @@ class EventSearch < ApplicationSearch
     raw_facets = Event.facets(term,
       :with => with,
       :with_all => with_all,
-      :conditions => conditions,
+      :conditions => sphinx_conditions,
       :match_mode => :extended,
       :facets => [:type]
     )[:type]
