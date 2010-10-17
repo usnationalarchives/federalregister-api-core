@@ -100,9 +100,10 @@ class ApplicationSearch
     
     define_method :within= do |val|
       if val.present? && val.is_a?(String)
-        @within = val
         if val.to_i < 1 && val.to_i > 200
           @errors < "range must be between 1 and 200 miles."
+        else
+          @within = val.to_i
         end
       end
     end
