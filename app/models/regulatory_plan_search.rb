@@ -14,7 +14,7 @@ class RegulatoryPlanSearch < ApplicationSearch
     raw_facets = RegulatoryPlan.facets(term,
       :with => with,
       :with_all => with_all,
-      :conditions => conditions,
+      :conditions => sphinx_conditions,
       :match_mode => :extended,
       :facets => [:priority_category]
     )[:priority_category]
