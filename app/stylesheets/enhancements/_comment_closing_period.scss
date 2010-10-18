@@ -52,24 +52,29 @@ TODO: Clean this all up.  We removed EnhanceJS and it is no longer clear & clean
   }
 .active .tabs-body .tabs-panel-selected {
   display: block;
-  } 
-#articles_published_by_day .tabs-nav li {
+  }
+  
+  
+#articles_published_by_day .tabs-nav li,
+#learn .tabs-nav li {
   list-style: none;
   margin-bottom: 15px;
-  padding-right: image-width('icons/section_nav_selected.png');
   }     
-#articles_published_by_day  .tabs-nav li.tabs-selected {
-  background: sprite-image('icons/section_nav_selected.png', 140px, 0, 50px) no-repeat;
-  }
-#articles_published_by_day  .tabs-nav li a {
+#articles_published_by_day  .tabs-nav li a,
+#learn  .tabs-nav li a {
   background: #eee; /* TODO mvoe into colors */
+  color: #777;
   display: block;
-  line-height: 70px;
-  padding: 0 15px;
+  @include apertura-condensed;
+  font-size: 1.1em;
+  font-weight: 700;
+  padding: 15px;
   text-align: center;
+  text-transform: uppercase;
   width: 110px;
   }
-#articles_published_by_day  .tabs-nav li.tabs-selected a {
+#articles_published_by_day  .tabs-nav li.tabs-selected a,
+#learn  .tabs-nav li.tabs-selected a {
   background-color: #dfb264;
   color: #fff;
   }
@@ -78,13 +83,15 @@ TODO: Clean this all up.  We removed EnhanceJS and it is no longer clear & clean
   }
 #articles_published_by_day  .tabs-nav li.search a {
   background: transparent sprite-image('icons/icon_search.png', 0, 1px, 50px) no-repeat;
+  font-size: 1em;
+  line-height: 1;
   padding: 2px 0 0 0;
   padding-left: image-width('icons/icon_search.png') + 10;
-  line-height: 1;
   text-align: left;
   }
 #articles_published_by_day  .tabs-nav li.search a:hover {
   background: transparent sprite-image('icons/icon_search_hover.png', 0, 1px, 50px) no-repeat;
+  color: #9e740d;
   }
 #articles_published_by_day article:last-child .article {
   border: none;

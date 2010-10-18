@@ -92,13 +92,6 @@ class EntrySearch < ApplicationSearch
     }
   end
   
-  # def conditions
-  #   conditions = {}
-  #   conditions[:type] = "\"#{@type}\"" if @type.present?
-  #   conditions[:regulation_id_number] = "\"#{@regulation_id_number}\"" if @regulation_id_number.present?
-  #   conditions
-  # end
-  
   def supported_orders
     %w(Relevant Newest Oldest)
   end
@@ -133,7 +126,7 @@ class EntrySearch < ApplicationSearch
     raw_facets = Entry.facets(term,
       :with => with,
       :with_all => with_all,
-      :conditions => conditions,
+      :conditions => sphinx_conditions,
       :match_mode => :extended,
       :facets => [:type]
     )[:type]
@@ -155,7 +148,7 @@ class EntrySearch < ApplicationSearch
     sphinx_search = ThinkingSphinx::Search.new(term,
       :with => with,
       :with_all => with_all,
-      :conditions => conditions,
+      :conditions => sphinx_conditions,
       :match_mode => :extended
     )
     
@@ -181,7 +174,7 @@ class EntrySearch < ApplicationSearch
     model.search_count(@term,
       :with => with.merge(:publication_date => n.days.ago.to_time.midnight .. Time.current.midnight),
       :with_all => with_all,
-      :conditions => conditions,
+      :conditions => sphinx_conditions,
       :match_mode => :extended
     )
   end

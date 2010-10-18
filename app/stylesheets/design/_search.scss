@@ -80,10 +80,14 @@ PAGE ELEMENTS
   height: 15px;
   padding: 5px;
   }
-.search_bar #conditions_type {
+.search_bar #conditions_type,
+.search_bar select {
   display: block;
   float: left;
   margin-top: 4px;
+  }  
+.search_bar select {
+  margin-right: 5px;
   }  
 .search_bar #conditions_submit {
   background: sprite-image('icons/search_button.png') no-repeat;
@@ -109,6 +113,10 @@ PAGE ELEMENTS
   margin-bottom: 0;
   margin-top: 7px;
   padding-top: 0;
+  }
+
+#citations .search_bar {
+  margin-left: 0;
   }
 
 /******************************
@@ -352,9 +360,9 @@ ERRORS
 
 ******************************/
 
-.errors li{
+.errors li,
+.notice {
   @include border-radius(5px);  
-  overflow: hidden;  
   background: #ebd8b6 image-url("error.png") no-repeat 1em top;
   color: #777777;
   @include apertura-condensed;
@@ -362,5 +370,19 @@ ERRORS
   line-height: 20px;    
   list-style: none;
   margin-bottom: 1em;
+  overflow: hidden;  
   padding: .75em 2.5em .5em;  
   }
+.notice {
+  float: left;
+  font-size: 1em;  
+  overflow: hidden;
+  }
+#citation.search {
+  margin-left: 10px;
+  }  
+.notice p {
+  line-height: 30px;
+  margin-left: 10px;
+  padding-bottom: 0;
+  }  
