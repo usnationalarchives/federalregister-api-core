@@ -20,4 +20,12 @@ $(document).ready(function () {
         var item = $(".section_nav li a").get(numRand);
         $(item).trigger("click");
     }
+    
+    if( $("#learn").size() > 0 ){    
+      $("#learn").addClass("active");
+      $("#learn").tabs({
+          trackState: true,
+          srcPath: '/blank.html'
+      });
+    }
 });

@@ -88,7 +88,7 @@ class ApplicationSearch
     name_definer ||= Proc.new{|id| filter_name.to_s.sub(/_ids?$/,'').classify.constantize.find_by_id(id).try(:name) }
     
     define_method "#{filter_name}=" do |val|
-      if val.present?
+      if val.present? && (val.is_a?(String) || val.is_a?(Fixnum))
         instance_variable_set("@#{filter_name}", val)
         add_filter options.merge(:value => val, :condition => filter_name, :name_definer => name_definer, :name => options[:name])
       end
@@ -99,16 +99,17 @@ class ApplicationSearch
     attr_accessor :location, :within
     
     define_method :within= do |val|
-      if val.present?
-        @within = val
+      if val.present? && (val.is_a?(String) || val.is_a?(Fixnum))
         if val.to_i < 1 && val.to_i > 200
           @errors < "range must be between 1 and 200 miles."
+        else
+          @within = val.to_i
         end
       end
     end
 
     define_method :location= do |val|
-      if val.present?
+      if val.present? && val.is_a?(String)
         @location = val
         loc = fetch_location(val)
 
@@ -177,12 +178,12 @@ class ApplicationSearch
   end
   
   def sphinx_conditions
-    conditions = {}
+    sphinx_conditions = {}
     @filters.select{|f| f.sphinx_type == :conditions }.each do |filter|
-      conditions[filter.sphinx_attribute] = filter.sphinx_value
+      sphinx_conditions[filter.sphinx_attribute] = filter.sphinx_value
     end
     
-    conditions
+    sphinx_conditions
   end
   
   def with
@@ -212,7 +213,7 @@ class ApplicationSearch
           :order => order_clause,
           :with => with,
           :with_all => with_all,
-          :conditions => conditions,
+          :conditions => sphinx_conditions,
           :match_mode => :extended,
           :sort_mode => :extended
         }.merge(find_options)

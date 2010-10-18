@@ -91,7 +91,9 @@ HOMEPAGE
 .home #fr_movie.with_icon .header_with_icon {
   background: image-url('icons/ie6/icon_movie.png') no-repeat 0 10px;
   }
-  
+.home #tools {
+  background: image-url('icons/ie6/tools_of_fr2.png') no-repeat 25px 0;
+  }
 #slideshow .container .news_content {
   height: 318px;
   position: relative;
@@ -246,6 +248,8 @@ MODAL
 
 ******************************/
 
-#modal {
+#modal,
+#disclaimer_modal,
+#exit_modal {
   position: absolute;
   }
