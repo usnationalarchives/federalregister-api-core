@@ -375,8 +375,9 @@ History Movie
   }
 #fr_movie object,
 #fr_movie embed {
-  margin-left: 3em;
+  margin-left: 1.5em;
   }
+  
 /******************************
 
 LEARN 
@@ -390,6 +391,18 @@ LEARN
   margin-bottom: 1em;
   overflow: hidden;
   padding-left: 35px;
+  }
+
+/******************************
+
+TOOLS OF FR2 
+
+******************************/
+.home #tools {
+  overflow: hidden;
+  }
+.home #tools {
+  background: sprite-image('icons/tools_of_fr2.png',  25px, 0, 400px) no-repeat;
   }
 
 /******************************
@@ -410,23 +423,15 @@ CURRENT
 .fr_section.health-and-public-welfare { background: sprite-image('icons/section_icons/icon_health.png', 25px, 0, 300px) no-repeat; }
 .fr_section.alpha {
   clear: both;
-  }
-.fr_section h1 {
-  border-bottom: 2px solid #464646;
-  @include apertura-condensed;
-  font-size: 1.5em;
-  margin-bottom: .5em;
-  text-transform: uppercase;
-  }
-.fr_section h1 a { color: #464646; }
-.fr_section h1 a:hover { color: darken($dark_blue_complement, 10%); }  
-.fr_section ul.bullets li {
+  } 
+.fr_section ul.bullets li,
+#tools li {
   background-position: left 5px;
   border-bottom: 2px solid #eee;
+  font-size: 1.1em;
+  line-height: 1.5;
   }
 .fr_section ul.bullets li:last-child,
-.fr_section ul.bullets li.lastchild { border-bottom: none; }   
-.fr_section ul.bullets a {
-  font-size: 1.1em;
-  line-height: 1.5; 
-  }   
+.fr_section ul.bullets li.lastchild,
+#tools li:last-child,
+#tools li.lastchild { border-bottom: none; }   

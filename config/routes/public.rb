@@ -105,7 +105,7 @@ ActionController::Routing::Routes.draw do |map|
   
   # true section routes
   map.about_section ":slug/about", :controller => "sections", :action => "about", :conditions => { :method => :get }
-  map.highlighted_entries_section ":slug/featured.:format", :controller => "sections", :action => "highlighted", :conditions => { :method => :get }
-  map.significant_entries_section ":slug/significant.:format", :controller => "sections", :action => "significant", :conditions => { :method => :get }
+  map.highlighted_entries_section ":slug/featured.:format", :controller => "sections", :action => "highlighted_entries", :conditions => { :method => :get }
+  map.significant_entries_section ":slug/significant.:format", :controller => "sections", :action => "significant_entries", :conditions => { :method => :get }
   map.section ':slug.:format', :controller => "sections", :action => "show", :conditions => { :method => :get }
 end
