@@ -5,11 +5,15 @@
 .calendar td,
 .calendar th {
   padding: 0;
+  table-layout: fixed;
   text-align: center;
   vertical-align: middle;
   }
 .calendar .monthName {
   font-size: 1.3em;
+  }
+.calendar .dayName th {
+  width: 30px;
   }  
 .calendar td a {
   display: block;
