@@ -2,9 +2,12 @@
 
 <h1 class="title"><span><%= "#{@volume} FR #{@page}" %></span></h1>
 
-<p>Which of the following articles are you looking for?</p>
+<div class="notice">
+  <p>Which of the following articles are you looking for?</p>
+</div>
 
-<ul class="indent raquo">
+
+<ul class="bullets clear">
 <% @entries.each do |entry| %>
   <li><%= link_to(entry.title, entry_path(entry)) %></li>
 <% end %>
