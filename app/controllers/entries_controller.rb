@@ -88,7 +88,12 @@ class EntriesController < ApplicationController
   def by_month
     cache_for 1.day
     
-    @date = Date.parse("#{params[:year]}-#{params[:month]}-01")
+    begin
+      @date = Date.parse("#{params[:year]}-#{params[:month]}-01")
+    rescue ArgumentError
+      raise ActiveRecord::RecordNotFound
+    end
+    
     if params[:current_date]
       @current_date = Date.parse(params[:current_date])
     end
@@ -136,6 +141,10 @@ class EntriesController < ApplicationController
     year  = params[:year]
     month = params[:month]
     day   = params[:day]
-    Date.parse("#{year}-#{month}-#{day}")
+    begin
+      Date.parse("#{year}-#{month}-#{day}")
+    rescue ArgumentError
+      raise ActiveRecord::RecordNotFound
+    end
   end
 end
