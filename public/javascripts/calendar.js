@@ -12,7 +12,9 @@ $(document).ready(function () {
             select_list.append(option);
         }
         th.append(select_list);
-    }    
+    }
+    
+    add_year_dropdown();
     
     $('table.calendar .nav').live('click', function () {
         $('#calendar_wrapper').load($(this).attr('href'), '', add_year_dropdown);
