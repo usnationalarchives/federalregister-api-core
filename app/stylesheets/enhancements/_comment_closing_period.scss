@@ -59,15 +59,19 @@ TODO: Clean this all up.  We removed EnhanceJS and it is no longer clear & clean
 #learn .tabs-nav li {
   list-style: none;
   margin-bottom: 15px;
-  }     
+  }
+#learn .tabs-nav li {
+  margin-bottom: 20px;
+  }   
 #articles_published_by_day  .tabs-nav li a,
 #learn  .tabs-nav li a {
-  background: #eee; /* TODO mvoe into colors */
+  background: #eee; /* TODO move into colors */
   color: #777;
   display: block;
   @include apertura-condensed;
   font-size: 1.1em;
   font-weight: 700;
+  margin-left: 5px;
   padding: 15px;
   text-align: center;
   text-transform: uppercase;
