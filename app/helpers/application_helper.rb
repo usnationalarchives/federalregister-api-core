@@ -28,4 +28,10 @@ module ApplicationHelper
   def feed_autodiscovery(feed_url, title = 'RSS')
     content_for :feeds, tag(:link, :rel => 'alternate', :type => 'application/rss+xml', :title => title, :href => feed_url)
   end
+  
+  def pluralize_without_count(count, noun, text = nil)
+    if count != 0
+      count == 1 ? "#{noun}#{text}" : "#{noun.pluralize}#{text}"
+    end
+  end
 end
