@@ -1,4 +1,5 @@
 <% title @entry.title %>
+<% description truncate_words(strip_tags(@entry.abstract), :length => 300) %>
 
 <h1 class="title"><span><%= @entry.entry_type %></span></h1>
 

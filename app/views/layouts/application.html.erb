@@ -5,8 +5,9 @@
     <meta name="keywords" content="government federal register executive rulings notices" />
   
     <%# Facebook uses these for parsing when someone adds a link  %>
-    <%= tag(:meta, :name => 'title', :content => @entry.title) if @entry %>
-    <%= tag(:meta, :name => 'description', :content => truncate_words(strip_tags(@entry.abstract), :length => 300)) if @entry %>
+    <%= tag(:meta, :name => 'title', :content => yield(:title) ) if yield(:title) %>
+    <%= tag(:meta, :name => 'description', :content => yield(:description) ) if yield(:description) %>
+    
     <link rel="Shortcut Icon" href="/favicon.ico">
     <%# TODO HELP-RUBY for facebook image below, show curated image if present, should be 130wide max %>
     <link rel="image_src" href="http://www.federalregister.gov/images/fbdisplay.jpg" />
