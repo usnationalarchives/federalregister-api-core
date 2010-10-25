@@ -1,4 +1,5 @@
 <%= title @section.title %>
+<% description description_for_section(@section) %>
 
 <%= feed_autodiscovery highlighted_entries_section_url(@section, :format => :rss), "Featured Articles in #{@section.title}"%>
 <%= feed_autodiscovery significant_entries_section_url(@section, :format => :rss), "Significant Articles in #{@section.title}"%>

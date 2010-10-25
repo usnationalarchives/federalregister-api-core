@@ -9,4 +9,14 @@ module AgencyHelper
       "All years by quarter"
     end
   end
+  
+  def description_for_agency(agency)
+    if agency.name == 'The White House Office'
+      agency_string = "#{@agency.name}"
+    else
+      agency_string = "The #{@agency.name}"
+    end
+    
+    "#{agency_string} publishes articles in the Federal Register. Explore most recent and most cited articles published by #{agency_string}."
+  end
 end
