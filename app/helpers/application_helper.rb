@@ -21,6 +21,10 @@ module ApplicationHelper
     end
   end
   
+  def description(text)
+    set_content_for :description, strip_tags(text)
+  end
+  
   def sidebar(text)
     set_content_for :sidebar, text
   end
