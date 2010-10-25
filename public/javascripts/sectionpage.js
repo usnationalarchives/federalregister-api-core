@@ -4,10 +4,7 @@ $(document).ready(function () {
       
         $("#comments-closing-opening").addClass("active");
 
-        $("#comments-closing-opening").tabs({
-            trackState: true,
-            srcPath: '/blank.html'
-        });
+        $("#comments-closing-opening").tabs();
 
         $(".TOC a").bind('click',
         function (event) {
@@ -17,10 +14,7 @@ $(document).ready(function () {
     
     if( $("#articles_published_by_day").size() > 0 ){    
       $("#articles_published_by_day").addClass("active");
-      $("#articles_published_by_day").tabs({
-          trackState: true,
-          srcPath: '/blank.html'
-      });
+      $("#articles_published_by_day").tabs();
     }
 
 });

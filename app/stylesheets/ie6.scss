@@ -139,7 +139,9 @@ HOMEPAGE
 #special .fr_section.science-and-technology { background: image-url('icons/ie6/icon_science.png') no-repeat 10px 0; }  
 #special .fr_section.business-and-industry { background: image-url('icons/ie6/icon_business.png') no-repeat 10px 0; }
 #special .fr_section.health-and-public-welfare { background: image-url('icons/ie6/icon_health.png') no-repeat 18px 0; }
-  
+
+
+
 /******************************
 
 GENERAL PAGE ITEMS
@@ -166,6 +168,9 @@ GENERAL PAGE ITEMS
   display: block;
   position: relative;
   }
+#comments-closing-opening .three_col_list .date {
+  clear: both;
+  }  
 #disclaimer h1 {
   background: image-url('icons/ie6/disclaimer.png') no-repeat left top;
   }
@@ -191,6 +196,11 @@ GENERAL PAGE ITEMS
 .vcard .email { background: none; }
 
 #entries.by_date .back_to_top { right: 60px; }
+
+#entries .shorter_url {
+  float: left;
+  word-break: break-all;
+  }
 
 /******************************
 
