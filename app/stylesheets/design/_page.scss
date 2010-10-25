@@ -23,6 +23,9 @@ ul.bullets  li {
 .bullets li:last-child,
 .bullets li.lastchild {
   margin-bottom: 0;
+  }
+ul.bold_links a {
+  font-weight: 700;
   }  
 .hide,  
 .skip_to_content { display: none; }
