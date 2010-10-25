@@ -23,9 +23,6 @@ $(document).ready(function () {
     
     if( $("#learn").size() > 0 ){    
       $("#learn").addClass("active");
-      $("#learn").tabs({
-          trackState: true,
-          srcPath: '/blank.html'
-      });
+      $("#learn").tabs();
     }
 });
