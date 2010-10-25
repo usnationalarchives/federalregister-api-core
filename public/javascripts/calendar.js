@@ -20,12 +20,12 @@ $(document).ready(function () {
         $('#calendar_wrapper').load($(this).attr('href'), '', add_year_dropdown);
         return false;
     });
-    
-    $('table.calendar select').live('change', function() {
+
+    $("#date_chooser").delegate('select', 'change', function(event) {
       $('#calendar_wrapper').load('/articles/' + $(this).val() + '/' + $(".calendar").attr("data-calendar-month"),'', add_year_dropdown);
       return false;
     });
-    
+
         
     $('.calendar td.late').live('click', function() {
         alert("Today's issue is currently unavailable; we apologize for any inconvenience.")
