@@ -24,8 +24,10 @@ module Content
       create_lock_file
       begin
         Rake::Task["data:daily:full"].invoke
-      rescue Content::EntryImporter::BulkdataFile::DownloadError, Content::EntryImporter::ModsFile::DownloadError
-        raise "Unable to download new content"
+      rescue Content::EntryImporter::ModsFile::DownloadError
+        raise "Problem downloading mods file"
+      rescue Content::EntryImporter::BulkdataFile::DownloadError
+        raise "Problem downloading bulkdata file"
       rescue Exception => e
         HoptoadNotifier.notify(e)
         raise e
