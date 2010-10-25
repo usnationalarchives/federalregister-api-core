@@ -20,16 +20,15 @@ class Content::EntryImporter::ModsFile
   end
 
   def document
-    Curl::Easy.download(url, file_path) unless File.exists?(file_path)
-    doc = Nokogiri::XML(open(file_path))
-    
-    publication_date = doc.root.xpath('./xmlns:originInfo/xmlns:dateIssued').first.try(:content) if doc.root
-    
-    if !publication_date
+    begin
+      Curl::Easy.download(url, file_path) unless File.exists?(file_path)
+      doc = Nokogiri::XML(open(file_path))
+      raise Content::EntryImporter::ModsFile::DownloadError unless doc.root.name == "mods"
+    rescue
       File.delete(file_path)
       raise Content::EntryImporter::ModsFile::DownloadError
     end
-
+    
     doc.root
   end
   memoize :document
