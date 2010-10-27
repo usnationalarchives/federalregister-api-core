@@ -1,4 +1,6 @@
 <% title @agency.name %>
+<% description description_for_agency(@agency) %>
+
 <h1 class="title"><span>View an Agency</span></h1>
 
 <% feed_autodiscovery agency_url(@agency, :format => :rss) %>
