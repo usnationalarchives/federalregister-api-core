@@ -2,7 +2,7 @@ module XsltHelperSpecHelpers
   include XsltHelper
   
   def process(xml)
-    @html = transform_xml("<RULE>#{xml}</RULE>", "entries/_full_text.html.xslt").to_s
+    @html = transform_xml("<RULE>#{xml}</RULE>", "entries/_full_text.html.xslt",{'first_page' => 100.to_s}).to_s
   end
 end
 
