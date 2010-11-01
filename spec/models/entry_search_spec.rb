@@ -1,3 +1,5 @@
+require "spec_helper"
+
 describe EntrySearch do
   describe 'matching_entry_citation' do
     before(:each) do
