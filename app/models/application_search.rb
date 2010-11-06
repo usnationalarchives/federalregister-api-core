@@ -258,4 +258,7 @@ class ApplicationSearch
   def fetch_location(location)
     Rails.cache.fetch("location_of: '#{location}'") { Geokit::Geocoders::GoogleGeocoder.geocode(location) }
   end
+  
+  def set_defaults(options)
+  end
 end
