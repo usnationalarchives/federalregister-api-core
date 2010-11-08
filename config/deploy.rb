@@ -132,6 +132,13 @@ set :git_enable_submodules, true
 
 
 #############################################################
+# Bundler
+#############################################################
+# this should list all groups in your Gemfile (except default)
+set :gem_file_groups, [:deployment, :development, :test]
+
+
+#############################################################
 # Run Order
 #############################################################
 
