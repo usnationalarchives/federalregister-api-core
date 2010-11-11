@@ -74,7 +74,7 @@ ActionController::Routing::Routes.draw do |map|
   map.significant_entries_topic 'topics/:id/significant.:format', :controller => "topics", :action => "significant_entries", :conditions => { :method => :get }
 
   # AGENCIES
-  map.resources :agencies, :only => [:index, :show]
+  map.resources :agencies, :only => [:index, :show], :collection => {:search => :get}
   map.significant_entries_agency 'agencies/:id/significant.:format', :controller => "agencies", :action => "significant_entries", :conditions => { :method => :get }
   
   # REGULATIONS
