@@ -4,6 +4,11 @@ class AgenciesController < ApplicationController
     @agencies  = Agency.all(:order => 'name ASC', :include => :children)
   end
   
+  def search
+    agencies = Agency.named_approximately(params[:term]).limit(10)
+    render :json => agencies.to_json(:only => [ :id, :name ])
+  end
+  
   def show
     cache_for 1.day
     @agency = Agency.find_by_slug!(params[:id])

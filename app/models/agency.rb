@@ -68,6 +68,20 @@ class Agency < ApplicationModel
   
   named_scope :with_logo, :conditions => "agencies.logo_file_name IS NOT NULL"
   
+  # consider using sphinx instead...
+  def self.named_approximately(name)
+    words = name.split(/\s+/)
+    
+    condition_sql = "(" + words.map{"agencies.name LIKE ?"}.join(" AND ") + ") OR (" + words.map{"agencies.short_name LIKE ?"}.join(" AND ") + ")"
+    bind_params = words.map{|word|"%#{word}%"} * 2
+    scoped(
+      :conditions => [
+        condition_sql, *bind_params
+      ],
+      :order => "agencies.name"
+    )
+  end
+  
   def to_param
     slug
   end
