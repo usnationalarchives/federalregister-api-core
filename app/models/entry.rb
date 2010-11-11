@@ -134,9 +134,10 @@ class Entry < ApplicationModel
   file_attribute(:full_text) {"#{RAILS_ROOT}/data/text/#{document_file_path}.txt"}
   file_attribute(:raw_text)  {"#{RAILS_ROOT}/data/raw/#{document_file_path}.txt"}
   
+  has_many :entry_regulation_id_numbers
+  
   has_many :regulatory_plans,
-           :primary_key => :regulation_id_number,
-           :foreign_key => :regulation_id_number
+           :through => :entry_regulation_id_numbers
   
   # Will require a application restart when new regulatory plan issue comes in...
   has_many :current_regulatory_plan,
