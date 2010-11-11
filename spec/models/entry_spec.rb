@@ -50,6 +50,9 @@
 require 'spec_helper'
 
 describe Entry do
+  it { should have_many :entry_regulation_id_numbers }
+  it { should have_many :regulatory_plans }
+  
   describe 'slug' do
     it "should downcase" do
       Entry.new(:title => "Meeting").slug.should == 'meeting'
