@@ -101,7 +101,7 @@ class ApplicationSearch
     define_method :within= do |val|
       if val.present? && (val.is_a?(String) || val.is_a?(Fixnum))
         if val.to_i < 1 && val.to_i > 200
-          @errors < "range must be between 1 and 200 miles."
+          @errors[:within] = "range must be between 1 and 200 miles."
         else
           @within = val.to_i
         end
@@ -125,10 +125,10 @@ class ApplicationSearch
           )
 
           if places.size > 4096
-            @errors << 'We found too many locations near your location; please reduce the scope of your search'
+            @errors[:location] = 'We found too many locations near your location; please reduce the scope of your search'
           end
         else
-          @errors << 'We could not understand your location.'
+          @errors[:location] = 'We could not understand your location.'
         end
       end
     end
@@ -136,7 +136,7 @@ class ApplicationSearch
   
   def initialize(options = {})
     options.symbolize_keys!
-    @errors = []
+    @errors = {}
     @filters = []
     
     # Set some defaults...
