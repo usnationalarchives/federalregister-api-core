@@ -51,7 +51,49 @@ require 'spec_helper'
 
 describe Entry do
   it { should have_many :entry_regulation_id_numbers }
-  it { should have_many :regulatory_plans }
+  
+  describe "regulation_id_numbers=" do
+    it "should create associated entry_regulation_id_numbers when no exist" do
+      rins = ["ABCD-1234", "ABCD-5678"]
+      e = Entry.new(:regulation_id_numbers => rins)
+      e.save!
+      e.reload
+      e.entry_regulation_id_numbers.map(&:regulation_id_number).should == rins
+    end
+    
+    it "should remove entry_regulation_id_numbers when not passed" do
+      e = Entry.new(:regulation_id_numbers => ["ABCD-1234", "ABCD-5678"])
+      e.save!
+      e.reload
+      e.regulation_id_numbers = ["ABCD-1234"]
+      e.save!
+      e.reload
+      
+      e.entry_regulation_id_numbers.map(&:regulation_id_number).should == ["ABCD-1234"]
+    end
+  end
+  
+  describe "current_regulatory_plans" do
+    it 'should find nothing when no RIN associated' do
+      e = Entry.create!()
+      e.current_regulatory_plans.should == []
+    end
+    
+    it 'should find nothing if the associated RIN is not included in the current issue' do
+      something_in_current_issue = RegulatoryPlan.create!(:regulation_id_number => "ABCD-1111", :issue => "201004")
+      something_in_prior_issue = RegulatoryPlan.create!(:regulation_id_number => "ABCD-1234", :issue => "200904")
+      e = Entry.create!(:regulation_id_numbers => [something_in_prior_issue.regulation_id_number])
+      e.current_regulatory_plans.should == []
+    end
+    
+    it 'should find the regulatory_plan if the associated RIN is included in the current issue' do
+      prior = RegulatoryPlan.create!(:regulation_id_number => "ABCD-1234", :issue => "200904")
+      cur = RegulatoryPlan.create!(:regulation_id_number => "ABCD-1234", :issue => "201004")
+      e = Entry.create!(:regulation_id_numbers => [cur.regulation_id_number])
+      e.current_regulatory_plans.should == [cur]
+    end
+  end
+  
   
   describe 'slug' do
     it "should downcase" do
