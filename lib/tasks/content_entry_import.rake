@@ -36,9 +36,9 @@ namespace :content do
         entry_importer(:start_page, :end_page)
       end
       
-      desc "Extract regulation_id_numbers"
-      task :regulation_id_numbers => :environment do
-        entry_importer(:regulation_id_numbers)
+      desc "Extract regulation_id_numbers and significant"
+      task :rin_and_significant => :environment do
+        entry_importer(:regulation_id_numbers, :significant)
       end
       
       desc "Extract docket id"
