@@ -1,4 +1,11 @@
 class EntrySearch < ApplicationSearch
+  TYPES = [
+    ['Rule',                  'RULE'    ], 
+    ['Proposed Rule',         'PRORULE' ], 
+    ['Notice',                'NOTICE'  ], 
+    ['Presidential Document', 'PRESDOCU'], 
+    ['Sunshine Act Document', 'SUNSHINE']
+  ]
   include Geokit::Geocoders
   
   attr_reader :type
@@ -14,8 +21,8 @@ class EntrySearch < ApplicationSearch
     Section.find_by_id(section_id).try(:title)
   end
   define_filter :topic_ids,   :sphinx_type => :with_all
-  define_filter :type,        :phrase => true do |type|
-    Entry::ENTRY_TYPES[type]
+  define_filter :type,        :sphinx_type => :with, :crc32_encode => true do |types|
+    types.map{|type| Entry::ENTRY_TYPES[type]}.to_sentence(:two_words_connector => ' or ', :last_word_connector => ', or ')
   end
   
   define_filter :docket_id, :phrase => true, :label => "Agency Docket" do |docket|
