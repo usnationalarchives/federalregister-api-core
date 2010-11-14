@@ -211,6 +211,12 @@ class EntrySearch < ApplicationSearch
     return nil
   end
   
+  def entry_with_document_number
+    if term.present?
+      return Entry.find_by_document_number(term)
+    end
+  end
+  
   private
   
   def set_defaults(options)

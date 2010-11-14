@@ -45,4 +45,23 @@ describe EntrySearch do
       EntrySearch.new(:conditions => {:term => "71 F.R. 12345"}).matching_entry_citation.attributes.should == citation_attributes
     end
   end
+  
+  describe 'entry_with_document_number' do
+    before(:each) do
+      Issue.stubs(:current).returns(Issue.new(:publication_date => Date.today))
+    end
+    
+    it "finds no match when no term" do
+      EntrySearch.new().entry_with_document_number.should be_nil
+    end
+    
+    it "finds no match for terms that aren't FR citations" do
+      EntrySearch.new(:conditions => {:term => "ABCD"}).entry_with_document_number.should be_nil
+    end
+    
+    it "finds a match for valid FR document numbers" do
+      entry = Entry.create!(:document_number => "2010-1")
+      EntrySearch.new(:conditions => {:term => "2010-1"}).entry_with_document_number.should == entry
+    end
+  end
 end
