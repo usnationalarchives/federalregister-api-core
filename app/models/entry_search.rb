@@ -28,7 +28,7 @@ class EntrySearch < ApplicationSearch
       begin
         parsed_val = Date.parse(val)
       rescue
-        @errors << "Could not understand publication date."
+        @errors[:date] = "Could not understand publication date."
       else
         add_filter(
           :value => parsed_val.to_time.utc.beginning_of_day.to_i .. parsed_val.to_time.utc.end_of_day.to_i,
@@ -48,7 +48,7 @@ class EntrySearch < ApplicationSearch
       begin
         parsed_val = Date.parse(val)
       rescue
-        @errors << "Could not understand start date."
+        @errors[:start_date] = "Could not understand start date."
       else
         days_ago = [30,90,365].find do |n|
           n.days.ago.to_date == parsed_val
@@ -77,7 +77,7 @@ class EntrySearch < ApplicationSearch
       begin
         @end_date = Date.parse(val).to_time
       rescue
-        @errors << "Could not understand start date."
+        @errors[:end_date] = "Could not understand end date."
       end
     end
   end
