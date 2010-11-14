@@ -9,7 +9,14 @@ class ApplicationSearch
       @name_definer = options[:name_definer]
       @condition    = options[:condition]
       @sphinx_attribute = options[:sphinx_attribute] || @condition
-      @sphinx_value = options[:phrase] ? "\"#{options[:value]}\"" : options[:value]
+      
+      if options[:phrase]
+        @sphinx_value = "\"#{options[:value]}\""
+      elsif options[:crc32_encode]
+        @sphinx_value = options[:value].map(&:to_crc32)
+      else
+        @sphinx_value = options[:value]
+      end
       @sphinx_type  = options[:sphinx_type] || :conditions
       @label        = options[:label] || @condition.to_s.singularize.humanize
     end
@@ -90,6 +97,9 @@ class ApplicationSearch
     define_method "#{filter_name}=" do |val|
       if val.present? && (val.is_a?(String) || val.is_a?(Fixnum) || val.is_a?(Array))
         instance_variable_set("@#{filter_name}", val)
+        if val.is_a?(Array)
+          val = val.reject(&:blank?)
+        end
         add_filter options.merge(:value => val, :condition => filter_name, :name_definer => name_definer, :name => options[:name])
       end
     end
@@ -163,10 +173,10 @@ class ApplicationSearch
   end
   
   def add_filter(options)
-    vals = (options[:value].is_a?(Array) ? options[:value] : [options[:value]])
-    vals.each do |val|
-      @filters << Filter.new(options.merge(:value => val))
-    end
+    # vals = (options[:value].is_a?(Array) ? options[:value] : [options[:value]])
+    # vals.each do |val|
+      @filters << Filter.new(options)#.merge(:value => val))
+    # end
   end
   
   def valid?
