@@ -79,7 +79,7 @@ class ApplicationSearch
     end
   end
   
-  attr_accessor :term, :order
+  attr_accessor :term, :order, :per_page
   attr_reader :errors, :filters
   
   def self.define_filter(filter_name, options = {}, &name_definer)
