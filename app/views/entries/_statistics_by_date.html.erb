@@ -8,6 +8,9 @@
     <% if issue.presidential_documents_count > 0 %>
       <li><%= link_to "<span>#{issue.presidential_documents_count}</span> #{pluralize_without_count issue.presidential_documents_count, "Presidential Document"}", entries_search_path(:conditions => {:type => "PRESDOCU", :date => issue.publication_date.to_s(:db)}) %></li>
     <% end -%>
+    <% if issue.significant_entries_count > 0 %>
+    <li><%= link_to "<span>#{issue.significant_entries_count}</span> #{pluralize_without_count issue.significant_entries_count, "Significant Documents"}", entries_search_path(:conditions => {:significant => 1, :date => issue.publication_date.to_s(:db)}) %></li>
+    <% end %>
     <li><span><%= issue.total_pages %></span> Pages</li>
   </ul>
   <% if other_dates %>
