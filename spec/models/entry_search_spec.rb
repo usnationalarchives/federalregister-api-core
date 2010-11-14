@@ -1,6 +1,14 @@
 require "spec_helper"
 
 describe EntrySearch do
+  describe 'agency_ids' do
+    it "populates sphinx `with`" do
+      search = EntrySearch.new()
+      search.agency_ids = [1,2]
+      search.with.should == {:agency_ids => [1,2]}
+    end
+  end
+  
   describe 'regulation_id_number' do
     it "populates sphinx `conditions` and properly quotes" do
       search = EntrySearch.new()
