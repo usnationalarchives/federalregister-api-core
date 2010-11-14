@@ -1,6 +1,14 @@
 require "spec_helper"
 
 describe EntrySearch do
+  describe 'regulation_id_number' do
+    it "populates sphinx `conditions` and properly quotes" do
+      search = EntrySearch.new()
+      search.regulation_id_number = "ABCD-1234"
+      search.sphinx_conditions.should == {:regulation_id_number => '"ABCD-1234"'}
+    end
+  end
+  
   describe 'matching_entry_citation' do
     before(:each) do
       Issue.stubs(:current).returns(Issue.new(:publication_date => Date.today))

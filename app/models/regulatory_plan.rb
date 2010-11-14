@@ -47,7 +47,7 @@ class RegulatoryPlan < ApplicationModel
   
   has_many :events,
            :class_name => "RegulatoryPlanEvent"
-  has_many :entries,
+  has_many :entry_regulation_id_numbers,
            :primary_key => :regulation_id_number,
            :foreign_key => :regulation_id_number
   

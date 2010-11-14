@@ -2,7 +2,7 @@ class RegulatoryPlansController < ApplicationController
   def show
     cache_for 1.day
     @regulatory_plan = RegulatoryPlan.find_by_regulation_id_number!(params[:regulation_id_number], :order => "issue DESC")
-    
+    @entry_count = EntrySearch.new(:conditions => {:regulation_id_number => @regulatory_plan.regulation_id_number}).count
     respond_to do |wants|
       wants.html do
       end

@@ -4,11 +4,12 @@ class EntrySearch < ApplicationSearch
   attr_reader :type
   attr_accessor :type, :regulation_id_number
   
-  define_filter :regulation_id_number, :label => "Regulation", :phrase => true do |regulation_id_number|
-    RegulatoryPlan.find_by_regulation_id_number(regulation_id_number).try(:title)
+  define_filter :regulation_id_number, :label => "Unified Agenda", :phrase => true do |regulation_id_number|
+    reg = RegulatoryPlan.find_by_regulation_id_number(regulation_id_number)
+    ["RIN #{regulation_id_number}", reg.try(:title)].join(' - ')
   end
   
-  define_filter :agency_ids,  :sphinx_type => :with_all
+  define_filter :agency_ids,  :sphinx_type => :with
   define_filter :section_ids, :sphinx_type => :with_all do |section_id|
     Section.find_by_id(section_id).try(:title)
   end

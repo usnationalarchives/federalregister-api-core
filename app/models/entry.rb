@@ -135,19 +135,6 @@ class Entry < ApplicationModel
   file_attribute(:raw_text)  {"#{RAILS_ROOT}/data/raw/#{document_file_path}.txt"}
   
   has_many :entry_regulation_id_numbers
-  
-  has_many :regulatory_plans,
-           :through => :entry_regulation_id_numbers
-  
-  # Will require a application restart when new regulatory plan issue comes in...
-  has_many :current_regulatory_plan,
-           :class_name => "RegulatoryPlan",
-           :primary_key => :regulation_id_number,
-           :foreign_key => :regulation_id_number,
-           :conditions => {:regulatory_plans => {:issue => RegulatoryPlan.current_issue} }
-  
-  named_scope :significant, :joins => :current_regulatory_plan, :conditions => { :regulatory_plans => {:priority_category => RegulatoryPlan::SIGNIFICANT_PRIORITY_CATEGORIES} }
-  
   validate :curated_attributes_are_not_too_long
   
   def self.published_today
@@ -222,7 +209,7 @@ class Entry < ApplicationModel
     indexes abstract
     indexes "LOAD_FILE(CONCAT('#{RAILS_ROOT}/data/raw/', document_file_path, '.txt'))", :as => :full_text
     indexes granule_class, :as => :type, :facet => true
-    indexes regulation_id_number
+    indexes entry_regulation_id_numbers(:regulation_id_number)
     
     # attributes
     has agency_assignments(:agency_id), :as => :agency_ids
@@ -369,16 +356,6 @@ class Entry < ApplicationModel
     entry_type != 'Unknown'
   end
   
-  def most_recent_regulatory_plan
-    RegulatoryPlan.first(:conditions => ["regulation_id_number = ?", regulation_id_number], :order => "regulatory_plans.issue DESC")
-  end
-  
-  def significant?
-    if most_recent_regulatory_plan
-      most_recent_regulatory_plan.significant?
-    end
-  end
-  
   def recalculate_agencies!
     agency_name_assignments.map do |agency_name_assignment|
       agency_name_assignment.create_agency_assignment
@@ -389,10 +366,28 @@ class Entry < ApplicationModel
     self[:lede_photo_candidates] ? YAML::load(self[:lede_photo_candidates]) : []
   end
   
+  def regulation_id_numbers=(rins)
+    @regulation_id_numbers = rins
+    self.entry_regulation_id_numbers = rins.map do |rin|
+      entry_regulation_id_numbers.to_a.find{|erin| erin.regulation_id_number == rin} || EntryRegulationIdNumber.new(:regulation_id_number => rin)
+    end
+    rins
+  end
+  
+  def regulation_id_numbers
+    @rins || self.entry_regulation_id_numbers.map(&:regulation_id_number)
+  end
+  
+  def current_regulatory_plans
+    RegulatoryPlan.in_current_issue.all(:conditions => {:regulation_id_number => regulation_id_numbers})
+  end
+  
   private
   
   def set_document_file_path
     self.document_file_path = document_number.sub(/-/,'').scan(/.{0,3}/).reject(&:blank?).join('/') if document_number.present?
+    
+    true
   end
   
   def curated_attributes_are_not_too_long
