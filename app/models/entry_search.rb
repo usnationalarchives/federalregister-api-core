@@ -22,6 +22,10 @@ class EntrySearch < ApplicationSearch
     docket
   end
   
+  define_filter :significant, :sphinx_type => :with, :label => "Signficance" do 
+    "Associated Unified Agenda Deemed Significant by OIRA"
+  end
+  
   define_place_filter :place_ids
   
   attr_reader :start_date, :end_date, :date
