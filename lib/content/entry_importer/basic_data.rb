@@ -1,6 +1,6 @@
 module Content::EntryImporter::BasicData
   extend Content::EntryImporter::Utils
-  provides :volume, :title, :toc_subject, :toc_doc, :citation, :regulation_id_number, :start_page, :end_page, :length, :type, :genre, :part_name, :granule_class, :abstract, :dates, :action, :contact, :docket_id
+  provides :volume, :title, :toc_subject, :toc_doc, :citation, :regulation_id_numbers, :start_page, :end_page, :length, :type, :genre, :part_name, :granule_class, :abstract, :dates, :action, :contact, :docket_id
   
   def volume
     mods_file.volume
@@ -28,9 +28,9 @@ module Content::EntryImporter::BasicData
     simple_node_value('identifier[type="preferred citation"]')
   end
   
-  def regulation_id_number
-    regulation_id_number = simple_node_value('identifier[type="regulation ID number"]')
-    regulation_id_number.sub!(/RIN /, '') if regulation_id_number.present?
+  def regulation_id_numbers
+    regulation_id_numbers = simple_node_values('identifier[type="regulation ID number"]')
+    regulation_id_numbers.map{|rin| rin.sub(/RIN /, '')}
   end
   
   def start_page
@@ -85,5 +85,9 @@ module Content::EntryImporter::BasicData
   
   def simple_node_value(css_selector)
     mods_node.css(css_selector).first.try(:content)
+  end
+  
+  def simple_node_values(css_selector)
+    mods_node.css(css_selector).map(&:content)
   end
 end
