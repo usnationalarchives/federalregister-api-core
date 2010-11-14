@@ -210,6 +210,7 @@ class Entry < ApplicationModel
     indexes "LOAD_FILE(CONCAT('#{RAILS_ROOT}/data/raw/', document_file_path, '.txt'))", :as => :full_text
     indexes granule_class, :as => :type, :facet => true
     indexes entry_regulation_id_numbers(:regulation_id_number)
+    indexes docket_id
     
     # attributes
     has agency_assignments(:agency_id), :as => :agency_ids
