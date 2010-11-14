@@ -213,6 +213,7 @@ class Entry < ApplicationModel
     indexes docket_id
     
     # attributes
+    has significant
     has agency_assignments(:agency_id), :as => :agency_ids
     has topic_assignments(:topic_id),   :as => :topic_ids
     has section_assignments(:section_id), :as => :section_ids
