@@ -180,6 +180,8 @@ ActiveRecord::Schema.define(:version => 20101111153856) do
     t.string  "regulation_id_number"
   end
 
+  add_index "entry_regulation_id_numbers", ["entry_id", "regulation_id_number"], :name => "index"
+
   create_table "events", :force => true do |t|
     t.integer "entry_id"
     t.date    "date"
