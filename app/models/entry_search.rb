@@ -18,6 +18,10 @@ class EntrySearch < ApplicationSearch
     Entry::ENTRY_TYPES[type]
   end
   
+  define_filter :docket_id, :phrase => true, :label => "Agency Docket" do |docket|
+    docket
+  end
+  
   define_place_filter :place_ids
   
   attr_reader :start_date, :end_date, :date
