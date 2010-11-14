@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101113192756) do
+ActiveRecord::Schema.define(:version => 20101114220648) do
 
   create_table "agencies", :force => true do |t|
     t.integer  "parent_id"
@@ -131,7 +131,7 @@ ActiveRecord::Schema.define(:version => 20101113192756) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.text     "slug"
-    t.boolean  "delta",                                       :default => true, :null => false
+    t.boolean  "delta",                                       :default => true,  :null => false
     t.string   "source_text_url"
     t.string   "regulationsdotgov_id"
     t.string   "comment_url"
@@ -141,8 +141,6 @@ ActiveRecord::Schema.define(:version => 20101113192756) do
     t.integer  "citing_entries_count",                        :default => 0
     t.string   "document_file_path"
     t.datetime "full_text_updated_at"
-    t.string   "cfr_title"
-    t.string   "cfr_part"
     t.string   "curated_title"
     t.string   "curated_abstract",             :limit => 500
     t.integer  "lede_photo_id"
@@ -167,6 +165,14 @@ ActiveRecord::Schema.define(:version => 20101113192756) do
   add_index "entries", ["raw_text_updated_at"], :name => "index_entries_on_raw_text_updated_at"
   add_index "entries", ["significant"], :name => "index_entries_on_significant"
   add_index "entries", ["volume", "start_page", "end_page"], :name => "index_entries_on_volume_and_start_page_and_end_page"
+
+  create_table "entry_cfr_affected_parts", :force => true do |t|
+    t.integer "entry_id"
+    t.integer "title"
+    t.integer "part"
+  end
+
+  add_index "entry_cfr_affected_parts", ["entry_id"], :name => "index_entry_cfr_affected_parts_on_entry_id"
 
   create_table "entry_page_views", :force => true do |t|
     t.integer  "entry_id"
