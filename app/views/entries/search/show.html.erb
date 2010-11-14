@@ -5,7 +5,7 @@
 
 <% unless @search.valid? %>
 <ul class="errors">
-  <% @search.errors.each do |err| %>
+  <% @search.errors.values.each do |err| %>
   <li><%= err %></li>
   <% end %>
 </ul>
