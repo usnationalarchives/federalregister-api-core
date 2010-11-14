@@ -5,6 +5,7 @@ class Admin::Issues::Sections::HighlightsController < AdminController
     @section_highlight = SectionHighlight.new(params[:section_highlight])
     @section_highlight.section = @section
     @section_highlight.publication_date = @publication_date
+    @section_highlight.new_position = 1
     @section_highlight.save
   end
   
