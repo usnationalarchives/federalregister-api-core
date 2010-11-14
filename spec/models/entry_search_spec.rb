@@ -9,6 +9,14 @@ describe EntrySearch do
     end
   end
   
+  describe 'significant' do
+    it "populates sphinx `with`" do
+      search = EntrySearch.new()
+      search.significant = 1
+      search.with.should == {:significant => [1]}
+    end
+  end
+  
   describe 'regulation_id_number' do
     it "populates sphinx `conditions` and properly quotes" do
       search = EntrySearch.new()
