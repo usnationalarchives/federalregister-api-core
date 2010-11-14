@@ -1,4 +1,5 @@
 <% f.inputs do %>
+  <%= f.input :type, :label => "Document Category", :as => :check_boxes, :collection => EntrySearch::TYPES %>
   <%= f.input :docket_id, :label => "Agency Docket" %>
   <%= f.input :regulation_id_number, :label => "Regulation ID Number" %>
   <%= f.input :significant, :as => :boolean, :label => "Deemed Significant by OIRA" %>

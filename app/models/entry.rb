@@ -208,12 +208,12 @@ class Entry < ApplicationModel
     indexes title
     indexes abstract
     indexes "LOAD_FILE(CONCAT('#{RAILS_ROOT}/data/raw/', document_file_path, '.txt'))", :as => :full_text
-    indexes granule_class, :as => :type, :facet => true
     indexes entry_regulation_id_numbers(:regulation_id_number)
     indexes docket_id
     
     # attributes
     has significant
+    has "CRC32(granule_class)", :as => :type, :type => :integer
     has agency_assignments(:agency_id), :as => :agency_ids
     has topic_assignments(:topic_id),   :as => :topic_ids
     has section_assignments(:section_id), :as => :section_ids
