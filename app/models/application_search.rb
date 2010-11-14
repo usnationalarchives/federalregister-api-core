@@ -238,19 +238,34 @@ class ApplicationSearch
   end
   
   def count
+    model.search_count(@term,
+      {
+        :page => @page,
+        :per_page => @per_page,
+        :order => order_clause,
+        :with => with,
+        :with_all => with_all,
+        :conditions => sphinx_conditions,
+        :match_mode => :extended,
+        :sort_mode => :extended
+      }.merge(find_options)
+    )
+  end
+  
+  def term_count
     model.search_count(@term, :match_mode => :extended)
   end
   
   def entry_count
-    EntrySearch.new(:conditions => {:term => @term}).count
+    EntrySearch.new(:conditions => {:term => @term}).term_count
   end
   
   def event_count
-    EventSearch.new(:conditions => {:term => @term}).count
+    EventSearch.new(:conditions => {:term => @term}).term_count
   end
   
   def regulatory_plan_count
-    RegulatoryPlanSearch.new(:conditions => {:term => @term}).count
+    RegulatoryPlanSearch.new(:conditions => {:term => @term}).term_count
   end
   
   private
