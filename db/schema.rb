@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101111153856) do
+ActiveRecord::Schema.define(:version => 20101113192756) do
 
   create_table "agencies", :force => true do |t|
     t.integer  "parent_id"
@@ -149,6 +149,7 @@ ActiveRecord::Schema.define(:version => 20101111153856) do
     t.text     "lede_photo_candidates"
     t.string   "docket_id"
     t.datetime "raw_text_updated_at"
+    t.boolean  "significant",                                 :default => false
   end
 
   add_index "entries", ["citation"], :name => "index_entries_on_citation"
@@ -164,6 +165,7 @@ ActiveRecord::Schema.define(:version => 20101111153856) do
   add_index "entries", ["publication_date"], :name => "index_entries_on_agency_id_and_publication_date"
   add_index "entries", ["publication_date"], :name => "index_entries_on_publication_date_and_agency_id"
   add_index "entries", ["raw_text_updated_at"], :name => "index_entries_on_raw_text_updated_at"
+  add_index "entries", ["significant"], :name => "index_entries_on_significant"
   add_index "entries", ["volume", "start_page", "end_page"], :name => "index_entries_on_volume_and_start_page_and_end_page"
 
   create_table "entry_page_views", :force => true do |t|
