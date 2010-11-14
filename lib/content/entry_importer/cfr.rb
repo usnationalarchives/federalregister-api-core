@@ -1,21 +1,22 @@
 module Content::EntryImporter::CFR
   extend Content::EntryImporter::Utils
-  provides :cfr_title, :cfr_part
+  provides :affected_cfr_titles_and_parts
   
-  def cfr_node
-    @cfr_node ||= mods_node.xpath('./xmlns:extension/xmlns:cfr').first if mods_node
+  def affected_cfr_titles_and_parts
+    affected_cfr_parts = []
+    
+    cfr_nodes.each do |cfr_node|
+      cfr_node.xpath('./xmlns:part').each do |part_node|
+        affected_cfr_parts << [ cfr_node['title'], part_node['number'] ]
+      end
+    end
+    
+    affected_cfr_parts
   end
   
-  def cfr_title
-    cfr_node['title'] if cfr_node
-  end
+  private
   
-  def part_node
-    @part_node ||= cfr_node.xpath('./xmlns:part').first if cfr_node
+  def cfr_nodes
+    @cfr_node ||= mods_node.xpath('./xmlns:extension/xmlns:cfr') if mods_node
   end
-  
-  def cfr_part
-    part_node['number'] if part_node
-  end
-  
 end
