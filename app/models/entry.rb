@@ -32,18 +32,16 @@
   checked_regulationsdotgov_at :datetime
   volume                       :integer(4)
   full_xml_updated_at          :datetime
-  regulation_id_number         :string(255)
   citing_entries_count         :integer(4)      default(0)
   document_file_path           :string(255)
   full_text_updated_at         :datetime
-  cfr_title                    :string(255)
-  cfr_part                     :string(255)
   curated_title                :string(255)
   curated_abstract             :string(500)
   lede_photo_id                :integer(4)
   lede_photo_candidates        :text
   docket_id                    :string(255)
   raw_text_updated_at          :datetime
+  significant                  :boolean(1)
 
 =end Schema Information
 
