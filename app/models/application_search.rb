@@ -95,7 +95,7 @@ class ApplicationSearch
     name_definer ||= Proc.new{|id| filter_name.to_s.sub(/_ids?$/,'').classify.constantize.find_by_id(id).try(:name) }
     
     define_method "#{filter_name}=" do |val|
-      if val.present? && (val.is_a?(String) || val.is_a?(Fixnum) || val.is_a?(Array))
+      if (val.present? && (val.is_a?(String) || val.is_a?(Fixnum))) || (val.is_a?(Array) && !val.all?(&:blank?))
         instance_variable_set("@#{filter_name}", val)
         if val.is_a?(Array)
           val = val.reject(&:blank?)
