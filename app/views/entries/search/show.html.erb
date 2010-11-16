@@ -19,7 +19,7 @@
   <%# TODO HELP-RUBY i know this doesn't go here. just wanted to stash it somewhere  %>
   <!-- <li><%#= sparkline(:data => @search.date_distribution.to_a.sort_by{|date, count| date}.map{|date, count| count}, :alt => "Monthly Distribution" ) %></li> -->
   
-  <%= render :esi => entries_search_facets_path(params.except(:action).merge(:facet => 'type')) %>
+  <%# render :esi => entries_search_facets_path(params.except(:action).merge(:facet => 'type')) %>
   <%= render :esi => entries_search_facets_path(params.except(:action).merge(:facet => 'section')) %>
   <%= render :esi => entries_search_facets_path(params.except(:action).merge(:facet => 'agency')) unless @search.agency_ids.present? %>
   <%= render :esi => entries_search_facets_path(params.except(:action).merge(:facet => 'topic')) %>
