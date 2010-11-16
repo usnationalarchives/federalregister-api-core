@@ -92,14 +92,16 @@ class ApplicationSearch
   def self.define_filter(filter_name, options = {}, &name_definer)
     attr_reader filter_name
     
-    name_definer ||= Proc.new{|id| filter_name.to_s.sub(/_ids?$/,'').classify.constantize.find_by_id(id).try(:name) }
+    # refactor to partials...
+    name_definer ||= Proc.new{|*ids| filter_name.to_s.sub(/_ids?$/,'').classify.constantize.find(ids).map(&:name).to_sentence(:two_words_connector => ' or ', :last_word_connector => ', or ') }
     
     define_method "#{filter_name}=" do |val|
       if (val.present? && (val.is_a?(String) || val.is_a?(Fixnum))) || (val.is_a?(Array) && !val.all?(&:blank?))
         instance_variable_set("@#{filter_name}", val)
         if val.is_a?(Array)
-          val = val.reject(&:blank?)
+          val.reject!(&:blank?)
         end
+        
         add_filter options.merge(:value => val, :condition => filter_name, :name_definer => name_definer, :name => options[:name])
       end
     end
@@ -199,8 +201,7 @@ class ApplicationSearch
   def with
     with = {}
     @filters.select{|f| f.sphinx_type == :with }.each do |filter|
-      with[filter.sphinx_attribute] ||= []
-      with[filter.sphinx_attribute] << filter.sphinx_value
+      with[filter.sphinx_attribute] = filter.sphinx_value
     end
     with
   end
