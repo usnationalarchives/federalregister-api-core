@@ -1,4 +1,10 @@
 <% f.inputs do %>
+  <% f.fields_for :publication_date, f.object.publication_date do |publication_date_f| %>
+    <%= publication_date_f.input :is %>
+    <%= publication_date_f.input :year, :as => :select, :collection => (1994..Issue.current.year) %>
+    <%= publication_date_f.input :gte %>
+    <%= publication_date_f.input :lte %>
+  <% end %>
   <%# Replace with AJAX-y input %>
   <%= f.input :agency_ids, :as => :select, :input_html => {:multiple => true}, :collection => Agency.all %>
   <%= f.input :type, :label => "Document Category", :as => :check_boxes, :collection => EntrySearch::TYPES %>

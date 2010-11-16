@@ -99,6 +99,10 @@ class Issue < ApplicationModel
     eventful_entries_search.results.size
   end
   
+  def year
+    publication_date.to_s(:year).to_i
+  end
+  
   private
   
   def eventful_entries_search

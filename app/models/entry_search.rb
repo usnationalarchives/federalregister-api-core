@@ -8,6 +8,42 @@ class EntrySearch < ApplicationSearch
       title.to_i * 100000 + part.to_i
     end
   end
+  
+  class DateSelector
+    attr_accessor :is, :gte, :lte, :year
+    attr_reader :sphinx_value, :filter_name
+    
+    def initialize(hsh)
+      @is = hsh[:is]
+      @gte = hsh[:gte]
+      @lte = hsh[:lte]
+      @year = hsh[:year].try(:to_i)
+      
+      if @is.present?
+        date = Date.parse(@is)
+        @sphinx_value = date.to_time.utc.beginning_of_day.to_i .. date.to_time.utc.end_of_day.to_i
+        @filter_name = "on #{date}"
+      elsif @year.present?
+        date = Date.parse("#{@year}-01-01")
+        @sphinx_value = date.to_time.utc.beginning_of_day.to_i .. date.end_of_year.to_time.utc.end_of_day.to_i
+        @filter_name = "in #{@year}"
+      else
+        start_date = if hsh[:gte].present?
+                       Date.parse(hsh[:gte])
+                     else
+                       Date.parse('1994-01-01')
+                     end
+        end_date = if hsh[:lte].present?
+                     Date.parse(hsh[:lte])
+                   else
+                     Issue.current.try(:publication_date) || Date.current
+                   end
+        @sphinx_value = start_date.to_time.utc.beginning_of_day.to_i .. end_date.to_time.utc.end_of_day.to_i
+        @filter_name = "from #{start_date} to #{end_date}"
+      end
+    end
+  end
+  
   TYPES = [
     ['Rule',                  'RULE'    ], 
     ['Proposed Rule',         'PRORULE' ], 
@@ -43,6 +79,22 @@ class EntrySearch < ApplicationSearch
   end
   
   define_place_filter :place_ids
+  attr_reader :cfr, :publication_date
+
+  def publication_date=(hsh)
+    # TODO :error handling
+    if hsh.values.any?(&:present?)
+      @publication_date = DateSelector.new(hsh)
+      add_filter(
+        :value => @publication_date.sphinx_value,
+        :name => @publication_date.filter_name,
+        :condition => :date,
+        :label => "Published",
+        :sphinx_type => :conditions,
+        :sphinx_attribute => :publication_date
+      )
+    end
+  end
   
   def cfr=(hsh)
     if hsh.present? && hsh.values.present?
@@ -57,67 +109,6 @@ class EntrySearch < ApplicationSearch
           :label => "Affected CFR Part",
           :sphinx_type => :with
         )
-      end
-    end
-  end
-  attr_reader :cfr, :start_date, :end_date, :date
-  
-  def date=(val)
-    if val.present?
-      @date = val
-      begin
-        parsed_val = Date.parse(val)
-      rescue
-        @errors[:date] = "Could not understand publication date."
-      else
-        add_filter(
-          :value => parsed_val.to_time.utc.beginning_of_day.to_i .. parsed_val.to_time.utc.end_of_day.to_i,
-          :name => "on #{parsed_val}",
-          :condition => :date,
-          :label => "Published",
-          :sphinx_type => :conditions,
-          :sphinx_attribute => :publication_date
-        )
-      end
-    end
-  end
-  
-  def start_date=(val)
-    if val.present?
-      @start_date = val
-      begin
-        parsed_val = Date.parse(val)
-      rescue
-        @errors[:start_date] = "Could not understand start date."
-      else
-        days_ago = [30,90,365].find do |n|
-          n.days.ago.to_date == parsed_val
-        end
-        
-        if days_ago.present?
-          name = "in the last #{days_ago} days"
-        else
-          name = "since #{parsed_val}"
-        end
-        
-        add_filter(
-          :value => parsed_val.to_time.utc.beginning_of_day.to_i .. end_date.utc.end_of_day.to_i,
-          :name => name,
-          :condition => :start_date,
-          :label => "Published",
-          :sphinx_type => :conditions,
-          :sphinx_attribute => :publication_date
-        )
-      end
-    end
-  end
-  
-  def end_date=(val)
-    if val.present?
-      begin
-        @end_date = Date.parse(val).to_time
-      rescue
-        @errors[:end_date] = "Could not understand end date."
       end
     end
   end
@@ -262,6 +253,5 @@ class EntrySearch < ApplicationSearch
   def set_defaults(options)
     @within = '25'
     @order = options[:order] || 'relevant'
-    @end_date = Issue.current.try(:publication_date).try(:to_time) || Time.current
   end
 end
