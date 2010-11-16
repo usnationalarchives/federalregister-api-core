@@ -220,6 +220,7 @@ class Entry < ApplicationModel
     has place_determinations(:place_id), :as => :place_ids
     
     has publication_date
+    has effective_date(:date), :as => :effective_date
     
     join entry_cfr_affected_parts
     
