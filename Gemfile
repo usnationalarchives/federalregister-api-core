@@ -73,4 +73,6 @@ group :test do
   
   gem 'cucumber', '0.9.2'
   gem 'mechanize', '1.0.0'
+  
+  gem 'ci_reporter', '1.6.3'
 end
