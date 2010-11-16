@@ -27,6 +27,14 @@ describe EntrySearch do
     it "collapses sunlight and notices"
   end
   
+  describe 'cfr' do
+    it "populates sphinx `with` using the custom citation format" do
+      search = EntrySearch.new
+      search.cfr = {:title => '10', :part => '101'}
+      search.with.should == {:cfr_affected_parts => [1000101]}
+    end
+  end
+  
   describe 'regulation_id_number' do
     it "populates sphinx `conditions` and properly quotes" do
       search = EntrySearch.new()

@@ -1,4 +1,13 @@
 class EntrySearch < ApplicationSearch
+  class CFR < Struct.new(:title,:part)
+    def citation
+      "#{title} CFR #{part}"
+    end
+    
+    def sphinx_citation
+      title.to_i * 100000 + part.to_i
+    end
+  end
   TYPES = [
     ['Rule',                  'RULE'    ], 
     ['Proposed Rule',         'PRORULE' ], 
@@ -35,7 +44,23 @@ class EntrySearch < ApplicationSearch
   
   define_place_filter :place_ids
   
-  attr_reader :start_date, :end_date, :date
+  def cfr=(hsh)
+    if hsh.present? && hsh.values.present?
+      @cfr = CFR.new(hsh[:title], hsh[:part])
+      
+      # TODO: error handling
+      if @cfr.title.present? && @cfr.part.present?
+        add_filter(
+          :value => @cfr.sphinx_citation,
+          :name => @cfr.citation,
+          :sphinx_attribute => :cfr_affected_parts,
+          :label => "Affected CFR Part",
+          :sphinx_type => :with
+        )
+      end
+    end
+  end
+  attr_reader :cfr, :start_date, :end_date, :date
   
   def date=(val)
     if val.present?
