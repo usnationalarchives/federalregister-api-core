@@ -213,12 +213,15 @@ class Entry < ApplicationModel
     # attributes
     has significant
     has "CRC32(granule_class)", :as => :type, :type => :integer
+    has "entry_cfr_affected_parts.title * 100000 + entry_cfr_affected_parts.part", :as => :cfr_affected_parts, :type => :integer
     has agency_assignments(:agency_id), :as => :agency_ids
     has topic_assignments(:topic_id),   :as => :topic_ids
     has section_assignments(:section_id), :as => :section_ids
     has place_determinations(:place_id), :as => :place_ids
     
     has publication_date
+    
+    join entry_cfr_affected_parts
     
     set_property :field_weights => {
       "title" => 100,
