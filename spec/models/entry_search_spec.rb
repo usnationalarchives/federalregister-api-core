@@ -5,7 +5,7 @@ describe EntrySearch do
     it "populates sphinx `with`" do
       search = EntrySearch.new()
       search.agency_ids = [1,2]
-      search.with.should == {:agency_ids => [[1,2]]}
+      search.with.should == {:agency_ids => [1,2]}
     end
   end
   
@@ -13,7 +13,7 @@ describe EntrySearch do
     it "populates sphinx `with`" do
       search = EntrySearch.new()
       search.significant = 1
-      search.with.should == {:significant => [1]}
+      search.with.should == {:significant => 1}
     end
   end
   
@@ -21,7 +21,7 @@ describe EntrySearch do
     it "populates sphinx `with`, CRC32 escaping" do
       search = EntrySearch.new
       search.type = ['RULE', 'PRORULE']
-      search.with.should == {:type => [['RULE'.to_crc32, 'PRORULE'.to_crc32]]}
+      search.with.should == {:type => ['RULE'.to_crc32, 'PRORULE'.to_crc32]}
     end
     
     it "collapses sunlight and notices"
@@ -31,7 +31,7 @@ describe EntrySearch do
     it "populates sphinx `with` using the custom citation format" do
       search = EntrySearch.new
       search.cfr = {:title => '10', :part => '101'}
-      search.with.should == {:cfr_affected_parts => [1000101]}
+      search.with.should == {:cfr_affected_parts => 1000101}
     end
   end
   
