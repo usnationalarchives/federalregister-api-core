@@ -3,4 +3,8 @@
   <%= f.input :docket_id, :label => "Agency Docket" %>
   <%= f.input :regulation_id_number, :label => "Regulation ID Number" %>
   <%= f.input :significant, :as => :boolean, :label => "Deemed Significant by OIRA", :unchecked_value => '' %>
+  <% f.fields_for :cfr, f.object.cfr do |cfr_f| %>
+    <%= cfr_f.input :title %>
+    <%= cfr_f.input :part %>
+  <% end %>
 <% end %>
