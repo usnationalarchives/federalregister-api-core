@@ -23,8 +23,6 @@
   <%= render :esi => entries_search_facets_path(params.except(:action).merge(:facet => 'section')) %>
   <%= render :esi => entries_search_facets_path(params.except(:action).merge(:facet => 'agency')) unless @search.agency_ids.present? %>
   <%= render :esi => entries_search_facets_path(params.except(:action).merge(:facet => 'topic')) %>
-  
-  <%= render :partial => 'search/location_form', :locals => {:search => @search } %>
 </div>
 
 <%= render :esi => entries_search_results_path(params.except(:action)) %>
