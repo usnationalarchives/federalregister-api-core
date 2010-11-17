@@ -1,18 +1,41 @@
 <% f.inputs do %>
   <% f.fields_for :publication_date, f.object.publication_date do |publication_date_f| %>
-    <%= publication_date_f.input :is %>
-    <%= publication_date_f.input :year, :as => :select, :collection => (1994..Issue.current.year) %>
-    <%= publication_date_f.input :gte %>
-    <%= publication_date_f.input :lte %>
+    <% f.inputs :name => "Publication Date" do %>
+      <%= publication_date_f.input :is %>
+      <%= publication_date_f.input :year,
+                                   :as => :select,
+                                   :collection => (1994..Issue.current.year) %>
+      <%= publication_date_f.input :gte,
+                                   :label => "On or after" %>
+      <%= publication_date_f.input :lte,
+                                   :label => "On or before" %>
+    <% end %>
   <% end %>
-  <%# Replace with AJAX-y input %>
-  <%= f.input :agency_ids, :as => :select, :input_html => {:multiple => true}, :collection => Agency.all %>
-  <%= f.input :type, :label => "Document Category", :as => :check_boxes, :collection => EntrySearch::TYPES %>
-  <%= f.input :docket_id, :label => "Agency Docket" %>
-  <%= f.input :regulation_id_number, :label => "Regulation ID Number" %>
-  <%= f.input :significant, :as => :boolean, :label => "Deemed Significant by OIRA", :unchecked_value => '' %>
+  
+  <%= f.input :agency_ids,
+              :as => :select,
+              :label => "Agencies",
+              :include_blank => false,
+              :input_html => {:multiple => true},
+              :value_method => Proc.new{|a| a.id.to_s},
+              :collection => Agency.all %>
+  <%= f.input :type,
+              :label => "Document Category",
+              :as => :check_boxes,
+              :collection => EntrySearch::TYPES %>
+  <%= f.input :docket_id,
+              :label => "Agency Docket" %>
+  <%= f.input :regulation_id_number,
+              :label => "Regulation ID Number" %>
+  <%= f.input :significant,
+              :as => :boolean,
+              :label => "Deemed Significant by OIRA",
+              :unchecked_value => '' %>
+  
   <% f.fields_for :cfr, f.object.cfr do |cfr_f| %>
-    <%= cfr_f.input :title %>
-    <%= cfr_f.input :part %>
+    <% cfr_f.inputs :name => "Affect CFR Part" do %>
+      <%= cfr_f.input :title %>
+      <%= cfr_f.input :part %>
+    <% end %>
   <% end %>
 <% end %>
