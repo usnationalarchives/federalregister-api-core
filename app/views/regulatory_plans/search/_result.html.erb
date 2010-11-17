@@ -20,8 +20,8 @@
       end %></span>
     
     <% entries = regulatory_plan.entries.most_recent(5) %>
-    <% num_entries = regulatory_plan.entries.count %>
     <% if entries.present? %>
+    <% num_entries = regulatory_plan.entries.count %>
     <div class="aside_box">
       <h5>Articles associated with this Unified Agenda</h5>
       <ul class="article_list">
