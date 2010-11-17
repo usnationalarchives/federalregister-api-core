@@ -57,6 +57,10 @@ class RegulatoryPlan < ApplicationModel
   has_many :agency_assignments, :as => :assignable
   has_many :agencies, :through => :agency_assignments, :extend => Agency::AssociationExtensions
   
+  def entries
+    Entry.with_regulation_id_number(self.regulation_id_number)
+  end
+  
   define_index do
     # Will require a index rebuild when new regulatory plan issue comes in...
     where "regulatory_plans.issue = '#{RegulatoryPlan.current_issue}'"
