@@ -198,6 +198,10 @@ class Entry < ApplicationModel
     scoped(:conditions => {:granule_class => type})
   end
   
+  def self.with_regulation_id_number(rin)
+    scoped(:conditions => {:entry_regulation_id_numbers => {:regulation_id_number => rin}}, :joins => :entry_regulation_id_numbers)
+  end
+  
   def entry_type 
     ENTRY_TYPES[granule_class]
   end
