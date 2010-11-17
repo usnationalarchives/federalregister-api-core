@@ -100,7 +100,7 @@ class Issue < ApplicationModel
   end
   
   def year
-    publication_date.to_s(:year).to_i
+    publication_date.year
   end
   
   private
