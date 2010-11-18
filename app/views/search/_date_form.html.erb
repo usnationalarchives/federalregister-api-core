@@ -1,0 +1,15 @@
+<% f.fields_for attribute, f.object.send(attribute) do |date_f| %>
+  <% f.inputs :name => label do %>
+    <%= date_f.input :is,
+                     :input_html => {:placeholder => Date.current} %>
+    <%= date_f.input :year,
+                     :as => :select,
+                     :collection => (1994..Issue.current.year) %>
+    <%= date_f.input :gte,
+                     :label => "On or after",
+                     :input_html => {:placeholder => 1.year.ago.to_date} %>
+    <%= date_f.input :lte,
+                     :label => "On or before",
+                     :input_html => {:placeholder => Date.current} %>
+  <% end %>
+<% end %>

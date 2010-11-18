@@ -1,19 +1,4 @@
-<% f.fields_for :publication_date, f.object.publication_date do |publication_date_f| %>
-  <% f.inputs :name => "Publication Date" do %>
-    <%= publication_date_f.input :is,
-                                 :input_html => {:placeholder => Date.current} %>
-    <%= publication_date_f.input :year,
-                                 :as => :select,
-                                 :collection => (1994..Issue.current.year) %>
-    <%= publication_date_f.input :gte,
-                                 :label => "On or after",
-                                 :input_html => {:placeholder => 1.year.ago.to_date} %>
-    <%= publication_date_f.input :lte,
-                                 :label => "On or before",
-                                 :input_html => {:placeholder => Date.current} %>
-  <% end %>
-<% end %>
-
+<%= render :partial => "search/date_form", :locals => {:f => f, :attribute => :publication_date, :label => "Publication Date "} %>
 <% f.inputs do %>
   <%= f.input :agency_ids,
               :as => :select,
@@ -39,7 +24,7 @@
 <% end %>
 
 <% f.fields_for :cfr, f.object.cfr do |cfr_f| %>
-  <% cfr_f.inputs :name => "Affect CFR Part" do %>
+  <% cfr_f.inputs :name => "Affecting CFR Part" do %>
     <%= cfr_f.input :title,
                     :input_html => {:placeholder => '40'} %>
     <%= cfr_f.input :part,
