@@ -9,41 +9,6 @@ class EntrySearch < ApplicationSearch
     end
   end
   
-  class DateSelector
-    attr_accessor :is, :gte, :lte, :year
-    attr_reader :sphinx_value, :filter_name
-    
-    def initialize(hsh)
-      @is = hsh[:is]
-      @gte = hsh[:gte]
-      @lte = hsh[:lte]
-      @year = hsh[:year].try(:to_i)
-      
-      if @is.present?
-        date = Date.parse(@is)
-        @sphinx_value = date.to_time.utc.beginning_of_day.to_i .. date.to_time.utc.end_of_day.to_i
-        @filter_name = "on #{date}"
-      elsif @year.present?
-        date = Date.parse("#{@year}-01-01")
-        @sphinx_value = date.to_time.utc.beginning_of_day.to_i .. date.end_of_year.to_time.utc.end_of_day.to_i
-        @filter_name = "in #{@year}"
-      else
-        start_date = if hsh[:gte].present?
-                       Date.parse(hsh[:gte])
-                     else
-                       Date.parse('1994-01-01')
-                     end
-        end_date = if hsh[:lte].present?
-                     Date.parse(hsh[:lte])
-                   else
-                     Issue.current.try(:publication_date) || Date.current
-                   end
-        @sphinx_value = start_date.to_time.utc.beginning_of_day.to_i .. end_date.to_time.utc.end_of_day.to_i
-        @filter_name = "from #{start_date} to #{end_date}"
-      end
-    end
-  end
-  
   TYPES = [
     ['Rule',                  'RULE'    ], 
     ['Proposed Rule',         'PRORULE' ], 
@@ -79,22 +44,9 @@ class EntrySearch < ApplicationSearch
   end
   
   define_place_filter :place_ids
-  attr_reader :cfr, :publication_date
-
-  def publication_date=(hsh)
-    # TODO :error handling
-    if hsh.values.any?(&:present?)
-      @publication_date = DateSelector.new(hsh)
-      add_filter(
-        :value => @publication_date.sphinx_value,
-        :name => @publication_date.filter_name,
-        :condition => :date,
-        :label => "Published",
-        :sphinx_type => :conditions,
-        :sphinx_attribute => :publication_date
-      )
-    end
-  end
+  define_date_filter :publication_date, :label => "Publication Date"
+  
+  attr_reader :cfr
   
   def cfr=(hsh)
     if hsh.present? && hsh.values.present?
