@@ -168,11 +168,10 @@ class EntrySearch < ApplicationSearch
     [30,90,365].map do |n|
       value = n.days.ago.to_date.to_s
       Facet.new(
-        :value      => value,
+        :value      => {:gte => value},
         :name       => "Past #{n} days",
         :count      => count_in_last_n_days(n),
-        :on         => start_date == value,
-        :condition  => :start_date
+        :condition  => :publication_date
       )
     end
   end
