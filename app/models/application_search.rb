@@ -94,7 +94,7 @@ class ApplicationSearch
       @is = hsh[:is]
       @gte = hsh[:gte]
       @lte = hsh[:lte]
-      @year = hsh[:year].try(:to_i)
+      @year = hsh[:year].to_i if hsh[:year].present?
       
       if @is.present?
         date = Date.parse(@is)
@@ -105,18 +105,35 @@ class ApplicationSearch
         @sphinx_value = date.to_time.utc.beginning_of_day.to_i .. date.end_of_year.to_time.utc.end_of_day.to_i
         @filter_name = "in #{@year}"
       else
-        start_date = if hsh[:gte].present?
-                       Date.parse(hsh[:gte])
-                     else
-                       Date.parse('1994-01-01')
-                     end
-        end_date = if hsh[:lte].present?
-                     Date.parse(hsh[:lte])
-                   else
-                     Issue.current.try(:publication_date) || Date.current
-                   end
+        if @gte.present? && @lte.present?
+          @filter_name = "from #{start_date} to #{end_date}"
+        elsif @gte.present?
+          @filter_name = "on or after #{start_date}"
+        elsif @lte.present?
+          @filter_name = "on or before #{end_date}"
+        else
+          raise "FAIL"
+        end
+        
         @sphinx_value = start_date.to_time.utc.beginning_of_day.to_i .. end_date.to_time.utc.end_of_day.to_i
-        @filter_name = "from #{start_date} to #{end_date}"
+      end
+    end
+    
+    private
+    
+    def start_date
+      if @gte.present?
+        Date.parse(@gte)
+      else
+        Date.parse('1994-01-01')
+      end
+    end
+    
+    def end_date
+      if @lte.present?
+        Date.parse(@lte)
+      else
+        Issue.current.try(:publication_date) || Date.current
       end
     end
   end
