@@ -86,6 +86,41 @@ class ApplicationSearch
     end
   end
   
+  class DateSelector
+    attr_accessor :is, :gte, :lte, :year
+    attr_reader :sphinx_value, :filter_name
+    
+    def initialize(hsh)
+      @is = hsh[:is]
+      @gte = hsh[:gte]
+      @lte = hsh[:lte]
+      @year = hsh[:year].try(:to_i)
+      
+      if @is.present?
+        date = Date.parse(@is)
+        @sphinx_value = date.to_time.utc.beginning_of_day.to_i .. date.to_time.utc.end_of_day.to_i
+        @filter_name = "on #{date}"
+      elsif @year.present?
+        date = Date.parse("#{@year}-01-01")
+        @sphinx_value = date.to_time.utc.beginning_of_day.to_i .. date.end_of_year.to_time.utc.end_of_day.to_i
+        @filter_name = "in #{@year}"
+      else
+        start_date = if hsh[:gte].present?
+                       Date.parse(hsh[:gte])
+                     else
+                       Date.parse('1994-01-01')
+                     end
+        end_date = if hsh[:lte].present?
+                     Date.parse(hsh[:lte])
+                   else
+                     Issue.current.try(:publication_date) || Date.current
+                   end
+        @sphinx_value = start_date.to_time.utc.beginning_of_day.to_i .. end_date.to_time.utc.end_of_day.to_i
+        @filter_name = "from #{start_date} to #{end_date}"
+      end
+    end
+  end
+  
   attr_accessor :term, :order, :per_page
   attr_reader :errors, :filters
   
@@ -103,6 +138,27 @@ class ApplicationSearch
         end
         
         add_filter options.merge(:value => val, :condition => filter_name, :name_definer => name_definer, :name => options[:name])
+      end
+    end
+  end
+  
+  def self.define_date_filter(filter_name, options = {})
+    attr_reader filter_name
+
+    define_method "#{filter_name}=" do |hsh|
+      # TODO :error handling
+      if hsh.values.any?(&:present?)
+        selector = DateSelector.new(hsh)
+        instance_variable_set("@#{filter_name}", selector)
+        
+        add_filter(
+          :value => selector.sphinx_value,
+          :name => selector.filter_name,
+          :condition => :date,
+          :label => options[:label],
+          :sphinx_type => :conditions,
+          :sphinx_attribute => options[:sphinx_attribute] || filter_name
+        )
       end
     end
   end
