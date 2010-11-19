@@ -112,7 +112,7 @@ class ApplicationSearch
         elsif @lte.present?
           @filter_name = "on or before #{end_date}"
         else
-          raise "FAIL"
+          raise "invalid date format"
         end
         
         @sphinx_value = start_date.to_time.utc.beginning_of_day.to_i .. end_date.to_time.utc.end_of_day.to_i
