@@ -1,7 +1,8 @@
 class RegulatoryPlansController < ApplicationController
+  before_filter :load_regulatory_plan
+  
   def show
     cache_for 1.day
-    @regulatory_plan = RegulatoryPlan.find_by_regulation_id_number!(params[:regulation_id_number], :order => "issue DESC")
 
     if @regulatory_plan.slug != params[:slug]
       redirect_to regulatory_plan_path(@regulatory_plan), :status => :moved_permanently
@@ -23,12 +24,16 @@ class RegulatoryPlansController < ApplicationController
   
   def timeline
     cache_for 1.day
-    @regulatory_plan = RegulatoryPlan.find_by_regulation_id_number(params[:regulation_id_number], :order => "issue DESC")
     render :layout => false
   end
   
   def tiny_url
-    regulatory_plan = RegulatoryPlan.find_by_regulation_id_number!(params[:regulation_id_number], :order => "issue DESC")
-    redirect_to regulatory_plan_path(regulatory_plan), :status=>:moved_permanently
+    redirect_to regulatory_plan_path(@regulatory_plan), :status=>:moved_permanently
+  end
+  
+  private
+  
+  def load_regulatory_plan
+    @regulatory_plan = RegulatoryPlan.find_by_regulation_id_number!(params[:regulation_id_number], :order => "issue DESC")
   end
 end
