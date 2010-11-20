@@ -86,6 +86,11 @@ ActionController::Routing::Routes.draw do |map|
                       :controller => 'regulatory_plans',
                       :action     => 'show',
                       :conditions => { :method => :get }
+  map.connect 'regulations/:regulation_id_number.js',
+                      :controller => 'regulatory_plans',
+                      :action     => 'json_summary',
+                      :format     => 'js',
+                      :conditions => { :method => :get }
   map.short_regulatory_plan 'r/:regulation_id_number', :controller => 'regulatory_plans',
                                                        :action     => 'tiny_url',
                                                        :conditions => { :method => :get }
