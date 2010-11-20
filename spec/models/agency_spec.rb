@@ -38,18 +38,28 @@ describe Agency do
       @commission = Agency.create!(:name => "Commission on the Future of the United States Aerospace Industry")
       @international = Agency.create!(:name => "Agency for International Development")
       @office = Agency.create!(:name => "Administrative Office of United States Courts")
+      @prison = Agency.create!(:name => "Prison Bureau")
     end
     
     it "matches based on partial words" do
       Agency.named_approximately("Admin").should == [@office, @nasa]
     end
     
-    it "should ignore word order" do
+    it "ignores word order" do
       Agency.named_approximately("Administration Space").should == [@nasa]
     end
     
-    it "should match short_names" do
+    it "matches short_names" do
       Agency.named_approximately("NASA").should == [@nasa]
+    end
+    
+    it "ignores stop words" do
+      Agency.named_approximately("National Aeronautics & Space Administration").should == [@nasa]
+      Agency.named_approximately("The Administrative Office of United States Courts").should == [@office]
+    end
+    
+    it "removes trailing 's' characters" do
+      Agency.named_approximately("Bureau of Prisons").should == [@prison]
     end
     
     after(:each) do
