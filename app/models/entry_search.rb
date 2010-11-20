@@ -165,7 +165,7 @@ class EntrySearch < ApplicationSearch
   end
   
   def date_facets
-    [30,90,365].map do |n|
+    facets = [30,90,365].map do |n|
       value = n.days.ago.to_date.to_s
       Facet.new(
         :value      => {:gte => value},
@@ -173,6 +173,12 @@ class EntrySearch < ApplicationSearch
         :count      => count_in_last_n_days(n),
         :condition  => :publication_date
       )
+    end
+    
+    if facets.all?{|f| f.count == 0}
+      return []
+    else
+      facets
     end
   end
   memoize :date_facets
