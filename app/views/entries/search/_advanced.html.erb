@@ -2,13 +2,17 @@
 <%= render :partial => "search/date_form", :locals => {:f => f, :attribute => :effective_date, :label => "Effective Date "} %>
 
 <% f.inputs do %>
-  <%= f.input :agency_ids,
-              :as => :select,
-              :label => "Agencies",
-              :include_blank => false,
-              :input_html => {:multiple => true},
-              :value_method => Proc.new{|a| a.id.to_s},
-              :collection => Agency.all %>
+  <% if js_known_to_be_enabled? %>
+    <%# put hidden fields and stub for JS-variation here %>
+  <% else %>
+    <%= f.input :agency_ids,
+                :as => :select,
+                :label => "Agencies",
+                :include_blank => false,
+                :input_html => {:multiple => true},
+                :value_method => Proc.new{|a| a.id.to_s},
+                :collection => Agency.all %>
+  <% end %>
   <%= f.input :type,
               :label => "Document Category",
               :as => :check_boxes,
