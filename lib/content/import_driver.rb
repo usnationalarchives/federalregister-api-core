@@ -5,13 +5,10 @@ module Content
   
     def perform
       load "#{Rails.root}/Rakefile"
-    
-      if today_is_a_holiday?
-        puts "Holiday! Exiting."
-        exit
-      end
-    
-      if todays_import_is_complete?
+      
+      calculate_date_to_import!
+      
+      if import_is_complete?
         puts "Import already complete. Exiting."
         exit
       end
@@ -35,13 +32,13 @@ module Content
         remove_lock_file
       end
     end
-  
-    def todays_import_is_complete?
-      Issue.complete?(Time.current.to_date)
+    
+    def calculate_date_to_import!
+      ENV['DATE'] = Issue.next_date_to_import.to_s(:iso)
     end
   
-    def today_is_a_holiday?
-      Holiday.find_by_date(Time.current.to_date)
+    def import_is_complete?
+      Issue.complete?(ENV['DATE'])
     end
   
     def lock_file_already_exists?
@@ -57,15 +54,6 @@ module Content
   
     def remove_lock_file
       File.delete(lock_file_path)
-    end
-  
-    def clean_up_old_data
-      mods_path = Content::EntryImporter::ModsFile.new(Time.current.to_date).path
-      bulk_path = Content::EntryImporter::BulkdataFile.new(Time.current.to_date).path
-    
-      if File.exists?(mods_path) || File.exists?(bulk_path)
-        File.makedirs("#{Rails.root}/data/import_issues/#{Time.now}")
-      end
     end
   
     private
