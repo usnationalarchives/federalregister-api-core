@@ -8,7 +8,10 @@ class SearchController < ApplicationController
   
   def results
     cache_for 1.day
-    render :layout => false
+    respond_to do |wants|
+      wants.html { render :layout => false }
+      wants.js { render :json => {:count => @search.count} }
+    end
   end
   
   def facets
