@@ -82,7 +82,7 @@ ActionController::Routing::Routes.draw do |map|
                       :controller => 'regulatory_plans/search',
                       :action     => 'show',
                       :conditions => { :method => :get }
-  map.regulatory_plan 'regulations/:regulation_id_number/:slug',
+  map.regulatory_plan 'regulations/:regulation_id_number/:slug.:format',
                       :controller => 'regulatory_plans',
                       :action     => 'show',
                       :conditions => { :method => :get }
