@@ -70,7 +70,9 @@ class Agency < ApplicationModel
   
   # consider using sphinx instead...
   def self.named_approximately(name)
-    words = name.split(/\s+/)
+    words = name.downcase.split(/[^a-z]+/) - %w(a and & in for of on s the)
+    
+    words.map{|w| w.sub!(/s$/,'')}
     
     condition_sql = "(" + words.map{"agencies.name LIKE ?"}.join(" AND ") + ") OR (" + words.map{"agencies.short_name LIKE ?"}.join(" AND ") + ")"
     bind_params = words.map{|word|"%#{word}%"} * 2
