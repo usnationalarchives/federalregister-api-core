@@ -1,4 +1,5 @@
 <% title @regulatory_plan.title %>
+<% feed_autodiscovery regulatory_plan_url(@regulatory_plan, :format => :rss) %>
 
 <h1 class="title"><span>Unified Agenda <%= @regulatory_plan.regulation_id_number %></span></h1>
 
