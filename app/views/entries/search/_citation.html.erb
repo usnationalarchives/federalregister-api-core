@@ -12,7 +12,7 @@
       <div class="aside_box clear">
       
         <ul class="bullets">
-          <%= render :partial => 'citation_result', :collection => citation.matching_fr_entries, :as => :entry %>
+          <%= render :partial => 'citation_result', :collection => citation.matching_fr_entries, :as => :entry, :locals => {:page => citation.part_2.to_i} %>
         </ul>
       
       </div>
