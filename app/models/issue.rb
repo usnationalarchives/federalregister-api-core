@@ -46,6 +46,18 @@ class Issue < ApplicationModel
     !(date.wday == 0 || date.wday == 6 || Holiday.find_by_date(date))
   end
   
+  def self.next_date_to_import
+    date = Date.current
+    
+    while(true) do
+      if should_have_an_issue?(date)
+        return date
+      else
+        date = date + 1
+      end
+    end
+  end
+  
   def to_param
     publication_date.to_s(:db)
   end
