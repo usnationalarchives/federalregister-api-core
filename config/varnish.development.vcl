@@ -57,3 +57,21 @@ sub vcl_fetch {
         esi;
     }
 }
+
+# vcl_hash creates the key for varnish under which the object is stored. It is
+# possible to store the same url under 2 different keys, by making vcl_hash
+# create a different hash.
+sub vcl_hash {
+
+    # these 2 entries are the default ones used for vcl. Below we add our own.
+    set req.hash += req.url;
+    set req.hash += req.http.host;
+    
+    # Hash differently based on presence of javascript_enabled cookie.
+    if( req.url ~ "^/articles/search/header" && req.http.Cookie ~ "javascript_enabled=1" ) {
+        # add this fact to the hash
+        set req.hash += "javascript enabled";
+    }
+    
+    return(hash);
+}
