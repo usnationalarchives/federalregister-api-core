@@ -31,6 +31,14 @@ class RegulatoryPlansController < ApplicationController
     redirect_to regulatory_plan_path(@regulatory_plan), :status=>:moved_permanently
   end
   
+  def json_summary
+    respond_to do |wants|
+      wants.js do
+        render :json => {:name => @regulatory_plan.title}
+      end
+    end
+  end
+  
   private
   
   def load_regulatory_plan
