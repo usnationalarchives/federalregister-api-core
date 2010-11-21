@@ -36,10 +36,8 @@ $(document).ready(function () {
         }
     };
     
-    
     $('#entry_search_form select').blur(calculate_expected_results);
     $('#entry_search_form input[type=checkbox]').click(calculate_expected_results)
-    
     // basic check for pause between events
     var typewatch = (function(){
       var timer = 0;
@@ -54,6 +52,69 @@ $(document).ready(function () {
             calculate_expected_results();
         }, 500);
     });
+    
+    var display_rin_info = function(message) {
+        var input = $('#conditions_regulation_id_number');
+        
+        input.siblings('.inline-hints').remove();
+        
+        if(message) {
+            var node = $('<p class="inline-hints" />');
+            node.text(message);
+        
+            input.after(node);
+        }
+    }
+    
+    var cache_rin_name = function (rin, name) {
+        var input = $('#conditions_regulation_id_number');
+        var cache = input.data('name_cache') || {};
+        cache[rin] = name;
+        input.data('name_cache', cache);
+    }
+    
+    var load_rin_info = function() {
+        var input = $('#conditions_regulation_id_number');
+        var rin = input.val();
+        
+        if (rin.length == 9) {
+            var cache = input.data('name_cache') || {};
+            
+            if (cache[rin]) {
+                display_rin_info(cache[rin])
+            }
+            else {
+                display_rin_info('loading');
+            
+                var url = '/regulations/' + rin + '.js';
+                $.ajax({
+                    url : url,
+                    success : function(str) {
+                        var data = $.parseJSON(str);
+                        var name = data.name;
+                        cache_rin_name(rin,name);
+                        display_rin_info(name);
+                    },
+                    error : function() {
+                        var name = 'Not in current Unified Agenda'
+                        cache_rin_name(rin,name);
+                        display_rin_info(name);
+                    }
+                });
+            }
+        }
+        else {
+            display_rin_info('');
+        }
+    }
+    $('#conditions_regulation_id_number').blur(load_rin_info);
+    $('#conditions_regulation_id_number').keyup(function () {
+        // only trigger if stopped typing for more than half a second
+        typewatch(function () {
+            load_rin_info();
+        }, 500);
+    });
+    
     
     $('a.load_facet').live('click',
     function () {
