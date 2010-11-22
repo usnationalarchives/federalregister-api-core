@@ -4,7 +4,7 @@
                      :input_html => {:placeholder => Date.current} %>
     <%= date_f.input :year,
                      :as => :select,
-                     :collection => (1994..Issue.current.year) %>
+                     :collection => (1994..Issue.current.year).to_a.reverse %>
     <%= date_f.input :gte,
                      :label => "On or after",
                      :input_html => {:placeholder => 1.year.ago.to_date} %>
