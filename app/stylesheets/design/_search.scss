@@ -272,6 +272,7 @@ dd.next + dd.next {
   }
 .article_list li {
   border-bottom: 1px solid #EEEEEE;
+  float: none;
   list-style: none;
   margin: 0 0 1em 0;
   padding: 0 0 1em 35px;
@@ -385,4 +386,57 @@ ERRORS
   line-height: 30px;
   margin-left: 10px;
   padding-bottom: 0;
+  }
+  
+/******************************
+
+ADVANCED SEARCH
+
+******************************/
+
+#search .simple {
+  display: block;
+  }
+#search .advanced {
+  margin-top: 1em;
+  }  
+#search .formtastic li {
+  list-style: none;
+  }  
+#search .formtastic fieldset {
+  border: none;
+  border-bottom: 1px solid #ccc;
+  display: block;
+  margin: 2em 5em;
+  }
+#search .formtastic fieldset:last-child {
+  border-bottom: none;
+  }
+#search .formtastic fieldset fieldset,
+#search .formtastic fieldset fieldset ol,
+#search .formtastic fieldset fieldset .label label {
+  border: none;
+  margin: 0;
+  padding: 0;
+  }  
+#search .formtastic fieldset legend {
+  font-size: 1.5em;
+  font-weight: bold;
+  }  
+#search .formtastic fieldset .label {
+  float: none;
+  }
+#search .formtastic fieldset fieldset .label label {
+  color: #000;
+  margin: 0;
+  }  
+#search .formtastic fieldset li {
+  display: block;
+  overflow: hidden;
+  }
+#search .formtastic fieldset label {
+  font-size: 1em;
+  }
+#search .formtastic fieldset .check_boxes li {
+  display: inline;
   }  
