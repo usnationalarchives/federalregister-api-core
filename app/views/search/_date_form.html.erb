@@ -1,15 +1,33 @@
 <% f.fields_for attribute, f.object.send(attribute) do |date_f| %>
+  
   <% f.inputs :name => label do %>
+    <li>
+      <ol class="type_selector">
+        <li>
+          <label><input type="radio" name="pubdates" value="is" data-show-field="conditions_publication_date_is_input" />Is Exactly</label>
+        </li>
+        <li>
+          <label><input type="radio" name="pubdates" value="year" data-show-field="conditions_publication_date_year_input" />In Year</label>
+        </li>
+        <li>
+          <label><input type="radio" name="pubdates" value="range"  data-show-field="conditions_publication_date_gte_input conditions_publication_date_lte_input" /> Range</label>
+        </li>
+      </ol>
+    </li>
     <%= date_f.input :is,
-                     :input_html => {:placeholder => Date.current} %>
+                     :input_html => {:placeholder => Date.current},
+                     :wrapper_html => {:class => 'date'} %>
     <%= date_f.input :year,
                      :as => :select,
-                     :collection => (1994..Issue.current.year) %>
+                     :collection => (1994..Issue.current.year),
+                     :wrapper_html => {:class => 'date'} %>
     <%= date_f.input :gte,
                      :label => "On or after",
-                     :input_html => {:placeholder => 1.year.ago.to_date} %>
+                     :input_html => {:placeholder => 1.year.ago.to_date},
+                     :wrapper_html => {:class => 'date'} %>
     <%= date_f.input :lte,
                      :label => "On or before",
-                     :input_html => {:placeholder => Date.current} %>
+                     :input_html => {:placeholder => Date.current},
+                     :wrapper_html => {:class => 'date'} %>
   <% end %>
 <% end %>

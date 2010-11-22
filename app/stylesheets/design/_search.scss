@@ -394,44 +394,48 @@ ADVANCED SEARCH
 
 ******************************/
 
-#search .simple {
+.simple {
   display: block;
   }
-#search .advanced {
+.advanced {
   border-top: 1px solid #ddd;
   margin-top: 2em;
-  padding-top: 2em;
+  padding: 2em 5em 2em;
   }  
-#search .formtastic li {
+.formtastic li {
   list-style: none;
   margin-bottom: .5em;
   }  
-#search .formtastic fieldset {
+.formtastic fieldset {
   border: none;
-  border-top: 2px solid #5697CF;
   display: block;
-  margin: 0 5em;
   padding-left: 0;
   }
-#search .formtastic fieldset:last-child {
+.formtastic fieldset:last-child {
   border-bottom: none;
   }
-#search .formtastic fieldset fieldset,
-#search .formtastic fieldset fieldset ol {
+.formtastic fieldset fieldset,
+.formtastic fieldset fieldset ol {
   border: none;
   margin: 0;
   padding: 0;
   }
-#search .formtastic fieldset fieldset ol {
+.formtastic fieldset fieldset ol {
   margin-bottom: 0;
   }
-#search .formtastic fieldset legend {
+  
+  
+  
+  
+.formtastic fieldset legend {
   color: #5697cf;
-  font-size: 1.5em;
+  float: left;
+  font-size: 1.1em;
   font-weight: bold;
-  padding-right: .5em;
+  text-align: right;
+  width: 7em;
   }  
-#search .formtastic fieldset .label {
+.formtastic fieldset .label {
   color: #666;
   font-size: 1em;
   font-weight: normal;
@@ -439,29 +443,37 @@ ADVANCED SEARCH
   text-align: right;
   width: 10em;
   }
-#search .formtastic fieldset li {
-  display: block;
-  overflow: hidden;
+.formtastic fieldset li {
+  display: inline;
   }
-#search .formtastic fieldset label {
+.formtastic fieldset label {
   color: #666;
   font-size: 1em;
   margin-top: 0;
   margin-right: 1em;
   text-align: right;
-  width: 10em;
   }
-#search .formtastic fieldset .check_boxes li {
+.formtastic .string label,
+.formtastic .select label {
+  display: none;
+  }  
+.formtastic fieldset .date input {
+  width: 5em;
+  }  
+.formtastic fieldset .check_boxes li {
   display: inline;
   }
-#search .formtastic fieldset .check_boxes ol label,
-#search .formtastic fieldset li.boolean label {
+.formtastic fieldset .check_boxes ol label,
+.formtastic fieldset li.boolean label {
   width: auto;
   margin-left: 0;
   }
-#search .formtastic fieldset li.boolean {
+.formtastic fieldset li.boolean {
   margin-left: 11.75em;
   }
-#search .formtastic .inline-hints {
+.formtastic .inline-hints {
   padding-left: 10em;
-  }  
+  }
+.formtastic fieldset .type_selector label {
+  margin-right: 0;
+  }
