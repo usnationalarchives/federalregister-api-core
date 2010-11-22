@@ -410,11 +410,7 @@ ADVANCED SEARCH
   border: none;
   border-top: 2px solid #5697CF;
   display: block;
-<<<<<<< HEAD
-  margin: 2em 5em 0 5em;
-=======
   margin: 0 5em;
->>>>>>> 44c0e2f73d90a83ed1864edd76193205e12d9c18
   padding-left: 0;
   }
 #search .formtastic fieldset:last-child {
@@ -433,10 +429,7 @@ ADVANCED SEARCH
   color: #5697cf;
   font-size: 1.5em;
   font-weight: bold;
-<<<<<<< HEAD
-=======
   padding-right: .5em;
->>>>>>> 44c0e2f73d90a83ed1864edd76193205e12d9c18
   }  
 #search .formtastic fieldset .label {
   color: #666;
@@ -464,11 +457,6 @@ ADVANCED SEARCH
 #search .formtastic fieldset .check_boxes ol label,
 #search .formtastic fieldset li.boolean label {
   width: auto;
-<<<<<<< HEAD
-  }
-#search .formtastic fieldset li.boolean {
-  margin-left: 10em;
-=======
   margin-left: 0;
   }
 #search .formtastic fieldset li.boolean {
@@ -476,5 +464,4 @@ ADVANCED SEARCH
   }
 #search .formtastic .inline-hints {
   padding-left: 10em;
->>>>>>> 44c0e2f73d90a83ed1864edd76193205e12d9c18
   }  
