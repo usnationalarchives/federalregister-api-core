@@ -1,7 +1,7 @@
 <%= render :partial => "search/date_form", :locals => {:f => f, :attribute => :publication_date, :label => "Publication Date "} %>
 <%= render :partial => "search/date_form", :locals => {:f => f, :attribute => :effective_date, :label => "Effective Date "} %>
 
-<% f.inputs do %>
+<% f.inputs :name => ' something ' do %>
   <% if js_known_to_be_enabled? %>
     <%# put hidden fields and stub for JS-variation here %>
   <% else %>
@@ -16,7 +16,8 @@
   <%= f.input :type,
               :label => "Document Category",
               :as => :check_boxes,
-              :collection => EntrySearch::TYPES %>
+              :collection => EntrySearch::TYPES,
+              :wrapper_html => { :class => 'zerp'} %>
   <%= f.input :docket_id,
               :label => "Agency Docket",
               :input_html => {:placeholder => "EPA-HQ-OPPT-2005-0049"} %>
