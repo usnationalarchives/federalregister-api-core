@@ -163,4 +163,38 @@ $(document).ready(function () {
     $(".cfr li:first-child input").after("<span> CFR </span>");
     $(".zip li:first-child input").after("<span> within </span>");
     
+    $("#toggle_advanced").bind('click', function(event) {
+      event.preventDefault();
+      var isOpen = $(this).attr("data-state") == "open";
+      isOpen ? $(this).text("Show Advanced Search") : $(this).text("Hide Advanced Search");
+      isOpen ? $(this).attr("title", "Show Advanced Search") : $(this).attr("title", "Hide Advanced Search");
+      $(this).attr("data-state", isOpen ? 'close' : 'open');
+      $(".advanced").toggle().find(":input").toggleDisabled();
+    });
+    
+    $(".formtastic select[multiple]").hide().bsmSelect();
+    
+    $("input[data-autocomplete]").autocomplete({
+      
+      source: function( request, response ){
+        $.ajax({
+          url: "/agencies/search?term=" + request.term,
+          success: function(data){
+            response( $.map( data, function( item ) {
+							return {
+								label: item.name,
+								value: item.id
+							}
+						}));	
+          } // end success
+        }) // end ajax
+      },
+      select: function( event, ui ) {
+        $("#conditions_agency_ids").append("<option value=" + ui.item.value +" selected='selected'>" + ui.item.label + "</option>");
+        $("#conditions_agency_ids").trigger("change");
+      },
+      close: function( event, ui ) {
+        $(this).val('');
+      }
+    });
 });

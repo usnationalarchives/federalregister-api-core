@@ -13,6 +13,22 @@ class Admin::AgenciesController < AdminController
     end
   end
   
+  def new
+    @agency = Agency.new
+  end
+  
+  def create
+    @agency = Agency.new(params[:agency])
+    
+    if @agency.save
+      flash[:notice] = "Successfully created."
+      redirect_to admin_agencies_url
+    else
+      flash.now[:error] = "There was a problem."
+      render :action => :edit
+    end
+  end
+  
   def edit
     @agency = Agency.find_by_slug!(params[:id])
   end
