@@ -574,4 +574,34 @@ select.bsmSelect {
   } 
 .bsmList {
   margin-left: 13.25em;
+  overflow: hidden;
   }
+  
+.ui-autocomplete  {
+  background: #dadada;
+  border: 1px solid #ccc;
+  @include border-bottom-left-radius(5px);
+  @include border-bottom-right-radius(5px);
+  @include border-top-right-radius(5px);
+  list-style: none;
+  padding: 10px 0;
+  width: 380px;
+  }
+.ui-autocomplete a {
+  cursor: pointer;
+  display: block;
+  padding: 5px 10px;
+  }
+.ui-autocomplete a:hover {
+  background: #efefef;
+  }
+.bsmList .bsmListItem {
+  background: #ccc;
+  @include border-radius(5px);
+  float: left;
+  margin: 0 5px 5px 0;
+  padding: 5px 10px;
+  }
+.bsmList .bsmListItem .bsmListItemRemove {
+  margin-left: 2px;
+  }  

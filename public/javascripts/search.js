@@ -175,7 +175,7 @@ $(document).ready(function () {
     $(".formtastic select[multiple]").hide().bsmSelect();
     
     $("input[data-autocomplete]").autocomplete({
-      
+      minLength: 3,
       source: function( request, response ){
         $.ajax({
           url: "/agencies/search?term=" + request.term,
