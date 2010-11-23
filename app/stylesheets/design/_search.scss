@@ -400,7 +400,7 @@ ADVANCED SEARCH
 .advanced {
   border-top: 1px solid #ddd;
   margin-top: 2em;
-  padding: 2em 5em 2em;
+  padding: 2em 5em 0;
   }  
 .formtastic li {
   list-style: none;
@@ -409,9 +409,15 @@ ADVANCED SEARCH
 .formtastic fieldset {
   border: none;
   display: block;
-  margin: 0;
+  margin: 0 0 1em 0;
   padding: 0;
   }
+.formtastic .show_labels {
+  margin-bottom: 0;
+  }
+.formtastic .show_labels li {
+  margin-bottom: 1em;
+  }    
 .formtastic fieldset:last-child {
   border-bottom: none;
   }
@@ -465,22 +471,22 @@ ADVANCED SEARCH
   display: inline;
   } 
 .formtastic fieldset .check_boxes ol label,
-.formtastic fieldset li.boolean label {
+.formtastic fieldset .boolean label {
   width: auto;
   margin-left: 0;
   }
+.formtastic fieldset .check_boxes input,
+.formtastic fieldset .boolean input {
+  margin-left: 0;
+  }  
 .formtastic .inline-hints {
-  padding-left: 10em;
+  padding-left: 13em;
   }
-  
 .formtastic fieldset .type_selector {
   margin: 0;
   }  
 .formtastic fieldset .type_selector li {
   display: inline;
-  }
-.formtastic fieldset .type_selector label {
-  margin-right: 0;
   }
 .formtastic .row_of_options {
   display: block;
@@ -492,16 +498,20 @@ ADVANCED SEARCH
   margin-bottom: 0;
   }  
 .formtastic .date_options .date {
-  display: inline;
+  display: block;
+  height: 16px;
   }
+.formtastic .date_options .range {
+  display: inline;
+  }  
 /*.formtastic .date_options .date {
   clear: both;
   } */
 .exact_date {
-  margin-left: 16em;
+  margin-left: 17.5em;
   }
 .exact_year {
-  margin-left: 22em;
+  margin-left: 23.75em;
   }
 .exact_year select,
 .zip select {
@@ -510,7 +520,7 @@ ADVANCED SEARCH
   margin: 0;
   }
 .range_start {
-  margin-left: 27em;
+  margin-left: 29.5em;
   }
 .formtastic .cfr li,
 .formtastic .zip li {
@@ -526,4 +536,11 @@ ADVANCED SEARCH
   }  */
 .formtastic .significant {
   margin-left: 15.25em;
+  overflow: hidden;
   }
+.formtastic .show_labels .reg_id {
+  margin-bottom: 0;
+  }  
+.formtastic .show_labels .reg_id input {
+  width: 100px;
+  }  

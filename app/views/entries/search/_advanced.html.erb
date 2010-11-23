@@ -48,3 +48,7 @@
               :as => :select,
               :collection => %w(5 10 25 50 100 200).map{|n| ["#{n} miles", n]} %>
 <% end %>
+
+<% f.buttons do %>
+  <%= f.commit_button %>
+<% end %>
