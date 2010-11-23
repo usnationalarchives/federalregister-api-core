@@ -8,7 +8,7 @@
       <%= f.submit 'Search' %>
       <span id="expected_result_count"></span>
 
-      <a title="Hide Advanced Search">Hide Advanced Search</a>
+      <a title="Hide Advanced Search" data-state="open" id="toggle_advanced">Hide Advanced Search</a>
       
       <div class="actions">
         <%= link_to 'Subscribe', entries_search_url(params.except(:action).merge(:format => :rss, :order => 'date', :publication_date_less_than => nil)  ), :class => 'rss' %>

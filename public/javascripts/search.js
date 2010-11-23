@@ -163,4 +163,12 @@ $(document).ready(function () {
     $(".cfr li:first-child input").after("<span> CFR </span>");
     $(".zip li:first-child input").after("<span> within </span>");
     
+    $("#toggle_advanced").bind('click', function(event) {
+      event.preventDefault();
+      var isOpen = $(this).attr("data-state") == "open";
+      isOpen ? $(this).text("Show Advanced Search") : $(this).text("Hide Advanced Search");
+      isOpen ? $(this).attr("title", "Show Advanced Search") : $(this).attr("title", "Hide Advanced Search");
+      $(this).attr("data-state", isOpen ? 'close' : 'open');
+      $(".advanced").toggle();
+    });
 });
