@@ -149,4 +149,14 @@ $(document).ready(function () {
         ajaxText: 'Loading...',
         trigger: '.results a.add_to_calendar'
     });
+    
+    $(".date_options .date").hide();
+    $("input[data-show-field]").bind('change', function(event) {
+      var parent_fieldset = $(this).closest("fieldset");
+      parent_fieldset.find(".date").hide();
+      parent_fieldset.find("." + $(this).attr("data-show-field")).show();
+    });
+    $(".date_options input[data-show-field] :selected").trigger("change");
+    $(".range_start input").after("<span> to </span>");
+    
 });
