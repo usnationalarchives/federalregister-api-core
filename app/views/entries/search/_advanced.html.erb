@@ -64,6 +64,12 @@
               :collection => %w(5 10 25 50 100 200).map{|n| ["#{n} miles", n]} %>
 <% end %>
 
+<% [:topic_ids, :section_ids].each do |param| %>
+  <% (params[:conditions] || {})[param].to_a.each do |val| %>
+    <%= text_field_tag "conditions[#{param}][]", val %>
+  <% end %>
+<% end %>
+
 <% f.buttons do %>
   <%= f.commit_button 'Search' %>
   <li>
