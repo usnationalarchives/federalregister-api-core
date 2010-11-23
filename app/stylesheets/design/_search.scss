@@ -543,4 +543,22 @@ ADVANCED SEARCH
   }  
 .formtastic .show_labels .reg_id input {
   width: 100px;
-  }  
+  }
+.formtastic .advanced #conditions_submit {
+  background: url(/images/search_btn_bg.png) repeat-x;
+  border: 1px solid #d5d5d5;
+  color: #777;
+  @include border-radius(5px);
+  @include apertura-condensed;
+  font-size: 1.3em;
+  line-height: 25px;
+  text-indent: 0;
+  width: auto;
+  }
+.formtastic .buttons {
+  margin-left: 15.75em;
+  margin-top: 2em;
+  }
+.formtastic .buttons li {
+  display: inline;
+  }   
