@@ -157,6 +157,10 @@ $(document).ready(function () {
       parent_fieldset.find("." + $(this).attr("data-show-field")).show();
     });
     $(".date_options input[data-show-field] :selected").trigger("change");
+    
+    //Add in some helpful hints that would be redundant if we had all the labels displaying
     $(".range_start input").after("<span> to </span>");
+    $(".cfr li:first-child input").after("<span> CFR </span>");
+    $(".zip li:first-child input").after("<span> within </span>");
     
 });
