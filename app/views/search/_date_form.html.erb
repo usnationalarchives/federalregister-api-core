@@ -20,7 +20,7 @@
                      :wrapper_html => {:class => 'date exact_date'} %>
     <%= date_f.input :year,
                      :as => :select,
-                     :collection => (1994..Issue.current.year),
+                     :collection => (1994..Issue.current.year).to_a.reverse,
                      :wrapper_html => {:class => 'date exact_year'} %>
     <%= date_f.input :gte,
                      :label => "On or after",
