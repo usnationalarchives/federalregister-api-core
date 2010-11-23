@@ -172,7 +172,9 @@ $(document).ready(function () {
       $(".advanced").toggle().find(":input").toggleDisabled();
     });
     
-    $(".formtastic select[multiple]").hide().bsmSelect();
+    $(".formtastic select[multiple]").hide().bsmSelect({
+      removeClass: 'remove'
+    });
     
     $("input[data-autocomplete]").autocomplete({
       minLength: 3,

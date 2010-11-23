@@ -176,15 +176,18 @@ ol.results li .date {
   margin-right: 1em;
   padding-left: 20px;
   }  
-.active_filter_list li .remove {
+.active_filter_list li .remove,
+.bsmListItem .remove {
   background: sprite-image('icons/icon_close.png', 0, 0, 50px) no-repeat;
   @include inline-block;
   height: 14px;
   @include hide-text;  
+  width: 14px;
+  }
+.active_filter_list li .remove {
   position: absolute;
   right: 1em;
   top: .8em;
-  width: 14px;
   }  
 .excerpts {
   display: block;
@@ -412,12 +415,13 @@ ADVANCED SEARCH
   margin: 0 0 1em 0;
   padding: 0;
   }
-.formtastic .show_labels {
+.formtastic .show_labels,
+.formtastic .show_labels .selected_agency_list {
   margin-bottom: 0;
   }
 .formtastic .show_labels li {
   margin-bottom: 1em;
-  }    
+  }
 .formtastic fieldset:last-child {
   border-bottom: none;
   }
@@ -596,12 +600,15 @@ select.bsmSelect {
   background: #efefef;
   }
 .bsmList .bsmListItem {
-  background: #ccc;
+  background: #dfe4ea;
   @include border-radius(5px);
   float: left;
   margin: 0 5px 5px 0;
-  padding: 5px 10px;
+  padding: 5px 5px 3px 7px;
   }
-.bsmList .bsmListItem .bsmListItemRemove {
-  margin-left: 2px;
+.bsmList .bsmListItem:hover {
+  background: #d3dae2;
+  }  
+.bsmList .bsmListItem .remove {
+  margin-left: 10px;
   }  
