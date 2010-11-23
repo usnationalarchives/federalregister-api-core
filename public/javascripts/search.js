@@ -190,7 +190,11 @@ $(document).ready(function () {
         }) // end ajax
       },
       select: function( event, ui ) {
-        $(".bsmSelect").append("<option value=" + ui.item.value +">" + ui.item.label + "</option>");
-      }  
+        $("#conditions_agency_ids").append("<option value=" + ui.item.value +" selected='selected'>" + ui.item.label + "</option>");
+        $("#conditions_agency_ids").trigger("change");
+      },
+      close: function( event, ui ) {
+        $(this).val('');
+      }
     });
 });

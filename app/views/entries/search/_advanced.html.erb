@@ -15,7 +15,8 @@
                   :include_blank => false,
                   :input_html => {:multiple => true},
                   :value_method => Proc.new{|a| a.id.to_s},
-                  :collection => Agency.all(:conditions => {:id => @search.agency_ids.to_a} ) %>
+                  :collection => Agency.all(:conditions => {:id => @search.agency_ids.to_a} ),
+                  :wrapper_html => {:class => 'selected_agency_list'} %>
     </li>  
     
   <% else %>
