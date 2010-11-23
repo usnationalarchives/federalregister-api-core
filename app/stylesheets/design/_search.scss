@@ -409,7 +409,8 @@ ADVANCED SEARCH
 .formtastic fieldset {
   border: none;
   display: block;
-  padding-left: 0;
+  margin: 0;
+  padding: 0;
   }
 .formtastic fieldset:last-child {
   border-bottom: none;
@@ -423,35 +424,35 @@ ADVANCED SEARCH
 .formtastic fieldset fieldset ol {
   margin-bottom: 0;
   }
-  
-  
-  
-  
-.formtastic fieldset legend {
+
+.formtastic fieldset legend,
+.formtastic fieldset .check_boxes legend,
+.formtastic .show_labels .string label {
   color: #5697cf;
+  display: block;
   float: left;
   font-size: 1.1em;
   font-weight: bold;
   text-align: right;
-  width: 7em;
-  }  
+  width: 13em;
+  } 
+.formtastic fieldset legend,
 .formtastic fieldset .label {
-  color: #666;
-  font-size: 1em;
-  font-weight: normal;
   margin: 0 1em 0 0;
-  text-align: right;
-  width: 10em;
-  }
-.formtastic fieldset li {
+  }   
+/*.formtastic fieldset li {
   display: inline;
-  }
+  }*/
 .formtastic fieldset label {
   color: #666;
   font-size: 1em;
-  margin-top: 0;
-  margin-right: 1em;
+  margin: 0 1em 0 0;
   text-align: right;
+  }
+.formtastic fieldset .label label {
+  color: #5697cf;
+  float: none;
+  margin: 0;
   }
 .formtastic .string label,
 .formtastic .select label {
@@ -462,20 +463,19 @@ ADVANCED SEARCH
   }  
 .formtastic fieldset .check_boxes li {
   display: inline;
-  }
+  } 
 .formtastic fieldset .check_boxes ol label,
 .formtastic fieldset li.boolean label {
   width: auto;
   margin-left: 0;
   }
-.formtastic fieldset li.boolean {
-  margin-left: 11.75em;
-  }
 .formtastic .inline-hints {
   padding-left: 10em;
   }
   
-  
+.formtastic fieldset .type_selector {
+  margin: 0;
+  }  
 .formtastic fieldset .type_selector li {
   display: inline;
   }
@@ -484,10 +484,11 @@ ADVANCED SEARCH
   }
 .formtastic .row_of_options {
   display: block;
+  margin-bottom: 0;
   overflow:hidden;
-  width:800px;
+  width: 500px;
   }
-.formtastic .date_options ol {
+.formtastic .advanced ol {
   margin-bottom: 0;
   }  
 .formtastic .date_options .date {
@@ -497,16 +498,32 @@ ADVANCED SEARCH
   clear: both;
   } */
 .exact_date {
-  margin-left: 11em;
+  margin-left: 16em;
   }
 .exact_year {
-  margin-left: 18em;
+  margin-left: 22em;
   }
-.exact_year select {
+.exact_year select,
+.zip select {
   display: inline;
   float: none;
   margin: 0;
   }
 .range_start {
-  margin-left: 23em;
+  margin-left: 27em;
+  }
+.formtastic .cfr li,
+.formtastic .zip li {
+  display: inline;
+  }
+.formtastic .cfr input,
+.formtastic .zip input {
+  width: 50px;
+  }
+/*.formtastic .show_labels label {
+  float: none;
+  display: block;
+  }  */
+.formtastic .significant {
+  margin-left: 15.25em;
   }

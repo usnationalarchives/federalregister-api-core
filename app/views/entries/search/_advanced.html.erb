@@ -1,7 +1,7 @@
 <%= render :partial => "search/date_form", :locals => {:f => f, :attribute => :publication_date, :label => "Publication Date "} %>
 <%= render :partial => "search/date_form", :locals => {:f => f, :attribute => :effective_date, :label => "Effective Date "} %>
 
-<% f.inputs :name => 'Documents' do %>
+<% f.inputs :class => 'show_labels' do %>
   <% if js_known_to_be_enabled? %>
     <%# put hidden fields and stub for JS-variation here %>
   <% else %>
@@ -28,11 +28,12 @@
   <%= f.input :significant,
               :as => :boolean,
               :label => "Deemed Significant by OIRA",
-              :unchecked_value => '' %>
+              :unchecked_value => '',
+              :wrapper_html => {:class => 'significant'} %>
 <% end %>
 
 <% f.fields_for :cfr, f.object.cfr do |cfr_f| %>
-  <% cfr_f.inputs :name => "Affecting CFR Part" do %>
+  <% cfr_f.inputs :name => "Affecting CFR Part", :class => 'cfr' do %>
     <%= cfr_f.input :title,
                     :input_html => {:placeholder => '40'} %>
     <%= cfr_f.input :part,
@@ -40,9 +41,9 @@
   <% end %>
 <% end %>
   
-<% f.inputs :name => "Mentioning Locations Near" do %>
+<% f.inputs :name => "Mentioning Locations Near", :class => 'zip' do %>
   <%= f.input :location,
-              :input_html => {:placeholder =>  "Zip Code", :class => 'zip'} %>
+              :input_html => {:placeholder =>  "Zip Code"} %>
   <%= f.input :within,
               :as => :select,
               :collection => %w(5 10 25 50 100 200).map{|n| ["#{n} miles", n]} %>

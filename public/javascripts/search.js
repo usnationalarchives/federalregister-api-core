@@ -153,7 +153,7 @@ $(document).ready(function () {
     $(".date_options .date").hide();
     $("input[data-show-field]").bind('change', function(event) {
       var parent_fieldset = $(this).closest("fieldset");
-      parent_fieldset.find(".date").hide();
+      parent_fieldset.find(".date").hide(); //TODO disable the input as well
       parent_fieldset.find("." + $(this).attr("data-show-field")).show();
     });
     $(".date_options input[data-show-field] :selected").trigger("change");
