@@ -434,13 +434,13 @@ ADVANCED SEARCH
 .formtastic fieldset legend,
 .formtastic fieldset .check_boxes legend,
 .formtastic .show_labels .string label {
-  color: #5697cf;
+  color: #777777;
   display: block;
   float: left;
   font-size: 1.1em;
   font-weight: bold;
   text-align: right;
-  width: 13em;
+  width: 11em;
   } 
 .formtastic fieldset legend,
 .formtastic fieldset .label {
@@ -456,7 +456,7 @@ ADVANCED SEARCH
   text-align: right;
   }
 .formtastic fieldset .label label {
-  color: #5697cf;
+  color: #777777;
   float: none;
   margin: 0;
   }
@@ -508,10 +508,10 @@ ADVANCED SEARCH
   clear: both;
   } */
 .exact_date {
-  margin-left: 17.5em;
+  margin-left: 15.5em;
   }
 .exact_year {
-  margin-left: 23.75em;
+  margin-left: 21.75em;
   }
 .exact_year select,
 .zip select {
@@ -520,7 +520,7 @@ ADVANCED SEARCH
   margin: 0;
   }
 .range_start {
-  margin-left: 29.5em;
+  margin-left: 27.5em;
   }
 .formtastic .cfr li,
 .formtastic .zip li {
@@ -535,19 +535,23 @@ ADVANCED SEARCH
   display: block;
   }  */
 .formtastic .significant {
-  margin-left: 15.25em;
+  margin-left: 13.25em;
   overflow: hidden;
   }
 .formtastic .show_labels .reg_id {
   margin-bottom: 0;
   }  
 .formtastic .show_labels .reg_id input {
-  width: 100px;
+  width: 65px;
+  }
+.formtastic .show_labels .docket input,
+.formtastic .agency input  {
+  width: 160px;
   }
 .formtastic .advanced #conditions_submit {
   background: url(/images/search_btn_bg.png) repeat-x;
-  border: 1px solid #d5d5d5;
-  color: #777;
+  border: 1px solid #aaa;
+  color: #555;
   @include border-radius(5px);
   @include apertura-condensed;
   font-size: 1.3em;
@@ -556,9 +560,18 @@ ADVANCED SEARCH
   width: auto;
   }
 .formtastic .buttons {
-  margin-left: 15.75em;
+  margin-left: 13.75em;
   margin-top: 2em;
   }
 .formtastic .buttons li {
   display: inline;
-  }   
+  }
+#toggle_advanced {
+  display: block;
+  }
+select.bsmSelect {
+  display: none;
+  } 
+.bsmList {
+  margin-left: 13.25em;
+  }

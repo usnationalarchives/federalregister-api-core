@@ -7,13 +7,14 @@
       <%= f.text_field :term, :placeholder => 'Search term or citation' %>
       <%= f.submit 'Search' %>
       <span id="expected_result_count"></span>
-
-      <a title="Hide Advanced Search" data-state="open" id="toggle_advanced">Hide Advanced Search</a>
       
       <div class="actions">
         <%= link_to 'Subscribe', entries_search_url(params.except(:action).merge(:format => :rss, :order => 'date', :publication_date_less_than => nil)  ), :class => 'rss' %>
         <%# link_to 'Widget', widget_instructions_path(params.except(:action, :controller)), :class => 'button widget spawn_modal notext', :id => 'widget' %>
       </div>
+      
+      <a title="Hide Advanced Search" data-state="open" id="toggle_advanced">Hide Advanced Search</a>
+      
     </div>
     <div class="advanced">
       <%= render :partial => "advanced", :locals => {:f => f} %>
