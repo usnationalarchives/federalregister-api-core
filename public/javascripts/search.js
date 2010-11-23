@@ -170,6 +170,27 @@ $(document).ready(function () {
       isOpen ? $(this).attr("title", "Show Advanced Search") : $(this).attr("title", "Hide Advanced Search");
       $(this).attr("data-state", isOpen ? 'close' : 'open');
       $(".advanced").toggle().find(":input").toggleDisabled();
+    });
+    
+    $(".formtastic select[multiple]").hide().bsmSelect();
+    
+    $("input[data-autocomplete]").autocomplete({
       
+      source: function( request, response ){
+        $.ajax({
+          url: "/agencies/search?term=" + request.term,
+          success: function(data){
+            response( $.map( data, function( item ) {
+							return {
+								label: item.name,
+								value: item.id
+							}
+						}));	
+          } // end success
+        }) // end ajax
+      },
+      select: function( event, ui ) {
+        $(".bsmSelect").append("<option value=" + ui.item.value +">" + ui.item.label + "</option>");
+      }  
     });
 });

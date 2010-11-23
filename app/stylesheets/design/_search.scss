@@ -542,7 +542,11 @@ ADVANCED SEARCH
   margin-bottom: 0;
   }  
 .formtastic .show_labels .reg_id input {
-  width: 100px;
+  width: 65px;
+  }
+.formtastic .show_labels .docket input,
+.formtastic .agency input  {
+  width: 160px;
   }
 .formtastic .advanced #conditions_submit {
   background: url(/images/search_btn_bg.png) repeat-x;
@@ -561,4 +565,13 @@ ADVANCED SEARCH
   }
 .formtastic .buttons li {
   display: inline;
-  }   
+  }
+#toggle_advanced {
+  display: block;
+  }
+select.bsmSelect {
+  display: none;
+  } 
+.bsmList {
+  margin-left: 13.25em;
+  }
