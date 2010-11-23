@@ -18,6 +18,7 @@
       <th>Name</th>
       <th>Parent</th>
       <th></th>
+      <th></th>
     </tr>
   </thead>
   <tbody>
@@ -26,6 +27,7 @@
       <td><%= agency.name %></td>
       <td><%= agency.parent.try(:name) %></td>
       <td><%= link_to 'Edit', edit_admin_agency_path(agency) %></td>
+      <td><%= link_to 'Delete', delete_admin_agency_path(agency) %></td>
     </tr>
     <% end %>
   </tbody>
