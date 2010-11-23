@@ -458,7 +458,7 @@ ADVANCED SEARCH
   display: none;
   }  
 .formtastic fieldset .date input {
-  width: 5em;
+  width: 7em;
   }  
 .formtastic fieldset .check_boxes li {
   display: inline;
@@ -474,6 +474,39 @@ ADVANCED SEARCH
 .formtastic .inline-hints {
   padding-left: 10em;
   }
+  
+  
+.formtastic fieldset .type_selector li {
+  display: inline;
+  }
 .formtastic fieldset .type_selector label {
   margin-right: 0;
+  }
+.formtastic .row_of_options {
+  display: block;
+  overflow:hidden;
+  width:800px;
+  }
+.formtastic .date_options ol {
+  margin-bottom: 0;
+  }  
+.formtastic .date_options .date {
+  display: inline;
+  }
+/*.formtastic .date_options .date {
+  clear: both;
+  } */
+.exact_date {
+  margin-left: 11em;
+  }
+.exact_year {
+  margin-left: 18em;
+  }
+.exact_year select {
+  display: inline;
+  float: none;
+  margin: 0;
+  }
+.range_start {
+  margin-left: 23em;
   }
