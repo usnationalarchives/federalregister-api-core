@@ -1,7 +1,7 @@
 ActionController::Routing::Routes.draw do |map|
   map.namespace :admin do |admin|
     admin.home '', :controller => "special", :action => "home", :conditions => {:method => :get}
-    admin.resources :agencies
+    admin.resources :agencies, :member => {:delete => :get}
     admin.resources :agency_names, :collection => {:unprocessed => :get}
     
     admin.resources :events

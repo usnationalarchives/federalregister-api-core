@@ -172,25 +172,29 @@ $(document).ready(function () {
       $(".advanced").toggle().find(":input").toggleDisabled();
     });
     
-    $(".formtastic select[multiple]").hide().bsmSelect();
+    $(".formtastic select[multiple]").hide().bsmSelect({
+      removeClass: 'remove'
+    });
     
     $("input[data-autocomplete]").autocomplete({
-      
+      minLength: 3,
       source: function( request, response ){
         $.ajax({
           url: "/agencies/search?term=" + request.term,
           success: function(data){
-            response( $.map( data, function( item ) {
-							return {
-								label: item.name,
-								value: item.id
-							}
+            response( 
+              $.map( data, function( item ) {
+  							return {
+  								label: item.name,
+  								value: item.name,
+  								id: item.id
+  							}
 						}));	
           } // end success
         }) // end ajax
       },
       select: function( event, ui ) {
-        $("#conditions_agency_ids").append("<option value=" + ui.item.value +" selected='selected'>" + ui.item.label + "</option>");
+        $("#conditions_agency_ids").append("<option value=" + ui.item.id +" selected='selected'>" + ui.item.label + "</option>");
         $("#conditions_agency_ids").trigger("change");
       },
       close: function( event, ui ) {
