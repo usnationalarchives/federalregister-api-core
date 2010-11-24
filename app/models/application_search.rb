@@ -95,28 +95,37 @@ class ApplicationSearch
       @gte = hsh[:gte]
       @lte = hsh[:lte]
       @year = hsh[:year].to_i if hsh[:year].present?
+      @valid = true
       
-      if @is.present?
-        date = Date.parse(@is)
-        @sphinx_value = date.to_time.utc.beginning_of_day.to_i .. date.to_time.utc.end_of_day.to_i
-        @filter_name = "on #{date}"
-      elsif @year.present?
-        date = Date.parse("#{@year}-01-01")
-        @sphinx_value = date.to_time.utc.beginning_of_day.to_i .. date.end_of_year.to_time.utc.end_of_day.to_i
-        @filter_name = "in #{@year}"
-      else
-        if @gte.present? && @lte.present?
-          @filter_name = "from #{start_date} to #{end_date}"
-        elsif @gte.present?
-          @filter_name = "on or after #{start_date}"
-        elsif @lte.present?
-          @filter_name = "on or before #{end_date}"
+      begin
+        if @is.present?
+          date = Date.parse(@is)
+          @sphinx_value = date.to_time.utc.beginning_of_day.to_i .. date.to_time.utc.end_of_day.to_i
+          @filter_name = "on #{date}"
+        elsif @year.present?
+          date = Date.parse("#{@year}-01-01")
+          @sphinx_value = date.to_time.utc.beginning_of_day.to_i .. date.end_of_year.to_time.utc.end_of_day.to_i
+          @filter_name = "in #{@year}"
         else
-          raise "invalid date format"
-        end
+          if @gte.present? && @lte.present?
+            @filter_name = "from #{start_date} to #{end_date}"
+          elsif @gte.present?
+            @filter_name = "on or after #{start_date}"
+          elsif @lte.present?
+            @filter_name = "on or before #{end_date}"
+          else
+            raise InvalidDate
+          end
         
-        @sphinx_value = start_date.to_time.utc.beginning_of_day.to_i .. end_date.to_time.utc.end_of_day.to_i
+          @sphinx_value = start_date.to_time.utc.beginning_of_day.to_i .. end_date.to_time.utc.end_of_day.to_i
+        end
+      rescue ArgumentError
+        @valid = false
       end
+    end
+    
+    def valid?
+      @valid
     end
     
     private
@@ -163,19 +172,24 @@ class ApplicationSearch
     attr_reader filter_name
 
     define_method "#{filter_name}=" do |hsh|
-      # TODO :error handling
       if hsh.values.any?(&:present?)
         selector = DateSelector.new(hsh)
         instance_variable_set("@#{filter_name}", selector)
         
-        add_filter(
-          :value => selector.sphinx_value,
-          :name => selector.filter_name,
-          :condition => :date,
-          :label => options[:label],
-          :sphinx_type => :conditions,
-          :sphinx_attribute => options[:sphinx_attribute] || filter_name
-        )
+        label = options[:label]
+        
+        if selector.valid?
+          add_filter(
+            :value => selector.sphinx_value,
+            :name => selector.filter_name,
+            :condition => :date,
+            :label => label,
+            :sphinx_type => :conditions,
+            :sphinx_attribute => options[:sphinx_attribute] || filter_name
+          )
+        else
+          @errors[filter_name.to_sym] = "#{label} is not a valid date."
+        end
       end
     end
   end
