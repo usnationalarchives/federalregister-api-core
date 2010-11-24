@@ -434,7 +434,6 @@ ADVANCED SEARCH
 .formtastic fieldset fieldset ol {
   margin-bottom: 0;
   }
-
 .formtastic fieldset legend,
 .formtastic fieldset .check_boxes legend,
 .formtastic .show_labels .string label {
@@ -562,8 +561,12 @@ ADVANCED SEARCH
   @include apertura-condensed;
   font-size: 1.3em;
   line-height: 25px;
+  padding: 0 5px;
   text-indent: 0;
   width: auto;
+  }
+.formtastic .advanced #conditions_submit:hover {
+  color: #B88659;
   }
 .formtastic .buttons {
   margin-left: 13.75em;
@@ -573,7 +576,11 @@ ADVANCED SEARCH
   display: inline;
   }
 #toggle_advanced {
-  display: block;
+  clear:both;
+  cursor: pointer;
+  display:block;
+  float:left;
+  margin-left:5em;
   }
 select.bsmSelect {
   display: none;
@@ -582,7 +589,6 @@ select.bsmSelect {
   margin-left: 13.25em;
   overflow: hidden;
   }
-  
 .ui-autocomplete  {
   background: #fff;
   border: 1px solid #ccc;
@@ -598,8 +604,10 @@ select.bsmSelect {
   padding: 5px 10px;
   }
 .ui-autocomplete a:hover,
-.ui-autocomplete a:focus {
+.ui-autocomplete a:focus,
+.ui-autocomplete a.ui-state-hover {
   background: #efefef;
+  color: #B88659;
   }
 .bsmList .bsmListItem {
   background: #dfe4ea;
