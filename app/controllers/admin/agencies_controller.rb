@@ -44,4 +44,17 @@ class Admin::AgenciesController < AdminController
       render :action => :edit
     end
   end
+  
+  def delete
+    @agency = Agency.find_by_slug!(params[:id])
+  end
+  
+  def destroy
+    @agency = Agency.find_by_slug!(params[:id])
+    unless @agency.entries.present?
+      flash[:notice] = "Agency #{@agency.name} has been removed."
+      @agency.destroy
+    end
+    redirect_to admin_agencies_url
+  end
 end
