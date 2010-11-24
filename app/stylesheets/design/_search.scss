@@ -548,10 +548,12 @@ ADVANCED SEARCH
 .formtastic .show_labels .reg_id input {
   width: 65px;
   }
-.formtastic .show_labels .docket input,
-.formtastic .agency input  {
+.formtastic .show_labels .docket input {
   width: 160px;
   }
+.formtastic .agency input {
+  width: 400px;
+  }  
 .formtastic .advanced #conditions_submit {
   background: url(/images/search_btn_bg.png) repeat-x;
   border: 1px solid #aaa;
@@ -586,7 +588,6 @@ select.bsmSelect {
   border: 1px solid #ccc;
   @include border-bottom-left-radius(5px);
   @include border-bottom-right-radius(5px);
-  @include border-top-right-radius(5px);
   list-style: none;
   padding: 10px 0;
   width: 380px;
@@ -596,7 +597,8 @@ select.bsmSelect {
   display: block;
   padding: 5px 10px;
   }
-.ui-autocomplete a:hover {
+.ui-autocomplete a:hover,
+.ui-autocomplete a:focus {
   background: #efefef;
   }
 .bsmList .bsmListItem {
