@@ -182,11 +182,12 @@ $(document).ready(function () {
         $.ajax({
           url: "/agencies/search?term=" + request.term,
           success: function(data){
-            response( $.map( data, function( item ) {
-							return {
-								label: item.name,
-								value: item.id
-							}
+            response( 
+              $.map( data, function( item ) {
+  							return {
+  								label: item.name,
+  								value: item.id
+  							}
 						}));	
           } // end success
         }) // end ajax

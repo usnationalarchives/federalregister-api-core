@@ -226,7 +226,7 @@
 
       $item = $('<li>', { 'class': o.listItemClass })
         .append($('<span>', { 'class': o.listItemLabelClass, html: o.extractLabel($bsmOpt, o)}))
-        .append($('<a>', { href: '#', 'class': o.removeClass, html: o.removeLabel }))
+        .append($('<a>', { href: '#', 'class': o.removeClass, html: o.removeLabel, title: 'Remove ' + o.extractLabel($bsmOpt, o) }))
         .data('bsm-option', $bsmOpt);
 
       this.disableSelectOption($bsmOpt.data('item', $item));
