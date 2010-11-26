@@ -47,15 +47,14 @@
 
 
 <% if @entries_without_agency.present? %>
-  <%# THESE SHOULD NOT EXIST AT LAUNCH; NO STYLE NECESSARY %>
-  <h2>Entries without agencies</h2>
+  <h2>Other Articles</h2>
   <% @entries_without_agency.group_by(&:agency_names).each do |agency_names, entries| %>
     <h3><%= agency_names.map(&:name).to_sentence %></h3>
-    <ul>
+    <dl>
     <% entries.each do |entry| %>
-      <li><%= link_to entry.title, entry_path(entry) %></li>
+      <dt><%= render :partial => 'entry_with_page_and_frdoc', :locals => {:entry => entry } %></dt>
     <% end %>
-    </ul>
+    </dl>
   <% end %>
 <% end %>
 
