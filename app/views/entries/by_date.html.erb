@@ -30,13 +30,13 @@
         <dt><%= toc_subject %></dt>
         <% entries_by_toc_subject.sort_by(&:toc_doc).each do |entry| %>
         <dd>
-          <%= render :partial => 'entry_with_page_and_frdoc', :locals => {:entry => entry } %>
+          <%= render :partial => 'entry_with_page_and_frdoc', :locals => {:entry => entry, :entry_title => entry.toc_doc || entry.title } %>
         </dd>
         <% end %>
       <% else %>
         <% entries_by_toc_subject.sort_by(&:title).each do |entry| %>
         <dt>
-          <%= render :partial => 'entry_with_page_and_frdoc', :locals => {:entry => entry } %>
+          <%= render :partial => 'entry_with_page_and_frdoc', :locals => {:entry => entry, :entry_title => entry.toc_doc || entry.title } %>
         </dt>
         <% end %>
       <% end %>
@@ -47,12 +47,14 @@
 
 
 <% if @entries_without_agency.present? %>
-  <h2>Other Articles</h2>
+  <div class="title_bar">
+    <h2>Other Articles</h2>
+  </div>
   <% @entries_without_agency.group_by(&:agency_names).each do |agency_names, entries| %>
     <h3><%= agency_names.map(&:name).to_sentence %></h3>
     <dl>
     <% entries.each do |entry| %>
-      <dt><%= render :partial => 'entry_with_page_and_frdoc', :locals => {:entry => entry } %></dt>
+      <dt><%= render :partial => 'entry_with_page_and_frdoc', :locals => {:entry => entry, :entry_title => entry.title } %></dt>
     <% end %>
     </dl>
   <% end %>

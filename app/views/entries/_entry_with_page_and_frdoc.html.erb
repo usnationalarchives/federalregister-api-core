@@ -1,4 +1,4 @@
-<%= link_to entry.toc_doc || entry.title, entry_path(entry) %>
+<%= link_to entry_title, entry_path(entry) %>
 <p class="details">
   <%= link_to 'PDF', entry.source_url(:pdf), :class => "button format list pdf small" %>
   <span class="pages"><%= entry_page_range(entry) %></span>
