@@ -2,6 +2,11 @@
 
 <h1 class="title"><span><%= "#{@volume} FR #{@page}" %></span></h1>
 
-<h2>Not found!</h2>
+<div class="notice">
+  <p>Not found! We could not find any articles on volume <strong><%= @volume %></strong>, page <strong><%= @page %></strong>.</p>
+</div>
 
-<%= render :partial => 'form' %>
+<p class="clear">Would you like to go to a different citation?</p>
+<div class="search_bar">
+  <%= render :partial => 'form' %>
+</div>
