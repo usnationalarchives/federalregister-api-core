@@ -335,6 +335,15 @@ class ApplicationSearch
     {}
   end
   
+  def to_hash
+    {
+      :page => @page,
+      :per_page => @per_page,
+      :order => order_clause,
+      :conditions => conditions
+    }
+  end
+  
   def count
     model.search_count(@term,
       {
