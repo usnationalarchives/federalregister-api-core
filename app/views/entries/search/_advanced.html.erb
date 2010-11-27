@@ -66,7 +66,7 @@
 
 <% [:topic_ids, :section_ids].each do |param| %>
   <% (params[:conditions] || {})[param].to_a.each do |val| %>
-    <%= text_field_tag "conditions[#{param}][]", val %>
+    <%= hidden_field_tag "conditions[#{param}][]", val %>
   <% end %>
 <% end %>
 
