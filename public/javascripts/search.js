@@ -153,10 +153,10 @@ $(document).ready(function () {
     $(".date_options .date").hide();
     $("input[data-show-field]").bind('change', function(event) {
       var parent_fieldset = $(this).closest("fieldset");
-      parent_fieldset.find(".date").hide(); //TODO disable the input as well
-      parent_fieldset.find("." + $(this).attr("data-show-field")).show();
+      parent_fieldset.find(".date").hide().find(":input").disable(); 
+      parent_fieldset.find("." + $(this).attr("data-show-field")).show().find(":input").enable();
     });
-    $(".date_options input[data-show-field] :selected").trigger("change");
+    $(".date_options input[data-show-field]:checked").trigger("change");
     
     //Add in some helpful hints that would be redundant if we had all the labels displaying
     $(".range_start input").after("<span> to </span>");

@@ -40,7 +40,7 @@
   
   </head>
 
-  <body id="<%= @faux_controller || controller.controller_name %>" class="<%= @faux_action || controller.action_name %>">
+  <body id="<%= @faux_controller || controller.controller_name %>" class="<%= @faux_action || controller.action_name %> <%= js_known_to_be_enabled? ? 'has_js' : '' %>">
         
     <a href="#main" title="Skip to Content" class="skip_to_content">Skip to Content</a>
     
