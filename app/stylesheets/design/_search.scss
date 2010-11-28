@@ -56,8 +56,7 @@ PAGE ELEMENTS
  background-color: #fff;
   }
 .search_bar label,
-.search_bar .label,
-#expected_result_count {
+.search_bar .label {
   color: #777777;
   display: block;
   float: left;
@@ -94,6 +93,8 @@ PAGE ELEMENTS
   background: sprite-image('icons/search_button.png') no-repeat;
   border: none;
   cursor: pointer;
+  display: block;
+  float: left;
   height:  image-height('icons/search_button.png');
   @include hide-text;
   margin-left: -1px;
@@ -400,10 +401,11 @@ ADVANCED SEARCH
 
 .simple {
   display: block;
+  overflow: hidden;
   }
 .advanced {
   border-top: 1px solid #ddd;
-  margin-top: 2em;
+  margin-top: 1em;
   padding: 2em 5em 0;
   }  
 .formtastic fieldset {
@@ -480,8 +482,11 @@ ADVANCED SEARCH
 .formtastic fieldset .date input { 
   width: 7em; 
   }
-.formtastic .inline-hints { 
-  padding-left: 13em; 
+.formtastic .inline-hints {
+  clear: both;
+  font-size: 1em;
+  @include gesta;
+  margin-left: 13em; 
   } 
 .formtastic .row_of_options {
   display: block;
@@ -518,6 +523,7 @@ ADVANCED SEARCH
   width: 50px; 
   }
 .formtastic .significant {
+  clear: both;
   margin-left: 13.25em;
   overflow: hidden;
   }
@@ -548,7 +554,7 @@ ADVANCED SEARCH
   margin-top: 2em;
   }
 #toggle_advanced {
-  clear:both;
+  clear: both;
   cursor: pointer;
   display:block;
   float:left;
@@ -581,7 +587,11 @@ select.bsmSelect {
   background: #efefef;
   color: #B88659;
   }
-.bsmList .bsmListItem {
+.ui-autocomplete-input.loading {
+  background: #fff image-url('ajax-loader.gif') no-repeat right top;
+  }  
+.bsmList .bsmListItem,
+.inline-hints {
   background: #dfe4ea;
   @include border-radius(5px);
   float: left;
@@ -597,3 +607,22 @@ select.bsmSelect {
 .formtastic .string span {
   margin: 0 3px;
   }
+#expected_result_count {
+  display: none;
+  float: left;
+  @include apertura-condensed;
+  font-size: 12px;
+  height: 21px;
+  margin-left: 5px;
+  padding: 3px 1em;
+  width: auto;
+  }
+#expected_result_count.loading {
+  background-image: image-url('ajax-loader.gif');
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  @include hide-text();
+  }
+.formtastic .clear_form {
+  margin-left: 5px;
+  }  

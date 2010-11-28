@@ -1,10 +1,11 @@
 $(document).ready(function () {
     var populate_expected_results = function (count) {
-        $('#expected_result_count').text(count);
+        $('#expected_result_count').removeClass('loading');
+        $('#expected_result_count').text(count).show();
     }
     
     var indicate_loading = function() {
-        $('#expected_result_count').text('loading');
+        $('#expected_result_count').show().addClass('loading');
     }
     
     // ajax-y lookup of number of expected results
@@ -36,8 +37,16 @@ $(document).ready(function () {
         }
     };
     
-    $('#entry_search_form select').blur(calculate_expected_results);
-    $('#entry_search_form input[type=checkbox]').click(calculate_expected_results)
+    $('#entry_search_form').bind('calculate_expected_results', calculate_expected_results);
+    
+    $('#entry_search_form select').bind('blur', function(event) {
+      $(this).trigger('calculate_expected_results');
+    });
+    
+    $('#entry_search_form input[type=checkbox]').bind('click', function(){
+      $(this).trigger('calculate_expected_results');
+    });
+
     // basic check for pause between events
     var typewatch = (function(){
       var timer = 0;
@@ -46,10 +55,11 @@ $(document).ready(function () {
         timer = setTimeout(callback, ms);
       }  
     })();
+    
     $('#entry_search_form input[type=text]').keyup(function () {
         // only trigger if stopped typing for more than half a second
         typewatch(function () {
-            calculate_expected_results();
+            $("#entry_search_form").trigger('calculate_expected_results');
         }, 500);
     });
     
@@ -122,7 +132,9 @@ $(document).ready(function () {
         $('#entry_search_form').find('#conditions_agency_ids option').remove();
         $('#entry_search_form').find('#conditions_within option:eq(3)').attr('selected','selected');
         $('#entry_search_form .bsmListItem').remove();
-        return(false);
+        $('#entry_search_form .date').hide().find("input").val('');
+        $(this).trigger('calculate_expected_results');
+        return false;
     });
     
     $('a.load_facet').live('click',
@@ -164,6 +176,8 @@ $(document).ready(function () {
       var parent_fieldset = $(this).closest("fieldset");
       parent_fieldset.find(".date").hide().find(":input").disable(); 
       parent_fieldset.find("." + $(this).attr("data-show-field")).show().find(":input").enable();
+      $("#expected_result_count").hide();
+      //$(this).trigger('calculate_expected_results');
     });
     $(".date_options input[data-show-field]:checked").trigger("change");
     
@@ -179,6 +193,7 @@ $(document).ready(function () {
       isOpen ? $(this).attr("title", "Show Advanced Search") : $(this).attr("title", "Hide Advanced Search");
       $(this).attr("data-state", isOpen ? 'close' : 'open');
       $(".advanced").toggle().find(":input").toggleDisabled();
+      $(this).trigger('calculate_expected_results');
     });
     
     $(".formtastic select[multiple]").hide().bsmSelect({
@@ -205,9 +220,17 @@ $(document).ready(function () {
       select: function( event, ui ) {
         $("#conditions_agency_ids").append("<option value=" + ui.item.id +" selected='selected'>" + ui.item.label + "</option>");
         $("#conditions_agency_ids").trigger("change");
+        $(this).trigger('calculate_expected_results');
+      },
+      open: function( event, ui ){
+        $(this).removeClass("loading");
       },
       close: function( event, ui ) {
         $(this).val('');
+        $(this).removeClass("loading");
+      },
+      search: function( event, ui) {
+        $(this).addClass("loading");
       }
     });
 });
