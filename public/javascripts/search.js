@@ -63,13 +63,16 @@ $(document).ready(function () {
         }, 500);
     });
     
-    var display_rin_info = function(message) {
+    var display_rin_info = function(message, loading) {
+        loading = false || loading;
+        console.log(loading);
         var input = $('#conditions_regulation_id_number');
         
         input.siblings('.inline-hints').remove();
         
         if(message) {
             var node = $('<p class="inline-hints" />');
+            loading ? node.addClass("loading") : '';
             node.text(message);
         
             input.after(node);
@@ -94,8 +97,8 @@ $(document).ready(function () {
                 display_rin_info(cache[rin])
             }
             else {
-                display_rin_info('loading');
-            
+                display_rin_info('loading', true);
+                
                 var url = '/regulations/' + rin + '.js';
                 $.ajax({
                     url : url,
@@ -115,6 +118,7 @@ $(document).ready(function () {
         }
         else {
             display_rin_info('');
+            input.siblings('.inline-hints').remove();
         }
     }
     $('#conditions_regulation_id_number').blur(load_rin_info);

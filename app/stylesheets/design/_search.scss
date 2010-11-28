@@ -608,21 +608,30 @@ select.bsmSelect {
   margin: 0 3px;
   }
 #expected_result_count {
+  background: #fcfcfc;
+  color: #f77825;
+  @include border-radius(5px);
   display: none;
   float: left;
   @include apertura-condensed;
   font-size: 12px;
+  font-weight: 700;  
   height: 21px;
+  line-height: 23px;
   margin-left: 5px;
   padding: 3px 1em;
   width: auto;
   }
-#expected_result_count.loading {
+#expected_result_count.loading,
+.inline-hints.loading {
   background-image: image-url('ajax-loader.gif');
   background-repeat: no-repeat;
   background-position: 50% 50%;
   @include hide-text();
   }
+.inline-hints.loading {
+  width: 20px;
+  }  
 .formtastic .clear_form {
   margin-left: 5px;
   }  
