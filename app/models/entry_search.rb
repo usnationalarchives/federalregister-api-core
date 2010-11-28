@@ -210,7 +210,7 @@ class EntrySearch < ApplicationSearch
   private
   
   def set_defaults(options)
-    @within = '25'
+    @within = 25
     @order = options[:order] || 'relevant'
   end
 end
