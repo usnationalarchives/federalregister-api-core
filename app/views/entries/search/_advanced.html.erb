@@ -41,11 +41,12 @@
               :input_html => {:placeholder => "2070-AJ57"},
               :hint => @search.regulatory_plan_title,
               :wrapper_html => {:class => 'reg_id'} %>
-  <%= f.input :significant,
-              :as => :boolean,
-              :label => "Deemed Significant by OIRA",
-              :unchecked_value => '',
-              :wrapper_html => {:class => 'significant'} %>
+  <li class="boolean optional significant" id="conditions_significant_input">
+    <label for="conditions_significant">
+      <%= f.check_box :significant, {}, 1, '' %>
+      Deemed Significant by <abbr title="OMB's Office of Information and Regulatory Affairs">OIRA</abbr>
+    </label>
+  </li>
 <% end %>
 
 <% f.fields_for :cfr, f.object.cfr do |cfr_f| %>
