@@ -1,3 +1,11 @@
+<% unless @search.valid? %>
+  <ul class="errors">
+    <% @search.errors.values.each do |err| %>
+    <li><%= err %></li>
+    <% end %>
+  </ul>
+<% end %>
+
 <%= render :partial => "search/tabs", :locals => {:search => @search, :selected => :entries}%>
 
 <div class="search_bar">

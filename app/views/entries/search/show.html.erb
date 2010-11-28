@@ -3,27 +3,23 @@
 
 <h1 class="title"><span>Search Articles</span></h1>
 
-<% unless @search.valid? %>
-  <ul class="errors">
-    <% @search.errors.values.each do |err| %>
-    <li><%= err %></li>
-    <% end %>
-  </ul>
-<% end %>
-
 <%= render :esi => entries_search_header_path(params.except(:action)) %>
 
-<% if @search.valid? %>
-  <div class="filters">
-    <%= render :esi => entries_search_facets_path(params.except(:action).merge(:facet => 'date')) unless @search.publication_date %>
-    <%# TODO HELP-RUBY i know this doesn't go here. just wanted to stash it somewhere  %>
-    <!-- <li><%#= sparkline(:data => @search.date_distribution.to_a.sort_by{|date, count| date}.map{|date, count| count}, :alt => "Monthly Distribution" ) %></li> -->
+<% if @search.blank?%>
+  <p>Please enter a search term.</p>
+<% else %>
+  <% if @search.valid? %>
+    <div class="filters">
+      <%= render :esi => entries_search_facets_path(params.except(:action).merge(:facet => 'date')) unless @search.publication_date %>
+      <%# TODO HELP-RUBY i know this doesn't go here. just wanted to stash it somewhere  %>
+      <!-- <li><%#= sparkline(:data => @search.date_distribution.to_a.sort_by{|date, count| date}.map{|date, count| count}, :alt => "Monthly Distribution" ) %></li> -->
   
-    <%# render :esi => entries_search_facets_path(params.except(:action).merge(:facet => 'type')) %>
-    <%= render :esi => entries_search_facets_path(params.except(:action).merge(:facet => 'section')) unless @search.section_ids.present? %>
-    <%= render :esi => entries_search_facets_path(params.except(:action).merge(:facet => 'agency')) unless @search.agency_ids.present? %>
-    <%= render :esi => entries_search_facets_path(params.except(:action).merge(:facet => 'topic')) unless @search.topic_ids.present? %>
-  </div>
+      <%# render :esi => entries_search_facets_path(params.except(:action).merge(:facet => 'type')) %>
+      <%= render :esi => entries_search_facets_path(params.except(:action).merge(:facet => 'section')) unless @search.section_ids.present? %>
+      <%= render :esi => entries_search_facets_path(params.except(:action).merge(:facet => 'agency')) unless @search.agency_ids.present? %>
+      <%= render :esi => entries_search_facets_path(params.except(:action).merge(:facet => 'topic')) unless @search.topic_ids.present? %>
+    </div>
 
-  <%= render :esi => entries_search_results_path(params.except(:action)) %>
+    <%= render :esi => entries_search_results_path(params.except(:action)) %>
+  <% end %>
 <% end %>

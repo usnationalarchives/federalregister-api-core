@@ -273,7 +273,7 @@ class ApplicationSearch
   end
   
   def blank?
-    [with, conditions, term].all?(&:blank?)
+    [with, with_all, sphinx_conditions, term].all?(&:blank?)
   end
   
   def sphinx_conditions
