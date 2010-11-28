@@ -50,10 +50,9 @@ class EntrySearch < ApplicationSearch
   attr_reader :cfr
   
   def cfr=(hsh)
-    if hsh.present? && hsh.values.present?
+    if hsh.present? && hsh.values.any?(&:present?)
       @cfr = CFR.new(hsh[:title], hsh[:part])
       
-      # TODO: error handling
       if @cfr.title.present? && @cfr.part.present?
         add_filter(
           :value => @cfr.sphinx_citation,
@@ -62,6 +61,8 @@ class EntrySearch < ApplicationSearch
           :label => "Affected CFR Part",
           :sphinx_type => :with
         )
+      else
+        @errors[:cfr] = "You must enter a specific CFR title and part"
       end
     end
   end
