@@ -7,7 +7,7 @@ ActionController::Routing::Routes.draw do |map|
   map.entries_search 'articles/search.:format', :controller => 'entries/search', :action => 'show', :conditions => { :method => :get }
   
   # ENTRY PAGE VIEW
-  map.entries_page_views 'articles/views', :controller => 'entries/page_views', :action => 'create', :conditions => { :method => :get }
+  map.entries_page_views 'articles/views', :controller => 'entries/page_views', :action => 'create', :conditions => { :method => :post }
   
   # ENTRIES
   map.entries 'articles.:format', :controller => 'entries', :action => 'index', :conditions => { :method => :get }

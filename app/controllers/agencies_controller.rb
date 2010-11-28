@@ -36,7 +36,7 @@ class AgenciesController < ApplicationController
       end
       
       wants.rss do
-        @entries = @agency.entries.most_recent(20).preload(:topics, :agencies)
+        @entries = EntrySearch.new(:conditions => {:agency_ids => [@agency.id]}, :order => "newest", :per_page => 20).results
         @feed_name = "Federal Register: #{@agency.name}"
         @feed_description = "Recent Federal Register articles from #{@agency.name}."
         render :template => 'entries/index.rss.builder'

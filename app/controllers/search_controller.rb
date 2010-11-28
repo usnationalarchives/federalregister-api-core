@@ -9,8 +9,16 @@ class SearchController < ApplicationController
   def results
     cache_for 1.day
     respond_to do |wants|
-      wants.html { render :layout => false }
-      wants.js { render :json => {:count => @search.count} }
+      wants.html do
+        render :layout => false
+      end
+      wants.js do
+        if @search.valid?
+          render :json => {:count => @search.count}
+        else
+          render :json => {:count => "Invalid parameters", :errors => @search.errors}
+        end
+      end
     end
   end
   

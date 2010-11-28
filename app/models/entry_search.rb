@@ -26,6 +26,12 @@ class EntrySearch < ApplicationSearch
     ["RIN #{regulation_id_number}", reg.try(:title)].join(' - ')
   end
   
+  def regulatory_plan_title
+    if @regulation_id_number.present?
+      RegulatoryPlan.find_by_regulation_id_number(@regulation_id_number, :order => "issue DESC").try(:title)
+    end
+  end
+  
   define_filter :agency_ids,  :sphinx_type => :with
   define_filter :section_ids, :sphinx_type => :with_all do |section_id|
     Section.find_by_id(section_id).try(:title)
@@ -50,10 +56,9 @@ class EntrySearch < ApplicationSearch
   attr_reader :cfr
   
   def cfr=(hsh)
-    if hsh.present? && hsh.values.present?
+    if hsh.present? && hsh.values.any?(&:present?)
       @cfr = CFR.new(hsh[:title], hsh[:part])
       
-      # TODO: error handling
       if @cfr.title.present? && @cfr.part.present?
         add_filter(
           :value => @cfr.sphinx_citation,
@@ -62,6 +67,8 @@ class EntrySearch < ApplicationSearch
           :label => "Affected CFR Part",
           :sphinx_type => :with
         )
+      else
+        @errors[:cfr] = "You must enter a specific CFR title and part"
       end
     end
   end
@@ -209,7 +216,7 @@ class EntrySearch < ApplicationSearch
   private
   
   def set_defaults(options)
-    @within = '25'
+    @within = 25
     @order = options[:order] || 'relevant'
   end
 end

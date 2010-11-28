@@ -72,6 +72,27 @@ describe EntrySearch do
     end
   end
   
+  describe 'publication_date' do
+    [:is, :gte, :lte].each do |type|
+      describe "`#{type}`" do
+        describe 'error handling' do
+          before(:each) do
+            @date_string = "NOT A VALID DATE"
+            @search = EntrySearch.new(:conditions => {:publication_date => {type => @date_string}})
+          end
+        
+          it "adds an error when given a bad `#{type}` date" do
+            @search.errors[:publication_date].should be_present
+          end
+      
+          it "populates the value when given a bad `#{type}` date" do
+            @search.publication_date.send(type).should == @date_string
+          end
+        end
+      end
+    end
+  end
+  
   describe 'entry_with_document_number' do
     before(:each) do
       Issue.stubs(:current).returns(Issue.new(:publication_date => Date.today))
