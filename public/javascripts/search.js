@@ -175,7 +175,9 @@ $(document).ready(function () {
         trigger: '.results a.add_to_calendar'
     });
     
-    $(".date_options .date").hide();
+    $(".date_options .date :input[value!='']").parent().hide();
+    
+    
     $("input[data-show-field]").bind('change', function(event) {
       var parent_fieldset = $(this).closest("fieldset");
       parent_fieldset.find(".date").hide().find(":input").disable(); 
