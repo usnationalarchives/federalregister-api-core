@@ -73,6 +73,6 @@
 <% f.buttons do %>
   <%= f.commit_button 'Search' %>
   <li>
-    <a href="#">Clear Form</a>
+    <%= link_to "Clear Form", entries_search_path, :class => "clear_form" %>
   </li>
 <% end %>

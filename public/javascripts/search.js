@@ -115,6 +115,15 @@ $(document).ready(function () {
         }, 500);
     });
     
+    $('.clear_form').click(function(){
+        $('#entry_search_form').find('input[type=text],input[type=hidden]').val('');
+        $('#entry_search_form').find('input[type=radio],input[type=checkbox]').removeAttr('checked');
+        $('#entry_search_form').find('select option:eq(0)').attr('selected','selected');
+        $('#entry_search_form').find('#conditions_agency_ids option').remove();
+        $('#entry_search_form').find('#conditions_within option:eq(3)').attr('selected','selected');
+        $('#entry_search_form .bsmListItem').remove();
+        return(false);
+    });
     
     $('a.load_facet').live('click',
     function () {
