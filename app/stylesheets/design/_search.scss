@@ -93,6 +93,8 @@ PAGE ELEMENTS
   background: sprite-image('icons/search_button.png') no-repeat;
   border: none;
   cursor: pointer;
+  display: block;
+  float: left;
   height:  image-height('icons/search_button.png');
   @include hide-text;
   margin-left: -1px;
@@ -399,15 +401,12 @@ ADVANCED SEARCH
 
 .simple {
   display: block;
+  overflow: hidden;
   }
 .advanced {
   border-top: 1px solid #ddd;
-  margin-top: 2em;
+  margin-top: 1em;
   padding: 2em 5em 0;
-  }  
-.formtastic li {
-  list-style: none;
-  margin-bottom: .5em;
   }  
 .formtastic fieldset {
   border: none;
@@ -415,24 +414,12 @@ ADVANCED SEARCH
   margin: 0 0 1em 0;
   padding: 0;
   }
-.formtastic .show_labels,
-.formtastic .show_labels .selected_agency_list {
-  margin-bottom: 0;
-  }
-.formtastic .show_labels li {
-  margin-bottom: 1em;
-  }
-.formtastic fieldset:last-child {
-  border-bottom: none;
-  }
 .formtastic fieldset fieldset,
-.formtastic fieldset fieldset ol {
+.formtastic fieldset fieldset ol,
+.formtastic fieldset .type_selector {
   border: none;
   margin: 0;
   padding: 0;
-  }
-.formtastic fieldset fieldset ol {
-  margin-bottom: 0;
   }
 .formtastic fieldset legend,
 .formtastic fieldset .check_boxes legend,
@@ -448,10 +435,7 @@ ADVANCED SEARCH
 .formtastic fieldset legend,
 .formtastic fieldset .label {
   margin: 0 1em 0 0;
-  }   
-/*.formtastic fieldset li {
-  display: inline;
-  }*/
+  }
 .formtastic fieldset label {
   color: #666;
   font-size: 1em;
@@ -464,57 +448,66 @@ ADVANCED SEARCH
   margin: 0;
   }
 .formtastic .string label,
-.formtastic .select label {
-  display: none;
-  }  
-.formtastic fieldset .date input {
-  width: 7em;
-  }  
-.formtastic fieldset .check_boxes li {
-  display: inline;
-  } 
+.formtastic .select label { display: none; }    
+.formtastic li {
+  list-style: none;
+  margin-bottom: .5em;
+  }
+.formtastic fieldset .check_boxes li,
+.formtastic .buttons li,
+.formtastic fieldset .type_selector li,
+.formtastic .date_options .range,
+.formtastic .cfr li,
+.formtastic .zip li { 
+  display: inline; 
+  }
 .formtastic fieldset .check_boxes ol label,
 .formtastic fieldset .boolean label {
   width: auto;
   margin-left: 0;
   }
 .formtastic fieldset .check_boxes input,
-.formtastic fieldset .boolean input {
-  margin-left: 0;
-  }  
+.formtastic fieldset .boolean input { 
+  margin-left: 0; 
+  }
+.formtastic .show_labels,
+.formtastic .show_labels .selected_agency_list,
+.formtastic .advanced ol,
+.formtastic .show_labels .reg_id { 
+  margin-bottom: 0; 
+  }
+.formtastic .show_labels li { 
+  margin-bottom: 1em;
+  }
+.formtastic fieldset .date input { 
+  width: 7em; 
+  }
 .formtastic .inline-hints {
-  padding-left: 13em;
-  }
-.formtastic fieldset .type_selector {
-  margin: 0;
-  }  
-.formtastic fieldset .type_selector li {
-  display: inline;
-  }
+  clear: both;
+  font-size: 1em;
+  @include gesta;
+  margin-left: 13em; 
+  } 
 .formtastic .row_of_options {
   display: block;
   margin-bottom: 0;
   overflow:hidden;
   width: 500px;
   }
-.formtastic .advanced ol {
-  margin-bottom: 0;
-  }  
 .formtastic .date_options .date {
   display: block;
+  float: left;
   height: 16px;
   }
-.formtastic .date_options .range {
-  display: inline;
-  }  
-/*.formtastic .date_options .date {
-  clear: both;
-  } */
-.exact_date {
-  margin-left: 15.5em;
+.has_js .formtastic .date_options .date,
+.has_js .formtastic .selected_agency_list select {
+  display: none;
   }
-.exact_year {
-  margin-left: 21.75em;
+.exact_date { 
+  margin-left: 15.5em; 
+  }
+.exact_year { 
+  margin-left: 21.75em; 
   }
 .exact_year select,
 .zip select {
@@ -522,37 +515,27 @@ ADVANCED SEARCH
   float: none;
   margin: 0;
   }
-.range_start {
-  margin-left: 27.5em;
-  }
-.formtastic .cfr li,
-.formtastic .zip li {
-  display: inline;
+.range_start { 
+  margin-left: 27.5em; 
   }
 .formtastic .cfr input,
-.formtastic .zip input {
-  width: 50px;
+.formtastic .zip input { 
+  width: 50px; 
   }
-/*.formtastic .show_labels label {
-  float: none;
-  display: block;
-  }  */
 .formtastic .significant {
+  clear: both;
   margin-left: 13.25em;
   overflow: hidden;
   }
-.formtastic .show_labels .reg_id {
-  margin-bottom: 0;
-  }  
-.formtastic .show_labels .reg_id input {
-  width: 65px;
+.formtastic .show_labels .reg_id input { 
+  width: 65px; 
   }
-.formtastic .show_labels .docket input {
+.formtastic .show_labels .docket input { 
   width: 160px;
+   }
+.formtastic .agency input { 
+  width: 400px; 
   }
-.formtastic .agency input {
-  width: 400px;
-  }  
 .formtastic .advanced #conditions_submit {
   background: url(/images/search_btn_bg.png) repeat-x;
   border: 1px solid #aaa;
@@ -565,25 +548,20 @@ ADVANCED SEARCH
   text-indent: 0;
   width: auto;
   }
-.formtastic .advanced #conditions_submit:hover {
-  color: #B88659;
-  }
+.formtastic .advanced #conditions_submit:hover { color: #B88659; }
 .formtastic .buttons {
   margin-left: 13.75em;
   margin-top: 2em;
   }
-.formtastic .buttons li {
-  display: inline;
-  }
 #toggle_advanced {
-  clear:both;
+  clear: both;
   cursor: pointer;
   display:block;
   float:left;
   margin-left:5em;
   }
 select.bsmSelect {
-  display: none;
+  display: none !important; /* important needed for IE */
   } 
 .bsmList {
   margin-left: 13.25em;
@@ -609,7 +587,11 @@ select.bsmSelect {
   background: #efefef;
   color: #B88659;
   }
-.bsmList .bsmListItem {
+.ui-autocomplete-input.loading {
+  background: #fff image-url('ajax-loader.gif') no-repeat right top;
+  }  
+.bsmList .bsmListItem,
+.inline-hints {
   background: #dfe4ea;
   @include border-radius(5px);
   float: left;
@@ -621,4 +603,26 @@ select.bsmSelect {
   }  
 .bsmList .bsmListItem .remove {
   margin-left: 10px;
+  }
+.formtastic .string span {
+  margin: 0 3px;
+  }
+#expected_result_count {
+  display: none;
+  float: left;
+  @include apertura-condensed;
+  font-size: 12px;
+  height: 21px;
+  margin-left: 5px;
+  padding: 3px 1em;
+  width: auto;
+  }
+#expected_result_count.loading {
+  background-image: image-url('ajax-loader.gif');
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  @include hide-text();
+  }
+.formtastic .clear_form {
+  margin-left: 5px;
   }  
