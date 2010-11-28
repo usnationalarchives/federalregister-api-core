@@ -26,6 +26,12 @@ class EntrySearch < ApplicationSearch
     ["RIN #{regulation_id_number}", reg.try(:title)].join(' - ')
   end
   
+  def regulatory_plan_title
+    if @regulation_id_number.present?
+      RegulatoryPlan.find_by_regulation_id_number(@regulation_id_number, :order => "issue DESC").try(:title)
+    end
+  end
+  
   define_filter :agency_ids,  :sphinx_type => :with
   define_filter :section_ids, :sphinx_type => :with_all do |section_id|
     Section.find_by_id(section_id).try(:title)
