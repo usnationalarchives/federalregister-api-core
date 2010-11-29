@@ -183,8 +183,7 @@ $(document).ready(function () {
       var parent_fieldset = $(this).closest("fieldset");
       parent_fieldset.find(".date").hide().find(":input").disable(); 
       parent_fieldset.find("." + $(this).attr("data-show-field")).show().find(":input").enable();
-      $("#expected_result_count").hide();
-      //$(this).trigger('calculate_expected_results');
+      $(this).trigger('calculate_expected_results');
     });
     $(".date_options input[data-show-field]:checked").trigger("change");
     
