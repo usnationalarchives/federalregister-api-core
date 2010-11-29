@@ -11,7 +11,7 @@ $(document).ready(function () {
     // ajax-y lookup of number of expected results
     var calculate_expected_results = function () {
         var form = $('#entry_search_form');
-        var url = '/articles/search/results.js?' + form.serialize();
+        var url = '/articles/search/results.js?' + form.find(":input[value!='']:not([data-show-field])").serialize();
         
         var cache = form.data('count_cache') || {};
         
