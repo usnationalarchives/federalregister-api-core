@@ -94,7 +94,10 @@ def chef_cloud_attributes(instance_type)
                 :ebs_vol_dev            => "/dev/sdh",
                 :ebs_vol_size           => 80,
                 :tunable => {
-                              :query_cache_size => '40M'
+                              :query_cache_size        => '40M',
+                              :tmp_table_size          => '100M',
+                              :max_heap_table_size     => '100M',
+                              :innodb_buffer_pool_size => '4GB'
                             }
                },
     :rails  => {
@@ -141,6 +144,6 @@ def chef_cloud_attributes(instance_type)
   }
 end
 
-#require 'config/poolparty/pools/production.rb'
-require 'config/poolparty/pools/staging.rb'
+require 'config/poolparty/pools/production.rb'
+#require 'config/poolparty/pools/staging.rb'
 
