@@ -130,11 +130,13 @@ $(document).ready(function () {
     });
     
     $('.clear_form').click(function(){
-        $('#entry_search_form').find('input[type=text],input[type=hidden]').val('');
-        $('#entry_search_form').find('input[type=radio],input[type=checkbox]').removeAttr('checked');
-        $('#entry_search_form').find('select option:eq(0)').attr('selected','selected');
-        $('#entry_search_form').find('#conditions_agency_ids option').remove();
-        $('#entry_search_form').find('#conditions_within option:eq(3)').attr('selected','selected');
+        var form = $('#entry_search_form');
+        form.find('input[type=text],input[type=hidden]').val('');
+        form.find('input[type=radio],input[type=checkbox]').removeAttr('checked');
+        form.find('select option:eq(0)').attr('selected','selected');
+        form.find('#conditions_agency_ids option').remove();
+        form.find('#conditions_within option:eq(3)').attr('selected','selected');
+        form.find('#conditions_regulation_id_number_input .inline-hints').remove();
         $('#entry_search_form .bsmListItem').remove();
         $('#entry_search_form .date').hide().find("input").val('');
         $(this).trigger('calculate_expected_results');
