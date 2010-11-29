@@ -179,8 +179,6 @@ $(document).ready(function () {
     
     $(".date_options .date").hide();
     
-    $(".date_options .date input[value]").parent().show();
-    
     $("input[data-show-field]").bind('change', function(event) {
       var parent_fieldset = $(this).closest("fieldset");
       parent_fieldset.find(".date").hide().find(":input").disable(); 
@@ -189,6 +187,20 @@ $(document).ready(function () {
       //$(this).trigger('calculate_expected_results');
     });
     $(".date_options input[data-show-field]:checked").trigger("change");
+    
+    // preselect date type radio button based on current values
+    $("input[data-show-field]").each(function(){
+        var type_radio_button = $(this);
+        var parent_fieldset = type_radio_button.closest("fieldset");
+        var matching_inputs = parent_fieldset.find("." + $(this).attr("data-show-field") + ' :input');
+        
+        matching_inputs.each(function(){
+            if ($(this).val() != '') {
+                type_radio_button.attr('checked', 'checked');
+                type_radio_button.trigget('change');
+            }
+        });
+    });
     
     //Add in some helpful hints that would be redundant if we had all the labels displaying
     $(".range_start input").after("<span> to </span>");
