@@ -88,6 +88,14 @@ class Agency < ApplicationModel
     slug
   end
   
+  def name_and_short_name
+    if short_name.present?
+      "#{name} (#{short_name})"
+    else
+      name
+    end
+  end
+  
   def sidebar_name
     # FIXME: remove downcase and capitalize_most_words - just fixing agency wierdness for now
     self.name.downcase.capitalize_most_words.gsub(/^Department of(?: the)? /,'')
