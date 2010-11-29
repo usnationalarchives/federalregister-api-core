@@ -197,7 +197,7 @@ $(document).ready(function () {
         matching_inputs.each(function(){
             if ($(this).val() != '') {
                 type_radio_button.attr('checked', 'checked');
-                type_radio_button.trigger('change');
+                type_radio_button.change();
             }
         });
     });
