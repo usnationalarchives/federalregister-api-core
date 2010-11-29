@@ -1,7 +1,8 @@
 $(document).ready(function () {
     var populate_expected_results = function (count) {
         $('#expected_result_count').removeClass('loading');
-        $('#expected_result_count').text(count + " results").show();
+        var text = count == 1 ? "1 result" : count + " results";
+        $('#expected_result_count').text(text).show();
     }
     
     var indicate_loading = function() {
