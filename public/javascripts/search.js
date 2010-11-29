@@ -39,7 +39,7 @@ $(document).ready(function () {
     
     $('#entry_search_form').bind('calculate_expected_results', calculate_expected_results);
     
-    $('#entry_search_form select').bind('blur', function(event) {
+    $('#entry_search_form select, #entry_search_form input').bind('blur', function(event) {
       $(this).trigger('calculate_expected_results');
     });
     
