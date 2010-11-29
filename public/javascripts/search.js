@@ -16,9 +16,7 @@ $(document).ready(function () {
         var cache = form.data('count_cache') || {};
         
         // don't go back to the server if you've checked this before
-        if (cache[url]) {
-            populate_expected_results(cache[url])
-        } else {
+        if (cache[url] == undefined) {
             // record that this is the current results we're looking for
             form.data('count_current_url', url);
             indicate_loading();
@@ -34,6 +32,8 @@ $(document).ready(function () {
                     populate_expected_results(data.count);
                 }
             });
+        } else {
+            populate_expected_results(cache[url])
         }
     };
     
