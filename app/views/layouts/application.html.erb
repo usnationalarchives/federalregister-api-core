@@ -35,6 +35,7 @@
     <% else %>
       <%= javascript_include_tag 'all.js' %>
     <% end %>
+    <%= yield :javascripts %>
     
     <%= yield :feeds %>
   
