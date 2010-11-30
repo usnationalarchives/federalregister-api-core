@@ -9,12 +9,14 @@ $(document).ready(function () {
         $('#expected_result_count').show().addClass('loading');
     }
     
+
+    var requests = {};
+    
     // ajax-y lookup of number of expected results
     var calculate_expected_results = function () {
         var form = $('#entry_search_form');
-        var url = '/articles/search/results.js?' + form.find(":input[value!='']:not([data-show-field]):not('.text-placeholder')").serialize();
-        
         var cache = form.data('count_cache') || {};
+        var url = '/articles/search/results.js?' + form.find(":input[value!='']:not([data-show-field]):not('.text-placeholder')").serialize();
         
         // don't go back to the server if you've checked this before
         if (cache[url] == undefined) {
@@ -22,19 +24,25 @@ $(document).ready(function () {
             form.data('count_current_url', url);
             indicate_loading();
             
-            $.getJSON(url, function(data){
-                var form = $('#entry_search_form');
-                var cache = form.data('count_cache') || {};
-                cache[url] = data.count;
-                form.data('count_cache', cache);
-                
-                // don't show number if user has already made another request
-                if (form.data('count_current_url') == url) {
-                    populate_expected_results(data.count);
-                }
-            });
+            if( requests[url] == undefined ){
+              requests[url] = url;
+                      
+              $.getJSON(url, function(data){
+                  var form = $('#entry_search_form');
+                  var cache = form.data('count_cache') || {};
+                  cache[url] = data.count;
+                  requests[url] = undefined;
+                  form.data('count_cache', cache);
+
+                  // don't show number if user has already made another request
+                  if (form.data('count_current_url') == url) {
+                      populate_expected_results(data.count);
+                  }
+              });
+            }
+            
         } else {
-            populate_expected_results(cache[url])
+            populate_expected_results(cache[url]);
         }
     };
     
