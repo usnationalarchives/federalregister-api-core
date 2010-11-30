@@ -221,6 +221,10 @@ $(document).ready(function () {
       removeClass: 'remove'
     });
     
+    $(".bsmListItem .remove").live('click', function(event) {
+      $(this).trigger('calculate_expected_results');
+    });
+    
     $("input[data-autocomplete]").autocomplete({
       minLength: 3,
       source: function( request, response ){
