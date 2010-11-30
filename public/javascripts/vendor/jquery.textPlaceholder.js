@@ -1,9 +1,4 @@
-/**
- * @param {String} [color='#AAA'] placeholder text color
- */
-jQuery.fn.textPlaceholder = function (color) {
-
-	color = color || '#AAA';
+jQuery.fn.textPlaceholder = function () {
 
 	return this.each(function(){
 
@@ -11,37 +6,32 @@ jQuery.fn.textPlaceholder = function (color) {
 
 		if (that.placeholder && 'placeholder' in document.createElement(that.tagName)) return;
 
-		var default_color = that.style.color;
 		var placeholder = that.getAttribute('placeholder');
 		var input = $(that);
 
 		if (that.value === '' || that.value == placeholder) {
+			input.addClass('text-placeholder');
 			that.value = placeholder;
-			that.style.color = color;
-			input.data('placeholder-visible', true);
 		}
 
 		input.focus(function(){
-			this.style.color = default_color;
-			if (input.data('placeholder-visible')) {
-				input.data('placeholder-visible', false);
+			if (input.hasClass('text-placeholder')) {
 				this.value = '';
+				input.removeClass('text-placeholder')
 			}
 		});
 
 		input.blur(function(){
 			if (this.value === '') {
-				input.data('placeholder-visible', true);
+				input.addClass('text-placeholder');
 				this.value = placeholder;
-				this.style.color = color;
 			} else {
-				this.style.color = default_color;
-				input.data('placeholder-visible', false);
+				input.removeClass('text-placeholder');
 			}
 		});
 
 		that.form && $(that.form).submit(function(){
-			if (input.data('placeholder-visible')) {
+			if (input.hasClass('text-placeholder')) {
 				that.value = '';
 			}
 		});
