@@ -12,7 +12,7 @@ $(document).ready(function () {
     // ajax-y lookup of number of expected results
     var calculate_expected_results = function () {
         var form = $('#entry_search_form');
-        var url = '/articles/search/results.js?' + form.find(":input[value!='']:not([data-show-field])").serialize();
+        var url = '/articles/search/results.js?' + form.find(":input[value!='']:not([data-show-field]):not('.text-placeholder')").serialize();
         
         var cache = form.data('count_cache') || {};
         
@@ -66,7 +66,6 @@ $(document).ready(function () {
     
     var display_rin_info = function(message, loading) {
         loading = false || loading;
-        console.log(loading);
         var input = $('#conditions_regulation_id_number');
         
         input.siblings('.inline-hints').remove();
@@ -221,6 +220,10 @@ $(document).ready(function () {
       removeClass: 'remove'
     });
     
+    $("#conditions_agency_ids").bind('change', function(event) {
+      $(this).trigger('calculate_expected_results');
+    });
+    
     $("input[data-autocomplete]").autocomplete({
       minLength: 3,
       source: function( request, response ){
@@ -241,7 +244,6 @@ $(document).ready(function () {
       select: function( event, ui ) {
         $("#conditions_agency_ids").append("<option value=" + ui.item.id +" selected='selected'>" + ui.item.label + "</option>");
         $("#conditions_agency_ids").trigger("change");
-        $(this).trigger('calculate_expected_results');
       },
       open: function( event, ui ){
         $(this).removeClass("loading");
