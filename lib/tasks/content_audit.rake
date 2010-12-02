@@ -1,5 +1,32 @@
 namespace :content do
   namespace :audit do
+    task :missing_pages => :environment do
+      prior_end_page = 0
+      prior_entry = nil
+      
+      Issue.all(:conditions => {:publication_date => Date.parse("2010-01-01") .. Date.current}).each do |issue|
+        issue.entries.scoped(:order => "entries.start_page, entries.id").each do |entry|
+          num_missing_pages = (entry.start_page - prior_end_page) - 1
+          if num_missing_pages > 2
+            puts "num_missing: #{num_missing_pages}"
+            
+            ((prior_end_page + 1) .. (entry.start_page - 1)).each do |page|
+              puts "\thttp://www.gpo.gov/fdsys/search/citation.result.FR.action?federalRegister.volume=2010&federalRegister.page=#{page}&publication=FR"
+            end
+            puts "\tprior: #{prior_entry.document_number}; date: #{prior_entry.publication_date}; pages: #{prior_entry.start_page}-#{prior_entry.end_page}"
+            puts "\t\t#{prior_entry.source_url(:mods)}"
+            puts "\t\thttp://www.gpo.gov/fdsys/search/getfrtoc.action?selectedDate=#{prior_entry.publication_date.to_s(:db)}"
+            puts "\tcur: #{entry.document_number}; date: #{entry.publication_date}; pages: #{entry.start_page}-#{entry.end_page}"
+            puts "\t\t#{entry.source_url(:mods)}"
+            puts "\t\thttp://www.gpo.gov/fdsys/search/getfrtoc.action?selectedDate=#{entry.publication_date.to_s(:db)}"
+          end
+          
+          prior_entry = entry
+          prior_end_page = prior_entry.end_page
+        end
+      end
+    end
+    
     task :bulkdata => :environment do
       FCSV do |csv|
         elements = %w(AGENCY CFR RIN SUBJECT AGY ACT SUM)
