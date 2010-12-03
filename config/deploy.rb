@@ -210,7 +210,7 @@ namespace :sphinx do
     run "rsync --verbose  --progress --stats --compress --recursive --times --perms --links #{shared_path}/data/raw sphinx:#{shared_path}/data"
   end
   task :transfer_sphinx_config, :roles => [:worker] do
-    run "rsync --verbose  --progress --stats --compress --recursive --times --perms --links #{shared_path}/config/#{rails_env}.sphinx.conf sphinx:#{shared_path}/config/"
+    run "rsync --verbose  --progress --stats --compress --recursive --times --perms --links #{current_path}/config/#{rails_env}.sphinx.conf sphinx:#{shared_path}/config/"
   end
   task :run_sphinx_indexer, :roles => [:sphinx] do
     run "indexer --config #{shared_path}/config/#{rails_env}.sphinx.conf --all --rotate"
