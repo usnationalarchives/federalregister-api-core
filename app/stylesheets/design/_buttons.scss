@@ -61,26 +61,36 @@ BUTTONS / ICONS
 .button.format.external { background: sprite-image('icons/icon_external.png', 0, 4px, 50px); }
 .button.format.external:hover { background: sprite-image('icons/icon_external_hover.png', 0, 4px, 20px); }
 
-
-.rss {
-  background: sprite-image('icons/icon_rss.png', 0, 0, 50px) no-repeat;
+.rss,
+.info,
+.add_to_calender {
   color: #6e6e6e;
   font-size: 1.2em;
   font-weight: bold;
   padding: 0 0 0 25px;
+  }
+.rss {
+  background: sprite-image('icons/icon_rss.png', 0, 0, 50px) no-repeat;
   height: image-height('icons/icon_rss.png');
   }
 .rss:hover {
   background: sprite-image('icons/icon_rss_hover.png', 0, 0, 50px) no-repeat;
   }
-  
+.info {
+  background: sprite-image('icons/icon_info.png', 0, 3px, 50px) no-repeat;
+  display: block;
+  height: image-height('icons/icon_rss.png');
+  padding-bottom: 3px;
+  }
+.info:hover {
+  background: sprite-image('icons/icon_info_hover.png', 0, 3px, 50px) no-repeat;
+  }   
 .add_to_calendar {
   background: sprite-image('icons/add_to_calendar_half.png', 0, 0, 50px) no-repeat;
-  color: #6e6e6e;
-  font-size: 1.2em;
-  font-weight: bold;
   line-height: image-height('icons/add_to_calendar_half.png');
-  padding: 5px 0 0 25px;
+  padding-top: 5px;
   }
-.add_to_calendar:hover { background: sprite-image('icons/add_to_calendar_half_hover.png', 0, 0, 50px) no-repeat; }  
+.add_to_calendar:hover { 
+  background: sprite-image('icons/add_to_calendar_half_hover.png', 0, 0, 50px) no-repeat; 
+  }  
   
