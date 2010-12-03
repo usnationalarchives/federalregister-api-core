@@ -31,12 +31,12 @@ def chef_cloud_attributes(instance_type)
 
   case instance_type
   when 'staging'
-    @proxy_server_address    = '10.205.13.15'
-    @static_server_address   = '10.203.41.201'
-    @worker_server_address   = '10.203.41.201'
-    @database_server_address = '10.205.6.208'
-    @sphinx_server_address   = '10.205.6.208'
-    @app_server_address      = '10.243.91.240'
+    @proxy_server_address    = '10.195.190.36'
+    @static_server_address   = '10.196.142.63'
+    @worker_server_address   = '10.196.142.63'
+    @database_server_address = '10.242.45.235'
+    @sphinx_server_address   = '10.242.45.235'
+    @app_server_address      = '10.242.46.47'
   when 'production'
     @proxy_server_address    = '10.194.207.96'  #'ip-10-194-207-96.ec2.internal'
     @static_server_address   = '10.245.106.31'  #'ip-10-245-106-31.ec2.internal'
@@ -144,6 +144,6 @@ def chef_cloud_attributes(instance_type)
   }
 end
 
-require 'config/poolparty/pools/production.rb'
-#require 'config/poolparty/pools/staging.rb'
+#require 'config/poolparty/pools/production.rb'
+require 'config/poolparty/pools/staging.rb'
 
