@@ -10,11 +10,10 @@ class EntrySearch < ApplicationSearch
   end
   
   TYPES = [
-    ['Rule',                  'RULE'    ], 
-    ['Proposed Rule',         'PRORULE' ], 
-    ['Notice',                'NOTICE'  ], 
-    ['Presidential Document', 'PRESDOCU'], 
-    ['Sunshine Act Document', 'SUNSHINE']
+    ['Rule',                  'RULE'    ],
+    ['Proposed Rule',         'PRORULE' ],
+    ['Notice',                'NOTICE'  ],
+    ['Presidential Document', 'PRESDOCU']
   ]
   include Geokit::Geocoders
   

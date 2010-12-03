@@ -142,7 +142,7 @@ class ApplicationSearch
       if @lte.present?
         Date.parse(@lte)
       else
-        Issue.current.try(:publication_date) || Date.current
+        Date.current
       end
     end
   end

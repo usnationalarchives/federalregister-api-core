@@ -9,12 +9,14 @@ $(document).ready(function () {
         $('#expected_result_count').show().addClass('loading');
     }
     
+
+    var requests = {};
+    
     // ajax-y lookup of number of expected results
     var calculate_expected_results = function () {
         var form = $('#entry_search_form');
-        var url = '/articles/search/results.js?' + form.find(":input[value!='']:not([data-show-field])").serialize();
-        
         var cache = form.data('count_cache') || {};
+        var url = '/articles/search/results.js?' + form.find(":input[value!='']:not([data-show-field]):not('.text-placeholder')").serialize();
         
         // don't go back to the server if you've checked this before
         if (cache[url] == undefined) {
@@ -22,19 +24,25 @@ $(document).ready(function () {
             form.data('count_current_url', url);
             indicate_loading();
             
-            $.getJSON(url, function(data){
-                var form = $('#entry_search_form');
-                var cache = form.data('count_cache') || {};
-                cache[url] = data.count;
-                form.data('count_cache', cache);
-                
-                // don't show number if user has already made another request
-                if (form.data('count_current_url') == url) {
-                    populate_expected_results(data.count);
-                }
-            });
+            if( requests[url] == undefined ){
+              requests[url] = url;
+                      
+              $.getJSON(url, function(data){
+                  var form = $('#entry_search_form');
+                  var cache = form.data('count_cache') || {};
+                  cache[url] = data.count;
+                  requests[url] = undefined;
+                  form.data('count_cache', cache);
+
+                  // don't show number if user has already made another request
+                  if (form.data('count_current_url') == url) {
+                      populate_expected_results(data.count);
+                  }
+              });
+            }
+            
         } else {
-            populate_expected_results(cache[url])
+            populate_expected_results(cache[url]);
         }
     };
     
@@ -66,7 +74,6 @@ $(document).ready(function () {
     
     var display_rin_info = function(message, loading) {
         loading = false || loading;
-        console.log(loading);
         var input = $('#conditions_regulation_id_number');
         
         input.siblings('.inline-hints').remove();
@@ -221,6 +228,10 @@ $(document).ready(function () {
       removeClass: 'remove'
     });
     
+    $("#conditions_agency_ids").bind('change', function(event) {
+      $(this).trigger('calculate_expected_results');
+    });
+    
     $("input[data-autocomplete]").autocomplete({
       minLength: 3,
       source: function( request, response ){
@@ -241,7 +252,6 @@ $(document).ready(function () {
       select: function( event, ui ) {
         $("#conditions_agency_ids").append("<option value=" + ui.item.id +" selected='selected'>" + ui.item.label + "</option>");
         $("#conditions_agency_ids").trigger("change");
-        $(this).trigger('calculate_expected_results');
       },
       open: function( event, ui ){
         $(this).removeClass("loading");
@@ -254,4 +264,40 @@ $(document).ready(function () {
         $(this).addClass("loading");
       }
     });
+    
+    
+    $('.help_link').live('click',
+    function () {
+        load_help();
+        $('#help_modal').centerScreen().jqmShow();
+        return false;
+    });
+
+    function load_help() {
+        if ($('#help_modal').size() == 0) {
+            
+            $.ajax({
+              url: '/search_help',
+              dataType: 'html',
+              complete: function(xhr, textStatus) {
+                //called when complete
+              },
+              success: function(data, textStatus, xhr) {
+                $("#help_modal").append(data);
+              },
+              error: function(xhr, textStatus, errorThrown) {
+                //called when there is an error
+              }
+            });
+            
+          
+            $('#help_modal').jqm({
+                modal: true,
+                toTop: true
+            });
+        }
+    }
+    
+    
+    
 });

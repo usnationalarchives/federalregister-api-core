@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101114220648) do
+ActiveRecord::Schema.define(:version => 20101201155054) do
 
   create_table "agencies", :force => true do |t|
     t.integer  "parent_id"
@@ -189,6 +189,7 @@ ActiveRecord::Schema.define(:version => 20101114220648) do
   end
 
   add_index "entry_regulation_id_numbers", ["entry_id", "regulation_id_number"], :name => "index"
+  add_index "entry_regulation_id_numbers", ["regulation_id_number", "entry_id"], :name => "rin_then_entry"
 
   create_table "events", :force => true do |t|
     t.integer "entry_id"
