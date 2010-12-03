@@ -62,7 +62,7 @@ BUTTONS / ICONS
 .button.format.external:hover { background: sprite-image('icons/icon_external_hover.png', 0, 4px, 20px); }
 
 .rss,
-.info,
+.help_link,
 .add_to_calender {
   color: #6e6e6e;
   font-size: 1.2em;
@@ -76,13 +76,13 @@ BUTTONS / ICONS
 .rss:hover {
   background: sprite-image('icons/icon_rss_hover.png', 0, 0, 50px) no-repeat;
   }
-.info {
+.help_link {
   background: sprite-image('icons/icon_info.png', 0, 3px, 50px) no-repeat;
   display: block;
   height: image-height('icons/icon_rss.png');
   padding-bottom: 3px;
   }
-.info:hover {
+.help_link:hover {
   background: sprite-image('icons/icon_info_hover.png', 0, 3px, 50px) no-repeat;
   }   
 .add_to_calendar {

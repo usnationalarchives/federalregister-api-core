@@ -264,4 +264,40 @@ $(document).ready(function () {
         $(this).addClass("loading");
       }
     });
+    
+    
+    $('.help_link').live('click',
+    function () {
+        load_help();
+        $('#help_modal').centerScreen().jqmShow();
+        return false;
+    });
+
+    function load_help() {
+        if ($('#help_modal').size() == 0) {
+            
+            $.ajax({
+              url: '/search_help',
+              dataType: 'html',
+              complete: function(xhr, textStatus) {
+                //called when complete
+              },
+              success: function(data, textStatus, xhr) {
+                $("#help_modal").append(data);
+              },
+              error: function(xhr, textStatus, errorThrown) {
+                //called when there is an error
+              }
+            });
+            
+          
+            $('#help_modal').jqm({
+                modal: true,
+                toTop: true
+            });
+        }
+    }
+    
+    
+    
 });
