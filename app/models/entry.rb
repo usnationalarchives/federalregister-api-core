@@ -240,6 +240,14 @@ class Entry < ApplicationModel
   # this line must appear after the define_index block
   include ThinkingSphinx::Deltas::ManualDelta::ActiveRecord
   
+  def title
+    if self[:title].present?
+      self[:title]
+    else
+      '[No title available]'
+    end
+  end
+  
   def curated_title
     self[:curated_title] || title
   end
