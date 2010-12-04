@@ -43,7 +43,7 @@ gem "net-scp", '1.0.4'
 # gem 'geokit'
 
 group :deployment do
-  gem "thunder_punch", '0.0.10', :require => false
+  gem "thunder_punch", '0.0.11', :require => false
 end
 
 group :development do
