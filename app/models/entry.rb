@@ -169,7 +169,7 @@ class Entry < ApplicationModel
     scoped(:order => "publication_date DESC", :limit => n)
   end
   
-  def self.popular(since = 1.month.ago)
+  def self.popular(since = 1.week.ago)
     scoped(
       :select => "entries.id, entries.title, entries.document_number, entries.publication_date, entries.abstract, count(distinct(remote_ip)) AS num_views",
       :joins => :entry_page_views,

@@ -4,7 +4,7 @@
   <div class="result_info">
     <span class="date"><%= entry.publication_date %></span>
     <span class="pages"><%= entry_page_range(entry) %></span>
-    <% if page != entry.start_page %>
+    <% if page.present? && page != entry.start_page %>
       <span class="specific_page">Jump directly to page <%= link_to page, entry_path(entry, :anchor => "page-#{page}") %>.</span>
     <% end %>
     <span class="excepts"><%= truncate_words(entry.abstract, :length => 200) %></span>
