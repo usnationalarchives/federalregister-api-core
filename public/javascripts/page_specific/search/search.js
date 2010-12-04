@@ -282,7 +282,7 @@ $(document).ready(function () {
         if ($('#help_modal').size() == 0) {
             
             $.ajax({
-              url: '/search_help',
+              url: '/entries/search/help?no_layout=1',
               dataType: 'html',
               complete: function(xhr, textStatus) {
                 //called when complete

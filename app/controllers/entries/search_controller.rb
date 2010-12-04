@@ -12,6 +12,15 @@ class Entries::SearchController < SearchController
     end
   end
   
+  def help
+    cache_for 1.day
+    if params[:no_layout]
+      render :layout => false
+    else
+      render
+    end
+  end
+  
   private
   
   def load_search
