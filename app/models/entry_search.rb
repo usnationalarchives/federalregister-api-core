@@ -114,24 +114,7 @@ class EntrySearch < ApplicationSearch
   memoize :topic_facets
   
   def type_facets
-    raw_facets = Entry.facets(term,
-      :with => with,
-      :with_all => with_all,
-      :conditions => sphinx_conditions,
-      :match_mode => :extended,
-      :facets => [:type]
-    )[:type]
-    
-    search_value_for_this_facet = self.type
-    facets = raw_facets.to_a.reverse.reject{|id, count| id == 'UNKNOWN'}.map do |id, count|
-      Facet.new(
-        :value      => id, 
-        :name       => Entry::ENTRY_TYPES[id],
-        :count      => count,
-        :on         => id.to_s == search_value_for_this_facet.to_s,
-        :condition  => :type
-      )
-    end
+    FacetCalculator.new(:search => self, :facet_name => :type, :hash => Entry::ENTRY_TYPES).all()
   end
   memoize :type_facets
   
