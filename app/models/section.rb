@@ -54,7 +54,7 @@ class Section < ApplicationModel
     end
   end
   
-  def popular_topics(n = 10, since = 1.month.ago)
+  def popular_topics(n = 10, since = 1.week.ago)
     entry_scope = self.entries.popular
     sub_query = Entry.construct_finder_sql(entry_scope.current_scoped_methods[:find])
     
