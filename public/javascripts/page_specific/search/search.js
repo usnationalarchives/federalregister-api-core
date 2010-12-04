@@ -1,7 +1,6 @@
 $(document).ready(function () {
-    var populate_expected_results = function (count) {
+    var populate_expected_results = function (text) {
         $('#expected_result_count').removeClass('loading');
-        var text = count == 1 ? "1 result" : count + " results";
         $('#expected_result_count').text(text).show();
     }
     
@@ -30,13 +29,19 @@ $(document).ready(function () {
               $.getJSON(url, function(data){
                   var form = $('#entry_search_form');
                   var cache = form.data('count_cache') || {};
-                  cache[url] = data.count;
+                  if (data.count) {
+                      cache[url] = count == 1 ? "1 result" : count + " results";
+                  }
+                  else {
+                      cache[url] = "Invalid parameters"
+                  }
+                  
                   requests[url] = undefined;
                   form.data('count_cache', cache);
 
                   // don't show number if user has already made another request
                   if (form.data('count_current_url') == url) {
-                      populate_expected_results(data.count);
+                      populate_expected_results(cache[url]);
                   }
               });
             }

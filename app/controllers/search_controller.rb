@@ -16,7 +16,7 @@ class SearchController < ApplicationController
         if @search.valid?
           render :json => {:count => @search.count}
         else
-          render :json => {:count => "Invalid parameters", :errors => @search.errors}
+          render :json => {:errors => @search.errors}
         end
       end
     end
