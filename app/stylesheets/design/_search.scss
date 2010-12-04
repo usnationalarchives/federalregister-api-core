@@ -275,8 +275,12 @@ dd.next + dd.next {
   font-size:1.1em;
   margin: 0 0 1em 0;
   }
+.article_list {
+  overflow: hidden;
+  }  
 .article_list li {
   border-bottom: 1px solid #EEEEEE;
+  clear: both;
   float: none;
   list-style: none;
   margin: 0 0 1em 0;
