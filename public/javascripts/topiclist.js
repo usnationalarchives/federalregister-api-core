@@ -60,7 +60,7 @@ $(document).ready(function () {
             break;
         }
 
-        $(this).parent().parent().find(".on").removeClass("on");
+        $(".topic_list_container .actions .on").removeClass("on");
         $(this).parent().addClass("on");
     });
 
