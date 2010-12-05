@@ -153,7 +153,8 @@ GENERAL PAGE ITEMS
   display: inline;
   }
 .agency_list_info .actions,
-.search_info .actions {
+.search_info .actions,
+.search_bar {
   top: 0;
   }  
 #main #content_area, 
@@ -219,8 +220,10 @@ SEARCH
 
 ******************************/
 
-.search_bar { height: 40px; }
+.search_bar { height: 55px; overflow: visible; }
 .search_bar #conditions_term { margin-left: 10px; }
+#main .search_bar .formtastic .simple label { display: inline; }
+#toggle_advanced { margin-left: 2.55em;}
 .active_filter_list li .type { background: image-url('icons/ie6/icon_filter_50.png') no-repeat; }
 .result_set.events .results { width: 500px; }
 .result_set .row { border: none;}
@@ -251,6 +254,33 @@ SEARCH
 
 .regulations .results { width: auto; }
 .regulations .results li { border-bottom: 2px solid #eee; margin-bottom: 15px; padding-bottom: 15px; }
+
+.help_link { 
+  background: image-url('icons/ie6/icon_info.png') no-repeat left 3px;
+  float: left; 
+  }
+.help_link:hover { background: image-url('icons/ie6/icon_info_hover.png') no-repeat left 3px;  }
+
+.matching_citation_header { background: image-url('icons/ie6/icon_article.png') no-repeat left top; }
+
+#main .formtastic .string label,
+#main .formtastic .select label { display: none; }
+
+#main .formtastic .show_labels .selected_agency_list label { display: none !important; }
+
+#main .formtastic .show_labels .string label,
+#main .formtastic .show_labels .select label,
+#main .formtastic .row_of_options .type_selector label { display: block; }
+
+#main .formtastic .exact_date { 
+  margin-left: 0 !important;   
+  }
+#main .formtastic .exact_year { 
+  margin-left: 0 !important; 
+  }
+#main .formtastic .range_start { 
+  margin-left: 0 !important; 
+  }
 
 /******************************
 

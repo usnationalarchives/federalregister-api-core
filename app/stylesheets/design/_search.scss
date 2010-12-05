@@ -28,6 +28,7 @@ PAGE ELEMENTS
   @include border-top-right-radius(5px);
   margin-bottom: -1em;
   padding-bottom: 1em;
+  padding-top:0.25em;
   }
 .tabs .on a {
   color: #385F82;
@@ -79,6 +80,7 @@ PAGE ELEMENTS
   float: left;
   height: 15px;
   padding: 5px;
+  width: 400px;
   }
 .search_bar #conditions_type,
 .search_bar select {
@@ -139,10 +141,12 @@ ol.results > li:last-child,
 ol.results > li.lastchild {
   border: none;
   }  
-ol.results h4 {
+ol.results h4,
+.matching_citation h4 {
   font-weight: normal;
   }  
-ol.results li .date {
+ol.results li .date,
+.matching_citation .date {
   font-size: 1.3em;
   line-height: 1.15;
   text-transform: uppercase;
@@ -210,22 +214,29 @@ RESULTS - MATCHING DOCUMENT
   }
 .matching_citation_header {
   background: sprite-image('icons/icon_article.png', 0, 0, 100px) no-repeat;
-  border-bottom:1px solid #EEEEEE;
   color: #666;
   @include gesta;
   line-height: image-height('icons/icon_article.png');
-  margin-bottom:10px;
-  padding-bottom:10px;
-  padding-left: 35px;
+  padding: 0 0 0 35px;
   }
 .matching_citation_document {
   margin-left: 5px;
   }
 .matching_citation_document ul {
-  margin: 0;
+  border-top: 1px solid #EEEEEE;
+  margin: 10px 0 0 0;
+  padding: 10px 0 0 0;
   }
 .matching_citation_document li {
+  border-top: 1px dotted #eee;
   list-style: none;
+  margin-top: 10px;
+  padding-top: 10px;
+  }
+.matching_citation_document li:first-child {
+  border: none;
+  margin-top: 0;
+  padding-top: 0;
   }  
 
 /******************************
@@ -649,8 +660,9 @@ select.bsmSelect {
   }
 #expected_result_count {
   background: #fcfcfc;
-  color: #f77825;
+  border: 1px solid #ddd;
   @include border-radius(5px);
+  color: #f77825;
   display: none;
   float: left;
   @include apertura-condensed;

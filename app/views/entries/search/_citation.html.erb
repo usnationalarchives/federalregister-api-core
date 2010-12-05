@@ -3,23 +3,19 @@
   <div class="matching_citation">
     <% if citation.matching_fr_entries.present? %>
       
-      <div class="notice">
-        <p>It looks like you were searching for the citation <strong><%= citation.name %></strong>.
-         We've found the following <%= pluralize(citation.matching_fr_entries.count, 'article') %>
-         on page <%= citation.part_2 %> of volume <%= citation.part_1 %>.</p>
-      </div>
+      <p class="matching_citation_header">It looks like you were searching for the citation <strong><%= citation.name %></strong>.
+       We've found the following <%= pluralize(citation.matching_fr_entries.count, 'article') %>
+       on page <%= citation.part_2 %> of volume <%= citation.part_1 %>.</p>
       
-      <div class="aside_box clear">
+      <div class="matching_citation_document">
       
-        <ul class="bullets">
+        <ul>
           <%= render :partial => 'citation_result', :collection => citation.matching_fr_entries, :as => :entry, :locals => {:page => citation.part_2.to_i} %>
         </ul>
       
       </div>
     <% else %>
-      <div class="notice">
-        <p>It looks like you were searching for the citation <strong><%= citation.name %></strong>. We were unable to find any articles with that citation. FederalRegister.gov covers articles published starting in January of 1994 (volumes 59-current).</p>
-      </div>
+        <p class="matching_citation_header">It looks like you were searching for the citation <strong><%= citation.name %></strong>. We were unable to find any articles with that citation. FederalRegister.gov covers articles published starting in January of 1994 (volumes 59-current).</p>
     <% end %>
   </div>
 <% end %>
