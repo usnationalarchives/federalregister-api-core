@@ -220,7 +220,7 @@ $(document).ready(function () {
       isOpen ? $(this).text("Show Advanced Search") : $(this).text("Hide Advanced Search");
       isOpen ? $(this).attr("title", "Show Advanced Search") : $(this).attr("title", "Hide Advanced Search");
       $(this).attr("data-state", isOpen ? 'close' : 'open');
-      $(".advanced").toggle().find(":input").toggleDisabled();
+      $(".advanced").toggleClass("open").find(":input").toggleDisabled();
       $(this).trigger('calculate_expected_results');
     });
     
