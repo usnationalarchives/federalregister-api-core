@@ -26,11 +26,11 @@ namespace :content do
       
       desc "List document numbers found in the bulkdata but missing in the MODS"
       task :missing_document_numbers_in_mods => :environment do
-        Issue.all(:conditions => "publication_date > '2000-01-01'").each do |issue|
-          mods_document_numbers = Content::EntryImporter::ModsFile.new(issue.publication_date).document_numbers
-          bulkdata_document_numbers = Content::EntryImporter::BulkdataFile.new(issue.publication_date).document_numbers
+        Content.parse_dates(ENV['DATE']).each do |date|
+          mods_document_numbers = Content::EntryImporter::ModsFile.new(date).document_numbers
+          bulkdata_document_numbers = Content::EntryImporter::BulkdataFile.new(date).document_numbers
           (bulkdata_document_numbers - mods_document_numbers).each do |missing_document_number|
-            puts "#{issue.publication_date}\t#{missing_document_number} not found in mods.xml"
+            puts "#{date}\t#{missing_document_number} not found in mods.xml"
           end
         end
       end
