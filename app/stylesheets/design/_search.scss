@@ -50,7 +50,7 @@ PAGE ELEMENTS
 .search_bar .actions {
   position: absolute;
   right: 2em;
-  top: 1.4em;  
+  top: 1.2em;  
   }
 .search_bar .button {
  background-color: #fff;
@@ -195,6 +195,38 @@ ol.results li .date {
   display: block;
   margin: 0 0 1em 0;
   }
+
+/******************************
+
+RESULTS - MATCHING DOCUMENT 
+
+******************************/
+
+.matching_citation {
+  @include box-shadow(#eee, 3px, 3px, 3px);
+  border: 1px solid #eee;
+  margin-bottom: 1em;
+  padding: 10px;
+  }
+.matching_citation_header {
+  background: sprite-image('icons/icon_article.png', 0, 0, 100px) no-repeat;
+  border-bottom:1px solid #EEEEEE;
+  color: #666;
+  @include gesta;
+  line-height: image-height('icons/icon_article.png');
+  margin-bottom:10px;
+  padding-bottom:10px;
+  padding-left: 35px;
+  }
+.matching_citation_document {
+  margin-left: 5px;
+  }
+.matching_citation_document ul {
+  margin: 0;
+  }
+.matching_citation_document li {
+  list-style: none;
+  }  
 
 /******************************
 
@@ -409,8 +441,12 @@ ADVANCED SEARCH
   }
 .advanced {
   border-top: 1px solid #ddd;
+  display: none;
   margin-top: 1em;
   padding: 2em 5em 0;
+  }  
+.advanced.open {
+  display: block;
   }  
 .formtastic fieldset {
   border: none;
