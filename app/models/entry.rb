@@ -344,7 +344,7 @@ class Entry < ApplicationModel
   end
   
   def self.find_all_by_citation(volume, page)
-    all(:conditions => ["volume = ? AND start_page <= ? AND end_page >= ?", volume.to_i, page.to_i, page.to_i], :order => "entries.end_page")
+    scoped(:conditions => ["volume = ? AND start_page <= ? AND end_page >= ?", volume.to_i, page.to_i, page.to_i], :order => "entries.end_page")
   end
   
   def self.first_publication_date_before(date)

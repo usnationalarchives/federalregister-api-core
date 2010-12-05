@@ -1,0 +1,16 @@
+<%=
+  summary = []
+  if @search.filters.blank?
+    if citation = @search.matching_entry_citation
+      if citation.matching_fr_entries.count > 0
+        summary << pluralize(citation.matching_fr_entries.count, 'matching citation')
+      end
+    elsif @search.entry_with_document_number
+      summary << '1 matching citation'
+    end
+  end
+  
+  summary << (@search.count == 1 ? '1 search result' : "#{number_with_delimiter @search.count} search results")
+  
+  summary.join(', ')
+%>

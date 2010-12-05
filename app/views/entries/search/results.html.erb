@@ -1,4 +1,4 @@
-<div class="result_set" data-number-of-results="<%= @search.count %>">
+<div class="result_set" data-expected-result-count="<%= render :partial => 'result_summary.txt.erb' %>">
   <%= render :partial => "search/filters", :locals => {:search => @search} %>
   
   <%= render :partial => "citation", :locals => {:search => @search} if @search.filters.blank? && params[:order].blank?%>

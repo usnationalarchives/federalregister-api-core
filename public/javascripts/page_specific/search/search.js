@@ -31,12 +31,7 @@ $(document).ready(function () {
               $.getJSON(url, function(data){
                   var form = $('#entry_search_form');
                   var cache = form.data('count_cache') || {};
-                  if (data.count != undefined) {
-                      cache[url] = data.count == 1 ? "1 result" : data.count + " results";
-                  }
-                  else {
-                      cache[url] = "Invalid parameters"
-                  }
+                  cache[url] = data.message;
                   
                   requests[url] = undefined;
                   form.data('count_cache', cache);
@@ -54,8 +49,7 @@ $(document).ready(function () {
     };
     
     $('.result_set').each(function(){
-        var count = $(this).attr('data-number-of-results');
-        var text = count == 1 ? "1 result" : count + " results";
+        var text = $(this).attr('data-expected-result-count');
         
         var form = $('#entry_search_form');
         var cache = form.data('count_cache') || {};
@@ -285,37 +279,37 @@ $(document).ready(function () {
     });
     
     
-    $('.help_link').live('click',
-    function () {
-        load_help();
-        $('#help_modal').centerScreen().jqmShow();
-        return false;
-    });
-
-    function load_help() {
-        if ($('#help_modal').size() == 0) {
-            
-            $.ajax({
-              url: '/entries/search/help?no_layout=1',
-              dataType: 'html',
-              complete: function(xhr, textStatus) {
-                //called when complete
-              },
-              success: function(data, textStatus, xhr) {
-                $("#help_modal").append(data);
-              },
-              error: function(xhr, textStatus, errorThrown) {
-                //called when there is an error
-              }
-            });
-            
-          
-            $('#help_modal').jqm({
-                modal: true,
-                toTop: true
-            });
-        }
-    }
+    // $('.help_link').live('click',
+    // function () {
+    //     load_help();
+    //     $('#help_modal').centerScreen().jqmShow();
+    //     return false;
+    // });
+    // 
+    // function load_help() {
+    //     if ($('#help_modal').size() == 0) {
+    //         
+    //         $.ajax({
+    //           url: '/entries/search/help?no_layout=1',
+    //           dataType: 'html',
+    //           complete: function(xhr, textStatus) {
+    //             //called when complete
+    //           },
+    //           success: function(data, textStatus, xhr) {
+    //             $("#help_modal").append(data);
+    //           },
+    //           error: function(xhr, textStatus, errorThrown) {
+    //             //called when there is an error
+    //           }
+    //         });
+    //         
+    //       
+    //         $('#help_modal').jqm({
+    //             modal: true,
+    //             toTop: true
+    //         });
+    //     }
+    // }
     
     
     
