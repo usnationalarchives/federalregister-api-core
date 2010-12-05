@@ -58,10 +58,6 @@ describe Agency do
       Agency.named_approximately("The Administrative Office of United States Courts").should == [@office]
     end
     
-    it "removes trailing 's' characters" do
-      Agency.named_approximately("Bureau of Prisons").should == [@prison]
-    end
-    
     after(:each) do
       Agency.connection.execute("TRUNCATE agencies")
     end
