@@ -29,7 +29,7 @@ $(document).ready(function () {
               $.getJSON(url, function(data){
                   var form = $('#entry_search_form');
                   var cache = form.data('count_cache') || {};
-                  if (data.count) {
+                  if (data.count != undefined) {
                       cache[url] = data.count == 1 ? "1 result" : data.count + " results";
                   }
                   else {
