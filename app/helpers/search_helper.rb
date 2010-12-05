@@ -24,4 +24,14 @@ module SearchHelper
     end
     params.except(:quiet).recursive_merge(:page => nil, :action => :show, :conditions => conditions)
   end
+  
+  def working_search_example(search_term)
+    content_tag(:code) do
+      link_to search_term, entries_search_path(:conditions => {:term => search_term}), :target => "_blank"
+    end
+  end
+  
+  def entry_count_for_search_term(search_term)
+    EntrySearch.new(:conditions => {:term => search_term}).count
+  end
 end

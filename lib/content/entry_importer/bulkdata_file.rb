@@ -28,6 +28,17 @@ class Content::EntryImporter::BulkdataFile
   end
   memoize :document
   
+  def document_numbers
+    document_numbers = []
+    document.css('RULE, PRORULE, NOTICE, PRESDOCU').each do |entry_node|
+      raw_frdoc = entry_node.css('FRDOC').first.try(:content)
+      document_number = /FR Doc.\s*([^ ;]+)/i.match(raw_frdoc).try(:[], 1)
+      document_numbers << document_number unless document_number.blank?
+    end
+    
+    document_numbers
+  end
+  
   def document_numbers_and_associated_nodes
     ret = []
     document.css('RULE, PRORULE, NOTICE, PRESDOCU').each do |entry_node|
