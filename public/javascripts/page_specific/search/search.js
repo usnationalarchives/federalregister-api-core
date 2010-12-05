@@ -30,7 +30,7 @@ $(document).ready(function () {
                   var form = $('#entry_search_form');
                   var cache = form.data('count_cache') || {};
                   if (data.count) {
-                      cache[url] = count == 1 ? "1 result" : count + " results";
+                      cache[url] = data.count == 1 ? "1 result" : data.count + " results";
                   }
                   else {
                       cache[url] = "Invalid parameters"
