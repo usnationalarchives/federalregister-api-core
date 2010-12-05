@@ -27,6 +27,7 @@ namespace :content do
       desc "List document numbers found in the bulkdata but missing in the MODS"
       task :missing_document_numbers_in_mods => :environment do
         Content.parse_dates(ENV['DATE']).each do |date|
+          puts "checking #{date}" if ENV['VERBOSE']
           mods_document_numbers = Content::EntryImporter::ModsFile.new(date).document_numbers
           bulkdata_document_numbers = Content::EntryImporter::BulkdataFile.new(date).document_numbers
           (bulkdata_document_numbers - mods_document_numbers).each do |missing_document_number|
