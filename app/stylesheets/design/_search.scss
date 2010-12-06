@@ -373,6 +373,7 @@ FILTERS
 .filters li a {
   font-size: 1em; 
   font-weight: 700;
+  line-height:1.25;
   }
 .filters li.on .facet_name {
   color: #363636;
@@ -451,10 +452,9 @@ ADVANCED SEARCH
   overflow: hidden;
   }
 .advanced {
-  border-top: 1px solid #ddd;
   display: none;
   margin-top: 1em;
-  padding: 2em 5em 0;
+  padding: 0 5em 0;
   }  
 .advanced.open {
   display: block;
@@ -530,6 +530,9 @@ ADVANCED SEARCH
 .formtastic .show_labels li { 
   margin-bottom: 1em;
   }
+.formtastic .show_labels .agency {
+  margin-bottom: .35em;
+  }  
 .formtastic fieldset .date input { 
   width: 7em; 
   }
@@ -569,7 +572,9 @@ ADVANCED SEARCH
 .range_start { 
   margin-left: 27.5em; 
   }
-.formtastic .cfr input,
+.formtastic .cfr input {
+  width: 30px;
+  }  
 .formtastic .zip input { 
   width: 50px; 
   }
