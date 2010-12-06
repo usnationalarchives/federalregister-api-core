@@ -7,11 +7,11 @@ var citation_info = {
         var self = this;
         $("#content_area").bind('click',
         function (event) {
-            if ($(event.target).hasClass("trigger")) {
+            if ($(event.target).hasClass("trigger") && !$("body").hasClass("print_view")) {
                 event.preventDefault();
                 self.show($(event.target).parent().attr("id"));
             }
-            if ($(event.target).hasClass("citable")) {
+            if ($(event.target).hasClass("citable") && !$("body").hasClass("print_view")) {
                 event.preventDefault();
                 self.show($(event.target).attr("id"));
             }
@@ -152,5 +152,25 @@ $(document).ready(function () {
         'the <a href="' + $(this).attr('data-historic-citation-url') + '" target="_blank">version as it existed at the time of publication</a>'
         );
     });
+
+   function PrintViewManager() {
+      var screen_sheets = $("head link[media=screen]");
+      var print_sheets = $("head link[media=print]");
+      this.enter = function(){
+        screen_sheets.attr("media", "none");
+        print_sheets.attr("media", "all");
+        $("body").addClass("print_view");
+      },
+      this.exit = function(){
+        screen_sheets.attr("media", "screen");
+        print_sheets.attr("media", "print");
+        $("body").removeClass("print_view");
+      }
+    }
+    var print_view_manager = new PrintViewManager();
+    
+    $(window).bind('hashchange', function(){
+      location.hash === "#print_view" ? print_view_manager.enter() : print_view_manager.exit();
+    }).trigger('hashchange');
 
 });

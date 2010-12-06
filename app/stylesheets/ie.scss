@@ -14,12 +14,17 @@
 .footer {
   margin-top: 1em;
   }
-
+  
+.button.format {
+  padding: 0 0 0 25px;
+  }
+  
 /******************************
 
 NAV
 
 ******************************/
+
 #primary_nav {
   background: image-url("nav_bg.png");
   }
@@ -138,10 +143,13 @@ SEARCH
 .result_set.events .results .actions a {
   display: block;
   }
-
 #citations .search_bar {
   margin-bottom: 1em;
   } 
+.pages,
+#toggle_advanced {
+  width: 150px;
+  }
 
 /******************************
 
@@ -169,21 +177,21 @@ ADVANCED SEARCH
 .formtastic .buttons ol {
   margin-left: 0;
   }
-.formtastic .string {
+#main .formtastic .string {
   clear: both;
   }
-.formtastic .exact_date,  
-.formtastic .exact_year,  
-.formtastic .exact_year select,
-.formtastic .zip select {
+#main .formtastic .exact_date,  
+#main .formtastic .exact_year,  
+#main .formtastic .exact_year select,
+#main .formtastic .zip select {
   display: inline;
   float: none;
   margin: 0;
   }
-.formtastic .exact_year select {
+#main .formtastic .exact_year select {
   margin-left: 8.5em;
   }  
-.range_start { 
+#main .range_start { 
   margin-left: 0; 
   }
 .bsmListItemLabel,
