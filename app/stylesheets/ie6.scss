@@ -33,7 +33,8 @@ GENERAL
   }
 .titlebar,
 .filters li,
-.search_info {
+.search_info,
+.matching_citation {
   zoom: 1;
   }  
 
@@ -179,6 +180,8 @@ GENERAL PAGE ITEMS
 .button.format.pdf { background: image-url('icons/ie6/icon_pdf.png') no-repeat left top; }
 .button.format.pdf.small { background: image-url('icons/ie6/icon_pdf_small.png') no-repeat left top }
 .button.format.xml { background: image-url('icons/ie6/icon_xml.png') no-repeat left top; }
+.button.format.print { background: sprite-image("icons/ie6/icon_print.png", 0, 0, 100px) no-repeat; }
+.button.format.print:hover { background: sprite-image("icons/ie6/icon_print_on.png", 0, 0, 100px) no-repeat; }
 .citation_box li.twitter { background: image-url('icons/ie6/icon_twitter.png') no-repeat; }
 .citation_box li.facebook { background: image-url('icons/ie6/icon_facebook.png') no-repeat; }
 .citation_box li.digg { background: image-url('icons/ie6/icon_digg.png') no-repeat; }
@@ -225,11 +228,14 @@ SEARCH
 #main .search_bar .formtastic .simple label { display: inline; }
 #toggle_advanced { margin-left: 2.55em;}
 .active_filter_list li .type { background: image-url('icons/ie6/icon_filter_50.png') no-repeat; }
-.result_set.events .results { width: 500px; }
+.result_set .results { width: auto; }
+.events .results { width: 500px; }
 .result_set .row { border: none;}
 .result_set.events .results dd.next { width: 350px; }
 .result_set.events .results dd.next.lastchild { margin-left: 1.618em; }
-
+.results li {
+  margin-bottom: 10px;
+  }
 .search_bar .add_to_calendar { background: image-url('icons/ie6/add_to_calendar_half.png') no-repeat left 3px; }
 .search_bar .add_to_calendar:hover { background: image-url('icons/ie6/add_to_calendar_half_hover.png') no-repeat; } 
 .add_to_calendar { background: image-url('icons/ie6/add_to_calendar.png') no-repeat; }
@@ -240,7 +246,6 @@ SEARCH
 .result_set.events .results li.comment_period.closing { background: image-url('icons/ie6/closing.png') no-repeat; }
 .result_set.events .results li.comment_period.opening { background: image-url('icons/ie6/opening.png') no-repeat; }
 .result_set.events .results li.public_meeting { background: image-url('icons/ie6/meeting.png') no-repeat; }
-
 .icon_money_half_size { background: image-url('icons/ie6/icon_money_50_half.png') no-repeat; width: 28px; }
 .icon_environment_half_size { background: image-url('icons/ie6/icon_environment_50_half.png') no-repeat; width: 21px;}
 .icon_world_half_size { background: image-url('icons/ie6/icon_world_50_half.png') no-repeat; width: 21px;}
@@ -281,7 +286,30 @@ SEARCH
 #main .formtastic .range_start { 
   margin-left: 0 !important; 
   }
+.results .metadata { zoom: 1; }
+#main .formtastic .advanced.open { display: block; }
+.errors_header { background: image-url('icons/ie6/icon_errors.png') no-repeat left top; }
+#main .matching_citation_header {
+  border-bottom: 1px solid #ccc;
+  margin-bottom: 10px;
+  padding-bottom: 10px;  
+  }
+#main .matching_citation li {
+  border-bottom: 1px solid #eee;
+  list-style: none;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  zoom: 1;
+  }
+#main .matching_citation li li {
+  border: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+  }
 
+#search #content_area p {
+  word-wrap: break-word;
+}  
 /******************************
 
 MODAL

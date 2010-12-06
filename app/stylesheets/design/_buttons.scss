@@ -14,7 +14,7 @@ BUTTONS / ICONS
   text-transform: uppercase;
   }
 .button.notext { text-indent: -9999px; }
-.button.list { margin: 0 .5em 0 0; }
+.button.list { margin: 0 5px 0 0; }
 .button.list:last-child,
 .button.list.lastchild { margin: 0; }  
 .comments_close { /* TODO this doesn't belong here */
@@ -60,7 +60,7 @@ BUTTONS / ICONS
 .button.format.xml { background: sprite-image('icons/icon_xml.png', 0, 0, 50px); }
 .button.format.external { background: sprite-image('icons/icon_external.png', 0, 4px, 50px); }
 .button.format.external:hover { background: sprite-image('icons/icon_external_hover.png', 0, 4px, 20px); }
-.button.format.print { background: sprite-image("icons/icon_print.png", 0, 0, 100px) no-repeat; }
+.button.format.print { background: sprite-image("icons/icon_print.png", 0, 0, 100px) no-repeat; padding-left: 26px; }
 .button.format.print:hover { background: sprite-image("icons/icon_print_on.png", 0, 0, 100px) no-repeat; }
   
 .rss,
