@@ -117,7 +117,6 @@ PAGE ELEMENTS
   margin-top: 7px;
   padding-top: 0;
   }
-
 #citations .search_bar {
   margin-left: 0;
   }
@@ -132,17 +131,18 @@ ol.results {
   list-style-type: none;
   }
 ol.results > li {
-  border-bottom: 2px solid #EEEEEE;
   margin-bottom: 2em;
-  padding-bottom: 2em;
   }
 ol.results > li:last-child,
-ol.results > li.lastchild {
+ol.results > li.lastchild,
+ol.results > li:last-child .metadata,
+ol.results > li.lastchild .metadata {
   border: none;
   }  
 ol.results h4,
 .matching_citation h4 {
-  font-weight: normal;
+  @include gesta;
+  font-size: 14px;
   }  
 ol.results li .date,
 .matching_citation .date {
@@ -195,8 +195,43 @@ ol.results li .date,
   top: .8em;
   }  
 .excerpts {
-  display: block;
   margin: 0 0 1em 0;
+  }
+.results .metadata {
+  border-bottom: 3px solid #ddd;
+  font-size: 14px;
+  margin: 10px 0 0 0;
+  overflow: hidden;
+  }
+.matching_citation .metadata {
+  font-size: 14px;
+  margin: 0;
+  overflow: hidden;
+  }  
+.results .metadata li,
+.matching_citation .metadata li {
+  float: left;
+  list-style: none;
+  margin-right: 1em;
+  }  
+.results .metadata .type,
+.matching_citation .metadata .type {
+  font-weight: 700;
+  }
+.results .metadata .pdf,
+.matching_citation .metadata .pdf {
+  color: #363636;
+  font-size: 14px;
+  font-weight: normal;
+  text-transform: uppercase;
+  }
+.results .metadata .pdf:hover,
+.matching_citation .metadata .pdf:hover {
+  color: #B88659;
+  }
+.matching_citation_document > ul > li:last-child .metadata {
+  border: none;
+  margin: 0;
   }
 
 /******************************
@@ -223,18 +258,18 @@ RESULTS - MATCHING DOCUMENT
 .matching_citation_document {
   margin-left: 5px;
   }
-.matching_citation_document ul {
+.matching_citation_document > ul {
   border-top: 1px solid #EEEEEE;
   margin: 10px 0 0 0;
   padding: 10px 0 0 0;
   }
-.matching_citation_document li {
+.matching_citation_document > ul > li {
   border-top: 1px dotted #eee;
   list-style: none;
   margin-top: 10px;
   padding-top: 10px;
   }
-.matching_citation_document li:first-child {
+.matching_citation_document > ul > li:first-child {
   border: none;
   margin-top: 0;
   padding-top: 0;
