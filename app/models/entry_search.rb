@@ -78,7 +78,7 @@ class EntrySearch < ApplicationSearch
   
   def find_options
     {
-      :select => "id, title, publication_date, document_number, document_file_path, abstract",
+      :select => "id, title, publication_date, document_number, granule_class, document_file_path, abstract",
       :include => :agencies,
     }
   end
@@ -114,7 +114,9 @@ class EntrySearch < ApplicationSearch
   memoize :topic_facets
   
   def type_facets
-    FacetCalculator.new(:search => self, :facet_name => :type, :hash => Entry::ENTRY_TYPES).all()
+    FacetCalculator.new(:search => self, :facet_name => :type, :hash => Entry::ENTRY_TYPES).all().reject do |facet|
+      ["UNKNOWN", "CORRECT"].include?(facet.value)
+    end
   end
   memoize :type_facets
   
