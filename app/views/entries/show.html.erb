@@ -51,7 +51,7 @@
       <%= render :esi => entry_abstract_path(@entry) %>
     <% end %>
     
-    <%= render :partial => "regulatory_plan", :collection => @entry.current_regulatory_plans %>
+    <%= render :partial => "unified_agena" %>
   
     <div id="fulltext_content_area">
       <% if RAILS_ENV == 'development' %>
