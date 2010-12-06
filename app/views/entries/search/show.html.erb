@@ -1,5 +1,5 @@
 <% title @search.term.blank? ? 'Article Search' : "Article Search Results for '#{h @search.term}'" %>
-<%= feed_autodiscovery url_for(params.merge(:format => :rss)), "Federal Register: Search Results" %>
+<%= feed_autodiscovery entries_search_url(params.except(:action).merge(:format => :rss, :order => 'date')), "Federal Register: Search Results" %>
 
 <% add_javascript :src => 'page_specific/search/search.js' %>
 <% add_javascript :src => 'page_specific/search/jquery-ui-1.8.6.custom.min.js' %>
