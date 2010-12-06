@@ -60,10 +60,12 @@ BUTTONS / ICONS
 .button.format.xml { background: sprite-image('icons/icon_xml.png', 0, 0, 50px); }
 .button.format.external { background: sprite-image('icons/icon_external.png', 0, 4px, 50px); }
 .button.format.external:hover { background: sprite-image('icons/icon_external_hover.png', 0, 4px, 20px); }
-
+.button.format.print { background: sprite-image("icons/icon_print.png", 0, 0, 100px) no-repeat; }
+.button.format.print:hover { background: sprite-image("icons/icon_print_on.png", 0, 0, 100px) no-repeat; }
+  
 .rss,
 .help_link,
-.add_to_calender {
+.add_to_calendar {
   color: #6e6e6e;
   font-size: 1.2em;
   font-weight: bold;
