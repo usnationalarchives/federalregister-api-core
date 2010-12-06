@@ -12,5 +12,5 @@
     <br />
     <%= link_to 'PDF', entry.source_url('pdf'), :class => 'button format list pdf' %>
     <span class="agency"><%= entry.agencies.excluding_parents.map{|agency| link_to(agency.name, agency_path(agency))}.join(' :: ') %></span>
-  </div>  
+  </div>
 </li>

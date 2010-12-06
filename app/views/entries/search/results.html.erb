@@ -24,6 +24,8 @@
     </ol>
     <%= will_paginate @search.results, :params => {:action => :show} %>
   <% else %>
-    <p>No articles were found.</p>
+    <div class="errors">
+      <p class="errors_header">No articles were found.</p>
+    </div>  
   <% end %>
 </div>
