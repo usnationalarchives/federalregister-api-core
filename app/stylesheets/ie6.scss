@@ -180,8 +180,8 @@ GENERAL PAGE ITEMS
 .button.format.pdf { background: image-url('icons/ie6/icon_pdf.png') no-repeat left top; }
 .button.format.pdf.small { background: image-url('icons/ie6/icon_pdf_small.png') no-repeat left top }
 .button.format.xml { background: image-url('icons/ie6/icon_xml.png') no-repeat left top; }
-.button.format.print { background: sprite-image("icons/ie6/icon_print.png", 0, 0, 100px) no-repeat; }
-.button.format.print:hover { background: sprite-image("icons/ie6/icon_print_on.png", 0, 0, 100px) no-repeat; }
+.button.format.print { background: image-url("icons/ie6/icon_print.png") no-repeat; }
+.button.format.print:hover { background: image-url("icons/ie6/icon_print_on.png") no-repeat; }
 .citation_box li.twitter { background: image-url('icons/ie6/icon_twitter.png') no-repeat; }
 .citation_box li.facebook { background: image-url('icons/ie6/icon_facebook.png') no-repeat; }
 .citation_box li.digg { background: image-url('icons/ie6/icon_digg.png') no-repeat; }
