@@ -143,6 +143,7 @@ ol.results h4,
 .matching_citation h4 {
   @include gesta;
   font-size: 14px;
+  margin-bottom: 0;
   }  
 ol.results li .date,
 .matching_citation .date {
@@ -200,7 +201,7 @@ ol.results li .date,
 .results .metadata {
   border-bottom: 3px solid #ddd;
   font-size: 14px;
-  margin: 10px 0 0 0;
+  margin: 5px 0 0 0;
   overflow: hidden;
   }
 .matching_citation .metadata {
