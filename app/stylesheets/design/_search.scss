@@ -82,8 +82,7 @@ PAGE ELEMENTS
   padding: 5px;
   width: 400px;
   }
-.search_bar #conditions_type,
-.search_bar select {
+.search_bar #conditions_type {
   display: block;
   float: left;
   margin-top: 4px;
@@ -246,6 +245,7 @@ RESULTS - MATCHING DOCUMENT
 RESULTS - EVENTS & REGULATIONS
 
 ******************************/
+
 .result_set {
   margin-bottom: 2em;
   }
@@ -381,7 +381,7 @@ FILTERS
   color: #363636;
   padding-left: 17px;
   width: 143px;
-  }   
+  }
 .filters .count {
   text-align: right;
   }  
@@ -415,9 +415,7 @@ div.pagination .disabled {
 ERRORS
 
 ******************************/
-.errors {
-  
-  }
+
 .errors_header {
   background: sprite-image('icons/icon_errors.png', 0, 0, 100px) no-repeat;
   padding-left: 30px;
@@ -453,7 +451,7 @@ ERRORS
   margin-left: 10px;
   padding-bottom: 0;
   }
-  
+
 /******************************
 
 ADVANCED SEARCH
@@ -465,9 +463,11 @@ ADVANCED SEARCH
   overflow: hidden;
   }
 .advanced {
-  display: none;
   margin-top: 1em;
   padding: 0 5em 0;
+  }
+.has_js .advanced {
+  display: none;
   }  
 .advanced.open {
   display: block;
@@ -487,15 +487,23 @@ ADVANCED SEARCH
   }
 .formtastic fieldset legend,
 .formtastic fieldset .check_boxes legend,
-.formtastic .show_labels .string label {
+.formtastic .show_labels .string label,
+.formtastic .fallback_agency_list label {
   color: #777777;
   display: block;
   float: left;
-  font-size: 1.1em;
+  font-size: 1em;
   font-weight: bold;
   text-align: right;
+  width: 13em;
+  }
+.has_js .formtastic fieldset legend,
+.has_js .formtastic fieldset .check_boxes legend,
+.has_js .formtastic .show_labels .string label,
+.has_js .formtastic .fallback_agency_list label {
+  font-size: 1.1em;
   width: 11em;
-  } 
+  }  
 .formtastic fieldset legend,
 .formtastic fieldset .label {
   margin: 0 1em 0 0;
@@ -511,8 +519,8 @@ ADVANCED SEARCH
   float: none;
   margin: 0;
   }
-.formtastic .string label,
-.formtastic .select label { display: none; }    
+.has_js .formtastic .string label,
+.has_js .formtastic .select label { display: none; }    
 .formtastic li {
   list-style: none;
   margin-bottom: .5em;
@@ -520,9 +528,9 @@ ADVANCED SEARCH
 .formtastic fieldset .check_boxes li,
 .formtastic .buttons li,
 .formtastic fieldset .type_selector li,
-.formtastic .date_options .range,
-.formtastic .cfr li,
-.formtastic .zip li { 
+.has_js .formtastic .date_options .range,
+.has_js .formtastic .cfr li,
+.has_js .formtastic .zip li { 
   display: inline; 
   }
 .formtastic fieldset .check_boxes ol label,
@@ -556,12 +564,25 @@ ADVANCED SEARCH
   margin-left: 13em; 
   } 
 .formtastic .row_of_options {
-  display: block;
+  display: none;
   margin-bottom: 0;
   overflow:hidden;
   width: 500px;
   }
-.formtastic .date_options .date {
+.has_js .formtastic .row_of_options {
+  display: block;
+  }  
+.date_options ol,
+.cfr ol,
+.zip ol {
+  float: left;
+  }
+.has_js .date_options ol,
+.has_js .cfr ol,
+.has_js .zip ol {
+  float: none;
+  }    
+.has_js .formtastic .date_options .date {
   display: block;
   float: left;
   height: 16px;
@@ -570,10 +591,10 @@ ADVANCED SEARCH
 .has_js .formtastic .selected_agency_list select {
   display: none;
   }
-.exact_date { 
+.has_js .exact_date { 
   margin-left: 15.5em; 
   }
-.exact_year { 
+.has_js .exact_year { 
   margin-left: 21.75em; 
   }
 .exact_year select,
@@ -582,7 +603,7 @@ ADVANCED SEARCH
   float: none;
   margin: 0;
   }
-.range_start { 
+.has_js .range_start { 
   margin-left: 27.5em; 
   }
 .formtastic .cfr_title input {
@@ -626,9 +647,12 @@ ADVANCED SEARCH
 #toggle_advanced {
   clear: both;
   cursor: pointer;
-  display:block;
-  float:left;
-  margin-left:5em;
+  display: none;
+  float: left;
+  margin-left: 5em;
+  }
+.has_js #toggle_advanced {
+  display: block;
   }
 select.bsmSelect {
   display: none !important; /* important needed for IE */
@@ -704,6 +728,10 @@ select.bsmSelect {
   width: 20px;
   }  
 .formtastic .clear_form {
+  display: none;
   margin-left: 5px;
   }
+.has_js .formtastic .clear_form {
+  display: inline;
+  }  
 .text-placeholder {color: #AAA !important}  

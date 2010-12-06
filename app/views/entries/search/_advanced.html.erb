@@ -26,7 +26,8 @@
                 :include_blank => false,
                 :input_html => {:multiple => true},
                 :value_method => Proc.new{|a| a.id.to_s},
-                :collection => Agency.all %>
+                :collection => Agency.all, 
+                :wrapper_html => {:class => 'fallback_agency_list'} %>
   <% end %>
   <%= f.input :type,
               :label => "Document Category",
