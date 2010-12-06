@@ -206,13 +206,15 @@ RESULTS - MATCHING DOCUMENT
 
 ******************************/
 
-.matching_citation {
+.matching_citation,
+.errors {
   @include box-shadow(#eee, 3px, 3px, 3px);
   border: 1px solid #eee;
   margin-bottom: 1em;
   padding: 10px;
   }
-.matching_citation_header {
+.matching_citation_header,
+.errors_header {
   background: sprite-image('icons/icon_article.png', 0, 0, 100px) no-repeat;
   color: #666;
   @include gesta;
@@ -413,8 +415,19 @@ div.pagination .disabled {
 ERRORS
 
 ******************************/
-
-.errors li,
+.errors {
+  
+  }
+.errors_header {
+  background: sprite-image('icons/icon_errors.png', 0, 0, 100px) no-repeat;
+  padding-left: 30px;
+  }
+.errors ul {
+  margin: 10px 0 10px 30px;
+  }
+.errors li {
+  font-weight: bold;
+  }  
 .notice {
   @include border-radius(5px);  
   background: #ebd8b6 image-url("error.png") no-repeat 1em top;
