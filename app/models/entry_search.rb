@@ -114,7 +114,9 @@ class EntrySearch < ApplicationSearch
   memoize :topic_facets
   
   def type_facets
-    FacetCalculator.new(:search => self, :facet_name => :type, :hash => Entry::ENTRY_TYPES).all()
+    FacetCalculator.new(:search => self, :facet_name => :type, :hash => Entry::ENTRY_TYPES).all().reject do |facet|
+      ["UNKNOWN", "CORRECT"].include?(facet.value)
+    end
   end
   memoize :type_facets
   
