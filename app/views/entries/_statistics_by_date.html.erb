@@ -2,14 +2,14 @@
   <%= link_to label, entries_by_date_path(issue.publication_date), :title => issue.publication_date.to_s(:wday_and_pretty_date), :class => 'issue'  %>
     
   <ul class="statistics">
-    <li><%= link_to "<span>#{issue.notice_count}</span> #{pluralize_without_count issue.notice_count, "Notice"}", entries_search_path(:conditions => {:type => "NOTICE", :publication_date => {:is => issue.publication_date.to_s(:db)}}) %></li>
-    <li><%= link_to "<span>#{issue.proposed_rule_count}</span> #{pluralize_without_count issue.proposed_rule_count, "Proposed Rule"}", entries_search_path(:conditions => {:type => "PRORULE", :publication_date => {:is => issue.publication_date.to_s(:db)}}) %></li>
-    <li><%= link_to "<span>#{issue.rule_count}</span> #{pluralize_without_count issue.rule_count, "Rule"}", entries_search_path(:conditions => {:type => "RULE", :publication_date => {:is => issue.publication_date.to_s(:db)}}) %></li>
+    <li><%= link_to "<span>#{issue.notice_count}</span> #{pluralize_without_count issue.notice_count, "Notice"}", entries_search_path(:conditions => {:type => "NOTICE", :publication_date => {:is => issue.publication_date}}) %></li>
+    <li><%= link_to "<span>#{issue.proposed_rule_count}</span> #{pluralize_without_count issue.proposed_rule_count, "Proposed Rule"}", entries_search_path(:conditions => {:type => "PRORULE", :publication_date => {:is => issue.publication_date}}) %></li>
+    <li><%= link_to "<span>#{issue.rule_count}</span> #{pluralize_without_count issue.rule_count, "Rule"}", entries_search_path(:conditions => {:type => "RULE", :publication_date => {:is => issue.publication_date}}) %></li>
     <% if issue.presidential_documents_count > 0 %>
-      <li><%= link_to "<span>#{issue.presidential_documents_count}</span> #{pluralize_without_count issue.presidential_documents_count, "Presidential Document"}", entries_search_path(:conditions => {:type => "PRESDOCU", :publication_date => {:is => issue.publication_date.to_s(:db)}}) %></li>
+      <li><%= link_to "<span>#{issue.presidential_documents_count}</span> #{pluralize_without_count issue.presidential_documents_count, "Presidential Document"}", entries_search_path(:conditions => {:type => "PRESDOCU", :publication_date => {:is => issue.publication_date}}) %></li>
     <% end -%>
     <% if issue.significant_entries_count > 0 %>
-    <li><%= link_to "<span>#{issue.significant_entries_count}</span> #{pluralize_without_count issue.significant_entries_count, "Significant Document"}", entries_search_path(:conditions => {:significant => 1, :publication_date => {:is => issue.publication_date.to_s(:db)}}) %></li>
+    <li><%= link_to "<span>#{issue.significant_entries_count}</span> #{pluralize_without_count issue.significant_entries_count, "Significant Document"}", entries_search_path(:conditions => {:significant => 1, :publication_date => {:is => issue.publication_date}}) %></li>
     <% end %>
     <li><span><%= issue.total_pages %></span> Pages</li>
   </ul>
