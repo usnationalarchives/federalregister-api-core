@@ -8,9 +8,7 @@
 
 <%= render :esi => entries_search_header_path(params.except(:action)) %>
 
-<% if @search.blank?%>
-  <p>Please enter a search term.</p>
-<% else %>
+<% unless @search.blank?%>
   <% if @search.valid? %>
     <div class="filters">
       <%= render :esi => entries_search_facets_path(params.except(:action).merge(:facet => 'date')) unless @search.publication_date %>

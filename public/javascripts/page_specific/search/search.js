@@ -85,79 +85,13 @@ $(document).ready(function () {
         }, 500);
     });
     
-    var display_rin_info = function(message, loading) {
-        loading = false || loading;
-        var input = $('#conditions_regulation_id_number');
-        
-        input.siblings('.inline-hints').remove();
-        
-        if(message) {
-            var node = $('<p class="inline-hints" />');
-            loading ? node.addClass("loading") : '';
-            node.text(message);
-        
-            input.after(node);
-        }
-    }
-    
-    var cache_rin_name = function (rin, name) {
-        var input = $('#conditions_regulation_id_number');
-        var cache = input.data('name_cache') || {};
-        cache[rin] = name;
-        input.data('name_cache', cache);
-    }
-    
-    var load_rin_info = function() {
-        var input = $('#conditions_regulation_id_number');
-        var rin = input.val();
-        
-        if (rin.length == 9) {
-            var cache = input.data('name_cache') || {};
-            
-            if (cache[rin]) {
-                display_rin_info(cache[rin])
-            }
-            else {
-                display_rin_info('loading', true);
-                
-                var url = '/regulations/' + rin + '.js';
-                $.ajax({
-                    url : url,
-                    success : function(str) {
-                        var data = $.parseJSON(str);
-                        var name = data.name;
-                        cache_rin_name(rin,name);
-                        display_rin_info(name);
-                    },
-                    error : function() {
-                        var name = 'Not in current Unified Agenda'
-                        cache_rin_name(rin,name);
-                        display_rin_info(name);
-                    }
-                });
-            }
-        }
-        else {
-            display_rin_info('');
-            input.siblings('.inline-hints').remove();
-        }
-    }
-    $('#conditions_regulation_id_number').blur(load_rin_info);
-    $('#conditions_regulation_id_number').keyup(function () {
-        // only trigger if stopped typing for more than half a second
-        typewatch(function () {
-            load_rin_info();
-        }, 500);
-    });
-    
     $('.clear_form').click(function(){
         var form = $('#entry_search_form');
         form.find('input[type=text],input[type=hidden]').val('');
-        form.find('input[type=radio],input[type=checkbox]').removeAttr('checked');
+        form.find('input[type=radio],input[type=checkbox]').removeAttr('checked').change();
         form.find('select option:eq(0)').attr('selected','selected');
         form.find('#conditions_agency_ids option').remove();
         form.find('#conditions_within option:eq(3)').attr('selected','selected');
-        form.find('#conditions_regulation_id_number_input .inline-hints').remove();
         $('#entry_search_form .bsmListItem').remove();
         $('#entry_search_form .date').hide().find("input").val('');
         $(this).trigger('calculate_expected_results');
@@ -203,7 +137,9 @@ $(document).ready(function () {
     $("input[data-show-field]").bind('change', function(event) {
       var parent_fieldset = $(this).closest("fieldset");
       parent_fieldset.find(".date").hide().find(":input").disable(); 
-      parent_fieldset.find("." + $(this).attr("data-show-field")).show().find(":input").enable();
+      if ($(this).attr('checked')) {
+          parent_fieldset.find("." + $(this).attr("data-show-field")).show().find(":input").enable();
+      }
       $(this).trigger('calculate_expected_results');
     });
     $(".date_options input[data-show-field]:checked").trigger("change");
