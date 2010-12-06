@@ -585,10 +585,11 @@ ADVANCED SEARCH
 .range_start { 
   margin-left: 27.5em; 
   }
-.formtastic .cfr input {
+.formtastic .cfr_title input {
   width: 30px;
   }  
-.formtastic .zip input { 
+.formtastic .zip input,
+.formtastic .cfr_part input { 
   width: 50px; 
   }
 .formtastic .significant {

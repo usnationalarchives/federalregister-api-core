@@ -51,9 +51,11 @@
 <% f.fields_for :cfr, f.object.cfr do |cfr_f| %>
   <% cfr_f.inputs :name => "Affecting CFR Part", :class => 'cfr' do %>
     <%= cfr_f.input :title,
-                    :input_html => {:placeholder => '40'} %>
+                    :input_html => {:placeholder => '40'},
+                    :wrapper_html => {:class => 'cfr_title'} %>
     <%= cfr_f.input :part,
-                    :input_html => {:placeholder => '745'} %>
+                    :input_html => {:placeholder => '745'},
+                    :wrapper_html => {:class => 'cfr_part'} %>
   <% end %>
 <% end %>
   
