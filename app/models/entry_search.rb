@@ -155,7 +155,7 @@ class EntrySearch < ApplicationSearch
     )
   end
   
-  def date_facets
+  def publication_date_facets
     facets = [30,90,365].map do |n|
       value = n.days.ago.to_date.to_s
       Facet.new(
@@ -172,7 +172,7 @@ class EntrySearch < ApplicationSearch
       facets
     end
   end
-  memoize :date_facets
+  memoize :publication_date_facets
   
   def regulatory_plan
     if @regulation_id_number
