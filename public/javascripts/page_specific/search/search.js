@@ -151,7 +151,7 @@ $(document).ready(function () {
         var matching_inputs = parent_fieldset.find("." + $(this).attr("data-show-field") + ' :input');
         
         matching_inputs.each(function(){
-            if ($(this).val() != '') {
+            if ($(this).val() != '' && !$(this).hasClass('text-placeholder')) {
                 type_radio_button.attr('checked', 'checked');
                 type_radio_button.change();
             }

@@ -188,9 +188,6 @@ ADVANCED SEARCH
   float: none;
   margin: 0;
   }
-#main .formtastic .exact_year select {
-  margin-left: 8.5em;
-  }  
 #main .range_start { 
   margin-left: 0; 
   }
@@ -209,8 +206,21 @@ ADVANCED SEARCH
   display: inline;
   float: none;
   }
+.formtastic .show_labels .docket {
+  display: block;
+  }
 
-
+#main .formtastic .advanced .date_options .select {
+  clear: both;
+  display: block;
+  }
+#main .formtastic .advanced .date_options .select select {
+  margin-left: 0;
+  }
+.has_js #main .formtastic .advanced .date_options .select select  {
+  margin-left: 8.5em;
+  }
+   
 /******************************
 
 TOPIC LIST
