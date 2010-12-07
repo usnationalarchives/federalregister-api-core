@@ -45,7 +45,7 @@ class EntrySearch < ApplicationSearch
   end
   
   define_filter :significant, :sphinx_type => :with, :label => "Signficance" do 
-    "Associated Unified Agenda Deemed Significant by OIRA"
+    "Associated Unified Agenda Deemed Significant Under EO 12866"
   end
   
   define_place_filter :place_ids
