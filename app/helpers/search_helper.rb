@@ -1,5 +1,5 @@
 module SearchHelper
-  PLURAL_FILTERS = [:topic_ids, :agency_ids]
+  PLURAL_FILTERS = [:topic_ids] # agency_ids; comment back in to be able to remove individual agencies
   
   def search_adding_filter(condition,value)
     conditions = params.dup[:conditions] || {}
