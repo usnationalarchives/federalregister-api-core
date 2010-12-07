@@ -1,7 +1,6 @@
 backend default {
   .host = "fr2.local";
-  .port = "80";
-  # .port = "3000";
+  .port = "3002";
 }
 
 sub vcl_recv {
