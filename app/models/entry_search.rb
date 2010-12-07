@@ -45,7 +45,7 @@ class EntrySearch < ApplicationSearch
   end
   
   define_filter :significant, :sphinx_type => :with, :label => "Signficance" do 
-    "Associated Unified Agenda Deemed Significant by OIRA"
+    "Associated Unified Agenda Deemed Significant Under EO 12866"
   end
   
   define_place_filter :place_ids
@@ -155,7 +155,7 @@ class EntrySearch < ApplicationSearch
     )
   end
   
-  def date_facets
+  def publication_date_facets
     facets = [30,90,365].map do |n|
       value = n.days.ago.to_date.to_s
       Facet.new(
@@ -172,7 +172,7 @@ class EntrySearch < ApplicationSearch
       facets
     end
   end
-  memoize :date_facets
+  memoize :publication_date_facets
   
   def regulatory_plan
     if @regulation_id_number
@@ -183,7 +183,7 @@ class EntrySearch < ApplicationSearch
   
   def matching_entry_citation
     if term.present?
-      term.scan(/^\s*(\d+)\s*F\.?R\.?\s*(\d+)\s*$/) do |volume, page|
+      term.scan(/^\s*(\d+)\s*F\.?R\.?\s*(\d+)\s*$/i) do |volume, page|
         return Citation.new(:citation_type => "FR", :part_1 => volume.to_i, :part_2 => page.to_i)
       end
     end

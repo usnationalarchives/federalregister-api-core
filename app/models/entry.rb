@@ -63,7 +63,7 @@ class Entry < ApplicationModel
     'NOTICE'   => 'Notice', 
     'PRESDOCU' => 'Presidential Document', 
     'CORRECT'  => 'Correction',
-    'UNKNOWN'  => 'Unknown',
+    'UNKNOWN'  => 'Document of Unknown Type',
     'SUNSHINE' => 'Sunshine Act Document'
   }
   

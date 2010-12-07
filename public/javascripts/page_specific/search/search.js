@@ -68,7 +68,25 @@ $(document).ready(function () {
     $('#entry_search_form input[type=checkbox]').bind('click', function(){
       $(this).trigger('calculate_expected_results');
     });
+    
+    // onchange doesn't trigger until blur, and onclick wasn't firing correctly either...
+    //    so we poll for the current value. In FF, this fires when you hover over an
+    //    item in the list, so it's a bit chatty, but seems ok.
+    $('#entry_search_form select').bind('focus', function(){
+        var elem = $(this);
+        var callback = function() {
+            elem.trigger('calculate_expected_results');
+        };
+        var poller = setInterval(callback, 250);
+        $(this).data('poller', poller);
+    });
 
+    $('#entry_search_form select').bind('blur', function(){
+        var poller = $(this).data('poller');
+        clearInterval(poller);
+        $(this).data('poller','');
+    });
+    
     // basic check for pause between events
     var typewatch = (function(){
       var timer = 0;

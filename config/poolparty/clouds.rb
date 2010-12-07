@@ -38,12 +38,12 @@ def chef_cloud_attributes(instance_type)
     @sphinx_server_address   = '10.242.45.235'
     @app_server_address      = '10.242.46.47'
   when 'production'
-    @proxy_server_address    = '10.194.207.96'  #'ip-10-194-207-96.ec2.internal'
-    @static_server_address   = '10.245.106.31'  #'ip-10-245-106-31.ec2.internal'
-    @worker_server_address   = '10.245.106.31'  #'ip-10-245-106-31.ec2.internal'
-    @database_server_address = '10.194.109.139' #'ip-10-194-109-139.ec2.internal'
-    @sphinx_server_address   = '10.194.109.139' #'ip-10-194-109-139.ec2.internal'
-    @app_server_address      = ['10.243.41.203', '10.196.117.123', '10.202.162.96', '10.212.73.172', '10.251.83.111', '10.251.131.239', '10.251.49.171', '10.251.234.128']  #'ip-10-243-41-203.ec2.internal'
+    @proxy_server_address    = '10.194.207.96'
+    @static_server_address   = '10.245.106.31'
+    @worker_server_address   = '10.245.106.31'
+    @database_server_address = '10.194.109.139'
+    @sphinx_server_address   = '10.194.109.139'
+    @app_server_address      = ['10.243.41.203', '10.196.117.123', '10.202.162.96', '10.212.73.172', '10.251.83.111', '10.251.131.239']
   end    
   
   case instance_type
@@ -78,8 +78,14 @@ def chef_cloud_attributes(instance_type)
     :ec2    => true,
     :aws    => {
                 :ebs => {
-                          :volume_id => '',
-                          :elastic_ip => ''
+                          :database => {
+                                          :volume_id   => 'vol-4c187e25',
+                                          :mount_point => '/vol'
+                                       },
+                          :worker   => {
+                                          :volume_id   => 'vol-ae81e5c7',
+                                          :mount_point => '/vol'
+                                       }
                         },
                 :accesskey => @amazon_keys['access_key_id'],
                 :secretkey => @amazon_keys['secret_access_key']

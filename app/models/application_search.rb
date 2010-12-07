@@ -185,9 +185,10 @@ class ApplicationSearch
   
   def self.define_date_filter(filter_name, options = {})
     attr_reader filter_name
-
+    condition = filter_name
+    
     define_method "#{filter_name}=" do |hsh|
-      if hsh.values.any?(&:present?)
+      if hsh.is_a?(Hash) && hsh.values.any?(&:present?)
         selector = DateSelector.new(hsh)
         instance_variable_set("@#{filter_name}", selector)
         
@@ -197,7 +198,7 @@ class ApplicationSearch
           add_filter(
             :value => selector.sphinx_value,
             :name => selector.filter_name,
-            :condition => :date,
+            :condition => condition,
             :label => label,
             :sphinx_type => :conditions,
             :sphinx_attribute => options[:sphinx_attribute] || filter_name

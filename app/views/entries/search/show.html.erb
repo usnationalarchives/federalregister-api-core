@@ -11,7 +11,7 @@
 <% unless @search.blank?%>
   <% if @search.valid? %>
     <div class="filters">
-      <%= render :esi => entries_search_facets_path(params.except(:action).merge(:facet => 'date')) unless @search.publication_date %>
+      <%= render :esi => entries_search_facets_path(params.except(:action).merge(:facet => 'publication_date')) unless @search.publication_date %>
       <%# TODO HELP-RUBY i know this doesn't go here. just wanted to stash it somewhere  %>
       <!-- <li><%#= sparkline(:data => @search.date_distribution.to_a.sort_by{|date, count| date}.map{|date, count| count}, :alt => "Monthly Distribution" ) %></li> -->
   
