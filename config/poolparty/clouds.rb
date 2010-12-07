@@ -78,8 +78,14 @@ def chef_cloud_attributes(instance_type)
     :ec2    => true,
     :aws    => {
                 :ebs => {
-                          :volume_id => '',
-                          :elastic_ip => ''
+                          :database => {
+                                          :volume_id   => 'vol-4c187e25',
+                                          :mount_point => '/vol'
+                                       },
+                          :worker   => {
+                                          :volume_id   => 'vol-ae81e5c7',
+                                          :mount_point => '/vol'
+                                       }
                         },
                 :accesskey => @amazon_keys['access_key_id'],
                 :secretkey => @amazon_keys['secret_access_key']
