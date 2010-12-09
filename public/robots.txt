@@ -1,4 +1,4 @@
-Sitemap: http://federalregister.gov/sitemap_index.xml.gz
+Sitemap: http://www.federalregister.gov/sitemap_index.xml.gz
 
 User-Agent: *
 Disallow: /articles/search
