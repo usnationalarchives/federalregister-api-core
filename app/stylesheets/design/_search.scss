@@ -524,7 +524,9 @@ ADVANCED SEARCH
 .formtastic fieldset legend,
 .formtastic fieldset .check_boxes legend,
 .has_js .formtastic .show_labels .string label,
-.formtastic .fallback_agency_list label {
+.formtastic .fallback_agency_list label,
+.formtastic fieldset .docket label,
+.formtastic fieldset .reg_id label {
   color: #777777;
   display: block;
   float: left;
@@ -651,9 +653,12 @@ ADVANCED SEARCH
   }
 .formtastic .significant {
   clear: both;
-  margin-left: 13.25em;
+  margin-left: 14em;
   overflow: hidden;
   }
+.has_js .formtastic .significant {
+  margin-left: 13.25em;
+  }  
 .formtastic .show_labels .reg_id input { 
   width: 65px; 
   }
