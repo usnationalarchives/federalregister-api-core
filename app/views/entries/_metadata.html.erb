@@ -8,9 +8,21 @@
   <% if entry.entry_type.present?           %><dt>Entry Type:</dt>       <dd><%= entry.entry_type                               %></dd><% end %>
   <% if entry.start_page != 0               %><dt>Page:</dt>             <dd><%= entry.start_page %><%= "-#{entry.end_page}" if entry.end_page != entry.start_page %> (<%= pluralize entry.human_length, 'page' %>)</dd>
                                               <dt>Document Citation:</dt>         <dd><span class="volume"><%= entry.volume %></span> FR <span class="page"><%= entry.start_page %></span></dd><% end %>
-  <% if entry.cfr_title.present?            %><dt>CFR:</dt>              <dd><%= add_cfr_links("#{entry.cfr_title} CFR #{entry.cfr_part}", entry.publication_date) %></dd><% end %>
+  
+  <% if entry.entry_cfr_affected_parts.present? %>
+    <dt>CFR:</dt>
+    <% entry.entry_cfr_affected_parts.each do |affected_part| %>
+      <dd><%= add_cfr_links("#{affected_part.title} CFR #{affected_part.part}", entry.publication_date) %></dd>
+    <% end %>
+  <% end %>
+  
   <% if entry.docket_id.present?            %><dt>Docket ID:</dt>        <dd><%= entry.docket_id %></dd><% end %>
-  <% if entry.regulation_id_number.present? %><dt>RIN:</dt>              <dd><%= entry.most_recent_regulatory_plan ? link_to(entry.regulation_id_number,regulatory_plan_path(entry.most_recent_regulatory_plan)) : entry.regulation_id_number %></dd><% end %>
+  <% if entry.entry_regulation_id_numbers.present? %>
+    <dt>RIN:</dt>
+    <% entry.entry_regulation_id_numbers.each do |e_rin| %>
+      <dd><%= e_rin.current_regulatory_plan ? link_to(e_rin.regulation_id_number,regulatory_plan_path(e_rin.current_regulatory_plan)) : e_rin.regulation_id_number %></dd>
+    <% end %>
+  <% end %>
   <% if entry.document_number.present?      %><dt>Document Number:</dt>  <dd class="doc_number"><%= entry.document_number %></dd><% end %>
                                               <dt>Shorter URL:</dt>        <dd><%= link_to short_entry_url(entry),short_entry_url(entry), :class => "shorter_url" %></dd>
 </dl>

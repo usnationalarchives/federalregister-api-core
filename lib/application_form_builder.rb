@@ -18,3 +18,7 @@ class ApplicationFormBuilder < Formtastic::SemanticFormBuilder
     label(method, options.delete(:label), options.slice(:required)) + text_field(method, options)
   end
 end
+
+class ApplicationFormBuilder::Errorless < ApplicationFormBuilder
+  self.inline_errors = :none
+end

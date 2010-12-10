@@ -1,12 +1,13 @@
-<div class="result_set">
+<div class="result_set" data-expected-result-count="<%= render :partial => 'result_summary.txt.erb' %>">
   <%= render :partial => "search/filters", :locals => {:search => @search} %>
   
   <%= render :partial => "citation", :locals => {:search => @search} if @search.filters.blank? && params[:order].blank?%>
+  <%= render :partial => "document_number", :locals => {:search => @search} if @search.filters.blank? && params[:order].blank?%>
     
   <% if @search.results.present? %>
     <div class="search_info">
       <div class="article_count">
-        <h2 class="title_bar"><span class="small_stack">Articles <span>Found</span></span> <%= number_with_delimiter @search.results.total_entries %></h2>
+        <h2 class="title_bar"><span class="small_stack">Articles <span>Found</span></span> <%= number_with_delimiter @search.count %></h2>
       </div>
 
       <ul class="actions">
@@ -23,6 +24,8 @@
     </ol>
     <%= will_paginate @search.results, :params => {:action => :show} %>
   <% else %>
-    <p>No articles were found.</p>
+    <div class="errors">
+      <p class="errors_header">No articles were found.</p>
+    </div>  
   <% end %>
 </div>

@@ -5,6 +5,7 @@ ActionController::Routing::Routes.draw do |map|
 
   # ENTRY SEARCH
   map.entries_search 'articles/search.:format', :controller => 'entries/search', :action => 'show', :conditions => { :method => :get }
+  map.entries_search_help 'articles/search/help', :controller => 'entries/search', :action => 'help', :conditions => { :method => :get }
   
   # ENTRY PAGE VIEW
   map.entries_page_views 'articles/views', :controller => 'entries/page_views', :action => 'create', :conditions => { :method => :post }
@@ -74,7 +75,7 @@ ActionController::Routing::Routes.draw do |map|
   map.significant_entries_topic 'topics/:id/significant.:format', :controller => "topics", :action => "significant_entries", :conditions => { :method => :get }
 
   # AGENCIES
-  map.resources :agencies, :only => [:index, :show]
+  map.resources :agencies, :only => [:index, :show], :collection => {:search => :get}
   map.significant_entries_agency 'agencies/:id/significant.:format', :controller => "agencies", :action => "significant_entries", :conditions => { :method => :get }
   
   # REGULATIONS
@@ -82,9 +83,14 @@ ActionController::Routing::Routes.draw do |map|
                       :controller => 'regulatory_plans/search',
                       :action     => 'show',
                       :conditions => { :method => :get }
-  map.regulatory_plan 'regulations/:regulation_id_number/:slug',
+  map.regulatory_plan 'regulations/:regulation_id_number/:slug.:format',
                       :controller => 'regulatory_plans',
                       :action     => 'show',
+                      :conditions => { :method => :get }
+  map.connect 'regulations/:regulation_id_number.js',
+                      :controller => 'regulatory_plans',
+                      :action     => 'json_summary',
+                      :format     => 'js',
                       :conditions => { :method => :get }
   map.short_regulatory_plan 'r/:regulation_id_number', :controller => 'regulatory_plans',
                                                        :action     => 'tiny_url',

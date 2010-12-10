@@ -28,6 +28,7 @@ PAGE ELEMENTS
   @include border-top-right-radius(5px);
   margin-bottom: -1em;
   padding-bottom: 1em;
+  padding-top:0.25em;
   }
 .tabs .on a {
   color: #385F82;
@@ -50,7 +51,7 @@ PAGE ELEMENTS
 .search_bar .actions {
   position: absolute;
   right: 2em;
-  top: 1.4em;  
+  top: 1.2em;  
   }
 .search_bar .button {
  background-color: #fff;
@@ -79,9 +80,9 @@ PAGE ELEMENTS
   float: left;
   height: 15px;
   padding: 5px;
+  width: 400px;
   }
-.search_bar #conditions_type,
-.search_bar select {
+.search_bar #conditions_type {
   display: block;
   float: left;
   margin-top: 4px;
@@ -93,6 +94,8 @@ PAGE ELEMENTS
   background: sprite-image('icons/search_button.png') no-repeat;
   border: none;
   cursor: pointer;
+  display: block;
+  float: left;
   height:  image-height('icons/search_button.png');
   @include hide-text;
   margin-left: -1px;
@@ -114,7 +117,6 @@ PAGE ELEMENTS
   margin-top: 7px;
   padding-top: 0;
   }
-
 #citations .search_bar {
   margin-left: 0;
   }
@@ -129,18 +131,22 @@ ol.results {
   list-style-type: none;
   }
 ol.results > li {
-  border-bottom: 2px solid #EEEEEE;
   margin-bottom: 2em;
-  padding-bottom: 2em;
   }
 ol.results > li:last-child,
-ol.results > li.lastchild {
+ol.results > li.lastchild,
+ol.results > li:last-child .metadata,
+ol.results > li.lastchild .metadata {
   border: none;
   }  
-ol.results h4 {
-  font-weight: normal;
+ol.results h4,
+.matching_citation h4 {
+  @include gesta;
+  font-size: 14px;
+  margin-bottom: 0;
   }  
-ol.results li .date {
+ol.results li .date,
+.matching_citation .date {
   font-size: 1.3em;
   line-height: 1.15;
   text-transform: uppercase;
@@ -176,26 +182,106 @@ ol.results li .date {
   margin-right: 1em;
   padding-left: 20px;
   }  
-.active_filter_list li .remove {
+.active_filter_list li .remove,
+.bsmListItem .remove {
   background: sprite-image('icons/icon_close.png', 0, 0, 50px) no-repeat;
   @include inline-block;
   height: 14px;
   @include hide-text;  
+  width: 14px;
+  }
+.active_filter_list li .remove {
   position: absolute;
   right: 1em;
   top: .8em;
-  width: 14px;
   }  
 .excerpts {
-  display: block;
   margin: 0 0 1em 0;
   }
+.results .metadata {
+  border-bottom: 3px solid #ddd;
+  font-size: 14px;
+  margin: 5px 0 0 0;
+  overflow: hidden;
+  }
+.matching_citation .metadata {
+  font-size: 14px;
+  margin: 0;
+  overflow: hidden;
+  }  
+.results .metadata li,
+.matching_citation .metadata li {
+  float: left;
+  list-style: none;
+  margin-right: 1em;
+  }  
+.results .metadata .type,
+.matching_citation .metadata .type {
+  font-weight: 700;
+  }
+.results .metadata .pdf,
+.matching_citation .metadata .pdf {
+  color: #363636;
+  font-size: 14px;
+  font-weight: normal;
+  text-transform: uppercase;
+  }
+.results .metadata .pdf:hover,
+.matching_citation .metadata .pdf:hover {
+  color: #B88659;
+  }
+.matching_citation_document > ul > li:last-child .metadata {
+  border: none;
+  margin: 0;
+  }
+
+/******************************
+
+RESULTS - MATCHING DOCUMENT 
+
+******************************/
+
+.matching_citation,
+.errors {
+  @include box-shadow(#eee, 3px, 3px, 3px);
+  border: 1px solid #eee;
+  margin-bottom: 1em;
+  padding: 10px;
+  }
+.matching_citation_header,
+.errors_header {
+  background: sprite-image('icons/icon_article.png', 0, 0, 100px) no-repeat;
+  color: #666;
+  @include gesta;
+  line-height: image-height('icons/icon_article.png');
+  padding: 0 0 0 35px;
+  }
+.matching_citation_document {
+  margin-left: 5px;
+  }
+.matching_citation_document > ul {
+  border-top: 1px solid #EEEEEE;
+  margin: 10px 0 0 0;
+  padding: 10px 0 0 0;
+  }
+.matching_citation_document > ul > li {
+  border-top: 1px dotted #eee;
+  list-style: none;
+  margin-top: 10px;
+  padding-top: 10px;
+  }
+.matching_citation_document > ul > li:first-child {
+  border: none;
+  margin-top: 0;
+  padding-top: 0;
+  }  
 
 /******************************
 
 RESULTS - EVENTS & REGULATIONS
 
 ******************************/
+
 .result_set {
   margin-bottom: 2em;
   }
@@ -270,8 +356,13 @@ dd.next + dd.next {
   font-size:1.1em;
   margin: 0 0 1em 0;
   }
+.article_list {
+  overflow: hidden;
+  }  
 .article_list li {
   border-bottom: 1px solid #EEEEEE;
+  clear: both;
+  float: none;
   list-style: none;
   margin: 0 0 1em 0;
   padding: 0 0 1em 35px;
@@ -320,12 +411,13 @@ FILTERS
 .filters li a {
   font-size: 1em; 
   font-weight: 700;
+  line-height:1.25;
   }
 .filters li.on .facet_name {
   color: #363636;
   padding-left: 17px;
   width: 143px;
-  }   
+  }
 .filters .count {
   text-align: right;
   }  
@@ -360,7 +452,16 @@ ERRORS
 
 ******************************/
 
-.errors li,
+.errors_header {
+  background: sprite-image('icons/icon_errors.png', 0, 0, 100px) no-repeat;
+  padding-left: 30px;
+  }
+.errors ul {
+  margin: 10px 0 10px 30px;
+  }
+.errors li {
+  font-weight: bold;
+  }  
 .notice {
   @include border-radius(5px);  
   background: #ebd8b6 image-url("error.png") no-repeat 1em top;
@@ -385,4 +486,293 @@ ERRORS
   line-height: 30px;
   margin-left: 10px;
   padding-bottom: 0;
+  }
+
+/******************************
+
+ADVANCED SEARCH
+
+******************************/
+
+.simple {
+  display: block;
+  overflow: hidden;
+  }
+.advanced {
+  margin-top: 1em;
+  padding: 0 5em 0;
+  }
+.has_js .advanced {
+  display: none;
   }  
+.advanced.open {
+  display: block;
+  }  
+.formtastic fieldset {
+  border: none;
+  display: block;
+  margin: 0 0 1em 0;
+  padding: 0;
+  }
+.formtastic fieldset fieldset,
+.formtastic fieldset fieldset ol,
+.formtastic fieldset .type_selector {
+  border: none;
+  margin: 0;
+  padding: 0;
+  }
+.formtastic fieldset legend,
+.formtastic fieldset .check_boxes legend,
+.has_js .formtastic .show_labels .string label,
+.formtastic .fallback_agency_list label,
+.formtastic fieldset .docket label,
+.formtastic fieldset .reg_id label {
+  color: #777777;
+  display: block;
+  float: left;
+  font-size: 1em;
+  font-weight: bold;
+  text-align: right;
+  width: 13em;
+  }
+.has_js .formtastic fieldset legend,
+.has_js .formtastic fieldset .check_boxes legend,
+.has_js .formtastic .show_labels .string label,
+.has_js .formtastic .fallback_agency_list label {
+  font-size: 1.1em;
+  width: 11em;
+  }  
+.formtastic fieldset legend,
+.formtastic fieldset .label {
+  margin: 0 1em 0 0;
+  }
+.formtastic fieldset label {
+  color: #666;
+  font-size: 1em;
+  margin: 0 1em 0 0;
+  text-align: right;
+  }
+.formtastic fieldset .label label {
+  color: #777777;
+  float: none;
+  margin: 0;
+  }
+.has_js .formtastic .string label,
+.has_js .formtastic .select label { display: none; }    
+.formtastic li {
+  list-style: none;
+  margin-bottom: .5em;
+  }
+.formtastic fieldset .check_boxes li,
+.formtastic .buttons li,
+.formtastic fieldset .type_selector li,
+.has_js .formtastic .date_options .range,
+.has_js .formtastic .cfr li,
+.has_js .formtastic .zip li { 
+  display: inline; 
+  }
+.formtastic fieldset .check_boxes ol label,
+.formtastic fieldset .boolean label {
+  width: auto;
+  margin-left: 0;
+  }
+.formtastic fieldset .check_boxes input,
+.formtastic fieldset .boolean input { 
+  margin-left: 0; 
+  }
+.formtastic .show_labels,
+.formtastic .show_labels .selected_agency_list,
+.formtastic .advanced ol,
+.formtastic .show_labels .reg_id { 
+  margin-bottom: 0; 
+  }
+.formtastic .show_labels li { 
+  margin-bottom: 1em;
+  }
+.formtastic .show_labels .agency {
+  margin-bottom: .35em;
+  }  
+.formtastic fieldset .date input { 
+  width: 7em; 
+  }
+.formtastic .inline-hints {
+  clear: both;
+  font-size: 1em;
+  @include gesta;
+  margin-left: 13em; 
+  } 
+.formtastic .row_of_options {
+  display: none;
+  margin-bottom: 0;
+  overflow:hidden;
+  width: 500px;
+  }
+.has_js .formtastic .row_of_options {
+  display: block;
+  }  
+.date_options ol,
+.cfr ol,
+.zip ol {
+  float: left;
+  }
+.has_js .date_options ol,
+.has_js .cfr ol,
+.has_js .zip ol {
+  float: none;
+  }    
+.has_js .formtastic .date_options .date {
+  display: block;
+  float: left;
+  height: 16px;
+  }
+.has_js .formtastic .date_options .date,
+.has_js .formtastic .selected_agency_list select {
+  display: none;
+  }
+.has_js .exact_date { 
+  margin-left: 15.5em; 
+  }
+.has_js .exact_year { 
+  margin-left: 21.75em; 
+  }
+.exact_year select,
+.zip select {
+  display: inline;
+  float: none;
+  margin: 0;
+  }
+.has_js .range_start { 
+  margin-left: 27.5em; 
+  }
+.formtastic .cfr_title input {
+  width: 30px;
+  }  
+.formtastic .zip input,
+.formtastic .cfr_part input { 
+  width: 50px; 
+  }
+.formtastic .significant {
+  clear: both;
+  margin-left: 14em;
+  overflow: hidden;
+  }
+.has_js .formtastic .significant {
+  margin-left: 13.25em;
+  }  
+.formtastic .show_labels .reg_id input { 
+  width: 65px; 
+  }
+.formtastic .show_labels .docket input { 
+  width: 160px;
+   }
+.formtastic .agency input { 
+  width: 400px; 
+  }
+.formtastic .advanced #conditions_submit {
+  background: url(/images/search_btn_bg.png) repeat-x;
+  border: 1px solid #aaa;
+  color: #555;
+  @include border-radius(5px);
+  @include apertura-condensed;
+  font-size: 1.3em;
+  line-height: 25px;
+  padding: 0 5px;
+  text-indent: 0;
+  width: auto;
+  }
+.formtastic .advanced #conditions_submit:hover { color: #B88659; }
+.formtastic .buttons {
+  margin-left: 13.75em;
+  margin-top: 2em;
+  }
+#toggle_advanced {
+  clear: both;
+  cursor: pointer;
+  display: none;
+  float: left;
+  margin-left: 5em;
+  }
+.has_js #toggle_advanced {
+  display: block;
+  }
+select.bsmSelect {
+  display: none !important; /* important needed for IE */
+  } 
+.bsmList {
+  margin-left: 13.25em;
+  overflow: hidden;
+  }
+.ui-autocomplete  {
+  background: #fff;
+  border: 1px solid #ccc;
+  @include border-bottom-left-radius(5px);
+  @include border-bottom-right-radius(5px);
+  list-style: none;
+  padding: 10px 0;
+  width: 380px;
+  }
+.ui-autocomplete a {
+  cursor: pointer;
+  display: block;
+  padding: 5px 10px;
+  }
+.ui-autocomplete a:hover,
+.ui-autocomplete a:focus,
+.ui-autocomplete a.ui-state-hover {
+  background: #efefef;
+  color: #B88659;
+  }
+.ui-autocomplete-input.loading {
+  background: #fff image-url('ajax-loader.gif') no-repeat right top;
+  }  
+.bsmList .bsmListItem,
+.inline-hints {
+  background: #dfe4ea;
+  @include border-radius(5px);
+  float: left;
+  margin: 0 5px 5px 0;
+  padding: 5px 5px 3px 7px;
+  }
+.bsmList .bsmListItem:hover {
+  background: #d3dae2;
+  }  
+.bsmList .bsmListItem .remove {
+  margin-left: 10px;
+  }
+.formtastic .string span {
+  margin: 0 3px;
+  }
+#expected_result_count {
+  background: #fcfcfc;
+  border: 1px solid #ddd;
+  @include border-radius(5px);
+  color: #f77825;
+  display: none;
+  float: left;
+  @include apertura-condensed;
+  font-size: 12px;
+  font-weight: 700;  
+  height: 21px;
+  line-height: 23px;
+  margin-left: 5px;
+  padding: 3px 1em;
+  width: auto;
+  }
+#expected_result_count.loading,
+.inline-hints.loading {
+  background-image: image-url('ajax-loader.gif');
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  @include hide-text();
+  }
+.inline-hints.loading {
+  width: 20px;
+  }  
+.formtastic .clear_form {
+  display: none;
+  margin-left: 5px;
+  }
+.has_js .formtastic .clear_form {
+  display: inline;
+  }  
+.text-placeholder {color: #AAA !important}  

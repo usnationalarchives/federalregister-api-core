@@ -36,6 +36,11 @@ namespace :content do
         entry_importer(:start_page, :end_page)
       end
       
+      desc "Extract regulation_id_numbers and significant"
+      task :rin_and_significant => :environment do
+        entry_importer(:regulation_id_numbers, :significant)
+      end
+      
       desc "Extract docket id"
       task :docket_id => :environment do
         entry_importer(:docket_id)
@@ -53,7 +58,7 @@ namespace :content do
       
       desc "Extract CFR information into entries"
       task :cfr => :environment do
-        entry_importer(:cfr_title, :cfr_part)
+        entry_importer(:affected_cfr_titles_and_parts)
       end
       
       desc "Import regulations.gov info"

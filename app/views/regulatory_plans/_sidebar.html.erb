@@ -21,6 +21,10 @@
   </div>
   <% end -%>
   
+  <div class='aside_box subscribe'>  
+    <%= link_to 'Subscribe', regulatory_plan_url(regulatory_plan, :format => :rss), :class => 'rss' %>
+  </div>
+  
   <% if regulatory_plan.agencies.present? %>
     <% section_tag(:id => 'agencies') do %>
       <h1 class="title_bar">Agencies</h1>

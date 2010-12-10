@@ -1,12 +1,16 @@
 <li>
   <h4><%= link_to entry_title(entry), entry_path(entry) %></h4>
-
   <div class="result_info">
-    <span class="date"><%= entry.publication_date %></span>
-    <span class="pages"><%= entry_page_range(entry) %></span>
-    <span class="excepts"><%= truncate_words(entry.abstract, :length => 200) %></span>
-    <br />
-    <%= link_to 'PDF', entry.source_url('pdf'), :class => 'button format list pdf' %>
-    <span class="agency"><%= entry.agencies.excluding_parents.map{|agency| link_to(agency.name, agency_path(agency))}.join(' :: ') %></span>
-  </div>  
+    <span class="excerpts"><%= truncate_words(entry.abstract, :length => 200) %></span>
+  </div>
+  <ul class="metadata">
+    <li class="type">Proposed Rule<%#= entry.entry_type %></li>
+    <li class="pub_date"><%= entry.publication_date %></li>
+    <li class="agency"><%= entry.agencies.excluding_parents.map{|agency| link_to(agency.name, agency_path(agency))}.join(' :: ') %></li>
+    <li class="pages"><%= entry_page_range(entry) %></li>
+    <% if page.present? && page != entry.start_page %>
+      <li>Jump directly to page <%= link_to page, entry_path(entry, :anchor => "page-#{page}") %>.</li>
+    <% end %>
+    <li><%= link_to 'PDF', entry.source_url('pdf'), :class => 'button format pdf small' %></li>
+  </ul>
 </li>

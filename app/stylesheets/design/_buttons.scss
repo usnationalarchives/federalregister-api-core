@@ -14,7 +14,7 @@ BUTTONS / ICONS
   text-transform: uppercase;
   }
 .button.notext { text-indent: -9999px; }
-.button.list { margin: 0 .5em 0 0; }
+.button.list { margin: 0 5px 0 0; }
 .button.list:last-child,
 .button.list.lastchild { margin: 0; }  
 .comments_close { /* TODO this doesn't belong here */
@@ -48,7 +48,7 @@ BUTTONS / ICONS
   background-color: #fff;
   background-repeat: no-repeat;
   line-height: 24px;
-  padding: 0 0 0 30px;
+  padding: 0 0 0 27px;
   }
 .button.social.digg { background: sprite-image('social/24px/digg.png', 0, 0, 50px); }
 .button.social.email { background: sprite-image('social/24px/email.png', 0, 0, 50px); }
@@ -60,27 +60,39 @@ BUTTONS / ICONS
 .button.format.xml { background: sprite-image('icons/icon_xml.png', 0, 0, 50px); }
 .button.format.external { background: sprite-image('icons/icon_external.png', 0, 4px, 50px); }
 .button.format.external:hover { background: sprite-image('icons/icon_external_hover.png', 0, 4px, 20px); }
-
-
-.rss {
-  background: sprite-image('icons/icon_rss.png', 0, 0, 50px) no-repeat;
+.button.format.print { background: sprite-image("icons/icon_print.png", 0, 0, 100px) no-repeat; padding-left: 26px; }
+.button.format.print:hover { background: sprite-image("icons/icon_print_on.png", 0, 0, 100px) no-repeat; }
+  
+.rss,
+.help_link,
+.add_to_calendar {
   color: #6e6e6e;
   font-size: 1.2em;
   font-weight: bold;
   padding: 0 0 0 25px;
+  }
+.rss {
+  background: sprite-image('icons/icon_rss.png', 0, 0, 50px) no-repeat;
   height: image-height('icons/icon_rss.png');
   }
 .rss:hover {
   background: sprite-image('icons/icon_rss_hover.png', 0, 0, 50px) no-repeat;
   }
-  
+.help_link {
+  background: sprite-image('icons/icon_info.png', 0, 3px, 50px) no-repeat;
+  display: block;
+  height: image-height('icons/icon_rss.png');
+  padding-bottom: 3px;
+  }
+.help_link:hover {
+  background: sprite-image('icons/icon_info_hover.png', 0, 3px, 50px) no-repeat;
+  }   
 .add_to_calendar {
   background: sprite-image('icons/add_to_calendar_half.png', 0, 0, 50px) no-repeat;
-  color: #6e6e6e;
-  font-size: 1.2em;
-  font-weight: bold;
   line-height: image-height('icons/add_to_calendar_half.png');
-  padding: 5px 0 0 25px;
+  padding-top: 5px;
   }
-.add_to_calendar:hover { background: sprite-image('icons/add_to_calendar_half_hover.png', 0, 0, 50px) no-repeat; }  
+.add_to_calendar:hover { 
+  background: sprite-image('icons/add_to_calendar_half_hover.png', 0, 0, 50px) no-repeat; 
+  }  
   

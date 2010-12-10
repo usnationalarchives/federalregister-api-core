@@ -32,18 +32,16 @@
   checked_regulationsdotgov_at :datetime
   volume                       :integer(4)
   full_xml_updated_at          :datetime
-  regulation_id_number         :string(255)
   citing_entries_count         :integer(4)      default(0)
   document_file_path           :string(255)
   full_text_updated_at         :datetime
-  cfr_title                    :string(255)
-  cfr_part                     :string(255)
   curated_title                :string(255)
   curated_abstract             :string(500)
   lede_photo_id                :integer(4)
   lede_photo_candidates        :text
   docket_id                    :string(255)
   raw_text_updated_at          :datetime
+  significant                  :boolean(1)
 
 =end Schema Information
 
@@ -65,7 +63,7 @@ class Entry < ApplicationModel
     'NOTICE'   => 'Notice', 
     'PRESDOCU' => 'Presidential Document', 
     'CORRECT'  => 'Correction',
-    'UNKNOWN'  => 'Unknown',
+    'UNKNOWN'  => 'Document of Unknown Type',
     'SUNSHINE' => 'Sunshine Act Document'
   }
   
@@ -134,19 +132,8 @@ class Entry < ApplicationModel
   file_attribute(:full_text) {"#{RAILS_ROOT}/data/text/#{document_file_path}.txt"}
   file_attribute(:raw_text)  {"#{RAILS_ROOT}/data/raw/#{document_file_path}.txt"}
   
-  has_many :regulatory_plans,
-           :primary_key => :regulation_id_number,
-           :foreign_key => :regulation_id_number
-  
-  # Will require a application restart when new regulatory plan issue comes in...
-  has_many :current_regulatory_plan,
-           :class_name => "RegulatoryPlan",
-           :primary_key => :regulation_id_number,
-           :foreign_key => :regulation_id_number,
-           :conditions => {:regulatory_plans => {:issue => RegulatoryPlan.current_issue} }
-  
-  named_scope :significant, :joins => :current_regulatory_plan, :conditions => { :regulatory_plans => {:priority_category => RegulatoryPlan::SIGNIFICANT_PRIORITY_CATEGORIES} }
-  
+  has_many :entry_regulation_id_numbers
+  has_many :entry_cfr_affected_parts
   validate :curated_attributes_are_not_too_long
   
   def self.published_today
@@ -182,7 +169,7 @@ class Entry < ApplicationModel
     scoped(:order => "publication_date DESC", :limit => n)
   end
   
-  def self.popular(since = 1.month.ago)
+  def self.popular(since = 1.week.ago)
     scoped(
       :select => "entries.id, entries.title, entries.document_number, entries.publication_date, entries.abstract, count(distinct(remote_ip)) AS num_views",
       :joins => :entry_page_views,
@@ -211,6 +198,10 @@ class Entry < ApplicationModel
     scoped(:conditions => {:granule_class => type})
   end
   
+  def self.with_regulation_id_number(rin)
+    scoped(:conditions => {:entry_regulation_id_numbers => {:regulation_id_number => rin}}, :joins => :entry_regulation_id_numbers)
+  end
+  
   def entry_type 
     ENTRY_TYPES[granule_class]
   end
@@ -220,16 +211,22 @@ class Entry < ApplicationModel
     indexes title
     indexes abstract
     indexes "LOAD_FILE(CONCAT('#{RAILS_ROOT}/data/raw/', document_file_path, '.txt'))", :as => :full_text
-    indexes granule_class, :as => :type, :facet => true
-    indexes regulation_id_number
+    indexes entry_regulation_id_numbers(:regulation_id_number)
+    indexes docket_id
     
     # attributes
+    has significant
+    has "CRC32(IF(granule_class = 'SUNSHINE', 'NOTICE', granule_class))", :as => :type, :type => :integer
+    has "entry_cfr_affected_parts.title * 100000 + entry_cfr_affected_parts.part", :as => :cfr_affected_parts, :type => :integer
     has agency_assignments(:agency_id), :as => :agency_ids
     has topic_assignments(:topic_id),   :as => :topic_ids
     has section_assignments(:section_id), :as => :section_ids
     has place_determinations(:place_id), :as => :place_ids
     
     has publication_date
+    has effective_date(:date), :as => :effective_date
+    
+    join entry_cfr_affected_parts
     
     set_property :field_weights => {
       "title" => 100,
@@ -242,6 +239,14 @@ class Entry < ApplicationModel
   end
   # this line must appear after the define_index block
   include ThinkingSphinx::Deltas::ManualDelta::ActiveRecord
+  
+  def title
+    if self[:title].present?
+      self[:title]
+    else
+      '[No title available]'
+    end
+  end
   
   def curated_title
     self[:curated_title] || title
@@ -339,7 +344,7 @@ class Entry < ApplicationModel
   end
   
   def self.find_all_by_citation(volume, page)
-    all(:conditions => ["volume = ? AND start_page <= ? AND end_page >= ?", volume.to_i, page.to_i, page.to_i], :order => "entries.end_page")
+    scoped(:conditions => ["volume = ? AND start_page <= ? AND end_page >= ?", volume.to_i, page.to_i, page.to_i], :order => "entries.end_page")
   end
   
   def self.first_publication_date_before(date)
@@ -368,16 +373,6 @@ class Entry < ApplicationModel
     entry_type != 'Unknown'
   end
   
-  def most_recent_regulatory_plan
-    RegulatoryPlan.first(:conditions => ["regulation_id_number = ?", regulation_id_number], :order => "regulatory_plans.issue DESC")
-  end
-  
-  def significant?
-    if most_recent_regulatory_plan
-      most_recent_regulatory_plan.significant?
-    end
-  end
-  
   def recalculate_agencies!
     agency_name_assignments.map do |agency_name_assignment|
       agency_name_assignment.create_agency_assignment
@@ -388,10 +383,40 @@ class Entry < ApplicationModel
     self[:lede_photo_candidates] ? YAML::load(self[:lede_photo_candidates]) : []
   end
   
+  def regulation_id_numbers=(rins)
+    @regulation_id_numbers = rins
+    self.entry_regulation_id_numbers = rins.map do |rin|
+      entry_regulation_id_numbers.to_a.find{|erin| erin.regulation_id_number == rin} || EntryRegulationIdNumber.new(:regulation_id_number => rin)
+    end
+    rins
+  end
+  
+  def regulation_id_numbers
+    @rins || self.entry_regulation_id_numbers.map(&:regulation_id_number)
+  end
+  
+  def affected_cfr_titles_and_parts=(affected_cfr_titles_and_parts)
+    @affected_cfr_titles_and_parts = affected_cfr_titles_and_parts.map{|t,p| [t.to_i, p.to_i]}
+    self.entry_cfr_affected_parts = @affected_cfr_titles_and_parts.map do |title, part|
+      entry_cfr_affected_parts.to_a.find{|ecap| ecap.title == title && ecap.part == part} || EntryCfrAffectedPart.new(:title => title, :part => part)
+    end
+    @affected_cfr_titles_and_parts
+  end
+  
+  def affected_cfr_titles_and_parts
+    @affected_cfr_titles_and_parts || self.entry_cfr_affected_parts.map{|ecap| [ecap.title, ecap.part]}
+  end
+  
+  def current_regulatory_plans
+    RegulatoryPlan.in_current_issue.all(:conditions => {:regulation_id_number => regulation_id_numbers})
+  end
+  
   private
   
   def set_document_file_path
     self.document_file_path = document_number.sub(/-/,'').scan(/.{0,3}/).reject(&:blank?).join('/') if document_number.present?
+    
+    true
   end
   
   def curated_attributes_are_not_too_long

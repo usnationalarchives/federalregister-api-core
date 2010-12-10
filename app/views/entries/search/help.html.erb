@@ -1,0 +1,86 @@
+<%= title 'Search Help' %>
+<h1 class="title"><span>Search Help</span></h1>
+
+<% section_tag(:id => 'content_area') do %>
+
+  <p>We support numerous ways to customize your search. Some of these are exposed via the advanced search options and others are inherently available in the search entry box. This document details the later case.</p>
+
+  <p>Before we begin we should mention a caveat with search excerpts. Due to the complexity caused by using the advanced search features below, the search excerpt below each returned search option may not reflect the complexity of your query.</p>
+
+
+  <h2 id="part_1" class="title_bar">Part I: Boolean Queries</h2>
+
+  <p>Boolean queries support grouping, AND, OR, and NOT operations. Allowing you to include or exclude words. Grouping makes this even more powerful as given in the example below.</p>
+
+  <p>Usage:</p>
+  <dl>
+    <dt>AND:</dt> <dd><%= working_search_example('tensile & strength') %></dd>
+    <dt>OR:</dt>  <dd><%= working_search_example('pipe | pipeline') %></dd>
+    <dt>NOT:</dt> <dd><%= working_search_example('tensile -strength') %>, also <%= working_search_example('tensile !strength') %></dd>
+    <dt>Grouping:</dt> <dd><%= working_search_example('(tensile & strength) & (pipe | pipeline)') %></dd>
+  </dl>
+  <p><strong>Example:</strong> If you are looking for documents that have content related to tensile strength on pipelines you may start your search with: <%= working_search_example('tensile strength pipelines') %>. This search would result in <%= entry_count_for_search_term('tensile strength pipelines') %> articles being returned.</p>
+
+  <p>However you realize that the search is excluding content that only mentions pipes. You can then modify your search using grouping and the OR operator to be: <%= working_search_example('tensile strength (pipes | pipelines)') %>. This results in <%= entry_count_for_search_term('tensile strength (pipes | pipelines)') %> documents being returned.</p>
+
+  <p>Now you notice that many of the articles are about waivers and antidumping, which you're not interested in. You can modify your search using the NOT operator as follows: <%= working_search_example('tensile strength (pipes | pipelines) -waiver -antidumping') %>. This results in a more manageable <%= entry_count_for_search_term('tensile strength (pipes | pipelines) -waiver -antidumping')%> results.</p>
+
+  <h2 id="part_2" class="title_bar">Part II: Phrase Search</h2>
+
+  <p>You can use quotes ("") to wrap some or all of your search terms. By wrapping terms in quotes you are telling the search engine to look for those words ADJACENT to each other.</p>
+
+  <p><strong>Example:</strong> To continue our example in Part I above (the last search being: <%= working_search_example('tensile strength (pipes | pipelines) -waiver -antidumping') %>) you notice that there are documents returned with either tensile or strength but scatter throughout the document. You can refine your query with: <%= working_search_example('"tensile strength" (pipes | pipelines) -waiver -antidumping') %>. This results in <%= entry_count_for_search_term('"tensile strength" (pipes | pipelines) -waiver -antidumping') %> matches (fewer than before).</p>
+
+
+  <h2 id="part_3" class="title_bar">Part III: Exact Form Searches</h2>
+
+  <p>By default we match words based on their stem word. So when you search <%= working_search_example('fish') %>, we also match documents containing 'fishing' and 'fished' (and vice versa). This holds true for plural forms as well, <%= working_search_example('fishery') %> also matches 'fisheries'. Exact form matches use the <code>=</code> operator in front of the word you wish to have exactly matched.</p>
+
+  <p><strong>Usage:</strong> <%= working_search_example('=airworthiness') %>, matches only documents with the exact word 'airworthiness'.</p>
+
+  <p><strong>Example:</strong> <%= working_search_example('=fishing') %> would only match documents with the word 'fishing' and not documents with the words 'fish' or 'fished'. Along the same lines <%= working_search_example('=fishery') %> would not match 'fisheries' only 'fishery'.</p>
+
+
+  <h2 id="part_4" class="title_bar">Part IV: Proximity Searches</h2>
+
+  <p>When using a quoted string in a search you can specify that you want a proximity match. Proximity is specified in words and adjusted for overall word count. Proximity searches utilize the '~' operator followed by a number.</p>
+
+  <p><strong>Usage:</strong> <%= working_search_example('"rebuilt parts"~2') %>, means there must be a less than 4 word span that matches. This would match "rebuilt vehicular parts" but not "rebuilt foreign vehicular parts"</p>
+
+  <p><strong>Example:</strong> If you were to search: <%= working_search_example('"rebuilt parts"') %> in FR2 you would have <%= entry_count_for_search_term('"rebuilt parts"') %> returned results. You can expand your search incrementally with a proximity search: <%= working_search_example('"rebuilt parts"~2') %> would allow matches on "rebuilt vehicular parts" and "rebuilt boat parts". A search for: <%= working_search_example('"rebuilt parts"~3') %> would allow matches on "rebuilt foreign vehicular parts" and "rebuilt domestic boat parts".</p>
+
+
+  <h2 id="part_5" class="title_bar">Part V: Quorum Searches</h2>
+
+  <p>When using a quoted string quorum searches allow for a form of fuzzy matching. This uses the '/' operated followed by a number.</p>
+
+  <p><strong>Usage:</strong> <%= working_search_example('"rebuilt foreign domestic vehicular boat parts"/3') %> would match any document that contains at least 3 of the 6 words. This is especially useful when you are looking for a familiar document with phrasing you remember or for documents that deal with a smaller subclass of common wording as in our example.</p>
+
+  <p><strong>Example:</strong> Returning to our example in Part IV above you could search: <%= working_search_example('"rebuilt vehicular boat parts"/3') %> which would allow matches on documents containing rebuilt, vehicular, and parts; rebuilt, boat, and parts; and vehicular, rebuilt, and parts. Remember this is matching words in a document not a phrase match as with the '~' operator in previous section.</p>
+
+
+  <h2 id="part_6" class="title_bar">Part VI: Precedence Searches</h2>
+
+  <p>We also support queries based on word (or phrase) ordering. This makes use of the <code>&lt;&lt;</code> operator and is useful at the times you know the rough order of a words in a phrase in a document but not the exact phrase.</p>
+
+  <p><strong>Usage:</strong> <%= working_search_example('rebuilt << parts') %>, ensures that matches contain those words in that order</p>
+
+  <p><strong>Example:</strong> Lets say you are looking for a document that you know contains the words 'rebuilt', 'reclaimed', 'vehicular', 'parts' in that order but aren't sure how exactly the phrase was constructed (perhaps is was: 'rebuilt or reclaimed vehicular and boat parts are now...'). By searching: <%= working_search_example('rebuilt << reclaimed << vehicular << parts') %>, you would match the document you are looking for without needing to know the exact phrasing of the document before hand.</p>
+
+  <p>Like many of the search types above all of these can be combined for more powerful searches (some more useful than others of course). To continue our example in Part VI above perhaps you wanted to search for phrases like, 'rebuilt and reclaimed vehicular parts' and 'rebuilt and reclaimed boat parts'. You could combine boolean operators with precedence and modify your search to be: <%= working_search_example('rebuilt << reclaimed << (vehicular | boat) << parts') %>, thus matching both of the new, slightly modified phrases.</p>
+
+<% end %>
+
+<% aside_tag(:id => 'sidebar') do %>
+  <% section_tag(:id => 'relevant_links') do %>
+    <h1 class="title_bar">Table of Contentes</h1>
+    <ul class="bullets">
+      <li><a href="#part_1">Part I: Boolean Queries</a></li>
+      <li><a href="#part_2">Part II: Phrase Search</a></li>
+      <li><a href="#part_3">Part III: Exact Form Searches</a></li>
+      <li><a href="#part_4">Part IV: Proximity Searches</a></li>
+      <li><a href="#part_5">Part V: Quorum Searches</a></li>
+      <li><a href="#part_6">Part VI: Precedence Searches</h2>
+    </ul>
+  <% end -%>
+<% end -%>

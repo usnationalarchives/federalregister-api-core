@@ -9,7 +9,14 @@ class ApplicationSearch
       @name_definer = options[:name_definer]
       @condition    = options[:condition]
       @sphinx_attribute = options[:sphinx_attribute] || @condition
-      @sphinx_value = options[:phrase] ? "\"#{options[:value]}\"" : options[:value]
+      
+      if options[:phrase]
+        @sphinx_value = "\"#{options[:value]}\""
+      elsif options[:crc32_encode]
+        @sphinx_value = options[:value].map(&:to_crc32)
+      else
+        @sphinx_value = options[:value]
+      end
       @sphinx_type  = options[:sphinx_type] || :conditions
       @label        = options[:label] || @condition.to_s.singularize.humanize
     end
@@ -39,6 +46,7 @@ class ApplicationSearch
     def initialize(options)
       @search = options[:search]
       @model = options[:model]
+      @hash = options[:hash]
       @facet_name = options[:facet_name]
       @name_attribute = options[:name_attribute] || :name
     end
@@ -61,36 +69,143 @@ class ApplicationSearch
     end
     
     def all
-      id_to_name = @model.find_as_hash(:select => "id, #{@name_attribute} AS name")#, :conditions => {:id => raw_facets.keys})
-      search_value_for_this_facet = @search.send(@facet_name)
-      facets = raw_facets.reverse.reject{|id, count| id == 0}.map do |id, count|
-        name = id_to_name[id.to_s]
-        next if name.blank?
-        Facet.new(
-          :value      => id, 
-          :name       => name,
-          :count      => count,
-          :on         => search_value_for_this_facet.to_a.include?(id.to_s),
-          :condition  => @facet_name
-        )
+      if @model
+        id_to_name = @model.find_as_hash(:select => "id, #{@name_attribute} AS name")#, :conditions => {:id => raw_facets.keys})
+        search_value_for_this_facet = @search.send(@facet_name)
+        facets = raw_facets.reverse.reject{|id, count| id == 0}.map do |id, count|
+          name = id_to_name[id.to_s]
+          next if name.blank?
+          Facet.new(
+            :value      => id,
+            :name       => name,
+            :count      => count,
+            :on         => search_value_for_this_facet.to_a.include?(id.to_s),
+            :condition  => @facet_name
+          )
+        end
+      else
+        facets = raw_facets.reverse.reject{|id, count| id == 0}.map do |id, count|
+          value = @hash.keys.find{|k| k.to_crc32 == id}
+          next if value.blank?
+          Facet.new(
+            :value      => value,
+            :name       => @hash[value],
+            :count      => count,
+            :on         => value.to_s == search_value_for_this_facet.to_s,
+            :condition  => :type
+          )
+        end
       end
       facets = facets.compact
       facets.sort_by{|f| [0-f.count, f.name]}
     end
   end
   
-  attr_accessor :term, :order
+  class DateSelector
+    attr_accessor :is, :gte, :lte, :year
+    attr_reader :sphinx_value, :filter_name
+    
+    def initialize(hsh)
+      @is = hsh[:is]
+      @gte = hsh[:gte]
+      @lte = hsh[:lte]
+      @year = hsh[:year].to_i if hsh[:year].present?
+      @valid = true
+      
+      begin
+        if @is.present?
+          date = Date.parse(@is)
+          @sphinx_value = date.to_time.utc.beginning_of_day.to_i .. date.to_time.utc.end_of_day.to_i
+          @filter_name = "on #{date}"
+        elsif @year.present?
+          date = Date.parse("#{@year}-01-01")
+          @sphinx_value = date.to_time.utc.beginning_of_day.to_i .. date.end_of_year.to_time.utc.end_of_day.to_i
+          @filter_name = "in #{@year}"
+        else
+          if @gte.present? && @lte.present?
+            @filter_name = "from #{start_date} to #{end_date}"
+          elsif @gte.present?
+            @filter_name = "on or after #{start_date}"
+          elsif @lte.present?
+            @filter_name = "on or before #{end_date}"
+          else
+            raise InvalidDate
+          end
+        
+          @sphinx_value = start_date.to_time.utc.beginning_of_day.to_i .. end_date.to_time.utc.end_of_day.to_i
+        end
+      rescue ArgumentError
+        @valid = false
+      end
+    end
+    
+    def valid?
+      @valid
+    end
+    
+    private
+    
+    def start_date
+      if @gte.present?
+        Date.parse(@gte)
+      else
+        Date.parse('1994-01-01')
+      end
+    end
+    
+    def end_date
+      if @lte.present?
+        Date.parse(@lte)
+      else
+        Date.current
+      end
+    end
+  end
+  
+  attr_accessor :term, :order, :per_page
   attr_reader :errors, :filters
   
   def self.define_filter(filter_name, options = {}, &name_definer)
     attr_reader filter_name
     
-    name_definer ||= Proc.new{|id| filter_name.to_s.sub(/_ids?$/,'').classify.constantize.find_by_id(id).try(:name) }
+    # refactor to partials...
+    name_definer ||= Proc.new{|*ids| filter_name.to_s.sub(/_ids?$/,'').classify.constantize.find(ids).map(&:name).to_sentence(:two_words_connector => ' or ', :last_word_connector => ', or ') }
     
     define_method "#{filter_name}=" do |val|
-      if val.present? && (val.is_a?(String) || val.is_a?(Fixnum) || val.is_a?(Array))
+      if (val.present? && (val.is_a?(String) || val.is_a?(Fixnum))) || (val.is_a?(Array) && !val.all?(&:blank?))
         instance_variable_set("@#{filter_name}", val)
+        if val.is_a?(Array)
+          val.reject!(&:blank?)
+        end
+        
         add_filter options.merge(:value => val, :condition => filter_name, :name_definer => name_definer, :name => options[:name])
+      end
+    end
+  end
+  
+  def self.define_date_filter(filter_name, options = {})
+    attr_reader filter_name
+    condition = filter_name
+    
+    define_method "#{filter_name}=" do |hsh|
+      if hsh.is_a?(Hash) && hsh.values.any?(&:present?)
+        selector = DateSelector.new(hsh)
+        instance_variable_set("@#{filter_name}", selector)
+        
+        label = options[:label]
+        
+        if selector.valid?
+          add_filter(
+            :value => selector.sphinx_value,
+            :name => selector.filter_name,
+            :condition => condition,
+            :label => label,
+            :sphinx_type => :conditions,
+            :sphinx_attribute => options[:sphinx_attribute] || filter_name
+          )
+        else
+          @errors[filter_name.to_sym] = "#{label} is not a valid date."
+        end
       end
     end
   end
@@ -101,7 +216,7 @@ class ApplicationSearch
     define_method :within= do |val|
       if val.present? && (val.is_a?(String) || val.is_a?(Fixnum))
         if val.to_i < 1 && val.to_i > 200
-          @errors < "range must be between 1 and 200 miles."
+          @errors[:within] = "range must be between 1 and 200 miles."
         else
           @within = val.to_i
         end
@@ -125,10 +240,10 @@ class ApplicationSearch
           )
 
           if places.size > 4096
-            @errors << 'We found too many locations near your location; please reduce the scope of your search'
+            @errors[:location] = 'We found too many locations near your location; please reduce the scope of your search'
           end
         else
-          @errors << 'We could not understand your location.'
+          @errors[:location] = 'We could not understand your location.'
         end
       end
     end
@@ -136,7 +251,7 @@ class ApplicationSearch
   
   def initialize(options = {})
     options.symbolize_keys!
-    @errors = []
+    @errors = {}
     @filters = []
     
     # Set some defaults...
@@ -163,10 +278,10 @@ class ApplicationSearch
   end
   
   def add_filter(options)
-    vals = (options[:value].is_a?(Array) ? options[:value] : [options[:value]])
-    vals.each do |val|
-      @filters << Filter.new(options.merge(:value => val))
-    end
+    # vals = (options[:value].is_a?(Array) ? options[:value] : [options[:value]])
+    # vals.each do |val|
+      @filters << Filter.new(options)#.merge(:value => val))
+    # end
   end
   
   def valid?
@@ -174,7 +289,7 @@ class ApplicationSearch
   end
   
   def blank?
-    [with, conditions, term].all?(&:blank?)
+    [with, with_all, sphinx_conditions, term].all?(&:blank?)
   end
   
   def sphinx_conditions
@@ -189,8 +304,7 @@ class ApplicationSearch
   def with
     with = {}
     @filters.select{|f| f.sphinx_type == :with }.each do |filter|
-      with[filter.sphinx_attribute] ||= []
-      with[filter.sphinx_attribute] << filter.sphinx_value
+      with[filter.sphinx_attribute] = filter.sphinx_value
     end
     with
   end
@@ -237,25 +351,52 @@ class ApplicationSearch
     {}
   end
   
+  def to_hash
+    {
+      :page => @page,
+      :per_page => @per_page,
+      :order => order_clause,
+      :conditions => conditions
+    }
+  end
+  
   def count
+    model.search_count(@term,
+      {
+        :page => @page,
+        :per_page => @per_page,
+        :order => order_clause,
+        :with => with,
+        :with_all => with_all,
+        :conditions => sphinx_conditions,
+        :match_mode => :extended,
+        :sort_mode => :extended
+      }.merge(find_options)
+    )
+  end
+  
+  def term_count
     model.search_count(@term, :match_mode => :extended)
   end
   
   def entry_count
-    EntrySearch.new(:conditions => {:term => @term}).count
+    EntrySearch.new(:conditions => {:term => @term}).term_count
   end
   
   def event_count
-    EventSearch.new(:conditions => {:term => @term}).count
+    EventSearch.new(:conditions => {:term => @term}).term_count
   end
   
   def regulatory_plan_count
-    RegulatoryPlanSearch.new(:conditions => {:term => @term}).count
+    RegulatoryPlanSearch.new(:conditions => {:term => @term}).term_count
   end
   
   private
   
   def fetch_location(location)
     Rails.cache.fetch("location_of: '#{location}'") { Geokit::Geocoders::GoogleGeocoder.geocode(location) }
+  end
+  
+  def set_defaults(options)
   end
 end

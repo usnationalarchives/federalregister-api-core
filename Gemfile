@@ -17,7 +17,7 @@ gem 'patron', '0.4.2'
 gem 'json'
 gem 'ym4r', '0.6.1'
 
-gem 'thinking-sphinx', '1.3.14', :require => 'thinking_sphinx'
+gem 'thinking-sphinx', '1.3.20', :require => 'thinking_sphinx'
 gem 'hoptoad_notifier', '2.1.3'
 gem 'aws-s3', '0.6.2', :require => 'aws/s3'
 gem 'paperclip', '2.3.1.1'
@@ -37,13 +37,14 @@ gem 'system_timer', '1.0.0'
 gem "amazon-ec2", :require => false
 
 gem "net-scp", '1.0.4'
+gem "capistrano", '2.5.19', :require => false
+gem "thunder_punch", '0.0.11', :require => false
 
 # bundler requires these gems in all environments
 # gem 'nokogiri', '1.4.2'
 # gem 'geokit'
 
 group :deployment do
-  gem "thunder_punch", '0.0.10', :require => false
 end
 
 group :development do
@@ -73,4 +74,6 @@ group :test do
   
   gem 'cucumber', '0.9.2'
   gem 'mechanize', '1.0.0'
+  
+  gem 'ci_reporter', '1.6.3'
 end

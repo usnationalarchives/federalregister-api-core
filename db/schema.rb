@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100922021627) do
+ActiveRecord::Schema.define(:version => 20101201155054) do
 
   create_table "agencies", :force => true do |t|
     t.integer  "parent_id"
@@ -131,25 +131,23 @@ ActiveRecord::Schema.define(:version => 20100922021627) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.text     "slug"
-    t.boolean  "delta",                                       :default => true, :null => false
+    t.boolean  "delta",                                       :default => true,  :null => false
     t.string   "source_text_url"
     t.string   "regulationsdotgov_id"
     t.string   "comment_url"
     t.datetime "checked_regulationsdotgov_at"
     t.integer  "volume"
     t.datetime "full_xml_updated_at"
-    t.string   "regulation_id_number"
     t.integer  "citing_entries_count",                        :default => 0
     t.string   "document_file_path"
     t.datetime "full_text_updated_at"
-    t.string   "cfr_title"
-    t.string   "cfr_part"
     t.string   "curated_title"
     t.string   "curated_abstract",             :limit => 500
     t.integer  "lede_photo_id"
     t.text     "lede_photo_candidates"
     t.string   "docket_id"
     t.datetime "raw_text_updated_at"
+    t.boolean  "significant",                                 :default => false
   end
 
   add_index "entries", ["citation"], :name => "index_entries_on_citation"
@@ -165,8 +163,16 @@ ActiveRecord::Schema.define(:version => 20100922021627) do
   add_index "entries", ["publication_date"], :name => "index_entries_on_agency_id_and_publication_date"
   add_index "entries", ["publication_date"], :name => "index_entries_on_publication_date_and_agency_id"
   add_index "entries", ["raw_text_updated_at"], :name => "index_entries_on_raw_text_updated_at"
-  add_index "entries", ["regulation_id_number"], :name => "index_entries_on_regulation_id_number"
+  add_index "entries", ["significant"], :name => "index_entries_on_significant"
   add_index "entries", ["volume", "start_page", "end_page"], :name => "index_entries_on_volume_and_start_page_and_end_page"
+
+  create_table "entry_cfr_affected_parts", :force => true do |t|
+    t.integer "entry_id"
+    t.integer "title"
+    t.integer "part"
+  end
+
+  add_index "entry_cfr_affected_parts", ["entry_id"], :name => "index_entry_cfr_affected_parts_on_entry_id"
 
   create_table "entry_page_views", :force => true do |t|
     t.integer  "entry_id"
@@ -176,6 +182,14 @@ ActiveRecord::Schema.define(:version => 20100922021627) do
 
   add_index "entry_page_views", ["created_at"], :name => "index_entry_page_views_on_created_at"
   add_index "entry_page_views", ["entry_id"], :name => "index_entry_page_views_on_entry_id"
+
+  create_table "entry_regulation_id_numbers", :force => true do |t|
+    t.integer "entry_id"
+    t.string  "regulation_id_number"
+  end
+
+  add_index "entry_regulation_id_numbers", ["entry_id", "regulation_id_number"], :name => "index"
+  add_index "entry_regulation_id_numbers", ["regulation_id_number", "entry_id"], :name => "rin_then_entry"
 
   create_table "events", :force => true do |t|
     t.integer "entry_id"
@@ -188,7 +202,6 @@ ActiveRecord::Schema.define(:version => 20100922021627) do
   end
 
   add_index "events", ["delta"], :name => "index_events_on_delta"
-  add_index "events", ["entry_id", "date"], :name => "index_events_on_entry_id_and_date"
   add_index "events", ["event_type", "entry_id", "date"], :name => "index_events_on_event_type_and_entry_id_and_date"
   add_index "events", ["event_type", "entry_id", "place_id"], :name => "index_events_on_event_type_and_entry_id_and_place_id"
   add_index "events", ["event_type", "place_id", "entry_id"], :name => "index_events_on_event_type_and_place_id_and_entry_id"
@@ -288,17 +301,6 @@ ActiveRecord::Schema.define(:version => 20100922021627) do
   add_index "regulatory_plans", ["issue", "regulation_id_number"], :name => "index_regulatory_plans_on_issue_and_regulation_id_number"
   add_index "regulatory_plans", ["regulation_id_number", "issue"], :name => "index_regulatory_plans_on_regulation_id_number_and_issue"
 
-  create_table "search_subscriptions", :force => true do |t|
-    t.integer  "user_id"
-    t.string   "title"
-    t.string   "frequency"
-    t.string   "search_params"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "search_subscriptions", ["user_id"], :name => "index_search_subscriptions_on_user_id"
-
   create_table "section_assignments", :force => true do |t|
     t.integer "entry_id"
     t.integer "section_id"
@@ -352,14 +354,15 @@ ActiveRecord::Schema.define(:version => 20100922021627) do
 
   create_table "topic_names", :force => true do |t|
     t.string   "name"
+    t.boolean  "void",          :default => false
+    t.integer  "entries_count", :default => 0
+    t.integer  "topics_count",  :default => 0
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "entries_count", :default => 0
-    t.boolean  "void",          :default => false
-    t.integer  "topics_count",  :default => 0
   end
 
   add_index "topic_names", ["name"], :name => "index_topic_names_on_name"
+  add_index "topic_names", ["void", "topics_count"], :name => "index_topic_names_on_void_and_topics_count"
 
   create_table "topics", :force => true do |t|
     t.string   "name"
@@ -411,27 +414,6 @@ ActiveRecord::Schema.define(:version => 20100922021627) do
   add_index "urls", ["name"], :name => "index_urls_on_name"
   add_index "urls", ["type"], :name => "index_urls_on_type"
 
-  create_table "user_list_items", :force => true do |t|
-    t.integer  "entry_id"
-    t.integer  "user_list_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "user_list_items", ["entry_id"], :name => "index_user_list_items_on_entry_id"
-  add_index "user_list_items", ["user_list_id"], :name => "index_user_list_items_on_user_list_id"
-
-  create_table "user_lists", :force => true do |t|
-    t.integer  "user_id"
-    t.string   "name"
-    t.string   "slug"
-    t.boolean  "public",     :default => false
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "user_lists", ["user_id"], :name => "index_user_lists_on_user_id"
-
   create_table "users", :force => true do |t|
     t.string   "email",                                 :null => false
     t.string   "crypted_password"
@@ -454,8 +436,5 @@ ActiveRecord::Schema.define(:version => 20100922021627) do
     t.string   "last_name"
     t.boolean  "active",              :default => true
   end
-
-  add_index "users", ["email"], :name => "index_users_on_email"
-  add_index "users", ["perishable_token"], :name => "index_users_on_perishable_token"
 
 end

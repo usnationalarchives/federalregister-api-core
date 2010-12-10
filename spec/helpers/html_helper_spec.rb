@@ -2,6 +2,22 @@ describe HtmlHelper do
   include HtmlHelper
   
   describe "modify_text_not_inside_anchor" do
+    it "replaces text" do
+      result = modify_text_not_inside_anchor('Hello world') do |text|
+        text.gsub(/Hello/, 'Hi')
+      end
+      
+      result.should == 'Hi world'
+    end
+    
+    it "replaces text outside of an anchor" do
+      result = modify_text_not_inside_anchor('Hello world <a>Hello you</a>') do |text|
+        text.gsub(/Hello/, 'Hi')
+      end
+      
+      result.should == 'Hi world <a>Hello you</a>'
+    end
+    
     it "replaces text in a <p>" do
       result = modify_text_not_inside_anchor('<p>Hello world</p>') do |text|
         text.gsub(/Hello/, 'Hi')
@@ -33,6 +49,5 @@ describe HtmlHelper do
       
       result.should == '<p>Hello <span>world</span> <a href="#">hello worldly folks</a> <a href="#">hello world</a></p>'
     end
-    
   end
 end

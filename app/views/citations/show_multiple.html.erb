@@ -3,12 +3,16 @@
 <h1 class="title"><span><%= "#{@volume} FR #{@page}" %></span></h1>
 
 <div class="notice">
-  <p>Which of the following articles are you looking for?</p>
+  <p>There are multiple articles on volume <strong><%= @volume %></strong>, page <strong><%= @page %></strong>. Which article are you looking for?</p>
 </div>
 
 
 <ul class="bullets clear">
 <% @entries.each do |entry| %>
-  <li><%= link_to(entry.title, entry_path(entry)) %></li>
+  <li>
+    <%= link_to(entry.title, entry_path(entry)) %><br />
+    <span class="pages"><%= entry_page_range(entry) %></span><br />
+    A <span class="type"><%= entry.entry_type %></span> by <span class="agencies"><%= agency_names(entry) %></span>
+  </li>
 <% end %>
 </ul>

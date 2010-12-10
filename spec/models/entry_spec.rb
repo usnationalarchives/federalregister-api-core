@@ -32,24 +32,88 @@
   checked_regulationsdotgov_at :datetime
   volume                       :integer(4)
   full_xml_updated_at          :datetime
-  regulation_id_number         :string(255)
   citing_entries_count         :integer(4)      default(0)
   document_file_path           :string(255)
   full_text_updated_at         :datetime
-  cfr_title                    :string(255)
-  cfr_part                     :string(255)
   curated_title                :string(255)
   curated_abstract             :string(500)
   lede_photo_id                :integer(4)
   lede_photo_candidates        :text
   docket_id                    :string(255)
   raw_text_updated_at          :datetime
+  significant                  :boolean(1)
 
 =end Schema Information
 
 require 'spec_helper'
 
 describe Entry do
+  it { should have_many :entry_regulation_id_numbers }
+  
+  describe "regulation_id_numbers=" do
+    it "should create associated entry_regulation_id_numbers when no exist" do
+      rins = ["ABCD-1234", "ABCD-5678"]
+      e = Entry.new(:regulation_id_numbers => rins)
+      e.save!
+      e.reload
+      e.entry_regulation_id_numbers.map(&:regulation_id_number).should == rins
+    end
+    
+    it "should remove entry_regulation_id_numbers when not passed" do
+      e = Entry.new(:regulation_id_numbers => ["ABCD-1234", "ABCD-5678"])
+      e.save!
+      e.reload
+      e.regulation_id_numbers = ["ABCD-1234"]
+      e.save!
+      e.reload
+      
+      e.entry_regulation_id_numbers.map(&:regulation_id_number).should == ["ABCD-1234"]
+    end
+  end
+  
+  describe "affected_cfr_titles_and_parts=" do
+    it "should create associated entry_cfr_affected_parts when no exist" do
+      ecaps = [['10','100'], ['11','200']]
+      e = Entry.new(:affected_cfr_titles_and_parts => ecaps)
+      e.save!
+      e.reload
+      e.entry_cfr_affected_parts.map{|ecap| [ecap.title, ecap.part]}.should == [[10,100], [11,200]]
+    end
+    
+    it "should remove entry_regulation_id_numbers when not passed" do
+      ecaps = [['10','100'], ['11','200']]
+      e = Entry.new(:affected_cfr_titles_and_parts => ecaps)
+      e.save!
+      e.reload
+      e.affected_cfr_titles_and_parts = [['11','200']]
+      e.save!
+      e.reload
+      e.entry_cfr_affected_parts.map{|ecap| [ecap.title, ecap.part]}.should == [[11,200]]
+    end
+  end
+  
+  describe "current_regulatory_plans" do
+    it 'should find nothing when no RIN associated' do
+      e = Entry.create!()
+      e.current_regulatory_plans.should == []
+    end
+    
+    it 'should find nothing if the associated RIN is not included in the current issue' do
+      something_in_current_issue = RegulatoryPlan.create!(:regulation_id_number => "ABCD-1111", :issue => "201004")
+      something_in_prior_issue = RegulatoryPlan.create!(:regulation_id_number => "ABCD-1234", :issue => "200904")
+      e = Entry.create!(:regulation_id_numbers => [something_in_prior_issue.regulation_id_number])
+      e.current_regulatory_plans.should == []
+    end
+    
+    it 'should find the regulatory_plan if the associated RIN is included in the current issue' do
+      prior = RegulatoryPlan.create!(:regulation_id_number => "ABCD-1234", :issue => "200904")
+      cur = RegulatoryPlan.create!(:regulation_id_number => "ABCD-1234", :issue => "201004")
+      e = Entry.create!(:regulation_id_numbers => [cur.regulation_id_number])
+      e.current_regulatory_plans.should == [cur]
+    end
+  end
+  
+  
   describe 'slug' do
     it "should downcase" do
       Entry.new(:title => "Meeting").slug.should == 'meeting'

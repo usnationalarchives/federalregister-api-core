@@ -1,0 +1,11 @@
+<% f.inputs do %>
+  <%= f.input :name %>
+  <%= f.input :short_name %>
+  <%= f.input :description %>
+  <%= f.input :url, :label => "URL" %>
+  <%= f.input :logo %>
+<% end %>
+
+<% f.buttons do %>
+  <%= f.commit_button 'Save' %>
+<% end %>

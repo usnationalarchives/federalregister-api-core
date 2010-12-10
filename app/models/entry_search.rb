@@ -1,82 +1,73 @@
 class EntrySearch < ApplicationSearch
+  class CFR < Struct.new(:title,:part)
+    def citation
+      "#{title} CFR #{part}"
+    end
+    
+    def sphinx_citation
+      title.to_i * 100000 + part.to_i
+    end
+  end
+  
+  TYPES = [
+    ['Rule',                  'RULE'    ],
+    ['Proposed Rule',         'PRORULE' ],
+    ['Notice',                'NOTICE'  ],
+    ['Presidential Document', 'PRESDOCU']
+  ]
   include Geokit::Geocoders
   
   attr_reader :type
   attr_accessor :type, :regulation_id_number
   
-  define_filter :regulation_id_number, :label => "Regulation", :phrase => true do |regulation_id_number|
-    RegulatoryPlan.find_by_regulation_id_number(regulation_id_number).try(:title)
+  define_filter :regulation_id_number, :label => "Unified Agenda", :phrase => true do |regulation_id_number|
+    reg = RegulatoryPlan.find_by_regulation_id_number(regulation_id_number)
+    ["RIN #{regulation_id_number}", reg.try(:title)].join(' - ')
   end
   
-  define_filter :agency_ids,  :sphinx_type => :with_all
+  def regulatory_plan_title
+    if @regulation_id_number.present?
+      RegulatoryPlan.find_by_regulation_id_number(@regulation_id_number, :order => "issue DESC").try(:title)
+    end
+  end
+  
+  define_filter :agency_ids,  :sphinx_type => :with
   define_filter :section_ids, :sphinx_type => :with_all do |section_id|
     Section.find_by_id(section_id).try(:title)
   end
   define_filter :topic_ids,   :sphinx_type => :with_all
-  define_filter :type,        :phrase => true do |type|
-    Entry::ENTRY_TYPES[type]
+  define_filter :type,        :sphinx_type => :with, :crc32_encode => true do |types|
+    types.map{|type| Entry::ENTRY_TYPES[type]}.to_sentence(:two_words_connector => ' or ', :last_word_connector => ', or ')
+  end
+  
+  define_filter :docket_id, :phrase => true, :label => "Agency Docket" do |docket|
+    docket
+  end
+  
+  define_filter :significant, :sphinx_type => :with, :label => "Signficance" do 
+    "Associated Unified Agenda Deemed Significant Under EO 12866"
   end
   
   define_place_filter :place_ids
+  define_date_filter :publication_date, :label => "Publication Date"
+  define_date_filter :effective_date, :label => "Effective Date"
   
-  attr_reader :start_date, :end_date, :date
+  attr_reader :cfr
   
-  def date=(val)
-    if val.present?
-      @date = val
-      begin
-        parsed_val = Date.parse(val)
-      rescue
-        @errors << "Could not understand publication date."
-      else
+  def cfr=(hsh)
+    if hsh.present? && hsh.values.any?(&:present?)
+      @cfr = CFR.new(hsh[:title], hsh[:part])
+      
+      if @cfr.title.present? && @cfr.part.present?
         add_filter(
-          :value => parsed_val.to_time.utc.beginning_of_day.to_i .. parsed_val.to_time.utc.end_of_day.to_i,
-          :name => "on #{parsed_val}",
-          :condition => :date,
-          :label => "Published",
-          :sphinx_type => :conditions,
-          :sphinx_attribute => :publication_date
+          :value => @cfr.sphinx_citation,
+          :name => @cfr.citation,
+          :sphinx_attribute => :cfr_affected_parts,
+          :label => "Affected CFR Part",
+          :sphinx_type => :with
         )
-      end
-    end
-  end
-  
-  def start_date=(val)
-    if val.present?
-      @start_date = val
-      begin
-        parsed_val = Date.parse(val)
-      rescue
-        @errors << "Could not understand start date."
       else
-        days_ago = [30,90,365].find do |n|
-          n.days.ago.to_date == parsed_val
-        end
-        
-        if days_ago.present?
-          name = "in the last #{days_ago} days"
-        else
-          name = "since #{parsed_val}"
-        end
-        
-        add_filter(
-          :value => parsed_val.to_time.utc.beginning_of_day.to_i .. end_date.utc.end_of_day.to_i,
-          :name => name,
-          :condition => :start_date,
-          :label => "Published",
-          :sphinx_type => :conditions,
-          :sphinx_attribute => :publication_date
-        )
-      end
-    end
-  end
-  
-  def end_date=(val)
-    if val.present?
-      begin
-        @end_date = Date.parse(val).to_time
-      rescue
-        @errors << "Could not understand start date."
+        @errors[:cfr] = "You must enter a specific CFR title and part"
       end
     end
   end
@@ -87,7 +78,7 @@ class EntrySearch < ApplicationSearch
   
   def find_options
     {
-      :select => "id, title, publication_date, document_number, document_file_path, abstract",
+      :select => "id, title, publication_date, document_number, granule_class, document_file_path, abstract",
       :include => :agencies,
     }
   end
@@ -123,23 +114,8 @@ class EntrySearch < ApplicationSearch
   memoize :topic_facets
   
   def type_facets
-    raw_facets = Entry.facets(term,
-      :with => with,
-      :with_all => with_all,
-      :conditions => sphinx_conditions,
-      :match_mode => :extended,
-      :facets => [:type]
-    )[:type]
-    
-    search_value_for_this_facet = self.type
-    facets = raw_facets.to_a.reverse.reject{|id, count| id == 'UNKNOWN'}.map do |id, count|
-      Facet.new(
-        :value      => id, 
-        :name       => Entry::ENTRY_TYPES[id],
-        :count      => count,
-        :on         => id.to_s == search_value_for_this_facet.to_s,
-        :condition  => :type
-      )
+    FacetCalculator.new(:search => self, :facet_name => :type, :hash => Entry::ENTRY_TYPES).all().reject do |facet|
+      ["UNKNOWN", "CORRECT"].include?(facet.value)
     end
   end
   memoize :type_facets
@@ -179,19 +155,24 @@ class EntrySearch < ApplicationSearch
     )
   end
   
-  def date_facets
-    [30,90,365].map do |n|
+  def publication_date_facets
+    facets = [30,90,365].map do |n|
       value = n.days.ago.to_date.to_s
       Facet.new(
-        :value      => value,
+        :value      => {:gte => value},
         :name       => "Past #{n} days",
         :count      => count_in_last_n_days(n),
-        :on         => start_date == value,
-        :condition  => :start_date
+        :condition  => :publication_date
       )
     end
+    
+    if facets.all?{|f| f.count == 0}
+      return []
+    else
+      facets
+    end
   end
-  memoize :date_facets
+  memoize :publication_date_facets
   
   def regulatory_plan
     if @regulation_id_number
@@ -202,7 +183,7 @@ class EntrySearch < ApplicationSearch
   
   def matching_entry_citation
     if term.present?
-      term.scan(/^\s*(\d+)\s*F\.?R\.?\s*(\d+)\s*$/) do |volume, page|
+      term.scan(/^\s*(\d+)\s*F\.?R\.?\s*(\d+)\s*$/i) do |volume, page|
         return Citation.new(:citation_type => "FR", :part_1 => volume.to_i, :part_2 => page.to_i)
       end
     end
@@ -210,11 +191,16 @@ class EntrySearch < ApplicationSearch
     return nil
   end
   
+  def entry_with_document_number
+    if term.present?
+      return Entry.find_by_document_number(term)
+    end
+  end
+  
   private
   
   def set_defaults(options)
-    @within = '25'
+    @within = 25
     @order = options[:order] || 'relevant'
-    @end_date = Issue.current.publication_date.to_time
   end
 end

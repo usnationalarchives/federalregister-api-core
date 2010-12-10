@@ -33,7 +33,8 @@ GENERAL
   }
 .titlebar,
 .filters li,
-.search_info {
+.search_info,
+.matching_citation {
   zoom: 1;
   }  
 
@@ -153,7 +154,8 @@ GENERAL PAGE ITEMS
   display: inline;
   }
 .agency_list_info .actions,
-.search_info .actions {
+.search_info .actions,
+.search_bar {
   top: 0;
   }  
 #main #content_area, 
@@ -178,6 +180,8 @@ GENERAL PAGE ITEMS
 .button.format.pdf { background: image-url('icons/ie6/icon_pdf.png') no-repeat left top; }
 .button.format.pdf.small { background: image-url('icons/ie6/icon_pdf_small.png') no-repeat left top }
 .button.format.xml { background: image-url('icons/ie6/icon_xml.png') no-repeat left top; }
+.button.format.print { background: image-url("icons/ie6/icon_print.png") no-repeat; }
+.button.format.print:hover { background: image-url("icons/ie6/icon_print_on.png") no-repeat; }
 .citation_box li.twitter { background: image-url('icons/ie6/icon_twitter.png') no-repeat; }
 .citation_box li.facebook { background: image-url('icons/ie6/icon_facebook.png') no-repeat; }
 .citation_box li.digg { background: image-url('icons/ie6/icon_digg.png') no-repeat; }
@@ -219,14 +223,19 @@ SEARCH
 
 ******************************/
 
-.search_bar { height: 40px; }
+.search_bar { height: 55px; overflow: visible; }
 .search_bar #conditions_term { margin-left: 10px; }
+#main .search_bar .formtastic .simple label { display: inline; }
+#toggle_advanced { margin-left: 2.55em;}
 .active_filter_list li .type { background: image-url('icons/ie6/icon_filter_50.png') no-repeat; }
-.result_set.events .results { width: 500px; }
+.result_set .results { width: auto; }
+.events .results { width: 500px; }
 .result_set .row { border: none;}
 .result_set.events .results dd.next { width: 350px; }
 .result_set.events .results dd.next.lastchild { margin-left: 1.618em; }
-
+.results li {
+  margin-bottom: 10px;
+  }
 .search_bar .add_to_calendar { background: image-url('icons/ie6/add_to_calendar_half.png') no-repeat left 3px; }
 .search_bar .add_to_calendar:hover { background: image-url('icons/ie6/add_to_calendar_half_hover.png') no-repeat; } 
 .add_to_calendar { background: image-url('icons/ie6/add_to_calendar.png') no-repeat; }
@@ -237,7 +246,6 @@ SEARCH
 .result_set.events .results li.comment_period.closing { background: image-url('icons/ie6/closing.png') no-repeat; }
 .result_set.events .results li.comment_period.opening { background: image-url('icons/ie6/opening.png') no-repeat; }
 .result_set.events .results li.public_meeting { background: image-url('icons/ie6/meeting.png') no-repeat; }
-
 .icon_money_half_size { background: image-url('icons/ie6/icon_money_50_half.png') no-repeat; width: 28px; }
 .icon_environment_half_size { background: image-url('icons/ie6/icon_environment_50_half.png') no-repeat; width: 21px;}
 .icon_world_half_size { background: image-url('icons/ie6/icon_world_50_half.png') no-repeat; width: 21px;}
@@ -252,6 +260,56 @@ SEARCH
 .regulations .results { width: auto; }
 .regulations .results li { border-bottom: 2px solid #eee; margin-bottom: 15px; padding-bottom: 15px; }
 
+.help_link { 
+  background: image-url('icons/ie6/icon_info.png') no-repeat left 3px;
+  float: left; 
+  }
+.help_link:hover { background: image-url('icons/ie6/icon_info_hover.png') no-repeat left 3px;  }
+
+.matching_citation_header { background: image-url('icons/ie6/icon_article.png') no-repeat left top; }
+
+#main .formtastic .string label,
+#main .formtastic .select label { display: none; }
+
+#main .formtastic .show_labels .selected_agency_list label { display: none !important; }
+
+#main .formtastic .show_labels .string label,
+#main .formtastic .show_labels .select label,
+#main .formtastic .row_of_options .type_selector label { display: block; }
+
+#main .formtastic .exact_date { 
+  margin-left: 0 !important;   
+  }
+#main .formtastic .exact_year { 
+  margin-left: 0 !important; 
+  }
+#main .formtastic .range_start { 
+  margin-left: 0 !important; 
+  }
+.results .metadata { zoom: 1; }
+#main .formtastic .advanced.open { display: block; }
+.errors_header { background: image-url('icons/ie6/icon_errors.png') no-repeat left top; }
+#main .matching_citation_header {
+  border-bottom: 1px solid #ccc;
+  margin-bottom: 10px;
+  padding-bottom: 10px;  
+  }
+#main .matching_citation li {
+  border-bottom: 1px solid #eee;
+  list-style: none;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  zoom: 1;
+  }
+#main .matching_citation li li {
+  border: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+  }
+
+#search #content_area p {
+  word-wrap: break-word;
+}  
 /******************************
 
 MODAL

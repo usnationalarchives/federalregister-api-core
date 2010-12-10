@@ -1,5 +1,88 @@
 namespace :content do
   namespace :audit do
+    namespace :entries do
+      desc "List pages with no title"
+      task :title => :environment do
+        Entry.find_each(:conditions => "title IS NULL or title = ''") do |entry|
+          puts "#{entry.publication_date}\t#{entry.document_number}"
+          
+          if ENV['verbose']
+            puts "\t#{entry.source_url('mods')}"
+          end
+          
+          if ENV['confirm']
+            importer = Content::EntryImporter.new(:entry => entry)
+            title = importer.title
+            if title.present?
+              puts "BUT TITLE IS PRESENT IN MODS: '#{title}"
+            end
+            
+            # if ENV['verbose']
+            #   puts importer.mods_node
+            # end
+          end
+        end
+      end
+      
+      desc "List document numbers found in the bulkdata but missing in the MODS"
+      task :missing_document_numbers_in_mods => :environment do
+        Content.parse_dates(ENV['DATE']).each do |date|
+          puts "checking #{date}" if ENV['VERBOSE']
+          mods_document_numbers = Content::EntryImporter::ModsFile.new(date).document_numbers
+          bulkdata_document_numbers = Content::EntryImporter::BulkdataFile.new(date).document_numbers
+          (bulkdata_document_numbers - mods_document_numbers).each do |missing_document_number|
+            puts "#{date}\t#{missing_document_number} not found in mods.xml"
+          end
+        end
+      end
+    end
+    
+    namespace :pages do
+      # desc "List pages that are out of order"
+      # task :out_of_order do
+      #   
+      # end
+      
+      desc "List pages that are missing; assumes correct order"
+      task :missing => :environment do
+        include EntryHelper
+        (75..75).each do |volume|
+          prior_end_page = 0
+          prior_entry = nil
+          year = volume + 1935
+        
+          Issue.all(:conditions => {:publication_date => Date.parse("#{year}-01-01") .. Date.parse("#{year}-12-31")}).each do |issue|
+            issue.entries.scoped(:order => "entries.start_page, entries.id").each do |entry|
+              num_missing_pages = (entry.start_page - prior_end_page) - 1
+              if num_missing_pages > 3
+                puts "#{prior_entry.try(:publication_date)} - #{entry.publication_date}:\t(#{volume} FR #{prior_end_page + 1});\tnum_missing: #{num_missing_pages}"
+              
+                if ENV['verbose']
+                  ((prior_end_page + 1) .. (entry.start_page - 1)).each do |page|
+                    puts "\thttp://www.gpo.gov/fdsys/search/citation.result.FR.action?federalRegister.volume=#{year}&federalRegister.page=#{page}&publication=FR"
+                  end
+                  if prior_entry
+                    puts "\tprior: #{prior_entry.document_number}; date: #{prior_entry.publication_date}; pages: #{prior_entry.start_page}-#{prior_entry.end_page}"
+                    puts "\t\t#{issue_pdf_url(prior_entry.publication_date)}"
+                    puts "\t\t#{prior_entry.source_url(:mods)}"
+                    puts "\t\thttp://www.gpo.gov/fdsys/search/getfrtoc.action?selectedDate=#{prior_entry.publication_date.to_s(:db)}"
+                  end
+                  
+                  puts "\tcur: #{entry.document_number}; date: #{entry.publication_date}; pages: #{entry.start_page}-#{entry.end_page}"
+                  puts "\t\t#{issue_pdf_url(entry.publication_date)}"
+                  puts "\t\t#{entry.source_url(:mods)}"
+                  puts "\t\thttp://www.gpo.gov/fdsys/search/getfrtoc.action?selectedDate=#{entry.publication_date.to_s(:db)}"
+                end
+              end
+          
+              prior_entry = entry
+              prior_end_page = prior_entry.end_page
+            end
+          end
+        end
+      end
+    end
+    
     task :bulkdata => :environment do
       FCSV do |csv|
         elements = %w(AGENCY CFR RIN SUBJECT AGY ACT SUM)

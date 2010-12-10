@@ -1,0 +1,12 @@
+<% if search.entry_with_document_number %>
+  <div class="matching_citation">
+    
+    <p class="matching_citation_header">It looks like you were searching for the document number <strong><%= h @search.term %></strong>.</p>
+    
+    <div class="matching_citation_document">
+      <ul>
+        <%= render :partial => 'citation_result', :locals => {:entry => search.entry_with_document_number, :page => nil} %>
+      </ul>  
+    </div>
+  </div>
+<% end %>

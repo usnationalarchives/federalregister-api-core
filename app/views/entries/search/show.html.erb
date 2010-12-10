@@ -1,30 +1,26 @@
 <% title @search.term.blank? ? 'Article Search' : "Article Search Results for '#{h @search.term}'" %>
-<%= feed_autodiscovery url_for(params.merge(:format => :rss)), "Federal Register: Search Results" %>
+<%= feed_autodiscovery entries_search_url(params.except(:action).merge(:format => :rss, :order => 'date')), "Federal Register: Search Results" %>
+
+<% add_javascript :src => 'page_specific/search/search.js' %>
+<% add_javascript :src => 'page_specific/search/jquery-ui-1.8.6.custom.min.js' %>
 
 <h1 class="title"><span>Search Articles</span></h1>
 
-<% unless @search.valid? %>
-<ul class="errors">
-  <% @search.errors.each do |err| %>
-  <li><%= err %></li>
-  <% end %>
-</ul>
-<% end %>
-
 <%= render :esi => entries_search_header_path(params.except(:action)) %>
 
-
-<div class="filters">
-  <%= render :esi => entries_search_facets_path(params.except(:action).merge(:facet => 'date')) unless @search.start_date.present? %>
-  <%# TODO HELP-RUBY i know this doesn't go here. just wanted to stash it somewhere  %>
-  <!-- <li><%#= sparkline(:data => @search.date_distribution.to_a.sort_by{|date, count| date}.map{|date, count| count}, :alt => "Monthly Distribution" ) %></li> -->
+<% unless @search.blank?%>
+  <% if @search.valid? %>
+    <div class="filters">
+      <%= render :esi => entries_search_facets_path(params.except(:action).merge(:facet => 'publication_date')) unless @search.publication_date %>
+      <%# TODO HELP-RUBY i know this doesn't go here. just wanted to stash it somewhere  %>
+      <!-- <li><%#= sparkline(:data => @search.date_distribution.to_a.sort_by{|date, count| date}.map{|date, count| count}, :alt => "Monthly Distribution" ) %></li> -->
   
-  <%= render :esi => entries_search_facets_path(params.except(:action).merge(:facet => 'type')) %>
-  <%= render :esi => entries_search_facets_path(params.except(:action).merge(:facet => 'section')) %>
-  <%= render :esi => entries_search_facets_path(params.except(:action).merge(:facet => 'agency')) %>
-  <%= render :esi => entries_search_facets_path(params.except(:action).merge(:facet => 'topic')) %>
-  
-  <%= render :partial => 'search/location_form', :locals => {:search => @search } %>
-</div>
+      <%= render :esi => entries_search_facets_path(params.except(:action).merge(:facet => 'type')) unless @search.type.present? %>
+      <%= render :esi => entries_search_facets_path(params.except(:action).merge(:facet => 'section')) unless @search.section_ids.present? %>
+      <%= render :esi => entries_search_facets_path(params.except(:action).merge(:facet => 'agency')) unless @search.agency_ids.present? %>
+      <%= render :esi => entries_search_facets_path(params.except(:action).merge(:facet => 'topic')) unless @search.topic_ids.present? %>
+    </div>
 
-<%= render :esi => entries_search_results_path(params.except(:action)) %>
+    <%= render :esi => entries_search_results_path(params.except(:action)) %>
+  <% end %>
+<% end %>

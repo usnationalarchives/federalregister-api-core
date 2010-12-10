@@ -1,3 +1,8 @@
+<p>
+  <%= link_to 'Add an Agency', new_admin_agency_path %> <br />
+  <%= link_to 'Export All Agencies as CSV', admin_agencies_path(:format => :csv) %>
+</p>
+
 <% semantic_form_for @search, :url => admin_agencies_path, :method => :get do |f| %>
   <% f.inputs do %>
     <%= f.input :name_contains %>
@@ -16,6 +21,7 @@
       <th>Name</th>
       <th>Parent</th>
       <th></th>
+      <th></th>
     </tr>
   </thead>
   <tbody>
@@ -24,6 +30,7 @@
       <td><%= agency.name %></td>
       <td><%= agency.parent.try(:name) %></td>
       <td><%= link_to 'Edit', edit_admin_agency_path(agency) %></td>
+      <td><%= link_to 'Delete', delete_admin_agency_path(agency) %></td>
     </tr>
     <% end %>
   </tbody>

@@ -47,7 +47,7 @@ class RegulatoryPlan < ApplicationModel
   
   has_many :events,
            :class_name => "RegulatoryPlanEvent"
-  has_many :entries,
+  has_many :entry_regulation_id_numbers,
            :primary_key => :regulation_id_number,
            :foreign_key => :regulation_id_number
   
@@ -56,6 +56,10 @@ class RegulatoryPlan < ApplicationModel
   
   has_many :agency_assignments, :as => :assignable
   has_many :agencies, :through => :agency_assignments, :extend => Agency::AssociationExtensions
+  
+  def entries
+    Entry.with_regulation_id_number(self.regulation_id_number)
+  end
   
   define_index do
     # Will require a index rebuild when new regulatory plan issue comes in...

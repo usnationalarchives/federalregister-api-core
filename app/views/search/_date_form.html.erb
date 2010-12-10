@@ -1,0 +1,34 @@
+<% f.fields_for attribute, f.object.send(attribute) do |date_f| %>
+  
+  <% f.inputs :name => label, :class => 'date_options' do %>
+    <li class="row_of_options">
+      <ol class="type_selector">
+        <li>
+          <label><input type="radio" name="<%= label %>_pubdates" value="is" data-show-field="exact_date" />Is Exactly</label>
+        </li>
+        <li>
+          <label><input type="radio" name="<%= label %>_pubdates" value="year" data-show-field="exact_year" />In Year</label>
+        </li>
+        <li>
+          <label><input type="radio" name="<%= label %>_pubdates" value="range"  data-show-field="range" /> Range</label>
+        </li>
+      </ol>
+    </li>
+    
+    <%= date_f.input :is,
+                     :input_html => {:placeholder => Date.current},
+                     :wrapper_html => {:class => 'date exact_date'} %>
+    <%= date_f.input :year,
+                     :as => :select,
+                     :collection => (1994..Issue.current.year).to_a.reverse,
+                     :wrapper_html => {:class => 'date exact_year'} %>
+    <%= date_f.input :gte,
+                     :label => "On or after",
+                     :input_html => {:placeholder => 1.year.ago.to_date},
+                     :wrapper_html => {:class => 'date range range_start'} %>
+    <%= date_f.input :lte,
+                     :label => "On or before",
+                     :input_html => {:placeholder => Date.current},
+                     :wrapper_html => {:class => 'date range range_end'} %>
+  <% end %>
+<% end %>

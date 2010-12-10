@@ -35,7 +35,8 @@ SECTION VIEW
 #topics #content_area,
 #pages #content_area,
 #entries #content_area,
-#regulatory_plans #content_area {
+#regulatory_plans #content_area,
+#search #content_area {
   @include grid(11, 16);
   @include grid-suffix(1, 16);
   }
@@ -43,7 +44,8 @@ SECTION VIEW
 #topics #sidebar,
 #pages #sidebar,
 #entries #sidebar,
-#regulatory_plans #sidebar {
+#regulatory_plans #sidebar,
+#search #sidebar {
   @include grid(4, 16);
   }
 #articles_published_by_day.active #articles_published_by_day-links {

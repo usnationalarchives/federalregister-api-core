@@ -253,7 +253,6 @@ ARTICLE VIEW
 .box .button.firstchild {
   margin-left: 25px;
   }
-
 #sidebar .aside_box {
   margin-bottom: 1em;
   }
@@ -277,6 +276,7 @@ ARTICLE VIEW
   padding-top: 0;
   text-align: right;
   text-transform: uppercase;
+  word-wrap: break-word;
   }
 .header_column h2 {
   font-size: 1.3em;
@@ -323,7 +323,8 @@ ARTICLE VIEW
   margin-bottom: 2em;
   }  
 #entries.show .body_column h3,  
-#entries.show .body_column h4 {
+#entries.show .body_column h4,
+.timeline_info {
   @include gesta;
   font-size: 1.3em;
   line-height: 1.5;
@@ -332,7 +333,8 @@ ARTICLE VIEW
 #entries.show .body_column h3 {
   font-weight: 700;
   }  
-#entries.show .body_column h4 {
+#entries.show .body_column h4,
+.timeline_info {
   font-size: 1.2em;
   font-style: italic;
   font-weight: 400;
@@ -539,11 +541,10 @@ p.stars {
 #font_controls a.sans.on { background: sprite-image("icons/font_controls/font_sans_hover.png", 0, 0, 100px) no-repeat; }  
 .font_control_wrapper {
   background: #e4ecd8;
-  border:1px solid $dark_green;
+  border:1px solid #a8bf82;
   padding:0.5em;
   }
-
-
+  
 /******************************
 
 AGENCY LIST 

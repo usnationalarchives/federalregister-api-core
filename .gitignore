@@ -32,3 +32,4 @@ webrat.log
 /tmp
 /config/mysql.yml
 /config/deploy_credentials.yml
+/hudson/reports

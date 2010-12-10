@@ -6,7 +6,7 @@
     <% end %>
     <h2><%= link_to @agency.name, agency_path(@agency) %></h2>
     <p class="metadata">
-      <%= link_to "#{@agency.entry_counts_since('month')} '#{ @section.title }' articles in the last month", entries_search_path(:conditions => {:agency_ids => [@agency.id], :start_date => 1.month.ago.to_date.to_s(:db), :section_ids => @section.id}) %>
+      <%= link_to "#{@search.count} '#{ @section.title }' articles in the last month", entries_search_path(@search.to_hash) %>
     </p>
   <% end -%>
 <% end %>

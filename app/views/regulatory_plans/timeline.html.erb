@@ -1,12 +1,7 @@
 <% if @regulatory_plan.try(:events).present? %>
-<div class="header_column">
-  <h1>Timeline</h1>
-</div>
-
-<div class="body_column">
   
   <% if @regulatory_plan.events.first.date.present? %>
-  <p>
+  <p class="timeline_info">
     <%= pluralize(@regulatory_plan.events.size, "action") %> from <%= fuzzy_date_formatter @regulatory_plan.events.first.date %> 
     <% if @regulatory_plan.events.size > 1 && @regulatory_plan.events.last.date.present? %> 
       to <%= fuzzy_date_formatter @regulatory_plan.events.last.date %>
@@ -36,5 +31,4 @@
     <div class="handle"></div>
   </div>
     
-</div>  
 <% end %>

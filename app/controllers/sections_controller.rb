@@ -28,13 +28,21 @@ class SectionsController < ApplicationController
                           :joins => {:entries => :sections},
                           :conditions => {
                             :sections => {:id => @section.id},
-                            :entries => {:publication_date => (1.month.ago .. Time.current.to_date)}
+                            :entries => {:publication_date => (1.month.ago .. 1.week.from_now.to_date)}
                           },
                           :group => "entries.id",
                           :order => "num_entries_this_month DESC",
                           :limit => 10
     ).sort_by { rand }.first
     
+    @search = EntrySearch.new(
+      :conditions => {
+          :agency_ids => [@agency.id],
+          :section_ids => [@section.id],
+          :publication_date => {:gte => 1.month.ago.to_date.to_s}
+      },
+      :order => "newest"
+    )
     render :layout => false
   end
   

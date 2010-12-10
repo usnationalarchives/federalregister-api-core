@@ -1,3 +1,15 @@
+=begin Schema Information
+
+ Table name: issues
+
+  id               :integer(4)      not null, primary key
+  publication_date :date
+  completed_at     :datetime
+  created_at       :datetime
+  updated_at       :datetime
+
+=end Schema Information
+
 class Issue < ApplicationModel
   has_many :entries,
            :primary_key => :publication_date,
@@ -32,6 +44,18 @@ class Issue < ApplicationModel
   
   def self.should_have_an_issue?(date)
     !(date.wday == 0 || date.wday == 6 || Holiday.find_by_date(date))
+  end
+  
+  def self.next_date_to_import
+    date = Date.current
+    
+    while(true) do
+      if should_have_an_issue?(date)
+        return date
+      else
+        date = date + 1
+      end
+    end
   end
   
   def to_param
@@ -85,6 +109,10 @@ class Issue < ApplicationModel
   
   def eventful_entries_count
     eventful_entries_search.results.size
+  end
+  
+  def year
+    publication_date.year
   end
   
   private

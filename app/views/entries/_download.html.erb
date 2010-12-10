@@ -1,10 +1,13 @@
 <div class="download_separator">
   <% if entry.publication_date > Date.parse('1995-01-01') %>
-    <%= link_to "Official PDF", entry.source_url('pdf'), :class => 'button format list pdf', :title => 'Download as PDF (Official Edition)' %>
+    <%= link_to "PDF", entry.source_url('pdf'), :class => 'button format list pdf', :title => 'Download as PDF (Official Edition)' %>
   <% end %>
   <% if entry.publication_date > Date.parse('2000-01-01') %>
     <%= link_to "XML", entry_xml_path(entry), :class => 'button format list xml', :title => 'Download article as XML' %>
   <% else %>
     <%= link_to "MODS", entry.source_url(:mods), :class => 'button format list xml', :title => 'Download MODS metadata' %>
   <% end %>
+  
+  <a href="#print_view" title="Print this page" class="button format list print" id="trigger_print">Print</a>
+  
 </div>

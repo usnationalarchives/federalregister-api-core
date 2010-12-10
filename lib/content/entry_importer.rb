@@ -19,31 +19,45 @@ module Content
       dates = Content.parse_dates(date)
     
       dates.each do |date|
-        puts "handling #{date}"
-        if date > '2000-01-01'
-          mods_doc_numbers = ModsFile.new(date).document_numbers
-          BulkdataFile.new(date).document_numbers_and_associated_nodes.each do |document_number, bulkdata_node|
-            if mods_doc_numbers.include?(document_number)
-              importer = EntryImporter.new(:date => date, :document_number => document_number, :bulkdata_node => bulkdata_node)
+        begin
+          puts "handling #{date}"
+          if date > '2000-01-01'
+            mods_doc_numbers = ModsFile.new(date).document_numbers
+            BulkdataFile.new(date).document_numbers_and_associated_nodes.each do |document_number, bulkdata_node|
+              if mods_doc_numbers.include?(document_number)
+                importer = EntryImporter.new(:date => date, :document_number => document_number, :bulkdata_node => bulkdata_node)
             
+                if attributes == [:all]
+                  importer.update_all_provided_attributes
+                else
+                  importer.update_attributes(*attributes)
+                end
+              else
+                puts "skipping #{document_number}; not in mods file"
+              end
+            end
+          else
+            ModsFile.new(date).document_numbers.each do |document_number|
+              importer = EntryImporter.new(:date => date, :document_number => document_number)
+          
               if attributes == [:all]
                 importer.update_all_provided_attributes
               else
                 importer.update_attributes(*attributes)
               end
-            else
-              puts "skipping #{document_number}; not in mods file"
             end
           end
-        else
-          ModsFile.new(date).document_numbers.each do |document_number|
-            importer = EntryImporter.new(:date => date, :document_number => document_number)
-          
-            if attributes == [:all]
-              importer.update_all_provided_attributes
-            else
-              importer.update_attributes(*attributes)
-            end
+        rescue Content::EntryImporter::BulkdataFile::DownloadError => e
+          if ENV['ALLOW_DOWNLOAD_FAILURE']
+            puts "...could not download bulkdata file for #{date}"
+          else
+            raise e
+          end
+        rescue Content::EntryImporter::ModsFile::DownloadError => e
+          if ENV['ALLOW_DOWNLOAD_FAILURE']
+            puts "...could not download MODS file for #{date}"
+          else
+            raise e
           end
         end
       end

@@ -35,13 +35,16 @@
     <% else %>
       <%= javascript_include_tag 'all.js' %>
     <% end %>
+    <%= yield :javascripts %>
     
     <%= yield :feeds %>
   
   </head>
 
   <body id="<%= @faux_controller || controller.controller_name %>" class="<%= @faux_action || controller.action_name %>">
-        
+    
+    <script type="text/javascript">document.getElementsByTagName('body')[0].className+=' has_js'</script>
+    
     <a href="#main" title="Skip to Content" class="skip_to_content">Skip to Content</a>
     
     <div id="print-disclaimer"></div>

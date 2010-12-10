@@ -94,11 +94,11 @@ task :staging do
   set :branch, `git branch`.match(/\* (.*)/)[1]
   
   role :proxy,  "ec2-184-72-250-132.compute-1.amazonaws.com"
-  role :app,    "ec2-174-129-84-43.compute-1.amazonaws.com"
-  role :db,     "ec2-72-44-38-166.compute-1.amazonaws.com", {:primary => true}
-  role :sphinx, "ec2-72-44-38-166.compute-1.amazonaws.com"
-  role :static, "ec2-184-72-183-146.compute-1.amazonaws.com"
-  role :worker, "ec2-184-72-183-146.compute-1.amazonaws.com", {:primary => true}
+  role :app,    "ec2-184-72-176-193.compute-1.amazonaws.com"
+  role :db,     "ec2-174-129-131-48.compute-1.amazonaws.com", {:primary => true}
+  role :sphinx, "ec2-174-129-131-48.compute-1.amazonaws.com"
+  role :static, "ec2-75-101-212-248.compute-1.amazonaws.com"
+  role :worker, "ec2-75-101-212-248.compute-1.amazonaws.com", {:primary => true}
 end
 
 
@@ -129,6 +129,13 @@ set :github_username, 'criticaljuncture'
 # This will execute the Git revision parsing on the *remote* server rather than locally
 set :real_revision, lambda { source.query_revision(revision) { |cmd| capture(cmd) } }
 set :git_enable_submodules, true
+
+
+#############################################################
+# Bundler
+#############################################################
+# this should list all groups in your Gemfile (except default)
+set :gem_file_groups, [:deployment, :development, :test]
 
 
 #############################################################
@@ -203,7 +210,7 @@ namespace :sphinx do
     run "rsync --verbose  --progress --stats --compress --recursive --times --perms --links #{shared_path}/data/raw sphinx:#{shared_path}/data"
   end
   task :transfer_sphinx_config, :roles => [:worker] do
-    run "rsync --verbose  --progress --stats --compress --recursive --times --perms --links #{shared_path}/config/#{rails_env}.sphinx.conf sphinx:#{shared_path}/config/"
+    run "rsync --verbose  --progress --stats --compress --recursive --times --perms --links #{current_path}/config/#{rails_env}.sphinx.conf sphinx:#{shared_path}/config/"
   end
   task :run_sphinx_indexer, :roles => [:sphinx] do
     run "indexer --config #{shared_path}/config/#{rails_env}.sphinx.conf --all --rotate"

@@ -1,12 +1,5 @@
+<% title "Edit agency :: #{@agency.name}" %>
+
 <% semantic_form_for @agency, :url => admin_agency_path(@agency),:html => { :multipart => true } do |f| %>
-  <% f.inputs do %>
-    <%= f.input :name %>
-    <%= f.input :description %>
-    <%= f.input :url, :label => "URL" %>
-    <%= f.input :logo %>
-  <% end %>
-  
-  <% f.buttons do %>
-    <%= f.commit_button 'Save' %>
-  <% end %>
+  <%= render :partial => 'form', :locals => {:f => f} %>
 <% end %>

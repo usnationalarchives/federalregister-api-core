@@ -14,12 +14,17 @@
 .footer {
   margin-top: 1em;
   }
-
+  
+.button.format {
+  padding: 0 0 0 25px;
+  }
+  
 /******************************
 
 NAV
 
 ******************************/
+
 #primary_nav {
   background: image-url("nav_bg.png");
   }
@@ -138,11 +143,84 @@ SEARCH
 .result_set.events .results .actions a {
   display: block;
   }
-
 #citations .search_bar {
   margin-bottom: 1em;
   } 
- 
+.pages,
+#toggle_advanced {
+  width: 150px;
+  }
+
+/******************************
+
+ADVANCED SEARCH
+
+******************************/
+
+.formtastic fieldset {
+  position: relative;
+  }
+.formtastic fieldset legend {
+  position: absolute;
+  top: 0;
+  left: 0;
+  }
+.formtastic .zip legend {
+  left: -2em;
+  }   
+.formtastic fieldset ol,
+.formtastic .show_labels .check_boxes ol,
+.formtastic .bsmContainer {
+  margin-left: 14em;
+  }
+.formtastic .show_labels ol,
+.formtastic .buttons ol {
+  margin-left: 0;
+  }
+#main .formtastic .string {
+  clear: both;
+  }
+#main .formtastic .exact_date,  
+#main .formtastic .exact_year,  
+#main .formtastic .exact_year select,
+#main .formtastic .zip select {
+  display: inline;
+  float: none;
+  margin: 0;
+  }
+#main .range_start { 
+  margin-left: 0; 
+  }
+.bsmListItemLabel,
+.bsmListItem .remove {
+  float: left;
+  }
+.bsmListItem .remove {
+  margin-top: 3px;
+  }
+.formtastic .advanced #conditions_submit {
+  padding: 0;
+  text-align: center;
+  }
+.formtastic .date_options .date {
+  display: inline;
+  float: none;
+  }
+.formtastic .show_labels .docket {
+  display: block;
+  }
+
+#main .formtastic .advanced .date_options .select {
+  clear: both;
+  display: block;
+  }
+#main .formtastic .advanced .date_options .select select {
+  margin-left: 0;
+  }
+.has_js #main .formtastic .advanced .date_options .select select  {
+  margin-left: 8.5em;
+  }
+   
 /******************************
 
 TOPIC LIST
@@ -152,3 +230,9 @@ TOPIC LIST
 div.actions ul {
   display: inline;
   } 
+  
+.formtastic .date_options .range {
+  float: left;
+  }
+  
+  

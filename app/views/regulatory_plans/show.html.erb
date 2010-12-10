@@ -1,4 +1,5 @@
 <% title @regulatory_plan.title %>
+<% feed_autodiscovery regulatory_plan_url(@regulatory_plan, :format => :rss) %>
 
 <h1 class="title"><span>Unified Agenda <%= @regulatory_plan.regulation_id_number %></span></h1>
 
@@ -32,7 +33,12 @@
       <%= render :esi => regulatory_plan_full_text_path(@regulatory_plan) %>
     <% end %>
   
-    <%= render :esi => regulatory_plan_timeline_path(@regulatory_plan)%>
+    <div class="header_column">
+      <h1>Timeline</h1>
+    </div>
+    <div class="body_column">
+      <%= render :esi => regulatory_plan_timeline_path(@regulatory_plan)%>
+    </div>
     
     <% if RAILS_ENV == 'development' %>
       <%= render :partial => "contacts", :locals => {:regulatory_plan => @regulatory_plan} %>
@@ -40,13 +46,12 @@
       <%= render :esi => regulatory_plan_contacts_path(@regulatory_plan) %>
     <% end %>
     
-    <% count = @regulatory_plan.entries.count %>
-    <% if count > 0 %>
+    <% if @entry_count > 0 %>
       <div class="header_column">
         <h1>Federal Register Activity</h1>
       </div>
       <div class="body_column">
-        <p><%= link_to "#{pluralize(count, "article")} found", entries_search_path(:conditions => {:regulation_id_number => @regulatory_plan.regulation_id_number})%></p>
+        <p><%= link_to "#{pluralize(@entry_count, "article")} found", entries_search_path(:conditions => {:regulation_id_number => @regulatory_plan.regulation_id_number})%></p>
       </div>
     <% end %>
   
