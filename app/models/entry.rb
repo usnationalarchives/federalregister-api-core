@@ -217,7 +217,7 @@ class Entry < ApplicationModel
     # attributes
     has significant
     has "CRC32(IF(granule_class = 'SUNSHINE', 'NOTICE', granule_class))", :as => :type, :type => :integer
-    has "entry_cfr_affected_parts.title * 100000 + entry_cfr_affected_parts.part", :as => :cfr_affected_parts, :type => :integer
+    has "GROUP_CONCAT(DISTINCT entry_cfr_affected_parts.title * 100000 + entry_cfr_affected_parts.part)", :as => :cfr_affected_parts, :type => :multi
     has agency_assignments(:agency_id), :as => :agency_ids
     has topic_assignments(:topic_id),   :as => :topic_ids
     has section_assignments(:section_id), :as => :section_ids
@@ -234,6 +234,8 @@ class Entry < ApplicationModel
       "full_text" => 25,
       "agency_name" => 10
     }
+    
+    where "entries.document_number = '2010-28997'"
     
     set_property :delta => ThinkingSphinx::Deltas::ManualDelta
   end
