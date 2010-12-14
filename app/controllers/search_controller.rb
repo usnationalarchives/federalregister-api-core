@@ -16,7 +16,7 @@ class SearchController < ApplicationController
         if @search.valid?
           render :json => {:count => @search.count, :message => render_to_string(:partial => "result_summary.txt.erb")}
         else
-          render :json => {:errors => @search.errors, :message => "Invalid parameters"}
+          render :json => {:errors => @search.validation_errors, :message => "Invalid parameters"}
         end
       end
     end
