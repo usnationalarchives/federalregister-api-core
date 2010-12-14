@@ -63,6 +63,8 @@ class Agency < ApplicationModel
   
   before_validation :slugify
   validates_uniqueness_of :name, :slug
+  validates_presence_of :name
+  
   validates_format_of :url, :with => /^https?:\/\//, :allow_blank => true
   serializable_column :entries_1_year_weekly, :entries_5_years_monthly, :entries_all_years_quarterly, :related_topics_cache
   
