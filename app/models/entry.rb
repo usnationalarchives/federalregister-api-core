@@ -235,8 +235,6 @@ class Entry < ApplicationModel
       "agency_name" => 10
     }
     
-    where "entries.document_number = '2010-28997'"
-    
     set_property :delta => ThinkingSphinx::Deltas::ManualDelta
   end
   # this line must appear after the define_index block
