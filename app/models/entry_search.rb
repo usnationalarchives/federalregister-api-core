@@ -67,7 +67,7 @@ class EntrySearch < ApplicationSearch
           :sphinx_type => :with
         )
       else
-        @errors[:cfr] = "You must enter a specific CFR title and part"
+        @errors[:cfr] = "You must enter both a CFR title and part"
       end
     end
   end
