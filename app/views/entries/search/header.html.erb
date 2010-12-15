@@ -2,7 +2,7 @@
   <div class="errors">
     <p class="errors_header">The following errors were found with your search: </p>
     <ul class="bullets">
-      <% @search.errors.values.each do |err| %>
+      <% @search.validation_errors.values.each do |err| %>
         <li class=""><%= err %></li>
       <% end %>
     </ul>
@@ -12,7 +12,7 @@
 <%= render :partial => "search/tabs", :locals => {:search => @search, :selected => :entries}%>
 
 <div class="search_bar">
-  <% semantic_form_for :conditions, @search, :url => entries_search_path, :html => {:method => :get, :id => "entry_search_form"}, :builder => ApplicationFormBuilder::Errorless do |f| %>
+  <% semantic_form_for :conditions, @search, :url => entries_search_path, :html => {:method => :get, :id => "entry_search_form"} do |f| %>
     <div class="simple">
       <label>Find</label>
       <%= f.text_field :term, :placeholder => 'Search term or citation' %>

@@ -82,7 +82,7 @@ describe EntrySearch do
           end
         
           it "adds an error when given a bad `#{type}` date" do
-            @search.errors[:publication_date].should be_present
+            @search.validation_errors[:publication_date].should be_present
           end
       
           it "populates the value when given a bad `#{type}` date" do

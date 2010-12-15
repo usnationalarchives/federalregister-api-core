@@ -162,7 +162,6 @@ after "passenger:restart",             "varnish:clear_cache"
 set :custom_symlinks, {
   'config/api_keys.yml'                       => 'config/api_keys.yml',
   'config/mail.yml'                           => 'config/mail.yml',
-  'config/production.sphinx.conf'             => 'config/production.sphinx.conf',
   'config/newrelic.yml'                       => 'config/newrelic.yml',
   'config/amazon.yml'                         => 'config/amazon.yml',
   'config/initializers/cloudkicker_config.rb' => 'config/cloudkicker_config.rb',
