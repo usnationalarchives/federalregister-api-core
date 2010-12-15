@@ -241,7 +241,7 @@ class Entry < ApplicationModel
   include ThinkingSphinx::Deltas::ManualDelta::ActiveRecord
   
   def title
-    if self[:title].present?
+    if self[:title].present? && self[:title] =~ /\w/
       self[:title]
     else
       '[No title available]'
