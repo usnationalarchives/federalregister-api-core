@@ -281,12 +281,17 @@ NEWS
   margin-left: 10px;
   width: 265px;
   }
+.inline_bullet {
+  background: image-url('bullet.png') no-repeat 5px 10px;
+  text-indent: 20px;
+  }
   
 /******************************
 
 WHATS HOT
 
 ******************************/
+
 .home #popular.with_icon .header_with_icon {
   margin-bottom: 1.75em;
   padding: 21px 0 0 0;
@@ -294,7 +299,6 @@ WHATS HOT
 #popular {
   background: sprite-image('icons/icon_whats_hot.png', 30px, 15px, 400px) no-repeat;
   }
-  
 .home .with_icon h1,
 .home #news h1 { /* TODO pull this into its own class to share with fr_sections below */
   border-bottom: 2px solid #464646;
@@ -373,8 +377,9 @@ History Movie
   overflow: hidden;
   padding: 21px 0 0 3em;
   }
-.youtube-player {
-  margin-left: 3.1em;
+object, 
+embed {
+  margin-left: 1.6em;
   }
   
 /******************************
@@ -382,16 +387,19 @@ History Movie
 LEARN 
 
 ******************************/
-.home #learn {
-  overflow: hidden;
-  }
+
 .home #learn.with_icon .header_with_icon {
   background: sprite-image('icons/whats_in_fr.png', 0, 0, 20px) no-repeat;
   margin-bottom: 1em;
   overflow: hidden;
   padding-left: 35px;
   }
-
+#learn-body,
+#learn-body div {
+  height: 330px;
+  overflow: hidden;
+  }
+  
 /******************************
 
 TOOLS OF FR2 
