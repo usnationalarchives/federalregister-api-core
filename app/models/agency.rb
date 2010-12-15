@@ -70,6 +70,7 @@ class Agency < ApplicationModel
   
   named_scope :with_logo, :conditions => "agencies.logo_file_name IS NOT NULL"
   named_scope :with_entries, :conditions => "agencies.entries_count > 0"
+  named_scope :alphabetically, :order => "agencies.name"
   
   # consider using sphinx instead...
   def self.named_approximately(name)
