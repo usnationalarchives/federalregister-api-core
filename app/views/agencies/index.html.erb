@@ -56,9 +56,9 @@
   <ul id="agency_list">
   <% @agencies.each do |agency|  %>
     <li><%= render :partial => 'agency_list_item', :locals => {:agency => agency} %>
-      <% if agency.children.present? %>
+      <% if agency.children.alphabetically.present? %>
         <ul>
-          <% agency.children.each do |sub_agency| %>
+          <% agency.children.alphabetically.each do |sub_agency| %>
             <li><%= render :partial => 'agency_list_item', :locals => {:agency => sub_agency} %></li>
           <% end %> 
         </ul>
