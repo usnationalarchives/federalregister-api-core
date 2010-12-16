@@ -248,6 +248,14 @@ class Entry < ApplicationModel
     end
   end
   
+  def toc_doc
+    if self[:toc_doc].present?
+      self[:toc_doc].sub(/\s*,\s*$/,'')
+    else
+      nil
+    end
+  end
+  
   def curated_title
     self[:curated_title] || title
   end
@@ -273,7 +281,7 @@ class Entry < ApplicationModel
   end
   
   def slug
-    clean_title = title.downcase.gsub(/[^a-z0-9& ]+/,'').gsub(/&/, 'and')
+    clean_title = title.downcase.gsub(/[^a-z0-9& -]+/,'').gsub(/&/, 'and')
     slug = view_helper.truncate_words(clean_title, :length => 100, :omission => '')
     slug.gsub(/ /,'-')
   end

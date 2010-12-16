@@ -131,6 +131,10 @@ describe Entry do
       Entry.new(:title => "Foo & Bar").slug.should == 'foo-and-bar'
     end
     
+    it "should retain dashes" do
+      Entry.new(:title => "Albany-Eugene Transmission Line").slug.should == 'albany-eugene-transmission-line'
+    end
+    
     it "should limit the length to 100 characters" do
       Entry.new(:title => "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt unt labore et dolore magna aliqua.").slug.should ==
         'lorem-ipsum-dolor-sit-amet-consectetur-adipisicing-elit-sed-do-eiusmod-tempor-incididunt-unt-labore'
