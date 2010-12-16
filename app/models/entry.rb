@@ -248,6 +248,14 @@ class Entry < ApplicationModel
     end
   end
   
+  def toc_doc
+    if self[:toc_doc].present?
+      self[:toc_doc].sub(/\s*,\s*$/,'')
+    else
+      nil
+    end
+  end
+  
   def curated_title
     self[:curated_title] || title
   end
