@@ -1,6 +1,25 @@
 namespace :content do
   namespace :audit do
     namespace :entries do
+      desc "List dates without valid MODS files"
+      task :missing_mods_files => :environment do
+        (Date.parse('1994-01-01')..Date.today).each do |date|
+          if Issue.should_have_an_issue?(date)
+            if Entry.published_on(date).count == 0
+              mods_file = Content::EntryImporter::ModsFile.new(date)
+              File.delete(mods_file.file_path) if File.exists?(mods_file.file_path)
+              begin
+                mods_file.document
+                puts "#{date}\tMODS file found on server, not here before"
+              rescue Content::EntryImporter::ModsFile::DownloadError
+                puts "#{date}\tNo MODS file"
+              end
+              
+            end
+          end
+        end
+      end
+      
       desc "List pages with no title"
       task :title => :environment do
         Entry.find_each(:conditions => "title IS NULL or title = ''") do |entry|
