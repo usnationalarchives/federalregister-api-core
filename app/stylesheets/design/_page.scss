@@ -85,7 +85,8 @@ LEGAL DISCLAIMER
   margin-left: 10px;
   padding: 0;
   }  
-#disclaimer h1 {
+#disclaimer h1,
+.disclaimer {
   background: sprite-image('icons/disclaimer.png', 0, 0, 50px) no-repeat;
   color: $bookmark_red;
   font-size: 1em;
@@ -94,12 +95,21 @@ LEGAL DISCLAIMER
   padding-left: 25px;
   text-transform: uppercase;
   }
-#disclaimer h1 a {
+#disclaimer h1 a,
+.disclaimer {
   color: $bookmark_red;
   }
-#disclaimer h1:hover {
+#disclaimer h1:hover,
+.disclaimer:hover {
   text-decoration: underline;
   }
+.home #news .disclaimer {
+  display: block;
+  font-weight: bold;
+  }
+.home #news .disclaimer:hover {
+  color: $bookmark_red;
+  }    
 #print-disclaimer {
   display: none;
   }
