@@ -19,6 +19,6 @@ class ApplicationFormBuilder < Formtastic::SemanticFormBuilder
   end
 end
 
-class ApplicationFormBuilder::Errorless < ApplicationFormBuilder
-  self.inline_errors = :none
-end
+# class ApplicationFormBuilder::Errorless < ApplicationFormBuilder
+#   self.inline_errors = :none
+# end

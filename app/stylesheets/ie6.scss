@@ -173,10 +173,13 @@ GENERAL PAGE ITEMS
 #comments-closing-opening .three_col_list .date {
   clear: both;
   }  
-#disclaimer h1 {
+#disclaimer h1,
+#news .disclaimer {
   background: image-url('icons/ie6/disclaimer.png') no-repeat left top;
   }
-
+#news .disclaimer {
+  float: left;
+  }
 .button.format.pdf { background: image-url('icons/ie6/icon_pdf.png') no-repeat left top; }
 .button.format.pdf.small { background: image-url('icons/ie6/icon_pdf_small.png') no-repeat left top }
 .button.format.xml { background: image-url('icons/ie6/icon_xml.png') no-repeat left top; }
