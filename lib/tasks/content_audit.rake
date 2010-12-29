@@ -69,35 +69,55 @@ namespace :content do
           prior_end_page = 0
           prior_entry = nil
           year = volume + 1935
-        
-          Issue.all(:conditions => {:publication_date => Date.parse("#{year}-01-01") .. Date.parse("#{year}-12-31")}).each do |issue|
-            issue.entries.scoped(:order => "entries.start_page, entries.id").each do |entry|
-              num_missing_pages = (entry.start_page - prior_end_page) - 1
-              if num_missing_pages > 3
-                puts "#{prior_entry.try(:publication_date)} - #{entry.publication_date}:\t(#{volume} FR #{prior_end_page + 1});\tnum_missing: #{num_missing_pages}"
-              
-                if ENV['verbose']
-                  ((prior_end_page + 1) .. (entry.start_page - 1)).each do |page|
-                    puts "\thttp://www.gpo.gov/fdsys/search/citation.result.FR.action?federalRegister.volume=#{year}&federalRegister.page=#{page}&publication=FR"
-                  end
-                  if prior_entry
-                    puts "\tprior: #{prior_entry.document_number}; date: #{prior_entry.publication_date}; pages: #{prior_entry.start_page}-#{prior_entry.end_page}"
-                    puts "\t\t#{issue_pdf_url(prior_entry.publication_date)}"
-                    puts "\t\t#{prior_entry.source_url(:mods)}"
-                    puts "\t\thttp://www.gpo.gov/fdsys/search/getfrtoc.action?selectedDate=#{prior_entry.publication_date.to_s(:db)}"
-                  end
-                  
-                  puts "\tcur: #{entry.document_number}; date: #{entry.publication_date}; pages: #{entry.start_page}-#{entry.end_page}"
-                  puts "\t\t#{issue_pdf_url(entry.publication_date)}"
-                  puts "\t\t#{entry.source_url(:mods)}"
-                  puts "\t\thttp://www.gpo.gov/fdsys/search/getfrtoc.action?selectedDate=#{entry.publication_date.to_s(:db)}"
-                end
-              end
           
-              prior_entry = entry
-              prior_end_page = prior_entry.end_page
+          start_page = 1
+          end_page = Entry.maximum(
+                        :end_page,
+                        :conditions => {
+                            :publication_date => (Date.parse("#{year}-01-01") .. Date.parse("#{year}-12-31"))
+                        })
+          
+          missing_page_start = nil
+          (start_page..end_page).each do |page|
+            if Entry.find_all_by_citation(volume, page).count == 0
+              if missing_page_start.nil?
+                missing_page_start = page
+              end
+            elsif missing_page_start
+              num_pages_missing = page - missing_page_start
+              prior_entry = Entry.find_all_by_citation(volume, missing_page_start - 1).last
+              puts [volume, missing_page_start, page - 1, num_pages_missing, prior_entry.try(:document_number), prior_entry.try(:publication_date)].join("\t")
+              missing_page_start = nil
             end
           end
+          # Issue.all(:conditions => {).each do |issue|
+          #   issue.entries.scoped(:order => "entries.start_page, entries.id").each do |entry|
+          #     num_missing_pages = (entry.start_page - prior_end_page) - 1
+          #     if num_missing_pages > 10
+          #       puts "#{prior_entry.try(:publication_date)} - #{entry.publication_date}:\t(#{volume} FR #{prior_end_page + 1});\tnum_missing: #{num_missing_pages}"
+          #     
+          #       if ENV['verbose']
+          #         ((prior_end_page + 1) .. (entry.start_page - 1)).each do |page|
+          #           puts "\thttp://www.gpo.gov/fdsys/search/citation.result.FR.action?federalRegister.volume=#{year}&federalRegister.page=#{page}&publication=FR"
+          #         end
+          #         if prior_entry
+          #           puts "\tprior: #{prior_entry.document_number}; date: #{prior_entry.publication_date}; pages: #{prior_entry.start_page}-#{prior_entry.end_page}"
+          #           puts "\t\t#{issue_pdf_url(prior_entry.publication_date)}"
+          #           puts "\t\t#{prior_entry.source_url(:mods)}"
+          #           puts "\t\thttp://www.gpo.gov/fdsys/search/getfrtoc.action?selectedDate=#{prior_entry.publication_date.to_s(:db)}"
+          #         end
+          #         
+          #         puts "\tcur: #{entry.document_number}; date: #{entry.publication_date}; pages: #{entry.start_page}-#{entry.end_page}"
+          #         puts "\t\t#{issue_pdf_url(entry.publication_date)}"
+          #         puts "\t\t#{entry.source_url(:mods)}"
+          #         puts "\t\thttp://www.gpo.gov/fdsys/search/getfrtoc.action?selectedDate=#{entry.publication_date.to_s(:db)}"
+          #       end
+          #     end
+          # 
+          #     prior_entry = entry
+          #     prior_end_page = prior_entry.end_page
+          #   end
+          # end
         end
       end
     end
@@ -107,7 +127,7 @@ namespace :content do
         elements = %w(AGENCY CFR RIN SUBJECT AGY ACT SUM)
         csv << ['Publication Date', 'Document Number'] + elements
         Entry.find_as_array(:select => "distinct(publication_date) AS publication_date",
-                            :conditions => "publication_date IS NOT NULL",
+                            :conditions => "publication_date IS NOT NULL AND publication_date > '2000-01-01'",
                             :order => "publication_date DESC").each do |publication_date|
           entries = Entry.published_on(publication_date)
           entries.each do |entry|
