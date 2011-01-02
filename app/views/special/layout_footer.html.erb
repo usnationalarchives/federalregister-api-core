@@ -1,0 +1,15 @@
+<% footer_tag(:id => "footer") do %>        
+  <%= render :partial => 'layouts/footer' %>
+<% end -%>
+
+<%= render :partial => 'layouts/google_analytics' %>
+
+<a href="http://federalregister.tenderapp.com/discussion/new?discussion" id="tender" class="trigger_tender">Site Feedback</a>
+
+<script>
+  Tender = {
+    hideToggle: true,
+    widgetToggles: $(".trigger_tender")
+  }
+</script>
+<script src="/javascripts/vendor/tender_widget.js"></script>
