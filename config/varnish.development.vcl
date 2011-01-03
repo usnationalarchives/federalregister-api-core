@@ -1,6 +1,11 @@
-backend default {
+backend rails {
+  .host = "fr2-rails.local";
+  .port = "80";
+}
+
+backend blog {
   .host = "fr2.local";
-  .port = "3002";
+  .port = "80";
 }
 
 sub vcl_recv {
@@ -22,6 +27,15 @@ sub vcl_recv {
     # Add a unique header containing the client address
     remove req.http.X-Forwarded-For;
     set    req.http.X-Forwarded-For = client.ip;
+    
+    # Route to the correct backend
+    if (req.url ~ "^(/blog|/policy|/learn|/wp-)") {
+      set req.http.host = "fr2.local";
+      set req.backend = blog;
+    } else {
+      set req.http.host = "fr2-rails.local";
+      set req.backend = rails;
+    }
     
     # Pass POSTs etc directly on to the backend
     if (req.request != "GET" && req.request != "HEAD") {
