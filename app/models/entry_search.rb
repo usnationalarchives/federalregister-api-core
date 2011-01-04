@@ -183,7 +183,7 @@ class EntrySearch < ApplicationSearch
   
   def matching_entry_citation
     if term.present?
-      term.scan(/^\s*(\d+)\s*F\.?R\.?\s*(\d+)\s*$/i) do |volume, page|
+      term.scan(/^\s*(\d+)\s*(?:F\.?R\.?|Fed\.?\s*Reg\.?)\s*(\d+)\s*$/i) do |volume, page|
         return Citation.new(:citation_type => "FR", :part_1 => volume.to_i, :part_2 => page.to_i)
       end
     end
