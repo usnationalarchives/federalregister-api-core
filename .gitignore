@@ -33,3 +33,4 @@ webrat.log
 /config/mysql.yml
 /config/deploy_credentials.yml
 /hudson/reports
+/vendor/bundle
