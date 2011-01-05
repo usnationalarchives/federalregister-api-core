@@ -12,7 +12,7 @@
   short_name                  :string(255)
   description                 :text
   more_information            :text
-  entries_count               :integer(4)
+  entries_count               :integer(4)      default(0), not null
   entries_1_year_weekly       :text
   entries_5_years_monthly     :text
   entries_all_years_quarterly :text
