@@ -12,7 +12,7 @@
 <% if Issue.current_issue_is_late? %>
   <%= render :partial => "special/issue_late" %>
 <% else %>
-  <%= render :partial => "entries/statistics_by_date", :locals => {:issue => @current_issue, :label => "Current Issue", :other_dates => true} %>
+  <%= render :partial => "entries/statistics_by_date", :locals => {:issue => @current_issue, :label => "Current Issue", :other_dates => true, :url => entries_current_issue_path } %>
 <% end %>
 
 <div class="row">

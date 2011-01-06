@@ -28,6 +28,10 @@ ActionController::Routing::Routes.draw do |map|
                                                                                 :month      => /\d{1,2}/,
                                                                                 :day        => /\d{1,2}/
 
+  map.entries_current_issue 'articles/current', :controller => 'entries',
+                                                :action      => 'current_issue',
+                                                :conditions => { :method => :get }
+  
   map.entries_by_date 'articles/:year/:month/:day', :controller => 'entries',
                                                    :action      => 'by_date',
                                                    :conditions => { :method => :get },

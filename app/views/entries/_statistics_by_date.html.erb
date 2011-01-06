@@ -1,5 +1,5 @@
 <div id="current_issue">
-  <%= link_to label, entries_by_date_path(issue.publication_date), :title => issue.publication_date.to_s(:wday_and_pretty_date), :class => 'issue'  %>
+  <%= link_to label, url, :title => issue.publication_date.to_s(:wday_and_pretty_date), :class => 'issue'  %>
     
   <ul class="statistics">
     <li><%= link_to "<span>#{issue.notice_count}</span> #{pluralize_without_count issue.notice_count, "Notice"}", entries_search_path(:conditions => {:type => "NOTICE", :publication_date => {:is => issue.publication_date}}) %></li>
@@ -14,6 +14,6 @@
     <li><span><%= issue.total_pages %></span> Pages</li>
   </ul>
   <% if other_dates %>
-    <%= link_to 'Browse this &amp; other dates', entries_by_date_path(issue.publication_date), :title => "Browse this & other dates", :class => 'other_dates'  %>
+    <%= link_to 'Browse this &amp; other dates', url, :title => "Browse this & other dates", :class => 'other_dates'  %>
   <% end %>
 </div>
