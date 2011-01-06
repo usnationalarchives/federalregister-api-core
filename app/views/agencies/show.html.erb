@@ -19,7 +19,7 @@
 
     <%= link_to(@agency.url) if @agency.url %>
     <% if @agency.description.present? %>
-      <%= add_citation_links simple_format @agency.description %>
+      <%= add_citation_links(auto_link(simple_format(@agency.description))) %>
     <% else %>
       <p>Description coming soon.</p>
     <% end %>
