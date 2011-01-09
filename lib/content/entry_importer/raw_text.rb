@@ -12,6 +12,12 @@ module Content::EntryImporter::RawText
             <xsl:output encoding="utf-8"/>
             <!-- ignore the same stuff the HTML view does -->
             <xsl:include href="app/views/entries/xslt/ignore.html.xslt" />
+            
+            <!-- except explicitly add back the SUMmary -->
+            <xsl:template match="SUM">
+              <xsl:apply-templates/>
+            </xsl:template>
+            
             <xsl:template match="text()">
               <xsl:value-of select="." />
               <xsl:text> </xsl:text>
