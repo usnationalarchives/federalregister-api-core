@@ -29,7 +29,7 @@ sub vcl_recv {
     set    req.http.X-Forwarded-For = client.ip;
     
     # Route to the correct backend
-    if (req.url ~ "^(/blog|/policy|/learn|/wp-)") {
+    if (req.url ~ "^(/blog|/policy|/learn|/layout/footer_page_list|/wp-)") {
       set req.http.host = "fr2.local";
       set req.backend = blog;
     } else {
