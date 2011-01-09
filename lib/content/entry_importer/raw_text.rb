@@ -9,6 +9,7 @@ module Content::EntryImporter::RawText
         xslt = <<-XSLT
           <?xml version="1.0" encoding="ISO-8859-1" ?>
           <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+            <xsl:output encoding="utf-8"/>
             <!-- ignore the same stuff the HTML view does -->
             <xsl:include href="app/views/entries/xslt/ignore.html.xslt" />
             <xsl:template match="text()">
@@ -20,7 +21,7 @@ module Content::EntryImporter::RawText
         text = Nokogiri::XSLT(xslt).transform(Nokogiri::XML(xml)).to_s
       
         # remove XML declaration
-        text.sub!(/<\?xml version="1.0"\?>\n/, '')
+        text.sub!(/<\?xml version="1.0" encoding="utf-8"\?>\n/, '')
       
         # normalize whitespace
         text.gsub!(/^ */s, "")
