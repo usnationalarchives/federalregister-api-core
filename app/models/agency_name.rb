@@ -21,7 +21,7 @@ class AgencyName < ApplicationModel
   validate :does_not_have_agency_if_void
   
   before_create :assign_agency_if_exact_match
-  before_save :update_agency_assignments
+  after_save :update_agency_assignments
   named_scope :unprocessed, :conditions => {:void => false, :agency_id => nil}, :order => "agency_names.name"
   
   def self.find_or_create_by_name(name)
@@ -36,16 +36,28 @@ class AgencyName < ApplicationModel
   private
   
   def update_agency_assignments
-    if agency_id_changed? && agency_id_was.present?
-      if agency_id.present?
-        agency_assignments.each do |agency_assignment|
-          agency_assignment.agency_id = agency_id
-          agency_assignment.save!
+    if agency_id_changed?
+      if agency_id_was.present?
+        if agency_id.present?
+          agency_assignments.each do |agency_assignment|
+            agency_assignment.agency_id = agency_id
+            agency_assignment.save!
+          end
+        else
+          agency_assignments.each do |agency_assignment|
+            agency_assignment.destroy
+          end
         end
       else
-        agency_assignments.each do |agency_assignment|
-          agency_assignment.destroy
-        end
+        connection.execute("INSERT INTO agency_assignments
+                            (agency_id, agency_name_id, assignable_type, assignable_id, position)
+                            SELECT #{agency_id} AS agency_id,
+                                   agency_name_assignments.id AS agency_name_id,
+                                   agency_name_assignments.assignable_type,
+                                   agency_name_assignments.assignable_id,
+                                   agency_name_assignments.position
+                            FROM agency_name_assignments
+                            WHERE agency_name_assignments.agency_name_id = #{id}")
       end
     end
   end
