@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110113162937) do
+ActiveRecord::Schema.define(:version => 20110113163937) do
 
   create_table "agencies", :force => true do |t|
     t.integer  "parent_id"
@@ -277,7 +277,7 @@ ActiveRecord::Schema.define(:version => 20110113162937) do
   create_table "mailing_lists", :force => true do |t|
     t.text     "parameters"
     t.string   "title"
-    t.integer  "active_subscriptions_count"
+    t.integer  "active_subscriptions_count", :default => 0
     t.datetime "created_at"
     t.datetime "updated_at"
   end
