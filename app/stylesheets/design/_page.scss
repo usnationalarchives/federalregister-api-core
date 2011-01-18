@@ -120,7 +120,8 @@ SECTION
 
 ******************************/
 
-.featured .article {
+.featured .article,
+#wordpress .blog_post_list .article {
   overflow: hidden; /* less awkward self-clear */
   margin-bottom: 25px;
   padding-bottom: 25px;
@@ -131,7 +132,8 @@ SECTION
   padding-bottom: 1em;
   }
 
-#sections .article {
+#sections .article,
+#wordpress .blog_post_list .article {
   border-bottom: 1px dotted #cdcdcd;
   }
 .article .metadata {
@@ -839,13 +841,15 @@ DAILY ISSUE
 
 ******************************/
 
-#meta_toc li {
+#meta_toc li,
+#wordpress .categories li {
   @include min-height(25px);
   padding-right: 40px;
   position: relative;
   }
 
-#meta_toc li span {
+#meta_toc li span,
+#wordpress .categories li span {
   position: absolute;
   right: 0;
   top: 0;

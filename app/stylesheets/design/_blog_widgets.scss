@@ -1,0 +1,31 @@
+#wordpress .widget-list {
+  list-style: none;
+  }
+#wordpress .widget-list li {
+  margin-bottom: 1em;
+  }  
+#wordpress .widget_title {
+  margin-bottom: 0;
+  }
+#wp-calendar tr, 
+#wp-calendar th,
+#wp-calendar td {
+  padding: 0 .75em;
+  }  
+  
+#wordpress .categories {
+  margin: 0;
+  }
+#wordpress .categories li:last-child {
+  margin-bottom: 0;
+  }
+  
+#wordpress #blog-search-form fieldset {
+  border: none;
+  margin: 0;
+  padding: 0;
+  }
+
+#wordpress #blog-search-form label {
+  display: none;
+  }  

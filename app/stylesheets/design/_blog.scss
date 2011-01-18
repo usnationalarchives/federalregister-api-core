@@ -1,0 +1,103 @@
+#wordpress .article {
+  margin-bottom: 1em;
+  padding-bottom: 1em;
+  }
+
+#wordpress .post_content {
+  border-bottom: 1px solid #c5c5c5;
+  margin-bottom: 1.8125em;
+  padding-bottom: 1em;
+  }
+
+/*#wordpress .article p {
+  font-family: Arial, "MS Trebuchet", sans-serif;
+  } */ 
+#nav-above {
+  border-bottom: 1px solid #ccc;
+  margin-bottom: 5px;
+  padding-bottom: 5px;
+  overflow: hidden;
+  }
+#nav-above .nav-previous {
+  float: left;
+  }    
+#nav-above .nav-next {
+  float: right;
+  } 
+#nav-above a {
+  color: #363636;
+  font-size: 15px;  
+  font-weight: 700;
+  }
+#wordpress .metadata {
+  line-height: 1.3; /* TODO move to typography */
+  }
+#wordpress .metadata span {
+  display: block;
+  }
+#wordpress .meta_actions > ul {
+  border-top: 1px solid #eaeaea;
+  clear: both;
+  margin: 15px 0;
+  padding: 15px 0;
+  }
+#wordpress .meta_actions > ul > li {
+  color: #a5a5a5;
+  list-style: none;
+  margin-bottom: 10px;
+  padding-left: 60px;
+  }
+#wordpress .meta_actions ul ul {
+  margin: 0;
+  }
+#wordpress .meta_actions ul ul li {
+  list-style: none;
+  }  
+#wordpress .meta_actions li.bookmark {
+  background: sprite-image('icons/blog/bookmark.png', 23px, 0, 50px) no-repeat;
+  }
+#wordpress .meta_actions li.email {
+  background: sprite-image('icons/blog/email.png', 22px, 3px, 50px) no-repeat;
+  }
+#wordpress .meta_actions li.comments {  
+  background: sprite-image('icons/blog/comment.png', 23px, 0, 50px) no-repeat;
+  position: relative;
+  }
+#wordpress .meta_actions li.comments span {
+  color: #fff;
+  display: block;
+  font-size: 11px;
+  left: 23px;
+  line-height: 16px;
+  position: absolute;  
+  text-align: center;
+  width: 19px;
+  }  
+#wordpress .meta_actions li.categories {
+  background: sprite-image('icons/blog/category.png', 23px, 1px, 500px) no-repeat;
+  }
+#wordpress .meta_actions li.tags {
+  background: sprite-image('icons/blog/tag.png', 23px, 1px, 50px) no-repeat;
+  }
+#wordpress .entry-title {
+  margin-bottom: 1em;
+  }
+#wordpress .comment_area h3 {
+  margin-bottom: 1em;
+  }
+.commentlist li {
+  border-bottom:1px solid #EEEEEE;
+  list-style:none outside none;
+  margin-bottom:2em;
+  padding-bottom:1em;
+  }
+.comment-reply-link {
+  background: sprite-image('icons/blog/reply.png', 0, 0, 50px) no-repeat;
+  font-size: 1.2em;
+  font-weight: bold;
+  line-height: 15px;
+  padding-left: 18px;
+  }
+.comment-reply-link:hover {
+  background: sprite-image('icons/blog/reply-hover.png', 0, 0, 50px) no-repeat;
+  } 

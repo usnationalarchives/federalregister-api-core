@@ -107,7 +107,8 @@ h1.title {
 
 /* stacked left words, big right word */
 
-.title_bar {
+.title_bar,
+#wordpress .widget-title {
   border-top: 3px solid $dark_blue;
   clear: both;
   color: $powder_blue;
@@ -154,7 +155,6 @@ div.title_bar h2 a {
 .small_stack span {
   display: block;
   }
-
 .fr_section h1 {
   border-bottom: 2px solid $dark_grey;
   @include apertura-condensed;
@@ -171,7 +171,8 @@ SIDEBAR
 
 ******************************/
 
-#sidebar .title_bar {
+#sidebar .title_bar,
+#wordpress .widget-title {
   font-size: 1.5em;
   margin: 0 0 .5em;
   padding: .3em 0 0 0;
@@ -213,8 +214,9 @@ ARTICLES
   line-height: 1.6;
   }
 
-.featured .article h1 {
-  font-size: 1.3em;
+.featured .article h1,
+#wordpress .blog_post_list h1 {
+  font-size: 1.4em;
   font-weight: normal;
   line-height: 1.4;
   }

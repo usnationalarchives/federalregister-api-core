@@ -193,4 +193,39 @@ HOMEPAGE
 .home #learn #learn-body {
   @include grid(5, 16);
   @include omega;
-  }  
+  }
+
+/******************************
+
+BLOG
+
+******************************/
+
+#wordpress #sidebar {
+  @include grid(4, 16);
+  @include omega;
+  }
+#wordpress #content_area {
+  @include grid(12, 16);
+  }
+#wordpress .meta_actions {
+  @include grid(4, 16);
+  @include alpha;
+  }
+#wordpress .post_content {
+  @include grid(8, 16);
+  @include omega;
+  }
+#wordpress .comment_area {
+  @include grid(8, 16);
+  left: 240px; /* PUSH 4 */  
+  position: relative;
+  }
+#wordpress .meta_actions img { 
+  @include grid(1, 16);
+  @include alpha;
+  }
+#wordpress .meta_actions p {
+  @include grid(3, 16);
+  @include omega;  
+  }     
