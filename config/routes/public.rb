@@ -100,6 +100,11 @@ ActionController::Routing::Routes.draw do |map|
                                                        :action     => 'tiny_url',
                                                        :conditions => { :method => :get }
 
+  # SUBSCRIPTIONS
+  map.resources :subscriptions, :only => [:new, :create, :destroy], :member => {:delete => :get} do |subscription|
+    subscription.resource :confirmation, :controller => "subscriptions/confirmations"
+  end
+  
   # SECTIONS
   map.about_section ":slug/about", :controller => "sections", :action => "about", :conditions => { :method => :get }
   map.highlighted_entries_section ":slug/featured.:format", :controller => "sections", :action => "highlighted_entries", :conditions => { :method => :get }
