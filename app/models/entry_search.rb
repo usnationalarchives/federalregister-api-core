@@ -197,6 +197,28 @@ class EntrySearch < ApplicationSearch
     end
   end
   
+  def summary
+    parts = []
+    # if @term.present?
+    #   parts << "matching '#{@term}'"
+    # end
+    # 
+    # # agency_ids.to_a.each do |agency_id|
+    # #   agency = Agency.find_by_id(agency_id)
+    # #   
+    # #   if agency
+    # #     parts << "from #{agency.short_name || agency.name}"
+    # #   end
+    # # end
+    # 
+    # [['from', :agency_ids]].each do |term, facet_name|
+    #   facet = facets.find{|facet| facet.name == facet_name}
+    #   parts << "#{term} #{facet.value}"
+    # end
+    # 
+    parts.to_sentence
+  end
+  
   private
   
   def set_defaults(options)

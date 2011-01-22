@@ -120,4 +120,19 @@ describe EntrySearch do
       EntrySearch.new(:conditions => {:term => "2010-1"}).entry_with_document_number.should == entry
     end
   end
+  
+  describe "summary" do
+    it "should include the term" do
+      EntrySearch.new(:conditions => {:term => "OH HAI"}).summary.should == "matching 'OH HAI'"
+    end
+    
+    it "should include the agency" do
+      EntrySearch.new(:conditions => {:agency_ids => [Agency.find_by_name("Commerce Department")]}).summary.should == "from the Commerce Department"
+    end
+    # 
+    # it "should include the agency's short name if available" do
+    #   EntrySearch.new(:conditions => {:agency_ids => [Agency.find_by_short_name("USDA")]}).summary.should == "from USDA"
+    # end
+    
+  end
 end

@@ -110,6 +110,11 @@ ActionController::Routing::Routes.draw do |map|
     end
   end
   
+  # SUBSCRIPTIONS
+  map.resources :subscriptions, :only => [:new, :create, :destroy], :member => {:delete => :get} do |subscription|
+    subscription.resource :confirmation, :controller => "subscriptions/confirmations"
+  end
+  
   # page routing
   map.page ':path', :requirements => {:path => /[a-zA-Z_\/-]+/}, :controller => "pages", :action => "show", :conditions => { :method => :get }
   

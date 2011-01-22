@@ -1,0 +1,20 @@
+<%= @mailing_list.title %>
+
+<%= pluralize @result, "result" %>.
+
+-------------
+
+<%- @results.each do |entry| -%>
+<%= entry.curated_title %>
+
+<%= short_entry_url (entry) %>
+
+A <%= entry.entry_type %> by <%= agency_names(entry) %>.
+    
+<%= truncate_words(entry.curated_abstract, :length => 500) %>
+
+<%- if entry.comments_close_on && entry.comments_close_on > @publication_date -%>
+Comment period ends in <%= pluralize (entry.comments_close_on - @publication_date), 'day' %> (<%= entry.comments_close_on %>)
+<%- end -%>
+-------
+<% end %>

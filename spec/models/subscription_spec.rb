@@ -49,6 +49,22 @@ describe Subscription do
       
       expect{ subscription.update_attributes(:unsubscribed_at => Time.now) }.to change{mailing_list.reload; mailing_list.active_subscriptions_count}.from(1).to(0)
     end
+  end
+  
+  describe 'parameters=' do
+  end
+  
+  describe 'mailing_list' do
+    it "should be created on subscription create if it does not exist" do
+      subscription = Factory(:subscription, :parameters => "{}")
+      subscription.mailing_list.parameters.should == "{}"
+    end
     
+    it "should be associated on subscription create if it does exist" do
+      subscription_1 = Factory(:subscription, :parameters => "{}")
+      list_1 = subscription.mailing_list
+      subscription_2 = Factory(:subscription, :parameters => "{}")
+      subscription_2.mailing_list.should == list_1
+    end
   end
 end

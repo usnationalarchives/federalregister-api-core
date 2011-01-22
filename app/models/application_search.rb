@@ -170,7 +170,10 @@ class ApplicationSearch
   end
   
   def self.define_filter(filter_name, options = {}, &name_definer)
-    attr_reader filter_name
+    define_filter "#{filter_name}" do
+      # filters.select{|f| f.name == filter_name}.try(:value)
+      "yo"
+    end
     
     # refactor to partials...
     name_definer ||= Proc.new{|*ids| filter_name.to_s.sub(/_ids?$/,'').classify.constantize.find(ids).map(&:name).to_sentence(:two_words_connector => ' or ', :last_word_connector => ', or ') }
