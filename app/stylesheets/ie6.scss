@@ -324,3 +324,24 @@ MODAL
 #exit_modal {
   position: absolute;
   }
+  
+/******************************
+
+BLOG
+
+******************************/  
+#wordpress .meta_actions li.bookmark {
+  background: image-url('icons/ie6/bookmark.png') no-repeat 23px top;
+  }
+#wordpress .meta_actions li.email {
+  background: image-url('icons/ie6/email.png') no-repeat 23px 3px;  
+  }
+#wordpress .meta_actions li.comments {  
+  background: image-url('icons/ie6/comment.png') no-repeat 23px top;
+  }
+#wordpress .meta_actions li.categories {
+  background: image-url('icons/ie6/category.png') no-repeat 23px 1px;
+  }
+#wordpress .meta_actions li.tags {
+  background: image-url('icons/ie6/tag.png') no-repeat 23px 1px;
+  }
