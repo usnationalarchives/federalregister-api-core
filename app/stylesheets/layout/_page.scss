@@ -220,6 +220,8 @@ BLOG
   @include grid(8, 16);
   left: 240px; /* PUSH 4 */  
   position: relative;
+  @include alpha;
+  @include omega;    
   }
 #wordpress .meta_actions img { 
   @include grid(1, 16);
@@ -228,4 +230,12 @@ BLOG
 #wordpress .meta_actions p {
   @include grid(3, 16);
   @include omega;  
-  }     
+  }
+#wordpress .comment-meta  img { 
+  @include grid(1, 16);
+  @include alpha;
+  }
+#wordpress .comment-meta  p {
+  @include grid(6, 16);
+  @include omega;  
+  }      
