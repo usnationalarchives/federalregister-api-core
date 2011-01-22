@@ -678,6 +678,7 @@ ADVANCED SEARCH
   background: url(/images/search_btn_bg.png) repeat-x;
   border: 1px solid #aaa;
   color: #555;
+  cursor: pointer;
   @include border-radius(5px);
   @include apertura-condensed;
   font-size: 1.3em;
