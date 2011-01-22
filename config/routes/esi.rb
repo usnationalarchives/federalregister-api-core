@@ -2,6 +2,11 @@ ActionController::Routing::Routes.draw do |map|
   map.with_options(:quiet => true, :conditions => {:method => :get}) do |quiet_map|
     quiet_map.status '/status', :controller => "special", :action => "status"
     
+    # LAYOUT
+    quiet_map.layout_head_content '/layout/head_content', :controller => 'special', :action => 'layout_head_content'
+    quiet_map.layout_header       '/layout/header',       :controller => 'special', :action => 'layout_header'
+    quiet_map.layout_footer       '/layout/footer',       :controller => 'special', :action => 'layout_footer'
+    
     # HOMEPAGE
     quiet_map.agency_highlight '/agency_highlight', :controller => 'special', :action => 'agency_highlight'
     quiet_map.popular_entries '/popular_entries', :controller => 'special', :action => 'popular_entries'

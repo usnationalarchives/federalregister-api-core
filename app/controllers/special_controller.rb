@@ -27,4 +27,19 @@ class SpecialController < ApplicationController
     current_time_on_database = Entry.connection.select_values("SELECT NOW()").first
     render :text => "Current time is: #{current_time_on_database}"
   end
+  
+  def layout_head_content
+    cache_for 1.day
+    render :layout => false
+  end
+  
+  def layout_header
+    cache_for 1.day
+    render :layout => false
+  end
+  
+  def layout_footer
+    cache_for 1.day
+    render :layout => false
+  end
 end
