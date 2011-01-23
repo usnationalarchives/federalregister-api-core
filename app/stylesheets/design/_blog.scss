@@ -317,6 +317,9 @@ PAGE VIEW
   margin-bottom:0.75em;
   padding-bottom:0.5em;
   }
+#wordpress #subnav ul li.current_page_item {
+  font-weight: bold;
+  }
 #wordpress #subnav ul li a {
   display: block;
   }  

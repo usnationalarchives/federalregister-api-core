@@ -3,5 +3,6 @@
     <% Section.all.each do |section| %>
       <li class=" <%= section.slug %> <%= 'one_word' if section.title.split(' ').count == 1 %> trick_ie6"><%= link_to section.title, section_path(section) %></li>
     <% end %>
+    <li class="blog one_word"><a href="/blog/">Blog</a></li>
   </ul>
 <% end -%>

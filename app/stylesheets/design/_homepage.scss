@@ -122,6 +122,7 @@ PROMO BOX
 PROMO NAV
 
 ******************************/
+
 #top_news_promo ul.section_nav {
   clear: both;
   display: block;
@@ -285,7 +286,42 @@ NEWS
   background: image-url('bullet.png') no-repeat 5px 10px;
   text-indent: 20px;
   }
-  
+#news h1 a {
+  color:#464646;
+  }
+#news h1 a:hover,
+#news h2 a:hover {
+  color:#B88659;
+  }
+#news h2 {
+  font-size: 1.1em;
+  margin-bottom: 0;
+  }   
+#news h2 a {
+  color: inherit;
+  }
+#news .metadata {
+  color:#7A838A;
+  font-size:1em;
+  }
+#news p {
+  font-size: 1em;
+  }
+#news p a {
+  display: block;
+  }    
+#news ul {
+  margin-bottom: 0;
+  }
+#news li {
+  list-style: none;
+  margin-bottom: .75em;
+  }
+#news li:last-child {
+  border: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+  }  
 /******************************
 
 WHATS HOT
@@ -341,6 +377,7 @@ WHATS HOT
 AGENCY HIGHLIGHT 
 
 ******************************/
+
 .home #agency_highlight.with_icon .header_with_icon {
   background: sprite-image('icons/icon_highlighted_opportunity.png', 0, 20px, 50px) no-repeat;  
   margin-bottom: 1em;
@@ -405,13 +442,26 @@ LEARN
 TOOLS OF FR2 
 
 ******************************/
+
 .home #tools {
   overflow: hidden;
   }
 .home #tools {
-  background: sprite-image('icons/tools_of_fr2.png',  25px, 0, 400px) no-repeat;
+  background: sprite-image('icons/tools_of_fr2.png',  25px, 0, 500px) no-repeat;
   }
-
+.home #tools .header_with_icon {
+  position: relative;
+  }
+.home #tools .header_with_icon .disclaimer {
+  position: absolute;
+  right: 0;
+  top: 0;
+  }
+.home #tools p {
+  border-bottom:2px solid #EEEEEE;
+  margin-bottom: .5em;
+  }
+  
 /******************************
 
 CURRENT 
@@ -432,7 +482,8 @@ CURRENT
   clear: both;
   } 
 .fr_section ul.bullets li,
-#tools li {
+#tools li,
+#news li {
   background-position: left 5px;
   border-bottom: 2px solid #eee;
   font-size: 1.1em;
