@@ -8,13 +8,11 @@ BLOG OVERALL
   margin-bottom: 1em;
   padding-bottom: 1em;
   }
-
 #wordpress .post_content {
   border-bottom: 1px solid #c5c5c5;
   margin-bottom: 1.8125em;
   padding-bottom: 1em;
   }
-
 #wordpress .entry-title {
   margin-bottom: .4em;
   }
@@ -97,12 +95,14 @@ COMMENT BUBBLE WITH INLINE COUNTS
 ******************************/
 
 #wordpress .meta_actions li.comments span,
-#wordpress .meta .comment {
+#wordpress .meta .comment { padding-left: 25px; position: relative; }
+#wordpress .meta .comment span {
   color: #fff;
   display: block;
   font-size: 10px;
-  left: 21px;
+  left: 0;
   line-height: 16px;
+  position: absolute;
   text-align: center;
   width: 20px;
   }
@@ -113,7 +113,7 @@ COMMENT BUBBLE WITH INLINE COUNTS
   @include inline-block; 
   margin-left: 5px;
   }  
-#wordpress .meta .comment.none {
+#wordpress .meta .comment.none span {
   font-size: 16px;
   line-height: 14px;
   padding-bottom: 2px;
