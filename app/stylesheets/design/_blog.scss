@@ -13,7 +13,8 @@ BLOG OVERALL
   margin-bottom: 1.8125em;
   padding-bottom: 1em;
   }
-#wordpress .entry-title {
+#wordpress .entry-title,
+#wordpress .page-title {
   margin-bottom: .4em;
   }
 
@@ -293,3 +294,22 @@ INDEX - POST LIST
   padding-right: image-width('icons/blog/next.png')+5;
   }
 #wordpress .blog_pagination .newer:hover { background: sprite-image('icons/blog/next-hover.png', 100%, 0, 100px) no-repeat; }  
+
+
+/******************************
+
+PAGE VIEW
+
+******************************/
+
+#wordpress #subnav ul li {
+  border-bottom:1px solid #EEEEEE;
+  font-size:1.1em;
+  line-height:1.5;
+  list-style: none;
+  margin-bottom:0.75em;
+  padding-bottom:0.5em;
+  }
+#wordpress #subnav ul li a {
+  display: block;
+  }  
