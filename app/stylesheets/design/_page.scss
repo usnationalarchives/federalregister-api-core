@@ -841,15 +841,13 @@ DAILY ISSUE
 
 ******************************/
 
-#meta_toc li,
-#wordpress .categories li {
+#meta_toc li {
   @include min-height(25px);
   padding-right: 40px;
   position: relative;
   }
 
-#meta_toc li span,
-#wordpress .categories li span {
+#meta_toc li span {
   position: absolute;
   right: 0;
   top: 0;
