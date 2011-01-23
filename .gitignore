@@ -29,6 +29,7 @@ webrat.log
 /public/stylesheets/utilities.css
 /public/stylesheets/enhancements.css
 /public/system
+/public/uploads
 /tmp
 /config/mysql.yml
 /config/deploy_credentials.yml

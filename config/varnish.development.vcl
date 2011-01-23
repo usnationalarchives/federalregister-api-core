@@ -39,30 +39,37 @@ sub vcl_recv {
         return (pass);
     }
     
-    # Pass admin requests directly on to the backend
-    if (req.url ~ "^/admin/") {
+    # Pass rails admin requests directly on to rails
+    if (req.url ~ "^/admin" ){
+        set req.http.host = "fr2-rails.local";
+        set req.backend = rails;
         return (pass);
     }
     
-    # logged in users must always pass
-    if( req.url ~ "^/wp-(login|admin)" || req.http.Cookie ~ "wordpress_logged_in_" ){
+    # Pass wp admin requests directly on to wp
+    if (req.url ~ "^(/wp-login|wp-admin)") {
+        set req.http.host = "fr2.local";
         set req.backend = blog;
         return (pass);
     }
     
     # Route to the correct backend
     if (req.url ~ "^(/blog|/policy|/learn|/layout/footer_page_list|/wp-)") {
-      set req.http.host = "fr2.local";
-      set req.backend = blog;
-      unset req.http.Cookie;
-      return (pass);
-      # return (lookup);
+        set req.http.host = "fr2.local";
+        set req.backend = blog;
+        
+        # Don't cache wordpress pages if logged in to wp
+        if (req.http.Cookie ~ "wordpress_logged_in_") {
+            return (pass);
+        }
     } else {
       set req.http.host = "fr2-rails.local";
       set req.backend = rails;
-      return (pass);
-      # return (lookup);
     }
+    
+    # either return lookup for caching or return pass for no caching
+    return (pass);
+    # return (lookup);
 }
 
 sub vcl_fetch {
