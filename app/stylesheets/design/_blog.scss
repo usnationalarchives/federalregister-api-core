@@ -63,15 +63,30 @@
   background: sprite-image('icons/blog/comment.png', 21px, 0, 50px) no-repeat;
   position: relative;
   }
-#wordpress .meta_actions li.comments span {
+#wordpress .meta .comment {
+  background: sprite-image('icons/blog/comment.png', 0, 0, 50px) no-repeat;
+  }  
+#wordpress .meta_actions li.comments span,
+#wordpress .meta .comment {
   color: #fff;
   display: block;
   font-size: 11px;
   left: 21px;
   line-height: 16px;
-  position: absolute;  
   text-align: center;
   width: 19px;
+  }
+#wordpress .meta_actions li.comments span {
+  position: absolute;
+  }
+#wordpress .meta .comment { 
+  @include inline-block; 
+  margin-left: 5px;
+  }
+#wordpress .meta .comment.none {
+  font-size: 16px;
+  line-height: 14px;
+  width:20px;
   }  
 #wordpress .meta_actions li.categories {
   background: sprite-image('icons/blog/category.png', 23px, 1px, 500px) no-repeat;
