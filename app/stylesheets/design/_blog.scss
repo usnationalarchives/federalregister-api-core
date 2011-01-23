@@ -95,8 +95,14 @@ COMMENT BUBBLE WITH INLINE COUNTS
 
 ******************************/
 
+#wordpress .meta .comment { 
+  padding-left: 25px; 
+  }
+#wordpress .meta .comment,
+#wordpress .meta_actions li.comments {
+  position: relative;
+  }
 #wordpress .meta_actions li.comments span,
-#wordpress .meta .comment { padding-left: 25px; position: relative; }
 #wordpress .meta .comment span {
   color: #fff;
   display: block;
@@ -108,8 +114,8 @@ COMMENT BUBBLE WITH INLINE COUNTS
   width: 20px;
   }
 #wordpress .meta_actions li.comments span {
-  position: absolute;
-  }
+  left: 20px;
+  }  
 #wordpress .meta .comment { 
   @include inline-block; 
   margin-left: 5px;
@@ -173,10 +179,11 @@ POST - COMMENTS
   border-left: 1px solid #d6d6d6;
   margin-bottom: .5em;
   overflow: hidden;
-  padding: 5px 5px 2px;
+  padding: 5px 5px 5px;
   position: relative;
   }
 .comment-meta .metadata {
+  font-size: 15px;
   margin-bottom: 0;
   padding: 0;
   } 
