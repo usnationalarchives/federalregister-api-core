@@ -8,6 +8,12 @@ backend blog {
   .port = "80";
 }
 
+sub vcl_fetch {
+  if (req.url ~ "^(/blog|/policy|/learn|/layout/footer_page_list|/wp-)") {
+   set beresp.ttl = 120s;
+  }
+}
+
 sub vcl_recv {
     # Reject Non-RFC2616 or CONNECT or TRACE requests.
     if (req.request != "GET" &&
@@ -28,15 +34,6 @@ sub vcl_recv {
     remove req.http.X-Forwarded-For;
     set    req.http.X-Forwarded-For = client.ip;
     
-    # Route to the correct backend
-    if (req.url ~ "^(/blog|/policy|/learn|/layout/footer_page_list|/wp-)") {
-      set req.http.host = "fr2.local";
-      set req.backend = blog;
-    } else {
-      set req.http.host = "fr2-rails.local";
-      set req.backend = rails;
-    }
-    
     # Pass POSTs etc directly on to the backend
     if (req.request != "GET" && req.request != "HEAD") {
         return (pass);
@@ -47,14 +44,25 @@ sub vcl_recv {
         return (pass);
     }
     
-    # Pass everything on...for now
-    return (pass);
+    # logged in users must always pass
+    if( req.url ~ "^/wp-(login|admin)" || req.http.Cookie ~ "wordpress_logged_in_" ){
+        set req.backend = blog;
+        return (pass);
+    }
     
-    # Prevent duplication of caches
-    set req.http.host = "fr2.local";
-    
-    # Check to see if cached
-    return (lookup);
+    # Route to the correct backend
+    if (req.url ~ "^(/blog|/policy|/learn|/layout/footer_page_list|/wp-)") {
+      set req.http.host = "fr2.local";
+      set req.backend = blog;
+      unset req.http.Cookie;
+      return (pass);
+      # return (lookup);
+    } else {
+      set req.http.host = "fr2-rails.local";
+      set req.backend = rails;
+      return (pass);
+      # return (lookup);
+    }
 }
 
 sub vcl_fetch {
