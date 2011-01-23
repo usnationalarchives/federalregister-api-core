@@ -354,15 +354,19 @@ BLOG
 .comment-reply-link:hover {
   background: image-url('icons/ie6/blog/reply-hover.png') no-repeat 0 0;  
   }
-#wordpress .meta_actions .navigation .next {
+#wordpress .meta_actions .navigation .next,
+#wordpress .blog_pagination .newer {
   background: image-url('icons/ie6/blog/next.png') no-repeat 0 2px;
   }
-#wordpress .meta_actions .navigation .next:hover {
+#wordpress .meta_actions .navigation .next:hover,
+#wordpress .blog_pagination .newer:hover {
   background: image-url('icons/ie6/blog/next-hover.png') no-repeat 0 2px;
   }  
-#wordpress .meta_actions .navigation .prev {
+#wordpress .meta_actions .navigation .prev,
+#wordpress .blog_pagination .older {
   background: image-url('icons/ie6/blog/prev.png') no-repeat 0 2px;
   }
-#wordpress .meta_actions .navigation .prev:hover {
+#wordpress .meta_actions .navigation .prev:hover,
+#wordpress .blog_pagination .older:hover {
   background: image-url('icons/ie6/blog/prev-hover.png') no-repeat 0 2px;
   }

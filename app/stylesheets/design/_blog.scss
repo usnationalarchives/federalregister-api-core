@@ -1,3 +1,9 @@
+/******************************
+
+BLOG OVERALL
+
+******************************/
+
 #wordpress .article {
   margin-bottom: 1em;
   padding-bottom: 1em;
@@ -9,26 +15,16 @@
   padding-bottom: 1em;
   }
 
-/*#wordpress .article p {
-  font-family: Arial, "MS Trebuchet", sans-serif;
-  } */ 
-#nav-above {
-  border-bottom: 1px solid #ccc;
-  margin-bottom: 5px;
-  padding-bottom: 5px;
-  overflow: hidden;
+#wordpress .entry-title {
+  margin-bottom: .4em;
   }
-#nav-above .nav-previous {
-  float: left;
-  }    
-#nav-above .nav-next {
-  float: right;
-  } 
-#nav-above a {
-  color: #363636;
-  font-size: 15px;  
-  font-weight: 700;
-  }
+
+/******************************
+
+POST - METADATA LIST
+
+******************************/
+  
 #wordpress .metadata {
   line-height: 1.3; /* TODO move to typography */
   }
@@ -42,6 +38,11 @@
   margin: 15px 0;
   padding: 15px 0;
   }
+#wordpress .blog_post_list .meta_actions > ul {
+  border: none;
+  margin: 0;
+  padding: 0;
+  }  
 #wordpress .meta_actions > ul > li {
   color: #7a7a7a;
   list-style: none;
@@ -56,29 +57,54 @@
   }
 #wordpress .meta_actions ul ul li {
   list-style: none;
-  }  
-#wordpress .meta_actions li.bookmark {
-  background: sprite-image('icons/blog/bookmark.png', 23px, 0, 50px) no-repeat;
   }
-#wordpress .meta_actions li.email {
-  background: sprite-image('icons/blog/email.png', 22px, 3px, 50px) no-repeat;
-  }
-#wordpress .meta_actions li.comments {  
+#wordpress .meta_actions .navigation .prev,
+#wordpress .meta_actions .navigation .next {
+  display: block;
+  padding-left: 60px;
+  } 
+
+/******************************
+
+POST - METADATA LIST ICONS
+
+******************************/
+  
+#wordpress li.bookmark { background: sprite-image('icons/blog/bookmark.png', 23px, 0, 50px) no-repeat; }
+#wordpress li.email { background: sprite-image('icons/blog/email.png', 22px, 3px, 50px) no-repeat; }
+#wordpress li.comments {  
   background: sprite-image('icons/blog/comment.png', 21px, 0, 50px) no-repeat;
   position: relative;
   }
-#wordpress .meta .comment {
-  background: sprite-image('icons/blog/comment.png', 0, 0, 50px) no-repeat;
-  }  
+#wordpress .meta .comment { background: sprite-image('icons/blog/comment.png', 0, 0, 50px) no-repeat; }
+#wordpress .meta .comment:hover { background: sprite-image('icons/blog/comment-hover.png', 0, 0, 50px) no-repeat; }
+#wordpress li.author { background: sprite-image('icons/blog/author.png', 0, 0, 50px) no-repeat; }
+#wordpress li.date { background: sprite-image('icons/blog/date.png', 0, 0, 50px) no-repeat; }  
+#wordpress li.categories { background: sprite-image('icons/blog/category.png', 23px, 1px, 500px) no-repeat; }
+#wordpress li.tags { background: sprite-image('icons/blog/tag.png', 23px, 1px, 50px) no-repeat; }
+#wordpress .meta_actions .navigation .prev {
+  background: sprite-image('icons/blog/prev.png', 23px, 2px, 100px) no-repeat;
+  margin-bottom: 1em;
+  }
+#wordpress .meta_actions .navigation .prev:hover { background: sprite-image('icons/blog/prev-hover.png', 23px, 2px, 100px) no-repeat; }  
+#wordpress .meta_actions .navigation .next { background: sprite-image('icons/blog/next.png', 23px, 2px, 100px) no-repeat; }
+#wordpress .meta_actions .navigation .next:hover { background: sprite-image('icons/blog/next-hover.png', 23px, 2px, 100px) no-repeat; }
+
+/******************************
+
+COMMENT BUBBLE WITH INLINE COUNTS
+
+******************************/
+
 #wordpress .meta_actions li.comments span,
 #wordpress .meta .comment {
   color: #fff;
   display: block;
-  font-size: 11px;
+  font-size: 10px;
   left: 21px;
   line-height: 16px;
   text-align: center;
-  width: 19px;
+  width: 20px;
   }
 #wordpress .meta_actions li.comments span {
   position: absolute;
@@ -86,23 +112,22 @@
 #wordpress .meta .comment { 
   @include inline-block; 
   margin-left: 5px;
-  }
-#wordpress .meta .comment:hover {
-  
   }  
 #wordpress .meta .comment.none {
   font-size: 16px;
   line-height: 14px;
-  width:20px;
+  padding-bottom: 2px;
+  width: 19px;
   }  
-#wordpress .meta_actions li.categories {
-  background: sprite-image('icons/blog/category.png', 23px, 1px, 500px) no-repeat;
-  }
-#wordpress .meta_actions li.tags {
-  background: sprite-image('icons/blog/tag.png', 23px, 1px, 50px) no-repeat;
-  }
-#wordpress .entry-title {
-  margin-bottom: .4em;
+
+/******************************
+
+POST - COMMENTS
+
+******************************/
+
+#comments {
+  margin-bottom:1.8125em;
   }
 #wordpress .comment_area h3 {
   margin-bottom: 1em;
@@ -136,6 +161,9 @@
 .comment-reply-link:hover {
   background: sprite-image('icons/blog/reply-hover.png', 0, 0, 50px) no-repeat;
   }
+
+/* COMMENT METADATA */  
+
 .comment-meta {
   background: #f6f6f6;
   border-top: 1px solid #ddd;
@@ -151,9 +179,9 @@
   margin-bottom: 0;
   padding: 0;
   } 
-#comments {
-  margin-bottom:1.8125em;
-  }
+  
+/* COMMENT FORM */ 
+
 #commentform input,
 #commentform textarea {
   border: 1px solid #bbb;
@@ -196,35 +224,72 @@
 .form-submit {
   padding-bottom: 0;
   }
-#wordpress .article .summary a {
-  display: block;
-  }
-#wordpress .pagination {
-  margin-bottom: 1em;
-  }
+
+/******************************
+
+INDEX - POST LIST
+
+******************************/
+
+#wordpress .article .summary p {
+  padding-bottom: 0;
+  }  
 #wordpress article:last-child .article {
   border-bottom: none;
   }
-#wordpress .meta_actions .navigation .prev,
-#wordpress .meta_actions .navigation .next {
-  color: #7a7a7a;
+#wordpress .blog_post_list .article {
+  clear: both;
+  }  
+
+/* INDIVIDUAL POSTS */ 
+
+#wordpress .blog_post_list .meta {
+  @include opacity(.4);
+  }  
+#wordpress .blog_post_list .article:hover .meta {
+  @include opacity(1);
+  }  
+#wordpress .blog_post_list .meta li {
+  color: #7A7A7A;
   display: block;
-  padding-left: image-width('icons/blog/next.png')+5;
-  } 
-#wordpress .meta_actions .navigation .prev:hover,
-#wordpress .meta_actions .navigation .next:hover {
-  color: #B88659;
-  }   
-#wordpress .meta_actions .navigation .prev {
-  background: sprite-image('icons/blog/prev.png', 0, 2px, 50px) no-repeat;
+  float: left;
+  line-height: 17px;
+  padding-left: 23px;
+  margin-right: 12px;
+  }
+#wordpress .blog_post_list .meta li.comments {
+  background: none;
+  padding-left: 0;
+  }
+
+/* PAGINATION CONTROLS */ 
+  
+#wordpress .blog_pagination {
+  overflow: hidden;
+  }
+#wordpress .blog_pagination.top {
   margin-bottom: 1em;
   }
-#wordpress .meta_actions .navigation .prev:hover {
-  background: sprite-image('icons/blog/prev-hover.png', 0, 2px, 50px) no-repeat;
+#wordpress .blog_pagination.bottom {
+  margin-top: 1em;
+  margin-bottom: 1em;
   }  
-#wordpress .meta_actions .navigation .next {
-  background: sprite-image('icons/blog/next.png', 0, 2px, 50px) no-repeat;
+#wordpress .blog_pagination .older,
+#wordpress .blog_pagination .newer {
+  margin-bottom: 1em;
   }
-#wordpress .meta_actions .navigation .next:hover {
-  background: sprite-image('icons/blog/next-hover.png', 0, 2px, 50px) no-repeat;
-  }  
+#wordpress .blog_pagination .older {
+  background: sprite-image('icons/blog/prev.png', 0, 1px, 100px) no-repeat;
+  float: left;
+  line-height: image-height('icons/blog/prev.png');
+  padding-left: image-width('icons/blog/prev.png')+5;
+  padding-top: 2px;
+  }
+#wordpress .blog_pagination .older:hover { background: sprite-image('icons/blog/prev-hover.png', 0, 1px, 100px) no-repeat; }  
+#wordpress .blog_pagination .newer {
+  background: sprite-image('icons/blog/next.png', 100%, 0, 100px) no-repeat;
+  float: right;
+  line-height: image-height('icons/blog/next.png');
+  padding-right: image-width('icons/blog/next.png')+5;
+  }
+#wordpress .blog_pagination .newer:hover { background: sprite-image('icons/blog/next-hover.png', 100%, 0, 100px) no-repeat; }  
