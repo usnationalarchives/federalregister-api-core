@@ -704,7 +704,19 @@ REGULATION VIEW
 .track .handle:hover {
   background: $powder_blue;
   }  
-  
+
+.contacts li {
+  background: sprite-image('icons/blog/author.png', 0, 5px, 200px) no-repeat;
+  border-bottom:2px solid #EEEEEE;
+  list-style: none;
+  margin-bottom: 1em;
+  padding-bottom: 1em;  
+  padding-left: 30px;  
+  }
+.contacts li:last-child,
+.contacts li.lastchild {
+  border-bottom: none;
+  }
 /******************************
 
 TOPIC LIST
