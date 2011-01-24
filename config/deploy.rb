@@ -94,11 +94,11 @@ task :staging do
   set :branch, `git branch`.match(/\* (.*)/)[1]
   
   role :proxy,  "ec2-184-72-250-132.compute-1.amazonaws.com"
-  role :app,    "ec2-184-72-176-193.compute-1.amazonaws.com"
-  role :db,     "ec2-174-129-131-48.compute-1.amazonaws.com", {:primary => true}
-  role :sphinx, "ec2-174-129-131-48.compute-1.amazonaws.com"
-  role :static, "ec2-75-101-212-248.compute-1.amazonaws.com"
-  role :worker, "ec2-75-101-212-248.compute-1.amazonaws.com", {:primary => true}
+  role :app,    "ec2-184-72-71-183.compute-1.amazonaws.com"
+  role :db,     "ec2-50-16-147-1.compute-1.amazonaws.com", {:primary => true}
+  role :sphinx, "ec2-50-16-147-1.compute-1.amazonaws.com"
+  role :static, "ec2-174-129-137-181.compute-1.amazonaws.com"
+  role :worker, "ec2-174-129-137-181.compute-1.amazonaws.com", {:primary => true}
 end
 
 
