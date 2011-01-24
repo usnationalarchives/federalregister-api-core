@@ -95,8 +95,14 @@ COMMENT BUBBLE WITH INLINE COUNTS
 
 ******************************/
 
+#wordpress .meta .comment { 
+  padding-left: 25px; 
+  }
+#wordpress .meta .comment,
+#wordpress .meta_actions li.comments {
+  position: relative;
+  }
 #wordpress .meta_actions li.comments span,
-#wordpress .meta .comment { padding-left: 25px; position: relative; }
 #wordpress .meta .comment span {
   color: #fff;
   display: block;
@@ -108,8 +114,8 @@ COMMENT BUBBLE WITH INLINE COUNTS
   width: 20px;
   }
 #wordpress .meta_actions li.comments span {
-  position: absolute;
-  }
+  left: 20px;
+  }  
 #wordpress .meta .comment { 
   @include inline-block; 
   margin-left: 5px;
@@ -173,10 +179,11 @@ POST - COMMENTS
   border-left: 1px solid #d6d6d6;
   margin-bottom: .5em;
   overflow: hidden;
-  padding: 5px 5px 2px;
+  padding: 5px 5px 5px;
   position: relative;
   }
 .comment-meta .metadata {
+  font-size: 15px;
   margin-bottom: 0;
   padding: 0;
   } 
@@ -244,12 +251,6 @@ INDEX - POST LIST
 
 /* INDIVIDUAL POSTS */ 
 
-#wordpress .blog_post_list .meta {
-  @include opacity(.4);
-  }  
-#wordpress .blog_post_list .article:hover .meta {
-  @include opacity(1);
-  }  
 #wordpress .blog_post_list .meta li {
   color: #7A7A7A;
   display: block;
@@ -280,20 +281,24 @@ INDEX - POST LIST
   margin-bottom: 1em;
   }
 #wordpress .blog_pagination .older {
-  background: sprite-image('icons/blog/prev.png', 0, 1px, 100px) no-repeat;
   float: left;
   line-height: image-height('icons/blog/prev.png');
+  }
+#wordpress .blog_pagination .older a {
+  background: sprite-image('icons/blog/prev.png', 0, 1px, 100px) no-repeat;
   padding-left: image-width('icons/blog/prev.png')+5;
   padding-top: 2px;
   }
-#wordpress .blog_pagination .older:hover { background: sprite-image('icons/blog/prev-hover.png', 0, 1px, 100px) no-repeat; }  
+#wordpress .blog_pagination .older:hover a { background: sprite-image('icons/blog/prev-hover.png', 0, 1px, 100px) no-repeat; }  
 #wordpress .blog_pagination .newer {
-  background: sprite-image('icons/blog/next.png', 100%, 0, 100px) no-repeat;
   float: right;
   line-height: image-height('icons/blog/next.png');
-  padding-right: image-width('icons/blog/next.png')+5;
   }
-#wordpress .blog_pagination .newer:hover { background: sprite-image('icons/blog/next-hover.png', 100%, 0, 100px) no-repeat; }  
+#wordpress .blog_pagination .newer a {
+  background: sprite-image('icons/blog/next.png', 100%, 0, 100px) no-repeat;
+  padding-right: image-width('icons/blog/next.png')+5;  
+  } 
+#wordpress .blog_pagination .newer:hover a { background: sprite-image('icons/blog/next-hover.png', 100%, 0, 100px) no-repeat; }  
 
 
 /******************************
@@ -310,6 +315,21 @@ PAGE VIEW
   margin-bottom:0.75em;
   padding-bottom:0.5em;
   }
+#wordpress #subnav ul li.current_page_item {
+  font-weight: bold;
+  }
 #wordpress #subnav ul li a {
   display: block;
   }  
+
+/******************************
+
+SEARCH
+
+******************************/
+
+#wordpress.search .page-title {
+  border-bottom: 2px solid #EFEFEF;
+  font-weight: bold;
+  margin-bottom: 1em;
+  }
