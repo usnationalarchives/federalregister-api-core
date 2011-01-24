@@ -21,29 +21,7 @@
   <% end -%>
 
   <% section_tag(:id => 'news') do %>
-    <h1><a href="/blog">Recent Blog Posts</a></h1>
-    
-    <ul>
-      <li>
-        <h2><a href="/blog/2008/09/readability-test">Readability test</a></h2>
-        <p class="metadata">Posted by admin on September 5, 2008</p>
-        <p class="firstchild lastchild">All children, except one, grow up. They soon know that they will grow up, and the way Wendy knew was this. One day when she was two years old she was playing in a garden, and she plucked another flower … <a href="http://fr2.local/blog/2008/09/readability-test" class="firstchild lastchild">Continue reading <span class="meta-nav firstchild lastchild">→</span></a></p>
-      </li>  
-
-      <li>
-        <h2><a href="/blog/2008/09/readability-test">Second blog post</a></h2>
-        <p class="metadata">Posted by admin on September 1, 2008</p>
-      </li>
-      
-      <li>
-        <h2><a href="/blog/2008/09/readability-test">Third blog post</a></h2>
-        <p class="metadata">Posted by admin on August 20, 2008</p>
-      </li>
-      
-      
-    </ul>
-    
-    <%#= render :partial => 'special/celebrating_75_years' %>
+    <%= render :esi => '/layout/homepage_post_list' %>
   <% end -%>
 </div>
 

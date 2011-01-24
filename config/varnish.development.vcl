@@ -9,7 +9,7 @@ backend blog {
 }
 
 sub vcl_fetch {
-  if (req.url ~ "^(/blog|/policy|/learn|/layout/footer_page_list|/wp-)") {
+  if (req.url ~ "^(/blog|/policy|/learn|/layout/footer_page_list|/layout/homepage_post_list|/wp-)") {
    set beresp.ttl = 120s;
   }
 }
@@ -54,7 +54,7 @@ sub vcl_recv {
     }
     
     # Route to the correct backend
-    if (req.url ~ "^(/blog|/policy|/learn|/layout/footer_page_list|/wp-)") {
+    if (req.url ~ "^(/blog|/policy|/learn|/layout/footer_page_list|/layout/homepage_post_list|/wp-)") {
         set req.http.host = "fr2.local";
         set req.backend = blog;
         
