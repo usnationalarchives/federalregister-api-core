@@ -317,7 +317,8 @@ NEWS
   list-style: none;
   margin-bottom: .75em;
   }
-#news li:last-child {
+#news li:last-child,
+#news li.lastchild {
   border: none;
   margin-bottom: 0;
   padding-bottom: 0;
