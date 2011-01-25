@@ -69,10 +69,6 @@ task :production do
   set :rails_env,  "production"
   set :branch, 'production'
   
-  instances = []
-  @ec2.instances.select{|i| i.groups.include?('app')}.each{|i| instances << i.dns_name}
-  
-  
   role :proxy, "ec2-184-72-241-172.compute-1.amazonaws.com"
   #role :static, "ec2-184-73-104-122.compute-1.amazonaws.com"
   #role :worker, "ec2-184-73-104-122.compute-1.amazonaws.com", {:primary => true}
