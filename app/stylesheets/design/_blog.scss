@@ -58,7 +58,8 @@ POST - METADATA LIST
   list-style: none;
   }
 #wordpress .meta_actions .navigation .prev,
-#wordpress .meta_actions .navigation .next {
+#wordpress .meta_actions .navigation .next,
+#wordpress .meta_actions .navigation .back {
   display: block;
   padding-left: 60px;
   } 
@@ -85,9 +86,15 @@ POST - METADATA LIST ICONS
   background: sprite-image('icons/blog/prev.png', 23px, 2px, 100px) no-repeat;
   margin-bottom: 1em;
   }
+#wordpress .meta_actions .navigation .back {
+  line-height: 25px;
+  margin-top: 13px;
+  }
 #wordpress .meta_actions .navigation .prev:hover { background: sprite-image('icons/blog/prev-hover.png', 23px, 2px, 100px) no-repeat; }  
 #wordpress .meta_actions .navigation .next { background: sprite-image('icons/blog/next.png', 23px, 2px, 100px) no-repeat; }
 #wordpress .meta_actions .navigation .next:hover { background: sprite-image('icons/blog/next-hover.png', 23px, 2px, 100px) no-repeat; }
+#wordpress .meta_actions .navigation .back { background: sprite-image('icons/blog/back.png', 25px, 2px, 100px) no-repeat; }
+#wordpress .meta_actions .navigation .back:hover { background: sprite-image('icons/blog/back-hover.png', 25px, 2px, 100px) no-repeat; }
 
 /******************************
 
@@ -106,9 +113,10 @@ COMMENT BUBBLE WITH INLINE COUNTS
 #wordpress .meta .comment span {
   color: #fff;
   display: block;
+  font-family: Arial, "MS Trebuchet", sans-serif;
   font-size: 10px;
   left: 0;
-  line-height: 16px;
+  line-height: 15px;
   position: absolute;
   text-align: center;
   width: 20px;
@@ -122,7 +130,6 @@ COMMENT BUBBLE WITH INLINE COUNTS
   }  
 #wordpress .meta .comment.none span {
   font-size: 16px;
-  line-height: 14px;
   padding-bottom: 2px;
   width: 19px;
   }  
@@ -270,6 +277,7 @@ INDEX - POST LIST
   overflow: hidden;
   }
 #wordpress .blog_pagination.top {
+  border-bottom: 2px solid #EFEFEF;
   margin-bottom: 1em;
   }
 #wordpress .blog_pagination.bottom {
