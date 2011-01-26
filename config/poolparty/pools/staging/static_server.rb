@@ -30,7 +30,10 @@ cloud :static_server do
 
     recipe "nginx"
     
-    recipe 'ruby_enterprise'
+    recipe "apache2"
+    recipe "php::php5"
+    recipe "passenger_enterprise::apache2"
+    
     recipe 'rubygems'
     
     recipe "git"
@@ -39,7 +42,7 @@ cloud :static_server do
     
     attributes chef_cloud_attributes('staging').recursive_merge(
       :chef    => {
-                    :roles => ['static', 'worker']
+                    :roles => ['static', 'worker', 'blog']
                   },
       :nginx   => {
                     :varnish_proxy => false,
@@ -53,12 +56,21 @@ cloud :static_server do
       :sphinx  => {
                     :server_address => 'sphinx.fr2.ec2.internal'
                   },
-      :rails  => { :environment => "staging" }
+      :rails  => { :environment => "staging" },
+      :apache => { 
+                   :server_aliases => "www.#{@app_url}",
+                   :listen_ports   => ['80'],
+                   :vhost_port     => '80',
+                   :docroot        => '/var/www/apps/fr2_blog/public',
+                   :name           => 'fr2_blog',
+                   :enable_mods    => ["rewrite", "deflate", "expires"]
+                 }
       )
   end
   
   security_group "static_staging" do
     authorize :from_port => "22", :to_port => "22"
+    authorize :from_port => "80", :to_port => "80"
     #authorize :from_port => "8080", :to_port => "8080"
   end
   security_group "worker_staging"
