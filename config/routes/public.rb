@@ -101,19 +101,6 @@ ActionController::Routing::Routes.draw do |map|
                                                        :conditions => { :method => :get }
 
   # SECTIONS
-  Section.all.each do |section|
-    map.with_options :slug => section.slug, :controller => "sections", :conditions => { :method => :get } do |section_map|
-      section_map.connect "#{section.slug}.:format",              :action => "show"
-      section_map.connect "#{section.slug}/about",                :action => "about"
-      section_map.connect "#{section.slug}/featured.:format",     :action => "highlighted_entries"
-      section_map.connect "#{section.slug}/significant.:format",  :action => "significant_entries"
-    end
-  end
-  
-  # page routing
-  map.page ':path', :requirements => {:path => /[a-zA-Z_\/-]+/}, :controller => "pages", :action => "show", :conditions => { :method => :get }
-  
-  # true section routes
   map.about_section ":slug/about", :controller => "sections", :action => "about", :conditions => { :method => :get }
   map.highlighted_entries_section ":slug/featured.:format", :controller => "sections", :action => "highlighted_entries", :conditions => { :method => :get }
   map.significant_entries_section ":slug/significant.:format", :controller => "sections", :action => "significant_entries", :conditions => { :method => :get }
