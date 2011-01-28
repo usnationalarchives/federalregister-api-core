@@ -58,7 +58,8 @@ POST - METADATA LIST
   list-style: none;
   }
 #wordpress .meta_actions .navigation .prev,
-#wordpress .meta_actions .navigation .next {
+#wordpress .meta_actions .navigation .next,
+#wordpress .meta_actions .navigation .back {
   display: block;
   padding-left: 60px;
   } 
@@ -85,9 +86,15 @@ POST - METADATA LIST ICONS
   background: sprite-image('icons/blog/prev.png', 23px, 2px, 100px) no-repeat;
   margin-bottom: 1em;
   }
+#wordpress .meta_actions .navigation .back {
+  line-height: 25px;
+  margin-bottom: 13px;
+  }
 #wordpress .meta_actions .navigation .prev:hover { background: sprite-image('icons/blog/prev-hover.png', 23px, 2px, 100px) no-repeat; }  
 #wordpress .meta_actions .navigation .next { background: sprite-image('icons/blog/next.png', 23px, 2px, 100px) no-repeat; }
 #wordpress .meta_actions .navigation .next:hover { background: sprite-image('icons/blog/next-hover.png', 23px, 2px, 100px) no-repeat; }
+#wordpress .meta_actions .navigation .back { background: sprite-image('icons/blog/back.png', 25px, 2px, 100px) no-repeat; }
+#wordpress .meta_actions .navigation .back:hover { background: sprite-image('icons/blog/back-hover.png', 25px, 2px, 100px) no-repeat; }
 
 /******************************
 
@@ -106,9 +113,10 @@ COMMENT BUBBLE WITH INLINE COUNTS
 #wordpress .meta .comment span {
   color: #fff;
   display: block;
+  font-family: Arial, "MS Trebuchet", sans-serif;
   font-size: 10px;
   left: 0;
-  line-height: 16px;
+  line-height: 15px;
   position: absolute;
   text-align: center;
   width: 20px;
@@ -122,7 +130,6 @@ COMMENT BUBBLE WITH INLINE COUNTS
   }  
 #wordpress .meta .comment.none span {
   font-size: 16px;
-  line-height: 14px;
   padding-bottom: 2px;
   width: 19px;
   }  
@@ -250,26 +257,31 @@ INDEX - POST LIST
   }  
 
 /* INDIVIDUAL POSTS */ 
-
+.wf-active #wordpress .blog_post_list .meta {
+  margin-top:5px;
+  }
 #wordpress .blog_post_list .meta li {
   color: #7A7A7A;
-  display: block;
-  float: left;
   line-height: 17px;
   padding-left: 23px;
   margin-right: 12px;
+  margin-bottom: 1em;
   }
 #wordpress .blog_post_list .meta li.comments {
   background: none;
   padding-left: 0;
   }
-
+#wordpress .blog_post_list .meta li.comments a {
+  margin-left: 0;
+  }
+  
 /* PAGINATION CONTROLS */ 
   
 #wordpress .blog_pagination {
   overflow: hidden;
   }
 #wordpress .blog_pagination.top {
+  border-bottom: 2px solid #EFEFEF;
   margin-bottom: 1em;
   }
 #wordpress .blog_pagination.bottom {
@@ -328,8 +340,25 @@ SEARCH
 
 ******************************/
 
-#wordpress.search .page-title {
+#wordpress.search .page-title,
+#wordpress.category .page-title,
+#wordpress.archive .page-title {
   border-bottom: 2px solid #EFEFEF;
   font-weight: bold;
   margin-bottom: 1em;
   }
+  
+.widget_archive ul {
+  @extend ul.bullets;
+  margin-left: 0;
+  }
+  
+/******************************
+
+PAGES
+
+******************************/  
+  
+#wordpress.page #content_area .article ul {
+  @extend ul.bullets;
+  }  

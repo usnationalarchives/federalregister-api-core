@@ -31,6 +31,8 @@ cloud :proxy_server do
                   },
       :varnish => {
                     :storage_size => '300M',
+                    :blog_proxy_host => @blog_server_address,
+                    :blog_proxy_port => '80'
                   },
       :nginx   => {
                     :doc_root      => '/var/www/apps/fr2/current/public'
