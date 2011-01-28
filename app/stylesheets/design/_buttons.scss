@@ -76,7 +76,10 @@ BUTTONS / ICONS
   }
 .rss {
   background: sprite-image('icons/icon_rss.png', 0, 0, 50px) no-repeat;
+  font-size: 1em;
   height: image-height('icons/icon_rss.png');
+  padding-top:2px;
+  text-transform: uppercase;
   }
 .rss:hover {
   background: sprite-image('icons/icon_rss_hover.png', 0, 0, 50px) no-repeat;
@@ -84,7 +87,7 @@ BUTTONS / ICONS
 .help_link {
   background: sprite-image('icons/icon_info.png', 0, 3px, 50px) no-repeat;
   display: block;
-  height: image-height('icons/icon_rss.png');
+  height: image-height('icons/icon_info.png');
   padding-bottom: 3px;
   }
 .help_link:hover {

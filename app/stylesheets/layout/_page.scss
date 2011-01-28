@@ -236,3 +236,16 @@ BLOG
   @include grid(6, 16);
   @include omega;  
   }
+
+#wordpress .blog_post_list .meta {
+  @include grid(3, 16);
+  left: -540px; /* PULL 8 */
+  position: relative;
+  @include omega;
+  }
+#wordpress .blog_post_list .excerpt {
+  @include grid(9, 16);
+  left: 180px; /* PUSH 2 */
+  position: relative;
+  @include alpha;
+  }  

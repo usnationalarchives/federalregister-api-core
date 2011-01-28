@@ -89,6 +89,7 @@ LEGAL DISCLAIMER
 .disclaimer {
   background: sprite-image('icons/disclaimer.png', 0, 0, 50px) no-repeat;
   color: $bookmark_red;
+  @include gesta;
   font-size: 1em;
   line-height: 20px;
   margin-bottom: 0;
@@ -96,9 +97,15 @@ LEGAL DISCLAIMER
   text-transform: uppercase;
   }
 #disclaimer h1 a,
-.disclaimer {
+.disclaimer,
+a.disclaimer:hover {
   color: $bookmark_red;
   }
+a.disclaimer {
+  display: block;;
+  font-weight: bold;
+  height: 20px;
+  }  
 #disclaimer h1:hover,
 .disclaimer:hover {
   text-decoration: underline;

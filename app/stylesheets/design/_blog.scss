@@ -88,7 +88,7 @@ POST - METADATA LIST ICONS
   }
 #wordpress .meta_actions .navigation .back {
   line-height: 25px;
-  margin-top: 13px;
+  margin-bottom: 13px;
   }
 #wordpress .meta_actions .navigation .prev:hover { background: sprite-image('icons/blog/prev-hover.png', 23px, 2px, 100px) no-repeat; }  
 #wordpress .meta_actions .navigation .next { background: sprite-image('icons/blog/next.png', 23px, 2px, 100px) no-repeat; }
@@ -257,20 +257,24 @@ INDEX - POST LIST
   }  
 
 /* INDIVIDUAL POSTS */ 
-
+.wf-active #wordpress .blog_post_list .meta {
+  margin-top:5px;
+  }
 #wordpress .blog_post_list .meta li {
   color: #7A7A7A;
-  display: block;
-  float: left;
   line-height: 17px;
   padding-left: 23px;
   margin-right: 12px;
+  margin-bottom: 1em;
   }
 #wordpress .blog_post_list .meta li.comments {
   background: none;
   padding-left: 0;
   }
-
+#wordpress .blog_post_list .meta li.comments a {
+  margin-left: 0;
+  }
+  
 /* PAGINATION CONTROLS */ 
   
 #wordpress .blog_pagination {
@@ -336,8 +340,25 @@ SEARCH
 
 ******************************/
 
-#wordpress.search .page-title {
+#wordpress.search .page-title,
+#wordpress.category .page-title,
+#wordpress.archive .page-title {
   border-bottom: 2px solid #EFEFEF;
   font-weight: bold;
   margin-bottom: 1em;
   }
+  
+.widget_archive ul {
+  @extend ul.bullets;
+  margin-left: 0;
+  }
+  
+/******************************
+
+PAGES
+
+******************************/  
+  
+#wordpress.page #content_area .article ul {
+  @extend ul.bullets;
+  }  
