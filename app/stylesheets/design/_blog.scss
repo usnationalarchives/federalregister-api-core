@@ -101,7 +101,9 @@ POST - METADATA LIST ICONS
 COMMENT BUBBLE WITH INLINE COUNTS
 
 ******************************/
-
+#wordpress .meta li {
+  list-style: none;
+  }
 #wordpress .meta .comment { 
   padding-left: 25px; 
   }
