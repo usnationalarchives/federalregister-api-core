@@ -46,6 +46,13 @@ sub vcl_recv {
         return (pass);
     }
     
+    # Rewrite top-level wordpress requests to /blog/
+    set req.url = regsub(
+        req.url,
+        "^/(learn|policy|layout/footer_page_list|layout/homepage_post_list)",
+        "/blog/\1"
+    );
+    
     # Pass wp admin requests directly on to wp
     if (req.url ~ "^(/wp-login|wp-admin)") {
         set req.http.host = "fr2.local";
