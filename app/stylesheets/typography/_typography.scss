@@ -354,8 +354,8 @@ STATIC PAGES
   @include athelas;
   font-size: 16px;
   }
-#wordpress.page #content_area.static_page .article li,
-#wordpress.single-post #content_area .post_content li {
+#wordpress.page #content_area.static_page .article ul li,
+#wordpress.single-post #content_area .post_content ul li {
   background-position: left 8px;
   line-height: 1.5;  
   }
