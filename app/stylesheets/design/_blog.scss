@@ -364,4 +364,8 @@ PAGES
 #wordpress.page #content_area.static_page .article ul,
 #wordpress.single-post #content_area .article ul  {
   @extend ul.bullets;
-  } 
+  }
+#wordpress.page #content_area.static_page .article h3,
+#wordpress.single-post #content_area .article h3 {
+  margin-top: 1em;
+  }  
