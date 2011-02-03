@@ -349,7 +349,7 @@ STATIC PAGES
   margin-bottom: 1em;
   }
 #wordpress.page #content_area.static_page .article ul,
-#wordpress.single-post #content_area .article ul  {
+#wordpress.single-post #content_area .post_content ul  {
   @extend ul.bullets;
   @include athelas;
   font-size: 16px;
