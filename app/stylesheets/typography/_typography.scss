@@ -324,34 +324,34 @@ BY DATE
 STATIC PAGES
 
 ******************************/ 
-#pages #content_area h1 {
+#wordpress.page #content_area h1 {
   border-top: 2px solid #464646;
   @include athelas;
   margin: 1em 0 .5em;
   }
-#pages #content_area h1:first-child,
-#pages #content_area h1.firstchild {
+#wordpress.page #content_area h1:first-child,
+#wordpress.page #content_area h1.firstchild {
   border-top: none;
   margin-top: 0;
   }  
-#pages #content_area h2 {
+#wordpress.page #content_area h2 {
   color: #464646;
   margin: .5em 0 0;
   }
-#pages #content_area ul.bullets {
+#wordpress.page #content_area ul.bullets {
   @include athelas;
-  font-size: 1.2em;
+  font-size: 16px;
   }
-#pages #content_area ul.bullets li {
+#wordpress.page #content_area ul.bullets li {
   background-position: left 8px;
   line-height: 1.5;
   }
-#pages #content_area ul.bullets li strong {
+#wordpress.page #content_area ul.bullets li strong {
   text-transform: uppercase;
   }
-#pages #content_area ul.bullets li ul {
+#wordpress.page #content_area ul.bullets li ul {
   margin-top: 0.75em;
   }  
-#pages #content_area .aside_box {
+#wordpress.page #content_area .aside_box {
   margin-bottom: 1em;
   }  
