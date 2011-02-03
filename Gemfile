@@ -12,7 +12,6 @@ gem 'fastercsv', '1.4.0'
 gem 'amatch', '0.2.3'
 gem 'rubyzip', '0.9.1', :require => 'zip/zip'
 gem 'formtastic', '0.9.8'
-gem 'patron', '0.4.2'
 
 gem 'json'
 gem 'ym4r', '0.6.1'
@@ -39,6 +38,8 @@ gem "amazon-ec2", :require => false
 gem "net-scp", '1.0.4'
 gem "capistrano", '2.5.19', :require => false
 gem "thunder_punch", '0.0.11', :require => false
+
+gem "gwt_rpc", "0.0.1"
 
 # bundler requires these gems in all environments
 # gem 'nokogiri', '1.4.2'
