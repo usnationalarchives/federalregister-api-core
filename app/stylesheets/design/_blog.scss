@@ -361,6 +361,7 @@ PAGES
 
 ******************************/  
   
-#wordpress.page #content_area .article ul {
+#wordpress.page #content_area .article ul,
+#wordpress.single #content_area .article ul  {
   @extend ul.bullets;
-  }  
+  } 
