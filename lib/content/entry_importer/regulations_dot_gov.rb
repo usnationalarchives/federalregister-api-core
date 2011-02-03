@@ -20,7 +20,7 @@ module Content::EntryImporter::RegulationsDotGov
   def regulationsdotgov_document
     begin
       client = Content::RegulationsDotGov::Client.new
-      documents = client.search("\"FR Doc No: #{document_number}\"")
+      documents = client.search("\"#{document_number}\"")
     
       if documents.size == 1
         documents.first
