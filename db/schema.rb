@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110104013924) do
+ActiveRecord::Schema.define(:version => 20110203000130) do
 
   create_table "agencies", :force => true do |t|
     t.integer  "parent_id"
@@ -133,7 +133,7 @@ ActiveRecord::Schema.define(:version => 20110104013924) do
     t.text     "slug"
     t.boolean  "delta",                                       :default => true,  :null => false
     t.string   "source_text_url"
-    t.string   "regulationsdotgov_id"
+    t.string   "regulationsdotgov_url"
     t.string   "comment_url"
     t.datetime "checked_regulationsdotgov_at"
     t.integer  "volume"
