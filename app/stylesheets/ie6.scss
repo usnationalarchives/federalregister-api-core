@@ -385,6 +385,12 @@ BLOG
 #wordpress .blog_pagination .older a:hover {
   background: image-url('icons/ie6/blog/prev-hover.png') no-repeat 0 2px;
   }
+#wordpress #policy a {
+  background: image-url('icons/ie6/blog/policy.png') no-repeat 0 -1px;
+  }
+#wordpress #policy a:hover { 
+  background: image-url('icons/ie6/blog/policy-hover.png') no-repeat 0 -1px;
+  }
 #wordpress #blog-search-term {
   width: 170px;
   }

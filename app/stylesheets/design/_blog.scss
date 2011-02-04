@@ -18,6 +18,33 @@ BLOG OVERALL
   margin-bottom: .4em;
   }
 
+#wordpress #policy {
+  background: #eee;
+  border: 1px solid #bbb;
+  color: #6E6E6E;
+  @include gesta;
+  font-size: 1em;
+  font-weight: bold;
+  line-height: 20px;
+  padding: 0.5em 1em 0.25em;
+  text-transform: uppercase;
+  }  
+#wordpress #policy a {
+  background: sprite-image('icons/blog/policy.png', 0, -1px, 50px) no-repeat;
+  padding-bottom: 2px;
+  padding-left: 25px;
+  padding-top: 6px;
+  color: inherit;
+  }
+#wordpress #policy a:hover { 
+  background: sprite-image('icons/blog/policy-hover.png', 0, -1px, 50px) no-repeat;
+  color: #B88659;
+  }
+#wordpress #disclaimer_modal .modal_content {
+  max-height: 400px;
+  overflow: auto;
+  }
+  
 /******************************
 
 POST - METADATA LIST
