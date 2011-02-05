@@ -28,6 +28,8 @@ SitemapGenerator::Sitemap.add_links do |sitemap|
     sitemap.add entries_by_date_path(Date.parse(date))
   end
   
+  sitemap.add entries_current_issue_path
+  
   # TOPICS
   sitemap.add topics_path
   Topic.find_each do |topic|

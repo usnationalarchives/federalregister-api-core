@@ -1,7 +1,7 @@
 <% title @agency.name %>
 <% description description_for_agency(@agency) %>
 
-<h1 class="title"><span>View an Agency</span></h1>
+<h1 class="title"><span>Agency</span></h1>
 
 <% feed_autodiscovery agency_url(@agency, :format => :rss) %>
 
@@ -19,7 +19,7 @@
 
     <%= link_to(@agency.url) if @agency.url %>
     <% if @agency.description.present? %>
-      <%= add_citation_links simple_format @agency.description %>
+      <%= add_citation_links(auto_link(simple_format(@agency.description))) %>
     <% else %>
       <p>Description coming soon.</p>
     <% end %>

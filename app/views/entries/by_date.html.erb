@@ -3,7 +3,7 @@
 <% title "Entries for #{@publication_date.to_formatted_s(:pretty)}" %>
 <h1 class="title"><span><%= @publication_date %> Issue</span></h1>
 
-<%= render :partial => "statistics_by_date", :locals => {:issue => @issue, :label => @publication_date, :other_dates => false} %>
+<%= render :partial => "statistics_by_date", :locals => {:issue => @issue, :label => @publication_date, :other_dates => false, :url => entries_by_date_path(@publication_date)} %>
 
 <div id="content_area">
 

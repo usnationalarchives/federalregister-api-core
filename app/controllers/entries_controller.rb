@@ -54,35 +54,14 @@ class EntriesController < ApplicationController
   
   def by_date
     cache_for 1.day
-    
-    @publication_date = parse_date_from_params
-    @issue = Issue.find_by_publication_date(@publication_date)
-    
-    @agencies = Agency.all(
-      :include => [:entries],
-      :conditions => ['publication_date = ?', @publication_date],
-      :order => "agencies.name, entries.title"
-    )
-    
-    Agency.preload_associations(@agencies, :children)
-    Entry.preload_associations(@agencies.map(&:entries).flatten, :agencies)
-    
-    @agencies.each do |agency|
-      def agency.entries_excluding_subagency_entries
-        self.entries.select{|entry| entry.agencies.excluding_parents.include?(self) }
-      end
-    end
-    
-    @entries_without_agency = Entry.all(
-      :include => :agencies,
-      :conditions => ['agencies.id IS NULL && entries.publication_date = ?', @publication_date],
-      :order => "entries.title"
-    )
-    
-    if @agencies.blank? && @entries_without_agency.blank?
-      raise ActiveRecord::RecordNotFound
-    end
-    
+    prep_issue_view(parse_date_from_params)
+  end
+  
+  def current_issue
+    cache_for 1.day
+    prep_issue_view(Issue.current.publication_date)
+    @faux_action = "by_date"
+    render :action => "by_date"
   end
   
   def by_month
@@ -144,6 +123,36 @@ class EntriesController < ApplicationController
     begin
       Date.parse("#{year}-#{month}-#{day}")
     rescue ArgumentError
+      raise ActiveRecord::RecordNotFound
+    end
+  end
+  
+  def prep_issue_view(date)
+    @publication_date = date
+    @issue = Issue.find_by_publication_date(@publication_date)
+    
+    @agencies = Agency.all(
+      :include => [:entries],
+      :conditions => ['publication_date = ?', @publication_date],
+      :order => "agencies.name, entries.title"
+    )
+    
+    Agency.preload_associations(@agencies, :children)
+    Entry.preload_associations(@agencies.map(&:entries).flatten, :agencies)
+    
+    @agencies.each do |agency|
+      def agency.entries_excluding_subagency_entries
+        self.entries.select{|entry| entry.agencies.excluding_parents.include?(self) }
+      end
+    end
+    
+    @entries_without_agency = Entry.all(
+      :include => :agencies,
+      :conditions => ['agencies.id IS NULL && entries.publication_date = ?', @publication_date],
+      :order => "entries.title"
+    )
+    
+    if @agencies.blank? && @entries_without_agency.blank?
       raise ActiveRecord::RecordNotFound
     end
   end

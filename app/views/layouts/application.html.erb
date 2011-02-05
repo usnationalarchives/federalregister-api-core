@@ -8,33 +8,8 @@
     <%= tag(:meta, :name => 'title', :content => yield(:title) ) if yield(:title) %>
     <%= tag(:meta, :name => 'description', :content => yield(:description) ) if yield(:description) %>
     
-    <link rel="Shortcut Icon" href="/favicon.ico">
-    <%# TODO HELP-RUBY for facebook image below, show curated image if present, should be 130wide max %>
-    <link rel="image_src" href="http://www.federalregister.gov/images/fbdisplay.jpg" />
-    <meta name="medium" content="news" />
+    <%= render :esi => layout_head_content_path %>
     
-    <script type="text/javascript" src="https://use.typekit.com/qbb7wou.js"></script>
-    <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
-
-    <%= yield :head %>
-    
-    <%= stylesheet_link_tag "screen", :media => :screen %>
-    <%= stylesheet_link_tag "print", :media => :print %>
-    
-    <!--[if lt IE 9]>
-      <%= stylesheet_link_tag "ie", :media => :screen %>  
-    <![endif]-->
-    
-    <!--[if lt IE 7]>
-      <%= stylesheet_link_tag "ie6", :media => :screen %>
-    <![endif]-->
-     
-    <%= javascript_include_tag :vendor %>
-    <% if RAILS_ENV == 'development' %>
-      <%= javascript_include_tag :all %>
-    <% else %>
-      <%= javascript_include_tag 'all.js' %>
-    <% end %>
     <%= yield :javascripts %>
     
     <%= yield :feeds %>
@@ -43,60 +18,12 @@
 
   <body id="<%= @faux_controller || controller.controller_name %>" class="<%= @faux_action || controller.action_name %>">
     
-    <script type="text/javascript">document.getElementsByTagName('body')[0].className+=' has_js'</script>
-    
-    <a href="#main" title="Skip to Content" class="skip_to_content">Skip to Content</a>
-    
-    <div id="print-disclaimer"></div>
-    
-    <% header_tag(:id => 'header') do %>
-      <%= render :partial => 'layouts/navigation', :locals => {:last_date => @last_date, :search_term => @search_term} %>    
-      
-      <div id="search_bar">
-        <div id="search_container">
-          <form action="<%= entries_search_path %>" method="get" id="search">
-            <label for="term">Search the Federal Register</label>
-            <%= text_field_tag "conditions[term]", nil, :id => "term", :title => 'Search Articles', :placeholder =>  "Search Articles" %>
-            <%= submit_tag 'Go', :class => "search_btn" %>
-          </form>
-          <div id="browse_container">
-            <%= link_to "Browse Agencies", agencies_path %>
-            <%= link_to "Browse Topics", topics_path %>
-          </div>
-        </div>
-      </div>  
-      
-      <%# TODO: someday use the HTML5 helpers, but for now need the div outside, rather than inside and don't want to change globally, need to switch for validity %>
-      <div id ="header_logo" class="hgroup">
-        <hgroup>
-          <h1><a href="/" title="Federal Register Home">The Federal Register</a></h1>
-          <h2>The Daily Journal of the United States Government</h2>
-        </hgroup>
-      </div>
-      
-    <% end -%>
-    
-    
+    <%= render :esi => layout_header_path %>
     
     <div id="main">
       <%= yield %>
     </div>
-
-    <% footer_tag(:id => "footer") do %>        
-      <%= render :partial => 'layouts/footer' %>
-    <% end -%>
-
     
-    <%= render :partial => 'layouts/google_analytics' %>
-    
-    <a href="http://federalregister.tenderapp.com/discussion/new?discussion" id="tender" class="trigger_tender">Site Feedback</a>
-    
-    <script>
-      Tender = {
-        hideToggle: true,
-        widgetToggles: $(".trigger_tender")
-      }
-    </script>
-    <script src="/javascripts/vendor/tender_widget.js"></script>
+    <%= render :esi => layout_footer_path %>
   </body>
 </html>

@@ -13,7 +13,7 @@ namespace :content do
     namespace :import do
       desc "Extract Basic data"
       task :basic_data => :environment do
-        entry_importer(:volume, :title, :toc_subject, :toc_doc, :citation, :regulation_id_number, :start_page, :end_page, :length, :type, :genre, :part_name, :granule_class, :abstract, :dates, :action, :contact, :docket_id)
+        entry_importer(:volume, :title, :toc_subject, :toc_doc, :citation, :start_page, :end_page, :length, :type, :genre, :part_name, :granule_class, :abstract, :dates, :action, :contact, :docket_id)
       end
       
       desc "Extract full text"
@@ -63,7 +63,7 @@ namespace :content do
       
       desc "Import regulations.gov info"
       task :regulations_dot_gov => :environment do
-        entry_importer(:checked_regulationsdotgov_at, :regulationsdotgov_id, :comment_url)
+        entry_importer(:checked_regulationsdotgov_at, :regulationsdotgov_url, :comment_url)
       end
       
       namespace :regulations_dot_gov do
@@ -72,7 +72,7 @@ namespace :content do
                           scoped(:conditions => ["comment_url IS NULL AND checked_regulationsdotgov_at IS NULL OR checked_regulationsdotgov_at < ?", 30.minutes.ago])
           entries.each do |entry|
             importer = Content::EntryImporter.new(:entry => entry)
-            importer.update_attributes(:checked_regulationsdotgov_at, :regulationsdotgov_id, :comment_url)
+            importer.update_attributes(:checked_regulationsdotgov_at, :regulationsdotgov_url, :comment_url)
           end
         end
         

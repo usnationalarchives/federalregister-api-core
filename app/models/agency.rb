@@ -12,7 +12,7 @@
   short_name                  :string(255)
   description                 :text
   more_information            :text
-  entries_count               :integer(4)
+  entries_count               :integer(4)      default(0), not null
   entries_1_year_weekly       :text
   entries_5_years_monthly     :text
   entries_all_years_quarterly :text
@@ -63,11 +63,14 @@ class Agency < ApplicationModel
   
   before_validation :slugify
   validates_uniqueness_of :name, :slug
+  validates_presence_of :name
+  
   validates_format_of :url, :with => /^https?:\/\//, :allow_blank => true
   serializable_column :entries_1_year_weekly, :entries_5_years_monthly, :entries_all_years_quarterly, :related_topics_cache
   
   named_scope :with_logo, :conditions => "agencies.logo_file_name IS NOT NULL"
   named_scope :with_entries, :conditions => "agencies.entries_count > 0"
+  named_scope :alphabetically, :order => "agencies.name"
   
   # consider using sphinx instead...
   def self.named_approximately(name)

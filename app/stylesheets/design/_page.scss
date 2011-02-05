@@ -79,27 +79,44 @@ LEGAL DISCLAIMER
   border: 1px solid $bookmark_red;
   padding: .5em .5em .25em;
   }
-.home  #disclaimer {
+#special.home  #disclaimer {
   background: none;
   border: none;
   margin-left: 10px;
   padding: 0;
   }  
-#disclaimer h1 {
+#disclaimer h1,
+.disclaimer {
   background: sprite-image('icons/disclaimer.png', 0, 0, 50px) no-repeat;
   color: $bookmark_red;
+  @include gesta;
   font-size: 1em;
   line-height: 20px;
   margin-bottom: 0;
   padding-left: 25px;
   text-transform: uppercase;
   }
-#disclaimer h1 a {
+#disclaimer h1 a,
+.disclaimer,
+a.disclaimer:hover {
   color: $bookmark_red;
   }
-#disclaimer h1:hover {
+a.disclaimer {
+  display: block;
+  font-weight: bold;
+  height: 20px;
+  }  
+#disclaimer h1:hover,
+.disclaimer:hover {
   text-decoration: underline;
   }
+.home #news .disclaimer {
+  display: block;
+  font-weight: bold;
+  }
+.home #news .disclaimer:hover {
+  color: $bookmark_red;
+  }    
 #print-disclaimer {
   display: none;
   }
@@ -110,7 +127,8 @@ SECTION
 
 ******************************/
 
-.featured .article {
+.featured .article,
+#wordpress .blog_post_list .article {
   overflow: hidden; /* less awkward self-clear */
   margin-bottom: 25px;
   padding-bottom: 25px;
@@ -121,7 +139,8 @@ SECTION
   padding-bottom: 1em;
   }
 
-#sections .article {
+#sections .article,
+#wordpress .blog_post_list .article {
   border-bottom: 1px dotted #cdcdcd;
   }
 .article .metadata {
@@ -692,7 +711,19 @@ REGULATION VIEW
 .track .handle:hover {
   background: $powder_blue;
   }  
-  
+
+.contacts li {
+  background: sprite-image('icons/blog/author.png', 0, 5px, 200px) no-repeat;
+  border-bottom:2px solid #EEEEEE;
+  list-style: none;
+  margin-bottom: 1em;
+  padding-bottom: 1em;  
+  padding-left: 30px;  
+  }
+.contacts li:last-child,
+.contacts li.lastchild {
+  border-bottom: none;
+  }
 /******************************
 
 TOPIC LIST

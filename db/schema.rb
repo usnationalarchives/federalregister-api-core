@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101201155054) do
+ActiveRecord::Schema.define(:version => 20110203000130) do
 
   create_table "agencies", :force => true do |t|
     t.integer  "parent_id"
@@ -21,7 +21,7 @@ ActiveRecord::Schema.define(:version => 20101201155054) do
     t.string   "short_name"
     t.text     "description"
     t.text     "more_information"
-    t.integer  "entries_count"
+    t.integer  "entries_count",               :default => 0, :null => false
     t.text     "entries_1_year_weekly"
     t.text     "entries_5_years_monthly"
     t.text     "entries_all_years_quarterly"
@@ -133,7 +133,7 @@ ActiveRecord::Schema.define(:version => 20101201155054) do
     t.text     "slug"
     t.boolean  "delta",                                       :default => true,  :null => false
     t.string   "source_text_url"
-    t.string   "regulationsdotgov_id"
+    t.string   "regulationsdotgov_url"
     t.string   "comment_url"
     t.datetime "checked_regulationsdotgov_at"
     t.integer  "volume"
@@ -259,6 +259,14 @@ ActiveRecord::Schema.define(:version => 20101201155054) do
     t.integer  "crop_y"
   end
 
+  create_table "mailing_lists", :force => true do |t|
+    t.text     "parameters"
+    t.string   "title"
+    t.integer  "active_subscriptions_count"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "place_determinations", :force => true do |t|
     t.integer "entry_id"
     t.integer "place_id"
@@ -328,6 +336,17 @@ ActiveRecord::Schema.define(:version => 20101201155054) do
     t.datetime "updated_at"
     t.integer  "creator_id"
     t.integer  "updater_id"
+  end
+
+  create_table "subscriptions", :force => true do |t|
+    t.integer  "mailing_list_id"
+    t.string   "email"
+    t.string   "requesting_ip"
+    t.string   "token"
+    t.datetime "confirmed_at"
+    t.datetime "unsubscribed_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "topic_assignments", :force => true do |t|

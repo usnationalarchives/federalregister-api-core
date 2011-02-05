@@ -217,7 +217,7 @@ class Entry < ApplicationModel
     # attributes
     has significant
     has "CRC32(IF(granule_class = 'SUNSHINE', 'NOTICE', granule_class))", :as => :type, :type => :integer
-    has "entry_cfr_affected_parts.title * 100000 + entry_cfr_affected_parts.part", :as => :cfr_affected_parts, :type => :integer
+    has "GROUP_CONCAT(DISTINCT entry_cfr_affected_parts.title * 100000 + entry_cfr_affected_parts.part)", :as => :cfr_affected_parts, :type => :multi
     has agency_assignments(:agency_id), :as => :agency_ids
     has topic_assignments(:topic_id),   :as => :topic_ids
     has section_assignments(:section_id), :as => :section_ids
@@ -241,10 +241,18 @@ class Entry < ApplicationModel
   include ThinkingSphinx::Deltas::ManualDelta::ActiveRecord
   
   def title
-    if self[:title].present?
+    if self[:title].present? && self[:title] =~ /[A-Za-z]/
       self[:title]
     else
       '[No title available]'
+    end
+  end
+  
+  def toc_doc
+    if self[:toc_doc].present?
+      self[:toc_doc].sub(/\s*,\s*$/,'')
+    else
+      nil
     end
   end
   
@@ -273,7 +281,7 @@ class Entry < ApplicationModel
   end
   
   def slug
-    clean_title = title.downcase.gsub(/[^a-z0-9& ]+/,'').gsub(/&/, 'and')
+    clean_title = title.downcase.gsub(/[^a-z0-9& -]+/,'').gsub(/&/, 'and')
     slug = view_helper.truncate_words(clean_title, :length => 100, :omission => '')
     slug.gsub(/ /,'-')
   end

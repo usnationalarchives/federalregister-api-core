@@ -35,15 +35,19 @@ class SectionsController < ApplicationController
                           :limit => 10
     ).sort_by { rand }.first
     
-    @search = EntrySearch.new(
-      :conditions => {
-          :agency_ids => [@agency.id],
-          :section_ids => [@section.id],
-          :publication_date => {:gte => 1.month.ago.to_date.to_s}
-      },
-      :order => "newest"
-    )
-    render :layout => false
+    if @agency
+      @search = EntrySearch.new(
+        :conditions => {
+            :agency_ids => [@agency.id],
+            :section_ids => [@section.id],
+            :publication_date => {:gte => 1.month.ago.to_date.to_s}
+        },
+        :order => "newest"
+      )
+      render :layout => false
+    else
+      render :nothing => true
+    end
   end
   
   def about

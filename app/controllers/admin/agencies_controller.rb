@@ -31,7 +31,7 @@ class Admin::AgenciesController < AdminController
       redirect_to admin_agencies_url
     else
       flash.now[:error] = "There was a problem."
-      render :action => :edit
+      render :action => :new
     end
   end
   

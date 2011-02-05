@@ -1,5 +1,9 @@
 <h1>News</h1>
-<h2 class="celebrating">75th anniversary of the Federal Register Act</h2>
-<p>July 26, 2010 marks the 75th anniversary of the Federal Register Act. Join us in celebrating a proud tradition of open access to government information with the launch of our experimental Federal Register beta site.</p>
 
-<h4><a href="http://federalregister.tenderapp.com/discussion/new" class="trigger_tender">We welcome your comments and suggestions!</a></h4>
+  <p class="inline_bullet">Try our new <strong><%= link_to "Advanced Search", entries_search_path(:anchor => 'advanced'), :title => "Advanced Search" %></strong>; and visit our <strong><%= link_to 'Search Help', entries_search_help_path %></strong> page to learn more.</p>
+
+  <h2 class="celebrating">75th anniversary of the Federal Register Act</h2>
+  <p class="inline_bullet">July 26, 2010 marked the 75th anniversary of the Federal Register Act. Join us in celebrating our 75th year by exploring Federal Register 2.0. <strong><a href="http://federalregister.tenderapp.com/discussion/new" class="trigger_tender">We welcome your comments and suggestions!</a></strong></p>
+  
+  <%= link_to 'Legal Disclaimer', '/policy/legal_status', :class => 'disclaimer' %>  
+  <!--[if lte IE 6]> <br/> <![endif]-->

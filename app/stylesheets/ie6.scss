@@ -71,7 +71,7 @@ HOMEPAGE
 
 ******************************/
 
-#news .celebrating {  
+#tools .celebrating {  
   background: image-url('icons/ie6/celebrating_75.png') no-repeat;
   }  
 #slideshow .stats {
@@ -173,10 +173,13 @@ GENERAL PAGE ITEMS
 #comments-closing-opening .three_col_list .date {
   clear: both;
   }  
-#disclaimer h1 {
+#disclaimer h1,
+#tools .disclaimer {
   background: image-url('icons/ie6/disclaimer.png') no-repeat left top;
   }
-
+#news .disclaimer {
+  float: left;
+  }
 .button.format.pdf { background: image-url('icons/ie6/icon_pdf.png') no-repeat left top; }
 .button.format.pdf.small { background: image-url('icons/ie6/icon_pdf_small.png') no-repeat left top }
 .button.format.xml { background: image-url('icons/ie6/icon_xml.png') no-repeat left top; }
@@ -321,3 +324,108 @@ MODAL
 #exit_modal {
   position: absolute;
   }
+  
+/******************************
+
+BLOG
+
+******************************/  
+#wordpress li.bookmark {
+  background: image-url('icons/ie6/blog/bookmark.png') no-repeat 23px top;
+  }
+#wordpress li.email {
+  background: image-url('icons/ie6/blog/email.png') no-repeat 23px 3px;  
+  }
+#wordpress li.comments {  
+  background: image-url('icons/ie6/blog/comment.png') no-repeat 23px top;
+  }
+#wordpress .meta li.comments a {
+  zoom: 1;
+  }  
+#wordpress li.categories {
+  background: image-url('icons/ie6/blog/category.png') no-repeat 23px 1px;
+  }
+#wordpress li.author {
+  background: image-url('icons/ie6/blog/author.png') no-repeat 23px 1px;
+  }
+#wordpress .meta li.author {
+  background: image-url('icons/ie6/blog/author.png') no-repeat 0 1px;
+  }
+#wordpress .meta li.date {
+  background: image-url('icons/ie6/blog/date.png') no-repeat 0 1px;
+  }
+#wordpress li.categories {
+  background: image-url('icons/ie6/blog/date.png') no-repeat 23px 1px;
+  }  
+#wordpress li.tags {
+  background: image-url('icons/ie6/blog/tag.png') no-repeat 23px 1px;
+  }
+#wordpress .meta .comment {
+  background: image-url('icons/ie6/blog/comment.png') no-repeat 0 0;
+  }
+.comment-reply-link {
+  background: image-url('icons/ie6/blog/reply.png') no-repeat 0 0;  
+  }
+.comment-reply-link:hover {
+  background: image-url('icons/ie6/blog/reply-hover.png') no-repeat 0 0;  
+  }
+#wordpress .meta_actions .navigation .next,
+#wordpress .blog_pagination .newer a {
+  background: image-url('icons/ie6/blog/next.png') no-repeat 100% 2px;
+  }
+#wordpress .meta_actions .navigation .next:hover,
+#wordpress .blog_pagination .newer a:hover {
+  background: image-url('icons/ie6/blog/next-hover.png') no-repeat 0 2px;
+  }  
+#wordpress .meta_actions .navigation .prev,
+#wordpress .blog_pagination .older a {
+  background: image-url('icons/ie6/blog/prev.png') no-repeat 0 2px;
+  }
+#wordpress .meta_actions .navigation .prev:hover,
+#wordpress .blog_pagination .older a:hover {
+  background: image-url('icons/ie6/blog/prev-hover.png') no-repeat 0 2px;
+  }
+#wordpress #policy a {
+  background: image-url('icons/ie6/blog/policy.png') no-repeat 0 -1px;
+  }
+#wordpress #policy a:hover { 
+  background: image-url('icons/ie6/blog/policy-hover.png') no-repeat 0 -1px;
+  }
+#wordpress #blog-search-term {
+  width: 170px;
+  }
+#wordpress #blog-search-submit {
+  background: image-url('icons/search_button.png') no-repeat 0 0;
+  border: none;
+  cursor: pointer;
+  float: left;
+  height:  27px;
+  text-indent: 9999px;
+  margin-left: -1px;
+  width: 30px;
+  zoom: 1;
+  }
+#wordpress .article,
+#wordpress .comment-meta {
+  zoom: 1;
+  }
+#wordpress .comment .reply {
+  position: static;
+  }
+#wordpress #comments code,
+#wordpress #comments .form-allowed-tags {
+  display: none;
+  }
+#wordpress .meta_actions li {
+  padding-left: 60px;
+  }
+#wordpress .meta_actions li li {
+  padding-left: 0;
+  }
+#wordpress .meta_actions .navigation a {
+  background-position-x: 23px !important;
+  }
+#wordpress .meta_actions ul li.comments span {
+  left: 23px;
+  top: -1px;
+  }  

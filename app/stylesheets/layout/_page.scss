@@ -193,4 +193,55 @@ HOMEPAGE
 .home #learn #learn-body {
   @include grid(5, 16);
   @include omega;
+  }
+
+/******************************
+
+BLOG
+
+******************************/
+
+#wordpress #sidebar {
+  @include grid(4, 16);
+  @include omega;
+  }
+#wordpress #subnav {
+  @include grid(3, 16);
+  @include grid-suffix(1, 16);
+  }  
+#wordpress #content_area {
+  @include grid(12, 16);
+  }
+#wordpress .meta_actions {
+  @include grid(4, 16);
+  @include alpha;
+  }
+#wordpress .post_and_comment_wrapper {
+  @include grid(8, 16);
+  @include omega;
+  }
+#wordpress .meta_actions img { 
+  @include grid(1, 16);
+  @include alpha;
+  }
+#wordpress .meta_actions p {
+  @include grid(3, 16);
+  @include omega;  
+  }
+#wordpress .comment-meta  img { 
+  @include grid(1, 16);
+  @include alpha;
+  }
+#wordpress .comment-meta  p {
+  @include grid(6, 16);
+  @include omega;  
+  }
+
+#wordpress .blog_post_list .meta {
+  @include grid(3, 16);
+  @include omega;
+  }
+#wordpress .blog_post_list .excerpt {
+  @include grid(9, 16);
+  @include alpha;
   }  

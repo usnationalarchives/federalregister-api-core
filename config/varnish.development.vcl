@@ -1,6 +1,17 @@
-backend default {
+backend rails {
+  .host = "fr2-rails.local";
+  .port = "80";
+}
+
+backend blog {
   .host = "fr2.local";
-  .port = "3002";
+  .port = "80";
+}
+
+sub vcl_fetch {
+  if (req.url ~ "^(/blog|/policy|/learn|/layout/footer_page_list|/layout/homepage_post_list)") {
+   set beresp.ttl = 120s;
+  }
 }
 
 sub vcl_recv {
@@ -28,19 +39,44 @@ sub vcl_recv {
         return (pass);
     }
     
-    # Pass admin requests directly on to the backend
-    if (req.url ~ "^/admin/") {
+    # Pass rails admin requests directly on to rails
+    if (req.url ~ "^/admin" ){
+        set req.http.host = "fr2-rails.local";
+        set req.backend = rails;
         return (pass);
     }
     
-    # Pass everything on...for now
+    # Rewrite top-level wordpress requests to /blog/
+    set req.url = regsub(
+        req.url,
+        "^/(learn|policy|layout/footer_page_list|layout/homepage_post_list)",
+        "/blog/\1"
+    );
+    
+    # Pass wp admin requests directly on to wp
+    if (req.url ~ "^(/wp-login|wp-admin)") {
+        set req.http.host = "fr2.local";
+        set req.backend = blog;
+        return (pass);
+    }
+    
+    # Route to the correct backend
+    if (req.url ~ "^(/blog|/policy|/learn|/layout/footer_page_list|/layout/homepage_post_list)") {
+        set req.http.host = "fr2.local";
+        set req.backend = blog;
+        
+        # Don't cache wordpress pages if logged in to wp
+        if (req.http.Cookie ~ "wordpress_logged_in_") {
+            return (pass);
+        }
+    } else {
+      set req.http.host = "fr2-rails.local";
+      set req.backend = rails;
+    }
+    
+    # either return lookup for caching or return pass for no caching
     return (pass);
-    
-    # Prevent duplication of caches
-    set req.http.host = "fr2.local";
-    
-    # Check to see if cached
-    return (lookup);
+    # return (lookup);
 }
 
 sub vcl_fetch {

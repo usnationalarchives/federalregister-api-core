@@ -127,7 +127,8 @@ SEARCH
   padding-bottom: 2px;
   } 
 #header #search_bar .search_btn,    
-#conditions_submit {
+#conditions_submit,
+#blog-search-submit {
   line-height: 0;
   } 
 .filters .actions li {
@@ -235,4 +236,23 @@ div.actions ul {
   float: left;
   }
   
-  
+/******************************
+
+BLOG
+
+******************************/  
+
+#wordpress .meta {
+  margin-top: 1em;
+  margin-bottom: 0;
+  }
+#wordpress .blog_post_list .article {
+  padding-bottom: 0;
+  }
+#wordpress .meta_actions ul ul,
+#wordpress .meta_actions li {
+  zoom: 1;
+  }
+#wordpress .meta_actions li.comments span {
+  top: 0;
+  }    

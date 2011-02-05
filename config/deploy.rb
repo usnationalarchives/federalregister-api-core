@@ -69,10 +69,6 @@ task :production do
   set :rails_env,  "production"
   set :branch, 'production'
   
-  instances = []
-  @ec2.instances.select{|i| i.groups.include?('app')}.each{|i| instances << i.dns_name}
-  
-  
   role :proxy, "ec2-184-72-241-172.compute-1.amazonaws.com"
   #role :static, "ec2-184-73-104-122.compute-1.amazonaws.com"
   #role :worker, "ec2-184-73-104-122.compute-1.amazonaws.com", {:primary => true}
@@ -94,11 +90,11 @@ task :staging do
   set :branch, `git branch`.match(/\* (.*)/)[1]
   
   role :proxy,  "ec2-184-72-250-132.compute-1.amazonaws.com"
-  role :app,    "ec2-184-72-176-193.compute-1.amazonaws.com"
-  role :db,     "ec2-174-129-131-48.compute-1.amazonaws.com", {:primary => true}
-  role :sphinx, "ec2-174-129-131-48.compute-1.amazonaws.com"
-  role :static, "ec2-75-101-212-248.compute-1.amazonaws.com"
-  role :worker, "ec2-75-101-212-248.compute-1.amazonaws.com", {:primary => true}
+  role :app,    "ec2-184-72-71-183.compute-1.amazonaws.com"
+  role :db,     "ec2-50-16-147-1.compute-1.amazonaws.com", {:primary => true}
+  role :sphinx, "ec2-50-16-147-1.compute-1.amazonaws.com"
+  role :static, "ec2-174-129-137-181.compute-1.amazonaws.com"
+  role :worker, "ec2-174-129-137-181.compute-1.amazonaws.com", {:primary => true}
 end
 
 

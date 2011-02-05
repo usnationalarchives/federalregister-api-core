@@ -3,41 +3,46 @@
     <h1>Contacts</h1>
   </div>
   <div class="body_column"> 
+    <ul class="contacts">
     <% regulatory_plan.contacts.each do |contact| %>
-    <div class="vcard">
-      <div class="fn">
-        <span class="given-name"><%= contact.first_name %></span>
-        <span class="family-name"><%= contact.last_name %></span>
-      </div>
+      <li>
+        <div class="vcard">
+          <div class="fn">
+            <span class="given-name"><%= contact.first_name %></span>
+            <span class="family-name"><%= contact.last_name %></span>
+          </div>
   
-      <% if contact.title.present? %>
-      <div class="title"><%= contact.title %></div>
-      <% end %>
+          <% if contact.title.present? %>
+          <div class="title"><%= contact.title %></div>
+          <% end %>
   
-      <% if contact.phone.present? %>
-      <div class="tel">
-       <span>Phone</span> <%= contact.phone %>
-      </div>
-      <% end %>
+          <% if contact.phone.present? %>
+          <div class="tel">
+           <span>Phone</span> <%= contact.phone %>
+          </div>
+          <% end %>
   
-      <% if contact.fax.present?%>
-      <div class="tel">
-        <span class="type">Fax</span> <%= contact.fax %>
-      </div>
-      <% end %>
-      <% if contact.email.present? %>
-        <div>Email: 
-         <%= mail_to contact.email, contact.email, :class => "email" %>
+          <% if contact.fax.present?%>
+          <div class="tel">
+            <span class="type">Fax</span> <%= contact.fax %>
+          </div>
+          <% end %>
+          <% if contact.email.present? %>
+            <div>Email: 
+             <%= mail_to contact.email, contact.email, :class => "email" %>
+            </div>
+          <% end %>
+  
+          <div class="adr">
+            <div class="street-address"><%= contact.street_address %></div>
+            <span class="locality"><%= contact.city %></span>
+            <span class="region"><%= contact.state%></span>
+            <span class="postal-code"><%= contact.zip %></span>
+          </div>
         </div>
-      <% end %>
-  
-      <div class="adr">
-        <div class="street-address"><%= contact.street_address %></div>
-        <span class="locality"><%= contact.city %></span>
-        <span class="region"><%= contact.state%></span>
-        <span class="postal-code"><%= contact.zip %></span>
-      </div>
-    </div>
+      </li>  
     <% end %>
+    </ul>
+    
   </div>
 <% end %>

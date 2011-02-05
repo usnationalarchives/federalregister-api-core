@@ -163,7 +163,11 @@ class ApplicationSearch
   end
   
   attr_accessor :term, :order, :per_page
-  attr_reader :errors, :filters
+  attr_reader :filters
+  
+  def validation_errors
+    @errors
+  end
   
   def self.define_filter(filter_name, options = {}, &name_definer)
     attr_reader filter_name

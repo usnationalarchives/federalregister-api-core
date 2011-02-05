@@ -4,6 +4,7 @@ require 'lib/base_extensions/hash_extensions.rb'
 def get_keys
   @amazon_keys     = File.open( File.join(File.dirname(__FILE__), '..', 'amazon.yml') ) { |yf| YAML::load( yf ) }
   @mysql_passwords = File.open( File.join(File.dirname(__FILE__), '..', 'mysql.yml' ) ) { |yf| YAML::load( yf ) }
+  @wordpress_keys = File.open( File.join(File.dirname(__FILE__), '..', '..', '..', 'fr2_blog', 'config', 'wordpress_keys.yml') ) { |yf| YAML::load( yf ) }
 end
 
 def munin_host(ip_addresses)
@@ -31,16 +32,18 @@ def chef_cloud_attributes(instance_type)
 
   case instance_type
   when 'staging'
-    @proxy_server_address    = '10.195.190.36'
-    @static_server_address   = '10.196.142.63'
-    @worker_server_address   = '10.196.142.63'
-    @database_server_address = '10.242.45.235'
-    @sphinx_server_address   = '10.242.45.235'
-    @app_server_address      = '10.242.46.47'
+    @proxy_server_address    = '10.117.49.253'
+    @static_server_address   = '10.114.167.201'
+    @worker_server_address   = '10.114.167.201'
+    @blog_server_address     = '10.114.167.201'
+    @database_server_address = '10.114.171.118'
+    @sphinx_server_address   = '10.114.171.118'
+    @app_server_address      = '10.114.166.194'
   when 'production'
     @proxy_server_address    = '10.194.207.96'
     @static_server_address   = '10.245.106.31'
     @worker_server_address   = '10.245.106.31'
+    @blog_server_address     = '10.245.106.31'
     @database_server_address = '10.194.109.139'
     @sphinx_server_address   = '10.194.109.139'
     @app_server_address      = ['10.243.41.203', '10.196.117.123', '10.202.162.96', '10.212.73.172', '10.251.83.111', '10.251.131.239']
@@ -65,6 +68,13 @@ def chef_cloud_attributes(instance_type)
                     :code_name  => 'karmic',
                     :ec2_region => 'us-east-1'
                },
+    :app => { 
+             :blog_root => '/var/www/apps/fr2_blog',
+             :app_root  => '/var/www/apps/fr2',
+             :web_dir   => '/var/www',
+             :name      => 'fr2',
+             :url       => @app_url
+           },
     :apache => {
                   :listen_ports   => [@app_server_port],
                   :vhost_port     => @app_server_port, 
@@ -146,7 +156,13 @@ def chef_cloud_attributes(instance_type)
     :munin      => {
                     :nodes => munin_host(@app_server_address),
                     :servers => munin_host(@proxy_server_address)
-                   }
+                   },
+    :wordpress => { 
+                  :keys              => @wordpress_keys,
+                  :database_name     => 'fr2_wordpress',
+                  :database_user     => 'wordpress',
+                  :database_password => 'QtZp2HZWu+ufAxJ9LBcN'
+                 }
   }
 end
 

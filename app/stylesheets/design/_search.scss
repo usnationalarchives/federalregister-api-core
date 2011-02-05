@@ -74,7 +74,8 @@ PAGE ELEMENTS
   margin-left: .5em;
   margin-right: .5em;  
   }  
-.search_bar #conditions_term {
+.search_bar #conditions_term,
+#wordpress #blog-search-term {
   border: 1px solid #ccc;
   display: block;
   float: left;
@@ -82,6 +83,9 @@ PAGE ELEMENTS
   padding: 5px;
   width: 400px;
   }
+#wordpress #blog-search-term {
+  width: 178px;
+  }  
 .search_bar #conditions_type {
   display: block;
   float: left;
@@ -90,7 +94,8 @@ PAGE ELEMENTS
 .search_bar select {
   margin-right: 5px;
   }  
-.search_bar #conditions_submit {
+.search_bar #conditions_submit,
+#wordpress #blog-search-submit {
   background: sprite-image('icons/search_button.png') no-repeat;
   border: none;
   cursor: pointer;
@@ -101,7 +106,8 @@ PAGE ELEMENTS
   margin-left: -1px;
   width: image-width('icons/search_button.png');
   }
-.search_bar #conditions_submit:hover {
+.search_bar #conditions_submit:hover,
+#wordpress #blog-search-submit:hover {
   background: sprite-image('icons/search_button_hover.png') no-repeat;
   }
 .search_info {  
@@ -436,7 +442,7 @@ div.pagination span,
 div.pagination a {
   border: 1px solid #CCCCCC;
   line-height: 1;
-  padding: .5em .5em .25em;
+  padding: 5px;
   }
 .result_set .pagination .current {
   background-color: $golden;
@@ -672,6 +678,7 @@ ADVANCED SEARCH
   background: url(/images/search_btn_bg.png) repeat-x;
   border: 1px solid #aaa;
   color: #555;
+  cursor: pointer;
   @include border-radius(5px);
   @include apertura-condensed;
   font-size: 1.3em;

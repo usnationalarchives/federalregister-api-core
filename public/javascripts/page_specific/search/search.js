@@ -179,17 +179,7 @@ $(document).ready(function () {
     //Add in some helpful hints that would be redundant if we had all the labels displaying
     $(".range_start input").after("<span> to </span>");
     $(".cfr li:first-child input").after("<span> CFR </span>");
-    $(".zip li:first-child input").after("<span> within </span>");
-    
-    $("#toggle_advanced").bind('click', function(event) {
-      event.preventDefault();
-      var isOpen = $(this).attr("data-state") == "open";
-      isOpen ? $(this).text("Show Advanced Search") : $(this).text("Hide Advanced Search");
-      isOpen ? $(this).attr("title", "Show Advanced Search") : $(this).attr("title", "Hide Advanced Search");
-      $(this).attr("data-state", isOpen ? 'close' : 'open');
-      $(".advanced").toggleClass("open");
-      $(this).trigger('calculate_expected_results');
-    });
+    $(".zip li:first-child input").after("<span> within </span>");;
     
     $(".formtastic select[multiple]").hide().bsmSelect({
       removeClass: 'remove'
@@ -232,6 +222,21 @@ $(document).ready(function () {
       }
     });
     
+    $("#toggle_advanced").bind('click', function(event) {
+      event.preventDefault();
+      location.hash === "#advanced" ? location.hash = "" : location.hash = "#advanced";      
+    });
+    
+    $(window).bind('hashchange', function(){
+      toggleAdvanced(location.hash === "#advanced");
+    }).trigger('hashchange');
+    
+    function toggleAdvanced(isOpen){
+      var label = isOpen ? "Hide Advanced Search" : "Show Advanced Search";
+      isOpen ? $(".advanced").addClass("open") : $(".advanced").removeClass("open");
+      $("#toggle_advanced").text(label).attr(label);
+      $("#toggle_advanced").trigger('calculate_expected_results');
+    }
     
     // $('.help_link').live('click',
     // function () {

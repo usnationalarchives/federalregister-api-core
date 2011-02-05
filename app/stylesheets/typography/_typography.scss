@@ -6,7 +6,6 @@ Enhanced Fonts for elements
 body {
   font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
   font-weight: 300;
-  text-rendering: optimizeLegibility;
   }
 .wf-active body {
   @include gesta;
@@ -107,7 +106,8 @@ h1.title {
 
 /* stacked left words, big right word */
 
-.title_bar {
+.title_bar,
+#wordpress .widget-title {
   border-top: 3px solid $dark_blue;
   clear: both;
   color: $powder_blue;
@@ -154,7 +154,6 @@ div.title_bar h2 a {
 .small_stack span {
   display: block;
   }
-
 .fr_section h1 {
   border-bottom: 2px solid $dark_grey;
   @include apertura-condensed;
@@ -171,7 +170,8 @@ SIDEBAR
 
 ******************************/
 
-#sidebar .title_bar {
+#sidebar .title_bar,
+#wordpress .widget-title {
   font-size: 1.5em;
   margin: 0 0 .5em;
   padding: .3em 0 0 0;
@@ -213,8 +213,9 @@ ARTICLES
   line-height: 1.6;
   }
 
-.featured .article h1 {
-  font-size: 1.3em;
+.featured .article h1,
+#wordpress .blog_post_list h1 {
+  font-size: 1.4em;
   font-weight: normal;
   line-height: 1.4;
   }
@@ -323,34 +324,44 @@ BY DATE
 STATIC PAGES
 
 ******************************/ 
-#pages #content_area h1 {
+#wordpress.page #content_area h1 {
   border-top: 2px solid #464646;
   @include athelas;
   margin: 1em 0 .5em;
   }
-#pages #content_area h1:first-child,
-#pages #content_area h1.firstchild {
+#wordpress.page #content_area h1:first-child,
+#wordpress.page #content_area h1.firstchild {
   border-top: none;
   margin-top: 0;
   }  
-#pages #content_area h2 {
+#wordpress.page #content_area h2 {
   color: #464646;
+  font-size: 1.6em;
   margin: .5em 0 0;
   }
-#pages #content_area ul.bullets {
-  @include athelas;
-  font-size: 1.2em;
-  }
-#pages #content_area ul.bullets li {
-  background-position: left 8px;
-  line-height: 1.5;
-  }
-#pages #content_area ul.bullets li strong {
+#wordpress.page #content_area ul.bullets li strong {
   text-transform: uppercase;
   }
-#pages #content_area ul.bullets li ul {
+#wordpress.page #content_area ul.bullets li ul {
   margin-top: 0.75em;
   }  
-#pages #content_area .aside_box {
+#wordpress.page #content_area .aside_box {
   margin-bottom: 1em;
+  }
+#wordpress.page #content_area.static_page .article ul,
+#wordpress.single-post #content_area .post_content ul,
+#wordpress #disclaimer_modal ul  {
+  @extend ul.bullets;
+  @include athelas;
+  font-size: 16px;
+  }
+#wordpress.page #content_area.static_page .article ul li,
+#wordpress.single-post #content_area .post_content ul li,
+#wordpress #disclaimer_modal .modal_content ul li {
+  background-position: left 8px;
+  line-height: 1.5;  
+  }
+#wordpress.page #content_area.static_page .article h3,
+#wordpress.single-post #content_area .post_content h3 {
+  margin-top: 1em;
   }  
