@@ -56,7 +56,6 @@ cloud :static_server_large do
       :sphinx  => {
                     :server_address => 'sphinx.fr2.ec2.internal'
                   },
-      :rails  => { :environment => "staging" },
       :apache => { 
                    :server_aliases => "www.#{@app_url}",
                    :listen_ports   => ['80'],
