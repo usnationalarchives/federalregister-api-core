@@ -109,7 +109,7 @@ class ApplicationSearch
       @is = hsh[:is]
       @gte = hsh[:gte]
       @lte = hsh[:lte]
-      @year = hsh[:year].to_i if hsh[:year].present?
+      @year = hsh[:year].to_s.to_i if hsh[:year].present?
       @valid = true
       
       begin
