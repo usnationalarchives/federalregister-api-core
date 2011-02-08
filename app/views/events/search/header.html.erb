@@ -1,3 +1,14 @@
+<% unless @search.valid? %>
+  <div class="errors">
+    <p class="errors_header">The following errors were found with your search: </p>
+    <ul class="bullets">
+      <% @search.validation_errors.values.each do |err| %>
+        <li class=""><%= err %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
 <%= render :partial => "search/tabs", :locals => {:search => @search, :selected => :events}%>
 
 <div class="search_bar">
