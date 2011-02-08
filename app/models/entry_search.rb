@@ -5,7 +5,7 @@ class EntrySearch < ApplicationSearch
     end
     
     def sphinx_citation
-      title.to_i * 100000 + part.to_i
+      title.to_s.to_i * 100000 + part.to_s.to_i
     end
   end
   
