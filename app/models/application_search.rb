@@ -13,7 +13,7 @@ class ApplicationSearch
       if options[:phrase]
         @sphinx_value = "\"#{options[:value]}\""
       elsif options[:crc32_encode]
-        @sphinx_value = options[:value].map(&:to_crc32)
+        @sphinx_value = options[:value].map{|v| v.to_s.to_crc32}
       else
         @sphinx_value = options[:value]
       end
