@@ -114,7 +114,7 @@ class ApplicationSearch
       
       begin
         if @is.present?
-          date = Date.parse(@is)
+          date = Date.parse(@is.to_s)
           @sphinx_value = date.to_time.utc.beginning_of_day.to_i .. date.to_time.utc.end_of_day.to_i
           @filter_name = "on #{date}"
         elsif @year.present?
