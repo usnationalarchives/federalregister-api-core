@@ -28,7 +28,7 @@
     <% entries_by_type.group_by(&:toc_subject).each do |toc_subject, entries_by_toc_subject| %>
       <% if toc_subject.present? %>
         <dt><%= toc_subject %></dt>
-        <% entries_by_toc_subject.sort_by(&:toc_doc).each do |entry| %>
+        <% entries_by_toc_subject.sort_by{|e| e.toc_doc || ''}.each do |entry| %>
         <dd>
           <%= render :partial => 'entry_with_page_and_frdoc', :locals => {:entry => entry, :entry_title => entry.toc_doc || entry.title } %>
         </dd>
