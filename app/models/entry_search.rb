@@ -44,7 +44,7 @@ class EntrySearch < ApplicationSearch
     docket
   end
   
-  define_filter :significant, :sphinx_type => :with, :label => "Signficance" do 
+  define_filter :significant, :sphinx_type => :with, :label => "Significance" do 
     "Associated Unified Agenda Deemed Significant Under EO 12866"
   end
   
