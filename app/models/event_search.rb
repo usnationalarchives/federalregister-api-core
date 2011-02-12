@@ -1,6 +1,6 @@
 class EventSearch < ApplicationSearch
   define_filter :agency_ids,  :sphinx_type => :with_all
-  define_place_filter :place_id
+  define_place_filter :near, :sphinx_attribute => :place_id
   define_filter :type do |type|
     Event::EVENT_TYPES_PLURAL[type]
   end

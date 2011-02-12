@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe EntrySearch do
+describe ApplicationSearch do
   before(:each) do
     @search_class = Class.new(ApplicationSearch)
   end
@@ -24,4 +24,27 @@ describe EntrySearch do
       search.filters.size.should == 1
     end
   end
+  
+  describe 'define_place_filter' do
+    before(:each) do
+      @search_class.define_place_filter :near, :sphinx_attribute => :place_ids
+    end
+    
+    it "creates an instance setter method" do
+      @search_class.new.should respond_to :near=
+    end
+    
+    it "creates an instance getter method" do
+      @search_class.new.should respond_to :near
+    end
+    
+    it "adds a filter when used" do
+      place = Factory(:place, :name => "San Francisco, CA, US", :latitude => '37.7792', :longitude => '-122.42')
+      
+      search = @search_class.new
+      search.near = {:location => "94118", :within => "50"}
+      search.filters.size.should == 1
+    end
+  end
 end
+

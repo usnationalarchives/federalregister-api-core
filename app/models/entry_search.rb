@@ -48,7 +48,7 @@ class EntrySearch < ApplicationSearch
     "Associated Unified Agenda Deemed Significant Under EO 12866"
   end
   
-  define_place_filter :place_ids
+  define_place_filter :near, :sphinx_attribute => :place_ids
   define_date_filter :publication_date, :label => "Publication Date"
   define_date_filter :effective_date, :label => "Effective Date"
   

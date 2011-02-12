@@ -170,10 +170,7 @@ class ApplicationSearch
   end
   
   def self.define_filter(filter_name, options = {}, &name_definer)
-    define_filter "#{filter_name}" do
-      # filters.select{|f| f.name == filter_name}.try(:value)
-      "yo"
-    end
+    attr_reader filter_name
     
     # refactor to partials...
     name_definer ||= Proc.new{|*ids| filter_name.to_s.sub(/_ids?$/,'').classify.constantize.find(ids).map(&:name).to_sentence(:two_words_connector => ' or ', :last_word_connector => ', or ') }
@@ -217,40 +214,24 @@ class ApplicationSearch
     end
   end
   
-  def self.define_place_filter(sphinx_attribute)
-    attr_accessor :location, :within
+  def self.define_place_filter(filter_name, options = {})
+    attr_reader filter_name
     
-    define_method :within= do |val|
-      if val.present? && (val.is_a?(String) || val.is_a?(Fixnum))
-        if val.to_i < 1 && val.to_i > 200
-          @errors[:within] = "range must be between 1 and 200 miles."
-        else
-          @within = val.to_i
-        end
-      end
-    end
-
-    define_method :location= do |val|
-      if val.present? && val.is_a?(String)
-        @location = val
-        loc = fetch_location(val)
-
-        if loc.lat
-          places = Place.find(:all, :select => "id", :origin => loc, :within => within)
+    define_method "#{filter_name}=" do |hsh|
+      if hsh.present? && hsh.values.any?(&:present?)
+        place_selector = PlaceSelector.new(hsh[:location], hsh[:within])
+        instance_variable_set("@#{filter_name}", place_selector)
+        if place_selector.valid?
           add_filter(
-            :value => [places.map{|p| p.id}], # deeply nested array keeps places together to avoid duplicate filters
-            :name => "#{val} within #{within} miles",
-            :condition => :location,
-            :sphinx_attribute => sphinx_attribute,
-            :label => "Near",
+            :value => [place_selector.place_ids], # deeply nested array keeps places together to avoid duplicate filters
+            :name => "within #{place_selector.within} miles of #{place_selector.location}",
+            :condition => filter_name,
+            :sphinx_attribute => options[:sphinx_attribute],
+            :label => "Located",
             :sphinx_type => :with
           )
-
-          if places.size > 4096
-            @errors[:location] = 'We found too many locations near your location; please reduce the scope of your search'
-          end
         else
-          @errors[:location] = 'We could not understand your location.'
+          @errors[filter_name] = place_selector.validation_errors
         end
       end
     end
@@ -399,10 +380,6 @@ class ApplicationSearch
   end
   
   private
-  
-  def fetch_location(location)
-    Rails.cache.fetch("location_of: '#{location}'") { Geokit::Geocoders::GoogleGeocoder.geocode(location) }
-  end
   
   def set_defaults(options)
   end
