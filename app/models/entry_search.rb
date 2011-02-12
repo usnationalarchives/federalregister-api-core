@@ -62,6 +62,7 @@ class EntrySearch < ApplicationSearch
         add_filter(
           :value => @cfr.sphinx_citation,
           :name => @cfr.citation,
+          :condition => :cfr,
           :sphinx_attribute => :cfr_affected_parts,
           :label => "Affected CFR Part",
           :sphinx_type => :with
@@ -199,24 +200,30 @@ class EntrySearch < ApplicationSearch
   
   def summary
     parts = []
-    # if @term.present?
-    #   parts << "matching '#{@term}'"
-    # end
-    # 
-    # # agency_ids.to_a.each do |agency_id|
-    # #   agency = Agency.find_by_id(agency_id)
-    # #   
-    # #   if agency
-    # #     parts << "from #{agency.short_name || agency.name}"
-    # #   end
-    # # end
-    # 
-    # [['from', :agency_ids]].each do |term, facet_name|
-    #   facet = facets.find{|facet| facet.name == facet_name}
-    #   parts << "#{term} #{facet.value}"
-    # end
-    # 
-    parts.to_sentence
+    if @term.present?
+      parts << "matching '#{@term}'"
+    end
+    
+    [
+      ['with an effective date', :effective_date],
+      ['from', :agency_ids],
+      ['of type', :type],
+      ['filed under agency docket', :docket_id],
+      ['whose', :significant],
+      ['associated with', :regulation_id_number],
+      ['affecting', :cfr],
+      ['located', :near],
+      ['in', :section_ids],
+      ['about', :topic_ids]
+    ].each do |term, filter_condition|
+      relevant_filters = filters.select{|f| f.condition == filter_condition}
+      
+      unless relevant_filters.empty?
+        parts << "#{term} #{relevant_filters.map(&:name).to_sentence(:two_words_connector => ' or ', :last_word_connector => ', and ')}"
+      end
+    end
+    
+    'Articles ' + parts.to_sentence
   end
   
   private
