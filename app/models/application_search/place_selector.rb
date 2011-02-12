@@ -23,7 +23,7 @@ class ApplicationSearch
     end
     
     def place_ids
-      if @validation_errors.empty?
+      if @validation_errors.empty? && location.present?
         @place_ids ||= Place.find(:all, :select => "id", :origin => location_latlong, :within => within).map(&:id)
         
         if @place_ids.size > 4096
