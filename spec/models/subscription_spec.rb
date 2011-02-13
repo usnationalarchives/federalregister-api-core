@@ -6,10 +6,8 @@ describe Subscription do
   it { should validate_presence_of(:requesting_ip) }
   
   it "should generate a random token on create" do
-    s1 = Subscription.new
-    s1.save(false)
-    s2 = Subscription.new
-    s2.save(false)
+    s1 = Factory(:subscription)
+    s2 = Factory(:subscription)
     
     s1.token.should be_present
     s1.token.should_not == s2.token
@@ -51,19 +49,16 @@ describe Subscription do
     end
   end
   
-  describe 'parameters=' do
-  end
-  
   describe 'mailing_list' do
     it "should be created on subscription create if it does not exist" do
-      subscription = Factory(:subscription, :parameters => "{}")
-      subscription.mailing_list.parameters.should == "{}"
+      subscription = Factory(:subscription, :search_conditions => {:term => "HAI"})
+      subscription.mailing_list.search_conditions.should == '{"term":"HAI"}'
     end
     
     it "should be associated on subscription create if it does exist" do
-      subscription_1 = Factory(:subscription, :parameters => "{}")
-      list_1 = subscription.mailing_list
-      subscription_2 = Factory(:subscription, :parameters => "{}")
+      subscription_1 = Factory(:subscription, :search_conditions => {:term => "HAI"})
+      list_1 = subscription_1.mailing_list
+      subscription_2 = Factory(:subscription, :search_conditions => {:term => "HAI"})
       subscription_2.mailing_list.should == list_1
     end
   end

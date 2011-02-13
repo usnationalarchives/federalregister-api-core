@@ -5,7 +5,22 @@ class Subscription < ApplicationModel
   
   belongs_to :mailing_list
   
-  validates_presence_of :email, :requesting_ip
+  def to_param
+    token
+  end
+  
+  def mailing_list_with_autobuilding
+    if mailing_list_without_autobuilding.nil? && search_conditions.present?
+      search = EntrySearch.new(:conditions => search_conditions)
+      self.mailing_list = MailingList.find_by_search(search) || MailingList.new(:search => search)
+    else
+      mailing_list_without_autobuilding
+    end
+  end
+  
+  alias_method_chain :mailing_list, :autobuilding
+  
+  validates_presence_of :email, :requesting_ip, :mailing_list
   
   def active?
     confirmed_at.present? && unsubscribed_at.nil?
@@ -15,10 +30,12 @@ class Subscription < ApplicationModel
     confirmed_at_was.present? && unsubscribed_at_was.nil?
   end
   
+  attr_accessor :search_conditions
+  
   private
   
   def ask_for_confirmation
-    Mailer.send_later :deliver_subscription_confirmation, self
+    Mailer.deliver_subscription_confirmation(self)
   end
   
   def generate_token

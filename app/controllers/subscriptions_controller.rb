@@ -1,4 +1,7 @@
 class SubscriptionsController < ApplicationController
+  # TODO: remove me
+  skip_before_filter :verify_authenticity_token
+  
   def new
     @subscription = Subscription.new(params[:subscription])
   end
@@ -6,12 +9,25 @@ class SubscriptionsController < ApplicationController
   def create
     @subscription = Subscription.new(params[:subscription])
     
+    @subscription.requesting_ip = request.remote_ip
     if @subscription.save
-      flash[:notice] = "Subscription saved"
-      redirect_to root_url
+      redirect_to confirmation_sent_subscriptions_url
     else
       render :action => :new
     end
+  end
+  
+  def confirmation_sent
+  end
+  
+  def confirm
+    @subscription = Subscription.find_by_token!(params[:id])
+    @subscription.update_attributes(:confirmed_at => Time.current)
+    redirect_to subscription_path
+  end
+  
+  def show
+    @subscription = Subscription.find_by_token!(params[:id])
   end
   
   def delete

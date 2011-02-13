@@ -15,6 +15,13 @@ config.action_controller.perform_caching             = false
 
 # Don't care if the mailer can't send
 # config.action_mailer.raise_delivery_errors = false
-config.action_mailer.default_url_options = {:host => 'fr2.local'}
+config.action_mailer.delivery_method = :sendmail
+config.action_mailer.smtp_settings = {
+  :address => "localhost",
+  :port    => "25",
+  :domain  => "fr2.local:3000"
+}
+
+config.action_mailer.default_url_options = {:host => 'fr2.local:3000'}
 
 # Put gems in Gemfile...
