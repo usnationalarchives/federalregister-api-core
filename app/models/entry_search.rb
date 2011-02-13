@@ -199,31 +199,35 @@ class EntrySearch < ApplicationSearch
   end
   
   def summary
-    parts = []
-    if @term.present?
-      parts << "matching '#{@term}'"
-    end
-    
-    [
-      ['with an effective date', :effective_date],
-      ['from', :agency_ids],
-      ['of type', :type],
-      ['filed under agency docket', :docket_id],
-      ['whose', :significant],
-      ['associated with', :regulation_id_number],
-      ['affecting', :cfr],
-      ['located', :near],
-      ['in', :section_ids],
-      ['about', :topic_ids]
-    ].each do |term, filter_condition|
-      relevant_filters = filters.select{|f| f.condition == filter_condition}
+    if @term.blank? && filters.empty?
+      "All Articles"
+    else
+      parts = []
       
-      unless relevant_filters.empty?
-        parts << "#{term} #{relevant_filters.map(&:name).to_sentence(:two_words_connector => ' or ', :last_word_connector => ', and ')}"
+      if @term.present?
+        parts << "matching '#{@term}'"
       end
-    end
     
-    'Articles ' + parts.to_sentence
+      [
+        ['with an effective date', :effective_date],
+        ['from', :agency_ids],
+        ['of type', :type],
+        ['filed under agency docket', :docket_id],
+        ['whose', :significant],
+        ['associated with', :regulation_id_number],
+        ['affecting', :cfr],
+        ['located', :near],
+        ['in', :section_ids],
+        ['about', :topic_ids]
+      ].each do |term, filter_condition|
+        relevant_filters = filters.select{|f| f.condition == filter_condition}
+      
+        unless relevant_filters.empty?
+          parts << "#{term} #{relevant_filters.map(&:name).to_sentence(:two_words_connector => ' or ', :last_word_connector => ', and ')}"
+        end
+      end
+      'Articles ' + parts.to_sentence
+    end
   end
   
   private

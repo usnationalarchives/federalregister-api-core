@@ -122,6 +122,10 @@ describe EntrySearch do
   end
   
   describe "summary" do
+    it "says 'All Articles' if no term or filters" do
+      EntrySearch.new(:conditions => {}).summary.should == "All Articles"
+    end
+    
     it "includes the term" do
       EntrySearch.new(:conditions => {:term => "OH HAI"}).summary.should == "Articles matching 'OH HAI'"
     end
