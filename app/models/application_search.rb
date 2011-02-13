@@ -162,8 +162,12 @@ class ApplicationSearch
     end
   end
   
-  attr_accessor :term, :order, :per_page
-  attr_reader :filters
+  attr_accessor :order, :per_page
+  attr_reader :filters, :term
+  
+  def term=(term)
+    @term = term.to_s
+  end
   
   def validation_errors
     @errors
