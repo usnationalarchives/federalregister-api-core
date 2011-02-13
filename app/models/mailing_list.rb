@@ -21,7 +21,9 @@ class MailingList < ApplicationModel
   
   composed_of :search,
               :class_name => 'EntrySearch',
-              :mapping => %w(search_conditions to_json)
+              :mapping => %w(search_conditions to_json),
+              :constructor => EntrySearch.method(:from_json),
+              :converter   => EntrySearch.method(:from_json)
   before_create :populate_title_based_on_search_summary
   
   def title
