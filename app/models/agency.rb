@@ -76,14 +76,18 @@ class Agency < ApplicationModel
   def self.named_approximately(name)
     words = name.downcase.split(/[^a-z]+/) - %w(a and & in for of on s the)
     
-    condition_sql = "(" + words.map{"agencies.name LIKE ?"}.join(" AND ") + ") OR (" + words.map{"agencies.short_name LIKE ?"}.join(" AND ") + ")"
-    bind_params = words.map{|word|"%#{word}%"} * 2
-    scoped(
-      :conditions => [
-        condition_sql, *bind_params
-      ],
-      :order => "agencies.name"
-    )
+    if words.empty?
+      []
+    else
+      condition_sql = "(" + words.map{"agencies.name LIKE ?"}.join(" AND ") + ") OR (" + words.map{"agencies.short_name LIKE ?"}.join(" AND ") + ")"
+      bind_params = words.map{|word|"%#{word}%"} * 2
+      scoped(
+        :conditions => [
+          condition_sql, *bind_params
+        ],
+        :order => "agencies.name"
+      )
+    end
   end
   
   def to_param
