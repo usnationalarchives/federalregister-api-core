@@ -1,4 +1,6 @@
 class Mailer < ActionMailer::Base
+  helper :entry, :text
+  
   def password_reset_instructions(user)
     subject    "FR2 Admin Password Reset"
     from       "FR2 Admin <info@criticaljuncture.org>"
@@ -16,11 +18,11 @@ class Mailer < ActionMailer::Base
   end
   
   def mailing_list(mailing_list, results, subscriptions)
-    subject "[FR] #{mailing_list}"
+    subject "[FR] #{mailing_list.title}"
     from       "Federal Register Subscriptions <subscriptions@mail.federalregister.gov>"
     recipients subscriptions.map(&:email)
-    custom_variables :token => subscriptions.map(&:token)
+    # custom_variables :token => subscriptions.map(&:token)
     sent_on    Time.current
-    body       :title => mailing_list.title, :results => results
+    body       :mailing_list => mailing_list, :results => results
   end
 end

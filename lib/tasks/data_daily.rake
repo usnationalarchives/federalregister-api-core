@@ -28,7 +28,7 @@ namespace :data do
       remote:sphinx:rebuild_delta
       content:issues:mark_complete
       varnish:expire:everything
-      content:mailing_lists:deliver
+      mailing_lists:deliver
       sitemap:refresh
     )
   end

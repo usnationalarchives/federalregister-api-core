@@ -1,6 +1,6 @@
 <%= @mailing_list.title %>
 
-<%= pluralize @result, "result" %>.
+<%= pluralize @results.size, "matching article" %>.
 
 -------------
 
@@ -9,12 +9,14 @@
 
 <%= short_entry_url (entry) %>
 
-A <%= entry.entry_type %> by <%= agency_names(entry) %>.
-    
-<%= truncate_words(entry.curated_abstract, :length => 500) %>
+A <%= entry.entry_type %> by <%= agency_names(entry, :no_links => true) %>.
 
-<%- if entry.comments_close_on && entry.comments_close_on > @publication_date -%>
-Comment period ends in <%= pluralize (entry.comments_close_on - @publication_date), 'day' %> (<%= entry.comments_close_on %>)
-<%- end -%>
+<%= truncate_words(entry.curated_abstract, :length => 500) || "[No abstract available]" -%>
+
+<%- if entry.comments_close_on && entry.comments_close_on > Date.current %>
+
+Comment period ends in <%= pluralize (entry.comments_close_on - Date.current), 'day' %> (<%= entry.comments_close_on %>)
+<%- end %>
 -------
+
 <% end %>
