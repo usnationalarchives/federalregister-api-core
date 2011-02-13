@@ -2,15 +2,17 @@
 
  Table name: subscriptions
 
-  id              :integer(4)      not null, primary key
-  mailing_list_id :integer(4)
-  email           :string(255)
-  requesting_ip   :string(255)
-  token           :string(255)
-  confirmed_at    :datetime
-  unsubscribed_at :datetime
-  created_at      :datetime
-  updated_at      :datetime
+  id                :integer(4)      not null, primary key
+  mailing_list_id   :integer(4)
+  email             :string(255)
+  requesting_ip     :string(255)
+  token             :string(255)
+  confirmed_at      :datetime
+  unsubscribed_at   :datetime
+  created_at        :datetime
+  updated_at        :datetime
+  last_delivered_at :datetime
+  delivery_count    :integer(4)      default(0)
 
 =end Schema Information
 
