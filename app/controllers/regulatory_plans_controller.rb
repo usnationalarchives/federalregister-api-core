@@ -15,7 +15,7 @@ class RegulatoryPlansController < ApplicationController
         wants.rss do
           @feed_name = "Federal Register: Recent articles about RIN #{@regulatory_plan.regulation_id_number}"
           @feed_description = "Significant Federal Register articles about RIN #{@regulatory_plan.regulation_id_number}."
-          @entries = @regulatory_plan.entries.most_recent(20).preload(:topics, :agencies)
+          @entries = EntrySearch.new(:conditions => {:regulation_id_number => @regulatory_plan.regulation_id_number}, :order => "newest", :per_page => 20).results
           render :template => 'entries/index.rss.builder'
         end
       end
