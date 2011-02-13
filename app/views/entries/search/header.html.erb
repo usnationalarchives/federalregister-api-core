@@ -21,7 +21,7 @@
       
       <div class="actions">
         <%# link_to 'Subscribe', entries_search_url(params.except(:action).merge(:format => :rss, :order => 'date')), :class => 'rss' %>
-        <%= link_to 'Subscribe', new_subscription_path(:subscription => {:search_conditions => params[:conditions]}) %>
+        <%= link_to 'Subscribe', new_subscription_path(:subscription => {:search_conditions => conditions_for_subscription}) %>
         <%= link_to 'Learn More', entries_search_help_path, :class => 'help_link' %>
         <%# link_to 'Widget', widget_instructions_path(params.except(:action, :controller)), :class => 'button widget spawn_modal notext', :id => 'widget' %>
       </div>
