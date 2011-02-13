@@ -225,7 +225,7 @@ class ApplicationSearch
       if hsh.present? && hsh.values.any?(&:present?)
         place_selector = PlaceSelector.new(hsh[:location], hsh[:within])
         instance_variable_set("@#{filter_name}", place_selector)
-        if place_selector.valid?
+        if place_selector.valid? && place_selector.location.present?
           add_filter(
             :value => [place_selector.place_ids], # deeply nested array keeps places together to avoid duplicate filters
             :name => "within #{place_selector.within} miles of #{place_selector.location}",
@@ -235,7 +235,9 @@ class ApplicationSearch
             :sphinx_type => :with
           )
         else
-          @errors[filter_name] = place_selector.validation_errors
+          unless place_selector.valid?
+            @errors[filter_name] = place_selector.validation_errors
+          end
         end
       end
     end
@@ -381,6 +383,14 @@ class ApplicationSearch
   
   def regulatory_plan_count
     RegulatoryPlanSearch.new(:conditions => {:term => @term}).term_count
+  end
+  
+  def to_json
+    @conditions.to_json
+  end
+  
+  def self.from_json(json)
+    self.new(:conditions => JSON.parse(json))
   end
   
   private

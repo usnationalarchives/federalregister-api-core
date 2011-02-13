@@ -1,11 +1,34 @@
-Are you sure you wish to subscribe to <%= h @subscription%>
-<% semantic_form_for @subscription, :url => subscription_path do |f| %>
+Are you sure you wish to subscribe to <strong><%= link_to h(@subscription.mailing_list.title), entries_search_path(:conditions => @subscription.search_conditions) %></strong>
+
+
+<%= error_messages_for :subscription %>
+
+<% semantic_form_for @subscription, :url => subscriptions_path do |f| %>
+  
+  <%# Serialize the parameters; note that this doesn't recurse %>
+  <% f.fields_for :search_conditions do |cond_f| %>
+    <% @subscription.search_conditions.each do |attr, vals| %>
+      <% if vals.is_a?(Array)%>
+        <% vals.each do |val| %>
+          <%= cond_f.hidden_field(attr, :id => '', :value => val, :multiple => true) unless val.blank? %>
+        <% end %>
+      <% elsif vals.is_a?(Hash) %>
+        <% vals.each_pair do |key,val| %>
+          <% cond_f.fields_for attr do |custom_f| %>
+            <%= custom_f.hidden_field(key, :id => '', :value => val) unless val.blank? %>
+          <% end %>
+        <% end %>
+      <% else%>
+        <%= cond_f.hidden_field(attr, :id => '', :value => vals) unless vals.blank? %>
+      <% end %>
+    <% end %>
+  <% end %>
+  
   <% f.inputs do %>
     <%= f.input :email %>
-    <%= f.input :parameters %>
   <% end %>
   
   <% f.buttons do %>
-    <%= f.button "Subscribe" %>
+    <%= f.commit_button "Subscribe" %>
   <% end %>
 <% end %>

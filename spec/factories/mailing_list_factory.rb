@@ -1,4 +1,4 @@
 Factory.define :mailing_list do |f|
-  f.title "Auto-generated title"
-  f.parameters "{}"
+  f.title "Articles matching 'Foo'"
+  f.search EntrySearch.new(:conditions => {:term => 'Foo'})
 end
