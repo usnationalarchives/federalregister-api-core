@@ -22,7 +22,7 @@ class SubscriptionsController < ApplicationController
   
   def confirm
     @subscription = Subscription.find_by_token!(params[:id])
-    @subscription.update_attributes(:confirmed_at => Time.current)
+    @subscription.update_attributes!(:confirmed_at => Time.current)
     redirect_to subscription_path
   end
   
@@ -30,14 +30,16 @@ class SubscriptionsController < ApplicationController
     @subscription = Subscription.find_by_token!(params[:id])
   end
   
-  def delete
+  def unsubscribe
     @subscription = Subscription.find_by_token!(params[:id])
   end
   
   def destroy
     @subscription = Subscription.find_by_token!(params[:id])
-    @subscription.update(:unsubscribed_at => Time.current)
-    flash[:notice] = "Successfully unsubscribed"
-    redirect_to root_url
+    @subscription.update_attributes!(:unsubscribed_at => Time.current)
+    redirect_to unsubscribed_subscriptions_url
+  end
+  
+  def unsubscribed
   end
 end

@@ -70,7 +70,7 @@ describe Subscription do
   describe 'mailing_list' do
     it "should be created on subscription create if it does not exist" do
       subscription = Factory(:subscription, :search_conditions => {:term => "HAI"})
-      subscription.mailing_list.search_conditions.should == '{"term":"HAI"}'
+      subscription.mailing_list['search_conditions'].should == '{"term":"HAI"}'
     end
     
     it "should be associated on subscription create if it does exist" do

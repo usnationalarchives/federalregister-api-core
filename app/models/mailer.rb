@@ -17,12 +17,11 @@ class Mailer < ActionMailer::Base
     body       :subscription => subscription
   end
   
-  def mailing_list(mailing_list, results, subscriptions)
+  def mailing_list(mailing_list, results, subscription)
     subject "[FR] #{mailing_list.title}"
     from       "Federal Register Subscriptions <subscriptions@mail.federalregister.gov>"
-    recipients subscriptions.map(&:email)
-    # custom_variables :token => subscriptions.map(&:token)
+    recipients subscription.email
     sent_on    Time.current
-    body       :mailing_list => mailing_list, :results => results
+    body       :mailing_list => mailing_list, :results => results, :subscription => subscription
   end
 end

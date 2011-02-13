@@ -111,7 +111,7 @@ ActionController::Routing::Routes.draw do |map|
   end
   
   # SUBSCRIPTIONS
-  map.resources :subscriptions, :except => [:index, :edit, :update], :member => {:delete => :get, :confirm => :get}, :collection => {:confirmation_sent => :get}  
+  map.resources :subscriptions, :except => [:index, :edit, :update], :member => {:unsubscribe => :get, :confirm => :get}, :collection => {:confirmation_sent => :get, :unsubscribed => :get}  
   # page routing
   map.page ':path', :requirements => {:path => /[a-zA-Z_\/-]+/}, :controller => "pages", :action => "show", :conditions => { :method => :get }
   
