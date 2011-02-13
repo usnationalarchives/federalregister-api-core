@@ -16,7 +16,7 @@ class EntriesController < ApplicationController
       end
       wants.rss do
         @feed_name = 'Federal Register Latest Entries'
-        @entries = Entry.published_today.preload(:topics, :agencies)
+        @entries = EntrySearch.new(:conditions => {:publication_date => {:is => @publication_date}}, :order => "newest", :per_page => 1000).results
       end
     end
   end
