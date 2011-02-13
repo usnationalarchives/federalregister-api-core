@@ -39,9 +39,16 @@ describe MailingList do
   end
   
   describe 'search_conditions' do
-    it "stores the values as JSON" do
+    it "are stored as JSON" do
       list = Factory(:mailing_list, :search => EntrySearch.new(:conditions => {:term => 'OH HAI'}))
       list['search_conditions'].should == '{"term":"OH HAI"}'
+    end
+    
+    it "are retrievable by EntrySearch" do
+      list = Factory(:mailing_list, :search => EntrySearch.new(:conditions => {:term => 'OH HAI'}))
+      list.reload
+      
+      list.search.term.should == 'OH HAI'
     end
   end
 end
