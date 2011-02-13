@@ -20,3 +20,5 @@ Comment period ends in <%= pluralize (entry.comments_close_on - Date.current), '
 -------
 
 <% end %>
+If you no longer wish to subscribe to these results, click here:
+<%= unsubscribe_subscription_url(@subscription) %>

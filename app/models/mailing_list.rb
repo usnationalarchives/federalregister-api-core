@@ -30,6 +30,10 @@ class MailingList < ApplicationModel
     self['title'] || search.summary
   end
   
+  def search_conditions
+    JSON.parse(self['search_conditions'])
+  end
+  
   def populate_title_based_on_search_summary
     self.title = search.summary
   end

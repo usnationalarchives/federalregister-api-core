@@ -18,7 +18,7 @@ namespace :mailing_lists do
         # TODO: refactor to find_in_batches and use sendgrid to send to 1000 subscribers at once
         mailing_list.active_subscriptions.find_each do |subscription|
           # TODO: exclude non-developers from receiving emails in development mode
-          Mailer.deliver_mailing_list(mailing_list, results, [subscription])
+          Mailer.deliver_mailing_list(mailing_list, results, subscription)
           Subscription.update_all(
             ['delivery_count = delivery_count + 1, last_delivered_at = ?', Time.now],
             {:id => subscription.id}

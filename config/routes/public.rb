@@ -101,7 +101,7 @@ ActionController::Routing::Routes.draw do |map|
                                                        :conditions => { :method => :get }
 
   # SUBSCRIPTIONS
-  map.resources :subscriptions, :except => [:index, :edit, :update], :member => {:delete => :get, :confirm => :get}, :collection => {:confirmation_sent => :get}  
+  map.resources :subscriptions, :except => [:index, :edit, :update], :member => {:unsubscribe => :get, :confirm => :get}, :collection => {:confirmation_sent => :get, :unsubscribed => :get}  
   
   # SECTIONS
   map.about_section ":slug/about", :controller => "sections", :action => "about", :conditions => { :method => :get }

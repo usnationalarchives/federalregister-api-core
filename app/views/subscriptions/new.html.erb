@@ -1,4 +1,4 @@
-Are you sure you wish to subscribe to <strong><%= link_to h(@subscription.mailing_list.title), entries_search_path(:conditions => @subscription.search_conditions) %></strong>
+Are you sure you wish to subscribe to <strong><%= link_to h(@subscription.mailing_list.title), entries_search_path(:conditions => @subscription.mailing_list.search_conditions) %></strong>
 
 
 <%= error_messages_for :subscription %>
