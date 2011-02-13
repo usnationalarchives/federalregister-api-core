@@ -208,7 +208,7 @@ class ApplicationSearch
             :name => selector.filter_name,
             :condition => condition,
             :label => label,
-            :sphinx_type => :conditions,
+            :sphinx_type => :with,
             :sphinx_attribute => options[:sphinx_attribute] || filter_name
           )
         else
