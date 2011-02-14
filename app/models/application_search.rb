@@ -106,9 +106,9 @@ class ApplicationSearch
     attr_reader :sphinx_value, :filter_name
     
     def initialize(hsh)
-      @is = hsh[:is]
-      @gte = hsh[:gte]
-      @lte = hsh[:lte]
+      @is = hsh[:is].to_s
+      @gte = hsh[:gte].to_s
+      @lte = hsh[:lte].to_s
       @year = hsh[:year].to_s.to_i if hsh[:year].present?
       @valid = true
       

@@ -16,7 +16,7 @@
             <% entry = section.highlighted_entries(publication_date).first %>
             <% if entry %>
               <%= render :partial => 'special/entry_with_abstract', :locals => {:entry => entry} %>  
-              <%= render :partial => 'special/stats', :locals => {:section => section}  %>
+              <%= render :partial => 'special/stats', :locals => {:section => section, :publication_date => publication_date}  %>
             <% end %>
         </div>  
       <% end -%>
