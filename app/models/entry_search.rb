@@ -5,7 +5,7 @@ class EntrySearch < ApplicationSearch
     end
     
     def sphinx_citation
-      title.to_i * 100000 + part.to_i
+      title.to_s.to_i * 100000 + part.to_s.to_i
     end
   end
   
@@ -44,13 +44,14 @@ class EntrySearch < ApplicationSearch
     docket
   end
   
-  define_filter :significant, :sphinx_type => :with, :label => "Signficance" do 
+  define_filter :significant, :sphinx_type => :with, :label => "Significance" do 
     "Associated Unified Agenda Deemed Significant Under EO 12866"
   end
   
   define_place_filter :place_ids
   define_date_filter :publication_date, :label => "Publication Date"
   define_date_filter :effective_date, :label => "Effective Date"
+  define_date_filter :comment_date, :label => "Comment Date"
   
   attr_reader :cfr
   

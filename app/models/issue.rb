@@ -28,7 +28,7 @@ class Issue < ApplicationModel
   end
   
   def self.most_recent(n = 50)
-    all(:order => "publication_date DESC", :limit => n).completed
+    scoped(:order => "publication_date DESC", :limit => n).completed
   end
   
   def self.complete?(date)

@@ -13,7 +13,7 @@ class ApplicationSearch
       if options[:phrase]
         @sphinx_value = "\"#{options[:value]}\""
       elsif options[:crc32_encode]
-        @sphinx_value = options[:value].map(&:to_crc32)
+        @sphinx_value = options[:value].map{|v| v.to_s.to_crc32}
       else
         @sphinx_value = options[:value]
       end
@@ -106,15 +106,15 @@ class ApplicationSearch
     attr_reader :sphinx_value, :filter_name
     
     def initialize(hsh)
-      @is = hsh[:is]
-      @gte = hsh[:gte]
-      @lte = hsh[:lte]
-      @year = hsh[:year].to_i if hsh[:year].present?
+      @is = hsh[:is].to_s
+      @gte = hsh[:gte].to_s
+      @lte = hsh[:lte].to_s
+      @year = hsh[:year].to_s.to_i if hsh[:year].present?
       @valid = true
       
       begin
         if @is.present?
-          date = Date.parse(@is)
+          date = Date.parse(@is.to_s)
           @sphinx_value = date.to_time.utc.beginning_of_day.to_i .. date.to_time.utc.end_of_day.to_i
           @filter_name = "on #{date}"
         elsif @year.present?
@@ -162,8 +162,12 @@ class ApplicationSearch
     end
   end
   
-  attr_accessor :term, :order, :per_page
-  attr_reader :filters
+  attr_accessor :order, :per_page
+  attr_reader :filters, :term
+  
+  def term=(term)
+    @term = term.to_s
+  end
   
   def validation_errors
     @errors
@@ -173,7 +177,7 @@ class ApplicationSearch
     attr_reader filter_name
     
     # refactor to partials...
-    name_definer ||= Proc.new{|*ids| filter_name.to_s.sub(/_ids?$/,'').classify.constantize.find(ids).map(&:name).to_sentence(:two_words_connector => ' or ', :last_word_connector => ', or ') }
+    name_definer ||= Proc.new{|*ids| filter_name.to_s.sub(/_ids?$/,'').classify.constantize.find_all_by_id(ids).map(&:name).to_sentence(:two_words_connector => ' or ', :last_word_connector => ', or ') }
     
     define_method "#{filter_name}=" do |val|
       if (val.present? && (val.is_a?(String) || val.is_a?(Fixnum))) || (val.is_a?(Array) && !val.all?(&:blank?))
