@@ -51,6 +51,7 @@ class EntrySearch < ApplicationSearch
   define_place_filter :place_ids
   define_date_filter :publication_date, :label => "Publication Date"
   define_date_filter :effective_date, :label => "Effective Date"
+  define_date_filter :comment_date, :label => "Comment Date"
   
   attr_reader :cfr
   
