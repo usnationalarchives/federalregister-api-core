@@ -5,6 +5,11 @@
   <% if entry.effective_on.present?         %><dt>Effective Date:</dt>   <dd><%= entry.effective_on                             %></dd><% end %>
   <% if entry.comments_close_on.present?    %><dt>Comments Close:</dt>   <dd><%= entry.comments_close_on                        %></dd><% end %>
   <% if entry.type.present?                 %><dt>Type: </dt>            <dd><%= entry.type                                     %></dd><% end %>
+  <% if entry.agency_names.present?         %><dt><%= pluralize_without_count(entry.agency_names.size, 'Agency') %>:</dt>
+     <% entry.agency_names.each do |agency_name| %>
+       <dd><%= agency_name.name.downcase.capitalize_most_words %></dd>
+     <% end %>
+  <% end %>
   <% if entry.entry_type.present?           %><dt>Entry Type:</dt>       <dd><%= entry.entry_type                               %></dd><% end %>
   <% if entry.start_page != 0               %><dt>Page:</dt>             <dd><%= entry.start_page %><%= "-#{entry.end_page}" if entry.end_page != entry.start_page %> (<%= pluralize entry.human_length, 'page' %>)</dd>
                                               <dt>Document Citation:</dt>         <dd><span class="volume"><%= entry.volume %></span> FR <span class="page"><%= entry.start_page %></span></dd><% end %>
