@@ -2,7 +2,7 @@
 ENV["RAILS_ASSET_ID"] = `git log -n 1 --pretty=format:%H`
 
 # Specifies gem version of Rails to use when vendor/rails is not present
-RAILS_GEM_VERSION = '2.3.8' unless defined? RAILS_GEM_VERSION
+RAILS_GEM_VERSION = '2.3.11' unless defined? RAILS_GEM_VERSION
 
 # Bootstrap the Rails environment, frameworks, and default configuration
 require File.join(File.dirname(__FILE__), 'boot')
@@ -13,7 +13,7 @@ Rails::Initializer.run do |config|
   # -- all .rb files in that directory are automatically loaded.
 
   # Add additional load paths for your own custom dirs
-  config.load_paths += %W( app/observers )
+  config.autoload_paths += %W( app/observers )
   
   # Gems go in RAILS_ROOT/Gemfile
   
