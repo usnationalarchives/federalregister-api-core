@@ -44,7 +44,10 @@ BLOG OVERALL
   max-height: 400px;
   overflow: auto;
   }
-  
+#wordpress .post_content a {
+  word-wrap: break-word;
+  }
+
 /******************************
 
 POST - METADATA LIST
