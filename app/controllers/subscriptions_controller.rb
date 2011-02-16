@@ -23,11 +23,10 @@ class SubscriptionsController < ApplicationController
   def confirm
     @subscription = Subscription.find_by_token!(params[:id])
     @subscription.update_attributes!(:confirmed_at => Time.current)
-    redirect_to subscription_path
+    redirect_to confirmed_subscriptions_path
   end
   
-  def show
-    @subscription = Subscription.find_by_token!(params[:id])
+  def confirmed
   end
   
   def unsubscribe
