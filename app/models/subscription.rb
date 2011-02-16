@@ -2,17 +2,18 @@
 
  Table name: subscriptions
 
-  id                :integer(4)      not null, primary key
-  mailing_list_id   :integer(4)
-  email             :string(255)
-  requesting_ip     :string(255)
-  token             :string(255)
-  confirmed_at      :datetime
-  unsubscribed_at   :datetime
-  created_at        :datetime
-  updated_at        :datetime
-  last_delivered_at :datetime
-  delivery_count    :integer(4)      default(0)
+  id                   :integer(4)      not null, primary key
+  mailing_list_id      :integer(4)
+  email                :string(255)
+  requesting_ip        :string(255)
+  token                :string(255)
+  confirmed_at         :datetime
+  unsubscribed_at      :datetime
+  created_at           :datetime
+  updated_at           :datetime
+  last_delivered_at    :datetime
+  delivery_count       :integer(4)      default(0)
+  last_issue_delivered :date
 
 =end Schema Information
 
@@ -23,6 +24,10 @@ class Subscription < ApplicationModel
   
   belongs_to :mailing_list
   
+  def self.not_delivered_on(date)
+    scoped(:conditions => ["subscriptions.last_issue_delivered IS NULL OR subscriptions.last_issue_delivered < ?", date])
+  end
+
   def to_param
     token
   end

@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110213164727) do
+ActiveRecord::Schema.define(:version => 20110216161513) do
 
   create_table "agencies", :force => true do |t|
     t.integer  "parent_id"
@@ -363,7 +363,8 @@ ActiveRecord::Schema.define(:version => 20110213164727) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.datetime "last_delivered_at"
-    t.integer  "delivery_count",    :default => 0
+    t.integer  "delivery_count",       :default => 0
+    t.date     "last_issue_delivered"
   end
 
   create_table "topic_assignments", :force => true do |t|
