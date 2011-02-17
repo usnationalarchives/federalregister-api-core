@@ -102,6 +102,7 @@ class ApplicationSearch
   end
   
   class DateSelector
+    class InvalidDate < ArgumentError; end
     attr_accessor :is, :gte, :lte, :year
     attr_reader :sphinx_value, :filter_name
     
