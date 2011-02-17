@@ -22,16 +22,10 @@ class Subscription < ApplicationModel
   after_create :ask_for_confirmation
   before_save :update_mailing_list_active_subscriptions_count
   
-  belongs_to :mailing_list
-  
-  def self.not_delivered_on(date)
-    scoped(:conditions => ["subscriptions.last_issue_delivered IS NULL OR subscriptions.last_issue_delivered < ?", date])
-  end
+  attr_accessor :search_conditions
 
-  def to_param
-    token
-  end
-  
+  belongs_to :mailing_list
+
   def mailing_list_with_autobuilding
     if mailing_list_without_autobuilding.nil? && search_conditions.present?
       search = EntrySearch.new(:conditions => search_conditions)
@@ -44,16 +38,22 @@ class Subscription < ApplicationModel
   alias_method_chain :mailing_list, :autobuilding
   
   validates_presence_of :email, :requesting_ip, :mailing_list
+    
+  def self.not_delivered_on(date)
+    scoped(:conditions => ["subscriptions.last_issue_delivered IS NULL OR subscriptions.last_issue_delivered < ?", date])
+  end
+
+  def to_param
+    token
+  end
   
-  def active?
+ def active?
     confirmed_at.present? && unsubscribed_at.nil?
   end
   
   def was_active?
     confirmed_at_was.present? && unsubscribed_at_was.nil?
   end
-  
-  attr_accessor :search_conditions
  
   def confirm!
     self.update_attributes!(:confirmed_at => Time.current) unless self.confirmed_at
