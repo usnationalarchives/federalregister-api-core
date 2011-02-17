@@ -54,7 +54,15 @@ class Subscription < ApplicationModel
   end
   
   attr_accessor :search_conditions
-  
+ 
+  def confirm!
+    self.update_attributes!(:confirmed_at => Time.current) unless self.confirmed_at
+  end
+
+  def unsubscribe!
+    self.update_attributes!(:unsubscribed_at => Time.current) unless self.unsubscribed_at
+  end
+
   private
   
   def ask_for_confirmation
