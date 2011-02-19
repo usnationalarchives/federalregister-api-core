@@ -1,0 +1,29 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+  </head>
+  <body>
+    <h1><%=h @mailing_list.title %></h1>
+    <p><%= pluralize @results.size, "matching article" %>.</p>
+
+    <hr />
+
+    <% @results.each do |entry| %>
+      <h2><%= entry.curated_title %></h2>
+      
+      <p><%= short_entry_url (entry) %></p>
+      
+      <p>A <%= entry.entry_type %> by <%= agency_names(entry, :no_links => true) %>.</p>
+      
+      <p><%= truncate_words(entry.curated_abstract, :length => 500) || "[No abstract available]" -%></p>
+
+      <%- if entry.comments_close_on && entry.comments_close_on > Date.current %>
+      <p>Comment period ends in <%= pluralize (entry.comments_close_on - Date.current), 'day' %> (<%= entry.comments_close_on %>)</p>
+      <%- end %>
+    <% end %>
+    
+    <p>If you no longer wish to subscribe to these results, <%= link_to "click here", unsubscribe_subscription_url(@subscription) %>
+  </body>
+</html>
+
