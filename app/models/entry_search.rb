@@ -56,6 +56,7 @@ class EntrySearch < ApplicationSearch
   attr_reader :cfr
   
   def cfr=(hsh)
+    hsh = hsh.with_indifferent_access
     if hsh.present? && hsh.values.any?(&:present?)
       @cfr = CFR.new(hsh[:title], hsh[:part])
       
@@ -229,6 +230,11 @@ class EntrySearch < ApplicationSearch
       end
       'Articles ' + parts.to_sentence
     end
+  end
+  
+  def results_for_date(date)
+    date = DateSelector.new(:is => date)
+    results(:with => {:publication_date => date.sphinx_value}, :per_page => 1000)
   end
   
   private

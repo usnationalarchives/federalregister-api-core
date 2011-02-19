@@ -37,4 +37,21 @@ class MailingList < ApplicationModel
   def populate_title_based_on_search_summary
     self.title = search.summary
   end
+
+  def deliver!(date, options = {})
+    results = search.results_for_date(date)
+    
+    unless results.empty?
+      subscriptions = active_subscriptions
+      subscriptions = subscriptions.not_delivered_on(date) unless options[:force_delivery]
+      
+      # TODO: exclude non-developers from receiving emails in development mode
+      # TODO: refactor to find_in_batches and use sendgrid to send to 1000 subscribers at once
+      subscriptions.find_in_batches(:batch_size => 1) do |batch_subscriptions|
+        Mailer.deliver_mailing_list(self, results, batch_subscriptions.first)
+      end
+      subscriptions.update_all(['delivery_count = delivery_count + 1, last_delivered_at = ?, last_issue_delivered = ?', Time.now, date])
+      Rails.logger.info("delivered mailing_lists/#{id} to #{subscriptions.count} subscribers (#{results.size} articles})")
+    end
+  end
 end

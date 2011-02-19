@@ -121,6 +121,21 @@ describe EntrySearch do
     end
   end
   
+  describe 'results_for_date' do
+    it "retains the same filters/conditions, but forces a particular publication_date" do
+      date = Date.parse("2010-10-10")
+      search = EntrySearch.new(:conditions => {:term => "HOWDY", :significant => '1', :cfr =>{:title => '7', :part => '132'}})
+      
+      Entry.should_receive(:search).with do |term, options|
+        term.should == 'HOWDY'
+        options[:with][:significant].should == '1'
+        options[:with][:publication_date].should == (date.to_time.utc.beginning_of_day.to_i .. date.to_time.utc.end_of_day.to_i)
+        options[:per_page].should == 1000
+      end
+      search.results_for_date(date)
+    end
+  end
+  
   describe "summary" do
     it "says 'All Articles' if no term or filters" do
       EntrySearch.new(:conditions => {}).summary.should == "All Articles"

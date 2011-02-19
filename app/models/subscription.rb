@@ -47,7 +47,7 @@ class Subscription < ApplicationModel
     token
   end
   
- def active?
+  def active?
     confirmed_at.present? && unsubscribed_at.nil?
   end
   

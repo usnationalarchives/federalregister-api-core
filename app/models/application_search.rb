@@ -107,6 +107,8 @@ class ApplicationSearch
     attr_reader :sphinx_value, :filter_name
     
     def initialize(hsh)
+      hsh = hsh.with_indifferent_access
+      
       @is = hsh[:is].to_s
       @gte = hsh[:gte].to_s
       @lte = hsh[:lte].to_s
@@ -313,30 +315,30 @@ class ApplicationSearch
     with
   end
   
-  def results
-    unless defined?(@results)
-      @results = model.search(@term,
-        {
-          :page => @page,
-          :per_page => @per_page,
-          :order => order_clause,
-          :with => with,
-          :with_all => with_all,
-          :conditions => sphinx_conditions,
-          :match_mode => :extended,
-          :sort_mode => :extended
-        }.merge(find_options)
-      )
-      
-      # TODO: FIXME: Ugly hack to get total pages to be within bounds
-      if @results && @results.total_pages > 50
-        def @results.total_pages
-          50
-        end
+  def results(args = {})
+    result_array = model.search(@term,
+      {
+        :page => @page,
+        :per_page => @per_page,
+        :order => order_clause,
+        :with => with,
+        :with_all => with_all,
+        :conditions => sphinx_conditions,
+        :match_mode => :extended,
+        :sort_mode => :extended
+      }.merge(find_options).recursive_merge(args)
+    )
+    
+    # TODO: FIXME: Ugly hack to get total pages to be within bounds
+    if result_array && result_array.total_pages > 50
+      def result_array.total_pages
+        50
       end
     end
-    @results
+    
+    result_array
   end
+  memoize :results
   
   def order_clause
     "@relevance DESC"
