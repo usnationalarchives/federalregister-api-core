@@ -178,9 +178,9 @@ class ApplicationSearch
   
   def self.define_filter(filter_name, options = {}, &name_definer)
     attr_reader filter_name
-    
     # refactor to partials...
-    name_definer ||= Proc.new{|*ids| filter_name.to_s.sub(/_ids?$/,'').classify.constantize.find_all_by_id(ids).map(&:name).to_sentence(:two_words_connector => ' or ', :last_word_connector => ', or ') }
+    name_definer ||= Proc.new{|*ids|
+filter_name.to_s.sub(/_ids?$/,'').classify.constantize.find_all_by_id(ids.flatten).map(&:name).to_sentence(:two_words_connector => ' or ', :last_word_connector => ', or ') }
     
     define_method "#{filter_name}=" do |val|
       if (val.present? && (val.is_a?(String) || val.is_a?(Fixnum))) || (val.is_a?(Array) && !val.all?(&:blank?))
