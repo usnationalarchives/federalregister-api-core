@@ -61,4 +61,7 @@ class ApplicationController < ActionController::Base
     false
   end
   
+  def handle_unverified_request
+    raise InvalidAuthenticityToken
+  end
 end
