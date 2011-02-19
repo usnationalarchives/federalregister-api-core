@@ -25,7 +25,7 @@ class Subscription < ApplicationModel
   attr_accessor :search_conditions
 
   belongs_to :mailing_list
-
+  
   def mailing_list_with_autobuilding
     if mailing_list_without_autobuilding.nil? && search_conditions.present?
       search = EntrySearch.new(:conditions => search_conditions)
@@ -54,7 +54,7 @@ class Subscription < ApplicationModel
   def was_active?
     confirmed_at_was.present? && unsubscribed_at_was.nil?
   end
- 
+  
   def confirm!
     self.update_attributes!(:confirmed_at => Time.current) unless self.confirmed_at
   end
