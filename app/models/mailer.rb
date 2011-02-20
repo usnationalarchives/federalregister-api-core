@@ -24,4 +24,12 @@ class Mailer < ActionMailer::Base
     sent_on    Time.current
     body       :mailing_list => mailing_list, :results => results, :subscription => subscription
   end
+  
+  def entry_email(entry_email)
+    subject "[FR] #{entry_email.entry.title}"
+    from entry_email.sender
+    recipients entry_email.recipients
+    sent_on Time.current
+    body :entry => entry_email.entry, :sender => entry_email.sender
+  end
 end

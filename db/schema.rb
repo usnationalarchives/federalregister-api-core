@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110216161513) do
+ActiveRecord::Schema.define(:version => 20110220193544) do
 
   create_table "agencies", :force => true do |t|
     t.integer  "parent_id"
@@ -188,6 +188,15 @@ ActiveRecord::Schema.define(:version => 20110216161513) do
   end
 
   add_index "entry_cfr_affected_parts", ["entry_id"], :name => "index_entry_cfr_affected_parts_on_entry_id"
+
+  create_table "entry_emails", :force => true do |t|
+    t.string   "remote_ip"
+    t.integer  "num_recipients"
+    t.integer  "entry_id"
+    t.string   "sender_hash"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "entry_page_views", :force => true do |t|
     t.integer  "entry_id"

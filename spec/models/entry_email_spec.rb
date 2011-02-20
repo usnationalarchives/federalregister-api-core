@@ -1,0 +1,60 @@
+require 'spec_helper'
+
+describe EntryEmail do
+  it { should belong_to :entry }
+  it { should validate_presence_of(:entry) }
+  it { should validate_presence_of(:remote_ip) }
+  it { should validate_presence_of(:sender_hash) }
+  it { should validate_presence_of(:sender) }
+  it { should validate_presence_of(:recipients) }
+  
+  describe 'sender=' do
+    it "hashes the sender email address consistently" do
+      email_1 = Factory.build(:entry_email, :sender_hash => nil)
+      email_1.sender = 'john.doe@example.com'
+      email_1.save!
+      
+      email_2 = Factory.build(:entry_email, :sender_hash => nil)
+      email_2.sender = 'john.doe@example.com'
+      email_2.save!
+      
+      email_1.sender_hash.should == email_2.sender_hash
+    end
+  end
+  
+  describe 'email' do
+    it "should be sent after record is originally created" do
+      email = Factory.build(:entry_email)
+      Mailer.should_receive(:deliver_entry_email).with(email)
+      email.save!
+    end
+  end
+  
+  describe 'recipients=' do
+    it "stores the provided array unchanged if given an array" do
+      email = Factory.build(:entry_email, :recipients => ["john@example.com","jane@example.com"])
+      email.recipients.should == ["john@example.com", "jane@example.com"]
+    end
+    
+    it "splits a string into an array" do
+      email = Factory.build(:entry_email, :recipients => "john@example.com, jane@example.com")
+      email.recipients.should == ["john@example.com", "jane@example.com"]
+    end
+    
+    # keep the fuzzer happy
+    it "doesn't blow up when given a hash" do
+      lambda {Factory.build(:entry_email, :recipients => {})}.should_not raise_error
+    end
+    
+    # it "should require valid participants" do
+    #   
+    # end
+  end
+  
+  describe "num_recipients" do
+    it "should be calculated based on the number of recipients" do
+      Factory(:entry_email, :recipients => "jane@example.com").num_recipients.should == 1
+      Factory(:entry_email, :recipients => "jane@example.com, judy@example.com").num_recipients.should == 2
+    end
+  end
+end
