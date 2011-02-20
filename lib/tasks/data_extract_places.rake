@@ -27,6 +27,7 @@ namespace :data do
           p.save
         
           context = entry.abstract.match(/\b.{0,100}#{Regexp.escape(place.string)}.{0,100}\b/)[0]
+          context = context[0,255]
           entry.place_determinations.create(:place_id => p.id, :confidence => place.confidence, :string => place.string, :context => context)
         end
       
