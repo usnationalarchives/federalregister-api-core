@@ -28,7 +28,9 @@ module Content::EntryImporter::RegulationsDotGov
         nil
       end
     rescue Exception => e
+      Rails.logger.warn e
       HoptoadNotifier.notify(e)
+      return nil
     end
   end
   memoize :regulationsdotgov_document
