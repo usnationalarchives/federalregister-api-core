@@ -81,4 +81,12 @@ describe Subscription do
       subscription_2.mailing_list.should == list_1
     end
   end
+  
+  describe 'confirmation email' do
+    it "should be sent after subscription is originally created" do
+      subscription_1 = Factory.build(:subscription, :search_conditions => {:term => "HAI"})
+      Mailer.should_receive(:deliver_subscription_confirmation).with(subscription_1)
+      subscription_1.save!
+    end
+  end
 end
