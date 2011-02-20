@@ -20,12 +20,12 @@ SitemapGenerator::Sitemap.add_links do |sitemap|
   end
   
   # ENTRIES
-  Entry.find_each do |entry|
+  Entry.scoped(:joins => :issue, :conditions => "issues.completed_at IS NOT NULL").find_each do |entry|
     sitemap.add entry_path(entry)
   end
   
-  Entry.connection.select_values("SELECT DISTINCT(publication_date) FROM entries").each do |date|
-    sitemap.add entries_by_date_path(Date.parse(date))
+  Issue.completed.find_each do |issue|
+    sitemap.add entries_by_date_path(issue.publication_date)
   end
   
   sitemap.add entries_current_issue_path
