@@ -129,7 +129,7 @@ class EntriesController < ApplicationController
   
   def prep_issue_view(date)
     @publication_date = date
-    @issue = Issue.find_by_publication_date(@publication_date)
+    @issue = Issue.completed.find_by_publication_date!(@publication_date)
     
     @agencies = Agency.all(
       :include => [:entries],
