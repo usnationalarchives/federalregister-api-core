@@ -30,6 +30,6 @@ class Mailer < ActionMailer::Base
     from entry_email.sender
     recipients entry_email.recipients
     sent_on Time.current
-    body :entry => entry_email.entry, :sender => entry_email.sender
+    body :entry => entry_email.entry, :sender => entry_email.sender, :message => entry_email.message
   end
 end

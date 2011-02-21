@@ -122,6 +122,8 @@ class Entry < ApplicationModel
   belongs_to :lede_photo
   
   has_many :entry_page_views
+  has_many :entry_emails
+  
   has_one :agency_highlight
   
   has_many :events, :dependent => :destroy

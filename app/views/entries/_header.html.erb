@@ -7,6 +7,7 @@
 
   <div class="share">
     <ul>
+      <li><%= link_to "Email", new_entry_email_path(entry), :title => "Email this article to a friend" %></li>
       <li><%= link_to_twitter("#{short_entry_url(entry)} #gov20") %></li>
       <li><%= link_to_facebook(short_entry_url(entry), entry.title) %></li>
       <li><%= link_to_reddit(short_entry_url(entry), entry.title) %></li>

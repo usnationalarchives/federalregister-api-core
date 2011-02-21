@@ -1,3 +1,9 @@
 <%= @entry.title %>
 
-<%= short_entry_url(@entry) %>
+<%= short_entry_url(@entry.document_number) %>
+
+<%= truncate_words(@entry.curated_abstract, :length => 500) || "[No abstract available]" -%>
+
+<%- if @message.present? -%>
+<%= h @sender %> wrote: <%= @message %>
+<% end %>

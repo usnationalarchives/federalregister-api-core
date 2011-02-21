@@ -20,6 +20,16 @@ describe EntryEmail do
       
       email_1.sender_hash.should == email_2.sender_hash
     end
+    
+    it "should add an error if sender is not a valid email address" do
+      email = Factory.build(:entry_email, :sender => "NOT-A-VALID-EMAIL-ADDRESS")
+      email.should have(1).errors_on(:sender)
+    end
+    
+    it "should accept valid sender emails" do
+      email = Factory.build(:entry_email, :sender => "john@example.com")
+      email.should have(:no).errors_on(:sender)
+    end
   end
   
   describe 'email' do
@@ -46,9 +56,15 @@ describe EntryEmail do
       lambda {Factory.build(:entry_email, :recipients => {})}.should_not raise_error
     end
     
-    # it "should require valid participants" do
-    #   
-    # end
+    it "should add errors when recipients are invalid" do
+      email = Factory.build(:entry_email, :recipients => ["NOT-AN-EMAIL-ADDRESS", "doe@foo_com", "john@example.com"])
+      email.should have(2).errors_on(:recipients)
+    end
+    
+    it "should allow valid recipients" do
+      email = Factory.build(:entry_email, :recipients => ["john@example.com"])
+      email.should have(0).errors_on(:recipients)
+    end
   end
   
   describe "num_recipients" do
