@@ -65,6 +65,16 @@ describe EntryEmail do
       email = Factory.build(:entry_email, :recipients => ["john@example.com"])
       email.should have(0).errors_on(:recipients)
     end
+    
+    it "adds errors when more than 10 recipients are added" do
+      email = Factory.build(:entry_email, :recipients => "one@example.com,two@example.com,three@example.com,four@example.com,five@example.com,six@example.com,seven@example.com,eight@example.com,nine@example.com,ten@example.com,eleven@example.com")
+      email.should have(1).error_on(:recipients)
+    end
+    
+    it "allows 10 recipients when 10 are added" do
+      email = Factory.build(:entry_email, :recipients => "one@example.com,two@example.com,three@example.com,four@example.com,five@example.com,six@example.com,seven@example.com,eight@example.com,nine@example.com,ten@example.com")
+      email.should have(0).error_on(:recipients)
+    end
   end
   
   describe "num_recipients" do

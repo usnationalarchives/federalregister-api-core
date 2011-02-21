@@ -8,6 +8,7 @@ class EntryEmail < ApplicationModel
   validates_presence_of :entry, :remote_ip, :recipients, :sender_hash
   validate :sender_email_is_valid
   validate :recipient_emails_are_valid
+  validate :no_more_than_10_recipients
   
   before_validation :calculate_num_recipients
   after_create :deliver_email
@@ -49,6 +50,10 @@ class EntryEmail < ApplicationModel
     @recipient_emails.to_a.each do |email|
       errors.add(:recipients, "'#{email}' is invalid") unless email_is_valid?(email)
     end
+  end
+  
+  def no_more_than_10_recipients
+    errors.add(:recipients, "Can only send to 10 recipients") if @recipient_emails && @recipient_emails.count > 10
   end
   
   def calculate_num_recipients
