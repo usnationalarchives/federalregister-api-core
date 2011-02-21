@@ -43,12 +43,12 @@ describe EntryEmail do
   describe 'recipients=' do
     it "stores the provided array unchanged if given an array" do
       email = Factory.build(:entry_email, :recipients => ["john@example.com","jane@example.com"])
-      email.recipients.should == ["john@example.com", "jane@example.com"]
+      email.recipient_emails.should == ["john@example.com", "jane@example.com"]
     end
     
     it "splits a string into an array" do
       email = Factory.build(:entry_email, :recipients => "john@example.com, jane@example.com")
-      email.recipients.should == ["john@example.com", "jane@example.com"]
+      email.recipient_emails.should == ["john@example.com", "jane@example.com"]
     end
     
     # keep the fuzzer happy
