@@ -83,4 +83,47 @@ describe EntryEmail do
       Factory(:entry_email, :recipients => "jane@example.com, judy@example.com").num_recipients.should == 2
     end
   end
+  
+  describe "requires_captcha_with_message?" do
+    it "is false when zero emails have been sent from this IP this day" do
+      Timecop.travel(1.week.ago) do
+        Factory(:entry_email, :remote_ip => '8.8.8.8')
+      end
+      Factory.build(:entry_email, :remote_ip => '8.8.8.8').requires_captcha_with_message?.should be_false
+    end
+    
+    it "is true when at least one email has been sent from this IP this day" do
+      Factory(:entry_email, :remote_ip => '8.8.8.8')
+      Factory.build(:entry_email, :remote_ip => '8.8.8.8').requires_captcha_with_message?.should be_true
+    end
+  end
+  
+  describe "requires_captcha_without_message?" do
+    it "is false when 10 or fewer emails have been sent from this IP this day" do
+      Timecop.travel(1.week.ago) do
+        10.times { Factory(:entry_email, :remote_ip => '8.8.8.8') }
+      end
+      5.times { Factory(:entry_email, :remote_ip => '8.8.8.8') }
+      Factory.build(:entry_email, :remote_ip => '8.8.8.8').requires_captcha_without_message?.should be_false
+    end
+    
+    it "is true when more than 10 emails have been sent from this IP this day" do
+      11.times { Factory(:entry_email, :remote_ip => '8.8.8.8') }
+      Factory.build(:entry_email, :remote_ip => '8.8.8.8').requires_captcha_without_message?.should be_true
+    end
+  end
+  
+  describe "requires_captcha?" do
+    it "calls requires_captcha_with_message? if message is present" do
+      email = Factory.build(:entry_email, :message => "HI")
+      email.expects(:requires_captcha_with_message?)
+      email.requires_captcha?
+    end
+    
+    it "calls requires_captcha_without_message? if message is not present" do
+      email = Factory.build(:entry_email)
+      email.expects(:requires_captcha_without_message?)
+      email.requires_captcha?
+    end
+  end
 end

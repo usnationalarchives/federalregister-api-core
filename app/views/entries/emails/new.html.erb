@@ -10,6 +10,10 @@
     <%= f.input :message, :as => :text %>
   <% end %>
   
+  <% if @entry_email.requires_captcha_with_message? || @entry_email.requires_captcha_without_message? %>
+    <%= recaptcha_tags %>
+  <% end %>
+  
   <% f.buttons do %>
     <%= f.commit_button "Send" %>
   <% end %>

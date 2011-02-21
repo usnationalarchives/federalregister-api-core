@@ -40,6 +40,18 @@ class EntryEmail < ApplicationModel
     @recipients
   end
   
+  def requires_captcha_with_message?
+    EntryEmail.count(:conditions => ["created_at > ? AND remote_ip = ?", 1.day.ago, remote_ip]) > 0
+  end
+  
+  def requires_captcha_without_message?
+    EntryEmail.count(:conditions => ["created_at > ? AND remote_ip = ?", 1.day.ago, remote_ip]) > 10
+  end
+  
+  def requires_captcha?
+    true
+  end
+  
   private
   
   def sender_email_is_valid
