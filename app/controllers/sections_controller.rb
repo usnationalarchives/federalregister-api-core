@@ -92,6 +92,14 @@ class SectionsController < ApplicationController
     render :template => "entries/popular", :layout => false
   end
   
+  def most_emailed_entries
+    cache_for 1.hour
+    @section = Section.find_by_slug!(params[:slug])
+    @entries = @section.entries.most_emailed.limit(5)
+    
+    render :template => "entries/most_emailed", :layout => false
+  end
+  
   def popular_topics
     cache_for 1.hour
     @section = Section.find_by_slug!(params[:slug])

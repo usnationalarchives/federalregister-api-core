@@ -182,6 +182,17 @@ class Entry < ApplicationModel
     )
   end
   
+  def self.most_emailed(since = 1.week.ago)
+    scoped(
+      :select => "entries.id, entries.title, entries.document_number, entries.publication_date, entries.abstract, count(distinct(remote_ip)) AS num_emails",
+      :joins => :entry_emails,
+      :conditions => ["entry_emails.created_at > ?", since],
+      :group => "entries.id",
+      :having => "num_emails > 0",
+      :order => "num_emails DESC"
+    )
+  end
+  
   def self.highlighted(date = IssueApproval.latest_publication_date)
     scoped(:joins => :section_highlights, :conditions => {:section_highlights => {:publication_date => date}})
   end
