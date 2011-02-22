@@ -27,7 +27,7 @@ class Subscription < ApplicationModel
   belongs_to :mailing_list
   
   def mailing_list_with_autobuilding
-    if mailing_list_without_autobuilding.nil? && search_conditions.present?
+    if mailing_list_without_autobuilding.nil?
       search = EntrySearch.new(:conditions => search_conditions)
       self.mailing_list = MailingList.find_by_search(search) || MailingList.new(:search => search)
     else
