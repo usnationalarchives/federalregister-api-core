@@ -1,8 +1,8 @@
 <%= title @section.title %>
 <% description description_for_section(@section) %>
 
-<%= feed_autodiscovery significant_entries_section_url(@section, :format => :rss), "Significant Articles in #{@section.title}"%>
-<%= feed_autodiscovery section_url(@section, :format => :rss), "All Articles in #{@section.title}"%>
+<%= feed_autodiscovery significant_entries_section_url(@section, :format => :rss), "Significant Articles in #{@section.title}", :search_conditions => {:section_ids => [@section.id], :significant => 1} %>
+<%= feed_autodiscovery section_url(@section, :format => :rss), "All Articles in #{@section.title}", :search_conditions => {:section_ids => [@section.id]} %>
 
 <h1 class="title"><span><%= @section.title %></span></h1>
 
@@ -38,7 +38,7 @@
   <% end -%>  
   
   <div class='aside_box subscribe'>  
-    <%= link_to 'Subscribe', highlighted_entries_section_path(@section, :format => :rss), :class => 'rss' %>
+    <%= link_to 'Subscribe', new_subscription_path(:subscription => {:search_conditions => {:section_ids => [@section.id]}}), :class => 'rss' %>
   </div>
   
   <%= render :partial => 'special/legal_disclaimer' %>
