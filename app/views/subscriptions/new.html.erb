@@ -2,8 +2,17 @@
 
 Are you sure you wish to subscribe to <strong><%= link_to h(@subscription.mailing_list.title), entries_search_path(:conditions => @subscription.mailing_list.search_conditions) %></strong>
 
+<% if params[:subscription][:email].nil? %>
+<h2>Subscribe via RSS:</h2>
+<ul>
+  <% feed_url = entries_search_url(:search => {:conditions => @subscription.search_conditions}, :format => :rss) %>
+  <li><a href="http://add.my.yahoo.com/rss?url=<%= CGI.escape(feed_url)  %>" title="Add feed to Yahoo"><img src="http://us.i1.yimg.com/us.yimg.com/i/us/my/addtomyyahoo4.gif" /></a></li>
+  <li><a href="http://fusion.google.com/add?feedurl=<%= CGI.escape(feed_url) %>" title="Add feed to Google"><img src="http://buttons.googlesyndication.com/fusion/add.gif" /></a></li>
+  <li><a href="http://www.netvibes.com/subscribe.php?url=<%= CGI.escape(feed_url) %>" title="Add feed to Netvibes"><img src="http://www.netvibes.com/img/add2netvibes.gif" /></a></li>
+</ul>
+<% end %>
 
-
+<h2>Subscribe via Email:</h2>
 <% semantic_form_for @subscription, :url => subscriptions_path do |f| %>
   <%# error_messages_for :subscription %>
   
