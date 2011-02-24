@@ -18,7 +18,7 @@ class Entries::EmailsController < ApplicationController
     remote_ip = remote_ip.split(/\s*,\s*/).last
     @entry_email.remote_ip = remote_ip
     
-    if (@entry_email.requires_captcha? && verify_recaptcha(:model => @entry_email)) && @entry_email.save
+    if (!@entry_email.requires_captcha? || verify_recaptcha(:model => @entry_email)) && @entry_email.save
       redirect_to delivered_entry_email_url(@entry)
     else
       render :action => :new

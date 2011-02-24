@@ -4,7 +4,6 @@ describe EntryEmail do
   it { should belong_to :entry }
   it { should validate_presence_of(:entry) }
   it { should validate_presence_of(:remote_ip) }
-  it { should validate_presence_of(:sender_hash) }
   it { should validate_presence_of(:sender) }
   it { should validate_presence_of(:recipients) }
   

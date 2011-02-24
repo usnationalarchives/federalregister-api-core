@@ -4,10 +4,9 @@ class EntryEmail < ApplicationModel
   attr_accessible :sender, :recipients, :message
   
   validates_presence_of :sender
-  validates_numericality_of :num_recipients, :greater_than => 0
-  validates_presence_of :entry, :remote_ip, :recipients, :sender_hash
-  validate :sender_email_is_valid
-  validate :recipient_emails_are_valid
+  validates_presence_of :entry, :remote_ip, :recipients
+  validate :sender_email_is_valid, :if => Proc.new{|e| e.sender.present?}
+  validate :recipient_emails_are_valid, :if => Proc.new{|e| e.recipients.present?}
   validate :no_more_than_10_recipients
   
   before_validation :calculate_num_recipients
@@ -49,7 +48,7 @@ class EntryEmail < ApplicationModel
   end
   
   def requires_captcha?
-    true
+    requires_captcha_with_message? || requires_captcha_without_message?
   end
   
   private
