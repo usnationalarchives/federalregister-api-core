@@ -2,7 +2,7 @@
 <h1 class="title"><span>E-Mail A Friend</span></h1>
 
 <h1>Email a Friend: <%= link_to @entry.title, entry_path(@entry) %></h1>
-<%= error_messages_for :entry_email%>
+<%# error_messages_for :entry_email %>
 <% semantic_form_for(@entry_email, :url => entry_email_path(@entry)) do |f| %>
   <% f.inputs do %>
     <%= f.input :sender, :required => true %>

@@ -3,9 +3,9 @@
 Are you sure you wish to subscribe to <strong><%= link_to h(@subscription.mailing_list.title), entries_search_path(:conditions => @subscription.mailing_list.search_conditions) %></strong>
 
 
-<%= error_messages_for :subscription %>
 
 <% semantic_form_for @subscription, :url => subscriptions_path do |f| %>
+  <%# error_messages_for :subscription %>
   
   <%# Serialize the parameters; note that this doesn't recurse %>
   <% f.fields_for :search_conditions do |cond_f| %>
