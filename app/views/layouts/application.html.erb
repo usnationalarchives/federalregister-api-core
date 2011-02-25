@@ -8,6 +8,9 @@
     <%= tag(:meta, :name => 'title', :content => yield(:title) ) if yield(:title) %>
     <%= tag(:meta, :name => 'description', :content => yield(:description) ) if yield(:description) %>
     
+    <%# Tell search engines to use the proper hostname and protocol %>
+    <%= tag(:link, :rel  => 'canonical', :href => 'http://www.federalregister.gov' + request.fullpath) %>
+    
     <%= render :esi => layout_head_content_path %>
     
     <%= yield :javascripts %>
