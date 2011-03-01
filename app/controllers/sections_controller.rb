@@ -34,7 +34,7 @@ class SectionsController < ApplicationController
                           :order => "num_entries_this_month DESC",
                           :limit => 10
     ).sort_by { rand }.first
-    
+
     if @agency
       @search = EntrySearch.new(
         :conditions => {
@@ -46,7 +46,7 @@ class SectionsController < ApplicationController
       )
       render :layout => false
     else
-      render :nothing => true
+      render( :nothing => true)
     end
   end
   
