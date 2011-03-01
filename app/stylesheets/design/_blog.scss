@@ -126,6 +126,12 @@ POST - METADATA LIST ICONS
 #wordpress .meta_actions .navigation .back { background: sprite-image('icons/blog/back.png', 25px, 2px, 100px) no-repeat; }
 #wordpress .meta_actions .navigation .back:hover { background: sprite-image('icons/blog/back-hover.png', 25px, 2px, 100px) no-repeat; }
 
+#wordpress li.tags a {
+  display: block;
+  padding: 0 0 0 10px;
+  text-indent: -10px;
+  }
+
 /******************************
 
 COMMENT BUBBLE WITH INLINE COUNTS
