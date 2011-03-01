@@ -1,0 +1,33 @@
+#email_pane {
+  -moz-border-radius:5px 5px 5px 5px;
+  background:none repeat scroll 0 0 #F6F6F6;
+  border:1px solid #DADADA;
+  margin-bottom: 28px;
+  padding:1em;
+  width: 500px;
+  }
+#new_entry_email input,
+#new_entry_email textarea {
+  @extend .comment_form_input; /* see _blog.scss */
+  }
+#new_entry_email textarea {
+  height: 140px;
+  }  
+#new_entry_email label {
+  @extend .comment_form_label;
+  font-size: 1.1em;
+  }
+#new_entry_email label abbr {
+  border-bottom: none;
+  color: #363636;
+  font-family:Arial;
+  font-size:12px;
+  margin-left: 3px;
+  }  
+#new_entry_email #entry_email_submit {
+  @extend .comment_form_submit;
+  }
+#new_entry_email .buttons,
+#new_entry_email .buttons ol {
+  margin: 0;
+  }

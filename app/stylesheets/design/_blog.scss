@@ -230,13 +230,15 @@ POST - COMMENTS
 /* COMMENT FORM */ 
 
 #commentform input,
-#commentform textarea {
+#commentform textarea,
+.comment_form_input {
   border: 1px solid #bbb;
   display: block;
   @include border-radius(3px);
   padding: 3px;
   }
-#commentform label {
+#commentform label,
+.comment_form_label {
   color: #777777;
   font-size: 1em;
   font-weight: bold;
@@ -246,7 +248,8 @@ POST - COMMENTS
   margin: 0;
   padding-bottom: 0;
   }
-#commentform #submit {
+#commentform #submit,
+.comment_form_submit {
   background: url(/images/search_btn_bg.png) repeat-x;
   border: 1px solid #aaa;
   color: #555;
