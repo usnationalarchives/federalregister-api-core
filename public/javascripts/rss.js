@@ -2,6 +2,7 @@ $(document).ready(function () {
     $('a.rss, a.subscription').live('click',
     function () {
         generate_dialog();
+        $('#modal input[placeholder]').textPlaceholder();
         $('#modal').centerScreen().jqmShow();
         return false;
     });
@@ -22,9 +23,10 @@ $(document).ready(function () {
               '         <li><a href="http://fusion.google.com/add?feedurl=<%= escape(this.href) %>" title="Add feed to Google"><img src="http://buttons.googlesyndication.com/fusion/add.gif" /></a></li>',
               '         <li><a href="http://www.netvibes.com/subscribe.php?url=<%= escape(this.href) %>" title="Add feed to Netvibes"><img src="http://www.netvibes.com/img/add2netvibes.gif" /></a></li>',
               '         <% if(this.subscription_action) { %>',
-              '         <li>via email: ',
+              '         <li>',
               '           <form action="<%= this.subscription_action %>" method="post">',
-              '             <input type="email" name="subscription[email]">',
+              '             <label>Via E-Mail: </label>',
+              '             <input type="email" name="subscription[email]" placeholder="E-Mail Address">',
               '             <input type="submit" value="Subscribe">',
               '           </form>',
               '         </li>',
