@@ -23,6 +23,7 @@ describe Subscription do
   it { should belong_to(:mailing_list) }
   it { should validate_presence_of(:email) }
   it { should validate_presence_of(:requesting_ip) }
+  it { should validate_presence_of(:environment) }
   
   it "should generate a random token on create" do
     s1 = Factory(:subscription)
