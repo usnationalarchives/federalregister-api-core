@@ -360,7 +360,7 @@ PAGE VIEW
 
 ******************************/
 
-#wordpress #subnav ul li {
+#wordpress #subnav li {
   border-bottom:1px solid #EEEEEE;
   font-size:1.1em;
   line-height:1.5;
@@ -368,13 +368,29 @@ PAGE VIEW
   margin-bottom:0.75em;
   padding-bottom:0.5em;
   }
-#wordpress #subnav ul li.current_page_item {
+#wordpress #subnav .current_page_item {
   font-weight: bold;
   }
-#wordpress #subnav ul li a {
+#wordpress #subnav .current_page_item li {
+  font-weight: normal;
+  }  
+#wordpress #subnav a {
   display: block;
   }  
-
+#wordpress #subnav .children {
+  margin-left: 10px;
+  }
+#wordpress #subnav .children li {
+  background: sprite-image('raquo/raquo.png', 0, 5px, 50px) no-repeat;
+  border: none;
+  font-size: .9em;
+  margin: 0;
+  padding: 0 0 0 15px;
+  }
+#wordpress #subnav .children li:hover {
+  background: sprite-image('raquo/raquo-on.png', 0, 5px, 50px) no-repeat;
+  }
+  
 /******************************
 
 SEARCH

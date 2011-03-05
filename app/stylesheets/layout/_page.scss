@@ -201,14 +201,11 @@ BLOG
 
 ******************************/
 
-#wordpress #sidebar {
+#wordpress #sidebar,
+#wordpress #subnav {
   @include grid(4, 16);
   @include omega;
   }
-#wordpress #subnav {
-  @include grid(3, 16);
-  @include grid-suffix(1, 16);
-  }  
 #wordpress #content_area {
   @include grid(12, 16);
   }

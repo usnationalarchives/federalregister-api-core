@@ -50,3 +50,6 @@
 #recaptcha_widget_div {
   margin-bottom: 1em;
   }
+.has_js #recaptcha_widget_div {
+  display: none;
+  }
