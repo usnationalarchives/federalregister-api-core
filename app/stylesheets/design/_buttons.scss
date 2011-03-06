@@ -69,17 +69,17 @@ BUTTONS / ICONS
 .rss,
 .help_link,
 .add_to_calendar,
-.subscription {
+a.subscription {
   color: #6e6e6e;
   font-size: 1.2em;
   font-weight: bold;
   padding: 0 0 0 25px;
   }
-.subscription {
+a.subscription {
   padding: 0 0 0 50px;
   }
 .rss,
-.subscription {
+a.subscription {
   background: sprite-image('icons/icon_rss.png', 0, 0, 50px) no-repeat;
   font-size: 1em;
   height: image-height('icons/icon_rss.png');
@@ -89,10 +89,10 @@ BUTTONS / ICONS
 .rss:hover {
   background: sprite-image('icons/icon_rss_hover.png', 0, 0, 50px) no-repeat;
   }
-.subscription {
+a.subscription {
   background: sprite-image('icons/icon_subscribe.png', 0, 0, 50px) no-repeat;  
   }
-.subscription:hover {
+a.subscription:hover {
   background: sprite-image('icons/icon_subscribe_hover.png', 0, 0, 50px) no-repeat;  
   }    
 .help_link {

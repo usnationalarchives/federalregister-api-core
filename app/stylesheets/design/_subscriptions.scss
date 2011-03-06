@@ -1,0 +1,95 @@
+#modal.subscribe h3,
+#subscriptions h3 {
+  border-bottom: 2px solid #363636;
+  margin-bottom: .5em;
+  text-transform: uppercase;
+  }  
+#modal.subscribe ul
+#subscriptions ul {
+  margin-bottom: 0;
+  }
+.icons.horizontal {
+  @include horizontal-list;
+  }
+#subscriptions ul.icons {
+  margin-bottom: 2em;
+  }  
+#modal.subscribe > li {
+  border-bottom: 1px solid #eee;
+  list-style: none;  
+  margin-bottom: 1em;
+  padding-bottom: 1em;
+  }
+#modal.subscribe li:last-child,
+#modal.subscribe li li {
+  border: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+  }    
+#modal.subscribe .icons > li,
+#subscriptions .icons > li {
+  line-height: 15px;
+  margin-right: 10px;
+  padding-left: 20px;
+  }
+#modal.subscribe .icons li:last-child ul {
+  margin-bottom: 1em;
+  }  
+#modal.subscribe .icons li a,
+#subscriptions .icons li a {
+  font-family: "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+  font-size: 13px;
+  }  
+#modal.subscribe .icons .google,
+#subscriptions .icons .google {  
+  background: sprite-image('icons/subscribe/google.png', 0, 0, 50px) no-repeat;  
+  margin-left: 5px;
+  }
+#modal.subscribe .icons .yahoo,
+#subscriptions .icons .yahoo { 
+  background: sprite-image('icons/subscribe/yahoo.png', 0, 0, 50px) no-repeat;
+  padding-left: 30px;
+  }  
+#modal.subscribe .icons .rss_link,
+#subscriptions .icons .rss_link { background: sprite-image('icons/subscribe/rss.png', 0, 0, 50px) no-repeat; }
+#modal.subscribe .icons .email,
+#subscriptions .icons .email { 
+  clear: left;
+  margin-top: 10px;
+  padding-left: 0;
+  }
+#modal.subscribe .icons .email label,
+#subscriptions .icons .email label {
+  display: none;
+  }
+#modal.subscribe .icons .email .address,
+#subscriptions .icons .email #subscription_email {
+  background: sprite-image('icons/subscribe/email-trans.png', 5px, 3px, 50px) no-repeat; 
+  border: 1px solid #d5d5d5;
+  height: 17px;
+  margin-right: 0;
+  padding: 1px 5px 1px 30px;
+  width: 215px;
+  }
+#modal.subscribe .icons .email .subscribe,
+#subscriptions .icons .email #subscription_submit {
+  background: sprite-image('icons/subscribe/subscribe-btn.png', 0, 1px, 50px) no-repeat;
+  border: none;
+  cursor: pointer;
+  display: inline;
+  height: 22px;
+  @include hide-text;
+  margin-left: -4px;
+  padding-bottom: 1px;
+  width: image-width('icons/subscribe/subscribe-btn.png');
+  }
+#modal.subscribe .icons .email .subscribe:hover,
+#subscriptions .icons .email #subscription_submit:hover { background: sprite-image('icons/subscribe/subscribe-btn-hover.png', 0, 1px, 50px) no-repeat; }
+
+#subscriptions .icons .email .formtastic ol {
+  margin: 0;
+  }
+#subscriptions .icons .email .formtastic fieldset {
+  display: inline;
+  margin: 0;
+  }

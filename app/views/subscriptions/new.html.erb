@@ -1,45 +1,47 @@
 <h1 class="title"><span>Subscriptions</span></h1>
 
-Are you sure you wish to subscribe to <strong><%= link_to h(@subscription.mailing_list.title), entries_search_path(:conditions => @subscription.mailing_list.search_conditions) %></strong>
+<div class="errors">
+  <p class="errors_header">Are you sure you wish to subscribe to <strong><%= link_to h(@subscription.mailing_list.title), entries_search_path(:conditions => @subscription.mailing_list.search_conditions) %></strong>?</p>
+</div>
 
 <% if params[:subscription][:email].nil? %>
-<h2>Subscribe via RSS:</h2>
-<ul>
-  <% feed_url = entries_search_url(:search => {:conditions => @subscription.search_conditions}, :format => :rss) %>
-  <li><a href="http://add.my.yahoo.com/rss?url=<%= CGI.escape(feed_url)  %>" title="Add feed to Yahoo"><img src="http://us.i1.yimg.com/us.yimg.com/i/us/my/addtomyyahoo4.gif" /></a></li>
-  <li><a href="http://fusion.google.com/add?feedurl=<%= CGI.escape(feed_url) %>" title="Add feed to Google"><img src="http://buttons.googlesyndication.com/fusion/add.gif" /></a></li>
-  <li><a href="http://www.netvibes.com/subscribe.php?url=<%= CGI.escape(feed_url) %>" title="Add feed to Netvibes"><img src="http://www.netvibes.com/img/add2netvibes.gif" /></a></li>
-</ul>
-<% end %>
+<h3>Subscription Options</h3>
+  <ul class="horizontal icons">
+    <% feed_url = entries_search_url(:search => {:conditions => @subscription.search_conditions}, :format => :rss) %>
+    <li class="google"><a href="http://fusion.google.com/add?feedurl=<%= CGI.escape(feed_url) %>" title="Add feed to Google">Google Reader</a></li>
+    <li class="yahoo"><a href="http://add.my.yahoo.com/rss?url=<%= CGI.escape(feed_url)  %>" title="Add feed to Yahoo">My Yahoo</a></li>
+    <li class="rss_link"><a href="<%= feed_url %>" title="RSS 2.0 Link">RSS 2.0 Link</a></li>
+    <li class="email">
+      <% semantic_form_for @subscription, :url => subscriptions_path do |f| %>
+        <%# error_messages_for :subscription %>
 
-<h2>Subscribe via Email:</h2>
-<% semantic_form_for @subscription, :url => subscriptions_path do |f| %>
-  <%# error_messages_for :subscription %>
-  
-  <%# Serialize the parameters; note that this doesn't recurse %>
-  <% f.fields_for :search_conditions do |cond_f| %>
-    <% @subscription.search_conditions.each do |attr, vals| %>
-      <% if vals.is_a?(Array)%>
-        <% vals.each do |val| %>
-          <%= cond_f.hidden_field(attr, :id => '', :value => val, :multiple => true) unless val.blank? %>
-        <% end %>
-      <% elsif vals.is_a?(Hash) %>
-        <% vals.each_pair do |key,val| %>
-          <% cond_f.fields_for attr do |custom_f| %>
-            <%= custom_f.hidden_field(key, :id => '', :value => val) unless val.blank? %>
+        <%# Serialize the parameters; note that this doesn't recurse %>
+        <% f.fields_for :search_conditions do |cond_f| %>
+          <% @subscription.search_conditions.each do |attr, vals| %>
+            <% if vals.is_a?(Array)%>
+              <% vals.each do |val| %>
+                <%= cond_f.hidden_field(attr, :id => '', :value => val, :multiple => true) unless val.blank? %>
+              <% end %>
+            <% elsif vals.is_a?(Hash) %>
+              <% vals.each_pair do |key,val| %>
+                <% cond_f.fields_for attr do |custom_f| %>
+                  <%= custom_f.hidden_field(key, :id => '', :value => val) unless val.blank? %>
+                <% end %>
+              <% end %>
+            <% else%>
+              <%= cond_f.hidden_field(attr, :id => '', :value => vals) unless vals.blank? %>
+            <% end %>
           <% end %>
         <% end %>
-      <% else%>
-        <%= cond_f.hidden_field(attr, :id => '', :value => vals) unless vals.blank? %>
+
+        <% f.inputs do %>
+          <%= f.input :email, :input_html => { :placeholder => 'Subscribe via E-Mail' } %>
+        <% end %>
+
+        <% f.buttons do %>
+          <%= f.commit_button "Subscribe" %>
+        <% end %>
       <% end %>
-    <% end %>
-  <% end %>
-  
-  <% f.inputs do %>
-    <%= f.input :email %>
-  <% end %>
-  
-  <% f.buttons do %>
-    <%= f.commit_button "Subscribe" %>
-  <% end %>
+    </li>  
+  </ul>
 <% end %>
