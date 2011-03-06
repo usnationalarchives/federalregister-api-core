@@ -71,4 +71,61 @@
   margin: .5em 0 1em;
   padding: 1em;
   text-align: center;
+  }
+  
+#modal.subscribe li {
+  list-style: none;
+  }
+#modal.subscribe h3 {
+  border-bottom: 2px solid #363636;
+  margin-bottom: 1em;
+  text-transform: uppercase;
   }  
+#modal.subscribe .icons li {
+  line-height: 15px;
+  margin-right: 10px;
+  padding-left: 20px;
+  }
+#modal.subscribe .icons li:last-child ul {
+  margin-bottom: 1em;
+  }  
+#modal.subscribe .icons li a {
+  font-family: "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+  font-size: 13px;
+  }  
+#modal.subscribe .icons .google {  
+  background: sprite-image('icons/subscribe/google.png', 0, 0, 50px) no-repeat;  
+  margin-left: 5px;
+  }
+#modal.subscribe .icons .yahoo { 
+  background: sprite-image('icons/subscribe/yahoo.png', 0, 0, 50px) no-repeat;
+  padding-left: 30px;
+  }  
+#modal.subscribe .icons .rss_link { background: sprite-image('icons/subscribe/rss.png', 0, 0, 50px) no-repeat; }
+#modal.subscribe .icons .email { 
+  margin-top: 10px;
+  padding-left: 0;
+  }
+#modal.subscribe .icons .email label {
+  display: none;
+  }
+#modal.subscribe .icons .email .address {
+  background: sprite-image('icons/subscribe/email-trans.png', 5px, 3px, 50px) no-repeat; 
+  border: 1px solid #d5d5d5;
+  height: 17px;
+  margin-right: 0;
+  padding: 1px 5px 1px 30px;
+  width: 215px;
+  }
+#modal.subscribe .icons .email .subscribe {
+  background: sprite-image('icons/subscribe/subscribe-btn.png', 0, 1px, 50px) no-repeat;
+  border: none;
+  cursor: pointer;
+  display: inline;
+  height: 22px;
+  @include hide-text;
+  margin-left: -4px;
+  padding-bottom: 1px;
+  width: image-width('icons/subscribe/subscribe-btn.png');
+  }
+#modal.subscribe .icons .email .subscribe:hover { background: sprite-image('icons/subscribe/subscribe-btn-hover.png', 0, 1px, 50px) no-repeat; }
