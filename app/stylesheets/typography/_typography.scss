@@ -348,20 +348,26 @@ STATIC PAGES
 #wordpress.page #content_area .aside_box {
   margin-bottom: 1em;
   }
-#wordpress.page #content_area.static_page .article ul,
-#wordpress.single-post #content_area .post_content ul,
+#wordpress.page .article ul,
+#wordpress.single-post .post_content ul,
 #wordpress #disclaimer_modal ul  {
   @extend ul.bullets;
   @include athelas;
-  font-size: 16px;
+  font-size: 15.6px;
   }
 #wordpress.page #content_area.static_page .article ul li,
 #wordpress.single-post #content_area .post_content ul li,
 #wordpress #disclaimer_modal .modal_content ul li {
   background-position: left 8px;
   line-height: 1.5;  
-  }
+  }  
 #wordpress.page #content_area.static_page .article h3,
 #wordpress.single-post #content_area .post_content h3 {
   margin-top: 1em;
-  }  
+  }
+#wordpress.page #content_area.static_page .article li,
+#wordpress.single-post #content_area .post_content li {
+  @include athelas;
+  font-size: 15.6px;
+  list-style-position: inside;
+  }

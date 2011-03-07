@@ -1,6 +1,6 @@
 #modal.subscribe h3,
-#subscriptions h3,
-#emails h3 {
+#subscriptions #main h3,
+#emails #main h3 {
   border-bottom: 2px solid #363636;
   margin-bottom: .5em;
   text-transform: uppercase;
@@ -9,7 +9,7 @@
   @include horizontal-list;
   }
 #modal.subscribe ul,
-#subscriptions ul {
+#subscriptions #main ul {
   margin-bottom: 0;
   margin-left: 1em;
   }  
@@ -95,15 +95,15 @@
   display: inline;
   margin: 0;
   }
-#subscriptions .error {
+#subscriptions #main .error {
   padding-left: 25px;
   position: relative;
   }
-#subscriptions .inline-errors {
+#subscriptions #main .inline-errors {
   left: 350px;
   position: absolute;
   top: 0;
   }
-#subscriptions .errors input { /* unsubscribe button */
+#subscriptions #main .errors input { /* unsubscribe button */
   margin: 10px 0 0 25px;
   }  
