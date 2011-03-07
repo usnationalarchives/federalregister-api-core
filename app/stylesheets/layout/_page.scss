@@ -3,6 +3,8 @@
 SETUP
 
 ******************************/
+@import "compass/layout/sticky-footer";
+@include sticky-footer(250px, "#main", "#layout_footer", "#footer");
 
 #main,
 #footer .wrapper {
