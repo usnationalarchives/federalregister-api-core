@@ -18,6 +18,7 @@
 =end Schema Information
 
 class Subscription < ApplicationModel
+  default_scope :conditions => { :environment => Rails.env }
   before_create :generate_token
   after_create :ask_for_confirmation
   before_save :update_mailing_list_active_subscriptions_count
@@ -37,8 +38,8 @@ class Subscription < ApplicationModel
   
   alias_method_chain :mailing_list, :autobuilding
   
-  validates_presence_of :email, :requesting_ip, :mailing_list
-    
+  validates_presence_of :email, :requesting_ip, :mailing_list, :environment
+  
   def self.not_delivered_on(date)
     scoped(:conditions => ["subscriptions.last_issue_delivered IS NULL OR subscriptions.last_issue_delivered < ?", date])
   end
