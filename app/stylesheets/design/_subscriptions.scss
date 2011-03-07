@@ -4,17 +4,18 @@
   margin-bottom: .5em;
   text-transform: uppercase;
   }  
-#modal.subscribe ul
-#subscriptions ul {
-  margin-bottom: 0;
-  }
 .icons.horizontal {
   @include horizontal-list;
   }
+#modal.subscribe ul,
+#subscriptions ul {
+  margin-bottom: 0;
+  margin-left: 1em;
+  }  
 #subscriptions ul.icons {
   margin-bottom: 2em;
   }  
-#modal.subscribe > li {
+#modal.subscribe li {
   border-bottom: 1px solid #eee;
   list-style: none;  
   margin-bottom: 1em;
@@ -26,7 +27,7 @@
   margin-bottom: 0;
   padding-bottom: 0;
   }    
-#modal.subscribe .icons > li,
+#modal.subscribe .icons li,
 #subscriptions .icons > li {
   line-height: 15px;
   margin-right: 10px;
@@ -93,3 +94,12 @@
   display: inline;
   margin: 0;
   }
+#subscriptions .error {
+  padding-left: 25px;
+  position: relative;
+  }
+#subscriptions .inline-errors {
+  left: 350px;
+  position: absolute;
+  top: 0;
+  }  

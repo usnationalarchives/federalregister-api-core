@@ -1,7 +1,9 @@
 <h1 class="title"><span>Subscriptions</span></h1>
 
-Are you sure you wish to unsubscribe <%= h @subscription.email %> from <%= link_to h(@subscription.mailing_list.title), entries_search_path(:conditions => @subscription.mailing_list.search_conditions) %>?
+<div class="errors">
+  <p class="errors_header">Are you sure you wish to unsubscribe <%= h @subscription.email %> from <%= link_to h(@subscription.mailing_list.title), entries_search_path(:conditions => @subscription.mailing_list.search_conditions) %>?</p>
+  <% form_for(@subscription, :html=>{:method=>"delete"}) do |f| %>
+    <%= f.submit 'Unsubscribe' %>
+  <% end %>
+</div>
 
-<% form_for(@subscription, :html=>{:method=>"delete"}) do |f| %>
-  <%= f.submit 'Unsubscribe' %>
-<% end %>
