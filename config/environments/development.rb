@@ -13,15 +13,21 @@ config.action_controller.consider_all_requests_local = true
 config.action_view.debug_rjs                         = true
 config.action_controller.perform_caching             = false
 
-# Don't care if the mailer can't send
-# config.action_mailer.raise_delivery_errors = false
-config.action_mailer.delivery_method = :sendmail
-config.action_mailer.smtp_settings = {
-  :address => "localhost",
-  :port    => "25",
-  :domain  => "fr2.local:3000"
+sendgrid_keys  = File.open( File.join(File.dirname(__FILE__), '..',
+'sendgrid.yml') ) { |yf| YAML::load( yf ) }
+
+smtp_settings = {
+ :address        => "smtp.sendgrid.net",
+ :port           => "587",
+ :domain         => "www.fr2.local",
+ :user_name      => sendgrid_keys['username'],
+ :password       => sendgrid_keys['password'],
+ :authentication => :plain
 }
 
-config.action_mailer.default_url_options = {:host => 'fr2.local:3000'}
+config.action_mailer.delivery_method = :smtp
+config.action_mailer.smtp_settings   = smtp_settings
+
+config.action_mailer.default_url_options = {:host => 'fr2.local:8080'}
 
 # Put gems in Gemfile...
