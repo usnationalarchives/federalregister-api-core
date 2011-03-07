@@ -1,20 +1,35 @@
 <% title "Email a friend: #{@entry.title}" %>
 <h1 class="title"><span>E-Mail A Friend</span></h1>
 
-<h1>Email a Friend: <%= link_to @entry.title, entry_path(@entry) %></h1>
-<%# error_messages_for :entry_email %>
-<% semantic_form_for(@entry_email, :url => entry_email_path(@entry)) do |f| %>
-  <% f.inputs do %>
-    <%= f.input :sender, :required => true %>
-    <%= f.input :recipients, :required => true %>
-    <%= f.input :message, :as => :text %>
-  <% end %>
+<div id="email_pane" data-requires-captcha-with-message="<%= @entry_email.requires_captcha_with_message? %>" data-requires-captcha="<%= @entry_email.requires_captcha_without_message? %>" >
+  <h3>E-Mail the following article:</h3>
+  <h4><%= link_to @entry.title, entry_path(@entry) %></h4>
+  <p>Your email address will not be published. Required fields are marked *</p>
+  <%# TODO HELP-RUBY not sure how to make errors trigger at the moment %>
+  <!-- <% if error_messages_for :entry_email %>
+    <div class="errors">
+      <%# TODO HELP-RUBY not sure if we have a header or just a list of the errors %>
+      <p class="errors_header">The following errors were found:</p>
+      <%# TODO HELP-RUBY if we have a list, it just needs to be ul class = bullets %>
+      <%= error_messages_for :entry_email %>
+    </div>
+  <% end %> -->
   
-  <% if @entry_email.requires_captcha_with_message? || @entry_email.requires_captcha_without_message? %>
-    <%= recaptcha_tags %>
-  <% end %>
+  <% semantic_form_for(@entry_email, :url => entry_email_path(@entry)) do |f| %>
+    <% f.inputs do %>
+      <%= f.input :sender, :required => true, :input_html => { :placeholder => "your_email@example.com" } %>
+      <%# TODO HELP-RUBY this checkbox is all styled and ready to go. just make it real :D %>
+      <%#= f.input :sender, :label => 'Send me a copy', :as => :boolean, :wrapper_html => { :class => 'copy' } %>
+      <%= f.input :recipients, :required => true, :input_html => { :placeholder => "one@example.com, two@example.com, three@example.com, etc." } %>
+      <%= f.input :message, :as => :text %>
+    <% end %>
   
-  <% f.buttons do %>
-    <%= f.commit_button "Send" %>
+    <% if @entry_email.requires_captcha_with_message? || @entry_email.requires_captcha_without_message? %>
+      <%= recaptcha_tags %>
+    <% end %>
+  
+    <% f.buttons do %>
+      <%= f.commit_button "Send" %>
+    <% end %>
   <% end %>
-<% end %>
+</div>
