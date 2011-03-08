@@ -1,3 +1,10 @@
+GIT
+  remote: git://github.com/criticaljuncture/sendgrid.git
+  revision: c3c7f99eb420ede23fecc63265e2f0d42fc61b8d
+  branch: master
+  specs:
+    sendgrid (0.1.5)
+
 GEM
   remote: http://rubygems.org/
   remote: http://gems.github.com/
@@ -186,6 +193,7 @@ DEPENDENCIES
   rubyzip (= 0.9.1)
   seanhussey-woulda
   searchlogic (= 2.4.12)
+  sendgrid!
   spork (= 0.7.5)
   stevedore (= 0.0.1)
   system_timer (= 1.0.0)

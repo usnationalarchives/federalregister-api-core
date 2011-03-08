@@ -43,6 +43,7 @@ gem "delayed_job", '2.0.3'
 gem "gwt_rpc", "0.0.1"
 
 gem "recaptcha", "0.3.1", :require => 'recaptcha/rails'
+gem 'sendgrid', :git => "git://github.com/criticaljuncture/sendgrid.git", :branch => 'master'
 
 # bundler requires these gems in all environments
 # gem 'nokogiri', '1.4.2'
