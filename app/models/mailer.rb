@@ -1,7 +1,13 @@
 class Mailer < ActionMailer::Base
+  include SendGrid
   helper :entry, :text
   
+  sendgrid_enable :opentracking, :clicktracking
+  
   def password_reset_instructions(user)
+    sendgrid_category "Admin Password Reset"
+    sendgrid_disable :subscriptiontrack
+    
     subject    "FR2 Admin Password Reset"
     from       "FR2 Admin <info@criticaljuncture.org>"
     recipients user.email
@@ -10,6 +16,9 @@ class Mailer < ActionMailer::Base
   end
   
   def subscription_confirmation(subscription)
+    sendgrid_category "Subscription Confirmation"
+    sendgrid_disable :subscriptiontrack
+    
     subject    "[FR] #{subscription.mailing_list.title}"
     from       "Federal Register Subscriptions <subscriptions@mail.federalregister.gov>"
     recipients subscription.email
@@ -17,15 +26,24 @@ class Mailer < ActionMailer::Base
     body       :subscription => subscription
   end
   
-  def mailing_list(mailing_list, results, subscription)
+  def mailing_list(mailing_list, results, subscriptions)
+    sendgrid_category "Subscription"
+    sendgrid_recipients subscriptions.map(&:email)
+    sendgrid_disable :subscriptiontrack
+    #TODO use variable replacement for unsubscribe
+    
     subject "[FR] #{mailing_list.title}"
     from       "Federal Register Subscriptions <subscriptions@mail.federalregister.gov>"
-    recipients subscription.email
+    recipients subscriptions.map(&:email).join(',')
     sent_on    Time.current
-    body       :mailing_list => mailing_list, :results => results, :subscription => subscription
+    body       :mailing_list => mailing_list, :results => results
   end
   
   def entry_email(entry_email)
+    sendgrid_category "Email a Friend"
+    sendgrid_recipients entry_email.recipient_emails
+    sendgrid_disable :subscriptiontrack
+    
     subject "[FR] #{entry_email.entry.title}"
     from entry_email.sender
     recipients entry_email.recipients
