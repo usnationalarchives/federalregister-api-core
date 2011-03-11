@@ -47,8 +47,8 @@ class MailingList < ApplicationModel
       
       # TODO: exclude non-developers from receiving emails in development mode
       # TODO: refactor to find_in_batches and use sendgrid to send to 1000 subscribers at once
-      subscriptions.find_in_batches(:batch_size => 1) do |batch_subscriptions|
-        Mailer.deliver_mailing_list(self, results, batch_subscriptions.first)
+      subscriptions.find_in_batches(:batch_size => 1000) do |batch_subscriptions|
+        Mailer.deliver_mailing_list(self, results, batch_subscriptions)
       end
       subscriptions.update_all(['delivery_count = delivery_count + 1, last_delivered_at = ?, last_issue_delivered = ?', Time.now, date])
       Rails.logger.info("delivered mailing_lists/#{id} to #{subscriptions.count} subscribers (#{results.size} articles})")

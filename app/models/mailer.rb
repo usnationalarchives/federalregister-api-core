@@ -29,8 +29,8 @@ class Mailer < ActionMailer::Base
   def mailing_list(mailing_list, results, subscriptions)
     sendgrid_category "Subscription"
     sendgrid_recipients subscriptions.map(&:email)
+    sendgrid_substitute "(((token)))", subscriptions.map(&:token)
     sendgrid_disable :subscriptiontrack
-    #TODO use variable replacement for unsubscribe
     
     subject "[FR] #{mailing_list.title}"
     from       "Federal Register Subscriptions <subscriptions@mail.federalregister.gov>"
