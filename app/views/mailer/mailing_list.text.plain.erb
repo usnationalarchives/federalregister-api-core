@@ -1,0 +1,24 @@
+<%= @mailing_list.title %>
+
+<%= pluralize @results.size, "matching article" %>.
+
+-------------
+
+<%- @results.each do |entry| -%>
+<%= entry.curated_title %>
+
+<%= short_entry_url (entry) %>
+
+A <%= entry.entry_type %> by <%= agency_names(entry, :no_links => true) %>.
+
+<%= truncate_words(entry.curated_abstract, :length => 500) || "[No abstract available]" -%>
+
+<%- if entry.comments_close_on && entry.comments_close_on > Date.current %>
+
+Comment period ends in <%= pluralize (entry.comments_close_on - Date.current), 'day' %> (<%= entry.comments_close_on %>)
+<%- end %>
+-------
+
+<% end %>
+If you no longer wish to subscribe to these results, click here:
+<%#= unsubscribe_subscription_url(@subscription) %>

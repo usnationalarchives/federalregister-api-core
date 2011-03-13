@@ -1,8 +1,7 @@
-<% super_title 'Agency Name Assignment' %>
-<% title 'All Agencies' %>
+<% super_title 'Agency Names' %>
+<% title 'All Agency Names' %>
 
 <% sidebar(render :partial => 'nav') %>
-<% super_title 'Topic Name Assignment' %>
 
 <% semantic_form_for @search do |f| %>
   <% f.inputs do %>
@@ -35,3 +34,5 @@
     <% end %>
   </tbody>
 </table>
+
+<%= will_paginate @agency_names %>

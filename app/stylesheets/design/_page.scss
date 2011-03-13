@@ -435,7 +435,8 @@ p:target {
 .metadata_list dd {
   font-weight: normal;
   margin: 0;
-  padding: 0;
+  padding: 0 0 0 10px;
+  text-indent: -10px;
   text-transform: none;
   }  
 .citable {

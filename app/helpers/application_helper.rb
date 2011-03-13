@@ -29,8 +29,13 @@ module ApplicationHelper
     set_content_for :sidebar, text
   end
   
-  def feed_autodiscovery(feed_url, title = 'RSS')
-    content_for :feeds, tag(:link, :rel => 'alternate', :type => 'application/rss+xml', :title => title, :href => feed_url)
+  def feed_autodiscovery(feed_url, title = 'RSS', options = {})
+    link_html_options = {:rel => 'alternate', :type => 'application/rss+xml', :title => title, :href => feed_url}
+    
+    if options[:search_conditions]
+      link_html_options[:'data-search-conditions'] = options[:search_conditions].to_json
+    end
+    content_for :feeds, tag(:link, link_html_options)
   end
   
   def pluralize_without_count(count, noun, text = nil)

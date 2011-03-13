@@ -68,6 +68,16 @@ ActionController::Routing::Routes.draw do |map|
                                          :action     => 'search',
                                          :conditions => { :method => :get }
   
+  # ENTRY EMAILS
+  map.new_entry_email 'articles/:document_number/email-a-friend', :controller => "entries/emails",
+                                                                  :action => "new",
+                                                                  :conditions => {:method => :get}
+  map.entry_email 'articles/:document_number/email-a-friend', :controller => "entries/emails",
+                                                              :action => "create",
+                                                              :conditions => {:method => :post}
+  map.delivered_entry_email 'articles/:document_number/email-a-friend/delivered', :controller => "entries/emails",
+                                                                                  :action => "delivered",
+                                                                                  :conditions => {:method => :get}
   # EVENT SEARCH
   map.events_search 'events/search.:format', :controller => 'events/search', :action => 'show', :conditions => { :method => :get }
   
@@ -100,6 +110,22 @@ ActionController::Routing::Routes.draw do |map|
                                                        :action     => 'tiny_url',
                                                        :conditions => { :method => :get }
 
+  # SUBSCRIPTIONS
+  map.resources :subscriptions, :only => [:new, :create, :edit, :update, :destroy], :member => {:unsubscribe => :get, :confirm => :get}, :collection => {:confirmation_sent => :get, :confirmed => :get, :unsubscribed => :get}
+  
+  # SECTIONS
+  Section.all.each do |section|
+    map.with_options :slug => section.slug, :controller => "sections", :conditions => { :method => :get } do |section_map|
+      section_map.connect "#{section.slug}.:format",              :action => "show"
+      section_map.connect "#{section.slug}/about",                :action => "about"
+      section_map.connect "#{section.slug}/featured.:format",     :action => "highlighted_entries"
+      section_map.connect "#{section.slug}/significant.:format",  :action => "significant_entries"
+    end
+  end
+  
+  # SUBSCRIPTIONS
+  map.resources :subscriptions, :except => [:index, :edit, :update], :member => {:unsubscribe => :get, :confirm => :get}, :collection => {:confirmation_sent => :get, :unsubscribed => :get}  
+  
   # SECTIONS
   map.about_section ":slug/about", :controller => "sections", :action => "about", :conditions => { :method => :get }
   map.highlighted_entries_section ":slug/featured.:format", :controller => "sections", :action => "highlighted_entries", :conditions => { :method => :get }

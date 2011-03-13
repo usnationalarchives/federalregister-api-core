@@ -122,6 +122,8 @@ class Entry < ApplicationModel
   belongs_to :lede_photo
   
   has_many :entry_page_views
+  has_many :entry_emails
+  
   has_one :agency_highlight
   
   has_many :events, :dependent => :destroy
@@ -177,6 +179,17 @@ class Entry < ApplicationModel
       :group => "entries.id",
       :having => "num_views > 0",
       :order => "num_views DESC"
+    )
+  end
+  
+  def self.most_emailed(since = 1.week.ago)
+    scoped(
+      :select => "entries.id, entries.title, entries.document_number, entries.publication_date, entries.abstract, count(distinct(remote_ip)) AS num_emails",
+      :joins => :entry_emails,
+      :conditions => ["entry_emails.created_at > ?", since],
+      :group => "entries.id",
+      :having => "num_emails > 0",
+      :order => "num_emails DESC"
     )
   end
   

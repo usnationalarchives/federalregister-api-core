@@ -10,6 +10,7 @@ ActionController::Routing::Routes.draw do |map|
     # HOMEPAGE
     quiet_map.agency_highlight '/agency_highlight', :controller => 'special', :action => 'agency_highlight'
     quiet_map.popular_entries '/popular_entries', :controller => 'special', :action => 'popular_entries'
+    quiet_map.most_emailed_entries '/most_emailed_entries', :controller => 'special', :action => 'most_emailed_entries'
     
     # BY DATE
     quiet_map.entries_by_month 'articles/:year/:month', :controller => 'entries',
@@ -39,6 +40,7 @@ ActionController::Routing::Routes.draw do |map|
     
     # SECTIONS
     quiet_map.popular_entries_section ':slug/popular_entries.:format', :controller => "sections", :action => "popular_entries"
+    quiet_map.most_emailed_entries_section ':slug/most_emailed_entries.:format', :controller => "sections", :action => "most_emailed_entries"
     quiet_map.popular_topics_section ':slug/popular_topics.:format', :controller => "sections", :action => "popular_topics"
     quiet_map.featured_agency_section ':slug/featured_agency.:format', :controller => "sections", :action => "featured_agency"
   end
