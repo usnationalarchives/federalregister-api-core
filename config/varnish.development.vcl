@@ -32,7 +32,7 @@ sub vcl_recv {
     
     # Route to the correct backend
     if (req.url ~ "^(/blog|/policy|/learn|/layout/footer_page_list|/layout/homepage_post_list)") {
-        set req.http.host = "blog.fr2.a.criticaljuncture.org";
+        set req.http.host = "fr2.local";
         set req.backend = blog;
  
         # Don't cache wordpress pages if logged in to wp
@@ -40,7 +40,7 @@ sub vcl_recv {
             return (pass);
         } 
     } else {
-      set req.http.host = "rails.fr2.a.criticaljuncture.org";
+      set req.http.host = "fr2-rails.local";
       set req.backend = rails;
     }
 
@@ -65,7 +65,7 @@ sub vcl_recv {
     # Pass wp admin requests directly on to wp
     if (req.url ~ "^(/wp-login|wp-admin)") {
         set req.backend = blog;
-        set req.http.host = "blog.fr2.a.criticaljuncture.org";
+        set req.http.host = "fr2.local";
         return (pass);
     }
     
