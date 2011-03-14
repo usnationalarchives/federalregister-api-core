@@ -9,6 +9,7 @@ webrat.log
 /config/mail.yml
 /config/newrelic.yml
 /config/sendgrid.yml
+/config/secrets.yml
 /data
 /db/sphinx/
 /log
