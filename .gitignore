@@ -8,6 +8,7 @@ webrat.log
 /config/ec2_config.yml
 /config/mail.yml
 /config/newrelic.yml
+/config/secrets.yml
 /data
 /db/sphinx/
 /log

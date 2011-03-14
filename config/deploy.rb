@@ -161,6 +161,7 @@ set :custom_symlinks, {
   'config/newrelic.yml'                       => 'config/newrelic.yml',
   'config/amazon.yml'                         => 'config/amazon.yml',
   'config/initializers/cloudkicker_config.rb' => 'config/cloudkicker_config.rb',
+  'config/secrets.yml'                        => 'config/secrets.yml',
   
   # don't symlink data directory directly!
   'data/bulkdata'         => 'data/bulkdata',
@@ -226,6 +227,12 @@ namespace :fr2 do
   desc "Update api keys"
   task :update_api_keys, :roles => [:app, :worker] do
     run "/usr/local/s3sync/s3cmd.rb get config.internal.federalregister.gov:api_keys.yml #{shared_path}/config/api_keys.yml"
+    find_and_execute_task("apache:restart")
+  end
+  
+  desc "Update secret keys"
+  task :update_secret_keys, :roles => [:app, :worker] do
+    run "/usr/local/s3sync/s3cmd.rb get config.internal.federalregister.gov:secrets.yml #{shared_path}/config/secrets.yml"
     find_and_execute_task("apache:restart")
   end
 end
