@@ -102,10 +102,13 @@ class ApplicationSearch
   end
   
   class DateSelector
+    class InvalidDate < ArgumentError; end
     attr_accessor :is, :gte, :lte, :year
     attr_reader :sphinx_value, :filter_name
     
     def initialize(hsh)
+      hsh = hsh.with_indifferent_access
+      
       @is = hsh[:is].to_s
       @gte = hsh[:gte].to_s
       @lte = hsh[:lte].to_s
@@ -175,9 +178,9 @@ class ApplicationSearch
   
   def self.define_filter(filter_name, options = {}, &name_definer)
     attr_reader filter_name
-    
     # refactor to partials...
-    name_definer ||= Proc.new{|*ids| filter_name.to_s.sub(/_ids?$/,'').classify.constantize.find_all_by_id(ids).map(&:name).to_sentence(:two_words_connector => ' or ', :last_word_connector => ', or ') }
+    name_definer ||= Proc.new{|*ids|
+filter_name.to_s.sub(/_ids?$/,'').classify.constantize.find_all_by_id(ids.flatten).map(&:name).to_sentence(:two_words_connector => ' or ', :last_word_connector => ', or ') }
     
     define_method "#{filter_name}=" do |val|
       if (val.present? && (val.is_a?(String) || val.is_a?(Fixnum))) || (val.is_a?(Array) && !val.all?(&:blank?))
@@ -208,7 +211,7 @@ class ApplicationSearch
             :name => selector.filter_name,
             :condition => condition,
             :label => label,
-            :sphinx_type => :conditions,
+            :sphinx_type => :with,
             :sphinx_attribute => options[:sphinx_attribute] || filter_name
           )
         else
@@ -218,40 +221,26 @@ class ApplicationSearch
     end
   end
   
-  def self.define_place_filter(sphinx_attribute)
-    attr_accessor :location, :within
+  def self.define_place_filter(filter_name, options = {})
+    attr_reader filter_name
     
-    define_method :within= do |val|
-      if val.present? && (val.is_a?(String) || val.is_a?(Fixnum))
-        if val.to_i < 1 && val.to_i > 200
-          @errors[:within] = "range must be between 1 and 200 miles."
-        else
-          @within = val.to_i
-        end
-      end
-    end
-
-    define_method :location= do |val|
-      if val.present? && val.is_a?(String)
-        @location = val
-        loc = fetch_location(val)
-
-        if loc.lat
-          places = Place.find(:all, :select => "id", :origin => loc, :within => within)
+    define_method "#{filter_name}=" do |hsh|
+      if hsh.present? && hsh.values.any?(&:present?)
+        place_selector = PlaceSelector.new(hsh[:location], hsh[:within])
+        instance_variable_set("@#{filter_name}", place_selector)
+        if place_selector.valid? && place_selector.location.present?
           add_filter(
-            :value => [places.map{|p| p.id}], # deeply nested array keeps places together to avoid duplicate filters
-            :name => "#{val} within #{within} miles",
-            :condition => :location,
-            :sphinx_attribute => sphinx_attribute,
-            :label => "Near",
+            :value => [place_selector.place_ids], # deeply nested array keeps places together to avoid duplicate filters
+            :name => "within #{place_selector.within} miles of #{place_selector.location}",
+            :condition => filter_name,
+            :sphinx_attribute => options[:sphinx_attribute],
+            :label => "Located",
             :sphinx_type => :with
           )
-
-          if places.size > 4096
-            @errors[:location] = 'We found too many locations near your location; please reduce the scope of your search'
-          end
         else
-          @errors[:location] = 'We could not understand your location.'
+          unless place_selector.valid?
+            @errors[filter_name] = place_selector.validation_errors
+          end
         end
       end
     end
@@ -326,30 +315,30 @@ class ApplicationSearch
     with
   end
   
-  def results
-    unless defined?(@results)
-      @results = model.search(@term,
-        {
-          :page => @page,
-          :per_page => @per_page,
-          :order => order_clause,
-          :with => with,
-          :with_all => with_all,
-          :conditions => sphinx_conditions,
-          :match_mode => :extended,
-          :sort_mode => :extended
-        }.merge(find_options)
-      )
-      
-      # TODO: FIXME: Ugly hack to get total pages to be within bounds
-      if @results && @results.total_pages > 50
-        def @results.total_pages
-          50
-        end
+  def results(args = {})
+    result_array = model.search(@term,
+      {
+        :page => @page,
+        :per_page => @per_page,
+        :order => order_clause,
+        :with => with,
+        :with_all => with_all,
+        :conditions => sphinx_conditions,
+        :match_mode => :extended,
+        :sort_mode => :extended
+      }.merge(find_options).recursive_merge(args)
+    )
+    
+    # TODO: FIXME: Ugly hack to get total pages to be within bounds
+    if result_array && result_array.total_pages > 50
+      def result_array.total_pages
+        50
       end
     end
-    @results
+    
+    result_array
   end
+  memoize :results
   
   def order_clause
     "@relevance DESC"
@@ -399,11 +388,15 @@ class ApplicationSearch
     RegulatoryPlanSearch.new(:conditions => {:term => @term}).term_count
   end
   
-  private
-  
-  def fetch_location(location)
-    Rails.cache.fetch("location_of: '#{location}'") { Geokit::Geocoders::GoogleGeocoder.geocode(location) }
+  def to_json
+    @conditions.to_json
   end
+  
+  def self.from_json(json)
+    self.new(:conditions => JSON.parse(json))
+  end
+  
+  private
   
   def set_defaults(options)
   end

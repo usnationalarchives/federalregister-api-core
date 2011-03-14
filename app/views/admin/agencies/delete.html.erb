@@ -4,7 +4,7 @@
   This agency has entries associated with it and cannot be deleted.
 <% else %>
   Are you sure you want to delete <%= @agency.name %>? This cannot be undone!
-  <% semantic_form_for @agency, agency_path(@agency), :method => :delete do |f| %>
+  <% semantic_form_for @agency, :url => admin_agency_path(@agency), :html => {:method => :delete} do |f| %>
     <% f.buttons do %>
       <%= f.commit_button 'Delete Agency' %>
     <% end %>

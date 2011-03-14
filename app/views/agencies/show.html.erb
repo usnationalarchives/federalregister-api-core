@@ -3,7 +3,7 @@
 
 <h1 class="title"><span>Agency</span></h1>
 
-<% feed_autodiscovery agency_url(@agency, :format => :rss) %>
+<% feed_autodiscovery agency_url(@agency, :format => :rss), "All Articles by #{@agency.name}", :search_conditions => {:agency_ids => [@agency.id]} %>
 
 <div class="group">
   
@@ -46,7 +46,7 @@
     <% end -%>
     
     <div class='aside_box subscribe'>  
-      <%= link_to 'Subscribe', agency_path(@agency, :format => :rss), :class => 'rss' %>
+      <%= link_to 'Subscribe', new_subscription_path(:subscription => {:search_conditions => {:agency_ids => [@agency.id]}}), :class => 'rss' %>
     </div>
     
     <%= render :partial => 'special/legal_disclaimer' %>

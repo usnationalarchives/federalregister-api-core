@@ -63,14 +63,26 @@ $(document).ready(function () {
     document.cookie = "javascript_enabled=1; path=/";
     
     $("input[placeholder]").textPlaceholder();
-    $("body").find(":first-child").addClass("firstchild");
-    $("body").find(":last-child").addClass("lastchild");    
+    
+    if($.browser.msie && $.browser.version.substr(0,1) < 7) {
+      $("body").find(":first-child").addClass("firstchild");
+      $("body").find(":last-child").addClass("lastchild");    
+    }
     
     generate_print_disclaimer();
     
     $(".jqmClose").live('click', function (event) {
       $(this).parent().jqmHide();
     });
+    
+    if( $("#email_pane").attr('data-requires-captcha-without-message') || $("#email_pane").attr('data-requires-captcha') ){
+      $("#recaptcha_widget_div").hide();
+      var el = $("#email_pane").attr('data-requires-captcha-without-message') ? $("#entry_email_sender", "#entry_email_recipients") : $("#entry_email_message");
+      el.bind('focus', function(event) {
+        $("#recaptcha_widget_div").show();
+      });
+    }
+
     
     $("a[href^='http://www.flickr.com']").bind('click',
     function (event) {

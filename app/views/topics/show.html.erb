@@ -1,8 +1,8 @@
 <% title @topic.name %>
 <% description "Browse Federal Register articles tagged by agencies with the topic '#{@topic.name}'. Use this topic to learn more about your areas of interest and the regulations that affect the topic '#{@topic.name}'." %>
 
-<% feed_autodiscovery topic_url(@topic, :format => :rss), "Articles in this topic" %>
-<% feed_autodiscovery significant_entries_topic_url(@topic, :format => :rss), "Significant Articles in this topic" %>
+<% feed_autodiscovery topic_url(@topic, :format => :rss), "Articles in this topic", :search_conditions => {:topic_ids => [@topic.id]} %>
+<% feed_autodiscovery significant_entries_topic_url(@topic, :format => :rss), "Significant Articles in this topic", :search_conditions => {:topic_ids => [@topic.id], :significant => '1'} %>
 
 <h1 class="title"><span>Topic</span></h1>
 
@@ -40,7 +40,7 @@
   <% end -%>
   
   <div class='aside_box subscribe'>  
-    <%= link_to 'Subscribe', topic_path(@topic, :format => :rss), :class => 'rss' %>
+    <%= link_to 'Subscribe', new_subscription_path(:subscription => {:search_conditions => {:topic_ids => [@topic.id]}}), :class => 'rss' %>
   </div>
   
   <%= render :partial => 'special/legal_disclaimer' %>

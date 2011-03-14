@@ -48,7 +48,7 @@ class EntrySearch < ApplicationSearch
     "Associated Unified Agenda Deemed Significant Under EO 12866"
   end
   
-  define_place_filter :place_ids
+  define_place_filter :near, :sphinx_attribute => :place_ids
   define_date_filter :publication_date, :label => "Publication Date"
   define_date_filter :effective_date, :label => "Effective Date"
   define_date_filter :comment_date, :label => "Comment Date"
@@ -56,6 +56,7 @@ class EntrySearch < ApplicationSearch
   attr_reader :cfr
   
   def cfr=(hsh)
+    hsh = hsh.with_indifferent_access
     if hsh.present? && hsh.values.any?(&:present?)
       @cfr = CFR.new(hsh[:title], hsh[:part])
       
@@ -63,6 +64,7 @@ class EntrySearch < ApplicationSearch
         add_filter(
           :value => @cfr.sphinx_citation,
           :name => @cfr.citation,
+          :condition => :cfr,
           :sphinx_attribute => :cfr_affected_parts,
           :label => "Affected CFR Part",
           :sphinx_type => :with
@@ -196,6 +198,43 @@ class EntrySearch < ApplicationSearch
     if term.present?
       return Entry.find_by_document_number(term)
     end
+  end
+  
+  def summary
+    if @term.blank? && filters.empty?
+      "All Articles"
+    else
+      parts = []
+      
+      if @term.present?
+        parts << "matching '#{@term}'"
+      end
+    
+      [
+        ['with an effective date', :effective_date],
+        ['from', :agency_ids],
+        ['of type', :type],
+        ['filed under agency docket', :docket_id],
+        ['whose', :significant],
+        ['associated with', :regulation_id_number],
+        ['affecting', :cfr],
+        ['located', :near],
+        ['in', :section_ids],
+        ['about', :topic_ids]
+      ].each do |term, filter_condition|
+        relevant_filters = filters.select{|f| f.condition == filter_condition}
+      
+        unless relevant_filters.empty?
+          parts << "#{term} #{relevant_filters.map(&:name).to_sentence(:two_words_connector => ' or ', :last_word_connector => ', and ')}"
+        end
+      end
+      'Articles ' + parts.to_sentence
+    end
+  end
+  
+  def results_for_date(date)
+    date = DateSelector.new(:is => date)
+    results(:with => {:publication_date => date.sphinx_value}, :per_page => 1000)
   end
   
   private

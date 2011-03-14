@@ -4,3 +4,5 @@ cloudmade: your-cloudmake-api-key
 hoptoad: your-hoptoad-api-key
 flickr: your-flickr-api-key
 flickr_secret: your-flickr-secret
+recaptcha_public: your-recaptcha-public-key
+recaptcha_private: your-recaptcha-private-key

@@ -3,9 +3,10 @@ module EntryHelper
     truncate_words(entry.title, :length => 100)
   end
   
-  def agency_names(entry)
+  def agency_names(entry, options = {})
+    autolink = true unless options[:no_links]
     if entry.agencies.present?
-      agencies = entry.agencies.excluding_parents.map{|a| "the #{link_to a.name, agency_path(a)}" }
+      agencies = entry.agencies.excluding_parents.map{|a| "the #{link_to_if autolink, a.name, agency_path(a)}" }
     else
       agencies = entry.agency_names.map(&:name)
     end

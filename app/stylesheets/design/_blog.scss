@@ -111,7 +111,7 @@ POST - METADATA LIST ICONS
 #wordpress li.author { background: sprite-image('icons/blog/author.png', 0, 0, 50px) no-repeat; }
 #wordpress li.date { background: sprite-image('icons/blog/date.png', 0, 0, 50px) no-repeat; }  
 #wordpress li.categories { background: sprite-image('icons/blog/category.png', 23px, 1px, 500px) no-repeat; }
-#wordpress li.tags { background: sprite-image('icons/blog/tag.png', 23px, 1px, 50px) no-repeat; }
+#wordpress li.tags { background: sprite-image('icons/blog/tag.png', 23px, 1px, 500px) no-repeat; }
 #wordpress .meta_actions .navigation .prev {
   background: sprite-image('icons/blog/prev.png', 23px, 2px, 100px) no-repeat;
   margin-bottom: 1em;
@@ -125,6 +125,12 @@ POST - METADATA LIST ICONS
 #wordpress .meta_actions .navigation .next:hover { background: sprite-image('icons/blog/next-hover.png', 23px, 2px, 100px) no-repeat; }
 #wordpress .meta_actions .navigation .back { background: sprite-image('icons/blog/back.png', 25px, 2px, 100px) no-repeat; }
 #wordpress .meta_actions .navigation .back:hover { background: sprite-image('icons/blog/back-hover.png', 25px, 2px, 100px) no-repeat; }
+
+#wordpress li.tags a {
+  display: block;
+  padding: 0 0 0 10px;
+  text-indent: -10px;
+  }
 
 /******************************
 
@@ -151,7 +157,7 @@ COMMENT BUBBLE WITH INLINE COUNTS
   line-height: 15px;
   position: absolute;
   text-align: center;
-  width: 20px;
+  width: 22px;
   }
 #wordpress .meta_actions li.comments span {
   left: 20px;
@@ -230,13 +236,15 @@ POST - COMMENTS
 /* COMMENT FORM */ 
 
 #commentform input,
-#commentform textarea {
+#commentform textarea,
+.comment_form_input {
   border: 1px solid #bbb;
   display: block;
   @include border-radius(3px);
   padding: 3px;
   }
-#commentform label {
+#commentform label,
+.comment_form_label {
   color: #777777;
   font-size: 1em;
   font-weight: bold;
@@ -246,7 +254,8 @@ POST - COMMENTS
   margin: 0;
   padding-bottom: 0;
   }
-#commentform #submit {
+#commentform #submit,
+.comment_form_submit {
   background: url(/images/search_btn_bg.png) repeat-x;
   border: 1px solid #aaa;
   color: #555;
@@ -351,7 +360,7 @@ PAGE VIEW
 
 ******************************/
 
-#wordpress #subnav ul li {
+#wordpress #subnav li {
   border-bottom:1px solid #EEEEEE;
   font-size:1.1em;
   line-height:1.5;
@@ -359,13 +368,29 @@ PAGE VIEW
   margin-bottom:0.75em;
   padding-bottom:0.5em;
   }
-#wordpress #subnav ul li.current_page_item {
+#wordpress #subnav .current_page_item {
   font-weight: bold;
   }
-#wordpress #subnav ul li a {
+#wordpress #subnav .current_page_item li {
+  font-weight: normal;
+  }  
+#wordpress #subnav a {
   display: block;
   }  
-
+#wordpress #subnav .children {
+  margin-left: 10px;
+  }
+#wordpress #subnav .children li {
+  background: sprite-image('raquo/raquo.png', 0, 5px, 50px) no-repeat;
+  border: none;
+  font-size: .9em;
+  margin: 0;
+  padding: 0 0 0 15px;
+  }
+#wordpress #subnav .children li:hover {
+  background: sprite-image('raquo/raquo-on.png', 0, 5px, 50px) no-repeat;
+  }
+  
 /******************************
 
 SEARCH

@@ -3,8 +3,10 @@
 
 <% sidebar(render :partial => 'nav') %>
 
+<%= will_paginate @unprocessed_agency_names %>
+
 <% if @unprocessed_agency_names.present? %>
-  <table class='center_content sortable'>
+  <table class='center_content'>
     <thead>
       <tr>
         <th>Agency Name</th>
@@ -21,3 +23,5 @@
 <% else %>
   <p>No unprocessed agency names</p>
 <% end %>
+
+<%= will_paginate @unprocessed_agency_names %>

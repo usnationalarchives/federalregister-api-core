@@ -1,4 +1,4 @@
-<% feed_autodiscovery entries_url(:format => :rss) %>
+<% feed_autodiscovery entries_url(:format => :rss), 'All Articles from the Federal Register', :search_conditions => {} %>
 
 <% title "Entries for #{@publication_date.to_formatted_s(:pretty)}" %>
 <h1 class="title"><span><%= @publication_date %> Issue</span></h1>
@@ -97,8 +97,9 @@
     </div>    
   <% end -%>
   
-  <p><%= link_to 'Subscribe', entries_url(:format => :rss), :class => 'rss' %></p>
-  
+  <p>
+    <%= link_to 'Subscribe', new_subscription_path(:subscription => {:search_conditions => {}}), :class => 'rss' %>
+  </p>
 <% end -%>
 
 

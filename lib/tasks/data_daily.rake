@@ -28,6 +28,7 @@ namespace :data do
       remote:sphinx:rebuild_delta
       content:issues:mark_complete
       varnish:expire:everything
+      mailing_lists:deliver
       sitemap:refresh
     )
   end
