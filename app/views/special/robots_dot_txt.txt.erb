@@ -1,6 +1,11 @@
+<% if Rails.env == 'production' %>
 Sitemap: http://www.federalregister.gov/sitemap_index.xml.gz
 
 User-Agent: *
 Disallow: /articles/search
 Disallow: /events/search
 Disallow: /regulations/search
+<%- else -%>
+User-Agent: *
+Disallow: /
+<% end %>

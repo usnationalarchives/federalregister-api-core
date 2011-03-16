@@ -49,4 +49,9 @@ class SpecialController < ApplicationController
     cache_for 1.day
     render :layout => false
   end
+  
+  def robots_dot_txt
+    cache_for 1.day
+    render :layout => false
+  end
 end
