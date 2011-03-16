@@ -18,8 +18,9 @@ class EntryEmail < ApplicationModel
   def sender=(sender)
     @sender = sender.to_s.strip
     if sender.present?
-      email_hash = @sender
-      self.sender_hash = 20.times { email_hash = Digest::SHA512.hexdigest(email_hash) }
+      email_hash = "#{@sender}#{SECRET_EMAIL_SALT}"
+      20.times { email_hash = Digest::SHA512.hexdigest(email_hash) }
+      self.sender_hash = email_hash
     else
       self.sender_hash = nil
     end
