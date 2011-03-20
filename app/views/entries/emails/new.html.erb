@@ -1,7 +1,7 @@
 <% title "Email a friend: #{@entry.title}" %>
 <h1 class="title"><span>E-Mail A Friend</span></h1>
 
-<div id="email_pane" data-requires-captcha-with-message="<%= @entry_email.requires_captcha_with_message? %>" data-requires-captcha="<%= @entry_email.requires_captcha_without_message? %>" >
+<div id="email_pane" data-requires-captcha-with-message="<%= @entry_email.requires_captcha_with_message? %>" data-requires-captcha-without-message="<%= @entry_email.requires_captcha_without_message? %>" >
   <h3>E-Mail the following article:</h3>
   <h4><%= link_to @entry.title, entry_path(@entry) %></h4>
   <p>Your email address will not be published. Required fields are marked *</p>
