@@ -12,7 +12,7 @@
     <% @results.each do |entry| %>
       <h2><%= entry.curated_title %></h2>
       
-      <p><%= short_entry_url (entry) %></p>
+      <p><%= short_entry_url(entry.document_number) %></p>
       
       <p>A <%= entry.entry_type %> by <%= agency_names(entry, :no_links => true) %>.</p>
       

@@ -11,6 +11,6 @@
 
 <h1><%= link_to @entry.title, short_entry_url(@entry.document_number) %></h1>
 
-<p><%= short_entry_url(@entry.document_number) %></p>
+<p><%= link_to short_entry_url(@entry.document_number), short_entry_url(@entry.document_number) %></p>
 
 <p><%= truncate_words(@entry.curated_abstract, :length => 500) || "[No abstract available]" -%></p>
