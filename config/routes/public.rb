@@ -1,6 +1,7 @@
 ActionController::Routing::Routes.draw do |map|
   # SPECIAL PAGES
   map.root :controller => 'special', :action => 'home', :conditions => { :method => :get }
+  map.connect 'robots.txt', :controller => 'special', :action => 'robots_dot_txt', :format => :txt, :conditions => { :method => :get }
   # map.widget_instructions 'widget_instructions', :controller => 'special', :action => 'widget_instructions', :conditions => { :method => :get }
 
   # ENTRY SEARCH
@@ -69,13 +70,13 @@ ActionController::Routing::Routes.draw do |map|
                                          :conditions => { :method => :get }
   
   # ENTRY EMAILS
-  map.new_entry_email 'articles/:document_number/email-a-friend', :controller => "entries/emails",
+  map.new_entry_email 'articles/email-a-friend/:document_number', :controller => "entries/emails",
                                                                   :action => "new",
                                                                   :conditions => {:method => :get}
-  map.entry_email 'articles/:document_number/email-a-friend', :controller => "entries/emails",
+  map.entry_email 'articles/email-a-friend/:document_number', :controller => "entries/emails",
                                                               :action => "create",
                                                               :conditions => {:method => :post}
-  map.delivered_entry_email 'articles/:document_number/email-a-friend/delivered', :controller => "entries/emails",
+  map.delivered_entry_email 'articles/email-a-friend/:document_number/delivered', :controller => "entries/emails",
                                                                                   :action => "delivered",
                                                                                   :conditions => {:method => :get}
   # EVENT SEARCH

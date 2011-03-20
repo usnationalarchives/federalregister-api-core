@@ -6,7 +6,6 @@ class Mailer < ActionMailer::Base
   
   def password_reset_instructions(user)
     sendgrid_category "Admin Password Reset"
-    sendgrid_disable :subscriptiontrack
     
     subject    "FR2 Admin Password Reset"
     from       "FR2 Admin <info@criticaljuncture.org>"
@@ -17,7 +16,6 @@ class Mailer < ActionMailer::Base
   
   def subscription_confirmation(subscription)
     sendgrid_category "Subscription Confirmation"
-    sendgrid_disable :subscriptiontrack
     
     subject    "[FR] #{subscription.mailing_list.title}"
     from       "Federal Register Subscriptions <subscriptions@mail.federalregister.gov>"
@@ -30,7 +28,6 @@ class Mailer < ActionMailer::Base
     sendgrid_category "Subscription"
     sendgrid_recipients subscriptions.map(&:email)
     sendgrid_substitute "(((token)))", subscriptions.map(&:token)
-    sendgrid_disable :subscriptiontrack
     
     subject "[FR] #{mailing_list.title}"
     from       "Federal Register Subscriptions <subscriptions@mail.federalregister.gov>"
@@ -41,12 +38,11 @@ class Mailer < ActionMailer::Base
   
   def entry_email(entry_email)
     sendgrid_category "Email a Friend"
-    sendgrid_recipients entry_email.recipient_emails
-    sendgrid_disable :subscriptiontrack
+    sendgrid_recipients entry_email.all_recipient_emails
     
     subject "[FR] #{entry_email.entry.title}"
     from entry_email.sender
-    recipients entry_email.recipients
+    recipients entry_email.all_recipient_emails
     sent_on Time.current
     body :entry => entry_email.entry, :sender => entry_email.sender, :message => entry_email.message
   end

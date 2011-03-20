@@ -1,7 +1,7 @@
 class EntryEmail < ApplicationModel
   belongs_to :entry
   
-  attr_accessible :sender, :recipients, :message
+  attr_accessible :sender, :recipients, :message, :send_me_a_copy
   
   validates_presence_of :sender
   validates_presence_of :entry, :remote_ip, :recipients
@@ -12,14 +12,15 @@ class EntryEmail < ApplicationModel
   before_validation :calculate_num_recipients
   after_create :deliver_email
   
-  attr_accessor :message
+  attr_accessor :message, :send_me_a_copy
   
   attr_reader :sender
   def sender=(sender)
     @sender = sender.to_s.strip
     if sender.present?
-      email_hash = @sender
-      self.sender_hash = 20.times { email_hash = Digest::SHA512.hexdigest(email_hash) }
+      email_hash = "#{@sender}#{SECRET_EMAIL_SALT}"
+      20.times { email_hash = Digest::SHA512.hexdigest(email_hash) }
+      self.sender_hash = email_hash
     else
       self.sender_hash = nil
     end
@@ -38,17 +39,25 @@ class EntryEmail < ApplicationModel
     
     @recipients
   end
+
+  def all_recipient_emails
+    if send_me_a_copy == '1'
+      @recipient_emails + [sender]
+    else
+      @recipient_emails
+    end
+  end
   
   def requires_captcha_with_message?
-    EntryEmail.count(:conditions => ["created_at > ? AND remote_ip = ?", 1.day.ago, remote_ip]) > 0
+    true
   end
   
   def requires_captcha_without_message?
-    EntryEmail.count(:conditions => ["created_at > ? AND remote_ip = ?", 1.day.ago, remote_ip]) > 10
+    EntryEmail.count(:conditions => ["created_at > ? AND remote_ip = ?", 1.day.ago, remote_ip]) >= 10
   end
   
   def requires_captcha?
-    requires_captcha_with_message? || requires_captcha_without_message?
+    (message.present? && requires_captcha_with_message?) || requires_captcha_without_message?
   end
   
   private

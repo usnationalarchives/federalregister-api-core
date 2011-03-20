@@ -56,7 +56,6 @@ $(document).ready(function () {
             $('#modal form').submit(function() {
                 var form = $(this);
                 form.attr('action', form.attr('action') + '&' + escape('subscription[email]') + '=' + escape(form.find('input[name="subscription[email]"]').val()));
-                alert(form.attr('action'));
             });
 
             $('#modal').jqm({

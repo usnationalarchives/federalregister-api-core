@@ -22,7 +22,7 @@
     <li><%= link_to "<span>#{issue.significant_entries_count}</span> #{pluralize_without_count issue.significant_entries_count, "Significant Document"}", entries_search_path(:conditions => {:significant => 1, :publication_date => {:is => issue.publication_date}}) %></li>
     <% end %>
     
-    <% if issue.total_pages > 1 %>
+    <% if issue.total_pages && issue.total_pages > 1 %>
     <li><span><%= issue.total_pages %></span> Pages</li>
     <% end %>
     

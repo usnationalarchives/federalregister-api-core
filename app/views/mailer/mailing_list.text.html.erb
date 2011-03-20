@@ -12,7 +12,7 @@
     <% @results.each do |entry| %>
       <h2><%= entry.curated_title %></h2>
       
-      <p><%= short_entry_url (entry) %></p>
+      <p><%= link_to short_entry_url(entry.document_number), short_entry_url(entry.document_number) %></p>
       
       <p>A <%= entry.entry_type %> by <%= agency_names(entry, :no_links => true) %>.</p>
       
@@ -22,7 +22,7 @@
       <p>Comment period ends in <%= pluralize (entry.comments_close_on - Date.current), 'day' %> (<%= entry.comments_close_on %>)</p>
       <%- end %>
     <% end %>
-    
+    <hr />    
     <p>If you no longer wish to subscribe to these results, <%= link_to "click here", unsubscribe_subscription_url('(((token)))') %>
   </body>
 </html>

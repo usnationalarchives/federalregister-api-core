@@ -11,7 +11,7 @@
      <% end %>
   <% end %>
   <% if entry.entry_type.present?           %><dt>Entry Type:</dt>       <dd><%= entry.entry_type                               %></dd><% end %>
-  <% if entry.start_page != 0               %><dt>Page:</dt>             <dd><%= entry.start_page %><%= "-#{entry.end_page}" if entry.end_page != entry.start_page %> (<%= pluralize entry.human_length, 'page' %>)</dd>
+  <% if entry.start_page && entry.start_page != 0 %><dt>Page:</dt>       <dd><%= entry.start_page %><%= "-#{entry.end_page}" if entry.end_page != entry.start_page %> (<%= pluralize entry.human_length, 'page' %>)</dd>
                                               <dt>Document Citation:</dt>         <dd><span class="volume"><%= entry.volume %></span> FR <span class="page"><%= entry.start_page %></span></dd><% end %>
   
   <% if entry.entry_cfr_affected_parts.present? %>
