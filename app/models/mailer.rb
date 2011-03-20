@@ -38,11 +38,11 @@ class Mailer < ActionMailer::Base
   
   def entry_email(entry_email)
     sendgrid_category "Email a Friend"
-    sendgrid_recipients entry_email.recipient_emails
+    sendgrid_recipients entry_email.all_recipient_emails
     
     subject "[FR] #{entry_email.entry.title}"
     from entry_email.sender
-    recipients entry_email.recipients
+    recipients entry_email.all_recipient_emails
     sent_on Time.current
     body :entry => entry_email.entry, :sender => entry_email.sender, :message => entry_email.message
   end

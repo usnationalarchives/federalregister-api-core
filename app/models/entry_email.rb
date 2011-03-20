@@ -1,7 +1,7 @@
 class EntryEmail < ApplicationModel
   belongs_to :entry
   
-  attr_accessible :sender, :recipients, :message
+  attr_accessible :sender, :recipients, :message, :send_me_a_copy
   
   validates_presence_of :sender
   validates_presence_of :entry, :remote_ip, :recipients
@@ -12,7 +12,7 @@ class EntryEmail < ApplicationModel
   before_validation :calculate_num_recipients
   after_create :deliver_email
   
-  attr_accessor :message
+  attr_accessor :message, :send_me_a_copy
   
   attr_reader :sender
   def sender=(sender)
@@ -38,6 +38,14 @@ class EntryEmail < ApplicationModel
     end
     
     @recipients
+  end
+
+  def all_recipient_emails
+    if send_me_a_copy == '1'
+      @recipient_emails + [sender]
+    else
+      @recipient_emails
+    end
   end
   
   def requires_captcha_with_message?

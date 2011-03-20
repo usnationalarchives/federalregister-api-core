@@ -19,8 +19,7 @@
   <% semantic_form_for(@entry_email, :url => entry_email_path(@entry)) do |f| %>
     <% f.inputs do %>
       <%= f.input :sender, :required => true, :input_html => { :placeholder => "your_email@example.com" } %>
-      <%# TODO HELP-RUBY this checkbox is all styled and ready to go. just make it real :D %>
-      <%#= f.input :sender, :label => 'Send me a copy', :as => :boolean, :wrapper_html => { :class => 'copy' } %>
+      <%= f.input :send_me_a_copy, :label => 'Send me a copy', :as => :boolean, :wrapper_html => { :class => 'copy' } %>
       <%= f.input :recipients, :required => true, :input_html => { :placeholder => "one@example.com, two@example.com, three@example.com, etc." } %>
       <%= f.input :message, :as => :text %>
     <% end %>
