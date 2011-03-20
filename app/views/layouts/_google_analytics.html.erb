@@ -1,13 +1,18 @@
+<% custom_page_to_track ||= false %>
 <script type="text/javascript">
-var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
-document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-17607887-1']);
+  <% if custom_page_to_track %>
+    _gaq.push(['_trackPageview', page_to_track]);
+  <% else %>
+    _gaq.push(['_trackPageview']);
+  <% end %>
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
 </script>
-<script type="text/javascript">
-try {
-var pageTracker = _gat._getTracker("UA-17607887-1");
-<% if yield :page_tracker %>
-<%= yield :page_tracker %>
-<% else %>
-pageTracker._trackPageview()
-<% end %>
-} catch(err) {}</script>
