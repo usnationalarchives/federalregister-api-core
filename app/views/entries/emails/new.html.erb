@@ -5,15 +5,16 @@
   <h3>E-Mail the following article:</h3>
   <h4><%= link_to @entry.title, entry_path(@entry) %></h4>
   <p>Your email address will not be published. Required fields are marked *</p>
-  <%# TODO HELP-RUBY not sure how to make errors trigger at the moment %>
-  <!-- <% if error_messages_for :entry_email %>
+  <% if @entry_email.errors.count > 0 %> 
     <div class="errors">
-      <%# TODO HELP-RUBY not sure if we have a header or just a list of the errors %>
       <p class="errors_header">The following errors were found:</p>
-      <%# TODO HELP-RUBY if we have a list, it just needs to be ul class = bullets %>
-      <%= error_messages_for :entry_email %>
+      <ul class="bullets">
+      <% @entry_email.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
     </div>
-  <% end %> -->
+  <% end %>
   
   <% semantic_form_for(@entry_email, :url => entry_email_path(@entry)) do |f| %>
     <% f.inputs do %>
