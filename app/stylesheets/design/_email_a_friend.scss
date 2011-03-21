@@ -17,6 +17,13 @@
   @extend .comment_form_input; /* see _blog.scss */
   width: 490px;
   }
+#new_entry_email .error {
+  background: none;
+  padding: 0;
+  }
+#new_entry_email .error label {
+  @extend .error;
+  }  
 #new_entry_email textarea {
   height: 140px;
   }  
@@ -39,7 +46,10 @@
   color: #363636;
   font-weight: normal;
   font-size: 12px;
-  }   
+  }
+#new_entry_email .copy input {
+  width: auto;
+  }  
 #new_entry_email #entry_email_submit {
   @extend .comment_form_submit;
   }

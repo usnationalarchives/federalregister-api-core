@@ -4,26 +4,37 @@
     <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
   </head>
   <body>
-    <h1><%=h @mailing_list.title %></h1>
-    <p><%= pluralize @results.size, "matching article" %>.</p>
-
+    <img src="http://federalregister.gov/images/logotype.png">
+    <h1 style="background:none repeat scroll 0 0 #FFFFFF;color:#5697CF;font-family:'Helvetica Neue',Arial,Helvetica,sans-serif;margin:30px0 15px 0;padding:0;">
+      <%=h @mailing_list.title %>
+      <span style="color:#363636;font-size: 12px;font-family:'Helvetica Neue',Arial,Helvetica,sans-serif;font-style:italic;font-weight: normal;">(<%= pluralize @results.size, "matching article" %>)</span>
+    </h1>
+    
+    <h3>At a glance:</h3>
+    
+    <ul>
+      <% @results.each_with_index do |entry, index| %>
+        <li><a href="#article_<%= index %>"><%= entry.curated_title %></a></li>
+      <% end %>
+    </ul>
+    
     <hr />
-
-    <% @results.each do |entry| %>
-      <h2><%= entry.curated_title %></h2>
+        
+    <% @results.each_with_index do |entry, index| %>
+    <div id="article_<%= index %>">
+      <h2 style="font-family:'Helvetica Neue',Arial,Helvetica,sans-serif;margin-bottom: 5px;"><%= link_to entry.curated_title, short_entry_url(entry.document_number) %> </h2>
+            
+      <p style="color:#7A838A;font-family:'Helvetica Neue',Arial,Helvetica,sans-serif;font-size:12px;margin: 0 0 10px; 0">A <%= entry.entry_type %> by <%= agency_names(entry, :no_links => true) %></p>
       
-      <p><%= link_to short_entry_url(entry.document_number), short_entry_url(entry.document_number) %></p>
-      
-      <p>A <%= entry.entry_type %> by <%= agency_names(entry, :no_links => true) %>.</p>
-      
-      <p><%= truncate_words(entry.curated_abstract, :length => 500) || "[No abstract available]" -%></p>
+      <p style="color:#363636;font-family:'Helvetica Neue',Arial,Helvetica,sans-serif;"><%= truncate_words(entry.curated_abstract, :length => 500) || "[No abstract available]" -%></p>
 
       <%- if entry.comments_close_on && entry.comments_close_on > Date.current %>
-      <p>Comment period ends in <%= pluralize (entry.comments_close_on - Date.current), 'day' %> (<%= entry.comments_close_on %>)</p>
+      <p style="color:#363636;font-family:'Helvetica Neue',Arial,Helvetica,sans-serif;">Comment period ends in <%= pluralize (entry.comments_close_on - Date.current), 'day' %> (<%= entry.comments_close_on %>)</p>
       <%- end %>
+    </div>  
     <% end %>
     <hr />    
-    <p>If you no longer wish to subscribe to these results, <%= link_to "click here", unsubscribe_subscription_url('(((token)))') %>
+    <p style="color:#363636;font-family:'Helvetica Neue',Arial,Helvetica,sans-serif;">If you no longer wish to subscribe to these results, <%= link_to "click here", unsubscribe_subscription_url('(((token)))') %>
   </body>
 </html>
 
