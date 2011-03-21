@@ -1,5 +1,3 @@
-<%= @entry.title %>
-
 <p>You've been sent an article from the Federal Register by <%= h @sender %>
   
 <% if @message.present? %>
@@ -10,6 +8,9 @@
   </p>
 <% end %>
 
-<%= short_entry_url(@entry.document_number) %>
 
-<%= truncate_words(@entry.curated_abstract, :length => 500) || "[No abstract available]" -%>
+<h1><%= link_to @entry.title, short_entry_url(@entry.document_number) %></h1>
+
+<p><%= link_to short_entry_url(@entry.document_number), short_entry_url(@entry.document_number) %></p>
+
+<p><%= truncate_words(@entry.curated_abstract, :length => 500) || "[No abstract available]" -%></p>

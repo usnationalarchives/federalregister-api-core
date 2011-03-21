@@ -22,8 +22,17 @@
   padding: 0;
   }
 #new_entry_email .error label {
-  @extend .error;
+  background: sprite-image('icons/error.png', 0, 1px, 100px) no-repeat;
+  display: block;
+  padding-left: image-width('icons/error.png') + 5;
+  text-align: left;
   }  
+#new_entry_email .error .inline-errors {
+  display: none;
+  }       
+#new_entry_email .error input {
+  border-color: #8a3737;
+  }
 #new_entry_email textarea {
   height: 140px;
   }  
