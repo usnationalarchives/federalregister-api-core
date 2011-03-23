@@ -100,19 +100,3 @@
     <%= link_to 'Subscribe', new_subscription_path(:subscription => {:search_conditions => {}}), :class => 'rss' %>
   </p>
 <% end -%>
-
-
-<% if false %>
-  
-  <% if @map.present? %>
-    <h3>Locations Mentioned</h3>
-    <% add_javascript { @map.to_js } %>
-    <div id="map" class='small_map'></div>
-  <% end %>
-  
-  <h3>Today's Article Types</h3>
-  <%= render :partial => 'entries/charts/by_type', :locals => {:entries => @entries} %>
-  
-  <h3>Top Agencies Reporting</h3>
-  <%= render :partial => 'entries/charts/by_agency', :locals => {:agencies => @agencies, :entry_count => @entries.count} %>
-<% end %>
