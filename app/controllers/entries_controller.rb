@@ -131,29 +131,8 @@ class EntriesController < ApplicationController
     @publication_date = date
     @issue = Issue.completed.find_by_publication_date!(@publication_date)
     
-    @agencies = Agency.all(
-      :include => [:entries],
-      :conditions => ['publication_date = ?', @publication_date],
-      :order => "agencies.name, entries.title"
-    )
-    
-    Agency.preload_associations(@agencies, :children)
-    Entry.preload_associations(@agencies.map(&:entries).flatten, :agencies)
-    
-    @agencies.each do |agency|
-      def agency.entries_excluding_subagency_entries
-        self.entries.select{|entry| entry.agencies.excluding_parents.include?(self) }
-      end
-    end
-    
-    @entries_without_agency = Entry.all(
-      :include => :agencies,
-      :conditions => ['agencies.id IS NULL && entries.publication_date = ?', @publication_date],
-      :order => "entries.title"
-    )
-    
-    if @agencies.blank? && @entries_without_agency.blank?
-      raise ActiveRecord::RecordNotFound
-    end
+    toc = TableOfContentsPresenter.new(@issue.entries.scoped(:include => :agencies))
+    @entries_without_agencies = toc.entries_without_agencies
+    @agencies = toc.agencies
   end
 end
