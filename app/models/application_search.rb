@@ -392,10 +392,6 @@ filter_name.to_s.sub(/_ids?$/,'').classify.constantize.find_all_by_id(ids.flatte
     @conditions.to_json
   end
   
-  def self.from_json(json)
-    self.new(:conditions => JSON.parse(json))
-  end
-  
   private
   
   def set_defaults(options)

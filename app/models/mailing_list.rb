@@ -19,12 +19,21 @@ class MailingList < ApplicationModel
            :conditions => "subscriptions.confirmed_at IS NOT NULL and subscriptions.unsubscribed_at IS NULL"
   named_scope :active, :conditions => "active_subscriptions_count > 0"
   
-  composed_of :search,
-              :class_name => 'EntrySearch',
-              :mapping => %w(search_conditions to_json),
-              :constructor => EntrySearch.method(:from_json),
-              :converter   => EntrySearch.method(:from_json)
   before_create :populate_title_based_on_search_summary
+  
+  def self.find_by_search(search)
+    find_by_search_conditions(search.to_json)
+  end
+  
+  def search
+    @search ||= search_conditions.present? ? EntrySearch.new(:conditions => search_conditions) : nil
+  end
+  
+  def search=(search)
+    @search = search
+    self.search_conditions = search.to_json
+    search
+  end
   
   def title
     self['title'] || search.summary
