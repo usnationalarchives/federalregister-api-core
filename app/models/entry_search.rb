@@ -232,9 +232,9 @@ class EntrySearch < ApplicationSearch
     end
   end
   
-  def results_for_date(date)
+  def results_for_date(date, args = {})
     date = DateSelector.new(:is => date)
-    results(:with => {:publication_date => date.sphinx_value}, :per_page => 1000)
+    results({:with => {:publication_date => date.sphinx_value}, :per_page => 1000}.merge(args))
   end
   
   private

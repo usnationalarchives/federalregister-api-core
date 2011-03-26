@@ -48,7 +48,7 @@ class MailingList < ApplicationModel
   end
 
   def deliver!(date, options = {})
-    results = search.results_for_date(date)
+    results = search.results_for_date(date, :select => "id, title, publication_date, document_number, granule_class, document_file_path, abstract, start_page, end_page, toc_doc, toc_subject")
     
     unless results.empty?
       subscriptions = active_subscriptions
