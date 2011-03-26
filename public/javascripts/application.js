@@ -75,11 +75,23 @@ $(document).ready(function () {
       $(this).parent().jqmHide();
     });
     
-    if( $("#email_pane").attr('data-requires-captcha-without-message') || $("#email_pane").attr('data-requires-captcha') ){
-      $("#recaptcha_widget_div").hide();
-      var el = $("#email_pane").attr('data-requires-captcha-without-message') ? $("#entry_email_sender", "#entry_email_recipients") : $("#entry_email_message");
-      el.bind('focus', function(event) {
-        $("#recaptcha_widget_div").show();
+    var requires_captcha_without_message = $("#email_pane").attr('data-requires-captcha-without-message') == 'true';
+    var requires_captcha_with_message = $("#email_pane").attr('data-requires-captcha-with-message') == 'true';
+    if( requires_captcha_without_message || requires_captcha_with_message) { 
+      $("#entry_email_message").bind('blur', function(event) {
+        if( requires_captcha_without_message || ( requires_captcha_with_message && $("#entry_email_message").val() != '' )) {
+          $("#recaptcha_widget_div").show();
+        }
+        else {
+          $("#recaptcha_widget_div").hide();
+        }
+      });
+      $("#entry_email_message").blur();
+
+      $("#entry_email_message").bind('focus', function(event) {
+        if( requires_captcha_with_message ) {
+          $("#recaptcha_widget_div").show();
+        }
       });
     }
 

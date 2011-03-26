@@ -4,26 +4,48 @@
     <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
   </head>
   <body>
-    <h1><%=h @mailing_list.title %></h1>
-    <p><%= pluralize @results.size, "matching article" %>.</p>
-
+    <img src="http://federalregister.gov/images/logotype.png">
+    <h1 style="background:none repeat scroll 0 0 #FFFFFF;color:#5697CF;font-family:'Helvetica Neue',Arial,Helvetica,sans-serif;margin:30px0 15px 0;padding:0;">
+      <%=h @mailing_list.title %>
+      <span style="color:#363636;font-size: 12px;font-family:'Helvetica Neue',Arial,Helvetica,sans-serif;font-style:italic;font-weight: normal;">(<%= pluralize @results.size, "matching article" %>)</span>
+    </h1>
+    
+    <h3 style="color:#363636;font-family:'Helvetica Neue',Arial,Helvetica,sans-serif;">At a glance:</h3>
+    
+    <ul style="color:#363636;">
+      <% @results.each_with_index do |entry, index| %>
+        <li><a href="#article_<%= index %>"><%= entry.curated_title %></a></li>
+      <% end %>
+    </ul>
+    
     <hr />
-
-    <% @results.each do |entry| %>
-      <h2><%= entry.curated_title %></h2>
+        
+    <% @results.each_with_index do |entry, index| %>
+    <a name="article_<%= index %>">
       
-      <p><%= short_entry_url (entry) %></p>
+      <h2 style="font-family:'Helvetica Neue',Arial,Helvetica,sans-serif;margin-bottom: 5px;"><%= link_to entry.curated_title, short_entry_url(entry.document_number) %> </h2>
+            
+      <p style="color:#7A838A;font-family:'Helvetica Neue',Arial,Helvetica,sans-serif;font-size:12px;margin: 0 0 10px; 0">A <%= entry.entry_type %> by <%= agency_names(entry, :no_links => true) %></p>
       
-      <p>A <%= entry.entry_type %> by <%= agency_names(entry, :no_links => true) %>.</p>
-      
-      <p><%= truncate_words(entry.curated_abstract, :length => 500) || "[No abstract available]" -%></p>
+      <p style="color:#363636;font-family:Georgia, 'Times New Roman',serif;font-size:13px; line-height:1.5;margin-bottom: 25px;"><%= truncate_words(entry.curated_abstract, :length => 500) || "[No abstract available]" -%></p>
 
       <%- if entry.comments_close_on && entry.comments_close_on > Date.current %>
-      <p>Comment period ends in <%= pluralize (entry.comments_close_on - Date.current), 'day' %> (<%= entry.comments_close_on %>)</p>
+      <p style="color:#363636;font-family:'Helvetica Neue',Arial,Helvetica,sans-serif;">Comment period ends in <%= pluralize (entry.comments_close_on - Date.current), 'day' %> (<%= entry.comments_close_on %>)</p>
       <%- end %>
     <% end %>
     
-    <p>If you no longer wish to subscribe to these results, <%= link_to "click here", unsubscribe_subscription_url('(((token)))') %>
+    <hr />
+      
+    <p style="color:#787878;font-family:'Helvetica Neue',Arial,Helvetica,sans-serif;">
+      <a href="http://www.federalregister.gov/policy/privacy#endorsement_disclaimer">Disclaimer</a> | 
+      <a href="http://www.federalregister.gov/policy/privacy">Policy</a> | 
+      <%= link_to "Unsubscribe from these results", unsubscribe_subscription_url('(((token)))') %>
+    </p> 
+    
+    <p style="color:#AAAAAA;font-family:'Helvetica Neue',Arial,Helvetica,sans-serif;font-size:10px;">The articles posted on this site are XML renditions of published Federal Register documents. Each document posted on the site includes a link to the corresponding official PDF file on FDsys.gov. This prototype edition of the daily Federal Register on FederalRegister.gov will remain an unofficial informational resource until the Administrative Committee of the Federal Register (ACFR) issues a regulation granting it official legal status. For complete information about, and access to, our official publications and services, go to the OFR.gov website.</p>
+
+    <p style="color:#AAAAAA;font-family:'Helvetica Neue',Arial,Helvetica,sans-serif;font-size:10px;">The OFR/GPO partnership is committed to presenting accurate and reliable regulatory information on FederalRegister.gov with the objective of establishing the XML-based Federal Register as an ACFR-sanctioned publication in the future. While every effort has been made to ensure that the material on FederalRegister.gov is accurately displayed, consistent with the official SGML-based PDF version on FDsys.gov, those relying on it for legal research should verify their results against an official edition of the Federal Register. Until the ACFR grants it official status, the XML rendition of the daily Federal Register on FederalRegister.gov does not provide legal notice to the public or judicial notice to the courts.</p>
+      
   </body>
 </html>
 

@@ -164,6 +164,9 @@ SECTION
   margin-right: 10px;
   width: 160px;
   }
+.article.with_photo .photo figure {
+  margin: 0 !important; /* Over-ride chrome figure margin. Needs important until we fix html5 helper. */
+  }  
 .article.with_photo.on_left .photo {
   left: -480px;
   margin-right: 0;

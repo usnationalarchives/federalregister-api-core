@@ -25,3 +25,5 @@
 <% else %>
   <%= javascript_include_tag 'all.js' %>
 <% end %>
+
+<%= render :partial => 'layouts/google_analytics', :custom_page_to_track => @page_to_track %>

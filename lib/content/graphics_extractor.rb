@@ -13,20 +13,22 @@ module Content
     end
     
     def perform
-      raise MissingXML.new unless File.exists?(entry_bulkdata_path)
-      Dir.mktmpdir("entry_graphics").each do |tmp_dir|
-        images.group_by(&:document_number).each do |document_number, images|
-          entry = Content::GraphicsExtractor::Entry.new(document_number, :base_dir => tmp_dir)
-          if entry.entry.nil?
-            warn "entry #{document_number} not found!"
-            next
+      if @date > Date.parse('2000-01-01')
+        raise MissingXML.new unless File.exists?(entry_bulkdata_path)
+        Dir.mktmpdir("entry_graphics").each do |tmp_dir|
+          images.group_by(&:document_number).each do |document_number, images|
+            entry = Content::GraphicsExtractor::Entry.new(document_number, :base_dir => tmp_dir)
+            if entry.entry.nil?
+              warn "entry #{document_number} not found!"
+              next
+            end
+            
+            images.each do |image|
+              entry.associate_image(image)
+            end
           end
-          
-          images.each do |image|
-            entry.associate_image(image)
-          end
+          `rm -r #{tmp_dir}`
         end
-        `rm -r #{tmp_dir}`
       end
     end
     
