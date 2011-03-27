@@ -39,6 +39,7 @@ class Agency < ApplicationModel
   has_many :agency_assignments
   has_many :agencies_sections
   has_many :sections, :through => :agencies_sections
+  has_many :agency_names
   
   has_many :entry_agency_assignments, :class_name => "AgencyAssignment", :conditions => "agency_assignments.assignable_type = 'Entry'"
   has_many :entries, :through => :entry_agency_assignments

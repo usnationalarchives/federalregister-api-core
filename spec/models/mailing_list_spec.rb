@@ -50,5 +50,11 @@ describe MailingList do
       
       list.search.term.should == 'OH HAI'
     end
+    
+    it "are searchable" do
+      list = Factory(:mailing_list, :search => EntrySearch.new(:conditions => {:term => 'OH HAI'}))
+      MailingList.find_by_search(EntrySearch.new(:conditions => {:term => 'OH HAI'})).should == list
+      MailingList.find_by_search(EntrySearch.new(:conditions => {:term => 'LATERZ'})).should be_nil
+    end
   end
 end

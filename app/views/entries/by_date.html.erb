@@ -13,28 +13,27 @@
     <a href="#entries" class="back_to_top">Back to Top</a>
   </div>
   
-  <% sub_agencies_on_this_page = @agencies & agency.children %>
-  <% if sub_agencies_on_this_page.present? %>
+  <% if agency.children.present? %>
     <ul>
-      <% sub_agencies_on_this_page.each do |sub_agency| %>
+      <% agency.children.each do |sub_agency| %>
         <li><span class="see">See</span> <%= link_to sub_agency.name, '#' + sub_agency.slug %> <span class="count_pill"><%= sub_agency.entries.to_a.size %></span></li>
       <% end %>
     </ul>
   <% end %>
   
-  <% agency.entries_excluding_subagency_entries.group_by(&:entry_type).each do |type, entries_by_type| %>
+  <% agency.entries_by_type_and_toc_subject.each do |type, entries_by_toc_subject| %>
     <h3><%= type.pluralize %></h3>
     <dl>
-    <% entries_by_type.group_by(&:toc_subject).each do |toc_subject, entries_by_toc_subject| %>
+    <% entries_by_toc_subject.each do |toc_subject, entries_by_toc_subject| %>
       <% if toc_subject.present? %>
         <dt><%= toc_subject %></dt>
-        <% entries_by_toc_subject.sort_by{|e| e.toc_doc || ''}.each do |entry| %>
+        <% entries_by_toc_subject.each do |entry| %>
         <dd>
           <%= render :partial => 'entry_with_page_and_frdoc', :locals => {:entry => entry, :entry_title => entry.toc_doc || entry.title } %>
         </dd>
         <% end %>
       <% else %>
-        <% entries_by_toc_subject.sort_by(&:title).each do |entry| %>
+        <% entries_by_toc_subject.each do |entry| %>
         <dt>
           <%= render :partial => 'entry_with_page_and_frdoc', :locals => {:entry => entry, :entry_title => entry.toc_doc || entry.title } %>
         </dt>
@@ -90,7 +89,7 @@
         <% @agencies.each do |agency| %>
           <li>
             <a href="#<%= agency.slug %>"><%= agency.name %></a> 
-            <span class="count_pill"><%= agency.entries.to_a.size %></span>
+            <span class="count_pill"><%= agency.entry_count %></span>
           </li>
         <% end -%>
       </ul>
@@ -101,19 +100,3 @@
     <%= link_to 'Subscribe', new_subscription_path(:subscription => {:search_conditions => {}}), :class => 'rss' %>
   </p>
 <% end -%>
-
-
-<% if false %>
-  
-  <% if @map.present? %>
-    <h3>Locations Mentioned</h3>
-    <% add_javascript { @map.to_js } %>
-    <div id="map" class='small_map'></div>
-  <% end %>
-  
-  <h3>Today's Article Types</h3>
-  <%= render :partial => 'entries/charts/by_type', :locals => {:entries => @entries} %>
-  
-  <h3>Top Agencies Reporting</h3>
-  <%= render :partial => 'entries/charts/by_agency', :locals => {:agencies => @agencies, :entry_count => @entries.count} %>
-<% end %>

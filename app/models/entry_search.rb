@@ -31,7 +31,7 @@ class EntrySearch < ApplicationSearch
     end
   end
   
-  define_filter :agency_ids,  :sphinx_type => :with
+  define_filter :agency_ids,  :sphinx_type => :with, :sphinx_attribute => :agency_name_ids, :value_definer => Proc.new{|agency_ids| Agency.all(:conditions => {:id => agency_ids}).map(&:agency_name_ids).flatten.uniq}
   define_filter :section_ids, :sphinx_type => :with_all do |section_id|
     Section.find_by_id(section_id).try(:title)
   end
@@ -232,9 +232,9 @@ class EntrySearch < ApplicationSearch
     end
   end
   
-  def results_for_date(date)
+  def results_for_date(date, args = {})
     date = DateSelector.new(:is => date)
-    results(:with => {:publication_date => date.sphinx_value}, :per_page => 1000)
+    results({:with => {:publication_date => date.sphinx_value}, :per_page => 1000}.merge(args))
   end
   
   private

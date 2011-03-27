@@ -29,11 +29,13 @@ class Mailer < ActionMailer::Base
     sendgrid_recipients subscriptions.map(&:email)
     sendgrid_substitute "(((token)))", subscriptions.map(&:token)
     
+    toc = TableOfContentsPresenter.new(results)
+    
     subject "[FR] #{mailing_list.title}"
     from       "Federal Register Subscriptions <subscriptions@mail.federalregister.gov>"
     recipients subscriptions.map(&:email).join(',')
     sent_on    Time.current
-    body       :mailing_list => mailing_list, :results => results
+    body       :mailing_list => mailing_list, :results => results, :agencies => toc.agencies, :entries_without_agencies => toc.entries_without_agencies
   end
   
   def entry_email(entry_email)

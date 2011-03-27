@@ -10,7 +10,9 @@ class ApplicationSearch
       @condition    = options[:condition]
       @sphinx_attribute = options[:sphinx_attribute] || @condition
       
-      if options[:phrase]
+      if options[:value_definer]
+        @sphinx_value = options[:value_definer].call(options[:value])
+      elsif options[:phrase]
         @sphinx_value = "\"#{options[:value]}\""
       elsif options[:crc32_encode]
         @sphinx_value = options[:value].map{|v| v.to_s.to_crc32}
@@ -390,10 +392,6 @@ filter_name.to_s.sub(/_ids?$/,'').classify.constantize.find_all_by_id(ids.flatte
   
   def to_json
     @conditions.to_json
-  end
-  
-  def self.from_json(json)
-    self.new(:conditions => JSON.parse(json))
   end
   
   private
