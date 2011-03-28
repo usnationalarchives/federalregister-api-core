@@ -24,7 +24,7 @@ class TableOfContentsPresenter
     def entries_by_type_and_toc_subject
       entries.group_by(&:entry_type).sort_by{|type,entries| type}.reverse.map do |type, entries_by_type|
         entries_by_toc_subject = entries_by_type.group_by(&:toc_subject).map do |toc_subject, entries_by_toc_subject|
-          [toc_subject, entries_by_toc_subject.sort_by{|e| [e.toc_doc.downcase || '', (e.toc_doc || e.title)]}]
+          [toc_subject, entries_by_toc_subject.sort_by{|e| [e.toc_doc.try(:downcase) || '', (e.toc_doc || e.title)]}]
         end
         [type, entries_by_toc_subject]
       end
@@ -34,7 +34,7 @@ class TableOfContentsPresenter
 
   attr_accessor :entries_without_agencies, :agencies, :agency_ids
   def initialize(entries)
-    @entries_without_agencies, @entries_with_agencies =  entries.sort_by{|e| [e.start_page, e.end_page, e.id]}.partition{|e| e.agencies.blank? }
+    @entries_without_agencies, @entries_with_agencies =  entries.sort_by{|e| [e.start_page || 0, e.end_page || 0, e.id]}.partition{|e| e.agencies.blank? }
 
     agencies_hsh = {}
     @entries_with_agencies.each do |entry|
