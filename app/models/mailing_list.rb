@@ -12,7 +12,6 @@
 =end Schema Information
 
 class MailingList < ApplicationModel
-  validates_presence_of :search_conditions, :title
   has_many :subscriptions
   has_many :active_subscriptions,
            :class_name => "Subscription",
@@ -26,7 +25,7 @@ class MailingList < ApplicationModel
   end
   
   def search
-    @search ||= search_conditions.present? ? EntrySearch.new(:conditions => search_conditions) : nil
+    @search ||= self[:search_conditions].present? ? EntrySearch.new(:conditions => search_conditions) : nil
   end
   
   def search=(search)

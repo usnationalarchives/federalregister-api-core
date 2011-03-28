@@ -8,7 +8,12 @@ namespace :mailing_lists do
     end
     
     MailingList.active.find_each do |mailing_list|
-      mailing_list.deliver!(date, :force_delivery => ENV['FORCE_DELIVERY'])
+      begin
+        mailing_list.deliver!(date, :force_delivery => ENV['FORCE_DELIVERY'])
+      rescue Exception => e
+        Rails.logger.warn(e)
+        HoptoadNotifier.notify(e)
+      end
     end
   end
   

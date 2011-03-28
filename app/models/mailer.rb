@@ -33,7 +33,7 @@ class Mailer < ActionMailer::Base
     
     subject "[FR] #{mailing_list.title}"
     from       "Federal Register Subscriptions <subscriptions@mail.federalregister.gov>"
-    recipients subscriptions.map(&:email).join(',')
+    recipients 'nobody@federalregister.gov' # should use sendgrid_recipients for actual recipient list
     sent_on    Time.current
     body       :mailing_list => mailing_list, :results => results, :agencies => toc.agencies, :entries_without_agencies => toc.entries_without_agencies
   end
@@ -44,7 +44,7 @@ class Mailer < ActionMailer::Base
     
     subject "[FR] #{entry_email.entry.title}"
     from entry_email.sender
-    recipients entry_email.all_recipient_emails
+    recipients 'nobody@mail.federalregister.gov' # should use sendgrid_recipients for actual recipient list
     sent_on Time.current
     body :entry => entry_email.entry, :sender => entry_email.sender, :message => entry_email.message
   end
