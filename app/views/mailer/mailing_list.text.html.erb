@@ -4,18 +4,28 @@
     <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
   </head>
   <body>
-    <img src="http://federalregister.gov/images/logotype.png">
-    <h1 style="background:none repeat scroll 0 0 #FFFFFF;color:#5697CF;font-family:'Helvetica Neue',Arial,Helvetica,sans-serif;margin:30px0 15px 0;padding:0;">
-      <%=h @mailing_list.title %>
-      <span style="color:#363636;font-size: 12px;font-family:'Helvetica Neue',Arial,Helvetica,sans-serif;font-style:italic;font-weight: normal;">(<%= pluralize @results.size, "matching article" %>)</span>
-    </h1>
-    
+   <table border="0" cellspacing="0" width="100%">
+      <tr>
+        <td>
+          <img src="http://federalregister.gov/images/logotype.png">
+          <h1 style="background:none repeat scroll 0 0 #FFFFFF;color:#5697CF;font-family:'Helvetica Neue',Arial,Helvetica,sans-serif;margin:30px0 15px 0;padding:0;">
+            <%=h @mailing_list.title %>
+          <span style="color:#363636;font-size: 12px;font-family:'Helvetica Neue',Arial,Helvetica,sans-serif;font-style:italic;font-weight: normal;">(<%= pluralize @results.size, "matching article" %>)</span>
+         </h1>
+        </td>
+        <td style="text-align:right;">
+          <img src="http://federalregister.gov/images/seal_email.gif" />
+        </td>
+      </tr>
+    </table>  
+ 
     <h2 style="color:#464646;font-family:'Helvetica Neue',Arial,Helvetica,sans-serif;font-size:18px;text-transform: uppercase;border-bottom: 2px solid #464646;margin: 0 0 10px;">Table of Contents:</h2>
     
     <% @agencies.each_with_index do |agency, index| %>
-      <h3 style="font-family:'Helvetica Neue',Arial,Helvetica,sans-serif;font-size:16px"><a href="#<%= agency.slug %>" name="<%= agency.slug %>"> <%= agency.name %> </a></h3>      
+      <a name="<%= agency.slug %>"></a>
+      <h3 style="color:#464646;font-family:'Helvetica Neue',Arial,Helvetica,sans-serif;font-size:16px;margin-bottom:5px;text-decoration:underline;"><%= agency.name %></h3>      
       <% if agency.children.present? %>
-      <ul>
+      <ul style="padding-left:5px;">
         <% agency.children.each_with_index do |sub_agency, index| %>
             <li style="list-style:none;font-family:'Helvetica Neue',Arial,Helvetica,sans-serif;">
               <i>See</i>
@@ -26,15 +36,15 @@
         </ul>
       <% end %>
       <% agency.entries_by_type_and_toc_subject.each do |type, entries_by_toc_subject| %>
-        <ul style="font-family:'Helvetica Neue',Arial,Helvetica,sans-serif;">
+        <ul style="font-family:'Helvetica Neue',Arial,Helvetica,sans-serif;padding-left:0;">
           <li style="list-style:none;">
-            <h4 style="font-size:14px;text-transform:uppercase;"><%= type.pluralize %></h4>
-            <ul style="color:#363636;list-style:none;">
+            <h4 style="color:#464646;font-size:14px;text-transform:uppercase;margin:5px 0;"><%= type.pluralize %></h4>
+            <ul style="color:#464646;list-style:none;margin-top:5px;padding-left:5px;">
               <% entries_by_toc_subject.each do |toc_subject, entries_by_toc_subject| %>
                 <% if toc_subject.present? %>
                   <li>
-                    <h5 style="font-size:13px;"><%= toc_subject %>:</h5>
-                    <ul style="list-style:none;margin-left: 40px;">
+                    <h5 style="color:#464646;font-size:13px;margin:5px 0;"><%= toc_subject %></h5>
+                    <ul style="list-style:none;padding-left: 0;">
                       <% entries_by_toc_subject.each do |entry| %>
                         <li><a href="#<%= entry.slug %>" name="toc_<%= entry.slug %>"><%= entry.title %></a></li>
                       <% end %>  
@@ -61,10 +71,10 @@
             
       <p style="color:#7A838A;font-family:'Helvetica Neue',Arial,Helvetica,sans-serif;font-size:12px;margin: 0 0 10px; 0">A <%= entry.entry_type %> by <%= agency_names(entry, :no_links => true) %></p>
       
-      <p style="color:#363636;font-family:Georgia, 'Times New Roman',serif;font-size:13px; line-height:1.5;margin-bottom: 25px;"><%= truncate_words(entry.curated_abstract, :length => 500) || "[No abstract available]" -%></p>
+      <p style="color:#363636;font-family:Georgia, 'Times New Roman',serif;font-size:13px; line-height:1.5;margin-bottom: 15px;"><%= truncate_words(entry.curated_abstract, :length => 500) || "[No abstract available]" -%></p>
 
       <%- if entry.comments_close_on && entry.comments_close_on > Date.current %>
-        <p style="color:#363636;font-family:'Helvetica Neue',Arial,Helvetica,sans-serif;">Comment period ends in <%= pluralize (entry.comments_close_on - Date.current), 'day' %> (<%= entry.comments_close_on %>)</p>
+        <p style="background:#eeeeee;color:#363636;font-family:'Helvetica Neue',Arial,Helvetica,sans-serif;font-weight:bold;padding:3px 3px 5px 3px;text-transform:uppercase;"><img src="http://www.federalregister.gov/images/icons/icon_comment.png" style="margin:3px 5px 0 5px;vertical-align:sub" />Comment period ends in <%= pluralize (entry.comments_close_on - Date.current), 'day' %> (<%= entry.comments_close_on %>)</p>
       <%- end %>
       
       <a href="#toc_<%= entry.slug %>">Back to Top</a>
