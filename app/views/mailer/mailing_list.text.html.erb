@@ -61,7 +61,7 @@
             
       <p style="color:#7A838A;font-family:'Helvetica Neue',Arial,Helvetica,sans-serif;font-size:12px;margin: 0 0 10px; 0">A <%= entry.entry_type %> by <%= agency_names(entry, :no_links => true) %></p>
       
-      <p style="color:#363636;font-family:Georgia, 'Times New Roman',serif;font-size:13px; line-height:1.5;margin-bottom: 25px;"><%= truncate_words(entry.curated_abstract, :length => 500) || "[No abstract available]" -%></p>
+      <p style="color:#363636;font-family:Georgia, 'Times New Roman',serif;font-size:13px; line-height:1.5;margin-bottom: 25px;"><%= truncate_words(entry.curated_abstract || entry.raw_text, :length => 500) || "[No abstract available]" -%></p>
 
       <%- if entry.comments_close_on && entry.comments_close_on > Date.current %>
         <p style="color:#363636;font-family:'Helvetica Neue',Arial,Helvetica,sans-serif;">Comment period ends in <%= pluralize (entry.comments_close_on - Date.current), 'day' %> (<%= entry.comments_close_on %>)</p>
