@@ -11,14 +11,14 @@ http://www.federalregister.gov/
 About
 ------------
 
-The FR 2.0 web site is similar to a daily web newspaper, with a clear layout and new tools to guide readers to the most popular topics and relevant documents. The site displays individual news sections for Money, Environment, World, Science & Technology, Business & Industry, and Health & Public Welfare. FR 2.0 has greatly improved navigation and search tools and highlights each agency’s significant rules. The new web site takes advantage of social media and integrates seamlessly with Regulations.gov and the Unified Agenda to make it easy for users to submit comments directly into the official e-Rulemaking docket, and view the history of rulemaking activity through a regulatory timeline.
+The FR 2.0 web site is similar to a daily web newspaper, with a clear layout and new tools to guide readers to the most popular topics and relevant documents. The site displays individual news sections for Money, Environment, World, Science & Technology, Business & Industry, and Health & Public Welfare. FR 2.0 has greatly improved navigation and search tools and highlights each agency's significant rules. The new web site takes advantage of social media and integrates seamlessly with Regulations.gov and the Unified Agenda to make it easy for users to submit comments directly into the official e-Rulemaking docket, and view the history of rulemaking activity through a regulatory timeline.
 
 The site was built by David Augustine, Bob Burbach, and Andrew Carpenter of CriticalJuncture, using the GovPulse application as a starting point. It is released as an open source project.
 
 Installation
 ------------
 
-First, you'll need Ruby, Bundler, Rails 2.3.8, the Sphinx search engine, MySQL, and the ruby MySQL bindings.
+First, you'll need Ruby, Bundler, Rails 2.3.11, the Sphinx search engine, MySQL, and the ruby MySQL bindings.
 
     git clone git://github.com/criticaljuncture/fr2.git
     cd fr2
