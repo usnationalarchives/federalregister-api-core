@@ -9,14 +9,10 @@
       <label>Agency</label>
       <input placeholder="Agriculture Department" data-autocomplete="autocomplete" />
 
-      <%= f.input :agency_ids,
-                  :as => :select,
-                  :label => "Agencies",
-                  :include_blank => false,
-                  :input_html => {:multiple => true},
-                  :value_method => Proc.new{|a| a.id.to_s},
-                  :collection => Agency.all(:conditions => {:id => @search.agency_ids.to_a} ),
-                  :wrapper_html => {:class => 'selected_agency_list'} %>
+      <%= f.select :agency_ids,
+                  Agency.all(:conditions => {:id => @search.agency_ids.to_a} ).map{|a| [a.name, a.id.to_s]},
+                  {},
+                  {:multiple => :multiple, :class => 'selected_agency_list'} %>
     </li>  
     
   <% else %>
