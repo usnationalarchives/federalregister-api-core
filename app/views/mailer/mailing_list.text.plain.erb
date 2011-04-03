@@ -14,11 +14,17 @@ A <%= entry.entry_type %> by <%= agency_names(entry, :no_links => true) %>.
 <%= truncate_words(entry.curated_abstract, :length => 500) || "[No abstract available]" -%>
 
 <%- if entry.comments_close_on && entry.comments_close_on > Date.current %>
-
-Comment period ends in <%= pluralize (entry.comments_close_on - Date.current), 'day' %> (<%= entry.comments_close_on %>)
+  Comment period ends in <%= pluralize (entry.comments_close_on - Date.current), 'day' %> (<%= entry.comments_close_on %>)
 <%- end %>
+
 -------
 
 <% end %>
 If you no longer wish to subscribe to these results, click here:
-<%#= unsubscribe_subscription_url(@subscription) %>
+<%= unsubscribe_subscription_url(@subscription) %>
+
+-Privacy-
+Welcome to our free E-mail subscription service. FederalRegister.gov uses your e-mail address to enable you to receive e-mail notifications according to your preferences. We retain only the personally identifiable information minimally necessary to operate the subscription service. We do not retain any information about third parties who receive “email a friend” notifications through the subscription service. For more information, please read our Privacy and Security Policy page (http://www.federalregister.gov/policy/privacy).
+
+-Legal Status-
+The documents received via our E-mail subscriptions service originate from FederalRegister.gov, which displays an unofficial “Web 2.0” version of the daily Federal Register. The official electronic version in PDF format is also available as a link from FederalRegister.gov or directly from GPO’s Federal Digital System website (http://www.fdsys.gov/). For more information, please read our Legal Status page (http://www.federalregister.gov/policy/legalstatus).
