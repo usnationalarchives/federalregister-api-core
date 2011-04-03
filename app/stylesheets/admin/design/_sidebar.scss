@@ -5,9 +5,10 @@
   background: #fff;
   @include border-radius(10px);
   margin-bottom: 1em;
+  padding-bottom: 1em;
   }  
 .module .nav,
-.module #form {
+.module .formtastic {
   padding: 0 1em;
   }
 .module .nav ul {
@@ -25,19 +26,25 @@
   padding-bottom: 0;
   }
 
-.module .string label,
-.module .calendar label,
+#main .module label,
 .module .location span  {
   clear: both;
   display: block;
-  }  
-.module #form .string input {
-  max-width: auto;
-  width: 90%;
-  }  
-.module #form .boolean label {
+  width: auto;
+  }
+#main .module .string input {
+  width: 100%;
+ }  
+#main .module .boolean label {
   padding-left: 0;
   }
-.module #form .buttons {
+#main .module .buttons {
   padding-left: 0;
-  }  
+  }
+ #main .commit  {
+   margin-bottom: 0;
+  }
+ #main .inputs li:last-child {
+  margin-bottom: .5em;
+  } 
+
