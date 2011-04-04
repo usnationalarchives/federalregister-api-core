@@ -7,14 +7,14 @@
    <table border="0" cellspacing="0" width="100%">
       <tr>
         <td>
-          <img src="http://federalregister.gov/images/logotype.png">
+          <img src="<%= root_url %>images/logotype.png">
           <h1 style="background:none repeat scroll 0 0 #FFFFFF;color:#5697CF;font-family:'Helvetica Neue',Arial,Helvetica,sans-serif;margin:30px0 15px 0;padding:0;">
             <%=h @mailing_list.title %>
           <span style="color:#363636;font-size: 12px;font-family:'Helvetica Neue',Arial,Helvetica,sans-serif;font-style:italic;font-weight: normal;">(<%= pluralize @results.size, "matching article" %>)</span>
          </h1>
         </td>
         <td style="text-align:right;">
-          <img src="<%= root_url + image_path('seal_email.gif')%>" />
+          <img src="<%= root_url %>images/seal_email.gif" />
         </td>
       </tr>
     </table>  
@@ -47,7 +47,7 @@
                     <ul style="list-style:none;padding-left: 0;">
                       <% entries_by_toc_subject.each do |entry| %>
                         <li>
-                          <%#= render :partial => 'article', :locals => {:entry => entry} %>
+                          <%= render :partial => 'article', :locals => {:entry => entry} %>
                         </li>
                       <% end %>  
                     </ul>
@@ -55,7 +55,7 @@
                 <% else %>
                   <% entries_by_toc_subject.each do |entry| %>
                     <li>
-                      <%#= render :partial => 'article', :locals => {:entry => entry} %>
+                      <%= render :partial => 'article', :locals => {:entry => entry} %>
                     </li>
                   <% end %>
                 <% end %>
