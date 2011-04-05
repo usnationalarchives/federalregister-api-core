@@ -7,7 +7,7 @@
    <table border="0" cellspacing="0" width="100%">
       <tr>
         <td>
-          <img src="<%= root_url %>images/logotype.png">
+          <img src="<%= root_url %>images/logotype.png" />
           <h1 style="background:none repeat scroll 0 0 #FFFFFF;color:#5697CF;font-family:'Helvetica Neue',Arial,Helvetica,sans-serif;margin:30px 0 15px 0;padding:0;">
             <%=h @mailing_list.title %>
           <span style="color:#363636;font-size: 12px;font-family:'Helvetica Neue',Arial,Helvetica,sans-serif;font-style:italic;font-weight: normal;">(<%= pluralize @results.size, "matching article" %>)</span>
@@ -25,44 +25,28 @@
       <a name="<%= agency.slug %>"></a>
       <h3 style="color:#464646;font-family:'Helvetica Neue',Arial,Helvetica,sans-serif;font-size:16px;margin-bottom:5px;text-decoration:underline;"><%= agency.name %></h3>      
       <% if agency.children.present? %>
-      <ul style="list-style:none;padding-left:5px;">
         <% agency.children.each_with_index do |sub_agency, index| %>
-            <li style="list-style:none;font-family:'Helvetica Neue',Arial,Helvetica,sans-serif;">
+            <div style="color:#464646;font-family:'Helvetica Neue',Arial,Helvetica,sans-serif;font-size:12px;margin: 0 0 10px 10px;">
               <i>See</i>
               <a href="#<%= sub_agency.slug %>" style="font-family:'Helvetica Neue',Arial,Helvetica,sans-serif;"><%= sub_agency.name %></a> 
               <span style="font-size: 11px;">(<%= pluralize(sub_agency.entries.to_a.size, 'article') %>)</span>
-            </li>
+            </div>
           <% end %>
-        </ul>
       <% end %>
       <% agency.entries_by_type_and_toc_subject.each do |type, entries_by_toc_subject| %>
-        <ul style="font-family:'Helvetica Neue',Arial,Helvetica,sans-serif;list-style:none;padding-left:0;">
-          <li style="list-style:none;margin-left: 15px;">
-            <h4 style="color:#464646;font-size:14px;text-transform:uppercase;margin:10px 0;"><%= type.pluralize %></h4>
-            <ul style="color:#464646;list-style:none;margin-top:5px;padding-left:5px;">
-              <% entries_by_toc_subject.each do |toc_subject, entries_by_toc_subject| %>
-                <% if toc_subject.present? %>
-                  <li style="margin-left: 15px;">
-                    <h5 style="color:#464646;font-size:13px;margin:5px 0;"><%= toc_subject %></h5>
-                    <ul style="list-style:none;padding-left: 0;">
-                      <% entries_by_toc_subject.each do |entry| %>
-                        <li style="list-style:none;">
-                          <%= render :partial => 'article', :locals => {:entry => entry} %>
-                        </li>
-                      <% end %>  
-                    </ul>
-                  </li>
-                <% else %>
-                  <% entries_by_toc_subject.each do |entry| %>
-                    <li style="list-style:none;">
-                      <%= render :partial => 'article', :locals => {:entry => entry} %>
-                    </li>
-                  <% end %>
-                <% end %>
+        <h4 style="color:#464646;font-family:'Helvetica Neue',Arial,Helvetica,sans-serif;font-size:14px;text-transform:uppercase;margin:10px 0 10px 10px;"><%= type.pluralize %></h4>
+        <% entries_by_toc_subject.each do |toc_subject, entries_by_toc_subject| %>
+          <% if toc_subject.present? %>
+            <h5 style="color:#464646;font-family:'Helvetica Neue',Arial,Helvetica,sans-serif;font-size:13px;margin:5px 0 5px 20px;"><%= toc_subject %></h5>
+              <% entries_by_toc_subject.each do |entry| %>
+                <%= render :partial => 'article', :locals => {:entry => entry} %>
               <% end %>  
-            </ul>
-          </li>
-        </ul>
+          <% else %>
+            <% entries_by_toc_subject.each do |entry| %>
+              <%= render :partial => 'article', :locals => {:entry => entry} %>
+            <% end %>
+          <% end %>
+        <% end %>  
       <% end %>
     <% end %>
     

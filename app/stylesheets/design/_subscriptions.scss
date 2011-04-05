@@ -79,8 +79,10 @@
   border: none;
   cursor: pointer;
   display: inline;
+  font-size: 0;
   height: 22px;
   @include hide-text;
+  line-height: 0;
   margin-left: -4px;
   padding-bottom: 1px;
   width: image-width('icons/subscribe/subscribe-btn.png');
