@@ -1,6 +1,6 @@
 <%= link_to entry_title, entry_path(entry) %>
 <p class="details">
   <%= link_to 'PDF', entry.source_url(:pdf), :class => "button format list pdf small" %>
-  <span class="pages"><%= entry_page_range(entry) %></span>
+  <span class="pages"><%= entry_page_range(entry) %> (<%= pluralize entry.human_length, 'page' %>)</span>
   <span class="document_number">[FR DOC #: <%= entry.document_number %>]</span>
 </p>
