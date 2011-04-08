@@ -32,13 +32,13 @@ def chef_cloud_attributes(instance_type)
 
   case instance_type
   when 'staging'
-    @proxy_server_address    = '10.117.49.253'
-    @static_server_address   = '10.114.167.201'
-    @worker_server_address   = '10.114.167.201'
-    @blog_server_address     = '10.114.167.201'
-    @database_server_address = '10.114.171.118'
-    @sphinx_server_address   = '10.114.171.118'
-    @app_server_address      = '10.114.166.194'
+    @proxy_server_address    = '10.117.73.130'
+    @static_server_address   = '10.114.162.36'
+    @worker_server_address   = '10.114.162.36'
+    @blog_server_address     = '10.114.162.36'
+    @database_server_address = '10.99.65.121'
+    @sphinx_server_address   = '10.99.65.121'
+    @app_server_address      = '10.114.137.84'
   when 'production'
     @proxy_server_address    = '10.194.207.96'
     @static_server_address   = '10.245.106.31'
@@ -109,6 +109,7 @@ def chef_cloud_attributes(instance_type)
                 :ec2_path               => "/vol/lib/mysql",
                 :ebs_vol_dev            => "/dev/sdh",
                 :ebs_vol_size           => 80,
+                :tmpdir                 => '/tmp/mysql',
                 :tunable => {
                               :query_cache_size        => '40M',
                               :tmp_table_size          => '100M',
@@ -161,7 +162,7 @@ def chef_cloud_attributes(instance_type)
                   :keys              => @wordpress_keys,
                   :database_name     => 'fr2_wordpress',
                   :database_user     => 'wordpress',
-                  :database_password => 'QtZp2HZWu+ufAxJ9LBcN'
+                  :database_password => @mysql_passwords['server_wordpress_password'],
                  }
   }
 end
