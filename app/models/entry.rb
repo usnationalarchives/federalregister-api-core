@@ -135,7 +135,7 @@ class Entry < ApplicationModel
   file_attribute(:raw_text)  {"#{RAILS_ROOT}/data/raw/#{document_file_path}.txt"}
   
   has_many :entry_regulation_id_numbers
-  has_many :entry_cfr_references
+  has_many :entry_cfr_references, :dependent => :destroy
   has_many :entry_cfr_affected_parts, :class_name => "EntryCfrReference", :conditions => "entry_cfr_references.part IS NOT NULL"
   validate :curated_attributes_are_not_too_long
   
@@ -416,18 +416,6 @@ class Entry < ApplicationModel
   
   def regulation_id_numbers
     @rins || self.entry_regulation_id_numbers.map(&:regulation_id_number)
-  end
-  
-  def affected_cfr_titles_and_parts=(affected_cfr_titles_and_parts)
-    @affected_cfr_titles_and_parts = affected_cfr_titles_and_parts.map{|t,p| [t.to_i, p.to_i]}
-    self.entry_cfr_affected_parts = @affected_cfr_titles_and_parts.map do |title, part|
-      entry_cfr_affected_parts.to_a.find{|ecap| ecap.title == title && ecap.part == part} || EntryCfrReference.new(:title => title, :part => part)
-    end
-    @affected_cfr_titles_and_parts
-  end
-  
-  def affected_cfr_titles_and_parts
-    @affected_cfr_titles_and_parts || self.entry_cfr_affected_parts.map{|ecap| [ecap.title, ecap.part]}
   end
   
   def current_regulatory_plans

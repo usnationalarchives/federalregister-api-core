@@ -58,7 +58,7 @@ namespace :content do
       
       desc "Extract CFR information into entries"
       task :cfr => :environment do
-        entry_importer(:affected_cfr_titles_and_parts)
+        entry_importer(:entry_cfr_references)
       end
       
       desc "Import regulations.gov info"
