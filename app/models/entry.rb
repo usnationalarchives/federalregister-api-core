@@ -135,7 +135,7 @@ class Entry < ApplicationModel
   file_attribute(:raw_text)  {"#{RAILS_ROOT}/data/raw/#{document_file_path}.txt"}
   
   has_many :entry_regulation_id_numbers
-  has_many :entry_cfr_references, :dependent => :destroy
+  has_many :entry_cfr_references, :dependent => :delete_all
   has_many :entry_cfr_affected_parts, :class_name => "EntryCfrReference", :conditions => "entry_cfr_references.part IS NOT NULL"
   validate :curated_attributes_are_not_too_long
   
