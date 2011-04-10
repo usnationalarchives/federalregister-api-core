@@ -17,7 +17,7 @@
   <% if entry.entry_cfr_references.present? %>
     <dt>CFR:</dt>
     <% entry.entry_cfr_references.each do |cfr_reference| %>
-      <dd><%= add_cfr_links("#{cfr_reference.title} CFR #{cfr_reference.chapter ? "chapter #{cfr_reference.chapter}" : cfr_reference.part}", entry.publication_date) %></dd>
+      <dd><%= add_cfr_links("#{cfr_reference.title} CFR #{cfr_reference.chapter ? "chapter #{number_to_roman(cfr_reference.chapter)}" : cfr_reference.part}", entry.publication_date) %></dd>
     <% end %>
   <% end %>
   
