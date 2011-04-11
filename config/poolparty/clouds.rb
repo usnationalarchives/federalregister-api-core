@@ -176,7 +176,7 @@ def chef_cloud_attributes(instance_type)
                    :header_size_limit          => 4096000,
                    :mail_type                  => "relay",
                    :relayhost                  => "[smtp.sendgrid.net]:587",
-                   :mail_relay_networks        => '127.0.0.0/8 33.33.33.0/28',
+                   :mail_relay_networks        => "127.0.0.0/8 #{@app_server_address.to_a.join(' ')} #{@worker_server_address}",
                    :inet_interfaces            => 'all',
                    :other_domains              => "$mydomain"
                  }
