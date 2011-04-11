@@ -23,6 +23,16 @@ class Mailer < ActionMailer::Base
     sent_on    Time.current
     body       :subscription => subscription
   end
+
+  def unsubscribe_notice(subscription)
+    sendgrid_category "Subscription Unsubscribe"
+    
+    subject "[FR] #{subscription.mailing_list.title}"
+    from       "Federal Register Subscriptions <subscriptions@mail.federalregister.gov>"
+    recipients subscription.email
+    sent_on    Time.current
+    body       :subscription => subscription
+  end
   
   def mailing_list(mailing_list, results, subscriptions)
     sendgrid_category "Subscription"

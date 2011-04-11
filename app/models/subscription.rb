@@ -57,11 +57,12 @@ class Subscription < ApplicationModel
   end
   
   def confirm!
-    self.update_attributes!(:confirmed_at => Time.current) unless self.confirmed_at
+    self.update_attributes!(:confirmed_at => Time.current, :unsubscribed_at => nil) unless self.active?
   end
 
   def unsubscribe!
     self.update_attributes!(:unsubscribed_at => Time.current) unless self.unsubscribed_at
+    Mailer.deliver_unsubscribe_notice(self)
   end
 
   private

@@ -90,11 +90,11 @@ task :staging do
   set :branch, `git branch`.match(/\* (.*)/)[1]
   
   role :proxy,  "ec2-184-72-250-132.compute-1.amazonaws.com"
-  role :app,    "ec2-184-72-71-183.compute-1.amazonaws.com"
-  role :db,     "ec2-50-16-147-1.compute-1.amazonaws.com", {:primary => true}
-  role :sphinx, "ec2-50-16-147-1.compute-1.amazonaws.com"
-  role :static, "ec2-174-129-137-181.compute-1.amazonaws.com"
-  role :worker, "ec2-174-129-137-181.compute-1.amazonaws.com", {:primary => true}
+  role :app,    "ec2-50-17-108-188.compute-1.amazonaws.com"
+  role :db,     "ec2-50-17-166-113.compute-1.amazonaws.com", {:primary => true}
+  role :sphinx, "ec2-50-17-166-113.compute-1.amazonaws.com"
+  role :static, "ec2-184-72-215-9.compute-1.amazonaws.com"
+  role :worker, "ec2-184-72-215-9.compute-1.amazonaws.com", {:primary => true}
 end
 
 
@@ -162,6 +162,7 @@ set :custom_symlinks, {
   'config/amazon.yml'                         => 'config/amazon.yml',
   'config/initializers/cloudkicker_config.rb' => 'config/cloudkicker_config.rb',
   'config/secrets.yml'                        => 'config/secrets.yml',
+  'config/sendgrid.yml'                       => 'config/sendgrid.yml',
   
   # don't symlink data directory directly!
   'data/bulkdata'         => 'data/bulkdata',
@@ -233,6 +234,12 @@ namespace :fr2 do
   desc "Update secret keys"
   task :update_secret_keys, :roles => [:app, :worker] do
     run "/usr/local/s3sync/s3cmd.rb get config.internal.federalregister.gov:secrets.yml #{shared_path}/config/secrets.yml"
+    find_and_execute_task("apache:restart")
+  end
+  
+  desc "Update sendgrid keys"
+  task :update_sendgrid_keys, :roles => [:app, :worker] do
+    run "/usr/local/s3sync/s3cmd.rb get config.internal.federalregister.gov:sendgrid.yml #{shared_path}/config/sendgrid.yml"
     find_and_execute_task("apache:restart")
   end
 end

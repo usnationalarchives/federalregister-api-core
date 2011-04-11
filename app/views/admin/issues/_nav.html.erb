@@ -1,3 +1,14 @@
+<% if AgencyName.unprocessed.count > 0 %>
+  <% section_tag(:class => 'module') do %>
+    <h1 class="title">Agencies</h1>
+    <% nav_tag do %>
+      <ul>
+        <li><%= link_to_unless_current 'Unprocessed Agency Names', unprocessed_admin_agency_names_path() %> (<%= AgencyName.unprocessed.count %>)</li>
+      </ul>
+    <% end -%>
+  <% end -%>
+<% end -%>
+
 <% section_tag(:class => 'module') do %>
   <h1 class="title">Events</h1>
   <% nav_tag do %>
