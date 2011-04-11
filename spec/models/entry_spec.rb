@@ -71,27 +71,6 @@ describe Entry do
     end
   end
   
-  describe "affected_cfr_titles_and_parts=" do
-    it "should create associated entry_cfr_affected_parts when no exist" do
-      ecaps = [['10','100'], ['11','200']]
-      e = Entry.new(:affected_cfr_titles_and_parts => ecaps)
-      e.save!
-      e.reload
-      e.entry_cfr_affected_parts.map{|ecap| [ecap.title, ecap.part]}.should == [[10,100], [11,200]]
-    end
-    
-    it "should remove entry_regulation_id_numbers when not passed" do
-      ecaps = [['10','100'], ['11','200']]
-      e = Entry.new(:affected_cfr_titles_and_parts => ecaps)
-      e.save!
-      e.reload
-      e.affected_cfr_titles_and_parts = [['11','200']]
-      e.save!
-      e.reload
-      e.entry_cfr_affected_parts.map{|ecap| [ecap.title, ecap.part]}.should == [[11,200]]
-    end
-  end
-  
   describe "current_regulatory_plans" do
     it 'should find nothing when no RIN associated' do
       e = Entry.create!()
