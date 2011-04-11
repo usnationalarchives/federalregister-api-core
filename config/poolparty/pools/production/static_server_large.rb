@@ -23,6 +23,7 @@ cloud :static_server_large do
     recipe "ubuntu"
     recipe "openssl"
     recipe "imagemagick"
+    recipe "postfix"
     
     recipe "munin::client"
     

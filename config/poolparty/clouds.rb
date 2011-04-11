@@ -36,6 +36,7 @@ def chef_cloud_attributes(instance_type)
     @static_server_address   = '10.114.162.36'
     @worker_server_address   = '10.114.162.36'
     @blog_server_address     = '10.114.162.36'
+    @mail_server_address     = '10.114.162.36'
     @database_server_address = '10.99.65.121'
     @sphinx_server_address   = '10.99.65.121'
     @app_server_address      = '10.114.137.84'
@@ -44,6 +45,7 @@ def chef_cloud_attributes(instance_type)
     @static_server_address   = '10.245.106.31'
     @worker_server_address   = '10.245.106.31'
     @blog_server_address     = '10.245.106.31'
+    @mail_server_address     = '10.245.106.31'
     @database_server_address = '10.194.109.139'
     @sphinx_server_address   = '10.194.109.139'
     @app_server_address      = ['10.243.41.203', '10.196.117.123', '10.202.162.96', '10.212.73.172', '10.251.83.111', '10.251.131.239']
@@ -152,7 +154,8 @@ def chef_cloud_attributes(instance_type)
                     :static_server => {:ip => @static_server_address},
                     :worker_server => {:ip => @worker_server_address},
                     :database      => {:ip => @database_server_address},
-                    :sphinx        => {:ip => @sphinx_server_address}
+                    :sphinx        => {:ip => @sphinx_server_address},
+                    :mail          => {:ip => @mail_server_address}
                    },
     :munin      => {
                     :nodes => munin_host(@app_server_address),
