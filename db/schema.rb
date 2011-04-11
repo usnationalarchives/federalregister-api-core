@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110329032038) do
+ActiveRecord::Schema.define(:version => 20110411162551) do
 
   create_table "agencies", :force => true do |t|
     t.integer  "parent_id"
@@ -185,6 +185,7 @@ ActiveRecord::Schema.define(:version => 20110329032038) do
     t.integer "entry_id"
     t.integer "title"
     t.integer "part"
+    t.integer "chapter"
   end
 
   add_index "entry_cfr_references", ["entry_id"], :name => "index_entry_cfr_affected_parts_on_entry_id"
