@@ -5,6 +5,7 @@ def get_keys
   @amazon_keys     = File.open( File.join(File.dirname(__FILE__), '..', 'amazon.yml') ) { |yf| YAML::load( yf ) }
   @mysql_passwords = File.open( File.join(File.dirname(__FILE__), '..', 'mysql.yml' ) ) { |yf| YAML::load( yf ) }
   @wordpress_keys = File.open( File.join(File.dirname(__FILE__), '..', '..', '..', 'fr2_blog', 'config', 'wordpress_keys.yml') ) { |yf| YAML::load( yf ) }
+  @sendgrid_keys  = File.open( File.join(File.dirname(__FILE__), '..', 'sendgrid.yml') ) { |yf| YAML::load( yf ) }
 end
 
 def munin_host(ip_addresses)
@@ -166,6 +167,18 @@ def chef_cloud_attributes(instance_type)
                   :database_name     => 'fr2_wordpress',
                   :database_user     => 'wordpress',
                   :database_password => @mysql_passwords['server_wordpress_password'],
+                 },
+    :postfix => {
+                   :smtp_sasl_auth_enable      => 'yes',
+                   :smtp_sasl_password_maps    => "static:#{@sendgrid_keys['username']}:#{@sendgrid_keys['password']}",
+                   :smtp_sasl_security_options => 'noanonymous',
+                   :smtp_tls_security_level    => 'may',
+                   :header_size_limit          => 4096000,
+                   :mail_type                  => "relay",
+                   :relayhost                  => "[smtp.sendgrid.net]:587",
+                   :mail_relay_networks        => '127.0.0.0/8 33.33.33.0/28',
+                   :inet_interfaces            => 'all',
+                   :other_domains              => "$mydomain"
                  }
   }
 end
