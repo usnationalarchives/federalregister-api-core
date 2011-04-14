@@ -59,6 +59,7 @@ class AgencyName < ApplicationModel
                                    agency_name_assignments.position
                             FROM agency_name_assignments
                             WHERE agency_name_assignments.agency_name_id = #{id}")
+        Entry.update_all({:delta => true}, {:id => self.entry_ids})
       end
     end
   end
