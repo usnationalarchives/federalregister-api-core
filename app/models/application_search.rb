@@ -10,9 +10,7 @@ class ApplicationSearch
       @condition    = options[:condition]
       @sphinx_attribute = options[:sphinx_attribute] || @condition
       
-      if options[:value_definer]
-        @sphinx_value = options[:value_definer].call(options[:value])
-      elsif options[:phrase]
+      if options[:phrase]
         @sphinx_value = "\"#{options[:value]}\""
       elsif options[:crc32_encode]
         @sphinx_value = options[:value].map{|v| v.to_s.to_crc32}
