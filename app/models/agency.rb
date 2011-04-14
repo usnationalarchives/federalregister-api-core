@@ -120,6 +120,11 @@ class Agency < ApplicationModel
     
     entries.count(:conditions => ["publication_date >= ?", date])
   end
+
+  def recalculate_entries_count!
+    self.entries_count = self.entries.count
+    self.save
+  end
   
   private
   

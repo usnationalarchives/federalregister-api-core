@@ -8,7 +8,8 @@ TODO: Clean this all up.  We removed EnhanceJS and it is no longer clear & clean
 
 #comments-closing-opening .header-nav,
 #articles_published_by_day .header-nav, 
-#popular-things .header-nav {
+#popular-things .header-nav,
+#popular .header-nav {
   display: none;
   }
 #comments-closing-opening.active .header-nav,
@@ -18,9 +19,13 @@ TODO: Clean this all up.  We removed EnhanceJS and it is no longer clear & clean
   display: block;
   position: relative;
   }
+#popular.active .header-nav {
+  display: block
+  }
 .active #comments-closing-opening-body h2,
 .active #articles_published_by_day-body h2,
-.active #popular-things-body .title_bar {
+.active #popular-things-body .title_bar,
+.active #popular-body .header_with_icon {
   display: none;
   }  
 #comments-closing-opening .header-nav h2,

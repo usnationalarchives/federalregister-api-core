@@ -29,6 +29,18 @@ class AgencyAssignment < ApplicationModel
       FROM agency_name_assignments
       JOIN agency_names ON agency_names.id = agency_name_assignments.agency_name_id
       WHERE agency_names.agency_id IS NOT NULL")
+    
+    # not all agencies have entries, so wouldn't be matched by the query that does the real calculation
+    connection.execute "UPDATE agencies SET entries_count = 0"
+    connection.execute "UPDATE agencies,
+                (
+                 SELECT agency_id, COUNT(DISTINCT(assignable_id)) AS entries_count
+                 FROM agency_assignments
+                 WHERE agency_assignments.assignable_type = 'Entry'
+                 GROUP BY agency_assignments.agency_id
+                ) AS agency_assignment_counts
+             SET agencies.entries_count = agency_assignment_counts.entries_count
+             WHERE agencies.id = agency_assignment_counts.agency_id"
   end
   
   private

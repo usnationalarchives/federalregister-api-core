@@ -563,8 +563,9 @@ ADVANCED SEARCH
   float: none;
   margin: 0;
   }
-#search .has_js .formtastic .string label,
-#search .has_js .formtastic .select label { display: none; }    
+#search.has_js .formtastic .cfr label,
+#search.has_js .formtastic .zip label,
+#search.has_js .formtastic .select label { display: none; }    
 .formtastic li {
   list-style: none;
   margin-bottom: .5em;
@@ -630,10 +631,6 @@ ADVANCED SEARCH
   display: block;
   float: left;
   height: 16px;
-  }
-.has_js .formtastic .date_options .date,
-.has_js .formtastic .selected_agency_list select {
-  display: none;
   }
 .has_js .exact_date { 
   margin-left: 15.5em; 

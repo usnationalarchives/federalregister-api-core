@@ -22,6 +22,7 @@ class AgencyName < ApplicationModel
   
   before_create :assign_agency_if_exact_match
   after_save :update_agency_assignments
+  after_save :update_agency_entries_count
   named_scope :unprocessed, :conditions => {:void => false, :agency_id => nil}, :order => "agency_names.name"
   
   def self.find_or_create_by_name(name)
@@ -52,7 +53,7 @@ class AgencyName < ApplicationModel
         connection.execute("INSERT INTO agency_assignments
                             (agency_id, agency_name_id, assignable_type, assignable_id, position)
                             SELECT #{agency_id} AS agency_id,
-                                   agency_name_assignments.id AS agency_name_id,
+                                   agency_name_assignments.agency_name_id AS agency_name_id,
                                    agency_name_assignments.assignable_type,
                                    agency_name_assignments.assignable_id,
                                    agency_name_assignments.position
@@ -99,5 +100,19 @@ class AgencyName < ApplicationModel
     alternative_name.sub!(/^(\w+) (?:of|on|for)(?: the)? (.*)/i, '\2 \1')
     
     alternative_name
+  end
+
+  private
+ 
+  def update_agency_entries_count
+    if agency_id_changed?
+      if agency_id_was.present?
+        Agency.find(agency_id_was).recalculate_entries_count!
+      end
+      if agency
+        agency.recalculate_entries_count!
+      end
+    end
+    true
   end
 end

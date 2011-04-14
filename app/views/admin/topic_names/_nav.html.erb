@@ -1,2 +1,10 @@
-<li><%= link_to_unless_current 'All Topic names',         admin_topic_names_path()             %></li>
-<li><%= link_to_unless_current 'Unprocessed Topic Names', unprocessed_admin_topic_names_path() %></li>
+<% section_tag(:class => 'module') do %>
+  <h1 class="title">Topic Names</h1>
+  <% nav_tag do %>
+    <ul>
+      <li><%= link_to_unless_current 'All Topic names',         admin_topic_names_path()             %></li>
+      <li><%= link_to_unless_current 'Unprocessed Topic Names', unprocessed_admin_topic_names_path() %></li>
+   </ul>
+  <% end -%>
+<% end -%>  
+

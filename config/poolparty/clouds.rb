@@ -5,6 +5,7 @@ def get_keys
   @amazon_keys     = File.open( File.join(File.dirname(__FILE__), '..', 'amazon.yml') ) { |yf| YAML::load( yf ) }
   @mysql_passwords = File.open( File.join(File.dirname(__FILE__), '..', 'mysql.yml' ) ) { |yf| YAML::load( yf ) }
   @wordpress_keys = File.open( File.join(File.dirname(__FILE__), '..', '..', '..', 'fr2_blog', 'config', 'wordpress_keys.yml') ) { |yf| YAML::load( yf ) }
+  @sendgrid_keys  = File.open( File.join(File.dirname(__FILE__), '..', 'sendgrid.yml') ) { |yf| YAML::load( yf ) }
 end
 
 def munin_host(ip_addresses)
@@ -32,18 +33,20 @@ def chef_cloud_attributes(instance_type)
 
   case instance_type
   when 'staging'
-    @proxy_server_address    = '10.117.49.253'
-    @static_server_address   = '10.114.167.201'
-    @worker_server_address   = '10.114.167.201'
-    @blog_server_address     = '10.114.167.201'
-    @database_server_address = '10.114.171.118'
-    @sphinx_server_address   = '10.114.171.118'
-    @app_server_address      = '10.114.166.194'
+    @proxy_server_address    = '10.117.73.130'
+    @static_server_address   = '10.114.162.36'
+    @worker_server_address   = '10.114.162.36'
+    @blog_server_address     = '10.114.162.36'
+    @mail_server_address     = '10.114.162.36'
+    @database_server_address = '10.99.65.121'
+    @sphinx_server_address   = '10.99.65.121'
+    @app_server_address      = '10.114.137.84'
   when 'production'
     @proxy_server_address    = '10.194.207.96'
     @static_server_address   = '10.245.106.31'
     @worker_server_address   = '10.245.106.31'
     @blog_server_address     = '10.245.106.31'
+    @mail_server_address     = '10.245.106.31'
     @database_server_address = '10.194.109.139'
     @sphinx_server_address   = '10.194.109.139'
     @app_server_address      = ['10.243.41.203', '10.196.117.123', '10.202.162.96', '10.212.73.172', '10.251.83.111', '10.251.131.239']
@@ -109,6 +112,7 @@ def chef_cloud_attributes(instance_type)
                 :ec2_path               => "/vol/lib/mysql",
                 :ebs_vol_dev            => "/dev/sdh",
                 :ebs_vol_size           => 80,
+                :tmpdir                 => '/tmp/mysql',
                 :tunable => {
                               :query_cache_size        => '40M',
                               :tmp_table_size          => '100M',
@@ -151,7 +155,8 @@ def chef_cloud_attributes(instance_type)
                     :static_server => {:ip => @static_server_address},
                     :worker_server => {:ip => @worker_server_address},
                     :database      => {:ip => @database_server_address},
-                    :sphinx        => {:ip => @sphinx_server_address}
+                    :sphinx        => {:ip => @sphinx_server_address},
+                    :mail          => {:ip => @mail_server_address}
                    },
     :munin      => {
                     :nodes => munin_host(@app_server_address),
@@ -161,7 +166,19 @@ def chef_cloud_attributes(instance_type)
                   :keys              => @wordpress_keys,
                   :database_name     => 'fr2_wordpress',
                   :database_user     => 'wordpress',
-                  :database_password => 'QtZp2HZWu+ufAxJ9LBcN'
+                  :database_password => @mysql_passwords['server_wordpress_password'],
+                 },
+    :postfix => {
+                   :smtp_sasl_auth_enable      => 'yes',
+                   :smtp_sasl_password_maps    => "static:#{@sendgrid_keys['username']}:#{@sendgrid_keys['password']}",
+                   :smtp_sasl_security_options => 'noanonymous',
+                   :smtp_tls_security_level    => 'may',
+                   :header_size_limit          => 4096000,
+                   :mail_type                  => "relay",
+                   :relayhost                  => "[smtp.sendgrid.net]:587",
+                   :mail_relay_networks        => "127.0.0.0/8 #{@app_server_address.to_a.join(' ')} #{@worker_server_address}",
+                   :inet_interfaces            => 'all',
+                   :other_domains              => "$mydomain"
                  }
   }
 end

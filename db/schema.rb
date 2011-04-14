@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110302040437) do
+ActiveRecord::Schema.define(:version => 20110411162551) do
 
   create_table "agencies", :force => true do |t|
     t.integer  "parent_id"
@@ -181,13 +181,14 @@ ActiveRecord::Schema.define(:version => 20110302040437) do
   add_index "entries", ["significant"], :name => "index_entries_on_significant"
   add_index "entries", ["volume", "start_page", "end_page"], :name => "index_entries_on_volume_and_start_page_and_end_page"
 
-  create_table "entry_cfr_affected_parts", :force => true do |t|
+  create_table "entry_cfr_references", :force => true do |t|
     t.integer "entry_id"
     t.integer "title"
     t.integer "part"
+    t.integer "chapter"
   end
 
-  add_index "entry_cfr_affected_parts", ["entry_id"], :name => "index_entry_cfr_affected_parts_on_entry_id"
+  add_index "entry_cfr_references", ["entry_id"], :name => "index_entry_cfr_affected_parts_on_entry_id"
 
   create_table "entry_emails", :force => true do |t|
     t.string   "remote_ip"

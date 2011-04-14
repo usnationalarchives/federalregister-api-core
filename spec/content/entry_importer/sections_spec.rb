@@ -5,7 +5,7 @@ describe Content::EntryImporter::Sections do
     @agency_1 = Factory.create(:agency)
     @agency_2 = Factory.create(:agency)
     
-    @entry = Factory.create(:entry, :affected_cfr_titles_and_parts => [["1","135"]], :agencies => [@agency_1])
+    @entry = Factory.create(:entry, :entry_cfr_references => [EntryCfrReference.new(:title => 1, :part => 135)], :agencies => [@agency_1])
     @importer = Content::EntryImporter.new(:entry => @entry)
   end
   

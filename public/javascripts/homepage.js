@@ -25,4 +25,9 @@ $(document).ready(function () {
       $("#learn").addClass("active");
       $("#learn").tabs();
     }
+  
+  if( $("#popular").size() > 0 ){
+      $("#popular").addClass("active");
+      $("#popular").tabs();
+  }
 });

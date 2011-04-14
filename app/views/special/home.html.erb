@@ -33,8 +33,24 @@
   <% end -%>
 
   <% section_tag(:id => 'popular', :class => 'with_icon') do %>
-    <%= render :esi => popular_entries_path %>
-    <%= render :esi => most_emailed_entries_path %>
+    <div class="header-nav">    
+      <ul id="popular-links" class="tabs-nav">
+        <li class="tab" id="tabs-popular"><a href="#most-popular">Most Viewed</a></li>
+        <li class="tab" id="tabs-emailed"><a href="#most-emailed">Most E-Mailed</a></li>       
+      </ul>
+    </div>
+    <div id="popular-body" class="tabs-body">    
+      <div id="most-popular">
+        <%= render :esi => popular_entries_path %>
+      </div>
+    
+      <div id="most-emailed">
+        <%= render :esi => most_emailed_entries_path %>
+      </div>
+    </div>
+    
+    <%#= render :esi => popular_entries_path %>
+    <%#= render :esi => most_emailed_entries_path %>
   <% end -%>
 </div>
 

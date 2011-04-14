@@ -6,7 +6,7 @@
 # no regular words or you'll be exposed to dictionary attacks.
 ActionController::Base.session = {
   :key         => '_fr2_session',
-  :secret      => SECRET_SESSION_KEY
+  :secret      => File.open( File.join(File.dirname(__FILE__), '..', 'secrets.yml') ) { |yf| YAML::load( yf ) }['session_key']
 }
 
 # Use the database for sessions instead of the cookie-based default,

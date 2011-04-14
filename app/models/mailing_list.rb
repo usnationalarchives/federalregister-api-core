@@ -12,7 +12,6 @@
 =end Schema Information
 
 class MailingList < ApplicationModel
-  validates_presence_of :search_conditions, :title
   has_many :subscriptions
   has_many :active_subscriptions,
            :class_name => "Subscription",
@@ -26,7 +25,7 @@ class MailingList < ApplicationModel
   end
   
   def search
-    @search ||= search_conditions.present? ? EntrySearch.new(:conditions => search_conditions) : nil
+    @search ||= self[:search_conditions].present? ? EntrySearch.new(:conditions => search_conditions) : nil
   end
   
   def search=(search)
@@ -54,8 +53,6 @@ class MailingList < ApplicationModel
       subscriptions = active_subscriptions
       subscriptions = subscriptions.not_delivered_on(date) unless options[:force_delivery]
       
-      # TODO: exclude non-developers from receiving emails in development mode
-      # TODO: refactor to find_in_batches and use sendgrid to send to 1000 subscribers at once
       subscriptions.find_in_batches(:batch_size => 1000) do |batch_subscriptions|
         Mailer.deliver_mailing_list(self, results, batch_subscriptions)
       end
