@@ -73,7 +73,7 @@ class EntryEmail < ApplicationModel
   end
   
   def no_more_than_10_recipients
-    errors.add(:recipients, "Can only send to 10 recipients") if @recipient_emails && @recipient_emails.count > 10
+    errors.add(:recipients, "cannot number more than 10") if @recipient_emails && @recipient_emails.count > 10
   end
   
   def calculate_num_recipients
