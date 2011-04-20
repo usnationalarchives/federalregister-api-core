@@ -6,7 +6,7 @@
 
 <h3>Subscription Options</h3>
 <ul class="horizontal icons">
-	<% if params[:subscription][:email].nil? %>
+	<% if params[:subscription].nil? || params[:subscription][:email].nil? %>
 		<% feed_url = entries_search_url(:search => {:conditions => @subscription.search_conditions}, :format => :rss) %>
 		<li class="google"><a href="http://fusion.google.com/add?feedurl=<%= CGI.escape(feed_url) %>" title="Add feed to Google">Google Reader</a></li>
 		<li class="yahoo"><a href="http://add.my.yahoo.com/rss?url=<%= CGI.escape(feed_url)  %>" title="Add feed to Yahoo">My Yahoo</a></li>
@@ -16,7 +16,7 @@
 		<% semantic_form_for @subscription, :url => subscriptions_path do |f| %>
 			<%# Serialize the parameters; note that this doesn't recurse %>
 			<% f.fields_for :search_conditions do |cond_f| %>
-				<% @subscription.search_conditions.each do |attr, vals| %>
+				<% (@subscription.search_conditions || []).each do |attr, vals| %>
 					<% if vals.is_a?(Array)%>
 						<% vals.each do |val| %>
 							<%= cond_f.hidden_field(attr, :id => '', :value => val, :multiple => true) unless val.blank? %>
