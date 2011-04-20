@@ -232,7 +232,7 @@ class Entry < ApplicationModel
     has significant
     has "CRC32(IF(granule_class = 'SUNSHINE', 'NOTICE', granule_class))", :as => :type, :type => :integer
     has "GROUP_CONCAT(DISTINCT entry_cfr_references.title * 100000 + entry_cfr_references.part)", :as => :cfr_affected_parts, :type => :multi
-    has agency_name_assignments(:agency_name_id), :as => :agency_name_ids
+    has agency_assignments(:agency_id), :as => :agency_ids
     has topic_assignments(:topic_id),   :as => :topic_ids
     has section_assignments(:section_id), :as => :section_ids
     has place_determinations(:place_id), :as => :place_ids

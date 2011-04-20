@@ -563,8 +563,9 @@ ADVANCED SEARCH
   float: none;
   margin: 0;
   }
-#search .has_js .formtastic .string label,
-#search .has_js .formtastic .select label { display: none; }    
+#search.has_js .formtastic .cfr label,
+#search.has_js .formtastic .zip label,
+#search.has_js .formtastic .select label { display: none; }    
 .formtastic li {
   list-style: none;
   margin-bottom: .5em;

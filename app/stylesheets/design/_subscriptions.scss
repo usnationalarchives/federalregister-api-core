@@ -3,6 +3,7 @@
 #emails #main h3 {
   border-bottom: 2px solid #363636;
   margin-bottom: .5em;
+  margin-top: 0;
   text-transform: uppercase;
   }  
 .icons.horizontal {
@@ -60,6 +61,10 @@
   margin-top: 10px;
   padding-left: 0;
   }
+#modal.subscribe li.email form {
+  position: relative;
+  }
+ 
 #modal.subscribe .icons .email label,
 #subscriptions .icons .email label {
   display: none;
@@ -86,6 +91,10 @@
   margin-left: -4px;
   padding-bottom: 1px;
   width: image-width('icons/subscribe/subscribe-btn.png');
+  }
+#modal.subscribe li.email .subscribe {
+  position: absolute;
+  top: -1px;
   }
 #modal.subscribe .icons .email .subscribe:hover,
 #subscriptions .icons .email #subscription_submit:hover { background: sprite-image('icons/subscribe/subscribe-btn-hover.png', 0, 1px, 50px) no-repeat; }
