@@ -29,6 +29,6 @@ config.action_mailer.default_url_options = {:host => 'www.federalregister.gov'}
 # config.threadsafe!
 
 # Commented out in as password protection is really annoying
-config.action_controller.asset_host = "http://static%d.federalregister.gov"
+# config.action_controller.asset_host = "http://static%d.federalregister.gov"
 
 # Put gems in Gemfile...
