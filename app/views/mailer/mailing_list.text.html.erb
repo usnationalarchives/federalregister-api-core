@@ -18,7 +18,7 @@
         </td>
       </tr>
     </table>  
- 
+    <p><i><%= @results.first.publication_date.to_s(:formal) %></i></p>
     <h2 style="color:#464646;font-family:'Helvetica Neue',Arial,Helvetica,sans-serif;font-size:18px;text-transform: uppercase;border-bottom: 2px solid #464646;margin: 0 0 10px;">Table of Contents:</h2>
     
     <% @agencies.each_with_index do |agency, index| %>

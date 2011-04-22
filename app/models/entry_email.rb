@@ -7,7 +7,7 @@ class EntryEmail < ApplicationModel
   validates_presence_of :entry, :remote_ip, :recipients
   validate :sender_email_is_valid, :if => Proc.new{|e| e.sender.present?}
   validate :recipient_emails_are_valid, :if => Proc.new{|e| e.recipients.present?}
-  validate :no_more_than_10_recipients
+  validate :no_more_than_20_recipients
   
   before_validation :calculate_num_recipients
   after_create :deliver_email
@@ -72,8 +72,8 @@ class EntryEmail < ApplicationModel
     end
   end
   
-  def no_more_than_10_recipients
-    errors.add(:recipients, "Can only send to 10 recipients") if @recipient_emails && @recipient_emails.count > 10
+  def no_more_than_20_recipients
+    errors.add(:recipients, "cannot number more than 20") if @recipient_emails && @recipient_emails.count > 20
   end
   
   def calculate_num_recipients
