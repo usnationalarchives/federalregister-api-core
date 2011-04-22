@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/criticaljuncture/sendgrid.git
-  revision: c3c7f99eb420ede23fecc63265e2f0d42fc61b8d
+  revision: 87d532bff3ab83ac5e842177a7b1fdaae39681b0
   branch: master
   specs:
     sendgrid (0.1.5)

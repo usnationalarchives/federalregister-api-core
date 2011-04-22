@@ -2,7 +2,7 @@ class Mailer < ActionMailer::Base
   include SendGrid
   helper :entry, :text
   
-  sendgrid_enable :opentracking, :clicktracking
+  sendgrid_enable :opentracking, :clicktracking, :ganalytics
   
   def password_reset_instructions(user)
     sendgrid_category "Admin Password Reset"
@@ -16,6 +16,7 @@ class Mailer < ActionMailer::Base
   
   def subscription_confirmation(subscription)
     sendgrid_category "Subscription Confirmation"
+    sendgrid_ganalytics_options :utm_source => 'federalregister.gov', :utm_medium => 'email', :utm_campaign => 'subscription confirmation'
     
     subject    "[FR] #{subscription.mailing_list.title}"
     from       "Federal Register Subscriptions <subscriptions@mail.federalregister.gov>"
@@ -26,6 +27,7 @@ class Mailer < ActionMailer::Base
 
   def unsubscribe_notice(subscription)
     sendgrid_category "Subscription Unsubscribe"
+    sendgrid_ganalytics_options :utm_source => 'federalregister.gov', :utm_medium => 'email', :utm_campaign => 'subscription unsubscribe'
     
     subject "[FR] #{subscription.mailing_list.title}"
     from       "Federal Register Subscriptions <subscriptions@mail.federalregister.gov>"
@@ -38,6 +40,7 @@ class Mailer < ActionMailer::Base
     sendgrid_category "Subscription"
     sendgrid_recipients subscriptions.map(&:email)
     sendgrid_substitute "(((token)))", subscriptions.map(&:token)
+    sendgrid_ganalytics_options :utm_source => 'federalregister.gov', :utm_medium => 'email', :utm_campaign => 'subscription mailing list'
     
     toc = TableOfContentsPresenter.new(results)
     agencies = toc.agencies
@@ -56,6 +59,7 @@ class Mailer < ActionMailer::Base
   def entry_email(entry_email)
     sendgrid_category "Email a Friend"
     sendgrid_recipients entry_email.all_recipient_emails
+    sendgrid_ganalytics_options :utm_source => 'federalregister.gov', :utm_medium => 'email', :utm_campaign => 'email a friend'
     
     subject "[FR] #{entry_email.entry.title}"
     from entry_email.sender
