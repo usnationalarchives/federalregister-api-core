@@ -1,5 +1,7 @@
 <%= @mailing_list.title %>
 
+<%= @results.first.publication_date.to_s(:formal) %>
+
 <%= pluralize @results.size, "matching article" %>.
 
 -------------
