@@ -43,6 +43,20 @@
   font-family: "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
   font-size: 13px;
   }  
+#modal.subscribe .icons .header,
+#subscriptions .icons .header {
+  padding: 0;
+  }
+#modal.subscribe .icons .header h5,
+#subscriptions .icons .header h5 {
+  float: left;
+  text-align: right;
+  width: 73px;
+  }
+.wf-active #modal.subscribe .icons .header h5,
+.wf-active #subscriptions .icons .header h5 {
+  width: 53px;
+  }
 #modal.subscribe .icons .google,
 #subscriptions .icons .google {  
   background: sprite-image('icons/subscribe/google.png', 0, 0, 50px) no-repeat;  
@@ -61,10 +75,22 @@
   margin-top: 10px;
   padding-left: 0;
   }
-#modal.subscribe li.email form {
+#modal.subscribe .icons .email h5,
+#subscriptions .icons .email h5 {
+  float: left;
+  margin-right: 15px;
+  text-align: right;
+  width: 75px;
+  }
+.wf-active #modal.subscribe .icons .email h5,
+.wf-active #subscriptions .icons .email h5 {
+  width: 55px;
+  }
+#modal.subscribe li.email form,
+#subscriptions li.email form {
+  float: left;
   position: relative;
   }
- 
 #modal.subscribe .icons .email label,
 #subscriptions .icons .email label {
   display: none;
