@@ -26,7 +26,7 @@
   <% end -%>
   
   <div class='aside_box subscribe'>  
-    <%= link_to 'Subscribe', new_subscription_path(:subscription => {:search_conditions => {:topic_ids => [@topic.id]}}), :class => 'rss' %>
+    <%= link_to 'Subscribe', new_subscription_path(:subscription => {:search_conditions => {:topic_ids => [@topic.id]}}), :class => 'subscription' %>
   </div>
   
   <%= render :partial => 'special/legal_disclaimer' %>
