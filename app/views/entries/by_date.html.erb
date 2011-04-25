@@ -45,11 +45,11 @@
 <% end %>
 
 
-<% if @entries_without_agency.present? %>
+<% if @entries_without_agencies.present? %>
   <div class="title_bar">
     <h2>Other Articles</h2>
   </div>
-  <% @entries_without_agency.group_by(&:agency_names).each do |agency_names, entries| %>
+  <% @entries_without_agencies.group_by(&:agency_names).each do |agency_names, entries| %>
     <h3><%= agency_names.map(&:name).to_sentence %></h3>
     <dl>
     <% entries.each do |entry| %>
