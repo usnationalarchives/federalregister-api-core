@@ -40,19 +40,22 @@ class ActiveRecord::Base
     end
     
     define_method "#{attribute}=" do |val|
-      path = self.send(path_method)
-      File.makedirs(File.dirname(path))
-      self.class.transaction do 
-        if self.class.columns_hash["#{attribute}_created_at"] && self["#{attribute}_created_at"].nil?
-          self["#{attribute}_created_at"] = Time.now
+      if val.present?
+        save # save beforehand, thus triggering before_save callbacks
+        path = self.send(path_method)
+        File.makedirs(File.dirname(path))
+        self.class.transaction do 
+          if self.class.columns_hash["#{attribute}_created_at"] && self["#{attribute}_created_at"].nil?
+            self["#{attribute}_created_at"] = Time.now
+          end
+          
+          if self.class.columns_hash["#{attribute}_updated_at"]
+            self["#{attribute}_updated_at"] = Time.now
+          end
+          
+          File.open(path, 'w') {|f| f.write(val) }
+          save
         end
-        
-        if self.class.columns_hash["#{attribute}_updated_at"]
-          self["#{attribute}_updated_at"] = Time.now
-        end
-        
-        File.open(path, 'w') {|f| f.write(val) }
-        save
       end
     end
 

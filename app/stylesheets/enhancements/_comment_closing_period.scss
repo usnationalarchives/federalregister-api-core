@@ -7,21 +7,30 @@ TODO: Clean this all up.  We removed EnhanceJS and it is no longer clear & clean
 ******************************/  
 
 #comments-closing-opening .header-nav,
-#articles_published_by_day .header-nav {
+#articles_published_by_day .header-nav, 
+#popular-things .header-nav,
+#popular .header-nav {
   display: none;
   }
 #comments-closing-opening.active .header-nav,
-#articles_published_by_day.active .header-nav {
+#articles_published_by_day.active .header-nav,
+#popular-things.active .header-nav {
   border-top: 3px solid $dark_blue;
   display: block;
   position: relative;
   }
+#popular.active .header-nav {
+  display: block
+  }
 .active #comments-closing-opening-body h2,
-.active #articles_published_by_day-body h2 {
+.active #articles_published_by_day-body h2,
+.active #popular-things-body .title_bar,
+.active #popular-body .header_with_icon {
   display: none;
   }  
 #comments-closing-opening .header-nav h2,
-#articles_published_by_day .header-nav h2 {
+#articles_published_by_day .header-nav h2,
+#popular-things .header-nav h2 {
   border-top: none;
   margin-top: 0;
   }
@@ -35,14 +44,12 @@ TODO: Clean this all up.  We removed EnhanceJS and it is no longer clear & clean
   font-size: .4em;
   }
 #comments-closing-opening .actions,
-#articles_published_by_day .actions {
+#articles_published_by_day .actions,
+#popular-things .actions {
   top: 5px;
   }
-#comments-closing-opening.active .header-nav,
-#articles_published_by_day.active .header-nav {
-  display: block;
-  }
-#comments-closing-opening .tabs-body {
+#comments-closing-opening .tabs-body,
+#popular-things .tabs-body {
   clear: both;
   overflow: auto;
   }
@@ -54,6 +61,13 @@ TODO: Clean this all up.  We removed EnhanceJS and it is no longer clear & clean
   display: block;
   }
   
+#popular-things.active h2 {
+  line-height:25px;
+  padding-bottom: 5px;
+  }  
+#popular-things.active  .actions {
+  left: 60px;
+  }  
   
 #articles_published_by_day .tabs-nav li,
 #learn .tabs-nav li {

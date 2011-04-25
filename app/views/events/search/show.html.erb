@@ -3,14 +3,6 @@
 
 <h1 class="title"><span>Search Events</span></h1>
 
-<% unless @search.valid? %>
-<ul class="errors">
-  <% @search.errors.each do |err| %>
-  <li><%= err %></li>
-  <% end %>
-</ul>
-<% end %>
-
 <%= render :esi => event_search_header_path(params.except(:action)) %>
 
 <div class="filters">

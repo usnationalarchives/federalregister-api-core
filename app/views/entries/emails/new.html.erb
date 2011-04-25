@@ -1,0 +1,41 @@
+<% title "Email a friend: #{@entry.title}" %>
+<h1 class="title"><span>E-Mail A Friend</span></h1>
+
+<script type="text/javascript">
+var RecaptchaOptions = {
+   theme : 'clean'
+};
+</script>
+
+<div id="email_pane" data-requires-captcha-with-message="<%= @entry_email.requires_captcha_with_message? %>" data-requires-captcha-without-message="<%= @entry_email.requires_captcha_without_message? %>" >
+  <h3>E-Mail the following article:</h3>
+  <h4><%= link_to @entry.title, entry_path(@entry) %></h4>
+  <p>Your email address will not be published. Required fields are marked *</p>
+  <% if @entry_email.errors.count > 0 %> 
+    <div class="errors">
+      <p class="errors_header">The following errors were found:</p>
+      <ul class="bullets">
+      <% @entry_email.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <% semantic_form_for(@entry_email, :url => entry_email_path(@entry)) do |f| %>
+    <% f.inputs do %>
+      <%= f.input :sender, :required => true, :input_html => { :placeholder => "your_email@example.com" } %>
+      <%= f.input :send_me_a_copy, :label => 'Send me a copy', :as => :boolean, :wrapper_html => { :class => 'copy' } %>
+      <%= f.input :recipients, :required => true, :input_html => { :placeholder => "one@example.com, two@example.com, three@example.com, etc." } %>
+      <%= f.input :message, :as => :text %>
+    <% end %>
+  
+    <% if @entry_email.requires_captcha_with_message? || @entry_email.requires_captcha_without_message? %>
+      <%= recaptcha_tags %>
+    <% end %>
+  
+    <% f.buttons do %>
+      <%= f.commit_button "Send" %>
+    <% end %>
+  <% end %>
+</div>

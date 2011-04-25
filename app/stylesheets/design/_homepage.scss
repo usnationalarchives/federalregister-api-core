@@ -333,7 +333,7 @@ WHATS HOT
   margin-bottom: 1.75em;
   padding: 21px 0 0 0;
   }
-#popular {
+#popular{
   background: sprite-image('icons/icon_whats_hot.png', 30px, 15px, 400px) no-repeat;
   }
 .home .with_icon h1,
@@ -372,7 +372,35 @@ WHATS HOT
   top: 0;
   width: 1em;
   }
-
+// Tabs on! 
+.home #popular.active ul {
+  @include horizontal-list;
+  }
+.home #popular.active .header-nav li {
+  border: none;
+  height: auto;
+  line-height: 23px;
+  min-height: 0;
+  }  
+.home #popular.active .header-nav {
+  border-bottom: 2px solid #464646;
+  margin-bottom: 20px;
+  padding-top: 21px;
+  }
+.home #popular.active .tab {
+  color:#464646;
+  @include apertura-condensed;
+  font-size: 1.5em;
+  font-weight: 700;
+  margin: 0;
+  text-transform: uppercase;
+  }
+.home #popular.active .tab a {
+  color: #aaa;  
+  }
+.home #popular.active .tab.tabs-selected a {
+  color: #464646;
+  } 
 /******************************
 
 AGENCY HIGHLIGHT 

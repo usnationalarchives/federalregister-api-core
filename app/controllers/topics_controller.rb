@@ -24,7 +24,7 @@ class TopicsController < ApplicationController
       wants.rss do
         @feed_name = "Federal Register: #{@topic.name}"
         @feed_description = "Recent Federal Register entries about #{@topic.name}."
-        @entries = @topic.entries.most_recent(20)
+        @entries = EntrySearch.new(:conditions => {:topic_ids => [@topic.id]}, :order => "newest", :per_page => 20).results
         render :template => 'entries/index.rss.builder'
       end
     end
@@ -38,7 +38,7 @@ class TopicsController < ApplicationController
       wants.rss do
         @feed_name = "Federal Register: Significant articles from the '#{@topic.name}' topic"
         @feed_description = "Significant Federal Register articles from the '#{@topic.name}' topic."
-        @entries = @topic.entries.significant.most_recent(20).preload(:topics, :agencies)
+        @entries = EntrySearch.new(:conditions => {:significant => 1, :topic_ids => [@topic.id]}, :order => "newest", :per_page => 20).results
         render :template => 'entries/index.rss.builder'
       end
     end

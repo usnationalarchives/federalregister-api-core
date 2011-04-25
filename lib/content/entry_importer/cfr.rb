@@ -1,17 +1,17 @@
 module Content::EntryImporter::CFR
   extend Content::EntryImporter::Utils
-  provides :affected_cfr_titles_and_parts
+  provides :entry_cfr_references
   
-  def affected_cfr_titles_and_parts
-    affected_cfr_parts = []
+  def entry_cfr_references
+    entry_cfr_references = []
     
     cfr_nodes.each do |cfr_node|
-      cfr_node.xpath('./xmlns:part').each do |part_node|
-        affected_cfr_parts << [ cfr_node['title'], part_node['number'] ]
+      cfr_node.xpath('./xmlns:part | ./xmlns:chapter').each do |chapter_or_part_node|
+        entry_cfr_references << EntryCfrReference.new(:title => cfr_node['title'], chapter_or_part_node.name => chapter_or_part_node['number'])
       end
     end
     
-    affected_cfr_parts
+    entry_cfr_references
   end
   
   private

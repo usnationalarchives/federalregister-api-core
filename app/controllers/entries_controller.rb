@@ -16,7 +16,7 @@ class EntriesController < ApplicationController
       end
       wants.rss do
         @feed_name = 'Federal Register Latest Entries'
-        @entries = Entry.published_today.preload(:topics, :agencies)
+        @entries = EntrySearch.new(:conditions => {:publication_date => {:is => @publication_date}}, :order => "newest", :per_page => 1000).results
       end
     end
   end
@@ -105,7 +105,7 @@ class EntriesController < ApplicationController
   def tiny_url
     cache_for 1.day
     entry = Entry.find_by_document_number!(params[:document_number])
-    url = entry_url(entry)
+    url = entry_url(entry, params.except(:anchor, :document_number, :action, :controller, :format))
     
     if params[:anchor].present?
       url += '#' + params[:anchor]
@@ -129,31 +129,10 @@ class EntriesController < ApplicationController
   
   def prep_issue_view(date)
     @publication_date = date
-    @issue = Issue.find_by_publication_date(@publication_date)
+    @issue = Issue.completed.find_by_publication_date!(@publication_date)
     
-    @agencies = Agency.all(
-      :include => [:entries],
-      :conditions => ['publication_date = ?', @publication_date],
-      :order => "agencies.name, entries.title"
-    )
-    
-    Agency.preload_associations(@agencies, :children)
-    Entry.preload_associations(@agencies.map(&:entries).flatten, :agencies)
-    
-    @agencies.each do |agency|
-      def agency.entries_excluding_subagency_entries
-        self.entries.select{|entry| entry.agencies.excluding_parents.include?(self) }
-      end
-    end
-    
-    @entries_without_agency = Entry.all(
-      :include => :agencies,
-      :conditions => ['agencies.id IS NULL && entries.publication_date = ?', @publication_date],
-      :order => "entries.title"
-    )
-    
-    if @agencies.blank? && @entries_without_agency.blank?
-      raise ActiveRecord::RecordNotFound
-    end
+    toc = TableOfContentsPresenter.new(@issue.entries.scoped(:include => :agencies))
+    @entries_without_agencies = toc.entries_without_agencies
+    @agencies = toc.agencies
   end
 end

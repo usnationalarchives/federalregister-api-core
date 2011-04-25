@@ -84,6 +84,26 @@ describe AgencyName do
       entry.reload
       entry.agencies.should == []
     end
+
+    it "recalculates agency.entries_count when agency_id is set" do
+      agency = Factory(:agency)
+      agency_name = Factory(:agency_name, :agency => agency)
+      entry = Factory(:entry, :agency_names => [agency_name])
+      agency.reload
+      agency.entries_count.should == 1
+    end
+    
+    it "recalculates agency.entries_count when agency_id changes" do
+      agency_1 = Factory(:agency)
+      agency_name = Factory(:agency_name, :agency => agency_1)
+      entry = Factory(:entry, :agency_names => [agency_name])
+      agency_2 = Factory(:agency)
+      agency_name.update_attributes(:agency => agency_2)
+      agency_1.reload
+      agency_2.reload
+      agency_1.entries_count.should == 0
+      agency_2.entries_count.should == 1
+    end
   end
   
 end

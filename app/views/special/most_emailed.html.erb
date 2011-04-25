@@ -1,0 +1,8 @@
+<div class="header_with_icon">
+  <h1>Most Emailed</h1>
+</div>
+<ol>
+  <% @entries.each_with_index do |entry, index| %>
+    <li><span class="index"><%= index + 1 %></span><%= link_to truncate_words(entry.title, :length => 110), entry_path(entry) %></li>
+  <% end %>
+</ol>

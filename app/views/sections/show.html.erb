@@ -1,9 +1,8 @@
 <%= title @section.title %>
 <% description description_for_section(@section) %>
 
-<%= feed_autodiscovery highlighted_entries_section_url(@section, :format => :rss), "Featured Articles in #{@section.title}"%>
-<%= feed_autodiscovery significant_entries_section_url(@section, :format => :rss), "Significant Articles in #{@section.title}"%>
-<%= feed_autodiscovery section_url(@section, :format => :rss), "All Articles in #{@section.title}"%>
+<%= feed_autodiscovery significant_entries_section_url(@section, :format => :rss), "Significant Articles in #{@section.title}", :search_conditions => {:section_ids => [@section.id], :significant => 1} %>
+<%= feed_autodiscovery section_url(@section, :format => :rss), "All Articles in #{@section.title}", :search_conditions => {:section_ids => [@section.id]} %>
 
 <h1 class="title"><span><%= @section.title %></span></h1>
 
@@ -39,7 +38,7 @@
   <% end -%>  
   
   <div class='aside_box subscribe'>  
-    <%= link_to 'Subscribe', highlighted_entries_section_path(@section, :format => :rss), :class => 'rss' %>
+    <%= link_to 'Subscribe', new_subscription_path(:subscription => {:search_conditions => {:section_ids => [@section.id]}}), :class => 'subscription' %>
   </div>
   
   <%= render :partial => 'special/legal_disclaimer' %>
@@ -52,7 +51,26 @@
     </p>
   <% end -%>
   
-  <%= render :esi => popular_entries_section_path(@section) %>
+  <% section_tag(:id => 'popular-things') do %>
+    
+    <div class="header-nav">    
+      <h2 class="title_bar">Most</h2>
+      <ul id="popular-things-links" class="actions tabs-nav">
+        <li class="tab" id="tabs-popular"><a href="#most-popular">Viewed</a></li>
+        <li class="tab" id="tabs-emailed"><a href="#most-emailed">E-Mailed</a></li>       
+      </ul>
+    </div>
+    <div id="popular-things-body" class="tabs-body">    
+      <div id="most-popular">
+        <%= render :esi => popular_entries_section_path(@section) %>
+      </div>
+    
+      <div id="most-emailed">
+        <%= render :esi => most_emailed_entries_section_path(@section) %>
+      </div>
+    </div>
+  <% end %>
+  
   <%= render :esi => popular_topics_section_path(@section) %>
   
   <%= render :esi => featured_agency_section_path(@section) %>

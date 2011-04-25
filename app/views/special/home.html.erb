@@ -1,5 +1,4 @@
-<% feed_autodiscovery entries_url(:format => :rss), "Recent Articles from the Federal Register" %>
-<% feed_autodiscovery highlighted_entries_url(:format => :rss), "Featured Articles from the Federal Register" %>
+<% feed_autodiscovery entries_url(:format => :rss), "All Articles from the Federal Register", :search_conditions => {} %>
 <% add_column_class('home') %>
 
 <% description "Search, browse and learn about the Federal Register. Federal Register 2.0 is the unofficial daily publication for rules, proposed rules, and notices of Federal agencies and organizations, as well as executive orders and other presidential documents." %>
@@ -34,7 +33,24 @@
   <% end -%>
 
   <% section_tag(:id => 'popular', :class => 'with_icon') do %>
-    <%= render :esi => popular_entries_path %>
+    <div class="header-nav">    
+      <ul id="popular-links" class="tabs-nav">
+        <li class="tab" id="tabs-popular"><a href="#most-popular">Most Viewed</a></li>
+        <li class="tab" id="tabs-emailed"><a href="#most-emailed">Most E-Mailed</a></li>       
+      </ul>
+    </div>
+    <div id="popular-body" class="tabs-body">    
+      <div id="most-popular">
+        <%= render :esi => popular_entries_path %>
+      </div>
+    
+      <div id="most-emailed">
+        <%= render :esi => most_emailed_entries_path %>
+      </div>
+    </div>
+    
+    <%#= render :esi => popular_entries_path %>
+    <%#= render :esi => most_emailed_entries_path %>
   <% end -%>
 </div>
 

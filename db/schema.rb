@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110203000130) do
+ActiveRecord::Schema.define(:version => 20110411162551) do
 
   create_table "agencies", :force => true do |t|
     t.integer  "parent_id"
@@ -108,6 +108,21 @@ ActiveRecord::Schema.define(:version => 20110203000130) do
   add_index "citations", ["cited_entry_id", "citation_type", "source_entry_id"], :name => "cited_citation_source"
   add_index "citations", ["source_entry_id", "citation_type", "cited_entry_id"], :name => "source_citation_cited"
 
+  create_table "delayed_jobs", :force => true do |t|
+    t.integer  "priority",   :default => 0
+    t.integer  "attempts",   :default => 0
+    t.text     "handler"
+    t.text     "last_error"
+    t.datetime "run_at"
+    t.datetime "locked_at"
+    t.datetime "failed_at"
+    t.string   "locked_by"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "delayed_jobs", ["priority", "run_at"], :name => "delayed_jobs_priority"
+
   create_table "entries", :force => true do |t|
     t.text     "title"
     t.text     "abstract"
@@ -166,13 +181,23 @@ ActiveRecord::Schema.define(:version => 20110203000130) do
   add_index "entries", ["significant"], :name => "index_entries_on_significant"
   add_index "entries", ["volume", "start_page", "end_page"], :name => "index_entries_on_volume_and_start_page_and_end_page"
 
-  create_table "entry_cfr_affected_parts", :force => true do |t|
+  create_table "entry_cfr_references", :force => true do |t|
     t.integer "entry_id"
     t.integer "title"
     t.integer "part"
+    t.integer "chapter"
   end
 
-  add_index "entry_cfr_affected_parts", ["entry_id"], :name => "index_entry_cfr_affected_parts_on_entry_id"
+  add_index "entry_cfr_references", ["entry_id"], :name => "index_entry_cfr_affected_parts_on_entry_id"
+
+  create_table "entry_emails", :force => true do |t|
+    t.string   "remote_ip"
+    t.integer  "num_recipients"
+    t.integer  "entry_id"
+    t.string   "sender_hash"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "entry_page_views", :force => true do |t|
     t.integer  "entry_id"
@@ -260,9 +285,9 @@ ActiveRecord::Schema.define(:version => 20110203000130) do
   end
 
   create_table "mailing_lists", :force => true do |t|
-    t.text     "parameters"
+    t.text     "search_conditions"
     t.string   "title"
-    t.integer  "active_subscriptions_count"
+    t.integer  "active_subscriptions_count", :default => 0
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -347,6 +372,10 @@ ActiveRecord::Schema.define(:version => 20110203000130) do
     t.datetime "unsubscribed_at"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.datetime "last_delivered_at"
+    t.integer  "delivery_count",       :default => 0
+    t.date     "last_issue_delivered"
+    t.string   "environment"
   end
 
   create_table "topic_assignments", :force => true do |t|

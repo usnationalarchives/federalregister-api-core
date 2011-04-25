@@ -1,5 +1,7 @@
 module Content
   class EntryImporter
+    class MissingDocumentNumber < StandardError; end
+
     # order here determines order of attributes when running :all
     include Content::EntryImporter::BasicData
     include Content::EntryImporter::Agencies
@@ -23,7 +25,18 @@ module Content
           puts "handling #{date}"
           if date > '2000-01-01'
             mods_doc_numbers = ModsFile.new(date).document_numbers
-            BulkdataFile.new(date).document_numbers_and_associated_nodes.each do |document_number, bulkdata_node|
+            docs_and_nodes = BulkdataFile.new(date).document_numbers_and_associated_nodes
+
+            (mods_doc_numbers - docs_and_nodes.map{|doc, node| doc}).each do |document_number|
+              error = "'#{document_number}' (#{date}) in MODS but not in bulkdata"
+              Rails.logger.warn(error)
+              HoptoadNotifier.notify(
+                :error_class   => "Missing Document Number in bulkdata",
+                :error_message => error 
+              )
+            end
+
+            docs_and_nodes.each do |document_number, bulkdata_node|
               if mods_doc_numbers.include?(document_number)
                 importer = EntryImporter.new(:date => date, :document_number => document_number, :bulkdata_node => bulkdata_node)
             
@@ -33,9 +46,15 @@ module Content
                   importer.update_attributes(*attributes)
                 end
               else
-                puts "skipping #{document_number}; not in mods file"
+                error = "'#{document_number}' (#{date}) in bulkdata but not in MODS"
+                Rails.logger.warn(error)
+                HoptoadNotifier.notify(
+                  :error_class   => "Missing Document Number in MODS",
+                  :error_message => error 
+                )
               end
             end
+            
           else
             ModsFile.new(date).document_numbers.each do |document_number|
               importer = EntryImporter.new(:date => date, :document_number => document_number)

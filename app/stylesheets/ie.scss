@@ -255,4 +255,24 @@ BLOG
   }
 #wordpress .meta_actions li.comments span {
   top: 0;
-  }    
+  }  
+
+/******************************
+
+EMAIL SUBS
+
+******************************/  
+
+#emails #entry_email_send_me_a_copy {
+  border: 0;
+  }
+
+ #modal.subscribe .icons li {
+   border: none;
+   margin-bottom: 0;
+   padding-bottom: 0;
+  }
+#modal.subscribe .icons .email,
+#subscriptions .icons .email {
+  width: 350px;
+  }

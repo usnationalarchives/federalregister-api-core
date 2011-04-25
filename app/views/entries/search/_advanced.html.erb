@@ -9,14 +9,10 @@
       <label>Agency</label>
       <input placeholder="Agriculture Department" data-autocomplete="autocomplete" />
 
-      <%= f.input :agency_ids,
-                  :as => :select,
-                  :label => "Agencies",
-                  :include_blank => false,
-                  :input_html => {:multiple => true},
-                  :value_method => Proc.new{|a| a.id.to_s},
-                  :collection => Agency.all(:conditions => {:id => @search.agency_ids.to_a} ),
-                  :wrapper_html => {:class => 'selected_agency_list'} %>
+      <%= f.select :agency_ids,
+                  Agency.all(:conditions => {:id => @search.agency_ids.to_a} ).map{|a| [a.name, a.id.to_s]},
+                  {},
+                  {:multiple => :multiple, :class => 'selected_agency_list'} %>
     </li>  
     
   <% else %>
@@ -60,12 +56,15 @@
   <% end %>
 <% end %>
   
-<% f.inputs :name => "Mentioning Locations Near", :class => 'zip' do %>
-  <%= f.input :location,
-              :input_html => {:placeholder =>  "Zip Code"} %>
-  <%= f.input :within,
-              :as => :select,
-              :collection => [5, 10, 25, 50, 100, 200].map{|n| ["#{n} miles", n]} %>
+<% f.fields_for :near, f.object.near do |location_f| %>
+  <% location_f.inputs :name => "Mentioning Locations Near", :class => 'zip' do %>
+    <%= location_f.input :location,
+                    :input_html => {:placeholder =>  "Zip Code"} %>
+    <%= location_f.input :within,
+                    :as => :select,
+                    :collection => [5, 10, 25, 50, 100, 200].map{|n| ["#{n} miles", n]},
+                    :selected => location_f.object.try(:within) || ApplicationSearch::PlaceSelector::DEFAULT_WITHIN %>
+  <% end %>
 <% end %>
 
 <% [:topic_ids, :section_ids].each do |param| %>

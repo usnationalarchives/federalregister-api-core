@@ -3,9 +3,11 @@
 
 <h4><%= event_title(@event) %></h4>
 
+<% if @event.date %>
 <ul class="bullets">
   <li><%= link_to 'Download iCalendar file', event_path(@event, :format => :ics), :target => "_blank" %></li>
   <li><%= link_to 'Google Calendar', add_google_event_url(@event), :target => "_blank" %></li>
   <li><%= link_to 'Windows Live Calendar', add_windows_live_event_url(@event), :target => "_blank" %></li>
   <li><%= link_to 'Yahoo! Calendar', add_yahoo_event_url(@event), :target => "_blank" %></li>
 </ul>
+<% end %>

@@ -28,7 +28,7 @@ class Issue < ApplicationModel
   end
   
   def self.most_recent(n = 50)
-    all(:order => "publication_date DESC", :limit => n).completed
+    scoped(:order => "publication_date DESC", :limit => n).completed
   end
   
   def self.complete?(date)
@@ -96,7 +96,13 @@ class Issue < ApplicationModel
   end
   
   def total_pages
-    entries.maximum(:end_page) - entries.minimum(:start_page) + 1
+    end_page = entries.maximum(:end_page)
+    start_page = entries.minimum(:start_page)
+    if end_page && start_page
+      end_page - start_page + 1
+    else
+      nil
+    end
   end
   
   def public_meeting_count

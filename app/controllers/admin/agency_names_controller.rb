@@ -1,14 +1,25 @@
 class Admin::AgencyNamesController < AdminController
   def index
-    search_options = params[:search] || {}
-    search_options['order'] ||= 'ascend_by_name'
-    @search = AgencyName.searchlogic(search_options)
-    
-    @agency_names = @search.paginate(:page => params[:page])
+    respond_to do |wants|
+      wants.html do
+        search_options = params[:search] || {}
+        search_options['order'] ||= 'ascend_by_name'
+        @search = AgencyName.searchlogic(search_options)
+        @agency_names = @search.paginate(:page => params[:page])
+      end
+      
+      wants.csv do
+        agency_names = AgencyName.all(:order => "agency_names.name", :include => :agency)
+        rows = [["agency_name", "agency"].to_csv] + 
+          agency_names.map{|agency_name| [agency_name.name, agency_name.void? ? 'Void' : agency_name.agency.try(:name)].to_csv}
+        render :text => rows
+      end
+      
+    end
   end
   
   def unprocessed
-    @unprocessed_agency_names = AgencyName.unprocessed
+    @unprocessed_agency_names = AgencyName.unprocessed.paginate(:page => params[:page])
   end
   
   def edit

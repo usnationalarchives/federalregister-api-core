@@ -122,6 +122,8 @@ class Entry < ApplicationModel
   belongs_to :lede_photo
   
   has_many :entry_page_views
+  has_many :entry_emails
+  
   has_one :agency_highlight
   
   has_many :events, :dependent => :destroy
@@ -133,7 +135,8 @@ class Entry < ApplicationModel
   file_attribute(:raw_text)  {"#{RAILS_ROOT}/data/raw/#{document_file_path}.txt"}
   
   has_many :entry_regulation_id_numbers
-  has_many :entry_cfr_affected_parts
+  has_many :entry_cfr_references, :dependent => :delete_all
+  has_many :entry_cfr_affected_parts, :class_name => "EntryCfrReference", :conditions => "entry_cfr_references.part IS NOT NULL"
   validate :curated_attributes_are_not_too_long
   
   def self.published_today
@@ -180,6 +183,17 @@ class Entry < ApplicationModel
     )
   end
   
+  def self.most_emailed(since = 1.week.ago)
+    scoped(
+      :select => "entries.id, entries.title, entries.document_number, entries.publication_date, entries.abstract, count(distinct(remote_ip)) AS num_emails",
+      :joins => :entry_emails,
+      :conditions => ["entry_emails.created_at > ?", since],
+      :group => "entries.id",
+      :having => "num_emails > 0",
+      :order => "num_emails DESC"
+    )
+  end
+  
   def self.highlighted(date = IssueApproval.latest_publication_date)
     scoped(:joins => :section_highlights, :conditions => {:section_highlights => {:publication_date => date}})
   end
@@ -217,7 +231,7 @@ class Entry < ApplicationModel
     # attributes
     has significant
     has "CRC32(IF(granule_class = 'SUNSHINE', 'NOTICE', granule_class))", :as => :type, :type => :integer
-    has "GROUP_CONCAT(DISTINCT entry_cfr_affected_parts.title * 100000 + entry_cfr_affected_parts.part)", :as => :cfr_affected_parts, :type => :multi
+    has "GROUP_CONCAT(DISTINCT entry_cfr_references.title * 100000 + entry_cfr_references.part)", :as => :cfr_affected_parts, :type => :multi
     has agency_assignments(:agency_id), :as => :agency_ids
     has topic_assignments(:topic_id),   :as => :topic_ids
     has section_assignments(:section_id), :as => :section_ids
@@ -225,6 +239,7 @@ class Entry < ApplicationModel
     
     has publication_date
     has effective_date(:date), :as => :effective_date
+    has comments_close_date(:date), :as => :comment_date
     
     join entry_cfr_affected_parts
     
@@ -401,18 +416,6 @@ class Entry < ApplicationModel
   
   def regulation_id_numbers
     @rins || self.entry_regulation_id_numbers.map(&:regulation_id_number)
-  end
-  
-  def affected_cfr_titles_and_parts=(affected_cfr_titles_and_parts)
-    @affected_cfr_titles_and_parts = affected_cfr_titles_and_parts.map{|t,p| [t.to_i, p.to_i]}
-    self.entry_cfr_affected_parts = @affected_cfr_titles_and_parts.map do |title, part|
-      entry_cfr_affected_parts.to_a.find{|ecap| ecap.title == title && ecap.part == part} || EntryCfrAffectedPart.new(:title => title, :part => part)
-    end
-    @affected_cfr_titles_and_parts
-  end
-  
-  def affected_cfr_titles_and_parts
-    @affected_cfr_titles_and_parts || self.entry_cfr_affected_parts.map{|ecap| [ecap.title, ecap.part]}
   end
   
   def current_regulatory_plans

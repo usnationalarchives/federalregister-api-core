@@ -1,5 +1,5 @@
 <% title @regulatory_plan.title %>
-<% feed_autodiscovery regulatory_plan_url(@regulatory_plan, :format => :rss) %>
+<% feed_autodiscovery regulatory_plan_url(@regulatory_plan, :format => :rss), "Articles associated with RIN #{@regulatory_plan.regulation_id_number}", :search_conditions => {:regulation_id_number => @regulatory_plan.regulation_id_number} %>
 
 <h1 class="title"><span>Unified Agenda <%= @regulatory_plan.regulation_id_number %></span></h1>
 

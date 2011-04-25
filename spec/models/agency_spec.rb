@@ -58,6 +58,10 @@ describe Agency do
       Agency.named_approximately("The Administrative Office of United States Courts").should == [@office]
     end
     
+    it "does not error out on numbers" do
+      Agency.named_approximately("2979").should == []
+    end
+    
     after(:each) do
       Agency.connection.execute("TRUNCATE agencies")
     end

@@ -39,6 +39,7 @@ class Agency < ApplicationModel
   has_many :agency_assignments
   has_many :agencies_sections
   has_many :sections, :through => :agencies_sections
+  has_many :agency_names
   
   has_many :entry_agency_assignments, :class_name => "AgencyAssignment", :conditions => "agency_assignments.assignable_type = 'Entry'"
   has_many :entries, :through => :entry_agency_assignments
@@ -76,14 +77,18 @@ class Agency < ApplicationModel
   def self.named_approximately(name)
     words = name.downcase.split(/[^a-z]+/) - %w(a and & in for of on s the)
     
-    condition_sql = "(" + words.map{"agencies.name LIKE ?"}.join(" AND ") + ") OR (" + words.map{"agencies.short_name LIKE ?"}.join(" AND ") + ")"
-    bind_params = words.map{|word|"%#{word}%"} * 2
-    scoped(
-      :conditions => [
-        condition_sql, *bind_params
-      ],
-      :order => "agencies.name"
-    )
+    if words.empty?
+      []
+    else
+      condition_sql = "(" + words.map{"agencies.name LIKE ?"}.join(" AND ") + ") OR (" + words.map{"agencies.short_name LIKE ?"}.join(" AND ") + ")"
+      bind_params = words.map{|word|"%#{word}%"} * 2
+      scoped(
+        :conditions => [
+          condition_sql, *bind_params
+        ],
+        :order => "agencies.name"
+      )
+    end
   end
   
   def to_param
@@ -114,6 +119,11 @@ class Agency < ApplicationModel
       end
     
     entries.count(:conditions => ["publication_date >= ?", date])
+  end
+
+  def recalculate_entries_count!
+    self.entries_count = self.entries.count
+    self.save
   end
   
   private

@@ -23,6 +23,7 @@ cloud :static_server_large do
     recipe "ubuntu"
     recipe "openssl"
     recipe "imagemagick"
+    recipe "postfix"
     
     recipe "munin::client"
     
@@ -56,7 +57,6 @@ cloud :static_server_large do
       :sphinx  => {
                     :server_address => 'sphinx.fr2.ec2.internal'
                   },
-      :rails  => { :environment => "staging" },
       :apache => { 
                    :server_aliases => "www.#{@app_url}",
                    :listen_ports   => ['80'],

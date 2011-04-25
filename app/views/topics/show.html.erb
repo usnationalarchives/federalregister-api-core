@@ -1,8 +1,8 @@
 <% title @topic.name %>
 <% description "Browse Federal Register articles tagged by agencies with the topic '#{@topic.name}'. Use this topic to learn more about your areas of interest and the regulations that affect the topic '#{@topic.name}'." %>
 
-<% feed_autodiscovery topic_url(@topic, :format => :rss), "Articles in this topic" %>
-<% feed_autodiscovery significant_entries_topic_url(@topic, :format => :rss), "Significant Articles in this topic" %>
+<% feed_autodiscovery topic_url(@topic, :format => :rss), "Articles in this topic", :search_conditions => {:topic_ids => [@topic.id]} %>
+<% feed_autodiscovery significant_entries_topic_url(@topic, :format => :rss), "Significant Articles in this topic", :search_conditions => {:topic_ids => [@topic.id], :significant => '1'} %>
 
 <h1 class="title"><span>Topic</span></h1>
 
@@ -13,20 +13,6 @@
 
 <%= render :partial => 'entries/most_cited', :locals => {:entries => @most_cited_entries} %>
 
-<% if false %>
-<% related_agencies = @topic.related_agencies_cache %>
-<% if related_agencies.present? %>
-  <h3>Agencies Using this Topic</h3>
-  <div class='chart size_<%=related_agencies.size%>'><%= pie_3d_chart(:alt => 'Agencies using this Topic Group', :truncate_legend => '30', :counts => true, :legend_location => 'bottom', :records => related_agencies, :value_method => 'entries_count', :legend_method => 'name', :max => 10, :size => ['230','350'], :color_range => ['005073','84cedb'], :transparent_bg => true) %></div>
-<% end %>
-
-<% if @entry_types.present? %>
-  <h3>Entry Types for Topic</h3>
-   <div class='chart size_<%=@entry_types.size%>'><%= pie_3d_chart(:alt => 'Entry Types', :truncate_legend => '30', :counts => true, :legend_location => 'bottom', :records => @entry_types, :value_method => :count, :legend_method => :entry_type, :size => ['230','200'], :color_range => ['005073','84cedb'], :transparent_bg => true) %></div>
-<% end %>
-
-<%= render :partial => 'topics_tagcloud', :locals => {:topics => @topic.related_topics_cache, :title => 'Related Topics'} %>
-<% end %>
 </div>
 
 <% aside_tag(:id => "sidebar") do %>
@@ -40,7 +26,7 @@
   <% end -%>
   
   <div class='aside_box subscribe'>  
-    <%= link_to 'Subscribe', topic_path(@topic, :format => :rss), :class => 'rss' %>
+    <%= link_to 'Subscribe', new_subscription_path(:subscription => {:search_conditions => {:topic_ids => [@topic.id]}}), :class => 'subscription' %>
   </div>
   
   <%= render :partial => 'special/legal_disclaimer' %>

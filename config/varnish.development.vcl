@@ -25,15 +25,25 @@ sub vcl_recv {
         return (pipe);
     }
     
-    # Compression handled upstream; only want one in the cache
-    if (req.http.Accept-Encoding) {
-        remove req.http.Accept-Encoding;
-    }
-    
     # Add a unique header containing the client address
     remove req.http.X-Forwarded-For;
     set    req.http.X-Forwarded-For = client.ip;
     
+    
+    # Route to the correct backend
+    if (req.url ~ "^(/blog|/policy|/learn|/layout/footer_page_list|/layout/homepage_post_list)") {
+        set req.http.host = "fr2.local";
+        set req.backend = blog;
+ 
+        # Don't cache wordpress pages if logged in to wp
+        if (req.http.Cookie ~ "wordpress_logged_in_") {
+            return (pass);
+        } 
+    } else {
+      set req.http.host = "fr2-rails.local";
+      set req.backend = rails;
+    }
+
     # Pass POSTs etc directly on to the backend
     if (req.request != "GET" && req.request != "HEAD") {
         return (pass);
@@ -41,7 +51,6 @@ sub vcl_recv {
     
     # Pass rails admin requests directly on to rails
     if (req.url ~ "^/admin" ){
-        set req.http.host = "fr2-rails.local";
         set req.backend = rails;
         return (pass);
     }
@@ -55,23 +64,9 @@ sub vcl_recv {
     
     # Pass wp admin requests directly on to wp
     if (req.url ~ "^(/wp-login|wp-admin)") {
-        set req.http.host = "fr2.local";
         set req.backend = blog;
+        set req.http.host = "fr2.local";
         return (pass);
-    }
-    
-    # Route to the correct backend
-    if (req.url ~ "^(/blog|/policy|/learn|/layout/footer_page_list|/layout/homepage_post_list)") {
-        set req.http.host = "fr2.local";
-        set req.backend = blog;
-        
-        # Don't cache wordpress pages if logged in to wp
-        if (req.http.Cookie ~ "wordpress_logged_in_") {
-            return (pass);
-        }
-    } else {
-      set req.http.host = "fr2-rails.local";
-      set req.backend = rails;
     }
     
     # either return lookup for caching or return pass for no caching

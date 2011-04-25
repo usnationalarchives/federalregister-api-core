@@ -169,7 +169,7 @@ $(document).ready(function () {
     }
     var print_view_manager = new PrintViewManager();
     
-    if( $("#entires") ){
+    if( $("#entries").length > 0 ){
       $(window).bind('hashchange', function(){
         location.hash === "#print_view" ? print_view_manager.enter() : print_view_manager.exit();
       }).trigger('hashchange');

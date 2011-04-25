@@ -85,6 +85,24 @@ module RouteBuilder
     }
   end
   
+  add_route :new_entry_email do |entry|
+    {
+      :document_number => entry.document_number,
+    }
+  end
+  
+  add_route :entry_email do |entry|
+    {
+      :document_number => entry.document_number,
+    }
+  end
+  
+  add_route :delivered_entry_email do |entry|
+    {
+      :document_number => entry.document_number,
+    }
+  end
+  
   add_route :section do |section|
     {
       :slug => section.slug

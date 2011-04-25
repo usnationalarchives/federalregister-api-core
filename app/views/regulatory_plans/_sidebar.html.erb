@@ -7,7 +7,7 @@
     </div>
     
     <dl class="metadata_list">
-      <% %w(priority_category major regulatory_flexibility_analysis_required energy_affected).each do |attribute| %>
+      <% %w(priority_category major regulatory_flexibility_analysis_required international_interest energy_affected).each do |attribute| %>
         <% value = regulatory_plan.send(attribute) %>
         <% if value.present? %>
           <dt><%= attribute.humanize %></dt>

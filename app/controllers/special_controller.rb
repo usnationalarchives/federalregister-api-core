@@ -23,12 +23,20 @@ class SpecialController < ApplicationController
     render :template => "special/popular", :layout => false
   end
   
+  def most_emailed_entries
+    cache_for 1.hour
+    @entries = Entry.most_emailed.limit(5)
+    
+    render :template => "special/most_emailed", :layout => false
+  end
+  
   def status
     current_time_on_database = Entry.connection.select_values("SELECT NOW()").first
     render :text => "Current time is: #{current_time_on_database}"
   end
   
   def layout_head_content
+    @page_to_track = params[:page_to_track]
     cache_for 1.day
     render :layout => false
   end
@@ -39,6 +47,11 @@ class SpecialController < ApplicationController
   end
   
   def layout_footer
+    cache_for 1.day
+    render :layout => false
+  end
+  
+  def robots_dot_txt
     cache_for 1.day
     render :layout => false
   end

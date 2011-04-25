@@ -1,5 +1,6 @@
 module SectionHelper
   def description_for_section(section)
+    # TODO: move to section model as an attribute, or combine with the existing section description attribute
     case section.title
     when "Money"
       "Documents relating to financial affairs and transactions, including: banks and banking, securities markets and trading, the Federal Reserve System, taxation, Federal grants, government contracts, loan programs, and credit assistance."

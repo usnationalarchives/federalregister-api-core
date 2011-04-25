@@ -34,4 +34,11 @@ module SearchHelper
   def entry_count_for_search_term(search_term)
     EntrySearch.new(:conditions => {:term => search_term}).count
   end
+  
+  def conditions_for_subscription
+    conditions = params[:conditions] || {}
+    conditions.delete(:near) unless conditions[:near] && conditions[:near][:location].present?
+    conditions.delete(:publication_date)
+    conditions
+  end
 end
