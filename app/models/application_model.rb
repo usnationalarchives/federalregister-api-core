@@ -19,7 +19,7 @@ class ApplicationModel < ActiveRecord::Base
   
   # Calculates the results immediately, so additional query filters cannot be appended
   def self.preload(*associations)
-    results = scoped()
+    results = scoped({})
     preload_associations(results, associations)
     results
   end
