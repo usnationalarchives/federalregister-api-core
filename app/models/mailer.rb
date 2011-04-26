@@ -43,17 +43,12 @@ class Mailer < ActionMailer::Base
     sendgrid_ganalytics_options :utm_source => 'federalregister.gov', :utm_medium => 'email', :utm_campaign => 'subscription mailing list'
     
     toc = TableOfContentsPresenter.new(results)
-    agencies = toc.agencies
-    if mailing_list.search.agency_ids.present?
-      agencies = agencies.select{|a|  mailing_list.search.agency_ids.include?(a.agency.id.to_s)}
-    end
-    entries_without_agencies = toc.entries_without_agencies
     
     subject "[FR] #{mailing_list.title}"
     from       "Federal Register Subscriptions <subscriptions@mail.federalregister.gov>"
     recipients 'nobody@federalregister.gov' # should use sendgrid_recipients for actual recipient list
     sent_on    Time.current
-    body       :mailing_list => mailing_list, :results => results, :agencies => agencies, :entries_without_agencies => entries_without_agencies
+    body       :mailing_list => mailing_list, :results => results, :agencies => toc.agencies, :entries_without_agencies => toc.entries_without_agencies
   end
   
   def entry_email(entry_email)
