@@ -288,7 +288,7 @@ class Entry < ApplicationModel
   end
   
   def human_length
-    if length.blank? 
+    if length.blank? && end_page && start_page
       end_page - start_page + 1
     else
       length
