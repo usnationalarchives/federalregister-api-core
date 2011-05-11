@@ -64,7 +64,7 @@ class SectionsController < ApplicationController
       wants.rss do
         @feed_name = "Federal Register: Featured articles from the '#{@section.title}' Section"
         @feed_description = "Featured Federal Register articles from the '#{@section.title}' Section."
-        @entries = @section.highlighted_entries.preload(:topics, :agencies)
+        @entries = @section.highlighted_entries.preload([{:topic_assignments => :topic}, :agencies])
         render :template => 'entries/index.rss.builder'
       end
     end

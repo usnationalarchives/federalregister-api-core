@@ -26,7 +26,7 @@ class EntriesController < ApplicationController
     respond_to do |wants|
       wants.rss do
         @feed_name = 'Featured Federal Register Articles'
-        @entries = Entry.highlighted.preload(:topics, :agencies)
+        @entries = Entry.highlighted.preload([{:topic_assignments => :topic}, :agencies])
         render :template => 'entries/index.rss.builder'
       end
     end
