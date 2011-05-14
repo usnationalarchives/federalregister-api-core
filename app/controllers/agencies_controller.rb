@@ -51,7 +51,7 @@ class AgenciesController < ApplicationController
     
     respond_to do |wants|
       wants.rss do
-        @entries = @agency.entries.significant.most_recent(20).preload(:topics, :agencies)
+        @entries = @agency.entries.significant.most_recent(20)
         @feed_name = "Federal Register: #{@agency.name} Significant Articles"
         @feed_description = "Recent Federal Register articles from #{@agency.name} on significant regulations."
         render :template => 'entries/index.rss.builder'
