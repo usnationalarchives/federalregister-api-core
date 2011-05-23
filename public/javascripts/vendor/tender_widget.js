@@ -5,7 +5,7 @@
     for(var i=0; i<scripts.length; i++){
       var script = scripts[i].src;
       if(script.match(/tender_widget\.js(\?.*)?$/)){
-        var host = "https://federalregister.tenderapp.com/";  //script.substring(0, script.indexOf("tender_widget.js"));
+        var host = "http://federalregister.tenderapp.com/";  //script.substring(0, script.indexOf("tender_widget.js"));
       }
     }
     return host;
