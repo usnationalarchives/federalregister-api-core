@@ -144,15 +144,6 @@ $(document).ready(function () {
         $("#content_area").addClass("sans");
     });
 
-    $("a[data-historic-citation-url]").bind('click',
-    function (event) {
-        event.preventDefault();
-        display_modal('Multiple Versions Available',
-        '<p>Would you like the <a href="' + $(this).attr('href') + '" target="_blank"> current version</a> of ' + $(this).text() + ' or ' +
-        'the <a href="' + $(this).attr('data-historic-citation-url') + '" target="_blank">version as it existed at the time of publication</a>'
-        );
-    });
-
    function PrintViewManager() {
       var screen_sheets = $("head link[media=screen]");
       var print_sheets = $("head link[media=print]");

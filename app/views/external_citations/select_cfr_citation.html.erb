@@ -1,0 +1,10 @@
+<h1><%= "#{@title} CFR #{@part}#{'.' + @section if @section}" %></h1>
+
+We could not determine which edition of the CFR is most appropriate. Please select from the choices below.
+
+<ul>
+  <% @candidates.each do |cfr_part| %>
+    <li><%= link_to "#{cfr_part.year}: #{cfr_part.name}", cfr_citation_path(cfr_part.year, cfr_part.title, cfr_part.part, @section)%></li>
+  <% end %>
+  <li><%= link_to "E-CFR", ecfr_url(@title, @part) %></li>
+</ul>

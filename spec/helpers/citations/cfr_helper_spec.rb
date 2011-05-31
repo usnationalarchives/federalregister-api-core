@@ -51,13 +51,6 @@ describe Citations::CfrHelper do
     it "supports '33 CFR Parts 160, 161, 164, and 165'"
     it "supports '18 CFR 385.214 or 385.211'"
     it "supports '7 CFR 2.22, 2.80, and 371.3'"
-    
-    describe "historical_context" do
-      it "adds multiple URLs when in history" do
-        add_cfr_links('10 CFR 100', Date.parse('2007-06-01')).should == '<a class="cfr external" data-historic-citation-url="' + h(cfr_url(Date.parse('2007-06-01'), '10', '100')) + '" href="' + h(cfr_url(Time.current.to_date,'10','100')) + '" target="_blank">10 CFR 100</a>'
-      end
-    end
-    
   end
   
   describe "cfr_url" do
