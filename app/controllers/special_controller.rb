@@ -41,7 +41,7 @@ class SpecialController < ApplicationController
     render :layout => false
   end
   
-  def layout_header
+  def layout_header_refresh
     cache_for 1.day
     render :layout => false
   end

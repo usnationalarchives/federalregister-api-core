@@ -1,0 +1,53 @@
+<% nav_tag(:id => "navigation") do %>
+
+  <ul class="container">
+    <li><a href="/" class="home">Home</a></li>
+    <li class="dropdown">
+      <a href="#" class="sections">Sections<span class="arrow"></span></a>
+      <ul class="subnav">
+        <% Section.all.each do |section| %>
+          <li class="<%= section.slug %>"><%= link_to section.title, section_path(section) %></li>
+        <% end %>
+      </ul>
+    </li>
+    <li class="dropdown">
+      <a href="#" class="browse">Browse<span class="arrow"></span></a>
+      <ul class="subnav">
+        <li>
+          <a href="/browse/agencies" class="agencies">By Agencies</a>
+        </li>
+        <li>
+          <a href="/browse/topics" class="topics">By Topics</a>
+        </li>
+        <li>
+          <a href="/articles/current" class="date">By Date</a>
+        </li>
+      </ul>
+    </li>
+     <li class="dropdown">
+      <a href="#" class="learn">Learn<span class="arrow"></span></a>
+      <ul class="subnav">
+        <li>
+          <a href="/browse/agencies" class="agencies">Agencies</a>
+        </li>
+      </ul>
+    </li>
+    <li class="dropdown">
+      <a href="#" class="policy">Policy<span class="arrow"></span></a>
+      <ul class="subnav">
+        <li>
+          <a href="/browse/agencies" class="agencies">Agencies</a>
+        </li>
+      </ul>
+    </li>
+    <li><a href="/blog" class="blog">Blog</a></li>
+    <li class="search">
+      <form action="<%= entries_search_path %>" method="get" class="search_form">
+        <label for="term">Search the Federal Register</label>
+        <%= text_field_tag "conditions[term]", nil, :id => "term", :title => 'Search Articles', :placeholder =>  "Search Articles" %>
+        <%= submit_tag 'Go', :class => "search_btn" %>
+      </form>
+    </li>
+  </ul>
+
+<% end -%>
