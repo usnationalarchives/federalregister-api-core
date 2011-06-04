@@ -4,7 +4,7 @@ ActionController::Routing::Routes.draw do |map|
     
     # LAYOUT
     quiet_map.layout_head_content '/layout/head_content', :controller => 'special', :action => 'layout_head_content'
-    quiet_map.layout_header_refresh       '/layout/header_refresh',       :controller => 'special', :action => 'layout_header_refresh'
+    quiet_map.layout_header       '/layout/header',       :controller => 'special', :action => 'layout_header'
     quiet_map.layout_footer       '/layout/footer',       :controller => 'special', :action => 'layout_footer'
     
     # HOMEPAGE

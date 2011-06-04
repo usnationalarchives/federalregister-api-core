@@ -1,3 +1,8 @@
+C{
+  #include <stdlib.h>
+  #include <stdio.h>
+}C
+
 backend rails {
   .host = "fr2-rails.local";
   .port = "80";
@@ -25,6 +30,26 @@ sub vcl_recv {
         return (pipe);
     }
     
+    if (req.http.Cookie ~ "ab_group=") {
+      if( req.http.Cookie ~ "ab_group=[0-9]+" ) {
+        set req.http.X-AB-Group = regsub( req.http.Cookie,    ".*ab_group=", "");
+        set req.http.X-AB-Group = regsub( req.http.X-AB-Group, ";.*", "");
+      }
+    } else {
+      C{
+        char buff[5];
+        sprintf(buff,"%d",rand()%2 + 1);
+        VRT_SetHdr(sp, HDR_REQ, "\013X-AB-Group:", buff, vrt_magic_string_end);
+      }C
+    }
+    
+    if (req.http.Cookie) {
+      set req.http.Cookie = req.http.Cookie ";";
+    } else {
+      set req.http.Cookie = "";
+    }
+    set req.http.Cookie = req.http.Cookie "ab_group=" req.http.X-AB-Group;
+     
     # Add a unique header containing the client address
     remove req.http.X-Forwarded-For;
     set    req.http.X-Forwarded-For = client.ip;
@@ -97,6 +122,11 @@ sub vcl_hash {
     set req.hash += req.url;
     set req.hash += req.http.host;
     
+    if (req.url ~ "^/layout/header" ) {
+      set req.hash += "ab_group";
+      set req.hash += req.http.X-AB-Group;
+    }
+    
     # Hash differently based on presence of javascript_enabled cookie.
     if( req.url ~ "^/articles/search/header" && req.http.Cookie ~ "javascript_enabled=1" ) {
         # add this fact to the hash
@@ -104,4 +134,8 @@ sub vcl_hash {
     }
     
     return(hash);
+}
+
+sub vcl_deliver {
+  set resp.http.Set-Cookie = "ab_group=" req.http.X-AB-Group "; path=/";
 }
