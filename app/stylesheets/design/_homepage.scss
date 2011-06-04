@@ -209,6 +209,10 @@ PROMO ITEMS
   float: left;
   margin: 0 1em 0 0;
   }
+#slideshow .figure a {
+  height: 100px;
+  width: 100px;
+  }
 #slideshow .figcaption {
   bottom: 7px;
   display: block;
@@ -217,6 +221,8 @@ PROMO ITEMS
   }
 #slideshow .figcaption a {
   word-wrap: break-word;
+  height: auto;
+  width: auto;
   }  
 #news_content {
   overflow: hidden;

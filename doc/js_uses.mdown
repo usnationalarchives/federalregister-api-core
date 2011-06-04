@@ -1,0 +1,41 @@
+##Vendored Javasctripts
+  * All javacripts found under vendor are minified and compressed with Google's Closure Compiler (with the exception of jquery.js)
+
+###vendor/dragdealer.js
+  * home page featured article box
+  * timeline on the article & regulatory plan views
+
+###vendor/footnotes.js
+  * footnotes in the articles
+
+###vendor/jqModal.js
+  * email and RSS subscription
+  * leaving the site flickr warning (home page and section pages)
+  * legal disclaimer (non-homepage - ie article, etc)
+
+###vendor/jquery.ba-hashchange.min
+  * search - changes url when advanced search panel is opened/closed
+  * print view on article
+
+###vendor/jquery.bsmselect.js
+  * advanced search - select multiple
+  
+###vendor/jquery.tabs.js
+  * home page - What's in the FR and Most Viewed/Emailed
+  * section - comments closing soon/newly opened, Browse the Last Five Days
+
+###vendor/jquery.textPlaceholder.js
+  * any form field with text in it (search, browse by agency & topic pages)
+
+###vendor/jquery.tinysort.min.js
+  * both agency and topic browse pages (sort by asc & desc)
+
+###vendor/jquery.utilities.js
+  * See file for actual commit references for each function
+  * sorting Agency list view
+  * Randomly choose which section to go to in the section highlight box on home page
+  * centering modal windows on screen
+
+###vendor/template.js
+  * article pages
+  * modals
