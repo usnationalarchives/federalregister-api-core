@@ -15,7 +15,7 @@ module Content
     
       add_procedure(:search, :path => '/Regs/dispatch/LoadSearchResultsAction') do |term|
         # shorthand method of generating the request as it doesn't change much
-        "5|0|17|http://www.regulations.gov/Regs/|9992AD8124BAFA7AB3130DAB9158E822|com.gwtplatform.dispatch.client.DispatchService|execute|java.lang.String/2004016611|com.gwtplatform.dispatch.shared.Action|f170d7b985f50a9c4b9da4fa4996a002602e17938e61f789bd320a8a044eab18.e38Sc3uTa3qQe34Pb40|gov.egov.erule.regs.shared.action.LoadSearchResultsAction/125242584|gov.egov.erule.regs.shared.models.SearchQueryModel/1476158501|java.util.ArrayList/3821976829||#{term}|gov.egov.erule.regs.shared.models.DataFetchSettings/1603506619|java.lang.Integer/3438268394|docketId|DESC|java.lang.Boolean/476441737|1|2|3|4|2|5|6|7|8|0|9|10|0|11|11|10|0|3|10|1|5|12|13|14|0|15|16|14|10|-8|11|11|11|17|0|1|0|"
+        "5|0|17|http://www.regulations.gov/Regs/|75CD5EB90A794C02DBA8438ADEE62406|com.gwtplatform.dispatch.client.DispatchService|execute|java.lang.String/2004016611|com.gwtplatform.dispatch.shared.Action|6db0daaad0abd925c09acf7c6226a211283d348b3f9e208165bdcd1dd1f3e1a5.e38Sb3aKaN8Oe34KbO0|gov.egov.erule.regs.shared.action.LoadSearchResultsAction/125242584|gov.egov.erule.regs.shared.models.SearchQueryModel/1476158501|java.util.ArrayList/3821976829||#{term}|gov.egov.erule.regs.shared.models.DataFetchSettings/1603506619|java.lang.Integer/3438268394|docketId|DESC|java.lang.Boolean/476441737|1|2|3|4|2|5|6|7|8|0|9|10|0|11|11|10|0|3|10|1|5|12|13|14|0|15|16|14|10|-8|11|11|11|17|0|1|0|"
       end
     end
     
