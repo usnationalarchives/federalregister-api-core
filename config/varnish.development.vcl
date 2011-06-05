@@ -14,7 +14,7 @@ backend blog {
 }
 
 sub vcl_fetch {
-  if (req.url ~ "^(/blog|/policy|/learn|/layout/footer_page_list|/layout/homepage_post_list)") {
+  if (req.url ~ "^(/blog|/policy|/learn|/layout/footer_page_list|/layout/navigation_page_list|/layout/homepage_post_list)") {
    set beresp.ttl = 120s;
   }
 }
@@ -56,7 +56,7 @@ sub vcl_recv {
     
     
     # Route to the correct backend
-    if (req.url ~ "^(/blog|/policy|/learn|/layout/footer_page_list|/layout/homepage_post_list)") {
+    if (req.url ~ "^(/blog|/policy|/learn|/layout/footer_page_list|/layout/navigation_page_list|/layout/homepage_post_list)") {
         set req.http.host = "fr2.local";
         set req.backend = blog;
  
@@ -83,7 +83,7 @@ sub vcl_recv {
     # Rewrite top-level wordpress requests to /blog/
     set req.url = regsub(
         req.url,
-        "^/(learn|policy|layout/footer_page_list|layout/homepage_post_list)",
+        "^/(learn|policy|layout/footer_page_list|layout/navigation_page_list|layout/homepage_post_list)",
         "/blog/\1"
     );
     
