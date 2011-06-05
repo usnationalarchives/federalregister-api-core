@@ -46,6 +46,10 @@ module Content
     end
   
     def create_lock_file
+      # register callback to cleanup lock file on unexpected exit
+      #    ...in theory, this is redundant
+      at_exit{ remove_lock_file }
+      
       # create file if it doesn't exist; error out if it does; prevents potential race condition
       File.open(lock_file_path, File::CREAT|File::EXCL|File::RDWR) do |f|
         f.write("#{Process.pid} - #{Time.now}")
