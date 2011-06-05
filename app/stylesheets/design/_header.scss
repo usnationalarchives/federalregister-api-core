@@ -294,10 +294,10 @@ NEW NAV
   background: sprite-image('header/topics-hover.png', 10px, 5px, 50px) no-repeat;
   }
 #navigation .date {
-  background: sprite-image('header/date-off.png', 10px, 5px, 50px) no-repeat;
+  background: sprite-image('header/date-off.png', 12px, 5px, 50px) no-repeat;
   }
 #navigation .date:hover {
-  background: sprite-image('header/date-hover.png', 10px, 5px, 50px) no-repeat;
+  background: sprite-image('header/date-hover.png', 12px, 5px, 50px) no-repeat;
   }
 #navigation .money {
   background: sprite-image('header/money-off.png', 10px, 5px, 50px) no-repeat;
@@ -330,13 +330,12 @@ NEW NAV
   background: sprite-image('header/industry-hover.png', 10px, 5px, 50px) no-repeat;
   }
 #navigation .health-and-public-welfare {
-  background: sprite-image('header/health-off.png', 10px, 5px, 50px) no-repeat;
+  background: sprite-image('header/health-off.png', 14px, 5px, 50px) no-repeat;
   }
 #navigation .health-and-public-welfare:hover {
-  background: sprite-image('header/health-hover.png', 10px, 5px, 50px) no-repeat;
+  background: sprite-image('header/health-hover.png', 14px, 5px, 50px) no-repeat;
   }
 
-  
 /******************************
 
 NAV DROPDOWN
@@ -441,9 +440,19 @@ NEW SEARCH
 NEW LOGO
 
 ******************************/
-.logos {
+.logo {
   margin: 25px auto;
   width: 960px;
+  }
+.logo .hgroup {
+  height: 100px;
+  @include replace-text('header/logo.png', 0, 0);
+  width: image-width('header/logo.png');
+  }
+.logo .hgroup a {
+  display: block;
+  height: image-height('header/logo.png');
+  width: image-width('header/logo.png');
   }
 .fr  {
   height: 100px;
