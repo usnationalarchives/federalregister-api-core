@@ -10,7 +10,7 @@
       <ul class="actions">
         <% @search.supported_orders.each do |order| %>
           <li class="<%= 'on' if @search.order == order.downcase %>">
-            <%= link_to order, params.merge(:order => order.downcase, :action => :show), :class => '' %>
+            <%= link_to order, params.merge(:order => order.downcase, :action => :show).except(:page), :class => '' %>
           </li>
         <% end %>
       </ul>
