@@ -422,6 +422,20 @@ class Entry < ApplicationModel
     RegulatoryPlan.in_current_issue.all(:conditions => {:regulation_id_number => regulation_id_numbers})
   end
   
+  def previous_entry
+    @previous_entry ||= Entry.first(
+      :conditions => ["entries.volume <= ? AND entries.start_page <= ? AND entries.id < ?", volume, start_page, id],
+      :order => "entries.volume DESC, entries.start_page DESC, entries.id DESC"
+    )
+  end
+  
+  def next_entry
+    @next_entry ||= Entry.first(
+      :conditions => ["entries.volume >= ? AND entries.start_page >= ? AND entries.id > ?", volume, start_page, id],
+      :order => "entries.volume, entries.start_page, entries.id"
+    )
+  end
+  
   private
   
   def set_document_file_path

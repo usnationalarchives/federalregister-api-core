@@ -30,6 +30,12 @@
     <div class="aside_box">
       <%= render :partial => 'download', :locals => {:entry => @entry} %>
       <%= render :partial => "metadata", :locals => {:entry => @entry} %>
+      <% if @entry.previous_entry %>
+        <%= link_to "Previous Article", entry_path(@entry.previous_entry), :title => @entry.previous_entry.title%>
+      <% end %>
+      <% if @entry.next_entry %>
+        <%= link_to "Next Article", entry_path(@entry.next_entry), :title => @entry.next_entry.title %>
+      <% end %>
     </div>  
     
     <% if @entry.topics.present? %>
