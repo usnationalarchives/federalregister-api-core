@@ -160,12 +160,14 @@ $(document).ready(function () {
         screen_sheets.attr("media", "none");
         print_sheets.attr("media", "all");
         $("body").addClass("print_view");
-      },
+      };
       this.exit = function(){
-        screen_sheets.attr("media", "screen");
-        print_sheets.attr("media", "print");
-        $("body").removeClass("print_view");
-      }
+        if( $("body").hasClass("print_view") ){
+          screen_sheets.attr("media", "screen");
+          print_sheets.attr("media", "print");
+          $("body").removeClass("print_view");
+        }
+      };
     }
     var print_view_manager = new PrintViewManager();
     

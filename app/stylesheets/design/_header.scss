@@ -49,18 +49,20 @@ NAV
 #primary_nav .health-and-public-welfare {
   width: 115px;
   } 
-  
+
 /******************************
 
 SEARCH
 
 ******************************/
+
 #header #search_bar  {
   margin: 0 auto;
   position: relative;
   width: 960px;
   }
-#header #search_container {
+#he
+ader #search_container {
   position: absolute;
   right: -20px;
   top: -47px;
@@ -117,7 +119,7 @@ SEARCH
 #header #browse_container a:hover {
   text-decoration: underline;
   }
-  
+ 
 /******************************
 
 LOGO
@@ -150,4 +152,314 @@ LOGO
   position: absolute;
   text-transform: uppercase;
   top: 0;
+  }
+
+/*/////////////////////////////////
+
+NEW HEADER
+
+/////////////////////////////////*/
+
+
+/******************************
+
+NEW NAV 
+
+******************************/
+
+#navigation {
+  border-top: 4px solid #fbb829;
+  }
+#navigation .container {
+  background: image-url('header/nav_bg.png');
+  border: 1px solid #cfcfcf;
+  border-left: 1px solid #a9a9a9;
+  border-top: none;
+  //border-top: 4px solid #fbb829; TODO add this back when we implement it as sticky.
+  //TO#navigation .container li DO add in a -4px top position or margin to overlap the border when at the top of the page
+  @include border-bottom-radius(4px);
+  @include box-shadow(#888, 0, 3px, 5px);
+  height: 30px;
+  list-style: none;
+  margin: 0 auto;
+  position: relative;
+  width: 960px;
+  z-index: 9999;
+  }
+#navigation li:first-child {
+  border-left: none;
+  }
+#navigation li:last-child {
+  border-right: 1px solid #cecece;
+  } 
+#navigation li {
+  border-left: 1px solid #cecece;
+  border-right: 1px solid #f5f5f5;
+  float: left;
+  }
+#navigation a {
+  color: #5f6061;
+  display: block;
+  font-family: "Helvetica Neue", "Helvetica", sans-serif;
+  font-size: 13px;
+  font-weight: bold;
+  line-height: 30px;
+  padding: 0 10px;
+  }
+#navigation a:hover {
+  color: #f77825;
+  }
+#navigation .dropdown a {
+  padding-right: 5px;
+  } 
+#navigation .dropdown .arrow {
+  background: image-url('header/dropdown-off.png') no-repeat left 50%;
+  display: inline;
+  height: 30px;
+  float: right;
+  margin-left: 15px;
+  width: image-width('header/dropdown-off.png');
+  }
+#navigation .dropdown:hover .arrow { //TODO sprite this
+  background: image-url('header/dropdown-hover.png') no-repeat left 50%;
+  }
+#navigation .browse,
+#navigation .agencies,
+#navigation .topics,
+#navigation .date,
+#navigation .money,
+#navigation .environment,
+#navigation .world, 
+#navigation .science-and-technology,
+#navigation .business-and-industry,
+#navigation .health-and-public-welfare {
+  padding-left: 35px;
+  }
+#navigation .home {
+  background: sprite-image('header/home-off.png', 10px, 8px, 50px) no-repeat;
+  @include hide-text;
+  width: image-width('header/home-off.png');
+  }
+#navigation .home:hover {
+  background: sprite-image('header/home-hover.png', 10px, 8px, 50px) no-repeat;
+  }
+#navigation .sections {
+  background: sprite-image('header/sections-off.png', 10px, 9px, 50px) no-repeat;
+  padding-left: 30px;
+  }
+#navigation .sections:hover {
+  background: sprite-image('header/sections-hover.png', 10px, 9px, 50px) no-repeat;
+  } 
+#navigation .browse {
+  background: sprite-image('header/browse-off.png', 10px, 10px, 50px) no-repeat;
+  }
+#navigation .browse:hover {
+  background: sprite-image('header/browse-hover.png', 10px, 10px, 50px) no-repeat;
+  }
+#navigation .learn {
+  background: sprite-image('header/learn-off.png', 10px, 9px, 50px) no-repeat;
+  padding-left: 27px;
+  }
+#navigation .learn:hover {
+  background: sprite-image('header/learn-hover.png', 10px, 9px, 50px) no-repeat;
+  }
+#navigation .policy {
+  background: sprite-image('header/policy-off.png', 10px, 9px, 50px) no-repeat;
+  padding-left: 27px;
+  }
+#navigation .policy:hover {
+  background: sprite-image('header/policy-hover.png', 10px, 9px, 50px) no-repeat;
+  }
+#navigation .blog {
+  background: sprite-image('header/blog-off.png', 10px, 10px, 50px) no-repeat;
+  padding-left: 30px;
+  }
+#navigation .blog:hover {
+  background: sprite-image('header/blog-hover.png', 10px, 10px, 50px) no-repeat;
+  }
+#navigation .agencies {
+  background: sprite-image('header/agencies-off.png', 10px, 5px, 50px) no-repeat;
+  }
+#navigation .agencies:hover {
+  background: sprite-image('header/agencies-hover.png', 10px, 5px, 50px) no-repeat;
+  }
+#navigation .topics {
+  background: sprite-image('header/topics-off.png', 10px, 5px, 50px) no-repeat;
+  }
+#navigation .topics:hover {
+  background: sprite-image('header/topics-hover.png', 10px, 5px, 50px) no-repeat;
+  }
+#navigation .date {
+  background: sprite-image('header/date-off.png', 10px, 5px, 50px) no-repeat;
+  }
+#navigation .date:hover {
+  background: sprite-image('header/date-hover.png', 10px, 5px, 50px) no-repeat;
+  }
+#navigation .money {
+  background: sprite-image('header/money-off.png', 10px, 5px, 50px) no-repeat;
+  }
+#navigation .money:hover {
+  background: sprite-image('header/money-hover.png', 10px, 5px, 50px) no-repeat;
+  }
+#navigation .environment {
+  background: sprite-image('header/environment-off.png', 10px, 5px, 50px) no-repeat;
+  }
+#navigation .environment:hover {
+  background: sprite-image('header/environment-hover.png', 10px, 5px, 50px) no-repeat;
+  }
+#navigation .world {
+  background: sprite-image('header/world-off.png', 10px, 5px, 50px) no-repeat;
+  }
+#navigation .world:hover {
+  background: sprite-image('header/world-hover.png', 10px, 5px, 50px) no-repeat;
+  }
+#navigation .science-and-technology {
+  background: sprite-image('header/science-off.png', 10px, 5px, 50px) no-repeat;
+  }
+#navigation .science-and-technology:hover {
+  background: sprite-image('header/science-hover.png', 10px, 5px, 50px) no-repeat;
+  }
+#navigation .business-and-industry {
+  background: sprite-image('header/industry-off.png', 10px, 5px, 50px) no-repeat;
+  }
+#navigation .business-and-industry:hover {
+  background: sprite-image('header/industry-hover.png', 10px, 5px, 50px) no-repeat;
+  }
+#navigation .health-and-public-welfare {
+  background: sprite-image('header/health-off.png', 10px, 5px, 50px) no-repeat;
+  }
+#navigation .health-and-public-welfare:hover {
+  background: sprite-image('header/health-hover.png', 10px, 5px, 50px) no-repeat;
+  }
+
+  
+/******************************
+
+NAV DROPDOWN
+
+******************************/
+
+#navigation .dropdown {
+  position: relative;
+  }
+#navigation .subnav {
+  background: #fff;
+  border: 1px solid #cbc8c8;
+  @include border-bottom-radius(3px);
+  @include box-shadow(#888, 0, 3px, 5px);
+  display: none;
+  left: -22px;
+  position: absolute;
+  top: 30px;
+  width: 200px;
+  z-index: 5555;
+  }
+#navigation .subnav.browse_list {
+  width: 150px;
+  }
+#navigation .subnav.wordpress {
+  width: 250px;
+  }
+#navigation .subnav li {
+  border: none; //reset other borders
+  border-top: 1px solid #e3e7e8;
+  float: none;
+  list-style: none;
+  }
+#navigation .dropdown:hover .subnav {
+  display: block;
+  }
+#navigation .subnav a {
+  border-top: 1px solid #fff;
+  border-bottom: 1px solid #fff;
+  color: #5f6061;
+  line-height: 30px;
+  }
+#navigation .subnav a:hover {
+  background-color: #e3e7e8;
+  border-top-color: #fff;
+  border-bottom-color: #fff;
+  color: #f77825;
+  }
+#navigation .subnav li:last-child a {
+  border-bottom: none;
+  }
+
+/******************************
+
+NEW SEARCH 
+
+******************************/
+
+#navigation .search {
+  float: right;
+  height: 30px;
+  }
+#navigation .search_form {
+  background: #fff;
+  border: 1px solid #bebebf;
+  @include border-radius(3px);
+  height: 20px;
+  margin: 4px 5px 0;
+  position: relative;
+  width: 180px;
+  }
+#navigation label {
+  display: none;
+  }
+#navigation input {
+  border: none;
+  float: left;
+  }
+#navigation #term { 
+  padding: 3px 0 0 5px;
+  width: 140px; 
+  }
+#navigation .search_btn {
+  background: sprite-image('header/search-off.png', 0, 0, 50px) no-repeat;
+  cursor: pointer;
+  display: block;
+  height: image-height('header/search-off.png');
+  @include hide-text;
+  position: absolute;
+  right: 5px;
+  top: 3px;
+  }
+#navigation .search_btn:hover {
+  background: sprite-image('header/search-hover.png', 0, 0, 50px) no-repeat;
+  }
+
+/******************************
+
+NEW LOGO
+
+******************************/
+.logos {
+  margin: 25px auto;
+  width: 960px;
+  }
+.fr  {
+  height: 100px;
+  @include replace-text('header/fr.png', 0, 20px);
+  width: image-width('header/fr.png');
+  }
+.nara {
+  @include replace-text-with-dimensions('header/naraseal.png', 0, 0);
+  float: left;
+  margin-right: 20px;
+  } 
+.logos h1,
+.logos h2,
+.logos h3 {
+  float: left;
+  }
+.fr a {
+  display: block; 
+  height: 64px;   
+  width: 543px;    
+  }
+.nara a {
+  display: block;
+  height: image-height('header/naraseal.png');
+  width: image-width('header/naraseal.png');
   }

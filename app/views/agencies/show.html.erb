@@ -4,6 +4,7 @@
 <h1 class="title"><span>Agency</span></h1>
 
 <% feed_autodiscovery agency_url(@agency, :format => :rss), "All Articles by #{@agency.name}", :search_conditions => {:agency_ids => [@agency.id]} %>
+<% feed_autodiscovery significant_entries_agency_url(@agency, :format => :rss), "Significant Articles by #{@agency.name}", :search_conditions => {:agency_ids => [@agency.id], :significant => 1} %>
 
 <div class="group">
   

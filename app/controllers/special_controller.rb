@@ -43,7 +43,8 @@ class SpecialController < ApplicationController
   
   def layout_header
     cache_for 1.day
-    render :layout => false
+    ab_group = cookies[:ab_group] || 0
+    render :action => "layout_header_#{ab_group}", :layout => false
   end
   
   def layout_footer
