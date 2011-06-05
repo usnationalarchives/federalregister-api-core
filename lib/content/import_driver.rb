@@ -14,8 +14,13 @@ module Content
       end
     
       if lock_file_already_exists?
-        puts "Lock file exists; exiting, assuming another process is working on the import. Exiting."
-        exit
+        if other_process_is_running?
+          puts "Lock file exists and other process is running; exiting as another process is working on the import. Exiting."
+          exit
+        else
+          puts "Lock file exists but other process is not running; removing lock file and continuing"
+          remove_lock_file
+        end
       end
     
       create_lock_file
@@ -44,6 +49,16 @@ module Content
     def lock_file_already_exists?
       File.exists?(lock_file_path)
     end
+    
+    def other_process_is_running?
+      pid = IO.read(lock_file_path).try(:to_i)
+      begin
+        Process.getpgid( pid )
+        return true
+      rescue Errno::ESRCH
+        return false
+      end
+    end
   
     def create_lock_file
       # register callback to cleanup lock file on unexpected exit
@@ -52,12 +67,12 @@ module Content
       
       # create file if it doesn't exist; error out if it does; prevents potential race condition
       File.open(lock_file_path, File::CREAT|File::EXCL|File::RDWR) do |f|
-        f.write("#{Process.pid} - #{Time.now}")
+        f.write(Process.pid)
       end
     end
   
     def remove_lock_file
-      File.delete(lock_file_path)
+      File.delete(lock_file_path) if File.exists?(lock_file_path)
     end
   
     private
