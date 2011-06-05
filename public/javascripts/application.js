@@ -77,8 +77,9 @@ $(document).ready(function () {
     $("input[placeholder]").textPlaceholder();
     
     if($.browser.msie && $.browser.version.substr(0,1) < 7) {
-      $("body").find(":first-child").addClass("firstchild");
-      $("body").find(":last-child").addClass("lastchild");    
+      $("li:first-child, ul:first-child, dt:first-child").addClass("firstchild");
+      $("li:last-child, ul:last-child, dd:last-child").addClass("lastchild");
+      $(".dropdown").hover(function(e){ $(this).addClass("hover"); }, function(e){ $(this).removeClass("hover"); });
     }
     
     generate_print_disclaimer();

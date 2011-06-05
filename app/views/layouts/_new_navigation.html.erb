@@ -2,32 +2,32 @@
 
   <ul class="container">
     <li><a href="/" class="home">Home</a></li>
-    <li class="dropdown">
-      <a href="#" class="sections">Sections<span class="arrow"></span></a>
+    <li class="dropdown nav_sections">
+      <a class="sections">Sections<span class="arrow"></span></a>
       <ul class="subnav">
         <% Section.all.each do |section| %>
           <li><%= link_to section.title, section_path(section), :class => "#{section.slug}" %></li>
         <% end %>
       </ul>
     </li>
-    <li class="dropdown">
-      <a href="#" class="browse">Browse<span class="arrow"></span></a>
+    <li class="dropdown nav_browse">
+      <a class="browse">Browse<span class="arrow"></span></a>
       <ul class="subnav browse_list">
         <li>
-          <a href="/browse/agencies" class="agencies">By Agencies</a>
+          <a href="/browse/agencies" class="agencies">Agencies</a>
         </li>
         <li>
-          <a href="/browse/topics" class="topics">By Topics</a>
+          <a href="/browse/topics" class="topics">Topics</a>
         </li>
         <li>
-          <a href="/articles/current" class="date">By Date</a>
+          <a href="/articles/current" class="date">Date</a>
         </li>
       </ul>
     </li>
     
     <%= render :esi => '/layout/navigation_page_list' %>
 
-    <li><a href="/blog" class="blog">Blog</a></li>
+    <li class="nav_blog"><a href="/blog" class="blog">Blog</a></li>
     <li class="search">
       <form action="<%= entries_search_path %>" method="get" class="search_form">
         <label for="term">Search the Federal Register</label>
