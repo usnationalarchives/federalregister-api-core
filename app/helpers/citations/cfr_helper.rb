@@ -6,7 +6,7 @@ module Citations::CfrHelper
       part = $2
       section = $3
       
-      content_tag(:a, str, :href => select_cfr_citation_path(date,title,part,section))
+      content_tag(:a, str, :href => select_cfr_citation_path(date,title,part,section), :class => "cfr external")
     end
   end
   
