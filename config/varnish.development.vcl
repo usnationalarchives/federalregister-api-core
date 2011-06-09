@@ -4,12 +4,12 @@ C{
 }C
 
 backend rails {
-  .host = "fr2-rails.local";
-  .port = "80";
+  .host = "127.0.0.1";
+  .port = "3000";
 }
 
 backend blog {
-  .host = "fr2.local";
+  .host = "127.0.0.1";
   .port = "80";
 }
 
@@ -30,7 +30,7 @@ sub vcl_recv {
         return (pipe);
     }
     
-    if (req.http.Cookie ~ "ab_group=") {
+    if (req.http.Cookie ~ "(^|;) ?ab_group=\d+(;|$)") {
       if( req.http.Cookie ~ "ab_group=[0-9]+" ) {
         set req.http.X-AB-Group = regsub( req.http.Cookie,    ".*ab_group=", "");
         set req.http.X-AB-Group = regsub( req.http.X-AB-Group, ";.*", "");
@@ -41,14 +41,15 @@ sub vcl_recv {
         sprintf(buff,"%d",rand()%2 + 1);
         VRT_SetHdr(sp, HDR_REQ, "\013X-AB-Group:", buff, vrt_magic_string_end);
       }C
+      # 
+      if (req.http.Cookie) {
+        set req.http.Cookie = req.http.Cookie ";";
+      } else {
+        set req.http.Cookie = "";
+      }
+      set req.http.Cookie = req.http.Cookie "ab_group=" req.http.X-AB-Group;
     }
     
-    if (req.http.Cookie) {
-      set req.http.Cookie = req.http.Cookie ";";
-    } else {
-      set req.http.Cookie = "";
-    }
-    set req.http.Cookie = req.http.Cookie "ab_group=" req.http.X-AB-Group;
      
     # Add a unique header containing the client address
     remove req.http.X-Forwarded-For;
