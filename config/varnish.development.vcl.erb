@@ -96,8 +96,11 @@ sub vcl_recv {
     }
     
     # either return lookup for caching or return pass for no caching
-    return (pass);
-    # return (lookup);
+    <% if config['cache'] %>
+      return (lookup);
+    <% else %>
+      return (pass);
+    <% end %>
 }
 
 sub vcl_fetch {

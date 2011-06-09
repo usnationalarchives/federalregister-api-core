@@ -50,9 +50,7 @@ class ApplicationController < ActionController::Base
   end
   
   def cache_for(time)
-    if RAILS_ENV != 'development'
-      expires_in time, :public => true
-    end
+    expires_in time, :public => true
   end
   
   def template_exists?(template_name = default_template_name)

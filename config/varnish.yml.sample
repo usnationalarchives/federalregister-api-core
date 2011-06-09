@@ -4,3 +4,4 @@ rails:
 wordpress:
   port: 8000
   host: fr2.local
+cache: false
