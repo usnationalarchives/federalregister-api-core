@@ -10,6 +10,8 @@ webrat.log
 /config/newrelic.yml
 /config/sendgrid.yml
 /config/secrets.yml
+/config/varnish.development.vcl
+/config/varnish.yml
 /data
 /db/sphinx/
 /log
