@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110411162551) do
+ActiveRecord::Schema.define(:version => 20110609171301) do
 
   create_table "agencies", :force => true do |t|
     t.integer  "parent_id"
@@ -179,7 +179,7 @@ ActiveRecord::Schema.define(:version => 20110411162551) do
   add_index "entries", ["publication_date"], :name => "index_entries_on_publication_date_and_agency_id"
   add_index "entries", ["raw_text_updated_at"], :name => "index_entries_on_raw_text_updated_at"
   add_index "entries", ["significant"], :name => "index_entries_on_significant"
-  add_index "entries", ["volume", "start_page", "end_page"], :name => "index_entries_on_volume_and_start_page_and_end_page"
+  add_index "entries", ["volume", "start_page", "id"], :name => "index_entries_on_volume_and_start_page_and_id"
 
   create_table "entry_cfr_references", :force => true do |t|
     t.integer "entry_id"
