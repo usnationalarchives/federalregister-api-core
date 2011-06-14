@@ -17,17 +17,10 @@ class Api::V1::EntriesController < ApiController
           end
           
           data[:results] = search.results.map do |entry|
-            {
-              :title            => entry.title,
-              :type             => entry.entry_type,
-              :abstract         => entry.abstract,
-              :excerpts         => entry.excerpts.full_text || entry.excerpts.abstract,
-              :document_number  => entry.document_number,
-              :url              => entry_url(entry),
-              :pdf_url          => entry.source_url('pdf'),
-              :publication_date => entry.publication_date,
-              :agencies         => entry.agency_names.map(&agency_proc)
-            }
+            basic_entry_data(entry).merge(
+              :excerpts => entry.excerpts.full_text || entry.excerpts.abstract,
+              :json_url => api_v1_entry_url(entry.document_number, :format => :json)
+            )
           end
         end
         
@@ -36,23 +29,61 @@ class Api::V1::EntriesController < ApiController
     end
   end
   
-  private
-  
-  def agency_proc
-    Proc.new do |agency_name|
-      agency = agency_name.agency
-      if agency
-        {
-          :raw_name => agency_name.name,
-          :name     => agency.name,
-          :id       => agency.id,
-          :url      => agency_url(agency)
-        }
-      else
-        {
-          :raw_name => agency_name.name
-        }
+  def show
+    respond_to do |wants|
+      wants.json do
+        entry = Entry.find_by_document_number!(params[:id])
+        
+        data = basic_entry_data(entry).merge({
+          :full_text_xml_url => entry_xml_url(entry),
+          :abstract_html_url => entry_abstract_url(entry),
+          :body_html_url => entry_full_text_url(entry),
+          :mods_url => entry.source_url(:mods),
+          :action => entry.action,
+          :dates  => entry.dates,
+          :effective_on  => entry.effective_date,
+          :comments_close_on  => entry.comments_close_on,
+          :start_page => entry.start_page,
+          :end_page => entry.end_page,
+          :volume => entry.volume,
+          :docket_id => entry.docket_id,
+          :regulation_id_numbers => entry.entry_regulation_id_numbers.map(&:regulation_id_number),
+          :cfr_refernces => entry.entry_cfr_references.map{|cfr_reference|
+            {:title => cfr_reference.title, :part => cfr_reference.part}
+          }
+        })
+        
+        render :json => data
       end
     end
+  end
+  
+  private
+  
+  def basic_entry_data(entry)
+    {
+      :title            => entry.title,
+      :type             => entry.entry_type,
+      :abstract         => entry.abstract,
+      :document_number  => entry.document_number,
+      :html_url         => entry_url(entry),
+      :pdf_url          => entry.source_url('pdf'),
+      :publication_date => entry.publication_date,
+      :agencies         => entry.agency_names.map{|agency_name|
+        agency = agency_name.agency
+        if agency
+          {
+            :raw_name => agency_name.name,
+            :name     => agency.name,
+            :id       => agency.id,
+            :url      => agency_url(agency)
+          }
+        else
+          {
+            :raw_name => agency_name.name
+          }
+        end
+      }
+    }
   end
 end
