@@ -8,7 +8,7 @@ class CitationsController < ApplicationController
     
     case @entries.size
     when 1
-      redirect_to entry_url(@entries.first)
+      redirect_to entry_url(@entries.first), :status => :moved_permanently
     when 0
       render :action => 'show_none'
     else
