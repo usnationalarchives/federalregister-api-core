@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110609171301) do
+ActiveRecord::Schema.define(:version => 20110614033345) do
 
   create_table "agencies", :force => true do |t|
     t.integer  "parent_id"
@@ -33,6 +33,7 @@ ActiveRecord::Schema.define(:version => 20110609171301) do
     t.string   "url"
     t.boolean  "active"
     t.text     "cfr_citation"
+    t.string   "display_name"
   end
 
   add_index "agencies", ["name", "parent_id"], :name => "index_agencies_on_name_and_parent_id"
