@@ -60,11 +60,15 @@ ActionController::Routing::Routes.draw do |map|
                                         :action     => 'tiny_url',
                                         :conditions => { :method => :get }
   
-  map.citation 'citation/:volume/:page', :controller => 'citations',
+  map.connect 'citation/:volume/:page', :controller => 'citations',
                                          :action     => 'show',
                                          :conditions => { :method => :get },
                                          :volume     => /\d{2}/,
                                          :page       => /\d+/
+  map.citation 'citation/:fr_citation', :controller => 'citations',
+                                         :action     => 'show',
+                                         :conditions => { :method => :get },
+                                         :fr_citation => /\d{2}-FR-\d+/
   map.citation_search 'citation/search', :controller => 'citations',
                                          :action     => 'search',
                                          :conditions => { :method => :get }

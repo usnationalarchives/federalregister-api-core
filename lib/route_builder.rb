@@ -25,6 +25,12 @@ module RouteBuilder
     end
   end
   
+  add_route :citation do |vol,page|
+    {
+      :fr_citation => "#{vol}-FR-#{page}"
+    }
+  end
+  
   add_route :entry do |entry|
     {
       :year            => entry.publication_date.strftime('%Y'),

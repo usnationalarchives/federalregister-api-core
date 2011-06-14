@@ -1,8 +1,13 @@
 class CitationsController < ApplicationController
   def show
     cache_for 1.day
-    @volume = params[:volume].to_i
-    @page   = params[:page].to_i
+    if params[:fr_citation] =~ /^(\d+)-FR-(\d+)$/
+      @volume = $1.to_i
+      @page   = $2.to_i
+    else
+      @volume = params[:volume].to_i
+      @page   = params[:page].to_i
+    end
     
     @entries = Entry.find_all_by_citation(@volume, @page)
     
