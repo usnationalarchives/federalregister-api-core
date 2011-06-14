@@ -39,10 +39,6 @@
         <% if @entries.present?%>
           <li><%= link_to 'Recent Articles', '#recent_articles' %></li>
         <% end %>
-        
-        <% if @most_cited_entries.present? %>
-          <li><%= link_to 'Most Cited Articles', '#most_cited' %></li>
-        <% end %>
       </ul>
     <% end -%>
     
@@ -88,6 +84,3 @@
 <% if @entries.present?%>
   <%= render :partial => 'entries/list', :locals => {:list_type => 'agency', :entries => @entries, :search_params => {:agency_id => @agency.id}} %>
 <% end %>
-<%= render :partial => 'entries/most_cited', :locals => {:entries => @most_cited_entries} %>
-
-

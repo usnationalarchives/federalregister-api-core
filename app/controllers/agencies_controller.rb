@@ -15,7 +15,6 @@ class AgenciesController < ApplicationController
     respond_to do |wants|
       wants.html do
         @entries = EntrySearch.new(:conditions => {:agency_ids => [@agency.id]}, :order => "newest", :per_page => 50).results
-        @most_cited_entries = @agency.entries.all(:conditions => "citing_entries_count > 0", :order => "citing_entries_count DESC, publication_date DESC", :limit => 50, :group => "entries.id")
         @significant_entries = EntrySearch.new(:conditions => {:agency_ids => [@agency.id], :significant => '1', :publication_date => {:gte => 3.months.ago.to_date.to_s}}, :order => "newest", :per_page => 50).results
       end
       
