@@ -76,7 +76,7 @@ class Api::V1::EntriesController < ApiController
             :raw_name => agency_name.name,
             :name     => agency.name,
             :id       => agency.id,
-            :url      => agency_url(agency)
+            :url      => agency_url(agency),
             :json_url => api_v1_agency_url(agency.id, :format => :json)
           }
         else
