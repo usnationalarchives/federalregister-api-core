@@ -17,22 +17,6 @@ class AgenciesController < ApplicationController
         @entries = EntrySearch.new(:conditions => {:agency_ids => [@agency.id]}, :order => "newest", :per_page => 50).results
         @most_cited_entries = @agency.entries.all(:conditions => "citing_entries_count > 0", :order => "citing_entries_count DESC, publication_date DESC", :limit => 50, :group => "entries.id")
         @significant_entries = EntrySearch.new(:conditions => {:agency_ids => [@agency.id], :significant => '1', :publication_date => {:gte => 3.months.ago.to_date.to_s}}, :order => "newest", :per_page => 50).results
-        
-        # Entry types
-        @entry_type_labels = []
-        @entry_type_values = []
-        
-        by_entry_type = Entry.all(
-          :select => 'granule_class, count(*) AS count',
-          :conditions => {:agency_assignments => {:assignable_id => @agency.id, :assignable_type => "Entry"}},
-          :joins => :agency_assignments,
-          :group => 'granule_class',
-          :order => 'count DESC'
-        )
-        by_entry_type.each do |summary|
-          @entry_type_labels << summary.entry_type
-          @entry_type_values << summary.count.to_i
-        end
       end
       
       wants.rss do
