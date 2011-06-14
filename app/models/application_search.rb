@@ -270,6 +270,7 @@ filter_name.to_s.sub(/_ids?$/,'').classify.constantize.find_all_by_id(ids.flatte
     
     set_defaults(options)
     
+    @skip_results = options[:skip_results] || false
     self.per_page = options[:per_page]
     self.conditions = (options[:conditions] || {}).reject{|key,val| ! self.respond_to?("#{key}=")}
   end
@@ -297,7 +298,11 @@ filter_name.to_s.sub(/_ids?$/,'').classify.constantize.find_all_by_id(ids.flatte
   end
   
   def blank?
-    [with, with_all, sphinx_conditions, term].all?(&:blank?)
+    [with, with_all, sphinx_conditions, term].all?(&:blank?) || skip_results?
+  end
+  
+  def skip_results?
+    @skip_results
   end
   
   def sphinx_conditions
