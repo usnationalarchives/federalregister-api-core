@@ -15,6 +15,16 @@ module RouteBuilder
     end
   end
   
+  def self.add_static_route(route_name, &proc)
+    define_method "#{route_name}_path" do |*args|
+      proc.call(*args)
+    end
+    
+    define_method "#{route_name}_url" do |*args|
+      root_url.sub(/\/$/,'') + proc.call(*args)
+    end
+  end
+  
   add_route :entry do |entry|
     {
       :year            => entry.publication_date.strftime('%Y'),
@@ -25,15 +35,15 @@ module RouteBuilder
     }
   end
   
-  def entry_full_text_path(entry)
+  add_static_route :entry_full_text do |entry|
     "/articles/html/full_text/#{entry.document_file_path}.html"
   end
   
-  def entry_abstract_path(entry)
+  add_static_route :entry_abstract do |entry|
     "/articles/html/abstract/#{entry.document_file_path}.html"
   end
   
-  def entry_xml_path(entry)
+  add_static_route :entry_xml do |entry|
     "/articles/xml/#{entry.document_file_path}.xml"
   end
   
@@ -122,15 +132,15 @@ module RouteBuilder
     }
   end
   
-  def regulatory_plan_full_text_path(regulatory_plan)
+  add_static_route :regulatory_plan_full_text do |regulatory_plan|
     "/regulations/html/full_text/#{regulatory_plan.regulation_id_number}.html"
   end
   
-  def regulatory_plan_contacts_path(regulatory_plan)
+  add_static_route :regulatory_plan_contacts do |regulatory_plan|
     "/regulations/html/contacts/#{regulatory_plan.regulation_id_number}.html"
   end
   
-  def regulatory_plan_sidebar_path(regulatory_plan)
+  add_static_route :regulatory_plan_sidebar do |regulatory_plan|
     "/regulations/html/sidebar/#{regulatory_plan.regulation_id_number}.html"
   end
   
