@@ -166,6 +166,11 @@ NEW NAV
 
 ******************************/
 
+#header_refresh {
+  background: image-url("seal.png") no-repeat right top;
+  }
+  
+
 #navigation {
   border-top: 4px solid #fbb829;
   }
@@ -220,7 +225,7 @@ NEW NAV
   display: inline;
   height: 30px;
   float: right;
-  margin-left: 15px;
+  margin-left: 10px;
   width: image-width('header/dropdown-off.png');
   }
 #navigation .dropdown:hover .arrow,
@@ -236,7 +241,12 @@ NEW NAV
 #navigation .world, 
 #navigation .science-and-technology,
 #navigation .business-and-industry,
-#navigation .health-and-public-welfare {
+#navigation .health-and-public-welfare,
+#navigation .search,
+#navigation .article-search,
+#navigation .advanced-search,
+#navigation .events-search,
+#navigation .unified-agenda-search {
   padding-left: 35px;
   }
 #navigation .home {
@@ -260,6 +270,13 @@ NEW NAV
 #navigation .browse:hover {
   background: sprite-image('header/browse-hover.png', 10px, 10px, 50px) no-repeat;
   }
+#navigation .search {
+  background: sprite-image('header/search-off.png', 10px, 9px, 50px) no-repeat;
+  padding-left: 30px;
+  }
+#navigation .search:hover {
+  background: sprite-image('header/search-hover.png', 10px, 9px, 50px) no-repeat;
+  }
 #navigation .learn {
   background: sprite-image('header/learn-off.png', 10px, 9px, 50px) no-repeat;
   padding-left: 27px;
@@ -282,10 +299,10 @@ NEW NAV
   background: sprite-image('header/blog-hover.png', 10px, 10px, 50px) no-repeat;
   }
 #navigation .agencies {
-  background: sprite-image('header/agencies-off.png', 10px, 5px, 50px) no-repeat;
+  background: sprite-image('header/agencies-off.png', 12px, 7px, 50px) no-repeat;
   }
 #navigation .agencies:hover {
-  background: sprite-image('header/agencies-hover.png', 10px, 5px, 50px) no-repeat;
+  background: sprite-image('header/agencies-hover.png', 12px, 7px, 50px) no-repeat;
   }
 #navigation .topics {
   background: sprite-image('header/topics-off.png', 10px, 5px, 50px) no-repeat;
@@ -335,6 +352,32 @@ NEW NAV
 #navigation .health-and-public-welfare:hover {
   background: sprite-image('header/health-hover.png', 14px, 5px, 50px) no-repeat;
   }
+#navigation .article-search {
+  background: sprite-image('header/article-off.png', 12px, 7px, 50px) no-repeat;
+  }
+#navigation .article-search:hover {
+  background: sprite-image('header/article-hover.png', 12px, 7px, 50px) no-repeat;
+  }
+#navigation .advanced-search {
+  background: sprite-image('header/advanced-off.png', 12px, 7px, 50px) no-repeat;
+  }
+#navigation .advanced-search:hover {
+  background: sprite-image('header/advanced-hover.png', 12px, 7px, 50px) no-repeat;
+  }
+#navigation .events-search {
+  background: sprite-image('header/events-off.png', 11px, 9px, 50px) no-repeat;
+  }
+#navigation .events-search:hover {
+  background: sprite-image('header/events-hover.png', 11px, 9px, 50px) no-repeat;
+  }
+#navigation .unified-agenda-search {
+  background: sprite-image('header/unified-off.png', 13px, 6px, 50px) no-repeat;
+  }
+#navigation .unified-agenda-search:hover {
+  background: sprite-image('header/unified-hover.png', 13px, 6px, 50px) no-repeat;
+  }
+
+
 
 /******************************
 
@@ -395,13 +438,13 @@ NEW SEARCH
 
 ******************************/
 
-#navigation .search {
+#navigation .inline_search {
   float: right;
   height: 30px;
   }
 #navigation .search_form {
   background: #fff;
-  border: 1px solid #bebebf;
+  border: 1px solid #aaa;
   @include border-radius(3px);
   height: 20px;
   margin: 4px 5px 0;
@@ -415,10 +458,14 @@ NEW SEARCH
   border: none;
   float: left;
   }
-#navigation #term { 
+#navigation #term {
   padding: 3px 0 0 5px;
-  width: 140px; 
+  width: 150px; 
   }
+#navigation #term.placeholder { color: #555; }
+::-webkit-input-placeholder { color: #555; }
+:-moz-placeholder { color: #555; }
+
 #navigation .search_btn {
   background: sprite-image('header/search-off.png', 0, 0, 50px) no-repeat;
   cursor: pointer;
