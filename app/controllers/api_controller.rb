@@ -1,5 +1,14 @@
 class ApiController < ApplicationController
   private
+  def render_json_or_jsonp(data)
+    callback = params[:callback].to_s
+    if callback =~ /^\w+$/
+      render :text => "#{callback}(" + data.to_json + ")"
+    else
+      render :json => data.to_json
+    end
+  end
+  
   def server_error(exception)
     notify_hoptoad(exception)
     render :json => {:status => 500, :message => "Internal Server Error"}, :status => 500

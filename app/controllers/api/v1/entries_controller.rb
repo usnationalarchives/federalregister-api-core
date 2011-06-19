@@ -24,7 +24,7 @@ class Api::V1::EntriesController < ApiController
           end
         end
         
-        render :json => data
+        render_json_or_jsonp data
       end
     end
   end
@@ -53,7 +53,7 @@ class Api::V1::EntriesController < ApiController
           }
         })
         
-        render :json => data
+        render_json_or_jsonp data
       end
     end
   end
