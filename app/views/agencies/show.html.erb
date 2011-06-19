@@ -82,8 +82,14 @@
     <h2 class="title_bar"><span class="small_stack">Most <span>Recent</span></span> Significant Regulations</h2>
     <%= render :partial => 'entries/grouped_by_date', :locals => {:entries => @significant_entries}%>
   </div>
+  <% if @significant_entries.total_entries > 40 %>
+    <%= link_to "See More", entries_search_path(:conditions => {:agency_ids => [@agency.id], :significant => 1}, :page => 3, :order => "newest") %>
+  <% end %>
 <% end %>
 
 <% if @entries.present?%>
   <%= render :partial => 'entries/list', :locals => {:list_type => 'agency', :entries => @entries, :search_params => {:agency_id => @agency.id}} %>
+  <% if @entries.total_entries > 40 %>
+    <%= link_to "See More", entries_search_path(:conditions => {:agency_ids => [@agency.id]}, :page => 3, :order => "newest") %>
+  <% end %>
 <% end %>

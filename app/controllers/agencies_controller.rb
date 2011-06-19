@@ -14,8 +14,8 @@ class AgenciesController < ApplicationController
     @agency = Agency.find_by_slug!(params[:id])
     respond_to do |wants|
       wants.html do
-        @entries = EntrySearch.new(:conditions => {:agency_ids => [@agency.id]}, :order => "newest", :per_page => 50).results
-        @significant_entries = EntrySearch.new(:conditions => {:agency_ids => [@agency.id], :significant => '1', :publication_date => {:gte => 3.months.ago.to_date.to_s}}, :order => "newest", :per_page => 50).results
+        @entries = EntrySearch.new(:conditions => {:agency_ids => [@agency.id]}, :order => "newest", :per_page => 40).results
+        @significant_entries = EntrySearch.new(:conditions => {:agency_ids => [@agency.id], :significant => '1', :publication_date => {:gte => 3.months.ago.to_date.to_s}}, :order => "newest", :per_page => 40).results
       end
       
       wants.rss do
