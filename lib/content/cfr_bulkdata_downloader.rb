@@ -57,14 +57,8 @@ module Content
 
     def download_zip
       puts "downloading #{url}..."
-      
-      open(url) do |input|
-        open(bulkfile_path, "wb") do |output|
-          while (buf = input.read(8192))
-            output.write buf
-          end
-        end
-      end
+
+      Curl::Easy.download(url, bulkfile_path)
     end
 
     def extract
