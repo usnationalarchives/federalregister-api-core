@@ -40,7 +40,7 @@ gem "capistrano", '2.5.19', :require => false
 gem "thunder_punch", '0.0.11', :require => false
 gem "delayed_job", '2.0.3'
 
-gem "gwt_rpc", "0.0.1"
+gem "gwt_rpc", '0.1.0'
 
 gem "recaptcha", "0.3.1", :require => 'recaptcha/rails'
 gem 'sendgrid', :git => "git://github.com/criticaljuncture/sendgrid.git", :branch => 'master'

@@ -18,7 +18,8 @@
     elsif @entry_dates.include?(d)
       [link_to(d.mday, entries_by_date_path(d)), {:class => "published" }]
     else
-      [d.mday, {:class => "holiday"}]
+      holiday_name = Holiday.find_by_date(d).try(:name)
+      [d.mday, {:class => "holiday", :title => holiday_name}]
     end
   end
 %>

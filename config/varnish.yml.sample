@@ -1,0 +1,7 @@
+rails:
+  port: 3000
+  host: 127.0.0.1
+wordpress:
+  port: 8000
+  host: fr2.local
+cache: false

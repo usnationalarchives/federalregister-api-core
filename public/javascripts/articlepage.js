@@ -98,7 +98,8 @@ $(document).ready(function () {
             url: '/articles/views',
             type: 'POST',
             data: {
-                'id': id
+                'id': id,
+                'referer': document.referrer
             }
         });
     });

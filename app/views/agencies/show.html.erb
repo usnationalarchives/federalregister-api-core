@@ -18,13 +18,16 @@
       <h1><%= @agency.name %></h1>
     </div>
 
-    <%= link_to(@agency.url) if @agency.url %>
+    <%= content_tag(:p, link_to(@agency.url, @agency.url)) if @agency.url %>
     <% if @agency.description.present? %>
       <%= add_citation_links(auto_link(simple_format(@agency.description))) %>
     <% else %>
       <p>Description coming soon.</p>
     <% end %>
-
+    
+    <% if @entries.present?%>
+      <p><%= link_to "Search all #{pluralize @entries.total_entries, 'article'} published by this agency since 1994", entries_search_path(:conditions => {:agency_ids => [@agency.id]}, :skip_results => 1, :anchor => 'advanced') %></p>
+    <% end %>
   <% end %>  
     
   <% aside_tag(:id => 'sidebar') do %>
@@ -38,10 +41,6 @@
         
         <% if @entries.present?%>
           <li><%= link_to 'Recent Articles', '#recent_articles' %></li>
-        <% end %>
-        
-        <% if @most_cited_entries.present? %>
-          <li><%= link_to 'Most Cited Articles', '#most_cited' %></li>
         <% end %>
       </ul>
     <% end -%>
@@ -83,11 +82,14 @@
     <h2 class="title_bar"><span class="small_stack">Most <span>Recent</span></span> Significant Regulations</h2>
     <%= render :partial => 'entries/grouped_by_date', :locals => {:entries => @significant_entries}%>
   </div>
+  <% if @significant_entries.total_entries > 40 %>
+    <%= link_to "See More", entries_search_path(:conditions => {:agency_ids => [@agency.id], :significant => 1}, :page => 3, :order => "newest") %>
+  <% end %>
 <% end %>
 
 <% if @entries.present?%>
   <%= render :partial => 'entries/list', :locals => {:list_type => 'agency', :entries => @entries, :search_params => {:agency_id => @agency.id}} %>
+  <% if @entries.total_entries > 40 %>
+    <%= link_to "See More", entries_search_path(:conditions => {:agency_ids => [@agency.id]}, :page => 3, :order => "newest") %>
+  <% end %>
 <% end %>
-<%= render :partial => 'entries/most_cited', :locals => {:entries => @most_cited_entries} %>
-
-
