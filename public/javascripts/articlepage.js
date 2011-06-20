@@ -167,4 +167,40 @@ $(document).ready(function () {
         location.hash === "#print_view" ? print_view_manager.enter() : print_view_manager.exit();
       }).trigger('hashchange');
     }
+    
+    var citation_modal_template = Handlebars.compile($("#select-cfr-citation-template").html());
+    
+    function display_cfr_modal(title, html) {
+      if ($('#cfr_citation_modal').size() == 0) {
+          $('body').append('<div id="cfr_citation_modal"/>');
+      }
+      $('#cfr_citation_modal').html(
+        [
+        '<a href="#" class="jqmClose">Close</a>',
+        '<h3 class="title_bar">' + title + '</h3>',
+        html
+        ].join("\n")
+      );
+      $('#cfr_citation_modal').jqm({
+          modal: true
+      });
+      $('#cfr_citation_modal').centerScreen().jqmShow();
+    }
+
+
+    // cfr citation modal
+    $('a.cfr.external').bind('click', function(event) {
+      event.preventDefault();
+      console.log('click');
+      var link = $(this);
+      var cfr_url = link.attr('href');
+      $.ajax({
+        url: cfr_url,
+        dataType: 'json',
+        success: function(response) {
+          cfr_html = citation_modal_template(response);
+          display_cfr_modal('External CFR Selection', cfr_html);
+        }
+      });
+    });
 });

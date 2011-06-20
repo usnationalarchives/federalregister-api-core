@@ -21,6 +21,15 @@ class ExternalCitationsController < ApplicationController
     @title, @part, @section = params[:citation].match(CFR_REGEXP)[1..3]
     
     @candidates = CfrPart.find_all_candidates(date, @title, @part)
+
+    respond_to do |format|
+      format.html
+      format.js { render :json => {:citation => params[:citation], 
+                                   :references => @candidates.map{|c| {:name => c.name,
+                                                                       :year => c.year,
+                                                                       :url  => cfr_citation_path(c.year, c.title, c.part, @section)}},
+                                   :ecfr_url => ecfr_url(@title, @part) }}
+    end
   end
 
   private
