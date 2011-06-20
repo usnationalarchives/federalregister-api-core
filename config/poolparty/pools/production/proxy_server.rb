@@ -26,7 +26,7 @@ cloud :proxy_server do
     
     attributes chef_cloud_attributes('production').recursive_merge(
       :chef    => {
-                    :roles => ['proxy']
+                    :roles => ['proxy', 'splunk_proxy']
                   },
       :varnish => {
                     :storage_size => '3G',

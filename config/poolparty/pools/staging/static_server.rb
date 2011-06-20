@@ -24,6 +24,7 @@ cloud :static_server do
     recipe "openssl"
     recipe "imagemagick"
     recipe "postfix"
+    recipe "splunk"
     
     recipe "munin::client"
     
@@ -65,7 +66,16 @@ cloud :static_server do
                    :docroot        => '/var/www/apps/fr2_blog/public',
                    :name           => 'fr2_blog',
                    :enable_mods    => ["rewrite", "deflate", "expires"]
-                 }
+                 },
+      :splunk => {
+                      :files_to_monitor => [
+                                              {:path => '/var/www/apps/fr2/shared/log/weekly_sphinx_reindex.log', :ignore_older_than => '7d', :source_type => 'unix_date'},
+                                              {:path => '/var/www/apps/fr2/shared/log/late_page_expiration.log', :ignore_older_than => '7d', :source_type => 'unix_date'},
+                                              {:path => '/var/www/apps/fr2/shared/log/reg_gov_url_import.log', :ignore_older_than => '7d', :source_type => 'unix_date'},
+                                              {:path => '/var/www/apps/fr2/shared/log/ofr_bulkdata_import.log', :ignore_older_than => '7d', :source_type => 'unix_date'},
+                                              {:path => '/var/log/mail.log', :ignore_older_than => '7d'}
+                                            ]
+                  }
       )
   end
   
