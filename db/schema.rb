@@ -97,6 +97,16 @@ ActiveRecord::Schema.define(:version => 20110614033345) do
   add_index "agency_names", ["name", "agency_id"], :name => "index_agency_names_on_name_and_agency_id"
   add_index "agency_names", ["name"], :name => "index_agency_names_on_name", :unique => true
 
+  create_table "cfr_parts", :force => true do |t|
+    t.integer "year"
+    t.integer "title"
+    t.integer "part"
+    t.integer "volume"
+    t.string  "name"
+  end
+
+  add_index "cfr_parts", ["year", "title", "part"], :name => "index_cfr_parts_on_year_and_title_and_part"
+
   create_table "citations", :force => true do |t|
     t.integer "source_entry_id"
     t.integer "cited_entry_id"
@@ -204,8 +214,6 @@ ActiveRecord::Schema.define(:version => 20110614033345) do
     t.integer  "entry_id"
     t.datetime "created_at"
     t.string   "remote_ip"
-    t.text     "raw_referer"
-    t.text     "normalized_referer"
   end
 
   add_index "entry_page_views", ["created_at"], :name => "index_entry_page_views_on_created_at"
