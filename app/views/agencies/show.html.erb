@@ -42,6 +42,14 @@
         <% if @entries.present?%>
           <li><%= link_to 'Recent Articles', '#recent_articles' %></li>
         <% end %>
+        
+        <% if @comments_closing.present? %>
+          <li><%= link_to 'Comment Periods Closing', '#comment-period-closing' %>
+        <% end %>
+        
+        <% if @comments_opening.present? %>
+          <li><%= link_to 'Comment Periods Opening', '#comment-period-opening' %>
+        <% end %>
       </ul>
     <% end -%>
     
@@ -92,4 +100,26 @@
   <% if @entries.total_entries > 40 %>
     <p><%= link_to "See More", entries_search_path(:conditions => {:agency_ids => [@agency.id]}, :page => 3, :order => "newest") %></p>
   <% end %>
+<% end %>
+
+<% if @comments_opening.present? || @comments_closing.present? %>
+  <div id="comments-closing-opening-body" class="tabs-body">
+    <% if @comments_closing.present? %>
+    <div class="closing tabs-panel" id='comment-period-closing'>
+      <% section_tag(:class => 'three_col_list comments') do %>  
+        <h2 class="title_bar"><span class="small_stack">Comment <span>Period</span></span><span class="large_flow">Closing Soon</span></h2>
+        <%= render :partial => "sections/grouped_by_toc_subject_and_comment_date", :locals => {:entries => @comments_closing } %>
+      <% end -%>
+    </div>
+    <% end %>
+  
+    <% if @comments_opening.present? %>
+    <div class="opening tabs-panel" id='comment-period-opening'>
+      <% section_tag(:class => 'three_col_list comments') do %>  
+        <h2 class="title_bar"><span class="small_stack">Comment <span>Period</span></span><span class="large_flow">Opening</span></h2>
+        <%= render :partial => "sections/grouped_by_toc_subject_and_comment_date", :locals => {:entries => @comments_opening } %>
+      <% end -%>
+    </div>
+    <% end %>
+  </div>
 <% end %>
