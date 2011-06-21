@@ -16,7 +16,7 @@ cloud :static_server_large do
   # end
   
   chef :solo do
-    repo File.join(File.dirname(__FILE__) , "chef_cloud")
+    repo File.join(File.dirname(__FILE__) ,"..", "..", "..", "..", "vendor", "plugins")
     
     recipe "apt"
     recipe 's3sync'
