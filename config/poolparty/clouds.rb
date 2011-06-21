@@ -187,6 +187,6 @@ def chef_cloud_attributes(instance_type)
   }
 end
 
-require 'config/poolparty/pools/production.rb'
-#require 'config/poolparty/pools/staging.rb'
+#require 'config/poolparty/pools/production.rb'
+require 'config/poolparty/pools/staging.rb'
 
