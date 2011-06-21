@@ -7,6 +7,7 @@ class Api::V1::AgenciesController < ApiController
           basic_agency_data(agency).merge(:json_url => api_v1_agency_url(agency.id, :format => :json))
         end
         
+        cache_for 1.day
         render_json_or_jsonp data
       end
     end
@@ -16,6 +17,8 @@ class Api::V1::AgenciesController < ApiController
     respond_to do |wants|
       wants.json do
         agency = Agency.find_by_id(params[:id])
+        
+        cache_for 1.day
         render_json_or_jsonp basic_agency_data(agency)
       end
     end
