@@ -19,9 +19,12 @@
       </ul>
     </div>
     
+    <%= will_paginate @search.results, :params => {:action => :show} %>
+    
     <ol class="results">
       <%= render :partial => 'result', :collection => @search.results, :as => :entry %>
     </ol>
+    
     <%= will_paginate @search.results, :params => {:action => :show} %>
   <% else %>
     <div class="errors">
