@@ -41,7 +41,9 @@ sub vcl_recv {
         sprintf(buff,"%d",rand()%2 + 1);
         VRT_SetHdr(sp, HDR_REQ, "\013X-AB-Group:", buff, vrt_magic_string_end);
       }C
-      # 
+      
+      set req.http.X-Added-AB-Group = "1";
+      
       if (req.http.Cookie) {
         set req.http.Cookie = req.http.Cookie ";";
       } else {
@@ -141,5 +143,12 @@ sub vcl_hash {
 }
 
 sub vcl_deliver {
-  set resp.http.Set-Cookie = "ab_group=" req.http.X-AB-Group "; path=/";
-}
+    if (req.http.X-Added-AB-Group) {
+        if (resp.http.Set-Cookie) {
+          set resp.http.Set-Cookie = resp.http.Set-Cookie "; ab_group=" req.http.X-AB-Group "; path=/";
+        }
+        else {
+          set resp.http.Set-Cookie = "ab_group=" req.http.X-AB-Group;
+        }
+    }
+} 

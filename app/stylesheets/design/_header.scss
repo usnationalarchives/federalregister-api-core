@@ -439,6 +439,7 @@ NEW SEARCH
 ******************************/
 
 #navigation .inline_search {
+  border-left: 0;
   float: right;
   height: 30px;
   }
@@ -449,7 +450,7 @@ NEW SEARCH
   height: 20px;
   margin: 4px 5px 0;
   position: relative;
-  width: 180px;
+  width: 210px;
   }
 #navigation label {
   display: none;
@@ -460,11 +461,11 @@ NEW SEARCH
   }
 #navigation #term {
   padding: 3px 0 0 5px;
-  width: 150px; 
+  width: 175px; 
   }
 #navigation #term.placeholder { color: #555; }
-::-webkit-input-placeholder { color: #555; }
-:-moz-placeholder { color: #555; }
+#navigation #term::-webkit-input-placeholder { color: #555; }
+#navigation #term:-moz-placeholder { color: #555; }
 
 #navigation .search_btn {
   background: sprite-image('header/search-off.png', 0, 0, 50px) no-repeat;
