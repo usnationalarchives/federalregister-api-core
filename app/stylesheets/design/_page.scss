@@ -43,6 +43,11 @@ ul.bold_links a {
 
 .clear { clear: both; }
 
+:invalid {
+  border-color: #e88;
+  -webkit-box-shadow: 0 0 5px rgba(255, 0, 0, .8);  
+  }
+
 /******************************
 
 DECORATIONS
@@ -916,7 +921,8 @@ HEADER ACTIONS
   text-transform: uppercase;
   }  
 .actions li.on,
-.actions li.tabs-selected {
+.actions li.tabs-selected,
+.action_button {
   background: #385F82;
   @include border-radius(5px);
   font-weight: 700;
@@ -926,10 +932,21 @@ HEADER ACTIONS
 .actions li:last-child, 
 .actions li.lastchild,
 .actions li.tabs-selected:first-child,
-.actions li.tabs-selected.firstchild {
+.actions li.tabs-selected.firstchild,
+.action_button {
   padding: 0.25em 0.5em 0;
   }  
 .actions li.on a,
-.actions li.tabs-selected a {
+.actions li.tabs-selected a,
+.action_button {
   color: #fff;
-  }  
+  }
+
+#agencies .action_button {
+  font-size: 16px;
+  margin-left: 243px;
+  }
+#agencies .action_button:hover {
+  background: #F77825;
+  color: #fff;
+  }
