@@ -1,6 +1,7 @@
-<h1><%= "#{@title} CFR #{@part}#{'.' + @section if @section}" %></h1>
+<h1>External Citation</h1>
 
-We could not determine which edition of the CFR is most appropriate. Please select from the choices below.
+There are multiple references available for <strong><%= "#{@title} CFR #{@part}#{'.' + @section if @section}" %></strong>
+when this document was published. Please choose from the following options.
 
 <ul>
   <% @candidates.each do |cfr_part| %>
