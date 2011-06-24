@@ -15,8 +15,8 @@
         <%= submit_tag 'Go', :class => "search_btn" %>
       </form>
       <div id="browse_container">
-        <%= link_to "Browse Agencies", agencies_path %>
-        <%= link_to "Browse Topics", topics_path %>
+        <%= link_to "Browse Agencies", agencies_path, :id => 'agencies-browse' %>
+        <%= link_to "Browse Topics", topics_path, :id => 'topics-browse' %>
       </div>
     </div>
   </div>  

@@ -1,25 +1,25 @@
 <% nav_tag(:id => "navigation") do %>
 
   <ul class="container">
-    <li><a href="/" class="home" title="Home">Home</a></li>
+    <li id='home-nav'><a href="/" class="home" title="Home">Home</a></li>
     <li class="dropdown nav_sections">
       <a class="sections">Sections<span class="arrow"></span></a>
       <ul class="subnav">
         <% Section.all.each do |section| %>
-          <li><%= link_to section.title, section_path(section), :class => "#{section.slug}" %></li>
+          <li id='<%= section.slug %>'><%= link_to section.title, section_path(section), :class => "#{section.slug}" %></li>
         <% end %>
       </ul>
     </li>
     <li class="dropdown nav_browse">
       <a class="browse">Browse<span class="arrow"></span></a>
       <ul class="subnav browse_list">
-        <li>
+        <li id='agencies-browse'>
           <a href="/agencies" class="agencies">Agencies</a>
         </li>
-        <li>
+        <li id='topics-browse'>
           <a href="/topics" class="topics">Topics</a>
         </li>
-        <li>
+        <li id='current-article-browse'>
           <a href="/articles/current" class="date">Dates</a>
         </li>
       </ul>
@@ -27,15 +27,15 @@
     <li class="dropdown nav_search">
       <a class="search">Search<span class="arrow"></span></a>
       <ul class="subnav search_list">
-        <li><a href="/articles/search" class="article-search">Article Search</a></li>
-        <li><a href="/articles/search#advanced" class="advanced-search">Advanced Article Search</a></li>
-        <li><a href="/events/search" class="events-search">Events Search</a></li>
-        <li><a href="/regulations/search" class="unified-agenda-search">Unified Agenda Search</a></li>
+        <li id='articles-search'><a href="/articles/search" class="article-search">Article Search</a></li>
+        <li id='articles-adv-search'><a href="/articles/search#advanced" class="advanced-search">Advanced Article Search</a></li>
+        <li id='events-search'><a href="/events/search" class="events-search">Events Search</a></li>
+        <li id='regulations-search'><a href="/regulations/search" class="unified-agenda-search">Unified Agenda Search</a></li>
       </ul>
     </li>
     <%= render :esi => '/layout/navigation_page_list' %>
 
-    <li class="nav_blog"><a href="/blog" class="blog">Blog</a></li>
+    <li class="nav_blog" id='blog-nav'><a href="/blog" class="blog">Blog</a></li>
     <li class="inline_search">
       <form action="<%= entries_search_path %>" method="get" class="search_form">
         <label for="term">Search the Federal Register</label>
