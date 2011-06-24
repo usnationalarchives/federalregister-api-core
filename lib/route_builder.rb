@@ -150,6 +150,22 @@ module RouteBuilder
     "/regulations/html/sidebar/#{regulatory_plan.regulation_id_number}.html"
   end
   
+  add_route :cfr_citation do |year, title, part, section |
+    {
+      :year            => year.to_s,
+      :citation        => "#{title}-CFR-#{part}#{'.' + section.to_s if section.present?}"
+    }
+  end
+  
+  add_route :select_cfr_citation do |date, title, part, section |
+    {
+      :year            => date.strftime('%Y'),
+      :month           => date.strftime('%m'),
+      :day             => date.strftime('%d'),
+      :citation        => "#{title}-CFR-#{part}#{'.' + section if section.present?}"
+    }
+  end
+  
   add_route :short_regulatory_plan do |regulatory_plan|
     {
       :regulation_id_number => regulatory_plan.regulation_id_number,

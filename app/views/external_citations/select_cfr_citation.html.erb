@@ -1,0 +1,11 @@
+<h1>External Citation</h1>
+
+There are multiple references available for <strong><%= "#{@title} CFR #{@part}#{'.' + @section if @section}" %></strong>
+when this document was published. Please choose from the following options.
+
+<ul>
+  <% @candidates.each do |cfr_part| %>
+    <li><%= link_to "#{cfr_part.year}: #{cfr_part.name}", cfr_citation_path(cfr_part.year, cfr_part.title, cfr_part.part, @section)%></li>
+  <% end %>
+  <li><%= link_to "E-CFR", ecfr_url(@title, @part) %></li>
+</ul>

@@ -115,6 +115,15 @@ ActionController::Routing::Routes.draw do |map|
                                                        :action     => 'tiny_url',
                                                        :conditions => { :method => :get }
 
+  # EXTERNAL CITATIONS
+  # /external-citation/10-CFR-123.456
+  map.with_options(:controller => 'external_citations', :conditions => {:method => :get}) do |external_citation|
+    external_citation.with_options(:requirements => {:citation => /\d+-CFR-\d+(?:\.\d+)?/}) do |external_cfr_citation|
+      external_cfr_citation.cfr_citation 'external-citation/:year/:citation', :action => :cfr_citation
+      external_cfr_citation.select_cfr_citation 'select-citation/:year/:month/:day/:citation', :action => :select_cfr_citation
+    end
+  end
+  
   # SUBSCRIPTIONS
   map.resources :subscriptions, :only => [:new, :create, :edit, :update, :destroy], :member => {:unsubscribe => :get, :confirm => :get}, :collection => {:confirmation_sent => :get, :confirmed => :get, :unsubscribed => :get}
   
