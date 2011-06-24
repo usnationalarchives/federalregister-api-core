@@ -1,7 +1,7 @@
 <% nav_tag(:id => "navigation") do %>
 
   <ul class="container">
-    <li id='home-nav'><a href="/" class="home" title="Home">Home</a></li>
+    <li id='nav-home'><a href="/" class="home" title="Home">Home</a></li>
     <li class="dropdown nav_sections">
       <a class="sections">Sections<span class="arrow"></span></a>
       <ul class="subnav">
@@ -35,7 +35,7 @@
     </li>
     <%= render :esi => '/layout/navigation_page_list' %>
 
-    <li class="nav_blog" id='blog-nav'><a href="/blog" class="blog">Blog</a></li>
+    <li class="nav_blog" id='nav-blog'><a href="/blog" class="blog">Blog</a></li>
     <li class="inline_search">
       <form action="<%= entries_search_path %>" method="get" class="search_form">
         <label for="term">Search the Federal Register</label>
@@ -46,3 +46,4 @@
   </ul>
 
 <% end -%>
+
