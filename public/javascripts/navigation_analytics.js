@@ -1,4 +1,4 @@
-/* 
+/*! 
  *  New header analytics 
  */
 
@@ -177,4 +177,5 @@ $("#primary_nav #search_bar #browse_container a#agencies-browse").bind('click', 
 
 $("#primary_nav #search_bar #browse_container a#topics-browse").bind('click', function() {
   _gaq.push(['_trackEvent', 'Navigation', 'Browse', "Topics"]);
+});
 

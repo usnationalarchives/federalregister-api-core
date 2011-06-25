@@ -168,8 +168,10 @@ $(document).ready(function () {
         location.hash === "#print_view" ? print_view_manager.enter() : print_view_manager.exit();
       }).trigger('hashchange');
     }
-    
-    var citation_modal_template = Handlebars.compile($("#select-cfr-citation-template").html());
+   
+    if ( $("#select-cfr-citation-template").length > 0 ) {
+      var citation_modal_template = Handlebars.compile($("#select-cfr-citation-template").html());
+    }
     
     function display_cfr_modal(title, html) {
       if ($('#cfr_citation_modal').size() == 0) {
