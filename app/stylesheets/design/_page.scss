@@ -572,7 +572,22 @@ p.stars {
   border:1px solid #a8bf82;
   padding:0.5em;
   }
-  
+#navigation_controls { overflow: hidden; }
+#navigation_controls .prev,
+#navigation_controls .next {
+    display: block;
+    height: 17px;
+    line-height: 19px;
+    }
+#navigation_controls .prev { float: left; padding-left: 20px; }
+#navigation_controls .next { float: right; padding-right: 20px; }
+
+.prev { background: sprite-image('icons/blog/prev.png', 0, 2px, 100px) no-repeat; }
+.prev:hover { background: sprite-image('icons/blog/prev-hover.png', 0, 2px, 100px) no-repeat; }  
+.next { background: sprite-image('icons/blog/next.png', 100%, 2px, 100px) no-repeat; }
+.next:hover { background: sprite-image('icons/blog/next-hover.png', 100%, 2px, 100px) no-repeat; }
+ 
+ 
 /******************************
 
 AGENCY LIST 
