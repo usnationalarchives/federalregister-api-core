@@ -25,6 +25,10 @@ namespace :varnish do
     `killall varnishd`
     puts "varnish shutting down..."
   end
+  
+  task :dump_vcl do
+    puts `varnishd -f config/varnish.development.vcl -d -C`
+  end
 
   desc "Restart varnish"
   task :restart => [:stop, :start]
