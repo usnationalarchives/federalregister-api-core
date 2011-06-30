@@ -1,6 +1,7 @@
 C{
   #include <stdlib.h>
   #include <stdio.h>
+  #include <time.h>
 }C
 
 backend rails {
@@ -145,12 +146,22 @@ sub vcl_hash {
 }
 
 sub vcl_deliver {
+    <% if config['cache'] %>
+        set resp.http.Etag = resp.http.Etag " abgroup=" req.http.X-AB-Group;
+    <% end %>
+    
     if (req.http.X-Added-AB-Group) {
-        if (resp.http.Set-Cookie) {
-          set resp.http.Set-Cookie = resp.http.Set-Cookie "; ab_group=" req.http.X-AB-Group "; path=/";
-        }
-        else {
-          set resp.http.Set-Cookie = "ab_group=" req.http.X-AB-Group;
-        }
+        # set resp.http.Set-Cookie = "ab_group=" req.http.X-AB-Group "; path=/";
+        C{
+          time_t now;
+          time(&now);
+          now = now + 10*24*60*60;
+
+          char expires [30];
+          strftime( expires, 30, "%a, %d %b %Y %H:%M:%S GMT", localtime(&now));
+
+          VRT_count(sp, 57);
+          VRT_SetHdr(sp, HDR_RESP, "\013Set-Cookie:", "ab_group=", VRT_GetHdr(sp, HDR_REQ, "\013X-AB-Group:"), "; path=/; expires=", expires, vrt_magic_string_end);
+        }C
     }
 } 
