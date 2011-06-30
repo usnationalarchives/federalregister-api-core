@@ -106,8 +106,10 @@ sub vcl_recv {
 }
 
 sub vcl_fetch {
-    unset beresp.http.Cache-Control;
-    unset beresp.http.Etag;
+    <% unless config['cache'] %>
+        unset beresp.http.Cache-Control;
+        unset beresp.http.Etag;
+    <% end %>
     
     # Directly serve static content
     if (req.url ~ "^/images" || req.url ~ "^/javascripts" || req.url ~ "^/flash" || req.url ~ "^/stylesheets" || req.url ~ "^/sitemaps") {
