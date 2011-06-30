@@ -158,7 +158,7 @@ sub vcl_deliver {
           now = now + 10*24*60*60;
 
           char expires [30];
-          strftime( expires, 30, "%a, %d %b %Y %H:%M:%S GMT", localtime(&now));
+          strftime( expires, 30, "%a, %d-%b-%Y %H:%M:%S GMT", localtime(&now));
 
           VRT_count(sp, 57);
           VRT_SetHdr(sp, HDR_RESP, "\013Set-Cookie:", "ab_group=", VRT_GetHdr(sp, HDR_REQ, "\013X-AB-Group:"), "; path=/; expires=", expires, vrt_magic_string_end);
