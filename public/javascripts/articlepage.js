@@ -193,17 +193,20 @@ $(document).ready(function () {
 
     // cfr citation modal
     $('a.cfr.external').bind('click', function(event) {
-      event.preventDefault();
-      console.log('click');
       var link = $(this);
       var cfr_url = link.attr('href');
-      $.ajax({
-        url: cfr_url,
-        dataType: 'json',
-        success: function(response) {
-          cfr_html = citation_modal_template(response);
-          display_cfr_modal('External CFR Selection', cfr_html);
-        }
-      });
+      
+      if( cfr_url.match(/^\//) ) {
+        event.preventDefault();
+
+        $.ajax({
+          url: cfr_url,
+          dataType: 'json',
+          success: function(response) {
+            cfr_html = citation_modal_template(response);
+            display_cfr_modal('External CFR Selection', cfr_html);
+          }
+        });
+      }
     });
 });
