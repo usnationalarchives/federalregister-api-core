@@ -28,10 +28,10 @@ module CitationsHelper
   
   def add_federal_register_links(text)
     text.gsub(/(\d+)\s+FR\s+(\d+)/) do |str|
-      issue = $1
+      volume = $1
       page = $2
-      if issue.to_i >= 60 # we have 59, but not the page numbers so this feature doesn't help
-        content_tag(:a, str, :href => "/citation/#{issue}/#{page}")
+      if volume.to_i >= 60 # we have 59, but not the page numbers so this feature doesn't help
+        content_tag(:a, str, :href => citation_path(volume,page))
       else
         str
       end

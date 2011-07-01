@@ -165,8 +165,19 @@ class ApplicationSearch
     end
   end
   
-  attr_accessor :order, :per_page
-  attr_reader :filters, :term
+  attr_accessor :order
+  attr_reader :filters, :term, :per_page, :page
+  
+  def per_page=(count)
+    per_page = count.to_s.to_i
+    if per_page > 1 && per_page <= 100
+      @per_page = per_page
+    else
+      @per_page = 20
+    end
+    
+    @per_page
+  end
   
   def term=(term)
     @term = term.to_s
@@ -252,7 +263,6 @@ filter_name.to_s.sub(/_ids?$/,'').classify.constantize.find_all_by_id(ids.flatte
     @filters = []
     
     # Set some defaults...
-    @per_page = 20
     @page = options[:page].to_i
     if @page < 1 || @page > 50
       @page = 1
@@ -260,6 +270,8 @@ filter_name.to_s.sub(/_ids?$/,'').classify.constantize.find_all_by_id(ids.flatte
     
     set_defaults(options)
     
+    @skip_results = options[:skip_results] || false
+    self.per_page = options[:per_page]
     self.conditions = (options[:conditions] || {}).reject{|key,val| ! self.respond_to?("#{key}=")}
   end
   
@@ -286,7 +298,11 @@ filter_name.to_s.sub(/_ids?$/,'').classify.constantize.find_all_by_id(ids.flatte
   end
   
   def blank?
-    [with, with_all, sphinx_conditions, term].all?(&:blank?)
+    [with, with_all, sphinx_conditions, term].all?(&:blank?) || skip_results?
+  end
+  
+  def skip_results?
+    @skip_results
   end
   
   def sphinx_conditions

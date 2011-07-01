@@ -24,7 +24,10 @@
     <% else %>
       <p>Description coming soon.</p>
     <% end %>
-
+    
+    <% if @entries.present?%>
+      <p><%= link_to "Search all #{pluralize @entries.total_entries, 'article'} published by this agency since 1994", entries_search_path(:conditions => {:agency_ids => [@agency.id]}, :skip_results => 1, :anchor => 'advanced') %></p>
+    <% end %>
   <% end %>  
     
   <% aside_tag(:id => 'sidebar') do %>
@@ -40,8 +43,12 @@
           <li><%= link_to 'Recent Articles', '#recent_articles' %></li>
         <% end %>
         
-        <% if @most_cited_entries.present? %>
-          <li><%= link_to 'Most Cited Articles', '#most_cited' %></li>
+        <% if @comments_closing.present? %>
+          <li><%= link_to 'Comment Periods Closing', '#comment-period-closing' %>
+        <% end %>
+        
+        <% if @comments_opening.present? %>
+          <li><%= link_to 'Comment Periods Opening', '#comment-period-opening' %>
         <% end %>
       </ul>
     <% end -%>
@@ -83,11 +90,36 @@
     <h2 class="title_bar"><span class="small_stack">Most <span>Recent</span></span> Significant Regulations</h2>
     <%= render :partial => 'entries/grouped_by_date', :locals => {:entries => @significant_entries}%>
   </div>
+  <% if @significant_entries.total_entries > 40 %>
+    <%= link_to "See More", entries_search_path(:conditions => {:agency_ids => [@agency.id], :significant => 1}, :page => 3, :order => "newest"), :class => 'action_button' %>
+  <% end %>
 <% end %>
 
 <% if @entries.present?%>
   <%= render :partial => 'entries/list', :locals => {:list_type => 'agency', :entries => @entries, :search_params => {:agency_id => @agency.id}} %>
+  <% if @entries.total_entries > 40 %>
+    <%= link_to "See More", entries_search_path(:conditions => {:agency_ids => [@agency.id]}, :page => 3, :order => "newest"), :class => 'action_button' %>
+  <% end %>
 <% end %>
-<%= render :partial => 'entries/most_cited', :locals => {:entries => @most_cited_entries} %>
 
-
+<% if @comments_opening.present? || @comments_closing.present? %>
+  <div id="comments-closing-opening-body" class="tabs-body">
+    <% if @comments_closing.present? %>
+    <div class="closing tabs-panel" id='comment-period-closing'>
+      <% section_tag(:class => 'three_col_list comments') do %>  
+        <h2 class="title_bar"><span class="small_stack">Comment <span>Period</span></span><span class="large_flow">Closing Soon</span></h2>
+        <%= render :partial => "sections/grouped_by_toc_subject_and_comment_date", :locals => {:entries => @comments_closing } %>
+      <% end -%>
+    </div>
+    <% end %>
+  
+    <% if @comments_opening.present? %>
+    <div class="opening tabs-panel" id='comment-period-opening'>
+      <% section_tag(:class => 'three_col_list comments') do %>  
+        <h2 class="title_bar"><span class="small_stack">Comment <span>Period</span></span><span class="large_flow">Opening</span></h2>
+        <%= render :partial => "sections/grouped_by_toc_subject_and_comment_date", :locals => {:entries => @comments_opening } %>
+      <% end -%>
+    </div>
+    <% end %>
+  </div>
+<% end %>

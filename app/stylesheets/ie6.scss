@@ -323,6 +323,7 @@ MODAL
 
 #modal,
 #disclaimer_modal,
+#cfr_citation_modal,
 #exit_modal {
   position: absolute;
   }
@@ -431,3 +432,45 @@ BLOG
   left: 23px;
   top: -1px;
   }  
+
+/*********************
+*
+* HEADER
+*
+*********************/
+
+#header .logos {
+  margin: 0 auto !important;
+  }
+#navigation .subnav {
+  left: 0;
+  }
+#navigation .subnav a {
+  background: none;
+  display: block;
+  padding: 0 10px;
+  width: 100%;
+  }
+#navigation .subnav a:hover {
+  background-image: none;
+  }
+#navigation .home { background: url('/images/header/ie6/home-off.gif') no-repeat 10px 8px; }
+#navigation .home:hover { background: url('/images/header/ie6/home-hover.gif') no-repeat 10px 8px; }
+
+#navigation .sections { background: url('/images/header/ie6/sections-off.gif') no-repeat 10px 8px; }
+#navigation .sections:hover { background: url('/images/header/ie6/sections-hover.gif') no-repeat 10px 8px; }
+
+#navigation .browse { background: url('/images/header/ie6/browse-off.gif') no-repeat 10px 8px; }
+#navigation .browse:hover { background: url('/images/header/ie6/browse-hover.gif') no-repeat 10px 8px; }
+
+#navigation .policy { background: url('/images/header/ie6/policy-off.gif') no-repeat 10px 8px; }
+#navigation .policy:hover { background: url('/images/header/ie6/policy-hover.gif') no-repeat 10px 8px; }
+
+#navigation .learn { background: url('/images/header/ie6/learn-off.gif') no-repeat 10px 8px; }
+#navigation .learn:hover { background: url('/images/header/ie6/learn-hover.gif') no-repeat 10px 8px; }
+
+#navigation .blog { background: url('/images/header/ie6/blog-off.gif') no-repeat 10px 8px; }
+#navigation .blog:hover { background: url('/images/header/ie6/blog-hover.gif') no-repeat 10px 8px; }
+
+#navigation .search_btn { background: url('/images/header/ie6/search-off.gif') no-repeat 0 0; }
+#navigation .search_btn:hover { background: url('/images/header/ie6/search-hover.gif') no-repeat 0 0; }

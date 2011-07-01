@@ -58,6 +58,18 @@ function unimplemented() {
     alert("This feature is not implemented yet.");
 }
 
+// http://www.quirksmode.org/js/cookies.html
+function readCookie(name) {
+  var nameEQ = name + "=";
+  var ca = document.cookie.split(';');
+  for(var i=0;i < ca.length;i++) {
+    var c = ca[i];
+    while (c.charAt(0)==' ') c = c.substring(1,c.length);
+    if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+  }
+  return null;
+}
+
 $(document).ready(function () {
     // let the server know the user has JS enabled
     document.cookie = "javascript_enabled=1; path=/";
@@ -65,8 +77,9 @@ $(document).ready(function () {
     $("input[placeholder]").textPlaceholder();
     
     if($.browser.msie && $.browser.version.substr(0,1) < 7) {
-      $("body").find(":first-child").addClass("firstchild");
-      $("body").find(":last-child").addClass("lastchild");    
+      $("li:first-child, ul:first-child, dt:first-child").addClass("firstchild");
+      $("li:last-child, ul:last-child, dd:last-child").addClass("lastchild");
+      $(".dropdown").hover(function(e){ $(this).addClass("hover"); }, function(e){ $(this).removeClass("hover"); });
     }
     
     generate_print_disclaimer();

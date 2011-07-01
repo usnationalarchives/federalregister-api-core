@@ -8,11 +8,12 @@ class ApplicationSearch
       @location = location
       @validation_errors = ''
       
+      @within = DEFAULT_WITHIN
       if within.present?
         if within.to_i < 1 || within.to_i > 200
           @validation_errors = "within must be between 1 and 200"
         else
-          @within = within.to_i || DEFAULT_WITHIN
+          @within = within.to_i
         end
       end
     end

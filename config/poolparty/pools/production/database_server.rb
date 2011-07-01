@@ -9,14 +9,14 @@ cloud :database_server do
   instance_type 'm1.large'
   
   #attach the ebs volumes
-  ebs_volumes do
-    size 40
-    device "/dev/sdh"
-    snapshot_id "snap-e9e9d581" #TODO find a way to automate this as it's new everyday...!
-  end
+  # ebs_volumes do
+  #   size 40
+  #   device "/dev/sdh"
+  #   snapshot_id "snap-e9e9d581" #TODO find a way to automate this as it's new everyday...!
+  # end
   
   chef :solo do
-    repo File.join(File.dirname(__FILE__) , "chef_cloud")
+    repo File.join(File.dirname(__FILE__) ,"..", "..", "..", "..", "vendor", "plugins")
     
     recipe "apt"
     recipe 's3sync'

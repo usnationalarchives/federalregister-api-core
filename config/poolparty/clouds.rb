@@ -6,6 +6,7 @@ def get_keys
   @mysql_passwords = File.open( File.join(File.dirname(__FILE__), '..', 'mysql.yml' ) ) { |yf| YAML::load( yf ) }
   @wordpress_keys = File.open( File.join(File.dirname(__FILE__), '..', '..', '..', 'fr2_blog', 'config', 'wordpress_keys.yml') ) { |yf| YAML::load( yf ) }
   @sendgrid_keys  = File.open( File.join(File.dirname(__FILE__), '..', 'sendgrid.yml') ) { |yf| YAML::load( yf ) }
+  @splunk_keys    = File.open( File.join(File.dirname(__FILE__), '..', 'splunk.yml') ) { |yf| YAML::load( yf ) }
 end
 
 def munin_host(ip_addresses)
@@ -33,20 +34,22 @@ def chef_cloud_attributes(instance_type)
 
   case instance_type
   when 'staging'
-    @proxy_server_address    = '10.117.73.130'
-    @static_server_address   = '10.114.162.36'
-    @worker_server_address   = '10.114.162.36'
-    @blog_server_address     = '10.114.162.36'
-    @mail_server_address     = '10.114.162.36'
-    @database_server_address = '10.99.65.121'
-    @sphinx_server_address   = '10.99.65.121'
-    @app_server_address      = '10.114.137.84'
+    @proxy_server_address    = '10.117.65.91'
+    @static_server_address   = '10.35.71.41'
+    @worker_server_address   = '10.35.71.41'
+    @blog_server_address     = '10.35.71.41'
+    @mail_server_address     = '10.35.71.41'
+    @splunk_server_address   = '10.35.71.41'
+    @database_server_address = '10.101.9.26'
+    @sphinx_server_address   = '10.101.9.26'
+    @app_server_address      = '10.83.113.240'
   when 'production'
     @proxy_server_address    = '10.194.207.96'
     @static_server_address   = '10.245.106.31'
     @worker_server_address   = '10.245.106.31'
     @blog_server_address     = '10.245.106.31'
     @mail_server_address     = '10.245.106.31'
+    @splunk_server_address   = '10.245.106.31'
     @database_server_address = '10.194.109.139'
     @sphinx_server_address   = '10.194.109.139'
     @app_server_address      = ['10.243.41.203', '10.196.117.123', '10.202.162.96', '10.212.73.172', '10.251.83.111', '10.251.131.239']
@@ -156,7 +159,8 @@ def chef_cloud_attributes(instance_type)
                     :worker_server => {:ip => @worker_server_address},
                     :database      => {:ip => @database_server_address},
                     :sphinx        => {:ip => @sphinx_server_address},
-                    :mail          => {:ip => @mail_server_address}
+                    :mail          => {:ip => @mail_server_address},
+                    :splunk        => {:ip => @splunk_server_address}
                    },
     :munin      => {
                     :nodes => munin_host(@app_server_address),

@@ -135,6 +135,7 @@ RESULTS
 
 ol.results {
   list-style-type: none;
+  margin-top: 1em;
   }
 ol.results > li {
   margin-bottom: 2em;
@@ -546,7 +547,7 @@ ADVANCED SEARCH
 .has_js .formtastic .show_labels .string label,
 .has_js .formtastic .fallback_agency_list label {
   font-size: 1.1em;
-  width: 11em;
+  width: 14em;
   }  
 .formtastic fieldset legend,
 .formtastic fieldset .label {
@@ -633,10 +634,10 @@ ADVANCED SEARCH
   height: 16px;
   }
 .has_js .exact_date { 
-  margin-left: 15.5em; 
+  margin-left: 17.5em; 
   }
 .has_js .exact_year { 
-  margin-left: 21.75em; 
+  margin-left: 24.5em; 
   }
 .exact_year select,
 .zip select {
@@ -645,7 +646,7 @@ ADVANCED SEARCH
   margin: 0;
   }
 .has_js .range_start { 
-  margin-left: 27.5em; 
+  margin-left: 30em; 
   }
 .formtastic .cfr_title input {
   width: 30px;
@@ -660,7 +661,7 @@ ADVANCED SEARCH
   overflow: hidden;
   }
 .has_js .formtastic .significant {
-  margin-left: 13.25em;
+  margin-left: 16.25em;
   }  
 .formtastic .show_labels .reg_id input { 
   width: 65px; 
@@ -686,7 +687,7 @@ ADVANCED SEARCH
   }
 .formtastic .advanced #conditions_submit:hover { color: #B88659; }
 .formtastic .buttons {
-  margin-left: 13.75em;
+  margin-left: 16.75em;
   margin-top: 2em;
   }
 #toggle_advanced {

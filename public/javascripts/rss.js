@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    $('a.rss, a.subscription').live('click',
+    $('a.rss, a.subscription, a.subscription_action').live('click',
     function () {
         generate_dialog();
         $('#modal input[placeholder]').textPlaceholder();

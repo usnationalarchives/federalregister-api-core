@@ -11,7 +11,7 @@
   </div>
   <ul class="metadata">
     <li class="type"><%= entry.entry_type %></li>
-    <li class="pub_date"><%= entry.publication_date %></li>
+    <li class="pub_date"><%= link_to entry.publication_date, entries_by_date_path(entry.publication_date) %></li>
     <li class="agency"><%= entry.agencies.excluding_parents.map{|agency| link_to(agency.name, agency_path(agency))}.join(' :: ') %></li>
     <li><%= link_to 'PDF', entry.source_url('pdf'), :class => 'button format pdf small' %></li>
   </ul>  

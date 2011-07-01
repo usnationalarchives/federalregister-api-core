@@ -16,7 +16,7 @@ cloud :static_server_large do
   # end
   
   chef :solo do
-    repo File.join(File.dirname(__FILE__) , "chef_cloud")
+    repo File.join(File.dirname(__FILE__) ,"..", "..", "..", "..", "vendor", "plugins")
     
     recipe "apt"
     recipe 's3sync'
@@ -24,7 +24,8 @@ cloud :static_server_large do
     recipe "openssl"
     recipe "imagemagick"
     recipe "postfix"
-    
+    recipe "splunk"
+
     recipe "munin::client"
     
     recipe "mysql::client"
@@ -64,7 +65,16 @@ cloud :static_server_large do
                    :docroot        => '/var/www/apps/fr2_blog/public',
                    :name           => 'fr2_blog',
                    :enable_mods    => ["rewrite", "deflate", "expires"]
-                 }
+                 },
+      :splunk  => {
+                      :files_to_monitor => [
+                                              {:path => '/var/www/apps/fr2/shared/log/weekly_sphinx_reindex.log', :ignore_older_than => '7d', :source_type => 'unix_date'},
+                                              {:path => '/var/www/apps/fr2/shared/log/late_page_expiration.log', :ignore_older_than => '7d', :source_type => 'unix_date'},
+                                              {:path => '/var/www/apps/fr2/shared/log/reg_gov_url_import.log', :ignore_older_than => '7d', :source_type => 'unix_date'},
+                                              {:path => '/var/www/apps/fr2/shared/log/ofr_bulkdata_import.log', :ignore_older_than => '7d', :source_type => 'unix_date'}
+                                            ]
+                    }
+
       )
   end
   
@@ -73,5 +83,4 @@ cloud :static_server_large do
     #authorize :from_port => "8080", :to_port => "8080"
   end
   security_group "worker"
-  
 end

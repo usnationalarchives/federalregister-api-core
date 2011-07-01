@@ -14,15 +14,15 @@ module SearchHelper
   end
   
   def search_removing_filter(condition, value)
-    conditions = params.dup[:conditions] || {}
+    conditions = params.dup[:conditions].with_indifferent_access || {}
     
     if PLURAL_FILTERS.include?(condition)
       conditions[condition] ||= []
       conditions[condition] = conditions[condition] - [value.to_s]
     else
-      conditions[condition] = nil
+      conditions.except!(condition)
     end
-    params.except(:quiet).recursive_merge(:page => nil, :action => :show, :conditions => conditions)
+    params.except(:quiet).merge(:page => nil, :action => :show, :conditions => conditions)
   end
   
   def working_search_example(search_term)

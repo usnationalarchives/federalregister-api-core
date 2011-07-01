@@ -49,7 +49,28 @@ NAV
   top: 2px;
   width: 110px;
   } 
-  
+
+#navigation .dropdown {
+  position: relative;
+  width: 110px;
+  }
+#navigation .dropdown .arrow {
+  position: absolute;
+  right: 2px;
+  top: 2px;
+  }
+#navigation .dropdown.nav_sections { width: 113px; }
+#navigation .dropdown.nav_browse { width: 112px; }
+#navigation .dropdown.nav_policy { width: 92px; }
+#navigation .dropdown.nav_learn { width: 92px; }
+#navigation .dropdown.nav_blog { width: 70px; }
+
+#navigation #term {
+  border: 0;
+  padding: 2px 0 0 0;
+  outline: none;
+  }
+
 /******************************
 
 HOMEPAGE
@@ -167,12 +188,12 @@ ADVANCED SEARCH
   left: 0;
   }
 .formtastic .zip legend {
-  left: -2em;
+  //left: -2em;
   }   
 .formtastic fieldset ol,
 .formtastic .show_labels .check_boxes ol,
 .formtastic .bsmContainer {
-  margin-left: 14em;
+  margin-left: 17em;
   }
 .formtastic .show_labels ol,
 .formtastic .buttons ol {

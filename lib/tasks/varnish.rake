@@ -1,6 +1,21 @@
 namespace :varnish do
+  namespace :config do
+    task :generate do
+      File.open(File.join(Rails.root, 'config', 'varnish.development.vcl'), 'w') do |f|
+        template_content = IO.read(File.join(Rails.root, 'config', 'varnish.development.vcl.erb'))
+        yml_path = File.join(Rails.root, 'config', 'varnish.yml')
+        if File.exists?(yml_path)
+          config = YAML::load_file(yml_path)
+        else
+          config = {:wordpress => {}, :rails => {}}
+        end
+        f.write ERB.new(template_content).result(binding)
+      end
+    end
+  end
+  
   desc "Start varnish, recompiling config if necessary"
-  task :start do
+  task :start => 'varnish:config:generate' do
     `varnishd -f config/varnish.development.vcl -a 0.0.0.0:8080 -s malloc,10M -T 127.0.0.1:6082`
     puts "please visit http://fr2.local:8080/"
   end
@@ -9,6 +24,10 @@ namespace :varnish do
   task :stop do
     `killall varnishd`
     puts "varnish shutting down..."
+  end
+  
+  task :dump_vcl do
+    puts `varnishd -f config/varnish.development.vcl -d -C`
   end
 
   desc "Restart varnish"

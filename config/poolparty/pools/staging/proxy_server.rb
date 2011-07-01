@@ -12,7 +12,7 @@ cloud :proxy_server do
   elastic_ip ['184.72.250.132']
   
   chef :solo do
-    repo File.join(File.dirname(__FILE__) , "chef_cloud")
+    repo File.join(File.dirname(__FILE__) ,"..", "..", "..", "..", "vendor", "plugins")
     
     recipe "apt"
     recipe 's3sync'
@@ -27,7 +27,7 @@ cloud :proxy_server do
     
     attributes chef_cloud_attributes('staging').recursive_merge(
       :chef    => {
-                    :roles => ['proxy']
+                    :roles => ['proxy', 'splunk_proxy']
                   },
       :varnish => {
                     :storage_size => '300M',

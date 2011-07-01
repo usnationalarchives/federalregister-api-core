@@ -98,7 +98,8 @@ $(document).ready(function () {
             url: '/articles/views',
             type: 'POST',
             data: {
-                'id': id
+                'id': id,
+                'referer': document.referrer
             }
         });
     });
@@ -144,15 +145,6 @@ $(document).ready(function () {
         $("#content_area").addClass("sans");
     });
 
-    $("a[data-historic-citation-url]").bind('click',
-    function (event) {
-        event.preventDefault();
-        display_modal('Multiple Versions Available',
-        '<p>Would you like the <a href="' + $(this).attr('href') + '" target="_blank"> current version</a> of ' + $(this).text() + ' or ' +
-        'the <a href="' + $(this).attr('data-historic-citation-url') + '" target="_blank">version as it existed at the time of publication</a>'
-        );
-    });
-
    function PrintViewManager() {
       var screen_sheets = $("head link[media=screen]");
       var print_sheets = $("head link[media=print]");
@@ -176,4 +168,45 @@ $(document).ready(function () {
         location.hash === "#print_view" ? print_view_manager.enter() : print_view_manager.exit();
       }).trigger('hashchange');
     }
+   
+    if ( $("#select-cfr-citation-template").length > 0 ) {
+      var citation_modal_template = Handlebars.compile($("#select-cfr-citation-template").html());
+    }
+    
+    function display_cfr_modal(title, html) {
+      if ($('#cfr_citation_modal').size() == 0) {
+          $('body').append('<div id="cfr_citation_modal"/>');
+      }
+      $('#cfr_citation_modal').html(
+        [
+        '<a href="#" class="jqmClose">Close</a>',
+        '<h3 class="title_bar">' + title + '</h3>',
+        html
+        ].join("\n")
+      );
+      $('#cfr_citation_modal').jqm({
+          modal: true
+      });
+      $('#cfr_citation_modal').centerScreen().jqmShow();
+    }
+
+
+    // cfr citation modal
+    $('a.cfr.external').bind('click', function(event) {
+      var link = $(this);
+      var cfr_url = link.attr('href');
+      
+      if( cfr_url.match(/^\//) ) {
+        event.preventDefault();
+
+        $.ajax({
+          url: cfr_url,
+          dataType: 'json',
+          success: function(response) {
+            cfr_html = citation_modal_template(response);
+            display_cfr_modal('External CFR Selection', cfr_html);
+          }
+        });
+      }
+    });
 });

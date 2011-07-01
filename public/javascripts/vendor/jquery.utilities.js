@@ -1,3 +1,4 @@
+/* Agency list view sorting - see commit 1ea203ff */
 jQuery.extend(  
     jQuery.expr[':'], {  
         regex: function(a, i, m, r) {  
@@ -12,7 +13,7 @@ jQuery.extend(
     Contains: "jQuery(a).text().toUpperCase().indexOf(m[3].toUpperCase())>=0"
 });
 
-
+/* Randomly choose which section to go to in the section highlight box on home page - see commit 71f0e595 */
 // http://blog.mastykarz.nl/jquery-random-filter/
 jQuery.jQueryRandom = 0;
 jQuery.extend(
@@ -25,7 +26,7 @@ jQuery.extend(
     }
 });
 
-
+/* Modal window centering - see commit 2cs91e1e */
 //http://groups.google.com/group/jquery-en/browse_thread/thread/a890828a14d86737
 //modified by DMA to use outerHeight, outerWidth
 jQuery.fn.centerScreen = function(loaded) {
