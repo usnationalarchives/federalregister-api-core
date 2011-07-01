@@ -1,8 +1,6 @@
 require 'ftools'
 module Content
   class ImportDriver
-    include HoptoadNotifier::Catcher
-  
     def perform
       load "#{Rails.root}/Rakefile"
       
