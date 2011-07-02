@@ -10,7 +10,6 @@ class TopicsController < ApplicationController
 
     respond_to do |wants|
       wants.html do
-        @most_cited_entries = @topic.entries.most_cited(50)
         @entries = @topic.entries.most_recent(50)
         @entry_types = Entry.all(
           :select => 'granule_class, count(*) AS count',
