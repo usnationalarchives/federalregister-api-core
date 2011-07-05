@@ -11,8 +11,6 @@
 
 <%= render :partial => "entries/list", :locals => {:entries => @entries, :search_params => {:topic => @topic}} %>
 
-<%= render :partial => 'entries/most_cited', :locals => {:entries => @most_cited_entries} %>
-
 </div>
 
 <% aside_tag(:id => "sidebar") do %>
@@ -21,7 +19,6 @@
     <h1>On This Page</h1>
     <ul>
       <li><%= link_to 'Recent Articles', '#recent_articles' %></li>
-      <li><%= link_to 'Most Cited Articles', '#most_cited' %></li>
     </ul>
   <% end -%>
   
