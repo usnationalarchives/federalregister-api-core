@@ -34,7 +34,7 @@ cloud :static_server do
     
     recipe "apache2"
     recipe "php::php5"
-    recipe "passenger_enterprise::apache2"
+    #recipe "passenger_enterprise::apache2"
     
     recipe 'rubygems'
     
