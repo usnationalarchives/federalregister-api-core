@@ -12,7 +12,8 @@ class EntrySearch::Suggestor::Base
   end
   
   def term
-    @search.term.sub(/\s*#{pattern}\s*/, ' ').strip
+    term = @search.term.sub(/\s*?(?:[aA][nN][dD])?\s*#{pattern}\s*(?:[aA][nN][dD])?\s*/, ' ')
+    term.strip
   end
   
   def suggestion
