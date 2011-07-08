@@ -21,6 +21,11 @@ class Entries::SearchController < SearchController
     end
   end
   
+  def suggestions
+    cache_for 1.day
+    render :layout => false
+  end
+  
   private
   
   def load_search

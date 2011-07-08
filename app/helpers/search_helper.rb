@@ -41,4 +41,12 @@ module SearchHelper
     conditions.delete(:publication_date)
     conditions
   end
+  
+  def search_title(search)
+    parts = search.filter_summary
+    parts.push("matching '#{search.term}'") if search.term.present?
+    parts.to_sentence
+  end
+  
+  
 end

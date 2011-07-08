@@ -194,6 +194,14 @@ class EntrySearch < ApplicationSearch
     return nil
   end
   
+  def suggestions
+    @suggestions ||= [
+      EntrySearch::Suggestor::Cfr,
+      EntrySearch::Suggestor::Date,
+      EntrySearch::Suggestor::RegulationIdNumber,
+    ].map {|suggestor| suggestor.new(self).suggestion }.compact
+  end
+  
   def entry_with_document_number
     if term.present?
       return Entry.find_by_document_number(term)
@@ -204,32 +212,37 @@ class EntrySearch < ApplicationSearch
     if @term.blank? && filters.empty?
       "All Articles"
     else
-      parts = []
+      parts = filter_summary
+      parts.unshift("matching '#{@term}'") if @term.present?
       
-      if @term.present?
-        parts << "matching '#{@term}'"
-      end
-    
-      [
-        ['with an effective date', :effective_date],
-        ['from', :agency_ids],
-        ['of type', :type],
-        ['filed under agency docket', :docket_id],
-        ['whose', :significant],
-        ['associated with', :regulation_id_number],
-        ['affecting', :cfr],
-        ['located', :near],
-        ['in', :section_ids],
-        ['about', :topic_ids]
-      ].each do |term, filter_condition|
-        relevant_filters = filters.select{|f| f.condition == filter_condition}
-      
-        unless relevant_filters.empty?
-          parts << "#{term} #{relevant_filters.map(&:name).to_sentence(:two_words_connector => ' or ', :last_word_connector => ', and ')}"
-        end
-      end
       'Articles ' + parts.to_sentence
     end
+  end
+  
+  def filter_summary
+    parts = []
+    
+    [
+      ['published on', :publication_date],
+      ['with an effective date', :effective_date],
+      ['from', :agency_ids],
+      ['of type', :type],
+      ['filed under agency docket', :docket_id],
+      ['whose', :significant],
+      ['associated with', :regulation_id_number],
+      ['affecting', :cfr],
+      ['located', :near],
+      ['in', :section_ids],
+      ['about', :topic_ids]
+    ].each do |term, filter_condition|
+      relevant_filters = filters.select{|f| f.condition == filter_condition}
+    
+      unless relevant_filters.empty?
+        parts << "#{term} #{relevant_filters.map(&:name).to_sentence(:two_words_connector => ' or ', :last_word_connector => ', and ')}"
+      end
+    end
+    
+    parts
   end
   
   def results_for_date(date, args = {})

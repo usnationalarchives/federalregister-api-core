@@ -21,6 +21,7 @@
       <%= render :esi => entries_search_facets_path(params.except(:action).merge(:facet => 'topic')) unless @search.topic_ids.present? %>
     </div>
 
+    <%= render :esi => entries_search_suggestions_path(params.except(:action)) %>
     <%= render :esi => entries_search_results_path(params.except(:action)) %>
   <% end %>
 <% end %>
