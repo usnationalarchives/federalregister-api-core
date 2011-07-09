@@ -4,7 +4,7 @@
 <% feed_autodiscovery topic_url(@topic, :format => :rss), "Articles in this topic", :search_conditions => {:topic_ids => [@topic.id]} %>
 <% feed_autodiscovery significant_entries_topic_url(@topic, :format => :rss), "Significant Articles in this topic", :search_conditions => {:topic_ids => [@topic.id], :significant => '1'} %>
 
-<h1 class="title"><span>Topic</span></h1>
+<div class="title"><span>Topic</span></div>
 
 <div id="content_area">
 <h1><%= @topic.name %></h1>

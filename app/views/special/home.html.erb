@@ -4,7 +4,7 @@
 
 <% description "Search, browse and learn about the Federal Register. Federal Register 2.0 is the unofficial daily publication for rules, proposed rules, and notices of Federal agencies and organizations, as well as executive orders and other presidential documents." %>
 
-<h1 class="title"><span><%= @current_issue.publication_date.try(:to_s, :wday_and_pretty_date) %></span></h1>
+<div class="title"><span><%= @current_issue.publication_date.try(:to_s, :wday_and_pretty_date) %></span></div>
 
 <%= render(:partial => "special/preview_warning") if @preview %>
 

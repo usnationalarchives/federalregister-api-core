@@ -4,7 +4,7 @@
 <%= feed_autodiscovery significant_entries_section_url(@section, :format => :rss), "Significant Articles in #{@section.title}", :search_conditions => {:section_ids => [@section.id], :significant => 1} %>
 <%= feed_autodiscovery section_url(@section, :format => :rss), "All Articles in #{@section.title}", :search_conditions => {:section_ids => [@section.id]} %>
 
-<h1 class="title"><span><%= @section.title %></span></h1>
+<div class="title"><span><%= @section.title %></span></div>
 
 <%= render(:partial => "special/preview_warning") if @preview %>
 

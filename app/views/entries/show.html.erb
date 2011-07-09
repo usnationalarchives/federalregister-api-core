@@ -3,7 +3,7 @@
 <% title @entry.title %>
 <% description truncate_words(strip_tags(@entry.abstract), :length => 300) %>
 
-<h1 class="title"><span><%= @entry.entry_type %></span></h1>
+<div class="title"><span><%= @entry.entry_type %></span></div>
 
 <% article_tag('data-internal-id' => @entry.id) do %>
   
@@ -22,9 +22,7 @@
   <% aside_tag(:id => 'sidebar') do %>
     
     <a href="#content_area" title="Skip the metadata" class="skip_to_content">Skip the metadata and jump to content</a>
-    
-    <%= render :partial => 'special/legal_disclaimer' %>
-    
+
     <% section_tag(:id => 'navigation_controls') do %>
       <% if @entry.previous_entry %>
         <%= link_to "Previous Article", entry_path(@entry.previous_entry), :title => @entry.previous_entry.title, :class => 'prev'%>
@@ -32,7 +30,9 @@
       <% if @entry.next_entry %>
         <%= link_to "Next Article", entry_path(@entry.next_entry), :title => @entry.next_entry.title, :class => 'next' %>
       <% end %>
-    <% end -%>
+    <% end -%>    
+    
+    <%= render :partial => 'special/legal_disclaimer' %>
     
     <% section_tag(:id => 'font_controls') do %>
       <%= render :partial => 'font_controls' %>

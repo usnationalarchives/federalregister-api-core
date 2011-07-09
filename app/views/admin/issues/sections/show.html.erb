@@ -8,7 +8,7 @@
   <%= render :partial => 'nav', :locals => {:sections => @sections, :publication_date => @publication_date} %>
   
   <% section_tag(:class => 'module') do %>
-    <h1 class="title">Highlight A Document</h1>
+    <div class="title">Highlight A Document</div>
     <% semantic_remote_form_for SectionHighlight.new, :url => admin_issue_section_highlights_path(@publication_date.to_s(:db), @section) do |f| %>
       <% f.inputs do %>
         <%= f.input :entry_document_number %>
