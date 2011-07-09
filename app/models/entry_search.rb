@@ -224,7 +224,7 @@ class EntrySearch < ApplicationSearch
     parts = []
     
     [
-      ['published on', :publication_date],
+      ['published', :publication_date],
       ['with an effective date', :effective_date],
       ['from', :agency_ids],
       ['of type', :type],
