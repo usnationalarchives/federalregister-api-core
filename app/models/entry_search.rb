@@ -198,6 +198,7 @@ class EntrySearch < ApplicationSearch
     @suggestions ||= [
       EntrySearch::Suggestor::Cfr,
       EntrySearch::Suggestor::Date,
+      EntrySearch::Suggestor::Spelling,
       EntrySearch::Suggestor::RegulationIdNumber,
     ].map {|suggestor| suggestor.new(self).suggestion }.compact
   end
