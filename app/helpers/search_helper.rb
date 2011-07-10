@@ -42,9 +42,25 @@ module SearchHelper
     conditions
   end
   
-  def search_title(search)
-    parts = search.filter_summary
-    parts.push("matching '#{search.term}'") if search.term.present?
+  def search_suggestion_title(suggestion, search)
+    search_filters = search.filter_summary
+    parts = suggestion.filter_summary.map do |suggested_filter|
+      if search_filters.include?(suggested_filter)
+        suggested_filter
+      else
+        content_tag(:strong, suggested_filter)
+      end
+    end
+    
+    # TODO: bolding of spelling corrections
+    if suggestion.term.present?
+      if suggestion.prior_term
+        parts.push("matching '#{SpellChecker.correct(suggestion.prior_term){|c,o| content_tag(:strong,c)}}'")
+      else
+        parts.push("matching '#{suggestion.term}'")
+      end
+    end
+    
     parts.to_sentence
   end
   

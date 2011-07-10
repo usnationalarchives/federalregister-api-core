@@ -18,7 +18,7 @@ class EntrySearch < ApplicationSearch
   include Geokit::Geocoders
   
   attr_reader :type
-  attr_accessor :type, :regulation_id_number
+  attr_accessor :type, :regulation_id_number, :prior_term
   
   define_filter :regulation_id_number, :label => "Unified Agenda", :phrase => true do |regulation_id_number|
     reg = RegulatoryPlan.find_by_regulation_id_number(regulation_id_number)

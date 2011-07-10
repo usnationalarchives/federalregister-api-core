@@ -2,7 +2,7 @@
   <h3>Did you mean?</h3>
   <% @search.suggestions.each do |suggestion| %>
     <div class="suggestion">
-      <%= link_to pluralize(suggestion.count, "article"), entries_search_path(:conditions => suggestion.conditions) %> <%= search_title(suggestion) %>
+      <%= link_to pluralize(suggestion.count, "article"), entries_search_path(:conditions => suggestion.conditions) %> <%= search_suggestion_title(suggestion, @search) %>
     </div>
   <% end %>
 <% end %>

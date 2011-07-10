@@ -5,6 +5,7 @@ class EntrySearch::Suggestor::Spelling < EntrySearch::Suggestor::Base
       corrected = SpellChecker.correct(@search.term)
       if @search.term != corrected
         @conditions = @search.conditions.dup
+        @prior_term = @search.term
         @term = corrected
       end
     end
