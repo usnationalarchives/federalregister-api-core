@@ -10,7 +10,7 @@ body {
 .wf-active body {
   @include gesta;
   }
-h1.title {
+.title {
   font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
   }
 .wf-active h1,
@@ -81,7 +81,7 @@ TITLE STYLES
 
 ******************************/
 
-h1.title {
+div.title {
   background: image-url("header_bg.png") repeat-x scroll left top;
   color: #fff;
   clear: both;
@@ -92,16 +92,19 @@ h1.title {
   letter-spacing: 0px;
   margin-bottom: 1em;
   }
-h1.title span {
+div.title span {
   background: #fff;
   color: $powder_blue;
   padding: 0 10px;
   margin: 0 25px 0 0;
   }
-h1.title {
+div.title {
   margin-left: -999px;
   padding-left: 999px;
   text-align: right;
+  }
+.wf-active div.title {
+  @include apertura-condensed; /* was gloriola */
   }
 
 /* stacked left words, big right word */

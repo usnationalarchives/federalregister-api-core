@@ -10,7 +10,8 @@ h1,h2,h3,h4,h5,h6{font-family: Arial, sans-serif;margin-bottom:5px;font-weight:7
 
 h1.title,
 h2.title,
-h3.title {
+h3.title,
+div.title {
   background: $blue_grey;
   @include border-top-left-radius(10px);
   @include border-top-right-radius(10px);
