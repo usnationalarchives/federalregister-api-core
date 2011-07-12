@@ -194,14 +194,19 @@ class EntrySearch < ApplicationSearch
     return nil
   end
   
-  def suggestions
-    @suggestions ||= [
-      EntrySearch::Suggestor::Cfr,
-      EntrySearch::Suggestor::Date,
-      EntrySearch::Suggestor::EntryType,
-      EntrySearch::Suggestor::Spelling,
-      EntrySearch::Suggestor::RegulationIdNumber,
-    ].map {|suggestor| suggestor.new(self).suggestion }.compact
+  def suggestion
+    if !defined?(@suggestion)
+      @suggestion = [
+        EntrySearch::Suggestor::Cfr,
+        EntrySearch::Suggestor::Date,
+        EntrySearch::Suggestor::EntryType,
+        EntrySearch::Suggestor::RegulationIdNumber,
+        EntrySearch::Suggestor::Spelling,
+      ].reduce(self) {|suggestion, suggestor| suggestor.new(suggestion).suggestion || suggestion }
+      @suggestion = nil if @suggestion == self
+    end
+    
+    @suggestion
   end
   
   def entry_with_document_number
