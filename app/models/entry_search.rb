@@ -197,6 +197,7 @@ class EntrySearch < ApplicationSearch
   def suggestion
     if !defined?(@suggestion)
       @suggestion = [
+        EntrySearch::Suggestor::Agency,
         EntrySearch::Suggestor::Cfr,
         EntrySearch::Suggestor::Date,
         EntrySearch::Suggestor::EntryType,
