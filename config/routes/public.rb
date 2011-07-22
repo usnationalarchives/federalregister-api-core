@@ -63,12 +63,12 @@ ActionController::Routing::Routes.draw do |map|
   map.connect 'citation/:volume/:page', :controller => 'citations',
                                          :action     => 'show',
                                          :conditions => { :method => :get },
-                                         :volume     => /\d{2}/,
+                                         :volume     => /\d+/,
                                          :page       => /\d+/
   map.citation 'citation/:fr_citation', :controller => 'citations',
                                          :action     => 'show',
                                          :conditions => { :method => :get },
-                                         :fr_citation => /\d{2}-FR-\d+/
+                                         :fr_citation => /\d+-FR-\d+/
   map.citation_search 'citation/search', :controller => 'citations',
                                          :action     => 'search',
                                          :conditions => { :method => :get }
