@@ -3,7 +3,7 @@
   <% search.filters.each do |filter| %>
   <li>
     <span class="type"><%= filter.label %></span>
-    <span class="name"><%= filter.name %></span>
+    <span class="name"><%= h filter.name %></span>
     <%= link_to 'Remove', search_removing_filter(filter.condition, filter.value), :title => 'Remove Filter', :class => 'remove' %>
   </li>
   <% end %>
