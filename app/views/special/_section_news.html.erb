@@ -1,14 +1,14 @@
 <% sections.each do |section| %>
   <div class="fr_section <%= section.slug %> <%= cycle('alpha', 'omega') %>">
     
-    <h1><%= link_to section.title, section_path(section) %></h1>
+    <h1><%= link_to section.title, section_path(section, :utm_source => 'homepage', :utm_medium => 'section_news') %></h1>
 
     <ul class="bullets">
       <%# TODO HELP-RUBY should we make these 3 latest %>
       <% entries = section.highlighted_entries(publication_date)[1..3] %>
       <% if entries %>
         <% entries.each do |entry| %>
-          <li><%= link_to entry.curated_title, entry_path(entry) %></li>
+          <li><%= link_to entry.curated_title, entry_path(entry, :utm_source => 'homepage', :utm_medium => 'section_news') %></li>
         <% end -%>
       <% end -%>  
     </ul>
