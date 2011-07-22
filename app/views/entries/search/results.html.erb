@@ -1,9 +1,6 @@
 <div class="result_set" data-expected-result-count="<%= render :partial => 'result_summary.txt.erb' %>">
   <%= render :partial => "search/filters", :locals => {:search => @search} %>
   
-  <%= render :partial => "citation", :locals => {:search => @search} if @search.filters.blank? && params[:order].blank?%>
-  <%= render :partial => "document_number", :locals => {:search => @search} if @search.filters.blank? && params[:order].blank?%>
-    
   <% if @search.results.present? %>
     <div class="search_info">
       <div class="article_count">

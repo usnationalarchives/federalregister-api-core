@@ -2,7 +2,7 @@
 .search_bar {
   @include grid(16,16);
   }
-.result_set {
+.result_set, .suggestions {
   @include grid(11, 16);
   @include grid-prefix(1, 16);
   margin-bottom: 2em;

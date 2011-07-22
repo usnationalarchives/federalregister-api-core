@@ -54,11 +54,12 @@ module SearchHelper
     
     # TODO: bolding of spelling corrections
     if suggestion.term.present?
-      if suggestion.prior_term
-        parts.push("matching '#{SpellChecker.correct(suggestion.prior_term){|c,o| content_tag(:strong,c)}}'")
-      else
-        parts.push("matching '#{suggestion.term}'")
-      end
+      term = if suggestion.prior_term
+               SpellChecker.correct(h(suggestion.prior_term)){|c,o| content_tag(:strong,h(c))}
+             else
+               h(suggestion.term)
+             end
+      parts << "matching " + content_tag(:span, term, :class => "term")
     end
     
     parts.to_sentence

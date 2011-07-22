@@ -1,6 +1,12 @@
-<% if @search.suggestion.present? %>
-  <h3>Did you mean?</h3>
-  <div class="suggestion">
-    <%= link_to pluralize(@search.suggestion.count, "article"), entries_search_path(:conditions => @search.suggestion.conditions) %> <%= search_suggestion_title(@search.suggestion, @search) %>
+<% if params[:page].blank? && params[:order].blank? %>
+  <div class="suggestions">
+    <%= render :partial => "suggestion",
+               :locals => {:search => @search} %>
+  
+    <%= render(:partial => "citation",
+               :locals => {:search => @search}) if @search.filters.blank? %>
+  
+    <%= render(:partial => "document_number",
+               :locals => {:search => @search}) if @search.filters.blank? %>
   </div>
 <% end %>
