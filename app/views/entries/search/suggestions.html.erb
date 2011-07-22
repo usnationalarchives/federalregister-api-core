@@ -1,0 +1,12 @@
+<% if params[:page].blank? && params[:order].blank? %>
+  <div class="suggestions">
+    <%= render :partial => "suggestion",
+               :locals => {:search => @search} %>
+  
+    <%= render(:partial => "citation",
+               :locals => {:search => @search}) if @search.filters.blank? %>
+  
+    <%= render(:partial => "document_number",
+               :locals => {:search => @search}) if @search.filters.blank? %>
+  </div>
+<% end %>

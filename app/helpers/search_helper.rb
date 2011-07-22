@@ -41,4 +41,29 @@ module SearchHelper
     conditions.delete(:publication_date)
     conditions
   end
+  
+  def search_suggestion_title(suggestion, search)
+    search_filters = search.filter_summary
+    parts = suggestion.filter_summary.map do |suggested_filter|
+      if search_filters.include?(suggested_filter)
+        suggested_filter
+      else
+        content_tag(:strong, suggested_filter)
+      end
+    end
+    
+    # TODO: bolding of spelling corrections
+    if suggestion.term.present?
+      term = if suggestion.prior_term
+               SpellChecker.correct(h(suggestion.prior_term)){|c,o| content_tag(:strong,h(c))}
+             else
+               h(suggestion.term)
+             end
+      parts << "matching " + content_tag(:span, term, :class => "term")
+    end
+    
+    parts.to_sentence
+  end
+  
+  
 end

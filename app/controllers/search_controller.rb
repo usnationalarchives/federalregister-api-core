@@ -25,9 +25,11 @@ class SearchController < ApplicationController
   def facets
     cache_for 1.day
     facets = @search.send(params[:facet] + "_facets").reject(&:on?)
+    
     if params[:all]
       render :partial => "search/facet", :collection => facets, :as => :facet
     else
+      @num_facets = params[:num_facets].try(:to_i) || 5
       render :partial => "search/facets", :locals => {:facets => facets, :name => params[:facet].humanize.capitalize_first}, :layout => false
     end
   end
