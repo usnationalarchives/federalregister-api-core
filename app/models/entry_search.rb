@@ -202,6 +202,7 @@ class EntrySearch < ApplicationSearch
         EntrySearch::Suggestor::Date,
         EntrySearch::Suggestor::EntryType,
         EntrySearch::Suggestor::RegulationIdNumber,
+        EntrySearch::Suggestor::HyphenatedIdentifier,
         EntrySearch::Suggestor::Spelling,
       ].reduce(self) {|suggestion, suggestor| suggestor.new(suggestion).suggestion || suggestion }
       @suggestion = nil if @suggestion == self
