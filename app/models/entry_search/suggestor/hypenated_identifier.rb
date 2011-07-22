@@ -16,6 +16,10 @@ class EntrySearch::Suggestor::HyphenatedIdentifier < EntrySearch::Suggestor::Bas
             (?:[^a-zA-Z\d-]|$)            (?# not-identifier character or end of string)
           /x) do |identifier|
         identifier = identifier.first
+        
+        # don't suggest quoting FR document numbers; this is handled with the document
+        next if Entry.count(:conditions => {:document_number => identifier}) > 0
+        
         @conditions = @search.conditions.dup
         @term = @search.term.sub(/#{Regexp.escape(identifier)}/, "\"#{identifier}\"")
         return

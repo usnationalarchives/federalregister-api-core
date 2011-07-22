@@ -44,4 +44,11 @@ describe 'EntrySearch::Suggestor::HyphenatedIdentifier' do
       end
     end
   end
+  
+  describe 'FR Document numbers' do
+    it "shouldn't suggest quoting FR document numbers" do
+      Factory(:entry, :document_number => "01-2170")
+      suggestor("01-2170").suggestion.should be_nil
+    end
+  end
 end
