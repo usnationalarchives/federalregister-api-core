@@ -10,6 +10,7 @@ describe 'EntrySearch::Suggestor::Agency' do
     before(:each) do
       @usda = Factory(:agency, :name => "Agriculture Department", :short_name => "USDA", :display_name => "Department of Agriculture")
       @hhs  = Factory(:agency, :name => "Health and Human Services Department", :short_name => "HHS", :display_name => "Department of Health and Human Services")
+      @fish = Factory(:agency, :name => "Fish Department")
     end
     
     it "should suggest an agency when matching a name identically" do
@@ -32,6 +33,11 @@ describe 'EntrySearch::Suggestor::Agency' do
     
     it "shouldn't suggest an agency who contains a short_name embedded in other words" do
       suggestion = suggestor("HHHSO Rules").suggestion
+      suggestion.should be_nil
+    end
+    
+    it "shouldn't suggest an agency that doesn't have a full match" do
+      suggestion = suggestor("cult Rules").suggestion
       suggestion.should be_nil
     end
   end
