@@ -1,7 +1,7 @@
 <% feed_autodiscovery entries_url(:format => :rss), 'All Articles from the Federal Register', :search_conditions => {} %>
 
 <% title "Articles for #{@publication_date.to_formatted_s(:pretty)}" %>
-<div class="title"><span><%= @publication_date %> Issue</span></div>
+<h1 class="title"><span><%= @publication_date %> Issue</span></h1>
 
 <%= render :partial => "statistics_by_date", :locals => {:issue => @issue, :label => @publication_date, :other_dates => false, :url => entries_by_date_path(@publication_date)} %>
 
