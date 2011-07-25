@@ -6,7 +6,8 @@ module SpellChecker
   def self.correct(string)
     string.gsub(/[\w\']+/) do |word| 
       if word !~ /\d/ && !speller.check(word) 
-        corrected_word = speller.suggest(word).first
+        suggestions = speller.suggest(word)
+        corrected_word = suggestions.find{|s| s !~ /\s|-/ } || suggestions.first
         
         if corrected_word.downcase != word.downcase
           if block_given?
