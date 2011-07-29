@@ -29,7 +29,7 @@ module RouteBuilder
     define_method "api_v1_#{route_name}_url" do |*args|
       options = args.extract_options!
       if Rails.env == 'staging'
-        base_url = 'http://api.criticaljuncture.org'
+        base_url = 'http://api.fr2.criticaljuncture.org'
       elsif Rails.env == 'production'
         base_url = 'http://api.federalregister.gov'
       else
