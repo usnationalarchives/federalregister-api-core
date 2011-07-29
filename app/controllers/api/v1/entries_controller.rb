@@ -9,11 +9,11 @@ class Api::V1::EntriesController < ApiController
           data[:total_pages] = search.results.total_pages
           
           if search.results.next_page
-            data[:next_page_url] = url_for(params.merge(:page => search.results.next_page))
+            data[:next_page_url] = api_v1_entries_url(params.merge(:page => search.results.next_page))
           end
           
           if search.results.previous_page
-            data[:previous_page_url] = url_for(params.merge(:page => search.results.previous_page))
+            data[:previous_page_url] = api_v1_entries_url(params.merge(:page => search.results.previous_page))
           end
           
           data[:results] = search.results.map do |entry|
