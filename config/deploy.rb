@@ -251,8 +251,9 @@ namespace :fr2 do
 
   desc "Update FR2 aspell dictionaries"
   task :update_aspell_dicts, :roles => [:app, :worker] do
-    run "/usr/local/s3sync/s3cmd.rb get config.internal.federalregister.gov:en_US-fr.rws #{shared_path}/data/en_US-fr.rws"
-    run "/usr/local/s3sync/s3cmd.rb get config.internal.federalregister.gov:en_US-fr.multi #{shared_path}/data/en_US-fr.multi"
+    run "mkdir -p #{shared_path}/data/dict"
+    run "/usr/local/s3sync/s3cmd.rb get config.internal.federalregister.gov:en_US-fr.rws #{shared_path}/data/dict/en_US-fr.rws"
+    run "/usr/local/s3sync/s3cmd.rb get config.internal.federalregister.gov:en_US-fr.multi #{shared_path}/data/dict/en_US-fr.multi"
   end
 end
 
