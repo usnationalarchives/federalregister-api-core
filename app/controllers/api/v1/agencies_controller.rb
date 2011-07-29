@@ -33,7 +33,6 @@ class Api::V1::AgenciesController < ApiController
       :short_name => agency.short_name,
       :url => agency_url(agency),
       :description => agency.description,
-      :url => agency.description,
       :recent_articles_url => api_v1_entries_url(:conditions => {:agency_ids => [agency.id]}, :order => "newest")
     }
     
