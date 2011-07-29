@@ -25,6 +25,26 @@ module RouteBuilder
     end
   end
   
+  def self.add_api_route(route_name, &proc)
+    define_method "api_v1_#{route_name}_url" do |*args|
+      options = args.extract_options!
+      if Rails.env == 'staging'
+        base_url = 'http://api.criticaljuncture.org'
+      elsif Rails.env == 'production'
+        base_url = 'http://api.federalregister.gov'
+      else
+        base_url = 'http://api.fr2.local:8080/'
+      end
+      
+      base_url + (["/v1/#{route_name}"] + args.map(&:to_param)).join("/") + ".json"
+    end
+  end
+  
+  add_api_route :entry
+  add_api_route :entries
+  add_api_route :agency
+  add_api_route :agencies
+  
   add_route :citation do |vol,page|
     {
       :fr_citation => "#{vol}-FR-#{page}"
