@@ -53,11 +53,16 @@ sub vcl_recv {
       set req.http.Cookie = req.http.Cookie "ab_group=" req.http.X-AB-Group;
     }
     
-     
+    # Rewrite api. subdomain to api/ subdirectory
+    if (req.http.host ~ "^api.") {
+      if (req.url !~ "^/api/") {
+        set req.url = "/api" req.url;
+      }
+    }
+    
     # Add a unique header containing the client address
     remove req.http.X-Forwarded-For;
     set    req.http.X-Forwarded-For = client.ip;
-    
     
     # Route to the correct backend
     if (req.url ~ "^(/blog|/policy|/learn|/layout/footer_page_list|/layout/navigation_page_list|/layout/homepage_post_list)") {
@@ -90,6 +95,7 @@ sub vcl_recv {
         "^/(learn|policy|layout/footer_page_list|layout/navigation_page_list|layout/homepage_post_list)",
         "/blog/\1"
     );
+    
     
     # Pass wp admin requests directly on to wp
     if (req.url ~ "^(/wp-login|wp-admin)") {

@@ -8,7 +8,11 @@ module CacheUtils
     
     def purge(regexp)
       Rails.logger.info("Expiring from varnish: '#{regexp}'...")
-      client.purge(:url, regexp)
+      begin
+        client.purge(:url, regexp)
+      rescue SocketError => e
+        Rails.logger.warn("Couldn't connect to varnish to expire agency")
+      end
     end
     
     private

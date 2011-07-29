@@ -249,6 +249,7 @@ RESULTS - MATCHING DOCUMENT
 ******************************/
 
 .matching_citation,
+.suggestion,
 .errors {
   @include box-shadow(#eee, 3px, 3px, 3px);
   border: 1px solid #eee;
@@ -281,8 +282,19 @@ RESULTS - MATCHING DOCUMENT
   border: none;
   margin-top: 0;
   padding-top: 0;
-  }  
-
+  } 
+.suggestion p {
+    background: sprite-image('icons/icon_search.png', 0, 0, 100px) no-repeat;
+    color: #666;
+    @include gesta;
+    line-height: image-height('icons/icon_search.png');
+    padding: 0 0 0 35px;
+    }
+.suggestion p .term {
+  padding: 6px;
+  margin-right: 3px;
+  background-color: #EDEDED;
+}
 /******************************
 
 RESULTS - EVENTS & REGULATIONS

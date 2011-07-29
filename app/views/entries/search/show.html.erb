@@ -4,7 +4,7 @@
 <% add_javascript :src => 'page_specific/search/search.js' %>
 <% add_javascript :src => 'page_specific/search/jquery-ui-1.8.6.custom.min.js' %>
 
-<h1 class="title"><span>Search Articles</span></h1>
+<div class="title"><span>Search Articles</span></div>
 
 <%= render :esi => entries_search_header_path(params.except(:action)) %>
 
@@ -16,11 +16,12 @@
       <!-- <li><%#= sparkline(:data => @search.date_distribution.to_a.sort_by{|date, count| date}.map{|date, count| count}, :alt => "Monthly Distribution" ) %></li> -->
   
       <%= render :esi => entries_search_facets_path(params.except(:action).merge(:facet => 'type')) unless @search.type.present? %>
-      <%= render :esi => entries_search_facets_path(params.except(:action).merge(:facet => 'section')) unless @search.section_ids.present? %>
       <%= render :esi => entries_search_facets_path(params.except(:action).merge(:facet => 'agency')) unless @search.agency_ids.present? %>
       <%= render :esi => entries_search_facets_path(params.except(:action).merge(:facet => 'topic')) unless @search.topic_ids.present? %>
+      <%= render :esi => entries_search_facets_path(params.except(:action).merge(:facet => 'section', :num_facets => 6)) unless @search.section_ids.present? %>
     </div>
 
+    <%= render :esi => entries_search_suggestions_path(params.except(:action)) %>
     <%= render :esi => entries_search_results_path(params.except(:action)) %>
   <% end %>
 <% end %>

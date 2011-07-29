@@ -89,8 +89,13 @@ task :staging do
   
   role :proxy,  "ec2-184-72-250-132.compute-1.amazonaws.com"
   role :app,    "ec2-50-19-14-105.compute-1.amazonaws.com"
-  role :db,     "ec2-50-17-145-38.compute-1.amazonaws.com", {:primary => true}
-  role :sphinx, "ec2-50-17-145-38.compute-1.amazonaws.com"
+#  role :db,     "ec2-50-17-145-38.compute-1.amazonaws.com", {:primary => true}
+#  role :sphinx, "ec2-50-17-145-38.compute-1.amazonaws.com"
+
+  # ubuntu 11.04 server
+  role :db,     "ec2-107-20-27-188.compute-1.amazonaws.com", {:primary => true}
+  role :sphinx, "ec2-107-20-27-188.compute-1.amazonaws.com"
+
   role :static, "ec2-184-72-163-77.compute-1.amazonaws.com"
   role :worker, "ec2-184-72-163-77.compute-1.amazonaws.com", {:primary => true}
 end
@@ -171,6 +176,8 @@ set :custom_symlinks, {
   'data/xml'              => 'data/xml',
   'data/raw'              => 'data/raw',
   'data/entries'          => 'data/entries',
+  'data/cfr'              => 'data/cfr',
+  'data/dict'             => 'data/dict',
   
   'db/sphinx'       => 'db/sphinx',
 }
@@ -240,6 +247,12 @@ namespace :fr2 do
   task :update_sendgrid_keys, :roles => [:app, :worker] do
     run "/usr/local/s3sync/s3cmd.rb get config.internal.federalregister.gov:sendgrid.yml #{shared_path}/config/sendgrid.yml"
     find_and_execute_task("apache:restart")
+  end
+
+  desc "Update FR2 aspell dictionaries"
+  task :update_aspell_dicts, :roles => [:app, :worker] do
+    run "/usr/local/s3sync/s3cmd.rb get config.internal.federalregister.gov:en_US-fr.rws #{shared_path}/data/en_US-fr.rws"
+    run "/usr/local/s3sync/s3cmd.rb get config.internal.federalregister.gov:en_US-fr.multi #{shared_path}/data/en_US-fr.multi"
   end
 end
 

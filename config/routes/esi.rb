@@ -21,6 +21,7 @@ ActionController::Routing::Routes.draw do |map|
     # ENTRY SEARCH
     quiet_map.entries_search_header 'articles/search/header', :controller => 'entries/search', :action => 'header'
     quiet_map.entries_search_results 'articles/search/results.:format', :controller => 'entries/search', :action => 'results'
+    quiet_map.entries_search_suggestions 'articles/search/suggestions.:format', :controller => 'entries/search', :action => 'suggestions'
     quiet_map.entries_search_facets 'articles/search/facets/:facet', :controller => 'entries/search', :action => 'facets'
     
     # EVENT SEARCH

@@ -45,6 +45,6 @@ config.action_mailer.default_url_options = {:host => 'www.fr2.criticaljuncture.o
 # config.threadsafe!
 
 # Commented out in as password protection is really annoying
-config.action_controller.asset_host = "http://assets%d.fr2.criticaljuncture.org"
+# config.action_controller.asset_host = "http://assets%d.fr2.criticaljuncture.org"
 
 # Put gems in Gemfile...

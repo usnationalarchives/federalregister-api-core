@@ -1,6 +1,6 @@
 <% title @search.term.blank? ? 'Search Regulations' : "Search Results for '#{h @search.term}'" %>
 
-<h1 class="title"><span><%= @search.term.blank? ? 'Search Regulations' : "Search Results for '#{h @search.term}'" %></span></h1>
+<div class="title"><span><%= @search.term.blank? ? 'Search Regulations' : "Search Results for '#{h @search.term}'" %></span></div>
 
 <% unless @search.valid? %>
 <ul class="errors">
