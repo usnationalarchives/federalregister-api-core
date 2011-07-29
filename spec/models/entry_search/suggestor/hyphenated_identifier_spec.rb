@@ -10,6 +10,7 @@ describe 'EntrySearch::Suggestor::HyphenatedIdentifier' do
     [
       ['abc 1a-2b 123', 'abc "1a-2b" 123'],
       ['asf asf1-fsa',  'asf "asf1-fsa"'],
+      ['asf as.f1-f.sa',  'asf "as.f1-f.sa"'],
       ['asf asf-fsa1',  'asf "asf-fsa1"'],
       ['123-456', '"123-456"']
     ].each do |term, quoted_term|
@@ -37,7 +38,8 @@ describe 'EntrySearch::Suggestor::HyphenatedIdentifier' do
       'abc 123 def',
       'abc foo-bar',
       '-123a',
-      'a123-'
+      'a123-',
+      '.a12-3'
     ].each do |term| 
       it "shouldn't match #{term}" do
         suggestor(term).suggestion.should be_nil
