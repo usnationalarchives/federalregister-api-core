@@ -28,19 +28,19 @@ module Content::EntryImporter::RegulationsDotGov
   memoize :regulationsdotgov_document
   
   def possible_regulationsdotgov_search_terms
-    terms = ["\"#{document_number}\""]
+    terms = ["\"#{@entry.document_number}\""]
     
-    agency_names.each do |agency_name|
-      terms << "\"#{document_number}\" \"#{agency_name.name}\""
+    @entry.agency_names.each do |agency_name|
+      terms << "\"#{@entry.document_number}\" \"#{agency_name.name}\""
     end
     
-    regulation_id_numbers.each do |rin|
-      terms << "\"#{document_number}\" \"#{rin}\""
+    @entry.regulation_id_numbers.each do |rin|
+      terms << "\"#{@entry.document_number}\" \"#{rin}\""
     end
     
-    if docket_id.present?
-      raw_docket_id = docket_id.sub(/^\s*Docket (No\.?|Number|)?\s*/, '')
-      terms << "\"#{document_number}\" \"#{raw_docket_id}\""
+    if @entry.docket_id.present?
+      raw_docket_id = @entry.docket_id.sub(/^\s*Docket (No\.?|Number|)?\s*/, '')
+      terms << "\"#{@entry.document_number}\" \"#{raw_docket_id}\""
     end
     
     terms
