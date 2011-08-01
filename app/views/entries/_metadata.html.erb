@@ -37,5 +37,5 @@
     <% end %>
   <% end %>
   <% if entry.document_number.present?      %><dt>Document Number:</dt>  <dd class="doc_number"><%= entry.document_number %></dd><% end %>
-                                              <dt>Shorter URL:</dt>        <dd><%= link_to short_entry_url(entry),short_entry_url(entry), :class => "shorter_url" %></dd>
+  <dt>Shorter URL:</dt>        <dd><%= link_to short_entry_url(entry),short_entry_url(entry), :class => "shorter_url" %><%= clippy(short_entry_url(entry)) %></dd>
 </dl>
