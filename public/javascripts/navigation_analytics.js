@@ -4,43 +4,19 @@ $(document).ready(function(){
    */
 
   // SECTIONS
-  $(".dropdown.nav_sections li#money a").bind('click', function() {
-    _gaq.push(['_trackEvent', 'Navigation', 'Sections', "Money"]);
-  });
-
-  $(".dropdown.nav_sections li#environment a").bind('click', function() {
-    _gaq.push(['_trackEvent', 'Navigation', 'Sections', "Environment"]);
-  });
-
-  $(".dropdown.nav_sections li#world a").bind('click', function() {
-    _gaq.push(['_trackEvent', 'Navigation', 'Sections', "World"]);
-  });
-
-  $(".dropdown.nav_sections li#science-and-technology a").bind('click', function() {
-    _gaq.push(['_trackEvent', 'Navigation', 'Sections', "Science and Technology"]);
-  });
-
-  $(".dropdown.nav_sections li#business-and-industry a").bind('click', function() {
-    _gaq.push(['_trackEvent', 'Navigation', 'Sections', "Business and Industry"]);
-  });
-
-  $(".dropdown.nav_sections li#health-and-public-welfare a").bind('click', function() {
-    _gaq.push(['_trackEvent', 'Navigation', 'Sections', "Health and Public Welfare"]);
+  $(".dropdown.nav_sections ul.subnav li a").each(function() {
+    $(this).bind('click', function() {
+      _gaq.push(['_trackEvent', 'Navigation', 'Sections', $(this).html()]);
+    });
   });
 
   // BROWSE
-  $(".dropdown.nav_browse li#agencies-browse a").bind('click', function() {
-    _gaq.push(['_trackEvent', 'Navigation', 'Browse', "Agencies"]);
+  $(".dropdown.nav_browse ul.subnav li a").each(function() {
+    $(this).bind('click', function() {
+      _gaq.push(['_trackEvent', 'Navigation', 'Browse', $(this).html()]);
+    });
   });
-
-  $(".dropdown.nav_browse li#topics-browse a").bind('click', function() {
-    _gaq.push(['_trackEvent', 'Navigation', 'Browse', "Topics"]);
-  });
-
-  $(".dropdown.nav_browse li#current-article-browse a").bind('click', function() {
-    _gaq.push(['_trackEvent', 'Navigation', 'Browse', "Current Article"]);
-  });
-
+  
   // SEARCH
   $(".dropdown.nav_browse li#articles-search a").bind('click', function() {
     _gaq.push(['_trackEvent', 'Navigation', 'Search', "Articles"]);
@@ -69,61 +45,17 @@ $(document).ready(function(){
 
   // WORDPRESS
   // POLICY
-  $(".dropdown li.page-item-50 a").bind('click', function() {
-    _gaq.push(['_trackEvent', 'Navigation', 'Policy', "About Us"]);
+  $(".dropdown a.policy").siblings("ul.subnav.wordpress").find("li.page_item a").each(function() {
+    $(this).bind('click', function() {
+      _gaq.push(['_trackEvent', 'Navigation', 'Policy', $(this).html()]);
+    });
   });
-
-  $(".dropdown li.page-item-52 a").bind('click', function() {
-    _gaq.push(['_trackEvent', 'Navigation', 'Policy', "Legal Status"]);
-  });
-
-  $(".dropdown li.page-item-54 a").bind('click', function() {
-    _gaq.push(['_trackEvent', 'Navigation', 'Policy', "User Information"]);
-  });
-
-  $(".dropdown li.page-item-56 a").bind('click', function() {
-    _gaq.push(['_trackEvent', 'Navigation', 'Policy', "Contact Us"]);
-  });
-
-  $(".dropdown li.page-item-58 a").bind('click', function() {
-    _gaq.push(['_trackEvent', 'Navigation', 'Policy', "Privacy"]);
-  });
-
-  $(".dropdown li.page-item-60 a").bind('click', function() {
-    _gaq.push(['_trackEvent', 'Navigation', 'Policy', "Accessibility"]);
-  });
-
-  $(".dropdown li.page-item-62 a").bind('click', function() {
-    _gaq.push(['_trackEvent', 'Navigation', 'Policy', "FOIA"]);
-  });
-
-  $(".dropdown li.page-item-64 a").bind('click', function() {
-    _gaq.push(['_trackEvent', 'Navigation', 'Policy', "No Fear Act"]);
-  });
-
+  
   // LEARN
-  $(".dropdown li.page-item-14 a").bind('click', function() {
-    _gaq.push(['_trackEvent', 'Navigation', 'Learn', "FR Tutorials & History"]);
-  });
-
-  $(".dropdown li.page-item-345 a").bind('click', function() {
-    _gaq.push(['_trackEvent', 'Navigation', 'Learn', "Public Inspection"]);
-  });
-
-  $(".dropdown li.page-item-38 a").bind('click', function() {
-    _gaq.push(['_trackEvent', 'Navigation', 'Learn', "Related Resources"]);
-  });
-
-  $(".dropdown li.page-item-40 a").bind('click', function() {
-    _gaq.push(['_trackEvent', 'Navigation', 'Learn', "Doc Drafting & Research"]);
-  });
-
-  $(".dropdown li.page-item-42 a").bind('click', function() {
-    _gaq.push(['_trackEvent', 'Navigation', 'Learn', "Regulatory Journals"]);
-  });
-
-  $(".dropdown li.page-item-553 a").bind('click', function() {
-    _gaq.push(['_trackEvent', 'Navigation', 'Learn', "Regulatory Improvement"]);
+  $(".dropdown a.learn").siblings("ul.subnav.wordpress").find("li.page_item a").each(function() {
+    $(this).bind('click', function() {
+      _gaq.push(['_trackEvent', 'Navigation', 'Learn', $(this).html()]);
+    });
   });
 
   // NAVIGATION SEARCH FORM
