@@ -189,37 +189,43 @@ $(document).ready(function () {
       $(this).trigger('calculate_expected_results');
     });
     
-    $("input[data-autocomplete]").autocomplete({
-      minLength: 3,
-      source: function( request, response ){
-        $.ajax({
-          url: "/agencies/search?term=" + request.term,
-          success: function(data){
-            response( 
-              $.map( data, function( item ) {
-  							return {
-  								label: item.name,
-  								value: item.name,
-  								id: item.id
-  							}
-						}));	
-          } // end success
-        }) // end ajax
-      },
-      select: function( event, ui ) {
-        $("#conditions_agency_ids").append("<option value=" + ui.item.id +" selected='selected'>" + ui.item.label + "</option>");
-        $("#conditions_agency_ids").trigger("change");
-      },
-      open: function( event, ui ){
-        $(this).removeClass("loading");
-      },
-      close: function( event, ui ) {
-        $(this).val('');
-        $(this).removeClass("loading");
-      },
-      search: function( event, ui) {
-        $(this).addClass("loading");
-      }
+    $("input[data-autocomplete]").each(function(){
+        var input = $(this);
+        input.autocomplete({
+        minLength: 3,
+        source: function( request, response ){
+          var elem = input;
+          $.ajax({
+            url: "/agencies/search?term=" + request.term,
+            success: function(data){
+              $(elem).removeClass("loading");
+              response( 
+                $.map( data, function( item ) {
+                  return {
+                    label: item.name,
+                    value: item.name,
+                    id: item.id
+                  }
+              }));	
+            } // end success
+          }) // end ajax
+        },
+        select: function( event, ui ) {
+          $("#conditions_agency_ids").append("<option value=" + ui.item.id +" selected='selected'>" + ui.item.label + "</option>");
+          $("#conditions_agency_ids").trigger("change");
+          $(this).data('clear-value', 1);
+        },
+        close: function() {
+          var input = $(this);
+          if (input.data('clear-value')) {
+             input.val('');
+             input.data('clear-value',0);
+          }
+        },
+        search: function( event, ui) {
+          $(this).addClass("loading");
+        }
+      })
     });
     
     $("#toggle_advanced").bind('click', function(event) {
