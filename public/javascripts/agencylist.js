@@ -37,7 +37,7 @@ $(document).ready(function () {
         if (!parent.hasClass("on")) {
             $(".sub_agencies li").removeClass("on");
             $(this).parent().toggleClass("on");
-            $("#agencies li > ul").toggle();
+            $("#agency_list li > ul").toggle();
         }
     });
 
