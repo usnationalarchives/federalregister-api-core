@@ -446,7 +446,10 @@ p:target {
   padding: 0 0 0 10px;
   text-indent: -10px;
   text-transform: none;
-  }  
+  }
+.metadata_list a.shorter_url {
+  padding-right: 15px;
+}
 .citable {
   padding-right: 25px;
   position: relative; 
