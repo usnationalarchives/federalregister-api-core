@@ -24,32 +24,6 @@
 NAV
 
 ******************************/
-
-#primary_nav {
-  background: image-url("nav_bg.png");
-  }
-#primary_nav a:hover,
-#primary_nav a:focus {
-  text-decoration: underline;
-  }
-#primary_nav .science-and-technology {
-  width: 80px;
-  }
-#primary_nav .business-and-industry {
-  width: 80px;
-  }
-#primary_nav .health-and-public-welfare {
-  width: 115px;
-  }
-#header #search_container {
-  top: -45px;
-  }  
-#header #browse_container {
-  right: 20px;
-  top: 2px;
-  width: 110px;
-  } 
-
 #navigation .dropdown {
   position: relative;
   width: 110px;

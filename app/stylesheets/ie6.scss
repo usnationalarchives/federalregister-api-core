@@ -17,9 +17,6 @@ GENERAL
   background-image: none;
   padding-left: 0;
   }
-#header #primary_nav li {
-  background-image: none;
-  }
 .row {
   clear: both;
   }
@@ -45,12 +42,6 @@ GENERAL
 HEADER
 
 ******************************/
-#primary_nav {
-  background: #b7c8cc;
-  }
-#header_logo {
-  background: image-url('icons/ie6/logotype.png') no-repeat;
-  }
 #header #search {
   background: #b7c8cc image-url('icons/ie6/search_bg_wide.png') no-repeat left 2px;
   }
@@ -61,9 +52,6 @@ HEADER
 #search label {
   display: none;
   }
-#search_container #browse_container {
-  top: 5px;
-  } 
 
 /******************************
 

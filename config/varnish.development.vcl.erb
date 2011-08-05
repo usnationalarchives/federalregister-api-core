@@ -137,10 +137,10 @@ sub vcl_hash {
     set req.hash += req.url;
     set req.hash += req.http.host;
     
-    if (req.url ~ "^/layout/header" ) {
-      set req.hash += "ab_group";
-      set req.hash += req.http.X-AB-Group;
-    }
+#    if (req.url ~ "^/layout/header" ) {
+#      set req.hash += "ab_group";
+#      set req.hash += req.http.X-AB-Group;
+#    }
     
     # Hash differently based on presence of javascript_enabled cookie.
     if( req.url ~ "^/articles/search/header" && req.http.Cookie ~ "javascript_enabled=1" ) {
