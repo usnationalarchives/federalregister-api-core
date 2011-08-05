@@ -142,11 +142,11 @@ sub vcl_hash {
       set req.hash += req.http.X-AB-Group;
     }
     
-    # Hash differently based on presence of javascript_enabled cookie.
-    if( req.url ~ "^/articles/search/header" && req.http.Cookie ~ "javascript_enabled=1" ) {
-        # add this fact to the hash
-        set req.hash += "javascript enabled";
-    }
+#    # Hash differently based on presence of javascript_enabled cookie.
+#    if( req.url ~ "^/articles/search/header" && req.http.Cookie ~ "javascript_enabled=1" ) {
+#        # add this fact to the hash
+#        set req.hash += "javascript enabled";
+#    }
     
     return(hash);
 }

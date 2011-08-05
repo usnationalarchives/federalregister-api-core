@@ -6,7 +6,7 @@
 
 <% header_tag(:id => 'header_refresh') do %>
   <div class="header_wrapper">
-    <%= render :partial => 'layouts/new_navigation', :locals => {:last_date => @last_date, :search_term => @search_term} %>
+    <%= render :partial => 'layouts/navigation', :locals => {:last_date => @last_date, :search_term => @search_term} %>
     
     <%# TODO: someday use the HTML5 helpers, but for now need the div outside, rather than inside and don't want to change globally, need to switch for validity %>
     <div class="logo">
