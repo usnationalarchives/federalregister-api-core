@@ -3,168 +3,6 @@
 NAV
 
 ******************************/
-  
-#primary_nav {
-  background: image-url("nav_bg.png");
-  background: rgba(55,68,78,.3);
-  border-top: 4px solid $golden;
-  border-bottom: 4px solid #eee;
-  }
-#primary_nav ul {
-  margin-bottom: 0;
-  }
-#primary_nav li {
-  display: block;
-  float: left;
-  line-height: 16px;
-  margin: .25em 1.5em .25em 0;
-  }
-.wf-active #primary_nav li {
-  margin-top: .35em;
-  }
-#primary_nav li span {
-  display: block;
-  }  
-#primary_nav li:first-child,
-#primary_nav li.firstchild {
-  background: none;
-  margin-left: 0;
-  padding-left: 0;
-  }
-#primary_nav a {
-  color: $body_type_color;
-  @include text-shadow(#DDDDDD, 1px, 1px, 1px);
-  text-decoration: none;
-  text-transform: uppercase;
-  }   
-#primary_nav a:hover,
-#primary_nav a:focus {
-  color: #fff;
-  @include text-shadow($golden, 1px, 1px, 1px);
-  }
-#primary_nav .science-and-technology,
-#primary_nav .business-and-industry {
-  width: 80px;
-  }
-#primary_nav .health-and-public-welfare {
-  width: 115px;
-  } 
-
-/******************************
-
-SEARCH
-
-******************************/
-
-#header #search_bar  {
-  margin: 0 auto;
-  position: relative;
-  width: 960px;
-  }
-#header #search_container {
-  position: absolute;
-  right: -20px;
-  top: -47px;
-  }  
-#header #search {
-  background: sprite-image('icons/search_bg_wide.png', 0, 0, 50px) no-repeat;
-  height: image-height('icons/search_bg_wide.png');
-  overflow: hidden; /* TODO for IE */
-  position: absolute;
-  right: 0;
-  top: 0;
-  width: image-width('icons/search_bg_wide.png');
-  }
-#header #search #term {
-  background: #fff; /* for opera */
-  border: 1px solid darken($golden, 10%);
-  @include border-top-left-radius(8px);
-  @include border-bottom-left-radius(8px);
-  height:13px;
-  left: 35px;
-  position: absolute;
-  padding: 5px;
-  top: 6px;
-  width: 140px;
-  }
-#header #search > label {
-  display: none;
-  }
-#header #search .inline-hint {
-  @include gesta;
-  }  
-#header #search .search_btn {
-  background: #e4a529 sprite-image('icons/header_search_button.png', 0, 0, 50px) no-repeat;
-  border: none;
-  cursor: pointer;
-  height:  image-height('icons/header_search_button.png');  
-  @include hide-text;
-  left: 185px;
-  position: absolute;
-  top: 6px;
-  width:  image-width('icons/header_search_button.png');    
-  }
-#header #browse_container {
-  top: 5px;
-  right: 27px;
-  position: absolute;
-  width: 105px;
-  }
-#header #browse_container a {
-  color: #fff;
-  display: block;
-  line-height: 1.15;
-  }
-#header #browse_container a:hover {
-  text-decoration: underline;
-  }
- 
-/******************************
-
-LOGO
-
-******************************/
-#header_logo {
-  @include replace-text-with-dimensions('logotype.png', 0, 0);
-  width: 960px;
-  }
-#header_logo.beta {
-  @include replace-text-with-dimensions('logotype_beta.png', 0, 0);
-  width: 960px;  
-  }  
-#header_logo h1,
-#header_logo h2 {
-  float: left;
-  }
-#header_logo a {
-  display: block; 
-  height: 64px;   
-  width: 543px;    
-  }
-#preview_indicator {
-  background: red;
-  color: #fff;
-  font-weight: bold;
-  line-height: 30px;
-  left: 400px;
-  padding: 0 20px;
-  position: absolute;
-  text-transform: uppercase;
-  top: 0;
-  }
-
-/*/////////////////////////////////
-
-NEW HEADER
-
-/////////////////////////////////*/
-
-
-/******************************
-
-NEW NAV 
-
-******************************/
 
 #header_refresh {
   background: image-url("seal.png") no-repeat right top;
@@ -434,7 +272,7 @@ NAV DROPDOWN
 
 /******************************
 
-NEW SEARCH 
+SEARCH 
 
 ******************************/
 
@@ -485,7 +323,7 @@ NEW SEARCH
 
 /******************************
 
-NEW LOGO
+LOGO
 
 ******************************/
 .logo {

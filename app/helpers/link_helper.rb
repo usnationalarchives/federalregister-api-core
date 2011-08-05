@@ -16,4 +16,32 @@ module LinkHelper
   def link_to_reddit(url, title)
     link_to "Reddit", "http://www.reddit.com/submit?url=#{CGI.escape url}&title=#{CGI.escape title}", :target => :blank, :class => 'button list reddit_link social reddit', :title => "Reddit"
   end
+
+  def clippy(text, bgcolor='#F5F8F9')
+    clippy_path = "/flash/clippy.swf"
+    html = <<-EOF
+      <object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000"
+              width="110"
+              height="14"
+              id="clippy" >
+      <param name="movie" value="#{clippy_path}"/>
+      <param name="allowScriptAccess" value="always" />
+      <param name="quality" value="high" />
+      <param name="scale" value="noscale" />
+      <param NAME="FlashVars" value="text=#{text}">
+      <param name="bgcolor" value="#{bgcolor}">
+      <embed src="#{clippy_path}"
+             width="110"
+             height="14"
+             name="clippy"
+             quality="high"
+             allowScriptAccess="always"
+             type="application/x-shockwave-flash"
+             pluginspage="http://www.macromedia.com/go/getflashplayer"
+             FlashVars="text=#{text}"
+             bgcolor="#{bgcolor}"
+      />
+      </object>
+    EOF
+  end
 end
