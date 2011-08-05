@@ -62,6 +62,4 @@ $(document).ready(function(){
   $("div.nav li.inline_search form").bind('submit', function() {
     _gaq.push(['_trackEvent', 'Navigation', 'Search', "Inline Search"]);
   });
-    _gaq.push(['_trackEvent', 'Navigation', 'Blog', "Blog"]);
-  });
 });
