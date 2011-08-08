@@ -348,14 +348,8 @@ RESULTS - EVENTS & REGULATIONS
 .result_set.regulations .results dt {
   width: auto;
   }  
-.result_set.events .results dd.next {
-  width: 380px;
-  }
 .result_set.regulations .results dd {
   width: 480px;
-  }  
-dd.next + dd.next {
-  padding-left: 4em;
   }  
 .result_set.events .results dd.icon {
   margin-right: 0;

@@ -7,7 +7,7 @@
       <dl>
         <dt>Agency</dt>
         <% regulatory_plan.agencies.excluding_parents.each do |agency| %>
-          <dd class="next"><%= link_to(agency.name, agency_path(agency)) %></dd>
+          <dd><%= link_to(agency.name, agency_path(agency)) %></dd>
         <% end -%>
       </dl>
     <% end -%>
