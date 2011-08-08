@@ -28,6 +28,8 @@
 =end Schema Information
 
 class Agency < ApplicationModel
+  does 'shared/slug', :based_on => :name
+
   module AssociationExtensions
     def excluding_parents
       agencies = self.compact
@@ -62,8 +64,7 @@ class Agency < ApplicationModel
                     :bucket => 'agency-logos.federalregister.gov',
                     :path => ":id/:style.:extension"
   
-  before_validation :slugify
-  validates_uniqueness_of :name, :slug
+  validates_uniqueness_of :name
   validates_presence_of :name
   
   validates_format_of :url, :with => /^https?:\/\//, :allow_blank => true
@@ -89,10 +90,6 @@ class Agency < ApplicationModel
         :order => "agencies.name"
       )
     end
-  end
-  
-  def to_param
-    slug
   end
   
   def name_and_short_name
@@ -125,11 +122,4 @@ class Agency < ApplicationModel
     self.entries_count = self.entries.count
     self.save
   end
-  
-  private
-  
-  def slugify
-    self.slug = "#{name.downcase.gsub(/[^a-z0-9]+/, '-')}"
-  end
-  
 end
