@@ -7,8 +7,6 @@
   <%= render(:partial => "special/lede_photo", :object => entry.lede_photo) if entry.lede_photo %>
   <p class="summary"><%= truncate_words(entry.curated_abstract, :length => 500) %></p>
 
-  <%= link_to 'Read more >', entry_path(entry, :utm_source => 'homepage', :utm_medium => 'slideshow', :utm_content => 'read_more'), :class => 'read_more' %>
-
   <% if false && entry.comments_close_on && entry.comments_close_on > Time.current.to_date %>
     <p class="comments_close">
       Comment period ends soon!
