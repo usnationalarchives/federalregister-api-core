@@ -8,14 +8,14 @@
 
   <dl>
     <dt>Type</dt>
-    <dd class="next"><%= event.type %></dd>
+    <dd><%= event.type %></dd>
     <% if event.place %> <%# TODO HELP-DESIGN reconsider this when you find one with this %>
       <dt>Location</dt>
       <dd><%= event.place.name %></dd>
     <% end %>
     <dt>Agency</dt>
     <% event.entry.agencies.excluding_parents.each do |agency| %>
-      <dd class="next"><%= link_to(agency.name, agency_path(agency)) %></dd>
+      <dd><%= link_to(agency.name, agency_path(agency)) %></dd>
     <% end -%>
     <% if event.entry.sections.size > 0 %>
       <dt>Sections</dt>
