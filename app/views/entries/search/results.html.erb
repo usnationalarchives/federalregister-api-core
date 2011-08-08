@@ -19,7 +19,7 @@
     <%= will_paginate @search.results, :params => {:action => :show} %>
     
     <ol class="results">
-      <%= render :partial => 'result', :collection => @search.results, :as => :entry %>
+      <%= render :partial => 'result', :collection => @search.results, :as => :entry, :locals => {:search => @search} %>
     </ol>
     
     <%= will_paginate @search.results, :params => {:action => :show} %>
