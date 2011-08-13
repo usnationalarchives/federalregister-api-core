@@ -33,33 +33,29 @@ class Api::V1::EntriesController < ApiController
   def show
     respond_to do |wants|
       wants.json do
-        entry = Entry.find_by_document_number!(params[:id])
-        
-        data = basic_entry_data(entry).merge({
-          :full_text_xml_url => entry_xml_url(entry),
-          :abstract_html_url => entry_abstract_url(entry),
-          :body_html_url => entry_full_text_url(entry),
-          :mods_url => entry.source_url(:mods),
-          :action => entry.action,
-          :dates  => entry.dates,
-          :effective_on  => entry.effective_date,
-          :comments_close_on  => entry.comments_close_on,
-          :start_page => entry.start_page,
-          :end_page => entry.end_page,
-          :volume => entry.volume,
-          :docket_id => entry.docket_id,
-          :regulation_id_numbers => entry.entry_regulation_id_numbers.map(&:regulation_id_number),
-          :cfr_refernces => entry.entry_cfr_references.map{|cfr_reference|
-            {:title => cfr_reference.title, :part => cfr_reference.part}
+        if params[:id] =~ /,/
+          document_numbers = params[:id].split(',')
+          entries = Entry.all(:conditions => {:document_number => document_numbers})
+          
+          data = {
+            :count => entries.count,
+            :results => entries.map{|e| full_entry_data(e)}
           }
-        })
-        
+
+          missing = document_numbers - entries.map(&:document_number)
+          if missing.present?
+            data[:errors] = {:not_found => missing}
+          end
+        else
+          entry = Entry.find_by_document_number!(params[:id])
+          data = full_entry_data(entry)
+        end
         cache_for 1.day
         render_json_or_jsonp data
       end
     end
   end
-  
+ 
   private
   
   def basic_entry_data(entry)
@@ -88,5 +84,27 @@ class Api::V1::EntriesController < ApiController
         end
       }
     }
+  end
+
+  def full_entry_data(entry)
+    basic_entry_data(entry).merge({
+        :full_text_xml_url => entry_xml_url(entry),
+        :abstract_html_url => entry_abstract_url(entry),
+        :body_html_url => entry_full_text_url(entry),
+        :mods_url => entry.source_url(:mods),
+        :action => entry.action,
+        :dates  => entry.dates,
+        :effective_on  => entry.effective_date,
+        :comments_close_on  => entry.comments_close_on,
+        :start_page => entry.start_page,
+        :end_page => entry.end_page,
+        :volume => entry.volume,
+        :docket_id => entry.docket_id,
+        :regulation_id_numbers => entry.entry_regulation_id_numbers.map(&:regulation_id_number),
+        :cfr_refernces => entry.entry_cfr_references.map{|cfr_reference|
+          {:title => cfr_reference.title, :part => cfr_reference.part}
+        }
+      }
+    )
   end
 end
