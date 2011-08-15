@@ -22,7 +22,7 @@ class Section < ApplicationModel
   
   has_many :agencies_sections
   has_many :agencies, :through => :agencies_sections, :order => "agencies.name"
-  has_many :canned_searches
+  has_many :canned_searches, :order => "canned_searches.position"
   
   validates_uniqueness_of :title
   validates_uniqueness_of :slug

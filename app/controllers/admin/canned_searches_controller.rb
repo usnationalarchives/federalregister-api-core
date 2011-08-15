@@ -1,7 +1,7 @@
 class Admin::CannedSearchesController < AdminController
   def section
     @section = Section.find_by_slug!(params[:slug])
-    @canned_searches = @section.canned_searches.all(:order => "position")
+    @canned_searches = @section.canned_searches
   end
 
   def index

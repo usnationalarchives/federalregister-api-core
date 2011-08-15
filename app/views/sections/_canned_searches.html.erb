@@ -1,0 +1,37 @@
+<div class="header-nav header_with_icon" id="suggested-searches" style="clear: both"> 
+  <h1>Suggested <%= section.title %> Searches</h1> 
+</div> 
+<div id='featured-searches'>
+  <% canned_searches[0..3].in_groups_of(2,false).each do |searches| %>
+    <div class='row'>
+      <% searches.each do |canned_search| %>
+        <% article_tag do %>
+          <div class="info canned_search"> 
+            <h1>
+              <%= link_to canned_search.title, canned_search_path(canned_search) %>
+              <span class="result_count"><%= canned_search.search.count_in_last_n_days(365) %> in the last year</span>
+            </h1>
+            <p class="summary"><%= canned_search.description %></p>
+            <ul>
+              <% canned_search.search.results(:per_page => 2)[0..1].each do |entry| %>
+                <li><%= link_to entry.title, entry_path(entry) %></li>
+              <% end %>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+  <% end %>
+</div>
+
+<div id="other_searches">
+  <% canned_searches[4..100].each do |canned_search| %>
+    <% article_tag do %>
+      <div class="info canned_search"> 
+        <h1>
+          <%= link_to canned_search.title, canned_search_path(canned_search) %>
+          <span class="result_count"><%= canned_search.search.count_in_last_n_days(365) %> in the last year</span>
+        </h1>
+      </div>
+    <% end %>
+  <% end %>
+</div>

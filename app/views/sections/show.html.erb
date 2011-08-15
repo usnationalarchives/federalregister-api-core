@@ -77,6 +77,8 @@
   
 <% end -%>
 
+<%= render :partial => "canned_searches", :locals => {:section => @section, :canned_searches => @section.canned_searches.active} %>
+
 <div id="comments-closing-opening">
   
   <div class="header-nav">
