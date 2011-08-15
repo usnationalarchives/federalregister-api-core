@@ -92,6 +92,10 @@ class Agency < ApplicationModel
     end
   end
   
+  def to_param
+    slug
+  end
+
   def name_and_short_name
     if short_name.present?
       "#{name} (#{short_name})"

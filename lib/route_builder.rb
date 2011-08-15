@@ -192,7 +192,13 @@ module RouteBuilder
       :regulation_id_number => regulatory_plan.regulation_id_number,
     }
   end
-  
+
+  add_route :canned_search do |canned_search|
+    {
+      :slug => canned_search.slug
+    }
+  end
+
   # keep at bottom of module
   def self.included(base)
     instance_methods.each do |method|

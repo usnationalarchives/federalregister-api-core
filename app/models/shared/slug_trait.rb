@@ -3,10 +3,6 @@ module Shared::SlugTrait
     before_validation :slugify
     validates_uniqueness_of :slug
 
-    def to_param
-      slug
-    end
-
     private
   
     define_method :slugify do

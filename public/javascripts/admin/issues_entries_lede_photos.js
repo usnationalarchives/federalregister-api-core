@@ -31,9 +31,10 @@ function prepare_to_crop_image(item) {
       $('#entry_lede_photo_attributes_crop_width').val(c.w);
       $('#entry_lede_photo_attributes_crop_height').val(c.h);
     },
-    aspectRatio: 1,
+    aspectRatio: 16/7,
     bgColor: 'yellow',
     bgOpacity: .8,
+    allowMove: 1
   });
 }
 

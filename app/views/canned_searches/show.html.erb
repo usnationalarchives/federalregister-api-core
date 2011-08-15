@@ -1,0 +1,11 @@
+<% title @canned_search.title %>
+
+<div class="title"><span>Suggested Searches</span></div>
+
+<h1><%= @canned_search.title %></h1>
+
+<%= simple_format @canned_search.description %>
+
+<p><%= link_to "customize this search", entries_search_path(:conditions => @canned_search.search_conditions, :order => "newest", :skip_results => '1', :anchor => 'advanced') %></p>
+
+<%= render :partial => 'result', :collection => @canned_search.search.results, :as => :entry, :locals => {:search => @canned_search.search} %>

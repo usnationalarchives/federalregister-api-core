@@ -140,9 +140,14 @@ ActionController::Routing::Routes.draw do |map|
   # SUBSCRIPTIONS
   map.resources :subscriptions, :except => [:index, :edit, :update], :member => {:unsubscribe => :get, :confirm => :get}, :collection => {:confirmation_sent => :get, :unsubscribed => :get}  
   
+
+  # CANNED SEARCHES
+  map.canned_search ":slug.:format", :controller => "canned_searches", :action => :show
+  
   # SECTIONS
   map.about_section ":slug/about", :controller => "sections", :action => "about", :conditions => { :method => :get }
   map.highlighted_entries_section ":slug/featured.:format", :controller => "sections", :action => "highlighted_entries", :conditions => { :method => :get }
   map.significant_entries_section ":slug/significant.:format", :controller => "sections", :action => "significant_entries", :conditions => { :method => :get }
   map.section ':slug.:format', :controller => "sections", :action => "show", :conditions => { :method => :get }
+  
 end
