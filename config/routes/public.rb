@@ -7,6 +7,10 @@ ActionController::Routing::Routes.draw do |map|
   # ENTRY SEARCH
   map.entries_search 'articles/search.:format', :controller => 'entries/search', :action => 'show', :conditions => { :method => :get }
   map.entries_search_help 'articles/search/help', :controller => 'entries/search', :action => 'help', :conditions => { :method => :get }
+  map.entries_search_activity_sparkline 'articles/search/activity/sparkline/:period',
+    :controller => 'entries/search',
+    :action => 'activity_sparkline', 
+    :conditions => { :method => :get}
   
   # ENTRY PAGE VIEW
   map.entries_page_views 'articles/views', :controller => 'entries/page_views', :action => 'create', :conditions => { :method => :post }

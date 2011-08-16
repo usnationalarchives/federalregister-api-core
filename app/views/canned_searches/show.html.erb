@@ -6,9 +6,10 @@
 
 <%= simple_format @canned_search.description %>
 
-<%= sparkline(:data => @canned_search.search.date_distribution(:period => :weekly, :since => 1.year.ago), :alt => "Weekly Distribution") %> 
-<%= sparkline(:data => @canned_search.search.date_distribution(:period => :monthly, :since => 5.years.ago), :alt => "Monthly Distribution") %> 
-<%= sparkline(:data => @canned_search.search.date_distribution(:period => :quarterly), :alt => "Quarterly Distribution") %> 
+<%= tag(:img, :src => entries_search_activity_sparkline_path('weekly', :conditions => @canned_search.search.conditions), :alt => "Weekly Distribution") %> 
+<%= tag(:img, :src => entries_search_activity_sparkline_path('monthly', :conditions => @canned_search.search.conditions), :alt => "Monthly Distribution") %> 
+<%= tag(:img, :src => entries_search_activity_sparkline_path('quarterly', :conditions => @canned_search.search.conditions), :alt => "Quarterly Distribution") %> 
+
 <p><%= link_to "customize this search", entries_search_path(:conditions => @canned_search.search_conditions, :order => "newest", :skip_results => '1', :anchor => 'advanced') %></p>
 
 <%= render :partial => 'result', :collection => @canned_search.search.results, :as => :entry, :locals => {:search => @canned_search.search} %>
