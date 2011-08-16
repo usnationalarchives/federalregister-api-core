@@ -123,32 +123,28 @@ class EntrySearch < ApplicationSearch
   end
   memoize :type_facets
   
-  def date_distribution
+  def date_distribution(options = {})
+    options[:since] ||= Date.parse('1994-01-01')
     sphinx_search = ThinkingSphinx::Search.new(term,
-      :with => with,
+      :with => with.merge(:publication_date => options[:since].to_time .. 1.week.from_now),
       :with_all => with_all,
       :conditions => sphinx_conditions,
       :match_mode => :extended
     )
-    
-    client = sphinx_search.send(:client)
-    client.group_function = :month
-    client.group_by = "publication_date"
-    client.limit = 5000
-    
-    query = sphinx_search.send(:query)
-    dist = {}
-    client.query(query, '*')[:matches].each{|m| dist[m[:attributes]["@groupby"].to_s] = m[:attributes]["@count"] }
-    
-    (1994..Time.current.to_date.year).each do |year|
-      (1..12).each do |month|
-        dist[sprintf("%d%02d",year, month)] ||= 0
-      end
-    end
-    
-    dist
+    klass = case options.delete(:period)
+            when :weekly
+              EntrySearch::DateAggregator::Weekly
+            when :monthly
+              EntrySearch::DateAggregator::Monthly
+            when :quarterly
+              EntrySearch::DateAggregator::Quarterly
+            else
+              raise "invalid :period specified; must be one of :weekly, :monthly, or :quarterly"
+            end
+    distribution = klass.new(sphinx_search, options)
+    distribution.results
   end
-  
+
   def count_in_last_n_days(n)
     model.search_count(@term,
       :with => with.merge(:publication_date => n.days.ago.to_time.midnight .. Time.current.midnight),
