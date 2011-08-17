@@ -101,7 +101,7 @@ class Api::V1::EntriesController < ApiController
         :volume => entry.volume,
         :docket_id => entry.docket_id,
         :regulation_id_numbers => entry.entry_regulation_id_numbers.map(&:regulation_id_number),
-        :cfr_refernces => entry.entry_cfr_references.map{|cfr_reference|
+        :cfr_references => entry.entry_cfr_references.map{|cfr_reference|
           {:title => cfr_reference.title, :part => cfr_reference.part}
         }
       }
