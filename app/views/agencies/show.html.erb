@@ -12,10 +12,10 @@
   <% section_tag(:id => 'agency_description') do %>
     
     <div class="header group <%= @agency.logo_file_name.present? ? 'with_image' : 'without_image' %>">
+      <h1><%= @agency.name %></h1>
       <% if @agency.logo_file_name.present? %>
         <%= image_tag @agency.logo.url(:medium), :class => 'agency_seal' %>
       <% end %>
-      <h1><%= @agency.name %></h1>
     </div>
 
     <%= content_tag(:p, link_to(@agency.url, @agency.url)) if @agency.url %>
