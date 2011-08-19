@@ -147,3 +147,7 @@ div#blank_flow {
 #canned_searches tr.separator {
   border-bottom: 2px solid black;
 }
+
+#canned_searches .active_canned_searches td.title:hover {
+  cursor: pointer;
+}

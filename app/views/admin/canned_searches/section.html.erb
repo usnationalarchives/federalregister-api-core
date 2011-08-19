@@ -16,26 +16,18 @@
       <th></th>
     </tr>
   </thead>
-  <tbody>
-    <% @canned_searches.each do |canned_search| %>
-    <tr id="canned_search_<%= canned_search.id %>" data-canned-search-id="<%= canned_search.id %>">
-      <td><%= canned_search.title %></td>
-      <td><%= canned_search.active? ? link_to('Yes', canned_search_path(canned_search)) : 'No' %>
-      <% counts = canned_search.search.date_distribution(:period => :monthly, :since => 5.years.ago) %>
-      <td><%= sparkline(:data => counts, :alt => "Monthly Distribution", :max => 100 ) %></td>
-      <td><%= counts.max %>/mo</td>
-      <td><%= counts.average.to_i %>/mo</td>
-      <td><%= link_to 'Edit', edit_admin_canned_search_path(canned_search) %></td>
-      <td><%= link_to 'Delete', delete_admin_canned_search_path(canned_search) %></td>
-    </tr>
-    <% end %>
+  <tbody class="active_canned_searches">
+    <%= render :partial => "row", :collection => @active_canned_searches, :as => :canned_search %>
+  </tbody>
+  <tbody class="inactive_canned_searches">
+    <%= render :partial => "row", :collection => @inactive_canned_searches, :as => :canned_search %>
   </tbody>
 </table>
 
 <% add_javascript do %>
 <script type="text/javascript">
 $(document).ready(function() {
-  $("#canned_searches tbody").sortable({
+  $("#canned_searches tbody.active_canned_searches").sortable({
     stop: function(event, ui) {
       var canned_search_id = ui.item.attr('data-canned-search-id');
       var position = ui.item.prevAll('tr').size() + 1;

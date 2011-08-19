@@ -5,6 +5,8 @@ class CannedSearch < ApplicationModel
   validates_presence_of :section, :title, :description, :search_conditions
 
   acts_as_list :scope => :section_id 
+  named_scope :in_order, :order => "position"
+  named_scope :inactive, :conditions => {:active => 0}
   
   def new_position=(new_pos)
     insert_at(new_pos)
