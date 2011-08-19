@@ -1,3 +1,5 @@
+require 'spec_helper'
+
 describe CitationsHelper do
   include CitationsHelper
   include Citations::CfrHelper
@@ -24,7 +26,7 @@ describe CitationsHelper do
   
   describe 'add_federal_register_links' do
     it "links post 1994 FR citations to this site" do
-      add_federal_register_links('60 FR 1000').should == '<a href="/citation/60/1000">60 FR 1000</a>'
+      add_federal_register_links('60 FR 1000').should == '<a href="/citation/60-FR-1000">60 FR 1000</a>'
     end
     
     it "does nothing with pre-1994 FR citations" do
@@ -63,15 +65,12 @@ describe CitationsHelper do
   end
   
   describe 'adding links to HTML' do
-    it "should call add_citation_links" do
-      add_cfr_links('15 CFR 801', Time.current.to_date).should == '<a class="cfr external" href="' + h(cfr_url(Time.current.to_date,'15','801')) + '" target="_blank">15 CFR 801</a>'
-    end
     it 'should not interfere with existing links' do
       add_citation_links('<a href="#">10 CFR 100</a>').should == '<a href="#">10 CFR 100</a>'
     end
     
     it 'should not interfere with existing HTML but add its own links' do
-      add_citation_links('<p><a href="#">10 CFR 100</a> and (<em>hi</em>) <em>alpha</em> beta 10 CFR 10 omega</em></p>').should == ('<p><a href="#">10 CFR 100</a> and (<em>hi</em>) <em>alpha</em> beta <a class="cfr external" href="' +  h(cfr_url(Time.current.to_date, '10','10')) + '" target="_blank">10 CFR 10</a> omega</p>')
+      add_citation_links('<p><a href="#">10 CFR 100</a> and (<em>hi</em>) <em>alpha</em> beta 10 CFR 10 omega</em></p>').should == ('<p><a href="#">10 CFR 100</a> and (<em>hi</em>) <em>alpha</em> beta <a class="cfr external" href="' +  h(select_cfr_citation_path(Time.current.to_date, '10','10')) + '">10 CFR 10</a> omega</p>')
     end
   end
 end
