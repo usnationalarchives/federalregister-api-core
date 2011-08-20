@@ -1,11 +1,11 @@
 class ApiController < ApplicationController
   private
-  def render_json_or_jsonp(data)
+  def render_json_or_jsonp(data, options = {})
     callback = params[:callback].to_s
     if callback =~ /^\w+$/
-      render :text => "#{callback}(" + data.to_json + ")"
+      render({:text => "#{callback}(" + data.to_json + ")"}.merge(options))
     else
-      render :json => data.to_json
+      render({:json => data.to_json}.merge(options))
     end
   end
   
