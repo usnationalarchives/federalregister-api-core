@@ -3,6 +3,12 @@ class Api::V1::EntriesController < ApiController
     respond_to do |wants|
       wants.json do
         search = EntrySearch.new(params)
+        if ! search.valid?
+          cache_for 1.day
+          render_json_or_jsonp({:errors => search.validation_errors}, :status => 400)
+          return
+        end
+
         data = { :count => search.count }
         
         if search.count > 0 && search.results.count > 0
