@@ -1,13 +1,17 @@
 <li>
-  <h4><%= link_to entry.title, entry_path(entry) %></h4>
+  <div class="rule_type doc_<%= entry.granule_class.downcase %> tipsy"><%= image_tag 'document_types.png' %></div>
 
-  <div class="result_info">
-    <%= truncate_words(entry.abstract || entry.raw_text, :length => 500) %>
+  <div class="search_result_wrapper">
+    <h4><%= link_to entry.title, entry_path(entry) %></h4>
+
+    <div class="metadata">
+      A <%= entry.entry_type %> by <%= agency_names(entry) %> on 
+      <%= link_to date_tag(entry.publication_date, :datetime => entry.publication_date.to_s(:iso)), entries_by_date_path(entry.publication_date) %>
+      <span class='pdf'><%= link_to "PDF - #{entry.human_length, 'page'}", entry.source_url('pdf'), :class => 'button format pdf small' %></span>
+    </div>
+ 
+    <p class="result_info">
+      <%= truncate_words(entry.abstract || entry.raw_text, :length => 500) %>
+    </p>
   </div>
-  <ul class="metadata">
-    <li class="type"><%= entry.entry_type %></li>
-    <li class="pub_date"><%= link_to entry.publication_date, entries_by_date_path(entry.publication_date) %></li>
-    <li class="agency"><%= entry.agencies.excluding_parents.map{|agency| link_to(agency.name, agency_path(agency))}.join(' :: ') %></li>
-    <li><%= link_to 'PDF', entry.source_url('pdf'), :class => 'button format pdf small' %></li>
-  </ul>  
 </li>
