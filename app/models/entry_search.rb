@@ -1,11 +1,21 @@
 class EntrySearch < ApplicationSearch
   class CFR < Struct.new(:title,:part)
+    TITLE_MULTIPLIER = 100000
     def citation
-      "#{title} CFR #{part}"
+      if part
+        "#{title} CFR #{part}"
+      else
+        "#{title} CFR"
+      end
     end
     
     def sphinx_citation
-      title.to_s.to_i * 100000 + part.to_s.to_i
+      title_int =  title.to_s.to_i * TITLE_MULTIPLIER
+      if part
+        title_int + part.to_s.to_i
+      else
+        title_int ... title_int + TITLE_MULTIPLIER
+      end
     end
   end
   
@@ -60,7 +70,7 @@ class EntrySearch < ApplicationSearch
     if hsh.present? && hsh.values.any?(&:present?)
       @cfr = CFR.new(hsh[:title], hsh[:part])
       
-      if @cfr.title.present? && @cfr.part.present?
+      if @cfr.title.present?
         add_filter(
           :value => @cfr.sphinx_citation,
           :name => @cfr.citation,
@@ -70,7 +80,7 @@ class EntrySearch < ApplicationSearch
           :sphinx_type => :with
         )
       else
-        @errors[:cfr] = "You must enter both a CFR title and part"
+        @errors[:cfr] = "You must provide at least a CFR title"
       end
     end
   end
