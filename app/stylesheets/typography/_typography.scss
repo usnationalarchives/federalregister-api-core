@@ -10,7 +10,7 @@ body {
 .wf-active body {
   @include gesta;
   }
-.title {
+h1.title {
   font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
   }
 .wf-active h1,
@@ -103,6 +103,16 @@ div.title {
   padding-left: 999px;
   text-align: right;
   }
+#sections div.title {
+  margin-bottom: 25px;
+  }
+#sections div.title span {
+  position: relative;
+  top: -13px;
+  margin: 0 5px 0 0;
+  padding: 0 10px 0 50px;  
+  }
+
 .wf-active div.title {
   @include apertura-condensed; /* was gloriola */
   }
