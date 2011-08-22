@@ -1,0 +1,44 @@
+<div id='carousel_wrapper'>
+  <div id='carousel_scroller'>
+    <ul>
+      <% entries.each do |entry| %>
+        <% next unless entry.lede_photo %>
+        <li>
+          <div class='carousel_rounded_box'>
+            <div class='text_wrapper'>
+              <h2><%= link_to entry.curated_title, entry_path(entry) %></h2>
+              <p class="metadata">
+                A <%= entry.entry_type %> by <%= agency_names(entry) %> on 
+                <%= link_to date_tag(entry.publication_date, :datetime => entry.publication_date.to_s(:iso)), entries_by_date_path(entry.publication_date) %>
+              </p>
+
+              <p class="summary"><%= truncate_words(entry.curated_abstract, :length => 500) %></p>
+            </div>
+            <div class='bg'></div>
+
+            <% if entry.lede_photo.credit.present? %>
+              <div class='attribution'>
+                photo by: <%= link_to entry.lede_photo.credit, entry.lede_photo.credit_url %>Dan Lurie</a>
+              </div>
+              <div class='attribution bg'></div>
+            <% end %>
+
+            <%= image_tag(entry.lede_photo.photo.url(:large)) %>
+          </div>
+        </li>
+      <% end %>
+    </ul>
+  </div> <!-- carousel_scroller -->
+
+  <div id="carousel-nav"> 
+    <div id="prev">&larr;</div> 
+    <ul id="indicator">
+      <% entries.each_with_index do |entry, index| %>
+        <li class="<%= index == 0 ? 'active' : '' %>"><%= index + 1 %></li>
+      <% end %>
+    </ul> 
+    <div id="next">&rarr;</div> 
+  </div>
+  <div id="carousel-nav-bg"></div>
+  
+</div> <!-- carousel_wrapper -->

@@ -1,0 +1,220 @@
+#sections #content_area {
+  width: 960px;
+  padding-right: 0px;
+  }
+#sections .article {
+  margin-left: 35px;
+  width: 265px;
+  float: left;
+  }
+#sections .header-nav h1 {
+  border-bottom: 2px solid #464646;
+  color: #464646;
+  font-family: "apertura-condensed-1","apertura-condensed-2", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+  font-size: 1.5em;
+  margin: 0 0 .5em;
+  padding: 0;
+  text-transform: uppercase;
+  }
+#sections .header_with_icon {
+  margin-bottom: 5px;
+  overflow: hidden;
+  padding-left: 35px;
+  }
+
+
+/******************************
+
+SECTION HEADER LOGOS
+
+******************************/
+
+
+#environment.title_icon {
+  background: url('images/section_icons.png?1311980920') 15px -3940px no-repeat;
+  height: 34px;
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  top: -7px;
+  left: 51px;
+  z-index: 1000;
+  }
+
+#sections a.subscription {
+  background: url('images/icons.png?1311980919') 0 -1278px no-repeat;
+  top: -1px;
+  position: relative;
+  color: white;
+  }
+
+
+/******************************
+
+SECTION SUGGESTED SEARCHES
+
+******************************/
+#suggested-searches {
+  width: 900px;
+  }
+#suggested-searches .article {
+  width: 265px;
+  }
+.suggested_search .summary {
+  width: 265px;
+  font-size: 1em;
+  }
+#sections #suggested-searches .header_with_icon {
+  background: url('http://www.federalregister.gov/images/icons.png') 0 -1969px no-repeat;
+  }
+.info.suggested_search h1 {
+  font-size: 1.3em;
+  font-weight: normal;
+  line-height: 1.3;
+  width:265px;
+  }
+.info.suggested_search h1.comments.closing {
+  background: url('images/icons.png') 0 -413px no-repeat;
+  padding-left: 25px;
+  }
+.info.suggested_search h1.comments.open {
+  background: url('images/icons.png') 0 -374px no-repeat;
+  padding-left: 25px;
+  }
+.suggested_search .results {
+  width:265px;
+  position: relative;
+  left: -10px;
+  }
+.suggested_search .results li {
+  background: url('http://www.federalregister.gov/images/header.png?1311980920') 12px -2130px no-repeat;
+  min-height: 24px;
+  padding:0 0 5px 30px;
+  }
+.suggested_search .results a {
+  top: 5px;
+  position: relative;
+  }
+span.result_count {
+  color: #6E6C6C;
+  font-size: 0.8em;
+  display: block;
+  font-family: "athelas-1","athelas-2", "Georgia", serif;
+  }
+#suggested-searches .row {
+  margin-bottom: 10px;
+  }
+#suggested-searches .row .article {
+  border-top: 1px dotted #CDCDCD;
+  margin-bottom: 0px;
+  padding-bottom: 0px;
+  padding-top: 10px;
+  border-bottom: none;
+  }
+
+/* Featured Searches */
+#featured-searches .article {
+  width: 415px;
+  height: 100%;
+  }
+#featured-searches .row.first .article {
+  border-top: none;
+  padding-top: 0px;
+  }
+
+#featured-searches .info.suggested_search h1 {
+  font-size: 1.3em;
+  font-weight: normal;
+  line-height: 1.3;
+  width: 415px;
+  }
+#featured-searches .suggested_search .summary {
+  width: 410px;
+  font-size: 1em;
+  }
+#featured-searches .article .info {
+  width: 410px;
+  left: 0px;
+  }
+#featured-searches .suggested_search ul.results {
+  width: 400px;
+  position: relative;
+  left: -10px;
+  padding: 0px;
+  margin: 0px;
+  list-style: none;
+  }
+#featured-searches .info.suggested_search {
+  height: 100%;
+  }
+
+/* Other Searches */
+#other-searches {
+  margin-bottom: 20px;
+  margin-top: 15px;
+  overflow: hidden;
+  }
+#other-searches .article {
+  border-top: 1px dotted #CDCDCD;
+  margin-bottom: 0px;
+  padding-bottom: 0px;
+  padding-top: 10px;
+  border-bottom: none;
+  }
+
+
+/******************************
+
+ALSO ON THIS PAGE
+
+******************************/
+.section.TOC.aside_box {
+  width: 800px;
+  margin: 30px auto;
+  clear: both;
+  padding: 10px 80px;
+  }
+.section.TOC.aside_box h3 {
+  font-size: 1.1em;
+  float:left;
+  line-height: 1.1em;
+  margin:0px;
+  top: 2px;
+  position: relative;
+  }
+.section.TOC.aside_box li {
+  display: inline;
+  margin-left: 10px;
+  padding-right: 10px;
+  border-bottom: none;
+  border-right: 1px solid #B3C2CF;
+  }
+.section.TOC.aside_box li.omega {
+  border-right: none;
+  padding-right: 0px;
+  }
+
+
+/******************************
+
+MOST VIEWED/EMAILED
+ 
+******************************/
+#popular-things {
+  width: 960px;
+  margin: 0 auto;
+  overflow: hidden;
+  }
+#popular-things #most-popular.alpha .whats_hot {
+  margin-right: 20px;
+  }
+#popular-things .title_bar {
+  font-size: 1.5em;
+  margin: 0 0 .5em;
+  padding: .3em 0 0 0;
+  }
+#popular-things .whats_hot {
+  width: 470px;
+  float:left;
+  }
+
