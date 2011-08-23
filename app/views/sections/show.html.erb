@@ -5,9 +5,9 @@
 <%= feed_autodiscovery section_url(@section, :format => :rss), "All Articles in #{@section.title}", :search_conditions => {:section_ids => [@section.id]} %>
 
 <div class="title">
-  <div class='title_icon' id="environment"></div>
+  <div class='title_icon' id="<%= @section.slug %>"></div>
   <span><%= @section.title %></span>
-  <%= link_to 'Subscribe', new_subscription_path(:subscription => {:search_conditions => {:section_ids => [@section.id]}}), :class => 'subscription tipsy', :title => 'Subscribe by Email or RSS' %>
+  <%= link_to '', new_subscription_path(:subscription => {:search_conditions => {:section_ids => [@section.id]}}), :class => 'subscription tipsy', :title => 'Subscribe by Email or RSS' %>
 </div>
 
 <%= render(:partial => "special/preview_warning") if @preview %>

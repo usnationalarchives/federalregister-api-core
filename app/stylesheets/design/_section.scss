@@ -31,23 +31,79 @@ SECTION HEADER LOGOS
 
 
 #environment.title_icon {
-  background: url('images/section_icons.png?1311980920') 15px -3940px no-repeat;
+  background: sprite-image('icons/section_icons/icon_environment_blue.png', 0, 0, 50px) no-repeat;
   height: 34px;
   position: relative;
   display: inline-block;
   width: 50px;
   top: -7px;
-  left: 51px;
+  left: 63px;
+  z-index: 1000;
+  }
+#money.title_icon {
+  background: sprite-image('icons/section_icons/icon_money_blue.png', 0, 0, 50px) no-repeat;
+  height: 34px;
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  top: -7px;
+  left: 63px;
+  z-index: 1000;
+  }
+#world.title_icon {
+  background: sprite-image('icons/section_icons/icon_world_blue.png', 0, 0, 50px) no-repeat;
+  height: 34px;
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  top: -7px;
+  left: 63px;
+  z-index: 1000;
+  }
+#science-and-technology.title_icon {
+  background: sprite-image('icons/section_icons/icon_science_blue.png', 0, 0, 50px) no-repeat;
+  height: 34px;
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  top: -7px;
+  left: 63px;
+  z-index: 1000;
+  }
+#business-and-industry.title_icon {
+  background: sprite-image('icons/section_icons/icon_business_blue.png', 0, 0, 50px) no-repeat;
+  height: 34px;
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  top: -7px;
+  left: 63px;
+  z-index: 1000;
+  }
+#health-and-public-welfare.title_icon {
+  background: sprite-image('icons/section_icons/icon_health_blue.png', 0, 0, 50px) no-repeat;
+  height: 34px;
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  top: -7px;
+  left: 63px;
   z-index: 1000;
   }
 
+
 #sections a.subscription {
-  background: url('images/icons.png?1311980919') 0 -1278px no-repeat;
-  top: -1px;
+  background: sprite-image('icons/icon_subscribe_white.png', 0, 0, 50px) no-repeat;
+  top: -8px;
+  left: -3px;
   position: relative;
   color: white;
+  height: 17px;
   }
-
+#sections a.subscription:hover {
+  background: sprite-image('icons/icon_subscribe_white_hover.png', 0, 0, 50px) no-repeat;  
+  color: #FBB829;
+  }
 
 /******************************
 
@@ -216,5 +272,43 @@ MOST VIEWED/EMAILED
 #popular-things .whats_hot {
   width: 470px;
   float:left;
+  }
+#most-popular .title_bar {
+  background: sprite-image('icons/icon_most_viewed.png', 0, 5px, 50px) no-repeat;
+  padding-left: 31px;
+  }
+#most-emailed .title_bar {
+  background: sprite-image('icons/icon_most_emailed.png', 0, 5px, 50px) no-repeat;
+  padding-left: 30px;
+  }
+
+/******************************
+
+COMMENTS OPENING/CLOSING
+
+******************************/
+#comments-closing-opening-body .three_col_list.comments ul {
+    margin-bottom: 1em;
+  }
+
+
+/******************************
+
+ARTICLES PUBLISHED - BY DAY
+
+******************************/
+#articles_published_by_day .row {
+  margin-bottom: 1em;
+  }
+#articles_published_by_day .row.first .article {
+  border-top: none;
+  padding-top: 0px;
+  }
+#articles_published_by_day .row .article {
+  border-top: 1px dotted #CDCDCD;
+  margin-bottom: 0px;
+  padding-bottom: 0px;
+  padding-top: 10px;
+  border-bottom: none;
   }
 
