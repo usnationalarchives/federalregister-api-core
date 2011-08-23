@@ -100,7 +100,7 @@ class Api::V1::EntriesController < ApiController
         :mods_url => entry.source_url(:mods),
         :action => entry.action,
         :dates  => entry.dates,
-        :effective_on  => entry.effective_date,
+        :effective_on  => entry.effective_on,
         :comments_close_on  => entry.comments_close_on,
         :start_page => entry.start_page,
         :end_page => entry.end_page,
