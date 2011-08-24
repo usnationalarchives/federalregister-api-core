@@ -14,8 +14,7 @@
     <div class="header group <%= @agency.logo_file_name.present? ? 'with_image' : 'without_image' %>">
       <h1><%= @agency.name %></h1>
       <% if @agency.logo_file_name.present? %>
-        <%= image_tag '/images/header/logo.png', :width => 100, :class => 'agency_seal' %> 
-        <%#= image_tag @agency.logo.url(:small), :class => 'agency_seal' %>
+        <%= image_tag @agency.logo.url(:small), :class => 'agency_seal' %>
       <% end %>
     </div>
 
