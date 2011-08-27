@@ -1,0 +1,205 @@
+/******************************
+
+TITLE AREA
+
+******************************/
+
+#suggested-search.title_icon {
+  background: sprite-image('icons/icon_search_blue.png', 0, 0, 50px) no-repeat;
+  height: 37px;
+  position: relative;
+  display: inline-block;
+  width: 37px;
+  top: -9px;
+  left: 49px;
+  z-index: 1000;
+  }
+
+#canned_searches a.subscription {
+  background: sprite-image('icons/icon_subscribe_white.png', 0, 0, 50px) no-repeat;
+  position: relative;
+  color: white;  
+  top: -5px;
+  left: -2px;
+  height: 17px;
+  }
+.wf-active #canned_searches a.subscription {
+  top: -11px;
+  }
+#canned_searches a.subscription:hover {
+  background: sprite-image('icons/icon_subscribe_white_hover.png', 0, 0, 50px) no-repeat;  
+  color: #FBB829;
+  }
+
+
+/******************************
+
+DESCRIPTION AREA
+
+******************************/
+
+#search_description_box {
+  background: #F1F1F1;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -o-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -khtml-border-radius: 5px;
+  border-radius: 5px;
+  padding: 10px 20px 2px;
+  }
+#search_description_box .line {
+  width: 100%; 
+  border-bottom: 1px solid #DDD; 
+  margin-bottom: 10px;
+  }
+p#search-actions {
+  padding: 0px;
+  }
+p#search-actions a {
+  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+  font-weight: bold;
+  color: #6E6E6E;
+  font-size: 14px;
+  }
+p#search-actions a:hover {
+  color: #DFB264;
+  }
+p#search-actions a.search {
+  background: sprite-image('icons/icon_search_small.png', 0, 0, 50px) no-repeat;
+  padding-left: 24px;
+  }
+p#search-actions a.search:hover {
+  background: sprite-image('icons/icon_search_small_hover.png', 0, 0, 50px) no-repeat;
+  }
+p#search-actions a.search_subscription {
+  background: sprite-image('icons/icon_subscribe_gray.png', 0, 2px, 50px) no-repeat;
+  padding-left: 46px;
+  float: right;
+  top: 1px;
+  position: relative;  
+  }
+p#search-actions a.search_subscription:hover {
+  background: sprite-image('icons/icon_subscribe_white_hover.png', 0, 2px, 50px) no-repeat;
+  }
+
+
+
+/******************************
+
+DOCUMENT ICONS
+
+******************************/
+#suggested-search-list div.rule_type {
+  width: 32px;
+  height: 22px;
+  float: left;
+  overflow: hidden;
+  }
+#suggested-search-list div.rule_type img {
+  position:relative;
+  }
+#suggested-search-list div.rule_type.doc_presdoc img {
+  top: -6px;
+  }
+#suggested-search-list div.rule_type.doc_notice img {
+  top:-627px;
+  }
+#suggested-search-list div.rule_type.doc_rule img {
+  top: -316px;
+  }
+#suggested-search-list div.rule_type.doc_prorule img {
+  top: -936px;
+  }
+
+
+/******************************
+
+SUGGESTED SEARCH RESULTS
+
+******************************/
+#canned_searches .search_count {
+  margin: 30px 0 20px 0px;
+  padding: 0;
+}
+#suggested-search-list {
+  list-style: none;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  }
+#suggested-search-list li {
+  margin-bottom: 10px;
+  }
+.search_result_wrapper {
+  padding-left: 40px;
+  }
+#suggested-search-list h4 {
+  padding-left: 10px;
+  margin-bottom: 5px;
+  }
+#suggested-search-list span.pdf {
+  padding-left: 15px;
+  font-size: 13px;
+  top: -1px;
+  position: relative;
+  }
+p.result_info {
+  clear: both;
+  color: #000;
+  font-family: "athelas-1","athelas-2", "Georgia", serif;
+  font-size: 1.2em;
+  line-height: 1.4em;
+  padding-left: 10px;
+  }
+div.metadata {
+  float: left;
+  font-size: 1.2em;
+  padding-left: 10px;
+  margin-bottom: 3px;
+  }
+.notice p {
+  margin-left: 0px;
+  }
+#canned_searches .more_results {
+  margin-bottom: 20px;
+}
+
+/******************************
+
+FREQUENCY SPARKLINES
+
+******************************/
+#frequency-wrapper {
+  background: #FFF;
+  border: 1px solid #DDD;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -o-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -khtml-border-radius: 5px;
+  border-radius: 5px;
+  padding: 10px 15px 5px;
+  color: #000;
+  width: 760px;
+  margin: 0 auto 10px;
+  }
+#frequency-header {
+  width:132px;
+  margin: 0 auto;
+  }
+ul#frequency-spark-lines {
+  list-style: none;
+  width: 780px;
+  margin: 0 auto;
+  }
+ul#frequency-spark-lines li {
+  display:inline;
+  }
+ul#frequency-spark-lines li img {
+  top:5px;
+  position: relative;
+  }
+li#five-years, li#all-years img {
+  top:13px;
+  }
+

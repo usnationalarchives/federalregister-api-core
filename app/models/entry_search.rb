@@ -81,7 +81,7 @@ class EntrySearch < ApplicationSearch
   
   def find_options
     {
-      :select => "id, title, publication_date, document_number, granule_class, document_file_path, abstract",
+      :select => "id, title, publication_date, document_number, granule_class, document_file_path, abstract, length, start_page, end_page",
       :include => :agencies,
     }
   end
