@@ -3,7 +3,7 @@
 <div class="title">
   <div class='title_icon' id="suggested-search"></div>
   <span>Suggested Search</span>
-  <%= link_to '', '#', :class => 'subscription tipsy', :title => 'Subscribe to this search by Email or RSS' %>
+  <%= link_to '', new_subscription_path(:subscription => {:search_conditions => @canned_search.search.conditions}), :class => 'subscription tipsy', :title => 'Subscribe to this search by Email or RSS' %>
 </div>
 
 <div id='search_description_box'>
@@ -24,7 +24,7 @@
 
   <p id='search-actions'>
     <%= link_to "Customize this search", entries_search_path(:conditions => @canned_search.search_conditions, :order => "newest", :skip_results => '1', :anchor => 'advanced'), :class => 'search' %>
-    <%= link_to 'Subscribe', '#', :class => 'search_subscription' %>
+    <%= link_to 'Subscribe', new_subscription_path(:subscription => {:search_conditions => @canned_search.search.conditions}), :class => 'search_subscription' %>
   </p>
 </div>
 
