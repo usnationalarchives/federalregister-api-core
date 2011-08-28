@@ -6,6 +6,7 @@ module Shared
       @highlighted_entries = @section.highlighted_entries(@publication_date).limit(5)
       @popular_entries = @section.entries.popular(5)
       @dates_to_show = Entry.latest_publication_dates(5)
+      @canned_searches = @section.canned_searches.active.in_order
     end
   end
 end

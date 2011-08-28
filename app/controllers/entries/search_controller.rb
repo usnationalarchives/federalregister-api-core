@@ -26,6 +26,25 @@ class Entries::SearchController < SearchController
     render :layout => false
   end
   
+  def activity_sparkline
+    options = case params[:period]
+              when 'weekly'
+                {:period => :weekly, :since => 1.year.ago}
+              when 'monthly'
+                {:period => :monthly, :since => 5.years.ago}
+              when 'quarterly'
+                {:period => :quarterly}
+              else
+                raise ActiveRecord::RecordNotFound
+              end
+
+    data = @search.date_distribution(options)
+    url = CustomChartHelper::Sparkline.new(:data => data).to_s
+
+    cache_for 1.day
+    redirect_to URI.escape(url)
+  end
+
   private
   
   def load_search

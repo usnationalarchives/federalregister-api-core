@@ -1,0 +1,9 @@
+<p>
+  <%= link_to 'Add a canned search', new_admin_canned_search_path %>
+</p>
+
+<ul>
+  <% @sections.each do |section| %>
+    <li><%= link_to section.title, admin_section_canned_searches_path(section.slug) %> (<%= section.canned_searches.count %>)</li>
+  <% end %>
+</ul>

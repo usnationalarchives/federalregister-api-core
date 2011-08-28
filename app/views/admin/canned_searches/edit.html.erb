@@ -1,0 +1,5 @@
+<% title "Edit canned search" %>
+
+<% semantic_form_for @canned_search, :url => admin_canned_search_path(@canned_search) do |f| %>
+  <%= render :partial => 'form', :locals => {:f => f} %>
+<% end %>

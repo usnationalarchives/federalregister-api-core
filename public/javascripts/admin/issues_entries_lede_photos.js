@@ -1,6 +1,6 @@
 function showPreview(coords) {
-  var rx = 100 / coords.w;
-  var ry = 100 / coords.h;
+  var rx = 160 / coords.w;
+  var ry = 70 / coords.h;
 
   $('#preview img').css({
     width: Math.round(rx * 500) + 'px',
@@ -12,10 +12,10 @@ function showPreview(coords) {
 
 function prepare_to_crop_image(item) {
   var img = $(item.content).first();
-  var src = img.attr('src').replace(/_m\./, '.');
+  var src = img.attr('data-photo-large-url');
   $('#entry_lede_photo_attributes_url').val(src);
   $('#entry_lede_photo_attributes_flickr_photo_id').val(img.attr('data-photo-id'));
-  $('#preview').val(src);
+//  $('#preview').val(src);
   $('#crop-box').html('<img src="' + src + '" />')
   $('#preview').html('<img src="' + src + '" />');
   
@@ -31,17 +31,37 @@ function prepare_to_crop_image(item) {
       $('#entry_lede_photo_attributes_crop_width').val(c.w);
       $('#entry_lede_photo_attributes_crop_height').val(c.h);
     },
-    aspectRatio: 1,
+    aspectRatio: 16/7,
     bgColor: 'yellow',
     bgOpacity: .8,
+    allowMove: true
   });
 }
+
+$.fn.imagesLoaded = function(callback){
+  var elems = this.find('img').andSelf().filter('img'),
+      len   = elems.length;
+  elems.bind('load',function(){
+      if (--len <= 0){ callback.call(elems,this); }
+  }).each(function(){
+     // cached images don't fire load sometimes, so we reset src.
+     if (this.complete || this.complete === undefined){
+        var src = this.src;
+        // webkit hack from http://groups.google.com/group/jquery-dev/browse_thread/thread/eee6ab7b2da50e1f
+        // data uri bypasses webkit log warning (thx doug jones)
+        this.src = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==";
+        this.src = src;
+     }  
+  }); 
+
+  return this;
+};
 
 $(document).ready(function(){
   $('.modal').jqm({modal: true});
   $('.jqmOverlay').live('click', function(){
     $('.modal').jqmHide();
-    $('#preview').clone().prependTo('form.formtastic.entry');
+ //   $('#preview').clone().prependTo('form.formtastic.entry');
     $('form.formtastic.entry div#preview').removeAttr('id').attr('id', 'entry_photo_preview').wrap('<fieldset id="photo_preview" class="inputs"><ol><li>');
     $('fieldset#photo_preview ol li div#entry_photo_preview').before('<label for="entry_photo_preview">Photo</label>');
   });
@@ -58,11 +78,11 @@ $(document).ready(function(){
       success: function(data, textStatus, XMLHttpRequest){
         $('#blank_flow').hide();
         $('#lede_photo_flow').prepend(data);
-        
-        var new_cf = $('#lede_photo_flow .ContentFlow').first();
-        var ajax_cf = new ContentFlow(new_cf.attr('id'), {circularFlow:false, startItem:'start', onclickActiveItem: prepare_to_crop_image});
-        ajax_cf.init();
-        
+        $('#lede_photo_flow').imagesLoaded(function() { 
+          var new_cf = $('#lede_photo_flow .ContentFlow').first();
+          var ajax_cf = new ContentFlow(new_cf.attr('id'), {circularFlow:false, startItem:'start', onclickActiveItem: prepare_to_crop_image});
+          ajax_cf.init();
+        });
       }
     });
   });
