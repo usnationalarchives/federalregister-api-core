@@ -27,7 +27,7 @@
   </div> <!-- #featured-searches -->
 
   <div id="other_searches">
-    <% canned_searches[4..100].in_groups_of(3, false).each_with_index do |searches, index| %>
+    <% (canned_searches[4..100] || []).in_groups_of(3, false).each_with_index do |searches, index| %>
       <div class="row <%= index == 0 ? 'first' : '' %>"> 
         <% searches.each do |canned_search| %>
           <% article_tag do %>
