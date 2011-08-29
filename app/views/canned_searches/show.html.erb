@@ -1,5 +1,5 @@
 <% title @canned_search.title %>
-<%= feed_autodiscovery entries_search_url(:conditions => @canned_search.search_conditions), @canned_search.search.summary %>
+<%= feed_autodiscovery entries_search_url(:conditions => @canned_search.search_conditions, :format => :rss), @canned_search.search.summary, :search_conditions => @canned_search.search_conditions %>
 
 <div class="title">
   <div class='title_icon' id="suggested-search"></div>
