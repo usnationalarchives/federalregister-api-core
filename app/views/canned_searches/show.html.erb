@@ -1,4 +1,5 @@
 <% title @canned_search.title %>
+<%= feed_autodiscovery entries_search_url(:conditions => @canned_search.search_conditions), @canned_search.search.summary %>
 
 <div class="title">
   <div class='title_icon' id="suggested-search"></div>
