@@ -29,52 +29,52 @@ SECTION HEADER LOGOS
 
 ******************************/
 #sections .title_icon {
-  height: 40px;
+  height: 32px;
   position: relative;
   display: inline-block;
-  width: 50px;
-  top: -12px;
-  left: 62px;
+  width: 37px;
+  top: -6px;
+  left: 52px;
   z-index: 500;
   }
 #environment.title_icon {
   background: sprite-image('icons/section_icons/icon_environment_blue.png', 0, 0, 50px) no-repeat;
-  left: 61px;
+  top: -9px;
   }
 #money.title_icon {
   background: sprite-image('icons/section_icons/icon_money_blue.png', 0, 0, 50px) no-repeat;
-  top: -6px;
+  top: -5px;
+  left: 50px;
   }
 #world.title_icon {
   background: sprite-image('icons/section_icons/icon_world_blue.png', 0, 0, 50px) no-repeat;
-  top: -9px;
-  left: 61px;
   }
 #science-and-technology.title_icon {
   background: sprite-image('icons/section_icons/icon_science_blue.png', 0, 0, 50px) no-repeat;
-  top: -10px;
-  left: 61px;
+  left: 54px;
   }
 #business-and-industry.title_icon {
   background: sprite-image('icons/section_icons/icon_business_blue.png', 0, 0, 50px) no-repeat;
-  top: -11px;
+  top: -9px;
+  left: 51px;
   }
 #health-and-public-welfare.title_icon {
   background: sprite-image('icons/section_icons/icon_health_blue.png', 0, 0, 50px) no-repeat;
-  left: 68px;
+  top: -7px;
+  left: 59px;
   }
 
 
 #sections a.subscription {
   background: sprite-image('icons/icon_subscribe_white.png', 0, 0, 50px) no-repeat;
-  top: -8px;
+  top: 0px;
   left: -3px;
   position: relative;
   color: white;
   height: 17px;
   }
 .wf-active #sections a.subscription {
-  top: -14px;
+  top: -6px;
   left: -2px;
   }
 #sections a.subscription:hover {
