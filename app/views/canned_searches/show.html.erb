@@ -30,7 +30,10 @@
 </div>
 
 <p class='search_count'>Showing 1-<%= @canned_search.search.results.count %> of <%= link_to "#{@canned_search.search.count} results", entries_search_path(:conditions => @canned_search.search_conditions, :order => "newest") %> since 1994</p>
+<p class="section_link">View more <%= link_to @canned_search.section.title, section_path(@canned_search.section)%> searches</p>
+<hr />
 <ul id='suggested-search-list'>
   <%= render :partial => 'result', :collection => @canned_search.search.results, :as => :entry, :locals => {:search => @canned_search.search} %>
 </ul>
+<hr class="result_end" />
 <p class='more_results'> <%= link_to "See #{@canned_search.search.count - @canned_search.search.results.count} more results", entries_search_path(:conditions => @canned_search.search_conditions, :order => "newest", :page => 2) %> </p>

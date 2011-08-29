@@ -48,10 +48,13 @@ DESCRIPTION AREA
   border-radius: 5px;
   padding: 10px 20px 2px;
   }
-#search_description_box .line {
+#search_description_box h1 {
+  font-size: 2.2em;
+}
+#search_description_box hr {
   width: 100%; 
   border-bottom: 1px solid #DDD; 
-  margin-bottom: 10px;
+  margin-bottom: 15px;
   }
 p#search-actions {
   padding: 0px;
@@ -83,6 +86,46 @@ p#search-actions a.search_subscription:hover {
   background: sprite-image('icons/icon_subscribe_white_hover.png', 0, 2px, 50px) no-repeat;
   }
 
+
+/******************************
+
+FREQUENCY SPARKLINES
+
+******************************/
+#frequency-wrapper {
+  background: #FFF;
+  border: 1px solid #DDD;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -o-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -khtml-border-radius: 5px;
+  border-radius: 5px;
+  padding: 10px 15px 5px;
+  color: #000;
+  width: 760px;
+  margin: 5px auto 15px;
+  }
+#frequency-header {
+  width:132px;
+  margin: 0 auto;
+  }
+ul#frequency-spark-lines {
+  list-style: none;
+  width: 780px;
+  margin: 0 auto;
+  }
+ul#frequency-spark-lines li {
+  display:inline;
+  margin-right: 15px;
+  }
+ul#frequency-spark-lines li img {
+  top:5px;
+  position: relative;
+  }
+li#five-years, li#all-years img {
+  top:13px;
+  }
 
 
 /******************************
@@ -119,9 +162,16 @@ SUGGESTED SEARCH RESULTS
 
 ******************************/
 #canned_searches .search_count {
-  margin: 30px 0 20px 0px;
+  margin: 30px 0 0 0;
   padding: 0;
 }
+#canned_searches .section_link {
+  float: right;
+  position: relative;
+  top: -24px;
+  margin-bottom: -27px;
+  padding-bottom: 0px;
+  }  
 #suggested-search-list {
   list-style: none;
   margin-top: 5px;
@@ -136,12 +186,16 @@ SUGGESTED SEARCH RESULTS
 #suggested-search-list h4 {
   padding-left: 10px;
   margin-bottom: 5px;
+  line-height: 1.3em;
+  }
+#suggested-search-list .date {
+  padding-right: 15px;
   }
 #suggested-search-list span.pdf {
-  padding-left: 15px;
   font-size: 13px;
   top: -1px;
   position: relative;
+  color: #7a838a;
   }
 p.result_info {
   clear: both;
@@ -156,6 +210,7 @@ div.metadata {
   font-size: 1.2em;
   padding-left: 10px;
   margin-bottom: 3px;
+  color: #7a838a;
   }
 .notice p {
   margin-left: 0px;
@@ -163,43 +218,6 @@ div.metadata {
 #canned_searches .more_results {
   margin-bottom: 20px;
 }
-
-/******************************
-
-FREQUENCY SPARKLINES
-
-******************************/
-#frequency-wrapper {
-  background: #FFF;
-  border: 1px solid #DDD;
-  -moz-border-radius: 5px;
-  -webkit-border-radius: 5px;
-  -o-border-radius: 5px;
-  -ms-border-radius: 5px;
-  -khtml-border-radius: 5px;
-  border-radius: 5px;
-  padding: 10px 15px 5px;
-  color: #000;
-  width: 760px;
-  margin: 0 auto 10px;
+hr.result_end {
+  margin-bottom: 0;
   }
-#frequency-header {
-  width:132px;
-  margin: 0 auto;
-  }
-ul#frequency-spark-lines {
-  list-style: none;
-  width: 780px;
-  margin: 0 auto;
-  }
-ul#frequency-spark-lines li {
-  display:inline;
-  }
-ul#frequency-spark-lines li img {
-  top:5px;
-  position: relative;
-  }
-li#five-years, li#all-years img {
-  top:13px;
-  }
-
