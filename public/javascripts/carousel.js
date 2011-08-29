@@ -13,6 +13,16 @@ function loaded() {
       document.querySelector('#indicator > li:nth-child(' + (this.currPageX+1) + ')').className = 'active';
     }
   });
+
+  $('#carousel-nav #prev').live('click', function(event) {
+    event.preventDefault();
+    myScroll.scrollToPage('prev', 0)
+  });
+
+  $('#carousel-nav #next').live('click', function(event) {
+    event.preventDefault();
+    myScroll.scrollToPage('next', 0)
+  });
 }
 
 document.addEventListener('DOMContentLoaded', loaded, false);
@@ -40,16 +50,6 @@ $(document).ready(function(){
     var attribution_bg = $(this).siblings('div.bg.attribution').first();
     attribution_bg.css('width', $(this).width());
   });
-
-  $('#carousel-nav #prev').live('click', function(event) {
-    event.preventDefault();
-    myScroll.scrollToPage('prev', 0)
-  });
-
-  $('#carousel-nav #next').live('click', function(event) {
-    event.preventDefault();
-    myScroll.scrollToPage('next', 0)
-  });
-
+ 
 });
 
