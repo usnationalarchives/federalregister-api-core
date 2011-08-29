@@ -18,7 +18,7 @@
     <%= render :partial => 'sections/carousel', :locals => {:entries => @highlighted_entries[0,3]} %>
   <% end %>
 
-  <%= render :partial => "canned_searches", :locals => {:section => @section, :canned_searches => @canned_searches} %>
+  <%= render :partial => "sections/canned_searches", :locals => {:section => @section, :canned_searches => @canned_searches} %>
 
   <% section_tag(:class => 'TOC aside_box') do %>
     <h3>Also On This Page:</h3>
