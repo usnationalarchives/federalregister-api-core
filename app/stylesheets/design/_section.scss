@@ -28,80 +28,45 @@
 SECTION HEADER LOGOS
 
 ******************************/
-
-
-#environment.title_icon {
-  background: sprite-image('icons/section_icons/icon_environment_blue.png', 0, 0, 50px) no-repeat;
-  height: 34px;
+#sections.title_icon {
+  height: 40px;
   position: relative;
   display: inline-block;
   width: 50px;
-  top: -7px;
+  top: -12px;
   left: 63px;
-  z-index: 1000;
+  z-index: 500;
+  }
+#environment.title_icon {
+  background: sprite-image('icons/section_icons/icon_environment_blue.png', 0, 0, 50px) no-repeat;
   }
 #money.title_icon {
   background: sprite-image('icons/section_icons/icon_money_blue.png', 0, 0, 50px) no-repeat;
-  height: 34px;
-  position: relative;
-  display: inline-block;
-  width: 50px;
-  top: -7px;
-  left: 63px;
-  z-index: 1000;
   }
 #world.title_icon {
   background: sprite-image('icons/section_icons/icon_world_blue.png', 0, 0, 50px) no-repeat;
-  height: 34px;
-  position: relative;
-  display: inline-block;
-  width: 50px;
-  top: -7px;
-  left: 63px;
-  z-index: 1000;
   }
 #science-and-technology.title_icon {
   background: sprite-image('icons/section_icons/icon_science_blue.png', 0, 0, 50px) no-repeat;
-  height: 34px;
-  position: relative;
-  display: inline-block;
-  width: 50px;
-  top: -7px;
-  left: 63px;
-  z-index: 1000;
   }
 #business-and-industry.title_icon {
   background: sprite-image('icons/section_icons/icon_business_blue.png', 0, 0, 50px) no-repeat;
-  height: 34px;
-  position: relative;
-  display: inline-block;
-  width: 50px;
-  top: -7px;
-  left: 63px;
-  z-index: 1000;
   }
 #health-and-public-welfare.title_icon {
   background: sprite-image('icons/section_icons/icon_health_blue.png', 0, 0, 50px) no-repeat;
-  height: 34px;
-  position: relative;
-  display: inline-block;
-  width: 50px;
-  top: -7px;
-  left: 63px;
-  z-index: 1000;
   }
 
 
 #sections a.subscription {
   background: sprite-image('icons/icon_subscribe_white.png', 0, 0, 50px) no-repeat;
-  top: -2px;
+  top: -8px;
   left: -3px;
   position: relative;
   color: white;
   height: 17px;
   }
 .wf-active #sections a.subscription {
-  top: -8px;
+  top: -14px;
   left: -2px;
   }
 #sections a.subscription:hover {
