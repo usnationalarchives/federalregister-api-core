@@ -12,7 +12,7 @@
 
   <hr /> 
 
-  <%= simple_format @canned_search.description %>
+  <%= add_citation_links(auto_link(simple_format(@canned_search.description))) %>
 
   <div id='frequency-wrapper'>
     <h4 id='frequency-header'>Result Frequency</h4>
