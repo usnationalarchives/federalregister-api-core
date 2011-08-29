@@ -34,26 +34,34 @@ SECTION HEADER LOGOS
   display: inline-block;
   width: 50px;
   top: -12px;
-  left: 63px;
+  left: 62px;
   z-index: 500;
   }
 #environment.title_icon {
   background: sprite-image('icons/section_icons/icon_environment_blue.png', 0, 0, 50px) no-repeat;
+  left: 61px;
   }
 #money.title_icon {
   background: sprite-image('icons/section_icons/icon_money_blue.png', 0, 0, 50px) no-repeat;
+  top: -6px;
   }
 #world.title_icon {
   background: sprite-image('icons/section_icons/icon_world_blue.png', 0, 0, 50px) no-repeat;
+  top: -9px;
+  left: 61px;
   }
 #science-and-technology.title_icon {
   background: sprite-image('icons/section_icons/icon_science_blue.png', 0, 0, 50px) no-repeat;
+  top: -10px;
+  left: 61px;
   }
 #business-and-industry.title_icon {
   background: sprite-image('icons/section_icons/icon_business_blue.png', 0, 0, 50px) no-repeat;
+  top: -10px;
   }
 #health-and-public-welfare.title_icon {
   background: sprite-image('icons/section_icons/icon_health_blue.png', 0, 0, 50px) no-repeat;
+  left: 68px;
   }
 
 
