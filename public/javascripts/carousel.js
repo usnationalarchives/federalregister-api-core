@@ -5,7 +5,7 @@ var myScroll;
  
 function loaded() {
   myScroll = new iScroll('carousel_wrapper', {
-    snap: 'li div',
+    snap: 'li',
     momentum: false,
     hScrollbar: false,
     onScrollEnd: function () {
