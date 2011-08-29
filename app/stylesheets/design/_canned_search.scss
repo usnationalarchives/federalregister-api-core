@@ -75,15 +75,18 @@ p#search-actions a.search {
 p#search-actions a.search:hover {
   background: sprite-image('icons/icon_search_small_hover.png', 0, 0, 50px) no-repeat;
   }
-p#search-actions a.search_subscription {
-  background: sprite-image('icons/icon_subscribe_gray.png', 0, 2px, 50px) no-repeat;
+p#search-actions a.search_subscription.subscription {
+  background: sprite-image('icons/icon_subscribe_gray.png', 0, 3px, 50px) no-repeat;
   padding-left: 46px;
   float: right;
   top: 1px;
-  position: relative;  
+  position: relative;
+  color: #6E6E6E;
+  text-transform: none;
   }
-p#search-actions a.search_subscription:hover {
-  background: sprite-image('icons/icon_subscribe_white_hover.png', 0, 2px, 50px) no-repeat;
+p#search-actions a.search_subscription.subscription:hover {
+  background: sprite-image('icons/icon_subscribe_white_hover.png', 0, 3px, 50px) no-repeat;
+  color: #DFB264;
   }
 
 
@@ -138,6 +141,7 @@ DOCUMENT ICONS
   height: 22px;
   float: left;
   overflow: hidden;
+  z-index: 500;
   }
 #suggested-search-list div.rule_type img {
   position:relative;
