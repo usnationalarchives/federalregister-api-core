@@ -203,13 +203,13 @@ span.result_count {
 ALSO ON THIS PAGE
 
 ******************************/
-.section.TOC.aside_box {
+#sections .section.TOC.aside_box {
   width: 800px;
   margin: 30px auto;
   clear: both;
   padding: 10px 80px;
   }
-.section.TOC.aside_box h3 {
+#sections .section.TOC.aside_box h3 {
   font-size: 1.1em;
   float:left;
   line-height: 1.1em;
@@ -217,14 +217,14 @@ ALSO ON THIS PAGE
   top: 2px;
   position: relative;
   }
-.section.TOC.aside_box li {
+#sections .section.TOC.aside_box li {
   display: inline;
   margin-left: 10px;
   padding-right: 10px;
   border-bottom: none;
   border-right: 1px solid #B3C2CF;
   }
-.section.TOC.aside_box li.omega {
+#sections .section.TOC.aside_box li.omega {
   border-right: none;
   padding-right: 0px;
   }
