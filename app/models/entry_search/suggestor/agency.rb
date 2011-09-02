@@ -18,7 +18,7 @@ class EntrySearch::Suggestor::Agency < EntrySearch::Suggestor::Base
       pattern = names.reject(&:blank?).compact.map{|n| "\\b" + Regexp.escape(n) + "\\b"}.join('|')
       if @term =~ /(#{pattern})/i
         @conditions ||= @search.conditions.dup
-        @conditions[:agency_ids] ||= []
+        @conditions[:agency_ids] = Array(@conditions[:agency_ids])
         @conditions[:agency_ids] << id.to_i
         @term = @term.sub(/\s*(?:#{pattern})\s*/i, '')
       end
