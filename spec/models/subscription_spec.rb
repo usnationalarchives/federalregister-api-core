@@ -57,7 +57,7 @@ describe Subscription do
       mailing_list = Factory(:mailing_list)
       subscription = Factory(:subscription, :mailing_list => mailing_list, :confirmed_at => nil, :unsubscribed_at => nil)
       
-      expect{ subscription.update_attributes(:confirmed_at => Time.now) }.to change{mailing_list.reload; mailing_list.active_subscriptions_count}.from(0).to(1)
+      expect{ subscription.confirmed_at = Time.now; subscription.save! }.to change{mailing_list.reload; mailing_list.active_subscriptions_count}.from(0).to(1)
     end
     
     it "decreases the active_subscriptions_count when a confirmed subscription is unsubscribed" do
@@ -65,7 +65,7 @@ describe Subscription do
       subscription = Factory(:subscription, :mailing_list => mailing_list, :confirmed_at => Time.now, :unsubscribed_at => nil)
       mailing_list.reload
       
-      expect{ subscription.update_attributes(:unsubscribed_at => Time.now) }.to change{mailing_list.reload; mailing_list.active_subscriptions_count}.from(1).to(0)
+      expect{ subscription.unsubscribed_at = Time.now; subscription.save! }.to change{mailing_list.reload; mailing_list.active_subscriptions_count}.from(1).to(0)
     end
   end
   
