@@ -9,7 +9,7 @@ module SpellChecker
         suggestions = speller.suggest(word)
         corrected_word = suggestions.find{|s| s !~ /\s|-/ } || suggestions.first
         
-        if corrected_word.downcase != word.downcase
+        if corrected_word && corrected_word.downcase != word.downcase
           if block_given?
             yield(corrected_word, word)
           else
