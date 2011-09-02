@@ -1,3 +1,7 @@
+/* Source modified by Bob Burbach on 20110902
+ modified the _bind and _unbind functions (lines 824-838) to be IE compatible (ie uses attachEvent)
+*/
+
 /*!
  * iScroll v4.1.9 ~ Copyright (c) 2011 Matteo Spinelli, http://cubiq.org
  * Released under MIT license, http://cubiq.org/license
@@ -1057,4 +1061,3 @@ if (typeof exports !== 'undefined') exports.iScroll = iScroll;
 else window.iScroll = iScroll;
 
 })();
-

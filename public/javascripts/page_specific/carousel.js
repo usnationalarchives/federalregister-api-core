@@ -1,5 +1,5 @@
 /*!
- *  iScroll 4 Setup
+ *  FR2 iScroll 4 Setup
  */
 function load_iScroll() {
   var previousPage = 0;
@@ -32,7 +32,6 @@ function load_iScroll() {
   });
 }
 
-
 /*!
  *  FR2 Carousel
  */
@@ -59,4 +58,3 @@ $(document).ready(function(){
   });
  
 });
-
