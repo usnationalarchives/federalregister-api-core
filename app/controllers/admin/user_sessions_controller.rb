@@ -8,7 +8,7 @@ class Admin::UserSessionsController < AdminController
   end
   
   def create
-    user = User.find_by_email(params[:user_session][:email])
+    user = User.find_by_email(params[:user_session][:email].to_s)
     if user && user.failed_login_count >= 10
       flash[:error] = "Too many failed login attempts; please contact an administrator to regain access."
       redirect_to new_admin_user_session_url

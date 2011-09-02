@@ -8,7 +8,7 @@ class Admin::PasswordResetsController < AdminController
   end
 
   def create
-    @user = User.find_by_email(params[:user][:email])
+    @user = User.find_by_email(params[:user][:email].to_s)
     if @user
       @user.deliver_password_reset_instructions!
       flash[:notice] = "Instructions to reset your password have been emailed to you." +

@@ -14,14 +14,20 @@ class EntrySearch::Suggestor::Agency < EntrySearch::Suggestor::Base
   
   def check_for_match
     @term = @search.term
+    agency_ids = Array(@search.conditions[:agency_ids]).map(&:to_i)
+
     Agency.active.find_as_arrays(:select => "id, name, short_name, display_name").each do |id, *names|
       pattern = names.reject(&:blank?).compact.map{|n| "\\b" + Regexp.escape(n) + "\\b"}.join('|')
-      if @term =~ /(#{pattern})/i
-        @conditions ||= @search.conditions.dup
-        @conditions[:agency_ids] ||= []
-        @conditions[:agency_ids] << id.to_i
+
+      if @term =~ /(#{pattern})/i && ! agency_ids.include?(id.to_i)
+        agency_ids << id.to_i
         @term = @term.sub(/\s*(?:#{pattern})\s*/i, '')
       end
+    end
+
+    if agency_ids != Array(@search.conditions[:agency_ids]).map(&:to_i)
+      @conditions = @search.conditions.dup
+      @conditions[:agency_ids] = agency_ids
     end
   end
   

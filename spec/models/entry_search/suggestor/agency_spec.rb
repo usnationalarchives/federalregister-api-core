@@ -40,5 +40,10 @@ describe 'EntrySearch::Suggestor::Agency' do
       suggestion = suggestor("cult Rules").suggestion
       suggestion.should be_nil
     end
+
+    it "shouldn't suggest an agency that is already selected" do
+      suggestion = suggestor(@usda.name, :agency_ids => [@usda.id]).suggestion
+      suggestion.should be_nil
+    end
   end
 end

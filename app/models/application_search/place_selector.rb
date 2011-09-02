@@ -5,11 +5,11 @@ class ApplicationSearch
     attr_reader :validation_errors
     
     def initialize(location, within = DEFAULT_WITHIN)
-      @location = location
+      @location = location.to_s
       @validation_errors = ''
       
       @within = DEFAULT_WITHIN
-      if within.present?
+      if within.present? && within.is_a?(String) || within.is_a?(Fixnum)
         if within.to_i < 1 || within.to_i > 200
           @validation_errors = "within must be between 1 and 200"
         else

@@ -141,10 +141,6 @@ ActionController::Routing::Routes.draw do |map|
     end
   end
   
-  # SUBSCRIPTIONS
-  map.resources :subscriptions, :except => [:index, :edit, :update], :member => {:unsubscribe => :get, :confirm => :get}, :collection => {:confirmation_sent => :get, :unsubscribed => :get}  
-  
-
   # CANNED SEARCHES
   map.canned_search ":slug.:format", :controller => "canned_searches", :action => :show
   
