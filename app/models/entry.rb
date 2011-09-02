@@ -142,6 +142,10 @@ class Entry < ApplicationModel
   def self.published_today
     Issue.current.entries
   end
+
+  def self.with_lede_photo
+    scoped(:joins => :lede_photo)
+  end
   
   def self.published_on(publication_date)
     scoped(:conditions => {:entries => {:publication_date => publication_date}})
