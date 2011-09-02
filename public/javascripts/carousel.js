@@ -1,37 +1,44 @@
 /*!
  *  iScroll 4 Setup
  */
-var myScroll;
- 
-function loaded() {
+function load_iScroll() {
+  var previousPage = 0;
   myScroll = new iScroll('carousel_wrapper', {
     snap: 'li',
     momentum: false,
     hScrollbar: false,
+    vScroll: false,
     onScrollEnd: function () {
-      document.querySelector('#indicator > li.active').className = '';
-      document.querySelector('#indicator > li:nth-child(' + (this.currPageX+1) + ')').className = 'active';
+      active_li = $("#indicator li.active");
+      if (this.currPageX > previousPage) {
+        active_li.next('li').addClass('active');
+        previousPage = this.currPageX;
+      } else if (this.currPageX < previousPage) {
+        active_li.prev('li').addClass('active');
+        previousPage = this.currPageX;
+      }
+      active_li.removeClass("active");
     }
   });
 
   $('#carousel-nav #prev').live('click', function(event) {
     event.preventDefault();
-    myScroll.scrollToPage('prev', 0)
+    myScroll.scrollToPage('prev', 0);
   });
 
   $('#carousel-nav #next').live('click', function(event) {
     event.preventDefault();
-    myScroll.scrollToPage('next', 0)
+    myScroll.scrollToPage('next', 0);
   });
 }
-
-document.addEventListener('DOMContentLoaded', loaded, false);
 
 
 /*!
  *  FR2 Carousel
  */
 $(document).ready(function(){
+  var myScroll;
+  load_iScroll();
 
   var carousel_rounded_corner_size = 18;
   var carousel_size = 350;

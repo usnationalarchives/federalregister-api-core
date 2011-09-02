@@ -819,11 +819,19 @@ iScroll.prototype = {
 	},
 
 	_bind: function (type, el, bubble) {
-		(el || this.scroller).addEventListener(type, this, !!bubble);
+    if ( document.addEventListener ) {
+		  (el || this.scroller).addEventListener(type, this, !!bubble);
+    } else if ( document.attachEvent ) {
+      (el || this.scroller).attachEvent(type, this);
+    }
 	},
 
 	_unbind: function (type, el, bubble) {
-		(el || this.scroller).removeEventListener(type, this, !!bubble);
+    if ( document.addEventListener ) {
+		  (el || this.scroller).removeEventListener(type, this, !!bubble);
+    } else if ( document.attachEvent ) {
+      (el || this.scroller).detachEvent(type, this);
+    }
 	},
 
 
