@@ -18,6 +18,7 @@
 =end Schema Information
 
 class Subscription < ApplicationModel
+  attr_accessible :email, :search_conditions
   default_scope :conditions => { :environment => Rails.env }
   before_create :generate_token
   after_create :ask_for_confirmation
@@ -57,11 +58,18 @@ class Subscription < ApplicationModel
   end
   
   def confirm!
-    self.update_attributes!(:confirmed_at => Time.current, :unsubscribed_at => nil) unless self.active?
+    unless active?
+      self.confirmed_at = Time.current
+      self.unsubscribed_at = nil
+      self.save!
+    end
   end
 
   def unsubscribe!
-    self.update_attributes!(:unsubscribed_at => Time.current) unless self.unsubscribed_at
+    unless self.unsubscribed_at
+      self.unsubscribed_at = Time.current
+      self.save!
+    end
     Mailer.deliver_unsubscribe_notice(self)
   end
 
