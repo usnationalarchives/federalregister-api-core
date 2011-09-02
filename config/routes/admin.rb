@@ -28,7 +28,7 @@ ActionController::Routing::Routes.draw do |map|
       end
     end
     
-    admin.resources :password_resets
+    admin.resources :password_resets, :except => [:index, :show, :destroy]
     admin.resources :users do |user|
       user.resource :password, :controller => "users/passwords"
     end
