@@ -7,6 +7,7 @@ webrat.log
 /config/development.sphinx.conf
 /config/ec2_config.yml
 /config/mail.yml
+/config/mongoid.yml
 /config/newrelic.yml
 /config/sendgrid.yml
 /config/secrets.yml

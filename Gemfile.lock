@@ -5,6 +5,13 @@ GIT
   specs:
     sendgrid (0.1.5)
 
+PATH
+  remote: ../fr2_audit_logic
+  specs:
+    fr2_audit_logic (0.0.0)
+      bson_ext (= 0.20.1)
+      mongoid
+
 GEM
   remote: http://rubygems.org/
   remote: http://gems.github.com/
@@ -33,6 +40,8 @@ GEM
       mime-types
       xml-simple
     bcrypt-ruby (2.1.2)
+    bson (1.0.9)
+    bson_ext (0.20.1)
     builder (2.1.2)
     capistrano (2.5.19)
       highline
@@ -58,6 +67,7 @@ GEM
     delayed_job (2.0.3)
       daemons
     diff-lcs (1.1.2)
+    durran-validatable (2.0.1)
     factory_girl (1.2.4)
     fastercsv (1.4.0)
     flickraw (0.8.1)
@@ -95,6 +105,14 @@ GEM
       nokogiri (>= 1.2.1)
     mime-types (1.16)
     modularity (0.6.1)
+    mongo (1.0.9)
+      bson (>= 1.0.5)
+    mongoid (1.9.2)
+      activesupport (< 3.0.0)
+      bson (~> 1.0.1)
+      durran-validatable (>= 2.0.1)
+      mongo (~> 1.0.1)
+      will_paginate (< 2.9)
     mysql (2.7)
     net-scp (1.0.4)
       net-ssh (>= 1.99.1)
@@ -175,6 +193,7 @@ DEPENDENCIES
   flickraw (= 0.8.1)
   floehopper-mocha
   formtastic (= 0.9.8)
+  fr2_audit_logic!
   geokit (= 1.4.1)
   gwt_rpc (= 0.1.0)
   haml (= 3.0.4)
