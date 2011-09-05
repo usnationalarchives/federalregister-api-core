@@ -18,6 +18,11 @@ SitemapGenerator::Sitemap.add_links do |sitemap|
     sitemap.add section_path(section)
     sitemap.add about_section_path(section)
   end
+
+  # CANNED SEARCHES
+  CannedSearch.active.each do |canned_search|
+    sitemap.add canned_search_path(canned_search)
+  end
   
   # ENTRIES
   Entry.scoped(:joins => :issue, :conditions => "issues.completed_at IS NOT NULL").find_each do |entry|

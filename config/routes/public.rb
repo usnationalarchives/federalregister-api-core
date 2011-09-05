@@ -7,6 +7,10 @@ ActionController::Routing::Routes.draw do |map|
   # ENTRY SEARCH
   map.entries_search 'articles/search.:format', :controller => 'entries/search', :action => 'show', :conditions => { :method => :get }
   map.entries_search_help 'articles/search/help', :controller => 'entries/search', :action => 'help', :conditions => { :method => :get }
+  map.entries_search_activity_sparkline 'articles/search/activity/sparkline/:period',
+    :controller => 'entries/search',
+    :action => 'activity_sparkline', 
+    :conditions => { :method => :get}
   
   # ENTRY PAGE VIEW
   map.entries_page_views 'articles/views', :controller => 'entries/page_views', :action => 'create', :conditions => { :method => :post }
@@ -137,12 +141,13 @@ ActionController::Routing::Routes.draw do |map|
     end
   end
   
-  # SUBSCRIPTIONS
-  map.resources :subscriptions, :except => [:index, :edit, :update], :member => {:unsubscribe => :get, :confirm => :get}, :collection => {:confirmation_sent => :get, :unsubscribed => :get}  
+  # CANNED SEARCHES
+  map.canned_search ":slug.:format", :controller => "canned_searches", :action => :show
   
   # SECTIONS
   map.about_section ":slug/about", :controller => "sections", :action => "about", :conditions => { :method => :get }
   map.highlighted_entries_section ":slug/featured.:format", :controller => "sections", :action => "highlighted_entries", :conditions => { :method => :get }
   map.significant_entries_section ":slug/significant.:format", :controller => "sections", :action => "significant_entries", :conditions => { :method => :get }
   map.section ':slug.:format', :controller => "sections", :action => "show", :conditions => { :method => :get }
+  
 end

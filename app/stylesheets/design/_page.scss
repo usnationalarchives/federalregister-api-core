@@ -219,7 +219,7 @@ COMMENT PERIOD CLOSING
   }
 .group {
   clear: both;
-  margin-bottom: 2em;
+  margin-bottom: 1em;
   overflow: hidden;
   }
 
@@ -634,6 +634,24 @@ AGENCY LIST
 AGENCY VIEW 
 
 ******************************/
+
+.header.with_image.group {
+  margin-bottom: 1.5em;
+}
+
+.header.with_image h1 {
+  display: inline-block;
+  float: none;
+  width: 440px;
+  text-align: center;
+  vertical-align: middle;
+  padding-right: 20px;
+  font-size: 2em;
+}
+
+.header.with_image img {
+  vertical-align: middle;
+}  
 
 .quotebox {
   @include linear-gradient(color-stops(#eee  30%, #fff));

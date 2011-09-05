@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110614033345) do
+ActiveRecord::Schema.define(:version => 20110805192543) do
 
   create_table "agencies", :force => true do |t|
     t.integer  "parent_id"
@@ -96,6 +96,19 @@ ActiveRecord::Schema.define(:version => 20110614033345) do
   add_index "agency_names", ["agency_id", "name"], :name => "index_agency_names_on_agency_id_and_name"
   add_index "agency_names", ["name", "agency_id"], :name => "index_agency_names_on_name_and_agency_id"
   add_index "agency_names", ["name"], :name => "index_agency_names_on_name", :unique => true
+
+  create_table "canned_searches", :force => true do |t|
+    t.integer "section_id"
+    t.string  "title"
+    t.string  "slug"
+    t.text    "description"
+    t.text    "search_conditions"
+    t.boolean "active"
+    t.integer "position"
+  end
+
+  add_index "canned_searches", ["section_id", "active"], :name => "index_canned_searches_on_section_id_and_active"
+  add_index "canned_searches", ["slug"], :name => "index_canned_searches_on_slug"
 
   create_table "cfr_parts", :force => true do |t|
     t.integer "year"
@@ -214,6 +227,8 @@ ActiveRecord::Schema.define(:version => 20110614033345) do
     t.integer  "entry_id"
     t.datetime "created_at"
     t.string   "remote_ip"
+    t.text     "raw_referer"
+    t.text     "normalized_referer"
   end
 
   add_index "entry_page_views", ["created_at"], :name => "index_entry_page_views_on_created_at"

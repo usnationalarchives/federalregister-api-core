@@ -203,11 +203,17 @@ PROMO ITEMS
   }
 #slideshow .metadata {
   font-size: 1em;
-  padding-bottom: 1em;
-  }  
+  padding-bottom: 0em;
+  }
+#slideshow figure {
+  /* remove default browser style */
+  -webkit-margin-start: 0px;
+  -webkit-margin-end: 0px;  
+  }
 #slideshow .figure {
   float: left;
   margin: 0 1em 0 0;
+  padding: .5em .5em .0em .5em;
   }
 #slideshow .figure a {
   height: 100px;

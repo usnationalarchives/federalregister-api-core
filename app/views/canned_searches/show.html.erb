@@ -1,0 +1,39 @@
+<% title @canned_search.title %>
+<%= feed_autodiscovery entries_search_url(:conditions => @canned_search.search_conditions, :format => :rss), @canned_search.search.summary, :search_conditions => @canned_search.search_conditions %>
+
+<div class="title">
+  <div class='title_icon' id="suggested-search"></div>
+  <span>Suggested Search</span>
+  <%= link_to '', new_subscription_path(:subscription => {:search_conditions => @canned_search.search.conditions}), :class => 'subscription tipsy', :title => 'Subscribe to this search by Email or RSS' %>
+</div>
+
+<div id='search_description_box'>
+  <h1><%= @canned_search.title %></h1>
+
+  <hr /> 
+
+  <%= add_citation_links(auto_link(simple_format(@canned_search.description))) %>
+
+  <div id='frequency-wrapper'>
+    <h4 id='frequency-header'>Result Frequency</h4>
+    <ul id='frequency-spark-lines'>
+      <li id='twelve-months'>Last year, weekly <%= tag(:img, :src => entries_search_activity_sparkline_path('weekly', :conditions => @canned_search.search.conditions), :alt => "Sparkline of Weekly Distribution", :size => "135x25") %></li>
+      <li id='five-years'>Last 5 years, monthly <%= tag(:img, :src => entries_search_activity_sparkline_path('monthly', :conditions => @canned_search.search.conditions), :alt => "Sparkline of Monthly Distribution", :size => "135x25") %></li>
+      <li id='all-years'>Since 1994, quarterly <%= tag(:img, :src => entries_search_activity_sparkline_path('quarterly', :conditions => @canned_search.search.conditions), :alt => "Sparkline of Quarterly Distribution", :size => "135x25") %> </li>
+    </ul>
+  </div>
+
+  <p id='search-actions'>
+    <%= link_to "Customize this search", entries_search_path(:conditions => @canned_search.search_conditions, :order => "newest", :skip_results => '1', :anchor => 'advanced'), :class => 'search' %>
+    <%= link_to 'Subscribe', new_subscription_path(:subscription => {:search_conditions => @canned_search.search.conditions}), :class => 'search_subscription subscription' %>
+  </p>
+</div>
+
+<p class='search_count'>Showing 1-<%= @canned_search.search.results.count %> of <%= link_to "#{@canned_search.search.count} results", entries_search_path(:conditions => @canned_search.search_conditions, :order => "newest") %> since 1994</p>
+<p class="section_link">View more <%= link_to @canned_search.section.title, section_path(@canned_search.section, :anchor => "suggested-searches")%> searches</p>
+<hr />
+<ul id='suggested-search-list'>
+  <%= render :partial => 'result', :collection => @canned_search.search.results, :as => :entry, :locals => {:search => @canned_search.search} %>
+</ul>
+<hr class="result_end" />
+<p class='more_results'> <%= link_to "See #{@canned_search.search.count - @canned_search.search.results.count} more results", entries_search_path(:conditions => @canned_search.search_conditions, :order => "newest", :page => 2) %> </p>

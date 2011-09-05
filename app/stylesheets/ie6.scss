@@ -460,3 +460,32 @@ BLOG
 
 #navigation .search_btn { background: url('/images/header/ie6/search-off.gif') no-repeat 0 0; }
 #navigation .search_btn:hover { background: url('/images/header/ie6/search-hover.gif') no-repeat 0 0; }
+
+
+
+/******************************
+
+SECTIONS
+
+******************************/
+#sections a.subscription {
+  top:-28px;
+  }
+#featured-searches, #other_searches {
+  margin-left: -35px;
+  }
+
+/******************************
+
+CANNED SEARCH SHOW
+
+******************************/ 
+.wf-active #canned_searches a.subscription {
+  top: -6px;
+  }
+#frequency-header {
+  width: 140px;
+  }
+ul#frequency-spark-lines {
+  width: 789px;
+  }

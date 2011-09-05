@@ -1,6 +1,6 @@
 <% figure_tag do %>
   <%# TODO HELP-RUBY need better alt tags %>
-  <%= image_tag(lede_photo.photo.url(:homepage)) %>
+  <%= image_tag(lede_photo.photo.url(:small)) %>
   <% if lede_photo.credit.present? %>
     <% figcaption_tag do %>
       <%= link_to lede_photo.credit, lede_photo.credit_url %>

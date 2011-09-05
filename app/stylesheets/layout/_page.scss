@@ -153,14 +153,6 @@ AGENCY VIEW
 #agencies #sidebar {
   @include grid(5, 16);
   }  
-#agencies .header.with_image img {
-  @include grid(2, 16);
-  @include alpha;
-  }
-#agencies .header.with_image h1 {
-  @include grid(8, 16);
-  @include omega;
-  }
   
 /******************************
 

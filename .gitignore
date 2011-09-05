@@ -40,3 +40,4 @@ webrat.log
 /config/deploy_credentials.yml
 /hudson/reports
 /vendor/bundle
+.sass-cache/

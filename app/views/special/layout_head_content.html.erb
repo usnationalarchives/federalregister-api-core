@@ -9,6 +9,7 @@
 
 <%= yield :head %>
 
+<%= stylesheet_link_tag "tipsy", :media => :screen %>
 <%= stylesheet_link_tag "screen", :media => :screen %>
 <%= stylesheet_link_tag "print", :media => :print %>
 
@@ -17,23 +18,25 @@
 <![endif]-->
 
 <!--[if lt IE 7]>
+  <%= stylesheet_link_tag "ie7", :media => :screen %>
   <%= stylesheet_link_tag "ie6", :media => :screen %>
 <![endif]-->
  
 <% if Rails.env == 'development' %>
   <%= javascript_include_tag 'vendor/jquery-1.6.1.min.js' %>
 <% else %>
-  <%# <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js" type="text/javascript"></script>%>
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.js" type="text/javascript"></script>
 <% end %>
   
 <script src="/javascripts/vendor/vendor.js" type="text/javascript"></script>
 <script src="/javascripts/vendor/handlebars.1.0.0.beta.3.js" type="text/javascript"></script>
+<script src="/javascripts/vendor/jquery.tipsy.js" type="text/javascript"></script>
 
-<% if RAILS_ENV == 'development' %>
+
+<%# if RAILS_ENV == 'development' %>
   <%= javascript_include_tag :all %>
-<% else %>
-  <%= javascript_include_tag 'all.js' %>
-<% end %>
+<%# else %>
+  <%#= javascript_include_tag 'all.js' %>
+<%# end %>
 
 <%= render :partial => 'layouts/google_analytics', :custom_page_to_track => @page_to_track %>

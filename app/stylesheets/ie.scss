@@ -271,3 +271,29 @@ EMAIL SUBS
 #subscriptions .icons .email {
   width: 350px;
   }
+
+
+/******************************
+
+SECTIONS
+
+******************************/ 
+.wf-active #sections a.subscription {
+  top:-1px;
+  }
+
+
+/******************************
+
+CANNED SEARCH SHOW
+
+******************************/ 
+.wf-active #canned_searches a.subscription {
+  top: -6px;
+  }
+#frequency-header {
+  width: 140px;
+  }
+ul#frequency-spark-lines {
+  width: 789px;
+  }

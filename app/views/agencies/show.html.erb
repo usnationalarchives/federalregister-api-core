@@ -12,13 +12,13 @@
   <% section_tag(:id => 'agency_description') do %>
     
     <div class="header group <%= @agency.logo_file_name.present? ? 'with_image' : 'without_image' %>">
-      <% if @agency.logo_file_name.present? %>
-        <%= image_tag @agency.logo.url(:medium), :class => 'agency_seal' %>
-      <% end %>
       <h1><%= @agency.name %></h1>
+      <% if @agency.logo_file_name.present? %>
+        <%= image_tag @agency.logo.url(:thumb), :class => 'agency_seal' %>
+      <% end %>
     </div>
 
-    <%= content_tag(:p, link_to(@agency.url, @agency.url)) if @agency.url %>
+    <%= content_tag(:p, link_to(@agency.url, @agency.url)) if @agency.url.present? %>
     <% if @agency.description.present? %>
       <%= add_citation_links(auto_link(simple_format(@agency.description))) %>
     <% else %>
@@ -31,28 +31,28 @@
   <% end %>  
     
   <% aside_tag(:id => 'sidebar') do %>
-    
-    <% section_tag(:class => 'TOC aside_box') do %>  
-      <h1>On This Page</h1>
-      <ul>
-        <% if @significant_entries.present? %>
-          <li><%= link_to 'Most Recent Significant Regulations', '#significant_regulations' %></li>
-        <% end %>
-        
-        <% if @entries.present?%>
-          <li><%= link_to 'Recent Articles', '#recent_articles' %></li>
-        <% end %>
-        
-        <% if @comments_closing.present? %>
-          <li><%= link_to 'Comment Periods Closing', '#comment-period-closing' %>
-        <% end %>
-        
-        <% if @comments_opening.present? %>
-          <li><%= link_to 'Comment Periods Opening', '#comment-period-opening' %>
-        <% end %>
-      </ul>
-    <% end -%>
-    
+    <% if @significant_entries.present? || @entries.present? || @comments_closing.present? || @comments_opening.present? %>
+      <% section_tag(:class => 'TOC aside_box') do %>  
+        <h1>On This Page</h1>
+        <ul>
+          <% if @significant_entries.present? %>
+            <li><%= link_to 'Most Recent Significant Regulations', '#significant_regulations' %></li>
+          <% end %>
+          
+          <% if @entries.present? %>
+            <li><%= link_to 'Recent Articles', '#recent_articles' %></li>
+          <% end %>
+          
+          <% if @comments_closing.present? %>
+            <li><%= link_to 'Comment Periods Closing', '#comment-period-closing' %>
+          <% end %>
+          
+          <% if @comments_opening.present? %>
+            <li><%= link_to 'Comment Periods Opening', '#comment-period-opening' %>
+          <% end %>
+        </ul>
+      <% end -%>
+    <% end %>  
     <div class='aside_box subscribe'>  
       <%= link_to 'Subscribe', new_subscription_path(:subscription => {:search_conditions => {:agency_ids => [@agency.id]}}), :class => 'subscription' %>
     </div>

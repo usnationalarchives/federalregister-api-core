@@ -4,7 +4,6 @@ require 'flickraw'
 class Flickr
   class Photo
     attr_accessor :id, :title, :owner, :farm, :server, :secret
-    
     def initialize(attributes)
       @id    = attributes["id"]
       @title = attributes["title"]
@@ -13,7 +12,11 @@ class Flickr
       @server = attributes["server"]
       @secret = attributes["secret"]
     end
-    
+   
+    def hash
+      @id.hash    
+    end 
+
     def creator
       @creator ||= Person.new(owner)
     end
@@ -24,6 +27,21 @@ class Flickr
     
     def self.find_by_id(id)
       Photo.new(flickr.photos.getInfo(:photo_id => id))
+    end
+
+    def of_appropriate_size?
+      large_size_info = raw_sizes.find{|s| s.label == 'Large'}
+      if large_size_info
+        large_size_info['width'].to_i >= 850
+      else
+        false
+      end
+    end
+
+    private
+
+    def raw_sizes
+      @raw_sizes ||= flickr.photos.getSizes(:photo_id => id)
     end
   end
   
@@ -44,13 +62,15 @@ class Flickr
   end
   
   def search(q)
-    flickr.photos.search(
+    conditions = {
       :text => q,
       :license => '1,2,4,5,7,8',
-      :per_page => 25,
-      :sort => 'interestingness-desc'
-    ).map do |attributes|
-      Photo.new(attributes)
-    end
+      :per_page => 500
+    }
+    relevant = flickr.photos.search(conditions.merge :sort => 'relevance').map{|attr| Photo.new(attr)}
+    interesting = flickr.photos.search(conditions.merge :sort => 'interestingness-desc').map{|attr| Photo.new(attr)}
+    
+    relevant_and_interesting_ids = relevant.map(&:id) & interesting.map(&:id)
+    (relevant.select{|photo| relevant_and_interesting_ids.include?(photo.id)} + relevant).uniq
   end
 end

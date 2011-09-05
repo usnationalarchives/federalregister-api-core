@@ -1,0 +1,45 @@
+<div id="suggested-searches">
+  <div class="header-nav header_with_icon"> 
+    <h1>Suggested <%= section.title %> Searches</h1> 
+  </div>
+
+  <div id='featured-searches'>
+    <% canned_searches[0..3].in_groups_of(2,false).each_with_index do |searches, index| %>
+      <div class="row <%= index == 0 ? 'first' : '' %>">
+        <% searches.each do |canned_search| %>
+          <% article_tag do %>
+            <div class="info suggested_search"> 
+              <h1>
+                <%= link_to canned_search.title, canned_search_path(canned_search) %>
+                <span class="result_count"><%= canned_search.search.count_in_last_n_days(365) %> in the last year</span>
+              </h1>
+              <p class="summary"><%= truncate_words(canned_search.description, :length => 280) %></p>
+              <ul class="results">
+                <% canned_search.search.results(:per_page => 2)[0..1].each do |entry| %>
+                  <li><%= link_to truncate_words(entry.title, :length => 120), entry_path(entry) %></li>
+                <% end %>
+              </ul>
+            </div>
+          <% end %>
+        <% end %>
+      </div> <!-- .row -->
+    <% end %>
+  </div> <!-- #featured-searches -->
+
+  <div id="other_searches">
+    <% (canned_searches[4..100] || []).in_groups_of(3, false).each_with_index do |searches, index| %>
+      <div class="row <%= index == 0 ? 'first' : '' %>"> 
+        <% searches.each do |canned_search| %>
+          <% article_tag do %>
+            <div class="info suggested_search"> 
+              <h1>
+                <%= link_to canned_search.title, canned_search_path(canned_search) %>
+                <span class="result_count"><%= canned_search.search.count_in_last_n_days(365) %> in the last year</span>
+              </h1>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+    <% end %>
+  </div> <!-- #other-searches -->
+</div> <!-- #suggested-searches -->

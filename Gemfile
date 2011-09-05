@@ -45,6 +45,7 @@ gem "gwt_rpc", '0.1.0'
 
 gem "recaptcha", "0.3.1", :require => 'recaptcha/rails'
 gem 'sendgrid', :git => "git://github.com/criticaljuncture/sendgrid.git", :branch => 'master'
+gem 'modularity', '0.6.1'
 
 # bundler requires these gems in all environments
 # gem 'nokogiri', '1.4.2'
