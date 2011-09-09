@@ -1,4 +1,6 @@
 <% title @canned_search.title %>
+<% description @canned_search.description %>
+
 <%= feed_autodiscovery entries_search_url(:conditions => @canned_search.search_conditions, :format => :rss), @canned_search.search.summary, :search_conditions => @canned_search.search_conditions %>
 
 <div class="title">
