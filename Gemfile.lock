@@ -40,7 +40,7 @@ GEM
       xml-simple
     bcrypt-ruby (2.1.2)
     bson (1.0.9)
-    bson_ext (0.20.1)
+    bson_ext (1.3.0)
     builder (2.1.2)
     capistrano (2.5.19)
       highline
@@ -180,7 +180,7 @@ DEPENDENCIES
   authlogic (= 2.1.3)
   aws-s3 (= 0.6.2)
   bcrypt-ruby (= 2.1.2)
-  bson_ext (= 0.20.1)
+  bson_ext (= 1.3.0)
   capistrano (= 2.5.19)
   ci_reporter (= 1.6.3)
   compass (= 0.10.1)
