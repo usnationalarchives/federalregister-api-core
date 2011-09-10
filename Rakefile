@@ -8,6 +8,8 @@ require 'rake/testtask'
 require 'rake/rdoctask'
 
 require 'tasks/rails'
+require 'fr2_audit_logic/tasks'
+
 begin
   require 'thinking_sphinx/tasks'
   require 'thinking_sphinx/deltas/delayed_delta/tasks'
