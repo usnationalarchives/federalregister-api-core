@@ -3,7 +3,10 @@ source 'http://gems.github.com'
 
 gem 'rails', '2.3.11'
 gem 'mysql', '2.7'
-gem 'fr2_audit_logic', :path => '../fr2_audit_logic'
+gem 'fr2_audit_logic',
+  :git => 'git://github.com/criticaljuncture/fr2_audit_logic.git', 
+  :ref => '8822dbe2304bf0a49cebe70964db5dc025f6e318'
+#gem 'fr2_audit_logic', :path => '../fr2_audit_logic'
 gem 'bson_ext', '1.3.0' 
 
 gem 'nokogiri', '1.3.2'
