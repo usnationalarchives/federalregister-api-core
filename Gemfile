@@ -5,7 +5,7 @@ gem 'rails', '2.3.11'
 gem 'mysql', '2.7'
 gem 'fr2_audit_logic',
   :git => 'git://github.com/criticaljuncture/fr2_audit_logic.git', 
-  :ref => '96c30fb79166ab66c494655f3af12e54195fd5d7'
+  :ref => '82980f05004b1add4c273089a6d127ba24c7f44f'
 # gem 'fr2_audit_logic', :path => '../fr2_audit_logic'
 gem 'bson_ext', '1.3.0' 
 

@@ -1,15 +1,17 @@
 GIT
+  remote: git://github.com/criticaljuncture/fr2_audit_logic.git
+  revision: 82980f05004b1add4c273089a6d127ba24c7f44f
+  ref: 82980f05004b1add4c273089a6d127ba24c7f44f
+  specs:
+    fr2_audit_logic (0.0.0)
+      mongoid
+
+GIT
   remote: git://github.com/criticaljuncture/sendgrid.git
   revision: 87d532bff3ab83ac5e842177a7b1fdaae39681b0
   branch: master
   specs:
     sendgrid (0.1.5)
-
-PATH
-  remote: ../fr2_audit_logic
-  specs:
-    fr2_audit_logic (0.0.0)
-      mongoid
 
 GEM
   remote: http://rubygems.org/
