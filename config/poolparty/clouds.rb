@@ -7,6 +7,7 @@ def get_keys
   @wordpress_keys = File.open( File.join(File.dirname(__FILE__), '..', '..', '..', 'fr2_blog', 'config', 'wordpress_keys.yml') ) { |yf| YAML::load( yf ) }
   @sendgrid_keys  = File.open( File.join(File.dirname(__FILE__), '..', 'sendgrid.yml') ) { |yf| YAML::load( yf ) }
   @splunk_keys    = File.open( File.join(File.dirname(__FILE__), '..', 'splunk.yml') ) { |yf| YAML::load( yf ) }
+  @secrets        = File.open( File.join(File.dirname(__FILE__), '..', 'secrets.yml' ) ) { |yf| YAML::load( yf ) }
 end
 
 def munin_host(ip_addresses)
@@ -23,6 +24,10 @@ def chef_cloud_attributes(instance_type)
   #users
   @deploy_credentials = File.open( File.join(File.dirname(__FILE__), '..', 'deploy_credentials.yml') ) { |yf| YAML::load( yf ) }
   
+  @app = {}
+  @app[:name] = 'fr2'
+
+
   @app_server_port    = "8080"
   @static_server_port = '8080'
   @app_url  = case instance_type
@@ -40,8 +45,9 @@ def chef_cloud_attributes(instance_type)
     @blog_server_address     = '10.35.71.41'
     @mail_server_address     = '10.35.71.41'
     @splunk_server_address   = '10.35.71.41'
-    @database_server_address = '10.101.9.26'
-    @sphinx_server_address   = '10.101.9.26'
+    @database_server_address = '10.116.233.30'
+    @mongodb_server_address  = '10.116.233.30'
+    @sphinx_server_address   = '10.116.233.30'
     @app_server_address      = '10.83.113.240'
   when 'production'
     @proxy_server_address    = '10.194.207.96'
@@ -50,23 +56,28 @@ def chef_cloud_attributes(instance_type)
     @blog_server_address     = '10.245.106.31'
     @mail_server_address     = '10.245.106.31'
     @splunk_server_address   = '10.245.106.31'
-    @database_server_address = '10.194.109.139'
-    @sphinx_server_address   = '10.194.109.139'
-    @app_server_address      = ['10.243.41.203', '10.196.117.123', '10.202.162.96', '10.212.73.172', '10.251.83.111', '10.251.131.239']
+    @database_server_address = '10.204.111.190'
+    @mongodb_server_address  = '10.204.111.190'
+    @sphinx_server_address   = '10.204.111.190'
+    @app_server_address      = ['10.243.41.203', '10.196.117.123', '10.202.162.96', '10.212.73.172', '10.251.131.239']
   end    
   
+  @rails_version = '2.3.11'
+
   case instance_type
   when 'staging'
     @ssl_cert_name      = 'fr2_staging.crt'
     @ssl_cert_key_name  = 'fr2_staging.key'
+     @rails_env = 'staging'
   when 'production'
     @ssl_cert_name      = 'fr2_admin.crt'
     @ssl_cert_key_name  = 'fr2_admin.key'
+     @rails_env = 'production'
   end
   
   return {
     :platform => "ubuntu",
-    :bootstrap => {:chef => {:client_version => '0.8.16'}},
+    :bootstrap => {:chef => {:client_version => '0.9.14'}},
     :chef    => {
                   :roles => []
                 },
@@ -85,7 +96,20 @@ def chef_cloud_attributes(instance_type)
                   :listen_ports   => [@app_server_port],
                   :vhost_port     => @app_server_port, 
                   :server_name    => @app_url,
-                  #:server_aliases => 'www.something',
+                  :vhosts         => [
+                                        { :server_name    =>  @app_url,
+                                          :server_aliases => '',
+                                          :docroot        => "/var/www/apps/#{@app[:name]}/current/public",
+                                          :name           => @app[:name],
+                                          :rewrite_conditions => "" 
+                                        },
+                                        { :server_name    =>  "audit.#{@app_url}",
+                                          :server_aliases => '',
+                                          :docroot        => "/var/www/apps/fr2_audit/public",
+                                          :name           => 'fr2_audit',
+                                          :rewrite_conditions => "" 
+                                        }
+                                     ],
                   :web_dir        => '/var/www',
                   :docroot        => '/var/www/apps/fr2/current/public',
                   :name           => 'fr2',
@@ -121,11 +145,15 @@ def chef_cloud_attributes(instance_type)
                               :tmp_table_size          => '100M',
                               :max_heap_table_size     => '100M',
                               :innodb_buffer_pool_size => '4GB'
-                            }
+                            },
+                :install_innodb_plugin => true,
+                :database_server_fqdn  => 'database.fr2.ec2.internal'
                },
     :rails  => {
-                :version     => "2.3.8",
-                :environment => "production"
+                :version     => @rails_version,
+                :environment => @rails_env,
+                :using_thinking_sphinx => 'true',
+                :using_mongoid => 'true'
                },
     :capistrano => {
                     :deploy_user => 'deploy'
@@ -144,7 +172,8 @@ def chef_cloud_attributes(instance_type)
                     :app_proxy_port    => @app_server_port,
                     :static_proxy_host => 'static.fr2.ec2.internal',
                     :static_proxy_port => @static_server_port,
-                    :proxy_host_name   => @app_url
+                    :proxy_host_name   => @app_url,
+                    :audit_proxy_host_name => "audit.#{@app_url}",
                    },
     :ubuntu     => {
                     :users => {
@@ -154,13 +183,24 @@ def chef_cloud_attributes(instance_type)
                                  }
                     },
                     :aws_config_path => 'config.internal.federalregister.gov',
+                    :servers => [
+                                  {:ip => @proxy_server_address,    :fqdn => 'proxy.fr2.ec2.internal',    :alias => 'proxy'},
+                                  {:ip => @static_server_address,   :fqdn => 'static.fr2.ec2.internal',   :alias => 'static'},
+                                  {:ip => @worker_server_address,   :fqdn => 'worker.fr2.ec2.internal',   :alias => 'worker'},
+                                  {:ip => @database_server_address, :fqdn => 'database.fr2.ec2.internal', :alias => 'database'},
+                                  {:ip => @sphinx_server_address,   :fqdn => 'sphinx.fr2.ec2.internal',   :alias => 'sphinx'},
+                                  {:ip => @mail_server_address,     :fqdn => 'mail.fr2.ec2.internal',     :alias => 'mail'},
+                                  {:ip => @splunk_server_address,   :fqdn => 'splunk.fr2.ec2.internal',   :alias => 'splunk'},
+                                  {:ip => @mongodb_server_address,  :fqdn => 'mongodb.fr2.ec2.internal',  :alias => 'mongodb'}
+                                ],
                     :proxy_server  => {:ip => @proxy_server_address},
                     :static_server => {:ip => @static_server_address},
                     :worker_server => {:ip => @worker_server_address},
                     :database      => {:ip => @database_server_address},
                     :sphinx        => {:ip => @sphinx_server_address},
                     :mail          => {:ip => @mail_server_address},
-                    :splunk        => {:ip => @splunk_server_address}
+                    :splunk        => {:ip => @splunk_server_address},
+                    :mongodb       => {:ip => @mongodb_server_address}
                    },
     :munin      => {
                     :nodes => munin_host(@app_server_address),
@@ -183,10 +223,20 @@ def chef_cloud_attributes(instance_type)
                    :mail_relay_networks        => "127.0.0.0/8 #{@app_server_address.to_a.join(' ')} #{@worker_server_address}",
                    :inet_interfaces            => 'all',
                    :other_domains              => "$mydomain"
+                 },
+    :mongodb => {
+                   :bind_address => 'mongodb.fr2.ec2.internal',
+                   :data_dir => '/var/lib/mongodb',
+                   :username => 'fr2_audit',
+                   :password => @secrets['mongodb_fr2_audit_password'],
+                   :database => 'fr2_audit',
+                   :auth     => 'true',
+                   :ec2_path => '/vol/lib/mongodb'
                  }
+
   }
 end
 
-#require 'config/poolparty/pools/production.rb'
-require 'config/poolparty/pools/staging.rb'
+require 'config/poolparty/pools/production.rb'
+#require 'config/poolparty/pools/staging.rb'
 

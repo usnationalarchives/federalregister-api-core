@@ -6,7 +6,7 @@ cloud :app_server do
   #image_id "ami-7d43ae14" #Ubuntu 9.10 Karmic Canonical, ubuntu@ EBS-based 64bit
   image_id "ami-de806bb7" #FR2 Basic App Server
   availability_zones ['us-east-1d']
-  instances 6
+  instances 5
   instance_type 'm1.large'
   
   
