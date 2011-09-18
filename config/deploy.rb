@@ -68,12 +68,9 @@ task :production do
   set :branch, 'production'
   
   role :proxy, "ec2-184-72-241-172.compute-1.amazonaws.com"
-  #role :static, "ec2-184-73-104-122.compute-1.amazonaws.com"
-  #role :worker, "ec2-184-73-104-122.compute-1.amazonaws.com", {:primary => true}
-  #role :app, *instances
-  role :app, "ec2-204-236-209-41.compute-1.amazonaws.com", "ec2-184-72-139-81.compute-1.amazonaws.com", "ec2-174-129-132-251.compute-1.amazonaws.com", "ec2-72-44-36-213.compute-1.amazonaws.com", "ec2-174-129-119-223.compute-1.amazonaws.com", "ec2-204-236-254-83.compute-1.amazonaws.com"
-  role :db, "ec2-184-73-60-158.compute-1.amazonaws.com", {:primary => true}
-  role :sphinx, "ec2-184-73-60-158.compute-1.amazonaws.com"
+  role :app, "ec2-204-236-209-41.compute-1.amazonaws.com", "ec2-184-72-139-81.compute-1.amazonaws.com", "ec2-174-129-132-251.compute-1.amazonaws.com", "ec2-72-44-36-213.compute-1.amazonaws.com", "ec2-204-236-254-83.compute-1.amazonaws.com"
+  role :db, "ec2-184-72-160-191.compute-1.amazonaws.com", {:primary => true}
+  role :sphinx, "ec2-184-72-160-191.compute-1.amazonaws.com"
   role :static, "ec2-75-101-243-195.compute-1.amazonaws.com" #monster image
   role :worker, "ec2-75-101-243-195.compute-1.amazonaws.com", {:primary => true} #monster image
 end
