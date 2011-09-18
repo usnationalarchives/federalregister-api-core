@@ -18,14 +18,32 @@ module Content
     include Content::EntryImporter::RegulationsDotGov
   
     def self.process_all_by_date(date, *attributes)
+      AgencyObserver.disabled = true
+      EntryObserver.disabled = true
+
       dates = Content.parse_dates(date)
     
       dates.each do |date|
         begin
           puts "handling #{date}"
-          if date > '2000-01-01'
+          if date < '2000-01-01'
+            process_without_bulkdata(date, *attributes)
+          else  
+            begin
+              docs_and_nodes = BulkdataFile.new(date).document_numbers_and_associated_nodes
+            rescue Content::EntryImporter::BulkdataFile::DownloadError => e
+              if ENV['TOLERATE_MISSING_BULKDATA']
+                process_without_bulkdata(date, *attributes)
+                next
+              elsif ENV['ALLOW_DOWNLOAD_FAILURE']
+                puts "...could not download bulkdata file for #{date}"
+                next
+              else
+                raise e
+              end
+            end
+
             mods_doc_numbers = ModsFile.new(date).document_numbers
-            docs_and_nodes = BulkdataFile.new(date).document_numbers_and_associated_nodes
 
             (mods_doc_numbers - docs_and_nodes.map{|doc, node| doc}).each do |document_number|
               error = "'#{document_number}' (#{date}) in MODS but not in bulkdata"
@@ -54,23 +72,6 @@ module Content
                 )
               end
             end
-            
-          else
-            ModsFile.new(date).document_numbers.each do |document_number|
-              importer = EntryImporter.new(:date => date, :document_number => document_number)
-          
-              if attributes == [:all]
-                importer.update_all_provided_attributes
-              else
-                importer.update_attributes(*attributes)
-              end
-            end
-          end
-        rescue Content::EntryImporter::BulkdataFile::DownloadError => e
-          if ENV['ALLOW_DOWNLOAD_FAILURE']
-            puts "...could not download bulkdata file for #{date}"
-          else
-            raise e
           end
         rescue Content::EntryImporter::ModsFile::DownloadError => e
           if ENV['ALLOW_DOWNLOAD_FAILURE']
@@ -81,7 +82,19 @@ module Content
         end
       end
     end
-  
+
+    def self.process_without_bulkdata(date, *attributes)
+      ModsFile.new(date).document_numbers.each do |document_number|
+        importer = EntryImporter.new(:date => date, :document_number => document_number)
+            
+        if attributes == [:all]
+          importer.update_all_provided_attributes
+        else
+          importer.update_attributes(*attributes)
+        end
+      end
+    end
+
     attr_accessor :date, :document_number, :bulkdata_node, :entry
     def initialize(options = {})
       options.symbolize_keys!

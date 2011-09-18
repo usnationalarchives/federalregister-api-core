@@ -5,7 +5,6 @@ namespace :data do
   
   namespace :daily do 
     task :basic => %w(
-      content:section_highlights:clone
       content:entries:import
       content:entries:import:graphics
       data:extract:places
@@ -22,6 +21,7 @@ namespace :data do
     )
     
     task :full => %w(
+      content:section_highlights:clone
       data:daily:basic
       content:entries:html:compile:all
       content:entries:import:regulations_dot_gov:tardy

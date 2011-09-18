@@ -1,4 +1,12 @@
 GIT
+  remote: git://github.com/criticaljuncture/fr2_audit_logic.git
+  revision: dda602440418fd52b4138470d73e109ed91cfa72
+  ref: dda602440418fd52b4138470d73e109ed91cfa72
+  specs:
+    fr2_audit_logic (0.0.0)
+      mongoid
+
+GIT
   remote: git://github.com/criticaljuncture/sendgrid.git
   revision: 87d532bff3ab83ac5e842177a7b1fdaae39681b0
   branch: master
@@ -33,6 +41,8 @@ GEM
       mime-types
       xml-simple
     bcrypt-ruby (2.1.2)
+    bson (1.0.9)
+    bson_ext (1.3.0)
     builder (2.1.2)
     capistrano (2.5.19)
       highline
@@ -58,6 +68,7 @@ GEM
     delayed_job (2.0.3)
       daemons
     diff-lcs (1.1.2)
+    durran-validatable (2.0.1)
     factory_girl (1.2.4)
     fastercsv (1.4.0)
     flickraw (0.8.1)
@@ -95,6 +106,14 @@ GEM
       nokogiri (>= 1.2.1)
     mime-types (1.16)
     modularity (0.6.1)
+    mongo (1.0.9)
+      bson (>= 1.0.5)
+    mongoid (1.9.2)
+      activesupport (< 3.0.0)
+      bson (~> 1.0.1)
+      durran-validatable (>= 2.0.1)
+      mongo (~> 1.0.1)
+      will_paginate (< 2.9)
     mysql (2.7)
     net-scp (1.0.4)
       net-ssh (>= 1.99.1)
@@ -163,6 +182,7 @@ DEPENDENCIES
   authlogic (= 2.1.3)
   aws-s3 (= 0.6.2)
   bcrypt-ruby (= 2.1.2)
+  bson_ext (= 1.3.0)
   capistrano (= 2.5.19)
   ci_reporter (= 1.6.3)
   compass (= 0.10.1)
@@ -175,6 +195,7 @@ DEPENDENCIES
   flickraw (= 0.8.1)
   floehopper-mocha
   formtastic (= 0.9.8)
+  fr2_audit_logic!
   geokit (= 1.4.1)
   gwt_rpc (= 0.1.0)
   haml (= 3.0.4)
