@@ -51,7 +51,7 @@ class Content::EntryImporter::BulkdataFile
           next
         end
       else
-        puts "no FRDOC in #{entry_node.name} in #{file}"
+        puts "no FRDOC in #{entry_node.name} in #{raw_frdoc}"
         next
       end
       
