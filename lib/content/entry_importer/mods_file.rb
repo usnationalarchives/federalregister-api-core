@@ -20,6 +20,10 @@ class Content::EntryImporter::ModsFile
   end
 
   def document
+    if ENV['FORCE_RELOAD_MODS'] && File.exists?(file_path)
+      File.delete(file_path)
+    end
+
     begin
       Curl::Easy.download(url, file_path) unless File.exists?(file_path)
       doc = Nokogiri::XML(open(file_path))

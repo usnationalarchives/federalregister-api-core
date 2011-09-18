@@ -16,6 +16,10 @@ class Content::EntryImporter::BulkdataFile
   end
 
   def document
+    if ENV['FORCE_RELOAD_BULKDATA'] && File.exists?(path)
+      File.delete(path)
+    end
+
     begin
       Curl::Easy.download(url, path) unless File.exists?(path)
       doc = Nokogiri::XML(open(path))
