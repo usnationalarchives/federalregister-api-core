@@ -11,6 +11,10 @@
     <div class="title">Highlight A Document</div>
     <% semantic_remote_form_for SectionHighlight.new, :url => admin_issue_section_highlights_path(@publication_date.to_s(:db), @section) do |f| %>
       <% f.inputs do %>
+        <li><%= link_to 'Bookmarklet', 'javascript:var url = "" + window.location;
+url = url.replace(/\/[^\/]*$/,"");
+url = url.replace(/articles\/\d{4}\/\d{2}\/\d{2}\//,"admin/entries/") + "/highlight";
+window.location = url'.gsub(/\s+/,' ') %></li>
         <%= f.input :entry_document_number %>
       <% end %>
       <% f.buttons do %>

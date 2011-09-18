@@ -1,4 +1,12 @@
 class Admin::Issues::EntriesController < AdminController
+  def highlight
+    @entry = Entry.find_by_document_number!(params[:id])
+    @issue = Issue.last(:order => "publication_date")
+    @current_sections = @entry.sections.select do |section|
+      section.highlighted_entries(@issue.publication_date).include?(@entry)
+    end
+  end
+
   def edit
     @sections = Section.all
     @publication_date = Date.parse(params[:issue_id])
