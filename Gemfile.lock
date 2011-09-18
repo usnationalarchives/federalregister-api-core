@@ -1,7 +1,7 @@
 GIT
   remote: git://github.com/criticaljuncture/fr2_audit_logic.git
-  revision: 7b45f2b8a90af0a8a7e3e80bb6e5b9e5607cd00a
-  ref: 7b45f2b8a90af0a8a7e3e80bb6e5b9e5607cd00a
+  revision: dda602440418fd52b4138470d73e109ed91cfa72
+  ref: dda602440418fd52b4138470d73e109ed91cfa72
   specs:
     fr2_audit_logic (0.0.0)
       mongoid
