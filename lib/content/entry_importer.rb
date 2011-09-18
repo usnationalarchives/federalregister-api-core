@@ -18,6 +18,9 @@ module Content
     include Content::EntryImporter::RegulationsDotGov
   
     def self.process_all_by_date(date, *attributes)
+      AgencyObserver.disabled = true
+      EntryObserver.disabled = true
+
       dates = Content.parse_dates(date)
     
       dates.each do |date|
