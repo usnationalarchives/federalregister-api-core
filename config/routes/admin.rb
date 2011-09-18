@@ -27,6 +27,7 @@ ActionController::Routing::Routes.draw do |map|
         section.resources :highlights, :controller => "issues/sections/highlights"
       end
     end
+    admin.highlight_entry 'entries/:id/highlight', :controller => "issues/entries", :action => "highlight", :conditions => {:method => :get}
     
     admin.resources :password_resets, :except => [:index, :show, :destroy]
     admin.resources :users do |user|
