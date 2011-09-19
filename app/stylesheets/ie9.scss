@@ -1,0 +1,36 @@
+/******************************
+
+SECTIONS
+
+******************************/ 
+.wf-active #sections a.subscription {
+  top:-1px;
+  }
+
+#most-popular .title_bar {
+  background: sprite-image('icons/icon_most_viewed.png', 0, 9px, 50px) no-repeat;
+  padding-left: 31px;
+  }
+#most-emailed .title_bar {
+  background: sprite-image('icons/icon_most_emailed.png', 0, 9px, 50px) no-repeat;
+  padding-left: 30px;
+  }
+
+
+/******************************
+
+SUGGESTED SEARCH
+
+******************************/
+.wf-active #canned_searches a.subscription {
+  top:-6px;
+  }
+ul#frequency-spark-lines {
+  width: 790px;
+  }
+
+/* DOCUMENT ICONS */
+#suggested-search-list div.rule_type {
+  height: 23px;
+  }
+
