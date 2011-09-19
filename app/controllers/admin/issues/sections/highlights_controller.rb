@@ -8,7 +8,7 @@ class Admin::Issues::Sections::HighlightsController < AdminController
     @section_highlight.save
     @section_highlight.move_to_top
     unless request.xhr?
-      redirect_to admin_issue_section_path(@publication_date, @section)
+      redirect_to admin_issue_section_path(@publication_date.to_s(:db), @section)
     end
   end
   
