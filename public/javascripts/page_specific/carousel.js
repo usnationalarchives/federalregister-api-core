@@ -2,7 +2,8 @@
  *  FR2 iScroll 4 Setup
  */
 function load_iScroll() {
-  var previousPage = 0;
+  var previousPage = 0
+  var numberOfPages = $('#carousel_wrapper #carousel_scroller').find('li').size();
   myScroll = new iScroll('carousel_wrapper', {
     snap: 'li',
     momentum: false,
@@ -10,14 +11,15 @@ function load_iScroll() {
     vScroll: false,
     onScrollEnd: function () {
       active_li = $("#indicator li.active");
-      if (this.currPageX > previousPage) {
+      if (this.currPageX > previousPage && this.currPageX < numberOfPages) {
         active_li.next('li').addClass('active');
         previousPage = this.currPageX;
-      } else if (this.currPageX < previousPage) {
+        active_li.removeClass("active");
+      } else if (this.currPageX < previousPage && this.currPageX >= 0) {
         active_li.prev('li').addClass('active');
         previousPage = this.currPageX;
+        active_li.removeClass("active");
       }
-      active_li.removeClass("active");
     }
   });
 
@@ -54,7 +56,7 @@ $(document).ready(function(){
   
   $(".attribution").not('.bg').each(function() {
     var attribution_bg = $(this).siblings('div.bg.attribution').first();
-    attribution_bg.css('width', $(this).width());
+    attribution_bg.css('width', $(this).width()).css('height', '0px');
   });
  
 });
