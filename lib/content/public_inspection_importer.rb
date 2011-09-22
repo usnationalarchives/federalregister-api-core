@@ -58,6 +58,10 @@ module Content
     end
 
     def url=(url)
+      if url !~ /^http/
+        url = "http://www.ofr.gov/" + url
+      end
+
       if not_already_downloaded? || etag_from_head(url) != @pi.pdf_etag
         path = File.join(Dir.tmpdir, File.basename(url))
         curl = Curl::Easy.download(url, path)
