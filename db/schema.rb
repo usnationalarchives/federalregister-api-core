@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110805192543) do
+ActiveRecord::Schema.define(:version => 20110919203721) do
 
   create_table "agencies", :force => true do |t|
     t.integer  "parent_id"
@@ -337,6 +337,25 @@ ActiveRecord::Schema.define(:version => 20110805192543) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "public_inspection_documents", :force => true do |t|
+    t.string   "document_number"
+    t.string   "granule_class"
+    t.datetime "filed_at"
+    t.date     "publication_date"
+    t.string   "docket_id"
+    t.string   "internal_docket_id"
+    t.string   "toc_subject"
+    t.string   "toc_doc"
+    t.boolean  "special_filing",     :default => false, :null => false
+    t.string   "pdf_file_name"
+    t.integer  "pdf_file_size"
+    t.datetime "pdf_updated_at"
+    t.string   "pdf_etag"
+  end
+
+  add_index "public_inspection_documents", ["document_number"], :name => "index_public_inspection_documents_on_document_number"
+  add_index "public_inspection_documents", ["publication_date"], :name => "index_public_inspection_documents_on_publication_date"
 
   create_table "regulatory_plan_events", :force => true do |t|
     t.integer "regulatory_plan_id"

@@ -121,7 +121,22 @@ module RouteBuilder
       :day             => date.strftime('%d'),
     }
   end
-  
+ 
+  add_route :public_inspection_documents_by_month do |date|
+    {
+      :year            => date.strftime('%Y'),
+      :month           => date.strftime('%m')
+    }
+  end
+    
+  add_route :public_inspection_documents_by_date do |date|
+    {
+      :year            => date.strftime('%Y'),
+      :month           => date.strftime('%m'),
+      :day             => date.strftime('%d'),
+    }
+  end 
+
   add_route :new_entry_email do |entry|
     {
       :document_number => entry.document_number,

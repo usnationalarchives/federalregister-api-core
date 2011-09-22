@@ -14,7 +14,17 @@ class ApplicationController < ActionController::Base
   filter_parameter_logging :password, :password_confirmation
   
   private
-  
+  def parse_date_from_params
+    year  = params[:year]
+    month = params[:month]
+    day   = params[:day]
+    begin
+      Date.parse("#{year}-#{month}-#{day}")
+    rescue ArgumentError
+      raise ActiveRecord::RecordNotFound
+    end
+  end
+
   rescue_from Exception, :with => :server_error if RAILS_ENV != 'development'
   def server_error(exception)
     notify_hoptoad(exception)

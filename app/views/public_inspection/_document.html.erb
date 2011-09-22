@@ -1,0 +1,5 @@
+<%= link_to document_title, document.pdf.url %>
+<p class="details">
+  [<%- if document.docket_id %><span class="docket_id">Docket Number: <%= document.docket_id %>;</span> <% end %><span class="filed_at">Filed on: <%= document.filed_at %></spa<span class="document_number">FR DOC #: <%= document.document_number %>; Publication Date: <%= document.publication_date %>]</span>
+</p>
+
