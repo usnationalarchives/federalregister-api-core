@@ -56,7 +56,7 @@ module Content
     def agency=(val)
       if val.present?
         agency_name = AgencyName.find_or_create_by_name(val)
-        @pi.agency_names << agency_name unless @pi.agency_names.include?(agency_name)
+        @pi.agency_names = [agency_name]
       else
         @pi.agency_names = []
       end
@@ -154,12 +154,9 @@ module Content
         when :final_details
           @details += str
 
-          if @granule_class == 'PRESDOCU' && ! @presidential_cleanup
-            @title = @toc_subject
-            @toc_doc = @toc_subject
-            @toc_subject = @agency
+          if @granule_class == 'PRESDOCU'
+            # throw out the 'PROCLAMATION', etc for now
             @agency = 'Executive Office of the President'
-            @presidential_cleanup = true
           end
 
           if @toc_doc.blank? && @toc_subject.present?
@@ -179,6 +176,7 @@ module Content
             :url             => @url
           )
           @document_number = nil
+          @title = ''
         end
 
         @context = new_context
