@@ -125,6 +125,7 @@ class Entry < ApplicationModel
   has_many :entry_emails
   
   has_one :agency_highlight
+  has_one :public_inspection_document, :foreign_key => :document_number, :primary_key => :document_number
   
   has_many :events, :dependent => :destroy
   
