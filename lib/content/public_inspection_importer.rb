@@ -25,7 +25,7 @@ module Content
       @pi.save
     end
 
-    [:document_number, :granule_class, :toc_subject, :toc_doc, :filed_at, :publication_date, :docket_id].each do |attr|
+    [:document_number, :granule_class, :toc_subject, :toc_doc, :title, :filed_at, :publication_date, :docket_id].each do |attr|
       define_method "#{attr}=" do |val|
         @pi.send("#{attr}=", val)
       end
@@ -148,6 +148,20 @@ module Content
           new_context = :final_details
         when :final_details
           @details += str
+
+          if @granule_class == 'PRESDOCU' && ! @presidential_cleanup
+            @title = @toc_subject
+            @toc_doc = @toc_subject
+            @toc_subject = @agency
+            @agency = 'Executive Office of the President'
+            @presidential_cleanup = true
+          end
+
+          if @toc_doc.blank? && @toc_subject.present?
+            @title = @toc_subject.dup
+            @toc_subject = nil
+          end
+
           Content::PublicInspectionImporter.import(
             :filing_type     => @filing_type,
             :details         => @details,
@@ -156,6 +170,7 @@ module Content
             :document_number => @document_number,
             :toc_subject     => @toc_subject,
             :toc_doc         => @toc_doc,
+            :title           => @title || '',
             :url             => @url
           )
           @document_number = nil

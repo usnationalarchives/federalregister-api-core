@@ -26,7 +26,7 @@
       <% else %>
         <% entries_by_toc_subject.each do |entry| %>
         <dt>
-          <%= render :partial => 'document', :locals => {:document => entry, :document_title => entry.toc_subject } %>
+          <%= render :partial => 'document', :locals => {:document => entry, :document_title => (entry.toc_subject || entry.title) } %>
         </dt>
         <% end %>
       <% end %>

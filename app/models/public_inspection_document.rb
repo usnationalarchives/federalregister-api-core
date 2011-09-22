@@ -45,8 +45,4 @@ class PublicInspectionDocument < ApplicationModel
   def end_page
     0
   end
-
-  def title
-    ''
-  end
 end

@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110919203721) do
+ActiveRecord::Schema.define(:version => 20110922153419) do
 
   create_table "agencies", :force => true do |t|
     t.integer  "parent_id"
@@ -352,6 +352,7 @@ ActiveRecord::Schema.define(:version => 20110919203721) do
     t.integer  "pdf_file_size"
     t.datetime "pdf_updated_at"
     t.string   "pdf_etag"
+    t.string   "title",              :default => "",    :null => false
   end
 
   add_index "public_inspection_documents", ["document_number"], :name => "index_public_inspection_documents_on_document_number"
