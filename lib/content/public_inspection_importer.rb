@@ -1,12 +1,17 @@
 module Content
   class PublicInspectionImporter
     def self.perform
-      curl = Curl::Easy.new('http://www.ofr.gov/inspection.aspx')
-      curl.follow_location = true
-      curl.perform
+      if ENV['PI_FILE']
+        html = File.read(ENV['PI_FILE'])
+      else
+        curl = Curl::Easy.new('http://www.ofr.gov/inspection.aspx')
+        curl.follow_location = true
+        curl.perform
+        html = curl.body_str
+      end
 
       parser = Nokogiri::HTML::SAX::Parser.new(Parser.new)
-      parser.parse(curl.body_str)
+      parser.parse(html)
     end
 
     def self.import(attributes)
