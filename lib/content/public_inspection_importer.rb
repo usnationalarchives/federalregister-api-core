@@ -67,7 +67,7 @@ module Content
         url = "http://www.ofr.gov/" + url
       end
 
-      if not_already_downloaded? || etag_from_head(url) != @pi.pdf_etag
+      if !ENV['SKIP_DOWNLOADS'] && (not_already_downloaded? || etag_from_head(url) != @pi.pdf_etag)
         path = File.join(Dir.tmpdir, File.basename(url))
         curl = Curl::Easy.download(url, path)
         headers = HttpHeaders.new(curl.header_str)
