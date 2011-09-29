@@ -87,6 +87,13 @@ ActionController::Routing::Routes.draw do |map|
   map.delivered_entry_email 'articles/email-a-friend/:document_number/delivered', :controller => "entries/emails",
                                                                                   :action => "delivered",
                                                                                   :conditions => {:method => :get}
+
+  map.public_inspection_documents_by_date 'public-inspection/:year/:month/:day', :controller => 'public_inspection',
+                                                   :action      => 'by_date',
+                                                   :conditions => { :method => :get },
+                                                   :year        => /\d{4}/,
+                                                   :month       => /\d{1,2}/,
+                                                   :day         => /\d{1,2}/
   # EVENT SEARCH
   map.events_search 'events/search.:format', :controller => 'events/search', :action => 'show', :conditions => { :method => :get }
   

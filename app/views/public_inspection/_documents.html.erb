@@ -1,0 +1,52 @@
+<% agencies.each do |agency| %>
+  <div class="title_bar">
+    <h2 id="<%= pi_type %>-filing-<%= agency.slug %>"><%= link_to agency.name, agency_path(agency) %></h2>
+    <a href="#entries" class="back_to_top">Back to Top</a>
+  </div>
+  
+  <% if agency.children.present? %>
+    <ul>
+      <% agency.children.each do |sub_agency| %>
+        <li><span class="see">See</span> <%= link_to sub_agency.name, "##{pi_type}-filing-" + sub_agency.slug %> <span class="count_pill"><%= sub_agency.entries.to_a.size %></span></li>
+      <% end %>
+    </ul>
+  <% end %>
+  
+  <% agency.entries_by_type_and_toc_subject.each do |type, entries_by_toc_subject| %>
+    <h3><%= type.pluralize %></h3>
+    <dl>
+    <% entries_by_toc_subject.each do |toc_subject, entries_by_toc_subject| %>
+      <% if toc_subject.present? %>
+        <dt><%= toc_subject %></dt>
+        <% entries_by_toc_subject.each do |entry| %>
+        <dd>
+          <%= render :partial => 'document', :locals => {:document => entry, :document_title => entry.toc_doc } %>
+        </dd>
+        <% end %>
+      <% else %>
+        <% entries_by_toc_subject.each do |entry| %>
+        <dt>
+          <%= render :partial => 'document', :locals => {:document => entry, :document_title => (entry.toc_subject || entry.title) } %>
+        </dt>
+        <% end %>
+      <% end %>
+    <% end %>
+    </dl>
+  <% end %>
+<% end %>
+
+
+<% if documents_without_agencies.present? %>
+  <div class="title_bar">
+    <h2>Other Articles</h2>
+  </div>
+  <% documents_without_agencies.group_by(&:agency_names).each do |agency_names, entries| %>
+    <h3><%= agency_names.map(&:name).to_sentence %></h3>
+    <dl>
+    <% entries.each do |entry| %>
+       <%= render :partial => 'document', :locals => {:document => entry, :document_title => entry.toc_doc } %>
+    <% end %>
+    </dl>
+  <% end %>
+<% end %>
+

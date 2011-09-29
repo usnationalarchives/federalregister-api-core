@@ -24,6 +24,11 @@ ActionController::Routing::Routes.draw do |map|
     quiet_map.entries_search_suggestions 'articles/search/suggestions.:format', :controller => 'entries/search', :action => 'suggestions'
     quiet_map.entries_search_facets 'articles/search/facets/:facet', :controller => 'entries/search', :action => 'facets'
     
+    # PI BY DATE
+    quiet_map.public_inspection_documents_by_month 'public-inspection/:year/:month', :controller => 'public_inspection',
+                                                     :action     => 'by_month',
+                                                     :year       => /\d{4}/,
+                                                     :month      => /\d{1,2}/
     # EVENT SEARCH
     quiet_map.event_search_header 'events/search/header', :controller => 'events/search', :action => 'header'
     quiet_map.event_search_results 'events/search/results', :controller => 'events/search', :action => 'results'

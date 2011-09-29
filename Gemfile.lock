@@ -94,6 +94,7 @@ GEM
     hoptoad_notifier (2.4.11)
       activesupport
       builder
+    http_headers (0.0.2.3)
     icalendar (1.1.5)
     jgre-monkeyspecdoc (0.9.5)
     json (1.4.6)
@@ -200,6 +201,7 @@ DEPENDENCIES
   gwt_rpc (= 0.1.0)
   haml (= 3.0.4)
   hoptoad_notifier (= 2.4.11)
+  http_headers (= 0.0.2.3)
   icalendar
   jgre-monkeyspecdoc (= 0.9.5)
   json

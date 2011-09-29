@@ -72,4 +72,10 @@ SIDEBAR
 .TOC li:last-child,
 .TOC li.lastchild {
   border-bottom: 0;
+  }
+
+#meta_toc.section .TOC h5 {
+  margin-top: 0;
+  border-bottom: 2px solid black;
+  margin-bottom: 1em;  
   } 
