@@ -227,16 +227,16 @@ def chef_cloud_attributes(instance_type)
     :mongodb => {
                    :bind_address => 'mongodb.fr2.ec2.internal',
                    :data_dir => '/var/lib/mongodb',
-                   :username => 'fr2_audit',
-                   :password => @secrets['mongodb_fr2_audit_password'],
+                   :username => '', #'fr2_audit',
+                   :password => '', #@secrets['mongodb_fr2_audit_password'],
                    :database => 'fr2_audit',
-                   :auth     => 'true',
+                   #:auth     => 'true',
                    :ec2_path => '/vol/lib/mongodb'
                  }
 
   }
 end
 
-require 'config/poolparty/pools/production.rb'
-#require 'config/poolparty/pools/staging.rb'
+#require 'config/poolparty/pools/production.rb'
+require 'config/poolparty/pools/staging.rb'
 
