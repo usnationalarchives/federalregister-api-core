@@ -228,7 +228,6 @@ ActiveRecord::Schema.define(:version => 20110922153419) do
     t.datetime "created_at"
     t.string   "remote_ip"
     t.text     "raw_referer"
-    t.text     "normalized_referer"
   end
 
   add_index "entry_page_views", ["created_at"], :name => "index_entry_page_views_on_created_at"

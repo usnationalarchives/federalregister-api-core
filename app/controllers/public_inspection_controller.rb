@@ -2,6 +2,8 @@ class PublicInspectionController < ApplicationController
   def by_date
     cache_for 1.day
 
+    @faux_controller = "entries"
+
     @date = parse_date_from_params
     @special_documents = TableOfContentsPresenter.new(PublicInspectionDocument.special_filing.available_on(@date))
     @regular_documents = TableOfContentsPresenter.new(PublicInspectionDocument.regular_filing.available_on(@date))

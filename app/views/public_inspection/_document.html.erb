@@ -1,5 +1,16 @@
-<%= link_to document_title, document.pdf.url %>
+<span class="pdf small"></span><%= link_to document_title, document.pdf.url, :class => "pdf small" %>
 <p class="details">
-  [<%- if document.docket_id %><span class="docket_id">Docket Number: <%= document.docket_id %>;</span> <% end %><span class="filed_at">Filed on: <%= document.filed_at %></spa<span class="document_number">FR DOC #: <%= document.document_number %>; Publication Date: <%= document.publication_date %>]</span>
+  [<%- if document.docket_id %><span class="docket_id">Docket Number: <%= document.docket_id %>;</span> <% end %>
+  <span class="filed_at">Filed on: <%= document.filed_at %>;</span>
+  <span class="document_number">
+    FR DOC #: 
+    <% if document.document_number.present? %> 
+      <%= Date.today > document.publication_date ? link_to(document.document_number, "/a/#{document.document_number}") : document.document_number %>
+    <% end %>
+    ;
+  </span>
+  <span class="publication_date">Publication Date: 
+    <%= Issue.find_by_publication_date(document.publication_date) ? link_to(document.publication_date, public_inspection_documents_by_date_path(document.publication_date.to_s(:iso)) ) : document.publication_date  %>
+  </span>]
 </p>
 
