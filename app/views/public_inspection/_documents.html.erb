@@ -1,13 +1,13 @@
 <% agencies.each do |agency| %>
   <div class="title_bar">
-    <h2 id="<%= pi_type %>-<%= agency.slug %>"><%= link_to agency.name, agency_path(agency) %></h2>
+    <h2 id="<%= pi_type %>-filing-<%= agency.slug %>"><%= link_to agency.name, agency_path(agency) %></h2>
     <a href="#entries" class="back_to_top">Back to Top</a>
   </div>
   
   <% if agency.children.present? %>
     <ul>
       <% agency.children.each do |sub_agency| %>
-        <li><span class="see">See</span> <%= link_to sub_agency.name, "##{pi_type}-" + sub_agency.slug %> <span class="count_pill"><%= sub_agency.entries.to_a.size %></span></li>
+        <li><span class="see">See</span> <%= link_to sub_agency.name, "##{pi_type}-filing-" + sub_agency.slug %> <span class="count_pill"><%= sub_agency.entries.to_a.size %></span></li>
       <% end %>
     </ul>
   <% end %>

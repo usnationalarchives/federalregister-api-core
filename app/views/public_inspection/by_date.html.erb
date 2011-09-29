@@ -1,6 +1,6 @@
 <% feed_autodiscovery entries_url(:format => :rss), 'All Articles from the Federal Register', :search_conditions => {} %>
 
-<% title "Articles for #{@date.to_formatted_s(:pretty)}" %>
+<% title "Public Inspect Documents for #{@date.to_formatted_s(:pretty)}" %>
 <div class="title"><span><%= @date %> Public Inspection</span></div>
 
 <div id="content_area">
@@ -30,7 +30,7 @@
       <ul>
         <% @special_documents.agencies.each do |agency| %>
           <li>
-            <a href="#special-<%= agency.slug %>"><%= agency.name %></a> 
+            <a href="#special-filing-<%= agency.slug %>"><%= agency.name %></a> 
             <span class="count_pill"><%= agency.entry_count %></span>
           </li>
         <% end -%>
@@ -42,7 +42,7 @@
       <ul>
         <% @regular_documents.agencies.each do |agency| %>
           <li>
-            <a href="#regular-<%= agency.slug %>"><%= agency.name %></a> 
+            <a href="#regular-filing-<%= agency.slug %>"><%= agency.name %></a> 
             <span class="count_pill"><%= agency.entry_count %></span>
           </li>
         <% end -%>
