@@ -5,12 +5,14 @@
   <span class="document_number">
     FR DOC #: 
     <% if document.document_number.present? %> 
-      <%= Date.today > document.publication_date ? link_to(document.document_number, "/a/#{document.document_number}") : document.document_number %>
+      <%= Date.today >= document.publication_date ? link_to(document.document_number, "/a/#{document.document_number}") : document.document_number %>
     <% end %>
     ;
   </span>
-  <span class="publication_date">Publication Date: 
-    <%= Issue.find_by_publication_date(document.publication_date) ? link_to(document.publication_date, entries_by_date_path(document.publication_date.to_s(:iso)) ) : document.publication_date  %>
+  <span class="publication_date">Publication Date:
+    <% if document.publication_date.present? %> 
+      <%= Issue.find_by_publication_date(document.publication_date) ? link_to(document.publication_date, entries_by_date_path(document.publication_date) ) : document.publication_date  %>
+    <% end %>
   </span>]
 </p>
 
