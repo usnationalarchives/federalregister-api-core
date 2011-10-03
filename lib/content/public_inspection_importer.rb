@@ -8,6 +8,8 @@ module Content
         curl.follow_location = true
         curl.perform
         html = curl.body_str
+
+        save_file(html)
       end
 
       parser = Nokogiri::HTML::SAX::Parser.new(Parser.new)
@@ -17,6 +19,13 @@ module Content
     def self.import(attributes)
       pi = new(attributes)
       pi.save
+    end
+
+    def self.save_file(html)
+      dir = FileUtils.mkdir_p("/var/www/apps/fr2/shared/data/public_inspection/html/#{Time.now.strftime('%Y/%m/%d')}/")
+      f = File.new("#{dir.to_s}/#{Time.now.to_s(:HMS_Z)}.html", "w")
+      f.write(html)
+      f.close
     end
 
     def initialize(attributes)
