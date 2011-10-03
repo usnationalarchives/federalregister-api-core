@@ -5,8 +5,11 @@ class PublicInspectionController < ApplicationController
     @faux_controller = "entries"
 
     @date = parse_date_from_params
+
+    regular_docs = PublicInspectionDocument.regular_filing.available_on(@date)
+    raise ActiveRecord::RecordNotFound if regular_docs.blank?
+    @regular_documents = TableOfContentsPresenter.new(regular_docs)
     @special_documents = TableOfContentsPresenter.new(PublicInspectionDocument.special_filing.available_on(@date))
-    @regular_documents = TableOfContentsPresenter.new(PublicInspectionDocument.regular_filing.available_on(@date))
   end
 
   def by_month
