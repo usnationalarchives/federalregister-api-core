@@ -20,7 +20,7 @@
         <dt><%= toc_subject %></dt>
         <% entries_by_toc_subject.each do |entry| %>
         <dd>
-          <%= render :partial => 'document', :locals => {:document => entry, :document_title => entry.toc_doc } %>
+          <%= render :partial => 'document', :locals => {:document => entry, :document_title => entry.toc_doc || entry.title } %>
         </dd>
         <% end %>
       <% else %>
@@ -44,7 +44,7 @@
     <h3><%= agency_names.map(&:name).to_sentence %></h3>
     <dl>
     <% entries.each do |entry| %>
-       <%= render :partial => 'document', :locals => {:document => entry, :document_title => entry.toc_doc } %>
+       <%= render :partial => 'document', :locals => {:document => entry, :document_title => entry.toc_doc || entry.title } %>
     <% end %>
     </dl>
   <% end %>
