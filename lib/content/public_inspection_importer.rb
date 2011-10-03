@@ -176,7 +176,7 @@ module Content
             :url             => @url
           )
           @document_number = nil
-          @title = ''
+          @title = '' if @toc_doc.present?
         end
 
         @context = new_context
