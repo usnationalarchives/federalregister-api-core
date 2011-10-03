@@ -8,8 +8,8 @@ class PublicInspectionController < ApplicationController
 
     regular_docs = PublicInspectionDocument.regular_filing.available_on(@date)
     raise ActiveRecord::RecordNotFound if regular_docs.blank?
-    @regular_documents = TableOfContentsPresenter.new(regular_docs)
-    @special_documents = TableOfContentsPresenter.new(PublicInspectionDocument.special_filing.available_on(@date))
+    @regular_documents = TableOfContentsPresenter.new(regular_docs, :always_include_parent_agencies => true)
+    @special_documents = TableOfContentsPresenter.new(PublicInspectionDocument.special_filing.available_on(@date), :always_include_parent_agencies => true)
   end
 
   def by_month

@@ -33,7 +33,7 @@ class TableOfContentsPresenter
   end
 
   attr_accessor :entries_without_agencies, :agencies, :agency_ids
-  def initialize(entries)
+  def initialize(entries, options = {})
     @entries_without_agencies, @entries_with_agencies =  entries.sort_by{|e| [e.start_page || 0, e.end_page || 0, e.id]}.partition{|e| e.agencies.blank? }
 
     agencies_hsh = {}
@@ -41,6 +41,9 @@ class TableOfContentsPresenter
       # create entry views for all associated agencies, powering the 'See XXX'
       entry.agencies.each do |agency|
         agencies_hsh[agency.id] ||= AgencyPresenter.new(self, agency)
+        if options[:always_include_parent_agencies] && agency.parent.present?
+          agencies_hsh[agency.parent_id] ||= AgencyPresenter.new(self, agency.parent)
+        end
       end
       
       entry.agencies.excluding_parents.each do |agency|
