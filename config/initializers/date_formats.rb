@@ -14,3 +14,7 @@ ActiveSupport::CoreExtensions::Date::Conversions::DATE_FORMATS.merge!(
   :year_month => "%Y/%m",
   :short_ordinal => lambda { |time| time.strftime("%B #{time.day.ordinalize}, %Y") }
 )
+
+ActiveSupport::CoreExtensions::Time::Conversions::DATE_FORMATS.merge!(
+  :HMS_Z => "%H-%M-%S_%Z"
+)
