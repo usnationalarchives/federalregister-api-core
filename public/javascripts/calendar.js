@@ -1,21 +1,26 @@
 $(document).ready(function () {
     function add_year_dropdown() {
-        var th = $('table.calendar .monthName');        
-        var select_list = $("<select />");
-        var today = new Date();
-        var start_year = parseInt( $('table.calendar').data('year-start') );
-        var end_year   = parseInt( $('table.calendar').data('year-end') );
+        var th = $('table.calendar .monthName');
 
-        if (end_year > start_year) {
-          for(var year = start_year; year <= end_year; year++) {
-              var option = $("<option />");
-              option.append(year);
-              if ( $(".calendar").attr("data-calendar-year") == year ) {
-                  option.attr('selected', 'selected');
-              }
-              select_list.append(option);
+        // only create/append the year select if there isn't one
+        if ( th.children('select').length == 0 ) {
+          var select_list = $("<select />");
+          var today = new Date();
+          var start_year = parseInt( $('table.calendar').data('year-start') );
+          var end_year   = parseInt( $('table.calendar').data('year-end') );
+
+          // don't create a year select if the data doesn't span years
+          if (end_year > start_year) {
+            for(var year = start_year; year <= end_year; year++) {
+                var option = $("<option />");
+                option.append(year);
+                if ( $(".calendar").attr("data-calendar-year") == year ) {
+                    option.attr('selected', 'selected');
+                }
+                select_list.append(option);
+            }
+            th.append(select_list);
           }
-          th.append(select_list);
         }
     }
     
