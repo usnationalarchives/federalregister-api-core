@@ -13,6 +13,7 @@ module Content
       end
 
       parser = Nokogiri::HTML::SAX::Parser.new(Parser.new)
+      parser.encoding = 'utf8'
       parser.parse(html)
     end
 
@@ -107,8 +108,17 @@ module Content
         "PROPOSED RULES" => "PRORULE",
         "PRESIDENTIAL DOCUMENTS" => "PRESDOCU"
       }
+      def initialize(*args)
+        @str = ''
+        super
+      end
 
-      def start_element name, raw_attributes = []
+      def start_element(name, raw_attributes = [])
+        if @str.present?
+          handle_characters
+          @str = ''
+        end
+
         attributes = Hash[*raw_attributes]
 
         # ensure we're only parsing the main document body
@@ -130,38 +140,50 @@ module Content
         when 'a'
           if attributes['href'] && attributes['target']
             @url = attributes['href']
-            @context = :initial_details if attributes['href']
+            @context = :details if attributes['href']
           elsif ['special', 'regular'].include?(attributes['name'])
             @filing_type = attributes['name']
           end
         end
       end
 
+      # SAX parsers don't guarantee that you get all of the characters at
+      #   once, and in practice we're getting split apart at special
+      #   character entities, so rather than doing the actual logic
+      #   with the character callback, we're storing the accumulated
+      #   characters (observing normal HTML whitespace rules) and then
+      #   processing them when the next element begins.
       def characters(str)
-        # get rid of leading/trailing whitespace and skip blank/&nbsp; nodes
-        str.strip!
-        return if str == '' || str == "\302\240"
+        if str == "\302\240"
+          str = ' '
+        else
+          str = str.sub(/^\s+/,' ').sub(/\s+$/, ' ')
+        end
+        @str += str
+      end
+
+      def handle_characters
+        # normalize whitespace
+        @str.sub(/\s+/, ' ')
+        @str.strip!
 
         case @context
         when :agency_or_granule_class
-          if GRANULE_CLASSES[str]
-            @granule_class = GRANULE_CLASSES[str]
+          if GRANULE_CLASSES[@str]
+            @granule_class = GRANULE_CLASSES[@str]
           else
-            @agency = str
+            @agency = @str
           end
         when :document_number_or_toc_doc
           if @document_number
             @toc_doc = @document_number
           end
-          @document_number = str
+          @document_number = @str
         when :toc_subject
-          @toc_subject = str
+          @toc_subject = @str
           @toc_doc = nil
-        when :initial_details
-          @details = str
-          new_context = :final_details
-        when :final_details
-          @details += str
+        when :details
+          @details = @str
 
           if @granule_class == 'PRESDOCU'
             # throw out the 'PROCLAMATION', etc for now
@@ -187,8 +209,6 @@ module Content
           @document_number = nil
           @title = '' if @toc_doc.present?
         end
-
-        @context = new_context
       end
     end
   end
