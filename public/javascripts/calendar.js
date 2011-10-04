@@ -3,15 +3,20 @@ $(document).ready(function () {
         var th = $('table.calendar .monthName');        
         var select_list = $("<select />");
         var today = new Date();
-        for(var year = 1994; year <= today.getFullYear(); year++) {
-            var option = $("<option />");
-            option.append(year);
-            if ( $(".calendar").attr("data-calendar-year") == year ) {
-                option.attr('selected', 'selected');
-            }
-            select_list.append(option);
+        var start_year = parseInt( $('table.calendar').data('year-start') );
+        var end_year   = parseInt( $('table.calendar').data('year-end') );
+
+        if (end_year > start_year) {
+          for(var year = start_year; year <= end_year; year++) {
+              var option = $("<option />");
+              option.append(year);
+              if ( $(".calendar").attr("data-calendar-year") == year ) {
+                  option.attr('selected', 'selected');
+              }
+              select_list.append(option);
+          }
+          th.append(select_list);
         }
-        th.append(select_list);
     }
     
     add_year_dropdown();
