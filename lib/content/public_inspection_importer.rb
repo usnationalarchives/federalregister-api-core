@@ -151,20 +151,15 @@ module Content
       #   once, and in practice we're getting split apart at special
       #   character entities, so rather than doing the actual logic
       #   with the character callback, we're storing the accumulated
-      #   characters (observing normal HTML whitespace rules) and then
-      #   processing them when the next element begins.
+      #   characters and them processing them when the next element
+      #   begins.
       def characters(str)
-        if str == "\302\240"
-          str = ' '
-        else
-          str = str.sub(/^\s+/,' ').sub(/\s+$/, ' ')
-        end
-        @str += str
+        @str += str.gsub(/\302\240/, ' ')
       end
 
       def handle_characters
         # normalize whitespace
-        @str.sub(/\s+/, ' ')
+        @str.gsub!(/\s+/, ' ')
         @str.strip!
 
         case @context
