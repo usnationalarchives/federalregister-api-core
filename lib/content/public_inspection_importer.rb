@@ -15,6 +15,7 @@ module Content
       parser = Nokogiri::HTML::SAX::Parser.new(Parser.new)
       parser.encoding = 'utf8'
       parser.parse(html)
+      parser.document.import!
     end
 
     def self.import(attributes)
@@ -108,8 +109,10 @@ module Content
         "PROPOSED RULES" => "PRORULE",
         "PRESIDENTIAL DOCUMENTS" => "PRESDOCU"
       }
+      attr_reader :pi_documents
       def initialize(*args)
         @str = ''
+        @pi_documents = []
         super
       end
 
@@ -190,7 +193,7 @@ module Content
             @toc_subject = nil
           end
 
-          Content::PublicInspectionImporter.import(
+          @pi_documents << {
             :filing_type     => @filing_type,
             :details         => @details,
             :agency          => @agency,
@@ -200,9 +203,15 @@ module Content
             :toc_doc         => @toc_doc,
             :title           => @title || '',
             :url             => @url
-          )
+          }
           @document_number = nil
           @title = '' if @toc_doc.present?
+        end
+      end
+
+      def import!
+        @pi_documents.each do |attr|
+          Content::PublicInspectionImporter.import(attr)
         end
       end
     end
