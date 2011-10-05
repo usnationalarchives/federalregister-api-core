@@ -41,7 +41,7 @@ module Content
       @pi.save
     end
 
-    [:document_number, :granule_class, :toc_subject, :toc_doc, :title, :filed_at, :publication_date, :docket_id].each do |attr|
+    [:document_number, :granule_class, :toc_subject, :toc_doc, :title, :filed_at, :publication_date, :docket_id, :editorial_note].each do |attr|
       define_method "#{attr}=" do |val|
         @pi.send("#{attr}=", val)
       end
@@ -139,7 +139,7 @@ module Content
         when 'p'
           @context = :toc_subject
         when 'b'
-          @context = :agency_or_granule_class
+          @context = :agency_or_granule_class_or_editorial_note
         when 'a'
           if attributes['href'] && attributes['target']
             @url = attributes['href']
@@ -166,17 +166,23 @@ module Content
         @str.strip!
 
         case @context
-        when :agency_or_granule_class
-          if GRANULE_CLASSES[@str]
-            @granule_class = GRANULE_CLASSES[@str]
+        when :agency_or_granule_class_or_editorial_note
+          if @str =~ /^EDITORIAL NOTE: /
+            @pi_documents.last[:editorial_note] = @str.sub(/^EDITORIAL NOTE: /,'')
           else
-            @agency = @str
+            if GRANULE_CLASSES[@str]
+              @granule_class = GRANULE_CLASSES[@str]
+            else
+              @agency = @str
+            end
           end
         when :document_number_or_toc_doc
           if @document_number
             @toc_doc = @document_number
           end
           @document_number = @str
+        when :editorial_note
+          @pi_documents.last[:editorial_note] = @str
         when :toc_subject
           @toc_subject = @str
           @toc_doc = nil

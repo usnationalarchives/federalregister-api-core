@@ -169,4 +169,29 @@ describe Content::PublicInspectionImporter::Parser do
       parse_html(@html).first[:granule_class] == 'Aviation Insurance Coverage for Commercial Air Carrier Service in Domestic and International Operations (Memorandum of September 28, 2011)'
     end
   end
+
+  context "editorial notes" do
+    it "should associate the note with the proper document" do
+      html = <<-HTML
+        <p><b>FEDERAL ELECTION COMMISSION</b></p>
+        <p><b>RULES</b></p>
+        <p>Publicly Disseminated Independent Expenditures</p>
+        <p>&nbsp;</p>
+        <blockquote>&nbsp;2011-24871<a href="http://ofr.gov/OFRUpload/OFRData/2011-24871_PI.pdf" target="_blank"> <img title="View Pdf" style="border: 0px solid;" alt="View Pdf" src="./2011-10-02_files/pfdlggif.gif"></a><br>
+        [Notice 2011-13; Filed: 09/29/11 at 8:45 am]</blockquote>
+        <p>&nbsp;</p>
+        <b>EDITORIAL NOTE:</b> The Federal Election Commission has requested this document be withdrawn from publication. This document will remain on-file through close of business on September 30, 2011. A copy of the agency's letter is available for inspection at the Office of the Federal Register.
+        <p><b>NOTICES</b></p>
+        <p>Meetings; Sunshine Act</p>
+        <p>&nbsp;</p>
+        <blockquote>&nbsp;2011-25592<a href="http://ofr.gov/OFRUpload/OFRData/2011-25592_PI.pdf" target="_blank"> <img title="View Pdf" style="border: 0px solid;" alt="View Pdf" src="./2011-10-02_files/pfdlggif.gif"></a><br>
+        [Filed: 09/29/11 at 4:15pm;&nbsp;&nbsp;Publication Date: 10/3/2011]</blockquote>
+      HTML
+      docs = parse_html(html)
+      docs.first[:editorial_note].should == "The Federal Election Commission has requested this document be withdrawn from publication. This document will remain on-file through close of business on September 30, 2011. A copy of the agency's letter is available for inspection at the Office of the Federal Register."
+      docs.first[:document_number].should == '2011-24871'
+      docs.second[:editorial_note].should be_nil
+      docs.second[:document_number].should == '2011-25592'
+    end
+  end
 end
