@@ -14,7 +14,13 @@ module Content
     
     def perform
       if @date > Date.parse('2000-01-01')
-        raise MissingXML.new unless File.exists?(entry_bulkdata_path)
+        unless File.exists?(entry_bulkdata_path)
+          if ENV['TOLERATE_MISSING_BULKDATA']
+            return
+          else
+            raise MissingXML.new
+          end
+        end
         Dir.mktmpdir("entry_graphics").each do |tmp_dir|
           images.group_by(&:document_number).each do |document_number, images|
             entry = Content::GraphicsExtractor::Entry.new(document_number, :base_dir => tmp_dir)
