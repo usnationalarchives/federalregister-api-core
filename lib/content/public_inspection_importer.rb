@@ -109,7 +109,7 @@ module Content
         "PROPOSED RULES" => "PRORULE",
         "PRESIDENTIAL DOCUMENTS" => "PRESDOCU"
       }
-      attr_reader :pi_documents
+      attr_reader :pi_documents, :special_filings_updated_at, :regular_filings_updated_at
       def initialize(*args)
         @str = ''
         @pi_documents = []
@@ -139,7 +139,7 @@ module Content
         when 'p'
           @context = :toc_subject
         when 'b'
-          @context = :agency_or_granule_class_or_editorial_note
+          @context = :updated_at_or_agency_or_granule_class_or_editorial_note
         when 'a'
           if attributes['href'] && attributes['target']
             @url = attributes['href']
@@ -166,9 +166,17 @@ module Content
         @str.strip!
 
         case @context
-        when :agency_or_granule_class_or_editorial_note
+        when :updated_at_or_agency_or_granule_class_or_editorial_note
           if @str =~ /^EDITORIAL NOTE: /
             @pi_documents.last[:editorial_note] = @str.sub(/^EDITORIAL NOTE: /,'')
+          elsif @str =~ /^Note: This (Special|Regular) Filing List was updated at (.*?)\. The following documents are on file/
+            updated_at = Time.zone.parse($2)
+            case $1
+            when 'Special'
+              @special_filings_updated_at = updated_at
+            when 'Regular'
+              @regular_filings_updated_at = updated_at
+            end
           else
             if GRANULE_CLASSES[@str]
               @granule_class = GRANULE_CLASSES[@str]
