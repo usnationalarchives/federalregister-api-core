@@ -4,9 +4,7 @@
   <span class="filed_at">Filed on: <%= document.filed_at %>;</span>
   <span class="document_number">
     FR DOC #: 
-    <% if document.document_number.present? && document.publication_date %> 
-      <%= Date.today >= document.publication_date ? link_to(document.document_number, "/a/#{document.document_number}") : document.document_number %>
-    <% end %>
+      <%= link_to_if document.document_number.present? && document.publication_date && Date.today >= document.publication_date, document.document_number, "/a/#{document.document_number}" %>
     ;
   </span>
   <span class="publication_date">Publication Date:
