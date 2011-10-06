@@ -9,10 +9,10 @@ module DateHelper
   end
 
   def pi_date_in_previous_month?(previous_month)
-    date_in_previous_month?(previous_month, PublicInspectionDocument.earliest_filing_date)
+    date_in_previous_month?(previous_month, PublicInspectionIssue.earliest_publication_date)
   end
 
   def pi_date_in_next_month?(next_month)
-    date_in_next_month?(next_month, PublicInspectionDocument.latest_filing_date)
+    date_in_next_month?(next_month, PublicInspectionIssue.latest_publication_date)
   end
 end

@@ -16,5 +16,6 @@ ActiveSupport::CoreExtensions::Date::Conversions::DATE_FORMATS.merge!(
 )
 
 ActiveSupport::CoreExtensions::Time::Conversions::DATE_FORMATS.merge!(
-  :HMS_Z => "%H-%M-%S_%Z"
+  :HMS_Z => "%H-%M-%S_%Z",
+  :time_then_date => lambda { |time| time.strftime("%H:%M %p, on %A, %B #{time.day.ordinalize}, %Y") }
 )

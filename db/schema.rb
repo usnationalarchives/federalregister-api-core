@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111005095028) do
+ActiveRecord::Schema.define(:version => 20111005131752) do
 
   create_table "agencies", :force => true do |t|
     t.integer  "parent_id"
@@ -357,6 +357,20 @@ ActiveRecord::Schema.define(:version => 20111005095028) do
 
   add_index "public_inspection_documents", ["document_number"], :name => "index_public_inspection_documents_on_document_number"
   add_index "public_inspection_documents", ["publication_date"], :name => "index_public_inspection_documents_on_publication_date"
+
+  create_table "public_inspection_issues", :force => true do |t|
+    t.date     "publication_date"
+    t.datetime "published_at"
+    t.datetime "special_filings_updated_at"
+    t.datetime "regular_filings_updated_at"
+  end
+
+  create_table "public_inspection_postings", :id => false, :force => true do |t|
+    t.integer "issue_id"
+    t.integer "document_id"
+  end
+
+  add_index "public_inspection_postings", ["issue_id", "document_id"], :name => "index_public_inspection_postings_on_issue_id_and_document_id"
 
   create_table "regulatory_plan_events", :force => true do |t|
     t.integer "regulatory_plan_id"

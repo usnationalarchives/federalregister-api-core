@@ -3,7 +3,7 @@
       :year => @date.year,
       :month => @date.month,
       # ugly hack to punch in data attributes
-      :table_class => "calendar\" data-calendar-year=\"#{@date.year}\" data-calendar-month=\"#{@date.month}\" data-year-start=\"#{PublicInspectionDocument.earliest_filing_date.year}\" data-year-end=\"#{PublicInspectionDocument.latest_filing_date.year}\"",
+      :table_class => "calendar\" data-calendar-year=\"#{@date.year}\" data-calendar-month=\"#{@date.month}\" data-year-start=\"#{PublicInspectionIssue.earliest_publication_date.year}\" data-year-end=\"#{PublicInspectionIssue.latest_publication_date.year}\"",
       :previous_month_text => link_to_if(pi_date_in_previous_month?(@date.months_ago(1)), '&laquo; Prev', public_inspection_documents_by_month_path(@date.months_ago(1)), :class => 'nav'),
       :next_month_text =>     link_to_if(pi_date_in_next_month?(@date.months_since(1)), 'Next &raquo;', public_inspection_documents_by_month_path(@date.months_since(1)), :class => 'nav'),
       :abbrev => (0..0),

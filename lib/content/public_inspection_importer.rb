@@ -15,12 +15,24 @@ module Content
       parser = Nokogiri::HTML::SAX::Parser.new(Parser.new)
       parser.encoding = 'utf8'
       parser.parse(html)
-      parser.document.import!
+      
+      pub_date = parser.document.regular_filings_updated_at.to_date
+      issue = PublicInspectionIssue.find_or_initialize_by_publication_date(pub_date)
+      issue.special_filings_updated_at = parser.document.special_filings_updated_at
+      issue.regular_filings_updated_at = parser.document.regular_filings_updated_at
+      issue.save!
+
+      parser.document.pi_documents.each do |attr|
+        doc = Content::PublicInspectionImporter.import(attr)
+        issue.public_inspection_documents << doc unless issue.public_inspection_document_ids.include?(doc.id)
+      end
+      issue.touch(:published_at) unless issue.published_at
     end
 
     def self.import(attributes)
-      pi = new(attributes)
-      pi.save
+      importer = new(attributes)
+      importer.save!
+      importer.document
     end
 
     def self.save_file(html)
@@ -37,8 +49,12 @@ module Content
       end
     end
 
-    def save
-      @pi.save
+    def document
+      @pi
+    end
+
+    def save!
+      @pi.save!
     end
 
     [:document_number, :granule_class, :toc_subject, :toc_doc, :title, :filed_at, :publication_date, :docket_id, :editorial_note].each do |attr|
@@ -223,11 +239,6 @@ module Content
         end
       end
 
-      def import!
-        @pi_documents.each do |attr|
-          Content::PublicInspectionImporter.import(attr)
-        end
-      end
     end
   end
 end

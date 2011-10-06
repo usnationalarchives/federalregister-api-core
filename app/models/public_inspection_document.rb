@@ -7,14 +7,14 @@ class PublicInspectionDocument < ApplicationModel
                     :bucket => 'public-inspection.federalregister.gov',
                     :path => ":document_number.pdf"
 
+  has_and_belongs_to_many :public_inspection_issues,
+                          :join_table              => :public_inspection_postings,
+                          :foreign_key             => :document_id,
+                          :association_foreign_key => :issue_id
   has_many :agency_name_assignments, :as => :assignable, :order => "agency_name_assignments.position", :dependent => :destroy
   has_many :agency_names, :through => :agency_name_assignments
   has_many :agency_assignments, :as => :assignable, :order => "agency_assignments.position", :dependent => :destroy
   has_many :agencies, :through => :agency_assignments, :order => "agency_assignments.position", :extend => Agency::AssociationExtensions
-
-  def self.available_on(date)
-    scoped({:conditions => ["filed_at < ? AND publication_date > ?", date.to_time.end_of_day, date]})
-  end
 
   def self.special_filing
     scoped(:conditions => {:special_filing => true})
@@ -22,14 +22,6 @@ class PublicInspectionDocument < ApplicationModel
 
   def self.regular_filing
     scoped(:conditions => {:special_filing => false})
-  end
-
-  def self.earliest_filing_date
-    regular_filing.minimum(:filed_at).to_date
-  end
-
-  def self.latest_filing_date
-    regular_filing.maximum(:filed_at).to_date
   end
 
   def entry_type 

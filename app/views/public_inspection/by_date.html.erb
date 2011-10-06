@@ -1,14 +1,14 @@
 <% feed_autodiscovery entries_url(:format => :rss), 'All Articles from the Federal Register', :search_conditions => {} %>
 
-<% title "Public Inspect Documents for #{@date.to_formatted_s(:pretty)}" %>
+<% title "Public Inspection Documents for #{@date.to_formatted_s(:pretty)}" %>
 <div class="title"><span><%= @date %> Public Inspection</span></div>
 
 <div id="content_area">
 
-<h2 id="special-filing">Special Filing</h2>
+<h2 id="special-filing">Special Filing <span>updated at <%= @issue.special_filings_updated_at.to_s(:time_then_date) %></h2>
 <%= render :partial => "documents", :locals => {:documents_without_agencies => @special_documents.entries_without_agencies, :agencies => @special_documents.agencies, :pi_type => 'special'} %>
 
-<h2 id="regular-filing">Regular Filing</h2>
+<h2 id="regular-filing">Regular Filing <span>updated at <%= @issue.regular_filings_updated_at.to_s(:time_then_date) %></span></h2>
 <%= render :partial => "documents", :locals => {:documents_without_agencies => @regular_documents.entries_without_agencies, :agencies => @regular_documents.agencies, :pi_type => 'regular'} %>
 
 </div> <!-- END CONTENT AREA -->

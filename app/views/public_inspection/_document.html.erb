@@ -4,7 +4,7 @@
   <span class="filed_at">Filed on: <%= document.filed_at %>;</span>
   <span class="document_number">
     FR DOC #: 
-    <% if document.document_number.present? %> 
+    <% if document.document_number.present? && document.publication_date %> 
       <%= Date.today >= document.publication_date ? link_to(document.document_number, "/a/#{document.document_number}") : document.document_number %>
     <% end %>
     ;
@@ -16,3 +16,6 @@
   </span>]
 </p>
 
+<% if document.editorial_note.present? %>
+<p class="editorial_note"><strong>Editorial Note:</strong> <%= document.editorial_note %></p>
+<% end %>
