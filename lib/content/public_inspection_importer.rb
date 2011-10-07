@@ -90,14 +90,29 @@ module Content
       end
 
       if !ENV['SKIP_DOWNLOADS'] && (not_already_downloaded? || etag_from_head(url) != @pi.pdf_etag)
-        path = File.join(Dir.tmpdir, File.basename(url))
-        curl = Curl::Easy.download(url, path)
+        pdf_path = File.join(Dir.tmpdir, File.basename(url))
+        puts "downloading #{url}..."
+        curl = Curl::Easy.download(url, pdf_path)
+        puts "done."
         headers = HttpHeaders.new(curl.header_str)
-        @pi.pdf_file_name = @pi.pdf_etag = headers.etag
-        @pi.pdf = File.new(path)
+
+        @pi.raw_text = get_plain_text(pdf_path)
+        @pi.pdf_etag = headers.etag
+        @pi.pdf = File.new(pdf_path)
         @pi.num_pages = Stevedore::Pdf.new(path).num_pages
-        File.delete(path)
+        File.delete(pdf_path)
       end
+    end
+
+    def get_plain_text(pdf_path)
+      raw_text = `pdftotext #{pdf_path} -`
+      raw_text.gsub!(/-{3,}/, '') # remove '----' etc
+      raw_text.gsub!(/\.{4,}/, '') # remove '....' etc
+      raw_text.gsub!(/_{2,}/, '') # remove '____' etc
+      raw_text.gsub!(/\\\d+\\/, '') # remove '\16\' etc
+      raw_text.gsub!(/\|/, '') # remove '|'
+      raw_text.gsub!(/\n\d+\n\n/,"\n") # remove page numbers
+      raw_text
     end
 
     def filing_type=(val)
