@@ -1,3 +1,9 @@
+#special-filing span.updated_at, #regular-filing span.updated_at {
+  font-size: 12px;
+  display: block;
+  font-weight: normal;
+  font-style: italic;  
+  }
 #entries span.pdf.small {
   background: sprite-image('icons/icon_pdf_small.png', 0, 0, 50px);
   padding-left: 5px;
