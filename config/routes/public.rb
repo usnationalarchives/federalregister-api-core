@@ -80,6 +80,10 @@ ActionController::Routing::Routes.draw do |map|
                                                                                   :action => "delivered",
                                                                                   :conditions => {:method => :get}
 
+  map.public_inspection_documents 'public-inspection.:format',
+                                                   :controller => 'public_inspection',
+                                                   :action => 'index',
+                                                   :conditions => {:method => :get}
   map.public_inspection_documents_by_date 'public-inspection/:year/:month/:day', :controller => 'public_inspection',
                                                    :action      => 'by_date',
                                                    :conditions => { :method => :get },

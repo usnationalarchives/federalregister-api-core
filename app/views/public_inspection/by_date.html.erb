@@ -1,4 +1,4 @@
-<% feed_autodiscovery entries_url(:format => :rss), 'All Articles from the Federal Register', :search_conditions => {} %>
+<% feed_autodiscovery public_inspection_documents_url(:format => :rss), 'All Public Inspection Documents', :search_conditions => {} %>
 
 <% title "Public Inspection Documents for #{@date.to_formatted_s(:pretty)}" %>
 <div class="title"><span><%= @date %> Public Inspection</span></div>
@@ -47,5 +47,8 @@
       </ul>
     </div>    
   <% end -%>
-  
+   
+  <div class='aside_box subscribe'> 
+    <%= link_to 'Subscribe', new_subscription_path(:subscription => {:search_conditions => {}}), :class => 'subscription subscription_action' %>
+  </div>
 <% end -%>
