@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111011070732) do
+ActiveRecord::Schema.define(:version => 20111011081258) do
 
   create_table "agencies", :force => true do |t|
     t.integer  "parent_id"
@@ -147,6 +147,15 @@ ActiveRecord::Schema.define(:version => 20111011070732) do
 
   add_index "delayed_jobs", ["priority", "run_at"], :name => "delayed_jobs_priority"
 
+  create_table "docket_numbers", :force => true do |t|
+    t.string  "number"
+    t.string  "assignable_type"
+    t.integer "assignable_id"
+    t.integer "position",        :default => 0, :null => false
+  end
+
+  add_index "docket_numbers", ["assignable_type", "assignable_id"], :name => "index_docket_numbers_on_assignable_type_and_assignable_id"
+
   create_table "entries", :force => true do |t|
     t.text     "title"
     t.text     "abstract"
@@ -184,7 +193,6 @@ ActiveRecord::Schema.define(:version => 20111011070732) do
     t.string   "curated_abstract",             :limit => 500
     t.integer  "lede_photo_id"
     t.text     "lede_photo_candidates"
-    t.string   "docket_id"
     t.datetime "raw_text_updated_at"
     t.boolean  "significant",                                 :default => false
   end
@@ -342,8 +350,6 @@ ActiveRecord::Schema.define(:version => 20111011070732) do
     t.string   "granule_class"
     t.datetime "filed_at"
     t.date     "publication_date"
-    t.string   "docket_id"
-    t.string   "internal_docket_id"
     t.string   "toc_subject"
     t.string   "toc_doc"
     t.boolean  "special_filing",     :default => false, :null => false

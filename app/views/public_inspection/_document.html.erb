@@ -1,6 +1,6 @@
 <span class="pdf small"></span><%= link_to document_title, document.pdf.url, :class => "pdf small" %>
 <p class="details">
-  [<%- if document.docket_id %><span class="docket_id">Docket Number: <%= document.docket_id %>;</span> <% end %>
+  [<%- if document.docket_numbers.present? %><span class="docket_id"><%= document.docket_numbers.map(&:number).join('; ') %>;</span> <% end %>
   <span class="filed_at">Filed on: <%= document.filed_at %>;</span>
   <span class="document_number">
     FR DOC #: 

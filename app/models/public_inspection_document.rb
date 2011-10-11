@@ -15,6 +15,7 @@ class PublicInspectionDocument < ApplicationModel
   has_many :agency_names, :through => :agency_name_assignments
   has_many :agency_assignments, :as => :assignable, :order => "agency_assignments.position", :dependent => :destroy
   has_many :agencies, :through => :agency_assignments, :order => "agency_assignments.position", :extend => Agency::AssociationExtensions
+  has_many :docket_numbers, :as => :assignable, :order => "docket_numbers.position", :dependent => :destroy
 
   def self.special_filing
     scoped(:conditions => {:special_filing => true})

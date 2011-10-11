@@ -57,13 +57,10 @@ module Content
       @pi.save!
     end
 
-    [:document_number, :granule_class, :toc_subject, :toc_doc, :title, :filed_at, :publication_date, :docket_id, :editorial_note].each do |attr|
-      define_method "#{attr}=" do |val|
-        @pi.send("#{attr}=", val)
-      end
-    end
+    delegate :document_number=, :granule_class=, :toc_subject=, :toc_doc=, :title=, :filed_at=, :publication_date=, :editorial_note=, :docket_numbers=, :to => :document
 
     def details=(val)
+      docket_numbers = []
       val.sub!(/^\[/,'').sub!(/\]$/,'')
       val.split(/\s*;\s*/).each do |part|
         case part
@@ -71,13 +68,11 @@ module Content
           self.filed_at = $1
         when /Publication Date: (.+)/
           self.publication_date = $1
-        when /Docket No. (.+)/
-          self.docket_id = $1
         else
-          # TODO: internal_docket_id ?
-          # TODO: multiple docket numbers?
+          docket_numbers << part
         end
       end
+      self.docket_numbers = docket_numbers.map{|number| DocketNumber.new(:number => number)}
     end
 
     def agency=(val)

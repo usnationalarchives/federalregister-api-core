@@ -40,11 +40,6 @@ module Content::EntryImporter::RegulationsDotGov
       terms << "\"#{@entry.document_number}\" \"#{rin}\""
     end
     
-    if @entry.docket_id.present?
-      raw_docket_id = @entry.docket_id.sub(/^\s*Docket (No\.?|Number|)?\s*/, '')
-      terms << "\"#{@entry.document_number}\" \"#{raw_docket_id}\""
-    end
-    
     terms
   end
   

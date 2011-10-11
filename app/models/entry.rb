@@ -103,7 +103,9 @@ class Entry < ApplicationModel
            :through => :graphic_usages
   
   acts_as_mappable :through => :places
-  
+ 
+  has_many :docket_numbers, :as => :assignable, :order => "docket_numbers.position", :dependent => :destroy
+ 
   has_many :agency_name_assignments, :as => :assignable, :order => "agency_name_assignments.position", :dependent => :destroy
   has_many :agency_names, :through => :agency_name_assignments
   has_many :agency_assignments, :as => :assignable, :order => "agency_assignments.position", :dependent => :destroy
@@ -231,7 +233,7 @@ class Entry < ApplicationModel
     indexes abstract
     indexes "LOAD_FILE(CONCAT('#{RAILS_ROOT}/data/raw/', document_file_path, '.txt'))", :as => :full_text
     indexes entry_regulation_id_numbers(:regulation_id_number)
-    indexes docket_id
+    indexes "GROUP_CONCAT(DISTINCT docket_numbers.number SEPARATOR ' ')", :as => :docket_id
     
     # attributes
     has significant
@@ -247,6 +249,7 @@ class Entry < ApplicationModel
     has comments_close_date(:date), :as => :comment_date
     
     join entry_cfr_affected_parts
+    join docket_numbers
     
     set_property :field_weights => {
       "title" => 100,

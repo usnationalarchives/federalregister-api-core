@@ -29,7 +29,12 @@
     <% end %>
   <% end %>
   
-  <% if entry.docket_id.present?            %><dt>Docket ID:</dt>        <dd><%= entry.docket_id %></dd><% end %>
+  <% if entry.docket_numbers.present?            %><dt><%= pluralize_without_count entry.docket_numbers.size, 'Agency/Docket Number' %>:</dt>
+    <% entry.docket_numbers.each do |docket_number| %>
+      <dd><%= docket_number.number %></dd>
+    <% end %>
+  <% end %>
+
   <% if entry.entry_regulation_id_numbers.present? %>
     <dt>RIN:</dt>
     <% entry.entry_regulation_id_numbers.each do |e_rin| %>

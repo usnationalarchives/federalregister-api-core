@@ -13,7 +13,7 @@ namespace :content do
     namespace :import do
       desc "Extract Basic data"
       task :basic_data => :environment do
-        entry_importer(:volume, :title, :toc_subject, :toc_doc, :citation, :start_page, :end_page, :length, :type, :genre, :part_name, :granule_class, :abstract, :dates, :action, :contact, :docket_id)
+        entry_importer(:volume, :title, :toc_subject, :toc_doc, :citation, :start_page, :end_page, :length, :type, :genre, :part_name, :granule_class, :abstract, :dates, :action, :contact, :docket_numbers)
       end
       
       desc "Extract full text"
@@ -41,9 +41,9 @@ namespace :content do
         entry_importer(:regulation_id_numbers, :significant)
       end
       
-      desc "Extract docket id"
-      task :docket_id => :environment do
-        entry_importer(:docket_id)
+      desc "Extract docket numbers"
+      task :docket_numbers => :environment do
+        entry_importer(:docket_numbers)
       end
       
       desc "Extract events"

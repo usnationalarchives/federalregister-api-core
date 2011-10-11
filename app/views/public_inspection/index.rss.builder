@@ -15,7 +15,7 @@ xml.rss "version" => "2.0", "xmlns:dc" => "http://purl.org/dc/elements/1.1/" do
         xml.link        document.pdf.url
 
         description = []
-        description << "Docket Number: #{document.docket_id}" if document.docket_id
+        description += document.docket_numbers.map(&:number)
         description << "FR DOC #: #{document.document_number}" if document.document_number
         description << "Publication Date: #{document.publication_date}" if document.publication_date
         description << number_to_human_size(document.pdf_file_size)
