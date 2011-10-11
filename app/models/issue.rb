@@ -1,14 +1,13 @@
-=begin Schema Information
-
- Table name: issues
-
-  id               :integer(4)      not null, primary key
-  publication_date :date
-  completed_at     :datetime
-  created_at       :datetime
-  updated_at       :datetime
-
-=end Schema Information
+# == Schema Information
+#
+# Table name: issues
+#
+#  id               :integer(4)      not null, primary key
+#  publication_date :date
+#  completed_at     :datetime
+#  created_at       :datetime
+#  updated_at       :datetime
+#
 
 class Issue < ApplicationModel
   has_many :entries,

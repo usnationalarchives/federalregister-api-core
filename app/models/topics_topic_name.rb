@@ -1,16 +1,15 @@
-=begin Schema Information
-
- Table name: topics_topic_names
-
-  id            :integer(4)      not null, primary key
-  topic_id      :integer(4)
-  topic_name_id :integer(4)
-  created_at    :datetime
-  updated_at    :datetime
-  creator_id    :integer(4)
-  updater_id    :integer(4)
-
-=end Schema Information
+# == Schema Information
+#
+# Table name: topics_topic_names
+#
+#  id            :integer(4)      not null, primary key
+#  topic_id      :integer(4)
+#  topic_name_id :integer(4)
+#  created_at    :datetime
+#  updated_at    :datetime
+#  creator_id    :integer(4)
+#  updater_id    :integer(4)
+#
 
 class TopicsTopicName < ApplicationModel
   belongs_to :topic

@@ -1,12 +1,11 @@
-=begin Schema Information
-
- Table name: graphic_usages
-
-  id         :integer(4)      not null, primary key
-  graphic_id :integer(4)
-  entry_id   :integer(4)
-
-=end Schema Information
+# == Schema Information
+#
+# Table name: graphic_usages
+#
+#  id         :integer(4)      not null, primary key
+#  graphic_id :integer(4)
+#  entry_id   :integer(4)
+#
 
 class GraphicUsage < ApplicationModel
   belongs_to :entry

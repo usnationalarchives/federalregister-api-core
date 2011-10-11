@@ -1,13 +1,14 @@
-=begin Schema Information
-
- Table name: entry_page_views
-
-  id         :integer(4)      not null, primary key
-  entry_id   :integer(4)
-  created_at :datetime
-  remote_ip  :string(255)
-
-=end Schema Information
+# == Schema Information
+#
+# Table name: entry_page_views
+#
+#  id                 :integer(4)      not null, primary key
+#  entry_id           :integer(4)
+#  created_at         :datetime
+#  remote_ip          :string(255)
+#  raw_referer        :text
+#  normalized_referer :text
+#
 
 class EntryPageView < ApplicationModel
   belongs_to :entry
