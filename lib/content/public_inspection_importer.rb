@@ -100,6 +100,7 @@ module Content
         headers = HttpHeaders.new(curl.header_str)
         @pi.pdf_file_name = @pi.pdf_etag = headers.etag
         @pi.pdf = File.new(path)
+        @pi.num_pages = Stevedore::Pdf.new(path).num_pages
         File.delete(path)
       end
     end

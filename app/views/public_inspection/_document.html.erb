@@ -9,8 +9,11 @@
   </span>
   <span class="publication_date">Publication Date:
     <% if document.publication_date.present? %> 
-      <%= Issue.find_by_publication_date(document.publication_date) ? link_to(document.publication_date, entries_by_date_path(document.publication_date) ) : document.publication_date  %>
+      <%= Issue.find_by_publication_date(document.publication_date) ? link_to(document.publication_date, entries_by_date_path(document.publication_date) ) : document.publication_date  %>;
     <% end %>
+  </span>
+  <span>
+    <%= number_to_human_size document.pdf_file_size %>; <%= pluralize document.num_pages, 'page' %>
   </span>]
 </p>
 
