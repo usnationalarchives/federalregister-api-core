@@ -16,8 +16,13 @@ class MailingList < ApplicationModel
   has_many :active_subscriptions,
            :class_name => "Subscription",
            :conditions => "subscriptions.confirmed_at IS NOT NULL and subscriptions.unsubscribed_at IS NULL"
-  named_scope :active, :conditions => "active_subscriptions_count > 0"
-  
+  named_scope :active,
+              :conditions => "active_subscriptions_count > 0"
+  named_scope :for_entries,
+              :conditions => {:search_type => 'Entry'}
+  named_scope :for_public_inspection_documents,
+              :conditions => {:search_type => 'PublicInspectionDocument'}
+
   before_create :populate_title_based_on_search_summary
   
   def self.find_by_search(search)
@@ -25,7 +30,7 @@ class MailingList < ApplicationModel
   end
   
   def search
-    @search ||= self[:search_conditions].present? ? EntrySearch.new(:conditions => search_conditions) : nil
+    @search ||= self[:search_conditions].present? ? search_class.new(:conditions => search_conditions) : nil
   end
   
   def search=(search)
@@ -58,6 +63,17 @@ class MailingList < ApplicationModel
       end
       subscriptions.update_all(['delivery_count = delivery_count + 1, last_delivered_at = ?, last_issue_delivered = ?', Time.now, date])
       Rails.logger.info("delivered mailing_lists/#{id} to #{subscriptions.count} subscribers (#{results.size} articles})")
+    end
+  end
+
+  private
+
+  def search_class
+    case search_type
+    when 'Entry'
+      EntrySearch
+    when 'PublicInspectionDocument'
+      PublicInspectionDocumentSearch
     end
   end
 end
