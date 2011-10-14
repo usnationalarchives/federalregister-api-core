@@ -28,12 +28,16 @@ webrat.log
 /public/stylesheets/header.css
 /public/stylesheets/ie.css
 /public/stylesheets/ie6.css
+/public/stylesheets/ie7.css
+/public/stylesheets/ie9.css
 /public/stylesheets/print.css
 /public/stylesheets/reset.css
 /public/stylesheets/screen.css
 /public/stylesheets/text.css
 /public/stylesheets/utilities.css
 /public/stylesheets/enhancements.css
+/app/stylesheets/*.css
+/app/stylesheets/admin/*.css
 /public/system
 /public/uploads
 /tmp
