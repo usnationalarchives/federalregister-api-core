@@ -51,6 +51,7 @@ class PublicInspectionDocument < ApplicationModel
     indexes "GROUP_CONCAT(DISTINCT docket_numbers.number SEPARATOR ' ')", :as => :docket_id
     
     # attributes
+    has "public_inspection_documents.id", :as => :public_inspection_document_id, :type => :integer
     has "CRC32(IF(granule_class = 'SUNSHINE', 'NOTICE', granule_class))", :as => :type, :type => :integer
     has agency_assignments(:agency_id), :as => :agency_ids
     has publication_date

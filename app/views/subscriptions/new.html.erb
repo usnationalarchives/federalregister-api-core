@@ -1,3 +1,4 @@
+<% title 'New Subscription' %>
 <div class="title"><span>Subscriptions</span></div>
 
 <div class="errors">
@@ -33,9 +34,14 @@
 				<% end %>
 			<% end %>
 
-			<% f.inputs do %>
-				<%= f.input :email, :input_html => { :placeholder => 'Subscribe via E-Mail' } %>
-			<% end %>
+      <% f.inputs do %>
+        <%= f.input :email,
+                    :input_html => { :placeholder => 'Subscribe via E-Mail' } %>
+        <%= f.input :search_type,
+                    :as => :radio,
+                    :collection => [['Published', 'Entry'], ['Filed on Public Inspection', 'PublicInspectionDocument']],
+                    :label => "Notify when" %>
+      <% end %>
 
 			<% f.buttons do %>
 				<%= f.commit_button "Subscribe" %>

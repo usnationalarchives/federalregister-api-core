@@ -8,7 +8,7 @@
 #  active_subscriptions_count :integer(4)      default(0)
 #  created_at                 :datetime
 #  updated_at                 :datetime
-#  search_type                :string(255)
+#  type                       :string(255)
 #
 
 require 'spec_helper'

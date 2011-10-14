@@ -93,8 +93,8 @@
   float: left;
   position: relative;
   }
-#modal.subscribe .icons .email label,
-#subscriptions .icons .email label {
+#modal.subscribe .icons #subscription_email_input label,
+#subscriptions .icons #subscription_email_input label {
   display: none;
   }
 #modal.subscribe .icons .email .address,

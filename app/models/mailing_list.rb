@@ -8,7 +8,7 @@
 #  active_subscriptions_count :integer(4)      default(0)
 #  created_at                 :datetime
 #  updated_at                 :datetime
-#  search_type                :string(255)
+#  type                       :string(255)
 #
 
 class MailingList < ApplicationModel
@@ -26,9 +26,9 @@ class MailingList < ApplicationModel
   before_create :populate_title_based_on_search_summary
   
   def self.find_by_search(search)
-    find_by_search_conditions(search.to_json)
+    find_by_search_conditions_and_type(search.to_json, "MailingList::#{search.model}")
   end
-  
+
   def search
     @search ||= self[:search_conditions].present? ? search_class.new(:conditions => search_conditions) : nil
   end
@@ -36,6 +36,7 @@ class MailingList < ApplicationModel
   def search=(search)
     @search = search
     self.search_conditions = search.to_json
+    self.type = "MailingList::#{@search.model.name}"
     search
   end
   
@@ -51,29 +52,7 @@ class MailingList < ApplicationModel
     self.title = search.summary
   end
 
-  def deliver!(date, options = {})
-    results = search.results_for_date(date, :select => "id, title, publication_date, document_number, granule_class, document_file_path, abstract, start_page, end_page, toc_doc, toc_subject")
-    
-    unless results.empty?
-      subscriptions = active_subscriptions
-      subscriptions = subscriptions.not_delivered_on(date) unless options[:force_delivery]
-      
-      subscriptions.find_in_batches(:batch_size => 1000) do |batch_subscriptions|
-        Mailer.deliver_mailing_list(self, results, batch_subscriptions)
-      end
-      subscriptions.update_all(['delivery_count = delivery_count + 1, last_delivered_at = ?, last_issue_delivered = ?', Time.now, date])
-      Rails.logger.info("delivered mailing_lists/#{id} to #{subscriptions.count} subscribers (#{results.size} articles})")
-    end
-  end
-
-  private
-
-  def search_class
-    case search_type
-    when 'Entry'
-      EntrySearch
-    when 'PublicInspectionDocument'
-      PublicInspectionDocumentSearch
-    end
+  def public_inspection_possible?
+    (search_conditions.keys.map(&:to_sym) - [:term, :publication_date, :docket_id, :agency_ids, :type]).size == 0
   end
 end

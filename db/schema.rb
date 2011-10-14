@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111011081258) do
+ActiveRecord::Schema.define(:version => 20111014190911) do
 
   create_table "agencies", :force => true do |t|
     t.integer  "parent_id"
@@ -323,7 +323,7 @@ ActiveRecord::Schema.define(:version => 20111011081258) do
     t.integer  "active_subscriptions_count", :default => 0
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "search_type"
+    t.string   "type"
   end
 
   create_table "place_determinations", :force => true do |t|

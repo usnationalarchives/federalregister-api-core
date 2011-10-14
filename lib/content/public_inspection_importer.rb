@@ -22,11 +22,15 @@ module Content
       issue.regular_filings_updated_at = parser.document.regular_filings_updated_at
       issue.save!
 
+      new_documents = []
       parser.document.pi_documents.each do |attr|
         doc = Content::PublicInspectionImporter.import(attr)
         issue.public_inspection_documents << doc unless issue.public_inspection_document_ids.include?(doc.id)
+        new_documents << doc if doc.new_record?
       end
       issue.touch(:published_at) unless issue.published_at
+
+      new_documents
     end
 
     def self.import(attributes)
@@ -44,9 +48,14 @@ module Content
 
     def initialize(attributes)
       @pi = PublicInspectionDocument.find_or_initialize_by_document_number(attributes.delete(:document_number))
+      @new_record = @pi.new_record?
       attributes.each_pair do |attr,val|
         send("#{attr}=", val)
       end
+    end
+
+    def new_record?
+      @new_record
     end
 
     def document

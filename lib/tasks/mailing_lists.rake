@@ -8,7 +8,7 @@ namespace :mailing_lists do
         date = Date.current
       end
       
-      MailingList.active.for_entries.find_each do |mailing_list|
+      MailingList::Entry.active.find_each do |mailing_list|
         begin
           mailing_list.deliver!(date, :force_delivery => ENV['FORCE_DELIVERY'])
         rescue Exception => e
