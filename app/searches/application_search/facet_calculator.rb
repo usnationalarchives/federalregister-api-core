@@ -31,7 +31,7 @@ class ApplicationSearch::FacetCalculator
       facets = raw_facets.reverse.reject{|id, count| id == 0}.map do |id, count|
         name = id_to_name[id.to_s]
         next if name.blank?
-        Facet.new(
+        ApplicationSearch::Facet.new(
           :value      => id,
           :name       => name,
           :count      => count,
@@ -43,7 +43,7 @@ class ApplicationSearch::FacetCalculator
       facets = raw_facets.reverse.reject{|id, count| id == 0}.map do |id, count|
         value = @hash.keys.find{|k| k.to_crc32 == id}
         next if value.blank?
-        Facet.new(
+        ApplicationSearch::Facet.new(
           :value      => value,
           :name       => @hash[value],
           :count      => count,
