@@ -108,7 +108,7 @@ module Content
         @pi.raw_text = get_plain_text(pdf_path)
         @pi.pdf_etag = headers.etag
         @pi.pdf = File.new(pdf_path)
-        @pi.num_pages = Stevedore::Pdf.new(path).num_pages
+        @pi.num_pages = Stevedore::Pdf.new(pdf_path).num_pages
         File.delete(pdf_path)
       end
     end
