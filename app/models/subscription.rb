@@ -23,6 +23,8 @@ class Subscription < ApplicationModel
   before_create :generate_token
   after_create :ask_for_confirmation
   before_save :update_mailing_list_active_subscriptions_count
+
+  validates_format_of :email, :with => /.+@[a-zA-Z0-9.-]+\.[a-zA-Z0-9.-]+/, :format => "is not a valid email address"
   
   attr_accessor :search_conditions, :search_type
   belongs_to :mailing_list
