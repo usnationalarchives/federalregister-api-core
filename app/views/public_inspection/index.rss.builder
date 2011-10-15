@@ -11,7 +11,12 @@ xml.rss "version" => "2.0", "xmlns:dc" => "http://purl.org/dc/elements/1.1/" do
 
     @documents.each do |document|
       xml.item do
-        xml.title       document.title || "#{document.toc_subject} #{document.toc_doc}"
+        if document.title.present?
+          xml.title   document.title
+        else
+          xml.title   "#{document.toc_subject} #{document.toc_doc}"
+        end
+
         xml.link        document.pdf.url
 
         description = []

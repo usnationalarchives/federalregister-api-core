@@ -8,9 +8,15 @@ class PublicInspectionController < ApplicationController
       end
 
       wants.rss do
-        @documents = PublicInspectionIssue.published.first(:order => "publication_date DESC").public_inspection_documents
-        @feed_name = 'Most Recent Public Inspection Documents'
-        @feed_description = 'All documents currently on Public Inspection at the Office of the Federal Register'
+        if params[:conditions]
+          search = PublicInspectionDocumentSearch.new(:conditions => params[:conditions], :per_page => 100, :order => "newest")
+          @documents = search.results
+          @feed_name = search.summary
+        else
+          @documents = PublicInspectionIssue.published.first(:order => "publication_date DESC").public_inspection_documents
+          @feed_name = 'Most Recent Public Inspection Documents'
+          @feed_description = 'All documents currently on Public Inspection at the Office of the Federal Register'
+        end
         render :template => 'public_inspection/index.rss.builder'
       end
     end

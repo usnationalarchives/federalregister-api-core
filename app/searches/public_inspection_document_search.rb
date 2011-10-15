@@ -12,7 +12,7 @@ class PublicInspectionDocumentSearch < ApplicationSearch
   
   def find_options
     {
-      :select => "id, title, toc_subject, toc_doc, publication_date, document_number, granule_class",
+      :select => "id, title, pdf_file_name, pdf_file_size, num_pages, toc_subject, toc_doc, publication_date, filed_at, document_number, granule_class",
       :include => :agencies,
     }
   end
@@ -24,11 +24,11 @@ class PublicInspectionDocumentSearch < ApplicationSearch
   def order_clause
     case @order
     when 'newest'
-      "publication_date DESC, @relevance DESC"
+      "filed_at DESC, @relevance DESC"
     when 'oldest'
-      "publication_date ASC, @relevance DESC"
+      "filed_at ASC, @relevance DESC"
     else
-      "@relevance DESC, publication_date DESC"
+      "@relevance DESC, filed_at DESC"
     end
   end
 
