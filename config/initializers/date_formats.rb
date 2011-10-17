@@ -19,4 +19,7 @@ ActiveSupport::CoreExtensions::Time::Conversions::DATE_FORMATS.merge!(
   :HMS_Z => "%H-%M-%S_%Z",
   :time_then_date => lambda { |time| time.strftime("%I:%M %p, on %A, %B #{time.day.ordinalize}, %Y") },
   :short_date_then_time => "%m/%d/%Y at %I:%M %p"
+
+  # "Friday, April 22nd, 2011 at 1:30 PM"
+  :formal_with_time => lambda { |time| time.strftime("%A, %B #{time.day.ordinalize}, %Y at %I:%M %p") }
 )

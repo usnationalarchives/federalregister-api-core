@@ -6,7 +6,7 @@ class ApplicationSearch
   
   def per_page=(count)
     per_page = count.to_s.to_i
-    if per_page > 1 && per_page <= 100
+    if per_page > 1 && per_page <= 250
       @per_page = per_page
     else
       @per_page = 20
