@@ -1,5 +1,5 @@
 <div style="margin-left:<%= margin_left %>">
-<h6 style="font-family:'Helvetica Neue',Arial,Helvetica,sans-serif;font-size:12px;margin: 10px 0 5px 0;"><%= link_to [document.toc_subject, document.toc_doc, document.title].reject(&:blank?).join(' - '), document.pdf.url %></h6>
+<h6 style="font-family:'Helvetica Neue',Arial,Helvetica,sans-serif;font-size:12px;margin: 10px 0 5px 0;"><%= link_to title.reject(&:blank?).join(' - '), document.pdf.url %></h6>
           
 <p style="color:#7A838A;font-family:'Helvetica Neue',Arial,Helvetica,sans-serif;font-size:12px;margin: 0 0 5px 0;">A <%= document.entry_type %> by <%= agency_names(document, :no_links => true) %></p>
 </div>
