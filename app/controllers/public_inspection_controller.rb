@@ -51,6 +51,7 @@ class PublicInspectionController < ApplicationController
 
   def display_issue(date)
     @faux_controller = "entries"
+    @faux_action     = "by_date"
 
     @date = date
     @issue = PublicInspectionIssue.published.find_by_publication_date!(@date)
