@@ -1,8 +1,7 @@
 <%= link_to document_title, document.pdf.url %>
 <div class="details">
-  <div class="column pdf">
-    <span class="pdf small"></span> 
-    <%= link_to 'PDF', document.pdf.url %> - <%= number_to_human_size document.pdf_file_size %>; <%= pluralize document.num_pages, 'page' %>
+  <div class="column file_info">
+    <%= link_to '<span class="pdf small"></span> PDF'.html_safe, document.pdf.url %> - <%= number_to_human_size document.pdf_file_size %>; <%= pluralize document.num_pages, 'page' %>
   </div>
   <div class="column dates">
     <%- if date && document.filed_at.to_date == date %>

@@ -46,6 +46,10 @@
       <%= render :esi => public_inspection_documents_by_month_path(@date, :current_date => @date.to_s(:iso)) %>
     </div>
   <% end -%>
+  
+  <div class='aside_box subscribe'> 
+    <%= link_to 'Subscribe', new_subscription_path(:subscription => {:search_conditions => {}}), :class => 'subscription subscription_action' %>
+  </div>
 
   <% section_tag(:id => 'meta_toc') do %>
     <div class="TOC aside_box">
@@ -72,8 +76,5 @@
       </ul>
     </div>    
   <% end -%>
-   
-  <div class='aside_box subscribe'> 
-    <%= link_to 'Subscribe', new_subscription_path(:subscription => {:search_conditions => {}}), :class => 'subscription subscription_action' %>
-  </div>
+  
 <% end -%>
