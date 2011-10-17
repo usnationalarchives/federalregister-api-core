@@ -1,17 +1,16 @@
-=begin Schema Information
-
- Table name: topics
-
-  id                     :integer(4)      not null, primary key
-  name                   :string(255)
-  created_at             :datetime
-  updated_at             :datetime
-  slug                   :string(255)
-  entries_count          :integer(4)      default(0)
-  related_topics_cache   :text
-  related_agencies_cache :text
-
-=end Schema Information
+# == Schema Information
+#
+# Table name: topics
+#
+#  id                     :integer(4)      not null, primary key
+#  name                   :string(255)
+#  created_at             :datetime
+#  updated_at             :datetime
+#  slug                   :string(255)
+#  entries_count          :integer(4)      default(0)
+#  related_topics_cache   :text
+#  related_agencies_cache :text
+#
 
 class Topic < ApplicationModel
   has_many :topic_assignments, :dependent => :destroy

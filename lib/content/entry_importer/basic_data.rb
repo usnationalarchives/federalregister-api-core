@@ -1,6 +1,6 @@
 module Content::EntryImporter::BasicData
   extend Content::EntryImporter::Utils
-  provides :volume, :title, :toc_subject, :toc_doc, :citation, :regulation_id_numbers, :significant, :start_page, :end_page, :length, :type, :genre, :part_name, :granule_class, :abstract, :dates, :action, :contact, :docket_id
+  provides :volume, :title, :toc_subject, :toc_doc, :citation, :regulation_id_numbers, :significant, :start_page, :end_page, :length, :type, :genre, :part_name, :granule_class, :abstract, :dates, :action, :contact, :docket_numbers
   
   def volume
     mods_file.volume
@@ -81,8 +81,8 @@ module Content::EntryImporter::BasicData
     simple_node_value('contact')
   end
   
-  def docket_id
-    simple_node_value('identifier[type="department code"]')
+  def docket_numbers
+    simple_node_values('departmentDoc').map{|number| DocketNumber.new(:number => number)}
   end
   
   private

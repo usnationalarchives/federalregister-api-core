@@ -1,15 +1,14 @@
-=begin Schema Information
-
- Table name: agency_names
-
-  id         :integer(4)      not null, primary key
-  name       :string(255)     not null
-  agency_id  :integer(4)
-  void       :boolean(1)
-  created_at :datetime
-  updated_at :datetime
-
-=end Schema Information
+# == Schema Information
+#
+# Table name: agency_names
+#
+#  id         :integer(4)      not null, primary key
+#  name       :string(255)     not null
+#  agency_id  :integer(4)
+#  void       :boolean(1)
+#  created_at :datetime
+#  updated_at :datetime
+#
 
 require 'spec_helper'
 

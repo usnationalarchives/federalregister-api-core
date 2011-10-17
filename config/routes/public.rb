@@ -47,18 +47,10 @@ ActionController::Routing::Routes.draw do |map|
                                                   :action     => 'date_search',
                                                   :conditions => { :method => :get }
 
-  
-  map.current_headlines 'articles/current-headlines', :controller => 'entries',
-                                                      :action     => 'current_headlines',
-                                                      :conditions => { :method => :get }
-
   map.short_entry 'a/:document_number', :controller => 'entries',
                                         :action     => 'tiny_url',
                                         :conditions => { :method => :get }
-  # Backwards compatability, at least for now...
-  map.connect 'e/:document_number',     :controller => 'entries',
-                                        :action     => 'tiny_url',
-                                        :conditions => { :method => :get }
+
   map.short_entry_with_anchor 'a/:document_number/:anchor',
                                         :controller => 'entries',
                                         :action     => 'tiny_url',
@@ -88,6 +80,10 @@ ActionController::Routing::Routes.draw do |map|
                                                                                   :action => "delivered",
                                                                                   :conditions => {:method => :get}
 
+  map.public_inspection_documents 'public-inspection.:format',
+                                                   :controller => 'public_inspection',
+                                                   :action => 'index',
+                                                   :conditions => {:method => :get}
   map.public_inspection_documents_by_date 'public-inspection/:year/:month/:day', :controller => 'public_inspection',
                                                    :action      => 'by_date',
                                                    :conditions => { :method => :get },

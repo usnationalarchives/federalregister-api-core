@@ -1,15 +1,15 @@
-=begin Schema Information
-
- Table name: mailing_lists
-
-  id                         :integer(4)      not null, primary key
-  search_conditions          :text
-  title                      :string(255)
-  active_subscriptions_count :integer(4)      default(0)
-  created_at                 :datetime
-  updated_at                 :datetime
-
-=end Schema Information
+# == Schema Information
+#
+# Table name: mailing_lists
+#
+#  id                         :integer(4)      not null, primary key
+#  search_conditions          :text
+#  title                      :string(255)
+#  active_subscriptions_count :integer(4)      default(0)
+#  created_at                 :datetime
+#  updated_at                 :datetime
+#  type                       :string(255)
+#
 
 require 'spec_helper'
 

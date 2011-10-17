@@ -22,11 +22,15 @@ module Content
       issue.regular_filings_updated_at = parser.document.regular_filings_updated_at
       issue.save!
 
+      new_documents = []
       parser.document.pi_documents.each do |attr|
         doc = Content::PublicInspectionImporter.import(attr)
         issue.public_inspection_documents << doc unless issue.public_inspection_document_ids.include?(doc.id)
+        new_documents << doc if doc.new_record?
       end
       issue.touch(:published_at) unless issue.published_at
+
+      new_documents
     end
 
     def self.import(attributes)
@@ -44,9 +48,14 @@ module Content
 
     def initialize(attributes)
       @pi = PublicInspectionDocument.find_or_initialize_by_document_number(attributes.delete(:document_number))
+      @new_record = @pi.new_record?
       attributes.each_pair do |attr,val|
         send("#{attr}=", val)
       end
+    end
+
+    def new_record?
+      @new_record
     end
 
     def document
@@ -57,13 +66,10 @@ module Content
       @pi.save!
     end
 
-    [:document_number, :granule_class, :toc_subject, :toc_doc, :title, :filed_at, :publication_date, :docket_id, :editorial_note].each do |attr|
-      define_method "#{attr}=" do |val|
-        @pi.send("#{attr}=", val)
-      end
-    end
+    delegate :document_number=, :granule_class=, :toc_subject=, :toc_doc=, :title=, :filed_at=, :publication_date=, :editorial_note=, :docket_numbers=, :to => :document
 
     def details=(val)
+      docket_numbers = []
       val.sub!(/^\[/,'').sub!(/\]$/,'')
       val.split(/\s*;\s*/).each do |part|
         case part
@@ -71,13 +77,11 @@ module Content
           self.filed_at = $1
         when /Publication Date: (.+)/
           self.publication_date = $1
-        when /Docket No. (.+)/
-          self.docket_id = $1
         else
-          # TODO: internal_docket_id ?
-          # TODO: multiple docket numbers?
+          docket_numbers << part
         end
       end
+      self.docket_numbers = docket_numbers.map{|number| DocketNumber.new(:number => number)}
     end
 
     def agency=(val)
@@ -95,13 +99,29 @@ module Content
       end
 
       if !ENV['SKIP_DOWNLOADS'] && (not_already_downloaded? || etag_from_head(url) != @pi.pdf_etag)
-        path = File.join(Dir.tmpdir, File.basename(url))
-        curl = Curl::Easy.download(url, path)
+        pdf_path = File.join(Dir.tmpdir, File.basename(url))
+        puts "downloading #{url}..."
+        curl = Curl::Easy.download(url, pdf_path)
+        puts "done."
         headers = HttpHeaders.new(curl.header_str)
-        @pi.pdf_file_name = @pi.pdf_etag = headers.etag
-        @pi.pdf = File.new(path)
-        File.delete(path)
+
+        @pi.raw_text = get_plain_text(pdf_path)
+        @pi.pdf_etag = headers.etag
+        @pi.pdf = File.new(pdf_path)
+        @pi.num_pages = Stevedore::Pdf.new(pdf_path).num_pages
+        File.delete(pdf_path)
       end
+    end
+
+    def get_plain_text(pdf_path)
+      raw_text = `pdftotext #{pdf_path} -`
+      raw_text.gsub!(/-{3,}/, '') # remove '----' etc
+      raw_text.gsub!(/\.{4,}/, '') # remove '....' etc
+      raw_text.gsub!(/_{2,}/, '') # remove '____' etc
+      raw_text.gsub!(/\\\d+\\/, '') # remove '\16\' etc
+      raw_text.gsub!(/\|/, '') # remove '|'
+      raw_text.gsub!(/\n\d+\n\n/,"\n") # remove page numbers
+      raw_text
     end
 
     def filing_type=(val)

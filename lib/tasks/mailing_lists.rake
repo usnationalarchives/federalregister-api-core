@@ -1,22 +1,24 @@
 namespace :mailing_lists do
-  desc "Deliver the mailing list content for a given day"
-  task :deliver => :environment do
-    if ENV['DATE'].present?
-      date = Date.parse(ENV['DATE'])
-    else
-      date = Date.current
-    end
-    
-    MailingList.active.find_each do |mailing_list|
-      begin
-        mailing_list.deliver!(date, :force_delivery => ENV['FORCE_DELIVERY'])
-      rescue Exception => e
-        Rails.logger.warn(e)
-        HoptoadNotifier.notify(e)
+  namespace :entries do
+    desc "Deliver the entry mailing list content for a given day"
+    task :deliver => :environment do
+      if ENV['DATE'].present?
+        date = Date.parse(ENV['DATE'])
+      else
+        date = Date.current
+      end
+      
+      MailingList::Entry.active.find_each do |mailing_list|
+        begin
+          mailing_list.deliver!(date, :force_delivery => ENV['FORCE_DELIVERY'])
+        rescue Exception => e
+          Rails.logger.warn(e)
+          HoptoadNotifier.notify(e)
+        end
       end
     end
   end
-  
+
   desc "recalculate active subscriptions for this environment"
   task :recalculate_counts => :environment do
     MailingList.connection.execute("UPDATE mailing_lists SET active_subscriptions_count = 0")

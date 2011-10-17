@@ -1,3 +1,15 @@
+# == Schema Information
+#
+# Table name: cfr_parts
+#
+#  id     :integer(4)      not null, primary key
+#  year   :integer(4)
+#  title  :integer(4)
+#  part   :integer(4)
+#  volume :integer(4)
+#  name   :string(255)
+#
+
 class CfrPart < ApplicationModel
   validates_presence_of :year, :title, :part, :volume
   validates_uniqueness_of :part, :scope => [:year, :title]

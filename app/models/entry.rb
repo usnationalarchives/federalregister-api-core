@@ -1,49 +1,47 @@
-=begin Schema Information
-
- Table name: entries
-
-  id                           :integer(4)      not null, primary key
-  title                        :text
-  abstract                     :text
-  contact                      :text
-  dates                        :text
-  action                       :text
-  type                         :string(255)
-  link                         :string(255)
-  genre                        :string(255)
-  part_name                    :string(255)
-  citation                     :string(255)
-  granule_class                :string(255)
-  document_number              :string(255)
-  toc_subject                  :string(255)
-  toc_doc                      :string(255)
-  length                       :integer(4)
-  start_page                   :integer(4)
-  end_page                     :integer(4)
-  publication_date             :date
-  places_determined_at         :datetime
-  created_at                   :datetime
-  updated_at                   :datetime
-  slug                         :text
-  delta                        :boolean(1)      default(TRUE), not null
-  source_text_url              :string(255)
-  regulationsdotgov_id         :string(255)
-  comment_url                  :string(255)
-  checked_regulationsdotgov_at :datetime
-  volume                       :integer(4)
-  full_xml_updated_at          :datetime
-  citing_entries_count         :integer(4)      default(0)
-  document_file_path           :string(255)
-  full_text_updated_at         :datetime
-  curated_title                :string(255)
-  curated_abstract             :string(500)
-  lede_photo_id                :integer(4)
-  lede_photo_candidates        :text
-  docket_id                    :string(255)
-  raw_text_updated_at          :datetime
-  significant                  :boolean(1)
-
-=end Schema Information
+# == Schema Information
+#
+# Table name: entries
+#
+#  id                           :integer(4)      not null, primary key
+#  title                        :text
+#  abstract                     :text
+#  contact                      :text
+#  dates                        :text
+#  action                       :text
+#  type                         :string(255)
+#  link                         :string(255)
+#  genre                        :string(255)
+#  part_name                    :string(255)
+#  citation                     :string(255)
+#  granule_class                :string(255)
+#  document_number              :string(255)
+#  toc_subject                  :string(255)
+#  toc_doc                      :string(255)
+#  length                       :integer(4)
+#  start_page                   :integer(4)
+#  end_page                     :integer(4)
+#  publication_date             :date
+#  places_determined_at         :datetime
+#  created_at                   :datetime
+#  updated_at                   :datetime
+#  slug                         :text
+#  delta                        :boolean(1)      default(TRUE), not null
+#  source_text_url              :string(255)
+#  regulationsdotgov_url        :string(255)
+#  comment_url                  :string(255)
+#  checked_regulationsdotgov_at :datetime
+#  volume                       :integer(4)
+#  full_xml_updated_at          :datetime
+#  citing_entries_count         :integer(4)      default(0)
+#  document_file_path           :string(255)
+#  full_text_updated_at         :datetime
+#  curated_title                :string(255)
+#  curated_abstract             :string(500)
+#  lede_photo_id                :integer(4)
+#  lede_photo_candidates        :text
+#  raw_text_updated_at          :datetime
+#  significant                  :boolean(1)
+#
 
 # require 'flickr'
 class Entry < ApplicationModel
@@ -103,7 +101,9 @@ class Entry < ApplicationModel
            :through => :graphic_usages
   
   acts_as_mappable :through => :places
-  
+ 
+  has_many :docket_numbers, :as => :assignable, :order => "docket_numbers.position", :dependent => :destroy
+ 
   has_many :agency_name_assignments, :as => :assignable, :order => "agency_name_assignments.position", :dependent => :destroy
   has_many :agency_names, :through => :agency_name_assignments
   has_many :agency_assignments, :as => :assignable, :order => "agency_assignments.position", :dependent => :destroy
@@ -231,7 +231,7 @@ class Entry < ApplicationModel
     indexes abstract
     indexes "LOAD_FILE(CONCAT('#{RAILS_ROOT}/data/raw/', document_file_path, '.txt'))", :as => :full_text
     indexes entry_regulation_id_numbers(:regulation_id_number)
-    indexes docket_id
+    indexes "GROUP_CONCAT(DISTINCT docket_numbers.number SEPARATOR ' ')", :as => :docket_id
     
     # attributes
     has significant
@@ -247,6 +247,7 @@ class Entry < ApplicationModel
     has comments_close_date(:date), :as => :comment_date
     
     join entry_cfr_affected_parts
+    join docket_numbers
     
     set_property :field_weights => {
       "title" => 100,

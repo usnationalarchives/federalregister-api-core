@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111005131752) do
+ActiveRecord::Schema.define(:version => 20111014190911) do
 
   create_table "agencies", :force => true do |t|
     t.integer  "parent_id"
@@ -147,6 +147,15 @@ ActiveRecord::Schema.define(:version => 20111005131752) do
 
   add_index "delayed_jobs", ["priority", "run_at"], :name => "delayed_jobs_priority"
 
+  create_table "docket_numbers", :force => true do |t|
+    t.string  "number"
+    t.string  "assignable_type"
+    t.integer "assignable_id"
+    t.integer "position",        :default => 0, :null => false
+  end
+
+  add_index "docket_numbers", ["assignable_type", "assignable_id"], :name => "index_docket_numbers_on_assignable_type_and_assignable_id"
+
   create_table "entries", :force => true do |t|
     t.text     "title"
     t.text     "abstract"
@@ -184,7 +193,6 @@ ActiveRecord::Schema.define(:version => 20111005131752) do
     t.string   "curated_abstract",             :limit => 500
     t.integer  "lede_photo_id"
     t.text     "lede_photo_candidates"
-    t.string   "docket_id"
     t.datetime "raw_text_updated_at"
     t.boolean  "significant",                                 :default => false
   end
@@ -315,6 +323,7 @@ ActiveRecord::Schema.define(:version => 20111005131752) do
     t.integer  "active_subscriptions_count", :default => 0
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "type"
   end
 
   create_table "place_determinations", :force => true do |t|
@@ -342,19 +351,22 @@ ActiveRecord::Schema.define(:version => 20111005131752) do
     t.string   "granule_class"
     t.datetime "filed_at"
     t.date     "publication_date"
-    t.string   "docket_id"
-    t.string   "internal_docket_id"
     t.string   "toc_subject"
     t.string   "toc_doc"
-    t.boolean  "special_filing",     :default => false, :null => false
+    t.boolean  "special_filing",      :default => false, :null => false
     t.string   "pdf_file_name"
     t.integer  "pdf_file_size"
     t.datetime "pdf_updated_at"
     t.string   "pdf_etag"
-    t.string   "title",              :default => "",    :null => false
+    t.string   "title",               :default => "",    :null => false
     t.text     "editorial_note"
+    t.string   "document_file_path"
+    t.datetime "raw_text_updated_at"
+    t.boolean  "delta",               :default => true,  :null => false
+    t.integer  "num_pages"
   end
 
+  add_index "public_inspection_documents", ["delta"], :name => "index_public_inspection_documents_on_delta"
   add_index "public_inspection_documents", ["document_number"], :name => "index_public_inspection_documents_on_document_number"
   add_index "public_inspection_documents", ["publication_date"], :name => "index_public_inspection_documents_on_publication_date"
 

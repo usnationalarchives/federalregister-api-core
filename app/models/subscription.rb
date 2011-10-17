@@ -1,36 +1,43 @@
-=begin Schema Information
-
- Table name: subscriptions
-
-  id                   :integer(4)      not null, primary key
-  mailing_list_id      :integer(4)
-  email                :string(255)
-  requesting_ip        :string(255)
-  token                :string(255)
-  confirmed_at         :datetime
-  unsubscribed_at      :datetime
-  created_at           :datetime
-  updated_at           :datetime
-  last_delivered_at    :datetime
-  delivery_count       :integer(4)      default(0)
-  last_issue_delivered :date
-
-=end Schema Information
+# == Schema Information
+#
+# Table name: subscriptions
+#
+#  id                   :integer(4)      not null, primary key
+#  mailing_list_id      :integer(4)
+#  email                :string(255)
+#  requesting_ip        :string(255)
+#  token                :string(255)
+#  confirmed_at         :datetime
+#  unsubscribed_at      :datetime
+#  created_at           :datetime
+#  updated_at           :datetime
+#  last_delivered_at    :datetime
+#  delivery_count       :integer(4)      default(0)
+#  last_issue_delivered :date
+#  environment          :string(255)
+#
 
 class Subscription < ApplicationModel
-  attr_accessible :email, :search_conditions
+  attr_accessible :email, :search_conditions, :search_type
   default_scope :conditions => { :environment => Rails.env }
   before_create :generate_token
   after_create :ask_for_confirmation
   before_save :update_mailing_list_active_subscriptions_count
-  
-  attr_accessor :search_conditions
 
+  validates_format_of :email, :with => /.+@[a-zA-Z0-9.-]+\.[a-zA-Z0-9.-]+/, :format => "is not a valid email address"
+  
+  attr_accessor :search_conditions, :search_type
   belongs_to :mailing_list
   
   def mailing_list_with_autobuilding
     if mailing_list_without_autobuilding.nil?
-      search = EntrySearch.new(:conditions => search_conditions)
+      search_class = case search_type
+                     when 'Entry'
+                       EntrySearch
+                     when 'PublicInspectionDocument'
+                       PublicInspectionDocumentSearch
+                     end
+      search = search_class.new(:conditions => search_conditions)
       self.mailing_list = MailingList.find_by_search(search) || MailingList.new(:search => search)
     else
       mailing_list_without_autobuilding

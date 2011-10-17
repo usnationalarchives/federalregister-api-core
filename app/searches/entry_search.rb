@@ -112,22 +112,22 @@ class EntrySearch < ApplicationSearch
   end
   
   def agency_facets
-    FacetCalculator.new(:search => self, :model => Agency, :facet_name => :agency_ids).all
+    ApplicationSearch::FacetCalculator.new(:search => self, :model => Agency, :facet_name => :agency_ids).all
   end
   memoize :agency_facets
   
   def section_facets
-    FacetCalculator.new(:search => self, :model => Section, :facet_name => :section_ids, :name_attribute => :title).all
+    ApplicationSearch::FacetCalculator.new(:search => self, :model => Section, :facet_name => :section_ids, :name_attribute => :title).all
   end
   memoize :section_facets
   
   def topic_facets
-    FacetCalculator.new(:search => self, :model => Topic, :facet_name => :topic_ids).all
+    ApplicationSearch::FacetCalculator.new(:search => self, :model => Topic, :facet_name => :topic_ids).all
   end
   memoize :topic_facets
   
   def type_facets
-    FacetCalculator.new(:search => self, :facet_name => :type, :hash => Entry::ENTRY_TYPES).all().reject do |facet|
+    ApplicationSearch::FacetCalculator.new(:search => self, :facet_name => :type, :hash => Entry::ENTRY_TYPES).all().reject do |facet|
       ["UNKNOWN", "CORRECT"].include?(facet.value)
     end
   end
@@ -167,7 +167,7 @@ class EntrySearch < ApplicationSearch
   def publication_date_facets
     facets = [30,90,365].map do |n|
       value = n.days.ago.to_date.to_s
-      Facet.new(
+      ApplicationSearch::Facet.new(
         :value      => {:gte => value},
         :name       => "Past #{n} days",
         :count      => count_in_last_n_days(n),

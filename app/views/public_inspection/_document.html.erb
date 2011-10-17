@@ -1,7 +1,7 @@
 <%= link_to document_title, document.pdf.url, :class => "pdf small" %>
 <div class="details">
   <div class="column pdf">
-     <span class="pdf small"></span> PDF - 2 Pages, 32K
+     <span class="pdf small"></span> PDF - <%= number_to_human_size document.pdf_file_size %>; <%= pluralize document.num_pages, 'page' %>
   </div>
   <div class="column dates">
     <%- if document.filed_at.strftime('%Y/%m/%d') == date.strftime('%Y/%m/%d') %>
@@ -20,12 +20,8 @@
       FR Document: <%= link_to_if document.document_number.present? && document.publication_date && Date.today >= document.publication_date, document.document_number, "/a/#{document.document_number}" %>
     </span>
 
-    <%- if document.docket_id %>
-      <span class="docket_id">Docket Number: <%= document.docket_id %></span>
+    <%- document.docket_numbers.each do |docket_number| %>
+        <span class="docket_id"><%= docket_number.number %></span>
     <%- end %>
   </div>
 </div>
-
-<% if document.editorial_note.present? %>
-<p class="editorial_note"><strong>Editorial Note:</strong> <%= document.editorial_note %></p>
-<% end %>

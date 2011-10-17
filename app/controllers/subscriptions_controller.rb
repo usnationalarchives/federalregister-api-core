@@ -4,6 +4,7 @@ class SubscriptionsController < ApplicationController
   
   def new
     @subscription = Subscription.new(params[:subscription])
+    @subscription.search_type ||= 'Entry'
   end
   
   def create

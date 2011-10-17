@@ -1,17 +1,16 @@
-=begin Schema Information
-
- Table name: agency_highlights
-
-  id              :integer(4)      not null, primary key
-  entry_id        :integer(4)
-  agency_id       :integer(4)
-  highlight_until :date
-  published       :boolean(1)
-  section_header  :string(255)
-  title           :string(255)
-  abstract        :string(255)
-
-=end Schema Information
+# == Schema Information
+#
+# Table name: agency_highlights
+#
+#  id              :integer(4)      not null, primary key
+#  entry_id        :integer(4)
+#  agency_id       :integer(4)
+#  highlight_until :date
+#  published       :boolean(1)
+#  section_header  :string(255)
+#  title           :string(255)
+#  abstract        :string(255)
+#
 
 class AgencyHighlight < ApplicationModel
   belongs_to :entry
