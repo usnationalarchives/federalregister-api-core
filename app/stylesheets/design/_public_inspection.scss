@@ -8,6 +8,14 @@
 #current_issue.public_inspection .issue:hover {
   text-decoration:none;
   }
+#current_issue.public_inspection ul.statistics li {
+  padding-right: 30px;
+  }
+#entries #content_area.public_inspection {
+  width:660px;
+  padding-right: 40px;
+  }
+
 
 /* Blue info box */
 .info_box {
@@ -20,7 +28,7 @@
   margin-left: 65px;
   padding: 10px;
   }
-.info_box.public_inspection {
+#content_area.public_inspection .info_box {
   // position the image down 10 more px than usual
   background: #F5F8F9 sprite-image('icons/icon_info_circle_large.png', 10px, 30px, 100px) no-repeat;
 
@@ -29,6 +37,8 @@
   padding-top: 15px;  
   }
 
+
+
 /* Document listing by filing type */
 #special-filing span.updated_at, #regular-filing span.updated_at {
   font-size: 12px;
@@ -36,13 +46,24 @@
   font-weight: normal;
   font-style: italic;  
   }
+#regular-filing {
+  clear:both;
+  padding-top: 50px;
+  }
+
 
 /* Meta data for document */
-#entries dl dt {
+#entries dl dt, #entries dl dd, #entries #content_area.public_inspection h3 {
   clear: both;
   }
+#entries #content_area.public_inspection dl dt a, #entries #content_area.public_inspection dl dd a {
+  font-weight: bold;
+  }
 #entries dl div.details {
-  width: 620px;
+  width: 650px;
+  font-weight: normal;
+  }
+#entries #content_area.public_inspection dl div.details a{
   font-weight: normal;
   }
 #entries dl div.column {
@@ -51,9 +72,7 @@
   margin-right:20px;
   float: left;
   display: block;
-  }
-#entries dl div.column.pdf {
-  width: 160px;
+  padding-bottom: 15px;
   }
 #entries dl div.column.dates {
   width: 220px;

@@ -1,10 +1,11 @@
-<%= link_to document_title, document.pdf.url, :class => "pdf small" %>
+<%= link_to document_title, document.pdf.url %>
 <div class="details">
   <div class="column pdf">
-     <span class="pdf small"></span> PDF - <%= number_to_human_size document.pdf_file_size %>; <%= pluralize document.num_pages, 'page' %>
+    <span class="pdf small"></span> 
+    <%= link_to 'PDF', document.pdf.url %> - <%= number_to_human_size document.pdf_file_size %>; <%= pluralize document.num_pages, 'page' %>
   </div>
   <div class="column dates">
-    <%- if document.filed_at.strftime('%Y/%m/%d') == date.strftime('%Y/%m/%d') %>
+    <%- if date && document.filed_at.to_date == date %>
       <span class="new_document"></span>
     <%- end %>
     <span class="filed_at">Filed on: <%= document.filed_at.to_s(:short_date_then_time) %></span>

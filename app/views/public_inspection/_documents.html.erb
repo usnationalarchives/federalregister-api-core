@@ -44,7 +44,9 @@
     <h3><%= agency_names.map(&:name).to_sentence %></h3>
     <dl>
     <% entries.each do |entry| %>
-      <%= render :partial => 'document', :locals => {:document => entry, :document_title => entry.toc_doc || entry.title, :date => date } %>
+      <dt>
+        <%= render :partial => 'document', :locals => {:document => entry, :document_title => entry.toc_doc || entry.title, :date => date } %>
+      </dt>
     <% end %>
     </dl>
   <% end %>

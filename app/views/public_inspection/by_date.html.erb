@@ -6,13 +6,13 @@
 <div id="current_issue" class="public_inspection">
   <span class="issue">Public Inspection</span>
   <ul class='statistics'>
-    <li>Special Filing: <%= link_to pluralize(@special_documents.entry_count, 'document'), "#special-filing" %> / <%= pluralize(@special_documents.agencies.count, 'agency') %></li>
-    <li>Regular Filing: <%= link_to pluralize(@regular_documents.entry_count, 'document'), "#regular-filing" %> / <%= pluralize(@regular_documents.agencies.count, 'agency') %></li>
+    <li><strong>Special Filing:</strong> <%= link_to pluralize(@special_documents.entry_count, 'document'), "#special-filing" %>/ <%= pluralize(@special_documents.agencies.count, 'agency') %></li>
+    <li><strong>Regular Filing:</strong> <%= link_to pluralize(@regular_documents.entry_count, 'document'), "#regular-filing" %>/ <%= pluralize(@regular_documents.agencies.count, 'agency') %></li>
   </ul>
 </div>
 
-<div id="content_area">
-  <div class="info_box public_inspection">
+<div id="content_area" class="public_inspection">
+  <div class="info_box">
     <p>
       The following documents are on file at the Office of the Federal Register (OFR) 
       and will be published in the Federal Register on the dates listed. Regular Filing 
@@ -34,7 +34,7 @@
     Regular Filing 
     <span class="updated_at">updated at <%= @issue.regular_filings_updated_at.to_s(:time_then_date) %></span>
   </h2>
-  <%= render :partial => "documents", :locals => {:documents_without_agencies => @regular_documents.entries_without_agencies, :agencies => @regular_documents.agencies, :pi_type => 'regular', :date => @date} %>
+  <%= render :partial => "documents", :locals => {:documents_without_agencies => @regular_documents.entries_without_agencies, :agencies => @regular_documents.agencies, :pi_type => 'regular', :date => nil} %>
 
 </div> <!-- END CONTENT AREA -->
 
