@@ -1,18 +1,30 @@
-<span class="pdf small"></span><%= link_to document_title, document.pdf.url, :class => "pdf small" %>
-<p class="details">
-  [<%- if document.docket_id %><span class="docket_id">Docket Number: <%= document.docket_id %>;</span> <% end %>
-  <span class="filed_at">Filed on: <%= document.filed_at %>;</span>
-  <span class="document_number">
-    FR DOC #: 
-      <%= link_to_if document.document_number.present? && document.publication_date && Date.today >= document.publication_date, document.document_number, "/a/#{document.document_number}" %>
-    ;
-  </span>
-  <span class="publication_date">Publication Date:
-    <% if document.publication_date.present? %> 
-      <%= Issue.find_by_publication_date(document.publication_date) ? link_to(document.publication_date, entries_by_date_path(document.publication_date) ) : document.publication_date  %>
-    <% end %>
-  </span>]
-</p>
+<%= link_to document_title, document.pdf.url, :class => "pdf small" %>
+<div class="details">
+  <div class="column pdf">
+     <span class="pdf small"></span> PDF - 2 Pages, 32K
+  </div>
+  <div class="column dates">
+    <%- if document.filed_at.strftime('%Y/%m/%d') == date.strftime('%Y/%m/%d') %>
+      <span class="new_document"></span>
+    <%- end %>
+    <span class="filed_at">Filed on: <%= document.filed_at.to_s(:short_date_then_time) %></span>
+    <span class="publication_date">Publication Date:
+      <%- if document.publication_date.present? %> 
+        <%= Issue.find_by_publication_date(document.publication_date) ? link_to(document.publication_date, entries_by_date_path(document.publication_date) ) : document.publication_date  %>
+      <%- end %>
+    </span>
+  </div>
+
+  <div class="column doc_numbers">
+    <span class="document_number">
+      FR Document: <%= link_to_if document.document_number.present? && document.publication_date && Date.today >= document.publication_date, document.document_number, "/a/#{document.document_number}" %>
+    </span>
+
+    <%- if document.docket_id %>
+      <span class="docket_id">Docket Number: <%= document.docket_id %></span>
+    <%- end %>
+  </div>
+</div>
 
 <% if document.editorial_note.present? %>
 <p class="editorial_note"><strong>Editorial Note:</strong> <%= document.editorial_note %></p>

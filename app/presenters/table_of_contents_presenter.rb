@@ -34,6 +34,7 @@ class TableOfContentsPresenter
 
   attr_accessor :entries_without_agencies, :agencies, :agency_ids
   def initialize(entries, options = {})
+    @entries = entries
     @entries_without_agencies, @entries_with_agencies =  entries.sort_by{|e| [e.start_page || 0, e.end_page || 0, e.id]}.partition{|e| e.agencies.blank? }
 
     agencies_hsh = {}
@@ -56,5 +57,9 @@ class TableOfContentsPresenter
     
     # preload all child agencies for performance
     Agency.preload_associations(@agencies.map(&:agency), :children)
+  end
+
+  def entry_count
+    @entry_count ||= @entries.size
   end
 end

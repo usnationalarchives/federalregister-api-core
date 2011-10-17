@@ -3,19 +3,38 @@
 <% title "Public Inspection Documents for #{@date.to_formatted_s(:pretty)}" %>
 <div class="title"><span><%= @date %> Public Inspection</span></div>
 
+<div id="current_issue" class="public_inspection">
+  <span class="issue">Public Inspection</span>
+  <ul class='statistics'>
+    <li>Special Filing: <%= link_to pluralize(@special_documents.entry_count, 'document'), "#special-filing" %> / <%= pluralize(@special_documents.agencies.count, 'agency') %></li>
+    <li>Regular Filing: <%= link_to pluralize(@regular_documents.entry_count, 'document'), "#regular-filing" %> / <%= pluralize(@regular_documents.agencies.count, 'agency') %></li>
+  </ul>
+</div>
+
 <div id="content_area">
+  <div class="info_box public_inspection">
+    <p>
+      The following documents are on file at the Office of the Federal Register (OFR) 
+      and will be published in the Federal Register on the dates listed. Regular Filing 
+      documents are routinely placed on file at 8:45 a.m. Eastern Time, for publication 
+      in the next day’s Federal Register. Special Filing documents are filed at other 
+      times and/or dates prior to publication. See 
+      <%= link_to 'About Public Inspection', "/learn/public-inspection-desk"%> for more 
+      information.
+    </p>
+  </div>
 
   <h2 id="special-filing">
     Special Filing 
     <span class="updated_at">updated at <%= @issue.special_filings_updated_at.to_s(:time_then_date) %></span>
   </h2>
-  <%= render :partial => "documents", :locals => {:documents_without_agencies => @special_documents.entries_without_agencies, :agencies => @special_documents.agencies, :pi_type => 'special'} %>
+  <%= render :partial => "documents", :locals => {:documents_without_agencies => @special_documents.entries_without_agencies, :agencies => @special_documents.agencies, :pi_type => 'special', :date => @date} %>
 
   <h2 id="regular-filing">
     Regular Filing 
     <span class="updated_at">updated at <%= @issue.regular_filings_updated_at.to_s(:time_then_date) %></span>
   </h2>
-  <%= render :partial => "documents", :locals => {:documents_without_agencies => @regular_documents.entries_without_agencies, :agencies => @regular_documents.agencies, :pi_type => 'regular'} %>
+  <%= render :partial => "documents", :locals => {:documents_without_agencies => @regular_documents.entries_without_agencies, :agencies => @regular_documents.agencies, :pi_type => 'regular', :date => @date} %>
 
 </div> <!-- END CONTENT AREA -->
 
@@ -23,7 +42,7 @@
 <% aside_tag(:id => 'sidebar') do %>
   
   <% section_tag(:id => 'date_chooser') do %>
-    <div id="calendar_wrapper">
+    <div id="calendar_wrapper" class="public_inspection">
       <%= render :esi => public_inspection_documents_by_month_path(@date, :current_date => @date.to_s(:iso)) %>
     </div>
   <% end -%>

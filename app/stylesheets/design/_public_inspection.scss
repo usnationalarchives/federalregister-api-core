@@ -1,9 +1,64 @@
+/*  
+    Most of the public inspection page co-opts the styles from the 
+    entries table of contents by using the body id of #entries. These 
+    styles are for the most part just tweaks to them.
+*/
+
+/* Green current issue box */
+#current_issue.public_inspection .issue:hover {
+  text-decoration:none;
+  }
+
+/* Blue info box */
+.info_box {
+  background: #F5F8F9 sprite-image('icons/icon_info_circle_large.png', 10px, 20px, 100px) no-repeat;
+  border: 1px solid #B3C2CF;
+  clear: both;
+  margin-bottom: 2em;
+}
+.info_box p{
+  margin-left: 65px;
+  padding: 10px;
+  }
+.info_box.public_inspection {
+  // position the image down 10 more px than usual
+  background: #F5F8F9 sprite-image('icons/icon_info_circle_large.png', 10px, 30px, 100px) no-repeat;
+
+  width: 675px;
+  height: 162px;
+  padding-top: 15px;  
+  }
+
+/* Document listing by filing type */
 #special-filing span.updated_at, #regular-filing span.updated_at {
   font-size: 12px;
   display: block;
   font-weight: normal;
   font-style: italic;  
   }
+
+/* Meta data for document */
+#entries dl dt {
+  clear: both;
+  }
+#entries dl div.details {
+  width: 620px;
+  font-weight: normal;
+  }
+#entries dl div.column {
+  position: relative;
+  width: 180px;
+  margin-right:20px;
+  float: left;
+  display: block;
+  }
+#entries dl div.column.pdf {
+  width: 160px;
+  }
+#entries dl div.column.dates {
+  width: 220px;
+  }
+
 #entries span.pdf.small {
   background: sprite-image('icons/icon_pdf_small.png', 0, 0, 50px);
   padding-left: 5px;
@@ -12,4 +67,19 @@
   display: inline-block;
   position: relative;
   top: 4px;  
+  }
+
+#entries span.new_document {
+  background: sprite-image('icons/new_badge_icon.png', 0, 0, 50px);
+  width: 16px;
+  height: 17px;
+  display: inline-block;
+  position: absolute;
+  left: -20px;
+  }
+
+/* Calendar modifications */
+#calendar_wrapper.public_inspection {
+  position: relative;
+  top: -8px;
   }
