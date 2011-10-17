@@ -39,11 +39,11 @@
           <% if toc_subject.present? %>
             <h5 style="color:#464646;font-family:'Helvetica Neue',Arial,Helvetica,sans-serif;font-size:13px;margin:5px 0 5px 20px;"><%= toc_subject %></h5>
               <% entries_by_toc_subject.each do |entry| %>
-                <%= render :partial => 'article', :locals => {:entry => entry} %>
+                <%= render :partial => 'article', :locals => {:entry => entry, :margin_left => '30px'} %>
               <% end %>  
           <% else %>
             <% entries_by_toc_subject.each do |entry| %>
-              <%= render :partial => 'article', :locals => {:entry => entry} %>
+              <%= render :partial => 'article', :locals => {:entry => entry, :margin_left => '20px'} %>
             <% end %>
           <% end %>
         <% end %>  
