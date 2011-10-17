@@ -1,0 +1,70 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+  </head>
+  <body>
+   <table border="0" cellspacing="0" width="100%">
+      <tr>
+        <td>
+          <img src="<%= root_url %>images/logotype.png" />
+          <h1 style="background:none repeat scroll 0 0 #FFFFFF;color:#5697CF;font-family:'Helvetica Neue',Arial,Helvetica,sans-serif;margin:30px 0 15px 0;padding:0;">
+            <%=h @mailing_list.title %>
+          <span style="color:#363636;font-size: 12px;font-family:'Helvetica Neue',Arial,Helvetica,sans-serif;font-style:italic;font-weight: normal;">(<%= pluralize @results.size, "matching article" %>)</span>
+         </h1>
+        </td>
+        <td style="text-align:right;">
+          <img src="<%= root_url %>images/seal_email.jpg" />
+        </td>
+      </tr>
+    </table>  
+    <p><i><%= @results.first.publication_date.to_s(:formal) %></i></p>
+    <h2 style="color:#464646;font-family:'Helvetica Neue',Arial,Helvetica,sans-serif;font-size:18px;text-transform: uppercase;border-bottom: 2px solid #464646;margin: 0 0 10px;">Table of Contents:</h2>
+    
+    <% @agencies.each_with_index do |agency, index| %>
+      <a name="<%= agency.slug %>"></a>
+      <h3 style="color:#464646;font-family:'Helvetica Neue',Arial,Helvetica,sans-serif;font-size:16px;margin-bottom:5px;text-decoration:underline;"><%= agency.name %></h3>      
+      <% if agency.children.present? %>
+        <% agency.children.each_with_index do |sub_agency, index| %>
+            <div style="color:#464646;font-family:'Helvetica Neue',Arial,Helvetica,sans-serif;font-size:12px;margin: 0 0 10px 10px;">
+              <i>See</i>
+              <a href="#<%= sub_agency.slug %>" style="font-family:'Helvetica Neue',Arial,Helvetica,sans-serif;"><%= sub_agency.name %></a> 
+              <span style="font-size: 11px;">(<%= pluralize(sub_agency.entries.to_a.size, 'article') %>)</span>
+            </div>
+          <% end %>
+      <% end %>
+      <% agency.entries_by_type_and_toc_subject.each do |type, entries_by_toc_subject| %>
+        <h4 style="color:#464646;font-family:'Helvetica Neue',Arial,Helvetica,sans-serif;font-size:14px;text-transform:uppercase;margin:10px 0 10px 10px;"><%= type.pluralize %></h4>
+        <% entries_by_toc_subject.each do |toc_subject, entries_by_toc_subject| %>
+          <% if toc_subject.present? %>
+            <h5 style="color:#464646;font-family:'Helvetica Neue',Arial,Helvetica,sans-serif;font-size:13px;margin:5px 0 5px 20px;"><%= toc_subject %></h5>
+              <% entries_by_toc_subject.each do |entry| %>
+                <%= render :partial => 'article', :locals => {:entry => entry, :margin_left => '30px'} %>
+              <% end %>  
+          <% else %>
+            <% entries_by_toc_subject.each do |entry| %>
+              <%= render :partial => 'article', :locals => {:entry => entry, :margin_left => '20px'} %>
+            <% end %>
+          <% end %>
+        <% end %>  
+      <% end %>
+    <% end %>
+    
+    <hr />
+      
+    <p style="color:#787878;font-family:'Helvetica Neue',Arial,Helvetica,sans-serif;">
+      <a href="http://www.federalregister.gov/policy/privacy#endorsement_disclaimer">Disclaimer</a> | 
+      <a href="http://www.federalregister.gov/policy/privacy">Policy</a> | 
+      <%= link_to "Unsubscribe from these results", unsubscribe_subscription_url('(((token)))') %>
+    </p> 
+    
+    <h3 style="color:#999999;font-size:13px;margin:5px 0;">Privacy</h3>
+    <p style="color:#AAAAAA;font-family:'Helvetica Neue',Arial,Helvetica,sans-serif;font-size:10px;">Welcome to our free E-mail subscription service. FederalRegister.gov uses your e-mail address to enable you to receive e-mail notifications according to your preferences. We retain only the personally identifiable information minimally necessary to operate the subscription service. We do not retain any information about third parties who receive “email a friend” notifications through the subscription service. For more information, please read our <a href="http://www.federalregister.gov/policy/privacy">Privacy and Security Policy</a>.</p>
+
+    <h3 style="color:#999999;font-size:13px;margin:5px 0;">Legal Status</h3>
+    <p style="color:#AAAAAA;font-family:'Helvetica Neue',Arial,Helvetica,sans-serif;font-size:10px;">The documents received via our E-mail subscriptions service originate from FederalRegister.gov, which displays an unofficial “Web 2.0” version of the daily Federal Register. The official electronic version in PDF format is also available as a link from FederalRegister.gov or directly from GPO’s <a href="http://www.fdsys.gov/">Federal Digital System website</a>. For more information, please read our <a href="http://www.federalregister.gov/policy/legal-status">Legal Status page</a>.</p>
+
+      
+  </body>
+</html>
+

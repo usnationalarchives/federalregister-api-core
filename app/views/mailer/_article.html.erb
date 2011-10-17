@@ -1,4 +1,4 @@
-<div style="margin-left:30px">
+<div style="margin-left:<%= margin_left %>">
 <h6 style="font-family:'Helvetica Neue',Arial,Helvetica,sans-serif;font-size:12px;margin: 10px 0 5px 0;"><%= link_to entry.curated_title, short_entry_url(entry.document_number) %></h6>
           
 <p style="color:#7A838A;font-family:'Helvetica Neue',Arial,Helvetica,sans-serif;font-size:12px;margin: 0 0 5px 0;">A <%= entry.entry_type %> by <%= agency_names(entry, :no_links => true) %></p>

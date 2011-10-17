@@ -36,7 +36,22 @@ class Mailer < ActionMailer::Base
     body       :subscription => subscription
   end
   
-  def mailing_list(mailing_list, results, subscriptions)
+  def public_inspection_document_mailing_list(mailing_list, results, subscriptions)
+    sendgrid_category "PI Subscription"
+    sendgrid_recipients subscriptions.map(&:email)
+    sendgrid_substitute "(((token)))", subscriptions.map(&:token)
+    sendgrid_ganalytics_options :utm_source => 'federalregister.gov', :utm_medium => 'email', :utm_campaign => 'pi subscription mailing list'
+    
+    toc = TableOfContentsPresenter.new(results)
+    
+    subject "[FR] #{mailing_list.title}"
+    from       "Federal Register Subscriptions <subscriptions@mail.federalregister.gov>"
+    recipients 'nobody@federalregister.gov' # should use sendgrid_recipients for actual recipient list
+    sent_on    Time.current
+    body       :mailing_list => mailing_list, :results => results, :agencies => toc.agencies, :entries_without_agencies => toc.entries_without_agencies
+  end
+
+  def entry_mailing_list(mailing_list, results, subscriptions)
     sendgrid_category "Subscription"
     sendgrid_recipients subscriptions.map(&:email)
     sendgrid_substitute "(((token)))", subscriptions.map(&:token)
