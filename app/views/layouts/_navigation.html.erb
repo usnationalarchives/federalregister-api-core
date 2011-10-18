@@ -14,23 +14,34 @@
       <a class="browse">Browse<span class="arrow"></span></a>
       <ul class="subnav browse_list">
         <li id='agencies-browse'>
-          <a href="/agencies" class="agencies">Agencies</a>
+          <%= link_to 'Agencies', agencies_path, :class => "agencies" %>
         </li>
         <li id='topics-browse'>
-          <a href="/topics" class="topics">Topics</a>
+          <%= link_to 'Topics', topics_path, :class => "topics" %>
         </li>
         <li id='current-article-browse'>
-          <a href="/articles/current" class="date">Dates</a>
+          <%= link_to 'Dates', entries_current_issue_path, :class => "date" %>
+        </li>
+        <li id='public-inspection-browse'>
+          <%= link_to 'Public Inspection', public_inspection_documents_path, :class => "public_inspection" %>
         </li>
       </ul>
     </li>
     <li class="dropdown nav_search">
       <a class="search">Search<span class="arrow"></span></a>
       <ul class="subnav search_list">
-        <li id='articles-search'><a href="/articles/search" class="article-search">Article Search</a></li>
-        <li id='articles-adv-search'><a href="/articles/search#advanced" class="advanced-search">Advanced Article Search</a></li>
-        <li id='events-search'><a href="/events/search" class="events-search">Events Search</a></li>
-        <li id='regulations-search'><a href="/regulations/search" class="unified-agenda-search">Unified Agenda Search</a></li>
+        <li id='articles-search'>
+          <%= link_to 'Article Search', entries_search_path, :class => "article-search" %>
+        </li>
+        <li id='articles-adv-search'>
+          <%= link_to 'Advanced Article Search', entries_search_path(:anchor => 'advanced'), :class => "advanced-search" %>
+        </li>
+        <li id='events-search'>
+          <%= link_to 'Events Search', events_search_path, :class => "events-search" %>
+        </li>
+        <li id='regulations-search'>
+          <%= link_to 'Unified Agenda Search', regulatory_plans_search_path, :class => "unified-agenda-search" %>
+        </li>
       </ul>
     </li>
     <%= render :esi => '/layout/navigation_page_list' %>

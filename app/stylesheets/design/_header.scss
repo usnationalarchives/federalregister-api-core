@@ -90,6 +90,7 @@ NAV
 #navigation .agencies,
 #navigation .topics,
 #navigation .date,
+#navigation .public_inspection,
 #navigation .money,
 #navigation .environment,
 #navigation .world, 
@@ -165,10 +166,16 @@ NAV
   background: sprite-image('header/topics-hover.png', 10px, 5px, 50px) no-repeat;
   }
 #navigation .date {
-  background: sprite-image('header/date-off.png', 12px, 5px, 50px) no-repeat;
+  background: sprite-image('header/date-off.png', 11px, 5px, 50px) no-repeat;
   }
 #navigation .date:hover {
-  background: sprite-image('header/date-hover.png', 12px, 5px, 50px) no-repeat;
+  background: sprite-image('header/date-hover.png', 11px, 5px, 50px) no-repeat;
+  }
+#navigation .public_inspection {
+  background: sprite-image('header/public-inspection-off.png', 9px, 7px, 50px) no-repeat;
+  }
+#navigation .public_inspection:hover {
+  background: sprite-image('header/public-inspection-hover.png', 9px, 7px, 50px) no-repeat;
   }
 #navigation .money {
   background: sprite-image('header/money-off.png', 10px, 5px, 50px) no-repeat;
