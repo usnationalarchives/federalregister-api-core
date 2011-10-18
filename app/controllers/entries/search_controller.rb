@@ -23,6 +23,15 @@ class Entries::SearchController < SearchController
   
   def suggestions
     cache_for 1.day
+
+    if params[:conditions]
+      per_page = params[:show_all_pi] ? 250 : 3
+      conditions = params[:conditions].merge(:pending_publication => "1")
+      @public_inspection_document_search = PublicInspectionDocumentSearch.new_if_possible(
+        :conditions => conditions,
+        :per_page => per_page
+      )
+    end
     render :layout => false
   end
   

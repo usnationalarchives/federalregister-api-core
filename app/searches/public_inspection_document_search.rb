@@ -6,6 +6,12 @@ class PublicInspectionDocumentSearch < ApplicationSearch
   end
   
   define_date_filter :publication_date, :label => "Publication Date"
+
+  def self.new_if_possible(args)
+    if (args[:conditions].keys.map(&:to_sym) - [:term, :publication_date, :docket_id, :agency_ids, :type, :pending_publication]).size == 0
+      new(args)
+    end
+  end
   
   def model
     PublicInspectionDocument

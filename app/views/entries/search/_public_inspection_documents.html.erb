@@ -1,0 +1,13 @@
+There are <%= pluralize public_inspection_document_search.count, "document" %> pending publication that match your search term:
+
+<ul>
+  <% public_inspection_document_search.results.each do |document| %>
+    <li><%= link_to document.title.present? ? document.title : "#{document.toc_subject} #{document.toc_doc}", document.pdf.url %> (<%= document.publication_date %>) <%= document.entry_type %> by <%= agency_names(document) %></li>
+  <% end %>
+</ul>
+
+<% if params[:show_all_pi] %>
+  <%= link_to "See fewer public inspection documents", entries_search_path(params.except(:action, :controller, :quiet, :show_all_pi)) %>
+<% elsif public_inspection_document_search.count > 3 %>
+  <%= link_to "See all #{pluralize  public_inspection_document_search.count, "matching document"} pending publication", entries_search_path(params.except(:action, :controller, :quiet).merge(:show_all_pi => 1)) %>
+<% end %>

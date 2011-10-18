@@ -51,8 +51,4 @@ class MailingList < ApplicationModel
   def populate_title_based_on_search_summary
     self.title = search.summary
   end
-
-  def public_inspection_possible?
-    (search_conditions.keys.map(&:to_sym) - [:term, :publication_date, :docket_id, :agency_ids, :type]).size == 0
-  end
 end
