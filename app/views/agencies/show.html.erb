@@ -35,6 +35,10 @@
       <% section_tag(:class => 'TOC aside_box') do %>  
         <h1>On This Page</h1>
         <ul>
+          <% if @public_inspection_documents.present? %>
+            <li><%= link_to 'Documents Pending Publication', '#public_inspection' %></li>
+          <% end %>
+
           <% if @significant_entries.present? %>
             <li><%= link_to 'Most Recent Significant Regulations', '#significant_regulations' %></li>
           <% end %>
@@ -83,7 +87,9 @@
 
 </div>    
 
-
+<% if @public_inspection_documents.present? %>
+  <%= render :partial => "public_inspection" %>
+<% end %>
 
 <% if @significant_entries.present? %>
   <div class="group" id="significant_regulations">
