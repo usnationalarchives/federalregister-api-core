@@ -16,7 +16,7 @@ class Api::V1::AgenciesController < ApiController
   def show
     respond_to do |wants|
       wants.json do
-        agency = Agency.find_by_id(params[:id])
+        agency = Agency.find(params[:id])
         
         cache_for 1.day
         render_json_or_jsonp basic_agency_data(agency)

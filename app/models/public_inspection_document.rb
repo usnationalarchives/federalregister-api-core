@@ -25,7 +25,6 @@
 class PublicInspectionDocument < ApplicationModel
   has_attached_file :pdf,
                     :storage => :s3,
-                    :s3_headers => { 'Content-Type' => 'application/pdf' },
                     :s3_credentials => "#{Rails.root}/config/amazon.yml",
                     :s3_alias_url => 'http://public-inspection.federalregister.gov.s3.amazonaws.com/',
                     :bucket => 'public-inspection.federalregister.gov',
@@ -43,6 +42,7 @@ class PublicInspectionDocument < ApplicationModel
  
   file_attribute(:raw_text)  {"#{RAILS_ROOT}/data/public_inspection/raw/#{document_file_path}.txt"}
   before_save :persist_document_file_path
+  before_save :set_content_type
 
   define_index do
     # fields
@@ -98,5 +98,9 @@ class PublicInspectionDocument < ApplicationModel
 
   def persist_document_file_path
     self.document_file_path = document_file_path
+  end
+
+  def set_content_type
+    self.pdf.instance_write(:content_type,'application/pdf') if self.pdf.present?
   end
 end

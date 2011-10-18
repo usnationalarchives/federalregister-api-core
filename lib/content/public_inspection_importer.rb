@@ -255,7 +255,7 @@ module Content
             :url             => @url
           }
           @document_number = nil
-          @title = '' if @toc_doc.present?
+          @title = ''
         end
       end
 
