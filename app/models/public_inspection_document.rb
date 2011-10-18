@@ -30,6 +30,9 @@ class PublicInspectionDocument < ApplicationModel
                     :bucket => 'public-inspection.federalregister.gov',
                     :path => ":document_number.pdf"
 
+  has_one :entry,
+          :foreign_key => :document_number,
+          :primary_key => :document_number
   has_and_belongs_to_many :public_inspection_issues,
                           :join_table              => :public_inspection_postings,
                           :foreign_key             => :document_id,
@@ -46,18 +49,20 @@ class PublicInspectionDocument < ApplicationModel
 
   define_index do
     # fields
-    indexes "title || CONCAT(toc_subject, ' ', toc_doc)", :as => :title
-    indexes "LOAD_FILE(CONCAT('#{RAILS_ROOT}/data/public_inspection/raw/', document_file_path, '.txt'))", :as => :full_text
+    indexes "IF(public_inspection_documents.title = '', CONCAT(public_inspection_documents.toc_subject, ' ', public_inspection_documents.toc_doc), public_inspection_documents.title)", :as => :title
+    indexes "LOAD_FILE(CONCAT('#{RAILS_ROOT}/data/public_inspection/raw/', public_inspection_documents.document_file_path, '.txt'))", :as => :full_text
     indexes "GROUP_CONCAT(DISTINCT docket_numbers.number SEPARATOR ' ')", :as => :docket_id
     
     # attributes
+    has "IF(public_inspection_documents.publication_date && entries.id IS NULL,1,0)", :as => :pending_publication, :type => :boolean
     has "public_inspection_documents.id", :as => :public_inspection_document_id, :type => :integer
-    has "CRC32(IF(granule_class = 'SUNSHINE', 'NOTICE', granule_class))", :as => :type, :type => :integer
+    has "CRC32(IF(public_inspection_documents.granule_class = 'SUNSHINE', 'NOTICE', public_inspection_documents.granule_class))", :as => :type, :type => :integer
     has agency_assignments(:agency_id), :as => :agency_ids
     has publication_date
     has filed_at
 
     join docket_numbers
+    join entry
 
     set_property :field_weights => {
       "title" => 100,

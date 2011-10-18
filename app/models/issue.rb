@@ -70,7 +70,7 @@ class Issue < ApplicationModel
       self.completed_at = Time.now
       save!
     end
-    
+    PublicInspectionDocument.update_all({:delta => 1}, {:document_number => entries.map(&:document_number)})
     self
   end
   

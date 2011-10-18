@@ -1,4 +1,5 @@
 class PublicInspectionDocumentSearch < ApplicationSearch
+  define_filter :pending_publication, :sphinx_type => :with
   define_filter :agency_ids,  :sphinx_type => :with
   define_filter :type,        :sphinx_type => :with, :crc32_encode => true do |types|
     types.map{|type| Entry::ENTRY_TYPES[type]}.to_sentence(:two_words_connector => ' or ', :last_word_connector => ', or ')
