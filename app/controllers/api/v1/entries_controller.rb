@@ -106,7 +106,8 @@ class Api::V1::EntriesController < ApiController
         :start_page => entry.start_page,
         :end_page => entry.end_page,
         :volume => entry.volume,
-        :docket_id => entry.docket_numbers.first.try(:number), # TODO: include all
+        :docket_id => entry.docket_numbers.first.try(:number), # backwards compatible for now
+        :docket_ids => entry.docket_numbers.map(&:number),
         :regulation_id_numbers => entry.entry_regulation_id_numbers.map(&:regulation_id_number),
         :cfr_references => entry.entry_cfr_references.map{|cfr_reference|
           {:title => cfr_reference.title, :part => cfr_reference.part}
