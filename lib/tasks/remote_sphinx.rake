@@ -12,7 +12,7 @@ namespace :remote do
     
     desc "Sync sphinx files and rebuild index"
     task :rebuild_delta => :environment do
-      delta_index_names = [Entry, Event, RegulatoryPlan, PublicnInspectionDocument].map{|model| model.delta_index_names}.flatten.join(' ')
+      delta_index_names = [Entry, Event, RegulatoryPlan, PublicInspectionDocument].map{|model| model.delta_index_names}.flatten.join(' ')
       `bundle exec cap #{RAILS_ENV} sphinx:rebuild_delta_index -s delta_index_names='#{delta_index_names}'`
     end
   end
