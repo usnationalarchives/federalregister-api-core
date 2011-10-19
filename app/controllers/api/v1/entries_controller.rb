@@ -72,6 +72,7 @@ class Api::V1::EntriesController < ApiController
       :document_number  => entry.document_number,
       :html_url         => entry_url(entry),
       :pdf_url          => entry.source_url('pdf'),
+      :public_inspection_pdf_url => entry.public_inspection_document.try(:pdf).try(:url),
       :publication_date => entry.publication_date,
       :agencies         => entry.agency_names.map{|agency_name|
         agency = agency_name.agency
