@@ -34,7 +34,17 @@ SitemapGenerator::Sitemap.add_links do |sitemap|
   end
   
   sitemap.add entries_current_issue_path
-  
+ 
+  PublicInspectionIssue.published.find_each do |issue|
+    sitemap.add public_inspection_documents_by_date_path(issue.publication_date)
+  end
+
+  sitemap.add public_inspection_documents_path
+
+  PublicInspectionDocument.unpublished.find_each do |document|
+    sitemap.add entry_path(document)
+  end
+
   # TOPICS
   sitemap.add topics_path
   Topic.find_each do |topic|
@@ -48,7 +58,7 @@ SitemapGenerator::Sitemap.add_links do |sitemap|
   end
   
   # REGULATIONS
-    RegulatoryPlan.find_each do |regulatory_plan|
+  RegulatoryPlan.find_each do |regulatory_plan|
     sitemap.add regulatory_plan_path(regulatory_plan)
   end
 end

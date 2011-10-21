@@ -73,6 +73,11 @@ class PublicInspectionDocument < ApplicationModel
     set_property :delta => ThinkingSphinx::Deltas::ManualDelta
   end
 
+  # Note: the concept of 'unpublished' is different from that of 'pending publication'
+  def self.unpublished
+    scoped(:include => :entry, :conditions => "entries.id IS NULL")
+  end
+
   def self.special_filing
     scoped(:conditions => {:special_filing => true})
   end
