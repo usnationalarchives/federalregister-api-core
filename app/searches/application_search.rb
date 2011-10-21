@@ -232,6 +232,10 @@ filter_name.to_s.sub(/_ids?$/,'').classify.constantize.find_all_by_id(ids.flatte
     EntrySearch.new(:conditions => {:term => @term}).term_count
   end
   
+  def public_inspection_document_count
+    PublicInspectionDocumentSearch.new(:conditions => {:term => @term}).term_count
+  end
+
   def event_count
     EventSearch.new(:conditions => {:term => @term}).term_count
   end

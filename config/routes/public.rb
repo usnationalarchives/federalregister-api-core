@@ -90,6 +90,9 @@ ActionController::Routing::Routes.draw do |map|
                                                    :year        => /\d{4}/,
                                                    :month       => /\d{1,2}/,
                                                    :day         => /\d{1,2}/
+
+  map.public_inspection_search 'public-inspection/search.:format', :controller => 'public_inspection/search', :action => 'show', :conditions => { :method => :get }
+
   # EVENT SEARCH
   map.events_search 'events/search.:format', :controller => 'events/search', :action => 'show', :conditions => { :method => :get }
   

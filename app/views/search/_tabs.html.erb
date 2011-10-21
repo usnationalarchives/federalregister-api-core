@@ -4,6 +4,12 @@
   <% else %>
     <li><%= link_to "Articles <span class=\"number_of_results\">#{number_with_delimiter search.entry_count}</span>", entries_search_path(:conditions => {:term => search.term}) %></li>
   <% end %>
+
+  <% if selected == :public_inspection %>
+    <li class="on"><%= link_to 'Public Inspection', public_inspection_search_path(:conditions => {:term => search.term}) %></li>
+  <% else %>
+    <li><%= link_to "Public Inspection <span class=\"number_of_results\">#{number_with_delimiter search.public_inspection_document_count}</span>", public_inspection_search_path(:conditions => {:term => search.term}) %></li>
+  <% end %>
   
   <% if selected == :events %>
     <li class="on"><%= link_to 'Events', events_search_path(:conditions => {:term => search.term}) %></li>

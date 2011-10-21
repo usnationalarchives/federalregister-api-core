@@ -1,0 +1,19 @@
+<% title @search.term.blank? ? 'Public Inspection Search' : "Public Inspection Search Results for '#{h @search.term}'" %>
+<%= feed_autodiscovery public_inspection_search_url(params.except(:action).merge(:format => :rss, :order => 'date')), @search.summary, :search_conditions => (params[:conditions] || {}).except(:publication_date) %>
+
+<% add_javascript :src => 'page_specific/search/search.js' %>
+<% add_javascript :src => 'page_specific/search/jquery-ui-1.8.6.custom.min.js' %>
+
+<div class="title"><span>Search Public Inspection</span></div>
+
+<%= render :esi => public_inspection_search_header_path(params.except(:action)) %>
+
+<% unless @search.blank?%>
+  <% if @search.valid? %>
+    <div class="filters">
+      <%= render :esi => public_inspection_search_facets_path(params.except(:action).merge(:facet => 'type')) unless @search.type.present? %>
+      <%= render :esi => public_inspection_search_facets_path(params.except(:action).merge(:facet => 'agency')) unless @search.agency_ids.present? %>
+    </div>
+    <%= render :esi => public_inspection_search_results_path(params.except(:action)) %>
+  <% end %>
+<% end %>

@@ -4,8 +4,21 @@ class PublicInspectionDocumentSearch < ApplicationSearch
   define_filter :type,        :sphinx_type => :with, :crc32_encode => true do |types|
     types.map{|type| Entry::ENTRY_TYPES[type]}.to_sentence(:two_words_connector => ' or ', :last_word_connector => ', or ')
   end
+  define_filter :docket_id, :phrase => true, :label => "Agency Docket" do |docket|
+    docket
+  end 
   
-  define_date_filter :publication_date, :label => "Publication Date"
+  def agency_facets
+    ApplicationSearch::FacetCalculator.new(:search => self, :model => Agency, :facet_name => :agency_ids).all
+  end
+  memoize :agency_facets
+  
+  def type_facets
+    ApplicationSearch::FacetCalculator.new(:search => self, :facet_name => :type, :hash => Entry::ENTRY_TYPES).all().reject do |facet|
+      ["UNKNOWN", "CORRECT"].include?(facet.value)
+    end
+  end
+  memoize :type_facets
 
   def self.new_if_possible(args)
     if (args[:conditions].keys.map(&:to_sym) - [:term, :publication_date, :docket_id, :agency_ids, :type, :pending_publication]).size == 0
@@ -25,18 +38,11 @@ class PublicInspectionDocumentSearch < ApplicationSearch
   end
   
   def supported_orders
-    %w(Relevant Newest Oldest)
+    %w(Relevant)
   end
   
   def order_clause
-    case @order
-    when 'newest'
-      "filed_at DESC, @relevance DESC"
-    when 'oldest'
-      "filed_at ASC, @relevance DESC"
-    else
-      "@relevance DESC, filed_at DESC"
-    end
+    "@relevance DESC, filed_at DESC"
   end
 
   def summary
