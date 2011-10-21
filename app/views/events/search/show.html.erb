@@ -1,5 +1,6 @@
 <% title @search.term.blank? ? 'Event Search' : "Event Search Results for '#{h @search.term}'" %>
 <%= feed_autodiscovery events_search_url(params.merge(:format => :rss, :order => 'date')) %>
+<% meta_robots("NOINDEX, NOFOLLOW") %>
 
 <div class="title"><span>Search Events</span></div>
 
