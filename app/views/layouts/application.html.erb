@@ -12,7 +12,9 @@
     <%= tag(:link, :rel  => 'canonical', :href => 'http://www.federalregister.gov' + request.fullpath.sub(/\/$/,'')) %>
     
     <%= render :esi => layout_head_content_path(:page_to_track => yield(:page_to_track)) %>
-    
+
+    <%= yield :robots %>
+
     <%= yield :javascripts %>
     
     <%= yield :feeds %>
