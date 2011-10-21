@@ -218,6 +218,21 @@ namespace :sphinx do
   task :run_sphinx_delta_indexer, :roles => [:sphinx] do
     run "indexer --config #{shared_path}/config/#{rails_env}.sphinx.conf --rotate #{delta_index_names}"
   end
+
+  namespace :public_inspection do
+    task :reindex do
+      transfer_raw_files
+      run_sphinx_indexer
+    end
+
+    task :transfer_raw_files, :roles => [:worker] do
+      run "rsync --verbose  --progress --stats --compress --recursive --times --perms --links #{shared_path}/data/public_inspection/raw sphinx:#{shared_path}/data/public_inspection"
+    end
+
+    task :run_sphinx_indexer, :roles => [:sphinx] do
+      run "indexer --config #{shared_path}/config/#{rails_env}.sphinx.conf public_inspection_document_core --rotate"
+    end
+  end
 end
 
 namespace :apache do

@@ -29,6 +29,7 @@ module Content
         new_documents << doc if doc.new_record?
       end
       issue.touch(:published_at) unless issue.published_at
+      issue.touch(:updated_at)
 
       new_documents
     end

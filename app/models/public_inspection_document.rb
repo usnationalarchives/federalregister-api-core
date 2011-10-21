@@ -20,6 +20,8 @@
 #  raw_text_updated_at :datetime
 #  delta               :boolean(1)      default(TRUE), not null
 #  num_pages           :integer(4)
+#  created_at          :datetime
+#  updated_at          :datetime
 #
 
 class PublicInspectionDocument < ApplicationModel

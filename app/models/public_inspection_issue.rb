@@ -7,6 +7,8 @@
 #  published_at               :datetime
 #  special_filings_updated_at :datetime
 #  regular_filings_updated_at :datetime
+#  created_at                 :datetime
+#  updated_at                 :datetime
 #
 
 class PublicInspectionIssue < ApplicationModel
