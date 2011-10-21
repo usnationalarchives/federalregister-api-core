@@ -6,7 +6,8 @@ class Events::SearchController < SearchController
       wants.html
       wants.ics do
         cal = Calendar.new
-        
+        @search.date = {:gte => Date.current.to_s}
+        @search.order = 'oldest'
         @search.results.each do |event|
           cal.add_event(event.to_ics)
         end

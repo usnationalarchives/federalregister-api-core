@@ -1,4 +1,5 @@
 class EventSearch < ApplicationSearch
+  define_date_filter :date, :label => "Date"
   define_filter :agency_ids,  :sphinx_type => :with_all
   define_place_filter :near, :sphinx_attribute => :place_id
   define_filter :type do |type|

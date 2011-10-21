@@ -160,7 +160,7 @@ class ApplicationSearch
       if @lte.present?
         Date.parse(@lte)
       else
-        Date.current
+        10.years.from_now
       end
     end
   end
