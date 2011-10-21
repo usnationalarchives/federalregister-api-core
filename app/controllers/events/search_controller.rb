@@ -8,6 +8,7 @@ class Events::SearchController < SearchController
         cal = Calendar.new
         @search.date = {:gte => Date.current.to_s}
         @search.order = 'oldest'
+        @search.per_page = 50
         @search.results.each do |event|
           cal.add_event(event.to_ics)
         end
