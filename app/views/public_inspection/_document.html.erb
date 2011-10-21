@@ -8,11 +8,11 @@
       <span class="new_document"></span>
     <%- end %>
     <span class="filed_at">Filed on: <%= document.filed_at.to_s(:short_date_then_time) %></span>
+    <%- if document.publication_date.present? %> 
     <span class="publication_date">Publication Date:
-      <%- if document.publication_date.present? %> 
         <%= Issue.find_by_publication_date(document.publication_date) ? link_to(document.publication_date, entries_by_date_path(document.publication_date, :anchor => document.document_number) ) : document.publication_date  %>
-      <%- end %>
     </span>
+    <%- end %>
   </div>
 
   <div class="column doc_numbers">
@@ -24,4 +24,10 @@
         <span class="docket_id"><%= docket_number.number %></span>
     <%- end %>
   </div>
+
+  <% if document.editorial_note %>
+    <div class="editorial_note">
+      <strong>Editorial Note: <%= document.editorial_note %></strong>
+    </div>
+  <% end %>
 </div>
