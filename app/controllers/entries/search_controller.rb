@@ -26,9 +26,8 @@ class Entries::SearchController < SearchController
 
     if params[:conditions]
       per_page = params[:show_all_pi] ? 250 : 3
-      conditions = params[:conditions].merge(:pending_publication => "1")
       @public_inspection_document_search = PublicInspectionDocumentSearch.new_if_possible(
-        :conditions => conditions
+        :conditions => params[:conditions]
       )
     end
     render :layout => false

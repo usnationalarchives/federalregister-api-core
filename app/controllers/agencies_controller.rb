@@ -14,7 +14,7 @@ class AgenciesController < ApplicationController
     @agency = Agency.find_by_slug!(params[:id])
     respond_to do |wants|
       wants.html do
-        @public_inspection_documents = PublicInspectionDocumentSearch.new(:conditions => {:pending_publication => 1, :agency_ids => [@agency.id]}, :per_page => 250).results
+        @public_inspection_documents = PublicInspectionDocumentSearch.new(:conditions => {:agency_ids => [@agency.id]}, :per_page => 250).results
         @entries = EntrySearch.new(:conditions => {:agency_ids => [@agency.id]}, :order => "newest", :per_page => 40).results
         @significant_entries = EntrySearch.new(:conditions => {:agency_ids => [@agency.id], :significant => '1', :publication_date => {:gte => 3.months.ago.to_date.to_s}}, :order => "newest", :per_page => 40).results
         @comments_closing = @agency.entries.comments_closing

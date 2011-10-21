@@ -54,7 +54,6 @@ class PublicInspectionDocument < ApplicationModel
     indexes "GROUP_CONCAT(DISTINCT docket_numbers.number SEPARATOR ' ')", :as => :docket_id
     
     # attributes
-    has "IF(public_inspection_documents.publication_date && entries.id IS NULL,1,0)", :as => :pending_publication, :type => :boolean
     has "public_inspection_documents.id", :as => :public_inspection_document_id, :type => :integer
     has "CRC32(IF(public_inspection_documents.granule_class = 'SUNSHINE', 'NOTICE', public_inspection_documents.granule_class))", :as => :type, :type => :integer
     has agency_assignments(:agency_id), :as => :agency_ids
@@ -70,7 +69,7 @@ class PublicInspectionDocument < ApplicationModel
       "agency_name" => 10
     }
     
-    set_property :delta => ThinkingSphinx::Deltas::ManualDelta
+    where "public_inspection_documents.publication_date && entries.id IS NULL"
   end
 
   # Note: the concept of 'unpublished' is different from that of 'pending publication'

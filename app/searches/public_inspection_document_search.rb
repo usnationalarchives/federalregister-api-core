@@ -1,5 +1,4 @@
 class PublicInspectionDocumentSearch < ApplicationSearch
-  define_filter :pending_publication, :sphinx_type => :with
   define_filter :agency_ids,  :sphinx_type => :with
   define_filter :type,        :sphinx_type => :with, :crc32_encode => true do |types|
     types.map{|type| Entry::ENTRY_TYPES[type]}.to_sentence(:two_words_connector => ' or ', :last_word_connector => ', or ')
@@ -21,7 +20,7 @@ class PublicInspectionDocumentSearch < ApplicationSearch
   memoize :type_facets
 
   def self.new_if_possible(args)
-    if (args[:conditions].keys.map(&:to_sym) - [:term, :publication_date, :docket_id, :agency_ids, :type, :pending_publication]).size == 0
+    if (args[:conditions].keys.map(&:to_sym) - [:term, :publication_date, :docket_id, :agency_ids, :type]).size == 0
       new(args)
     end
   end
