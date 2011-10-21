@@ -48,7 +48,7 @@ $(document).ready(function () {
         }
     };
     
-    $('.result_set').each(function(){
+    $('.result_set[data-expected-result-count]').each(function(){
         var text = $(this).attr('data-expected-result-count');
         
         var form = $('#entry_search_form');
