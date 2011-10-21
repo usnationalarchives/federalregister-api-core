@@ -86,13 +86,21 @@ class EntriesController < ApplicationController
   
   def show
     cache_for 1.day
-    @entry = Entry.find_by_document_number!(params[:document_number])
     
-    if @entry.slug != params[:slug]
-      redirect_to entry_path(@entry), :status => :moved_permanently
+    @entry = Entry.find_by_document_number(params[:document_number])
+
+    if @entry
+      if @entry.slug != params[:slug]
+        redirect_to entry_path(@entry), :status => :moved_permanently
+      else
+        render
+      end
     else
-      respond_to do |wants|
-        wants.html
+      @public_inspection_document = PublicInspectionDocument.find_by_document_number!(params[:document_number])
+      if @public_inspection_document.slug != params[:slug]
+        redirect_to entry_path(@public_inspection_document), :status => :moved_permanently
+      else
+        render :template => 'public_inspection/show'
       end
     end
   end
@@ -104,7 +112,9 @@ class EntriesController < ApplicationController
   
   def tiny_url
     cache_for 1.day
-    entry = Entry.find_by_document_number!(params[:document_number])
+    entry_or_pi = Entry.find_by_document_number(params[:document_number]) || PublicInspectionDocument.find_by_document_number(params[:document_number])
+    raise ActiveRecord::RecordNotFound if entry_or_pi.blank?
+
     url = entry_url(entry, params.except(:anchor, :document_number, :action, :controller, :format))
     
     if params[:anchor].present?

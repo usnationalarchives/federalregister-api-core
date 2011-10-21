@@ -89,6 +89,13 @@ class PublicInspectionDocument < ApplicationModel
     self['document_file_path'] || document_number.sub(/-/,'').scan(/.{0,3}/).reject(&:blank?).join('/')
   end
 
+  def slug
+    base = title.present? ? title : [toc_doc, toc_subject].join(' ')
+    clean_title = base.downcase.gsub(/[^a-z0-9& -]+/,'').gsub(/&/, 'and')
+    slug = view_helper.truncate_words(clean_title, :length => 100, :omission => '')
+    slug.gsub(/ /,'-')
+  end
+
   # FIXME: these are only defined so that the presenter doesn't blow up...
   #   the presenter should be made more dynamic and handle different sort orders.
   def start_page

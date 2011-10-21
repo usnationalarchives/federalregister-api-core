@@ -1,0 +1,45 @@
+<% title "Public Inspection: #{@public_inspection_document.title.present? ? @public_inspection_document.title : "#{@public_inspection_document.toc_subject} #{@public_inspection_document.toc_doc}"}" %>
+
+<div class="title"><span>PI: <%= @public_inspection_document.entry_type %></span></div>
+
+<% article_tag do %>
+  
+  <div id="metadata_content_area">
+      <%= render :partial => "public_inspection/header", :locals => {:document => @public_inspection_document} %>
+  </div> <!-- end metadata_content_area -->
+  
+  <% aside_tag(:id => 'sidebar') do %>
+    
+    <a href="#content_area" title="Skip the metadata" class="skip_to_content">Skip the metadata and jump to content</a>
+    
+    <%= render :partial => 'special/legal_disclaimer' %>
+    
+    <div class="aside_box">
+      <% if @public_inspection_document.pdf_file_name.present? %>
+      <div class="download_separator">
+        <%= link_to "PDF", @public_inspection_document.pdf.url, :class => 'button format list pdf', :title => 'Download as PDF' %>
+      </div>
+      <% end %>
+      <%= render :partial => "public_inspection/metadata", :locals => {:document => @public_inspection_document} %>
+    </div>  
+    
+  <% end -%> <!-- end aside tag -->
+  
+  <div id="content_area">
+    <div id="fulltext_content_area">
+      <% if @public_inspection_document.editorial_note %>
+        <p class="editorial_note"><strong>Editorial Note: <%= @public_inspection_document.editorial_note %></strong></p>
+      <% end %>
+
+      <% if @public_inspection_document.publication_date %>
+        <p>This document is <strong>unpublished</strong>, but on <%= @public_inspection_document.publication_date %> it will be published and available on this page.
+          <% if @public_inspection_document.pdf_file_name.present? %>
+            Until then, you can download the <%= link_to 'original PDF version', @public_inspection_document.pdf.url %>.
+          <% end %>
+        </p>
+      <% end %>
+    </div> <!-- end fulltext_content_area area -->  
+  
+  </div> <!-- content_area end -->
+  
+<% end %> <!-- end article tag -->

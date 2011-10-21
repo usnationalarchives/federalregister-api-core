@@ -1,0 +1,18 @@
+<% title = document.title.present? ? document.title : "#{document.toc_subject} #{document.toc_doc}" %>
+<h1><%= title %></h1>
+
+<div class="metadata_share_bar">
+  <p class="metadata">An <strong>unpublished</strong> <%= document.entry_type %> by <%= agency_names(document) %>
+    <% if document.publication_date %>
+      on <%= date_tag(document.publication_date, :datetime => document.publication_date.to_s(:iso)) %>
+    <% end %>
+  </p>
+
+  <div class="share">
+    <ul>
+      <li><%= link_to_twitter("#{short_entry_url(document)} #gov20") %></li>
+      <li><%= link_to_facebook(short_entry_url(document), title) %></li>
+    </ul>
+  </div>
+</div>
+
