@@ -12,7 +12,7 @@ module Paperclip
       if num_pages > 1 
         `pdftk #{file.path} cat 1 output - | pdftk - background #{banner.path} output - | pdftk A=- B=#{file.path} cat A1 B2-end output #{output.path}`
       else
-        `pdftk #{file.path} stamp #{banner.path} output #{output.path}`
+        `pdftk #{file.path} background #{banner.path} output #{output.path}`
       end
       output
     end
