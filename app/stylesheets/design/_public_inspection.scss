@@ -85,6 +85,9 @@
   display: block;
   }
 
+#entries div.editorial_note {
+  clear:both;
+  }
 
 #entries span.pdf.small {
   background: sprite-image('icons/icon_pdf_small.png', 0, 0, 50px);

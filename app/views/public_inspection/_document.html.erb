@@ -25,10 +25,10 @@
         <span class="docket_id"><%= docket_number.number %></span>
     <%- end %>
   </div>
-
-  <% if document.editorial_note %>
-    <div class="editorial_note">
-      <strong>Editorial Note: <%= document.editorial_note %></strong>
-    </div>
-  <% end %>
 </div>
+
+<% if document.editorial_note %>
+  <div class="editorial_note">
+    <strong>Editorial Note: <%= document.editorial_note %></strong>
+  </div>
+<% end %>
