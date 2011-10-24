@@ -5,7 +5,14 @@
   margin-bottom: .5em;
   margin-top: 0;
   text-transform: uppercase;
-  }  
+  }
+
+#subscriptions li.header.email {
+  clear: left;
+  margin-top: 10px;
+  }
+#subscriptions li.header.email h5 { margin-right: 3px; }
+
 .icons.horizontal {
   @include horizontal-list;
   }
@@ -70,9 +77,13 @@
   }  
 #modal.subscribe .icons .rss_link,
 #subscriptions .icons .rss_link { background: sprite-image('icons/subscribe/rss.png', 0, 0, 50px) no-repeat; }
-#modal.subscribe .icons .email,
-#subscriptions .icons .email { 
+
+#modal.subscribe .icons .email { 
   clear: left;
+  margin-top: 10px;
+  padding-left: 0;
+  }
+#subscriptions .icons .email { 
   margin-top: 10px;
   padding-left: 0;
   }
@@ -97,6 +108,15 @@
 #subscriptions .icons #subscription_email_input label {
   display: none;
   }
+#subscriptions .icons #subscription_search_type_input { clear: both; }
+#subscriptions .icons #subscription_search_type_input fieldset { width: 400px; }
+#subscriptions .icons #subscription_search_type_input legend {
+  width: 60px;
+  margin-top: 2px;
+}
+
+
+#subscription_email_input input { height: 16px; }
 #modal.subscribe .icons .email .address,
 #subscriptions .icons .email #subscription_email {
   background: sprite-image('icons/subscribe/email-trans.png', 5px, 3px, 50px) no-repeat; 
@@ -106,6 +126,13 @@
   padding: 1px 5px 1px 30px;
   width: 215px;
   }
+
+#subscriptions .icons .email .formstastic fieldset#buttons {
+  position: absolute;
+  left: 251px;
+  top: -1px;
+  }  
+
 #modal.subscribe .icons .email .subscribe,
 #subscriptions .icons .email #subscription_submit {
   background: sprite-image('icons/subscribe/subscribe-btn.png', 0, 1px, 50px) no-repeat;
