@@ -25,7 +25,7 @@ class SubscriptionsController < ApplicationController
   def confirm
     @subscription = Subscription.find_by_token!(params[:id])
     @subscription.confirm!
-    redirect_to confirmed_subscriptions_path
+    redirect_to confirmed_subscriptions_path(:type => @subscription.mailing_list.type)
   end
   
   def confirmed

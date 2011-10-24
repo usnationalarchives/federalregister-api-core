@@ -27,6 +27,7 @@ class ApplicationController < ActionController::Base
 
   rescue_from Exception, :with => :server_error if RAILS_ENV != 'development'
   def server_error(exception)
+    Rails.logger.error(exception)
     notify_hoptoad(exception)
     
     # ESI routes should return correct status codes, but no error page

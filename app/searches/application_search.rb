@@ -2,7 +2,7 @@ class ApplicationSearch
   extend ActiveSupport::Memoizable
 
   attr_accessor :order
-  attr_reader :filters, :term, :per_page, :page
+  attr_reader :filters, :term, :per_page, :page, :conditions, :valid_conditions
   
   def per_page=(count)
     per_page = count.to_s.to_i
@@ -111,14 +111,12 @@ filter_name.to_s.sub(/_ids?$/,'').classify.constantize.find_all_by_id(ids.flatte
     self.conditions = (options[:conditions] || {}).reject{|key,val| ! self.respond_to?("#{key}=")}
   end
   
-  def conditions
-    @conditions
-  end
-  
   def conditions=(conditions)
     @conditions = conditions
+    @valid_conditions = {}
     conditions.to_a.reverse.each do |attr, val|
-      self.send("#{attr}=", val)
+      valid = self.send("#{attr}=", val)
+      @valid_conditions[attr] = val if valid
     end
   end
   

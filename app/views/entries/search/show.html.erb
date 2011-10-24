@@ -22,7 +22,9 @@
       <%= render :esi => entries_search_facets_path(params.except(:action).merge(:facet => 'section', :num_facets => 6)) unless @search.section_ids.present? %>
     </div>
 
-    <%= render :esi => entries_search_suggestions_path(params.except(:action)) %>
+    <% if (params[:page].blank? || params[:page] == '1') && params[:order].blank? %>
+      <%= render :esi => entries_search_suggestions_path(params.except(:action)) %>
+    <% end %>
     <%= render :esi => entries_search_results_path(params.except(:action)) %>
   <% end %>
 <% end %>
