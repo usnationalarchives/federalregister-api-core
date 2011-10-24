@@ -49,7 +49,12 @@
     <div class='banner'>
       <p>
         This document has not yet been published in the Federal Register. 
-        It is scheduled to be published on <%= document.publication_date %> and will be available online at<br />
+        <% if document.publication_date %>
+          It is scheduled to be published on <%= document.publication_date %> and will be available online at
+        <% else %>
+          More information can be found at 
+        <% end %>
+        <br />
         <%= link_to nil, short_entry_url(document, :host => "federalregister.gov") %>.
       </p>
       <div class='logo'></div>
