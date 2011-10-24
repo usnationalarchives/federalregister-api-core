@@ -25,9 +25,8 @@ class Entries::SearchController < SearchController
     cache_for 1.day
 
     if params[:conditions]
-      per_page = params[:show_all_pi] ? 250 : 3
       @public_inspection_document_search = PublicInspectionDocumentSearch.new_if_possible(
-        :conditions => params[:conditions]
+        :conditions => @search.valid_conditions
       )
     end
     render :layout => false
