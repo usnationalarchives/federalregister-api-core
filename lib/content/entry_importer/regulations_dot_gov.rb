@@ -29,8 +29,10 @@ module Content::EntryImporter::RegulationsDotGov
   
   def possible_regulationsdotgov_search_terms
     terms = ["\"#{@entry.document_number}\""]
-
-    terms << "\"#{@entry.document_number}\" \"#{entry.docket_id}\""
+    
+    @entry.docket_numbers.each do |docket_number|
+      terms << "\"#{@entry.document_number}\" \"#{docket_number.number}\""
+    end
 
     terms << "\"#{@entry.document_number}\" \"#{entry.title}\""
 
