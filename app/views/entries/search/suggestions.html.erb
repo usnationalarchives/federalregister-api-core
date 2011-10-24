@@ -1,15 +1,13 @@
-<% if params[:page].blank? && params[:order].blank? %>
-  <div class="suggestions">
-    <%= render :partial => "suggestion",
-               :locals => {:search => @search} %>
-  
-    <%= render(:partial => "citation",
-               :locals => {:search => @search}) if @search.filters.blank? %>
-  
-    <%= render(:partial => "document_number",
-               :locals => {:search => @search}) if @search.filters.blank? %>
+<div class="suggestions">
+  <%= render :partial => "suggestion",
+             :locals => {:search => @search} %>
 
-    <%= render(:partial => "public_inspection_documents",
-               :locals => {:public_inspection_document_search => @public_inspection_document_search}) if @public_inspection_document_search.present? && @public_inspection_document_search.results.present? %>
-  </div>
-<% end %>
+  <%= render(:partial => "citation",
+             :locals => {:search => @search}) if @search.filters.blank? %>
+
+  <%= render(:partial => "document_number",
+             :locals => {:search => @search}) if @search.filters.blank? %>
+
+  <%= render(:partial => "public_inspection_documents",
+             :locals => {:public_inspection_document_search => @public_inspection_document_search}) if @public_inspection_document_search.present? && @public_inspection_document_search.results.present? %>
+</div>
