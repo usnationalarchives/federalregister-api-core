@@ -39,6 +39,7 @@ gem 'compass', '0.10.1'
 gem 'compass-960-plugin', '0.9.13', :require => false
 gem 'lemonade', '0.3.2'
 gem 'icalendar'
+gem 'pdfkit', '0.5.2'
 gem 'klarlack', '0.0.6'
 gem 'system_timer', '1.0.0'
 gem "amazon-ec2", :require => false
