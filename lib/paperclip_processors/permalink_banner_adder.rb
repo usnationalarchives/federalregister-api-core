@@ -8,7 +8,7 @@ module Paperclip
       kit.to_file(banner.path)
 
       output = Tempfile.new("output_pdf")
-      `pdftk #{file.path} cat 1 output - | pdftk - background #{banner.path} output - | pdftk A=- B=document.pdf cat A1 B2-end output #{output.path}`
+      `pdftk #{file.path} cat 1 output - | pdftk - background #{banner.path} output - | pdftk A=- B=#{file.path} cat A1 B2-end output #{output.path}`
       output
     end
   end
