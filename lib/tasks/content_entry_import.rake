@@ -69,7 +69,7 @@ namespace :content do
       namespace :regulations_dot_gov do
         def update_missing_regulationsdotgov_info(date)
           entries = Entry.scoped(:conditions => {:publication_date => date}).
-                          scoped(:conditions => ["comment_url IS NULL AND checked_regulationsdotgov_at IS NULL OR checked_regulationsdotgov_at < ?", 30.minutes.ago])
+                          scoped(:conditions => ["comment_url IS NULL AND (checked_regulationsdotgov_at IS NULL OR checked_regulationsdotgov_at < ?)", 30.minutes.ago])
           entries.each do |entry|
             importer = Content::EntryImporter.new(:entry => entry)
             importer.update_attributes(:checked_regulationsdotgov_at, :regulationsdotgov_url, :comment_url)
