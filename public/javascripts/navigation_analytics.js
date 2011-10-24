@@ -34,6 +34,10 @@ $(document).ready(function(){
     _gaq.push(['_trackEvent', 'Navigation', 'Search', "Regulations"]);
   });
 
+  $(".dropdown.nav_browse li#public-inspection-search a").bind('click', function() {
+    _gaq.push(['_trackEvent', 'Navigation', 'Search', "Public Inspection"]);
+  });
+
   // STATIC
   $(".dropdown.nav_browse li#nav-home a").bind('click', function() {
     _gaq.push(['_trackEvent', 'Navigation', 'Home', "Home"]);
