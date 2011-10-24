@@ -29,6 +29,7 @@ module Content
         new_documents << doc if doc.new_record?
       end
       issue.touch(:published_at) unless issue.published_at
+      issue.touch(:updated_at)
 
       new_documents
     end
@@ -49,9 +50,11 @@ module Content
     def initialize(attributes)
       @pi = PublicInspectionDocument.find_or_initialize_by_document_number(attributes.delete(:document_number))
       @new_record = @pi.new_record?
+      url = attributes.delete(:url)
       attributes.each_pair do |attr,val|
         send("#{attr}=", val)
       end
+      self.url = url
     end
 
     def new_record?
@@ -230,6 +233,7 @@ module Content
         when :toc_subject
           @toc_subject = @str
           @toc_doc = nil
+          @title = ''
         when :details
           @details = @str
 
@@ -255,7 +259,6 @@ module Content
             :url             => @url
           }
           @document_number = nil
-          @title = ''
         end
       end
 

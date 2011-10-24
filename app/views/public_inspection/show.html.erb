@@ -32,7 +32,7 @@
       <% end %>
 
       <% if @public_inspection_document.publication_date %>
-        <p>This document is <strong>unpublished</strong>, but on <%= @public_inspection_document.publication_date %> it will be published and available on this page.
+        <p>This document is unpublished, but on <%= @public_inspection_document.publication_date %> it is scheduled to be published and available on this page.
           <% if @public_inspection_document.pdf_file_name.present? %>
             Until then, you can download the <%= link_to 'original PDF version', @public_inspection_document.pdf.url %>.
           <% end %>

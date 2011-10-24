@@ -1,0 +1,63 @@
+<html>
+  <head>
+    <style>
+      body { margin-top: 0; padding-top: 0; }
+      div.banner {
+        background-color: #E5E5E5;
+        -webkit-border-bottom-left-radius: 5px;
+        border-bottom-left-radius: 5px;
+        -webkit-border-bottom-right-radius: 5px;
+        border-bottom-right-radius: 5px;
+        -webkit-border-top-left-radius: 5px;
+        border-top-left-radius: 5px;
+        -webkit-border-top-right-radius: 5px;
+        border-top-right-radius: 5px;
+        
+        width: 390px;
+        height: 80px;
+        margin: 0;
+        margin-top: 10px;
+        margin-left: 130px;
+        }
+      
+      div.logo {
+        width: 150px;
+        height: 148px;
+        background: url('<%= Rails.root %>/public/images/nara_seal_circle.png') 0 0 no-repeat;
+        top: -10px;
+        left: 10px;
+        position: relative;
+        opacity: .8;
+        }
+      
+      div.banner p {
+        width: 250px;
+        position: absolute;
+        left: 260px;
+        font-family: "Helvetica Neue";
+        margin-top:0.5em;
+        line-height: 1.4em;
+        font-size: 11px;
+      }
+      a {
+        color: #000;
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
+    <div class='banner'>
+      <p>
+        This document has not yet been published in the Federal Register. 
+        <% if document.publication_date %>
+          It is scheduled to be published on <%= document.publication_date %> and will be available online at
+        <% else %>
+          More information can be found at 
+        <% end %>
+        <br />
+        <%= link_to nil, short_entry_url(document, :host => "federalregister.gov") %>.
+      </p>
+      <div class='logo'></div>
+    </div>
+  </body>
+</html>

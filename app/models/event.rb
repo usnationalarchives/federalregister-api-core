@@ -87,7 +87,7 @@ class Event < ApplicationModel
       "abstract" => 50,
       "full_text" => 25,
     }
-    
+    where "events.date BETWEEN DATE_SUB(NOW(), INTERVAL 1 MONTH) AND DATE_ADD(NOW(), INTERVAL 2 YEAR)"
     set_property :delta => ThinkingSphinx::Deltas::ManualDelta
   end
   # this line must appear after the define_index block

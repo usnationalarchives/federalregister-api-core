@@ -1,6 +1,6 @@
 class ApplicationSearch
   extend ActiveSupport::Memoizable
-  
+
   attr_accessor :order
   attr_reader :filters, :term, :per_page, :page
   

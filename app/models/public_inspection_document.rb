@@ -20,6 +20,8 @@
 #  raw_text_updated_at :datetime
 #  delta               :boolean(1)      default(TRUE), not null
 #  num_pages           :integer(4)
+#  created_at          :datetime
+#  updated_at          :datetime
 #
 
 class PublicInspectionDocument < ApplicationModel
@@ -28,7 +30,14 @@ class PublicInspectionDocument < ApplicationModel
                     :s3_credentials => "#{Rails.root}/config/amazon.yml",
                     :s3_alias_url => 'http://public-inspection.federalregister.gov.s3.amazonaws.com/',
                     :bucket => 'public-inspection.federalregister.gov',
-                    :path => ":document_number.pdf"
+                    :path => ":style/:document_number.pdf",
+                    :default_style => :with_banner,
+                    :styles => {
+                      :with_banner => { :processors => [:permalink_banner_adder] },
+                      :original => {}
+                    },
+                    :processors => [:permalink_banner_adder]
+
 
   has_one :entry,
           :foreign_key => :document_number,

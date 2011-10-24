@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111014190911) do
+ActiveRecord::Schema.define(:version => 20111021185603) do
 
   create_table "agencies", :force => true do |t|
     t.integer  "parent_id"
@@ -364,6 +364,8 @@ ActiveRecord::Schema.define(:version => 20111014190911) do
     t.datetime "raw_text_updated_at"
     t.boolean  "delta",               :default => true,  :null => false
     t.integer  "num_pages"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "public_inspection_documents", ["delta"], :name => "index_public_inspection_documents_on_delta"
@@ -375,6 +377,8 @@ ActiveRecord::Schema.define(:version => 20111014190911) do
     t.datetime "published_at"
     t.datetime "special_filings_updated_at"
     t.datetime "regular_filings_updated_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "public_inspection_postings", :id => false, :force => true do |t|
