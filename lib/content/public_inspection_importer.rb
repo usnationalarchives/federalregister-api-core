@@ -24,9 +24,9 @@ module Content
 
       new_documents = []
       parser.document.pi_documents.each do |attr|
-        doc = Content::PublicInspectionImporter.import(attr)
-        issue.public_inspection_documents << doc unless issue.public_inspection_document_ids.include?(doc.id)
-        new_documents << doc if doc.new_record?
+        doc_importer = Content::PublicInspectionImporter.import(attr)
+        issue.public_inspection_documents << doc_importer.document unless issue.public_inspection_document_ids.include?(doc_importer.document.id)
+        new_documents << doc_importer.document if doc_importer.new_record?
       end
       issue.touch(:published_at) unless issue.published_at
       issue.touch(:updated_at)
@@ -37,7 +37,7 @@ module Content
     def self.import(attributes)
       importer = new(attributes)
       importer.save!
-      importer.document
+      importer
     end
 
     def self.save_file(html)
