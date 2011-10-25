@@ -39,6 +39,7 @@ ul.bold_links a {
   top: 100px;
   right: 0;
   width: image-width("icons/tender.png");
+  z-index: 5000;
   }
 
 .clear { clear: both; }
