@@ -115,7 +115,7 @@ class EntriesController < ApplicationController
     entry_or_pi = Entry.find_by_document_number(params[:document_number]) || PublicInspectionDocument.find_by_document_number(params[:document_number])
     raise ActiveRecord::RecordNotFound if entry_or_pi.blank?
 
-    url = entry_url(entry, params.except(:anchor, :document_number, :action, :controller, :format))
+    url = entry_url(entry_or_pi, params.except(:anchor, :document_number, :action, :controller, :format))
     
     if params[:anchor].present?
       url += '#' + params[:anchor]
