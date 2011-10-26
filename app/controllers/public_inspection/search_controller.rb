@@ -3,6 +3,11 @@ class PublicInspection::SearchController < SearchController
     cache_for 1.day
     respond_to do |wants|
       wants.html
+      wants.rss do
+        @documents = @search.results
+        @feed_name = @search.summary
+        render :template => 'public_inspection/index.rss.builder'
+      end
     end
   end
 
