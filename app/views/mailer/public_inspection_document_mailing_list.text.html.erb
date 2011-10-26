@@ -9,7 +9,7 @@
         <td>
           <img src="<%= root_url %>images/logotype.png" />
           <h1 style="background:none repeat scroll 0 0 #FFFFFF;color:#5697CF;font-family:'Helvetica Neue',Arial,Helvetica,sans-serif;margin:30px 0 15px 0;padding:0;">
-            <%=h @mailing_list.title %>
+            <%=h @mailing_list.title %><br />
           <span style="color:#363636;font-size: 12px;font-family:'Helvetica Neue',Arial,Helvetica,sans-serif;font-style:italic;font-weight: normal;">(<%= pluralize @results.size, "matching newly filed public inspection document" %>)</span>
          </h1>
         </td>
@@ -18,7 +18,7 @@
         </td>
       </tr>
     </table>  
-    <p><i><%= @results.first.publication_date.to_s(:formal) %></i></p>
+    <p><i><%= link_to @results.first.filed_at.to_date.to_s(:formal), public_inspection_documents_by_date(@results.first.filed_at.to_date) %></i></p>
     <h2 style="color:#464646;font-family:'Helvetica Neue',Arial,Helvetica,sans-serif;font-size:18px;text-transform: uppercase;border-bottom: 2px solid #464646;margin: 0 0 10px;">Table of Contents:</h2>
     
     <% @agencies.each_with_index do |agency, index| %>

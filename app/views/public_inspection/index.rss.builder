@@ -17,7 +17,7 @@ xml.rss "version" => "2.0", "xmlns:dc" => "http://purl.org/dc/elements/1.1/" do
           xml.title   "#{document.toc_subject} #{document.toc_doc}"
         end
 
-        xml.link        document.pdf.url
+        xml.link        entry_url(document)
 
         description = []
         description += document.docket_numbers.map(&:number)
@@ -28,7 +28,7 @@ xml.rss "version" => "2.0", "xmlns:dc" => "http://purl.org/dc/elements/1.1/" do
 
         xml.description description.join('; ')
         xml.pubDate     CGI.rfc1123_date document.filed_at
-        xml.guid        document.pdf.url
+        xml.guid        document.document_number
         xml.author      document.agencies.map(&:name).to_sentence
       end
     end

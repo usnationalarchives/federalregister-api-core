@@ -35,8 +35,7 @@ module ApplicationHelper
     if options[:search_conditions]
       link_html_options[:'data-search-conditions'] = options[:search_conditions].to_json
 
-      options[:public_inspection_subscription_supported] ||= false
-      link_html_options[:'data-public-inspection-subscription-supported'] = options[:public_inspection_subscription_supported]
+      link_html_options[:'data-public-inspection-subscription-supported'] = PublicInspectionDocumentSearch.valid_arguments?(:conditions => options[:search_conditions])
     end
 
     content_for :feeds, tag(:link, link_html_options)
