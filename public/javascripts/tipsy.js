@@ -9,5 +9,10 @@ $(document).ready(function(){
   $('.doc_rule.tipsy').tipsy(   {gravity: 'e', fallback: "Final Rule",            delayIn: 100, fade: true, offset: -4});
   $('.doc_prorule.tipsy').tipsy({gravity: 'e', fallback: "Proposed Rule",         delayIn: 100, fade: true, offset: -4});
   $('.doc_presdocu.tipsy').tipsy({gravity: 'e', fallback: "Presidential Document", delayIn: 100, fade: true, offset: -4});
+
+  $('.tip_left').tipsy({gravity:'east'});
+  $('.tip_over').tipsy({gravity:'south'});
+  $('.tip_right').tipsy({gravity:'west'});
+  $('.tip_under').tipsy({gravity:'north'});
 });
 
