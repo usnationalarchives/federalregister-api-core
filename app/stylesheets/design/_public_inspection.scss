@@ -110,7 +110,7 @@ span.permalink {
   display: block;
   }
 span.permalink:hover {
-  background: sprite-image('icons/icon_permalink_hover.png', -1px, 0, 50px);
+  background: sprite-image('icons/icon_permalink_hover.png', -1px, 0, 50px) no-repeat;
   }
 
 /* Calendar modifications */

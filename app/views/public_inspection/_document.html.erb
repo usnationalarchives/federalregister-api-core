@@ -18,7 +18,7 @@
 
   <div class="column doc_numbers">
     <span class="document_number">
-      FR Document: <%= link_to_if document.document_number.present? && document.publication_date && Date.today >= document.publication_date, document.document_number, "/a/#{document.document_number}" %>
+      FR Document: <%= link_to document.document_number, short_entry_path(document) %>
     </span>
 
     <%- document.docket_numbers.each do |docket_number| %>

@@ -39,21 +39,28 @@ $(document).ready(function () {
               '</div>'
             ].join("\n");
 
+            if ( $("#subscription-modal-template").length > 0 ) {
+              var subscription_modal_template = Handlebars.compile( $("#subscription-modal-template").html() );
+            }
+
             var elements = $('link[type="application/rss+xml"]').map(function () {
-                var elem = $(this);
-                var feed = {
-                  title: elem.attr('title'),
-                  href: elem.attr('href')
-                };
-                if(elem.attr('data-search-conditions')) {
-                  feed.subscription_action = "/subscriptions?" + $.param({'subscription' : {'search_conditions' : $.parseJSON(elem.attr('data-search-conditions'))}})
-                }
-                
-                return feed;
+              var elem = $(this);
+              var feed = {
+                title: elem.attr('title'),
+                href: elem.attr('href')
+              };
+              if(elem.attr('data-search-conditions')) {
+                feed.subscription_action = "/subscriptions?" + $.param({'subscription' : {'search_conditions' : $.parseJSON(elem.attr('data-search-conditions'))}})
+              }
+
+              if( !elem.data('public-inspection-subscription-supported') == undefined ) {
+                feed.public_inspection_subscription_supported = elem.data('public-inspection-subscription-supported');
+              }
+
+              return feed;
             });
-            $('body').append(tmpl(template, {
-                elements: elements
-            }));
+
+            $('body').append( subscription_modal_template({elements: elements}) );
 
             $('#modal form').submit(function() {
                 var form = $(this);

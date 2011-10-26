@@ -49,6 +49,7 @@
   
   <div class='aside_box subscribe'> 
     <%= link_to 'Subscribe', new_subscription_path(:subscription => {:search_conditions => {}}), :class => 'subscription subscription_action' %>
+    <%= add_template('subscription_modal', 'subscription-modal') %>
   </div>
 
   <% section_tag(:id => 'meta_toc') do %>
