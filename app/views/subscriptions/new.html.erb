@@ -39,11 +39,30 @@
 
       <% f.inputs do %>
         <%= f.input :email,
-                    :input_html => { :placeholder => 'Subscribe via E-Mail' } %>
-        <%= f.input :search_type,
-                    :as => :radio,
-                    :collection => [['Published', 'Entry'], ['Filed on Public Inspection', 'PublicInspectionDocument']],
-                    :label => "Notify when" %>
+                    :input_html => { :placeholder => 'E-Mail Address' } %>
+        <li class="radio optional" id="subscription_search_type_input">
+          <fieldset>
+            <legend class="label">
+              <label for="subscription_search_type">Notify when</label>
+            </legend>
+            <ol>
+              <li>
+                <label for="subscription_search_type_entry">
+                  <%= f.radio_button :search_type, 'Entry' %>
+                  <!-- <input checked="checked" id="subscription_search_type_entry" name="subscription[search_type]" type="radio" value="Entry" /> -->
+                  Published
+                </label>
+              </li>
+              <% disabled = ! @subscription.mailing_list.search.public_inspection_search_possible? %>
+              <li class="<%= 'disabled' if disabled %>">
+                <label for="subscription_search_type_publicinspectiondocument" <%= 'title="This search is not available when documents are filed for public inspection."' if disabled %>>
+                  <%= f.radio_button :search_type, 'PublicInspectionDocument', (disabled ? {:disabled => :disabled} : {}) %>
+                  Filed on Public Inspection
+                </label>
+              </li>
+            </ol>
+          </fieldset>
+        </li>
       <% end %>
 
 			<% f.buttons do %>

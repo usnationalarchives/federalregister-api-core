@@ -264,7 +264,13 @@ class EntrySearch < ApplicationSearch
     date = ApplicationSearch::DateSelector.new(:is => date)
     results({:with => {:publication_date => date.sphinx_value}, :per_page => 1000}.merge(args))
   end
-  
+
+  def public_inspection_search_possible?
+    PublicInspectionDocumentSearch.valid_arguments?(
+      :conditions => valid_conditions
+    )
+  end
+
   private
   
   def set_defaults(options)

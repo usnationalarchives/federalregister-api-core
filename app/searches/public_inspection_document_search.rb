@@ -20,12 +20,16 @@ class PublicInspectionDocumentSearch < ApplicationSearch
   memoize :type_facets
 
   def self.new_if_possible(args)
-    args[:conditions] ||= {}
-    if (args[:conditions].keys.map(&:to_sym)- [:term, :publication_date, :docket_id, :agency_ids, :type]).size == 0
+    if valid_arguments?(args)
       new(args)
     end
   end
-  
+
+  def self.valid_arguments?(args)
+    args[:conditions] ||= {}
+    (args[:conditions].keys.map(&:to_sym)- [:term, :publication_date, :docket_id, :agency_ids, :type]).size == 0
+  end
+
   def model
     PublicInspectionDocument
   end
