@@ -1,5 +1,6 @@
 class Mailer < ActionMailer::Base
   include SendGrid
+  include RouteBuilder
   helper :entry, :text
   
   sendgrid_enable :opentracking, :clicktracking, :ganalytics

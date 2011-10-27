@@ -220,7 +220,7 @@ module RouteBuilder
       next if method !~ /(?:_path|_url)$/
       
       # allow this module to be mixed in outside of controllers...
-      if base < ActionController::Base
+      if base < ActionController::Base || base < ActionMailer::Base
         base.instance_eval do
           helper_method method
         end
