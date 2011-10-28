@@ -17,11 +17,11 @@ class EntrySearch::Suggestor::Agency < EntrySearch::Suggestor::Base
     agency_ids = Array(@search.conditions[:agency_ids]).map(&:to_i)
 
     Agency.active.find_as_arrays(:select => "id, name, short_name, display_name").each do |id, *names|
-      pattern = names.reject(&:blank?).compact.map{|n| "\\b" + Regexp.escape(n) + "\\b"}.join('|')
+      pattern = names.reject(&:blank?).compact.map{|n| "(^|[^a-zA-Z0-9-])" + Regexp.escape(n) + "\\b"}.join('|')
 
       if @term =~ /(#{pattern})/i && ! agency_ids.include?(id.to_i)
         agency_ids << id.to_i
-        @term = @term.sub(/\b(?:#{pattern})\b/i, '')
+        @term = @term.sub(/(?:#{pattern})/i, '\1')
       end
     end
 

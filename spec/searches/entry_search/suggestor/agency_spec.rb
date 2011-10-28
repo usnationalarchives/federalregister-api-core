@@ -48,7 +48,12 @@ describe 'EntrySearch::Suggestor::Agency' do
 
     it "keep words separate" do
       suggestion = suggestor("before USDA after").suggestion
-      suggestion.term.should == 'before  after'
+      suggestion.term.should == 'before after'
+    end
+
+    it "not match hyphenated words" do
+      suggestion = suggestor("pre-USDA").suggestion
+      suggestion.should be_nil
     end
   end
 end
