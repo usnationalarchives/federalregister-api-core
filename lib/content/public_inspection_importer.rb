@@ -180,11 +180,14 @@ module Content
         when 'b'
           @context = :updated_at_or_agency_or_granule_class_or_editorial_note
         when 'a'
-          if attributes['href'] && attributes['target']
-            @url = attributes['href']
-            @context = :details if attributes['href']
-          elsif ['special', 'regular'].include?(attributes['name'])
-            @filing_type = attributes['name']
+          if @context != :editorial_note
+            # raise self.inspect if attributes['href'] == 'PI.pdf'
+            if attributes['href'] && attributes['target']
+              @url = attributes['href']
+              @context = :details if attributes['href']
+            elsif ['special', 'regular'].include?(attributes['name'])
+              @filing_type = attributes['name']
+            end
           end
         end
       end
@@ -208,6 +211,7 @@ module Content
         when :updated_at_or_agency_or_granule_class_or_editorial_note
           if @str =~ /^EDITORIAL NOTE: /
             @pi_documents.last[:editorial_note] = @str.sub(/^EDITORIAL NOTE: /,'')
+            @context = :editorial_note
           elsif @str =~ /^Note: This (Special|Regular) Filing List was updated at (.*?)\. The following documents are on file/
             updated_at = Time.zone.parse($2)
             case $1
@@ -229,7 +233,10 @@ module Content
           end
           @document_number = @str
         when :editorial_note
-          @pi_documents.last[:editorial_note] = @str
+          @pi_documents.last[:editorial_note] ||= ''
+          @pi_documents.last[:editorial_note] += ' ' + @str
+        when :continued_editorial_note
+          @context = :editorial_note
         when :toc_subject
           @toc_subject = @str
           @toc_doc = nil
