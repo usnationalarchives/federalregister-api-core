@@ -73,7 +73,7 @@ module Content
 
     def details=(val)
       docket_numbers = []
-      val.sub!(/^\[/,'').sub!(/\]$/,'')
+      val = val.sub(/^\[/,'').sub(/\]$/,'')
       val.split(/\s*;\s*/).each do |part|
         case part
         when /Filed: (.+)/
