@@ -108,13 +108,29 @@
 #subscriptions .icons #subscription_email_input label {
   display: none;
   }
-#subscriptions .icons #subscription_search_type_input { clear: both; }
-#subscriptions .icons #subscription_search_type_input fieldset { width: 400px; }
+#modal.subscribe .icons li#subscription_search_type_input,
+#modal.subscribe .icons li#subscription_search_type_input li {
+  padding-left: 0px;
+  margin-right: 0px;
+  }
+#modal.subscribe .icons #subscription_search_type_input, 
+#subscriptions .icons #subscription_search_type_input { 
+  clear: both; 
+  }
+#modal.subscribe .icons #subscription_search_type_input fieldset, 
+#subscriptions .icons #subscription_search_type_input fieldset { 
+  width: 400px;
+  margin-top: 2px; 
+  }
+#modal.subscribe .icons #subscription_search_type_input legend, 
 #subscriptions .icons #subscription_search_type_input legend {
   width: 60px;
   margin-top: 2px;
-}
-
+  }
+#modal.subscribe li.disabled label,
+#subscriptions li.disabled label {
+  color: #CCC;
+  }
 
 #subscription_email_input input { height: 16px; }
 #modal.subscribe .icons .email .address,

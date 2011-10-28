@@ -13,7 +13,7 @@
         {{#if subscription_action }}
         <li class="email">
           <h5>Via Email:</h5>
-          <form action="{{ subscription_action }}" method="post">
+          <form action="{{ subscription_action }}" method="post" class="formtastic subscription">
             <input type="email" name="subscription[email]" placeholder="Subscribe via E-Mail" class="address">
 
             <li class="radio optional" id="subscription_search_type_input">
