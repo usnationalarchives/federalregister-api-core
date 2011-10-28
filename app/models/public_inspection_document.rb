@@ -28,9 +28,9 @@ class PublicInspectionDocument < ApplicationModel
   has_attached_file :pdf,
                     :storage => :s3,
                     :s3_credentials => "#{Rails.root}/config/amazon.yml",
-                    :s3_alias_url => 'http://public-inspection.federalregister.gov.s3.amazonaws.com/',
-                    :bucket => 'public-inspection.federalregister.gov',
                     :path => ":style/:document_number.pdf",
+                    :s3_alias_url => "http://public-inspection.#{APP_HOST_NAME}.s3.amazonaws.com/",
+                    :bucket => "public-inspection.#{APP_HOST_NAME}",
                     :default_style => :with_banner,
                     :styles => {
                       :with_banner => { :processors => [:permalink_banner_adder] },

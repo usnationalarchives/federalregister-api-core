@@ -1,3 +1,5 @@
+APP_HOST_NAME = 'fr2.local'
+
 # Settings specified here will take precedence over those in config/environment.rb
 
 # In the development environment your application's code is reloaded on
@@ -19,7 +21,7 @@ sendgrid_keys  = File.open( File.join(File.dirname(__FILE__), '..',
 smtp_settings = {
  :address        => "smtp.sendgrid.net",
  :port           => "587",
- :domain         => "www.fr2.local",
+ :domain         => "#{APP_HOST_NAME}",
  :user_name      => sendgrid_keys['username'],
  :password       => sendgrid_keys['password'],
  :authentication => :plain
@@ -28,6 +30,6 @@ smtp_settings = {
 config.action_mailer.delivery_method = :smtp
 config.action_mailer.smtp_settings   = smtp_settings
 
-config.action_mailer.default_url_options = {:host => 'fr2.local:8080'}
+config.action_mailer.default_url_options = {:host => "#{APP_HOST_NAME}:8080"}
 
 # Put gems in Gemfile...
