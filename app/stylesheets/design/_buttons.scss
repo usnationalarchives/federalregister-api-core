@@ -53,19 +53,33 @@ BUTTONS / ICONS
   line-height: 24px;
   padding: 0 0 0 27px;
   }
+.button.format.pdf,
+.button.format.xml,
+.button.format.print,
+.button.format.pi {
+  line-height: 25px;
+  padding-left: 20px;
+  }
+
 .button.social.digg { background: sprite-image('social/24px/digg.png', 0, 0, 50px); }
 .button.social.email { background: sprite-image('social/24px/email.png', 0, 0, 50px); }
 .button.social.facebook { background: sprite-image('social/24px/facebook.png', 0, 0, 50px); }
 .button.social.reddit { background: sprite-image('social/24px/reddit.png', 0, 0, 50px); }
 .button.social.twitter { background: sprite-image('social/24px/twitter.png', 0, 0, 50px); }
-.button.format.pdf { background: sprite-image('icons/icon_pdf.png', 0, 0, 50px); }
+.button.format.pdf { background: sprite-image('icons/icon_pdf_document.png', 0, -1px, 50px); }
+.button.format.pdf:hover { background: sprite-image('icons/icon_pdf_document_on.png', 0, -1px, 50px); }
 .button.format.pdf.small { background: sprite-image('icons/icon_pdf_small.png', 0, 0, 50px); line-height: 18px; padding-left: 17px; }
-.button.format.xml { background: sprite-image('icons/icon_xml.png', 0, 0, 50px); }
+.button.format.xml { background: sprite-image('icons/icon_code_document.png', 0, 0, 50px); }
+.button.format.xml:hover { background: sprite-image('icons/icon_code_document_on.png', 0, 0, 50px); }
 .button.format.external { background: sprite-image('icons/icon_external.png', 0, 4px, 50px); }
 .button.format.external:hover { background: sprite-image('icons/icon_external_hover.png', 0, 4px, 20px); }
-.button.format.print { background: sprite-image("icons/icon_print.png", 0, 0, 100px) no-repeat; padding-left: 26px; }
-.button.format.print:hover { background: sprite-image("icons/icon_print_on.png", 0, 0, 100px) no-repeat; }
+.button.format.print { background: sprite-image("icons/icon_print.png", 0, 3px, 100px) no-repeat; padding-left: 26px; }
+.button.format.print:hover { background: sprite-image("icons/icon_print_on.png", 0, 3px, 100px) no-repeat; }
+.button.format.pi { background: sprite-image('icons/icon_pdf_dashed_document.png', 0, -1px, 50px); }
+.button.format.pi:hover { background: sprite-image('icons/icon_pdf_dashed_document_on.png', 0, -1px, 50px); }
+
   
+
 .rss,
 .help_link,
 .add_to_calendar,
