@@ -1,5 +1,6 @@
 module ApplicationSearch::TermPreprocessor
   def self.process_term(term)
+    return if term.nil?
     processed_term = term.dup
     processed_term = remove_extra_quote_mark(processed_term)
     processed_term = fix_hypenated_word_searches(processed_term)
