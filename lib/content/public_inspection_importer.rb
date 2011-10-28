@@ -117,7 +117,7 @@ module Content
     end
 
     def get_plain_text(pdf_path)
-      raw_text = `pdftotext #{pdf_path} -`
+      raw_text = `pdftotext -enc UTF-8 #{pdf_path} -`
       raw_text.gsub!(/-{3,}/, '') # remove '----' etc
       raw_text.gsub!(/\.{4,}/, '') # remove '....' etc
       raw_text.gsub!(/_{2,}/, '') # remove '____' etc
