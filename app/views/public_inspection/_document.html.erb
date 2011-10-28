@@ -1,4 +1,4 @@
-<%= link_to document_title, document.pdf.url %>
+<%= link_to document_title, entry_path(document) %>
 <div class="details">
   <div class="column file_info">
     <%= link_to '<span class="pdf small">PDF</span>'.html_safe, document.pdf.url(:with_banner, false) %> - <%= number_to_human_size document.pdf_file_size %>; <%= pluralize document.num_pages, 'page' %>
