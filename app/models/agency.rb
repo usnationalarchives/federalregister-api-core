@@ -81,9 +81,10 @@ class Agency < ApplicationModel
     if words.empty?
       scoped(:conditions => {:id => nil}) # null scope
     else
-      condition_sql = "(" + words.map{"agencies.name LIKE ?"}.join(" AND ") + ") OR (" + words.map{"agencies.short_name LIKE ?"}.join(" AND ") + ")"
-      bind_params = words.map{|word|"%#{word}%"} * 2
-      scoped(
+      condition_sql = "(" + words.map{"agencies.name REGEXP ?"}.join(" AND ") + ") OR (" + words.map{"agencies.short_name REGEXP ?"}.join(" AND ") + ")"
+      # '[[:<:]]' is MySQL regex for 'beginning of word'
+      bind_params = words.map{|word|"[[:<:]]#{Regexp.escape(word)}"} * 2
+      agencies = scoped(
         :conditions => [
           condition_sql, *bind_params
         ],

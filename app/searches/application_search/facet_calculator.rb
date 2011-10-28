@@ -8,7 +8,7 @@ class ApplicationSearch::FacetCalculator
   end
   
   def raw_facets
-    sphinx_search = ThinkingSphinx::Search.new(@search.term,
+    sphinx_search = ThinkingSphinx::Search.new(@search.sphinx_term,
       :with => @search.with,
       :with_all => @search.with_all,
       :conditions => @search.sphinx_conditions,

@@ -38,7 +38,8 @@ describe Agency do
       @commission = Agency.create!(:name => "Commission on the Future of the United States Aerospace Industry")
       @international = Agency.create!(:name => "Agency for International Development")
       @office = Agency.create!(:name => "Administrative Office of United States Courts")
-      @prison = Agency.create!(:name => "Prison Bureau")
+      @prison = Agency.create!(:name => "Prison Department")
+      @epa = Agency.create!(:name => "Environmental Protection Agency", :short_name => "EPA")
     end
     
     it "matches based on partial words" do
@@ -61,7 +62,11 @@ describe Agency do
     it "does not error out on numbers" do
       Agency.named_approximately("2979").should == []
     end
-    
+
+    it "only searches from the beginning of words" do
+      Agency.named_approximately('epa').should == [@epa]
+    end
+
     after(:each) do
       Agency.connection.execute("TRUNCATE agencies")
     end

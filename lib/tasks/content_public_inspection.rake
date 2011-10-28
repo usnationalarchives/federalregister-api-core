@@ -23,7 +23,11 @@ namespace :content do
     end
 
     task :reindex do
-      `bundle exec cap #{RAILS_ENV} sphinx:public_inspection:reindex`
+      if RAILS_ENV == 'development'
+        `indexer -c /Users/andrewcarpenter/Documents/federal_register/fr2/config/development.sphinx.conf public_inspection_document_core --rotate`
+      else
+        `bundle exec cap #{RAILS_ENV} sphinx:public_inspection:reindex`
+      end
     end
   end
 end

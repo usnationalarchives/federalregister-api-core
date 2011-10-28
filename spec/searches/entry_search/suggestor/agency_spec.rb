@@ -27,7 +27,7 @@ describe 'EntrySearch::Suggestor::Agency' do
     
     it "should suggest an agency when containing a short_name" do
       suggestion = suggestor("HHS Rules").suggestion
-      suggestion.term.should == 'Rules'
+      suggestion.term.should == ' Rules'
       suggestion.agency_ids.should == [@hhs.id]
     end
     
@@ -43,6 +43,16 @@ describe 'EntrySearch::Suggestor::Agency' do
 
     it "shouldn't suggest an agency that is already selected" do
       suggestion = suggestor(@usda.name, :agency_ids => [@usda.id]).suggestion
+      suggestion.should be_nil
+    end
+
+    it "keep words separate" do
+      suggestion = suggestor("before USDA after").suggestion
+      suggestion.term.should == 'before after'
+    end
+
+    it "not match hyphenated words" do
+      suggestion = suggestor("pre-USDA").suggestion
       suggestion.should be_nil
     end
   end

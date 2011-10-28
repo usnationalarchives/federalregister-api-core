@@ -135,7 +135,7 @@ class EntrySearch < ApplicationSearch
   
   def date_distribution(options = {})
     options[:since] ||= Date.parse('1994-01-01')
-    sphinx_search = ThinkingSphinx::Search.new(term,
+    sphinx_search = ThinkingSphinx::Search.new(sphinx_term,
       :with => with.merge(:publication_date => options[:since].to_time .. 1.week.from_now),
       :with_all => with_all,
       :conditions => sphinx_conditions,
@@ -156,7 +156,7 @@ class EntrySearch < ApplicationSearch
   end
 
   def count_in_last_n_days(n)
-    model.search_count(@term,
+    model.search_count(sphinx_term,
       :with => with.merge(:publication_date => n.days.ago.to_time.midnight .. Time.current.midnight),
       :with_all => with_all,
       :conditions => sphinx_conditions,
@@ -208,8 +208,7 @@ class EntrySearch < ApplicationSearch
         EntrySearch::Suggestor::Date,
         EntrySearch::Suggestor::EntryType,
         EntrySearch::Suggestor::RegulationIdNumber,
-        EntrySearch::Suggestor::HyphenatedIdentifier,
-        EntrySearch::Suggestor::Spelling,
+        EntrySearch::Suggestor::Spelling
       ].reduce(self) {|suggestion, suggestor| suggestor.new(suggestion).suggestion || suggestion }
       @suggestion = nil if @suggestion == self
     end
