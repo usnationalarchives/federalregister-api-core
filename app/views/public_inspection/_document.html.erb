@@ -1,7 +1,7 @@
 <%= link_to document_title, document.pdf.url %>
 <div class="details">
   <div class="column file_info">
-    <%= link_to '<span class="pdf small">PDF</span>'.html_safe, document.pdf.url %> - <%= number_to_human_size document.pdf_file_size %>; <%= pluralize document.num_pages, 'page' %>
+    <%= link_to '<span class="pdf small">PDF</span>'.html_safe, document.pdf.url(:with_banner, false) %> - <%= number_to_human_size document.pdf_file_size %>; <%= pluralize document.num_pages, 'page' %>
     <%= link_to '<span class="permalink">Permalink</span>', entry_path(document)%>
   </div>
   <div class="column dates">

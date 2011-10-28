@@ -10,6 +10,6 @@
       <li class="pub_date"><%= document.publication_date %></li>
     <% end %>
     <li class="agency"><%= document.agencies.excluding_parents.map{|agency| link_to(agency.name, agency_path(agency))}.join(' :: ') %></li>
-    <li><%= link_to 'PDF', document.pdf.url, :class => 'button format pdf small' %></li>
+    <li><%= link_to 'PDF', document.pdf.url(:with_banner, false), :class => 'button format pdf small' %></li>
   </ul>  
 </li>
