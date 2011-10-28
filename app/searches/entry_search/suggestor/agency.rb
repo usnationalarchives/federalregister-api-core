@@ -21,7 +21,7 @@ class EntrySearch::Suggestor::Agency < EntrySearch::Suggestor::Base
 
       if @term =~ /(#{pattern})/i && ! agency_ids.include?(id.to_i)
         agency_ids << id.to_i
-        @term = @term.sub(/\s*(?:#{pattern})\s*/i, '')
+        @term = @term.sub(/\b(?:#{pattern})\b/i, '')
       end
     end
 
