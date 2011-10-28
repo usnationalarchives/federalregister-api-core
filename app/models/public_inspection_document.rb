@@ -119,10 +119,6 @@ class PublicInspectionDocument < ApplicationModel
     0
   end
 
-  def raw_text_via_db
-    connection.select_value("SELECT LOAD_FILE(CONCAT('#{RAILS_ROOT}/data/public_inspection/raw/', public_inspection_documents.document_file_path, '.txt')) FROM public_inspection_documents WHERE id = #{id}")
-  end
-
   private
 
   def persist_document_file_path
