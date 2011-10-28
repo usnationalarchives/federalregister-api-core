@@ -20,6 +20,7 @@
   
   <div class="actions">
     <%= link_to 'Subscribe', events_search_url(params.except(:action).merge(:format => :ics, :order => 'date')), :class => 'add_to_calendar' %>
+    <%= add_template('subscription_modal', 'subscription-modal') %>
   </div>
   
 </div>

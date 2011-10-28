@@ -11,6 +11,7 @@
   <div class='title_icon' id="<%= @section.slug %>"></div>
   <span><%= @section.title %></span>
   <%= link_to '', new_subscription_path(:subscription => {:search_conditions => {:section_ids => [@section.id]}}), :class => 'subscription tipsy', :title => 'Subscribe by Email or RSS' %>
+  <%= add_template('subscription_modal', 'subscription-modal') %>
 </div>
 
 <%= render(:partial => "special/preview_warning") if @preview %>

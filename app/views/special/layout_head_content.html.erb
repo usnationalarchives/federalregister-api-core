@@ -30,7 +30,7 @@
   <%= stylesheet_link_tag "ie6", :media => :screen %>
 <![endif]-->
  
-<% if Rails.env == 'development' %>
+<% if Rails.env == 'development' || Rails.env == 'staging' %>
   <%= javascript_include_tag 'vendor/jquery-1.6.1.min.js' %>
 <% else %>
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.js" type="text/javascript"></script>
@@ -41,7 +41,7 @@
 <script src="/javascripts/vendor/jquery.tipsy.js" type="text/javascript"></script>
 
 
-<% if RAILS_ENV == 'development' %>
+<% if RAILS_ENV == 'development' || RAILS_ENV == 'staging' %>
   <%= javascript_include_tag :all %>
 <% else %>
   <%= javascript_include_tag 'all.js' %>

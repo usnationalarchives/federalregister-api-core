@@ -14,6 +14,11 @@
   <li><%= link_to "Browse by agency", agencies_path %> or <%= link_to "explore by topic", topics_path %>.</li>
   <li>View upcoming documents on <%= link_to 'Public Inspection', public_inspection_documents_path %></li>
   <!-- <li>Share a link to a specific paragraph in any article.</li> -->
-  <li>Subscribe, via RSS or <%= link_to 'email', "/blog/2011/04/email-notifications-now-available" %>, to a search term, a section, an agency or <%= link_to 'a daily feed of all articles', new_subscription_path(:subscription => {:search_conditions => {}}), :class => 'subscription_action' %>.</li>
+  <li>
+    Subscribe, via RSS or <%= link_to 'email', "/blog/2011/04/email-notifications-now-available" %>, 
+    to a search term, a section, an agency or 
+    <%= link_to 'a daily feed of all articles', new_subscription_path(:subscription => {:search_conditions => {}}), :class => 'subscription_action' %>.
+    <%= add_template('subscription_modal', 'subscription-modal') %>
+  </li>
   <li>Learn more on our <a href="/policy/user-information">user information page</a>!</li>
 </ul>
