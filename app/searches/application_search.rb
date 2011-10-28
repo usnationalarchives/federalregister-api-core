@@ -166,7 +166,7 @@ filter_name.to_s.sub(/_ids?$/,'').classify.constantize.find_all_by_id(ids.flatte
   end
   
   def results(args = {})
-    result_array = model.search(@term,
+    result_array = model.search(sphinx_term,
       {
         :page => @page,
         :per_page => @per_page,
@@ -208,7 +208,7 @@ filter_name.to_s.sub(/_ids?$/,'').classify.constantize.find_all_by_id(ids.flatte
   end
   
   def count
-    model.search_count(@term,
+    model.search_count(sphinx_term,
       {
         :page => @page,
         :per_page => @per_page,
@@ -223,7 +223,7 @@ filter_name.to_s.sub(/_ids?$/,'').classify.constantize.find_all_by_id(ids.flatte
   end
   
   def term_count
-    model.search_count(@term, :match_mode => :extended)
+    model.search_count(sphinx_term, :match_mode => :extended)
   end
   
   def entry_count
@@ -244,6 +244,10 @@ filter_name.to_s.sub(/_ids?$/,'').classify.constantize.find_all_by_id(ids.flatte
   
   def to_json
     @conditions.to_json
+  end
+
+  def sphinx_term
+    @sphinx_term ||= TermPreprocessor.process_term(@term)
   end
   
   private
