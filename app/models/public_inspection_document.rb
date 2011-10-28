@@ -28,9 +28,9 @@ class PublicInspectionDocument < ApplicationModel
   has_attached_file :pdf,
                     :storage => :s3,
                     :s3_credentials => "#{Rails.root}/config/amazon.yml",
-                    :s3_alias_url => 'http://public-inspection.federalregister.gov.s3.amazonaws.com/',
-                    :bucket => 'public-inspection.federalregister.gov',
-                    :path => ":style/:document_number.pdf",
+                    :s3_alias_url => "http://public-inspection.#{APP_HOST_NAME}.s3.amazonaws.com/",
+                    :bucket => "public-inspection.#{APP_HOST_NAME}",
+                    :path => ":style_if_not_with_banner:document_number.pdf",
                     :default_style => :with_banner,
                     :styles => {
                       :with_banner => { :processors => [:permalink_banner_adder] },
@@ -117,10 +117,6 @@ class PublicInspectionDocument < ApplicationModel
 
   def end_page
     0
-  end
-
-  def raw_text_via_db
-    connection.select_value("SELECT LOAD_FILE(CONCAT('#{RAILS_ROOT}/data/public_inspection/raw/', public_inspection_documents.document_file_path, '.txt')) FROM public_inspection_documents WHERE id = #{id}")
   end
 
   private

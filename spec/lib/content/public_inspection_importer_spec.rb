@@ -193,6 +193,37 @@ describe Content::PublicInspectionImporter::Parser do
       docs.second[:editorial_note].should be_nil
       docs.second[:document_number].should == '2011-25592'
     end
+
+    it "matches editorial notes with links in them" do
+      html = <<-HTML
+        <p><b>RURAL HOUSING SERVICE</b></p>
+        <p><b>PROPOSED RULES</b></p>
+        <p>Disaster Designation Process</p>
+        <p>&nbsp;</p>
+        <blockquote>&nbsp;2011-27105<a href="http://ofr.gov/OFRUpload/OFRData/2011-27105_PI.pdf" target="_blank"> <img title="View Pdf" style="border: 0px solid;" alt="View Pdf" src="./2011-10-21_files/pfdlggif.gif"></a><br>
+        [File Until: 10/21/2011]</blockquote>
+        <p>&nbsp;</p>
+        <b>EDITORIAL NOTE:</b> After placement on Public Inspection, FR Doc. 2011-27105<a href="PI.pdf" target="_blank">&nbsp;</a> was withdrawn from publication at the agency's request. Copies of the agency withdrawal letter and the document are available for inspection at the Office of the Federal Register. This document will remain on Public Inspection at the OFR through close of business October 21, 2011.
+        <p><a href="http://ofr.gov/inspection.aspx#top"><img width="73" height="13" style="border: 0px solid;" alt="Top of Page" src="./2011-10-21_files/top_of_page.gif"></a></p>
+        <p><a name="reg_C"><b>CENTERS FOR DISEASE CONTROL AND PREVENTION</b></a></p>
+        <p><b>NOTICES</b></p>
+        <p>Meetings:</p>
+        <p>&nbsp;</p>
+        <blockquote>Advisory Committee on Childhood Lead Poisoning Prevention; Correction</blockquote>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <blockquote>&nbsp;2011-27396<a href="http://ofr.gov/OFRUpload/OFRData/2011-27396_PI.pdf" target="_blank"> <img title="View Pdf" style="border: 0px solid;" alt="View Pdf" src="./2011-10-21_files/pfdlggif.gif"></a><br>
+        [Filed: 10/21/11 at 8:45 am;&nbsp;&nbsp;Publication Date: 10/24/2011]</blockquote>
+      HTML
+
+      docs = parse_html(html).pi_documents
+      docs.count.should == 2
+      docs.first[:editorial_note].should == "After placement on Public Inspection, FR Doc. 2011-27105 was withdrawn from publication at the agency's request. Copies of the agency withdrawal letter and the document are available for inspection at the Office of the Federal Register. This document will remain on Public Inspection at the OFR through close of business October 21, 2011."
+      docs.first[:document_number].should == '2011-27105'
+      docs.first[:details].should == '[File Until: 10/21/2011]'
+      docs.second[:editorial_note].should be_nil
+      docs.second[:document_number].should == '2011-27396'
+    end
   end
 
   describe '#special_filings_updated_at' do

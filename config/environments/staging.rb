@@ -1,3 +1,5 @@
+APP_HOST_NAME = 'fr2.criticaljuncture.org'
+
 # Settings specified here will take precedence over those in config/environment.rb
 
 # The production environment is meant for finished, "live" apps.
@@ -39,7 +41,7 @@ config.action_mailer.smtp_settings   = smtp_settings
 
 # Disable delivery errors, bad email addresses will be ignored
 # config.action_mailer.raise_delivery_errors = false
-config.action_mailer.default_url_options = {:host => 'www.fr2.criticaljuncture.org'}
+config.action_mailer.default_url_options = {:host => "www.#{APP_HOST_NAME}"}
 
 # Enable threaded mode
 # config.threadsafe!

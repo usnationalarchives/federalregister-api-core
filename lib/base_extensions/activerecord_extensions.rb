@@ -70,6 +70,12 @@ class ActiveRecord::Base
       path = self.send(path_method)
       File.exists?(path)
     end
+
+    define_method "#{attribute}_via_db" do
+      path = self.send(path_method)
+      connection.select_value("SELECT LOAD_FILE('#{path}')")
+    end
+
   end
   
 end

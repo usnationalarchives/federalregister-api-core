@@ -1,3 +1,5 @@
+APP_HOST_NAME = 'federalregister.gov'
+
 # Settings specified here will take precedence over those in config/environment.rb
 
 # The production environment is meant for finished, "live" apps.
@@ -29,7 +31,7 @@ config.log_level = :debug
 smtp_settings = {
   :address => "mail.fr2.ec2.internal",
   :port    => "25",
-  :domain  => "www.federalregister.gov",
+  :domain  => "www.#{APP_HOST_NAME}",
   :user_name => @sendgrid_keys[:username],
   :password => @sendgrid_keys[:password],
   :authentication => :plain
@@ -40,7 +42,7 @@ smtp_settings = {
 config.action_mailer.delivery_method = :smtp
 config.action_mailer.smtp_settings   = smtp_settings
 
-config.action_mailer.default_url_options = {:host => 'www.federalregister.gov'}
+config.action_mailer.default_url_options = {:host => "www.#{APP_HOST_NAME}"}
 
 # Enable threaded mode
 # config.threadsafe!
