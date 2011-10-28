@@ -17,7 +17,7 @@
     <div class="aside_box">
       <% if @public_inspection_document.pdf_file_name.present? %>
       <div class="download_separator">
-        <%= link_to "PDF", @public_inspection_document.pdf.url, :class => 'button format list pdf', :title => 'Download as PDF' %>
+        <%= link_to "PDF", @public_inspection_document.pdf.url(:with_banner, false), :class => 'button format list pdf', :title => 'Download as PDF' %>
       </div>
       <% end %>
       <%= render :partial => "public_inspection/metadata", :locals => {:document => @public_inspection_document} %>
@@ -34,7 +34,7 @@
       <% if @public_inspection_document.publication_date %>
         <p>This document is unpublished, but on <%= @public_inspection_document.publication_date %> it is scheduled to be published and available on this page.
           <% if @public_inspection_document.pdf_file_name.present? %>
-            Until then, you can download the <%= link_to 'pre-publication PDF version', @public_inspection_document.pdf.url %>.
+            Until then, you can download the <%= link_to 'pre-publication PDF version', @public_inspection_document.pdf.url(:with_banner, false) %>.
           <% end %>
         </p>    
       <% end %>

@@ -22,6 +22,7 @@
     <dt>Type: </dt>
     <dd><%= document.entry_type %></dd>
   <% end %>
+  <dt>Pages</dt><dd><%= document.num_pages %></dd>
   
   <% if document.docket_numbers.present?            %><dt><%= pluralize_without_count document.docket_numbers.size, 'Agency/Docket Number' %>:</dt>
     <% document.docket_numbers.each do |docket_number| %>
