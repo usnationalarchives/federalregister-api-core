@@ -291,6 +291,10 @@ RESULTS - MATCHING DOCUMENT
     line-height: image-height('icons/icon_search.png');
     padding: 0 0 0 35px;
     }
+.suggestion p.public_inspection_suggestion {
+  background: sprite-image('icons/icon_public_inspection_search_suggestion.png', 0, 0, 100px) no-repeat;
+  line-height: image-height('icons/icon_public_inspection_search_suggestion.png');
+  }
 .suggestion p .term {
   padding: 6px;
   margin-right: 3px;
