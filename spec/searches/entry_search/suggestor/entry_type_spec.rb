@@ -7,7 +7,8 @@ describe 'EntrySearch::Suggestor::EntryType' do
   end
   
   describe "presidential documents" do 
-    ["president goats", "executive order goats", "presidential goats", "eo goats"].each do |term|
+    ["president goats", "executive order goats",
+ "presidential goats", "eo goats"].each do |term|
       it "should add set the type to PRESDOC and remove the term when given '#{term}'" do
         suggestion = suggestor(term).suggestion
         suggestion.term.should == 'goats'
@@ -19,6 +20,9 @@ describe 'EntrySearch::Suggestor::EntryType' do
       it "shouldn't have a suggestion match #{term}" do
         suggestion = suggestor(term).suggestion.should be_nil
       end
+    end
+    it "shouldn't match inside of a phrase" do 
+      suggestor('"Cross-Media Electronic Reporting Rule"').suggestion.should be_nil
     end
   end
 end

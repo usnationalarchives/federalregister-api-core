@@ -13,7 +13,7 @@ class EntrySearch::Suggestor::EntryType < EntrySearch::Suggestor::Base
   }
   
   def pattern
-    /(#{TYPE_NAMES.keys.map{|n| "\\b#{n}\\b"}.join("|")})/i
+    /(#{TYPE_NAMES.keys.map{|n| "\\b#{n}\\b"}.join("|")})(?=(?:[^"]*"[^"]*")*[^"]*$)/i
   end
   
   def handle_match(type_name)
