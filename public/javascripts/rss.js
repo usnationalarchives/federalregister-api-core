@@ -33,9 +33,6 @@ $(document).ready(function () {
                 feed.default_to_entry = true;
               }
 
-              console.log( elem.data('default-search-type') );
-              console.log(feed);
-
               return feed;
             });
 
