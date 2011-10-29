@@ -30,6 +30,10 @@ class PublicInspectionDocumentSearch < ApplicationSearch
     (args[:conditions].keys.map(&:to_sym)- [:term, :publication_date, :docket_id, :agency_ids, :type]).size == 0
   end
 
+  def public_inspection_search_possible?
+    true
+  end
+
   def model
     PublicInspectionDocument
   end

@@ -1,4 +1,4 @@
-<% feed_autodiscovery public_inspection_documents_url(:format => :rss), 'All Public Inspection Documents', :search_conditions => {} %>
+<% feed_autodiscovery public_inspection_documents_url(:format => :rss), 'All Public Inspection Documents', :search_conditions => {}, :subscription_default => 'PublicInspectionDocument' %>
 
 <% title "Public Inspection Documents for #{@date.to_formatted_s(:pretty)}" %>
 <div class="title"><span><%= @date %> Public Inspection</span></div>
@@ -48,7 +48,7 @@
   <% end -%>
   
   <div class='aside_box subscribe'> 
-    <%= link_to 'Subscribe', new_subscription_path(:subscription => {:search_conditions => {}}), :class => 'subscription subscription_action' %>
+    <%= link_to 'Subscribe', new_subscription_path(:subscription => {:search_conditions => {:search_type => 'PublicInspectionDocument'}}), :class => 'subscription subscription_action' %>
     <%= add_template('subscription_modal', 'subscription-modal') %>
   </div>
 

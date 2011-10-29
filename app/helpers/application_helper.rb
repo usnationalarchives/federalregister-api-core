@@ -38,6 +38,10 @@ module ApplicationHelper
       link_html_options[:'data-public-inspection-subscription-supported'] = PublicInspectionDocumentSearch.valid_arguments?(:conditions => options[:search_conditions])
     end
 
+    if options[:subscription_default]
+      link_html_options[:'data-default-search-type'] = options[:subscription_default]
+    end
+
     content_for :feeds, tag(:link, link_html_options)
   end
   
