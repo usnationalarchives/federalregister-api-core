@@ -23,9 +23,18 @@ $(document).ready(function () {
                 feed.subscription_action = "/subscriptions?" + $.param({'subscription' : {'search_conditions' : $.parseJSON(elem.attr('data-search-conditions'))}})
               }
 
-              if( !elem.data('public-inspection-subscription-supported') == undefined ) {
+              if( !(elem.data('public-inspection-subscription-supported') == undefined) ) {
                 feed.public_inspection_subscription_supported = elem.data('public-inspection-subscription-supported');
               }
+
+              if( elem.data('default-search-type') == "PublicInspectionDocument" ) { 
+                feed.default_to_public_inspection = true; 
+              } else {
+                feed.default_to_entry = true;
+              }
+
+              console.log( elem.data('default-search-type') );
+              console.log(feed);
 
               return feed;
             });
@@ -34,7 +43,7 @@ $(document).ready(function () {
 
             $('#modal form').submit(function() {
                 var form = $(this);
-                form.attr('action', form.attr('action') + '&' + escape('subscription[email]') + '=' + escape(form.find('input[name="subscription[email]"]').val()));
+                form.attr('action', form.attr('action') + '&' + escape('subscription[email]') + '=' + escape(form.find('input[name="subscription[email]"]').val()) + '&' + escape('subscription[search_type]') + '=' + escape(form.find('input[name="subscription[search_type]"]:checked').val()) );
             });
 
             $('#modal').jqm({
