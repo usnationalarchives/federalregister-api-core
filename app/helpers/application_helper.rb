@@ -34,8 +34,8 @@ module ApplicationHelper
     
     if options[:search_conditions]
       link_html_options[:'data-search-conditions'] = options[:search_conditions].to_json
-
-      link_html_options[:'data-public-inspection-subscription-supported'] = PublicInspectionDocumentSearch.valid_arguments?(:conditions => options[:search_conditions])
+      entry_search = EntrySearch.new(:conditions => options[:search_conditions])
+      link_html_options[:'data-public-inspection-subscription-supported'] = entry_search.public_inspection_search_possible?
     end
 
     if options[:subscription_default]
