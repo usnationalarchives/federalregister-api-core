@@ -45,6 +45,8 @@ module RouteBuilder
   add_api_route :entries
   add_api_route :agency
   add_api_route :agencies
+  add_api_route :public_inspection_document
+  add_api_route :public_inspection_documents
   
   add_route :citation do |vol,page|
     {

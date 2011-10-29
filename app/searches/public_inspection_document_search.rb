@@ -40,7 +40,7 @@ class PublicInspectionDocumentSearch < ApplicationSearch
   
   def find_options
     {
-      :select => "id, title, pdf_file_name, pdf_file_size, num_pages, toc_subject, toc_doc, publication_date, filed_at, document_number, granule_class",
+      :select => "id, title, pdf_file_name, pdf_file_size, num_pages, toc_subject, toc_doc, publication_date, filed_at, document_number, granule_class, editorial_note",
       :include => :agencies,
     }
   end

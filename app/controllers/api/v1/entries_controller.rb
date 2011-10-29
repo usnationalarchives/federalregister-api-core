@@ -2,36 +2,14 @@ class Api::V1::EntriesController < ApiController
   def index
     respond_to do |wants|
       wants.json do
-        search = EntrySearch.new(params)
-        if ! search.valid?
-          cache_for 1.day
-          render_json_or_jsonp({:errors => search.validation_errors}, :status => 400)
-          return
-        end
-
-        data = { :count => search.count }
-        
-        if search.count > 0 && search.results.count > 0
-          data[:total_pages] = search.results.total_pages
-          
-          if search.results.next_page
-            data[:next_page_url] = api_v1_entries_url(params.merge(:page => search.results.next_page))
-          end
-          
-          if search.results.previous_page
-            data[:previous_page_url] = api_v1_entries_url(params.merge(:page => search.results.previous_page))
-          end
-          
-          data[:results] = search.results.map do |entry|
-            basic_entry_data(entry).merge(
-              :excerpts => entry.excerpts.full_text || entry.excerpts.abstract,
-              :json_url => api_v1_entry_url(entry.document_number, :format => :json)
-            )
-          end
-        end
-        
         cache_for 1.day
-        render_json_or_jsonp data
+        search = EntrySearch.new(params)
+        render_search(search) do |result| 
+          basic_entry_data(result).merge(
+            :excerpts => result.excerpts.raw_text_via_db || result.excerpts.abstract,
+            :json_url => api_v1_entry_url(result.document_number, :format => :json)
+          )
+        end
       end
     end
   end
@@ -39,25 +17,10 @@ class Api::V1::EntriesController < ApiController
   def show
     respond_to do |wants|
       wants.json do
-        if params[:id] =~ /,/
-          document_numbers = params[:id].split(',')
-          entries = Entry.all(:conditions => {:document_number => document_numbers})
-          
-          data = {
-            :count => entries.count,
-            :results => entries.map{|e| full_entry_data(e)}
-          }
-
-          missing = document_numbers - entries.map(&:document_number)
-          if missing.present?
-            data[:errors] = {:not_found => missing}
-          end
-        else
-          entry = Entry.find_by_document_number!(params[:id])
-          data = full_entry_data(entry)
-        end
         cache_for 1.day
-        render_json_or_jsonp data
+        render_one_or_more(Entry, params[:id]) do |entry|
+          full_entry_data(entry)
+        end
       end
     end
   end
