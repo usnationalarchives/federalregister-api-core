@@ -31,12 +31,7 @@ class Subscription < ApplicationModel
   
   def mailing_list_with_autobuilding
     if mailing_list_without_autobuilding.nil?
-      search_class = case search_type
-                     when 'Entry'
-                       EntrySearch
-                     when 'PublicInspectionDocument'
-                       PublicInspectionDocumentSearch
-                     end
+      search_class = search_type == 'PublicInspectionDocument' ? PublicInspectionDocumentSearch : EntrySearch
       search = search_class.new(:conditions => search_conditions)
       self.mailing_list = MailingList.find_by_search(search) || MailingList.new(:search => search)
     else
