@@ -149,7 +149,7 @@ ActionController::Routing::Routes.draw do |map|
   end
   
   # CANNED SEARCHES
-  map.canned_search ":slug.:format", :controller => "canned_searches", :action => :show
+  map.canned_search ":slug.:format", :controller => "canned_searches", :action => :show, :conditions => {:method => :get}
   
   # SECTIONS
   map.about_section ":slug/about", :controller => "sections", :action => "about", :conditions => { :method => :get }
