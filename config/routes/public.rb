@@ -20,11 +20,12 @@ ActionController::Routing::Routes.draw do |map|
   map.highlighted_entries 'articles/featured.:format', :controller => 'entries', :action => 'highlighted', :conditions => { :method => :get }
   map.entries_search_facet 'articles/search/facet', :controller => 'entries', :action => 'search_facet', :conditions => { :method => :get }
   map.entries_widget 'articles/widget', :controller => 'entries', :action => 'widget', :conditions => { :method => :get }
-  map.entry 'articles/:year/:month/:day/:document_number/:slug.:format', :controller => 'entries', :conditions => { :method => :get },
+  map.entry 'articles/:year/:month/:day/:document_number/:slug', :controller => 'entries', :conditions => { :method => :get },
                                                                 :action     => 'show',
                                                                 :year       => /\d{4}/,
                                                                 :month      => /\d{1,2}/,
-                                                                :day        => /\d{1,2}/
+                                                                :day        => /\d{1,2}/,
+                                                                :slug       => /[^\/]+/
                                                
   map.entry_citation 'citations/:year/:month/:day/:document_number/:slug', :controller => 'entries',
                                                                                 :action     => 'citations',
