@@ -71,6 +71,6 @@ class ApplicationController < ActionController::Base
   end
   
   def handle_unverified_request
-    raise InvalidAuthenticityToken
+    raise "Invalid Authenticity Token"
   end
 end

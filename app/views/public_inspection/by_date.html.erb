@@ -1,6 +1,11 @@
 <% feed_autodiscovery public_inspection_documents_url(:format => :rss), 'All Public Inspection Documents', :search_conditions => {}, :subscription_default => 'PublicInspectionDocument' %>
 
-<% title "Public Inspection Documents for #{@date.to_formatted_s(:pretty)}" %>
+<% if params[:action] == 'index' %>
+  <% title "Current Public Inspection Documents" %>
+<% else %>
+  <% title "Public Inspection Documents for #{@date.to_formatted_s(:pretty)}" %>
+<% end %>
+
 <div class="title"><span><%= @date %> Public Inspection</span></div>
 
 <div id="current_issue" class="public_inspection">

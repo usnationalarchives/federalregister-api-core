@@ -27,7 +27,7 @@ class PublicInspectionDocumentSearch < ApplicationSearch
 
   def self.valid_arguments?(args)
     args[:conditions] ||= {}
-    (args[:conditions].keys.map(&:to_sym)- [:term, :publication_date, :docket_id, :agency_ids, :type]).size == 0
+    (args[:conditions].keys.map(&:to_sym)- [:term, :docket_id, :agency_ids, :type]).size == 0
   end
 
   def public_inspection_search_possible?
