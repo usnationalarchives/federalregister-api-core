@@ -1,6 +1,6 @@
 namespace :data do
   task :daily => :environment do
-    Content::ImportDriver.new.perform
+    Content::ImportDriver::EntryDriver.new.perform
   end
   
   namespace :daily do 
