@@ -58,7 +58,7 @@ class ApplicationSearch::DateSelector
     if @lte.present?
       Date.parse(@lte)
     else
-      10.years.ago
+      10.years.from_now
     end
   end
 end
