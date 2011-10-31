@@ -8,6 +8,10 @@ namespace :content do
     end
 
     task :import_and_deliver => :environment do
+      Content::ImportDriver::PublicInspectionDriver.new.perform
+    end
+
+    task :run => :environment do
       new_documents = Content::PublicInspectionImporter.perform
 
       Rake::Task["content:public_inspection:reindex"].invoke unless Rails.env == 'development'

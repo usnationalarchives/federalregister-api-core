@@ -2,14 +2,7 @@ require 'ftools'
 module Content
   class ImportDriver
     def perform
-      load "#{Rails.root}/Rakefile"
-      
-      calculate_date_to_import!
-      
-      if import_is_complete?
-        puts "Import already complete. Exiting."
-        exit
-      end
+      exit unless should_run?
     
       if lock_file_already_exists?
         if other_process_is_running?
@@ -23,25 +16,13 @@ module Content
     
       create_lock_file
       begin
-        Rake::Task["data:daily:full"].invoke
-      rescue Content::EntryImporter::ModsFile::DownloadError
-        raise "Problem downloading mods file"
-      rescue Content::EntryImporter::BulkdataFile::DownloadError
-        raise "Problem downloading bulkdata file"
+        run
       rescue Exception => e
         HoptoadNotifier.notify(e)
         raise e
       ensure
         remove_lock_file
       end
-    end
-    
-    def calculate_date_to_import!
-      ENV['DATE'] = Issue.next_date_to_import.to_s(:iso)
-    end
-  
-    def import_is_complete?
-      Issue.complete?(ENV['DATE'])
     end
   
     def lock_file_already_exists?
@@ -73,10 +54,14 @@ module Content
       File.delete(lock_file_path) if File.exists?(lock_file_path)
     end
   
+    def should_run?
+      true
+    end
+
     private
   
     def lock_file_path
-      "#{RAILS_ROOT}/tmp/import.lock"
+      "#{RAILS_ROOT}/tmp/#{lockfile_name}"
     end
   end
 end
