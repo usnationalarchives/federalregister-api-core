@@ -33,5 +33,22 @@ namespace :content do
         `bundle exec cap #{RAILS_ENV} sphinx:public_inspection:reindex`
       end
     end
+
+    task :purge_revoked_documents => :environment do
+      # after 5:15, purge PDFs
+      if Time.current >= Time.zone.parse("5:15PM")
+        revoked_documents = PublicInspectionIssue.current.public_inspection_documents.revoked
+        issues = []
+        revoked_documents.each do |document|
+          document.make_s3_files_private!
+          issues << document.public_inspection_issues
+        end
+
+        # have the after_save observer purge the cache for all affected issues
+        issues.uniq.each do |issue|
+          issue.touch(:updated_at)
+        end
+      end
+    end
   end
 end

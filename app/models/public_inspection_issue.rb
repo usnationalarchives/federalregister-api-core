@@ -23,6 +23,10 @@ class PublicInspectionIssue < ApplicationModel
   end
 
   def self.latest_publication_date
-    published.first(:order => "publication_date DESC").publication_date
+   current.publication_date
+  end
+
+  def self.current
+     published.first(:order => "publication_date DESC")
   end
 end
