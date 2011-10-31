@@ -15,7 +15,7 @@
     <%= render :partial => 'special/pi_legal_notice' %>
     
     <div class="aside_box">
-      <% if @public_inspection_document.pdf_file_name.present? %>
+      <% if @public_inspection_document.pdf_displayable? %>
       <div class="download_separator">
         <%= link_to "PDF", @public_inspection_document.pdf.url(:with_banner, false), :class => 'button format list pdf', :title => 'Download as PDF' %>
       </div>

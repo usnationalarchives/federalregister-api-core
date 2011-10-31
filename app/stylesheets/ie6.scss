@@ -496,6 +496,24 @@ ul#frequency-spark-lines {
 PUBLIC INSPECTION
 
 ******************************/ 
-a.pdf.small { 
-  background: image-url('icons/ie6/icon_pdf_small.png') no-repeat left top;
+#entries span.pdf.small { 
+  background: image-url('icons/ie6/icon_pdf_small.png') no-repeat left 1px;
+  }
+#entries #content_area.public_inspection {
+  padding-right: 10px;
+  }
+#entries #meta_toc .aside_box ul {
+  position: relative;
+  }
+#entries span.new_document {
+  background: image-url('icons/ie6/new_badge_icon.png') no-repeat left -1px;
+  }
+span.permalink {
+  background: image-url('icons/ie6/icon_permalink.png') no-repeat left 1px;
+  }
+span.permalink:hover {
+  background: image-url('icons/ie6/icon_permalink_hover.png') no-repeat left 1px;
+  }
+#content_area.public_inspection .info_box {
+  background: image-url('icons/ie6/info_circle_large.png') no-repeat 10px 30px;
   }
