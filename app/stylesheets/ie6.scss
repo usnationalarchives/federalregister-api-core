@@ -497,7 +497,7 @@ PUBLIC INSPECTION
 
 ******************************/ 
 #entries span.pdf.small { 
-  background: image-url('icons/ie6/icon_pdf_small.png') no-repeat left top;
+  background: image-url('icons/ie6/icon_pdf_small.png', 0, 1px) no-repeat left top;
   }
 #entries #content_area.public_inspection {
   padding-right: 10px;
@@ -506,14 +506,14 @@ PUBLIC INSPECTION
   position: relative;
   }
 #entries span.new_document {
-  background: image-url('icons/ie6/new_badge_icon.png') no-repeat left top;
+  background: image-url('icons/ie6/new_badge_icon.png', 0, -1px) no-repeat left top;
   }
 span.permalink {
-  background: image-url('icons/ie6/icon_permalink.png') no-repeat left top;
+  background: image-url('icons/ie6/icon_permalink.png', 0, 1px) no-repeat left top;
   }
 span.permalink:hover {
-  background: image-url('icons/ie6/icon_permalink_hover.png') no-repeat left top;
+  background: image-url('icons/ie6/icon_permalink_hover.png', 0, 1px) no-repeat left top;
   }
 #content_area.public_inspection .info_box {
-  background: image-url('icons/ie6/info_circle_large.png') no-repeat left top;
+  background: image-url('icons/ie6/info_circle_large.png', 10px, 30px) no-repeat left top;
   }
