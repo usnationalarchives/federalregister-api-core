@@ -1,6 +1,15 @@
 class Entries::SearchController < SearchController
   def show
     cache_for 1.day
+    if (params[:conditions].keys - @search.valid_conditions.keys).present?
+      redirect_to entries_search_path(
+        :conditions => @search.valid_conditions,
+        :page => params[:page],
+        :order => params[:order],
+        :format => params[:format]
+      )
+      return
+    end
     respond_to do |wants|
       wants.html
       wants.rss do
