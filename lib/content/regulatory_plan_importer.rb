@@ -23,7 +23,8 @@ module Content
     end
   
     def perform
-      %w(title abstract priority_category events agency_name_assignments).each do |attr|
+      return unless document
+      %w(title abstract priority_category events agency_name_assignments small_entities).each do |attr|
         @regulatory_plan.send("#{attr}=", self.send(attr))
       end
       @regulatory_plan.save
@@ -49,6 +50,12 @@ module Content
   
     def priority_category
       document.xpath('.//PRIORITY_CATEGORY').first.content
+    end
+
+    def small_entities
+      document.xpath('.//SMALL_ENTITY').map(&:content).reject{|e| e == 'No' || e == 'Undetermined'}.map do |name|
+        SmallEntity.find_or_initialize_by_name(name)
+      end
     end
     
     def agency_name_assignments
