@@ -115,8 +115,8 @@ filter_name.to_s.sub(/_ids?$/,'').classify.constantize.find_all_by_id(ids.flatte
     @conditions = conditions
     @valid_conditions = {}
     conditions.to_a.reverse.each do |attr, val|
-      valid = self.send("#{attr}=", val)
-      @valid_conditions[attr] = val if valid
+      response = self.send("#{attr}=", val)
+      @valid_conditions[attr] = val if response.present?
     end
   end
   
