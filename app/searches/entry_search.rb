@@ -11,7 +11,7 @@ class EntrySearch < ApplicationSearch
     
     def sphinx_citation
       title_int =  title.to_s.to_i * TITLE_MULTIPLIER
-      if part
+      if part.present?
         title_int + part.to_s.to_i
       else
         title_int ... title_int + TITLE_MULTIPLIER
