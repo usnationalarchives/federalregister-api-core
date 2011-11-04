@@ -2,6 +2,7 @@
 <%= feed_autodiscovery events_search_url(params.merge(:format => :rss, :order => 'date')) %>
 
 <% if @search.blank? %>
+  <% description 'Easy, powerful search of recent and future events contained Federal Register documents' %>
   <% meta_robots("NOFOLLOW") %>
 <% else %>
   <% meta_robots("NOINDEX, NOFOLLOW") %>

@@ -1,6 +1,7 @@
 <% title @search.term.blank? ? 'Unified Agenda Search' : "Unified Agenda Search Results for '#{h @search.term}'" %>
 
 <% if @search.blank? %>
+  <% description 'Easy, powerful search of all Federal Register documents since 1994 by Unified Agenda' %>
   <% meta_robots("NOFOLLOW") %>
 <% else %>
   <% meta_robots("NOINDEX, NOFOLLOW") %>
@@ -8,19 +9,21 @@
 
 <div class="title"><span>Search the Unified Agenda</span></div>
 
-<% unless @search.valid? %>
-<ul class="errors">
-  <% @search.errors.each do |err| %>
-  <li><%= err %></li>
+<% unless @search.blank? %>
+  <% unless @search.valid? %>
+  <ul class="errors">
+    <% @search.errors.each do |err| %>
+    <li><%= err %></li>
+    <% end %>
+  </ul>
   <% end %>
-</ul>
+
+  <%= render :esi => regulatory_plan_search_header_path(params.except(:action)) %>
+
+  <div class="filters">
+    <%= render :esi => regulatory_plan_search_facets_path(params.except(:action).merge(:facet => 'priority_category')) %>
+    <%= render :esi => regulatory_plan_search_facets_path(params.except(:action).merge(:facet => 'agency')) %>
+  </div>
+
+  <%= render :esi => regulatory_plan_search_results_path(params.except(:action)) %>
 <% end %>
-
-<%= render :esi => regulatory_plan_search_header_path(params.except(:action)) %>
-
-<div class="filters">
-  <%= render :esi => regulatory_plan_search_facets_path(params.except(:action).merge(:facet => 'priority_category')) %>
-  <%= render :esi => regulatory_plan_search_facets_path(params.except(:action).merge(:facet => 'agency')) %>
-</div>
-
-<%= render :esi => regulatory_plan_search_results_path(params.except(:action)) %>
