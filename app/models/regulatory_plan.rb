@@ -9,6 +9,7 @@
 #  abstract             :text
 #  priority_category    :string(255)
 #  delta                :boolean(1)      default(TRUE), not null
+#  current              :boolean(1)
 #
 
 class RegulatoryPlan < ApplicationModel

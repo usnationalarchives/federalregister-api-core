@@ -1,6 +1,14 @@
 module Content
   class RegulatoryPlanImporter
     require 'ftools'
+
+    def self.recalculate_current
+      ActiveRecord::Base.connection.execute("UPDATE regulatory_plans SET current = 1")
+      ActiveRecord::Base.connection.execute("UPDATE regulatory_plans, regulatory_plans prior_reg_plan
+                                            SET regulatory_plans.current = 0
+                                            WHERE regulatory_plans.regulation_id_number = prior_reg_plan.regulation_id_number
+                                            AND prior_reg_plan.issue > regulatory_plans.issue")
+    end
     
     def self.import_all_by_publication_date(issue)
       url = "http://www.reginfo.gov/public/do/eAgendaMain?operation=OPERATION_GET_AGENCY_RULE_LIST&currentPubId=#{issue}&agencyCd=0000"
