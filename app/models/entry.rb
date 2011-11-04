@@ -142,7 +142,7 @@ class Entry < ApplicationModel
            :conditions => "1 = 1
               LEFT OUTER JOIN regulatory_plans
                 ON regulatory_plans.regulation_id_number = entry_regulation_id_numbers.regulation_id_number
-                AND regulatory_plans.issue = '#{RegulatoryPlan.current_issue}'
+                AND regulatory_plans.current = 1
               LEFT OUTER JOIN regulatory_plans_small_entities
                 ON regulatory_plans_small_entities.regulatory_plan_id = regulatory_plans.id"
   has_many :entry_cfr_references, :dependent => :delete_all
@@ -243,7 +243,7 @@ class Entry < ApplicationModel
     indexes "GROUP_CONCAT(DISTINCT docket_numbers.number SEPARATOR ' ')", :as => :docket_id
     
     # attributes
-    has significant
+    has "SUM(IF(regulatory_plans.priority_category IN (#{RegulatoryPlan::SIGNIFICANT_PRIORITY_CATEGORIES.map{|c| "'#{c}'"}.join(',')}),1,0)) > 0", :as => :significant, :type => :boolean
     has "CRC32(IF(granule_class = 'SUNSHINE', 'NOTICE', granule_class))", :as => :type, :type => :integer
     has "GROUP_CONCAT(DISTINCT entry_cfr_references.title * #{EntrySearch::CFR::TITLE_MULTIPLIER} + entry_cfr_references.part)", :as => :cfr_affected_parts, :type => :multi
     has agency_assignments(:agency_id), :as => :agency_ids
