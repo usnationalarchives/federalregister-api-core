@@ -55,5 +55,26 @@ describe 'EntrySearch::Suggestor::Agency' do
       suggestion = suggestor("pre-USDA").suggestion
       suggestion.should be_nil
     end
+
+    it "doesn't match quoted words" do
+      suggestion = suggestor('"425 USDA 123"').suggestion
+      suggestion.should be_nil
+    end
+
+    it "doesn't match excluded words" do
+      suggestion = suggestor('-USDA').suggestion
+      suggestion.should be_nil
+
+    end
+
+    it "doesn't match exact words" do
+      suggestion = suggestor('=USDA').suggestion
+      suggestion.should be_nil
+    end
+
+    it "doesn't match exact excluded words" do
+      suggestion = suggestor('-=USDA').suggestion
+      suggestion.should be_nil
+    end
   end
 end

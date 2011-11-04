@@ -3,7 +3,7 @@ module Paperclip
   class PermalinkBannerAdder < Paperclip::Processor
     def make
       html = Content.render_erb('public_inspection/_pdf_banner', {:document => attachment.instance})
-      kit = PDFKit.new(html, :page_size => 'Letter', :margin_top => ".2in")
+      kit = PDFKit.new(html, :page_size => 'Letter', :margin_top => "0in")
       banner = Tempfile.new("banner_pdf")
       kit.to_file(banner.path)
 

@@ -17,22 +17,26 @@ module ApplicationSearch::TermPreprocessor
   end
 
   def self.fix_hypenated_word_searches(term)
-    # remove hyphens in identifiers inside phrases
+    # quote hyphenated words outside phrases
     processed_term = term.gsub(/
+      \b
+      ((?:
+        \w+                               (?#   some word characters )
+        -                                 (?#   a hyphen )
+      )+)
       (\w+)                               (?# some word characters )
-      -                                   (?# a hyphen )
-      (\w+)                               (?# some word characters )
-      (?=(?:[^"]*"[^"]*")*[^"]*"[^"]*$)   (?# an odd number of quotes afterwards)
-    /x, '\1 \2')
+      (?=(?:[^"]*"[^"]*")*[^"]*$)         (?# an even number of quotes afterwards )
+    /x, '"\1\2"')
 
-    # quote and remove hyphens in identifiers outside phrases
+    # remove hyphens in identifiers inside phrases
     processed_term.gsub(/
       (\w+)                               (?# some word characters )
       -                                   (?# a hyphen )
-      (\w+)                               (?# some word characters )
-      (?=(?:[^"]*"[^"]*")*[^"]*$)         (?# an even number of quotes afterwards)
-    /x, '"\1 \2"')
-
+      (?=                                 (?# looking ahead to... )
+        \w+                               (?#   another word character )
+        (?:[^"]*"[^"]*")*[^"]*"[^"]*$     (?#   an odd number of quotes afterwards )
+      )
+    /x, '\1 \2')
   end
 
   def self.use_exact_word_matching_within_phrase(term)

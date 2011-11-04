@@ -33,8 +33,7 @@ class PublicInspectionDocument < ApplicationModel
                     :path => ":style_if_not_with_banner:document_number.pdf",
                     :default_style => :with_banner,
                     :styles => {
-                      :with_banner => { :processors => [:permalink_banner_adder] },
-                      :original => {}
+                      :with_banner => { :processors => [:permalink_banner_adder] }
                     },
                     :processors => [:permalink_banner_adder]
 
@@ -55,6 +54,8 @@ class PublicInspectionDocument < ApplicationModel
   file_attribute(:raw_text)  {"#{RAILS_ROOT}/data/public_inspection/raw/#{document_file_path}.txt"}
   before_save :persist_document_file_path
   before_save :set_content_type
+
+  named_scope :revoked, :conditions => {:publication_date => nil}
 
   define_index do
     # fields
@@ -117,6 +118,34 @@ class PublicInspectionDocument < ApplicationModel
 
   def end_page
     0
+  end
+
+  def pdf_displayable?
+    pdf_file_name.present? &&
+    (
+      publication_date.present? ||
+      Time.current < Time.zone.parse("#{public_inspection_issues.first(:order => "publication_date DESC").publication_date.to_s(:db)} 5:15PM")
+    )
+  end
+
+  def make_s3_files_private!
+    pdf.styles.each_pair do |style, options|
+      path = pdf.path(style)
+      bucket = pdf.bucket_name
+      obj = AWS::S3::S3Object.find(path, bucket)
+
+      grantee = AWS::S3::ACL::Grantee.new
+      grantee.id = obj.owner.id
+      grantee.type = 'CanonicalUser'
+
+      grant = AWS::S3::ACL::Grant.new
+      grant.permission = 'FULL_CONTROL'
+      grant.grantee = grantee
+ 
+      obj.acl.grants = [grant]
+      obj.acl(obj.acl)
+    end
+    touch(:updated_at)
   end
 
   private
