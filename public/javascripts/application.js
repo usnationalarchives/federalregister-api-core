@@ -7,6 +7,7 @@ var jqmHandlers = {
             window.location = href;
         },
         10000);
+        closeOnEscape(hash);
     },
     hide: function (hash) {
         hash.w.hide();

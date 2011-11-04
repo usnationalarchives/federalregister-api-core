@@ -1,3 +1,16 @@
+function closeOnEscape(hash) {
+  $(window).one('keyup', function(event) {
+    if( event.keyCode == '27' ){
+      hash.w.jqmHide();
+    }
+  });
+}
+var modalOpen = function(hash) {
+  closeOnEscape(hash);
+  hash.w.show();
+}
+
+
 $(document).ready(function () {
     $('a.rss, a.subscription, a.subscription_action').live('click',
     function () {
@@ -46,14 +59,7 @@ $(document).ready(function () {
             $('#modal').jqm({
                 modal: true,
                 toTop: true,
-                onShow: function(hash){
-                  $(window).one('keypress', function(event) {
-                    if( event.keyCode == '27' ){
-                      hash.w.jqmHide();
-                    }
-                  });
-                  hash.w.show();
-                }
+                onShow: modalOpen
             });            
         }
     }
