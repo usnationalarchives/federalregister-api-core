@@ -434,7 +434,11 @@ class Entry < ApplicationModel
   end
   
   def current_regulatory_plans
-    RegulatoryPlan.in_current_issue.all(:conditions => {:regulation_id_number => regulation_id_numbers})
+    RegulatoryPlan.current.all(:conditions => {:regulation_id_number => regulation_id_numbers})
+  end
+
+  def significant?
+    current_regulatory_plans.any?(&:significant?)
   end
   
   def previous_entry

@@ -91,7 +91,7 @@ class Issue < ApplicationModel
   end
   
   def significant_entries_count
-    entries.significant.count
+    EntrySearch.new(:conditions => {:publication_date => {:is => publication_date}, :significant => '1'}).count
   end
   
   def total_pages
