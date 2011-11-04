@@ -1,6 +1,11 @@
 <% title @search.term.blank? ? 'Event Search' : "Event Search Results for '#{h @search.term}'" %>
 <%= feed_autodiscovery events_search_url(params.merge(:format => :rss, :order => 'date')) %>
-<% meta_robots("NOINDEX, NOFOLLOW") %>
+
+<% if @search.blank? %>
+  <% meta_robots("NOFOLLOW") %>
+<% else %>
+  <% meta_robots("NOINDEX, NOFOLLOW") %>
+<% end %>
 
 <% add_javascript :src => 'page_specific/search/search.js' %>
 <% add_javascript :src => 'page_specific/search/jquery-ui-1.8.6.custom.min.js' %>

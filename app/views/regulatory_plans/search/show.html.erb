@@ -1,5 +1,10 @@
 <% title @search.term.blank? ? 'Unified Agenda Search' : "Unified Agenda Search Results for '#{h @search.term}'" %>
-<% meta_robots("NOINDEX, NOFOLLOW") %>
+
+<% if @search.blank? %>
+  <% meta_robots("NOFOLLOW") %>
+<% else %>
+  <% meta_robots("NOINDEX, NOFOLLOW") %>
+<% end %>
 
 <div class="title"><span>Search the Unified Agenda</span></div>
 
