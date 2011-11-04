@@ -10,6 +10,16 @@ module Content
                                             AND prior_reg_plan.issue > regulatory_plans.issue")
     end
     
+    def self.import_all_small_entities
+      RegulatoryPlan.find_each do |reg_plan|
+        reg_plan.small_entities = reg_plan.send(:root_node).xpath('.//SMALL_ENTITY').map do |name|
+          next if name == 'No' || name == 'Undetermined'
+          SmallEntity.find_or_initialize_by_name(name)
+        end
+        reg_plan.save
+      end
+    end
+
     def self.import_all_by_publication_date(issue)
       url = "http://www.reginfo.gov/public/do/eAgendaMain?operation=OPERATION_GET_AGENCY_RULE_LIST&currentPubId=#{issue}&agencyCd=0000"
       path = "#{Rails.root}/data/regulatory_plans/xml/#{issue}/index.html"
