@@ -12,11 +12,18 @@ module Content
     
     def self.import_all_small_entities
       RegulatoryPlan.find_each do |reg_plan|
-        reg_plan.small_entities = reg_plan.send(:root_node).xpath('.//SMALL_ENTITY').map do |name|
-          next if name == 'No' || name == 'Undetermined'
-          SmallEntity.find_or_initialize_by_name(name)
+        puts "#{reg_plan.issue}: #{reg_plan.regulation_id_number}"
+        root_node = reg_plan.send(:root_node)
+        if root_node
+          small_entities = root_node.xpath('.//SMALL_ENTITY').map(&:content).map do |name|
+            next if name == 'No' || name == 'Undetermined'
+            SmallEntity.find_or_initialize_by_name(name)
+          end
+          reg_plan.small_entities = small_entities.compact
+          reg_plan.save
+        else
+          puts "XML NOT AVAILABLE!"
         end
-        reg_plan.save
       end
     end
 
