@@ -33,8 +33,7 @@ class PublicInspectionDocument < ApplicationModel
                     :path => ":style_if_not_with_banner:document_number.pdf",
                     :default_style => :with_banner,
                     :styles => {
-                      :with_banner => { :processors => [:permalink_banner_adder] },
-                      :original => {}
+                      :with_banner => { :processors => [:permalink_banner_adder] }
                     },
                     :processors => [:permalink_banner_adder]
 
