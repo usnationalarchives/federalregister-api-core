@@ -9,17 +9,9 @@
 
 <div class="title"><span>Search the Unified Agenda</span></div>
 
+<%= render :esi => regulatory_plan_search_header_path(params.except(:action)) %>
+
 <% unless @search.blank? %>
-  <% unless @search.valid? %>
-  <ul class="errors">
-    <% @search.errors.each do |err| %>
-    <li><%= err %></li>
-    <% end %>
-  </ul>
-  <% end %>
-
-  <%= render :esi => regulatory_plan_search_header_path(params.except(:action)) %>
-
   <div class="filters">
     <%= render :esi => regulatory_plan_search_facets_path(params.except(:action).merge(:facet => 'priority_category')) %>
     <%= render :esi => regulatory_plan_search_facets_path(params.except(:action).merge(:facet => 'agency')) %>
