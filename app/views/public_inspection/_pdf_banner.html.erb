@@ -1,7 +1,7 @@
 <html>
   <head>
     <style>
-      body { margin-top: 0; padding-top: 0; }
+      body { margin-top: 0; padding-top: 10px; }
       div.banner {
         background-color: #E5E5E5;
         -webkit-border-bottom-left-radius: 5px;
@@ -13,27 +13,29 @@
         -webkit-border-top-right-radius: 5px;
         border-top-right-radius: 5px;
         
-        width: 390px;
-        height: 80px;
-        margin: 0;
+        width: 380px;
+        height: 60px;
+        padding-top: 2px;
+        padding-bottom: 2px;
         margin-top: 10px;
-        margin-left: 130px;
+        margin-right: auto;
+        margin-left: auto;
         }
       
       div.logo {
-        width: 150px;
-        height: 148px;
+        width: 85px;
+        height: 85px;
         background: url('<%= Rails.root %>/public/images/nara_seal_circle.png') 0 0 no-repeat;
-        top: -10px;
-        left: 10px;
-        position: relative;
+        background-size: 100%;
+        top:10px;
+        left: 135px;
+        position: absolute;
         opacity: .8;
         }
       
       div.banner p {
-        width: 250px;
-        position: absolute;
-        left: 260px;
+        margin-left: 100px;
+        width: 260px;
         font-family: "Helvetica Neue";
         margin-top:0.5em;
         line-height: 1.4em;
