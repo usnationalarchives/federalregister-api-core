@@ -9,6 +9,7 @@
 #  abstract             :text
 #  priority_category    :string(255)
 #  delta                :boolean(1)      default(TRUE), not null
+#  current              :boolean(1)
 #
 
 class RegulatoryPlan < ApplicationModel
@@ -55,6 +56,7 @@ class RegulatoryPlan < ApplicationModel
   
   has_many :agency_assignments, :as => :assignable
   has_many :agencies, :through => :agency_assignments, :extend => Agency::AssociationExtensions
+  has_and_belongs_to_many :small_entities
   
   def entries
     Entry.with_regulation_id_number(self.regulation_id_number)

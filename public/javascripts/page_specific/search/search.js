@@ -147,7 +147,8 @@ $(document).ready(function () {
     $('#modal').centerScreen().jqm({
         ajax: '@href',
         ajaxText: 'Loading...',
-        trigger: '.results a.add_to_calendar'
+        trigger: '.results a.add_to_calendar',
+        onShow: modalOpen
     });
     
     $(".date_options .date").hide();

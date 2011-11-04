@@ -136,6 +136,15 @@ class Entry < ApplicationModel
   file_attribute(:raw_text)  {"#{RAILS_ROOT}/data/raw/#{document_file_path}.txt"}
   
   has_many :entry_regulation_id_numbers
+  has_many :regulatory_plans, :through => :entry_regulation_id_numbers
+  has_many :small_entities_for_thinking_sphinx,
+           :class_name => 'EntryRegulationIdNumber',
+           :conditions => "1 = 1
+              LEFT OUTER JOIN regulatory_plans
+                ON regulatory_plans.regulation_id_number = entry_regulation_id_numbers.regulation_id_number
+                AND regulatory_plans.current = 1
+              LEFT OUTER JOIN regulatory_plans_small_entities
+                ON regulatory_plans_small_entities.regulatory_plan_id = regulatory_plans.id"
   has_many :entry_cfr_references, :dependent => :delete_all
   has_many :entry_cfr_affected_parts, :class_name => "EntryCfrReference", :conditions => "entry_cfr_references.part IS NOT NULL"
   validate :curated_attributes_are_not_too_long
@@ -230,25 +239,25 @@ class Entry < ApplicationModel
     indexes title
     indexes abstract
     indexes "LOAD_FILE(CONCAT('#{RAILS_ROOT}/data/raw/', document_file_path, '.txt'))", :as => :full_text
-    indexes entry_regulation_id_numbers(:regulation_id_number)
+    indexes "GROUP_CONCAT(DISTINCT IFNULL(`entry_regulation_id_numbers`.`regulation_id_number`, '0') SEPARATOR ' ')", :as =>  :regulation_id_number
     indexes "GROUP_CONCAT(DISTINCT docket_numbers.number SEPARATOR ' ')", :as => :docket_id
     
     # attributes
-    has significant
+    has "SUM(IF(regulatory_plans.priority_category IN (#{RegulatoryPlan::SIGNIFICANT_PRIORITY_CATEGORIES.map{|c| "'#{c}'"}.join(',')}),1,0)) > 0", :as => :significant, :type => :boolean
     has "CRC32(IF(granule_class = 'SUNSHINE', 'NOTICE', granule_class))", :as => :type, :type => :integer
     has "GROUP_CONCAT(DISTINCT entry_cfr_references.title * #{EntrySearch::CFR::TITLE_MULTIPLIER} + entry_cfr_references.part)", :as => :cfr_affected_parts, :type => :multi
     has agency_assignments(:agency_id), :as => :agency_ids
     has topic_assignments(:topic_id),   :as => :topic_ids
     has section_assignments(:section_id), :as => :section_ids
     has place_determinations(:place_id), :as => :place_ids
-    
+    has "GROUP_CONCAT(regulatory_plans_small_entities.small_entity_id)", :as => :small_entity_ids, :type => :multi
     has publication_date
     has effective_date(:date), :as => :effective_date
     has comments_close_date(:date), :as => :comment_date
     
     join entry_cfr_affected_parts
     join docket_numbers
-    
+    join small_entities_for_thinking_sphinx
     set_property :field_weights => {
       "title" => 100,
       "abstract" => 50,
@@ -425,7 +434,11 @@ class Entry < ApplicationModel
   end
   
   def current_regulatory_plans
-    RegulatoryPlan.in_current_issue.all(:conditions => {:regulation_id_number => regulation_id_numbers})
+    RegulatoryPlan.current.all(:conditions => {:regulation_id_number => regulation_id_numbers})
+  end
+
+  def significant?
+    current_regulatory_plans.any?(&:significant?)
   end
   
   def previous_entry

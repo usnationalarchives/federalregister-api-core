@@ -1,7 +1,32 @@
 module Content
   class RegulatoryPlanImporter
     require 'ftools'
+
+    def self.recalculate_current
+      ActiveRecord::Base.connection.execute("UPDATE regulatory_plans SET current = 1")
+      ActiveRecord::Base.connection.execute("UPDATE regulatory_plans, regulatory_plans prior_reg_plan
+                                            SET regulatory_plans.current = 0
+                                            WHERE regulatory_plans.regulation_id_number = prior_reg_plan.regulation_id_number
+                                            AND prior_reg_plan.issue > regulatory_plans.issue")
+    end
     
+    def self.import_all_small_entities
+      RegulatoryPlan.find_each do |reg_plan|
+        puts "#{reg_plan.issue}: #{reg_plan.regulation_id_number}"
+        root_node = reg_plan.send(:root_node)
+        if root_node
+          small_entities = root_node.xpath('.//SMALL_ENTITY').map(&:content).map do |name|
+            next if name == 'No' || name == 'Undetermined'
+            SmallEntity.find_or_initialize_by_name(name)
+          end
+          reg_plan.small_entities = small_entities.compact
+          reg_plan.save
+        else
+          puts "XML NOT AVAILABLE!"
+        end
+      end
+    end
+
     def self.import_all_by_publication_date(issue)
       url = "http://www.reginfo.gov/public/do/eAgendaMain?operation=OPERATION_GET_AGENCY_RULE_LIST&currentPubId=#{issue}&agencyCd=0000"
       path = "#{Rails.root}/data/regulatory_plans/xml/#{issue}/index.html"
@@ -23,7 +48,8 @@ module Content
     end
   
     def perform
-      %w(title abstract priority_category events agency_name_assignments).each do |attr|
+      return unless document
+      %w(title abstract priority_category events agency_name_assignments small_entities).each do |attr|
         @regulatory_plan.send("#{attr}=", self.send(attr))
       end
       @regulatory_plan.save
@@ -49,6 +75,12 @@ module Content
   
     def priority_category
       document.xpath('.//PRIORITY_CATEGORY').first.content
+    end
+
+    def small_entities
+      document.xpath('.//SMALL_ENTITY').map(&:content).reject{|e| e == 'No' || e == 'Undetermined'}.map do |name|
+        SmallEntity.find_or_initialize_by_name(name)
+      end
     end
     
     def agency_name_assignments

@@ -37,7 +37,7 @@ class AgenciesController < ApplicationController
     
     respond_to do |wants|
       wants.rss do
-        @entries = @agency.entries.significant.most_recent(20)
+        @entries = EntrySearch.new(:conditions => {:agency_ids => [@agency.id], :significant => '1'}, :order => "newest", :per_page => 20).results
         @feed_name = "Federal Register: #{@agency.name} Significant Articles"
         @feed_description = "Recent Federal Register articles from #{@agency.name} on significant regulations."
         render :template => 'entries/index.rss.builder'

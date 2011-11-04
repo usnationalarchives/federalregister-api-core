@@ -11,7 +11,7 @@ class EntrySearch < ApplicationSearch
     
     def sphinx_citation
       title_int =  title.to_s.to_i * TITLE_MULTIPLIER
-      if part
+      if part.present?
         title_int + part.to_s.to_i
       else
         title_int ... title_int + TITLE_MULTIPLIER
@@ -48,6 +48,9 @@ class EntrySearch < ApplicationSearch
   define_filter :topic_ids,   :sphinx_type => :with_all
   define_filter :type,        :sphinx_type => :with, :crc32_encode => true do |types|
     types.map{|type| Entry::ENTRY_TYPES[type]}.to_sentence(:two_words_connector => ' or ', :last_word_connector => ', or ')
+  end
+  define_filter :small_entity_ids, :sphinx_type => :with, :label => "Small Entities Affected" do |entity_ids|
+    SmallEntity.find(entity_ids).map(&:name).to_sentence(:two_words_connector => ' or ', :last_word_connector => ', or ')
   end
   
   define_filter :docket_id, :phrase => true, :label => "Agency Docket" do |docket|
@@ -247,7 +250,8 @@ class EntrySearch < ApplicationSearch
       ['affecting', :cfr],
       ['located', :near],
       ['in', :section_ids],
-      ['about', :topic_ids]
+      ['about', :topic_ids],
+      ['affecting Small', :small_entity_ids]
     ].each do |term, filter_condition|
       relevant_filters = filters.select{|f| f.condition == filter_condition}
     

@@ -185,7 +185,11 @@ $(document).ready(function () {
         ].join("\n")
       );
       $('#cfr_citation_modal').jqm({
-          modal: true
+          modal: true,
+          onShow: function(hash) {
+                    closeOnEscape(hash);
+                    hash.w.show();
+                  }
       });
       $('#cfr_citation_modal').centerScreen().jqmShow();
     }

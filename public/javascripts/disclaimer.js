@@ -29,7 +29,8 @@ $(document).ready(function() {
       );
       $('#disclaimer_modal').jqm({
           modal: true,
-          toTop: true
+          toTop: true,
+          onShow: modalOpen
       });
       $('#disclaimer_modal').centerScreen().jqmShow();
   }

@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111021185603) do
+ActiveRecord::Schema.define(:version => 20111104184505) do
 
   create_table "agencies", :force => true do |t|
     t.integer  "parent_id"
@@ -404,11 +404,18 @@ ActiveRecord::Schema.define(:version => 20111021185603) do
     t.text    "abstract"
     t.string  "priority_category"
     t.boolean "delta",                :default => true, :null => false
+    t.boolean "current"
   end
 
+  add_index "regulatory_plans", ["current", "regulation_id_number"], :name => "index_regulatory_plans_on_current_and_regulation_id_number"
   add_index "regulatory_plans", ["delta"], :name => "index_regulatory_plans_on_delta"
   add_index "regulatory_plans", ["issue", "regulation_id_number"], :name => "index_regulatory_plans_on_issue_and_regulation_id_number"
   add_index "regulatory_plans", ["regulation_id_number", "issue"], :name => "index_regulatory_plans_on_regulation_id_number_and_issue"
+
+  create_table "regulatory_plans_small_entities", :id => false, :force => true do |t|
+    t.integer "regulatory_plan_id"
+    t.integer "small_entity_id"
+  end
 
   create_table "section_assignments", :force => true do |t|
     t.integer "entry_id"
@@ -437,6 +444,10 @@ ActiveRecord::Schema.define(:version => 20111021185603) do
     t.datetime "updated_at"
     t.integer  "creator_id"
     t.integer  "updater_id"
+  end
+
+  create_table "small_entities", :force => true do |t|
+    t.string "name"
   end
 
   create_table "subscriptions", :force => true do |t|
