@@ -9,7 +9,7 @@
 <%- @results.each do |document| -%>
 <%= [document.toc_subject, document.toc_doc, document.title].reject(&:blank?).join(' - ') %> (<%= document.document_number %>)
 
-A <%= document.entry_type %> by <%= agency_names(document, :no_links => true) %>.
+A <%= document.entry_type %> by <%= agency_names(document, :no_links => true) %> to be published on <%= document.publication_date %>.
 
 <%= short_entry_url(document.document_number) %>
 
