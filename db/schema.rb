@@ -417,6 +417,7 @@ ActiveRecord::Schema.define(:version => 20111105135810) do
     t.integer "small_entity_id"
   end
 
+  add_index "regulatory_plans_small_entities", ["regulatory_plan_id", "small_entity_id"], :name => "reg_then_entity"
   add_index "regulatory_plans_small_entities", ["regulatory_plan_id", "small_entity_id"], :name => "regulatory_plan_id"
 
   create_table "section_assignments", :force => true do |t|
