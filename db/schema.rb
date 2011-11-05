@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111104184505) do
+ActiveRecord::Schema.define(:version => 20111105135810) do
 
   create_table "agencies", :force => true do |t|
     t.integer  "parent_id"
@@ -416,6 +416,8 @@ ActiveRecord::Schema.define(:version => 20111104184505) do
     t.integer "regulatory_plan_id"
     t.integer "small_entity_id"
   end
+
+  add_index "regulatory_plans_small_entities", ["regulatory_plan_id", "small_entity_id"], :name => "regulatory_plan_id"
 
   create_table "section_assignments", :force => true do |t|
     t.integer "entry_id"
