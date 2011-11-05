@@ -250,7 +250,7 @@ class Entry < ApplicationModel
     has topic_assignments(:topic_id),   :as => :topic_ids
     has section_assignments(:section_id), :as => :section_ids
     has place_determinations(:place_id), :as => :place_ids
-    has "GROUP_CONCAT(regulatory_plans_small_entities.small_entity_id)", :as => :small_entity_ids, :type => :multi
+    has "GROUP_CONCAT(DISTINCT IFNULL(regulatory_plans_small_entities.small_entity_id,0) SEPARATOR ',')", :as => :small_entity_ids, :type => :multi
     has publication_date
     has effective_date(:date), :as => :effective_date
     has comments_close_date(:date), :as => :comment_date
