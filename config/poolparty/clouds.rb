@@ -70,8 +70,8 @@ def chef_cloud_attributes(instance_type)
     @ssl_cert_key_name  = 'fr2_staging.key'
      @rails_env = 'staging'
   when 'production'
-    @ssl_cert_name      = 'fr2_admin.crt'
-    @ssl_cert_key_name  = 'fr2_admin.key'
+    @ssl_cert_name      = 'www_federalregister_gov.crt'
+    @ssl_cert_key_name  = 'www_federalregister_gov.key'
      @rails_env = 'production'
   end
   
