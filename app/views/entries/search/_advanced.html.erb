@@ -43,13 +43,11 @@
       Deemed Significant Under EO 12866
     </label>
   </li>
-  <% if RAILS_ENV != 'production' %>
   <%= f.input :small_entity_ids,
               :label => "Small Entities Affected",
               :as => :check_boxes,
               :collection => SmallEntity.all,
               :value_method => Proc.new{|e| e.id.to_s} %>
-  <% end %>
 <% end %>
 
 <% f.fields_for :cfr, f.object.cfr do |cfr_f| %>
