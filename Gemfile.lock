@@ -64,9 +64,6 @@ GEM
       json (~> 1.4.6)
       term-ansicolor (~> 1.0.5)
     curb (0.4.4.0)
-    daemons (1.1.0)
-    delayed_job (2.0.3)
-      daemons
     diff-lcs (1.1.2)
     durran-validatable (2.0.1)
     factory_girl (1.2.4)
@@ -191,7 +188,6 @@ DEPENDENCIES
   compass-960-plugin (= 0.9.13)
   cucumber (= 0.9.2)
   curb (= 0.4.4.0)
-  delayed_job (= 2.0.3)
   factory_girl (= 1.2.4)
   fastercsv (= 1.4.0)
   flickraw (= 0.8.1)
