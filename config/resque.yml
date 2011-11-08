@@ -1,0 +1,4 @@
+development: localhost:6379
+staging: redis.fr2.ec2.internal:6379
+production: redis.fr2.ec2.internal:6379
+
