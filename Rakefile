@@ -8,6 +8,7 @@ require 'rake/testtask'
 require 'rake/rdoctask'
 
 require 'tasks/rails'
+require 'resque/tasks'
 require 'fr2_audit_logic/tasks'
 
 begin

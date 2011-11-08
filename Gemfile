@@ -47,6 +47,7 @@ gem "amazon-ec2", :require => false
 gem "net-scp", '1.0.4'
 gem "capistrano", '2.5.19', :require => false
 gem "thunder_punch", '0.0.11', :require => false
+gem "resque", "1.19.0"
 
 gem "gwt_rpc", '0.1.0'
 
