@@ -15,6 +15,8 @@
 #
 
 class Graphic < ApplicationModel
+  before_save :set_content_type
+
   has_many :usages, :class_name => "GraphicUsage"
   has_many :entries, :through => :usages
   
@@ -26,4 +28,8 @@ class Graphic < ApplicationModel
                     :s3_protocol => 'https',
                     :bucket => 'images.federalregister.gov',
                     :path => ":identifier/:style.:extension"
+
+  def set_content_type
+    self.graphic.instance_write(:content_type,'image/gif')
+  end
 end
