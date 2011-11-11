@@ -2,8 +2,10 @@
 
 <% if params[:action] == 'index' %>
   <% title "Current Public Inspection Documents" %>
+  <% description "The following are a preview of unpublished Federal Register documents scheduled to appear on the dates listed. Special filings: #{ @special_documents.entry_count } Regular filings: #{ @regular_documents.entry_count }" %>
 <% else %>
   <% title "Public Inspection Documents for #{@date.to_formatted_s(:pretty)}" %>
+  <% description "On #{@date.to_formatted_s(:pretty)}, the following documents appeared on the Public Inspection Desk. Special filings: #{ @special_documents.entry_count } Regular filings: #{ @regular_documents.entry_count }" %>
 <% end %>
 
 <div class="title"><span><%= @date %> Public Inspection</span></div>
