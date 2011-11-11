@@ -212,7 +212,7 @@ module Content
           if @str =~ /^EDITORIAL NOTE: /
             @pi_documents.last[:editorial_note] = @str.sub(/^EDITORIAL NOTE: /,'')
             @context = :editorial_note
-          elsif @str =~ /^Note: This (Special|Regular) Filing List was updated at (.*?)\. The following documents are on file/
+          elsif @str =~ /^Note: This (Special|Regular) Filing List was updated at (.*?)\. The following documents are on file/i
             updated_at = Time.zone.parse($2)
             case $1
             when 'Special'
