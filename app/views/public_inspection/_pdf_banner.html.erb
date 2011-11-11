@@ -13,7 +13,7 @@
         -webkit-border-top-right-radius: 5px;
         border-top-right-radius: 5px;
         
-        width: 380px;
+        width: 430px;
         height: 60px;
         padding-top: 2px;
         padding-bottom: 2px;
@@ -28,14 +28,14 @@
         background: url('<%= Rails.root %>/public/images/nara_seal_circle.png') 0 0 no-repeat;
         background-size: 100%;
         top:10px;
-        left: 135px;
+        left: 110px;
         position: absolute;
         opacity: .8;
         }
       
       div.banner p {
-        margin-left: 100px;
-        width: 260px;
+        margin-left: 108px;
+        width: 310px;
         font-family: "Helvetica Neue";
         margin-top:0.5em;
         line-height: 1.4em;
@@ -51,12 +51,14 @@
     <div class='banner'>
       <p>
         <% if document.publication_date %>
-          This document is scheduled to be published in the Federal Register on <%= document.publication_date %> and available online at
+          This document is scheduled to be published in the<br />
+          Federal Register on <%= document.publication_date %> and available online at
         <% else %>
-          More information can be found at 
+          More information can be found at
         <% end %>
         <br />
-        <%= link_to nil, short_entry_url(document, :host => "federalregister.gov") %>.
+        <%= link_to nil, short_entry_url(document, :host => "federalregister.gov") %>,
+        and on <%= link_to 'FDsys.gov', short_entry_url(document, :host => "federalregister.gov", :format => :pdf) %>
       </p>
       <div class='logo'></div>
     </div>
