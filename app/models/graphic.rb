@@ -23,7 +23,7 @@ class Graphic < ApplicationModel
                     :processors => [:auto_inverter],
                     :storage => :s3,
                     :s3_credentials => "#{Rails.root}/config/amazon.yml",
-                    :s3_alias_url => 'http://images.federalregister.gov.s3.amazonaws.com/',
+                    :s3_protocol => 'https',
                     :bucket => 'images.federalregister.gov',
                     :path => ":identifier/:style.:extension"
 end
