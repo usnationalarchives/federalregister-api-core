@@ -27,6 +27,7 @@ namespace :data do
       content:entries:import:regulations_dot_gov:tardy
       remote:sphinx:rebuild_delta
       content:issues:mark_complete
+      content:public_inspection:reindex
       varnish:expire:everything
       mailing_lists:entries:deliver
       sitemap:refresh
