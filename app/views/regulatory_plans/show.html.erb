@@ -15,8 +15,6 @@
           <ul>
             <li><%= link_to_twitter("#{short_regulatory_plan_url(@regulatory_plan)} #gov20") %></li>
             <li><%= link_to_facebook(short_regulatory_plan_url(@regulatory_plan), @regulatory_plan.title) %></li>
-            <li><%= link_to_reddit(short_regulatory_plan_url(@regulatory_plan), @regulatory_plan.title) %></li>
-            <li><%= link_to_digg(short_regulatory_plan_url(@regulatory_plan), @regulatory_plan.title, @regulatory_plan.abstract) %></li>
           <%# TODO HELP-RUBY make this real %>
           <%# <a href="#" class="button list social email">E-Mail</a> %>
           </ul>
