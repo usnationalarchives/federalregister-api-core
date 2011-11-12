@@ -15,6 +15,8 @@
 #
 
 class Graphic < ApplicationModel
+  before_save :set_content_type
+
   has_many :usages, :class_name => "GraphicUsage"
   has_many :entries, :through => :usages
   
@@ -23,7 +25,11 @@ class Graphic < ApplicationModel
                     :processors => [:auto_inverter],
                     :storage => :s3,
                     :s3_credentials => "#{Rails.root}/config/amazon.yml",
-                    :s3_alias_url => 'http://images.federalregister.gov.s3.amazonaws.com/',
+                    :s3_protocol => 'https',
                     :bucket => 'images.federalregister.gov',
                     :path => ":identifier/:style.:extension"
+
+  def set_content_type
+    self.graphic.instance_write(:content_type,'image/gif')
+  end
 end

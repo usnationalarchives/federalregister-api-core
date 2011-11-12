@@ -32,7 +32,7 @@
       </xsl:call-template>
     </xsl:variable>
     
-    <xsl:value-of select="concat('http://images.federalregister.gov.s3.amazonaws.com/', $image_id, '/', $size, '.gif')" />
+    <xsl:value-of select="concat('https://s3.amazonaws.com/images.federalregister.gov/', $image_id, '/', $size, '.gif')" />
   </xsl:template>
   
   <xsl:template name="table_of_graphics">

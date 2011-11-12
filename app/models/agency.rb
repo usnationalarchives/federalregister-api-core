@@ -60,7 +60,7 @@ class Agency < ApplicationModel
                     :processors => [:thumbnail],
                     :storage => :s3,
                     :s3_credentials => "#{Rails.root}/config/amazon.yml",
-                    :s3_alias_url => 'http://agency-logos.federalregister.gov.s3.amazonaws.com/',
+                    :s3_protocol => 'https',
                     :bucket => 'agency-logos.federalregister.gov',
                     :path => ":id/:style.:extension"
   
