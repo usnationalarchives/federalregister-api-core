@@ -117,15 +117,29 @@ class EntriesController < ApplicationController
                   Entry.find_by_id(params[:document_number])
     raise ActiveRecord::RecordNotFound if entry_or_pi.blank?
 
-    url = entry_url(entry_or_pi, params.except(:anchor, :document_number, :action, :controller, :format))
-    
-    if params[:anchor].present?
-      url += '#' + params[:anchor]
+    respond_to do |wants|
+      wants.html do
+        url = entry_url(entry_or_pi, params.except(:anchor, :document_number, :action, :controller, :format))
+        
+        if params[:anchor].present?
+          url += '#' + params[:anchor]
+        end
+        redirect_to url, :status => :moved_permanently
+      end
+      wants.pdf do
+        if entry_or_pi.is_a?(Entry)
+          redirect_to entry_or_pi.source_url(:pdf), :status => :moved_permanently
+        else
+          @public_inspection_document = entry_or_pi
+          render :template => "public_inspection/not_published.html.erb",
+                 :layout => "application.html.erb",
+                 :content_type => 'text/html',
+                 :status => :not_found
+        end
+      end
     end
-    
-    redirect_to url, :status=>:moved_permanently
   end
-  
+
   private
   
   def parse_date_from_params

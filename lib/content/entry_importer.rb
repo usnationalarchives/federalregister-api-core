@@ -57,7 +57,7 @@ module Content
             docs_and_nodes.each do |document_number, bulkdata_node|
               if mods_doc_numbers.include?(document_number)
                 importer = EntryImporter.new(:date => date, :document_number => document_number, :bulkdata_node => bulkdata_node)
-            
+                attributes = attributes.map(&:to_sym) 
                 if attributes == [:all]
                   importer.update_all_provided_attributes
                 else

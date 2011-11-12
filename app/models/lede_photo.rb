@@ -24,7 +24,7 @@ class LedePhoto < ApplicationModel
                     :processors => [:thumbnail],
                     :storage => :s3,
                     :s3_credentials => "#{Rails.root}/config/amazon.yml",
-                    :s3_alias_url => 'http://lede-photos.federalregister.gov.s3.amazonaws.com/',
+                    :s3_protocol => 'https',
                     :bucket => 'lede-photos.federalregister.gov',
                     :path => ":id/:style.:extension"
   

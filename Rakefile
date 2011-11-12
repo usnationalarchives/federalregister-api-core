@@ -8,23 +8,17 @@ require 'rake/testtask'
 require 'rake/rdoctask'
 
 require 'tasks/rails'
+require 'resque/tasks'
 require 'fr2_audit_logic/tasks'
 
 begin
   require 'thinking_sphinx/tasks'
-  require 'thinking_sphinx/deltas/delayed_delta/tasks'
 rescue LoadError
 end
 
 begin
   require 'hoptoad_notifier/tasks'
 rescue LoadError
-end
-
-begin
-  require 'delayed/tasks'
-rescue LoadError
-  STDERR.puts "Run `rake gems:install` to install delayed_job"
 end
 
 begin

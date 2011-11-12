@@ -48,7 +48,8 @@ ActionController::Routing::Routes.draw do |map|
                                                   :action     => 'date_search',
                                                   :conditions => { :method => :get }
 
-  map.short_entry 'a/:document_number', :controller => 'entries',
+  map.short_entry 'a/:document_number.:format',
+                                        :controller => 'entries',
                                         :action     => 'tiny_url',
                                         :conditions => { :method => :get }
 

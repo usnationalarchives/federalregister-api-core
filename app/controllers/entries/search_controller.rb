@@ -55,9 +55,9 @@ class Entries::SearchController < SearchController
 
     data = @search.date_distribution(options)
     url = CustomChartHelper::Sparkline.new(:data => data).to_s
-
+    c = Curl::Easy.perform(url)
+    render :text => c.body_str, :content_type => "image/png" 
     cache_for 1.day
-    redirect_to URI.escape(url)
   end
 
   private
