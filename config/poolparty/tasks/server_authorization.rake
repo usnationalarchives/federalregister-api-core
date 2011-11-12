@@ -10,6 +10,7 @@ namespace :fr2 do
                       ['database', 'worker'],
                       ['sphinx',   'worker'],
                       ['app',      'proxy' ],
+                      ['app',      'worker'],
                       ['static',   'proxy' ],
                       # need to be able to clear varnish cache
                       ['proxy',    'worker'],

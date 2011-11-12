@@ -37,6 +37,7 @@ def chef_cloud_attributes(instance_type)
                 'federalregister.gov'
               end
 
+
   case instance_type
   when 'staging'
     @proxy_server_address    = '10.117.65.91'
@@ -45,6 +46,7 @@ def chef_cloud_attributes(instance_type)
     @blog_server_address     = '10.35.71.41'
     @mail_server_address     = '10.35.71.41'
     @splunk_server_address   = '10.35.71.41'
+    @redis_server_address    = '10.35.71.41'
     @database_server_address = '10.116.233.30'
     @mongodb_server_address  = '10.116.233.30'
     @sphinx_server_address   = '10.116.233.30'
@@ -56,9 +58,10 @@ def chef_cloud_attributes(instance_type)
     @blog_server_address     = '10.245.106.31'
     @mail_server_address     = '10.245.106.31'
     @splunk_server_address   = '10.245.106.31'
-    @database_server_address = '10.204.111.190'
-    @mongodb_server_address  = '10.204.111.190'
-    @sphinx_server_address   = '10.204.111.190'
+    @redis_server_address    = '10.245.106.31'
+    @database_server_address = '10.244.157.171'
+    @mongodb_server_address  = '10.244.157.171'
+    @sphinx_server_address   = '10.244.157.171'
     @app_server_address      = ['10.243.41.203', '10.196.117.123', '10.202.162.96', '10.212.73.172', '10.251.131.239']
   end    
   
@@ -68,12 +71,14 @@ def chef_cloud_attributes(instance_type)
   when 'staging'
     @ssl_cert_name      = 'fr2_staging.crt'
     @ssl_cert_key_name  = 'fr2_staging.key'
-     @rails_env = 'staging'
+    @rails_env = 'staging'
   when 'production'
     @ssl_cert_name      = 'www_federalregister_gov.crt'
     @ssl_cert_key_name  = 'www_federalregister_gov.key'
-     @rails_env = 'production'
+    @rails_env = 'production'
   end
+
+  @resque_web_password = @secrets['resque_web_password']
   
   return {
     :platform => "ubuntu",
@@ -108,6 +113,12 @@ def chef_cloud_attributes(instance_type)
                                           :docroot        => "/var/www/apps/fr2_audit/public",
                                           :name           => 'fr2_audit',
                                           :rewrite_conditions => "" 
+                                        },
+                                        { :server_name    =>  "resque.#{@app_url}",
+                                          :server_aliases => '',
+                                          :docroot        => "/var/www/apps/resque_web/public",
+                                          :name           => 'resque-web',
+                                          :rewrite_conditions => "" 
                                         }
                                      ],
                   :web_dir        => '/var/www',
@@ -120,11 +131,13 @@ def chef_cloud_attributes(instance_type)
                 :ebs => {
                           :database => {
                                           :volume_id   => 'vol-4c187e25',
-                                          :mount_point => '/vol'
+                                          :mount_point => '/vol',
+                                          :device      => '/dev/xvdh'
                                        },
                           :worker   => {
                                           :volume_id   => 'vol-ae81e5c7',
-                                          :mount_point => '/vol'
+                                          :mount_point => '/vol',
+                                          :device      => '/dev/sdh'
                                        }
                         },
                 :accesskey => @amazon_keys['access_key_id'],
@@ -139,7 +152,7 @@ def chef_cloud_attributes(instance_type)
                 :ec2_path               => "/vol/lib/mysql",
                 :ebs_vol_dev            => "/dev/sdh",
                 :ebs_vol_size           => 80,
-                :tmpdir                 => '/tmp/mysql',
+                :tmpdir                 => '/mnt/tmp/mysql',
                 :tunable => {
                               :query_cache_size        => '40M',
                               :tmp_table_size          => '100M',
@@ -191,7 +204,8 @@ def chef_cloud_attributes(instance_type)
                                   {:ip => @sphinx_server_address,   :fqdn => 'sphinx.fr2.ec2.internal',   :alias => 'sphinx'},
                                   {:ip => @mail_server_address,     :fqdn => 'mail.fr2.ec2.internal',     :alias => 'mail'},
                                   {:ip => @splunk_server_address,   :fqdn => 'splunk.fr2.ec2.internal',   :alias => 'splunk'},
-                                  {:ip => @mongodb_server_address,  :fqdn => 'mongodb.fr2.ec2.internal',  :alias => 'mongodb'}
+                                  {:ip => @mongodb_server_address,  :fqdn => 'mongodb.fr2.ec2.internal',  :alias => 'mongodb'},
+                                  {:ip => @redis_server_address,    :fqdn => 'redis.fr2.ec2.internal',    :alias => 'redis'}
                                 ],
                     :proxy_server  => {:ip => @proxy_server_address},
                     :static_server => {:ip => @static_server_address},
@@ -200,12 +214,13 @@ def chef_cloud_attributes(instance_type)
                     :sphinx        => {:ip => @sphinx_server_address},
                     :mail          => {:ip => @mail_server_address},
                     :splunk        => {:ip => @splunk_server_address},
-                    :mongodb       => {:ip => @mongodb_server_address}
+                    :mongodb       => {:ip => @mongodb_server_address},
+                    :redis         => {:ip => @redis_server_address}
                    },
-    :munin      => {
-                    :nodes => munin_host(@app_server_address),
-                    :servers => munin_host(@proxy_server_address)
-                   },
+    # :munin      => {
+    #                 :nodes => munin_host(@app_server_address),
+    #                 :servers => munin_host(@proxy_server_address)
+    #                },
     :wordpress => { 
                   :keys              => @wordpress_keys,
                   :database_name     => 'fr2_wordpress',
@@ -232,11 +247,17 @@ def chef_cloud_attributes(instance_type)
                    :database => 'fr2_audit',
                    #:auth     => 'true',
                    :ec2_path => '/vol/lib/mongodb'
-                 }
+                 },
+    :splunk => { :reciever => {
+                    :host => 'splunk.fr2.ec2.internal',
+                    :username => @splunk_keys['username'],
+                    :password => @splunk_keys['password']
+                  }
+               }
 
   }
 end
 
-#require 'config/poolparty/pools/production.rb'
-require 'config/poolparty/pools/staging.rb'
+require 'config/poolparty/pools/production.rb'
+#require 'config/poolparty/pools/staging.rb'
 
