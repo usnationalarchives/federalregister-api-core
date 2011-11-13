@@ -90,8 +90,8 @@ task :staging do
 #  role :sphinx, "ec2-50-17-145-38.compute-1.amazonaws.com"
 
   # ubuntu 11.04 server
-  role :db,     "ec2-107-20-27-188.compute-1.amazonaws.com", {:primary => true}
-  role :sphinx, "ec2-107-20-27-188.compute-1.amazonaws.com"
+  role :db,     "ec2-50-16-6-83.compute-1.amazonaws.com", {:primary => true}
+  role :sphinx, "ec2-50-16-6-83.compute-1.amazonaws.com"
 
   role :static, "ec2-184-72-163-77.compute-1.amazonaws.com"
   role :worker, "ec2-184-72-163-77.compute-1.amazonaws.com", {:primary => true}
