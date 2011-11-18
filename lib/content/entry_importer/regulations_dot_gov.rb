@@ -1,7 +1,7 @@
 module Content::EntryImporter::RegulationsDotGov
   extend Content::EntryImporter::Utils
   extend ActiveSupport::Memoizable
-  provides :checked_regulationsdotgov_at#, :regulationsdotgov_url, :comment_url
+  provides :checked_regulationsdotgov_at, :regulationsdotgov_url, :comment_url
   
   def checked_regulationsdotgov_at
     Time.now
