@@ -10,9 +10,9 @@ module Paperclip
       output = Tempfile.new("output_pdf")
       num_pages = Stevedore::Pdf.new(file.path).num_pages
       if num_pages > 1 
-        `pdftk #{file.path} cat 1 output - | pdftk - background #{banner.path} output - | pdftk A=- B=#{file.path} cat A1 B2-end output #{output.path}`
+        `pdftk #{file.path} cat 1 output - | pdftk #{banner.path} stamp - output - | pdftk A=- B=#{file.path} cat A1 B2-end output #{output.path}`
       else
-        `pdftk #{file.path} background #{banner.path} output #{output.path}`
+        `pdftk #{banner.path} stamp #{file.path} output #{output.path}`
       end
       output
     end
