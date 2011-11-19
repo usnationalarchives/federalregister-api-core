@@ -20,18 +20,18 @@ cloud :database_server_11 do
   chef :solo do
     repo File.join(File.dirname(__FILE__) ,"..", "..", "..", "..", "vendor", "plugins")
     
-    # recipe "apt"
-    # recipe 's3sync'
+    recipe "apt"
+    recipe 's3sync'
     recipe "ubuntu"
-    # recipe "openssl"
+    recipe "openssl"
     
-    # recipe "apparmor"
+    recipe "apparmor"
 
-    # recipe "munin::client"
+    recipe "munin::client"
     
-    # recipe "mysql::server"
-    # recipe "mysql::server_ec2"
-    # recipe "sphinx"
+    recipe "mysql::server"
+    recipe "mysql::server_ec2"
+    recipe "sphinx"
     recipe "mongodb"
 
     attributes chef_cloud_attributes('staging').recursive_merge(
@@ -51,7 +51,7 @@ cloud :database_server_11 do
                   :tunable => {:max_connections => "50"}
                 },
       :rails  => { :environment => "staging" },
-      :ubuntu => { :hostname => 'database'},
+      #:ubuntu => { :hostname => 'database'},
       :sphinx => { 
                     :version => "2.0.1-beta",
                     :url => "http://sphinxsearch.com/files/sphinx-2.0.1-beta.tar.gz",

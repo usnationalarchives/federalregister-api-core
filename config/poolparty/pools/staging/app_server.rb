@@ -18,6 +18,8 @@ cloud :app_server do
     recipe "ubuntu"
     recipe "openssl"
     recipe "imagemagick"
+    recipe "splunk::forwarder"
+    recipe "splunk::nix_app_forwarder"
     
     recipe "munin::client"
     
@@ -52,6 +54,11 @@ cloud :app_server do
                    :server_address => 'sphinx.fr2.ec2.internal'
                  },
       :rails  => { :environment => "staging" }
+      # :splunk => {
+      #               :files_to_monitor => [
+      #                                     {:path => '/var/www/apps/fr2/current/log/staging.log'}
+      #                                    ]
+      #            }
       )
           
   end

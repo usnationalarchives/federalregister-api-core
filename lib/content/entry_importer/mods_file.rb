@@ -3,8 +3,9 @@ class Content::EntryImporter::ModsFile
   
   extend ActiveSupport::Memoizable
   
-  def initialize(date)
+  def initialize(date, force_reload_mods)
     @date = date.is_a?(String) ? Date.parse(date) : date
+    @force_reload_mods = force_reload_mods
   end
   
   def document_numbers
@@ -20,7 +21,7 @@ class Content::EntryImporter::ModsFile
   end
 
   def document
-    if ENV['FORCE_RELOAD_MODS'] && File.exists?(file_path)
+    if @force_reload_mods && File.exists?(file_path)
       File.delete(file_path)
     end
 

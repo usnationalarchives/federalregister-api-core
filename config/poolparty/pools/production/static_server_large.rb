@@ -26,8 +26,6 @@ cloud :static_server_large do
     recipe "postfix"
     recipe "splunk"
 
-    recipe "munin::client"
-    
     recipe "mysql::client"
 
     recipe "nginx"
@@ -41,6 +39,8 @@ cloud :static_server_large do
     recipe "git"
     recipe "capistrano"
     recipe "rails"
+    recipe "redis"
+    recipe "resque_web"
     
     attributes chef_cloud_attributes('production').recursive_merge(
       :chef    => {
@@ -73,7 +73,10 @@ cloud :static_server_large do
                                               {:path => '/var/www/apps/fr2/shared/log/reg_gov_url_import.log', :ignore_older_than => '7d', :source_type => 'unix_date'},
                                               {:path => '/var/www/apps/fr2/shared/log/ofr_bulkdata_import.log', :ignore_older_than => '7d', :source_type => 'unix_date'}
                                             ]
-                    }
+                    },
+      :resque_web => {  
+                      :password => @resque_web_password
+                     }
 
       )
   end

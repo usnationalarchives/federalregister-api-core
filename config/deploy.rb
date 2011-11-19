@@ -69,10 +69,10 @@ task :production do
   
   role :proxy, "ec2-184-72-241-172.compute-1.amazonaws.com"
   role :app, "ec2-204-236-209-41.compute-1.amazonaws.com", "ec2-184-72-139-81.compute-1.amazonaws.com", "ec2-174-129-132-251.compute-1.amazonaws.com", "ec2-72-44-36-213.compute-1.amazonaws.com", "ec2-204-236-254-83.compute-1.amazonaws.com"
-  role :db, "ec2-50-19-0-95.compute-1.amazonaws.com", {:primary => true}
-  role :sphinx, "ec2-50-19-0-95.compute-1.amazonaws.com"
-  role :static, "ec2-75-101-243-195.compute-1.amazonaws.com" #monster image
-  role :worker, "ec2-75-101-243-195.compute-1.amazonaws.com", {:primary => true} #monster image
+  role :db, "ec2-50-19-195-199.compute-1.amazonaws.com", {:primary => true}
+  role :sphinx, "ec2-50-19-195-199.compute-1.amazonaws.com"
+  role :static, "ec2-107-20-145-32.compute-1.amazonaws.com" #monster image
+  role :worker, "ec2-107-20-145-32.compute-1.amazonaws.com", {:primary => true} #monster image
 end
 
 
@@ -90,8 +90,8 @@ task :staging do
 #  role :sphinx, "ec2-50-17-145-38.compute-1.amazonaws.com"
 
   # ubuntu 11.04 server
-  role :db,     "ec2-107-20-27-188.compute-1.amazonaws.com", {:primary => true}
-  role :sphinx, "ec2-107-20-27-188.compute-1.amazonaws.com"
+  role :db,     "ec2-50-16-6-83.compute-1.amazonaws.com", {:primary => true}
+  role :sphinx, "ec2-50-16-6-83.compute-1.amazonaws.com"
 
   role :static, "ec2-184-72-163-77.compute-1.amazonaws.com"
   role :worker, "ec2-184-72-163-77.compute-1.amazonaws.com", {:primary => true}

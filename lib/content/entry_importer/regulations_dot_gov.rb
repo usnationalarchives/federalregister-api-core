@@ -18,6 +18,7 @@ module Content::EntryImporter::RegulationsDotGov
   private
   
   def regulationsdotgov_document
+    return nil unless @entry.comments_close_on && @entry.comments_close_on >= Date.current
     possible_regulationsdotgov_search_terms.each do |term|
       doc = find_single_document(term)
       return doc if doc

@@ -39,7 +39,7 @@ cloud :app_server do
       :passenger_enterprise => {
                                  :pool_idle_time => 100000,
                                  :max_requests   => 10000,
-                                 :max_pool_size  => 70
+                                 :max_pool_size  => 50
                                },
       :apache => {
                    :prefork => {

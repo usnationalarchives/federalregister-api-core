@@ -18,16 +18,14 @@ cloud :proxy_server do
     recipe "ubuntu"
     recipe "openssl"
     
-    recipe "munin::server"
-    recipe "munin::client"
-    
     recipe "nginx"
     recipe "varnish"
     
     attributes chef_cloud_attributes('production').recursive_merge(
       :chef    => {
-                    :roles => ['proxy', 'splunk_proxy']
+                    :roles => ['proxy', 'splunk_proxy', 'resque_proxy']
                   },
+      #:ubuntu => { :hostname => 'proxy'},
       :varnish => {
                     :storage_size => '3G',
                     :blog_proxy_host => @blog_server_address,
