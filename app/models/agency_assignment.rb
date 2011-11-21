@@ -22,6 +22,11 @@ class AgencyAssignment < ApplicationModel
   acts_as_list :scope => 'assignable_id = #{assignable_id} AND assignable_type = \'#{assignable_type}\''
   
   def self.recalculate!
+    connection.execute("UPDATE agency_names
+                        LEFT JOIN agencies
+                          ON agencies.id = agency_names.agency_id
+                        SET agency_names.agency_id = NULL
+                        WHERE agencies.id IS NULL AND agency_names.agency_id IS NOT NULL")
     connection.execute("TRUNCATE agency_assignments")
     connection.execute("INSERT INTO agency_assignments (id, assignable_id, assignable_type, position, agency_id)
       SELECT agency_name_assignments.id, agency_name_assignments.assignable_id, agency_name_assignments.assignable_type, agency_name_assignments.position, agency_names.agency_id
