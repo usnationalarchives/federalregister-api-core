@@ -8,5 +8,12 @@ namespace :content do
                        :force_reload_bulkdata => true)
       end
     end
+
+    task :recompile => :environment do
+      Content.parse_dates(ENV['DATE']).each do |date|
+        Resque.enqueue(EntryRecompiler, :abstract, date)
+        Resque.enqueue(EntryRecompiler, :full_text, date)
+      end
+    end
   end
 end
