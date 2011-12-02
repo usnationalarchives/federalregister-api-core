@@ -254,17 +254,19 @@ module Content
             @toc_subject = nil
           end
 
-          @pi_documents << {
-            :filing_type     => @filing_type,
-            :details         => @details,
-            :agency          => @agency,
-            :granule_class   => @granule_class,
-            :document_number => @document_number,
-            :toc_subject     => @toc_subject,
-            :toc_doc         => @toc_doc,
-            :title           => @title || '',
-            :url             => @url
-          }
+          if @document_number
+            @pi_documents << {
+              :filing_type     => @filing_type,
+              :details         => @details,
+              :agency          => @agency,
+              :granule_class   => @granule_class,
+              :document_number => @document_number,
+              :toc_subject     => @toc_subject,
+              :toc_doc         => @toc_doc,
+              :title           => @title || '',
+              :url             => @url
+            }
+          end
           @document_number = nil
         end
       end
