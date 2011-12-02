@@ -254,6 +254,7 @@ class Entry < ApplicationModel
     has publication_date
     has effective_date(:date), :as => :effective_date
     has comments_close_date(:date), :as => :comment_date
+    has start_page
     
     join entry_cfr_affected_parts
     join docket_numbers
