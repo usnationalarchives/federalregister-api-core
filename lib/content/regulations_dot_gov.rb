@@ -4,6 +4,8 @@ module Content
       domain 'www.regulations.gov'
       js_url 'http://www.regulations.gov/Regs/'
       gwt_permutation '96ED140EA002EA7F0224967DBF229721'
+      timeout 2000
+      num_attempts 3
       
       map_classes 'gov.egov.erule.regs.shared.action.LoadSearchResultsResult'            => 'Content::RegulationsDotGov::SearchResultPackage',
                   'gov.egov.erule.regs.shared.models.SearchResultModel'                  => 'Content::RegulationsDotGov::SearchResult',

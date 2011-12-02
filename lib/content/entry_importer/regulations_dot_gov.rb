@@ -1,7 +1,7 @@
 module Content::EntryImporter::RegulationsDotGov
   extend Content::EntryImporter::Utils
   extend ActiveSupport::Memoizable
-  provides :checked_regulationsdotgov_at#, :regulationsdotgov_url, :comment_url
+  provides :checked_regulationsdotgov_at, :regulationsdotgov_url, :comment_url
   
   def checked_regulationsdotgov_at
     Time.now
@@ -18,6 +18,7 @@ module Content::EntryImporter::RegulationsDotGov
   private
   
   def regulationsdotgov_document
+    return nil unless @entry.comments_close_on && @entry.comments_close_on >= Date.current
     possible_regulationsdotgov_search_terms.each do |term|
       doc = find_single_document(term)
       return doc if doc

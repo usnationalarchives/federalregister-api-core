@@ -39,7 +39,7 @@ describe EntrySearch do
     it "populates sphinx `conditions` and properly quotes" do
       search = EntrySearch.new()
       search.regulation_id_number = "ABCD-1234"
-      search.sphinx_conditions.should == {:regulation_id_number => '"ABCD-1234"'}
+      search.sphinx_conditions.should == {:regulation_id_number => '"=ABCD =1234"'}
     end
   end
   

@@ -105,7 +105,7 @@ class EntrySearch < ApplicationSearch
   
   def order_clause
     case @order
-    when 'newest'
+    when 'newest', 'date'
       "publication_date DESC, @relevance DESC"
     when 'oldest'
       "publication_date ASC, @relevance DESC"

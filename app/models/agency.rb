@@ -76,6 +76,7 @@ class Agency < ApplicationModel
   
   # consider using sphinx instead...
   def self.named_approximately(name)
+    return [] if name.blank?
     words = name.downcase.split(/[^a-z]+/) - %w(a and & in for of on s the)
     
     if words.empty?

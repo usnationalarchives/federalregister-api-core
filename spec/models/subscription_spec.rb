@@ -49,19 +49,19 @@ describe Subscription do
   
   describe "updating mailing_lists.active_subscriptions_count" do
     it "does not change the active_subscriptions_count when a non-confirmed subscription is created" do
-      mailing_list = Factory(:mailing_list)
+      mailing_list = Factory(:mailing_list_entry)
       expect{ Factory(:subscription, :mailing_list => mailing_list, :confirmed_at => nil) }.to_not change{mailing_list.active_subscriptions_count}
     end
     
     it "increases the active_subscriptions_count when a non-confirmed subscription is confirmed" do
-      mailing_list = Factory(:mailing_list)
+      mailing_list = Factory(:mailing_list_entry)
       subscription = Factory(:subscription, :mailing_list => mailing_list, :confirmed_at => nil, :unsubscribed_at => nil)
       
       expect{ subscription.confirmed_at = Time.now; subscription.save! }.to change{mailing_list.reload; mailing_list.active_subscriptions_count}.from(0).to(1)
     end
     
     it "decreases the active_subscriptions_count when a confirmed subscription is unsubscribed" do
-      mailing_list = Factory(:mailing_list)
+      mailing_list = Factory(:mailing_list_entry)
       subscription = Factory(:subscription, :mailing_list => mailing_list, :confirmed_at => Time.now, :unsubscribed_at => nil)
       mailing_list.reload
       
@@ -77,7 +77,7 @@ describe Subscription do
     
     it "should be associated on subscription create if it does exist" do
       subscription_1 = Factory(:subscription, :search_conditions => {:term => "HAI"})
-      list_1 = subscription_1.mailing_list
+      list_1 = subscription_1.mailing_list.reload
       subscription_2 = Factory(:subscription, :search_conditions => {:term => "HAI"})
       subscription_2.mailing_list.should == list_1
     end

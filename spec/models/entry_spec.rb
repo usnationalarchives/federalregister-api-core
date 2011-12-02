@@ -76,15 +76,15 @@ describe Entry do
     end
     
     it 'should find nothing if the associated RIN is not included in the current issue' do
-      something_in_current_issue = RegulatoryPlan.create!(:regulation_id_number => "ABCD-1111", :issue => "201004")
-      something_in_prior_issue = RegulatoryPlan.create!(:regulation_id_number => "ABCD-1234", :issue => "200904")
+      something_in_current_issue = RegulatoryPlan.create!(:regulation_id_number => "ABCD-1111", :current => true)
+      something_in_prior_issue = RegulatoryPlan.create!(:regulation_id_number => "ABCD-1234", :current => false)
       e = Entry.create!(:regulation_id_numbers => [something_in_prior_issue.regulation_id_number])
       e.current_regulatory_plans.should == []
     end
     
     it 'should find the regulatory_plan if the associated RIN is included in the current issue' do
-      prior = RegulatoryPlan.create!(:regulation_id_number => "ABCD-1234", :issue => "200904")
-      cur = RegulatoryPlan.create!(:regulation_id_number => "ABCD-1234", :issue => "201004")
+      prior = RegulatoryPlan.create!(:regulation_id_number => "ABCD-1234", :current => false)
+      cur = RegulatoryPlan.create!(:regulation_id_number => "ABCD-1234", :current => true)
       e = Entry.create!(:regulation_id_numbers => [cur.regulation_id_number])
       e.current_regulatory_plans.should == [cur]
     end

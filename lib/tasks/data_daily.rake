@@ -24,6 +24,7 @@ namespace :data do
       content:section_highlights:clone
       data:daily:basic
       content:entries:html:compile:all
+      content:entries:import:regulations_dot_gov:tardy
       remote:sphinx:rebuild_delta
       content:issues:mark_complete
       content:public_inspection:reindex
@@ -31,6 +32,5 @@ namespace :data do
       mailing_lists:entries:deliver
       sitemap:refresh
     )
-    # content:entries:import:regulations_dot_gov:tardy
   end
 end

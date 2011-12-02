@@ -6,7 +6,7 @@ gem 'mysql', '2.7'
 
 gem 'fr2_audit_logic',
   :git => 'git://github.com/criticaljuncture/fr2_audit_logic.git', 
-  :ref => 'dda602440418fd52b4138470d73e109ed91cfa72'
+  :ref => 'd0b037954987cc28dac25dfbf72ae94f28e9c9f7'
 # gem 'fr2_audit_logic', :path => '../fr2_audit_logic'
 gem 'bson_ext', '1.3.0' 
 
@@ -49,7 +49,7 @@ gem "capistrano", '2.5.19', :require => false
 gem "thunder_punch", '0.0.11', :require => false
 gem "resque", "1.19.0"
 
-gem "gwt_rpc", '0.1.0'
+gem "gwt_rpc", '0.1.2'
 
 gem "recaptcha", "0.3.1", :require => 'recaptcha/rails'
 gem 'sendgrid', :git => "git://github.com/criticaljuncture/sendgrid.git", :branch => 'master'

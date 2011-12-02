@@ -3,7 +3,8 @@ class Content::EntryImporter::BulkdataFile
   
   extend ActiveSupport::Memoizable
   
-  def initialize(date)
+  def initialize(date, force_reload_bulkdata)
+    @force_reload_bulkdata = force_reload_bulkdata
     @date = date.is_a?(String) ? Date.parse(date) : date
   end
   
@@ -16,7 +17,7 @@ class Content::EntryImporter::BulkdataFile
   end
 
   def document
-    if ENV['FORCE_RELOAD_BULKDATA'] && File.exists?(path)
+    if @force_reload_bulkdata && File.exists?(path)
       File.delete(path)
     end
 
