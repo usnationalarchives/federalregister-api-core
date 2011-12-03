@@ -187,7 +187,7 @@ def chef_cloud_attributes(instance_type)
                     :static_proxy_port => @static_server_port,
                     :proxy_host_name   => @app_url,
                     :audit_proxy_host_name => "audit.#{@app_url}",
-                    :skip_cache_key    => @secrets[:varnish][:skip_cache_key]
+                    :skip_cache_key    => @secrets['varnish']['skip_cache_key']
                    },
     :ubuntu     => {
                     :users => {
@@ -259,6 +259,6 @@ def chef_cloud_attributes(instance_type)
   }
 end
 
-require 'config/poolparty/pools/production.rb'
-#require 'config/poolparty/pools/staging.rb'
+#require 'config/poolparty/pools/production.rb'
+require 'config/poolparty/pools/staging.rb'
 
