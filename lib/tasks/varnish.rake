@@ -9,6 +9,8 @@ namespace :varnish do
         else
           config = {:wordpress => {}, :rails => {}}
         end
+        secrets = YAML::load_file File.join(Rails.root, 'config', 'secrets.yml')
+        skip_cache_key = secrets['varnish']['skip_cache_key']
         f.write ERB.new(template_content).result(binding)
       end
     end

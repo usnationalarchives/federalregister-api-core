@@ -106,7 +106,12 @@ sub vcl_recv {
     
     # either return lookup for caching or return pass for no caching
     <% if config['cache'] %>
-      return (lookup);
+      # Fetch from cache unless explicitly skipping cache
+      if (req.http.Cookie ~ "skip_cache=<%= skip_cache_key %>") {
+        return (pass);
+      } else {  
+        return (lookup);
+      }
     <% else %>
       return (pass);
     <% end %>
