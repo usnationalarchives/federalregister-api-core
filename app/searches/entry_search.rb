@@ -110,7 +110,7 @@ class EntrySearch < ApplicationSearch
     when 'oldest'
       "publication_date ASC, @relevance DESC"
     else
-      "@relevance DESC, publication_date DESC"
+      "@relevance DESC, publication_date DESC, start_page ASC, sphinx_internal_id ASC"
     end
   end
   

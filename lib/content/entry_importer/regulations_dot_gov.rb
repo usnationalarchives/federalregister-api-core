@@ -53,7 +53,7 @@ module Content::EntryImporter::RegulationsDotGov
       client = Content::RegulationsDotGov::Client.new
       documents = client.search(search_term)
     
-      if documents.size == 1
+      if documents && documents.size == 1
         documents.first
       else
         nil
