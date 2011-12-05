@@ -50,7 +50,7 @@ class EntrySearch < ApplicationSearch
     types.map{|type| Entry::ENTRY_TYPES[type]}.to_sentence(:two_words_connector => ' or ', :last_word_connector => ', or ')
   end
   define_filter :small_entity_ids, :sphinx_type => :with, :label => "Small Entities Affected" do |entity_ids|
-    SmallEntity.find(entity_ids).map(&:name).to_sentence(:two_words_connector => ' or ', :last_word_connector => ', or ')
+    SmallEntity.find_all_by_id(entity_ids).map(&:name).to_sentence(:two_words_connector => ' or ', :last_word_connector => ', or ')
   end
   
   define_filter :docket_id, :phrase => true, :label => "Agency Docket" do |docket|
