@@ -1,5 +1,6 @@
 namespace :content do
   namespace :entries do
+    desc "Reimport entry data from FDSys"
     task :reimport => :environment do
       Content.parse_dates(ENV['DATE']).each do |date|
         Resque.enqueue(EntryReimporter, date,
@@ -9,6 +10,7 @@ namespace :content do
       end
     end
 
+    desc "Recompile pre-compiled Entry pages"
     task :recompile => :environment do
       Content.parse_dates(ENV['DATE']).each do |date|
         Resque.enqueue(EntryRecompiler, :abstract, date)
