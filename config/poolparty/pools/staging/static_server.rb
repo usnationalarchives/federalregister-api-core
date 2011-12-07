@@ -1,7 +1,7 @@
 cloud :static_server do
   # basic settings
   using :ec2
-  keypair "/Users/rburbach/Documents/AWS/FR2/gpoEC2.pem"
+  keypair "~/Documents/AWS/FR2/gpoEC2.pem"
   user "ubuntu"
   image_id "ami-913ad1f8" #Basic Static Server
   availability_zones ['us-east-1d']
