@@ -11,7 +11,7 @@ class Api::V1::PublicInspectionDocumentsController < ApiController
           render_search(search) do |result|
             basic_public_inspection_document_data(result).merge(
               :json_url         => api_v1_public_inspection_document_url(result.document_number, :format => :json),
-              :excerpts         => result.excerpts.raw_text_via_db
+              :excerpts         => result.excerpts.raw_text
             )
           end 
         end

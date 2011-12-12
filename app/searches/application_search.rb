@@ -178,7 +178,18 @@ filter_name.to_s.sub(/_ids?$/,'').classify.constantize.find_all_by_id(ids.flatte
         :sort_mode => :extended
       }.merge(find_options).recursive_merge(args)
     )
-    
+
+    sphinx_search = ThinkingSphinx::Search.new(sphinx_term,
+      :with => with,
+      :with_all => with_all,
+      :conditions => sphinx_conditions,
+      :match_mode => :extended
+    )
+
+    result_array.each do |result|
+      result.excerpts = ApplicationSearch::FileExcerpter.new sphinx_search, result
+    end
+
     # TODO: FIXME: Ugly hack to get total pages to be within bounds
     if result_array && result_array.total_pages > 50
       def result_array.total_pages

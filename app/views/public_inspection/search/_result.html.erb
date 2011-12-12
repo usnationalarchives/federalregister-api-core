@@ -2,7 +2,7 @@
   <h4><%= link_to sanitize(document.excerpts.title.present? ? document.excerpts.title : "#{document.toc_subject} #{document.toc_doc}", :tags => %w(span), :attributes => %w(class)), entry_path(document) %></h4>
 
   <div class="result_info">
-    <span class="excerpts"><%= sanitize document.excerpts.raw_text_via_db, :tags => %w(span), :attributes => %w(class) %></span>
+    <span class="excerpts"><%= sanitize document.excerpts.raw_text, :tags => %w(span), :attributes => %w(class) %></span>
   </div>
   <ul class="metadata">
     <li class="type"><%= document.entry_type %></li>
