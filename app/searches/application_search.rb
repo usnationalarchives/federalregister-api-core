@@ -186,8 +186,10 @@ filter_name.to_s.sub(/_ids?$/,'').classify.constantize.find_all_by_id(ids.flatte
       :match_mode => :extended
     )
 
-    result_array.each do |result|
-      result.excerpts = ApplicationSearch::FileExcerpter.new sphinx_search, result
+    if result_array
+      result_array.each do |result|
+        result.excerpts = ApplicationSearch::FileExcerpter.new sphinx_search, result
+      end
     end
 
     # TODO: FIXME: Ugly hack to get total pages to be within bounds
