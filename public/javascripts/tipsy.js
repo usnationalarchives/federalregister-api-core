@@ -1,7 +1,7 @@
 $(document).ready(function(){
   
   /* ALL PAGES */
-  $('.subscription.tipsy').tipsy({gravity: 'se', offset: 3, delayIn: 100, fade: true,}); // nw | n | ne | w | e | sw | s | se
+  $('.subscription.tipsy').tipsy({gravity: 'se', offset: 3, delayIn: 100, fade: true});
   
 
   /* CANNED SEARCH PAGE */
