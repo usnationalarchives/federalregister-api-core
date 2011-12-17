@@ -1,7 +1,7 @@
 cloud :app_server do
   # basic settings
   using :ec2
-  keypair "/Users/rburbach/Documents/AWS/FR2/gpoEC2.pem"
+  keypair "~/Documents/AWS/FR2/gpoEC2.pem"
   user "ubuntu"
   #image_id "ami-7d43ae14" #Ubuntu 9.10 Karmic Canonical, ubuntu@ EBS-based 64bit
   image_id "ami-de806bb7" #FR2 Basic App Server

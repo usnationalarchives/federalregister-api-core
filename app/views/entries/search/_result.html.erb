@@ -3,10 +3,10 @@
 
   <div class="result_info">
     <span class="excerpts"><%= 
-      if (search.term.blank? && entry.abstract.present?) || entry.excerpts.raw_text_via_db.blank?
+      if (search.term.blank? && entry.abstract.present?) || entry.excerpts.raw_text.blank?
         sanitize entry.excerpts.abstract, :tags => %w(span), :attributes => %w(class)
       else
-        sanitize entry.excerpts.raw_text_via_db, :tags => %w(span), :attributes => %w(class)
+        sanitize entry.excerpts.raw_text, :tags => %w(span), :attributes => %w(class)
       end %></span>
   </div>
   <ul class="metadata">

@@ -27,7 +27,7 @@ end
 
 # use these settings for making AMIs with thunderpunch
 # set :user, "ubuntu"
-#ssh_options[:keys] = [File.join('/Users/rburbach/Documents/AWS/FR2', "gpoEC2.pem")]
+#ssh_options[:keys] = [File.join('~/Documents/AWS/FR2', "gpoEC2.pem")]
 
 
 ssh_options[:paranoid] = false

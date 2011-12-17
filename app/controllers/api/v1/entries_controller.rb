@@ -6,7 +6,7 @@ class Api::V1::EntriesController < ApiController
         search = EntrySearch.new(params)
         render_search(search) do |result| 
           basic_entry_data(result).merge(
-            :excerpts => result.excerpts.raw_text_via_db || result.excerpts.abstract,
+            :excerpts => result.excerpts.raw_text || result.excerpts.abstract,
             :json_url => api_v1_entry_url(result.document_number, :format => :json)
           )
         end

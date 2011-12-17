@@ -1,9 +1,9 @@
 Given /^I am on the home page$/ do
-  visit 'http://www.fr2.criticaljuncture.org/'
+  visit '/'
 end
 
 When /^I search for '([^\']*)'$/ do |query|
-  fill_in "term", :with => query
+  fill_in "Search the Federal Register", :with => query
   click_button "Go"
 end
 

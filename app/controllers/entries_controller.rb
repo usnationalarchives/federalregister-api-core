@@ -114,7 +114,7 @@ class EntriesController < ApplicationController
     cache_for 1.day
     entry_or_pi = Entry.find_by_document_number(params[:document_number]) ||
                   PublicInspectionDocument.find_by_document_number(params[:document_number]) ||
-                  Entry.find_by_id(params[:document_number])
+                  ((params[:document_number].to_s.to_i.to_s == params[:document_number].to_s) && Entry.find_by_id(params[:document_number]))
     raise ActiveRecord::RecordNotFound if entry_or_pi.blank?
 
     respond_to do |wants|

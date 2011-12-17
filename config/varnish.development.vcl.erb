@@ -28,7 +28,7 @@ sub vcl_recv {
       req.request != "POST" &&
       req.request != "OPTIONS" &&
       req.request != "DELETE") {
-        return (pipe);
+        return (error);
     }
     
     if (req.http.Cookie ~ "(^|;) ?ab_group=\d+(;|$)") {
