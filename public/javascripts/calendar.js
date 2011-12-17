@@ -3,11 +3,11 @@ $(document).ready(function () {
         var th = $('table.calendar .monthName');
 
         // only create/append the year select if there isn't one
-        if ( th.children('select').length == 0 ) {
+        if ( th.children('select').length === 0 ) {
           var select_list = $("<select />");
           var today = new Date();
-          var start_year = parseInt( $('table.calendar').data('year-start') );
-          var end_year   = parseInt( $('table.calendar').data('year-end') );
+          var start_year = parseInt( $('table.calendar').data('year-start'), 10 );
+          var end_year   = parseInt( $('table.calendar').data('year-end'), 10 );
 
           // don't create a year select if the data doesn't span years
           if (end_year > start_year) {
@@ -38,7 +38,7 @@ $(document).ready(function () {
 
         
     $('.calendar td.late').live('click', function() {
-        alert("Today's issue is currently unavailable; we apologize for any inconvenience.")
+        alert("Today's issue is currently unavailable; we apologize for any inconvenience.");
     });
     
     $('#date_selector').submit(function () {

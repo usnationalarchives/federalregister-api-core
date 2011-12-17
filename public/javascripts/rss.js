@@ -8,7 +8,7 @@ function closeOnEscape(hash) {
 var modalOpen = function(hash) {
   closeOnEscape(hash);
   hash.w.show();
-}
+};
 
 
 $(document).ready(function () {
@@ -21,9 +21,10 @@ $(document).ready(function () {
     });
 
     function generate_dialog() {
-        if ($('#modal').size() == 0) {
+        if ($('#modal').size() === 0) {
+            var subscription_modal_template;
             if ( $("#subscription-modal-template").length > 0 ) {
-              var subscription_modal_template = Handlebars.compile( $("#subscription-modal-template").html() );
+              subscription_modal_template = Handlebars.compile( $("#subscription-modal-template").html() );
             }
 
             var elements = $('link[type="application/rss+xml"]').map(function () {
@@ -33,10 +34,10 @@ $(document).ready(function () {
                 href: elem.attr('href')
               };
               if(elem.attr('data-search-conditions')) {
-                feed.subscription_action = "/subscriptions?" + $.param({'subscription' : {'search_conditions' : $.parseJSON(elem.attr('data-search-conditions'))}})
+                feed.subscription_action = "/subscriptions?" + $.param({'subscription' : {'search_conditions' : $.parseJSON(elem.attr('data-search-conditions'))}});
               }
 
-              if( !(elem.data('public-inspection-subscription-supported') == undefined) ) {
+              if( elem.data('public-inspection-subscription-supported') !== undefined ) {
                 feed.public_inspection_subscription_supported = elem.data('public-inspection-subscription-supported');
               }
 

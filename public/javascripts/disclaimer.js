@@ -17,7 +17,7 @@ $(document).ready(function() {
   });
 
   function display_modal(title, html) {
-      if ($('#disclaimer_modal').size() == 0) {
+      if ($('#disclaimer_modal').size() === 0) {
           $('body').append('<div id="disclaimer_modal"/>');
       }
       $('#disclaimer_modal').html(

@@ -20,7 +20,7 @@ var jqmHandlers = {
 };
 
 function generate_exit_dialog() {
-    if ($("#exit_modal").size() == 0) {
+    if ($("#exit_modal").size() === 0) {
 
         var template = [
         '<div id="exit_modal">',
@@ -66,7 +66,7 @@ function readCookie(name) {
   for(var i=0;i < ca.length;i++) {
     var c = ca[i];
     while (c.charAt(0)==' ') c = c.substring(1,c.length);
-    if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+    if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length,c.length);
   }
   return null;
 }
@@ -93,7 +93,7 @@ $(document).ready(function () {
     var requires_captcha_with_message = $("#email_pane").attr('data-requires-captcha-with-message') == 'true';
     if( requires_captcha_without_message || requires_captcha_with_message) { 
       $("#entry_email_message").bind('blur', function(event) {
-        if( requires_captcha_without_message || ( requires_captcha_with_message && $("#entry_email_message").val() != '' )) {
+        if( requires_captcha_without_message || ( requires_captcha_with_message && $("#entry_email_message").val() !== '' )) {
           $("#recaptcha_widget_div").show();
         }
         else {

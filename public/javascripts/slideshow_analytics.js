@@ -1,5 +1,5 @@
 function promo_selected(link) {
-  $(link).closest('li').hasClass('on') ? 1 : 0 ;
+  return $(link).closest('li').hasClass('on') ? 1 : 0;
 }
 
 $(document).ready(function(){

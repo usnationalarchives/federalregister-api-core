@@ -52,7 +52,7 @@ var citation_info = {
         window.location.hash = id;
         node.attr('id', id);
 
-        if (this.cache[id] == null) {
+        if (this.cache[id] === null) {
             this.create(id);
         }
         if (this.open !== null && this.open !== id) {
@@ -165,16 +165,20 @@ $(document).ready(function () {
     
     if( $("#entries").length > 0 ){
       $(window).bind('hashchange', function(){
-        location.hash === "#print_view" ? print_view_manager.enter() : print_view_manager.exit();
+        if (location.hash === "#print_view") {
+          print_view_manager.enter();
+        } else {
+          print_view_manager.exit();
+        }
       }).trigger('hashchange');
     }
-   
+
     if ( $("#select-cfr-citation-template").length > 0 ) {
       var citation_modal_template = Handlebars.compile($("#select-cfr-citation-template").html());
     }
-    
+
     function display_cfr_modal(title, html) {
-      if ($('#cfr_citation_modal').size() == 0) {
+      if ($('#cfr_citation_modal').size() === 0) {
           $('body').append('<div id="cfr_citation_modal"/>');
       }
       $('#cfr_citation_modal').html(
