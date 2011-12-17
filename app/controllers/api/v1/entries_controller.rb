@@ -62,6 +62,7 @@ class Api::V1::EntriesController < ApiController
         :abstract_html_url => entry_abstract_url(entry),
         :body_html_url => entry_full_text_url(entry),
         :mods_url => entry.source_url(:mods),
+        :regulations_dot_gov_url => entry.regulationsdotgov_url,
         :action => entry.action,
         :dates  => entry.dates,
         :effective_on  => entry.effective_on,
