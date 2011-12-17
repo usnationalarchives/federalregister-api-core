@@ -20,12 +20,12 @@ $(document).ready(function () {
         var url = get_current_url();
         
         // don't go back to the server if you've checked this before
-        if (cache[url] == undefined) {
+        if (cache[url] === undefined) {
             // record that this is the current results we're looking for
             form.data('count_current_url', url);
             indicate_loading();
             
-            if( requests[url] == undefined ){
+            if( requests[url] === undefined ){
               requests[url] = url;
                       
               $.getJSON(url, function(data){
@@ -231,7 +231,11 @@ $(document).ready(function () {
     
     $("#toggle_advanced").bind('click', function(event) {
       event.preventDefault();
-      location.hash === "#advanced" ? location.hash = "" : location.hash = "#advanced";      
+      if (location.hash === "#advanced") {
+        location.hash = "";
+      } else {
+        location.hash = "#advanced";
+      }
     });
     
     $(window).bind('hashchange', function(){
@@ -240,7 +244,11 @@ $(document).ready(function () {
     
     function toggleAdvanced(isOpen){
       var label = isOpen ? "Hide Advanced Search" : "Show Advanced Search";
-      isOpen ? $(".advanced").addClass("open") : $(".advanced").removeClass("open");
+      if (isOpen) {
+        $(".advanced").addClass("open");
+      } else {
+        $(".advanced").removeClass("open");
+      }
       $("#toggle_advanced").text(label).attr(label);
       $("#toggle_advanced").trigger('calculate_expected_results');
     }
