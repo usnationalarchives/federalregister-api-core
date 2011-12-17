@@ -1,7 +1,7 @@
 class ApplicationSearch::FileExcerpter < ThinkingSphinx::Excerpter
   def raw_text
     begin
-      @search.send(:client).excerpts(
+      @raw_text ||= @search.send(:client).excerpts(
         :docs   => [@instance.raw_text_file_path],
         :load_files => true,
         :words  => @search.args.join(' '),
