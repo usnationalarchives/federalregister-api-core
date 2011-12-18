@@ -73,10 +73,30 @@ class Api::V1::EntriesController < ApiController
         :docket_id => entry.docket_numbers.first.try(:number), # backwards compatible for now
         :docket_ids => entry.docket_numbers.map(&:number),
         :regulation_id_numbers => entry.entry_regulation_id_numbers.map(&:regulation_id_number),
+        :regulation_id_number_info => regulation_id_number_info(entry),
+       
         :cfr_references => entry.entry_cfr_references.map{|cfr_reference|
           {:title => cfr_reference.title, :part => cfr_reference.part}
         }
       }
     )
+  end
+
+  def regulation_id_number_info(entry)
+    values = entry.entry_regulation_id_numbers.map(&:regulation_id_number).map do |rin|
+      regulatory_plan = entry.current_regulatory_plans.detect{|r| r.regulation_id_number == rin}
+
+      if regulatory_plan
+        regulatory_plan_info = {
+          :xml_url => regulatory_plan.source_url(:xml),
+          :issue => regulatory_plan.issue,
+          :title => regulatory_plan.title,
+          :priority_category => regulatory_plan.priority_category
+        }
+      end
+      [rin, regulatory_plan_info]
+    end
+    
+    Hash[*values.flatten]
   end
 end
