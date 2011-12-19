@@ -4,10 +4,10 @@ var jqmHandlers = {
     show: function (hash) {
         hash.w.show();
         this.timer = setTimeout(function () {
-            window.location = href;
+            window.location = this.href;
         },
-        10000);
-        closeOnEscape(hash);
+        1000);
+        this.closeOnEscape(hash);
     },
     hide: function (hash) {
         hash.w.hide();
@@ -15,7 +15,7 @@ var jqmHandlers = {
         clearTimeout(this.timer);
     },
     setHref: function (link) {
-        href = link;
+        this.href = link;
     }
 };
 
@@ -65,8 +65,8 @@ function readCookie(name) {
   var ca = document.cookie.split(';');
   for(var i=0;i < ca.length;i++) {
     var c = ca[i];
-    while (c.charAt(0)==' ') c = c.substring(1,c.length);
-    if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length,c.length);
+    while (c.charAt(0) ===' ') {c = c.substring(1,c.length);}
+    if (c.indexOf(nameEQ) === 0) {return c.substring(nameEQ.length,c.length);}
   }
   return null;
 }
@@ -89,8 +89,8 @@ $(document).ready(function () {
       $(this).parent().jqmHide();
     });
     
-    var requires_captcha_without_message = $("#email_pane").attr('data-requires-captcha-without-message') == 'true';
-    var requires_captcha_with_message = $("#email_pane").attr('data-requires-captcha-with-message') == 'true';
+    var requires_captcha_without_message = $("#email_pane").attr('data-requires-captcha-without-message') === 'true';
+    var requires_captcha_with_message = $("#email_pane").attr('data-requires-captcha-with-message') === 'true';
     if( requires_captcha_without_message || requires_captcha_with_message) { 
       $("#entry_email_message").bind('blur', function(event) {
         if( requires_captcha_without_message || ( requires_captcha_with_message && $("#entry_email_message").val() !== '' )) {

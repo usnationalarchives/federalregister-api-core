@@ -2,15 +2,15 @@
  *  FR2 iScroll 4 Setup
  */
 function load_iScroll() {
-  var previousPage = 0
+  var previousPage = 0;
   var numberOfPages = $('#carousel_wrapper #carousel_scroller').find('li').size();
-  myScroll = new iScroll('carousel_wrapper', {
+  var myScroll = new iScroll('carousel_wrapper', {
     snap: 'li',
     momentum: false,
     hScrollbar: false,
     vScroll: false,
     onScrollEnd: function () {
-      active_li = $("#indicator li.active");
+      var active_li = $("#indicator li.active");
       if (this.currPageX > previousPage && this.currPageX < numberOfPages) {
         active_li.next('li').addClass('active');
         previousPage = this.currPageX;
@@ -32,14 +32,14 @@ function load_iScroll() {
     event.preventDefault();
     myScroll.scrollToPage('next', 0);
   });
+  return myScroll;
 }
 
 /*!
  *  FR2 Carousel
  */
 $(document).ready(function(){
-  var myScroll;
-  load_iScroll();
+  var myScroll = load_iScroll();
 
   var carousel_rounded_corner_size = 18;
   var carousel_size = 350;

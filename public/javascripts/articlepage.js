@@ -173,8 +173,9 @@ $(document).ready(function () {
       }).trigger('hashchange');
     }
 
+    var citation_modal_template;
     if ( $("#select-cfr-citation-template").length > 0 ) {
-      var citation_modal_template = Handlebars.compile($("#select-cfr-citation-template").html());
+      citation_modal_template = Handlebars.compile($("#select-cfr-citation-template").html());
     }
 
     function display_cfr_modal(title, html) {
@@ -191,7 +192,7 @@ $(document).ready(function () {
       $('#cfr_citation_modal').jqm({
           modal: true,
           onShow: function(hash) {
-                    closeOnEscape(hash);
+                    this.closeOnEscape(hash);
                     hash.w.show();
                   }
       });
@@ -211,7 +212,7 @@ $(document).ready(function () {
           url: cfr_url,
           dataType: 'json',
           success: function(response) {
-            cfr_html = citation_modal_template(response);
+            var cfr_html = citation_modal_template(response);
             display_cfr_modal('External CFR Selection', cfr_html);
           }
         });

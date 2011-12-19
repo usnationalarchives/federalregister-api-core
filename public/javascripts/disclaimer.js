@@ -1,21 +1,4 @@
 $(document).ready(function() {
-  
-  $('#disclaimer a, a.disclaimer').not('.public-inspection').bind('click',
-  function (event) {
-      event.preventDefault();
-      display_modal('Legal Status Disclaimer', '<p>The content posted on this site, taken from the daily Federal Register (FR), is not an official, legal edition of the FR; it does not replace the official print or electronic versions of the FR. Each document posted on the site includes a link to the corresponding official FR PDF file.  For more information, see our <a href="/policy/legal-status">Legal Status</a> page.</p>');
-  });
-
-  if ( $("#pi-legal-notice-template").length > 0 ) {
-    var pi_legal_notice_template = Handlebars.compile($("#pi-legal-notice-template").html());
-  }
-
-  $('#disclaimer a.public-inspection').bind('click',
-  function (event) {
-      event.preventDefault();
-      display_modal('Legal Notice', pi_legal_notice_template() );
-  });
-
   function display_modal(title, html) {
       if ($('#disclaimer_modal').size() === 0) {
           $('body').append('<div id="disclaimer_modal"/>');
@@ -30,10 +13,27 @@ $(document).ready(function() {
       $('#disclaimer_modal').jqm({
           modal: true,
           toTop: true,
-          onShow: modalOpen
+          onShow: this.modalOpen
       });
       $('#disclaimer_modal').centerScreen().jqmShow();
   }
+
+  $('#disclaimer a, a.disclaimer').not('.public-inspection').bind('click',
+  function (event) {
+      event.preventDefault();
+      display_modal('Legal Status Disclaimer', '<p>The content posted on this site, taken from the daily Federal Register (FR), is not an official, legal edition of the FR; it does not replace the official print or electronic versions of the FR. Each document posted on the site includes a link to the corresponding official FR PDF file.  For more information, see our <a href="/policy/legal-status">Legal Status</a> page.</p>');
+  });
+
+  var pi_legal_notice_template;
+  if ( $("#pi-legal-notice-template").length > 0 ) {
+    pi_legal_notice_template = Handlebars.compile($("#pi-legal-notice-template").html());
+  }
+
+  $('#disclaimer a.public-inspection').bind('click',
+  function (event) {
+      event.preventDefault();
+      display_modal('Legal Notice', pi_legal_notice_template() );
+  });
   
   $('#policy a').bind('click',
   function (event) {

@@ -1,6 +1,6 @@
 function closeOnEscape(hash) {
   $(window).one('keyup', function(event) {
-    if( event.keyCode == '27' ){
+    if( event.keyCode === '27' ){
       hash.w.jqmHide();
     }
   });
@@ -12,14 +12,6 @@ var modalOpen = function(hash) {
 
 
 $(document).ready(function () {
-    $('a.rss, a.subscription, a.subscription_action').live('click',
-    function () {
-        generate_dialog();
-        $('#modal input[placeholder]').textPlaceholder();
-        $('#modal').centerScreen().jqmShow();
-        return false;
-    });
-
     function generate_dialog() {
         if ($('#modal').size() === 0) {
             var subscription_modal_template;
@@ -41,7 +33,7 @@ $(document).ready(function () {
                 feed.public_inspection_subscription_supported = elem.data('public-inspection-subscription-supported');
               }
 
-              if( elem.data('default-search-type') == "PublicInspectionDocument" ) { 
+              if( elem.data('default-search-type') === "PublicInspectionDocument" ) { 
                 feed.default_to_public_inspection = true; 
               } else {
                 feed.default_to_entry = true;
@@ -64,4 +56,13 @@ $(document).ready(function () {
             });            
         }
     }
+
+    $('a.rss, a.subscription, a.subscription_action').live('click',
+      function () {
+        generate_dialog();
+        $('#modal input[placeholder]').textPlaceholder();
+        $('#modal').centerScreen().jqmShow();
+        return false;
+      }
+    );
 });

@@ -14,7 +14,7 @@ $(document).ready(function () {
             for(var year = start_year; year <= end_year; year++) {
                 var option = $("<option />");
                 option.append(year);
-                if ( $(".calendar").attr("data-calendar-year") == year ) {
+                if ( $(".calendar").attr("data-calendar-year") === year ) {
                     option.attr('selected', 'selected');
                 }
                 select_list.append(option);
@@ -38,7 +38,7 @@ $(document).ready(function () {
 
         
     $('.calendar td.late').live('click', function() {
-        alert("Today's issue is currently unavailable; we apologize for any inconvenience.");
+      window.alert("Today's issue is currently unavailable; we apologize for any inconvenience.");
     });
     
     $('#date_selector').submit(function () {
@@ -52,9 +52,9 @@ $(document).ready(function () {
             complete: function (xmlHttp) {
                 var status = xmlHttp.status;
                 form.find('span.error').remove();
-                if (status == '200') {
+                if (status === '200') {
                     window.location = xmlHttp.responseText;
-                } else if (status == '422' || status == '404') {
+                } else if (status === '422' || status === '404') {
                     form.append($("<span class='error'></span>").text(xmlHttp.responseText));
                 } else {
                     form.append("<span class='error'><strong>Unknown error.</strong></span>");

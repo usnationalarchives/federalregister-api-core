@@ -37,7 +37,7 @@ $(document).ready(function () {
                   form.data('count_cache', cache);
 
                   // don't show number if user has already made another request
-                  if (form.data('count_current_url') == url) {
+                  if (form.data('count_current_url') === url) {
                       populate_expected_results(cache[url]);
                   }
               });
@@ -94,7 +94,7 @@ $(document).ready(function () {
         clearTimeout (timer);
         timer = setTimeout(callback, ms);
       };
-    })();
+    }());
     
     $('#entry_search_form input[type=text]').keyup(function () {
         // only trigger if stopped typing for more than half a second
@@ -148,7 +148,7 @@ $(document).ready(function () {
         ajax: '@href',
         ajaxText: 'Loading...',
         trigger: '.results a.add_to_calendar',
-        onShow: modalOpen
+        onShow: this.modalOpen
     });
     
     $(".date_options .date").hide();
@@ -239,7 +239,7 @@ $(document).ready(function () {
     });
     
     $(window).bind('hashchange', function(){
-      toggleAdvanced(location.hash === "#advanced");
+      this.toggleAdvanced(location.hash === "#advanced");
     }).trigger('hashchange');
     
     function toggleAdvanced(isOpen){
