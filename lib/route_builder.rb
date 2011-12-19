@@ -1,4 +1,6 @@
 module RouteBuilder
+  include RouteBuilder::MyFederalRegister
+
   def self.add_route(route_name, &proc)
     %w(path url).each do |type|
       new_method_name = "#{route_name}_#{type}"      # eg entry_path

@@ -12,6 +12,7 @@
     <%= tag(:link, :rel  => 'canonical', :href => 'https://www.federalregister.gov' + request.fullpath.sub(/\/$/,'')) %>
     
     <%= render :esi => layout_head_content_path(:page_to_track => yield(:page_to_track)) %>
+    <%= render :esi => my_fr2_assets_path %>
 
     <%= yield :robots %>
 
@@ -22,6 +23,7 @@
 
   <body id="<%= @faux_controller || controller.controller_name %>" class="<%= @faux_action || controller.action_name %>">
     
+    <esi:include src="/my/special/user_utils" />
     <%= render :esi => layout_header_path %>
     
     <div id="main">

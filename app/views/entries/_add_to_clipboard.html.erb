@@ -1,0 +1,8 @@
+<% semantic_form_for entry,  :url => my_fr2_clippings_path, :html => {:method => :post} do |f| %>
+  <% f.inputs do %>
+    <%= f.input :document_number, :as => :hidden, :value => entry.document_number %>
+  <% end %>
+  <% f.buttons do %>
+    <%= f.commit_button 'Add to clipboard' %>
+  <% end %>
+<% end %> 
