@@ -23,7 +23,8 @@ $(document).ready(function () {
               var elem = $(this);
               var feed = {
                 title: elem.attr('title'),
-                href: elem.attr('href')
+                href: elem.attr('href'),
+                escaped_href: escape(elem.attr('href'))
               };
               if(elem.attr('data-search-conditions')) {
                 feed.subscription_action = "/subscriptions?" + $.param({'subscription' : {'search_conditions' : $.parseJSON(elem.attr('data-search-conditions'))}});
