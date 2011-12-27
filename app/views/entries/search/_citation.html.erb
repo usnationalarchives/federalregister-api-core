@@ -4,8 +4,14 @@
     <% if citation.matching_fr_entries.present? %>
       
       <p class="matching_citation_header">It looks like you were searching for the citation <strong><%= citation.name %></strong>.
-       We've found the following <%= pluralize(citation.matching_fr_entries.count, 'article') %>
-       on page <%= citation.part_2 %> of volume <%= citation.part_1 %>.</p>
+        <% if citation.citation_type == 'FR' %>
+          We've found the following <%= pluralize(citation.matching_fr_entries.count, 'article') %>
+          on page <%= citation.part_2 %> of volume <%= citation.part_1 %>.
+        <% else %>
+          We've found the following Executive Order:
+        <% end %>
+      </p>
+
       
       <div class="matching_citation_document">
       
