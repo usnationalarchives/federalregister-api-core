@@ -16,7 +16,8 @@ class Citation < ApplicationModel
     'USC' => /(\d+)\s+U\.?S\.?C\.?\s+(\d+)/,
     'CFR' => /(\d+)\s+CFR\s+(\d+)(?:\.(\d+))?/,
     'FR'  => /(\d+)\s+FR\s+(\d+)/,
-    'PL'  => /Pub(?:lic|\.)\s+L(?:aw|\.)\.\s+(\d+)-(\d+)/
+    'PL'  => /Pub(?:lic|\.)\s+L(?:aw|\.)\.\s+(\d+)-(\d+)/,
+    'EO'  => /(?:EO|E\.O\.|Executive Order) (\d+)/
   }
   
   belongs_to :source_entry, :class_name => "Entry"
@@ -45,6 +46,8 @@ class Citation < ApplicationModel
       "#{part_1} FR #{part_2}"
     when 'PL'
       "Public Law #{part_1}-#{part_2}"
+    when 'EO'
+      "Executive Order #{part_1}"
     end
   end
   
@@ -76,6 +79,14 @@ class Citation < ApplicationModel
   end
   
   def matching_fr_entries
-    @matching_fr_entries ||= Entry.find_all_by_citation(part_1, part_2) if citation_type == 'FR'
+    @matching_fr_entries ||= case citation_type
+                             when 'FR'
+                               Entry.find_all_by_citation(part_1, part_2)
+                             when 'EO'
+                               Entry.find_all_by_presidential_document_type_id_and_executive_order_number(
+                                 PresidentialDocumentType::EXECUTIVE_ORDER.id,
+                                 part_1
+                               )
+                             end
   end
 end

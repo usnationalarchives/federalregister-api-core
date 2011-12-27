@@ -22,7 +22,7 @@ GEM
     actionpack (2.3.11)
       activesupport (= 2.3.11)
       rack (~> 1.1.0)
-    active_hash (0.7.9)
+    active_hash (0.9.5)
       activesupport (>= 2.2.2)
     activerecord (2.3.11)
       activesupport (= 2.3.11)
@@ -189,7 +189,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  active_hash (= 0.7.9)
+  active_hash (= 0.9.5)
   amatch (= 0.2.3)
   amazon-ec2
   authlogic (= 2.1.3)

@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111226170112) do
+ActiveRecord::Schema.define(:version => 20111227184509) do
 
   create_table "agencies", :force => true do |t|
     t.integer  "parent_id"
@@ -195,7 +195,7 @@ ActiveRecord::Schema.define(:version => 20111226170112) do
   add_index "entries", ["granule_class"], :name => "index_entries_on_agency_id_and_granule_class"
   add_index "entries", ["id", "publication_date"], :name => "index_entries_on_id_and_publication_date"
   add_index "entries", ["id"], :name => "index_entries_on_agency_id_and_id"
-  add_index "entries", ["presidential_document_type_id"], :name => "index_entries_on_presidential_document_type_id"
+  add_index "entries", ["presidential_document_type_id", "executive_order_number"], :name => "presdocu_type_id_and_eo_number"
   add_index "entries", ["publication_date"], :name => "index_entries_on_agency_id_and_publication_date"
   add_index "entries", ["publication_date"], :name => "index_entries_on_publication_date_and_agency_id"
   add_index "entries", ["raw_text_updated_at"], :name => "index_entries_on_raw_text_updated_at"

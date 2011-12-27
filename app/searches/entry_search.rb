@@ -199,6 +199,10 @@ class EntrySearch < ApplicationSearch
       term.scan(/^\s*(\d+)\s*(?:F\.?R\.?|Fed\.?\s*Reg\.?)\s*(\d+)\s*$/i) do |volume, page|
         return Citation.new(:citation_type => "FR", :part_1 => volume.to_i, :part_2 => page.to_i)
       end
+
+      term.scan(/^\s*(?:EO|Executive Order|E\.O\.)\s+(\d+)\s*$/i) do |captures|
+        return Citation.new(:citation_type => "EO", :part_1 => captures.first.to_i)
+      end
     end
     
     return nil

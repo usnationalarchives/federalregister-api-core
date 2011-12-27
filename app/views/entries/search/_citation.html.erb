@@ -10,7 +10,7 @@
       <div class="matching_citation_document">
       
         <ul>
-          <%= render :partial => 'citation_result', :collection => citation.matching_fr_entries, :as => :entry, :locals => {:page => citation.part_2.to_i} %>
+          <%= render :partial => 'citation_result', :collection => citation.matching_fr_entries, :as => :entry, :locals => {:page => citation.part_2 ? citation.part_2.to_i : nil} %>
         </ul>
       
       </div>
