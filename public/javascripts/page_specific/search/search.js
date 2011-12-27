@@ -1,4 +1,17 @@
 $(document).ready(function () {
+    var toggle_presdocu_types = function() {
+      var type_checkboxes = $('#conditions_presidential_document_type_id_input');
+      if ($('#conditions_type_presdocu').attr('checked')) {
+        type_checkboxes.show().find(':input').removeAttr('disabled');
+      }
+      else {
+        type_checkboxes.hide().find(':input').attr('disabled', 'disabled');
+      }
+    };
+
+    $('#conditions_type_presdocu').bind('click', toggle_presdocu_types);
+    toggle_presdocu_types();
+
     var populate_expected_results = function (text) {
         $('#expected_result_count').removeClass('loading');
         $('#expected_result_count').text(text).show();

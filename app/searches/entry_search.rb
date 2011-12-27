@@ -49,6 +49,7 @@ class EntrySearch < ApplicationSearch
   define_filter :type,        :sphinx_type => :with, :crc32_encode => true do |types|
     types.map{|type| Entry::ENTRY_TYPES[type]}.to_sentence(:two_words_connector => ' or ', :last_word_connector => ', or ')
   end
+  define_filter :presidential_document_type_id, :sphinx_type => :with
   define_filter :small_entity_ids, :sphinx_type => :with, :label => "Small Entities Affected" do |entity_ids|
     SmallEntity.find_all_by_id(entity_ids).map(&:name).to_sentence(:two_words_connector => ' or ', :last_word_connector => ', or ')
   end
