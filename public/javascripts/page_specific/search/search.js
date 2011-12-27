@@ -237,11 +237,7 @@ $(document).ready(function () {
         location.hash = "#advanced";
       }
     });
-    
-    $(window).bind('hashchange', function(){
-      this.toggleAdvanced(location.hash === "#advanced");
-    }).trigger('hashchange');
-    
+
     function toggleAdvanced(isOpen){
       var label = isOpen ? "Hide Advanced Search" : "Show Advanced Search";
       if (isOpen) {
@@ -251,7 +247,11 @@ $(document).ready(function () {
       }
       $("#toggle_advanced").text(label).attr(label);
       $("#toggle_advanced").trigger('calculate_expected_results');
-    }
+    }  
+
+    $(window).bind('hashchange', function(){
+      toggleAdvanced(location.hash === "#advanced");
+    }).trigger('hashchange');
     
     // $('.help_link').live('click',
     // function () {
