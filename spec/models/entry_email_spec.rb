@@ -78,13 +78,13 @@ describe EntryEmail do
       email.should have(0).errors_on(:recipients)
     end
     
-    it "adds errors when more than 20 recipients are added" do
-      email = Factory.build(:entry_email, :recipients => "one@example.com,two@example.com,three@example.com,four@example.com,five@example.com,six@example.com,seven@example.com,eight@example.com,nine@example.com,ten@example.com,eleven@example.com,twelve@example.com,thirteen@example.com,fourteen@example.com,fifteen@example.com,sixteen@example.com,seventeen@example.com,eighteen@example.com,nineteen@example.com,twenty@example.com,twentyone@example.com")
+    it "adds errors when more than 5 recipients are added" do
+      email = Factory.build(:entry_email, :recipients => "one@example.com,two@example.com,three@example.com,four@example.com,five@example.com,six@example.com")
       email.should have(1).error_on(:recipients)
     end
     
-    it "allows 10 recipients when 10 are added" do
-      email = Factory.build(:entry_email, :recipients => "one@example.com,two@example.com,three@example.com,four@example.com,five@example.com,six@example.com,seven@example.com,eight@example.com,nine@example.com,ten@example.com")
+    it "allows 5 recipients when 5 are added" do
+      email = Factory.build(:entry_email, :recipients => "one@example.com,two@example.com,three@example.com,four@example.com,five@example.com")
       email.should have(0).error_on(:recipients)
     end
   end
@@ -111,16 +111,16 @@ describe EntryEmail do
   end
   
   describe "requires_captcha_without_message?" do
-    it "is false when 10 or fewer emails have been sent from this IP this day" do
+    it "is false when 5 or fewer emails have been sent from this IP this day" do
       Timecop.travel(1.week.ago) do
-        10.times { Factory(:entry_email, :remote_ip => '8.8.8.8') }
+        10.times { Factory.build(:entry_email, :remote_ip => '8.8.8.8').save(false) }
       end
-      5.times { Factory(:entry_email, :remote_ip => '8.8.8.8') }
+      2.times { Factory(:entry_email, :remote_ip => '8.8.8.8') }
       Factory.build(:entry_email, :remote_ip => '8.8.8.8').requires_captcha_without_message?.should be_false
     end
     
-    it "is true when more than 10 emails have been sent from this IP this day" do
-      11.times { Factory(:entry_email, :remote_ip => '8.8.8.8') }
+    it "is true when 5 or more emails have been sent from this IP this day" do
+      5.times { Factory(:entry_email, :remote_ip => '8.8.8.8') }
       Factory.build(:entry_email, :remote_ip => '8.8.8.8').requires_captcha_without_message?.should be_true
     end
   end

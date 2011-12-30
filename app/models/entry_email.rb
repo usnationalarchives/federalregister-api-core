@@ -20,7 +20,8 @@ class EntryEmail < ApplicationModel
   validates_presence_of :entry, :remote_ip, :recipients
   validate :sender_email_is_valid, :if => Proc.new{|e| e.sender.present?}
   validate :recipient_emails_are_valid, :if => Proc.new{|e| e.recipients.present?}
-  validate :no_more_than_20_recipients
+  validate :no_more_than_5_recipients
+  validate :no_more_than_5_messages_in_a_day
   
   before_validation :calculate_num_recipients
   after_create :deliver_email
@@ -66,7 +67,7 @@ class EntryEmail < ApplicationModel
   end
   
   def requires_captcha_without_message?
-    EntryEmail.count(:conditions => ["created_at > ? AND remote_ip = ?", 1.day.ago, remote_ip]) >= 10
+    EntryEmail.count(:conditions => ["created_at > ? AND remote_ip = ?", 1.day.ago, remote_ip]) >= 5
   end
   
   def requires_captcha?
@@ -85,8 +86,14 @@ class EntryEmail < ApplicationModel
     end
   end
   
-  def no_more_than_20_recipients
-    errors.add(:recipients, "cannot number more than 20") if @recipient_emails && @recipient_emails.count > 20
+  def no_more_than_5_recipients
+    errors.add(:recipients, "cannot number more than 5") if @recipient_emails && @recipient_emails.count > 5
+  end
+
+  def no_more_than_5_messages_in_a_day
+    if EntryEmail.count(:conditions => ["created_at > ? AND remote_ip = ?", 1.day.ago, remote_ip]) >= 5
+      errors.add(:base, "You cannot send more than 5 messages from the same IP address in a 24 hour period.")
+    end
   end
   
   def calculate_num_recipients
