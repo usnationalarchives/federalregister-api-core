@@ -80,7 +80,12 @@ $(document).ready(function(){
         $('#lede_photo_flow').prepend(data);
         $('#lede_photo_flow').imagesLoaded(function() { 
           var new_cf = $('#lede_photo_flow .ContentFlow').first();
-          var ajax_cf = new ContentFlow(new_cf.attr('id'), {circularFlow:false, startItem:'start', onclickActiveItem: prepare_to_crop_image});
+          var ajax_cf = new ContentFlow(new_cf.attr('id'), {
+            circularFlow:false,
+            startItem:'start',
+            onclickActiveItem: prepare_to_crop_image,
+            reflectionHeight: 0.25
+          });
           ajax_cf.init();
         });
       }

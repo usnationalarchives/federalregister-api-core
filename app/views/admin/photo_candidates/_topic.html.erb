@@ -3,8 +3,8 @@
     <div class="flow">
         <% photos.each do |photo| %>
         <div class="item">
-          <%= image_tag photo.url('m'), 'data-photo-large-url' => photo.url('b'), 'data-photo-id' => photo.id, :class => 'content', :title => '' %>
-          <div class="caption"><%= topic %></div>
+          <%= image_tag photo.url('m'), 'data-photo-large-url' => photo.url('b'), 'data-photo-id' => photo.id, :class => 'content' %>
+          <div class="caption"><%= photo.creator.real_name.present? ? photo.creator.real_name : photo.creator.user_name %></div>
         </div>
         <% end %>
     </div>
