@@ -2,6 +2,7 @@ class Entries::EmailsController < ApplicationController
   skip_before_filter :verify_authenticity_token, :only => :create
   
   def new
+    raise "temporarily disabled"
     @entry = Entry.find_by_document_number!(params[:document_number])
     @entry_email = @entry.entry_emails.new
     
@@ -11,6 +12,7 @@ class Entries::EmailsController < ApplicationController
   end
   
   def create
+    raise "temporarily disabled"
     @entry = Entry.find_by_document_number!(params[:document_number])
     @entry_email = @entry.entry_emails.new(params[:entry_email])
 
