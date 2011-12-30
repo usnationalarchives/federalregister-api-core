@@ -4,9 +4,9 @@ var jqmHandlers = {
     show: function (hash) {
         hash.w.show();
         this.timer = setTimeout(function () {
-            window.location = this.href;
+            window.location = $('#exit_modal').attr('data-href');
         },
-        1000);
+        10000);
         this.closeOnEscape(hash);
     },
     hide: function (hash) {
@@ -15,7 +15,7 @@ var jqmHandlers = {
         clearTimeout(this.timer);
     },
     setHref: function (link) {
-        this.href = link;
+        $('#exit_modal').attr('data-href', link);
     }
 };
 
