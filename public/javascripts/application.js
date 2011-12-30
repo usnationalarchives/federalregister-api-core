@@ -1,3 +1,15 @@
+function closeOnEscape(hash) {
+  $(window).one('keyup', function(event) {
+    if( event.keyCode === '27' ){
+      hash.w.jqmHide();
+    }
+  });
+}
+var modalOpen = function(hash) {
+  closeOnEscape(hash);
+  hash.w.show();
+};
+
 var jqmHandlers = {
     href: "",
     timer: "",
@@ -7,7 +19,7 @@ var jqmHandlers = {
             window.location = $('#exit_modal').attr('data-href');
         },
         10000);
-        this.closeOnEscape(hash);
+        closeOnEscape(hash);
     },
     hide: function (hash) {
         hash.w.hide();

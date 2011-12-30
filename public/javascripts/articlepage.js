@@ -192,7 +192,7 @@ $(document).ready(function () {
       $('#cfr_citation_modal').jqm({
           modal: true,
           onShow: function(hash) {
-                    this.closeOnEscape(hash);
+                    closeOnEscape(hash);
                     hash.w.show();
                   }
       });

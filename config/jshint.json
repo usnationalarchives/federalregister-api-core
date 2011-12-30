@@ -29,6 +29,9 @@
       // Some methods defined across files; should prob be refactored
       "add_date_picker",
 
+      "closeOnEscape",
+      "modalOpen",
+
       // Some non-recognized built-in methods
       "escape",
       "confirm",

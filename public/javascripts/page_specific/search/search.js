@@ -161,7 +161,7 @@ $(document).ready(function () {
         ajax: '@href',
         ajaxText: 'Loading...',
         trigger: '.results a.add_to_calendar',
-        onShow: this.modalOpen
+        onShow: modalOpen
     });
     
     $(".date_options .date").hide();

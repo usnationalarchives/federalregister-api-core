@@ -1,15 +1,3 @@
-function closeOnEscape(hash) {
-  $(window).one('keyup', function(event) {
-    if( event.keyCode === '27' ){
-      hash.w.jqmHide();
-    }
-  });
-}
-var modalOpen = function(hash) {
-  closeOnEscape(hash);
-  hash.w.show();
-};
-
 
 $(document).ready(function () {
     function generate_dialog() {
