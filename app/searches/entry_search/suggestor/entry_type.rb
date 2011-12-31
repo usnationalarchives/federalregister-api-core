@@ -7,9 +7,7 @@ class EntrySearch::Suggestor::EntryType < EntrySearch::Suggestor::Base
     'presidential document' => 'PRESDOCU',
     'president' => 'PRESDOCU',
     'presidential' => 'PRESDOCU',
-    'executive order' => 'PRESDOCU',
     'executive document' => 'PRESDOCU',
-    'eo' => 'PRESDOCU',
   }
   
   def pattern

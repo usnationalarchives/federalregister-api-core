@@ -18,13 +18,13 @@ $(function() {
       url: name_field.attr('data-source-url'),
       dataType: 'json',
       success: function(json_data){
-        var data = $.makeArray($(json_data).map(function(i,obj) { return {id : obj.id, value : obj.name } }));
+        var data = $.makeArray($(json_data).map(function(i,obj) { return {id : obj.id, value : obj.name }; }));
         name_field.autocomplete({
           source: data,
           minLength: 0,
           select: function(event, ui) {
             name_field.val('');
-            parent_li.find("ul.selected").append('<li>' + ui.item.value + '<input type="hidden" name="' + hidden_field.attr('name') + '" value="' + ui.item.id + '" /></li>')
+            parent_li.find("ul.selected").append('<li>' + ui.item.value + '<input type="hidden" name="' + hidden_field.attr('name') + '" value="' + ui.item.id + '" /></li>');
             return false;
           }
         });
@@ -33,7 +33,7 @@ $(function() {
   
     parent_li.find(".selected li").live("click", function() {
       $(this).remove();
-    })
+    });
   });
   
   // CALENDAR SUPPORT

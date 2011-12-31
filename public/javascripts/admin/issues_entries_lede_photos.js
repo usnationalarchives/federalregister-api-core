@@ -16,7 +16,7 @@ function prepare_to_crop_image(item) {
   $('#entry_lede_photo_attributes_url').val(src);
   $('#entry_lede_photo_attributes_flickr_photo_id').val(img.attr('data-photo-id'));
 //  $('#preview').val(src);
-  $('#crop-box').html('<img src="' + src + '" />')
+  $('#crop-box').html('<img src="' + src + '" />');
   $('#preview').html('<img src="' + src + '" />');
   
   $('.modal').jqmShow();
@@ -33,7 +33,7 @@ function prepare_to_crop_image(item) {
     },
     aspectRatio: 16/7,
     bgColor: 'yellow',
-    bgOpacity: .8,
+    bgOpacity: 0.8,
     allowMove: true
   });
 }
@@ -67,7 +67,7 @@ $(document).ready(function(){
   });
   
   $("#custom_tag").change(function() {
-    var tag = $(this).val()
+    var tag = $(this).val();
     $(this).val('');
     
     $('.topic_photo_flow:first').hide();
@@ -80,7 +80,12 @@ $(document).ready(function(){
         $('#lede_photo_flow').prepend(data);
         $('#lede_photo_flow').imagesLoaded(function() { 
           var new_cf = $('#lede_photo_flow .ContentFlow').first();
-          var ajax_cf = new ContentFlow(new_cf.attr('id'), {circularFlow:false, startItem:'start', onclickActiveItem: prepare_to_crop_image});
+          var ajax_cf = new ContentFlow(new_cf.attr('id'), {
+            circularFlow:false,
+            startItem:'start',
+            onclickActiveItem: prepare_to_crop_image,
+            reflectionHeight: 0.25
+          });
           ajax_cf.init();
         });
       }

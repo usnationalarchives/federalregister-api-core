@@ -1,16 +1,29 @@
 $(document).ready(function () {
+    var toggle_presdocu_types = function() {
+      var type_checkboxes = $('#conditions_presidential_document_type_id_input');
+      if ($('#conditions_type_presdocu').attr('checked')) {
+        type_checkboxes.show().find(':input').removeAttr('disabled');
+      }
+      else {
+        type_checkboxes.hide().find(':input').attr('disabled', 'disabled');
+      }
+    };
+
+    $('#conditions_type_presdocu').bind('click', toggle_presdocu_types);
+    toggle_presdocu_types();
+
     var populate_expected_results = function (text) {
         $('#expected_result_count').removeClass('loading');
         $('#expected_result_count').text(text).show();
-    }
+    };
     
     var indicate_loading = function() {
         $('#expected_result_count').show().addClass('loading');
-    }
+    };
     
     var get_current_url = function() {
         return '/articles/search/results.js?' + $("#entry_search_form :input[value!='']:not([data-show-field]):not('.text-placeholder')").serialize();
-    }
+    };
     var requests = {};
     
     // ajax-y lookup of number of expected results
@@ -20,12 +33,12 @@ $(document).ready(function () {
         var url = get_current_url();
         
         // don't go back to the server if you've checked this before
-        if (cache[url] == undefined) {
+        if (cache[url] === undefined) {
             // record that this is the current results we're looking for
             form.data('count_current_url', url);
             indicate_loading();
             
-            if( requests[url] == undefined ){
+            if( requests[url] === undefined ){
               requests[url] = url;
                       
               $.getJSON(url, function(data){
@@ -37,7 +50,7 @@ $(document).ready(function () {
                   form.data('count_cache', cache);
 
                   // don't show number if user has already made another request
-                  if (form.data('count_current_url') == url) {
+                  if (form.data('count_current_url') === url) {
                       populate_expected_results(cache[url]);
                   }
               });
@@ -93,8 +106,8 @@ $(document).ready(function () {
       return function(callback, ms){
         clearTimeout (timer);
         timer = setTimeout(callback, ms);
-      }  
-    })();
+      };
+    }());
     
     $('#entry_search_form input[type=text]').keyup(function () {
         // only trigger if stopped typing for more than half a second
@@ -135,12 +148,12 @@ $(document).ready(function () {
 
     if ($(".result_set.events").size() > 0) {
         $('body#search.show').each(function () {
-            $('body').append([
+            var message = [
               '<div id="modal">',
               '  <a href="#" class="jqmClose">Close</a>',
               '  <h3 class="title_bar">Loading...</h3>',
-              '</div>'].join("\n")
-            );
+              '</div>'].join("\n");
+            $('body').append(message);
         });
     }
 
@@ -170,7 +183,7 @@ $(document).ready(function () {
         var matching_inputs = parent_fieldset.find("." + $(this).attr("data-show-field") + ' :input');
         
         matching_inputs.each(function(){
-            if ($(this).val() != '' && !$(this).hasClass('text-placeholder')) {
+            if ($(this).val() !== '' && !$(this).hasClass('text-placeholder')) {
                 type_radio_button.attr('checked', 'checked');
                 type_radio_button.change();
             }
@@ -180,7 +193,7 @@ $(document).ready(function () {
     //Add in some helpful hints that would be redundant if we had all the labels displaying
     $(".range_start input").after("<span> to </span>");
     $(".cfr li:first-child input").after("<span> CFR </span>");
-    $(".zip li:first-child input").after("<span> within </span>");;
+    $(".zip li:first-child input").after("<span> within </span>");
     
     $(".formtastic select[multiple]").hide().bsmSelect({
       removeClass: 'remove'
@@ -206,10 +219,10 @@ $(document).ready(function () {
                     label: item.name,
                     value: item.name,
                     id: item.id
-                  }
+                  };
               }));	
             } // end success
-          }) // end ajax
+          }); // end ajax
         },
         select: function( event, ui ) {
           $("#conditions_agency_ids").append("<option value=" + ui.item.id +" selected='selected'>" + ui.item.label + "</option>");
@@ -226,24 +239,32 @@ $(document).ready(function () {
         search: function( event, ui) {
           $(this).addClass("loading");
         }
-      })
+      });
     });
     
     $("#toggle_advanced").bind('click', function(event) {
       event.preventDefault();
-      location.hash === "#advanced" ? location.hash = "" : location.hash = "#advanced";      
+      if (location.hash === "#advanced") {
+        location.hash = "";
+      } else {
+        location.hash = "#advanced";
+      }
     });
-    
+
+    function toggleAdvanced(isOpen){
+      var label = isOpen ? "Hide Advanced Search" : "Show Advanced Search";
+      if (isOpen) {
+        $(".advanced").addClass("open");
+      } else {
+        $(".advanced").removeClass("open");
+      }
+      $("#toggle_advanced").text(label).attr(label);
+      $("#toggle_advanced").trigger('calculate_expected_results');
+    }  
+
     $(window).bind('hashchange', function(){
       toggleAdvanced(location.hash === "#advanced");
     }).trigger('hashchange');
-    
-    function toggleAdvanced(isOpen){
-      var label = isOpen ? "Hide Advanced Search" : "Show Advanced Search";
-      isOpen ? $(".advanced").addClass("open") : $(".advanced").removeClass("open");
-      $("#toggle_advanced").text(label).attr(label);
-      $("#toggle_advanced").trigger('calculate_expected_results');
-    }
     
     // $('.help_link').live('click',
     // function () {

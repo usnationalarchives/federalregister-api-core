@@ -10,7 +10,7 @@ $(document).ready(function(){
       success: function(response) {
         entry.addClass('highlighted');
       }
-    })
+    });
   });
   $("ul#highlighted .remove").live('click', function() {
     var item = $(this).parent();
@@ -23,7 +23,7 @@ $(document).ready(function(){
         success: function() {
           item.remove();
           $('article[data-entry-id=' + entry_id + '] div.article').removeClass('highlighted');
-          $('article[data-entry-id=' + entry_id + '] div.article').append('<a class="add button grey mini">highlight</a>')
+          $('article[data-entry-id=' + entry_id + '] div.article').append('<a class="add button grey mini">highlight</a>');
         }
       });
     }
@@ -39,7 +39,7 @@ $(document).ready(function(){
         success: function() {
           $('#' + entry_id).addClass('highlighted');
         }
-      })
+      });
     }
   });
 });

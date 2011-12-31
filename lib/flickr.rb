@@ -49,6 +49,10 @@ class Flickr
     attr_accessor :real_name, :user_name, :location, :profile_url
     
     def initialize(attributes)
+      if attributes.is_a?(String)
+        attributes = flickr.people.getInfo(:user_id => attributes)
+      end
+
       @real_name = attributes["realname"]
       @user_name = attributes["username"]
       @location = attributes["location"]

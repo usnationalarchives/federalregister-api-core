@@ -1,4 +1,9 @@
 $(document).ready(function(){
+  function load_new_form(){
+    var entry_id = $('div.article[data-internal-id]').first().attr('data-internal-id');
+    $('#form').load('/admin/events/new?event[entry_id]=' + entry_id, add_date_picker);
+  }
+
   load_new_form();
   $('.article a.date').click(function(){
     var date = $(this).attr('data-date');
@@ -49,14 +54,11 @@ $(document).ready(function(){
   
   $(window).bind('scroll', function(event) {
     position = $(window).scrollTop() - header_height;
-    if( position > 0 )
+    if( position > 0 ) {
       $(".events").css("top", $(window).scrollTop() - header_height);
+    }
   });
   
   
 });
 
-function load_new_form(){
-  var entry_id = $('div.article[data-internal-id]').first().attr('data-internal-id');
-  $('#form').load('/admin/events/new?event[entry_id]=' + entry_id, add_date_picker);
-}

@@ -1,10 +1,22 @@
+function closeOnEscape(hash) {
+  $(window).one('keyup', function(event) {
+    if( event.keyCode === '27' ){
+      hash.w.jqmHide();
+    }
+  });
+}
+var modalOpen = function(hash) {
+  closeOnEscape(hash);
+  hash.w.show();
+};
+
 var jqmHandlers = {
     href: "",
     timer: "",
     show: function (hash) {
         hash.w.show();
         this.timer = setTimeout(function () {
-            window.location = href;
+            window.location = $('#exit_modal').attr('data-href');
         },
         10000);
         closeOnEscape(hash);
@@ -15,12 +27,12 @@ var jqmHandlers = {
         clearTimeout(this.timer);
     },
     setHref: function (link) {
-        href = link;
+        $('#exit_modal').attr('data-href', link);
     }
 };
 
 function generate_exit_dialog() {
-    if ($("#exit_modal").size() == 0) {
+    if ($("#exit_modal").size() === 0) {
 
         var template = [
         '<div id="exit_modal">',
@@ -65,8 +77,8 @@ function readCookie(name) {
   var ca = document.cookie.split(';');
   for(var i=0;i < ca.length;i++) {
     var c = ca[i];
-    while (c.charAt(0)==' ') c = c.substring(1,c.length);
-    if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+    while (c.charAt(0) ===' ') {c = c.substring(1,c.length);}
+    if (c.indexOf(nameEQ) === 0) {return c.substring(nameEQ.length,c.length);}
   }
   return null;
 }
@@ -89,11 +101,11 @@ $(document).ready(function () {
       $(this).parent().jqmHide();
     });
     
-    var requires_captcha_without_message = $("#email_pane").attr('data-requires-captcha-without-message') == 'true';
-    var requires_captcha_with_message = $("#email_pane").attr('data-requires-captcha-with-message') == 'true';
+    var requires_captcha_without_message = $("#email_pane").attr('data-requires-captcha-without-message') === 'true';
+    var requires_captcha_with_message = $("#email_pane").attr('data-requires-captcha-with-message') === 'true';
     if( requires_captcha_without_message || requires_captcha_with_message) { 
       $("#entry_email_message").bind('blur', function(event) {
-        if( requires_captcha_without_message || ( requires_captcha_with_message && $("#entry_email_message").val() != '' )) {
+        if( requires_captcha_without_message || ( requires_captcha_with_message && $("#entry_email_message").val() !== '' )) {
           $("#recaptcha_widget_div").show();
         }
         else {

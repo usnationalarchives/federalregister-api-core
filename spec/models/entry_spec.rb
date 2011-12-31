@@ -2,45 +2,48 @@
 #
 # Table name: entries
 #
-#  id                           :integer(4)      not null, primary key
-#  title                        :text
-#  abstract                     :text
-#  contact                      :text
-#  dates                        :text
-#  action                       :text
-#  type                         :string(255)
-#  link                         :string(255)
-#  genre                        :string(255)
-#  part_name                    :string(255)
-#  citation                     :string(255)
-#  granule_class                :string(255)
-#  document_number              :string(255)
-#  toc_subject                  :string(255)
-#  toc_doc                      :string(255)
-#  length                       :integer(4)
-#  start_page                   :integer(4)
-#  end_page                     :integer(4)
-#  publication_date             :date
-#  places_determined_at         :datetime
-#  created_at                   :datetime
-#  updated_at                   :datetime
-#  slug                         :text
-#  delta                        :boolean(1)      default(TRUE), not null
-#  source_text_url              :string(255)
-#  regulationsdotgov_url        :string(255)
-#  comment_url                  :string(255)
-#  checked_regulationsdotgov_at :datetime
-#  volume                       :integer(4)
-#  full_xml_updated_at          :datetime
-#  citing_entries_count         :integer(4)      default(0)
-#  document_file_path           :string(255)
-#  full_text_updated_at         :datetime
-#  curated_title                :string(255)
-#  curated_abstract             :string(500)
-#  lede_photo_id                :integer(4)
-#  lede_photo_candidates        :text
-#  raw_text_updated_at          :datetime
-#  significant                  :boolean(1)
+#  id                            :integer(4)      not null, primary key
+#  title                         :text
+#  abstract                      :text
+#  contact                       :text
+#  dates                         :text
+#  action                        :text
+#  type                          :string(255)
+#  link                          :string(255)
+#  genre                         :string(255)
+#  part_name                     :string(255)
+#  citation                      :string(255)
+#  granule_class                 :string(255)
+#  document_number               :string(255)
+#  toc_subject                   :string(255)
+#  toc_doc                       :string(255)
+#  length                        :integer(4)
+#  start_page                    :integer(4)
+#  end_page                      :integer(4)
+#  publication_date              :date
+#  places_determined_at          :datetime
+#  created_at                    :datetime
+#  updated_at                    :datetime
+#  slug                          :text
+#  delta                         :boolean(1)      default(TRUE), not null
+#  source_text_url               :string(255)
+#  regulationsdotgov_url         :string(255)
+#  comment_url                   :string(255)
+#  checked_regulationsdotgov_at  :datetime
+#  volume                        :integer(4)
+#  full_xml_updated_at           :datetime
+#  citing_entries_count          :integer(4)      default(0)
+#  document_file_path            :string(255)
+#  full_text_updated_at          :datetime
+#  curated_title                 :string(255)
+#  curated_abstract              :string(500)
+#  lede_photo_id                 :integer(4)
+#  lede_photo_candidates         :text
+#  raw_text_updated_at           :datetime
+#  significant                   :boolean(1)
+#  presidential_document_type_id :integer(4)
+#  signing_date                  :date
+#  executive_order_number        :integer(4)
 #
 
 require 'spec_helper'

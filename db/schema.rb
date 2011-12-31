@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111108002330) do
+ActiveRecord::Schema.define(:version => 20111227184509) do
 
   create_table "agencies", :force => true do |t|
     t.integer  "parent_id"
@@ -164,22 +164,25 @@ ActiveRecord::Schema.define(:version => 20111108002330) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.text     "slug"
-    t.boolean  "delta",                                       :default => true,  :null => false
+    t.boolean  "delta",                                        :default => true,  :null => false
     t.string   "source_text_url"
     t.string   "regulationsdotgov_url"
     t.string   "comment_url"
     t.datetime "checked_regulationsdotgov_at"
     t.integer  "volume"
     t.datetime "full_xml_updated_at"
-    t.integer  "citing_entries_count",                        :default => 0
+    t.integer  "citing_entries_count",                         :default => 0
     t.string   "document_file_path"
     t.datetime "full_text_updated_at"
     t.string   "curated_title"
-    t.string   "curated_abstract",             :limit => 500
+    t.string   "curated_abstract",              :limit => 500
     t.integer  "lede_photo_id"
     t.text     "lede_photo_candidates"
     t.datetime "raw_text_updated_at"
-    t.boolean  "significant",                                 :default => false
+    t.boolean  "significant",                                  :default => false
+    t.integer  "presidential_document_type_id"
+    t.date     "signing_date"
+    t.integer  "executive_order_number"
   end
 
   add_index "entries", ["citation"], :name => "index_entries_on_citation"
@@ -192,6 +195,7 @@ ActiveRecord::Schema.define(:version => 20111108002330) do
   add_index "entries", ["granule_class"], :name => "index_entries_on_agency_id_and_granule_class"
   add_index "entries", ["id", "publication_date"], :name => "index_entries_on_id_and_publication_date"
   add_index "entries", ["id"], :name => "index_entries_on_agency_id_and_id"
+  add_index "entries", ["presidential_document_type_id", "executive_order_number"], :name => "presdocu_type_id_and_eo_number"
   add_index "entries", ["publication_date"], :name => "index_entries_on_agency_id_and_publication_date"
   add_index "entries", ["publication_date"], :name => "index_entries_on_publication_date_and_agency_id"
   add_index "entries", ["raw_text_updated_at"], :name => "index_entries_on_raw_text_updated_at"

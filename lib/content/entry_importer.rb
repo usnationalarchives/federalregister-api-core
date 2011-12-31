@@ -14,6 +14,7 @@ module Content
     include Content::EntryImporter::Events
     include Content::EntryImporter::Sections
     include Content::EntryImporter::TopicNames
+    include Content::EntryImporter::PresidentialDocumentDetails
     include Content::EntryImporter::Urls
     include Content::EntryImporter::RegulationsDotGov
   
