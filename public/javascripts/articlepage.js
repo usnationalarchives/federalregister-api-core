@@ -52,7 +52,7 @@ var citation_info = {
         window.location.hash = id;
         node.attr('id', id);
 
-        if (this.cache[id] === null) {
+        if (this.cache[id] === undefined) {
             this.create(id);
         }
         if (this.open !== null && this.open !== id) {
