@@ -14,7 +14,7 @@ $(document).ready(function () {
             for(var year = start_year; year <= end_year; year++) {
                 var option = $("<option />");
                 option.append(year);
-                if ( $(".calendar").attr("data-calendar-year") === year ) {
+                if ( parseInt($(".calendar").attr("data-calendar-year"), 10) === year ) {
                     option.attr('selected', 'selected');
                 }
                 select_list.append(option);
