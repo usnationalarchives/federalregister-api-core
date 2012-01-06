@@ -3,6 +3,7 @@ module CitationsHelper
     options[:date] ||= Time.current.to_date
     if html.present?
       modify_text_not_inside_anchor(html) do |text|
+        text = add_eo_links(text)
         text = add_usc_links(text)
         text = add_cfr_links(text,options[:date])
         text = add_federal_register_links(text)
@@ -13,6 +14,17 @@ module CitationsHelper
     else
       html
     end 
+  end
+
+  def add_eo_links(text)
+    text.gsub(/(?:\bE\.O\.|\bEO\b|\bExecutive Order\b)\s+(\d+)/) do |str|
+      eo_number = $1.to_i
+      if eo_number >= 12890
+        content_tag :a, str, :href => executive_order_path(eo_number), :class => "eo"
+      else
+        str
+      end
+    end
   end
   
   def add_usc_links(text)

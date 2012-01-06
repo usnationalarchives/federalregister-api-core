@@ -57,7 +57,11 @@ ActionController::Routing::Routes.draw do |map|
                                         :controller => 'entries',
                                         :action     => 'tiny_url',
                                         :conditions => { :method => :get }
-  
+  map.executive_order 'executive-order/:number',
+                                        :controller => "citations",
+                                        :action     => "executive_order",
+                                        :conditions => {:method => :get},
+                                        :number     => /\d+/
   map.connect 'citation/:volume/:page', :controller => 'citations',
                                          :action     => 'show',
                                          :conditions => { :method => :get },
