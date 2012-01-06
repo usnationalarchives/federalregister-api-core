@@ -64,14 +64,14 @@ module Content
         entries = Entry.find_all_by_volume_and_start_page(fr_volume, fr_page)
         if entries.size == 1
           entry = entries.first
-          puts "updating #{entry.document_number} #{entry.publication_date}"
+          puts "updating EO #{number} -- #{entry.document_number} #{entry.publication_date}"
           entry.granule_class = 'PRESDOCU'
           entry.presidential_document_type = PresidentialDocumentType::EXECUTIVE_ORDER
           entry.executive_order_number = number
           entry.signing_date = signing_date
           entry.save
         else
-          puts "couldn't find single document for #{fr_volume} FR #{fr_page}: #{entries.map(&:document_number).inspect}"
+          puts "couldn't find single document for EO #{number} (#{fr_volume} FR #{fr_page}): #{entries.map(&:document_number).inspect}"
         end
       end
     end
