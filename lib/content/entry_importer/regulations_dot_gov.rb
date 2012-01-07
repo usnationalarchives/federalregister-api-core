@@ -60,7 +60,7 @@ module Content::EntryImporter::RegulationsDotGov
       end
     rescue Exception => e
       Rails.logger.warn e
-      HoptoadNotifier.notify(e)
+      Airbrake.notify(e)
       return nil
     end
   end

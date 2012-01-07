@@ -21,7 +21,7 @@ namespace :content do
           mailing_list.deliver!(new_documents)
         rescue Exception => e
           Rails.logger.warn(e)
-          HoptoadNotifier.notify(e)
+          Airbrake.notify(e)
         end
       end
     end

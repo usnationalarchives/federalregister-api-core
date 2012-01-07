@@ -1,3 +1,3 @@
-HoptoadNotifier.configure do |config|
+Airbrake.configure do |config|
   config.api_key = ENV['hoptoad_api_key']
 end

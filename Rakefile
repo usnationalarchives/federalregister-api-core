@@ -17,11 +17,6 @@ rescue LoadError
 end
 
 begin
-  require 'hoptoad_notifier/tasks'
-rescue LoadError
-end
-
-begin
   require 'cucumber'
   require 'cucumber/rake/task'
   

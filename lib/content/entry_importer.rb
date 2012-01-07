@@ -52,7 +52,7 @@ module Content
             (mods_doc_numbers - docs_and_nodes.map{|doc, node| doc}).each do |document_number|
               error = "'#{document_number}' (#{date}) in MODS but not in bulkdata"
               Rails.logger.warn(error)
-              HoptoadNotifier.notify(
+              Airbrake.notify(
                 :error_class   => "Missing Document Number in bulkdata",
                 :error_message => error 
               )
@@ -75,7 +75,7 @@ module Content
               else
                 error = "'#{document_number}' (#{date}) in bulkdata but not in MODS"
                 Rails.logger.warn(error)
-                HoptoadNotifier.notify(
+                Airbrake.notify(
                   :error_class   => "Missing Document Number in MODS",
                   :error_message => error 
                 )
