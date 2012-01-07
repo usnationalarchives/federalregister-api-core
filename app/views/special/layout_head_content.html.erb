@@ -29,7 +29,16 @@
 <!--[if lt IE 7]>
   <%= stylesheet_link_tag "ie6", :media => :screen %>
 <![endif]-->
- 
+
+<%= airbrake_javascript_notifier %>
+<% if Airbrake.configuration.public? %>
+<script type="text/javascript">
+//<![CDATA[
+Airbrake.setErrorDefaults({ url: window.location });
+//]]>
+</script>
+<% end %>
+
 <% if Rails.env == 'development' || Rails.env == 'staging' %>
   <%= javascript_include_tag 'vendor/jquery-1.6.1.min.js' %>
 <% else %>

@@ -4,7 +4,21 @@ describe CitationsHelper do
   include CitationsHelper
   include Citations::CfrHelper
   include HtmlHelper
-  
+ 
+  describe 'add_eo_links' do
+    [
+      'Executive Order 12917',
+      'EO 12917',
+      'E. O. 12917',
+      'E.O. 12917',
+      'Executive Order No 12917',
+      'Executive Order No. 12,917'
+    ].each do |citation|
+      it "supports '#{citation}'" do
+        add_eo_links(citation).should == '<a class="eo" href="' + executive_order_path(12917) + '">' + citation + '</a>'
+      end
+    end
+  end 
   describe 'add_usc_links' do
     it "supports '# USC #'" do
       add_usc_links('10 USC 1').should == '<a class="usc external" href="' + h(usc_url('10', '1')) + '" target="_blank">10 USC 1</a>'

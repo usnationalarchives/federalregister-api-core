@@ -18,7 +18,7 @@ module Content
       begin
         run
       rescue Exception => e
-        HoptoadNotifier.notify(e)
+        Airbrake.notify(e)
         raise e
       ensure
         remove_lock_file

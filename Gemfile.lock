@@ -31,6 +31,9 @@ GEM
     activesupport (2.3.11)
     after_commit (1.0.8)
       activerecord (< 3.0.0)
+    airbrake (3.0.9)
+      activesupport
+      builder
     amatch (0.2.3)
     amazon-ec2 (0.9.15)
       xml-simple (>= 1.0.12)
@@ -88,9 +91,6 @@ GEM
       typhoeus
     haml (3.0.4)
     highline (1.6.1)
-    hoptoad_notifier (2.4.11)
-      activesupport
-      builder
     http_headers (0.0.2.3)
     icalendar (1.1.5)
     jgre-monkeyspecdoc (0.9.5)
@@ -190,6 +190,7 @@ PLATFORMS
 
 DEPENDENCIES
   active_hash (= 0.9.5)
+  airbrake (= 3.0.9)
   amatch (= 0.2.3)
   amazon-ec2
   authlogic (= 2.1.3)
@@ -211,7 +212,6 @@ DEPENDENCIES
   geokit (= 1.4.1)
   gwt_rpc (= 0.1.2)
   haml (= 3.0.4)
-  hoptoad_notifier (= 2.4.11)
   http_headers (= 0.0.2.3)
   icalendar
   jgre-monkeyspecdoc (= 0.9.5)

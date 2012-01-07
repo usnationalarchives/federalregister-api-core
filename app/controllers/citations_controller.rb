@@ -28,4 +28,12 @@ class CitationsController < ApplicationController
       render
     end
   end
+
+  def executive_order
+    entry = Entry.find_by_presidential_document_type_id_and_executive_order_number!(
+      PresidentialDocumentType::EXECUTIVE_ORDER.id,
+      params[:number]
+    )
+    redirect_to entry_path(entry)
+  end
 end

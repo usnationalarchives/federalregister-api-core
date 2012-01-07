@@ -25,7 +25,7 @@ gem 'ym4r', '0.6.1'
 
 gem 'thinking-sphinx', '1.3.20', :require => 'thinking_sphinx'
 gem 'raspell', '1.2'
-gem 'hoptoad_notifier', '2.4.11'
+gem 'airbrake', '3.0.9'
 gem 'aws-s3', '0.6.2', :require => 'aws/s3'
 gem 'paperclip', '2.3.1.1'
 gem 'stevedore', '0.0.1'
