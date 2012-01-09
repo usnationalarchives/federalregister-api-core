@@ -76,4 +76,9 @@ class ApplicationController < ActionController::Base
   def handle_unverified_request
     raise "Invalid Authenticity Token"
   end
+
+  def ab_group
+    cookies[:ab_group]
+  end
+  helper_method :ab_group
 end

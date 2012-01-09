@@ -39,7 +39,7 @@ sub vcl_recv {
     } else {
       C{
         char buff[5];
-        sprintf(buff,"%d",rand()%2 + 1);
+        sprintf(buff,"%d",rand()%10 != 0 ? 1 : 2);
         VRT_SetHdr(sp, HDR_REQ, "\013X-AB-Group:", buff, vrt_magic_string_end);
       }C
       

@@ -29,7 +29,16 @@
 <!--[if lt IE 7]>
   <%= stylesheet_link_tag "ie6", :media => :screen %>
 <![endif]-->
- 
+
+<% if Airbrake.configuration.public? && ab_group == '2' %>
+  <%= airbrake_javascript_notifier %>
+  <script type="text/javascript">
+  //<![CDATA[
+  Airbrake.setErrorDefaults({ url: window.location });
+  //]]>
+  </script>
+<% end %>
+
 <% if Rails.env == 'development' || Rails.env == 'staging' %>
   <%= javascript_include_tag 'vendor/jquery-1.6.1.min.js' %>
 <% else %>
@@ -40,8 +49,7 @@
 <script src="/javascripts/vendor/handlebars.1.0.0.beta.3.js" type="text/javascript"></script>
 <script src="/javascripts/vendor/jquery.tipsy.js" type="text/javascript"></script>
 
-
-<% if RAILS_ENV == 'development' || RAILS_ENV == 'staging' %>
+<% if RAILS_ENV == 'development' || RAILS_ENV == 'staging' || (Airbrake.configuration.public? && ab_group == '2') %>
   <%= javascript_include_tag :all %>
 <% else %>
   <%= javascript_include_tag 'all.js' %>
