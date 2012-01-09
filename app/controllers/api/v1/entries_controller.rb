@@ -26,6 +26,10 @@ class Api::V1::EntriesController < ApiController
   end
  
   private
+
+  def index_url(options)
+    api_v1_entries_url(options)
+  end
   
   def basic_entry_data(entry)
     {
