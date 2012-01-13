@@ -508,6 +508,14 @@ p:target {
 .citable.on .trigger {
   @include opacity(1);
   }  
+p:target {
+  background-color: #F5F8F9;
+}
+.body_column p {
+  padding-left: 0.2em;
+  padding-right: 0.2em;
+  margin-right: 0.4125em;
+}
 // HELP-DESIGN: in the PDF this has a big black bullet next to it /a/2010-15073
 p.amendment_part {
 }
