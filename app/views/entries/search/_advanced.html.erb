@@ -33,6 +33,8 @@
               :label => "Presidential Document Type",
               :as => :check_boxes,
               :collection => PresidentialDocumentType.all %>
+  <%= f.input :action,
+              :label => "Action" %>
   <%= f.input :docket_id,
               :label => "Agency Docket",
               :input_html => {:placeholder => "EPA-HQ-OPPT-2005-0049"}, 

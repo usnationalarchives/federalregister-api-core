@@ -41,6 +41,10 @@ class EntrySearch < ApplicationSearch
     end
   end
   
+  define_filter :action, :sphinx_type => :conditions do |action_name|
+    action_name
+  end
+
   define_filter :agency_ids,  :sphinx_type => :with
   define_filter :section_ids, :sphinx_type => :with_all do |section_id|
     Section.find_by_id(section_id).try(:title)

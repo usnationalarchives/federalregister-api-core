@@ -9,7 +9,13 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111227184509) do
+ActiveRecord::Schema.define(:version => 20120113200011) do
+
+  create_table "action_names", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "agencies", :force => true do |t|
     t.integer  "parent_id"
@@ -183,6 +189,7 @@ ActiveRecord::Schema.define(:version => 20111227184509) do
     t.integer  "presidential_document_type_id"
     t.date     "signing_date"
     t.integer  "executive_order_number"
+    t.integer  "action_name_id"
   end
 
   add_index "entries", ["citation"], :name => "index_entries_on_citation"

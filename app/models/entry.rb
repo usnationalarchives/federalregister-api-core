@@ -44,6 +44,7 @@
 #  presidential_document_type_id :integer(4)
 #  signing_date                  :date
 #  executive_order_number        :integer(4)
+#  action_name_id                :integer(4)
 #
 
 # require 'flickr'
@@ -70,6 +71,7 @@ class Entry < ApplicationModel
   
   belongs_to :issue, :foreign_key => :publication_date, :primary_key => :publication_date
   belongs_to :presidential_document_type
+  belongs_to :action_name
 
   has_many :topic_name_assignments, :dependent => :destroy
   has_many :topic_names, :through => :topic_name_assignments
@@ -246,6 +248,7 @@ class Entry < ApplicationModel
     indexes "LOAD_FILE(CONCAT('#{RAILS_ROOT}/data/raw/', document_file_path, '.txt'))", :as => :full_text
     indexes "GROUP_CONCAT(DISTINCT IFNULL(`entry_regulation_id_numbers`.`regulation_id_number`, '0') SEPARATOR ' ')", :as =>  :regulation_id_number
     indexes "GROUP_CONCAT(DISTINCT docket_numbers.number SEPARATOR ' ')", :as => :docket_id
+    indexes "action_names.name", :as => :action
     
     # attributes
     has "SUM(IF(regulatory_plans.priority_category IN (#{RegulatoryPlan::SIGNIFICANT_PRIORITY_CATEGORIES.map{|c| "'#{c}'"}.join(',')}),1,0)) > 0", :as => :significant, :type => :boolean
@@ -265,10 +268,12 @@ class Entry < ApplicationModel
     join entry_cfr_affected_parts
     join docket_numbers
     join small_entities_for_thinking_sphinx
+    join action_name
     set_property :field_weights => {
       "title" => 100,
       "abstract" => 50,
       "full_text" => 25,
+      "action" => 10,
       "agency_name" => 10
     }
     
