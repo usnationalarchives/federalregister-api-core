@@ -58,7 +58,7 @@ class Api::V1::EntriesController < ApiController
 
   def full_entry_data(entry)
     basic_entry_data(entry).merge({
-        :full_text_xml_url => entry_xml_url(entry),
+        :full_text_xml_url => entry.full_xml_updated_at ? entry_xml_url(entry) : nil,
         :abstract_html_url => entry_abstract_url(entry),
         :body_html_url => entry_full_text_url(entry),
         :mods_url => entry.source_url(:mods),
