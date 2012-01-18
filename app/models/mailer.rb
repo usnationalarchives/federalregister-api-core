@@ -18,6 +18,7 @@ class Mailer < ActionMailer::Base
   def subscription_confirmation(subscription)
     sendgrid_category "Subscription Confirmation"
     sendgrid_ganalytics_options :utm_source => 'federalregister.gov', :utm_medium => 'email', :utm_campaign => 'subscription confirmation'
+    sendgrid_disable :clicktracking
     
     subject    "[FR] #{subscription.mailing_list.title}"
     from       "Federal Register Subscriptions <subscriptions@mail.federalregister.gov>"
@@ -29,6 +30,8 @@ class Mailer < ActionMailer::Base
   def unsubscribe_notice(subscription)
     sendgrid_category "Subscription Unsubscribe"
     sendgrid_ganalytics_options :utm_source => 'federalregister.gov', :utm_medium => 'email', :utm_campaign => 'subscription unsubscribe'
+    sendgrid_disable :clicktracking
+
     
     subject "[FR] #{subscription.mailing_list.title}"
     from       "Federal Register Subscriptions <subscriptions@mail.federalregister.gov>"
