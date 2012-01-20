@@ -37,6 +37,10 @@ class PublicInspectionDocument < ApplicationModel
                     },
                     :processors => [:permalink_banner_adder]
 
+
+  has_one :entry,
+          :foreign_key => :document_number,
+          :primary_key => :document_number
   has_and_belongs_to_many :public_inspection_issues,
                           :join_table              => :public_inspection_postings,
                           :foreign_key             => :document_id,
@@ -52,7 +56,6 @@ class PublicInspectionDocument < ApplicationModel
   before_save :set_content_type
 
   named_scope :revoked, :conditions => {:publication_date => nil}
-  does 'shared/document_number_normalization'
 
   define_index do
     # fields
@@ -68,6 +71,7 @@ class PublicInspectionDocument < ApplicationModel
     has filed_at
 
     join docket_numbers
+    join entry
 
     set_property :field_weights => {
       "title" => 100,
@@ -75,12 +79,12 @@ class PublicInspectionDocument < ApplicationModel
       "agency_name" => 10
     }
     
-    where "public_inspection_documents.publication_date > (SELECT MAX(publication_date) FROM issues where issues.completed_at is not null)"
+    where "public_inspection_documents.publication_date && entries.id IS NULL"
   end
 
   # Note: the concept of 'unpublished' is different from that of 'pending publication'
   def self.unpublished
-    scoped(:conditions => ["publication_date > ?", Issue.current.try(:publication_date)])
+    scoped(:include => :entry, :conditions => "entries.id IS NULL")
   end
 
   def self.special_filing
@@ -89,10 +93,6 @@ class PublicInspectionDocument < ApplicationModel
 
   def self.regular_filing
     scoped(:conditions => {:special_filing => false})
-  end
-
-  def entry
-    Entry.find_by_document_number(document_number)
   end
 
   def entry_type 
