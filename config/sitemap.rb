@@ -1,5 +1,5 @@
 # Set the host name for URL creation
-SitemapGenerator::Sitemap.default_host = "http://www.federalregister.gov"
+SitemapGenerator::Sitemap.default_host = "https://www.federalregister.gov"
 
 SitemapGenerator::Sitemap.add_links do |sitemap|
   # Put links creation logic here.

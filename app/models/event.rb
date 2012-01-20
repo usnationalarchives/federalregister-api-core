@@ -63,7 +63,7 @@ class Event < ApplicationModel
     ical_event.start = self.date
     ical_event.end = self.date
     ical_event.summary = "#{self.type}: #{self.title}"
-    ical_event.unique_id = "http://www.federalregister.gov/events/#{self.id}"
+    ical_event.unique_id = "https://www.federalregister.gov/events/#{self.id}"
     ical_event.description = self.entry.try(:abstract)
     ical_event
   end
