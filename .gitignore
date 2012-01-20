@@ -1,6 +1,7 @@
 .DS_Store
 .bundle
 webrat.log
+/bin
 /config/amazon.yml
 /config/api_keys.yml
 /config/database.yml
