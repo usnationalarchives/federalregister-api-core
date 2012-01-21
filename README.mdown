@@ -3,7 +3,7 @@ Federal Register 2.0
 
 The Federal Register at your fingertips.
  
-http://www.federalregister.gov/
+https://www.federalregister.gov/
 
 * The source code is available on Github at [http://github.com/criticaljuncture/fr2](http://github.com/criticaljuncture/fr2).
 * Problems, suggestions, etc can also be filed at Tender, via [http://federalregister.tenderapp.com/discussions](http://federalregister.tenderapp.com/discussions)

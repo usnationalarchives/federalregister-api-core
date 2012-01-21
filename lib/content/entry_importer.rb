@@ -17,6 +17,7 @@ module Content
     include Content::EntryImporter::PresidentialDocumentDetails
     include Content::EntryImporter::Urls
     include Content::EntryImporter::RegulationsDotGov
+    include Content::EntryImporter::Action
   
     def self.process_all_by_date(date, *attributes)
       AgencyObserver.disabled = true

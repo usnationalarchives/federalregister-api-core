@@ -13,8 +13,8 @@ module Content::EntryImporter::RawText
             <!-- ignore the same stuff the HTML view does -->
             <xsl:include href="app/views/entries/xslt/ignore.html.xslt" />
             
-            <!-- except explicitly add back the SUMmary -->
-            <xsl:template match="SUM">
+            <!-- except explicitly add back the SUMmary and the ACTion-->
+            <xsl:template match="SUM | ACT">
               <xsl:apply-templates/>
             </xsl:template>
             

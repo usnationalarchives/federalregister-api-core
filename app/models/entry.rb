@@ -44,6 +44,7 @@
 #  presidential_document_type_id :integer(4)
 #  signing_date                  :date
 #  executive_order_number        :integer(4)
+#  action_name_id                :integer(4)
 #
 
 # require 'flickr'
@@ -70,6 +71,7 @@ class Entry < ApplicationModel
   
   belongs_to :issue, :foreign_key => :publication_date, :primary_key => :publication_date
   belongs_to :presidential_document_type
+  belongs_to :action_name
 
   has_many :topic_name_assignments, :dependent => :destroy
   has_many :topic_names, :through => :topic_name_assignments
@@ -130,7 +132,6 @@ class Entry < ApplicationModel
   has_many :entry_emails
   
   has_one :agency_highlight
-  has_one :public_inspection_document, :foreign_key => :document_number, :primary_key => :document_number
   
   has_many :events, :dependent => :destroy
   
@@ -152,6 +153,9 @@ class Entry < ApplicationModel
                 ON regulatory_plans_small_entities.regulatory_plan_id = regulatory_plans.id"
   has_many :entry_cfr_references, :dependent => :delete_all
   has_many :entry_cfr_affected_parts, :class_name => "EntryCfrReference", :conditions => "entry_cfr_references.part IS NOT NULL"
+
+  does 'shared/document_number_normalization'
+
   validate :curated_attributes_are_not_too_long
   
   def self.published_today
@@ -234,7 +238,11 @@ class Entry < ApplicationModel
   def self.with_regulation_id_number(rin)
     scoped(:conditions => {:entry_regulation_id_numbers => {:regulation_id_number => rin}}, :joins => :entry_regulation_id_numbers)
   end
-  
+
+  def public_inspection_document
+    @public_inspection_document ||= PublicInspectionDocument.find_by_document_number(document_number)
+  end
+
   def entry_type 
     ENTRY_TYPES[granule_class]
   end

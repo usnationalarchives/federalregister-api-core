@@ -56,6 +56,11 @@ namespace :content do
         entry_importer(:events)
       end
       
+      desc "Extract Action Name"
+      task :action_name => :environment do
+        entry_importer(:action_name)
+      end
+      
       desc "Extract lede photo candidates"
       task :lede_photo_candidates => :environment do
         entry_importer(:lede_photo_candidates)

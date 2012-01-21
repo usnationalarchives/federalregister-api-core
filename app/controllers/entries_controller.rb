@@ -90,14 +90,14 @@ class EntriesController < ApplicationController
     @entry = Entry.find_by_document_number(params[:document_number])
 
     if @entry
-      if @entry.slug != params[:slug]
+      if request.path != entry_path(@entry)
         redirect_to entry_path(@entry), :status => :moved_permanently
       else
         render
       end
     else
       @public_inspection_document = PublicInspectionDocument.find_by_document_number!(params[:document_number])
-      if @public_inspection_document.slug != params[:slug]
+      if request.path != entry_path(@public_inspection_document)
         redirect_to entry_path(@public_inspection_document), :status => :moved_permanently
       else
         render :template => 'public_inspection/show'

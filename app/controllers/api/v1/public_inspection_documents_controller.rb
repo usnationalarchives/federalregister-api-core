@@ -42,6 +42,10 @@ class Api::V1::PublicInspectionDocumentsController < ApiController
 
   private
 
+  def index_url(options)
+    api_v1_public_inspection_documents_url(options)
+  end
+
   def render_date(date)
     issue = PublicInspectionIssue.published.find_by_publication_date(date)
     if issue.nil?

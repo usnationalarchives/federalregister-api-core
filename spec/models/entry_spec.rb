@@ -44,6 +44,7 @@
 #  presidential_document_type_id :integer(4)
 #  signing_date                  :date
 #  executive_order_number        :integer(4)
+#  action_name_id                :integer(4)
 #
 
 require 'spec_helper'
