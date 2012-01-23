@@ -1,0 +1,28 @@
+div#add-to-clipboard {
+  background: #E4ECD8;
+  border: 1px solid #A8BF82;
+  padding: 3px;
+  }
+div#add-to-clipboard .formtastic .buttons {
+  margin-left: 0;  
+  }
+
+div#add-to-clipboard a.add {
+  display:none;
+  background: sprite-image('icons/my_fr2/icon_add_to_clipboard.png', 0, 0, 51px) no-repeat;
+  padding-left: 25px;
+  font-weight: bold;
+  color: #6E6E6E;
+  margin-left: 40px;
+  padding-bottom: 3px;
+  padding-top: 1px;
+  }
+div#add-to-clipboard a.add:hover {
+  background: sprite-image('icons/my_fr2/icon_add_to_clipboard_active.png', 0, 0, 51px) no-repeat;
+  color: #B88659;
+  }
+
+div.share li.flag_for_later {
+  background: sprite-image('icons/my_fr2/icon_add_to_clipboard.png', 0, 0, 51px) no-repeat;
+  }
+  
