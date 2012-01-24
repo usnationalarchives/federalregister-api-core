@@ -7,6 +7,21 @@ namespace :content do
       Rake::Task["content:public_inspection:reindex"].invoke unless Rails.env == 'development'
     end
 
+    namespace :import do
+      desc "Link public inspection documents to their entries based on publication date"
+      task :entry_id => :environment do
+        dates = Content.parse_dates(ENV['DATE'] || Date.current)
+
+        dates.each do |date|
+          puts "linking PI for #{date}"
+          PublicInspectionDocument.find_all_by_publication_date_and_entry_id(date, nil).each do |pi_doc|
+            pi_doc.entry = Entry.find_by_document_number(pi_doc.document_number)
+            pi_doc.save(false)
+          end
+        end
+      end
+    end
+
     task :import_and_deliver => :environment do
       Content::ImportDriver::PublicInspectionDriver.new.perform
     end

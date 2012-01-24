@@ -22,6 +22,7 @@
 #  num_pages           :integer(4)
 #  created_at          :datetime
 #  updated_at          :datetime
+#  entry_id            :integer(4)
 #
 
 class PublicInspectionDocument < ApplicationModel
@@ -37,6 +38,7 @@ class PublicInspectionDocument < ApplicationModel
                     },
                     :processors => [:permalink_banner_adder]
 
+  belongs_to :entry
   has_and_belongs_to_many :public_inspection_issues,
                           :join_table              => :public_inspection_postings,
                           :foreign_key             => :document_id,

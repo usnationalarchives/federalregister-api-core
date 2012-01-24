@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120113200011) do
+ActiveRecord::Schema.define(:version => 20120123222820) do
 
   create_table "action_names", :force => true do |t|
     t.string   "name"
@@ -362,10 +362,12 @@ ActiveRecord::Schema.define(:version => 20120113200011) do
     t.integer  "num_pages"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "entry_id"
   end
 
   add_index "public_inspection_documents", ["delta"], :name => "index_public_inspection_documents_on_delta"
   add_index "public_inspection_documents", ["document_number"], :name => "index_public_inspection_documents_on_document_number"
+  add_index "public_inspection_documents", ["entry_id"], :name => "index_public_inspection_documents_on_entry_id"
   add_index "public_inspection_documents", ["publication_date"], :name => "index_public_inspection_documents_on_publication_date"
 
   create_table "public_inspection_issues", :force => true do |t|

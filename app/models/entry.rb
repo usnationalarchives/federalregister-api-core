@@ -73,6 +73,8 @@ class Entry < ApplicationModel
   belongs_to :presidential_document_type
   belongs_to :action_name
 
+  has_one :public_inspection_document
+
   has_many :topic_name_assignments, :dependent => :destroy
   has_many :topic_names, :through => :topic_name_assignments
   
@@ -237,10 +239,6 @@ class Entry < ApplicationModel
   
   def self.with_regulation_id_number(rin)
     scoped(:conditions => {:entry_regulation_id_numbers => {:regulation_id_number => rin}}, :joins => :entry_regulation_id_numbers)
-  end
-
-  def public_inspection_document
-    @public_inspection_document ||= PublicInspectionDocument.find_by_document_number(document_number)
   end
 
   def entry_type 
