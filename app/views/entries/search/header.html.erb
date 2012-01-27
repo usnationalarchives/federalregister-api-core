@@ -22,11 +22,13 @@
       <div class="actions">
         <%= link_to 'Subscribe', new_subscription_path(:subscription => {:search_conditions => conditions_for_subscription}), :class => 'subscription' %>
         <%= add_template('subscription_modal', 'subscription-modal') %>
-        <%= link_to 'Learn More', entries_search_help_path, :class => 'help_link' %>
-        <%# link_to 'Widget', widget_instructions_path(params.except(:action, :controller)), :class => 'button widget spawn_modal notext', :id => 'widget' %>
+        <span class="other_formats">Other Formats: <%= link_to 'CSV', entries_search_path(params.except(:controller, :action, :quiet).merge(:format => :csv)) %>,
+          <%= link_to 'JSON', api_v1_entries_url(params.except(:controller, :action, :quiet)) %></span>
       </div>
-      
-      <a title="Show Advanced Search" id="toggle_advanced" href="#advanced">Show Advanced Search</a>
+      <div class="options">      
+        <%= link_to "Show Advanced Search", '#advanced', :id => :toggle_advanced %>
+        <%= link_to 'Learn More', entries_search_help_path, :class => 'help_link' %>
+      </div>
       
     </div>
     <div class="advanced">

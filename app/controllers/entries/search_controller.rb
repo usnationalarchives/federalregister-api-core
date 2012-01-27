@@ -18,6 +18,12 @@ class Entries::SearchController < SearchController
         @entries = @search.results
         render :template => 'entries/index.rss.builder'
       end
+      wants.csv do
+        @search.per_page = 100
+        @entries = @search.results
+        filename = @search.summary.gsub(/\W+/, '_').sub(/_$/,'').downcase
+        headers['Content-Disposition'] = "attachment; filename=\"#{filename}.csv\"" 
+      end
     end
   end
   

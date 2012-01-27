@@ -52,6 +52,19 @@ PAGE ELEMENTS
   position: absolute;
   right: 2em;
   top: 1.2em;  
+  text-align: right;
+  }
+.search_bar .actions .other_formats, .search_bar .actions .subscription {
+  font-size: 15px;
+  }
+.search_bar .actions .other_formats {
+  display: block;
+  }
+.search_bar .actions .other_formats a {
+  color: #6E6E6E;
+  }
+.search_bar .actions .other_formats a:hover {
+  color: #B88659;
   }
 .search_bar .button {
  background-color: #fff;
@@ -701,16 +714,24 @@ ADVANCED SEARCH
   margin-left: 16.75em;
   margin-top: 2em;
   }
-#toggle_advanced {
+.search_bar .options {
+  width: 410px; 
   clear: both;
-  cursor: pointer;
-  display: none;
   float: left;
   margin-left: 5em;
+}
+#toggle_advanced {
+  cursor: pointer;
+  float: left;
+  display: none;
   }
 .has_js #toggle_advanced {
   display: block;
   }
+.search_bar .options .help_link {
+  float: right;
+}
+
 select.bsmSelect {
   display: none !important; /* important needed for IE */
   } 

@@ -265,39 +265,4 @@ $(document).ready(function () {
     $(window).bind('hashchange', function(){
       toggleAdvanced(location.hash === "#advanced");
     }).trigger('hashchange');
-    
-    // $('.help_link').live('click',
-    // function () {
-    //     load_help();
-    //     $('#help_modal').centerScreen().jqmShow();
-    //     return false;
-    // });
-    // 
-    // function load_help() {
-    //     if ($('#help_modal').size() == 0) {
-    //         
-    //         $.ajax({
-    //           url: '/entries/search/help?no_layout=1',
-    //           dataType: 'html',
-    //           complete: function(xhr, textStatus) {
-    //             //called when complete
-    //           },
-    //           success: function(data, textStatus, xhr) {
-    //             $("#help_modal").append(data);
-    //           },
-    //           error: function(xhr, textStatus, errorThrown) {
-    //             //called when there is an error
-    //           }
-    //         });
-    //         
-    //       
-    //         $('#help_modal').jqm({
-    //             modal: true,
-    //             toTop: true
-    //         });
-    //     }
-    // }
-    
-    
-    
 });
