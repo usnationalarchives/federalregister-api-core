@@ -49,7 +49,8 @@ class Api::V1::EntriesController < ApiController
             :name     => agency.name,
             :id       => agency.id,
             :url      => agency_url(agency),
-            :json_url => api_v1_agency_url(agency.id, :format => :json)
+            :json_url => api_v1_agency_url(agency.id, :format => :json),
+            :parent_id => agency.parent_id
           }
         else
           {
@@ -78,7 +79,7 @@ class Api::V1::EntriesController < ApiController
         :docket_ids => entry.docket_numbers.map(&:number),
         :regulation_id_numbers => entry.entry_regulation_id_numbers.map(&:regulation_id_number),
         :regulation_id_number_info => regulation_id_number_info(entry),
-       
+        :subtype => entry.presidential_document_type.try(:name),     
         :cfr_references => entry.entry_cfr_references.map{|cfr_reference|
           {:title => cfr_reference.title, :part => cfr_reference.part}
         }

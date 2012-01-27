@@ -29,6 +29,7 @@ class Api::V1::AgenciesController < ApiController
   def basic_agency_data(agency)
     agency_data = {
       :id => agency.id,
+      :parent_id => agency.parent_id,
       :name => agency.name,
       :short_name => agency.short_name,
       :url => agency_url(agency),
