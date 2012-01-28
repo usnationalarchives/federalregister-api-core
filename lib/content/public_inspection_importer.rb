@@ -209,10 +209,10 @@ module Content
 
         case @context
         when :updated_at_or_agency_or_granule_class_or_editorial_note
-          if @str =~ /^EDITORIAL NOTE: /
-            @pi_documents.last[:editorial_note] = @str.sub(/^EDITORIAL NOTE: /,'')
+          if @str =~ /^EDITORIAL\s*NOTE:/i
+            @pi_documents.last[:editorial_note] = @str.sub(/^EDITORIAL\s*NOTE:\s*/i,'')
             @context = :editorial_note
-          elsif @str =~ /^Note: This (Special|Regular) Filing List was updated at (.*?)\. The following documents are on file/i
+          elsif @str =~ /.*?(Special|Regular)\s*(?:.*?)\s*updated\s*at\s*(.*?)\.\s*The\s*following/i
             updated_at = Time.zone.parse($2)
             case $1
             when 'Special'
