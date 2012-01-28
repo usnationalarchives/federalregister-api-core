@@ -1,0 +1,22 @@
+<%= FasterCSV.generate do |csv|
+    csv << [
+      'FR Citation',
+      'Document Number',
+      'Title',
+      'Publication Date',
+      'Document Type',
+      'Agencies',
+      'URL'
+    ]
+    @entries.each do |entry| 
+      csv << [
+        entry.citation,
+        entry.document_number,
+        entry.title,
+        entry.publication_date,
+        entry.entry_type,
+        entry.agencies.excluding_parents.map(&:name).join(', '),
+        short_entry_url(entry)
+      ]
+    end
+  end %>

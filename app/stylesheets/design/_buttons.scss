@@ -81,8 +81,8 @@ BUTTONS / ICONS
 
   
 
+.other_formats,
 .rss,
-.help_link,
 .add_to_calendar,
 a.subscription {
   color: #6e6e6e;
@@ -112,15 +112,6 @@ a.subscription:hover {
   background: sprite-image('icons/icon_subscribe_hover.png', 0, 0, 50px) no-repeat;  
   color: #B88659;
   }    
-.help_link {
-  background: sprite-image('icons/icon_info.png', 0, 3px, 50px) no-repeat;
-  display: block;
-  height: image-height('icons/icon_info.png');
-  padding-bottom: 3px;
-  }
-.help_link:hover {
-  background: sprite-image('icons/icon_info_hover.png', 0, 3px, 50px) no-repeat;
-  }   
 .add_to_calendar {
   background: sprite-image('icons/add_to_calendar_half.png', 0, 0, 50px) no-repeat;
   line-height: image-height('icons/add_to_calendar_half.png');
