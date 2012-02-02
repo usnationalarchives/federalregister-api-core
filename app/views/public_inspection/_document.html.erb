@@ -7,10 +7,10 @@
     <%= link_to '<span class="permalink">Permalink</span>', entry_path(document)%>
   </div>
   <div class="column dates">
-    <%- if date && document.filed_at.to_date == date %>
-      <span class="new_document"></span>
-    <%- end %>
     <%- if document.filed_at %>
+      <%- if date && document.filed_at.to_date == date %>
+        <span class="new_document"></span>
+      <%- end %>
       <span class="filed_at">Filed on: <%= document.filed_at.to_s(:short_date_then_time) %></span>
     <%- end %>
     <%- if document.publication_date.present? %> 
