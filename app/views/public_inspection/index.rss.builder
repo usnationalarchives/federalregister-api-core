@@ -27,7 +27,9 @@ xml.rss "version" => "2.0", "xmlns:dc" => "http://purl.org/dc/elements/1.1/" do
         description << pluralize(document.num_pages, 'page')
 
         xml.description description.join('; ')
-        xml.pubDate     CGI.rfc1123_date document.filed_at
+        if document.filed_at
+          xml.pubDate     CGI.rfc1123_date document.filed_at
+        end
         xml.guid        document.document_number
         xml.author      document.agencies.map(&:name).to_sentence
       end

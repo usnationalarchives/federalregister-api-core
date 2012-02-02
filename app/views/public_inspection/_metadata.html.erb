@@ -1,6 +1,8 @@
 <dl class='metadata_list '>
-  <dt>Filed On:</dt>
-  <dd><%= link_to document.filed_at.to_date, public_inspection_documents_by_date_path(document.filed_at.to_date) %> at <%= document.filed_at.to_s(:time_only) %></dd>
+  <% if document.filed_at %>
+    <dt>Filed On:</dt>
+    <dd><%= link_to document.filed_at.to_date, public_inspection_documents_by_date_path(document.filed_at.to_date) %> at <%= document.filed_at.to_s(:time_only) %></dd>
+  <% end %>
   <% if document.publication_date.present? %>
     <dt>Publication Date:</dt>
     <dd><%= document.publication_date.to_formatted_s(:pretty) %></dd> <% end %>
