@@ -10,7 +10,9 @@
     <%- if date && document.filed_at.to_date == date %>
       <span class="new_document"></span>
     <%- end %>
-    <span class="filed_at">Filed on: <%= document.filed_at.to_s(:short_date_then_time) %></span>
+    <%- if document.filed_at %>
+      <span class="filed_at">Filed on: <%= document.filed_at.to_s(:short_date_then_time) %></span>
+    <%- end %>
     <%- if document.publication_date.present? %> 
     <span class="publication_date">Publication Date:
         <%= Issue.find_by_publication_date(document.publication_date) ? link_to(document.publication_date, entries_by_date_path(document.publication_date, :anchor => document.document_number) ) : document.publication_date  %>
