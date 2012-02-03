@@ -17,6 +17,15 @@
           </p>
         </div>
       <% end -%>      
+
+      <% unless @entry.has_full_xml? %>
+        <div id="flash_message" class="pdf_only">
+          <p>
+            The full text of this document is currently only available in <%= link_to 'PDF format', @entry.source_url('pdf') %>.
+            <%= link_to 'Download PDF', @entry.source_url('pdf'), :class => "button" %>
+          </p>
+        </div>
+      <% end %>
   </div> <!-- end metadata_content_area -->
   
   <% aside_tag(:id => 'sidebar') do %>
@@ -61,16 +70,18 @@
     <% else %>
       <%= render :esi => entry_abstract_path(@entry) %>
     <% end %>
+
+    <% if @entry.has_full_xml? %>    
+      <%= render :partial => "unified_agena" %>
     
-    <%= render :partial => "unified_agena" %>
-  
-    <div id="fulltext_content_area">
-      <% if RAILS_ENV == 'development' %>
-        <%= render :partial => 'full_text', :locals => {:entry => @entry} %>
-      <% else %>
+      <div id="fulltext_content_area">
+        <% if RAILS_ENV == 'development' %>
+          <%= render :partial => 'full_text', :locals => {:entry => @entry} %>
+        <% else %>
         <%= render :esi => entry_full_text_path(@entry) %>
       <% end %>
-    </div> <!-- end fulltext_content_area area -->  
+      </div> <!-- end fulltext_content_area area -->  
+    <% end %>
   
   </div> <!-- content_area end -->
   
