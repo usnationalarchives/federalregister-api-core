@@ -33,10 +33,11 @@ $(document).ready(function () {
 
             $('body').append( subscription_modal_template({elements: elements}) );
 
-            $('#modal form').submit(function() {
+            $('#modal form').submit(function(event) {
+                event.preventDefault();
                 var form = $(this);
                 form.attr('action', form.attr('action') + '&' + escape('subscription[email]') + '=' + escape(form.find('input[name="subscription[email]"]').val()) + '&' + escape('subscription[search_type]') + '=' + escape(form.find('input[name="subscription[search_type]"]:checked').val()) );
-                return true;
+                form.submit();
             });
 
             $('#modal').jqm({
