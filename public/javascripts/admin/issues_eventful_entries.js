@@ -12,10 +12,14 @@ $(document).ready(function(){
   });
   
   $('.article a.place').click(function(){
-    var id = $(this).attr('data-id');
-    var name = $(this).attr('data-name');
-    $('#event_place_id').val(id);
-    $('#event_place_name').text(name);
+    var elem = $(this);
+    $('#event_place_id').val(elem.attr('data-id'));
+    $('#event_place_name').text(elem.attr('data-name'));
+
+    $('#place_name').val(elem.attr('data-name'));
+    $('#place_place_type').val(elem.attr('data-type'));
+    $('#place_latitude').val(elem.attr('data-latitude'));
+    $('#place_longitude').val(elem.attr('data-longitude'));
     return false;
   });
   
