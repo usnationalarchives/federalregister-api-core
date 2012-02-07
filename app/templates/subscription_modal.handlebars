@@ -15,30 +15,32 @@
           <h5>Via Email:</h5>
           <form action="{{ subscription_action }}" method="post" class="formtastic subscription">
             <input type="text" name="subscription[email]" placeholder="Subscribe via E-Mail" class="address">
-
-            <li class="radio optional" id="subscription_search_type_input">
-              <fieldset>
-                <legend class="label">
-                  <label for="subscription_search_type">Notify when</label>
-                </legend>
-                <ol>
-                  <li>
-                    <label for="subscription_search_type_entry">
-                      <input id="subscription_search_type_entry" name="subscription[search_type]" type="radio" {{#if default_to_entry}}checked="checked"{{/if}} value="Entry">
-                      Published
-                    </label>
-                  </li>
-                  <li class="{{#unless public_inspection_subscription_supported}}disabled{{/unless}}">
-                    <label for="subscription_search_type_publicinspectiondocument" {{#unless public_inspection_subscription_supported}}title="This search is not available when documents are filed for public inspection."{{/unless}}>
-                      <input id="subscription_search_type_publicinspectiondocument" name="subscription[search_type]" type="radio" {{#unless public_inspection_subscription_supported }}disabled="disabled"{{/unless}} {{#if default_to_public_inspection}}checked="checked"{{/if}} value="PublicInspectionDocument">
-                      Filed on Public Inspection
-                    </label>
-                  </li>
-                </ol>
-              </fieldset>
-            </li>
-
-            <input type="submit" value="Subscribe" class="subscribe">
+            <ul>
+              <li class="radio optional" id="subscription_search_type_input">
+                <fieldset>
+                  <legend class="label">
+                    <label for="subscription_search_type">Notify when</label>
+                  </legend>
+                  <ol>
+                    <li>
+                      <label for="subscription_search_type_entry">
+                        <input id="subscription_search_type_entry" name="subscription[search_type]" type="radio" {{#if default_to_entry}}checked="checked"{{/if}} value="Entry">
+                        Published
+                      </label>
+                    </li>
+                    <li class="{{#unless public_inspection_subscription_supported}}disabled{{/unless}}">
+                      <label for="subscription_search_type_publicinspectiondocument" {{#unless public_inspection_subscription_supported}}title="This search is not available when documents are filed for public inspection."{{/unless}}>
+                        <input id="subscription_search_type_publicinspectiondocument" name="subscription[search_type]" type="radio" {{#unless public_inspection_subscription_supported }}disabled="disabled"{{/unless}} {{#if default_to_public_inspection}}checked="checked"{{/if}} value="PublicInspectionDocument">
+                        Filed on Public Inspection
+                      </label>
+                    </li>
+                  </ol>
+                </fieldset>
+              </li>
+              <li>
+                <input type="submit" value="Subscribe" class="subscribe">
+              </li>
+            </ul>
           </form>
         </li>
         {{/if}}
