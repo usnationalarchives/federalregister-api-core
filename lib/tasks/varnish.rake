@@ -3,12 +3,7 @@ namespace :varnish do
     task :generate do
       File.open(File.join(Rails.root, 'config', 'varnish.development.vcl'), 'w') do |f|
         template_content = IO.read(File.join(Rails.root, 'config', 'varnish.development.vcl.erb'))
-        yml_path = File.join(Rails.root, 'config', 'varnish.yml')
-        if File.exists?(yml_path)
-          config = YAML::load_file(yml_path)
-        else
-          config = {:wordpress => {}, :rails => {}}
-        end
+        config = varnish_config
         secrets = YAML::load_file File.join(Rails.root, 'config', 'secrets.yml')
         skip_cache_key = secrets['varnish']['skip_cache_key']
         f.write ERB.new(template_content).result(binding)
@@ -18,8 +13,9 @@ namespace :varnish do
   
   desc "Start varnish, recompiling config if necessary"
   task :start => 'varnish:config:generate' do
-    `varnishd -f config/varnish.development.vcl -a 0.0.0.0:8080 -s malloc,10M -T 127.0.0.1:6082`
-    puts "please visit http://fr2.local:8080/"
+     config = varnish_config
+    `varnishd -f config/varnish.development.vcl -a 0.0.0.0:#{config["port"]} -s malloc,10M -T 127.0.0.1:6082`
+    puts "please visit http://fr2.local:#{config["port"]}/"
   end
   
   desc "Stop varnish"
@@ -35,6 +31,16 @@ namespace :varnish do
   desc "Restart varnish"
   task :restart => [:stop, :start]
   
+  def varnish_config
+    yml_path = File.join(Rails.root, 'config', 'varnish.yml')
+    if File.exists?(yml_path)
+      config = YAML::load_file(yml_path)
+    else
+      config = {:wordpress => {}, :rails => {}, :port => 8080}
+    end
+  end
+
+
   namespace :expire do
     desc "Expire everything from varnish"
     task :everything => :environment do
