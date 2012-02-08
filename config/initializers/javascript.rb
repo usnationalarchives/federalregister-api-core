@@ -1,4 +1,4 @@
-initial_libs = ['jquery.js', 'jrails.js']
+initial_libs = ['jquery-1.6.1.min.js', 'jrails.js']
 exclude_libs = ['vendor.js']
 all_vendor_libs = Dir.entries("#{RAILS_ROOT}/public/javascripts/vendor").select{|n| n =~ /\.js$/}.sort
 

@@ -250,6 +250,8 @@ ARTICLE VIEW
   position: absolute;
   right: 0;
   top: 0;
+  min-width: 193px;
+  text-align: center;
   }  
 #flash_message .button:hover {
   background: $golden;
@@ -259,11 +261,14 @@ ARTICLE VIEW
   line-height: 20px;  
   margin: 0;
   padding: 0;
+  line-height: 3em;
+  padding-left: 40px;
+  }
+#flash_message.pdf_only p {
+  background: sprite-image('icons/icon_errors.png', 15px, 9px, 100px) no-repeat;
   }
 #flash_message.comment p {
   background: sprite-image('icons/icon_comment.png', 10px, 14px, 20px) no-repeat;
-  line-height: 3em;
-  padding-left: 40px;
   }  
 .article .metadata_list dt {
   text-transform: none;

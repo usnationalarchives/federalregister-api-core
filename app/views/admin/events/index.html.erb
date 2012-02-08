@@ -17,7 +17,7 @@
       <tr>
         <td><%= event.title %></td>
         <td><%= event.date %></td>
-        <td><%= event.place.name %></td>
+        <td><%= event.place.try(:name) %></td>
         <td><%= link_to event.entry.document_number, entry_path(event.entry) %> (<%= event.entry.publication_date %>)</td>
         <td>
           <%= link_to 'Edit', edit_admin_event_path(event) %>

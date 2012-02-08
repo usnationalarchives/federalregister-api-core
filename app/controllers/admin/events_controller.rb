@@ -14,6 +14,11 @@ class Admin::EventsController < AdminController
   def create
     @event = Event.new(params[:event])
     @event.event_type = 'PublicMeeting'
+    if params[:event][:place_id].present? && Event.find_by_id(params[:event][:place_id]).nil?
+      @event.place = Place.new(
+        params[:place].merge(:id => params[:event][:place_id])
+      )
+    end
     
     if @event.save
       if request.xhr?

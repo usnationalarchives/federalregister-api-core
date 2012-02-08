@@ -126,7 +126,7 @@ class Issue < ApplicationModel
     EntrySearch.new(
       :conditions => {
         :term => "(#{Event::PUBLIC_MEETING_PHRASES.map{|phrase| "\"#{phrase}\""}.join('|')})",
-        :date => publication_date.to_s
+        :publication_date => {:is => publication_date.to_s}
       },
       :per_page => 200
     )
