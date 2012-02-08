@@ -467,6 +467,10 @@ class Entry < ApplicationModel
       :order => "entries.volume, entries.start_page, entries.id"
     )
   end
+
+  def has_full_xml?
+    full_xml_updated_at.present?
+  end
   
   private
   
