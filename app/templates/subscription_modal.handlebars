@@ -15,6 +15,7 @@
           <h5>Via Email:</h5>
           <form action="{{ subscription_action }}" method="post" class="formtastic subscription">
             <input type="text" name="subscription[email]" placeholder="Subscribe via E-Mail" class="address">
+            <input type="submit" value="Subscribe" class="subscribe">
             <ul>
               <li class="radio optional" id="subscription_search_type_input">
                 <fieldset>
@@ -36,9 +37,6 @@
                     </li>
                   </ol>
                 </fieldset>
-              </li>
-              <li>
-                <input type="submit" value="Subscribe" class="subscribe">
               </li>
             </ul>
           </form>
