@@ -468,7 +468,7 @@ class Entry < ApplicationModel
     )
   end
 
-  def has_full_xml?
+  def should_have_full_xml?
     full_xml_updated_at.present?
   end
   

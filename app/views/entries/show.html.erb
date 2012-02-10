@@ -18,7 +18,7 @@
         </div>
       <% end -%>      
 
-      <% unless @entry.has_full_xml? %>
+      <% unless @entry.should_have_full_xml? %>
         <div id="flash_message" class="pdf_only">
           <p>
             The full text of this document is currently only available in <%= link_to 'PDF format', @entry.source_url('pdf') %>.
@@ -71,7 +71,7 @@
       <%= render :esi => entry_abstract_path(@entry) %>
     <% end %>
 
-    <% if @entry.has_full_xml? %>    
+    <% if @entry.should_have_full_xml? %>    
       <%= render :partial => "unified_agena" %>
     
       <div id="fulltext_content_area">
