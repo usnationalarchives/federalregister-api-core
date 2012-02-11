@@ -7,6 +7,7 @@ namespace :data do
     task :basic => %w(
       content:entries:import
       content:entries:import:graphics
+      content:entries:extract_equation_pages
       data:extract:places
     )
     
