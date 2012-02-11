@@ -35,6 +35,8 @@ class Content::EquationPageExtractor
     end
 
     def equation_pages
+      return [] unless entry.has_full_xml?
+
       # find all page nodes that have a child MATH node...
       pages = Nokogiri::XML(File.open(entry.full_xml_file_path)).xpath('.//MATH').map do |math_node|
         attr = math_node.xpath('preceding::PRTPAGE[not(ancestor::FTNT)][1]/@P').first
