@@ -31,7 +31,7 @@ SitemapGenerator::Sitemap.add_links do |sitemap|
   end
   
   # ENTRIES
-  Entry.scoped(:joins => :issue, :conditions => "issues.publication_date > '2011-10-01' && issues.completed_at IS NOT NULL").find_each do |entry|
+  Entry.scoped(:joins => :issue, :conditions => "issues.completed_at IS NOT NULL").find_each do |entry|
     sitemap.add entry_path(entry), :changefreq => 'monthly', :lastmod => entry.updated_at
   end
   
