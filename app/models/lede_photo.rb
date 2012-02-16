@@ -58,6 +58,10 @@ class LedePhoto < ApplicationModel
   def flickr_photo_id=(photo_id)
     @flickr_photo_id = photo_id
   end
+
+  def credit_url
+    self['credit_url'] + '/lightbox'
+  end
   
   private
   
