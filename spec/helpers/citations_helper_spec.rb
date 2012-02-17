@@ -7,15 +7,15 @@ describe CitationsHelper do
  
   describe 'add_eo_links' do
     [
-      'Executive Order 12917',
-      'EO 12917',
-      'E. O. 12917',
-      'E.O. 12917',
-      'Executive Order No 12917',
-      'Executive Order No. 12,917'
+      'Executive Order 12944',
+      'EO 12944',
+      'E. O. 12944',
+      'E.O. 12944',
+      'Executive Order No 12944',
+      'Executive Order No. 12,944'
     ].each do |citation|
       it "supports '#{citation}'" do
-        add_eo_links(citation).should == '<a class="eo" href="' + executive_order_path(12917) + '">' + citation + '</a>'
+        add_eo_links(citation).should == '<a class="eo" href="' + executive_order_path(12944) + '">' + citation + '</a>'
       end
     end
   end 
