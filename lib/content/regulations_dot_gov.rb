@@ -5,6 +5,7 @@ module Content
 
     include HTTParty
     base_uri 'http://www.regulations.gov/api/'
+    default_timeout 2
 
     def initialize(api_key)
       @api_key = api_key
