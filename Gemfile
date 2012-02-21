@@ -49,8 +49,7 @@ gem "capistrano", '2.5.19', :require => false
 gem "thunder_punch", '0.0.11', :require => false
 gem "resque", "1.19.0"
 
-gem "gwt_rpc", '0.1.2'
-
+gem "httparty", "0.8.1"
 gem "recaptcha", "0.3.1", :require => 'recaptcha/rails'
 gem 'sendgrid', :git => "git://github.com/criticaljuncture/sendgrid.git", :branch => 'master'
 gem 'modularity', '0.6.1'
