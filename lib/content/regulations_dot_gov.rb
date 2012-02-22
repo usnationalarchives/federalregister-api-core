@@ -1,7 +1,8 @@
 module Content
   class RegulationsDotGov
-    class RecordNotFound < HTTParty::ResponseError; end
-    class ServerError < HTTParty::ResponseError; end
+    class ResponseError < HTTParty::ResponseError; end
+    class RecordNotFound < ResponseError; end
+    class ServerError < ResponseError; end
 
     include HTTParty
     base_uri 'http://www.regulations.gov/api/'
@@ -13,15 +14,19 @@ module Content
 
     def find_by_document_number(document_number)
       begin
-        fetch_by_document_number(document_number)
-      rescue RecordNotFound, ServerError => e
-        revised_document_number = pad_document_number(document_number) 
-        if revised_document_number != document_number
-          fetch_by_document_number(revised_document_number)
-        else
-          nil
-        end
-      end  
+        begin
+          fetch_by_document_number(document_number)
+        rescue RecordNotFound, ServerError => e
+          revised_document_number = pad_document_number(document_number) 
+          if revised_document_number != document_number
+            fetch_by_document_number(revised_document_number)
+          else
+            nil
+          end
+        end  
+      rescue ResponseError
+        nil
+      end
     end
 
     private
@@ -37,17 +42,23 @@ module Content
     end
 
     def self.get(url, options)
-      response = super
+      begin
+        response = super
 
-      case response.code
-      when 200
-        response
-      when 404
-        raise RecordNotFound.new(response)
-      when 500
-        raise ServerError.new(response)
-      else
-        raise HTTParty::ResponseError.new(response)
+        case response.code
+        when 200
+          response
+        when 404
+          raise RecordNotFound.new(response)
+        when 500
+          raise ServerError.new(response)
+        else
+          raise ResponseError.new(response)
+        end
+      rescue SocketError
+        raise ResponseError.new("Hostname lookup failed")
+      rescue Timeout::Error
+        raise ResponseError.new("Request timed out")
       end
     end
 

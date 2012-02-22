@@ -18,7 +18,11 @@ module Content::EntryImporter::RegulationsDotGov
   private
   
   def regulationsdotgov_document
-    Content::RegulationsDotGov.new(ENV['regulations_dot_gov_api_key']).find_by_document_number(entry.document_number)
+    begin
+      Content::RegulationsDotGov.new(ENV['regulations_dot_gov_api_key']).find_by_document_number(entry.document_number)
+    rescue Content::RegulationsDotGov::ResponseError
+      nil
+    end
   end
   memoize :regulationsdotgov_document
 end
