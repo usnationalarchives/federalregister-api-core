@@ -21,8 +21,13 @@
       <% unless @entry.should_have_full_xml? %>
         <div id="flash_message" class="pdf_only">
           <p>
-            The full text of this document is currently only available in <%= link_to 'PDF format', @entry.source_url('pdf') %>.
-            <%= link_to 'Download PDF', @entry.source_url('pdf'), :class => "button" %>
+            <% if @entry.publication_date > Date.new(1995,1,1) %>
+              The full text of this document is currently only available in <%= link_to 'PDF format', @entry.source_url('pdf') %>.
+              <%= link_to 'Download PDF', @entry.source_url('pdf'), :class => "button" %>
+            <% else %>
+              The full text of this document is currently only available in <%= link_to 'a basic text format', @entry.source_url('text') %>.
+              <%= link_to 'View Text', @entry.source_url('text'), :class => "button" %>
+            <% end %>
           </p>
         </div>
       <% end %>
