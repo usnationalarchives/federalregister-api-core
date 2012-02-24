@@ -83,7 +83,9 @@ module Content
       end
 
       def comment_url
-        "http://www.regulations.gov/#!submitComment;D=#{document_id}"
+        if @raw_attributes['canCommentOnDocument']
+          "http://www.regulations.gov/#!submitComment;D=#{document_id}"
+        end
       end
 
       def url
