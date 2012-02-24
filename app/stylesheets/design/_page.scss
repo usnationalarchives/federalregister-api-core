@@ -326,20 +326,23 @@ ARTICLE VIEW
   border-top:1px solid #CCCCCC;
   margin:0.5em 0;
   overflow:hidden;
-  padding:0.5em 0
+  padding:0.5em 0;
   }
 .metadata_share_bar .metadata {
   margin-bottom: 0;
   padding-bottom: 0;
+  display: inline-block;
   }
 .metadata_share_bar .share {
   position: relative;
+  display: inline-block;
   }
 .metadata_share_bar .share ul {
   @include horizontal-list;
   position: absolute;
   right: 0;
   top: 0;
+  overflow:visible;
   }   
 #entries.show .back_to_top {
   color: #aaa;
