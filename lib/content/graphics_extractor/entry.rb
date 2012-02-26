@@ -37,7 +37,8 @@ module Content
           if pdf_image
             graphic.graphic = File.open(pdf_image.file_path)
           else
-            puts "\tpdf image on page (#{pdf_page_number}) not present (images on #{pdf_images_by_page.keys.sort.join(', ')})"
+            puts "\tpdf image ##{image.num_prior_images_on_page} on page (#{pdf_page_number}) not present (images on #{pdf_images_by_page.keys.sort.join(', ')})"
+            Content::PageImageExtractor.new(entry, pdf_file_path, image.page_number).extract!
           end
         end
         

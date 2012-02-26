@@ -1,6 +1,6 @@
 <%
   if entry.has_full_xml?
-    html = transform_xml(entry.full_xml, 'entries/_abstract.html.xslt', {'first_page' => (entry.start_page.to_s)}).to_s
+    html = transform_xml(entry.full_xml, 'entries/_abstract.html.xslt', {'first_page' => (entry.start_page.to_s), 'volume' => entry.volume.to_s}).to_s
   elsif entry.abstract.present?
     html = content_tag(:p, entry.abstract)
   end %>

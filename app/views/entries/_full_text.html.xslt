@@ -7,6 +7,7 @@
   <xsl:include href="app/views/entries/xslt/table_of_contents.html.xslt" />
   <xsl:include href="app/views/entries/xslt/tables.html.xslt" />
   <xsl:include href="app/views/entries/xslt/graphics.html.xslt" />
+  <xsl:include href="app/views/entries/xslt/equations.html.xslt" />
   <xsl:include href="app/views/entries/xslt/text.html.xslt" />
   <xsl:include href="app/views/entries/xslt/footnotes.html.xslt" />
   

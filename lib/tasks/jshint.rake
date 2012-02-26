@@ -13,6 +13,7 @@ namespace :jshint do
     files = Rake::FileList.new
     files.include File.join(js_root_dir, '**', '*.js')
     files.exclude File.join(js_root_dir, 'vendor', '**', '*.js')
+    files.exclude File.join(js_root_dir, 'admin', 'jquery.js')
     %w(
       jqModal.js
       jquery-ui.js

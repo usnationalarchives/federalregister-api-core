@@ -29,6 +29,8 @@ class Graphic < ApplicationModel
                     :bucket => 'images.federalregister.gov',
                     :path => ":identifier/:style.:extension"
 
+  named_scope :extracted, :conditions => "graphic_file_name IS NOT NULL"
+
   def set_content_type
     self.graphic.instance_write(:content_type,'image/gif')
   end

@@ -1,7 +1,11 @@
 <div class="fulltextWrapper">
   <% if entry.has_full_xml? %>
     <%=
-     html = transform_xml(entry.full_xml, 'entries/_full_text.html.xslt', {'first_page' => (entry.start_page.to_s)}).to_s
+      html = transform_xml(entry.full_xml, 'entries/_full_text.html.xslt', {
+        'first_page' => (entry.start_page.to_s),
+        'volume' => entry.volume.to_s,
+        'extracted_graphics' => "'|" + entry.graphics.extracted.map(&:identifier).join('|') + "|'"
+      }.to_a.flatten).to_s
      add_citation_links(auto_link(html, :href_options => { :class => 'external' }), :date => entry.publication_date) %>
   <% elsif entry.full_text %>
     <h3>Full text</h3>

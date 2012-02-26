@@ -12,17 +12,30 @@
       
       <% if (@entry.comments_close_on.present? && @entry.comments_close_on >= Time.current.to_date) %>
         <div id="flash_message" class="comment">
-          <p>This article has a comment period that ends <%= days_remaining( @entry.comments_close_on ) %>
-          (<%= @entry.comments_close_on %>)  <%= link_to "Submit a formal comment", @entry.comment_url || '#addresses', :class => 'button', :target => (@entry.comment_url ? '_blank' : '') %>
+          <p>
+            <% if @entry.regulations_dot_gov_comments_close_on && @entry.regulations_dot_gov_comments_close_on > @entry.comments_close_on %>
+              This article's comment period has been extended; it now ends in <%= days_remaining( @entry.regulations_dot_gov_comments_close_on) %>
+              (<%= @entry.regulations_dot_gov_comments_close_on %>)
+            <% else %>
+              This article has a comment period that ends <%= days_remaining( @entry.comments_close_on ) %>
+              (<%= @entry.comments_close_on %>)
+            <% end %>
+            
+            <%= link_to "Submit a formal comment", @entry.regulations_dot_gov_comment_period_open? ? @entry.comment_url : '#addresses', :class => 'button', :target => (@entry.regulations_dot_gov_comment_period_open? ? '_blank' : '') %>
           </p>
         </div>
       <% end -%>      
 
-      <% unless @entry.has_full_xml? %>
+      <% unless @entry.should_have_full_xml? %>
         <div id="flash_message" class="pdf_only">
           <p>
-            The full text of this document is currently only available in <%= link_to 'PDF format', @entry.source_url('pdf') %>.
-            <%= link_to 'Download PDF', @entry.source_url('pdf'), :class => "button" %>
+            <% if @entry.publication_date > Date.new(1995,1,1) %>
+              The full text of this document is currently only available in <%= link_to 'PDF format', @entry.source_url('pdf') %>.
+              <%= link_to 'Download PDF', @entry.source_url('pdf'), :class => "button" %>
+            <% else %>
+              The full text of this document is currently only available in <%= link_to 'a basic text format', @entry.source_url('text') %>.
+              <%= link_to 'View Text', @entry.source_url('text'), :class => "button" %>
+            <% end %>
           </p>
         </div>
       <% end %>
@@ -71,7 +84,7 @@
       <%= render :esi => entry_abstract_path(@entry) %>
     <% end %>
 
-    <% if @entry.has_full_xml? %>    
+    <% if @entry.should_have_full_xml? %>    
       <%= render :partial => "unified_agena" %>
     
       <div id="fulltext_content_area">
