@@ -70,27 +70,29 @@
       
       <ul class="table_of_graphics thumbs noscript">
         <xsl:for-each select="//GPH/GID[descendant::text()]">
-          <li>
-            <xsl:if test="count(preceding::GID[descendant::text()]) mod 4 = 0">
-              <xsl:attribute name="class">start_of_row</xsl:attribute>
-            </xsl:if>
-            
-            <xsl:if test="count(preceding::GID[descendant::text()]) mod 4 = 3">
-              <xsl:attribute name="class">end_of_row</xsl:attribute>
-            </xsl:if>
-            <a class="thumb">
-              <xsl:attribute name="href">
-                <xsl:value-of select="concat('#g-', count(preceding::GPH/GID)+1)" />
-              </xsl:attribute>
-              <img>
-                <xsl:attribute name="src">
-                  <xsl:call-template name="graphic_url">
-                    <xsl:with-param name="size" select="'thumb'" />
-                  </xsl:call-template>
+          <xsl:if test="contains($extracted_graphics, concat('|', text(), '|'))">
+            <li>
+              <xsl:if test="count(preceding::GID[descendant::text()]) mod 4 = 0">
+                <xsl:attribute name="class">start_of_row</xsl:attribute>
+              </xsl:if>
+              
+              <xsl:if test="count(preceding::GID[descendant::text()]) mod 4 = 3">
+                <xsl:attribute name="class">end_of_row</xsl:attribute>
+              </xsl:if>
+              <a class="thumb">
+                <xsl:attribute name="href">
+                  <xsl:value-of select="concat('#g-', count(preceding::GPH/GID)+1)" />
                 </xsl:attribute>
-              </img>
-            </a>
-          </li>
+                <img>
+                  <xsl:attribute name="src">
+                    <xsl:call-template name="graphic_url">
+                      <xsl:with-param name="size" select="'thumb'" />
+                    </xsl:call-template>
+                  </xsl:attribute>
+                </img>
+              </a>
+            </li>
+          </xsl:if>
         </xsl:for-each>
       </ul>
     </xsl:if>
