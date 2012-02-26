@@ -1,26 +1,35 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
   <xsl:template match="GPH/GID">
-    <a class="entry_graphic_link">
-      <xsl:attribute name="id">
-        <xsl:value-of select="concat('g-', count(preceding::GPH/GID)+1)" />
-      </xsl:attribute>
-      
-      <xsl:attribute name="href">
-        <xsl:call-template name="graphic_url">
-          <xsl:with-param name="size" select="'original'" />
-        </xsl:call-template>
-      </xsl:attribute>
-      <img class="entry_graphic">
-        <xsl:attribute name="src">
-          <xsl:call-template name="graphic_url">
-            <xsl:with-param name="size" select="'large'" />
-          </xsl:call-template>
-        </xsl:attribute>
-      </img>
-    </a>
+    <xsl:choose>
+      <xsl:when test="contains($extracted_graphics, concat('|', text(), '|'))">
+        <p class="graphic">
+          <a class="entry_graphic_link">
+            <xsl:attribute name="id">
+              <xsl:value-of select="concat('g-', count(preceding::GPH/GID)+1)" />
+            </xsl:attribute>
+            
+            <xsl:attribute name="href">
+              <xsl:call-template name="graphic_url">
+                <xsl:with-param name="size" select="'original'" />
+              </xsl:call-template>
+            </xsl:attribute>
+            <img class="entry_graphic">
+              <xsl:attribute name="src">
+                <xsl:call-template name="graphic_url">
+                  <xsl:with-param name="size" select="'large'" />
+                </xsl:call-template>
+              </xsl:attribute>
+            </img>
+          </a>
+        </p>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:call-template name="missing_graphic" />
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
-  
+    
   <xsl:template name="graphic_url">
     <xsl:param name="size" />
     
@@ -33,6 +42,23 @@
     </xsl:variable>
     
     <xsl:value-of select="concat('https://s3.amazonaws.com/images.federalregister.gov/', $image_id, '/', $size, '.gif')" />
+  </xsl:template>
+
+  <xsl:template name="missing_graphic">
+    <p>
+      <xsl:text>[Graphic not available; </xsl:text> 
+      <a class="missing_graphic">
+        <xsl:attribute name="href">
+          <xsl:text>/articles/page-images/</xsl:text>
+          <xsl:value-of select="$volume" />
+          <xsl:text>/</xsl:text>
+          <xsl:call-template name="current_page" />
+          <xsl:text>.png</xsl:text>
+        </xsl:attribute>
+        <xsl:text>view image of printed page</xsl:text>
+      </a>
+      <xsl:text>]</xsl:text>
+    </p>
   </xsl:template>
   
   <xsl:template name="table_of_graphics">

@@ -30,7 +30,7 @@ class Content::EquationPageExtractor
       return unless equation_pages.present? && pdf_file_present?
 
       equation_pages.each do |page|
-        Page.new(self,page).extract! 
+        Content::PageImageExtractor.new(entry, pdf_file_path, page).extract! 
       end
     end
 
@@ -66,27 +66,6 @@ class Content::EquationPageExtractor
         File.unlink(pdf_file_path)
         false
       end
-    end
-  end
-
-  class Page
-    attr_reader :entry, :page
-    def initialize(entry, page)
-      @entry = entry
-      @page = page
-    end
-
-    def extract!
-      FileUtils.mkdir_p(File.dirname(png_file_path)) 
-      `pdftk #{entry.pdf_file_path} cat #{page_offset} output - | gs -sDEVICE=pnggray -sOutputFile=#{png_file_path} -r300 -`
-    end
-
-    def page_offset
-      (page - entry.start_page) + 1
-    end
-
-    def png_file_path
-      File.join(Rails.root, 'data', 'page_images', entry.volume.to_s, "#{@page}.png")
     end
   end
 end
