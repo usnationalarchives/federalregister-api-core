@@ -97,8 +97,7 @@ class Entry < ApplicationModel
            :through => :citations,
            :source => :cited_entry
   
-  has_many :references,
-           :class_name => 'Citation',
+  has_many :references, :class_name => 'Citation',
            :foreign_key => :cited_entry_id,
            :dependent => :nullify
   has_many :referencing_entries,
@@ -121,6 +120,7 @@ class Entry < ApplicationModel
   has_many :events, :dependent => :destroy
   has_one :comments_close_date, :class_name => "Event", :conditions => {:event_type => 'CommentsClose'}
   has_one :effective_date, :class_name => "Event", :conditions => {:event_type => 'EffectiveDate'}
+  has_one :regulations_dot_gov_comments_close_date, :class_name => "Event", :conditions => {:event_type => 'RegulationsDotGovCommentsClose'}
   
   before_save :set_document_file_path
   
@@ -336,6 +336,23 @@ class Entry < ApplicationModel
   def effective_on
     effective_date.try(:date)
   end
+
+  def regulations_dot_gov_comments_close_on
+    regulations_dot_gov_comments_close_date.try(:date)
+  end
+
+  def regulations_dot_gov_comments_close_on=(date)
+    if date
+      event = regulations_dot_gov_comments_close_date || events.build(:event_type => 'RegulationsDotGovCommentsClose')
+      event.date = date
+    else
+      regulations_dot_gov_comments_close_date.try(:delete)
+    end
+  end
+
+  def regulations_dot_gov_comment_period_open?
+    regulations_dot_gov_comments_close_on && regulations_dot_gov_comments_close_on >= Date.current
+  end
   
   def source_url(format)
     case format.to_sym
@@ -471,7 +488,7 @@ class Entry < ApplicationModel
   def should_have_full_xml?
     full_xml_updated_at.present?
   end
-  
+ 
   private
   
   def set_document_file_path

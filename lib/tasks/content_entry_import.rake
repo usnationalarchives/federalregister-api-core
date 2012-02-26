@@ -13,7 +13,7 @@ namespace :content do
     namespace :import do
       desc "Import all execept regulations.gov"
       task :except_regulations_dot_gov => :environment do
-        entry_importer(:except => [:checked_regulationsdotgov_at, :regulationsdotgov_url, :comment_url])
+        entry_importer(:except => [:checked_regulationsdotgov_at, :regulationsdotgov_url, :comment_url, :regulations_dot_gov_comments_close_on])
       end
 
       desc "Extract Basic data"
@@ -73,7 +73,7 @@ namespace :content do
       
       desc "Import regulations.gov info"
       task :regulations_dot_gov => :environment do
-        entry_importer(:checked_regulationsdotgov_at, :regulationsdotgov_url, :comment_url)
+        entry_importer(:checked_regulationsdotgov_at, :regulationsdotgov_url, :comment_url, :regulations_dot_gov_comments_close_on)
       end
       
       namespace :regulations_dot_gov do

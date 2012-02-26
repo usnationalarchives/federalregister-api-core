@@ -21,13 +21,15 @@ class Event < ApplicationModel
     'ClosedMeeting' => 'Closed Meeting',
     'CommentsOpen'  => 'Comment Period Opening',
     'CommentsClose' => 'Comment Period Closing',
-    'EffectiveDate' => 'Effective Date'
+    'EffectiveDate' => 'Effective Date',
+    'RegulationsDotGovCommentsClose' => "Regulations.gov Comment Period Closing",
   }
   EVENT_TYPES_PLURAL = {
     'PublicMeeting' => 'Public Meetings',
     'ClosedMeeting' => 'Closed Meetings',
     'CommentsOpen'  => 'Comment Periods Opening',
     'CommentsClose' => 'Comment Periods Closing',
+    'RegulationsDotGovCommentsClose' => "Regulations.gov Comment Periods Closing",
     'EffectiveDate' => 'Effective Dates'
   }
   
@@ -87,7 +89,7 @@ class Event < ApplicationModel
       "abstract" => 50,
       "full_text" => 25,
     }
-    where "events.date BETWEEN DATE_SUB(NOW(), INTERVAL 1 MONTH) AND DATE_ADD(NOW(), INTERVAL 2 YEAR)"
+    where "events.date BETWEEN DATE_SUB(NOW(), INTERVAL 1 MONTH) AND DATE_ADD(NOW(), INTERVAL 2 YEAR) AND event_type != 'RegulationsDotGovCommentsCloseDate'"
     set_property :delta => ThinkingSphinx::Deltas::ManualDelta
   end
   # this line must appear after the define_index block
