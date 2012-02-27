@@ -10,10 +10,10 @@
   <div id="metadata_content_area">
       <%= render :partial => "header", :locals => {:entry => @entry} %>
       
-      <% if (@entry.comments_close_on.present? && @entry.comments_close_on >= Time.current.to_date) %>
+      <% if (@entry.comments_close_on.present? && @entry.comments_close_on >= Time.current.to_date) || @entry.regulations_dot_gov_comment_period_open? %>
         <div id="flash_message" class="comment">
           <p>
-            <% if @entry.regulations_dot_gov_comments_close_on && @entry.regulations_dot_gov_comments_close_on > @entry.comments_close_on %>
+            <% if @entry.comments_close_on && @entry.regulations_dot_gov_comments_close_on && @entry.regulations_dot_gov_comments_close_on > @entry.comments_close_on %>
               This article's comment period has been extended; it now ends in <%= days_remaining( @entry.regulations_dot_gov_comments_close_on) %>
               (<%= @entry.regulations_dot_gov_comments_close_on %>)
             <% else %>
