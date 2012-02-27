@@ -17,8 +17,8 @@
               This article's comment period has been extended; it now ends in <%= days_remaining( @entry.regulations_dot_gov_comments_close_on) %>
               (<%= @entry.regulations_dot_gov_comments_close_on %>)
             <% else %>
-              This article has a comment period that ends <%= days_remaining( @entry.comments_close_on ) %>
-              (<%= @entry.comments_close_on %>)
+              This article has a comment period that ends <%= days_remaining( @entry.regulations_dot_gov_comments_close_on || @entry.comments_close_on ) %>
+              (<%= @entry.regulations_dot_gov_comments_close_on || @entry.comments_close_on %>)
             <% end %>
             
             <%= link_to "Submit a formal comment", @entry.regulations_dot_gov_comment_period_open? ? @entry.comment_url : '#addresses', :class => 'button', :target => (@entry.regulations_dot_gov_comment_period_open? ? '_blank' : '') %>
