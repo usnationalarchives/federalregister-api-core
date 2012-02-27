@@ -341,9 +341,14 @@ ARTICLE VIEW
   @include horizontal-list;
   position: absolute;
   right: 0;
-  top: 0;
+  top: -2px;
   overflow:visible;
   }   
+.metadata_share_bar .share ul li:first-child,
+.metadata_share_bar .share ul li.first {
+  padding-right: 64px;
+  }
+
 #entries.show .back_to_top {
   color: #aaa;
   font-size: .8em;
