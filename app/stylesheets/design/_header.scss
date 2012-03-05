@@ -58,6 +58,7 @@ NAV
   width:68px;
   }
 #navigation li.nav_myfr2 {
+  width: 75px;
   border-right-color: #cecece;
 }
 #navigation a {
@@ -106,6 +107,9 @@ NAV
 #navigation .unified-agenda-search,
 #navigation .public-inspection-search {
   padding-left: 35px;
+  }
+#navigation .nav_myfr2 {
+  padding-left: 25px;
   }
 #navigation .home {
   background: sprite-image('header/home-off.png', 10px, 8px, 50px) no-repeat;
@@ -245,6 +249,12 @@ NAV
   }
 #navigation .public-inspection-search:hover {
   background: sprite-image('header/public-inspection-search-hover.png', 6px, 2px, 50px) no-repeat;
+  }
+#navigation .nav_myfr2 {
+  background: sprite-image('header/my-fr2.png', 7px, 7px, 50px) no-repeat;
+  }
+#navigation .nav_myfr2:hover {
+  background: sprite-image('header/my-fr2-hover.png', 7px, 7px, 50px) no-repeat;
   }
 
 
