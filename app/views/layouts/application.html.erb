@@ -12,7 +12,6 @@
     <%= tag(:link, :rel  => 'canonical', :href => 'https://www.federalregister.gov' + request.fullpath.sub(/\/$/,'')) %>
     
     <%= render :esi => layout_head_content_path(:page_to_track => yield(:page_to_track)) %>
-    <%= render :esi => my_fr2_assets_path %>
 
     <%= yield :robots %>
 
