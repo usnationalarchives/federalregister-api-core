@@ -836,14 +836,22 @@ select.bsmSelect {
 MY FR2
 
 ******************************/
+ol.results li { position: relative; }
 ol.results h4 {
   float: left;
   width: 575px;
+  margin-bottom: 13px;
   }
 div.my_fr2 {
-  float: right;
-  top: -4px;
-  position: relative;
+  right: 0px;
+  position: absolute;
+  }
+div.my_fr2 ul { 
+  list-style: none;
+  margin: 0px;
+  }
+div.my_fr2 #clipping-actions #add-to-folder {
+  right: 10px;
   }
 div.result_info {
   clear: both;

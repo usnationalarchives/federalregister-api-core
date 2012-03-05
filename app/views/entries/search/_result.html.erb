@@ -1,8 +1,12 @@
-<li>
+<li data-document-number="<%= entry.document_number %>">
   <h4><%= link_to sanitize(entry.excerpts.title, :tags => %w(span), :attributes => %w(class)), entry_path(entry) %></h4>
 
-  <div class="my_fr2">
-    <%= link_to "Flag for Later", "#", :class => "flag_for_later button social" %>
+  <div class="my_fr2 share">
+    <ul>
+      <li class="clip_for_later">
+        <%= render :partial => 'entries/add_to_clipboard', :locals => {:entry => entry} %>
+      </li>
+    </ul>
   </div>
 
   <div class="result_info">
