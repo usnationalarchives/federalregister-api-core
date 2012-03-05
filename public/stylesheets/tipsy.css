@@ -27,7 +27,8 @@
   /* tipsy arrows are broken on the article page and aren't being position properly */
   /* this fix works currently because we only have tipsy on the clip/share icons    */
   /* if more items are given tipsy's on this page it may break.                     */
-  body#entries .tipsy-arrow-s {
+  body#entries .tipsy-arrow-s,
+  body#search .tipsy-arrow-s {
     top: 89%;
     left: 47%;
     }
