@@ -1,0 +1,54 @@
+<% title "#{@year} #{@president.full_name} Executive Orders" %>
+
+<div class="title"><span>Executive Orders</span></div>
+
+<% html5_tag(:aside, :id => :left_sidebar) do %>
+  <nav>
+    <ul>
+      <% @presidents.each do |president| %>
+        <li><strong><%= president.full_name %></strong>
+          <ul class="children">
+            <% president.year_ranges.to_a.sort.reverse.each do |year, range| %>
+              <li class="<%= 'current_page_item' if president == @president && year == @year %>"><%= link_to year, executive_orders_by_president_and_year_path(president.identifier, year) %></li>
+            <% end %>
+          </ul>
+        </li>
+      <% end %>
+    </ul>
+  </nav>
+<% end %>
+
+<% html5_tag(:section, :id => :content_area, :class => "executive_orders") do %>
+  <div class="page_summary">
+    <h1><%= "#{@year} #{@president.full_name} Executive Orders" %></h1>
+    <hr />
+    <p>In <%= @year %>, <%= @president.full_name %> published <%= pluralize(@executive_orders.size, 'executive order') %>, from EO <%= @executive_orders.last.executive_order_number %> through EO <%= @executive_orders.first.executive_order_number %>.</p>
+
+    <p>These <%= pluralize(@executive_orders.size, 'executive order') %> can be downloaded in CSV and JSON formats.</p>
+  </div>
+
+  <% @executive_orders.each do |executive_order| %>
+    <div>
+      <h4>EO <%= executive_order.executive_order_number %>: <%= link_to executive_order.title, entry_path(executive_order) %></h4>
+
+      <dl>
+        <dt><%= link_to 'PDF', executive_order_path(executive_order.executive_order_number, :format => :pdf) %></dt>
+        <dd><%= pluralize executive_order.human_length, 'page' %></dd>
+
+        <dt><%= link_to 'Permalink', executive_order_path(executive_order.executive_order_number) %></dt>
+      </dl>
+      <dl>
+        <dt>Signed:</dt>
+        <dd><%= executive_order.signing_date %></dd>
+        <dt>Published:</dt>
+        <dd><%= executive_order.publication_date %></dd>
+      </dl>
+      <dl>
+        <dt>FR Citation:</dt>
+        <dd><%= executive_order.citation %></dd>
+        <dt>FR Document Number:</dt>
+        <dd><%= executive_order.document_number %></dd>
+      </dl>
+    </div>
+  <% end %>
+<% end %>

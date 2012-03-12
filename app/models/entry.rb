@@ -167,6 +167,10 @@ class Entry < ApplicationModel
   def self.with_lede_photo
     scoped(:joins => :lede_photo)
   end
+ 
+  def self.published_in(date_range)
+    scoped(:conditions => {:entries => {:publication_date => date_range}})
+  end
   
   def self.published_on(publication_date)
     scoped(:conditions => {:entries => {:publication_date => publication_date}})
@@ -239,6 +243,10 @@ class Entry < ApplicationModel
   
   def self.with_regulation_id_number(rin)
     scoped(:conditions => {:entry_regulation_id_numbers => {:regulation_id_number => rin}}, :joins => :entry_regulation_id_numbers)
+  end
+
+  def self.executive_order
+    scoped(:conditions => {:presidential_document_type_id => PresidentialDocumentType::EXECUTIVE_ORDER})
   end
 
   def entry_type 

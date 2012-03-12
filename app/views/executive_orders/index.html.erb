@@ -1,0 +1,25 @@
+<% title 'Executive Orders' %>
+
+<div class="title"><span>Executive Orders</span></div>
+
+<div class="page_summary">
+
+  <p>You can download all Executive Orders since 1994: <%= link_to 'CSV', '#' %>, <%= link_to 'JSON', '#' %> or all by president:
+  <% @presidents.each do |president| %>
+     <br />
+     <%= president.full_name %>
+     <%= link_to 'CSV', '#' %>
+     <%= link_to 'JSON', '#' %>
+   <% end %>
+</div>
+
+<% @presidents.each do |president| %>
+  <h3><%= president.full_name %></h3>
+
+  <ul>
+    <% president.year_ranges.to_a.sort.reverse.each do |year, range| %>
+      <li><%= link_to year, executive_orders_by_president_and_year_path(president.identifier, year) %>
+      (<%= pluralize Entry.executive_order.published_in(range).count, 'executive order' %>)</li>
+    <% end %>
+  </ul>
+<% end %>
