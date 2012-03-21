@@ -74,10 +74,19 @@ module Content
     def details=(val)
       docket_numbers = []
       val = val.sub(/^\[/,'').sub(/\]$/,'')
+
+      # clear out the publication date so documents can be revoked
+      self.publication_date = nil
+
       val.split(/\s*;\s*/).each do |part|
         case part
         when /Filed: (.+)/
-          self.filed_at = $1
+          begin
+            date = DateTime.parse($1)
+            self.filed_at = date 
+          rescue
+            # don't clear this out
+          end
         when /Publication Date: (.+)/
           self.publication_date = $1
         else
