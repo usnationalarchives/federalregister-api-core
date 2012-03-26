@@ -74,10 +74,19 @@ module Content
     def details=(val)
       docket_numbers = []
       val = val.sub(/^\[/,'').sub(/\]$/,'')
+
+      # clear out the publication date so documents can be revoked
+      self.publication_date = nil
+
       val.split(/\s*;\s*/).each do |part|
         case part
         when /Filed: (.+)/
-          self.filed_at = $1
+          begin
+            date = DateTime.parse($1)
+            self.filed_at = date 
+          rescue
+            # don't clear this out
+          end
         when /Publication Date: (.+)/
           self.publication_date = $1
         else
@@ -212,7 +221,7 @@ module Content
           if @str =~ /^EDITORIAL\s*NOTE:/i
             @pi_documents.last[:editorial_note] = @str.sub(/^EDITORIAL\s*NOTE:\s*/i,'')
             @context = :editorial_note
-          elsif @str =~ /.*?(Special|Regular)\s*(?:.*?)\s*updated\s*at\s*(.*?)\.?\s*The\s*following/i
+          elsif @str =~ /.*?(Special|Regular)\s*(?:.*?)\s*updated\s*at\s*(.*)/i
             updated_at = Time.zone.parse($2)
             case $1
             when 'Special'
