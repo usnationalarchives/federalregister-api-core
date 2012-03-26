@@ -29,6 +29,7 @@ def chef_cloud_attributes(instance_type)
 
 
   @app_server_port    = "8080"
+  @my_fr2_server_port = "8081"
   @static_server_port = '8080'
   @app_url  = case instance_type
               when 'staging'
@@ -51,6 +52,7 @@ def chef_cloud_attributes(instance_type)
     @mongodb_server_address  = '10.116.233.30'
     @sphinx_server_address   = '10.116.233.30'
     @app_server_address      = '10.83.113.240'
+    @my_fr2_server_address   = '10.83.113.240'
   when 'production'
     @proxy_server_address    = '10.194.207.96'
     @static_server_address   = '10.245.106.31'
@@ -63,6 +65,7 @@ def chef_cloud_attributes(instance_type)
     @mongodb_server_address  = '10.244.157.171'
     @sphinx_server_address   = '10.244.157.171'
     @app_server_address      = ['10.243.41.203', '10.196.117.123', '10.202.162.96', '10.212.73.172', '10.251.131.239']
+    @my_fr2_server_address   = ['10.243.41.203', '10.196.117.123', '10.202.162.96', '10.212.73.172', '10.251.131.239']
   end    
   
   @rails_version = '2.3.11'
@@ -99,25 +102,36 @@ def chef_cloud_attributes(instance_type)
            },
     :apache => {
                   :listen_ports   => [@app_server_port],
-                  :vhost_port     => @app_server_port, 
+                  :vhost_port     => @app_server_port,
+                  :my_fr2_port    => @my_fr2_server_port,
                   :server_name    => @app_url,
                   :vhosts         => [
                                         { :server_name    =>  @app_url,
                                           :server_aliases => '',
+                                          :port           => @app_server_port,
                                           :docroot        => "/var/www/apps/#{@app[:name]}/current/public",
                                           :name           => @app[:name],
-                                          :rewrite_conditions => "" 
+                                          :rewrite_conditions => ""
                                         },
                                         { :server_name    =>  "audit.#{@app_url}",
                                           :server_aliases => '',
+                                          :port           => @app_server_port,
                                           :docroot        => "/var/www/apps/fr2_audit/public",
                                           :name           => 'fr2_audit',
                                           :rewrite_conditions => "" 
                                         },
                                         { :server_name    =>  "resque.#{@app_url}",
                                           :server_aliases => '',
+                                          :port           => @app_server_port,
                                           :docroot        => "/var/www/apps/resque_web/public",
                                           :name           => 'resque-web',
+                                          :rewrite_conditions => "" 
+                                        },
+                                        { :server_name    =>  @app_url,
+                                          :server_aliases => '',
+                                          :port           => @my_fr2_server_port,
+                                          :docroot        => "/var/www/apps/my_fr2/public",
+                                          :name           => 'my_fr2',
                                           :rewrite_conditions => "" 
                                         }
                                      ],
@@ -187,7 +201,9 @@ def chef_cloud_attributes(instance_type)
                     :static_proxy_port => @static_server_port,
                     :proxy_host_name   => @app_url,
                     :audit_proxy_host_name => "audit.#{@app_url}",
-                    :skip_cache_key    => @secrets['varnish']['skip_cache_key']
+                    :skip_cache_key    => @secrets['varnish']['skip_cache_key'],
+                    :my_fr2_proxy_host => @my_fr2_server_address,
+                    :my_fr2_proxy_port => @my_fr2_server_port
                    },
     :ubuntu     => {
                     :users => {
