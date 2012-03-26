@@ -51,17 +51,7 @@
 
     <li class="nav_blog" id='nav-blog'><a href="/blog" class="blog">Blog</a></li>
 
-    <li class="dropdown nav_myfr2">
-      <a class="myfr2">My FR<span class="arrow"></span></a>
-      <ul class="subnav myfr2_list">
-        <li id='myfr2-clipboard'>
-          <%= link_to 'My Clipboard', '/my/', :class => "myfr2-clipboard" %>
-        </li>
-        <li id='myfr2-account'>
-          <%= link_to 'Sign Up / Sign In', '/my/users/sign_up', :class => "myfr2-account" %>
-        </li>
-      </ul>
-    </li>
+    <esi:include src="/my/special/navigation" />
 
     <li class="inline_search">
       <form action="<%= entries_search_path %>" method="get" class="search_form">
