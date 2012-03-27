@@ -82,7 +82,7 @@ module Content
         case part
         when /Filed: (.+)/
           begin
-            date = DateTime.parse($1)
+            date = Time.zone.parse($1)
             self.filed_at = date 
           rescue
             # don't clear this out
