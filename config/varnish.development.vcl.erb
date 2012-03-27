@@ -4,15 +4,21 @@ C{
   #include <time.h>
 }C
 
-backend rails {
-  .host = "<%= config['rails']['host'] || '127.0.0.1' %>";
-  .port = "<%= config['rails']['port'] || '3000' %>";
+backend fr2 {
+  .host = "<%= config['fr2']['host'] || '127.0.0.1' %>";
+  .port = "<%= config['fr2']['port'] || '3000' %>";
+}
+
+backend my_fr2 {
+  .host = "<%= config['my_fr2']['host'] || '127.0.0.1' %>";
+  .port = "<%= config['my_fr2']['port'] || '3000' %>";
 }
 
 backend blog {
   .host = "<%= config['wordpress']['host'] || '127.0.0.1' %>";
   .port = "<%= config['wordpress']['port'] || '80' %>";
 }
+
 
 sub vcl_fetch {
   if (req.url ~ "^(/blog|/policy|/learn|/layout/footer_page_list|/layout/navigation_page_list|/layout/homepage_post_list)") {
@@ -65,7 +71,13 @@ sub vcl_recv {
     set    req.http.X-Forwarded-For = client.ip;
     
     # Route to the correct backend
-    if (req.url ~ "^(/blog|/policy|/learn|/layout/footer_page_list|/layout/navigation_page_list|/layout/homepage_post_list)") {
+    if (req.url ~ "^/my/assets/") {
+      set req.backend = my_fr2;
+      return(pass);
+    } else if (req.url ~ "^/my/") {
+      set req.backend = my_fr2;
+      return(pass);
+    } else if (req.url ~ "^(/blog|/policy|/learn|/layout/footer_page_list|/layout/navigation_page_list|/layout/homepage_post_list)") {
         set req.http.host = "<%= config['wordpress']['host'] || 'fr2.local' %>";
         set req.backend = blog;
  
@@ -74,8 +86,8 @@ sub vcl_recv {
             return (pass);
         } 
     } else {
-      set req.http.host = "<%= config['rails']['host'] || 'fr2-rails.local' %>";
-      set req.backend = rails;
+      set req.http.host = "<%= config['fr2']['host'] || 'fr2-rails.local' %>";
+      set req.backend = fr2;
     }
 
     # Pass POSTs etc directly on to the backend
@@ -83,9 +95,9 @@ sub vcl_recv {
         return (pass);
     }
     
-    # Pass rails admin requests directly on to rails
+    # Pass fr2 admin requests directly on to fr2
     if (req.url ~ "^/admin" ){
-        set req.backend = rails;
+        set req.backend = fr2;
         return (pass);
     }
     

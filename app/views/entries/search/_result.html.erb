@@ -1,5 +1,13 @@
-<li>
+<li data-document-number="<%= entry.document_number %>">
   <h4><%= link_to sanitize(entry.excerpts.title, :tags => %w(span), :attributes => %w(class)), entry_path(entry) %></h4>
+
+  <div class="my_fr2 share">
+    <ul>
+      <li class="clip_for_later">
+        <%= render :partial => 'entries/add_to_clipboard', :locals => {:entry => entry} %>
+      </li>
+    </ul>
+  </div>
 
   <div class="result_info">
     <span class="excerpts"><%= 
@@ -10,9 +18,11 @@
       end %></span>
   </div>
   <ul class="metadata">
-    <li class="type"><%= entry.entry_type %></li>
-    <li class="pub_date"><%= link_to entry.publication_date, entries_by_date_path(entry.publication_date) %></li>
-    <li class="agency"><%= entry.agencies.excluding_parents.map{|agency| link_to(agency.name, agency_path(agency))}.join(' :: ') %></li>
-    <li><%= link_to 'PDF', entry.source_url('pdf'), :class => 'button format pdf small' %></li>
+    <li>
+      A <span class='entry_type'><%= entry.entry_type %></span>
+      by <%= agency_names(entry) %> on
+      <%= link_to date_tag(entry.publication_date, :datetime => entry.publication_date.to_s(:iso)), entries_by_date_path(entry.publication_date) %>
+    </li>
+    <li class="pdf"><%= link_to 'PDF', entry.source_url('pdf'), :class => 'button format pdf small' %></li>
   </ul>  
 </li>

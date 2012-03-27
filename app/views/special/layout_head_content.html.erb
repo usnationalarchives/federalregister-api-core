@@ -53,4 +53,6 @@
   <%= javascript_include_tag 'all.js' %>
 <% end %>
 
+<%= render :esi => my_fr2_assets_path %>
+
 <%= render :partial => 'layouts/google_analytics', :custom_page_to_track => @page_to_track %>

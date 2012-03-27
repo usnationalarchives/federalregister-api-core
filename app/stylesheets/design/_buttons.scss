@@ -41,10 +41,12 @@ BUTTONS / ICONS
 .button.social {
   background: none;
   display: block;
-  height: 24px;
+  height: 33px;
   padding: 0;
   @include hide-text;
-  width: 24px;
+  width: 33px;
+  border: none;
+  border-radius: 0px;
   }
 .button.format {
   border: none;
@@ -62,11 +64,19 @@ BUTTONS / ICONS
   margin-right: 10px;  
   }
 
-.button.social.digg { background: sprite-image('social/24px/digg.png', 0, 0, 50px); }
-.button.social.email { background: sprite-image('social/24px/email.png', 0, 0, 50px); }
-.button.social.facebook { background: sprite-image('social/24px/facebook.png', 0, 0, 50px); }
-.button.social.reddit { background: sprite-image('social/24px/reddit.png', 0, 0, 50px); }
-.button.social.twitter { background: sprite-image('social/24px/twitter.png', 0, 0, 50px); }
+.button.social.flag_for_later { display:none; background: sprite-image('icons/my_fr2/icon_add_to_clipboard.png', 0, 0, 50px) no-repeat; }
+.button.social.flag_for_later.flagged { background: sprite-image('icons/my_fr2/icon_add_to_clipboard_active.png', 0, 0, 50px) no-repeat; }
+.button.social.flag_for_later:hover { background: sprite-image('icons/my_fr2/icon_add_to_clipboard_active.png', 0, 0, 50px) no-repeat; }
+
+.button.social.email { background: sprite-image('icons/sharing/icon_email.png', 0, 0, 55px); }
+.button.social.email:hover { background: sprite-image('icons/sharing/icon_email_active.png', 0, 0, 55px); }
+
+.button.social.facebook { background: sprite-image('icons/sharing/icon_facebook.png', 0, 0, 55px); }
+.button.social.facebook:hover { background: sprite-image('icons/sharing/icon_facebook_active.png', 0, 0, 55px); }
+
+.button.social.twitter { background: sprite-image('icons/sharing/icon_twitter.png', 0, 0, 55px); }
+.button.social.twitter:hover { background: sprite-image('icons/sharing/icon_twitter_active.png', 0, 0, 55px); }
+
 .button.format.pdf { background: sprite-image('icons/icon_pdf_document.png', 0, -1px, 50px) no-repeat; }
 .button.format.pdf:hover { background: sprite-image('icons/icon_pdf_document_on.png', 0, -1px, 50px) no-repeat; }
 .button.format.pdf.small { background: sprite-image('icons/icon_pdf_small.png', 0, 0, 50px); line-height: 18px; padding-left: 17px; }

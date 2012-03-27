@@ -44,7 +44,7 @@ cloud :static_server_large do
     
     attributes chef_cloud_attributes('production').recursive_merge(
       :chef    => {
-                    :roles => ['static', 'worker', 'blog']
+                    :roles => ['static', 'worker', 'blog', 'my_fr2']
                   },
       :nginx   => {
                     :varnish_proxy => false,
