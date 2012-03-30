@@ -131,5 +131,6 @@ $(document).ready(function () {
         jqmHandlers.setHref($(this).attr("href"));
         $("#exit_modal").centerScreen().jqmShow();
     });
+    $(".collapse").collapse();
 });
 
