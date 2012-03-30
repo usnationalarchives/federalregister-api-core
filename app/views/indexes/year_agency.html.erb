@@ -1,0 +1,24 @@
+<% title "#{@year} FR Index" %>
+
+<div class="title"><span>FR Index</span></div>
+
+<h1><%= @year %> Federal Register Index: <%= @agency.name %></h1>
+
+<% @entries_by_type.each do |type, entries_by_toc_subject| %>
+  <h2><%= type.pluralize %></h2>
+  <ul>
+  <% entries_by_toc_subject.each do |toc_subject, entries_by_title| %>
+    <% if toc_subject %>
+      <li><%= toc_subject %>
+      <ul>
+    <% end %>
+    <% entries_by_title.each do |title, entries| %>
+      <li><%= title %>
+      <%= entries.map{|e| link_to e.publication_date, entry_path(e)}.join(', '.html_safe)%></li>
+    <% end %>
+    <% if toc_subject %>
+      </ul>
+    <% end %>
+  <% end %>
+  </ul>
+<% end %>
