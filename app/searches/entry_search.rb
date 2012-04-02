@@ -42,6 +42,7 @@ class EntrySearch < ApplicationSearch
   end
   
   define_filter :agency_ids,  :sphinx_type => :with
+  define_filter :without_agency_ids,  :sphinx_type => :without, :sphinx_attribute => :agency_ids
   define_filter :section_ids, :sphinx_type => :with_all do |section_id|
     Section.find_by_id(section_id).try(:title)
   end
@@ -142,6 +143,7 @@ class EntrySearch < ApplicationSearch
     sphinx_search = ThinkingSphinx::Search.new(sphinx_term,
       :with => with.merge(:publication_date => options[:since].to_time .. 1.week.from_now),
       :with_all => with_all,
+      :without => without,
       :conditions => sphinx_conditions,
       :match_mode => :extended
     )
@@ -163,6 +165,7 @@ class EntrySearch < ApplicationSearch
     model.search_count(sphinx_term,
       :with => with.merge(:publication_date => n.days.ago.to_time.midnight .. Time.current.midnight),
       :with_all => with_all,
+      :without => without,
       :conditions => sphinx_conditions,
       :match_mode => :extended
     )
@@ -248,6 +251,7 @@ class EntrySearch < ApplicationSearch
       ['published', :publication_date],
       ['with an effective date', :effective_date],
       ['from', :agency_ids],
+      ['not from', :without_agency_ids],
       ['of type', :type],
       ['filed under agency docket', :docket_id],
       ['whose', :significant],

@@ -132,7 +132,7 @@ filter_name.to_s.sub(/_ids?$/,'').classify.constantize.find_all_by_id(ids.flatte
   end
   
   def blank?
-    [with, with_all, sphinx_conditions, term].all?(&:blank?) || skip_results?
+    [with, with_all, without, sphinx_conditions, term].all?(&:blank?) || skip_results?
   end
   
   def skip_results?
@@ -164,6 +164,15 @@ filter_name.to_s.sub(/_ids?$/,'').classify.constantize.find_all_by_id(ids.flatte
     end
     with
   end
+
+  def without
+    without = {}
+    @filters.select{|f| f.sphinx_type == :without }.each do |filter|
+      without[filter.sphinx_attribute] ||= []
+      without[filter.sphinx_attribute] << filter.sphinx_value
+    end
+    without
+  end
   
   def results(args = {})
     result_array = model.search(sphinx_term,
@@ -173,6 +182,7 @@ filter_name.to_s.sub(/_ids?$/,'').classify.constantize.find_all_by_id(ids.flatte
         :order => order_clause,
         :with => with,
         :with_all => with_all,
+        :without => without,
         :conditions => sphinx_conditions,
         :match_mode => :extended,
         :sort_mode => :extended
@@ -182,6 +192,7 @@ filter_name.to_s.sub(/_ids?$/,'').classify.constantize.find_all_by_id(ids.flatte
     sphinx_search = ThinkingSphinx::Search.new(sphinx_term,
       :with => with,
       :with_all => with_all,
+      :without => without,
       :conditions => sphinx_conditions,
       :match_mode => :extended
     )
@@ -228,6 +239,7 @@ filter_name.to_s.sub(/_ids?$/,'').classify.constantize.find_all_by_id(ids.flatte
         :order => order_clause,
         :with => with,
         :with_all => with_all,
+        :without => without,
         :conditions => sphinx_conditions,
         :match_mode => :extended,
         :sort_mode => :extended

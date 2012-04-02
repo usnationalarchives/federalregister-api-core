@@ -28,7 +28,17 @@ module FrIndexPresenter
     agencies = Agency.all(:conditions => {:id => facets.map(&:value)}, :include => :children).to_a
 
     agency_presenters = facets.map do |facet|
-      AgencyPresenter.new(agencies.detect{|a| a.id == facet.value}, facet.count)
+      agency = agencies.detect{|a| a.id == facet.value}
+      if agency.children.present?
+        count = EntrySearch.new(:conditions => {
+          :publication_date => {:year => year},
+          :agency_ids => [agency.id],
+          :without_agency_ids => agency.children.map(&:id)
+        }).count
+      else
+        count = facet.count
+      end
+      AgencyPresenter.new(agency, count)
     end
 
     agency_presenters.each do |p|
@@ -44,6 +54,17 @@ module FrIndexPresenter
     entries = agency.entries.scoped(
       :select => "entries.id, entries.document_number, entries.publication_date, entries.title, entries.toc_subject, entries.toc_doc",
       :conditions => {:publication_date => Date.parse("#{year}-01-01")..Date.parse("#{year}-12-31")})
+    
+    if agency.children.present?
+      entries = entries.scoped(
+        :joins => "LEFT OUTER JOIN agency_assignments AS child_agency_assignments
+                     ON child_agency_assignments.agency_id IN (#{agency.children.map(&:id).join(',')})
+                     AND child_agency_assignments.assignable_type = 'Entry'
+                     AND child_agency_assignments.assignable_id = entries.id",
+        :conditions => "child_agency_assignments.id IS NULL"
+      )
+    end
+
     entries.group_by(&:entry_type).sort_by{|type,entries| type}.reverse.map do |type, entries_by_type|
 
       entries_with_toc_subject, entries_without_toc_subject = entries_by_type.partition{|e| e.toc_subject.present?}
