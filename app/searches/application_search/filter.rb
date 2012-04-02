@@ -11,6 +11,8 @@ class ApplicationSearch::Filter
       @sphinx_value = "\"#{options[:value]}\""
     elsif options[:crc32_encode]
       @sphinx_value = options[:value].map{|v| v.to_s.to_crc32}
+    elsif options[:sphinx_value_processor]
+      @sphinx_value = options[:sphinx_value_processor].call(options[:value])
     else
       @sphinx_value = options[:value]
     end

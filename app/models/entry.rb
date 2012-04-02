@@ -265,6 +265,7 @@ class Entry < ApplicationModel
     has "SUM(IF(regulatory_plans.priority_category IN (#{RegulatoryPlan::SIGNIFICANT_PRIORITY_CATEGORIES.map{|c| "'#{c}'"}.join(',')}),1,0)) > 0", :as => :significant, :type => :boolean
     has "CRC32(IF(granule_class = 'SUNSHINE', 'NOTICE', granule_class))", :as => :type, :type => :integer
     has presidential_document_type_id
+    has "IF(signing_date IS NOT NULL, INTERVAL(signing_date, #{President.all.map{|p| p.starts_on.strftime("%Y%m%d")}.join(', ')}), NULL)", :as => :president_id, :type => :integer
     has "GROUP_CONCAT(DISTINCT entry_cfr_references.title * #{EntrySearch::CFR::TITLE_MULTIPLIER} + entry_cfr_references.part)", :as => :cfr_affected_parts, :type => :multi
     has agency_assignments(:agency_id), :as => :agency_ids
     has topic_assignments(:topic_id),   :as => :topic_ids

@@ -42,6 +42,15 @@ class EntrySearch < ApplicationSearch
   end
   
   define_filter :agency_ids,  :sphinx_type => :with
+  define_filter :president,
+                :sphinx_type => :with,
+                :sphinx_attribute => :president_id,
+                :sphinx_value_processor => Proc.new{|*identifiers| identifiers.flatten.map {|identifier| president = President.find_by_identifier(identifier); raise ApplicationSearch::InputError.new("invalid presidential identifier") if president.nil?; president.id }} do |*identifiers|
+    identifiers.flatten.map do |identifier|
+      president = President.find_by_identifier(identifier)
+      president.full_name
+    end.to_sentence(:two_words_connector => ' or ', :last_word_connector => ', or ')
+  end
   define_filter :section_ids, :sphinx_type => :with_all do |section_id|
     Section.find_by_id(section_id).try(:title)
   end
@@ -248,6 +257,7 @@ class EntrySearch < ApplicationSearch
       ['published', :publication_date],
       ['with an effective date', :effective_date],
       ['from', :agency_ids],
+      ['signed by', :president],
       ['of type', :type],
       ['filed under agency docket', :docket_id],
       ['whose', :significant],
