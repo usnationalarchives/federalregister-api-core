@@ -5,11 +5,11 @@
 <% html5_tag(:aside, :id => :left_sidebar) do %>
   <nav>
     <ul>
-      <% @presidents.each do |president| %>
+      <% @orders_by_president_and_year.each do |president, eo_collections| %>
         <li><strong><%= president.full_name %></strong>
           <ul class="children">
-            <% president.year_ranges.to_a.sort.reverse.each do |year, range| %>
-              <li class="<%= 'current_page_item' if president == @president && year == @year %>"><%= link_to year, executive_orders_by_president_and_year_path(president.identifier, year) %></li>
+            <% eo_collections.each do |eo_collection| %>
+              <li class="<%= 'current_page_item' if president == @president && eo_collection.year == @year %>"><%= link_to eo_collection.year, executive_orders_by_president_and_year_path(president.identifier, eo_collection.year) %></li>
             <% end %>
           </ul>
         </li>
@@ -22,12 +22,12 @@
   <div class="page_summary">
     <h1><%= "#{@year} #{@president.full_name} Executive Orders" %></h1>
     <hr />
-    <p>In <%= @year %>, <%= @president.full_name %> published <%= pluralize(@executive_orders.size, 'executive order') %>, from EO <%= @executive_orders.last.executive_order_number %> through EO <%= @executive_orders.first.executive_order_number %>.</p>
+    <p>In <%= @year %>, <%= @president.full_name %> published <%= pluralize(@eo_collection.count, 'executive order') %>, from EO <%= @eo_collection.minimum_number %> through EO <%= @eo_collection.maximum_number %>.</p>
 
-    <p>These <%= pluralize(@executive_orders.size, 'executive order') %> can be downloaded in CSV and JSON formats.</p>
+    <p>These <%= pluralize(@eo_collection.count, 'executive order') %> can be downloaded in <%= link_to 'CSV', '#' %> and <%= link_to 'JSON', '#' %> formats.</p>
   </div>
 
-  <% @executive_orders.each do |executive_order| %>
+  <% @eo_collection.executive_orders.each do |executive_order| %>
     <div>
       <h4>EO <%= executive_order.executive_order_number %>: <%= link_to executive_order.title, entry_path(executive_order) %></h4>
 

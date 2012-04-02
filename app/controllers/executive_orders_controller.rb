@@ -1,16 +1,15 @@
 class ExecutiveOrdersController < ApplicationController
   def index
-    @presidents = President.all.reverse
+    @orders_by_president_and_year = ExecutiveOrderPresenter.all_by_president_and_year
   end
 
   def by_president_and_year
-    @presidents = President.all.reverse
+    @orders_by_president_and_year = ExecutiveOrderPresenter.all_by_president_and_year
 
     @president = President.find_by_identifier(params[:president])
     @year = params[:year].to_i
-    @executive_orders = Entry.executive_order.published_in(@president.year_ranges[@year]).scoped(:order => "executive_order_number DESC")
 
-    raise ActiveRecord::RecordNotFound unless @executive_orders.present?
+    @eo_collection = ExecutiveOrderPresenter::EoCollection.new(@president, @year)
   end
 
   def show
