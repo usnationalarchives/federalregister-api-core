@@ -119,6 +119,8 @@ class EntrySearch < ApplicationSearch
       "publication_date DESC, @relevance DESC"
     when 'oldest'
       "publication_date ASC, @relevance DESC"
+    when 'executive_order_number'
+      "executive_order_number ASC"
     else
       "@relevance DESC, publication_date DESC, start_page ASC, sphinx_internal_id ASC"
     end
