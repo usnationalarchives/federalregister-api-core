@@ -4,13 +4,17 @@
 
 <div class="page_summary">
 
-  <p>You can download all Executive Orders since 1994: <%= link_to 'CSV', '#' %>, <%= link_to 'JSON', '#' %> or all by president:
+  <p>You can download all Executive Orders since 1994:
+     <%= link_to 'CSV',  api_v1_entries_url(:conditions => @api_conditions, :fields => @fields, :per_page => 1000, :format => :csv, :order => "executive_order_number") %>
+     <%= link_to 'JSON', api_v1_entries_url(:conditions => @api_conditions, :fields => @fields, :per_page => 1000, :format => :json, :order => "executive_order_number") %>
+  or all by president:
   <% @orders_by_president_and_year.each do |president, orders_by_year| %>
      <br />
      <%= president.full_name %>
-     <%= link_to 'CSV', '#' %>
-     <%= link_to 'JSON', '#' %>
+     <%= link_to 'CSV',  api_v1_entries_url(:conditions => @api_conditions.merge(:president => president.identifier), :fields => @fields, :per_page => 1000, :format => :csv, :order => "executive_order_number") %> and
+     <%= link_to 'JSON', api_v1_entries_url(:conditions => @api_conditions.merge(:president => president.identifier), :fields => @fields, :per_page => 1000, :format => :json, :order => "executive_order_number") %> formats.
    <% end %>
+   </p>
 </div>
 
 <% @orders_by_president_and_year.each do |president,orders_by_year| %>
