@@ -31,27 +31,32 @@
   </div>
 
   <% @eo_collection.executive_orders.each do |executive_order| %>
-    <div>
-      <h4>EO <%= executive_order.executive_order_number %>: <%= link_to executive_order.title, entry_path(executive_order) %></h4>
+    <div class="executive_order_wrapper">
+      <h4>
+        <span class="eo_number">EO <%= executive_order.executive_order_number %>:</span>
+        <%= link_to executive_order.title, entry_path(executive_order) %>
+      </h4>
 
-      <dl>
-        <dt><%= link_to 'PDF', executive_order_path(executive_order.executive_order_number, :format => :pdf) %></dt>
-        <dd><%= pluralize executive_order.human_length, 'page' %></dd>
+      <div class="metadata_wrapper">
+        <dl class="metadata" id="col-1">
+          <dt><%= link_to 'PDF', executive_order_path(executive_order.executive_order_number, :format => :pdf) %></dt>
+          <dd><%= pluralize executive_order.human_length, 'page' %></dd>
 
-        <dt><%= link_to 'Permalink', executive_order_path(executive_order.executive_order_number) %></dt>
-      </dl>
-      <dl>
-        <dt>Signed:</dt>
-        <dd><%= executive_order.signing_date %></dd>
-        <dt>Published:</dt>
-        <dd><%= executive_order.publication_date %></dd>
-      </dl>
-      <dl>
-        <dt>FR Citation:</dt>
-        <dd><%= executive_order.citation %></dd>
-        <dt>FR Document Number:</dt>
-        <dd><%= executive_order.document_number %></dd>
-      </dl>
+          <dt><%= link_to 'Permalink', executive_order_path(executive_order.executive_order_number) %></dt>
+        </dl>
+        <dl class="metadata" id="col-2">
+          <dt>Signed:</dt>
+          <dd><%= executive_order.signing_date %></dd>
+          <dt>Published:</dt>
+          <dd><%= executive_order.publication_date %></dd>
+        </dl>
+        <dl class="metadata" id="col-3">
+          <dt>FR Citation:</dt>
+          <dd><%= executive_order.citation %></dd>
+          <dt>FR Document Number:</dt>
+          <dd><%= executive_order.document_number %></dd>
+        </dl>
+      </div>
     </div>
   <% end %>
 <% end %>
