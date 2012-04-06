@@ -2,21 +2,21 @@ class President < ActiveHash::Base
   self.data = [
     {
       :id => 1,
-      :identifier => 'clinton',
+      :identifier => 'william-j-clinton',
       :full_name => "William J. Clinton",
       :starts_on => Date.new(1994,1,1),
       :ends_on => Date.new(2001,1,19)
     },
     {
       :id => 2,
-      :identifier => 'bush',
+      :identifier => 'george-w-bush',
       :full_name => "George W. Bush",
       :starts_on => Date.new(2001,1,20),
       :ends_on => Date.new(2009,1,19)
     },
     {
       :id => 3,
-      :identifier => 'obama',
+      :identifier => 'barack-obama',
       :full_name => "Barack Obama",
       :starts_on => Date.new(2009,1,20),
       :ends_on => Date.new(2013,1,19)
