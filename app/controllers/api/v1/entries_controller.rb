@@ -17,7 +17,7 @@ class Api::V1::EntriesController < ApiController
         output = FasterCSV.generate do |csv|
           csv << fields
           search.results.each do |result|
-            csv << fields.map{|field| value_for(result,field)}
+            csv << fields.map{|field| [*value_for(result,field)].join('; ')}
           end
         end
 
@@ -73,8 +73,10 @@ class Api::V1::EntriesController < ApiController
       :abstract_html_url         => Proc.new{|e| entry_abstract_url(e)},
       :action                    => Proc.new{|e| e.action},
       :agencies                  => Proc.new{|e| agencies_data(e)},
+      :agency_names              => Proc.new{|e| e.agency_names.map{|a| a.agency.try(:name) || a.name}},
       :body_html_url             => Proc.new{|e| entry_full_text_url(e)},
       :cfr_references            => Proc.new{|e| cfr_references_info(e)}, 
+      :citation                  => Proc.new{|e| e.citation}, 
       :comments_close_on         => Proc.new{|e| e.comments_close_on},
       :dates                     => Proc.new{|e| e.dates},
       :docket_id                 => Proc.new{|e| e.docket_numbers.first.try(:number)}, # backwards compatible for now
@@ -102,7 +104,7 @@ class Api::V1::EntriesController < ApiController
   end
 
   def all_fields
-    field_calculators.keys - [:excerpts]
+    field_calculators.keys - [:excerpts, :agency_names]
   end
 
   def index_url(options)
