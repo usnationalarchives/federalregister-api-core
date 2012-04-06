@@ -16,13 +16,19 @@
   <ul class="bulk_files">
     <li>
       <span class="title">All Executive Orders since 1994</span>
-      <span class="links"><%= link_to 'CSV', '#' %> <%= link_to 'JSON', '#' %></span>
+      <span class="links">
+        <%= link_to 'CSV',  api_v1_entries_url(:conditions => @api_conditions, :fields => @fields, :per_page => 1000, :format => :csv, :order => "executive_order_number") %>
+        <%= link_to 'JSON', api_v1_entries_url(:conditions => @api_conditions, :fields => @fields, :per_page => 1000, :format => :json, :order => "executive_order_number") %>
+      </span>
     </li>
   
     <% @orders_by_president_and_year.each do |president, orders_by_year| %>
       <li>
         <span class="title"><%= president.full_name %></span>
-        <span class="links"><%= link_to 'CSV', '#' %> <%= link_to 'JSON', '#' %></span>
+        <span class="links">
+          <%= link_to 'CSV',  api_v1_entries_url(:conditions => @api_conditions.merge(:president => president.identifier), :fields => @fields, :per_page => 1000, :format => :csv, :order => "executive_order_number") %> 
+          <%= link_to 'JSON', api_v1_entries_url(:conditions => @api_conditions.merge(:president => president.identifier), :fields => @fields, :per_page => 1000, :format => :json, :order => "executive_order_number") %>
+        </span>
       </li>
      <% end %>
   </ul>
