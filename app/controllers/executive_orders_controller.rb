@@ -1,6 +1,14 @@
 class ExecutiveOrdersController < ApplicationController
+  FIELDS = [:executive_order_number, :title, :publication_date, :signing_date, :citation, :document_number]
+  
   def index
     @orders_by_president_and_year = ExecutiveOrderPresenter.all_by_president_and_year
+    @api_conditions = {
+      :type => "PRESDOCU",
+      :presidential_document_type_id => 2
+    }
+
+    @fields = FIELDS
   end
 
   def by_president_and_year
@@ -10,6 +18,15 @@ class ExecutiveOrdersController < ApplicationController
     @year = params[:year].to_i
 
     @eo_collection = ExecutiveOrderPresenter::EoCollection.new(@president, @year)
+
+    @api_conditions = {
+      :type => "PRESDOCU",
+      :presidential_document_type_id => 2,
+      :president => @president.identifier,
+      :publication_date => {:year => @year}
+    }
+
+    @fields = FIELDS
   end
 
   def show

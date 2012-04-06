@@ -24,7 +24,10 @@
     <hr />
     <p>In <%= @year %>, <%= @president.full_name %> published <%= pluralize(@eo_collection.count, 'executive order') %>, from EO <%= @eo_collection.minimum_number %> through EO <%= @eo_collection.maximum_number %>.</p>
 
-    <p>These <%= pluralize(@eo_collection.count, 'executive order') %> can be downloaded in <%= link_to 'CSV', '#' %> and <%= link_to 'JSON', '#' %> formats.</p>
+    <p>These <%= pluralize(@eo_collection.count, 'executive order') %> can be downloaded in
+    <%= link_to 'CSV',  api_v1_entries_url(:conditions => @api_conditions, :fields => @fields, :per_page => 1000, :format => :csv, :order => "executive_order_number") %> and
+    <%= link_to 'JSON', api_v1_entries_url(:conditions => @api_conditions, :fields => @fields, :per_page => 1000, :format => :json, :order => "executive_order_number") %> formats.
+    </p>
   </div>
 
   <% @eo_collection.executive_orders.each do |executive_order| %>

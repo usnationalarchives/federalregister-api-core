@@ -104,7 +104,7 @@ class EntrySearch < ApplicationSearch
   
   def find_options
     {
-      :select => "id, title, publication_date, document_number, granule_class, document_file_path, abstract, length, start_page, end_page, citation",
+      :select => "id, title, publication_date, document_number, granule_class, document_file_path, abstract, length, start_page, end_page, citation, signing_date, executive_order_number",
       :include => :agencies,
     }
   end
@@ -119,6 +119,8 @@ class EntrySearch < ApplicationSearch
       "publication_date DESC, @relevance DESC"
     when 'oldest'
       "publication_date ASC, @relevance DESC"
+    when 'executive_order_number'
+      "executive_order_number ASC"
     else
       "@relevance DESC, publication_date DESC, start_page ASC, sphinx_internal_id ASC"
     end
