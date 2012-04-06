@@ -39,3 +39,54 @@
   padding: 2px .5em 1px;
   }
 
+/* by_president_and_year.html */
+#executive_orders .executive_order_wrapper { 
+  margin-left: 20px;
+  clear: both;
+}
+
+#executive_orders .executive_order_wrapper h4 .eo_number {
+  display: inline-block;
+  width: 80px;
+  vertical-align: top;
+  }
+
+#executive_orders .executive_order_wrapper h4 a {
+  font-weight: normal;
+  display: inline-block;
+  width: 655px;
+  }
+#executive_orders .executive_order_wrapper .metadata_wrapper { margin-left: 84px; }
+
+#executive_orders .executive_order_wrapper dl#col-1 { width: 150px; }
+#executive_orders .executive_order_wrapper dl#col-2 { width: 200px; }
+#executive_orders .executive_order_wrapper dl#col-3 { width: 215px; }
+
+#executive_orders .executive_order_wrapper dl dt {
+  clear: both;
+  float: left;
+  }
+#executive_orders .executive_order_wrapper dl dd {
+  float: left;
+  padding-top: 4px;
+  margin-left: 5px;
+  }
+
+#executive_orders .executive_order_wrapper dl.metadata { 
+  font-size: 1em;
+  margin: 0 20px 30px 0;
+  float: left;
+  }
+#executive_orders .executive_order_wrapper dl.metadata dt {
+  color: #6E6E6E;
+  height: 19px;
+  }
+#executive_orders .executive_order_wrapper dl.metadata dd {
+  margin-left: 1em;
+  margin-bottom: 3px;
+  line-height: 1em;
+  padding-left: 10px;
+  text-indent: -10px;
+  }
+#executive_orders .executive_order_wrapper dl.metadata dd:last { margin-bottom: none; }
+
