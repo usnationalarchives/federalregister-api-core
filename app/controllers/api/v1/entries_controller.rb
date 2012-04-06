@@ -3,14 +3,28 @@ class Api::V1::EntriesController < ApiController
 
   def index
     respond_to do |wants|
-      wants.json do
-        cache_for 1.day
-        search = EntrySearch.new(params)
-        fields = specified_fields || BASIC_FIELDS
+      cache_for 1.day
+      search = EntrySearch.new(params)
+      fields = specified_fields || BASIC_FIELDS
 
+      wants.json do
         render_search(search) do |result| 
           entry_data(result, fields)
         end
+      end
+
+      wants.csv do
+        output = FasterCSV.generate do |csv|
+          csv << fields
+          search.results.each do |result|
+            csv << fields.map{|field| value_for(result,field)}
+          end
+        end
+
+        filename = search.summary.gsub(/\W+/, '_').sub(/_$/,'').downcase
+        headers['Content-Disposition'] = "attachment; filename=\"#{filename}.csv\"" 
+
+        render :text => output
       end
     end
   end
@@ -37,15 +51,19 @@ class Api::V1::EntriesController < ApiController
     end
   end
 
+  def value_for(entry,field)
+    calculator = field_calculators[field]
+
+    if calculator.nil?
+      raise UnknownFieldError.new("#{field} is not a valid field")
+    end
+
+    calculator.call(entry)
+  end
+
   def entry_data(entry, fields)
     Hash[ fields.map do |field|
-      calculator = field_calculators[field]
-
-      if calculator.nil?
-        raise UnknownFieldError.new("#{field} is not a valid field")
-      end
-
-      [field, calculator.call(entry)]
+      [field, value_for(entry,field)] 
     end]
   end
 
