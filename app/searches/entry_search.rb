@@ -42,6 +42,15 @@ class EntrySearch < ApplicationSearch
   end
   
   define_filter :agency_ids,  :sphinx_type => :with
+  define_filter :president,
+                :sphinx_type => :with,
+                :sphinx_attribute => :president_id,
+                :sphinx_value_processor => Proc.new{|*identifiers| identifiers.flatten.map {|identifier| president = President.find_by_identifier(identifier); raise ApplicationSearch::InputError.new("invalid presidential identifier") if president.nil?; president.id }} do |*identifiers|
+    identifiers.flatten.map do |identifier|
+      president = President.find_by_identifier(identifier)
+      president.full_name
+    end.to_sentence(:two_words_connector => ' or ', :last_word_connector => ', or ')
+  end
   define_filter :section_ids, :sphinx_type => :with_all do |section_id|
     Section.find_by_id(section_id).try(:title)
   end
@@ -95,7 +104,7 @@ class EntrySearch < ApplicationSearch
   
   def find_options
     {
-      :select => "id, title, publication_date, document_number, granule_class, document_file_path, abstract, length, start_page, end_page, citation",
+      :select => "id, title, publication_date, document_number, granule_class, document_file_path, abstract, length, start_page, end_page, citation, signing_date, executive_order_number",
       :include => :agencies,
     }
   end
@@ -110,6 +119,8 @@ class EntrySearch < ApplicationSearch
       "publication_date DESC, @relevance DESC"
     when 'oldest'
       "publication_date ASC, @relevance DESC"
+    when 'executive_order_number'
+      "executive_order_number ASC"
     else
       "@relevance DESC, publication_date DESC, start_page ASC, sphinx_internal_id ASC"
     end
@@ -248,6 +259,7 @@ class EntrySearch < ApplicationSearch
       ['published', :publication_date],
       ['with an effective date', :effective_date],
       ['from', :agency_ids],
+      ['signed by', :president],
       ['of type', :type],
       ['filed under agency docket', :docket_id],
       ['whose', :significant],

@@ -167,6 +167,10 @@ class Entry < ApplicationModel
   def self.with_lede_photo
     scoped(:joins => :lede_photo)
   end
+ 
+  def self.published_in(date_range)
+    scoped(:conditions => {:entries => {:publication_date => date_range}})
+  end
   
   def self.published_on(publication_date)
     scoped(:conditions => {:entries => {:publication_date => publication_date}})
@@ -241,6 +245,10 @@ class Entry < ApplicationModel
     scoped(:conditions => {:entry_regulation_id_numbers => {:regulation_id_number => rin}}, :joins => :entry_regulation_id_numbers)
   end
 
+  def self.executive_order
+    scoped(:conditions => {:presidential_document_type_id => PresidentialDocumentType::EXECUTIVE_ORDER})
+  end
+
   def entry_type 
     ENTRY_TYPES[granule_class]
   end
@@ -257,6 +265,7 @@ class Entry < ApplicationModel
     has "SUM(IF(regulatory_plans.priority_category IN (#{RegulatoryPlan::SIGNIFICANT_PRIORITY_CATEGORIES.map{|c| "'#{c}'"}.join(',')}),1,0)) > 0", :as => :significant, :type => :boolean
     has "CRC32(IF(granule_class = 'SUNSHINE', 'NOTICE', granule_class))", :as => :type, :type => :integer
     has presidential_document_type_id
+    has "IF(granule_class = 'PRESDOCU', INTERVAL(DATE_FORMAT(IFNULL(signing_date,DATE_SUB(publication_date, INTERVAL 3 DAY)), '%Y%m%d'),#{President.all.map{|p| p.starts_on.strftime("%Y%m%d")}.join(', ')}), NULL)", :as => :president_id, :type => :integer
     has "GROUP_CONCAT(DISTINCT entry_cfr_references.title * #{EntrySearch::CFR::TITLE_MULTIPLIER} + entry_cfr_references.part)", :as => :cfr_affected_parts, :type => :multi
     has agency_assignments(:agency_id), :as => :agency_ids
     has topic_assignments(:topic_id),   :as => :topic_ids
@@ -267,6 +276,7 @@ class Entry < ApplicationModel
     has effective_date(:date), :as => :effective_date
     has comments_close_date(:date), :as => :comment_date
     has start_page
+    has executive_order_number
     
     join entry_cfr_affected_parts
     join docket_numbers

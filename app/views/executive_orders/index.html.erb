@@ -1,0 +1,60 @@
+<% title 'Executive Orders' %>
+
+<div class="title"><span>Presidential Documents</span></div>
+
+<div class="page_summary">
+  <h1>Executive Orders</h1>
+  <hr />
+
+  <p>
+    Executive Orders are official documents, numbered consecutively, through which the President of the United States manages the operations of the Federal Government.
+    The text of Executive Orders appears in the daily Federal Register as each Executive Order is signed by the President and received by the Office of the Federal Register.
+  </p>
+
+  <p>Executive Orders made since 1994 are available as a single bulk download and as a bulk download by president, or you can browse by president and year below.</p>
+
+  <ul class="bulk_files">
+    <li>
+      <span class="title">All Executive Orders since 1994</span>
+      <span class="links">
+        <%= link_to 'CSV',  api_v1_entries_url(:conditions => @api_conditions, :fields => @fields, :per_page => 1000, :format => :csv, :order => "executive_order_number") %>
+        <%= link_to 'JSON', api_v1_entries_url(:conditions => @api_conditions, :fields => @fields, :per_page => 1000, :format => :json, :order => "executive_order_number") %>
+      </span>
+    </li>
+  
+    <% @orders_by_president_and_year.each do |president, orders_by_year| %>
+      <li>
+        <span class="title"><%= president.full_name %></span>
+        <span class="links">
+          <%= link_to 'CSV',  api_v1_entries_url(:conditions => @api_conditions.merge(:president => president.identifier), :fields => @fields, :per_page => 1000, :format => :csv, :order => "executive_order_number") %> 
+          <%= link_to 'JSON', api_v1_entries_url(:conditions => @api_conditions.merge(:president => president.identifier), :fields => @fields, :per_page => 1000, :format => :json, :order => "executive_order_number") %>
+        </span>
+      </li>
+     <% end %>
+  </ul>
+</div>
+
+<% @orders_by_president_and_year.each do |president,orders_by_year| %>
+  <div class="president_wrapper">
+    <h3><%= president.full_name %></h3>
+
+    <p>
+      <%= president.full_name %> issued <%= pluralize(orders_by_year.sum{|eo| eo.count}, 'executive order') %>
+      between <%= orders_by_year.last.year %> and <%= orders_by_year.first.year %>.
+    </p>
+
+    <ul class="eo_list">
+      <% orders_by_year.each do |eo_collection| %>
+        <% next if eo_collection.count == 0 %>
+        <li>
+          <%= link_to eo_collection.year, executive_orders_by_president_and_year_path(president.identifier, eo_collection.year) %>
+          EO <%= eo_collection.minimum_number %>
+          <% if eo_collection.maximum_number && eo_collection.maximum_number != eo_collection.minimum_number %>
+            - EO <%= eo_collection.maximum_number %>
+          <% end %>
+          <span class="count_pill"> <%= eo_collection.count%> </span>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
