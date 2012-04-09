@@ -5,7 +5,8 @@ class ExecutiveOrdersController < ApplicationController
     @orders_by_president_and_year = ExecutiveOrderPresenter.all_by_president_and_year
     @api_conditions = {
       :type => "PRESDOCU",
-      :presidential_document_type_id => 2
+      :presidential_document_type_id => 2,
+      :correction => 0
     }
 
     @fields = FIELDS
@@ -23,7 +24,8 @@ class ExecutiveOrdersController < ApplicationController
       :type => "PRESDOCU",
       :presidential_document_type_id => 2,
       :president => @president.identifier,
-      :publication_date => {:year => @year}
+      :publication_date => {:year => @year},
+      :correction => 0
     }
 
     @fields = FIELDS

@@ -70,6 +70,8 @@ class EntrySearch < ApplicationSearch
   define_filter :significant, :sphinx_type => :with, :label => "Significance" do 
     "Associated Unified Agenda Deemed Significant Under EO 12866"
   end
+
+  define_filter :correction, :sphinx_type => :with
   
   define_place_filter :near, :sphinx_attribute => :place_ids
   define_date_filter :publication_date, :label => "Publication Date"
