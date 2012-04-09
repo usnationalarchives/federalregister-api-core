@@ -26,6 +26,8 @@
         </div>
       <% end -%>      
 
+      <%= render :partial => "corrections", :locals => {:entry => @entry } %>
+
       <% unless @entry.should_have_full_xml? %>
         <div id="flash_message" class="pdf_only">
           <p>

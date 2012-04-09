@@ -78,6 +78,8 @@ class Api::V1::EntriesController < ApiController
       :cfr_references            => Proc.new{|e| cfr_references_info(e)}, 
       :citation                  => Proc.new{|e| e.citation}, 
       :comments_close_on         => Proc.new{|e| e.comments_close_on},
+      :corrections               => Proc.new{|e| e.corrections.map{|c| api_v1_entry_url(c.document_number, :format => :json)}},
+      :correction_of             => Proc.new{|e| api_v1_entry_url(e.correction_of.document_number, :format => :json) if e.correction_of},
       :dates                     => Proc.new{|e| e.dates},
       :docket_id                 => Proc.new{|e| e.docket_numbers.first.try(:number)}, # backwards compatible for now
       :docket_ids                => Proc.new{|e| e.docket_numbers.map(&:number)},

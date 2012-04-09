@@ -45,6 +45,7 @@
 #  signing_date                  :date
 #  executive_order_number        :integer(4)
 #  action_name_id                :integer(4)
+#  correction_of_id              :integer(4)
 #
 
 # require 'flickr'
@@ -72,9 +73,11 @@ class Entry < ApplicationModel
   belongs_to :issue, :foreign_key => :publication_date, :primary_key => :publication_date
   belongs_to :presidential_document_type
   belongs_to :action_name
+  belongs_to :correction_of, :class_name => "Entry"
 
   has_one :public_inspection_document
 
+  has_many :corrections, :foreign_key => "correction_of_id", :class_name => "Entry"
   has_many :topic_name_assignments, :dependent => :destroy
   has_many :topic_names, :through => :topic_name_assignments
   

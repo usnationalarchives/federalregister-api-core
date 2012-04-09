@@ -1,0 +1,12 @@
+<% if entry.correction_of %>
+  <h3>This article is a correction of <%= link_to entry.correction_of.title, entry_path(entry.correction_of) %> (<%= entry.correction_of.publication_date %>)</h3>
+<% end %>
+
+<% if entry.corrections.present? %>
+  <h3>This article was corrected by </h3>
+  <ul>
+    <% entry.corrections.each do |correction| %> 
+      <li><%= link_to correction.title, entry_path(correction) %> (<%= correction.publication_date %>)</li>
+    <% end %>
+  </ul>
+<% end %>
