@@ -62,6 +62,14 @@ SitemapGenerator::Sitemap.add_links do |sitemap|
   Agency.find_each do |agency|
     sitemap.add agency_path(agency), :priority => 0.75, :changefreq => 'daily'
   end
+
+  # EXECUTIVE ORDERS
+  sitemap.add executive_orders_path
+  ExecutiveOrderPresenter.all_by_president_and_year.each do |president, eo_collections|
+    eo_collections.each do |eo_collection|
+      sitemap.add executive_orders_by_president_and_year_path(president.identifier, eo_collection.year)
+    end
+  end
  
   # REGULATIONS
   RegulatoryPlan.find_each do |regulatory_plan|
