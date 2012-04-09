@@ -48,6 +48,9 @@ ActionController::Routing::Routes.draw do |map|
                                                   :action     => 'date_search',
                                                   :conditions => { :method => :get }
 
+  map.random_entry 'a/random', :controller => 'entries',
+                                :action => 'random',
+                                :conditions => { :method => :get } 
   map.short_entry 'a/:document_number.:format',
                                         :controller => 'entries',
                                         :action     => 'tiny_url',

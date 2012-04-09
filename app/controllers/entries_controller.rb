@@ -140,6 +140,11 @@ class EntriesController < ApplicationController
     end
   end
 
+  def random
+    @entry = Entry.random_selection(1).first
+    redirect_to entry_url(@entry)
+  end
+
   private
   
   def parse_date_from_params
