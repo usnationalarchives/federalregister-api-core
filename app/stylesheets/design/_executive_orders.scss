@@ -59,8 +59,11 @@
 #executive_orders .executive_order_wrapper .metadata_wrapper { margin-left: 84px; }
 
 #executive_orders .executive_order_wrapper dl#col-1 { width: 150px; }
-#executive_orders .executive_order_wrapper dl#col-2 { width: 200px; }
+#executive_orders .executive_order_wrapper dl#col-2 { width: 180px; }
 #executive_orders .executive_order_wrapper dl#col-3 { width: 215px; }
+
+#executive_orders .executive_order_wrapper dl#col-2 dt { width: 55px; }
+#executive_orders .executive_order_wrapper dl#col-3 dt { width: 126px; }
 
 #executive_orders .executive_order_wrapper dl dt {
   clear: both;
@@ -77,6 +80,8 @@
   margin: 0 20px 30px 0;
   float: left;
   }
+#executive_orders .executive_order_wrapper dl#col-1 dd { margin-left: 5px; }
+
 #executive_orders .executive_order_wrapper dl.metadata dt {
   color: #6E6E6E;
   height: 19px;
@@ -90,3 +95,10 @@
   }
 #executive_orders .executive_order_wrapper dl.metadata dd:last { margin-bottom: none; }
 
+#executive_orders .executive_order_wrapper a { font-weight: normal; }
+
+#executive_orders .executive_order_wrapper a span.pdf.small {
+  background: sprite-image('icons/icon_pdf_small.png', 0, 3px, 50px) no-repeat;
+  padding-left: 20px;
+  display: inline-block;
+  }

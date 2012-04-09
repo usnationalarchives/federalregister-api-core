@@ -39,10 +39,17 @@
 
       <div class="metadata_wrapper">
         <dl class="metadata" id="col-1">
-          <dt><%= link_to 'PDF', executive_order_path(executive_order.executive_order_number, :format => :pdf) %></dt>
+          <dt>
+            <%= link_to content_tag(:span, 'PDF', :class => "pdf small"), 
+                        executive_order_path(executive_order.executive_order_number, :format => :pdf) %>
+          </dt>
+    
           <dd><%= pluralize executive_order.human_length, 'page' %></dd>
 
-          <dt><%= link_to 'Permalink', executive_order_path(executive_order.executive_order_number) %></dt>
+          <dt>
+            <%= link_to content_tag(:span, 'Permalink', :class => "permalink"), 
+                        executive_order_path(executive_order.executive_order_number) %>
+          </dt>
         </dl>
         <dl class="metadata" id="col-2">
           <dt>Signed:</dt>
