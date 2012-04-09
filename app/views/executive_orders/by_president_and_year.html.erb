@@ -27,7 +27,7 @@
 
     <p>These <%= pluralize(@eo_collection.count, 'executive order') %> can be downloaded in
     <%= link_to 'CSV',  api_v1_entries_url(:conditions => @api_conditions, :fields => @fields, :per_page => 1000, :format => :csv, :order => "executive_order_number") %> and
-    <%= link_to 'JSON', api_v1_entries_url(:conditions => @api_conditions, :fields => @fields, :per_page => 1000, :format => :json, :order => "executive_order_number") %> formats. More information about our APIs can be found on our <a href="/learn/developers">developers page</a>.
+    <%= link_to 'JSON', api_v1_entries_url(:conditions => @api_conditions, :fields => @fields + %w(full_text_xml_url body_html_url json_url), :per_page => 1000, :format => :json, :order => "executive_order_number") %> formats. More information about our APIs can be found on our <a href="/learn/developers">developers page</a>.
     </p>
   </div>
 
