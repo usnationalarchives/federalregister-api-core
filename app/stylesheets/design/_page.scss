@@ -252,7 +252,10 @@ ARTICLE VIEW
   top: 0;
   min-width: 193px;
   text-align: center;
-  }  
+  }
+#flash_message.correction .button { background: $bookmark_red; }
+#flash_message.correction_of .button { background: $golden; }
+
 #flash_message .button:hover {
   background: $golden;
   }  
@@ -269,7 +272,11 @@ ARTICLE VIEW
   }
 #flash_message.comment p {
   background: sprite-image('icons/icon_comment.png', 10px, 14px, 20px) no-repeat;
-  }  
+  } 
+#flash_message.correction_of p,
+#flash_message.correction p {
+  background: sprite-image('icons/disclaimer_grey.png', 12px, 12px, 50px) no-repeat;
+  }
 .article .metadata_list dt {
   text-transform: none;
   }  

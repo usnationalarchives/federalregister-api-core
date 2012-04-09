@@ -1,12 +1,19 @@
 <% if entry.correction_of %>
-  <h3>This article is a correction of <%= link_to entry.correction_of.title, entry_path(entry.correction_of) %> (<%= entry.correction_of.publication_date %>)</h3>
+  <div id="flash_message" class="correction_of">
+    <p>
+      This article is a correction of <%= link_to entry.correction_of.title, entry_path(entry.correction_of) %> (<%= entry.correction_of.publication_date %>)
+      <%= link_to 'View Corrected Article', entry_path(entry.correction_of) %>
+    </p>
+  </div>
 <% end %>
 
 <% if entry.corrections.present? %>
-  <h3>This article was corrected by </h3>
-  <ul>
-    <% entry.corrections.each do |correction| %> 
-      <li><%= link_to correction.title, entry_path(correction) %> (<%= correction.publication_date %>)</li>
-    <% end %>
-  </ul>
+  <% entry.corrections.each do |correction| %>
+    <div id="flash_message" class="correction">
+      <p>
+        This article was corrected by an article published on <%= correction.publication_date %>.
+        <%= link_to 'View Correction', entry_path(correction), :class => "button" %>
+      </p>
+    </div>
+  <% end %>
 <% end %>
