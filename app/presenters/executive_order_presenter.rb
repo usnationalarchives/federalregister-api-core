@@ -9,7 +9,7 @@ module ExecutiveOrderPresenter
     end
 
     def executive_orders
-      Entry.executive_order.published_in(@date_range).scoped(:order => "executive_order_number DESC")
+      Entry.executive_order.scoped(:conditions => "executive_order_number > 0").published_in(@date_range).scoped(:order => "executive_order_number DESC")
     end
 
     def count
