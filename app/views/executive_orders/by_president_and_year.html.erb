@@ -4,6 +4,7 @@
 
 <% html5_tag(:aside, :id => :left_sidebar) do %>
   <nav>
+    <h4><%= link_to 'Executive Orders', executive_orders_path() %></h4>
     <ul>
       <% @orders_by_president_and_year.each do |president, eo_collections| %>
         <li><strong><%= president.full_name %></strong>

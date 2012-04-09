@@ -36,7 +36,7 @@
 
 <% @orders_by_president_and_year.each do |president,orders_by_year| %>
   <div class="president_wrapper">
-    <h3><%= president.full_name %></h3>
+    <h3><%= link_to president.full_name, executive_orders_by_president_and_year_path(president.identifier, orders_by_year.first.year) %></h3>
 
     <p>
       <%= president.full_name %> issued <%= pluralize(orders_by_year.sum{|eo| eo.count}, 'executive order') %>

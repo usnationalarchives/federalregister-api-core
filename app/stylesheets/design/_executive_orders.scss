@@ -17,10 +17,9 @@
   margin: 1em auto 0;
   width: 900px;
   }
-#executive_orders .president_wrapper h3 { 
-  color: #5697CF;
-  border-bottom: 1px solid #3F5B75; 
-  }
+#executive_orders .president_wrapper h3 { border-bottom: 1px solid #3F5B75; }
+#executive_orders .president_wrapper h3 a { color: #5697CF; }
+#executive_orders .president_wrapper h3 a:hover { color: #B88659; }
 
 #executive_orders .president_wrapper p { margin-left: 1.2em; }
 
@@ -40,6 +39,12 @@
   }
 
 /* by_president_and_year.html */
+#executive_orders h4 a {
+  color: #5697CF;
+  font-weight: normal;
+  }
+#executive_orders h4 a:hover { color: #B88659; }
+
 #executive_orders .executive_order_wrapper { 
   margin-left: 20px;
   clear: both;
@@ -62,7 +67,7 @@
 #executive_orders .executive_order_wrapper dl#col-2 { width: 180px; }
 #executive_orders .executive_order_wrapper dl#col-3 { width: 215px; }
 
-#executive_orders .executive_order_wrapper dl#col-2 dt { width: 55px; }
+#executive_orders .executive_order_wrapper dl#col-2 dt { width: 60px; }
 #executive_orders .executive_order_wrapper dl#col-3 dt { width: 126px; }
 
 #executive_orders .executive_order_wrapper dl dt {
