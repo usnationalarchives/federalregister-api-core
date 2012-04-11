@@ -1,5 +1,5 @@
 class ExecutiveOrdersController < ApplicationController
-  FIELDS = [:executive_order_number, :title, :publication_date, :signing_date, :citation, :document_number]
+  FIELDS = [:executive_order_number, :title, :publication_date, :signing_date, :citation, :document_number, :html_url]
   
   def index
     @orders_by_president_and_year = ExecutiveOrderPresenter.all_by_president_and_year
