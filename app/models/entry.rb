@@ -364,10 +364,6 @@ class Entry < ApplicationModel
     end
   end
 
-  def regulations_dot_gov_comment_period_open?
-    (regulations_dot_gov_comments_close_on && regulations_dot_gov_comments_close_on >= Date.current) || (regulations_dot_gov_comments_close_on.nil? && comment_url && comments_close_on && comments_close_on >= Date.current)
-  end
-  
   def source_url(format)
     case format.to_sym
     when :mods
