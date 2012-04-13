@@ -23,11 +23,11 @@ module ExecutiveOrderPresenter
     end
 
     def minimum_number
-      executive_orders.first.executive_order_number
+      executive_orders.last.executive_order_number
     end
 
     def maximum_number
-      executive_orders.last.executive_order_number
+      executive_orders.first.executive_order_number
     end
   end
 
