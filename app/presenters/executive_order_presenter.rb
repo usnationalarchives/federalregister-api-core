@@ -9,7 +9,13 @@ module ExecutiveOrderPresenter
     end
 
     def executive_orders
-      Entry.executive_order.scoped(:conditions => "executive_order_number > 0").published_in(@date_range).scoped(:order => "executive_order_number DESC")
+      EntrySearch.new(:conditions => {
+        :president => @president.identifier,
+        :publication_date => {:year => @year},
+        :type => "PRESDOCU",
+        :presidential_document_type_id => 2,
+        :correction => '0',
+      }, :order => "executive_order_number", :per_page => 200).results.reverse
     end
 
     def count
@@ -17,11 +23,11 @@ module ExecutiveOrderPresenter
     end
 
     def minimum_number
-      executive_orders.minimum(:executive_order_number)
+      executive_orders.first.executive_order_number
     end
 
     def maximum_number
-      executive_orders.maximum(:executive_order_number)
+      executive_orders.last.executive_order_number
     end
   end
 
