@@ -57,6 +57,18 @@ module Content
                 :error_class   => "Missing Document Number in bulkdata",
                 :error_message => error 
               )
+
+              importer = EntryImporter.new(options.merge(:date => date, :document_number => document_number))
+              attributes = attributes.map(&:to_sym) 
+              if options[:except]
+                attributes = importer.provided - options[:except].map(&:to_sym)
+              end
+
+              if attributes == [:all]
+                importer.update_all_provided_attributes
+              else
+                importer.update_attributes(*attributes)
+              end
             end
 
             docs_and_nodes.each do |document_number, bulkdata_node|
