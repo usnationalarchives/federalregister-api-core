@@ -1,0 +1,70 @@
+<% title "#{@year} #{@president.full_name} Executive Orders" %>
+
+<div class="title"><span>Executive Orders</span></div>
+
+<% html5_tag(:aside, :id => :left_sidebar) do %>
+  <nav>
+    <h4><%= link_to 'Executive Orders', executive_orders_path() %></h4>
+    <ul>
+      <% @orders_by_president_and_year.each do |president, eo_collections| %>
+        <li><strong><%= president.full_name %></strong>
+          <ul class="children">
+            <% eo_collections.each do |eo_collection| %>
+              <li class="<%= 'current_page_item' if president == @president && eo_collection.year == @year %>"><%= link_to eo_collection.year, executive_orders_by_president_and_year_path(president.identifier, eo_collection.year) %></li>
+            <% end %>
+          </ul>
+        </li>
+      <% end %>
+    </ul>
+  </nav>
+<% end %>
+
+<% html5_tag(:section, :id => :content_area, :class => "executive_orders") do %>
+  <div class="page_summary">
+    <h1><%= "#{@year} #{@president.full_name} Executive Orders" %></h1>
+    <hr />
+    <p>In <%= @year %>, <%= @president.full_name %> published <%= pluralize(@eo_collection.count, 'executive order') %>, from EO <%= @eo_collection.minimum_number %> through EO <%= @eo_collection.maximum_number %>.</p>
+
+    <p>These <%= pluralize(@eo_collection.count, 'executive order') %> can be downloaded in
+    <%= link_to 'CSV',  api_v1_entries_url(:conditions => @api_conditions, :fields => @fields, :per_page => 1000, :format => :csv, :order => "executive_order_number") %> and
+    <%= link_to 'JSON', api_v1_entries_url(:conditions => @api_conditions, :fields => @fields + %w(full_text_xml_url body_html_url json_url), :per_page => 1000, :format => :json, :order => "executive_order_number") %> formats. More information about our APIs can be found on our <a href="/learn/developers">developers page</a>.
+    </p>
+  </div>
+
+  <% @eo_collection.executive_orders.each do |executive_order| %>
+    <div class="executive_order_wrapper">
+      <h4>
+        <span class="eo_number">EO <%= executive_order.executive_order_number %>:</span>
+        <%= link_to executive_order.title, entry_path(executive_order) %>
+      </h4>
+
+      <div class="metadata_wrapper">
+        <dl class="metadata" id="col-1">
+          <dt>
+            <%= link_to content_tag(:span, 'PDF', :class => "pdf small"), 
+                        executive_order_path(executive_order.executive_order_number, :format => :pdf) %>
+          </dt>
+    
+          <dd><%= pluralize executive_order.human_length, 'page' %></dd>
+
+          <dt>
+            <%= link_to content_tag(:span, 'Permalink', :class => "permalink"), 
+                        executive_order_path(executive_order.executive_order_number) %>
+          </dt>
+        </dl>
+        <dl class="metadata" id="col-2">
+          <dt>Signed:</dt>
+          <dd><%= executive_order.signing_date %></dd>
+          <dt>Published:</dt>
+          <dd><%= executive_order.publication_date %></dd>
+        </dl>
+        <dl class="metadata" id="col-3">
+          <dt>FR Citation:</dt>
+          <dd><%= executive_order.citation %></dd>
+          <dt>FR Document Number:</dt>
+          <dd><%= executive_order.document_number %></dd>
+        </dl>
+      </div>
+    </div>
+  <% end %>
+<% end %>

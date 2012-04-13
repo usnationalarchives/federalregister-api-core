@@ -9,13 +9,23 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120123222820) do
+ActiveRecord::Schema.define(:version => 20120409204635) do
 
   create_table "action_names", :force => true do |t|
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "granule_class"
   end
+
+  add_index "action_names", ["granule_class", "name"], :name => "granule_then_name"
+
+  create_table "action_names_document_subtypes", :id => false, :force => true do |t|
+    t.integer "action_name_id"
+    t.integer "document_subtype_id"
+  end
+
+  add_index "action_names_document_subtypes", ["action_name_id", "document_subtype_id"], :name => "action_name_id"
 
   create_table "agencies", :force => true do |t|
     t.integer  "parent_id"
@@ -147,6 +157,11 @@ ActiveRecord::Schema.define(:version => 20120123222820) do
 
   add_index "docket_numbers", ["assignable_type", "assignable_id"], :name => "index_docket_numbers_on_assignable_type_and_assignable_id"
 
+  create_table "document_subtypes", :force => true do |t|
+    t.string "granule_class"
+    t.string "name"
+  end
+
   create_table "entries", :force => true do |t|
     t.text     "title"
     t.text     "abstract"
@@ -190,11 +205,14 @@ ActiveRecord::Schema.define(:version => 20120123222820) do
     t.date     "signing_date"
     t.integer  "executive_order_number"
     t.integer  "action_name_id"
+    t.integer  "correction_of_id"
   end
 
+  add_index "entries", ["action_name_id"], :name => "action_name_id"
   add_index "entries", ["citation"], :name => "index_entries_on_citation"
   add_index "entries", ["citing_entries_count"], :name => "index_entries_on_agency_id_and_citing_entries_count"
   add_index "entries", ["citing_entries_count"], :name => "index_entries_on_citing_entries_count"
+  add_index "entries", ["correction_of_id"], :name => "index_entries_on_correction_of"
   add_index "entries", ["delta"], :name => "index_entries_on_delta"
   add_index "entries", ["document_number"], :name => "index_entries_on_document_number"
   add_index "entries", ["full_text_updated_at"], :name => "index_entries_on_full_text_added_at"

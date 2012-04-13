@@ -1,12 +1,13 @@
 class ApplicationSearch
   extend ActiveSupport::Memoizable
+  class InputError < StandardError; end
 
   attr_accessor :order
   attr_reader :filters, :term, :per_page, :page, :conditions, :valid_conditions
   
   def per_page=(count)
     per_page = count.to_s.to_i
-    if per_page > 1 && per_page <= 250
+    if per_page > 1 && per_page <= 1000
       @per_page = per_page
     else
       @per_page = 20
@@ -36,7 +37,11 @@ filter_name.to_s.sub(/_ids?$/,'').classify.constantize.find_all_by_id(ids.flatte
           val.reject!(&:blank?)
         end
         
-        add_filter options.merge(:value => val, :condition => filter_name, :name_definer => name_definer, :name => options[:name])
+        begin
+          add_filter options.merge(:value => val, :condition => filter_name, :name_definer => name_definer, :name => options[:name])
+        rescue ApplicationSearch::InputError => e
+          @errors[filter_name] = e.message
+        end
       end
     end
   end

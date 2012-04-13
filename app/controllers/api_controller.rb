@@ -1,5 +1,9 @@
 class ApiController < ApplicationController
+  class RequestError < StandardError; end
+  class UnknownFieldError < RequestError; end
+
   private
+
   def render_json_or_jsonp(data, options = {})
     callback = params[:callback].to_s
     if callback =~ /^\w+$/
@@ -62,6 +66,11 @@ class ApiController < ApplicationController
   def server_error(exception)
     notify_airbrake(exception)
     render :json => {:status => 500, :message => "Internal Server Error"}, :status => 500
+  end
+
+  rescue_from RequestError, :with => :request_error if RAILS_ENV != 'development'
+  def request_error(exception)
+    render :json => {:status => 400, :message => exception.message}, :status => 400
   end
   
   rescue_from ActiveRecord::RecordNotFound, :with => :record_not_found if RAILS_ENV != 'development'

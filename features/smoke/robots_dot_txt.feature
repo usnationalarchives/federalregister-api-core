@@ -13,6 +13,7 @@ Feature: Accessible robots.txt
       Disallow: /subscriptions
       Disallow: /articles/current
       Disallow: /articles/email-a-friend
+      Disallow: /my/
 
 
       """

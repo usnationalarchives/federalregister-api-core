@@ -45,6 +45,7 @@
 #  signing_date                  :date
 #  executive_order_number        :integer(4)
 #  action_name_id                :integer(4)
+#  correction_of_id              :integer(4)
 #
 
 # require 'flickr'
@@ -72,9 +73,11 @@ class Entry < ApplicationModel
   belongs_to :issue, :foreign_key => :publication_date, :primary_key => :publication_date
   belongs_to :presidential_document_type
   belongs_to :action_name
+  belongs_to :correction_of, :class_name => "Entry"
 
   has_one :public_inspection_document
 
+  has_many :corrections, :foreign_key => "correction_of_id", :class_name => "Entry"
   has_many :topic_name_assignments, :dependent => :destroy
   has_many :topic_names, :through => :topic_name_assignments
   
@@ -167,6 +170,10 @@ class Entry < ApplicationModel
   def self.with_lede_photo
     scoped(:joins => :lede_photo)
   end
+ 
+  def self.published_in(date_range)
+    scoped(:conditions => {:entries => {:publication_date => date_range}})
+  end
   
   def self.published_on(publication_date)
     scoped(:conditions => {:entries => {:publication_date => publication_date}})
@@ -241,6 +248,10 @@ class Entry < ApplicationModel
     scoped(:conditions => {:entry_regulation_id_numbers => {:regulation_id_number => rin}}, :joins => :entry_regulation_id_numbers)
   end
 
+  def self.executive_order
+    scoped(:conditions => {:presidential_document_type_id => PresidentialDocumentType::EXECUTIVE_ORDER})
+  end
+
   def entry_type 
     ENTRY_TYPES[granule_class]
   end
@@ -257,6 +268,7 @@ class Entry < ApplicationModel
     has "SUM(IF(regulatory_plans.priority_category IN (#{RegulatoryPlan::SIGNIFICANT_PRIORITY_CATEGORIES.map{|c| "'#{c}'"}.join(',')}),1,0)) > 0", :as => :significant, :type => :boolean
     has "CRC32(IF(granule_class = 'SUNSHINE', 'NOTICE', granule_class))", :as => :type, :type => :integer
     has presidential_document_type_id
+    has "IF(granule_class = 'PRESDOCU', INTERVAL(DATE_FORMAT(IFNULL(signing_date,DATE_SUB(publication_date, INTERVAL 3 DAY)), '%Y%m%d'),#{President.all.map{|p| p.starts_on.strftime("%Y%m%d")}.join(', ')}), NULL)", :as => :president_id, :type => :integer
     has "GROUP_CONCAT(DISTINCT entry_cfr_references.title * #{EntrySearch::CFR::TITLE_MULTIPLIER} + entry_cfr_references.part)", :as => :cfr_affected_parts, :type => :multi
     has agency_assignments(:agency_id), :as => :agency_ids
     has topic_assignments(:topic_id),   :as => :topic_ids
@@ -266,7 +278,9 @@ class Entry < ApplicationModel
     has publication_date
     has effective_date(:date), :as => :effective_date
     has comments_close_date(:date), :as => :comment_date
+    has "IF(granule_class = 'CORRECT' OR correction_of_id IS NOT NULL OR (presidential_document_type_id = 2 AND (executive_order_number = 0 or executive_order_number IS NULL)), 1, 0)", :as => :correction, :type => :boolean
     has start_page
+    has executive_order_number
     
     join entry_cfr_affected_parts
     join docket_numbers
@@ -487,6 +501,10 @@ class Entry < ApplicationModel
 
   def should_have_full_xml?
     full_xml_updated_at.present?
+  end
+
+  def republication?
+    document_number =~ /^R/
   end
  
   private

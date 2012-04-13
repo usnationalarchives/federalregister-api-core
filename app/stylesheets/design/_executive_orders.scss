@@ -1,0 +1,109 @@
+#executive_orders .page_summary { margin-bottom: 2em; }
+
+#executive_orders ul.bulk_files {
+  list-style: none;
+  margin-left: 1.5em;
+  font-family: "athelas-1","athelas-2", "Georgia", serif;
+  font-size: 1.2em;
+  margin-bottom: 1em;
+  }
+#executive_orders ul.bulk_files span.title { 
+  display: inline-block;
+  width: 250px;
+  }
+#executive_orders ul.bulk_files span.links a { margin-right: 15px; }
+
+#executive_orders .president_wrapper { 
+  margin: 1em auto 0;
+  width: 900px;
+  }
+#executive_orders .president_wrapper h3 { border-bottom: 1px solid #3F5B75; }
+#executive_orders .president_wrapper h3 a { color: #5697CF; }
+#executive_orders .president_wrapper h3 a:hover { color: #B88659; }
+
+#executive_orders .president_wrapper p { margin-left: 1.2em; }
+
+#executive_orders ul.eo_list {
+  list-style: none;
+  margin-left: 1.5em;
+  }
+
+#executive_orders ul.eo_list a {
+  width: 40px;
+  display: inline-block;
+  }
+
+#executive_orders ul .count_pill {
+  font-size: 12px;
+  padding: 2px .5em 1px;
+  }
+
+/* by_president_and_year.html */
+#executive_orders h4 a {
+  color: #5697CF;
+  font-weight: normal;
+  }
+#executive_orders h4 a:hover { color: #B88659; }
+
+#executive_orders .executive_order_wrapper { 
+  margin-left: 20px;
+  clear: both;
+}
+
+#executive_orders .executive_order_wrapper h4 .eo_number {
+  display: inline-block;
+  width: 80px;
+  vertical-align: top;
+  }
+
+#executive_orders .executive_order_wrapper h4 a {
+  font-weight: normal;
+  display: inline-block;
+  width: 655px;
+  }
+#executive_orders .executive_order_wrapper .metadata_wrapper { margin-left: 84px; }
+
+#executive_orders .executive_order_wrapper dl#col-1 { width: 150px; }
+#executive_orders .executive_order_wrapper dl#col-2 { width: 180px; }
+#executive_orders .executive_order_wrapper dl#col-3 { width: 215px; }
+
+#executive_orders .executive_order_wrapper dl#col-2 dt { width: 60px; }
+#executive_orders .executive_order_wrapper dl#col-3 dt { width: 126px; }
+
+#executive_orders .executive_order_wrapper dl dt {
+  clear: both;
+  float: left;
+  }
+#executive_orders .executive_order_wrapper dl dd {
+  float: left;
+  padding-top: 4px;
+  margin-left: 5px;
+  }
+
+#executive_orders .executive_order_wrapper dl.metadata { 
+  font-size: 1em;
+  margin: 0 20px 30px 0;
+  float: left;
+  }
+#executive_orders .executive_order_wrapper dl#col-1 dd { margin-left: 5px; }
+
+#executive_orders .executive_order_wrapper dl.metadata dt {
+  color: #6E6E6E;
+  height: 19px;
+  }
+#executive_orders .executive_order_wrapper dl.metadata dd {
+  margin-left: 1em;
+  margin-bottom: 3px;
+  line-height: 1em;
+  padding-left: 10px;
+  text-indent: -10px;
+  }
+#executive_orders .executive_order_wrapper dl.metadata dd:last { margin-bottom: none; }
+
+#executive_orders .executive_order_wrapper a { font-weight: normal; }
+
+#executive_orders .executive_order_wrapper a span.pdf.small {
+  background: sprite-image('icons/icon_pdf_small.png', 0, 3px, 50px) no-repeat;
+  padding-left: 20px;
+  display: inline-block;
+  }
