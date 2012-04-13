@@ -86,7 +86,7 @@ module Content::EntryImporter::BasicData
   end
 
   def correction_of_id
-    document_number.scan(/^C\d-(.*)/).each do |corrected_document_number|
+    document_number.scan(/^[CR]\d-(.*)/).each do |corrected_document_number|
       return Entry.find_by_document_number(corrected_document_number.first).try(:id)
     end
 

@@ -502,6 +502,10 @@ class Entry < ApplicationModel
   def should_have_full_xml?
     full_xml_updated_at.present?
   end
+
+  def republication?
+    document_number =~ /^R/
+  end
  
   private
   
