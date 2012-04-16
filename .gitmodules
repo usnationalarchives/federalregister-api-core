@@ -7,6 +7,9 @@
 [submodule "vendor/plugins/later_dude"]
 	path = vendor/plugins/later_dude
 	url = git://github.com/clemens/later_dude.git
+[submodule "vendor/plugins/geokit-rails"]
+	path = vendor/plugins/geokit-rails
+	url = git://github.com/andre/geokit-rails.git
 [submodule "vendor/plugins/sitemap_generator"]
 	path = vendor/plugins/sitemap_generator
 	url = git@github.com:criticaljuncture/sitemap_generator
@@ -28,6 +31,3 @@
 [submodule "public/images/icons"]
 	path = public/images/icons
 	url = git@github.com:criticaljuncture/fr2_icons.git
-[submodule "geokit-rails"]
-	path = geokit-rails
-	url = git@github.com:criticaljuncture/geokit-rails.git
