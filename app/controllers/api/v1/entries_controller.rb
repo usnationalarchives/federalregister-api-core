@@ -86,7 +86,7 @@ class Api::V1::EntriesController < ApiController
       :document_number           => Proc.new{|e| e.document_number},
       :effective_on              => Proc.new{|e| e.effective_on},
       :end_page                  => Proc.new{|e| e.end_page},
-      :excerpts                  => Proc.new{|e| (e.excerpts.raw_text || result.excerpts.abstract) if e.respond_to?(:excerpts)},
+      :excerpts                  => Proc.new{|e| (e.excerpts.raw_text || e.excerpts.abstract) if e.respond_to?(:excerpts)},
       :executive_order_number    => Proc.new{|e| e.executive_order_number},
       :full_text_xml_url         => Proc.new{|e| entry_xml_url(e) if e.should_have_full_xml?},
       :html_url                  => Proc.new{|e| entry_url(e)},
