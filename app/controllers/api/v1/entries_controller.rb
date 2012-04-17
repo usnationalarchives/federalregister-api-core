@@ -1,5 +1,5 @@
 class Api::V1::EntriesController < ApiController
-  BASIC_FIELDS = [:title, :type, :abstract, :document_number, :html_url, :pdf_url, :public_inspection_pdf_url, :publication_date, :agenices, :excerpts]
+  BASIC_FIELDS = [:title, :type, :abstract, :document_number, :html_url, :pdf_url, :public_inspection_pdf_url, :publication_date, :agencies, :excerpts]
 
   def index
     respond_to do |wants|
