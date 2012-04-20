@@ -1,7 +1,7 @@
 module Content::EntryImporter::RegulationsDotGov
   extend Content::EntryImporter::Utils
   extend ActiveSupport::Memoizable
-  provides :checked_regulationsdotgov_at, :regulationsdotgov_url, :comment_url, :regulations_dot_gov_comments_close_on
+  provides :checked_regulationsdotgov_at, :regulationsdotgov_url, :comment_url, :regulations_dot_gov_comments_close_on, :regulations_dot_gov_docket_id
   
   def checked_regulationsdotgov_at
     Time.now
@@ -17,6 +17,10 @@ module Content::EntryImporter::RegulationsDotGov
 
   def regulations_dot_gov_comments_close_on
     regulationsdotgov_document.try(:comment_due_date)
+  end
+
+  def regulations_dot_gov_docket_id
+    regulationsdotgov_document.try(:docket_id)
   end
   
   private
