@@ -4,12 +4,12 @@
 
 <h1><%= @year %> Federal Register Index: <%= @agency.name %></h1>
 
-<% @entries_by_type.each do |type, entries_by_toc_subject| %>
+<% @entries_by_type.each do |type, entries_by_subject| %>
   <h2><%= type.pluralize %></h2>
   <ul>
-  <% entries_by_toc_subject.each do |toc_subject, entries_by_title| %>
-    <% if toc_subject %>
-      <li><%= toc_subject %>
+  <% entries_by_subject.each do |subject, entries_by_title| %>
+    <% if subject %>
+      <li><%= subject %>
       <ul>
     <% end %>
     <% entries_by_title.each do |title, entries| %>
@@ -29,7 +29,7 @@
         </ul>
       </li>
     <% end %>
-    <% if toc_subject %>
+    <% if subject %>
       </ul>
     <% end %>
   <% end %>

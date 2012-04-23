@@ -322,6 +322,14 @@ class Entry < ApplicationModel
   def curated_abstract
     self[:curated_abstract] || abstract
   end
+
+  def fr_index_subject
+    self[:fr_index_subject] || toc_subject
+  end
+  
+  def fr_index_doc
+    self[:fr_index_doc] || toc_doc
+  end
   
   def day
     publication_date.strftime('%d')

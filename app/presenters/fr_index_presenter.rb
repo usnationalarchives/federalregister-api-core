@@ -52,7 +52,7 @@ module FrIndexPresenter
     first = Date.parse('1900-01-01')
 
     entries = agency.entries.scoped(
-      :select => "entries.id, entries.document_number, entries.publication_date, entries.title, entries.toc_subject, entries.toc_doc",
+      :select => "entries.id, entries.document_number, entries.publication_date, entries.title, entries.toc_subject, entries.toc_doc, entries.fr_index_subject, entries.fr_index_doc",
       :conditions => {:publication_date => Date.parse("#{year}-01-01")..Date.parse("#{year}-12-31")})
     
     if agency.children.present?
@@ -67,15 +67,15 @@ module FrIndexPresenter
 
     entries.group_by(&:entry_type).sort_by{|type,entries| type}.reverse.map do |type, entries_by_type|
 
-      entries_with_toc_subject, entries_without_toc_subject = entries_by_type.partition{|e| e.toc_subject.present?}
+      entries_with_subject, entries_without_subject = entries_by_type.partition{|e| e.fr_index_subject.present?}
 
-      grouped_entries = entries_with_toc_subject.group_by(&:toc_subject).map do |toc_subject, entries_by_toc_subject|
-        [toc_subject] << entries_by_toc_subject.group_by do |e|
-          (e.toc_doc || e.title)
+      grouped_entries = entries_with_subject.group_by(&:fr_index_subject).map do |subject, entries_by_subject|
+        [subject] << entries_by_subject.group_by do |e|
+          (e.fr_index_doc || e.title)
         end.sort_by{|a,b| a.downcase}.map{|a,b| [a,b.sort_by(&:publication_date)]}
       end
 
-      grouped_entries += entries_without_toc_subject.group_by(&:title).map{|g_e| [nil, [[g_e.first, g_e.second.sort_by(&:publication_date)]]]}
+      grouped_entries += entries_without_subject.group_by(&:title).map{|g_e| [nil, [[g_e.first, g_e.second.sort_by(&:publication_date)]]]}
 
       sorted_grouped_entries = grouped_entries.sort_by{|a,b| [a || b.first.first]}
       [type, sorted_grouped_entries]
