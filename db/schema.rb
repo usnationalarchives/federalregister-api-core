@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120420163727) do
+ActiveRecord::Schema.define(:version => 20120423203541) do
 
   create_table "action_names", :force => true do |t|
     t.string   "name"
@@ -233,6 +233,7 @@ ActiveRecord::Schema.define(:version => 20120420163727) do
     t.integer  "action_name_id"
     t.integer  "correction_of_id"
     t.string   "regulations_dot_gov_docket_id"
+    t.text     "executive_order_notes"
   end
 
   add_index "entries", ["citation"], :name => "index_entries_on_citation"
