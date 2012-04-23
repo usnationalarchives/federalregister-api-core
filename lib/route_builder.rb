@@ -219,7 +219,7 @@ module RouteBuilder
   end
 
   def regulations_dot_gov_docket_url(docket_id)
-    "http://www.regulations.gov/#!docketDetail;dct=PS;rpp=100;so=DESC;sb=docId;po=0;dct=O%252BSR%252BN%252BFR;D=#{docket_id}"
+    "http://www.regulations.gov/#!docketDetail;rpp=100;so=DESC;sb=docId;po=0;D=#{docket_id}"
   end
 
   def regulations_dot_gov_docket_comments_url(docket_id)
