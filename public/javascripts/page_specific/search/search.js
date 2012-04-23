@@ -1,6 +1,6 @@
 $(document).ready(function () {
     var toggle_presdocu_types = function() {
-      var type_checkboxes = $('#conditions_presidential_document_type_id_input');
+      var type_checkboxes = $('.presidential_dependent');
       if ($('#conditions_type_presdocu').attr('checked')) {
         type_checkboxes.show().find(':input').removeAttr('disabled');
       }

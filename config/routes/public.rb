@@ -48,6 +48,9 @@ ActionController::Routing::Routes.draw do |map|
                                                   :action     => 'date_search',
                                                   :conditions => { :method => :get }
 
+  map.random_entry 'a/random', :controller => 'entries',
+                                :action => 'random',
+                                :conditions => { :method => :get } 
   map.short_entry 'a/:document_number.:format',
                                         :controller => 'entries',
                                         :action     => 'tiny_url',
@@ -57,9 +60,21 @@ ActionController::Routing::Routes.draw do |map|
                                         :controller => 'entries',
                                         :action     => 'tiny_url',
                                         :conditions => { :method => :get }
-  map.executive_order 'executive-order/:number',
-                                        :controller => "citations",
-                                        :action     => "executive_order",
+  map.executive_orders 'executive-orders.:format',
+                                        :controller => "executive_orders",
+                                        :action => "index",
+                                        :conditions => {:method => :get}
+  map.executive_orders_by_president 'executive-orders/:president.:format',
+                                        :controller => "executive_orders",
+                                        :action => "by_president",
+                                        :conditions => {:method => :get}
+  map.executive_orders_by_president_and_year 'executive-orders/:president/:year.:format',
+                                        :controller => "executive_orders",
+                                        :action => "by_president_and_year",
+                                        :conditions => {:method => :get}
+  map.executive_order 'executive-order/:number.:format',
+                                        :controller => "executive_orders",
+                                        :action     => "show",
                                         :conditions => {:method => :get},
                                         :number     => /\d+/
   map.connect 'citation/:volume/:page', :controller => 'citations',

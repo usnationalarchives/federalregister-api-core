@@ -13,12 +13,12 @@ namespace :content do
     namespace :import do
       desc "Import all execept regulations.gov"
       task :except_regulations_dot_gov => :environment do
-        entry_importer(:except => [:checked_regulationsdotgov_at, :regulationsdotgov_url, :comment_url, :regulations_dot_gov_comments_close_on])
+        entry_importer(:except => [:checked_regulationsdotgov_at, :regulationsdotgov_url, :comment_url, :regulations_dot_gov_comments_close_on, :regulationsPdot_gov_docket_id])
       end
 
       desc "Extract Basic data"
       task :basic_data => :environment do
-        entry_importer(:volume, :title, :toc_subject, :toc_doc, :citation, :start_page, :end_page, :length, :type, :genre, :part_name, :granule_class, :abstract, :dates, :action, :contact, :docket_numbers)
+        entry_importer(:volume, :title, :toc_subject, :toc_doc, :citation, :start_page, :end_page, :length, :type, :genre, :part_name, :granule_class, :abstract, :dates, :action, :contact, :docket_numbers, :correction_of_id)
       end
       
       desc "Extract full text"
@@ -73,28 +73,38 @@ namespace :content do
       
       desc "Import regulations.gov info"
       task :regulations_dot_gov => :environment do
-        entry_importer(:checked_regulationsdotgov_at, :regulationsdotgov_url, :comment_url, :regulations_dot_gov_comments_close_on)
+        entry_importer(:checked_regulationsdotgov_at, :regulationsdotgov_url, :comment_url, :regulations_dot_gov_comments_close_on, :regulations_dot_gov_docket_id)
       end
       
       namespace :regulations_dot_gov do
-        def update_missing_regulationsdotgov_info(date)
-          entries = Entry.scoped(:conditions => {:publication_date => date}).
-                          scoped(:conditions => ["comment_url IS NULL AND (checked_regulationsdotgov_at IS NULL OR checked_regulationsdotgov_at < ?)", 30.minutes.ago])
-          entries.each do |entry|
+        def update_missing_regulationsdotgov_info(date = nil)
+          entries = Entry.scoped(:conditions => ["checked_regulationsdotgov_at IS NULL or checked_regulationsdotgov_at < ?", 25.minutes.ago])
+          if date
+            entries = entries.scoped(:conditions => {:publication_date => date})
+          else
+            entries = entries.scoped(:conditions => {:publication_date => (4.months.ago .. Issue.current.publication_date.to_time)}).scoped(:conditions => "comment_url IS NOT NULL")
+          end
+
+          entries.find_each do |entry|
             importer = Content::EntryImporter.new(:entry => entry)
-            importer.update_attributes(:checked_regulationsdotgov_at, :regulationsdotgov_url, :comment_url)
+            importer.update_attributes(:checked_regulationsdotgov_at, :regulationsdotgov_url, :comment_url, :regulations_dot_gov_comments_close_on, :regulations_dot_gov_docket_id)
           end
         end
         
         desc "Import regulations.gov info for entries missing it published today"
         task :only_missing => :environment do
           puts "importing today's missing regulations.gov data"
-          update_missing_regulationsdotgov_info(Time.current.to_date)
+          update_missing_regulationsdotgov_info(Date.current)
         end
         
         desc "Import regulations.gov info for entries missing it published in the last 3 weeks"
         task :tardy => :environment do
           update_missing_regulationsdotgov_info(3.weeks.ago .. Time.now)
+        end
+
+        desc "Confirm comment periods are still open for comments in the last few months"
+        task :open_comments => :environment do
+          update_missing_regulationsdotgov_info
         end
       end
       

@@ -10,21 +10,29 @@
   <div id="metadata_content_area">
       <%= render :partial => "header", :locals => {:entry => @entry} %>
       
-      <% if (@entry.comments_close_on.present? && @entry.comments_close_on >= Time.current.to_date) || @entry.regulations_dot_gov_comment_period_open? %>
+      <% if (@entry.comments_close_on.present? && @entry.comments_close_on >= Time.current.to_date) || (@entry.comment_url.present? && @entry.publication_date.to_time > 4.months.ago) %>
+        <% comment_date = @entry.regulations_dot_gov_comments_close_on || @entry.comments_close_on %>
         <div id="flash_message" class="comment">
           <p>
-            <% if @entry.comments_close_on && @entry.regulations_dot_gov_comments_close_on && @entry.regulations_dot_gov_comments_close_on > @entry.comments_close_on %>
+            <% if @entry.comments_close_on && @entry.regulations_dot_gov_comments_close_on && @entry.regulations_dot_gov_comments_close_on > @entry.comments_close_on && @entry.regulations_dot_gov_comments_close_on > Date.current %>
               This article's comment period has been extended; it now ends in <%= days_remaining( @entry.regulations_dot_gov_comments_close_on) %>
               (<%= @entry.regulations_dot_gov_comments_close_on %>)
+            <% elsif comment_date && comment_date >= Date.current %>
+              This article has a comment period that ends <%= days_remaining( comment_date) %>
+              (<%= comment_date %>)
             <% else %>
-              This article has a comment period that ends <%= days_remaining( @entry.regulations_dot_gov_comments_close_on || @entry.comments_close_on ) %>
-              (<%= @entry.regulations_dot_gov_comments_close_on || @entry.comments_close_on %>)
+              Comments on this article are being accepted at Regulations.gov
             <% end %>
             
-            <%= link_to "Submit a formal comment", @entry.regulations_dot_gov_comment_period_open? ? @entry.comment_url : '#addresses', :class => 'button', :target => (@entry.regulations_dot_gov_comment_period_open? ? '_blank' : '') %>
+            <%= link_to "Submit a formal comment", @entry.comment_url.present? ? @entry.comment_url : '#addresses', :class => 'button', :target => (@entry.comment_url.present? ? '_blank' : '') %>
           </p>
         </div>
+        <% if @entry.docket && @entry.docket.comments_count > 0 %>
+          <p id="comment_count">Read the <%= link_to pluralize(@entry.docket.comments_count, 'submitted public comment'), regulations_dot_gov_docket_comments_url(@entry.docket.id), :target => "_blank" %></p>
+        <% end %>
       <% end -%>      
+
+      <%= render :partial => "corrections", :locals => {:entry => @entry } %>
 
       <% unless @entry.should_have_full_xml? %>
         <div id="flash_message" class="pdf_only">
@@ -75,6 +83,8 @@
         </ul>
       <% end -%>
     <% end %>  
+
+    <%= render(:partial => "docket", :locals => {:docket => @entry.docket, :entry => @entry }) if @entry.docket %>
   <% end -%> <!-- end aside tag -->
   
   <div id="content_area">
