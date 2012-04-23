@@ -4,7 +4,7 @@ class President < ActiveHash::Base
       :id => 1,
       :identifier => 'william-j-clinton',
       :full_name => "William J. Clinton",
-      :starts_on => Date.new(1994,1,1),
+      :starts_on => Date.new(1993,1,20),
       :ends_on => Date.new(2001,1,19)
     },
     {
