@@ -12,6 +12,7 @@ module Content::ExecutiveOrderImporter
       next if document_number.blank?
 
       entry = Entry.find_by_document_number(document_number)
+      entry.agency_names = [AgencyName.find_by_name!('Executive Office of the President')]
       if entry
         entry.update_attributes(
           :executive_order_number => eo['number'],
