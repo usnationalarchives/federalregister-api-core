@@ -1,30 +1,24 @@
 class Api::V1::EntriesController < ApiController
-  BASIC_FIELDS = [:title, :type, :abstract, :document_number, :html_url, :pdf_url, :public_inspection_pdf_url, :publication_date, :agenices, :excerpts]
+  BASIC_FIELDS = [:title, :type, :abstract, :document_number, :html_url, :pdf_url, :public_inspection_pdf_url, :publication_date, :agencies, :excerpts]
+  CSV_FIELDS = [:title, :type, :agency_names, :abstract, :document_number, :html_url, :pdf_url, :publication_date]
 
   def index
     respond_to do |wants|
       cache_for 1.day
       search = EntrySearch.new(params)
-      fields = specified_fields || BASIC_FIELDS
 
       wants.json do
+        fields = specified_fields || BASIC_FIELDS
         render_search(search) do |result| 
           entry_data(result, fields)
         end
       end
 
       wants.csv do
-        output = FasterCSV.generate do |csv|
-          csv << fields
-          search.results.each do |result|
-            csv << fields.map{|field| [*value_for(result,field)].join('; ')}
-          end
-        end
-
+        fields = specified_fields || CSV_FIELDS
         filename = search.summary.gsub(/\W+/, '_').sub(/_$/,'').downcase
-        headers['Content-Disposition'] = "attachment; filename=\"#{filename}.csv\"" 
-
-        render :text => output
+        entries = search.results
+        render_csv(entries, fields, filename)
       end
     end
   end
@@ -40,10 +34,30 @@ class Api::V1::EntriesController < ApiController
           entry_data(entry, fields)
         end
       end
+      wants.csv do
+        fields = specified_fields || CSV_FIELDS 
+        document_numbers = params[:id].split(',')
+        entries = Entry.all(:conditions => {:document_number => document_numbers})
+        filename = 'federal_register'
+        render_csv(entries, fields, filename)
+      end
     end
   end
  
   private
+
+  def render_csv(entries, fields, filename)
+    output = FasterCSV.generate do |csv|
+      csv << fields
+      entries.each do |result|
+        csv << fields.map{|field| [*value_for(result,field)].join('; ')}
+      end
+    end
+
+    headers['Content-Disposition'] = "attachment; filename=\"#{filename}.csv\"" 
+
+    render :text => output
+  end
 
   def specified_fields
     if params[:fields]
@@ -86,7 +100,8 @@ class Api::V1::EntriesController < ApiController
       :document_number           => Proc.new{|e| e.document_number},
       :effective_on              => Proc.new{|e| e.effective_on},
       :end_page                  => Proc.new{|e| e.end_page},
-      :excerpts                  => Proc.new{|e| (e.excerpts.raw_text || result.excerpts.abstract) if e.respond_to?(:excerpts)},
+      :excerpts                  => Proc.new{|e| (e.excerpts.raw_text || e.excerpts.abstract) if e.respond_to?(:excerpts)},
+      :executive_order_notes     => Proc.new{|e| e.executive_order_notes},
       :executive_order_number    => Proc.new{|e| e.executive_order_number},
       :full_text_xml_url         => Proc.new{|e| entry_xml_url(e) if e.should_have_full_xml?},
       :html_url                  => Proc.new{|e| entry_url(e)},

@@ -13,9 +13,11 @@ module Content::ExecutiveOrderImporter
 
       entry = Entry.find_by_document_number(document_number)
       if entry
+        entry.agency_names = [AgencyName.find_by_name!('Executive Office of the President')]
         entry.update_attributes(
           :executive_order_number => eo['number'],
           :signing_date => eo['signing_date'],
+          :executive_order_notes => eo['executive_order_notes'],
           :granule_class => "PRESDOCU",
           :presidential_document_type_id => 2
         )
