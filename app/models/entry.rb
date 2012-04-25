@@ -47,6 +47,7 @@
 #  action_name_id                :integer(4)
 #  correction_of_id              :integer(4)
 #  regulations_dot_gov_docket_id :string(255)
+#  executive_order_notes         :text
 #
 
 # require 'flickr'

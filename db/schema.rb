@@ -148,14 +148,6 @@ ActiveRecord::Schema.define(:version => 20120423203541) do
   add_index "citations", ["cited_entry_id", "citation_type", "source_entry_id"], :name => "cited_citation_source"
   add_index "citations", ["source_entry_id", "citation_type", "cited_entry_id"], :name => "source_citation_cited"
 
-  create_table "clippings", :force => true do |t|
-    t.integer  "user_id"
-    t.string   "document_number"
-    t.integer  "position"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "docket_documents", :id => false, :force => true do |t|
     t.string "id"
     t.string "docket_id"
@@ -236,6 +228,7 @@ ActiveRecord::Schema.define(:version => 20120423203541) do
     t.text     "executive_order_notes"
   end
 
+  add_index "entries", ["action_name_id"], :name => "action_name_id"
   add_index "entries", ["citation"], :name => "index_entries_on_citation"
   add_index "entries", ["citing_entries_count"], :name => "index_entries_on_agency_id_and_citing_entries_count"
   add_index "entries", ["citing_entries_count"], :name => "index_entries_on_citing_entries_count"
