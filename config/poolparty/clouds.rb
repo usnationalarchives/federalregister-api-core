@@ -48,11 +48,11 @@ def chef_cloud_attributes(instance_type)
     @mail_server_address     = '10.35.71.41'
     @splunk_server_address   = '10.35.71.41'
     @redis_server_address    = '10.35.71.41'
-    @database_server_address = '10.116.233.30'
-    @mongodb_server_address  = '10.116.233.30'
-    @sphinx_server_address   = '10.116.233.30'
-    @app_server_address      = '10.83.113.240'
-    @my_fr2_server_address   = '10.83.113.240'
+    @database_server_address = '10.101.57.196'
+    @mongodb_server_address  = '10.101.57.196'
+    @sphinx_server_address   = '10.101.57.196'
+    @app_server_address      = ['10.82.225.119']
+    @my_fr2_server_address   = ['10.82.225.119']
   when 'production'
     @proxy_server_address    = '10.194.207.96'
     @static_server_address   = '10.245.106.31'
@@ -61,14 +61,16 @@ def chef_cloud_attributes(instance_type)
     @mail_server_address     = '10.245.106.31'
     @splunk_server_address   = '10.245.106.31'
     @redis_server_address    = '10.245.106.31'
-    @database_server_address = '10.244.157.171'
-    @mongodb_server_address  = '10.244.157.171'
-    @sphinx_server_address   = '10.244.157.171'
-    @app_server_address      = ['10.243.41.203', '10.196.117.123', '10.202.162.96', '10.212.73.172', '10.251.131.239']
-    @my_fr2_server_address   = ['10.243.41.203', '10.196.117.123', '10.202.162.96', '10.212.73.172', '10.251.131.239']
+    @database_server_address = '10.116.81.89'
+    @mongodb_server_address  = '10.116.81.89'
+    @sphinx_server_address   = '10.116.81.89'
+    #@app_server_address      = ['10.243.41.203', '10.196.117.123', '10.202.162.96', '10.212.73.172', '10.251.131.239']
+    @app_server_address      = ['10.40.221.230', '10.83.5.182', '10.98.87.46', '10.114.118.200', '10.116.65.97']
+    #@my_fr2_server_address   = ['10.243.41.203', '10.196.117.123', '10.202.162.96', '10.212.73.172', '10.251.131.239']
+    @my_fr2_server_address   = ['10.40.221.230', '10.83.5.182', '10.98.87.46', '10.114.118.200', '10.116.65.97']
   end    
   
-  @rails_version = '2.3.11'
+  @rails_versions = ['2.3.11', '3.1.3']
 
   case instance_type
   when 'staging'
@@ -94,11 +96,12 @@ def chef_cloud_attributes(instance_type)
                     :ec2_region => 'us-east-1'
                },
     :app => { 
-             :blog_root => '/var/www/apps/fr2_blog',
-             :app_root  => '/var/www/apps/fr2',
-             :web_dir   => '/var/www',
-             :name      => 'fr2',
-             :url       => @app_url
+             :blog_root  => '/var/www/apps/fr2_blog',
+             :app_root   => '/var/www/apps/fr2',
+             :my_fr_root => '/var/www/apps/my_fr2',
+             :web_dir    => '/var/www',
+             :name       => 'fr2',
+             :url        => @app_url
            },
     :apache => {
                   :listen_ports   => [@app_server_port],
@@ -160,6 +163,7 @@ def chef_cloud_attributes(instance_type)
     :mysql  => {
                 :server_address         => @database_server_address,
                 :database_name          => 'fr2_production',
+                :my_fr_database_name    => "my_fr2_#{@rails_env}",
                 :server_root_password   => @mysql_passwords['server_root_password'],
                 :server_repl_password   => @mysql_passwords['server_repl_password'],
                 :server_debian_password => @mysql_passwords['server_debian_password'],
@@ -177,7 +181,7 @@ def chef_cloud_attributes(instance_type)
                 :database_server_fqdn  => 'database.fr2.ec2.internal'
                },
     :rails  => {
-                :version     => @rails_version,
+                :versions    => @rails_versions,
                 :environment => @rails_env,
                 :using_thinking_sphinx => 'true',
                 :using_mongoid => 'true'
@@ -275,6 +279,6 @@ def chef_cloud_attributes(instance_type)
   }
 end
 
-#require 'config/poolparty/pools/production.rb'
-require 'config/poolparty/pools/staging.rb'
+require 'config/poolparty/pools/production.rb'
+#require 'config/poolparty/pools/staging.rb'
 

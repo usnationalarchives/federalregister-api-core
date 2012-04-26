@@ -68,7 +68,8 @@ task :production do
   set :branch, 'production'
   
   role :proxy, "ec2-184-72-241-172.compute-1.amazonaws.com"
-  role :app, "ec2-204-236-209-41.compute-1.amazonaws.com", "ec2-184-72-139-81.compute-1.amazonaws.com", "ec2-174-129-132-251.compute-1.amazonaws.com", "ec2-72-44-36-213.compute-1.amazonaws.com", "ec2-204-236-254-83.compute-1.amazonaws.com"
+  #role :app, "ec2-204-236-209-41.compute-1.amazonaws.com", "ec2-184-72-139-81.compute-1.amazonaws.com", "ec2-174-129-132-251.compute-1.amazonaws.com", "ec2-72-44-36-213.compute-1.amazonaws.com", "ec2-204-236-254-83.compute-1.amazonaws.com"
+  role :app, "ec2-23-20-255-226.compute-1.amazonaws.com", "ec2-23-20-217-149.compute-1.amazonaws.com", "ec2-50-19-46-231.compute-1.amazonaws.com", "ec2-107-21-88-250.compute-1.amazonaws.com", "ec2-107-21-140-249.compute-1.amazonaws.com"
   role :db, "ec2-50-17-38-106.compute-1.amazonaws.com", {:primary => true}
   role :sphinx, "ec2-50-17-38-106.compute-1.amazonaws.com"
   role :static, "ec2-107-20-145-32.compute-1.amazonaws.com" #monster image
@@ -85,7 +86,7 @@ task :staging do
   set :branch, `git branch`.match(/\* (.*)/)[1]
   
   role :proxy,  "ec2-184-72-250-132.compute-1.amazonaws.com"
-  role :app,    "ec2-50-19-14-105.compute-1.amazonaws.com"
+  role :app,    "ec2-50-19-14-105.compute-1.amazonaws.com", "ec2-174-129-64-134.compute-1.amazonaws.com"
 #  role :db,     "ec2-50-17-145-38.compute-1.amazonaws.com", {:primary => true}
 #  role :sphinx, "ec2-50-17-145-38.compute-1.amazonaws.com"
 
