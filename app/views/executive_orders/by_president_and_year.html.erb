@@ -64,7 +64,12 @@
           <dt>FR Document Number:</dt>
           <dd><%= executive_order.document_number %></dd>
         </dl>
+
+        <% if executive_order.executive_order_notes.present? %>
+          <%= simple_format add_citation_links(executive_order.executive_order_notes, :class => "notes") %>
+        <% end %>
       </div>
+
     </div>
   <% end %>
 <% end %>

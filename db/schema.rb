@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120409204635) do
+ActiveRecord::Schema.define(:version => 20120423203541) do
 
   create_table "action_names", :force => true do |t|
     t.string   "name"
@@ -148,6 +148,15 @@ ActiveRecord::Schema.define(:version => 20120409204635) do
   add_index "citations", ["cited_entry_id", "citation_type", "source_entry_id"], :name => "cited_citation_source"
   add_index "citations", ["source_entry_id", "citation_type", "cited_entry_id"], :name => "source_citation_cited"
 
+  create_table "docket_documents", :id => false, :force => true do |t|
+    t.string "id"
+    t.string "docket_id"
+    t.string "title"
+    t.text   "metadata"
+  end
+
+  add_index "docket_documents", ["docket_id"], :name => "index_docket_documents_on_docket_id"
+
   create_table "docket_numbers", :force => true do |t|
     t.string  "number"
     t.string  "assignable_type"
@@ -156,6 +165,15 @@ ActiveRecord::Schema.define(:version => 20120409204635) do
   end
 
   add_index "docket_numbers", ["assignable_type", "assignable_id"], :name => "index_docket_numbers_on_assignable_type_and_assignable_id"
+
+  create_table "dockets", :id => false, :force => true do |t|
+    t.string  "id"
+    t.string  "regulation_id_number"
+    t.integer "comments_count"
+    t.integer "docket_documents_count"
+    t.string  "title"
+    t.text    "metadata"
+  end
 
   create_table "document_subtypes", :force => true do |t|
     t.string "granule_class"
@@ -206,6 +224,8 @@ ActiveRecord::Schema.define(:version => 20120409204635) do
     t.integer  "executive_order_number"
     t.integer  "action_name_id"
     t.integer  "correction_of_id"
+    t.string   "regulations_dot_gov_docket_id"
+    t.text     "executive_order_notes"
   end
 
   add_index "entries", ["action_name_id"], :name => "action_name_id"

@@ -46,6 +46,8 @@
 #  executive_order_number        :integer(4)
 #  action_name_id                :integer(4)
 #  correction_of_id              :integer(4)
+#  regulations_dot_gov_docket_id :string(255)
+#  executive_order_notes         :text
 #
 
 # require 'flickr'
@@ -74,6 +76,7 @@ class Entry < ApplicationModel
   belongs_to :presidential_document_type
   belongs_to :action_name
   belongs_to :correction_of, :class_name => "Entry"
+  belongs_to :docket, :foreign_key => :regulations_dot_gov_docket_id
 
   has_one :public_inspection_document
 

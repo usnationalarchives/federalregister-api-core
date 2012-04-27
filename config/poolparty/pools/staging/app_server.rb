@@ -1,10 +1,11 @@
-cloud :app_server do
+cloud :app_server_v2 do
   # basic settings
   using :ec2
   keypair "~/Documents/AWS/FR2/gpoEC2.pem"
   user "ubuntu"
   #image_id "ami-7d43ae14" #Ubuntu 9.10 Karmic Canonical, ubuntu@ EBS-based 64bit
-  image_id "ami-de806bb7" #FR2 Basic App Server
+  #image_id "ami-de806bb7" #FR2 Basic App Server
+  image_id "ami-4dad7424" #Ubuntu 11.10 Oneiric, EBS-based 64bit
   availability_zones ['us-east-1d']
   instances 1
   instance_type 'm1.large'
@@ -18,10 +19,8 @@ cloud :app_server do
     recipe "ubuntu"
     recipe "openssl"
     recipe "imagemagick"
-    recipe "splunk::forwarder"
-    recipe "splunk::nix_app_forwarder"
-    
-    recipe "munin::client"
+    #recipe "splunk::forwarder"
+    #recipe "splunk::nix_app_forwarder"
     
     recipe "mysql::client"
     

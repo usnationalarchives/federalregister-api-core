@@ -237,7 +237,7 @@ ARTICLE VIEW
   background: #E6E6E6;
   color: #6E6E6E;
   line-height: 20px;
-  margin: 1em 0;
+  margin: 20px 0;
   overflow: hidden;  
   position: relative;
   }
@@ -276,6 +276,17 @@ ARTICLE VIEW
 #flash_message.correction_of p,
 #flash_message.correction p {
   background: sprite-image('icons/disclaimer_grey.png', 12px, 12px, 50px) no-repeat;
+  }
+#comment_count {
+  width: 100%;
+  text-align: right;
+  padding-bottom: 0;
+  margin-top: -15px;
+  color: #363636;
+  font-family: gesta-1, gesta-2, 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif;
+  font-size: 14px;
+  font-weight: bold;
+
   }
 .article .metadata_list dt {
   text-transform: none;
@@ -351,8 +362,7 @@ ARTICLE VIEW
   top: -2px;
   overflow:visible;
   }   
-.metadata_share_bar .share ul li:first-child,
-.metadata_share_bar .share ul li.first {
+.metadata_share_bar .share ul li.clip_for_later {
   padding-right: 35px;
   }
 
@@ -470,6 +480,10 @@ p:target {
   }
 .metadata_list a.shorter_url {
   padding-right: 15px;
+}
+#sidebar .aside_box h5 {
+  margin-top: 0;
+  padding-top: 0;
 }
 .citable {
   padding-right: 25px;
