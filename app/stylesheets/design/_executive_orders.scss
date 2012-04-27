@@ -67,11 +67,7 @@
   display: inline-block;
   width: 655px;
   }
-#executive_orders .executive_order_wrapper .metadata_wrapper { 
-  margin-left: 84px;
-  width: 650px;
-  height: 75px;
-  }
+#executive_orders .executive_order_wrapper .metadata_wrapper { margin-left: 84px; }
 
 #executive_orders .executive_order_wrapper dl#col-1 { width: 150px; }
 #executive_orders .executive_order_wrapper dl#col-2 { width: 180px; }
@@ -92,7 +88,7 @@
 
 #executive_orders .executive_order_wrapper dl.metadata { 
   font-size: 1em;
-  margin: 0 20px 30px 0;
+  margin: 0 20px 10px 0;
   float: left;
   }
 #executive_orders .executive_order_wrapper dl#col-1 dd { margin-left: 5px; }
@@ -110,9 +106,11 @@
   }
 #executive_orders .executive_order_wrapper dl.metadata dd:last { margin-bottom: none; }
 
-.executive_order_wrapper p {
-  margin-left: 84px;
-  margin-bottom: 15px;
+.executive_order_wrapper .metadata_wrapper p {
+  margin-bottom: 25px;
+  clear: both;
+  font-size: 1.1em;
+  width: 570px;
   }
 
 #executive_orders .executive_order_wrapper a { 
