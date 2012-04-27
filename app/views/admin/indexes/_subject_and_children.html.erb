@@ -1,0 +1,44 @@
+<% if subject %>
+  <li id="<%= type %>-<%= Digest::MD5.hexdigest(subject) %>">
+    <span class="title"><%= subject %><span>
+    <% form_tag(params, :method => :put) do %>
+      <%= hidden_field_tag(:type, type) %>
+      <%= hidden_field_tag(:old_subject, subject) %>
+      <% entries_by_title.map{|t,e| e}.flatten.each do |entry| %>
+        <%= hidden_field_tag(:'entry_ids[]', entry.id) %>
+      <% end %>
+      <%= text_field_tag('entry[fr_index_subject]', subject) %>
+      <%= submit_tag("Save") %>
+    <% end %>
+  <ul>
+<% end %>
+<% entries_by_title.each do |title, entries| %>
+  <li id="<%= type %>-<%= Digest::MD5.hexdigest("#{subject}#{title}")%>">
+    <a href="javascript:" data-toggle="collapse" data-target="#<%= id %>">
+      <span class="title"><%= title %></span>
+      <span class="count_pill"><%= entries.count %></span>
+      <%= link_to 'Edit', '#' %>
+    </a>
+    <% form_tag(params, :method => :put) do %>
+      <%= hidden_field_tag(:type, type) %>
+      <%= hidden_field_tag(:old_subject, subject || title) %>
+      <% entries.each do |entry| %>
+        <%= hidden_field_tag(:'entry_ids[]', entry.id) %>
+      <% end %>
+      <%= text_field_tag('entry[fr_index_subject]', subject) %>
+      <%= text_field_tag('entry[fr_index_doc]', title) %>
+      <%= submit_tag("Save") %>
+    <% end %>
+    <ul id="<%= id %>" style="height: 0px; overflow-y: hidden"> 
+      <% entries.each do |entry| %>
+        <li>
+          <%= link_to entry.document_number, entry_path(entry) %>
+          page <%= entry.start_page %>, published <%= link_to entry.publication_date, entry_path(entry) %>
+        </li>
+      <% end %>
+    </ul>
+  </li>
+<% end %>
+<% if subject %>
+  </ul>
+<% end %>

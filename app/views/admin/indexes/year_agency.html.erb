@@ -1,0 +1,12 @@
+<% title "#{@year} FR Index" %>
+
+<% add_javascript(:src => 'admin/fr_index.js') %>
+
+<% @entries_by_type.each do |type, entries_by_subject| %>
+  <h2><%= Entry::ENTRY_TYPES[type].pluralize %></h2>
+  <ul id="<%= type %>" class="entry_type">
+    <% entries_by_subject.each do |subject, entries_by_title| %>
+      <%= render :partial => "subject_and_children", :locals => {:subject => subject, :entries_by_title => entries_by_title, :type => type} %>
+    <% end %>
+  </ul>
+<% end %>

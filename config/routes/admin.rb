@@ -9,7 +9,11 @@ ActionController::Routing::Routes.draw do |map|
     admin.resources :canned_searches, :member => {:delete => :get}
        
     admin.resources :events
-    
+
+    admin.index_year 'index/:year', :controller => "indexes", :action => "year", :conditions => {:method => :get}
+    admin.index_year_agency 'index/:year/:agency', :controller => "indexes", :action => "year_agency", :conditions => {:method => :get}
+    admin.index_year_agency 'index/:year/:agency', :controller => "indexes", :action => "update_year_agency", :conditions => {:method => :put}
+
     admin.resources :topics
     admin.resources :topic_names, :collection => {:unprocessed => :get}
     

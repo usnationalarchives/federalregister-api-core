@@ -48,7 +48,7 @@ module FrIndexPresenter
     agency_presenters.sort_by{|a| a.name.downcase}
   end
 
-  def self.grouped_entries_for_year_and_agency(year, agency)
+  def self.entries_for_year_and_agency(year,agency)
     first = Date.parse('1900-01-01')
 
     entries = agency.entries.scoped(
@@ -64,8 +64,13 @@ module FrIndexPresenter
         :conditions => "child_agency_assignments.id IS NULL"
       )
     end
+    entries
+  end
 
-    entries.group_by(&:entry_type).sort_by{|type,entries| type}.reverse.map do |type, entries_by_type|
+  def self.grouped_entries_for_year_and_agency(year, agency)
+    entries = entries_for_year_and_agency(year,agency)
+
+    entries.group_by(&:granule_class).sort_by{|type,entries| type}.reverse.map do |type, entries_by_type|
 
       entries_with_subject, entries_without_subject = entries_by_type.partition{|e| e.fr_index_subject.present?}
 

@@ -5,7 +5,7 @@
 <h1><%= @year %> Federal Register Index: <%= @agency.name %></h1>
 
 <% @entries_by_type.each do |type, entries_by_subject| %>
-  <h2><%= type.pluralize %></h2>
+  <h2><%= Entry::ENTRY_TYPES[type].pluralize %></h2>
   <ul>
   <% entries_by_subject.each do |subject, entries_by_title| %>
     <% if subject %>
