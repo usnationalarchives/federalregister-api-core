@@ -129,18 +129,23 @@ DOCUMENT ICONS
   position:relative;
   }
 #suggested-search-list div.rule_type.doc_presdocu img {
-  top: -6px;
+  top: -7px;
   }
 #suggested-search-list div.rule_type.doc_notice img {
-  top:-627px;
+  top:-628px;
   }
 #suggested-search-list div.rule_type.doc_rule img {
-  top: -316px;
+  top: -317px;
   }
 #suggested-search-list div.rule_type.doc_prorule img {
-  top: -936px;
+  top: -938px;
   }
-
+#suggested-search-list div.rule_type.doc_unknown img {
+  top: -1249px;
+  }
+#suggested-search-list div.rule_type.doc_correct img {
+  top: -1560px;
+  }
 
 /******************************
 

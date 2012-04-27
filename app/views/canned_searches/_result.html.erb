@@ -1,5 +1,5 @@
 <li>
-  <div class="rule_type doc_<%= entry.granule_class.downcase %> tipsy"><%= image_tag 'icons/document_icons.png' %></div>
+  <div class="rule_type doc_<%= entry.granule_class.downcase == "sunshine" ? "notice" : entry.granule_class.downcase %> tipsy"><%= image_tag 'icons/document_icons.png' %></div>
 
   <div class="search_result_wrapper">
     <h4><%= link_to entry.title, entry_path(entry) %></h4>
