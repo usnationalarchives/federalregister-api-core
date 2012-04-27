@@ -101,10 +101,7 @@ class Api::V1::EntriesController < ApiController
       :effective_on              => Proc.new{|e| e.effective_on},
       :end_page                  => Proc.new{|e| e.end_page},
       :excerpts                  => Proc.new{|e| (e.excerpts.raw_text || e.excerpts.abstract) if e.respond_to?(:excerpts)},
-<<<<<<< HEAD
-=======
       :executive_order_notes     => Proc.new{|e| e.executive_order_notes},
->>>>>>> master
       :executive_order_number    => Proc.new{|e| e.executive_order_number},
       :full_text_xml_url         => Proc.new{|e| entry_xml_url(e) if e.should_have_full_xml?},
       :html_url                  => Proc.new{|e| entry_url(e)},
