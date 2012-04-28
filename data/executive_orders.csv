@@ -1,1091 +1,1319 @@
-number,signing_date,document_number,executive_order_notes
-12890,12/30/93,94-290,
-12891,1/15/94,94-1531,"Revoked by: EO 13062, September 29, 1997"
-12892,1/17/94,94-1532,"Amends: EO 11063, November 20, 1962
+number,signing_date,document_number,notes
+12890,1993-12-30,94-290,
+12891,1994-01-15,94-1531,"Revoked by: EO 13062, September 29, 1997
+"
+12892,1994-01-17,94-1532,"Amends: EO 11063, November 20, 1962
 Revokes: EO 11063, November 20, 1962 (in part); EO 12259, December 31, 1980
-See: Memorandum, January 17, 1994"
-12893,1/26/94,94-2261,"Revokes: EO 11063, November 20, 1962 (in part); EO 12259, December 31, 1980"
-12894,1/26/94,94-2267,"See: Memorandum, January 17, 1994"
-12895,1/26/94,94-2266,
-12896,2/3/94,94-2904,
-12897,2/3/94,94-2905,See: 59 FR 14541
-12898,2/11/94,94-3685,"Amends: EO 12250, November 2, 1980
-Amended by: EO 12948, January 30, 1995"
-12899,2/15/94,94-3853,
-12900,2/22/94,94-4472,"Revokes: EO 12729, September 24, 1990
+See: Memorandum, January 17, 1994
+"
+12893,1994-01-26,94-2261,"Revokes: EO 11063, November 20, 1962 (in part); EO 12259, December 31, 1980"
+12894,1994-01-26,94-2267,"See: Memorandum, January 17, 1994"
+12895,1994-01-26,94-2266,
+12896,1994-02-03,94-2904,
+12897,1994-02-03,94-2905,See: 59 FR 14541
+12898,1994-02-11,94-3685,"Amends: EO 12250, November 2, 1980
+Amended by: EO 12948, January 30, 1995
+"
+12899,1994-02-15,94-3853,
+12900,1994-02-22,94-4472,"Revokes: EO 12729, September 24, 1990
 Amended by: EO 12974, September 29, 1995; EO 13062, September 29, 1997; EO 13138, September 30, 1999; EO 13225, September 28, 2001
-Revoked by: EO 13230, October 12, 2001"
-12901,3/3/94,94-5434,"Amended by: EO 12973, September 27, 1995"
-12902,3/8/94,94-5834,"Revokes: EO 12759, April 17, 1991
+Revoked by: EO 13230, October 12, 2001
+"
+12901,1994-03-03,94-5434,"Amended by: EO 12973, September 27, 1995"
+12902,1994-03-08,94-5834,"Revokes: EO 12759, April 17, 1991
 See: EO 13101, September 14, 1998
-Revoked by: EO 13123, June 3, 1999"
-12903,3/9/94,94-5915,"Supersedes: EO 12840, March 9, 1993
-Superseded by: EO 12955, March 9, 199"
-12904,3/16/94,94-6696,
-12905,3/25/94,94-7635,"Amended by: EO 12974, September 29, 1995; EO 13062, September 29, 1997; EO 13138, September 30, 1999; EO 13225, September 28, 2001; EO 13316, September 17, 2003; EO 13385, September 29, 2005
+Revoked by: EO 13123, June 3, 1999
+"
+12903,1994-03-09,94-5915,"Supersedes: EO 12840, March 9, 1993
+Superseded by: EO 12955, March 9, 199
+"
+12904,1994-03-16,94-6696,
+12905,1994-03-25,94-7635,"Amended by: EO 12974, September 29, 1995; EO 13062, September 29, 1997; EO 13138, September 30, 1999; EO 13225, September 28, 2001; EO 13316, September 17, 2003; EO 13385, September 29, 2005
 Continued by: EO 13446, September 28, 2007; EO 13511, September 29, 2009
-See: EO 13585, September 30, 2011"
-12906,4/11/94,94-9117,"Amended by: EO 13286, February 28, 2003"
-12907,4/14/94,94-9419,"Amends: EO 12882, November 23, 1993
-Revoked by: EO 13226, September 30, 2001"
-12908,4/22/94,94-10241,
-12909,4/22/94,94-10242,
-12910,4/23/94,94-10249,Note: In memoriam of President Nixon
-12911,4/25/94,94-13090,
-12912,4/29/94,94-10794,"Amends: EO 12878, November 5, 1993
-See EO 12974, September 29, 1995"
-12913,5/2/94,94-10932,"Revokes: EO 12582, February 2, 1987"
-12914,5/7/94,94-11547,"Revoked by: EO 12932, October 14, 1994
-See: 59 FR 25809; 59 FR 26333; 59 FR 32744; EO 12922, June 21, 1994; 59 FR 51066; Notice of September 30, 1994"
-12915,5/13/94,94-12275,
-12916,5/13/94,94-12284,"Amended by: EO 13380, June 17, 2005"
-12917,5/21/94,94-12880,"Revokes in part: EO 12779, October 28, 1991; EO 12853, June 30, 1993
+See: EO 13585, September 30, 2011
+"
+12906,1994-04-11,94-9117,"Amended by: EO 13286, February 28, 2003"
+12907,1994-04-14,94-9419,"Amends: EO 12882, November 23, 1993
+Revoked by: EO 13226, September 30, 2001
+"
+12908,1994-04-22,94-10241,
+12909,1994-04-22,94-10242,
+12910,1994-04-23,94-10249,Note: In memoriam of President Nixon
+12911,1994-04-25,94-13090,
+12912,1994-04-29,94-10794,"Amends: EO 12878, November 5, 1993
+See EO 12974, September 29, 1995
+"
+12913,1994-05-02,94-10932,"Revokes: EO 12582, February 2, 1987"
+12914,1994-05-07,94-11547,"Revoked by: EO 12932, October 14, 1994
+See: 59 FR 25809; 59 FR 26333; 59 FR 32744; EO 12922, June 21, 1994; 59 FR 51066; Notice of September 30, 1994
+"
+12915,1994-05-13,94-12275,
+12916,1994-05-13,94-12284,"Amended by: EO 13380, June 17, 2005"
+12917,1994-05-21,94-12880,"Revokes in part: EO 12779, October 28, 1991; EO 12853, June 30, 1993
 Revoked by: EO 12932, October 14, 1994
 See: EO 12920, June 10, 1994; 59 FR 51066
-Amended by: Notice, September 30, 1994"
-12918,5/26/94,94-13391,See: 59 FR 28583
-12919,6/3/94,94-14027,"Amends: EO 10789, November 14, 1958; EO 11790, June 25, 1974
+Amended by: Notice, September 30, 1994
+"
+12918,1994-05-26,94-13391,See: 59 FR 28583
+12919,1994-06-03,94-14027,"Amends: EO 10789, November 14, 1958; EO 11790, June 25, 1974
 Amended by: EO 13286, February 28, 2003
 Revoked in part by: EO 13456, January 23, 2008
-Supersedes or Revokes: EO 8248, September 8, 1939 (in part); EO 10222, March 8, 1951; EO 10480, August 14, 1953; EO 10647, November 28, 1955; EO 11179, September 22, 1964; EO 11355, May 26, 1967; EO 11912, April 13, 1976 (in part); EO 12148, July 20, 1979 (in part); EO 12521, June 24, 1985; EO 12649, August 11, 1988; EO 12773, September 26, 1991 (in part)"
-12920,6/10/94,94-14582,"Revoked by: EO 12932, October 14, 1994
-See: Notice, September 30, 1994; 59 FR 51066"
-12921,6/13/94,94-14728,"Amends: 12864, September 15, 1993
-Revoked by: EO 13062, September 29, 1997"
-12922,6/21/94,94-15498,"Revoked by: EO 12932, October 14, 1994
-See: Notice, September 30, 1994; 59 FR 51066"
-12923,6/30/94,94-16403,"Revoked by: EO 12924, August 19, 1994
-See: EO 12002, July 7, 1977; EO 12214, May 2, 1980; EO 12735, November 16, 1990; EO 12755, March 12, 1991; EO 12851, June 11, 1993"
-12924,8/19/94,94-20892,"Revokes: EO 12923, June 30, 1994
+Supersedes or Revokes: EO 8248, September 8, 1939 (in part); EO 10222, March 8, 1951; EO 10480, August 14, 1953; EO 10647, November 28, 1955; EO 11179, September 22, 1964; EO 11355, May 26, 1967; EO 11912, April 13, 1976 (in part); EO 12148, July 20, 1979 (in part); EO 12521, June 24, 1985; EO 12649, August 11, 1988; EO 12773, September 26, 1991 (in part)
+"
+12920,1994-06-10,94-14582,"Revoked by: EO 12932, October 14, 1994
+See: Notice, September 30, 1994; 59 FR 51066
+"
+12921,1994-06-13,94-14728,"Amends: 12864, September 15, 1993
+Revoked by: EO 13062, September 29, 1997
+"
+12922,1994-06-21,94-15498,"Revoked by: EO 12932, October 14, 1994
+See: Notice, September 30, 1994; 59 FR 51066
+"
+12923,1994-06-30,94-16403,"Revoked by: EO 12924, August 19, 1994
+See: EO 12002, July 7, 1977; EO 12214, May 2, 1980; EO 12735, November 16, 1990; EO 12755, March 12, 1991; EO 12851, June 11, 1993
+"
+12924,1994-08-19,94-20892,"Revokes: EO 12923, June 30, 1994
 Continued by: Notice of August 15, 1995; Notice of August 14, 1996; Notice of August 13, 1997; Notice of August 13, 1998; Notice of August 10, 1999
 Revoked by: EO 13206, April 4, 2001
-See: EO 12002, July 7, 1977; EO 12214, May 2, 1980; EO 12735, November 16, 1990; EO 12755, March 12, 1991; EO 12851, June 11, 1993; EO 12981, December 5, 1995; EO 13020, October 12, 1996; Notice of August 3, 2000"
-12925,8/29/94,94-21738,
-12926,9/12/94,94-22969,
-12927,9/15/94,94-23273,
-12928,9/16/94,94-23453,
-12929,9/29/94,94-24589,
-12930,9/29/94,94-24617,"Revoked by: EO 12938, November 14, 1994"
-12931,10/13/94,94-25837,"Revokes: EO 12352, March 17, 1982"
-12932,10/14/94,94-25940,"Revokes: EO 12775, October 4, 1991; EO 12779, October 28, 1991; EO 12853, June 30, 1993; EO 12872, October 18, 1993; EO 12914, May 7, 1994; EO 12917, May 21, 1994; EO 12920, June 10, 1994; EO 12922, June 21, 1994"
-12933,10/20/94,94-26517,"Revoked by: EO 13204, February 17, 2001
-See: Final Rule of May 16, 1997 (62 FR 28176)"
-12934,10/25/94,94-26834,"See: Pres. Determination No. 96-7 of December 27, 1995; Notice of May 24, 1996; Notice of May 28, 1997; Notice of May 25, 2000; Notice of May 24, 2001
-Revoked by: EO 13304, May 28, 2003"
-12935,10/28/94,94-27135,"Amends: EO 11157, June 22, 1964"
-12936,11/10/94,94-28430,"Amends: EO 12473, April 13, 1984
-See: EO 12484, July 13, 1984; EO 12550, February 19, 1986; EO 12586, March 3, 1987; EO 12708, March 23, 1990; EO 12767, June 27, 1991; EO 12888, December 23, 1993; EO 12960, May 12, 1995; EO 13086, May 27, 1998; EO 13140, October 6, 1999"
-12937,11/10/94,94-28431,
-12938,11/14/94,94-28487,
-12939,11/22/94,94-29541,"Revokes: EO 12735, November 16, 1990; EO 12930, September 29, 1994
+See: EO 12002, July 7, 1977; EO 12214, May 2, 1980; EO 12735, November 16, 1990; EO 12755, March 12, 1991; EO 12851, June 11, 1993; EO 12981, December 5, 1995; EO 13020, October 12, 1996; Notice of August 3, 2000
+"
+12925,1994-08-29,94-21738,
+12926,1994-09-12,94-22969,
+12927,1994-09-15,94-23273,
+12928,1994-09-16,94-23453,
+12929,1994-09-29,94-24589,
+12930,1994-09-29,94-24617,"Revoked by: EO 12938, November 14, 1994"
+12931,1994-10-13,94-25837,"Revokes: EO 12352, March 17, 1982"
+12932,1994-10-14,94-25940,"Revokes: EO 12775, October 4, 1991; EO 12779, October 28, 1991; EO 12853, June 30, 1993; EO 12872, October 18, 1993; EO 12914, May 7, 1994; EO 12917, May 21, 1994; EO 12920, June 10, 1994; EO 12922, June 21, 1994"
+12933,1994-10-20,94-26517,"Revoked by: EO 13204, February 17, 2001
+See: Final Rule of May 16, 1997 (62 FR 28176)
+"
+12934,1994-10-25,94-26834,"See: Pres. Determination No. 96-7 of December 27, 1995; Notice of May 24, 1996; Notice of May 28, 1997; Notice of May 25, 2000; Notice of May 24, 2001
+Revoked by: EO 13304, May 28, 2003
+"
+12935,1994-10-28,94-27135,"Amends: EO 11157, June 22, 1964"
+12936,1994-11-10,94-28430,"Amends: EO 12473, April 13, 1984
+See: EO 12484, July 13, 1984; EO 12550, February 19, 1986; EO 12586, March 3, 1987; EO 12708, March 23, 1990; EO 12767, June 27, 1991; EO 12888, December 23, 1993; EO 12960, May 12, 1995; EO 13086, May 27, 1998; EO 13140, October 6, 1999
+"
+12937,1994-11-10,94-28431,
+12938,1994-11-14,94-28487,
+12939,1994-11-22,94-29541,"Revokes: EO 12735, November 16, 1990; EO 12930, September 29, 1994
 Amended by: EO 13094, July 28, 1998; EO 13128, June 25, 1999; EO 13382, June 28, 2005
-See: Notice of November 8, 1995; Notice of November 12, 1996; Notice of November 12, 1997; Notice of November 12, 1998; Notice of November 10, 1999; Notice of November 9, 2000; EO 13159, June 21, 2000; EO 13206, April 4, 2001; Notice of November 9, 2001; Notice of November 6, 2002; Notice of October 29, 2003; Notice of November 4, 2004; Notice of October 25, 2005; Notice of October 27, 2006; Notice of November 8, 2007; Notice of November 10, 2008; Notice of November 6, 2009"
-12940,11/28/94,94-29663,"Supersedes: EO 12300, March 23, 1981"
-12941,12/1/94,94-30035,
-12942,12/12/94,94-30997,
-12943,12/13/94,94-30998,"Amends: EO 11755, December 29, 1973"
-12944,12/28/94,94-32388,"Supersedes: EO 12826 of December 30, 1992; EO 12886 of December 13, 1993
+See: Notice of November 8, 1995; Notice of November 12, 1996; Notice of November 12, 1997; Notice of November 12, 1998; Notice of November 10, 1999; Notice of November 9, 2000; EO 13159, June 21, 2000; EO 13206, April 4, 2001; Notice of November 9, 2001; Notice of November 6, 2002; Notice of October 29, 2003; Notice of November 4, 2004; Notice of October 25, 2005; Notice of October 27, 2006; Notice of November 8, 2007; Notice of November 10, 2008; Notice of November 6, 2009
+"
+12940,1994-11-28,94-29663,"Supersedes: EO 12300, March 23, 1981"
+12941,1994-12-01,94-30035,
+12942,1994-12-12,94-30997,
+12943,1994-12-13,94-30998,"Amends: EO 11755, December 29, 1973"
+12944,1994-12-28,94-32388,"Supersedes: EO 12826 of December 30, 1992; EO 12886 of December 13, 1993
 Superseded by: EO 12984 of December 28, 1995
 Executive Order 12945 
 Amendment to Executive Order No. 12640
 Signed: January 20, 1995
 Federal Register page and date: 60 FR 4527; January 24, 1995
-Amends: EO 12640, May 10, 1988"
-12945,1/20/95,95-1877,
-12946,1/20/95,95-1925,"Revoked by: EO 13062, September 29, 1997"
-12947,1/23/95,X95-110125,"Amended by: EO 13099, August 20, 1998; EO 13371, February 16, 2005
+Amends: EO 12640, May 10, 1988
+"
+12945,1995-01-20,95-1877,
+12946,1995-01-20,95-1925,"Revoked by: EO 13062, September 29, 1997"
+12947,1995-01-23,X95-110125,"Amended by: EO 13099, August 20, 1998; EO 13371, February 16, 2005
 Continued by: Notice of January 18, 1996; Notice of January 21, 1997; Notice of January 21, 1998; Notice of January 19, 2000
-See: Notice of January 3, 1996; Notice of January 19, 2001; Notice of January 18, 2002; Notice of January 20, 2003; Notice of January 16, 2004; January 17, 2005; Notice of January 18, 2006; Notice of January 18, 2007; Notice of January 18, 2008; Notice of January 15, 2009; Notice of January 20, 2010"
-12948,1/30/95,95-2687,"Amends: EO 12898, February 11, 1994"
-12949,2/9/95,95-3671,"Amended by: EO 13475, October 7, 2008"
-12950,2/22/95,95-4908,"Amended by: EO 12952, February 24, 1995"
-12951,2/22/95,95-5050,
-12952,2/24/95,95-5129,"Amends: EO 12950, February 22, 1995"
-12953,2/27/95,95-5146,
-12954,3/8/95,95-6121,
-12955,3/9/95,95-6211,"Supersedes: EO 12903, March 9, 1994"
-12956,3/13/95,95-6588,
-12957,3/15/95,95-6849,"Revoked in part and supplemented by: EO 12959, May 6, 1995
+See: Notice of January 3, 1996; Notice of January 19, 2001; Notice of January 18, 2002; Notice of January 20, 2003; Notice of January 16, 2004; January 17, 2005; Notice of January 18, 2006; Notice of January 18, 2007; Notice of January 18, 2008; Notice of January 15, 2009; Notice of January 20, 2010
+"
+12948,1995-01-30,95-2687,"Amends: EO 12898, February 11, 1994"
+12949,1995-02-09,95-3671,"Amended by: EO 13475, October 7, 2008"
+12950,1995-02-22,95-4908,"Amended by: EO 12952, February 24, 1995"
+12951,1995-02-22,95-5050,
+12952,1995-02-24,95-5129,"Amends: EO 12950, February 22, 1995"
+12953,1995-02-27,95-5146,
+12954,1995-03-08,95-6121,
+12955,1995-03-09,95-6211,"Supersedes: EO 12903, March 9, 1994"
+12956,1995-03-13,95-6588,
+12957,1995-03-15,95-6849,"Revoked in part and supplemented by: EO 12959, May 6, 1995
 Revoked in part by: EO 13059, August 19, 1997
-See: Notice of March 8, 1996; Notice of March 5, 1997; Notice of March 4, 1998; Notice of March 10, 1999; Notice of March 13, 2000; Notice of March 13, 2001; Notice of March 13, 2002; Notice of March 12, 2003; Notice of March 10, 2004; Notice of March 10, 2005; Notice of March 13, 2006; Notice of March 8, 2007; Notice of March 11, 2008; Notice of March 11, 2009; Notice of March 10, 2010; EO 13553, September 28, 2010; EO 13574, May 23, 2011; EO 13590, November 20, 2011"
-12958,4/17/95,95-9941,"Revokes: EO 12356, April 6, 1982
+See: Notice of March 8, 1996; Notice of March 5, 1997; Notice of March 4, 1998; Notice of March 10, 1999; Notice of March 13, 2000; Notice of March 13, 2001; Notice of March 13, 2002; Notice of March 12, 2003; Notice of March 10, 2004; Notice of March 10, 2005; Notice of March 13, 2006; Notice of March 8, 2007; Notice of March 11, 2008; Notice of March 11, 2009; Notice of March 10, 2010; EO 13553, September 28, 2010; EO 13574, May 23, 2011; EO 13590, November 20, 2011
+"
+12958,1995-04-17,95-9941,"Revokes: EO 12356, April 6, 1982
 Amended by: EO 12972, September 18, 1995; EO 13142, November 19, 1999; EO 13292, March 25, 2003
 Revoked by: EO 13526, December 29, 2009
-See: Order of October 13, 1995; Order of February 27, 1996; Order of February 26, 1997; Final rule of July 1, 1997 (62 FR 36984); EO 13231, October 16, 2001; Military order of November 13, 2001 (66 FR 57833); Order of December 10, 2001 (66 FR 64347); EO 13284, January 23, 2003; EO 13311, July 29, 2003; Order of September 17, 2003 (68 FR 55257); EO 13329, February 24, 2004; EO 13354, August 27, 2004; EO 13356, August 27, 2004; Order of April 21, 2005; EO 13387, October 14, 2005; EO 13388, October 25, 2005; EO 13462, February 29, 2008; EO 13467, June 30, 2008; EO 13470, July 30, 2008; EO 13516, October 28, 2009"
-12959,5/6/95,95-11694,"Revokes in part and supplements: EO 12613, October 29, 1987;EO 12957, March 15, 1995
+See: Order of October 13, 1995; Order of February 27, 1996; Order of February 26, 1997; Final rule of July 1, 1997 (62 FR 36984); EO 13231, October 16, 2001; Military order of November 13, 2001 (66 FR 57833); Order of December 10, 2001 (66 FR 64347); EO 13284, January 23, 2003; EO 13311, July 29, 2003; Order of September 17, 2003 (68 FR 55257); EO 13329, February 24, 2004; EO 13354, August 27, 2004; EO 13356, August 27, 2004; Order of April 21, 2005; EO 13387, October 14, 2005; EO 13388, October 25, 2005; EO 13462, February 29, 2008; EO 13467, June 30, 2008; EO 13470, July 30, 2008; EO 13516, October 28, 2009
+"
+12959,1995-05-06,95-11694,"Revokes in part and supplements: EO 12613, October 29, 1987;EO 12957, March 15, 1995
 Revoked in part by: EO 13059, August 19, 1997
-See: Notice of March 8, 1996; Notice of March 5, 1997; Notice of March 4, 1998; Notice of March 10, 1999; Notice of March 13, 2000; Notice of March 13, 2001; Notice of March 13, 2002; Notice of March 12, 2003; Notice of March 10, 2004; Notice of March 10, 2005; Notice of March 13, 2006; Notice of March 8, 2007; Notice of March 11, 2008; Notice of March 11, 2009; Notice of March 10, 2010"
-12960,5/12/95,95-12285,
-12961,5/26/95,95-13484,
-12962,6/7/95,95-14407,"Amended by: EO 13474, September 26, 2008 "
-12963,6/14/95,95-14983,"Amended by: EO 13009, June 14, 1996"
-12964,6/21/95,95-15760,"Amended by: EO 12987, January 31, 1996; EO 13032, December 26, 1996
-Revoked by: EO 13062, September 29, 1997"
-12965,6/27/95,95-16320,"Amends: EO 12852, June 29, 1993
-Note: EO 12965 is nullified by virtue of the Council being abolished by EO 13138, September 30, 1999."
-12966,7/14/95,95-17828,
-12967,7/31/95,95-19174,
-12968,8/2/95,95-19654,"Amended by: EO 13467, June 30, 2008
-See: Final rule of March 26, 1997 (62 FR 17683); Final rule of July 1, 1997 (62 FR 36984); EO 13284, January 23, 2003; EO 13311, July 29, 2003; EO 13462, February 29, 2008; EO 13516, October 28, 2009; EO 13539, April 21, 2010; EO 13549, August 18, 2010"
-12969,8/8/95,95-19972,"Revoked by: EO 13148, April 21, 2000
-See: EO 13101, September 14, 1998"
-12970,9/14/95,95-23338,"Amends: EO 12864, September 15, 1993
-Revoked by: EO 13062, September 29, 1997"
-12971,9/15/95,95-23423,"Amends: EO 12425, June 6, 1983"
-12972,9/18/95,95-23581,"Amends: EO 12958, April 17, 1995"
-12973,9/27/95,95-24649,"Amends: EO 12901, March 3, 1994"
-12974,9/29/95,95-24754,"Continues certain committee established by: EO 11145, March 7, 1964; EO 11183, October 3, 1964; EO 11287, October 24, 1964; EO 11776, March 28, 1974; EO 12131, May 4, 1979; EO 12196, February 26, 1980; EO 12216, June 18, 1980; EO 12345, February 2, 1982; EO 12367, June 15, 1982; EO 12382, September 13, 1982; EO 12871, October 1, 1993; EO 12876, November 1, 1993; EO 12882, November 23, 1993; EO 12900, February 22, 1994; EO 12905, March 25, 1994
+See: Notice of March 8, 1996; Notice of March 5, 1997; Notice of March 4, 1998; Notice of March 10, 1999; Notice of March 13, 2000; Notice of March 13, 2001; Notice of March 13, 2002; Notice of March 12, 2003; Notice of March 10, 2004; Notice of March 10, 2005; Notice of March 13, 2006; Notice of March 8, 2007; Notice of March 11, 2008; Notice of March 11, 2009; Notice of March 10, 2010
+"
+12960,1995-05-12,95-12285,
+12961,1995-05-26,95-13484,
+12962,1995-06-07,95-14407,"Amended by: EO 13474, September 26, 2008 "
+12963,1995-06-14,95-14983,"Amended by: EO 13009, June 14, 1996"
+12964,1995-06-21,95-15760,"Amended by: EO 12987, January 31, 1996; EO 13032, December 26, 1996
+Revoked by: EO 13062, September 29, 1997
+"
+12965,1995-06-27,95-16320,"Amends: EO 12852, June 29, 1993
+Note: EO 12965 is nullified by virtue of the Council being abolished by EO 13138, September 30, 1999.
+"
+12966,1995-07-14,95-17828,
+12967,1995-07-31,95-19174,
+12968,1995-08-02,95-19654,"Amended by: EO 13467, June 30, 2008
+See: Final rule of March 26, 1997 (62 FR 17683); Final rule of July 1, 1997 (62 FR 36984); EO 13284, January 23, 2003; EO 13311, July 29, 2003; EO 13462, February 29, 2008; EO 13516, October 28, 2009; EO 13539, April 21, 2010; EO 13549, August 18, 2010
+"
+12969,1995-08-08,95-19972,"Revoked by: EO 13148, April 21, 2000
+See: EO 13101, September 14, 1998
+"
+12970,1995-09-14,95-23338,"Amends: EO 12864, September 15, 1993
+Revoked by: EO 13062, September 29, 1997
+"
+12971,1995-09-15,95-23423,"Amends: EO 12425, June 6, 1983"
+12972,1995-09-18,95-23581,"Amends: EO 12958, April 17, 1995"
+12973,1995-09-27,95-24649,"Amends: EO 12901, March 3, 1994"
+12974,1995-09-29,95-24754,"Continues certain committee established by: EO 11145, March 7, 1964; EO 11183, October 3, 1964; EO 11287, October 24, 1964; EO 11776, March 28, 1974; EO 12131, May 4, 1979; EO 12196, February 26, 1980; EO 12216, June 18, 1980; EO 12345, February 2, 1982; EO 12367, June 15, 1982; EO 12382, September 13, 1982; EO 12871, October 1, 1993; EO 12876, November 1, 1993; EO 12882, November 23, 1993; EO 12900, February 22, 1994; EO 12905, March 25, 1994
 Revokes in part: EO 12844, April 21, 1993
 Supersedes: EO 12869, September 30, 1993
 Revokes: EO 12878, November 5, 1993
 Superseded by: EO 13062, September 29, 1997
-See: EO 12887, December 23, 1993; EO 12912, April 29, 1994"
-12975,10/3/95,95-24921,"Amended by: EO 13018, September 16, 1996; EO 13046, May 16, 1997; EO 13137, September 15, 1999
-Revoked by: EO 13316, September 17, 2003"
-12976,10/5/95,95-25256,
-12977,10/19/95,95-26497,"Amends: EO 13286, February 28, 2003"
-12978,10/21/95,95-26569,"Amended by: EO 13286, February 28, 2003
-See: Notice of October 16, 1996; Notice of October 17, 1997; Notice of October 19, 1998; Notice of October 19, 1999; Notice of October 19, 2000; Notice of October 16, 2001; Notice of October 16, 2002; Notice of October 16, 2003; Notice of October 19, 2004; Notice of October 19, 2005; Notice of October 19, 2006; Notice of October 18, 2007; Notice of October 16, 2008; Notice of October 16, 2009"
-12979,10/25/95,95-26944,
-12980,11/17/95,95-28630,"Amends: EO 12852, June 29, 1993
-Note: EO 12980 is nullified by virtue of the Council being abolished by EO 13138, September 30, 1999."
-12981,12/5/95,95-30106,"Amended by: EO 13020, October 12, 1996; EO 13026, November 15, 1996
-See: EO 11533, June 4, 1970; EO 12002, July 7, 1977; EO 12924, August 19, 1994; EO 13206, April 4, 2001"
-12982,12/8/95,95-30451,"Amends: EO 13286, February 28, 2003
-See: Department of Defense notice of February 11, 1997 (62 FR 6953)"
-12983,12/21/95,95-31437,"Amends: EO 12871, October 1, 1993
-See: EO 13156, May 17, 2000; EO 13203, February 17, 2001"
-12984,12/28/95,95-31595,"Amended by: EO 12990, February 29, 1996
-Superseded by: EO 13033, December 27, 1996"
-12985,1/11/96,96-622,"Amended by: EO 13286, February 28, 2003
-See: EO 13154, May 3, 2000"
-12986,1/18/96,96-955,
-12987,1/31/96,96-2407,"Amends: EO 12964, June 21, 1995
+See: EO 12887, December 23, 1993; EO 12912, April 29, 1994
+"
+12975,1995-10-03,95-24921,"Amended by: EO 13018, September 16, 1996; EO 13046, May 16, 1997; EO 13137, September 15, 1999
+Revoked by: EO 13316, September 17, 2003
+"
+12976,1995-10-05,95-25256,
+12977,1995-10-19,95-26497,"Amends: EO 13286, February 28, 2003"
+12978,1995-10-21,95-26569,"Amended by: EO 13286, February 28, 2003
+See: Notice of October 16, 1996; Notice of October 17, 1997; Notice of October 19, 1998; Notice of October 19, 1999; Notice of October 19, 2000; Notice of October 16, 2001; Notice of October 16, 2002; Notice of October 16, 2003; Notice of October 19, 2004; Notice of October 19, 2005; Notice of October 19, 2006; Notice of October 18, 2007; Notice of October 16, 2008; Notice of October 16, 2009
+"
+12979,1995-10-25,95-26944,
+12980,1995-11-17,95-28630,"Amends: EO 12852, June 29, 1993
+Note: EO 12980 is nullified by virtue of the Council being abolished by EO 13138, September 30, 1999.
+"
+12981,1995-12-05,95-30106,"Amended by: EO 13020, October 12, 1996; EO 13026, November 15, 1996
+See: EO 11533, June 4, 1970; EO 12002, July 7, 1977; EO 12924, August 19, 1994; EO 13206, April 4, 2001
+"
+12982,1995-12-08,95-30451,"Amends: EO 13286, February 28, 2003
+See: Department of Defense notice of February 11, 1997 (62 FR 6953)
+"
+12983,1995-12-21,95-31437,"Amends: EO 12871, October 1, 1993
+See: EO 13156, May 17, 2000; EO 13203, February 17, 2001
+"
+12984,1995-12-28,95-31595,"Amended by: EO 12990, February 29, 1996
+Superseded by: EO 13033, December 27, 1996
+"
+12985,1996-01-11,96-622,"Amended by: EO 13286, February 28, 2003
+See: EO 13154, May 3, 2000
+"
+12986,1996-01-18,96-955,
+12987,1996-01-31,96-2407,"Amends: EO 12964, June 21, 1995
 See: EO 13032, December 26, 1996
-Revoked by: EO 13062, September 29, 1997"
-12988,2/5/96,96-2755,"Revokes: EO 12778, October 23, 1991
+Revoked by: EO 13062, September 29, 1997
+"
+12988,1996-02-05,96-2755,"Revokes: EO 12778, October 23, 1991
 Supplemented by: EO 13083, May 14, 1998 (which was suspended by EO 13095, August 5, 1998); EO 13084, May 14, 1998; EO 13132, August 4, 1999
-See: EO 12866, September 30, 1993; EO 13175, November 6, 2000"
-12989,2/13/96,96-3646,"Amended by: EO 13286, February 28, 2003; EO 13466, June 26, 2008"
-12990,2/29/96,96-5263,"Amends: EO 12984, December 28, 1995
-Superseded by: EO 13033, December 27, 1996"
-12991,3/6/96,96-5832,"Amends: EO 12131, May 4, 1979"
-12992,3/15/96,96-6803,"Amended by: EO 13023, November 6, 1996; EO 13284, January 23, 2003"
-12993,3/21/96,96-7460,
-12994,3/21/96,96-7461,"Amended by: EO 13062, September 29, 1997; EO 13138, September 30, 1999; EO 13225, September 28, 2001; EO 13309, July 25, 2003; EO 13385, September 29, 2005; EO 13446, September 28, 2007
+See: EO 12866, September 30, 1993; EO 13175, November 6, 2000
+"
+12989,1996-02-13,96-3646,"Amended by: EO 13286, February 28, 2003; EO 13466, June 26, 2008"
+12990,1996-02-29,96-5263,"Amends: EO 12984, December 28, 1995
+Superseded by: EO 13033, December 27, 1996
+"
+12991,1996-03-06,96-5832,"Amends: EO 12131, May 4, 1979"
+12992,1996-03-15,96-6803,"Amended by: EO 13023, November 6, 1996; EO 13284, January 23, 2003"
+12993,1996-03-21,96-7460,
+12994,1996-03-21,96-7461,"Amended by: EO 13062, September 29, 1997; EO 13138, September 30, 1999; EO 13225, September 28, 2001; EO 13309, July 25, 2003; EO 13385, September 29, 2005; EO 13446, September 28, 2007
 Continued by: EO 13446, September 28, 2007; EO 13511, September 29, 2009
-See: EO 13585, September 30, 2011"
-12995,3/25/96,96-7773,"Amends: EO 12873, October 20, 1993"
-12996,3/25/96,96-7774,
-12997,4/1/96,96-8520,
-12998,4/5/96,96-9033,"Amends: EO 11880, October 2, 1975
-Revoked by: EO 13242, December 18, 2001"
-12999,4/17/96,96-9866,"Supersedes: EO 12821, November 16, 1992"
-13000,4/24/96,96-10550,"Revokes: EO 12787, December 31, 1991
-Revoked by: EO 13394, December 22, 2005"
-13001,5/8/96,96-11966,
-13002,5/13/96,96-12535,
-13003,5/15/96,96-12720,
-13004,5/17/96,96-13081,
-13005,5/21/96,96-13306,
-13006,5/21/96,96-13305,"See: EO 11593, May 13, 1971; EO 12072, August 16, 1978"
-13007,5/24/96,96-13597,
-13008,6/3/96,96-14372,"Amends: EO 12880, November 16, 1993"
-13009,6/14/96,96-15656,"Amends: EO 12963, June 14, 1995"
-13010,7/15/96,96-18351,"Amended by: EO 13025, November 13, 1996; EO 13041, April 3, 1997; EO 13064, October 11, 1997; EO 13077, March 10, 1998
+See: EO 13585, September 30, 2011
+"
+12995,1996-03-25,96-7773,"Amends: EO 12873, October 20, 1993"
+12996,1996-03-25,96-7774,
+12997,1996-04-01,96-8520,
+12998,1996-04-05,96-9033,"Amends: EO 11880, October 2, 1975
+Revoked by: EO 13242, December 18, 2001
+"
+12999,1996-04-17,96-9866,"Supersedes: EO 12821, November 16, 1992"
+13000,1996-04-24,96-10550,"Revokes: EO 12787, December 31, 1991
+Revoked by: EO 13394, December 22, 2005
+"
+13001,1996-05-08,96-11966,
+13002,1996-05-13,96-12535,
+13003,1996-05-15,96-12720,
+13004,1996-05-17,96-13081,
+13005,1996-05-21,96-13306,
+13006,1996-05-21,96-13305,"See: EO 11593, May 13, 1971; EO 12072, August 16, 1978"
+13007,1996-05-24,96-13597,
+13008,1996-06-03,96-14372,"Amends: EO 12880, November 16, 1993"
+13009,1996-06-14,96-15656,"Amends: EO 12963, June 14, 1995"
+13010,1996-07-15,96-18351,"Amended by: EO 13025, November 13, 1996; EO 13041, April 3, 1997; EO 13064, October 11, 1997; EO 13077, March 10, 1998
 See: EO 13130, July 14, 1999
-Revoked in part by: EO 13138, September 30, 1999 "
-13011,7/16/96,96-18555,"Amended by: EO 13284, January 23, 2003; EO 13286, February 28, 2003
+Revoked in part by: EO 13138, September 30, 1999 
+"
+13011,1996-07-16,96-18555,"Amended by: EO 13284, January 23, 2003; EO 13286, February 28, 2003
 See: EO 13103, September 30, 1998
-Revoked by: EO 13403, May 12, 2006"
-13012,7/18/96,96-18846,
-13013,8/6/96,96-20531,"Amends: EO 10163, September 25, 1950 "
-13014,8/15/96,96-13014,"Supersedes: EO 12143, June 22, 1979"
-13015,8/22/96,96-21996,"Revoked by: EO 13062, September 29, 1997"
-13016,8/28/96,96-22462,"Amends: EO 12580, January 23, 1987"
-13017,9/5/96,96-23187,"Amended by: EO 13040, March 25, 1997; EO 13056, July 21, 1997
-Revoked by: EO 13138 September 30, 1999"
-13018,9/16/96,96-24048,"Amends: EO 12975, October 13, 1995
-See: EO 13316, September 17, 2003"
-13019,9/28/96,96-25577,
-13020,10/12/96,96-26837,"Amends: EO 12981, December 5, 1995
-See: EO 12924, August 19, 1995"
-13021,10/19/96,96-27352,"Amended by: EO 13104, October 19, 1998; EO 13138, September 30,1999; EO 13225, September 28, 2001
-Revoked by: EO 13270, July 3, 2002"
-13022,10/31/96,96-28509,"Supersedes in part: EO 199-A, January 20, 1903; EO 8682, February 14, 1941; EO 8729, April 2, 1941; EO 11048, September 4, 1962
-See: EO 11593, May 13, 1971; EO 12996, March 25, 1996"
-13023,11/6/96,96-28938,"Amends: EO 12992, March 15, 1996"
-13024,11/7/96,96-29109,"Amends: EO 12015, October 26, 1977"
-13025,11/13/96,96-29597,"Amends: EO 13010, July 15, 1996
-Note: EO 13025 is nullified in part by virtue of the Advisory Committee of the President's Commission on Critical Infrastructure Protection being abolished by EO 13138, September 30, 1999."
-13026,11/15/96,96-29692,"Amends: EO 12981, December 5, 1995
-See: EO 13206, April 4, 2001; EO 13222, August 17, 2001"
-13027,11/15/96,96-29815,
-13028,12/3/96,96-31164,"Amends: EO 12757, March 19, 1991
+Revoked by: EO 13403, May 12, 2006
+"
+13012,1996-07-18,96-18846,
+13013,1996-08-06,96-20531,"Amends: EO 10163, September 25, 1950 "
+13014,1996-08-15,96-13014,"Supersedes: EO 12143, June 22, 1979"
+13015,1996-08-22,96-21996,"Revoked by: EO 13062, September 29, 1997"
+13016,1996-08-28,96-22462,"Amends: EO 12580, January 23, 1987"
+13017,1996-09-05,96-23187,"Amended by: EO 13040, March 25, 1997; EO 13056, July 21, 1997
+Revoked by: EO 13138 September 30, 1999
+"
+13018,1996-09-16,96-24048,"Amends: EO 12975, October 13, 1995
+See: EO 13316, September 17, 2003
+"
+13019,1996-09-28,96-25577,
+13020,1996-10-12,96-26837,"Amends: EO 12981, December 5, 1995
+See: EO 12924, August 19, 1995
+"
+13021,1996-10-19,96-27352,"Amended by: EO 13104, October 19, 1998; EO 13138, September 30,1999; EO 13225, September 28, 2001
+Revoked by: EO 13270, July 3, 2002
+"
+13022,1996-10-31,96-28509,"Supersedes in part: EO 199-A, January 20, 1903; EO 8682, February 14, 1941; EO 8729, April 2, 1941; EO 11048, September 4, 1962
+See: EO 11593, May 13, 1971; EO 12996, March 25, 1996
+"
+13023,1996-11-06,96-28938,"Amends: EO 12992, March 15, 1996"
+13024,1996-11-07,96-29109,"Amends: EO 12015, October 26, 1977"
+13025,1996-11-13,96-29597,"Amends: EO 13010, July 15, 1996
+Note: EO 13025 is nullified in part by virtue of the Advisory Committee of the President's Commission on Critical Infrastructure Protection being abolished by EO 13138, September 30, 1999.
+"
+13026,1996-11-15,96-29692,"Amends: EO 12981, December 5, 1995
+See: EO 13206, April 4, 2001; EO 13222, August 17, 2001
+"
+13027,1996-11-15,96-29815,
+13028,1996-12-03,96-31164,"Amends: EO 12757, March 19, 1991
 See: EO 12823, December 3, 1996; EO 13131, July 22, 1999
-Revoked by: EO 13345, July 8, 2004"
-13029,12/3/96,96-31165,
-13030,12/12/96,96-32128,"Amends: EO 11958, January 18, 1977; EO 12163, September 29, 1979; EO 12884, December 1, 1993"
-13031,12/13/96,96-32195,"Suspersedes: EO 12844, April 21, 1993
+Revoked by: EO 13345, July 8, 2004
+"
+13029,1996-12-03,96-31165,
+13030,1996-12-12,96-32128,"Amends: EO 11958, January 18, 1977; EO 12163, September 29, 1979; EO 12884, December 1, 1993"
+13031,1996-12-13,96-32195,"Suspersedes: EO 12844, April 21, 1993
 Revoked by: EO 13149, April 21, 2000
-See: EO 13101, September 14, 1998"
-13032,12/26/96,96-33336,"Amends: EO 12964, June 21, 1995
-Revoked by: EO 13062, September 29, 1997"
-13033,12/27/96,96-33384,"Amends: EO 12961, May 26, 1995
-Note: EO 13034 is nullified by virtue of the Committee being abolished by EO 13138, September 30, 1999."
-13034,1/30/97,97-2818,
-13035,2/11/97,97-3992,"Amended by: EO 13092, July 24, 1998; EO 13113, February 10, 1999; EO 13200, February 11, 2001; EO 13215, May 31, 2001; EO 13305, May 28, 2003
-See: Public Law 105-305, October 28, 1998 (112 Stat. 2919)"
-13036,2/15/97,97-4302,
-13037,3/3/97,97-5728,"Amended by: EO 13066, October 29, 1997; EO 13108, December 11, 1998
-Revoked by: EO 13138, September 30, 1999"
-13038,3/11/97,97-6571,"Amended by: EO 13062, September 29, 1997; EO 13065, October 22, 1997; EO 13081, April 30, 1998; EO 13102, September 25, 1998
-Revoked by: EO 13138, September 30, 1999"
-13039,3/11/97,97-6703,"Amends: EO 12171, November 19, 1979"
-13040,3/25/97,97-8123,"Amends: EO 13017, September 5, 1996
-Note: EO 13040 is nullified by virtue of the Commission being abolished by EO 13138, September 30, 1999."
-13041,4/3/97,97-9200,"Amends: EO 13010, July 15, 1996
-Note: EO 13041 is nullified in part by virtue of the Committee being abolished by EO 13138, September 30, 1999."
-13042,4/9/97,97-9700,
-13043,4/16/97,97-10331,
-13044,4/18/97,97-10605,"Amends: EO 12752, February 25, 1991"
-13045,4/21/97,97-10695,"Amended by: EO 13229, October 9, 2001; EO 13296, April 18, 2003"
-13046,5/16/97,97-13450,"Amends: EO 12975, October 3, 1995
-See: EO 13316, September 17, 2003"
-13047,5/20/97,97-13704,"Amended by: EO 13310, July 28, 2003
-See: EO 13448, October 18, 2007; EO 13464, April 30, 2008; Notice of May 18, 1998; Notice of May 16, 2003; Notice of May 17, 2004; Notice of May 17, 2005; Notice of May 18, 2006; Notice of May 17, 2007; Notice of May 16, 2008; Notice of May 14, 2009; Notice of May 13, 2010"
-13048,6/10/97,97-15828,"Amended by: EO 13284, January 23, 2003
-Revokes: EO 12552, February 25, 1986; EO 12637, April 27, 1988; EO 12816, October 14, 1992"
-13049,6/11/97,97-15879,
-13050,6/13/97,97-16080,
-13051,6/24/97,97-16957,
-13052,6/30/97,97-17512,
-13053,6/30/97,97-17566,"Amends: EO 12852, June 29, 1993
-Note: EO 13053 is nullified by virtue of the Council being abolished by EO 13138, September 30, 1999."
-13054,7/7/97,97-18288,"Amended by: EO 13062, September 29, 1997"
-13055,7/15/97,97-19341,
-13056,7/21/97,97-19562,"Amends: EO 13017, September 5, 1996
-Note: EO 13056 is nullified by virtue of the Commission being abolished by EO 13138, September 30, 1999."
-13057,7/26/97,97-20497,
-13058,8/9/97,97-21607,
-13059,8/19/97,97-22482,"Revokes in part: EO 12613, October 29, 1987; EO 12957, March 15, 1995; EO 12959, May 6, 1995
-See: Notice of March 4, 1998; Notice of March 10, 1999; Notice of March 13, 2000; Notice of March 13, 2001; Notice of March 12, 2003; Notice of March 10, 2004; Notice of March 10, 2005; Notice of March 13, 2006; Notice of March 8, 2007; Notice of March 11, 2008; Notice of March 11, 2009; Notice of March 10, 2010"
-13060,8/21/97,97-22703,
-13061,9/11/97,97-24591,"Amended by: EO 13093, July 27, 1998"
-13062,9/29/97,97-26364,"Amends: EO 13038, March 11, 1997 (in part); EO 13054, July 7, 1997 (in part) 
+See: EO 13101, September 14, 1998
+"
+13032,1996-12-26,96-33336,"Amends: EO 12964, June 21, 1995
+Revoked by: EO 13062, September 29, 1997
+"
+13033,1996-12-27,96-33384,"Amends: EO 12961, May 26, 1995
+Note: EO 13034 is nullified by virtue of the Committee being abolished by EO 13138, September 30, 1999.
+"
+13034,1997-01-30,97-2818,
+13035,1997-02-11,97-3992,"Amended by: EO 13092, July 24, 1998; EO 13113, February 10, 1999; EO 13200, February 11, 2001; EO 13215, May 31, 2001; EO 13305, May 28, 2003
+See: Public Law 105-305, October 28, 1998 (112 Stat. 2919)
+"
+13036,1997-02-15,97-4302,
+13037,1997-03-03,97-5728,"Amended by: EO 13066, October 29, 1997; EO 13108, December 11, 1998
+Revoked by: EO 13138, September 30, 1999
+"
+13038,1997-03-11,97-6571,"Amended by: EO 13062, September 29, 1997; EO 13065, October 22, 1997; EO 13081, April 30, 1998; EO 13102, September 25, 1998
+Revoked by: EO 13138, September 30, 1999
+"
+13039,1997-03-11,97-6703,"Amends: EO 12171, November 19, 1979"
+13040,1997-03-25,97-8123,"Amends: EO 13017, September 5, 1996
+Note: EO 13040 is nullified by virtue of the Commission being abolished by EO 13138, September 30, 1999.
+"
+13041,1997-04-03,97-9200,"Amends: EO 13010, July 15, 1996
+Note: EO 13041 is nullified in part by virtue of the Committee being abolished by EO 13138, September 30, 1999.
+"
+13042,1997-04-09,97-9700,
+13043,1997-04-16,97-10331,
+13044,1997-04-18,97-10605,"Amends: EO 12752, February 25, 1991"
+13045,1997-04-21,97-10695,"Amended by: EO 13229, October 9, 2001; EO 13296, April 18, 2003"
+13046,1997-05-16,97-13450,"Amends: EO 12975, October 3, 1995
+See: EO 13316, September 17, 2003
+"
+13047,1997-05-20,97-13704,"Amended by: EO 13310, July 28, 2003
+See: EO 13448, October 18, 2007; EO 13464, April 30, 2008; Notice of May 18, 1998; Notice of May 16, 2003; Notice of May 17, 2004; Notice of May 17, 2005; Notice of May 18, 2006; Notice of May 17, 2007; Notice of May 16, 2008; Notice of May 14, 2009; Notice of May 13, 2010
+"
+13048,1997-06-10,97-15828,"Amended by: EO 13284, January 23, 2003
+Revokes: EO 12552, February 25, 1986; EO 12637, April 27, 1988; EO 12816, October 14, 1992
+"
+13049,1997-06-11,97-15879,
+13050,1997-06-13,97-16080,
+13051,1997-06-24,97-16957,
+13052,1997-06-30,97-17512,
+13053,1997-06-30,97-17566,"Amends: EO 12852, June 29, 1993
+Note: EO 13053 is nullified by virtue of the Council being abolished by EO 13138, September 30, 1999.
+"
+13054,1997-07-07,97-18288,"Amended by: EO 13062, September 29, 1997"
+13055,1997-07-15,97-19341,
+13056,1997-07-21,97-19562,"Amends: EO 13017, September 5, 1996
+Note: EO 13056 is nullified by virtue of the Commission being abolished by EO 13138, September 30, 1999.
+"
+13057,1997-07-26,97-20497,
+13058,1997-08-09,97-21607,
+13059,1997-08-19,97-22482,"Revokes in part: EO 12613, October 29, 1987; EO 12957, March 15, 1995; EO 12959, May 6, 1995
+See: Notice of March 4, 1998; Notice of March 10, 1999; Notice of March 13, 2000; Notice of March 13, 2001; Notice of March 12, 2003; Notice of March 10, 2004; Notice of March 10, 2005; Notice of March 13, 2006; Notice of March 8, 2007; Notice of March 11, 2008; Notice of March 11, 2009; Notice of March 10, 2010
+"
+13060,1997-08-21,97-22703,
+13061,1997-09-11,97-24591,"Amended by: EO 13093, July 27, 1998"
+13062,1997-09-29,97-26364,"Amends: EO 13038, March 11, 1997 (in part); EO 13054, July 7, 1997 (in part) 
 Revokes: EO 12864, September 15, 1993; EO 12891, January 15, 1994; EO 12946, January 20, 1995; EO 12964, June 21, 1995; EO 13015, August 22, 1996
 Supersedes: EO 12974, September 29, 1995
 Amended by: EO 13065, October 22, 1997
 Superseded by: EO 13138, September 30, 1999EO 13038, March 11, 1997 (in part); EO 13054, July 7, 1997 (in part)
 See:EO 13065, October 22, 1997
-Note: EO 13062 is nullified in part by virtue of the Advisory Committee on Public Interest Obligations of Digital Television Broadcasters being abolished by EO 13138, September 30, 1999."
-13063,9/30/97,97-26365,"Amends: EO 12154, September 4, 1979"
-13064,10/11/97,97-27644,"Amends: EO 13010, July 15, 1996
-Note: EO 13064 is nullified in part by virtue of the Committee being abolished by EO 13138, September 30, 1999."
-13065,10/22/97,97-28427,"Amends: EO 13038, March 11, 1997
+Note: EO 13062 is nullified in part by virtue of the Advisory Committee on Public Interest Obligations of Digital Television Broadcasters being abolished by EO 13138, September 30, 1999.
+"
+13063,1997-09-30,97-26365,"Amends: EO 12154, September 4, 1979"
+13064,1997-10-11,97-27644,"Amends: EO 13010, July 15, 1996
+Note: EO 13064 is nullified in part by virtue of the Committee being abolished by EO 13138, September 30, 1999.
+"
+13065,1997-10-22,97-28427,"Amends: EO 13038, March 11, 1997
 See:EO 13062, September 29, 1997
-Note: EO 13065 is nullified by virtue of the Committee being abolished by EO 13138, September 30, 1999."
-13066,10/29/97,97-29126,"Amends: EO 13037, March 3, 1997
-Note: EO 13066 is nullified by virtue of the Commission being abolished by EO 13138, September 30, 1999."
-13067,11/3/97,97-29464,
-13068,11/25/97,97-31456,
-13069,12/12/97,97-33034,
-13070,12/15/97,97-33299,"Amends: EO 12863, September 13, 1993
+Note: EO 13065 is nullified by virtue of the Committee being abolished by EO 13138, September 30, 1999.
+"
+13066,1997-10-29,97-29126,"Amends: EO 13037, March 3, 1997
+Note: EO 13066 is nullified by virtue of the Commission being abolished by EO 13138, September 30, 1999.
+"
+13067,1997-11-03,97-29464,
+13068,1997-11-25,97-31456,
+13069,1997-12-12,97-33034,
+13070,1997-12-15,97-33299,"Amends: EO 12863, September 13, 1993
 Amended by: EO 13301, May 14, 2003
-See: EO 13376, April 13, 2005"
-13071,12/29/97,97-34224,"Supersedes: EO 13033, December 27, 1996
-Superseded by: EO 13106, December 7, 1998"
-13072,2/2/98,98-3135,
-13073,2/4/98,98-3229,"Amended by: EO 13127, June 14, 1999"
-13074,2/9/98,98-3847,"Amends: EO 12656, November 18, 1988
-Note: This Executive order is concerned with force deployment with respect to evacuation of U.S. citizens in threatened areas overseas."
-13075,2/19/98,98-4816,"Revoked by: EO 13225, September 28, 2001"
-13076,2/24/98,98-5119,"Amended by: EO 13286, February 28, 2003
-See: Proc. 6867, March 1, 1996"
-13077,3/10/98,98-6628,"Amends: EO 13010, July 15, 1996
-Note: EO 13077 is nullified by virtue of the Committee being abolished by EO 13138, September 30, 1999."
-13078,3/13/98,98-7139,"Amended by: EO 13172, October 25, 2000; EO 13187, January 10, 2001; EO 13583, August 18, 2011"
-13079,4/7/98,98-9599,
-13080,4/7/98,98-9709,"Amended by: EO 13093, July 27, 1998
-Revoked by: EO 13225, September 28, 2001"
-13081,4/30/98,98-11922,"Amends: EO 13038, March 11, 1997
-Note: EO 13081 is nullified by virtue of the Committee being abolished by EO 13138, September 30, 1999."
-13082,5/8/98,98-12963,"Amends: EO 9080, February 27, 1942
-See: EO 10692, December 22, 1956; EO 12377, August 6, 1982"
-13083,5/14/98,98-13552,"Supplements: EO 12866, September 30, 1993; EO 12988, February 5, 1996
+See: EO 13376, April 13, 2005
+"
+13071,1997-12-29,97-34224,"Supersedes: EO 13033, December 27, 1996
+Superseded by: EO 13106, December 7, 1998
+"
+13072,1998-02-02,98-3135,
+13073,1998-02-04,98-3229,"Amended by: EO 13127, June 14, 1999"
+13074,1998-02-09,98-3847,"Amends: EO 12656, November 18, 1988
+Note: This Executive order is concerned with force deployment with respect to evacuation of U.S. citizens in threatened areas overseas.
+"
+13075,1998-02-19,98-4816,"Revoked by: EO 13225, September 28, 2001"
+13076,1998-02-24,98-5119,"Amended by: EO 13286, February 28, 2003
+See: Proc. 6867, March 1, 1996
+"
+13077,1998-03-10,98-6628,"Amends: EO 13010, July 15, 1996
+Note: EO 13077 is nullified by virtue of the Committee being abolished by EO 13138, September 30, 1999.
+"
+13078,1998-03-13,98-7139,"Amended by: EO 13172, October 25, 2000; EO 13187, January 10, 2001; EO 13583, August 18, 2011"
+13079,1998-04-07,98-9599,
+13080,1998-04-07,98-9709,"Amended by: EO 13093, July 27, 1998
+Revoked by: EO 13225, September 28, 2001
+"
+13081,1998-04-30,98-11922,"Amends: EO 13038, March 11, 1997
+Note: EO 13081 is nullified by virtue of the Committee being abolished by EO 13138, September 30, 1999.
+"
+13082,1998-05-08,98-12963,"Amends: EO 9080, February 27, 1942
+See: EO 10692, December 22, 1956; EO 12377, August 6, 1982
+"
+13083,1998-05-14,98-13552,"Supplements: EO 12866, September 30, 1993; EO 12988, February 5, 1996
 Revokes: EO 12612, October 26, 1987; EO 12875, October 26, 1993
 Suspended by: EO 13095, August 5, 1998
 See: EO 13084, May 14, 1998; Public Law 105-277 (sec. 425)
-Revoked by: EO 13132, August 4, 1999"
-13084,5/14/98,98-13553,"Supplements: EO 12866, September 30, 1993; EO 12988, February 5, 1996; Memorandum of April 29, 1994 (Government-to-Government Relations With Native American Tribal Governments)
+Revoked by: EO 13132, August 4, 1999
+"
+13084,1998-05-14,98-13553,"Supplements: EO 12866, September 30, 1993; EO 12988, February 5, 1996; Memorandum of April 29, 1994 (Government-to-Government Relations With Native American Tribal Governments)
 Revoked by: EO 13175, November 6, 2000
-See: EO 13083, May 14, 1998"
-13085,5/26/98,98-14407,
-13086,5/27/98,98-14688,"Amends: EO 12473, April 13, 1984
-See: EO 12484, July 13, 1984; EO 12550, February 19, 1986; EO 12586, March 3, 1987; EO 12708, March 23, 1990; EO 12767, June 27, 1991; EO 12888, December 23, 1993; EO 12936, November 10, 1994; EO 12960, May 12, 1995; EO 13140, October 6, 1999"
-13087,5/28/98,98-14689,"Amends: EO 11478, August 8, 1969
+See: EO 13083, May 14, 1998
+"
+13085,1998-05-26,98-14407,
+13086,1998-05-27,98-14688,"Amends: EO 12473, April 13, 1984
+See: EO 12484, July 13, 1984; EO 12550, February 19, 1986; EO 12586, March 3, 1987; EO 12708, March 23, 1990; EO 12767, June 27, 1991; EO 12888, December 23, 1993; EO 12936, November 10, 1994; EO 12960, May 12, 1995; EO 13140, October 6, 1999
+"
+13087,1998-05-28,98-14689,"Amends: EO 11478, August 8, 1969
 See: Proc. 7316, June 2, 2000 (65 FR 36051)
-Note: This Executive order expands equal employment policy in the Federal Government by prohibiting discrimination based on sexual orientation."
-13088,6/9/98,98-15888,"Amended by: EO 13121, April 30, 1999; EO 13192, January 17, 2001
+Note: This Executive order expands equal employment policy in the Federal Government by prohibiting discrimination based on sexual orientation.
+"
+13088,1998-06-09,98-15888,"Amended by: EO 13121, April 30, 1999; EO 13192, January 17, 2001
 See: Notice of May 25, 2000; Notice of May 24, 2001
-Revoked by: EO 13304, May 28, 2003"
-13089,6/11/98,98-16161,"See: EO 13178, December 4, 2000"
-13090,6/29/98,98-17828,"Amended by: EO 13136, September 3, 1999
-Revoked by: EO 13225, September 28, 2001"
-13091,6/29/98,98-17829,"Amends: EO 11958, January 18, 1977; EO 12163, September 29, 1979"
-13092,7/24/98,98-20315,"Amends: EO 13035, February 11, 1997
-See: EO 13200, February 11, 2001; EO 13215, May 31, 2001"
-13093,7/27/98,98-20450,"Amends: EO 13061, September 11, 1997; EO 13080, April 30, 1998"
-13094,7/28/98,98-20590,"Amends: EO 12938, November 14, 1994
-See: Notice of November 6, 2002; Notice of October 29, 2003; Notice of November 4, 2004; EO 13382, June 28, 2005; Notice of October 25, 2005; Notice of October 27, 2006; Notice of November 8, 2007; Notice of November 10, 2008; Notice of November 6, 2009"
-13095,8/5/98,98-21400,"Suspends: EO 13083, May 14, 1998
+Revoked by: EO 13304, May 28, 2003
+"
+13089,1998-06-11,98-16161,"See: EO 13178, December 4, 2000"
+13090,1998-06-29,98-17828,"Amended by: EO 13136, September 3, 1999
+Revoked by: EO 13225, September 28, 2001
+"
+13091,1998-06-29,98-17829,"Amends: EO 11958, January 18, 1977; EO 12163, September 29, 1979"
+13092,1998-07-24,98-20315,"Amends: EO 13035, February 11, 1997
+See: EO 13200, February 11, 2001; EO 13215, May 31, 2001
+"
+13093,1998-07-27,98-20450,"Amends: EO 13061, September 11, 1997; EO 13080, April 30, 1998"
+13094,1998-07-28,98-20590,"Amends: EO 12938, November 14, 1994
+See: Notice of November 6, 2002; Notice of October 29, 2003; Notice of November 4, 2004; EO 13382, June 28, 2005; Notice of October 25, 2005; Notice of October 27, 2006; Notice of November 8, 2007; Notice of November 10, 2008; Notice of November 6, 2009
+"
+13095,1998-08-05,98-21400,"Suspends: EO 13083, May 14, 1998
 Note: Suspends Executive order dealing with new federalism provisions.
-Revoked by: EO 13132, August 4, 1999"
-13096,8/6/98,98-21643,"See: Proc. 7246, October 30, 1999.
-Revoked by: EO 13336, April 30, 2004"
-13097,8/7/98,98-21710,
-13098,8/18/98,98-22595,"See: EO 12865, September 26, 1993; Notice of September 22, 2000; Notice of September 24, 2001; Notice of September 23, 2002 (67 FR 60105)
-Revoked by: EO 13298, May 6, 2003"
-13099,8/20/98,98-22940,"Amends: EO 12947, January 23, 1995
-See: EO 13371, February 16, 2005; Notice of January 19, 2000; Notice of January 19, 2001; Notice of January 18, 2002; Notice of January 20, 2003; Notice of January 16, 2004; Notice of January 17, 2005; Notice of January 18, 2006; Notice of January 18, 2007; Notice of January 18, 2008; Notice of January 15, 2009; Notice of January 20, 2010"
-13100,8/25/98,98-23258,"Amended by: EO 13286, February 28, 2003"
-13101,9/14/98,98-25023,"Revokes: EO 12873, October 20, 1993
+Revoked by: EO 13132, August 4, 1999
+"
+13096,1998-08-06,98-21643,"See: Proc. 7246, October 30, 1999.
+Revoked by: EO 13336, April 30, 2004
+"
+13097,1998-08-07,98-21710,
+13098,1998-08-18,98-22595,"See: EO 12865, September 26, 1993; Notice of September 22, 2000; Notice of September 24, 2001; Notice of September 23, 2002 (67 FR 60105)
+Revoked by: EO 13298, May 6, 2003
+"
+13099,1998-08-20,98-22940,"Amends: EO 12947, January 23, 1995
+See: EO 13371, February 16, 2005; Notice of January 19, 2000; Notice of January 19, 2001; Notice of January 18, 2002; Notice of January 20, 2003; Notice of January 16, 2004; Notice of January 17, 2005; Notice of January 18, 2006; Notice of January 18, 2007; Notice of January 18, 2008; Notice of January 15, 2009; Notice of January 20, 2010
+"
+13100,1998-08-25,98-23258,"Amended by: EO 13286, February 28, 2003"
+13101,1998-09-14,98-25023,"Revokes: EO 12873, October 20, 1993
 Revoked by: EO 13423, January 24, 2007
-See: EO 12843, April 21, 1993; EO 12845, April 21, 1993; EO 12856, August 3, 1993; EO 12902, March 8, 1994; EO 12969, August 8, 1995; EO 13031, December 13, 1996; EO 13148, April 21, 2000; EO 13149, April 21, 2000; Proc. 7250, November 15, 1999"
-13102,9/25/98,98-26250,"Amends: EO 13038, March 11, 1997
-Note: EO 13102 is nullified by virtue of the Committee being abolished by EO 13138, September 30, 1999."
-13103,9/30/98,98-26799,"See: EO 13011, July 16, 1996"
-13104,10/19/98,98-28471,"Amends: EO 13021, October 19, 1996"
-13105,11/2/98,98-30054,
-13106,12/7/98,98-32953,"Amends: EO 12748, February 1, 1991
+See: EO 12843, April 21, 1993; EO 12845, April 21, 1993; EO 12856, August 3, 1993; EO 12902, March 8, 1994; EO 12969, August 8, 1995; EO 13031, December 13, 1996; EO 13148, April 21, 2000; EO 13149, April 21, 2000; Proc. 7250, November 15, 1999
+"
+13102,1998-09-25,98-26250,"Amends: EO 13038, March 11, 1997
+Note: EO 13102 is nullified by virtue of the Committee being abolished by EO 13138, September 30, 1999.
+"
+13103,1998-09-30,98-26799,"See: EO 13011, July 16, 1996"
+13104,1998-10-19,98-28471,"Amends: EO 13021, October 19, 1996"
+13105,1998-11-02,98-30054,
+13106,1998-12-07,98-32953,"Amends: EO 12748, February 1, 1991
 Supersedes: EO 13071, December 29, 1997
-Superseded by: EO 13144, December 21, 1999 (in part)"
-13107,12/10/98,98-33348,
-13108,12/11/98,98-33382,"Amends: EO 13037, March 3, 1997
-Note: EO 13108 is nullified by virtue of the Commission being abolished by EO 13138, September 30, 1999."
-13109,12/17/98,98-34034,
-13110,1/11/99,99-980,
-13111,1/12/99,99-1185,"Amended by: EO 13188, January 12, 2001; EEO 13218, June 20, 2001
-Revoked (in part) by: EO 13316, September 17, 2003"
-13112,2/3/99,99-3184,"Amended by: EO 13286, February 28, 2003
-Revokes: EO 11987, May 24, 1977"
-13113,2/10/99,99-3832,"Amends: EO 13035, February 11, 1997
-See: EO 13200, February 11, 2001; EO 13215, May 31, 2001"
-13114,2/28/99,99-5164,"Amends: EO 12852, June 29, 1993
-Note: EO 13114 is nullified by virtue of the Council being abolished by EO 13138, September 30, 1999."
-13115,3/25/99,99-7999,"Amended by: EO 13138, September 30, 1999"
-13116,3/31/99,99-8433,
-13117,3/31/99,99-8509,"Amends: EO 12981, December 5, 1995
-Note: This Executive order amends the administration of export controls"
-13118,3/31/99,99-8547,"Amends: EO 11223 of May 12, 1965; EO 11269 of February 14, 1966; EO 11958 of January 18, 1977; EO 12163 of September 29, 1979; EO 12188 of January 2, 1980; EO 12260 of December 31, 1980; EO 12293 of February 23, 1981; EO 12301 of March 26, 1981; EO 12703 of February 20, 1990; EO 12884 of December 1, 1993; Memorandum of March 23, 1999
-Revokes: EO 12599 of June 23, 1987"
-13119,4/13/99,99-9738,
-13120,4/27/99,99-10901,"Amended by: EO 13286, February 28, 2003"
-13121,4/30/99,99-11410,"Amends: EO 13088, June 9, 1998
+Superseded by: EO 13144, December 21, 1999 (in part)
+"
+13107,1998-12-10,98-33348,
+13108,1998-12-11,98-33382,"Amends: EO 13037, March 3, 1997
+Note: EO 13108 is nullified by virtue of the Commission being abolished by EO 13138, September 30, 1999.
+"
+13109,1998-12-17,98-34034,
+13110,1999-01-11,99-980,
+13111,1999-01-12,99-1185,"Amended by: EO 13188, January 12, 2001; EEO 13218, June 20, 2001
+Revoked (in part) by: EO 13316, September 17, 2003
+"
+13112,1999-02-03,99-3184,"Amended by: EO 13286, February 28, 2003
+Revokes: EO 11987, May 24, 1977
+"
+13113,1999-02-10,99-3832,"Amends: EO 13035, February 11, 1997
+See: EO 13200, February 11, 2001; EO 13215, May 31, 2001
+"
+13114,1999-02-28,99-5164,"Amends: EO 12852, June 29, 1993
+Note: EO 13114 is nullified by virtue of the Council being abolished by EO 13138, September 30, 1999.
+"
+13115,1999-03-25,99-7999,"Amended by: EO 13138, September 30, 1999"
+13116,1999-03-31,99-8433,
+13117,1999-03-31,99-8509,"Amends: EO 12981, December 5, 1995
+Note: This Executive order amends the administration of export controls
+"
+13118,1999-03-31,99-8547,"Amends: EO 11223 of May 12, 1965; EO 11269 of February 14, 1966; EO 11958 of January 18, 1977; EO 12163 of September 29, 1979; EO 12188 of January 2, 1980; EO 12260 of December 31, 1980; EO 12293 of February 23, 1981; EO 12301 of March 26, 1981; EO 12703 of February 20, 1990; EO 12884 of December 1, 1993; Memorandum of March 23, 1999
+Revokes: EO 12599 of June 23, 1987
+"
+13119,1999-04-13,99-9738,
+13120,1999-04-27,99-10901,"Amended by: EO 13286, February 28, 2003"
+13121,1999-04-30,99-11410,"Amends: EO 13088, June 9, 1998
 See: Notice of May 25, 2000; EO 13192, January 17, 2001; Notice of May 24, 2001
-Revoked by: EO 13304, May 28, 2003"
-13122,5/25/99,99-13825,"Amended by: EO 13284, January 23, 2003"
-13123,6/3/99,99-14633,"Revokes: EO 12759, April 17, 1991; EO 12845, April 21, 1993; EO 12902, March 9, 1994
+Revoked by: EO 13304, May 28, 2003
+"
+13122,1999-05-25,99-13825,"Amended by: EO 13284, January 23, 2003"
+13123,1999-06-03,99-14633,"Revokes: EO 12759, April 17, 1991; EO 12845, April 21, 1993; EO 12902, March 9, 1994
 Revoked by: EO 13423, January 24, 2007
-See: EO 13148, April 21, 2000"
-13124,6/4/99,99-14825,
-13125,6/7/99,99-14901,"Amended by: EO 13216, June 6, 2001
-Superseded by: EO 13515, October 14, 2009"
-13126,6/12/99,99-15491,
-13127,6/14/99,99-15623,"Amends: EO 13073, February 4, 1998"
-13128,6/25/99,99-16634,"Amends: EO 12938, November 14, 1994"
-13129,7/4/99,99-17444,"See: EO 13268, July 2, 2002"
-13130,7/14/99,99-18476,"Revoked by: EO 13231, October 16, 2001
-See: EO 13010, July 15, 1996; EO 13286, February 28, 2003"
-13131,7/22/99,99-19396,"Amends: EO 12757, March 19, 1991
+See: EO 13148, April 21, 2000
+"
+13124,1999-06-04,99-14825,
+13125,1999-06-07,99-14901,"Amended by: EO 13216, June 6, 2001
+Superseded by: EO 13515, October 14, 2009
+"
+13126,1999-06-12,99-15491,
+13127,1999-06-14,99-15623,"Amends: EO 13073, February 4, 1998"
+13128,1999-06-25,99-16634,"Amends: EO 12938, November 14, 1994"
+13129,1999-07-04,99-17444,"See: EO 13268, July 2, 2002"
+13130,1999-07-14,99-18476,"Revoked by: EO 13231, October 16, 2001
+See: EO 13010, July 15, 1996; EO 13286, February 28, 2003
+"
+13131,1999-07-22,99-19396,"Amends: EO 12757, March 19, 1991
 See: EO 12823, December 3, 1992; EO 13028, December 3, 1996
-Revoked by: EO 13345, July 8, 2004"
-13132,8/4/99,99-20729,"Revokes: EO 12612, October 26, 1987; EO 12875, October 26, 1993; EO 13083, May 14, 1998; EO 13095, August 5, 1998
+Revoked by: EO 13345, July 8, 2004
+"
+13132,1999-08-04,99-20729,"Revokes: EO 12612, October 26, 1987; EO 12875, October 26, 1993; EO 13083, May 14, 1998; EO 13095, August 5, 1998
 Supplements: EO 12372, July 14, 1982; EO 12866, September 30, 1993; EO 12988, February 5, 1996
-See: EO 13175, November 6, 2000"
-13133,8/5/99,99-20924,"Amended by: EO 13286, February 28, 2003"
-13134,8/12/99,99-21392,"Revoked by: EO 13225, September 28, 2001 (in part); EO 13423, January 24, 2007
-See: EO 13148, April 21, 2000"
-13135,8/27/99,99-22778,"Amends: EO 12216, June 18, 1980"
-13136,9/3/99,99-23508,"Amends: EO 13090, June 29, 1998"
-13137,9/15/99,99-24582,"Amends: EO 12975, October 3, 1995
-See: EO 13316, September 17, 2003"
-13138,9/30/99,99-25958,"Amends: EO 12131, May 4, 1979; EO 12345, February 2, 1982; EO 12367, June 15, 1982; EO 13115, March 25, 1999
+See: EO 13175, November 6, 2000
+"
+13133,1999-08-05,99-20924,"Amended by: EO 13286, February 28, 2003"
+13134,1999-08-12,99-21392,"Revoked by: EO 13225, September 28, 2001 (in part); EO 13423, January 24, 2007
+See: EO 13148, April 21, 2000
+"
+13135,1999-08-27,99-22778,"Amends: EO 12216, June 18, 1980"
+13136,1999-09-03,99-23508,"Amends: EO 13090, June 29, 1998"
+13137,1999-09-15,99-24582,"Amends: EO 12975, October 3, 1995
+See: EO 13316, September 17, 2003
+"
+13138,1999-09-30,99-25958,"Amends: EO 12131, May 4, 1979; EO 12345, February 2, 1982; EO 12367, June 15, 1982; EO 13115, March 25, 1999
 Supersedes: EO 13062, September 29, 1997 (in part)
 Revokes: EO 12852, June 29, 1993; EO 12961, May 26, 1995; EO 13010, July 15, 1996, (in part); EO 13017, September 5, 1996; EO 13037, March 3, 1997; EO 13038, March 11, 1997; EO 13050, June 13, 1997
 Superseded by: EO 13225, September 28, 2001 (in part)
-Revoked by: EO 13226, September 30, 2001 (in part)"
-13139,9/30/99,99-26078,"See: Food and Drug Administration rule of May 25, 1999 (64 FR 54180)"
-13140,10/6/99,99-26670,"Amends: EO 12473, April 13, 1984
-See: EO 12484, July 13, 1984; EO 12550, February 19, 1986; EO 12586, March 3, 1987; EO 12708, March 23, 1990; EO 12767, June 27, 1991; EO 12888, December 23, 1993; EO 12936, November 10, 1994; EO 12960, May 12, 1995; EO 13086, May 27, 1998"
-13141,11/16/99,99-30346,
-13142,11/19/99,99-30687,"Amends: EO 12958, April 17, 1995"
-13143,12/1/99,99-31748,"Amends: EO 10173, October 18, 1950"
-13144,12/21/99,99-33511,"Supersedes: EO 13106, December 7, 1998 (in part)
-Superseded by: EO 13182, December 23, 2000"
-13145,2/8/00,00-3331,
-13146,2/29/00,00-5209,
-13147,3/7/00,00-6126,"Amended by: EO 13167, September 15, 2000
-Revoked by: EO 13316, September 17, 2003"
-13148,4/21/00,00-10550,"Revokes: EO 12088, October 13, 1978 (in part); EO 12843, April 21, 1993; EO 12856, August 3, 1993; EO 12969, August 8, 1995; Memorandum of April 26, 1994
+Revoked by: EO 13226, September 30, 2001 (in part)
+"
+13139,1999-09-30,99-26078,"See: Food and Drug Administration rule of May 25, 1999 (64 FR 54180)"
+13140,1999-10-06,99-26670,"Amends: EO 12473, April 13, 1984
+See: EO 12484, July 13, 1984; EO 12550, February 19, 1986; EO 12586, March 3, 1987; EO 12708, March 23, 1990; EO 12767, June 27, 1991; EO 12888, December 23, 1993; EO 12936, November 10, 1994; EO 12960, May 12, 1995; EO 13086, May 27, 1998
+"
+13141,1999-11-16,99-30346,
+13142,1999-11-19,99-30687,"Amends: EO 12958, April 17, 1995"
+13143,1999-12-01,99-31748,"Amends: EO 10173, October 18, 1950"
+13144,1999-12-21,99-33511,"Supersedes: EO 13106, December 7, 1998 (in part)
+Superseded by: EO 13182, December 23, 2000
+"
+13145,2000-02-08,00-3331,
+13146,2000-02-29,00-5209,
+13147,2000-03-07,00-6126,"Amended by: EO 13167, September 15, 2000
+Revoked by: EO 13316, September 17, 2003
+"
+13148,2000-04-21,00-10550,"Revokes: EO 12088, October 13, 1978 (in part); EO 12843, April 21, 1993; EO 12856, August 3, 1993; EO 12969, August 8, 1995; Memorandum of April 26, 1994
 Revoked by: EO 13423, January 24, 2007
-See:  EO 13101, September 14, 1998; EO 13123, June 3, 1999; EO 13134, August 12, 1999"
-13149,4/21/00,00-10551,"Revokes: EO 13031, December 13, 1996
+See:  EO 13101, September 14, 1998; EO 13123, June 3, 1999; EO 13134, August 12, 1999
+"
+13149,2000-04-21,00-10551,"Revokes: EO 13031, December 13, 1996
 Revoked by: EO 13423, January 24, 2007
-See:  EO 13101, September 14, 1998; Proc. 7308, May 15, 2000 (65 FR 31783)"
-13150,4/21/00,00-10552,
-13151,4/27/00,00-11070,"Amended by: EO 13284, January 23, 2003"
-13152,5/2/00,00-11336,"Amends:  EO 11478, August 8, 1969
-Note: This Executive order expands equal employment policy in the Federal Government by prohibiting discrimination based on parental status."
-13153,5/3/00,00-11531,
-13154,5/3/00,00-11532,"Amended by: EO 13286, February 28, 2003
-See:  EO 10977, December 4, 1961; EO 12985, January 11, 1996"
-13155,5/10/00,00-12177,
-13156,5/17/00,00-12840,"Amends:  EO 12871, October 1, 1993
-See:  EO 12983, December 21, 1995; EO 13203, February 17, 2001"
-13157,5/23/00,00-13367,
-13158,5/26/00,00-13830,"See:  Proc. 5030, March 10, 1983; Proc. 5928, December 27, 1988; Proc. 7219, September 2, 1999; EO 13178, December 4, 2000"
-13159,6/21/00,00-16252,"See:  EO 12938, November 14, 1994; EO 13085, May 26, 1998; Notice of June 18, 2002; Notice of June 10, 2003; Notice of June 16, 2004; Notice of June 17, 2005; Notice of June 19, 2006; Notice of June 19, 2007; Notice of June 18, 2008; Notice of June 18, 2009; Notice of June 17, 2010"
-13160,6/23/00,00-16434,"See:  EO 12250, November 2, 1980"
-13161,6/29/00,00-17174,
-13162,7/6/00,00-17829,"Revokes: EO 12596, May 7, 1987
-Revoked by: EO 13562, December 27, 2010"
-13163,7/26/00,00-19322,"See: EO 13548, July 26, 2010; EO 13583, August 18, 2011"
-13164,7/26/00,00-19323,
-13165,8/9/00,00-20670,"Amended by: EO 13286, February 28, 2003"
-13166,8/11/00,00-20938,"See:  Department of Justice notice of August 16, 2000 (65 FR 50123)"
-13167,9/15/00,00-24364,"Amends:  EO 13147, March 7, 2000"
-13168,9/22/00,00-24978,"Revoked by: EO 13225, September 28, 2001"
-13169,10/6/00,00-26397,
-13170,10/6/00,00-26446,"See:  EO 11625, October 13, 1971"
-13171,10/12/00,00-26716,"See: EO 13583, August 18, 2011"
-13172,10/25/00,00-27892,"Amends:  EO 13078, March 13, 1998"
-13173,10/25/00,00-27893,"Amended by: EO 13359, October 20, 2004"
-13174,10/27/00,00-28299,"Revoked by: EO 13218, June 20, 2001"
-13175,11/6/00,00-29003,"Revokes: EO 13084, May 14, 1998
-See:  EO 12866, September 30, 1993; EO 12988, February 5, 1996; EO 13132, August 4, 1999; EO 13336, April 30, 2004; Memorandum of April 29, 1994"
-13176,11/27/00,00-30690,"Superseded by: EO 13476, October 9, 2008"
-13177,12/4/00,00-31252,"Revoked (in part) by: EO 13316, September 17, 2003"
-13178,12/4/00,00-31313,"Amended by: EO 13196, January 18, 2001
-See:  EO 13089, June 11, 1998; EO 13158, May 26, 2000; Proc. 5030, March 10, 1983; Proc. 5928, December 27, 1988; Proc. 7219, September 2, 1999"
-13179,12/7/00,00-31692,
-13180,12/7/00,00-31697,"Amended by: EO 13264, June 4, 2002"
-13181,12/20/00,00-33004,
-13182,12/23/00,00-33450,"Supersedes: EO 13144, December 21, 1999
-Superseded by: EO 13249, December 28, 2001"
-13183,12/23/00,00-33451,"Amended by: EO 13209, April 30, 2001; EO 13319, December 3, 2003; EO 13517, October 30, 2009"
-13184,12/28/00,01-255,"Revokes: EO 12834, January 20, 1993"
-13185,12/28/00,01-321,
-13186,1/10/01,01-1387,
-13187,1/10/01,01-1438,"Amends: EO 13078, March 13, 1998
-Revokes: EO 12640, May 10, 1988"
-13188,1/12/01,01-1736,"Amends: EO 13111, January 12, 1999
-See: EO 13316, September 17, 2003"
-13189,1/15/01,01-1813,
-13190,1/15/01,01-1814,
-13191,1/17/01,Jan-14,
-13192,1/17/01,Jan-38,"Amends: EO 13088, June 9, 1998
+See:  EO 13101, September 14, 1998; Proc. 7308, May 15, 2000 (65 FR 31783)
+"
+13150,2000-04-21,00-10552,
+13151,2000-04-27,00-11070,"Amended by: EO 13284, January 23, 2003"
+13152,2000-05-02,00-11336,"Amends:  EO 11478, August 8, 1969
+Note: This Executive order expands equal employment policy in the Federal Government by prohibiting discrimination based on parental status.
+"
+13153,2000-05-03,00-11531,
+13154,2000-05-03,00-11532,"Amended by: EO 13286, February 28, 2003
+See:  EO 10977, December 4, 1961; EO 12985, January 11, 1996
+"
+13155,2000-05-10,00-12177,
+13156,2000-05-17,00-12840,"Amends:  EO 12871, October 1, 1993
+See:  EO 12983, December 21, 1995; EO 13203, February 17, 2001
+"
+13157,2000-05-23,00-13367,
+13158,2000-05-26,00-13830,"See:  Proc. 5030, March 10, 1983; Proc. 5928, December 27, 1988; Proc. 7219, September 2, 1999; EO 13178, December 4, 2000"
+13159,2000-06-21,00-16252,"See:  EO 12938, November 14, 1994; EO 13085, May 26, 1998; Notice of June 18, 2002; Notice of June 10, 2003; Notice of June 16, 2004; Notice of June 17, 2005; Notice of June 19, 2006; Notice of June 19, 2007; Notice of June 18, 2008; Notice of June 18, 2009; Notice of June 17, 2010"
+13160,2000-06-23,00-16434,"See:  EO 12250, November 2, 1980"
+13161,2000-06-29,00-17174,
+13162,2000-07-06,00-17829,"Revokes: EO 12596, May 7, 1987
+Revoked by: EO 13562, December 27, 2010
+"
+13163,2000-07-26,00-19322,"See: EO 13548, July 26, 2010; EO 13583, August 18, 2011"
+13164,2000-07-26,00-19323,
+13165,2000-08-09,00-20670,"Amended by: EO 13286, February 28, 2003"
+13166,2000-08-11,00-20938,"See:  Department of Justice notice of August 16, 2000 (65 FR 50123)"
+13167,2000-09-15,00-24364,"Amends:  EO 13147, March 7, 2000"
+13168,2000-09-22,00-24978,"Revoked by: EO 13225, September 28, 2001"
+13169,2000-10-06,00-26397,
+13170,2000-10-06,00-26446,"See:  EO 11625, October 13, 1971"
+13171,2000-10-12,00-26716,"See: EO 13583, August 18, 2011"
+13172,2000-10-25,00-27892,"Amends:  EO 13078, March 13, 1998"
+13173,2000-10-25,00-27893,"Amended by: EO 13359, October 20, 2004"
+13174,2000-10-27,00-28299,"Revoked by: EO 13218, June 20, 2001"
+13175,2000-11-06,00-29003,"Revokes: EO 13084, May 14, 1998
+See:  EO 12866, September 30, 1993; EO 12988, February 5, 1996; EO 13132, August 4, 1999; EO 13336, April 30, 2004; Memorandum of April 29, 1994
+"
+13176,2000-11-27,00-30690,"Superseded by: EO 13476, October 9, 2008"
+13177,2000-12-04,00-31252,"Revoked (in part) by: EO 13316, September 17, 2003"
+13178,2000-12-04,00-31313,"Amended by: EO 13196, January 18, 2001
+See:  EO 13089, June 11, 1998; EO 13158, May 26, 2000; Proc. 5030, March 10, 1983; Proc. 5928, December 27, 1988; Proc. 7219, September 2, 1999
+"
+13179,2000-12-07,00-31692,
+13180,2000-12-07,00-31697,"Amended by: EO 13264, June 4, 2002"
+13181,2000-12-20,00-33004,
+13182,2000-12-23,00-33450,"Supersedes: EO 13144, December 21, 1999
+Superseded by: EO 13249, December 28, 2001
+"
+13183,2000-12-23,00-33451,"Amended by: EO 13209, April 30, 2001; EO 13319, December 3, 2003; EO 13517, October 30, 2009"
+13184,2000-12-28,01-255,"Revokes: EO 12834, January 20, 1993"
+13185,2000-12-28,01-321,
+13186,2001-01-10,01-1387,
+13187,2001-01-10,01-1438,"Amends: EO 13078, March 13, 1998
+Revokes: EO 12640, May 10, 1988
+"
+13188,2001-01-12,01-1736,"Amends: EO 13111, January 12, 1999
+See: EO 13316, September 17, 2003
+"
+13189,2001-01-15,01-1813,
+13190,2001-01-15,01-1814,
+13191,2001-01-17,01-2014,
+13192,2001-01-17,01-2138,"Amends: EO 13088, June 9, 1998
 See: EO 13121, April 30, 1999; Notice of May 24, 2001 
-Revoked by: EO 13304, May 28, 2003"
-13193,1/18/01,Jan-39,
-13194,1/18/01,Jan-40,"Amended by: EO 13213, May 22, 2001
+Revoked by: EO 13304, May 28, 2003
+"
+13193,2001-01-18,01-2139,
+13194,2001-01-18,01-2140,"Amended by: EO 13213, May 22, 2001
 See: Notice of January 15, 2002; Notice of January 16, 2003; EO 13312, July 29, 2003
-Revoked by: EO 13324, January 15, 2004"
-13195,1/18/01,Jan-41,
-13196,1/18/01,Jan-14,"Amends: EO 13178, December 4, 2000"
-13197,1/18/01,Jan-98,
-13198,1/29/01,Jan-51,"See: EO 13559, November 17, 2010"
-13199,1/29/01,Jan-52,"Amended by: EO 13498, February 5, 2009
+Revoked by: EO 13324, January 15, 2004
+"
+13195,2001-01-18,01-2141,
+13196,2001-01-18,01-2214,"Amends: EO 13178, December 4, 2000"
+13197,2001-01-18,01-2398,
+13198,2001-01-29,01-2851,"See: EO 13559, November 17, 2010"
+13199,2001-01-29,01-2852,"Amended by: EO 13498, February 5, 2009
 See: EO 13559, November 17, 2010"
-13200,2/11/01,Jan-83,"Amends:  EO 13035, February 11, 1997
+13200,2001-02-11,01-3883,"Amends:  EO 13035, February 11, 1997
 See:  EO 13092, July 24, 1998; EO 13113, February 10, 1999; EO 13215, May 31, 2001"
-13201,2/17/01,Jan-21,"Revokes: EO 12836, February 1, 1993 (in part)
+13201,2001-02-17,01-4621,"Revokes: EO 12836, February 1, 1993 (in part)
 See:  EO 12800, April 13, 1992
 Revoked by: EO 13496, January 30, 2009"
-13202,2/17/01,Jan-22,"Revokes: EO 12836, February 1, 1993; Memorandum of June 5, 1997
+13202,2001-02-17,01-4622,"Revokes: EO 12836, February 1, 1993; Memorandum of June 5, 1997
 See:  EO 12818, October 23, 1992
 Amended by: EO 13208, April 6, 2001
-Revoked by: EO 13502, February 6, 2009"
-13203,2/17/01,Jan-23,"Revokes: EO 12871, October 1, 1993; Memorandum of October 28, 1999
+Revoked by: EO 13502, February 6, 2009
+"
+13203,2001-02-17,01-4623,"Revokes: EO 12871, October 1, 1993; Memorandum of October 28, 1999
 See:  EO 12983, December 21, 1995; EO 13156, May 17, 2000"
-13204,2/17/01,Jan-24,"Revokes: EO 12933, October 20, 1994
+13204,2001-02-17,01-4624,"Revokes: EO 12933, October 20, 1994
 Revoked by: EO 13495, January 30, 2009"
-13205,3/9/01,Jan-58,
-13206,4/4/01,Jan-35,"Revokes: EO 12924, August 19, 1994
+13205,2001-03-09,01-6558,
+13206,2001-04-04,01-8835,"Revokes: EO 12924, August 19, 1994
 See:  EO 12002, July 7, 1977; EO 12214, May 2, 1980; EO 12938, November 14, 1994; EO 12981, December 5, 1995; EO 13026, November 15, 1996"
-13207,4/5/01,Jan-36,"Amends:  EO 10000, September 16, 1948"
-13208,4/6/01,Jan-86,"Amends:  EO 13202, February 17, 2001
+13207,2001-04-05,01-8836,"Amends:  EO 10000, September 16, 1948"
+13208,2001-04-06,01-9086,"Amends:  EO 13202, February 17, 2001
 Revoked by: EO 13502, February 6, 2009"
-13209,4/30/01,01-11210,"Amends:  EO 13183, December 23, 2000"
-13210,5/2/01,01-11505,"Revoked by: EO 13316, September 17, 2003"
-13211,5/18/01,01-13116,
-13212,5/18/01,01-13117,"Amended by: EO 13286, February 28, 2003; EO 13302, May 15, 2003
+13209,2001-04-30,01-11210,"Amends:  EO 13183, December 23, 2000"
+13210,2001-05-02,01-11505,"Revoked by: EO 13316, September 17, 2003"
+13211,2001-05-18,01-13116,
+13212,2001-05-18,01-13117,"Amended by: EO 13286, February 28, 2003; EO 13302, May 15, 2003
 See:  EO 13337, April 30, 2004"
-13213,5/22/01,01-13381,"Amends:  EO 13194, January 18, 2001
+13213,2001-05-22,01-13381,"Amends:  EO 13194, January 18, 2001
 See:  Notice of January 15, 2002; Notice of January 16, 2003; EO 13312, July 29, 2003
 Revoked by: EO 13324, January 15, 2004"
-13214,5/28/01,01-13869,"Revoked by: EO 13316, September 17, 2003"
-13215,5/31/01,01-14319,"Amends:  EO 13035, February 11, 1997
+13214,2001-05-28,01-13869,"Revoked by: EO 13316, September 17, 2003"
+13215,2001-05-31,01-14319,"Amends:  EO 13035, February 11, 1997
 See:  EO 13092, July 24, 1998; EO 13113, February 10, 1999; EO 13200, February 11, 2001"
-13216,6/6/01,01-14862,"Amends:  EO 13125, June 7, 1999"
-13217,6/18/01,01-15758,
-13218,6/20/01,01-15958,"Amends:  EO 13111, January 12, 1999
+13216,2001-06-06,01-14862,"Amends:  EO 13125, June 7, 1999"
+13217,2001-06-18,01-15758,
+13218,2001-06-20,01-15958,"Amends:  EO 13111, January 12, 1999
 Revokes: EO 13174, October 27, 2000
 See:  EO 13316, September 17, 2003"
-13219,6/26/01,01-16668,"Amended by: EO 13304, May 28, 2003
-See:  Notice of June 20, 2003; Notice of June 24, 2004; Notice of June 23, 2005; Notice of June 22, 2006; Notice of June 22, 2007; Notice of June 24, 2008; Notice of June 22, 2009; Notice of June 8, 2010"
-13220,7/2/01,01-17041,
-13221,7/31/01,01-19562,
-13222,8/17/01,01-21338,"See:  EO 12002, July 7, 1977; EO 12214, May 2, 1980; EO 12735, November 16, 1990; EO 12755, March 12, 1991; EO 12851, June 11, 1993; EO 13026, November 15, 1996; Notice of August 14, 2002 Notice of August 7, 2003; Notice of August 6, 2004; Notice of August 2, 2005; Memorandum of May 12, 2006; PD No. 2006-14 of May 18, 2006; Notice of August 3, 2006; Notice of August 15, 2007; Notice of July 23, 2008; Notice of August 13, 2009; Notice of August 12, 2010"
-13223,9/14/01,01-23359,"Amended by: EO 13253, January 16, 2002; EO 13286, February 28, 2003
+13219,2001-06-26,01-16668,"Amended by: EO 13304, May 28, 2003
+See:  Notice of June 20, 2003; Notice of June 24, 2004; Notice of June 23, 2005; Notice of June 22, 2006; Notice of June 22, 2007; Notice of June 24, 2008; Notice of June 22, 2009; Notice of June 8, 2010
+"
+13220,2001-07-02,01-17041,
+13221,2001-07-31,01-19562,
+13222,2001-08-17,01-21338,"See:  EO 12002, July 7, 1977; EO 12214, May 2, 1980; EO 12735, November 16, 1990; EO 12755, March 12, 1991; EO 12851, June 11, 1993; EO 13026, November 15, 1996; Notice of August 14, 2002 Notice of August 7, 2003; Notice of August 6, 2004; Notice of August 2, 2005; Memorandum of May 12, 2006; PD No. 2006-14 of May 18, 2006; Notice of August 3, 2006; Notice of August 15, 2007; Notice of July 23, 2008; Notice of August 13, 2009; Notice of August 12, 2010"
+13223,2001-09-14,01-23359,"Amended by: EO 13253, January 16, 2002; EO 13286, February 28, 2003
 See:  Proclamation 7463, September 14, 2001 (66 FR 48199); Notice of September 12, 2002 (67 FR 58317); Notice of September 10, 2003 (68 FR 53665); Notice of September 10, 2004 (69 FR 55313); Notice of September 8, 2005 (70 FR 54229)"
-13224,9/23/01,01-24205,"Amended by: EO 13268, July 2, 2002; EO 13284, January 23, 2003 EO 13372, February 16, 2005
+13224,2001-09-23,01-24205,"Amended by: EO 13268, July 2, 2002; EO 13284, January 23, 2003 EO 13372, February 16, 2005
 See:  Proclamation 7463, September 14, 2001 (66 FR 48199, September 18, 2001); Notice of September 19, 2002; Notice of September 18, 2003; EO 13338, May 11, 2004; Notice of September 21, 2004; Notice of September 21, 2005; Notice of September 21, 2006; Notice of September 20, 2007; Notice of September 18, 2008; Notice of September 21, 2009; Notice of September 16, 2010"
-13225,9/28/01,01-24917,"Continues: EO 11183, October 3, 1964; EO 11145, March 7, 1964; EO 11287, June 28, 1966; EO 12131, May 4, 1979; EO 12196, February 26, 1980; EO 12216, June 18, 1980; EO 12345, February 2, 1982; EO 12367, June 15, 1982; EO 12382, September 13, 1982; EO 12900, February 22, 1994; EO 12905, March 25, 1994; EO 12994, March 21, 1996; EO 13021, October 19, 1996 
+13225,2001-09-28,01-24917,"Continues: EO 11183, October 3, 1964; EO 11145, March 7, 1964; EO 11287, June 28, 1966; EO 12131, May 4, 1979; EO 12196, February 26, 1980; EO 12216, June 18, 1980; EO 12345, February 2, 1982; EO 12367, June 15, 1982; EO 12382, September 13, 1982; EO 12900, February 22, 1994; EO 12905, March 25, 1994; EO 12994, March 21, 1996; EO 13021, October 19, 1996 
 Revokes: EO 13075, February 19, 1998; EO 13080, April 7, 1998; EO 13090, June 29, 1998; EO 13134, August 12, 1999 (in part); EO 13168, September 22, 2000
 Supersedes: EO 13138, September 30, 1999 (in part)
 Superseded by: EO 13316, September 17, 2003"
-13226,9/30/01,01-24983,"Revokes: EO 12882, November 23, 1993; EO 12907, April 14, 1994; EO 13138, September 30, 1999 (in part)
+13226,2001-09-30,01-24983,"Revokes: EO 12882, November 23, 1993; EO 12907, April 14, 1994; EO 13138, September 30, 1999 (in part)
 Amended by: EO 13305, May 28, 2003; EO 13349, July 23, 2004; EO 13385, September 29, 2005
 Continued by: EO 13446, September 28, 2007; EO 13511, September 29, 2009
 Revoked by: EO 13539, April 21, 2010"
-13227,10/2/01,01-25344,"Amended by: EO 13255, February 6, 2002
-Revoked by: EO 13316, September 17, 2003"
-13228,10/8/01,01-25677,"Amends:  EO 12656, November 18, 1988
+13227,2001-10-02,01-25344,"Amended by: EO 13255, February 6, 2002
+Revoked by: EO 13316, September 17, 2003
+"
+13228,2001-10-08,01-25677,"Amends:  EO 12656, November 18, 1988
 Amended by: EO 13284, January 23, 2003; EO 13286, February 28, 2003
 See:  EO 13231, October 16, 2001; EO 13257, February 13, 2002"
-13229,10/9/01,01-25788,"Amends:  EO 13045, April 21, 1997"
-13230,10/12/01,01-26339,"Revokes: EO 12900, February 22, 1994"
-13231,10/16/01,01-26509,"Revokes: EO 13130, July 14, 1999
+13229,2001-10-09,01-25788,"Amends:  EO 13045, April 21, 1997"
+13230,2001-10-12,01-26339,"Revokes: EO 12900, February 22, 1994"
+13231,2001-10-16,01-26509,"Revokes: EO 13130, July 14, 1999
 Amended by: EO 13284, January 23, 2003; EO 13286, February 28, 2003; EO 13316, September 17, 2003; EO 13385, September 29, 2005
 Continued by: EO 13446, September 28, 2007; EO 13511, September 29, 2009
-See:  EO 12333, December 4, 1981; EO 12382, September 13, 1982; EO 12472, April 3, 1984; EO 12958, April 17, 1995; EO 13228, October 8, 2001; EO 13585, September 30, 2011"
-13232,10/20/01,01-26990,"Amends:  EO 10789, November 14, 1958"
-13233,11/1/01,01-27917,"Revokes: EO 12667, January 18, 1989
-Revoked by: EO 13489, January 21, 2009"
-13234,11/9/01,01-28762,"Federal Register page and date:   66 FR 57355, November 15, 2001
-Amended by: EO 13284, January 23, 2003"
-13235,11/16/01,01-29219,"See:  Notice of September 12, 2002 (67 FR 58317); Notice of September 10, 2003 (68 FR 53665); Notice of September 10, 2004 (69 FR 55313); Notice of September 8, 2005 (70 FR 54229)"
-13236,11/27/01,01-29831,
-13237,11/28/01,01-29948,"Amended by: EO 13316, September 17, 2003; EO 13385, September 29, 2005
+See:  EO 12333, December 4, 1981; EO 12382, September 13, 1982; EO 12472, April 3, 1984; EO 12958, April 17, 1995; EO 13228, October 8, 2001; EO 13585, September 30, 2011
+"
+13232,2001-10-20,01-26990,"Amends:  EO 10789, November 14, 1958"
+13233,2001-11-01,01-27917,"Revokes: EO 12667, January 18, 1989
+Revoked by: EO 13489, January 21, 2009
+"
+13234,2001-11-09,01-28762,"Federal Register page and date:   66 FR 57355, November 15, 2001
+Amended by: EO 13284, January 23, 2003
+"
+13235,2001-11-16,01-29219,"See:  Notice of September 12, 2002 (67 FR 58317); Notice of September 10, 2003 (68 FR 53665); Notice of September 10, 2004 (69 FR 55313); Notice of September 8, 2005 (70 FR 54229)"
+13236,2001-11-27,01-29831,
+13237,2001-11-28,01-29948,"Amended by: EO 13316, September 17, 2003; EO 13385, September 29, 2005
 Continued by: EO 13446, September 28, 2007
-Superseded by: EO 13521, November 24, 2009"
-13238,12/5/01,01-30624,"See:  EO 11582, February 11, 1971"
-13239,12/12/01,01-31119,
-13240,12/18/01,01-31665,"Revokes: EO 11957, January 13, 1977
+Superseded by: EO 13521, November 24, 2009
+"
+13238,2001-12-05,01-30624,"See:  EO 11582, February 11, 1971"
+13239,2001-12-12,01-31119,
+13240,2001-12-18,01-31665,"Revokes: EO 11957, January 13, 1977
 Amended by: EO 13261, March 19, 2002
-Revoked by: EO 13542, May 13, 2010"
-13241,12/18/01,01-31666,
-13242,12/18/01,01-31667,"Revokes: EO 11880, October 2, 1975; EO 12608, September 9, 1987 (in part); EO 12998, April 5, 1996
-Amended by: EO 13261, March 19, 2002"
-13243,12/18/01,01-31668,"Revokes: EO 11274, March 30, 1966
-Amended by: EO 13261, March 19, 2002"
-13244,12/18/01,01-31669,"Revokes: EO 11487, October 6, 1969
-Amended by: EO 13261, March 19, 2002"
-13245,12/18/01,01-31670,"Revokes: EO 10513, January 19, 1954
-Amended by: EO 13261, March 19, 2002"
-13246,12/18/01,01-31671,"Revokes: EO 11822, December 10, 1974
-Amended by: EO 13261, March 19, 2002"
-13247,12/18/01,01-31672,"Amended by: EO 13261, March 19, 2002
-See:  Memorandum of February 12, 2003 (68 FR 10141)"
-13248,12/20/01,01-31959,
-13249,12/28/01,02-448,"Supersedes: EO 13182, December 23, 2000"
-13250,12/28/01,02-917,"Amended by: EO 13261, March 19, 2002
-Revoked by: EO 13461, February 15, 2008"
-13251,12/28/01,02-918,"Revokes: EO 12343, January 27, 1982
-Amended by: EO 13261, March 19, 2002"
-13252,1/7/02,02-919,"Amends: EO 12171, November 19, 1979"
-13253,1/16/02,02-1594,"Amends: EO 13223, September 14, 2001
-See: Notice of September 12, 2002 (67 FR 58317); Notice of September 10, 2003 (68 FR 53665); Notice of September 10, 2004 (69 FR 55313); Notice of September 8, 2005 (70 FR 54229)"
-13254,1/29/02,Feb-38,"Amends: EO 13286, February 28, 2003"
-13255,2/6/02,Feb-37,"Amends: EO 13227, October 2, 2001
-See: EO 13316, September 17, 2003"
-13256,2/12/02,Feb-26,"Amended by: EO 13316, September 17, 2003; EO 13385, September 29, 2005
+Revoked by: EO 13542, May 13, 2010
+"
+13241,2001-12-18,01-31666,
+13242,2001-12-18,01-31667,"Revokes: EO 11880, October 2, 1975; EO 12608, September 9, 1987 (in part); EO 12998, April 5, 1996
+Amended by: EO 13261, March 19, 2002
+"
+13243,2001-12-18,01-31668,"Revokes: EO 11274, March 30, 1966
+Amended by: EO 13261, March 19, 2002
+"
+13244,2001-12-18,01-31669,"Revokes: EO 11487, October 6, 1969
+Amended by: EO 13261, March 19, 2002
+"
+13245,2001-12-18,01-31670,"Revokes: EO 10513, January 19, 1954
+Amended by: EO 13261, March 19, 2002
+"
+13246,2001-12-18,01-31671,"Revokes: EO 11822, December 10, 1974
+Amended by: EO 13261, March 19, 2002
+"
+13247,2001-12-18,01-31672,"Amended by: EO 13261, March 19, 2002
+See:  Memorandum of February 12, 2003 (68 FR 10141)
+"
+13248,2001-12-20,01-31959,
+13249,2001-12-28,02-448,"Supersedes: EO 13182, December 23, 2000"
+13250,2001-12-28,02-917,"Amended by: EO 13261, March 19, 2002
+Revoked by: EO 13461, February 15, 2008
+"
+13251,2001-12-28,02-918,"Revokes: EO 12343, January 27, 1982
+Amended by: EO 13261, March 19, 2002
+"
+13252,2002-01-07,02-919,"Amends: EO 12171, November 19, 1979"
+13253,2002-01-16,02-1594,"Amends: EO 13223, September 14, 2001
+See: Notice of September 12, 2002 (67 FR 58317); Notice of September 10, 2003 (68 FR 53665); Notice of September 10, 2004 (69 FR 55313); Notice of September 8, 2005 (70 FR 54229)
+"
+13254,2002-01-29,02-2638,"Amends: EO 13286, February 28, 2003"
+13255,2002-02-06,02-3337,"Amends: EO 13227, October 2, 2001
+See: EO 13316, September 17, 2003
+"
+13256,2002-02-12,02-3826,"Amended by: EO 13316, September 17, 2003; EO 13385, September 29, 2005
 Continued by: EO 13446, September 28, 2007; EO 13511, September 29, 2009
 Revoked by: EO 13532, February 26, 2010
-Revokes: EO 12876, November 1, 1993"
-13257,2/13/02,Feb-71,"Amends: EO 13286, February 28, 2003
+Revokes: EO 12876, November 1, 1993
+"
+13257,2002-02-13,02-4071,"Amends: EO 13286, February 28, 2003
 See: EO 13228, October 8, 2001
-Amended by: EO 13333, March 18, 2004"
-13258,2/26/02,Feb-69,"Amends: EO 12866, September 30, 1993
-Revoked by: EO 13497, January 30, 2009"
-13259,3/19/02,02-07085,
-13260,3/19/02,02-07086,"Amends: EO 13286, February 28, 2003
-Revoked by: EO 13286, February 28, 2003 eff. March 31, 2003"
-13261,3/19/02,Feb-87,"Amends: EO 13241, December 18, 2001; EO 13242, December 18, 2001; EO 13243, December 18, 2001; EO 13244, December 18, 2001; EO 13245, December 18, 2001; EO 13246, December 18, 2001; EO 13247, December 18, 2001; EO 13250, December 28, 2001; EO 13251, December 28, 2001
-Amended by: EO 13344, July 9, 2004"
-13262,4/11/02,Feb-36,"Amends: EO 12473, April 13, 1984
-See: EO 13447, September 28, 2007"
-13263,4/29/02,02-11166,"Revoked by: EO 13316, September 17, 2003
-See: Proclamation 7804 of July 26, 2004"
-13264,6/4/02,02-14497,"Amends: EO 13180, December 7, 2000"
-13265,6/6/02,02-14807,"Amended by: EO 13316, September 17, 2003; EO 13385, September 29, 2005; EO 13545, June 22, 2010
+Amended by: EO 13333, March 18, 2004
+"
+13258,2002-02-26,02-5069,"Amends: EO 12866, September 30, 1993
+Revoked by: EO 13497, January 30, 2009
+"
+13259,2002-03-19,02-07085,
+13260,2002-03-19,02-07086,"Amends: EO 13286, February 28, 2003
+Revoked by: EO 13286, February 28, 2003 eff. March 31, 2003
+"
+13261,2002-03-19,02-7087,"Amends: EO 13241, December 18, 2001; EO 13242, December 18, 2001; EO 13243, December 18, 2001; EO 13244, December 18, 2001; EO 13245, December 18, 2001; EO 13246, December 18, 2001; EO 13247, December 18, 2001; EO 13250, December 28, 2001; EO 13251, December 28, 2001
+Amended by: EO 13344, July 9, 2004
+"
+13262,2002-04-11,02-9536,"Amends: EO 12473, April 13, 1984
+See: EO 13447, September 28, 2007
+"
+13263,2002-04-29,02-11166,"Revoked by: EO 13316, September 17, 2003
+See: Proclamation 7804 of July 26, 2004
+"
+13264,2002-06-04,02-14497,"Amends: EO 13180, December 7, 2000"
+13265,2002-06-06,02-14807,"Amended by: EO 13316, September 17, 2003; EO 13385, September 29, 2005; EO 13545, June 22, 2010
 Continued by: EO 13446, September 28, 2007; EO 13511, September 29, 2009
 Revokes: EO 12345, February 2, 1982
-See: EO 13585, September 30, 2011"
-13266,6/20/02,02-16040,
-13267,6/20/02,02-16041,
-13268,7/2/02,02-16951,"Amends: EO 13224, September 23, 2001
-See: EO 13129, July 4, 1999; EO 13371, February 16, 2005"
-13269,7/3/02,02-17273,
-13270,7/3/02,02-17274,"Amended by: EO 13316, September 17, 2003; EO 13385, September 29, 2005
+See: EO 13585, September 30, 2011
+"
+13266,2002-06-20,02-16040,
+13267,2002-06-20,02-16041,
+13268,2002-07-02,02-16951,"Amends: EO 13224, September 23, 2001
+See: EO 13129, July 4, 1999; EO 13371, February 16, 2005
+"
+13269,2002-07-03,02-17273,
+13270,2002-07-03,02-17274,"Amended by: EO 13316, September 17, 2003; EO 13385, September 29, 2005
 Continued by: EO 13446, September 28, 2007; EO 13511, September 29, 2009
 Revokes: EO 13021, October 19, 1996
-See: EO 13585, September 30, 2011; EO 13592, December 2, 2011"
-13271,7/9/02,02-17640,"Amended by: EO 13286, February 28, 2003
-Terminated by: EO 13519, November 17, 2009"
-13272,8/13/02,02-21056,"See: EO 12866, September 30, 1993"
-13273,8/21/02,02-22526,"See: EO 10173, October 18, 1950"
-13274,9/18/02,02-24252,"Amends: EO 13286, February 28, 2003"
-13275,10/7/02,02-25900,
-13276,11/15/02,02-29580,"See: EO 12807, May 24, 1992
-Amends: EO 13286, February 28, 2003"
-13277,11/19/02,02-29832,"Amends: EO 11846, March 27, 1975
-Amended by: EO 13346, July 8, 2004"
-13278,12/11/02,02-31624,"Revoked by: EO 13316, September 17, 2003"
-13279,12/12/02,02-31831,"Amends: EO 11246, September 24, 1965
-Amended by: EO 13403, May 12, 2006; EO 13559, November 17, 2010"
-13280,12/12/02,02-31832,
-13281,12/19/02,02-32518,
-13282,12/31/02,03-464,"Superseded by: EO 13322, December 30, 2003"
-13283,1/21/03,03-1798,"See:  EO 12333, December 4, 1981
-Revoked by: EO 13385, September 29, 2005"
-13284,1/23/03,Mar-69,"Amends:  EO 10865, February 20, 1960; EO 11423, August 16, 1968; EO 11958, January 18, 1977; EO 12260, December 31, 1980; EO 12333, December 4, 1981; EO 12590, March 26, 1987; EO 12859, August 16, 1993; EO 12881, November 23, 1993; EO 12992, March 15, 1996; EO 13011, July 16, 1996; EO 13048, June 10, 1997; EO 13122, May 25, 1999; EO 13151, April 27, 2000; EO 13224, September 23, 2001; EO 13228, October 8, 2001; EO 13231, October 16, 2001; EO 13234, November 9, 2001
-See:  EO 12829, January 6, 1993; EO 12958, April 17, 1995; EO 12968, August 2, 1995; EO 13286, February 28, 2003; EO 13371, February 16, 2005"
-13285,1/29/03,Mar-06,"Amended by: EO 13371, February 16, 2005; EO 13424, January 26, 2007; EO 13471, August 28, 2008"
-13286,2/28/03,Mar-43,"Amends:  EO 4601, March 1, 1927; EO 10113, February 24, 1950; EO 10163, September 25, 1950; EO 10179, November 8, 1950; EO 10271, July 7, 1951; EO 10448, April 22, 1953; EO 10499, November 4, 1953; EO 10554, August 18, 1954; EO 10631, August 17, 1955; EO 10637, September 16, 1955; EO 10694, January 10, 1957; EO 10789, November 14, 1958; EO 10977, December 4, 1961; EO 11016, April 25, 1962; EO 11046, August 24, 1962; EO 11079, January 25, 1963; EO 11139, January 7, 1964; EO 11190, December 29, 1964; EO 11231, July 8, 1965; EO 11239, July 31, 1965; EO 11366, August 4, 1967; EO 11438, December 3, 1968; EO 11446, January 16, 1969; EO 11448, January 16, 1969; EO 11623, October 12, 1971; EO 11645, February 8, 1972; EO 11800, August 17, 1974; EO 11858, May 7, 1975; EO 11926, July 19, 1976; EO 11965, January 19, 1977; EO 12002, July 7, 1977; EO 12146, July 18, 1979; EO 12148, July 20, 1979; EO 12160, September 26, 1979; EO 12188, January 2, 1980; EO 12208, April 15, 1980; EO 12341, January 21, 1982; EO 12382, September 13, 1982; EO 12472, April 3, 1984; EO 12501, January 28, 1985; EO 12555, March 10, 1986; EO 12580, January 23, 1987; EO 12656, November 18, 1988; EO 12657, November 18, 1988; EO 12699, January 5, 1990; EO 12727, August 22, 1990; EO 12728, August 22, 1990; EO 12733, November 13, 1990; EO 12742, January 8, 1991; EO 12743, January 18, 1991; EO 12777, October 18, 1991; EO 12788, January 15, 1992; EO 12789, February 10, 1992; EO 12793, March 20, 1992; EO 12807, May 24, 1992; EO 12824, December 7, 1992; EO 12830, January 9, 1993; EO 12835, January 25, 1993; EO 12870, September 30, 1993; EO 12906, April 11, 1994; EO 12919, June 3, 1994; EO 12977, October 19, 1995; EO 12978, October 21, 1995; EO 12982, December 8, 1995; EO 12985, January 11, 1996; EO 12989, February 13, 1996; EO 13011, July 16, 1996; EO 13076, February 24, 1998; EO 13100, August 25, 1998; EO 13112, February 3, 1999; EO 13120, April 27, 1999; EO 13133, August 5, 1999; EO 13154, May 3, 2000; EO 13165, August 9, 2000; EO 13212, May 18, 2001; EO 13223, September 14, 2001; EO 13228, October 8, 2001; EO 13231, October 16, 2001; EO 13254, January 29, 2002; EO 13257, February 13, 2002; EO 13260, March 19, 2002; EO 13271, July 9, 2002; EO 13274, September 18, 2002; EO 13276, November 15, 2002
+See: EO 13585, September 30, 2011; EO 13592, December 2, 2011
+"
+13271,2002-07-09,02-17640,"Amended by: EO 13286, February 28, 2003
+Terminated by: EO 13519, November 17, 2009
+"
+13272,2002-08-13,02-21056,"See: EO 12866, September 30, 1993"
+13273,2002-08-21,02-22526,"See: EO 10173, October 18, 1950"
+13274,2002-09-18,02-24252,"Amends: EO 13286, February 28, 2003"
+13275,2002-10-07,02-25900,
+13276,2002-11-15,02-29580,"See: EO 12807, May 24, 1992
+Amends: EO 13286, February 28, 2003
+"
+13277,2002-11-19,02-29832,"Amends: EO 11846, March 27, 1975
+Amended by: EO 13346, July 8, 2004
+"
+13278,2002-12-11,02-31624,"Revoked by: EO 13316, September 17, 2003"
+13279,2002-12-12,02-31831,"Amends: EO 11246, September 24, 1965
+Amended by: EO 13403, May 12, 2006; EO 13559, November 17, 2010
+"
+13280,2002-12-12,02-31832,
+13281,2002-12-19,02-32518,
+13282,2002-12-31,03-464,"Superseded by: EO 13322, December 30, 2003
+"
+13283,2003-01-21,03-1798,"See:  EO 12333, December 4, 1981
+Revoked by: EO 13385, September 29, 2005
+"
+13284,2003-01-23,03-2069,"Amends:  EO 10865, February 20, 1960; EO 11423, August 16, 1968; EO 11958, January 18, 1977; EO 12260, December 31, 1980; EO 12333, December 4, 1981; EO 12590, March 26, 1987; EO 12859, August 16, 1993; EO 12881, November 23, 1993; EO 12992, March 15, 1996; EO 13011, July 16, 1996; EO 13048, June 10, 1997; EO 13122, May 25, 1999; EO 13151, April 27, 2000; EO 13224, September 23, 2001; EO 13228, October 8, 2001; EO 13231, October 16, 2001; EO 13234, November 9, 2001
+See:  EO 12829, January 6, 1993; EO 12958, April 17, 1995; EO 12968, August 2, 1995; EO 13286, February 28, 2003; EO 13371, February 16, 2005
+"
+13285,2003-01-29,03-2606,"Amended by: EO 13371, February 16, 2005; EO 13424, January 26, 2007; EO 13471, August 28, 2008"
+13286,2003-02-28,03-5343,"Amends:  EO 4601, March 1, 1927; EO 10113, February 24, 1950; EO 10163, September 25, 1950; EO 10179, November 8, 1950; EO 10271, July 7, 1951; EO 10448, April 22, 1953; EO 10499, November 4, 1953; EO 10554, August 18, 1954; EO 10631, August 17, 1955; EO 10637, September 16, 1955; EO 10694, January 10, 1957; EO 10789, November 14, 1958; EO 10977, December 4, 1961; EO 11016, April 25, 1962; EO 11046, August 24, 1962; EO 11079, January 25, 1963; EO 11139, January 7, 1964; EO 11190, December 29, 1964; EO 11231, July 8, 1965; EO 11239, July 31, 1965; EO 11366, August 4, 1967; EO 11438, December 3, 1968; EO 11446, January 16, 1969; EO 11448, January 16, 1969; EO 11623, October 12, 1971; EO 11645, February 8, 1972; EO 11800, August 17, 1974; EO 11858, May 7, 1975; EO 11926, July 19, 1976; EO 11965, January 19, 1977; EO 12002, July 7, 1977; EO 12146, July 18, 1979; EO 12148, July 20, 1979; EO 12160, September 26, 1979; EO 12188, January 2, 1980; EO 12208, April 15, 1980; EO 12341, January 21, 1982; EO 12382, September 13, 1982; EO 12472, April 3, 1984; EO 12501, January 28, 1985; EO 12555, March 10, 1986; EO 12580, January 23, 1987; EO 12656, November 18, 1988; EO 12657, November 18, 1988; EO 12699, January 5, 1990; EO 12727, August 22, 1990; EO 12728, August 22, 1990; EO 12733, November 13, 1990; EO 12742, January 8, 1991; EO 12743, January 18, 1991; EO 12777, October 18, 1991; EO 12788, January 15, 1992; EO 12789, February 10, 1992; EO 12793, March 20, 1992; EO 12807, May 24, 1992; EO 12824, December 7, 1992; EO 12830, January 9, 1993; EO 12835, January 25, 1993; EO 12870, September 30, 1993; EO 12906, April 11, 1994; EO 12919, June 3, 1994; EO 12977, October 19, 1995; EO 12978, October 21, 1995; EO 12982, December 8, 1995; EO 12985, January 11, 1996; EO 12989, February 13, 1996; EO 13011, July 16, 1996; EO 13076, February 24, 1998; EO 13100, August 25, 1998; EO 13112, February 3, 1999; EO 13120, April 27, 1999; EO 13133, August 5, 1999; EO 13154, May 3, 2000; EO 13165, August 9, 2000; EO 13212, May 18, 2001; EO 13223, September 14, 2001; EO 13228, October 8, 2001; EO 13231, October 16, 2001; EO 13254, January 29, 2002; EO 13257, February 13, 2002; EO 13260, March 19, 2002; EO 13271, July 9, 2002; EO 13274, September 18, 2002; EO 13276, November 15, 2002
 Amended by: EO 13442, August 13, 2007
 Revokes: EO 13260, March 19, 2002 eff. March 31, 2002
 See:  EO 13130, July 14, 1999; EO 13284, January 23, 2003; Notice of September 10, 2003 (68 FR 53665); Notice of September 10, 2004 (69 FR 55313); EO 13362, November 29, 2004; EO 13373, March 10, 2005; Notice of September 8, 2005 (70 FR 54229)
+
 "
-13287,3/3/03,03-05344,
-13288,3/6/03,Mar-48,"Amended by: EO 13391, November 22, 2005
+13287,2003-03-03,03-05344,
+13288,2003-03-06,03-5848,"Amended by: EO 13391, November 22, 2005
 Superseded in part by: EO 13391, November 22, 2005
-See:  Notice of March 2, 2004; Notice of March 2, 2005; Notice of February 27, 2006; Notice of February 28, 2007; Notice of March 4, 2008; EO 13469, July 25, 2008; Notice of March 3, 2009; Notice of March 1, 2010"
-13289,3/12/03,Mar-45,"See:  EO 10977, December 4, 1961; EO 12985, January 11, 1996; EO 13363, November 29, 2004"
-13290,3/20/03,Mar-60,"See:  EO 13303, May 22, 2003; Notice of July 31, 2003 (68 FR 45739); Notice of May 19, 2005 (70 FR 29435)
-Amended by: EO 13350, July 29, 2004"
-13291,3/21/03,Mar-13,"Amends:  EO 13282, December 31, 2002
-See:  EO 13322, December 30, 2003"
-13292,3/25/03,Mar-36,"Amends:  EO 12958, April 17, 1995
+See:  Notice of March 2, 2004; Notice of March 2, 2005; Notice of February 27, 2006; Notice of February 28, 2007; Notice of March 4, 2008; EO 13469, July 25, 2008; Notice of March 3, 2009; Notice of March 1, 2010
+"
+13289,2003-03-12,03-6445,"See:  EO 10977, December 4, 1961; EO 12985, January 11, 1996; EO 13363, November 29, 2004"
+13290,2003-03-20,03-7160,"See:  EO 13303, May 22, 2003; Notice of July 31, 2003 (68 FR 45739); Notice of May 19, 2005 (70 FR 29435)
+Amended by: EO 13350, July 29, 2004
+"
+13291,2003-03-21,03-7313,"Amends:  EO 13282, December 31, 2002
+See:  EO 13322, December 30, 2003
+"
+13292,2003-03-25,03-7736,"Amends:  EO 12958, April 17, 1995
 Revoked by: EO 13526, December 29, 2009
-See:  EO 12356, April 6, 1982"
-13293,3/28/03,Mar-08,"Amends:  EO 10448, April 22, 1953
-See:  EO 12776, October 8, 1991"
-13294,3/28/03,Mar-09,"Revokes: EO 11157, June 22, 1964; EO 11800, August 17, 1974"
-13295,4/4/03,Mar-32,"Revokes: EO 12452, December 22, 1983
-Amended by: EO 13375, April 1, 2005"
-13296,4/18/03,03-10194,"Amends:  EO 13045, April 21, 1997"
-13297,4/23/03,03-10606,
-13298,5/6/03,03-11713,"Revokes: EO 12865, September 26, 1993; EO 13069, December 12, 1997; EO 13098, August 18, 1998"
-13299,5/8/03,03-11969,"Superseded by: EO 13537, April 14, 2010"
-13300,5/9/03,03-12071,
-13301,5/14/03,03-12661,"Amends:  EO 12863, September 13, 1993; EO 13070, December 15, 1997
-See: EO 13376, April 13, 2005"
-13302,5/15/03,03-12766,"Amends:  EO 13212, May 18, 2001"
-13303,5/22/03,03-13412,"Amended by: EO 13364, November 29, 2004"
-13304,5/28/03,03-13694,"Amends:  EO 13219, June 26, 2001
+See:  EO 12356, April 6, 1982
+"
+13293,2003-03-28,03-8108,"Amends:  EO 10448, April 22, 1953
+See:  EO 12776, October 8, 1991
+"
+13294,2003-03-28,03-8109,"Revokes: EO 11157, June 22, 1964; EO 11800, August 17, 1974"
+13295,2003-04-04,03-8832,"Revokes: EO 12452, December 22, 1983
+Amended by: EO 13375, April 1, 2005
+"
+13296,2003-04-18,03-10194,"Amends:  EO 13045, April 21, 1997"
+13297,2003-04-23,03-10606,
+13298,2003-05-06,03-11713,"Revokes: EO 12865, September 26, 1993; EO 13069, December 12, 1997; EO 13098, August 18, 1998"
+13299,2003-05-08,03-11969,"Superseded by: EO 13537, April 14, 2010"
+13300,2003-05-09,03-12071,
+13301,2003-05-14,03-12661,"Amends:  EO 12863, September 13, 1993; EO 13070, December 15, 1997
+See: EO 13376, April 13, 2005
+"
+13302,2003-05-15,03-12766,"Amends:  EO 13212, May 18, 2001"
+13303,2003-05-22,03-13412,"Amended by: EO 13364, November 29, 2004"
+13304,2003-05-28,03-13694,"Amends:  EO 13219, June 26, 2001
 Revokes: EO 12808, May 30, 1992; EO 12810, June 5, 1992; EO 12831, January 15, 1993; EO 13088, June 9, 1998; EO 13121, April 30, 1999; EO 13192, January 17, 2001
-See:  Notice of June 20, 2003; Notice of June 24, 2004; Notice of June 23, 2005; Notice of June 22, 2006; Notice of June 22, 2007; Notice of June 24, 2008; Notice of June 22, 2009; Notice of June 8, 2010"
-13305,5/28/03,03-13750,"Amends:  EO 13035, February 11, 1997; EO 13226, September 30, 2001"
-13306,5/28/03,03-14116,
-13307,5/29/03,03-14117,
-13308,6/20/03,03-16102,"Amends:  EO 12580, January 23, 1987"
-13309,7/25/03,03-19572,"Amends:  EO 12994, March 21, 1996"
-13310,7/28/03,03-19573,"Amends:  EO 13047, May 20, 1997
-See:  EO 13448, October 18, 2007; EO 13464, April 30, 2008; Notice of May 17, 2004;  Notice of May 17, 2005; Notice of May 18, 2006; Notice of May 17, 2007; Notice of May 16, 2008; Notice of May 14, 2009; Notice of May 13, 2010"
-13311,7/29/03,03-19675,"Amended by: EO 13388, October 25, 2005
-See:  EO 12958, April 17, 1995; EO 12968, August 2, 1995; EO 13356, August 27, 2004"
-13312,7/29/03,03-19676,"See:  EO 13194, January 8, 2001; EO 13213, May 22, 2001"
-13313,7/31/03,03-20013,
-13314,8/8/03,03-20764,
-13315,8/28/03,03-22543,"See:  EO 13303, May 22, 2003; EO 13364, November 29, 2004; EO 13438, July 17, 2007; Notice of May 20, 2004; Notice of May 19, 2005; Notice of May 18, 2006; Notice of May 18, 2007; Notice of May 20, 2008; Notice of May 19, 2009; Notice of May 12, 2010
-Superseded in part by:  EO 13350, July 29, 2004"
-13316,9/17/03,03-24217,"Amends:  EO 12131, May 4, 1979
+See:  Notice of June 20, 2003; Notice of June 24, 2004; Notice of June 23, 2005; Notice of June 22, 2006; Notice of June 22, 2007; Notice of June 24, 2008; Notice of June 22, 2009; Notice of June 8, 2010
+"
+13305,2003-05-28,03-13750,"Amends:  EO 13035, February 11, 1997; EO 13226, September 30, 2001"
+13306,2003-05-28,03-14116,
+13307,2003-05-29,03-14117,
+13308,2003-06-20,03-16102,"Amends:  EO 12580, January 23, 1987"
+13309,2003-07-25,03-19572,"Amends:  EO 12994, March 21, 1996"
+13310,2003-07-28,03-19573,"Amends:  EO 13047, May 20, 1997
+See:  EO 13448, October 18, 2007; EO 13464, April 30, 2008; Notice of May 17, 2004;  Notice of May 17, 2005; Notice of May 18, 2006; Notice of May 17, 2007; Notice of May 16, 2008; Notice of May 14, 2009; Notice of May 13, 2010
+"
+13311,2003-07-29,03-19675,"Amended by: EO 13388, October 25, 2005
+See:  EO 12958, April 17, 1995; EO 12968, August 2, 1995; EO 13356, August 27, 2004
+"
+13312,2003-07-29,03-19676,"See:  EO 13194, January 8, 2001; EO 13213, May 22, 2001"
+13313,2003-07-31,03-20013,
+13314,2003-08-08,03-20764,
+13315,2003-08-28,03-22543,"See:  EO 13303, May 22, 2003; EO 13364, November 29, 2004; EO 13438, July 17, 2007; Notice of May 20, 2004; Notice of May 19, 2005; Notice of May 18, 2006; Notice of May 18, 2007; Notice of May 20, 2008; Notice of May 19, 2009; Notice of May 12, 2010
+Superseded in part by:  EO 13350, July 29, 2004
+"
+13316,2003-09-17,03-24217,"Amends:  EO 12131, May 4, 1979
 Revokes: EO 12975, October 3, 1995; EO 13147, March 7, 2000; EO 13210, May 2, 2001; EO 13214, May 28, 2001; EO 13227, October 2, 2001; EO 13263, April 29, 2002; EO 13278, December 11, 2002
 Revokes in part: EO 13111, January 12, 1999; EO 13177, December 4, 2000
 Continues: EO 11145, March 7, 1964; EO 11183, October 3, 1964; EO 11287, June 28, 1966; EO 12196, February 26, 1980; EO 12216, June 18, 1980; EO 12367, June 15, 1982; EO 12382, September 13, 1982; EO 12905, March 25, 1994; EO 13231, October 16, 2001; EO 13237, November 28, 2001; EO 13256, February 12, 2002; EO 13265, June 6, 2002; EO 13270, July 3, 2002
 See:  EO 13018. September 16, 1996; EO 13046, May 16, 1997; EO 13137, September 15, 1999; EO 13167, September 15, 2000; EO 13188, January 12, 2001; EO 13218, June 20, 2001; EO 13255, February 6, 2002
 Supersedes: EO 13225, September 28, 2001
-Superseded in part by: EO 13385, September 29, 2005"
-13317,9/25/03,03-24919,"Amended by: EO 13418, December 14, 2006"
-13318,11/21/03,03-29644,"Supersedes: EO 12364, May 24, 1982
-Revoked by: EO 13562, December 27, 2010"
-13319,12/3/03,03-30513,"Amends:  EO 13183, December 23, 2000"
-13320,12/9/03,03-30913,"See:  EO 11582, February 11, 1971"
-13321,12/17/03,03-31594,"See:  EO 12396, December 9, 1982"
-13322,12/30/03,03-32328,"Supersedes: EO 13282, December 31, 2002
+Superseded in part by: EO 13385, September 29, 2005
+"
+13317,2003-09-25,03-24919,"Amended by: EO 13418, December 14, 2006"
+13318,2003-11-21,03-29644,"Supersedes: EO 12364, May 24, 1982
+Revoked by: EO 13562, December 27, 2010
+"
+13319,2003-12-03,03-30513,"Amends:  EO 13183, December 23, 2000"
+13320,2003-12-09,03-30913,"See:  EO 11582, February 11, 1971"
+13321,2003-12-17,03-31594,"See:  EO 12396, December 9, 1982"
+13322,2003-12-30,03-32328,"Supersedes: EO 13282, December 31, 2002
 See:  EO 13291, March 21, 2003
-Superseded by: EO 13332, March 3, 2004"
-13323,12/30/03,03-32332,
-13324,1/15/04,04-1322,"Revokes: EO 13194, January 8, 2001; EO 13213, May 2, 2001"
-13325,1/23/04,Apr-41,"Amends: EO 12293, February 23, 1981
-Revoked by: EO 13374, March 14, 2005"
-13326,1/27/04,Apr-08,"Revoked by: EO 13385, September 29, 2005"
-13327,2/4/04,Apr-73,"Amended by: EO 13423, January 24, 2007
-Revokes: EO 12512, April 29, 1985"
-13328,2/6/04,Apr-70,"Revoked by: EO 13385, September 29, 2005"
-13329,2/24/04,Apr-36,"See: EO 12958, April 17, 1995"
-13330,2/24/04,Apr-51,"See: Proclamation 7804 of July 26, 2004"
-13331,2/27/04,Apr-84,
-13332,3/4/04,Apr-22,"Supersedes: EO 13322, December 30, 2003
-Superseded by: EO 13368, December 30, 2004"
-13333,3/18/04,Apr-22,"Amends: EO 13257, February 13, 2002"
-13334,4/10/04,Apr-16,"See: EO 13351, August 9, 2004"
-13335,4/27/04,04-10024,
-13336,4/30/04,04-10377,"See: EO 13175, November 6, 2000; EO 13592, December 2, 2011
-Revokes: EO 13096, August 6, 1998"
-13337,4/30/04,04-10378,"Amends: EO 11423, August 16, 1968
-See: EO 10485, September 3, 1953; EO 10530, May 10, 1954; EO 13212, May 18, 2001"
-13338,5/11/04,04-11058,"Amended by: EO 13460, February 13, 2008
+Superseded by: EO 13332, March 3, 2004
+"
+13323,2003-12-30,03-32332,
+13324,2004-01-15,04-1322,"Revokes: EO 13194, January 8, 2001; EO 13213, May 2, 2001"
+13325,2004-01-23,04-1941,"Amends: EO 12293, February 23, 1981
+Revoked by: EO 13374, March 14, 2005
+"
+13326,2004-01-27,04-2408,"Revoked by: EO 13385, September 29, 2005"
+13327,2004-02-04,04-2773,"Amended by: EO 13423, January 24, 2007
+Revokes: EO 12512, April 29, 1985
+"
+13328,2004-02-06,04-3170,"Revoked by: EO 13385, September 29, 2005"
+13329,2004-02-24,04-4436,"See: EO 12958, April 17, 1995"
+13330,2004-02-24,04-4451,"See: Proclamation 7804 of July 26, 2004"
+13331,2004-02-27,04-4884,
+13332,2004-03-04,04-5322,"Supersedes: EO 13322, December 30, 2003
+Superseded by: EO 13368, December 30, 2004
+"
+13333,2004-03-18,04-6622,"Amends: EO 13257, February 13, 2002"
+13334,2004-04-10,04-8616,"See: EO 13351, August 9, 2004"
+13335,2004-04-27,04-10024,
+13336,2004-04-30,04-10377,"See: EO 13175, November 6, 2000; EO 13592, December 2, 2011
+Revokes: EO 13096, August 6, 1998
+"
+13337,2004-04-30,04-10378,"Amends: EO 11423, August 16, 1968
+See: EO 10485, September 3, 1953; EO 10530, May 10, 1954; EO 13212, May 18, 2001
+"
+13338,2004-05-11,04-11058,"Amended by: EO 13460, February 13, 2008
 See: EO 13224, September 23, 2001; Notice of May 5, 2005; EO 13399, April 25, 2006; Notice of May 8, 2006; Notice of May 8, 2007; Notice of May 7, 2008; Notice of May 7, 2009; Notice of May 3, 2010; EO 13572, April 29, 2011; EO 13573, May 18, 2011; EO 13582, August 17, 2011"
-13339,5/13/04,04-11271,"Amended by: EO 13403, May 12, 2006
-Superseded by: EO 13515, October 14, 2009"
-13340,5/18/04,04-11592,
-13341,5/20/04,04-11991,
-13342,6/1/04,04-12745,
-13343,6/6/04,04-13123,"See: EO 11582, February 11, 1971"
-13344,7/7/04,04-15787,"See: EO 11582, February 11, 1971"
-13345,7/8/04,04-15933,"See: EO 11269, February 14, 1966
-Revokes: EO 12757, March 19, 1991; EO 12823, December 3, 1992; EO 13028, December 3, 1996; EO 13131, July 22, 1999"
-13346,7/8/04,04-15934,"Amends: EO 12163, September 29, 1979; EO 13277, November 19, 2002
-See: EO 13419, December 20, 2006"
-13347,7/22/04,04-17150,
-13348,7/22/04,04-17205,"See: Notice of July 19, 2005; Notice of July 18, 2006; Notice of July 19, 2007; Notice of July 16, 2008; Notice of July 16, 2009; Notice of July 19, 2010"
-13349,7/23/04,04-17204,"Amends: EO 13326, September 30, 2001"
-13350,7/29/04,04-17636,"Revokes: EO 12722, August 2, 1990; EO 12724, August 9, 1990; EO 12734, November 14, 1990; EO 12743, January 18, 1991; EO 12751, February 14, 1991; EO 12817, October 21, 1992
+13339,2004-05-13,04-11271,"Amended by: EO 13403, May 12, 2006
+Superseded by: EO 13515, October 14, 2009
+"
+13340,2004-05-18,04-11592,
+13341,2004-05-20,04-11991,
+13342,2004-06-01,04-12745,
+13343,2004-06-06,04-13123,"See: EO 11582, February 11, 1971"
+13344,2004-07-07,04-15787,"See: EO 11582, February 11, 1971"
+13345,2004-07-08,04-15933,"See: EO 11269, February 14, 1966
+Revokes: EO 12757, March 19, 1991; EO 12823, December 3, 1992; EO 13028, December 3, 1996; EO 13131, July 22, 1999
+"
+13346,2004-07-08,04-15934,"Amends: EO 12163, September 29, 1979; EO 13277, November 19, 2002
+See: EO 13419, December 20, 2006
+"
+13347,2004-07-22,04-17150,
+13348,2004-07-22,04-17205,"See: Notice of July 19, 2005; Notice of July 18, 2006; Notice of July 19, 2007; Notice of July 16, 2008; Notice of July 16, 2009; Notice of July 19, 2010"
+13349,2004-07-23,04-17204,"Amends: EO 13326, September 30, 2001"
+13350,2004-07-29,04-17636,"Revokes: EO 12722, August 2, 1990; EO 12724, August 9, 1990; EO 12734, November 14, 1990; EO 12743, January 18, 1991; EO 12751, February 14, 1991; EO 12817, October 21, 1992
 Amends: EO 13290, March 20, 2003
 Supersedes in part: EO 13315, August 28, 2003
-See: EO 13303, May 22, 2003; EO 13364, November 29, 2004; EO 13438, July 17, 2007; Notice of May 19, 2005; Notice of May 18, 2006; Notice of May 18, 2007; Notice of May 20, 2008; Notice of May 19, 2009; Notice of May 12, 2010"
-13351,8/9/04,04-18575,"See: EO 13334, April 12, 2004"
-13352,8/26/04,04-19909,
-13353,8/27/04,04-20049,
-13354,8/27/04,04-20050,"Revoked by: EO 13470, July 30, 2008, read in conjunction with EO 12333, December 4, 1981
+See: EO 13303, May 22, 2003; EO 13364, November 29, 2004; EO 13438, July 17, 2007; Notice of May 19, 2005; Notice of May 18, 2006; Notice of May 18, 2007; Notice of May 20, 2008; Notice of May 19, 2009; Notice of May 12, 2010
+"
+13351,2004-08-09,04-18575,"See: EO 13334, April 12, 2004"
+13352,2004-08-26,04-19909,
+13353,2004-08-27,04-20049,
+13354,2004-08-27,04-20050,"Revoked by: EO 13470, July 30, 2008, read in conjunction with EO 12333, December 4, 1981
 See: EO 12333, December 12, 1981; EO 12958, April 17, 1995; EO 13470, July 30, 2008"
-13355,8/27/04,04-20051,"See: EO 13470, July 30, 2008
+13355,2004-08-27,04-20051,"See: EO 13470, July 30, 2008
 Amends: EO 12333, December 12, 1981
-Revoked by: EO 13470, July 30, 2008, read in conjunction with EO 12333, December 4, 1981"
-13356,8/27/04,04-20052,"See: EO 12333, December 12, 1981; EO 12958, April 17, 1995; EO 13311, July 29, 2003
-Revoked by: EO 13388, October 25, 2005"
-13357,9/20/04,04-21411,"Revokes: EO 12538, November 15, 1985; EO 12543, January 7, 1986; EO 12544, January 8, 1986; EO 12801, April 15, 1992"
-13358,9/28/04,04-22212,
-13359,10/20/04,04-23994,"Amends: EO 13173, October 25, 2000"
-13360,10/20/04,04-24098,
-13361,11/16/04,04-25866,"Amends: EO 12163, September 29, 1979"
-13362,11/29/04,04-26684,"Revoked by: EO 13442, August 13, 2007
-See: EO 13286, February 28, 2003"
-13363,11/29/04,04-26685,"See: EO 13289, March 12, 2003"
-13364,11/29/04,04-26686,"Amends: EO 13303, May 22, 2003
-See: EO 13315, August 28, 2003; EO 13350, July 29, 2004; EO 13438, July 17, 2007; Notice of May 19, 2005; Notice of May 18, 2006; Notice of May 18, 2007; Notice of May 20, 2008; Notice of May 19, 2009; Notice of May 12, 2010"
-13365,12/3/04,04-27076,"Amends: EO 12473, April 13, 1984"
-13366,12/17/04,04-28079,"Revoked by: EO 13547, July 19, 2010"
-13367,12/21/04,04-28404,
-13368,12/30/04,05-306,"Supersedes: EO 13332, March 3, 2004
-Superseded by: EO 13393, December 22, 2005"
-13369,1/7/05,05-771,"Amended by: EO 13379, June 16, 2005; EO 13386, September 30, 2005
-Revoked by: EO 13446, September 28, 2007"
-13370,1/13/05,05-1170,
-13371,1/27/05,05-1886,"Amends: EO 13285, January 29, 2003"
-13372,2/16/05,May-85,"Amends: EO 12947, January 23, 1995; EO 13224, September 23, 2001
-See: EO 13099, August 20, 1998; EO 13268, July 2, 2002; EO 13284, January 23, 2003"
-13373,3/5/05,May-97,"Amends: EO 11926, July 19, 1976
-See: EO 13286, February 28, 2003"
-13374,3/14/05,May-34,"Amends: EO 12293, February 23, 1981
-Revokes: EO 13325, January 23, 2004"
-13375,4/1/05,May-07,"Amends: EO 13295, April 4, 2003"
-13376,4/13/05,May-30,"Amends: EO 12863, September 13, 1993
-See: EO 13070, December 15, 1997; EO 13301, May 14, 2003"
-13377,4/13/05,May-31,"Revokes: EO 11767, February 19, 1974"
-13378,5/12/05,May-92,"Amends: EO 12788, January 15, 1992"
-13379,6/16/05,05-12284,"Amends: EO 13369, January 7, 2005
-See: EO 13386, September 30, 2005; EO 13446, September 28, 2007"
-13380,6/17/05,05-12354,"Amends: EO 13369, May 13, 1994"
-13381,6/27/05,05-13098,"Amends: EO 12171, November 19, 1979
+Revoked by: EO 13470, July 30, 2008, read in conjunction with EO 12333, December 4, 1981
+"
+13356,2004-08-27,04-20052,"See: EO 12333, December 12, 1981; EO 12958, April 17, 1995; EO 13311, July 29, 2003
+Revoked by: EO 13388, October 25, 2005
+"
+13357,2004-09-20,04-21411,"Revokes: EO 12538, November 15, 1985; EO 12543, January 7, 1986; EO 12544, January 8, 1986; EO 12801, April 15, 1992"
+13358,2004-09-28,04-22212,
+13359,2004-10-20,04-23994,"Amends: EO 13173, October 25, 2000"
+13360,2004-10-20,04-24098,
+13361,2004-11-16,04-25866,"Amends: EO 12163, September 29, 1979"
+13362,2004-11-29,04-26684,"Revoked by: EO 13442, August 13, 2007
+See: EO 13286, February 28, 2003
+"
+13363,2004-11-29,04-26685,"See: EO 13289, March 12, 2003"
+13364,2004-11-29,04-26686,"Amends: EO 13303, May 22, 2003
+See: EO 13315, August 28, 2003; EO 13350, July 29, 2004; EO 13438, July 17, 2007; Notice of May 19, 2005; Notice of May 18, 2006; Notice of May 18, 2007; Notice of May 20, 2008; Notice of May 19, 2009; Notice of May 12, 2010
+"
+13365,2004-12-03,04-27076,"Amends: EO 12473, April 13, 1984"
+13366,2004-12-17,04-28079,"Revoked by: EO 13547, July 19, 2010"
+13367,2004-12-21,04-28404,
+13368,2004-12-30,05-306,"Supersedes: EO 13332, March 3, 2004
+Superseded by: EO 13393, December 22, 2005
+"
+13369,2005-01-07,05-771,"Amended by: EO 13379, June 16, 2005; EO 13386, September 30, 2005
+Revoked by: EO 13446, September 28, 2007
+"
+13370,2005-01-13,05-1170,
+13371,2005-01-27,05-1886,"Amends: EO 13285, January 29, 2003"
+13372,2005-02-16,05-3385,"Amends: EO 12947, January 23, 1995; EO 13224, September 23, 2001
+See: EO 13099, August 20, 1998; EO 13268, July 2, 2002; EO 13284, January 23, 2003
+"
+13373,2005-03-05,05-5097,"Amends: EO 11926, July 19, 1976
+See: EO 13286, February 28, 2003
+"
+13374,2005-03-14,05-5434,"Amends: EO 12293, February 23, 1981
+Revokes: EO 13325, January 23, 2004
+"
+13375,2005-04-01,05-6907,"Amends: EO 13295, April 4, 2003"
+13376,2005-04-13,05-7830,"Amends: EO 12863, September 13, 1993
+See: EO 13070, December 15, 1997; EO 13301, May 14, 2003
+"
+13377,2005-04-13,05-7831,"Revokes: EO 11767, February 19, 1974"
+13378,2005-05-12,05-9892,"Amends: EO 12788, January 15, 1992"
+13379,2005-06-16,05-12284,"Amends: EO 13369, January 7, 2005
+See: EO 13386, September 30, 2005; EO 13446, September 28, 2007
+"
+13380,2005-06-17,05-12354,"Amends: EO 13369, May 13, 1994"
+13381,2005-06-27,05-13098,"Amends: EO 12171, November 19, 1979
 See: EO 12958, April 17, 1995
 Amended by: EO 13403, May 12, 2006; EO 13408, June 29, 2006; EO 13436, June 28, 2007
-Revoked by: EO 13467, June 30, 2008"
-13382,6/28/05,05-13214,"Amends: EO 12938, November 14, 1994
-See: EO 12735, November 16, 1990; EO 13094, July 28, 1998; Notice of October 25, 2005; Notice of October 27, 2006; Notice of November 8, 2007; Notice of November 10, 2008; Notice of November 6, 2009"
-13383,7/15/05,05-14452,"Amends: EO 12139, May 23, 1979; EO 12949, February 9, 1995"
-13384,7/27/05,05-15160,
-13385,9/29/05,05-19993,"Amends: EO 12216, June 18, 1980; EO 12367, June 15, 1982; EO 13226, September 30, 2001; EO 13231, October 16, 2001
+Revoked by: EO 13467, June 30, 2008
+"
+13382,2005-06-28,05-13214,"Amends: EO 12938, November 14, 1994
+See: EO 12735, November 16, 1990; EO 13094, July 28, 1998; Notice of October 25, 2005; Notice of October 27, 2006; Notice of November 8, 2007; Notice of November 10, 2008; Notice of November 6, 2009
+"
+13383,2005-07-15,05-14452,"Amends: EO 12139, May 23, 1979; EO 12949, February 9, 1995"
+13384,2005-07-27,05-15160,
+13385,2005-09-29,05-19993,"Amends: EO 12216, June 18, 1980; EO 12367, June 15, 1982; EO 13226, September 30, 2001; EO 13231, October 16, 2001
 Supersedes in part: EO 13316, September 17, 2003
 Revokes: EO 13283, January 21, 2003; EO 13326, January 27, 2004; EO 13328, February 6, 2004
 Continues: EO 11145, March 7, 1964; EO 11183, October 3, 1964; EO 11287, June 28, 1966; EO 12131, May 4, 1979; EO 12196, February 26, 1980; EO 12382, September 13, 1982; EO 12905, March 25, 1994; EO 12994, March 21, 1996; EO 13231, October 16, 2001; EO 13237, November 28, 2001; EO 13256, February 12, 2002; EO 13265, June 6, 2002; EO 13270, July 3, 2002
-Superseded in part by: EO 13446, September 28, 2007"
-13386,9/30/05,05-20156,"Amends: EO 13369, January 7, 2005
-See: EO 13379, June 16, 2005; EO 13446, September 28, 2007"
-13387,10/14/05,05-20944,"Amends: EO 12473, April 13, 1984
-See: EO 12958, April 17, 1995"
-13388,10/25/05,05-21571,"Revokes: EO 13356, August 27, 2004
+Superseded in part by: EO 13446, September 28, 2007
+"
+13386,2005-09-30,05-20156,"Amends: EO 13369, January 7, 2005
+See: EO 13379, June 16, 2005; EO 13446, September 28, 2007
+"
+13387,2005-10-14,05-20944,"Amends: EO 12473, April 13, 1984
+See: EO 12958, April 17, 1995
+"
+13388,2005-10-25,05-21571,"Revokes: EO 13356, August 27, 2004
 Amends: EO 13311, July 29, 2003
-See: EO 12958, April 17, 1995"
-13389,11/1/05,05-22132,"Amended by: EO 13403, May 12, 2006; EO 13463, April 18, 2008"
-13390,11/1/05,05-22133,"Amended by: EO 13463, April 18, 2008; EO 13504, February 19, 2009; EO 13512, September 29, 2009"
-13391,11/22/05,05-23412,"Amends: EO 13288, March 6, 2003
+See: EO 12958, April 17, 1995
+"
+13389,2005-11-01,05-22132,"Amended by: EO 13403, May 12, 2006; EO 13463, April 18, 2008"
+13390,2005-11-01,05-22133,"Amended by: EO 13463, April 18, 2008; EO 13504, February 19, 2009; EO 13512, September 29, 2009"
+13391,2005-11-22,05-23412,"Amends: EO 13288, March 6, 2003
 Supersedes in part: EO 13288, March 6, 2003
-See: Notice of February 27, 2006; Notice of February 28, 2007; Notice of March 4, 2008; EO 13469, July 25, 2008; Notice of March 3, 2009; Notice of March 1, 2010"
-13392,12/14/05,05-24255,
-13393,12/22/05,05-24596,"Supersedes: EO 13368, December 30, 2004"
-13394,12/22/05,05-24597,"Revoked by: EO 13533, March 1, 2010
-Revokes: EO 13000, April 24, 1996; Memorandum of June 2, 2005"
-13395,1/13/06,06-554,
-13396,2/7/06,06-1316,"See: Notice of February 5, 2007; Notice of February 5, 2008; Notice of February 4, 2009; Notice of February 2, 2010"
-13397,3/7/06,Jun-62,
-13398,4/18/06,Jun-65,
-13399,4/25/06,Jun-85,"See: EO 13338, May 11, 2004; EO 13460, February 13, 2008; Notice of May 8, 2006; Notice of May 8, 2007; Notice of May 7, 2008; Notice of May 7, 2009; Notice of May 3, 2010; EO 13572, April 29, 2011; EO 13573, May 18, 2011; EO 13582, August 17, 2011"
-13400,4/26/06,Jun-21,"See: EO 13067, November 3, 1997; Notice of November 1, 2006; Notice of November 1, 2007; Notice of October 30, 2008; Notice of October 27, 2009"
-13401,2/27/07,Jun-32,"See: EO 12820, November 5, 1992"
-13402,5/10/06,Jun-52,"Amended by: EO 13414, November 3, 2006"
-13403,5/12/06,Jun-52,"Amends: EO 11030, June 19, 1962
+See: Notice of February 27, 2006; Notice of February 28, 2007; Notice of March 4, 2008; EO 13469, July 25, 2008; Notice of March 3, 2009; Notice of March 1, 2010
+"
+13392,2005-12-14,05-24255,
+13393,2005-12-22,05-24596,"Supersedes: EO 13368, December 30, 2004"
+13394,2005-12-22,05-24597,"Revoked by: EO 13533, March 1, 2010
+Revokes: EO 13000, April 24, 1996; Memorandum of June 2, 2005
+"
+13395,2006-01-13,06-554,
+13396,2006-02-07,06-1316,"See: Notice of February 5, 2007; Notice of February 5, 2008; Notice of February 4, 2009; Notice of February 2, 2010"
+13397,2006-03-07,06-2362,
+13398,2006-04-18,06-3865,
+13399,2006-04-25,06-4085,"See: EO 13338, May 11, 2004; EO 13460, February 13, 2008; Notice of May 8, 2006; Notice of May 8, 2007; Notice of May 7, 2008; Notice of May 7, 2009; Notice of May 3, 2010; EO 13572, April 29, 2011; EO 13573, May 18, 2011; EO 13582, August 17, 2011"
+13400,2006-04-26,06-4121,"See: EO 13067, November 3, 1997; Notice of November 1, 2006; Notice of November 1, 2007; Notice of October 30, 2008; Notice of October 27, 2009"
+13401,2007-02-27,06-4132,"See: EO 12820, November 5, 1992"
+13402,2006-05-10,06-4552,"Amended by: EO 13414, November 3, 2006"
+13403,2006-05-12,06-4652,"Amends: EO 11030, June 19, 1962
 Amends: EO 13279, December 12, 2002
 Amends: EO 13339, May 13, 2004
 Amends: EO 13381, June 27, 2005
 Amends: EO 13389, November 1, 2005
-Revokes: EO 13011, July 16, 1996"
-13404,6/7/06,Jun-51,
-13405,6/16/06,Jun-92,"See: Notice of June 14, 2007; Notice of June 6, 2008; Notice of June 12, 2009; Notice of June 8, 2010"
-13406,6/23/06,Jun-28,"See: EO 12630, March 15, 1988"
-13407,6/26/06,Jun-29,"Amends: EO 12472, April 3, 1984"
-13408,6/29/06,Jun-84,"Amends: EO 13381, June 27, 2005"
-13409,7/3/06,Jun-01,
-13410,8/22/06,Jun-20,
-13411,8/29/06,Jun-92,
-13412,10/13/06,Jun-69,"See: EO 13067, November 3, 1997; Notice of November 1, 2006; Notice of November 1, 2007; Notice of October 30, 2008; Notice of October 27, 2009"
-13413,10/27/06,Jun-20,"See: Notice of October 24, 2007; Notice of October 22, 2008; Notice of October 20, 2009"
-13414,11/3/06,Jun-48,"Amends: EO 13402, May 10, 2006"
-13415,12/1/06,Jun-61,"Revokes in part: EO 12748, February 1, 1991; EO 12828, January 5, 1993"
-13416,12/5/06,Jun-19,"See: EO 12866, September 30, 1993"
-13417,12/6/06,X06-11208,"See: EO 13429, April 4, 2007"
-13418,12/14/06,Jun-70,"Amends: EO 13317, September 25, 2003"
-13419,12/20/06,Jun-95,"See: EO 12881, November 23, 1993; EO 13346, July 8, 2004; EO 13479, November 18, 2008"
-13420,12/21/06,Jun-96,"Supersedes: EO 13393, December 22, 2005
-Superseded by: EO 13454, January 4, 2008"
-13421,12/28/06,Jun-93,"See: EO 11582, February 11, 1971"
-13422,1/18/07,07-293,"Amends: EO 12866, September 30, 1993
-Revoked by: EO 13497, January 30, 2009"
-13423,1/24/07,07-374,"Amends: EO 13327, February 4, 2004
+Revokes: EO 13011, July 16, 1996
+"
+13404,2006-06-07,06-5351,
+13405,2006-06-16,06-5592,"See: Notice of June 14, 2007; Notice of June 6, 2008; Notice of June 12, 2009; Notice of June 8, 2010"
+13406,2006-06-23,06-5828,"See: EO 12630, March 15, 1988"
+13407,2006-06-26,06-5829,"Amends: EO 12472, April 3, 1984"
+13408,2006-06-29,06-5984,"Amends: EO 13381, June 27, 2005"
+13409,2006-07-03,06-6101,
+13410,2006-08-22,06-7220,
+13411,2006-08-29,06-7492,
+13412,2006-10-13,06-8769,"See: EO 13067, November 3, 1997; Notice of November 1, 2006; Notice of November 1, 2007; Notice of October 30, 2008; Notice of October 27, 2009"
+13413,2006-10-27,06-9020,"See: Notice of October 24, 2007; Notice of October 22, 2008; Notice of October 20, 2009"
+13414,2006-11-03,06-9148,"Amends: EO 13402, May 10, 2006"
+13415,2006-12-01,06-9561,"Revokes in part: EO 12748, February 1, 1991; EO 12828, January 5, 1993"
+13416,2006-12-05,06-9619,"See: EO 12866, September 30, 1993"
+13417,2006-12-06,X06-11208,"See: EO 13429, April 4, 2007"
+13418,2006-12-14,06-9770,"Amends: EO 13317, September 25, 2003"
+13419,2006-12-20,06-9895,"See: EO 12881, November 23, 1993; EO 13346, July 8, 2004; EO 13479, November 18, 2008"
+13420,2006-12-21,06-9896,"Supersedes: EO 13393, December 22, 2005
+Superseded by: EO 13454, January 4, 2008
+"
+13421,2006-12-28,06-9993,"See: EO 11582, February 11, 1971"
+13422,2007-01-18,07-293,"Amends: EO 12866, September 30, 1993
+Revoked by: EO 13497, January 30, 2009
+"
+13423,2007-01-24,07-374,"Amends: EO 13327, February 4, 2004
 Revokes: EO 13101, September 14, 1998; EO 13123, June 3, 1999; EO 13134, August 12, 1999; EO 13148, April 21, 2000; EO 13149, April 21, 2000
-See: EO 13432, May 14, 2007; EO 13514, October 5, 2009"
-13424,1/26/07,07-419,"Amends: EO 13285, January 29, 2003"
-13425,2/14/07,07-780,"Supersedes: Military Order of November 13, 2001"
-13426,3/6/07,07-1137,
-13427,3/7/07,07-1152,
-13428,4/2/07,07-1704,"See: EO 7059-A, June 4, 1935; EO 10992, February 9, 1962"
-13429,4/4/07,07-1816,"See: EO 13417, December 6, 2006"
-13430,4/18/07,Jul-27,"Amends: EO 12473, April 13, 1984"
-13431,5/8/07,Jul-67,
-13432,5/14/07,Jul-62,"See: EO 12866, September 30, 1993; EO 13423, January 24, 2007"
-13433,5/16/07,Jul-18,
-13434,5/17/07,Jul-70,
-13435,6/20/07,Jul-12,"Revoked by: EO 13505, March 9, 2009"
-13436,6/28/07,Jul-58,"Amends: EO 13381, June 27, 2005"
-13437,6/28/07,Jul-59,
-13438,7/17/07,Jul-52,"See: EO 13303, May 22, 2003; EO 13315, August 28, 2003; EO 13350, July 29, 2004; EO 13364, November 29, 2004; Notice of May 20, 2008; Notice of May 19, 2009; Notice of May 12, 2010"
-13439,7/18/07,Jul-93,
-13440,7/20/07,Jul-56,
-13441,8/1/07,Jul-35,"See: Notice of July 30, 2008; Notice of July 30, 2009; Notice of July 29, 2010"
-13442,8/13/07,Jul-23,"Amends: EO 13286, February 28, 2003
-Revokes: EO 13362, November 29, 2004"
-13443,8/16/07,Jul-15,
-13444,9/12/07,Jul-00,
-13445,9/27/07,Jul-90,
-13446,9/28/07,Jul-06,"Amends: EO 12994, March 21, 1996
+See: EO 13432, May 14, 2007; EO 13514, October 5, 2009
+"
+13424,2007-01-26,07-419,"Amends: EO 13285, January 29, 2003"
+13425,2007-02-14,07-780,"Supersedes: Military Order of November 13, 2001"
+13426,2007-03-06,07-1137,
+13427,2007-03-07,07-1152,
+13428,2007-04-02,07-1704,"See: EO 7059-A, June 4, 1935; EO 10992, February 9, 1962"
+13429,2007-04-04,07-1816,"See: EO 13417, December 6, 2006"
+13430,2007-04-18,07-2027,"Amends: EO 12473, April 13, 1984"
+13431,2007-05-08,07-2367,
+13432,2007-05-14,07-2462,"See: EO 12866, September 30, 1993; EO 13423, January 24, 2007"
+13433,2007-05-16,07-2518,
+13434,2007-05-17,07-2570,
+13435,2007-06-20,07-3112,"Revoked by: EO 13505, March 9, 2009"
+13436,2007-06-28,07-3258,"Amends: EO 13381, June 27, 2005"
+13437,2007-06-28,07-3259,
+13438,2007-07-17,07-3552,"See: EO 13303, May 22, 2003; EO 13315, August 28, 2003; EO 13350, July 29, 2004; EO 13364, November 29, 2004; Notice of May 20, 2008; Notice of May 19, 2009; Notice of May 12, 2010"
+13439,2007-07-18,07-3593,
+13440,2007-07-20,07-3656,
+13441,2007-08-01,07-3835,"See: Notice of July 30, 2008; Notice of July 30, 2009; Notice of July 29, 2010"
+13442,2007-08-13,07-4023,"Amends: EO 13286, February 28, 2003
+Revokes: EO 13362, November 29, 2004
+"
+13443,2007-08-16,07-4115,
+13444,2007-09-12,07-4600,
+13445,2007-09-27,07-4890,
+13446,2007-09-28,07-4906,"Amends: EO 12994, March 21, 1996
 Continues: EO 11145, March 7,1964; EO 11183, October 3, 1964; EO 11287, June 28, 1966; EO 12131, May 4, 1979; EO 12196, February 26, 1980; EO 12216, June 19, 1980; EO 12367, June 15, 1982; EO 12382, September 13, 1982; EO 12905, March 25, 1994; EO 12994, March 21, 1996; EO 13226, September 30, 2001; EO 13231, October 16, 2001; EO 13237, November 28, 2001; EO 13256, February 12, 2002; EO 13265, June 6, 2002; EO 13270, July 3, 2002
 Revokes: EO 13369, January 7, 2005
 See: EO 13379, June 16, 2005; EO 13386, September 30, 2005
 Supersedes in part: EO 13385, September 29, 2005
-Superseded in part by: EO 13511, September 29, 2009"
-13447,9/28/07,Jul-07,"See: EO 12473, April 13, 1984; EO 13262, April 11, 2002"
-13448,10/18/07,Jul-70,"See: EO 13047, May 20, 1997; EO 13310, July 28, 2003; EO 13464, April 30, 2008; Notice of May 16, 2008; Notice of May 14, 2009; Notice of May 13, 2010"
-13449,10/20/07,Jul-99,"See: Proclamation 5030, March 10, 1983"
-13450,11/13/07,Jul-26,
-13451,11/19/07,Jul-16,
-13452,11/28/07,X07-11130,
-13453,12/6/07,Jul-22,"See: EO 11582, February 11, 1971"
-13454,1/4/08,Aug-62,"Supersedes: EO 13420, December 21, 2006
-Superseded by: EO 13483, December 18, 2008"
-13455,1/22/08,08-325,
-13456,1/23/08,08-360,"Amends: EO 11858, May 7, 1975
-Revokes in part: EO 12919, June 3, 1994"
-13457,1/29/08,08-483,
-13458,2/4/08,08-568,
-13459,2/7/08,08-658,
-13460,2/13/08,08-761,"Amends: EO 13338, May 11, 2004
-See: EO 13399, April 25, 2006; Notice of May 7, 2008; Notice of May 7, 2009; Notice of May 3, 2010; EO 13572, April 29, 2011; EO 13573, May 18, 2011; EO 13582, August 17, 2011"
-13461,2/15/08,08-797,"Revokes: EO 13250, December 28, 2001; Memorandum of March 19, 2002"
-13462,2/29/08,08-970,"Amended by: EO 13516, October 28, 2009
+Superseded in part by: EO 13511, September 29, 2009
+"
+13447,2007-09-28,07-4907,"See: EO 12473, April 13, 1984; EO 13262, April 11, 2002"
+13448,2007-10-18,07-5270,"See: EO 13047, May 20, 1997; EO 13310, July 28, 2003; EO 13464, April 30, 2008; Notice of May 16, 2008; Notice of May 14, 2009; Notice of May 13, 2010"
+13449,2007-10-20,07-5299,"See: Proclamation 5030, March 10, 1983"
+13450,2007-11-13,07-5726,
+13451,2007-11-19,07-5816,
+13452,2007-11-28,X07-11130,
+13453,2007-12-06,07-6022,"See: EO 11582, February 11, 1971"
+13454,2008-01-04,08-62,"Supersedes: EO 13420, December 21, 2006
+Superseded by: EO 13483, December 18, 2008
+"
+13455,2008-01-22,08-325,
+13456,2008-01-23,08-360,"Amends: EO 11858, May 7, 1975
+Revokes in part: EO 12919, June 3, 1994
+"
+13457,2008-01-29,08-483,
+13458,2008-02-04,08-568,
+13459,2008-02-07,08-658,
+13460,2008-02-13,08-761,"Amends: EO 13338, May 11, 2004
+See: EO 13399, April 25, 2006; Notice of May 7, 2008; Notice of May 7, 2009; Notice of May 3, 2010; EO 13572, April 29, 2011; EO 13573, May 18, 2011; EO 13582, August 17, 2011
+"
+13461,2008-02-15,08-797,"Revokes: EO 13250, December 28, 2001; Memorandum of March 19, 2002"
+13462,2008-02-29,08-970,"Amended by: EO 13516, October 28, 2009
 Revokes: EO 12863, September 13, 1993
-See: EO 12333, December 4, 1981; EO 12958, April 17, 1995; EO 12968, August 2, 1995; EO 13470, July 30, 2008"
-13463,4/18/08,08-1182,"Amends: EO 13389, November 1, 2005; EO 13390, November 1, 2005"
-13464,4/30/08,X08-10502,"See: EO 13047, May 20, 1997; EO 13310, July 28, 2003; EO 13448, October 18, 2007; Notice of May 16, 2008; Notice of May 14, 2009; Notice of May 13, 2010"
-13465,6/6/08,08-1348,"Amends: EO 12989, February 5, 1996"
-13466,6/26/08,08-1399,"See: Notice of June 24, 2009; Notice of June 14, 2010; EO 13551, August 30, 2010; EO 13570, April 18, 2011"
-13467,6/30/08,08-1409,"Amends: EO 12171, November 19, 1979; EO 12968, August 2, 1995
+See: EO 12333, December 4, 1981; EO 12958, April 17, 1995; EO 12968, August 2, 1995; EO 13470, July 30, 2008
+"
+13463,2008-04-18,08-1182,"Amends: EO 13389, November 1, 2005; EO 13390, November 1, 2005"
+13464,2008-04-30,X08-10502,"See: EO 13047, May 20, 1997; EO 13310, July 28, 2003; EO 13448, October 18, 2007; Notice of May 16, 2008; Notice of May 14, 2009; Notice of May 13, 2010"
+13465,2008-06-06,08-1348,"Amends: EO 12989, February 5, 1996"
+13466,2008-06-26,08-1399,"See: Notice of June 24, 2009; Notice of June 14, 2010; EO 13551, August 30, 2010; EO 13570, April 18, 2011"
+13467,2008-06-30,08-1409,"Amends: EO 12171, November 19, 1979; EO 12968, August 2, 1995
 Revokes: EO 13381, June 27, 2005
-See: EO 10450, April 27, 1953; EO 10577, November 23, 1954; EO 10865, February 20, 1960; EO 12333, December 4, 1981; EO 12829, January 6, 1993; EO 12958, April 17, 1995; EO 13476, October 9, 2008; EO 13488, January 16, 2008; EO 13549, August 18, 2010"
-13468,7/24/08,08-1472,"See: EO 12473, April 13, 1984"
-13469,7/25/08,08-1480,"See: EO 13288, March 6, 2003; EO 13391, November 22, 2005; Notice of March 3, 2009; Notice of March 1, 2010"
-13470,7/30/08,E8-17940,"See: EO 12036, January 24, 1978; EO 12958, April 17, 1995; EO 13354, August 27, 2004; EO 13355, August 27, 2004; EO 13462, February 29, 2008
+See: EO 10450, April 27, 1953; EO 10577, November 23, 1954; EO 10865, February 20, 1960; EO 12333, December 4, 1981; EO 12829, January 6, 1993; EO 12958, April 17, 1995; EO 13476, October 9, 2008; EO 13488, January 16, 2008; EO 13549, August 18, 2010
+"
+13468,2008-07-24,08-1472,"See: EO 12473, April 13, 1984"
+13469,2008-07-25,08-1480,"See: EO 13288, March 6, 2003; EO 13391, November 22, 2005; Notice of March 3, 2009; Notice of March 1, 2010"
+13470,2008-07-30,E8-17940,"See: EO 12036, January 24, 1978; EO 12958, April 17, 1995; EO 13354, August 27, 2004; EO 13355, August 27, 2004; EO 13462, February 29, 2008
 Amends: EO 12333, December 4, 1981
-Revokes: EO 13354, August 27, 2004, and EO 13355, August 27, 2004, read in conjunction with EO 12333, December 4, 1981"
-13471,8/28/08,E8-20436,"Amends: EO 13285, January 29, 2003"
-13472,9/11/08,E8-21651,"See: EO 11030, June 15, 1962"
-13473,9/25/08,E8-23125,
-13474,9/26/08,E8-23235,"Amends: EO 12962, June 7, 1995"
-13475,10/7/08,E8-24342,"Amends: EO 12139, May 23, 1979; EO 12949, February 9, 1995"
-13476,10/9/08,E8-24465,"See: EO 13467, June 30, 2008
-Supersedes: EO 13176, November 27, 2000"
-13477,10/31/08,E8-26531,
-13478,11/18/08,E8-27771,"Amends: EO 9397, November 22, 1943"
-13479,11/18/08,E8-27777,"See: EO 13419, December 20, 2006"
-13480,11/26/08,E8-28912,"Amends: EO 12171, November 19, 1979"
-13481,12/9/08,E8-29564,"Supersedes: Memorandum of December 8, 2006
-Revoked by: EO 13557, November 4, 2010"
-13482,12/12/08,E8-30042,"See: EO 11582, February 11, 1971"
-13483,12/18/08,E8-30700,"Superseded by: EO 13525, December 23, 2009
-Supersedes: EO 13454, January, 4, 2008"
-13484,1/9/09,E9-811,"Amends: EO 13241, December 18, 2001"
-13485,1/9/09,E9-814,"Supersedes: Memorandum of March 19, 2002"
-13486,1/9/09,E9-818,
-13487,1/16/09,E9-1538,
-13488,1/16/09,E9-1574,"See: EO 10450, April 27, 1953; EO 13467, June 30, 2008"
-13489,1/21/09,E9-1712,"Revokes: EO 13233, November 1, 2001"
-13490,1/21/09,E9-1719,
-13491,1/22/09,E9-1885,"See: EO 13567, March 7, 2011
+Revokes: EO 13354, August 27, 2004, and EO 13355, August 27, 2004, read in conjunction with EO 12333, December 4, 1981
+"
+13471,2008-08-28,E8-20436,"Amends: EO 13285, January 29, 2003"
+13472,2008-09-11,E8-21651,"See: EO 11030, June 15, 1962"
+13473,2008-09-25,E8-23125,
+13474,2008-09-26,E8-23235,"Amends: EO 12962, June 7, 1995"
+13475,2008-10-07,E8-24342,"Amends: EO 12139, May 23, 1979; EO 12949, February 9, 1995"
+13476,2008-10-09,E8-24465,"See: EO 13467, June 30, 2008
+Supersedes: EO 13176, November 27, 2000
+"
+13477,2008-10-31,E8-26531,
+13478,2008-11-18,E8-27771,"Amends: EO 9397, November 22, 1943"
+13479,2008-11-18,E8-27777,"See: EO 13419, December 20, 2006"
+13480,2008-11-26,E8-28912,"Amends: EO 12171, November 19, 1979"
+13481,2008-12-09,E8-29564,"Supersedes: Memorandum of December 8, 2006
+Revoked by: EO 13557, November 4, 2010
+"
+13482,2008-12-12,E8-30042,"See: EO 11582, February 11, 1971"
+13483,2008-12-18,E8-30700,"Superseded by: EO 13525, December 23, 2009
+Supersedes: EO 13454, January, 4, 2008
+"
+13484,2009-01-09,E9-811,"Amends: EO 13241, December 18, 2001"
+13485,2009-01-09,E9-814,"Supersedes: Memorandum of March 19, 2002"
+13486,2009-01-09,E9-818,
+13487,2009-01-16,E9-1538,
+13488,2009-01-16,E9-1574,"See: EO 10450, April 27, 1953; EO 13467, June 30, 2008"
+13489,2009-01-21,E9-1712,"Revokes: EO 13233, November 1, 2001"
+13490,2009-01-21,E9-1719,
+13491,2009-01-22,E9-1885,"See: EO 13567, March 7, 2011
 Revokes: EO 13440, July 20, 2007"
-13492,1/22/09,E9-1893,"See: EO 13567, March 7, 2011"
-13493,1/22/09,E9-1895,
-13494,1/30/09,E9-2483,"Amended by: EO 13517, October 30, 2009"
-13495,1/30/09,E9-2484,"Revokes: EO 13204, February 17, 2001"
-13496,1/30/09,E9-2485,"Revokes: EO 13201, February 17, 2001"
-13497,1/30/09,E9-2486,"Revokes: EO 13258, February 26, 2002; EO 13422, January 18, 2007
-See: EO 12866, September 30, 1993"
-13498,2/5/09,E9-2893,"Amends: EO 13199, July 29, 2001
-See: EO 13559, November 17, 2010; EO 13569, April 5, 2011"
-13499,2/5/09,E9-3106,"Amends: EO 12835, January 25, 1993"
-13500,2/5/09,E9-3108,"Amends: EO 12859, August 16, 1993"
-13501,2/6/09,E9-3112,"Revoked by: EO 13564, January 31, 2011"
-13502,2/6/09,E9-3113,"Revokes: EO 13202, February 17, 2001; EO 13208, April 6, 2001"
-13503,2/19/09,E9-4068,
-13504,2/20/09,E9-4103,"Amends: EO 13390, November 1, 2005"
-13505,3/9/09,E9-5441,"Revokes: EO 13435, June 20, 2007"
-13506,3/11/09,E9-5802,
-13507,4/8/09,E9-8572,"Revoked by: EO 13569, April 5, 2011"
-13508,5/12/09,E9-11547,
-13509,6/23/09,E9-15368,"Revoked by: EO 13578, July 6, 2011"
-13510,7/1/09,E9-16034,
-13511,9/29/09,E9-23886,"Continues: EO 11145, March 7, 1964; EO 11183, October 3, 1964; EO 11287, June 28, 1966; EO 12131, May 4, 1979; EO 12196, February 26, 1980; EO 12216, June 18, 1980; EO 12367, February 15, 1982; EO 12382, September 13, 1982; EO 12905, March 25, 1994; EO 12994, March 21, 1996; EO 13226, September 30, 2001; EO 13231, October 16, 2001; EO 13256, February 12, 2002; EO 13265, June 6, 2002; EO 13270, July 3, 2002; 
+13492,2009-01-22,E9-1893,"See: EO 13567, March 7, 2011"
+13493,2009-01-22,E9-1895,
+13494,2009-01-30,E9-2483,"Amended by: EO 13517, October 30, 2009"
+13495,2009-01-30,E9-2484,"Revokes: EO 13204, February 17, 2001"
+13496,2009-01-30,E9-2485,"Revokes: EO 13201, February 17, 2001
+"
+13497,2009-01-30,E9-2486,"Revokes: EO 13258, February 26, 2002; EO 13422, January 18, 2007
+See: EO 12866, September 30, 1993
+"
+13498,2009-02-05,E9-2893,"Amends: EO 13199, July 29, 2001
+See: EO 13559, November 17, 2010; EO 13569, April 5, 2011
+"
+13499,2009-02-05,E9-3106,"Amends: EO 12835, January 25, 1993"
+13500,2009-02-05,E9-3108,"Amends: EO 12859, August 16, 1993"
+13501,2009-02-06,E9-3112,"Revoked by: EO 13564, January 31, 2011"
+13502,2009-02-06,E9-3113,"Revokes: EO 13202, February 17, 2001; EO 13208, April 6, 2001"
+13503,2009-02-19,E9-4068,
+13504,2009-02-20,E9-4103,"Amends: EO 13390, November 1, 2005"
+13505,2009-03-09,E9-5441,"Revokes: EO 13435, June 20, 2007"
+13506,2009-03-11,E9-5802,
+13507,2009-04-08,E9-8572,"Revoked by: EO 13569, April 5, 2011"
+13508,2009-05-12,E9-11547,
+13509,2009-06-23,E9-15368,"Revoked by: EO 13578, July 6, 2011"
+13510,2009-07-01,E9-16034,
+13511,2009-09-29,E9-23886,"Continues: EO 11145, March 7, 1964; EO 11183, October 3, 1964; EO 11287, June 28, 1966; EO 12131, May 4, 1979; EO 12196, February 26, 1980; EO 12216, June 18, 1980; EO 12367, February 15, 1982; EO 12382, September 13, 1982; EO 12905, March 25, 1994; EO 12994, March 21, 1996; EO 13226, September 30, 2001; EO 13231, October 16, 2001; EO 13256, February 12, 2002; EO 13265, June 6, 2002; EO 13270, July 3, 2002; 
 Supersedes in part: EO 13446, September 28, 2007
-Superseded by: EO 13585, September 30, 2011"
-13512,9/29/09,E9-23915,"Amends: EO 13390, November 1, 2005"
-13513,10/1/09,E9-24203,
-13514,10/5/09,E9-24518,"See: EO 13423, January 24, 2007"
-13515,10/14/09,E9-25268,"Supersedes: EO 13125, June 7, 1999; EO 13339, May 13, 2004
-Amended by: EO 13585, September 30, 2011"
-13516,10/28/09,E9-26408,"Federal Register correction page and date: 74 FR 57241, November 5, 2009"
-13517,10/30/09,E9-26834,"Amends: EO 13183, December 23, 2000; EO 13494, January 30, 2009"
-13518,11/9/09,E9-27441,"See: EO 13583, August 18, 2011"
-13519,11/17/09,E9-28022,"Terminates: EO 13271, July 9, 2002"
-13520,11/20/09,E9-28493,
-13521,11/24/09,E9-28805,"See: EO 13591, November 23, 2011
-Supersedes: EO 13237, November 28, 2001"
-13522,12/9/09,E9-29781,"See: EO 13591, November 23, 2011"
-13523,12/11/09,E9-30020,"Federal Register correction page and date: 74 FR 67049, December 18, 2009"
-13524,12/16/09,E9-30413,"Amends: EO 12425, June 16, 1983"
-13525,12/23/09,X09-41230,"Supersedes: EO 13483, December 18, 2008
+Superseded by: EO 13585, September 30, 2011
+"
+13512,2009-09-29,E9-23915,"Amends: EO 13390, November 1, 2005"
+13513,2009-10-01,E9-24203,
+13514,2009-10-05,E9-24518,"See: EO 13423, January 24, 2007"
+13515,2009-10-14,E9-25268,"Supersedes: EO 13125, June 7, 1999; EO 13339, May 13, 2004
+Amended by: EO 13585, September 30, 2011
+"
+13516,2009-10-28,E9-26408,"Federal Register correction page and date: 74 FR 57241, November 5, 2009"
+13517,2009-10-30,E9-26834,"Amends: EO 13183, December 23, 2000; EO 13494, January 30, 2009"
+13518,2009-11-09,E9-27441,"See: EO 13583, August 18, 2011"
+13519,2009-11-17,E9-28022,"Terminates: EO 13271, July 9, 2002"
+13520,2009-11-20,E9-28493,
+13521,2009-11-24,E9-28805,"See: EO 13591, November 23, 2011
+Supersedes: EO 13237, November 28, 2001
+"
+13522,2009-12-09,E9-29781,"See: EO 13591, November 23, 2011"
+13523,2009-12-11,E9-30020,"Federal Register correction page and date: 74 FR 67049, December 18, 2009"
+13524,2009-12-16,E9-30413,"Amends: EO 12425, June 16, 1983"
+13525,2009-12-23,X09-41230,"Supersedes: EO 13483, December 18, 2008
 Superseded by: EO 13561, December 22, 2010"
-13526,12/29/10,E9-31418,"Federal Register correction page and date: 75 FR 1013, January 8, 2010, Executive Order 13526 - Correction
+13526,2010-12-29,E9-31418,"Federal Register correction page and date: 75 FR 1013, January 8, 2010, Executive Order 13526 - Correction
 Revokes: EO 12958, April 17, 1995; EO 13292, March 25, 2003
 See: EO 12333, December 4, 1981; Memorandum of December 29, 2009 (75 FR 733); Order of December 29, 2009 (75 FR 735); EO 13549, August 18, 2010; EO 13556, November 4, 2010"
-13527,12/30/09,2010-38,
-13528,1/11/10,2010-705,
-13529,1/16/10,2010-1229,
-13530,1/29/10,2010-2419,"Amended by: EO 13591, November 23, 2011"
-13531,2/18/10,2010-3725,
-13532,2/26/10,2010-4593,"See: EO 13591, November 23, 2011
+13527,2009-12-30,2010-38,
+13528,2010-01-11,2010-705,
+13529,2010-01-16,2010-1229,
+13530,2010-01-29,2010-2419,"Amended by: EO 13591, November 23, 2011"
+13531,2010-02-18,2010-3725,
+13532,2010-02-26,2010-4593,"See: EO 13591, November 23, 2011
 Amended by: EO 13569, April 5, 2011
 Revokes: EO 13256, February 12, 2002"
-13533,3/1/10,2010-4884,"Revokes: EO 13394, December 22, 2005"
-13534,3/11/10,2010-5837,"See: EO 12870, September 30, 1993"
-13535,3/24/10,2010-7154,
-13536,4/12/10,2010-8878,
-13537,4/14/10,2010-9078,"Supersedes: EO 13299, May 8, 2003"
-13538,4/19/10,2010-9451,"See: EO 13591, November 23, 2011"
-13539,4/21/10,2010-9796,"Revokes: EO 13226, September 30, 2001
+13533,2010-03-01,2010-4884,"Revokes: EO 13394, December 22, 2005"
+13534,2010-03-11,2010-5837,"See: EO 12870, September 30, 1993"
+13535,2010-03-24,2010-7154,
+13536,2010-04-12,2010-8878,
+13537,2010-04-14,2010-9078,"Supersedes: EO 13299, May 8, 2003"
+13538,2010-04-19,2010-9451,"See: EO 13591, November 23, 2011"
+13539,2010-04-21,2010-9796,"Revokes: EO 13226, September 30, 2001
 See: EO 12968, August 2, 1995; EO 13591, November 23, 2011
 Amended by: EO 13596, December 19, 2011"
-13540,4/26/10,2010-10172,"Supersedes: EO 13299, May 8, 2003"
-13541,5/7/10,2010-11557,
-13542,5/13/10,2010-12070,"Revokes: EO 13241, December 18, 2001"
-13543,5/21/10,2010-12805,
-13544,6/10/10,2010-14613,"See: EO 13591, November 23, 2011"
-13545,6/22/10,2010-15851,"See: EO 10830, July 24, 1959"
-13546,7/2/10,2010-16864,
-13547,7/19/10,2010-18169,"Revokes: EO 13366, December 17, 2004"
-13548,7/26/10,2010-18988,"See: EO 13163, July 26, 2000; EO 13583, August 18, 2011"
-13549,8/18/10,2010-21016,"See: EO 12333, December 4, 1981; EO 12829, January 6, 1993; EO 12968, August 2, 1995; EO 13467, June 30, 2008; EO 13526, December 29, 2009; EO 13591, November 23, 2011"
-13550,8/18/10,2010-21020,
-13551,8/30/10,X10-10901,"See: EO 13466, June 26, 2008; EO 13570, April 18, 2011"
-13552,8/31/10,2010-22279,"See: EO 12473, April 13, 1984"
-13553,9/28/10,2010-24839,"See: EO 12957, March 15, 1995"
-13554,10/5/10,2010-25578,
-13555,10/19/10,2010-27004,
-13556,11/4/10,2010-28360,"Revokes: Memorandum of May 7, 2008
+13540,2010-04-26,2010-10172,"Supersedes: EO 13299, May 8, 2003"
+13541,2010-05-07,2010-11557,
+13542,2010-05-13,2010-12070,"Revokes: EO 13241, December 18, 2001"
+13543,2010-05-21,2010-12805,
+13544,2010-06-10,2010-14613,"See: EO 13591, November 23, 2011"
+13545,2010-06-22,2010-15851,"See: EO 10830, July 24, 1959"
+13546,2010-07-02,2010-16864,
+13547,2010-07-19,2010-18169,"Revokes: EO 13366, December 17, 2004"
+13548,2010-07-26,2010-18988,"See: EO 13163, July 26, 2000; EO 13583, August 18, 2011"
+13549,2010-08-18,2010-21016,"See: EO 12333, December 4, 1981; EO 12829, January 6, 1993; EO 12968, August 2, 1995; EO 13467, June 30, 2008; EO 13526, December 29, 2009; EO 13591, November 23, 2011"
+13550,2010-08-18,2010-21020,
+13551,2010-08-30,X10-10901,"See: EO 13466, June 26, 2008; EO 13570, April 18, 2011"
+13552,2010-08-31,2010-22279,"See: EO 12473, April 13, 1984"
+13553,2010-09-28,2010-24839,"See: EO 12957, March 15, 1995"
+13554,2010-10-05,2010-25578,
+13555,2010-10-19,2010-27004,
+13556,2010-11-04,2010-28360,"Revokes: Memorandum of May 7, 2008
 See: EO 13526, December 29, 2009"
-13557,11/4/10,2010-28365,"Revokes: EO 13481, December 9, 2008"
-13558,11/9/10,2010-28854,
-13559,11/17/10,2010-29579,"Amends: EO 13279, December 12, 2002
+13557,2010-11-04,2010-28365,"Revokes: EO 13481, December 9, 2008"
+13558,2010-11-09,2010-28854,
+13559,2010-11-17,2010-29579,"Amends: EO 13279, December 12, 2002
 See: EO 13198, January 29, 2001; EO 13199, January 29, 2001; EO 13498, February 5, 2009"
-13560,12/14/10,2010-31878,
-13561,12/22/10,2010-32961,"Supersedes: EO 13525, December 23, 2009; EO 13594, December 19, 2009"
-13562,12/27/10,2010-33169,"Supersedes: EO 12015, October 26, 1977
+13560,2010-12-14,2010-31878,
+13561,2010-12-22,2010-32961,"Supersedes: EO 13525, December 23, 2009; EO 13594, December 19, 2009"
+13562,2010-12-27,2010-33169,"Supersedes: EO 12015, October 26, 1977
 Revokes: EO 13318, November 21, 2003; EO 13162, July 6, 2000"
-13563,1/18/11,2011-1385,"See: EO 12866, September 30, 1993; EO 13579, July 11, 2011"
-13564,1/31/11,2011-2577,"Revokes: EO 13501, February 6, 2009"
-13565,2/8/11,2011-3257,
-13566,2/25/11,2011-4753,
-13567,3/7/11,2011-5728,"See: EO 13491, January 22, 2009; EO 13492, January 22, 2009"
-13568,3/8/11,2011-5903,
-13569,4/5/11,2011-8642,"Amends: EO 12824, December 7, 1992; EO 12835, January 25, 1993; EO 12859, August 16, 1993; EO 13532, February 26, 2010
+13563,2011-01-18,2011-1385,"See: EO 12866, September 30, 1993; EO 13579, July 11, 2011"
+13564,2011-01-31,2011-2577,"Revokes: EO 13501, February 6, 2009"
+13565,2011-02-08,2011-3257,
+13566,2011-02-25,2011-4753,
+13567,2011-03-07,2011-5728,"See: EO 13491, January 22, 2009; EO 13492, January 22, 2009"
+13568,2011-03-08,2011-5903,
+13569,2011-04-05,2011-8642,"Amends: EO 12824, December 7, 1992; EO 12835, January 25, 1993; EO 12859, August 16, 1993; EO 13532, February 26, 2010
 Revokes: EO 13507, April 8, 2009
 See: EO 13498, February 5, 2009"
-13570,4/18/11,2011-9739,"See: EO 13466, June 26, 2008; EO 13551, August 30, 2010"
-13571,4/27/11,2011-10732,"See: EO 12862, September 11, 1993; Memoranda of March 22, 1995, and March 3, 1998"
-13572,4/29/11,2011-10910,"See: EO 13338, May 11, 2004; EO 13399, April 25, 2006; EO 13460, February 13, 2008; EO 13573, May 18, 2011; EO 13582, August 17, 2011"
-13573,5/18/11,2011-12645,"See: EO 13338, May 11, 2004; EO 13399, April 25, 2006; EO 13460, February 13, 2008; EO 13572, April 29, 2011; EO 13582, August 17, 2011"
-13574,5/23/11,2011-13173,"See: EO 12957, March 15, 1995"
-13575,6/9/11,2011-14919,
-13576,6/13/11,2011-15181,
-13577,6/15/11,2011-15443,
-13578,7/6/11,2011-17447,"Revokes: EO 13509, June 23, 2009"
-13579,7/11/11,2011-17953,"See: EO 12866, September 30, 1993; EO 13563, January 18, 2011"
-13580,7/12/11,2011-18065,"See: EO 13547, June 19, 2010"
-13581,7/24/11,2011-19156,
-13582,8/17/11,2011-21505,"See: EO 13338, May 11, 2004; EO 13399, April 25, 2006; EO 13460, February 13, 2008; EO 13572, April 29, 2011; and EO 13573, May 18, 2011"
-13583,8/18/11,2011-21704,"See: EO 13078, March 13, 1998; EO 13163, July 26, 2000; EO 13171, October 12, 2000; EO 13518, November 9, 2009; and EO 13548, July 26, 2010"
-13584,9/9/11,2011-23891,
-13585,9/30/11,2011-26141,"See: EO 11145, March 7, 1964; EO 11183, October 3, 1964; EO 11287, June 28, 1966; EO 11612, July 26, 1971; EO 12131, May 4, 1979; EO 12216, June 18, 1980; EO 12367, June 15, 1982; EO 12382, September 13, 1982; EO 12829, January 6, 1993; EO 12905, March 25, 1994; EO 12994, March 21, 1996; EO 13231, October 16, 2001; EO 13265, June 6, 2002; EO 13270, July 3, 2002; EO 13515, October 14, 2009; EO 13592, December 2, 2011 
+13570,2011-04-18,2011-9739,"See: EO 13466, June 26, 2008; EO 13551, August 30, 2010"
+13571,2011-04-27,2011-10732,"See: EO 12862, September 11, 1993; Memoranda of March 22, 1995, and March 3, 1998"
+13572,2011-04-29,2011-10910,"See: EO 13338, May 11, 2004; EO 13399, April 25, 2006; EO 13460, February 13, 2008; EO 13573, May 18, 2011; EO 13582, August 17, 2011"
+13573,2011-05-18,2011-12645,"See: EO 13338, May 11, 2004; EO 13399, April 25, 2006; EO 13460, February 13, 2008; EO 13572, April 29, 2011; EO 13582, August 17, 2011"
+13574,2011-05-23,2011-13173,"See: EO 12957, March 15, 1995"
+13575,2011-06-09,2011-14919,
+13576,2011-06-13,2011-15181,
+13577,2011-06-15,2011-15443,
+13578,2011-07-06,2011-17447,"Revokes: EO 13509, June 23, 2009"
+13579,2011-07-11,2011-17953,"See: EO 12866, September 30, 1993; EO 13563, January 18, 2011"
+13580,2011-07-12,2011-18065,"See: EO 13547, June 19, 2010"
+13581,2011-07-24,2011-19156,
+13582,2011-08-17,2011-21505,"See: EO 13338, May 11, 2004; EO 13399, April 25, 2006; EO 13460, February 13, 2008; EO 13572, April 29, 2011; and EO 13573, May 18, 2011"
+13583,2011-08-18,2011-21704,"See: EO 13078, March 13, 1998; EO 13163, July 26, 2000; EO 13171, October 12, 2000; EO 13518, November 9, 2009; and EO 13548, July 26, 2010"
+13584,2011-09-09,2011-23891,
+13585,2011-09-30,2011-26141,"See: EO 11145, March 7, 1964; EO 11183, October 3, 1964; EO 11287, June 28, 1966; EO 11612, July 26, 1971; EO 12131, May 4, 1979; EO 12216, June 18, 1980; EO 12367, June 15, 1982; EO 12382, September 13, 1982; EO 12829, January 6, 1993; EO 12905, March 25, 1994; EO 12994, March 21, 1996; EO 13231, October 16, 2001; EO 13265, June 6, 2002; EO 13270, July 3, 2002; EO 13515, October 14, 2009; EO 13592, December 2, 2011 
 Supersedes: EO 13511, September 29, 2009
 Amends: EO 13515, October 14, 2009"
-13586,10/6/11,2011-26574,
-13587,10/7/11,2011-26729,
-13588,10/31/11,2011-28728,
-13589,11/9/11,2011-29683,"See: EO 13576, June 13, 2011; Memorandum of May 24, 2011"
-13590,11/20/11,2011-30463,"See: EO 12957, March 15, 1995"
-13591,11/23/11,2011-30990,"Amends: EO 13530, January 29, 2010
+13586,2011-10-06,2011-26574,
+13587,2011-10-07,2011-26729,
+13588,2011-10-31,2011-28728,
+13589,2011-11-09,2011-29683,"See: EO 13576, June 13, 2011; Memorandum of May 24, 2011"
+13590,2011-11-20,2011-30463,"See: EO 12957, March 15, 1995"
+13591,2011-11-23,2011-30990,"Amends: EO 13530, January 29, 2010
 See: EO 13521, November 24, 2009; EO 13522, December 9, 2009; EO 13532, February 26, 2010; EO 13538, April 22, 2010; EO 13539, April 21, 2011; EO 13540, April 26, 2010; EO 13549, August 18, 2010; EO 13544, June 10, 2010"
-13592,12/2/11,2011-31624,"Revokes: EO 13270, July 3, 2002; EO 13336, April 30, 2004; EO 13585, September 30, 2011"
-13593,12/13/11,,
-13594,12/19/11,2011-33087,"Supersedes: EO 13561, December 22, 2010"
-13595,12/19/11,2011-33089,
-13596,12/19/11,2011-33335,"Amends: EO 12131, May 4, 1979; EO 13539, April 21, 2010"
-13597,1/19/12,2012-1568,
-13598,1/27/12,2012-2557,
-13599,2/5/12,2012-3097,"See: EO 12957, March 15, 1995; EO 12170, November 14, 1979; EO 12281, January 19, 1981"
-13600,2/9/12,2012-3616,
-13601,2/28/12,2012-5366,
-13602,3/15/12,2012-6797,
-13603,3/16/12,2012-7019,"See: EO 11858, May 7, 1975; EO 12472, April 3, 1984; EO 12656, November 18, 1988"
-13604,3/22/12,2012-7636,
-13605,4/13/12,2012-9473,
+13592,2011-12-02,2011-31624,"Revokes: EO 13270, July 3, 2002; EO 13336, April 30, 2004; EO 13585, September 30, 2011"
+13593,2011-12-13,X11-11216,
+13594,2011-12-19,2011-33087,"Supersedes: EO 13561, December 22, 2010"
+13595,2011-12-19,2011-33089,
+13596,2011-12-19,2011-33335,"Amends: EO 12131, May 4, 1979; EO 13539, April 21, 2010"
+13597,2012-01-19,2012-1568,
+13598,2012-01-27,2012-2557,
+13599,2012-02-05,2012-3097,"See: EO 12957, March 15, 1995; EO 12170, November 14, 1979; EO 12281, January 19, 1981
+"
+13600,2012-02-09,2012-3616,
+13601,2012-02-28,2012-5366,
+13602,2012-03-15,2012-6797,
+13603,2012-03-16,2012-7019,"See: EO 11858, May 7, 1975; EO 12472, April 3, 1984; EO 12656, November 18, 1988"
+13604,2012-03-22,2012-7636,
