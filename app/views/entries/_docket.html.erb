@@ -18,7 +18,7 @@
     <% end %>
 
 
-    <% if entry.comment_url || docket.comments_count > 0 %>
+    <% if entry.comment_url || (docket.comments_count && docket.comments_count > 0) %>
       <dt>Public Comments</dt>
       <dd><%= link_to pluralize(docket.comments_count, 'comment'), regulations_dot_gov_docket_comments_url(docket.id), :target => "_blank" %></dd>
     <% end %>
