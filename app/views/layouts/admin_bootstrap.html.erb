@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en"> 
+<head> 
+  <title>FR2 Admin<%= " | #{yield :title}" if yield(:title) %></title>
+  <meta charset="utf-8">
+  
+  <%= stylesheet_link_tag "admin/screen",                    :media => :screen %>
+  <%= stylesheet_link_tag "admin/jqModal",                   :media => :screen %>
+  <%= stylesheet_link_tag "admin/formtastic",                :media => :screen %>
+  <%= stylesheet_link_tag "admin/bootstrap",                  :media => :screen %>
+  <%= csrf_meta_tag %>  
+</head>
+<body>
+
+
+  <% header_tag(:id => "header") do %>
+    <div id="inner_header">
+      <% hgroup_tag(:id => "header_logo") do %>        
+        <h1><%= link_to 'Federal Register Admin', admin_home_path %></h1>
+      <% end -%>
+      <% if current_user %>
+      <nav id="utility">
+        <p>Hello, <span class="name"><%= current_user.first_name %></span>!</p>
+        <ul>
+          <li><%= link_to 'Change Password', edit_admin_user_password_path(current_user) %></li>
+          <li><%= link_to 'Logout', admin_logout_path %></li>
+        </ul>
+      </nav>
+      <% end -%>
+      
+      <% nav_tag(:id => 'primary' ) do %>
+        <ul>
+          <% if current_user %>
+          <li><%= link_to 'Home', admin_home_path, :class => "home" %></li>
+          <li><%= link_to 'Sections', admin_sections_path, :class => "" %></li>
+          <li><%= link_to 'Canned Searches', admin_canned_searches_path %></li>
+          <li><%= link_to 'Agencies', admin_agencies_path, :class => "" %></li>
+          <li><%= link_to 'Agency Names', admin_agency_names_path, :class => "" %></li>
+          <li><%= link_to 'Topic Names', admin_topic_names_path, :class => "" %></li>
+          <li><%= link_to 'Users <div class="users icon"></div>', admin_users_path, :class => "" %></li>
+          <li><%= link_to 'Events', admin_events_path, :class => "" %></li>
+          <li><%= link_to 'Agency Highlights', admin_agency_highlights_path, :class => "" %></li>
+          <li><%= link_to 'Recent Issues', admin_issues_path, :class => "" %></li>
+          <li><%= link_to 'Current Issue', admin_issue_path(Issue.current.publication_date.to_s(:mdy_dash)), :class => "" %></li>
+          <% end %>
+        </ul>
+      <% end -%>
+      
+    </div>
+  <% end -%>
+    
+  <!-- MAIN -->
+  <div id="main">
+
+    <% if yield(:super_title) %>
+      <h2><%= yield(:super_title) %></h2>
+    <% end %>
+    
+    <% if yield(:sidebar) %>
+      <div id="sidebar">
+        <%= yield(:sidebar) %>
+      </div>
+    <% end %>
+ 
+    <div id="content_area" class="<%= 'has_sidebar' if yield(:nav_secondary) %>">
+      
+      <% if yield(:title)%>
+       <h3 class="title"><%= yield(:title) %></h3>
+      <% end %>
+      
+      <div class="wrapper">
+        <% if flash[:notice] %>
+        <div class="flash notice">
+          <%= flash[:notice]%>
+        </div>
+        <% end %>
+
+        <% if flash[:error] %>
+        <div class="flash error">
+          <%= flash[:error]%>
+        </div>
+        <% end %>
+      
+        <%= yield %>
+      </div>
+    </div><!-- content end -->
+      
+  </div> <!-- MAIN end -->
+  
+  <div class='jqmOverlay'></div>
+  <div class='modal jqmWindow'>
+    <div id='crop_area'>
+      <div id="crop-box"></div>
+      <!-- <div id="preview">
+        <% if @entry.present? %>
+          <%= image_tag(@entry.lede_photo.photo.url(:medium)) if @entry.lede_photo %>
+        <% end %>
+      </div> -->
+    </div>
+  </div>
+  
+  <%= jquery_include_tag %>
+  <%= jquery_ui_include_tag %>
+  <%= javascript_include_tag 'admin/jquery.tablesorter' %>
+  <%= javascript_include_tag 'admin/application_form_builder' %>
+  <%= javascript_include_tag 'admin/admin' %>
+  
+  <%= yield :javascripts %>
+  
+  <!-- <script>
+    (function(){document.body.appendChild(document.createElement('script')).src='http://gridder.andreehansson.se/releases/latest/960.gridder.js';})();
+  </script> -->
+  
+  <script type="text/javascript" src="https://use.typekit.com/qbb7wou.js"></script>
+  <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+</body>
+</html>
