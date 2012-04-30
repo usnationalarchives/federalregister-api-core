@@ -7,6 +7,9 @@
 // TYPOGRAPHY
 @import "typography";
 
+// VENDORED BOOTSTRAP (symlinked)
+@import "bootstrap/_bootstrap";
+
 // REAL WORK
 @import "layout";
 @import "design";
