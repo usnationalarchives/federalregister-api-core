@@ -23,7 +23,7 @@ module Content
       issue.save!
 
       new_documents = []
-      parser.document.pi_documents.each do |attr|
+      parser.document.grouped_pi_documents.each do |attr|
         doc_importer = Content::PublicInspectionImporter.import(attr)
         issue.public_inspection_documents << doc_importer.document unless issue.public_inspection_document_ids.include?(doc_importer.document.id)
         new_documents << doc_importer.document if doc_importer.new_record?
@@ -96,13 +96,9 @@ module Content
       self.docket_numbers = docket_numbers.map{|number| DocketNumber.new(:number => number)}
     end
 
-    def agency=(val)
-      if val.present?
-        agency_name = AgencyName.find_or_create_by_name(val)
-        @pi.agency_names = [agency_name]
-      else
-        @pi.agency_names = []
-      end
+    def agency_names=(names)
+      @pi.agency_names = names.map{|name| AgencyName.find_or_create_by_name(name)}
+      @pi.agency_ids = @pi.agency_names.map(&:agency_id)
     end
 
     def url=(url)
@@ -162,6 +158,15 @@ module Content
         @str = ''
         @pi_documents = []
         super
+      end
+
+      def grouped_pi_documents
+        @pi_documents.group_by{|attr| attr[:document_number]}.map do |document_number, attrs|
+          grouped = attrs.last.dup
+          grouped.delete(:agency)
+          grouped[:agency_names] = attrs.map{|attr| attr[:agency]}
+          grouped
+        end
       end
 
       def start_element(name, raw_attributes = [])
