@@ -19,7 +19,7 @@ module CitationsHelper
   def add_eo_links(text)
     text.gsub(/(?:\bE\.\s*O\.|\bE\s*O\b|\bExecutive Order\b)(?:\s+No\.?)?\s+([0-9,]+)/i) do |str|
       eo_number = $1.gsub(/,/,'').to_i
-      if eo_number >= 12944
+      if eo_number >= 12890
         content_tag :a, str, :href => executive_order_path(eo_number), :class => "eo"
       else
         str
