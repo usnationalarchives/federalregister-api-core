@@ -3,7 +3,7 @@ class EntryApiRepresentation < ApiRepresentation
   self.default_index_fields_csv = [:title, :type, :agency_names, :abstract, :document_number, :html_url, :pdf_url, :publication_date]
 
   def self.default_show_fields_json
-    all_fields - [:excerpts, :agency_names, :docket_id]
+    all_fields - [:excerpts, :agency_names, :docket_id, :president]
   end
 
   field(:abstract)
@@ -54,6 +54,12 @@ class EntryApiRepresentation < ApiRepresentation
   field(:mods_url, :select => [:publication_date, :document_number]){|e| e.source_url(:mods)}
   field(:pdf_url, :select => [:publication_date, :document_number]){|e| e.source_url('pdf')}
   field(:public_inspection_pdf_url, :select => :document_number) {|e| e.public_inspection_document.try(:pdf).try(:url)}
+  field(:president, :select => [:granule_class, :signing_date, :publication_date]) do |entry|
+    president = entry.president
+    if president
+      {:name => president.full_name, :identifier => president.identifier}
+    end
+  end
   field(:publication_date)
   field(:regulation_id_number_info, :include => :entry_regulation_id_numbers) do |entry|
     values = entry.entry_regulation_id_numbers.map(&:regulation_id_number).map do |rin|

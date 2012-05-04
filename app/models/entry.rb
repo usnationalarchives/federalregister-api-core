@@ -505,6 +505,11 @@ class Entry < ApplicationModel
   def republication?
     document_number =~ /^R/
   end
+
+  def president
+    date = signing_date || (publication_date - 3)
+    President.in_office_on(date)
+  end
  
   private
   
