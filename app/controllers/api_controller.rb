@@ -13,7 +13,7 @@ class ApiController < ApplicationController
     end
   end
 
-  def render_search(search)
+  def render_search(search, options={})
     if ! search.valid?
       cache_for 1.day
       render_json_or_jsonp({:errors => search.validation_errors}, :status => 400)
@@ -22,18 +22,20 @@ class ApiController < ApplicationController
 
     data = { :count => search.count }
     
-    if search.count > 0 && search.results.count > 0
-      data[:total_pages] = search.results.total_pages
+    results = search.results(options)
+
+    if search.count > 0 && results.count > 0
+      data[:total_pages] = results.total_pages
       
-      if search.results.next_page
-        data[:next_page_url] = index_url(params.merge(:page => search.results.next_page))
+      if results.next_page
+        data[:next_page_url] = index_url(params.merge(:page => results.next_page))
       end
       
-      if search.results.previous_page
-        data[:previous_page_url] = index_url(params.merge(:page => search.results.previous_page))
+      if results.previous_page
+        data[:previous_page_url] = index_url(params.merge(:page => results.previous_page))
       end
       
-      data[:results] = search.results.map do |result|
+      data[:results] = results.map do |result|
         yield(result)
       end
     end

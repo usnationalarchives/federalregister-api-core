@@ -226,7 +226,7 @@ filter_name.to_s.sub(/_ids?$/,'').classify.constantize.find_all_by_id(ids.flatte
   end
   
   def count
-    model.search_count(sphinx_term,
+    @count ||= model.search_count(sphinx_term,
       {
         :page => @page,
         :per_page => @per_page,
