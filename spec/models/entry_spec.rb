@@ -46,6 +46,10 @@
 #  executive_order_number        :integer(4)
 #  action_name_id                :integer(4)
 #  correction_of_id              :integer(4)
+#  regulations_dot_gov_docket_id :string(255)
+#  executive_order_notes         :text
+#  fr_index_subject              :string(255)
+#  fr_index_doc                  :string(255)
 #
 
 require 'spec_helper'
