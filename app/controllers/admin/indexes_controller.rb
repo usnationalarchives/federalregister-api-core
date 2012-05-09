@@ -1,4 +1,6 @@
 class Admin::IndexesController < AdminController
+  layout 'admin_bootstrap'
+
   def year
     @year = params[:year].to_i
 #    raise ActiveRecord::RecordNotFound if @year < 2012

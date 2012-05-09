@@ -1,10 +1,16 @@
-<% title "#{@year} FR Index" %>
+<% super_title "#{@year} FR Index" %>
+
+<% sidebar(render :partial => 'nav', :locals => {:years => [2010]}) %>
 
 <% add_javascript(:src => 'admin/fr_index.js') %>
 
+<h1 class="agency_name"><%= @agency.name %></h1>
+
 <% @entries_by_type.each do |type, entries_by_subject| %>
-  <h2><%= Entry::ENTRY_TYPES[type].pluralize %></h2>
-  <ul id="<%= type %>" class="entry_type">
+  <div class="title_bar">
+    <h2><%= Entry::ENTRY_TYPES[type].pluralize %></h2>
+  </div>
+  <ul id="<%= type.downcase %>" class="entry_type">
     <% entries_by_subject.each do |subject, entries_by_title| %>
       <%= render :partial => "subject_and_children", :locals => {:subject => subject, :entries_by_title => entries_by_title, :type => type} %>
     <% end %>

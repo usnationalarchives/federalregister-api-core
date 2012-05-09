@@ -1,0 +1,5 @@
+<ul>
+  <% years.each do |year| %>
+    <li><%= link_to_unless_current year, admin_index_year_path(year) %></li>
+  <% end %>
+</ul>

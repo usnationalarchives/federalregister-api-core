@@ -4,10 +4,10 @@
   <title>FR2 Admin<%= " | #{yield :title}" if yield(:title) %></title>
   <meta charset="utf-8">
   
-  <%= stylesheet_link_tag "admin/screen",                    :media => :screen %>
+  <%= stylesheet_link_tag "admin/screen_bootstrap",          :media => :screen %>
   <%= stylesheet_link_tag "admin/jqModal",                   :media => :screen %>
   <%= stylesheet_link_tag "admin/formtastic",                :media => :screen %>
-  <%= stylesheet_link_tag "admin/bootstrap",                  :media => :screen %>
+  <%= stylesheet_link_tag "admin/bootstrap",                 :media => :screen %>
   <%= csrf_meta_tag %>
 
   <%= javascript_include_tag "https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" %>
@@ -26,59 +26,62 @@
 
 </head>
 <body>
+  
 
-  <%= render :partial => "layouts/admin/header" %>
-      
-  <!-- MAIN -->
-  <div id="main">
+    <%= render :partial => "layouts/admin/header" %>
+  <div class="container">
+    <!-- MAIN -->
+    <div id="main">
 
-    <% if yield(:super_title) %>
-      <h2><%= yield(:super_title) %></h2>
-    <% end %>
-    
-    <% if yield(:sidebar) %>
-      <div id="sidebar">
-        <%= yield(:sidebar) %>
-      </div>
-    <% end %>
- 
-    <div id="content_area" class="<%= 'has_sidebar' if yield(:nav_secondary) %>">
-      
-      <% if yield(:title)%>
-       <h3 class="title"><%= yield(:title) %></h3>
+      <% if yield(:super_title) %>
+        <div class="title"><span><%= yield(:super_title) %></span></div>
       <% end %>
       
-      <div class="wrapper">
-        <% if flash[:notice] %>
-        <div class="flash notice">
-          <%= flash[:notice]%>
+      <% if yield(:sidebar) %>
+        <div id="sidebar" class="span3">
+          <%= yield(:sidebar) %>
         </div>
+      <% end %>
+   
+      <div id="content_area" class="span8">
+        
+        <% if yield(:title)%>
+         <h3 class="title"><%= yield(:title) %></h3>
         <% end %>
+        
+        <div class="wrapper">
+          <% if flash[:notice] %>
+          <div class="flash notice">
+            <%= flash[:notice]%>
+          </div>
+          <% end %>
 
-        <% if flash[:error] %>
-        <div class="flash error">
-          <%= flash[:error]%>
+          <% if flash[:error] %>
+          <div class="flash error">
+            <%= flash[:error]%>
+          </div>
+          <% end %>
+        
+          <%= yield %>
         </div>
-        <% end %>
-      
-        <%= yield %>
+      </div><!-- content end -->
+        
+    </div> <!-- MAIN end -->
+    
+    <div class='jqmOverlay'></div>
+    <div class='modal jqmWindow'>
+      <div id='crop_area'>
+        <div id="crop-box"></div>
+        <!-- <div id="preview">
+          <% if @entry.present? %>
+            <%= image_tag(@entry.lede_photo.photo.url(:medium)) if @entry.lede_photo %>
+          <% end %>
+        </div> -->
       </div>
-    </div><!-- content end -->
-      
-  </div> <!-- MAIN end -->
-  
-  <div class='jqmOverlay'></div>
-  <div class='modal jqmWindow'>
-    <div id='crop_area'>
-      <div id="crop-box"></div>
-      <!-- <div id="preview">
-        <% if @entry.present? %>
-          <%= image_tag(@entry.lede_photo.photo.url(:medium)) if @entry.lede_photo %>
-        <% end %>
-      </div> -->
     </div>
-  </div>
-  
+
+  </div> <!-- end .container -->
+
   <%= jquery_include_tag %>
   <%= jquery_ui_include_tag %>
   <%= javascript_include_tag 'admin/jquery.tablesorter' %>

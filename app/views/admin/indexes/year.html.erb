@@ -1,13 +1,21 @@
-<% title "#{@year} FR Index" %>
+<% super_title "#{@year} FR Index" %>
 
-<% @agencies.each do |agency| %>
-  <li><%= link_to agency.name, admin_index_year_agency_path(@year, agency) %> <span class="count_pill"><%= agency.entries_count %></span>
-  <% if agency.children.present? %>
-    <ul>
-      <% agency.children.each do |sub_agency| %>
-        <li><span class="see">See</span> <%= link_to sub_agency.name, admin_index_year_agency_path(@year, sub_agency) %> <span class="count_pill"><%= sub_agency.entries_count %></span></li>
-      <% end %>
-    </ul>
+<% sidebar(render :partial => 'nav', :locals => {:years => [2010]}) %>
+
+<ul>
+  <% @agencies.each do |agency| %>
+    <li><%= link_to agency.name, admin_index_year_agency_path(@year, agency) %> <span class="count_pill"><%= agency.entries_count %></span>
+    <% if agency.children.present? %>
+      <ul>
+        <% agency.children.each do |sub_agency| %>
+          <li>
+            <span class="see">See</span> 
+            <%= link_to sub_agency.name, admin_index_year_agency_path(@year, sub_agency) %>
+            <span class="count_pill"><%= sub_agency.entries_count %></span>
+          </li>
+        <% end %>
+      </ul>
+    <% end %>
+    </li>
   <% end %>
-  </li>
-<% end %>
+</ul>

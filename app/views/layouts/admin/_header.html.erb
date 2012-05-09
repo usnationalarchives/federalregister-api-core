@@ -1,62 +1,63 @@
 <% header_tag(:id => "header") do %>
-  <div id="inner_header">
-    <% hgroup_tag(:id => "header_logo") do %>        
-      <h1><%= link_to 'Federal Register Admin', admin_home_path %></h1>
+    <% nav_tag(:id => 'primary' ) do %>
+      <div class="subnav subnav-fixed-top">
+        <div class="navbar-inner">
+          <div class="container">
+            <div class="brand"><%= link_to 'FR2 Admin', admin_home_path %></div>
+            <ul class="nav nav-pills">
+              <li><%= link_to 'Home', admin_home_path, :class => "home" %></li>
+
+              <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">Sections<b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <li><%= link_to 'Sections', admin_sections_path, :class => "" %></li>
+                  <li><%= link_to 'Canned Searches', admin_canned_searches_path %></li>
+                </ul>
+                </li>
+
+              <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">Agencies<b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <li><%= link_to 'Agencies', admin_agencies_path, :class => "" %></li>
+                  <li><%= link_to 'Agency Names', admin_agency_names_path, :class => "" %></li>
+                </ul>
+                </li>
+
+              <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">Issues<b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <li><%= link_to 'Recent Issues', admin_issues_path, :class => "" %></li>
+                  <li><%= link_to 'Current Issue', admin_issue_path(Issue.current.publication_date.to_s(:mdy_dash)), :class => "" %></li>
+                </ul>
+              </li>
+
+              <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">Documents<b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <li><%= link_to 'Executive Orders', admin_issues_path, :class => "" %></li>
+                </ul>
+              </li>
+
+              <li><%= link_to 'Topic Names', admin_topic_names_path, :class => "" %></li>
+              <li><%= link_to 'Users <div class="users icon"></div>', admin_users_path, :class => "" %></li>
+              <li><%= link_to 'Events', admin_events_path, :class => "" %></li>
+            </ul>
+          </div>
+        </div>
+      </div>
     <% end -%>
 
     <% if current_user %>
-    <nav id="utility">
-      <p>Hello, <span class="name"><%= current_user.first_name %></span>!</p>
-      <ul>
-        <li><%= link_to 'Change Password', edit_admin_user_password_path(current_user) %></li>
-        <li><%= link_to 'Logout', admin_logout_path %></li>
-      </ul>
-    </nav>
+      <% nav_tag(:id => "utility") do %>
+        <div class="container">
+          <p>Hello, <span class="name"><%= current_user.first_name %></span>!</p>
+          <ul>
+            <li><%= link_to 'Change Password', edit_admin_user_password_path(current_user) %></li>
+            <li><%= link_to 'Logout', admin_logout_path %></li>
+          </ul>
+        </div>
+      <% end -%>
     <% end -%>
-    
-    <% nav_tag(:id => 'primary' ) do %>
-      <div class="subnav subnav-fixed">
-        <ul class="nav nav-pills">
-          <li><%= link_to 'Home', admin_home_path, :class => "home" %></li>
 
-          <li class="dropdown">
-            <a class="dropdown-toggle" data-toggle="dropdown" href="#">Sections<b class="caret"></b></a>
-            <ul class="dropdown-menu">
-              <li><%= link_to 'Sections', admin_sections_path, :class => "" %></li>
-              <li><%= link_to 'Canned Searches', admin_canned_searches_path %></li>
-            </ul>
-            </li>
-
-          <li class="dropdown">
-            <a class="dropdown-toggle" data-toggle="dropdown" href="#">Agencies<b class="caret"></b></a>
-            <ul class="dropdown-menu">
-              <li><%= link_to 'Agencies', admin_agencies_path, :class => "" %></li>
-              <li><%= link_to 'Agency Names', admin_agency_names_path, :class => "" %></li>
-            </ul>
-            </li>
-
-          <li class="dropdown">
-            <a class="dropdown-toggle" data-toggle="dropdown" href="#">Issues<b class="caret"></b></a>
-            <ul class="dropdown-menu">
-              <li><%= link_to 'Recent Issues', admin_issues_path, :class => "" %></li>
-              <li><%= link_to 'Current Issue', admin_issue_path(Issue.current.publication_date.to_s(:mdy_dash)), :class => "" %></li>
-            </ul>
-          </li>
-
-          <li class="dropdown">
-            <a class="dropdown-toggle" data-toggle="dropdown" href="#">Documents<b class="caret"></b></a>
-            <ul class="dropdown-menu">
-              <li><%= link_to 'Executive Orders', admin_issues_path, :class => "" %></li>
-            </ul>
-          </li>
-
-          <li><%= link_to 'Topic Names', admin_topic_names_path, :class => "" %></li>
-          <li><%= link_to 'Users <div class="users icon"></div>', admin_users_path, :class => "" %></li>
-          <li><%= link_to 'Events', admin_events_path, :class => "" %></li>
-        </ul>
-      </div>
-    <% end -%>
-    
-  </div>
 <% end -%>
 

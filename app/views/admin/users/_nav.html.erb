@@ -1,2 +1,4 @@
-<li><%= link_to "All Users", admin_users_path    %></li>
-<li><%= link_to "New User",  new_admin_user_path %></li>
+<ul>
+  <li><%= link_to_unless_current "View All Users",   admin_users_path    %></li>
+  <li><%= link_to_unless_current "Create New User",  new_admin_user_path %></li>
+</ul>
