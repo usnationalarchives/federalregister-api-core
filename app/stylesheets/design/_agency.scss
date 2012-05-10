@@ -1,0 +1,25 @@
+$doc_icon_mini_width: 20;
+$doc_icon_mini_height: 20;
+
+.grouped_by_date .rule_type {
+  width: $doc_icon_mini_width + px;
+  height: $doc_icon_mini_height + px;
+  display: inline-block;
+  overflow: hidden;
+  padding: 0;
+  }
+
+.grouped_by_date li .rule_type img { 
+  position: relative;
+  }
+
+.grouped_by_date li .rule_type.doc_presdocu img { top: -1px; }
+.grouped_by_date li .rule_type.doc_rule img { top: -211px; }
+.grouped_by_date li .rule_type.doc_notice img { top: -422px; }
+.grouped_by_date li .rule_type.doc_prorule img { top: -632px; }
+.grouped_by_date li .rule_type.doc_correct img { top: -1054px; }
+
+.grouped_by_date .rule_type + a {
+  display: inline-block;
+  padding-left: $doc_icon_mini_width + 10 + px;
+  }
