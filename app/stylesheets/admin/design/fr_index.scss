@@ -41,6 +41,7 @@ ul.entry_type li.hover {
   background-color: #CCC;
   @include border-radius(3);
 }
+ul.entry_type li ul.in { overflow: visible; }
 
 ul.entry_type li a.wrapper {
   width: 90%;

@@ -28,8 +28,6 @@ $(document).ready(function(){
   });
 
   $('#content_area ul.entry_type a.edit').on('hover', function(event) {
-    console.log( $(this).closest('li') );
-
     highlight_el(event, $(this).closest('li'));
   });
 
