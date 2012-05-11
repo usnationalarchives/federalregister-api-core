@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
   <xsl:template name="table_of_contents">
-    <xsl:if test="count(//HD) &gt; 2">
+    <xsl:if test="count(//HD[not(ancestor::NOTE|ancestor::FP|ancestor::REGTEXT)]) &gt; 2">
       <xsl:call-template name="manual_header">
         <xsl:with-param name="id" select="'table_of_contents'"/>
         <xsl:with-param name="name" select="'Table of Contents'"/>
@@ -17,7 +17,7 @@
     </xsl:if>
   </xsl:template>
   
-  <xsl:template match="HD[@SOURCE='HED' or @SOURCE='HD1' or @SOURCE = 'HD2' or @SOURCE = 'HD3' or @SOURCE = 'HD4']" mode="table_of_contents">
+  <xsl:template match="HD[@SOURCE='HED' or @SOURCE='HD1' or @SOURCE = 'HD2' or @SOURCE = 'HD3' or @SOURCE = 'HD4'][not(ancestor::NOTE|ancestor::FP|ancestor::REGTEXT)]" mode="table_of_contents">
     <xsl:choose>
       <xsl:when test="text() = 'AGENCY:' or text() = 'ACTION:' or text() = 'SUMMARY:'"/>
       <xsl:otherwise>
