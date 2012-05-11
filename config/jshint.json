@@ -35,7 +35,10 @@
       // Some non-recognized built-in methods
       "escape",
       "confirm",
-      "alert"
+      "alert",
+
+      // Some variables are defined at page generation
+      "dev_formats"
     ],
 
 
