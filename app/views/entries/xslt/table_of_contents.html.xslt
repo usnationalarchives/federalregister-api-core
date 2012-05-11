@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
   <xsl:template name="table_of_contents">
-    <xsl:if test="count(//HD) &gt; 0">
+    <xsl:if test="count(//HD) &gt; 2">
       <xsl:call-template name="manual_header">
         <xsl:with-param name="id" select="'table_of_contents'"/>
         <xsl:with-param name="name" select="'Table of Contents'"/>
