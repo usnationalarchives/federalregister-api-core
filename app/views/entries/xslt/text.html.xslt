@@ -40,7 +40,7 @@
     </p>
   </xsl:template>
   
-  <xsl:template match="P | FP | AMDPAR | BILCOD">
+  <xsl:template match="P | FP | AMDPAR">
     <xsl:choose>
       <xsl:when test="starts-with(text(),'&#x2022;')">
         <xsl:if test="not(preceding-sibling::*[name() != 'PRTPAGE'][1][starts-with(text(),'&#x2022;')])">
@@ -108,9 +108,24 @@
     </p>
   </xsl:template>
 
+  <xsl:template match="FILED | BILCOD"></xsl:template>
+  <xsl:template name="filing_date">
+    <xsl:for-each select="//FILED">
+      <xsl:text > </xsl:text>
+      <span class="filed"><xsl:value-of select="text()" /></span>
+    </xsl:for-each>
+  </xsl:template>
+  <xsl:template name="billing_code">
+    <xsl:for-each select="//BILCOD">
+      <br />
+      <span class="billing_code"><xsl:value-of select="text()" /></span>
+    </xsl:for-each>
+  </xsl:template>
   <xsl:template match="FRDOC">
-    <p class="fr_doc">
-      <xsl:apply-templates />
+    <p class="document_details">
+      <span class="fr_doc"><xsl:apply-templates /></span>
+      <xsl:call-template name="filing_date" />
+      <xsl:call-template name="billing_code" />
     </p>
   </xsl:template>
 
