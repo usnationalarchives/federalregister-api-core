@@ -113,6 +113,12 @@
       <xsl:apply-templates />
     </p>
   </xsl:template>
+
+  <xsl:template match="EXECORDR">
+    <h3 class="executive_order_number">
+      <xsl:apply-templates />
+    </h3>
+  </xsl:template>
   
   <xsl:template match="PRTPAGE[not(ancestor::FTNT)]">
     <span class="printed_page">
