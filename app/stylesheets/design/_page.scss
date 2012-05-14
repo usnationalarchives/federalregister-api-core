@@ -446,6 +446,10 @@ p:target {
 #fulltext_content_area p {
   text-indent: 2em;
   }
+#fulltext_content_area p.document_details {
+  text-indent: 0;
+  color: #CCC;
+  }
 #fulltext_content_area p.flush {
   text-indent: 0;
   }  

@@ -1,5 +1,11 @@
 <% feed_autodiscovery entries_url(:format => :rss), 'All Articles from the Federal Register', :search_conditions => {} %>
 
+<% if controller.action_name == 'current_issue' %>
+  <% description "Today Federal Register issue, including notices, proposed and final rules, and presidential documents." %>
+<% else %>
+  <% description "Notices, proposed and final rules, and presidential documents published in the Federal Register on #{@publication_date.to_formatted_s(:pretty)}." %>
+<% end %>
+
 <% title "Articles for #{@publication_date.to_formatted_s(:pretty)}" %>
 <div class="title"><span><%= @publication_date %> Issue</span></div>
 

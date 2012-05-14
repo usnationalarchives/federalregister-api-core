@@ -16,7 +16,7 @@
       <xsl:value-of disable-output-escaping="yes" select="'&lt;div class=&quot;body_column&quot; &gt;'" />
       
       <xsl:call-template name="table_of_contents" />
-      <xsl:call-template name="table_of_graphics" />
+      <!-- <xsl:call-template name="table_of_graphics" />-->
       <xsl:call-template name="table_of_tables" />
       
       <!-- apply default content rules -->
