@@ -64,6 +64,12 @@ class ApiController < ApplicationController
     render_json_or_jsonp data
   end 
 
+  def specified_fields
+    if params[:fields]
+      params[:fields].reject(&:blank?).map{|f| f.to_s.to_sym}
+    end
+  end
+
   rescue_from Exception, :with => :server_error if RAILS_ENV != 'development'
   def server_error(exception)
     notify_airbrake(exception)

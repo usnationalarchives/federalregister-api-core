@@ -61,12 +61,6 @@ class Api::V1::EntriesController < ApiController
     render :text => output
   end
 
-  def specified_fields
-    if params[:fields]
-      params[:fields].reject(&:blank?).map{|f| f.to_s.to_sym}
-    end
-  end
-
   def entry_data(entry, fields)
     representation = EntryApiRepresentation.new(entry)
     Hash[ fields.map do |field|
