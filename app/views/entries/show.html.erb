@@ -88,6 +88,15 @@
   <% end -%> <!-- end aside tag -->
   
   <div id="content_area">
+    <% if @entry.action.present? %>
+      <div class="header_column">
+        <h1>Action</h1>
+      </div>
+      <div class="body_column">
+        <p><%= @entry.action.titlecase %></p>
+      </div>
+    <% end %>
+
     <% if RAILS_ENV == 'development' %>
       <%= render(:partial => 'abstract', :locals => {:entry => @entry}) %>
     <% else %>
