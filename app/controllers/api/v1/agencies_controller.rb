@@ -27,26 +27,10 @@ class Api::V1::AgenciesController < ApiController
   private
   
   def basic_agency_data(agency)
-    agency_data = {
-      :id => agency.id,
-      :parent_id => agency.parent_id,
-      :name => agency.name,
-      :short_name => agency.short_name,
-      :url => agency_url(agency),
-      :description => agency.description,
-      :recent_articles_url => api_v1_entries_url(:conditions => {:agency_ids => [agency.id]}, :order => "newest")
-    }
-    
-    # TODO: figure out why paperclip seems so slow--600ms for this?
-    if agency.logo_file_name.present?
-      logo = agency.logo
-      agency_data[:logo] = {
-        :thumb_url => logo.url(:thumb),
-        :small_url => logo.url(:small),
-        :medium_url => logo.url(:medium),
-      }
-    end
-    
-    agency_data
+    representation = AgencyApiRepresentation.new(agency)
+    fields = specified_fields || AgencyApiRepresentation.all_fields
+    Hash[ fields.map do |field|
+      [field, representation.value(field)] 
+    end]
   end
 end
