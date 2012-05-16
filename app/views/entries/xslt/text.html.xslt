@@ -129,6 +129,12 @@
     </p>
   </xsl:template>
 
+  <xsl:template match="NOTE">
+    <div class="note">
+      <xsl:apply-templates />
+    </div>
+  </xsl:template>
+
   <xsl:template match="EXECORDR">
     <h3 class="executive_order_number">
       <xsl:apply-templates />
