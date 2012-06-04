@@ -967,6 +967,12 @@ TABLES
   padding: .5em;
   @include text-shadow(#fff, 1px, 1px, 1px);
   } 
+#entries.show table td.center {
+  text-align: center;
+}
+#entries.show table td.indent {
+  padding-left: 25px;
+}
 
 /******************************
 

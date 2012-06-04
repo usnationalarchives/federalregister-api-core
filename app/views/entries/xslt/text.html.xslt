@@ -28,12 +28,23 @@
     <xsl:call-template name="optional_whitespace" />
   </xsl:template>
 
-
-  <!-- this should actually add a bar over the prior character, but at least let's fix the whitespace -->
-  <xsl:template match="AC[@T=8]">
+  <!-- these aren't handled correctly, but at least let's fix the whitespace:
+       LI: should actually keep the content on the same line
+       AC[@T=8]: should actually add a bar over the prior character
+   -->
+  <xsl:template match="LI|AC[@T=8]">
+    <xsl:call-template name="optional_preceding_whitespace" />
+    <xsl:apply-templates />
     <xsl:call-template name="optional_whitespace" />
   </xsl:template>
 
+  <xsl:template name="optional_preceding_whitespace">
+    <xsl:variable name="preceding_text" select="preceding-sibling::node()[1][self::text()]" />
+    <xsl:if test="contains('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789(', substring($preceding_text,string-length($preceding_text)))">
+      <xsl:text> </xsl:text>
+    </xsl:if>
+  </xsl:template>
+  
   <xsl:template name="optional_whitespace">
     <xsl:variable name="following_text" select="following-sibling::node()[1][self::text()]" />
     <xsl:if test="contains('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789(', substring($following_text,1,1))">

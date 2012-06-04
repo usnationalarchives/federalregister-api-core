@@ -105,9 +105,14 @@
   
   <xsl:template match="ENT">
     <td>
-      <xsl:attribute name="class">
-        <xsl:value-of select="name()"/>
-      </xsl:attribute>
+      <xsl:if test="@I">
+        <xsl:attribute name="class">
+          <xsl:choose>
+            <xsl:when test="@I=02"><xsl:text>indent</xsl:text></xsl:when>
+            <xsl:when test="@I=21"><xsl:text>center</xsl:text></xsl:when>
+          </xsl:choose>
+        </xsl:attribute>
+      </xsl:if>
       <xsl:if test="@A">
         <xsl:attribute name="colspan">
           <xsl:value-of select="1 + @A"/>
