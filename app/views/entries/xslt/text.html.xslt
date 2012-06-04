@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
+  <xsl:template match="E[@T=03]">
+    <i class="E-03">
+      <xsl:apply-templates />
+    </i>
+  </xsl:template>
   <xsl:template match="E">
     <xsl:variable name="preceding_text" select="preceding-sibling::node()[1][self::text()]" />
     <xsl:if test="contains(');:,.abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789', substring($preceding_text, string-length($preceding_text)))">
