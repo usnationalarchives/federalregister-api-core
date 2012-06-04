@@ -5,6 +5,17 @@
       <xsl:apply-templates />
     </i>
   </xsl:template>
+
+  <xsl:template match="E[@T=51]">
+    <sup class="E-51"><xsl:apply-templates /></sup>
+    <xsl:call-template name="optional_whitespace" />
+  </xsl:template>
+
+  <xsl:template match="E[@T=52]">
+    <sub class="E-52"><xsl:apply-templates /></sub>
+    <xsl:call-template name="optional_whitespace" />
+  </xsl:template>
+
   <xsl:template match="E">
     <xsl:variable name="preceding_text" select="preceding-sibling::node()[1][self::text()]" />
     <xsl:if test="contains(');:,.abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789', substring($preceding_text, string-length($preceding_text)))">
@@ -14,6 +25,16 @@
       <xsl:attribute name="class">E-<xsl:value-of select="@T"/></xsl:attribute>  
       <xsl:apply-templates/>	
     </span>
+    <xsl:call-template name="optional_whitespace" />
+  </xsl:template>
+
+
+  <!-- this should actually add a bar over the prior character, but at least let's fix the whitespace -->
+  <xsl:template match="AC[@T=8]">
+    <xsl:call-template name="optional_whitespace" />
+  </xsl:template>
+
+  <xsl:template name="optional_whitespace">
     <xsl:variable name="following_text" select="following-sibling::node()[1][self::text()]" />
     <xsl:if test="contains('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789(', substring($following_text,1,1))">
       <xsl:text> </xsl:text>
