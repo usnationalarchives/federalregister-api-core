@@ -145,25 +145,24 @@
     </p>
   </xsl:template>
 
-  <xsl:template match="FILED | BILCOD"></xsl:template>
+  <xsl:template match="FILED"></xsl:template>
+
   <xsl:template name="filing_date">
     <xsl:for-each select="//FILED">
       <xsl:text > </xsl:text>
       <span class="filed"><xsl:value-of select="text()" /></span>
     </xsl:for-each>
   </xsl:template>
-  <xsl:template name="billing_code">
-    <xsl:for-each select="//BILCOD">
-      <br />
-      <span class="billing_code"><xsl:value-of select="text()" /></span>
-    </xsl:for-each>
-  </xsl:template>
+
   <xsl:template match="FRDOC">
     <p class="document_details">
       <span class="fr_doc"><xsl:apply-templates /></span>
       <xsl:call-template name="filing_date" />
-      <xsl:call-template name="billing_code" />
     </p>
+  </xsl:template>
+
+  <xsl:template match="BILCOD">
+     <p class="document_details billing_code"><xsl:value-of select="text()" /></p>
   </xsl:template>
 
   <xsl:template match="NOTE">
