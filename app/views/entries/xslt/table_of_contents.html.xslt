@@ -17,7 +17,7 @@
     </xsl:if>
   </xsl:template>
   
-  <xsl:template match="HD[@SOURCE='HED' or @SOURCE='HD1' or @SOURCE = 'HD2' or @SOURCE = 'HD3' or @SOURCE = 'HD4'][not(ancestor::NOTE|ancestor::FP|ancestor::REGTEXT)]" mode="table_of_contents">
+  <xsl:template match="HD[@SOURCE='HED' or @SOURCE='HD1' or @SOURCE = 'HD2' or @SOURCE = 'HD3' or @SOURCE = 'HD4'][not(ancestor::NOTE|ancestor::FP|ancestor::REGTEXT|ancestor::SECTION|ancestor::AUTH)]" mode="table_of_contents">
     <xsl:choose>
       <xsl:when test="text() = 'AGENCY:' or text() = 'ACTION:' or text() = 'SUMMARY:'"/>
       <xsl:otherwise>
