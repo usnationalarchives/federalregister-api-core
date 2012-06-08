@@ -24,6 +24,15 @@ ul.bullets  li {
 .bullets li.lastchild {
   margin-bottom: 0;
   }
+#entries.show .bullets li {
+  margin-left: 2em;
+}
+.bullets .citable {
+  width: auto;
+}
+.bullets .citable .trigger {
+  left: 454px;
+}
 ul.bold_links a {
   font-weight: 700;
   }  
@@ -472,9 +481,6 @@ p:target {
   display: none;
   margin: 0;
   }  
-#entries.show .bullets li {
-  margin-left: 2em;
-}
 
 .E-03 {
  font-style: italic; 
