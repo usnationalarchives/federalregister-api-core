@@ -429,12 +429,19 @@ p:target {
   margin-top: 0;
   padding-top: 0;
   }
+#entries.show .table_of_contents .level_1 {
+  margin-left: 0;
+}
 #entries.show .table_of_contents .level_2 {
   margin-left: 1em;
   }
 #entries.show .table_of_contents .level_3 {
   margin-left: 2em;
   }  
+#entries.show .table_of_contents .level_4 {
+  margin-left: 3em;
+  }  
+#entries.show .body_column p:first-child,
 #entries.show .body_column p:first-child,
 #entries.show .body_column p.firstchild {
   text-indent: 0;
@@ -465,7 +472,7 @@ p:target {
   display: none;
   margin: 0;
   }  
-#entries.show .body_column ul.bullets li {
+#entries.show .bullets li {
   margin-left: 2em;
 }
 
