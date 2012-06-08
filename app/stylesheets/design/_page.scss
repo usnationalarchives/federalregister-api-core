@@ -465,6 +465,10 @@ p:target {
   display: none;
   margin: 0;
   }  
+#entries.show .body_column ul.bullets li {
+  margin-left: 2em;
+}
+
 .E-03 {
  font-style: italic; 
   }
