@@ -471,6 +471,17 @@ p:target {
 .E-04 {
   font-weight: bold;
   }
+.printed_page {
+  background: sprite-image('icons/icon_page_break.png', 0, 0, 50px) no-repeat; 
+  display: inline-block;
+  width: 11px;
+  height: 14px;
+  margin-bottom: -2px;
+  margin-right: 3px;
+  margin-left: 3px;
+  cursor: pointer;
+}
+
 .metadata_list dt,
 .metadata_list dd {
   display: block;
