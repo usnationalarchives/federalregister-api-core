@@ -1,5 +1,4 @@
-$(document).ready(function() {
-  function display_modal(title, html) {
+function display_modal(title, html) {
       if ($('#disclaimer_modal').size() === 0) {
           $('body').append('<div id="disclaimer_modal"/>');
       }
@@ -18,6 +17,8 @@ $(document).ready(function() {
       $('#disclaimer_modal').centerScreen().jqmShow();
   }
 
+$(document).ready(function() {
+ 
   $('#disclaimer a, a.disclaimer').not('.public-inspection').bind('click',
   function (event) {
       event.preventDefault();

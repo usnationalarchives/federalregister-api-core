@@ -44,4 +44,7 @@ class President < ActiveHash::Base
     end
   end
 
+  def self.in_office_on(date)
+    all.find{|p| p.starts_on <= date && p.ends_on >= date} if date
+  end
 end

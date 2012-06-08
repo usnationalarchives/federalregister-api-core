@@ -24,6 +24,15 @@ ul.bullets  li {
 .bullets li.lastchild {
   margin-bottom: 0;
   }
+#entries.show .bullets li {
+  margin-left: 2em;
+}
+.bullets .citable {
+  width: auto;
+}
+.bullets .citable .trigger {
+  left: 454px;
+}
 ul.bold_links a {
   font-weight: 700;
   }  
@@ -47,6 +56,14 @@ ul.bold_links a {
 :invalid {
   border-color: #e88;
   -webkit-box-shadow: 0 0 5px rgba(255, 0, 0, .8);  
+  }
+
+#content_area a.wrap {
+  -ms-word-break: break-all;
+  word-break: break-all;
+  -webkit-hyphens: auto;
+  -moz-hyphens: auto;
+  hyphens: auto;
   }
 
 /******************************
@@ -421,12 +438,19 @@ p:target {
   margin-top: 0;
   padding-top: 0;
   }
+#entries.show .table_of_contents .level_1 {
+  margin-left: 0;
+}
 #entries.show .table_of_contents .level_2 {
   margin-left: 1em;
   }
 #entries.show .table_of_contents .level_3 {
   margin-left: 2em;
   }  
+#entries.show .table_of_contents .level_4 {
+  margin-left: 3em;
+  }  
+#entries.show .body_column p:first-child,
 #entries.show .body_column p:first-child,
 #entries.show .body_column p.firstchild {
   text-indent: 0;
@@ -446,6 +470,10 @@ p:target {
 #fulltext_content_area p {
   text-indent: 2em;
   }
+#fulltext_content_area p.document_details {
+  text-indent: 0;
+  color: #CCC;
+  }
 #fulltext_content_area p.flush {
   text-indent: 0;
   }  
@@ -453,12 +481,24 @@ p:target {
   display: none;
   margin: 0;
   }  
+
 .E-03 {
  font-style: italic; 
   }
 .E-04 {
   font-weight: bold;
   }
+.printed_page {
+  background: sprite-image('icons/icon_page_break.png', 0, 0, 50px) no-repeat; 
+  display: inline-block;
+  width: 11px;
+  height: 14px;
+  margin-bottom: -2px;
+  margin-right: 3px;
+  margin-left: 3px;
+  cursor: pointer;
+}
+
 .metadata_list dt,
 .metadata_list dd {
   display: block;
@@ -955,6 +995,12 @@ TABLES
   padding: .5em;
   @include text-shadow(#fff, 1px, 1px, 1px);
   } 
+#entries.show table td.center {
+  text-align: center;
+}
+#entries.show table td.indent {
+  padding-left: 25px;
+}
 
 /******************************
 
@@ -984,7 +1030,7 @@ FOOTNOTES
   background-color: #fff;
   position: absolute;
   width: 400px;
-  opacity: .9;
+  opacity: 1;
   }
 #footnotediv .back {
   display: none;

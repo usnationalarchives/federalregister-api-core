@@ -218,4 +218,16 @@ $(document).ready(function () {
         });
       }
     });
+
+    $('.printed_page').tipsy({opacity: 0.9, title: function(){
+      return 'Begin printed page ' + $(this).attr('data-page') + '.';
+    }}).bind('click', function() {
+      var element = $(this);
+      window.location = '#' + element.attr('id');
+    }).each(function() {
+      var element = $(this);
+      if (element.next().is('p,h2,h3')) {
+        element.next().prepend(element.detach());
+      }
+    });
 });
