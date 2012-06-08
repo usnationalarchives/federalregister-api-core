@@ -8,7 +8,12 @@
         <ul class="comments">
           <% entries.each_with_index do |entry, i| %>
             <li>
-                <%= link_to (toc_subject.present? ? (entry.toc_doc || entry.curated_title) : entry.curated_title), entry_path(entry), :class => "#{'not_first' if i > 0}" %>
+              <div class="rule_type doc_<%= entry.granule_class.downcase == "sunshine" ? "notice" : entry.granule_class.downcase %> tipsy mini" 
+                   data-tooltip="<%= entry.presidential_document_type.name if entry.presidential_document_type %>"
+              >
+                <%= image_tag 'icons/document_icons/document_icons_mini.png' %>
+              </div>
+              <%= link_to (toc_subject.present? ? (entry.toc_doc || entry.curated_title) : entry.curated_title), entry_path(entry), :class => "#{'not_first' if i > 0}" %>
             </li>
           <% end %>
         </ul>
