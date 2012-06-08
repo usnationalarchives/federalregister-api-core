@@ -19,7 +19,7 @@ describe XsltHelper do
       XML
       
       @html.should have_tag("p") do |p|
-        p.first.inner_html.should == "John's <span class=\"E-03\">ex parte</span> rules"
+        p.first.inner_html.should == "John's <i class=\"E-03\">ex parte</i> rules"
       end
     end
     
@@ -28,7 +28,7 @@ describe XsltHelper do
         <P>or,<E T="03">decision</E>.<E T="03">decision</E> was</P>
       XML
       @html.should have_tag("p") do |p|
-        p.first.inner_html.should == "or, <span class=\"E-03\">decision</span>. <span class=\"E-03\">decision</span> was"
+        p.first.inner_html.should == "or, <i class=\"E-03\">decision</i>. <i class=\"E-03\">decision</i> was"
       end
     end
     
@@ -37,7 +37,7 @@ describe XsltHelper do
         <P>John'S<E T="03">decision</E>.</P>
       XML
       @html.should have_tag("p") do |p|
-        p.first.inner_html.should == "John'S <span class=\"E-03\">decision</span>."
+        p.first.inner_html.should == "John'S <i class=\"E-03\">decision</i>."
       end
     end
     
@@ -46,7 +46,7 @@ describe XsltHelper do
         <P>John's "<E T="03">decision</E>".</P>
       XML
       @html.should have_tag("p") do |p|
-        p.first.inner_html.should == "John's \"<span class=\"E-03\">decision</span>\"."
+        p.first.inner_html.should == "John's \"<i class=\"E-03\">decision</i>\"."
       end
     end
     
@@ -55,7 +55,7 @@ describe XsltHelper do
         <P>--<E T="03">text</E>is not a good idea</P>
       XML
       @html.should have_tag("p") do |p|
-        p.first.inner_html.should == "--<span class=\"E-03\">text</span> is not a good idea"
+        p.first.inner_html.should == "--<i class=\"E-03\">text</i> is not a good idea"
       end
     end
     
@@ -64,7 +64,7 @@ describe XsltHelper do
         <P>Fish <E T="03">text</E>--is not a good idea</P>
       XML
       @html.should have_tag("p") do |p|
-        p.first.inner_html.should == "Fish <span class=\"E-03\">text</span>--is not a good idea"
+        p.first.inner_html.should == "Fish <i class=\"E-03\">text</i>--is not a good idea"
       end
     end
   end

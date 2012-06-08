@@ -1,14 +1,52 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
+  <xsl:template match="E[@T=03]">
+    <xsl:call-template name="optional_preceding_whitespace" />
+    <i class="E-03">
+      <xsl:apply-templates />
+    </i>
+    <xsl:call-template name="optional_following_whitespace" />
+  </xsl:template>
+
+  <xsl:template match="E[@T=51]">
+    <xsl:call-template name="optional_preceding_whitespace" />
+    <sup class="E-51"><xsl:apply-templates /></sup>
+    <xsl:call-template name="optional_following_whitespace" />
+  </xsl:template>
+
+  <xsl:template match="E[@T=52]">
+    <xsl:call-template name="optional_preceding_whitespace" />
+    <sub class="E-52"><xsl:apply-templates /></sub>
+    <xsl:call-template name="optional_following_whitespace" />
+  </xsl:template>
+
   <xsl:template match="E">
-    <xsl:variable name="preceding_text" select="preceding-sibling::node()[1][self::text()]" />
-    <xsl:if test="contains(');:,.abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789', substring($preceding_text, string-length($preceding_text)))">
-      <xsl:text> </xsl:text>
-    </xsl:if>
+    <xsl:call-template name="optional_preceding_whitespace" />
     <span>
       <xsl:attribute name="class">E-<xsl:value-of select="@T"/></xsl:attribute>  
       <xsl:apply-templates/>	
     </span>
+    <xsl:call-template name="optional_following_whitespace" />
+  </xsl:template>
+
+  <!-- these aren't handled correctly, but at least let's fix the whitespace:
+       LI: should actually keep the content on the same line
+       AC[@T=8]: should actually add a bar over the prior character
+   -->
+  <xsl:template match="LI|AC[@T=8]">
+    <xsl:call-template name="optional_preceding_whitespace" />
+    <xsl:apply-templates />
+    <xsl:call-template name="optional_following_whitespace" />
+  </xsl:template>
+
+  <xsl:template name="optional_preceding_whitespace">
+    <xsl:variable name="preceding_text" select="preceding-sibling::node()[1][self::text()]" />
+    <xsl:if test="contains(');:,.abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789', substring($preceding_text, string-length($preceding_text)))">
+      <xsl:text> </xsl:text>
+    </xsl:if>
+  </xsl:template>
+  
+  <xsl:template name="optional_following_whitespace">
     <xsl:variable name="following_text" select="following-sibling::node()[1][self::text()]" />
     <xsl:if test="contains('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789(', substring($following_text,1,1))">
       <xsl:text> </xsl:text>
@@ -108,25 +146,24 @@
     </p>
   </xsl:template>
 
-  <xsl:template match="FILED | BILCOD"></xsl:template>
+  <xsl:template match="FILED"></xsl:template>
+
   <xsl:template name="filing_date">
     <xsl:for-each select="//FILED">
       <xsl:text > </xsl:text>
       <span class="filed"><xsl:value-of select="text()" /></span>
     </xsl:for-each>
   </xsl:template>
-  <xsl:template name="billing_code">
-    <xsl:for-each select="//BILCOD">
-      <br />
-      <span class="billing_code"><xsl:value-of select="text()" /></span>
-    </xsl:for-each>
-  </xsl:template>
+
   <xsl:template match="FRDOC">
     <p class="document_details">
       <span class="fr_doc"><xsl:apply-templates /></span>
       <xsl:call-template name="filing_date" />
-      <xsl:call-template name="billing_code" />
     </p>
+  </xsl:template>
+
+  <xsl:template match="BILCOD">
+     <p class="document_details billing_code"><xsl:value-of select="text()" /></p>
   </xsl:template>
 
   <xsl:template match="NOTE">

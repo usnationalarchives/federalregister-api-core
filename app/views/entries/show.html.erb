@@ -27,7 +27,7 @@
             <%= link_to "Submit a formal comment", @entry.comment_url.present? ? @entry.comment_url : '#addresses', :class => 'button', :target => (@entry.comment_url.present? ? '_blank' : '') %>
           </p>
         </div>
-        <% if @entry.docket && @entry.docket.comments_count && @entry.docket.comments_count > 0 %>
+        <% if @entry.docket && @entry.docket.comments_count && @entry.docket.comments_count > 0 && ! @entry.docket.placeholder? %>
           <p id="comment_count">Read the <%= link_to pluralize(@entry.docket.comments_count, 'submitted public comment'), regulations_dot_gov_docket_comments_url(@entry.docket.id), :target => "_blank" %></p>
         <% end %>
       <% end -%>      
@@ -84,7 +84,7 @@
       <% end -%>
     <% end %>  
 
-    <%= render(:partial => "docket", :locals => {:docket => @entry.docket, :entry => @entry }) if @entry.docket %>
+    <%= render(:partial => "docket", :locals => {:docket => @entry.docket, :entry => @entry }) if @entry.docket && !@entry.docket.placeholder?%>
   <% end -%> <!-- end aside tag -->
   
   <div id="content_area">
