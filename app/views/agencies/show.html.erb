@@ -29,18 +29,20 @@
           <%= f.submit 'Search' %>
           <span id="expected_result_count"></span>
 
-          <div id="doc-type-search-filter">
-            <ul>
-              <li class="doc_notice first" data-filter-doc-type="notice"   data-filter-doc-type-display="Notice">                <%= image_tag '/my/assets/icons/document_icons/document_icons_mini.png' %></li>
-              <li class="doc_prorule"      data-filter-doc-type="prorule"  data-filter-doc-type-display="Proposed Rule">         <%= image_tag '/my/assets/icons/document_icons/document_icons_mini.png' %></li>
-              <li class="doc_rule last"         data-filter-doc-type="rule"     data-filter-doc-type-display="Rule">                  <%= image_tag '/my/assets/icons/document_icons/document_icons_mini.png' %></li>
-            </ul>
+          <% unless @agency = AgencyName.find_by_name!("Executive Office of the President").agency %>
+            <div id="doc-type-search-filter">
+              <ul>
+                <li class="doc_notice first" data-filter-doc-type="notice"   data-filter-doc-type-display="Notice">                <%= image_tag '/my/assets/icons/document_icons/document_icons_mini.png' %></li>
+                <li class="doc_prorule"      data-filter-doc-type="prorule"  data-filter-doc-type-display="Proposed Rule">         <%= image_tag '/my/assets/icons/document_icons/document_icons_mini.png' %></li>
+                <li class="doc_rule last"         data-filter-doc-type="rule"     data-filter-doc-type-display="Rule">                  <%= image_tag '/my/assets/icons/document_icons/document_icons_mini.png' %></li>
+              </ul>
 
-            <%= f.input :type,
-              :label => "Document Category",
-              :as => :check_boxes,
-              :collection => EntrySearch::TYPES %>
-          </div>
+              <%= f.input :type,
+                :label => "Document Category",
+                :as => :check_boxes,
+                :collection => EntrySearch::TYPES %>
+            </div>
+          <% end %>
         </div>
       <% end %>
     </div>
@@ -52,9 +54,6 @@
       <p>Description coming soon.</p>
     <% end %>
     
-    <% if @entries.present?%>
-      <p><%= link_to "Search all #{pluralize @entries.total_entries, 'article'} published by this agency since 1994", entries_search_path(:conditions => {:agency_ids => [@agency.id]}, :skip_results => 1, :anchor => 'advanced') %></p>
-    <% end %>
   <% end %>  
     
   <% aside_tag(:id => 'sidebar') do %>
