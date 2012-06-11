@@ -220,7 +220,7 @@ $(document).ready(function () {
     });
 
     $('.printed_page').tipsy({opacity: 0.9, title: function(){
-      return 'Begin printed page ' + $(this).attr('data-page') + '.';
+      return 'Printed page ' + $(this).attr('data-page') + '.';
     }}).bind('click', function() {
       var element = $(this);
       window.location = '#' + element.attr('id');
