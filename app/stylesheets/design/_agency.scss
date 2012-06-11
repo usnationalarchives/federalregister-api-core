@@ -1,6 +1,15 @@
 $doc_icon_mini_width: 20;
 $doc_icon_mini_height: 20;
 
+#agencies .search_bar { 
+  margin-left: 0;
+  width: 580px;
+  padding: 1em 0 .6em;
+  }
+#agencies .search_bar #conditions_term { width: 244px; }
+#agencies .formtastic li.hidden { position: absolute; }
+#agencies .formtastic #conditions_type_input { display: none; }
+
 .grouped_by_date .rule_type {
   width: $doc_icon_mini_width + px;
   height: $doc_icon_mini_height + px;
