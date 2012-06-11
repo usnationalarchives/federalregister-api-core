@@ -24,6 +24,10 @@ $(document).ready(function(){
   $('#agencies .doc_correct.tipsy').tipsy({gravity: 'e', fallback: "Correction",               delayIn: 100, fade: true, offset: 0});
 
 
+  /* Doctype Filters */
+  $('#doc-type-search-filter li').tipsy( {gravity: 'n', fade: true, offset: 2, title: function() { return $(this).data('tooltip');} });
+
+
   $('.tip_left').tipsy({gravity:'east'});
   $('.tip_over').tipsy({gravity:'south'});
   $('.tip_right').tipsy({gravity:'west'});
