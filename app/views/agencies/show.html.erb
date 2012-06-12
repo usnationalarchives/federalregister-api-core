@@ -34,7 +34,7 @@
               <ul>
                 <li class="doc_notice first" data-filter-doc-type="notice"   data-filter-doc-type-display="Notice">                <%= image_tag '/my/assets/icons/document_icons/document_icons_mini.png' %></li>
                 <li class="doc_prorule"      data-filter-doc-type="prorule"  data-filter-doc-type-display="Proposed Rule">         <%= image_tag '/my/assets/icons/document_icons/document_icons_mini.png' %></li>
-                <li class="doc_rule last"         data-filter-doc-type="rule"     data-filter-doc-type-display="Rule">                  <%= image_tag '/my/assets/icons/document_icons/document_icons_mini.png' %></li>
+                <li class="doc_rule last"    data-filter-doc-type="rule"     data-filter-doc-type-display="Rule">                  <%= image_tag '/my/assets/icons/document_icons/document_icons_mini.png' %></li>
               </ul>
 
               <%= f.input :type,
@@ -48,11 +48,14 @@
     </div>
 
     <%= content_tag(:p, "Agency URL: " + link_to(@agency.url, @agency.url)) if @agency.url.present? %>
-    <% if @agency.description.present? %>
-      <%= add_citation_links(auto_link(simple_format(@agency.description))) %>
-    <% else %>
-      <p>Description coming soon.</p>
-    <% end %>
+
+    <div id="agency-description-wrapper">
+      <% if @agency.description.present? %>
+        <%= add_citation_links(auto_link(simple_format(@agency.description))) %>
+      <% else %>
+        <p>Description coming soon.</p>
+      <% end %>
+    </div>
 
     <% if @entries.present?%>
       <p>

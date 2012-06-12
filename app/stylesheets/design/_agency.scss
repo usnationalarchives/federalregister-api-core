@@ -10,6 +10,16 @@ $doc_icon_mini_height: 20;
 #agencies .formtastic li.hidden { position: absolute; }
 #agencies .formtastic #conditions_type_input { display: none; }
 
+
+#agencies #sidebar .sub_agencies li.show_hide a,
+#agencies p.show_hide a { 
+  cursor: pointer;
+  font-weight: bold;
+}
+
+#agencies #sidebar .sub_agencies li.show_hide { background: none; }
+
+
 .grouped_by_date .rule_type {
   width: $doc_icon_mini_width + px;
   height: $doc_icon_mini_height + px;
