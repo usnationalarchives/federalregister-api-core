@@ -590,6 +590,24 @@ p:target {
   padding-right: 0.2em;
   margin-right: 0.4125em;
 }
+
+#fulltext_content_area .note {
+  margin: 1.5em 0;
+  padding: 10px;
+  background-color: #FFFEEC;
+  }
+#fulltext_content_area .note h4 {
+  margin-top: 0;
+  margin-bottom: 0.4em;
+  padding-left: 20px;
+  background: sprite-image('icons/icon_notepad.png', 0, 0, 50px) no-repeat;
+}
+#entries.show .body_column .note h4 { font-size: 1.4em; }
+#fulltext_content_area .note p {
+  padding: 0 0 0 20px;
+  text-indent: 0;
+  width: auto;
+  }
 // HELP-DESIGN: in the PDF this has a big black bullet next to it /a/2010-15073
 p.amendment_part {
 }
