@@ -47,7 +47,7 @@
       <% end %>
     </div>
 
-    <%= content_tag(:p, link_to(@agency.url, @agency.url)) if @agency.url.present? %>
+    <%= content_tag(:p, "Agency URL: " + link_to(@agency.url, @agency.url)) if @agency.url.present? %>
     <% if @agency.description.present? %>
       <%= add_citation_links(auto_link(simple_format(@agency.description))) %>
     <% else %>
