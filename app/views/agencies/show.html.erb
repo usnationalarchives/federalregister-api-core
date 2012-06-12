@@ -29,7 +29,7 @@
           <%= f.submit 'Search' %>
           <span id="expected_result_count"></span>
 
-          <% unless @agency = AgencyName.find_by_name!("Executive Office of the President").agency %>
+          <% unless @agency == AgencyName.find_by_name!("Executive Office of the President").agency %>
             <div id="doc-type-search-filter">
               <ul>
                 <li class="doc_notice first" data-filter-doc-type="notice"   data-filter-doc-type-display="Notice">                <%= image_tag '/my/assets/icons/document_icons/document_icons_mini.png' %></li>
