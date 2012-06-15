@@ -125,7 +125,7 @@ class EntrySearch < ApplicationSearch
       "executive_order_number ASC"
     else
       @sort_mode = :expr
-      "@weight * 1/LOG2( (((NOW()+#{5.days}) - publication_date) / #{1.year})+2 )"
+      "@weight * 1/LOG2( (((NOW()+#{5.days}) - publication_date) / #{1.year} / 3)+2 )"
     end
   end
 
