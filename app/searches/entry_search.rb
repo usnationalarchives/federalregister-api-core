@@ -124,8 +124,13 @@ class EntrySearch < ApplicationSearch
     when 'executive_order_number'
       "executive_order_number ASC"
     else
-      "@relevance DESC, publication_date DESC, start_page ASC, sphinx_internal_id ASC"
+      @sort_mode = :expr
+      "@weight * 1/LOG2( (((NOW()+#{5.days}) - publication_date) / #{1.year})+2 )"
     end
+  end
+
+  def sort_mode
+    @sort_mode || :extended
   end
   
   def agency_facets
