@@ -29,16 +29,16 @@
               :label => "Document Category",
               :as => :check_boxes,
               :collection => EntrySearch::TYPES %>
+  <%= f.input :presidential_document_type_id,
+              :label => "Presidential Document Type",
+              :as => :check_boxes,
+              :collection => PresidentialDocumentType.all,
+              :wrapper_html => {:class => "presidential_dependent"} %>
   <%= f.input :president,
               :label => "President",
               :as => :check_boxes,
               :collection => President.all,
               :value_method => :identifier,
-              :wrapper_html => {:class => "presidential_dependent"} %>
-  <%= f.input :presidential_document_type_id,
-              :label => "Presidential Document Type",
-              :as => :check_boxes,
-              :collection => PresidentialDocumentType.all,
               :wrapper_html => {:class => "presidential_dependent"} %>
   <%= f.input :docket_id,
               :label => "Agency Docket",
