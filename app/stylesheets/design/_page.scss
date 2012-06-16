@@ -467,16 +467,9 @@ p:target {
 .table_of_graphics li.end_of_row {
   margin-right: 0;
   }
-#fulltext_content_area p {
-  text-indent: 2em;
-  }
 #fulltext_content_area p.document_details {
-  text-indent: 0;
   color: #CCC;
   }
-#fulltext_content_area p.flush {
-  text-indent: 0;
-  }  
 #entries.show .body_column:empty {
   display: none;
   margin: 0;
