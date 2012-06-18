@@ -72,8 +72,8 @@ task :production do
   role :app, "ec2-23-20-255-226.compute-1.amazonaws.com", "ec2-23-20-217-149.compute-1.amazonaws.com", "ec2-50-19-46-231.compute-1.amazonaws.com", "ec2-107-21-88-250.compute-1.amazonaws.com", "ec2-107-21-140-249.compute-1.amazonaws.com"
   role :db, "ec2-50-17-38-106.compute-1.amazonaws.com", {:primary => true}
   role :sphinx, "ec2-50-17-38-106.compute-1.amazonaws.com"
-  role :static, "ec2-107-20-145-32.compute-1.amazonaws.com" #monster image
-  role :worker, "ec2-107-20-145-32.compute-1.amazonaws.com", {:primary => true} #monster image
+  role :static, "ec2-184-73-2-241.compute-1.amazonaws.com" #monster image
+  role :worker, "ec2-184-73-2-241.compute-1.amazonaws.com", {:primary => true} #monster image
 end
 
 
