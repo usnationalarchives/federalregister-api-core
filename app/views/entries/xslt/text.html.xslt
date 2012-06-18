@@ -106,10 +106,7 @@
           <xsl:attribute name="data-page">
             <xsl:call-template name="current_page" />
           </xsl:attribute>
-          
-          <xsl:if test="name(.) = 'FP'">
-            <xsl:attribute name="class">flush</xsl:attribute>
-          </xsl:if>
+
           <xsl:apply-templates/>
         </p>
       </xsl:otherwise>
