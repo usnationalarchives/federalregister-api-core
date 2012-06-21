@@ -31,12 +31,17 @@
         <p class="editorial_note"><strong>Editorial Note: <%= @public_inspection_document.editorial_note %></strong></p>
       <% end %>
 
-      <% if @public_inspection_document.publication_date %>
-        <p>This document is unpublished, but on <%= @public_inspection_document.publication_date %> it is scheduled to be published and available on this page.
-          <% if @public_inspection_document.pdf_file_name.present? %>
-            Until then, you can download the <%= link_to 'pre-publication PDF version', @public_inspection_document.pdf.url(:with_banner, false) %>.
-          <% end %>
-        </p>    
+      <% if @public_inspection_document.document_number == '2012-15272' %>
+        <p>This document will be printed in the Federal Register on 06/21/2012.
+              Until then, you can download the <%= link_to 'PDF version', @public_inspection_document.pdf.url(:with_banner, false) %>.
+      <% else %>
+        <% if @public_inspection_document.publication_date %>
+          <p>This document is unpublished, but on <%= @public_inspection_document.publication_date %> it is scheduled to be published and available on this page.
+            <% if @public_inspection_document.pdf_file_name.present? %>
+              Until then, you can download the <%= link_to 'pre-publication PDF version', @public_inspection_document.pdf.url(:with_banner, false) %>.
+            <% end %>
+          </p>    
+        <% end %>
       <% end %>
     </div> <!-- end fulltext_content_area area -->  
   

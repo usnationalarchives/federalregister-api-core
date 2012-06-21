@@ -48,7 +48,9 @@ module Content
     end
 
     def initialize(attributes)
+      return if attributes[:document_number] == '2012-15272'
       @pi = PublicInspectionDocument.find_or_initialize_by_document_number(attributes.delete(:document_number))
+
       @new_record = @pi.new_record?
       url = attributes.delete(:url)
       attributes.each_pair do |attr,val|
@@ -106,7 +108,7 @@ module Content
         url = "http://www.ofr.gov/" + url
       end
 
-      if !ENV['SKIP_DOWNLOADS'] && (not_already_downloaded? || etag_from_head(url) != @pi.pdf_etag)
+      if !ENV['SKIP_DOWNLOADS'] && (not_already_downloaded? || etag_from_head(url) != @pi.pdf_etag) && @pi.document_number != '2012-15272'
         pdf_path = File.join(Dir.tmpdir, File.basename(url))
         puts "downloading #{url}..."
         curl = Curl::Easy.download(url, pdf_path)

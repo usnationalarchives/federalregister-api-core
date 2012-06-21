@@ -2,11 +2,17 @@
 <h1><%= title %></h1>
 
 <div class="metadata_share_bar">
-  <p class="metadata">An <strong>unpublished</strong> <%= document.entry_type %> by <%= agency_names(document) %>
-    <% if document.publication_date %>
-      on <%= date_tag(document.publication_date, :datetime => document.publication_date.to_s(:iso)) %>
-    <% end %>
-  </p>
+  <% if @public_inspection_document.document_number == '2012-15272' %>
+    <p class="metadata">A <%= document.entry_type %> submitted by <%= agency_names(document) %>
+      on 06/18/2012
+    </p>
+  <% else %>
+    <p class="metadata">An <strong>unpublished</strong> <%= document.entry_type %> by <%= agency_names(document) %>
+      <% if document.publication_date %>
+        on <%= date_tag(document.publication_date, :datetime => document.publication_date.to_s(:iso)) %>
+      <% end %>
+    </p>
+  <% end %>
 
   <div class="share">
     <ul>
