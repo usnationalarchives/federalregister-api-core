@@ -14,7 +14,12 @@
       <span class="filed_at">Filed on: <%= document.filed_at.to_s(:short_date_then_time) %></span>
     <%- end %>
     <%- if document.publication_date.present? %> 
-    <span class="publication_date">Publication Date:
+    <span class="publication_date">
+      <% if document.document_number == '2012-15272' %>
+        Printing Date:
+      <% else %>
+        Publication Date:
+      <% end %>
         <%= Issue.find_by_publication_date(document.publication_date) ? link_to(document.publication_date, entries_by_date_path(document.publication_date, :anchor => document.document_number) ) : document.publication_date  %>
     </span>
     <%- end %>
