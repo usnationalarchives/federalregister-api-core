@@ -88,22 +88,22 @@
   <% end -%> <!-- end aside tag -->
   
   <div id="content_area">
-    <% if @entry.action.present? %>
-      <div class="header_column">
-        <h1>Action</h1>
-      </div>
-      <div class="body_column">
-        <p><%= @entry.action.titlecase %></p>
-      </div>
-    <% end %>
-
-    <% if RAILS_ENV == 'development' %>
-      <%= render(:partial => 'abstract', :locals => {:entry => @entry}) %>
-    <% else %>
-      <%= render :esi => entry_abstract_path(@entry) %>
-    <% end %>
-
     <% if @entry.should_have_full_xml? %>    
+      <% if @entry.action.present? %>
+        <div class="header_column">
+          <h1>Action</h1>
+        </div>
+        <div class="body_column">
+          <p><%= @entry.action.titlecase %></p>
+        </div>
+      <% end %>
+
+      <% if RAILS_ENV == 'development' %>
+        <%= render(:partial => 'abstract', :locals => {:entry => @entry}) %>
+      <% else %>
+        <%= render :esi => entry_abstract_path(@entry) %>
+      <% end %>
+
       <%= render :partial => "unified_agena" %>
     
       <div id="fulltext_content_area">
@@ -113,8 +113,8 @@
         <%= render :esi => entry_full_text_path(@entry) %>
       <% end %>
       </div> <!-- end fulltext_content_area area -->  
+    
     <% end %>
-  
   </div> <!-- content_area end -->
   
 <% end %> <!-- end article tag -->
