@@ -4,14 +4,8 @@
     <dd><%= link_to document.filed_at.to_date, public_inspection_documents_by_date_path(document.filed_at.to_date) %> at <%= document.filed_at.to_s(:time_only) %></dd>
   <% end %>
   <% if document.publication_date.present? %>
-    <% if @public_inspection_document.document_number == '2012-15272' %>
-      <dt>Printing Date:</dt>
-      <dd><%= document.publication_date.to_formatted_s(:pretty) %></dd> 
-    <% else %>
-      <dt>Publication Date:</dt>
-      <dd><%= document.publication_date.to_formatted_s(:pretty) %></dd> 
-    <% end %>
-  <% end %>
+    <dt>Publication Date:</dt>
+    <dd><%= document.publication_date.to_formatted_s(:pretty) %></dd> <% end %>
   <% if document.agency_names.present?         %>
     <dt><%= pluralize_without_count(document.agency_names.size, 'Agency') %>:</dt>
      <% document.agency_names.each do |agency_name| %>
