@@ -78,6 +78,10 @@ module RouteBuilder
     "/articles/xml/#{entry.document_file_path}.xml"
   end
   
+  add_static_route :public_inspection_raw_text do |public_inspection_document|
+    "/public-inspection/raw_text/#{public_inspection_document.document_file_path}.txt"
+  end
+  
   add_route :entry_citation do |entry|
     {
       :year            => entry.publication_date.strftime('%Y'),
