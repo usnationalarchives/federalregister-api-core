@@ -84,18 +84,19 @@ end
 task :staging do
   set :rails_env,  "staging" 
   set :branch, `git branch`.match(/\* (.*)/)[1]
+  set :gateway, 'fr2.criticaljuncture.org'
   
-  role :proxy,  "ec2-184-72-250-132.compute-1.amazonaws.com"
-  role :app,    "ec2-174-129-64-134.compute-1.amazonaws.com"
+  role :proxy,  "proxy.fr2.ec2.internal"
+  role :app,    "app-server-1.fr2.ec2.internal"
 #  role :db,     "ec2-50-17-145-38.compute-1.amazonaws.com", {:primary => true}
 #  role :sphinx, "ec2-50-17-145-38.compute-1.amazonaws.com"
 
   # ubuntu 11.04 server
-  role :db,     "ec2-50-16-6-83.compute-1.amazonaws.com", {:primary => true}
-  role :sphinx, "ec2-50-16-6-83.compute-1.amazonaws.com"
+  role :db,     "database.fr2.ec2.internal", {:primary => true}
+  role :sphinx, "sphinx.fr2.ec2.internal"
 
-  role :static, "ec2-184-72-163-77.compute-1.amazonaws.com"
-  role :worker, "ec2-184-72-163-77.compute-1.amazonaws.com", {:primary => true}
+  role :static, "static.fr2.ec2.internal"
+  role :worker, "worker.fr2.ec2.internal", {:primary => true}
 end
 
 

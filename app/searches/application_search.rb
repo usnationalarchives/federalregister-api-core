@@ -180,7 +180,7 @@ filter_name.to_s.sub(/_ids?$/,'').classify.constantize.find_all_by_id(ids.flatte
         :with_all => with_all,
         :conditions => sphinx_conditions,
         :match_mode => :extended,
-        :sort_mode => :extended
+        :sort_mode => sort_mode
       }.merge(find_options).recursive_merge(args)
     )
 
@@ -211,6 +211,10 @@ filter_name.to_s.sub(/_ids?$/,'').classify.constantize.find_all_by_id(ids.flatte
   def order_clause
     "@relevance DESC"
   end
+
+  def sort_mode
+    :extended
+  end
   
   def find_options
     {}
@@ -235,7 +239,7 @@ filter_name.to_s.sub(/_ids?$/,'').classify.constantize.find_all_by_id(ids.flatte
         :with_all => with_all,
         :conditions => sphinx_conditions,
         :match_mode => :extended,
-        :sort_mode => :extended
+        :sort_mode => sort_mode
       }.merge(find_options)
     )
   end

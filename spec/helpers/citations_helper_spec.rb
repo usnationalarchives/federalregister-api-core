@@ -34,7 +34,7 @@ describe CitationsHelper do
   
   describe 'add_regulatory_plan_links' do
     it "links RINs to the appropriate regulation page" do
-      add_regulatory_plan_links("See RIN 1234-ABCD and RIN 1234-ABCF").should == 'See <a href="/r/1234-ABCD">RIN 1234-ABCD</a> and <a href="/r/1234-ABCF">RIN 1234-ABCF</a>'
+      add_regulatory_plan_links("See RIN 1234-AB12 and RIN 1234-AB34").should == 'See RIN <a href="/r/1234-AB12">1234-AB12</a> and RIN <a href="/r/1234-AB34">1234-AB34</a>'
     end
   end
   

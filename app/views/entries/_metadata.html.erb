@@ -19,6 +19,7 @@
   <% if entry.comments_close_on.present?    %><dt>Comments Close:</dt>   <dd><%= entry.comments_close_on                        %></dd><% end %>
   <% if entry.type.present?                 %><dt>Type: </dt>            <dd><%= entry.type                                     %></dd><% end %>
   <% if entry.entry_type.present?           %><dt>Entry Type:</dt>       <dd><%= entry.entry_type                               %></dd><% end %>
+  <% if entry.action.present?               %><dt>Action: </dt>          <dd><%= entry.action                                   %></dd><% end %>
   <% if entry.presidential_document_type.present? %><dt>Presidential Document Type:</dt><dd><%= entry.presidential_document_type.name %></dd><% end %>
   <% if entry.executive_order_number.present? %><dt>E.O. Citation:</dt><dd>E.O. <%= entry.executive_order_number %>
     <% if entry.signing_date %>of <%= entry.signing_date.to_s(:shorter_ordinal) %><% end %></dd><% end %>

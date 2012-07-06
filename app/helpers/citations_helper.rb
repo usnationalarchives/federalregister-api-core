@@ -10,6 +10,7 @@ module CitationsHelper
         text = add_regulatory_plan_links(text)
         text = add_public_law_links(text)
         text = add_patent_links(text)
+        text = add_omb_control_number_links(text)
       end
     else
       html
@@ -51,7 +52,7 @@ module CitationsHelper
   end
   
   def add_regulatory_plan_links(text)
-    text.gsub(/RIN (\w{4}-\w{4})/) do |str|
+    text.gsub(/\b(\d{4}\s*-\s*[A-Z]{2}\d{2})\b/) do |str|
       content_tag :a, str, :href => short_regulatory_plan_path(:regulation_id_number => $1)
     end
   end
@@ -74,6 +75,13 @@ module CitationsHelper
       content_tag :a, str, :href => patent_url(number), :class => "patent external", :target => "_blank"
     end
   end
+
+  def add_omb_control_number_links(text)
+    text = text.gsub(/\b(\d{4}\s*-\s*\d{4})\b/) do |str|
+      number = $1
+      content_tag(:a, number, :href => omb_control_number_url(number), :class => "omb_number external", :target => "_blank")
+    end
+  end
   
   def usc_url(title, part)
     "http://frwebgate.access.gpo.gov/cgi-bin/getdoc.cgi?dbname=browse_usc&docid=Cite:+#{title}USC#{part}"
@@ -86,6 +94,10 @@ module CitationsHelper
   def patent_url(number_possibly_with_commas)
     number = number_possibly_with_commas.gsub(/,/,'')
     "http://patft.uspto.gov/netacgi/nph-Parser?Sect2=PTO1&Sect2=HITOFF&p=1&u=/netahtml/PTO/search-bool.html&r=1&f=G&l=50&d=PALL&RefSrch=yes&Query=PN/#{number}"
+  end
+
+  def omb_control_number_url(number)
+    "http://www.reginfo.gov/public/do/PRAOMBHistory?ombControlNumber=#{number}"
   end
   
   # def patent_application_url(number_possibly_with_commas)

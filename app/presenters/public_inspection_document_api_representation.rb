@@ -25,6 +25,9 @@ class PublicInspectionDocumentApiRepresentation < ApiRepresentation
   field(:filing_type, :select => :special_filing) {|document| document.special_filing? ? 'special' : 'regular'}
   field(:html_url, :select => [:publication_date, :filed_at, :document_number, :slug]) {|document| entry_url(document) }
   field(:json_url, :select => :document_number) {|document| api_v1_public_inspection_document_url(document.document_number, :format => :json) }
+  field(:raw_text_url, :select => :document_number) {|document|
+    public_inspection_raw_text_url(document)
+  }
   field(:num_pages)
   field(:publication_date)
   field(:type, :select => :granule_class) {|document| document.entry_type}
@@ -37,6 +40,7 @@ class PublicInspectionDocumentApiRepresentation < ApiRepresentation
   def self.default_index_fields_json
     all_fields
   end
+
   def self.default_show_fields_json
     all_fields - [:json_url, :excerpts]
   end
