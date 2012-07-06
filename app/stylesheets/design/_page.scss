@@ -594,30 +594,13 @@ p:target {
   margin-bottom: 0.4em;
   padding-left: 20px;
   background: sprite-image('icons/icon_notepad.png', 0, 0, 50px) no-repeat;
-  }
+}
 #entries.show .body_column .note h4 { font-size: 1.4em; }
 #fulltext_content_area .note p {
   padding: 0 0 0 20px;
   text-indent: 0;
   width: auto;
   }
-
-#entries #fulltext_content_area .signature {
-  padding: 10px;
-  background: #F0FDFF sprite-image('icons/icon_pen.png', 10px, 12px, 200px) no-repeat;
-  }
-#entries #fulltext_content_area .signature p {
-  margin-left: 25px;
-  text-indent: 0;
-  width: auto;
-  padding: 2px 10px;
-  }
-#entries #fulltext_content_area .signature p.name { 
-  font-weight: bold;
-  margin-top: 10px;
-  }
-#entries #fulltext_content_area .signature p.title { font-style: italic; }
-
 // HELP-DESIGN: in the PDF this has a big black bullet next to it /a/2010-15073
 p.amendment_part {
 }
