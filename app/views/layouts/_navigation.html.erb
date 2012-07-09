@@ -2,36 +2,146 @@
 
   <ul class="container">
     <li id='nav-home'><a href="/" class="home" title="Home">Home</a></li>
-    <li class="dropdown nav_sections">
-      <a class="sections">Sections<span class="arrow"></span></a>
-      <ul class="subnav">
-        <% Section.all.each do |section| %>
-          <li id='<%= section.slug %>'><%= link_to section.title, section_path(section), :class => "#{section.slug}" %></li>
-        <% end %>
-      </ul>
+    <li class="dropdown previewable nav_sections">
+      <a class="sections top_nav">Sections<span class="arrow"></span></a>
+      <div class="subnav">
+        <ul class="left_column">
+          <% Section.all.each do |section| %>
+            <li id='<%= section.slug %>'><%= link_to section.title, section_path(section), :class => "#{section.slug}" %></li>
+          <% end %>
+        </ul>
+        <ul class="right_column">
+          <% Section.all.each do |section| %>
+            <li id='<%= section.slug %>-preview' class="preview">
+              <% @highlighted_entries = section.highlighted_entries(IssueApproval.latest_publication_date).with_lede_photo.limit(1) %>
+              <% if @highlighted_entries.present? %>
+                <%= render :partial => 'sections/carousel', :locals => {:entries => @highlighted_entries} %>
+              <% end %>
+              <div class="suggested_searches">
+                <% section.canned_searches.active.in_order.limit(4).in_groups_of(2,false).each_with_index do |searches, index| %>
+                  <div class="row <%= index == 0 ? 'first' : '' %>">
+                    <% searches.each do |canned_search| %>
+                        <div class="info suggested_search"> 
+                          <h1>
+                            <%= link_to canned_search.title, canned_search_path(canned_search) %>
+                            <span class="result_count"><%= canned_search.search.count_in_last_n_days(365) %> in the last year</span>
+                          </h1>
+                         </div>
+                      <% end %>
+                  </div> <!-- .row -->
+                <% end %>
+              </div> <!-- .suggested_searches -->
+
+              <div class="daily_stats">
+                <ul>
+                  <li class="new_articles">
+                    <% conditions = {:publication_date => {:is => Issue.current.publication_date}, :section_ids => [section.id]} %>
+                    <% link_to entries_search_path(:conditions => conditions, :utm_source => 'navigation', :utm_medium => 'dropdown', :utm_content => 'new_articles') do %>
+                      <span class="count"><%= count = EntrySearch.new(:conditions => conditions).count %></span>
+                      <span class="details"><%= pluralize_without_count(count, 'New Articles') %> In this Issue</span>
+                    <% end %>
+                  </li>
+                  <li class="closing_soon">
+                    <% conditions = {:comment_date => {:gte => Date.current, :lte => 1.week.from_now.to_date}, :section_ids => [section.id]} %>
+                    <% link_to entries_search_path(:conditions => conditions, :utm_source => 'homepage', :utm_medium => 'slideshow', :utm_content => 'comments_closing') do %>
+                      <span class="count"><%= count = EntrySearch.new(:conditions => conditions).count %></span>
+                      <span class="details"><%= pluralize_without_count(count, 'Comment Period') %> Ending Soon</span> 
+                    <% end %>
+                  </li>
+                </ul>
+              </div> <!-- .daily_stats -->
+            </li>
+          <% end %>
+        </ul>
+      </div>
     </li>
-    <li class="dropdown nav_browse">
-      <a class="browse">Browse<span class="arrow"></span></a>
-      <ul class="subnav browse_list">
-        <li id='agencies-browse'>
-          <%= link_to 'Agencies', agencies_path, :class => "agencies" %>
-        </li>
-        <li id='topics-browse'>
-          <%= link_to 'Topics', topics_path, :class => "topics" %>
-        </li>
-        <li id='current-article-browse'>
-          <%= link_to 'Dates', entries_current_issue_path, :class => "date" %>
-        </li>
-        <li id='public-inspection-browse'>
-          <%= link_to 'Public Inspection', public_inspection_documents_path, :class => "public_inspection" %>
-        </li>
-        <li id='executive-orders-browse'>
-          <%= link_to 'Executive Orders', executive_orders_path, :class => "executive_orders" %>
-        </li>
-      </ul>
+    <li class="dropdown previewable nav_browse">
+      <a class="browse top_nav">Browse<span class="arrow"></span></a>
+      <div class="subnav browse_list">
+        <ul class="left_column">
+          <li id='agencies-browse'>
+            <%= link_to 'Agencies', agencies_path, :class => "agencies" %>
+          </li>
+          <li id='topics-browse'>
+            <%= link_to 'Topics', topics_path, :class => "topics" %>
+          </li>
+          <li id='current-article-browse'>
+            <%= link_to 'Dates', entries_current_issue_path, :class => "date" %>
+          </li>
+          <li id='public-inspection-browse'>
+            <%= link_to 'Public Inspection', public_inspection_documents_path, :class => "public_inspection" %>
+          </li>
+          <li id='executive-orders-browse'>
+            <%= link_to 'Executive Orders', executive_orders_path, :class => "executive_orders" %>
+          </li>
+        </ul>
+        <ul class="right_column">
+          <li id="agencies-browse-preview" class="preview">
+            <ol class="cabinet_agencies">
+              <% Agency.cabinet_level.each_with_index do |agency, index| %>
+                <li class="<%= index % 2 == 0 ? 'left' : 'right' %>">
+                  <h2><%= link_to agency.name, agency_path(agency) %></h2>
+                  <div class="document_counts">
+                    <span class="count"><%= count = agency.entry_counts_since('month') %></span>
+                    <span class="details"><%= pluralize_without_count(count, 'Document') %> In Last Month</span>
+                  </div>
+                </li>
+              <% end %>
+            </ol>
+          </li>
+          <li id="current-article-browse-preview" class="preview">
+            <div class="fr_stats">
+              <% issue = Issue.current %>
+              <h2>
+                Current Issue
+                <% if issue.total_pages && issue.total_pages > 1 %>
+                  <span class="page_count"><%= issue.total_pages %> Pages</span>
+                <% end %>
+              </h2>  
+              <ul class="current_issue statistics">
+                <% if issue.notice_count == 0 && issue.proposed_rule_count == 0 && issue.rule_count == 0 && issue.presidential_documents_count == 0 && issue.significant_entries_count == 0 && issue.total_pages == 1 %>
+                  <li>No statistics available.</li>
+                <% else %>
+                  <% if issue.notice_count > 0 %>
+                    <li><%= link_to "<span>#{issue.notice_count}</span> #{pluralize_without_count issue.notice_count, "Notice"}", entries_search_path(:conditions => {:type => "NOTICE", :publication_date => {:is => issue.publication_date}}) %></li>
+                  <% end %>
+                  <% if issue.proposed_rule_count > 0 %>
+                    <li><%= link_to "<span>#{issue.proposed_rule_count}</span> #{pluralize_without_count issue.proposed_rule_count, "Proposed Rule"}", entries_search_path(:conditions => {:type => "PRORULE", :publication_date => {:is => issue.publication_date}}) %></li>
+                  <% end %>            
+                  <% if issue.rule_count > 0 %>
+                    <li><%= link_to "<span>#{issue.rule_count}</span> #{pluralize_without_count issue.rule_count, "Rule"}", entries_search_path(:conditions => {:type => "RULE", :publication_date => {:is => issue.publication_date}}) %></li>
+                  <% end %>            
+                  <% if issue.presidential_documents_count > 0 %>
+                    <li><%= link_to "<span>#{issue.presidential_documents_count}</span> #{pluralize_without_count issue.presidential_documents_count, "Presidential Document"}", entries_search_path(:conditions => {:type => "PRESDOCU", :publication_date => {:is => issue.publication_date}}) %></li>
+                  <% end -%>
+                  <% if issue.significant_entries_count > 0 %>
+                    <li><%= link_to "<span>#{issue.significant_entries_count}</span> #{pluralize_without_count issue.significant_entries_count, "Significant Document"}", entries_search_path(:conditions => {:significant => 1, :publication_date => {:is => issue.publication_date}}) %></li>
+                  <% end %>
+                <% end %>
+              </ul>
+            </div>
+            <div class="calendar_holder">
+              <h2>Explore</h2>
+              <div id="date_chooser">
+                <div id="calendar_wrapper">
+                  <%= render :esi => entries_by_month_path(Issue.current.publication_date, :current_date => Issue.current.publication_date.to_s(:iso)) %>
+                </div>
+              </div>
+            </div>
+            <div class="date_input_holder">
+              <h2>Go to a specific date</h2>
+              <% form_tag entries_date_search_path, :method => :get, :id => "date_selector" do %>
+                <label>Go to a specific date:</label>
+                <%= text_field_tag :search, '', :placeholder => 'MM/DD/YYYY' %>
+                <%= submit_tag 'Go' %>
+              <% end %>
+            </div>
+          </li>
+        </ul>
+      </div>
     </li>
     <li class="dropdown nav_search">
-      <a class="search">Search<span class="arrow"></span></a>
+      <a class="search top_nav">Search<span class="arrow"></span></a>
       <ul class="subnav search_list">
         <li id='articles-search'>
           <%= link_to 'Article Search', entries_search_path, :class => "article-search" %>
@@ -52,7 +162,7 @@
     </li>
     <%= render :esi => '/layout/navigation_page_list' %>
 
-    <li class="nav_blog" id='nav-blog'><a href="/blog" class="blog">Blog</a></li>
+    <li class="nav_blog" id='nav-blog'><a href="/blog" class="blog top_nav">Blog</a></li>
 
     <esi:include src="/my/special/navigation" />
 

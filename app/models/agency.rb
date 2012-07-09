@@ -38,6 +38,10 @@ class Agency < ApplicationModel
     end
   end
   
+  # this list excludes things like the dept of the arty, etc
+  # as they don't produce many FR articles
+  CABINET_LEVEL_AGENCY_IDS = [12, 54, 103, 126, 136, 221, 227, 228, 253, 268, 271, 476, 492, 497, 520]
+
   has_many :agency_assignments
   has_many :agencies_sections
   has_many :sections, :through => :agencies_sections
@@ -54,6 +58,7 @@ class Agency < ApplicationModel
   
   # grab cabinet level agencies (departments) as these are top producing
   named_scope :featured, :conditions => ['name LIKE ?', '%Department']
+  named_scope :cabinet_level, :conditions => ['id IN (?)', CABINET_LEVEL_AGENCY_IDS]
   
   has_attached_file :logo,
                     :styles => { :thumb => "100", :small => "140", :medium => "245", :large => "580", :full_size => "" },

@@ -74,15 +74,16 @@
   
   <% section_tag(:id => 'date_chooser') do %>
     <div id="calendar_wrapper">
-      <%= render :esi => entries_by_month_path(@publication_date, :current_date => @publication_date.to_s(:iso)) %>
+      <%= render :esi => entries_by_month_path(publication_date, :current_date => publication_date.to_s(:iso)) %>
     </div>
-    
+
     <% form_tag entries_date_search_path, :method => :get, :id => "date_selector" do %>
       <label>Go to a specific date:</label>
       <%= text_field_tag :search, '', :placeholder => 'MM/DD/YYYY' %>
       <%= submit_tag 'Go' %>
     <% end %>
   <% end -%>
+
   <div class='aside_box subscribe'> 
     <%= link_to 'Subscribe', new_subscription_path(:subscription => {:search_conditions => {}}), :class => 'subscription subscription_action' %>
     <%= add_template('subscription_modal', 'subscription-modal') %>

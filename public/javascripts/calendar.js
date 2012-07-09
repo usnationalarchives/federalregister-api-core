@@ -26,14 +26,17 @@ $(document).ready(function () {
     
     add_year_dropdown();
     
-    $('table.calendar .nav').live('click', function () {
+    $('table.calendar .nav').live('click', function (event) {
+        event.stopPropagation();
+        event.preventDefault();
         $('#calendar_wrapper').load($(this).attr('href'), '', add_year_dropdown);
-        return false;
     });
 
     $("#date_chooser").delegate('select', 'change', function(event) {
+      event.stopPropagation();
+      event.preventDefault();
+
       $('#calendar_wrapper').load('/articles/' + $(this).val() + '/' + $(".calendar").attr("data-calendar-month"),'', add_year_dropdown);
-      return false;
     });
 
         

@@ -71,7 +71,8 @@ NAV
   line-height: 30px;
   padding: 0 10px;
   }
-#navigation a:hover {
+#navigation a:hover,
+#navigation a.hover {
   color: #f77825;
   }
 #navigation .dropdown a {
@@ -124,12 +125,14 @@ NAV
   background: sprite-image('icons/header/sections-off.png', 10px, 9px, 50px) no-repeat;
   padding-left: 30px;
   }
-#navigation .sections:hover {
+#navigation .sections:hover,
+#navigation .sections.hover {
   background: sprite-image('icons/header/sections-hover.png', 10px, 9px, 50px) no-repeat;
   } 
 #navigation .browse {
   background: sprite-image('icons/header/browse-off.png', 10px, 10px, 50px) no-repeat;
   }
+#navigation .browse.hover 
 #navigation .browse:hover {
   background: sprite-image('icons/header/browse-hover.png', 10px, 10px, 50px) no-repeat;
   }
@@ -162,70 +165,72 @@ NAV
   background: sprite-image('icons/header/blog-hover.png', 10px, 10px, 50px) no-repeat;
   }
 #navigation .agencies {
-  background: sprite-image('icons/header/agencies-off.png', 12px, 7px, 50px) no-repeat;
+  background: sprite-image('icons/header/agencies-off.png', 12px, 21px, 50px) no-repeat;
   }
+#navigation .agencies.hover,
 #navigation .agencies:hover {
-  background: sprite-image('icons/header/agencies-hover.png', 12px, 7px, 50px) no-repeat;
+  background: sprite-image('icons/header/agencies-hover.png', 12px, 21px, 50px) no-repeat;
   }
 #navigation .topics {
-  background: sprite-image('icons/header/topics-off.png', 10px, 5px, 50px) no-repeat;
+  background: sprite-image('icons/header/topics-off.png', 10px, 19px, 50px) no-repeat;
   }
 #navigation .topics:hover {
-  background: sprite-image('icons/header/topics-hover.png', 10px, 5px, 50px) no-repeat;
+  background: sprite-image('icons/header/topics-hover.png', 10px, 19px, 50px) no-repeat;
   }
 #navigation .date {
-  background: sprite-image('icons/header/date-off.png', 11px, 5px, 50px) no-repeat;
+  background: sprite-image('icons/header/date-off.png', 11px, 19px, 50px) no-repeat;
   }
 #navigation .date:hover {
-  background: sprite-image('icons/header/date-hover.png', 11px, 5px, 50px) no-repeat;
+  background: sprite-image('icons/header/date-hover.png', 11px, 19px, 50px) no-repeat;
   }
 #navigation .public_inspection {
-  background: sprite-image('icons/header/public-inspection-off.png', 9px, 3px, 50px) no-repeat;
+  background: sprite-image('icons/header/public-inspection-off.png', 9px, 17px, 50px) no-repeat;
   }
 #navigation .public_inspection:hover {
-  background: sprite-image('icons/header/public-inspection-hover.png', 9px, 3px, 50px) no-repeat;
+  background: sprite-image('icons/header/public-inspection-hover.png', 9px, 17px, 50px) no-repeat;
   }
 #navigation .executive_orders {
-  background: sprite-image('icons/header/executive-orders-off.png', 10px, 6px, 50px) no-repeat;
+  background: sprite-image('icons/header/executive-orders-off.png', 10px, 20px, 50px) no-repeat;
   }
 #navigation .executive_orders:hover {
-  background: sprite-image('icons/header/executive-orders-hover.png', 10px, 6px, 50px) no-repeat;
+  background: sprite-image('icons/header/executive-orders-hover.png', 10px, 20px, 50px) no-repeat;
   }
 #navigation .money {
-  background: sprite-image('icons/header/money-off.png', 10px, 5px, 50px) no-repeat;
+  background: sprite-image('icons/header/money-off.png', 10px, 20px, 50px) no-repeat;
   }
-#navigation .money:hover {
-  background: sprite-image('icons/header/money-hover.png', 10px, 5px, 50px) no-repeat;
+#navigation .money:hover,
+#navigation .money.hover {
+  background: sprite-image('icons/header/money-hover.png', 10px, 20px, 50px) no-repeat;
   }
 #navigation .environment {
-  background: sprite-image('icons/header/environment-off.png', 10px, 5px, 50px) no-repeat;
+  background: sprite-image('icons/header/environment-off.png', 10px, 20px, 50px) no-repeat;
   }
 #navigation .environment:hover {
-  background: sprite-image('icons/header/environment-hover.png', 10px, 5px, 50px) no-repeat;
+  background: sprite-image('icons/header/environment-hover.png', 10px, 20px, 50px) no-repeat;
   }
 #navigation .world {
-  background: sprite-image('icons/header/world-off.png', 10px, 5px, 50px) no-repeat;
+  background: sprite-image('icons/header/world-off.png', 10px, 20px, 50px) no-repeat;
   }
 #navigation .world:hover {
-  background: sprite-image('icons/header/world-hover.png', 10px, 5px, 50px) no-repeat;
+  background: sprite-image('icons/header/world-hover.png', 10px, 20px, 50px) no-repeat;
   }
 #navigation .science-and-technology {
-  background: sprite-image('icons/header/science-off.png', 10px, 5px, 50px) no-repeat;
+  background: sprite-image('icons/header/science-off.png', 10px, 20px, 50px) no-repeat;
   }
 #navigation .science-and-technology:hover {
-  background: sprite-image('icons/header/science-hover.png', 10px, 5px, 50px) no-repeat;
+  background: sprite-image('icons/header/science-hover.png', 10px, 20px, 50px) no-repeat;
   }
 #navigation .business-and-industry {
-  background: sprite-image('icons/header/industry-off.png', 10px, 5px, 50px) no-repeat;
+  background: sprite-image('icons/header/industry-off.png', 10px, 20px, 50px) no-repeat;
   }
 #navigation .business-and-industry:hover {
-  background: sprite-image('icons/header/industry-hover.png', 10px, 5px, 50px) no-repeat;
+  background: sprite-image('icons/header/industry-hover.png', 10px, 20px, 50px) no-repeat;
   }
 #navigation .health-and-public-welfare {
-  background: sprite-image('icons/header/health-off.png', 14px, 5px, 50px) no-repeat;
+  background: sprite-image('icons/header/health-off.png', 14px, 20px, 50px) no-repeat;
   }
 #navigation .health-and-public-welfare:hover {
-  background: sprite-image('icons/header/health-hover.png', 14px, 5px, 50px) no-repeat;
+  background: sprite-image('icons/header/health-hover.png', 14px, 20px, 50px) no-repeat;
   }
 #navigation .article-search {
   background: sprite-image('icons/header/article-off.png', 12px, 7px, 50px) no-repeat;
@@ -310,7 +315,8 @@ NAV DROPDOWN
   color: #5f6061;
   line-height: 30px;
   }
-#navigation .subnav a:hover {
+#navigation .subnav a:hover,
+#navigation .subnav a.hover {
   background-color: #e3e7e8;
   border-top-color: #fff;
   border-bottom-color: #fff;
@@ -319,6 +325,273 @@ NAV DROPDOWN
 #navigation .subnav li:last-child a {
   border-bottom: none;
   }
+
+
+/******************************
+
+SUBNAV 
+
+******************************/
+#navigation .previewable .subnav { 
+  width: 605px;
+  margin-left: 21px;
+  }
+#navigation .previewable .subnav ul { 
+  margin: 0;
+  display: inline-block;
+  }
+#navigation .previewable .subnav .left_column { width: 190px; }
+#navigation .previewable .subnav .left_column li {
+  width: 194px;
+  height: 57px;
+  vertical-align: middle;
+  }
+#navigation .previewable .subnav .left_column li a { 
+  border: none; 
+  padding-top: 13px;
+  height: 45px;
+  }
+
+#navigation .previewable .subnav .right_column {
+  border-left: 1px solid #E3E7E8;
+  vertical-align: top;
+  width: 405px;
+  }
+#navigation .previewable .subnav .right_column li { border: none; }
+#navigation .previewable .subnav .right_column li.preview { display: none; }
+#navigation .previewable .subnav .right_column li#money_preview { display: list-item; }
+
+#navigation .preview a:hover {
+  background: none;
+  color: inherit;
+  }
+
+/* SECTION SUGGESTED SEARCHES */
+#navigation .preview .suggested_searches { 
+  margin-left: 10px;
+  margin-bottom: 10px;
+  height: 100px;
+  }
+#navigation .preview .row { margin-bottom: 0; }
+#navigation .preview .suggested_search {
+  float: left;
+  width: 190px;
+  }
+#navigation .preview .suggested_search h1 { 
+  line-height: 10px;
+  width: auto;
+  }
+#navigation .preview .suggested_search a {
+  color: #015BA2;
+  padding: 0;
+  font-size: 12px;
+  line-height: 16px;
+  }
+
+/* SECTION CAROUSEL */
+#navigation .preview #carousel_wrapper,
+#navigation .preview #carousel_scroller li,
+#navigation .preview  .carousel_rounded_box {
+  width: 400px;
+  height: 175px;
+  border: none;
+  }
+#navigation .preview #carousel_wrapper {
+  margin-top: 5px;
+  margin-left: 4px;
+  }
+#navigation .preview  .carousel_rounded_box {
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -o-border-radius: 10px;
+  border-radius: 10px;
+  }
+#navigation .preview .carousel_rounded_box img {
+  width: 400px;
+  height: 175px;
+  }
+#navigation .preview #carousel_scroller li div.bg,
+#navigation .preview #carousel_scroller li div.text_wrapper {
+  top: 9px;
+  width: 100%;
+  font-size: 12px;
+  padding: 5px 10px;
+  }
+#navigation .preview #carousel_scroller li div.text_wrapper h2 { width: 95%; }
+#navigation .preview #carousel_scroller li div.text_wrapper a {
+  line-height: 16px;
+  font-size: 12px;
+  color: #FFF;
+  border: none;
+  display: inline-block;
+  padding: 0;
+  }
+#navigation .preview #carousel_scroller li div.text_wrapper a { font-size: 14px; }
+#navigation .preview #carousel_scroller li div.text_wrapper .date { 
+  background: none;
+  padding-left: 0;
+  }
+
+#navigation .preview  #carousel_scroller li div.attribution,
+#navigation .preview  #carousel_scroller li div.attribution.bg {
+  top: auto;
+  bottom: 10px;
+  font-size: 11px;
+  width: auto;
+  line-height: 10px;
+  }
+#navigation .preview  #carousel_scroller li div.attribution.bg { padding: 1px 2px; }
+#navigation .preview  #carousel_scroller li div.attribution a { 
+  font-size: 11px;
+  line-height: 14px;
+  border: none;
+  }
+#navigation .preview  #carousel_scroller li p.metadata,
+#navigation .preview  #carousel_scroller li p.summary { display: none; }
+
+/* SECTION DAILY STATS */
+#navigation .preview .daily_stats {
+  border-top: 1px solid #EEE;
+  font-weight: bold;
+  color: #C3C3C3;
+  margin-bottom: 3px;
+  }
+#navigation .preview .daily_stats li {
+  padding-top: 5px;
+  width: 200px;
+  display: inline-block;
+  height: 25px;
+  }
+#navigation .preview .daily_stats a {
+  font-weight: bold;
+  color: #C3C3C3;
+  }
+#navigation .preview .daily_stats .count {
+  top: -3px;
+  position: relative;
+  padding-right: 5px;
+  width: 30px;
+  font-size: 23px;
+  text-align: right;
+  }
+#navigation .preview .daily_stats .details {
+  line-height: 11px;
+  display: inline-block;
+  width: 114px;
+  font-size: 10px;
+  text-transform: uppercase;
+  }
+
+/* BROWSE AGENCIES */
+#agencies-browse-preview ol.cabinet_agencies { 
+  margin-left: 10px;
+  margin-bottom: 10px;
+  }
+#agencies-browse-preview ol.cabinet_agencies li {
+  width: 185px;
+  display: inline-block;
+  }
+#agencies-browse-preview ol.cabinet_agencies li h2 {
+  margin-bottom: 0px;
+  margin-left: 5px;
+  padding-left: 5px;
+  text-transform: uppercase;
+  margin-top: 10px;
+  border-bottom: 1px solid #979797;
+  font-size: 1.1em;
+  color: #979797;
+  }
+#navigation ol.cabinet_agencies li h2 a {
+  color: #015BA2;
+  font-size: 12px;
+  padding: 0;
+  line-height: 14px;
+  }
+#navigation ol.cabinet_agencies li h2 a:hover { color: #B88659; }
+
+#agencies-browse-preview ol.cabinet_agencies li .document_counts { margin-left: 10px; }
+#agencies-browse-preview ol.cabinet_agencies li .document_counts .count {
+  top: 1px;
+  position: relative;
+  padding-right: 5px;
+  width: auto;
+  font-size: 13px;
+  text-align: right;
+  font-weight: bold;
+  }
+#agencies-browse-preview ol.cabinet_agencies li .document_counts .details {
+  line-height: 11px;
+  display: inline-block;
+  width: 126px;
+  font-size: 10px;
+  text-transform: uppercase;
+  }
+
+/* BROWSE DATES */
+.previewable .fr_stats h2,
+.previewable .calendar_holder h2,
+.previewable .date_input_holder h2 {
+  margin-left: 5px;
+  padding-left: 5px;
+  text-transform: uppercase;
+  margin-top: 10px;
+  border-bottom: 1px solid #979797;
+  font-size: 1.1em;
+  color: #979797;
+  }
+.previewable .page_count {
+  color: #5F6061;
+  float: right;
+  font-size: 13px;
+  }
+.previewable .right_column .fr_stats .statistics li {
+  font-size: 15px;
+  color: #5F6061;
+  font-weight: bold;
+  line-height: 20px;
+  display: inline-block;
+  }
+#navigation .previewable .fr_stats .statistics a { 
+  line-height: 12px;
+  color: #015BA2;
+  }
+#navigation .previewable .fr_stats .statistics a:hover { 
+  background: none;
+  color: #B88659;
+  }
+
+#navigation .previewable #date_chooser { margin-left: 10px; }
+
+#navigation .previewable .calendar_holder,
+#navigation .previewable .date_input_holder {
+  display: inline-block;
+  width: 200px;
+  margin-bottom: 12px;
+  }
+
+#navigation .previewable .calendar_holder table { margin-bottom: 10px; }
+#navigation .previewable table.calendar { width: 190px; }
+#navigation .previewable table.calendar a { 
+  line-height: 20px;
+  padding: 0;
+  font-weight: normal;
+  }
+#navigation .previewable table.calendar tr.calendar_nav th.cal_prev a,
+#navigation .previewable table.calendar tr.calendar_nav th.cal_next a,
+#navigation .previewable table.calendar tr.calendar_nav th.cal_prev,
+#navigation .previewable table.calendar tr.calendar_nav th.cal_next { 
+  color: #5F6061;
+  font-weight: bold;
+  font-size: 12px;
+  border: none;
+  line-height: 18px;
+  }
+#navigation .previewable table.calendar tr.calendar_nav a { color: #015BA2; }
+#navigation .previewable table.calendar tr.calendar_nav a:hover { color: #B88659; }
+
+#navigation .previewable .date_input_holder form { margin-left: 15px }
+#navigation .previewable .date_input_holder input#search { border: 1px solid #979797; }
+
 
 /******************************
 

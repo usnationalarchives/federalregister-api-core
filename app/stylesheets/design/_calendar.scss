@@ -55,3 +55,11 @@
 .calendar .otherMonth {
   background: #eee;
   }  
+
+.calendar th.monthName select {
+  margin-left: 10px;
+  }
+.calendar tr.calendar_nav th.cal_prev,
+.calendar tr.calendar_nav th.cal_next {
+  background: none;
+  }

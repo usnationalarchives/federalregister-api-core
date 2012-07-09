@@ -107,11 +107,11 @@
       <%= render :partial => "unified_agena" %>
     
       <div id="fulltext_content_area">
-        <% if RAILS_ENV == 'development' %>
-          <%= render :partial => 'full_text', :locals => {:entry => @entry} %>
-        <% else %>
-        <%= render :esi => entry_full_text_path(@entry) %>
-      <% end %>
+        <%# if RAILS_ENV == 'development' %>
+          <%#= render :partial => 'full_text', :locals => {:entry => @entry} %>
+        <%# else %>
+          <%= render :esi => entry_full_text_path(@entry) %>
+        <%# end %>
       </div> <!-- end fulltext_content_area area -->  
     
     <% end %>
