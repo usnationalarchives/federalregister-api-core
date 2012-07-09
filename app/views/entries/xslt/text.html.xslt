@@ -114,6 +114,11 @@
   </xsl:template>
   
   <xsl:template match="SIG">
+    <xsl:value-of disable-output-escaping="yes" select="'&lt;/div&gt;'" />
+    <div class="header_column">
+      <h2 class="signature_header"></h2>
+    </div>
+    <xsl:value-of disable-output-escaping="yes" select="'&lt;div class=&quot;body_column&quot; &gt;'" />
     <div class="signature">
       <xsl:apply-templates />
     </div>
