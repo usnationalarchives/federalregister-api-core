@@ -4,6 +4,19 @@ module XsltHelper
     xslt.transform(Nokogiri::XML(xml), options.to_a.flatten)
   end
 
+  def handle_amdpar(xml)
+    doc = Nokogiri::HTML::DocumentFragment.parse(xml)
+    doc.css('p.amendment_part').each do |amdpar_node|
+      match = amdpar_node.content.strip.match(/^(\d+\.) (.*)/)
+
+      if match
+        amdpar_node.children = %Q{<span class="amendment_part_number">#{match[1]}</span> <span class="amendment_part_text">#{match[2]}</span>}
+      end
+    end
+
+    doc.to_html.to_s
+  end
+
   def handle_lstsub(xml)
     @known_topics ||= TopicName.find_as_hash([<<-SQL])
       SELECT topic_names.name, topics.slug
