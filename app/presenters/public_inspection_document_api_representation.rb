@@ -35,6 +35,7 @@ class PublicInspectionDocumentApiRepresentation < ApiRepresentation
   field(:pdf_updated_at)
   field(:pdf_url, :select => :document_number) {|document| document.pdf.url(:with_banner, false)}
   field(:title)
+  field(:toc_doc)
   field(:toc_subject)
 
   def self.default_index_fields_json
