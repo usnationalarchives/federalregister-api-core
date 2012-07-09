@@ -217,4 +217,13 @@
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
+
+  <xsl:template match="P[ancestor::LSTSUB]">
+    <div class="subject_list">
+      <ul>
+        <li><xsl:apply-templates /></li>
+      </ul>
+    </div>
+  </xsl:template>
+
 </xsl:stylesheet>
