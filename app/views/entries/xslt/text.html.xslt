@@ -112,6 +112,13 @@
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
+
+  <xsl:template match="AUTH">
+    <xsl:value-of disable-output-escaping="yes" select="'&lt;/div&gt;'" />
+    <xsl:value-of disable-output-escaping="yes" select="'&lt;div class=&quot;body_column authority&quot; &gt;'" />
+    <xsl:apply-templates />
+  </xsl:template>
+
   
   <xsl:template match="SIG">
     <xsl:value-of disable-output-escaping="yes" select="'&lt;/div&gt;'" />
