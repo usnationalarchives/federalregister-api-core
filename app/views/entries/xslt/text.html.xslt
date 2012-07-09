@@ -78,7 +78,7 @@
     </p>
   </xsl:template>
   
-  <xsl:template match="P | FP | AMDPAR">
+  <xsl:template match="P | FP">
     <xsl:choose>
       <xsl:when test="starts-with(text(),'&#x2022;')">
         <xsl:if test="not(preceding-sibling::*[name() != 'PRTPAGE'][1][starts-with(text(),'&#x2022;')])">
@@ -229,4 +229,17 @@
     </div>
   </xsl:template>
 
+  <xsl:template match="AMDPAR">
+    <p class="amendment_part">
+      <xsl:attribute name="id">
+        <xsl:call-template name="paragraph_id" />
+      </xsl:attribute>
+        
+      <xsl:attribute name="data-page">
+        <xsl:call-template name="current_page" />
+      </xsl:attribute>
+
+      <xsl:apply-templates />
+    </p>
+  </xsl:template>
 </xsl:stylesheet>
