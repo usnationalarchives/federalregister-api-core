@@ -6,6 +6,7 @@
         'volume' => entry.volume.to_s,
         'extracted_graphics' => "'|" + entry.graphics.extracted.map(&:identifier).join('|') + "|'"
       }.to_a.flatten).to_s
+      html = handle_lstsub(html)
      add_citation_links(auto_link(html, :html => { :class => 'external wrap' }), :date => entry.publication_date) %>
   <% elsif entry.full_text %>
     <h3>Full text</h3>

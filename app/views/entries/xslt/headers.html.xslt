@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
   
-  <xsl:template match="HD[@SOURCE='HED' or @SOURCE='HD1' or @SOURCE = 'HD2' or @SOURCE = 'HD3' or @SOURCE = 'HD4'][not(ancestor::NOTE)][not(ancestor::AUTH)]">
+  <xsl:template match="HD[@SOURCE='HED' or @SOURCE='HD1' or @SOURCE = 'HD2' or @SOURCE = 'HD3' or @SOURCE = 'HD4']">
     <xsl:variable name="level">
       <xsl:call-template name="header_level">
         <xsl:with-param name="source" select="@SOURCE"/>
@@ -32,6 +32,14 @@
       <xsl:apply-templates />
     </h3>
   </xsl:template>
+
+  <xsl:template match="HD[ancestor::LSTSUB]">
+    <xsl:call-template name="manual_header">
+      <xsl:with-param name="name" select="text()"/>
+      <xsl:with-param name="level" select="2"/>
+      <xsl:with-param name="class" select="'subject_list_header'"/>
+    </xsl:call-template>
+  </xsl:template>
   
   <xsl:template name="header">
     <xsl:variable name="level">
@@ -57,19 +65,30 @@
   
   <xsl:template name="manual_header">
     <xsl:param name="name"/>
-    <xsl:param name="id"/>
-    <xsl:param name="back_to_top"/>
+    <xsl:param name="level" value="1"/>
+    <xsl:param name="id">
+      <xsl:call-template name="header_id" />
+    </xsl:param>
+    <xsl:param name="back_to_top" select="1"/>
+    <xsl:param name="class" select="''"/>
     <xsl:value-of disable-output-escaping="yes" select="'&lt;/div&gt;'"/>
     <div class="header_column">
-      <h1>
+      <xsl:element name="{concat('h', $level)}">
         <xsl:attribute name="id">
           <xsl:value-of select="$id"/>
         </xsl:attribute>
+
+        <xsl:if test="$class">
+          <xsl:attribute name="class">
+            <xsl:value-of select="$class"/>
+          </xsl:attribute>
+        </xsl:if>
+
         <xsl:value-of select="$name"/>
         <xsl:if test="$back_to_top">
           <xsl:call-template name="back_to_top"/>
         </xsl:if>
-      </h1>
+      </xsl:element>
     </div>
     <xsl:value-of disable-output-escaping="yes" select="'&lt;div class=&quot;body_column&quot; &gt;'"/>
   </xsl:template>
