@@ -3,7 +3,7 @@ $(document).ready(function () {
         var th = $('table.calendar .monthName');
 
         // only create/append the year select if there isn't one
-        if ( th.children('select').length === 0 ) {
+        if ( th.children('select').length === 0 && ! th.closest('table.calendar').hasClass('no_select') ) {
           var select_list = $("<select />");
           var today = new Date();
           var start_year = parseInt( $('table.calendar').data('year-start'), 10 );
@@ -29,7 +29,13 @@ $(document).ready(function () {
     $('table.calendar .nav').live('click', function (event) {
         event.stopPropagation();
         event.preventDefault();
-        $('#calendar_wrapper').load($(this).attr('href'), '', add_year_dropdown);
+        
+        href = $(this).attr('href');
+        if( $(this).closest('table.calendar').hasClass('no_select') ) {
+          href = href + '?table_class=no_select';
+        }
+        console.log( $(this), $(this).closest('table.calendar'), href );
+        $('#calendar_wrapper').load(href, '', add_year_dropdown);
     });
 
     $("#date_chooser").delegate('select', 'change', function(event) {
