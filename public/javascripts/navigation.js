@@ -85,4 +85,46 @@ $(document).ready( function() {
         }
       });
     });
+
+    $("input[data-autocomplete]#topic-search").each(function(){
+      var input = $(this);
+      input.autocomplete({
+      minLength: 3,
+      source: function( request, response ){
+        var elem = input;
+        $.ajax({
+          url: "/topics/search?term=" + request.term,
+          success: function(data){
+            $(elem).removeClass("loading");
+            response( 
+              $.map( data, function( item ) {
+                return {
+                  label: item.name,
+                  value: item.name,
+                  id: item.id,
+                  url: item.url
+                };
+              })
+            );
+            $('.ui-autocomplete.ui-menu').css({'padding': '5px 0px', 'box-shadow': '#888 0 3px 5px'});
+            $('.ui-autocomplete.ui-menu a').css({'padding': '2px 10px', 'font-size': '14px', 'font-weight': 'bold'});
+          } // end success
+        }); // end ajax
+      },
+      select: function( event, ui ) {
+        window.location.href = ui.item.url;
+        $(this).data('clear-value', 1);
+      },
+      close: function() {
+        var input = $(this);
+        if (input.data('clear-value')) {
+           input.val('');
+           input.data('clear-value',0);
+        }
+      },
+      search: function( event, ui) {
+        $(this).addClass("loading");
+      }
+    });
+  });
 });

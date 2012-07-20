@@ -119,7 +119,48 @@
               </table>
             </div>
           </li>
+          <li id="topics-browse-preview" class="preview">
+            <div class="topic_finder">
+              <h2>Go to a Specific Topic</h2>
+              <% form_tag entries_date_search_path, :method => :get, :id => "date_selector" do %>
+                <label>Go to a specific topic:</label>
+                <input id="topic-search" placeholder="Antidumping" data-autocomplete="autocomplete" />
               <% end %>
+            </div>
+            <div class="topic_browse">
+              <table class="recent_topics default">
+                <thead>
+                  <tr>
+                    <th><h2>Browse Topics</h2></th>
+                    <th class="past_7_days" data-tooltip="Related Articles Published in the Last 7 Days"></th>
+                    <th class="recently_opened" data-tooltip="Related Articles with Comment Periods Opened in the Last 14 Days"></th>
+                    <th class="closing_soon" data-tooltip="Related Articles with Comment Periods Closing in the Next 7 Days"></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% Topic.without_routine.top_by_article_count(10).in_last_days(30).each do |topic| %>
+                    <tr>
+                      <td class="topic_name">
+                        <%= link_to topic.name, topic_path(topic) %>
+                      </td>
+                      <td class="count_7_days">
+                        <%= topic.entries_count %>
+                      </td>
+                      <% conditions = {:publication_date => {:gte => Issue.current.publication_date - 2.weeks}, :comment_date => {:gte => Date.current} , :topic_ids => [topic.id]} %>
+                      <% count = EntrySearch.new(:conditions => conditions).count %>
+                      <td class="comments_recently_opened">
+                        <%= link_to count, entries_search_path(:conditions => conditions, :utm_source => 'navigation', :utm_medium => 'dropdown', :utm_content => 'topics_opened_recently') %>
+                      </td>
+                      <% conditions = {:comment_date => {:gte => Date.current, :lte => 1.week.from_now.to_date}, :topic_ids => [topic.id]} %>
+                      <% count = EntrySearch.new(:conditions => conditions).count %>
+                      <td class="comments_closing_soon">
+                        <%= link_to count, entries_search_path(:conditions => conditions, :utm_source => 'navigation', :utm_medium => 'dropdown', :utm_content => 'topics_closing_soon') %>
+                      </td>
+                    </tr>
+                  <% end %>
+                </tbody>
+              </table>
+            </div>
           </li>
           <li id="current-article-browse-preview" class="preview">
             <div class="fr_stats">

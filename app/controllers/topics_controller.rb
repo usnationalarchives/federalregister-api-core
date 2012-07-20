@@ -3,7 +3,12 @@ class TopicsController < ApplicationController
     cache_for 1.day
     @topics = Topic.all(:order => "topics.name", :conditions => "topics.entries_count > 0")
   end
-  
+
+  def search
+    topics = Topic.named_approximately(params[:term]).limit(10)
+    render :json => topics.map{|t| {:id => t.id, :name => t.name, :url => topic_url(t)} }
+  end
+
   def show
     cache_for 1.day
     @topic = Topic.find_by_slug!(params[:id])
