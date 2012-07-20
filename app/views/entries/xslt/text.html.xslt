@@ -115,8 +115,10 @@
 
   <xsl:template match="AUTH">
     <xsl:value-of disable-output-escaping="yes" select="'&lt;/div&gt;'" />
-    <xsl:value-of disable-output-escaping="yes" select="'&lt;div class=&quot;body_column authority&quot; &gt;'" />
-    <xsl:apply-templates />
+    <div class="body_column authority">
+      <xsl:apply-templates />
+    </div>
+    <xsl:value-of disable-output-escaping="yes" select="'&lt;div class=&quot;body_column&quot; &gt;'" />
   </xsl:template>
 
   
@@ -229,8 +231,8 @@
     </div>
   </xsl:template>
 
-  <xsl:template match="REGTEXT">
-    <xsl:if test="not(preceding-sibling::*[1][name() = 'REGTEXT'])"> 
+  <xsl:template match="REGTEXT|PART[not(ancestor::REGTEXT)]">
+    <xsl:if test="not(preceding-sibling::*[1][name() = 'REGTEXT' or name() = 'PART'])"> 
       <xsl:value-of disable-output-escaping="yes" select="'&lt;/div&gt;'" />
       <xsl:value-of disable-output-escaping="yes" select="'&lt;div class=&quot;reg_text&quot;&gt;'" />
         <div class="border"></div>
@@ -242,7 +244,7 @@
         <xsl:apply-templates />
       <xsl:value-of disable-output-escaping="yes" select="'&lt;/div&gt;'" />
 
-    <xsl:if test="not(following-sibling::*[1][name() = 'REGTEXT'])"> 
+    <xsl:if test="not(following-sibling::*[1][name() = 'REGTEXT' or name() = 'PART'])"> 
         <div class="border"></div>
         <div class="border_icon bottom">end regulatory text</div>
         <div class="border"></div>
