@@ -9,6 +9,9 @@
   text-align: center;
   vertical-align: middle;
   }
+.calendar thead tr.calendar_nav {
+  height: 18px;
+  }
 .calendar .monthName {
   font-size: 1.3em;
   }
@@ -37,7 +40,7 @@
   cursor: pointer;
   }   
 .calendar .holiday {
-  
+  background: lighten(#B3C2CF, 15%);
   }   
 .calendar .published a {
   background: $pale_green;
