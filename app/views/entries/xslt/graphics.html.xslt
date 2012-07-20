@@ -20,6 +20,9 @@
                   <xsl:with-param name="size" select="'large'" />
                 </xsl:call-template>
               </xsl:attribute>
+              <xsl:attribute name="width">
+                <xsl:value-of select="number(parent::GPH/@SPAN)*153" />
+              </xsl:attribute>
             </img>
           </a>
         </p>
