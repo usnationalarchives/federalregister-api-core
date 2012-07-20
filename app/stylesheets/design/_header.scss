@@ -366,6 +366,88 @@ SUBNAV
   color: inherit;
   }
 
+#navigation .previewable .right_column li > h2,
+.previewable .right_column table.default h2,
+.previewable .agency_finder h2,
+.previewable .topic_finder h2 {
+  margin-left: 5px;
+  padding-left: 5px;
+  text-transform: uppercase;
+  margin-top: 10px;
+  border-bottom: 1px solid #979797;
+  font-size: 1.1em;
+  color: #979797;
+  word-spacing: 0.13em;
+  }
+.previewable .right_column table.default h2 { 
+  padding-left: 0;
+  margin-bottom: 0;
+  border-bottom: none;
+  }
+
+.previewable .right_column table.default {
+  width: 390px;
+  margin: 10px 0 10px 5px;
+  }
+
+.previewable .right_column table.default tr,
+.previewable .right_column table.default th,
+.previewable .right_column table.default td { padding: 0; }
+
+.previewable .right_column table.default th { border-bottom: 1px solid #979797; }
+
+.previewable .right_column table.default th.past_7_days,
+.previewable .right_column table.default th.recently_opened,
+.previewable .right_column table.default th.closing_soon {
+  width: 40px;
+  height: 23px;
+  }
+
+.previewable .right_column table.default th.past_7_days {
+  background: sprite-image('icons/icon_last_7_days.png', 11px, 2px, 50px) no-repeat;
+  }
+.previewable .right_column table.default th.recently_opened {
+  background: sprite-image('icons/icon_comments_opened.png', 12px, 2px, 50px) no-repeat;
+  }
+.previewable .right_column table.default th.closing_soon {
+  background: sprite-image('icons/icon_comments_closing.png', 12px, 2px, 50px) no-repeat;
+  }
+
+.previewable .right_column table.default .count_7_days,
+.previewable .right_column table.default .comments_recently_opened,
+.previewable .right_column table.default .comments_closing_soon { text-align: center; }
+
+
+#navigation .previewable .right_column table.default td:first-child {
+  padding: 2px 0 2px 10px;
+  }
+#navigation .previewable .right_column table.default a {
+  display: inline;
+  border-bottom: none;
+  border-top: none;
+  font-size: 12px;
+  padding: 0;
+  line-height: 14px;
+  }
+#navigation .previewable .right_column table.default td:first-child a { color: #015BA2; }
+#navigation .previewable .right_column table.default td:first-child a:hover,
+#navigation .previewable .right_column table.default a:hover { color: #B88659; }
+
+.previewable .right_column form { 
+  margin-left: 15px;
+  overflow: hidden;
+  }
+#navigation .previewable .right_column input#search { 
+  border: 1px solid #979797;
+  width: 370px;
+  height: 18px;
+  padding-left: 10px;
+  }
+.previewable .right_column input.loading {
+  background: white url('/images/ajax-loader.gif?1292020484') 332px 2px no-repeat;
+  }
+
+
 /* SECTION SUGGESTED SEARCHES */
 #navigation .preview .suggested_searches { 
   margin-left: 10px;
@@ -483,49 +565,8 @@ SUBNAV
   }
 
 /* BROWSE AGENCIES */
-#agencies-browse-preview ol.cabinet_agencies { 
-  margin-left: 10px;
-  margin-bottom: 10px;
-  }
-#agencies-browse-preview ol.cabinet_agencies li {
-  width: 185px;
-  display: inline-block;
-  }
-#agencies-browse-preview ol.cabinet_agencies li h2 {
-  margin-bottom: 0px;
-  margin-left: 5px;
-  padding-left: 5px;
-  text-transform: uppercase;
-  margin-top: 10px;
-  border-bottom: 1px solid #979797;
-  font-size: 1.1em;
-  color: #979797;
-  }
-#navigation ol.cabinet_agencies li h2 a {
-  color: #015BA2;
-  font-size: 12px;
-  padding: 0;
-  line-height: 14px;
-  }
-#navigation ol.cabinet_agencies li h2 a:hover { color: #B88659; }
+/* most styles for browse agencies are generic and under the subnav section above
 
-#agencies-browse-preview ol.cabinet_agencies li .document_counts { margin-left: 10px; }
-#agencies-browse-preview ol.cabinet_agencies li .document_counts .count {
-  top: 1px;
-  position: relative;
-  padding-right: 5px;
-  width: auto;
-  font-size: 13px;
-  text-align: right;
-  font-weight: bold;
-  }
-#agencies-browse-preview ol.cabinet_agencies li .document_counts .details {
-  line-height: 11px;
-  display: inline-block;
-  width: 126px;
-  font-size: 10px;
-  text-transform: uppercase;
-  }
 
 /* BROWSE DATES */
 .previewable .fr_stats h2,

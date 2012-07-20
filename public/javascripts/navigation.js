@@ -13,6 +13,7 @@ $(document).ready( function() {
   });
   $('#navigation .subnav').bind('mouseleave', function() {
     $(this).closest('.dropdown').find('a.top_nav').removeClass('hover');
+    $('.ui-autocomplete.ui-menu').hide();
   });
 
   $('#navigation .nav_sections a.sections').bind('mouseenter', function() {
@@ -39,5 +40,49 @@ $(document).ready( function() {
 
   $('#navigation .subnav .left_column li').bind('mouseleave', function() {
     $(this).find('a').removeClass('hover');
+    $('.ui-autocomplete.ui-menu').hide();
   });
+
+
+  $("input[data-autocomplete]#agency-search").each(function(){
+        var input = $(this);
+        input.autocomplete({
+        minLength: 3,
+        source: function( request, response ){
+          var elem = input;
+          $.ajax({
+            url: "/agencies/search?term=" + request.term,
+            success: function(data){
+              $(elem).removeClass("loading");
+              response( 
+                $.map( data, function( item ) {
+                  return {
+                    label: item.name,
+                    value: item.name,
+                    id: item.id,
+                    url: item.url
+                  };
+                })
+              );
+              $('.ui-autocomplete.ui-menu').css({'padding': '5px 0px', 'box-shadow': '#888 0 3px 5px'});
+              $('.ui-autocomplete.ui-menu a').css({'padding': '2px 10px', 'font-size': '14px', 'font-weight': 'bold'});
+            } // end success
+          }); // end ajax
+        },
+        select: function( event, ui ) {
+          window.location.href = ui.item.url;
+          $(this).data('clear-value', 1);
+        },
+        close: function() {
+          var input = $(this);
+          if (input.data('clear-value')) {
+             input.val('');
+             input.data('clear-value',0);
+          }
+        },
+        search: function( event, ui) {
+          $(this).addClass("loading");
+        }
+      });
+    });
 });

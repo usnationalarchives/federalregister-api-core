@@ -2,7 +2,13 @@ $(document).ready(function(){
   
   /* ALL PAGES */
   $('.subscription.tipsy').tipsy({gravity: 'se', offset: 3, delayIn: 100, fade: true});
-  
+ 
+  /* NAVIGATION */
+  $('#agencies-browse-preview .past_7_days, #agencies-browse-preview .recently_opened, #agencies-browse-preview .closing_soon').each( function() {
+    $(this).tipsy({ gravity: 's', delayIn: 100, fade: true, offset: 0,
+                    title: function() { return $(this).data('tooltip');}
+                  });
+  });
 
   /* CANNED SEARCH PAGE */
   $('#canned_searches .doc_notice.tipsy').tipsy( {gravity: 'e', fallback: "Notice",                delayIn: 100, fade: true, offset: -4});
