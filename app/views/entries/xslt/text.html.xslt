@@ -221,6 +221,9 @@
     </xsl:choose>
   </xsl:template>
 
+  <xsl:template match="CFR[ancestor::LSTSUB]">
+    <h3><xsl:apply-templates /></h3>
+  </xsl:template>
   <xsl:template match="P[ancestor::LSTSUB]">
     <div class="subject_list">
       <ul>

@@ -31,14 +31,13 @@ module XsltHelper
       topic_names = topics_node.text.strip.sub(/\.$/, '').split(/\s*,\s*/)
 
       topic_names.reverse.each do |topic_name|
-        item = Nokogiri::XML::Node.new "li", doc
-        if topic_slug = @known_topics[topic_name]
-          link = Nokogiri::XML::Node.new "a", doc
-          link['href'] = '/topics/' + topic_slug
-          link.content = topic_name
-          item.add_child link
-        else
-          item.content = topic_name
+        item = content_tag(:li) do
+          conjunction, name = topic_name.match(/^(\s*and\s*)?(.*)/)[1,2]
+          if topic_slug = @known_topics[name]
+            [conjunction, link_to(name, '/topics/' + topic_slug)].compact.join(' ')
+          else
+            topic_name
+          end
         end
         topics_node.add_next_sibling(item)
       end
