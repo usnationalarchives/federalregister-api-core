@@ -81,6 +81,9 @@ class EntriesController < ApplicationController
       :select => "distinct(publication_date)",
       :conditions => {:publication_date => @date .. @date.end_of_month}
     ).map(&:publication_date)
+
+    @table_class = params[:table_class]
+
     render :layout => false
   end
   
