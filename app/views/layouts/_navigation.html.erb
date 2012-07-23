@@ -196,9 +196,9 @@
             <div class="calendar_holder">
               <h2>Explore</h2>
               <div id="date_chooser">
-                <div id="calendar_wrapper">
-                  <%= render :esi => entries_by_month_path(Issue.current.publication_date - 1.month, :table_class => 'no_select') %>
-                  <%= render :esi => entries_by_month_path(Issue.current.publication_date, :current_date => Issue.current.publication_date.to_s(:iso), :table_class => 'no_select') %>
+                <div id="calendar_wrapper" class="cal_double">
+                  <%= render :esi => entries_by_month_path(Issue.current.publication_date - 1.month, :table_class => 'no_select cal_first') %>
+                  <%= render :esi => entries_by_month_path(Issue.current.publication_date, :current_date => Issue.current.publication_date.to_s(:iso), :table_class => 'no_select cal_last') %>
                 </div>
               </div>
             </div>

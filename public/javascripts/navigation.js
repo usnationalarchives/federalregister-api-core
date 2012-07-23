@@ -130,7 +130,7 @@ $(document).ready( function() {
 
   /* Setup calendar as appropriate for navigation view */
   $('#navigation .previewable table.calendar').addClass('no_select');
-  $('#navigation .previewable table.calendar').first().find('.cal_next').hide();
-  $('#navigation .previewable table.calendar').last().find('.cal_prev').html('');
+  $('#navigation .previewable table.cal_first').find('.cal_next').html('');
+  $('#navigation .previewable table.cal_last').find('.cal_prev').html('');
 
 });
