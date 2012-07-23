@@ -367,55 +367,56 @@ SUBNAV
   }
 
 #navigation .previewable .right_column li > h2,
-.previewable .right_column table.default h2,
-.previewable .agency_finder h2,
-.previewable .topic_finder h2 {
+#navigation .previewable .right_column table.default h2,
+#navigation .previewable .agency_finder h2,
+#navigation .previewable .topic_finder h2 {
   margin-left: 5px;
   padding-left: 5px;
   text-transform: uppercase;
   margin-top: 10px;
+  margin-bottom: 5px;
   border-bottom: 1px solid #979797;
   font-size: 1.1em;
   color: #979797;
   word-spacing: 0.13em;
   }
-.previewable .right_column table.default h2 { 
+#navigation .previewable .right_column table.default h2 { 
   padding-left: 0;
   margin-bottom: 0;
   border-bottom: none;
   }
 
-.previewable .right_column table.default {
+#navigation .previewable .right_column table.default {
   width: 390px;
   margin: 10px 0 10px 5px;
   }
 
-.previewable .right_column table.default tr,
-.previewable .right_column table.default th,
-.previewable .right_column table.default td { padding: 0; }
+#navigation .previewable .right_column table.default tr,
+#navigation .previewable .right_column table.default th,
+#navigation .previewable .right_column table.default td { padding: 0; }
 
-.previewable .right_column table.default th { border-bottom: 1px solid #979797; }
+#navigation .previewable .right_column table.default th { border-bottom: 1px solid #979797; }
 
-.previewable .right_column table.default th.past_7_days,
-.previewable .right_column table.default th.recently_opened,
-.previewable .right_column table.default th.closing_soon {
+#navigation .previewable .right_column table.default th.past_7_days,
+#navigation .previewable .right_column table.default th.recently_opened,
+#navigation .previewable .right_column table.default th.closing_soon {
   width: 40px;
   height: 23px;
   }
 
-.previewable .right_column table.default th.past_7_days {
+#navigation .previewable .right_column table.default th.past_7_days {
   background: sprite-image('icons/icon_last_7_days.png', 11px, 2px, 50px) no-repeat;
   }
-.previewable .right_column table.default th.recently_opened {
+#navigation .previewable .right_column table.default th.recently_opened {
   background: sprite-image('icons/icon_comments_opened.png', 12px, 2px, 50px) no-repeat;
   }
-.previewable .right_column table.default th.closing_soon {
+#navigation .previewable .right_column table.default th.closing_soon {
   background: sprite-image('icons/icon_comments_closing.png', 12px, 2px, 50px) no-repeat;
   }
 
-.previewable .right_column table.default .count_7_days,
-.previewable .right_column table.default .comments_recently_opened,
-.previewable .right_column table.default .comments_closing_soon { text-align: center; }
+#navigation .previewable .right_column table.default .count_7_days,
+#navigation .previewable .right_column table.default .comments_recently_opened,
+#navigation .previewable .right_column table.default .comments_closing_soon { text-align: center; }
 
 
 #navigation .previewable .right_column table.default td:first-child {
@@ -433,7 +434,7 @@ SUBNAV
 #navigation .previewable .right_column table.default td:first-child a:hover,
 #navigation .previewable .right_column table.default a:hover { color: #B88659; }
 
-.previewable .right_column form { 
+#navigation .previewable .right_column form { 
   margin-left: 15px;
   overflow: hidden;
   }
@@ -443,7 +444,7 @@ SUBNAV
   height: 18px;
   padding-left: 10px;
   }
-.previewable .right_column input.loading {
+#navigation .previewable .right_column input.loading {
   background: white url('/images/ajax-loader.gif?1292020484') 332px 2px no-repeat;
   }
 
@@ -569,23 +570,24 @@ SUBNAV
 
 
 /* BROWSE DATES */
-.previewable .fr_stats h2,
-.previewable .calendar_holder h2,
-.previewable .date_input_holder h2 {
+#navigation .previewable .fr_stats h2,
+#navigation .previewable .calendar_holder h2,
+#navigation .previewable .date_input_holder h2 {
   margin-left: 5px;
   padding-left: 5px;
   text-transform: uppercase;
   margin-top: 10px;
+  margin-bottom: 5px;
   border-bottom: 1px solid #979797;
   font-size: 1.1em;
   color: #979797;
   }
-.previewable .page_count {
+#navigation .previewable .page_count {
   color: #5F6061;
   float: right;
   font-size: 13px;
   }
-.previewable .right_column .fr_stats .statistics li {
+#navigation .previewable .right_column .fr_stats .statistics li {
   font-size: 15px;
   color: #5F6061;
   font-weight: bold;
