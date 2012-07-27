@@ -211,6 +211,37 @@
               <% end %>
             </div>
           </li>
+          <li id="executive-orders-browse-preview" class="preview">
+            <ol>
+              <% orders_by_president_and_year = ExecutiveOrderPresenter.all_by_president_and_year %>
+              <% orders_by_president_and_year.each do |president, eo_collections| %>
+                <li class="pres_holder" id="<%=president.identifier%>">
+                  <div class='photo'></div>
+                  <div class="pres_details">
+                    <h2><%= president.full_name %></h2>
+                    <% if president == orders_by_president_and_year.first.first %> 
+                    <ol class="recent">
+                      <% eo_collections.first.executive_orders[0..2].each do |executive_order| %>
+                        <li class="executive_order_wrapper">
+                          <span class="eo_number">EO <%= executive_order.executive_order_number %>:</span>
+                          <%= link_to executive_order.title, entry_path(executive_order) %>
+                        </li>
+                      <% end %>
+                    </ol>
+                    <% end %>
+                    <ol class="children">
+                      <% eo_collections.reverse.each do |eo_collection| %>
+                        <li class="<%= cycle('left', 'right') %>">
+                          <%= eo_collection.year %>
+                          <%= link_to eo_collection.count, executive_orders_by_president_and_year_path(president.identifier, eo_collection.year) %>:
+                        </li>
+                      <% end %>
+                    </ol>
+                  </div>
+                </li>
+              <% end %>
+            </ol>
+          </li>
         </ul>
       </div>
     </li>

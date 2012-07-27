@@ -652,6 +652,69 @@ SUBNAV
   }
 
 
+/* BROWSE EXECUTIVE ORDERS */
+#navigation .previewable .pres_holder .photo {
+  width: 50px;
+  height: 65px;
+  border: 1px solid #333;
+  margin: 10px 0 0 5px;
+  vertical-align: top;
+  display: inline-block;
+}
+#navigation .previewable #barack-obama .photo {
+  background: transparent url('/images/presidential_photos/Barack_Obama_sm.jpg') 0 0 no-repeat;
+  }
+#navigation .previewable #george-w-bush .photo {
+  background: transparent url('/images/presidential_photos/George_W_Bush_sm.jpg') 0 0 no-repeat;
+  }
+#navigation .previewable #william-j-clinton .photo {
+  background: transparent url('/images/presidential_photos/Bill_Clinton_sm.jpg') 0 0 no-repeat;
+  }
+
+#navigation .previewable .pres_details {
+  width: 340px;
+  display: inline-block;
+  }
+
+#navigation .previewable .pres_holder li,
+#navigation .previewable .pres_holder li a,
+#navigation .previewable .pres_holder li span { 
+  padding: 0;
+  display: inline-block;
+  line-height: 14px;
+  }
+
+#navigation .previewable #executive-orders-browse-preview ol { margin: 0; }
+
+#navigation .previewable #executive-orders-browse-preview ol.children,
+#navigation .previewable #executive-orders-browse-preview ol.recent { margin: 10px; }
+
+#navigation .previewable .pres_holder li.executive_order_wrapper { vertical-align: top; }
+#navigation .previewable .pres_holder li.executive_order_wrapper .eo_number { 
+  width: 55px;
+  vertical-align: top;
+  padding-top: 3px;
+  font-weight: bold;
+  }
+#navigation .previewable .pres_holder li.executive_order_wrapper a { 
+  line-height: 16px;
+  font-size: 12px;
+  font-weight: 500;
+  color: #015BA2;
+  width: 260px;
+  }
+#navigation .previewable .pres_holder li.executive_order_wrapper a:hover { color: #B88659; }
+#navigation .previewable .pres_holder ol.children li { 
+  width: 65px;
+  font-weight: bold;
+  font-size: 13px;
+  }
+#navigation .previewable .pres_holder ol.children li a { 
+  color: #015BA2;
+  font-size: 12px;
+  }
+#navigation .previewable .pres_holder ol.children li a:hover { color: #B88659; }
+
 /******************************
 
 SEARCH 
