@@ -361,15 +361,17 @@ SUBNAV
 #navigation .previewable .subnav .right_column li.preview { display: none; }
 #navigation .previewable .subnav .right_column li#money_preview { display: list-item; }
 
-#navigation .preview a:hover {
+#navigation .previewable .right_column a:hover {
   background: none;
   color: inherit;
+  color: #B88659;
   }
 
 #navigation .previewable .right_column li > h2,
 #navigation .previewable .right_column table.default h2,
 #navigation .previewable .agency_finder h2,
-#navigation .previewable .topic_finder h2 {
+#navigation .previewable .topic_finder h2,
+#navigation .previewable .pres_details h2 {
   margin-left: 5px;
   padding-left: 5px;
   text-transform: uppercase;
@@ -622,8 +624,12 @@ SUBNAV
   line-height: 20px;
   padding: 0;
   font-weight: 700;
+  color: #015BA2;
   }
-#navigation .previewable table.calendar td a:hover { background-color: $golden; } 
+#navigation .previewable table.calendar td a:hover { 
+  background-color: $golden;
+  color: #FFF;
+  } 
 
 #navigation .previewable table.calendar tr.calendar_nav th.cal_prev a,
 #navigation .previewable table.calendar tr.calendar_nav th.cal_next a,
