@@ -5,6 +5,7 @@
       <xsl:call-template name="manual_header">
         <xsl:with-param name="id" select="'table_of_contents'"/>
         <xsl:with-param name="name" select="'Table of Contents'"/>
+        <xsl:with-param name="level" select="1"/>
       </xsl:call-template>
       <ul class="bullets table_of_contents">
         <xsl:apply-templates mode="table_of_contents"/>
