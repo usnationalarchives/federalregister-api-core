@@ -68,6 +68,7 @@ class PublicInspectionDocument < ApplicationModel
     has agency_assignments(:agency_id), :as => :agency_ids
     has publication_date
     has filed_at
+    has special_filing
 
     join docket_numbers
 
