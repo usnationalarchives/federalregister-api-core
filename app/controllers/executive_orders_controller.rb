@@ -48,4 +48,13 @@ class ExecutiveOrdersController < ApplicationController
       end
     end
   end
+
+  def navigation
+    cache_for 1.day
+    
+    @orders_by_president_and_year = ExecutiveOrderPresenter.all_by_president_and_year
+
+    render :partial => 'layouts/navigation/executive_orders', :layout => false
+  end
+
 end

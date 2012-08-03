@@ -371,7 +371,8 @@ SUBNAV
 #navigation .previewable .right_column table.default h2,
 #navigation .previewable .agency_finder h2,
 #navigation .previewable .topic_finder h2,
-#navigation .previewable .pres_details h2 {
+#navigation .previewable .pres_details h2,
+#navigation .previewable .preview_wrapper h2 {
   margin-left: 5px;
   padding-left: 5px;
   text-transform: uppercase;
@@ -381,6 +382,24 @@ SUBNAV
   font-size: 1.1em;
   color: #979797;
   word-spacing: 0.13em;
+  }
+
+#navigation .previewable .right_column h2 .supplemental,
+#navigation .previewable .right_column h2 .secondary {
+  color: #5F6061;
+  float: right;
+  font-size: 12px;
+  }
+
+#navigation .previewable .right_column h2 .secondary {
+  text-transform: none;
+  font-style: italic;
+  font-weight: normal;
+  position: relative;
+  padding-right: 3px;
+  top: 1px;
+  font-size: 12px;
+  word-spacing: initial;
   }
 #navigation .previewable .right_column table.default h2 { 
   padding-left: 0;
@@ -450,6 +469,37 @@ SUBNAV
   background: white url('/images/ajax-loader.gif?1292020484') 332px 2px no-repeat;
   }
 
+#navigation .previewable .right_column p.info {
+  padding: 10px 10px 5px 10px;
+  font-size: 1.1em;
+  line-height: 1.1em;
+  }
+#navigation .previewable .preview_wrapper p { 
+  padding: 0 5px;
+  margin-left: 10px;
+  margin-bottom: 15px;
+  line-height: 14px;
+  }
+#navigation .previewable .preview_wrapper a {
+  color: #015BA2;
+  font-weight: bold;
+  display: inline-block;
+  border: none;
+  font-size: 12px;
+  padding: 0;
+  line-height: 14px;
+  }
+#navigation .previewable p.info a {
+  color: #015BA2;
+  font-family: inherit;
+  font-weight: normal;
+  display: inline-block;
+  border: none;
+  line-height: 1.1em;
+  padding: 0;
+  }
+#navigation .previewable p.info a:hover,
+#navigation .previewable .preview_wrapper a:hover { color: #B88659; }
 
 /* SECTION SUGGESTED SEARCHES */
 #navigation .preview .suggested_searches { 
@@ -584,11 +634,6 @@ SUBNAV
   font-size: 1.1em;
   color: #979797;
   }
-#navigation .previewable .page_count {
-  color: #5F6061;
-  float: right;
-  font-size: 13px;
-  }
 #navigation .previewable .right_column .fr_stats .statistics li {
   font-size: 15px;
   color: #5F6061;
@@ -705,7 +750,7 @@ SUBNAV
   }
 #navigation .previewable .pres_holder li.executive_order_wrapper a:hover { color: #B88659; }
 #navigation .previewable .pres_holder ol.children li { 
-  width: 65px;
+  width: 60px;
   font-weight: bold;
   font-size: 13px;
   }
@@ -714,6 +759,20 @@ SUBNAV
   font-size: 12px;
   }
 #navigation .previewable .pres_holder ol.children li a:hover { color: #B88659; }
+
+/* PUBLIC INSPECTION BROWSE PREVIEW */
+#navigation .previewable #public-inspection-browse-preview { height: 280px; }
+#navigation .previewable #public-inspection-browse-preview p.info {
+  margin: 10px 0 10px 7px;
+  padding: 5px 12px 5px 15px;
+  background-color: #F5F8F9;
+  }
+#navigation .previewable #public-inspection-browse-preview .preview_wrapper {
+  overflow: hidden;
+  clear: both
+  }
+#navigation .previewable .inspection_counts { float: left; }
+#navigation .previewable .mini_document_types a { vertical-align: top; }
 
 /******************************
 

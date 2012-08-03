@@ -48,4 +48,13 @@ class TopicsController < ApplicationController
     end
   end
   
+  def navigation
+    cache_for 1.day
+    
+    @topics = Topic.without_routine.top_by_article_count(10).in_last_days(30)
+    @issue  = Issue.current
+    @date   = Date.current
+
+    render :partial => 'layouts/navigation/topics', :layout => false
+  end
 end

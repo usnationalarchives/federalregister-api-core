@@ -44,4 +44,15 @@ class AgenciesController < ApplicationController
       end
     end
   end
+
+  def navigation
+    cache_for 1.day
+    
+    @agencies = Agency.in_navigation.each_with_index
+    @issue    = Issue.current
+    @date     = Date.current
+
+    render :partial => 'layouts/navigation/agencies', :layout => false
+  end
+
 end

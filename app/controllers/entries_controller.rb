@@ -86,6 +86,13 @@ class EntriesController < ApplicationController
 
     render :layout => false
   end
+
+  def navigation
+    cache_for 1.day
+    @issue = Issue.current
+
+    render :partial => 'layouts/navigation/dates', :layout => false
+  end
   
   def show
     cache_for 1.day

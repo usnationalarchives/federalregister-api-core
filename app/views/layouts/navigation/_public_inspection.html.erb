@@ -1,0 +1,52 @@
+<li id="public-inspection-browse-preview" class="preview">
+  <p class="info">
+    The <a href="http://www.federalregister.gov/public-inspection" target="_blank">Public Inspection web page on FederalRegister.gov</a> 
+    offers a preview of documents scheduled to appear in the next day’s <em>Federal Register</em> issue. The Public Inspection page may 
+    also include documents scheduled for later issues, at the request of the issuing agency. This gives the public access to 
+    important or complex documents before they publish in the <em>Federal Register</em>. See 
+    <%= link_to 'About Public Inspection', "/learn/public-inspection-desk"%> for more information.
+  </p>
+
+  <div class="preview_wrapper">
+    <h2>
+      Special Filing
+      <span class="secondary">updated at <%= @issue.special_filings_updated_at.to_s(:time_then_date) %></span>
+    </h2>
+
+    <p class="inspection_counts">
+      <%= link_to pluralize(@special_documents.entry_count, 'articles'), public_inspection_documents_path(:anchor => "special-filing") %> from <%= pluralize(@special_documents.agencies.count, 'agency') %>.
+      <ul class="mini_document_types">
+        <% @special_documents.entries.group_by(&:granule_class).sort.each do |entry_type, entries| %>
+          <li>
+            <%= link_to entries.count, public_inspection_search_path(:conditions => {:type => entry_type, :special_filing => 1}) %>
+            <div class="rule_type doc_<%= entry_type.downcase%> tipsy mini">
+              <%= image_tag 'icons/document_icons/document_icons_mini.png' %>
+            </div>
+          </li>
+        <% end %>
+      </ul>
+    </p>
+  </div>
+
+  <div class="preview_wrapper">
+    <h2>
+      Regular Filing
+      <span class="secondary">updated at <%= @issue.regular_filings_updated_at.to_s(:time_then_date) %></span>
+    </h2>
+
+    <p class="inspection_counts">
+      <%= link_to pluralize(@regular_documents.entry_count, 'articles'), public_inspection_documents_path(:anchor => "regular-filing") %> from <%= pluralize(@regular_documents.agencies.count, 'agency') %>.
+      <ul class="mini_document_types">
+        <% @regular_documents.entries.group_by(&:granule_class).sort.each do |entry_type, entries| %>
+          <li>
+            <%= link_to entries.count, public_inspection_search_path(:conditions => {:type => entry_type, :special_filing => 1}) %>
+            <div class="rule_type doc_<%= entry_type.downcase%> tipsy mini">
+              <%= image_tag 'icons/document_icons/document_icons_mini.png' %>
+            </div>
+          </li>
+        <% end %>
+      </ul>
+    </p>
+  </div>
+
+</li>
