@@ -17,23 +17,23 @@ $(document).ready( function() {
   });
 
   $('#navigation .nav_sections a.sections').bind('mouseenter', function() {
-    nav_sections = $(this).closest('.nav_sections');
+    var nav_sections = $(this).closest('.nav_sections');
     nav_sections.find('.left_column li#money a').addClass('hover');
-    preview = nav_sections.find('.right_column li#money-preview');
+    var preview = nav_sections.find('.right_column li#money-preview');
     preview.show();
     setup_preview_scroller( preview.find('.text_wrapper') );
    });
 
   $('#navigation .nav_browse a.browse').bind('mouseenter', function() {
-    nav_sections = $(this).closest('.nav_browse');
+    var nav_sections = $(this).closest('.nav_browse');
     nav_sections.find('.left_column li#agencies-browse a').addClass('hover');
-    preview = nav_sections.find('.right_column li#agencies-browse-preview');
+    var preview = nav_sections.find('.right_column li#agencies-browse-preview');
     preview.show();
    });
 
   $('#navigation .subnav .left_column li').bind('mouseenter', function() {
     $('#navigation .subnav .right_column li.preview').hide();
-    preview = $('#navigation .subnav .right_column').find('#' + $(this).attr('id') + '-preview');
+    var preview = $('#navigation .subnav .right_column').find('#' + $(this).attr('id') + '-preview');
     preview.show();
     setup_preview_scroller( preview.find('.text_wrapper') );
   });
