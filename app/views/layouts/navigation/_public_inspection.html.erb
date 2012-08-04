@@ -39,7 +39,7 @@
       <ul class="mini_document_types">
         <% @regular_documents.entries.group_by(&:granule_class).sort.each do |entry_type, entries| %>
           <li>
-            <%= link_to entries.count, public_inspection_search_path(:conditions => {:type => entry_type, :special_filing => 1}) %>
+            <%= link_to entries.count, public_inspection_search_path(:conditions => {:type => entry_type, :special_filing => 0}) %>
             <div class="rule_type doc_<%= entry_type.downcase%> tipsy mini">
               <%= image_tag 'icons/document_icons/document_icons_mini.png' %>
             </div>
