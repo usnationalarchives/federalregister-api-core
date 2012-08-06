@@ -23,17 +23,19 @@
               <%= link_to topic.name, topic_path(topic) %>
             </td>
             <td class="count_7_days">
-              <%= topic.entries_count %>
+              <% conditions = {:publication_date => {:gte => @issue.publication_date - 1.week}, :topic_ids => [topic.id]} %>
+              <% count = EntrySearch.new(:conditions => conditions).count %>
+              <%= link_to count, entries_search_path(:conditions => conditions, :utm_source => 'navigation', :utm_medium => 'dropdown', :utm_content => 'topics_with_entries_last_7_days') %>
             </td>
             <% conditions = {:publication_date => {:gte => @issue.publication_date - 2.weeks}, :comment_date => {:gte => @date} , :topic_ids => [topic.id]} %>
             <% count = EntrySearch.new(:conditions => conditions).count %>
             <td class="comments_recently_opened">
-              <%= link_to count, entries_search_path(:conditions => conditions, :utm_source => 'navigation', :utm_medium => 'dropdown', :utm_content => 'topics_opened_recently') %>
+              <%= link_to count, entries_search_path(:conditions => conditions, :utm_source => 'navigation', :utm_medium => 'dropdown', :utm_content => 'topics_with_comments_opened_recently') %>
             </td>
             <% conditions = {:comment_date => {:gte => @date, :lte => 1.week.from_now.to_date}, :topic_ids => [topic.id]} %>
             <% count = EntrySearch.new(:conditions => conditions).count %>
             <td class="comments_closing_soon">
-              <%= link_to count, entries_search_path(:conditions => conditions, :utm_source => 'navigation', :utm_medium => 'dropdown', :utm_content => 'topics_closing_soon') %>
+              <%= link_to count, entries_search_path(:conditions => conditions, :utm_source => 'navigation', :utm_medium => 'dropdown', :utm_content => 'topics_with_comments_closing_soon') %>
             </td>
           </tr>
         <% end %>
