@@ -240,9 +240,9 @@
         <div class="border"></div>
     </xsl:if>
 
-      <xsl:value-of disable-output-escaping="yes" select="'&lt;div class=&quot;body_column&quot; &gt;'" />
-        <xsl:apply-templates />
-      <xsl:value-of disable-output-escaping="yes" select="'&lt;/div&gt;'" />
+    <xsl:value-of disable-output-escaping="yes" select="'&lt;div&gt;'" />
+      <xsl:apply-templates />
+    <xsl:value-of disable-output-escaping="yes" select="'&lt;/div&gt;'" />
 
     <xsl:if test="not(following-sibling::*[1][name() = 'REGTEXT' or name() = 'PART'])"> 
         <div class="border"></div>
@@ -253,7 +253,20 @@
     </xsl:if>
   </xsl:template> 
 
+  <xsl:template match="PART[ancestor::REGTEXT]">
+    <xsl:apply-templates />
+
+    <xsl:if test="count(descendant::AMDPAR) > 0">
+      <xsl:value-of disable-output-escaping="yes" select="'&lt;/div&gt;'" />
+    </xsl:if>
+
+  </xsl:template>
+
   <xsl:template match="AMDPAR">
+    <xsl:if test="not(preceding-sibling::*[1][name() = 'PART'])"> 
+      <xsl:value-of disable-output-escaping="yes" select="'&lt;/div&gt;'" />
+    </xsl:if>
+
     <p class="amendment_part">
       <xsl:attribute name="id">
         <xsl:call-template name="paragraph_id" />
@@ -265,5 +278,7 @@
 
       <xsl:apply-templates />
     </p>
+    
+    <xsl:value-of disable-output-escaping="yes" select="'&lt;div class=&quot;contents&quot;&gt;'" />
   </xsl:template>
 </xsl:stylesheet>
