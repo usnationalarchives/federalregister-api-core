@@ -1,6 +1,18 @@
 class EntrySearch < ApplicationSearch
-  class CFR < Struct.new(:title,:part)
+  class CFR
+    attr_accessor :title, :part
+
     TITLE_MULTIPLIER = 100000
+
+    def initialize(title,part)
+      @errors = []
+
+      @title = title.to_s.strip
+      @part  = part.to_s.strip
+
+      validate
+    end
+
     def citation
       if part
         "#{title} CFR #{part}"
@@ -10,11 +22,29 @@ class EntrySearch < ApplicationSearch
     end
     
     def sphinx_citation
-      title_int =  title.to_s.to_i * TITLE_MULTIPLIER
-      if part.present?
-        title_int + part.to_s.to_i
-      else
+      title_int = title.to_i * TITLE_MULTIPLIER
+      if part.blank?
         title_int ... title_int + TITLE_MULTIPLIER
+      elsif match = part.match(/(\d+)-(\d+)/)
+        title_int + match[1].to_i .. title_int + match[2].to_i
+      else
+        title_int + part.to_i
+      end
+    end
+
+    def error_message
+      @errors.to_sentence
+    end
+
+    private
+
+    def validate
+      unless ('1'..'50').include?(@title)
+        @errors << "CFR title must be between 1 and 50"
+      end
+
+      unless @part.blank? || @part =~ /^\d+$/ || @part =~ /^\d+ ?- ?\d+$/
+        @errors << 'CFR part must be an integer or a range (eg "1" or "1-200")'
       end
     end
   end
@@ -85,7 +115,7 @@ class EntrySearch < ApplicationSearch
     if hsh.present? && hsh.values.any?(&:present?)
       @cfr = CFR.new(hsh[:title], hsh[:part])
       
-      if @cfr.title.present?
+      if @cfr.error_message.blank?
         add_filter(
           :value => @cfr.sphinx_citation,
           :name => @cfr.citation,
@@ -95,7 +125,7 @@ class EntrySearch < ApplicationSearch
           :sphinx_type => :with
         )
       else
-        @errors[:cfr] = "You must provide at least a CFR title"
+        @errors[:cfr] = @cfr.error_message
       end
     end
   end
