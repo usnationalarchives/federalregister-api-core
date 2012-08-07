@@ -1,14 +1,13 @@
 class EntrySearch < ApplicationSearch
-  class CFR
-    attr_accessor :title, :part
+  class CFR < Struct.new(:title, :part)
 
     TITLE_MULTIPLIER = 100000
 
     def initialize(title,part)
       @errors = []
 
-      @title = title.to_s.strip
-      @part  = part.to_s.strip
+      self.title = title.to_s.strip
+      self.part  = part.to_s.strip
 
       validate
     end
@@ -39,11 +38,11 @@ class EntrySearch < ApplicationSearch
     private
 
     def validate
-      unless ('1'..'50').include?(@title)
+      unless ('1'..'50').include?(title)
         @errors << "CFR title must be between 1 and 50"
       end
 
-      unless @part.blank? || @part =~ /^\d+$/ || @part =~ /^\d+ ?- ?\d+$/
+      unless part.blank? || part =~ /^\d+$/ || part =~ /^\d+ ?- ?\d+$/
         @errors << 'CFR part must be an integer or a range (eg "1" or "1-200")'
       end
     end
