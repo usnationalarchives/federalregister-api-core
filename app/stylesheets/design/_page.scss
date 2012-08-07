@@ -702,7 +702,7 @@ p:target {
   margin-bottom: 0.5em;
   width: 530px;
   }
-#fulltext_content_area .reg_text p.amendment_part { padding-bottom: 0; }
+#fulltext_content_area .reg_text p.amendment_part { padding-bottom: 0; clear: left; }
 #fulltext_content_area .reg_text .amendment_part_number {
   position: relative;
   top: -8px;
