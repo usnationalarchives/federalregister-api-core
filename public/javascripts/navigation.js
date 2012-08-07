@@ -8,6 +8,8 @@ function setup_preview_scroller( text_wrapper ) {
 }
 
 $(document).ready( function() {
+  var navigation_timeout = null;
+
   $('#navigation .subnav').bind('mouseenter', function() {
     $(this).closest('.dropdown').find('a.top_nav').addClass('hover');
   });
@@ -32,15 +34,20 @@ $(document).ready( function() {
    });
 
   $('#navigation .subnav .left_column li').bind('mouseenter', function() {
-    $('#navigation .subnav .right_column li.preview').hide();
-    var preview = $('#navigation .subnav .right_column').find('#' + $(this).attr('id') + '-preview');
-    preview.show();
-    setup_preview_scroller( preview.find('.text_wrapper') );
+    var el = $(this);
+    navigation_timeout =  setTimeout( function() {
+                            $('#navigation .subnav .right_column li.preview').hide();
+                            var preview = $('#navigation .subnav .right_column').find('#' + el.attr('id') + '-preview');
+                            preview.show();
+                            setup_preview_scroller( preview.find('.text_wrapper') );
+                          }, 300);
+    
   });
 
   $('#navigation .subnav .left_column li').bind('mouseleave', function() {
     $(this).find('a').removeClass('hover');
     $('.ui-autocomplete.ui-menu').hide();
+    clearTimeout( navigation_timeout );
   });
 
 
