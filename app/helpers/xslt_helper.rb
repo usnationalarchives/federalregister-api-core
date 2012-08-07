@@ -4,6 +4,17 @@ module XsltHelper
     xslt.transform(Nokogiri::XML(xml), options.to_a.flatten)
   end
 
+  def remove_empty_nodes(xml)
+    doc = Nokogiri::HTML::DocumentFragment.parse(xml)
+    doc.css('div').each do |div|
+      if div.children.all?{|n| n.text? && (n.content.nil? || n.content =~ /^\s*$/)}
+        div.remove
+      end
+    end
+
+    doc.to_html.to_s
+  end
+
   def handle_amdpar(xml)
     doc = Nokogiri::HTML::DocumentFragment.parse(xml)
     doc.css('p.amendment_part').each do |amdpar_node|

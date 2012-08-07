@@ -245,9 +245,9 @@
     <xsl:if test="not(preceding-sibling::*[1][name() = 'REGTEXT' or name() = 'PART'])"> 
       <xsl:value-of disable-output-escaping="yes" select="'&lt;/div&gt;'" />
       <xsl:value-of disable-output-escaping="yes" select="'&lt;div class=&quot;reg_text&quot;&gt;'" />
-        <div class="border"></div>
-        <div class="border_icon top">begin regulatory text</div>
-        <div class="border"></div>
+        <span class="border"></span>
+        <span class="border_icon top">begin regulatory text</span>
+        <span class="border"></span>
     </xsl:if>
 
     <xsl:value-of disable-output-escaping="yes" select="'&lt;div&gt;'" />
@@ -255,9 +255,9 @@
     <xsl:value-of disable-output-escaping="yes" select="'&lt;/div&gt;'" />
 
     <xsl:if test="not(following-sibling::*[1][name() = 'REGTEXT' or name() = 'PART'])"> 
-        <div class="border"></div>
-        <div class="border_icon bottom">end regulatory text</div>
-        <div class="border"></div>
+        <span class="border"></span>
+        <span class="border_icon bottom">end regulatory text</span>
+        <span class="border"></span>
       <xsl:value-of disable-output-escaping="yes" select="'&lt;/div&gt;'" />
       <xsl:value-of disable-output-escaping="yes" select="'&lt;div class=&quot;body_column&quot;&gt;'" />
     </xsl:if>
