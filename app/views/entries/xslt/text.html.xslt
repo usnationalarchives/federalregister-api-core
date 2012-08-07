@@ -231,6 +231,16 @@
     </div>
   </xsl:template>
 
+  <xsl:template match="P[preceding-sibling::*[1][name() = 'LSTSUB' or name() = 'SIG'] and following-sibling::*[1][name()='REGTEXT']]">
+      <xsl:value-of disable-output-escaping="yes" select="'&lt;/div&gt;'" />
+      <div class="header_column words_of_issuance">
+        <h2></h2>
+      </div>
+
+      <xsl:value-of disable-output-escaping="yes" select="'&lt;div class=&quot;body_column&quot; &gt;'" />
+      <p><xsl:apply-templates /></p>
+  </xsl:template>
+
   <xsl:template match="REGTEXT|PART[not(ancestor::REGTEXT)]">
     <xsl:if test="not(preceding-sibling::*[1][name() = 'REGTEXT' or name() = 'PART'])"> 
       <xsl:value-of disable-output-escaping="yes" select="'&lt;/div&gt;'" />
