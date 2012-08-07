@@ -268,17 +268,10 @@
 
   <xsl:template match="PART[ancestor::REGTEXT]">
     <xsl:apply-templates />
-
-    <xsl:if test="count(descendant::AMDPAR) > 0">
-      <xsl:value-of disable-output-escaping="yes" select="'&lt;/div&gt;'" />
-    </xsl:if>
-
   </xsl:template>
 
   <xsl:template match="AMDPAR">
-    <xsl:if test="not(preceding-sibling::*[1][name() = 'PART'])"> 
-      <xsl:value-of disable-output-escaping="yes" select="'&lt;/div&gt;'" />
-    </xsl:if>
+    <xsl:value-of disable-output-escaping="yes" select="'&lt;/div&gt;'" />
 
     <p class="amendment_part">
       <xsl:attribute name="id">
