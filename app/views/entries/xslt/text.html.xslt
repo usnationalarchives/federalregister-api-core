@@ -71,11 +71,11 @@
   </xsl:template>
   
   <xsl:template match="SECTNO">
-    <p class="cfr_section">
+    <h2 class="cfr_section">
       <xsl:apply-templates />
       <xsl:text> </xsl:text>
       <xsl:value-of select="following::SUBJECT[text()]/text()" />
-    </p>
+    </h2>
   </xsl:template>
   
   <xsl:template match="P | FP">
