@@ -7,16 +7,27 @@
         <xsl:with-param name="source" select="@SOURCE"/>
       </xsl:call-template>
     </xsl:variable>
+
+    <xsl:variable name="class">
+      <xsl:if test="parent::*[name() = 'PART']">
+        <xsl:value-of select="'part'" />
+      </xsl:if>
+    </xsl:variable>
+
     <xsl:choose>
       <xsl:when test="$level &lt; 3">
         <xsl:value-of disable-output-escaping="yes" select="'&lt;/div&gt;'"/>
         <div class="header_column">
-          <xsl:call-template name="header"/>
+          <xsl:call-template name="header">
+            <xsl:with-param name="class" select="$class"/>
+          </xsl:call-template>
         </div>
         <xsl:value-of disable-output-escaping="yes" select="'&lt;div class=&quot;body_column&quot; &gt;'"/>
       </xsl:when>
       <xsl:otherwise>
-        <xsl:call-template name="header"/>
+        <xsl:call-template name="header">
+          <xsl:with-param name="class" select="$class"/>
+        </xsl:call-template>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
@@ -42,6 +53,8 @@
   </xsl:template>
   
   <xsl:template name="header">
+    <xsl:param name="class" select="''"/>
+
     <xsl:variable name="level">
       <xsl:call-template name="header_level">
         <xsl:with-param name="source" select="@SOURCE"/>
@@ -51,7 +64,15 @@
       <xsl:attribute name="id">
         <xsl:call-template name="header_id" />
       </xsl:attribute>
+
+        <xsl:if test="$class">
+          <xsl:attribute name="class">
+            <xsl:value-of select="$class"/>
+          </xsl:attribute>
+        </xsl:if>
+
       <xsl:apply-templates/>
+
       <xsl:if test="text() != 'SUMMARY:' and $level &lt; 3">
         <xsl:call-template name="back_to_top"/>
       </xsl:if>
