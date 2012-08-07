@@ -42,6 +42,7 @@
         <xsl:with-param name="id" select="'footnotes'"/>
         <xsl:with-param name="name" select="'Footnotes'"/>
         <xsl:with-param name="back_to_top" select="1"/>
+        <xsl:with-param name="level" select="1"/>
       </xsl:call-template>
       <div id="footnotes">
         <xsl:apply-templates mode="footnotes"/>
