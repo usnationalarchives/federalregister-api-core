@@ -7,6 +7,18 @@ function setup_preview_scroller( text_wrapper ) {
   attribution_bg.css('width', attribution.width()).css('height', attribution.height());
 }
 
+function setup_previewable_nav(el) {
+    var nav_sections = el.closest('.dropdown');
+    nav_sections.find('.left_column li').first().find('a').addClass('hover');
+    nav_sections.children('.right_column li').hide();
+    var preview = nav_sections.find('.right_column li').first();
+    preview.show();
+
+    if(el == $('#navigation .nav_sections a.sections') ) { 
+      setup_preview_scroller( preview.find('.text_wrapper') );
+    }
+}
+
 $(document).ready( function() {
   var navigation_timeout = null;
 
@@ -19,18 +31,11 @@ $(document).ready( function() {
   });
 
   $('#navigation .nav_sections a.sections').bind('mouseenter', function() {
-    var nav_sections = $(this).closest('.nav_sections');
-    nav_sections.find('.left_column li#money a').addClass('hover');
-    var preview = nav_sections.find('.right_column li#money-preview');
-    preview.show();
-    setup_preview_scroller( preview.find('.text_wrapper') );
+    setup_previewable_nav( $(this) );
    });
 
   $('#navigation .nav_browse a.browse').bind('mouseenter', function() {
-    var nav_sections = $(this).closest('.nav_browse');
-    nav_sections.find('.left_column li#agencies-browse a').addClass('hover');
-    var preview = nav_sections.find('.right_column li#agencies-browse-preview');
-    preview.show();
+    setup_previewable_nav( $(this) );
    });
 
   $('#navigation .subnav .left_column li').bind('mouseenter', function() {

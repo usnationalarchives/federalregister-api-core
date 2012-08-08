@@ -132,7 +132,7 @@ NAV
 #navigation .browse {
   background: sprite-image('icons/header/browse-off.png', 10px, 10px, 50px) no-repeat;
   }
-#navigation .browse.hover 
+#navigation .browse.hover, 
 #navigation .browse:hover {
   background: sprite-image('icons/header/browse-hover.png', 10px, 10px, 50px) no-repeat;
   }
