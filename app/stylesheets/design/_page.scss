@@ -756,6 +756,10 @@ p:target {
   font-size: 1.3em;
   background: sprite-image('icons/icon_topics.png', 6px, -2px, 100px) no-repeat;
   }
+#fulltext_content_area h2.subject_list_header span {
+  width: 140px;
+  display: block;
+  }
 #fulltext_content_area h2.subject_list_header a {
   white-space: nowrap;
   word-wrap: break-word;
@@ -767,11 +771,14 @@ p:target {
   padding: 0 10px;
   width: 430px;
   }
+#fulltext_content_area .subject_list h3:first-child { margin-top: 0; }
+#fulltext_content_area .subject_list h3 { margin-bottom: 0; }
+
 #fulltext_content_area .subject_list p { padding-bottom: 0px; }
 #fulltext_content_area .subject_list ul {
   margin-bottom: 0;
   font-size: 1.1em;
-  margin-left: 20px;
+  margin-left: 30px;
   }
 
 /* Words of Issuance */
