@@ -71,11 +71,13 @@
   </xsl:template>
   
   <xsl:template match="SECTNO">
+    <xsl:value-of disable-output-escaping="yes" select="'&lt;/div&gt;'" />
     <h2 class="cfr_section">
       <xsl:apply-templates />
       <xsl:text> </xsl:text>
       <xsl:value-of select="following::SUBJECT[text()]/text()" />
     </h2>
+    <xsl:value-of disable-output-escaping="yes" select="'&lt;div class=&quot;contents&quot;&gt;'" />
   </xsl:template>
   
   <xsl:template match="P | FP">
