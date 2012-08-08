@@ -655,17 +655,14 @@ p:target {
   padding-top: 4px;
   }
 .reg_text .header_column h1.chapter {
-  padding-top: 40px;
+  margin-bottom: 0;
   padding-left: 30px;
-  background: sprite-image('icons/icon_books.png', 0, 39px, 150px) no-repeat;
+  background: sprite-image('icons/icon_books.png', 0, 3px, 150px) no-repeat;
   }
 .reg_text .header_column h1.part {
-  padding-top: 40px;
+  margin-bottom: 0;
   padding-left: 30px;
-  background: sprite-image('icons/icon_book.png', 0, 39px, 150px) no-repeat;
-  }
-.reg_text .header_column h1.chapter + .header_column h1.part {
-  padding-top: 10px;
+  background: sprite-image('icons/icon_book.png', 0, 4px, 150px) no-repeat;
   }
 #fulltext_content_area .reg_text .border + .header_column h1.part { 
   padding-top: 10px;
