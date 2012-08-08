@@ -727,10 +727,14 @@ p:target {
   }
 #entries.show .reg_text .authority,
 #entries.show .reg_text .extract,
-#entries.show .rule .reg_text .contents {
+#entries.show .reg_text .contents {
   padding: 0 10px 10px 10px;
   margin-left: 65px;
   width: 460px;
+  }
+#entries.show .reg_text .authority,
+#entries.show .reg_text .extract,
+#entries.show .rule .reg_text .contents {
   background-color: #F8F8F8;
   }
 #entries.show .reg_text .authority { margin-left: 65px; }
@@ -739,6 +743,7 @@ p:target {
 #entries.show .reg_text .table_of_contents { 
   font-size: 1.1em;
   overflow: hidden;
+  clear: left;
   }
 #entries.show .reg_text .table_of_contents h2 {
   height: 35px;
