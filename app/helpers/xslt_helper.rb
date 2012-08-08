@@ -29,7 +29,7 @@ module XsltHelper
         amdpar_node.add_child(part_number)
 
         part_text = Nokogiri::XML::Node.new "span", doc
-        part_text['class'] = 'amendment_part_next'
+        part_text['class'] = 'amendment_part_text'
         part_text.content = match[2] + ' '
         amdpar_node.add_child(part_text)
       end
