@@ -1,4 +1,4 @@
-<div class="fulltextWrapper">
+<div class="fulltextWrapper <%= entry.granule_class.downcase%>">
   <% if entry.has_full_xml? %>
     <%=
       html = transform_xml(entry.full_xml, 'entries/_full_text.html.xslt', {

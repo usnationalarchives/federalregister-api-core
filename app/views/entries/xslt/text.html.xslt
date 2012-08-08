@@ -319,4 +319,10 @@
     </div>
     <xsl:value-of disable-output-escaping="yes" select="'&lt;div class=&quot;body_column&quot;&gt;'" />
   </xsl:template>
+
+  <xsl:template match="EXTRACT">
+    <div class="extract">
+      <xsl:apply-templates />
+    </div>
+  </xsl:template>
 </xsl:stylesheet>
