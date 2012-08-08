@@ -27,6 +27,8 @@ $(document).ready(function(){
   /* Doctype Filters */
   $('#doc-type-search-filter li').tipsy( {gravity: 'n', fade: true, offset: 2, title: function() { return $(this).data('tooltip');} });
 
+  /* ARTICLE PAGE */
+  $('#entries.show .reg_text .table_of_contents h2').tipsy( {gravity: 's', fade: true, offset: 2, fallback: "Table of Contents"});
 
   $('.tip_left').tipsy({gravity:'east'});
   $('.tip_over').tipsy({gravity:'south'});
