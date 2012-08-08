@@ -73,6 +73,9 @@
   <xsl:template match="SECTNO">
     <xsl:value-of disable-output-escaping="yes" select="'&lt;/div&gt;'" />
     <h2 class="cfr_section">
+      <xsl:attribute name="id">
+        <xsl:value-of select="concat('sec-', substring(translate(text(), '.', '-'), string-length(substring-before(text(), ' '))+2))" />
+      </xsl:attribute>
       <xsl:apply-templates />
       <xsl:text> </xsl:text>
       <xsl:value-of select="following::SUBJECT[text()]/text()" />
@@ -288,5 +291,35 @@
     </p>
     
     <xsl:value-of disable-output-escaping="yes" select="'&lt;div class=&quot;contents&quot;&gt;'" />
+  </xsl:template>
+
+  <xsl:template match="CONTENTS">
+    <xsl:value-of disable-output-escaping="yes" select="'&lt;/div&gt;'" />
+    <div class="table_of_contents">
+      <h2></h2>
+
+      <ul>
+        <xsl:for-each select="SECHD">
+          <li><xsl:value-of select="text()" /></li>
+        </xsl:for-each>
+        <xsl:for-each select="SECTNO">
+          <li>
+            <a>
+              <xsl:attribute name="href">
+                <xsl:value-of select="concat('#sec-', translate(text(), '.', '-'))" />
+              </xsl:attribute>
+              <span class="section_number">
+                <xsl:value-of select="text()" />
+              </span>
+
+              <xsl:text> </xsl:text>
+
+              <xsl:value-of select="following-sibling::SUBJECT[1][text()]" />
+            </a>
+          </li>
+        </xsl:for-each>
+      </ul>
+    </div>
+    <xsl:value-of disable-output-escaping="yes" select="'&lt;div class=&quot;body_column&quot;&gt;'" />
   </xsl:template>
 </xsl:stylesheet>
