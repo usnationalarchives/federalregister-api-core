@@ -74,7 +74,7 @@
     <xsl:value-of disable-output-escaping="yes" select="'&lt;/div&gt;'" />
     <h2 class="cfr_section">
       <xsl:attribute name="id">
-        <xsl:value-of select="concat('sec-', substring(translate(text(), '.', '-'), string-length(substring-before(text(), ' '))+2))" />
+        <xsl:value-of select="concat('sec-', translate(translate(translate(text(), '.', '-'), '§', ''), ' ', ''))" />
       </xsl:attribute>
       <xsl:apply-templates />
       <xsl:text> </xsl:text>
@@ -298,11 +298,12 @@
     <div class="table_of_contents">
       <h2></h2>
 
+
       <ul>
-        <xsl:for-each select="SECHD">
+        <xsl:for-each select=".//SECHD">
           <li><xsl:value-of select="text()" /></li>
         </xsl:for-each>
-        <xsl:for-each select="SECTNO">
+        <xsl:for-each select=".//SECTNO">
           <li>
             <a>
               <xsl:attribute name="href">
@@ -321,5 +322,11 @@
       </ul>
     </div>
     <xsl:value-of disable-output-escaping="yes" select="'&lt;div class=&quot;body_column&quot;&gt;'" />
+  </xsl:template>
+
+  <xsl:template match="EXTRACT">
+    <div class="extract">
+      <xsl:apply-templates />
+    </div>
   </xsl:template>
 </xsl:stylesheet>

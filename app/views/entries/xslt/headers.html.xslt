@@ -9,9 +9,14 @@
     </xsl:variable>
 
     <xsl:variable name="class">
-      <xsl:if test="parent::*[name() = 'PART']">
-        <xsl:value-of select="'part'" />
-      </xsl:if>
+      <xsl:choose>
+        <xsl:when test="parent::*[1][name() = 'CHAPTER']">
+          <xsl:value-of select="'chapter'" />
+        </xsl:when>
+        <xsl:when test="parent::*[name() = 'PART']">
+          <xsl:value-of select="'part'" />
+        </xsl:when>
+      </xsl:choose>
     </xsl:variable>
 
     <xsl:choose>
