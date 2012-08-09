@@ -731,7 +731,7 @@ p:target {
 #entries.show .reg_text .contents {
   padding: 0 10px 10px 10px;
   margin-left: 65px;
-  width: 460px;
+  width: 600px;
   }
 #entries.show .reg_text .authority,
 #entries.show .reg_text .extract,
@@ -763,6 +763,7 @@ p:target {
   margin-left: 0px;
   }
 #entries.show .reg_text .table_of_contents ul li { margin-left: 5px; }
+#entries.show .reg_text table { width: 92%; }
 
 /* <LSTSUB> */
 #fulltext_content_area h2.subject_list_header {
