@@ -33,6 +33,15 @@ $(document).ready(function(){
   $('#agencies .doc_correct.tipsy').tipsy({gravity: 'e', fallback: "Correction",               delayIn: 100, fade: true, offset: 0});
 
 
+  /* NAVIGATION (pluralized tooltips) */
+  /* CANNED SEARCH PAGE */
+  $('#navigation .doc_notice.tipsy').tipsy(  {gravity: 's', fallback: "Notice",                   delayIn: 100, fade: true, offset: 4});
+  $('#navigation .doc_rule.tipsy').tipsy(    {gravity: 's', fallback: "Final Rule",               delayIn: 100, fade: true, offset: 4});
+  $('#navigation .doc_prorule.tipsy').tipsy( {gravity: 's', fallback: "Proposed Rule",            delayIn: 100, fade: true, offset: 4});
+  $('#navigation .doc_presdocu.tipsy').tipsy({gravity: 's', fallback: "Presidential Document",    delayIn: 100, fade: true, offset: 4});
+  $('#navigation .doc_unknown.tipsy').tipsy( {gravity: 's', fallback: "Document of Unknown Type", delayIn: 100, fade: true, offset: 4});
+  $('#navigation .doc_correct.tipsy').tipsy( {gravity: 's', fallback: "Correction",               delayIn: 100, fade: true, offset: 4});
+
   /* Doctype Filters */
   $('#doc-type-search-filter li').tipsy( {gravity: 'n', fade: true, offset: 2, title: function() { return $(this).data('tooltip');} });
 

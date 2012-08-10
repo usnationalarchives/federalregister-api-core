@@ -643,6 +643,13 @@ SUBNAV
   font-size: 1.1em;
   color: #979797;
   }
+
+#current-article-browse-preview .significant { float: left; }
+#current-article-browse-preview .significant a { 
+  line-height: 14px;
+  color: #015BA2;
+  }
+
 #navigation .previewable .right_column .fr_stats .statistics li {
   font-size: 15px;
   color: #5F6061;
@@ -781,7 +788,14 @@ SUBNAV
   clear: both
   }
 #navigation .previewable .inspection_counts { float: left; }
-#navigation .previewable .mini_document_types a { vertical-align: top; }
+
+
+#navigation .previewable .mini_document_types a { 
+  vertical-align: top;
+  display: inline-block;
+  padding: 0;
+  padding-top: 2px;
+  }
 
 /******************************
 

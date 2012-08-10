@@ -5,26 +5,50 @@
       <% if @issue.total_pages && @issue.total_pages > 1 %>
         <span class="supplemental"><%= @issue.total_pages %> Pages</span>
       <% end %>
-    </h2>  
-    <ul class="current_@issue statistics">
+    </h2>
+
+    <% if true || @issue.significant_entries_count > 0 %>
+      <p class="significant">
+        <%= link_to "<span>#{@issue.significant_entries_count}</span> #{pluralize_without_count @issue.significant_entries_count, "Significant Document"}", entries_search_path(:conditions => {:significant => 1, :publication_date => {:is => @issue.publication_date}}) %>
+      </p>
+    <% end %>
+
+    <ul class="current_issue statistics mini_document_types">
       <% if @issue.notice_count == 0 && @issue.proposed_rule_count == 0 && @issue.rule_count == 0 && @issue.presidential_documents_count == 0 && @issue.significant_entries_count == 0 && @issue.total_pages == 1 %>
         <li>No statistics available.</li>
       <% else %>
         <% if @issue.notice_count > 0 %>
-          <li><%= link_to "<span>#{@issue.notice_count}</span> #{pluralize_without_count @issue.notice_count, "Notice"}", entries_search_path(:conditions => {:type => "NOTICE", :publication_date => {:is => @issue.publication_date}}) %></li>
+          <li>
+            <%= link_to @issue.notice_count, entries_search_path(:conditions => {:type => "NOTICE", :publication_date => {:is => @issue.publication_date}}) %>
+            <div class="rule_type doc_notice tipsy mini">
+              <%= image_tag 'icons/document_icons/document_icons_mini.png' %>
+            </div>
+          </li>
         <% end %>
         <% if @issue.proposed_rule_count > 0 %>
-          <li><%= link_to "<span>#{@issue.proposed_rule_count}</span> #{pluralize_without_count @issue.proposed_rule_count, "Proposed Rule"}", entries_search_path(:conditions => {:type => "PRORULE", :publication_date => {:is => @issue.publication_date}}) %></li>
+          <li>
+            <%= link_to @issue.proposed_rule_count, entries_search_path(:conditions => {:type => "PRORULE", :publication_date => {:is => @issue.publication_date}}) %>
+            <div class="rule_type doc_prorule tipsy mini">
+              <%= image_tag 'icons/document_icons/document_icons_mini.png' %>
+            </div>
+          </li>
         <% end %>            
         <% if @issue.rule_count > 0 %>
-          <li><%= link_to "<span>#{@issue.rule_count}</span> #{pluralize_without_count @issue.rule_count, "Rule"}", entries_search_path(:conditions => {:type => "RULE", :publication_date => {:is => @issue.publication_date}}) %></li>
+          <li>
+            <%= link_to @issue.rule_count, entries_search_path(:conditions => {:type => "RULE", :publication_date => {:is => @issue.publication_date}}) %>
+            <div class="rule_type doc_rule tipsy mini">
+              <%= image_tag 'icons/document_icons/document_icons_mini.png' %>
+            </div>
+          </li>
         <% end %>            
         <% if @issue.presidential_documents_count > 0 %>
-          <li><%= link_to "<span>#{@issue.presidential_documents_count}</span> #{pluralize_without_count @issue.presidential_documents_count, "Presidential Document"}", entries_search_path(:conditions => {:type => "PRESDOCU", :publication_date => {:is => @issue.publication_date}}) %></li>
+          <li>
+            <%= link_to @issue.presidential_documents_count, entries_search_path(:conditions => {:type => "PRESDOCU", :publication_date => {:is => @issue.publication_date}}) %>
+            <div class="rule_type doc_notice tipsy mini">
+              <%= image_tag 'icons/document_icons/document_icons_mini.png' %>
+            </div>
+          </li>
         <% end -%>
-        <% if @issue.significant_entries_count > 0 %>
-          <li><%= link_to "<span>#{@issue.significant_entries_count}</span> #{pluralize_without_count @issue.significant_entries_count, "Significant Document"}", entries_search_path(:conditions => {:significant => 1, :publication_date => {:is => @issue.publication_date}}) %></li>
-        <% end %>
       <% end %>
     </ul>
   </div>
