@@ -10,11 +10,11 @@ function setup_preview_scroller( text_wrapper ) {
 function setup_previewable_nav(el) {
     var nav_sections = el.closest('.dropdown');
     nav_sections.find('.left_column li').first().find('a').addClass('hover');
-    nav_sections.children('.right_column li').hide();
+    nav_sections.find('.right_column').children('li').hide();
     var preview = nav_sections.find('.right_column li').first();
     preview.show();
 
-    if(el == $('#navigation .nav_sections a.sections') ) { 
+    if( el.hasClass('sections') ) { 
       setup_preview_scroller( preview.find('.text_wrapper') );
     }
 }
