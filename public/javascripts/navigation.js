@@ -8,12 +8,15 @@ function setup_preview_scroller( text_wrapper ) {
 }
 
 function setup_previewable_nav(el) {
+    /* hide all other sections and show the first */
     var nav_sections = el.closest('.dropdown');
+    nav_sections.find('.left_column li').children('a').removeClass('hover');
     nav_sections.find('.left_column li').first().find('a').addClass('hover');
     nav_sections.find('.right_column').children('li').hide();
     var preview = nav_sections.find('.right_column li').first();
     preview.show();
 
+    /* ensure that sections get setup properly */
     if( el.hasClass('sections') ) { 
       setup_preview_scroller( preview.find('.text_wrapper') );
     }
@@ -39,8 +42,16 @@ $(document).ready( function() {
    });
 
   $('#navigation .subnav .left_column li').bind('mouseenter', function() {
+    /* set timeouts so that menu items show only if the mouseenter event was 
+     * intentional, not an inadvertant hover on the way to the right side of
+     * the menu */
     var el = $(this);
     navigation_timeout =  setTimeout( function() {
+                            /* set hover states properly */
+                            el.closest('.left_column').find('li a').removeClass('hover');
+                            el.find('a').addClass('hover');
+                            
+                            /* show right side */
                             $('#navigation .subnav .right_column li.preview').hide();
                             var preview = $('#navigation .subnav .right_column').find('#' + el.attr('id') + '-preview');
                             preview.show();
@@ -50,7 +61,6 @@ $(document).ready( function() {
   });
 
   $('#navigation .subnav .left_column li').bind('mouseleave', function() {
-    $(this).find('a').removeClass('hover');
     $('.ui-autocomplete.ui-menu').hide();
     clearTimeout( navigation_timeout );
   });

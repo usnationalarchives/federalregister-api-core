@@ -167,69 +167,67 @@ NAV
 #navigation .agencies {
   background: sprite-image('icons/header/agencies-off.png', 12px, 21px, 50px) no-repeat;
   }
-#navigation .agencies.hover,
-#navigation .agencies:hover {
+#navigation .agencies.hover{
   background: sprite-image('icons/header/agencies-hover.png', 12px, 21px, 50px) no-repeat;
   }
 #navigation .topics {
   background: sprite-image('icons/header/topics-off.png', 10px, 19px, 50px) no-repeat;
   }
-#navigation .topics:hover {
+#navigation .topics.hover {
   background: sprite-image('icons/header/topics-hover.png', 10px, 19px, 50px) no-repeat;
   }
 #navigation .date {
   background: sprite-image('icons/header/date-off.png', 11px, 19px, 50px) no-repeat;
   }
-#navigation .date:hover {
+#navigation .date.hover {
   background: sprite-image('icons/header/date-hover.png', 11px, 19px, 50px) no-repeat;
   }
 #navigation .public_inspection {
   background: sprite-image('icons/header/public-inspection-off.png', 9px, 17px, 50px) no-repeat;
   }
-#navigation .public_inspection:hover {
+#navigation .public_inspection.hover {
   background: sprite-image('icons/header/public-inspection-hover.png', 9px, 17px, 50px) no-repeat;
   }
 #navigation .executive_orders {
   background: sprite-image('icons/header/executive-orders-off.png', 10px, 20px, 50px) no-repeat;
   }
-#navigation .executive_orders:hover {
+#navigation .executive_orders.hover {
   background: sprite-image('icons/header/executive-orders-hover.png', 10px, 20px, 50px) no-repeat;
   }
 #navigation .money {
   background: sprite-image('icons/header/money-off.png', 10px, 20px, 50px) no-repeat;
   }
-#navigation .money:hover,
 #navigation .money.hover {
   background: sprite-image('icons/header/money-hover.png', 10px, 20px, 50px) no-repeat;
   }
 #navigation .environment {
   background: sprite-image('icons/header/environment-off.png', 10px, 20px, 50px) no-repeat;
   }
-#navigation .environment:hover {
+#navigation .environment.hover {
   background: sprite-image('icons/header/environment-hover.png', 10px, 20px, 50px) no-repeat;
   }
 #navigation .world {
   background: sprite-image('icons/header/world-off.png', 10px, 20px, 50px) no-repeat;
   }
-#navigation .world:hover {
+#navigation .world.hover {
   background: sprite-image('icons/header/world-hover.png', 10px, 20px, 50px) no-repeat;
   }
 #navigation .science-and-technology {
   background: sprite-image('icons/header/science-off.png', 10px, 20px, 50px) no-repeat;
   }
-#navigation .science-and-technology:hover {
+#navigation .science-and-technology.hover {
   background: sprite-image('icons/header/science-hover.png', 10px, 20px, 50px) no-repeat;
   }
 #navigation .business-and-industry {
   background: sprite-image('icons/header/industry-off.png', 10px, 20px, 50px) no-repeat;
   }
-#navigation .business-and-industry:hover {
+#navigation .business-and-industry.hover {
   background: sprite-image('icons/header/industry-hover.png', 10px, 20px, 50px) no-repeat;
   }
 #navigation .health-and-public-welfare {
   background: sprite-image('icons/header/health-off.png', 14px, 20px, 50px) no-repeat;
   }
-#navigation .health-and-public-welfare:hover {
+#navigation .health-and-public-welfare.hover {
   background: sprite-image('icons/header/health-hover.png', 14px, 20px, 50px) no-repeat;
   }
 #navigation .article-search {
@@ -315,13 +313,23 @@ NAV DROPDOWN
   color: #5f6061;
   line-height: 30px;
   }
+/* because of js timeouts on the previewable menu  items we don't want css hovers here */
+#navigation .previewable .subnav a:hover {
+  background-color: inherit;
+  border-top-color: #5F6061;
+  border-bottom-color: #5F6061;
+  color: #5F6061;
+  }
 #navigation .subnav a:hover,
-#navigation .subnav a.hover {
+#navigation .subnav a.hover,
+#navigation .previewable .subnav a.hover {
   background-color: #e3e7e8;
   border-top-color: #fff;
   border-bottom-color: #fff;
   color: #f77825;
   }
+
+
 #navigation .subnav li:last-child a {
   border-bottom: none;
   }
