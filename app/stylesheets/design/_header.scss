@@ -316,9 +316,9 @@ NAV DROPDOWN
 /* because of js timeouts on the previewable menu  items we don't want css hovers here */
 #navigation .previewable .subnav a:hover {
   background-color: inherit;
-  border-top-color: #5F6061;
-  border-bottom-color: #5F6061;
-  color: #5F6061;
+  border-top-color: inherit;
+  border-bottom-color: inherit;
+  color: #5f6061;
   }
 #navigation .subnav a:hover,
 #navigation .subnav a.hover,
@@ -369,9 +369,10 @@ SUBNAV
 #navigation .previewable .subnav .right_column li.preview { display: none; }
 #navigation .previewable .subnav .right_column li#money_preview { display: list-item; }
 
+#navigation .previewable .right_column a { border: none; }
 #navigation .previewable .right_column a:hover {
   background: none;
-  color: inherit;
+  border: none;
   color: #B88659;
   }
 
@@ -515,7 +516,7 @@ SUBNAV
   margin-bottom: 10px;
   height: 100px;
   }
-#navigation .preview .row { margin-bottom: 0; }
+#navigation .preview .row { margin-bottom: 10px; }
 #navigation .preview .suggested_search {
   float: left;
   width: 190px;

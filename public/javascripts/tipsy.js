@@ -4,7 +4,7 @@ $(document).ready(function(){
   $('.subscription.tipsy').tipsy({gravity: 'se', offset: 3, delayIn: 100, fade: true});
  
   /* NAVIGATION */
-  $('.previewable .right_column .past_7_days, .previewable .right_column .recently_opened, .previewable .right_column .closing_soon').each( function() {
+  $('.previewable .right_column table .past_7_days, .previewable .right_column table .recently_opened, .previewable .right_column table .closing_soon').each( function() {
     $(this).tipsy({ gravity: 's', delayIn: 100, fade: true, offset: 0,
                     title: function() { return $(this).data('tooltip');}
                   });
