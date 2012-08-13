@@ -56,6 +56,8 @@ class Topic < ApplicationModel
       condition_sql = "(" + words.map{"topics.name REGEXP ?"}.join(" AND ") + ")"
       # '[[:<:]]' is MySQL regex for 'beginning of word'
       bind_params = words.map{|word|"[[:<:]]#{Regexp.escape(word)}"}
+      conditions_sql = conditions_sql + "topics.entries_count > 0"
+
       topics = scoped(
         :conditions => [
           condition_sql, *bind_params
