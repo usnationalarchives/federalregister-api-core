@@ -26,6 +26,7 @@ $doc_icon_mini_height: 20;
   display: inline-block;
   overflow: hidden;
   padding: 0;
+  z-index: 1000;
   }
 
 .grouped_by_date li .rule_type img { 
