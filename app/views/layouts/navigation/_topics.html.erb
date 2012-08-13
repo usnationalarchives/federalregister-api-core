@@ -12,7 +12,7 @@
         <tr>
           <th><h2>Browse Topics</h2></th>
           <th class="past_7_days" data-tooltip="Related Articles Published in the Last 7 Days"></th>
-          <th class="recently_opened" data-tooltip="Related Articles with Comment Periods Opened in the Last 14 Days"></th>
+          <th class="recently_opened" data-tooltip="Related Articles with Comment Periods Opened in the Last 7 Days"></th>
           <th class="closing_soon" data-tooltip="Related Articles with Comment Periods Closing in the Next 7 Days"></th>
         </tr>
       </thead>
@@ -27,7 +27,7 @@
               <% count = EntrySearch.new(:conditions => conditions).count %>
               <%= link_to count, entries_search_path(:conditions => conditions, :utm_source => 'navigation', :utm_medium => 'dropdown', :utm_content => 'topics_with_entries_last_7_days') %>
             </td>
-            <% conditions = {:publication_date => {:gte => @issue.publication_date - 2.weeks}, :comment_date => {:gte => @date} , :topic_ids => [topic.id]} %>
+            <% conditions = {:publication_date => {:gte => @issue.publication_date - 1.week}, :comment_date => {:gte => @date} , :topic_ids => [topic.id]} %>
             <% count = EntrySearch.new(:conditions => conditions).count %>
             <td class="comments_recently_opened">
               <%= link_to count, entries_search_path(:conditions => conditions, :utm_source => 'navigation', :utm_medium => 'dropdown', :utm_content => 'topics_with_comments_opened_recently') %>

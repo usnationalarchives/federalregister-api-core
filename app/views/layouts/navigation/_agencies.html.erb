@@ -12,7 +12,7 @@
         <tr>
           <th><h2>Browse Agencies</h2></th>
           <th class="past_7_days" data-tooltip="Articles Published in the Last 7 Days"></th>
-          <th class="recently_opened" data-tooltip="Articles with Comment Periods Opened in the Last 14 Days"></th>
+          <th class="recently_opened" data-tooltip="Articles with Comment Periods Opened in the Last 7 Days"></th>
           <th class="closing_soon" data-tooltip="Articles with Comment Periods Closing in the Next 7 Days"></th>
         </tr>
       </thead>
@@ -25,7 +25,7 @@
               <% conditions = {:publication_date => {:gte => @issue.publication_date - 1.week}, :agency_ids => [agency.id]} %>
               <%= link_to count, entries_search_path(:conditions => conditions, :utm_source => 'navigation', :utm_medium => 'dropdown', :utm_content => 'agencies_last_7') %>
             </td>
-            <% conditions = {:publication_date => {:gte => @issue.publication_date - 2.weeks}, :comment_date => {:gte => @date} , :agency_ids => [agency.id]} %>
+            <% conditions = {:publication_date => {:gte => @issue.publication_date - 1.week}, :comment_date => {:gte => @date} , :agency_ids => [agency.id]} %>
             <% count = EntrySearch.new(:conditions => conditions).count %>
             <td class="comments_recently_opened">
               <%= link_to count, entries_search_path(:conditions => conditions, :utm_source => 'navigation', :utm_medium => 'dropdown', :utm_content => 'agencies_opened_recently') %>

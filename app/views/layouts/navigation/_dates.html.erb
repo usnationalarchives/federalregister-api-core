@@ -7,7 +7,7 @@
       <% end %>
     </h2>
 
-    <% if true || @issue.significant_entries_count > 0 %>
+    <% if @issue.significant_entries_count > 0 %>
       <p class="significant">
         <%= link_to "<span>#{@issue.significant_entries_count}</span> #{pluralize_without_count @issue.significant_entries_count, "Significant Document"}", entries_search_path(:conditions => {:significant => 1, :publication_date => {:is => @issue.publication_date}}) %>
       </p>
