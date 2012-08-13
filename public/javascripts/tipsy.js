@@ -9,8 +9,8 @@ $(document).ready(function(){
                     title: function() { return $(this).data('tooltip');}
                   });
   });
-  $('.fr_year_not_available').tipsy({ gravity: 's', fallback: "Not Available", delayIn: 100, fade: true, offset: 2,
-                                      title: function() { return $(this).data('tooltip');}
+  $('.fr_year_not_available').tipsy({ gravity: 's', delayIn: 100, fade: true, offset: 2,
+                                      title: function() { return $(this).data('tooltip') === undefined ? "Not Available" : $(this).data('tooltip');}
                                     });
   /* CALENDAR */
   $('table.calendar td.holiday').tipsy({ gravity: 's', delayIn: 100, fade: true, offset: 0});
@@ -28,8 +28,7 @@ $(document).ready(function(){
 
   /* AGENCY PAGE, TOPICS, CANNED SEARCHES */
   $('.doc_presdocu.tipsy').tipsy({ gravity: 'e', delayIn: 100, fade: true, offset: 0,
-                                             title: function() { return $(this).data('tooltip');},
-                                             fallback: "Presidential Document"
+                                             title: function() { return $(this).data('tooltip') === undefined ? "Presidential Document" : $(this).data('tooltip');}
                                            });
   $('.doc_notice.tipsy').tipsy(  {gravity: 'e', fallback: "Notice",                   delayIn: 100, fade: true, offset: 0});
   $('.doc_rule.tipsy').tipsy(    {gravity: 'e', fallback: "Final Rule",               delayIn: 100, fade: true, offset: 0});
