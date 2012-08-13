@@ -9,7 +9,9 @@ $(document).ready(function(){
                     title: function() { return $(this).data('tooltip');}
                   });
   });
-
+  $('.fr_year_not_available').tipsy({ gravity: 's', fallback: "Not Available", delayIn: 100, fade: true, offset: 2,
+                                      title: function() { return $(this).data('tooltip');}
+                                    });
   /* CALENDAR */
   $('table.calendar td.holiday').tipsy({ gravity: 's', delayIn: 100, fade: true, offset: 0});
 
