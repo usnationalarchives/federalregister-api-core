@@ -1,7 +1,7 @@
 <li id="topics-browse-preview" class="preview">
   <div class="topic_finder">
     <h2>Go to a Specific Topic</h2>
-    <% form_tag entries_date_search_path, :method => :get, :id => "date_selector" do %>
+    <% form_tag topics_path, :method => :get, :id => "date_selector" do %>
       <label>Go to a specific topic:</label>
       <input id="topic-search" class="browse_search" placeholder="Antidumping" data-autocomplete="autocomplete" />
     <% end %>

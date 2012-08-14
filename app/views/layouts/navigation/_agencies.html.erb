@@ -1,7 +1,7 @@
 <li id="agencies-browse-preview" class="preview">
   <div class="agency_finder">
     <h2>Go to a specific agency</h2>
-    <% form_tag entries_date_search_path, :method => :get, :id => "date_selector" do %>
+    <% form_tag agencies_path, :method => :get, :id => "date_selector" do %>
       <label>Go to a specific agency:</label>
       <input id="agency-search" class="browse_search" placeholder="Agricultural Marketing Service" data-autocomplete="autocomplete" />
     <% end %>
