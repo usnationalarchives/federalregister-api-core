@@ -24,13 +24,30 @@ function setup_previewable_nav(el) {
 
 $(document).ready( function() {
   var navigation_timeout = null;
+  var current_open_menu = null;
+
+  $('#navigation .dropdown').bind('mouseenter', function() {
+    $(this).find('.subnav').show();
+  });
 
   $('#navigation .subnav').bind('mouseenter', function() {
     $(this).closest('.dropdown').find('a.top_nav').addClass('hover');
+    current_open_menu = $(this);
   });
+  
   $('#navigation .subnav').bind('mouseleave', function() {
     $(this).closest('.dropdown').find('a.top_nav').removeClass('hover');
-    $('.ui-autocomplete.ui-menu').hide();
+    $(this).hide();
+    //$('.ui-autocomplete.ui-menu').hide();
+  });
+
+  $('.ui-autocomplete').live('mouseenter', function() {
+    current_open_menu.closest('.dropdown').find('a.top_nav').addClass('hover');
+    current_open_menu.show();
+    $(this).show();
+  });
+  $('.ui-autocomplete').live('mouseleave', function() {
+    $(this).hide();
   });
 
   $('#navigation .nav_sections a.sections').bind('mouseenter', function() {
