@@ -55,7 +55,7 @@ NAV
   width: 98px;
   }
 #navigation li.nav_blog { 
-  width:68px;
+  width:81px;
   }
 #navigation li.nav_myfr2 {
   width: 75px;
@@ -161,6 +161,7 @@ NAV
   background: sprite-image('icons/header/blog-off.png', 10px, 10px, 50px) no-repeat;
   padding-left: 30px;
   }
+#navigation .blog.hover,
 #navigation .blog:hover {
   background: sprite-image('icons/header/blog-hover.png', 10px, 10px, 50px) no-repeat;
   }
@@ -381,7 +382,8 @@ SUBNAV
 #navigation .previewable .agency_finder h2,
 #navigation .previewable .topic_finder h2,
 #navigation .previewable .pres_details h2,
-#navigation .previewable .preview_wrapper h2 {
+#navigation .previewable .preview_wrapper h2,
+#navigation .previewable #blog-browse-preview h1 {
   margin-left: 5px;
   padding-left: 5px;
   text-transform: uppercase;
@@ -795,6 +797,51 @@ SUBNAV
   display: inline-block;
   padding: 0;
   padding-top: 2px;
+  }
+
+/* BROWSE BLOG */
+/* some styles are in the generic subnav section */
+#navigation .previewable .subnav.blog_list  { width: 595px; }
+#navigation .previewable .subnav.blog_list .right_column { width: 395px; }
+
+
+#navigation .previewable #blog-browse-preview h1 a { 
+  line-height: 14px;
+  padding-left: 0;
+  color: #979797;
+  }
+#navigation .previewable #blog-browse-preview h2 { 
+  border: none;
+  margin-left: 0;
+  padding-left: 0;
+  }
+#navigation .previewable #blog-browse-preview h2 a {
+  color: #015BA2;
+  text-transform: none;
+  font-size: 13px;
+  line-height: 14px;
+  padding-left: 0;
+  }
+#navigation .previewable #blog-browse-preview h2 a:hover { color: #B88659; }
+
+#navigation .previewable #blog-browse-preview ul { margin-left: 10px; }
+#navigation .previewable #blog-browse-preview ul .metadata {
+  font-size: 1.1em;
+  padding-bottom: 0;
+  font-style: italic;
+  margin-left: 5px;
+  }
+#navigation .previewable #blog-browse-preview ul .post_content {
+  display: block;
+  margin-left: 5px;
+  font-size: 1.15em;
+  line-height: 1.3em;
+  }
+#navigation .previewable #blog-browse-preview ul .post_content a {
+  font-size: 0.8em;
+  position: relative;
+  float: right;
+  top: -5px;
   }
 
 /******************************

@@ -52,11 +52,15 @@ $(document).ready( function() {
 
   $('#navigation .nav_sections a.sections').bind('mouseenter', function() {
     setup_previewable_nav( $(this) );
-   });
+  });
 
   $('#navigation .nav_browse a.browse').bind('mouseenter', function() {
     setup_previewable_nav( $(this) );
-   });
+  });
+
+  $('#navigation .nav_blog a.blog').bind('mouseenter', function() {
+    setup_previewable_nav( $(this) );
+  });
 
   $('#navigation .subnav .left_column li').bind('mouseenter', function() {
     /* set timeouts so that menu items show only if the mouseenter event was 
