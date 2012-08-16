@@ -43,7 +43,7 @@
     </h4>
   </xsl:template>
 
-  <xsl:template match="HD[ancestor::AUTH]">
+  <xsl:template match="HD[ancestor::AUTH and (ancestor::REGTEXT or ancestor::PART)]">
     <h3>
       <xsl:apply-templates />
     </h3>
