@@ -3,7 +3,7 @@ var citation_info = {
     open: null,
     setup: function () {
         var anchor = "<span class='trigger'>Show citation box</span>";
-        $(".body_column > *[id^='p-'], .body_column > ul > li[id^='p-']").append(anchor).addClass("citable");
+        $(".body_column *[id^='p-'], .body_column ul > li[id^='p-'], .reg_text *[id^='p-']").append(anchor).addClass("citable");
         var self = this;
         $("#content_area").bind('click',
         function (event) {
