@@ -755,29 +755,6 @@ select.bsmSelect {
 .bsmList {
   margin-left: 13.25em;
   overflow: hidden;
-  }
-.ui-autocomplete  {
-  background: #fff;
-  border: 1px solid #ccc;
-  @include border-bottom-left-radius(5px);
-  @include border-bottom-right-radius(5px);
-  list-style: none;
-  padding: 10px 0;
-  width: 380px;
-  }
-.ui-autocomplete a {
-  cursor: pointer;
-  display: block;
-  padding: 5px 10px;
-  }
-.ui-autocomplete a:hover,
-.ui-autocomplete a:focus,
-.ui-autocomplete a.ui-state-hover {
-  background: #efefef;
-  color: #B88659;
-  }
-.ui-autocomplete-input.loading {
-  background: #fff image-url('ajax-loader.gif') no-repeat right top;
   }  
 .bsmList .bsmListItem,
 .inline-hints {

@@ -24,7 +24,6 @@ function setup_previewable_nav(el) {
 
 $(document).ready( function() {
   var navigation_timeout = null;
-  var current_open_menu = null;
 
   $('#navigation .dropdown').bind('mouseenter', function() {
     /* ensure other menus close - this covers odd edge cases that
@@ -42,7 +41,6 @@ $(document).ready( function() {
 
   $('#navigation .subnav').bind('mouseenter', function() {
     $(this).closest('.dropdown').find('a.top_nav').addClass('hover');
-    current_open_menu = $(this);
   });
   
   $('#navigation .subnav').bind('mouseleave', function() {
@@ -50,14 +48,14 @@ $(document).ready( function() {
     $(this).hide();
   });
 
-  $('.ui-autocomplete').live('mouseenter', function() {
-    current_open_menu.closest('.dropdown').find('a.top_nav').addClass('hover');
-    current_open_menu.show();
-    $(this).show();
-  });
-  $('.ui-autocomplete').live('mouseleave', function() {
-    $(this).hide();
-  });
+  //$('.ui-autocomplete').live('mouseenter', function() {
+    //current_open_menu.closest('.dropdown').find('a.top_nav').addClass('hover');
+    //current_open_menu.show();
+    //$(this).show();
+  //});
+  //$('.ui-autocomplete').live('mouseleave', function() {
+    //$(this).hide();
+  //});
 
   $('#navigation .nav_sections a.sections').bind('mouseenter', function() {
     setup_previewable_nav( $(this) );
@@ -100,6 +98,8 @@ $(document).ready( function() {
     var input = $(this);
     input.autocomplete({
       minLength: 3,
+      appendTo: "#agency-search-form",
+      position: { of : "input[data-autocomplete]#agency-search" },
       source: function( request, response ){
         var elem = input;
         $.ajax({
@@ -120,6 +120,9 @@ $(document).ready( function() {
             $('.ui-autocomplete.ui-menu a').css({'padding': '2px 10px', 'font-size': '14px', 'font-weight': 'bold'});
           } // end success
         }); // end ajax
+      },
+      open: function( event, ui ) {
+        console.log( $(this), ui, event );
       },
       select: function( event, ui ) {
         window.location.href = ui.item.url;
@@ -142,6 +145,8 @@ $(document).ready( function() {
     var input = $(this);
     input.autocomplete({
       minLength: 3,
+      appendTo: "#topic-search-form",
+      position: { of : "input[data-autocomplete]#topic-search" },
       source: function( request, response ){
         var elem = input;
         $.ajax({
