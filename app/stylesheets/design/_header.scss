@@ -802,9 +802,8 @@ SUBNAV
 
 /* BROWSE BLOG */
 /* some styles are in the generic subnav section */
-#navigation .previewable .subnav.blog_list  { width: 595px; }
+#navigation .previewable .subnav.blog_list  { width: 395px; }
 #navigation .previewable .subnav.blog_list .right_column { width: 395px; }
-
 
 #navigation .previewable #blog-browse-preview h1 a { 
   line-height: 14px;
@@ -837,6 +836,7 @@ SUBNAV
   margin-left: 5px;
   font-size: 1.15em;
   line-height: 1.3em;
+  padding-right: 5px;
   }
 #navigation .previewable #blog-browse-preview ul .post_content a {
   font-size: 0.8em;
@@ -844,7 +844,15 @@ SUBNAV
   float: right;
   top: -5px;
   }
+#navigation .view_all {
+  font-size: 12px;
+  font-style: italic;
+  float: right;
+  position: relative;
+  top: -7px;
+  }
 
+  
 /******************************
 
 SEARCH 
