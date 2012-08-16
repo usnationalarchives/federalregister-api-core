@@ -16,6 +16,9 @@
         <xsl:when test="parent::*[name() = 'PART']">
           <xsl:value-of select="'part'" />
         </xsl:when>
+        <xsl:when test="parent::*[name() = 'SUBPART']">
+          <xsl:value-of select="'subpart'" />
+        </xsl:when>
       </xsl:choose>
     </xsl:variable>
 

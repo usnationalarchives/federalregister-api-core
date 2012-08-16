@@ -655,7 +655,7 @@ p:target {
   padding-left: 30px;
   background: sprite-image('icons/icon_books.png', 0, 3px, 150px) no-repeat;
   }
-.reg_text .header_column h1.part {
+.reg_text .header_column h1.part, .reg_text .header_column h1.subpart {
   margin-bottom: 0;
   padding-left: 30px;
   background: sprite-image('icons/icon_book.png', 0, 4px, 150px) no-repeat;
