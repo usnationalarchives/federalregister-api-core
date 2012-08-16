@@ -1180,13 +1180,13 @@ TABLES
   padding: .5em;
   @include text-shadow(#ddd, 1px, 1px, 1px);  
   }
-#entries.show table {
+#entries.show #content_area table {
   border-collapse:separate;
   border: 1px solid #eee;  
   border-top: none;
   width: 100%;
   }
-#entries.show table td {
+#entries.show #content_area table td {
   @include linear-gradient(color-stops(#fff 80%,#f8f8f8));
   border-left: 1px solid #fff;
   border-right: 1px solid #eee;  
@@ -1194,13 +1194,13 @@ TABLES
   border-bottom: 1px solid #eee; 
   padding: .5em 1.618em .5em .5em;
   }
-#entries.show table tr:hover td {
+#entries.show #content_area table tr:hover td {
   background: #F6F9FB;
   /*@include linear-gradient(color-stops(#fff 20%,#f8f8f8));*/
   border-left: 1px solid lighten(#F6F9FB, 2%);  
   border-right: 1px solid darken(#F6F9FB, 2%);
   }  
-#entries.show table thead th {
+#entries.show #content_area table thead th {
   background: #F6F9FB;
   @include linear-gradient(color-stops(#F6F9FB,#e8ebed));
   border-top: 1px solid #fff;
@@ -1212,10 +1212,10 @@ TABLES
   padding: .5em;
   @include text-shadow(#fff, 1px, 1px, 1px);
   } 
-#entries.show table td.center {
+#entries.show #content_area table td.center {
   text-align: center;
 }
-#entries.show table td.indent {
+#entries.show #content_area table td.indent {
   padding-left: 25px;
 }
 
