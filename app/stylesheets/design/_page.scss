@@ -1180,6 +1180,9 @@ TABLES
   padding: .5em;
   @include text-shadow(#ddd, 1px, 1px, 1px);  
   }
+#entries.show #content_area .table_wrapper {
+  overflow-x: scroll;
+}
 #entries.show #content_area table {
   border-collapse:separate;
   border: 1px solid #eee;  

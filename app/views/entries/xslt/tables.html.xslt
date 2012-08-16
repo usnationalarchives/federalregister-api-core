@@ -5,6 +5,7 @@
     <xsl:variable name="number_of_columns">
       <xsl:value-of select="@COLS"/>
     </xsl:variable>
+    <div class="table_wrapper">
     <table>
       <xsl:for-each select="TTITLE[descendant::text()]">
         <caption>
@@ -61,6 +62,7 @@
         </xsl:for-each>
       </tbody>
     </table>
+    </div>
   </xsl:template>
   
   <xsl:template name="header_row">
