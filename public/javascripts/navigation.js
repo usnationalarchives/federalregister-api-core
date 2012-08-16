@@ -27,6 +27,10 @@ $(document).ready( function() {
   var current_open_menu = null;
 
   $('#navigation .dropdown').bind('mouseenter', function() {
+    /* ensure other menus close - this covers odd edge cases that
+     * bypass mouseleave (opening another tab, switching apps, etc). */
+    $(this).siblings().trigger('mouseleave');
+
     $(this).find('a.top_nav').addClass('hover');
     $(this).find('.subnav').show();
   });
