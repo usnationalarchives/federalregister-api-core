@@ -138,6 +138,7 @@ NAV
   background: sprite-image('icons/header/search-off.png', 10px, 9px, 50px) no-repeat;
   padding-left: 30px;
   }
+#navigation .search.hover,
 #navigation .search:hover {
   background: sprite-image('icons/header/search-hover.png', 10px, 9px, 50px) no-repeat;
   }
@@ -145,6 +146,7 @@ NAV
   background: sprite-image('icons/header/learn-off.png', 10px, 9px, 50px) no-repeat;
   padding-left: 27px;
   }
+#navigation .learn.hover,
 #navigation .learn:hover {
   background: sprite-image('icons/header/learn-hover.png', 10px, 9px, 50px) no-repeat;
   }
@@ -152,6 +154,7 @@ NAV
   background: sprite-image('icons/header/policy-off.png', 10px, 9px, 50px) no-repeat;
   padding-left: 27px;
   }
+#navigation .policy.hover,
 #navigation .policy:hover {
   background: sprite-image('icons/header/policy-hover.png', 10px, 9px, 50px) no-repeat;
   }
@@ -261,6 +264,7 @@ NAV
 #navigation .nav_myfr2 {
   background: sprite-image('icons/header/my-fr2.png', 7px, 7px, 50px) no-repeat;
   }
+#navigation .nav_myfr2.hover, 
 #navigation .nav_myfr2:hover {
   background: sprite-image('icons/header/my-fr2-hover.png', 7px, 7px, 50px) no-repeat;
   }
@@ -311,7 +315,7 @@ NAV DROPDOWN
   color: #5f6061;
   line-height: 30px;
   }
-/* because of js timeouts on the previewable menu  items we don't want css hovers here */
+/* because of js timeouts on the previewable menu items we don't want css hovers here so we change them back to default */
 #navigation .previewable .subnav a:hover {
   background-color: inherit;
   border-top-color: inherit;
