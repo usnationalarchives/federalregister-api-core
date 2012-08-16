@@ -121,9 +121,6 @@ $(document).ready( function() {
           } // end success
         }); // end ajax
       },
-      open: function( event, ui ) {
-        console.log( $(this), ui, event );
-      },
       select: function( event, ui ) {
         window.location.href = ui.item.url;
         $(this).data('clear-value', 1);
