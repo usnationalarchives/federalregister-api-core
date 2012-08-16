@@ -27,7 +27,13 @@ $(document).ready( function() {
   var current_open_menu = null;
 
   $('#navigation .dropdown').bind('mouseenter', function() {
+    $(this).find('a.top_nav').addClass('hover');
     $(this).find('.subnav').show();
+  });
+
+  $('#navigation .dropdown').bind('mouseleave', function() {
+    $(this).find('.subnav').hide();
+    $(this).find('a.top_nav').removeClass('hover');
   });
 
   $('#navigation .subnav').bind('mouseenter', function() {
@@ -38,7 +44,6 @@ $(document).ready( function() {
   $('#navigation .subnav').bind('mouseleave', function() {
     $(this).closest('.dropdown').find('a.top_nav').removeClass('hover');
     $(this).hide();
-    //$('.ui-autocomplete.ui-menu').hide();
   });
 
   $('.ui-autocomplete').live('mouseenter', function() {

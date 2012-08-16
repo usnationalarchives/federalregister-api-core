@@ -55,7 +55,7 @@ NAV
   width: 98px;
   }
 #navigation li.nav_blog { 
-  width:81px;
+  width:85px;
   }
 #navigation li.nav_myfr2 {
   width: 75px;
@@ -125,15 +125,13 @@ NAV
   background: sprite-image('icons/header/sections-off.png', 10px, 9px, 50px) no-repeat;
   padding-left: 30px;
   }
-#navigation .sections:hover,
 #navigation .sections.hover {
   background: sprite-image('icons/header/sections-hover.png', 10px, 9px, 50px) no-repeat;
   } 
 #navigation .browse {
   background: sprite-image('icons/header/browse-off.png', 10px, 10px, 50px) no-repeat;
   }
-#navigation .browse.hover, 
-#navigation .browse:hover {
+#navigation .browse.hover {
   background: sprite-image('icons/header/browse-hover.png', 10px, 10px, 50px) no-repeat;
   }
 #navigation .search {
@@ -161,8 +159,7 @@ NAV
   background: sprite-image('icons/header/blog-off.png', 10px, 10px, 50px) no-repeat;
   padding-left: 30px;
   }
-#navigation .blog.hover,
-#navigation .blog:hover {
+#navigation .blog.hover {
   background: sprite-image('icons/header/blog-hover.png', 10px, 10px, 50px) no-repeat;
   }
 #navigation .agencies {
