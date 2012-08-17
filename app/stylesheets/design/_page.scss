@@ -746,6 +746,12 @@ p:target {
   }
 #entries.show .reg_text .authority h3 { margin-bottom: 0; }
 
+#entries.show .reg_text .authority p,
+#entries.show .reg_text .extract p,
+#entries.show .reg_text .contents p{
+  width: 550px;
+}
+
 #entries.show .reg_text .table_of_contents { 
   font-size: 1.1em;
   overflow: hidden;
