@@ -7,7 +7,7 @@
     
     <li class="string optional agency">
       <label>Agency</label>
-      <input placeholder="Agriculture Department" data-autocomplete="autocomplete" />
+      <input placeholder="Agriculture Department" data-autocomplete="autocomplete" id="article-agency-search" />
 
       <%= f.select :agency_ids,
                   Agency.all(:conditions => {:id => @search.agency_ids.to_a} ).map{|a| [a.name, a.id.to_s]},
