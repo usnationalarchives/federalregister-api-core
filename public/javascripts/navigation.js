@@ -34,7 +34,7 @@ $(document).ready( function() {
     $(this).find('.subnav').show();
   });
 
-  $('#navigation .dropdown').bind('mouseleave', function() {
+  $('#navigation .dropdown').bind('mouseleave', function(event) {
     $(this).find('.subnav').hide();
     $(this).find('a.top_nav').removeClass('hover');
   });
@@ -46,16 +46,14 @@ $(document).ready( function() {
   $('#navigation .subnav').bind('mouseleave', function() {
     $(this).closest('.dropdown').find('a.top_nav').removeClass('hover');
     $(this).hide();
+    
+    /* check to see if the mouse pointer in now over the main navigation dropdowns,
+     * if it is then trigger mouseenter once more (it doesn't fire by default because
+     * subnav's are containted within the dropdown and thus haven't left yet...) */
+    if( $(document.elementFromPoint(event.clientX, event.clientY)).parent().hasClass('dropdown') ) {
+      $(document.elementFromPoint(event.clientX, event.clientY)).parent().trigger('mouseenter');
+    }
   });
-
-  //$('.ui-autocomplete').live('mouseenter', function() {
-    //current_open_menu.closest('.dropdown').find('a.top_nav').addClass('hover');
-    //current_open_menu.show();
-    //$(this).show();
-  //});
-  //$('.ui-autocomplete').live('mouseleave', function() {
-    //$(this).hide();
-  //});
 
   $('#navigation .nav_sections a.sections').bind('mouseenter', function() {
     setup_previewable_nav( $(this) );
