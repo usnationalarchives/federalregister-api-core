@@ -9,9 +9,10 @@ $(document).ready(function(){
                     title: function() { return $(this).data('tooltip');}
                   });
   });
-  $('.fr_year_not_available').tipsy({ gravity: 's', delayIn: 100, fade: true, offset: 2,
-                                      title: function() { return $(this).data('tooltip') === undefined ? "Not Available" : $(this).data('tooltip');}
-                                    });
+  $('#navigation .right_column .fr_year_not_available').tipsy({ gravity: 's', delayIn: 100, fade: true, offset: 2,
+                                                  title: function() { return $(this).data('tooltip') === undefined ? "Not Available" : $(this).data('tooltip');}
+                                                });
+                                                
   /* CALENDAR */
   $('table.calendar td.holiday').tipsy({ gravity: 's', delayIn: 100, fade: true, offset: 0});
 

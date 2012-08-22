@@ -25,10 +25,10 @@ function setup_previewable_nav(el) {
 $(document).ready( function() {
   var navigation_timeout = null;
 
-  $('#navigation .dropdown').bind('mouseenter', function() {
+  $('#navigation .dropdown').bind('mouseenter', function(event) {
     /* ensure other menus close - this covers odd edge cases that
      * bypass mouseleave (opening another tab, switching apps, etc). */
-    $(this).siblings().trigger('mouseleave');
+    $(this).siblings().find('.dropdown').trigger('mouseleave');
 
     $(this).find('a.top_nav').addClass('hover');
     $(this).find('.subnav').show();

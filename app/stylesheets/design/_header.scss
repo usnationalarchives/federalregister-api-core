@@ -567,13 +567,13 @@ SUBNAV
 #navigation .preview #carousel_scroller li div.text_wrapper h2 { width: 95%; }
 #navigation .preview #carousel_scroller li div.text_wrapper a {
   line-height: 16px;
-  font-size: 12px;
+  font-size: 14px;
   color: #FFF;
   border: none;
   display: inline-block;
   padding: 0;
+  width: 95%;
   }
-#navigation .preview #carousel_scroller li div.text_wrapper a { font-size: 14px; }
 #navigation .preview #carousel_scroller li div.text_wrapper .date { 
   background: none;
   padding-left: 0;
@@ -755,7 +755,7 @@ SUBNAV
 
 #navigation .previewable .pres_holder li.executive_order_wrapper { vertical-align: top; }
 #navigation .previewable .pres_holder li.executive_order_wrapper .eo_number { 
-  width: 55px;
+  width: 65px;
   vertical-align: top;
   padding-top: 3px;
   font-weight: bold;
@@ -765,11 +765,11 @@ SUBNAV
   font-size: 12px;
   font-weight: 500;
   color: #015BA2;
-  width: 260px;
+  width: 250px;
   }
 #navigation .previewable .pres_holder li.executive_order_wrapper a:hover { color: #B88659; }
 #navigation .previewable .pres_holder ol.children li { 
-  width: 60px;
+  width: 61px;
   font-weight: bold;
   font-size: 13px;
   }
