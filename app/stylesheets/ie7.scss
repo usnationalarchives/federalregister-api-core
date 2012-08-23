@@ -84,3 +84,11 @@ NAVIGATION
   }
 #navigation .previewable .pres_holder .pres_details { float: left; }
 #navigation .previewable .pres_holder ol.children li { float: left; }
+/* blog */
+#navigation .previewable #blog-browse-preview h1 { margin-top: 0px; }
+#navigation .view_all { top: 10px; }
+#navigation .previewable #blog-browse-preview ul .post_content a {
+  top: -27px;
+  line-height: 14px;
+  }
+
