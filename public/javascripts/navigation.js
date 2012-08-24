@@ -46,6 +46,14 @@ $(document).ready( function() {
     $(this).find('a.top_nav').removeClass('hover');
   });
 
+  $('#navigation .subnav .left_column a').bind('click', function(event) {
+    /* this is to support touch enabled devices where the first click 
+     * is actually a hover on these menus */
+    if( ! $(this).hasClass('hover') ) {
+      event.preventDefault();
+    }
+  });
+
   $('#navigation .subnav').bind('mouseenter', function() {
     $(this).closest('.dropdown').find('a.top_nav').addClass('hover');
   });
