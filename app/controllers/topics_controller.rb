@@ -3,7 +3,12 @@ class TopicsController < ApplicationController
     cache_for 1.day
     @topics = Topic.all(:order => "topics.name", :conditions => "topics.entries_count > 0")
   end
-  
+
+  def search
+    topics = Topic.named_approximately(params[:term]).limit(10)
+    render :json => topics.map{|t| {:id => t.id, :name => t.name, :url => topic_url(t)} }
+  end
+
   def show
     cache_for 1.day
     @topic = Topic.find_by_slug!(params[:id])
@@ -43,4 +48,13 @@ class TopicsController < ApplicationController
     end
   end
   
+  def navigation
+    cache_for 1.day
+    
+    @topics = Topic.without_routine.top_by_article_count(10).in_last_days(30)
+    @issue  = Issue.current
+    @date   = Date.current
+
+    render :partial => 'layouts/navigation/topics', :layout => false
+  end
 end

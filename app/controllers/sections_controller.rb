@@ -20,6 +20,15 @@ class SectionsController < ApplicationController
       
     end
   end
+
+  def navigation
+    cache_for 1.day
+
+    @issue = Issue.current 
+    @date  = Date.current
+
+    render :partial => 'layouts/navigation/sections', :layout => false
+  end
   
   def featured_agency
     cache_for 5.minutes

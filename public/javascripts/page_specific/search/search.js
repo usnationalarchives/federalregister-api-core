@@ -203,7 +203,7 @@ $(document).ready(function () {
       $(this).trigger('calculate_expected_results');
     });
     
-    $("input[data-autocomplete]").each(function(){
+    $("input[data-autocomplete]#article-agency-search").each(function(){
         var input = $(this);
         input.autocomplete({
         minLength: 3,

@@ -8,7 +8,12 @@
         <div class="date"><%= link_to pub_date.to_formatted_s(:day_date), entries_by_date_path(pub_date) %></div>
         <ul class="comments">
           <% docs.sort_by{|doc| doc.title.present? ? doc.title : "#{doc.toc_subject} #{doc.toc_doc}"}.each do |doc| %>  
-            <li><%= link_to doc.title.present? ? doc.title : "#{doc.toc_subject} #{doc.toc_doc}", entry_path(doc) %></li>
+            <li>
+              <div class="rule_type doc_<%= doc.granule_class.downcase == "sunshine" ? "notice" : doc.granule_class.downcase %> tipsy mini">
+                <%= image_tag 'icons/document_icons/document_icons_mini.png' %>
+              </div>
+              <%= link_to doc.title.present? ? doc.title : "#{doc.toc_subject} #{doc.toc_doc}", entry_path(doc) %>
+            </li>
           <% end %>
         </ul> 
       <% end %>

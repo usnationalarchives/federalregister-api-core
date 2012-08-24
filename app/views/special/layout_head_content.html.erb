@@ -56,4 +56,9 @@
 
 <%= render :esi => my_fr2_assets_path %>
 
+<!--[if lt IE 7]>
+  <script type="text/javascript" src="/javascripts/ie_6/ie_6.js"></script>
+<![endif]-->
+
+
 <%= render :partial => 'layouts/google_analytics', :custom_page_to_track => @page_to_track %>

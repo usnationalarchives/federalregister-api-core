@@ -7,9 +7,13 @@ $doc_icon_mini_height: 20;
   padding: 1em 0 .6em;
   }
 #agencies .search_bar #conditions_term { width: 244px; }
+#agencies .search_bar .formtastic .simple ul { float: left; }
 #agencies .formtastic li.hidden { position: absolute; }
 #agencies .formtastic #conditions_type_input { display: none; }
-
+#agencies #doc-type-search-filter {
+  overflow: hidden;
+  height: 25px;
+  }
 
 #agencies #sidebar .sub_agencies li.show_hide a,
 #agencies p.show_hide a { 
@@ -26,6 +30,7 @@ $doc_icon_mini_height: 20;
   display: inline-block;
   overflow: hidden;
   padding: 0;
+  z-index: 1000;
   }
 
 .grouped_by_date li .rule_type img { 

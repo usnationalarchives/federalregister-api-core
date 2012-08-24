@@ -1,0 +1,41 @@
+#navigation .ui-autocomplete, 
+.ui-autocomplete {
+  background: #fff;
+  border: 1px solid #ccc;
+  @include border-bottom-left-radius(5px);
+  @include border-bottom-right-radius(5px);
+  list-style: none;
+  padding: 10px 0;
+  width: 380px;
+  }
+#navigation .ui-autocomplete a,
+.ui-autocomplete a {
+  cursor: pointer;
+  display: block;
+  padding: 5px 10px;
+  }
+#navigation .previewable .right_column .ui-autocomplete a:hover,
+#navigation .previewable .right_column .ui-autocomplete a:focus,
+#navigation .ui-autocomplete a.ui-state-hover,
+.ui-autocomplete a:hover,
+.ui-autocomplete a:focus,
+.ui-autocomplete a.ui-state-hover {
+  background: #efefef;
+  color: #B88659;
+  }
+.ui-autocomplete-input.loading {
+  background: #fff image-url('ajax-loader.gif') no-repeat right top;
+  }
+
+/* Navigation specific */
+/* using !important to override inline styles */
+#navigation .previewable .right_column .ui-autocomplete { left: 0px !important; }
+#navigation .previewable .right_column .ui-autocomplete a { 
+  font-size: 12px !important;
+  color: #015BA2 !important;
+  line-height: 18px;
+  }
+#navigation .previewable .right_column .ui-autocomplete a:hover,
+#navigation .previewable .right_column .ui-autocomplete a:focus { 
+  color: #B88659 !important;
+  }

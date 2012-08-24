@@ -121,7 +121,7 @@ ActionController::Routing::Routes.draw do |map|
   map.event 'events/:id.:format', :controller => 'events', :action => 'show', :conditions => { :method => :get }
   
   # TOPICS
-  map.resources :topics, :as => "topics", :only => [:index, :show]
+  map.resources :topics, :as => "topics", :only => [:index, :show], :collection => {:search => :get}
   map.significant_entries_topic 'topics/:id/significant.:format', :controller => "topics", :action => "significant_entries", :conditions => { :method => :get }
 
   # AGENCIES

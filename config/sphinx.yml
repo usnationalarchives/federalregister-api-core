@@ -3,6 +3,7 @@ development:
   version: '2.0.1'
   morphology: stem_en
   index_exact_words: 1
+  mem_limit: 528M
 test:
   version: '2.0.1'
   morphology: stem_en

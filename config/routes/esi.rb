@@ -11,13 +11,22 @@ ActionController::Routing::Routes.draw do |map|
     quiet_map.agency_highlight '/agency_highlight', :controller => 'special', :action => 'agency_highlight'
     quiet_map.popular_entries '/popular_entries', :controller => 'special', :action => 'popular_entries'
     quiet_map.most_emailed_entries '/most_emailed_entries', :controller => 'special', :action => 'most_emailed_entries'
-    
+   
+
+    # NAVIGATION
+    quiet_map.sections_navigation         'sections/navigation',          :controller => 'sections',          :action => 'navigation'
+    quiet_map.agencies_navigation         'agencies/navigation',          :controller => 'agencies',          :action => 'navigation'
+    quiet_map.topics_navigation           'topics/navigation',            :controller => 'topics',            :action => 'navigation'
+    quiet_map.date_navigation             'articles/navigation',          :controller => 'entries',           :action => 'navigation'
+    quiet_map.pi_navigation               'public_inspection/navigation', :controller => 'public_inspection', :action => 'navigation'
+    quiet_map.executive_orders_navigation 'executive_orders/navigation',  :controller => 'executive_orders',  :action => 'navigation'
+
     # BY DATE
     quiet_map.entries_by_month 'articles/:year/:month', :controller => 'entries',
                                                      :action     => 'by_month',
                                                      :year       => /\d{4}/,
                                                      :month      => /\d{1,2}/
-    
+         
     # ENTRY SEARCH
     quiet_map.entries_search_header 'articles/search/header', :controller => 'entries/search', :action => 'header'
     quiet_map.entries_search_results 'articles/search/results.:format', :controller => 'entries/search', :action => 'results'
@@ -29,7 +38,7 @@ ActionController::Routing::Routes.draw do |map|
                                                      :action     => 'by_month',
                                                      :year       => /\d{4}/,
                                                      :month      => /\d{1,2}/
-
+    
     # PI SEARCH
     quiet_map.public_inspection_search_header 'public-inspection/search/header', :controller => 'public_inspection/search', :action => 'header'
     quiet_map.public_inspection_search_results 'public-inspection/search/results', :controller => 'public_inspection/search', :action => 'results'
