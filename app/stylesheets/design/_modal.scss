@@ -39,6 +39,7 @@
 
 #modal,
 #disclaimer_modal,
+#deprecation_modal,
 #cfr_citation_modal,
 #exit_modal {
   background-color: white;
@@ -62,6 +63,7 @@
 #modal .jqmClose,
 #exit_modal .jqmClose,
 #disclaimer_modal .jqmClose,
+#deprecation_modal .jqmClose,
 #cfr_citation_modal .jqmClose {
   position: absolute;
   right: 1em;

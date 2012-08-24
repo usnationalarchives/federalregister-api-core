@@ -26,12 +26,19 @@ $(document).ready( function() {
   var navigation_timeout = null;
 
   $('#navigation .dropdown').bind('mouseenter', function(event) {
+    var dropdown = $(this);
     /* ensure other menus close - this covers odd edge cases that
      * bypass mouseleave (opening another tab, switching apps, etc). */
-    $(this).siblings().find('.dropdown').trigger('mouseleave');
+    /* also, shouldn't need the added find scope after siblings - 
+     * but IE requires it or you get a big nasty loop... */
+    dropdown.siblings().find('.dropdown').trigger('mouseleave');
 
-    $(this).find('a.top_nav').addClass('hover');
-    $(this).find('.subnav').show();
+    dropdown.find('a.top_nav').addClass('hover');
+    dropdown.find('.subnav').show();
+
+    if( dropdown.hasClass('nav_sections') || dropdown.hasClass('nav_browse') || dropdown.hasClass('nav_blog') ) {
+      setup_previewable_nav( dropdown.find('a.top_nav') );
+    }
   });
 
   $('#navigation .dropdown').bind('mouseleave', function(event) {
@@ -53,18 +60,6 @@ $(document).ready( function() {
     if( $(document.elementFromPoint(event.clientX, event.clientY)).parent().hasClass('dropdown') ) {
       $(document.elementFromPoint(event.clientX, event.clientY)).parent().trigger('mouseenter');
     }
-  });
-
-  $('#navigation .nav_sections a.sections').bind('mouseenter', function() {
-    setup_previewable_nav( $(this) );
-  });
-
-  $('#navigation .nav_browse a.browse').bind('mouseenter', function() {
-    setup_previewable_nav( $(this) );
-  });
-
-  $('#navigation .nav_blog a.blog').bind('mouseenter', function() {
-    setup_previewable_nav( $(this) );
   });
 
   $('#navigation .subnav .left_column li').bind('mouseenter', function() {
