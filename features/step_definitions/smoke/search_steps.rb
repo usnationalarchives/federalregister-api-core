@@ -3,8 +3,10 @@ Given /^I am on the home page$/ do
 end
 
 When /^I search for '([^\']*)'$/ do |query|
-  fill_in "Search the Federal Register", :with => query
-  click_button "Go"
+  within '.search_form' do |scope|
+    scope.fill_in "Search the Federal Register", :with => query
+    scope.click_button 'Go'
+  end
 end
 
 Then /^I should see a link to '([^\']*)'$/ do |url|
