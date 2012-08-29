@@ -561,21 +561,13 @@ p:target {
   }  
 .trigger {
   background: sprite-image('icons/citation_box/icon_bookmark.png', 0, 0, 50px) no-repeat;;
-  height: image-height('icons/citation_box/icon_bookmark.png');
   @include hide-text;
-  @include opacity(.10);
   cursor: pointer;
   position: absolute;
-  left: 485px;
   top: .5em;
-  width: image-width('icons/citation_box/icon_bookmark.png');  
+  height: 50px;
+  width: 50px;  
   }
-.citable:hover .trigger {
-  @include opacity(1);
-  }
-.citable.on .trigger {
-  @include opacity(1);
-  }  
 p:target {
   background-color: #F5F8F9;
 }
@@ -633,7 +625,6 @@ p:target {
   margin-top: 10px;
   }
 #entries #fulltext_content_area .signature p.title { font-style: italic; }
-#entries #fulltext_content_area .signature .trigger { left: 477px; }
 
 
 /* <REGTEXT> */
