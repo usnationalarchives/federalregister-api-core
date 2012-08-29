@@ -130,4 +130,27 @@ $(document).ready(function () {
                                   });
                                 }, 700);
     });
+
+    $(".citation_box li.next a, .citation_box li.top a").live('click', function(event) {
+      event.preventDefault();
+      var el_id = $(this).attr('href');
+      var target_el = $("#fulltext_content_area").find( el_id );
+
+      /* scroll to the paragraph past the header if it is one that can be cited ,
+       * these allows the reader to see past the header and not need to scroll again immediately */
+      var next_after_target = target_el.next();
+      var scroll_target = target_el;
+      if( next_after_target.length > 0 && next_after_target.attr('id').match(/^p-/) !== null ) {
+        scroll_target = next_after_target;
+      }
+
+      /* scroll target into view, highlight, and update window has so that the back button works */
+      scroll_target.scrollintoview({
+        duration: 200,
+        complete: function() {
+          target_el.effect("highlight", {color: "#d2eff9"}, 1500);
+          window.location.hash = el_id;
+        }
+      });
+    });
 });
