@@ -468,6 +468,10 @@ p:target {
   margin-right: 0;
   }
 
+#fulltext_content_area {
+  overflow: hidden;
+  clear: both;
+  }
 #fulltext_content_area p.document_details {
   color: #CCC;
   }
@@ -631,6 +635,8 @@ p:target {
 #fulltext_content_area .reg_text {
   width: 100%;
   margin-bottom: 20px;
+  overflow: hidden;
+  clear: both;
   }
 
 .reg_text .header_column { float: none; }
@@ -735,12 +741,6 @@ p:target {
   margin-top: 10px;
   }
 #entries.show .reg_text .authority h3 { margin-bottom: 0; }
-
-#entries.show .reg_text .authority p,
-#entries.show .reg_text .extract p,
-#entries.show .reg_text .contents p{
-  width: 550px;
-}
 
 #entries.show .reg_text .table_of_contents { 
   font-size: 1.1em;
