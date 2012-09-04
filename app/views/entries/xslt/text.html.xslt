@@ -156,6 +156,12 @@
     </p>
   </xsl:template>
   
+  <xsl:template match="DATE">
+    <p class="date">
+      <xsl:apply-templates />
+    </p>
+  </xsl:template>
+
   <xsl:template match="AMDPAR">
     <p class="amendment_part">
       <xsl:apply-templates />
