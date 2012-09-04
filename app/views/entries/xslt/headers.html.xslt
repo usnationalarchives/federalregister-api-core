@@ -52,6 +52,12 @@
     </h3>
   </xsl:template>
 
+  <xsl:template match="PROC">
+    <h3 class="proc">
+      <xsl:apply-templates />
+    </h3>
+  </xsl:template>
+
   <xsl:template match="HD[ancestor::LSTSUB]">
     <xsl:call-template name="manual_header">
       <xsl:with-param name="name" select="text()"/>
