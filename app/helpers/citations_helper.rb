@@ -7,6 +7,7 @@ module CitationsHelper
         text = add_usc_links(text)
         text = add_cfr_links(text,options[:date])
         text = add_federal_register_links(text)
+        text = add_federal_register_doc_number_links(text)
         text = add_regulatory_plan_links(text)
         text = add_public_law_links(text)
         text = add_patent_links(text)
@@ -48,6 +49,16 @@ module CitationsHelper
       else
         str
       end
+    end
+  end
+
+  def add_federal_register_doc_number_links(text)
+    text.gsub(/(FR Doc\.? )([A-Z0-9]+-[0-9]+)([,;\. ])/) do |str|
+      pre = $1
+      doc_number = $2
+      post = $3
+
+      "#{pre}#{content_tag(:a, doc_number, :href => "/a/#{doc_number}")}#{post}"
     end
   end
   
