@@ -17,10 +17,12 @@ class ExecutiveOrdersController < ApplicationController
     cache_for 1.day
     @orders_by_president_and_year = ExecutiveOrderPresenter.all_by_president_and_year
 
-    @president = President.find_by_identifier(params[:president])
+    @president = President.find_by_identifier!(params[:president])
     @year = params[:year].to_i
 
     @eo_collection = ExecutiveOrderPresenter::EoCollection.new(@president, @year)
+
+    raise ActiveRecord::RecordNotFound unless @eo_collection.count > 0
 
     @api_conditions = {
       :type => "PRESDOCU",
