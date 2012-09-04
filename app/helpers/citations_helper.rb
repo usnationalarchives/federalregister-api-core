@@ -77,10 +77,16 @@ module CitationsHelper
   end
 
   def add_omb_control_number_links(text)
-    text = text.gsub(/\b(\d{4}\s*-\s*\d{4})\b/) do |str|
-      number = $1
-      content_tag(:a, number, :href => omb_control_number_url(number), :class => "omb_number external", :target => "_blank")
+    if text =~ /OMB/
+      text = text.gsub(/(\s)(\d{4}\s*-\s*\d{4})([ \.;,]|$)/) do |str|
+        pre = $1
+        number = $2
+        post = $3
+        "#{pre}#{content_tag(:a, number, :href => omb_control_number_url(number), :class => "omb_number external", :target => "_blank")}#{post}"
+      end
     end
+
+    text
   end
   
   def usc_url(title, part)
