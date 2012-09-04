@@ -100,12 +100,12 @@ module CitationsHelper
     text
   end
   
-  def usc_url(title, part)
-    "http://frwebgate.access.gpo.gov/cgi-bin/getdoc.cgi?dbname=browse_usc&docid=Cite:+#{title}USC#{part}"
+  def usc_url(title, section)
+    "http://api.fdsys.gov/link?collection=uscode&title=#{title}&year=mostrecent&section=#{section}&type=usc&link-type=html"
   end
   
   def public_law_url(congress, law)
-    "http://frwebgate.access.gpo.gov/cgi-bin/getdoc.cgi?dbname=#{congress}_cong_public_laws&docid=f:publ#{sprintf("%03d",law.to_i)}.#{congress}"
+    "http://api.fdsys.gov/link?collection=plaw&congress=#{congress}&lawtype=public&lawnum=#{law.to_i}&link-type=html"
   end
   
   def patent_url(number_possibly_with_commas)
