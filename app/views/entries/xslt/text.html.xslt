@@ -98,7 +98,7 @@
           </xsl:attribute>
           <xsl:apply-templates />
         </li>
-        <xsl:if test="not(following-sibling::*[name() != 'PRTPAGE'][1][starts-with(text(),'&#x2022;')])">
+        <xsl:if test="not(following-sibling::*[name() != 'PRTPAGE'][1][starts-with(text(),'&#x2022;') and (name() = 'P' or name() = 'FP')])">
           <xsl:value-of disable-output-escaping="yes" select="'&lt;/ul&gt;'"/>
         </xsl:if>
       </xsl:when>
