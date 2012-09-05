@@ -77,10 +77,14 @@ def chef_cloud_attributes(instance_type)
     @ssl_cert_name      = 'fr2_staging.crt'
     @ssl_cert_key_name  = 'fr2_staging.key'
     @rails_env = 'staging'
+    @database_volume_id = 'vol-dae127b7'
+    @worker_volume_id   = 'vol-30af8159'
   when 'production'
     @ssl_cert_name      = 'www_federalregister_gov.crt'
     @ssl_cert_key_name  = 'www_federalregister_gov.key'
     @rails_env = 'production'
+    @database_volume_id = 'vol-8e12e2e3'
+    @worker_volume_id   = 'vol-3acd3d57'
   end
 
   @resque_web_password = @secrets['resque_web_password']
@@ -147,12 +151,12 @@ def chef_cloud_attributes(instance_type)
     :aws    => {
                 :ebs => {
                           :database => {
-                                          :volume_id   => 'vol-4c187e25',
+                                          :volume_id   => @databse_volume_id,
                                           :mount_point => '/vol',
                                           :device      => '/dev/xvdh'
                                        },
                           :worker   => {
-                                          :volume_id   => 'vol-ae81e5c7',
+                                          :volume_id   => @worker_volume_id,
                                           :mount_point => '/vol',
                                           :device      => '/dev/sdh'
                                        }
@@ -279,6 +283,6 @@ def chef_cloud_attributes(instance_type)
   }
 end
 
-require 'config/poolparty/pools/production.rb'
-#require 'config/poolparty/pools/staging.rb'
+#require 'config/poolparty/pools/production.rb'
+require 'config/poolparty/pools/staging.rb'
 
