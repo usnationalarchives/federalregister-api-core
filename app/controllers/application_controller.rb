@@ -42,7 +42,7 @@ class ApplicationController < ActionController::Base
     end
   end
   
-  rescue_from ActiveRecord::RecordNotFound, ActionController::RoutingError, :with => :record_not_found if RAILS_ENV != 'development'
+  rescue_from ActiveRecord::RecordNotFound, ActiveHash::RecordNotFound, ActionController::RoutingError, :with => :record_not_found if RAILS_ENV != 'development'
   def record_not_found
     # ESI routes should return correct status codes, but no error page
     if params[:quiet]
