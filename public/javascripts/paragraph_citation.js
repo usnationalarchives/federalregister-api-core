@@ -10,6 +10,9 @@ $(document).ready(function () {
       paragraph_citation_box_template = Handlebars.compile($("#paragraph-citation-box-template").html());
     }
 
+    var citation_box_timeout = null,
+        citation_marker_timeout = null;
+
     var citation_box = {
       anchor: $("<span>").addClass('trigger').html("Show citation box"), //"<span class='trigger'>Show citation box</span>",
       document_information: {
@@ -88,9 +91,6 @@ $(document).ready(function () {
         });
       }
     };
-
-    var citation_box_timeout = null,
-        citation_marker_timeout = null;
 
     $('#fulltext_content_area').delegate(".body_column *[id^='p-'], .body_column ul > li[id^='p-'], .reg_text *[id^='p-']", 'mouseenter', function(event) {
       clearTimeout( citation_marker_timeout );
