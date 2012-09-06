@@ -472,9 +472,10 @@ p:target {
   overflow: hidden;
   clear: both;
   }
-#fulltext_content_area p.document_details {
-  color: #CCC;
-  }
+#fulltext_content_area p.document_details { color: #CCC; }
+#fulltext_content_area p.document_details a { color: #CCC; }
+#fulltext_content_area p.document_details a:hover { color: #B88659; }
+
 #entries.show .body_column:empty {
   display: none;
   margin: 0;
@@ -804,7 +805,6 @@ p:target {
   width: 7px;
   background: sprite-image('icons/icon_megaphone.png', 0, 0, 200px) no-repeat;
   }
-
 
 // HELP-DESIGN: I could convert this to a header if you prefer...
 p.cfr_section {
