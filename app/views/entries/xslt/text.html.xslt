@@ -71,14 +71,19 @@
   </xsl:template>
   
   <xsl:template match="SECTNO">
-    <p class="cfr_section">
+    <xsl:value-of disable-output-escaping="yes" select="'&lt;/div&gt;'" />
+    <h2 class="cfr_section">
+      <xsl:attribute name="id">
+        <xsl:value-of select="concat('sec-', translate(translate(translate(text(), '.', '-'), '§', ''), ' ', ''))" />
+      </xsl:attribute>
       <xsl:apply-templates />
       <xsl:text> </xsl:text>
       <xsl:value-of select="following::SUBJECT[text()]/text()" />
-    </p>
+    </h2>
+    <xsl:value-of disable-output-escaping="yes" select="'&lt;div class=&quot;contents&quot;&gt;'" />
   </xsl:template>
   
-  <xsl:template match="P | FP | AMDPAR">
+  <xsl:template match="P | FP">
     <xsl:choose>
       <xsl:when test="starts-with(text(),'&#x2022;')">
         <xsl:if test="not(preceding-sibling::*[name() != 'PRTPAGE'][1][starts-with(text(),'&#x2022;')])">
@@ -93,7 +98,7 @@
           </xsl:attribute>
           <xsl:apply-templates />
         </li>
-        <xsl:if test="not(following-sibling::*[name() != 'PRTPAGE'][1][starts-with(text(),'&#x2022;')])">
+        <xsl:if test="not(following-sibling::*[name() != 'PRTPAGE'][1][starts-with(text(),'&#x2022;') and (name() = 'P' or name() = 'FP')])">
           <xsl:value-of disable-output-escaping="yes" select="'&lt;/ul&gt;'"/>
         </xsl:if>
       </xsl:when>
@@ -112,8 +117,22 @@
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
+
+  <xsl:template match="AUTH">
+    <xsl:value-of disable-output-escaping="yes" select="'&lt;/div&gt;'" />
+    <div class="body_column authority">
+      <xsl:apply-templates />
+    </div>
+    <xsl:value-of disable-output-escaping="yes" select="'&lt;div class=&quot;body_column&quot; &gt;'" />
+  </xsl:template>
+
   
   <xsl:template match="SIG">
+    <xsl:value-of disable-output-escaping="yes" select="'&lt;/div&gt;'" />
+    <div class="header_column">
+      <h2 class="signature_header"></h2>
+    </div>
+    <xsl:value-of disable-output-escaping="yes" select="'&lt;div class=&quot;body_column&quot; &gt;'" />
     <div class="signature">
       <xsl:apply-templates />
     </div>
@@ -137,6 +156,12 @@
     </p>
   </xsl:template>
   
+  <xsl:template match="DATE">
+    <p class="date">
+      <xsl:apply-templates />
+    </p>
+  </xsl:template>
+
   <xsl:template match="AMDPAR">
     <p class="amendment_part">
       <xsl:apply-templates />
@@ -204,5 +229,107 @@
         <xsl:value-of select="$first_page" />
       </xsl:otherwise>
     </xsl:choose>
+  </xsl:template>
+
+  <xsl:template match="CFR[ancestor::LSTSUB]">
+    <h3><xsl:apply-templates /></h3>
+  </xsl:template>
+  <xsl:template match="P[ancestor::LSTSUB]">
+    <div class="subject_list">
+      <ul>
+        <li><xsl:apply-templates /></li>
+      </ul>
+    </div>
+  </xsl:template>
+
+  <xsl:template match="P[preceding-sibling::*[1][name() = 'LSTSUB' or name() = 'SIG'] and following-sibling::*[1][name()='REGTEXT']]">
+      <xsl:value-of disable-output-escaping="yes" select="'&lt;/div&gt;'" />
+      <div class="header_column words_of_issuance">
+        <h2></h2>
+      </div>
+
+      <xsl:value-of disable-output-escaping="yes" select="'&lt;div class=&quot;body_column&quot; &gt;'" />
+      <p><xsl:apply-templates /></p>
+  </xsl:template>
+
+  <xsl:template match="REGTEXT|PART[not(ancestor::REGTEXT)]">
+    <xsl:if test="not(preceding-sibling::*[1][name() = 'REGTEXT' or name() = 'PART'])"> 
+      <xsl:value-of disable-output-escaping="yes" select="'&lt;/div&gt;'" />
+      <xsl:value-of disable-output-escaping="yes" select="'&lt;div class=&quot;reg_text&quot;&gt;'" />
+        <span class="border"></span>
+        <span class="border_icon top">begin regulatory text</span>
+        <span class="border"></span>
+    </xsl:if>
+
+    <xsl:value-of disable-output-escaping="yes" select="'&lt;div&gt;'" />
+      <xsl:apply-templates />
+    <xsl:value-of disable-output-escaping="yes" select="'&lt;/div&gt;'" />
+
+    <xsl:if test="not(following-sibling::*[1][name() = 'REGTEXT' or name() = 'PART'])"> 
+        <span class="border"></span>
+        <span class="border_icon bottom">end regulatory text</span>
+        <span class="border"></span>
+      <xsl:value-of disable-output-escaping="yes" select="'&lt;/div&gt;'" />
+      <xsl:value-of disable-output-escaping="yes" select="'&lt;div class=&quot;body_column&quot;&gt;'" />
+    </xsl:if>
+  </xsl:template> 
+
+  <xsl:template match="PART[ancestor::REGTEXT]">
+    <xsl:apply-templates />
+  </xsl:template>
+
+  <xsl:template match="AMDPAR">
+    <xsl:value-of disable-output-escaping="yes" select="'&lt;/div&gt;'" />
+
+    <p class="amendment_part">
+      <xsl:attribute name="id">
+        <xsl:call-template name="paragraph_id" />
+      </xsl:attribute>
+        
+      <xsl:attribute name="data-page">
+        <xsl:call-template name="current_page" />
+      </xsl:attribute>
+
+      <xsl:apply-templates />
+    </p>
+    
+    <xsl:value-of disable-output-escaping="yes" select="'&lt;div class=&quot;contents&quot;&gt;'" />
+  </xsl:template>
+
+  <xsl:template match="CONTENTS">
+    <xsl:value-of disable-output-escaping="yes" select="'&lt;/div&gt;'" />
+    <div class="table_of_contents">
+      <h2></h2>
+
+
+      <ul>
+        <xsl:for-each select=".//SECHD">
+          <li><xsl:value-of select="text()" /></li>
+        </xsl:for-each>
+        <xsl:for-each select=".//SECTNO">
+          <li>
+            <a>
+              <xsl:attribute name="href">
+                <xsl:value-of select="concat('#sec-', translate(text(), '.', '-'))" />
+              </xsl:attribute>
+              <span class="section_number">
+                <xsl:value-of select="text()" />
+              </span>
+
+              <xsl:text> </xsl:text>
+
+              <xsl:value-of select="following-sibling::SUBJECT[1][text()]" />
+            </a>
+          </li>
+        </xsl:for-each>
+      </ul>
+    </div>
+    <xsl:value-of disable-output-escaping="yes" select="'&lt;div class=&quot;body_column&quot;&gt;'" />
+  </xsl:template>
+
+  <xsl:template match="EXTRACT">
+    <div class="extract">
+      <xsl:apply-templates />
+    </div>
   </xsl:template>
 </xsl:stylesheet>
