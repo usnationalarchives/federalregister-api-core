@@ -3,8 +3,8 @@
  */
 function load_iScroll() {
   var previousPage = 0;
-  var numberOfPages = $('#carousel_wrapper #carousel_scroller').find('li').size();
-  var myScroll = new iScroll('carousel_wrapper', {
+  var numberOfPages = $('#main_carousel_wrapper #carousel_scroller').find('li').size();
+  var myScroll = new iScroll('main_carousel_wrapper', {
     snap: 'li',
     momentum: false,
     hScrollbar: false,
@@ -39,13 +39,16 @@ function load_iScroll() {
  *  FR2 Carousel
  */
 $(document).ready(function(){
+  /* we have two carousels on the page but only want one to be iScroll'd */
+  $('#main #carousel_wrapper').attr('id', 'main_carousel_wrapper');
   var myScroll = load_iScroll();
 
   var carousel_rounded_corner_size = 18;
   var carousel_size = 350;
   var navigation_height = 18;
   
-  $(".text_wrapper").each(function() {
+  /* text_wrappers are also in nav and we don't want to modify those */
+  $("#main .text_wrapper").each(function() {
     var text_wrapper = $(this);
     var box_y_position = carousel_size - (carousel_rounded_corner_size * 2) - navigation_height - text_wrapper.height();      
     text_wrapper.css('top', box_y_position).css('width', $(this).width());
