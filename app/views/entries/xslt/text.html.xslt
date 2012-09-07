@@ -256,19 +256,23 @@
     <xsl:if test="not(preceding-sibling::*[1][name() = 'REGTEXT' or name() = 'PART'])"> 
       <xsl:value-of disable-output-escaping="yes" select="'&lt;/div&gt;'" />
       <xsl:value-of disable-output-escaping="yes" select="'&lt;div class=&quot;reg_text&quot;&gt;'" />
-        <span class="border"></span>
-        <span class="border_icon top">begin regulatory text</span>
-        <span class="border"></span>
+        <div class="divider">
+          <span class="border"></span>
+          <span class="border_icon top">begin regulatory text</span>
+          <span class="border"></span>
+        </div>
     </xsl:if>
 
-    <xsl:value-of disable-output-escaping="yes" select="'&lt;div&gt;'" />
+    <xsl:value-of disable-output-escaping="yes" select="'&lt;div class=&quot;body_column regtext_intro&quot;&gt;'" />
       <xsl:apply-templates />
     <xsl:value-of disable-output-escaping="yes" select="'&lt;/div&gt;'" />
 
     <xsl:if test="not(following-sibling::*[1][name() = 'REGTEXT' or name() = 'PART'])"> 
+      <div class="divider">
         <span class="border"></span>
         <span class="border_icon bottom">end regulatory text</span>
         <span class="border"></span>
+      </div>
       <xsl:value-of disable-output-escaping="yes" select="'&lt;/div&gt;'" />
       <xsl:value-of disable-output-escaping="yes" select="'&lt;div class=&quot;body_column&quot;&gt;'" />
     </xsl:if>
@@ -327,7 +331,7 @@
     <xsl:value-of disable-output-escaping="yes" select="'&lt;div class=&quot;body_column&quot;&gt;'" />
   </xsl:template>
 
-  <xsl:template match="EXTRACT">
+  <xsl:template match="EXTRACT[not(ancestor::REGTEXT)]">
     <div class="extract">
       <xsl:apply-templates />
     </div>
