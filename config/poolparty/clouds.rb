@@ -29,8 +29,10 @@ def chef_cloud_attributes(instance_type)
 
 
   @app_server_port    = "8080"
-  @my_fr2_server_port = "8081"
-  @static_server_port = '8080'
+  @static_server_port = "8080"
+  @my_fr2_server_port = "8080"
+  @audit_server_port  = "8080"
+  @resque_server_port = "80"
   @app_url  = case instance_type
               when 'staging'
                 'fr2.criticaljuncture.org'
@@ -42,12 +44,12 @@ def chef_cloud_attributes(instance_type)
   case instance_type
   when 'staging'
     @proxy_server_address    = '10.117.65.91'
-    @static_server_address   = '10.35.71.41'
-    @worker_server_address   = '10.35.71.41'
-    @blog_server_address     = '10.35.71.41'
-    @mail_server_address     = '10.35.71.41'
-    @splunk_server_address   = '10.35.71.41'
-    @redis_server_address    = '10.35.71.41'
+    @static_server_address   = '10.100.233.7'
+    @worker_server_address   = '10.100.233.7'
+    @blog_server_address     = '10.100.233.7'
+    @mail_server_address     = '10.100.233.7'
+    @splunk_server_address   = '10.100.233.7'
+    @redis_server_address    = '10.100.233.7'
     @database_server_address = '10.101.57.196'
     @mongodb_server_address  = '10.101.57.196'
     @sphinx_server_address   = '10.101.57.196'
@@ -122,14 +124,14 @@ def chef_cloud_attributes(instance_type)
                                         },
                                         { :server_name    =>  "audit.#{@app_url}",
                                           :server_aliases => '',
-                                          :port           => @app_server_port,
+                                          :port           => @audit_server_port,
                                           :docroot        => "/var/www/apps/fr2_audit/public",
                                           :name           => 'fr2_audit',
                                           :rewrite_conditions => "" 
                                         },
                                         { :server_name    =>  "resque.#{@app_url}",
                                           :server_aliases => '',
-                                          :port           => @app_server_port,
+                                          :port           => @resque_server_port,
                                           :docroot        => "/var/www/apps/resque_web/public",
                                           :name           => 'resque-web',
                                           :rewrite_conditions => "" 
