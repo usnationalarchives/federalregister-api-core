@@ -1,4 +1,4 @@
-<div class="fulltextWrapper">
+<div class="fulltextWrapper doc_<%= entry.granule_class.downcase%>">
   <% if entry.has_full_xml? %>
     <%=
       html = transform_xml(entry.full_xml, 'entries/_full_text.html.xslt', {
@@ -6,6 +6,8 @@
         'volume' => entry.volume.to_s,
         'extracted_graphics' => "'|" + entry.graphics.extracted.map(&:identifier).join('|') + "|'"
       }.to_a.flatten).to_s
+      html = remove_empty_nodes(html)
+      html = handle_lstsub(handle_amdpar(html))
      add_citation_links(auto_link(html, :html => { :class => 'external wrap' }), :date => entry.publication_date) %>
   <% elsif entry.full_text %>
     <h3>Full text</h3>

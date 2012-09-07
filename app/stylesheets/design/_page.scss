@@ -467,9 +467,15 @@ p:target {
 .table_of_graphics li.end_of_row {
   margin-right: 0;
   }
-#fulltext_content_area p.document_details {
-  color: #CCC;
+
+#fulltext_content_area {
+  overflow: hidden;
+  clear: both;
   }
+#fulltext_content_area p.document_details { color: #CCC; }
+#fulltext_content_area p.document_details a { color: #CCC; }
+#fulltext_content_area p.document_details a:hover { color: #B88659; }
+
 #entries.show .body_column:empty {
   display: none;
   margin: 0;
@@ -560,21 +566,13 @@ p:target {
   }  
 .trigger {
   background: sprite-image('icons/citation_box/icon_bookmark.png', 0, 0, 50px) no-repeat;;
-  height: image-height('icons/citation_box/icon_bookmark.png');
   @include hide-text;
-  @include opacity(.10);
   cursor: pointer;
   position: absolute;
-  left: 485px;
   top: .5em;
-  width: image-width('icons/citation_box/icon_bookmark.png');  
+  height: 50px;
+  width: 50px;  
   }
-.citable:hover .trigger {
-  @include opacity(1);
-  }
-.citable.on .trigger {
-  @include opacity(1);
-  }  
 p:target {
   background-color: #F5F8F9;
 }
@@ -584,6 +582,8 @@ p:target {
   margin-right: 0.4125em;
 }
 
+
+/* <NOTE> */
 #fulltext_content_area .note {
   margin: 1.5em 0;
   padding: 10px;
@@ -601,9 +601,236 @@ p:target {
   text-indent: 0;
   width: auto;
   }
-// HELP-DESIGN: in the PDF this has a big black bullet next to it /a/2010-15073
-p.amendment_part {
+
+/* <PSIG> */
+#entries #fulltext_content_area .signature_header {
+  padding-left: 20px;
+  float: right;
+  height: 40px;
+  width: 7px;
+  background: sprite-image('icons/icon_pen.png', 0, 1px, 200px) no-repeat;
+  }
+#entries #fulltext_content_area .signature {
+  margin-left: 4px;
+  border-left: 4px solid #7B8687;
+  margin-bottom: 20px;
+  padding-left: 10px;
+  padding-right: 10px;
+  width: 430px;
 }
+#entries #fulltext_content_area .signature p {
+  text-indent: 0;
+  width: auto;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  }
+#entries #fulltext_content_area .signature p.signature_date { padding-top: 0; }
+#entries #fulltext_content_area .signature p.name {
+  font-weight: bold;
+  margin-top: 10px;
+  }
+#entries #fulltext_content_area .signature p.title { font-style: italic; }
+
+
+/* <REGTEXT> */
+#fulltext_content_area .reg_text {
+  width: 100%;
+  margin-bottom: 20px;
+  overflow: hidden;
+  clear: both;
+  }
+#entries.show .reg_text .body_column { 
+  margin-left: 0px;
+  margin-bottom: 0.5em;
+  width: 530px;
+  }
+#entries.show .reg_text .body_column .back_to_top {
+  position: relative;
+  right: 0px;
+  }
+
+.reg_text .header_column { float: none; }
+.reg_text h1 {
+  margin-left: 0;
+  text-align: left;
+  font-size: 1.3em;
+  padding-top: 4px;
+  color: #5697CF;
+  font-weight: bold;
+  }
+.reg_text h1.chapter {
+  margin-bottom: 0;
+  padding-left: 30px;
+  background: sprite-image('icons/icon_books.png', 0, 3px, 150px) no-repeat;
+  }
+.reg_text h1.part, .reg_text h1.subpart {
+  margin-bottom: 0;
+  padding-left: 30px;
+  background: sprite-image('icons/icon_book.png', 0, 4px, 150px) no-repeat;
+  }
+.reg_text .divider { 
+  overflow: hidden;
+  clear: both;
+  }
+#fulltext_content_area .reg_text .divider h1.part { 
+  padding-top: 10px;
+  background: sprite-image('icons/icon_book.png', 0, 9px, 150px) no-repeat;
+  }
+#entries.show .reg_text .body_column.regtext_intro {
+  position: relative;
+  margin-left: 0;
+  left: -5px;
+  }
+
+.reg_text h2 {
+  padding-top: 20px;
+  margin-left: 0;
+  margin-bottom: 1em;
+  text-align: left;
+  color: #5697CF;
+  font-size: 1.2em;
+}
+.reg_text h2.cfr_section {
+  padding-left: 31px;
+  background: sprite-image('icons/icon_openbook.png', 0, 15px, 50px) no-repeat;
+  font-size: 1.2em;
+  font-weight: bold;
+  }
+
+.reg_text h3 {
+  color: #5697CF;
+  font-size: 1.1em;
+  }
+
+#fulltext_content_area .reg_text .border {
+  opacity: 0.3;
+  border-bottom: 2px solid #7B8687;
+  width: 38%;
+  float: left;
+  height: 13px;
+  }
+#fulltext_content_area .reg_text .border_icon {
+  opacity: 0.3;
+  background: sprite-image('icons/icon_scales.png', 7px, 0, 50px) no-repeat;
+  float: left;
+  width: 19%;
+  height: 17px;
+  text-transform: lowercase;
+  font-style: italic;
+  padding-left: 32px;
+  padding-top: 5px;
+  color: #7B8687;
+  margin-bottom: 25px;
+  }
+
+#fulltext_content_area .reg_text p.amendment_part {
+  margin-left: 35px;
+  padding-top: 10px;
+  padding-bottom: 0; 
+  clear: left;
+  line-height: 1.4em;
+  font-weight: bold;
+  }
+#fulltext_content_area .reg_text .amendment_part_number {
+  position: absolute;
+  left: 0px;
+  padding-right: 5px;
+  padding-bottom: 5px;
+  font-family: "athelas-1","athelas-2", "Georgia", serif;
+  vertical-align: top;
+  display: inline-block;
+  font-size: 24px;
+  width: 25px;
+  }
+#fulltext_content_area .reg_text .amendment_part_text {
+  width: 87%;
+  display: inline-block;
+  padding-top: 3px;
+  }
+#entries.show .reg_text .authority,
+#entries.show .reg_text .extract,
+#entries.show .reg_text .contents {
+  padding: 0 10px 10px 10px;
+  margin-left: 65px;
+  width: 87%;
+  overflow: hidden;
+  margin-top: 10px;
+  }
+#entries.show .reg_text .authority,
+#entries.show .reg_text .extract,
+#entries.show .doc_rule .reg_text .contents {
+  background-color: #F5F5F5;
+  }
+#entries.show .reg_text .authority { 
+  margin-left: 65px;
+  margin-top: 10px;
+  }
+#entries.show .reg_text .authority h3 { margin-bottom: 0; }
+
+#entries.show .reg_text .table_of_contents { 
+  font-size: 1.1em;
+  overflow: hidden;
+  clear: left;
+  }
+#entries.show .reg_text .table_of_contents h2 {
+  height: 35px;
+  width: 31px;
+  padding-top: 0;
+  float: left;
+  background: sprite-image('icons/icon_compass.png', 0, 0, 50px) no-repeat;
+  }
+#entries.show .reg_text .table_of_contents ul {
+  float: left;
+  border-left: 4px solid #7B8687;
+  list-style: none;
+  margin-left: 0px;
+  width: 87%;
+  }
+#entries.show .reg_text .table_of_contents ul li { margin-left: 5px; }
+#entries.show .reg_text table { width: 92%; }
+
+/* <LSTSUB> */
+#fulltext_content_area h2.subject_list_header {
+  padding-left: 20px;
+  font-size: 1.3em;
+  background: sprite-image('icons/icon_topics.png', 6px, -2px, 100px) no-repeat;
+  }
+#fulltext_content_area h2.subject_list_header span {
+  width: 140px;
+  display: block;
+  }
+#fulltext_content_area h2.subject_list_header a {
+  white-space: nowrap;
+  word-wrap: break-word;
+  word-break: break-word;
+  }
+#fulltext_content_area .subject_list {
+  margin-left: 4px;
+  border-left: 4px solid #7B8687;
+  padding: 0 10px;
+  width: 430px;
+  }
+#fulltext_content_area .subject_list h3:first-child { margin-top: 0; }
+#fulltext_content_area .subject_list h3 { margin-bottom: 0; }
+
+#fulltext_content_area .subject_list p { padding-bottom: 0px; }
+#fulltext_content_area .subject_list ul {
+  margin-bottom: 0;
+  font-size: 1.1em;
+  margin-left: 30px;
+  }
+
+/* Words of Issuance */
+#entries #fulltext_content_area .header_column.words_of_issuance,
+#entries #fulltext_content_area .header_column.words_of_issuance + .body_column { margin-top: 15px; }
+#entries #fulltext_content_area .header_column.words_of_issuance h2 {
+  padding-left: 20px;
+  float: right;
+  height: 40px;
+  width: 7px;
+  background: sprite-image('icons/icon_megaphone.png', 0, 0, 200px) no-repeat;
+  }
+
 // HELP-DESIGN: I could convert this to a header if you prefer...
 p.cfr_section {
   font-weight: bold;
@@ -974,6 +1201,9 @@ TABLES
   padding: .5em;
   @include text-shadow(#ddd, 1px, 1px, 1px);  
   }
+#entries.show #content_area .table_wrapper {
+  overflow-x: scroll;
+}
 #entries.show #content_area table {
   border-collapse:separate;
   border: 1px solid #eee;  
@@ -986,7 +1216,7 @@ TABLES
   border-right: 1px solid #eee;  
   border-top: 1px solid #fff;
   border-bottom: 1px solid #eee; 
-  padding: .5em 1.618em .5em .5em;
+  padding: .5em;
   }
 #entries.show #content_area table tr:hover td {
   background: #F6F9FB;

@@ -37,6 +37,10 @@ $(document).ready(function(){
   $('.doc_unknown.tipsy').tipsy( {gravity: 'e', fallback: "Document of Unknown Type", delayIn: 100, fade: true, offset: 0});
   $('.doc_correct.tipsy').tipsy( {gravity: 'e', fallback: "Correction",               delayIn: 100, fade: true, offset: 0});
 
+  /* ARTICLE PAGE */
+  $('body#entries.show .reg_text .table_of_contents h2').tipsy( {gravity: 's', fade: true, offset: 2, fallback: "Table of Contents"});
+  $('body#entries.show h2.signature_header').tipsy( {gravity: 's', fade: true, offset: 2, fallback: "Document Signature"});
+  $('body#entries.show .words_of_issuance h2').tipsy( {gravity: 's', fade: true, offset: 2, fallback: "Words of Issuance"});
 
   $('.tip_left').tipsy({gravity:'east'});
   $('.tip_over').tipsy({gravity:'south'});

@@ -29,8 +29,10 @@ def chef_cloud_attributes(instance_type)
 
 
   @app_server_port    = "8080"
-  @my_fr2_server_port = "8081"
-  @static_server_port = '8080'
+  @static_server_port = "8080"
+  @my_fr2_server_port = "8080"
+  @audit_server_port  = "8080"
+  @resque_server_port = "80"
   @app_url  = case instance_type
               when 'staging'
                 'fr2.criticaljuncture.org'
@@ -42,12 +44,12 @@ def chef_cloud_attributes(instance_type)
   case instance_type
   when 'staging'
     @proxy_server_address    = '10.117.65.91'
-    @static_server_address   = '10.35.71.41'
-    @worker_server_address   = '10.35.71.41'
-    @blog_server_address     = '10.35.71.41'
-    @mail_server_address     = '10.35.71.41'
-    @splunk_server_address   = '10.35.71.41'
-    @redis_server_address    = '10.35.71.41'
+    @static_server_address   = '10.100.233.7'
+    @worker_server_address   = '10.100.233.7'
+    @blog_server_address     = '10.100.233.7'
+    @mail_server_address     = '10.100.233.7'
+    @splunk_server_address   = '10.100.233.7'
+    @redis_server_address    = '10.100.233.7'
     @database_server_address = '10.101.57.196'
     @mongodb_server_address  = '10.101.57.196'
     @sphinx_server_address   = '10.101.57.196'
@@ -77,10 +79,14 @@ def chef_cloud_attributes(instance_type)
     @ssl_cert_name      = 'fr2_staging.crt'
     @ssl_cert_key_name  = 'fr2_staging.key'
     @rails_env = 'staging'
+    @database_volume_id = 'vol-dae127b7'
+    @worker_volume_id   = 'vol-30af8159'
   when 'production'
     @ssl_cert_name      = 'www_federalregister_gov.crt'
     @ssl_cert_key_name  = 'www_federalregister_gov.key'
     @rails_env = 'production'
+    @database_volume_id = 'vol-8e12e2e3'
+    @worker_volume_id   = 'vol-3acd3d57'
   end
 
   @resque_web_password = @secrets['resque_web_password']
@@ -118,14 +124,14 @@ def chef_cloud_attributes(instance_type)
                                         },
                                         { :server_name    =>  "audit.#{@app_url}",
                                           :server_aliases => '',
-                                          :port           => @app_server_port,
+                                          :port           => @audit_server_port,
                                           :docroot        => "/var/www/apps/fr2_audit/public",
                                           :name           => 'fr2_audit',
                                           :rewrite_conditions => "" 
                                         },
                                         { :server_name    =>  "resque.#{@app_url}",
                                           :server_aliases => '',
-                                          :port           => @app_server_port,
+                                          :port           => @resque_server_port,
                                           :docroot        => "/var/www/apps/resque_web/public",
                                           :name           => 'resque-web',
                                           :rewrite_conditions => "" 
@@ -147,12 +153,12 @@ def chef_cloud_attributes(instance_type)
     :aws    => {
                 :ebs => {
                           :database => {
-                                          :volume_id   => 'vol-4c187e25',
+                                          :volume_id   => @databse_volume_id,
                                           :mount_point => '/vol',
                                           :device      => '/dev/xvdh'
                                        },
                           :worker   => {
-                                          :volume_id   => 'vol-ae81e5c7',
+                                          :volume_id   => @worker_volume_id,
                                           :mount_point => '/vol',
                                           :device      => '/dev/sdh'
                                        }
@@ -279,6 +285,6 @@ def chef_cloud_attributes(instance_type)
   }
 end
 
-require 'config/poolparty/pools/production.rb'
-#require 'config/poolparty/pools/staging.rb'
+#require 'config/poolparty/pools/production.rb'
+require 'config/poolparty/pools/staging.rb'
 

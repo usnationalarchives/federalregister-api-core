@@ -5,6 +5,7 @@
     <xsl:variable name="number_of_columns">
       <xsl:value-of select="@COLS"/>
     </xsl:variable>
+    <div class="table_wrapper">
     <table>
       <xsl:for-each select="TTITLE[descendant::text()]">
         <caption>
@@ -61,6 +62,7 @@
         </xsl:for-each>
       </tbody>
     </table>
+    </div>
   </xsl:template>
   
   <xsl:template name="header_row">
@@ -147,6 +149,7 @@
       <xsl:call-template name="manual_header">
         <xsl:with-param name="id" select="'table_of_tables'"/>
         <xsl:with-param name="name" select="'Tables'"/>
+        <xsl:with-param name="level" select="1"/>
       </xsl:call-template>
       <ul class="table_of_tables bullets">
         <xsl:for-each select="//GPOTABLE/TTITLE[descendant::text()]">
