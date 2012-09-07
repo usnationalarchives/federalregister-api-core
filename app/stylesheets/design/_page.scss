@@ -639,7 +639,11 @@ p:target {
   overflow: hidden;
   clear: both;
   }
-#entries.show .reg_text .body_column { margin-left: 0px; }
+#entries.show .reg_text .body_column { 
+  margin-left: 0px;
+  margin-bottom: 0.5em;
+  width: 530px;
+  }
 #entries.show .reg_text .body_column .back_to_top {
   position: relative;
   right: 0px;
@@ -664,7 +668,10 @@ p:target {
   padding-left: 30px;
   background: sprite-image('icons/icon_book.png', 0, 4px, 150px) no-repeat;
   }
-.reg_text .divider { overflow: hidden; }
+.reg_text .divider { 
+  overflow: hidden;
+  clear: both;
+  }
 #fulltext_content_area .reg_text .divider h1.part { 
   padding-top: 10px;
   background: sprite-image('icons/icon_book.png', 0, 9px, 150px) no-repeat;
@@ -716,11 +723,6 @@ p:target {
   margin-bottom: 25px;
   }
 
-#entries.show .reg_text .body_column { 
-  margin-left: 25px;
-  margin-bottom: 0.5em;
-  width: 530px;
-  }
 #fulltext_content_area .reg_text p.amendment_part {
   margin-left: 35px;
   padding-top: 10px;
@@ -733,6 +735,7 @@ p:target {
   position: absolute;
   left: 0px;
   padding-right: 5px;
+  padding-bottom: 5px;
   font-family: "athelas-1","athelas-2", "Georgia", serif;
   vertical-align: top;
   display: inline-block;
