@@ -23,7 +23,7 @@
     </xsl:variable>
 
     <xsl:choose>
-      <xsl:when test="not(ancestor::REGTEXT) and $level &lt; 3">
+      <xsl:when test="not(ancestor::REGTEXT or ancestor::PART) and $level &lt; 3">
         <xsl:value-of disable-output-escaping="yes" select="'&lt;/div&gt;'"/>
         <div class="header_column">
           <xsl:call-template name="header">

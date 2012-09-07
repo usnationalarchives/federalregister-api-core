@@ -335,7 +335,7 @@
     <xsl:value-of disable-output-escaping="yes" select="'&lt;div class=&quot;body_column&quot;&gt;'" />
   </xsl:template>
 
-  <xsl:template match="EXTRACT[not(ancestor::REGTEXT)]">
+  <xsl:template match="EXTRACT[not(ancestor::REGTEXT or ancestor::PART)]">
     <div class="extract">
       <xsl:apply-templates />
     </div>
