@@ -19,7 +19,7 @@
 <div id="content_area">
 
   <% if @highlighted_entries.present? %>
-    <%= render :partial => 'sections/carousel', :locals => {:entries => @highlighted_entries} %>
+    <%= render :partial => 'sections/carousel', :locals => {:entries => @highlighted_entries, :image_size => :large} %>
   <% end %>
 
   <%= render :partial => "sections/canned_searches", :locals => {:section => @section, :canned_searches => @canned_searches} %>

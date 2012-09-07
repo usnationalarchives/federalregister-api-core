@@ -2,7 +2,7 @@
   <li id='<%= section.slug %>-preview' class="preview">
     <% @highlighted_entries = section.highlighted_entries(IssueApproval.latest_publication_date).with_lede_photo.limit(1) %>
     <% if @highlighted_entries.present? %>
-      <%= render :partial => 'sections/carousel', :locals => {:entries => @highlighted_entries} %>
+      <%= render :partial => 'sections/carousel', :locals => {:entries => @highlighted_entries, :image_size => :navigation} %>
     <% end %>
     <div class="suggested_searches">
       <% section.canned_searches.active.in_order.limit(4).in_groups_of(2,false).each_with_index do |searches, index| %>
