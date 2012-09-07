@@ -639,27 +639,39 @@ p:target {
   overflow: hidden;
   clear: both;
   }
+#entries.show .reg_text .body_column .back_to_top {
+  position: relative;
+  right: 0px;
+  }
 
 .reg_text .header_column { float: none; }
-.reg_text .header_column h1 {
+.reg_text h1 {
   margin-left: 0;
   text-align: left;
   font-size: 1.3em;
   padding-top: 4px;
+  color: #5697CF;
+  font-weight: bold;
   }
-.reg_text .header_column h1.chapter {
+.reg_text h1.chapter {
   margin-bottom: 0;
   padding-left: 30px;
   background: sprite-image('icons/icon_books.png', 0, 3px, 150px) no-repeat;
   }
-.reg_text .header_column h1.part, .reg_text .header_column h1.subpart {
+.reg_text h1.part, .reg_text h1.subpart {
   margin-bottom: 0;
   padding-left: 30px;
   background: sprite-image('icons/icon_book.png', 0, 4px, 150px) no-repeat;
   }
-#fulltext_content_area .reg_text .border + .header_column h1.part { 
+.reg_text .divider { overflow: hidden; }
+#fulltext_content_area .reg_text .divider h1.part { 
   padding-top: 10px;
   background: sprite-image('icons/icon_book.png', 0, 9px, 150px) no-repeat;
+  }
+#entries.show .reg_text .body_column.regtext_intro {
+  position: relative;
+  margin-left: 0;
+  left: -5px;
   }
 
 .reg_text h2 {
@@ -675,6 +687,11 @@ p:target {
   background: sprite-image('icons/icon_openbook.png', 0, 15px, 50px) no-repeat;
   font-size: 1.2em;
   font-weight: bold;
+  }
+
+.reg_text h3 {
+  color: #5697CF;
+  font-size: 1.1em;
   }
 
 #fulltext_content_area .reg_text .border {
@@ -721,7 +738,7 @@ p:target {
   width: 20px;
   }
 #fulltext_content_area .reg_text .amendment_part_text {
-  width: 600px;
+  width: 87%;
   display: inline-block;
   }
 #entries.show .reg_text .authority,
@@ -729,8 +746,9 @@ p:target {
 #entries.show .reg_text .contents {
   padding: 0 10px 10px 10px;
   margin-left: 65px;
-  width: 600px;
+  width: 87%;
   overflow: hidden;
+  margin-top: 10px;
   }
 #entries.show .reg_text .authority,
 #entries.show .reg_text .extract,

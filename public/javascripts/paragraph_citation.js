@@ -70,7 +70,7 @@ $(document).ready(function () {
                   /* position citation box in relation to it's cooresponding paragraph */
                   citation_el.css({
                       "top": paragraph_el.position().top + 6,
-                      "right": 0,
+                      "right": 37,
                       "display": "block"
                     }).data("id", paragraph_id);
 
@@ -82,6 +82,10 @@ $(document).ready(function () {
                     citation_box_timeout =  setTimeout( function() {
                                               self.hide(citation);
                                             }, 500);
+                  });
+
+                  citation_el.bind('mouseenter', function(event) {
+                    clearTimeout( citation_box_timeout );
                   });
                },
 
@@ -106,7 +110,7 @@ $(document).ready(function () {
         el.append( anchor );
         anchor.css({
           "top": el.position().top + 6,
-          "right": -40,
+          "right": -5,
           "display": "block"
         });
 
