@@ -215,6 +215,10 @@
   <xsl:template name="paragraph_id">
     <xsl:value-of select="concat('p-', count(preceding::*[name(.) = 'P' or name(.) = 'FP'])+1)" />
   </xsl:template>
+
+  <xsl:template name="amdpar_paragraph_id">
+    <xsl:value-of select="concat('p-amd-', count(preceding::*[name(.) = 'AMDPAR'])+1)" />
+  </xsl:template>
   
   <xsl:template name="current_page">
     <xsl:variable name="current_page">
@@ -287,7 +291,7 @@
 
     <p class="amendment_part">
       <xsl:attribute name="id">
-        <xsl:call-template name="paragraph_id" />
+        <xsl:call-template name="amdpar_paragraph_id" />
       </xsl:attribute>
         
       <xsl:attribute name="data-page">
