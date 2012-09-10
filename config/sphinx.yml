@@ -1,22 +1,22 @@
-# Chef overwrites this file...
+# Our chef setup no longer overwrites this file...
 development:
-  version: '2.0.1'
+  version: '2.0.5'
   morphology: stem_en
   index_exact_words: 1
   mem_limit: 528M
   listen: 127.0.0.1
   compat_sphinxql_magics: 0
 test:
-  version: '2.0.1'
+  version: '2.0.5'
   morphology: stem_en
   index_exact_words: 1
 staging:
   morphology: stem_en
   index_exact_words: 1
-  listen: sphinx.fr2.ec2.internal
+  address: sphinx.fr2.ec2.internal
   port: 3312
   mem_limit: 528M
-  version: '2.0.1'
+  version: '2.0.5'
   searchd_log_file: /var/www/apps/fr2/shared/log/searchd.log
   query_log_file: /var/www/apps/fr2/shared/log/searchd.query.log
   pid_file: /var/www/apps/fr2/shared/tmp/searchd.pid
@@ -28,8 +28,9 @@ production:
   address: sphinx.fr2.ec2.internal
   port: 3312
   mem_limit: 528M
-  version: '2.0.1'
+  version: '2.0.5'
   searchd_log_file: /var/www/apps/fr2/shared/log/searchd.log
   query_log_file: /var/www/apps/fr2/shared/log/searchd.query.log
   pid_file: /var/www/apps/fr2/shared/tmp/searchd.pid
   searchd_file_path: /var/www/apps/fr2/shared/db/sphinx/production
+  compat_sphinxql_magics: 0
