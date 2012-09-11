@@ -23,7 +23,7 @@ gem 'formtastic', '0.9.8'
 gem 'json'
 gem 'ym4r', '0.6.1'
 
-gem 'thinking-sphinx', '1.3.20', :require => 'thinking_sphinx'
+gem 'thinking-sphinx', '1.4.13', :require => 'thinking_sphinx'
 gem 'raspell', '1.2'
 gem 'airbrake', '3.0.9'
 gem 'aws-s3', '0.6.2', :require => 'aws/s3'
