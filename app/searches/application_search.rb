@@ -184,16 +184,9 @@ filter_name.to_s.sub(/_ids?$/,'').classify.constantize.find_all_by_id(ids.flatte
       }.merge(find_options).recursive_merge(args)
     )
 
-    sphinx_search = model.search(sphinx_term,
-      :with => with,
-      :with_all => with_all,
-      :conditions => sphinx_conditions,
-      :match_mode => :extended
-    )
-
     if result_array
       result_array.each do |result|
-        result.excerpts = ApplicationSearch::FileExcerpter.new sphinx_search, result
+        result.excerpts = ApplicationSearch::FileExcerpter.new result_array, result
       end
     end
 
