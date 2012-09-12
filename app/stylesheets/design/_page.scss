@@ -626,11 +626,11 @@ p:target {
   padding-top: 2px;
   padding-bottom: 2px;
   }
-#entries #fulltext_content_area .signature p.signature_date { padding-top: 0; }
-#entries #fulltext_content_area .signature p.name {
-  font-weight: bold;
-  margin-top: 10px;
+#entries #fulltext_content_area .signature p.signature_date { 
+  padding-top: 0;
+  margin-bottom: 10px;
   }
+#entries #fulltext_content_area .signature p.name { font-weight: bold; }
 #entries #fulltext_content_area .signature p.title { font-style: italic; }
 
 
