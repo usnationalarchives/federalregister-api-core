@@ -36,7 +36,7 @@ module SearchHelper
   end
   
   def conditions_for_subscription
-    conditions = params[:conditions] || {}
+    conditions = params[:conditions].dup || {}
     conditions.delete(:near) unless conditions[:near] && conditions[:near][:location].present?
     conditions.delete(:publication_date)
     conditions
