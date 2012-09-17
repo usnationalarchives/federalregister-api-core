@@ -64,10 +64,6 @@ ActionController::Routing::Routes.draw do |map|
                                         :controller => "executive_orders",
                                         :action => "index",
                                         :conditions => {:method => :get}
-  map.executive_orders_by_president 'executive-orders/:president.:format',
-                                        :controller => "executive_orders",
-                                        :action => "by_president",
-                                        :conditions => {:method => :get}
   map.executive_orders_by_president_and_year 'executive-orders/:president/:year.:format',
                                         :controller => "executive_orders",
                                         :action => "by_president_and_year",
