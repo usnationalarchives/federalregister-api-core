@@ -70,42 +70,86 @@ class EntrySearch < ApplicationSearch
     end
   end
   
-  define_filter :agency_ids,  :sphinx_type => :with
+  define_filter :agency_ids,
+                :sphinx_type => :with
+
+  define_filter :agencies,
+                :sphinx_type => :with,
+                :sphinx_attribute => :agency_ids,
+                :model_sphinx_method => :id,
+                :model_id_method=> :slug
+
   define_filter :president,
                 :sphinx_type => :with,
                 :sphinx_attribute => :president_id,
-                :sphinx_value_processor => Proc.new{|*identifiers| identifiers.flatten.map {|identifier| president = President.find_by_identifier(identifier); raise ApplicationSearch::InputError.new("invalid presidential identifier") if president.nil?; president.id }} do |*identifiers|
-    identifiers.flatten.map do |identifier|
-      president = President.find_by_identifier(identifier)
-      president.full_name
-    end.to_sentence(:two_words_connector => ' or ', :last_word_connector => ', or ')
-  end
-  define_filter :section_ids, :sphinx_type => :with_all do |section_id|
-    Section.find_by_id(section_id).try(:title)
-  end
-  define_filter :topic_ids,   :sphinx_type => :with_all
-  define_filter :type,        :sphinx_type => :with, :crc32_encode => true do |types|
-    types.map{|type| Entry::ENTRY_TYPES[type]}.to_sentence(:two_words_connector => ' or ', :last_word_connector => ', or ')
-  end
-  define_filter :presidential_document_type_id, :sphinx_type => :with
-  define_filter :small_entity_ids, :sphinx_type => :with, :label => "Small Entities Affected" do |entity_ids|
-    SmallEntity.find_all_by_id(entity_ids).map(&:name).to_sentence(:two_words_connector => ' or ', :last_word_connector => ', or ')
-  end
-  
-  define_filter :docket_id, :phrase => true, :label => "Agency Docket" do |docket|
-    docket
-  end
-  
-  define_filter :significant, :sphinx_type => :with, :label => "Significance" do 
-    "Associated Unified Agenda Deemed Significant Under EO 12866"
-  end
+                :model_id_method=> :identifier,
+                :model_sphinx_method => :id,
+                :model_label_method => :full_name
 
-  define_filter :correction, :sphinx_type => :with
+  define_filter :section_ids,
+                :sphinx_type => :with_all,
+                :model_label_method => :title
+
+  define_filter :sections,
+                :sphinx_type => :with_all,
+                :sphinx_attribute => :section_ids,
+                :model_label_method => :title,
+                :model_id_attribute => :slug
+
+  define_filter :topic_ids,
+                :sphinx_type => :with_all
+
+  define_filter :type,
+                :sphinx_type => :with,
+                :crc32_encode => true do |types|
+                  types.map{|type| Entry::ENTRY_TYPES[type]}.to_sentence(:two_words_connector => ' or ', :last_word_connector => ', or ')
+                end
   
-  define_place_filter :near, :sphinx_attribute => :place_ids
-  define_date_filter :publication_date, :label => "Publication Date"
-  define_date_filter :effective_date, :label => "Effective Date"
-  define_date_filter :comment_date, :label => "Comment Date"
+  define_filter :presidential_document_type_id,
+                :sphinx_type => :with
+
+  define_filter :presidential_document_type,
+                :sphinx_type => :with,
+                :sphinx_attribute => :presidential_document_type_id,
+                :model_sphinx_method => :id,
+                :model_id_method => :identifier
+
+  define_filter :small_entity_ids,
+                :sphinx_type => :with,
+                :label => "Small Entities Affected"
+  
+  define_filter :small_entities,
+                :sphinx_type => :with,
+                :model_id_method => :identifier,
+                :model_sphinx_method => :id,
+                :label => "Small Entities Affected"
+
+  define_filter :docket_id,
+                :phrase => true,
+                :label => "Agency Docket" do |docket|
+                  docket
+                end
+  
+  define_filter :significant,
+                :sphinx_type => :with,
+                :label => "Significance" do 
+                  "Associated Unified Agenda Deemed Significant Under EO 12866"
+                end
+
+  define_filter :correction,
+                :sphinx_type => :with
+  
+  define_place_filter :near,
+                      :sphinx_attribute => :place_ids
+
+  define_date_filter :publication_date,
+                     :label => "Publication Date"
+
+  define_date_filter :effective_date,
+                     :label => "Effective Date"
+
+  define_date_filter :comment_date,
+                     :label => "Comment Date"
   
   attr_reader :cfr
   
@@ -295,16 +339,21 @@ class EntrySearch < ApplicationSearch
       ['published', :publication_date],
       ['with an effective date', :effective_date],
       ['from', :agency_ids],
+      ['from', :agencies],
       ['signed by', :president],
       ['of type', :type],
+      ['of presidential document type', :presidential_document_type_id],
+      ['of presidential document type', :presidential_document_type],
       ['filed under agency docket', :docket_id],
       ['whose', :significant],
       ['associated with', :regulation_id_number],
       ['affecting', :cfr],
       ['located', :near],
       ['in', :section_ids],
+      ['in', :sections],
       ['about', :topic_ids],
-      ['affecting Small', :small_entity_ids]
+      ['affecting Small', :small_entity_ids],
+      ['affecting Small', :small_entities]
     ].each do |term, filter_condition|
       relevant_filters = filters.select{|f| f.condition == filter_condition}
     

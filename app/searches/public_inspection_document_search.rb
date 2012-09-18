@@ -1,18 +1,32 @@
 class PublicInspectionDocumentSearch < ApplicationSearch
-  define_filter :agency_ids,  :sphinx_type => :with
-  define_filter :type,        :sphinx_type => :with, :crc32_encode => true do |types|
-    types.map{|type| Entry::ENTRY_TYPES[type]}.to_sentence(:two_words_connector => ' or ', :last_word_connector => ', or ')
-  end
-  define_filter :docket_id, :phrase => true, :label => "Agency Docket" do |docket|
-    docket
-  end 
-  define_filter :special_filing, :sphinx_type => :with, :label => "Filing Type" do |type|
-    if type == '1'
-      'Special Filing'
-    else
-      'Regular Filing'
-    end
-  end
+  define_filter :agency_ids,
+                :sphinx_type => :with
+
+  define_filter :agencies,
+                :sphinx_attribute => :agency_ids,
+                :sphinx_type => :with,
+                :model_id_method => :slug
+
+  define_filter :type,
+                :sphinx_type => :with, :crc32_encode => true do |types|
+                  types.map{|type| Entry::ENTRY_TYPES[type]}.to_sentence(:two_words_connector => ' or ', :last_word_connector => ', or ')
+                end
+
+  define_filter :docket_id,
+                :phrase => true,
+                :label => "Agency Docket" do |docket|
+                  docket
+                end 
+
+  define_filter :special_filing,
+                :sphinx_type => :with,
+                :label => "Filing Type" do |type|
+                  if type == '1'
+                    'Special Filing'
+                  else
+                    'Regular Filing'
+                  end
+                end
   
   def agency_facets
     ApplicationSearch::FacetCalculator.new(:search => self, :model => Agency, :facet_name => :agency_ids).all
