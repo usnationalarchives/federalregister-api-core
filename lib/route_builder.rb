@@ -27,29 +27,6 @@ module RouteBuilder
     end
   end
   
-  def self.add_api_route(route_name, &proc)
-    base_route = "api_v1_#{route_name}"
-    
-    define_method "#{base_route}_url" do |*args|
-      if Rails.env == 'staging'
-        base_url = 'http://api.fr2.criticaljuncture.org'
-      elsif Rails.env == 'production'
-        base_url = 'http://api.federalregister.gov'
-      else
-        base_url = 'http://api.fr2.local:8080'
-      end
-      
-      base_url + send("#{base_route}_path", *args).sub(/^\/api\//, '/')
-    end
-  end
-  
-  add_api_route :entry
-  add_api_route :entries
-  add_api_route :agency
-  add_api_route :agencies
-  add_api_route :public_inspection_document
-  add_api_route :public_inspection_documents
-  
   add_route :citation do |vol,page|
     {
       :fr_citation => "#{vol}-FR-#{page}"
