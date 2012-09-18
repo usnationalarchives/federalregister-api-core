@@ -1,31 +1,30 @@
 class ApplicationSearch::Filter
   attr_reader :value, :condition, :label, :sphinx_type, :sphinx_attribute, :sphinx_value
   def initialize(options)
+    @name               = options[:name]
     @value              = [options[:value]].flatten
     @condition          = options[:condition]
     @sphinx_attribute   = options[:sphinx_attribute] || @condition
     
-    @model_class        = options[:model_class] || @condition.
-                                                    to_s.
-                                                    sub(/_ids?$/,'').
-                                                    classify.
-                                                    constantize
+    @model_class        = options[:model_class]
     @model_id_method    = options[:model_id_method] || :id
     @model_label_method = options[:model_label_method] || :name
 
-    @name_definer = options[:name_definer] ||= Proc.new do |*ids|
-      ids.flatten.map{|id|
-        begin
-          @model_class.send("find_by_#{@model_id_method}!", id)
-        rescue
-          raise "invalid value"
-        end
-      }.
-      compact.
-      map{|x| x.send(@model_label_method)}.
-      to_sentence(:two_words_connector => ' or ', :last_word_connector => ', or ')
+    unless @name
+      @name_definer = options[:name_definer] ||= Proc.new do |*ids|
+        ids.flatten.map{|id|
+          begin
+            model_class.send("find_by_#{@model_id_method}!", id)
+          rescue
+            raise "invalid value"
+          end
+        }.
+        compact.
+        map{|x| x.send(@model_label_method)}.
+        to_sentence(:two_words_connector => ' or ', :last_word_connector => ', or ')
+      end
     end
-    
+      
     if options[:phrase]
       @sphinx_value = "\"#{@value.join(' ')}\""
     elsif options[:crc32_encode]
@@ -33,7 +32,7 @@ class ApplicationSearch::Filter
     elsif options[:model_sphinx_method]
       @sphinx_value = @value.map{|id|
         begin
-          @model_class.send("find_by_#{@model_id_method}!", id)
+          model_class.send("find_by_#{@model_id_method}!", id)
         rescue
           raise "invalid value"
         end
@@ -49,5 +48,13 @@ class ApplicationSearch::Filter
   
   def name
     @name ||= @name_definer.call(value)
+  end
+
+  def model_class
+    @model_class || @condition.
+                      to_s.
+                      sub(/_ids?$/,'').
+                      classify.
+                      constantize
   end
 end
