@@ -1,5 +1,5 @@
 class ApplicationSearch::Filter
-  attr_reader :value, :condition, :label, :sphinx_type, :sphinx_attribute, :sphinx_value
+  attr_reader :value, :condition, :label, :sphinx_type, :sphinx_attribute, :sphinx_value, :name
   def initialize(options)
     @name               = options[:name]
     @value              = [options[:value]].flatten
@@ -16,13 +16,15 @@ class ApplicationSearch::Filter
           begin
             model_class.send("find_by_#{@model_id_method}!", id)
           rescue
-            raise "invalid value"
+            raise ApplicationSearch::InputError.new("invalid value")
           end
         }.
         compact.
         map{|x| x.send(@model_label_method)}.
         to_sentence(:two_words_connector => ' or ', :last_word_connector => ', or ')
       end
+
+      @name = @name_definer.call(@value)
     end
       
     if options[:phrase]
@@ -34,7 +36,7 @@ class ApplicationSearch::Filter
         begin
           model_class.send("find_by_#{@model_id_method}!", id)
         rescue
-          raise "invalid value"
+          raise ApplicationSearch::InputError.new("invalid value")
         end
       }.map{|x| x.send(options[:model_sphinx_method])}
     elsif options[:sphinx_value_processor]
@@ -46,10 +48,6 @@ class ApplicationSearch::Filter
     @label        = options[:label] || @condition.to_s.singularize.humanize
   end
   
-  def name
-    @name ||= @name_definer.call(value)
-  end
-
   def model_class
     @model_class || @condition.
                       to_s.
