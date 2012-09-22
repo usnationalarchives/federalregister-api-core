@@ -166,7 +166,7 @@ GEM
       after_commit (>= 1.0.7)
       riddle (>= 1.5.3)
     thoughtbot-shoulda (2.11.1)
-    thunder_punch (0.0.11)
+    thunder_punch (0.0.12)
       capistrano (>= 2.5.5)
     tilt (1.3.3)
     timecop (0.3.5)
@@ -236,7 +236,7 @@ DEPENDENCIES
   system_timer (= 1.0.0)
   thinking-sphinx (= 1.4.13)
   thoughtbot-shoulda
-  thunder_punch (= 0.0.11)
+  thunder_punch (= 0.0.12)
   timecop (= 0.3.5)
   webrat (= 0.7.1)
   will_paginate (= 2.3.14)
