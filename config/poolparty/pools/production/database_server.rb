@@ -26,8 +26,6 @@ cloud :fr2_database do
     
     recipe "apparmor"
 
-    #recipe "munin::client"
-
     recipe "mysql::server_ec2"
     recipe "mysql::server"
     recipe "sphinx"
