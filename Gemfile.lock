@@ -56,6 +56,7 @@ GEM
     chunky_png (0.9.0)
     ci_reporter (1.6.3)
       builder (>= 2.1.2)
+    cmdparse (2.0.5)
     compass (0.10.1)
       haml (>= 3.0.4)
     compass-960-plugin (0.9.13)
@@ -91,6 +92,10 @@ GEM
     icalendar (1.1.5)
     jgre-monkeyspecdoc (0.9.5)
     json (1.4.6)
+    juicer (1.0.6)
+      cmdparse
+      nokogiri
+      rubyzip
     klarlack (0.0.6)
     lemonade (0.3.2)
       chunky_png (>= 0.7.3)
@@ -211,6 +216,7 @@ DEPENDENCIES
   icalendar
   jgre-monkeyspecdoc (= 0.9.5)
   json
+  juicer (= 1.0.6)
   klarlack (= 0.0.6)
   lemonade (= 0.3.2)
   mechanize (= 1.0.0)
