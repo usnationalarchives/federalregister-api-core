@@ -36,7 +36,8 @@ class PublicInspectionDocument < ApplicationModel
                     :styles => {
                       :with_banner => { :processors => [:permalink_banner_adder] }
                     },
-                    :processors => [:permalink_banner_adder]
+                    :processors => [:permalink_banner_adder],
+                    :default_url => "missing.pdf"
 
   belongs_to :entry
   has_and_belongs_to_many :public_inspection_issues,

@@ -137,7 +137,7 @@ module Content
     end
 
     def not_already_downloaded?
-      @pi.pdf.url.blank?
+      @pi.pdf.url == 'missing.pdf'
     end
 
     def etag_from_head(url)
