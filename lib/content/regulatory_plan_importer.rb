@@ -117,7 +117,7 @@ module Content
       File.makedirs(File.dirname(path))
       unless File.exists?(path)
         puts "downloading #{url}..."
-        Curl::Easy.download(url, path) 
+        Curl::Easy.download(url, path) {|c| c.follow_location = true} 
       end
       
     end
