@@ -137,8 +137,16 @@ class EntrySearch < ApplicationSearch
                 end
 
   define_filter :correction,
-                :sphinx_type => :with
-  
+                :sphinx_type => :with do |val|
+                  case val
+                  when '1', 1, true
+                    "Original Document"
+                  when '0', 0, false
+                    "Correction"
+                  end
+                end
+
+
   define_place_filter :near,
                       :sphinx_attribute => :place_ids
 
