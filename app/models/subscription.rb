@@ -79,7 +79,11 @@ class Subscription < ApplicationModel
   private
   
   def remove_from_bounce_list
-    response = SendgridClient.new.remove_from_bounce_list(email)
+    begin
+      SendgridClient.new.remove_from_bounce_list(email)
+    rescue Exception => e
+      Airbrake.notify(e)
+    end
   end
 
   def ask_for_confirmation
