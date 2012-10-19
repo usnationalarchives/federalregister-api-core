@@ -17,7 +17,7 @@
     <li>
       <span class="title">All Executive Orders since 1994</span>
       <span class="links">
-        <%= link_to 'CSV',  api_v1_entries_url(:conditions => @api_conditions, :fields => @fields, :per_page => 1000, :format => :csv, :order => "executive_order_number") %>
+        <%= link_to 'CSV/Excel',  api_v1_entries_url(:conditions => @api_conditions, :fields => @fields, :per_page => 1000, :format => :csv, :order => "executive_order_number") %>
         <%= link_to 'JSON', api_v1_entries_url(:conditions => @api_conditions, :fields => @fields + %w(full_text_xml_url body_html_url json_url), :per_page => 1000, :format => :json, :order => "executive_order_number") %>
       </span>
     </li>
@@ -26,7 +26,7 @@
       <li>
         <span class="title"><%= president.full_name %></span>
         <span class="links">
-          <%= link_to 'CSV',  api_v1_entries_url(:conditions => @api_conditions.merge(:president => president.identifier), :fields => @fields, :per_page => 1000, :format => :csv, :order => "executive_order_number") %> 
+          <%= link_to 'CSV/Excel',  api_v1_entries_url(:conditions => @api_conditions.merge(:president => president.identifier), :fields => @fields, :per_page => 1000, :format => :csv, :order => "executive_order_number") %>
           <%= link_to 'JSON', api_v1_entries_url(:conditions => @api_conditions.merge(:president => president.identifier), :fields => @fields, :per_page => 1000, :format => :json, :order => "executive_order_number") %>
         </span>
       </li>
