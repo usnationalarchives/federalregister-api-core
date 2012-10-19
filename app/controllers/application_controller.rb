@@ -64,6 +64,12 @@ class ApplicationController < ActionController::Base
   end
   
   def cache_for(time)
+    if RAILS_ENV == 'development'
+      path = File.join(Rails.root, 'config', 'cache.yml')
+      if File.exists?(path) && YAML::load_file(path).none? {|path| request.path =~ /#{path}/ }
+        return
+      end
+    end
     expires_in time, :public => true
   end
   

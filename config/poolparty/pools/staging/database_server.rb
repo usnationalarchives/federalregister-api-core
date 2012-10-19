@@ -27,8 +27,6 @@ cloud :database_server_11 do
     
     recipe "apparmor"
 
-    recipe "munin::client"
-    
     recipe "mysql::server"
     recipe "mysql::server_ec2"
     recipe "sphinx"
@@ -43,9 +41,6 @@ cloud :database_server_11 do
       :chef => {
                  :roles => ['database']
                },
-      :aws  => {
-                  :ebs => { :volume_id => "vol-fa4c6893" }
-               },
       :mysql => {
                   :bind_address    => '',
                   :tunable => {:max_connections => "50"}
@@ -53,9 +48,9 @@ cloud :database_server_11 do
       :rails  => { :environment => "staging" },
       #:ubuntu => { :hostname => 'database'},
       :sphinx => { 
-                    :version => "2.0.1-beta",
-                    :url => "http://sphinxsearch.com/files/sphinx-2.0.1-beta.tar.gz",
-                    :tar_file => "/opt/src/sphinx-2.0.1-beta.tar.gz"
+                    :version => "2.0.5-release",
+                    :url => "http://sphinxsearch.com/files/sphinx-2.0.5-release.tar.gz",
+                    :tar_file => "/opt/src/sphinx-2.0.5-release.tar.gz"
                  }
       )
           

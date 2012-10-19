@@ -71,11 +71,11 @@ BUTTONS / ICONS
 .button.social.email { background: sprite-image('icons/sharing/icon_email.png', 0, 0, 55px); }
 .button.social.email:hover { background: sprite-image('icons/sharing/icon_email_active.png', 0, 0, 55px); }
 
-.button.social.facebook { background: sprite-image('icons/sharing/icon_facebook.png', 0, 0, 55px); }
-.button.social.facebook:hover { background: sprite-image('icons/sharing/icon_facebook_active.png', 0, 0, 55px); }
+#entries .button.social.facebook { background: sprite-image('icons/sharing/icon_facebook.png', 0, 0, 55px); }
+#entries .button.social.facebook:hover { background: sprite-image('icons/sharing/icon_facebook_active.png', 0, 0, 55px); }
 
-.button.social.twitter { background: sprite-image('icons/sharing/icon_twitter.png', 0, 0, 55px); }
-.button.social.twitter:hover { background: sprite-image('icons/sharing/icon_twitter_active.png', 0, 0, 55px); }
+#entries .button.social.twitter { background: sprite-image('icons/sharing/icon_twitter.png', 0, 0, 55px); }
+#entries .button.social.twitter:hover { background: sprite-image('icons/sharing/icon_twitter_active.png', 0, 0, 55px); }
 
 .button.format.pdf { background: sprite-image('icons/icon_pdf_document.png', 0, -1px, 50px) no-repeat; }
 .button.format.pdf:hover { background: sprite-image('icons/icon_pdf_document_on.png', 0, -1px, 50px) no-repeat; }

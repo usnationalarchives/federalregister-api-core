@@ -1,9 +1,10 @@
-cloud :static_server do
+cloud :worker_server do
   # basic settings
   using :ec2
   keypair "~/Documents/AWS/FR2/gpoEC2.pem"
   user "ubuntu"
-  image_id "ami-913ad1f8" #Basic Static Server
+  #image_id "ami-913ad1f8" #Basic Static Server
+  image_id "ami-4dad7424" #Ubuntu 11.10 Karmic Canonical, ubuntu@ EBS-based 64bit
   availability_zones ['us-east-1d']
   instances 1
   instance_type 'm1.large'
@@ -24,9 +25,7 @@ cloud :static_server do
     recipe "openssl"
     recipe "imagemagick"
     recipe "postfix"
-    recipe "splunk"
     
-    #recipe "munin::client"
     
     recipe "mysql::client"
 
@@ -34,7 +33,7 @@ cloud :static_server do
     
     recipe "apache2"
     recipe "php::php5"
-    #recipe "passenger_enterprise::apache2"
+    recipe "passenger_enterprise::apache2"
     
     recipe 'rubygems'
     
@@ -43,10 +42,12 @@ cloud :static_server do
     recipe "rails"
     recipe "redis"
     recipe "resque_web"
+
+    #recipe "iodocs"
     
     attributes chef_cloud_attributes('staging').recursive_merge(
       :chef    => {
-                    :roles => ['static', 'worker', 'blog', 'my_fr2']
+                    :roles => ['static', 'worker', 'blog', 'my_fr2', 'iodocs']
                   },
       :nginx   => {
                     :varnish_proxy => false,
@@ -55,7 +56,7 @@ cloud :static_server do
                     :doc_root      => '/var/www/apps/fr2/current/public'
                   },
       :aws     => {
-                     :ebs => { :volume_id => "vol-784f6b11" }
+                     :ebs => { :volume_id => "vol-3c02cf46" }
                   },
       :sphinx  => {
                     :server_address => 'sphinx.fr2.ec2.internal'
@@ -69,15 +70,6 @@ cloud :static_server do
                    :name           => 'fr2_blog',
                    :enable_mods    => ["rewrite", "deflate", "expires"]
                  },
-      :splunk => {
-                      :files_to_monitor => [
-                                              {:path => '/var/www/apps/fr2/shared/log/weekly_sphinx_reindex.log', :ignore_older_than => '7d', :source_type => 'unix_date'},
-                                              {:path => '/var/www/apps/fr2/shared/log/late_page_expiration.log', :ignore_older_than => '7d', :source_type => 'unix_date'},
-                                              {:path => '/var/www/apps/fr2/shared/log/reg_gov_url_import.log', :ignore_older_than => '7d', :source_type => 'unix_date'},
-                                              {:path => '/var/www/apps/fr2/shared/log/ofr_bulkdata_import.log', :ignore_older_than => '7d', :source_type => 'unix_date'},
-                                              {:path => '/var/log/mail.log', :ignore_older_than => '7d'}
-                                            ]
-                  },
       :resque_web => {  
                       :password => @resque_web_password
                      }

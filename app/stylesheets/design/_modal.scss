@@ -41,7 +41,8 @@
 #disclaimer_modal,
 #deprecation_modal,
 #cfr_citation_modal,
-#exit_modal {
+#exit_modal,
+#fr_modal {
   background-color: white;
   border: 5px solid #3F5B75;
   display: none;
@@ -64,7 +65,8 @@
 #exit_modal .jqmClose,
 #disclaimer_modal .jqmClose,
 #deprecation_modal .jqmClose,
-#cfr_citation_modal .jqmClose {
+#cfr_citation_modal .jqmClose,
+#fr_modal .jqmClose {
   position: absolute;
   right: 1em;
   top: 1em;

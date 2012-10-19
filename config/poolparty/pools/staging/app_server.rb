@@ -19,8 +19,6 @@ cloud :app_server_v2 do
     recipe "ubuntu"
     recipe "openssl"
     recipe "imagemagick"
-    #recipe "splunk::forwarder"
-    #recipe "splunk::nix_app_forwarder"
     
     recipe "mysql::client"
     

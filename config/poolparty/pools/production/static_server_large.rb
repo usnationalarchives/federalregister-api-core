@@ -41,10 +41,12 @@ cloud :static_server_large do
     recipe "rails"
     recipe "redis"
     recipe "resque_web"
+
+    recipe "iodocs"
     
     attributes chef_cloud_attributes('production').recursive_merge(
       :chef    => {
-                    :roles => ['static', 'worker', 'blog', 'my_fr2']
+                    :roles => ['static', 'worker', 'blog', 'my_fr2', "iodocs"]
                   },
       :nginx   => {
                     :varnish_proxy => false,

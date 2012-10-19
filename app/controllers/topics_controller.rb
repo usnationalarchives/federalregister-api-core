@@ -50,8 +50,8 @@ class TopicsController < ApplicationController
   
   def navigation
     cache_for 1.day
-    
-    @topics = Topic.without_routine.top_by_article_count(10).in_last_days(30)
+
+    @topics = Topic.without_routine.top_by_article_count(10).in_last_days(30).sort_by{|t| t.name}
     @issue  = Issue.current
     @date   = Date.current
 
