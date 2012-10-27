@@ -66,14 +66,14 @@ set :deploy_to,  "/var/www/apps/#{application}"
 task :production do
   set :rails_env,  "production"
   set :branch, 'production'
+  set :gateway, 'federalregister.gov'
   
-  role :proxy, "ec2-184-72-241-172.compute-1.amazonaws.com"
-  #role :app, "ec2-204-236-209-41.compute-1.amazonaws.com", "ec2-184-72-139-81.compute-1.amazonaws.com", "ec2-174-129-132-251.compute-1.amazonaws.com", "ec2-72-44-36-213.compute-1.amazonaws.com", "ec2-204-236-254-83.compute-1.amazonaws.com"
-  role :app, "ec2-23-20-255-226.compute-1.amazonaws.com", "ec2-23-20-217-149.compute-1.amazonaws.com", "ec2-50-19-46-231.compute-1.amazonaws.com", "ec2-107-21-88-250.compute-1.amazonaws.com", "ec2-107-21-140-249.compute-1.amazonaws.com"
-  role :db, "ec2-50-17-38-106.compute-1.amazonaws.com", {:primary => true}
-  role :sphinx, "ec2-50-17-38-106.compute-1.amazonaws.com"
-  role :static, "ec2-184-73-2-241.compute-1.amazonaws.com" #monster image
-  role :worker, "ec2-184-73-2-241.compute-1.amazonaws.com", {:primary => true} #monster image
+  role :proxy,  "proxy.fr2.ec2.internal"
+  role :app,    "app-server-1.fr2.ec2.internal", "app-server-2.fr2.ec2.internal", "app-server-3.fr2.ec2.internal", "app-server-4.fr2.ec2.internal", "app-server-5.fr2.ec2.internal"
+  role :db,     "database.fr2.ec2.internal", {:primary => true}
+  role :sphinx, "sphinx.fr2.ec2.internal"
+  role :static, "static.fr2.ec2.internal"
+  role :worker, "worker.fr2.ec2.internal", {:primary => true} #monster image
 end
 
 
@@ -208,10 +208,10 @@ namespace :sphinx do
   end
   
   task :transfer_raw_files, :roles => [:worker] do
-    run "rsync --verbose  --progress --stats --compress --recursive --times --perms --links #{shared_path}/data/raw sphinx:#{shared_path}/data"
+    run "rsync --verbose  --progress --stats --compress --recursive --times --perms --links #{shared_path}/data/raw sphinx.fr2.ec2.internal:#{shared_path}/data"
   end
   task :transfer_sphinx_config, :roles => [:worker] do
-    run "rsync --verbose  --progress --stats --compress --recursive --times --perms --links #{current_path}/config/#{rails_env}.sphinx.conf sphinx:#{shared_path}/config/"
+    run "rsync --verbose  --progress --stats --compress --recursive --times --perms --links #{current_path}/config/#{rails_env}.sphinx.conf sphinx.fr2.ec2.internal:#{shared_path}/config/"
   end
   task :run_sphinx_indexer, :roles => [:sphinx] do
     run "indexer --config #{shared_path}/config/#{rails_env}.sphinx.conf --all --rotate"
@@ -227,7 +227,7 @@ namespace :sphinx do
     end
 
     task :transfer_raw_files, :roles => [:worker] do
-      run "rsync --verbose  --progress --stats --compress --recursive --times --perms --links #{shared_path}/data/public_inspection/raw sphinx:#{shared_path}/data/public_inspection"
+      run "rsync --verbose  --progress --stats --compress --recursive --times --perms --links #{shared_path}/data/public_inspection/raw sphinx.fr2.ec2.internal:#{shared_path}/data/public_inspection"
     end
 
     task :run_sphinx_indexer, :roles => [:sphinx] do
