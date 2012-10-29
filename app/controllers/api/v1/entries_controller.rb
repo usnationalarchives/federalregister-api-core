@@ -8,7 +8,7 @@ class Api::V1::EntriesController < ApiController
         fields = specified_fields || EntryApiRepresentation.default_index_fields_json
         find_options = EntryApiRepresentation.find_options_for(fields)
 
-        render_search(search, find_options) do |result| 
+        render_search(search, find_options, params[:metadata_only]) do |result| 
           entry_data(result, fields)
         end
       end
