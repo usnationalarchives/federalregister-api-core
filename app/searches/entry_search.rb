@@ -78,6 +78,21 @@ class EntrySearch < ApplicationSearch
                 :sphinx_attribute => :agency_ids,
                 :model_sphinx_method => :id,
                 :model_id_method=> :slug
+  define_filter(:citing_document_numbers,
+                :sphinx_type => :with,
+                :sphinx_attribute => :cited_entry_ids,
+                :sphinx_value_processor => Proc.new { |*document_numbers|
+                  entries = Entry.all(:select => "id, document_number", :conditions => {:document_number => document_numbers.flatten})
+                  missing_document_numbers = entries.map(&:document_number) - document_numbers.flatten
+
+                  if missing_document_numbers.present?
+                    raise ApplicationSearch::InputError.new("#{missing_document_numbers.map(&:inspect).to_sentence} could not be found")
+                  end
+
+                  entries.map(&:id)
+                }) do |*document_numbers|
+                  document_numbers.flatten.map(&:inspect).to_sentence
+                end
 
   define_filter :president,
                 :sphinx_type => :with,

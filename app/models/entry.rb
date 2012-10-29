@@ -279,6 +279,7 @@ class Entry < ApplicationModel
     has topic_assignments(:topic_id),   :as => :topic_ids
     has section_assignments(:section_id), :as => :section_ids
     has place_determinations(:place_id), :as => :place_ids
+    has citations(:cited_entry_id), :as => :cited_entry_ids
     has "GROUP_CONCAT(DISTINCT IFNULL(regulatory_plans_small_entities.small_entity_id,0) SEPARATOR ',')", :as => :small_entity_ids, :type => :multi
     has publication_date
     has effective_date(:date), :as => :effective_date
@@ -429,7 +430,31 @@ class Entry < ApplicationModel
   def self.find_all_by_citation(volume, page)
     scoped(:conditions => ["volume = ? AND start_page <= ? AND end_page >= ?", volume.to_i, page.to_i, page.to_i], :order => "entries.end_page")
   end
-  
+
+  def self.find_all_by_starting_citation(volume, page)
+    scoped(:conditions => ["volume = ? AND start_page = ?", volume.to_i, page.to_i], :order => "entries.start_page")
+  end
+
+  def self.find_best_citation_matches(volume, page, agencies = [])
+    candidates = find_all_by_starting_citation(volume, page)
+
+    if candidates.empty?
+      candidates = find_all_by_citation(volume,page)
+    end
+
+    agency_ids = agencies.map(&:id)
+    if candidates.present? && agency_ids.present?
+      agency_candidates = candidates.reject{|x| (x.agency_ids & agency_ids).empty? }
+    end
+
+    if agency_candidates.present?
+      agency_candidates
+    else
+      candidates
+    end
+  end
+
+
   def self.first_publication_date_before(date)
     Entry.find(:first,
         :select => 'publication_date',
