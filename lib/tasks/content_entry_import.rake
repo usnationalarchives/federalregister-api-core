@@ -35,6 +35,11 @@ namespace :content do
       task :raw_text => :environment do
         entry_importer(:raw_text)
       end
+
+      desc "Citations"
+      task :citations => :environment do
+        entry_importer(:citations)
+      end
       
       desc "Extract pages"
       task :pages => :environment do
