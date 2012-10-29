@@ -54,6 +54,7 @@
 
 # require 'flickr'
 class Entry < ApplicationModel
+  self.inheritance_column = nil
   
   DESCRIPTIONS = {
     :notice => 'This section of the Federal Register contains documents other than rules 
