@@ -88,13 +88,8 @@ task :staging do
   
   role :proxy,  "proxy.fr2.ec2.internal"
   role :app,    "app-server-1.fr2.ec2.internal"
-#  role :db,     "ec2-50-17-145-38.compute-1.amazonaws.com", {:primary => true}
-#  role :sphinx, "ec2-50-17-145-38.compute-1.amazonaws.com"
-
-  # ubuntu 11.04 server
   role :db,     "database.fr2.ec2.internal", {:primary => true}
   role :sphinx, "sphinx.fr2.ec2.internal"
-
   role :static, "static.fr2.ec2.internal"
   role :worker, "worker.fr2.ec2.internal", {:primary => true}
 end
@@ -152,6 +147,7 @@ after "deploy:migrate",                "sass:update_stylesheets"
 after "sass:update_stylesheets",       "javascript:combine_and_minify"
 after "javascript:combine_and_minify", "passenger:restart"
 after "passenger:restart",             "varnish:clear_cache"
+after "varnish:clear_cache",           "airbrake:notify_deploy"
 
 
 #############################################################
@@ -287,9 +283,12 @@ namespace :javascript do
 end
 
 
+#############################################################
+# Airbrake Tasks
+#############################################################
 
-Dir[File.join(File.dirname(__FILE__), '..', 'vendor', 'gems', 'airbrake-*')].each do |vendored_notifier|
-  $: << File.join(vendored_notifier, 'lib')
+namespace :airbrake do
+  task :notify_deploy, :roles => [:static] do
+    run "cd #{current_path} && bundle exec rake airbrake:deploy RAILS_ENV=#{rails_env} TO=#{branch} USER=#{`git config --global github.user`} REVISION=#{real_revision} REPO=#{repository}" 
+  end
 end
-
-require 'airbrake/capistrano'
