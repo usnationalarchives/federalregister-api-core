@@ -87,7 +87,7 @@ class Citation < ApplicationModel
     citations
   end
 
-  def matching_fr_entries(agencies=nil)
+  def matching_fr_entries(agencies=[])
     @matching_fr_entries ||= case citation_type
                              when 'FR'
                                Entry.find_best_citation_matches(part_1, part_2, agencies)
