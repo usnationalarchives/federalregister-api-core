@@ -268,30 +268,80 @@ class Entry < ApplicationModel
     indexes abstract
     indexes "LOAD_FILE(CONCAT('#{RAILS_ROOT}/data/raw/', document_file_path, '.txt'))", :as => :full_text
     indexes "GROUP_CONCAT(DISTINCT IFNULL(`entry_regulation_id_numbers`.`regulation_id_number`, '0') SEPARATOR ' ')", :as =>  :regulation_id_number
-    indexes "GROUP_CONCAT(DISTINCT docket_numbers.number SEPARATOR ' ')", :as => :docket_id
-    
-    # attributes
-    has "SUM(IF(regulatory_plans.priority_category IN (#{RegulatoryPlan::SIGNIFICANT_PRIORITY_CATEGORIES.map{|c| "'#{c}'"}.join(',')}),1,0)) > 0", :as => :significant, :type => :boolean
+    indexes <<-SQL, :as => :docket_id
+      (
+        SELECT GROUP_CONCAT(DISTINCT docket_numbers.number SEPARATOR ' ')
+        FROM docket_numbers
+        WHERE docket_numbers.assignable_id = entries.id
+          AND docket_numbers.assignable_type = 'Entry'
+      )
+    SQL
+
     has "CRC32(IF(granule_class = 'SUNSHINE', 'NOTICE', granule_class))", :as => :type, :type => :integer
     has presidential_document_type_id
-    has "IF(granule_class = 'PRESDOCU', INTERVAL(DATE_FORMAT(IFNULL(signing_date,DATE_SUB(publication_date, INTERVAL 3 DAY)), '%Y%m%d'),#{President.all.map{|p| p.starts_on.strftime("%Y%m%d")}.join(', ')}), NULL)", :as => :president_id, :type => :integer
-    has "GROUP_CONCAT(DISTINCT entry_cfr_references.title * #{EntrySearch::CFR::TITLE_MULTIPLIER} + entry_cfr_references.part)", :as => :cfr_affected_parts, :type => :multi
-    has agency_assignments(:agency_id), :as => :agency_ids
-    has topic_assignments(:topic_id),   :as => :topic_ids
-    has section_assignments(:section_id), :as => :section_ids
-    has place_determinations(:place_id), :as => :place_ids
-    has citations(:cited_entry_id), :as => :cited_entry_ids
-    has "GROUP_CONCAT(DISTINCT IFNULL(regulatory_plans_small_entities.small_entity_id,0) SEPARATOR ',')", :as => :small_entity_ids, :type => :multi
     has publication_date
-    has effective_date(:date), :as => :effective_date
-    has comments_close_date(:date), :as => :comment_date
+    has "IF(granule_class = 'PRESDOCU', INTERVAL(DATE_FORMAT(IFNULL(signing_date,DATE_SUB(publication_date, INTERVAL 3 DAY)), '%Y%m%d'),#{President.all.map{|p| p.starts_on.strftime("%Y%m%d")}.join(', ')}), NULL)", :as => :president_id, :type => :integer
     has "IF(granule_class = 'CORRECT' OR correction_of_id IS NOT NULL OR (presidential_document_type_id = 2 AND (executive_order_number = 0 or executive_order_number IS NULL)), 1, 0)", :as => :correction, :type => :boolean
     has start_page
     has executive_order_number
-    
-    join entry_cfr_affected_parts
-    join docket_numbers
+
+    has <<-SQL, :as => :cfr_affected_parts, :type => :multi
+      (
+        SELECT GROUP_CONCAT(DISTINCT title * #{EntrySearch::CFR::TITLE_MULTIPLIER} + part SEPARATOR ',')
+        FROM entry_cfr_references
+        WHERE entry_id = entries.id
+      )
+    SQL
+    has <<-SQL, :as => :agency_ids, :type => :multi
+      (
+        SELECT GROUP_CONCAT(DISTINCT agency_id SEPARATOR ',')
+        FROM agency_assignments
+        WHERE assignable_id = entries.id
+          AND assignable_type = 'Entry'
+          AND agency_id IS NOT NULL
+      )
+    SQL
+    has <<-SQL, :as => :topic_ids, :type => :multi
+      (
+        SELECT GROUP_CONCAT(DISTINCT topic_id SEPARATOR ',')
+        FROM topic_assignments
+        WHERE entry_id = entries.id
+          AND topic_id IS NOT NULL
+      )
+    SQL
+    has <<-SQL, :as => :section_ids, :type => :multi
+      (
+        SELECT GROUP_CONCAT(DISTINCT section_id SEPARATOR ',')
+        FROM section_assignments
+        WHERE section_id = entries.id
+          AND section_id IS NOT NULL
+      )
+    SQL
+    has <<-SQL, :as => :place_ids, :type => :multi
+      (
+        SELECT GROUP_CONCAT(DISTINCT IFNULL(place_id, '0') SEPARATOR ',')
+        FROM place_determinations
+        WHERE entry_id = entries.id
+          AND place_id IS NOT NULL
+      )
+    SQL
+    has <<-SQL, :as => :cited_entry_ids, :type => :multi
+      (
+        SELECT GROUP_CONCAT(DISTINCT cited_entry_id SEPARATOR ',')
+        FROM citations
+        WHERE source_entry_id = entries.id
+          AND cited_entry_id IS NOT NULL
+      )
+    SQL
+    has effective_date(:date), :as => :effective_date
+    has comments_close_date(:date), :as => :comment_date
+
     join small_entities_for_thinking_sphinx
+    has "GROUP_CONCAT(DISTINCT IFNULL(regulatory_plans_small_entities.small_entity_id,0) SEPARATOR ',')", :as => :small_entity_ids, :type => :multi
+    has "SUM(IF(regulatory_plans.priority_category IN (#{RegulatoryPlan::SIGNIFICANT_PRIORITY_CATEGORIES.map{|c| "'#{c}'"}.join(',')}),1,0)) > 0",
+      :as => :significant,
+      :type => :boolean
+
     set_property :field_weights => {
       "title" => 100,
       "abstract" => 50,
