@@ -268,10 +268,19 @@ class Entry < ApplicationModel
     indexes abstract
     indexes "LOAD_FILE(CONCAT('#{RAILS_ROOT}/data/raw/', document_file_path, '.txt'))", :as => :full_text
     indexes "GROUP_CONCAT(DISTINCT IFNULL(`entry_regulation_id_numbers`.`regulation_id_number`, '0') SEPARATOR ' ')", :as =>  :regulation_id_number
-    indexes "GROUP_CONCAT(DISTINCT docket_numbers.number SEPARATOR ' ')", :as => :docket_id
     
     # attributes
     has "SUM(IF(regulatory_plans.priority_category IN (#{RegulatoryPlan::SIGNIFICANT_PRIORITY_CATEGORIES.map{|c| "'#{c}'"}.join(',')}),1,0)) > 0", :as => :significant, :type => :boolean
+    indexes <<-SQL, :as => :docket_id
+      (
+        SELECT GROUP_CONCAT(DISTINCT docket_numbers.number SEPARATOR ' ')
+        FROM docket_numbers
+        WHERE docket_numbers.assignable_id = entries.id
+          AND docket_numbers.assignable_type = 'Entry'
+      )
+    SQL
+
+    has "CRC32(document_number)", :as => :document_number, :type => :integer
     has "CRC32(IF(granule_class = 'SUNSHINE', 'NOTICE', granule_class))", :as => :type, :type => :integer
     has presidential_document_type_id
     has "IF(granule_class = 'PRESDOCU', INTERVAL(DATE_FORMAT(IFNULL(signing_date,DATE_SUB(publication_date, INTERVAL 3 DAY)), '%Y%m%d'),#{President.all.map{|p| p.starts_on.strftime("%Y%m%d")}.join(', ')}), NULL)", :as => :president_id, :type => :integer
