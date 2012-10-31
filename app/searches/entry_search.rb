@@ -94,6 +94,12 @@ class EntrySearch < ApplicationSearch
                   document_numbers.flatten.map(&:inspect).to_sentence
                 end
 
+  define_filter(:document_numbers,
+                :sphinx_type => :with,
+                :sphinx_attribute => :document_number,
+                :sphinx_value_processor => Proc.new{|*document_numbers| document_numbers.flatten.map{|x| x.to_s.to_crc32}}) do |*document_numbers|
+                  document_numbers.flatten.map(&:inspect).to_sentence(:two_words_connector => ' or ', :last_word_connector => ', or ')
+                end
   define_filter :president,
                 :sphinx_type => :with,
                 :sphinx_attribute => :president_id,

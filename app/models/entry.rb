@@ -277,6 +277,7 @@ class Entry < ApplicationModel
       )
     SQL
 
+    has "CRC32(document_number)", :as => :document_number, :type => :integer
     has "CRC32(IF(granule_class = 'SUNSHINE', 'NOTICE', granule_class))", :as => :type, :type => :integer
     has presidential_document_type_id
     has publication_date

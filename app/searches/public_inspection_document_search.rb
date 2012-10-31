@@ -17,7 +17,12 @@ class PublicInspectionDocumentSearch < ApplicationSearch
                 :label => "Agency Docket" do |docket|
                   docket
                 end 
-
+  define_filter(:document_numbers,
+                :sphinx_type => :with,
+                :sphinx_attribute => :document_number,
+                :sphinx_value_processor => Proc.new{|*document_numbers| document_numbers.flatten.map{|x| x.to_s.to_crc32}}) do |*document_numbers|
+                  document_numbers.flatten.map(&:inspect).to_sentence(:two_words_connector => ' or ', :last_word_connector => ', or ')
+                end
   define_filter :special_filing,
                 :sphinx_type => :with,
                 :label => "Filing Type" do |type|
