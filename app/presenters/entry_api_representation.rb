@@ -61,6 +61,7 @@ class EntryApiRepresentation < ApiRepresentation
     end
   end
   field(:publication_date)
+  field(:raw_text_url, :select => [:document_file_path]){|e| entry_raw_text_url(e)}
   field(:regulation_id_number_info, :include => :entry_regulation_id_numbers) do |entry|
     values = entry.entry_regulation_id_numbers.map(&:regulation_id_number).map do |rin|
       regulatory_plan = entry.current_regulatory_plans.detect{|r| r.regulation_id_number == rin}
@@ -78,12 +79,27 @@ class EntryApiRepresentation < ApiRepresentation
     
     Hash[*values.flatten]
   end
+  field(:regulations_dot_gov_info, :docket) do |entry|
+    docket = entry.docket
+    if docket
+      {
+        :docket_id => docket.id,
+        :regulation_id_number => docket.regulation_id_number,
+        :title => docket.title,
+        :comments_count => docket.comments_count,
+        :supporting_documents_count => docket.docket_documents_count,
+        :metadata => docket.metadata
+      }
+    end
+  end
   field(:regulation_id_numbers, :include => :entry_regulation_id_numbers) {|e| e.entry_regulation_id_numbers.map{|r| r.regulation_id_number}}
   field(:regulations_dot_gov_url, :select => :regulationsdotgov_url) {|e| e.regulationsdotgov_url}
   field(:start_page)
   field(:signing_date)
   field(:subtype, :select => :presidential_document_type_id){|e| e.presidential_document_type.try(:name)}
   field(:title)
+  field(:toc_subject)
+  field(:toc_doc)
   field(:type, :select => :granule_class){|e| e.entry_type}
   field(:volume)
 end
