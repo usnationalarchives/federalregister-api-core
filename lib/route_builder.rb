@@ -51,6 +51,10 @@ module RouteBuilder
     "/articles/html/abstract/#{entry.document_file_path}.html"
   end
   
+  add_static_route :entry_raw_text do |entry|
+    "/articles/text/raw_text/#{entry.document_file_path}.txt"
+  end
+
   add_static_route :entry_xml do |entry|
     "/articles/xml/#{entry.document_file_path}.xml"
   end
