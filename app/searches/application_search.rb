@@ -111,7 +111,11 @@ class ApplicationSearch
     
     @skip_results = options[:skip_results] || false
     self.per_page = options[:per_page]
-    self.conditions = (options[:conditions] || {}).reject{|key,val| ! self.respond_to?("#{key}=")}
+    self.conditions = (options[:conditions] || {}).reject do |key,val|
+      unless self.respond_to?("#{key}=")
+        @errors[key] = "is not a valid field"
+      end
+    end
   end
   
   def conditions=(conditions)
