@@ -151,9 +151,6 @@ ActionController::Routing::Routes.draw do |map|
     end
   end
   
-  # SUBSCRIPTIONS
-  map.resources :subscriptions, :only => [:new, :create, :edit, :update, :destroy], :member => {:unsubscribe => :get, :confirm => :get}, :collection => {:confirmation_sent => :get, :confirmed => :get, :unsubscribed => :get}
-  
   # SECTIONS
   Section.all.each do |section|
     map.with_options :slug => section.slug, :controller => "sections", :conditions => { :method => :get } do |section_map|

@@ -31,14 +31,8 @@ namespace :content do
 
       Rake::Task["content:public_inspection:reindex"].invoke unless Rails.env == 'development'
 
-      MailingList::PublicInspectionDocument.active.find_each do |mailing_list|
-        begin
-          mailing_list.deliver!(new_documents)
-        rescue Exception => e
-          Rails.logger.warn(e)
-          Airbrake.notify(e)
-        end
-      end
+      document_numbers = new_documents.map(&:document_number).join(';')
+      puts `cd /var/www/apps/my_fr2 && bundle exec rake mailing_lists:public_inspection:deliver["#{document_numbers}"]`
     end
 
     task :reindex do

@@ -15,7 +15,7 @@ $(document).ready(function () {
                 escaped_href: escape(elem.attr('href'))
               };
               if(elem.attr('data-search-conditions')) {
-                feed.subscription_action = "/subscriptions?" + $.param({'subscription' : {'search_conditions' : $.parseJSON(elem.attr('data-search-conditions'))}});
+                feed.subscription_action = "/my/subscriptions?" + $.param({'subscription' : {'search_conditions' : $.parseJSON(elem.attr('data-search-conditions'))}});
               }
 
               if( elem.data('public-inspection-subscription-supported') !== undefined ) {

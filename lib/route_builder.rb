@@ -219,6 +219,10 @@ module RouteBuilder
     "http://www.regulations.gov/#!documentDetail;D=#{document_id}"
   end
 
+  def new_subscription_path(params={})
+    "/my/subscriptions/new?#{params.to_query}"
+  end
+
   # keep at bottom of module
   def self.included(base)
     instance_methods.each do |method|
