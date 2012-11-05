@@ -109,9 +109,11 @@ module CustomChartHelper
     include ActionView::Helpers::TextHelper
     
     def initialize(args={})
-      options = args.dup
+      options = args.dup.symbolize_keys!
+
       @line_color       = options.delete(:line_color) || '000000'
       @background_color = options.delete(:bg_color) || 'CCCCCC'
+      @chart_background = options.delete(:chart_bg_color) || 'FFFFFF'
       @marker_color     = options.delete(:marker_color) || 'FA6900'
       @marker_size      = options.delete(:marker_size) || 3.0
       @size             = options.delete(:size) || [135,25]
@@ -125,6 +127,9 @@ module CustomChartHelper
       url << "?cht=ls"
       url << "&chd=t:#{text_encode(@data)}"
       
+      # chart background color
+      url << "&chf=c,s,#{@chart_background}"
+
       # fill area & chart markers
       if @fill
         url << "&chm=B,#{@background_color},0,0,0#{build_chart_markers}"
