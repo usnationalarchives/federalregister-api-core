@@ -112,6 +112,10 @@
             <xsl:call-template name="current_page" />
           </xsl:attribute>
 
+          <xsl:if test="name(..) = 'FURINF'">
+            <xsl:attribute name="class">furinf</xsl:attribute>
+          </xsl:if>
+
           <xsl:apply-templates/>
         </p>
       </xsl:otherwise>
