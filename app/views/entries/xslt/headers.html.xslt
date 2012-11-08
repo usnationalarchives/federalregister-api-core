@@ -26,6 +26,9 @@
       <xsl:when test="not(ancestor::REGTEXT or ancestor::PART) and $level &lt; 3">
         <xsl:value-of disable-output-escaping="yes" select="'&lt;/div&gt;'"/>
         <div class="header_column">
+          <xsl:if test="name(..) = 'FURINF'">
+            <xsl:attribute name="id">furinf</xsl:attribute>
+          </xsl:if>
           <xsl:call-template name="header">
             <xsl:with-param name="class" select="$class"/>
           </xsl:call-template>
