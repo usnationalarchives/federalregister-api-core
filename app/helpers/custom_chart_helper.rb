@@ -128,7 +128,7 @@ module CustomChartHelper
       url << "&chd=t:#{text_encode(@data)}"
       
       # chart background color
-      url << "&chf=c,s,#{@chart_background}"
+      url << "&chf=bg,s,#{@chart_background}"
 
       # fill area & chart markers
       if @fill
