@@ -1,4 +1,6 @@
 class Admin::Issues::Sections::HighlightsController < AdminController
+  skip_before_filter :verify_authenticity_token
+  
   def create
     @publication_date = Date.parse(params[:issue_id])
     @section = Section.find_by_slug(params[:section_id])
