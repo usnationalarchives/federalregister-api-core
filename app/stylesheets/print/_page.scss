@@ -1,6 +1,7 @@
 /* for printing from modals */
 body.hide_body_content div { display: none; }
-body.hide_body_content #fr_modal { display: inherit; }
+body.hide_body_content #fr_modal,
+body.hide_body_content #fr_modal div { display: inherit; }
 
 
 #modal,
