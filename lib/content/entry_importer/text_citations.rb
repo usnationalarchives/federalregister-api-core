@@ -1,4 +1,4 @@
-module Content::EntryImporter::Citations
+module Content::EntryImporter::TextCitations
   extend Content::EntryImporter::Utils
   provides :citations
   
