@@ -25,7 +25,17 @@
               Comments on this article are being accepted at Regulations.gov
             <% end %>
             
-            <%= link_to "Submit a formal comment", @entry.comment_url.present? ? @entry.comment_url : '#addresses', :class => 'button', :id => 'start_comment', :target => (@entry.comment_url.present? ? '_blank' : '') %>
+            <% if @entry.comment_url %>
+              <%= link_to "Submit a formal comment", @entry.comment_url,
+                :class => 'button',
+                :id => 'start_comment',
+                :target => '_blank',
+                :'data-comment' => 1 %>
+            <% else %>
+              <%= link_to "Submit a formal comment", '#addresses',
+                :class => 'button',
+                :id => 'start_comment' %>
+            <% end %>
           </p>
         </div>
         <% if @entry.docket && @entry.docket.comments_count && @entry.docket.comments_count > 0 && ! @entry.docket.placeholder? %>
