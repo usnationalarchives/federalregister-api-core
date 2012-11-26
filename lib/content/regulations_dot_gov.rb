@@ -5,7 +5,13 @@ module Content
     class ServerError < ResponseError; end
 
     include HTTParty
-    base_uri 'http://www.regulations.gov/api/'
+    
+    if RAILS_ENV == 'production'
+      base_uri 'http://www.regulations.gov/api/'
+    else
+      base_uri 'regstest.erulemaking.net/api/'
+    end
+
     default_timeout 2
 
     def initialize(api_key)
