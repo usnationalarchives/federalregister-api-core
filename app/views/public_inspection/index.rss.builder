@@ -26,12 +26,12 @@ xml.rss "version" => "2.0", "xmlns:dc" => "http://purl.org/dc/elements/1.1/" do
         description << number_to_human_size(document.pdf_file_size)
         description << pluralize(document.num_pages, 'page')
 
-        xml.description description.join('; ')
+        xml.description h(description.join('; '))
         if document.filed_at
           xml.pubDate     CGI.rfc1123_date document.filed_at
         end
-        xml.guid        document.document_number
-        xml.author      document.agencies.map(&:name).to_sentence
+        xml.guid        entry_url(document)
+        xml.dc :creator, document.agencies.map(&:name).to_sentence
       end
     end
   end
