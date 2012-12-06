@@ -74,7 +74,7 @@ sub vcl_recv {
     if (req.url ~ "^/my/assets/") {
       set req.backend = my_fr2;
       return(pass);
-    } else if (req.url ~ "^/my/") {
+    } else if (req.url ~ "^/my(/|$)") {
       set req.backend = my_fr2;
       return(pass);
     } else if (req.url ~ "^(/blog|/policy|/learn|/layout/footer_page_list|/layout/navigation_page_list|/layout/homepage_post_list)") {

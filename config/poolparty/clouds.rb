@@ -213,7 +213,7 @@ def chef_cloud_attributes(instance_type)
                     :ssl_cert_key_name  => @ssl_cert_key_name
                    },
     :varnish    => {
-                    :version           => '2.1.2',
+                    :version           => '2.1.5',
                     :listen_address    => '127.0.0.1',
                     #:app_proxy_host    => @app_server_address,
                     :app_proxy_servers => @app_server_address.each_with_index.map{|ip, index| {:ip => ip, :fqdn => "app-server-#{index + 1}.fr2.ec2.internal", :alias => "app_server_#{index + 1}"} },
