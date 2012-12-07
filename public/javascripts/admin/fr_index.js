@@ -6,6 +6,21 @@ function highlight_el(event, el) {
   }
 }
 
+function get_popover_content(el) {
+  var base_url = 'https://www.federalregister.gov/api/v1/articles/',
+      fields = 'fields%5B%5D=publication_date',
+      url = base_url + el.data('document-number') + '.json?' + fields;
+
+  $.ajax({
+    url: url,
+    dataType: 'jsonp'
+  }).done(function(response) {
+    console.log(response);
+    popover_id = '#popover-' + el.data('document-number');
+    $(popover_id).append(response);
+  });
+}
+
 $(document).ready(function(){
   $('#content_area form').hide();
   $('#content_area ul.entry_type a.edit').on('click', function(event) {
@@ -58,4 +73,29 @@ $(document).ready(function(){
     });
     return false;
   });
+  
+
+  if ( $("#fr-index-entry-popover-template") !== []) {
+    var fr_index_entry_popover_template = Handlebars.compile($("#fr-index-entry-popover-template").html());
+
+    $('body').delegate('.with_ajax_popover', 'mouseenter', function(event) {
+      var $el = $(this);
+            
+      $('.with_ajax_popover').tipsy({ fade: true,
+                                      opacity: 1.0,
+                                      gravity: 'e',
+                                      html: true,
+                                      title: function(){
+                                        return fr_index_entry_popover_template( {content: new Handlebars.SafeString('<div class="loading">Loading...</div>'),
+                                                                                 document_number: $(this).data('document-number')} );
+                                      } 
+                                    });
+
+      get_popover_content( $el );
+    });
+  }
+
 });
+
+
+  

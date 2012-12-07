@@ -4,6 +4,8 @@
 
 <% add_javascript(:src => 'admin/fr_index.js') %>
 
+<%= add_template('admin/fr_index_entry_popover', 'fr-index-entry-popover') %>
+
 <h1 class="agency_name"><%= @agency.name %></h1>
 
 <% @entries_by_type.each do |type, entries_by_subject| %>

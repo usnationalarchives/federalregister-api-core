@@ -4,13 +4,19 @@
   <title>FR2 Admin<%= " | #{yield :title}" if yield(:title) %></title>
   <meta charset="utf-8">
   
-  <%= stylesheet_link_tag "admin/screen_bootstrap",          :media => :screen %>
   <%= stylesheet_link_tag "admin/jqModal",                   :media => :screen %>
   <%= stylesheet_link_tag "admin/formtastic",                :media => :screen %>
   <%= stylesheet_link_tag "admin/bootstrap",                 :media => :screen %>
+  <%= stylesheet_link_tag "tipsy",                           :media => :screen %>
+  <%= stylesheet_link_tag "admin/screen_bootstrap",          :media => :screen %>
+
   <%= csrf_meta_tag %>
 
-  <%= javascript_include_tag "https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" %>
+  <%#= javascript_include_tag "https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" %>
+
+  <%= jquery_include_tag %>
+  <%= jquery_ui_include_tag %>
+
   <%= javascript_include_tag "bootstrap/bootstrap-transition.js" %>
   <%= javascript_include_tag "bootstrap/bootstrap-alert.js" %>
   <%= javascript_include_tag "bootstrap/bootstrap-button.js" %>
@@ -23,6 +29,16 @@
   <%= javascript_include_tag "bootstrap/bootstrap-tooltip.js" %>
   <%= javascript_include_tag "bootstrap/bootstrap-popover.js" %>
   <%= javascript_include_tag "bootstrap/bootstrap-typeahead.js" %>
+
+  <%= javascript_include_tag 'admin/jquery.tablesorter' %>
+  <%= javascript_include_tag 'vendor/handlebars-1.0.rc.1.min.js' %>
+  <%= javascript_include_tag 'vendor/jquery.tipsy.js' %>
+  <%= javascript_include_tag 'admin/application_form_builder' %>
+  <%= javascript_include_tag 'admin/admin' %>
+  
+  <%= yield :javascripts %>
+
+
 
 </head>
 <body>
@@ -80,16 +96,7 @@
       </div>
     </div>
 
-  </div> <!-- end .container -->
-
-  <%= jquery_include_tag %>
-  <%= jquery_ui_include_tag %>
-  <%= javascript_include_tag 'admin/jquery.tablesorter' %>
-  <%= javascript_include_tag 'admin/application_form_builder' %>
-  <%= javascript_include_tag 'admin/admin' %>
-  
-  <%= yield :javascripts %>
-  
+  </div> <!-- end .container -->  
   <!-- <script>
     (function(){document.body.appendChild(document.createElement('script')).src='http://gridder.andreehansson.se/releases/latest/960.gridder.js';})();
   </script> -->

@@ -30,29 +30,39 @@ h1.agency_name { color: #3F5B75; }
 
 .title_bar h2 { font-family: "apertura-condensed-1","apertura-condensed-2", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; }
 
-ul.entry_type li { 
-  clear: both;
-  padding-left: 5px;
-  overflow: hidden;
-  height: 100%;
-  margin-bottom: 5px;
+ul.entry_type {
+  li { 
+    clear: both;
+    padding-left: 5px;
+    overflow: hidden;
+    height: 100%;
+    margin-bottom: 5px;
+
+    a.wrapper {
+      width: 90%;
+      display: block;
+      float: left;
+    }
+    a.edit { 
+      float: right;
+      padding-right: 5px;
+    }
+
+    ul.in { 
+    overflow: visible;
+    height: auto;
+    float: left;
+
+      li { height: auto; }
+    }
+
   }
-ul.entry_type li.hover { 
-  background-color: #CCC;
-  @include border-radius(3);
+
+  li.hover { 
+    background-color: #CCC;
+    @include border-radius(3);
+  }
 }
-ul.entry_type li ul.in { overflow: visible; }
-
-ul.entry_type li a.wrapper {
-  width: 90%;
-  display: block;
-  float: left;
-  }
-
-ul.entry_type li a.edit { 
-  float: right;
-  padding-right: 5px;
-  }
 
 ul.entry_type form input {
   display: block;
@@ -68,3 +78,22 @@ ul.entry_type form input[type="submit"] {
   width: 15%;
   float: right;
   }
+
+.tipsy-inner {
+  padding: 3px;
+  width: 280px;
+  overflow: hidden;
+  background: #000;
+  background: rgba(0, 0, 0, 0.8);
+
+  color: #000;
+  font-size: 1.5em;
+
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  border-radius: 6px;
+  -webkit-box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
+  -moz-box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
+}
+
