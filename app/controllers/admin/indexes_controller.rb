@@ -36,7 +36,7 @@ class Admin::IndexesController < AdminController
 
       subject_entries = base_scope.all(:conditions => ["fr_index_subject = ? OR (fr_index_subject IS NULL and toc_subject = ?) OR (fr_index_subject IS NULL AND toc_subject IS NULL AND title = ?)", subject, subject, subject])
 
-      entries_by_title = subject_entries.group_by(&:fr_index_doc)
+      entries_by_title = subject_entries.group_by(&:fr_index_doc).sort
 
       if subject_entries.present?
         subjects_by_id[id] = render_to_string(:partial => "subject_and_children", :locals => {:subject => subject, :entries_by_title => entries_by_title, :type => params[:type]})

@@ -1,5 +1,5 @@
 <% if subject %>
-  <li id="<%= type.downcase %>-<%= Digest::MD5.hexdigest(subject) %>">
+  <li id="<%= type %>-<%= Digest::MD5.hexdigest(subject) %>">
     <span class="title"><%= subject %><span>
     <% form_tag(params, :method => :put) do %>
       <%= hidden_field_tag(:type, type) %>
@@ -14,7 +14,7 @@
 <% end %>
 
 <% entries_by_title.each do |title, entries| %>
-  <li id="<%= type.downcase %>-<%= Digest::MD5.hexdigest("#{subject}#{title}")%>">
+  <li id="<%= type %>-<%= Digest::MD5.hexdigest("#{subject}#{title}")%>">
     <a class="wrapper" href="javascript:" data-toggle="collapse" data-target="#<%= Digest::MD5.hexdigest(entries.to_s) %>">
       <span class="title"><%= title %></span>
       <span class="count_pill"><%= entries.count %></span>
