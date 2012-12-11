@@ -13,6 +13,22 @@ class Admin::IndexesController < AdminController
 #    raise ActiveRecord::RecordNotFound if @year < 2012
     @agency = Agency.find_by_slug!(params[:agency])
     @entries_by_type = FrIndexPresenter.grouped_entries_for_year_and_agency(@year, @agency)
+
+    respond_to do |wants|
+      wants.html
+      wants.pdf do
+        input = Tempfile.new(['fr_index', '.html']).path
+        File.open(input, 'w') do |f|
+          f.write render_to_string
+        end
+
+        output = Tempfile.new(['fr_index', '.pdf']).path
+
+       `/usr/local/bin/prince #{input} -o #{output}`
+
+        send_file output, :filename => "fr_index.pdf"
+      end
+    end
   end
 
   def update_year_agency

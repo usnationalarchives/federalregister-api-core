@@ -11,7 +11,7 @@ ActionController::Routing::Routes.draw do |map|
     admin.resources :events
 
     admin.index_year 'index/:year', :controller => "indexes", :action => "year", :conditions => {:method => :get}
-    admin.index_year_agency 'index/:year/:agency', :controller => "indexes", :action => "year_agency", :conditions => {:method => :get}
+    admin.index_year_agency 'index/:year/:agency.:format', :controller => "indexes", :action => "year_agency", :conditions => {:method => :get}
     admin.index_year_agency 'index/:year/:agency', :controller => "indexes", :action => "update_year_agency", :conditions => {:method => :put}
 
     admin.resources :topics

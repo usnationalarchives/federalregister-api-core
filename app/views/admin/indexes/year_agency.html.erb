@@ -9,6 +9,8 @@
 
 <h1 class="agency_name"><%= @agency.name %></h1>
 
+<%= link_to 'PDF Preview', {:format => :pdf}, :class => "btn", :style => "margin-top: 10px" %>
+
 <% @entries_by_type.each do |type, entries_by_subject| %>
   <div class="title_bar">
     <h2><%= Entry::ENTRY_TYPES[type].pluralize %></h2>
