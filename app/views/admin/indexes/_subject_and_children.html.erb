@@ -35,8 +35,8 @@
       <% entries.each do |entry| %>
         <%= hidden_field_tag(:'entry_ids[]', entry.id) %>
       <% end %>
-      <%= text_field_tag('entry[fr_index_subject]', subject) %>
-      <%= text_field_tag('entry[fr_index_doc]', title) %>
+      <%= text_field_tag('entry[fr_index_subject]', subject, :class => "fr_index_subject") %>
+      <%= text_field_tag('entry[fr_index_doc]', title, :class => "fr_index_doc") %>
       <%= submit_tag("Save") %>
     <% end %>
   </li>
