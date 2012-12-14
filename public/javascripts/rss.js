@@ -12,7 +12,7 @@ $(document).ready(function () {
               var feed = {
                 title: elem.attr('title'),
                 href: elem.attr('href'),
-                escaped_href: escape(elem.attr('href'))
+                escaped_href: encodeURIComponent(elem.attr('href'))
               };
               if(elem.attr('data-search-conditions')) {
                 feed.subscription_action = "/my/subscriptions?" + $.param({'subscription' : {'search_conditions' : $.parseJSON(elem.attr('data-search-conditions'))}});
@@ -31,11 +31,11 @@ $(document).ready(function () {
               return feed;
             });
 
-            $('body').append( subscription_modal_template({elements: elements}) );
+            $('body').append( subscription_modal_template({elements: elements, email_address: user_email_address}) );
 
             $('#modal form').submit(function() {
                 var form = $(this);
-                form.attr('action', form.attr('action') + '&' + escape('subscription[email]') + '=' + escape(form.find('input[name="subscription[email]"]').val()) + '&' + escape('subscription[search_type]') + '=' + escape(form.find('input[name="subscription[search_type]"]:checked').val()) );
+                form.attr('action', form.attr('action') + '&' + encodeURIComponent('subscription[email]') + '=' + encodeURIComponent(form.find('input[name="subscription[email]"]').val()) + '&' + encodeURIComponent('subscription[search_type]') + '=' + encodeURIComponent(form.find('input[name="subscription[search_type]"]:checked').val()) );
             });
 
             $('#modal').jqm({
