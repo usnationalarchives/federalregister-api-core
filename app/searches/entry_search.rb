@@ -38,7 +38,7 @@ class EntrySearch < ApplicationSearch
     private
 
     def validate
-      unless ('1'..'50').include?(title)
+      unless (1..50).to_a.include?(title.to_i)
         @errors << "CFR title must be between 1 and 50"
       end
 
