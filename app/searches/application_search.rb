@@ -192,17 +192,6 @@ class ApplicationSearch
       }.merge(find_options).recursive_merge(args)
     )
 
-<<<<<<< HEAD
-    sphinx_search = ThinkingSphinx::Search.new(sphinx_term,
-      :with => with,
-      :with_all => with_all,
-      :without => without,
-      :conditions => sphinx_conditions,
-      :match_mode => :extended
-    )
-
-=======
->>>>>>> master
     if result_array
       result_array.each do |result|
         result.excerpts = ApplicationSearch::FileExcerpter.new result_array, result
