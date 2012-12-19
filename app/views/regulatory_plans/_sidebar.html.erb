@@ -1,4 +1,9 @@
 <% aside_tag(:id => 'sidebar') do %>
+  <div class='aside_box subscribe'>  
+      <%= link_to 'Subscribe', new_subscription_path(:subscription => {:search_conditions => {:regulation_id_number => regulatory_plan.regulation_id_number}}), :class => 'subscription' %>
+      <%= add_template('subscription_modal', 'subscription-modal') %>
+  </div>
+  
   <% section_tag(:id => 'metadata') do %>
   <div class="aside_box">
     <div class="download_separator">
@@ -20,10 +25,6 @@
     </dl>
   </div>
   <% end -%>
-  
-  <div class='aside_box subscribe'>  
-    <%= link_to 'Subscribe', regulatory_plan_url(regulatory_plan, :format => :rss), :class => 'rss' %>
-  </div>
   
   <% if regulatory_plan.agencies.present? %>
     <% section_tag(:id => 'agencies') do %>

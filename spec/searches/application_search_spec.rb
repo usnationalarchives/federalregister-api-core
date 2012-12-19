@@ -7,7 +7,7 @@ describe ApplicationSearch do
   
   describe 'define_filter' do
     before(:each) do
-      @search_class.define_filter :topic_id
+      @search_class.define_filter(:topic_id) {|x| x}
     end
     
     it "creates an instance setter method" do

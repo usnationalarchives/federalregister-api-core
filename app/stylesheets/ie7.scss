@@ -1,3 +1,9 @@
+div.title span {
+  line-height: 1.1em;
+  position: relative;
+  top: -5px;
+  }
+
 /******************************
 
 SECTIONS
@@ -30,3 +36,65 @@ CANNED SEARCH SHOW
 ul#frequency-spark-lines {
   width: 789px;
   }
+
+/******************************
+
+AGENCY SHOW
+
+******************************/ 
+#agency_description .header.with_image h1 { float: left; }
+
+/******************************
+
+NAVIGATION
+
+******************************/ 
+#navigation .previewable .subnav .left_column { 
+  float: left;
+  margin-right: 3px;
+  }
+#navigation .previewable .right_column form { margin-left: 10px; }
+/* dates */
+#navigation .preview .daily_stats li { float: left; }
+#navigation .previewable .right_column .fr_stats h2 { position: relative; }
+#navigation .previewable .right_column .fr_stats h2 .supplemental {
+  position: absolute;
+  right: 0px;
+  top: 2px;
+  }
+#navigation .previewable .right_column .fr_stats .statistics li,
+#navigation .previewable .right_column .fr_stats .statistics li a { 
+  float: left;
+  line-height: 13px;
+  }
+#navigation .previewable .mini_document_types li,
+#navigation .previewable .mini_document_types li a { float: left;}
+#navigation .previewable .mini_document_types a {
+  line-height: 13px;
+  padding-top: 0px;
+  }
+/* public inspection */
+#navigation .previewable .right_column #public-inspection-browse-preview h2 { position: relative; }
+#navigation .previewable .right_column #public-inspection-browse-preview h2 .secondary {
+  position: absolute;
+  right: -5px;
+  font-size: 11px;
+  top: 2px;
+  }
+/* executive orders */
+#navigation .previewable .pres_holder { clear: both; }
+#navigation .previewable .pres_holder .photo {
+  float: left;
+  margin-top: 0;
+  clear: both;
+  }
+#navigation .previewable .pres_holder .pres_details { float: left; }
+#navigation .previewable .pres_holder ol.children li { float: left; }
+/* blog */
+#navigation .previewable #blog-browse-preview h1 { margin-top: 0px; }
+#navigation .view_all { top: 10px; }
+#navigation .previewable #blog-browse-preview ul .post_content a {
+  top: -27px;
+  line-height: 14px;
+  }
+

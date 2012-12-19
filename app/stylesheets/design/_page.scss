@@ -24,6 +24,15 @@ ul.bullets  li {
 .bullets li.lastchild {
   margin-bottom: 0;
   }
+#entries.show .bullets li {
+  margin-left: 2em;
+}
+.bullets .citable {
+  width: auto;
+}
+.bullets .citable .trigger {
+  left: 454px;
+}
 ul.bold_links a {
   font-weight: 700;
   }  
@@ -47,6 +56,14 @@ ul.bold_links a {
 :invalid {
   border-color: #e88;
   -webkit-box-shadow: 0 0 5px rgba(255, 0, 0, .8);  
+  }
+
+#content_area a.wrap {
+  -ms-word-break: break-all;
+  word-break: break-all;
+  -webkit-hyphens: auto;
+  -moz-hyphens: auto;
+  hyphens: auto;
   }
 
 /******************************
@@ -362,8 +379,7 @@ ARTICLE VIEW
   top: -2px;
   overflow:visible;
   }   
-.metadata_share_bar .share ul li:first-child,
-.metadata_share_bar .share ul li.first {
+.metadata_share_bar .share ul li.clip_for_later {
   padding-right: 35px;
   }
 
@@ -422,12 +438,19 @@ p:target {
   margin-top: 0;
   padding-top: 0;
   }
+#entries.show .table_of_contents .level_1 {
+  margin-left: 0;
+}
 #entries.show .table_of_contents .level_2 {
   margin-left: 1em;
   }
 #entries.show .table_of_contents .level_3 {
   margin-left: 2em;
   }  
+#entries.show .table_of_contents .level_4 {
+  margin-left: 3em;
+  }  
+#entries.show .body_column p:first-child,
 #entries.show .body_column p:first-child,
 #entries.show .body_column p.firstchild {
   text-indent: 0;
@@ -444,22 +467,37 @@ p:target {
 .table_of_graphics li.end_of_row {
   margin-right: 0;
   }
-#fulltext_content_area p {
-  text-indent: 2em;
+
+#fulltext_content_area {
+  overflow: hidden;
+  clear: both;
   }
-#fulltext_content_area p.flush {
-  text-indent: 0;
-  }  
+#fulltext_content_area p.document_details { color: #CCC; }
+#fulltext_content_area p.document_details a { color: #CCC; }
+#fulltext_content_area p.document_details a:hover { color: #B88659; }
+
 #entries.show .body_column:empty {
   display: none;
   margin: 0;
   }  
+
 .E-03 {
  font-style: italic; 
   }
 .E-04 {
   font-weight: bold;
   }
+.printed_page {
+  background: sprite-image('icons/icon_page_break.png', 0, 0, 50px) no-repeat; 
+  display: inline-block;
+  width: 11px;
+  height: 14px;
+  margin-bottom: -2px;
+  margin-right: 3px;
+  margin-left: 3px;
+  cursor: pointer;
+}
+
 .metadata_list dt,
 .metadata_list dd {
   display: block;
@@ -528,21 +566,13 @@ p:target {
   }  
 .trigger {
   background: sprite-image('icons/citation_box/icon_bookmark.png', 0, 0, 50px) no-repeat;;
-  height: image-height('icons/citation_box/icon_bookmark.png');
   @include hide-text;
-  @include opacity(.10);
   cursor: pointer;
   position: absolute;
-  left: 485px;
   top: .5em;
-  width: image-width('icons/citation_box/icon_bookmark.png');  
+  height: 50px;
+  width: 50px;  
   }
-.citable:hover .trigger {
-  @include opacity(1);
-  }
-.citable.on .trigger {
-  @include opacity(1);
-  }  
 p:target {
   background-color: #F5F8F9;
 }
@@ -551,9 +581,259 @@ p:target {
   padding-right: 0.2em;
   margin-right: 0.4125em;
 }
-// HELP-DESIGN: in the PDF this has a big black bullet next to it /a/2010-15073
-p.amendment_part {
+
+
+/* <NOTE> */
+#fulltext_content_area .note {
+  margin: 1.5em 0;
+  padding: 10px;
+  background-color: #FFFEEC;
+  }
+#fulltext_content_area .note h4 {
+  line-height: 24px;
+  margin-top: 0;
+  margin-bottom: 0.4em;
+  padding-left: 20px;
+  padding-top: 3px;
+  background: sprite-image('icons/icon_notepad.png', 0, 0, 50px) no-repeat;
 }
+#entries.show .body_column .note h4 { font-size: 1.4em; }
+#fulltext_content_area .note p {
+  padding: 0 0 0 20px;
+  text-indent: 0;
+  width: auto;
+  }
+
+/* <PSIG> */
+#entries #fulltext_content_area .signature_header {
+  padding-left: 20px;
+  float: right;
+  height: 40px;
+  width: 7px;
+  background: sprite-image('icons/icon_pen.png', 0, 1px, 200px) no-repeat;
+  }
+#entries #fulltext_content_area .signature {
+  margin-left: 4px;
+  border-left: 4px solid #7B8687;
+  margin-bottom: 20px;
+  padding-left: 10px;
+  padding-right: 10px;
+  width: 430px;
+}
+#entries #fulltext_content_area .signature p {
+  text-indent: 0;
+  width: auto;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  }
+#entries #fulltext_content_area .signature p.signature_date { 
+  padding-top: 0;
+  margin-bottom: 10px;
+  }
+#entries #fulltext_content_area .signature p.name { font-weight: bold; }
+#entries #fulltext_content_area .signature p.title { font-style: italic; }
+
+
+/* <REGTEXT> */
+#fulltext_content_area .reg_text {
+  width: 100%;
+  margin-bottom: 20px;
+  overflow: hidden;
+  clear: both;
+  }
+#entries.show .reg_text .body_column { 
+  margin-left: 0px;
+  margin-bottom: 0.5em;
+  width: 530px;
+  }
+#entries.show .reg_text .body_column .back_to_top {
+  position: relative;
+  right: 0px;
+  }
+
+.reg_text .header_column { float: none; }
+.reg_text h1 {
+  margin-left: 0;
+  text-align: left;
+  font-size: 1.3em;
+  padding-top: 4px;
+  color: #5697CF;
+  font-weight: bold;
+  }
+.reg_text h1.chapter {
+  margin-bottom: 0;
+  padding-left: 30px;
+  background: sprite-image('icons/icon_books.png', 0, 3px, 150px) no-repeat;
+  }
+.reg_text h1.part, .reg_text h1.subpart {
+  margin-bottom: 0;
+  padding-left: 30px;
+  background: sprite-image('icons/icon_book.png', 0, 4px, 150px) no-repeat;
+  }
+.reg_text .divider { 
+  overflow: hidden;
+  clear: both;
+  }
+#fulltext_content_area .reg_text .divider h1.part { 
+  padding-top: 10px;
+  background: sprite-image('icons/icon_book.png', 0, 9px, 150px) no-repeat;
+  }
+#entries.show .reg_text .body_column.regtext_intro {
+  position: relative;
+  margin-left: 0;
+  left: -5px;
+  }
+.regtext_intro p { padding-left: 0.3em; }
+
+.reg_text h2 {
+  padding-top: 20px;
+  margin-left: 0;
+  margin-bottom: 1em;
+  text-align: left;
+  color: #5697CF;
+  font-size: 1.2em;
+}
+.reg_text h2.cfr_section {
+  padding-left: 31px;
+  background: sprite-image('icons/icon_openbook.png', 0, 15px, 50px) no-repeat;
+  font-size: 1.2em;
+  font-weight: bold;
+  }
+
+.reg_text h3 {
+  color: #5697CF;
+  font-size: 1.1em;
+  }
+
+#fulltext_content_area .reg_text .border {
+  opacity: 0.3;
+  border-bottom: 2px solid #7B8687;
+  width: 38%;
+  float: left;
+  height: 13px;
+  }
+#fulltext_content_area .reg_text .border_icon {
+  opacity: 0.3;
+  background: sprite-image('icons/icon_scales.png', 7px, 0, 50px) no-repeat;
+  float: left;
+  width: 19%;
+  height: 17px;
+  text-transform: lowercase;
+  font-style: italic;
+  padding-left: 32px;
+  padding-top: 5px;
+  color: #7B8687;
+  margin-bottom: 25px;
+  }
+
+#fulltext_content_area .reg_text p.amendment_part {
+  margin-left: 35px;
+  padding-top: 10px;
+  padding-bottom: 0; 
+  clear: left;
+  line-height: 1.4em;
+  font-weight: bold;
+  }
+#fulltext_content_area .reg_text .amendment_part_number {
+  position: absolute;
+  left: 0px;
+  padding-right: 5px;
+  padding-bottom: 5px;
+  font-family: "athelas-1","athelas-2", "Georgia", serif;
+  vertical-align: top;
+  display: inline-block;
+  font-size: 24px;
+  width: 25px;
+  }
+#fulltext_content_area .reg_text .amendment_part_text {
+  width: 87%;
+  display: inline-block;
+  padding-top: 3px;
+  }
+#entries.show .reg_text .authority,
+#entries.show .reg_text .extract,
+#entries.show .reg_text .contents {
+  padding: 0 10px 10px 10px;
+  margin-left: 65px;
+  width: 87%;
+  overflow: hidden;
+  margin-top: 10px;
+  }
+#entries.show .reg_text .authority,
+#entries.show .reg_text .extract,
+#entries.show .doc_rule .reg_text .contents {
+  background-color: #F5F5F5;
+  }
+#entries.show .reg_text .authority { 
+  margin-left: 65px;
+  margin-top: 10px;
+  }
+#entries.show .reg_text .authority h3 { margin-bottom: 0; }
+
+#entries.show .reg_text .table_of_contents { 
+  font-size: 1.1em;
+  overflow: hidden;
+  clear: left;
+  }
+#entries.show .reg_text .table_of_contents h2 {
+  height: 35px;
+  width: 31px;
+  padding-top: 0;
+  float: left;
+  background: sprite-image('icons/icon_compass.png', 0, 0, 50px) no-repeat;
+  }
+#entries.show .reg_text .table_of_contents ul {
+  float: left;
+  border-left: 4px solid #7B8687;
+  list-style: none;
+  margin-left: 0px;
+  width: 87%;
+  }
+#entries.show .reg_text .table_of_contents ul li { margin-left: 5px; }
+#entries.show .reg_text table { width: 92%; }
+
+/* <LSTSUB> */
+#fulltext_content_area h2.subject_list_header {
+  padding-left: 20px;
+  font-size: 1.3em;
+  background: sprite-image('icons/icon_topics.png', 6px, -2px, 100px) no-repeat;
+  }
+#fulltext_content_area h2.subject_list_header span {
+  width: 140px;
+  display: block;
+  }
+#fulltext_content_area h2.subject_list_header a {
+  white-space: nowrap;
+  word-wrap: break-word;
+  word-break: break-word;
+  }
+#fulltext_content_area .subject_list {
+  margin-left: 4px;
+  border-left: 4px solid #7B8687;
+  padding: 0 10px;
+  width: 430px;
+  }
+#fulltext_content_area .subject_list h3:first-child { margin-top: 0; }
+#fulltext_content_area .subject_list h3 { margin-bottom: 0; }
+
+#fulltext_content_area .subject_list p { padding-bottom: 0px; }
+#fulltext_content_area .subject_list ul {
+  margin-bottom: 0;
+  font-size: 1.1em;
+  margin-left: 30px;
+  }
+
+/* Words of Issuance */
+#entries #fulltext_content_area .header_column.words_of_issuance,
+#entries #fulltext_content_area .header_column.words_of_issuance + .body_column { margin-top: 15px; }
+#entries #fulltext_content_area .header_column.words_of_issuance h2 {
+  padding-left: 20px;
+  float: right;
+  height: 40px;
+  width: 7px;
+  background: sprite-image('icons/icon_megaphone.png', 0, 0, 200px) no-repeat;
+  }
+
 // HELP-DESIGN: I could convert this to a header if you prefer...
 p.cfr_section {
   font-weight: bold;
@@ -924,27 +1204,30 @@ TABLES
   padding: .5em;
   @include text-shadow(#ddd, 1px, 1px, 1px);  
   }
-#entries.show table {
+#entries.show #content_area .table_wrapper {
+  overflow-x: scroll;
+}
+#entries.show #content_area table {
   border-collapse:separate;
   border: 1px solid #eee;  
   border-top: none;
   width: 100%;
   }
-#entries.show table td {
+#entries.show #content_area table td {
   @include linear-gradient(color-stops(#fff 80%,#f8f8f8));
   border-left: 1px solid #fff;
   border-right: 1px solid #eee;  
   border-top: 1px solid #fff;
   border-bottom: 1px solid #eee; 
-  padding: .5em 1.618em .5em .5em;
+  padding: .5em;
   }
-#entries.show table tr:hover td {
+#entries.show #content_area table tr:hover td {
   background: #F6F9FB;
   /*@include linear-gradient(color-stops(#fff 20%,#f8f8f8));*/
   border-left: 1px solid lighten(#F6F9FB, 2%);  
   border-right: 1px solid darken(#F6F9FB, 2%);
   }  
-#entries.show table thead th {
+#entries.show #content_area table thead th {
   background: #F6F9FB;
   @include linear-gradient(color-stops(#F6F9FB,#e8ebed));
   border-top: 1px solid #fff;
@@ -956,6 +1239,12 @@ TABLES
   padding: .5em;
   @include text-shadow(#fff, 1px, 1px, 1px);
   } 
+#entries.show #content_area table td.center {
+  text-align: center;
+}
+#entries.show #content_area table td.indent {
+  padding-left: 25px;
+}
 
 /******************************
 
@@ -985,7 +1274,7 @@ FOOTNOTES
   background-color: #fff;
   position: absolute;
   width: 400px;
-  opacity: .9;
+  opacity: 1;
   }
 #footnotediv .back {
   display: none;

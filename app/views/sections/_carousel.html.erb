@@ -1,4 +1,4 @@
-<div id='carousel_wrapper'>
+<div id='carousel_wrapper' class="carousel_wrapper">
   <div id='carousel_scroller'>
     <ul>
       <% entries.each do |entry| %>
@@ -23,7 +23,7 @@
               <div class='attribution bg'></div>
             <% end %>
 
-            <%= image_tag(entry.lede_photo.photo.url(:large)) %>
+            <%= image_tag(entry.lede_photo.photo.url(image_size)) %>
           </div>
         </li>
       <% end %>

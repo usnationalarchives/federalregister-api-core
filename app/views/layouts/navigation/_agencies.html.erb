@@ -1,0 +1,43 @@
+<li id="agencies-browse-preview" class="preview">
+  <div class="agency_finder">
+    <h2>Go to a specific agency</h2>
+    <% form_tag agencies_path, :method => :get, :id => "agency-search-form" do %>
+      <label>Go to a specific agency:</label>
+      <input id="agency-search" class="browse_search" placeholder="Agricultural Marketing Service" data-autocomplete="autocomplete" />
+    <% end %>
+  </div>
+  <div class="agency_browse">
+    <table class="cabinet_agencies default">
+      <thead>
+        <tr>
+          <th><h2>Browse Agencies</h2></th>
+          <th class="past_7_days" data-tooltip="Articles Published in the Last 7 Days"></th>
+          <th class="recently_opened" data-tooltip="Articles with Comment Periods Opened in the Last 7 Days"></th>
+          <th class="closing_soon" data-tooltip="Articles with Comment Periods Closing in the Next 7 Days"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @agencies.each do |agency, index| %>
+          <tr>
+            <td class="agency_name"><%= link_to agency.name, agency_path(agency) %></td>
+            <% count = agency.entry_counts_since('week') %>
+            <td class="count_7_days">
+              <% conditions = {:publication_date => {:gte => @issue.publication_date - 1.week}, :agency_ids => [agency.id]} %>
+              <%= link_to count, entries_search_path(:conditions => conditions, :utm_source => 'navigation', :utm_medium => 'dropdown', :utm_content => 'agencies_last_7') %>
+            </td>
+            <% conditions = {:publication_date => {:gte => @issue.publication_date - 1.week}, :comment_date => {:gte => @date} , :agency_ids => [agency.id]} %>
+            <% count = EntrySearch.new(:conditions => conditions).count %>
+            <td class="comments_recently_opened">
+              <%= link_to count, entries_search_path(:conditions => conditions, :utm_source => 'navigation', :utm_medium => 'dropdown', :utm_content => 'agencies_opened_recently') %>
+            </td>
+            <% conditions = {:comment_date => {:gte => @date, :lte => 1.week.from_now.to_date}, :agency_ids => [agency.id]} %>
+            <% count = EntrySearch.new(:conditions => conditions).count %>
+            <td class="comments_closing_soon">
+              <%= link_to count, entries_search_path(:conditions => conditions, :utm_source => 'navigation', :utm_medium => 'dropdown', :utm_content => 'agencies_closing_soon') %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</li>

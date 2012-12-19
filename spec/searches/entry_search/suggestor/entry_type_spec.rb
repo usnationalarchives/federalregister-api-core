@@ -7,7 +7,7 @@ describe 'EntrySearch::Suggestor::EntryType' do
   end
   
   describe "presidential documents" do 
-    ["president goats", "presidential goats"].each do |term|
+    ["president goats", "presidential goats", "goats president", "goats:president"].each do |term|
       it "should add set the type to PRESDOC and remove the term when given '#{term}'" do
         suggestion = suggestor(term).suggestion
         suggestion.term.should == 'goats'

@@ -4,6 +4,7 @@ class IssueApprovalObserver < ActiveRecord::Observer
 
   def after_save(issue_approval)
     purge_cache("^/")
+    purge_cache("^/sections/navigation")
     Section.all.each do |section|
       purge_cache("^/#{section.slug}")
     end

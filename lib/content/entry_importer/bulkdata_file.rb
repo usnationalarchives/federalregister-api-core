@@ -22,7 +22,7 @@ class Content::EntryImporter::BulkdataFile
     end
 
     begin
-      Curl::Easy.download(url, path) unless File.exists?(path)
+      Curl::Easy.download(url, path){|c| c.follow_location = true} unless File.exists?(path)
       doc = Nokogiri::XML(open(path))
       raise Content::EntryImporter::BulkdataFile::DownloadError unless doc.root.name == "FEDREG"
     rescue
@@ -35,7 +35,7 @@ class Content::EntryImporter::BulkdataFile
   
   def document_numbers
     document_numbers = []
-    document.css('RULE, PRORULE, NOTICE, PRESDOCU').each do |entry_node|
+    document.css('RULE, PRORULE, NOTICE, PRESDOCU, CORRECT').each do |entry_node|
       raw_frdoc = entry_node.css('FRDOC').first.try(:content)
       document_number = /FR Doc.\s*([^ ;]+)/i.match(raw_frdoc).try(:[], 1)
       document_numbers << document_number unless document_number.blank?
@@ -46,7 +46,7 @@ class Content::EntryImporter::BulkdataFile
   
   def document_numbers_and_associated_nodes
     ret = []
-    document.css('RULE, PRORULE, NOTICE, PRESDOCU').each do |entry_node|
+    document.css('RULE, PRORULE, NOTICE, PRESDOCU, CORRECT').each do |entry_node|
       raw_frdoc = entry_node.css('FRDOC').first.try(:content)
       
       if raw_frdoc.present?

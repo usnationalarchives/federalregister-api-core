@@ -1,6 +1,17 @@
 class EntrySearch < ApplicationSearch
-  class CFR < Struct.new(:title,:part)
+  class CFR < Struct.new(:title, :part)
+
     TITLE_MULTIPLIER = 100000
+
+    def initialize(title,part)
+      @errors = []
+
+      self.title = title.to_s.strip
+      self.part  = part.to_s.strip
+
+      validate
+    end
+
     def citation
       if part
         "#{title} CFR #{part}"
@@ -10,11 +21,29 @@ class EntrySearch < ApplicationSearch
     end
     
     def sphinx_citation
-      title_int =  title.to_s.to_i * TITLE_MULTIPLIER
-      if part.present?
-        title_int + part.to_s.to_i
-      else
+      title_int = title.to_i * TITLE_MULTIPLIER
+      if part.blank?
         title_int ... title_int + TITLE_MULTIPLIER
+      elsif match = part.match(/(\d+)-(\d+)/)
+        title_int + match[1].to_i .. title_int + match[2].to_i
+      else
+        title_int + part.to_i
+      end
+    end
+
+    def error_message
+      @errors.to_sentence
+    end
+
+    private
+
+    def validate
+      unless ('1'..'50').include?(title)
+        @errors << "CFR title must be between 1 and 50"
+      end
+
+      unless part.blank? || part =~ /^\d+$/ || part =~ /^\d+ ?- ?\d+$/
+        @errors << 'CFR part must be an integer or a range (eg "1" or "1-200")'
       end
     end
   end
@@ -41,43 +70,115 @@ class EntrySearch < ApplicationSearch
     end
   end
   
-  define_filter :agency_ids,  :sphinx_type => :with
-  define_filter :without_agency_ids,  :sphinx_type => :without, :sphinx_attribute => :agency_ids
+  define_filter :agency_ids,
+                :sphinx_type => :with
+
+  define_filter :agencies,
+                :sphinx_type => :with,
+                :sphinx_attribute => :agency_ids,
+                :model_sphinx_method => :id,
+                :model_id_method=> :slug
+  define_filter(:citing_document_numbers,
+                :sphinx_type => :with,
+                :sphinx_attribute => :cited_entry_ids,
+                :sphinx_value_processor => Proc.new { |*document_numbers|
+                  entries = Entry.all(:select => "id, document_number", :conditions => {:document_number => document_numbers.flatten})
+                  missing_document_numbers = entries.map(&:document_number) - document_numbers.flatten
+
+                  if missing_document_numbers.present?
+                    raise ApplicationSearch::InputError.new("#{missing_document_numbers.map(&:inspect).to_sentence} could not be found")
+                  end
+
+                  entries.map(&:id)
+                }) do |*document_numbers|
+                  document_numbers.flatten.map(&:inspect).to_sentence
+                end
+
+  define_filter(:document_numbers,
+                :sphinx_type => :with,
+                :sphinx_attribute => :document_number,
+                :sphinx_value_processor => Proc.new{|*document_numbers| document_numbers.flatten.map{|x| x.to_s.to_crc32}}) do |*document_numbers|
+                  document_numbers.flatten.map(&:inspect).to_sentence(:two_words_connector => ' or ', :last_word_connector => ', or ')
+                end
   define_filter :president,
                 :sphinx_type => :with,
                 :sphinx_attribute => :president_id,
-                :sphinx_value_processor => Proc.new{|*identifiers| identifiers.flatten.map {|identifier| president = President.find_by_identifier(identifier); raise ApplicationSearch::InputError.new("invalid presidential identifier") if president.nil?; president.id }} do |*identifiers|
-    identifiers.flatten.map do |identifier|
-      president = President.find_by_identifier(identifier)
-      president.full_name
-    end.to_sentence(:two_words_connector => ' or ', :last_word_connector => ', or ')
-  end
-  define_filter :section_ids, :sphinx_type => :with_all do |section_id|
-    Section.find_by_id(section_id).try(:title)
-  end
-  define_filter :topic_ids,   :sphinx_type => :with_all
-  define_filter :type,        :sphinx_type => :with, :crc32_encode => true do |types|
-    types.map{|type| Entry::ENTRY_TYPES[type]}.to_sentence(:two_words_connector => ' or ', :last_word_connector => ', or ')
-  end
-  define_filter :presidential_document_type_id, :sphinx_type => :with
-  define_filter :small_entity_ids, :sphinx_type => :with, :label => "Small Entities Affected" do |entity_ids|
-    SmallEntity.find_all_by_id(entity_ids).map(&:name).to_sentence(:two_words_connector => ' or ', :last_word_connector => ', or ')
-  end
-  
-  define_filter :docket_id, :phrase => true, :label => "Agency Docket" do |docket|
-    docket
-  end
-  
-  define_filter :significant, :sphinx_type => :with, :label => "Significance" do 
-    "Associated Unified Agenda Deemed Significant Under EO 12866"
-  end
+                :model_id_method=> :identifier,
+                :model_sphinx_method => :id,
+                :model_label_method => :full_name
 
-  define_filter :correction, :sphinx_type => :with
+  define_filter :section_ids,
+                :sphinx_type => :with_all,
+                :model_label_method => :title
+
+  define_filter :sections,
+                :sphinx_type => :with_all,
+                :sphinx_attribute => :section_ids,
+                :model_label_method => :title,
+                :model_id_attribute => :slug
+
+  define_filter :topic_ids,
+                :sphinx_type => :with_all
+
+  define_filter :type,
+                :sphinx_type => :with,
+                :crc32_encode => true do |types|
+                  types.map{|type| Entry::ENTRY_TYPES[type]}.to_sentence(:two_words_connector => ' or ', :last_word_connector => ', or ')
+                end
   
-  define_place_filter :near, :sphinx_attribute => :place_ids
-  define_date_filter :publication_date, :label => "Publication Date"
-  define_date_filter :effective_date, :label => "Effective Date"
-  define_date_filter :comment_date, :label => "Comment Date"
+  define_filter :presidential_document_type_id,
+                :sphinx_type => :with
+
+  define_filter :presidential_document_type,
+                :sphinx_type => :with,
+                :sphinx_attribute => :presidential_document_type_id,
+                :model_sphinx_method => :id,
+                :model_id_method => :identifier
+
+  define_filter :small_entity_ids,
+                :sphinx_type => :with,
+                :label => "Small Entities Affected"
+  
+  define_filter :small_entities,
+                :sphinx_type => :with,
+                :model_id_method => :identifier,
+                :model_sphinx_method => :id,
+                :label => "Small Entities Affected"
+
+  define_filter :docket_id,
+                :phrase => true,
+                :label => "Agency Docket" do |docket|
+                  docket
+                end
+  
+  define_filter :significant,
+                :sphinx_type => :with,
+                :label => "Significance" do 
+                  "Associated Unified Agenda Deemed Significant Under EO 12866"
+                end
+
+  define_filter :correction,
+                :sphinx_type => :with do |val|
+                  case val
+                  when '1', 1, true
+                    "Original Document"
+                  when '0', 0, false
+                    "Correction"
+                  end
+                end
+
+
+  define_place_filter :near,
+                      :sphinx_attribute => :place_ids
+
+  define_date_filter :publication_date,
+                     :label => "Publication Date"
+
+  define_date_filter :effective_date,
+                     :label => "Effective Date"
+
+  define_date_filter :comment_date,
+                     :label => "Comment Date"
   
   attr_reader :cfr
   
@@ -86,7 +187,7 @@ class EntrySearch < ApplicationSearch
     if hsh.present? && hsh.values.any?(&:present?)
       @cfr = CFR.new(hsh[:title], hsh[:part])
       
-      if @cfr.title.present?
+      if @cfr.error_message.blank?
         add_filter(
           :value => @cfr.sphinx_citation,
           :name => @cfr.citation,
@@ -96,7 +197,7 @@ class EntrySearch < ApplicationSearch
           :sphinx_type => :with
         )
       else
-        @errors[:cfr] = "You must provide at least a CFR title"
+        @errors[:cfr] = @cfr.error_message
       end
     end
   end
@@ -107,7 +208,7 @@ class EntrySearch < ApplicationSearch
   
   def find_options
     {
-      :select => "id, title, publication_date, document_number, granule_class, document_file_path, abstract, length, start_page, end_page, citation, signing_date, executive_order_number, executive_order_notes",
+      :select => "id, title, publication_date, document_number, granule_class, document_file_path, abstract, length, start_page, end_page, citation, signing_date, executive_order_number, presidential_document_type_id",
       :include => :agencies,
     }
   end
@@ -125,8 +226,13 @@ class EntrySearch < ApplicationSearch
     when 'executive_order_number'
       "executive_order_number ASC"
     else
-      "@relevance DESC, publication_date DESC, start_page ASC, sphinx_internal_id ASC"
+      @sort_mode = :expr
+      "@weight * 1/LOG2( (((NOW()+#{5.days}) - publication_date) / #{1.year} / 3)+2 )"
     end
+  end
+
+  def sort_mode
+    @sort_mode || :extended
   end
   
   def agency_facets
@@ -264,17 +370,21 @@ class EntrySearch < ApplicationSearch
       ['published', :publication_date],
       ['with an effective date', :effective_date],
       ['from', :agency_ids],
-      ['not from', :without_agency_ids],
+      ['from', :agencies],
       ['signed by', :president],
       ['of type', :type],
+      ['of presidential document type', :presidential_document_type_id],
+      ['of presidential document type', :presidential_document_type],
       ['filed under agency docket', :docket_id],
       ['whose', :significant],
       ['associated with', :regulation_id_number],
       ['affecting', :cfr],
       ['located', :near],
       ['in', :section_ids],
+      ['in', :sections],
       ['about', :topic_ids],
-      ['affecting Small', :small_entity_ids]
+      ['affecting Small', :small_entity_ids],
+      ['affecting Small', :small_entities]
     ].each do |term, filter_condition|
       relevant_filters = filters.select{|f| f.condition == filter_condition}
     

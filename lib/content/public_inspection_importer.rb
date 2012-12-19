@@ -4,7 +4,7 @@ module Content
       if ENV['PI_FILE']
         html = File.read(ENV['PI_FILE'])
       else
-        curl = Curl::Easy.new('http://www.ofr.gov/inspection.aspx')
+        curl = Curl::Easy.new('http://www.ofr.gov/inspection.aspx') {|c| c.follow_location = true} 
         curl.follow_location = true
         curl.perform
         html = curl.body_str
@@ -23,7 +23,7 @@ module Content
       issue.save!
 
       new_documents = []
-      parser.document.pi_documents.each do |attr|
+      parser.document.grouped_pi_documents.each do |attr|
         doc_importer = Content::PublicInspectionImporter.import(attr)
         issue.public_inspection_documents << doc_importer.document unless issue.public_inspection_document_ids.include?(doc_importer.document.id)
         new_documents << doc_importer.document if doc_importer.new_record?
@@ -96,13 +96,9 @@ module Content
       self.docket_numbers = docket_numbers.map{|number| DocketNumber.new(:number => number)}
     end
 
-    def agency=(val)
-      if val.present?
-        agency_name = AgencyName.find_or_create_by_name(val)
-        @pi.agency_names = [agency_name]
-      else
-        @pi.agency_names = []
-      end
+    def agency_names=(names)
+      @pi.agency_names = names.map{|name| AgencyName.find_or_create_by_name(name)}
+      @pi.agency_ids = @pi.agency_names.map(&:agency_id)
     end
 
     def url=(url)
@@ -113,7 +109,7 @@ module Content
       if !ENV['SKIP_DOWNLOADS'] && (not_already_downloaded? || etag_from_head(url) != @pi.pdf_etag)
         pdf_path = File.join(Dir.tmpdir, File.basename(url))
         puts "downloading #{url}..."
-        curl = Curl::Easy.download(url, pdf_path)
+        curl = Curl::Easy.download(url, pdf_path) {|c| c.follow_location = true}
         puts "done."
         headers = HttpHeaders.new(curl.header_str)
 
@@ -141,7 +137,7 @@ module Content
     end
 
     def not_already_downloaded?
-      @pi.pdf.url.blank?
+      @pi.pdf.url == 'missing.pdf'
     end
 
     def etag_from_head(url)
@@ -162,6 +158,15 @@ module Content
         @str = ''
         @pi_documents = []
         super
+      end
+
+      def grouped_pi_documents
+        @pi_documents.group_by{|attr| attr[:document_number]}.map do |document_number, attrs|
+          grouped = attrs.last.dup
+          grouped.delete(:agency)
+          grouped[:agency_names] = attrs.map{|attr| attr[:agency]}
+          grouped
+        end
       end
 
       def start_element(name, raw_attributes = [])

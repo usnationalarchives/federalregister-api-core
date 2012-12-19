@@ -20,6 +20,9 @@
                   <xsl:with-param name="size" select="'large'" />
                 </xsl:call-template>
               </xsl:attribute>
+              <xsl:attribute name="width">
+                <xsl:value-of select="number(parent::GPH/@SPAN)*153" />
+              </xsl:attribute>
             </img>
           </a>
         </p>
@@ -66,6 +69,7 @@
       <xsl:call-template name="manual_header">
         <xsl:with-param name="id" select="'table_of_graphics'" />
         <xsl:with-param name="name" select="'Graphics'" />
+        <xsl:with-param name="level" select="1" />
       </xsl:call-template>
       
       <ul class="table_of_graphics thumbs noscript">

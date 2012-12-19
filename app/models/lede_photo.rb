@@ -20,7 +20,7 @@ class LedePhoto < ApplicationModel
   attr_reader :flickr_photo_id
   has_many :entries
   has_attached_file :photo,
-                    :styles => { :homepage => ["100", :jpg], :small => ["140", :jpg], :medium => ["245", :jpg], :large => ["800x350", :jpg], :full_size => ["", :jpg] },
+                    :styles => { :navigation => ["400x175", :jpg], :homepage => ["100", :jpg], :small => ["140", :jpg], :medium => ["245", :jpg], :large => ["800x350", :jpg], :full_size => ["", :jpg] },
                     :processors => [:thumbnail],
                     :storage => :s3,
                     :s3_credentials => "#{Rails.root}/config/amazon.yml",
@@ -35,7 +35,7 @@ class LedePhoto < ApplicationModel
     if url.present?
       file_path = Tempfile.new('flickr.jpg').path
       Rails.logger.warn "FILE NAME => #{file_path}"
-      Curl::Easy.download(url, file_path)
+      Curl::Easy.download(url, file_path) {|c| c.follow_location = true}
       
       if crop_x
         dst = Tempfile.new('flickr.jpg')

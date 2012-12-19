@@ -28,14 +28,17 @@
 
       // Some methods defined across files; should prob be refactored
       "add_date_picker",
-
+      "display_modal",
       "closeOnEscape",
       "modalOpen",
 
       // Some non-recognized built-in methods
       "escape",
       "confirm",
-      "alert"
+      "alert",
+
+      // Some variables are defined at page generation
+      "dev_formats"
     ],
 
 

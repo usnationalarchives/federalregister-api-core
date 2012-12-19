@@ -29,8 +29,8 @@ GEM
     activeresource (2.3.11)
       activesupport (= 2.3.11)
     activesupport (2.3.11)
-    after_commit (1.0.8)
-      activerecord (< 3.0.0)
+    after_commit (1.0.10)
+      activerecord (>= 1.15.6, < 3.0.0)
     airbrake (3.0.9)
       activesupport
       builder
@@ -56,6 +56,7 @@ GEM
     chunky_png (0.9.0)
     ci_reporter (1.6.3)
       builder (>= 2.1.2)
+    cmdparse (2.0.5)
     compass (0.10.1)
       haml (>= 3.0.4)
     compass-960-plugin (0.9.13)
@@ -91,6 +92,10 @@ GEM
     icalendar (1.1.5)
     jgre-monkeyspecdoc (0.9.5)
     json (1.4.6)
+    juicer (1.0.6)
+      cmdparse
+      nokogiri
+      rubyzip
     klarlack (0.0.6)
     lemonade (0.3.2)
       chunky_png (>= 0.7.3)
@@ -143,7 +148,7 @@ GEM
       redis-namespace (~> 1.0.2)
       sinatra (>= 0.9.2)
       vegas (~> 0.1.2)
-    riddle (1.4.0)
+    riddle (1.5.3)
     rspec (1.3.0)
     rspec-rails (1.3.2)
       rack (>= 1.0.0)
@@ -161,12 +166,12 @@ GEM
       activesupport
     system_timer (1.0)
     term-ansicolor (1.0.5)
-    thinking-sphinx (1.3.20)
+    thinking-sphinx (1.4.13)
       activerecord (>= 1.15.6, < 3.0.0)
-      after_commit (>= 1.0.6)
-      riddle (>= 1.0.10)
+      after_commit (>= 1.0.7)
+      riddle (>= 1.5.3)
     thoughtbot-shoulda (2.11.1)
-    thunder_punch (0.0.11)
+    thunder_punch (0.0.13)
       capistrano (>= 2.5.5)
     tilt (1.3.3)
     timecop (0.3.5)
@@ -211,6 +216,7 @@ DEPENDENCIES
   icalendar
   jgre-monkeyspecdoc (= 0.9.5)
   json
+  juicer (= 1.0.6)
   klarlack (= 0.0.6)
   lemonade (= 0.3.2)
   mechanize (= 1.0.0)
@@ -234,9 +240,9 @@ DEPENDENCIES
   spork (= 0.7.5)
   stevedore (= 0.0.1)
   system_timer (= 1.0.0)
-  thinking-sphinx (= 1.3.20)
+  thinking-sphinx (= 1.4.13)
   thoughtbot-shoulda
-  thunder_punch (= 0.0.11)
+  thunder_punch (= 0.0.13)
   timecop (= 0.3.5)
   webrat (= 0.7.1)
   will_paginate (= 2.3.14)

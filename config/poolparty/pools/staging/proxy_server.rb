@@ -1,15 +1,14 @@
-cloud :proxy_server do
+cloud :proxy_server_v2 do
   # basic settings
   using :ec2
   keypair "~/Documents/AWS/FR2/gpoEC2.pem"
   user "ubuntu"
-  #image_id "ami-7d43ae14" #Ubuntu 9.10 Karmic Canonical, ubuntu@ EBS-based 64bit
-  image_id "ami-9f3ad1f6"
+  image_id "ami-4dad7424" #Ubuntu 11.10 Karmic Canonical, ubuntu@ EBS-based 64bit
   availability_zones ['us-east-1d']
   instances 1
   instance_type 't1.micro'
   
-  elastic_ip ['184.72.250.132']
+  #elastic_ip ['184.72.250.132']
   
   chef :solo do
     repo File.join(File.dirname(__FILE__) ,"..", "..", "..", "..", "vendor", "plugins")
@@ -18,9 +17,6 @@ cloud :proxy_server do
     recipe 's3sync'
     recipe "ubuntu"
     recipe "openssl"
-    
-    # recipe "munin::server"
-    # recipe "munin::client"
     
     recipe "nginx"
     recipe "varnish"
@@ -32,8 +28,8 @@ cloud :proxy_server do
       #:ubuntu => { :hostname => 'proxy'},
       :varnish => {
                     :storage_size => '300M',
-                    :blog_proxy_host => @blog_server_address,
-                    :blog_proxy_port => '80'
+                    :blog_proxy_host => 'blog.fr2.ec2.internal',
+                    :blog_proxy_port => @blog_proxy_port
                   },
       :nginx   => {
                     :doc_root      => '/var/www/apps/fr2/current/public'

@@ -22,9 +22,6 @@
 [submodule "vendor/plugins/cookbooks"]
 	path = vendor/plugins/cookbooks
 	url = git@github.com:criticaljuncture/cookbooks.git
-[submodule "vendor/plugins/calendar_helper"]
-	path = vendor/plugins/calendar_helper
-	url = git://github.com/topfunky/calendar_helper.git
 [submodule "public/images/icons"]
 	path = public/images/icons
 	url = git@github.com:criticaljuncture/fr2_icons.git
@@ -34,3 +31,6 @@
 [submodule "vendor/plugins/bootstrap-sass"]
 	path = vendor/plugins/bootstrap-sass
 	url = git@github.com:criticaljuncture/bootstrap-sass.git
+[submodule "vendor/plugins/calendar_helper"]
+	path = vendor/plugins/calendar_helper
+	url = git@github.com:criticaljuncture/calendar_helper.git

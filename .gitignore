@@ -4,6 +4,7 @@ webrat.log
 /bin
 /config/amazon.yml
 /config/api_keys.yml
+/config/cache.yml
 /config/database.yml
 /config/development.sphinx.conf
 /config/ec2_config.yml

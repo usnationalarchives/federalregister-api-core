@@ -168,6 +168,13 @@ sub vcl_hash {
     return(hash);
 }
 
+sub vcl_error {
+    set obj.http.Content-Type = "text/html; charset=utf-8";
+
+    synthetic {"<!--"} obj.status " " obj.response {"-->"};
+    return(deliver);
+}
+
 sub vcl_deliver {
     <% if config['cache'] %>
         set resp.http.Etag = resp.http.Etag " abgroup=" req.http.X-AB-Group;

@@ -32,7 +32,7 @@ class TableOfContentsPresenter
     
   end
 
-  attr_accessor :entries_without_agencies, :agencies, :agency_ids
+  attr_accessor :entries_without_agencies, :agencies, :agency_ids, :entries_with_agencies, :entries
   def initialize(entries, options = {})
     @entries = entries
     @entries_without_agencies, @entries_with_agencies =  entries.sort_by{|e| [e.start_page || 0, e.end_page || 0, e.id]}.partition{|e| e.agencies.blank? }

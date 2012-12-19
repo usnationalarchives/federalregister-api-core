@@ -13,18 +13,27 @@
             %></dd>
      <% end %>
   <% end %>
-  <% if entry.action.present?               %><dt>Action:</dt>           <dd><%= entry.action.titlecase                         %></dd><% end %>
+  
   <% if entry.dates.present?                %><dt>Dates:</dt>            <dd><%= add_citation_links(entry.dates)                %></dd><% end %>
   <% if entry.effective_on.present?         %><dt>Effective Date:</dt>   <dd><%= entry.effective_on                             %></dd><% end %>
   <% if entry.comments_close_on.present?    %><dt>Comments Close:</dt>   <dd><%= entry.comments_close_on                        %></dd><% end %>
   <% if entry.type.present?                 %><dt>Type: </dt>            <dd><%= entry.type                                     %></dd><% end %>
   <% if entry.entry_type.present?           %><dt>Entry Type:</dt>       <dd><%= entry.entry_type                               %></dd><% end %>
+  <% if entry.action.present?               %><dt>Action: </dt>          <dd><%= entry.action                                   %></dd><% end %>
   <% if entry.presidential_document_type.present? %><dt>Presidential Document Type:</dt><dd><%= entry.presidential_document_type.name %></dd><% end %>
   <% if entry.executive_order_number.present? %><dt>E.O. Citation:</dt><dd>E.O. <%= entry.executive_order_number %>
     <% if entry.signing_date %>of <%= entry.signing_date.to_s(:shorter_ordinal) %><% end %></dd><% end %>
     <% if entry.executive_order_notes.present? %><dt>E.O. Notes:</dt><dd><%= add_citation_links(entry.executive_order_notes).gsub(/\n+/, "<br />") %></dd><% end %>
-  <% if entry.start_page && entry.start_page != 0 %><dt>Page:</dt>       <dd><%= entry.start_page %><%= "-#{entry.end_page}" if entry.end_page != entry.start_page %> (<%= pluralize entry.human_length, 'page' %>)</dd>
-                                              <dt>Document Citation:</dt>         <dd><span class="volume"><%= entry.volume %></span> FR <span class="page"><%= entry.start_page %></span></dd><% end %>
+  <% if entry.start_page && entry.start_page != 0 %>
+    <dt>Document Citation:</dt>
+    <dd><span class="volume"><%= entry.volume %></span> FR <span class="page"><%= entry.start_page %></span></dd>
+
+    <dt>Page:</dt>
+    <dd>
+      <%= entry.start_page %>
+      <%= "-#{entry.end_page}" if entry.end_page != entry.start_page %> (<%= pluralize entry.human_length, 'page' %>)
+    </dd>    
+  <% end %>
   
   <% if entry.entry_cfr_references.present? %>
     <dt>CFR:</dt>

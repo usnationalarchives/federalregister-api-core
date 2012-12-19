@@ -9,7 +9,8 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120423214305) do
+
+ActiveRecord::Schema.define(:version => 20120625141513) do
 
   create_table "action_names", :force => true do |t|
     t.string   "name"
@@ -193,8 +194,8 @@ ActiveRecord::Schema.define(:version => 20120423214305) do
     t.string   "citation"
     t.string   "granule_class"
     t.string   "document_number"
-    t.string   "toc_subject"
-    t.string   "toc_doc"
+    t.string   "toc_subject",                   :limit => 1000
+    t.string   "toc_doc",                       :limit => 1000
     t.integer  "length"
     t.integer  "start_page"
     t.integer  "end_page"

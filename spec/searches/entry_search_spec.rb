@@ -3,9 +3,10 @@ require "spec_helper"
 describe EntrySearch do
   describe 'agency_ids' do
     it "populates sphinx `with`" do
+      agencies = (1..2).map{ Factory.create(:agency) }
       search = EntrySearch.new()
-      search.agency_ids = [1,2]
-      search.with.should == {:agency_ids => [1,2]}
+      search.agency_ids = agencies.map(&:id)
+      search.with.should == {:agency_ids => agencies.map(&:id)}
     end
   end
   

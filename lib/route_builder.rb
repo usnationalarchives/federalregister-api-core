@@ -27,29 +27,6 @@ module RouteBuilder
     end
   end
   
-  def self.add_api_route(route_name, &proc)
-    base_route = "api_v1_#{route_name}"
-    
-    define_method "#{base_route}_url" do |*args|
-      if Rails.env == 'staging'
-        base_url = 'http://api.fr2.criticaljuncture.org'
-      elsif Rails.env == 'production'
-        base_url = 'http://api.federalregister.gov'
-      else
-        base_url = 'http://api.fr2.local:8080'
-      end
-      
-      base_url + send("#{base_route}_path", *args).sub(/^\/api\//, '/')
-    end
-  end
-  
-  add_api_route :entry
-  add_api_route :entries
-  add_api_route :agency
-  add_api_route :agencies
-  add_api_route :public_inspection_document
-  add_api_route :public_inspection_documents
-  
   add_route :citation do |vol,page|
     {
       :fr_citation => "#{vol}-FR-#{page}"
@@ -74,8 +51,16 @@ module RouteBuilder
     "/articles/html/abstract/#{entry.document_file_path}.html"
   end
   
+  add_static_route :entry_raw_text do |entry|
+    "/articles/text/raw_text/#{entry.document_file_path}.txt"
+  end
+
   add_static_route :entry_xml do |entry|
     "/articles/xml/#{entry.document_file_path}.xml"
+  end
+  
+  add_static_route :public_inspection_raw_text do |public_inspection_document|
+    "/public-inspection/raw_text/#{public_inspection_document.document_file_path}.txt"
   end
   
   add_route :entry_citation do |entry|
@@ -223,11 +208,11 @@ module RouteBuilder
   end
 
   def regulations_dot_gov_docket_comments_url(docket_id)
-    "http://www.regulations.gov/#!docketDetail;dct=PS;rpp=100;so=DESC;sb=docId;po=0;D=#{docket_id}"
+    "http://www.regulations.gov/#!docketBrowser;dct=PS;rpp=100;so=DESC;sb=docId;po=0;D=#{docket_id}"
   end
 
   def regulations_dot_gov_docket_supporting_documents_url(docket_id)
-    "http://www.regulations.gov/#!docketDetail;dct=SR;rpp=100;so=DESC;sb=docId;po=0;D=#{docket_id}"
+    "http://www.regulations.gov/#!docketBrowser;dct=SR;rpp=100;so=DESC;sb=docId;po=0;D=#{docket_id}"
   end
 
   def regulations_dot_gov_document_url(document_id)

@@ -40,7 +40,17 @@ class PublicInspectionController < ApplicationController
     ).map(&:publication_date)
     render :layout => false
   end
-  
+ 
+  def navigation
+    cache_for 1.day
+    
+    @issue = PublicInspectionIssue.current
+    @special_documents = TableOfContentsPresenter.new(@issue.public_inspection_documents.special_filing, :always_include_parent_agencies => true)
+    @regular_documents = TableOfContentsPresenter.new(@issue.public_inspection_documents.regular_filing, :always_include_parent_agencies => true)
+
+    render :partial => 'layouts/navigation/public_inspection', :layout => false
+  end
+
   private
 
   def display_issue(date)

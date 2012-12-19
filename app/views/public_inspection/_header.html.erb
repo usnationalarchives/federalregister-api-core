@@ -16,3 +16,11 @@
   </div>
 </div>
 
+<% if document.pdf_displayable? %>
+  <div id="flash_message" class="pdf_only">
+    <p>
+      This document has not been published and is only available in <%= link_to 'PDF format', document.pdf.url(:with_banner, false) %>.
+      <%= link_to 'Download PDF', document.pdf.url(:with_banner, false), :class => "button" %>
+    </p>
+  </div>
+<% end %>

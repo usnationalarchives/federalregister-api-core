@@ -24,5 +24,20 @@
         <p class="matching_citation_header">It looks like you were searching for the citation <strong><%= citation.name %></strong>. We were unable to find any articles with that citation. FederalRegister.gov covers articles published starting in January of 1994 (volumes 59-current).</p>
     <% end %>
   </div>
+<% elsif search.term.present? && is_cfr_citation?(search.term) %>
+  <% title, part, section = Citations::CfrHelper::PATTERN.match(search.term).to_a.slice(1,3) %>
+  <% candidates = CfrPart.find_all_candidates(Date.current, title, part) %>
+  <div class="matching_citation">
+    <p class="matching_citation_header">
+      It looks like you were searching for the Code of Federal Regulations citation: <strong><%= search.term %></strong>:
+    </p>
+    <div class="matching_citation_document">
+      <ul>
+        <% candidates.each do |cfr_part| %>
+          <li><%= link_to "#{cfr_part.year}: #{cfr_part.name}", cfr_citation_path(cfr_part.year, cfr_part.title, cfr_part.part, @section)%></li>
+        <% end %>
+        <li><%= link_to 'ECFR', ecfr_url(title, part) %></li>
+      </ul>
+    </div>
+  </div>
 <% end %>
-

@@ -55,7 +55,7 @@ NAV
   width: 98px;
   }
 #navigation li.nav_blog { 
-  width:68px;
+  width:85px;
   }
 #navigation li.nav_myfr2 {
   width: 75px;
@@ -71,23 +71,24 @@ NAV
   line-height: 30px;
   padding: 0 10px;
   }
-#navigation a:hover {
+#navigation a:hover,
+#navigation a.hover {
   color: #f77825;
   }
 #navigation .dropdown a {
   padding-right: 5px;
   } 
 #navigation .dropdown .arrow {
-  background: image-url('header/dropdown-off.png') no-repeat left 50%;
+  background: image-url('icons/header/dropdown-off.png') no-repeat left 50%;
   display: inline;
   height: 30px;
   float: right;
   margin-left: 10px;
-  width: image-width('header/dropdown-off.png');
+  width: image-width('icons/header/dropdown-off.png');
   }
 #navigation .dropdown:hover .arrow,
 #navigation .dropdown.hover .arrow { //TODO sprite this
-  background: image-url('header/dropdown-hover.png') no-repeat left 50%;
+  background: image-url('icons/header/dropdown-hover.png') no-repeat left 50%;
   }
 #navigation .browse,
 #navigation .agencies,
@@ -113,77 +114,86 @@ NAV
   padding-left: 25px;
   }
 #navigation .home {
-  background: sprite-image('header/home-off.png', 10px, 8px, 50px) no-repeat;
+  background: sprite-image('icons/header/home-off.png', 10px, 8px, 50px) no-repeat;
   @include hide-text;
-  width: image-width('header/home-off.png');
+  width: image-width('icons/header/home-off.png');
   }
 #navigation .home:hover {
-  background: sprite-image('header/home-hover.png', 10px, 8px, 50px) no-repeat;
+  background: sprite-image('icons/header/home-hover.png', 10px, 8px, 50px) no-repeat;
   }
 #navigation .sections {
-  background: sprite-image('header/sections-off.png', 10px, 9px, 50px) no-repeat;
+  background: sprite-image('icons/header/sections-off.png', 10px, 9px, 50px) no-repeat;
   padding-left: 30px;
   }
-#navigation .sections:hover {
-  background: sprite-image('header/sections-hover.png', 10px, 9px, 50px) no-repeat;
+#navigation .sections.hover {
+  background: sprite-image('icons/header/sections-hover.png', 10px, 9px, 50px) no-repeat;
   } 
 #navigation .browse {
-  background: sprite-image('header/browse-off.png', 10px, 10px, 50px) no-repeat;
+  background: sprite-image('icons/header/browse-off.png', 10px, 10px, 50px) no-repeat;
   }
-#navigation .browse:hover {
-  background: sprite-image('header/browse-hover.png', 10px, 10px, 50px) no-repeat;
+#navigation .browse.hover {
+  background: sprite-image('icons/header/browse-hover.png', 10px, 10px, 50px) no-repeat;
   }
 #navigation .search {
-  background: sprite-image('header/search-off.png', 10px, 9px, 50px) no-repeat;
+  background: sprite-image('icons/header/search-off.png', 10px, 9px, 50px) no-repeat;
   padding-left: 30px;
   }
+#navigation .search.hover,
 #navigation .search:hover {
-  background: sprite-image('header/search-hover.png', 10px, 9px, 50px) no-repeat;
+  background: sprite-image('icons/header/search-hover.png', 10px, 9px, 50px) no-repeat;
   }
 #navigation .learn {
-  background: sprite-image('header/learn-off.png', 10px, 9px, 50px) no-repeat;
+  background: sprite-image('icons/header/learn-off.png', 10px, 9px, 50px) no-repeat;
   padding-left: 27px;
   }
+#navigation .learn.hover,
 #navigation .learn:hover {
-  background: sprite-image('header/learn-hover.png', 10px, 9px, 50px) no-repeat;
+  background: sprite-image('icons/header/learn-hover.png', 10px, 9px, 50px) no-repeat;
   }
 #navigation .policy {
-  background: sprite-image('header/policy-off.png', 10px, 9px, 50px) no-repeat;
+  background: sprite-image('icons/header/policy-off.png', 10px, 9px, 50px) no-repeat;
   padding-left: 27px;
   }
+#navigation .policy.hover,
 #navigation .policy:hover {
-  background: sprite-image('header/policy-hover.png', 10px, 9px, 50px) no-repeat;
+  background: sprite-image('icons/header/policy-hover.png', 10px, 9px, 50px) no-repeat;
   }
 #navigation .blog {
-  background: sprite-image('header/blog-off.png', 10px, 10px, 50px) no-repeat;
+  background: sprite-image('icons/header/blog-off.png', 10px, 10px, 50px) no-repeat;
   padding-left: 30px;
   }
-#navigation .blog:hover {
-  background: sprite-image('header/blog-hover.png', 10px, 10px, 50px) no-repeat;
+#navigation .blog.hover {
+  background: sprite-image('icons/header/blog-hover.png', 10px, 10px, 50px) no-repeat;
   }
 #navigation .agencies {
-  background: sprite-image('header/agencies-off.png', 12px, 7px, 50px) no-repeat;
+  background: sprite-image('icons/header/agencies-off.png', 12px, 21px, 50px) no-repeat;
   }
-#navigation .agencies:hover {
-  background: sprite-image('header/agencies-hover.png', 12px, 7px, 50px) no-repeat;
+#navigation .agencies.hover{
+  background: sprite-image('icons/header/agencies-hover.png', 12px, 21px, 50px) no-repeat;
   }
 #navigation .topics {
-  background: sprite-image('header/topics-off.png', 10px, 5px, 50px) no-repeat;
+  background: sprite-image('icons/header/topics-off.png', 10px, 19px, 50px) no-repeat;
   }
-#navigation .topics:hover {
-  background: sprite-image('header/topics-hover.png', 10px, 5px, 50px) no-repeat;
+#navigation .topics.hover {
+  background: sprite-image('icons/header/topics-hover.png', 10px, 19px, 50px) no-repeat;
   }
 #navigation .date {
-  background: sprite-image('header/date-off.png', 11px, 5px, 50px) no-repeat;
+  background: sprite-image('icons/header/date-off.png', 11px, 19px, 50px) no-repeat;
   }
-#navigation .date:hover {
-  background: sprite-image('header/date-hover.png', 11px, 5px, 50px) no-repeat;
+#navigation .date.hover {
+  background: sprite-image('icons/header/date-hover.png', 11px, 19px, 50px) no-repeat;
   }
 #navigation .public_inspection {
-  background: sprite-image('header/public-inspection-off.png', 9px, 3px, 50px) no-repeat;
+  background: sprite-image('icons/header/public-inspection-off.png', 9px, 17px, 50px) no-repeat;
   }
-#navigation .public_inspection:hover {
-  background: sprite-image('header/public-inspection-hover.png', 9px, 3px, 50px) no-repeat;
+#navigation .public_inspection.hover {
+  background: sprite-image('icons/header/public-inspection-hover.png', 9px, 17px, 50px) no-repeat;
+  }
+#navigation .executive_orders {
+  background: sprite-image('icons/header/executive-orders-off.png', 10px, 20px, 50px) no-repeat;
+  }
+#navigation .executive_orders.hover {
+  background: sprite-image('icons/header/executive-orders-hover.png', 10px, 20px, 50px) no-repeat;
   }
 #navigation .executive_orders {
   background: sprite-image('header/executive-orders-off.png', 10px, 6px, 50px) no-repeat;
@@ -192,76 +202,77 @@ NAV
   background: sprite-image('header/executive-orders-hover.png', 10px, 6px, 50px) no-repeat;
   }
 #navigation .money {
-  background: sprite-image('header/money-off.png', 10px, 5px, 50px) no-repeat;
+  background: sprite-image('icons/header/money-off.png', 10px, 20px, 50px) no-repeat;
   }
-#navigation .money:hover {
-  background: sprite-image('header/money-hover.png', 10px, 5px, 50px) no-repeat;
+#navigation .money.hover {
+  background: sprite-image('icons/header/money-hover.png', 10px, 20px, 50px) no-repeat;
   }
 #navigation .environment {
-  background: sprite-image('header/environment-off.png', 10px, 5px, 50px) no-repeat;
+  background: sprite-image('icons/header/environment-off.png', 10px, 20px, 50px) no-repeat;
   }
-#navigation .environment:hover {
-  background: sprite-image('header/environment-hover.png', 10px, 5px, 50px) no-repeat;
+#navigation .environment.hover {
+  background: sprite-image('icons/header/environment-hover.png', 10px, 20px, 50px) no-repeat;
   }
 #navigation .world {
-  background: sprite-image('header/world-off.png', 10px, 5px, 50px) no-repeat;
+  background: sprite-image('icons/header/world-off.png', 10px, 20px, 50px) no-repeat;
   }
-#navigation .world:hover {
-  background: sprite-image('header/world-hover.png', 10px, 5px, 50px) no-repeat;
+#navigation .world.hover {
+  background: sprite-image('icons/header/world-hover.png', 10px, 20px, 50px) no-repeat;
   }
 #navigation .science-and-technology {
-  background: sprite-image('header/science-off.png', 10px, 5px, 50px) no-repeat;
+  background: sprite-image('icons/header/science-off.png', 10px, 20px, 50px) no-repeat;
   }
-#navigation .science-and-technology:hover {
-  background: sprite-image('header/science-hover.png', 10px, 5px, 50px) no-repeat;
+#navigation .science-and-technology.hover {
+  background: sprite-image('icons/header/science-hover.png', 10px, 20px, 50px) no-repeat;
   }
 #navigation .business-and-industry {
-  background: sprite-image('header/industry-off.png', 10px, 5px, 50px) no-repeat;
+  background: sprite-image('icons/header/industry-off.png', 10px, 20px, 50px) no-repeat;
   }
-#navigation .business-and-industry:hover {
-  background: sprite-image('header/industry-hover.png', 10px, 5px, 50px) no-repeat;
+#navigation .business-and-industry.hover {
+  background: sprite-image('icons/header/industry-hover.png', 10px, 20px, 50px) no-repeat;
   }
 #navigation .health-and-public-welfare {
-  background: sprite-image('header/health-off.png', 14px, 5px, 50px) no-repeat;
+  background: sprite-image('icons/header/health-off.png', 14px, 20px, 50px) no-repeat;
   }
-#navigation .health-and-public-welfare:hover {
-  background: sprite-image('header/health-hover.png', 14px, 5px, 50px) no-repeat;
+#navigation .health-and-public-welfare.hover {
+  background: sprite-image('icons/header/health-hover.png', 14px, 20px, 50px) no-repeat;
   }
 #navigation .article-search {
-  background: sprite-image('header/article-off.png', 12px, 7px, 50px) no-repeat;
+  background: sprite-image('icons/header/article-off.png', 12px, 7px, 50px) no-repeat;
   }
 #navigation .article-search:hover {
-  background: sprite-image('header/article-hover.png', 12px, 7px, 50px) no-repeat;
+  background: sprite-image('icons/header/article-hover.png', 12px, 7px, 50px) no-repeat;
   }
 #navigation .advanced-search {
-  background: sprite-image('header/advanced-off.png', 12px, 7px, 50px) no-repeat;
+  background: sprite-image('icons/header/advanced-off.png', 12px, 7px, 50px) no-repeat;
   }
 #navigation .advanced-search:hover {
-  background: sprite-image('header/advanced-hover.png', 12px, 7px, 50px) no-repeat;
+  background: sprite-image('icons/header/advanced-hover.png', 12px, 7px, 50px) no-repeat;
   }
 #navigation .events-search {
-  background: sprite-image('header/events-off.png', 11px, 9px, 50px) no-repeat;
+  background: sprite-image('icons/header/events-off.png', 11px, 9px, 50px) no-repeat;
   }
 #navigation .events-search:hover {
-  background: sprite-image('header/events-hover.png', 11px, 9px, 50px) no-repeat;
+  background: sprite-image('icons/header/events-hover.png', 11px, 9px, 50px) no-repeat;
   }
 #navigation .unified-agenda-search {
-  background: sprite-image('header/unified-off.png', 13px, 6px, 50px) no-repeat;
+  background: sprite-image('icons/header/unified-off.png', 13px, 6px, 50px) no-repeat;
   }
 #navigation .unified-agenda-search:hover {
-  background: sprite-image('header/unified-hover.png', 13px, 6px, 50px) no-repeat;
+  background: sprite-image('icons/header/unified-hover.png', 13px, 6px, 50px) no-repeat;
   }
 #navigation .public-inspection-search {
-  background: sprite-image('header/public-inspection-search-off.png', 6px, 2px, 50px) no-repeat;
+  background: sprite-image('icons/header/public-inspection-search-off.png', 6px, 2px, 50px) no-repeat;
   }
 #navigation .public-inspection-search:hover {
-  background: sprite-image('header/public-inspection-search-hover.png', 6px, 2px, 50px) no-repeat;
+  background: sprite-image('icons/header/public-inspection-search-hover.png', 6px, 2px, 50px) no-repeat;
   }
 #navigation .nav_myfr2 {
-  background: sprite-image('header/my-fr2.png', 7px, 7px, 50px) no-repeat;
+  background: sprite-image('icons/header/my-fr2.png', 7px, 7px, 50px) no-repeat;
   }
+#navigation .nav_myfr2.hover, 
 #navigation .nav_myfr2:hover {
-  background: sprite-image('header/my-fr2-hover.png', 7px, 7px, 50px) no-repeat;
+  background: sprite-image('icons/header/my-fr2-hover.png', 7px, 7px, 50px) no-repeat;
   }
 
 
@@ -310,16 +321,544 @@ NAV DROPDOWN
   color: #5f6061;
   line-height: 30px;
   }
-#navigation .subnav a:hover {
+/* because of js timeouts on the previewable menu items we don't want css hovers here so we change them back to default */
+#navigation .previewable .subnav a:hover {
+  background-color: inherit;
+  border-top-color: inherit;
+  border-bottom-color: inherit;
+  color: #5f6061;
+  }
+#navigation .subnav a:hover,
+#navigation .subnav a.hover,
+#navigation .previewable .subnav a.hover {
   background-color: #e3e7e8;
   border-top-color: #fff;
   border-bottom-color: #fff;
   color: #f77825;
   }
+
+
 #navigation .subnav li:last-child a {
   border-bottom: none;
   }
 
+
+/******************************
+
+SUBNAV 
+
+******************************/
+#navigation .previewable .subnav { 
+  width: 605px;
+  margin-left: 21px;
+  }
+#navigation .previewable .subnav ul { 
+  margin: 0;
+  display: inline-block;
+  }
+#navigation .previewable .subnav .left_column { width: 190px; }
+#navigation .previewable .subnav .left_column li {
+  width: 194px;
+  height: 57px;
+  vertical-align: middle;
+  }
+#navigation .previewable .subnav .left_column li a { 
+  border: none; 
+  padding-top: 13px;
+  height: 45px;
+  }
+
+#navigation .previewable .subnav .right_column {
+  border-left: 1px solid #E3E7E8;
+  vertical-align: top;
+  width: 405px;
+  }
+#navigation .previewable .subnav .right_column li { border: none; }
+#navigation .previewable .subnav .right_column li.preview { display: none; }
+#navigation .previewable .subnav .right_column li#money_preview { display: list-item; }
+
+#navigation .previewable .right_column a { border: none; }
+#navigation .previewable .right_column a:hover {
+  background: none;
+  border: none;
+  color: #B88659;
+  }
+
+#navigation .previewable .right_column li > h2,
+#navigation .previewable .right_column table.default h2,
+#navigation .previewable .agency_finder h2,
+#navigation .previewable .topic_finder h2,
+#navigation .previewable .pres_details h2,
+#navigation .previewable .preview_wrapper h2,
+#navigation .previewable #blog-browse-preview h1 {
+  margin-left: 5px;
+  padding-left: 5px;
+  text-transform: uppercase;
+  margin-top: 10px;
+  margin-bottom: 5px;
+  border-bottom: 1px solid #979797;
+  font-size: 1.1em;
+  color: #979797;
+  word-spacing: 0.13em;
+  }
+
+#navigation .previewable .right_column h2 .supplemental,
+#navigation .previewable .right_column h2 .secondary {
+  color: #5F6061;
+  float: right;
+  font-size: 12px;
+  }
+
+#navigation .previewable .right_column h2 .secondary {
+  text-transform: none;
+  font-style: italic;
+  font-weight: normal;
+  position: relative;
+  padding-right: 3px;
+  top: 1px;
+  font-size: 12px;
+  word-spacing: initial;
+  }
+#navigation .previewable .right_column table.default h2 { 
+  padding-left: 0;
+  margin-bottom: 0;
+  border-bottom: none;
+  }
+
+#navigation .previewable .right_column table.default {
+  width: 390px;
+  margin: 10px 0 10px 5px;
+  }
+
+#navigation .previewable .right_column table.default tr,
+#navigation .previewable .right_column table.default th,
+#navigation .previewable .right_column table.default td { padding: 0; }
+
+#navigation .previewable .right_column table.default th { border-bottom: 1px solid #979797; }
+
+#navigation .previewable .right_column table.default th.past_7_days,
+#navigation .previewable .right_column table.default th.recently_opened,
+#navigation .previewable .right_column table.default th.closing_soon {
+  width: 40px;
+  height: 23px;
+  }
+
+#navigation .previewable .right_column table.default th.past_7_days {
+  background: sprite-image('icons/icon_last_7_days.png', 11px, 2px, 50px) no-repeat;
+  }
+#navigation .previewable .right_column table.default th.recently_opened {
+  background: sprite-image('icons/icon_comments_opened.png', 12px, 2px, 50px) no-repeat;
+  }
+#navigation .previewable .right_column table.default th.closing_soon {
+  background: sprite-image('icons/icon_comments_closing.png', 12px, 2px, 50px) no-repeat;
+  }
+
+#navigation .previewable .right_column table.default .count_7_days,
+#navigation .previewable .right_column table.default .comments_recently_opened,
+#navigation .previewable .right_column table.default .comments_closing_soon { text-align: center; }
+
+
+#navigation .previewable .right_column table.default td:first-child {
+  padding: 2px 0 2px 10px;
+  }
+#navigation .previewable .right_column table.default a {
+  display: inline;
+  border-bottom: none;
+  border-top: none;
+  font-size: 12px;
+  padding: 0;
+  line-height: 14px;
+  }
+#navigation .previewable .right_column table.default td:first-child a { color: #015BA2; }
+#navigation .previewable .right_column table.default td:first-child a:hover,
+#navigation .previewable .right_column table.default a:hover { color: #B88659; }
+
+#navigation .previewable .right_column form { 
+  margin-left: 15px;
+  overflow: hidden;
+  }
+#navigation .previewable .right_column input.browse_search { 
+  border: 1px solid #979797;
+  width: 370px;
+  height: 18px;
+  padding-left: 10px;
+  }
+#navigation .previewable .right_column input.loading {
+  background: white url('/images/ajax-loader.gif?1292020484') 332px 2px no-repeat;
+  }
+
+#navigation .previewable .right_column p.info {
+  padding: 10px 10px 5px 10px;
+  font-size: 1.1em;
+  line-height: 1.1em;
+  }
+#navigation .previewable .preview_wrapper p { 
+  padding: 0 5px;
+  margin-left: 10px;
+  margin-bottom: 15px;
+  line-height: 14px;
+  }
+#navigation .previewable .preview_wrapper a {
+  color: #015BA2;
+  font-weight: bold;
+  display: inline-block;
+  border: none;
+  font-size: 12px;
+  padding: 0;
+  line-height: 14px;
+  }
+#navigation .previewable p.info a {
+  color: #015BA2;
+  font-family: inherit;
+  font-weight: normal;
+  display: inline-block;
+  border: none;
+  line-height: 1.1em;
+  padding: 0;
+  }
+#navigation .previewable p.info a:hover,
+#navigation .previewable .preview_wrapper a:hover { color: #B88659; }
+
+/* SECTION SUGGESTED SEARCHES */
+#navigation .preview .suggested_searches { 
+  margin-left: 10px;
+  margin-bottom: 10px;
+  height: 100px;
+  }
+#navigation .preview .row { margin-bottom: 10px; }
+#navigation .preview .suggested_search {
+  float: left;
+  width: 190px;
+  }
+#navigation .preview .suggested_search h1 { 
+  line-height: 10px;
+  width: auto;
+  }
+#navigation .preview .suggested_search a {
+  color: #015BA2;
+  padding: 0;
+  font-size: 12px;
+  line-height: 16px;
+  }
+
+/* SECTION CAROUSEL */
+#navigation .preview #carousel_wrapper,
+#navigation .preview #carousel_scroller li,
+#navigation .preview  .carousel_rounded_box {
+  width: 400px;
+  height: 175px;
+  border: none;
+  }
+#navigation .preview #carousel_wrapper {
+  margin-top: 5px;
+  margin-left: 4px;
+  }
+#navigation .preview  .carousel_rounded_box {
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -o-border-radius: 10px;
+  border-radius: 10px;
+  }
+#navigation .preview .carousel_rounded_box img {
+  width: 400px;
+  height: 175px;
+  }
+#navigation .preview #carousel_scroller li div.bg,
+#navigation .preview #carousel_scroller li div.text_wrapper {
+  top: 9px;
+  width: 100%;
+  font-size: 12px;
+  padding: 5px 10px;
+  }
+#navigation .preview #carousel_scroller li div.text_wrapper h2 { width: 95%; }
+#navigation .preview #carousel_scroller li div.text_wrapper a {
+  line-height: 16px;
+  font-size: 14px;
+  color: #FFF;
+  border: none;
+  display: inline-block;
+  padding: 0;
+  width: 95%;
+  }
+#navigation .preview #carousel_scroller li div.text_wrapper .date { 
+  background: none;
+  padding-left: 0;
+  }
+
+#navigation .preview  #carousel_scroller li div.attribution,
+#navigation .preview  #carousel_scroller li div.attribution.bg {
+  top: auto;
+  bottom: 10px;
+  font-size: 11px;
+  width: auto;
+  line-height: 10px;
+  }
+#navigation .preview  #carousel_scroller li div.attribution.bg { padding: 1px 2px; }
+#navigation .preview  #carousel_scroller li div.attribution a { 
+  font-size: 11px;
+  line-height: 14px;
+  border: none;
+  }
+#navigation .preview  #carousel_scroller li p.metadata,
+#navigation .preview  #carousel_scroller li p.summary { display: none; }
+
+/* SECTION DAILY STATS */
+#navigation .preview .daily_stats {
+  border-top: 1px solid #EEE;
+  font-weight: bold;
+  color: #C3C3C3;
+  margin-bottom: 3px;
+  }
+#navigation .preview .daily_stats li {
+  padding-top: 5px;
+  width: 200px;
+  display: inline-block;
+  height: 25px;
+  }
+#navigation .preview .daily_stats a {
+  font-weight: bold;
+  color: #C3C3C3;
+  }
+#navigation .preview .daily_stats .count {
+  top: -3px;
+  position: relative;
+  padding-right: 5px;
+  width: 40px;
+  font-size: 23px;
+  text-align: right;
+  }
+#navigation .preview .daily_stats .details {
+  line-height: 11px;
+  display: inline-block;
+  width: 114px;
+  font-size: 10px;
+  text-transform: uppercase;
+  }
+
+/* BROWSE AGENCIES */
+/* most styles for browse agencies are generic and under the subnav section above
+
+
+/* BROWSE DATES */
+#navigation .previewable .fr_stats h2,
+#navigation .previewable .calendar_holder h2,
+#navigation .previewable .date_input_holder h2 {
+  margin-left: 5px;
+  padding-left: 5px;
+  text-transform: uppercase;
+  margin-top: 10px;
+  margin-bottom: 5px;
+  border-bottom: 1px solid #979797;
+  font-size: 1.1em;
+  color: #979797;
+  }
+
+#current-article-browse-preview .significant { float: left; }
+#current-article-browse-preview .significant a { 
+  line-height: 14px;
+  color: #015BA2;
+  }
+
+#navigation .previewable .right_column .fr_stats .statistics li {
+  font-size: 15px;
+  color: #5F6061;
+  font-weight: bold;
+  line-height: 20px;
+  display: inline-block;
+  }
+#navigation .previewable .fr_stats .statistics a { 
+  line-height: 12px;
+  color: #015BA2;
+  }
+#navigation .previewable .fr_stats .statistics a:hover { 
+  background: none;
+  color: #B88659;
+  }
+
+#navigation .previewable #date_chooser { margin-left: 10px; }
+
+#navigation .previewable .calendar_holder,
+#navigation .previewable .date_input_holder {
+  display: inline-block;
+  width: 400px;
+  margin-bottom: 12px;
+  }
+
+#navigation .previewable .calendar_holder table { margin-bottom: 10px; }
+#navigation .previewable .calendar_holder table.calendar:first-child { margin-right: 20px; }
+#navigation .previewable table.calendar { 
+  width: 185px;
+  float: left;
+  }
+#navigation .previewable table.calendar a { 
+  line-height: 20px;
+  padding: 0;
+  font-weight: 700;
+  color: #015BA2;
+  }
+#navigation .previewable table.calendar td a:hover { 
+  background-color: $golden;
+  color: #FFF;
+  } 
+
+#navigation .previewable table.calendar tr.calendar_nav th.cal_prev a,
+#navigation .previewable table.calendar tr.calendar_nav th.cal_next a,
+#navigation .previewable table.calendar tr.calendar_nav th.cal_prev,
+#navigation .previewable table.calendar tr.calendar_nav th.cal_next { 
+  color: #5F6061;
+  font-weight: bold;
+  font-size: 12px;
+  border: none;
+  line-height: 18px;
+  }
+#navigation .previewable table.calendar tr.calendar_nav a { color: #015BA2; }
+#navigation .previewable table.calendar tr.calendar_nav a:hover { color: #B88659; }
+
+#navigation .previewable .date_input_holder input#search { width: 325px; }
+#navigation .previewable .date_input_holder input[type="submit"] {
+  margin-left: 5px;
+  width: 35px;
+  height: 22px;
+  }
+
+
+/* BROWSE EXECUTIVE ORDERS */
+#navigation .previewable .pres_holder .photo {
+  width: 50px;
+  height: 65px;
+  border: 1px solid #333;
+  margin: 10px 0 0 5px;
+  vertical-align: top;
+  display: inline-block;
+}
+#navigation .previewable #barack-obama .photo {
+  background: transparent url('/images/presidential_photos/Barack_Obama_sm.jpg') 0 0 no-repeat;
+  }
+#navigation .previewable #george-w-bush .photo {
+  background: transparent url('/images/presidential_photos/George_W_Bush_sm.jpg') 0 0 no-repeat;
+  }
+#navigation .previewable #william-j-clinton .photo {
+  background: transparent url('/images/presidential_photos/Bill_Clinton_sm.jpg') 0 0 no-repeat;
+  }
+
+#navigation .previewable .pres_details {
+  width: 340px;
+  display: inline-block;
+  }
+
+#navigation .previewable .pres_holder li,
+#navigation .previewable .pres_holder li a,
+#navigation .previewable .pres_holder li span { 
+  padding: 0;
+  display: inline-block;
+  line-height: 14px;
+  }
+
+#navigation .previewable #executive-orders-browse-preview ol { margin: 0; }
+
+#navigation .previewable #executive-orders-browse-preview ol.children,
+#navigation .previewable #executive-orders-browse-preview ol.recent { margin: 10px; }
+
+#navigation .previewable .pres_holder li.executive_order_wrapper { vertical-align: top; }
+#navigation .previewable .pres_holder li.executive_order_wrapper .eo_number { 
+  width: 65px;
+  vertical-align: top;
+  padding-top: 2px;
+  font-weight: bold;
+  }
+#navigation .previewable .pres_holder li.executive_order_wrapper a { 
+  line-height: 16px;
+  font-size: 12px;
+  font-weight: 500;
+  color: #015BA2;
+  width: 250px;
+  }
+#navigation .previewable .pres_holder li.executive_order_wrapper a:hover { color: #B88659; }
+#navigation .previewable .pres_holder ol.children li { 
+  width: 61px;
+  font-weight: bold;
+  font-size: 13px;
+  }
+#navigation .previewable .pres_holder ol.children li a { 
+  color: #015BA2;
+  font-size: 12px;
+  }
+#navigation .previewable .pres_holder ol.children li a:hover { color: #B88659; }
+
+/* PUBLIC INSPECTION BROWSE PREVIEW */
+#navigation .previewable #public-inspection-browse-preview { height: 280px; }
+#navigation .previewable #public-inspection-browse-preview p.info {
+  margin: 10px 0 10px 7px;
+  padding: 5px 12px 5px 15px;
+  background-color: #F5F8F9;
+  }
+#navigation .previewable #public-inspection-browse-preview .preview_wrapper {
+  overflow: hidden;
+  clear: both
+  }
+#navigation .previewable .inspection_counts { float: left; }
+
+
+#navigation .previewable .mini_document_types a { 
+  vertical-align: top;
+  display: inline-block;
+  padding: 0;
+  padding-top: 2px;
+  }
+
+/* BROWSE BLOG */
+/* some styles are in the generic subnav section */
+#navigation .previewable .subnav.blog_list  { width: 395px; }
+#navigation .previewable .subnav.blog_list .right_column { width: 395px; }
+
+#navigation .previewable #blog-browse-preview h1 a { 
+  line-height: 14px;
+  padding-left: 0;
+  color: #979797;
+  }
+#navigation .previewable #blog-browse-preview h2 { 
+  border: none;
+  margin-left: 0;
+  padding-left: 0;
+  }
+#navigation .previewable #blog-browse-preview h2 a {
+  color: #015BA2;
+  text-transform: none;
+  font-size: 13px;
+  line-height: 14px;
+  padding-left: 0;
+  }
+#navigation .previewable #blog-browse-preview h2 a:hover { color: #B88659; }
+
+#navigation .previewable #blog-browse-preview ul { margin-left: 10px; }
+#navigation .previewable #blog-browse-preview ul .metadata {
+  font-size: 1.1em;
+  padding-bottom: 0;
+  font-style: italic;
+  margin-left: 5px;
+  }
+#navigation .previewable #blog-browse-preview ul .post_content {
+  display: block;
+  margin-left: 5px;
+  font-size: 1.15em;
+  line-height: 1.3em;
+  padding-right: 5px;
+  }
+#navigation .previewable #blog-browse-preview ul .post_content a {
+  font-size: 0.8em;
+  position: relative;
+  float: right;
+  top: -5px;
+  }
+#navigation .view_all {
+  font-size: 12px;
+  font-style: italic;
+  float: right;
+  position: relative;
+  top: -7px;
+  }
+
+  
 /******************************
 
 SEARCH 
@@ -356,19 +895,19 @@ SEARCH
 #navigation #term:-moz-placeholder { color: #555; }
 
 #navigation .search_btn {
-  background: sprite-image('header/search-off.png', 0, 0, 50px) no-repeat;
+  background: sprite-image('icons/header/search-off.png', 0, 0, 50px) no-repeat;
   cursor: pointer;
   display: block;
-  height: image-height('header/search-off.png');
+  height: image-height('icons/header/search-off.png');
   font-size: 0;
   @include hide-text;
   position: absolute;
   right: 5px;
   top: 3px;
-  width: image-width('header/search-off.png');
+  width: image-width('icons/header/search-off.png');
   }
 #navigation .search_btn:hover {
-  background: sprite-image('header/search-hover.png', 0, 0, 50px) no-repeat;
+  background: sprite-image('icons/header/search-hover.png', 0, 0, 50px) no-repeat;
   }
 
 /******************************

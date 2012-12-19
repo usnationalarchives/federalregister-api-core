@@ -64,10 +64,6 @@ ActionController::Routing::Routes.draw do |map|
                                         :controller => "executive_orders",
                                         :action => "index",
                                         :conditions => {:method => :get}
-  map.executive_orders_by_president 'executive-orders/:president.:format',
-                                        :controller => "executive_orders",
-                                        :action => "by_president",
-                                        :conditions => {:method => :get}
   map.executive_orders_by_president_and_year 'executive-orders/:president/:year.:format',
                                         :controller => "executive_orders",
                                         :action => "by_president_and_year",
@@ -125,7 +121,7 @@ ActionController::Routing::Routes.draw do |map|
   map.event 'events/:id.:format', :controller => 'events', :action => 'show', :conditions => { :method => :get }
   
   # TOPICS
-  map.resources :topics, :as => "topics", :only => [:index, :show]
+  map.resources :topics, :as => "topics", :only => [:index, :show], :collection => {:search => :get}
   map.significant_entries_topic 'topics/:id/significant.:format', :controller => "topics", :action => "significant_entries", :conditions => { :method => :get }
 
   # AGENCIES

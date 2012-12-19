@@ -1,11 +1,37 @@
 class PublicInspectionDocumentSearch < ApplicationSearch
-  define_filter :agency_ids,  :sphinx_type => :with
-  define_filter :type,        :sphinx_type => :with, :crc32_encode => true do |types|
-    types.map{|type| Entry::ENTRY_TYPES[type]}.to_sentence(:two_words_connector => ' or ', :last_word_connector => ', or ')
-  end
-  define_filter :docket_id, :phrase => true, :label => "Agency Docket" do |docket|
-    docket
-  end 
+  define_filter :agency_ids,
+                :sphinx_type => :with
+
+  define_filter :agencies,
+                :sphinx_attribute => :agency_ids,
+                :sphinx_type => :with,
+                :model_id_method => :slug
+
+  define_filter :type,
+                :sphinx_type => :with, :crc32_encode => true do |types|
+                  types.map{|type| Entry::ENTRY_TYPES[type]}.to_sentence(:two_words_connector => ' or ', :last_word_connector => ', or ')
+                end
+
+  define_filter :docket_id,
+                :phrase => true,
+                :label => "Agency Docket" do |docket|
+                  docket
+                end 
+  define_filter(:document_numbers,
+                :sphinx_type => :with,
+                :sphinx_attribute => :document_number,
+                :sphinx_value_processor => Proc.new{|*document_numbers| document_numbers.flatten.map{|x| x.to_s.to_crc32}}) do |*document_numbers|
+                  document_numbers.flatten.map(&:inspect).to_sentence(:two_words_connector => ' or ', :last_word_connector => ', or ')
+                end
+  define_filter :special_filing,
+                :sphinx_type => :with,
+                :label => "Filing Type" do |type|
+                  if type == '1'
+                    'Special Filing'
+                  else
+                    'Regular Filing'
+                  end
+                end
   
   def agency_facets
     ApplicationSearch::FacetCalculator.new(:search => self, :model => Agency, :facet_name => :agency_ids).all
@@ -71,6 +97,7 @@ class PublicInspectionDocumentSearch < ApplicationSearch
       ['published', :publication_date],
       ['from', :agency_ids],
       ['of type', :type],
+      ['categorized as', :special_filing],
       ['filed under agency docket', :docket_id],
     ].each do |term, filter_condition|
       relevant_filters = filters.select{|f| f.condition == filter_condition}

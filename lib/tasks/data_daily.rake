@@ -11,6 +11,11 @@ namespace :data do
       data:extract:places
     )
     
+    task :really_quick => %w(
+      content:entries:import
+      content:issues:mark_complete
+    )
+
     task :quick => %w(
       data:daily:basic
       content:issues:mark_complete

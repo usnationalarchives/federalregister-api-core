@@ -26,6 +26,10 @@
               :label => "Document Category",
               :as => :check_boxes,
               :collection => EntrySearch::TYPES %>
+  <%= f.input :special_filing,
+              :as => :radio,
+              :label => "Filing Type",
+              :collection => [['All', ''],['Regular', '0'], ['Special', '1']] %>
   <%= f.input :docket_id,
               :label => "Agency Docket",
               :input_html => {:placeholder => "EPA-HQ-OPPT-2005-0049"}, 

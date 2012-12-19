@@ -13,12 +13,12 @@ xml.rss "version" => "2.0", "xmlns:dc" => "http://purl.org/dc/elements/1.1/" do
       xml.item do
         xml.title       entry.title
         xml.link        entry_url(entry)
-        xml.description entry.abstract
+        xml.description h(entry.abstract)
         xml.pubDate     CGI.rfc1123_date entry.publication_date.to_time
         xml.guid        entry_url(entry)
-        xml.author      entry.agency.try(:name)
+        xml.dc :creator, entry.agency.try(:name)
         entry.topics.each do |topic|
-          xml.category topic.name
+          xml.category h(topic.name)
         end
       end
     end

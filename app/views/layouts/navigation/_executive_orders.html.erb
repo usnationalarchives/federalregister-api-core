@@ -1,0 +1,42 @@
+<li id="executive-orders-browse-preview" class="preview">
+  <ol>
+    <% @orders_by_president_and_year.each do |president, eo_collections| %>
+      <li class="pres_holder" id="<%=president.identifier%>">
+        <% photo_title =  case president.identifier
+                          when 'barack-obama'
+                            "Photo Courtesy, WhiteHouse.gov"
+                          when 'george-w-bush'
+                            "Photo Courtesy, George W. Bush Presidential Library"
+                          when 'william-j-clinton'
+                            "Photo Courtesy, William J. Clinton Presidential Library"
+                          end %>
+        <div class='photo' title='<%= photo_title %>'></div>
+        <div class="pres_details">
+          <h2><%= president.full_name %></h2>
+          <% if president == @orders_by_president_and_year.first.first %> 
+          <ol class="recent">
+            <% eo_collections.first.executive_orders[0..2].each do |executive_order| %>
+              <li class="executive_order_wrapper">
+                <span class="eo_number">EO <%= executive_order.executive_order_number %>:</span>
+                <%= link_to executive_order.title, entry_path(executive_order) %>
+              </li>
+            <% end %>
+          </ol>
+          <% end %>
+          <ol class="children">
+            <% eo_collections.reverse.each do |eo_collection| %>
+              <li>
+                <% if eo_collection.year < 1994 %>
+                  <%= eo_collection.year %>: <span class="fr_year_not_available" data-tooltip="Articles on FederalRegister.gov are available from 1994-current">N/A</span>
+                <% else %>
+                  <%= eo_collection.year %>: 
+                  <%= link_to eo_collection.count, executive_orders_by_president_and_year_path(president.identifier, eo_collection.year) %>
+                <% end %>
+              </li>
+            <% end %>
+          </ol>
+        </div>
+      </li>
+    <% end %>
+  </ol>
+</li>

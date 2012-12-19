@@ -21,6 +21,7 @@ class Subscription < ApplicationModel
   attr_accessible :email, :search_conditions, :search_type
   default_scope :conditions => { :environment => Rails.env }
   before_create :generate_token
+  after_create :remove_from_bounce_list
   after_create :ask_for_confirmation
   before_save :update_mailing_list_active_subscriptions_count
 
@@ -77,6 +78,14 @@ class Subscription < ApplicationModel
 
   private
   
+  def remove_from_bounce_list
+    begin
+      SendgridClient.new.remove_from_bounce_list(email)
+    rescue Exception => e
+      Airbrake.notify(e)
+    end
+  end
+
   def ask_for_confirmation
     Mailer.deliver_subscription_confirmation(self)
   end

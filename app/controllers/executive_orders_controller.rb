@@ -2,6 +2,7 @@ class ExecutiveOrdersController < ApplicationController
   FIELDS = [:executive_order_number, :title, :publication_date, :signing_date, :citation, :document_number, :executive_order_notes, :html_url]
   
   def index
+    cache_for 1.day
     @orders_by_president_and_year = ExecutiveOrderPresenter.all_by_president_and_year
     @api_conditions = {
       :type => "PRESDOCU",
@@ -13,12 +14,15 @@ class ExecutiveOrdersController < ApplicationController
   end
 
   def by_president_and_year
+    cache_for 1.day
     @orders_by_president_and_year = ExecutiveOrderPresenter.all_by_president_and_year
 
-    @president = President.find_by_identifier(params[:president])
+    @president = President.find_by_identifier!(params[:president])
     @year = params[:year].to_i
 
     @eo_collection = ExecutiveOrderPresenter::EoCollection.new(@president, @year)
+
+    raise ActiveRecord::RecordNotFound unless @eo_collection.count > 0
 
     @api_conditions = {
       :type => "PRESDOCU",
@@ -46,4 +50,13 @@ class ExecutiveOrdersController < ApplicationController
       end
     end
   end
+
+  def navigation
+    cache_for 1.day
+    
+    @orders_by_president_and_year = ExecutiveOrderPresenter.all_by_president_and_year
+
+    render :partial => 'layouts/navigation/executive_orders', :layout => false
+  end
+
 end

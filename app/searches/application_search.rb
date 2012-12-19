@@ -27,8 +27,6 @@ class ApplicationSearch
   def self.define_filter(filter_name, options = {}, &name_definer)
     attr_reader filter_name
     # refactor to partials...
-    name_definer ||= Proc.new{|*ids|
-filter_name.to_s.sub(/_ids?$/,'').classify.constantize.find_all_by_id(ids.flatten).map(&:name).to_sentence(:two_words_connector => ' or ', :last_word_connector => ', or ') }
     
     define_method "#{filter_name}=" do |val|
       if (val.present? && (val.is_a?(String) || val.is_a?(Fixnum))) || (val.is_a?(Array) && !val.all?(&:blank?))
@@ -38,7 +36,7 @@ filter_name.to_s.sub(/_ids?$/,'').classify.constantize.find_all_by_id(ids.flatte
         end
         
         begin
-          add_filter options.merge(:value => val, :condition => filter_name, :name_definer => name_definer, :name => options[:name])
+          add_filter options.merge(:value => val, :condition => filter_name, :name_definer => name_definer)
         rescue ApplicationSearch::InputError => e
           @errors[filter_name] = e.message
         end
@@ -190,10 +188,11 @@ filter_name.to_s.sub(/_ids?$/,'').classify.constantize.find_all_by_id(ids.flatte
         :without => without,
         :conditions => sphinx_conditions,
         :match_mode => :extended,
-        :sort_mode => :extended
+        :sort_mode => sort_mode
       }.merge(find_options).recursive_merge(args)
     )
 
+<<<<<<< HEAD
     sphinx_search = ThinkingSphinx::Search.new(sphinx_term,
       :with => with,
       :with_all => with_all,
@@ -202,9 +201,11 @@ filter_name.to_s.sub(/_ids?$/,'').classify.constantize.find_all_by_id(ids.flatte
       :match_mode => :extended
     )
 
+=======
+>>>>>>> master
     if result_array
       result_array.each do |result|
-        result.excerpts = ApplicationSearch::FileExcerpter.new sphinx_search, result
+        result.excerpts = ApplicationSearch::FileExcerpter.new result_array, result
       end
     end
 
@@ -222,6 +223,10 @@ filter_name.to_s.sub(/_ids?$/,'').classify.constantize.find_all_by_id(ids.flatte
   def order_clause
     "@relevance DESC"
   end
+
+  def sort_mode
+    :extended
+  end
   
   def find_options
     {}
@@ -237,17 +242,15 @@ filter_name.to_s.sub(/_ids?$/,'').classify.constantize.find_all_by_id(ids.flatte
   end
   
   def count
-    model.search_count(sphinx_term,
+    @count ||= model.search_count(sphinx_term,
       {
         :page => @page,
         :per_page => @per_page,
-        :order => order_clause,
         :with => with,
         :with_all => with_all,
         :without => without,
         :conditions => sphinx_conditions,
-        :match_mode => :extended,
-        :sort_mode => :extended
+        :match_mode => :extended
       }.merge(find_options)
     )
   end

@@ -39,8 +39,10 @@
 
 #modal,
 #disclaimer_modal,
+#deprecation_modal,
 #cfr_citation_modal,
-#exit_modal {
+#exit_modal,
+#fr_modal {
   background-color: white;
   border: 5px solid #3F5B75;
   display: none;
@@ -62,7 +64,9 @@
 #modal .jqmClose,
 #exit_modal .jqmClose,
 #disclaimer_modal .jqmClose,
-#cfr_citation_modal .jqmClose {
+#deprecation_modal .jqmClose,
+#cfr_citation_modal .jqmClose,
+#fr_modal .jqmClose {
   position: absolute;
   right: 1em;
   top: 1em;
@@ -82,3 +86,20 @@
   padding-left: 33px;
   text-indent: -33px;
   }
+
+
+/* developer formats modal */
+#disclaimer_modal ul { 
+  list-style: none;
+  margin-bottom: 10px;
+  margin-left: 20px;
+  }
+#disclaimer_modal ul a {
+  padding-left: 20px;
+  padding-top: 3px;
+  text-transform: none;
+  font-size: 1.1em;
+  background: sprite-image('icons/icon_code_document.png', 0, 1px, 50px) no-repeat;
+}
+#disclaimer_modal ul a:hover { background: sprite-image('icons/icon_code_document_on.png', 0, 1px, 50px) no-repeat; }
+

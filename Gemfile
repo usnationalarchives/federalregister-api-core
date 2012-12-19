@@ -23,7 +23,7 @@ gem 'formtastic', '0.9.8'
 gem 'json'
 gem 'ym4r', '0.6.1'
 
-gem 'thinking-sphinx', '1.3.20', :require => 'thinking_sphinx'
+gem 'thinking-sphinx', '1.4.13', :require => 'thinking_sphinx'
 gem 'raspell', '1.2'
 gem 'airbrake', '3.0.9'
 gem 'aws-s3', '0.6.2', :require => 'aws/s3'
@@ -46,13 +46,15 @@ gem "amazon-ec2", :require => false
 
 gem "net-scp", '1.0.4'
 gem "capistrano", '2.5.19', :require => false
-gem "thunder_punch", '0.0.11', :require => false
+gem "thunder_punch", '0.0.13', :require => false
 gem "resque", "1.19.0"
 
 gem "httparty", "0.8.1"
 gem "recaptcha", "0.3.1", :require => 'recaptcha/rails'
 gem 'sendgrid', :git => "git://github.com/criticaljuncture/sendgrid.git", :branch => 'master'
 gem 'modularity', '0.6.1'
+
+gem 'juicer', '1.0.6'
 
 # bundler requires these gems in all environments
 # gem 'nokogiri', '1.4.2'

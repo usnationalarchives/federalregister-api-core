@@ -7,21 +7,71 @@
         <xsl:with-param name="source" select="@SOURCE"/>
       </xsl:call-template>
     </xsl:variable>
+
+    <xsl:variable name="class">
+      <xsl:choose>
+        <xsl:when test="parent::*[1][name() = 'CHAPTER']">
+          <xsl:value-of select="'chapter'" />
+        </xsl:when>
+        <xsl:when test="parent::*[name() = 'PART']">
+          <xsl:value-of select="'part'" />
+        </xsl:when>
+        <xsl:when test="parent::*[name() = 'SUBPART']">
+          <xsl:value-of select="'subpart'" />
+        </xsl:when>
+      </xsl:choose>
+    </xsl:variable>
+
     <xsl:choose>
-      <xsl:when test="$level &lt; 3">
+      <xsl:when test="not(ancestor::REGTEXT or ancestor::PART) and $level &lt; 3">
         <xsl:value-of disable-output-escaping="yes" select="'&lt;/div&gt;'"/>
         <div class="header_column">
-          <xsl:call-template name="header"/>
+          <xsl:if test="name(..) = 'FURINF'">
+            <xsl:attribute name="id">furinf</xsl:attribute>
+          </xsl:if>
+          <xsl:call-template name="header">
+            <xsl:with-param name="class" select="$class"/>
+          </xsl:call-template>
         </div>
         <xsl:value-of disable-output-escaping="yes" select="'&lt;div class=&quot;body_column&quot; &gt;'"/>
       </xsl:when>
       <xsl:otherwise>
-        <xsl:call-template name="header"/>
+        <xsl:call-template name="header">
+          <xsl:with-param name="class" select="$class"/>
+        </xsl:call-template>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
+
+  <xsl:template match="HD[ancestor::NOTE]">
+    <h4>
+      <xsl:apply-templates />
+    </h4>
+  </xsl:template>
+
+  <xsl:template match="HD[ancestor::AUTH and (ancestor::REGTEXT or ancestor::PART)]">
+    <h3>
+      <xsl:apply-templates />
+    </h3>
+  </xsl:template>
+
+  <xsl:template match="PROC">
+    <h3 class="proc">
+      <xsl:apply-templates />
+    </h3>
+  </xsl:template>
+
+  <xsl:template match="HD[ancestor::LSTSUB]">
+    <xsl:call-template name="manual_header">
+      <xsl:with-param name="name" select="text()"/>
+      <xsl:with-param name="level" select="2"/>
+      <xsl:with-param name="class" select="'subject_list_header'"/>
+    </xsl:call-template>
+  </xsl:template>
   
   <xsl:template name="header">
+    <xsl:param name="class" select="''"/>
+
     <xsl:variable name="level">
       <xsl:call-template name="header_level">
         <xsl:with-param name="source" select="@SOURCE"/>
@@ -31,7 +81,15 @@
       <xsl:attribute name="id">
         <xsl:call-template name="header_id" />
       </xsl:attribute>
+
+        <xsl:if test="$class">
+          <xsl:attribute name="class">
+            <xsl:value-of select="$class"/>
+          </xsl:attribute>
+        </xsl:if>
+
       <xsl:apply-templates/>
+
       <xsl:if test="text() != 'SUMMARY:' and $level &lt; 3">
         <xsl:call-template name="back_to_top"/>
       </xsl:if>
@@ -45,19 +103,30 @@
   
   <xsl:template name="manual_header">
     <xsl:param name="name"/>
-    <xsl:param name="id"/>
-    <xsl:param name="back_to_top"/>
+    <xsl:param name="level" value="1"/>
+    <xsl:param name="id">
+      <xsl:call-template name="header_id" />
+    </xsl:param>
+    <xsl:param name="back_to_top" select="1"/>
+    <xsl:param name="class" select="''"/>
     <xsl:value-of disable-output-escaping="yes" select="'&lt;/div&gt;'"/>
     <div class="header_column">
-      <h1>
+      <xsl:element name="{concat('h', $level)}">
         <xsl:attribute name="id">
           <xsl:value-of select="$id"/>
         </xsl:attribute>
+
+        <xsl:if test="$class">
+          <xsl:attribute name="class">
+            <xsl:value-of select="$class"/>
+          </xsl:attribute>
+        </xsl:if>
+
         <xsl:value-of select="$name"/>
         <xsl:if test="$back_to_top">
           <xsl:call-template name="back_to_top"/>
         </xsl:if>
-      </h1>
+      </xsl:element>
     </div>
     <xsl:value-of disable-output-escaping="yes" select="'&lt;div class=&quot;body_column&quot; &gt;'"/>
   </xsl:template>

@@ -42,7 +42,7 @@ class ApplicationController < ActionController::Base
     end
   end
   
-  rescue_from ActiveRecord::RecordNotFound, ActionController::RoutingError, :with => :record_not_found if RAILS_ENV != 'development'
+  rescue_from ActiveRecord::RecordNotFound, ActiveHash::RecordNotFound, ActionController::RoutingError, :with => :record_not_found if RAILS_ENV != 'development'
   def record_not_found
     # ESI routes should return correct status codes, but no error page
     if params[:quiet]
@@ -64,6 +64,12 @@ class ApplicationController < ActionController::Base
   end
   
   def cache_for(time)
+    if RAILS_ENV == 'development'
+      path = File.join(Rails.root, 'config', 'cache.yml')
+      if File.exists?(path) && YAML::load_file(path).none? {|path| request.path =~ /#{path}/ }
+        return
+      end
+    end
     expires_in time, :public => true
   end
   

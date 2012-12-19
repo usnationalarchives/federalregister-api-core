@@ -1,4 +1,4 @@
-cloud :fr2_db do
+cloud :fr2_database do
   # basic settings
   using :ec2
   keypair "~/Documents/AWS/FR2/gpoEC2.pem"
@@ -25,8 +25,6 @@ cloud :fr2_db do
     recipe "openssl"
     
     recipe "apparmor"
-
-    #recipe "munin::client"
 
     recipe "mysql::server_ec2"
     recipe "mysql::server"

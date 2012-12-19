@@ -16,6 +16,7 @@ class Citation < ApplicationModel
     'USC' => /(\d+)\s+U\.?S\.?C\.?\s+(\d+)/,
     'CFR' => /(\d+)\s+CFR\s+(\d+)(?:\.(\d+))?/,
     'FR'  => /(\d+)\s+FR\s+(\d+)/,
+    'FR-DocNum' => /(?:FR Doc(?:\.|ument)? )([A-Z0-9]+-[0-9]+)(?:[,;\. ])/i,
     'PL'  => /Pub(?:lic|\.)\s+L(?:aw|\.)\.\s+(\d+)-(\d+)/,
     'EO'  => /(?:EO|E\.O\.|Executive Order) (\d+)/
   }
@@ -31,6 +32,8 @@ class Citation < ApplicationModel
       "http://frwebgate.access.gpo.gov/cgi-bin/get-cfr.cgi?YEAR=current&TITLE=#{part_1}&PART=#{part_2}&SECTION=#{part_3}&SUBPART=&TYPE=TEXT"
     when 'FR'
       "/citation/#{part_1}/#{part_2}" if part_1.to_i >= 59
+    when 'FR-DocNum'
+      "/a/#{part_1}"
     when 'PL'
       "http://frwebgate.access.gpo.gov/cgi-bin/getdoc.cgi?dbname=#{part_1}_cong_public_laws&docid=f:publ#{sprintf("%03d",part_2.to_i)}.#{part_1}" if part_1.to_i >= 104
     end
@@ -44,6 +47,8 @@ class Citation < ApplicationModel
       "#{part_1} CFR #{part_2}" + (part_3.blank? ? '' : ".#{part_3}")
     when 'FR'
       "#{part_1} FR #{part_2}"
+    when 'FR-DocNum'
+      "FR Doc. #{part_1}"
     when 'PL'
       "Public Law #{part_1}-#{part_2}"
     when 'EO'
@@ -53,9 +58,10 @@ class Citation < ApplicationModel
   
   def self.extract!(entry)
     text = entry.full_text
-    entry.citations.destroy_all
-    return if text.blank?
-    
+    return [] if text.blank?
+
+    citations = []
+
     CITATION_TYPES.each_pair do |citation_type, regexp|
       text.scan(regexp) do |part_1, part_2, part_3|
         attributes = {:source_entry_id => entry.id, :citation_type => citation_type, :part_1 => part_1, :part_2 => part_2, :part_3 => part_3}
@@ -66,22 +72,27 @@ class Citation < ApplicationModel
           citation = Citation.new(attributes)
           
           if citation_type == 'FR' && part_1.to_i >= 59
-            entries = citation.matching_fr_entries
-            if entries.count == 1
-              citation.cited_entry = entries.first
+            citation.matching_fr_entries(entry.agencies).each do |cited_entry|
+              citation = Citation.new(attributes)
+              citation.cited_entry = cited_entry
+              citations << citation
             end
+          else
+            citations << citation
           end
-          
-          citation.save
         end
       end
     end
+
+    citations
   end
-  
-  def matching_fr_entries
+
+  def matching_fr_entries(agencies=[])
     @matching_fr_entries ||= case citation_type
                              when 'FR'
-                               Entry.find_all_by_citation(part_1, part_2)
+                               Entry.find_best_citation_matches(part_1, part_2, agencies)
+                             when 'FR-DocNum'
+                               Entry.find_by_document_number(part_1)
                              when 'EO'
                                Entry.find_all_by_presidential_document_type_id_and_executive_order_number(
                                  PresidentialDocumentType::EXECUTIVE_ORDER.id,

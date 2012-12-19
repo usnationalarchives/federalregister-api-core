@@ -13,28 +13,32 @@ class ApiController < ApplicationController
     end
   end
 
-  def render_search(search)
+  def render_search(search, options={}, metadata_only="0")
     if ! search.valid?
       cache_for 1.day
       render_json_or_jsonp({:errors => search.validation_errors}, :status => 400)
       return
     end
 
-    data = { :count => search.count }
-    
-    if search.count > 0 && search.results.count > 0
-      data[:total_pages] = search.results.total_pages
-      
-      if search.results.next_page
-        data[:next_page_url] = index_url(params.merge(:page => search.results.next_page))
-      end
-      
-      if search.results.previous_page
-        data[:previous_page_url] = index_url(params.merge(:page => search.results.previous_page))
-      end
-      
-      data[:results] = search.results.map do |result|
-        yield(result)
+    data = { :count => search.count, :description => search.summary }
+
+    unless metadata_only == "1"
+      results = search.results(options)
+
+      if search.count > 0 && results.count > 0
+        data[:total_pages] = results.total_pages
+        
+        if results.next_page
+          data[:next_page_url] = index_url(params.merge(:page => results.next_page))
+        end
+        
+        if results.previous_page
+          data[:previous_page_url] = index_url(params.merge(:page => results.previous_page))
+        end
+
+        data[:results] = results.map do |result|
+          yield(result)
+        end
       end
     end
 
@@ -61,6 +65,12 @@ class ApiController < ApplicationController
     end
     render_json_or_jsonp data
   end 
+
+  def specified_fields
+    if params[:fields]
+      params[:fields].reject(&:blank?).map{|f| f.to_s.to_sym}
+    end
+  end
 
   rescue_from Exception, :with => :server_error if RAILS_ENV != 'development'
   def server_error(exception)
