@@ -1,0 +1,25 @@
+#indexes {
+  h1 {
+    margin-bottom: 20px;
+
+    a { color: $fr_blue; }
+    }
+
+  h3 {
+    text-transform: uppercase;
+    line-height: 1.7em;
+    font-size: 1.4em;
+    color: $fr_blue;
+    border-top: 2px solid $dark_blue;
+    width: 800px;
+    }
+
+  .entry_type {
+    margin-left: 20px;
+
+    ul {
+      list-style-type: square;
+      margin-left: 40px;
+      }
+  }
+}
