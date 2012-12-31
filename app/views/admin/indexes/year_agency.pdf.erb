@@ -76,7 +76,7 @@
   }
 
   div.index {
-    columns: 3;
+    columns: 2;
     column-rule: black solid 0.5pt;
   }
   div.index ul {
@@ -97,6 +97,10 @@
   .page_break {
     page-break-before: always;
   }
+  .item {
+    font-style: italic;
+    page-break-inside: avoid;
+  }
 
 </style>
 
@@ -114,7 +118,12 @@
             <ul>
         <% end %>
               <% entries_by_title.each do |title, entries| %>
-                <li data-agency-name="<%= @agency.name %>"><%= title %>, <%= entries.map(&:start_page).join(', ') %></li>
+                <li data-agency-name="<%= @agency.name %>">
+                  <%= title %>:
+                  <em>
+                    <%= entries.map{|e| "<span class='item'>#{e.start_page} (#{e.publication_date.strftime("%b %e")})</span>"}.join('; ') %>
+                  </em>
+                  </li>
               <% end %>
         <% if subject %>
             </ul>
