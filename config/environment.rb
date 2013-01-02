@@ -1,13 +1,13 @@
-# Use deployed git commit hash as quick & easy cache busting strategy
-unless Rails.env == 'development'
-  ENV["RAILS_ASSET_ID"] = `git log -n 1 --pretty=format:%H`
-end
-
 # Specifies gem version of Rails to use when vendor/rails is not present
 RAILS_GEM_VERSION = '2.3.11' unless defined? RAILS_GEM_VERSION
 
 # Bootstrap the Rails environment, frameworks, and default configuration
 require File.join(File.dirname(__FILE__), 'boot')
+
+# Use deployed git commit hash as quick & easy cache busting strategy
+unless Rails.env == 'development'
+  ENV["RAILS_ASSET_ID"] = `git log -n 1 --pretty=format:%H`
+end
 
 Rails::Initializer.run do |config|
   # Settings in config/environments/* take precedence over those specified here.
