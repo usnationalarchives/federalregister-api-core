@@ -49,22 +49,32 @@ module FrIndexPresenter
   end
 
   def self.entries_for_year_and_agency(year,agency)
-    first = Date.parse('1900-01-01')
-
-    entries = agency.entries.scoped(
-      :select => "entries.id, entries.document_number, entries.publication_date, entries.title, entries.toc_subject, entries.toc_doc, entries.fr_index_subject, entries.fr_index_doc",
-      :conditions => {:publication_date => Date.parse("#{year}-01-01")..Date.parse("#{year}-12-31")})
-    
-    if agency.children.present?
-      entries = entries.scoped(
-        :joins => "LEFT OUTER JOIN agency_assignments AS child_agency_assignments
-                     ON child_agency_assignments.agency_id IN (#{agency.children.map(&:id).join(',')})
-                     AND child_agency_assignments.assignable_type = 'Entry'
-                     AND child_agency_assignments.assignable_id = entries.id",
-        :conditions => "child_agency_assignments.id IS NULL"
-      )
-    end
-    entries
+    EntrySearch.new(
+      :conditions => {
+        :agency_ids => [agency.id] + agency.children.map(&:id),
+        :publication_date => {
+          :gte => Date.parse("#{year}-01-01"),
+          :lte => Date.parse("#{year}-12-31"),
+        }
+      },
+      :per_page => 1000
+    ).raw_results(
+      :select => %w(
+        id
+        document_number
+        publication_date
+        title
+        toc_subject
+        toc_doc
+        fr_index_subject
+        fr_index_doc
+        granule_class
+        start_page
+        
+        presidential_document_type_id
+        executive_order_number
+      ).map{|attribute| "entries.#{attribute}"}.join(",")
+    )
   end
 
   def self.grouped_entries_for_year_and_agency(year, agency)

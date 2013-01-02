@@ -48,14 +48,28 @@ class Admin::IndexesController < AdminController
 
     subjects_by_id = {}
     [params[:entry][:fr_index_subject], params[:old_subject]].uniq.each do |subject|
-      id = "#{params[:type]}-#{Digest::MD5.hexdigest(subject)}"
-
-      subject_entries = base_scope.all(:conditions => ["fr_index_subject = ? OR (fr_index_subject IS NULL and toc_subject = ?) OR (fr_index_subject IS NULL AND toc_subject IS NULL AND title = ?)", subject, subject, subject])
+      subject_entries = base_scope.all(
+        :conditions => [
+          "fr_index_subject = :subject OR
+          (fr_index_subject IS NULL and toc_subject = :subject) OR
+          (fr_index_subject IS NULL AND toc_subject IS NULL AND title = :subject)",
+          {:subject => subject}
+        ]
+      )
 
       entries_by_title = subject_entries.group_by(&:fr_index_doc).sort
+      
+      id = "#{params[:type]}-#{Digest::MD5.hexdigest(subject)}"
 
       if subject_entries.present?
-        subjects_by_id[id] = render_to_string(:partial => "subject_and_children", :locals => {:subject => subject, :entries_by_title => entries_by_title, :type => params[:type]})
+        subjects_by_id[id] = render_to_string(
+          :partial => "subject_and_children",
+          :locals => {
+            :subject => subject,
+            :entries_by_title => entries_by_title,
+            :type => params[:type]
+          }
+        )
       else
         subjects_by_id[id] = nil
       end

@@ -176,9 +176,9 @@ class ApplicationSearch
     end
     without
   end
-  
-  def results(args = {})
-    result_array = model.search(sphinx_term,
+
+  def raw_results(args = {})
+    ids = model.search(sphinx_term,
       {
         :page => @page,
         :per_page => @per_page,
@@ -188,8 +188,23 @@ class ApplicationSearch
         :without => without,
         :conditions => sphinx_conditions,
         :match_mode => :extended,
-        :sort_mode => sort_mode
+        :sort_mode => :extended,
+        :ids_only => true
       }.merge(find_options).recursive_merge(args)
+    )
+
+    model.scoped({:conditions => {:id => ids}}.recursive_merge(args.slice(:joins, :includes, :select)))
+  end
+  
+  def results(args = {})
+    result_array = raw_results(args)
+
+    sphinx_search = ThinkingSphinx::Search.new(sphinx_term,
+      :with => with,
+      :with_all => with_all,
+      :without => without,
+      :conditions => sphinx_conditions,
+      :match_mode => :extended
     )
 
     if result_array
