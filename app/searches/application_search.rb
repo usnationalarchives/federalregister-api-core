@@ -188,7 +188,7 @@ class ApplicationSearch
         :without => without,
         :conditions => sphinx_conditions,
         :match_mode => :extended,
-        :sort_mode => :extended,
+        :sort_mode => sort_mode,
         :ids_only => true
       }.merge(find_options).recursive_merge(args)
     )
