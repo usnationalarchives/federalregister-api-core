@@ -403,7 +403,19 @@ class Entry < ApplicationModel
       length
     end
   end
-  
+
+  def page_range
+    if human_length > 1
+      "#{start_page}-#{end_page}"
+    else
+      start_page
+    end
+  end
+ 
+  def publication_month
+    publication_date.strftime('%B')
+  end
+
   def slug
     clean_title = title.downcase.gsub(/[^a-z0-9& -]+/,'').gsub(/&/, 'and')
     slug = view_helper.truncate_words(clean_title, :length => 100, :omission => '')

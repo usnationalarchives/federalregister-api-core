@@ -35,13 +35,14 @@
   <%= javascript_include_tag 'vendor/jquery.tipsy.js' %>
   <%= javascript_include_tag 'admin/application_form_builder' %>
   <%= javascript_include_tag 'admin/admin' %>
+  <%= javascript_include_tag 'fr_index_popover_handler' %>
   
   <%= yield :javascripts %>
 
 
 
 </head>
-<body>
+<body class="admin">
   
 
     <%= render :partial => "layouts/admin/header" %>
