@@ -280,6 +280,7 @@ class Entry < ApplicationModel
     has "CRC32(document_number)", :as => :document_number, :type => :integer
     has "CRC32(IF(granule_class = 'SUNSHINE', 'NOTICE', granule_class))", :as => :type, :type => :integer
     has presidential_document_type_id
+
     has publication_date
     has "IF(granule_class = 'PRESDOCU', INTERVAL(DATE_FORMAT(IFNULL(signing_date,DATE_SUB(publication_date, INTERVAL 3 DAY)), '%Y%m%d'),#{President.all.map{|p| p.starts_on.strftime("%Y%m%d")}.join(', ')}), NULL)", :as => :president_id, :type => :integer
     has "IF(granule_class = 'CORRECT' OR correction_of_id IS NOT NULL OR (presidential_document_type_id = 2 AND (executive_order_number = 0 or executive_order_number IS NULL)), 1, 0)", :as => :correction, :type => :boolean
@@ -378,6 +379,14 @@ class Entry < ApplicationModel
   def curated_abstract
     self[:curated_abstract] || abstract
   end
+
+  def fr_index_subject
+    self[:fr_index_subject] || toc_subject
+  end
+  
+  def fr_index_doc
+    self[:fr_index_doc] || toc_doc
+  end
   
   def day
     publication_date.strftime('%d')
@@ -394,7 +403,19 @@ class Entry < ApplicationModel
       length
     end
   end
-  
+
+  def page_range
+    if human_length > 1
+      "#{start_page}-#{end_page}"
+    else
+      start_page
+    end
+  end
+ 
+  def publication_month
+    publication_date.strftime('%B')
+  end
+
   def slug
     clean_title = title.downcase.gsub(/[^a-z0-9& -]+/,'').gsub(/&/, 'and')
     slug = view_helper.truncate_words(clean_title, :length => 100, :omission => '')

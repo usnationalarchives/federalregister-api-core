@@ -1,0 +1,81 @@
+/* YEAR */
+
+#content_area ul { list-style: none; }
+
+.count_pill {
+  width: 17px;
+  padding: 0 .5em;
+  font-size: 11px;
+  text-align: center;
+  background: #D2DBE3;
+  @include border-radius(5);
+  }
+
+
+/* YEAR AGENCY */
+
+h1.agency_name { color: #3F5B75; }
+
+.title_bar {
+  border-top: 3px solid #3F5B75;
+  clear: both;
+  color: #5697CF;
+  font-family: "apertura-condensed-1","apertura-condensed-2", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+  margin: 1em 0 1em;
+  font-size: .8em;
+  padding: 0;
+  position: relative;
+  text-transform: none;
+  }
+
+.title_bar h2 { font-family: "apertura-condensed-1","apertura-condensed-2", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; }
+
+ul.entry_type {
+  li { 
+    clear: both;
+    padding-left: 5px;
+    overflow: hidden;
+    height: 100%;
+    margin-bottom: 5px;
+
+    a.wrapper {
+      width: 90%;
+      display: block;
+      float: left;
+    }
+    a.edit { 
+      float: right;
+      padding-right: 5px;
+    }
+
+    ul.in { 
+    overflow: visible;
+    height: auto;
+    float: left;
+
+      li { height: auto; }
+    }
+
+  }
+
+  li.hover { 
+    background-color: #CCC;
+    @include border-radius(3);
+  }
+}
+
+ul.entry_type form input {
+  display: block;
+  width: 50%;
+  float: left;
+  }
+ul.entry_type form input#entry_fr_index_doc {
+  clear: both;
+  margin-left: 30px;
+  width: 75%;
+  }
+ul.entry_type form input[type="submit"] {
+  width: 15%;
+  float: right;
+  }
+

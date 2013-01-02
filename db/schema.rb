@@ -9,6 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
+
 ActiveRecord::Schema.define(:version => 20120625141513) do
 
   create_table "action_names", :force => true do |t|

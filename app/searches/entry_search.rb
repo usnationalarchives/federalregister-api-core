@@ -262,6 +262,7 @@ class EntrySearch < ApplicationSearch
     sphinx_search = ThinkingSphinx::Search.new(sphinx_term,
       :with => with.merge(:publication_date => options[:since].to_time .. 1.week.from_now),
       :with_all => with_all,
+      :without => without,
       :conditions => sphinx_conditions,
       :match_mode => :extended
     )
@@ -283,6 +284,7 @@ class EntrySearch < ApplicationSearch
     model.search_count(sphinx_term,
       :with => with.merge(:publication_date => n.days.ago.to_time.midnight .. Time.current.midnight),
       :with_all => with_all,
+      :without => without,
       :conditions => sphinx_conditions,
       :match_mode => :extended
     )

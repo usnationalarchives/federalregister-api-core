@@ -28,6 +28,9 @@
 [submodule "vendor/plugins/geokit-rails"]
 	path = vendor/plugins/geokit-rails
 	url = git@github.com:criticaljuncture/geokit-rails.git
+[submodule "vendor/plugins/bootstrap-sass"]
+	path = vendor/plugins/bootstrap-sass
+	url = git@github.com:criticaljuncture/bootstrap-sass.git
 [submodule "vendor/plugins/calendar_helper"]
 	path = vendor/plugins/calendar_helper
 	url = git@github.com:criticaljuncture/calendar_helper.git

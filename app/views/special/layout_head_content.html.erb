@@ -45,9 +45,10 @@
   <%# includeall top level js files %>
   <%= javascript_include_tag :all %>
 <% else %>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.js" type="text/javascript"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.js" type="text/javascript"></script>
   <%# Need to manually recompile vendor scripts to get included %>
   <script src="/javascripts/vendor/vendor-20120907.js" type="text/javascript"></script>
+  <script src="/javascripts/vendor/bootstrap-collapse.js" type="text/javascript"></script>
   <%= javascript_include_tag 'all.js' %>
 <% end %>
 
