@@ -58,7 +58,7 @@ module FrIndexPresenter
         }
       },
       :per_page => 1000
-    ).raw_results(
+    ).chainable_results(
       :select => %w(
         id
         document_number
