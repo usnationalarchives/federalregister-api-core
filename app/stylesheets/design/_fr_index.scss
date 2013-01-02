@@ -1,0 +1,63 @@
+#indexes {
+  h1 {
+    margin-bottom: 20px;
+
+    a { color: $fr_blue; }
+    }
+
+  h3 {
+    text-transform: uppercase;
+    line-height: 1.7em;
+    font-size: 1.4em;
+    color: $fr_blue;
+    border-top: 2px solid $dark_blue;
+    width: 800px;
+    }
+
+  .entry_type {
+    margin-left: 20px;
+
+    h6 {
+      margin: 5px 0 0 40px;
+      color: #676767;
+      clear: both;
+      float: left;
+      width: 80px;
+      }
+    ul {
+      list-style: none;
+      margin-left: 40px;
+      font-size: 14px;
+
+      li ul { font-size: 13px; }
+      }
+
+    a.toc_title { 
+      font-weight: bold;
+      font-size: 14px;
+      }
+  }
+
+  dl {
+    float: left;
+    margin-bottom: 10px;
+    padding-top: 3px;
+    font-size: 13px;
+
+    dt {
+      font-weight: normal;
+      float: left;
+      padding-right: 5px;
+      }
+    dt.with_ajax_popover { clear: both; }
+
+    dd {
+      margin-right: 30px;
+      margin-left: 0;
+      float: left;
+      width: 70px;
+      }
+    dd.pages { width: 140px; }
+  }
+}
+

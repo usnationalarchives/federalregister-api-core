@@ -1,9 +1,9 @@
 <% super_title 'Users' %>
-<% title 'All' %>
+<%# title 'All' %>
 
 <% sidebar(render :partial => 'nav') %>
 
-<table class='center_content sortable' summary="All Users">
+<table class='table table-bordered table-striped table-condensed' summary="All Users">
   <thead>
     <tr>
       <th>First Name</th>
@@ -15,7 +15,7 @@
   </thead>
   <tbody>
     <% @users.each do |user| %>
-      <tr class="<%= cycle("even", "odd") %>">
+      <tr>
         <td><%= user.first_name %></td>
         <td><%= user.last_name %></td>
         <td><%= user.email %></td>

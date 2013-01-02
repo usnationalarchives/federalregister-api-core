@@ -1,0 +1,137 @@
+<style>
+  @page {
+    size: "US-Letter";
+    margin-left: 0.63in; 
+    margin-right: 0.63in; 
+    margin-bottom: 0.83in;
+    margin-top: 0.613in;
+
+    @bottom-left {
+      content: "FEDERAL REGISTER INDEX, January-October 2012";
+      font-family: 'Times-Bold';
+      font-weight: bold;
+      font-size: 8pt;
+      margin-bottom: 0.7in;
+    }
+    @bottom-right {
+      content: counter(page);
+      font-family: 'Times-Bold';
+      font-weight: bold;
+      font-size: 8pt;
+      margin-bottom: 0.6in;
+    }
+  }
+  @page :left {
+    @top-left {
+      font-weight: bold;
+      font-family: 'Times-Bold';
+      font-size: 10.2pt;
+      margin-top: 0.14in;
+      content: string(agency_short_name, first);
+    }
+  }
+  @page :right {
+    @top-right {
+      font-weight: bold;
+      font-family: 'Times-Bold';
+      font-size: 10.2pt;
+      margin-top: 0.14in;
+      /*content: string(agency_short_name, last) */
+    }
+  }
+  *[data-agency-name] {
+    string-set: agency_short_name attr('data-agency-name');
+  }
+
+  body {
+    font-family: 'Times';
+    font-size: 8pt;
+    counter-reset: page 1053;
+  }
+  h1 {
+    margin-top: 1.32in;
+    margin-bottom: 0.275in;
+    font-size: 18pt;
+    font-family: 'Times-Bold';
+    text-align: center;
+  }
+  h2 {
+    font-family: 'Times-Bold';
+    font-size: 10.2pt;
+    padding: 0;
+    margin-top: 5.6pt;
+    margin-bottom: 2.9pt;
+    margin-left: 2em;
+    text-indent: -2em;
+  }
+  h3 {
+    font-family: 'Times-Bold';
+    font-size: 8pt;
+    margin: 0;
+  }
+
+  p {
+    padding: 0;
+    margin: 0;
+  }
+
+  div.index {
+    columns: 2;
+    column-rule: black solid 0.5pt;
+  }
+  div.index ul {
+    margin: 0;
+    margin-left: 2em;
+    line-height: 9.2pt;
+  }
+
+  div.index ul ul {
+    margin-left: 1em;
+  }
+
+  div.index li {
+    list-style-type: none;
+    text-indent: -2em;
+    line-height: 110.5%;
+  }
+  .page_break {
+    page-break-before: always;
+  }
+  .item {
+    font-style: italic;
+    page-break-inside: avoid;
+  }
+
+</style>
+
+<body>
+  <h1>FEDERAL REGISTER INDEX, January-October 2012</h1>
+  <div class="index">
+  <h2><%= @agency.name %></h2>
+
+  <% @entries_by_type.each do |type, entries_by_subject| %>
+    <h3><%= Entry::ENTRY_TYPES[type].pluralize.upcase %></h3>
+    <ul>
+      <% entries_by_subject.each do |subject, entries_by_title| %>
+        <% if subject %>
+          <li><%= subject %>
+            <ul>
+        <% end %>
+              <% entries_by_title.each do |title, entries| %>
+                <li data-agency-name="<%= @agency.name %>">
+                  <%= title %>:
+                  <em>
+                    <%= entries.map{|e| "<span class='item'>#{e.start_page} (#{e.publication_date.strftime("%b %e")})</span>"}.join('; ') %>
+                  </em>
+                  </li>
+              <% end %>
+        <% if subject %>
+            </ul>
+          </li>
+        <% else %>
+        <% end %>
+      <% end %>
+    </ul>
+  <% end %>
+</div>
+</body>

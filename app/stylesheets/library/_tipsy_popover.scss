@@ -1,0 +1,45 @@
+.admin .tipsy-inner,
+#indexes .tipsy-inner {
+  padding: 3px;
+  width: 280px;
+  overflow: hidden;
+  background: #000;
+  background: rgba(0, 0, 0, 0.8);
+
+  color: #000;
+  font-size: 1.5em;
+
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  border-radius: 6px;
+  -webkit-box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
+  -moz-box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
+  }
+
+.popover-title { font-size: 16px; }
+.popover-content {
+  dl {
+    margin: 0;
+    font-size: 14px;
+    overflow: hidden;
+    
+    dt {
+      width: 50px;
+      float: left;
+      clear: both;
+      margin-bottom: 10px;
+    }
+    dd {
+      margin-bottom: 10px;
+      text-align: left;
+      width: 175px;
+      float: left;
+    }
+  }
+
+  .loading {
+    padding-left: 20px;
+    background: #fff image-url('ajax-loader.gif') no-repeat 80px 1px;
+  }
+}

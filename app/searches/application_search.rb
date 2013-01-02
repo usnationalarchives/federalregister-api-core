@@ -139,7 +139,7 @@ class ApplicationSearch
   end
   
   def blank?
-    [with, with_all, sphinx_conditions, term].all?(&:blank?) || skip_results?
+    [with, with_all, without, sphinx_conditions, term].all?(&:blank?) || skip_results?
   end
   
   def skip_results?
@@ -171,19 +171,44 @@ class ApplicationSearch
     end
     with
   end
-  
-  def results(args = {})
-    result_array = model.search(sphinx_term,
+
+  def without
+    without = {}
+    @filters.select{|f| f.sphinx_type == :without }.each do |filter|
+      without[filter.sphinx_attribute] ||= []
+      without[filter.sphinx_attribute] << filter.sphinx_value
+    end
+    without
+  end
+
+  def raw_results(args = {})
+    ids = model.search(sphinx_term,
       {
         :page => @page,
         :per_page => @per_page,
         :order => order_clause,
         :with => with,
         :with_all => with_all,
+        :without => without,
         :conditions => sphinx_conditions,
         :match_mode => :extended,
-        :sort_mode => sort_mode
+        :sort_mode => sort_mode,
+        :ids_only => true
       }.merge(find_options).recursive_merge(args)
+    )
+
+    model.scoped({:conditions => {:id => ids}}.recursive_merge(args.slice(:joins, :includes, :select)))
+  end
+  
+  def results(args = {})
+    result_array = raw_results(args)
+
+    sphinx_search = ThinkingSphinx::Search.new(sphinx_term,
+      :with => with,
+      :with_all => with_all,
+      :without => without,
+      :conditions => sphinx_conditions,
+      :match_mode => :extended
     )
 
     if result_array
@@ -231,6 +256,7 @@ class ApplicationSearch
         :per_page => @per_page,
         :with => with,
         :with_all => with_all,
+        :without => without,
         :conditions => sphinx_conditions,
         :match_mode => :extended
       }.merge(find_options)

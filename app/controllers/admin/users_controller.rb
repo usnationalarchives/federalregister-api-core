@@ -1,4 +1,6 @@
 class Admin::UsersController < AdminController
+  layout 'admin_bootstrap'
+
   def index
     @users = User.all
   end
