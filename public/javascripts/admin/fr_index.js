@@ -1,5 +1,5 @@
 function highlight_el(event, el) {
-  if( event.type == 'mouseleave' ) {
+  if( event.type === 'mouseleave' ) {
     el.removeClass('hover');
   } else {
     el.addClass('hover');
@@ -91,19 +91,19 @@ function initializeFrIndexEditor(elements) {
 
   $elements.find('a.edit').on('hover', function(event) {
     var el = $(this).closest('li');
-    if( event.type == 'mouseleave' ) {
+    if( event.type === 'mouseleave' ) {
       el.removeClass('hover');
     } else {
       el.addClass('hover');
     }
   });
 
-  var fr_index_subjects = sort_unique($('.fr_index_subject').map(function() { return $(this).val()}));
+  var fr_index_subjects = sort_unique($('.fr_index_subject').map(function() { return $(this).val(); }));
   $elements.find('.fr_index_subject').typeahead({
     minLength: 3,
     source: fr_index_subjects
   });
-  var fr_index_docs = sort_unique($('.fr_index_doc').map(function() { return $(this).val()}));
+  var fr_index_docs = sort_unique($('.fr_index_doc').map(function() { return $(this).val(); }));
   $elements.find('.fr_index_doc').typeahead({
     minLength: 3,
     source: fr_index_docs
@@ -111,21 +111,18 @@ function initializeFrIndexEditor(elements) {
 
   $elements.find('form').unbind('submit').bind('submit', function(event) {
     var form = $(this);
-    console.log(form);
     event.preventDefault();
 
     var path = form.attr('action');
 
     var data = form.serialize();
-    console.log(path);
-    console.log(data);
     $.ajax({
       url: path + '?' + data,
       type: 'PUT',
       datatype: 'json',
       success: function(subjects) {
         var wrapping_list = form.closest('ul.entry_type');
-        for( id in subjects ) {
+        for( var id in subjects ) {
           $('#' + id).remove();
           var element_to_insert = subjects[id];
 
@@ -144,8 +141,6 @@ function initializeFrIndexEditor(elements) {
             if (!added_element) {
               added_element = $(element_to_insert).appendTo(wrapping_list).fadeIn("fast");
             }
-            console.log(added_element);
-
             initializeFrIndexEditor(added_element);
           }
         }
