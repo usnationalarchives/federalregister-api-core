@@ -70,7 +70,9 @@ module FrIndexPresenter
         fr_index_doc
         granule_class
         start_page
-        
+        end_page
+        length
+  
         presidential_document_type_id
         executive_order_number
       ).map{|attribute| "entries.#{attribute}"}.join(",")
