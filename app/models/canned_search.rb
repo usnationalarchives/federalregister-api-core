@@ -6,8 +6,8 @@
 #  section_id        :integer(4)
 #  title             :string(255)
 #  slug              :string(255)
-#  description       :text
-#  search_conditions :text
+#  description       :text(16777215)
+#  search_conditions :text(16777215)
 #  active            :boolean(1)
 #  position          :integer(4)
 #

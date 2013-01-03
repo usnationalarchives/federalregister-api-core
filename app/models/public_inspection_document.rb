@@ -15,7 +15,7 @@
 #  pdf_updated_at      :datetime
 #  pdf_etag            :string(255)
 #  title               :string(255)     default(""), not null
-#  editorial_note      :text
+#  editorial_note      :text(16777215)
 #  document_file_path  :string(255)
 #  raw_text_updated_at :datetime
 #  delta               :boolean(1)      default(TRUE), not null
