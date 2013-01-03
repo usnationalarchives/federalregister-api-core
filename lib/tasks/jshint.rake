@@ -15,14 +15,14 @@ namespace :jshint do
     files.exclude File.join(js_root_dir, 'vendor', '**', '*.js')
     files.exclude File.join(js_root_dir, 'admin', 'jquery.js')
     %w(
-      jqModal.js
-      jquery-ui.js
-      jquery.Jcrop.js
-      jquery.tablesorter.js
-      iscroll.js
+      admin/jqModal.js
+      admin/jquery-ui.js
+      admin/jquery.Jcrop.js
+      admin/jquery.tablesorter.js
+      page_specific/iscroll.js
       jquery-ui-1.8.6.custom.min.js
       vendor.js
-    ).map{|f| files.exclude(f)}
+    ).each{|f| files.exclude(File.join(js_root_dir,f))}
 
     sh "jshint #{files.join(' ')} --config #{config_file}" do |ok, res|
       fail 'JSHint found errors.' unless ok
