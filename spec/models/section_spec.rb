@@ -6,8 +6,8 @@
 #  title                 :string(255)
 #  slug                  :string(255)
 #  position              :integer(4)
-#  description           :text
-#  relevant_cfr_sections :text
+#  description           :text(16777215)
+#  relevant_cfr_sections :text(16777215)
 #  created_at            :datetime
 #  updated_at            :datetime
 #  creator_id            :integer(4)

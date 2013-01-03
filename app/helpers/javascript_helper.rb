@@ -7,7 +7,7 @@ module JavascriptHelper
   
   def jquery_include_tag
     # if RAILS_ENV == 'development'
-      javascript_include_tag 'vendor/jquery'
+      javascript_include_tag 'vendor/jquery-1.8.3.min.js'
     # else
     #   javascript_include_tag 'http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js'
     # end

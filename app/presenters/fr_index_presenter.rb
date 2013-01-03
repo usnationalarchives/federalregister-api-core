@@ -58,7 +58,7 @@ module FrIndexPresenter
         }
       },
       :per_page => 1000
-    ).raw_results(
+    ).chainable_results(
       :select => %w(
         id
         document_number
@@ -70,7 +70,9 @@ module FrIndexPresenter
         fr_index_doc
         granule_class
         start_page
-        
+        end_page
+        length
+  
         presidential_document_type_id
         executive_order_number
       ).map{|attribute| "entries.#{attribute}"}.join(",")

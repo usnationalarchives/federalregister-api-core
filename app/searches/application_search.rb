@@ -181,34 +181,17 @@ class ApplicationSearch
     without
   end
 
-  def raw_results(args = {})
+  def chainable_results(args = {})
     ids = model.search(sphinx_term,
-      {
-        :page => @page,
-        :per_page => @per_page,
-        :order => order_clause,
-        :with => with,
-        :with_all => with_all,
-        :without => without,
-        :conditions => sphinx_conditions,
-        :match_mode => :extended,
-        :sort_mode => sort_mode,
-        :ids_only => true
-      }.merge(find_options).recursive_merge(args)
+      search_options.merge(:ids_only => true).recursive_merge(args)
     )
 
     model.scoped({:conditions => {:id => ids}}.recursive_merge(args.slice(:joins, :includes, :select)))
   end
   
   def results(args = {})
-    result_array = raw_results(args)
-
-    sphinx_search = ThinkingSphinx::Search.new(sphinx_term,
-      :with => with,
-      :with_all => with_all,
-      :without => without,
-      :conditions => sphinx_conditions,
-      :match_mode => :extended
+    result_array = model.search(sphinx_term,
+      search_options.recursive_merge(args)
     )
 
     if result_array
@@ -251,15 +234,7 @@ class ApplicationSearch
   
   def count
     @count ||= model.search_count(sphinx_term,
-      {
-        :page => @page,
-        :per_page => @per_page,
-        :with => with,
-        :with_all => with_all,
-        :without => without,
-        :conditions => sphinx_conditions,
-        :match_mode => :extended
-      }.merge(find_options)
+      search_options.except(:order, :sort_mode)
     )
   end
   
@@ -294,5 +269,19 @@ class ApplicationSearch
   private
   
   def set_defaults(options)
+  end
+
+  def search_options
+    {
+      :page => @page,
+      :per_page => @per_page,
+      :order => order_clause,
+      :with => with,
+      :with_all => with_all,
+      :without => without,
+      :conditions => sphinx_conditions,
+      :match_mode => :extended,
+      :sort_mode => sort_mode
+    }.merge(find_options)
   end
 end

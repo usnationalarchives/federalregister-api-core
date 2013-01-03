@@ -2,11 +2,10 @@
 #
 # Table name: action_names
 #
-#  id            :integer(4)      not null, primary key
-#  name          :string(255)
-#  created_at    :datetime
-#  updated_at    :datetime
-#  granule_class :string(255)
+#  id         :integer(4)      not null, primary key
+#  name       :string(255)
+#  created_at :datetime
+#  updated_at :datetime
 #
 
 class ActionName < ApplicationModel

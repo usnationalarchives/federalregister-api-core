@@ -1,7 +1,7 @@
 source :gemcutter
 source 'http://gems.github.com'
 
-gem 'rails', '2.3.11'
+gem 'rails', '2.3.14'
 gem 'mysql', '2.7'
 
 gem 'fr2_audit_logic',
@@ -56,6 +56,8 @@ gem 'modularity', '0.6.1'
 
 gem 'juicer', '1.0.6'
 
+gem 'rdoc'
+
 # bundler requires these gems in all environments
 # gem 'nokogiri', '1.4.2'
 # gem 'geokit'
@@ -88,7 +90,7 @@ group :test do
   gem 'spork', '0.7.5', :require => false
   gem 'timecop', '0.3.5'
   
-  gem 'cucumber', '0.9.2'
+  gem 'cucumber'
   gem 'mechanize', '1.0.0'
   
   gem 'ci_reporter', '1.6.3'

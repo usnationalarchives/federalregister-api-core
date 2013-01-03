@@ -6,7 +6,7 @@
 #  entry_id    :integer(4)
 #  created_at  :datetime
 #  remote_ip   :string(255)
-#  raw_referer :text
+#  raw_referer :text(16777215)
 #
 
 class EntryPageView < ApplicationModel
