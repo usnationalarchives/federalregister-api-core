@@ -95,6 +95,7 @@ class EntryApiRepresentation < ApiRepresentation
   field(:regulation_id_numbers, :include => :entry_regulation_id_numbers) {|e| e.entry_regulation_id_numbers.map{|r| r.regulation_id_number}}
   field(:regulations_dot_gov_url, :select => :regulationsdotgov_url) {|e| e.regulationsdotgov_url}
   field(:start_page)
+  field(:significant)
   field(:signing_date)
   field(:subtype, :select => :presidential_document_type_id){|e| e.presidential_document_type.try(:name)}
   field(:title)
