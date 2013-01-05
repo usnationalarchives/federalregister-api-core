@@ -1,7 +1,12 @@
+/* This file defines a generic fr_index popover handler.
+ * Actual use of this handler requires the addition of methods 
+ * appropriate to the particular use.
+ * The fields to be retrieved from the API (fields) and how to present the 
+ * data returned (add_popover_content) are required. */
+
 fr_index_popover_handler = {
   popover_cache: {},
   base_url: 'https://www.federalregister.gov/api/v1/articles/',
-  fields: 'fields%5B%5D=title&fields%5B%5D=toc_subject&fields%5B%5D=toc_doc',
   current_el: null,
 
   initialize: function() {
@@ -31,20 +36,6 @@ fr_index_popover_handler = {
   ajax_done: function(response) {
     this.popover_cache[this.current_el.data('document-number')] = response;
     this.add_popover_content();
-  },
-
-  add_popover_content: function() {
-    var $tipsy_el = $('.tipsy'),
-        prev_height = $tipsy_el.height(),
-        fr_index_entry_popover_content_template = Handlebars.compile($("#fr-index-entry-popover-content-template").html()),
-        popover_id = '#popover-' + this.current_el.data('document-number'),
-        new_html = fr_index_entry_popover_content_template( this.popover_cache[this.current_el.data('document-number')] );
-
-    $(popover_id).find('.loading').replaceWith( new_html );
-
-    // bacause we modify the content we need to calculate a new top based on the new height of the popover
-    var new_top = parseInt($tipsy_el.css('top'), 10) - ( ($tipsy_el.height() - prev_height) / 2 );
-    $tipsy_el.css('top', new_top);
   }
 };
 

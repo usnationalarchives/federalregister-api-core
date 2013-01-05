@@ -17,8 +17,26 @@
   box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
   }
 
-.popover-title { font-size: 16px; }
+.popover-title { 
+  font-size: 16px;
+  padding: 9px 15px;
+  line-height: 1;
+  background-color: whiteSmoke;
+  border-bottom: 1px solid #EEE;
+  -webkit-border-radius: 3px 3px 0 0;
+  -moz-border-radius: 3px 3px 0 0;
+  border-radius: 3px 3px 0 0;
+}
 .popover-content {
+  padding: 14px;
+  background-color: white;
+  -webkit-border-radius: 0 0 3px 3px;
+  -moz-border-radius: 0 0 3px 3px;
+  border-radius: 0 0 3px 3px;
+  -webkit-background-clip: padding-box;
+  -moz-background-clip: padding-box;
+  background-clip: padding-box;
+
   dl {
     margin: 0;
     font-size: 14px;

@@ -1,0 +1,20 @@
+<dl class="entry_details">
+  <dt>Abstract</dt>
+  <dd>
+    {{#if abstract}}
+      {{truncate_words abstract 50}}
+    {{else}}
+      Abstract not available
+    {{/if}}
+  </dd>
+
+  {{#date_in_past comments_close_on }}
+  <dt class="comment_open"></dt>
+  <dd>Comments close on {{formatted_date comments_close_on}}</dd>
+  {{/date_in_past}}
+
+  {{#if significant}}
+  <dt class="significant"></dt>
+  <dd>Deemed Significant Under EO 12866</dd>
+  {{/if}}
+</dl>

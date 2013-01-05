@@ -1,7 +1,7 @@
 <% title "#{@year} FR Index" %>
 
-<%= add_template('admin/fr_index_entry_popover', 'fr-index-entry-popover') %>
-<%= add_template('admin/fr_index_entry_popover_content', 'fr-index-entry-popover-content') %>
+<%= add_template('fr_index_entry_popover', 'fr-index-entry-popover') %>
+<%= add_template('fr_index_entry_popover_content', 'fr-index-entry-popover-content') %>
 
 <div class="title"><span><%= @year %> FR Index</span></div>
 
@@ -24,12 +24,22 @@
             <%= title %>
             <span class="count_pill"><%= entries.count %></span>
           </a>
-          <div id="<%= id %>" style="height: 0px; overflow-y: hidden">
+          
+          <% if entries.any?{|e| e.comments_open?} %> 
+            <div class="comment_open"></div>
+          <% end %>
+          <% if entries.any?{|e| e.significant?} %>
+            <div class="significant"></div>
+          <% end %>
+
+          <div id="<%= id %>" class="index_entries" style="height: 0px; overflow-y: hidden">
             <% entries.group_by(&:publication_month).each do |month, entries| %>
               <h6><%= month %></h6>
-              <dl> 
-                <% entries.each do |entry| %>
-                  <dt class="with_ajax_popover" data-document-number=<%= entry.document_number %>>Published:</dt>
+
+              <div class="entries_by_month"> 
+              <% entries.each do |entry| %>
+                <dl class="with_ajax_popover" data-document-title="<%= entry.title %>" data-document-number=<%= entry.document_number %> >
+                  <dt>Published:</dt>
                   <dd><%= link_to entry.publication_date, entry_path(entry) %></dd> 
                   
                   <dt>FR Document:</dt>
@@ -37,9 +47,19 @@
                   
                   <dt><%= pluralize_without_count(entry.human_length, 'Page') %>:</dt>
                   <dd class='pages'><%= link_to entry.page_range, entry.source_url('pdf') %> <%= "(#{pluralize(entry.human_length, 'page')})" if entry.human_length > 1 %></dd>
-                <% end %>
-              </dl>
+
+                  <dt></dt>
+                  <% if entry.comments_open? %>
+                    <dd class="comment_open"></dd>
+                  <% end %>
+                  <% if entry.significant? %>
+                    <dd class="significant"></dd>
+                  <% end %>
+                </dl>
               <% end %>
+              </div>
+
+            <% end %>
           </div>
         </li>
       <% end %>
