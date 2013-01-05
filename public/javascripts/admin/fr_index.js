@@ -1,3 +1,9 @@
+/**
+ *
+ * @depend fr_index_popover_handler.js
+ */
+
+
 function highlight_el(event, el) {
   if( event.type === 'mouseleave' ) {
     el.removeClass('hover');
