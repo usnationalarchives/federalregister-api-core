@@ -425,6 +425,10 @@ class Entry < ApplicationModel
   def comments_close_on
     comments_close_date.try(:date)
   end
+
+  def comments_open?
+    comments_close_on.present? && comments_close_on >= Date.today
+  end
   
   def effective_on
     effective_date.try(:date)
