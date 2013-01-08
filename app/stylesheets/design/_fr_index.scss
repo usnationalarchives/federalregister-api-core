@@ -5,8 +5,16 @@
     a { color: $fr_blue; }
   }
 
+  .count_pill {
+    padding: 1px 7px;
+    padding-top: 2px;
+    top: -1px;
+    position: relative;
+    }
+
   /* popover customizations */
   .tipsy-inner { width: 580px; }
+  .popover-title { margin-bottom: 0; }
   .popover-content dl dt { 
     width: 75px;
     text-align: right;
@@ -20,7 +28,8 @@
     dl dd { width: 445px; }
 
     dt.significant,
-    dt.comment_open {
+    dt.comment_open,
+    dt.comments_received {
       margin-top: 3px;
       height: 15px;
       }
@@ -29,7 +38,11 @@
       }
     dt.comment_open {
       background: sprite-image('icons/icon_comment_index_green.png', 60px, 0, 50px) no-repeat;
+      }
+    dt.comments_received {
+      background: sprite-image('icons/icon_comment_index_gray.png', 59px, 0, 50px) no-repeat;
       } 
+
   }
 
   
@@ -56,14 +69,16 @@
     ul {
       list-style: none;
       margin-left: 40px;
-      font-size: 14px;
+      font-size: 15px;
+      font-weight: bold;
+      line-height: 22px;
 
       li ul { font-size: 13px; }
       }
 
     a.toc_title { 
       font-weight: bold;
-      font-size: 14px;
+      font-size: 15px;
       float: left;
       }
 
@@ -91,7 +106,8 @@
       dd.pages { width: 140px; }
 
       dd.significant,
-      dd.comment_open {
+      dd.comment_open,
+      dd.comments_received {
         margin-top: 4px;
         margin-right: 0px;
         height: 15px;
@@ -103,10 +119,15 @@
       dd.comment_open {
         background: sprite-image('icons/icon_comment_index_green.png', 0, 0, 50px) no-repeat;
         }
+      dd.comments_received {
+        background: sprite-image('icons/icon_comment_index_gray.png', 0, 0, 50px) no-repeat;
+        }
+
     }
 
     .significant,
-    .comment_open {
+    .comment_open,
+    .comments_received {
       margin-top: 3px;
       height: 15px;
       width: 16px;
@@ -118,8 +139,14 @@
       }
     .comment_open {
       background: sprite-image('icons/icon_comment_index_green.png', 0, 0, 50px) no-repeat;
-      } 
-    .index_entries { clear: both; }
+      }
+    .comments_received {
+      background: sprite-image('icons/icon_comment_index_gray.png', 0, 0, 50px) no-repeat;
+      }
+    .index_entries { 
+      clear: both;
+      font-weight: normal;
+      }
 
   }
 }
