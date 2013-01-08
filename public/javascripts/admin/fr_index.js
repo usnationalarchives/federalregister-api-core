@@ -137,17 +137,21 @@ $(document).ready(function() {
     $('body').delegate('.with_ajax_popover', 'mouseenter', function(event) {
       var $el = $(this);
             
-      $('.with_ajax_popover').tipsy({ fade: true,
-                                      opacity: 1.0,
-                                      gravity: 'e',
-                                      html: true,
-                                      title: function(){
-                                        return fr_index_entry_popover_template( {content: new Handlebars.SafeString('<div class="loading">Loading...</div>'),
-                                                                                 document_number: $(this).data('document-number'),
-                                                                                 title: 'Original ToC Data'} );
-                                      } 
-                                    });
+      /* add tipsy to the element */
+      $el.tipsy({ fade: true,
+                  opacity: 1.0,
+                  gravity: 'e',
+                  html: true,
+                  title: function(){
+                    return fr_index_entry_popover_template( {content: new Handlebars.SafeString('<div class="loading">Loading...</div>'),
+                                                             document_number: $(this).data('document-number'),
+                                                             title: 'Original ToC Data'} );
+                  } 
+                });
+      /* trigger the show or else it won't be shown until the next mouseover */
+      $el.tipsy("show");
 
+      /* get the ajax content and show it */
       popover_handler.get_popover_content( $el );
     });
   }
