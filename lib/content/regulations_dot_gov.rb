@@ -100,6 +100,8 @@ module Content
       attr_reader :metadata
 
       def initialize(client, raw_attributes)
+        raise ResponseError.new("invalid document format") if raw_attributes.nil?
+
         @client = client
         @raw_attributes = raw_attributes
         @metadata = {}
