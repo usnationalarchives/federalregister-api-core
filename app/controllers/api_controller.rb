@@ -78,6 +78,11 @@ class ApiController < ApplicationController
     render :json => {:status => 500, :message => "Internal Server Error"}, :status => 500
   end
 
+  rescue_from ApiRepresentation::FieldNotFound, :with => :field_not_found
+  def field_not_found(exception)
+    render :json => {:status => 400, :message => exception.message}, :status => 400
+  end
+
   rescue_from RequestError, :with => :request_error if RAILS_ENV != 'development'
   def request_error(exception)
     render :json => {:status => 400, :message => exception.message}, :status => 400
