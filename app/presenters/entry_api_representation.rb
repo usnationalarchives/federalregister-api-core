@@ -52,6 +52,7 @@ class EntryApiRepresentation < ApiRepresentation
   field(:html_url, :select => [:publication_date, :document_number, :slug]){|e| entry_url(e)}
   field(:json_url, :select => :document_number) {|e| api_v1_entry_url(e.document_number, :format => :json)}
   field(:mods_url, :select => [:publication_date, :document_number]){|e| e.source_url(:mods)}
+  field(:page_length, :select => [:length, :start_page, :end_page]) {|e| e.human_length }
   field(:pdf_url, :select => [:publication_date, :document_number]){|e| e.source_url('pdf')}
   field(:public_inspection_pdf_url, :select => :document_number) {|e| e.public_inspection_document.try(:pdf).try(:url)}
   field(:president, :select => [:granule_class, :signing_date, :publication_date]) do |entry|
