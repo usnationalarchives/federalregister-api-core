@@ -19,7 +19,7 @@ class Entries::SearchController < SearchController
         render :template => 'entries/index.rss.builder'
       end
       wants.csv do
-        redirect_to api_v1_entries_url(:per_page => 1000, :conditions => params[:conditions], :fields => [:citation, :document_number, :title, :publication_date, :type, :agency_names, :html_url], :format => :csv) 
+        redirect_to api_v1_entries_url(:per_page => 1000, :conditions => params[:conditions], :fields => [:citation, :document_number, :title, :publication_date, :type, :agency_names, :html_url, :page_length], :format => :csv) 
       end
     end
   end
