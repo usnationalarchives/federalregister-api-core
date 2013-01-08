@@ -72,7 +72,6 @@ task :production do
   role :app,    "app-server-1.fr2.ec2.internal", "app-server-2.fr2.ec2.internal", "app-server-3.fr2.ec2.internal", "app-server-4.fr2.ec2.internal", "app-server-5.fr2.ec2.internal"
   role :db,     "database.fr2.ec2.internal", {:primary => true}
   role :sphinx, "sphinx.fr2.ec2.internal"
-  role :static, "static.fr2.ec2.internal"
   role :worker, "worker.fr2.ec2.internal", {:primary => true} #monster image
 end
 
@@ -90,7 +89,6 @@ task :staging do
   role :app,    "app-server-1.fr2.ec2.internal"
   role :db,     "database.fr2.ec2.internal", {:primary => true}
   role :sphinx, "sphinx.fr2.ec2.internal"
-  role :static, "static.fr2.ec2.internal"
   role :worker, "worker.fr2.ec2.internal", {:primary => true}
 end
 
@@ -277,7 +275,7 @@ namespace :filesystem do
 end
 
 namespace :javascript do
-  task :combine_and_minify, :roles => [:static] do
+  task :combine_and_minify, :roles => [:worker] do
     run "rm #{current_path}/public/javascripts/all.js; cd #{current_path} && bundle exec juicer merge -m closure_compiler -s #{current_path}/public/javascripts/*.js --force -o #{current_path}/tmp/all.js && mv #{current_path}/tmp/all.js #{current_path}/public/javascripts/all.js"
   end
 end
@@ -288,7 +286,7 @@ end
 #############################################################
 
 namespace :airbrake do
-  task :notify_deploy, :roles => [:static] do
+  task :notify_deploy, :roles => [:worker] do
     run "cd #{current_path} && bundle exec rake airbrake:deploy RAILS_ENV=#{rails_env} TO=#{branch} USER=#{`git config --global github.user`} REVISION=#{real_revision} REPO=#{repository}" 
   end
 end
