@@ -22,11 +22,14 @@
         <li>
           <a href="javascript:" data-toggle="collapse" data-target="#<%= id %>" class="toc_title">
             <%= title %>
-            <span class="count_pill"><%= entries.count %></span>
+            <%= content_tag(:span, entries.count, :class => "count_pill") if entries.count > 1 %>
           </a>
           
           <% if entries.any?{|e| e.comments_open?} %> 
             <div class="comment_open"></div>
+          <% end %>
+          <% if entries.any?{|e| e.docket && e.docket.comments_count > 0} %> 
+            <div class="comments_received"></div>
           <% end %>
           <% if entries.any?{|e| e.significant?} %>
             <div class="significant"></div>
@@ -52,6 +55,11 @@
                   <% if entry.comments_open? %>
                     <dd class="comment_open"></dd>
                   <% end %>
+
+                  <% if entry.docket && entry.docket.comments_count > 0 %>
+                    <dd class="comments_received"></dd>
+                  <% end %>
+
                   <% if entry.significant? %>
                     <dd class="significant"></dd>
                   <% end %>

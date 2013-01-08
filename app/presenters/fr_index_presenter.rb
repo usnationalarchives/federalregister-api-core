@@ -72,7 +72,7 @@ module FrIndexPresenter
         start_page
         end_page
         length
-  
+        regulations_dot_gov_docket_id
         presidential_document_type_id
         executive_order_number
       ).map{|attribute| "entries.#{attribute}"}.join(",")
