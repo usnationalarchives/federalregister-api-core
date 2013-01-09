@@ -13,12 +13,14 @@
   <dd>Comments close on {{formatted_date comments_close_on}}</dd>
   {{/date_in_past}}
 
+  {{#if regulations_dot_gov_info}}
   {{#with regulations_dot_gov_info}}
     {{#if comments_count}}
       <dt class="comments_received"></dt>
       <dd>{{comments_count}} public comments received</dd>
     {{/if}}
   {{/with}}
+  {{/if}}
 
   {{#if significant}}
   <dt class="significant"></dt>
