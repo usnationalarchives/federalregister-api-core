@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120625141513) do
+ActiveRecord::Schema.define(:version => 20130109000702) do
 
   create_table "action_names", :force => true do |t|
     t.string   "name"
@@ -191,23 +191,18 @@ ActiveRecord::Schema.define(:version => 20120625141513) do
     t.text     "contact"
     t.text     "dates"
     t.text     "action"
-    t.string   "type"
-    t.string   "link"
-    t.string   "genre"
     t.string   "part_name"
     t.string   "citation"
     t.string   "granule_class"
     t.string   "document_number"
     t.string   "toc_subject",                   :limit => 1000
     t.string   "toc_doc",                       :limit => 1000
-    t.integer  "length"
     t.integer  "start_page"
     t.integer  "end_page"
     t.date     "publication_date"
     t.datetime "places_determined_at"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.text     "slug"
     t.boolean  "delta",                                         :default => true,  :null => false
     t.string   "source_text_url"
     t.string   "regulationsdotgov_url"
