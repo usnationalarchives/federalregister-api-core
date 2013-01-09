@@ -71,7 +71,6 @@ module FrIndexPresenter
         granule_class
         start_page
         end_page
-        length
         regulations_dot_gov_docket_id
         presidential_document_type_id
         executive_order_number
