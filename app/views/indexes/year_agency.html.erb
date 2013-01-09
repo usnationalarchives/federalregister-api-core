@@ -29,6 +29,8 @@
     </tr>
     <% end %>
   </table>
+
+  <%= link_to "Return to the agency list for the #{@year} FR Index", index_year_path(@year), :class => "return_to_index" %>
 </div>
 
 <% @entries_by_toc_subject.each do |type, entries_by_subject| %>

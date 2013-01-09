@@ -43,11 +43,14 @@
 
   #fr-index-agency-metadata { 
     margin-bottom: 30px;
+    overflow: hidden;
   
     table {
       .entry_count,
       .subject_count { text-align: center; }
       }
+
+    .return_to_index { float: right; }
   }
 
   .entry_type {
