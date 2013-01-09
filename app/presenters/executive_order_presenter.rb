@@ -15,7 +15,7 @@ module ExecutiveOrderPresenter
         :type => "PRESDOCU",
         :presidential_document_type_id => 2,
         :correction => '0',
-      }, :order => "executive_order_number", :per_page => 200).results(:select => "id, document_number, publication_date, signing_date, title, length, start_page, end_page, citation, executive_order_number, executive_order_notes").reverse
+      }, :order => "executive_order_number", :per_page => 200).results(:select => "id, document_number, publication_date, signing_date, title, start_page, end_page, citation, executive_order_number, executive_order_notes").reverse
     end
 
     def count
