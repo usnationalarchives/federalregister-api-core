@@ -17,7 +17,6 @@
   <% if entry.dates.present?                %><dt>Dates:</dt>            <dd><%= add_citation_links(entry.dates)                %></dd><% end %>
   <% if entry.effective_on.present?         %><dt>Effective Date:</dt>   <dd><%= entry.effective_on                             %></dd><% end %>
   <% if entry.comments_close_on.present?    %><dt>Comments Close:</dt>   <dd><%= entry.comments_close_on                        %></dd><% end %>
-  <% if entry.type.present?                 %><dt>Type: </dt>            <dd><%= entry.type                                     %></dd><% end %>
   <% if entry.entry_type.present?           %><dt>Entry Type:</dt>       <dd><%= entry.entry_type                               %></dd><% end %>
   <% if entry.action.present?               %><dt>Action: </dt>          <dd><%= entry.action                                   %></dd><% end %>
   <% if entry.presidential_document_type.present? %><dt>Presidential Document Type:</dt><dd><%= entry.presidential_document_type.name %></dd><% end %>
