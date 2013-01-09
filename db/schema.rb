@@ -9,16 +9,13 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120625141513) do
+ActiveRecord::Schema.define(:version => 20130109000702) do
 
   create_table "action_names", :force => true do |t|
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "granule_class"
   end
-
-  add_index "action_names", ["granule_class", "name"], :name => "granule_then_name"
 
   create_table "action_names_document_subtypes", :id => false, :force => true do |t|
     t.integer "action_name_id"
@@ -117,8 +114,8 @@ ActiveRecord::Schema.define(:version => 20120625141513) do
     t.integer "section_id"
     t.string  "title"
     t.string  "slug"
-    t.text    "description"
-    t.text    "search_conditions"
+    t.text    "description",       :limit => 16777215
+    t.text    "search_conditions", :limit => 16777215
     t.boolean "active"
     t.integer "position"
   end
@@ -147,6 +144,14 @@ ActiveRecord::Schema.define(:version => 20120625141513) do
 
   add_index "citations", ["cited_entry_id", "citation_type", "source_entry_id"], :name => "cited_citation_source"
   add_index "citations", ["source_entry_id", "citation_type", "cited_entry_id"], :name => "source_citation_cited"
+
+  create_table "clippings", :force => true do |t|
+    t.integer  "user_id"
+    t.string   "document_number"
+    t.integer  "position"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "docket_documents", :id => false, :force => true do |t|
     t.string "id"
@@ -186,31 +191,26 @@ ActiveRecord::Schema.define(:version => 20120625141513) do
     t.text     "contact"
     t.text     "dates"
     t.text     "action"
-    t.string   "type"
-    t.string   "link"
-    t.string   "genre"
     t.string   "part_name"
     t.string   "citation"
     t.string   "granule_class"
     t.string   "document_number"
     t.string   "toc_subject",                   :limit => 1000
     t.string   "toc_doc",                       :limit => 1000
-    t.integer  "length"
     t.integer  "start_page"
     t.integer  "end_page"
     t.date     "publication_date"
     t.datetime "places_determined_at"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.text     "slug"
-    t.boolean  "delta",                                        :default => true,  :null => false
+    t.boolean  "delta",                                         :default => true,  :null => false
     t.string   "source_text_url"
     t.string   "regulationsdotgov_url"
     t.string   "comment_url"
     t.datetime "checked_regulationsdotgov_at"
     t.integer  "volume"
     t.datetime "full_xml_updated_at"
-    t.integer  "citing_entries_count",                         :default => 0
+    t.integer  "citing_entries_count",                          :default => 0
     t.string   "document_file_path"
     t.datetime "full_text_updated_at"
     t.string   "curated_title"
@@ -218,7 +218,7 @@ ActiveRecord::Schema.define(:version => 20120625141513) do
     t.integer  "lede_photo_id"
     t.text     "lede_photo_candidates"
     t.datetime "raw_text_updated_at"
-    t.boolean  "significant",                                  :default => false
+    t.boolean  "significant",                                   :default => false
     t.integer  "presidential_document_type_id"
     t.date     "signing_date"
     t.integer  "executive_order_number"
@@ -230,7 +230,6 @@ ActiveRecord::Schema.define(:version => 20120625141513) do
     t.string   "fr_index_doc"
   end
 
-  add_index "entries", ["action_name_id"], :name => "action_name_id"
   add_index "entries", ["citation"], :name => "index_entries_on_citation"
   add_index "entries", ["citing_entries_count"], :name => "index_entries_on_agency_id_and_citing_entries_count"
   add_index "entries", ["citing_entries_count"], :name => "index_entries_on_citing_entries_count"
@@ -271,11 +270,21 @@ ActiveRecord::Schema.define(:version => 20120625141513) do
     t.integer  "entry_id"
     t.datetime "created_at"
     t.string   "remote_ip"
-    t.text     "raw_referer"
+    t.text     "raw_referer", :limit => 16777215
   end
 
   add_index "entry_page_views", ["created_at"], :name => "index_entry_page_views_on_created_at"
   add_index "entry_page_views", ["entry_id"], :name => "index_entry_page_views_on_entry_id"
+
+  create_table "entry_page_views_archive", :force => true do |t|
+    t.integer  "entry_id"
+    t.datetime "created_at"
+    t.string   "remote_ip"
+    t.text     "raw_referer", :limit => 16777215
+  end
+
+  add_index "entry_page_views_archive", ["created_at"], :name => "index_entry_page_views_on_created_at"
+  add_index "entry_page_views_archive", ["entry_id"], :name => "index_entry_page_views_on_entry_id"
 
   create_table "entry_regulation_id_numbers", :force => true do |t|
     t.integer "entry_id"
@@ -354,9 +363,9 @@ ActiveRecord::Schema.define(:version => 20120625141513) do
   end
 
   create_table "mailing_lists", :force => true do |t|
-    t.text     "search_conditions"
+    t.text     "search_conditions",          :limit => 16777215
     t.string   "title"
-    t.integer  "active_subscriptions_count", :default => 0
+    t.integer  "active_subscriptions_count",                     :default => 0
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "type"
@@ -389,16 +398,16 @@ ActiveRecord::Schema.define(:version => 20120625141513) do
     t.date     "publication_date"
     t.string   "toc_subject"
     t.string   "toc_doc"
-    t.boolean  "special_filing",      :default => false, :null => false
+    t.boolean  "special_filing",                          :default => false, :null => false
     t.string   "pdf_file_name"
     t.integer  "pdf_file_size"
     t.datetime "pdf_updated_at"
     t.string   "pdf_etag"
-    t.string   "title",               :default => "",    :null => false
-    t.text     "editorial_note"
+    t.string   "title",                                   :default => "",    :null => false
+    t.text     "editorial_note",      :limit => 16777215
     t.string   "document_file_path"
     t.datetime "raw_text_updated_at"
-    t.boolean  "delta",               :default => true,  :null => false
+    t.boolean  "delta",                                   :default => true,  :null => false
     t.integer  "num_pages"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -438,10 +447,10 @@ ActiveRecord::Schema.define(:version => 20120625141513) do
   create_table "regulatory_plans", :force => true do |t|
     t.string  "regulation_id_number"
     t.string  "issue"
-    t.text    "title"
-    t.text    "abstract"
+    t.text    "title",                :limit => 16777215
+    t.text    "abstract",             :limit => 16777215
     t.string  "priority_category"
-    t.boolean "delta",                :default => true, :null => false
+    t.boolean "delta",                                    :default => true, :null => false
     t.boolean "current"
   end
 
@@ -456,7 +465,6 @@ ActiveRecord::Schema.define(:version => 20120625141513) do
   end
 
   add_index "regulatory_plans_small_entities", ["regulatory_plan_id", "small_entity_id"], :name => "reg_then_entity"
-  add_index "regulatory_plans_small_entities", ["regulatory_plan_id", "small_entity_id"], :name => "regulatory_plan_id"
 
   create_table "section_assignments", :force => true do |t|
     t.integer "entry_id"
@@ -479,8 +487,8 @@ ActiveRecord::Schema.define(:version => 20120625141513) do
     t.string   "title"
     t.string   "slug"
     t.integer  "position"
-    t.text     "description"
-    t.text     "relevant_cfr_sections"
+    t.text     "description",           :limit => 16777215
+    t.text     "relevant_cfr_sections", :limit => 16777215
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "creator_id"

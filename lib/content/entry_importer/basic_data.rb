@@ -1,6 +1,6 @@
 module Content::EntryImporter::BasicData
   extend Content::EntryImporter::Utils
-  provides :volume, :title, :toc_subject, :toc_doc, :citation, :regulation_id_numbers, :significant, :start_page, :end_page, :length, :type, :genre, :part_name, :granule_class, :abstract, :dates, :action, :contact, :docket_numbers, :correction_of_id
+  provides :volume, :title, :toc_subject, :toc_doc, :citation, :regulation_id_numbers, :significant, :start_page, :end_page, :part_name, :granule_class, :abstract, :dates, :action, :contact, :docket_numbers, :correction_of_id
   
   def volume
     mods_file.volume
@@ -43,18 +43,6 @@ module Content::EntryImporter::BasicData
   
   def end_page
     simple_node_value('extent[unit="pages"] end')
-  end
-  
-  def length
-    simple_node_value('length')
-  end
-  
-  def type
-    simple_node_value('type')
-  end
-  
-  def genre
-    simple_node_value('genre')
   end
   
   def part_name

@@ -8,23 +8,18 @@
 #  contact                       :text
 #  dates                         :text
 #  action                        :text
-#  type                          :string(255)
-#  link                          :string(255)
-#  genre                         :string(255)
 #  part_name                     :string(255)
 #  citation                      :string(255)
 #  granule_class                 :string(255)
 #  document_number               :string(255)
-#  toc_subject                   :string(255)
-#  toc_doc                       :string(255)
-#  length                        :integer(4)
+#  toc_subject                   :string(1000)
+#  toc_doc                       :string(1000)
 #  start_page                    :integer(4)
 #  end_page                      :integer(4)
 #  publication_date              :date
 #  places_determined_at          :datetime
 #  created_at                    :datetime
 #  updated_at                    :datetime
-#  slug                          :text
 #  delta                         :boolean(1)      default(TRUE), not null
 #  source_text_url               :string(255)
 #  regulationsdotgov_url         :string(255)
