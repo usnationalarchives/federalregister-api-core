@@ -5,11 +5,38 @@
 
 <div class="title"><span><%= @year %> FR Index</span></div>
 
-<h1><%= link_to @agency.name, agency_path(@agency) %></h1>
+<div id="fr-index-agency-metadata" class="page_summary">
+  <h1><%= link_to @agency.name, agency_path(@agency) %></h1>
 
-<% @entries_by_type.each do |type, entries_by_subject| %>
-  <div class="entry_type">
-    <h3><%= Entry::ENTRY_TYPES[type].pluralize %></h3>
+  <hr />
+
+  <p>
+    In <%= @year %> the <%= @agency.name %> <%= @year < Date.today.year ? "published" : "has published" %> 
+    <%= pluralize @entries_by_granule_class.sum{|t,e| e.size}, "article" %>.
+  </p>
+
+  <table>
+    <tr>
+      <th>Article Type</th>
+      <th>Articles Published</th>
+      <th>Subjects Covered</th>
+    </tr>
+    <% @entries_by_granule_class.each do |type, entries_by_granule_class| %>
+    <tr>
+      <td class="type"><%= link_to Entry::ENTRY_TYPES[type].pluralize, "#fr-index-#{Entry::ENTRY_TYPES[type].pluralize.downcase}" %></td>
+      <td class="entry_count"><%= entries_by_granule_class.size %></td>
+      <td class="subject_count"><%= @entries_by_toc_subject.select{|t,e| t == type}.first.last.size %></td>
+    </tr>
+    <% end %>
+  </table>
+</div>
+
+<% @entries_by_toc_subject.each do |type, entries_by_subject| %>
+  <div class="entry_type" id="fr-index-<%= Entry::ENTRY_TYPES[type].pluralize.downcase %>">
+    <h3>
+      <%= Entry::ENTRY_TYPES[type].pluralize %>
+      <a href="#fr-index-agency-metadata">back to top</a>
+    </h3>
     <ul>
     <% entries_by_subject.each do |subject, entries_by_title| %>
       <% if subject %>
@@ -23,17 +50,17 @@
           <a href="javascript:" data-toggle="collapse" data-target="#<%= id %>" class="toc_title">
             <%= title %>
             <%= content_tag(:span, entries.count, :class => "count_pill") if entries.count > 1 %>
+                   
+            <% if entries.any?{|e| e.comments_open?} %> 
+              <div class="comment_open"></div>
+            <% end %>
+            <% if entries.any?{|e| e.docket && e.docket.comments_count > 0} %> 
+              <div class="comments_received"></div>
+            <% end %>
+            <% if entries.any?{|e| e.significant?} %>
+              <div class="significant"></div>
+            <% end %>
           </a>
-          
-          <% if entries.any?{|e| e.comments_open?} %> 
-            <div class="comment_open"></div>
-          <% end %>
-          <% if entries.any?{|e| e.docket && e.docket.comments_count > 0} %> 
-            <div class="comments_received"></div>
-          <% end %>
-          <% if entries.any?{|e| e.significant?} %>
-            <div class="significant"></div>
-          <% end %>
 
           <div id="<%= id %>" class="index_entries" style="height: 0px; overflow-y: hidden">
             <% entries.group_by(&:publication_month).each do |month, entries| %>

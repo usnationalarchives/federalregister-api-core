@@ -78,11 +78,12 @@ module FrIndexPresenter
     )
   end
 
-  def self.grouped_entries_for_year_and_agency(year, agency)
-    entries = entries_for_year_and_agency(year,agency)
+  def self.entries_for_year_and_agency_grouped_by_granule_class(year, agency)
+    entries_for_year_and_agency(year,agency).group_by(&:granule_class).sort_by{|type,entries| type}.reverse
+  end
 
-    entries.group_by(&:granule_class).sort_by{|type,entries| type}.reverse.map do |type, entries_by_type|
-
+  def self.entries_for_year_and_agency_grouped_by_toc_subject(year, agency)
+    entries_for_year_and_agency_grouped_by_granule_class(year,agency).map do |type, entries_by_type|
       entries_with_subject, entries_without_subject = entries_by_type.partition{|e| e.fr_index_subject.present?}
 
       grouped_entries = entries_with_subject.group_by(&:fr_index_subject).map do |subject, entries_by_subject|

@@ -12,7 +12,7 @@ class Admin::IndexesController < AdminController
     @year = params[:year].to_i
 #    raise ActiveRecord::RecordNotFound if @year < 2012
     @agency = Agency.find_by_slug!(params[:agency])
-    @entries_by_type = FrIndexPresenter.grouped_entries_for_year_and_agency(@year, @agency)
+    @entries_by_type = FrIndexPresenter.entries_for_year_and_agency_grouped_by_toc_subject(@year, @agency)
 
     respond_to do |wants|
       wants.html
