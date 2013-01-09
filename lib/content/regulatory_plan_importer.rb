@@ -62,7 +62,11 @@ module Content
     def document
       self.class.download_url_to(@regulatory_plan.source_url(:xml), file_path)
       doc = Nokogiri::XML(open(file_path))
-      doc.root
+      if doc.root.name == "REGINFO_RIN_DATA"
+        doc.root
+      else
+        nil
+      end
     end
   
     def title
