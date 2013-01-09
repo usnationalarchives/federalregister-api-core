@@ -36,7 +36,7 @@ fr_index_popover_handler = {
 
   ajax_done: function(response) {
     this.popover_cache[response.document_number] = response;
-    if( this.current_el.data('document-number') == response.document_number ) {
+    if( this.current_el.data('document-number') === response.document_number ) {
       this.add_popover_content();
     }
   }
