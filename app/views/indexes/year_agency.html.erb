@@ -56,7 +56,7 @@
             <% if entries.any?{|e| e.comments_open?} %> 
               <div class="comment_open"></div>
             <% end %>
-            <% if entries.any?{|e| e.docket && e.docket.comments_count > 0} %> 
+            <% if entries.any?{|e| e.docket.try(:comments_count) && e.docket.comments_count > 0} %>
               <div class="comments_received"></div>
             <% end %>
             <% if entries.any?{|e| e.significant?} %>
@@ -85,7 +85,7 @@
                     <dd class="comment_open"></dd>
                   <% end %>
 
-                  <% if entry.docket && entry.docket.comments_count > 0 %>
+                  <% if entry.docket.try(:comments_count) && entry.docket.comments_count > 0 %>
                     <dd class="comments_received"></dd>
                   <% end %>
 
