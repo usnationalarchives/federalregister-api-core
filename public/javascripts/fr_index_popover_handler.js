@@ -1,7 +1,8 @@
 /* This file defines a generic fr_index popover handler.
  * Actual use of this handler requires the addition of methods 
  * appropriate to the particular use.
- * The fields to be retrieved from the API (fields) and how to present the 
+ * The fields to be retrieved from the API (fields) which must
+ * include document_number and how to present the 
  * data returned (add_popover_content) are required. */
 
 fr_index_popover_handler = {
@@ -34,8 +35,10 @@ fr_index_popover_handler = {
   },
 
   ajax_done: function(response) {
-    this.popover_cache[this.current_el.data('document-number')] = response;
-    this.add_popover_content();
+    this.popover_cache[response.document_number] = response;
+    if( this.current_el.data('document-number') == response.document_number ) {
+      this.add_popover_content();
+    }
   }
 };
 
