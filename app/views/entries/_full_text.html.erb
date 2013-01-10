@@ -1,7 +1,12 @@
 <div class="fulltextWrapper doc_<%= entry.granule_class.downcase%>">
   <% if entry.has_full_xml? %>
     <%=
-      html = transform_xml(entry.full_xml, 'entries/_full_text.html.xslt', {
+      if entry.granule_class == 'PRORULE' && entry.full_xml =~ /AMDPAR/ && entry.full_xml !~ /REGTEXT/
+        base_xml = transform_xml(entry.full_xml, 'entries/xslt/add_regtext.xslt', {}).to_s
+      else
+        base_xml = entry.full_xml
+      end
+      html = transform_xml(base_xml, 'entries/_full_text.html.xslt', {
         'first_page' => (entry.start_page.to_s),
         'volume' => entry.volume.to_s,
         'extracted_graphics' => "'|" + entry.graphics.extracted.map(&:identifier).join('|') + "|'"
