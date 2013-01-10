@@ -17,7 +17,7 @@
   {{#with regulations_dot_gov_info}}
     {{#if comments_count}}
       <dt class="comments_received"></dt>
-      <dd>{{comments_count}} public comments received</dd>
+      <dd>{{comments_count}} public {{pluralize comments_count "comment" "comments"}} received</dd>
     {{/if}}
   {{/with}}
   {{/if}}
