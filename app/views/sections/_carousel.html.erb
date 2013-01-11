@@ -8,7 +8,7 @@
             <div class='text_wrapper'>
               <h2><%= link_to entry.curated_title, entry_path(entry) %></h2>
               <p class="metadata">
-                A <%= entry.entry_type %> by <%= agency_names(entry) %> on 
+                <%= entry.entry_type.with_indefinite_article(true) %> by <%= agency_names(entry) %> on 
                 <%= link_to date_tag(entry.publication_date, :datetime => entry.publication_date.to_s(:iso)), entries_by_date_path(entry.publication_date) %>
               </p>
 

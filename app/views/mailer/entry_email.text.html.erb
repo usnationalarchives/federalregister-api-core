@@ -29,7 +29,7 @@
     
       <h2 style="font-family:'Helvetica Neue',Arial,Helvetica,sans-serif;margin: 25px 0 5px;"><%= link_to @entry.title, short_entry_url(@entry.document_number) %> </h2>
       
-      <p style="color:#7A838A;font-family:'Helvetica Neue',Arial,Helvetica,sans-serif;font-size:12px;margin: 0 0 10px;"><%= @entry.citation %> - A <%= @entry.entry_type %> by <%= agency_names(@entry, :no_links => true) %> published on <%= @entry.publication_date %></p>
+      <p style="color:#7A838A;font-family:'Helvetica Neue',Arial,Helvetica,sans-serif;font-size:12px;margin: 0 0 10px;"><%= @entry.citation %> - <%= @entry.entry_type.with_indefinite_article(true) %> by <%= agency_names(@entry, :no_links => true) %> published on <%= @entry.publication_date %></p>
       
     <p style="color:#363636;font-family:Georgia, 'Times New Roman',serif;font-size:13px; line-height:1.5;margin-bottom: 25px;"><%= truncate_words(@entry.curated_abstract, :length => 500) || "[No abstract available]" -%></p>
 

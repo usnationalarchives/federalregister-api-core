@@ -17,6 +17,7 @@ gem 'geokit', '1.4.1', :require => 'geokit'
 gem 'will_paginate', '2.3.14', :require => 'will_paginate'
 gem 'fastercsv', '1.4.0'
 gem 'amatch', '0.2.3'
+gem 'indefinite_article'
 gem 'rubyzip', '0.9.1', :require => 'zip/zip'
 gem 'formtastic', '0.9.8'
 

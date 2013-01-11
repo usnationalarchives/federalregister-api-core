@@ -88,6 +88,8 @@ GEM
       multi_json
       multi_xml
     icalendar (1.1.5)
+    indefinite_article (0.2.0)
+      activesupport
     jgre-monkeyspecdoc (0.9.5)
     json (1.7.6)
     juicer (1.0.6)
@@ -213,6 +215,7 @@ DEPENDENCIES
   http_headers (= 0.0.2.3)
   httparty (= 0.8.1)
   icalendar
+  indefinite_article
   jgre-monkeyspecdoc (= 0.9.5)
   json
   juicer (= 1.0.6)

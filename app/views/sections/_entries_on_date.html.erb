@@ -5,7 +5,7 @@
       <% entries.each do |entry| %>
         <% article_tag do %>  
           <h1><%= link_to entry.title, entry_path(entry) %></h1>
-          A <%= entry.entry_type %> by <%= agency_names(entry) %>
+          <%= entry.entry_type.with_indefinite_article(true) %> by <%= agency_names(entry) %>
         <% end -%>
       <% end %>
     </div>

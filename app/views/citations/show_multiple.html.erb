@@ -12,7 +12,7 @@
   <li>
     <%= link_to(entry.title, entry_path(entry)) %><br />
     <span class="pages"><%= entry_page_range(entry) %></span><br />
-    A <span class="type"><%= entry.entry_type %></span> by <span class="agencies"><%= agency_names(entry) %></span>
+    <%= entry.entry_type.indefinite_article(true) %> <span class="type"><%= entry.entry_type %></span> by <span class="agencies"><%= agency_names(entry) %></span>
   </li>
 <% end %>
 </ul>
