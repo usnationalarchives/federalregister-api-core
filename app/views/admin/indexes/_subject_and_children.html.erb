@@ -14,12 +14,14 @@
 <% end %>
 
 <% entries_by_title.each do |title, entries| %>
-  <li id="<%= type %>-<%= Digest::MD5.hexdigest("#{subject}#{title}")%>">
+  <% highlight_entry =  entries.select{|e| e.publication_date <= Date.today - 3.days}.size == 0 && entries.none?{|e| e.fr_index_doc || e.fr_index_subject} %>
+  <li id="<%= type %>-<%= Digest::MD5.hexdigest("#{subject}#{title}")%>" class="<%= 'new_item' if highlight_entry %>">
     <a class="wrapper" href="javascript:" data-toggle="collapse" data-target="#<%= Digest::MD5.hexdigest(entries.to_s) %>">
       <span class="title"><%= title %></span>
       <span class="count_pill"><%= entries.count %></span>
     </a>
-    <%= link_to 'Edit', '#', :class => "edit" %>
+
+    <%= link_to 'Edit', '#', :class => "edit btn btn-mini" %>
 
     <ul id="<%= Digest::MD5.hexdigest(entries.to_s) %>" class="entry_details" style="height: 0px; overflow-y: hidden"> 
       <% entries.each do |entry| %>
