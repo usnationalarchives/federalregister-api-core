@@ -1,0 +1,80 @@
+/*********************/
+/* HEADER            */
+/*********************/
+
+.header .nav { margin-bottom: 0px; }
+
+.header { height: 55px; }
+.header #primary.nav { 
+  height: 40px;
+  }
+
+.header .brand {
+  font-size: 24px;
+  font-weight: bold;
+  float: left;
+  top: 7px;
+  position: relative;
+  margin-right: 20px;
+  }
+.header .brand a:hover { text-decoration: none; }
+
+.header .subnav { background-color: #CCC; }
+.header .navbar-inner {
+  background: none;
+  background-color: #CCC;
+  }
+
+#utility.nav { margin-bottom: 10px; }
+
+#utility.nav p { float: right; }
+#utility.nav ul { 
+  list-style: none;
+  float: right;
+  }
+#utility.nav ul li { 
+  display: inline-block;
+  margin-right: 10px;
+  }
+
+.wf-active div.title { font-family: "apertura-condensed-1","apertura-condensed-2", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; }
+div.title {
+  margin: 1em;
+  margin-left: -999px;
+  padding-left: 999px;
+  text-align: right;
+  background: url('/images/header_bg.png?1307210486') repeat-x scroll left top;
+  color: white;
+  clear: both;
+  line-height: .9;
+  font-size: 2.2em;
+  font-weight: 700;
+  height: 21px;
+  letter-spacing: 0px;
+  
+  }
+div.title span {
+  background: white;
+  color: #5697CF;
+  padding: 0 10px;
+  margin: 0 25px 0 0;
+  }
+
+/*********************/
+/* SIDEBAR           */
+/*********************/
+
+#sidebar {
+  border-radius: 6px;
+  border: 1px solid #CCC;
+  background-color: #EEE;
+  margin-left: 0px;
+  }
+#sidebar ul {
+  list-style: none;
+  margin-left: 0px;
+  margin-bottom: 5px;
+  }
+#sidebar ul li {
+  padding: 5px 0 0 5px;
+}

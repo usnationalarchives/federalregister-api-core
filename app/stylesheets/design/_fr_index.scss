@@ -78,11 +78,7 @@
     width: 880px;
 
     h3 {
-      text-transform: uppercase;
-      line-height: 1.7em;
-      font-size: 1.4em;
-      color: $fr_blue;
-      border-top: 2px solid $dark_blue;
+      @extend .header_with_top_border;
 
       a { 
         text-transform: none;
