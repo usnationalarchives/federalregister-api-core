@@ -1,5 +1,5 @@
 <div style="margin-left:<%= margin_left %>">
 <h6 style="font-family:'Helvetica Neue',Arial,Helvetica,sans-serif;font-size:12px;margin: 10px 0 5px 0;"><%= link_to title.reject(&:blank?).join(' - '), short_entry_url(document.document_number) %> (<%= document.document_number %>)</h6>
           
-<p style="color:#7A838A;font-family:'Helvetica Neue',Arial,Helvetica,sans-serif;font-size:12px;margin: 0 0 5px 0;">A <%= document.entry_type %> by <%= agency_names(document, :no_links => true) %> to be published on <%= document.publication_date %></p>
+<p style="color:#7A838A;font-family:'Helvetica Neue',Arial,Helvetica,sans-serif;font-size:12px;margin: 0 0 5px 0;"><%= document.entry_type.with_indefinite_article(true) %> by <%= agency_names(document, :no_links => true) %> to be published on <%= document.publication_date %></p>
 </div>

@@ -1,7 +1,7 @@
 <div style="margin-left:<%= margin_left %>">
 <h6 style="font-family:'Helvetica Neue',Arial,Helvetica,sans-serif;font-size:12px;margin: 10px 0 5px 0;"><%= link_to entry.curated_title, short_entry_url(entry.document_number) %></h6>
           
-<p style="color:#7A838A;font-family:'Helvetica Neue',Arial,Helvetica,sans-serif;font-size:12px;margin: 0 0 5px 0;">A <%= entry.entry_type %> by <%= agency_names(entry, :no_links => true) %></p>
+<p style="color:#7A838A;font-family:'Helvetica Neue',Arial,Helvetica,sans-serif;font-size:12px;margin: 0 0 5px 0;"><%= entry.entry_type.with_indefinite_article(true) %> by <%= agency_names(entry, :no_links => true) %></p>
     
 <p style="color:#363636;font-family:Georgia, 'Times New Roman',serif;font-size:13px; line-height:1.5;margin:0px 0 15px;"><%= truncate_words(entry.curated_abstract || entry.raw_text, :length => 500) || "[No abstract available]" -%></p>
 
