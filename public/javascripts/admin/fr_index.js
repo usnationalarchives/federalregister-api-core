@@ -32,20 +32,33 @@ fr_index_popover_handler.add_popover_content = function() {
   };
 
 
-function sort_unique(arr) {
-    arr = arr.sort(function (a, b) { return a*1 - b*1; });
-    var ret = [arr[0]];
-    for (var i = 1; i < arr.length; i++) { // start loop at 1 as element 0 can never be a duplicate
-        if (arr[i-1] !== arr[i]) {
-            ret.push(arr[i]);
-        }
-    }
-    return ret;
+/* returns the current state of toc subject and doc titles as users make edits */
+function current_toc_subjects() {
+  return _.uniq($('.fr_index_subject').map(function() { return $(this).val(); }));
+}
+function current_toc_docs() {
+  return _.uniq($('.fr_index_doc').map(function() { return $(this).val(); }));
+}
+
+/* using a function as the source for these typeaheads allows
+ * them to stay up to date with changes on the page.
+ * if just an array is provided that is cached and not updated */
+function fr_index_toc_subject_typeahead(elements) {
+  elements.find('.fr_index_subject').typeahead({
+    minLength: 3,
+    source: current_toc_subjects()
+  });
+}
+function fr_index_toc_doc_typeahead(elements) {
+  elements.find('.fr_index_doc').typeahead({
+    minLength: 3,
+    source: current_toc_docs()
+  });
 }
 
 function initializeFrIndexEditor(elements) {
   var $elements = $(elements);
-  $elements.find('form').hide();
+  //$elements.find('form').hide();
   $elements.find('a.edit').on('click', function(event) {
     event.preventDefault();
 
@@ -55,12 +68,14 @@ function initializeFrIndexEditor(elements) {
     
 
     if( form.css('display') === 'none' ) {
-      link.html('Cancel');
+      link.removeClass('edit').addClass('cancel').html('Cancel');
+      link.closest('li').addClass('edit');
       form.show();
       el.removeClass('hover');
     } else {
-      link.html('Edit');
+      link.removeClass('cancel').addClass('edit').html('Edit');
       form.hide();
+      link.closest('li').removeClass('edit');
       el.addClass('hover');
     }
   });
@@ -74,16 +89,8 @@ function initializeFrIndexEditor(elements) {
     }
   });
 
-  var fr_index_subjects = sort_unique($('.fr_index_subject').map(function() { return $(this).val(); }));
-  $elements.find('.fr_index_subject').typeahead({
-    minLength: 3,
-    source: fr_index_subjects
-  });
-  var fr_index_docs = sort_unique($('.fr_index_doc').map(function() { return $(this).val(); }));
-  $elements.find('.fr_index_doc').typeahead({
-    minLength: 3,
-    source: fr_index_docs
-  });
+  fr_index_toc_subject_typeahead($elements);
+  fr_index_toc_doc_typeahead($elements);
 
   $elements.find('form').unbind('submit').bind('submit', function(event) {
     var form = $(this);

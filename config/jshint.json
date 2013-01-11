@@ -25,6 +25,7 @@
       "ContentFlow",
       "tmpl",
       "iScroll",
+      "_",
 
       // Some methods defined across files; should prob be refactored
       "add_date_picker",
