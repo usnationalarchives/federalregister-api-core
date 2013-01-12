@@ -92,7 +92,7 @@ module FrIndexPresenter
         end.sort_by{|a,b| a.downcase}.map{|a,b| [a,b.sort_by(&:publication_date)]}
       end
 
-      grouped_entries += entries_without_subject.group_by(&:title).map{|g_e| [nil, [[g_e.first, g_e.second.sort_by(&:publication_date)]]]}
+      grouped_entries += entries_without_subject.group_by{|e| e.fr_index_doc || e.title}.map{|g_e| [nil, [[g_e.first, g_e.second.sort_by(&:publication_date)]]]}
 
       sorted_grouped_entries = grouped_entries.sort_by{|a,b| [a || b.first.first]}
       [type, sorted_grouped_entries]

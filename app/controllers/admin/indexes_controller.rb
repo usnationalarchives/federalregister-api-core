@@ -57,7 +57,7 @@ class Admin::IndexesController < AdminController
         ]
       )
 
-      entries_by_title = subject_entries.group_by(&:fr_index_doc).sort
+      entries_of_subject = subject_entries.group_by{|e| e.fr_index_doc || e.title}.sort
       
       id = "#{params[:type]}-#{Digest::MD5.hexdigest(subject)}"
 
@@ -66,7 +66,7 @@ class Admin::IndexesController < AdminController
           :partial => "subject_and_children",
           :locals => {
             :subject => subject,
-            :entries_by_title => entries_by_title,
+            :entries_of_subject => entries_of_subject,
             :type => params[:type]
           }
         )

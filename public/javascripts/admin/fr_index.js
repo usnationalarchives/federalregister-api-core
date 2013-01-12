@@ -122,7 +122,7 @@ function initializeFrIndexEditor(elements) {
             });
 
             if (!added_element) {
-              added_element = $(element_to_insert).appendTo(wrapping_list).fadeIn("fast");
+              added_element = $(element_to_insert).appendTo(wrapping_list).scrollintoview({duration: 200}).fadeIn("fast");
             }
             initializeFrIndexEditor(added_element);
           }
