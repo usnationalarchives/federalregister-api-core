@@ -15,3 +15,12 @@ $(document).ajaxSend(function(e, xhr, options) {
     var token = $("meta[name='csrf-token']").attr("content");
     xhr.setRequestHeader("X-CSRF-Token", token);
 });
+
+$(document).ajaxError(function(event, request, options) {
+  if( request.status === 403 ) {
+    window.location = '/admin/login';
+  } else if( request.status === 500 ) {
+    alert( "We're sorry something went wrong!" );
+  }
+});
+
