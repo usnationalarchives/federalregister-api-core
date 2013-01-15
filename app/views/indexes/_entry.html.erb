@@ -1,0 +1,23 @@
+<dl class="with_ajax_popover" data-document-title="<%= entry.title %>" data-document-number=<%= entry.document_number %> >
+  <dt>Published:</dt>
+  <dd><%= link_to entry.publication_date, entry_path(entry) %></dd> 
+  
+  <dt>FR Document:</dt>
+  <dd><%= link_to entry.document_number, entry_path(entry) %></dd>
+  
+  <dt><%= pluralize_without_count(entry.human_length, 'Page') %>:</dt>
+  <dd class='pages'><%= link_to entry.page_range, entry.source_url('pdf') %> <%= "(#{pluralize(entry.human_length, 'page')})" if entry.human_length > 1 %></dd>
+
+  <dt></dt>
+  <% if entry.comments_open? %>
+    <dd class="comment_open"></dd>
+  <% end %>
+
+  <% if (entry.docket.try(:comments_count) || 0) > 0 %>
+    <dd class="comments_received"></dd>
+  <% end %>
+
+  <% if entry.significant? %>
+    <dd class="significant"></dd>
+  <% end %>
+</dl>

@@ -2,17 +2,15 @@ class Admin::IndexesController < AdminController
   layout 'admin_bootstrap'
 
   def year
-    @year = params[:year].to_i
-#    raise ActiveRecord::RecordNotFound if @year < 2012
-
-    @agencies = FrIndexPresenter.agencies_in_year(@year)
+    @years = FrIndexPresenter.available_years
+    @fr_index = FrIndexPresenter.new(params[:year])
   end
 
   def year_agency
-    @year = params[:year].to_i
-#    raise ActiveRecord::RecordNotFound if @year < 2012
-    @agency = Agency.find_by_slug!(params[:agency])
-    @entries_by_type = FrIndexPresenter.entries_for_year_and_agency_grouped_by_toc_subject(@year, @agency)
+    @years = FrIndexPresenter.available_years
+
+    agency = Agency.find_by_slug!(params[:agency])
+    @agency_year = FrIndexPresenter::AgencyYear.new(agency, params[:year])
 
     respond_to do |wants|
       wants.html
@@ -32,13 +30,7 @@ class Admin::IndexesController < AdminController
   end
 
   def update_year_agency
-    year = params[:year].to_i
-    agency = Agency.find_by_slug!(params[:agency])
-
-    base_scope = FrIndexPresenter.entries_for_year_and_agency(year, agency).
-      scoped(:conditions => {:granule_class => params[:type]})
-
-    entries = base_scope.scoped(:conditions => {:id => params[:entry_ids]})
+    entries = Entry.scoped(:conditions => {:id => params[:entry_ids]})
 
     Entry.transaction do
       entries.each do |entry|
@@ -46,28 +38,33 @@ class Admin::IndexesController < AdminController
       end
     end
 
+
+    agency = Agency.find_by_slug!(params[:agency])
+    agency_year = FrIndexPresenter::AgencyYear.new(agency, params[:year])
+
+    granule_class = params[:granule_class]
+
     subjects_by_id = {}
-    [params[:entry][:fr_index_subject], params[:old_subject]].uniq.each do |subject|
-      subject_entries = base_scope.all(
-        :conditions => [
-          "fr_index_subject = :subject OR
-          (fr_index_subject IS NULL and toc_subject = :subject) OR
-          (fr_index_subject IS NULL AND toc_subject IS NULL AND title = :subject)",
-          {:subject => subject}
-        ]
-      )
+    headers = []
+    if params[:entry][:fr_index_subject].present?
+      headers << params[:entry][:fr_index_subject]
+    else
+      headers << params[:entry][:fr_index_doc]
+    end
 
-      entries_of_subject = subject_entries.group_by{|e| e.fr_index_doc || e.title}.sort
-      
-      id = "#{params[:type]}-#{Digest::MD5.hexdigest(subject)}"
+    headers << params[:old_subject]
 
-      if subject_entries.present?
+    headers.uniq.each do |header|
+      id = "#{granule_class}-#{Digest::MD5.hexdigest(header)}"
+
+      grouping = agency_year.grouping_for_document_type_and_header(granule_class, header)
+
+      if grouping
         subjects_by_id[id] = render_to_string(
-          :partial => "subject_and_children",
+          :partial => "grouping",
           :locals => {
-            :subject => subject,
-            :entries_of_subject => entries_of_subject,
-            :type => params[:type]
+            :grouping => grouping,
+            :granule_class => granule_class
           }
         )
       else

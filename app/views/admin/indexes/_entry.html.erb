@@ -1,0 +1,4 @@
+<li class="with_ajax_popover" data-document-number=<%= entry.document_number %>>
+  <%= link_to entry.document_number, entry_path(entry) %>
+  page <%= entry.start_page %>, published <%= link_to entry.publication_date, entry_path(entry) %>
+</li>

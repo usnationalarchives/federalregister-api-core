@@ -1,32 +1,32 @@
-<% title "#{@year} FR Index" %>
+<% title "#{@fr_index.year} FR Index" %>
 
-<div class="title"><span><%= @year %> FR Index</span></div>
+<div class="title"><span><%= @fr_index.year %> FR Index</span></div>
 
 <div id="fr-index-metadata" class="page_summary">
-  <h1><%= @year %> Federal Register Index</h1>
+  <h1><%= @fr_index.year %> Federal Register Index</h1>
 
   <hr />
 
   <p>
     This index provides descriptive entries and Federal Register page numbers
     for documents published in the daily Federal Register. It includes entries, 
-    with select metadata for all documents published in the <%= @year %> calendar year.
+    with select metadata for all documents published in the <%= @fr_index.year %> calendar year.
   </p>
 
   <p>
     Each agency below is followed by a count that represents the number of articles for 
-    that agency in the <%= @year %> FR Index. The count is omitted for agency publishing 
+    that agency in the <%= @fr_index.year %> FR Index. The count is omitted for agency publishing 
     less than 2 articles in a given year.
   </p>
 
   <p id="agency-jump-nav">
-    Jump to Agencies: <%= @agencies_grouped_by_first_letter.map{|l,g| "<a href='##{l}' class='letter_link'>#{l}</a>"}.join(' | ') %>
+    Jump to Agencies: <%= @fr_index.agencies_by_letter.map{|letter,agencies| "<a href='##{letter}' class='letter_link'>#{letter}</a>"}.join(' | ') %>
   <p>
 
 </div>
 
 <div class="index_agencies">
-  <% @agencies_grouped_by_first_letter.each do |letter, agencies| %>
+  <% @fr_index.agencies_by_letter.each do |letter, agencies| %>
     <h3 id="<%= letter %>">
       <%= letter %>
       <a href="#fr-index-metadata">back to top</a>
@@ -34,15 +34,15 @@
     <ul>
     <% agencies.each do |agency| %>
       <li>
-        <%= link_to agency.name, index_year_agency_path(@year, agency) %>
-        <%= content_tag(:span, agency.entries_count, :class => "count_pill") if agency.entries_count > 1 %>
+        <%= link_to agency.name, index_year_agency_path(@fr_index.year, agency) %>
+        <%= content_tag(:span, agency.entry_count, :class => "count_pill") if agency.entry_count > 1 %>
         <% if agency.children.present? %>
         <ul>
           <% agency.children.each do |sub_agency| %>
             <li>
               <span class="see">See</span> 
-              <%= link_to sub_agency.name, index_year_agency_path(@year, sub_agency) %>
-              <%= content_tag(:span, sub_agency.entries_count, :class => "count_pill") if sub_agency.entries_count > 1 %>
+              <%= link_to sub_agency.name, index_year_agency_path(@fr_index.year, sub_agency) %>
+              <%= content_tag(:span, sub_agency.entry_count, :class => "count_pill") if sub_agency.entry_count > 1 %>
             </li>
           <% end %>
         </ul>

@@ -380,7 +380,7 @@ class Entry < ApplicationModel
   end
   
   def fr_index_doc
-    self[:fr_index_doc] || toc_doc
+    self[:fr_index_doc] || toc_doc || title
   end
   
   def day

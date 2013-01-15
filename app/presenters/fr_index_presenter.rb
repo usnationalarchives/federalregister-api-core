@@ -1,101 +1,238 @@
-module FrIndexPresenter
-  class AgencyPresenter
-    attr_reader :agency, :total_count
-    attr_accessor :children
+class FrIndexPresenter
+  LAST_CURATED = 3.days.ago.to_date
 
-    delegate :id,
-             :name,
-             :parent_id,
-             :slug,
-             :to_param,
-             :to => :agency
+  attr_reader :year
 
-    def initialize(agency, total_count)
-      @agency = agency
-      @total_count = total_count
-    end
+  def self.available_years
+    [2013, 2012]
+  end
 
-    def entries_count
-      @total_count
+  def initialize(year)
+    @year = year.to_i
+    raise ActiveRecord::RecordNotFound unless FrIndexPresenter.available_years.include?(@year)
+  end
+
+  def agencies_by_letter
+    agencies.group_by(&:first_letter)
+  end
+
+  def agencies
+    return @agency_years if @agency_years
+
+    agencies = Agency.all(
+      :conditions => {:id => raw_counts_by_agency_id.keys},
+      :include => :children
+    )
+
+    @agency_years = agencies.map do |agency|
+      children = agencies.
+        select{|candidate_child| candidate_child.parent_id == agency.id}.
+        sort_by{|child| child.name.downcase}.
+        map{|child| AgencyYear.new(child, year, :entry_count => raw_counts_by_agency_id[child.id]) }
+
+      entry_count = children.present? ? nil : raw_counts_by_agency_id[agency.id]
+      AgencyYear.new(agency, year,
+        :children => children,
+        :entry_count => entry_count
+      )
     end
   end
 
-  def self.agencies_in_year(year)
-    facets = EntrySearch.new(
+  private
+
+  def raw_counts_by_agency_id
+    @raw_counts_by_agency_id ||= EntrySearch.new(
       :conditions => {:publication_date => {:year => year}}
-    ).agency_facets
+    ).agency_facets.inject({}) do |hsh, facet|
+      hsh[facet.value] = facet.count
+      hsh
+    end
+  end
 
-    agencies = Agency.all(:conditions => {:id => facets.map(&:value)}, :include => :children).to_a
+  class AgencyYear
+    attr_reader :agency, :year, :children
 
-    agency_presenters = facets.map do |facet|
-      agency = agencies.detect{|a| a.id == facet.value}
-      if agency.children.present?
-        count = EntrySearch.new(:conditions => {
+    delegate :name,
+      :to_param,
+      :to => :agency
+
+    def initialize(agency, year, options={})
+      @agency = agency
+      @year = year.to_i
+      raise ActiveRecord::RecordNotFound unless FrIndexPresenter.available_years.include?(@year)
+
+      @children = options[:children] || []
+      @entry_count = options[:entry_count]
+    end
+
+    def current_year?
+      year >= Date.today.year
+    end
+
+    def first_letter
+      agency.name.chars.first
+    end
+
+    def entry_count
+      @entry_count ||= EntrySearch.new(
+        :conditions => {
           :publication_date => {:year => year},
           :agency_ids => [agency.id],
           :without_agency_ids => agency.children.map(&:id)
-        }).count
-      else
-        count = facet.count
-      end
-      AgencyPresenter.new(agency, count)
+        }
+      ).count
     end
 
-    agency_presenters.each do |p|
-      p.children = agency_presenters.select{|c| c.parent_id == p.id}.sort_by{|c| c.name.downcase}
+    def document_types
+      entries.
+        group_by(&:granule_class).
+        sort_by{|type,entries| type}.
+        reverse.
+        map {|type, entries| DocumentType.new(type, entries) }
+    end
+
+    def grouping_for_document_type_and_header(granule_class, header)
+      document_type = document_types.find{|dt| dt.granule_class == granule_class}
+      document_type.groupings.find{|g| g.header == header}
     end
     
-    agency_presenters.sort_by{|a| a.name.downcase}
+    private
+
+    def entries
+      EntrySearch.new(
+        :conditions => {
+          :agency_ids => [agency.id],
+          :without_agency_ids => agency.children.map(&:id),
+          :publication_date => {:year => year},
+        },
+        :per_page => 1000
+      ).chainable_results(
+        :select => %w(
+          id
+          document_number
+          publication_date
+          title
+          toc_subject
+          toc_doc
+          fr_index_subject
+          fr_index_doc
+          granule_class
+          start_page
+          end_page
+          regulations_dot_gov_docket_id
+          presidential_document_type_id
+          executive_order_number
+        ).map{|attribute| "entries.#{attribute}"}.join(",")
+      ).preload(
+        :docket
+      )
+    end
   end
 
-  def self.entries_for_year_and_agency(year,agency)
-    EntrySearch.new(
-      :conditions => {
-        :agency_ids => [agency.id] + agency.children.map(&:id),
-        :publication_date => {
-          :gte => Date.parse("#{year}-01-01"),
-          :lte => Date.parse("#{year}-12-31"),
-        }
-      },
-      :per_page => 1000
-    ).chainable_results(
-      :select => %w(
-        id
-        document_number
-        publication_date
-        title
-        toc_subject
-        toc_doc
-        fr_index_subject
-        fr_index_doc
-        granule_class
-        start_page
-        end_page
-        regulations_dot_gov_docket_id
-        presidential_document_type_id
-        executive_order_number
-      ).map{|attribute| "entries.#{attribute}"}.join(",")
-    )
+  class DocumentType
+    attr_reader :granule_class, :entries
+    def initialize(granule_class, entries)
+      @granule_class = granule_class
+      @entries = entries
+    end
+
+    def name
+      Entry::ENTRY_TYPES[granule_class]
+    end
+
+    def entry_count
+      entries.count
+    end
+
+    def grouping_count
+      groupings.count
+    end
+
+    def groupings
+      (subject_groupings + document_groupings).sort_by(&:header)
+    end
+
+    private
+
+    def subject_groupings
+      entries.
+        reject{|e| e.fr_index_subject.blank?}.
+        group_by(&:fr_index_subject).
+        map {|fr_index_subject, group_entries| SubjectGrouping.new(fr_index_subject, group_entries) }
+    end
+
+    def document_groupings
+      entries.
+        select{|e| e.fr_index_subject.blank?}.
+        group_by(&:fr_index_doc).
+        map {|fr_index_doc, group_entries| DocumentGrouping.new(fr_index_doc, group_entries) }
+    end
   end
 
-  def self.entries_for_year_and_agency_grouped_by_granule_class(year, agency)
-    entries_for_year_and_agency(year,agency).group_by(&:granule_class).sort_by{|type,entries| type}.reverse
+  class SubjectGrouping
+    attr_reader :header, :entries
+
+    def initialize(header, entries)
+      @header = header
+      @entries = entries
+    end
+
+    def document_groupings
+      entries.
+        group_by(&:fr_index_doc).
+        sort_by{|fr_index_doc, group_entries| fr_index_doc }.
+        map {|fr_index_doc, group_entries| DocumentGrouping.new(fr_index_doc, group_entries, header) }
+    end
+
+    def identifier
+      Digest::MD5.hexdigest(header)
+    end
   end
 
-  def self.entries_for_year_and_agency_grouped_by_toc_subject(year, agency)
-    entries_for_year_and_agency_grouped_by_granule_class(year,agency).map do |type, entries_by_type|
-      entries_with_subject, entries_without_subject = entries_by_type.partition{|e| e.fr_index_subject.present?}
+  class DocumentGrouping
+    attr_reader :header, :entries, :fr_index_subject
+    def initialize(header, entries, fr_index_subject = nil)
+      @header = header
+      @entries = entries
+      @fr_index_subject = fr_index_subject
+    end
 
-      grouped_entries = entries_with_subject.group_by(&:fr_index_subject).map do |subject, entries_by_subject|
-        [subject] << entries_by_subject.group_by do |e|
-          (e.fr_index_doc || e.title)
-        end.sort_by{|a,b| a.downcase}.map{|a,b| [a,b.sort_by(&:publication_date)]}
-      end
+    def entry_count
+      @entries.count
+    end
 
-      grouped_entries += entries_without_subject.group_by{|e| e.fr_index_doc || e.title}.map{|g_e| [nil, [[g_e.first, g_e.second.sort_by(&:publication_date)]]]}
+    def comments_open?
+      entries.any?(&:comments_open?)
+    end
 
-      sorted_grouped_entries = grouped_entries.sort_by{|a,b| [a || b.first.first]}
-      [type, sorted_grouped_entries]
+    def has_comments?
+      entries.any?{|e| (e.docket.try(:comments_count) || 0) > 0}
+    end
+
+    def significant?
+      entries.any?(&:significant?) 
+    end
+
+    def needs_attention?
+      old_entry_count == 0 && unmodified?
+    end
+
+    def identifier
+      Digest::MD5.hexdigest(top_level_header)
+    end
+
+    def top_level_header
+      fr_index_subject.present? ? fr_index_subject : header
+    end
+    
+    private
+
+    def old_entry_count
+      entries.select{|e| e.publication_date <= LAST_CURATED}.size
+    end
+
+    def unmodified?
+      entries.none?{|e| e[:fr_index_doc] || e[:fr_index_subject]}
     end
   end
 end

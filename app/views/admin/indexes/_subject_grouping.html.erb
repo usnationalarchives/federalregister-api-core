@@ -1,0 +1,17 @@
+<li id="<%= granule_class %>-<%= subject_grouping.identifier %>">
+  <span class="title"><%= subject_grouping.header %></span>
+  <% form_tag(params, :method => :put) do %>
+    <%= hidden_field_tag(:granule_class, granule_class) %>
+    <%= hidden_field_tag(:old_subject, subject_grouping.header) %>
+    <% subject_grouping.entries.each do |entry| %>
+      <%= hidden_field_tag(:'entry_ids[]', entry.id) %>
+    <% end %>
+    <%= text_field_tag('entry[fr_index_subject]', subject_grouping.header) %>
+    <%= submit_tag("Save") %>
+  <% end %>
+  <ul>
+    <%= render :partial => "document_grouping",
+      :collection => subject_grouping.document_groupings,
+      :locals => {:granule_class => granule_class} %>
+  </ul>
+</li>

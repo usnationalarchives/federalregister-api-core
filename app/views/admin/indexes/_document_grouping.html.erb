@@ -1,0 +1,24 @@
+<li id="<%= granule_class %>-<%= document_grouping.identifier %>"
+  class="<%= 'new_item' if document_grouping.needs_attention? %>">
+  <a class="wrapper" href="javascript:" data-toggle="collapse" data-target="#a<%= document_grouping.object_id %>">
+    <span class="title"><%= document_grouping.header %></span>
+    <span class="count_pill"><%= document_grouping.entry_count %></span>
+  </a>
+
+  <%= link_to 'Edit', '#', :class => "edit btn btn-mini" %>
+
+  <ul id="#a<%= document_grouping.object_id %>" class="entry_details" style="height: 0px; overflow-y: hidden">
+    <%= render :partial => "entry", :collection => document_grouping.entries %>
+  </ul>
+
+  <% form_tag(params, :method => :put) do %>
+    <%= hidden_field_tag(:granule_class, granule_class) %>
+    <%= hidden_field_tag(:old_subject, document_grouping.top_level_header) %>
+    <% document_grouping.entries.each do |entry| %>
+      <%= hidden_field_tag(:'entry_ids[]', entry.id) %>
+    <% end %>
+    <%= text_field_tag('entry[fr_index_subject]', document_grouping.fr_index_subject, :class => "fr_index_subject") %>
+    <%= text_field_tag('entry[fr_index_doc]', document_grouping.header, :class => "fr_index_doc") %>
+    <%= submit_tag("Save") %>
+  <% end %>
+</li>

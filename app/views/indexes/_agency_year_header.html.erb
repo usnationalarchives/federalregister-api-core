@@ -1,0 +1,27 @@
+<div id="fr-index-agency-metadata" class="page_summary">
+  <h1><%= link_to agency_year.agency.name, agency_path(agency_year.agency) %></h1>
+
+  <hr />
+
+  <p>
+    In <%= agency_year.year %> the <%= agency_year.agency.name %> <%= agency_year.current_year? ? "has published" : "published" %> 
+    <%= pluralize agency_year.entry_count, "article" %>.
+  </p>
+
+  <table>
+    <tr>
+      <th>Article Type</th>
+      <th>Articles Published</th>
+      <th>Subjects Covered</th>
+    </tr>
+    <% agency_year.document_types.each do |document_type| %>
+    <tr>
+      <td class="type"><%= link_to document_type.name.pluralize, "#fr-index-#{document_type.name.pluralize.downcase}" %></td>
+      <td class="entry_count"><%= document_type.entry_count %></td>
+      <td class="subject_count"><%= document_type.grouping_count %></td>
+    </tr>
+    <% end %>
+  </table>
+
+  <%= link_to "Return to the agency list for the #{agency_year.year} FR Index", index_year_path(agency_year.year), :class => "return_to_index" %>
+</div>

@@ -1,6 +1,6 @@
-<% super_title "#{@year} FR Index" %>
+<% super_title "#{@agency_year.year} FR Index" %>
 
-<% sidebar(render :partial => 'nav', :locals => {:years => [2012,2011,2010]}) %>
+<% sidebar(render :partial => 'nav', :locals => {:years => @years}) %>
 
 <% add_javascript(:src => 'admin/fr_index.js') %>
 
@@ -8,20 +8,23 @@
 <%= add_template('admin/fr_index_entry_popover_content', 'fr-index-entry-popover-content') %>
 
 <div class="page_summary">
-  <h1 class="agency_name"><%= @agency.name %></h1>
+  <h1 class="agency_name"><%= @agency_year.name %></h1>
 
   <hr />
 
   <%= link_to 'PDF Preview', {:format => :pdf}, :class => "btn pdf_preview", :style => "margin-top: 10px" %>
 </div>
 
-<% @entries_by_type.each do |type, entries_of_type| %>
+<% @agency_year.document_types.each do |document_type| %>
   <div class="title_bar">
-    <h3><%= Entry::ENTRY_TYPES[type].pluralize %></h3>
+    <h3>
+      <%= document_type.name.pluralize %>
+    </h3>
   </div>
-  <ul id="<%= type.downcase %>" class="entry_type">
-    <% entries_of_type.each do |subject, entries_of_subject| %>
-      <%= render :partial => "subject_and_children", :locals => {:subject => subject, :entries_of_subject => entries_of_subject, :type => type} %>
-    <% end %>
+
+  <ul id="<%= document_type.name.downcase %>" class="entry_type">
+    <%= render :partial => "grouping",
+      :collection => document_type.groupings,
+      :locals => {:granule_class => document_type.granule_class} %>
   </ul>
 <% end %>
