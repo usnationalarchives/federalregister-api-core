@@ -11,8 +11,8 @@ class AdminController < ApplicationController
     User.stamper ||= current_user
   end
   
-  def store_location
-    session[:return_to] = request.request_uri
+  def store_location(url = request.request_uri)
+    session[:return_to] = url
   end
   
   def redirect_back_or_default(default)
@@ -33,6 +33,7 @@ class AdminController < ApplicationController
   def require_user
     unless current_user
       if request.xhr?
+        store_location(request.referer)
         render :nothing => true, :status => 403
         flash[:error] = 'Your session expired, please sign in again to continue.'
         return false
