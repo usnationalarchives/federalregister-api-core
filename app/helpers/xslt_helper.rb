@@ -7,7 +7,9 @@ module XsltHelper
   def remove_empty_nodes(xml)
     doc = Nokogiri::HTML::DocumentFragment.parse(xml)
     doc.css('div').each do |div|
-      if div.children.all?{|n| n.text? && (n.content.nil? || n.content =~ /^\s*$/)}
+      if div.children.all?{|n|
+        (n['class'] && n['class'] == 'printed_page') ||
+        (n.text? && (n.content.nil? || n.content =~ /^\s*$/))}
         div.remove
       end
     end
