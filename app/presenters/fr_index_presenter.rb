@@ -222,9 +222,13 @@ class FrIndexPresenter
     end
 
     def top_level_header
-      fr_index_subject.present? ? fr_index_subject : header
+      top_level? ? header : fr_index_subject
     end
-    
+   
+    def top_level?
+      fr_index_subject.blank?
+    end
+
     private
 
     def old_entry_count
