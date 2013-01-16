@@ -35,14 +35,14 @@
     <% agencies.each do |agency| %>
       <li>
         <%= link_to agency.name, index_year_agency_path(@fr_index.year, agency) %>
-        <%= content_tag(:span, agency.entry_count, :class => "count_pill") if agency.entry_count > 1 %>
+        <%= count_pill(agency.entry_count) %>
         <% if agency.children.present? %>
         <ul>
           <% agency.children.each do |sub_agency| %>
             <li>
               <span class="see">See</span> 
               <%= link_to sub_agency.name, index_year_agency_path(@fr_index.year, sub_agency) %>
-              <%= content_tag(:span, sub_agency.entry_count, :class => "count_pill") if sub_agency.entry_count > 1 %>
+              <%= count_pill(sub_agency.entry_count) %>
             </li>
           <% end %>
         </ul>

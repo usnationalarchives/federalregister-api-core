@@ -1,8 +1,7 @@
 <li id="<%= granule_class %>-<%= document_grouping.identifier %>"
   class="<%= 'new_item' if document_grouping.needs_attention? %>">
   <a class="wrapper" href="javascript:" data-toggle="collapse" data-target="#a<%= document_grouping.object_id %>">
-    <span class="title"><%= document_grouping.header %></span>
-    <span class="count_pill"><%= document_grouping.entry_count %></span>
+    <span class="title"><%= document_grouping.header %></span><%= count_pill(document_grouping.entry_count) %>
   </a>
 
   <%= link_to 'Edit', '#', :class => "edit btn #{document_grouping.top_level? ? '' : 'btn-mini'}" %>

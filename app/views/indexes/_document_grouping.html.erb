@@ -1,9 +1,7 @@
 <% id = rand(100000) %> 
 <li>
   <a href="javascript:" data-toggle="collapse" data-target="#<%= id %>" class="toc_title">
-    <%= document_grouping.header %>
-
-    <%= content_tag(:span, document_grouping.entry_count, :class => "count_pill") if document_grouping.entry_count > 1 %>
+    <%= document_grouping.header %><%= count_pill(document_grouping.entry_count) %>
 
     <% if document_grouping.comments_open? %> 
       <div class="comment_open"></div>
