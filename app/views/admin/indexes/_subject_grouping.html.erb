@@ -1,5 +1,6 @@
 <li id="<%= granule_class %>-<%= subject_grouping.identifier %>">
   <span class="title"><%= subject_grouping.header %></span>
+  <%= link_to 'Edit', '#', :class => "edit btn btn-mini" %>
   <% form_tag(params, :method => :put) do %>
     <%= hidden_field_tag(:granule_class, granule_class) %>
     <%= hidden_field_tag(:old_subject, subject_grouping.header) %>
