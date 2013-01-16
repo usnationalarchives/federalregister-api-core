@@ -5,7 +5,7 @@
     <span class="count_pill"><%= document_grouping.entry_count %></span>
   </a>
 
-  <%= link_to 'Edit', '#', :class => "edit btn btn-mini" %>
+  <%= link_to 'Edit', '#', :class => "edit btn #{document_grouping.top_level? ? '' : 'btn-mini'}" %>
 
   <ul id="#a<%= document_grouping.object_id %>" class="entry_details">
     <%= render :partial => "entry", :collection => document_grouping.entries %>
