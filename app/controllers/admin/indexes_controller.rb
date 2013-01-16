@@ -4,6 +4,14 @@ class Admin::IndexesController < AdminController
   def year
     @years = FrIndexPresenter.available_years
     @fr_index = FrIndexPresenter.new(params[:year])
+
+    respond_to do |wants|
+      wants.html
+      wants.pdf do
+        @agency_years = @fr_index.agencies
+        render_pdf(:action => :year)
+      end
+    end
   end
 
   def year_agency
@@ -15,16 +23,8 @@ class Admin::IndexesController < AdminController
     respond_to do |wants|
       wants.html
       wants.pdf do
-        input = Tempfile.new(['fr_index', '.html']).path
-        File.open(input, 'w') do |f|
-          f.write render_to_string
-        end
-
-        output = Tempfile.new(['fr_index', '.pdf']).path
-
-       `/usr/local/bin/prince #{input} -o #{output}`
-
-        send_file output, :filename => "fr_index.pdf"
+        @agency_years = [@agency_year]
+        render_pdf(:action => :year)
       end
     end
   end
@@ -73,5 +73,21 @@ class Admin::IndexesController < AdminController
     end
 
     render :json => subjects_by_id
+  end
+
+  private
+
+  def render_pdf(options={})
+    input = Tempfile.new(['fr_index', '.html']).path
+
+    File.open(input, 'w') do |f|
+      f.write render_to_string(options)
+    end
+
+    output = Tempfile.new(['fr_index', '.pdf']).path
+
+   `/usr/local/bin/prince #{input} -o #{output}`
+
+    send_file output, :filename => "fr_index.pdf"
   end
 end

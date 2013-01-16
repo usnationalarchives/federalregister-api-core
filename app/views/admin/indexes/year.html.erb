@@ -2,6 +2,8 @@
 
 <% sidebar(render :partial => 'nav', :locals => {:years => @years}) %>
 
+<%= link_to 'PDF Preview', {:format => :pdf}, :class => "btn btn-mini pdf_preview" %>
+
 <ul>
   <% @fr_index.agencies.each do |agency| %>
     <li><%= link_to agency.name, admin_index_year_agency_path(@fr_index.year, agency) %> <span class="count_pill"><%= agency.entry_count %></span>
