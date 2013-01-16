@@ -69,6 +69,10 @@ class FrIndexPresenter
       year >= Date.today.year
     end
 
+    def last_issue
+      entries.map(&:publication_date).max
+    end
+
     def first_letter
       agency.name.chars.first
     end
@@ -99,7 +103,7 @@ class FrIndexPresenter
     private
 
     def entries
-      EntrySearch.new(
+      @entries ||= EntrySearch.new(
         :conditions => {
           :agency_ids => [agency.id],
           :without_agency_ids => agency.children.map(&:id),
