@@ -309,7 +309,7 @@ class Entry < ApplicationModel
       (
         SELECT GROUP_CONCAT(DISTINCT section_id SEPARATOR ',')
         FROM section_assignments
-        WHERE section_id = entries.id
+        WHERE entry_id = entries.id
           AND section_id IS NOT NULL
       )
     SQL
