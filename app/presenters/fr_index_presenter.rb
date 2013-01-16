@@ -20,7 +20,7 @@ class FrIndexPresenter
     return @agency_years if @agency_years
 
     agencies = Agency.all(
-      :conditions => {:id => raw_counts_by_agency_id.keys},
+      :conditions => {:id => raw_entry_counts_by_agency_id.keys},
       :include => :children
     )
 
@@ -28,9 +28,15 @@ class FrIndexPresenter
       children = agencies.
         select{|candidate_child| candidate_child.parent_id == agency.id}.
         sort_by{|child| child.name.downcase}.
-        map{|child| AgencyYear.new(child, year, :entry_count => raw_counts_by_agency_id[child.id]) }
+        map do |child|
+          AgencyYear.new(
+            child,
+            year,
+            :entry_count => raw_entry_counts_by_agency_id[child.id]
+          )
+      end
 
-      entry_count = children.present? ? nil : raw_counts_by_agency_id[agency.id]
+      entry_count = children.present? ? nil : raw_entry_counts_by_agency_id[agency.id]
       AgencyYear.new(agency, year,
         :children => children,
         :entry_count => entry_count
@@ -40,8 +46,8 @@ class FrIndexPresenter
 
   private
 
-  def raw_counts_by_agency_id
-    @raw_counts_by_agency_id ||= EntrySearch.new(
+  def raw_entry_counts_by_agency_id
+    @raw_entry_counts_by_agency_id ||= EntrySearch.new(
       :conditions => {:publication_date => {:year => year}}
     ).agency_facets.inject({}) do |hsh, facet|
       hsh[facet.value] = facet.count
