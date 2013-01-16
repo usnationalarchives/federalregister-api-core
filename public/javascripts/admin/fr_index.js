@@ -64,6 +64,10 @@ function insert_index_element( element, list_item ) {
          });
 }
 
+function hide_top_level_index_form(form) {
+  form.hide();
+  form.closest('li').removeClass('edit').find('a.cancel').first().removeClass('cancel').addClass('edit').html('Edit');
+}
 
 function initializeFrIndexEditor(elements) {
   var $elements = $(elements);
@@ -73,12 +77,17 @@ function initializeFrIndexEditor(elements) {
 
     var link = $(this);
     var form = link.siblings('form').first();
+    var top_level_form = $([]);
+    if( ! form.hasClass('top_level') ) {
+      top_level_form = link.closest('ul').closest('li').find('form.top_level').first().hide();
+    }
     var el   = link.closest('li');
     
 
     if( form.css('display') === 'none' ) {
       link.removeClass('edit').addClass('cancel').html('Cancel');
       link.closest('li').addClass('edit');
+      hide_top_level_index_form(top_level_form);
       form.show();
       form.find('input[type!=hidden]').last().scrollintoview();
       form.find('input[type!=hidden]').first().focus();

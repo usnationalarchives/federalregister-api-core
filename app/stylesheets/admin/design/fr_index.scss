@@ -11,10 +11,43 @@
   h1.agency_name { color: #3F5B75; }
   hr { margin-top: 0px; }
   
-  .pdf_preview { 
+  .agency_index_actions {
+    margin-top: 10px;
     margin-bottom: 5px;
-    float: right;
+    overflow: hidden;
+
+    .mark_as_complete,
+    .pdf_preview { 
+      padding-left: 26px;
+      -webkit-transition: none;
+      -moz-transition: none;
+      -ms-transition: none;
+      -o-transition: none;
+      transition: none;
     }
+    
+    .mark_as_complete {
+      float: left;
+      background: sprite-image("icons/admin/index_mark_as_done.png", 4px, 3px, 30px) no-repeat;
+    }
+    .mark_as_complete:hover {
+      color: $fr_green;
+      border-color: $fr_green;
+      background: #e6e6e6 sprite-image("icons/admin/index_mark_as_done_active.png", 4px, 3px, 30px) no-repeat;
+    }
+
+    .pdf_preview {
+      float: right;
+      background: sprite-image("icons/admin/index_pdf_preview.png", 5px, 4px, 30px) no-repeat;
+    }
+    .pdf_preview:hover {
+      color: $fr_orange;
+      border-color: $fr_orange;
+      background: #e6e6e6 sprite-image("icons/admin/index_pdf_preview_active.png", 5px, 4px, 30px) no-repeat;
+    }
+
+
+  }
 }
 
 .title_bar {
@@ -50,7 +83,12 @@ ul.entry_type {
     .btn { padding: 2px 10px 2px; }
     .btn-mini { padding: 2px 6px; }
 
-    form { display: none; }
+    form { 
+      display: none;
+      overflow: hidden;
+      margin: 0px;
+      margin-top: 10px;
+    }
 
     a.wrapper {
       width: 90%;
@@ -73,7 +111,8 @@ ul.entry_type {
 
     ul {
       margin-top: 15px;
-      li { 
+      li {
+        form { overflow: initial; }
         a.edit { 
           padding-right: 5px;
           right: 0;

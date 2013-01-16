@@ -10,7 +10,7 @@
     <%= render :partial => "entry", :collection => document_grouping.entries %>
   </ul>
 
-  <% form_tag(params, :method => :put) do %>
+  <% form_tag(params, :method => :put, :class => "#{document_grouping.top_level? ? 'top_level' : ''}") do %>
     <%= hidden_field_tag(:granule_class, granule_class) %>
     <%= hidden_field_tag(:old_subject, document_grouping.top_level_header) %>
     <% document_grouping.entries.each do |entry| %>

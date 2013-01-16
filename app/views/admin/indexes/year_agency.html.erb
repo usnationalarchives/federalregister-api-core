@@ -12,8 +12,10 @@
 
   <hr />
 
-  <%= link_to 'Mark Complete', admin_index_year_agency_completion_path(:last_completed_issue => @agency_year.last_issue), :method => :put, :class => "btn" %>
-  <%= link_to 'PDF Preview', {:format => :pdf}, :class => "btn pdf_preview", :style => "margin-top: 10px" %>
+  <div class="agency_index_actions">
+    <%= link_to 'Mark Complete', admin_index_year_agency_completion_path(:last_completed_issue => @agency_year.last_issue), :method => :put, :class => "btn mark_as_complete" %>
+    <%= link_to 'PDF Preview', {:format => :pdf}, :class => "btn pdf_preview" %>
+  </div>
 </div>
 
 <% @agency_year.document_types.each do |document_type| %>
