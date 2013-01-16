@@ -42,6 +42,8 @@ class Admin::IndexesController < AdminController
     agency = Agency.find_by_slug!(params[:agency])
     agency_year = FrIndexPresenter::AgencyYear.new(agency, params[:year])
 
+    agency_year.update_cache
+
     granule_class = params[:granule_class]
 
     subjects_by_id = {}

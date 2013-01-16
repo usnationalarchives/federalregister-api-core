@@ -35,6 +35,7 @@ namespace :data do
       content:issues:mark_complete
       content:public_inspection:import:entry_id
       content:public_inspection:reindex
+      content:fr_index:update_status_cache
       varnish:expire:everything
       mailing_lists:entries:deliver
       sitemap:refresh

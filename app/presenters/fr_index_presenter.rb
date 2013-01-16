@@ -32,14 +32,16 @@ class FrIndexPresenter
           AgencyYear.new(
             child,
             year,
-            :entry_count => raw_entry_counts_by_agency_id[child.id]
+            :entry_count => raw_entry_counts_by_agency_id[child.id],
+            :needs_attention_count => needs_attention_counts_by_agency_id[child.id]
           )
       end
 
       entry_count = children.present? ? nil : raw_entry_counts_by_agency_id[agency.id]
       AgencyYear.new(agency, year,
         :children => children,
-        :entry_count => entry_count
+        :entry_count => entry_count,
+        :needs_attention_count => needs_attention_counts_by_agency_id[agency.id]
       )
     end
   end
@@ -53,6 +55,13 @@ class FrIndexPresenter
       hsh[facet.value] = facet.count
       hsh
     end
+  end
+
+  def needs_attention_counts_by_agency_id
+    @needs_attention_counts_by_agency_id ||= Hash[FrIndexAgencyStatus.find_as_arrays(
+      :select => "agency_id, needs_attention_count",
+      :conditions => {:year => year}
+    ).map{|id, count| [id.to_i, count.to_i]}]
   end
 
   class AgencyYear
@@ -69,6 +78,7 @@ class FrIndexPresenter
 
       @children = options[:children] || []
       @entry_count = options[:entry_count]
+      @needs_attention_count = options[:needs_attention_count]
     end
 
     def current_year?
@@ -81,6 +91,10 @@ class FrIndexPresenter
 
     def first_letter
       agency.name.chars.first
+    end
+
+    def last_completed_issue
+      FrIndexAgencyStatus.find_by_year_and_agency_id(year, agency.id).try(:last_completed_issue)
     end
 
     def entry_count
@@ -98,14 +112,23 @@ class FrIndexPresenter
         group_by(&:granule_class).
         sort_by{|type,entries| type}.
         reverse.
-        map {|type, entries| DocumentType.new(type, entries) }
+        map {|type, entries| DocumentType.new(self, type, entries) }
     end
 
     def grouping_for_document_type_and_header(granule_class, header)
       document_type = document_types.find{|dt| dt.granule_class == granule_class}
       document_type.groupings.find{|g| g.header == header}
     end
-    
+
+    def needs_attention_count
+      @needs_attention_count || document_types.map(&:needs_attention_count).sum
+    end
+
+    def update_cache
+      FrIndexAgencyStatus.update_cache(self)
+    end
+
+
     private
 
     def entries
@@ -140,8 +163,11 @@ class FrIndexPresenter
   end
 
   class DocumentType
-    attr_reader :granule_class, :entries
-    def initialize(granule_class, entries)
+    attr_reader :agency_year, :granule_class, :entries
+    delegate :last_completed_issue, :to => :agency_year
+
+    def initialize(agency_year, granule_class, entries)
+      @agency_year = agency_year
       @granule_class = granule_class
       @entries = entries
     end
@@ -159,7 +185,11 @@ class FrIndexPresenter
     end
 
     def groupings
-      (subject_groupings + document_groupings).sort_by(&:header)
+      @groupings ||= (subject_groupings + document_groupings).sort_by(&:header)
+    end
+
+    def needs_attention_count
+      groupings.sum(&:needs_attention_count)
     end
 
     private
@@ -168,21 +198,23 @@ class FrIndexPresenter
       entries.
         reject{|e| e.fr_index_subject.blank?}.
         group_by(&:fr_index_subject).
-        map {|fr_index_subject, group_entries| SubjectGrouping.new(fr_index_subject, group_entries) }
+        map {|fr_index_subject, group_entries| SubjectGrouping.new(self, fr_index_subject, group_entries) }
     end
 
     def document_groupings
       entries.
         select{|e| e.fr_index_subject.blank?}.
         group_by(&:fr_index_doc).
-        map {|fr_index_doc, group_entries| DocumentGrouping.new(fr_index_doc, group_entries) }
+        map {|fr_index_doc, group_entries| DocumentGrouping.new(self, fr_index_doc, group_entries) }
     end
   end
 
   class SubjectGrouping
-    attr_reader :header, :entries
+    attr_reader :document_type, :header, :entries
+    delegate :last_completed_issue, :to => :document_type
 
-    def initialize(header, entries)
+    def initialize(document_type, header, entries)
+      @document_type = document_type
       @header = header
       @entries = entries
     end
@@ -191,17 +223,24 @@ class FrIndexPresenter
       entries.
         group_by(&:fr_index_doc).
         sort_by{|fr_index_doc, group_entries| fr_index_doc }.
-        map {|fr_index_doc, group_entries| DocumentGrouping.new(fr_index_doc, group_entries, header) }
+        map {|fr_index_doc, group_entries| DocumentGrouping.new(self, fr_index_doc, group_entries, header) }
     end
 
     def identifier
       Digest::MD5.hexdigest(header)
     end
+
+    def needs_attention_count
+      document_groupings.map(&:needs_attention_count).sum
+    end
   end
 
   class DocumentGrouping
-    attr_reader :header, :entries, :fr_index_subject
-    def initialize(header, entries, fr_index_subject = nil)
+    attr_reader :parent, :header, :entries, :fr_index_subject
+    delegate :last_completed_issue, :to => :parent
+
+    def initialize(parent, header, entries, fr_index_subject = nil)
+      @parent = parent
       @header = header
       @entries = entries
       @fr_index_subject = fr_index_subject
@@ -223,6 +262,10 @@ class FrIndexPresenter
       entries.any?(&:significant?) 
     end
 
+    def needs_attention_count
+      needs_attention? ? 1 : 0
+    end
+
     def needs_attention?
       old_entry_count == 0 && unmodified?
     end
@@ -242,7 +285,12 @@ class FrIndexPresenter
     private
 
     def old_entry_count
-      entries.select{|e| e.publication_date <= LAST_CURATED}.size
+      date = last_completed_issue
+      if date
+        entries.select{|e| e.publication_date <= date}.size
+      else
+        0
+      end
     end
 
     def unmodified?
