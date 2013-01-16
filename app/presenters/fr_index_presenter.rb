@@ -271,7 +271,7 @@ class FrIndexPresenter
     end
 
     def identifier
-      Digest::MD5.hexdigest(top_level_header)
+      Digest::MD5.hexdigest(header)
     end
 
     def top_level_header
