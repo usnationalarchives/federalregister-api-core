@@ -75,6 +75,16 @@ class Admin::IndexesController < AdminController
     render :json => subjects_by_id
   end
 
+  def mark_complete
+    agency = Agency.find_by_slug!(params[:agency])
+    status = FrIndexAgencyStatus.find_or_initialize_by_year_and_agency_id(params[:year], agency.id)
+
+    status.last_completed_at = Time.current
+    status.save
+    flash[:notice] = "'#{agency.name}' marked complete"
+    redirect_to admin_index_year_path(params[:year])
+  end
+
   private
 
   def render_pdf(options={})

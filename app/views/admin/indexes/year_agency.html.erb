@@ -13,6 +13,7 @@
   <hr />
 
   <%= link_to 'PDF Preview', {:format => :pdf}, :class => "btn pdf_preview", :style => "margin-top: 10px" %>
+  <%= link_to 'Mark Complete', admin_index_year_agency_completion_path, :method => :put, :class => "btn" %>
 </div>
 
 <% @agency_year.document_types.each do |document_type| %>

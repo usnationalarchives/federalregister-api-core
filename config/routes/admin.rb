@@ -13,6 +13,7 @@ ActionController::Routing::Routes.draw do |map|
     admin.index_year 'index/:year.:format', :controller => "indexes", :action => "year", :conditions => {:method => :get}
     admin.index_year_agency 'index/:year/:agency.:format', :controller => "indexes", :action => "year_agency", :conditions => {:method => :get}
     admin.index_year_agency 'index/:year/:agency', :controller => "indexes", :action => "update_year_agency", :conditions => {:method => :put}
+    admin.index_year_agency_completion 'index/:year/:agency/completion', :controller => "indexes", :action => "mark_complete", :conditions => {:method => :put}
 
     admin.resources :topics
     admin.resources :topic_names, :collection => {:unprocessed => :get}

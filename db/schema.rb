@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130109000702) do
+ActiveRecord::Schema.define(:version => 20130116173240) do
 
   create_table "action_names", :force => true do |t|
     t.string   "name"
@@ -308,6 +308,15 @@ ActiveRecord::Schema.define(:version => 20130109000702) do
   add_index "events", ["event_type", "entry_id", "date"], :name => "index_events_on_event_type_and_entry_id_and_date"
   add_index "events", ["event_type", "entry_id", "place_id"], :name => "index_events_on_event_type_and_entry_id_and_place_id"
   add_index "events", ["event_type", "place_id", "entry_id"], :name => "index_events_on_event_type_and_place_id_and_entry_id"
+
+  create_table "fr_index_agency_statuses", :force => true do |t|
+    t.integer  "year"
+    t.integer  "agency_id"
+    t.datetime "last_completed_at"
+    t.integer  "needs_attention_count"
+  end
+
+  add_index "fr_index_agency_statuses", ["year", "agency_id"], :name => "index_fr_index_agency_statuses_on_year_and_agency_id"
 
   create_table "graphic_usages", :force => true do |t|
     t.integer "graphic_id"
