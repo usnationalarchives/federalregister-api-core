@@ -12,7 +12,7 @@
     AMDPAR[preceding-sibling::LSTSUB]   |
     AUTH[preceding-sibling::LSTSUB]     |
     CONTENTS[preceding-sibling::LSTSUB] |
-    HD[preceding-sibling::LSTSUB]       |
+    HD[preceding-sibling::LSTSUB and preceding-sibling::*[1][name() != 'LSTSUB']] |
     EXTRACT[preceding-sibling::LSTSUB]">
     <xsl:if test="not(preceding-sibling::*[1][
       name() = 'SECTION' or
