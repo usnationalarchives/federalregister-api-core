@@ -56,6 +56,15 @@ function fr_index_toc_doc_typeahead(elements) {
   });
 }
 
+function insert_index_element( element, list_item ) {
+  element.insertBefore(list_item)
+         .scrollintoview({duration: 300, complete: function() {
+            element.effect("highlight", {color: '#f5f8f9'}, 2000);
+          }
+         });
+}
+
+
 function initializeFrIndexEditor(elements) {
   var $elements = $(elements);
   //$elements.find('form').hide();
@@ -71,6 +80,8 @@ function initializeFrIndexEditor(elements) {
       link.removeClass('edit').addClass('cancel').html('Cancel');
       link.closest('li').addClass('edit');
       form.show();
+      form.find('input[type!=hidden]').last().scrollintoview();
+      form.find('input[type!=hidden]').first().focus();
       el.removeClass('hover');
     } else {
       link.removeClass('cancel').addClass('edit').html('Edit');
@@ -107,6 +118,7 @@ function initializeFrIndexEditor(elements) {
         var wrapping_list = form.closest('ul.entry_type');
         for( var id in subjects ) {
           $('#' + id).remove();
+
           var element_to_insert = subjects[id];
 
           if (element_to_insert) {
@@ -116,13 +128,13 @@ function initializeFrIndexEditor(elements) {
             wrapping_list.children('li').each(function() {
               var list_item = $(this);
               if (list_item.find('span.title:first').text() > text) {
-                added_element = $(element_to_insert).insertBefore(list_item).fadeIn("fast");
+                added_element = insert_index_element( $(element_to_insert), list_item );
                 return false;
               }
             });
 
             if (!added_element) {
-              added_element = $(element_to_insert).appendTo(wrapping_list).scrollintoview({duration: 200}).fadeIn("fast");
+              added_element = $(element_to_insert).appendTo(wrapping_list).fadeIn(300);
             }
             initializeFrIndexEditor(added_element);
           }
@@ -134,7 +146,6 @@ function initializeFrIndexEditor(elements) {
 }
 
 $(document).ready(function() {
-  $('#content_area form').hide();
   initializeFrIndexEditor($('#content_area ul.entry_type > li'));
 
   var popover_handler = fr_index_popover_handler.initialize();
