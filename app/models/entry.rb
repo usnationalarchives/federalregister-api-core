@@ -376,11 +376,11 @@ class Entry < ApplicationModel
   end
 
   def fr_index_subject
-    self[:fr_index_subject] || toc_subject
+    [self[:fr_index_subject], public_inspection_document.try(:toc_subject), toc_subject].reject(&:blank?).first
   end
   
   def fr_index_doc
-    self[:fr_index_doc] || toc_doc || title
+    [self[:fr_index_doc], public_inspection_document.try(:toc_doc), toc_doc, title].reject(&:blank?).first
   end
   
   def day
