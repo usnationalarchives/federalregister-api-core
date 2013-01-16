@@ -102,6 +102,9 @@
     page-break-inside: avoid;
     white-space: nowrap;
   }
+  .day {
+    font-size: 94%;
+  }
 
 </style>
 
@@ -111,29 +114,24 @@
     January-October 2012
   </h1>
   <div class="index">
-  <h2><%= @agency.name %></h2>
+  <h2><%= @agency_year.name %></h2>
 
-  <% @entries_by_type.each do |type, entries_by_subject| %>
-    <h3><%= Entry::ENTRY_TYPES[type].pluralize.upcase %></h3>
+  <% @agency_year.document_types.each do |document_type| %>
+    <h3><%= document_type.name.pluralize.upcase %></h3>
     <ul>
-      <% entries_by_subject.each do |subject, entries_by_title| %>
-        <% if subject %>
-          <li><%= subject %>
-            <ul>
-        <% end %>
-              <% entries_by_title.each do |title, entries| %>
-                <li data-agency-name="<%= @agency.name %>">
-                  <%= title %>:
-                  <em>
-                    <%= entries.map{|e| "<span class='item'>#{e.start_page} (#{e.publication_date.strftime("%b %e")})</span>"}.join('; ') %>
-                  </em>
-                  </li>
-              <% end %>
-        <% if subject %>
-            </ul>
-          </li>
-        <% else %>
-        <% end %>
+      <% document_type.groupings.each do |grouping| %>
+        <%= case grouping
+          when FrIndexPresenter::SubjectGrouping
+            render :partial => "subject_grouping", :locals => {
+              :subject_grouping => grouping,
+              :agency => @agency_year
+            }
+          when FrIndexPresenter::DocumentGrouping
+            render :partial => "document_grouping", :locals => {
+              :document_grouping => grouping,
+              :agency => @agency_year
+            }
+          end %>
       <% end %>
     </ul>
   <% end %>
