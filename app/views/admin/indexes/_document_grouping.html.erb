@@ -7,7 +7,7 @@
 
   <%= link_to 'Edit', '#', :class => "edit btn btn-mini" %>
 
-  <ul id="#a<%= document_grouping.object_id %>" class="entry_details" style="height: 0px; overflow-y: hidden">
+  <ul id="#a<%= document_grouping.object_id %>" class="entry_details">
     <%= render :partial => "entry", :collection => document_grouping.entries %>
   </ul>
 

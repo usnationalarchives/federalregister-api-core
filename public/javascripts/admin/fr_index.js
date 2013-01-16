@@ -67,7 +67,7 @@ function insert_index_element( element, list_item ) {
 
 function initializeFrIndexEditor(elements) {
   var $elements = $(elements);
-  //$elements.find('form').hide();
+  
   $elements.find('a.edit').on('click', function(event) {
     event.preventDefault();
 
@@ -146,6 +146,11 @@ function initializeFrIndexEditor(elements) {
 }
 
 $(document).ready(function() {
+
+  $('a.wrapper').on('click', function(event) {
+    $(this).closest('li').find('ul.entry_details').toggle();
+  });
+
   initializeFrIndexEditor($('#content_area ul.entry_type > li'));
 
   var popover_handler = fr_index_popover_handler.initialize();

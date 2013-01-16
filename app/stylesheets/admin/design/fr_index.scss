@@ -71,12 +71,8 @@ ul.entry_type {
       li.edit { background-color: #EEE; }
     }
 
-    ul.in { 
-    overflow: visible;
-    height: auto;
-    float: left;
-
-      li { height: auto; }
+    ul.entry_details { 
+      display: none;
     }
 
   }
