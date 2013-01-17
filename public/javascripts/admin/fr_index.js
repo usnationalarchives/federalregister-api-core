@@ -16,7 +16,7 @@ function highlight_el(event, el) {
  * the custom methods we need for this instance of it here,
  * Usually this is just the fields to be retrieved from the API 
  * and how to present the data returned. */
-fr_index_popover_handler.fields = 'fields%5B%5D=title&fields%5B%5D=toc_subject&fields%5B%5D=toc_doc&fields%5B%5D=document_number';
+fr_index_popover_handler.fields = 'fields%5B%5D=toc_subject&fields%5B%5D=toc_doc&fields%5B%5D=document_number';
 fr_index_popover_handler.add_popover_content = function() {
     var $tipsy_el = $('.tipsy'),
         prev_height = $tipsy_el.height(),

@@ -7,15 +7,21 @@
 
 fr_index_popover_handler = {
   popover_cache: {},
-  base_url: 'https://www.federalregister.gov/api/v1/articles/',
+  pi_base_url: 'https://www.federalregister.gov/api/v1/public-inspection-documents/',
+  article_base_url: 'https://www.federalregister.gov/api/v1/articles/',
   current_el: null,
+  article_fields: 'fields%5B%5D=title',
 
   initialize: function() {
     return this;
   },
 
   url: function() {
-    return this.base_url + this.current_el.data('document-number') + '.json?' + this.fields;
+    return this.pi_base_url + this.current_el.data('document-number') + '.json?' + this.fields;
+  },
+
+  article_url: function() {
+    return this.article_base_url + this.current_el.data('document-number') + '.json?' + this.article_fields;
   },
 
   get_popover_content: function(el) {
@@ -27,7 +33,16 @@ fr_index_popover_handler = {
         url: popover_handler.url(),
         dataType: 'jsonp'
       }).done(function(response) {
-        popover_handler.ajax_done(response);
+        var pi_response = response;
+        /* need to get the title from the article end point and then 
+         * pass the whole thing as a single object to handlebars */
+        $.ajax({
+          url: popover_handler.article_url(),
+          dataType: 'jsonp'
+        }).done(function(response) {
+          pi_response.title = response.title;
+          popover_handler.ajax_done(pi_response);
+        });
       });
     } else {
       popover_handler.add_popover_content();
