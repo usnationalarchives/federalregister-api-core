@@ -27,20 +27,15 @@
       <% agencies.each do |agency| %>
         <li>
           <%= link_to agency.name, admin_index_year_agency_path(@fr_index.year, agency) %>
-                  <%= count_pill(
-                    agency.needs_attention_count,
-                    :class => "needs_attention tip_under",
-                    :title => "needing attention") %>
+            <%= needs_attention_pill(agency.needs_attention_count) %>
+
           <% if agency.children.present? %>
             <ul>
               <% agency.children.each do |sub_agency| %>
                 <li>
                   <span class="see">See</span> 
                   <%= link_to sub_agency.name, admin_index_year_agency_path(@fr_index.year, sub_agency) %>
-                  <%= count_pill(
-                    sub_agency.needs_attention_count,
-                    :class => "needs_attention tip_under",
-                    :title => "needing attention") %>
+                  <%= needs_attention_pill(sub_agency.needs_attention_count) %>
                 </li>
               <% end %>
             </ul>
