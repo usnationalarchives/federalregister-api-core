@@ -129,8 +129,9 @@ function initializeFrIndexEditor(elements) {
 
       /* visually identify form as being saved */
       form.addClass('disabled');
-      submit_button.val('Saving');
       form.siblings('a.cancel').hide();
+      submit_button.val('Saving');
+      submit_button.attr("disabled", true);
 
       var path = form.attr('action');
 
@@ -143,8 +144,9 @@ function initializeFrIndexEditor(elements) {
         success: function(response) {
           /* set form back to normal while it's still available */
           form.removeClass('disabled');
+          form.siblings('a.cancel').show();
           submit_button.val('Save');
-          form.siblings('a.cancel').show()
+          submit_button.attr("disabled", false);
 
           var added_element;
           var wrapping_list = form.closest('ul.entry_type');
