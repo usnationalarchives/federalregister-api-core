@@ -253,6 +253,10 @@ class Entry < ApplicationModel
     scoped(:conditions => {:presidential_document_type_id => PresidentialDocumentType::EXECUTIVE_ORDER})
   end
 
+  def granule_class
+    self[:granule_class] || 'UNKNOWN'
+  end
+
   def entry_type 
     ENTRY_TYPES[granule_class]
   end
