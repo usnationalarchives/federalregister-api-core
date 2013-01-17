@@ -2,30 +2,51 @@
 
 <% sidebar(render :partial => 'nav', :locals => {:years => @years}) %>
 
-<%= link_to 'PDF Preview', {:format => :pdf}, :class => "btn btn-mini pdf_preview" %>
+<div id="fr-index-metadata" class="page_summary">
+  <h1><%= @fr_index.year %> Federal Register Index</h1>
 
-<ul>
-  <% @fr_index.agencies.each do |agency| %>
-    <li>
-      <%= link_to agency.name, admin_index_year_agency_path(@fr_index.year, agency) %>
-              <%= count_pill(
-                agency.needs_attention_count,
-                :class => "needs_attention tip_under",
-                :title => "needing attention") %>
-      <% if agency.children.present? %>
-        <ul>
-          <% agency.children.each do |sub_agency| %>
-            <li>
-              <span class="see">See</span> 
-              <%= link_to sub_agency.name, admin_index_year_agency_path(@fr_index.year, sub_agency) %>
-              <%= count_pill(
-                sub_agency.needs_attention_count,
-                :class => "needs_attention tip_under",
-                :title => "needing attention") %>
-            </li>
+  <hr />
+
+  <p id="agency-jump-nav">
+    Jump to Agencies: <%= @fr_index.agencies_by_letter.map{|letter,agencies| "<a href='##{letter}' class='letter_link'>#{letter}</a>"}.join(' | ') %>
+  <p>
+
+  <div class="agency_index_actions">
+    <%= link_to 'PDF Preview', {:format => :pdf}, :class => "btn pdf_preview" %>
+  </div>
+</div>
+
+<div class="index_agencies">
+  <% @fr_index.agencies_by_letter.each do |letter, agencies| %>
+    <h3 id="<%= letter %>">
+      <%= letter %>
+      <a href="#fr-index-metadata">back to top</a>
+    </h3>
+
+    <ul>
+      <% agencies.each do |agency| %>
+        <li>
+          <%= link_to agency.name, admin_index_year_agency_path(@fr_index.year, agency) %>
+                  <%= count_pill(
+                    agency.needs_attention_count,
+                    :class => "needs_attention tip_under",
+                    :title => "needing attention") %>
+          <% if agency.children.present? %>
+            <ul>
+              <% agency.children.each do |sub_agency| %>
+                <li>
+                  <span class="see">See</span> 
+                  <%= link_to sub_agency.name, admin_index_year_agency_path(@fr_index.year, sub_agency) %>
+                  <%= count_pill(
+                    sub_agency.needs_attention_count,
+                    :class => "needs_attention tip_under",
+                    :title => "needing attention") %>
+                </li>
+              <% end %>
+            </ul>
           <% end %>
-        </ul>
+        </li>
       <% end %>
-    </li>
+    </ul>
   <% end %>
-</ul>
+</div>
