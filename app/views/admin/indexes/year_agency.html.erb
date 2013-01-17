@@ -14,6 +14,7 @@
 
   <div class="agency_index_actions">
     <%= link_to 'Mark Complete', admin_index_year_agency_completion_path(:last_completed_issue => @agency_year.last_issue), :method => :put, :class => "btn mark_as_complete" %>
+    <div class="last_completed">Last issue marked complete: <%= @agency_year.last_issue.strftime("%b. #{@agency_year.last_issue.day.ordinalize}") %></div>
     <%= link_to 'PDF Preview', {:format => :pdf}, :class => "btn pdf_preview" %>
   </div>
 </div>

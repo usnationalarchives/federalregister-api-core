@@ -16,6 +16,15 @@
     margin-bottom: 5px;
     overflow: hidden;
 
+    .last_completed {
+      float: left;
+      width: 130px;
+      margin-left: 10px;
+      margin-top: 2px;
+      font-size: 12px;
+      line-height: 12px;
+      }
+
     .mark_as_complete,
     .pdf_preview { 
       padding-left: 26px;
