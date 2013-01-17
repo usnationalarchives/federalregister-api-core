@@ -23,6 +23,7 @@
 .header .navbar-inner {
   background: none;
   background-color: #CCC;
+  filter: none; /* get rid of bootstrap default in IE */
   }
 
 #utility.nav { margin-bottom: 10px; }
