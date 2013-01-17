@@ -38,43 +38,25 @@ class Admin::IndexesController < AdminController
       end
     end
 
-
     agency = Agency.find_by_slug!(params[:agency])
     agency_year = FrIndexPresenter::AgencyYear.new(agency, params[:year])
 
     agency_year.update_cache
 
-    granule_class = params[:granule_class]
+    header = params[:entry][:fr_index_subject].present? ?
+      params[:entry][:fr_index_subject] :
+      params[:entry][:fr_index_doc]
 
-    subjects_by_id = {}
-    headers = []
-    if params[:entry][:fr_index_subject].present?
-      headers << params[:entry][:fr_index_subject]
-    else
-      headers << params[:entry][:fr_index_doc]
-    end
+    grouping = agency_year.grouping_for_document_type_and_header(params[:granule_class], header)
 
-    headers << params[:old_subject]
-
-    headers.uniq.each do |header|
-      id = "#{granule_class}-#{Digest::MD5.hexdigest(header)}"
-
-      grouping = agency_year.grouping_for_document_type_and_header(granule_class, header)
-
-      if grouping
-        subjects_by_id[id] = render_to_string(
-          :partial => "grouping",
-          :locals => {
-            :grouping => grouping,
-            :granule_class => granule_class
-          }
-        )
-      else
-        subjects_by_id[id] = nil
-      end
-    end
-
-    render :json => subjects_by_id
+    render :json => {
+      :id_to_remove => grouping.identifier,
+      :header => header,
+      :element_to_insert => render_to_string(
+        :partial => "grouping",
+        :locals => { :grouping => grouping }
+      )
+    }
   end
 
   def mark_complete

@@ -1,12 +1,6 @@
 <%= case grouping
     when FrIndexPresenter::SubjectGrouping
-      render :partial => "subject_grouping", :locals => {
-        :subject_grouping => grouping,
-        :granule_class => granule_class
-      }
+      render :partial => "subject_grouping", :locals => { :subject_grouping => grouping }
     when FrIndexPresenter::DocumentGrouping
-      render :partial => "document_grouping", :locals => {
-        :document_grouping => grouping,
-        :granule_class => granule_class
-      }
+      render :partial => "document_grouping", :locals => { :document_grouping => grouping }
     end %>

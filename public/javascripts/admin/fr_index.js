@@ -56,12 +56,13 @@ function fr_index_toc_doc_typeahead(elements) {
   });
 }
 
-function insert_index_element( element, list_item ) {
-  element.insertBefore(list_item)
-         .scrollintoview({duration: 300, complete: function() {
-            element.effect("highlight", {color: '#f5f8f9'}, 2000);
-          }
-         });
+function highlightElement( element ) {
+  element.scrollintoview({
+    duration: 300,
+    complete: function() {
+      element.effect("highlight", {color: '#f5f8f9'}, 2000);
+    }
+  });
 }
 
 function hide_top_level_index_form(form) {
@@ -117,59 +118,81 @@ function initializeFrIndexEditor(elements) {
 
   fr_index_toc_subject_typeahead($elements);
   fr_index_toc_doc_typeahead($elements);
-
-  $elements.find('form').unbind('submit').bind('submit', function(event) {
+  $elements.find('form').each(function(){
     var form = $(this);
-    var submit_button = form.find('input[type=submit]').first();
 
-    event.preventDefault();
+    form.unbind('submit').bind('submit', function(event) {
+      var form = $(this);
+      event.preventDefault();
 
-    /* visually identify form as being saved */
-    form.addClass('disabled');
-    submit_button.val('Saving');
-    form.siblings('a.cancel').hide();
+      var submit_button = form.find('input[type=submit]').first();
 
-    var path = form.attr('action');
+      /* visually identify form as being saved */
+      form.addClass('disabled');
+      submit_button.val('Saving');
+      form.siblings('a.cancel').hide();
 
-    var data = form.serialize();
-    $.ajax({
-      url: path + '?' + data,
-      type: 'PUT',
-      datatype: 'json',
-      success: function(subjects) {
-        /* set form back to normal while it's still available */
-        form.removeClass('disabled');
-        submit_button.val('Save');
-        form.siblings('a.cancel').show();
+      var path = form.attr('action');
 
-        var wrapping_list = form.closest('ul.entry_type');
-        for( var id in subjects ) {
-          $('#' + id).remove();
+      var data = form.serialize();
+      $.ajax({
+        url: path,
+        data: data,
+        type: 'PUT',
+        dataType: 'json',
+        success: function(response) {
+          /* set form back to normal while it's still available */
+          form.removeClass('disabled');
+          submit_button.val('Save');
+          form.siblings('a.cancel').show()
 
-          var element_to_insert = subjects[id];
+          var added_element;
+          var wrapping_list = form.closest('ul.entry_type');
 
-          if (element_to_insert) {
-            var text = $(element_to_insert).find('span.title:first').text();
-            var added_element;
+          var parent = form.closest('li');
 
-            wrapping_list.children('li').each(function() {
-              var list_item = $(this);
-              if (list_item.find('span.title:first').text() > text) {
-                added_element = insert_index_element( $(element_to_insert), list_item );
-                return false;
-              }
-            });
+          if (!parent.hasClass('top_level')) {
+            var siblings = parent.siblings('li');
 
-            if (!added_element) {
-              added_element = $(element_to_insert).appendTo(wrapping_list).fadeIn(300);
+            if (siblings.size() === 0) {
+              console.log("removing grandparent!")
+              parent.closest('li.top_level').remove();
             }
-            initializeFrIndexEditor(added_element);
+            else if (siblings.size() === 1) {
+              console.log("removing button!")
+              parent.closest('li.top_level').children('.edit').remove();
+              parent.remove();
+            }
+          } else {
+            parent.remove();
+            console.log("removing self!")
           }
+
+          $('#' + response.id_to_remove).remove();
+
+          var element_to_insert = response.element_to_insert;
+
+          // insert alphabetically, immediately before of anything alphabetically after it
+          wrapping_list.children('li').each(function() {
+            var list_item = $(this);
+            if (list_item.find('span.title:first').text() > response.header) {
+              added_element = $(element_to_insert).insertBefore(list_item);
+              return false;
+            }
+          });
+
+          // if not already added ahead of an existing element, append it to the end
+          if (!added_element) {
+            added_element = $(element_to_insert).appendTo(wrapping_list);
+          }
+
+          highlightElement(added_element);
+          initializeFrIndexEditor(added_element);
         }
-      }
+      });
     });
-    return false;
   });
+  return false;
 }
 
 $(document).ready(function() {

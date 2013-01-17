@@ -211,7 +211,9 @@ class FrIndexPresenter
 
   class SubjectGrouping
     attr_reader :document_type, :header, :entries
-    delegate :last_completed_issue, :to => :document_type
+    delegate :last_completed_issue,
+      :granule_class,
+      :to => :document_type
 
     def initialize(document_type, header, entries)
       @document_type = document_type
@@ -227,7 +229,7 @@ class FrIndexPresenter
     end
 
     def identifier
-      Digest::MD5.hexdigest(header)
+      "#{granule_class}_#{Digest::MD5.hexdigest(header)}"
     end
 
     def needs_attention_count
@@ -237,7 +239,9 @@ class FrIndexPresenter
 
   class DocumentGrouping
     attr_reader :parent, :header, :entries, :fr_index_subject
-    delegate :last_completed_issue, :to => :parent
+    delegate :last_completed_issue,
+      :granule_class,
+      :to => :parent
 
     def initialize(parent, header, entries, fr_index_subject = nil)
       @parent = parent
@@ -271,7 +275,7 @@ class FrIndexPresenter
     end
 
     def identifier
-      Digest::MD5.hexdigest(header)
+      "#{granule_class}_#{Digest::MD5.hexdigest(header)}"
     end
 
     def top_level_header

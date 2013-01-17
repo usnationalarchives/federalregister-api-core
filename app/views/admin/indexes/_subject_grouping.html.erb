@@ -1,18 +1,18 @@
-<li id="<%= granule_class %>-<%= subject_grouping.identifier %>">
+<li id="<%= subject_grouping.identifier %>" class="top_level">
   <span class="title"><%= subject_grouping.header %></span>
-  <%= link_to 'Edit', '#', :class => "edit btn" %>
-  <% form_tag(params, :method => :put, :class => 'top_level') do %>
-    <%= hidden_field_tag(:granule_class, granule_class) %>
-    <%= hidden_field_tag(:old_subject, subject_grouping.header) %>
-    <% subject_grouping.entries.each do |entry| %>
-      <%= hidden_field_tag(:'entry_ids[]', entry.id) %>
+  <% if subject_grouping.document_groupings.size > 1 %>
+    <%= link_to 'Edit', '#', :class => "edit btn" %>
+    <% form_tag({}, :method => :put, :class => 'top_level') do %>
+      <%= hidden_field_tag(:granule_class, subject_grouping.granule_class) %>
+      <%= hidden_field_tag(:old_subject, subject_grouping.header) %>
+      <% subject_grouping.entries.each do |entry| %>
+        <%= hidden_field_tag(:'entry_ids[]', entry.id) %>
+      <% end %>
+      <%= text_field_tag('entry[fr_index_subject]', subject_grouping.header, :class => "fr_index_subject", :autocomplete => "off") %>
+      <%= submit_tag("Save") %>
     <% end %>
-    <%= text_field_tag('entry[fr_index_subject]', subject_grouping.header) %>
-    <%= submit_tag("Save") %>
   <% end %>
   <ul>
-    <%= render :partial => "document_grouping",
-      :collection => subject_grouping.document_groupings,
-      :locals => {:granule_class => granule_class} %>
+    <%= render :partial => "document_grouping", :collection => subject_grouping.document_groupings %>
   </ul>
 </li>
