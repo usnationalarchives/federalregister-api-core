@@ -77,17 +77,23 @@ function initializeFrIndexEditor(elements) {
 
     var link = $(this);
     var form = link.siblings('form').first();
-    var top_level_form = $([]);
+    var top_level_form = null;
     if( ! form.hasClass('top_level') ) {
-      top_level_form = link.closest('ul').closest('li').find('form.top_level').first().hide();
+      top_level_form = link.closest('ul').
+                            closest('li').
+                            find('form.top_level').
+                            first();
     }
     var el   = link.closest('li');
     
 
     if( form.css('display') === 'none' ) {
+      if( top_level_form ) {
+        hide_top_level_index_form(top_level_form);
+      }
+
       link.removeClass('edit').addClass('cancel').html('Cancel');
       link.closest('li').addClass('edit');
-      hide_top_level_index_form(top_level_form);
       form.show();
       form.find('input[type!=hidden]').last().scrollintoview();
       form.find('input[type!=hidden]').first().focus();
@@ -114,7 +120,14 @@ function initializeFrIndexEditor(elements) {
 
   $elements.find('form').unbind('submit').bind('submit', function(event) {
     var form = $(this);
+    var submit_button = form.find('input[type=submit]').first();
+
     event.preventDefault();
+
+    /* visually identify form as being saved */
+    form.addClass('disabled');
+    submit_button.val('Saving');
+    form.siblings('a.cancel').hide();
 
     var path = form.attr('action');
 
@@ -124,6 +137,11 @@ function initializeFrIndexEditor(elements) {
       type: 'PUT',
       datatype: 'json',
       success: function(subjects) {
+        /* set form back to normal while it's still available */
+        form.removeClass('disabled');
+        submit_button.val('Save');
+        form.siblings('a.cancel').show();
+
         var wrapping_list = form.closest('ul.entry_type');
         for( var id in subjects ) {
           $('#' + id).remove();

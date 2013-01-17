@@ -134,20 +134,31 @@ ul.entry_type {
   }
 }
 
-ul.entry_type form input {
-  display: block;
-  width: 50%;
-  float: left;
+ul.entry_type {
+  form input {
+    display: block;
+    width: 50%;
+    float: left;
+    }
+ 
+  form input#entry_fr_index_doc {
+    clear: both;
+    margin-left: 30px;
+    width: 75%;
+    }
+
+  form input[type="submit"] {
+    width: 15%;
+    float: right;
+    background-color: $fr_green;
+    color: #FFF;
+    box-shadow: none;
+    }
+  form input[type="submit"]:hover { background-color: $golden; }
+
+  form.disabled input[type="submit"],
+  form.disbaled input[type="submit"]:hover { 
+    color: #000;
+    background: #CCC url(/my/assets/orange_loader_CCC.gif) 6px 5px no-repeat;
   }
-ul.entry_type form input#entry_fr_index_doc {
-  clear: both;
-  margin-left: 30px;
-  width: 75%;
-  }
-ul.entry_type form input[type="submit"] {
-  width: 15%;
-  float: right;
-  background-color: $fr_green;
-  color: #FFF;
-  box-shadow: none;
-  }
+}
