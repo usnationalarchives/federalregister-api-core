@@ -94,7 +94,8 @@ class FrIndexPresenter
     end
 
     def last_completed_issue
-      FrIndexAgencyStatus.find_by_year_and_agency_id(year, agency.id).try(:last_completed_issue)
+      return @last_completed_issue if defined?(@last_completed_issue)
+      @last_completed_issue = FrIndexAgencyStatus.find_by_year_and_agency_id(year, agency.id).try(:last_completed_issue)
     end
 
     def entry_count
@@ -157,7 +158,7 @@ class FrIndexPresenter
           executive_order_number
         ).map{|attribute| "entries.#{attribute}"}.join(",")
       ).preload(
-        :docket
+        :docket, :public_inspection_document
       )
     end
   end
