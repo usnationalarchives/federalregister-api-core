@@ -79,3 +79,25 @@ div.title span {
 #sidebar ul li {
   padding: 5px 0 0 5px;
 }
+
+
+/*********************/
+/* FLASH MESSAGES    */
+/*********************/
+
+div.notice,
+div.warning {
+  padding: .5em .5em .25em;
+  margin-bottom: 30px;
+  text-align: center;
+  float: none;
+}
+div.notice {
+  background: #D7E5C2;
+  border: 1px solid #7AA13D;
+  }
+div.warning {
+  background: #EDD3D3;
+  border: 1px solid #8A3737;
+  }
+
