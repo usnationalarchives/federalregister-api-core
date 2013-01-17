@@ -155,17 +155,14 @@ function initializeFrIndexEditor(elements) {
             var siblings = parent.siblings('li');
 
             if (siblings.size() === 0) {
-              console.log("removing grandparent!")
               parent.closest('li.top_level').remove();
             }
             else if (siblings.size() === 1) {
-              console.log("removing button!")
               parent.closest('li.top_level').children('.edit').remove();
               parent.remove();
             }
           } else {
             parent.remove();
-            console.log("removing self!")
           }
 
           $('#' + response.id_to_remove).remove();
