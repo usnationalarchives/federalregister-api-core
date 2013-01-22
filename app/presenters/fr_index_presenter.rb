@@ -4,7 +4,7 @@ class FrIndexPresenter
   attr_reader :year
 
   def self.available_years
-    [2013, 2012]
+    (2013..Date.today.year).to_a.uniq.reverse
   end
 
   def initialize(year)
