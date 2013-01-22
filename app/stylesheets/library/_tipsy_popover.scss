@@ -42,7 +42,8 @@
     overflow: hidden;
     
     dt {
-      width: 50px;
+      text-align: right;
+      width: 60px;
       float: left;
       clear: both;
       margin-bottom: 10px;
@@ -59,8 +60,10 @@
     padding-left: 20px;
     background: #fff image-url('ajax-loader.gif') no-repeat 80px 1px;
   }
-  .admin.loading {
-    padding-left: 30px;
-    background: #fff image-url('ajax-loader.gif') no-repeat 70px 1px;
-  }
 }
+
+.admin .popover-content .loading {
+  padding-left: 30px;
+  background: #fff image-url('ajax-loader.gif') no-repeat 70px 1px;
+}
+

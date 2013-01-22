@@ -1,25 +1,4 @@
-#indexes {
-  h1 {
-    a { color: $fr_blue; }
-    a:hover { color: $fr_orange; }
-    }
-
-  .count_pill {
-    padding: 1px 7px;
-    padding-top: 2px;
-    top: -1px;
-    position: relative;
-    }
-
-  p#agency-jump-nav {
-    padding-bottom: 0;
-
-    a.letter_link {
-      color: $fr-blue;
-      margin: 5px;
-      }
-    }
-
+#indexes.year_agency {
   /* popover customizations */
   .tipsy-inner { width: 580px; }
   .popover-title { 
@@ -57,6 +36,29 @@
       } 
 
   }
+}
+
+#indexes {
+  h1 {
+    a { color: $fr_blue; }
+    a:hover { color: $fr_orange; }
+    }
+
+  .count_pill {
+    padding: 1px 7px;
+    padding-top: 2px;
+    top: -1px;
+    position: relative;
+    }
+
+  p#agency-jump-nav {
+    padding-bottom: 0;
+
+    a.letter_link {
+      color: $fr-blue;
+      margin: 5px;
+      }
+    }
 
   #fr-index-metadata,
   #fr-index-agency-metadata { 
