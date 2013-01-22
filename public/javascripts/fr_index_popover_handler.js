@@ -11,13 +11,18 @@ fr_index_popover_handler = {
   article_base_url: 'https://www.federalregister.gov/api/v1/articles/',
   current_el: null,
   article_fields: 'fields%5B%5D=title',
+  uses_pi: true,
 
   initialize: function() {
     return this;
   },
 
   url: function() {
-    return this.pi_base_url + this.current_el.data('document-number') + '.json?' + this.fields;
+    if( this.uses_pi ) {
+      return this.pi_base_url + this.current_el.data('document-number') + '.json?' + this.fields;
+    } else { 
+      return this.article_url();
+    }
   },
 
   article_url: function() {
@@ -33,16 +38,20 @@ fr_index_popover_handler = {
         url: popover_handler.url(),
         dataType: 'jsonp'
       }).done(function(response) {
-        var pi_response = response;
-        /* need to get the title from the article end point and then 
-         * pass the whole thing as a single object to handlebars */
-        $.ajax({
-          url: popover_handler.article_url(),
-          dataType: 'jsonp'
-        }).done(function(response) {
-          pi_response.title = response.title;
-          popover_handler.ajax_done(pi_response);
-        });
+        if( this.uses_pi ) {
+          var pi_response = response;
+          /* need to get the title from the article end point and then 
+           * pass the whole thing as a single object to handlebars */
+          $.ajax({
+            url: popover_handler.article_url(),
+            dataType: 'jsonp'
+          }).done(function(response) {
+            pi_response.title = response.title;
+            popover_handler.ajax_done(pi_response);
+          });
+        } else {
+          popover_handler.ajax_done(response);
+        }
       });
     } else {
       popover_handler.add_popover_content();

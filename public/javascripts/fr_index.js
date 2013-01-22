@@ -7,7 +7,8 @@
  * the custom methods we need for this instance of it here,
  * Usually this is just the fields to be retrieved from the API 
  * and how to present the data returned. */
-fr_index_popover_handler.fields = 'fields%5B%5D=abstract&fields%5B%5D=comments_close_on&fields%5B%5D=significant&fields%5B%5D=regulations_dot_gov_info&fields%5B%5D=document_number';
+fr_index_popover_handler.uses_pi = false;
+fr_index_popover_handler.article_fields = 'fields%5B%5D=abstract&fields%5B%5D=comments_close_on&fields%5B%5D=significant&fields%5B%5D=regulations_dot_gov_info&fields%5B%5D=document_number';
 fr_index_popover_handler.add_popover_content = function() {
     var $tipsy_el = $('.tipsy'),
         current_dl = this.current_el,
