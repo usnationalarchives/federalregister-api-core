@@ -1,6 +1,6 @@
 <% super_title "#{@agency_year.year} FR Index" %>
 
-<% sidebar(render :partial => 'nav', :locals => {:years => @years}) %>
+<% sidebar(render :partial => 'nav', :locals => {:years => @years, :current_year => @agency_year.year}) %>
 
 <% add_javascript(:src => 'admin/fr_index.js') %>
 

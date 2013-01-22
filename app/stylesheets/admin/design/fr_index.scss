@@ -1,3 +1,11 @@
+/* SIDEBAR NAV */
+#indexes.admin #sidebar h4 {
+  margin: 5px;
+  border-bottom: 2px solid $dark_blue;
+  color: $dark_blue;
+  }
+
+
 /* YEAR */
 
 #content_area ul { list-style: none; }
@@ -8,7 +16,7 @@
   overflow: hidden;
   margin-bottom: 20px;
 
-  h1.agency_name { color: #3F5B75; }
+  h1.agency_name { color: $dark_blue; }
   hr { margin-top: 0px; }
   
   .agency_index_actions {

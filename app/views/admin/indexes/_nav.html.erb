@@ -1,5 +1,11 @@
+<h4>FR Index Years</h4>
+
 <ul>
   <% years.each do |year| %>
-    <li><%= link_to_unless_current year, admin_index_year_path(year) %></li>
+    <li>
+      <%= link_to_unless  current_year == year, 
+                          "#{year} #{"<strong><<</strong>".html_safe if current_year == year}", 
+                          admin_index_year_path(year) %>
+    </li>
   <% end %>
 </ul>
