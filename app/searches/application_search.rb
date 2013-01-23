@@ -177,12 +177,14 @@ class ApplicationSearch
     without
   end
 
-  def chainable_results(args = {})
-    ids = model.search(sphinx_term,
+  def result_ids(args = {})
+    model.search(sphinx_term,
       search_options.merge(:ids_only => true).recursive_merge(args)
     )
+  end
 
-    model.scoped({:conditions => {:id => ids}}.recursive_merge(args.slice(:joins, :includes, :select)))
+  def chainable_results(args = {})
+    model.scoped({:conditions => {:id => result_ids(args)}}.recursive_merge(args.slice(:joins, :includes, :select)))
   end
   
   def results(args = {})

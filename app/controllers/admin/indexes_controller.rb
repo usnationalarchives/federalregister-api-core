@@ -49,12 +49,19 @@ class Admin::IndexesController < AdminController
 
     grouping = agency_year.grouping_for_document_type_and_header(params[:granule_class], header)
 
+    partial = case grouping
+      when FrIndexPresenter::SubjectGrouping
+        "subject_grouping"
+      when FrIndexPresenter::DocumentGrouping
+        "document_grouping"
+      end
+
     render :json => {
       :id_to_remove => grouping.identifier,
       :header => header,
       :element_to_insert => render_to_string(
-        :partial => "grouping",
-        :locals => { :grouping => grouping }
+        :partial => partial,
+        :collection => [grouping]
       )
     }
   end
