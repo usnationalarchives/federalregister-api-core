@@ -4,7 +4,8 @@ class FrIndexPresenter
   attr_reader :year
 
   def self.available_years
-    (2013..Date.today.year).to_a.uniq.reverse
+    min_year = Rails.env == 'development' ? 2012 : 2013
+    (min_year..Date.today.year).to_a.uniq.reverse
   end
 
   def initialize(year)
