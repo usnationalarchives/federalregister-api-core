@@ -4,7 +4,8 @@ class FrIndexPresenter
   attr_reader :year
 
   def self.available_years
-    (2013..Date.today.year).to_a.uniq.reverse
+    min_year = Rails.env == 'development' ? 2012 : 2013
+    (min_year..Date.today.year).to_a.uniq.reverse
   end
 
   def initialize(year)
@@ -129,37 +130,118 @@ class FrIndexPresenter
       FrIndexAgencyStatus.update_cache(self)
     end
 
-
     private
 
     def entries
-      @entries ||= EntrySearch.new(
+      return @entries if @entries
+
+      entry_ids = EntrySearch.new(
         :conditions => {
           :agency_ids => [agency.id],
           :without_agency_ids => agency.children.map(&:id),
           :publication_date => {:year => year},
         },
         :per_page => 1000
-      ).chainable_results(
-        :select => %w(
-          id
-          document_number
-          publication_date
-          title
-          toc_subject
-          toc_doc
-          fr_index_subject
-          fr_index_doc
-          granule_class
-          start_page
-          end_page
-          regulations_dot_gov_docket_id
-          presidential_document_type_id
-          executive_order_number
-        ).map{|attribute| "entries.#{attribute}"}.join(",")
-      ).preload(
-        :docket, :public_inspection_document
-      )
+      ).result_ids
+
+      @entries = ::Entry.connection.select_all(<<-SQL).map{|row| Entry.new(row) }
+        SELECT entries.id,
+          entries.title,
+          entries.document_number,
+          entries.publication_date,
+          IFNULL(entries.fr_index_subject, entries.toc_subject) AS fr_index_subject,
+          IFNULL(IFNULL(entries.fr_index_doc, entries.toc_doc), entries.title) AS fr_index_doc,
+          entries.granule_class,
+          entries.start_page,
+          entries.end_page,
+          comment_close_events.date AS comments_close_on,
+          SUM(regulatory_plans.priority_category IN (#{RegulatoryPlan::SIGNIFICANT_PRIORITY_CATEGORIES.map(&:inspect).join(',')})) > 0 AS significant,
+          IFNULL(dockets.comments_count,0) AS comment_count
+        FROM entries
+        LEFT OUTER JOIN dockets
+          ON dockets.id = entries.regulations_dot_gov_docket_id
+        LEFT OUTER JOIN events AS comment_close_events
+          ON comment_close_events.entry_id = entries.id
+          AND comment_close_events.event_type = 'CommentsClose'
+        LEFT OUTER JOIN entry_regulation_id_numbers
+          ON entry_regulation_id_numbers.entry_id = entries.id
+        LEFT OUTER JOIN regulatory_plans
+          ON regulatory_plans.regulation_id_number = entry_regulation_id_numbers.regulation_id_number
+          AND regulatory_plans.current = 1
+        WHERE entries.id IN (#{entry_ids.join(',')})
+        GROUP BY entries.id
+      SQL
+    end
+  end
+
+  Entry = Struct.new(
+      :id,
+      :title,
+      :document_number,
+      :publication_date,
+      :fr_index_subject,
+      :fr_index_doc,
+      :granule_class,
+      :start_page,
+      :end_page,
+      :comments_close_on,
+      :significant,
+      :comment_count
+    ) do
+
+    def initialize(options)
+      # manual typecasting FTW
+      %w(publication_date comments_close_on).each do |date_attr|
+        val = options[date_attr]
+        if val && val.is_a?(String)
+          options[date_attr] = Date.parse(val)
+        end
+      end
+
+      %w(comment_count start_page end_page).each do |int_attr|
+        val = options[int_attr]
+        options[int_attr] = val.to_i if val
+      end
+
+      # populate struct
+      options.each do |key, val|
+        self[key] = val
+      end
+    end
+
+    def comments_open?
+      comments_close_on.present? && comments_close_on >= Date.today
+    end
+
+    def significant?
+      significant == '1'
+    end
+
+    def pdf_url
+      "http://www.gpo.gov/fdsys/pkg/FR-#{publication_date.to_s(:db)}/pdf/#{document_number}.pdf"
+    end
+
+    # the following are copied from entry.rb; ideally these would live in a decorator
+    #   that could present either ::Entry or FrIndexPresenter::Entry objects...
+
+    def publication_month
+      publication_date.strftime('%B')
+    end
+
+    def human_length
+      if end_page && start_page
+        end_page - start_page + 1
+      else
+        nil
+      end
+    end
+
+    def page_range
+      if human_length > 1
+        "#{start_page}-#{end_page}"
+      else
+        start_page
+      end
     end
   end
 
@@ -174,7 +256,7 @@ class FrIndexPresenter
     end
 
     def name
-      Entry::ENTRY_TYPES[granule_class]
+      ::Entry::ENTRY_TYPES[granule_class]
     end
 
     def entry_count
@@ -260,7 +342,7 @@ class FrIndexPresenter
     end
 
     def has_comments?
-      entries.any?{|e| (e.docket.try(:comments_count) || 0) > 0}
+      entries.any?{|e| e.comment_count > 0}
     end
 
     def significant?
