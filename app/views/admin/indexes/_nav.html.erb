@@ -3,9 +3,9 @@
 <ul>
   <% years.each do |year| %>
     <li>
-      <%= link_to_unless  current_year == year, 
-                          "#{year} #{"<strong><<</strong>".html_safe if current_year == year}", 
-                          admin_index_year_path(year) %>
+      <%= link_to_unless_current  "#{year}", 
+        admin_index_year_path(year) %>
+      <%= "<strong>&lt;&lt;</strong>".html_safe if current_year == year %>
     </li>
   <% end %>
 </ul>
