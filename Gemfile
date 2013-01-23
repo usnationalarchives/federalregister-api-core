@@ -67,6 +67,7 @@ group :deployment do
 end
 
 group :development do
+  gem 'rack-mini-profiler'
   # bundler requires these gems in development
   # gem 'rails-footnotes'
   # gem 'poolparty', '1.6.8'
