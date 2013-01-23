@@ -8,67 +8,67 @@
 
     @bottom-left {
       content: "FEDERAL REGISTER INDEX, January 2013";
-      font-family: 'Times-Bold';
-      font-weight: bold;
-      font-size: 8pt;
+      font-family: 'Open Sans Semibold';
+      font-size: 0.65em;
+      margin-top: 0.4in;
       margin-bottom: 0.7in;
     }
     @bottom-right {
       content: counter(page);
-      font-family: 'Times-Bold';
-      font-weight: bold;
-      font-size: 8pt;
+      font-family: 'Open Sans Semibold';
+      font-size: 0.65em;
+      margin-top: 0.4in;
       margin-bottom: 0.6in;
     }
   }
   @page :left {
     @top-left {
-      font-weight: bold;
-      font-family: 'Times-Bold';
-      font-size: 10.2pt;
+      font-family: 'Open Sans Bold';
+      font-size: 0.75em;
       margin-top: 0.14in;
       content: string(agency_short_name, first);
     }
   }
   @page :right {
     @top-right {
-      font-weight: bold;
-      font-family: 'Times-Bold';
-      font-size: 10.2pt;
+      font-family: 'Open Sans Bold';
+      font-size: 0.75em;
       margin-top: 0.14in;
-      /*content: string(agency_short_name, last) */
+      content: string(agency_short_name, last)
     }
   }
+
+  @page:first {
+    @top-right { content: normal; }
+    @top-left { content: normal; }
+  }
+
   *[data-agency-name] {
     string-set: agency_short_name attr('data-agency-name');
   }
 
   body {
-    font-family: 'Times';
-    font-size: 8pt;
+    font-family: 'Open Sans';
+    font-size: 1em;
     counter-reset: page 1053;
   }
   h1 {
-    margin-top: 1.32in;
-    margin-bottom: 0.275in;
-    font-size: 18pt;
-    font-family: 'Times-Bold';
+    margin-top: 0.75in;
+    margin-bottom: 0.5in;
+    font-size: 1.4em;
+    font-family: 'Open Sans Bold';
     text-align: center;
   }
   h2 {
-    font-family: 'Times-Bold';
-    font-size: 10.2pt;
+    font-family: 'Open Sans Bold';
+    font-size: 1.05em;
     padding: 0;
-    margin-top: 5.6pt;
-    margin-bottom: 2.9pt;
-    margin-left: 2em;
-    text-indent: -2em;
+    margin-top: 6pt;
+    margin-bottom: 1.5pt;
+    margin-left: 0.5em;
+    text-indent: -0.5em;
   }
-  h3 {
-    font-family: 'Times-Bold';
-    font-size: 8pt;
-    margin: 0;
-  }
+
 
   p {
     padding: 0;
@@ -76,34 +76,47 @@
   }
 
   div.index {
+    font-size: 0.75em;
     columns: 2;
     column-rule: black solid 0.5pt;
+    column-gap: 2em;
   }
+
+  h3 {
+    font-family: 'Open Sans Bold';
+    font-size: 0.85em;
+    margin: 0;
+    margin-top: 1pt;
+  }
+
   div.index ul {
     margin: 0;
     margin-left: 2em;
-    line-height: 9.2pt;
+    line-height: 1.3em;
+    font-style: 'Open Sans';
+    font-size: 0.8em;
   }
 
   div.index ul ul {
     margin-left: 1em;
+    font-size: 0.98em;
   }
 
   div.index li {
     list-style-type: none;
     text-indent: -2em;
-    line-height: 110.5%;
+    line-height: 1.2em%;
   }
   .page_break {
     page-break-before: always;
   }
   .item {
-    font-style: italic;
+    font-style: 'Open Sans Italic';
     page-break-inside: avoid;
     white-space: nowrap;
   }
   .day {
-    font-size: 94%;
+    font-size: 0.97em;
   }
 
 </style>
