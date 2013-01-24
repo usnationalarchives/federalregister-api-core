@@ -188,6 +188,8 @@ class FrIndexPresenter
       :significant,
       :comment_count
     ) do
+    
+    include EntryViewLogic
 
     def initialize(options)
       # manual typecasting FTW
@@ -219,29 +221,6 @@ class FrIndexPresenter
 
     def pdf_url
       "http://www.gpo.gov/fdsys/pkg/FR-#{publication_date.to_s(:db)}/pdf/#{document_number}.pdf"
-    end
-
-    # the following are copied from entry.rb; ideally these would live in a decorator
-    #   that could present either ::Entry or FrIndexPresenter::Entry objects...
-
-    def publication_month
-      publication_date.strftime('%B')
-    end
-
-    def human_length
-      if end_page && start_page
-        end_page - start_page + 1
-      else
-        nil
-      end
-    end
-
-    def page_range
-      if human_length > 1
-        "#{start_page}-#{end_page}"
-      else
-        start_page
-      end
     end
   end
 

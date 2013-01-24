@@ -50,6 +50,7 @@
 # require 'flickr'
 class Entry < ApplicationModel
   self.inheritance_column = nil
+  include EntryViewLogic
   
   DESCRIPTIONS = {
     :notice => 'This section of the Federal Register contains documents other than rules 
@@ -395,26 +396,6 @@ class Entry < ApplicationModel
     response_code == '200' ? true : false
   end
   
-  def human_length
-    if end_page && start_page
-      end_page - start_page + 1
-    else
-      nil
-    end
-  end
-
-  def page_range
-    if human_length > 1
-      "#{start_page}-#{end_page}"
-    else
-      start_page
-    end
-  end
- 
-  def publication_month
-    publication_date.strftime('%B')
-  end
-
   def slug
     clean_title = title.downcase.gsub(/[^a-z0-9& -]+/,'').gsub(/&/, 'and')
     slug = view_helper.truncate_words(clean_title, :length => 100, :omission => '')
