@@ -130,12 +130,8 @@ class FrIndexPresenter
       FrIndexAgencyStatus.update_cache(self)
     end
 
-    private
-
-    def entries
-      return @entries if @entries
-
-      entry_ids = EntrySearch.new(
+    def entry_ids
+      @entry_ids ||= EntrySearch.new(
         :conditions => {
           :agency_ids => [agency.id],
           :without_agency_ids => agency.children.map(&:id),
@@ -143,6 +139,12 @@ class FrIndexPresenter
         },
         :per_page => 1000
       ).result_ids
+    end
+
+    private
+
+    def entries
+      return @entries if @entries
 
       @entries = ::Entry.connection.select_all(<<-SQL).map{|row| Entry.new(row) }
         SELECT entries.id,
