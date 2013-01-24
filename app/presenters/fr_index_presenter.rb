@@ -149,8 +149,10 @@ class FrIndexPresenter
           entries.title,
           entries.document_number,
           entries.publication_date,
-          IFNULL(entries.fr_index_subject, entries.toc_subject) AS fr_index_subject,
-          IFNULL(IFNULL(entries.fr_index_doc, entries.toc_doc), entries.title) AS fr_index_doc,
+          IFNULL(public_inspection_documents.toc_subject, entries.toc_subject) AS original_subject,
+          IFNULL(IFNULL(public_inspection_documents.toc_doc, entries.toc_doc), entries.title) AS original_doc,
+          entries.fr_index_subject AS modified_subject,
+          entries.fr_index_doc AS modified_doc,
           entries.granule_class,
           entries.start_page,
           entries.end_page,
@@ -158,6 +160,8 @@ class FrIndexPresenter
           SUM(regulatory_plans.priority_category IN (#{RegulatoryPlan::SIGNIFICANT_PRIORITY_CATEGORIES.map(&:inspect).join(',')})) > 0 AS significant,
           IFNULL(dockets.comments_count,0) AS comment_count
         FROM entries
+        LEFT OUTER JOIN public_inspection_documents
+          ON public_inspection_documents.document_number = entries.document_number
         LEFT OUTER JOIN dockets
           ON dockets.id = entries.regulations_dot_gov_docket_id
         LEFT OUTER JOIN events AS comment_close_events
@@ -179,8 +183,10 @@ class FrIndexPresenter
       :title,
       :document_number,
       :publication_date,
-      :fr_index_subject,
-      :fr_index_doc,
+      :original_subject,
+      :modified_subject,
+      :original_doc,
+      :modified_doc,
       :granule_class,
       :start_page,
       :end_page,
@@ -211,12 +217,24 @@ class FrIndexPresenter
       end
     end
 
+    def fr_index_subject
+      modified_subject || original_subject
+    end
+
+    def fr_index_doc
+      modified_doc || original_doc
+    end
+
     def comments_open?
       comments_close_on.present? && comments_close_on >= Date.today
     end
 
     def significant?
       significant == '1'
+    end
+
+    def modified?
+      modified_subject || modified_doc
     end
 
     def pdf_url
@@ -295,7 +313,11 @@ class FrIndexPresenter
     end
 
     def needs_attention_count
-      document_groupings.map(&:needs_attention_count).sum
+      @needs_attention_count = document_groupings.map(&:needs_attention_count).sum
+    end
+
+    def needs_attention?
+      needs_attention_count > 0
     end
   end
 
@@ -360,7 +382,7 @@ class FrIndexPresenter
     end
 
     def unmodified?
-      entries.none?{|e| e[:fr_index_doc] || e[:fr_index_subject]}
+      entries.none?(&:modified?)
     end
   end
 end
