@@ -1,7 +1,18 @@
 <h2><%= agency_year.name %></h2>
+<% if agency_year.children.present? %>
+  <ul class="see_also">
+    <% agency_year.children.each do |sub_agency| %>
+      <li>
+        <em class="see">See</em> 
+        <%= sub_agency.name %>
+      </li>
+    <% end %>
+  </ul>
+<% end %>
 
 <% agency_year.document_types.each do |document_type| %>
   <h3><%= document_type.name.pluralize.upcase %></h3>
+
   <ul>
     <% document_type.groupings.each do |grouping| %>
       <%= case grouping
