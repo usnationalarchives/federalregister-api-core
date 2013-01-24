@@ -18,7 +18,10 @@ class Admin::IndexesController < AdminController
     @years = FrIndexPresenter.available_years
 
     agency = Agency.find_by_slug!(params[:agency])
-    @agency_year = FrIndexPresenter::AgencyYear.new(agency, params[:year])
+    year = params[:year].to_i
+    @agency_year = FrIndexPresenter::AgencyYear.new(agency, year)
+
+    @last_completed_issue = Entry.scoped(:conditions => "publication_date <= '#{year}-12-31'").maximum(:publication_date)
 
     respond_to do |wants|
       wants.html
