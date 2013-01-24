@@ -5,6 +5,6 @@ class IndexesController < ApplicationController
 
   def year_agency
     agency = Agency.find_by_slug!(params[:agency])
-    @agency_year = FrIndexPresenter::AgencyYear.new(agency, params[:year])
+    @agency_year = FrIndexPresenter::Agency.new(agency, params[:year])
   end
 end

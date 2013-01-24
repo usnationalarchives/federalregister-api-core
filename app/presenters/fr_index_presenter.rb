@@ -20,7 +20,7 @@ class FrIndexPresenter
   def agencies
     return @agency_years if @agency_years
 
-    agencies = Agency.all(
+    agencies = ::Agency.all(
       :conditions => {:id => raw_entry_counts_by_agency_id.keys},
       :include => :children
     )
@@ -30,7 +30,7 @@ class FrIndexPresenter
         select{|candidate_child| candidate_child.parent_id == agency.id}.
         sort_by{|child| child.name.downcase}.
         map do |child|
-          AgencyYear.new(
+          Agency.new(
             child,
             year,
             :entry_count => raw_entry_counts_by_agency_id[child.id],
@@ -39,7 +39,7 @@ class FrIndexPresenter
       end
 
       entry_count = children.present? ? nil : raw_entry_counts_by_agency_id[agency.id]
-      AgencyYear.new(agency, year,
+      Agency.new(agency, year,
         :children => children,
         :entry_count => entry_count,
         :needs_attention_count => needs_attention_counts_by_agency_id[agency.id]
@@ -65,7 +65,7 @@ class FrIndexPresenter
     ).map{|id, count| [id.to_i, count.to_i]}]
   end
 
-  class AgencyYear
+  class Agency
     attr_reader :agency, :year, :children
 
     delegate :name,

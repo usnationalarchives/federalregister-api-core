@@ -19,7 +19,7 @@ class Admin::IndexesController < AdminController
 
     agency = Agency.find_by_slug!(params[:agency])
     year = params[:year].to_i
-    @agency_year = FrIndexPresenter::AgencyYear.new(agency, year)
+    @agency_year = FrIndexPresenter::Agency.new(agency, year)
 
     @last_completed_issue = Entry.scoped(:conditions => "publication_date <= '#{year}-12-31'").maximum(:publication_date)
 
@@ -42,7 +42,7 @@ class Admin::IndexesController < AdminController
     end
 
     agency = Agency.find_by_slug!(params[:agency])
-    agency_year = FrIndexPresenter::AgencyYear.new(agency, params[:year])
+    agency_year = FrIndexPresenter::Agency.new(agency, params[:year])
 
     agency_year.update_cache
 
