@@ -8,14 +8,16 @@
 
     @bottom-left {
       content: "FEDERAL REGISTER INDEX, January 2013";
-      font-family: 'Open Sans Semibold';
+      font-family: 'Open Sans';
+      font-weight:600; /* semibold */
       font-size: 0.65em;
       margin-top: 0.4in;
       margin-bottom: 0.7in;
     }
     @bottom-right {
       content: counter(page);
-      font-family: 'Open Sans Semibold';
+      font-family: 'Open Sans';
+      font-weight:600; /* semibold */
       font-size: 0.65em;
       margin-top: 0.4in;
       margin-bottom: 0.6in;
@@ -23,7 +25,8 @@
   }
   @page :left {
     @top-left {
-      font-family: 'Open Sans Bold';
+      font-family: 'Open Sans';
+      font-weight: bold;
       font-size: 0.75em;
       margin-top: 0.14in;
       content: string(agency_short_name, first);
@@ -31,7 +34,8 @@
   }
   @page :right {
     @top-right {
-      font-family: 'Open Sans Bold';
+      font-family: 'Open Sans';
+      font-weight: bold;
       font-size: 0.75em;
       margin-top: 0.14in;
       content: string(agency_short_name, last)
@@ -56,11 +60,13 @@
     margin-top: 0.75in;
     margin-bottom: 0.5in;
     font-size: 1.4em;
-    font-family: 'Open Sans Bold';
+    font-family: 'Open Sans';
+    font-weight: bold;
     text-align: center;
   }
   h2 {
-    font-family: 'Open Sans Bold';
+    font-family: 'Open Sans';
+    font-weight: bold;
     font-size: 1.05em;
     padding: 0;
     margin-top: 6pt;
@@ -83,7 +89,7 @@
   }
 
   h3 {
-    font-family: 'Open Sans Bold';
+    font-weight: bold;
     font-size: 0.85em;
     margin: 0;
     margin-top: 1pt;
@@ -111,7 +117,7 @@
     page-break-before: always;
   }
   .item {
-    font-style: 'Open Sans Italic';
+    font-style: italic;
     page-break-inside: avoid;
     white-space: nowrap;
   }
