@@ -161,7 +161,7 @@ class FrIndexPresenter
           IFNULL(dockets.comments_count,0) AS comment_count
         FROM entries
         LEFT OUTER JOIN public_inspection_documents
-          ON public_inspection_documents.document_number = entries.document_number
+          ON public_inspection_documents.entry_id = entries.id
         LEFT OUTER JOIN dockets
           ON dockets.id = entries.regulations_dot_gov_docket_id
         LEFT OUTER JOIN events AS comment_close_events
