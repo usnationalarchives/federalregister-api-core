@@ -83,16 +83,17 @@ class Admin::IndexesController < AdminController
   private
 
   def render_pdf(options={})
-    input = Tempfile.new(['fr_index', '.html']).path
+    Tempfile.open(['fr_index', '.pdf']) do |output_pdf|
+      output_pdf.close
 
-    File.open(input, 'w') do |f|
-      f.write render_to_string(options)
+      Tempfile.open(['fr_index', '.html']) do |input_html|
+        input_html.write render_to_string(options)
+        input_html.close
+
+        `/usr/local/bin/prince #{input_html.path} -o #{output_pdf.path}`
+      end
+
+      send_file output_pdf.path, :filename => "fr_index.pdf"
     end
-
-    output = Tempfile.new(['fr_index', '.pdf']).path
-
-   `/usr/local/bin/prince #{input} -o #{output}`
-
-    send_file output, :filename => "fr_index.pdf"
   end
 end
