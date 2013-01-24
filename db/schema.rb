@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130116191134) do
+ActiveRecord::Schema.define(:version => 20130124192057) do
 
   create_table "action_names", :force => true do |t|
     t.string   "name"
@@ -171,8 +171,7 @@ ActiveRecord::Schema.define(:version => 20130116191134) do
 
   add_index "docket_numbers", ["assignable_type", "assignable_id"], :name => "index_docket_numbers_on_assignable_type_and_assignable_id"
 
-  create_table "dockets", :id => false, :force => true do |t|
-    t.string  "id"
+  create_table "dockets", :force => true do |t|
     t.string  "regulation_id_number"
     t.integer "comments_count"
     t.integer "docket_documents_count"
