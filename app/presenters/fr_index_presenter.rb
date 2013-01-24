@@ -1,21 +1,32 @@
 class FrIndexPresenter
   module Utils
     def publication_date_conditions
-      {:year => year}
+      if max_date
+        {:gte => "#{year}-01-01", :lte => max_date.to_s(:iso)}
+      else
+        {:year => year}
+      end
+    end
+
+    def parse_date(date_or_str)
+      return if date_or_str.nil?
+      date_or_str.is_a?(Date) ? date_or_str : Date.parse(date_or_str)
     end
   end
 
   include Utils
 
-  attr_reader :year
+  attr_reader :year, :max_date
 
   def self.available_years
     min_year = Rails.env == 'development' ? 2012 : 2013
     (min_year..Date.today.year).to_a.uniq.reverse
   end
 
-  def initialize(year)
+  def initialize(year, options = {})
     @year = year.to_i
+    @max_date = parse_date(options[:max_date])
+
     raise ActiveRecord::RecordNotFound unless FrIndexPresenter.available_years.include?(@year)
   end
 
@@ -40,7 +51,8 @@ class FrIndexPresenter
             child,
             year,
             :entry_count => raw_entry_counts_by_agency_id[child.id],
-            :needs_attention_count => needs_attention_counts_by_agency_id[child.id]
+            :needs_attention_count => needs_attention_counts_by_agency_id[child.id],
+            :max_date => max_date
           )
       end
 
@@ -48,7 +60,8 @@ class FrIndexPresenter
       Agency.new(agency, year,
         :children => children,
         :entry_count => entry_count,
-        :needs_attention_count => needs_attention_counts_by_agency_id[agency.id]
+        :needs_attention_count => needs_attention_counts_by_agency_id[agency.id],
+        :max_date => max_date
       )
     end
   end
@@ -64,6 +77,8 @@ class FrIndexPresenter
     end
   end
 
+
+  # doesn't recalcuate for max_date
   def needs_attention_counts_by_agency_id
     @needs_attention_counts_by_agency_id ||= Hash[FrIndexAgencyStatus.find_as_arrays(
       :select => "agency_id, needs_attention_count",
@@ -73,7 +88,7 @@ class FrIndexPresenter
 
   class Agency
     include Utils
-    attr_reader :agency, :year, :children
+    attr_reader :agency, :year, :children, :max_date
 
     delegate :name,
       :to_param,
@@ -87,6 +102,7 @@ class FrIndexPresenter
       @children = options[:children] || []
       @entry_count = options[:entry_count]
       @needs_attention_count = options[:needs_attention_count]
+      @max_date = parse_date(options[:max_date])
     end
 
     def current_year?

@@ -1,3 +1,4 @@
+<% date_description = @end_date.month == 1 ? @end_date.to_s(:month_year) : "January&ndash;#{@end_date.to_s(:month_year)}".html_safe %>
 <style>
   @page {
     size: "US-Letter";
@@ -7,7 +8,7 @@
     margin-top: 0.613in;
 
     @bottom-left {
-      content: "FEDERAL REGISTER INDEX, January 2013";
+      content: "FEDERAL REGISTER INDEX, <%= date_description %>";
       font-family: 'Open Sans';
       font-weight:600; /* semibold */
       font-size: 0.65em;
@@ -134,7 +135,7 @@
 <body>
   <h1>
     FEDERAL REGISTER INDEX<br>
-    January 2013
+    <%= date_description %>
   </h1>
   <div class="index">
     <%= render :partial => "agency_year", :collection => @agency_years %>

@@ -12,7 +12,17 @@
   <p>
 
   <div class="agency_index_actions">
-    <%= link_to 'Preview PDF', {:format => :pdf}, :class => "btn pdf_preview" %>
+    <% form_tag(url_for(:format => :pdf), :method => :get) do %>
+      <%= select_tag('max_date',
+        options_for_select(
+          [['Year to Date','']] +
+          (1..@end_date.month).map{ |m|
+            date = Date.new(2012,m,1).end_of_month
+            [date.strftime("%B"), date.to_s(:iso)]
+          }
+        )) %>
+      <%= submit_tag 'Preview PDF', :class => "btn pdf_preview" %>
+    <% end %>
   </div>
 </div>
 

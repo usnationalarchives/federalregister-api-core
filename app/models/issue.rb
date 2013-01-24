@@ -29,6 +29,12 @@ class Issue < ApplicationModel
   def self.most_recent(n = 50)
     scoped(:order => "publication_date DESC", :limit => n).completed
   end
+
+  def self.last_issue_date_in_year(year)
+    scoped(:conditions => {:publication_date => Date.new(year.to_i,1,1)..Date.new(year.to_i,12,31)}).
+      completed.
+      maximum(:publication_date)
+  end
   
   def self.complete?(date)
     issue = find_by_publication_date(date)

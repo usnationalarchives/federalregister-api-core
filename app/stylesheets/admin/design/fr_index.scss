@@ -53,6 +53,10 @@
       background: #e6e6e6 sprite-image("icons/admin/index_mark_as_done_active.png", 4px, 3px, 30px) no-repeat;
     }
 
+    #max_date {
+      float: left;
+      margin-left: 210px;
+    }
     .pdf_preview {
       float: right;
       background: sprite-image("icons/admin/index_pdf_preview.png", 5px, 4px, 30px) no-repeat;
