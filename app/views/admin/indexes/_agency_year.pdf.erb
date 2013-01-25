@@ -11,9 +11,11 @@
 <% end %>
 
 <% agency_year.document_types.each do |document_type| %>
-  <h3><%= document_type.name.pluralize.upcase %></h3>
+  <% unless document_type.name == Entry::ENTRY_TYPES['UNKNOWN'] %>
+    <h3><%= document_type.name.pluralize.upcase %></h3>
+  <% end %>
 
-  <ul>
+  <ul <%= "class='no_header'" if document_type.name == Entry::ENTRY_TYPES['UNKNOWN'] %>>
     <% document_type.groupings.each do |grouping| %>
       <%= case grouping
         when FrIndexPresenter::SubjectGrouping

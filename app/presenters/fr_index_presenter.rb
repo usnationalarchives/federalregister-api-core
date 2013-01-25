@@ -40,7 +40,7 @@ class FrIndexPresenter
     agencies = ::Agency.all(
       :conditions => {:id => raw_entry_counts_by_agency_id.keys},
       :include => :children
-    )
+    ).sort_by{|agency| agency.name.downcase}
 
     @agency_years = agencies.map do |agency|
       children = agencies.

@@ -10,7 +10,7 @@ class Admin::IndexesController < AdminController
     respond_to do |wants|
       wants.html
       wants.pdf do
-        @agency_years = @fr_index.agencies[0,10]
+        @agency_years = @fr_index.agencies
 
         render_pdf(:action => :year)
       end
