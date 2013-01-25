@@ -1,12 +1,12 @@
 <li id="<%= document_grouping.identifier %>"
   class="<%= 'new_item' if document_grouping.needs_attention? %> <%= 'top_level' if document_grouping.top_level? %>">
-  <a class="wrapper" href="javascript:" data-toggle="collapse" data-target="#a<%= document_grouping.object_id %>">
+  <a class="wrapper" href="#">
     <span class="title"><%= document_grouping.header %></span><%= count_pill(document_grouping.entry_count) %>
   </a>
 
   <%= link_to 'Edit', '#', :class => "edit btn #{document_grouping.top_level? ? '' : 'btn-mini'}" %>
 
-  <ul id="a<%= document_grouping.object_id %>" class="entry_details">
+  <ul class="entry_details">
     <% document_grouping.entries.each do |entry| %>
       <li class="with_ajax_popover" data-document-number=<%= entry.document_number %>>
         <%= link_to entry.document_number, short_entry_path(entry) %>

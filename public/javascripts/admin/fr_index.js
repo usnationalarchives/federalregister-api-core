@@ -197,7 +197,8 @@ function initializeFrIndexEditor(elements) {
 $(document).ready(function() {
 
   $('a.wrapper').on('click', function(event) {
-    $(this).closest('li').find('ul.entry_details').toggle();
+    event.preventDefault();
+    $(this).siblings('ul.entry_details').toggle();
   });
 
   initializeFrIndexEditor($('#content_area ul.entry_type > li'));
