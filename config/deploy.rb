@@ -276,7 +276,7 @@ end
 
 namespace :javascript do
   task :combine_and_minify, :roles => [:worker] do
-    run "rm #{current_path}/public/javascripts/all.js; cd #{current_path} && bundle exec juicer merge -s #{current_path}/public/javascripts/*.js --force -o #{current_path}/tmp/all.js && mv #{current_path}/tmp/all.js #{current_path}/public/javascripts/all.js"
+    run "rm #{current_path}/public/javascripts/all.js; cd #{current_path} && bundle exec juicer merge -m closure_compiler -s #{current_path}/public/javascripts/*.js --force -o #{current_path}/tmp/all.js && mv #{current_path}/tmp/all.js #{current_path}/public/javascripts/all.js"
   end
 end
 
