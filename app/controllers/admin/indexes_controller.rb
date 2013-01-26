@@ -29,7 +29,7 @@ class Admin::IndexesController < AdminController
     respond_to do |wants|
       wants.html
       wants.pdf do
-        @end_date = Issue.last_issue_date_in_year(@fr_index.year)
+        @end_date = Issue.last_issue_date_in_year(year)
         @agency_years = [@agency_year]
         render_pdf(:action => :year)
       end
