@@ -31,14 +31,15 @@ fr_index_popover_handler = {
 
   get_popover_content: function(el) {
     var popover_handler = this;
+
     popover_handler.current_el = el;
-  
+     
     if( popover_handler.popover_cache[popover_handler.current_el.data('document-number')] === undefined ) {
       $.ajax({
         url: popover_handler.url(),
         dataType: 'jsonp'
       }).done(function(response) {
-        if( this.uses_pi ) {
+        if( popover_handler.uses_pi ) {
           var pi_response = response;
           /* need to get the title from the article end point and then 
            * pass the whole thing as a single object to handlebars */
