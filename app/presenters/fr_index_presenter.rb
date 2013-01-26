@@ -9,7 +9,7 @@ class FrIndexPresenter
     end
 
     def parse_date(date_or_str)
-      return if date_or_str.present?
+      return unless date_or_str.present?
       date_or_str.is_a?(Date) ? date_or_str : Date.parse(date_or_str)
     end
   end
