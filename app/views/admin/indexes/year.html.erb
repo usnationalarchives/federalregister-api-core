@@ -17,7 +17,7 @@
         options_for_select(
           [['Year to Date','']] +
           (1..@end_date.month).map{ |m|
-            date = Date.new(2012,m,1).end_of_month
+            date = Date.new(@fr_index.year,m,1).end_of_month
             [date.strftime("%B"), date.to_s(:iso)]
           }
         )) %>
