@@ -72,6 +72,11 @@ function hide_top_level_index_form(form) {
 
 function initializeFrIndexEditor(elements) {
   var $elements = $(elements);
+
+  $elements.find('a.wrapper').on('click', function(event) {
+    event.preventDefault();
+    $(this).siblings('ul.entry_details').toggle();
+  });
   
   $elements.find('a.edit').on('click', function(event) {
     event.preventDefault();
@@ -195,11 +200,6 @@ function initializeFrIndexEditor(elements) {
 }
 
 $(document).ready(function() {
-
-  $('a.wrapper').on('click', function(event) {
-    event.preventDefault();
-    $(this).siblings('ul.entry_details').toggle();
-  });
 
   initializeFrIndexEditor($('#content_area ul.entry_type > li'));
 
