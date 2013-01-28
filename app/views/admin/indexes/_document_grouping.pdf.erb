@@ -1,5 +1,5 @@
 <li data-agency-name="<%= agency.name %>">
-  <%= document_grouping.header %>&hellip;
+  <%= document_grouping.header %> &mdash; 
   <em>
     <%= document_grouping.entries.group_by(&:publication_date).map do |publication_date, entries|
       "<span class='item'>#{entries.map{|e| link_to e.start_page, short_entry_url(e)}.join(', ')} <span class='day'>(#{publication_date.strftime("%b %e")})</span></span>"
