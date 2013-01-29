@@ -96,18 +96,22 @@ $(document).ready(function () {
       }
     };
 
-    $('#fulltext_content_area').delegate(".body_column *[id^='p-'], .body_column ul > li[id^='p-'], .reg_text *[id^='p-']", 'mouseenter', function(event) {
+    $('#fulltext_content_area').delegate("*[id^='p-']", 'mouseenter', function(event) {
       clearTimeout( citation_marker_timeout );
       clearTimeout( citation_box_timeout );
+
       $('#fulltext_content_area').find('.trigger').remove();
       citation_box.hide( $('#paragraph-citation-box') );
 
       var el = $(this);
+      var paragraph_id = el.attr('id');
 
       if( el.find('.trigger').length === 0 ) {
         var anchor = $(citation_box.anchor);
-        anchor.data('paragraph_id', el.attr('id'));
+
+        anchor.data('paragraph_id', paragraph_id);
         el.append( anchor );
+        
         anchor.css({
           "top": el.position().top + 6,
           "right": -5,
@@ -117,7 +121,7 @@ $(document).ready(function () {
         anchor.bind('mouseenter', function(event) {
           var trigger = $(this);
           trigger.fadeOut(100, function() {
-            citation_box.display( trigger.data('paragraph_id') );
+            citation_box.display( paragraph_id );
             trigger.remove();
           });
         });
