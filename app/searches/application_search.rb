@@ -279,6 +279,7 @@ class ApplicationSearch
       :without => without,
       :conditions => sphinx_conditions,
       :match_mode => :extended,
+      :retry_stale => true,
       :sort_mode => sort_mode
     }.merge(find_options)
   end
