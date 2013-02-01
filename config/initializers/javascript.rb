@@ -1,3 +1,6 @@
+# if you're adding a file to vendor - especially initial libs 
+# then check to make sure that closure doesn't have/need an extern file
+# http://closure-compiler.googlecode.com/svn/trunk/contrib/externs/
 VENDOR_INITIAL_LIBS = ['jquery-1.8.3.min.js', 'jrails.js', 'jquery-ui-1.9.2.custom.min.js', 'jquery-ui-1.9.2.effects.min.js']
 ALL_VENDOR_LIBS = Dir.entries("#{RAILS_ROOT}/public/javascripts/vendor").select{|n| n =~ /\.js$/}.sort
 
