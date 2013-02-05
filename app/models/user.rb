@@ -29,7 +29,7 @@ class User < ApplicationModel
   acts_as_authentic do |c|
     c.crypto_provider = Authlogic::CryptoProviders::BCrypt
     c.validate_password_field = false
-    c.logged_in_timeout = RAILS_ENV == 'development' ? 8.hours : 30.minutes
+    c.logged_in_timeout = RAILS_ENV == 'development' ? 8.hours : 2.hours
   end
   
   model_stamper
