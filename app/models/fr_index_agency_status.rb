@@ -15,7 +15,7 @@ class FrIndexAgencyStatus < ApplicationModel
 
   def self.update_cache(agency_year)
     status = FrIndexAgencyStatus.find_or_initialize_by_year_and_agency_id(agency_year.year, agency_year.agency.id)
-    status.needs_attention_count = agency_year.needs_attention_count
+    status.needs_attention_count = agency_year.calculate_needs_attention_count
     status.save!
   end
 end

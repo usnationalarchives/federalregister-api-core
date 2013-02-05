@@ -110,6 +110,17 @@
   line-height: 15px;
   font-weight: normal;
   }
+#indexes.admin.year_agency .page_summary .agency_index_actions {
+  form.max_date {
+    padding-bottom: 7px;
+    border-bottom: 1px solid #DDD;
+
+    #max_date { 
+      float: none;
+      margin-left: 0;
+    }
+  }
+}
 
 ul.entry_type {
   li { 

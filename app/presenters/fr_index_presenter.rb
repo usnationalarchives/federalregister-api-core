@@ -12,6 +12,10 @@ class FrIndexPresenter
       return unless date_or_str.present?
       date_or_str.is_a?(Date) ? date_or_str : Date.parse(date_or_str)
     end
+
+    def last_issue_published
+      ::Entry.scoped(:conditions => "publication_date <= '#{year}-12-31'").maximum(:publication_date)
+    end
   end
 
   include Utils
@@ -25,7 +29,7 @@ class FrIndexPresenter
 
   def initialize(year, options = {})
     @year = year.to_i
-    @max_date = parse_date(options[:max_date])
+    @max_date = parse_date(options[:max_date]) || last_issue_published
 
     raise ActiveRecord::RecordNotFound unless FrIndexPresenter.available_years.include?(@year)
   end
@@ -102,7 +106,7 @@ class FrIndexPresenter
       @children = options[:children] || []
       @entry_count = options[:entry_count]
       @needs_attention_count = options[:needs_attention_count]
-      @max_date = parse_date(options[:max_date])
+      @max_date = parse_date(options[:max_date]) || last_issue_published
     end
 
     def current_year?
@@ -142,7 +146,11 @@ class FrIndexPresenter
     end
 
     def needs_attention_count
-      @needs_attention_count || document_types.map(&:needs_attention_count).sum
+      @needs_attention_count ||= calculate_needs_attention_count
+    end
+
+    def calculate_needs_attention_count
+      document_types.map(&:needs_attention_count).sum
     end
 
     def update_cache

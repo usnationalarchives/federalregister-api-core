@@ -5,7 +5,6 @@ class Admin::IndexesController < AdminController
     @years = FrIndexPresenter.available_years
     options = params.slice(:max_date)
     @fr_index = FrIndexPresenter.new(params[:year], options)
-    @end_date = @fr_index.max_date || Issue.last_issue_date_in_year(@fr_index.year)
 
     respond_to do |wants|
       wants.html
@@ -22,14 +21,13 @@ class Admin::IndexesController < AdminController
 
     agency = Agency.find_by_slug!(params[:agency])
     year = params[:year].to_i
-    @agency_year = FrIndexPresenter::Agency.new(agency, year)
 
-    @last_completed_issue = Entry.scoped(:conditions => "publication_date <= '#{year}-12-31'").maximum(:publication_date)
+    options = params.slice(:max_date)
+    @agency_year = FrIndexPresenter::Agency.new(agency, year, options)
 
     respond_to do |wants|
       wants.html
       wants.pdf do
-        @end_date = Issue.last_issue_date_in_year(year)
         @agency_years = [@agency_year]
         render_pdf(:action => :year)
       end
@@ -76,11 +74,13 @@ class Admin::IndexesController < AdminController
   def mark_complete
     agency = Agency.find_by_slug!(params[:agency])
     status = FrIndexAgencyStatus.find_or_initialize_by_year_and_agency_id(params[:year], agency.id)
-
     status.last_completed_issue = params[:last_completed_issue]
-    status.needs_attention_count = 0
     status.save
-    flash[:notice] = "'#{agency.name}' marked complete"
+
+    agency_year = FrIndexPresenter::Agency.new(agency, params[:year])
+    FrIndexAgencyStatus.update_cache(agency_year)
+
+    flash[:notice] = "'#{agency.name}' marked complete through #{status.last_completed_issue}"
     redirect_to admin_index_year_path(params[:year])
   end
 

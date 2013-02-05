@@ -13,14 +13,7 @@
 
   <div class="agency_index_actions">
     <% form_tag(url_for(:format => :pdf), :method => :get) do %>
-      <%= select_tag('max_date',
-        options_for_select(
-          [['Year to Date','']] +
-          (1..@end_date.month).map{ |m|
-            date = Date.new(@fr_index.year,m,1).end_of_month
-            [date.strftime("%B"), date.to_s(:iso)]
-          }
-        )) %>
+      <%= max_date_select(@fr_index) %>
       <%= submit_tag 'Preview PDF', :class => "btn pdf_preview" %>
     <% end %>
   </div>
