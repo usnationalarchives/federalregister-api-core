@@ -142,7 +142,11 @@ class FrIndexPresenter
     end
 
     def needs_attention_count
-      @needs_attention_count || document_types.map(&:needs_attention_count).sum
+      @needs_attention_count ||= calculate_needs_attention_count
+    end
+
+    def calculate_needs_attention_count
+      document_types.map(&:needs_attention_count).sum
     end
 
     def update_cache
