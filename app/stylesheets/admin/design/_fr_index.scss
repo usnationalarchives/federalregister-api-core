@@ -112,8 +112,8 @@
   }
 #indexes.admin.year_agency .page_summary .agency_index_actions {
   form.max_date {
-    float: left;
-    margin-left: 10px;
+    padding-bottom: 7px;
+    border-bottom: 1px solid #DDD;
 
     #max_date { 
       float: none;
