@@ -75,13 +75,14 @@ class Admin::IndexesController < AdminController
 
   def mark_complete
     agency = Agency.find_by_slug!(params[:agency])
-    agency_year = FrIndexPresenter::Agency.new(agency, params[:year])
     status = FrIndexAgencyStatus.find_or_initialize_by_year_and_agency_id(params[:year], agency.id)
-
     status.last_completed_issue = params[:last_completed_issue]
-    status.needs_attention_count = agency_year.calculate_needs_attention_count
     status.save
-    flash[:notice] = "'#{agency.name}' marked complete"
+
+    agency_year = FrIndexPresenter::Agency.new(agency, params[:year])
+    FrIndexAgencyStatus.update_cache(agency_year)
+
+    flash[:notice] = "'#{agency.name}' marked complete as of #{status.last_completed_issue}"
     redirect_to admin_index_year_path(params[:year])
   end
 
