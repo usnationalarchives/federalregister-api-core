@@ -102,6 +102,7 @@ class EntryApiRepresentation < ApiRepresentation
   field(:title)
   field(:toc_subject)
   field(:toc_doc)
+  field(:topics, :include => {:topic_assignments => :topic}) {|e| e.topics.map(&:name)}
   field(:type, :select => :granule_class){|e| e.entry_type}
   field(:volume)
 end
