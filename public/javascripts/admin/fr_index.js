@@ -228,4 +228,8 @@ $(document).ready(function() {
       popover_handler.get_popover_content( $el );
     });
   }
+
+  $('#indexes.admin.year_agency form.max_date select#max_date').on('change', function(event) {
+    $(this).closest('form').submit();
+  });
 });

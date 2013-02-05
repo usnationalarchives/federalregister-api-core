@@ -19,6 +19,11 @@
         <%= @agency_year.last_completed_issue.strftime("%b. #{@agency_year.last_completed_issue.day.ordinalize}") %>
       </div>
     <% end %>
+
+    <% form_tag(url_for(:max_date => @agency_year.last_issue_published), :method => :get, :class => 'max_date') do %>
+      <%= max_date_select(@agency_year) %>
+    <% end %>
+
     <%= link_to 'Preview PDF', {:format => :pdf}, :class => "btn pdf_preview" %>
   </div>
 </div>
