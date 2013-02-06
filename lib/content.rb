@@ -50,7 +50,14 @@ module Content
       
       alias_method_chain :url_for, :string_support
     end
+
+    if template_path =~ /\.erb$/
+      path = template_path
+    else
+      path = "#{template_path}.html.erb"
+    end
+
     
-    view.render(:file => "#{template_path}.html.erb", :locals => locals)
+    view.render(:file => path, :locals => locals)
   end
 end

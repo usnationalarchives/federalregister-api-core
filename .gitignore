@@ -38,6 +38,7 @@ webrat.log
 /public/stylesheets/text.css
 /public/stylesheets/utilities.css
 /public/stylesheets/enhancements.css
+/public/generated_files/
 /app/stylesheets/*.css
 /app/stylesheets/admin/*.css
 /public/system

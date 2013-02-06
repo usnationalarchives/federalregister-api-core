@@ -1,4 +1,4 @@
-<% max_date = @agency_years.first.max_date %>
+<% max_date = agency_years.first.max_date %>
 <% date_description = max_date.month == 1 ? max_date.to_s(:month_year) : "January&ndash;#{max_date.to_s(:month_year)}".html_safe %>
 <style>
   @page {
@@ -159,7 +159,7 @@
     <%= date_description %>
   </h1>
   <div class="index">
-    <%= render :partial => "agency_year", :collection => @agency_years %>
+    <%= render :partial => "admin/indexes/agency_year.pdf.erb", :collection => agency_years %>
   </div>
 </body>
 

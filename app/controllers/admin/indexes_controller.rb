@@ -9,9 +9,10 @@ class Admin::IndexesController < AdminController
     respond_to do |wants|
       wants.html
       wants.pdf do
-        @agency_years = @fr_index.agencies
-
-        render_pdf(:action => :year)
+        queue_pdf(
+          :year => year,
+          :max_date => options[:max_date]
+        )
       end
     end
   end
@@ -28,8 +29,11 @@ class Admin::IndexesController < AdminController
     respond_to do |wants|
       wants.html
       wants.pdf do
-        @agency_years = [@agency_year]
-        render_pdf(:action => :year)
+        queue_pdf(
+          :agency_id => agency.id,
+          :year => year,
+          :max_date => options[:max_date]
+        )
       end
     end
   end
@@ -86,18 +90,9 @@ class Admin::IndexesController < AdminController
 
   private
 
-  def render_pdf(options={})
-    Tempfile.open(['fr_index', '.pdf']) do |output_pdf|
-      output_pdf.close
-
-      Tempfile.open(['fr_index', '.html']) do |input_html|
-        input_html.write render_to_string(options)
-        input_html.close
-
-        `/usr/local/bin/prince #{input_html.path} -o #{output_pdf.path}`
-      end
-
-      send_file output_pdf.path, :filename => "fr_index.pdf"
-    end
+  def queue_pdf(parameters={})
+    file = GeneratedFile.create(:parameters => parameters)
+    Resque.enqueue FrIndexPdfGenerator, file.id
+    redirect_to admin_generated_file_path(file)
   end
 end
