@@ -34,14 +34,14 @@ class FrIndexPdfGenerator
 
     locals = {}
 
-    locals[:max_date] = params[:max_date] ? Date.parse(params[:max_date]) : Issue.last_issue_date_in_year(year)
-
     if params[:agency_id]
       agency = Agency.find(params[:agency_id])
-      locals[:agency_years] = [FrIndexPresenter::Agency.new(agency, year)]
+      agency_years = [FrIndexPresenter::Agency.new(agency, year, :max_date => params[:max_date])]
     else
-      locals[:agency_years] = FrIndexPresenter.new(year, :end_date => locals[:end_date])
+      agency_years = FrIndexPresenter.new(year, :max_date => params[:max_date]).agencies
     end
+
+    locals[:agency_years] = agency_years
 
     locals
   end

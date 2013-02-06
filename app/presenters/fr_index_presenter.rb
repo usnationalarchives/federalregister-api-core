@@ -1,7 +1,7 @@
 class FrIndexPresenter
   module Utils
     def publication_date_conditions
-      if max_date
+      if max_date.present?
         {:gte => "#{year}-01-01", :lte => max_date.to_s(:iso)}
       else
         {:year => year}
