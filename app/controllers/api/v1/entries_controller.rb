@@ -56,7 +56,7 @@ class Api::V1::EntriesController < ApiController
           value = [*representation.value(field)].join('; ')
 
           if field == :document_number
-            value = "#{value} "
+            value = " #{value}"
           else
             value
           end
