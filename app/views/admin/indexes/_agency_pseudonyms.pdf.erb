@@ -1,6 +1,7 @@
 <div id="agency_pseudonymns">
   <h1>Agency Pseudonyms</h1>
 
+  <% if RAILS_ENV == 'development' %>
   <div class="index">
     <% agency_years.each do |agency_year| %>
       <h2><%= agency_year.name %></h2>
@@ -16,4 +17,5 @@
       <% end %>
     <% end %>
   </div>
+  <% end %>
 </div>
