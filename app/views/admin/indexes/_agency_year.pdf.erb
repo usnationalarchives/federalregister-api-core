@@ -1,5 +1,4 @@
-<h2><%= agency_year.name %></h2>
-<% if agency_year.children.present? %>
+<h2><%= agency_year.name %></h2> <% if agency_year.children.present? %>
   <ul class="see_also">
     <% agency_year.children.each do |sub_agency| %>
       <li>
@@ -32,3 +31,5 @@
     <% end %>
   </ul>
 <% end %>
+
+<% generated_file.increment_processed_processed_document_count_by(agency_year.entry_count) %>

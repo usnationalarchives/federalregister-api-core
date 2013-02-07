@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130131201120) do
+ActiveRecord::Schema.define(:version => 20130207191803) do
 
   create_table "action_names", :force => true do |t|
     t.string   "name"
@@ -330,6 +330,8 @@ ActiveRecord::Schema.define(:version => 20130131201120) do
     t.integer  "updater_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "total_document_count"
+    t.integer  "processed_document_count"
   end
 
   create_table "graphic_usages", :force => true do |t|

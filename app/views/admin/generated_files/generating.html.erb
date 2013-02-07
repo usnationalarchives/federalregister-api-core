@@ -4,4 +4,25 @@
   <meta http-equiv="refresh" content="2">
 <% end %>
 
-<h2>Your file is being generated.</h2>
+<% if @generated_file.processing_began_at? %>
+  <h2>Your file is being generated.</h2>
+
+  <% if @generated_file.percentage_complete == 1 %>
+    <p>Generating PDF...</p>
+    <p>Your file will be ready shortly.</p>
+  <% elsif @generated_file.percentage_complete %>
+    <p>
+      Generating HTML...
+      <%= number_to_percentage @generated_file.percentage_complete * 100, :precision => 1 %> complete
+      (<%= number_with_delimiter @generated_file.processed_document_count %>
+        documents of <%= number_with_delimiter @generated_file.total_document_count %> total
+      )
+    </p>
+    <p>
+      We estimate this step will be complete in
+      <%= distance_of_time_in_words @generated_file.estimated_processing_remaining %>.
+    </p>
+  <% end %>
+<% else %>
+  <h2>Your file is queued to be generated.</h2>
+<% end %>

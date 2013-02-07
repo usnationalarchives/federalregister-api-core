@@ -293,7 +293,7 @@
     </h1>
 
     <div class="index">
-      <%= render :partial => "admin/indexes/agency_year.pdf.erb", :collection => agency_years %>
+      <%= render :partial => "admin/indexes/agency_year.pdf.erb", :collection => agency_years, :locals => {:generated_file => generated_file} %>
     </div>
   </div>
 
