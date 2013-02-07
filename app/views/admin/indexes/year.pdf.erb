@@ -279,12 +279,14 @@
 </style>
 
 <body>
+  <% if agency_years.size > 1 %>
   <div id="footer_dateline" class='left'>FEDERAL REGISTER INDEX, <%= date_description %></div>
   <div id="footer_dateline" class='right'>FEDERAL REGISTER INDEX, <%= date_description %></div>
 
   <%= render :partial => 'admin/indexes/title_page.pdf.erb', :locals => {:date_description => date_description} %>
 
   <%= render :partial => 'admin/indexes/front_matter.pdf.erb', :locals => {:date_description_without_year => date_description_without_year} %>
+  <% end %>
 
   <div id='index_pages'>
     <h1>
@@ -297,6 +299,6 @@
     </div>
   </div>
 
-  <%= render :partial => 'admin/indexes/agency_pseudonyms.pdf.erb', :locals => {:agency_years => agency_years} %>
+  <%= render(:partial => 'admin/indexes/agency_pseudonyms.pdf.erb', :locals => {:agency_years => agency_years}) if agency_years.size > 1 %>
 </body>
 
