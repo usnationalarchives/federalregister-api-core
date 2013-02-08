@@ -1,0 +1,9 @@
+<span class="<%= 'new_item' if max_date &&
+    agency.oldest_issue_needing_attention &&
+    max_date >= agency.oldest_issue_needing_attention %>">
+  <%= link_to agency.name, admin_index_year_agency_path(@fr_index.year, agency, :max_date => max_date) %>
+</span>
+
+<% unless max_date %>
+  <%= needs_attention_pill(agency.needs_attention_count) %>
+<% end %>

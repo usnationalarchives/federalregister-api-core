@@ -3,17 +3,17 @@ class Admin::IndexesController < AdminController
 
   def year
     @years = FrIndexPresenter.available_years
-    options = params.slice(:max_date)
+    @max_date = Date.parse(params[:max_date]) if params[:max_date]
 
     respond_to do |wants|
       wants.html do
-        @fr_index = FrIndexPresenter.new(params[:year], options)
+        @fr_index = FrIndexPresenter.new(params[:year], :max_date => @max_date)
       end
 
       wants.pdf do
         queue_pdf(
           :year => params[:year],
-          :max_date => options[:max_date]
+          :max_date => @max_date
         )
       end
     end
