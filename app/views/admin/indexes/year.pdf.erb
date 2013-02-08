@@ -283,7 +283,7 @@
   <div id="footer_dateline" class='left'>FEDERAL REGISTER INDEX, <%= date_description %></div>
   <div id="footer_dateline" class='right'>FEDERAL REGISTER INDEX, <%= date_description %></div>
 
-  <%= render :partial => 'admin/indexes/title_page.pdf.erb', :locals => {:date_description => date_description} %>
+  <%= render :partial => 'admin/indexes/title_page.pdf.erb', :locals => {:date_description => date_description, :fr_index_presenter => fr_index_presenter} %>
 
   <%= render :partial => 'admin/indexes/front_matter.pdf.erb', :locals => {:date_description_without_year => date_description_without_year} %>
   <% end %>

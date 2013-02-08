@@ -14,7 +14,13 @@ class FrIndexPresenter
     end
 
     def last_issue_published
-      ::Entry.scoped(:conditions => "publication_date <= '#{year}-12-31'").maximum(:publication_date)
+      ::Entry.scoped(:conditions => "publication_date BETWEEN '#{year}-01-01' AND '#{year}-12-31'").maximum(:publication_date)
+    end
+
+    private
+
+    def entries_scope
+      ::Entry.scoped(:conditions => "publication_date BETWEEN '#{year}-01-01' AND '#{max_date.to_s(:db)}'")
     end
   end
 
@@ -70,6 +76,18 @@ class FrIndexPresenter
         :max_date => max_date
       )
     end
+  end 
+
+  def volume_number
+    entries_scope.maximum(:volume)
+  end
+
+  def max_page_number
+    entries_scope.maximum(:end_page)
+  end
+
+  def max_issue_number
+    entries_scope.maximum(:issue_number)
   end
 
   private

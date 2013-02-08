@@ -5,10 +5,10 @@
   
   <p>
     <%= date_description %><br />
-    Volume XX &mdash; Numbers X-XXX
+    Volume <%= fr_index_presenter.volume_number %> &mdash; Numbers 1-<%= fr_index_presenter.max_issue_number %>
   </p>
 
-  <p>Pages 1-XXX</p>
+  <p>Pages 1-<%= fr_index_presenter.max_page_number %></p>
 
   <p class="ofr">OFFICE OF THE FEDERAL REGISTER<p>
 </div>

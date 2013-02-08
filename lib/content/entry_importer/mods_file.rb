@@ -41,6 +41,11 @@ class Content::EntryImporter::ModsFile
   def volume
     document.css('volume').first.try(:content)
   end
+
+  def issue_number
+    document.css('issue').first.try(:content)
+  end
+
   memoize :volume
   
   def find_entry_node_by_document_number(document_number)

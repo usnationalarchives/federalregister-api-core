@@ -31,20 +31,27 @@ class FrIndexPdfGenerator
   def generate_html
     Content.render_erb "admin/indexes/year.pdf.erb", 
       :agency_years => agency_years,
-      :generated_file => generated_file
+      :generated_file => generated_file,
+      :fr_index_presenter => fr_index_presenter
   end
 
   def agency_years
     return @agency_years if @agency_years
 
-    year = params[:year].to_i
-
     if params[:agency_id]
       agency = Agency.find(params[:agency_id])
       @agency_years = [FrIndexPresenter::Agency.new(agency, year, :max_date => params[:max_date])]
     else
-      @agency_years = FrIndexPresenter.new(year, :max_date => params[:max_date]).agencies
+      @agency_years = fr_index_presenter.agencies
     end
+  end
+
+  def fr_index_presenter
+    @fr_index_presenter ||= FrIndexPresenter.new(year, :max_date => params[:max_date])
+  end
+
+  def year
+    year = params[:year].to_i
   end
 
   def params
