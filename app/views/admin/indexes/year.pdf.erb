@@ -59,7 +59,7 @@
     }
   }
 
-  @page index_pages:nth(3) {
+  @page index_pages:nth(<%= agency_years.size > 1 ? 3 : 1 %>) {
     @top-right { content: normal; }
     @top-left { content: normal; }
   }
