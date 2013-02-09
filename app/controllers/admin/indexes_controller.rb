@@ -87,7 +87,7 @@ class Admin::IndexesController < AdminController
     FrIndexAgencyStatus.update_cache(agency_year)
 
     flash[:notice] = "'#{agency.name}' marked complete through #{status.last_completed_issue}"
-    redirect_to admin_index_year_path(params[:year])
+    redirect_to admin_index_year_path(params[:year], :max_date => params[:max_date])
   end
 
   private

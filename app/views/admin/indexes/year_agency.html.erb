@@ -15,7 +15,7 @@
       <%= max_date_select(@agency_year) %>
     <% end %>
 
-    <%= link_to 'Mark As Reviewed', admin_index_year_agency_completion_path(:last_completed_issue => @agency_year.max_date), :method => :put, :class => "btn mark_as_complete" %>
+    <%= link_to 'Mark As Reviewed', admin_index_year_agency_completion_path(:last_completed_issue => @agency_year.max_date, :max_date => params[:max_date]), :method => :put, :class => "btn mark_as_complete" %>
     <% if @agency_year.last_completed_issue %>
       <div class="last_completed">Marked complete through
         <%= @agency_year.last_completed_issue.strftime("%b. #{@agency_year.last_completed_issue.day.ordinalize}") %>
