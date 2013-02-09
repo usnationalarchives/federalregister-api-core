@@ -1,7 +1,7 @@
 <li>
   <%= subject_grouping.header %>
   <ul>
-    <%= render :partial => "document_grouping",
+    <%= render :partial => "admin/indexes/document_grouping.pdf.erb",
       :collection => subject_grouping.document_groupings,
       :locals => {:agency => agency} %>
   </ul>

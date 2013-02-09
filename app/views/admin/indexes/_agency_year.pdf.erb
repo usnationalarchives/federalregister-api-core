@@ -1,5 +1,4 @@
-<h2><%= agency_year.name %></h2>
-<% if agency_year.children.present? %>
+<h2><%= agency_year.name %></h2> <% if agency_year.children.present? %>
   <ul class="see_also">
     <% agency_year.children.each do |sub_agency| %>
       <li>
@@ -19,12 +18,12 @@
     <% document_type.groupings.each do |grouping| %>
       <%= case grouping
         when FrIndexPresenter::SubjectGrouping
-          render :partial => "subject_grouping", :locals => {
+          render :partial => "admin/indexes/subject_grouping.pdf.erb", :locals => {
             :subject_grouping => grouping,
             :agency => agency_year
           }
         when FrIndexPresenter::DocumentGrouping
-          render :partial => "document_grouping", :locals => {
+          render :partial => "admin/indexes/document_grouping.pdf.erb", :locals => {
             :document_grouping => grouping,
             :agency => agency_year
           }
@@ -32,3 +31,5 @@
     <% end %>
   </ul>
 <% end %>
+
+<% generated_file.increment_processed_processed_document_count_by(agency_year.entry_count) %>

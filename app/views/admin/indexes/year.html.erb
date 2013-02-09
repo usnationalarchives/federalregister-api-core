@@ -12,10 +12,10 @@
   <p>
 
   <div class="agency_index_actions">
-    <% form_tag(url_for(:format => :pdf), :method => :get) do %>
+    <% form_tag(url_for(:max_date => @fr_index.last_issue_published), :method => :get, :class => 'max_date') do %>
       <%= max_date_select(@fr_index) %>
-      <%= submit_tag 'Preview PDF', :class => "btn pdf_preview" %>
     <% end %>
+     <%= link_to 'Preview PDF', {:format => :pdf, :max_date => params[:max_date]}, :class => "btn pdf_preview" %>
   </div>
 </div>
 
@@ -29,16 +29,14 @@
     <ul>
       <% agencies.each do |agency| %>
         <li>
-          <%= link_to agency.name, admin_index_year_agency_path(@fr_index.year, agency) %>
-            <%= needs_attention_pill(agency.needs_attention_count) %>
+          <%= render :partial => "agency_name", :locals => {:agency => agency, :max_date => @max_date} %>
 
           <% if agency.children.present? %>
             <ul>
               <% agency.children.each do |sub_agency| %>
                 <li>
                   <span class="see">See</span> 
-                  <%= link_to sub_agency.name, admin_index_year_agency_path(@fr_index.year, sub_agency) %>
-                  <%= needs_attention_pill(sub_agency.needs_attention_count) %>
+                  <%= render :partial => "agency_name", :locals => {:agency => sub_agency, :max_date => @max_date} %>
                 </li>
               <% end %>
             </ul>

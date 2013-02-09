@@ -1,4 +1,4 @@
-cloud :static_server_large do
+cloud :worker_server_v2 do
   # basic settings
   using :ec2
   keypair "~/Documents/AWS/FR2/gpoEC2.pem"
@@ -19,30 +19,31 @@ cloud :static_server_large do
     repo File.join(File.dirname(__FILE__) ,"..", "..", "..", "..", "vendor", "plugins")
     
     recipe "apt"
-    recipe 's3sync'
-    recipe "ubuntu"
-    recipe "openssl"
-    recipe "imagemagick"
-    recipe "postfix"
-    recipe "splunk"
+    #recipe 's3sync'
+    #recipe "ubuntu"
+    #recipe "openssl"
+    #recipe "imagemagick"
+    #recipe "postfix"
 
-    recipe "mysql::client"
+    recipe 'princexml'
 
-    recipe "nginx"
+    #recipe "mysql::client"
+
+    #recipe "nginx"
     
-    recipe "apache2"
-    recipe "php::php5"
+    #recipe "apache2"
+    #recipe "php::php5"
     #recipe "passenger_enterprise::apache2"
     
-    recipe 'rubygems'
+    #recipe 'rubygems'
     
-    recipe "git"
-    recipe "capistrano"
-    recipe "rails"
-    recipe "redis"
-    recipe "resque_web"
+    #recipe "git"
+    #recipe "capistrano"
+    #recipe "rails"
+    #recipe "redis"
+    #recipe "resque_web"
 
-    recipe "iodocs"
+    #recipe "iodocs"
     
     attributes chef_cloud_attributes('production').recursive_merge(
       :chef    => {

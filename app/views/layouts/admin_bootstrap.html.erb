@@ -42,11 +42,12 @@
   <%= javascript_include_tag 'admin/tipsy' %>
   <%= javascript_include_tag 'admin/admin' %>
   <%= javascript_include_tag 'fr_index_popover_handler' %>
+  <%= javascript_include_tag 'admin/fr_index' %>
   
   <%= yield :javascripts %>
 
 
-
+  <%= yield :head %>
 </head>
 <body id="<%= controller.controller_name %>" class="admin <%= controller.action_name %>">
   

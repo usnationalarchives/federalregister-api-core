@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130124192057) do
+ActiveRecord::Schema.define(:version => 20130208211036) do
 
   create_table "action_names", :force => true do |t|
     t.string   "name"
@@ -227,6 +227,7 @@ ActiveRecord::Schema.define(:version => 20130124192057) do
     t.text     "executive_order_notes"
     t.string   "fr_index_subject"
     t.string   "fr_index_doc"
+    t.integer  "issue_number"
   end
 
   add_index "entries", ["citation"], :name => "index_entries_on_citation"
@@ -316,6 +317,23 @@ ActiveRecord::Schema.define(:version => 20130124192057) do
   end
 
   add_index "fr_index_agency_statuses", ["year", "agency_id"], :name => "index_fr_index_agency_statuses_on_year_and_agency_id"
+
+  create_table "generated_files", :force => true do |t|
+    t.string   "parameters"
+    t.string   "token"
+    t.datetime "processing_began_at"
+    t.datetime "processing_completed_at"
+    t.string   "attachment_file_name"
+    t.string   "attachment_file_type"
+    t.integer  "attachment_file_size"
+    t.datetime "attachment_updated_at"
+    t.integer  "creator_id"
+    t.integer  "updater_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "total_document_count"
+    t.integer  "processed_document_count"
+  end
 
   create_table "graphic_usages", :force => true do |t|
     t.integer "graphic_id"

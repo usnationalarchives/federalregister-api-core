@@ -18,7 +18,7 @@ namespace :content do
 
       desc "Extract Basic data"
       task :basic_data => :environment do
-        entry_importer(:volume, :title, :toc_subject, :toc_doc, :citation, :start_page, :end_page, :part_name, :granule_class, :abstract, :dates, :action, :contact, :docket_numbers, :correction_of_id)
+        entry_importer(:volume, :issue_number, :title, :toc_subject, :toc_doc, :citation, :start_page, :end_page, :part_name, :granule_class, :abstract, :dates, :action, :contact, :docket_numbers, :correction_of_id)
       end
       
       desc "Extract full text"
@@ -74,6 +74,11 @@ namespace :content do
       desc "Extract CFR information into entries"
       task :cfr => :environment do
         entry_importer(:entry_cfr_references)
+      end
+      
+      desc "Extract Issue Number into entries"
+      task :issue_number => :environment do
+        entry_importer(:issue_number)
       end
       
       desc "Import regulations.gov info"

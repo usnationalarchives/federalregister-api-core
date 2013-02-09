@@ -1,7 +1,7 @@
 class FrIndexPresenter
   module Utils
     def publication_date_conditions
-      if max_date
+      if max_date.present?
         {:gte => "#{year}-01-01", :lte => max_date.to_s(:iso)}
       else
         {:year => year}
@@ -14,7 +14,13 @@ class FrIndexPresenter
     end
 
     def last_issue_published
-      ::Entry.scoped(:conditions => "publication_date <= '#{year}-12-31'").maximum(:publication_date)
+      ::Entry.scoped(:conditions => "publication_date BETWEEN '#{year}-01-01' AND '#{year}-12-31'").maximum(:publication_date)
+    end
+
+    private
+
+    def entries_scope
+      ::Entry.scoped(:conditions => "publication_date BETWEEN '#{year}-01-01' AND '#{max_date.to_s(:db)}'")
     end
   end
 
@@ -56,6 +62,7 @@ class FrIndexPresenter
             year,
             :entry_count => raw_entry_counts_by_agency_id[child.id],
             :needs_attention_count => needs_attention_counts_by_agency_id[child.id],
+            :oldest_issue_needing_attention => oldest_issue_needing_attention_by_agency_id[child.id],
             :max_date => max_date
           )
       end
@@ -65,9 +72,22 @@ class FrIndexPresenter
         :children => children,
         :entry_count => entry_count,
         :needs_attention_count => needs_attention_counts_by_agency_id[agency.id],
+        :oldest_issue_needing_attention => oldest_issue_needing_attention_by_agency_id[agency.id],
         :max_date => max_date
       )
     end
+  end 
+
+  def volume_number
+    entries_scope.maximum(:volume)
+  end
+
+  def max_page_number
+    entries_scope.maximum(:end_page)
+  end
+
+  def max_issue_number
+    entries_scope.maximum(:issue_number)
   end
 
   private
@@ -81,13 +101,18 @@ class FrIndexPresenter
     end
   end
 
-
-  # doesn't recalcuate for max_date
   def needs_attention_counts_by_agency_id
     @needs_attention_counts_by_agency_id ||= Hash[FrIndexAgencyStatus.find_as_arrays(
       :select => "agency_id, needs_attention_count",
       :conditions => {:year => year}
     ).map{|id, count| [id.to_i, count.to_i]}]
+  end
+
+  def oldest_issue_needing_attention_by_agency_id
+    @oldest_issue_needing_attention_by_agency_id ||= Hash[FrIndexAgencyStatus.find_as_arrays(
+      :select => "agency_id, oldest_issue_needing_attention",
+      :conditions => {:year => year}
+    ).map{|id, date| [id.to_i, date ? Date.parse(date) : nil]}]
   end
 
   class Agency
@@ -106,6 +131,7 @@ class FrIndexPresenter
       @children = options[:children] || []
       @entry_count = options[:entry_count]
       @needs_attention_count = options[:needs_attention_count]
+      @oldest_issue_needing_attention = options[:oldest_issue_needing_attention]
       @max_date = parse_date(options[:max_date]) || last_issue_published
     end
 
@@ -151,6 +177,19 @@ class FrIndexPresenter
 
     def calculate_needs_attention_count
       document_types.map(&:needs_attention_count).sum
+    end
+
+    def needs_attention?
+      needs_attention_count > 0
+    end
+
+    def oldest_issue_needing_attention
+      return @oldest_issue_needing_attention if defined?(@oldest_issue_needing_attention)
+      @oldest_issue_needing_attention = calculate_oldest_issue_needing_attention
+    end
+
+    def calculate_oldest_issue_needing_attention
+      document_types.map(&:oldest_issue_needing_attention).compact.min if needs_attention?
     end
 
     def update_cache
@@ -305,6 +344,14 @@ class FrIndexPresenter
       groupings.sum(&:needs_attention_count)
     end
 
+    def needs_attention?
+      needs_attention_count > 0
+    end
+
+    def oldest_issue_needing_attention
+      groupings.map(&:oldest_issue_needing_attention).compact.min if needs_attention?
+    end
+
     private
 
     def subject_groupings
@@ -352,6 +399,10 @@ class FrIndexPresenter
     def needs_attention?
       needs_attention_count > 0
     end
+
+    def oldest_issue_needing_attention
+      document_groupings.map(&:oldest_issue_needing_attention).compact.min if needs_attention?
+    end
   end
 
   class DocumentGrouping
@@ -389,6 +440,10 @@ class FrIndexPresenter
 
     def needs_attention?
       old_entry_count == 0 && unmodified?
+    end
+
+    def oldest_issue_needing_attention
+      entries.map(&:publication_date).min if needs_attention?
     end
 
     def identifier

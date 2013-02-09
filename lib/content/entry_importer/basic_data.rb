@@ -1,9 +1,13 @@
 module Content::EntryImporter::BasicData
   extend Content::EntryImporter::Utils
-  provides :volume, :title, :toc_subject, :toc_doc, :citation, :regulation_id_numbers, :significant, :start_page, :end_page, :part_name, :granule_class, :abstract, :dates, :action, :contact, :docket_numbers, :correction_of_id
+  provides :volume, :issue_number, :title, :toc_subject, :toc_doc, :citation, :regulation_id_numbers, :significant, :start_page, :end_page, :part_name, :granule_class, :abstract, :dates, :action, :contact, :docket_numbers, :correction_of_id
   
   def volume
     mods_file.volume
+  end
+
+  def issue_number
+    mods_file.issue_number
   end
   
   def title

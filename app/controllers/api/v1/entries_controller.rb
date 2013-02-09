@@ -52,7 +52,15 @@ class Api::V1::EntriesController < ApiController
       csv << fields
       entries.each do |result|
         representation = EntryApiRepresentation.new(result)
-        csv << fields.map{|field| [*representation.value(field)].join('; ')}
+        csv << fields.map do |field|
+          value = [*representation.value(field)].join('; ')
+
+          if field == :document_number
+            value = " #{value}"
+          else
+            value
+          end
+        end
       end
     end
 

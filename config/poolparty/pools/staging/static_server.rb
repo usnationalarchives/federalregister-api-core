@@ -20,28 +20,30 @@ cloud :worker_server do
     repo File.join(File.dirname(__FILE__) ,"..", "..", "..", "..", "vendor", "plugins")
     
     recipe "apt"
-    recipe 's3sync'
-    recipe "ubuntu"
-    recipe "openssl"
-    recipe "imagemagick"
-    recipe "postfix"
+    #recipe 's3sync'
+    #recipe "ubuntu"
+    #recipe "openssl"
+    #recipe "imagemagick"
+    #recipe "postfix"
     
+    #recipe 'princexml'
+    recipe 'god'
     
-    recipe "mysql::client"
+    #recipe "mysql::client"
 
-    recipe "nginx"
+    #recipe "nginx"
     
-    recipe "apache2"
-    recipe "php::php5"
-    recipe "passenger_enterprise::apache2"
+    #recipe "apache2"
+    #recipe "php::php5"
+    #recipe "passenger_enterprise::apache2"
     
-    recipe 'rubygems'
+    #recipe 'rubygems'
     
-    recipe "git"
-    recipe "capistrano"
-    recipe "rails"
-    recipe "redis"
-    recipe "resque_web"
+    #recipe "git"
+    #recipe "capistrano"
+    #recipe "rails"
+    #recipe "redis"
+    #recipe "resque_web"
 
     #recipe "iodocs"
     
@@ -72,8 +74,14 @@ cloud :worker_server do
                  },
       :resque_web => {  
                       :password => @resque_web_password
-                     }
-
+                     },
+      :god => {
+                :bin_path => '/opt/ruby-enterprise/bin/god',
+                :domain => 'federalregister.gov',
+                :email_name => 'info',
+                :email_domain => 'criticaljuncture.org',
+                :monitor => [{:name => 'resque', :options => {:queue => 'fr_index', :queue_count => 2, :interval => 1.0}}]
+              }
       )
   end
   

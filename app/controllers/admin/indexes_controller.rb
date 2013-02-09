@@ -3,15 +3,18 @@ class Admin::IndexesController < AdminController
 
   def year
     @years = FrIndexPresenter.available_years
-    options = params.slice(:max_date)
-    @fr_index = FrIndexPresenter.new(params[:year], options)
+    @max_date = Date.parse(params[:max_date]) if params[:max_date].present?
 
     respond_to do |wants|
-      wants.html
-      wants.pdf do
-        @agency_years = @fr_index.agencies
+      wants.html do
+        @fr_index = FrIndexPresenter.new(params[:year], :max_date => @max_date)
+      end
 
-        render_pdf(:action => :year)
+      wants.pdf do
+        queue_pdf(
+          :year => params[:year],
+          :max_date => @max_date
+        )
       end
     end
   end
@@ -28,8 +31,11 @@ class Admin::IndexesController < AdminController
     respond_to do |wants|
       wants.html
       wants.pdf do
-        @agency_years = [@agency_year]
-        render_pdf(:action => :year)
+        queue_pdf(
+          :agency_id => agency.id,
+          :year => year,
+          :max_date => options[:max_date]
+        )
       end
     end
   end
@@ -81,23 +87,14 @@ class Admin::IndexesController < AdminController
     FrIndexAgencyStatus.update_cache(agency_year)
 
     flash[:notice] = "'#{agency.name}' marked complete through #{status.last_completed_issue}"
-    redirect_to admin_index_year_path(params[:year])
+    redirect_to admin_index_year_path(params[:year], :max_date => params[:max_date])
   end
 
   private
 
-  def render_pdf(options={})
-    Tempfile.open(['fr_index', '.pdf']) do |output_pdf|
-      output_pdf.close
-
-      Tempfile.open(['fr_index', '.html']) do |input_html|
-        input_html.write render_to_string(options)
-        input_html.close
-
-        `/usr/local/bin/prince #{input_html.path} -o #{output_pdf.path}`
-      end
-
-      send_file output_pdf.path, :filename => "fr_index.pdf"
-    end
+  def queue_pdf(parameters={})
+    file = GeneratedFile.create(:parameters => parameters)
+    Resque.enqueue FrIndexPdfGenerator, file.id
+    redirect_to admin_generated_file_path(file)
   end
 end

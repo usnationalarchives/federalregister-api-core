@@ -2,6 +2,18 @@ Paperclip.interpolates :identifier do |attachment, style|
   attachment.instance.identifier
 end
 
+Paperclip.interpolates :token do |attachment, style|
+  attachment.instance.token
+end
+
+Paperclip.interpolates :creation_year do |attachment, style|
+  attachment.instance.created_at.year
+end
+
+Paperclip.interpolates :creation_month do |attachment, style|
+  attachment.instance.created_at.strftime("%m")
+end
+
 Paperclip.interpolates :document_number do |attachment, style|
   attachment.instance.document_number
 end
