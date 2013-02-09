@@ -13,7 +13,7 @@ class Admin::IndexesController < AdminController
       wants.pdf do
         queue_pdf(
           :year => params[:year],
-          :max_date => @max_date
+          :max_date => params[:max_date]
         )
       end
     end
