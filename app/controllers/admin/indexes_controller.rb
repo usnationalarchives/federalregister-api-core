@@ -3,7 +3,7 @@ class Admin::IndexesController < AdminController
 
   def year
     @years = FrIndexPresenter.available_years
-    @max_date = Date.parse(params[:max_date]) if params[:max_date]
+    @max_date = Date.parse(params[:max_date]) if params[:max_date].present?
 
     respond_to do |wants|
       wants.html do

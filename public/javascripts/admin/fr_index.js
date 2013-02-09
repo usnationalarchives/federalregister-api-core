@@ -229,7 +229,7 @@ $(document).ready(function() {
     });
   }
 
-  $('#indexes.admin.year_agency form.max_date select#max_date').on('change', function(event) {
+  $('#indexes.admin form.max_date select#max_date').on('change', function(event) {
     $(this).closest('form').submit();
   });
 });

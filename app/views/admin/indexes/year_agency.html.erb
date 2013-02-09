@@ -2,8 +2,6 @@
 
 <% sidebar(render :partial => 'nav', :locals => {:years => @years, :current_year => @agency_year.year}) %>
 
-<% add_javascript(:src => 'admin/fr_index.js') %>
-
 <%= add_template('admin/fr_index_entry_popover', 'fr-index-entry-popover') %>
 <%= add_template('admin/fr_index_entry_popover_content', 'fr-index-entry-popover-content') %>
 
