@@ -51,7 +51,7 @@ class Admin::IndexesController < AdminController
     end
 
     agency = Agency.find_by_slug!(params[:agency])
-    agency_year = FrIndexPresenter::Agency.new(agency, params[:year])
+    agency_year = FrIndexPresenter::Agency.new(agency, params[:year], :max_date => params[:max_date])
 
     agency_year.update_cache
 
