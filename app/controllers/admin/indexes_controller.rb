@@ -1,5 +1,6 @@
 class Admin::IndexesController < AdminController
   layout 'admin_bootstrap'
+  before_filter :disable_all_browser_caching
 
   def year
     @years = FrIndexPresenter.available_years
@@ -91,6 +92,10 @@ class Admin::IndexesController < AdminController
   end
 
   private
+
+  def disable_all_browser_caching
+    headers['Cache-Control'] = "no-cache, max-age=0, must-revalidate, no-store"
+  end
 
   def queue_pdf(parameters={})
     file = GeneratedFile.create(:parameters => parameters)
