@@ -19,6 +19,7 @@
 
   <% form_tag({}, :method => :put, :class => "#{'top_level' if document_grouping.top_level?}") do %>
     <%= hidden_field_tag(:granule_class, document_grouping.granule_class) %>
+    <%= hidden_field_tag(:max_date, params[:max_date]) %>
     <% document_grouping.entries.each do |entry| %>
       <%= hidden_field_tag(:'entry_ids[]', entry.id) %>
     <% end %>

@@ -4,6 +4,7 @@
     <%= link_to 'Edit', '#', :class => "edit btn" %>
     <% form_tag({}, :method => :put, :class => 'top_level') do %>
       <%= hidden_field_tag(:granule_class, subject_grouping.granule_class) %>
+      <%= hidden_field_tag(:max_date, params[:max_date]) %>
       <%= hidden_field_tag(:old_subject, subject_grouping.header) %>
       <% subject_grouping.entries.each do |entry| %>
         <%= hidden_field_tag(:'entry_ids[]', entry.id) %>
