@@ -1,7 +1,7 @@
 source :gemcutter
 source 'http://gems.github.com'
 
-gem 'rails', '2.3.16'
+gem 'rails', '2.3.17'
 gem 'mysql', '2.7'
 
 gem 'fr2_audit_logic',
@@ -21,7 +21,7 @@ gem 'indefinite_article'
 gem 'rubyzip', '0.9.1', :require => 'zip/zip'
 gem 'formtastic', '0.9.8'
 
-gem 'json'
+gem 'json', '1.7.7'
 gem 'ym4r', '0.6.1'
 
 gem 'thinking-sphinx', '1.4.13', :require => 'thinking_sphinx'
