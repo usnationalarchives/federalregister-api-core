@@ -314,6 +314,7 @@ ActiveRecord::Schema.define(:version => 20130208211036) do
     t.integer "agency_id"
     t.date    "last_completed_issue"
     t.integer "needs_attention_count"
+    t.date    "oldest_issue_needing_attention"
   end
 
   add_index "fr_index_agency_statuses", ["year", "agency_id"], :name => "index_fr_index_agency_statuses_on_year_and_agency_id"
