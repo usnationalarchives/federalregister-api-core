@@ -299,6 +299,6 @@ end
 
 namespace :airbrake do
   task :notify_deploy, :roles => [:worker] do
-    run "cd #{current_path} && bundle exec rake airbrake:deploy RAILS_ENV=#{rails_env} TO=#{rails_env} USER=#{`git config --global github.user`} REVISION=#{real_revision} REPO=#{repository}" 
+    run "cd #{current_path} && bundle exec rake airbrake:deploy RAILS_ENV=#{rails_env} TO=#{rails_env} USER=#{`git config --global github.user`.strip} REVISION=#{real_revision} REPO=#{repository}" 
   end
 end
