@@ -19,12 +19,11 @@ module FrIndexHelper
   def max_date_select(index_object)
     select_tag( 'max_date',
                 options_for_select(
-                  [['Year to Date','']] +
                   (1..index_object.last_issue_published.month).map{ |m|
                     date = Date.new(index_object.last_issue_published.year,m,1).end_of_month
                     [date.strftime("%B"), date.to_s(:iso)]
                   },
-                  index_object.max_date.to_s(:iso)
+                  index_object.max_date.to_s(:iso) || index_object.last_issue_published.end_of_month.to_s(:iso)
                 )) 
   end
 end
