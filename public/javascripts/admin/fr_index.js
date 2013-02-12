@@ -213,7 +213,8 @@ $(document).ready(function() {
       /* add tipsy to the element */
       $el.find('a.document_number').tipsy({ fade: true,
                   opacity: 1.0,
-                  gravity: 'e',
+                  gravity: 'n',
+                  offset: 5,
                   html: true,
                   title: function(){
                     return fr_index_entry_popover_template( {content: new Handlebars.SafeString('<div class="loading">Loading...</div>'),
