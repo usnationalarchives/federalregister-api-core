@@ -211,7 +211,7 @@ $(document).ready(function() {
       var $el = $(this);
             
       /* add tipsy to the element */
-      $el.tipsy({ fade: true,
+      $el.find('a.document_number').tipsy({ fade: true,
                   opacity: 1.0,
                   gravity: 'e',
                   html: true,
