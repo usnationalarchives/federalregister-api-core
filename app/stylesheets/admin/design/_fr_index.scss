@@ -213,3 +213,29 @@ ul.entry_type {
     background: #CCC url(/my/assets/orange_loader_CCC.gif) 6px 5px no-repeat;
   }
 }
+
+#indexes.admin.year_agency {
+  /* bottom padding so last popover is visible */
+  #content_area > .wrapper { padding-bottom: 200px; }
+
+  /* popover customizations */
+  .tipsy-inner { width: 580px; }
+  .popover-title { 
+    margin-bottom: 0;
+    font-size: 16px;
+    border-top: none;
+    color: #000;
+   }
+  .popover-content dl dt { 
+    width: 100px;
+    text-align: right;
+  }
+  .popover-content {
+    .loading {
+      background-position-x: 220px;
+      background-position-y: 1px;
+      }
+
+    dl dd { width: 420px; }
+  }
+}

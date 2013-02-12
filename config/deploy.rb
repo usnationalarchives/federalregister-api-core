@@ -144,8 +144,8 @@ after "bundler:fix_bundle",            "deploy:migrate"
 after "deploy:migrate",                "sass:update_stylesheets"
 after "sass:update_stylesheets",       "javascript:combine_and_minify"
 after "javascript:combine_and_minify", "passenger:restart"
-after "passenger:restart",             "resque:restart"
-after "resque:restart",                "varnish:clear_cache"
+after "passenger:restart",             "resque:restart_workers"
+after "resque:restart_workers",        "varnish:clear_cache"
 after "varnish:clear_cache",           "airbrake:notify_deploy"
 
 
@@ -236,8 +236,8 @@ end
 #############################################################
 
 namespace :resque do
-  task :restart, :roles => [:worker] do
-    sudo '/opt/ruby-enterprise/bin/god signal resque SIGQUIT'
+  task :restart_workers, :roles => [:worker] do
+    sudo "monit -g rescue_workers restart"
   end
 end
 
@@ -299,6 +299,6 @@ end
 
 namespace :airbrake do
   task :notify_deploy, :roles => [:worker] do
-    run "cd #{current_path} && bundle exec rake airbrake:deploy RAILS_ENV=#{rails_env} TO=#{rails_env} USER=#{`git config --global github.user`} REVISION=#{real_revision} REPO=#{repository}" 
+    run "cd #{current_path} && bundle exec rake airbrake:deploy RAILS_ENV=#{rails_env} TO=#{rails_env} USER=#{`git config --global github.user`.strip} REVISION=#{real_revision} REPO=#{repository}" 
   end
 end

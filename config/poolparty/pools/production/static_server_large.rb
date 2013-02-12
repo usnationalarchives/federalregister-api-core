@@ -25,7 +25,8 @@ cloud :worker_server_v2 do
     #recipe "imagemagick"
     #recipe "postfix"
 
-    recipe 'princexml'
+    #recipe 'princexml'
+    recipe 'monit'
 
     #recipe "mysql::client"
 
@@ -69,19 +70,34 @@ cloud :worker_server_v2 do
                    :name           => 'fr2_blog',
                    :enable_mods    => ["rewrite", "deflate", "expires"]
                  },
-      :splunk  => {
-                      :files_to_monitor => [
-                                              {:path => '/var/www/apps/fr2/shared/log/weekly_sphinx_reindex.log', :ignore_older_than => '7d', :source_type => 'unix_date'},
-                                              {:path => '/var/www/apps/fr2/shared/log/late_page_expiration.log', :ignore_older_than => '7d', :source_type => 'unix_date'},
-                                              {:path => '/var/www/apps/fr2/shared/log/reg_gov_url_import.log', :ignore_older_than => '7d', :source_type => 'unix_date'},
-                                              {:path => '/var/www/apps/fr2/shared/log/ofr_bulkdata_import.log', :ignore_older_than => '7d', :source_type => 'unix_date'}
-                                            ]
-                    },
       :resque_web => {  
                       :password => @resque_web_password
-                     }
+                     },
+      #:god => {
+          #:bin_path => '/opt/ruby-enterprise/bin/god',
+          #:domain => 'federalregister.gov',
+          #:email_name => 'info',
+          #:email_domain => 'criticaljuncture.org',
+          #:monitor => [{:name => 'resque', :options => {:queue => 'fr_index', :queue_count => 2, :interval => 1.0}}]
+        #}
+      
+      :monit => {
+            :check_interval => 30,
+            :mail_from_address => "monit-#{@rails_env}@federalregister.gov",
+            :alert_to_address => 'info@criticaljuncture.org',
+            :monitors => [{:name => 'resque_worker_fr_index',
+                           :monitor_type => 'resque',
+                           :options => {:queue => 'fr_index',
+                                        :queue_count => 2,
+                                        :interval => 1,
+                                        :app_path => "/var/www/apps/#{@app[:name]}/current",
+                                        :total_mem => "500 MB",
+                                        :total_mem_cycles => "10"
+                                       }
+                         }]
+          }
 
-      )
+    )
   end
   
   security_group "static" do

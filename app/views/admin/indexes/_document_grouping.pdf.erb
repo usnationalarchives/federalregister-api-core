@@ -1,7 +1,5 @@
 <li data-agency-name="<%= agency.name %>">
-  <%= document_grouping.header %> &mdash; 
-  <em>
-    <%= document_grouping.entries.group_by(&:publication_date).map do |publication_date, entries|
+  <%= document_grouping.header %>&nbsp;&ndash;&nbsp;<em><%= document_grouping.entries.group_by(&:publication_date).map do |publication_date, entries|
       "<span class='item'>#{entries.map{|e| link_to e.start_page, short_entry_url(e, :host => "federalregister.gov")}.join(', ')} <span class='day'>(#{publication_date.strftime("%b %e")})</span></span>"
       end.join('; ') %>
   </em>

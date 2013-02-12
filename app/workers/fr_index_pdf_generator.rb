@@ -42,7 +42,7 @@ class FrIndexPdfGenerator
       agency = Agency.find(params[:agency_id])
       @agency_years = [FrIndexPresenter::Agency.new(agency, year, :max_date => params[:max_date])]
     else
-      @agency_years = fr_index_presenter.agencies
+      @agency_years = fr_index_presenter.agencies_with_pseudonyms
     end
   end
 

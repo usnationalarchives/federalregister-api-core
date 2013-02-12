@@ -25,6 +25,7 @@
 #  active                      :boolean(1)
 #  cfr_citation                :text
 #  display_name                :string(255)
+#  pseudonym                   :string(255)
 #
 
 require 'spec_helper'

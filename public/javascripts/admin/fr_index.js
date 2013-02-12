@@ -25,10 +25,6 @@ fr_index_popover_handler.add_popover_content = function() {
         new_html = fr_index_entry_popover_content_template( this.popover_cache[this.current_el.data('document-number')] );
 
     $(popover_id).find('.loading').replaceWith( new_html );
-
-    // bacause we modify the content we need to calculate a new top based on the new height of the popover
-    var new_top = parseInt($tipsy_el.css('top'), 10) - ( ($tipsy_el.height() - prev_height) / 2 );
-    $tipsy_el.css('top', new_top);
   };
 
 
@@ -207,25 +203,30 @@ $(document).ready(function() {
   if ( $("#fr-index-entry-popover-template") !== []) {
     var fr_index_entry_popover_template = Handlebars.compile($("#fr-index-entry-popover-template").html());
         
-    $('body').delegate('.with_ajax_popover', 'mouseenter', function(event) {
-      var $el = $(this);
-            
+    $('body').delegate('.with_ajax_popover a.document_number', 'mouseenter', function(event) {
+      var $el = $(this),
+          $li = $el.closest('.with_ajax_popover');
+
+
       /* add tipsy to the element */
       $el.tipsy({ fade: true,
                   opacity: 1.0,
-                  gravity: 'e',
+                  gravity: 'n',
+                  offset: 5,
                   html: true,
                   title: function(){
                     return fr_index_entry_popover_template( {content: new Handlebars.SafeString('<div class="loading">Loading...</div>'),
-                                                             document_number: $(this).data('document-number'),
+                                                             document_number: $li.data('document-number'),
                                                              title: 'Original ToC Data'} );
                   } 
                 });
       /* trigger the show or else it won't be shown until the next mouseover */
       $el.tipsy("show");
 
-      /* get the ajax content and show it */
-      popover_handler.get_popover_content( $el );
+      /* get the ajax content and show it
+       * this used to be bound to the li - so we pass it through here
+       * to stay consistent with other uses of the handler */
+      popover_handler.get_popover_content( $li );
     });
   }
 

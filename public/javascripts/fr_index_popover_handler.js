@@ -10,7 +10,7 @@ fr_index_popover_handler = {
   pi_base_url: 'https://www.federalregister.gov/api/v1/public-inspection-documents/',
   article_base_url: 'https://www.federalregister.gov/api/v1/articles/',
   current_el: null,
-  article_fields: 'fields%5B%5D=title',
+  article_fields: 'fields%5B%5D=title&fields%5B%5D=document_number',
   uses_pi: true,
 
   initialize: function() {
@@ -48,6 +48,7 @@ fr_index_popover_handler = {
             dataType: 'jsonp'
           }).done(function(response) {
             pi_response.title = response.title;
+            pi_response.document_number = response.document_number;
             popover_handler.ajax_done(pi_response);
           });
         } else {

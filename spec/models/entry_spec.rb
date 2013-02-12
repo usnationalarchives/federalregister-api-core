@@ -45,6 +45,7 @@
 #  executive_order_notes         :text
 #  fr_index_subject              :string(255)
 #  fr_index_doc                  :string(255)
+#  issue_number                  :integer(4)
 #
 
 require 'spec_helper'
