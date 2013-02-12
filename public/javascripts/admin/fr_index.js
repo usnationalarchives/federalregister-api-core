@@ -205,7 +205,7 @@ $(document).ready(function() {
         
     $('body').delegate('.with_ajax_popover a.document_number', 'mouseenter', function(event) {
       var $el = $(this),
-          $li = $el.closest('.with_ajax_popover')
+          $li = $el.closest('.with_ajax_popover');
 
 
       /* add tipsy to the element */
