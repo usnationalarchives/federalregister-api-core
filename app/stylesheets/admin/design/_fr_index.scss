@@ -216,7 +216,7 @@ ul.entry_type {
 
 #indexes.admin.year_agency {
   /* bottom padding so last popover is visible */
-  #content_area .wrapper { padding-bottom: 200px; }
+  #content_area > .wrapper { padding-bottom: 200px; }
 
   /* popover customizations */
   .tipsy-inner { width: 580px; }
