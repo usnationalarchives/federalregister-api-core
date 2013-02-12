@@ -78,6 +78,10 @@ class FrIndexPresenter
     end
   end 
 
+  def agencies_with_pseudonyms
+    (agencies + agencies.map(&:pseudonym)).compact.sort_by{|agency_or_pseudonym| agency_or_pseudonym.name.downcase}
+  end
+
   def volume_number
     entries_scope.maximum(:volume)
   end
@@ -115,6 +119,20 @@ class FrIndexPresenter
     ).map{|id, date| [id.to_i, date ? Date.parse(date) : nil]}]
   end
 
+  AgencyPseudonym = Struct.new(:agency) do
+    def name
+      agency.pseudonym
+    end
+
+    def see_instead
+      agency
+    end
+
+    def entry_count
+      0
+    end
+  end
+
   class Agency
     include Utils
     attr_reader :agency, :year, :children, :max_date
@@ -133,6 +151,12 @@ class FrIndexPresenter
       @needs_attention_count = options[:needs_attention_count]
       @oldest_issue_needing_attention = options[:oldest_issue_needing_attention]
       @max_date = parse_date(options[:max_date]) || last_issue_published
+    end
+
+    def pseudonym
+      if agency.pseudonym
+        AgencyPseudonym.new(agency)
+      end
     end
 
     def current_year?

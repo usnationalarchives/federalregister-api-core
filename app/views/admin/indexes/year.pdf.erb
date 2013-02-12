@@ -261,14 +261,9 @@
   #front_matter .right_column li {
     list-style: none;
     }
-  #front_matter .right_column li a:after {
-    content: target-counter(attr(href), page);
+  a.agency_reference:after {
+    content: concat(' (on page ' target-counter(attr(href), page) ')');
     }
-
-  #agency_pseudonymns h2 {
-    font-size: 0.9em;
-  }
-    
 </style>
 
 <body>
@@ -291,7 +286,5 @@
       <%= render :partial => "admin/indexes/agency_year.pdf.erb", :collection => agency_years, :locals => {:generated_file => generated_file} %>
     </div>
   </div>
-
-  <%= render(:partial => 'admin/indexes/agency_pseudonyms.pdf.erb', :locals => {:agency_years => agency_years}) if agency_years.size > 1 %>
 </body>
 

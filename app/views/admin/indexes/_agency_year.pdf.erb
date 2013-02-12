@@ -1,35 +1,46 @@
-<h2><%= agency_year.name %></h2> <% if agency_year.children.present? %>
+<% if agency_year.respond_to?(:see_instead) %>
+  <h2><%= agency_year.name %></h2>
   <ul class="see_also">
-    <% agency_year.children.each do |sub_agency| %>
-      <li>
-        <em class="see">See</em> 
-        <%= sub_agency.name %>
-      </li>
-    <% end %>
+    <li>
+      <em class="see">See</em> 
+      <%= link_to "#{agency_year.see_instead.name} ", "#agency_#{agency_year.see_instead.id}", :class => "agency_reference"  %>
+    </li>
   </ul>
-<% end %>
-
-<% agency_year.document_types.each do |document_type| %>
-  <% unless document_type.name == Entry::ENTRY_TYPES['UNKNOWN'] %>
-    <h3><%= document_type.name.pluralize.upcase %></h3>
+<% else %>
+  <h2 id="agency_<%= agency_year.agency.id %>"><%= agency_year.name %></h2>
+  <% if agency_year.children.present? %>
+    <ul class="see_also">
+      <% agency_year.children.each do |sub_agency| %>
+        <li>
+          <em class="see">See</em> 
+          <%= link_to "#{sub_agency.name} ", "#agency_#{sub_agency.agency.id}", :class => "agency_reference" %>
+        </li>
+      <% end %>
+    </ul>
   <% end %>
 
-  <ul <%= "class='no_header'" if document_type.name == Entry::ENTRY_TYPES['UNKNOWN'] %>>
-    <% document_type.groupings.each do |grouping| %>
-      <%= case grouping
-        when FrIndexPresenter::SubjectGrouping
-          render :partial => "admin/indexes/subject_grouping.pdf.erb", :locals => {
-            :subject_grouping => grouping,
-            :agency => agency_year
-          }
-        when FrIndexPresenter::DocumentGrouping
-          render :partial => "admin/indexes/document_grouping.pdf.erb", :locals => {
-            :document_grouping => grouping,
-            :agency => agency_year
-          }
-        end %>
+  <% agency_year.document_types.each do |document_type| %>
+    <% unless document_type.name == Entry::ENTRY_TYPES['UNKNOWN'] %>
+      <h3><%= document_type.name.pluralize.upcase %></h3>
     <% end %>
-  </ul>
+
+    <ul <%= "class='no_header'" if document_type.name == Entry::ENTRY_TYPES['UNKNOWN'] %>>
+      <% document_type.groupings.each do |grouping| %>
+        <%= case grouping
+          when FrIndexPresenter::SubjectGrouping
+            render :partial => "admin/indexes/subject_grouping.pdf.erb", :locals => {
+              :subject_grouping => grouping,
+              :agency => agency_year
+            }
+          when FrIndexPresenter::DocumentGrouping
+            render :partial => "admin/indexes/document_grouping.pdf.erb", :locals => {
+              :document_grouping => grouping,
+              :agency => agency_year
+            }
+          end %>
+      <% end %>
+    </ul>
+  <% end %>
 <% end %>
 
 <% generated_file.increment_processed_processed_document_count_by(agency_year.entry_count) %>
