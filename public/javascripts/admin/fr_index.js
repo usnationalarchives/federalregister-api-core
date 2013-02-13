@@ -254,7 +254,7 @@ $(document).ready(function() {
           tipsy_right_adjustment = $input.hasClass('fr_index_subject') ? 30 : 0;
       
       $input.tipsy('show');
-      $('.tipsy').addClass('input_tipsy').css('left', $('.fr_index_subject').first().position().left - $('.tipsy').width() - tipsy_right_adjustment);
+      $('.tipsy').addClass('input_tipsy').css('left', $input.position().left - $('.tipsy').width() - tipsy_right_adjustment);
       $('.tipsy .tipsy-arrow').css('right', -16);
     });
     $('.fr_index_subject, .fr_index_doc').on('blur', function(event) {
