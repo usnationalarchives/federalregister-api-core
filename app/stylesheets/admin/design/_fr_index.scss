@@ -238,4 +238,11 @@ ul.entry_type {
 
     dl dd { width: 420px; }
   }
+
+  .input_tipsy {
+    z-index: 500;
+    .tipsy-inner {
+      width: 100%;
+    }
+  }
 }

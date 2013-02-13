@@ -122,6 +122,37 @@ function initializeFrIndexEditor(elements) {
   $elements.find('form').each(function(){
     var form = $(this);
 
+      form.find('.fr_index_subject').each( function(event) {
+        var $input = $(this);
+
+        $input.tipsy({ opacity: 1.0,
+                       gravity: 'e',
+                       fallback: 'Category',
+                       trigger: 'manual'});
+      });
+
+      form.find('.fr_index_doc').each( function(event) {
+        var $input = $(this);
+
+        $input.tipsy({ opacity: 1.0,
+                       gravity: 'e',
+                       fallback: 'Subject Line',
+                       trigger: 'manual'});
+      });
+
+
+      form.find('.fr_index_subject, .fr_index_doc').on('focus', function(event) {
+        var $input = $(this),
+            tipsy_right_adjustment = $input.hasClass('fr_index_subject') ? 30 : 0;
+        
+        $input.tipsy('show');
+        $('.tipsy').addClass('input_tipsy').css('left', $input.position().left - $('.tipsy').width() - tipsy_right_adjustment);
+        $('.tipsy .tipsy-arrow').css('right', -16);
+      });
+      form.find('.fr_index_subject, .fr_index_doc').on('blur', function(event) {
+        $(this).tipsy('hide');
+      });
+
     form.unbind('submit').bind('submit', function(event) {
       var form = $(this);
       event.preventDefault();
@@ -148,6 +179,7 @@ function initializeFrIndexEditor(elements) {
           form.siblings('a.cancel').show();
           submit_button.val('Save');
           submit_button.attr("disabled", false);
+          form.find('input[type=text]').trigger('blur');
 
           var added_element;
           var wrapping_list = form.closest('ul.entry_type');

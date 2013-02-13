@@ -23,8 +23,8 @@
     <% document_grouping.entries.each do |entry| %>
       <%= hidden_field_tag(:'entry_ids[]', entry.id) %>
     <% end %>
-    <%= text_field_tag('entry[fr_index_subject]', document_grouping.fr_index_subject, :class => "fr_index_subject", :autocomplete => "off") %>
-    <%= text_field_tag('entry[fr_index_doc]', document_grouping.header, :class => "fr_index_doc", :autocomplete => "off") %>
+    <%= text_field_tag('entry[fr_index_subject]', document_grouping.fr_index_subject, :class => "fr_index_subject", :title => 'Category', :autocomplete => "off") %>
+    <%= text_field_tag('entry[fr_index_doc]', document_grouping.header, :class => "fr_index_doc", :title => 'Subject Line', :autocomplete => "off") %>
     <%= submit_tag("Save") %>
   <% end %>
 </li>

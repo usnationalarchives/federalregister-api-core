@@ -361,7 +361,7 @@ class FrIndexPresenter
     end
 
     def groupings
-      @groupings ||= (subject_groupings + document_groupings).sort_by(&:header)
+      @groupings ||= (subject_groupings + document_groupings).sort_by{|grouping| grouping.header.downcase}
     end
 
     def needs_attention_count
@@ -408,7 +408,7 @@ class FrIndexPresenter
     def document_groupings
       entries.
         group_by(&:fr_index_doc).
-        sort_by{|fr_index_doc, group_entries| fr_index_doc }.
+        sort_by{|fr_index_doc, group_entries| fr_index_doc.downcase }.
         map {|fr_index_doc, group_entries| DocumentGrouping.new(self, fr_index_doc, group_entries, header) }
     end
 
