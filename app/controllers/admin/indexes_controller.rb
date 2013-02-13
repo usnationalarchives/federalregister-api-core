@@ -44,9 +44,17 @@ class Admin::IndexesController < AdminController
   def update_year_agency
     entries = Entry.scoped(:conditions => {:id => params[:entry_ids]})
 
+    subject = params[:entry][:fr_index_subject]
+    doc = params[:entry][:fr_index_doc]
+
+    if doc.blank? && subject.present?
+      doc = subject
+      subject = ''
+    end
+
     Entry.transaction do
       entries.each do |entry|
-        entry.update_attributes!(params[:entry])
+        entry.update_attributes!(params[:entry].merge(:fr_index_subject => subject, :fr_index_doc => doc))
       end
     end
 
@@ -55,9 +63,7 @@ class Admin::IndexesController < AdminController
 
     agency_year.update_cache
 
-    header = params[:entry][:fr_index_subject].present? ?
-      params[:entry][:fr_index_subject] :
-      params[:entry][:fr_index_doc]
+    header = subject.present? ? subject : doc
 
     grouping = agency_year.grouping_for_document_type_and_header(params[:granule_class], header)
 
