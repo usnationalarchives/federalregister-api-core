@@ -48,4 +48,10 @@ $(document).ready(function() {
     /* get the ajax content and show it */
     popover_handler.get_popover_content( $el );
   });
+
+  $('a.toc_title').on('click', function(event) {
+    event.preventDefault();
+
+    $(this).siblings('div.index_entries').toggle();
+  });
 });

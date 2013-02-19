@@ -1,6 +1,5 @@
-<% id = rand(100000) %> 
-<li>
-  <a href="javascript:" data-toggle="collapse" data-target="#<%= id %>" class="toc_title">
+<li class="<%= 'top_level' if top_level %>">
+  <a href="#" class="toc_title">
     <%= document_grouping.header %><%= count_pill(document_grouping.entry_count) %>
 
     <% if document_grouping.comments_open? %> 
@@ -14,7 +13,7 @@
     <% end %>
   </a>
 
-  <div id="<%= id %>" class="index_entries" style="height: 0px; overflow-y: hidden">
+  <div class="index_entries">
     <% document_grouping.entries.group_by(&:publication_month).each do |month, entries| %>
       <h6><%= month %></h6>
 
