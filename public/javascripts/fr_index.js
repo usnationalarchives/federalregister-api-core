@@ -13,8 +13,8 @@ fr_index_popover_handler.add_popover_content = function() {
     var $tipsy_el = $('.tipsy'),
         current_dl = this.current_el,
         fr_index_entry_popover_content_template = Handlebars.compile($("#fr-index-entry-popover-content-template").html()),
-        popover_id = '#popover-' + current_dl.data('document-number'),
-        new_html = fr_index_entry_popover_content_template( this.popover_cache[current_dl.data('document-number')] );
+        popover_id = '#popover-' + current_dl.data('document-number');
+    var new_html = fr_index_entry_popover_content_template( this.popover_cache[current_dl.data('document-number')] );
 
     $(popover_id).find('.loading').replaceWith( new_html );
   };
@@ -43,6 +43,7 @@ $(document).ready(function() {
           });
     /* trigger show or else it won't be shown until the next mouseenter */
     $el.tipsy("show");
+    $('.tipsy.tipsy-n').addClass('popover').css('left', $el.find('dd.document_number').position().left - 300);
 
     /* get the ajax content and show it */
     popover_handler.get_popover_content( $el );

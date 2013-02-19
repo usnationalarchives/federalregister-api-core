@@ -254,6 +254,7 @@ $(document).ready(function() {
                 });
       /* trigger the show or else it won't be shown until the next mouseover */
       $el.tipsy("show");
+      $('.tipsy.tipsy-n').addClass('popover');
 
       /* get the ajax content and show it
        * this used to be bound to the li - so we pass it through here
