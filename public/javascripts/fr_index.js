@@ -65,4 +65,14 @@ $(document).ready(function() {
         return $(this).data('tooltip');
       }
     });
+
+  $('#indexes.year .count_pill')
+    .tipsy({
+      fade: true,
+      opacity: 0.8,
+      gravity: 's',
+      title: function() {
+        return $(this).data('tooltip');
+      }
+    });
 });
