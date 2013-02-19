@@ -3,13 +3,13 @@
     <%= document_grouping.header %><%= count_pill(document_grouping.entry_count) %>
 
     <% if document_grouping.comments_open? %> 
-      <div class="comment_open"></div>
+      <div class="comment_open" data-tooltip="Contains documents that are open for public comments"></div>
     <% end %>
     <% if document_grouping.has_comments? %>
-      <div class="comments_received"></div>
+      <div class="comments_received" data-tooltip="Contains documents that have recieved public comments"></div>
     <% end %>
     <% if document_grouping.significant? %>
-      <div class="significant"></div>
+      <div class="significant" data-tooltip="Contains documents that have been deemed significant under EO 12866"></div>
     <% end %>
   </a>
 
@@ -24,22 +24,25 @@
             <dd><%= link_to entry.publication_date, short_entry_path(entry) %></dd>
 
             <dt>FR Document:</dt>
-            <dd><%= link_to entry.document_number, short_entry_path(entry) %></dd>
+            <dd class='document_number'><%= link_to entry.document_number, short_entry_path(entry) %></dd>
 
             <dt><%= pluralize_without_count(entry.length, 'Page') %>:</dt>
             <dd class='pages'><%= link_to entry.page_range, entry.pdf_url %> <%= "(#{pluralize(entry.human_length, 'page')})" if entry.human_length > 1 %></dd>
 
-            <dt></dt>
-            <% if entry.comments_open? %>
-              <dd class="comment_open"></dd>
-            <% end %>
 
-            <% if entry.comment_count > 0 %>
-              <dd class="comments_received"></dd>
-            <% end %>
+            <% if entry.comments_open? || entry.comment_count > 0 || entry.significant? %>
+              <dt></dt>
+              <% if entry.comments_open? %>
+                <dd class="comment_open" data-tooltip="Is open for public comments"></dd>
+              <% end %>
 
-            <% if entry.significant? %>
-              <dd class="significant"></dd>
+              <% if entry.comment_count > 0 %>
+                <dd class="comments_received" data-tooltip="Has recieved public comments"></dd>
+              <% end %>
+
+              <% if entry.significant? %>
+                <dd class="significant" data-tooltip="Has been deemed significant under EO 12866"></dd>
+              <% end %>
             <% end %>
           </dl>
         <% end %>

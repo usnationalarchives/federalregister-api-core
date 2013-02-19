@@ -54,4 +54,15 @@ $(document).ready(function() {
 
     $(this).siblings('div.index_entries').toggle();
   });
+
+  $('#indexes .entry_type')
+    .find('.comments_received, .comments_open, .significant')
+    .tipsy({
+      fade: true,
+      opacity: 0.8,
+      gravity: 's',
+      title: function() {
+        return $(this).data('tooltip');
+      }
+    });
 });
