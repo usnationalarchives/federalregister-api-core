@@ -1,5 +1,43 @@
 <div id="fr-index-agency-metadata" class="page_summary">
-  <h1><%= link_to agency_year.agency.name, agency_path(agency_year.agency) %></h1>
+  <h1>
+    <%= link_to agency_year.agency.name, agency_path(agency_year.agency) %>
+    <%= link_to "Return to the agency list for the #{agency_year.year} FR Index", index_year_path(agency_year.year), :class => "return_to_index" %>
+  </h1>
+
+  <hr />
+
+  <% add_javascript :src => 'page_specific/search/search.js' %>
+  <% add_javascript :src => 'page_specific/search/agency_search.js' %>
+  <div class="embedded_search search_bar">
+    <% semantic_form_for :conditions, @search, :url => entries_search_path, :html => {:method => :get, :id => "entry_search_form"} do |f| %>
+      <div class="simple">
+        <label>Search <%= agency_year.year %> Articles</label>
+        <%= f.text_field :term, :placeholder => 'Search term' %>
+        <ul>
+          <%= f.input :agency_ids, :as => :hidden, :value => agency_year.agency.id %>
+          <% f.fields_for :publication_date do |date_f| %>
+            <%= date_f.input :year, :as => :hidden, :value => agency_year.year %>
+          <% end %>
+        </ul>
+        <%= f.submit 'Search' %>
+        <span id="expected_result_count"></span>
+
+        <% unless agency_year.agency == AgencyName.find_by_name!("Executive Office of the President").agency %>
+          <div id="doc-type-search-filter">
+            <ul>
+              <li class="doc_notice first" data-filter-doc-type="notice"   data-filter-doc-type-display="Notice">                <%= image_tag '/my/assets/icons/document_icons/document_icons_mini.png' %></li>
+              <li class="doc_prorule"      data-filter-doc-type="prorule"  data-filter-doc-type-display="Proposed Rule">         <%= image_tag '/my/assets/icons/document_icons/document_icons_mini.png' %></li>
+              <li class="doc_rule last"    data-filter-doc-type="rule"     data-filter-doc-type-display="Rule">                  <%= image_tag '/my/assets/icons/document_icons/document_icons_mini.png' %></li>
+            </ul>
+          </div>
+          <%= f.input :type,
+                      :label => "Document Category",
+                      :as => :check_boxes,
+                      :collection => EntrySearch::TYPES %>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
 
   <hr />
 
@@ -22,6 +60,4 @@
     </tr>
     <% end %>
   </table>
-
-  <%= link_to "Return to the agency list for the #{agency_year.year} FR Index", index_year_path(agency_year.year), :class => "return_to_index" %>
 </div>
