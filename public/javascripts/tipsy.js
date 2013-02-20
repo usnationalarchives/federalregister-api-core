@@ -17,7 +17,7 @@ $(document).ready(function(){
   $('table.calendar td.holiday').tipsy({ gravity: 's', delayIn: 100, fade: true, offset: 0});
 
   /* Doctype Filters */
-  $('#doc-type-search-filter li').tipsy( {gravity: 'n', fade: true, offset: 2, title: function() { return $(this).data('tooltip');} });
+  $('#doc-type-search-filter li').tipsy( {gravity: 'n', fade: false, offset: 2, title: function() { return $(this).data('tooltip');} });
 
   /* NAVIGATION (pluralized tooltips) */
   $('#navigation .doc_notice.tipsy').tipsy(  {gravity: 's', fallback: "Notice",                   delayIn: 100, fade: true, offset: 4});
