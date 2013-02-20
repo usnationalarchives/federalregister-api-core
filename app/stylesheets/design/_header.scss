@@ -107,7 +107,8 @@ NAV
 #navigation .advanced-search,
 #navigation .events-search,
 #navigation .unified-agenda-search,
-#navigation .public-inspection-search {
+#navigation .public-inspection-search,
+#navigation .fr-index-search {
   padding-left: 35px;
   }
 #navigation .nav_myfr2 {
@@ -190,16 +191,10 @@ NAV
   background: sprite-image('icons/header/public-inspection-hover.png', 9px, 17px, 50px) no-repeat;
   }
 #navigation .executive_orders {
-  background: sprite-image('icons/header/executive-orders-off.png', 10px, 20px, 50px) no-repeat;
+  background: sprite-image('icons/header/executive-orders-off.png', 10px, 19px, 50px) no-repeat;
   }
 #navigation .executive_orders.hover {
-  background: sprite-image('icons/header/executive-orders-hover.png', 10px, 20px, 50px) no-repeat;
-  }
-#navigation .executive_orders {
-  background: sprite-image('header/executive-orders-off.png', 10px, 6px, 50px) no-repeat;
-  }
-#navigation .executive_orders:hover {
-  background: sprite-image('header/executive-orders-hover.png', 10px, 6px, 50px) no-repeat;
+  background: sprite-image('icons/header/executive-orders-hover.png', 10px, 19px, 50px) no-repeat;
   }
 #navigation .money {
   background: sprite-image('icons/header/money-off.png', 10px, 20px, 50px) no-repeat;
@@ -266,6 +261,12 @@ NAV
   }
 #navigation .public-inspection-search:hover {
   background: sprite-image('icons/header/public-inspection-search-hover.png', 6px, 2px, 50px) no-repeat;
+  }
+#navigation .fr-index-search {
+  background: sprite-image('icons/header/fr-index-off.png', 8px, 6px, 50px) no-repeat;
+  }
+#navigation .fr-index-search:hover {
+  background: sprite-image('icons/header/fr-index-hover.png', 8px, 6px, 50px) no-repeat;
   }
 #navigation .nav_myfr2 {
   background: sprite-image('icons/header/my-fr2.png', 7px, 7px, 50px) no-repeat;

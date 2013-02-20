@@ -62,6 +62,9 @@
         <li id='public-inspection-search'>
           <%= link_to 'Public Inspection Search', public_inspection_search_path, :class => "public-inspection-search" %>
         </li>
+        <li id='fr-index-search'>
+          <%= link_to 'FR Index', index_year_path(Issue.current.publication_date.year), :class => "fr-index-search" %>
+        </li>
       </ul>
     </li>
     <%= render :esi => '/layout/navigation_page_list' %>
