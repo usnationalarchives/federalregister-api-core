@@ -41,7 +41,7 @@ class FrIndexPresenter
   end
 
   def agencies_by_letter
-    agencies.group_by(&:first_letter)
+    agencies_with_pseudonyms.group_by(&:first_letter)
   end
 
   def agencies
@@ -130,6 +130,10 @@ class FrIndexPresenter
 
     def entry_count
       0
+    end
+
+    def first_letter
+      name.chars.first
     end
   end
 

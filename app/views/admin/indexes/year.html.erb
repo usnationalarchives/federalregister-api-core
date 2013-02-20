@@ -28,20 +28,39 @@
 
     <ul>
       <% agencies.each do |agency| %>
-        <li>
-          <%= render :partial => "agency_name", :locals => {:agency => agency, :max_date => @max_date} %>
-
-          <% if agency.children.present? %>
+        <% if agency.respond_to?(:see_instead) %> 
+          <li>
+            <%= agency.name %>
             <ul>
-              <% agency.children.each do |sub_agency| %>
-                <li>
-                  <span class="see">See</span> 
-                  <%= render :partial => "agency_name", :locals => {:agency => sub_agency, :max_date => @max_date} %>
-                </li>
-              <% end %>
+              <li>
+                <em class="see">see</em> 
+                <%= link_to "#{agency.see_instead.name} ", "#agency_#{agency.see_instead.id}", :class => "agency_reference"  %>
+              </li>
             </ul>
-          <% end %>
-        </li>
+          </li>
+        <% else %>
+          <li>
+            <%= render :partial => "agency_name", :locals => {:agency => agency, :max_date => @max_date} %>
+
+            <% if agency.children.present? %>
+              <ul>
+                <% agency.children.each do |sub_agency| %>
+                  <% if sub_agency.respond_to?(:see_instead) %>
+                    <li>
+                      <em class="see">See</em> 
+                      <%= link_to "#{sub_agency.see_instead.name} ", "#agency_#{sub_agency.see_instead.id}", :class => "agency_reference"  %>
+                    </li>
+                  <% else %>
+                    <li>
+                      <span class="see">See</span> 
+                      <%= render :partial => "agency_name", :locals => {:agency => sub_agency, :max_date => @max_date} %>
+                    </li>
+                  <% end %>
+                <% end %>
+              </ul>
+            <% end %>
+          </li>
+        <% end %>
       <% end %>
     </ul>
   <% end %>

@@ -26,28 +26,47 @@
 </div>
 
 <div class="index_agencies">
-  <% @fr_index.agencies_by_letter.each do |letter, agencies| %>
+  <% @fr_index.agencies_by_letter.each do |letter, agency_years| %>
     <h3 id="<%= letter %>">
       <%= letter %>
       <a href="#fr-index-metadata">back to top</a>
     </h3>
     <ul>
-    <% agencies.each do |agency| %>
-      <li>
-        <%= link_to agency.name, index_year_agency_path(@fr_index.year, agency) %>
-        <%= count_pill(agency.entry_count, "data-tooltip" => "Articles published in #{@fr_index.year}") %>
-        <% if agency.children.present? %>
-        <ul>
-          <% agency.children.each do |sub_agency| %>
+    <% agency_years.each do |agency_year| %>
+      <% if agency_year.respond_to?(:see_instead) %> 
+        <li>
+          <%= agency_year.name %>
+          <ul>
             <li>
-              <span class="see">See</span> 
-              <%= link_to sub_agency.name, index_year_agency_path(@fr_index.year, sub_agency) %>
-              <%= count_pill(sub_agency.entry_count, "data-tooltip" => "Articles published in #{@fr_index.year}") %>
+              <em class="see">see</em> 
+              <%= link_to "#{agency_year.see_instead.name} ", "#agency_#{agency_year.see_instead.id}", :class => "agency_reference"  %>
             </li>
+          </ul>
+        </li>
+      <% else %>
+        <li>
+        <%= link_to agency_year.name, index_year_agency_path(@fr_index.year, agency_year), :id => "agency_#{agency_year.agency.id}" %>
+          <%= count_pill(agency_year.entry_count, "data-tooltip" => "Articles published in #{@fr_index.year}") %>
+          <% if agency_year.children.present? %>
+          <ul>
+            <% agency_year.children.each do |sub_agency| %>
+              <% if sub_agency.respond_to?(:see_instead) %>
+                <li>
+                  <em class="see">See</em> 
+                  <%= link_to "#{sub_agency.see_instead.name} ", "#agency_#{sub_agency.see_instead.id}", :class => "agency_reference"  %>
+                </li>
+              <% else %>
+                <li>
+                  <span class="see">See</span> 
+                  <%= link_to sub_agency.name, index_year_agency_path(@fr_index.year, sub_agency), :id => "agency_#{sub_agency.agency.id}" %>
+                  <%= count_pill(sub_agency.entry_count, "data-tooltip" => "Articles published in #{@fr_index.year}") %>
+                </li>
+              <% end %>
+            <% end %>
+          </ul>
           <% end %>
-        </ul>
-        <% end %>
-      </li>
+        </li>
+      <% end %>
     <% end %>
     </ul>
   <% end %>
