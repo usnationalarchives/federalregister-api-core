@@ -16,7 +16,7 @@ staging:
   address: sphinx.fr2.ec2.internal
   port: 3312
   mem_limit: 528M
-  version: '2.0.5'
+  version: '2.0.6'
   searchd_log_file: /var/www/apps/fr2/shared/log/searchd.log
   query_log_file: /var/www/apps/fr2/shared/log/searchd.query.log
   pid_file: /var/www/apps/fr2/shared/tmp/searchd.pid
