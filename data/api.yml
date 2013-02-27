@@ -116,16 +116,16 @@ endpoints:
       Type: multiple
     - Name: conditions[type][]
       EnumeratedDescription: 
-        prorule: Proposed Rule
-        presdocu: Presidential Document
-        notice: Notice
-        rule: Final Rule
+        PRORULE: Proposed Rule
+        PRESDOCU: Presidential Document
+        NOTICE: Notice
+        RULE: Final Rule
       Description: Document type
       EnumeratedList: 
-      - rule
-      - prorule
-      - notice
-      - presdocu
+      - RULE
+      - PRORULE
+      - NOTICE
+      - PRESDOCU
       Type: multiple
     - Name: conditions[presidential_document_type][]
       Description: Presidential document type; only available for Presidential Docuements
@@ -276,16 +276,16 @@ endpoints:
       Type: multiple
     - Name: conditions[type][]
       EnumeratedDescription: 
-        prorule: Proposed Rule
-        presdocu: Presidential Document
-        notice: Notice
-        rule: Final Rule
+        PRORULE: Proposed Rule
+        PRESDOCU: Presidential Document
+        NOTICE: Notice
+        RULE: Final Rule
       Description: Document type
       EnumeratedList: 
-      - rule
-      - prorule
-      - notice
-      - presdocu
+      - RULE
+      - PRORULE
+      - NOTICE
+      - PRESDOCU
       Type: multiple
     - Name: conditions[special_filing]
       Default: ""

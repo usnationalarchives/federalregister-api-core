@@ -47,7 +47,7 @@ class Admin::IndexesController < AdminController
     subject = params[:entry][:fr_index_subject]
     doc = params[:entry][:fr_index_doc]
 
-    if doc.blank? && subject.present?
+    if doc == '' && subject.present?
       doc = subject
       subject = ''
     end
