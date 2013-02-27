@@ -95,7 +95,20 @@ cloud :worker_server do
                                               :total_mem => "500 MB",
                                               :total_mem_cycles => "10"
                                              }
-                               }]
+                                },
+                                {:name => 'redis',
+                                 :monitor_type => 'redis',
+                                 :options => {:host => '127.0.0.1',
+                                              :port => 6379,
+                                              :total_mem => '200 MB',
+                                              :total_mem_cycles => 5,
+                                              :max_children => 255,
+                                              :max_children_cycles => 5,
+                                              :max_cpu_percent => '95%',
+                                              :max_cpu_percent_cycles => 5,
+                                             }
+                                }
+                               ]
                 }
       )
   end
