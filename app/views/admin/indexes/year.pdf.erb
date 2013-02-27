@@ -1,3 +1,6 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 <% max_date = agency_years.first.max_date %>
 <% date_description = max_date.month == 1 ? max_date.to_s(:month_year) : "January&ndash;#{max_date.to_s(:month_year)}".html_safe %>
 <% date_description_without_year = max_date.month == 1 ? max_date.strftime("%B") : "January&ndash;#{max_date.strftime("%B")}".html_safe %>
@@ -265,7 +268,7 @@
     content: " (on page " target-counter(attr(href), page) ")"
     }
 </style>
-
+</head>
 <body>
   <% if agency_years.size > 1 %>
   <div id="footer_dateline" class='left'>FEDERAL REGISTER INDEX, <%= date_description %></div>
@@ -287,4 +290,4 @@
     </div>
   </div>
 </body>
-
+</html>
