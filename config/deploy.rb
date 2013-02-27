@@ -237,7 +237,7 @@ end
 
 namespace :resque do
   task :restart_workers, :roles => [:worker] do
-    sudo "monit -g rescue_workers restart"
+    sudo "monit -g resque_workers restart"
   end
 end
 
