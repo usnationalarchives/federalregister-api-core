@@ -81,6 +81,11 @@
   #fr-index-agency-metadata { 
     margin-bottom: 30px;
     overflow: hidden;
+
+    h1 { 
+      overflow: hidden;
+      a.agency { float: left; }
+    }
   
     table {
       .entry_count,

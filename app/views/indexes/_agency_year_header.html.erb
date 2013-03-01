@@ -1,6 +1,6 @@
 <div id="fr-index-agency-metadata" class="page_summary">
   <h1>
-    <%= link_to agency_year.agency.name, agency_path(agency_year.agency) %>
+    <%= link_to agency_year.agency.name, agency_path(agency_year.agency), :class => 'agency' %>
     <%= link_to "Return to the agency list for the #{agency_year.year} FR Index", index_year_path(agency_year.year), :class => "return_to_index" %>
   </h1>
 
