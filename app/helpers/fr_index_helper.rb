@@ -23,7 +23,7 @@ module FrIndexHelper
                     date = Date.new(index_object.last_issue_published.year,m,1).end_of_month
                     [date.strftime("%B"), date.to_s(:iso)]
                   },
-                  index_object.max_date.to_s(:iso) || index_object.last_issue_published.end_of_month.to_s(:iso)
+                  index_object.max_date.end_of_month.to_s(:iso)
                 )) 
   end
 end
