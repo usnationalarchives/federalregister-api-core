@@ -240,7 +240,7 @@ class FrIndexPresenter
     end
 
     def last_published
-      @last_published = agency_status.try(:last_published)
+      @last_published ||= agency_status.try(:last_published)
     end
 
     def published_pdf_path
