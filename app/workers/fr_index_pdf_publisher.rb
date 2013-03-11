@@ -33,9 +33,9 @@ class FrIndexPdfPublisher < FrIndexPdfGenerator
 
   def destination_path
     if agency
-      'public' + fr_index_presenter.published_pdf_path
-    else
       'public' + agency_years.first.published_pdf_path
+    else
+      'public' + fr_index_presenter.published_pdf_path
     end
   end
 end
