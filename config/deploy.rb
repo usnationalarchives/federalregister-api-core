@@ -138,7 +138,8 @@ set :gem_file_groups, [:deployment, :development, :test]
 # be put in the user-scripts files on s3!!!
 
 after "deploy:update_code",            "symlinks:create"
-after "symlinks:create",               "deploy:set_rake_path"
+after "symlinks:create",               "static_files:custom_symlinks"
+after "static_files:custom_symlinks",  "deploy:set_rake_path"
 after "deploy:set_rake_path",          "bundler:fix_bundle"
 after "bundler:fix_bundle",            "deploy:migrate"
 after "deploy:migrate",                "sass:update_stylesheets"
@@ -174,6 +175,12 @@ set :custom_symlinks, {
   
   'db/sphinx'       => 'db/sphinx',
 }
+
+namespace :static_files do
+  task :custom_symlinks, :roles => [:worker]  do
+    run "ln -sf #{shared_path}/index #{current_path}/public/"
+  end
+end
 
 
 #############################################################
