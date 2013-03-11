@@ -19,6 +19,12 @@
     less than 2 articles in a given year.
   </p>
 
+  <% if @fr_index.last_published %>
+    <p>
+      <%= link_to "Download Approved #{@fr_index.last_published.to_s(:month_year)} Index (PDF)", @fr_index.published_pdf_path %>
+    </p>
+  <% end %>
+
   <p id="agency-jump-nav">
     Jump to Agencies: <%= @fr_index.agencies_by_letter.map{|letter,agencies| "<a href='##{letter}' class='letter_link'>#{letter}</a>"}.join(' | ') %>
   <p>

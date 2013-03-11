@@ -34,6 +34,7 @@
       }
 
     .mark_as_complete,
+    .publish_pdfs,
     .pdf_preview { 
       padding-left: 26px;
       -webkit-transition: none;
@@ -43,11 +44,11 @@
       transition: none;
     }
     
-    .mark_as_complete {
+    .mark_as_complete, .publish_pdfs {
       float: left;
       background: sprite-image("icons/admin/index_mark_as_done.png", 4px, 3px, 30px) no-repeat;
     }
-    .mark_as_complete:hover {
+    .mark_as_complete:hover, .publish_pdfs:hover {
       color: $fr_green;
       border-color: $fr_green;
       background: #e6e6e6 sprite-image("icons/admin/index_mark_as_done_active.png", 4px, 3px, 30px) no-repeat;

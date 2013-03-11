@@ -4,6 +4,9 @@
     <%= link_to "Return to the agency list for the #{agency_year.year} FR Index", index_year_path(agency_year.year), :class => "return_to_index" %>
   </h1>
 
+  <% if agency_year.last_published %>
+    <%= link_to "Download Approved #{agency_year.last_published.to_s(:month_year)} #{agency_year.name} Index (PDF)", agency_year.published_pdf_path %>
+  <% end %>
   <hr />
 
   <%= render :partial => 'embedded_search', :locals => {:search => @search, :agency_year => agency_year} %>

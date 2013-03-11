@@ -12,12 +12,26 @@ class Admin::IndexesController < AdminController
       end
 
       wants.pdf do
-        queue_pdf(
+        queue_preview_pdf(
           :year => params[:year],
           :max_date => params[:max_date]
         )
       end
     end
+  end
+
+  def publish
+    year = params[:year]
+    max_date = params[:max_date]
+    fr_index = FrIndexPresenter.new(year, :max_date => max_date)
+
+    Resque.enqueue FrIndexPdfPublisher, {:year => year, :max_date => max_date}
+    fr_index.agencies.each do |year_agency|
+      Resque.enqueue FrIndexPdfPublisher, {:year => year, :max_date => max_date, :agency_id => year_agency.agency.id}
+    end
+
+    flash[:notice] = "#{max_date.to_s(:month_year)} has been queued to be published."
+    redirect_to admin_index_year_path(params[:year], :max_date => params[:max_date])
   end
 
   def year_agency
@@ -32,7 +46,7 @@ class Admin::IndexesController < AdminController
     respond_to do |wants|
       wants.html
       wants.pdf do
-        queue_pdf(
+        queue_preview_pdf(
           :agency_id => agency.id,
           :year => year,
           :max_date => options[:max_date]
@@ -103,9 +117,9 @@ class Admin::IndexesController < AdminController
     headers['Cache-Control'] = "no-cache, max-age=0, must-revalidate, no-store"
   end
 
-  def queue_pdf(parameters={})
+  def queue_preview_pdf(parameters={})
     file = GeneratedFile.create(:parameters => parameters)
-    Resque.enqueue FrIndexPdfGenerator, file.id
+    Resque.enqueue FrIndexPdfPreviewer, file.id
     redirect_to admin_generated_file_path(file)
   end
 end
