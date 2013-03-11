@@ -29,6 +29,7 @@ class FrIndexPdfPublisher < FrIndexPdfGenerator
     FileUtils.mkdir_p(File.dirname(destination_path))
 
     FileUtils.cp(file.path, destination_path)
+    FileUtils.chmod(644, destination_path)
   end
 
   def destination_path
