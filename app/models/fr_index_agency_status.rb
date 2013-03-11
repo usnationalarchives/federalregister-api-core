@@ -8,6 +8,7 @@
 #  last_completed_issue           :date
 #  needs_attention_count          :integer(4)
 #  oldest_issue_needing_attention :date
+#  last_published                 :date
 #
 
 class FrIndexAgencyStatus < ApplicationModel

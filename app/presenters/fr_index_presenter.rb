@@ -36,6 +36,7 @@ class FrIndexPresenter
   def initialize(year, options = {})
     @year = year.to_i
     @max_date = parse_date(options[:max_date]) || last_issue_published
+    @last_published = options[:last_published]
 
     raise ActiveRecord::RecordNotFound unless FrIndexPresenter.available_years.include?(@year)
   end
@@ -94,6 +95,16 @@ class FrIndexPresenter
     entries_scope.maximum(:issue_number)
   end
 
+  def last_published
+    @last_published ||= FrIndexAgencyStatus.scoped(:conditions => {:year => year}).maximum(:last_published)
+  end
+
+  def published_pdf_path
+    if last_published
+      "/index/pdf/#{year}/#{last_published.strftime("%m")}.pdf"
+    end
+  end
+
   private
 
   def raw_entry_counts_by_agency_id
@@ -150,6 +161,7 @@ class FrIndexPresenter
       @entry_count = options[:entry_count]
       @needs_attention_count = options[:needs_attention_count]
       @oldest_issue_needing_attention = options[:oldest_issue_needing_attention]
+      @last_published = options[:last_published]
       @max_date = parse_date(options[:max_date]) || last_issue_published
     end
 
@@ -173,7 +185,7 @@ class FrIndexPresenter
 
     def last_completed_issue
       return @last_completed_issue if defined?(@last_completed_issue)
-      @last_completed_issue = FrIndexAgencyStatus.find_by_year_and_agency_id(year, agency.id).try(:last_completed_issue)
+      @last_completed_issue = agency_status.try(:last_completed_issue)
     end
 
     def entry_count
@@ -227,7 +239,21 @@ class FrIndexPresenter
       ).result_ids
     end
 
+    def last_published
+      @last_published = agency_status.try(:last_published)
+    end
+
+    def published_pdf_path
+      if last_published
+        "/index/pdf/#{year}/#{last_published.strftime("%m")}/#{agency.slug}.pdf"
+      end
+    end
+
     private
+
+    def agency_status
+      @agency_status ||= FrIndexAgencyStatus.find_by_year_and_agency_id(year, agency.id)
+    end
 
     def sphinx_conditions
       {

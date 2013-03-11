@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130212183831) do
+ActiveRecord::Schema.define(:version => 20130228190112) do
 
   create_table "action_names", :force => true do |t|
     t.string   "name"
@@ -316,6 +316,7 @@ ActiveRecord::Schema.define(:version => 20130212183831) do
     t.date    "last_completed_issue"
     t.integer "needs_attention_count"
     t.date    "oldest_issue_needing_attention"
+    t.date    "last_published"
   end
 
   add_index "fr_index_agency_statuses", ["year", "agency_id"], :name => "index_fr_index_agency_statuses_on_year_and_agency_id"
