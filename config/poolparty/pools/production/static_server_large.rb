@@ -88,7 +88,7 @@ cloud :worker_server_v2 do
             :monitors => [
                           {:name => 'resque_worker_fr_index',
                            :monitor_type => 'resque',
-                           :options => {:queue => 'fr_index',
+                           :options => {:queue => 'fr_index_pdf_previewer,fr_index_pdf_publisher',
                                         :queue_count => 2,
                                         :interval => 1,
                                         :app_path => "/var/www/apps/#{@app[:name]}/current",
