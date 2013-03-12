@@ -56,7 +56,7 @@ $(document).ready(function() {
   });
 
   $('#indexes .entry_type')
-    .find('.comments_received, .comments_open, .significant')
+    .find('.comments_received, .comment_open, .significant')
     .tipsy({
       fade: true,
       opacity: 0.8,

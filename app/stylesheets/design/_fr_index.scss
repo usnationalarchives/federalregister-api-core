@@ -145,8 +145,13 @@
     a.toc_title { 
       font-weight: bold;
       font-size: 15px;
-      float: left;
+
+      span.title { 
+        display: block;
+        float: left;
       }
+      
+    }
 
     .entries_by_month { float: left; }
 
@@ -180,7 +185,7 @@
         width: 20px;
         }
       dd.significant {
-        background: sprite-image('icons/icon_significant_entry_index.png', 0, 2px, 50px) no-repeat;
+        background: sprite-image('icons/icon_significant_entry_index.png', 0, 1px, 50px) no-repeat;
         }
       dd.comment_open {
         margin-top: 2px;
@@ -197,19 +202,19 @@
     .comments_received {
       position: relative;
       top: 2px;
-      display: inline-block;
       height: 15px;
       width: 16px;
       margin-left: 5px;
+      float: left;
       }
     .significant {
-      background: sprite-image('icons/icon_significant_entry_index.png', 0, 2px, 50px) no-repeat;
+      background: sprite-image('icons/icon_significant_entry_index.png', 0, 1px, 50px) no-repeat;
       }
     .comment_open {
-      background: sprite-image('icons/icon_comment_index_green.png', 0, 2px, 50px) no-repeat;
+      background: sprite-image('icons/icon_comment_index_green.png', 0, 1px, 50px) no-repeat;
       }
     .comments_received {
-      background: sprite-image('icons/icon_comment_index_gray.png', 0, 2px, 50px) no-repeat;
+      background: sprite-image('icons/icon_comment_index_gray.png', 0, 1px, 50px) no-repeat;
       }
     .index_entries { 
       clear: both;

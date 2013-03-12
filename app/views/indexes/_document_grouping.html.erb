@@ -1,6 +1,7 @@
 <li class="<%= 'top_level' if top_level %>">
   <a href="#" class="toc_title">
-    <%= document_grouping.header %><%= count_pill(document_grouping.entry_count) %>
+    <span class="title"><%= document_grouping.header %></span>
+    <%= count_pill(document_grouping.entry_count) %>
 
     <% if document_grouping.comments_open? %> 
       <div class="comment_open" data-tooltip="Contains documents that are open for public comments"></div>
