@@ -6,10 +6,12 @@ development:
   mem_limit: 528M
   listen: 127.0.0.1
   compat_sphinxql_magics: 0
+  max_matches: 2000
 test:
   version: '2.0.5'
   morphology: stem_en
   index_exact_words: 1
+  max_matches: 2000
 staging:
   morphology: stem_en
   index_exact_words: 1
@@ -22,6 +24,7 @@ staging:
   pid_file: /var/www/apps/fr2/shared/tmp/searchd.pid
   searchd_file_path: /var/www/apps/fr2/shared/db/sphinx/production
   compat_sphinxql_magics: 0
+  max_matches: 2000
 production:
   morphology: stem_en
   index_exact_words: 1
@@ -34,3 +37,4 @@ production:
   pid_file: /var/www/apps/fr2/shared/tmp/searchd.pid
   searchd_file_path: /var/www/apps/fr2/shared/db/sphinx/production
   compat_sphinxql_magics: 0
+  max_matches: 2000

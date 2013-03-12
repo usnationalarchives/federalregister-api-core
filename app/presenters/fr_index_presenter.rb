@@ -239,7 +239,7 @@ class FrIndexPresenter
     def entry_ids
       @entry_ids ||= EntrySearch.new(
         :conditions => sphinx_conditions,
-        :per_page => 1000
+        :per_page => 2000
       ).result_ids
     end
 
