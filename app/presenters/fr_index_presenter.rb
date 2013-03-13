@@ -280,12 +280,13 @@ class FrIndexPresenter
           entries.end_page,
           comment_close_events.date AS comments_close_on,
           SUM(regulatory_plans.priority_category IN (#{RegulatoryPlan::SIGNIFICANT_PRIORITY_CATEGORIES.map(&:inspect).join(',')})) > 0 AS significant,
-          IFNULL(dockets.comments_count,0) AS comment_count
+          # IFNULL(dockets.comments_count,0) AS comment_count
+          0 AS comment_count
         FROM entries
         LEFT OUTER JOIN public_inspection_documents
           ON public_inspection_documents.entry_id = entries.id
-        LEFT OUTER JOIN dockets
-          ON dockets.id = entries.regulations_dot_gov_docket_id
+        #LEFT OUTER JOIN dockets
+        #  ON dockets.id = entries.regulations_dot_gov_docket_id
         LEFT OUTER JOIN events AS comment_close_events
           ON comment_close_events.entry_id = entries.id
           AND comment_close_events.event_type = 'CommentsClose'
