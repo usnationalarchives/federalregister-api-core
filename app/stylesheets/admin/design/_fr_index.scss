@@ -211,7 +211,8 @@ ul.entry_type {
   form.disabled input[type="submit"],
   form.disbaled input[type="submit"]:hover { 
     color: #000;
-    background: #CCC url(/my/assets/orange_loader_CCC.gif) 6px 5px no-repeat;
+    padding-left: 22px;
+    background: #CCC url(/my/assets/orange_loader_CCC.gif) 8px 5px no-repeat;
   }
 }
 

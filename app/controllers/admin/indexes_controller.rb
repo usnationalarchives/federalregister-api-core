@@ -93,7 +93,8 @@ class Admin::IndexesController < AdminController
       :header => header,
       :element_to_insert => render_to_string(
         :partial => partial,
-        :collection => [grouping]
+        :collection => [grouping],
+        :locals => {:agency_year => agency_year}
       )
     }
   end

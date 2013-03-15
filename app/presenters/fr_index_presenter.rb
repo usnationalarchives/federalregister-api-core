@@ -366,6 +366,10 @@ class FrIndexPresenter
     def pdf_url
       "http://www.gpo.gov/fdsys/pkg/FR-#{publication_date.to_s(:db)}/pdf/#{document_number}.pdf"
     end
+
+    def public_path
+      "/a/#{document_number}"
+    end
   end
 
   class DocumentType

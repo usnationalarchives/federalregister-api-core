@@ -28,120 +28,43 @@ fr_index_popover_handler.add_popover_content = function() {
   };
 
 
-/* returns the current state of toc subject and doc titles as users make edits */
-function current_toc_subjects() {
-  return _.uniq($('.fr_index_subject').map(function() { return $(this).val(); }));
-}
-function current_toc_docs() {
-  return _.uniq($('.fr_index_doc').map(function() { return $(this).val(); }));
-}
+var FRIndexEditorForm = (function() {
+  var FRIndexEditorForm = function() {
+    this.form_template = Handlebars.compile($("#fr-index-form-template").html());
+  };
 
-/* using a function as the source for these typeaheads allows
- * them to stay up to date with changes on the page.
- * if just an array is provided that is cached and not updated */
-function fr_index_toc_subject_typeahead(elements) {
-  elements.find('.fr_index_subject').typeahead({
-    minLength: 3,
-    source: current_toc_subjects()
-  });
-}
-function fr_index_toc_doc_typeahead(elements) {
-  elements.find('.fr_index_doc').typeahead({
-    minLength: 3,
-    source: current_toc_docs()
-  });
-}
+  FRIndexEditorForm.prototype = {
+    initialize: function(fr_index_editor_instance, form_data) {
+      this.form = $(this.form_template( form_data ));
+      this.editor_instance = fr_index_editor_instance;
 
-function highlightElement( element ) {
-  element.scrollintoview({
-    duration: 300,
-    complete: function() {
-      element.effect("highlight", {color: '#f5f8f9'}, 2000);
-    }
-  });
-}
-
-function hide_top_level_index_form(form) {
-  form.hide();
-  form.closest('li').removeClass('edit').find('a.cancel').first().removeClass('cancel').addClass('edit').html('Edit');
-}
-
-function initializeFrIndexEditor(elements) {
-  var $elements = $(elements);
-
-  $elements.find('a.wrapper').on('click', function(event) {
-    event.preventDefault();
-    $(this).siblings('ul.entry_details').toggle();
-  });
-  
-  $elements.find('a.edit').on('click', function(event) {
-    event.preventDefault();
-
-    var link = $(this);
-    var form = link.siblings('form').first();
-    var top_level_form = null;
-    if( ! form.hasClass('top_level') ) {
-      top_level_form = link.closest('ul').
-                            closest('li').
-                            find('form.top_level').
-                            first();
-    }
-    var el   = link.closest('li');
-    
-
-    if( form.css('display') === 'none' ) {
-      if( top_level_form ) {
-        hide_top_level_index_form(top_level_form);
-      }
-
-      link.removeClass('edit').addClass('cancel').html('Cancel');
-      link.closest('li').addClass('edit');
-      form.show();
-      form.find('input[type!=hidden]').last().scrollintoview();
-      form.find('input[type!=hidden]').first().focus();
-      el.removeClass('hover');
-    } else {
-      link.removeClass('cancel').addClass('edit').html('Edit');
-      form.hide();
-      link.closest('li').removeClass('edit');
-      el.addClass('hover');
-    }
-  });
-
-  $elements.find('a.edit').on('hover', function(event) {
-    var el = $(this).closest('li');
-    if( event.type === 'mouseleave' ) {
-      el.removeClass('hover');
-    } else {
-      el.addClass('hover');
-    }
-  });
-
-  fr_index_toc_subject_typeahead($elements);
-  fr_index_toc_doc_typeahead($elements);
-  $elements.find('form').each(function(){
-    var form = $(this);
-
-      form.find('.fr_index_subject').each( function(event) {
-        var $input = $(this);
-
-        $input.tipsy({ opacity: 1.0,
-                       gravity: 'e',
-                       fallback: 'Category',
-                       trigger: 'manual'});
-      });
-
-      form.find('.fr_index_doc').each( function(event) {
-        var $input = $(this);
-
-        $input.tipsy({ opacity: 1.0,
-                       gravity: 'e',
-                       fallback: 'Subject Line',
-                       trigger: 'manual'});
-      });
+      this.add_field_tooltips();
+      this.add_autocompleter();
+      this.add_submit_handler();
 
 
-      form.find('.fr_index_subject, .fr_index_doc').on('focus', function(event) {
+      return this.form;
+    },
+
+    add_field_tooltips: function() {
+      var fr_subject_input = this.form.find('.fr_index_subject');
+
+      fr_subject_input.tipsy({  opacity: 1.0,
+                                gravity: 'e',
+                                fallback: 'Category',
+                                trigger: 'manual' });
+
+      var fr_doc_input = this.form.find('.fr_index_doc');
+
+      fr_doc_input.tipsy({ opacity: 1.0,
+                           gravity: 'e',
+                           fallback: 'Subject Line',
+                           trigger: 'manual'});
+
+
+      var inputs = this.form.find('.fr_index_subject, .fr_index_doc');
+
+      inputs.on('focus', function(event) {
         var $input = $(this),
             tipsy_right_adjustment = $input.hasClass('fr_index_subject') ? 30 : 0;
         
@@ -149,87 +72,271 @@ function initializeFrIndexEditor(elements) {
         $('.tipsy').addClass('input_tipsy').css('left', $input.position().left - $('.tipsy').width() - tipsy_right_adjustment);
         $('.tipsy .tipsy-arrow').css('right', -16);
       });
-      form.find('.fr_index_subject, .fr_index_doc').on('blur', function(event) {
+
+      inputs.on('blur', function(event) {
         $(this).tipsy('hide');
       });
+    },
 
-    form.unbind('submit').bind('submit', function(event) {
-      var form = $(this);
-      event.preventDefault();
+    add_autocompleter: function() {
+      this.form.find('.fr_index_subject').typeahead({
+        minLength: 3,
+        source: this.editor_instance.current_toc_subjects
+      });
 
-      var submit_button = form.find('input[type=submit]').first();
+      this.form.find('.fr_index_doc').typeahead({
+        minLength: 3,
+        source: this.editor_instance.current_toc_docs
+      });
+    },
 
-      /* visually identify form as being saved */
-      form.addClass('disabled');
-      form.siblings('a.cancel').hide();
-      submit_button.val('Saving');
-      submit_button.attr("disabled", true);
+    add_submit_handler: function() {
+      var frIndexEditorForm = this;
 
-      var path = form.attr('action');
+      this.form.on('submit', function(event) {
+        event.preventDefault();
+        var form = $(this);
+        
+        frIndexEditorForm.identify_as_saving();
+        frIndexEditorForm.submit_form();
+      });
+    },
 
-      var data = form.serialize();
+    submit_form: function() {
+      var frIndexEditorForm = this,
+          path = this.form.attr('action'),
+          data = this.form.serialize();
+
+      /* set active form so that response can be handled by the editor 
+       * instance that spawned the form */
+      frIndexEditorForm.editor_instance.active_form = this.form;
+
       $.ajax({
         url: path,
         data: data,
         type: 'PUT',
         dataType: 'json',
         success: function(response) {
-          /* set form back to normal while it's still available */
-          form.removeClass('disabled');
-          form.siblings('a.cancel').show();
-          submit_button.val('Save');
-          submit_button.attr("disabled", false);
-          form.find('input[type=text]').trigger('blur');
-
-          var added_element;
-          var wrapping_list = form.closest('ul.entry_type');
-
-          var parent = form.closest('li');
-
-          if (!parent.hasClass('top_level')) {
-            var siblings = parent.siblings('li');
-
-            if (siblings.size() === 0) {
-              parent.closest('li.top_level').remove();
-            }
-            else if (siblings.size() === 1) {
-              parent.closest('li.top_level').children('.edit').remove();
-              parent.remove();
-            }
-          } else {
-            parent.remove();
-          }
-
-          $('#' + response.id_to_remove).remove();
-
-          var element_to_insert = response.element_to_insert;
-
-          // insert alphabetically, immediately before of anything alphabetically after it
-          wrapping_list.children('li').each(function() {
-            var list_item = $(this);
-            if (list_item.find('span.title:first').text() > response.header) {
-              added_element = $(element_to_insert).insertBefore(list_item);
-              return false;
-            }
-          });
-
-          // if not already added ahead of an existing element, append it to the end
-          if (!added_element) {
-            added_element = $(element_to_insert).appendTo(wrapping_list);
-          }
-
-          highlightElement(added_element);
-          initializeFrIndexEditor(added_element);
+          frIndexEditorForm.editor_instance.form_ajax_success(response);
         }
       });
-    });
-  });
-  return false;
-}
+    },
+
+    identify_as_saving: function() {
+      var submit_button = this.form.find('input[type=submit]').first();
+
+      this.form.addClass('disabled');
+      this.form.siblings('a.cancel').hide();
+      submit_button.val('Saving');
+      submit_button.attr("disabled", true);
+    }
+  };
+
+  return FRIndexEditorForm;
+})();
+
+var FRIndexEditor = (function(){
+  var FRIndexEditor = function() {
+    this.form_object = new FRIndexEditorForm();
+    /* active form is set on submit by the form object */
+    this.active_form = null;
+  };
+
+  FRIndexEditor.prototype = {
+    initialize: function(elements) {
+      this.elements = elements;
+      this.wrappers = this.elements.find('a.wrapper');
+      this.edit_buttons = this.elements.find('a.edit');
+      this.setup();
+    },
+
+    setup: function() {
+      this.add_wrapper_toggle();
+      this.add_edit_context_highlight();
+      this.generate_toc_subject_and_doc_autocompleter_elements();
+      this.add_edit_funtionality();
+    },
+  
+    add_wrapper_toggle: function() {
+      this.wrappers.off('click');
+
+      this.wrappers.on('click', function(event) {
+        event.preventDefault();
+        $(this).siblings('ul.entry_details').toggle();
+      });
+    },
+
+    add_edit_context_highlight: function() {
+      this.edit_buttons.off('hover');
+
+      this.edit_buttons.on('hover', function(event) {
+        var context_wrapper = $(this).closest('li');
+
+        if( event.type === 'mouseleave' ) {
+          context_wrapper.removeClass('hover');
+        } else {
+          context_wrapper.addClass('hover');
+        }
+      });
+    },
+
+    generate_toc_subject_and_doc_autocompleter_elements: function() {
+      this.current_toc_subjects = _.uniq($('li[data-form-data]').map(function() { return $(this).data('form-data').fr_index_subject; })).sort();
+      this.current_toc_docs = _.uniq($('li[data-form-data]').map(function() { return $(this).data('form-data').fr_index_doc; })).sort();
+    },
+
+    add_edit_funtionality: function() {
+      var frIndexEditor = this;
+
+      /* ensure buttons are in clean state */
+      this.edit_buttons.off('click');
+
+      this.edit_buttons.on('click', function(event) {
+        event.preventDefault();
+        var edit_button = $(this),
+            context_wrapper = edit_button.closest('li');
+
+        frIndexEditor.highlight_edit_context( context_wrapper );
+        frIndexEditor.close_parent_form( context_wrapper );
+        frIndexEditor.convert_to_cancel_button( edit_button );
+        frIndexEditor.display_form( context_wrapper );
+      });
+    },
+
+    close_parent_form: function(context_wrapper) {
+      var frIndexEditor = this,
+          top_level_form = null;
+
+      if( ! context_wrapper.hasClass('top_level') ) {
+        top_level_form = context_wrapper.
+                              closest('ul').
+                              closest('li').
+                              find('form.top_level').
+                              first();
+
+        var top_level_wrapper_context = top_level_form.closest('li');
+
+        top_level_form.remove();
+
+        top_level_wrapper_context.removeClass('edit');
+        frIndexEditor.convert_to_edit_button( top_level_wrapper_context.find('a.cancel').first(), frIndexEditor);
+      }
+    },
+
+    convert_to_cancel_button: function(edit_button) {
+      var frIndexEditor = this;
+
+      edit_button.removeClass('edit').addClass('cancel').html('Cancel');
+      edit_button.off('click');
+
+      edit_button.on('click', function(event) {
+        event.preventDefault();
+        frIndexEditor.convert_to_edit_button( $(this), frIndexEditor );
+      });
+    },
+
+    convert_to_edit_button: function(edit_button, frIndexEditor) {
+      var context_wrapper = edit_button.closest('li');
+
+      edit_button.removeClass('cancel').addClass('edit').html('Edit');
+      context_wrapper.find('form').remove();
+      context_wrapper.removeClass('edit').addClass('hover');
+
+      frIndexEditor.add_edit_funtionality();
+    },
+
+    highlight_edit_context: function(context_wrapper) {
+      context_wrapper.addClass('edit');
+      context_wrapper.removeClass('hover');
+    },
+
+    display_form: function(context_wrapper) {
+      var frIndexEditor = this,
+          form_data = context_wrapper.data('form-data'),
+          form = this.form_object.initialize(frIndexEditor, form_data);
+
+      form.insertAfter( context_wrapper.find('a.cancel').first() );
+      
+      /* ensure all of form is visible and place cursor in first input */
+      form.find('input[type!=hidden]').last().scrollintoview();
+      form.find('input[type!=hidden]').first().focus();
+    },
+
+    form_ajax_success: function(response) {
+      /* clear form tooltips before removing or they hang out orphaned */
+      this.active_form.find('input[type=text]').trigger('blur');
+
+      var wrapping_list = this.active_form.closest('ul.entry_type'),
+          wrapping_context = this.active_form.closest('li');
+
+      this.remove_items_in_context( wrapping_context );
+      this.remove_modified_item( response.id_to_remove );
+
+      this.insert_alphabetically( response.element_to_insert, response.header, wrapping_list );
+
+      this.initialize( $('#content_area ul.entry_type > li') );
+
+    },
+
+    /* we need to remove the appropriate context because an edit can effect
+     * multiple items on the page */
+    remove_items_in_context: function(wrapping_context) {
+      if ( ! wrapping_context.hasClass('top_level') ) {
+        var context_siblings = wrapping_context.siblings('li');
+
+        if (context_siblings.size() === 0) {
+          wrapping_context.closest('li.top_level').remove();
+        }
+        else if (context_siblings.size() === 1) {
+          wrapping_context.closest('li.top_level').children('.edit').remove();
+          wrapping_context.remove();
+        }
+      } else {
+        wrapping_context.remove();
+      }
+    },
+
+    remove_modified_item: function(id) {
+      $('#' + id).remove();
+    },
+
+    insert_alphabetically: function(element, header, wrapping_list) {
+      var added_element = null;
+      wrapping_list.children('li').each(function() {
+        var list_item = $(this);
+        if (list_item.find('span.title:first').text() > header) {
+          added_element = $(element).insertBefore(list_item);
+          return false;
+        }
+      });
+
+      // if not already added ahead of an existing element, append it to the end
+      if ( ! added_element ) {
+        added_element = $(element).appendTo(wrapping_list);
+      }
+      
+      this.highlight_added_element(added_element);
+    },
+
+    highlight_added_element: function(element) {
+      element.scrollintoview({
+        duration: 300,
+        complete: function() {
+          element.effect("highlight", {color: '#e5edef'}, 2000);
+        }
+      });
+    }
+  };
+
+  return FRIndexEditor;
+})();
+
 
 $(document).ready(function() {
 
-  initializeFrIndexEditor($('#content_area ul.entry_type > li'));
+  //initializeFrIndexEditor($('#content_area ul.entry_type > li'));
+  var frIndexEditor = new FRIndexEditor();
+  frIndexEditor.initialize( $('#content_area ul.entry_type > li') );
 
   var popover_handler = fr_index_popover_handler.initialize();
   if ( $("#fr-index-entry-popover-template") !== []) {
