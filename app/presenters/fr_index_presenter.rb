@@ -303,7 +303,7 @@ class FrIndexPresenter
         GROUP BY entries.id
       SQL
 
-      docket_ids = results.map{|r| r.delete('docket_id')}.compact.uniq
+      docket_ids = results.map{|r| r['docket_id']}.compact.uniq
 
       if docket_ids.present?
         comment_counts = Docket.find_as_hash(:select => "id, comments_count", :conditions => {:id => docket_ids})
@@ -311,7 +311,7 @@ class FrIndexPresenter
         comment_counts = {}
       end
 
-      @entries = results.map{|row| Entry.new(row.merge('comment_count' => comment_counts[row['id']] || 0)) }
+      @entries = results.map{|row| Entry.new(row.merge('comment_count' => comment_counts[row.delete('id')] || 0)) }
     end
   end
 
