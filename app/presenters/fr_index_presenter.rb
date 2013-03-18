@@ -311,7 +311,7 @@ class FrIndexPresenter
         comment_counts = {}
       end
 
-      @entries = results.map{|row| Entry.new(row.merge('comment_count' => comment_counts[row['id']])) }
+      @entries = results.map{|row| Entry.new(row.merge('comment_count' => comment_counts[row['id']] || 0)) }
     end
   end
 
