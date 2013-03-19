@@ -21,7 +21,7 @@
 
   <% if @fr_index.last_published %>
     <p>
-      <%= link_to "Download Approved #{@fr_index.last_published.to_s(:month_year)} Index (PDF)", @fr_index.published_pdf_path %>
+      <%= link_to "Download Approved #{@fr_index.last_published.to_s(:month_year)} Index (PDF)", @fr_index.published_pdf_path, :class => "pdf_link" %>
     </p>
   <% end %>
 

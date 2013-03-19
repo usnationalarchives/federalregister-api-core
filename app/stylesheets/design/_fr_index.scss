@@ -78,6 +78,13 @@
     }
   }
 
+  .pdf_link { 
+    background: sprite-image('icons/icon_pdf_small.png', 0, 2px, 50px) no-repeat;
+    padding-left: 16px;
+    margin-left: 6px;
+  }
+  p .pdf_link { margin-left: 0px; }
+
   #fr-index-metadata,
   #fr-index-agency-metadata { 
     margin-bottom: 30px;
