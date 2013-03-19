@@ -8,20 +8,28 @@ class ApplicationSearch::FacetCalculator
   end
   
   def raw_facets
-    sphinx_search = ThinkingSphinx::Search.new(@search.sphinx_term,
+    # sphinx_search = ThinkingSphinx::Search.new(
+    # )
+    
+    # # raise sphinx_search.options.inspect
+    # client = sphinx_search.send(:client)
+    # client.group_function = :attr
+    # client.group_by = @facet_name.to_s
+    # client.limit = 1000
+    # query = sphinx_search.send(:query)
+    # # raise client.inspect
+    # # raise client.query(query, sphinx_search.send(:indexes))[:matches].size.inspect
+    # result = client.query(query, sphinx_search.send(:indexes))[:matches]
+    @search.model.search(
+      @search.sphinx_term,
       :with => @search.with,
       :with_all => @search.with_all,
       :conditions => @search.sphinx_conditions,
       :match_mode => :extended,
-      :classes => [@search.model]
-    )
-    
-    client = sphinx_search.send(:client)
-    client.group_function = :attr
-    client.group_by = @facet_name.to_s
-    client.limit = 5000
-    query = sphinx_search.send(:query)
-    result = client.query(query, sphinx_search.send(:indexes))[:matches].map{|m| [m[:attributes]["@groupby"], m[:attributes]["@count"]]}
+      :per_page => 1000,
+      :group => @facet_name.to_s,
+      :ids_only => true
+    ).results[:matches].map{|m| [m[:attributes]["@groupby"], m[:attributes]["@count"]]}
   end
   
   def all
