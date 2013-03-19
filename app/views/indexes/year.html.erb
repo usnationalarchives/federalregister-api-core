@@ -19,6 +19,8 @@
     less than 2 articles in a given year.
   </p>
 
+  <p>This online index is current as of <strong><%= @fr_index.max_date.strftime("%B %e, %Y") %></strong>.</p>
+
   <% if @fr_index.last_published %>
     <p>
       <%= link_to "Download Approved #{@fr_index.last_published.to_s(:month_year)} Index (PDF)", @fr_index.published_pdf_path, :class => "pdf_link" %>
