@@ -51,3 +51,4 @@ config.action_mailer.default_url_options = {:host => "www.#{APP_HOST_NAME}"}
 # config.action_controller.asset_host = "http://static%d.federalregister.gov"
 
 # Put gems in Gemfile...
+ThinkingSphinx.remote_sphinx = true
