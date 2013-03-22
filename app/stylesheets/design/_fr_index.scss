@@ -156,6 +156,7 @@
       span.title { 
         display: block;
         float: left;
+        max-width: 650px;
       }
       
     }
@@ -197,10 +198,10 @@
         }
       dd.comment_open {
         margin-top: 2px;
-        background: sprite-image('icons/icon_comment_index_green.png', 0, 2px, 50px) no-repeat;
+        background: sprite-image('icons/icon_comment_index_green.png', 0, 0, 50px) no-repeat;
         }
       dd.comments_received {
-        background: sprite-image('icons/icon_comment_index_gray.png', 0, 2px, 50px) no-repeat;
+        background: sprite-image('icons/icon_comment_index_gray.png', 0, 0, 50px) no-repeat;
         }
 
     }
