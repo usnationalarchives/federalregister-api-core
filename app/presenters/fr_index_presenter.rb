@@ -42,7 +42,7 @@ class FrIndexPresenter
   end
 
   def agencies_by_letter
-    agencies.group_by(&:first_letter)
+    agencies_with_pseudonyms.group_by(&:first_letter)
   end
 
   def agencies
@@ -142,6 +142,10 @@ class FrIndexPresenter
     def entry_count
       0
     end
+
+    def first_letter
+      name.chars.first
+    end
   end
 
   class Agency
@@ -235,7 +239,7 @@ class FrIndexPresenter
     def entry_ids
       @entry_ids ||= EntrySearch.new(
         :conditions => sphinx_conditions,
-        :per_page => 1000
+        :per_page => 2000
       ).result_ids
     end
 
@@ -266,7 +270,7 @@ class FrIndexPresenter
     def entries
       return @entries if @entries
 
-      @entries = ::Entry.connection.select_all(<<-SQL).map{|row| Entry.new(row) }
+      results = ::Entry.connection.select_all(<<-SQL)
         SELECT entries.id,
           entries.title,
           entries.document_number,
@@ -280,13 +284,13 @@ class FrIndexPresenter
           entries.end_page,
           comment_close_events.date AS comments_close_on,
           SUM(regulatory_plans.priority_category IN (#{RegulatoryPlan::SIGNIFICANT_PRIORITY_CATEGORIES.map(&:inspect).join(',')})) > 0 AS significant,
+          entries.regulations_dot_gov_docket_id AS docket_id
           # IFNULL(dockets.comments_count,0) AS comment_count
-          0 AS comment_count
         FROM entries
         LEFT OUTER JOIN public_inspection_documents
           ON public_inspection_documents.entry_id = entries.id
-        #LEFT OUTER JOIN dockets
-        #  ON dockets.id = entries.regulations_dot_gov_docket_id
+        # LEFT OUTER JOIN dockets
+          # ON dockets.id = entries.regulations_dot_gov_docket_id
         LEFT OUTER JOIN events AS comment_close_events
           ON comment_close_events.entry_id = entries.id
           AND comment_close_events.event_type = 'CommentsClose'
@@ -298,6 +302,16 @@ class FrIndexPresenter
         WHERE entries.id IN (#{entry_ids.join(',')})
         GROUP BY entries.id
       SQL
+
+      docket_ids = results.map{|r| r['docket_id']}.compact.uniq
+
+      if docket_ids.present?
+        comment_counts = Docket.find_as_hash(:select => "id, comments_count", :conditions => {:id => docket_ids})
+      else
+        comment_counts = {}
+      end
+
+      @entries = results.map{|row| Entry.new(row.merge('comment_count' => comment_counts[row.delete('docket_id')] || 0)) }
     end
   end
 
@@ -362,6 +376,10 @@ class FrIndexPresenter
 
     def pdf_url
       "http://www.gpo.gov/fdsys/pkg/FR-#{publication_date.to_s(:db)}/pdf/#{document_number}.pdf"
+    end
+
+    def public_path
+      "/a/#{document_number}"
     end
   end
 

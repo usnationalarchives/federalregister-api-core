@@ -1,0 +1,37 @@
+<% add_javascript :src => 'page_specific/search/search.js' %>
+<div class="embedded_search search_bar">
+  <% semantic_form_for :conditions, search, :url => entries_search_path, :html => {:method => :get, :id => "entry_search_form"} do |f| %>
+    <div class="simple">
+      <label>Search <%= agency_year.year %> Articles</label>
+      <%= f.text_field :term, :placeholder => 'Search term' %>
+      <ul>
+        <%= f.input :agency_ids, :as => :hidden, :value => agency_year.agency.id %>
+        <% f.fields_for :publication_date do |date_f| %>
+          <%= date_f.input :year, :as => :hidden, :value => agency_year.year %>
+        <% end %>
+      </ul>
+      <%= f.submit 'Search' %>
+      <span id="expected_result_count"></span>
+
+      <% unless agency_year.agency == AgencyName.find_by_name!("Executive Office of the President").agency %>
+        <div id="doc-type-filter">
+          <ul>
+            <li class="doc_notice first" data-filter-doc-type="notice" data-filter-doc-type-display="Notice">
+              <div aria-hidden="true" class="icon-fr2 icon-fr2-notice"></div>
+            </li>
+            <li class="doc_prorule" data-filter-doc-type="prorule" data-filter-doc-type-display="Proposed Rule">
+              <div aria-hidden="true" class="icon-fr2 icon-fr2-prorule"></div>
+            </li>
+            <li class="doc_rule last" data-filter-doc-type="rule" data-filter-doc-type-display="Rule">
+              <div aria-hidden="true" class="icon-fr2 icon-fr2-rule"></div>
+            </li>
+          </ul>
+        </div>
+        <%= f.input :type,
+                    :label => "Document Category",
+                    :as => :check_boxes,
+                    :collection => EntrySearch::TYPES %>
+      <% end %>
+    </div>
+  <% end %>
+</div>

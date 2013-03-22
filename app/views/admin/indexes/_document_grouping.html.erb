@@ -1,5 +1,16 @@
-<li id="<%= document_grouping.identifier %>"
-  class="<%= 'new_item' if document_grouping.needs_attention? %> <%= 'top_level' if document_grouping.top_level? %>">
+<% content_tag  :li,
+                :id => document_grouping.identifier,
+                :class => "#{document_grouping.needs_attention? ? 'new_item' : ''} #{document_grouping.top_level? ? 'top_level' : ''}",
+                :"data-form-data" => { 
+                        :subject_form => false,
+                        :form_url => "/admin/index/#{agency_year.year}/#{agency_year.agency.slug}",
+                        :form_class => document_grouping.top_level? ? 'top_level' : '', 
+                        :granule_class => document_grouping.granule_class,
+                        :max_date => params[:max_date],
+                        :entry_ids => document_grouping.entries.map{|e| e.id},
+                        :fr_index_subject => document_grouping.fr_index_subject,
+                        :fr_index_doc =>  document_grouping.header }.to_json do %>
+
   <a class="wrapper" href="#">
     <span class="title"><%= document_grouping.header %></span><%= count_pill(document_grouping.entry_count) %>
   </a>
@@ -9,22 +20,11 @@
   <ul class="entry_details">
     <% document_grouping.entries.each do |entry| %>
       <li class="with_ajax_popover" data-document-number=<%= entry.document_number %>>
-        <%= link_to entry.document_number, short_entry_path(entry), :class => "document_number", :target => "_blank" %>
+        <a href="<%= entry.public_path %>" class="document_number", target="_blank"><%= entry.document_number %></a>
         page <%= entry.start_page %>, 
-        published <%= link_to entry.publication_date, short_entry_path(entry), :target => "_blank" %>
-        <%= link_to 'PDF', entry.pdf_url, :class => "button format list pdf small", :target => "_blank" %>
+        published <a href="<%= entry.public_path %>" target="_blank"><%= entry.publication_date %></a> 
+        <a href="<%= entry.pdf_url %>" class="button format list pdf small" target="_blank">PDF</a>
       </li>
     <% end %>
   </ul>
-
-  <% form_tag({}, :method => :put, :class => "#{'top_level' if document_grouping.top_level?}") do %>
-    <%= hidden_field_tag(:granule_class, document_grouping.granule_class) %>
-    <%= hidden_field_tag(:max_date, params[:max_date]) %>
-    <% document_grouping.entries.each do |entry| %>
-      <%= hidden_field_tag(:'entry_ids[]', entry.id) %>
-    <% end %>
-    <%= text_field_tag('entry[fr_index_subject]', document_grouping.fr_index_subject, :class => "fr_index_subject", :title => 'Category', :autocomplete => "off") %>
-    <%= text_field_tag('entry[fr_index_doc]', document_grouping.header, :class => "fr_index_doc", :title => 'Subject Line', :autocomplete => "off") %>
-    <%= submit_tag("Save") %>
-  <% end %>
-</li>
+<% end %>

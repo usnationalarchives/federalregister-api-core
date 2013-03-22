@@ -50,3 +50,4 @@ config.action_mailer.default_url_options = {:host => "www.#{APP_HOST_NAME}"}
 # config.action_controller.asset_host = "http://assets%d.fr2.criticaljuncture.org"
 
 # Put gems in Gemfile...
+ThinkingSphinx.remote_sphinx = true

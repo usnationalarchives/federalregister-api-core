@@ -4,6 +4,7 @@
 
 <%= add_template('admin/fr_index_entry_popover', 'fr-index-entry-popover') %>
 <%= add_template('admin/fr_index_entry_popover_content', 'fr-index-entry-popover-content') %>
+<%= add_template('admin/fr_index_form', 'fr-index-form') %>
 
 <div class="page_summary">
   <h1 class="agency_name"><%= @agency_year.name %></h1>
@@ -37,9 +38,9 @@
     <% document_type.groupings.each do |grouping| %>
       <%= case grouping
           when FrIndexPresenter::SubjectGrouping
-            render :partial => "subject_grouping", :locals => { :subject_grouping => grouping }
+            render :partial => "subject_grouping", :locals => { :subject_grouping => grouping, :agency_year => @agency_year }
           when FrIndexPresenter::DocumentGrouping
-            render :partial => "document_grouping", :locals => { :document_grouping => grouping }
+            render :partial => "document_grouping", :locals => { :document_grouping => grouping, :agency_year => @agency_year }
           end %>
     <% end %>
   </ul>

@@ -1,0 +1,21 @@
+<form action="{{form_url}}" method="post" class="{{form_class}}" style="display: block;">
+  <div style="margin:0;padding:0;display:inline">
+    <input name="_method" type="hidden" value="put">
+  </div>
+  <input id="granule_class" name="granule_class" type="hidden" value="{{granule_class}}">
+  <input id="max_date" name="max_date" type="hidden" value="{{max_date}}">
+
+  {{#if subject_form}}
+    <input id="old_subject" name="old_subject" type="hidden" value="{{old_subject}}">
+  {{/if}}
+
+  {{#each entry_ids}}
+    <input id="entry_ids_" name="entry_ids[]" type="hidden" value="{{this}}">
+  {{/each}}
+
+  <input autocomplete="off" class="fr_index_subject" id="entry_fr_index_subject" name="entry[fr_index_subject]" type="text" value="{{fr_index_subject}}" original-title="Category">
+  {{#unless subject_form}}
+    <input autocomplete="off" class="fr_index_doc" id="entry_fr_index_doc" name="entry[fr_index_doc]" type="text" value="{{fr_index_doc}}" original-title="Subject Line">
+  {{/unless}}
+  <input name="commit" type="submit" value="Save">
+</form>

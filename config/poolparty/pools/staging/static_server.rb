@@ -88,14 +88,27 @@ cloud :worker_server do
                   :alert_to_address => 'info@criticaljuncture.org',
                   :monitors => [{:name => 'resque_worker_fr_index',
                                  :monitor_type => 'resque',
-                                 :options => {:queue => 'fr_index',
+                                 :options => {:queue => 'fr_index_pdf_previewer,fr_index_pdf_publisher',
                                               :queue_count => 2,
                                               :interval => 1,
                                               :app_path => "/var/www/apps/#{@app[:name]}/current",
                                               :total_mem => "500 MB",
                                               :total_mem_cycles => "10"
                                              }
-                               }]
+                                },
+                                {:name => 'redis',
+                                 :monitor_type => 'redis',
+                                 :options => {:host => '127.0.0.1',
+                                              :port => 6379,
+                                              :total_mem => '200 MB',
+                                              :total_mem_cycles => 5,
+                                              :max_children => 255,
+                                              :max_children_cycles => 5,
+                                              :max_cpu_percent => '95%',
+                                              :max_cpu_percent_cycles => 5,
+                                             }
+                                }
+                               ]
                 }
       )
   end
