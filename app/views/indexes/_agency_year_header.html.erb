@@ -12,9 +12,6 @@
     <%= link_to "Download Approved #{agency_year.last_published.to_s(:month_year)} #{agency_year.name} Index (PDF)", agency_year.published_pdf_path, :class => "pdf_link" %>
   <% end %>
 
-  <% if agency_year.last_published %>
-    <%= link_to "Download Approved #{agency_year.last_published.to_s(:month_year)} #{agency_year.name} Index (PDF)", agency_year.published_pdf_path %>
-  <% end %>
   <hr />
 
   <p>
