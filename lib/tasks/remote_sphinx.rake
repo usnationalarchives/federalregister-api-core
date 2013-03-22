@@ -22,9 +22,9 @@ namespace :remote do
     desc "Purge delta items from core index"
     task :purge_from_core_index => :environment do
       [Entry, Event, RegulatoryPlan].each do |model|
-        model.find_each(:select => "id, delta", :conditions => {:delta => true}) do |entry|
+        model.find_each(:select => "id, delta", :conditions => {:delta => true}) do |record|
           model.core_index_names.each do |index_name|
-            delete_in_index(index_name, entry.sphinx_document_id)
+            model.delete_in_index(index_name, record.sphinx_document_id)
           end
         end
       end
