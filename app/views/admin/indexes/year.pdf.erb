@@ -1,7 +1,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-<% max_date = agency_years.first.max_date %>
+<% max_date = agency_years.find{|x| x.respond_to?(:max_date)}.max_date %>
 <% date_description = max_date.month == 1 ? max_date.to_s(:month_year) : "January&ndash;#{max_date.to_s(:month_year)}".html_safe %>
 <% date_description_without_year = max_date.month == 1 ? max_date.strftime("%B") : "January&ndash;#{max_date.strftime("%B")}".html_safe %>
 <style>
