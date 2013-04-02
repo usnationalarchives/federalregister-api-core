@@ -71,6 +71,9 @@ GEM
     durran-validatable (2.0.1)
     factory_girl (1.2.4)
     fastercsv (1.4.0)
+    ffi (1.6.0)
+    ffi-hunspell (0.2.6)
+      ffi (~> 1.0)
     flickraw (0.8.1)
       json (>= 1.1.1)
     floehopper-mocha (0.9.7.20090701124354)
@@ -138,7 +141,6 @@ GEM
       rake (>= 0.8.3)
     rails-test-serving (0.1.4.2)
     rake (10.0.3)
-    raspell (1.2)
     rdoc (3.12)
       json (~> 1.4)
     recaptcha (0.3.1)
@@ -206,6 +208,7 @@ DEPENDENCIES
   curb (= 0.4.4.0)
   factory_girl (= 1.2.4)
   fastercsv (= 1.4.0)
+  ffi-hunspell
   flickraw (= 0.8.1)
   floehopper-mocha
   formtastic (= 0.9.8)
@@ -230,7 +233,6 @@ DEPENDENCIES
   pdfkit (= 0.5.2)
   rails (= 2.3.17)
   rails-test-serving (= 0.1.4.2)
-  raspell (= 1.2)
   rdoc
   recaptcha (= 0.3.1)
   resque (= 1.19.0)

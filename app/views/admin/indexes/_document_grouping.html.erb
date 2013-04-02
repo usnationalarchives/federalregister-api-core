@@ -12,7 +12,7 @@
                         :fr_index_doc =>  document_grouping.header }.to_json do %>
 
   <a class="wrapper" href="#">
-    <span class="title"><%= document_grouping.header %></span><%= count_pill(document_grouping.entry_count) %>
+    <span class="title"><%= spell_checker.highlight_spelling_errors(document_grouping.header) %></span><%= count_pill(document_grouping.entry_count) %>
   </a>
 
   <%= link_to 'Edit', '#', :class => "edit btn #{document_grouping.top_level? ? '' : 'btn-mini'}" %>

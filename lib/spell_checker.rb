@@ -1,22 +1,44 @@
-module SpellChecker
-  def self.speller
-    @speller ||= Aspell.new1("lang" => "en_US", "jargon" => 'fr', "dict-dir" => File.join(Rails.root, 'data', 'dict'))
+class SpellChecker
+  attr_reader :speller, :template
+
+  def initialize(options={})
+    @template = options[:template]
+    @speller = FFI::Hunspell.dict('en_US')
   end
-  
-  def self.correct(string)
-    string.gsub(/[\w\']+/) do |word| 
-      if word !~ /\d/ && !speller.check(word) 
+
+  def close
+    speller.close
+  end
+
+  def dictionary_words
+    @dictionary_words ||= DictionaryWord.find_as_array(:select => "word")
+  end
+
+  def highlight_spelling_errors(text)
+    correct(text) do |original, suggestions|
+      template.content_tag(:span, original, :'data-suggestions' => suggestions.to_json, :class => "spelling_error")
+    end
+  end
+
+  def highlight_corrections(text)
+    correct(text) do |original, suggestions|
+      if suggestions.present?
+        template.content_tag(:strong, suggestions.first)
+      else
+        original
+      end
+    end
+  end
+
+  def correct(string)
+    string.gsub(/\w[\w\']*\w+/) do |word| 
+      if word !~ /\d/ && word !~ /\A[A-Z]+\z/ && !speller.check?(word) && ! dictionary_words.include?(word.capitalize_first)
         suggestions = speller.suggest(word)
-        corrected_word = suggestions.find{|s| s !~ /\s|-/ } || suggestions.first
-        
-        if corrected_word && corrected_word.downcase != word.downcase
-          if block_given?
-            yield(corrected_word, word)
-          else
-            corrected_word
-          end
+
+        if block_given?
+          yield(word, suggestions)
         else
-          word
+          suggestions.first
         end
       else
         word

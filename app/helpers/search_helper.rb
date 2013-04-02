@@ -55,7 +55,7 @@ module SearchHelper
     # TODO: bolding of spelling corrections
     if suggestion.term.present?
       term = if suggestion.prior_term
-               SpellChecker.correct(suggestion.prior_term){|c,o| content_tag(:strong,h(c))}
+               SpellChecker.new(:template => self).highlight_corrections(suggestion.prior_term)
              else
                h(suggestion.term)
              end
