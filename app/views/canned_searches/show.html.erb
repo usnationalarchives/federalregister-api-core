@@ -20,9 +20,9 @@
   <div id='frequency-wrapper'>
     <h4 id='frequency-header'>Result Frequency</h4>
     <ul id='frequency-spark-lines'>
-      <li id='twelve-months'>Last year, weekly <%= tag(:img, :src => entries_search_activity_sparkline_path('weekly', :conditions => @canned_search.search.conditions), :alt => "Sparkline of Weekly Distribution", :size => "135x25") %></li>
-      <li id='five-years'>Last 5 years, monthly <%= tag(:img, :src => entries_search_activity_sparkline_path('monthly', :conditions => @canned_search.search.conditions), :alt => "Sparkline of Monthly Distribution", :size => "135x25") %></li>
-      <li id='all-years'>Since 1994, quarterly <%= tag(:img, :src => entries_search_activity_sparkline_path('quarterly', :conditions => @canned_search.search.conditions), :alt => "Sparkline of Quarterly Distribution", :size => "135x25") %> </li>
+      <li id='twelve-months'>Last year, weekly <%= tag(:img, :src => entries_search_activity_sparkline_path('weekly', :conditions => @canned_search.search.conditions), :alt => "Sparkline of Weekly Distribution", :width => "135", :height => "25") %></li>
+      <li id='five-years'>Last 5 years, monthly <%= tag(:img, :src => entries_search_activity_sparkline_path('monthly', :conditions => @canned_search.search.conditions), :alt => "Sparkline of Monthly Distribution", :width => "135", :height => "25") %></li>
+      <li id='all-years'>Since 1994, quarterly <%= tag(:img, :src => entries_search_activity_sparkline_path('quarterly', :conditions => @canned_search.search.conditions), :alt => "Sparkline of Quarterly Distribution", :width => "135", :height => "25") %> </li>
     </ul>
   </div>
 
