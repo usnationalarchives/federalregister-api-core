@@ -472,6 +472,10 @@ class FrIndexPresenter
     def oldest_issue_needing_attention
       document_groupings.map(&:oldest_issue_needing_attention).compact.min if needs_attention?
     end
+
+    def header_attribute
+      'fr_index_subject'
+    end
   end
 
   class DocumentGrouping
@@ -525,6 +529,10 @@ class FrIndexPresenter
    
     def top_level?
       fr_index_subject.blank?
+    end
+
+    def header_attribute
+      'fr_index_doc'
     end
 
     private
