@@ -16,7 +16,7 @@ class SpellChecker
 
   def highlight_spelling_errors(text)
     correct(text) do |original, suggestions|
-      template.content_tag(:span, original, :'data-suggestions' => suggestions.to_json, :class => "spelling_error")
+      template.content_tag(:span, original, :'data-suggestions' => suggestions.to_json, :'data-misspelled-word' => original, :class => "spelling_error")
     end
   end
 

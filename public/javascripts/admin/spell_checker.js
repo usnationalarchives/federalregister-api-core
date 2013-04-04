@@ -4,7 +4,8 @@ var SpellChecker = (function(){
 
   SpellChecker.prototype = {
     initialize: function(options) {
-      this.element_class = options.element_class || '.spelling_error';
+      this.element_class = options.element_class || 'body';
+      this.spelling_class = options.spelling_class || '.spelling_error';
       this.open_behaviour = options.open_behaviour || 'mouseenter';
       this.close_behaviour = options.close_behaviour || 'mouseleave';
       this.handlebars_template = options.handlebars_template || '#spelling-error-menu-template';
@@ -16,7 +17,7 @@ var SpellChecker = (function(){
 
     add_behaviour: function() {
       var spell_checker = this;
-      $(this.element_class).on(this.open_behaviour, function(event) {
+      $(this.element_class).on(this.open_behaviour, this.spelling_class, function(event) {
         event.stopPropagation();
         event.preventDefault();
         
@@ -25,7 +26,7 @@ var SpellChecker = (function(){
         spell_checker.show_menu();
       });
 
-      $(this.element_class).on(this.close_behaviour, function(event) {
+      $(this.element_class).on(this.close_behaviour, this.spelling_class, function(event) {
         spell_checker.remove_menu();
       });
     },
@@ -56,6 +57,8 @@ var SpellChecker = (function(){
 
         var clicked_el = $(this);
 
+        clicked_el.addClass('saving');
+
         if( clicked_el.data('role') === 'add-to-dictionary' ) {
           clicked_el.unbind('click');
           spell_checker.add_to_dictionary( spell_checker.active_element, spell_checker.active_element_text );
@@ -71,17 +74,25 @@ var SpellChecker = (function(){
     },
 
     replace_word: function() {
-      this.original_title = this.active_element.closest('span.title').data('original-title');
-      
-      var new_title = this.original_title.replace(new RegExp(this.active_element_text, 'g'), 
-                                                  this.correct_word);
+      /* set correct word and then get complete correct string for submission */
+      this.active_element.text( this.correct_word );
+      var new_title = this.active_element.closest('span.title').text().trim();
+
+      /* change text back to original so user only sees corrected version state when it is set later */
+      this.active_element.text( this.active_element.data('misspelled-word') );
 
       this.submit_replacement(this.active_element, new_title);
     },
 
-    remove_highlight: function() {
+    remove_highlight_via_correction: function() {
       this.active_element.removeClass('spelling_error');
-      this.active_element.unbind('mouseenter mouseleave');
+      this.menu.remove();
+    },
+
+    remove_highlight_via_add_to_dictionary: function() {
+      var word = this.active_element.data('misspelled-word');
+
+      $('.spelling_error[data-misspelled-word=' + word + ']').removeClass('spelling_error');
       this.menu.remove();
     },
 

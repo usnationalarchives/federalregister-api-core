@@ -327,17 +327,14 @@ var FRIndexEditor = (function(){
       });
     },
 
-    silent_spelling_correction_submit: function(context_wrapper, text) {
+    silent_spelling_correction_submit: function(context_wrapper, header_attribute, text) {
       var form_data = context_wrapper.data('form-data'),
           frIndexEditor = this;
 
-      if( form_data.fr_index_subject !== null ) {
-        form_data.fr_index_subject = text;
-      } else {
-        form_data.fr_index_doc = text;
-      }
-
+      form_data[header_attribute] = text;
+      
       var form = this.form_object.initialize(frIndexEditor, form_data);
+      
       context_wrapper.append( form.hide() );
       form.submit();
     }
@@ -354,7 +351,7 @@ $(document).ready(function() {
   frIndexEditor.initialize( $('#content_area ul.entry_type > li') );
 
   var spellChecker = new SpellChecker();
-  spellChecker.initialize({});
+  spellChecker.initialize({element_class: "ul.entry_type"});
 
   spellChecker.add_to_dictionary = function(active_element, word_to_add) {
     $.ajax({
@@ -362,14 +359,16 @@ $(document).ready(function() {
       url: '/admin/dictionary_words',
       data: {word: word_to_add},
       success: function(response) {
-        spellChecker.remove_highlight();
+        spellChecker.remove_highlight_via_add_to_dictionary();
       }
     });
   };
 
   spellChecker.submit_replacement = function(active_element, replacement) {
-    var fr_index_li = $(active_element).closest('li');
-    frIndexEditor.silent_spelling_correction_submit(fr_index_li, replacement);
+    var fr_index_li = $(active_element).closest('li'),
+        header_attribute = $(active_element).closest('span.title').data('header-attribute');
+
+    frIndexEditor.silent_spelling_correction_submit(fr_index_li, header_attribute, replacement);
   };
 
   var popover_handler = fr_index_popover_handler.initialize();

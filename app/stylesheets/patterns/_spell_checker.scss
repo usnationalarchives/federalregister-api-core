@@ -12,7 +12,10 @@ span.spelling_error { border-bottom: 2px dotted red; }
     list-style: none;
     padding: 5px 10px;
 
-    li { margin: 0; }
+    li { 
+      cursor: pointer;
+      margin: 0;
+    }
         
     div.horiz-rule {
       border-top: 1px solid #777;
@@ -20,11 +23,11 @@ span.spelling_error { border-bottom: 2px dotted red; }
       margin-bottom: 5px;
     }
 
-    li.add-to-dict { text-align: center; }
-
-    li.hover { 
+    li.hover {
       background-color: #DDDDDD;
       color: $fr_orange;
     }
+
+    li.saving { background: #DDDDDD url(/my/assets/orange_loader_DDD.gif) 160px 7px no-repeat; }
   }
 }
