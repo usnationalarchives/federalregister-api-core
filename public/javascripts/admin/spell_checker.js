@@ -97,14 +97,12 @@ var SpellChecker = (function(){
     },
 
     submit_replacement: function(active_element, replacement) {
-      console.log("This is a stub method and should be implemented by adding it to your instance of spellchecker");
-      console.log("function: submit_replacement(active_element, replacement)");
+      alert("This is a stub method and should be implemented by adding it to your instance of spellchecker \n function: submit_replacement(active_element, replacement)");
     },
 
     add_to_dictionary: function(active_element, word_to_add) {
-      console.log("This is a stub method and should be implemented by adding it to your instance of spellchecker");
-      console.log("function: add_to_dictionary(active_element, word_to_add)");
-    },
+      alert("This is a stub method and should be implemented by adding it to your instance of spellchecker \n function: add_to_dictionary(active_element, word_to_add)");
+    }
   };
 
   return SpellChecker;
