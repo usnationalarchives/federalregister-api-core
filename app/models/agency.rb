@@ -72,7 +72,7 @@ class Agency < ApplicationModel
   validates_uniqueness_of :name
   validates_presence_of :name
   
-  validates_format_of :url, :with => /^https?:\/\//, :allow_blank => true
+  validates_format_of :url, :with => /\Ahttps?:\/\/\S+\z/, :allow_blank => true
   serializable_column :entries_1_year_weekly, :entries_5_years_monthly, :entries_all_years_quarterly, :related_topics_cache
   
   named_scope :with_logo, :conditions => "agencies.logo_file_name IS NOT NULL"

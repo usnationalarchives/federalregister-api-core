@@ -25,7 +25,7 @@ class Section < ApplicationModel
   
   validates_uniqueness_of :title
   validates_uniqueness_of :slug
-  validates_format_of :slug, :with => /^[a-z0-9-]+$/
+  validates_format_of :slug, :with => /\A[a-z0-9-]+\z/
   
   validate :cfr_format_is_valid
   
