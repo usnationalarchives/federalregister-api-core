@@ -10,6 +10,8 @@ ActionController::Routing::Routes.draw do |map|
        
     admin.resources :events
 
+    admin.resources :dictionary_words, :only => [:create]
+    
     admin.index_year 'index/:year.:format', :controller => "indexes", :action => "year", :conditions => {:method => :get}
     admin.publish_index_year 'index/:year/publish', :controller => "indexes", :action => "publish", :conditions => {:method => :post}
     admin.index_year_agency 'index/:year/:agency.:format', :controller => "indexes", :action => "year_agency", :conditions => {:method => :get}

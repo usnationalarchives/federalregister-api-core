@@ -1,6 +1,8 @@
 class Admin::IndexesController < AdminController
   layout 'admin_bootstrap'
   before_filter :disable_all_browser_caching
+  include ActionView::Helpers::TagHelper
+  include SpellingHelper
 
   def year
     @years = FrIndexPresenter.available_years
@@ -88,15 +90,17 @@ class Admin::IndexesController < AdminController
         "document_grouping"
       end
 
-    render :json => {
-      :id_to_remove => grouping.identifier,
-      :header => header,
-      :element_to_insert => render_to_string(
-        :partial => partial,
-        :collection => [grouping],
-        :locals => {:agency_year => agency_year}
-      )
-    }
+    spelling_checker do |spell_checker|
+      render :json => {
+        :id_to_remove => grouping.identifier,
+        :header => header,
+        :element_to_insert => render_to_string(
+          :partial => partial,
+          :collection => [grouping],
+          :locals => {:agency_year => agency_year, :spell_checker => spell_checker}
+        )
+      }
+    end
   end
 
   def mark_complete
