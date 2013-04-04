@@ -5,6 +5,9 @@
 */
 
 /* Green current issue box */
+#current_issue.public_inspection .issue {
+  padding-left: 46px;
+}
 #current_issue.public_inspection .issue:hover {
   text-decoration:none;
   }
