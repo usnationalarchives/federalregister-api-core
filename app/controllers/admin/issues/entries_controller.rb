@@ -27,7 +27,11 @@ class Admin::Issues::EntriesController < AdminController
         render :nothing => true
       else
         flash[:notice] = 'Successfully saved.'
-        redirect_to params[:redirect_to]
+        if params[:redirect_to]
+          redirect_to URI.parse(params[:redirect_to]).path
+        else
+          redirect_to '/admin'
+        end
       end
     else
       flash.now[:error] = 'There was a problem.'

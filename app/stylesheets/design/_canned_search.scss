@@ -88,7 +88,7 @@ FREQUENCY SPARKLINES
   border-radius: 5px;
   padding: 10px 15px 5px;
   color: #000;
-  width: 760px;
+  width: 815px;
   margin: 5px auto 15px;
   }
 #frequency-header {
@@ -97,8 +97,7 @@ FREQUENCY SPARKLINES
   }
 ul#frequency-spark-lines {
   list-style: none;
-  width: 780px;
-  margin: 0 auto;
+  text-align: center;
   }
 ul#frequency-spark-lines li {
   display:inline;

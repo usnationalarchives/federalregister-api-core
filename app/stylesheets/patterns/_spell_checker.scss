@@ -1,0 +1,33 @@
+span.spelling_error { border-bottom: 2px dotted red; }
+
+.spelling_error_menu {
+  position: absolute;
+  width: 200px;
+  background-color: #EEEEEE;
+  @include border-radius(6px);
+  z-index: 5000;
+
+  ol.suggestions { 
+    margin-left: 0;
+    list-style: none;
+    padding: 5px 10px;
+
+    li { 
+      cursor: pointer;
+      margin: 0;
+    }
+        
+    div.horiz-rule {
+      border-top: 1px solid #777;
+      margin-top: 5px;
+      margin-bottom: 5px;
+    }
+
+    li.hover {
+      background-color: #DDDDDD;
+      color: $fr_orange;
+    }
+
+    li.saving { background: #DDDDDD url(/my/assets/orange_loader_DDD.gif) 160px 7px no-repeat; }
+  }
+}

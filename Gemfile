@@ -25,7 +25,7 @@ gem 'json', '1.7.7'
 gem 'ym4r', '0.6.1'
 
 gem 'thinking-sphinx', '1.3.20', :require => 'thinking_sphinx'
-gem 'raspell', '1.2'
+gem 'ffi-hunspell', :require => 'ffi/hunspell'
 gem 'airbrake', '3.0.9'
 gem 'aws-s3', '0.6.2', :require => 'aws/s3'
 gem 'paperclip', '2.3.1.1'

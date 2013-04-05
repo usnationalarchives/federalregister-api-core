@@ -11,12 +11,14 @@
                           :entry_ids => subject_grouping.entries.map{|e| e.id},
                           :fr_index_subject => subject_grouping.header }.to_json do %>
 
-  <span class="title"><%= subject_grouping.header %></span>
+                          <span class="title" data-header-attribute="<%= subject_grouping.header_attribute %>" data-original-title='<%= subject_grouping.header %>'>
+                            <%= spell_checker.highlight_spelling_errors subject_grouping.header %>
+                          </span>
   <% if subject_grouping.document_groupings.size > 1 %>
     <a href="#" class="edit btn">Edit</a>
   <% end %>
   <ul>
-    <%= render :partial => "document_grouping", :collection => subject_grouping.document_groupings, :locals => {:agency_year => agency_year} %>
+    <%= render :partial => "document_grouping", :collection => subject_grouping.document_groupings, :locals => {:agency_year => agency_year, :spell_checker => spell_checker} %>
   </ul>
 <% end %>
 

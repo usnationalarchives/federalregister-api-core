@@ -33,6 +33,7 @@
       "closeOnEscape",
       "modalOpen",
       "fr_index_popover_handler",
+      "SpellChecker",
 
       // Some non-recognized built-in methods
       "escape",
