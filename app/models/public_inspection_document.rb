@@ -60,7 +60,7 @@ class PublicInspectionDocument < ApplicationModel
   define_index do
     # fields
     indexes "IF(public_inspection_documents.title = '', CONCAT(public_inspection_documents.toc_subject, ' ', public_inspection_documents.toc_doc), public_inspection_documents.title)", :as => :title
-    indexes "LOAD_FILE(CONCAT('#{RAILS_ROOT}/data/public_inspection/raw/', public_inspection_documents.document_file_path, '.txt'))", :as => :full_text
+    indexes "CONCAT('#{RAILS_ROOT}/data/public_inspection/raw/', public_inspection_documents.document_file_path, '.txt')", :as => :full_text, :file => true
     indexes "GROUP_CONCAT(DISTINCT docket_numbers.number SEPARATOR ' ')", :as => :docket_id
     
     # attributes

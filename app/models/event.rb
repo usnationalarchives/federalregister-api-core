@@ -76,7 +76,7 @@ class Event < ApplicationModel
     indexes entry.abstract
     indexes place.name, :as => :place
     indexes event_type, :as => :type, :facet => true
-    indexes "LOAD_FILE(CONCAT('#{RAILS_ROOT}/data/raw/', entries.document_file_path, '.txt'))", :as => :entry_full_text
+    indexes "CONCAT('#{RAILS_ROOT}/data/raw/', entries.document_file_path, '.txt')", :as => :entry_full_text, :file => true
     
     # attributes
     has date

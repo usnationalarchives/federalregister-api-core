@@ -267,7 +267,7 @@ class Entry < ApplicationModel
     # fields
     indexes title
     indexes abstract
-    indexes "LOAD_FILE(CONCAT('#{RAILS_ROOT}/data/raw/', document_file_path, '.txt'))", :as => :full_text
+    indexes "CONCAT('#{RAILS_ROOT}/data/raw/', document_file_path, '.txt')", :as => :full_text, :file => true
     indexes "GROUP_CONCAT(DISTINCT IFNULL(`entry_regulation_id_numbers`.`regulation_id_number`, '0') SEPARATOR ' ')", :as =>  :regulation_id_number
     indexes <<-SQL, :as => :docket_id
       (

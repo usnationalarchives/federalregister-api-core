@@ -73,7 +73,7 @@ class RegulatoryPlan < ApplicationModel
     # fields
     indexes title
     indexes abstract
-    indexes "LOAD_FILE(CONCAT('#{RAILS_ROOT}/data/regulatory_plans/', issue, '/', regulation_id_number, '.xml'))", :as => :full_text
+    indexes "CONCAT('#{RAILS_ROOT}/data/regulatory_plans/', issue, '/', regulation_id_number, '.xml')", :as => :full_text, :file => true
     indexes priority_category, :facet => true
     
     # attributes
