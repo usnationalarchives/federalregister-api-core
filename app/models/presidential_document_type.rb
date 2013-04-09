@@ -8,5 +8,6 @@ class PresidentialDocumentType < ActiveHash::Base
     {:id => 3, :name => "Memorandum",         :node_name => "PRMEMO",    :identifier => "memorandum"},
     {:id => 4, :name => "Notice",             :node_name => "PRNOTICE",  :identifier => "notice"},
     {:id => 5, :name => "Proclamation",       :node_name => "PROCLA",    :identifier => "proclamation"},
+    {:id => 6, :name => "Presidential Order", :node_name => "PRORDER",   :identifier => "presidential_order"},
   ]
 end
