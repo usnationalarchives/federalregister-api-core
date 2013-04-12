@@ -318,12 +318,12 @@ class EntrySearch < ApplicationSearch
   
   def matching_entry_citation
     if term.present?
-      term.scan(/^\s*(\d+)\s*(?:F\.?R\.?|Fed\.?\s*Reg\.?)\s*(\d+)\s*$/i) do |volume, page|
-        return Citation.new(:citation_type => "FR", :part_1 => volume.to_i, :part_2 => page.to_i)
+      term.scan(/^\s*(\d+)\s*(?:F\.?R\.?|Fed\.?\s*Reg\.?)\s*([0-9,]+)\s*$/i) do |volume, page|
+        return Citation.new(:citation_type => "FR", :part_1 => volume.to_i, :part_2 => page.gsub(/,/,'').to_i)
       end
 
-      term.scan(/^\s*(?:EO|Executive Order|E\.O\.)\s+(\d+)\s*$/i) do |captures|
-        return Citation.new(:citation_type => "EO", :part_1 => captures.first.to_i)
+      term.scan(/^\s*(?:EO|Executive Order|E\.O\.)\s+([0-9,]+)\s*$/i) do |captures|
+        return Citation.new(:citation_type => "EO", :part_1 => captures.first.gsub(/,/,'').to_i)
       end
     end
     
