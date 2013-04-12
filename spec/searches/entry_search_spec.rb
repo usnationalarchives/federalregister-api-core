@@ -76,6 +76,7 @@ describe EntrySearch do
       citation_attributes = Citation.new(:citation_type => "FR", :part_1 => 71, :part_2 => 12345).attributes
       EntrySearch.new(:conditions => {:term => "71 Fed Reg 12345"}).matching_entry_citation.attributes.should == citation_attributes
       EntrySearch.new(:conditions => {:term => "71 Fed. Reg. 12345"}).matching_entry_citation.attributes.should == citation_attributes
+      EntrySearch.new(:conditions => {:term => "71 Fed. Reg. 12,345"}).matching_entry_citation.attributes.should == citation_attributes
       EntrySearch.new(:conditions => {:term => " 71 fed reg 12345 "}).matching_entry_citation.attributes.should == citation_attributes
       EntrySearch.new(:conditions => {:term => "71 fedreg 12345"}).matching_entry_citation.attributes.should == citation_attributes
       EntrySearch.new(:conditions => {:term => "71fedreg12345"}).matching_entry_citation.attributes.should == citation_attributes
