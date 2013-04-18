@@ -42,11 +42,7 @@ namespace :content do
     end
 
     task :reindex do
-      if RAILS_ENV == 'development'
-        `indexer -c /Users/andrewcarpenter/Documents/federal_register/fr2/config/development.sphinx.conf public_inspection_document_core --rotate`
-      else
-        `bundle exec cap #{RAILS_ENV} sphinx:public_inspection:reindex`
-      end
+      SphinxIndexer.perform('public_inspection_document_core')
     end
 
     task :purge_revoked_documents => :environment do

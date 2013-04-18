@@ -193,52 +193,6 @@ end
 
 
 #############################################################
-# Transfer raw files to sphinx server
-#############################################################
-
-namespace :sphinx do
-  task :rebuild_remote_index do
-    transfer_raw_files
-    find_and_execute_task('thinking_sphinx:configure')
-    transfer_sphinx_config
-    run_sphinx_indexer
-  end
-  
-  task :rebuild_delta_index do
-    transfer_raw_files
-    run_sphinx_delta_indexer
-  end
-  
-  task :transfer_raw_files, :roles => [:worker] do
-    run "rsync --verbose  --progress --stats --compress --recursive --times --perms --links #{shared_path}/data/raw sphinx.fr2.ec2.internal:#{shared_path}/data"
-  end
-  task :transfer_sphinx_config, :roles => [:worker] do
-    run "rsync --verbose  --progress --stats --compress --recursive --times --perms --links #{current_path}/config/#{rails_env}.sphinx.conf sphinx.fr2.ec2.internal:#{shared_path}/config/"
-  end
-  task :run_sphinx_indexer, :roles => [:sphinx] do
-    run "indexer --config #{shared_path}/config/#{rails_env}.sphinx.conf --all --rotate"
-  end
-  task :run_sphinx_delta_indexer, :roles => [:sphinx] do
-    run "indexer --config #{shared_path}/config/#{rails_env}.sphinx.conf --rotate #{delta_index_names}"
-  end
-
-  namespace :public_inspection do
-    task :reindex do
-      transfer_raw_files
-      run_sphinx_indexer
-    end
-
-    task :transfer_raw_files, :roles => [:worker] do
-      run "rsync --verbose  --progress --stats --compress --recursive --times --perms --links #{shared_path}/data/public_inspection/raw sphinx.fr2.ec2.internal:#{shared_path}/data/public_inspection"
-    end
-
-    task :run_sphinx_indexer, :roles => [:sphinx] do
-      run "indexer --config #{shared_path}/config/#{rails_env}.sphinx.conf public_inspection_document_core --rotate"
-    end
-  end
-end
-
-#############################################################
 # Restart resque workers
 #############################################################
 
