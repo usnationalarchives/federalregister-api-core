@@ -3,7 +3,7 @@ class EntrySearch::Suggestor::Spelling < EntrySearch::Suggestor::Base
     @search = search
     if @search.term.present?
       corrected = SpellChecker.new.correct(@search.term)
-      if @search.term != corrected
+      if @search.term.downcase != corrected.downcase
         @conditions = @search.conditions.dup
         @prior_term = @search.term
         @term = corrected
