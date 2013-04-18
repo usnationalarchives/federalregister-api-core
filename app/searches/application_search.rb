@@ -280,7 +280,7 @@ class ApplicationSearch
       # force sphinx to populate the result so that if it fails due to
       #   unescaped invalid extended mode characters we can handle the
       #   error here
-      results.send(:populate) unless results.is_a?(Array)
+      results.send(:populate) if results.is_a?(ThinkingSphinx::Search)
 
       results
     rescue ThinkingSphinx::SphinxError
