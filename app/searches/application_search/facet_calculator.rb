@@ -20,7 +20,7 @@ class ApplicationSearch::FacetCalculator
     # # raise client.inspect
     # # raise client.query(query, sphinx_search.send(:indexes))[:matches].size.inspect
     # result = client.query(query, sphinx_search.send(:indexes))[:matches]
-    @search.model.search(
+    @search.sphinx_search(
       @search.sphinx_term,
       :with => @search.with,
       :with_all => @search.with_all,

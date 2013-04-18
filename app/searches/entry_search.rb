@@ -281,7 +281,7 @@ class EntrySearch < ApplicationSearch
   end
 
   def count_in_last_n_days(n)
-    model.search_count(sphinx_term,
+    sphinx_search_count(sphinx_term,
       :with => with.merge(:publication_date => n.days.ago.to_time.midnight .. Time.current.midnight),
       :with_all => with_all,
       :without => without,

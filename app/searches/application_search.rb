@@ -178,7 +178,7 @@ class ApplicationSearch
   end
 
   def result_ids(args = {})
-    model.search(sphinx_term,
+    sphinx_search(sphinx_term,
       search_options.merge(:ids_only => true).recursive_merge(args)
     )
   end
@@ -188,7 +188,7 @@ class ApplicationSearch
   end
   
   def results(args = {})
-    result_array = model.search(sphinx_term,
+    result_array = sphinx_search(sphinx_term,
       search_options.recursive_merge(args)
     )
 
@@ -207,7 +207,7 @@ class ApplicationSearch
     
     result_array
   end
-  memoize :results
+  # memoize :results
   
   def order_clause
     "@relevance DESC"
@@ -231,13 +231,13 @@ class ApplicationSearch
   end
   
   def count
-    @count ||= model.search_count(sphinx_term,
+    @count ||= sphinx_search_count(sphinx_term,
       search_options.except(:order, :sort_mode)
     )
   end
   
   def term_count
-    model.search_count(sphinx_term, :match_mode => :extended)
+    sphinx_search_count(sphinx_term, :match_mode => :extended)
   end
   
   def entry_count
@@ -264,6 +264,30 @@ class ApplicationSearch
     @sphinx_term ||= TermPreprocessor.process_term(@term)
   end
   
+
+  def sphinx_search_count(term, options)
+    begin
+      model.search_count(term, options)
+    rescue ThinkingSphinx::SphinxError
+      model.search_count(term, options.merge(:match_mode => :all))
+    end
+  end
+
+  def sphinx_search(term, options)
+    begin
+      results = model.search(term, options)
+
+      # force sphinx to populate the result so that if it fails due to
+      #   unescaped invalid extended mode characters we can handle the
+      #   error here
+      results.send(:populate) unless results.is_a?(Array)
+
+      results
+    rescue ThinkingSphinx::SphinxError
+      model.search(term, options.merge(:match_mode => :all))
+    end
+  end
+
   private
   
   def set_defaults(options)
