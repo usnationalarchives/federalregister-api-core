@@ -1,6 +1,10 @@
 # Use deployed git commit hash as quick & easy cache busting strategy
 ENV["RAILS_ASSET_ID"] = `git log -n 1 --pretty=format:%H`
 
+if (File.basename($0) == 'rake' && (ARGV.include?('db:migrate')|| ARGV.include?('db:setup')))
+  ENV["ASSUME_UNITIALIZED_DB"] = '1'
+end
+
 # Specifies gem version of Rails to use when vendor/rails is not present
 RAILS_GEM_VERSION = '2.3.17' unless defined? RAILS_GEM_VERSION
 
@@ -26,7 +30,7 @@ Rails::Initializer.run do |config|
   # config.frameworks -= [ :active_record, :active_resource, :action_mailer ]
 
   # Activate observers that should always be running, expect during db:migrate and db:setup...
-  unless (File.basename($0) == 'rake' && (ARGV.include?('db:migrate')|| ARGV.include?('db:setup')))
+  unless ENV['ASSUME_UNITIALIZED_DB']
     config.active_record.observers = [:agency_observer, :agency_name_observer, :canned_search_observer, :issue_approval_observer, :entry_observer, :public_inspection_document_observer, :public_inspection_issue_observer]
   end
 

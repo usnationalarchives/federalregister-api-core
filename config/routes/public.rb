@@ -159,12 +159,14 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :subscriptions, :only => [:new, :create, :edit, :update, :destroy], :member => {:unsubscribe => :get, :confirm => :get}, :collection => {:confirmation_sent => :get, :confirmed => :get, :unsubscribed => :get}
   
   # SECTIONS
-  Section.all.each do |section|
-    map.with_options :slug => section.slug, :controller => "sections", :conditions => { :method => :get } do |section_map|
-      section_map.connect "#{section.slug}.:format",              :action => "show"
-      section_map.connect "#{section.slug}/about",                :action => "about"
-      section_map.connect "#{section.slug}/featured.:format",     :action => "highlighted_entries"
-      section_map.connect "#{section.slug}/significant.:format",  :action => "significant_entries"
+  unless ENV["ASSUME_UNITIALIZED_DB"]
+    Section.all.each do |section|
+      map.with_options :slug => section.slug, :controller => "sections", :conditions => { :method => :get } do |section_map|
+        section_map.connect "#{section.slug}.:format",              :action => "show"
+        section_map.connect "#{section.slug}/about",                :action => "about"
+        section_map.connect "#{section.slug}/featured.:format",     :action => "highlighted_entries"
+        section_map.connect "#{section.slug}/significant.:format",  :action => "significant_entries"
+      end
     end
   end
   
