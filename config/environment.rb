@@ -25,8 +25,10 @@ Rails::Initializer.run do |config|
   # you must remove the Active Record framework.
   # config.frameworks -= [ :active_record, :active_resource, :action_mailer ]
 
-  # Activate observers that should always be running
-  config.active_record.observers = [:agency_observer, :agency_name_observer, :canned_search_observer, :issue_approval_observer, :entry_observer, :public_inspection_document_observer, :public_inspection_issue_observer]
+  # Activate observers that should always be running, expect during db:migrate and db:setup...
+  unless (File.basename($0) == 'rake' && (ARGV.include?('db:migrate')|| ARGV.include?('db:setup')))
+    config.active_record.observers = [:agency_observer, :agency_name_observer, :canned_search_observer, :issue_approval_observer, :entry_observer, :public_inspection_document_observer, :public_inspection_issue_observer]
+  end
 
   # Set Time.zone default to the specified zone and make Active Record auto-convert to this zone.
   # Run "rake -D time" for a list of tasks for finding time zone names.
