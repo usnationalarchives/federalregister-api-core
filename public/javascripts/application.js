@@ -5,6 +5,7 @@ function closeOnEscape(hash) {
     }
   });
 }
+/*global modalOpen:true */
 var modalOpen = function(hash) {
   closeOnEscape(hash);
   hash.w.show();

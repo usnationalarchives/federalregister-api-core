@@ -1,3 +1,4 @@
+/*global SpellChecker:true */
 var SpellChecker = (function(){
   var SpellChecker = function() {
   };

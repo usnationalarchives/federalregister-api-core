@@ -5,6 +5,7 @@
  * include document_number and how to present the 
  * data returned (add_popover_content) are required. */
 
+/*global fr_index_popover_handler:true */
 fr_index_popover_handler = {
   popover_cache: {},
   pi_base_url: 'https://www.federalregister.gov/api/v1/public-inspection-documents/',
