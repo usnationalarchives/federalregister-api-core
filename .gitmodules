@@ -1,6 +1,3 @@
-[submodule "vendor/plugins/annotate_models"]
-	path = vendor/plugins/annotate_models
-	url = git://github.com/wested/annotate_models.git
 [submodule "vendor/plugins/later_dude"]
 	path = vendor/plugins/later_dude
 	url = git://github.com/clemens/later_dude.git
@@ -28,6 +25,3 @@
 [submodule "vendor/plugins/bootstrap-sass"]
 	path = vendor/plugins/bootstrap-sass
 	url = git@github.com:criticaljuncture/bootstrap-sass.git
-[submodule "vendor/plugins/calendar_helper"]
-	path = vendor/plugins/calendar_helper
-	url = git@github.com:criticaljuncture/calendar_helper.git
