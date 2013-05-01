@@ -94,6 +94,7 @@ GEM
     indefinite_article (0.2.0)
       activesupport
     jgre-monkeyspecdoc (0.9.5)
+    jrails (0.6.0)
     json (1.7.7)
     juicer (1.0.6)
       cmdparse
@@ -220,6 +221,7 @@ DEPENDENCIES
   icalendar
   indefinite_article
   jgre-monkeyspecdoc (= 0.9.5)
+  jrails (= 0.6.0)
   json (= 1.7.7)
   juicer (= 1.0.6)
   klarlack (= 0.0.6)
