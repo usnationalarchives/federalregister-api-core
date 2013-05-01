@@ -68,7 +68,7 @@ NAV
   font-family: "Helvetica Neue", "Helvetica", sans-serif;
   font-size: 13px;
   font-weight: bold;
-  line-height: 30px;
+  line-height: 32px;
   padding: 0 10px;
   }
 #navigation a:hover,
@@ -81,7 +81,7 @@ NAV
 #navigation .dropdown .arrow {
   background: image-url('icons/header/dropdown-off.png') no-repeat left 50%;
   display: inline;
-  height: 30px;
+  height: 34px;
   float: right;
   margin-left: 10px;
   width: image-width('icons/header/dropdown-off.png');
@@ -268,13 +268,13 @@ NAV
 #navigation .fr-index-search:hover {
   background: sprite-image('icons/header/fr-index-hover.png', 8px, 6px, 50px) no-repeat;
   }
-#navigation .nav_myfr2 {
-  background: sprite-image('icons/header/my-fr2.png', 7px, 7px, 50px) no-repeat;
-  }
-#navigation .nav_myfr2.hover, 
-#navigation .nav_myfr2:hover {
-  background: sprite-image('icons/header/my-fr2-hover.png', 7px, 7px, 50px) no-repeat;
-  }
+/*#navigation .nav_myfr2 {*/
+  /*background: sprite-image('icons/header/my-fr2.png', 7px, 7px, 50px) no-repeat;*/
+  /*}*/
+/*#navigation .nav_myfr2.hover, */
+/*#navigation .nav_myfr2:hover {*/
+  /*background: sprite-image('icons/header/my-fr2-hover.png', 7px, 7px, 50px) no-repeat;*/
+  /*}*/
 
 
 
