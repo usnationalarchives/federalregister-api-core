@@ -1,15 +1,3 @@
-# == Schema Information
-#
-# Table name: place_determinations
-#
-#  id         :integer(4)      not null, primary key
-#  entry_id   :integer(4)
-#  place_id   :integer(4)
-#  string     :string(255)
-#  context    :string(255)
-#  confidence :integer(4)
-#
-
 class PlaceDetermination < ApplicationModel
   MIN_CONFIDENCE = 9
   default_scope :conditions => "place_determinations.confidence >= #{MIN_CONFIDENCE}"

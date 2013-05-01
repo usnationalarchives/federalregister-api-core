@@ -1,15 +1,3 @@
-# == Schema Information
-#
-# Table name: agency_assignments
-#
-#  id              :integer(4)      not null, primary key
-#  assignable_id   :integer(4)
-#  agency_id       :integer(4)
-#  position        :integer(4)
-#  assignable_type :string(255)
-#  agency_name_id  :integer(4)
-#
-
 require 'spec_helper'
 
 describe AgencyAssignment do

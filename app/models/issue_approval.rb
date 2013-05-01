@@ -1,15 +1,3 @@
-# == Schema Information
-#
-# Table name: issue_approvals
-#
-#  id               :integer(4)      not null, primary key
-#  publication_date :date
-#  creator_id       :integer(4)
-#  updater_id       :integer(4)
-#  created_at       :datetime
-#  updated_at       :datetime
-#
-
 class IssueApproval < ApplicationModel
   validates_uniqueness_of :publication_date
   

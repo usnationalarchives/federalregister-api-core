@@ -1,17 +1,3 @@
-# == Schema Information
-#
-# Table name: canned_searches
-#
-#  id                :integer(4)      not null, primary key
-#  section_id        :integer(4)
-#  title             :string(255)
-#  slug              :string(255)
-#  description       :text(16777215)
-#  search_conditions :text(16777215)
-#  active            :boolean(1)
-#  position          :integer(4)
-#
-
 class CannedSearch < ApplicationModel
   does 'shared/slug', :based_on => :title
 

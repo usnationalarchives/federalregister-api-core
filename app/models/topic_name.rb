@@ -1,16 +1,3 @@
-# == Schema Information
-#
-# Table name: topic_names
-#
-#  id            :integer(4)      not null, primary key
-#  name          :string(255)
-#  void          :boolean(1)
-#  entries_count :integer(4)      default(0)
-#  topics_count  :integer(4)      default(0)
-#  created_at    :datetime
-#  updated_at    :datetime
-#
-
 class TopicName < ApplicationModel
   has_many :topic_name_assignments, :dependent => :destroy
   has_many :entries, :through => :topic_name_assignments

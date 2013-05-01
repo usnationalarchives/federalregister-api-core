@@ -1,17 +1,3 @@
-# == Schema Information
-#
-# Table name: regulatory_plans
-#
-#  id                   :integer(4)      not null, primary key
-#  regulation_id_number :string(255)
-#  issue                :string(255)
-#  title                :text(16777215)
-#  abstract             :text(16777215)
-#  priority_category    :string(255)
-#  delta                :boolean(1)      default(TRUE), not null
-#  current              :boolean(1)
-#
-
 class RegulatoryPlan < ApplicationModel
   class Contact
     def initialize(node)

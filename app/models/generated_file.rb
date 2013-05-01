@@ -1,24 +1,3 @@
-# == Schema Information
-#
-# Table name: generated_files
-#
-#  id                       :integer(4)      not null, primary key
-#  parameters               :string(255)
-#  token                    :string(255)
-#  processing_began_at      :datetime
-#  processing_completed_at  :datetime
-#  attachment_file_name     :string(255)
-#  attachment_file_type     :string(255)
-#  attachment_file_size     :integer(4)
-#  attachment_updated_at    :datetime
-#  creator_id               :integer(4)
-#  updater_id               :integer(4)
-#  created_at               :datetime
-#  updated_at               :datetime
-#  total_document_count     :integer(4)
-#  processed_document_count :integer(4)
-#
-
 class GeneratedFile < ApplicationModel
   serialize :parameters
   has_attached_file :attachment,

@@ -1,30 +1,3 @@
-# == Schema Information
-#
-# Table name: public_inspection_documents
-#
-#  id                  :integer(4)      not null, primary key
-#  document_number     :string(255)
-#  granule_class       :string(255)
-#  filed_at            :datetime
-#  publication_date    :date
-#  toc_subject         :string(255)
-#  toc_doc             :string(255)
-#  special_filing      :boolean(1)      not null
-#  pdf_file_name       :string(255)
-#  pdf_file_size       :integer(4)
-#  pdf_updated_at      :datetime
-#  pdf_etag            :string(255)
-#  title               :string(255)     default(""), not null
-#  editorial_note      :text(16777215)
-#  document_file_path  :string(255)
-#  raw_text_updated_at :datetime
-#  delta               :boolean(1)      default(TRUE), not null
-#  num_pages           :integer(4)
-#  created_at          :datetime
-#  updated_at          :datetime
-#  entry_id            :integer(4)
-#
-
 class PublicInspectionDocument < ApplicationModel
   has_attached_file :pdf,
                     :storage => :s3,

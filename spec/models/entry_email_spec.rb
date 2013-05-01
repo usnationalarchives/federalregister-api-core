@@ -1,16 +1,3 @@
-# == Schema Information
-#
-# Table name: entry_emails
-#
-#  id             :integer(4)      not null, primary key
-#  remote_ip      :string(255)
-#  num_recipients :integer(4)
-#  entry_id       :integer(4)
-#  sender_hash    :string(255)
-#  created_at     :datetime
-#  updated_at     :datetime
-#
-
 require 'spec_helper'
 
 describe EntryEmail do

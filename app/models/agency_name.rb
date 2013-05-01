@@ -1,15 +1,3 @@
-# == Schema Information
-#
-# Table name: agency_names
-#
-#  id         :integer(4)      not null, primary key
-#  name       :string(255)     not null
-#  agency_id  :integer(4)
-#  void       :boolean(1)
-#  created_at :datetime
-#  updated_at :datetime
-#
-
 class AgencyName < ApplicationModel
   belongs_to :agency
   has_many :agency_name_assignments

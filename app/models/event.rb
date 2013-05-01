@@ -1,17 +1,3 @@
-# == Schema Information
-#
-# Table name: events
-#
-#  id                       :integer(4)      not null, primary key
-#  entry_id                 :integer(4)
-#  date                     :date
-#  title                    :string(255)
-#  place_id                 :integer(4)
-#  remote_call_in_available :boolean(1)
-#  event_type               :string(255)
-#  delta                    :boolean(1)      default(TRUE), not null
-#
-
 class Event < ApplicationModel
   include Icalendar
   PUBLIC_MEETING_PHRASES = ["public meeting", "public hearing", "town hall meeting", "web dialogue", "webinar"]

@@ -1,15 +1,3 @@
-# == Schema Information
-#
-# Table name: dockets
-#
-#  id                     :string(255)     default(""), not null, primary key
-#  regulation_id_number   :string(255)
-#  comments_count         :integer(4)
-#  docket_documents_count :integer(4)
-#  title                  :string(255)
-#  metadata               :text
-#
-
 class Docket < ApplicationModel
   serialize :metadata, Hash
   has_many :docket_documents

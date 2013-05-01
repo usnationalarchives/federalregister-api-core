@@ -1,16 +1,3 @@
-# == Schema Information
-#
-# Table name: places
-#
-#  id         :integer(4)      not null, primary key
-#  name       :string(255)
-#  place_type :string(255)
-#  latitude   :float
-#  longitude  :float
-#  created_at :datetime
-#  updated_at :datetime
-#
-
 class Place < ApplicationModel
   UNUSABLE_PLACES = [23424977,2393620]
   

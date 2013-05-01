@@ -1,16 +1,3 @@
-# == Schema Information
-#
-# Table name: mailing_lists
-#
-#  id                         :integer(4)      not null, primary key
-#  search_conditions          :text(16777215)
-#  title                      :string(255)
-#  active_subscriptions_count :integer(4)      default(0)
-#  created_at                 :datetime
-#  updated_at                 :datetime
-#  type                       :string(255)
-#
-
 class MailingList::Entry < MailingList
   def search_class
     EntrySearch
