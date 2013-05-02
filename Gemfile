@@ -57,6 +57,7 @@ gem "recaptcha", "0.3.1", :require => 'recaptcha/rails'
 gem 'sendgrid', :git => "git://github.com/criticaljuncture/sendgrid.git", :branch => 'master'
 gem 'modularity', '0.6.1'
 
+gem "validation_reflection", "0.3.8"
 gem 'juicer', '1.0.6'
 
 gem 'rdoc'

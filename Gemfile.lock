@@ -179,6 +179,7 @@ GEM
       capistrano (>= 2.5.5)
     tilt (1.3.3)
     timecop (0.3.5)
+    validation_reflection (0.3.8)
     vegas (0.1.8)
       rack (>= 1.0.0)
     webrat (0.7.1)
@@ -251,6 +252,7 @@ DEPENDENCIES
   thoughtbot-shoulda
   thunder_punch (= 0.0.14)
   timecop (= 0.3.5)
+  validation_reflection (= 0.3.8)
   webrat (= 0.7.1)
   will_paginate (= 2.3.14)
   ym4r (= 0.6.1)
