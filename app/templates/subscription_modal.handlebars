@@ -1,14 +1,12 @@
 <div id="modal" class="subscribe">
   <a href="#" class="jqmClose">Close</a>
-  <h3>Select a feed</h3>
+  <h3>Select a Subscription</h3>
   <ul>
   {{#each elements}}
     <li>
     <h4>{{ title }}</h4>
       <ul class="horizontal icons">
         <li class="header"><h5>Via RSS:</h5> </li>
-        <li class="google"><a href="http://fusion.google.com/add?feedurl={{ escaped_href }}" title="Add feed to Google">Google Reader</a></li>
-        <li class="yahoo"><a href="http://add.my.yahoo.com/rss?url={{ escaped_href }}" title="Add feed to Yahoo">My Yahoo</a></li>
         <li class="rss_link"><a href="{{ href }}" title="RSS 2.0 Link">RSS 2.0 Link</a></li>
         {{#if subscription_action }}
         <li class="email">
