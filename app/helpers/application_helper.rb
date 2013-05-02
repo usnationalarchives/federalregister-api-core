@@ -30,7 +30,7 @@ module ApplicationHelper
   end
   
   def feed_autodiscovery(feed_url, title = 'RSS', options = {})
-    link_html_options = {:rel => 'alternate', :type => 'application/rss+xml', :title => title, :href => feed_url}
+    link_html_options = {:rel => 'alternate', :type => 'application/rss+xml', :title => title, :href => feed_url, :class => 'subscription_feed'}
     
     if options[:search_conditions]
       link_html_options[:'data-search-conditions'] = options[:search_conditions].to_json

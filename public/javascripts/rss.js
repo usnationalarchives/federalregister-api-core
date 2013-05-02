@@ -7,8 +7,8 @@ $(document).ready(function () {
               subscription_modal_template = Handlebars.compile( $("#subscription-modal-template").html() );
             }
 
-            var elements = $('link[type="application/rss+xml"]').map(function () {
-              var elem = $(this);
+            var elements = $.map( $('link.subscription_feed'), function(el) {
+              var elem = $(el);
               var feed = {
                 title: elem.attr('title'),
                 href: elem.attr('href'),
