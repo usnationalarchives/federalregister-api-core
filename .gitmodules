@@ -1,6 +1,3 @@
-[submodule "vendor/plugins/later_dude"]
-	path = vendor/plugins/later_dude
-	url = git://github.com/clemens/later_dude.git
 [submodule "vendor/plugins/sitemap_generator"]
 	path = vendor/plugins/sitemap_generator
 	url = git@github.com:criticaljuncture/sitemap_generator
