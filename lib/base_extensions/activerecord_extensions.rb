@@ -31,7 +31,7 @@ class ActiveRecord::Base
   
   # TODO: pluginize
   def self.file_attribute(attribute, &filename_generator)
-    require 'ftools'
+    require 'fileutils'
     
     path_method = "#{attribute}_file_path"
     has_method = "has_#{attribute}?"
@@ -43,7 +43,7 @@ class ActiveRecord::Base
       if val.present?
         save # save beforehand, thus triggering before_save callbacks
         path = self.send(path_method)
-        File.makedirs(File.dirname(path))
+        FileUtils.mkdir_p(File.dirname(path))
         self.class.transaction do 
           if self.class.columns_hash["#{attribute}_created_at"] && self["#{attribute}_created_at"].nil?
             self["#{attribute}_created_at"] = Time.now
