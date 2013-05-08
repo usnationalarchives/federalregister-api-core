@@ -34,7 +34,8 @@ GEM
     airbrake (3.0.9)
       activesupport
       builder
-    amatch (0.2.3)
+    amatch (0.2.11)
+      tins (~> 0.3)
     amazon-ec2 (0.9.15)
       xml-simple (>= 1.0.12)
     authlogic (2.1.3)
@@ -179,6 +180,7 @@ GEM
       capistrano (>= 2.5.5)
     tilt (1.3.3)
     timecop (0.3.5)
+    tins (0.8.0)
     validation_reflection (0.3.8)
     vegas (0.1.8)
       rack (>= 1.0.0)
@@ -196,7 +198,7 @@ PLATFORMS
 DEPENDENCIES
   active_hash (= 0.9.5)
   airbrake (= 3.0.9)
-  amatch (= 0.2.3)
+  amatch (= 0.2.11)
   amazon-ec2
   authlogic (= 2.1.3)
   aws-s3 (= 0.6.2)
