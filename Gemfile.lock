@@ -38,6 +38,7 @@ GEM
       tins (~> 0.3)
     amazon-ec2 (0.9.15)
       xml-simple (>= 1.0.12)
+    american_date (1.1.0)
     authlogic (2.1.3)
       activesupport
     aws-s3 (0.6.2)
@@ -87,6 +88,8 @@ GEM
       json (>= 1.4.6)
     haml (3.0.4)
     highline (1.6.1)
+    hoe (3.6.0)
+      rake (>= 0.8, < 11.0)
     http_headers (0.0.2.3)
     httparty (0.8.1)
       multi_json
@@ -94,7 +97,6 @@ GEM
     icalendar (1.1.5)
     indefinite_article (0.2.0)
       activesupport
-    jgre-monkeyspecdoc (0.9.5)
     jrails (0.6.0)
     json (1.7.7)
     juicer (1.0.6)
@@ -120,7 +122,7 @@ GEM
       will_paginate (< 2.9)
     multi_json (1.0.3)
     multi_xml (0.4.1)
-    mysql (2.7)
+    mysql (2.9.1)
     net-scp (1.0.4)
       net-ssh (>= 1.99.1)
     net-sftp (2.0.5)
@@ -159,7 +161,7 @@ GEM
     rspec-rails (1.3.2)
       rack (>= 1.0.0)
       rspec (>= 1.3.0)
-    rubyzip (0.9.1)
+    rubyzip (0.9.9)
     seanhussey-woulda (0.2.2)
       thoughtbot-shoulda (>= 2.0.0)
     searchlogic (2.4.12)
@@ -170,7 +172,9 @@ GEM
     spork (0.7.5)
     stevedore (0.0.1)
       activesupport
-    system_timer (1.0)
+    system_timer (1.2.4)
+    test-unit (1.2.3)
+      hoe (>= 1.5.1)
     thinking-sphinx (1.4.13)
       activerecord (>= 1.15.6, < 3.0.0)
       after_commit (>= 1.0.7)
@@ -179,7 +183,7 @@ GEM
     thunder_punch (0.0.14)
       capistrano (>= 2.5.5)
     tilt (1.3.3)
-    timecop (0.3.5)
+    timecop (0.6.1)
     tins (0.8.0)
     validation_reflection (0.3.8)
     vegas (0.1.8)
@@ -200,6 +204,7 @@ DEPENDENCIES
   airbrake (= 3.0.9)
   amatch (= 0.2.11)
   amazon-ec2
+  american_date
   authlogic (= 2.1.3)
   aws-s3 (= 0.6.2)
   bcrypt-ruby (= 2.1.2)
@@ -223,7 +228,6 @@ DEPENDENCIES
   httparty (= 0.8.1)
   icalendar
   indefinite_article
-  jgre-monkeyspecdoc (= 0.9.5)
   jrails (= 0.6.0)
   json (= 1.7.7)
   juicer (= 1.0.6)
@@ -231,7 +235,7 @@ DEPENDENCIES
   lemonade (= 0.3.2)
   mechanize (= 1.0.0)
   modularity (= 0.6.1)
-  mysql (= 2.7)
+  mysql
   net-scp (= 1.0.4)
   nokogiri (= 1.3.2)
   paperclip (= 2.3.1.1)
@@ -243,17 +247,18 @@ DEPENDENCIES
   resque (= 1.19.0)
   rspec (= 1.3.0)
   rspec-rails (= 1.3.2)
-  rubyzip (= 0.9.1)
+  rubyzip
   seanhussey-woulda
   searchlogic (= 2.4.12)
   sendgrid!
   spork (= 0.7.5)
   stevedore (= 0.0.1)
-  system_timer (= 1.0.0)
+  system_timer (= 1.2.4)
+  test-unit (= 1.2.3)
   thinking-sphinx (= 1.4.13)
   thoughtbot-shoulda
   thunder_punch (= 0.0.14)
-  timecop (= 0.3.5)
+  timecop
   validation_reflection (= 0.3.8)
   webrat (= 0.7.1)
   will_paginate (= 2.3.14)

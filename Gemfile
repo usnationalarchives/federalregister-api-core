@@ -2,7 +2,7 @@ source 'http://rubygems.org'
 source 'http://gems.github.com'
 
 gem 'rails', '2.3.17'
-gem 'mysql', '2.7'
+gem 'mysql'
 
 gem "jrails", "0.6.0"
 
@@ -17,10 +17,9 @@ gem 'curb', '0.4.4.0'
 gem 'http_headers', '0.0.2.3'
 gem 'geokit', '1.4.1', :require => 'geokit'
 gem 'will_paginate', '2.3.14', :require => 'will_paginate'
-gem 'fastercsv', '1.4.0'
 gem 'amatch', '0.2.11'
 gem 'indefinite_article'
-gem 'rubyzip', '0.9.1', :require => 'zip/zip'
+gem 'rubyzip', :require => 'zip/zip'
 gem 'formtastic', '0.9.8'
 
 gem 'json', '1.7.7'
@@ -44,7 +43,7 @@ gem 'lemonade', '0.3.2'
 gem 'icalendar'
 gem 'pdfkit', '0.5.2'
 gem 'klarlack', '0.0.6'
-gem 'system_timer', '1.0.0'
+
 gem "amazon-ec2", :require => false
 
 gem "net-scp", '1.0.4'
@@ -62,9 +61,11 @@ gem 'juicer', '1.0.6'
 
 gem 'rdoc'
 
-# bundler requires these gems in all environments
-# gem 'nokogiri', '1.4.2'
-# gem 'geokit'
+# needed when running on ruby 1.8
+gem 'system_timer', '1.2.4', :platform => :ruby_18
+gem 'fastercsv', '1.4.0', :platform => :ruby_18
+
+gem 'american_date', :platform => :ruby_19
 
 group :deployment do
 end
@@ -85,17 +86,19 @@ group :test do
   gem 'floehopper-mocha',   :require => 'mocha'
   
   gem 'rails-test-serving', '0.1.4.2', :require => 'rails_test_serving'
-  gem 'jgre-monkeyspecdoc', '0.9.5', :require => 'monkeyspecdoc'
+  #gem 'jgre-monkeyspecdoc', '0.9.5', :require => 'monkeyspecdoc'
   
   gem 'rspec', '1.3.0', :require => false
   gem 'rspec-rails', '1.3.2', :require => false
   gem 'webrat', '0.7.1'
   gem 'factory_girl', '1.2.4'
   gem 'spork', '0.7.5', :require => false
-  gem 'timecop', '0.3.5'
+  gem 'timecop'
   
   gem 'cucumber'
   gem 'mechanize', '1.0.0'
   
   gem 'ci_reporter', '1.6.3'
+
+  gem 'test-unit', '1.2.3', :platform => :ruby_19
 end
