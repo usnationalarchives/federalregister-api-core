@@ -168,8 +168,7 @@ GEM
       rack (~> 1.1)
       tilt (>= 1.2.2, < 2.0)
     spork (0.7.5)
-    stevedore (0.0.1)
-      activesupport
+    stevedore (0.1.0)
     system_timer (1.0)
     thinking-sphinx (1.4.13)
       activerecord (>= 1.15.6, < 3.0.0)
@@ -248,7 +247,7 @@ DEPENDENCIES
   searchlogic (= 2.4.12)
   sendgrid!
   spork (= 0.7.5)
-  stevedore (= 0.0.1)
+  stevedore (= 0.1.0)
   system_timer (= 1.0.0)
   thinking-sphinx (= 1.4.13)
   thoughtbot-shoulda
