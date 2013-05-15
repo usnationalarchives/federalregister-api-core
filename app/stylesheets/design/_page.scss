@@ -1205,7 +1205,8 @@ TABLES
   @include text-shadow(#ddd, 1px, 1px, 1px);  
   }
 #entries.show #content_area .table_wrapper {
-  overflow-x: scroll;
+  overflow: scroll;
+  max-height: 550px;
 }
 #entries.show #content_area table {
   border-collapse:separate;
