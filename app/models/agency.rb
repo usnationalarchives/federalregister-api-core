@@ -33,7 +33,7 @@ class Agency < ApplicationModel
 
   module AssociationExtensions
     def excluding_parents
-      agencies = self.compact
+      agencies = self.compact.uniq
 
       # proxy_owner becomes proxy_association.owner in Rails 3+
       owner = proxy_owner
@@ -47,7 +47,7 @@ class Agency < ApplicationModel
         agencies
       else
         parent_agency_ids = agencies.map(&:parent_id).compact
-        agencies.reject{|a| parent_agency_ids.include?(a.id) }.uniq
+        agencies.reject{|a| parent_agency_ids.include?(a.id) }
       end
     end
   end
