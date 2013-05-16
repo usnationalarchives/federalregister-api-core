@@ -35,7 +35,13 @@ class RegulatoryPlanSearch < ApplicationSearch
   def model
     RegulatoryPlan
   end
-  
+
+  def find_options
+    {
+      :include => [:agencies, :agency_names],
+    }
+  end
+
   private
   
   def set_defaults(options)
