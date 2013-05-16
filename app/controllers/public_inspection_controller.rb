@@ -59,8 +59,8 @@ class PublicInspectionController < ApplicationController
 
     @date = date
     @issue = PublicInspectionIssue.published.find_by_publication_date!(@date)
-    @special_documents = TableOfContentsPresenter.new(@issue.public_inspection_documents.special_filing, :always_include_parent_agencies => true)
-    @regular_documents = TableOfContentsPresenter.new(@issue.public_inspection_documents.regular_filing, :always_include_parent_agencies => true)
+    @special_documents = TableOfContentsPresenter.new(@issue.public_inspection_documents.special_filing.scoped(:include => :docket_numbers), :always_include_parent_agencies => true)
+    @regular_documents = TableOfContentsPresenter.new(@issue.public_inspection_documents.regular_filing.scoped(:include => :docket_numbers), :always_include_parent_agencies => true)
     render :action => :by_date
   end
 end
