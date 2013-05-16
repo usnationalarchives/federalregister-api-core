@@ -1,7 +1,10 @@
 module Content::EntryImporter::PresidentialDocumentDetails
   extend Content::EntryImporter::Utils
 
-  provides :presidential_document_type_id, :signing_date, :executive_order_number
+  provides :presidential_document_type_id,
+    :signing_date,
+    :executive_order_number,
+    :executive_order_notes
 
   def presidential_document_type_id
     child_node = @bulkdata_node && @bulkdata_node.xpath('./*').first
@@ -29,6 +32,15 @@ module Content::EntryImporter::PresidentialDocumentDetails
       execordr_node.text.scan(/Executive Order (\d+)/) do |captures|
         return captures.first.to_i
       end
+    end
+  end
+
+  def executive_order_notes
+    notes_nodes = mods_node.css('noprinteonotes')
+    if notes_nodes.present?
+      notes_nodes.map(&:content).join("\n")
+    else
+      @entry.try(:executive_order_notes)
     end
   end
 end
