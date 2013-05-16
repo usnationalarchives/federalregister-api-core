@@ -63,6 +63,8 @@
   font-weight: bold;
   }
 #entries dl div.details {
+  padding-bottom: 10px;
+  overflow: hidden;
   width: 675px;
   font-weight: normal;
   }
@@ -76,7 +78,6 @@
   margin-right:20px;
   float: left;
   display: block;
-  padding-bottom: 15px;
   }
 #entries dl div.column.dates {
   width: 220px;
@@ -89,7 +90,8 @@
   }
 
 #entries div.editorial_note {
-  clear:both;
+  clear: both;
+  margin-bottom: 30px;
   }
 
 #entries span.pdf.small {
