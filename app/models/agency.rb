@@ -42,8 +42,7 @@ class Agency < ApplicationModel
       #  it is a co-publication between the parent and child agencies, so the parent
       #  agency should never be excluded
       if owner.is_a?(PublicInspectionDocument) ||
-        
-          owner.agency_names.any?{|agency_name| agency_name.name =~ /Office of the Secretary/i}
+          owner.agency_names.any?{|agency_name| agency_name && agency_name.name =~ /Office of the Secretary/i}
         agencies
       else
         parent_agency_ids = agencies.map(&:parent_id).compact
