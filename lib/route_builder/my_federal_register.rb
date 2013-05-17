@@ -7,6 +7,10 @@ module RouteBuilder::MyFederalRegister
     "/my/special/my_fr_assets"
   end
 
+  def my_fr2_fr2_assets_path
+    "/my/special/fr2_assets"
+  end
+
   def my_fr2_clippings_path
     "/my/clippings"
   end
