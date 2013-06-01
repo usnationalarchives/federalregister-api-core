@@ -15,21 +15,22 @@ cloud :app_server_v2 do
     repo File.join(File.dirname(__FILE__) ,"..", "..", "..", "..", "vendor", "plugins")
     
     recipe "apt"
-    recipe 's3sync'
-    recipe "ubuntu"
-    recipe "openssl"
-    recipe "imagemagick"
+    #recipe 's3sync'
+    #recipe "ubuntu"
+    #recipe "openssl"
+    #recipe "imagemagick"
     
-    recipe "mysql::client"
+    #recipe "mysql::client"
     
-    recipe "apache2"
-    recipe "passenger_enterprise::apache2"
+    #recipe "apache2"
+    #recipe "passenger_enterprise::apache2"
     
-    recipe 'rubygems'
+    #recipe 'rubygems'
     
-    recipe "git"
-    recipe "capistrano"
-    recipe "rails"
+    #recipe "git"
+    #recipe "capistrano"
+    #recipe "rails"
+    recipe "nodejs"
     
     attributes chef_cloud_attributes('staging').recursive_merge(
       :chef => {
