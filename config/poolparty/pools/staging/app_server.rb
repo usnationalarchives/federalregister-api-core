@@ -17,6 +17,7 @@ cloud :app_server_v2 do
     recipe "apt"
     #recipe 's3sync'
     #recipe "ubuntu"
+
     #recipe "openssl"
     #recipe "imagemagick"
     

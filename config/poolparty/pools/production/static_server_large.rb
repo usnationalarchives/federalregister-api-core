@@ -19,14 +19,14 @@ cloud :worker_server_v2 do
     repo File.join(File.dirname(__FILE__) ,"..", "..", "..", "..", "vendor", "plugins")
     
     recipe "apt"
-    #recipe 's3sync'
-    #recipe "ubuntu"
+    recipe 's3sync'
+    recipe "ubuntu"
     #recipe "openssl"
     #recipe "imagemagick"
     #recipe "postfix"
 
     #recipe 'princexml'
-    recipe 'monit'
+    #recipe 'monit'
 
     #recipe "mysql::client"
 

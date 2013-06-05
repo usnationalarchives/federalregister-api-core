@@ -23,14 +23,14 @@ cloud :database_server_11 do
     recipe "apt"
     recipe 's3sync'
     recipe "ubuntu"
-    recipe "openssl"
+    #recipe "openssl"
     
-    recipe "apparmor"
+    #recipe "apparmor"
 
-    recipe "mysql::server"
-    recipe "mysql::server_ec2"
+    #recipe "mysql::server"
+    #recipe "mysql::server_ec2"
     recipe "sphinx"
-    recipe "mongodb"
+    #recipe "mongodb"
 
     attributes chef_cloud_attributes('staging').recursive_merge(
       :bootstrap => {:chef => {:client_version => '0.9.12'}},
@@ -48,9 +48,9 @@ cloud :database_server_11 do
       :rails  => { :environment => "staging" },
       #:ubuntu => { :hostname => 'database'},
       :sphinx => { 
-                    :version => "2.0.5-release",
-                    :url => "http://sphinxsearch.com/files/sphinx-2.0.5-release.tar.gz",
-                    :tar_file => "/opt/src/sphinx-2.0.5-release.tar.gz"
+                    :version => "2.1.1-beta",
+                    :url => "http://sphinxsearch.com/files/sphinx-2.1.1-beta.tar.gz",
+                    :tar_file => "/opt/src/sphinx-2.1.1-beta.tar.gz"
                  }
       )
           
