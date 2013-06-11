@@ -10,20 +10,64 @@
     }
     return host;
   };
-  
+ 
+  var articlePageRegEx = new RegExp('\/articles\/\\d{4}');
+  var articlePage = function() {
+    return articlePageRegEx.test(window.location.href);
+  };
+
+  var showInterstitialModal = function () {
+    var interstitial_tender_modal_template = $('#interstitial-tender-modal-template');
+    if ( interstitial_tender_modal_template.length > 0 ) {
+      interstitial_tender_modal_template = Handlebars.compile( interstitial_tender_modal_template.html() );
+      display_modal('', interstitial_tender_modal_template({}), {modal_id: '#interstitial_tender_modal', include_title: false, modal_class: 'fr_modal wide'});
+
+      $('#interstitial_tender_modal').on('click', '.site_feedback .button', function(event) {
+        event.preventDefault();
+        $('#interstitial_tender_modal').remove();
+
+        show();
+      });
+
+      $('#interstitial_tender_modal').on('click', '.document_feedback .button', function(event) {
+        event.preventDefault();
+        $('#interstitial_tender_modal').jqmHide();
+
+        var formal_comment_link = $('.button.formal_comment');
+
+        if( formal_comment_link.length > 0 ) {
+          window.location.href = formal_comment_link.href;
+        } else {
+          window.location.href = '#furinf';
+        }
+      });
+    } else {
+      /* fallback to showing the tender modal */
+      show();
+    }
+  }
+
   var visible = false;
   var initialized = false;
   var host = getHost();
   if (!host || host === "") host = "https://help.tenderapp.com/";
   
   var showWidget = function(){
-    if (!initialized) initialize();
-    else show();
+    if( articlePage() ) {
+      showInterstitialModal();
+    } else {
+      show();
+    }
   };
   
   var show = function(){
-    document.getElementById('tender_window').style.display = '';
-    visible = true;        
+    console.log('show');
+    if (!initialized) {
+      initialize();
+    } else {
+      document.getElementById('tender_window').style.display = '';
+      visible = true;
+    }
   };
   
   var hide = function(){
@@ -46,6 +90,7 @@
     document.body.appendChild(element);
     var close_link = document.getElementById('tender_closer');
     close_link.onclick = function(){
+      $('.jqmOverlay').remove();
       hide();
       return false;
     };
@@ -58,7 +103,7 @@
     for(var i=0; i<Tender.widgetToggles.length; i++){
       var toggle = Tender.widgetToggles[i];
       if (toggle == null) continue;
-      toggle.onclick = function(){
+      toggle.onclick = function(event){
         showWidget();
         return false;
       };
