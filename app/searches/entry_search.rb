@@ -148,7 +148,7 @@ class EntrySearch < ApplicationSearch
   define_filter :docket_id,
                 :phrase => true,
                 :label => "Agency Docket" do |docket|
-                  docket
+                  docket.join(', ')
                 end
   
   define_filter :significant,

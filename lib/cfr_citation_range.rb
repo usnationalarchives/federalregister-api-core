@@ -26,7 +26,7 @@ class CfrCitationRange
       
       @ranges = []
       if text.present?
-        text.each_with_index do |line, i|
+        text.split(/\n/).each_with_index do |line, i|
           range = process_line(line, i+1)
           @ranges << range if range
         end

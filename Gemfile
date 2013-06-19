@@ -1,5 +1,4 @@
-source 'http://rubygems.org'
-source 'http://gems.github.com'
+source :rubygems
 
 gem 'rails', '2.3.17'
 gem 'mysql'
@@ -12,7 +11,7 @@ gem 'fr2_audit_logic',
 # gem 'fr2_audit_logic', :path => '../fr2_audit_logic'
 gem 'bson_ext', '1.3.0' 
 
-gem 'nokogiri', '1.3.2'
+gem 'nokogiri', '1.4.1'
 gem 'curb', '0.4.4.0'
 gem 'http_headers', '0.0.2.3'
 gem 'geokit', '1.4.1', :require => 'geokit'
@@ -67,37 +66,17 @@ gem 'fastercsv', '1.4.0', :platform => :ruby_18
 
 gem 'american_date', :platform => :ruby_19
 
-group :deployment do
-end
-
-group :development do
-  # bundler requires these gems in development
-  # gem 'rails-footnotes'
-  # gem 'poolparty', '1.6.8'
-  # gem "thunder_punch", '0.0.6', :require => false
-end
-
 group :test do
-  # bundler requires these gems while running tests
-  
-  # FIXME: these are still from github...
-  gem 'thoughtbot-shoulda', :require => 'shoulda'
-  gem 'seanhussey-woulda',  :require => 'woulda'
-  gem 'floehopper-mocha',   :require => 'mocha'
-  
-  gem 'rails-test-serving', '0.1.4.2', :require => 'rails_test_serving'
-  #gem 'jgre-monkeyspecdoc', '0.9.5', :require => 'monkeyspecdoc'
-  
-  gem 'rspec', '1.3.0', :require => false
-  gem 'rspec-rails', '1.3.2', :require => false
+  gem 'shoulda', '2.10.3'
+
+  gem 'rspec'
+  gem 'mocha', '0.9.8'
+  gem 'rspec-rails', '1.3.4', :require => false
   gem 'webrat', '0.7.1'
   gem 'factory_girl', '1.2.4'
-  gem 'spork', '0.7.5', :require => false
   gem 'timecop'
-  
   gem 'cucumber'
   gem 'mechanize', '1.0.0'
-  
   gem 'ci_reporter', '1.6.3'
 
   gem 'test-unit', '1.2.3', :platform => :ruby_19
