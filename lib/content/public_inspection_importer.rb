@@ -269,6 +269,7 @@ module Content
           end
 
           if @document_number
+            @document_number.gsub!(/.*?([A-Za-z0-9-]+)$/, '\1')
             @pi_documents << {
               :filing_type     => @filing_type,
               :details         => @details,

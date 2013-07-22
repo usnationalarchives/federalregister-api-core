@@ -25,17 +25,7 @@
               Comments on this article are being accepted at Regulations.gov
             <% end %>
             
-            <% if @entry.comment_url %>
-              <%= link_to "Submit a formal comment", @entry.comment_url,
-                :class => 'button',
-                :id => 'start_comment',
-                :target => '_blank',
-                :'data-comment' => 1 %>
-            <% else %>
-              <%= link_to "Submit a formal comment", '#addresses',
-                :class => 'button',
-                :id => 'start_comment' %>
-            <% end %>
+            <%= link_to "Submit a formal comment", @entry.comment_url.present? ? @entry.comment_url : '#addresses', :id => 'start_comment', :class => 'button formal_comment', :target => (@entry.comment_url.present? ? '_blank' : ''), :'data-comment' => (@entry.comment_url.present? ? 1 : '') %>
           </p>
         </div>
         <% if @entry.docket && @entry.docket.comments_count && @entry.docket.comments_count > 0 && ! @entry.docket.placeholder? %>
