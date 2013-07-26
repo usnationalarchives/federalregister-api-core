@@ -31,6 +31,7 @@ Spork.prefork do
     config.use_transactional_fixtures = true
     config.use_instantiated_fixtures  = false
     config.fixture_path = RAILS_ROOT + '/spec/fixtures/'
+    config.extend VCR::RSpec::Macros
 
     # == Fixtures
     #
@@ -71,3 +72,4 @@ Spork.each_run do
   # Dir["#{Rails.root}/spec/factories/*.rb"].each {|f| load f} 
   
 end
+

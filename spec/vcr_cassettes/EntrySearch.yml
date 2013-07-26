@@ -1,0 +1,57 @@
+--- 
+recorded_with: VCR 2.5.0
+http_interactions: 
+- request: 
+    method: get
+    uri: http://maps.google.com/maps/geo?q=+94118&output=xml&key=<API_KEY>&oe=utf-8
+    body: 
+      string: ""
+    headers: 
+      accept: 
+      - "*/*"
+  response: 
+    status: 
+      code: 200
+      message: OK
+    headers: 
+      server: 
+      - mafe
+      expires: 
+      - Fri, 01 Jan 1990 00:00:00 GMT
+      vary: 
+      - Accept-Language
+      x-xss-protection: 
+      - 1; mode=block
+      pragma: 
+      - no-cache
+      date: 
+      - Fri, 26 Jul 2013 20:12:30 GMT
+      cache-control: 
+      - no-cache, must-revalidate
+      transfer-encoding: 
+      - chunked
+      x-frame-options: 
+      - SAMEORIGIN
+      content-type: 
+      - text/xml; charset=UTF-8
+    body: 
+      string: |
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <kml xmlns="http://earth.google.com/kml/2.0"><Response>
+          <name> 94118</name>
+          <Status>
+            <code>200</code>
+            <request>geocode</request>
+          </Status>
+          <Placemark id="p1">
+            <address>San Francisco, CA 94118, USA</address>
+            <AddressDetails Accuracy="5" xmlns="urn:oasis:names:tc:ciq:xsdschema:xAL:2.0"><Country><CountryNameCode>US</CountryNameCode><CountryName>USA</CountryName><AdministrativeArea><AdministrativeAreaName>CA</AdministrativeAreaName><Locality><LocalityName>San Francisco</LocalityName><PostalCode><PostalCodeNumber>94118</PostalCodeNumber></PostalCode></Locality></AdministrativeArea></Country></AddressDetails>
+            <ExtendedData>
+              <LatLonBox north="37.7916370" south="37.7660620" east="-122.4436991" west="-122.4795040" />
+            </ExtendedData>
+            <Point><coordinates>-122.4637080,37.7822891,0</coordinates></Point>
+          </Placemark>
+        </Response></kml>
+
+    http_version: "1.1"
+  recorded_at: Fri, 26 Jul 2013 20:12:30 GMT
