@@ -43,7 +43,9 @@
   padding-left: 20px;
   }
 #modal.subscribe .icons li:last-child ul {
-  margin-bottom: 1em;
+  padding-top: 10px;
+  overflow: hidden;
+  margin: 0;
   }  
 #modal.subscribe .icons li a,
 #subscriptions .icons li a {
@@ -124,7 +126,7 @@
   }
 #modal.subscribe .icons #subscription_search_type_input legend, 
 #subscriptions .icons #subscription_search_type_input legend {
-  width: 60px;
+  width: 70px;
   margin-top: 2px;
   }
 #modal.subscribe li.disabled label,
