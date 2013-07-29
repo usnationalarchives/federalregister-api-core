@@ -111,13 +111,18 @@ module Content
         puts "downloading #{url}..."
         curl = Curl::Easy.download(url, pdf_path) {|c| c.follow_location = true}
         puts "done."
+
         headers = HttpHeaders.new(curl.header_str)
 
-        @pi.raw_text = get_plain_text(pdf_path)
-        @pi.pdf_etag = headers.etag
-        @pi.pdf = File.new(pdf_path)
-        @pi.num_pages = Stevedore::Pdf.new(pdf_path).num_pages
-        File.delete(pdf_path)
+        if headers.response_code.to_i == 200
+          @pi.raw_text = get_plain_text(pdf_path)
+          @pi.pdf_etag = headers.etag
+          @pi.pdf = File.new(pdf_path)
+          @pi.num_pages = Stevedore::Pdf.new(pdf_path).num_pages
+          File.delete(pdf_path)
+        else
+          puts "Unable to download #{url}: #{headers.response_code}"
+        end
       end
     end
 
