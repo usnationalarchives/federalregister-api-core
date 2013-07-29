@@ -58,9 +58,7 @@
   @include horizontal-list;
   margin-bottom: 2em;
   }
-#modal li li {
-  background: none;
-  }  
+
 #modal .jqmClose,
 #exit_modal .jqmClose,
 #disclaimer_modal .jqmClose,
@@ -68,8 +66,8 @@
 #cfr_citation_modal .jqmClose,
 #fr_modal .jqmClose {
   position: absolute;
-  right: 1em;
-  top: 1em;
+  right: .5em;
+  top: .5em;
   }
 .external_link {
   background: #eee;
