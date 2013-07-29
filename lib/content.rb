@@ -27,7 +27,19 @@ module Content
   
   def self.render_erb(template_path, locals = {})
     view = ActionView::Base.new(Rails::Configuration.new.view_path, {})
-    [ActionView::Helpers::UrlHelper, ActionController::UrlWriter, ApplicationHelper, HtmlHelper, Html5Helper, CitationsHelper, Citations::CfrHelper, XsltHelper, RegulatoryPlanHelper, TextHelper].each do |mod|
+    [
+      ActionView::Helpers::UrlHelper,
+      ActionController::UrlWriter,
+      ApplicationHelper,
+      HandlebarsHelper,
+      HtmlHelper,
+      Html5Helper,
+      CitationsHelper,
+      Citations::CfrHelper,
+      XsltHelper,
+      RegulatoryPlanHelper,
+      TextHelper
+    ].each do |mod|
       view.extend mod
     end
     
