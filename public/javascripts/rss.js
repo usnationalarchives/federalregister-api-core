@@ -51,6 +51,9 @@ $(document).ready(function () {
         generate_dialog();
         $('#modal input[placeholder]').textPlaceholder();
         $('#modal').centerScreen().jqmShow();
+
+        $('#modal .tip_under').tipsy({gravity:'north'});
+
         return false;
       }
     );
