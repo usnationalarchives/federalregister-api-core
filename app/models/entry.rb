@@ -124,9 +124,9 @@ class Entry < ApplicationModel
   has_many :agencies, :through => :agency_assignments, :order => "agency_assignments.position", :extend => Agency::AssociationExtensions
   
   has_many :events, :dependent => :destroy
-  has_one :comments_close_date, :class_name => "Event", :conditions => {:event_type => 'CommentsClose'}
-  has_one :effective_date, :class_name => "Event", :conditions => {:event_type => 'EffectiveDate'}
-  has_one :regulations_dot_gov_comments_close_date, :class_name => "Event", :conditions => {:event_type => 'RegulationsDotGovCommentsClose'}
+  has_one :comments_close_date, :class_name => "Event", :conditions => {:event_type => 'CommentsClose'}, :autosave => true
+  has_one :effective_date, :class_name => "Event", :conditions => {:event_type => 'EffectiveDate'}, :autosave => true
+  has_one :regulations_dot_gov_comments_close_date, :class_name => "Event", :conditions => {:event_type => 'RegulationsDotGovCommentsClose'}, :autosave => true
   
   before_save :set_document_file_path
   
