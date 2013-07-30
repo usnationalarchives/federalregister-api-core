@@ -126,7 +126,36 @@ describe Entry do
       Entry.new(:title => "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed unt eiusmod tempor incididunt labore cumin").slug.should == 'lorem-ipsum-dolor-sit-amet-consectetur-adipisicing-elit-sed-unt-eiusmod-tempor-incididunt-labore'
     end
   end
-  
+
+  describe 'regulations_dot_gov_comments_close_on' do
+    it "persists a date when no date exists" do
+      date = Date.new(2013,1,1)
+      entry = Entry.create!
+      entry.regulations_dot_gov_comments_close_on = date
+      entry.save!
+
+      entry.reload
+      entry.regulations_dot_gov_comments_close_on.should eql date
+    end
+
+    it "updates the date when a date already existed" do
+      original_date = Date.current
+      entry = Entry.create!
+      entry.regulations_dot_gov_comments_close_on = original_date
+      entry.save!
+
+      entry.reload
+
+      new_date = Date.new(2013,1,1)
+      entry.regulations_dot_gov_comments_close_on = new_date
+      entry.save!
+
+      entry.reload
+
+      entry.regulations_dot_gov_comments_close_on.should eql new_date
+    end
+  end
+
   describe 'destroy' do
     it "should remove all agency_name_assignments" do
       entry = Factory(:entry, :agency_names => [Factory(:agency_name), Factory(:agency_name)])
