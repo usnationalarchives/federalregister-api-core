@@ -4,14 +4,14 @@ $(document).ready(function(){
    */
 
   // SECTIONS
-  $(".dropdown.nav_sections ul.subnav li a").each(function() {
+  $(".dropdown.nav_sections .subnav .left_column li a").each(function() {
     $(this).bind('click', function() {
       _gaq.push(['_trackEvent', 'Navigation', 'Sections', $(this).html()]);
     });
   });
 
   // BROWSE
-  $(".dropdown.nav_browse ul.subnav li a").each(function() {
+  $(".dropdown.nav_browse .subnav .left_column li a").each(function() {
     $(this).bind('click', function() {
       _gaq.push(['_trackEvent', 'Navigation', 'Browse', $(this).html()]);
     });
