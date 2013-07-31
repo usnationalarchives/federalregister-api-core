@@ -79,7 +79,7 @@ $(document).ready(function(){
 
   /* track use of 'submit formal comment' button */
   $('#flash_message.comment a.button').on('click', function() {
-    var path = $(this).href,
+    var path = $(this).attr('href'),
         action;
 
     if( path === "#addresses" ) {
