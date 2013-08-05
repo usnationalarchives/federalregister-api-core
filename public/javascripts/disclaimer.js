@@ -7,7 +7,7 @@ function display_modal(title, html, options) {
   }; 
 
   // combine options with default values
-  var options = $.extend({}, defaults, options);
+  options = $.extend({}, defaults, options);
 
   var modal_id      = options.modal_id,
       include_title = options.include_title,
