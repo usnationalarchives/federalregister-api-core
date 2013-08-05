@@ -1,7 +1,17 @@
 function display_modal(title, html, options) {
-  var modal_id = options.modal_id !== undefined ? options.modal_id : '#disclaimer_modal',
-      include_title = options.include_title !== undefined ? options.include_title : true,
-      modal_class   = options.modal_class !== undefined ? options.modal_class : '';
+  // set up default options 
+  var defaults = { 
+    modal_id:       '#disclaimer_modal', 
+    include_title:  true,
+    modal_class:    ''
+  }; 
+
+  // combine options with default values
+  var options = $.extend({}, defaults, options);
+
+  var modal_id      = options.modal_id,
+      include_title = options.include_title,
+      modal_class   = options.modal_class;
 
 
   var current_modal = $(modal_id);
