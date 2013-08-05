@@ -76,4 +76,37 @@ $(document).ready(function(){
   function (event) {
     _gaq.push(['_trackEvent', 'Social', 'Facebook', document.location.pathname]);
   });
+
+  /* track use of 'submit formal comment' button */
+  $('#flash_message.comment a.button').on('click', function() {
+    var path = $(this).attr('href'),
+        action;
+
+    if( path === "#addresses" ) {
+      action = 'Addresses';
+    } else {
+      action = 'Regulations.gov';
+    }
+
+    _gaq.push(['_trackEvent', 'Comments', action]);
+  });
+
+  /* track links to regs.gov */
+  $('#metadata_content_area #comment_count a').on('click', function() {
+    _gaq.push(['_trackEvent', 'Regulations.gov', 'View Comments', 'metadata_content_area']);
+  });
+    
+  $('.reg_gov_docket_info .reg_gov_docket').on('click', function() {
+    _gaq.push(['_trackEvent', 'Regulations.gov', 'View Docket']);
+  });
+  $('.reg_gov_docket_info .reg_gov_view_comments').on('click', function() {
+    _gaq.push(['_trackEvent', 'Regulations.gov', 'View Comments', 'reg_gov_sidebar']);
+  });
+  $('.reg_gov_docket_info .reg_gov_supporting_documents').on('click', function() {
+    _gaq.push(['_trackEvent', 'Regulations.gov', 'View Supporting Documents', 'Individual']);
+  });
+  $('.reg_gov_docket_info .reg_gov_all_supporting_documents').on('click', function() {
+    _gaq.push(['_trackEvent', 'Regulations.gov', 'View Supporting Documents', 'All']);
+  });
+
 });

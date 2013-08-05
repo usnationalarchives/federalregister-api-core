@@ -1,6 +1,8 @@
 require "spec_helper"
 
 describe EntrySearch do
+  use_vcr_cassette
+
   describe 'agency_ids' do
     it "populates sphinx `with`" do
       agencies = (1..2).map{ Factory.create(:agency) }
@@ -189,8 +191,8 @@ describe EntrySearch do
     end
     
     it "includes the location" do
-      search = EntrySearch.new(:conditions => {:near => {:location => "94118", :within => 50}})
-      search.summary.should == "Articles located within 50 miles of 94118"
+      search = EntrySearch.new(:conditions => {:near => {:location => " 94118", :within => 50}})
+      search.summary.should == "Articles located within 50 miles of  94118"
     end
     
     it "includes the section" do

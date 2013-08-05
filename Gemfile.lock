@@ -71,6 +71,7 @@ GEM
     diff-lcs (1.1.3)
     durran-validatable (2.0.1)
     factory_girl (1.2.4)
+    fakeweb (1.3.0)
     fastercsv (1.4.0)
     ffi (1.6.0)
     ffi-hunspell (0.2.6)
@@ -181,6 +182,7 @@ GEM
     timecop (0.3.5)
     tins (0.8.0)
     validation_reflection (0.3.8)
+    vcr (2.5.0)
     vegas (0.1.8)
       rack (>= 1.0.0)
     webrat (0.7.1)
@@ -210,6 +212,7 @@ DEPENDENCIES
   cucumber
   curb (= 0.4.4.0)
   factory_girl (= 1.2.4)
+  fakeweb
   fastercsv (= 1.4.0)
   ffi-hunspell
   flickraw (= 0.8.1)
@@ -254,6 +257,7 @@ DEPENDENCIES
   thunder_punch (= 0.0.14)
   timecop (= 0.3.5)
   validation_reflection (= 0.3.8)
+  vcr
   webrat (= 0.7.1)
   will_paginate (= 2.3.14)
   ym4r (= 0.6.1)

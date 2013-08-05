@@ -61,7 +61,6 @@
   };
   
   var show = function(){
-    console.log('show');
     if (!initialized) {
       initialize();
     } else {

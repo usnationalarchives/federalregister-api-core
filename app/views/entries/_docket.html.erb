@@ -1,12 +1,12 @@
-<div class="aside_box">
+<div class="aside_box reg_gov_docket_info">
   <h5>Regulations.gov Docket Info</h5>
 
   <dl class="metadata_list">
     <dt>Docket Number</dt>
-    <dd><%= link_to docket.id, regulations_dot_gov_docket_url(docket.id), :target => "_blank" %></dt>
+    <dd><%= link_to docket.id, regulations_dot_gov_docket_url(docket.id), :target => "_blank", :class => 'reg_gov_docket' %></dd>
 
     <dt>Docket Name</dt>
-    <dd><%= h docket.title %></dt>
+    <dd><%= h docket.title %></dd>
 
     <% if docket.regulation_id_number.present? %>
       <dt>Docket RIN</dt>
@@ -20,16 +20,16 @@
 
     <% if entry.comment_url || (docket.comments_count && docket.comments_count > 0) %>
       <dt>Public Comments</dt>
-      <dd><%= link_to pluralize(docket.comments_count, 'comment'), regulations_dot_gov_docket_comments_url(docket.id), :target => "_blank" %></dd>
+      <dd><%= link_to pluralize(docket.comments_count, 'comment'), regulations_dot_gov_docket_comments_url(docket.id), :target => "_blank", :class => 'reg_gov_view_comments' %></dd>
     <% end %>
 
     <% if docket.docket_documents.present? %>
       <dt>Supporting/Related Materials</dt>
       <% docket.docket_documents.sort_by(&:id).reverse[0..9].each do |doc| %>
-        <dd><%= link_to truncate_words(doc.title, :length => 65), regulations_dot_gov_document_url(doc.id), :target => "_blank", :title => doc.title, :class => "tip_left" %></dd>
+        <dd><%= link_to truncate_words(doc.title, :length => 65), regulations_dot_gov_document_url(doc.id), :target => "_blank", :title => doc.title, :class => "tip_left reg_gov_supporting_documents" %></dd>
       <% end %>
       <% if docket.docket_documents.size > 10 %>
-        <dd><strong><%= link_to "See all #{docket.docket_documents_count} supporting documents", regulations_dot_gov_docket_supporting_documents_url(docket.id), :target => "_blank" %></strong></dd>
+        <dd><strong><%= link_to "See all #{docket.docket_documents_count} supporting documents", regulations_dot_gov_docket_supporting_documents_url(docket.id), :target => "_blank", :class => "tip_left reg_gov_all_supporting_documents" %></strong></dd>
       <% end %>
     <% end %>
   </dl>

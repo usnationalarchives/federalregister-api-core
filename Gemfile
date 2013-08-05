@@ -93,7 +93,9 @@ group :test do
   gem 'factory_girl', '1.2.4'
   gem 'spork', '0.7.5', :require => false
   gem 'timecop', '0.3.5'
-  
+  gem 'vcr'
+  gem 'fakeweb'
+
   gem 'cucumber'
   gem 'mechanize', '1.0.0'
   
