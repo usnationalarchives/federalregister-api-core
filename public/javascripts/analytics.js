@@ -21,8 +21,7 @@ $(document).ready(function(){
   
   
   $("a.rss").bind('click', function(){
-    var path = window.location.pathname + "/rss_modal";
-    _gaq.push(['_trackEvent', 'RSS', 'View Modal', path]);
+    _gaq.push(['_trackEvent', 'RSS', 'View Modal']);
     return true;
   });
   
@@ -31,36 +30,30 @@ $(document).ready(function(){
     _gaq.push(['_trackEvent', 'Short URL', 'Shorten', path]);
   });
   
-  $('#disclaimer a').bind('click', function(){
-    var path = window.location.pathname + "/legal_disclaimer";
-    _gaq.push(['_trackEvent', 'Legal Disclaimer', 'View', path]);
+  $('#disclaimer').bind('click', 'a', function(){
+    _gaq.push(['_trackEvent', 'Legal Disclaimer', 'View']);
     return true;
   });
   
   // track use of font controls
-  $("a.increase").bind('click', function() {
-    var path = window.location.pathname + "/font/increase";
-    _gaq.push(['_trackEvent', 'Font Controls', 'Increase', path]);
+  $('#font_controls').on('click', 'a.increase', function() {
+    _gaq.push(['_trackEvent', 'Font Controls', 'Increase']);
+  });
+
+  $('#font_controls').on('click', 'a.decrease', function() {
+    _gaq.push(['_trackEvent', 'Font Controls', 'Decrease']);
   });
   
-  $("a.decrease").bind('click', function() {
-    var path = window.location.pathname + "/font/decrease";
-    _gaq.push(['_trackEvent', 'Font Controls', 'Decrease', path]);
+  $('#font_controls').on('click', 'a.reset', function() {
+    _gaq.push(['_trackEvent', 'Font Controls', 'Reset']);
   });
   
-  $("a.reset").bind('click', function() {
-    var path = window.location.pathname + "/font/reset";
-    _gaq.push(['_trackEvent', 'Font Controls', 'Reset', path]);
+  $('#font_controls').on('click', 'a.increase', function() {
+    _gaq.push(['_trackEvent', 'Font Controls', 'Increase']);
   });
   
-  $("a.serif").bind('click', function() {
-    var path = window.location.pathname + "/font/serif";
-    _gaq.push(['_trackEvent', 'Font Controls', 'Serif', path]);
-  });
-  
-  $("a.sans").bind('click', function() {
-    var path = window.location.pathname + "/font/sans";
-    _gaq.push(['_trackEvent', 'Font Controls', 'Sans', path]);
+  $('#font_controls').on('click', 'a.sans', function() {
+    _gaq.push(['_trackEvent', 'Font Controls', 'Sans']);
   });
   
   // track use of social features
@@ -95,17 +88,20 @@ $(document).ready(function(){
   $('#metadata_content_area #comment_count a').on('click', function() {
     _gaq.push(['_trackEvent', 'Regulations.gov', 'View Comments', 'metadata_content_area']);
   });
-    
-  $('.reg_gov_docket_info .reg_gov_docket').on('click', function() {
+ 
+  $('.reg_gov_docket_info').on('click', '.reg_gov_docket', function() {
     _gaq.push(['_trackEvent', 'Regulations.gov', 'View Docket']);
   });
-  $('.reg_gov_docket_info .reg_gov_view_comments').on('click', function() {
+
+  $('.reg_gov_docket_info').on('click', '.reg_gov_view_comments', function() {
     _gaq.push(['_trackEvent', 'Regulations.gov', 'View Comments', 'reg_gov_sidebar']);
   });
-  $('.reg_gov_docket_info .reg_gov_supporting_documents').on('click', function() {
+
+  $('.reg_gov_docket_info').on('click', '.reg_gov_supporting_documents', function() {
     _gaq.push(['_trackEvent', 'Regulations.gov', 'View Supporting Documents', 'Individual']);
   });
-  $('.reg_gov_docket_info .reg_gov_all_supporting_documents').on('click', function() {
+
+  $('.reg_gov_docket_info').on('click', '.reg_gov_all_supporting_documents', function() {
     _gaq.push(['_trackEvent', 'Regulations.gov', 'View Supporting Documents', 'All']);
   });
 
