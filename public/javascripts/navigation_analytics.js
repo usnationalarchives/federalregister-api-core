@@ -4,46 +4,26 @@ $(document).ready(function(){
    */
 
   // SECTIONS
-  $(".dropdown.nav_sections .subnav .left_column li a").each(function() {
-    $(this).bind('click', function() {
-      _gaq.push(['_trackEvent', 'Navigation', 'Sections', $(this).html()]);
-    });
+  $(".dropdown.nav_sections").on('click', '.subnav .left_column li a', function() {
+    _gaq.push(['_trackEvent', 'Navigation', 'Sections', $(this).html()]);
   });
 
   // BROWSE
-  $(".dropdown.nav_browse .subnav .left_column li a").each(function() {
-    $(this).bind('click', function() {
-      _gaq.push(['_trackEvent', 'Navigation', 'Browse', $(this).html()]);
-    });
+  $(".dropdown.nav_browse").on('click', '.subnav .left_column li a', function() {
+    _gaq.push(['_trackEvent', 'Navigation', 'Browse', $(this).html()]);
   });
   
   // SEARCH
-  $(".dropdown.nav_browse li#articles-search a").bind('click', function() {
-    _gaq.push(['_trackEvent', 'Navigation', 'Search', "Articles"]);
-  });
-
-  $(".dropdown.nav_browse li#articles-adv-search a").bind('click', function() {
-    _gaq.push(['_trackEvent', 'Navigation', 'Search', "Articles Advanced"]);
-  });
-
-  $(".dropdown.nav_browse li#events-search a").bind('click', function() {
-    _gaq.push(['_trackEvent', 'Navigation', 'Search', "Events"]);
-  });
-
-  $(".dropdown.nav_browse li#regulations-search a").bind('click', function() {
-    _gaq.push(['_trackEvent', 'Navigation', 'Search', "Regulations"]);
-  });
-
-  $(".dropdown.nav_browse li#public-inspection-search a").bind('click', function() {
-    _gaq.push(['_trackEvent', 'Navigation', 'Search', "Public Inspection"]);
+  $(".dropdown.nav_search").on('click', '.search_list a', function(event) {
+    _gaq.push(['_trackEvent', 'Navigation', 'Search', $(this).html()]);
   });
 
   // STATIC
-  $(".dropdown.nav_browse li#nav-home a").bind('click', function() {
+  $("li#nav-home").on('click', 'a', function() {
     _gaq.push(['_trackEvent', 'Navigation', 'Home', "Home"]);
   });
 
-  $(".dropdown.nav_browse li#nav-blog a").bind('click', function() {
+  $("li#nav-blog").on('click', 'a', function() {
     _gaq.push(['_trackEvent', 'Navigation', 'Blog', "Blog"]);
   });
 
