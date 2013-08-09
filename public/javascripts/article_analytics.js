@@ -1,11 +1,10 @@
 $(document).ready(function(){
 
   // previous/next page links
-  $("div.article div#sidebar div#navigation_controls a.prev").bind('click', function() {
+  $('#entries #navigation_controls').on('click', 'a.prev', function() {
     _gaq.push(['_trackEvent', 'Article', 'Links', "Previous Article"]);
-  });
-
-  $("div.article div#sidebar div#navigation_controls a.next").bind('click', function() {
+  })
+  .on('click', 'a.next', function() {
     _gaq.push(['_trackEvent', 'Article', 'Links', "Next Article"]);
   });
 });

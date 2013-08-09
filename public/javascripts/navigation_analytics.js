@@ -1,45 +1,39 @@
 $(document).ready(function(){
-  /*
-   *  New header analytics 
-   */
 
+  $("#navigation")
   // SECTIONS
-  $(".dropdown.nav_sections").on('click', '.subnav .left_column li a', function() {
+  .on('click', '.dropdown.nav_sections .subnav .left_column li a', function() {
     _gaq.push(['_trackEvent', 'Navigation', 'Sections', $(this).html()]);
-  });
-
+  })
   // BROWSE
-  $(".dropdown.nav_browse").on('click', '.subnav .left_column li a', function() {
+  .on('click', '.dropdown.nav_browse .subnav .left_column li a', function() {
     _gaq.push(['_trackEvent', 'Navigation', 'Browse', $(this).html()]);
-  });
-  
+  })
   // SEARCH
-  $(".dropdown.nav_search").on('click', '.search_list a', function(event) {
+  .on('click', '.dropdown.nav_search .search_list a', function(event) {
     _gaq.push(['_trackEvent', 'Navigation', 'Search', $(this).html()]);
   });
 
   // STATIC
-  $("li#nav-home").on('click', 'a', function() {
+  $("#nav-home").on('click', 'a', function() {
     _gaq.push(['_trackEvent', 'Navigation', 'Home', "Home"]);
   });
 
-  $("li#nav-blog").on('click', 'a', function() {
+  $("#nav-blog").on('click', 'a', function() {
     _gaq.push(['_trackEvent', 'Navigation', 'Blog', "Blog"]);
   });
 
   // WORDPRESS
   // POLICY
-  $(".dropdown a.policy").siblings("ul.subnav.wordpress").find("li.page_item a").each(function() {
-    $(this).bind('click', function() {
-      _gaq.push(['_trackEvent', 'Navigation', 'Policy', $(this).html()]);
-    });
+  var policy_item_ul = $('#navigation').find("li.dropdown a.policy").siblings("ul.subnav.wordpress").first();
+  $(policy_item_ul).on('click', 'li.page_item a', function() {
+    _gaq.push(['_trackEvent', 'Navigation', 'Policy', $(this).html()]);
   });
   
   // LEARN
-  $(".dropdown a.learn").siblings("ul.subnav.wordpress").find("li.page_item a").each(function() {
-    $(this).bind('click', function() {
-      _gaq.push(['_trackEvent', 'Navigation', 'Learn', $(this).html()]);
-    });
+  var learn_item_ul = $('#navigation').find("li.dropdown a.learn").siblings("ul.subnav.wordpress").first();
+  $(learn_item_ul).on('click', 'li.page_item a', function() {
+    _gaq.push(['_trackEvent', 'Navigation', 'Learn', $(this).html()]);
   });
 
   // NAVIGATION SEARCH FORM
