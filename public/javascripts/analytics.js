@@ -79,7 +79,7 @@ $(document).ready(function(){
   });
 
   /* track links to regs.gov */
-  meta_data_content_area.on('click', '#comment_count a' function() {
+  meta_data_content_area.on('click', '#comment_count a', function() {
     _gaq.push(['_trackEvent', 'Regulations.gov', 'View Comments', 'metadata_content_area']);
   });
 
