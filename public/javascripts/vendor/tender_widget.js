@@ -49,7 +49,7 @@
         show();
       });
 
-      $('#interstitial_tender_modal').on('click', '.document_feedback .button', function(event) {
+      $('#interstitial_tender_modal').on('click', '.document_feedback .button:not(.disabled)', function(event) {
         event.preventDefault();
         $('#interstitial_tender_modal').jqmHide();
 
