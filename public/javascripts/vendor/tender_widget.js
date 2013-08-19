@@ -25,7 +25,7 @@
           document_button_enabled = '',
           formal_comment_link = $('.button.formal_comment');
 
-      if( formal_comment_link.length > 0 ) {
+      if( formal_comment_link.length > 0 && formal_comment_link.first().attr('href') != '#addresses') {
         document_feedback_text = "If you would like to submit a formal comment to the issuing agency on the document you are currently viewing, please use the 'Document Feedback' button below.";
       } else if( $('#addresses').length > 0 || $('#furinf').length > 0 ) {
         document_feedback_text = "If you would like to comment on the current document, please use the 'Document Comment' button below for instructions on contacting the issuing agency";
@@ -55,7 +55,7 @@
 
         var formal_comment_link = $('.button.formal_comment');
 
-        if( formal_comment_link.length > 0 ) {
+        if( formal_comment_link.length > 0 && formal_comment_link.first().attr('href') != '#addresses') {
           window.location.href = formal_comment_link.href;
         } else if( $('#furinf').length > 0 ) {
           window.location.href = '#furinf';
