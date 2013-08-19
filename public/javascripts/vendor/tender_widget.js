@@ -57,10 +57,10 @@
 
         if( formal_comment_link.length > 0 && formal_comment_link.first().attr('href') != '#addresses') {
           window.location.href = formal_comment_link.href;
-        } else if( $('#furinf').length > 0 ) {
-          window.location.href = '#furinf';
-        } else {
+        } else if( $('#addresses').length > 0 ) {
           window.location.href = '#addresses';
+        } else {
+          window.location.href = '#furinf';
         }
       });
     } else {
