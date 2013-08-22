@@ -20,7 +20,27 @@
     var interstitial_tender_modal_template = $('#interstitial-tender-modal-template');
     if ( interstitial_tender_modal_template.length > 0 ) {
       interstitial_tender_modal_template = Handlebars.compile( interstitial_tender_modal_template.html() );
-      display_modal('', interstitial_tender_modal_template({}), {modal_id: '#interstitial_tender_modal', include_title: false, modal_class: 'fr_modal wide'});
+
+      var document_feedback_text, 
+          document_button_enabled = '',
+          formal_comment_link = $('.button.formal_comment');
+
+      if( formal_comment_link.length > 0 && formal_comment_link.first().attr('href') != '#addresses') {
+        document_feedback_text = "If you would like to submit a formal comment to the issuing agency on the document you are currently viewing, please use the 'Document Feedback' button below.";
+      } else if( $('#addresses').length > 0 || $('#furinf').length > 0 ) {
+        document_feedback_text = "If you would like to comment on the current document, please use the 'Document Comment' button below for instructions on contacting the issuing agency";
+      } else {
+        document_feedback_text = "The current document is not open for formal comment, please use other means to contact " + $('.metadata .agencies').html() + " directly.";
+        document_button_enabled = 'disabled';
+      }
+
+
+      display_modal('', 
+                    interstitial_tender_modal_template({document_feedback_text: document_feedback_text,
+                                                        document_button_enabled: document_button_enabled}),
+                    {modal_id: '#interstitial_tender_modal', 
+                     include_title: false, 
+                     modal_class: 'fr_modal wide'});
 
       $('#interstitial_tender_modal').on('click', '.site_feedback .button', function(event) {
         event.preventDefault();
@@ -29,14 +49,16 @@
         show();
       });
 
-      $('#interstitial_tender_modal').on('click', '.document_feedback .button', function(event) {
+      $('#interstitial_tender_modal').on('click', '.document_feedback .button:not(.disabled)', function(event) {
         event.preventDefault();
         $('#interstitial_tender_modal').jqmHide();
 
         var formal_comment_link = $('.button.formal_comment');
 
-        if( formal_comment_link.length > 0 ) {
+        if( formal_comment_link.length > 0 && formal_comment_link.first().attr('href') != '#addresses') {
           window.location.href = formal_comment_link.href;
+        } else if( $('#addresses').length > 0 ) {
+          window.location.href = '#addresses';
         } else {
           window.location.href = '#furinf';
         }
