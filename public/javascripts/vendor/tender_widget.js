@@ -56,7 +56,7 @@
         var formal_comment_link = $('.button.formal_comment');
 
         if( formal_comment_link.length > 0 && formal_comment_link.first().attr('href') != '#addresses') {
-          window.location.href = formal_comment_link.href;
+          window.location.href = formal_comment_link.attr('href');
         } else if( $('#addresses').length > 0 ) {
           window.location.href = '#addresses';
         } else {
