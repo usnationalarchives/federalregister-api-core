@@ -24,7 +24,18 @@ module Content
       dates = [Time.current.to_date]
     end
   end
-  
+
+  def self.call_myfr2_command(command)
+    old_gemfile = ENV['BUNDLE_GEMFILE']
+    Dir.chdir("/var/www/apps/my_fr2") do
+      ENV['BUNDLE_GEMFILE'] = nil
+      puts "running MyFR command: '#{command}'"
+      system(command) or raise "Error when calling '#{command}'"
+    end
+  ensure
+    ENV['BUNDLE_GEMFILE'] = old_gemfile
+  end
+
   def self.render_erb(template_path, locals = {})
     view = ActionView::Base.new(Rails::Configuration.new.view_path, {})
     [

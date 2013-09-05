@@ -7,8 +7,8 @@ namespace :mailing_lists do
       else
         date = Date.current
       end
-      
-      puts `cd /var/www/apps/my_fr2 && bundle exec rake mailing_lists:articles:deliver["#{date.to_s(:iso)}"]`
+
+      Content.run_myfr2_command "bundle exec rake mailing_lists:articles:deliver[\"#{date.to_s(:iso)}\"]"
     end
   end
 end
