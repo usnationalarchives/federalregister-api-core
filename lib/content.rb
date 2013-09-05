@@ -25,7 +25,7 @@ module Content
     end
   end
 
-  def self.call_myfr2_command(command)
+  def self.run_myfr2_command(command)
     old_gemfile = ENV['BUNDLE_GEMFILE']
     Dir.chdir("/var/www/apps/my_fr2") do
       ENV['BUNDLE_GEMFILE'] = nil
