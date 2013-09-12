@@ -26,7 +26,8 @@ class PublicInspectionDocumentSearch < ApplicationSearch
   define_filter :special_filing,
                 :sphinx_type => :with,
                 :label => "Filing Type" do |type|
-                  if type == '1'
+                  case type
+                  when 1, '1', ['1']
                     'Special Filing'
                   else
                     'Regular Filing'
