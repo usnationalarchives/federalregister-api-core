@@ -6,7 +6,7 @@
 <div class="title">
   <div class='title_icon' id="suggested-search"></div>
   <span>Suggested Search</span>
-  <%= link_to '', new_subscription_path(:subscription => {:search_conditions => @canned_search.search.conditions}), :class => 'subscription tipsy', :title => 'Subscribe to this search by Email or RSS' %>
+  <%= link_to '', new_subscription_path(:subscription => {:search_conditions => @canned_search.search.valid_conditions}), :class => 'subscription tipsy', :title => 'Subscribe to this search by Email or RSS' %>
   <%= add_template('subscription_modal', 'subscription-modal') %>
 </div>
 
@@ -28,7 +28,7 @@
 
   <p id='search-actions'>
     <%= link_to "Customize this search", entries_search_path(:conditions => @canned_search.search_conditions, :order => "newest", :skip_results => '1', :anchor => 'advanced'), :class => 'search' %>
-    <%= link_to 'Subscribe', new_subscription_path(:subscription => {:search_conditions => @canned_search.search.conditions}), :class => 'search_subscription subscription' %>
+    <%= link_to 'Subscribe', new_subscription_path(:subscription => {:search_conditions => @canned_search.search.valid_conditions}), :class => 'search_subscription subscription' %>
   </p>
 </div>
 

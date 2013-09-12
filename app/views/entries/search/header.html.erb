@@ -20,7 +20,7 @@
       <span id="expected_result_count"></span>
       
       <div class="actions">
-        <%= link_to 'Subscribe', new_subscription_path(:subscription => {:search_conditions => conditions_for_subscription}), :class => 'subscription' %>
+        <%= link_to 'Subscribe', new_subscription_path(:subscription => {:search_conditions => conditions_for_subscription(@search)}), :class => 'subscription' %>
         <%= add_template('subscription_modal', 'subscription-modal') %>
         <span class="other_formats">Other Formats: <%= link_to 'CSV/Excel', entries_search_path(params.except(:controller, :action, :quiet).merge(:format => :csv)) %>,
           <%= link_to 'JSON', api_v1_entries_url(params.except(:controller, :action, :quiet)) %></span>

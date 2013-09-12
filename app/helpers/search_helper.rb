@@ -35,11 +35,8 @@ module SearchHelper
     EntrySearch.new(:conditions => {:term => search_term}).count
   end
   
-  def conditions_for_subscription
-    conditions = (params[:conditions] || {}).dup
-    conditions.delete(:near) unless conditions[:near] && conditions[:near][:location].present?
-    conditions.delete(:publication_date)
-    conditions
+  def conditions_for_subscription(search)
+    search.valid_conditions.except(:publication_date)
   end
   
   def search_suggestion_title(suggestion, search)
