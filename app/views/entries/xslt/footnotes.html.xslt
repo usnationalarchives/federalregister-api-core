@@ -6,9 +6,16 @@
       <xsl:value-of select="text()"/>
     </xsl:variable>
     <sup>
-      <a rel="footnote"><xsl:attribute name="id">citation-<xsl:value-of select="$number"/></xsl:attribute><xsl:attribute name="href">#footnote-<xsl:value-of select="$number"/></xsl:attribute>
-        [<xsl:value-of select="$number"/>]
-      </a>
+      <xsl:choose>
+        <xsl:when test="count(//SU[text() = $number]) = 2">
+          <a rel="footnote"><xsl:attribute name="id">citation-<xsl:value-of select="$number"/></xsl:attribute><xsl:attribute name="href">#footnote-<xsl:value-of select="$number"/></xsl:attribute>
+            [<xsl:value-of select="$number"/>]
+          </a>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:value-of select="$number"/>
+        </xsl:otherwise>
+      </xsl:choose>
     </sup>
   </xsl:template>
   
@@ -25,10 +32,12 @@
     <div class="footnote">
       <xsl:attribute name="id">footnote-<xsl:value-of select="$number"/></xsl:attribute>
       <xsl:apply-templates/>
-      <a class="back">
-        <xsl:attribute name="href">#citation-<xsl:value-of select="$number"/></xsl:attribute>
-        Back to Context
-      </a>
+      <xsl:if test="count(//SU[text() = $number]) = 2">
+        <a class="back">
+          <xsl:attribute name="href">#citation-<xsl:value-of select="$number"/></xsl:attribute>
+          Back to Context
+        </a>
+      </xsl:if>
     </div>
   </xsl:template>
   
