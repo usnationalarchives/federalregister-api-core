@@ -5,7 +5,7 @@ class Graphic < ApplicationModel
   has_many :entries, :through => :usages
   
   has_attached_file :graphic,
-                    :styles => { :thumb => ["100", :gif], :large => ["460", :gif], :original => ["", :gif] },
+                    :styles => { :large => ["460", :png], :original => ["", :png] },
                     :processors => [:auto_inverter],
                     :storage => :s3,
                     :s3_credentials => "#{Rails.root}/config/amazon.yml",
@@ -16,6 +16,6 @@ class Graphic < ApplicationModel
   named_scope :extracted, :conditions => "graphic_file_name IS NOT NULL"
 
   def set_content_type
-    self.graphic.instance_write(:content_type,'image/gif')
+    self.graphic.instance_write(:content_type,'image/png')
   end
 end
