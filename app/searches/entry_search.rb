@@ -178,7 +178,7 @@ class EntrySearch < ApplicationSearch
                      :label => "Effective Date"
 
   define_date_filter :comment_date,
-                     :label => "Comment Date"
+                     :label => "Comment Close Date"
   
   attr_reader :cfr
   
