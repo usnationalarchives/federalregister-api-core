@@ -8,13 +8,13 @@
   <title>The page you were looking for doesn't exist (404)</title>
   <style type="text/css">
     body {
-      background: url('/images/seal.png?1350948048') no-repeat right top;
+      background: url('/images/seal.png?20130930') no-repeat right top;
       color: #363636;
       margin: 0;
       font-family: arial, sans-serif;
     }
 
-    #header_refresh { background: url('/images/seal.png?1350948048') no-repeat right top; } 
+    #header_refresh { background: url('/images/seal.png?20130930') no-repeat right top; } 
     #navigation { border-top: 4px solid #fbb829; }
 
     div.dialog {
@@ -41,7 +41,7 @@
       text-indent: -9999em;
       overflow: hidden;
       text-align: left;
-      background-image: url('/images/header/logo.png?1350948048');
+      background-image: url('/images/header/logo.png?20130930');
       background-repeat: no-repeat;
       background-position: 0 0;
       width: 463px;
@@ -52,7 +52,7 @@
       width: 463px;
     }
     h2.title {
-      background: url("/images/header_bg.png") repeat-x scroll left top;
+      background: url("/images/header_bg.png?20130930") repeat-x scroll left top;
       color: #fff;
       clear: both;
       line-height: .9;
@@ -74,6 +74,18 @@
       text-align: right;
     }
     h3 { color: #8a3737; }
+
+    div.info_warning {
+      background-color: #fcf8e3;
+      border: 1px solid #c09853;
+      padding: .5em .5em .25em;
+      margin-bottom: 30px;
+      text-align: center;
+      float: none;
+      border-radius: 6px;
+      -moz-border-radius: 6px;
+      -webkit-border-radius: 6px;
+    }
 </style>
 </head>
 
@@ -93,6 +105,14 @@
   </div>
 
   <div id="main">
+    <div class="info_warning">
+      Due to an appropriations lapse, the Office of the Federal Register (OFR) is not updating this site. 
+      OFR is publishing documents in the daily Federal Register that are directly related to the performance 
+      of governmental functions necessary to address imminent threats to the safety of human life or protection 
+      of property. You can view those documents at <a href="http://www.gpo.gov/fdsys/browse/collection.action?collectionCode=FR&amp;browsePath=2013&amp;isCollapsed=true&amp;leafLevelBrowse=false&amp;ycord=0">FDSys</a>.
+      You can read more about OFR services in <a href="https://www.federalregister.gov/blog/2013/09/what-happens-if-the-government-shuts-down">our blog post</a>.
+    </div>  
+
     <h2 class="title"><span>Error :: 404</span></h2>
     
     <!-- This file lives in public/404.html -->

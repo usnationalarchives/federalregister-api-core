@@ -28,6 +28,13 @@
     <%= render :esi => layout_header_path %>
     
     <div id="main">
+      <div class="info_warning">
+        Due to an appropriations lapse, the Office of the Federal Register (OFR) is not updating this site. 
+        OFR is publishing documents in the daily Federal Register that are directly related to the performance 
+        of governmental functions necessary to address imminent threats to the safety of human life or protection 
+        of property. You can view those documents on <%= link_to 'FDSys', 'http://www.gpo.gov/fdsys/browse/collection.action?collectionCode=FR&browsePath=2013&isCollapsed=true&leafLevelBrowse=false&ycord=0' %>.
+        You can read more about OFR services in <%= link_to 'our blog post', 'https://www.federalregister.gov/blog/2013/09/what-happens-if-the-government-shuts-down' %>.
+      </div>
       <%= yield %>
       <div id="layout_footer"></div>
     </div>
