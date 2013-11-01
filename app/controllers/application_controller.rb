@@ -6,8 +6,6 @@ class ApplicationController < ActionController::Base
   include RouteBuilder
   include ViewHelper
   
-  protect_from_forgery # See ActionController::RequestForgeryProtection for details
-  
   include Locator
  
   # turn IP Spoofing detection off.

@@ -3,7 +3,9 @@ class AdminController < ApplicationController
   
   before_filter :require_user
   helper_method :current_user_session, :current_user
-  
+
+  protect_from_forgery
+
   private
   
   include Userstamp
