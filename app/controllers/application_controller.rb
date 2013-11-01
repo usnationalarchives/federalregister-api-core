@@ -7,6 +7,10 @@ class ApplicationController < ActionController::Base
   include ViewHelper
   
   include Locator
+
+  before_filter do
+    self.request_forgery_protection_token = nil
+  end
  
   # turn IP Spoofing detection off.
   ActionController::Base.ip_spoofing_check = false
