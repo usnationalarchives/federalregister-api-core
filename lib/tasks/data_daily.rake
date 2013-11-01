@@ -4,6 +4,11 @@ namespace :data do
   end
   
   namespace :daily do 
+    # used to avoid thundering herd after clearing sitewide cache
+    task :sleep do
+      sleep(60)
+    end
+
     task :basic => %w(
       content:entries:import
       content:entries:import:graphics
@@ -37,6 +42,7 @@ namespace :data do
       content:public_inspection:reindex
       content:fr_index:update_status_cache
       varnish:expire:everything
+      data:daily:sleep
       mailing_lists:entries:deliver
       sitemap:refresh
     )
