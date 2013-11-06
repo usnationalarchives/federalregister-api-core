@@ -1,5 +1,5 @@
 <% feed_autodiscovery entries_url(:format => :rss), "All Articles from the Federal Register", :search_conditions => {} %>
-<% feed_autodiscovery entries_search_url(:conditions => {:significant => 1}, :format => :rss), "Articles Deemed Significant from the Federal Register", :search_conditions => {:signicant => 1} %>
+<% feed_autodiscovery entries_search_url(:conditions => {:significant => 1}, :format => :rss), "Articles Deemed Significant from the Federal Register", :search_conditions => {:significant => 1} %>
 <% add_column_class('home') %>
 
 <% description "Search, browse and learn about the Federal Register. Federal Register 2.0 is the unofficial daily publication for rules, proposed rules, and notices of Federal agencies and organizations, as well as executive orders and other presidential documents." %>
