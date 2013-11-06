@@ -55,7 +55,7 @@
   <% end -%>
   
   <div class='aside_box subscribe'> 
-    <%= link_to 'Subscribe', new_subscription_path(:subscription => {:search_conditions => {:search_type => 'PublicInspectionDocument'}}), :class => 'subscription subscription_action' %>
+    <%= link_to 'Subscribe', new_subscription_path(:subscription => {:search_type => 'PublicInspectionDocument'}), :class => 'subscription subscription_action' %>
     <%= add_template('subscription_modal', 'subscription-modal') %>
   </div>
 
