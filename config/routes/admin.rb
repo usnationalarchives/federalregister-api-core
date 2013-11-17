@@ -3,7 +3,9 @@ ActionController::Routing::Routes.draw do |map|
     admin.home '', :controller => "special", :action => "home", :conditions => {:method => :get}
     admin.resources :agencies, :member => {:delete => :get}
     admin.resources :agency_names, :collection => {:unprocessed => :get}
-
+    admin.namespace 'agency_names' do |agency_names|
+      agency_names.resources :issues
+    end
     admin.resources :canned_searches, :only => [:new]
     admin.section_canned_searches "canned_searches/:slug", :controller => "canned_searches", :action => :section, :conditions => {:method => :get, :slug => '\w*[a-zA-Z]\w*'}
     admin.resources :canned_searches, :member => {:delete => :get}

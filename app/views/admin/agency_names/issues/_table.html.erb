@@ -1,0 +1,24 @@
+<table>
+  <thead>
+    <tr>
+      <th>Original Name</th>
+      <th>Remapped Name</th>
+      <th>Documents</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% remappings.each do |remapping| %>
+        <tr>
+          <td><%= remapping.original_name %></td>
+          <td>
+            <% if remapping.agency_name.agency %>
+              <%= link_to remapping.agency_name.agency.name, edit_admin_agency_name_path(remapping.agency_name, :return_to => request.url) %>
+            <% else %>
+              <em><%= link_to 'not remapped', edit_admin_agency_name_path(remapping.agency_name, :return_to => request.url) %></em>
+            <% end %>
+          </td>
+          <td><%= remapping.entries.map{|e| link_to e.document_number, entry_path(e)}.join(', ') %>
+        </tr>
+    <% end %>
+  </tbody>
+</table>

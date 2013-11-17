@@ -4,6 +4,7 @@
     <ul>
       <li><%= link_to_unless_current 'All Agency Names',         admin_agency_names_path()             %></li>
       <li><%= link_to_unless_current 'Unprocessed Agency Names', unprocessed_admin_agency_names_path() %> (<%= AgencyName.unprocessed.count %>)</li>
+      <li><%= link_to_unless_current 'Recent Remappings',         admin_agency_names_issue_path(Issue.current.publication_date.to_s(:iso)) %></li>
       <li><%= link_to 'Download CSV', admin_agency_names_path(:format => :csv) %></li>
     </ul>
   <% end -%>
