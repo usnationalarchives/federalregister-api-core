@@ -40,12 +40,12 @@
                 <td style="width: 300px;"><%= remapping.original_name %></td>
                 <td style="width: 300px;">
                   <% if remapping.agency_name.agency %>
-                    <%= link_to remapping.agency_name.agency.name, edit_admin_agency_name_path(remapping.agency_name) %>
+                    <%= link_to remapping.agency_name.agency.name, edit_admin_agency_name_url(remapping.agency_name) %>
                   <% else %>
                     <em>not remapped</em>
                   <% end %>
                 </td>
-                <td style="width: 255px;padding: 20px 0;"><%= remapping.entries.map{|e| link_to e.document_number, short_entry_path(e.document_number)}.join(', ') %>
+                <td style="width: 255px;padding: 20px 0;"><%= remapping.entries.map{|e| link_to e.document_number, short_entry_url(e.document_number)}.join(', ') %>
               </tr>
           <% end %>
         </tbody>
@@ -70,12 +70,12 @@
               <td style="width: 300px;"><%= remapping.original_name %></td>
               <td style="width: 300px;">
                 <% if remapping.agency_name.agency %>
-                  <%= link_to remapping.agency_name.agency.name, edit_admin_agency_name_path(remapping.agency_name) %>
+                  <%= link_to remapping.agency_name.agency.name, edit_admin_agency_name_url(remapping.agency_name) %>
                 <% else %>
                   <em>not remapped</em>
                 <% end %>
               </td>
-              <td style="width: 255px;padding: 20px 0;"><%= remapping.entries.map{|e| link_to e.document_number, short_entry_path(e.document_number)}.join(', ') %>
+              <td style="width: 255px;padding: 20px 0;"><%= remapping.entries.map{|e| link_to e.document_number, short_entry_url(e.document_number)}.join(', ') %>
             </tr>
           <% end %>
         </tbody>
