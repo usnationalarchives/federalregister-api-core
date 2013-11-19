@@ -78,4 +78,20 @@ class Mailer < ActionMailer::Base
     sent_on Time.current
     body :entry => entry_email.entry, :sender => entry_email.sender, :message => entry_email.message
   end
+
+  def agency_name_mapping_admin_email(date)
+    sendgrid_category "Agency Name Mapping Admin Email"
+    sendgrid_recipients %w(awoo@gpo.gov mvincent@gpo.gov mscott@gpo.gov kgreen@gpo.gov aotovo@gpo.gov)
+    sendgrid_ganalytics_options :utm_source => 'federalregister.gov', :utm_medium => 'admin email', :utm_campaign => 'daily agency name mapping'
+
+    remappings = AgencyNameAuditPresenter.new(date)
+
+    subject "[FR Admin] Daily Agency Name Mapping for #{date}"
+    from       "Federal Register Admin <no-reply@mail.federalregister.gov>"
+    recipients 'nobody@federalregister.gov' # should use sendgrid_recipients for actual recipient list
+    sent_on    Time.current
+    body       :remappings => remappings, :date => date
+  end
+
+
 end

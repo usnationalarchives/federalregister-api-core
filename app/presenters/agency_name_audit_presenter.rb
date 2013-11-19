@@ -17,6 +17,8 @@ class AgencyNameAuditPresenter
       flatten(1).
       group_by(&:first).
       map {|an, pairs| Remapping.new(an, pairs.map(&:last))}
+
+    @remappings.reject{|r| r.original_name.try(:downcase) == r.remapped_name.try(:downcase)}
   end
 
   class Remapping
