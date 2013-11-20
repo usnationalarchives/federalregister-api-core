@@ -7,10 +7,10 @@ gem 'mysql', '2.7'
 gem "jrails", "0.6.0"
 
 gem 'fr2_audit_logic',
-  :git => 'git://github.com/criticaljuncture/fr2_audit_logic.git', 
+  :git => 'git://github.com/criticaljuncture/fr2_audit_logic.git',
   :ref => 'd0b037954987cc28dac25dfbf72ae94f28e9c9f7'
 # gem 'fr2_audit_logic', :path => '../fr2_audit_logic'
-gem 'bson_ext', '1.3.0' 
+gem 'bson_ext', '1.3.0'
 
 gem 'nokogiri', '1.3.2'
 gem 'curb', '0.4.4.0'
@@ -78,15 +78,15 @@ end
 
 group :test do
   # bundler requires these gems while running tests
-  
+
   # FIXME: these are still from github...
   gem 'thoughtbot-shoulda', :require => 'shoulda'
   gem 'seanhussey-woulda',  :require => 'woulda'
   gem 'floehopper-mocha',   :require => 'mocha'
-  
+
   gem 'rails-test-serving', '0.1.4.2', :require => 'rails_test_serving'
   gem 'jgre-monkeyspecdoc', '0.9.5', :require => 'monkeyspecdoc'
-  
+
   gem 'rspec', '1.3.0', :require => false
   gem 'rspec-rails', '1.3.2', :require => false
   gem 'webrat', '0.7.1'
@@ -98,6 +98,6 @@ group :test do
 
   gem 'cucumber'
   gem 'mechanize', '1.0.0'
-  
+
   gem 'ci_reporter', '1.6.3'
 end
