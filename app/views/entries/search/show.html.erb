@@ -1,5 +1,5 @@
 <% title @search.term.blank? ? 'Article Search' : "Article Search Results for '#{h @search.term}'" %>
-<%= feed_autodiscovery entries_search_url(params.except(:action).merge(:format => :rss, :order => 'newest')), @search.summary, :search_conditions => (params[:conditions] || {}).except(:publication_date) %>
+<%= feed_autodiscovery entries_search_url(params.except(:action).merge(:format => :rss, :order => 'newest')), @search.summary, :search_conditions => (params[:conditions].blank? ? {} : params[:conditions]).except(:publication_date) %>
 
 <% if @search.blank? %>
   <% description 'Easy, powerful search of all Federal Register documents since 1994' %>
