@@ -29,7 +29,13 @@ class Mailer < ActionMailer::Base
 
   def agency_name_mapping_admin_email(date)
     sendgrid_category "Agency Name Mapping Admin Email"
-    sendgrid_recipients %w(awoo@gpo.gov mvincent@gpo.gov mscott@gpo.gov kgreen@gpo.gov aotovo@gpo.gov)
+
+    recipients = %w(bob@criticaljuncture.org andrew@criticaljuncture.org)
+    if RAILS_ENV == 'production'
+      recipients += %w(awoo@gpo.gov mvincent@gpo.gov mscott@gpo.gov kgreen@gpo.gov aotovo@gpo.gov)
+    end
+    sendgrid_recipients recipients
+
     sendgrid_ganalytics_options :utm_source => 'federalregister.gov', :utm_medium => 'admin email', :utm_campaign => 'daily agency name mapping'
 
     remappings = AgencyNameAuditPresenter.new(date)
