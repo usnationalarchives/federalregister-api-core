@@ -28,7 +28,12 @@ gem 'ym4r', '0.6.1'
 
 gem 'thinking-sphinx', '1.4.13', :require => 'thinking_sphinx'
 gem 'ffi-hunspell', :require => 'ffi/hunspell'
-gem 'airbrake', '3.0.9'
+
+gem 'honeybadger', :require => 'honeybadger/rails'
+gem 'resque-honeybadger', 
+    :git => 'git@github.com:henrik/resque-honeybadger.git',
+    :ref => '832be87662840d44e73f66c006796da8ed6250e2'
+
 gem 'aws-s3', '0.6.2', :require => 'aws/s3'
 gem 'paperclip', '2.3.1.1'
 gem 'stevedore', '0.1.0'

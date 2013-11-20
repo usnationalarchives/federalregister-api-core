@@ -18,7 +18,7 @@ module Content
       begin
         run
       rescue Exception => e
-        Airbrake.notify(e)
+        Honeybadger.notify(e)
         raise e
       ensure
         remove_lock_file

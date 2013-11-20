@@ -32,16 +32,8 @@
   <%= stylesheet_link_tag "ie6", :media => :screen %>
 <![endif]-->
 
-<% if false && Airbrake.configuration.public? && ab_group == '2' %>
-  <%= airbrake_javascript_notifier %>
-  <script type="text/javascript">
-  //<![CDATA[
-  Airbrake.setErrorDefaults({ url: window.location });
-  //]]>
-  </script>
-<% end %>
 
-<% if RAILS_ENV == 'development' || (false && Airbrake.configuration.public? && ab_group == '2') %>
+<% if RAILS_ENV == 'development' %>
   <%# include all vendor/*.js files except for vendor.js %> 
   <%= javascript_include_tag :vendor %>
   <%# includeall top level js files %>

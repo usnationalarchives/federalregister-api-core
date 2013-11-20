@@ -13,6 +13,15 @@ GIT
   specs:
     sendgrid (0.1.5)
 
+GIT
+  remote: git@github.com:henrik/resque-honeybadger.git
+  revision: 832be87662840d44e73f66c006796da8ed6250e2
+  ref: 832be87662840d44e73f66c006796da8ed6250e2
+  specs:
+    resque-honeybadger (1.0.2)
+      honeybadger
+      resque (>= 1.8.0)
+
 GEM
   remote: http://rubygems.org/
   remote: http://gems.github.com/
@@ -31,9 +40,6 @@ GEM
     activesupport (2.3.17)
     after_commit (1.0.10)
       activerecord (>= 1.15.6, < 3.0.0)
-    airbrake (3.0.9)
-      activesupport
-      builder
     amatch (0.2.11)
       tins (~> 0.3)
     amazon-ec2 (0.9.15)
@@ -72,6 +78,8 @@ GEM
     durran-validatable (2.0.1)
     factory_girl (1.2.4)
     fakeweb (1.3.0)
+    faraday (0.8.8)
+      multipart-post (~> 1.2.0)
     fastercsv (1.4.0)
     ffi (1.6.0)
     ffi-hunspell (0.2.6)
@@ -88,6 +96,9 @@ GEM
       json (>= 1.4.6)
     haml (3.0.4)
     highline (1.6.1)
+    honeybadger (1.9.4)
+      faraday (~> 0.7)
+      json
     http_headers (0.0.2.3)
     httparty (0.8.1)
       multi_json
@@ -121,6 +132,7 @@ GEM
       will_paginate (< 2.9)
     multi_json (1.0.3)
     multi_xml (0.4.1)
+    multipart-post (1.2.0)
     mysql (2.7)
     net-scp (1.0.4)
       net-ssh (>= 1.99.1)
@@ -198,7 +210,6 @@ PLATFORMS
 
 DEPENDENCIES
   active_hash (= 0.9.5)
-  airbrake (= 3.0.9)
   amatch (= 0.2.11)
   amazon-ec2
   authlogic (= 2.1.3)
@@ -221,6 +232,7 @@ DEPENDENCIES
   fr2_audit_logic!
   geokit (= 1.4.1)
   haml (= 3.0.4)
+  honeybadger
   http_headers (= 0.0.2.3)
   httparty (= 0.8.1)
   icalendar
@@ -243,6 +255,7 @@ DEPENDENCIES
   rdoc
   recaptcha (= 0.3.1)
   resque (= 1.19.0)
+  resque-honeybadger!
   rspec (= 1.3.0)
   rspec-rails (= 1.3.2)
   rubyzip (= 0.9.1)
