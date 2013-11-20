@@ -170,7 +170,7 @@ class FrIndexPresenter
     end
 
     def pseudonym
-      if agency.pseudonym
+      if agency.pseudonym.present?
         AgencyPseudonym.new(agency)
       end
     end
