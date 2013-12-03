@@ -5,7 +5,7 @@
   {{#each elements}}
     <li>
       <h4>{{ title }}</h4>
-      
+
       <ul>
         <li class="rss">
           <h5>
@@ -24,7 +24,7 @@
           </h5>
           <form action="{{ subscription_action }}" method="post" class="formtastic subscription">
             <input type="text" name="subscription[email]" placeholder="Subscribe via E-Mail" class="address" {{add_email_to_input ../../email_address}}>
-            
+
             <ul>
               <li class="radio optional" id="subscription_search_type_input">
                 <fieldset>
