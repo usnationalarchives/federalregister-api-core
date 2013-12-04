@@ -54,6 +54,29 @@ $(document).ready(function () {
 
         $('#modal .tip_under').tipsy({gravity:'north'});
 
+        /* add email helper for validation and suggestions on blur */
+        var email_helper = new EmailHelper();
+        $('#modal form.subscription').on('input onpropertychange', '#subscription_email', function() {
+            var $input = $(this);
+
+            clearTimeout($input.data('timeout'));
+
+            if( !email_helper.initialized ) {
+              email_helper.initialize($input);
+            }
+
+            email_helper.reset_help_text();
+
+            $input.data('timeout', setTimeout(function(){
+              email_helper.validate_or_suggest();
+            }, 500));
+        });
+
+        /* add ability to use the suggested correction */
+        $('form').on('click', '.email_suggestion .link', function() {
+          email_helper.use_suggestion( $(this) );
+        });
+
         return false;
       }
     );

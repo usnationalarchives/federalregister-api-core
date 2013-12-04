@@ -61,6 +61,7 @@
 
 #subscriptions .icons .rss_link { background: sprite-image('icons/subscribe/rss.png', 0, 0, 50px) no-repeat; }
 
+#modal.subscribe fieldset ol:first-child { margin: 0px; }
 #modal.subscribe .icons .email { 
   clear: left;
   margin-top: 10px;
