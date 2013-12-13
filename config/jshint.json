@@ -35,6 +35,7 @@
       "fr_index_popover_handler",
       "SpellChecker",
       "user_email_address",
+      "EmailHelper",
 
       // Some non-recognized built-in methods
       "escape",
