@@ -52,7 +52,7 @@ class Mailer < ActionMailer::Base
   def admin_notification(message)
     sendgrid_category "Admin Notification Email"
 
-    sendgrid_recipients = FR_DEVELOPER_ADMINS
+    sendgrid_recipients FR_DEVELOPER_ADMINS
 
     subject "[FR Notification] Urgent Admin Notification"
     from       "Federal Register Admin <no-reply@mail.federalregister.gov>"
