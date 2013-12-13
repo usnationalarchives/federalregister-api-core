@@ -5,6 +5,8 @@ class Mailer < ActionMailer::Base
 
   sendgrid_enable :opentracking, :clicktracking, :ganalytics
 
+  FR_DEVELOPER_ADMINS = %w(bob@criticaljuncture.org andrew@criticaljuncture.org)
+
   def password_reset_instructions(user)
     sendgrid_category "Admin Password Reset"
 
@@ -30,7 +32,7 @@ class Mailer < ActionMailer::Base
   def agency_name_mapping_admin_email(date)
     sendgrid_category "Agency Name Mapping Admin Email"
 
-    recipients = %w(bob@criticaljuncture.org andrew@criticaljuncture.org)
+    recipients = FR_DEVELOPER_ADMINS
     if RAILS_ENV == 'production'
       recipients += %w(awoo@gpo.gov mvincent@gpo.gov mscott@gpo.gov kgreen@gpo.gov aotovo@gpo.gov)
     end
@@ -45,5 +47,17 @@ class Mailer < ActionMailer::Base
     recipients 'nobody@federalregister.gov' # should use sendgrid_recipients for actual recipient list
     sent_on    Time.current
     body       :remappings => remappings, :date => date
+  end
+
+  def admin_notification(message)
+    sendgrid_category "Admin Notification Email"
+
+    sendgrid_recipients = FR_DEVELOPER_ADMINS
+
+    subject "[FR Notification] Urgent Admin Notification"
+    from       "Federal Register Admin <no-reply@mail.federalregister.gov>"
+    recipients 'nobody@federalregister.gov' # should use sendgrid_recipients for actual recipient list
+    sent_on    Time.current
+    body       :message => message
   end
 end

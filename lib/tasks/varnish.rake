@@ -51,6 +51,8 @@ namespace :varnish do
     desc "Expire from varnish pages so that late notice can go up"
     task :pages_warning_of_late_content => :environment do
       if Issue.current_issue_is_late?
+        Mailer.deliver_admin_notification("Today's issue #{Time.current.to_date} is late. There may have been a problem!")
+
         include CacheUtils
         purge_cache("/")
         purge_cache("/articles/#{Time.current.to_date.strftime('%Y')}/#{Time.current.to_date.strftime('%m')}")
