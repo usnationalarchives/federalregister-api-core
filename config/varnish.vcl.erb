@@ -11,7 +11,12 @@ backend fr2 {
 
 backend my_fr2 {
   .host = "<%= config['my_fr2']['host'] || '127.0.0.1' %>";
-  .port = "<%= config['my_fr2']['port'] || '3000' %>";
+  .port = "<%= config['my_fr2']['port'] || '3001' %>";
+}
+
+backend assets_my_fr2 {
+  .host = "<%= config['assets_my_fr2']['host'] || '127.0.0.1' %>";
+  .port = "<%= config['assets_my_fr2']['port'] || '3001' %>";
 }
 
 backend blog {
@@ -72,7 +77,7 @@ sub vcl_recv {
     
     # Route to the correct backend
     if (req.url ~ "^/my/assets/") {
-      set req.backend = my_fr2;
+      set req.backend = assets_my_fr2;
       return(pass);
     } else if (req.url ~ "^/my(/|$)") {
       set req.backend = my_fr2;

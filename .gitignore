@@ -14,6 +14,7 @@ webrat.log
 /config/sendgrid.yml
 /config/secrets.yml
 /config/varnish.development.vcl
+/config/varnish.test.vcl
 /config/varnish.yml
 /config/splunk.yml
 /data
