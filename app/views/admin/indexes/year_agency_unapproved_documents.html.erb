@@ -43,7 +43,7 @@
   <%= render :esi => admin_index_year_agency_type_path(@agency_year.year, @agency_year.agency, document_type.granule_class, :unapproved_only => 1) %>
 <% end %>
 
-<% if @agency_year.document_types %>
+<% if @agency_year.document_types.present? %>
   <%= render :partial => "autocompleter_data", :locals => {:agency_year => @agency_year} %>
 <% else %>
   <h3>No documents have been published since the agency was last approved (<%= @agency_year.last_completed_issue %>)</h3>
