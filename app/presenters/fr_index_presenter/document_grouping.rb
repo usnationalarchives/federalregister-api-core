@@ -73,8 +73,8 @@ class FrIndexPresenter
               ON public_inspection_documents.entry_id = entries.id
             WHERE entries.id IN (?)
               AND entries.publication_date <= ?
-              AND IFNULL(IFNULL(fr_index_subject, IFNULL(public_inspection_documents.toc_subject, entries.toc_subject)),'_null_') = IFNULL(?, '_null_')
-              AND IFNULL(fr_index_doc, IFNULL(IFNULL(public_inspection_documents.toc_doc, entries.toc_doc), entries.title)) = ?
+              AND IFNULL(#{FrIndexPresenter::EntryPresenter::SUBJECT_SQL},'_null_') = IFNULL(?, '_null_')
+              AND IFNULL(fr_index_doc, #{FrIndexPresenter::EntryPresenter::DOC_SQL}) = ?
           SQL
         end
       else

@@ -37,3 +37,5 @@
 <% @agency_year.document_types.each do |document_type| %>
   <%= render :esi => admin_index_year_agency_type_path(@agency_year.year, @agency_year.agency, document_type.granule_class, :max_date => params[:max_date]) %>
 <% end %>
+
+<%= render :partial => "autocompleter_data", :locals => {:agency_year => @agency_year} %>

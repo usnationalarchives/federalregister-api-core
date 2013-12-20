@@ -92,10 +92,37 @@ class FrIndexPresenter
       end
     end
 
+    def autocompleter_subjects
+      Entry.find_as_array([<<-SQL, entry_ids_for_year]).reject(&:blank?)
+        SELECT DISTINCT #{FrIndexPresenter::EntryPresenter::SUBJECT_SQL}
+        FROM entries
+        LEFT OUTER JOIN public_inspection_documents
+          ON public_inspection_documents.entry_id = entries.id
+        WHERE entries.id IN (?)
+      SQL
+    end
+
+    def autocompleter_docs
+      Entry.find_as_array([<<-SQL, entry_ids_for_year]).reject(&:blank?)
+        SELECT DISTINCT #{FrIndexPresenter::EntryPresenter::DOC_SQL}
+        FROM entries
+        LEFT OUTER JOIN public_inspection_documents
+          ON public_inspection_documents.entry_id = entries.id
+        WHERE entries.id IN (?)
+      SQL
+    end
+
     private
 
     def agency_status
       @agency_status ||= FrIndexAgencyStatus.find_by_year_and_agency_id(year, agency.id)
+    end
+
+    def entry_ids_for_year
+      @entry_ids_for_year ||= EntrySearch.new(
+        :conditions => sphinx_conditions.merge(:publication_date => {:year => year}),
+        :per_page => 2000
+      ).result_ids
     end
 
     def sphinx_conditions

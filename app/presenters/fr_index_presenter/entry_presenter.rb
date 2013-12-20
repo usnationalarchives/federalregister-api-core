@@ -17,6 +17,11 @@ class FrIndexPresenter
   )
     include EntryViewLogic
 
+    DEFAULT_SUBJECT_SQL = "IFNULL(public_inspection_documents.toc_subject, entries.toc_subject)"
+    SUBJECT_SQL = "IFNULL(entries.fr_index_subject, #{DEFAULT_SUBJECT_SQL})"
+    DEFAULT_DOC_SQL = "IFNULL(IFNULL(public_inspection_documents.toc_doc, entries.toc_doc), entries.title)"
+    DOC_SQL = "IFNULL(entries.fr_index_doc, #{DEFAULT_DOC_SQL})"
+
     def initialize(options)
       # manual typecasting FTW
       %w(publication_date comments_close_on).each do |date_attr|

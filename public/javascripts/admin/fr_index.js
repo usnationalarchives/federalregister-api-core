@@ -181,8 +181,8 @@ var FRIndexEditor = (function(){
     },
 
     generate_toc_subject_and_doc_autocompleter_elements: function() {
-      this.current_toc_subjects = _.uniq($('li[data-form-data]').map(function() { return $(this).data('form-data').fr_index_subject; })).sort();
-      this.current_toc_docs = _.uniq($('li[data-form-data]').map(function() { return $(this).data('form-data').fr_index_doc; })).sort();
+      this.current_toc_subjects = $('#current_toc_subjects').data('values');
+      this.current_toc_docs = $('#current_toc_docs').data('values');
     },
 
     add_edit_funtionality: function() {
