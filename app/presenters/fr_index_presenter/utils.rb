@@ -2,7 +2,7 @@ class FrIndexPresenter
   module Utils
     def publication_date_conditions
       {
-        :gte => (unapproved_only && last_completed_issue) ? last_completed_issue : "#{year}-01-01",
+        :gte => (unapproved_only && last_completed_issue) ? last_completed_issue+1 : "#{year}-01-01",
         :lte => max_date.present? ? max_date.to_s(:iso) : "#{year}-12-31",
       }
     end
