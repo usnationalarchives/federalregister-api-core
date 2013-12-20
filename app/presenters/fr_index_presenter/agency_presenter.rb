@@ -53,7 +53,7 @@ class FrIndexPresenter
     def document_types
       @document_types ||= EntrySearch.new(
         :conditions => sphinx_conditions
-      ).type_facets.map{|f| DocumentType.new(agency, year, f.value, :max_date => max_date)}
+      ).type_facets.map{|f| DocumentType.new(agency, year, f.value, :max_date => max_date)}.sort_by(&:name).reverse
     end
 
     def needs_attention_count
