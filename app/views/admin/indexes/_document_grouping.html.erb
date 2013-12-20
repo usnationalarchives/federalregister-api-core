@@ -9,7 +9,9 @@
                         :max_date => params[:max_date],
                         :entry_ids => document_grouping.entries.map{|e| e.id},
                         :fr_index_subject => document_grouping.fr_index_subject,
-                        :fr_index_doc =>  document_grouping.header }.to_json do %>
+                        :fr_index_doc =>  document_grouping.header,
+                        :unapproved_only => params[:unapproved_only].present?
+                      }.to_json do %>
 
   <a class="wrapper" href="#">
     <span class="title" data-header-attribute="<%= document_grouping.header_attribute %>" data-original-title='<%= document_grouping.header %>'>

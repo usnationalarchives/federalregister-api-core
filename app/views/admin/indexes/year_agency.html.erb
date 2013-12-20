@@ -8,12 +8,12 @@
 <%= add_template('admin/spelling_error_menu', 'spelling-error-menu') %>
 
 <ul class="agency_index_nav_tabs page_summary">
-  <li class='active'>
+  <li>
     <%= link_to "New Documents Since Last Approval (#{@agency_year.last_completed_issue.strftime("%b. #{@agency_year.last_completed_issue.day.ordinalize}")})",
-                '#',
+                {:action => :year_agency_unapproved_documents},
                 :class => '' %>
   </li>
-  <li>
+  <li class='active'>
     <%= link_to "All #{@agency_year.year} Agency Documents",
                 admin_index_year_agency_path(@agency_year.year, @agency_year.agency, :max_date => params[:max_date]),
                 :class => ''  %>
@@ -28,17 +28,6 @@
   <div class="agency_index_actions">
     <% form_tag(url_for(:max_date => @agency_year.last_issue_published), :method => :get, :class => 'max_date') do %>
       <%= max_date_select(@agency_year) %>
-    <% end %>
-
-    <%= link_to 'Mark As Reviewed',
-                admin_index_year_agency_completion_path(:last_completed_issue => [Issue.current.publication_date, @agency_year.max_date].min,
-                                                        :max_date => params[:max_date]),
-                :method => :put,
-                :class => "btn mark_as_complete" %>
-    <% if @agency_year.last_completed_issue %>
-      <div class="last_completed">Marked complete through
-        <%= @agency_year.last_completed_issue.strftime("%b. #{@agency_year.last_completed_issue.day.ordinalize}") %>
-      </div>
     <% end %>
 
     <%= link_to 'Preview PDF', {:format => :pdf, :max_date => params[:max_date]}, :class => "btn pdf_preview", :target => "_blank" %>

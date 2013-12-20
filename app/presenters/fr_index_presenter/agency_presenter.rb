@@ -1,7 +1,7 @@
 class FrIndexPresenter
   class AgencyPresenter
     include FrIndexPresenter::Utils
-    attr_reader :agency, :year, :children, :max_date
+    attr_reader :agency, :year, :children, :max_date, :unapproved_only
 
     delegate :name,
       :to_param,
@@ -18,6 +18,7 @@ class FrIndexPresenter
       @oldest_issue_needing_attention = options[:oldest_issue_needing_attention]
       @last_published = options[:last_published]
       @max_date = parse_date(options[:max_date]) || last_issue_published
+      @unapproved_only = options[:unapproved_only].present?
     end
 
     def pseudonym
@@ -53,11 +54,6 @@ class FrIndexPresenter
       @document_types ||= EntrySearch.new(
         :conditions => sphinx_conditions
       ).type_facets.map{|f| DocumentType.new(agency, year, f.value, :max_date => max_date)}
-    end
-
-    def grouping_for_document_type_and_header(granule_class, header)
-      document_type = document_types.find{|dt| dt.granule_class == granule_class}
-      document_type.groupings.find{|g| g.header == header}
     end
 
     def needs_attention_count

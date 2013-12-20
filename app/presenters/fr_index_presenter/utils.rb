@@ -1,11 +1,10 @@
 class FrIndexPresenter
   module Utils
     def publication_date_conditions
-      if max_date.present?
-        {:gte => "#{year}-01-01", :lte => max_date.to_s(:iso)}
-      else
-        {:year => year}
-      end
+      {
+        :gte => (unapproved_only && last_completed_issue) ? last_completed_issue : "#{year}-01-01",
+        :lte => max_date.present? ? max_date.to_s(:iso) : "#{year}-12-31",
+      }
     end
 
     def parse_date(date_or_str)

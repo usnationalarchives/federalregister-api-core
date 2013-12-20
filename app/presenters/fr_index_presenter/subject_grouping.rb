@@ -3,6 +3,7 @@ class FrIndexPresenter
     attr_reader :document_type, :header, :entries
     delegate :last_completed_issue,
       :granule_class,
+      :entry_ids_for_year,
       :to => :document_type
 
     def initialize(document_type, header, entries)

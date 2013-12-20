@@ -1,6 +1,6 @@
 class FrIndexPresenter
   class DocumentType
-    attr_reader :agency, :year, :granule_class, :max_date
+    attr_reader :agency, :year, :granule_class, :max_date, :unapproved_only
     delegate :last_completed_issue, :to => :agency_year
 
     include FrIndexPresenter::Utils
@@ -10,6 +10,7 @@ class FrIndexPresenter
       @year = year
       @granule_class = granule_class.upcase
       @max_date = parse_date(options[:max_date]) || last_issue_published
+      @unapproved_only = options[:unapproved_only].present?
     end
 
     def agency_year
@@ -44,7 +45,25 @@ class FrIndexPresenter
       groupings.map(&:oldest_issue_needing_attention).compact.min if needs_attention?
     end
 
+    def entry_ids_for_year
+      @entry_ids_for_year ||= EntrySearch.new(
+        :conditions => sphinx_conditions.merge(:publication_date => {:year => year}),
+        :per_page => 2000
+      ).result_ids
+    end
+
+    def grouping_for_header(header)
+      groupings.find{|g| g.header == header}
+    end
+
     private
+
+    def entry_ids
+      EntrySearch.new(
+        :conditions => sphinx_conditions,
+        :per_page => 2000
+      ).result_ids
+    end
 
     def sphinx_conditions
       {
@@ -53,13 +72,6 @@ class FrIndexPresenter
         :publication_date => publication_date_conditions,
         :type => granule_class
       }
-    end
-
-    def entry_ids
-      EntrySearch.new(
-        :conditions => sphinx_conditions,
-        :per_page => 2000
-      ).result_ids
     end
 
     def entries

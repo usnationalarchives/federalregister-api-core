@@ -3,6 +3,7 @@ class FrIndexPresenter
     attr_reader :parent, :header, :entries, :fr_index_subject
     delegate :last_completed_issue,
       :granule_class,
+      :entry_ids_for_year,
       :to => :parent
 
     def initialize(parent, header, entries, fr_index_subject = nil)
@@ -61,7 +62,21 @@ class FrIndexPresenter
     def old_entry_count
       date = last_completed_issue
       if date
-        entries.select{|e| e.publication_date <= date}.size
+        count = entries.select{|e| e.publication_date <= date}.size
+        if count > 0
+          return count
+        else
+          Entry.find_as_array([<<-SQL, entry_ids_for_year, last_completed_issue, entries.first.fr_index_subject, entries.first.fr_index_doc]).first.to_i
+            SELECT COUNT(*)
+            FROM entries
+            LEFT OUTER JOIN public_inspection_documents
+              ON public_inspection_documents.entry_id = entries.id
+            WHERE entries.id IN (?)
+              AND entries.publication_date <= ?
+              AND IFNULL(IFNULL(fr_index_subject, IFNULL(public_inspection_documents.toc_subject, entries.toc_subject)),'_null_') = IFNULL(?, '_null_')
+              AND IFNULL(fr_index_doc, IFNULL(IFNULL(public_inspection_documents.toc_doc, entries.toc_doc), entries.title)) = ?
+          SQL
+        end
       else
         0
       end

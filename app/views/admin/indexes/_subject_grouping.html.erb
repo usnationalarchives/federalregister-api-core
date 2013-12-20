@@ -9,7 +9,9 @@
                           :max_date => params[:max_date],
                           :old_subject => subject_grouping.header,
                           :entry_ids => subject_grouping.entries.map{|e| e.id},
-                          :fr_index_subject => subject_grouping.header }.to_json do %>
+                          :fr_index_subject => subject_grouping.header,
+                          :unapproved_only => params[:unapproved_only].present?
+                        }.to_json do %>
 
                           <span class="title" data-header-attribute="<%= subject_grouping.header_attribute %>" data-original-title='<%= subject_grouping.header %>'>
                             <%= spell_checker.highlight_spelling_errors subject_grouping.header %>

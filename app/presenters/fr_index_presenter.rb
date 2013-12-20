@@ -1,7 +1,7 @@
 class FrIndexPresenter
   include FrIndexPresenter::Utils
 
-  attr_reader :year, :max_date
+  attr_reader :year, :max_date, :unapproved_only
 
   def self.available_years
     min_year = Rails.env == 'development' ? 2012 : 2013
