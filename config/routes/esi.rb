@@ -64,5 +64,8 @@ ActionController::Routing::Routes.draw do |map|
     quiet_map.most_emailed_entries_section ':slug/most_emailed_entries.:format', :controller => "sections", :action => "most_emailed_entries"
     quiet_map.popular_topics_section ':slug/popular_topics.:format', :controller => "sections", :action => "popular_topics"
     quiet_map.featured_agency_section ':slug/featured_agency.:format', :controller => "sections", :action => "featured_agency"
+
+    # FR INDEX
+    quiet_map.index_year_agency_type 'index/:year/:agency/:type', :controller => "indexes", :action => "year_agency_type", :conditions => {:method => :get}
   end
 end

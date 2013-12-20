@@ -18,6 +18,7 @@ ActionController::Routing::Routes.draw do |map|
     admin.publish_index_year 'index/:year/publish', :controller => "indexes", :action => "publish", :conditions => {:method => :post}
     admin.index_year_agency 'index/:year/:agency.:format', :controller => "indexes", :action => "year_agency", :conditions => {:method => :get}
     admin.index_year_agency 'index/:year/:agency', :controller => "indexes", :action => "update_year_agency", :conditions => {:method => :put}
+    admin.index_year_agency_type 'index/:year/:agency/:type', :controller => "indexes", :action => "year_agency_type", :conditions => {:method => :get}
     admin.index_year_agency_completion 'index/:year/:agency/completion', :controller => "indexes", :action => "mark_complete", :conditions => {:method => :put}
 
     admin.resources :generated_files, :only => [:show]

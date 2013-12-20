@@ -1,0 +1,18 @@
+<div class="title_bar">
+  <h3>
+    <%= @document_type.name.pluralize %>
+  </h3>
+</div>
+
+<ul id="<%= @document_type.name.downcase %>" class="entry_type">
+  <% spelling_checker do |spell_checker| %>
+    <% @document_type.groupings.each do |grouping| %>
+      <%= case grouping
+          when FrIndexPresenter::SubjectGrouping
+            render :partial => "subject_grouping", :locals => { :subject_grouping => grouping, :agency_year => @document_type.agency_year, :spell_checker => spell_checker}
+          when FrIndexPresenter::DocumentGrouping
+            render :partial => "document_grouping", :locals => { :document_grouping => grouping, :agency_year => @document_type.agency_year, :spell_checker => spell_checker }
+          end %>
+    <% end %>
+  <% end %>
+</ul>

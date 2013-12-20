@@ -43,7 +43,7 @@ class Admin::IndexesController < AdminController
     year = params[:year].to_i
 
     options = params.slice(:max_date)
-    @agency_year = FrIndexPresenter::Agency.new(agency, year, options)
+    @agency_year = FrIndexPresenter::AgencyPresenter.new(agency, year, options)
 
     respond_to do |wants|
       wants.html
@@ -55,6 +55,14 @@ class Admin::IndexesController < AdminController
         )
       end
     end
+  end
+
+  def year_agency_type
+    options = params.slice(:max_date)
+    agency = Agency.find_by_slug!(params[:agency])
+
+    @document_type = FrIndexPresenter::DocumentType.new(agency, params[:year].to_i, params[:type], options)
+    render :layout => false
   end
 
   def update_year_agency
@@ -75,7 +83,7 @@ class Admin::IndexesController < AdminController
     end
 
     agency = Agency.find_by_slug!(params[:agency])
-    agency_year = FrIndexPresenter::Agency.new(agency, params[:year], :max_date => params[:max_date])
+    agency_year = FrIndexPresenter::AgencyPresenter.new(agency, params[:year], :max_date => params[:max_date])
 
     agency_year.update_cache
 
@@ -109,7 +117,7 @@ class Admin::IndexesController < AdminController
     status.last_completed_issue = params[:last_completed_issue]
     status.save
 
-    agency_year = FrIndexPresenter::Agency.new(agency, params[:year])
+    agency_year = FrIndexPresenter::AgencyPresenter.new(agency, params[:year])
     FrIndexAgencyStatus.update_cache(agency_year)
 
     flash[:notice] = "'#{agency.name}' marked complete through #{status.last_completed_issue}"
