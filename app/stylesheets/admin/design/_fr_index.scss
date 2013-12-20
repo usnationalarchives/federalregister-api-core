@@ -42,7 +42,13 @@
 
     &.active {
       background-color: #DFDFDF;
-      a { color: #000000; }
+      a {
+        color: #000000;
+        &:hover {
+          text-decoration: none;
+          cursor: default;
+        }
+      }
     }
   }
 }

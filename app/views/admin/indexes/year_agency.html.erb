@@ -14,8 +14,8 @@
                 :class => '' %>
   </li>
   <li>
-  <%= link_to "All #{@agency_year.year} Agency Documents",
-                '#',
+    <%= link_to "All #{@agency_year.year} Agency Documents",
+                admin_index_year_agency_path(@agency_year.year, @agency_year.agency, :max_date => params[:max_date]),
                 :class => ''  %>
   </li>
 </ul>
