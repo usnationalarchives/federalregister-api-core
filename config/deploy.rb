@@ -146,8 +146,8 @@ after "deploy:migrate",                "sass:update_stylesheets"
 after "sass:update_stylesheets",       "javascript:combine_and_minify"
 after "javascript:combine_and_minify", "passenger:restart"
 after "passenger:restart",             "resque:restart_workers"
-#after "resque:restart_workers",        "varnish:clear_cache"
-#after "varnish:clear_cache",           "honeybadger:notify_deploy"
+after "resque:restart_workers",        "varnish:clear_cache"
+after "varnish:clear_cache",           "honeybadger:notify_deploy"
 
 
 #############################################################
