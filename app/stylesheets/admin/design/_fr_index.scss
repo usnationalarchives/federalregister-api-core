@@ -12,9 +12,44 @@
 
 /* YEAR AGENCY */
 
+.agency_index_nav_tabs {
+  &.page_summary {
+    margin-bottom: 20px;
+  }
+
+  overflow: hidden;
+
+  padding: 0;
+  padding-bottom: 8px;
+
+  margin-left: 0;
+
+  height: 20px;
+  width: 617px;
+
+  border: 1px solid #CCC;
+
+  li {
+    float: left;
+    padding: 5px 0 5px 10px;
+    width: 279px;
+    text-align: center;
+
+    &:first-child {
+      padding-right: 10px;
+      border-right: 1px solid #CCC;
+    }
+
+    &.active {
+      background-color: #DFDFDF;
+      a { color: #000000; }
+    }
+  }
+}
+
 .page_summary {
   overflow: hidden;
-  margin-bottom: 20px;
+  margin-bottom: 40px;
 
   h1.agency_name { color: $dark_blue; }
   hr { margin-top: 0px; }
@@ -67,8 +102,6 @@
       border-color: $fr_orange;
       background: #e6e6e6 sprite-image("icons/admin/index_pdf_preview_active.png", 5px, 4px, 30px) no-repeat;
     }
-
-
   }
 }
 

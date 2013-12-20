@@ -7,6 +7,19 @@
 <%= add_template('admin/fr_index_form', 'fr-index-form') %>
 <%= add_template('admin/spelling_error_menu', 'spelling-error-menu') %>
 
+<ul class="agency_index_nav_tabs page_summary">
+  <li class='active'>
+    <%= link_to "New Documents Since Last Approval (#{@agency_year.last_completed_issue.strftime("%b. #{@agency_year.last_completed_issue.day.ordinalize}")})",
+                '#',
+                :class => '' %>
+  </li>
+  <li>
+  <%= link_to "All #{@agency_year.year} Agency Documents",
+                '#',
+                :class => ''  %>
+  </li>
+</ul>
+
 <div class="page_summary">
   <h1 class="agency_name"><%= @agency_year.name %></h1>
 
