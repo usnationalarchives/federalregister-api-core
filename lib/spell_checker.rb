@@ -31,9 +31,9 @@ class SpellChecker
   end
 
   def correct(string)
-    string.gsub(/\w[\w\']*\w+/) do |word| 
+    string.gsub(/[a-zA-Z][a-zA-Z\']*[a-zA-Z]+/) do |word|
       if word !~ /\d/ && word !~ /\A[A-Z]+\z/ && !speller.check?(word) && ! dictionary_words[word.capitalize_first]
-        suggestions = speller.suggest(word)
+        suggestions = suggestions_for(word)
 
         if block_given?
           yield(word, suggestions)
@@ -44,5 +44,10 @@ class SpellChecker
         word
       end
     end
+  end
+
+  def suggestions_for(word)
+    @suggestions ||= {}
+    @suggestions[word] ||= speller.suggest(word)
   end
 end
