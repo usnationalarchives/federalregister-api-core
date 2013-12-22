@@ -9,7 +9,7 @@
 
 <ul class="agency_index_nav_tabs page_summary">
   <li>
-    <%= link_to "New Documents Since Last Approval (#{@agency_year.last_completed_issue.strftime("%b. #{@agency_year.last_completed_issue.day.ordinalize}")})",
+    <%= link_to "New Documents Since Last Approval (#{@last_approved_date})",
                 {:action => :year_agency_unapproved_documents},
                 :class => '' %>
   </li>

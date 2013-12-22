@@ -32,12 +32,13 @@
   li {
     float: left;
     padding: 5px 0 5px 10px;
-    width: 279px;
+    width: 286px;
     text-align: center;
 
     &:first-child {
       padding-right: 10px;
       border-right: 1px solid #CCC;
+      width: 300px;
     }
 
     &.active {
@@ -153,7 +154,10 @@
 #indexes.admin .page_summary .agency_index_actions {
   form.max_date {
     padding-bottom: 7px;
-    border-bottom: 1px solid #DDD;
+    width: 400px;
+    margin-right: 0;
+    margin-bottom: 0;
+    float: left;
 
     #max_date { 
       float: none;
@@ -255,17 +259,20 @@ ul.entry_type {
   }
 }
 
-#indexes.admin.year_agency {
+#indexes.admin.year_agency,
+#indexes.admin.year_agency_unapproved_documents {
   /* bottom padding so last popover is visible */
   #content_area > .wrapper { padding-bottom: 200px; }
 
   /* popover customizations */
-  .tipsy-inner { width: 580px; }
-  .popover-title { 
+  .tipsy-inner {
+    color: #000;
+    width: 580px;
+  }
+  .popover-title {
     margin-bottom: 0;
     font-size: 16px;
     border-top: none;
-    color: #000;
    }
   .popover-content dl dt { 
     width: 100px;

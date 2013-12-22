@@ -44,6 +44,7 @@ class Admin::IndexesController < AdminController
 
     options = params.slice(:max_date)
     @agency_year = FrIndexPresenter::AgencyPresenter.new(agency, year, options)
+    @last_approved_date = last_approved_date
 
     respond_to do |wants|
       wants.html
@@ -72,6 +73,7 @@ class Admin::IndexesController < AdminController
     year = params[:year].to_i
 
     @agency_year = FrIndexPresenter::AgencyPresenter.new(agency, year, :unapproved_only => true)
+    @last_approved_date = last_approved_date
   end
 
   def update_year_agency
@@ -142,5 +144,13 @@ class Admin::IndexesController < AdminController
     file = GeneratedFile.create(:parameters => parameters)
     Resque.enqueue FrIndexPdfPreviewer, file.id
     redirect_to admin_generated_file_path(file)
+  end
+
+  def last_approved_date
+    if @agency_year.last_completed_issue
+      @agency_year.last_completed_issue.strftime("%b. #{@agency_year.last_completed_issue.day.ordinalize}")
+    else
+      ""
+    end
   end
 end
