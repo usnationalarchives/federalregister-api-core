@@ -24,7 +24,7 @@ class FrIndexPdfGenerator
     return @agency_years if @agency_years
 
     if agency
-      @agency_years = [FrIndexPresenter::Agency.new(agency, year, :max_date => params[:max_date], :last_published => fr_index_presenter.last_published)]
+      @agency_years = [FrIndexPresenter::AgencyPresenter.new(agency, year, :max_date => params[:max_date], :last_published => fr_index_presenter.last_published)]
     else
       @agency_years = fr_index_presenter.agencies_with_pseudonyms
     end
