@@ -54,6 +54,8 @@
   }
 }
 
+.admin.year_agency .page_summary .agency_index_actions { margin-bottom: 0px; }
+
 .page_summary {
   overflow: hidden;
   margin-bottom: 40px;
@@ -151,9 +153,9 @@
   line-height: 15px;
   font-weight: normal;
   }
+
 #indexes.admin .page_summary .agency_index_actions {
   form.max_date {
-    padding-bottom: 7px;
     width: 400px;
     margin-right: 0;
     margin-bottom: 0;
@@ -162,6 +164,7 @@
     #max_date { 
       float: none;
       margin-left: 0;
+      margin-bottom: 6px;
     }
   }
 }
