@@ -11,7 +11,7 @@ class SpellChecker
   end
 
   def dictionary_words
-    @dictionary_words ||= DictionaryWord.find_as_array(:select => "word")
+    @dictionary_words ||= DictionaryWord.find_as_hash(:select => "word, 1")
   end
 
   def highlight_spelling_errors(text)
@@ -32,7 +32,7 @@ class SpellChecker
 
   def correct(string)
     string.gsub(/\w[\w\']*\w+/) do |word| 
-      if word !~ /\d/ && word !~ /\A[A-Z]+\z/ && !speller.check?(word) && ! dictionary_words.include?(word.capitalize_first)
+      if word !~ /\d/ && word !~ /\A[A-Z]+\z/ && !speller.check?(word) && ! dictionary_words[word.capitalize_first]
         suggestions = speller.suggest(word)
 
         if block_given?
