@@ -34,7 +34,7 @@ class FrIndexPresenter
     end
 
     def needs_attention?
-      old_entry_count == 0 && unmodified?
+      unmodified? && old_entry_count == 0
     end
 
     def oldest_issue_needing_attention
@@ -60,13 +60,14 @@ class FrIndexPresenter
     private
 
     def old_entry_count
+      return @old_entry_count if @old_entry_count 
       date = last_completed_issue
       if date
-        count = entries.select{|e| e.publication_date <= date}.size
-        if count > 0
-          return count
+        @old_entry_count = entries.select{|e| e.publication_date <= date}.size
+        if @old_entry_count > 0
+          @old_entry_count
         else
-          Entry.find_as_array([<<-SQL, entry_ids_for_year, last_completed_issue, entries.first.fr_index_subject, entries.first.fr_index_doc]).first.to_i
+          @old_entry_count = Entry.find_as_array([<<-SQL, entry_ids_for_year, last_completed_issue, entries.first.fr_index_subject, entries.first.fr_index_doc]).first.to_i
             SELECT COUNT(*)
             FROM entries
             LEFT OUTER JOIN public_inspection_documents
@@ -78,7 +79,7 @@ class FrIndexPresenter
           SQL
         end
       else
-        0
+        @old_entry_count = 0
       end
     end
 
