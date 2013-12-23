@@ -351,7 +351,9 @@ $(document).ready(function() {
   frIndexEditor.initialize( $('#content_area ul.entry_type > li') );
 
   var spellChecker = new SpellChecker();
-  spellChecker.initialize({element_class: "ul.entry_type"});
+  spellChecker.initialize({element_class: "ul.entry_type",
+                           ajax_suggestions: true,
+                           ajax_suggestion_url: '/admin/spelling_suggestions'});
 
   spellChecker.add_to_dictionary = function(active_element, word_to_add) {
     $.ajax({

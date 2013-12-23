@@ -15,8 +15,8 @@ class SpellChecker
   end
 
   def highlight_spelling_errors(text)
-    correct(text) do |original, suggestions|
-      template.content_tag(:span, original, :'data-suggestions' => suggestions.to_json, :'data-misspelled-word' => original, :class => "spelling_error")
+    spell_check(text) do |misspelled_word|
+      template.content_tag(:span, misspelled_word, :'data-misspelled-word' => misspelled_word, :class => "spelling_error")
     end
   end
 
@@ -31,15 +31,21 @@ class SpellChecker
   end
 
   def correct(string)
+    spell_check(string) do |misspelled_word|
+      suggestions = suggestions_for(misspelled_word)
+
+      if block_given?
+        yield(misspelled_word, suggestions)
+      else
+        suggestions.first || misspelled_word
+      end
+    end
+  end
+
+  def spell_check(string)
     string.gsub(/[a-zA-Z][a-zA-Z\']*[a-zA-Z]+/) do |word|
       if word !~ /\d/ && word !~ /\A[A-Z]+\z/ && !speller.check?(word) && ! dictionary_words[word.capitalize_first]
-        suggestions = [] # suggestions_for(word)
-
-        if block_given?
-          yield(word, suggestions)
-        else
-          suggestions.first
-        end
+        yield(word)
       else
         word
       end
