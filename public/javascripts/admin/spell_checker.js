@@ -154,14 +154,14 @@ var SpellChecker = (function(){
 
     remove_highlight_via_correction: function() {
       this.active_element.removeClass('spelling_error');
-      this.menu.remove();
+      this.remove_menu(this.menu);
     },
 
     remove_highlight_via_add_to_dictionary: function() {
       var word = this.active_element.data('misspelled-word');
 
       $('.spelling_error[data-misspelled-word=' + word + ']').removeClass('spelling_error');
-      this.menu.remove();
+      this.remove_menu(this.menu);
     },
 
     submit_replacement: function(active_element, replacement) {
