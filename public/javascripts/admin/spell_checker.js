@@ -18,6 +18,9 @@ var SpellChecker = (function(){
         this.ajax_suggestion_url = options.ajax_suggestion_url || 'not-implemented'
       }
 
+      this.suggestion_cache = {};
+      this.suggestionDeferreds = {};
+
       this.template = Handlebars.compile( $(this.handlebars_template).html() );
       this.loading_template = Handlebars.compile( $(this.handlebars_loading_template).html() );
 
@@ -36,7 +39,9 @@ var SpellChecker = (function(){
       });
 
       $(this.element_class).on(this.close_behaviour, this.spelling_class, function(event) {
-        spell_checker.remove_menu();
+        spell_checker.remove_menu(spell_checker.menu);
+        spell_checker.remove_menu(spell_checker.loading_menu);
+        spell_checker.suggestionDeferreds[spell_checker.active_element.data('misspelled-word')].reject();
       });
     },
 
@@ -51,21 +56,26 @@ var SpellChecker = (function(){
           misspelled_word = spellChecker.active_element.text();
         }
 
-        $.ajax({
-          type: "GET",
-          async: false,
-          url: spellChecker.ajax_suggestion_url,
-          data: {word: misspelled_word},
-          dataType: 'json',
-          success: function(response) {
-            spellChecker.suggestions = response['suggestions'];
-          }
-        });
+        if( ! spellChecker.suggestion_cache[misspelled_word] ) {
+          $.ajax({
+            type: "GET",
+            url: spellChecker.ajax_suggestion_url,
+            data: {word: misspelled_word},
+            dataType: 'json',
+            success: function(response) {
+              spellChecker.suggestion_cache[misspelled_word] = response['suggestions'];
+              spellChecker.suggestions = response['suggestions'];
+              spellChecker.suggestionDeferreds[misspelled_word].resolve();
+            }
+          });
+        } else {
+          spellChecker.suggestions = spellChecker.suggestion_cache[misspelled_word];
+          spellChecker.suggestionDeferreds[misspelled_word].resolve();
+        }
       } else {
         spellChecker.suggestions = spellChecker.active_element.data('suggestions');
+        spellChecker.suggestionDeferred.resolve();
       }
-
-      return spellChecker.suggestions;
     },
 
     show_menu: function() {
@@ -76,12 +86,14 @@ var SpellChecker = (function(){
         spellChecker.position_menu(spellChecker.loading_menu);
       }
 
-      /* loading menu doesn't show unless there is a delay here - needs debugging */
-      setTimeout(function(){
+      var currently_misspelled_word = spellChecker.active_element.data('misspelled-word');
+      spellChecker.suggestionDeferreds[currently_misspelled_word] = $.Deferred();
+      $.when(spellChecker.suggestionDeferreds[currently_misspelled_word]).done(function() {
         spellChecker.create_menu();
         spellChecker.position_menu(spellChecker.menu);
-        spellChecker.loading_menu.remove();
-      }, 1);
+        spellChecker.remove_menu(spellChecker.loading_menu);
+      });
+      spellChecker.get_suggestions();
     },
 
     position_menu: function(menu) {
@@ -97,7 +109,7 @@ var SpellChecker = (function(){
     create_menu: function() {
       var spell_checker = this;
 
-      spell_checker.menu = $(this.template( {suggestions: this.get_suggestions()} ) );
+      spell_checker.menu = $(this.template( {suggestions: this.suggestions} ) );
 
       spell_checker.menu.on('mouseenter', 'li', function(event) {
         $(this).addClass('hover');
@@ -125,8 +137,8 @@ var SpellChecker = (function(){
       });
     },
 
-    remove_menu: function() {
-      this.menu.remove();
+    remove_menu: function(menu) {
+      menu.remove();
     },
 
     replace_word: function() {
