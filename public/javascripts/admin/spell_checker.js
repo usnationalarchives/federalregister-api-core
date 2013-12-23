@@ -13,9 +13,9 @@ var SpellChecker = (function(){
       this.handlebars_template = options.handlebars_template || '#spelling-error-menu-template';
       this.handlebars_loading_template = options.handlebars_loading_template || '#spelling-error-loading-menu-template';
 
-      if( options.ajax_suggestions == true ) {
+      if( options.ajax_suggestions === true ) {
         this.ajax_suggestions = true;
-        this.ajax_suggestion_url = options.ajax_suggestion_url || 'not-implemented'
+        this.ajax_suggestion_url = options.ajax_suggestion_url || 'not-implemented';
       }
 
       this.suggestion_cache = {};
@@ -63,8 +63,8 @@ var SpellChecker = (function(){
             data: {word: misspelled_word},
             dataType: 'json',
             success: function(response) {
-              spellChecker.suggestion_cache[misspelled_word] = response['suggestions'];
-              spellChecker.suggestions = response['suggestions'];
+              spellChecker.suggestion_cache[misspelled_word] = response.suggestions;
+              spellChecker.suggestions = response.suggestions;
               spellChecker.suggestionDeferreds[misspelled_word].resolve();
             }
           });
