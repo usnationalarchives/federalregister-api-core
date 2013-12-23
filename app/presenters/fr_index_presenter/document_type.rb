@@ -77,6 +77,12 @@ class FrIndexPresenter
     def entries
       return @entries if @entries
 
+      ids = entry_ids
+
+      if ids.empty?
+        return @entries = []
+      end
+
       results = ::Entry.connection.select_all(<<-SQL)
         SELECT entries.id,
           entries.title,
@@ -106,7 +112,7 @@ class FrIndexPresenter
         LEFT OUTER JOIN regulatory_plans
           ON regulatory_plans.regulation_id_number = entry_regulation_id_numbers.regulation_id_number
           AND regulatory_plans.current = 1
-        WHERE entries.id IN (#{entry_ids.join(',')})
+        WHERE entries.id IN (#{ids.join(',')})
         GROUP BY entries.id
       SQL
 
