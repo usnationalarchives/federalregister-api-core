@@ -231,7 +231,7 @@ module Content
           if @str =~ /^EDITORIAL\s*NOTE:/i
             @pi_documents.last[:editorial_note] = @str.sub(/^EDITORIAL\s*NOTE:\s*/i,'')
             @context = :editorial_note
-          elsif @str =~ /.*?(Special|Regular)\s*(?:.*?)\s*updated\s*at\s*(.*)/i
+          elsif @str =~ /.*?(Special|Regular)\s*(?:.*?)\s*(?:updated\s+at|as\s+of)\s*(.*)/i
             updated_at = Time.zone.parse($2)
             case $1
             when 'Special'
