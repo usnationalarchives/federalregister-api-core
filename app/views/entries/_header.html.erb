@@ -1,7 +1,7 @@
 <h1><%= entry.title %></h1>
 
 <div class="metadata_share_bar">
-  <p class="metadata"><%= entry.entry_type.with_indefinite_article(true) %> by <%= agency_names(entry) %> on
+  <p class="metadata"><%= entry.entry_type.with_indefinite_article(true) %> by <span class="agencies"><%= agency_names(entry) %></span> on
     <%= link_to date_tag(entry.publication_date, :datetime => entry.publication_date.to_s(:iso)), entries_by_date_path(entry.publication_date) %>
   </p>
 

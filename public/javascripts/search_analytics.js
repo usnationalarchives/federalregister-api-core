@@ -1,6 +1,6 @@
 $(document).ready(function(){
   // SEACH SUGGESTIONS
-  $(".suggestions .suggestion a").bind('click', function() {
+  $("#search").on('click', '.suggestions .suggestion a', function() {
     _gaq.push(['_trackEvent', 'Search', 'Suggestion', ""]);
   });
 });

@@ -31,6 +31,11 @@ class SpecialController < ApplicationController
   end
   
   def status
+    if File.exists?("#{RAILS_ROOT}/tmp/maintenance.txt")
+      render :text => "Down for maintenance.", :status => 503
+      return
+    end
+
     current_time_on_database = Entry.connection.select_values("SELECT NOW()").first
     render :text => "Current time is: #{current_time_on_database}"
   end

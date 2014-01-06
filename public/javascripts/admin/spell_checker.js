@@ -1,6 +1,7 @@
 /*global SpellChecker:true */
 var SpellChecker = (function(){
   var SpellChecker = function() {
+    this.ajax_suggestions = false;
   };
 
   SpellChecker.prototype = {
@@ -10,8 +11,18 @@ var SpellChecker = (function(){
       this.open_behaviour = options.open_behaviour || 'mouseenter';
       this.close_behaviour = options.close_behaviour || 'mouseleave';
       this.handlebars_template = options.handlebars_template || '#spelling-error-menu-template';
+      this.handlebars_loading_template = options.handlebars_loading_template || '#spelling-error-loading-menu-template';
+
+      if( options.ajax_suggestions === true ) {
+        this.ajax_suggestions = true;
+        this.ajax_suggestion_url = options.ajax_suggestion_url || 'not-implemented';
+      }
+
+      this.suggestion_cache = {};
+      this.suggestionDeferreds = {};
 
       this.template = Handlebars.compile( $(this.handlebars_template).html() );
+      this.loading_template = Handlebars.compile( $(this.handlebars_loading_template).html() );
 
       this.add_behaviour();
     },
@@ -21,33 +32,89 @@ var SpellChecker = (function(){
       $(this.element_class).on(this.open_behaviour, this.spelling_class, function(event) {
         event.stopPropagation();
         event.preventDefault();
-        
+
         spell_checker.active_element = $(this);
         spell_checker.active_element_text = spell_checker.active_element.text();
         spell_checker.show_menu();
       });
 
       $(this.element_class).on(this.close_behaviour, this.spelling_class, function(event) {
-        spell_checker.remove_menu();
+        spell_checker.remove_menu(spell_checker.menu);
+        spell_checker.remove_menu(spell_checker.loading_menu);
+        spell_checker.suggestionDeferreds[spell_checker.active_element.data('misspelled-word')].reject();
       });
     },
 
+    get_suggestions: function() {
+      var spellChecker = this;
+
+      if( spellChecker.ajax_suggestions ) {
+        var misspelled_word;
+        if( spellChecker.active_element.data('misspelled-word') ) {
+          misspelled_word = spellChecker.active_element.data('misspelled-word');
+        } else {
+          misspelled_word = spellChecker.active_element.text();
+        }
+
+        if( ! spellChecker.suggestion_cache[misspelled_word] ) {
+          $.ajax({
+            type: "GET",
+            url: spellChecker.ajax_suggestion_url,
+            data: {word: misspelled_word},
+            dataType: 'json',
+            success: function(response) {
+              spellChecker.suggestion_cache[misspelled_word] = response.suggestions;
+              spellChecker.suggestions = response.suggestions;
+              spellChecker.suggestionDeferreds[misspelled_word].resolve();
+            }
+          });
+        } else {
+          spellChecker.suggestions = spellChecker.suggestion_cache[misspelled_word];
+          spellChecker.suggestionDeferreds[misspelled_word].resolve();
+        }
+      } else {
+        spellChecker.suggestions = spellChecker.active_element.data('suggestions');
+        spellChecker.suggestionDeferred.resolve();
+      }
+    },
+
     show_menu: function() {
-      this.create_menu();
-      this.menu.css({left: this.active_element.position().left, 
-                     top: this.active_element.position.top + 10});
-      this.active_element.append( this.menu );
+      var spellChecker = this;
+
+      if( spellChecker.ajax_suggestions ) {
+        spellChecker.create_loading_menu();
+        spellChecker.position_menu(spellChecker.loading_menu);
+      }
+
+      var currently_misspelled_word = spellChecker.active_element.data('misspelled-word');
+      spellChecker.suggestionDeferreds[currently_misspelled_word] = $.Deferred();
+      $.when(spellChecker.suggestionDeferreds[currently_misspelled_word]).done(function() {
+        spellChecker.create_menu();
+        spellChecker.position_menu(spellChecker.menu);
+        spellChecker.remove_menu(spellChecker.loading_menu);
+      });
+      spellChecker.get_suggestions();
+    },
+
+    position_menu: function(menu) {
+      menu.css({left: this.active_element.position().left,
+                top: this.active_element.position.top + 10});
+      this.active_element.append( menu );
+    },
+
+    create_loading_menu: function() {
+      this.loading_menu =  $(this.loading_template());
     },
 
     create_menu: function() {
       var spell_checker = this;
 
-      spell_checker.menu = $(this.template( {suggestions: this.active_element.data('suggestions')} ) );
-      
+      spell_checker.menu = $(this.template( {suggestions: this.suggestions} ) );
+
       spell_checker.menu.on('mouseenter', 'li', function(event) {
         $(this).addClass('hover');
       });
-      
+
       spell_checker.menu.on('mouseleave', 'li', function(event) {
         $(this).removeClass('hover');
       });
@@ -70,8 +137,8 @@ var SpellChecker = (function(){
       });
     },
 
-    remove_menu: function() {
-      this.menu.remove();
+    remove_menu: function(menu) {
+      menu.remove();
     },
 
     replace_word: function() {
@@ -87,14 +154,14 @@ var SpellChecker = (function(){
 
     remove_highlight_via_correction: function() {
       this.active_element.removeClass('spelling_error');
-      this.menu.remove();
+      this.remove_menu(this.menu);
     },
 
     remove_highlight_via_add_to_dictionary: function() {
       var word = this.active_element.data('misspelled-word');
 
       $('.spelling_error[data-misspelled-word=' + word + ']').removeClass('spelling_error');
-      this.menu.remove();
+      this.remove_menu(this.menu);
     },
 
     submit_replacement: function(active_element, replacement) {

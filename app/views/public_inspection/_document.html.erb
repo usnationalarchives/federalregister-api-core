@@ -20,7 +20,15 @@
       <% else %>
         Publication Date:
       <% end %>
-        <%= Issue.find_by_publication_date(document.publication_date) ? link_to(document.publication_date, entries_by_date_path(document.publication_date, :anchor => document.document_number) ) : document.publication_date  %>
+        <% if Issue.count(:conditions => {:publication_date => document.publication_date}) > 0 %>
+          <%= link_to document.publication_date,
+                entries_by_date_path(
+                  document.publication_date,
+                  :anchor => document.document_number
+                ) %>
+        <% else %>
+          <%= document.publication_date %>
+        <% end %>
     </span>
     <%- end %>
   </div>

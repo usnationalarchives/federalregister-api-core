@@ -1,5 +1,5 @@
 <% title @search.term.blank? ? 'Public Inspection Search' : "Public Inspection Search Results for '#{h @search.term}'" %>
-<%= feed_autodiscovery public_inspection_search_url(params.except(:action).merge(:format => :rss, :order => 'date')), @search.summary, :search_conditions => (params[:conditions] || {}).except(:publication_date), :subscription_default => 'PublicInspectionDocument' %>
+<%= feed_autodiscovery public_inspection_search_url(params.except(:action).merge(:format => :rss, :order => 'date')), @search.summary, :search_conditions => (params[:conditions].blank? ? {} : params[:conditions]).except(:publication_date), :subscription_default => 'PublicInspectionDocument' %>
 
 <% if @search.blank? %>
   <% description 'Easy, powerful search of all unpublished Federal Register documents currently on Public Inspection' %>

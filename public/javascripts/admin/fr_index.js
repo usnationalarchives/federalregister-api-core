@@ -181,8 +181,8 @@ var FRIndexEditor = (function(){
     },
 
     generate_toc_subject_and_doc_autocompleter_elements: function() {
-      this.current_toc_subjects = _.uniq($('li[data-form-data]').map(function() { return $(this).data('form-data').fr_index_subject; })).sort();
-      this.current_toc_docs = _.uniq($('li[data-form-data]').map(function() { return $(this).data('form-data').fr_index_doc; })).sort();
+      this.current_toc_subjects = $('#current_toc_subjects').data('values');
+      this.current_toc_docs = $('#current_toc_docs').data('values');
     },
 
     add_edit_funtionality: function() {
@@ -351,7 +351,9 @@ $(document).ready(function() {
   frIndexEditor.initialize( $('#content_area ul.entry_type > li') );
 
   var spellChecker = new SpellChecker();
-  spellChecker.initialize({element_class: "ul.entry_type"});
+  spellChecker.initialize({element_class: "ul.entry_type",
+                           ajax_suggestions: true,
+                           ajax_suggestion_url: '/admin/spelling_suggestions'});
 
   spellChecker.add_to_dictionary = function(active_element, word_to_add) {
     $.ajax({

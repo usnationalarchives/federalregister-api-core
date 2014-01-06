@@ -1,0 +1,50 @@
+<% super_title "#{@agency_year.year} FR Index" %>
+
+<% sidebar(render :partial => 'nav', :locals => {:years => @years, :current_year => @agency_year.year}) %>
+
+<%= add_template('admin/fr_index_entry_popover', 'fr-index-entry-popover') %>
+<%= add_template('admin/fr_index_entry_popover_content', 'fr-index-entry-popover-content') %>
+<%= add_template('admin/fr_index_form', 'fr-index-form') %>
+<%= add_template('admin/spelling_error_menu', 'spelling-error-menu') %>
+<%= add_template('admin/spelling_error_loading_menu', 'spelling-error-loading-menu') %>
+
+<ul class="agency_index_nav_tabs page_summary">
+  <li class='active'>
+    <%= link_to "New Documents Since Last Approval (#{@last_approved_date})",
+                {:action => :year_agency_unapproved_documents} %>
+  </li>
+  <li>
+  <%= link_to "All #{@agency_year.year} Agency Documents", {:action => :year_agency} %>
+  </li>
+</ul>
+
+<div class="page_summary">
+  <h1 class="agency_name"><%= @agency_year.name %></h1>
+
+  <hr />
+
+  <div class="agency_index_actions">
+    <%= link_to 'Mark As Reviewed',
+                admin_index_year_agency_completion_path(:last_completed_issue => [Issue.current.publication_date, @agency_year.max_date].min,
+                                                        :max_date => params[:max_date]),
+                :method => :put,
+                :class => "btn mark_as_complete" %>
+    <% if @agency_year.last_completed_issue %>
+      <div class="last_completed">Marked complete through
+        <%= @agency_year.last_completed_issue.strftime("%b. #{@agency_year.last_completed_issue.day.ordinalize}") %>
+      </div>
+    <% end %>
+
+    <%= link_to 'Preview PDF', {:action => :year_agency, :format => :pdf, :max_date => params[:max_date]}, :class => "btn pdf_preview", :target => "_blank" %>
+  </div>
+</div>
+
+<% @agency_year.document_types.each do |document_type| %>
+  <%= render :esi => admin_index_year_agency_type_path(@agency_year.year, @agency_year.agency, document_type.granule_class, :unapproved_only => 1) %>
+<% end %>
+
+<% if @agency_year.document_types.present? %>
+  <%= render :partial => "autocompleter_data", :locals => {:agency_year => @agency_year} %>
+<% else %>
+  <h3>No documents have been published since the agency was last approved (<%= @agency_year.last_completed_issue %>)</h3>
+<% end %>

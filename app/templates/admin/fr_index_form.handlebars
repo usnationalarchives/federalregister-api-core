@@ -4,6 +4,9 @@
   </div>
   <input id="granule_class" name="granule_class" type="hidden" value="{{granule_class}}">
   <input id="max_date" name="max_date" type="hidden" value="{{max_date}}">
+  {{#if unapproved_only}}
+    <input name="unapproved_only" type="hidden" value="1">
+  {{/if}}
 
   {{#if subject_form}}
     <input id="old_subject" name="old_subject" type="hidden" value="{{old_subject}}">

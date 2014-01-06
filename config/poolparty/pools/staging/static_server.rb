@@ -20,16 +20,17 @@ cloud :worker_server do
     repo File.join(File.dirname(__FILE__) ,"..", "..", "..", "..", "vendor", "plugins")
     
     recipe "apt"
-    #recipe 's3sync'
-    #recipe "ubuntu"
+    recipe 's3sync'
+    recipe "ubuntu"
     #recipe "openssl"
     #recipe "imagemagick"
     #recipe "postfix"
     
     #recipe 'princexml'
-    recipe 'monit'
+    #recipe 'monit'
     
     #recipe "mysql::client"
+    recipe "sphinx"
 
     #recipe "nginx"
     
@@ -75,13 +76,11 @@ cloud :worker_server do
       :resque_web => {  
                       :password => @resque_web_password
                      },
-      #:god => {
-                #:bin_path => '/opt/ruby-enterprise/bin/god',
-                #:domain => 'federalregister.gov',
-                #:email_name => 'info',
-                #:email_domain => 'criticaljuncture.org',
-                #:monitor => [{:name => 'resque', :options => {:queue => 'fr_index', :queue_count => 2, :interval => 1.0}}]
-              #}
+      :sphinx => { 
+                    :version => "2.1.1-beta",
+                    :url => "http://sphinxsearch.com/files/sphinx-2.1.1-beta.tar.gz",
+                    :tar_file => "/opt/src/sphinx-2.1.1-beta.tar.gz"
+                 },
       :monit => {
                   :check_interval => 30,
                   :mail_from_address => "monit-#{@rails_env}@federalregister.gov",

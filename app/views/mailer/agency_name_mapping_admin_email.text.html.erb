@@ -1,0 +1,87 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+  </head>
+  <body>
+    <table border="0" cellspacing="0" width="100%">
+      <tr>
+        <td>
+          <img src="<%= root_url %>images/logotype.png" />
+        </td>
+        <td style="text-align:right;">
+          <img src="<%= root_url %>images/seal_email.jpg" />
+        </td>
+      </tr>
+    </table>
+
+    <div>
+      <h2 style="font-family:'Helvetica Neue',Arial,Helvetica,sans-serif;margin: 25px 0 5px;font-size: 25px;">
+        FederalRegister.gov Admin Daily Agency Name Mapping for <%= @date %>
+      </h2>
+
+
+      <% if @remappings.interesting_remappings.present? %>
+      <h3 style="font-family:'Helvetica Neue',Arial,Helvetica,sans-serif;margin: 25px 0 5px;font-size: 20px;">
+        Agencies of Note
+      </h3>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Original Name</th>
+            <th>Remapped Name</th>
+            <th>Documents</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @remappings.interesting_remappings.each do |remapping| %>
+              <tr>
+                <td style="width: 300px;"><%= remapping.original_name %></td>
+                <td style="width: 300px;">
+                  <% if remapping.agency_name.agency %>
+                    <%= link_to remapping.agency_name.agency.name, edit_admin_agency_name_url(remapping.agency_name) %>
+                  <% else %>
+                    <em>not remapped</em>
+                  <% end %>
+                </td>
+                <td style="width: 255px;padding: 20px 0;"><%= remapping.entries.map{|e| link_to e.document_number, short_entry_url(e.document_number)}.join(', ') %>
+              </tr>
+          <% end %>
+        </tbody>
+      </table>
+      <% end %>
+
+      <% if @remappings.boring_remappings.present? %>
+      <h3 style="font-family:'Helvetica Neue',Arial,Helvetica,sans-serif;margin: 25px 0 5px;font-size: 20px;">
+        Other Agencies
+      </h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Original Name</th>
+            <th>Remapped Name</th>
+            <th>Documents</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @remappings.boring_remappings.each do |remapping| %>
+            <tr>
+              <td style="width: 300px;"><%= remapping.original_name %></td>
+              <td style="width: 300px;">
+                <% if remapping.agency_name.agency %>
+                  <%= link_to remapping.agency_name.agency.name, edit_admin_agency_name_url(remapping.agency_name) %>
+                <% else %>
+                  <em>not remapped</em>
+                <% end %>
+              </td>
+              <td style="width: 255px;padding: 20px 0;"><%= remapping.entries.map{|e| link_to e.document_number, short_entry_url(e.document_number)}.join(', ') %>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+      <% end %>
+    </div>
+
+  </body>
+</html>

@@ -10,7 +10,7 @@ namespace :content do
         rescue StandardError => e
           puts e.message
           puts e.backtrace.join("\n")
-          Airbrake.notify(e)
+          Honeybadger.notify(e)
         end
       end
     end

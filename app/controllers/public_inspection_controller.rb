@@ -8,7 +8,11 @@ class PublicInspectionController < ApplicationController
       end
 
       wants.rss do
-        @documents = PublicInspectionIssue.published.first(:order => "publication_date DESC").public_inspection_documents
+        @documents = PublicInspectionIssue.
+          published.
+          first(:order => "publication_date DESC").
+          public_inspection_documents.
+          scoped(:conditions => "publication_date IS NOT NULL")
         @feed_name = 'Most Recent Public Inspection Documents'
         @feed_description = 'All documents currently on Public Inspection at the Office of the Federal Register'
         render :template => 'public_inspection/index.rss.builder'
@@ -59,8 +63,8 @@ class PublicInspectionController < ApplicationController
 
     @date = date
     @issue = PublicInspectionIssue.published.find_by_publication_date!(@date)
-    @special_documents = TableOfContentsPresenter.new(@issue.public_inspection_documents.special_filing, :always_include_parent_agencies => true)
-    @regular_documents = TableOfContentsPresenter.new(@issue.public_inspection_documents.regular_filing, :always_include_parent_agencies => true)
+    @special_documents = TableOfContentsPresenter.new(@issue.public_inspection_documents.special_filing.scoped(:include => :docket_numbers), :always_include_parent_agencies => true)
+    @regular_documents = TableOfContentsPresenter.new(@issue.public_inspection_documents.regular_filing.scoped(:include => :docket_numbers), :always_include_parent_agencies => true)
     render :action => :by_date
   end
 end

@@ -1,21 +1,47 @@
-function display_modal(title, html) {
-      if ($('#disclaimer_modal').size() === 0) {
-          $('body').append('<div id="disclaimer_modal"/>');
-      }
-      $('#disclaimer_modal').html(
-        [
-        '<a href="#" class="jqmClose">Close</a>',
-        '<h3 class="title_bar">' + title + '</h3>',
-        html
-        ].join("\n")
-      );
-      $('#disclaimer_modal').jqm({
-          modal: true,
-          toTop: true,
-          onShow: this.modalOpen
-      });
-      $('#disclaimer_modal').centerScreen().jqmShow();
+function display_modal(title, html, options) {
+  // set up default options 
+  var defaults = { 
+    modal_id:       '#disclaimer_modal', 
+    include_title:  true,
+    modal_class:    ''
+  }; 
+
+  // combine options with default values
+  options = $.extend({}, defaults, options);
+
+  var modal_id      = options.modal_id,
+      include_title = options.include_title,
+      modal_class   = options.modal_class;
+
+
+  var current_modal = $(modal_id);
+
+  if( $(current_modal).size() === 0 ) {
+    $('body').append('<div id="' + modal_id.slice(1) + '"/>');
+    current_modal = $(modal_id);
+    current_modal.addClass( modal_class );
   }
+
+  var modal_content = ['<a href="#" class="jqmClose">Close</a>'];
+
+  if( include_title ) {
+    modal_content.push( '<h3 class="title_bar">' + title + '</h3>' );
+  }
+
+  modal_content.push( html );
+  
+  current_modal.html(
+    modal_content.join("\n")
+  );
+
+  current_modal.jqm({
+      modal: true,
+      toTop: true,
+      onShow: this.modalOpen
+  });
+
+  current_modal.centerScreen().jqmShow();
+}
 
 $(document).ready(function() {
  

@@ -16,9 +16,9 @@ World do
   url = "http://#{host}"
   session.visit(url) # sets the default URL, hits the cache
 
-  cookie = Mechanize::Cookie.new('skip_cache', secrets['varnish']['skip_cache_key'])
-  cookie.domain = "#{host}"
-  cookie.path = "/"
-  session.webrat_session.adapter.mechanize.cookie_jar.add(URI.parse(url), cookie)
+  # cookie = Mechanize::Cookie.new('skip_cache', secrets['varnish']['skip_cache_key'])
+  # cookie.domain = "#{host}"
+  # cookie.path = "/"
+  # session.webrat_session.adapter.mechanize.cookie_jar.add(URI.parse(url), cookie)
   session
 end

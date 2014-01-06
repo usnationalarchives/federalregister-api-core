@@ -10,7 +10,6 @@ Feature: Accessible robots.txt
       Sitemap: https://www.federalregister.gov/sitemap_index.xml.gz
 
       User-Agent: *
-      Disallow: /subscriptions
       Disallow: /articles/current
       Disallow: /articles/email-a-friend
       Disallow: /my/

@@ -114,7 +114,15 @@ class Issue < ApplicationModel
   def year
     publication_date.year
   end
-  
+
+  def next
+    Issue.first(:conditions => ["publication_date > ?", publication_date], :order => "publication_date")
+  end
+
+  def previous
+    Issue.first(:conditions => ["publication_date < ?", publication_date], :order => "publication_date DESC")
+  end
+
   private
   
   def eventful_entries_search

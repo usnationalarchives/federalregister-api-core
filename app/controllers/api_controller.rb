@@ -74,7 +74,7 @@ class ApiController < ApplicationController
 
   rescue_from Exception, :with => :server_error if RAILS_ENV != 'development'
   def server_error(exception)
-    notify_airbrake(exception)
+    notify_honeybadger(exception)
     render :json => {:status => 500, :message => "Internal Server Error"}, :status => 500
   end
 

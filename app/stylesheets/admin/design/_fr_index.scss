@@ -12,9 +12,53 @@
 
 /* YEAR AGENCY */
 
+.agency_index_nav_tabs {
+  &.page_summary {
+    margin-bottom: 20px;
+  }
+
+  overflow: hidden;
+
+  padding: 0;
+  padding-bottom: 8px;
+
+  margin-left: 0;
+
+  height: 20px;
+  width: 617px;
+
+  border: 1px solid #CCC;
+
+  li {
+    float: left;
+    padding: 5px 0 5px 10px;
+    width: 286px;
+    text-align: center;
+
+    &:first-child {
+      padding-right: 10px;
+      border-right: 1px solid #CCC;
+      width: 300px;
+    }
+
+    &.active {
+      background-color: #DFDFDF;
+      a {
+        color: #000000;
+        &:hover {
+          text-decoration: none;
+          cursor: default;
+        }
+      }
+    }
+  }
+}
+
+.admin.year_agency .page_summary .agency_index_actions { margin-bottom: 0px; }
+
 .page_summary {
   overflow: hidden;
-  margin-bottom: 20px;
+  margin-bottom: 40px;
 
   h1.agency_name { color: $dark_blue; }
   hr { margin-top: 0px; }
@@ -67,8 +111,6 @@
       border-color: $fr_orange;
       background: #e6e6e6 sprite-image("icons/admin/index_pdf_preview_active.png", 5px, 4px, 30px) no-repeat;
     }
-
-
   }
 }
 
@@ -111,14 +153,18 @@
   line-height: 15px;
   font-weight: normal;
   }
+
 #indexes.admin .page_summary .agency_index_actions {
   form.max_date {
-    padding-bottom: 7px;
-    border-bottom: 1px solid #DDD;
+    width: 400px;
+    margin-right: 0;
+    margin-bottom: 0;
+    float: left;
 
     #max_date { 
       float: none;
       margin-left: 0;
+      margin-bottom: 6px;
     }
   }
 }
@@ -216,17 +262,22 @@ ul.entry_type {
   }
 }
 
-#indexes.admin.year_agency {
+#indexes.admin.year_agency,
+#indexes.admin.year_agency_unapproved_documents {
   /* bottom padding so last popover is visible */
   #content_area > .wrapper { padding-bottom: 200px; }
 
   /* popover customizations */
-  .tipsy-inner { width: 580px; }
-  .popover-title { 
+  .tipsy-inner {
+    color: #000;
+    width: 580px;
+  }
+  .input_tipsy .tipsy-inner { color: #FFF; }
+
+  .popover-title {
     margin-bottom: 0;
     font-size: 16px;
     border-top: none;
-    color: #000;
    }
   .popover-content dl dt { 
     width: 100px;

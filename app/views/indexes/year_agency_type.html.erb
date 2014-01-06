@@ -1,0 +1,15 @@
+<div class="entry_type" id="fr-index-<%= @document_type.name.pluralize.downcase %>">
+  <h3>
+    <%= @document_type.name.pluralize %>
+    <a href="#fr-index-agency-metadata">back to top</a>
+  </h3>
+  <ul>
+    <% @document_type.groupings.each do |grouping| %>
+      <% if grouping.is_a?(FrIndexPresenter::SubjectGrouping) %>
+        <%= render :partial => "subject_grouping", :locals => {:subject_grouping => grouping} %>
+      <% elsif grouping.is_a?(FrIndexPresenter::DocumentGrouping) %>
+        <%= render :partial => "document_grouping", :locals => {:document_grouping => grouping, :top_level => true} %>
+      <% end %>
+    <% end %>
+  </ul>
+</div>

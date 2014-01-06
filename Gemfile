@@ -6,10 +6,10 @@ gem 'mysql'
 gem "jrails", "0.6.0"
 
 gem 'fr2_audit_logic',
-  :git => 'git://github.com/criticaljuncture/fr2_audit_logic.git', 
+  :git => 'git://github.com/criticaljuncture/fr2_audit_logic.git',
   :ref => 'd0b037954987cc28dac25dfbf72ae94f28e9c9f7'
 # gem 'fr2_audit_logic', :path => '../fr2_audit_logic'
-gem 'bson_ext', '1.3.0' 
+gem 'bson_ext', '1.3.0'
 
 gem 'nokogiri', '1.4.1'
 gem 'curb', '0.4.4.0'
@@ -26,10 +26,15 @@ gem 'ym4r', '0.6.1'
 
 gem 'thinking-sphinx', '1.4.13', :require => 'thinking_sphinx'
 gem 'ffi-hunspell', :require => 'ffi/hunspell'
-gem 'airbrake', '3.0.9'
+
+gem 'honeybadger', :require => 'honeybadger/rails'
+gem 'resque-honeybadger', 
+    :git => 'git@github.com:henrik/resque-honeybadger.git',
+    :ref => '832be87662840d44e73f66c006796da8ed6250e2'
+
 gem 'aws-s3', '0.6.2', :require => 'aws/s3'
 gem 'paperclip', '2.3.1.1'
-gem 'stevedore', '0.0.1'
+gem 'stevedore', '0.1.0'
 gem 'active_hash', '0.9.5'
 gem 'bcrypt-ruby', '2.1.2', :require => 'bcrypt'
 gem 'authlogic', '2.1.3'
@@ -77,6 +82,10 @@ group :test do
   gem 'timecop'
   gem 'cucumber'
   gem 'mechanize', '1.0.0'
+
+  gem 'vcr'
+  gem 'fakeweb'
+
   gem 'ci_reporter', '1.6.3'
 
   gem 'test-unit', '1.2.3', :platform => :ruby_19

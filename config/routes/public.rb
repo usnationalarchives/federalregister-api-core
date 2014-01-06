@@ -155,9 +155,6 @@ ActionController::Routing::Routes.draw do |map|
     end
   end
   
-  # SUBSCRIPTIONS
-  map.resources :subscriptions, :only => [:new, :create, :edit, :update, :destroy], :member => {:unsubscribe => :get, :confirm => :get}, :collection => {:confirmation_sent => :get, :confirmed => :get, :unsubscribed => :get}
-  
   # SECTIONS
   unless ENV["ASSUME_UNITIALIZED_DB"]
     Section.all.each do |section|

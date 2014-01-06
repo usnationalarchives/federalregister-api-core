@@ -1,0 +1,13 @@
+<% title "Agency Remapping for #{@presenter.publication_date}" %>
+<% sidebar(render :partial => 'admin/agency_names/nav') %>
+
+<%= link_to "Previous Issue", admin_agency_names_issue_path(@presenter.issue.previous.publication_date.to_s(:iso)) if @presenter.issue.previous %> |
+<%= link_to "Next Issue", admin_agency_names_issue_path(@presenter.issue.next.publication_date.to_s(:iso)) if @presenter.issue.next %>
+
+<% if @presenter.interesting_remappings.present? %>
+  <h3>Agencies of Note</h3>
+  <%= render :partial => "table", :locals => {:remappings => @presenter.interesting_remappings} %>
+<% end %>
+
+<h3>Other Agencies</h3>
+<%= render :partial => "table", :locals => {:remappings => @presenter.boring_remappings} %>

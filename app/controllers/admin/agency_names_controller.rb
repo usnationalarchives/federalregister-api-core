@@ -31,8 +31,9 @@ class Admin::AgencyNamesController < AdminController
     
     if @agency_name.update_attributes(params[:agency_name])
       flash[:notice] = 'Successfully saved'
-      next_agency_name = AgencyName.unprocessed.first(:conditions => ["agency_names.name > ?", @agency_name.name])
-      if next_agency_name
+      if params[:return_to]
+        redirect_to params[:return_to]
+      elsif next_agency_name = AgencyName.unprocessed.first(:conditions => ["agency_names.name > ?", @agency_name.name])
         redirect_to edit_admin_agency_name_path(next_agency_name)
       else
         redirect_to unprocessed_admin_agency_names_path

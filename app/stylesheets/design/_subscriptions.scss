@@ -1,4 +1,3 @@
-#modal.subscribe h3,
 #subscriptions #main h3,
 #emails #main h3 {
   border-bottom: 2px solid #363636;
@@ -16,7 +15,6 @@
 .icons.horizontal {
   @include horizontal-list;
   }
-#modal.subscribe ul,
 #subscriptions #main ul {
   margin-bottom: 0;
   margin-left: 1em;
@@ -24,60 +22,46 @@
 #subscriptions #main ul.icons {
   margin-bottom: 2em;
   }  
-#modal.subscribe li {
-  border-bottom: 1px solid #eee;
-  list-style: none;  
-  margin-bottom: 1em;
-  padding-bottom: 1em;
-  }
-#modal.subscribe li:last-child,
-#modal.subscribe li li {
-  border: none;
-  margin-bottom: 0;
-  padding-bottom: 0;
-  }    
-#modal.subscribe .icons li,
+ 
 #subscriptions .icons > li {
   line-height: 15px;
   margin-right: 10px;
   padding-left: 20px;
   }
-#modal.subscribe .icons li:last-child ul {
-  margin-bottom: 1em;
-  }  
-#modal.subscribe .icons li a,
+ 
 #subscriptions .icons li a {
   font-family: "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
   font-size: 13px;
   }  
-#modal.subscribe .icons .header,
+
 #subscriptions .icons .header {
   padding: 0;
   }
-#modal.subscribe .icons .header h5,
+
 #subscriptions .icons .header h5 {
   float: left;
   margin-top: 0;
   text-align: right;
   width: 73px;
   }
-.wf-active #modal.subscribe .icons .header h5,
+
 .wf-active #subscriptions .icons .header h5 {
   width: 53px;
   }
-#modal.subscribe .icons .google,
+
 #subscriptions .icons .google {  
   background: sprite-image('icons/subscribe/google.png', 0, 0, 50px) no-repeat;  
   margin-left: 5px;
   }
-#modal.subscribe .icons .yahoo,
+
 #subscriptions .icons .yahoo { 
   background: sprite-image('icons/subscribe/yahoo.png', 0, 0, 50px) no-repeat;
   padding-left: 30px;
   }  
-#modal.subscribe .icons .rss_link,
+
 #subscriptions .icons .rss_link { background: sprite-image('icons/subscribe/rss.png', 0, 0, 50px) no-repeat; }
 
+#modal.subscribe fieldset ol:first-child { margin: 0px; }
 #modal.subscribe .icons .email { 
   clear: left;
   margin-top: 10px;
@@ -124,7 +108,7 @@
   }
 #modal.subscribe .icons #subscription_search_type_input legend, 
 #subscriptions .icons #subscription_search_type_input legend {
-  width: 60px;
+  width: 70px;
   margin-top: 2px;
   }
 #modal.subscribe li.disabled label,

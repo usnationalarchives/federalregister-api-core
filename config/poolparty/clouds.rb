@@ -59,19 +59,19 @@ def chef_cloud_attributes(instance_type)
     @app_server_address      = ['10.82.225.119']
     @my_fr2_server_address   = ['10.82.225.119']
   when 'production'
-    @proxy_server_address    = '10.80.82.56'
-    @static_server_address   = '10.98.223.209'
-    @worker_server_address   = '10.98.223.209'
-    @blog_server_address     = '10.98.223.209'
-    @mail_server_address     = '10.98.223.209'
-    @splunk_server_address   = '10.98.223.209'
-    @redis_server_address    = '10.98.223.209'
-    @iodocs_server_address   = '10.98.223.209'
+    @proxy_server_address    = '10.39.115.107'
+    @static_server_address   = '10.98.146.140'
+    @worker_server_address   = '10.98.146.140'
+    @blog_server_address     = '10.98.146.140'
+    @mail_server_address     = '10.98.146.140'
+    @splunk_server_address   = '10.98.146.140'
+    @redis_server_address    = '10.98.146.140'
+    @iodocs_server_address   = '10.98.146.140'
     @database_server_address = '10.116.81.89'
     @mongodb_server_address  = '10.116.81.89'
     @sphinx_server_address   = '10.116.81.89'
-    @app_server_address      = ['10.40.221.230', '10.83.5.182', '10.98.87.46', '10.114.118.200', '10.116.65.97']
-    @my_fr2_server_address   = ['10.40.221.230', '10.83.5.182', '10.98.87.46', '10.114.118.200', '10.116.65.97']
+    @app_server_address      = ['10.40.221.230', '10.116.162.47', '10.98.87.46', '10.114.113.88', '10.116.65.97' ]
+    @my_fr2_server_address   = ['10.40.221.230', '10.116.162.47', '10.98.87.46', '10.114.113.88', '10.116.65.97']
   end    
   
   @rails_versions = ['2.3.11', '3.1.3']
@@ -213,7 +213,7 @@ def chef_cloud_attributes(instance_type)
                     :ssl_cert_key_name  => @ssl_cert_key_name
                    },
     :varnish    => {
-                    :version           => '2.1.2',
+                    :version           => '2.1.5',
                     :listen_address    => '127.0.0.1',
                     #:app_proxy_host    => @app_server_address,
                     :app_proxy_servers => @app_server_address.each_with_index.map{|ip, index| {:ip => ip, :fqdn => "app-server-#{index + 1}.fr2.ec2.internal", :alias => "app_server_#{index + 1}"} },

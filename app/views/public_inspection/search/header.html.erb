@@ -19,7 +19,7 @@
       <%= f.submit 'Search' %>
       
       <div class="actions">
-        <%= link_to 'Subscribe', new_subscription_path(:subscription => {:search_conditions => conditions_for_subscription}), :class => 'subscription' %>
+        <%= link_to 'Subscribe', new_subscription_path(:subscription => {:search_conditions => conditions_for_subscription(@search)}), :class => 'subscription' %>
         <%= add_template('subscription_modal', 'subscription-modal') %>
         <%# link_to 'Widget', widget_instructions_path(params.except(:action, :controller)), :class => 'button widget spawn_modal notext', :id => 'widget' %>
       </div>

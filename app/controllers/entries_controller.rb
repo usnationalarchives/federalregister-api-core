@@ -172,7 +172,7 @@ class EntriesController < ApplicationController
     @publication_date = date
     @issue = Issue.completed.find_by_publication_date!(@publication_date)
     
-    toc = TableOfContentsPresenter.new(@issue.entries.scoped(:include => :agencies))
+    toc = TableOfContentsPresenter.new(@issue.entries.scoped(:include => [:agencies, :agency_names]))
     @entries_without_agencies = toc.entries_without_agencies
     @agencies = toc.agencies
   end

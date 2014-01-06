@@ -1,6 +1,7 @@
 <% title "Processing '#{@agency_name.name}'" %>
 
 <% semantic_form_for @agency_name, :url => admin_agency_name_path(@agency_name) do |f| %>
+  <%= hidden_field_tag :return_to, params[:return_to] %>
   <% f.inputs do %>
     <%= f.input :agency_id, :as => :select, :collection => Agency.alphabetically %>
     <%= f.input :void %>

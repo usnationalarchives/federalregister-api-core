@@ -3,9 +3,21 @@ class Agency < ApplicationModel
 
   module AssociationExtensions
     def excluding_parents
-      agencies = self.compact
-      parent_agency_ids = agencies.map(&:parent_id).compact
-      agencies.reject{|a| parent_agency_ids.include?(a.id) }.uniq
+      agencies = self.compact.uniq
+
+      # proxy_owner becomes proxy_association.owner in Rails 3+
+      owner = proxy_owner
+
+      # Public Inspection Documents only get a parent agency associated when
+      #  it is a co-publication between the parent and child agencies, so the parent
+      #  agency should never be excluded
+      if owner.is_a?(PublicInspectionDocument) ||
+          owner.agency_names.any?{|agency_name| agency_name && agency_name.name =~ /Office of the Secretary/i}
+        agencies
+      else
+        parent_agency_ids = agencies.map(&:parent_id).compact
+        agencies.reject{|a| parent_agency_ids.include?(a.id) }
+      end
     end
   end
   

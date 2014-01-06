@@ -112,13 +112,18 @@ module Content
         puts "downloading #{url}..."
         curl = Curl::Easy.download(url, pdf_path) {|c| c.follow_location = true}
         puts "done."
+
         headers = HttpHeaders.new(curl.header_str)
 
-        @pi.raw_text = get_plain_text(pdf_path)
-        @pi.pdf_etag = headers.etag
-        @pi.pdf = File.new(pdf_path)
-        @pi.num_pages = Stevedore::Pdf.new(pdf_path).num_pages
-        File.delete(pdf_path)
+        if headers.response_code.to_i == 200
+          @pi.raw_text = get_plain_text(pdf_path)
+          @pi.pdf_etag = headers.etag
+          @pi.pdf = File.new(pdf_path)
+          @pi.num_pages = Stevedore::Pdf.new(pdf_path).num_pages
+          File.delete(pdf_path)
+        else
+          puts "Unable to download #{url}: #{headers.response_code}"
+        end
       end
     end
 
@@ -227,7 +232,7 @@ module Content
           if @str =~ /^EDITORIAL\s*NOTE:/i
             @pi_documents.last[:editorial_note] = @str.sub(/^EDITORIAL\s*NOTE:\s*/i,'')
             @context = :editorial_note
-          elsif @str =~ /.*?(Special|Regular)\s*(?:.*?)\s*updated\s*at\s*(.*)/i
+          elsif @str =~ /.*?(Special|Regular)\s*(?:.*?)\s*(?:updated\s+at|as\s+of)\s*(.*)/i
             updated_at = Time.zone.parse($2)
             case $1
             when 'Special'
@@ -270,6 +275,7 @@ module Content
           end
 
           if @document_number
+            @document_number.gsub!(/.*?([A-Za-z0-9-]+)$/, '\1')
             @pi_documents << {
               :filing_type     => @filing_type,
               :details         => @details,

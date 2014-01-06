@@ -35,9 +35,9 @@ module RouteBuilder
   
   add_route :entry do |entry|
     {
-      :year            => (entry.publication_date || entry.filed_at.to_date).strftime('%Y'),
-      :month           => (entry.publication_date || entry.filed_at.to_date).strftime('%m'),
-      :day             => (entry.publication_date || entry.filed_at.to_date).strftime('%d'),
+      :year            => (entry.publication_date || (entry.filed_at || Date.current).to_date ).strftime('%Y'),
+      :month           => (entry.publication_date || (entry.filed_at || Date.current).to_date ).strftime('%m'),
+      :day             => (entry.publication_date || (entry.filed_at || Date.current).to_date ).strftime('%d'),
       :document_number => entry.document_number,
       :slug            => entry.slug
     }
@@ -217,6 +217,10 @@ module RouteBuilder
 
   def regulations_dot_gov_document_url(document_id)
     "http://www.regulations.gov/#!documentDetail;D=#{document_id}"
+  end
+
+  def new_subscription_path(params={})
+    "/my/subscriptions/new?#{params.to_query}"
   end
 
   # keep at bottom of module

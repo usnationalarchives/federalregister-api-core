@@ -6,9 +6,11 @@ class ApplicationController < ActionController::Base
   include RouteBuilder
   include ViewHelper
   
-  protect_from_forgery # See ActionController::RequestForgeryProtection for details
-  
   include Locator
+
+  before_filter do
+    self.request_forgery_protection_token = nil
+  end
  
   # turn IP Spoofing detection off.
   ActionController::Base.ip_spoofing_check = false
@@ -31,7 +33,7 @@ class ApplicationController < ActionController::Base
   rescue_from Exception, :with => :server_error if RAILS_ENV != 'development'
   def server_error(exception)
     Rails.logger.error(exception)
-    notify_airbrake(exception)
+    notify_honeybadger(exception)
     
     # ESI routes should return correct status codes, but no error page
     if params[:quiet]

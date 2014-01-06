@@ -3,7 +3,12 @@ class AdminController < ApplicationController
   
   before_filter :require_user
   helper_method :current_user_session, :current_user
-  
+
+  protect_from_forgery
+  before_filter do
+    self.request_forgery_protection_token = :authenticity_token
+  end
+
   private
   
   include Userstamp

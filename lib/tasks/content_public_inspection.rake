@@ -29,15 +29,11 @@ namespace :content do
     task :run => :environment do
       new_documents = Content::PublicInspectionImporter.perform
 
-      Rake::Task["content:public_inspection:reindex"].invoke unless Rails.env == 'development'
+      if new_documents.present?
+        Rake::Task["content:public_inspection:reindex"].invoke unless Rails.env == 'development'
 
-      MailingList::PublicInspectionDocument.active.find_each do |mailing_list|
-        begin
-          mailing_list.deliver!(new_documents)
-        rescue Exception => e
-          Rails.logger.warn(e)
-          Airbrake.notify(e)
-        end
+        document_numbers = new_documents.map(&:document_number).join(';')
+        Content.run_myfr2_command "bundle exec rake mailing_lists:public_inspection:deliver[\"#{document_numbers}\"]"
       end
     end
 

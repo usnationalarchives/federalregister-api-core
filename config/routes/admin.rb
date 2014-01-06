@@ -3,7 +3,9 @@ ActionController::Routing::Routes.draw do |map|
     admin.home '', :controller => "special", :action => "home", :conditions => {:method => :get}
     admin.resources :agencies, :member => {:delete => :get}
     admin.resources :agency_names, :collection => {:unprocessed => :get}
-
+    admin.namespace 'agency_names' do |agency_names|
+      agency_names.resources :issues
+    end
     admin.resources :canned_searches, :only => [:new]
     admin.section_canned_searches "canned_searches/:slug", :controller => "canned_searches", :action => :section, :conditions => {:method => :get, :slug => '\w*[a-zA-Z]\w*'}
     admin.resources :canned_searches, :member => {:delete => :get}
@@ -11,12 +13,15 @@ ActionController::Routing::Routes.draw do |map|
     admin.resources :events
 
     admin.resources :dictionary_words, :only => [:create]
+    admin.resources :spelling_suggestions, :only => [:index]
     
     admin.index_year 'index/:year.:format', :controller => "indexes", :action => "year", :conditions => {:method => :get}
     admin.publish_index_year 'index/:year/publish', :controller => "indexes", :action => "publish", :conditions => {:method => :post}
     admin.index_year_agency 'index/:year/:agency.:format', :controller => "indexes", :action => "year_agency", :conditions => {:method => :get}
     admin.index_year_agency 'index/:year/:agency', :controller => "indexes", :action => "update_year_agency", :conditions => {:method => :put}
+    admin.index_year_agency_unapproved_documents 'index/:year/:agency/unapproved-documents', :controller => "indexes", :action => "year_agency_unapproved_documents", :conditions => {:method => :get}
     admin.index_year_agency_completion 'index/:year/:agency/completion', :controller => "indexes", :action => "mark_complete", :conditions => {:method => :put}
+    admin.index_year_agency_type 'index/:year/:agency/:type', :controller => "indexes", :action => "year_agency_type", :conditions => {:method => :get}
 
     admin.resources :generated_files, :only => [:show]
 

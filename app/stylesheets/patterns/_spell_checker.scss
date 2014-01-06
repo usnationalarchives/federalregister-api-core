@@ -7,16 +7,16 @@ span.spelling_error { border-bottom: 2px dotted red; }
   @include border-radius(6px);
   z-index: 5000;
 
-  ol.suggestions { 
+  ol.suggestions {
     margin-left: 0;
     list-style: none;
     padding: 5px 10px;
 
-    li { 
+    li {
       cursor: pointer;
       margin: 0;
     }
-        
+
     div.horiz-rule {
       border-top: 1px solid #777;
       margin-top: 5px;
@@ -29,5 +29,18 @@ span.spelling_error { border-bottom: 2px dotted red; }
     }
 
     li.saving { background: #DDDDDD url(/my/assets/orange_loader_DDD.gif) 160px 7px no-repeat; }
+  }
+}
+
+.spelling_error_menu.loading {
+  height: 30px;
+  text-align: center;
+  padding-top: 10px;
+  background-color: #DDDDDD;
+  z-index: 5500;
+
+  .loader {
+    padding-left: 20px;
+    background: #DDDDDD url(/my/assets/orange_loader_DDD.gif) 20px 0 no-repeat;
   }
 }

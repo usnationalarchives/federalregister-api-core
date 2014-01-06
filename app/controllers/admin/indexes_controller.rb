@@ -43,7 +43,8 @@ class Admin::IndexesController < AdminController
     year = params[:year].to_i
 
     options = params.slice(:max_date)
-    @agency_year = FrIndexPresenter::Agency.new(agency, year, options)
+    @agency_year = FrIndexPresenter::AgencyPresenter.new(agency, year, options)
+    @last_approved_date = last_approved_date
 
     respond_to do |wants|
       wants.html
@@ -55,6 +56,24 @@ class Admin::IndexesController < AdminController
         )
       end
     end
+  end
+
+  def year_agency_type
+    options = params.slice(:max_date, :unapproved_only)
+    agency = Agency.find_by_slug!(params[:agency])
+
+    @document_type = FrIndexPresenter::DocumentType.new(agency, params[:year].to_i, params[:type], options)
+    render :layout => false
+  end
+
+  def year_agency_unapproved_documents
+    @years = FrIndexPresenter.available_years
+
+    agency = Agency.find_by_slug!(params[:agency])
+    year = params[:year].to_i
+
+    @agency_year = FrIndexPresenter::AgencyPresenter.new(agency, year, :unapproved_only => true)
+    @last_approved_date = last_approved_date
   end
 
   def update_year_agency
@@ -75,13 +94,12 @@ class Admin::IndexesController < AdminController
     end
 
     agency = Agency.find_by_slug!(params[:agency])
-    agency_year = FrIndexPresenter::Agency.new(agency, params[:year], :max_date => params[:max_date])
-
-    agency_year.update_cache
+    document_type = FrIndexPresenter::DocumentType.new(agency, params[:year], params[:granule_class], params.slice(:max_date, :unapproved_only))
+    document_type.agency_year.update_cache
 
     header = subject.present? ? subject : doc
 
-    grouping = agency_year.grouping_for_document_type_and_header(params[:granule_class], header)
+    grouping = document_type.grouping_for_header(header)
 
     partial = case grouping
       when FrIndexPresenter::SubjectGrouping
@@ -97,7 +115,7 @@ class Admin::IndexesController < AdminController
         :element_to_insert => render_to_string(
           :partial => partial,
           :collection => [grouping],
-          :locals => {:agency_year => agency_year, :spell_checker => spell_checker}
+          :locals => {:agency_year => document_type.agency_year, :spell_checker => spell_checker}
         )
       }
     end
@@ -109,7 +127,7 @@ class Admin::IndexesController < AdminController
     status.last_completed_issue = params[:last_completed_issue]
     status.save
 
-    agency_year = FrIndexPresenter::Agency.new(agency, params[:year])
+    agency_year = FrIndexPresenter::AgencyPresenter.new(agency, params[:year])
     FrIndexAgencyStatus.update_cache(agency_year)
 
     flash[:notice] = "'#{agency.name}' marked complete through #{status.last_completed_issue}"
@@ -126,5 +144,13 @@ class Admin::IndexesController < AdminController
     file = GeneratedFile.create(:parameters => parameters)
     Resque.enqueue FrIndexPdfPreviewer, file.id
     redirect_to admin_generated_file_path(file)
+  end
+
+  def last_approved_date
+    if @agency_year.last_completed_issue
+      @agency_year.last_completed_issue.strftime("%b. #{@agency_year.last_completed_issue.day.ordinalize}")
+    else
+      ""
+    end
   end
 end

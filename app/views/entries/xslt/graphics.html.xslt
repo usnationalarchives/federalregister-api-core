@@ -44,7 +44,7 @@
       </xsl:call-template>
     </xsl:variable>
     
-    <xsl:value-of select="concat('https://s3.amazonaws.com/images.federalregister.gov/', $image_id, '/', $size, '.gif')" />
+    <xsl:value-of select="concat('https://s3.amazonaws.com/images.federalregister.gov/', $image_id, '/', $size, '.png')" />
   </xsl:template>
 
   <xsl:template name="missing_graphic">

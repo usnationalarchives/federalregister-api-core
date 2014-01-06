@@ -8,6 +8,7 @@ require 'rake/testtask'
 require 'rdoc/task'
 
 require 'tasks/rails'
+require 'honeybadger/tasks'
 require 'resque/tasks'
 require 'fr2_audit_logic/tasks'
 
