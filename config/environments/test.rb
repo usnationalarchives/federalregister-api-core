@@ -1,4 +1,4 @@
-APP_HOST_NAME = 'test.fr2.local'
+APP_HOST_NAME = 'www.fr2.local'
 
 # Settings specified here will take precedence over those in config/environment.rb
 
@@ -10,6 +10,8 @@ config.cache_classes = true
 
 # Log error messages when you accidentally call methods on nil.
 config.whiny_nils = true
+
+config.log_level = :debug
 
 # Show full error reports and disable caching
 config.action_controller.consider_all_requests_local = true
@@ -23,7 +25,7 @@ config.action_controller.allow_forgery_protection    = false
 # The :test delivery method accumulates sent emails in the
 # ActionMailer::Base.deliveries array.
 config.action_mailer.delivery_method = :test
-config.action_mailer.default_url_options = {:host => "#{APP_HOST_NAME}:3000"}
+config.action_mailer.default_url_options = {:host => "#{APP_HOST_NAME}:8081"}
 
 # Use SQL instead of Active Record's schema dumper when creating the test database.
 # This is necessary if your schema can't be completely dumped by the schema dumper,
