@@ -4,7 +4,8 @@ development:
   morphology: stem_en
   index_exact_words: 1
   mem_limit: 528M
-  listen: 127.0.0.1
+  listen: 127.0.0.1:9339
+  port: 9339
   compat_sphinxql_magics: 0
   max_matches: 10000
 test:
@@ -12,6 +13,11 @@ test:
   morphology: stem_en
   index_exact_words: 1
   max_matches: 10000
+  listen: 127.0.0.1:9340
+  port: 9340
+  compat_sphinxql_magics: 0
+  max_matches: 10000
+  sql_range_step: 10000000
 staging:
   morphology: stem_en
   index_exact_words: 1

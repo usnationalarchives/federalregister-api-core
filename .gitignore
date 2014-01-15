@@ -7,6 +7,7 @@ webrat.log
 /config/cache.yml
 /config/database.yml
 /config/development.sphinx.conf
+/config/test.sphinx.conf
 /config/ec2_config.yml
 /config/mail.yml
 /config/mongoid.yml
