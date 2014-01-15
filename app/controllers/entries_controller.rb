@@ -129,8 +129,8 @@ class EntriesController < ApplicationController
 
     respond_to do |wants|
       wants.html do
-        url = entry_url(entry_or_pi, params.except(:anchor, :document_number, :action, :controller, :format))
-        
+        url = entry_path(entry_or_pi, params.except(:anchor, :document_number, :action, :controller, :format))
+
         if params[:anchor].present?
           url += '#' + params[:anchor]
         end
