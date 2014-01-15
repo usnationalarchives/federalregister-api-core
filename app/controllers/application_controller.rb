@@ -30,7 +30,7 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  rescue_from Exception, :with => :server_error if RAILS_ENV != 'development'
+  rescue_from Exception, :with => :server_error if RAILS_ENV == 'production' || RAILS_ENV == 'staging'
   def server_error(exception)
     Rails.logger.error(exception)
     notify_honeybadger(exception)

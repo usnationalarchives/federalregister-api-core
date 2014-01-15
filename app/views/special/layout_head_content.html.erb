@@ -33,7 +33,7 @@
 <![endif]-->
 
 
-<% if RAILS_ENV == 'development' %>
+<% if RAILS_ENV == 'development' || RAILS_ENV == 'test' %>
   <%# include all vendor/*.js files except for vendor.js %> 
   <%= javascript_include_tag :vendor %>
   <%# includeall top level js files %>
