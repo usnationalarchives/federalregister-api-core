@@ -1,7 +1,7 @@
 ## Customize the test machine
 machine:
   ruby:
-    version: ree
+    version: 1.9.3-p429
   environment:
     RAILS_ENV: test
     RACK_ENV: test
@@ -10,7 +10,7 @@ machine:
 dependencies:
   pre:
     - npm install -g jshint
-    - gem update --system 1.8.20
+    - gem update --system 1.8.29
     - cp config/amazon.yml.sample config/amazon.yml
     - cp config/api_keys.yml.sample config/api_keys.yml
     - cp config/deploy_credentials.yml.sample config/deploy_credentials.yml
