@@ -28,7 +28,7 @@ span.spelling_error { border-bottom: 2px dotted red; }
       color: $fr_orange;
     }
 
-    li.saving { background: #DDDDDD url(/my/assets/orange_loader_DDD.gif) 160px 7px no-repeat; }
+    li.saving { background: #DDDDDD url(/assets/orange_loader_DDD.gif) 160px 7px no-repeat; }
   }
 }
 
@@ -41,6 +41,6 @@ span.spelling_error { border-bottom: 2px dotted red; }
 
   .loader {
     padding-left: 20px;
-    background: #DDDDDD url(/my/assets/orange_loader_DDD.gif) 20px 0 no-repeat;
+    background: #DDDDDD url(/assets/orange_loader_DDD.gif) 20px 0 no-repeat;
   }
 }
