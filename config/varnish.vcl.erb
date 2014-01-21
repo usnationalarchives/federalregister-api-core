@@ -76,10 +76,13 @@ sub vcl_recv {
     set    req.http.X-Forwarded-For = client.ip;
     
     # Route to the correct backend
-    if (req.url ~ "^/my/assets/") {
+    if (req.url ~ "^/assets/") {
       set req.backend = assets_my_fr2;
       return(pass);
     } else if (req.url ~ "^/my(/|$)") {
+      set req.backend = my_fr2;
+      return(pass);
+    } else if (req.url ~ "^/styleguides(/|$)") {
       set req.backend = my_fr2;
       return(pass);
     } else if (req.url ~ "^(/blog|/policy|/learn|/layout/footer_page_list|/layout/navigation_page_list|/layout/homepage_post_list)") {
