@@ -6,9 +6,9 @@ gem 'mysql', '2.7'
 
 gem "jrails", "0.6.0"
 
-gem 'fr2_audit_logic',
-  :git => 'git://github.com/criticaljuncture/fr2_audit_logic.git',
-  :ref => 'd0b037954987cc28dac25dfbf72ae94f28e9c9f7'
+#gem 'fr2_audit_logic',
+#  :git => 'git://github.com/criticaljuncture/fr2_audit_logic.git',
+#  :ref => 'd0b037954987cc28dac25dfbf72ae94f28e9c9f7'
 # gem 'fr2_audit_logic', :path => '../fr2_audit_logic'
 gem 'bson_ext', '1.3.0'
 
