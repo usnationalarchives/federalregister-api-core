@@ -1,7 +1,7 @@
 ## Customize the test machine
 machine:
   ruby:
-    version: 1.9.3-p429
+    version: 1.9.3-p484
   environment:
     RAILS_ENV: test
     RACK_ENV: test
