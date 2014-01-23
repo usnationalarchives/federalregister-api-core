@@ -10,7 +10,7 @@ machine:
 dependencies:
   pre:
     - npm install -g jshint
-    - gem update --system 1.8.29
+    - gem update --system 1.8.25
     - cp config/amazon.yml.sample config/amazon.yml
     - cp config/api_keys.yml.sample config/api_keys.yml
     - cp config/deploy_credentials.yml.sample config/deploy_credentials.yml
