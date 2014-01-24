@@ -14,7 +14,7 @@ namespace :varnish do
   desc "Start varnish, recompiling config if necessary"
   task :start => 'varnish:config:generate' do
      config = varnish_config
-    `varnishd -f config/varnish.#{RAILS_ENV}.vcl -a 0.0.0.0:#{config["port"]} -s malloc,10M -T 127.0.0.1:#{config["management_port"]} -n #{RAILS_ENV} -P #{File.join(Rails.root, 'tmp', "#{RAILS_ENV}_varnish.pid")}`
+    `varnishd -f config/varnish.#{RAILS_ENV}.vcl -a 0.0.0.0:#{config["port"]} -s malloc,10M -T 127.0.0.1:#{config["management_port"]} -n #{File.join(Rails.root, 'tmp', "#{RAILS_ENV}")} -P #{File.join(Rails.root, 'tmp', "#{RAILS_ENV}_varnish.pid")}`
     puts "please visit http://fr2.local:#{config["port"]}/"
   end
 
