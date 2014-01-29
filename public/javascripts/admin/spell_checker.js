@@ -172,7 +172,7 @@ var SpellChecker = (function(){
     remove_highlight_via_correction: function() {
       this.active_element.removeClass('spelling_error');
 
-      this.remove_menu(spell_checker.menu);
+      this.remove_menu(this.menu);
     },
 
     remove_highlight_via_add_to_dictionary: function() {
