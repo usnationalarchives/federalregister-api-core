@@ -5,7 +5,7 @@ span.spelling_error { border-bottom: 2px dotted red; }
   width: 200px;
   background-color: #EEEEEE;
   @include border-radius(6px);
-  z-index: 5000;
+  z-index: 5500;
 
   ol.suggestions {
     margin-left: 0;
@@ -37,7 +37,7 @@ span.spelling_error { border-bottom: 2px dotted red; }
   text-align: center;
   padding-top: 10px;
   background-color: #DDDDDD;
-  z-index: 5500;
+  z-index: 5000;
 
   .loader {
     padding-left: 20px;

@@ -353,7 +353,8 @@ $(document).ready(function() {
   var spellChecker = new SpellChecker();
   spellChecker.initialize({element_class: "ul.entry_type",
                            ajax_suggestions: true,
-                           ajax_suggestion_url: '/admin/spelling_suggestions'});
+                           ajax_suggestion_url: '/admin/spelling_suggestions',
+                           open_behavior_delay: 500});
 
   spellChecker.add_to_dictionary = function(active_element, word_to_add) {
     $.ajax({
