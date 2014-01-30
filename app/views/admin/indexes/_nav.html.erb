@@ -1,11 +1,38 @@
-<h4>FR Index Years</h4>
+<div class="section">
+  <h4>FR Index Years</h4>
 
-<ul>
-  <% years.each do |year| %>
-    <li>
-      <%= link_to_unless_current  "#{year}", 
-        admin_index_year_path(year, :max_date => (current_year == year ? params[:max_date] : nil)) %>
-      <%= "<strong>&lt;&lt;</strong>".html_safe if current_year == year %>
-    </li>
-  <% end %>
-</ul>
+  <ul>
+    <% years.each do |year| %>
+      <li>
+        <%= link_to_unless_current  "#{year}",
+                                    admin_index_year_path(year,
+                                    :max_date => (current_year == year ? max_date : nil)) %>
+        <%= "<strong>&lt;&lt;</strong>".html_safe if current_year == year %>
+      </li>
+    <% end %>
+  </ul>
+</div>
+
+<% include_agency_nav ||= false %>
+<% if include_agency_nav %>
+  <div class="section">
+    <h4>Other Agency Years</h4>
+
+    <ul>
+      <% years.each do |year| %>
+        <li>
+          <% if year == agency_year.year %>
+            <%= year %>
+          <% else %>
+            <%= link_to year,
+                        admin_index_year_agency_path(year,
+                                                     agency_year.agency, 
+                                                     :max_date => max_date) %>
+          <% end %>
+
+          <%= "<strong>&lt;&lt;</strong>".html_safe if year == agency_year.year %>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>

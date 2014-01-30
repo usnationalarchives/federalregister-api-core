@@ -1,6 +1,6 @@
 <% super_title "#{@fr_index.year} FR Index" %>
 
-<% sidebar(render :partial => 'nav', :locals => {:years => @years, :current_year => @fr_index.year}) %>
+<% sidebar(render :partial => 'nav', :locals => {:years => @years, :current_year => @fr_index.year, :max_date => @max_date}) %>
 
 <div id="fr-index-metadata" class="page_summary">
   <h1><%= @fr_index.year %> Federal Register Index</h1>

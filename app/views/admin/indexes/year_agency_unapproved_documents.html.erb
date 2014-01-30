@@ -1,6 +1,6 @@
 <% super_title "#{@agency_year.year} FR Index" %>
 
-<% sidebar(render :partial => 'nav', :locals => {:years => @years, :current_year => @agency_year.year}) %>
+<% sidebar(render :partial => 'nav', :locals => {:years => @years, :current_year => @agency_year.year, :max_date => @max_date, :include_agency_nav => true, :agency_year => @agency_year}) %>
 
 <%= add_template('admin/fr_index_entry_popover', 'fr-index-entry-popover') %>
 <%= add_template('admin/fr_index_entry_popover_content', 'fr-index-entry-popover-content') %>
