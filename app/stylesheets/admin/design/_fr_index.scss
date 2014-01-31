@@ -1,9 +1,13 @@
 /* SIDEBAR NAV */
-#indexes.admin #sidebar h4 {
-  margin: 5px;
-  border-bottom: 2px solid $dark_blue;
-  color: $dark_blue;
+#indexes.admin #sidebar {
+  .section { margin-bottom: 20px; }
+
+  h4 {
+    margin: 5px;
+    border-bottom: 2px solid $dark_blue;
+    color: $dark_blue;
   }
+}
 
 
 /* YEAR */

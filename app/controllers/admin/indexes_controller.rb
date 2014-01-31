@@ -8,6 +8,12 @@ class Admin::IndexesController < AdminController
     @years = FrIndexPresenter.available_years
     @max_date = Date.parse(params[:max_date]) if params[:max_date].present?
 
+    #handle end of year scenario
+    last_day_of_year = Date.parse("#{params[:year]}-12-31")
+    if @max_date.nil? && Date.current > last_day_of_year
+      @max_date = last_day_of_year
+    end
+
     respond_to do |wants|
       wants.html do
         @fr_index = FrIndexPresenter.new(params[:year], :max_date => @max_date)
@@ -33,7 +39,7 @@ class Admin::IndexesController < AdminController
     end
 
     flash[:notice] = "#{Date.parse(max_date).to_s(:month_year)} has been queued to be published."
-    redirect_to admin_index_year_path(params[:year], :max_date => params[:max_date])
+    redirect_to admin_index_year_path(year, :max_date => max_date)
   end
 
   def year_agency
@@ -41,6 +47,7 @@ class Admin::IndexesController < AdminController
 
     agency = Agency.find_by_slug!(params[:agency])
     year = params[:year].to_i
+    @max_date = params[:max_date]
 
     options = params.slice(:max_date)
     @agency_year = FrIndexPresenter::AgencyPresenter.new(agency, year, options)
@@ -61,6 +68,7 @@ class Admin::IndexesController < AdminController
   def year_agency_type
     options = params.slice(:max_date, :unapproved_only)
     agency = Agency.find_by_slug!(params[:agency])
+    @max_date = params[:max_date]
 
     @document_type = FrIndexPresenter::DocumentType.new(agency, params[:year].to_i, params[:type], options)
     render :layout => false
@@ -71,6 +79,7 @@ class Admin::IndexesController < AdminController
 
     agency = Agency.find_by_slug!(params[:agency])
     year = params[:year].to_i
+    @max_date = params[:max_date]
 
     @agency_year = FrIndexPresenter::AgencyPresenter.new(agency, year, :unapproved_only => true)
     @last_approved_date = last_approved_date

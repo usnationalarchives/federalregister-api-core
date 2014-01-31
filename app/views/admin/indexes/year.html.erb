@@ -1,6 +1,6 @@
 <% super_title "#{@fr_index.year} FR Index" %>
 
-<% sidebar(render :partial => 'nav', :locals => {:years => @years, :current_year => @fr_index.year}) %>
+<% sidebar(render :partial => 'nav', :locals => {:years => @years, :current_year => @fr_index.year, :max_date => @max_date}) %>
 
 <div id="fr-index-metadata" class="page_summary">
   <h1><%= @fr_index.year %> Federal Register Index</h1>
@@ -15,9 +15,9 @@
     <% form_tag(url_for(:max_date => @fr_index.last_issue_published), :method => :get, :class => 'max_date') do %>
       <%= max_date_select(@fr_index) %>
     <% end %>
-    <%= link_to 'Preview PDF', {:format => :pdf, :max_date => params[:max_date]}, :class => "btn pdf_preview", :target => "_blank" %>
-    <% if params[:max_date].present? %>
-      <%= link_to "(Re)generate PDFs for Public Site", admin_publish_index_year_path(:max_date => params[:max_date]), :class => "btn publish_pdfs", :confirm => "Are you sure you wish to (re)publish the #{@fr_index.max_date.to_s(:month_year)} issue to the public site?", :method => :post %>
+    <%= link_to 'Preview PDF', {:format => :pdf, :max_date => @max_date}, :class => "btn pdf_preview", :target => "_blank" %>
+    <% if @max_date.present? %>
+      <%= link_to "(Re)generate PDFs for Public Site", admin_publish_index_year_path(:max_date => @max_date), :class => "btn publish_pdfs", :confirm => "Are you sure you wish to (re)publish the #{@fr_index.max_date.to_s(:month_year)} issue to the public site?", :method => :post %>
     <% end %>
   </div>
 </div>

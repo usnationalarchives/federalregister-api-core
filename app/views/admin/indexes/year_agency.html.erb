@@ -1,6 +1,6 @@
 <% super_title "#{@agency_year.year} FR Index" %>
 
-<% sidebar(render :partial => 'nav', :locals => {:years => @years, :current_year => @agency_year.year}) %>
+<% sidebar(render :partial => 'nav', :locals => {:years => @years, :current_year => @agency_year.year, :max_date => @max_date, :include_agency_nav => true, :agency_year => @agency_year}) %>
 
 <%= add_template('admin/fr_index_entry_popover', 'fr-index-entry-popover') %>
 <%= add_template('admin/fr_index_entry_popover_content', 'fr-index-entry-popover-content') %>
@@ -16,7 +16,7 @@
   </li>
   <li class='active'>
     <%= link_to "All #{@agency_year.year} Agency Documents",
-                admin_index_year_agency_path(@agency_year.year, @agency_year.agency, :max_date => params[:max_date]),
+                admin_index_year_agency_path(@agency_year.year, @agency_year.agency, :max_date => @max_date),
                 :class => ''  %>
   </li>
 </ul>
@@ -31,12 +31,12 @@
       <%= max_date_select(@agency_year) %>
     <% end %>
 
-    <%= link_to 'Preview PDF', {:format => :pdf, :max_date => params[:max_date]}, :class => "btn pdf_preview", :target => "_blank" %>
+    <%= link_to 'Preview PDF', {:format => :pdf, :max_date => @max_date}, :class => "btn pdf_preview", :target => "_blank" %>
   </div>
 </div>
 
 <% @agency_year.document_types.each do |document_type| %>
-  <%= render :esi => admin_index_year_agency_type_path(@agency_year.year, @agency_year.agency, document_type.granule_class, :max_date => params[:max_date]) %>
+  <%= render :esi => admin_index_year_agency_type_path(@agency_year.year, @agency_year.agency, document_type.granule_class, :max_date => @max_date) %>
 <% end %>
 
 <%= render :partial => "autocompleter_data", :locals => {:agency_year => @agency_year} %>

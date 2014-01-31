@@ -67,7 +67,7 @@ var FRIndexEditorForm = (function() {
       inputs.on('focus', function(event) {
         var $input = $(this),
             tipsy_right_adjustment = $input.hasClass('fr_index_subject') ? 30 : 0;
-        
+
         $input.tipsy('show');
         $('.tipsy').addClass('input_tipsy').css('left', $input.position().left - $('.tipsy').width() - tipsy_right_adjustment);
         $('.tipsy .tipsy-arrow').css('right', -16);
@@ -96,7 +96,7 @@ var FRIndexEditorForm = (function() {
       this.form.on('submit', function(event) {
         event.preventDefault();
         var form = $(this);
-        
+
         frIndexEditorForm.identify_as_saving();
         frIndexEditorForm.submit_form();
       });
@@ -107,7 +107,7 @@ var FRIndexEditorForm = (function() {
           path = this.form.attr('action'),
           data = this.form.serialize();
 
-      /* set active form so that response can be handled by the editor 
+      /* set active form so that response can be handled by the editor
        * instance that spawned the form */
       frIndexEditorForm.editor_instance.active_form = this.form;
 
@@ -156,7 +156,7 @@ var FRIndexEditor = (function(){
       this.generate_toc_subject_and_doc_autocompleter_elements();
       this.add_edit_funtionality();
     },
-  
+
     add_wrapper_toggle: function() {
       this.wrappers.off('click');
 
@@ -256,7 +256,7 @@ var FRIndexEditor = (function(){
           form = this.form_object.initialize(frIndexEditor, form_data);
 
       form.insertAfter( context_wrapper.find('a.cancel').first() );
-      
+
       /* ensure all of form is visible and place cursor in first input */
       form.find('input[type!=hidden]').last().scrollintoview();
       form.find('input[type!=hidden]').first().focus();
@@ -314,7 +314,7 @@ var FRIndexEditor = (function(){
       if ( ! added_element ) {
         added_element = $(element).appendTo(wrapping_list);
       }
-      
+
       this.highlight_added_element(added_element);
     },
 
@@ -332,9 +332,9 @@ var FRIndexEditor = (function(){
           frIndexEditor = this;
 
       form_data[header_attribute] = text;
-      
+
       var form = this.form_object.initialize(frIndexEditor, form_data);
-      
+
       context_wrapper.append( form.hide() );
       form.submit();
     }
@@ -353,7 +353,8 @@ $(document).ready(function() {
   var spellChecker = new SpellChecker();
   spellChecker.initialize({element_class: "ul.entry_type",
                            ajax_suggestions: true,
-                           ajax_suggestion_url: '/admin/spelling_suggestions'});
+                           ajax_suggestion_url: '/admin/spelling_suggestions',
+                           open_behavior_delay: 500});
 
   spellChecker.add_to_dictionary = function(active_element, word_to_add) {
     $.ajax({
@@ -376,7 +377,7 @@ $(document).ready(function() {
   var popover_handler = fr_index_popover_handler.initialize();
   if ( $("#fr-index-entry-popover-template") !== []) {
     var fr_index_entry_popover_template = Handlebars.compile($("#fr-index-entry-popover-template").html());
-        
+
     $('body').delegate('.with_ajax_popover a.document_number', 'mouseenter', function(event) {
       var $el = $(this),
           $li = $el.closest('.with_ajax_popover');
@@ -392,7 +393,7 @@ $(document).ready(function() {
                     return fr_index_entry_popover_template( {content: new Handlebars.SafeString('<div class="loading">Loading...</div>'),
                                                              document_number: $li.data('document-number'),
                                                              title: 'Original ToC Data'} );
-                  } 
+                  }
                 });
       /* trigger the show or else it won't be shown until the next mouseover */
       $el.tipsy("show");
