@@ -7,7 +7,14 @@ class ApiRepresentation
     # don't ask...
     class << self.class
       def default_url_options
-        {:host => "www.federalregister.gov", :protocol => "https"}
+        case Rails.env
+        when 'development'
+          {:host => "www.fr2.local", :port => 8080, :protocol => "http"}
+        when 'staging'
+          {:host => "fr2.criticaljuncture.org", :protocol => "https"}
+        else
+          {:host => "www.federalregister.gov", :protocol => "https"}
+        end
       end
     end
 

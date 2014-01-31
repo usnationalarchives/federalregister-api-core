@@ -85,14 +85,20 @@ sub vcl_recv {
     } else if (req.url ~ "^/styleguides(/|$)") {
       set req.backend = my_fr2;
       return(pass);
+    } else if (req.url ~ "^/api/") {
+      set req.backend = fr2;
+      return (lookup);
+    } else if (req.url ~ "^(/documents|/d/|/a/)") {
+      set req.backend = my_fr2;
+      return (pass);
     } else if (req.url ~ "^(/blog|/policy|/learn|/layout/footer_page_list|/layout/navigation_page_list|/layout/homepage_post_list)") {
-        set req.http.host = "<%= config['wordpress']['host'] || 'fr2.local' %>";
-        set req.backend = blog;
- 
-        # Don't cache wordpress pages if logged in to wp
-        if (req.http.Cookie ~ "wordpress_logged_in_") {
-            return (pass);
-        } 
+      set req.http.host = "<%= config['wordpress']['host'] || 'fr2.local' %>";
+      set req.backend = blog;
+
+      # Don't cache wordpress pages if logged in to wp
+      if (req.http.Cookie ~ "wordpress_logged_in_") {
+          return (pass);
+      }
     } else {
       set req.http.host = "<%= config['fr2']['host'] || 'fr2-rails.local' %>";
       set req.backend = fr2;

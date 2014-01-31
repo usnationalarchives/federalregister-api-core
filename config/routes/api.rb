@@ -5,7 +5,7 @@ ActionController::Routing::Routes.draw do |map|
     end
 
     api.resources :entries,
-                  :as => :articles,
+                  :as => :documents,
                   :only => [:index, :show],
                   :controller => 'api/v1/entries'
   
