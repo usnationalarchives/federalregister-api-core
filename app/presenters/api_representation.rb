@@ -10,6 +10,8 @@ class ApiRepresentation
         case Rails.env
         when 'development'
           {:host => "www.fr2.local", :port => 8080, :protocol => "http"}
+        when 'test'
+          {:host => "www.fr2.local", :port => 8081, :protocol => "http"}
         when 'staging'
           {:host => "fr2.criticaljuncture.org", :protocol => "https"}
         else

@@ -371,17 +371,27 @@ ARTICLE VIEW
 .metadata_share_bar .share {
   position: relative;
   display: inline-block;
+  height: 27px;
+
+  ul {
+    @include horizontal-list;
+    position: absolute;
+    right: 0;
+    top: -2px;
+    overflow:visible;
+
+    li.clip_for_later {
+      padding-right: 35px;
+
+      fieldset.inputs { display: none; }
+      fieldset.buttons {
+        margin: 0;
+
+        li { padding: 5px 0 0 0; }
+      }
+    }
   }
-.metadata_share_bar .share ul {
-  @include horizontal-list;
-  position: absolute;
-  right: 0;
-  top: -2px;
-  overflow:visible;
-  }   
-.metadata_share_bar .share ul li.clip_for_later {
-  padding-right: 35px;
-  }
+}
 
 #entries.show .back_to_top {
   color: #aaa;
