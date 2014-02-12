@@ -74,12 +74,14 @@ ENTRIES
   left: 720px; /* PUSH 12 */
   }  
 .metadata_share_bar .metadata {
-  @include grid(12, 16);
+  //@include grid(12, 16);
   @include alpha;
+  float: left;
   }
 .metadata_share_bar .share {
-  @include grid(4, 16);
+  //@include grid(4, 16);
   @include omega;  
+  float: right;
   }
 #entries #content_area, 
 #entries #sidebar {
