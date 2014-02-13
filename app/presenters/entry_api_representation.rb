@@ -72,7 +72,8 @@ class EntryApiRepresentation < ApiRepresentation
           :xml_url => regulatory_plan.source_url(:xml),
           :issue => regulatory_plan.issue,
           :title => regulatory_plan.title,
-          :priority_category => regulatory_plan.priority_category
+          :priority_category => regulatory_plan.priority_category,
+          :html_url => regulatory_plan_url(regulatory_plan)
         }
       end
       [rin, regulatory_plan_info]
