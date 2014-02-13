@@ -48,10 +48,6 @@ class RegulatoryPlan < ApplicationModel
     Entry.with_regulation_id_number(self.regulation_id_number)
   end
 
-  def find_by_regulation_id_number(rin)
-    first(:conditions => {:regulation_id_number => rin}, :order => "issue DESC")
-  end
-  
   define_index do
     # Will require a index rebuild when new regulatory plan issue comes in...
     where "regulatory_plans.issue = '#{RegulatoryPlan.current_issue}'"
