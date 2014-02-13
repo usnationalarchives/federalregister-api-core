@@ -53,9 +53,9 @@ def chef_cloud_attributes(instance_type)
     @splunk_server_address   = '10.85.5.241'
     @redis_server_address    = '10.85.5.241'
     @iodocs_server_address   = '10.85.5.241'
+    @sphinx_server_address   = '10.85.5.241'
     @database_server_address = '10.101.57.196'
     @mongodb_server_address  = '10.101.57.196'
-    @sphinx_server_address   = '10.101.57.196'
     @app_server_address      = ['10.82.225.119']
     @my_fr2_server_address   = ['10.82.225.119']
   when 'production'
@@ -67,11 +67,11 @@ def chef_cloud_attributes(instance_type)
     @splunk_server_address   = '10.98.146.140'
     @redis_server_address    = '10.98.146.140'
     @iodocs_server_address   = '10.98.146.140'
+    @sphinx_server_address   = '10.98.146.140'
     @database_server_address = '10.116.81.89'
     @mongodb_server_address  = '10.116.81.89'
-    @sphinx_server_address   = '10.116.81.89'
-    @app_server_address      = ['10.40.221.230', '10.116.162.47', '10.98.87.46', '10.114.113.88', '10.116.65.97' ]
-    @my_fr2_server_address   = ['10.40.221.230', '10.116.162.47', '10.98.87.46', '10.114.113.88', '10.116.65.97']
+    @app_server_address      = ['10.40.221.230', '10.116.162.47', '10.10.39.7', '10.34.50.43', '10.116.65.97' ]
+    @my_fr2_server_address   = ['10.40.221.230', '10.116.162.47', '10.10.39.7', '10.34.50.43', '10.116.65.97']
   end    
   
   @rails_versions = ['2.3.11', '3.1.3']
