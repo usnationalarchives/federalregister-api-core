@@ -30,7 +30,7 @@ module Content::EntryImporter::RawText
         text.sub!(/<\?xml version="1.0" encoding="utf-8"\?>\n/, '')
       
         # normalize whitespace
-        text.gsub!(/^ */s, "")
+        text.lstrip!
         text.gsub!(/\n{2,}/, "\n")
         text.gsub!(/ {2,}/, ' ')
       

@@ -21,19 +21,18 @@ module Content
             raise MissingXML.new
           end
         end
-        Dir.mktmpdir("entry_graphics").each do |tmp_dir|
+        Dir.mktmpdir("entry_graphics") do |tmp_dir|
           images.group_by(&:document_number).each do |document_number, images|
             entry = Content::GraphicsExtractor::Entry.new(document_number, :base_dir => tmp_dir)
             if entry.entry.nil?
               warn "entry #{document_number} not found!"
               next
             end
-            
+
             images.each do |image|
               entry.associate_image(image)
             end
           end
-          `rm -r #{tmp_dir}`
         end
       end
     end
