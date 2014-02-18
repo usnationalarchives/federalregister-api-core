@@ -44,19 +44,19 @@ module RouteBuilder
   end
   
   add_static_route :entry_full_text do |entry|
-    "/articles/html/full_text/#{entry.document_file_path}.html"
+    "/documents/html/full_text/#{entry.document_file_path}.html"
   end
   
   add_static_route :entry_abstract do |entry|
-    "/articles/html/abstract/#{entry.document_file_path}.html"
+    "/documents/html/abstract/#{entry.document_file_path}.html"
   end
   
   add_static_route :entry_raw_text do |entry|
-    "/articles/text/raw_text/#{entry.document_file_path}.txt"
+    "/documents/text/raw_text/#{entry.document_file_path}.txt"
   end
 
   add_static_route :entry_xml do |entry|
-    "/articles/xml/#{entry.document_file_path}.xml"
+    "/documents/xml/#{entry.document_file_path}.xml"
   end
   
   add_static_route :public_inspection_raw_text do |public_inspection_document|
