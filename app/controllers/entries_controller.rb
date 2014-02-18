@@ -155,6 +155,19 @@ class EntriesController < ApplicationController
     redirect_to entry_url(@entry)
   end
 
+  #used for development and testing
+  def abstract_text
+    @entry = Entry.find_by_document_number!(params[:id])
+
+    render :partial => 'abstract', :locals => {:entry => @entry}
+  end
+
+  def full_text
+    @entry = Entry.find_by_document_number!(params[:id])
+
+    render :partial => 'full_text', :locals => {:entry => @entry}
+  end
+
   private
   
   def parse_date_from_params

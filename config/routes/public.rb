@@ -16,6 +16,11 @@ ActionController::Routing::Routes.draw do |map|
   map.entries_page_views 'articles/views', :controller => 'entries/page_views', :action => 'create', :conditions => { :method => :post }
   
   # ENTRIES
+  if RAILS_ENV == 'development' || RAILS_ENV == 'test'
+    map.document_abstract_text 'documents/html/abstract/:id.:format', :controller => 'entries', :action => 'abstract_text', :conditions => {:method => :get}
+    map.document_full_text 'documents/html/full_text/:id.:format', :controller => 'entries', :action => 'full_text', :conditions => {:method => :get}
+  end
+
   map.entries 'articles.:format', :controller => 'entries', :action => 'index', :conditions => { :method => :get }
   map.highlighted_entries 'articles/featured.:format', :controller => 'entries', :action => 'highlighted', :conditions => { :method => :get }
   map.entries_search_facet 'articles/search/facet', :controller => 'entries', :action => 'search_facet', :conditions => { :method => :get }
