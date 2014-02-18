@@ -41,7 +41,7 @@ sub vcl_recv {
       req.request != "DELETE") {
         return (error);
     }
-    
+
     if (req.http.Cookie ~ "(^|;) ?ab_group=\d+(;|$)") {
       if( req.http.Cookie ~ "ab_group=[0-9]+" ) {
         set req.http.X-AB-Group = regsub( req.http.Cookie,    ".*ab_group=", "");
@@ -53,9 +53,9 @@ sub vcl_recv {
         sprintf(buff,"%d",rand()%10 != 0 ? 1 : 2);
         VRT_SetHdr(sp, HDR_REQ, "\013X-AB-Group:", buff, vrt_magic_string_end);
       }C
-      
+
       set req.http.X-Added-AB-Group = "1";
-      
+
       if (req.http.Cookie) {
         set req.http.Cookie = req.http.Cookie ";";
       } else {
@@ -63,18 +63,18 @@ sub vcl_recv {
       }
       set req.http.Cookie = req.http.Cookie "ab_group=" req.http.X-AB-Group;
     }
-    
+
     # Rewrite api. subdomain to api/ subdirectory
     if (req.http.host ~ "^api.") {
       if (req.url !~ "^/api/") {
         set req.url = "/api" req.url;
       }
     }
-    
+
     # Add a unique header containing the client address
     remove req.http.X-Forwarded-For;
     set    req.http.X-Forwarded-For = client.ip;
-    
+
     # Route to the correct backend
     if (req.url ~ "^/assets/") {
       set req.backend = assets_my_fr2;
@@ -88,6 +88,9 @@ sub vcl_recv {
     } else if (req.url ~ "^/api/") {
       set req.backend = fr2;
       return (lookup);
+    } else if (req.url ~ "^(/documents/html/)") {
+      set req.backend = fr2;
+      return (pass);
     } else if (req.url ~ "^(/documents|/d/|/a/)") {
       set req.backend = my_fr2;
       return (pass);
@@ -108,34 +111,34 @@ sub vcl_recv {
     if (req.request != "GET" && req.request != "HEAD") {
         return (pass);
     }
-    
+
     # Pass fr2 admin requests directly on to fr2
     if (req.url ~ "^/admin" ){
         set req.backend = fr2;
         return (pass);
     }
-    
+
     # Rewrite top-level wordpress requests to /blog/
     set req.url = regsub(
         req.url,
         "^/(learn|policy|layout/footer_page_list|layout/navigation_page_list|layout/homepage_post_list)",
         "/blog/\1"
     );
-    
-    
+
+
     # Pass wp admin requests directly on to wp
     if (req.url ~ "^(/wp-login|wp-admin)") {
         set req.backend = blog;
         set req.http.host = "fr2.local";
         return (pass);
     }
-    
+
     # either return lookup for caching or return pass for no caching
     <% if config['cache'] %>
       # Fetch from cache unless explicitly skipping cache
       if (req.http.Cookie ~ "skip_cache=<%= skip_cache_key %>") {
         return (pass);
-      } else {  
+      } else {
         return (lookup);
       }
     <% else %>
@@ -148,9 +151,9 @@ sub vcl_fetch {
         unset beresp.http.Cache-Control;
         unset beresp.http.Etag;
     <% end %>
-    
+
     # Directly serve static content
-    if (req.url ~ "^/images" || req.url ~ "^/javascripts" || req.url ~ "^/flash" || req.url ~ "^/stylesheets" || req.url ~ "^/sitemaps") {
+    if (req.url ~ "^(/images|/javascripts|/flash|/stylesheets|/sitemap)") {
         return(deliver);
     }
     # ESI process the rest
@@ -167,18 +170,18 @@ sub vcl_hash {
     # these 2 entries are the default ones used for vcl. Below we add our own.
     set req.hash += req.url;
     set req.hash += req.http.host;
-    
+
     if (req.url ~ "^/layout/head_content" ) {
       set req.hash += "ab_group";
       set req.hash += req.http.X-AB-Group;
     }
-    
+
     # Hash differently based on presence of javascript_enabled cookie.
     if( req.url ~ "^/articles/search/header" && req.http.Cookie ~ "javascript_enabled=1" ) {
         # add this fact to the hash
         set req.hash += "javascript enabled";
     }
-    
+
     return(hash);
 }
 
@@ -193,7 +196,7 @@ sub vcl_deliver {
     <% if config['cache'] %>
         set resp.http.Etag = resp.http.Etag " abgroup=" req.http.X-AB-Group;
     <% end %>
-    
+
     if (req.http.X-Added-AB-Group) {
         # set resp.http.Set-Cookie = "ab_group=" req.http.X-AB-Group "; path=/";
         C{
@@ -208,4 +211,4 @@ sub vcl_deliver {
           VRT_SetHdr(sp, HDR_RESP, "\013Set-Cookie:", "ab_group=", VRT_GetHdr(sp, HDR_REQ, "\013X-AB-Group:"), "; path=/; expires=", expires, vrt_magic_string_end);
         }C
     }
-} 
+}
