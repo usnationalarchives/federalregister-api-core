@@ -90,14 +90,35 @@ class EntryApiRepresentation < ApiRepresentation
   field(:regulations_dot_gov_info, :include => :docket, :select => :regulations_dot_gov_docket_id) do |entry|
     docket = entry.docket
     if docket
-      {
+      docket_info = {
         :docket_id => docket.id,
         :regulation_id_number => docket.regulation_id_number,
         :title => docket.title,
         :comments_count => docket.comments_count,
+        :comments_url => regulations_dot_gov_docket_comments_url(docket.id),
         :supporting_documents_count => docket.docket_documents_count,
+        :supporting_documents => docket.docket_documents.sort_by(&:id).reverse[0..9].map do |doc|
+          {
+            :title => doc.title,
+            :document_id => doc.id
+          }
+        end,
         :metadata => docket.metadata
       }
+
+      if docket.regulation_id_number.present?
+        regulatory_plan = RegulatoryPlan.current.find_by_regulation_id_number(docket.regulation_id_number)
+        if regulatory_plan
+          docket_info.deep_merge!(
+            :regulatory_plan => {
+              html_url: regulatory_plan_url(regulatory_plan),
+              title: regulatory_plan.title
+            }
+          )
+        end
+      end
+
+      docket_info
     end
   end
   field(:regulation_id_numbers, :include => :entry_regulation_id_numbers) {|e| e.entry_regulation_id_numbers.map{|r| r.regulation_id_number}}
