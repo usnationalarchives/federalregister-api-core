@@ -35,6 +35,7 @@
   <%= javascript_include_tag "bootstrap/bootstrap-typeahead.js" %>
   <%= javascript_include_tag "vendor/jquery.scrollintoview.min.js" %>
 
+  <%= javascript_include_tag 'admin/honeybadger.min.js' %>
   <%= javascript_include_tag 'admin/jquery.tablesorter' %>
   <%= javascript_include_tag 'vendor/jquery.tipsy.js' %>
   <%= javascript_include_tag 'vendor/underscore-1.4.3.min.js' %>
@@ -113,5 +114,6 @@
   
   <script type="text/javascript" src="https://use.typekit.com/qbb7wou.js"></script>
   <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+  <script type="text/javascript">Honeybadger.configure({api_key: 03193658, onerror: true})</script>
 </body>
 </html>
