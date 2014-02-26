@@ -37,6 +37,7 @@ class EntryApiRepresentation < ApiRepresentation
   end
   field(:citation)
   field(:comments_close_on, :include => :events){|e| e.comments_close_on}
+  field(:comment_url){|e| e.comment_url}
   field(:corrections, :include => :corrections){|e| e.corrections.map{|c| api_v1_entry_url(c.document_number, :format => :json)}}
   field(:correction_of, :include => :correction_of, :select => :correction_of_id){|e| api_v1_entry_url(e.correction_of.document_number, :format => :json) if e.correction_of}
   field(:dates)
