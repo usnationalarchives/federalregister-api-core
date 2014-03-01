@@ -81,28 +81,6 @@ TITLE STYLES
 
 ******************************/
 
-div.title {
-  background: image-url("header_bg.png") repeat-x scroll left top;
-  color: #fff;
-  clear: both;
-  line-height: .9;
-  font-size: 2.2em;
-  font-weight: 700;
-  height: 21px;
-  letter-spacing: 0px;
-  margin-bottom: 1em;
-  }
-div.title span {
-  background: #fff;
-  color: $powder_blue;
-  padding: 0 10px;
-  margin: 0 25px 0 0;
-  }
-div.title {
-  margin-left: -999px;
-  padding-left: 999px;
-  text-align: right;
-  }
 #sections div.title, #canned_searches div.title {
   margin-bottom: 25px;
   }
