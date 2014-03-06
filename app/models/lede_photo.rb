@@ -42,7 +42,7 @@ class LedePhoto < ApplicationModel
   end
 
   def credit_url
-    self['credit_url'] + '/lightbox'
+    self['credit_url'] + '/sizes/l'
   end
   
   private
