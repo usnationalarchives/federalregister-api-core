@@ -42,7 +42,7 @@ module Content
     end
 
     def self.save_file(html)
-      dir = FileUtils.mkdir_p("#{Rails.root}/data/public_inspection/html/#{Time.now.strftime('%Y/%m/%d')}/")
+      dir = FileUtils.mkdir_p("#{Rails.root}/data/public_inspection/html/#{Time.now.strftime('%Y/%m/%d')}/").last
       f = File.new("#{dir.to_s}/#{Time.now.to_s(:HMS_Z)}.html", "w")
       f.write(html)
       f.close
