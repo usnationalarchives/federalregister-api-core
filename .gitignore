@@ -29,6 +29,7 @@ webrat.log
 /public/stylesheets/admin/navigation.css
 /public/stylesheets/admin/screen.css
 /public/stylesheets/admin/tablesorter.css
+/public/stylesheets/admin/bootstrap.css
 /public/stylesheets/grid.css
 /public/stylesheets/header.css
 /public/stylesheets/ie.css
