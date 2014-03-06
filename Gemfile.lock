@@ -64,6 +64,7 @@ GEM
     ci_reporter (1.6.3)
       builder (>= 2.1.2)
     cmdparse (2.0.5)
+    coderay (1.1.0)
     compass (0.10.1)
       haml (>= 3.0.4)
     compass-960-plugin (0.9.13)
@@ -116,6 +117,7 @@ GEM
       haml (>= 3.0.0)
     mechanize (1.0.0)
       nokogiri (>= 1.2.1)
+    method_source (0.8.2)
     mime-types (1.16)
     mocha (0.9.8)
       rake
@@ -141,6 +143,10 @@ GEM
     nokogiri (1.4.1)
     paperclip (2.3.1.1)
     pdfkit (0.5.2)
+    pry (0.9.12.4)
+      coderay (~> 1.0)
+      method_source (~> 0.8)
+      slop (~> 3.4)
     rack (1.1.6)
     rack-test (0.5.6)
       rack (>= 1.0)
@@ -175,6 +181,7 @@ GEM
     sinatra (1.2.7)
       rack (~> 1.1)
       tilt (>= 1.2.2, < 2.0)
+    slop (3.4.7)
     stevedore (0.1.0)
     system_timer (1.2.4)
     test-unit (1.2.3)
@@ -245,6 +252,7 @@ DEPENDENCIES
   nokogiri (= 1.4.1)
   paperclip (= 2.3.1.1)
   pdfkit (= 0.5.2)
+  pry
   rails (= 2.3.17)
   rdoc
   recaptcha (= 0.3.1)

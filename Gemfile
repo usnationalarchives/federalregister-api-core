@@ -90,3 +90,7 @@ group :test do
 
   gem 'test-unit', '1.2.3', :platform => :ruby_19
 end
+
+group :development, :test do
+  gem 'pry'
+end
