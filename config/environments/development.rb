@@ -1,4 +1,4 @@
-APP_HOST_NAME = 'fr2.local'
+APP_HOST_NAME = 'www.fr2.local:8080'
 
 # Settings specified here will take precedence over those in config/environment.rb
 
@@ -30,6 +30,6 @@ smtp_settings = {
 config.action_mailer.delivery_method = :smtp
 config.action_mailer.smtp_settings   = smtp_settings
 
-config.action_mailer.default_url_options = {:host => "#{APP_HOST_NAME}:8080"}
+config.action_mailer.default_url_options = {:host => "#{APP_HOST_NAME}", :protocol => "http://"}
 
 # Put gems in Gemfile...
