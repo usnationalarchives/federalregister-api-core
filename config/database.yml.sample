@@ -1,0 +1,39 @@
+development:
+  adapter: mysql
+  host: 127.0.0.1
+  port: 3306
+  encoding: utf8
+  reconnect: true
+  database: fr2_development
+  username: root
+  password: 
+
+test:
+  adapter: mysql
+  host: 127.0.0.1
+  port: 3306
+  encoding: utf8
+  reconnect: true
+  database: fr2_test
+  username: root
+  password: 
+
+staging:
+  adapter: mysql
+  host: 127.0.0.1
+  port: 3306
+  encoding: utf8
+  reconnect: true
+  database: fr2_development
+  username: root
+  password: 
+
+production:
+  adapter: mysql
+  host: 127.0.0.1
+  port: 3306
+  encoding: utf8
+  reconnect: true
+  database: fr2_development
+  username: root
+  password: 
