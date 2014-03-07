@@ -85,6 +85,9 @@ sub vcl_recv {
     } else if (req.url ~ "^/styleguides(/|$)") {
       set req.backend = my_fr2;
       return(pass);
+    } else if (req.url ~ "^(/special/header)") {
+      set req.backend = my_fr2;
+      return(pass);
     } else if (req.url ~ "^/api/") {
       set req.backend = fr2;
       return (lookup);
@@ -92,6 +95,9 @@ sub vcl_recv {
       set req.backend = fr2;
       return (pass);
     } else if (req.url ~ "^(/documents|/d/|/a/)") {
+      set req.backend = my_fr2;
+      return (pass);
+    } else if (req.url ~ "^(/public-inspection)") {
       set req.backend = my_fr2;
       return (pass);
     } else if (req.url ~ "^(/blog|/policy|/learn|/layout/footer_page_list|/layout/navigation_page_list|/layout/homepage_post_list)") {
@@ -102,6 +108,9 @@ sub vcl_recv {
       if (req.http.Cookie ~ "wordpress_logged_in_") {
           return (pass);
       }
+    } else if (req.url == "/") {
+      set req.backend = my_fr2;
+      return(pass);
     } else {
       set req.http.host = "<%= config['fr2']['host'] || 'fr2-rails.local' %>";
       set req.backend = fr2;
