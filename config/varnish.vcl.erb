@@ -97,7 +97,7 @@ sub vcl_recv {
     } else if (req.url ~ "^(/documents|/d/|/a/)") {
       set req.backend = my_fr2;
       return (pass);
-    } else if (req.url ~ "^(/public-inspection)") {
+    } else if (req.url ~ "^(/public-inspection|/reader-aids)") {
       set req.backend = my_fr2;
       return (pass);
     } else if (req.url ~ "^(/blog|/policy|/learn|/layout/footer_page_list|/layout/navigation_page_list|/layout/homepage_post_list)") {
