@@ -1,6 +1,6 @@
 class Content::DocketImporter
   def initialize
-    @client = Content::RegulationsDotGov.new(ENV['regulations_dot_gov_api_key'])
+    @client = RegulationsDotGov::Client.new
   end
 
   def perform(docket_number)

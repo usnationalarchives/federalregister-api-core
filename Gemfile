@@ -58,6 +58,8 @@ gem "thunder_punch", '0.0.14', :require => false
 gem "resque", "1.19.0"
 
 gem "httparty", "0.8.1"
+gem "httmultiparty", '~> 0.3.13'
+
 gem "recaptcha", "0.3.1", :require => 'recaptcha/rails'
 gem 'sendgrid', :git => "git://github.com/criticaljuncture/sendgrid.git", :branch => 'master'
 gem 'modularity', '0.6.1'

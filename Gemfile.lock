@@ -99,6 +99,10 @@ GEM
     honeybadger (1.9.4)
       faraday (~> 0.7)
       json
+    httmultiparty (0.3.13)
+      httparty (>= 0.7.3)
+      mimemagic
+      multipart-post
     http_headers (0.0.2.3)
     httparty (0.8.1)
       multi_json
@@ -121,6 +125,7 @@ GEM
     mechanize (1.0.0)
       nokogiri (>= 1.2.1)
     mime-types (1.16)
+    mimemagic (0.2.1)
     modularity (0.6.1)
     mongo (1.2.4)
       bson (>= 1.2.4)
@@ -233,6 +238,7 @@ DEPENDENCIES
   geokit (= 1.4.1)
   haml (= 3.0.4)
   honeybadger
+  httmultiparty (~> 0.3.13)
   http_headers (= 0.0.2.3)
   httparty (= 0.8.1)
   icalendar
