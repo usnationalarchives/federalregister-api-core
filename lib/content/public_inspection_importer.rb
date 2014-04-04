@@ -279,7 +279,7 @@ module Content
               :filing_type     => @filing_type,
               :details         => @details,
               :agency          => @agency,
-              :granule_class   => @granule_class,
+              :granule_class   => @granule_class || 'UNKNOWN',
               :document_number => @document_number,
               :toc_subject     => @toc_subject,
               :toc_doc         => @toc_doc,
