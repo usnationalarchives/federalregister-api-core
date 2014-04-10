@@ -36,6 +36,7 @@
       "SpellChecker",
       "user_email_address",
       "EmailHelper",
+      "Honeybadger",
 
       // Some non-recognized built-in methods
       "escape",
