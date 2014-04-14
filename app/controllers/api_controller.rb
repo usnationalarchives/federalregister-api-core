@@ -6,7 +6,7 @@ class ApiController < ApplicationController
 
   def render_json_or_jsonp(data, options = {})
     callback = params[:callback].to_s
-    if callback =~ /^\w+$/
+    if callback =~ /^[a-zA-Z0-9_\.]+$/
       render({:text => "#{callback}(" + data.to_json + ")", :content_type => "application/javascript"}.merge(options))
     else
       render({:json => data.to_json}.merge(options))
