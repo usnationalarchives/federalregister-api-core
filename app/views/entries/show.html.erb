@@ -16,10 +16,10 @@
         <div id="flash_message" class="comment">
           <p>
             <% if comment_date && comment_date >= Date.current %>
-              This article has a comment period that ends <%= days_remaining( comment_date) %>
+              This document has a comment period that ends <%= days_remaining( comment_date) %>
               (<%= comment_date %>)
             <% else %>
-              Comments on this article are being accepted at Regulations.gov
+              Comments on this document are being accepted at Regulations.gov
             <% end %>
             
             <%= link_to "Submit a formal comment", @entry.comment_url.present? ? @entry.comment_url : '#addresses', :id => 'start_comment', :class => 'button formal_comment', :target => (@entry.comment_url.present? ? '_blank' : ''), :'data-comment' => (@entry.comment_url.present? ? 1 : '') %>
@@ -53,10 +53,10 @@
 
     <% section_tag(:id => 'navigation_controls') do %>
       <% if @entry.previous_entry %>
-        <%= link_to "Previous Article", entry_path(@entry.previous_entry, :utm_source => 'Article', :utm_medium => 'PrevNext', :utm_content => 'previous'), :title => @entry.previous_entry.title, :class => 'prev'%>
+        <%= link_to "Previous Document", entry_path(@entry.previous_entry, :utm_source => 'Article', :utm_medium => 'PrevNext', :utm_content => 'previous'), :title => @entry.previous_entry.title, :class => 'prev'%>
       <% end %>
       <% if @entry.next_entry %>
-        <%= link_to "Next Article", entry_path(@entry.next_entry, :utm_source => 'Article', :utm_medium => 'PrevNext', :utm_content => 'next'), :title => @entry.next_entry.title, :class => 'next' %>
+        <%= link_to "Next Document", entry_path(@entry.next_entry, :utm_source => 'Article', :utm_medium => 'PrevNext', :utm_content => 'next'), :title => @entry.next_entry.title, :class => 'next' %>
       <% end %>
     <% end -%>    
     
@@ -115,4 +115,4 @@
     <% end %>
   </div> <!-- content_area end -->
   
-<% end %> <!-- end article tag -->
+<% end %> <!-- end document tag -->

@@ -40,8 +40,8 @@ class TopicsController < ApplicationController
     
     respond_to do |wants|
       wants.rss do
-        @feed_name = "Federal Register: Significant articles from the '#{@topic.name}' topic"
-        @feed_description = "Significant Federal Register articles from the '#{@topic.name}' topic."
+        @feed_name = "Federal Register: Significant documents from the '#{@topic.name}' topic"
+        @feed_description = "Significant Federal Register documents from the '#{@topic.name}' topic."
         @entries = EntrySearch.new(:conditions => {:significant => 1, :topic_ids => [@topic.id]}, :order => "newest", :per_page => 20).results
         render :template => 'entries/index.rss.builder'
       end

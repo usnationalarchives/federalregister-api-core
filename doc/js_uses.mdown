@@ -2,20 +2,20 @@
   * All javacripts found under vendor are minified and compressed with Google's Closure Compiler (with the exception of jquery.js)
 
 ###vendor/dragdealer.js
-  * home page featured article box
-  * timeline on the article & regulatory plan views
+  * home page featured document box
+  * timeline on the document & regulatory plan views
 
 ###vendor/footnotes.js
-  * footnotes in the articles
+  * footnotes in the document
 
 ###vendor/jqModal.js
   * email and RSS subscription
   * leaving the site flickr warning (home page and section pages)
-  * legal disclaimer (non-homepage - ie article, etc)
+  * legal disclaimer (non-homepage - ie document, etc)
 
 ###vendor/jquery.ba-hashchange.min
   * search - changes url when advanced search panel is opened/closed
-  * print view on article
+  * print view on document
 
 ###vendor/jquery.bsmselect.js
   * advanced search - select multiple
@@ -37,5 +37,5 @@
   * centering modal windows on screen
 
 ###vendor/template.js
-  * article pages
+  * document pages
   * modals

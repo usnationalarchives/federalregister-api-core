@@ -1,6 +1,6 @@
 <% if search.suggestion.present? %>
   <div class="suggestion">
     <p>Did you mean the
-    <%= link_to((@search.suggestion.count == 1 ? "1 article" : "#{number_with_delimiter @search.suggestion.count} articles"), entries_search_path(:conditions => @search.suggestion.conditions)) %> <%= search_suggestion_title(@search.suggestion, @search) %>?</p>
+    <%= link_to((@search.suggestion.count == 1 ? "1 document" : "#{number_with_delimiter @search.suggestion.count} documents"), entries_search_path(:conditions => @search.suggestion.conditions)) %> <%= search_suggestion_title(@search.suggestion, @search) %>?</p>
   </div>
 <% end %>

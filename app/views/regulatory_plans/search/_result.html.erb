@@ -23,7 +23,7 @@
     <% if entries.present? %>
     <% num_entries = regulatory_plan.entries.count %>
     <div class="aside_box">
-      <h5>Articles associated with this Unified Agenda</h5>
+      <h5>Documents associated with this Unified Agenda</h5>
       <ul class="article_list">
         <% entries.each do |entry| %>
           <li class="<%= entry.entry_type.sub(/\s+/, '_').downcase %>">
@@ -39,7 +39,7 @@
         <% end %>
       </ul>
       <% if num_entries > 5 %>
-        <%= link_to "See all #{num_entries} articles with RIN #{regulatory_plan.regulation_id_number}.", entries_search_path(:conditions => {:regulation_id_number => regulatory_plan.regulation_id_number}) %>
+        <%= link_to "See all #{num_entries} documents with RIN #{regulatory_plan.regulation_id_number}.", entries_search_path(:conditions => {:regulation_id_number => regulatory_plan.regulation_id_number}) %>
       <% end %>
       </div>
     <% end %>

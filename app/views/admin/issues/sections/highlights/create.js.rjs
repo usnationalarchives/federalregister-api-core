@@ -3,6 +3,6 @@ if @section_highlight.valid?
   page.insert_html :top, '#highlighted', :partial => 'admin/issues/sections/highlighted_entry', :object => @section_highlight.entry
   page.visual_effect :highlight, dom_id(@section_highlight.entry), :duration => 5
 else
-  page << '$("#new_section_highlight").append("<p class=\"error\">We could not find an article with that document number or it has already been highlighted.</p>")'
+  page << '$("#new_section_highlight").append("<p class=\"error\">We could not find a document with that document number or it has already been highlighted.</p>")'
   page.visual_effect :highlight, '#new_section_highlight .error', :duration => 5
 end

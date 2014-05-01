@@ -354,12 +354,12 @@ class EntrySearch < ApplicationSearch
   
   def summary
     if @term.blank? && filters.empty?
-      "All Articles"
+      "All Documents"
     else
       parts = filter_summary
       parts.unshift("matching '#{@term}'") if @term.present?
       
-      'Articles ' + parts.to_sentence
+      'Documents ' + parts.to_sentence
     end
   end
   

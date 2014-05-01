@@ -1,5 +1,5 @@
 <% title "Topics" %>
-<% description "Federal agencies add topics to the articles they publish in the Federal Register. Use these topics to learn more about your areas of interest and the regulations that affect them." %>
+<% description "Federal agencies add topics to the documents they publish in the Federal Register. Use these topics to learn more about your areas of interest and the regulations that affect them." %>
 
 <div class="title"><span>Topic List</span></div>
 
@@ -60,7 +60,7 @@
   <ul id="topic_list">
     <% @topics.each do |topic| %>
       <li>
-        <span class="individual_topic_count" title="Number of associated articles"><%= topic.entries_count %></span> 
+        <span class="individual_topic_count" title="Number of associated documents"><%= topic.entries_count %></span> 
         <%= link_to topic.name, topic_path(topic) %>
       </li>
     <% end %>
