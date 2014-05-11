@@ -34,8 +34,8 @@ class FrIndexPresenter
     end
 
     def needs_attention?
-      last_completed_issue ||= Date.new(2000,1,1)
-      unmodified? && entries.any? { |entry| entry.publication_date > last_completed_issue }
+      last_approved_issue = last_completed_issue || Date.new(2000,1,1)
+      unmodified? && entries.any? { |entry| entry.publication_date > last_approved_issue }
     end
 
     def oldest_issue_needing_attention
