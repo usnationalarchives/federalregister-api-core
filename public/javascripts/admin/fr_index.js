@@ -298,6 +298,9 @@ var FRIndexEditor = (function(){
             wrapping_context.closest('li.top_level').children('.edit').remove();
             wrapping_context.remove();
           }
+          else {
+            wrapping_context.remove();
+          }
         } else {
           wrapping_context.remove();
         }
