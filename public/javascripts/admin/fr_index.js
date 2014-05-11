@@ -325,10 +325,11 @@ var FRIndexEditor = (function(){
           added_element = $(element).appendTo(wrapping_list);
         }
 
+        var $addedElement;
         if (window.$scrollTarget.hasClass("top_level")) {
-          var $addedElement = added_element;
+          $addedElement = added_element;
         } else {
-          var $addedElement= $(added_element).find("li[data-document-number=" + window.$scrollTargetValue + "]").parent().parent();
+          $addedElement= $(added_element).find("li[data-document-number=" + window.$scrollTargetValue + "]").parent().parent();
         }
 
         this.highlight_added_element($addedElement);
