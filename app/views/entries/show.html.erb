@@ -13,7 +13,7 @@
       
       <% if (@entry.comments_close_on.present? && @entry.comments_close_on >= Time.current.to_date) || (@entry.comment_url.present? && @entry.publication_date.to_time > 4.months.ago) %>
         <% comment_date = @entry.comments_close_on %>
-        <div id="flash_message" class="comment">
+        <div id="flash_message" class="comment" data-document-number="<%= @entry.document_number %>">
           <p>
             <% if comment_date && comment_date >= Date.current %>
               This article has a comment period that ends <%= days_remaining( comment_date) %>
