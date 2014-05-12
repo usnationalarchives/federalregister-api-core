@@ -1,4 +1,4 @@
-* fancy article view
+* fancy document view
     * built from XML bulkdata
     * images extracted from PDF and inserted into view
     * footnotes placed inline with tooltip
@@ -14,10 +14,10 @@
     * newly proposed rules
 * browse by agency
     * map of recent activity
-    * identification of most cited articles from this agency
+    * identification of most cited documents from this agency
 * browse by topic
     * graphic of most popular agencies for this topic
-    * identification of most cited articles with the topic
+    * identification of most cited documents with the topic
     * when appropriate combining multiple historic GPO topics
 * browse by publication date
     * calendar tool to switch date
@@ -25,7 +25,7 @@
 * search by
     * keyword (including word stemming)
     * location (including customizable distance)
-    * article type (combining SUNLIGHT into NOTICE)
+    * document type (combining SUNLIGHT into NOTICE)
     * date published
       * specific date, year, date range
     * effective date
@@ -52,12 +52,12 @@
     * URL identification
     * determination of whether comments are accepted there
 * location extraction using Yahoo's Placemaker service
-* tools to share articles
-    * tiny URL for every article (one click to copy to clipboard)
+* tools to share documents
+    * tiny URL for every document (one click to copy to clipboard)
     * share on twitter, facebook, digg, reddit
 * search engine optimization
     * daily XML sitemap generation for all 500,000 pages, including ping of all major engines when updated
-    * URLs include article title
+    * URLs include document title
         * no truncation of words
         * automatic repair of mangled URLs
     * use of semantic HTML5

@@ -4,14 +4,14 @@
 <div id="content_area">
   <%= link_to "back to #{@section.title}", section_path(@section) %>
 
-  <p>All articles published by the following agencies are assigned to this section.</p>
+  <p>All documents published by the following agencies are assigned to this section.</p>
   <ul>
   <% @section.agencies.each do |agency| %>
     <li><%= link_to agency.name, agency_path(agency) %></li>
   <% end %>
   </ul>
 
-  <p>Articles associated with the following parts of the CFR are assigned to this section.</p>
+  <p>Documents associated with the following parts of the CFR are assigned to this section.</p>
   <ul>
   <% @section.cfr_citation_ranges.each do |cfr_citation_range| %>
     <li><%= cfr_citation_range.title %> CFR <%= cfr_citation_range.part_start %><%= "-#{cfr_citation_range.part_end}" if cfr_citation_range.part_end.present? %></li>

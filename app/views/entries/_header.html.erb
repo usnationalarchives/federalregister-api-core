@@ -10,7 +10,7 @@
       <li class="clip_for_later">
         <%= render :partial => 'add_to_clipboard', :locals => {:entry => @entry} %>
       </li>
-      <li><%= link_to "Email", new_entry_email_path(entry), :title => "Email this article to a friend", :class => 'button list social email tip_over' %></li>
+      <li><%= link_to "Email", new_entry_email_path(entry), :title => "Email this document to a friend", :class => 'button list social email tip_over' %></li>
       <li><%= link_to_twitter("#{short_entry_url(entry)} #gov20") %></li>
       <li><%= link_to_facebook(short_entry_url(entry), entry.title) %></li>
     </ul>

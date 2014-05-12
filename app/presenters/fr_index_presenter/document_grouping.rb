@@ -34,7 +34,8 @@ class FrIndexPresenter
     end
 
     def needs_attention?
-      unmodified? && old_entry_count == 0
+      last_approved_issue = last_completed_issue || Date.new(2000,1,1)
+      unmodified? && entries.any? { |entry| entry.publication_date > last_approved_issue }
     end
 
     def oldest_issue_needing_attention
@@ -58,30 +59,6 @@ class FrIndexPresenter
     end
 
     private
-
-    def old_entry_count
-      return @old_entry_count if @old_entry_count 
-      date = last_completed_issue
-      if date
-        @old_entry_count = entries.select{|e| e.publication_date <= date}.size
-        if @old_entry_count > 0
-          @old_entry_count
-        else
-          @old_entry_count = Entry.find_as_array([<<-SQL, entry_ids_for_year, last_completed_issue, entries.first.fr_index_subject, entries.first.fr_index_doc]).first.to_i
-            SELECT COUNT(*)
-            FROM entries
-            LEFT OUTER JOIN public_inspection_documents
-              ON public_inspection_documents.entry_id = entries.id
-            WHERE entries.id IN (?)
-              AND entries.publication_date <= ?
-              AND IFNULL(#{FrIndexPresenter::EntryPresenter::SUBJECT_SQL},'_null_') = IFNULL(?, '_null_')
-              AND IFNULL(fr_index_doc, #{FrIndexPresenter::EntryPresenter::DOC_SQL}) = ?
-          SQL
-        end
-      else
-        @old_entry_count = 0
-      end
-    end
 
     def unmodified?
       entries.none?(&:modified?)

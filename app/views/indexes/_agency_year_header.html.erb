@@ -17,16 +17,16 @@
   <p>
     <% if agency_year.current_year? %>
       As of <strong><%= agency_year.max_date.strftime("%B %e, %Y") %></strong> the <%= agency_year.agency.name %> has published 
-      <%= pluralize agency_year.entry_count, "article" %> in <%= agency_year.year %>.
+      <%= pluralize agency_year.entry_count, "document" %> in <%= agency_year.year %>.
     <% else %>
-      In <%= agency_year.year %> the <%= agency_year.agency.name %> published <%= pluralize agency_year.entry_count, "article" %>.
+      In <%= agency_year.year %> the <%= agency_year.agency.name %> published <%= pluralize agency_year.entry_count, "document" %>.
     <% end %>
   </p>
 
   <table>
     <tr>
-      <th>Article Type</th>
-      <th>Articles Published</th>
+      <th>Document Type</th>
+      <th>Documents Published</th>
       <th>Subjects Covered</th>
     </tr>
     <% agency_year.document_types.each do |document_type| %>

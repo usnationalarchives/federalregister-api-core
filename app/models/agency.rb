@@ -23,7 +23,7 @@ class Agency < ApplicationModel
   
   # cabinet level agencies and the EPA
   # excludes things like the dept of the army, etc
-  # as they don't produce many FR articles
+  # as they don't produce many FR documents
   AGENCIES_IN_NAV_AGENCY_IDS = [12, 54, 103, 126, 136, 145, 221, 227, 228, 253, 268, 271, 476, 492, 497, 520]
 
   has_many :agency_assignments

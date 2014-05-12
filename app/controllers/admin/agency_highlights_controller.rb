@@ -5,7 +5,7 @@ class Admin::AgencyHighlightsController < AdminController
   
   def new
     if entry.agency_highlight.present?
-      flash[:error] = 'This article has already been agency highlighted. You are now editing.'
+      flash[:error] = 'This document has already been agency highlighted. You are now editing.'
       redirect_to edit_admin_agency_highlight_path(entry.agency_highlight)
       return
     end

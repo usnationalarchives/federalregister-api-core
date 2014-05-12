@@ -96,6 +96,8 @@ var FRIndexEditorForm = (function() {
 
         this.form.on('submit', function(event) {
           event.preventDefault();
+          window.$scrollTarget = $(event.target);
+          window.$scrollTargetValue = $(event.target).next('ul').find('li').attr('data-document-number');
           var form = $(this);
 
           frIndexEditorForm.identify_as_saving();
@@ -296,6 +298,9 @@ var FRIndexEditor = (function(){
             wrapping_context.closest('li.top_level').children('.edit').remove();
             wrapping_context.remove();
           }
+          else {
+            wrapping_context.remove();
+          }
         } else {
           wrapping_context.remove();
         }
@@ -320,18 +325,22 @@ var FRIndexEditor = (function(){
           added_element = $(element).appendTo(wrapping_list);
         }
 
-        this.highlight_added_element(added_element);
-      },
+        var $addedElement;
+        if (window.$scrollTarget.hasClass("top_level")) {
+          $addedElement = added_element;
+        } else {
+          $addedElement= $(added_element).find("li[data-document-number=" + window.$scrollTargetValue + "]").parent().parent();
+        }
 
+        this.highlight_added_element($addedElement);
+      },
       highlight_added_element: function(element) {
-        element.scrollintoview({
-          duration: 300,
-          complete: function() {
-            element.effect("highlight", {color: '#e5edef'}, 2000);
-          }
-        });
-      },
+        $('html, body').animate({
+          scrollTop:  element.offset().top,
+        }, 1000);
 
+        element.delay(1000).effect("highlight", {color: '#e5edef'}, 2000);
+      },
       silent_spelling_correction_submit: function(context_wrapper, header_attribute, text) {
         var form_data = context_wrapper.data('form-data'),
             frIndexEditor = this;

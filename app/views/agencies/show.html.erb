@@ -3,8 +3,8 @@
 
 <div class="title"><span>Agency</span></div>
 
-<% feed_autodiscovery agency_url(@agency, :format => :rss), "All Articles by #{@agency.name}", :search_conditions => {:agency_ids => [@agency.id]} %>
-<% feed_autodiscovery significant_entries_agency_url(@agency, :format => :rss), "Significant Articles by #{@agency.name}", :search_conditions => {:agency_ids => [@agency.id], :significant => 1} %>
+<% feed_autodiscovery agency_url(@agency, :format => :rss), "All Documents by #{@agency.name}", :search_conditions => {:agency_ids => [@agency.id]} %>
+<% feed_autodiscovery significant_entries_agency_url(@agency, :format => :rss), "Significant Documents by #{@agency.name}", :search_conditions => {:agency_ids => [@agency.id], :significant => 1} %>
 
 <div class="group">
   
@@ -33,7 +33,7 @@
     <% if @entries.present?%>
       <p>
         This agency has published 
-        <%= link_to pluralize(number_with_delimiter(@entries.total_entries), 'article'), entries_search_path(:conditions => {:agency_ids => [@agency.id]}, :skip_results => 1, :anchor => 'advanced') %>
+        <%= link_to pluralize(number_with_delimiter(@entries.total_entries), 'document'), entries_search_path(:conditions => {:agency_ids => [@agency.id]}, :skip_results => 1, :anchor => 'advanced') %>
         since 1994.
       </p>
     <% end %>
@@ -55,7 +55,7 @@
           <% end %>
           
           <% if @entries.present? %>
-            <li><%= link_to 'Recent Articles', '#recent_articles' %></li>
+            <li><%= link_to 'Recent Documents', '#recent_articles' %></li>
           <% end %>
           
           <% if @comments_closing.present? %>

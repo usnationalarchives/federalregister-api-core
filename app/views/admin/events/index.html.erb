@@ -8,7 +8,7 @@
       <th><%= order @search, :as => 'Title', :by => :title %></th>
       <th><%= order @search, :as => 'Event Date', :by => :date %></th>
       <th><%= order @search, :as => 'Location', :by => {:place => :name} %></th>
-      <th><%= order @search, :as => 'Article', :by => {:entry => :publication_date} %></th>
+      <th><%= order @search, :as => 'Document', :by => {:entry => :publication_date} %></th>
       <th></th>
     </tr>
   </thead>

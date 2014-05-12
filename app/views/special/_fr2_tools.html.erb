@@ -9,15 +9,15 @@
 
 <ul class="bullets bold_links">
   <li>Read the Federal Register by section.</li> 
-  <li>Search our article collection, <strong>dating to 1994</strong>, from anywhere on the site by using the search box at the top of any page.</li>
-  <li>Go to a specific article by searching for the citation or by going to the <%= link_to 'retrieve articles by citation', citation_search_path %> page.</li>
+  <li>Search our document collection, <strong>dating to 1994</strong>, from anywhere on the site by using the search box at the top of any page.</li>
+  <li>Go to a specific document by searching for the citation or by going to the <%= link_to 'retrieve documents by citation', citation_search_path %> page.</li>
   <li><%= link_to "Browse by agency", agencies_path %> or <%= link_to "explore by topic", topics_path %>.</li>
   <li>View upcoming documents on <%= link_to 'Public Inspection', public_inspection_documents_path %></li>
-  <!-- <li>Share a link to a specific paragraph in any article.</li> -->
+  <!-- <li>Share a link to a specific paragraph in any document.</li> -->
   <li>
     Subscribe, via RSS or <%= link_to 'email', "/blog/2011/04/email-notifications-now-available" %>, 
     to a search term, a section, an agency or 
-    <%= link_to 'a daily feed of all articles', new_subscription_path(:subscription => {:search_conditions => {}}), :class => 'subscription_action' %>.
+    <%= link_to 'a daily feed of all documents', new_subscription_path(:subscription => {:search_conditions => {}}), :class => 'subscription_action' %>.
     <%= add_template('subscription_modal', 'subscription-modal') %>
   </li>
   <li>Learn more on our <a href="/policy/user-information">user information page</a>!</li>

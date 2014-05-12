@@ -13,8 +13,8 @@ class RegulatoryPlansController < ApplicationController
         end
       
         wants.rss do
-          @feed_name = "Federal Register: Recent articles about RIN #{@regulatory_plan.regulation_id_number}"
-          @feed_description = "Federal Register articles about RIN #{@regulatory_plan.regulation_id_number}."
+          @feed_name = "Federal Register: Recent documents about RIN #{@regulatory_plan.regulation_id_number}"
+          @feed_description = "Federal Register documents about RIN #{@regulatory_plan.regulation_id_number}."
           @entries = EntrySearch.new(:conditions => {:regulation_id_number => @regulatory_plan.regulation_id_number}, :order => "newest", :per_page => 20).results
           render :template => 'entries/index.rss.builder'
         end

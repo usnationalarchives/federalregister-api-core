@@ -25,7 +25,7 @@
           <% conditions = {:publication_date => {:is => @issue.publication_date}, :section_ids => [section.id]} %>
           <% link_to entries_search_path(:conditions => conditions, :utm_source => 'navigation', :utm_medium => 'dropdown', :utm_content => 'new_articles') do %>
             <span class="count"><%= count = EntrySearch.new(:conditions => conditions).count %></span>
-            <span class="details"><%= pluralize_without_count(count, 'New Articles') %> In this Issue</span>
+            <span class="details"><%= pluralize_without_count(count, 'New Documents') %> In this Issue</span>
           <% end %>
         </li>
         <li class="closing_soon">

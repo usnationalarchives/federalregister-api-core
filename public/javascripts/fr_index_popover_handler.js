@@ -42,7 +42,7 @@ fr_index_popover_handler = {
       }).done(function(response) {
         if( popover_handler.uses_pi ) {
           var pi_response = response;
-          /* need to get the title from the article end point and then 
+          /* need to get the title from the document end point and then 
            * pass the whole thing as a single object to handlebars */
           $.ajax({
             url: popover_handler.article_url(),

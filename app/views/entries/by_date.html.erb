@@ -1,4 +1,4 @@
-<% feed_autodiscovery entries_url(:format => :rss), 'All Articles from the Federal Register', :search_conditions => {} %>
+<% feed_autodiscovery entries_url(:format => :rss), 'All Documents from the Federal Register', :search_conditions => {} %>
 
 <% if controller.action_name == 'current_issue' %>
   <% description "Today Federal Register issue, including notices, proposed and final rules, and presidential documents." %>
@@ -6,7 +6,7 @@
   <% description "Notices, proposed and final rules, and presidential documents published in the Federal Register on #{@publication_date.to_formatted_s(:pretty)}." %>
 <% end %>
 
-<% title "Articles for #{@publication_date.to_formatted_s(:pretty)}" %>
+<% title "Documents for #{@publication_date.to_formatted_s(:pretty)}" %>
 <div class="title"><span><%= @publication_date %> Issue</span></div>
 
 <%= render :partial => "statistics_by_date", :locals => {:issue => @issue, :label => @publication_date, :other_dates => false, :url => entries_by_date_path(@publication_date)} %>
@@ -53,7 +53,7 @@
 
 <% if @entries_without_agencies.present? %>
   <div class="title_bar">
-    <h2>Other Articles</h2>
+    <h2>Other Documents</h2>
   </div>
   <% @entries_without_agencies.group_by(&:agency_names).each do |agency_names, entries| %>
     <h3><%= agency_names.map(&:name).to_sentence %></h3>

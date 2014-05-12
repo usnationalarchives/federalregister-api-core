@@ -1,5 +1,5 @@
 <div id="articles_published_by_day-<%= index %>" data-date="<%= date %>" class="tabs-panel">
-  <h2 class="title_bar"><span class="small_stack">Articles <span>published on</span></span> <span class="large_flow"><%= date %></span></h2>
+  <h2 class="title_bar"><span class="small_stack">Documents <span>published on</span></span> <span class="large_flow"><%= date %></span></h2>
   <% @section.entries.published_on(date).scoped(:include => [:agencies, :agency_names]).in_groups_of(2, false).each_with_index do |entries, index| %>
     <div class="row <%= index == 0 ? 'first' : '' %>">
       <% entries.each do |entry| %>
