@@ -101,7 +101,7 @@ $(document).ready(function () {
                     hash.w.show();
                   }
       });
-      $('#cfr_citation_modal').centerScreen().jqmShow();
+      $('#cfr_citation_modal').jqmShow().centerScreen();
     }
 
 

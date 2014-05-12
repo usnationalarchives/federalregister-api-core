@@ -157,12 +157,12 @@ $(document).ready(function () {
         });
     }
 
-    $('#modal').centerScreen().jqm({
+    $('#modal').jqm({
         ajax: '@href',
         ajaxText: 'Loading...',
         trigger: '.results a.add_to_calendar',
         onShow: modalOpen
-    });
+    }).centerScreen();
     
     $(".date_options .date").hide();
     

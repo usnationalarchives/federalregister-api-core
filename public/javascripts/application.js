@@ -130,7 +130,7 @@ $(document).ready(function () {
         generate_exit_dialog();
         $("#exit_modal .flickr_link").attr("href", $(this).attr("href")).text($(this).attr("href"));
         jqmHandlers.setHref($(this).attr("href"));
-        $("#exit_modal").centerScreen().jqmShow();
+        $("#exit_modal").jqmShow().centerScreen();
     });
 
     if( $(".collapse").length > 0 ) {

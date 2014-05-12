@@ -40,7 +40,7 @@ function display_modal(title, html, options) {
       onShow: this.modalOpen
   });
 
-  current_modal.centerScreen().jqmShow();
+  current_modal.jqmShow().centerScreen();
 }
 
 $(document).ready(function() {

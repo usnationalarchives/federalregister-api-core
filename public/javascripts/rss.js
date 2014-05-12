@@ -50,7 +50,7 @@ $(document).ready(function () {
       function () {
         generate_dialog();
         $('#modal input[placeholder]').textPlaceholder();
-        $('#modal').centerScreen().jqmShow();
+        $('#modal').jqmShow().centerScreen();
 
         $('#modal .tip_under').tipsy({gravity:'north'});
 
