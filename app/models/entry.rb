@@ -288,6 +288,8 @@ class Entry < ApplicationModel
     has effective_date(:date), :as => :effective_date
     has comments_close_date(:date), :as => :comment_date
 
+    has "IF(comment_url != '', 1, 0)", :as => :accepting_comments_on_regulations_dot_gov, :type => :boolean
+
     join small_entities_for_thinking_sphinx
     has "GROUP_CONCAT(DISTINCT IFNULL(regulatory_plans_small_entities.small_entity_id,0) SEPARATOR ',')", :as => :small_entity_ids, :type => :multi
     has "SUM(IF(regulatory_plans.priority_category IN (#{RegulatoryPlan::SIGNIFICANT_PRIORITY_CATEGORIES.map{|c| "'#{c}'"}.join(',')}),1,0)) > 0",

@@ -157,6 +157,12 @@ class EntrySearch < ApplicationSearch
                   "Associated Unified Agenda Deemed Significant Under EO 12866"
                 end
 
+  define_filter :accepting_comments_on_regulations_dot_gov,
+                :sphinx_type => :with,
+                :label => "Regulations.gov" do
+                  "Accepting Comments on Regulations.gov"
+                end
+
   define_filter :correction,
                 :sphinx_type => :with do |val|
                   case val
