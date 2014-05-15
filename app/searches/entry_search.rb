@@ -81,6 +81,7 @@ class EntrySearch < ApplicationSearch
   define_filter(:citing_document_numbers,
                 :sphinx_type => :with,
                 :sphinx_attribute => :cited_entry_ids,
+                :label => 'Citing document',
                 :sphinx_value_processor => Proc.new { |*document_numbers|
                   entries = Entry.all(:select => "id, document_number", :conditions => {:document_number => document_numbers.flatten})
                   missing_document_numbers = entries.map(&:document_number) - document_numbers.flatten
@@ -91,7 +92,9 @@ class EntrySearch < ApplicationSearch
 
                   entries.map(&:id)
                 }) do |*document_numbers|
-                  document_numbers.flatten.map(&:inspect).to_sentence
+                  entries = Entry.all(:select => "id, citation", :conditions => {:document_number => document_numbers.flatten})
+
+                  entries.map(&:citation).to_sentence(:two_words_connector => ' or ', :last_word_connector => ', or ')
                 end
 
   define_filter(:document_numbers,
@@ -390,7 +393,8 @@ class EntrySearch < ApplicationSearch
       ['in', :sections],
       ['about', :topic_ids],
       ['affecting Small', :small_entity_ids],
-      ['affecting Small', :small_entities]
+      ['affecting Small', :small_entities],
+      ['citing', :citing_document_numbers]
     ].each do |term, filter_condition|
       relevant_filters = filters.select{|f| f.condition == filter_condition}
     
