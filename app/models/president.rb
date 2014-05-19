@@ -19,7 +19,7 @@ class President < ActiveHash::Base
       :identifier => 'barack-obama',
       :full_name => "Barack Obama",
       :starts_on => Date.new(2009,1,20),
-      :ends_on => Date.new(2013,1,19)
+      :ends_on => Date.new(2017,1,19)
     }
   ]
 
