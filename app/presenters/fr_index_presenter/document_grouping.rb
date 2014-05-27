@@ -34,8 +34,7 @@ class FrIndexPresenter
     end
 
     def needs_attention?
-      last_approved_issue = last_completed_issue || Date.new(2000,1,1)
-      unmodified? && entries.any? { |entry| entry.publication_date > last_approved_issue }
+      entries.any? { |entry| entry.needs_attention?(last_completed_issue) }
     end
 
     def oldest_issue_needing_attention
@@ -56,12 +55,6 @@ class FrIndexPresenter
 
     def header_attribute
       'fr_index_doc'
-    end
-
-    private
-
-    def unmodified?
-      entries.none?(&:modified?)
     end
   end
 end
