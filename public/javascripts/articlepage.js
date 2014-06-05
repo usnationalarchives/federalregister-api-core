@@ -1,4 +1,15 @@
 $(document).ready(function () {
+    var commentButton = $('#start_comment.how_to_comment');
+    if (commentButton.size() > 0) {
+      if($('#addresses').size() === 0) {
+        if ($('#furinf').size() === 0) {
+          commentButton.remove();
+        } else {
+          commentButton.attr('href', '#furinf');
+        }
+      }
+    }
+
     $('div.article[data-internal-id]').each(function () {
         var id = $(this).attr('data-internal-id');
         $.ajax({

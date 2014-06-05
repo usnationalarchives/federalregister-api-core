@@ -22,7 +22,11 @@
               Comments on this document are being accepted at Regulations.gov
             <% end %>
             
-            <%= link_to "Submit a formal comment", @entry.comment_url.present? ? @entry.comment_url : '#addresses', :id => 'start_comment', :class => 'button formal_comment', :target => (@entry.comment_url.present? ? '_blank' : ''), :'data-comment' => (@entry.comment_url.present? ? 1 : '') %>
+            <% if @entry.comment_url.present? %>
+              <%= link_to "Submit a formal comment", @entry.comment_url, :id => 'start_comment', :class => 'button formal_comment', :target => '_blank', :'data-comment' => @entry.comment_url.present? %>
+            <% else %>
+              <%= link_to "How To Comment", '#addresses', :id => 'start_comment', :class => 'button formal_comment how_to_comment' %>
+            <% end %>
           </p>
         </div>
         <% if @entry.docket && @entry.docket.comments_count && @entry.docket.comments_count > 0 && ! @entry.docket.placeholder? %>
