@@ -147,8 +147,7 @@ class Entry < ApplicationModel
   def self.comments_opening(range = (Time.current.to_date - 7.days .. Time.current.to_date))
     scoped(
       :joins => :comments_close_date,
-      # :conditions => {:entries => {:publication_date => range}},
-      :conditions => {:events => {:date => range}},
+      :conditions => {:entries => {:publication_date => range}},
       :order => "events.date"
     )
   end
