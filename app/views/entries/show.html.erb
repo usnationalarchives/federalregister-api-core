@@ -23,7 +23,7 @@
             <% end %>
             
             <% if @entry.comment_url.present? %>
-              <%= link_to "Submit a formal comment", @entry.comment_url, :id => 'start_comment', :class => 'button formal_comment', :target => '_blank', :'data-comment' => @entry.comment_url.present? %>
+              <%= link_to "Submit a formal comment", @entry.comment_url, :id => 'start_comment', :class => 'button formal_comment', :target => '_blank', :'data-comment' => 1 %>
             <% else %>
               <%= link_to "How To Comment", '#addresses', :id => 'start_comment', :class => 'button formal_comment how_to_comment' %>
             <% end %>
