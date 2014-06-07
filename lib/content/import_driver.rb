@@ -6,8 +6,13 @@ module Content
     
       if lock_file_already_exists?
         if other_process_is_running?
-          puts "Lock file exists and other process is running; exiting as another process is working on the import. Exiting."
-          exit
+          if other_process_is_old?
+            puts "Lock file exists, but other process (PID #{other_process_pid}) exists and isn't too old. Killing it now."
+            kill_other_process
+          else
+            puts "Lock file exists and other process is running and not older than an hour; exiting as another process is working on the import. Exiting."
+            exit
+          end
         else
           puts "Lock file exists but other process is not running; removing lock file and continuing"
           remove_lock_file
@@ -28,11 +33,18 @@ module Content
     def lock_file_already_exists?
       File.exists?(lock_file_path)
     end
+
+    def other_process_pid
+      @other_process_pid ||= IO.read(lock_file_path).try(:to_i)
+    end
+
+    def other_process_is_old?
+      (Time.current - File.stat(lock_file_path).ctime) > 60.minutes
+    end
     
     def other_process_is_running?
-      pid = IO.read(lock_file_path).try(:to_i)
       begin
-        Process.getpgid( pid )
+        Process.getpgid( other_process_pid )
         return true
       rescue Errno::ESRCH
         return false
@@ -48,6 +60,11 @@ module Content
       File.open(lock_file_path, File::CREAT|File::EXCL|File::RDWR) do |f|
         f.write(Process.pid)
       end
+    end
+
+    def kill_other_process
+      Process.kill("TERM", other_process_pid)
+      remove_lock_file
     end
   
     def remove_lock_file
