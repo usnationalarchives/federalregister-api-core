@@ -65,6 +65,7 @@ module Content
     def kill_other_process
       Process.kill("TERM", other_process_pid)
       remove_lock_file
+      sleep(10)
     end
   
     def remove_lock_file
