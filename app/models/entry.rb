@@ -537,6 +537,10 @@ class Entry < ApplicationModel
     date = signing_date || (publication_date - 3)
     President.in_office_on(date)
   end
+
+  def regulations_dot_gov_agency_id
+    comment_url.present? ? comment_url.split('D=').last.split(/(_|-)/, 2).first : ''
+  end
  
   private
   
