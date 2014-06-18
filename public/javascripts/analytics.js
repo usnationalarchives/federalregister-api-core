@@ -64,20 +64,6 @@ $(document).ready(function(){
     _gaq.push(['_trackEvent', 'Social', 'Facebook', document.location.pathname]);
   });
 
-  /* track use of 'submit formal comment' button */
-  $('#flash_message.comment a.button').on('click', function() {
-    var path = $(this).attr('href'),
-        action;
-
-    if( path === "#addresses" ) {
-      action = 'Addresses';
-    } else {
-      action = 'Regulations.gov';
-    }
-
-    _gaq.push(['_trackEvent', 'Comments', action]);
-  });
-
   /* track links to regs.gov */
   meta_data_content_area.on('click', '#comment_count a', function() {
     _gaq.push(['_trackEvent', 'Regulations.gov', 'View Comments', 'metadata_content_area']);
