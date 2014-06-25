@@ -1,7 +1,10 @@
 source 'http://rubygems.org'
 source 'http://gems.github.com'
 
-gem 'rails', '2.3.18'
+gem 'rails',
+  :git => 'https://github.com/makandra/rails.git',
+  :branch => '2-3-lts'
+
 gem 'mysql', '2.7'
 
 gem "jrails", "0.6.0"

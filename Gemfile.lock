@@ -22,22 +22,36 @@ GIT
       honeybadger
       resque (>= 1.8.0)
 
-GEM
-  remote: http://rubygems.org/
-  remote: http://gems.github.com/
+GIT
+  remote: https://github.com/makandra/rails.git
+  revision: 133bbcb301a2b51918d3641541f4d0aa2b086af0
+  branch: 2-3-lts
   specs:
     actionmailer (2.3.18)
       actionpack (= 2.3.18)
     actionpack (2.3.18)
       activesupport (= 2.3.18)
       rack (~> 1.1.0)
-    active_hash (0.9.5)
-      activesupport (>= 2.2.2)
     activerecord (2.3.18)
       activesupport (= 2.3.18)
     activeresource (2.3.18)
       activesupport (= 2.3.18)
     activesupport (2.3.18)
+    rails (2.3.18)
+      actionmailer (= 2.3.18)
+      actionpack (= 2.3.18)
+      activerecord (= 2.3.18)
+      activeresource (= 2.3.18)
+      activesupport (= 2.3.18)
+      railslts-version (= 2.3.18.10)
+      rake (>= 0.8.3)
+
+GEM
+  remote: http://rubygems.org/
+  remote: http://gems.github.com/
+  specs:
+    active_hash (0.9.5)
+      activesupport (>= 2.2.2)
     after_commit (1.0.10)
       activerecord (>= 1.15.6, < 3.0.0)
     amatch (0.2.11)
@@ -152,14 +166,8 @@ GEM
     rack (1.1.6)
     rack-test (0.5.6)
       rack (>= 1.0)
-    rails (2.3.18)
-      actionmailer (= 2.3.18)
-      actionpack (= 2.3.18)
-      activerecord (= 2.3.18)
-      activeresource (= 2.3.18)
-      activesupport (= 2.3.18)
-      rake (>= 0.8.3)
     rails-test-serving (0.1.4.2)
+    railslts-version (2.3.18.10)
     rake (10.3.2)
     rdoc (3.12)
       json (~> 1.4)
@@ -256,7 +264,7 @@ DEPENDENCIES
   nokogiri (= 1.3.2)
   paperclip (= 2.3.1.1)
   pdfkit (= 0.5.2)
-  rails (= 2.3.18)
+  rails!
   rails-test-serving (= 0.1.4.2)
   rdoc
   recaptcha (= 0.3.1)
