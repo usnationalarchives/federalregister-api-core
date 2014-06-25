@@ -47,4 +47,6 @@ Rails::Initializer.run do |config|
     :path => '/admin',
   }
   config.cache_store = :file_store, "#{RAILS_ROOT}/tmp/cache"
+
+  config.rails_lts_options = { :disable_xml_parsing => true }
 end
