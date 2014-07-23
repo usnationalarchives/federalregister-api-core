@@ -98,8 +98,7 @@ GEM
     ffi (1.6.0)
     ffi-hunspell (0.2.6)
       ffi (~> 1.0)
-    flickraw (0.8.1)
-      json (>= 1.1.1)
+    flickraw (0.9.8)
     floehopper-mocha (0.9.7.20090701124354)
       rake
     formtastic (0.9.8)
@@ -239,7 +238,7 @@ DEPENDENCIES
   fakeweb
   fastercsv (= 1.4.0)
   ffi-hunspell
-  flickraw (= 0.8.1)
+  flickraw (= 0.9.8)
   floehopper-mocha
   formtastic (= 0.9.8)
   fr2_audit_logic!

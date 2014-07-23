@@ -298,6 +298,14 @@ class ApplicationSearch
   end
 
   def search_options
+    @page ||= 1
+    @per_page ||= 20
+
+    max_resultset = @page * @per_page
+    if max_resultset > 10_000
+      @page = 1
+    end
+
     {
       :page => @page,
       :per_page => @per_page,
@@ -309,7 +317,7 @@ class ApplicationSearch
       :match_mode => :extended,
       :retry_stale => true,
       :sort_mode => sort_mode,
-      :max_matches => @per_page > 1000 ? @per_page : 1000
+      :max_matches => 10_000,
     }.merge(find_options)
   end
 end
