@@ -15,6 +15,6 @@ class RegulationsDotGov::CommentForm::Option
   end
 
   def default?
-    attributes["@default"] == "true"
+    attributes["default"] == true
   end
 end

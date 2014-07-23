@@ -27,11 +27,11 @@ class RegulationsDotGov::CommentForm::Field
   end
 
   def required?
-    attributes["@required"] == "true"
+    attributes["required"]
   end
 
   def publically_viewable?
-    attributes["@publicViewable"] == "true"
+    attributes["publicViewable"]
   end
 
   def name

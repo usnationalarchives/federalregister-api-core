@@ -7,19 +7,16 @@ class RegulationsDotGov::CommentForm
     @client = client
     @attributes = attributes
     @document_attributes = attributes['document']
+    @field_list = attributes['fieldList']
   end
 
   def allow_attachments?
-    raise 'not implemented in v2 api!'
-    attributes["showAttachment"] == true
+    # attachments are now always allowed
+    true
   end
 
   def alternative_ways_to_comment
     document_attributes["alternateWaysToComment"]
-  end
-
-  def submit_by
-    DateTime.parse( document_attributes["commentEndDate"] )
   end
 
   def posting_guidelines
@@ -31,11 +28,15 @@ class RegulationsDotGov::CommentForm
   end
 
   def comments_open_at
-    DateTime.parse(document_attributes['commentStartDate'])
+    Time.zone.parse(document_attributes['commentStartDate'])
   end
 
   def comments_close_at
-    DateTime.parse(document_attributes['commentEndDate'])
+    Time.zone.parse(document_attributes['commentDueDate'])
+  end
+
+  def open_for_comment?
+    document_attributes['openForComment']
   end
 
   def has_field?(name)
@@ -43,13 +44,13 @@ class RegulationsDotGov::CommentForm
   end
 
   def fields
-    @fields ||= attributes["fieldList"].map do |field_attributes|
+    @fields ||= @field_list.map do |field_attributes|
       Field.build(client, field_attributes, agency_acronym)
     end
   end
 
   def agency_name
-    document_attributes['agencyName']
+    attributes['agencyName']
   end
 
   def agency_acronym
@@ -57,7 +58,7 @@ class RegulationsDotGov::CommentForm
   end
 
   def agency_id
-    attributes['document']['agencyId']
+    raise 'not implemented in v3 api, use agency_acronym!'
   end
 
   def text_fields
@@ -74,9 +75,9 @@ class RegulationsDotGov::CommentForm
       val = case field
             when RegulationsDotGov::CommentForm::Field::TextField
               raw_value
-            when RegulationsDotGov::CommentForm::Field::SelectField 
-              field.options.find{|x| x.value == raw_value}.try(:label)
-            when RegulationsDotGov::CommentForm::Field::ComboField 
+            when RegulationsDotGov::CommentForm::Field::SelectField
+              field.option_values.find{|x| x.value == raw_value}.try(:label)
+            when RegulationsDotGov::CommentForm::Field::ComboField
               parent_value = form_values[fields.find{|x| x.name == field.dependent_on}.try(:name)]
               if field.dependent_values.include?(parent_value)
                 field.options_for_parent_value(parent_value).find{|x| x.value == raw_value}.try(:label)
@@ -85,7 +86,7 @@ class RegulationsDotGov::CommentForm
               end
             end
 
-      {:label => field.label, :values => [val]}
+      {:label => field.label, :values => Array(val)}
     end
 
     field_values
