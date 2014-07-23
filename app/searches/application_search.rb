@@ -317,7 +317,7 @@ class ApplicationSearch
       :match_mode => :extended,
       :retry_stale => true,
       :sort_mode => sort_mode,
-      :max_matches => max_resultset
+      :max_matches => 10_000,
     }.merge(find_options)
   end
 end
