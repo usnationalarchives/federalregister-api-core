@@ -121,7 +121,7 @@ namespace :content do
         task :open_comments => :environment do
           include CacheUtils
           update_missing_regulationsdotgov_info
-          purge_cache("/api/v1")
+          purge_cache("/api/v1/*")
         end
       end
       
