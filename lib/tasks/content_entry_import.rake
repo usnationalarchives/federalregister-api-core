@@ -119,7 +119,9 @@ namespace :content do
 
         desc "Confirm comment periods are still open for comments in the last few months"
         task :open_comments => :environment do
+          include CacheUtils
           update_missing_regulationsdotgov_info
+          purge_cache("/api/v1")
         end
       end
       
