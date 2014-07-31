@@ -1,7 +1,7 @@
 <% form_for :citation, :url => citation_search_path, :html => {:method => :get} do %>
   <label>Locate</label>
   <%= select_tag :volume,
-        options_for_select([['Volume','75']] + (60..75).to_a.reverse.map {|v| ["#{v} (#{v+1935})", v.to_s] },params[:volume] ) %>
+        options_for_select([['Volume',(Date.current.year - 1935).to_s]] + (1994..(Date.current.year)).to_a.reverse.map {|year| ["#{year-1935} (#{year})", (year-1935).to_s] },params[:volume] ) %>
   <%= text_field_tag :page, local_assigns[:page] || params[:page], :placeholder => 'Page Number', :class => 'pagenumber', :id => 'conditions_term' %>
   <%= submit_tag 'Go', :id => 'conditions_submit', :class => 'btn' %>
 <% end %>
