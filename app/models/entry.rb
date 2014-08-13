@@ -428,11 +428,11 @@ class Entry < ApplicationModel
   end
   
   def self.find_all_by_citation(volume, page)
-    scoped(:conditions => ["volume = ? AND start_page <= ? AND end_page >= ?", volume.to_i, page.to_i, page.to_i], :order => "entries.end_page")
+    scoped(:conditions => ["volume = ? AND start_page <= ? AND end_page >= ?", volume.to_i, page.to_i, page.to_i], :order => "entries.end_page", :limit => 100)
   end
 
   def self.find_all_by_starting_citation(volume, page)
-    scoped(:conditions => ["volume = ? AND start_page = ?", volume.to_i, page.to_i], :order => "entries.start_page")
+    scoped(:conditions => ["volume = ? AND start_page = ?", volume.to_i, page.to_i], :order => "entries.start_page", :limit => 100)
   end
 
   def self.find_best_citation_matches(volume, page, agencies = [])
