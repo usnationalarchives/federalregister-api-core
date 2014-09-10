@@ -73,7 +73,7 @@ end
 
 task :staging do
   set :rails_env,  "staging"
-  set :branch, `git branch`.match(/\* (.*)/)[1]
+  set :branch, ENV['DEPLOY_BRANCH'] || `git branch`.match(/\* (.*)/)[1]
   set :gateway, 'fr2_staging'
 
   role :proxy,  "proxy.fr2.ec2.internal"
