@@ -27,12 +27,12 @@ namespace :content do
     end
 
     task :run => :environment do
-      new_documents = Content::PublicInspectionImporter.perform
+      new_document_numbers = Content::PublicInspectionImporter.perform
 
-      if new_documents.present?
+      if new_document_numbers.present?
         Rake::Task["content:public_inspection:reindex"].invoke unless Rails.env == 'development'
 
-        document_numbers = new_documents.map(&:document_number).join(';')
+        document_numbers = new_document_numbers.join(';')
         Content.run_myfr2_command "bundle exec rake mailing_lists:public_inspection:deliver[\"#{document_numbers}\"]"
       end
     end

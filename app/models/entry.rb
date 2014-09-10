@@ -211,6 +211,8 @@ class Entry < ApplicationModel
   def entry_type 
     ENTRY_TYPES[granule_class]
   end
+
+  alias_method :category, :entry_type
   
   define_index do
     # fields
