@@ -1,11 +1,11 @@
 <li>
-  <h4><%= link_to sanitize(document.excerpts.title.present? ? document.excerpts.title : "#{document.toc_subject} #{document.toc_doc}", :tags => %w(span), :attributes => %w(class)), entry_path(document) %></h4>
+  <h4><%= link_to sanitize(document.excerpts.title.present? ? document.excerpts.title : document.title, :tags => %w(span), :attributes => %w(class)), entry_path(document) %></h4>
 
   <div class="result_info">
     <span class="excerpts"><%= sanitize document.excerpts.raw_text, :tags => %w(span), :attributes => %w(class) %></span>
   </div>
   <ul class="metadata">
-    <li class="type"><%= document.entry_type %></li>
+    <li class="type"><%= document.category %></li>
     <% if document.publication_date %>
       <li class="pub_date"><%= document.publication_date %></li>
     <% end %>
