@@ -7,27 +7,18 @@ require 'thinking_sphinx/deploy/capistrano'
 # deploy recipes - need to do `sudo gem install thunder_punch` - these should be required last
 require 'thunder_punch'
 
-load File.join(File.dirname(__FILE__), '..', 'lib', 'amazon_aws')
-set :ec2_config_location, File.join(File.dirname(__FILE__), "amazon.yml")
-
-ec2_config = YAML.load( File.open(ec2_config_location, 'r') )
-@ec2 = AmazonAws::EC2.new(ec2_config['access_key_id'], ec2_config['secret_access_key'])
-
 #############################################################
 # Set Basics
 #############################################################
 set :application, "fr2"
 set :user, "deploy"
+set :current_path, "/var/www/apps/#{application}"
 
 if File.exists?(File.join(ENV["HOME"], ".ssh", "fr_staging"))
   ssh_options[:keys] = [File.join(ENV["HOME"], ".ssh", "fr_staging")]
 else
   ssh_options[:keys] = [File.join(ENV["HOME"], ".ssh", "id_rsa")]
 end
-
-# use these settings for making AMIs with thunderpunch
-# set :user, "ubuntu"
-#ssh_options[:keys] = [File.join('~/Documents/AWS/FR2', "gpoEC2.pem")]
 
 
 ssh_options[:paranoid] = false
@@ -45,7 +36,7 @@ set(:previous_revision) { capture("cd #{current_path}; git rev-parse --short HEA
 
 set :finalize_deploy, false
 # we don't need this because we have an asset server
-# and we also use varnish as a cache server. Thus 
+# and we also use varnish as a cache server. Thus
 # normalizing timestamps is detrimental.
 set :normalize_asset_timestamps, false
 
@@ -54,10 +45,10 @@ set :migrate_target, :current
 
 
 #############################################################
-# General Settings  
+# General Settings
 #############################################################
 
-set :deploy_to,  "/var/www/apps/#{application}" 
+set :deploy_to,  "/var/www/apps/#{application}"
 
 #############################################################
 # Set Up for Production Environment
@@ -67,7 +58,7 @@ task :production do
   set :rails_env,  "production"
   set :branch, 'production'
   set :gateway, 'fr2_production'
-  
+
   role :proxy,  "proxy.fr2.ec2.internal"
   role :app,    "app-server-1.fr2.ec2.internal", "app-server-2.fr2.ec2.internal", "app-server-3.fr2.ec2.internal", "app-server-4.fr2.ec2.internal", "app-server-5.fr2.ec2.internal"
   role :db,     "database.fr2.ec2.internal", {:primary => true}
@@ -81,10 +72,10 @@ end
 #############################################################
 
 task :staging do
-  set :rails_env,  "staging" 
+  set :rails_env,  "staging"
   set :branch, `git branch`.match(/\* (.*)/)[1]
   set :gateway, 'fr2_staging'
-  
+
   role :proxy,  "proxy.fr2.ec2.internal"
   role :app,    "app-server-1.fr2.ec2.internal"
   role :db,     "database.fr2.ec2.internal", {:primary => true}
@@ -98,19 +89,19 @@ end
 #############################################################
 
 set :remote_db_name, "fr2_production"
-set :db_path,        "#{shared_path}/db"
-set :sql_file_path,  "#{shared_path}/db/#{remote_db_name}_#{Time.now.utc.strftime("%Y%m%d%H%M%S")}.sql"
+set :db_path,        "#{current_path}/db"
+set :sql_file_path,  "#{current_path}/db/#{remote_db_name}_#{Time.now.utc.strftime("%Y%m%d%H%M%S")}.sql"
 
 
 #############################################################
 # SCM Settings
 #############################################################
-set :scm,              :git          
+set :scm,              :git
 set :github_user_repo, 'criticaljuncture'
 set :github_project_repo, 'fr2'
 set :deploy_via,       :remote_cache
 set :repository, "git@github.com:#{github_user_repo}/#{github_project_repo}.git"
-set :github_username, 'criticaljuncture' 
+set :github_username, 'criticaljuncture'
 
 
 #############################################################
@@ -134,12 +125,13 @@ set :gem_file_groups, [:deployment, :development, :test]
 #############################################################
 
 # Do not change below unless you know what you are doing!
-# all deployment changes that affect app servers also must 
+# all deployment changes that affect app servers also must
 # be put in the user-scripts files on s3!!!
 
-after "deploy:update_code",            "symlinks:create"
-after "symlinks:create",               "static_files:custom_symlinks"
-after "static_files:custom_symlinks",  "deploy:set_rake_path"
+#after "deploy:update_code",            "symlinks:create"
+#after "symlinks:create",               "static_files:custom_symlinks"
+#after "static_files:custom_symlinks",  "deploy:set_rake_path"
+after "deploy:update_code",            "deploy:set_rake_path"
 after "deploy:set_rake_path",          "bundler:fix_bundle"
 after "bundler:fix_bundle",            "deploy:migrate"
 after "deploy:migrate",                "sass:update_stylesheets"
@@ -153,28 +145,28 @@ after "varnish:clear_cache",           "honeybadger:notify_deploy"
 #############################################################
 # Symlinks for Static Files
 #############################################################
-set :custom_symlinks, {
-  'config/secrets.yml'    => 'config/secrets.yml',
-  
-  # don't symlink data directory directly!
-  'data/bulkdata'         => 'data/bulkdata',
-  'data/mods'             => 'data/mods',
-  'data/regulatory_plans' => 'data/regulatory_plans',
-  'data/text'             => 'data/text',
-  'data/xml'              => 'data/xml',
-  'data/raw'              => 'data/raw',
-  'data/entries'          => 'data/entries',
-  'data/cfr'              => 'data/cfr',
-  'data/dict'             => 'data/dict',
-  
-  'db/sphinx'       => 'db/sphinx',
-}
+#set :custom_symlinks, {
+#  'config/secrets.yml'                        => 'config/secrets.yml',
 
-namespace :static_files do
-  task :custom_symlinks, :roles => [:worker]  do
-    run "ln -sf #{shared_path}/index #{current_path}/public/"
-  end
-end
+#  # don't symlink data directory directly!
+#  'data/bulkdata'         => 'data/bulkdata',
+#  'data/mods'             => 'data/mods',
+#  'data/regulatory_plans' => 'data/regulatory_plans',
+#  'data/text'             => 'data/text',
+#  'data/xml'              => 'data/xml',
+#  'data/raw'              => 'data/raw',
+#  'data/entries'          => 'data/entries',
+#  'data/cfr'              => 'data/cfr',
+#  'data/dict'             => 'data/dict',
+
+#  'db/sphinx'       => 'db/sphinx',
+#}
+
+#namespace :static_files do
+#  task :custom_symlinks, :roles => [:worker]  do
+#    run "ln -sf #{current_path}/index #{current_path}/public/"
+#  end
+#end
 
 
 #############################################################
@@ -207,9 +199,9 @@ end
 namespace :fr2 do
   desc "Update FR2 aspell dictionaries"
   task :update_aspell_dicts, :roles => [:app, :worker] do
-    run "mkdir -p #{shared_path}/data/dict"
-    run "/usr/local/s3sync/s3cmd.rb get config.internal.federalregister.gov:en_US-fr.rws #{shared_path}/data/dict/en_US-fr.rws"
-    run "/usr/local/s3sync/s3cmd.rb get config.internal.federalregister.gov:en_US-fr.multi #{shared_path}/data/dict/en_US-fr.multi"
+    run "mkdir -p #{current_path}/data/dict"
+    run "/usr/local/s3sync/s3cmd.rb get config.internal.federalregister.gov:en_US-fr.rws #{current_path}/data/dict/en_US-fr.rws"
+    run "/usr/local/s3sync/s3cmd.rb get config.internal.federalregister.gov:en_US-fr.multi #{current_path}/data/dict/en_US-fr.multi"
   end
 end
 
