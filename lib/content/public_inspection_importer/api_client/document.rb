@@ -21,7 +21,7 @@ class Content::PublicInspectionImporter::ApiClient::Document
   end
 
   def agency_names
-    raw_attributes["Agencies"].map(&:last)
+    raw_attributes["Agencies"].map(&:last).flatten
   end
 
   def filed_at
