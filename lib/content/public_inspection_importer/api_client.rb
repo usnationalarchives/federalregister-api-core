@@ -18,7 +18,11 @@ class Content::PublicInspectionImporter::ApiClient
     raise ResponseError.new("Status: #{response.code}; body: #{response.body}") unless response.ok?
 
     write_to_log(response)
-    Array(response["PublicInspectionList"]["Document"]).map{|attributes| Document.new(self, attributes)}
+    document = Nokogiri::XML(response.body)
+
+    document.xpath('//PublicInspectionList/Document').map do |node|
+      Document.new(self, node)
+    end
   end
 
   def get(url)
