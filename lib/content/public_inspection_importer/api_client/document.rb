@@ -1,9 +1,9 @@
 class Content::PublicInspectionImporter::ApiClient::Document
-  attr_reader :client, :raw_attributes
+  attr_reader :client, :node
 
-  def initialize(client, attributes)
+  def initialize(client, node)
     @client = client
-    @raw_attributes = attributes
+    @node = node
   end
 
   {
@@ -14,43 +14,51 @@ class Content::PublicInspectionImporter::ApiClient::Document
     'Subject2' => 'subject_2',
     'Subject3' => 'subject_3',
     'FilingSection' => 'filing_section',
-  }.each do |raw_value, method|
+  }.each do |selector, method|
     define_method method do
-      raw_attributes[raw_value]
+      simple_node_value(selector)
     end
   end
 
   def agency_names
-    raw_attributes["Agencies"].map(&:last).flatten
+    node.css("Agency").map{|x| x.children.first.text}
   end
 
   def filed_at
-    Time.zone.parse(raw_attributes["FiledAt"]) if raw_attributes["FiledAt"]
+    Time.zone.parse(simple_node_value("FiledAt")) if simple_node_value("FiledAt").present?
   end
 
   def update_pil_at
-    Time.zone.parse(raw_attributes["PILUpdateTime"]) if raw_attributes["PILUpdateTime"]
+    Time.zone.parse(simple_node_value("PILUpdateTime")) if simple_node_value("PILUpdateTime").present?
   end
 
   def file_until
-    Time.zone.parse(raw_attributes["FileUntil"]) if raw_attributes["FileUntil"]
+    Time.zone.parse(simple_node_value("FileUntil")) if simple_node_value("FileUntil").present?
   end
 
   def publication_date
-    Date.parse(raw_attributes["PublicationDate"]) if raw_attributes["PublicationDate"]
+    Date.parse(simple_node_value("PublicationDate")) if simple_node_value("PublicationDate").present?
   end
 
   def docket_numbers
-    if raw_attributes["Docket"].present?
-      raw_attributes["Docket"].split(/,/)
+    docket_numbers = simple_node_value("Docket")
+
+    if docket_numbers.present?
+      docket_numbers.split(/,/)
     else
       []
     end
   end
 
   def pdf_url
-    if raw_attributes["URL"]
-      "/#{raw_attributes["URL"]}"
+    if simple_node_value("URL")
+      "/#{simple_node_value("URL")}"
     end
+  end
+
+  private
+
+  def simple_node_value(css_selector)
+    node.css(css_selector).first.try(:content)
   end
 end
