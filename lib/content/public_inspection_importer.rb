@@ -41,6 +41,10 @@ module Content
     end
 
     def finalize_import
+      return unless issue.
+        public_inspection_documents.
+        scoped(:conditions => {:special_filing => false}).count > 0
+
       issue.special_filings_updated_at = issue.
         public_inspection_documents.
         scoped(:conditions => {:special_filing => true}).
