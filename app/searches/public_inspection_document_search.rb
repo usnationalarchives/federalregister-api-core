@@ -67,7 +67,7 @@ class PublicInspectionDocumentSearch < ApplicationSearch
   
   def find_options
     {
-      :select => "id, title, pdf_file_name, pdf_file_size, num_pages, toc_subject, toc_doc, publication_date, filed_at, document_number, granule_class, editorial_note",
+      :select => "id, subject_1, subject_2, subject_3, pdf_file_name, pdf_file_size, num_pages, publication_date, filed_at, document_number, granule_class, editorial_note",
       :include => :agencies,
     }
   end

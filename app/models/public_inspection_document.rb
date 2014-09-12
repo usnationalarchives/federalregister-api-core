@@ -32,7 +32,15 @@ class PublicInspectionDocument < ApplicationModel
 
   define_index do
     # fields
-    indexes "IF(CONCAT(public_inspection_documents.subject_1, ' ', public_inspection_documents.subject_2, ' ', public_inspection_documents.subject_3)", :as => :title
+    indexes <<-SQL, :as => :title
+      CONCAT(
+        IFNULL(public_inspection_documents.subject_1, ''),
+        ' ',
+        IFNULL(public_inspection_documents.subject_2, ''),
+        ' ',
+        IFNULL(public_inspection_documents.subject_3, '')
+      )
+    SQL
     indexes "CONCAT('#{RAILS_ROOT}/data/public_inspection/raw/', public_inspection_documents.document_file_path, '.txt')", :as => :full_text, :file => true
     indexes "GROUP_CONCAT(DISTINCT docket_numbers.number SEPARATOR ' ')", :as => :docket_id
     
