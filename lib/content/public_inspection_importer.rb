@@ -44,7 +44,7 @@ module Content
       issue.special_filings_updated_at = issue.
         public_inspection_documents.
         scoped(:conditions => {:special_filing => true}).
-        maximum(:update_pil_at)
+        maximum(:update_pil_at) || DateTime.current
       issue.regular_filings_updated_at ||= DateTime.current.change(:hour => 8, :min => 45, :sec => 0)
       issue.published_at ||= DateTime.current
       issue.save!
