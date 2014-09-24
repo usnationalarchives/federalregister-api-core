@@ -37,7 +37,7 @@ namespace :content do
       end
     end
 
-    task :reindex do
+    task :reindex => :environment do
       SphinxIndexer.perform('public_inspection_document_core')
     end
 
