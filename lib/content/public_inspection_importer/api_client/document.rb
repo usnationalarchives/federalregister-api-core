@@ -63,6 +63,11 @@ class Content::PublicInspectionImporter::ApiClient::Document
   private
 
   def simple_node_value(css_selector)
-    node.css(css_selector).first.try(:content)
+    content = node.css(css_selector).first.try(:content)
+    if content.blank?
+      nil
+    else
+      content
+    end
   end
 end
