@@ -56,6 +56,10 @@ class Content::PublicInspectionImporter::ApiClient::Document
     end
   end
 
+  def pdf_url?
+    simple_node_value("URL").present?
+  end
+
   private
 
   def simple_node_value(css_selector)

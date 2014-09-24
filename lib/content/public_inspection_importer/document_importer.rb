@@ -17,7 +17,7 @@ class Content::PublicInspectionImporter::DocumentImporter
 
     document.save!
 
-    if api_doc.pdf_url.present? && api_doc.pdf_url != document.pdf_url
+    if api_doc.pdf_url? && api_doc.pdf_url != document.pdf_url
       pil_importer.enqueue_job(document.document_number, api_doc.pdf_url)
     end
   end
