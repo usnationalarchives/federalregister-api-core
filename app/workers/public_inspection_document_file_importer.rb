@@ -22,6 +22,7 @@ class PublicInspectionDocumentFileImporter
     document.save!
 
     clean_up_tempfile
+  ensure
     mark_as_complete
   end
 
