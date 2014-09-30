@@ -17,9 +17,28 @@ class FrIndexPresenter
   )
     include EntryViewLogic
 
-    DEFAULT_SUBJECT_SQL = "IFNULL(public_inspection_documents.toc_subject, entries.toc_subject)"
+    DEFAULT_SUBJECT_SQL = <<-SQL
+      IF(public_inspection_documents.subject_3 IS NOT NULL AND public_inspection_documents.subject_3 != '',
+        CONCAT(public_inspection_documents.subject_1, ' ', public_inspection_documents.subject_2),
+        IF(public_inspection_documents.subject_2 IS NOT NULL AND public_inspection_documents.subject_2 != '',
+          public_inspection_documents.subject_1,
+          entries.toc_subject
+        )
+      )
+    SQL
     SUBJECT_SQL = "IFNULL(entries.fr_index_subject, #{DEFAULT_SUBJECT_SQL})"
-    DEFAULT_DOC_SQL = "IFNULL(IFNULL(public_inspection_documents.toc_doc, entries.toc_doc), entries.title)"
+    DEFAULT_DOC_SQL = <<-SQL
+      IF(public_inspection_documents.subject_3 IS NOT NULL AND public_inspection_documents.subject_3 != '',
+        public_inspection_documents.subject_3,
+        IF(public_inspection_documents.subject_2 IS NOT NULL AND public_inspection_documents.subject_2 != '',
+          public_inspection_documents.subject_2,
+          IF(public_inspection_documents.subject_1 IS NOT NULL AND public_inspection_documents.subject_1 != '',
+            public_inspection_documents.subject_1,
+            entries.toc_doc
+          )
+        )
+      )
+    SQL
     DOC_SQL = "IFNULL(entries.fr_index_doc, #{DEFAULT_DOC_SQL})"
 
     def initialize(options)
