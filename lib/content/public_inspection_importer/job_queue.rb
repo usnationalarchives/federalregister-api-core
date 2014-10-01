@@ -24,10 +24,15 @@ class Content::PublicInspectionImporter::JobQueue
     timeout.to_i.times do
       if empty?
         yield
+        redis.del(redis_set)
       else
         sleep(1)
       end
     end
+  end
+
+  def pending_document_numbers
+    redis.smembers(redis_set)
   end
 
   private
