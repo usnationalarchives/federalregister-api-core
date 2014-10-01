@@ -11,6 +11,8 @@ module Content
     end
 
     def perform
+      return if DateTime.current < first_posting_date
+
       @start_time = Time.current
 
       client.documents.each do |api_document|
@@ -41,15 +43,11 @@ module Content
     end
 
     def finalize_import
-      return unless issue.
-        public_inspection_documents.
-        scoped(:conditions => {:special_filing => false}).count > 0
-
       issue.special_filings_updated_at = issue.
         public_inspection_documents.
         scoped(:conditions => {:special_filing => true}).
         maximum(:update_pil_at) || DateTime.current
-      issue.regular_filings_updated_at ||= DateTime.current.change(:hour => 8, :min => 45, :sec => 0)
+      issue.regular_filings_updated_at ||= first_posting_date
       issue.published_at ||= DateTime.current
       issue.save!
     end
@@ -60,6 +58,10 @@ module Content
 
     def client
       @client ||= ApiClient.new
+    end
+
+    def first_posting_date
+      DateTime.current.change(:hour => 8, :min => 45, :sec => 0)
     end
   end
 end
