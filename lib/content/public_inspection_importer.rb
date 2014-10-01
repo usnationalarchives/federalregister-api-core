@@ -1,5 +1,7 @@
 module Content
   class PublicInspectionImporter
+    JOB_TIMEOUT = 1.minutes
+
     def self.perform
       new.perform
     end
@@ -19,13 +21,13 @@ module Content
         import_document(api_document)
       end
 
-      job_queue.poll_until_complete(:timeout => 10.minutes) do
+      job_queue.poll_until_complete(:timeout => JOB_TIMEOUT) do
         finalize_import
         return imported_document_numbers
       end
 
       # TODO: notify us
-      raise "timeout"
+      raise "Jobs not processed in #{JOB_TIMEOUT}; pending_document_numbers: #{job_queue.pending_document_numbers.inspect}"
     end
 
     def enqueue_job(document_number, pdf_url)
