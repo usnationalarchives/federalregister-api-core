@@ -27,7 +27,9 @@ module Content
       end
 
       # TODO: notify us
-      raise "Jobs not processed in #{JOB_TIMEOUT}; pending_document_numbers: #{job_queue.pending_document_numbers.inspect}"
+      document_numbers = job_queue.pending_document_numbers
+      job_queue.clear
+      raise "Jobs not processed in #{JOB_TIMEOUT}s; pending_document_numbers: #{document_numbers.inspect}"
     end
 
     def enqueue_job(document_number, pdf_url)
