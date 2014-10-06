@@ -1,6 +1,6 @@
 module Content
   class PublicInspectionImporter
-    JOB_TIMEOUT = 1.minutes
+    JOB_TIMEOUT = 10.minutes
 
     def self.perform
       new.perform
