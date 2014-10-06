@@ -24,7 +24,7 @@ class Content::PublicInspectionImporter::JobQueue
     timeout.to_i.times do
       if empty?
         yield
-        redis.del(redis_set)
+        clear
       else
         sleep(1)
       end
@@ -35,10 +35,14 @@ class Content::PublicInspectionImporter::JobQueue
     redis.smembers(redis_set)
   end
 
+  def clear
+    redis.del(redis_set)
+  end
+
   private
 
   def redis_set
-    "pi_import_#{Process.pid}"
+    "pi_import:#{Process.pid}:#{SecureRandom.hex(10)}"
   end
 
   def redis
