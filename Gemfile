@@ -75,7 +75,7 @@ end
 group :development do
   # bundler requires these gems in development
   # gem 'rails-footnotes'
-  # gem 'poolparty', '1.6.8'
+  gem 'poolparty', '1.6.9'
   # gem "thunder_punch", '0.0.6', :require => false
 end
 

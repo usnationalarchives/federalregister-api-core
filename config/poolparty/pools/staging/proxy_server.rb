@@ -7,20 +7,20 @@ cloud :proxy_server_v2 do
   availability_zones ['us-east-1d']
   instances 1
   instance_type 't1.micro'
-  
+
   #elastic_ip ['184.72.250.132']
-  
+
   chef :solo do
     repo File.join(File.dirname(__FILE__) ,"..", "..", "..", "..", "vendor", "plugins")
-    
+
     recipe "apt"
     recipe 's3sync'
     recipe "ubuntu"
     recipe "openssl"
-    
+
     recipe "nginx"
     recipe "varnish"
-    
+
     attributes chef_cloud_attributes('staging').recursive_merge(
       :chef    => {
                     :roles => ['proxy', 'splunk_proxy', 'resque_proxy']
@@ -32,18 +32,18 @@ cloud :proxy_server_v2 do
                     :blog_proxy_port => @blog_proxy_port
                   },
       :nginx   => {
-                    :doc_root      => '/var/www/apps/fr2/current/public'
+                    :doc_root      => '/var/www/apps/fr2/public'
                   },
       :rails  => { :environment => "staging" }
       )
-          
+
   end
-  
+
   security_group "proxy_staging" do
     authorize :from_port => "22",   :to_port => "22"
     authorize :from_port => "80",   :to_port => "80"
     authorize :from_port => "443",  :to_port => "443"
     #authorize :from_port => "4950", :to_port => "4950"
   end
-  
+
 end
