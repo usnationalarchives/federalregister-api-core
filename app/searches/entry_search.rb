@@ -118,7 +118,8 @@ class EntrySearch < ApplicationSearch
                 :sphinx_type => :with_all,
                 :sphinx_attribute => :section_ids,
                 :model_label_method => :title,
-                :model_id_attribute => :slug
+                :model_sphinx_method => :id,
+                :model_id_method => :slug
 
   define_filter :topic_ids,
                 :sphinx_type => :with_all
