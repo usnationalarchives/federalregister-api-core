@@ -124,6 +124,13 @@ class EntrySearch < ApplicationSearch
   define_filter :topic_ids,
                 :sphinx_type => :with_all
 
+  define_filter :topics,
+                :sphinx_type => :with_all,
+                :sphinx_attribute => :topic_ids,
+                :model_label_method => :name,
+                :model_sphinx_method => :id,
+                :model_id_method => :slug
+
   define_filter :type,
                 :sphinx_type => :with,
                 :crc32_encode => true do |types|
@@ -393,6 +400,7 @@ class EntrySearch < ApplicationSearch
       ['in', :section_ids],
       ['in', :sections],
       ['about', :topic_ids],
+      ['about', :topics],
       ['affecting Small', :small_entity_ids],
       ['affecting Small', :small_entities],
       ['citing', :citing_document_numbers]
