@@ -155,12 +155,9 @@ after "varnish:clear_cache",           "honeybadger:notify_deploy"
 #############################################################
 set :custom_symlinks, {
   'config/api_keys.yml'                       => 'config/api_keys.yml',
-  'config/mail.yml'                           => 'config/mail.yml',
-  'config/newrelic.yml'                       => 'config/newrelic.yml',
   'config/amazon.yml'                         => 'config/amazon.yml',
   'config/initializers/cloudkicker_config.rb' => 'config/cloudkicker_config.rb',
   'config/secrets.yml'                        => 'config/secrets.yml',
-  'config/sendgrid.yml'                       => 'config/sendgrid.yml',
   
   # don't symlink data directory directly!
   'data/bulkdata'         => 'data/bulkdata',

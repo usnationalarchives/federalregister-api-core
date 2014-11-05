@@ -17,7 +17,6 @@ dependencies:
     - cp config/mongoid.yml.sample config/mongoid.yml
     - cp config/mysql.yml.sample config/mysql.yml
     - cp config/secrets.yml.sample config/secrets.yml
-    - cp config/sendgrid.yml.sample config/sendgrid.yml
 
 ## Customize database setup commands
 database:
