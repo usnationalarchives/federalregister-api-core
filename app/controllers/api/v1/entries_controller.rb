@@ -23,6 +23,31 @@ class Api::V1::EntriesController < ApiController
       end
     end
   end
+
+  def facets
+    field_facets = %w(agency topic section type)
+    date_facets = %w(daily weekly monthly quarterly yearly)
+    raise ActiveRecord::RecordNotFound unless (field_facets + date_facets).include?(params[:facet])
+
+    search = EntrySearch.new(params)
+    if search.valid?
+      if date_facets.include?(params[:facet])
+        json = search.date_distribution(:period => params[:facet].to_sym).results
+      else
+        facets = search.send("#{params[:facet]}_facets")
+
+        json = facets.each_with_object(Hash.new) do |facet, hsh|
+          hsh[facet.identifier] = {
+            :count => facet.count,
+            :name => facet.name
+          }
+        end
+      end
+      render_json_or_jsonp(json)
+    else
+      render_json_or_jsonp({:errors => search.validation_errors}, :status => 400)
+    end
+  end
   
   def show
     respond_to do |wants|
