@@ -46,7 +46,10 @@ class Agency < ApplicationModel
                     :styles => { :thumb => "100", :small => "140", :medium => "245", :large => "580", :full_size => "" },
                     :processors => [:thumbnail],
                     :storage => :s3,
-                    :s3_credentials => "#{Rails.root}/config/amazon.yml",
+                    :s3_credentials => {
+                      :access_key_id     => SECRETS['aws']['access_key_id'],
+                      :secret_access_key => SECRETS['aws']['secret_access_key']
+                    },
                     :s3_protocol => 'https',
                     :bucket => 'agency-logos.federalregister.gov',
                     :path => ":id/:style.:extension"

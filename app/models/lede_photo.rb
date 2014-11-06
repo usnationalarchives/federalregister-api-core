@@ -5,7 +5,10 @@ class LedePhoto < ApplicationModel
                     :styles => { :navigation => ["400x175", :jpg], :homepage => ["100", :jpg], :small => ["140", :jpg], :medium => ["245", :jpg], :large => ["800x350", :jpg], :full_size => ["", :jpg] },
                     :processors => [:thumbnail],
                     :storage => :s3,
-                    :s3_credentials => "#{Rails.root}/config/amazon.yml",
+                    :s3_credentials => {
+                      :access_key_id     => SECRETS['aws']['access_key_id'],
+                      :secret_access_key => SECRETS['aws']['secret_access_key']
+                    },
                     :s3_protocol => 'https',
                     :bucket => 'lede-photos.federalregister.gov',
                     :path => ":id/:style.:extension"

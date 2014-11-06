@@ -1,9 +1,0 @@
-aws_key_location:   /path/to/keys
-ec2_private_key:    XXX.pem
-ec2_x509_cert:      XXX.pem
-aws_account_id:     12345
-ec2_architecture:   i386
-access_key_id:      XXX
-secret_access_key:  XXX
-ec2_s3_bucket_name: XXX
-ami_excluded_items: ['/vol', '/var/lib/mysql', '/var/log', '/var/www/apps/']

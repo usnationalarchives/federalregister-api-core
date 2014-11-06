@@ -8,7 +8,10 @@ class Graphic < ApplicationModel
                     :styles => { :large => ["460", :png], :original => ["", :png] },
                     :processors => [:auto_inverter],
                     :storage => :s3,
-                    :s3_credentials => "#{Rails.root}/config/amazon.yml",
+                    :s3_credentials => {
+                      :access_key_id     => SECRETS['aws']['access_key_id'],
+                      :secret_access_key => SECRETS['aws']['secret_access_key']
+                    },
                     :s3_protocol => 'https',
                     :bucket => 'images.federalregister.gov',
                     :path => ":identifier/:style.:extension"

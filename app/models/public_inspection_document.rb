@@ -1,7 +1,10 @@
 class PublicInspectionDocument < ApplicationModel
   has_attached_file :pdf,
                     :storage => :s3,
-                    :s3_credentials => "#{Rails.root}/config/amazon.yml",
+                    :s3_credentials => {
+                      :access_key_id     => SECRETS['aws']['access_key_id'],
+                      :secret_access_key => SECRETS['aws']['secret_access_key']
+                    },
                     :s3_protocol => 'https',
                     :bucket => "public-inspection.#{APP_HOST_NAME}",
                     :path => ":style_if_not_with_banner:document_number.pdf",
