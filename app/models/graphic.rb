@@ -3,7 +3,7 @@ class Graphic < ApplicationModel
 
   has_many :usages, :class_name => "GraphicUsage"
   has_many :entries, :through => :usages
-  
+
   has_attached_file :graphic,
                     :styles => { :large => ["460", :png], :original => ["", :png] },
                     :processors => [:auto_inverter],
