@@ -11,11 +11,7 @@ dependencies:
   pre:
     - npm install -g jshint
     - gem update --system 1.8.20
-    - cp config/amazon.yml.sample config/amazon.yml
-    - cp config/api_keys.yml.sample config/api_keys.yml
-    - cp config/deploy_credentials.yml.sample config/deploy_credentials.yml
     - cp config/mongoid.yml.sample config/mongoid.yml
-    - cp config/mysql.yml.sample config/mysql.yml
     - cp config/secrets.yml.sample config/secrets.yml
 
 ## Customize database setup commands
