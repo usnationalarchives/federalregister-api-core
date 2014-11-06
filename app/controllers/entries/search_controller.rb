@@ -58,7 +58,7 @@ class Entries::SearchController < SearchController
                 raise ActiveRecord::RecordNotFound
               end
 
-    data = @search.date_distribution(options)
+    data = @search.date_distribution(options).counts
     sparkline_data = chart_options.present? ? {:data => data}.merge(chart_options) : {:data => data}
     url = CustomChartHelper::Sparkline.new(sparkline_data).to_s
     c = Curl::Easy.perform(url)
