@@ -1,12 +1,4 @@
 GIT
-  remote: git://github.com/criticaljuncture/fr2_audit_logic.git
-  revision: d0b037954987cc28dac25dfbf72ae94f28e9c9f7
-  ref: d0b037954987cc28dac25dfbf72ae94f28e9c9f7
-  specs:
-    fr2_audit_logic (0.0.0)
-      mongoid
-
-GIT
   remote: git://github.com/criticaljuncture/sendgrid.git
   revision: 87d532bff3ab83ac5e842177a7b1fdaae39681b0
   branch: master
@@ -48,7 +40,6 @@ GIT
 
 GEM
   remote: http://rubygems.org/
-  remote: http://gems.github.com/
   specs:
     active_hash (0.9.5)
       activesupport (>= 2.2.2)
@@ -65,8 +56,6 @@ GEM
       mime-types
       xml-simple
     bcrypt-ruby (2.1.2)
-    bson (1.2.4)
-    bson_ext (1.3.0)
     builder (3.1.4)
     capistrano (2.5.19)
       highline
@@ -89,7 +78,6 @@ GEM
       json (>= 1.4.6)
     curb (0.4.4.0)
     diff-lcs (1.1.3)
-    durran-validatable (2.0.1)
     factory_girl (1.2.4)
     fakeweb (1.3.0)
     faraday (0.8.8)
@@ -140,14 +128,6 @@ GEM
     mime-types (1.16)
     mimemagic (0.2.1)
     modularity (0.6.1)
-    mongo (1.2.4)
-      bson (>= 1.2.4)
-    mongoid (1.9.5)
-      activesupport (< 3.0.0)
-      bson (~> 1.2.1)
-      durran-validatable (>= 2.0.1)
-      mongo (~> 1.2.1)
-      will_paginate (< 2.9)
     multi_json (1.0.3)
     multi_xml (0.4.1)
     multipart-post (1.2.0)
@@ -227,7 +207,6 @@ DEPENDENCIES
   authlogic (= 2.1.3)
   aws-s3 (= 0.6.2)
   bcrypt-ruby (= 2.1.2)
-  bson_ext (= 1.3.0)
   capistrano (= 2.5.19)
   ci_reporter (= 1.6.3)
   compass (= 0.10.1)
@@ -241,7 +220,6 @@ DEPENDENCIES
   flickraw (= 0.9.8)
   floehopper-mocha
   formtastic (= 0.9.8)
-  fr2_audit_logic!
   geokit (= 1.4.1)
   haml (= 3.0.4)
   honeybadger

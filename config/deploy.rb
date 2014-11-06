@@ -154,9 +154,7 @@ after "varnish:clear_cache",           "honeybadger:notify_deploy"
 # Symlinks for Static Files
 #############################################################
 set :custom_symlinks, {
-  'config/api_keys.yml'                       => 'config/api_keys.yml',
-  'config/amazon.yml'                         => 'config/amazon.yml',
-  'config/secrets.yml'                        => 'config/secrets.yml',
+  'config/secrets.yml'    => 'config/secrets.yml',
   
   # don't symlink data directory directly!
   'data/bulkdata'         => 'data/bulkdata',
@@ -207,24 +205,6 @@ namespace :apache do
 end
 
 namespace :fr2 do
-  desc "Update api keys"
-  task :update_api_keys, :roles => [:app, :worker] do
-    run "/usr/local/s3sync/s3cmd.rb get config.internal.federalregister.gov:api_keys.yml #{shared_path}/config/api_keys.yml"
-    find_and_execute_task("apache:restart")
-  end
-  
-  desc "Update secret keys"
-  task :update_secret_keys, :roles => [:app, :worker] do
-    run "/usr/local/s3sync/s3cmd.rb get config.internal.federalregister.gov:secrets.yml #{shared_path}/config/secrets.yml"
-    find_and_execute_task("apache:restart")
-  end
-  
-  desc "Update sendgrid keys"
-  task :update_sendgrid_keys, :roles => [:app, :worker] do
-    run "/usr/local/s3sync/s3cmd.rb get config.internal.federalregister.gov:sendgrid.yml #{shared_path}/config/sendgrid.yml"
-    find_and_execute_task("apache:restart")
-  end
-
   desc "Update FR2 aspell dictionaries"
   task :update_aspell_dicts, :roles => [:app, :worker] do
     run "mkdir -p #{shared_path}/data/dict"
