@@ -23,16 +23,17 @@ config.log_level = :debug
 # Enable serving of images, stylesheets, and javascripts from an asset server
 # config.action_controller.asset_host = "http://assets.example.com"
 
-sendgrid_keys  = File.open(File.join(
+secrets  = File.open(File.join(
   File.dirname(__FILE__), '..', 'secrets.yml'
-)) { |yf| YAML::load( yf ) }['sendgrid']
+)) { |yf| YAML::load( yf ) }
+sendgrid_keys = secrets['sendgrid']
 
 smtp_settings = {
   :address => "mail.fr2.ec2.internal",
   :port    => "25",
   :domain  => "www.fr2.criticaljuncture.org",
-  :user_name => sendgrid_keys[:username],
-  :password => sendgrid_keys[:password],
+  :user_name => secrets['sendgrid']['username'],
+  :password => secrets['sendgrid']['password'],
   :authentication => :plain
 }
 
