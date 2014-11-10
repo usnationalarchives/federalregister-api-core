@@ -7,10 +7,17 @@ require 'thinking_sphinx/deploy/capistrano'
 # deploy recipes - need to do `sudo gem install thunder_punch` - these should be required last
 require 'thunder_punch'
 
+# rvm support
+set :rvm_ruby_string, 'ree-1.8.7-2012.02'
+set :rvm_require_role, :app
+set :rvm_type, :system
+require "rvm/capistrano/selector_mixed"
+
 #############################################################
 # Set Basics
 #############################################################
-set :application, "fr2"
+#set :application, "fr2"
+set :application, "federalregister-api-core"
 set :user, "deploy"
 set :current_path, "/var/www/apps/#{application}"
 
@@ -64,6 +71,11 @@ task :production do
   role :db,     "database.fr2.ec2.internal", {:primary => true}
   role :sphinx, "sphinx.fr2.ec2.internal"
   role :worker, "worker.fr2.ec2.internal", {:primary => true} #monster image
+
+  set :github_user_repo, 'criticaljuncture'
+  set :github_project_repo, 'fr2'
+  set :github_username, 'criticaljuncture'
+  set :repository, "git@github.com:#{github_user_repo}/#{github_project_repo}.git"
 end
 
 
@@ -81,6 +93,11 @@ task :staging do
   role :db,     "database.fr2.ec2.internal", {:primary => true}
   role :sphinx, "sphinx.fr2.ec2.internal"
   role :worker, "worker.fr2.ec2.internal", {:primary => true}
+
+  set :github_user_repo, 'criticaljuncture'
+  set :github_project_repo, 'federalregister-api-core'
+  set :github_username, 'criticaljuncture'
+  set :repository, "git@github.com:#{github_user_repo}/#{github_project_repo}.git"
 end
 
 
@@ -97,12 +114,7 @@ set :sql_file_path,  "#{current_path}/db/#{remote_db_name}_#{Time.now.utc.strfti
 # SCM Settings
 #############################################################
 set :scm,              :git
-set :github_user_repo, 'criticaljuncture'
-set :github_project_repo, 'fr2'
 set :deploy_via,       :remote_cache
-set :repository, "git@github.com:#{github_user_repo}/#{github_project_repo}.git"
-set :github_username, 'criticaljuncture'
-
 
 #############################################################
 # Git
@@ -131,9 +143,9 @@ set :gem_file_groups, [:deployment, :development, :test]
 #after "deploy:update_code",            "symlinks:create"
 #after "symlinks:create",               "static_files:custom_symlinks"
 #after "static_files:custom_symlinks",  "deploy:set_rake_path"
-after "deploy:update_code",            "deploy:set_rake_path"
-after "deploy:set_rake_path",          "bundler:fix_bundle"
-after "bundler:fix_bundle",            "deploy:migrate"
+after "deploy:update_code",            "bundler:fix_bundle"
+after "bundler:fix_bundle",            "deploy:set_rake_path"
+after "deploy:set_rake_path",          "deploy:migrate"
 after "deploy:migrate",                "sass:update_stylesheets"
 after "sass:update_stylesheets",       "javascript:combine_and_minify"
 after "javascript:combine_and_minify", "passenger:restart"
