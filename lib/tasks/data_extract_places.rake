@@ -4,7 +4,7 @@ namespace :data do
     task :places => :environment do 
       date = ENV['DATE'].blank? ? Time.current.to_date : Date.parse(ENV['DATE'])
       
-      placemaker = Placemaker.new(:application_id => ENV['yahoo_placemaker_api_key'])
+      placemaker = Placemaker.new(:application_id => SECRETS['api_keys']['yahoo_placemaker'])
       
       Entry.find_each(:conditions => ["publication_date = ? AND abstract IS NOT NULL", date]) do |entry|
         puts "determining places for #{entry.document_number} (#{entry.publication_date})"
