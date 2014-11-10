@@ -1,5 +1,5 @@
 Honeybadger.configure do |config|
-  config.api_key = ENV['honeybadger_api_key']
+  config.api_key = SECRETS['honeybadger_api_key']
   config.ignore_user_agent  << /ScanAlert/
 end
 
