@@ -23,5 +23,9 @@ ActionController::Routing::Routes.draw do |map|
                   :only => [:index, :show],
                   :controller => 'api/v1/public_inspection_documents',
                   :collection => {:current => :get}
+
+    api.resources :site_notifications,
+                  :only => [:index, :show],
+                  :controller => 'api/v1/site_notifications'
   end
 end

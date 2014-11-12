@@ -11,6 +11,7 @@ ActionController::Routing::Routes.draw do |map|
     quiet_map.agency_highlight '/agency_highlight', :controller => 'special', :action => 'agency_highlight'
     quiet_map.popular_entries '/popular_entries', :controller => 'special', :action => 'popular_entries'
     quiet_map.most_emailed_entries '/most_emailed_entries', :controller => 'special', :action => 'most_emailed_entries'
+    quiet_map.site_notifications '/site_notifications', :controller => 'special', :action => 'site_notifications'
    
 
     # NAVIGATION

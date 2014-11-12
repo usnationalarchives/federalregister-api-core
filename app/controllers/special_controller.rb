@@ -60,4 +60,10 @@ class SpecialController < ApplicationController
     cache_for 1.day
     render :layout => false
   end
+
+  def site_notifications
+    cache_for 1.minute
+    @notification = SiteNotification.active.find_by_identifier(params[:identifier])
+    render :layout => false
+  end
 end

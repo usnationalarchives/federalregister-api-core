@@ -1,0 +1,10 @@
+<% f.inputs do %>
+  <%= f.input :identifier, :as => :hidden %>
+  <%= f.input :notification_type, :as => :hidden %>
+  <%= f.input :description %>
+  <%= f.input :active %>
+<% end %>
+
+<% f.buttons do %>
+  <%= f.commit_button 'Save', :button_html => {:class => "btn-success site_notification_button"} %>
+<% end %>

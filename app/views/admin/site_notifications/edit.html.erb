@@ -1,0 +1,5 @@
+<% title 'Edit Site Notification' %>
+<br>
+<% semantic_form_for @site_notification, :url => admin_site_notification_path(@site_notification), :html => { :method => :put } do |f| %>
+  <%= render :partial => 'form', :locals => {:f => f} %>
+<% end %>
