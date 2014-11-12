@@ -11,7 +11,7 @@ class EntrySearch::DateAggregator::Base
   end
 
   def counts
-    periods.map{|sub_periods| sub_periods.map{|p| raw_results[p] || 0}.sum }
+    periods.map{|sub_periods| sub_periods.map{|p| raw_results[sphinx_format(p)] || 0}.sum }
   end
 
   def results
