@@ -8,7 +8,7 @@ class Admin::SiteNotificationsController < AdminController
   def edit
     @site_notification = SiteNotification.find(params[:id])
   end
-  
+
   def update
     @site_notification = SiteNotification.find(params[:id])
     if @site_notification.update_attributes(params[:site_notification])
