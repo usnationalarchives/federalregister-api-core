@@ -45,6 +45,17 @@
     a:hover { color: $fr_orange; }
     }
 
+  .page_summary {
+    .title_container {
+      width: 80%;
+      float: left;
+    }
+    .selected_date {
+      margin-top: 5px;
+      float: right;
+    }
+  }
+
   .count_pill {
     padding: 1px 7px;
     padding-top: 2px;

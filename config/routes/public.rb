@@ -111,8 +111,10 @@ ActionController::Routing::Routes.draw do |map|
   map.public_inspection_search 'public-inspection/search.:format', :controller => 'public_inspection/search', :action => 'show', :conditions => { :method => :get }
 
   # FR Index
+  map.index 'index', :controller => "indexes", :action => "select_year", :conditions => {:method => :get}
   map.index_year 'index/:year', :controller => "indexes", :action => "year", :conditions => {:method => :get}
   map.index_year_agency 'index/:year/:agency', :controller => "indexes", :action => "year_agency", :conditions => {:method => :get}
+  map.select_index_year '/select_index_year', :controller => "indexes", :action => "select_year", :conditions => {:method => :get}
 
   # EVENT SEARCH
   map.events_search 'events/search.:format', :controller => 'events/search', :action => 'show', :conditions => { :method => :get }
