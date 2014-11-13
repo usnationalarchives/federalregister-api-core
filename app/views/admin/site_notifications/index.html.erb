@@ -1,0 +1,24 @@
+<% super_title 'Site Notifications' %>
+
+<table class='table table-bordered table-striped table-condensed' summary="Site Notifications">
+  <thead>
+    <tr>
+      <th>Identifier</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Active?</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @site_notifications.each do |site_notification| %>
+    <tr>
+      <td><%= site_notification.identifier %></td>
+      <td><%= site_notification.notification_type %></td>
+      <td><%= site_notification.description %></td>
+      <td><%= site_notification.active %></td>
+      <td><%= link_to "edit", edit_admin_site_notification_path(site_notification) %>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
