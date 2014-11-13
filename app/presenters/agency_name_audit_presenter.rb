@@ -18,7 +18,11 @@ class AgencyNameAuditPresenter
   def rules_without_dates
     @rules_without_dates ||= issue.
       entries.
-      select {|doc| doc.granule_class == "RULE" && doc.effective_on.blank?}
+      select do |doc|
+        doc.granule_class == "RULE" &&
+        doc.effective_on.blank? &&
+        !doc.document_number.match(/^C-/)
+      end
   end
 
   private
