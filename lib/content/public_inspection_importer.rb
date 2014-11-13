@@ -18,8 +18,8 @@ module Content
       
       pub_date = parser.document.regular_filings_updated_at.to_date
       issue = PublicInspectionIssue.find_or_initialize_by_publication_date(pub_date)
-      issue.special_filings_updated_at = parser.document.special_filings_updated_at
-      issue.regular_filings_updated_at = parser.document.regular_filings_updated_at
+      issue.special_filings_updated_at = parser.document.special_filings_updated_at || DateTime.current
+      issue.regular_filings_updated_at = parser.document.regular_filings_updated_at || DateTime.current
       issue.save!
 
       new_documents = []
