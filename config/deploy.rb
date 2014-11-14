@@ -7,11 +7,6 @@ require 'thinking_sphinx/deploy/capistrano'
 # deploy recipes - need to do `sudo gem install thunder_punch` - these should be required last
 require 'thunder_punch'
 
-load File.join(File.dirname(__FILE__), '..', 'lib', 'amazon_aws')
-set :ec2_config_location, File.join(File.dirname(__FILE__), "amazon.yml")
-
-ec2_config = YAML.load( File.open(ec2_config_location, 'r') )
-@ec2 = AmazonAws::EC2.new(ec2_config['access_key_id'], ec2_config['secret_access_key'])
 
 #############################################################
 # Set Basics
