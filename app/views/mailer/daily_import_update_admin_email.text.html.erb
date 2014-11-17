@@ -36,7 +36,7 @@
           <% @problematic_document_presenter.special_documents.each do |document| %>
             <tr>
               <td style="width: 300px;" align="left"><%= document.title %></td>
-              <td style="width: 300px;" align="center"><%= document.document_number %></td>
+              <td style="width: 300px;" align="center"><%= link_to document.document_number, short_entry_url(document.document_number) %></td>
               <td style="width: 300px;" align="center"><%= document.entry_type %></td>
             </tr>
           <% end %>
@@ -59,7 +59,7 @@
           <% @problematic_document_presenter.rules_without_dates.each do |document| %>
           <tr>
             <td style="width: 600px;" align="left"><%= document.title %></td>
-            <td style="width: 300px;" align="center"><%= document.document_number %></td>
+            <td style="width: 300px;" align="center"><%= link_to document.document_number, short_entry_url(document.document_number) %></td>
           </tr>
           <% end %>
         </tbody>
