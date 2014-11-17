@@ -55,9 +55,12 @@
       float: right;
       @include apertura-condensed;
       font-size: 14px;
-      background-color: #FFF;
-      background-image: none;
-      height: 20px;
+
+      select {
+        background-color: #FFF;
+        background-image: none;
+        height: 20px;
+      }
     }
   }
 
