@@ -47,7 +47,7 @@ class Mailer < ActionMailer::Base
     from       "Federal Register Admin <no-reply@mail.federalregister.gov>"
     recipients 'nobody@federalregister.gov' # should use sendgrid_recipients for actual recipient list
     sent_on    Time.current
-    body       :agency_name_presenter => remappings, :date => date, :problematic_document_presenter => problematic_document_presenter
+    body       :agency_name_presenter => agency_name_presenter, :date => date, :problematic_document_presenter => problematic_document_presenter
   end
 
   def admin_notification(message)
