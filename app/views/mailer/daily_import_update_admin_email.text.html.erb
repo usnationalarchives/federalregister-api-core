@@ -17,11 +17,11 @@
 
     <div>
       <h2 style="font-family:'Helvetica Neue',Arial,Helvetica,sans-serif;margin: 25px 0 5px;font-size: 25px;">
-        FederalRegister.gov Admin Daily Agency Name Mapping for <%= @date %>
+        FederalRegister.gov Daily Import Update for <%= @date %>
       </h2>
 
-      <% if @remappings.special_documents.present? %>
-      <h3 style="font-family:'Helvetica Neue',Arial,Helvetica,sans-serif;margin: 25px 0 5px;font-size: 20px;">
+      <% if @problematic_document_presenter.special_documents.present? %>
+      <h3 style="font-family:'Helvetica Neue',Arial,Helvetica,sans-serif;margin: 25px 0 5px;font-size: 20px;border-bottom: 1px solid #000;">
         Documents with Problematic Document Numbers
       </h3>
       <table>
@@ -33,19 +33,19 @@
           </tr>
         </thead>
         <tbody>
-          <% @remappings.special_documents.each do |document| %>
+          <% @problematic_document_presenter.special_documents.each do |document| %>
             <tr>
-              <td style="width: 300px;"><%= document.title %></td>
-              <td style="width: 300px;"><%= document.document_number %></td>
-              <td style="width: 255px;padding: 20px 0;"><%= document.entry_type %></td>
+              <td style="width: 300px;" align="left"><%= document.title %></td>
+              <td style="width: 300px;" align="center"><%= document.document_number %></td>
+              <td style="width: 300px;" align="center"><%= document.entry_type %></td>
             </tr>
           <% end %>
         </tbody>
       </table>
       <% end %>
 
-      <% if @remappings.rules_without_dates.present? %>
-      <h3 style="font-family:'Helvetica Neue',Arial,Helvetica,sans-serif;margin: 25px 0 5px;font-size: 20px;">
+      <% if @problematic_document_presenter.rules_without_dates.present? %>
+      <h3 style="font-family:'Helvetica Neue',Arial,Helvetica,sans-serif;margin: 25px 0 5px;font-size: 20px;border-bottom: 1px solid #000;">
         Rules without Effective Dates
       </h3>
       <table>
@@ -56,19 +56,19 @@
           </tr>
         </thead>
         <tbody>
-          <% @remappings.rules_without_dates.each do |document| %>
+          <% @problematic_document_presenter.rules_without_dates.each do |document| %>
           <tr>
-            <td style="width: 300px;"><%= document.title %></td>
-            <td style="width: 300px;"><%= document.document_number %></td>
+            <td style="width: 600px;" align="left"><%= document.title %></td>
+            <td style="width: 300px;" align="center"><%= document.document_number %></td>
           </tr>
           <% end %>
         </tbody>
       </table>
       <% end %>
 
-      <% if @remappings.interesting_remappings.present? %>
-      <h3 style="font-family:'Helvetica Neue',Arial,Helvetica,sans-serif;margin: 25px 0 5px;font-size: 20px;">
-        Agencies of Note
+      <% if @agency_name_presenter.complex_remappings.present? %>
+      <h3 style="font-family:'Helvetica Neue',Arial,Helvetica,sans-serif;margin: 25px 0 5px;font-size: 20px;border-bottom: 1px solid #000;">
+        Complex Agency Name Remappings
       </h3>
 
       <table>
@@ -80,7 +80,7 @@
           </tr>
         </thead>
         <tbody>
-          <% @remappings.interesting_remappings.each do |remapping| %>
+          <% @agency_name_presenter.complex_remappings.each do |remapping| %>
               <tr>
                 <td style="width: 300px;"><%= remapping.original_name %></td>
                 <td style="width: 300px;">
@@ -90,16 +90,16 @@
                     <em>not remapped</em>
                   <% end %>
                 </td>
-                <td style="width: 255px;padding: 20px 0;"><%= remapping.entries.map{|e| link_to e.document_number, short_entry_url(e.document_number)}.join(', ') %>
+                <td style="width: 255px;padding: 20px 0;" align="center"><%= remapping.entries.map{|e| link_to e.document_number, short_entry_url(e.document_number)}.join(', ') %>
               </tr>
           <% end %>
         </tbody>
       </table>
       <% end %>
 
-      <% if @remappings.boring_remappings.present? %>
-      <h3 style="font-family:'Helvetica Neue',Arial,Helvetica,sans-serif;margin: 25px 0 5px;font-size: 20px;">
-        Other Agencies
+      <% if @agency_name_presenter.basic_remappings.present? %>
+      <h3 style="font-family:'Helvetica Neue',Arial,Helvetica,sans-serif;margin: 25px 0 5px;font-size: 20px;border-bottom: 1px solid #000;">
+        Basic Agency Name Remappings
       </h3>
       <table>
         <thead>
@@ -110,7 +110,7 @@
           </tr>
         </thead>
         <tbody>
-          <% @remappings.boring_remappings.each do |remapping| %>
+          <% @agency_name_presenter.basic_remappings.each do |remapping| %>
             <tr>
               <td style="width: 300px;"><%= remapping.original_name %></td>
               <td style="width: 300px;">

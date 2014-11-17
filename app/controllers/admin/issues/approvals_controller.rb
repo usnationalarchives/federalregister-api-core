@@ -3,7 +3,7 @@ class Admin::Issues::ApprovalsController < AdminController
     @issue_approval = IssueApproval.new(:publication_date => params[:issue_id])
 
     if @issue_approval.save!
-      Mailer.deliver_agency_name_mapping_admin_email(@issue_approval.publication_date)
+      Mailer.daily_import_update_admin_email(@issue_approval.publication_date)
       flash[:notice] = "Issue approved! It will appear on the public site in a few minutes"
     else
       flash[:error] = "There was a problem!"
