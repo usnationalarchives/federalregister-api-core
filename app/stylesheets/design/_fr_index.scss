@@ -53,6 +53,11 @@
     .selected_date {
       margin-top: 5px;
       float: right;
+      @include apertura-condensed;
+      font-size: 14px;
+      background-color: #FFF;
+      background-image: none;
+      height: 20px;
     }
   }
 
