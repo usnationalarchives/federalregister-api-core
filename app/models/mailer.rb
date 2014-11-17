@@ -42,7 +42,7 @@ class Mailer < ActionMailer::Base
 
     remappings = AgencyNameAuditPresenter.new(date)
 
-    subject "[FR Admin] Daily Agency Name Mapping for #{date}"
+    subject "[FR Admin] Daily Import Update for #{date}"
     from       "Federal Register Admin <no-reply@mail.federalregister.gov>"
     recipients 'nobody@federalregister.gov' # should use sendgrid_recipients for actual recipient list
     sent_on    Time.current

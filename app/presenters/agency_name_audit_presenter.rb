@@ -1,15 +1,31 @@
 class AgencyNameAuditPresenter
   delegate :publication_date, :to => :issue
-  attr_reader :issue, :interesting_remappings, :boring_remappings
+  attr_reader :issue,
+    :interesting_remappings,
+    :boring_remappings
 
   def initialize(date)
     @issue = Issue.find_by_publication_date!(date)
-
     @interesting_remappings, @boring_remappings = remappings.partition(&:interesting?)
   end
 
-  private
+  def special_documents
+    @special_documents ||= issue.
+      entries.
+      select {|doc| doc.document_number.match(/^X/)}
+  end
 
+  def rules_without_dates
+    @rules_without_dates ||= issue.
+      entries.
+      select do |doc|
+        doc.granule_class == "RULE" &&
+        doc.effective_on.blank? &&
+        !doc.document_number.match(/^C-/)
+      end
+  end
+
+  private
   def remappings
     @remappings = @issue.
       entries.
