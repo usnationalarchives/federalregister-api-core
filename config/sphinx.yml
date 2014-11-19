@@ -1,6 +1,6 @@
 # Our chef setup no longer overwrites this file...
 development:
-  version: '2.0.5'
+  version: '2.1.1-beta'
   morphology: stem_en
   index_exact_words: 1
   mem_limit: 528M
@@ -9,7 +9,7 @@ development:
   compat_sphinxql_magics: 0
   max_matches: 10000
 test:
-  version: '2.0.5'
+  version: '2.1.1-beta'
   morphology: stem_en
   index_exact_words: 1
   max_matches: 10000
