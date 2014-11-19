@@ -26,4 +26,8 @@ module RouteBuilder::MyFederalRegister
   def my_fr2_user_utils_path
     "/special/user_utils"
   end
+
+  def my_fr2_header_path(header_type)
+    "/special/header/#{header_type}"
+  end
 end

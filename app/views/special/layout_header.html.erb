@@ -8,7 +8,6 @@
   <div class="header_wrapper">
     <%= render :partial => 'layouts/navigation', :locals => {:last_date => @last_date, :search_term => @search_term} %>
     <%= render :esi => my_fr2_user_utils_path %>
-
-    <esi:include src="/special/header/<%= params[:header_type] %>" />
+    <%= render :esi => my_fr2_header_path(params[:header_type]) %>
   </div>
 <% end -%>

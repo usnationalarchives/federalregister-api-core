@@ -2,19 +2,6 @@
 
   <ul class="container">
     <li id='nav-home'><a href="/" class="home" title="Home">Home</a></li>
-    <li class="dropdown previewable nav_sections">
-      <a class="sections top_nav">Sections<span class="arrow"></span></a>
-      <div class="subnav">
-        <ul class="left_column">
-          <% Section.all.each do |section| %>
-            <li id='<%= section.slug %>'><%= link_to section.title, section_path(section), :class => "#{section.slug}" %></li>
-          <% end %>
-        </ul>
-        <ul class="right_column">
-          <%= render :esi => sections_navigation_path %>
-        </ul>
-      </div>
-    </li>
     <li class="dropdown previewable nav_browse">
       <a class="browse top_nav">Browse<span class="arrow"></span></a>
       <div class="subnav browse_list">
