@@ -39,20 +39,31 @@ module SearchHelper
     search.valid_conditions.except(:publication_date)
   end
   
-  def search_suggestion_title(suggestion, search)
+  def search_suggestion_title(suggestion, search, options={})
+    semantic = options[:semantic]
+
     search_filters = search.filter_summary
+
+    if semantic
+      change_element = :span
+      change_attributes = {:class => :addition}
+    else
+      change_element = :strong
+      change_attributes = {}
+    end
+
     parts = suggestion.filter_summary.map do |suggested_filter|
       if search_filters.include?(suggested_filter)
         suggested_filter
       else
-        content_tag(:strong, suggested_filter)
+        content_tag(change_element, suggested_filter, change_attributes)
       end
     end
     
     # TODO: bolding of spelling corrections
     if suggestion.term.present?
       term = if suggestion.prior_term
-               SpellChecker.new(:template => self).highlight_corrections(suggestion.prior_term)
+               SpellChecker.new(:template => self).highlight_corrections(suggestion.prior_term, change_element, change_attributes)
              else
                h(suggestion.term)
              end

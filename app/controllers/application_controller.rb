@@ -95,4 +95,8 @@ class ApplicationController < ActionController::Base
   def log_memory_usage
     Rails.logger.warn "[memory usage: #{MemInfo.rss}]"
   end
+
+  def view_context
+    @template
+  end
 end

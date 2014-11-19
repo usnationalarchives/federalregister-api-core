@@ -20,10 +20,10 @@ class SpellChecker
     end
   end
 
-  def highlight_corrections(text)
+  def highlight_corrections(text, element=:strong, html_options={})
     correct(text) do |original, suggestions|
       if suggestions.present?
-        template.content_tag(:strong, suggestions.first)
+        template.content_tag(element, suggestions.first, html_options)
       else
         original
       end
