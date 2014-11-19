@@ -7,7 +7,7 @@
 <% header_tag(:id => 'header_refresh') do %>
   <div class="header_wrapper">
     <%= render :partial => 'layouts/navigation', :locals => {:last_date => @last_date, :search_term => @search_term} %>
-    <esi:include src="/my/special/user_utils" />
+    <%= render :esi => my_fr2_user_utils_path %>
 
     <esi:include src="/special/header/<%= params[:header_type] %>" />
   </div>

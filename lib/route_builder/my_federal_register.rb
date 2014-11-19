@@ -1,14 +1,14 @@
 module RouteBuilder::MyFederalRegister
   def my_fr2_shared_assets_path
-    "/my/special/shared_assets"
+    "/special/shared_assets"
   end
 
   def my_fr2_assets_path
-    "/my/special/my_fr_assets"
+    "/special/my_fr_assets"
   end
 
   def my_fr2_fr2_assets_path
-    "/my/special/fr2_assets"
+    "/special/fr2_assets"
   end
 
   def my_fr2_clippings_path
@@ -16,6 +16,14 @@ module RouteBuilder::MyFederalRegister
   end
 
   def my_site_notifications_path(params)
-    "/my/special/site_notifications/#{params[:identifier]}"
+    "/special/site_notifications/#{params[:identifier]}"
+  end
+
+  def my_fr2_navigation_path
+    "/special/navigation"
+  end
+
+  def my_fr2_user_utils_path
+    "/special/user_utils"
   end
 end
