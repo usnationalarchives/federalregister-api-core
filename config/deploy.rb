@@ -140,9 +140,6 @@ set :gem_file_groups, [:deployment, :development, :test]
 # all deployment changes that affect app servers also must
 # be put in the user-scripts files on s3!!!
 
-#after "deploy:update_code",            "symlinks:create"
-#after "symlinks:create",               "static_files:custom_symlinks"
-#after "static_files:custom_symlinks",  "deploy:set_rake_path"
 after "deploy:update_code",            "bundler:fix_bundle"
 after "bundler:fix_bundle",            "deploy:set_rake_path"
 after "deploy:set_rake_path",          "deploy:migrate"
