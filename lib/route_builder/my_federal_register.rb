@@ -30,4 +30,8 @@ module RouteBuilder::MyFederalRegister
   def my_fr2_header_path(header_type)
     "/special/header/#{header_type}"
   end
+
+  def my_fr2_footer_path
+    "/special/footer"
+  end
 end
