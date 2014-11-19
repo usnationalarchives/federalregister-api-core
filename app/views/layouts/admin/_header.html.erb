@@ -5,8 +5,6 @@
           <div class="container">
             <div class="brand"><%= link_to 'FR2 Admin', admin_home_path %></div>
             <ul class="nav nav-pills">
-              <li><%= link_to 'Home', admin_home_path, :class => "home" %></li>
-
               <li class="dropdown">
                 <a class="dropdown-toggle" data-toggle="dropdown" href="#">Sections<b class="caret"></b></a>
                 <ul class="dropdown-menu">
@@ -42,6 +40,7 @@
               <li><%= link_to 'Topic Names', admin_topic_names_path, :class => "" %></li>
               <li><%= link_to 'Users <div class="users icon"></div>', admin_users_path, :class => "" %></li>
               <li><%= link_to 'Events', admin_events_path, :class => "" %></li>
+              <li><%= link_to 'Site Notifications', admin_site_notifications_path %></li>
             </ul>
           </div>
         </div>

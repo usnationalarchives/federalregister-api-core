@@ -26,7 +26,8 @@
   <body id="<%= @faux_controller || controller.controller_name %>" class="<%= @faux_action || controller.action_name %>">
     
     <%= render :esi => layout_header_path %>
-    
+
+    <esi:include src="<%= my_site_notifications_path(:identifier => :global) %>" />
     <div id="main">
       <%= yield %>
       <div id="layout_footer"></div>

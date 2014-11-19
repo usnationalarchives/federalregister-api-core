@@ -16,4 +16,8 @@ class IndexesController < ApplicationController
     @document_type = FrIndexPresenter::DocumentType.new(agency, params[:year], params[:type])
     render :layout => false
   end
+
+  def select_year
+    redirect_to index_year_path(params.delete(:year) || Date.today.year)
+  end
 end

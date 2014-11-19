@@ -49,5 +49,13 @@ describe HtmlHelper do
       
       result.should == '<p>Hello <span>world</span> <a href="#">hello worldly folks</a> <a href="#">hello world</a></p>'
     end
+
+    it "persists ampersands" do
+      result = modify_text_not_inside_anchor('<p>Goats &amp; stuff</p>') do |text|
+        text.gsub(/Goats/, 'Sheep')
+      end
+
+      result.should == '<p>Sheep &amp; stuff</p>'
+    end
   end
 end

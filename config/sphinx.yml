@@ -18,11 +18,7 @@ staging:
   address: sphinx.fr2.ec2.internal
   port: 3312
   mem_limit: 528M
-  version: '2.0.6'
-  searchd_log_file: /var/www/apps/fr2/shared/log/searchd.log
-  query_log_file: /var/www/apps/fr2/shared/log/searchd.query.log
-  pid_file: /var/www/apps/fr2/shared/tmp/searchd.pid
-  searchd_file_path: /var/www/apps/fr2/shared/db/sphinx/production
+  version: '2.1.1-beta'
   compat_sphinxql_magics: 0
   max_matches: 10000
 production:
@@ -31,10 +27,6 @@ production:
   address: sphinx.fr2.ec2.internal
   port: 3312
   mem_limit: 528M
-  version: '2.0.1'
-  searchd_log_file: /var/www/apps/fr2/shared/log/searchd.log
-  query_log_file: /var/www/apps/fr2/shared/log/searchd.query.log
-  pid_file: /var/www/apps/fr2/shared/tmp/searchd.pid
-  searchd_file_path: /var/www/apps/fr2/shared/db/sphinx/production
+  version: '2.1.1-beta'
   compat_sphinxql_magics: 0
   max_matches: 10000

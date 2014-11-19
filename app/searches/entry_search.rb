@@ -118,10 +118,18 @@ class EntrySearch < ApplicationSearch
                 :sphinx_type => :with_all,
                 :sphinx_attribute => :section_ids,
                 :model_label_method => :title,
-                :model_id_attribute => :slug
+                :model_sphinx_method => :id,
+                :model_id_method => :slug
 
   define_filter :topic_ids,
                 :sphinx_type => :with_all
+
+  define_filter :topics,
+                :sphinx_type => :with_all,
+                :sphinx_attribute => :topic_ids,
+                :model_label_method => :name,
+                :model_sphinx_method => :id,
+                :model_id_method => :slug
 
   define_filter :type,
                 :sphinx_type => :with,
@@ -245,17 +253,17 @@ class EntrySearch < ApplicationSearch
   end
   
   def agency_facets
-    ApplicationSearch::FacetCalculator.new(:search => self, :model => Agency, :facet_name => :agency_ids).all
+    ApplicationSearch::FacetCalculator.new(:search => self, :model => Agency, :facet_name => :agency_ids, :identifier_attribute => :slug).all
   end
   memoize :agency_facets
   
   def section_facets
-    ApplicationSearch::FacetCalculator.new(:search => self, :model => Section, :facet_name => :section_ids, :name_attribute => :title).all
+    ApplicationSearch::FacetCalculator.new(:search => self, :model => Section, :facet_name => :section_ids, :name_attribute => :title, :identifier_attribute => :slug).all
   end
   memoize :section_facets
   
   def topic_facets
-    ApplicationSearch::FacetCalculator.new(:search => self, :model => Topic, :facet_name => :topic_ids).all
+    ApplicationSearch::FacetCalculator.new(:search => self, :model => Topic, :facet_name => :topic_ids, :identifier_attribute => :slug).all
   end
   memoize :topic_facets
   
@@ -267,26 +275,34 @@ class EntrySearch < ApplicationSearch
   memoize :type_facets
   
   def date_distribution(options = {})
-    options[:since] ||= Date.parse('1994-01-01')
+    if options[:since]
+      modified_with = with.merge(:publication_date => options[:since].to_time.to_time.to_i .. Issue.current.publication_date.to_time.to_i)
+    else
+      modified_with = with
+    end
+
     sphinx_search = ThinkingSphinx::Search.new(sphinx_term,
-      :with => with.merge(:publication_date => options[:since].to_time .. 1.week.from_now),
+      :with => modified_with,
       :with_all => with_all,
       :without => without,
       :conditions => sphinx_conditions,
       :match_mode => :extended
     )
     klass = case options.delete(:period)
+            when :daily
+              EntrySearch::DateAggregator::Daily
             when :weekly
               EntrySearch::DateAggregator::Weekly
             when :monthly
               EntrySearch::DateAggregator::Monthly
             when :quarterly
               EntrySearch::DateAggregator::Quarterly
+            when :yearly
+              EntrySearch::DateAggregator::Yearly
             else
               raise "invalid :period specified; must be one of :weekly, :monthly, or :quarterly"
             end
-    distribution = klass.new(sphinx_search, options)
-    distribution.results
+    klass.new(sphinx_search, :with => modified_with)
   end
 
   def count_in_last_n_days(n)
@@ -297,6 +313,10 @@ class EntrySearch < ApplicationSearch
       :conditions => sphinx_conditions,
       :match_mode => :extended
     )
+  end
+
+  def publication_year_facets
+    ApplicationSearch::FacetCalculator.new(:search => self, :facet_name => :publication, :hash => Entry::ENTRY_TYPES).all()
   end
   
   def publication_date_facets
@@ -392,6 +412,7 @@ class EntrySearch < ApplicationSearch
       ['in', :section_ids],
       ['in', :sections],
       ['about', :topic_ids],
+      ['about', :topics],
       ['affecting Small', :small_entity_ids],
       ['affecting Small', :small_entities],
       ['citing', :citing_document_numbers]

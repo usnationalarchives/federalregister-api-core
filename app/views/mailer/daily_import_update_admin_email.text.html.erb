@@ -1,0 +1,132 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+  </head>
+  <body>
+    <table border="0" cellspacing="0" width="100%">
+      <tr>
+        <td>
+          <img src="<%= root_url %>images/logotype.png" />
+        </td>
+        <td style="text-align:right;">
+          <img src="<%= root_url %>images/seal_email.jpg" />
+        </td>
+      </tr>
+    </table>
+
+    <div>
+      <h2 style="font-family:'Helvetica Neue',Arial,Helvetica,sans-serif;margin: 25px 0 5px;font-size: 25px;">
+        FederalRegister.gov Daily Import Update for <%= @date %>
+      </h2>
+
+      <% if @problematic_document_presenter.special_documents.present? %>
+      <h3 style="font-family:'Helvetica Neue',Arial,Helvetica,sans-serif;margin: 25px 0 5px;font-size: 20px;border-bottom: 1px solid #000;">
+        Documents with Problematic Document Numbers
+      </h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Document Number</th>
+            <th>Rule Type</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @problematic_document_presenter.special_documents.each do |document| %>
+            <tr>
+              <td style="width: 300px;" align="left"><%= document.title %></td>
+              <td style="width: 300px;" align="center"><%= link_to document.document_number, short_entry_url(document.document_number) %></td>
+              <td style="width: 300px;" align="center"><%= document.entry_type %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+      <% end %>
+
+      <% if @problematic_document_presenter.rules_without_dates.present? %>
+      <h3 style="font-family:'Helvetica Neue',Arial,Helvetica,sans-serif;margin: 25px 0 5px;font-size: 20px;border-bottom: 1px solid #000;">
+        Rules without Effective Dates
+      </h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Document Number</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @problematic_document_presenter.rules_without_dates.each do |document| %>
+          <tr>
+            <td style="width: 600px;" align="left"><%= document.title %></td>
+            <td style="width: 300px;" align="center"><%= link_to document.document_number, short_entry_url(document.document_number) %></td>
+          </tr>
+          <% end %>
+        </tbody>
+      </table>
+      <% end %>
+
+      <% if @agency_name_presenter.complex_remappings.present? %>
+      <h3 style="font-family:'Helvetica Neue',Arial,Helvetica,sans-serif;margin: 25px 0 5px;font-size: 20px;border-bottom: 1px solid #000;">
+        Complex Agency Name Remappings
+      </h3>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Original Name</th>
+            <th>Remapped Name</th>
+            <th>Documents</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @agency_name_presenter.complex_remappings.each do |remapping| %>
+              <tr>
+                <td style="width: 300px;"><%= remapping.original_name %></td>
+                <td style="width: 300px;">
+                  <% if remapping.agency_name.agency %>
+                    <%= link_to remapping.agency_name.agency.name, edit_admin_agency_name_url(remapping.agency_name) %>
+                  <% else %>
+                    <em>not remapped</em>
+                  <% end %>
+                </td>
+                <td style="width: 255px;padding: 20px 0;" align="center"><%= remapping.entries.map{|e| link_to e.document_number, short_entry_url(e.document_number)}.join(', ') %>
+              </tr>
+          <% end %>
+        </tbody>
+      </table>
+      <% end %>
+
+      <% if @agency_name_presenter.basic_remappings.present? %>
+      <h3 style="font-family:'Helvetica Neue',Arial,Helvetica,sans-serif;margin: 25px 0 5px;font-size: 20px;border-bottom: 1px solid #000;">
+        Basic Agency Name Remappings
+      </h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Original Name</th>
+            <th>Remapped Name</th>
+            <th>Documents</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @agency_name_presenter.basic_remappings.each do |remapping| %>
+            <tr>
+              <td style="width: 300px;"><%= remapping.original_name %></td>
+              <td style="width: 300px;">
+                <% if remapping.agency_name.agency %>
+                  <%= link_to remapping.agency_name.agency.name, edit_admin_agency_name_url(remapping.agency_name) %>
+                <% else %>
+                  <em>not remapped</em>
+                <% end %>
+              </td>
+              <td style="width: 255px;padding: 20px 0;"><%= remapping.entries.map{|e| link_to e.document_number, short_entry_url(e.document_number)}.join(', ') %>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+      <% end %>
+    </div>
+
+  </body>
+</html>

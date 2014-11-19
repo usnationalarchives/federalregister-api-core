@@ -5,21 +5,10 @@ class ApplicationSearch::FacetCalculator
     @hash = options[:hash]
     @facet_name = options[:facet_name]
     @name_attribute = options[:name_attribute] || :name
+    @identifier_attribute = options[:identifier_attribute]
   end
   
   def raw_facets
-    # sphinx_search = ThinkingSphinx::Search.new(
-    # )
-    
-    # # raise sphinx_search.options.inspect
-    # client = sphinx_search.send(:client)
-    # client.group_function = :attr
-    # client.group_by = @facet_name.to_s
-    # client.limit = 1000
-    # query = sphinx_search.send(:query)
-    # # raise client.inspect
-    # # raise client.query(query, sphinx_search.send(:indexes))[:matches].size.inspect
-    # result = client.query(query, sphinx_search.send(:indexes))[:matches]
     @search.sphinx_search(
       @search.sphinx_term,
       :with => @search.with,
@@ -34,13 +23,22 @@ class ApplicationSearch::FacetCalculator
   
   def all
     if @model
-      id_to_name = @model.find_as_hash(:select => "id, #{@name_attribute} AS name")#, :conditions => {:id => raw_facets.keys})
+      id_to_name = @model.find_as_hash(:select => "id, #{@name_attribute} AS name")
+
+      if @identifier_attribute
+        id_to_identifier = @model.find_as_hash(:select => "id, #{@identifier_attribute} AS identifier")
+      else
+        id_to_identifier = {}
+      end
+
       search_value_for_this_facet = @search.send(@facet_name)
       facets = raw_facets.reverse.reject{|id, count| id == 0}.map do |id, count|
         name = id_to_name[id.to_s]
+
         next if name.blank?
         ApplicationSearch::Facet.new(
           :value      => id,
+          :identifier => id_to_identifier[id.to_s],
           :name       => name,
           :count      => count,
           :on         => search_value_for_this_facet.to_a.include?(id.to_s),
@@ -53,7 +51,7 @@ class ApplicationSearch::FacetCalculator
         next if value.blank?
         ApplicationSearch::Facet.new(
           :value      => value,
-          :name       => @hash[value],
+          :name       => @hash[value] || value,
           :count      => count,
           :on         => value.to_s == search_value_for_this_facet.to_s,
           :condition  => :type

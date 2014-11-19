@@ -1,25 +1,25 @@
-class EntrySearch::DateAggregator::Monthly < EntrySearch::DateAggregator::Base
+class EntrySearch::DateAggregator::Daily < EntrySearch::DateAggregator::Base
   def group_function
-    :month
+    :day
   end
 
   def periods
     periods = []
 
-    date = @start_date
+    date = @start_date.beginning_of_quarter
     while(date < @end_date)
       periods << [date]
-      date = date.advance(:months => 1) 
+      date = date.advance(:days => 1) 
     end
 
     periods
   end
 
   def sphinx_format_str
-    "%Y%m" 
+    "%Y%m%d"
   end
 
   def name_format_str
-    "%B %Y"
+    "%m/%d/%Y"
   end
 end

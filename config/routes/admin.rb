@@ -50,6 +50,7 @@ ActionController::Routing::Routes.draw do |map|
     end
     
     admin.resource :user_session
+    admin.resources :site_notifications, :only => [:edit, :index, :update]
     admin.login  'login',  :controller => "user_sessions", :action => "new", :conditions => {:method => :get}
     admin.logout 'logout', :controller => "user_sessions", :action => "destroy", :conditions => {:method => :get}
   end

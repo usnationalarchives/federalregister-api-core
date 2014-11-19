@@ -11,20 +11,13 @@ dependencies:
   pre:
     - npm install -g jshint
     - gem update --system 1.8.20
-    - cp config/amazon.yml.sample config/amazon.yml
-    - cp config/api_keys.yml.sample config/api_keys.yml
-    - cp config/deploy_credentials.yml.sample config/deploy_credentials.yml
-    - cp config/mongoid.yml.sample config/mongoid.yml
-    - cp config/mysql.yml.sample config/mysql.yml
     - cp config/secrets.yml.sample config/secrets.yml
-    - cp config/sendgrid.yml.sample config/sendgrid.yml
 
 ## Customize database setup commands
 database:
   override:
     - 'mkdir -p config'
     - 'echo -e "test:\n  host: localhost\n  username: ubuntu\n  database: circle_ruby_test\n  adapter: mysql\n" > config/database.yml'
-    - 'echo -e "test:\n  host: localhost\n  database: circle_test\n  port: 27017\n" > config/mongoid.yml'
     - 'bundle exec rake db:create db:schema:load --trace ASSUME_UNITIALIZED_DB=1'
 
 ## Customize test commands

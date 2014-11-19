@@ -4,6 +4,11 @@ ActionController::Routing::Routes.draw do |map|
       doc.entries_attributes ':type/attributes', :action => :attributes, :quiet => true
     end
 
+    api.articles_facets 'articles/facets/:facet',
+                  :controller => 'api/v1/entries',
+                  :action => 'facets',
+                  :conditions => {:method => :get}
+
     api.resources :entries,
                   :as => :articles,
                   :only => [:index, :show],
@@ -18,5 +23,9 @@ ActionController::Routing::Routes.draw do |map|
                   :only => [:index, :show],
                   :controller => 'api/v1/public_inspection_documents',
                   :collection => {:current => :get}
+
+    api.resources :site_notifications,
+                  :only => [:index, :show],
+                  :controller => 'api/v1/site_notifications'
   end
 end

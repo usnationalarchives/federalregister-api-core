@@ -4,7 +4,7 @@ module HtmlHelper
     doc.xpath(".//text()[not(ancestor::a)]").each do |text_node|
       text = text_node.text.dup
       
-      text = yield(text)
+      text = yield(h(text))
       
       # FIXME: this ugliness shouldn't be necessary, but seems to be
       if text != text_node.text

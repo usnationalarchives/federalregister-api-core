@@ -2,11 +2,11 @@
 
 # Your secret key for verifying cookie session data integrity.
 # If you change this key, all old sessions will become invalid!
-# Make sure the secret is at least 30 characters and all random, 
+# Make sure the secret is at least 30 characters and all random,
 # no regular words or you'll be exposed to dictionary attacks.
 ActionController::Base.session = {
   :key         => '_fr2_session',
-  :secret      => File.open( File.join(File.dirname(__FILE__), '..', 'secrets.yml') ) { |yf| YAML::load( yf ) }['session_key']
+  :secret      => SECRETS['session_key']
 }
 
 # Use the database for sessions instead of the cookie-based default,

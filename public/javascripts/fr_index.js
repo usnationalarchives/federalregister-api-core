@@ -21,6 +21,10 @@ fr_index_popover_handler.add_popover_content = function() {
 
 
 $(document).ready(function() {
+  $('#fr-index-year-select select').on('change', function(e) {
+    $(this).closest('form').submit();
+  });
+
   var popover_handler = fr_index_popover_handler.initialize();
 
   if ( $("#fr-index-entry-popover-template").length > 0) {

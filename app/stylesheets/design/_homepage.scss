@@ -536,3 +536,21 @@ CURRENT
 .fr_section ul.bullets li.lastchild,
 #tools li:last-child,
 #tools li.lastchild { border-bottom: none; }   
+
+/******************************
+
+NOTIFICATIONS
+
+******************************/
+
+div.danger {
+  padding: .5em .5em .25em;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 30px;
+  text-align: center;
+  float: none;
+  width: 945px;
+  }
+
+

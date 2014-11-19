@@ -3,7 +3,16 @@
 <div class="title"><span><%= @fr_index.year %> FR Index</span></div>
 
 <div id="fr-index-metadata" class="page_summary">
-  <h1><%= @fr_index.year %> Federal Register Index</h1>
+  <div class="title_container">
+    <h1><%= @fr_index.year %> Federal Register Index</h1>
+  </div>
+  <% form_tag(url_for(select_index_year_path), :method => :get, :id => "fr-index-year-select", :class => 'selected_date') do %>
+    <%= label_tag :year, "View other years:" %>
+    <%= select_tag(:year,
+                   options_for_select(@fr_index.class.available_years, @fr_index.year),
+                   :include_blank => false
+                  ) %>
+  <% end %>
 
   <hr />
 
