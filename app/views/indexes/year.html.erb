@@ -3,7 +3,16 @@
 <div class="title"><span><%= @fr_index.year %> FR Index</span></div>
 
 <div id="fr-index-metadata" class="page_summary">
-  <h1><%= @fr_index.year %> Federal Register Index</h1>
+  <div class="title_container">
+    <h1><%= @fr_index.year %> Federal Register Index</h1>
+  </div>
+  <% form_tag(url_for(select_index_year_path), :method => :get, :id => "fr-index-year-select", :class => 'selected_date') do %>
+    <%= label_tag :year, "View other years:" %>
+    <%= select_tag(:year,
+                   options_for_select(@fr_index.class.available_years, @fr_index.year),
+                   :include_blank => false
+                  ) %>
+  <% end %>
 
   <hr />
 
@@ -14,9 +23,9 @@
   </p>
 
   <p>
-    Each agency below is followed by a count that represents the number of articles for 
+    Each agency below is followed by a count that represents the number of documents for 
     that agency in the <%= @fr_index.year %> FR Index. The count is omitted for agency publishing 
-    less than 2 articles in a given year.
+    less than 2 documents in a given year.
   </p>
 
   <p>This online index is current as of <strong><%= @fr_index.max_date.strftime("%B %e, %Y") %></strong>.</p>
@@ -54,7 +63,7 @@
       <% else %>
         <li>
         <%= link_to agency_year.name, index_year_agency_path(@fr_index.year, agency_year), :id => "agency_#{agency_year.agency.id}" %>
-          <%= count_pill(agency_year.entry_count, "data-tooltip" => "Articles published in #{@fr_index.year}") %>
+          <%= count_pill(agency_year.entry_count, "data-tooltip" => "Documents published in #{@fr_index.year}") %>
           <% if agency_year.children.present? %>
           <ul>
             <% agency_year.children.each do |sub_agency| %>
@@ -67,7 +76,7 @@
                 <li>
                   <span class="see">See</span> 
                   <%= link_to sub_agency.name, index_year_agency_path(@fr_index.year, sub_agency), :id => "agency_#{sub_agency.agency.id}" %>
-                  <%= count_pill(sub_agency.entry_count, "data-tooltip" => "Articles published in #{@fr_index.year}") %>
+                  <%= count_pill(sub_agency.entry_count, "data-tooltip" => "Documents published in #{@fr_index.year}") %>
                 </li>
               <% end %>
             <% end %>

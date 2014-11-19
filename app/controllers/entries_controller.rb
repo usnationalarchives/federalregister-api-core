@@ -25,7 +25,7 @@ class EntriesController < ApplicationController
     cache_for 1.day
     respond_to do |wants|
       wants.rss do
-        @feed_name = 'Featured Federal Register Articles'
+        @feed_name = 'Featured Federal Register Documents'
         @entries = Entry.highlighted.preload([{:topic_assignments => :topic}, :agencies])
         render :template => 'entries/index.rss.builder'
       end

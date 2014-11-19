@@ -7,11 +7,6 @@ require 'thinking_sphinx/deploy/capistrano'
 # deploy recipes - need to do `sudo gem install thunder_punch` - these should be required last
 require 'thunder_punch'
 
-load File.join(File.dirname(__FILE__), '..', 'lib', 'amazon_aws')
-set :ec2_config_location, File.join(File.dirname(__FILE__), "amazon.yml")
-
-ec2_config = YAML.load( File.open(ec2_config_location, 'r') )
-@ec2 = AmazonAws::EC2.new(ec2_config['access_key_id'], ec2_config['secret_access_key'])
 
 #############################################################
 # Set Basics
@@ -66,7 +61,7 @@ set :deploy_to,  "/var/www/apps/#{application}"
 task :production do
   set :rails_env,  "production"
   set :branch, 'production'
-  set :gateway, 'federalregister.gov'
+  set :gateway, 'fr2_production'
   
   role :proxy,  "proxy.fr2.ec2.internal"
   role :app,    "app-server-1.fr2.ec2.internal", "app-server-2.fr2.ec2.internal", "app-server-3.fr2.ec2.internal", "app-server-4.fr2.ec2.internal", "app-server-5.fr2.ec2.internal"
@@ -83,7 +78,7 @@ end
 task :staging do
   set :rails_env,  "staging" 
   set :branch, `git branch`.match(/\* (.*)/)[1]
-  set :gateway, 'fr2.criticaljuncture.org'
+  set :gateway, 'fr2_staging'
   
   role :proxy,  "proxy.fr2.ec2.internal"
   role :app,    "app-server-1.fr2.ec2.internal"
@@ -154,13 +149,7 @@ after "varnish:clear_cache",           "honeybadger:notify_deploy"
 # Symlinks for Static Files
 #############################################################
 set :custom_symlinks, {
-  'config/api_keys.yml'                       => 'config/api_keys.yml',
-  'config/mail.yml'                           => 'config/mail.yml',
-  'config/newrelic.yml'                       => 'config/newrelic.yml',
-  'config/amazon.yml'                         => 'config/amazon.yml',
-  'config/initializers/cloudkicker_config.rb' => 'config/cloudkicker_config.rb',
-  'config/secrets.yml'                        => 'config/secrets.yml',
-  'config/sendgrid.yml'                       => 'config/sendgrid.yml',
+  'config/secrets.yml'    => 'config/secrets.yml',
   
   # don't symlink data directory directly!
   'data/bulkdata'         => 'data/bulkdata',
@@ -211,24 +200,6 @@ namespace :apache do
 end
 
 namespace :fr2 do
-  desc "Update api keys"
-  task :update_api_keys, :roles => [:app, :worker] do
-    run "/usr/local/s3sync/s3cmd.rb get config.internal.federalregister.gov:api_keys.yml #{shared_path}/config/api_keys.yml"
-    find_and_execute_task("apache:restart")
-  end
-  
-  desc "Update secret keys"
-  task :update_secret_keys, :roles => [:app, :worker] do
-    run "/usr/local/s3sync/s3cmd.rb get config.internal.federalregister.gov:secrets.yml #{shared_path}/config/secrets.yml"
-    find_and_execute_task("apache:restart")
-  end
-  
-  desc "Update sendgrid keys"
-  task :update_sendgrid_keys, :roles => [:app, :worker] do
-    run "/usr/local/s3sync/s3cmd.rb get config.internal.federalregister.gov:sendgrid.yml #{shared_path}/config/sendgrid.yml"
-    find_and_execute_task("apache:restart")
-  end
-
   desc "Update FR2 aspell dictionaries"
   task :update_aspell_dicts, :roles => [:app, :worker] do
     run "mkdir -p #{shared_path}/data/dict"

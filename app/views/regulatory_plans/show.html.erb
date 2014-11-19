@@ -1,5 +1,5 @@
 <% title @regulatory_plan.title %>
-<% feed_autodiscovery regulatory_plan_url(@regulatory_plan, :format => :rss), "Articles associated with RIN #{@regulatory_plan.regulation_id_number}", :search_conditions => {:regulation_id_number => @regulatory_plan.regulation_id_number} %>
+<% feed_autodiscovery regulatory_plan_url(@regulatory_plan, :format => :rss), "Documents associated with RIN #{@regulatory_plan.regulation_id_number}", :search_conditions => {:regulation_id_number => @regulatory_plan.regulation_id_number} %>
 
 <div class="title"><span>Unified Agenda <%= @regulatory_plan.regulation_id_number %></span></div>
 
@@ -49,7 +49,7 @@
         <h1>Federal Register Activity</h1>
       </div>
       <div class="body_column">
-        <p><%= link_to "#{pluralize(@entry_count, "article")} found", entries_search_path(:conditions => {:regulation_id_number => @regulatory_plan.regulation_id_number})%></p>
+        <p><%= link_to "#{pluralize(@entry_count, "document")} found", entries_search_path(:conditions => {:regulation_id_number => @regulatory_plan.regulation_id_number})%></p>
       </div>
     <% end %>
   

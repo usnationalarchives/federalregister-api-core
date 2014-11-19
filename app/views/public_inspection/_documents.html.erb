@@ -38,7 +38,7 @@
 
 <% if documents_without_agencies.present? %>
   <div class="title_bar">
-    <h2>Other Articles</h2>
+    <h2>Other Documents</h2>
   </div>
   <% documents_without_agencies.group_by(&:agency_names).each do |agency_names, entries| %>
     <h3><%= agency_names.map(&:name).to_sentence %></h3>

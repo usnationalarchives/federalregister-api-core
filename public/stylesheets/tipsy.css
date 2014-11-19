@@ -24,7 +24,7 @@
   .tipsy-e .tipsy-arrow { right: 0; border-right: none; }
   .tipsy-w .tipsy-arrow { left: 0; border-left: none; }
 
-  /* tipsy arrows are broken on the article page and aren't being position properly */
+  /* tipsy arrows are broken on the document page and aren't being position properly */
   /* this fix works currently because we only have tipsy on the clip/share icons    */
   /* if more items are given tipsy's on this page it may break.                     */
   body#entries .tipsy-arrow-s,

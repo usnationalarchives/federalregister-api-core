@@ -1,7 +1,10 @@
 class PublicInspectionDocument < ApplicationModel
   has_attached_file :pdf,
                     :storage => :s3,
-                    :s3_credentials => "#{Rails.root}/config/amazon.yml",
+                    :s3_credentials => {
+                      :access_key_id     => SECRETS['aws']['access_key_id'],
+                      :secret_access_key => SECRETS['aws']['secret_access_key']
+                    },
                     :s3_protocol => 'https',
                     :bucket => "public-inspection.#{APP_HOST_NAME}",
                     :path => ":style_if_not_with_banner:document_number.pdf",
@@ -22,7 +25,7 @@ class PublicInspectionDocument < ApplicationModel
   has_many :agency_assignments, :as => :assignable, :order => "agency_assignments.position", :dependent => :destroy
   has_many :agencies, :through => :agency_assignments, :order => "agency_assignments.position", :extend => Agency::AssociationExtensions
   has_many :docket_numbers, :as => :assignable, :order => "docket_numbers.position", :dependent => :destroy
- 
+
   file_attribute(:raw_text)  {"#{RAILS_ROOT}/data/public_inspection/raw/#{document_file_path}.txt"}
   before_save :persist_document_file_path
   before_save :set_content_type
@@ -35,7 +38,7 @@ class PublicInspectionDocument < ApplicationModel
     indexes "IF(public_inspection_documents.title = '', CONCAT(public_inspection_documents.toc_subject, ' ', public_inspection_documents.toc_doc), public_inspection_documents.title)", :as => :title
     indexes "CONCAT('#{RAILS_ROOT}/data/public_inspection/raw/', public_inspection_documents.document_file_path, '.txt')", :as => :full_text, :file => true
     indexes "GROUP_CONCAT(DISTINCT docket_numbers.number SEPARATOR ' ')", :as => :docket_id
-    
+
     # attributes
     has "CRC32(document_number)", :as => :document_number, :type => :integer
     has "public_inspection_documents.id", :as => :public_inspection_document_id, :type => :integer
@@ -52,7 +55,7 @@ class PublicInspectionDocument < ApplicationModel
       "full_text" => 25,
       "agency_name" => 10
     }
-    
+
     where "public_inspection_documents.publication_date > (SELECT MAX(publication_date) FROM issues where issues.completed_at is not null)"
   end
 
@@ -73,7 +76,7 @@ class PublicInspectionDocument < ApplicationModel
     @entry ||= Entry.find_by_document_number(document_number)
   end
 
-  def entry_type 
+  def entry_type
     Entry::ENTRY_TYPES[granule_class]
   end
 
@@ -119,7 +122,7 @@ class PublicInspectionDocument < ApplicationModel
       grant = AWS::S3::ACL::Grant.new
       grant.permission = 'FULL_CONTROL'
       grant.grantee = grantee
- 
+
       obj.acl.grants = [grant]
       obj.acl(obj.acl)
     end

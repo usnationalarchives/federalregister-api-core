@@ -1,5 +1,8 @@
-FlickRawOptions = { 'api_key' => ENV['flickr_api_key'] }
 require 'flickraw'
+
+FlickRawOptions = { 'api_key' => SECRETS['api_keys']['flickr'] }
+FlickRaw.api_key = SECRETS['api_keys']['flickr']
+FlickRaw.shared_secret = SECRETS['api_keys']['flickr_secret']
 
 class Flickr
   class Photo
@@ -58,11 +61,6 @@ class Flickr
       @location = attributes["location"]
       @profile_url = attributes["profileurl"]
     end
-  end
-  
-  def initialize
-    FlickRaw.api_key=ENV['flickr_api_key']
-    FlickRaw.shared_secret=ENV['flickr_secret_api_key']
   end
   
   def search(q)

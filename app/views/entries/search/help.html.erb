@@ -19,26 +19,26 @@
     <dt>NOT:</dt> <dd><%= working_search_example('tensile -strength') %>, also <%= working_search_example('tensile !strength') %></dd>
     <dt>Grouping:</dt> <dd><%= working_search_example('(tensile & strength) & (pipe | pipeline)') %></dd>
   </dl>
-  <p><strong>Example:</strong> If you are looking for articles related to tensile strength on pipelines, you may start your search with: <%= working_search_example('tensile strength pipelines') %>. This search would result in <%= entry_count_for_search_term('tensile strength pipelines') %> articles being returned.</p>
+  <p><strong>Example:</strong> If you are looking for documents related to tensile strength on pipelines, you may start your search with: <%= working_search_example('tensile strength pipelines') %>. This search would result in <%= entry_count_for_search_term('tensile strength pipelines') %> documents being returned.</p>
 
-  <p>However you realize that the search is excluding content that only mentions pipes. You can then modify your search using grouping and the OR operator to be: <%= working_search_example('tensile strength (pipes | pipelines)') %>. This results in <%= entry_count_for_search_term('tensile strength (pipes | pipelines)') %> articles returned in search results.</p>
+  <p>However you realize that the search is excluding content that only mentions pipes. You can then modify your search using grouping and the OR operator to be: <%= working_search_example('tensile strength (pipes | pipelines)') %>. This results in <%= entry_count_for_search_term('tensile strength (pipes | pipelines)') %> documents returned in search results.</p>
 
-  <p>Now you notice that many of the articles are about waivers and antidumping, which don’t interest you. You can modify your search using the NOT operator as follows: <%= working_search_example('tensile strength (pipes | pipelines) -waiver -antidumping') %>. This results in a more manageable <%= entry_count_for_search_term('tensile strength (pipes | pipelines) -waiver -antidumping')%> results.</p>
+  <p>Now you notice that many of the documents are about waivers and antidumping, which don’t interest you. You can modify your search using the NOT operator as follows: <%= working_search_example('tensile strength (pipes | pipelines) -waiver -antidumping') %>. This results in a more manageable <%= entry_count_for_search_term('tensile strength (pipes | pipelines) -waiver -antidumping')%> results.</p>
 
   <h2 id="part_2" class="title_bar">Part II: Phrase Search</h2>
 
   <p>You can use quotes (<code>""</code>) to wrap some or all of your search terms. By wrapping terms in quotes you are telling the search engine to look for words that are ADJACENT to each other.</p>
 
-  <p><strong>Example:</strong> To continue with the example in Part I above:  <%= working_search_example('tensile strength (pipes | pipelines) -waiver -antidumping') %>) you notice that articles are returned with either tensile or strength, but the terms are scattered throughout the document. You can refine your query with: <%= working_search_example('"tensile strength" (pipes | pipelines) -waiver -antidumping') %>. This results in <%= entry_count_for_search_term('"tensile strength" (pipes | pipelines) -waiver -antidumping') %> matches (fewer than before).</p>
+  <p><strong>Example:</strong> To continue with the example in Part I above:  <%= working_search_example('tensile strength (pipes | pipelines) -waiver -antidumping') %>) you notice that documents are returned with either tensile or strength, but the terms are scattered throughout the document. You can refine your query with: <%= working_search_example('"tensile strength" (pipes | pipelines) -waiver -antidumping') %>. This results in <%= entry_count_for_search_term('"tensile strength" (pipes | pipelines) -waiver -antidumping') %> matches (fewer than before).</p>
 
 
   <h2 id="part_3" class="title_bar">Part III: Exact Form Searches</h2>
 
-  <p>In our default search, we match words based on their stem word. So when you search <%= working_search_example('fish') %>, we also match articles containing 'fishing' and 'fished' (and vice versa). This holds true for plural forms as well, <%= working_search_example('fishery') %> also matches 'fisheries'. By using the exact form option, you can limit your search to exact matches of a word. Use the <code>=</code> operator in front of the word you wish to have exactly matched.</p>
+  <p>In our default search, we match words based on their stem word. So when you search <%= working_search_example('fish') %>, we also match documents containing 'fishing' and 'fished' (and vice versa). This holds true for plural forms as well, <%= working_search_example('fishery') %> also matches 'fisheries'. By using the exact form option, you can limit your search to exact matches of a word. Use the <code>=</code> operator in front of the word you wish to have exactly matched.</p>
 
   <p><strong>Usage:</strong> <%= working_search_example('=airworthiness') %>, matches only documents with the exact word 'airworthiness'.</p>
 
-  <p><strong>Example:</strong> <%= working_search_example('=fishing') %> would only match articles with the word 'fishing' and not articles with the words 'fish' or 'fished'. Along the same lines <%= working_search_example('=fishery') %> would not match 'fisheries' only 'fishery'.</p>
+  <p><strong>Example:</strong> <%= working_search_example('=fishing') %> would only match documents with the word 'fishing' and not documents with the words 'fish' or 'fished'. Along the same lines <%= working_search_example('=fishery') %> would not match 'fisheries' only 'fishery'.</p>
 
 
   <h2 id="part_4" class="title_bar">Part IV: Proximity Searches</h2>
@@ -61,11 +61,11 @@
 
   <h2 id="part_6" class="title_bar">Part VI: Precedence Searches</h2>
 
-  <p>We also support queries based on word (or phrase) ordering. This precedence search makes use of the <code>&lt;&lt;</code> operator and is useful when you know the rough order of words in a phrase in an article, but not the exact phrase.</p>
+  <p>We also support queries based on word (or phrase) ordering. This precedence search makes use of the <code>&lt;&lt;</code> operator and is useful when you know the rough order of words in a phrase in a document, but not the exact phrase.</p>
 
   <p><strong>Usage:</strong> <%= working_search_example('rebuilt << parts') %>, ensures that matches contain those words in the order indicated.</p>
 
-  <p><strong>Example:</strong> Let’s say you are looking for an article that you know contains the words 'rebuilt', 'reclaimed', 'vehicular', and 'parts' in that order, but you aren't sure exactly how the phrase was constructed (perhaps it was: 'rebuilt or reclaimed vehicular and boat parts are now...'). By searching: <%= working_search_example('rebuilt << reclaimed << vehicular << parts') %>, you would match the items you are looking for without needing to know the exact order of the phrase in advance.</p>
+  <p><strong>Example:</strong> Let’s say you are looking for a document that you know contains the words 'rebuilt', 'reclaimed', 'vehicular', and 'parts' in that order, but you aren't sure exactly how the phrase was constructed (perhaps it was: 'rebuilt or reclaimed vehicular and boat parts are now...'). By searching: <%= working_search_example('rebuilt << reclaimed << vehicular << parts') %>, you would match the items you are looking for without needing to know the exact order of the phrase in advance.</p>
 
   <p>Like many of the search types above, all of these search options can be combined to create more powerful searches (some more useful than others). To continue with our example in Part VI above, perhaps you wanted to search for phrases like, 'rebuilt and reclaimed vehicular parts' and 'rebuilt and reclaimed boat parts'. You could combine boolean operators with precedence searching and modify your search to be: <%= working_search_example('rebuilt << reclaimed << (vehicular | boat) << parts') %>, to match both of the new, slightly modified phrases.</p>
 

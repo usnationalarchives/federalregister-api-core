@@ -1,8 +1,8 @@
 <% title @topic.name %>
-<% description "Browse Federal Register articles tagged by agencies with the topic '#{@topic.name}'. Use this topic to learn more about your areas of interest and the regulations that affect the topic '#{@topic.name}'." %>
+<% description "Browse Federal Register documents  tagged by agencies with the topic '#{@topic.name}'. Use this topic to learn more about your areas of interest and the regulations that affect the topic '#{@topic.name}'." %>
 
-<% feed_autodiscovery topic_url(@topic, :format => :rss), "Articles in this topic", :search_conditions => {:topic_ids => [@topic.id]} %>
-<% feed_autodiscovery significant_entries_topic_url(@topic, :format => :rss), "Significant Articles in this topic", :search_conditions => {:topic_ids => [@topic.id], :significant => '1'} %>
+<% feed_autodiscovery topic_url(@topic, :format => :rss), "Documents in this topic", :search_conditions => {:topic_ids => [@topic.id]} %>
+<% feed_autodiscovery significant_entries_topic_url(@topic, :format => :rss), "Significant Documents in this topic", :search_conditions => {:topic_ids => [@topic.id], :significant => '1'} %>
 
 <div class="title"><span>Topic</span></div>
 
@@ -18,7 +18,7 @@
   <% section_tag(:class => 'TOC aside_box') do %>  
     <h1>On This Page</h1>
     <ul>
-      <li><%= link_to 'Recent Articles', '#recent_articles' %></li>
+      <li><%= link_to 'Recent Documents', '#recent_articles' %></li>
     </ul>
   <% end -%>
   

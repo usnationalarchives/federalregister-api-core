@@ -69,5 +69,11 @@ class FrIndexPresenter
     def public_path
       "/a/#{document_number}"
     end
+
+    def needs_attention?(last_completed_issue)
+      return false if modified?
+      return true unless last_completed_issue
+      last_completed_issue < publication_date
+    end
   end
 end

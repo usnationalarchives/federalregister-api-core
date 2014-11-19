@@ -1,15 +1,12 @@
 source 'https://rubygems.org'
 
-gem 'rails', '2.3.17'
-gem 'mysql'
+gem 'rails',
+  :git => 'https://github.com/makandra/rails.git',
+  :branch => '2-3-lts'
+
+gem 'mysql', '2.8.1'
 
 gem "jrails", "0.6.0"
-
-gem 'fr2_audit_logic',
-  :git => 'git://github.com/criticaljuncture/fr2_audit_logic.git',
-  :ref => 'd0b037954987cc28dac25dfbf72ae94f28e9c9f7'
-# gem 'fr2_audit_logic', :path => '../fr2_audit_logic'
-gem 'bson_ext', '1.3.0'
 
 gem 'nokogiri', '1.4.1'
 gem 'curb', '0.4.4.0'
@@ -38,7 +35,7 @@ gem 'stevedore', '0.1.0'
 gem 'active_hash', '0.9.5'
 gem 'bcrypt-ruby', '2.1.2', :require => 'bcrypt'
 gem 'authlogic', '2.1.3'
-gem 'flickraw', '0.8.1', :require => false
+gem 'flickraw', '0.9.8', :require => false
 gem 'searchlogic', '2.4.12'
 gem 'haml', '3.0.4'
 gem 'compass', '0.10.1'
@@ -56,6 +53,8 @@ gem "thunder_punch", '0.0.14', :require => false
 gem "resque", "1.19.0"
 
 gem "httparty", "0.8.1"
+gem "httmultiparty", '~> 0.3.13'
+
 gem "recaptcha", "0.3.1", :require => 'recaptcha/rails'
 gem 'sendgrid', :git => "git://github.com/criticaljuncture/sendgrid.git", :branch => 'master'
 gem 'modularity', '0.6.1'

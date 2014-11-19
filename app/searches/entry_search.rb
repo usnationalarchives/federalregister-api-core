@@ -81,6 +81,7 @@ class EntrySearch < ApplicationSearch
   define_filter(:citing_document_numbers,
                 :sphinx_type => :with,
                 :sphinx_attribute => :cited_entry_ids,
+                :label => 'Citing document',
                 :sphinx_value_processor => Proc.new { |*document_numbers|
                   entries = Entry.all(:select => "id, document_number", :conditions => {:document_number => document_numbers.flatten})
                   missing_document_numbers = entries.map(&:document_number) - document_numbers.flatten
@@ -91,7 +92,9 @@ class EntrySearch < ApplicationSearch
 
                   entries.map(&:id)
                 }) do |*document_numbers|
-                  document_numbers.flatten.map(&:inspect).to_sentence
+                  entries = Entry.all(:select => "id, citation", :conditions => {:document_number => document_numbers.flatten})
+
+                  entries.map(&:citation).to_sentence(:two_words_connector => ' or ', :last_word_connector => ', or ')
                 end
 
   define_filter(:document_numbers,
@@ -115,10 +118,18 @@ class EntrySearch < ApplicationSearch
                 :sphinx_type => :with_all,
                 :sphinx_attribute => :section_ids,
                 :model_label_method => :title,
-                :model_id_attribute => :slug
+                :model_sphinx_method => :id,
+                :model_id_method => :slug
 
   define_filter :topic_ids,
                 :sphinx_type => :with_all
+
+  define_filter :topics,
+                :sphinx_type => :with_all,
+                :sphinx_attribute => :topic_ids,
+                :model_label_method => :name,
+                :model_sphinx_method => :id,
+                :model_id_method => :slug
 
   define_filter :type,
                 :sphinx_type => :with,
@@ -155,6 +166,12 @@ class EntrySearch < ApplicationSearch
                 :sphinx_type => :with,
                 :label => "Significance" do 
                   "Associated Unified Agenda Deemed Significant Under EO 12866"
+                end
+
+  define_filter :accepting_comments_on_regulations_dot_gov,
+                :sphinx_type => :with,
+                :label => "Regulations.gov" do
+                  "Accepting Comments on Regulations.gov"
                 end
 
   define_filter :correction,
@@ -236,17 +253,17 @@ class EntrySearch < ApplicationSearch
   end
   
   def agency_facets
-    ApplicationSearch::FacetCalculator.new(:search => self, :model => Agency, :facet_name => :agency_ids).all
+    ApplicationSearch::FacetCalculator.new(:search => self, :model => Agency, :facet_name => :agency_ids, :identifier_attribute => :slug).all
   end
   memoize :agency_facets
   
   def section_facets
-    ApplicationSearch::FacetCalculator.new(:search => self, :model => Section, :facet_name => :section_ids, :name_attribute => :title).all
+    ApplicationSearch::FacetCalculator.new(:search => self, :model => Section, :facet_name => :section_ids, :name_attribute => :title, :identifier_attribute => :slug).all
   end
   memoize :section_facets
   
   def topic_facets
-    ApplicationSearch::FacetCalculator.new(:search => self, :model => Topic, :facet_name => :topic_ids).all
+    ApplicationSearch::FacetCalculator.new(:search => self, :model => Topic, :facet_name => :topic_ids, :identifier_attribute => :slug).all
   end
   memoize :topic_facets
   
@@ -258,26 +275,34 @@ class EntrySearch < ApplicationSearch
   memoize :type_facets
   
   def date_distribution(options = {})
-    options[:since] ||= Date.parse('1994-01-01')
+    if options[:since]
+      modified_with = with.merge(:publication_date => options[:since].to_time.to_time.to_i .. Issue.current.publication_date.to_time.to_i)
+    else
+      modified_with = with
+    end
+
     sphinx_search = ThinkingSphinx::Search.new(sphinx_term,
-      :with => with.merge(:publication_date => options[:since].to_time .. 1.week.from_now),
+      :with => modified_with,
       :with_all => with_all,
       :without => without,
       :conditions => sphinx_conditions,
       :match_mode => :extended
     )
     klass = case options.delete(:period)
+            when :daily
+              EntrySearch::DateAggregator::Daily
             when :weekly
               EntrySearch::DateAggregator::Weekly
             when :monthly
               EntrySearch::DateAggregator::Monthly
             when :quarterly
               EntrySearch::DateAggregator::Quarterly
+            when :yearly
+              EntrySearch::DateAggregator::Yearly
             else
               raise "invalid :period specified; must be one of :weekly, :monthly, or :quarterly"
             end
-    distribution = klass.new(sphinx_search, options)
-    distribution.results
+    klass.new(sphinx_search, :with => modified_with)
   end
 
   def count_in_last_n_days(n)
@@ -288,6 +313,10 @@ class EntrySearch < ApplicationSearch
       :conditions => sphinx_conditions,
       :match_mode => :extended
     )
+  end
+
+  def publication_year_facets
+    ApplicationSearch::FacetCalculator.new(:search => self, :facet_name => :publication, :hash => Entry::ENTRY_TYPES).all()
   end
   
   def publication_date_facets
@@ -354,12 +383,12 @@ class EntrySearch < ApplicationSearch
   
   def summary
     if @term.blank? && filters.empty?
-      "All Articles"
+      "All Documents"
     else
       parts = filter_summary
       parts.unshift("matching '#{@term}'") if @term.present?
       
-      'Articles ' + parts.to_sentence
+      'Documents ' + parts.to_sentence
     end
   end
   
@@ -383,8 +412,10 @@ class EntrySearch < ApplicationSearch
       ['in', :section_ids],
       ['in', :sections],
       ['about', :topic_ids],
+      ['about', :topics],
       ['affecting Small', :small_entity_ids],
-      ['affecting Small', :small_entities]
+      ['affecting Small', :small_entities],
+      ['citing', :citing_document_numbers]
     ].each do |term, filter_condition|
       relevant_filters = filters.select{|f| f.condition == filter_condition}
     

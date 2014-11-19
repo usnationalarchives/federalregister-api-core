@@ -4,8 +4,8 @@
 <%= title @section.title %>
 <% description description_for_section(@section) %>
 
-<%= feed_autodiscovery significant_entries_section_url(@section, :format => :rss), "Significant Articles in #{@section.title}", :search_conditions => {:section_ids => [@section.id], :significant => 1} %>
-<%= feed_autodiscovery section_url(@section, :format => :rss), "All Articles in #{@section.title}", :search_conditions => {:section_ids => [@section.id]} %>
+<%= feed_autodiscovery significant_entries_section_url(@section, :format => :rss), "Significant Documents in #{@section.title}", :search_conditions => {:section_ids => [@section.id], :significant => 1} %>
+<%= feed_autodiscovery section_url(@section, :format => :rss), "All Documents in #{@section.title}", :search_conditions => {:section_ids => [@section.id]} %>
 
 <div class="title">
   <div class='title_icon' id="<%= @section.slug %>"></div>
@@ -29,7 +29,7 @@
     <ul>
       <li><%= link_to 'Comment Periods Closing Soon ', '#comment-period-closing' %></li>
       <li><%= link_to 'Comment Periods Recently Opened ', '#comment-period-opening' %></li>
-      <li class='omega'><%= link_to 'Articles published in the past 5 days ', '#articles_published_by_day' %></li>
+      <li class='omega'><%= link_to 'Documents published in the past 5 days ', '#articles_published_by_day' %></li>
     </ul>
   <% end -%>
     
@@ -46,7 +46,7 @@
   <div id="comments-closing-opening">
     
     <div class="header-nav">
-      <h2 class="title_bar"><span class="small_stack"><span>Articles</span>With</span> Comments Requested</h2>
+      <h2 class="title_bar"><span class="small_stack"><span>Documents</span>With</span> Comments Requested</h2>
       
       <ul id="comments-closing-opening-links" class="actions tabs-nav">
         <li class="tab" id="tabs-opening"><a href="#comment-period-closing">Closing Soon</a></li>
@@ -79,7 +79,7 @@
         <%# TODO HELP-RUBY instead of index we will probably want the href to be the data, but it didn't like -09/27/10 at the end  %>
         <li class="tab" id="bydate-<%= index %>"><a href="#articles_published_by_day-<%= index %>"><%= date %></a></li>   
       <% end %>
-      <li class="search"><%= link_to 'Search to see older articles.', entries_search_path(:conditions => {:section_ids => @section.id}) %></li>
+      <li class="search"><%= link_to 'Search to see older documents.', entries_search_path(:conditions => {:section_ids => @section.id}) %></li>
     </ul>
         
     <div id="articles_published_by_day-body" class="tabs-body">

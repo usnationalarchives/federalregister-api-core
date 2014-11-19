@@ -27,7 +27,7 @@
             <% eo_collections.reverse.each do |eo_collection| %>
               <li>
                 <% if eo_collection.year < 1994 %>
-                  <%= eo_collection.year %>: <span class="fr_year_not_available" data-tooltip="Articles on FederalRegister.gov are available from 1994-current">N/A</span>
+                  <%= eo_collection.year %>: <span class="fr_year_not_available" data-tooltip="Documents on FederalRegister.gov are available from 1994-current">N/A</span>
                 <% else %>
                   <%= eo_collection.year %>: 
                   <%= link_to eo_collection.count, executive_orders_by_president_and_year_path(president.identifier, eo_collection.year) %>

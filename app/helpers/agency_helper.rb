@@ -19,6 +19,6 @@ module AgencyHelper
       agency_string_2 = "the #{@agency.name}"
     end
     
-    "#{agency_string_1} publishes articles in the Federal Register. Explore most recent and most cited articles published by #{agency_string_2}."
+    "#{agency_string_1} publishes documents in the Federal Register. Explore most recent and most cited documents published by #{agency_string_2}."
   end
 end

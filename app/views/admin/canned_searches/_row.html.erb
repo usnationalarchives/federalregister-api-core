@@ -1,7 +1,7 @@
 <tr id="canned_search_<%= canned_search.id %>" data-canned-search-id="<%= canned_search.id %>">
   <td class="title"><%= canned_search.title %></td>
   <td><%= canned_search.active? ? link_to('Yes', canned_search_path(canned_search)) : 'No' %>
-  <% counts = canned_search.search.date_distribution(:period => :monthly, :since => 5.years.ago) %>
+  <% counts = canned_search.search.date_distribution(:period => :monthly, :since => 5.years.ago).counts %>
   <td><%= sparkline(:data => counts, :alt => "Monthly Distribution", :max => 100 ) %></td>
   <td><%= counts.max %>/mo</td>
   <td><%= counts.average.to_i %>/mo</td>

@@ -26,9 +26,7 @@ First, you'll need Ruby, Bundler, Rails 2.3.x, the Sphinx search engine, MySQL, 
 
 Then you'll need to create the following files based on the examples:
 * config/database.yml
-* config/api_keys.yml
-* config/amazon.yml
-* config/sendgrid.yml
+* config/secrets.yml
 
 Then:
 

@@ -8,7 +8,7 @@ var RecaptchaOptions = {
 </script>
 
 <div id="email_pane" data-requires-captcha-with-message="<%= @entry_email.requires_captcha_with_message? %>" data-requires-captcha-without-message="<%= @entry_email.requires_captcha_without_message? %>" >
-  <h3>E-Mail the following article:</h3>
+  <h3>E-Mail the following document:</h3>
   <h4><%= link_to @entry.title, entry_path(@entry) %></h4>
   <p>Your email address will not be published. Required fields are marked *</p>
   <% if @entry_email.errors.count > 0 %> 

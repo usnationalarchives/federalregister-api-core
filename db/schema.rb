@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130402203849) do
+ActiveRecord::Schema.define(:version => 20141111200846) do
 
   create_table "action_names", :force => true do |t|
     t.string   "name"
@@ -528,6 +528,13 @@ ActiveRecord::Schema.define(:version => 20130402203849) do
     t.datetime "updated_at"
     t.integer  "creator_id"
     t.integer  "updater_id"
+  end
+
+  create_table "site_notifications", :force => true do |t|
+    t.string  "identifier"
+    t.string  "notification_type"
+    t.text    "description"
+    t.boolean "active"
   end
 
   create_table "small_entities", :force => true do |t|

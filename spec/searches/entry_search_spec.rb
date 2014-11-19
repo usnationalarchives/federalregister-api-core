@@ -141,25 +141,25 @@ describe EntrySearch do
   end
   
   describe "summary" do
-    it "says 'All Articles' if no term or filters" do
-      EntrySearch.new(:conditions => {}).summary.should == "All Articles"
+    it "says 'All Documents' if no term or filters" do
+      EntrySearch.new(:conditions => {}).summary.should == "All Documents"
     end
     
     it "includes the term" do
-      EntrySearch.new(:conditions => {:term => "OH HAI"}).summary.should == "Articles matching 'OH HAI'"
+      EntrySearch.new(:conditions => {:term => "OH HAI"}).summary.should == "Documents matching 'OH HAI'"
     end
     
     it "includes the effective date" do
       search = EntrySearch.new(:conditions => {:effective_date => {:year => 2011}})
       
-      search.summary.should == "Articles with an effective date in 2011"
+      search.summary.should == "Documents with an effective date in 2011"
     end
     
     it "includes the single agency" do
       agency = Factory(:agency, :name => "Commerce Department")
       search = EntrySearch.new(:conditions => {:agency_ids => [agency.id]})
       
-      search.summary.should == "Articles from Commerce Department"
+      search.summary.should == "Documents from Commerce Department"
     end
     
     it "includes all agencies" do
@@ -167,44 +167,44 @@ describe EntrySearch do
       agency_2 = Factory(:agency, :name => "State Department")
       search = EntrySearch.new(:conditions => {:agency_ids => [agency_1.id,agency_2.id]})
       
-      search.summary.should == "Articles from Commerce Department or State Department"
+      search.summary.should == "Documents from Commerce Department or State Department"
     end
     
     it "includes the document type" do
       search = EntrySearch.new(:conditions => {:type => ['RULE','PRORULE']})
-      search.summary.should == "Articles of type Rule or Proposed Rule"
+      search.summary.should == "Documents of type Rule or Proposed Rule"
     end
     
     it "includes the agency docket" do
       search = EntrySearch.new(:conditions => {:docket_id => 'EPA-HQ-OPPT-2005-0049'})
-      search.summary.should == "Articles filed under agency docket EPA-HQ-OPPT-2005-0049"
+      search.summary.should == "Documents filed under agency docket EPA-HQ-OPPT-2005-0049"
     end
     
     it "includes the significance" do
       search = EntrySearch.new(:conditions => {:significant => '1'})
-      search.summary.should == "Articles whose Associated Unified Agenda Deemed Significant Under EO 12866"
+      search.summary.should == "Documents whose Associated Unified Agenda Deemed Significant Under EO 12866"
     end
 
     it "includes the affected CFR part" do
       search = EntrySearch.new(:conditions => {:cfr => {:title => '40', :part => '745'}})
-      search.summary.should == "Articles affecting 40 CFR 745"
+      search.summary.should == "Documents affecting 40 CFR 745"
     end
     
     it "includes the location" do
       search = EntrySearch.new(:conditions => {:near => {:location => " 94118", :within => 50}})
-      search.summary.should == "Articles located within 50 miles of  94118"
+      search.summary.should == "Documents located within 50 miles of  94118"
     end
     
     it "includes the section" do
       section = Factory(:section, :title => "Environment")
       search = EntrySearch.new(:conditions => {:section_ids => [section.id]})
-      search.summary.should == "Articles in Environment"
+      search.summary.should == "Documents in Environment"
     end
     
     it "includes the topic" do
       topic = Factory(:topic, :name => "Reporting and recordkeeping requirements")
       search = EntrySearch.new(:conditions => {:topic_ids => [topic.id]})
-      search.summary.should == "Articles about Reporting and recordkeeping requirements"
+      search.summary.should == "Documents about Reporting and recordkeeping requirements"
     end
     
     it "combines multiple types of filters with the appropriate conjunction" do
@@ -213,7 +213,7 @@ describe EntrySearch do
             :type => ['RULE','PRORULE'],
             :cfr => {:title => '45', :part => '745'}
       })
-      search.summary.should == "Articles matching 'fishing', of type Rule or Proposed Rule, and affecting 45 CFR 745"
+      search.summary.should == "Documents matching 'fishing', of type Rule or Proposed Rule, and affecting 45 CFR 745"
     end
   end
 end

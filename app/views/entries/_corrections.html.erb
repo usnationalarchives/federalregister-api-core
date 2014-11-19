@@ -2,11 +2,11 @@
   <div id="flash_message" class="correction_of">
     <p>
       <% if entry.republication? %>
-        This article is a corrected republication of an article that was published on <%= entry.correction_of.publication_date %>.
+        This document is a corrected republication of a document that was published on <%= entry.correction_of.publication_date %>.
       <% else %>
-        This article is a correction of an article that was published on <%= entry.correction_of.publication_date %>.
+        This document is a correction of a document that was published on <%= entry.correction_of.publication_date %>.
       <% end %>
-      <%= link_to 'View Uncorrected Article', entry_path(entry.correction_of), :class => "button" %>
+      <%= link_to 'View Uncorrected Document', entry_path(entry.correction_of), :class => "button" %>
     </p>
   </div>
 <% end %>
@@ -16,10 +16,10 @@
     <div id="flash_message" class="correction">
       <p>
         <% if correction.republication? %>
-          This article has been corrected and republished on <%= correction.publication_date %>.
+          This document has been corrected and republished on <%= correction.publication_date %>.
           <%= link_to 'View Republication', entry_path(correction), :class => "button" %>
         <% else %>
-          This article was corrected by an article published on <%= correction.publication_date %>.
+          This document was corrected by a document published on <%= correction.publication_date %>.
           <%= link_to 'View Correction', entry_path(correction), :class => "button" %>
         <% end %>
       </p>

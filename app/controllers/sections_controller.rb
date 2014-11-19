@@ -12,7 +12,7 @@ class SectionsController < ApplicationController
       
       wants.rss do
         @feed_name = "Federal Register: '#{@section.title}' Section"
-        @feed_description = "Most Recent Federal Register articles from the '#{@section.title}' Section."
+        @feed_description = "Most Recent Federal Register documents from the '#{@section.title}' Section."
         @entries = EntrySearch.new(:conditions => {:publication_date => {:is => @publication_date}, :section_ids => [@section.id]}, :order => "newest", :per_page => 1000).results
         
         render :template => 'entries/index.rss.builder'
@@ -71,8 +71,8 @@ class SectionsController < ApplicationController
     
     respond_to do |wants|
       wants.rss do
-        @feed_name = "Federal Register: Featured articles from the '#{@section.title}' Section"
-        @feed_description = "Featured Federal Register articles from the '#{@section.title}' Section."
+        @feed_name = "Federal Register: Featured documents from the '#{@section.title}' Section"
+        @feed_description = "Featured Federal Register documents from the '#{@section.title}' Section."
         @entries = @section.highlighted_entries.preload([{:topic_assignments => :topic}, :agencies])
         render :template => 'entries/index.rss.builder'
       end
@@ -85,8 +85,8 @@ class SectionsController < ApplicationController
     
     respond_to do |wants|
       wants.rss do
-        @feed_name = "Federal Register: Significant articles from the '#{@section.title}' Section"
-        @feed_description = "Significant Federal Register articles from the '#{@section.title}' Section."
+        @feed_name = "Federal Register: Significant documents from the '#{@section.title}' Section"
+        @feed_description = "Significant Federal Register documents from the '#{@section.title}' Section."
         @entries = EntrySearch.new(:conditions => {:significant => 1, :section_ids => [@section.id]}, :order => "newest", :per_page => 20).results
         render :template => 'entries/index.rss.builder'
       end

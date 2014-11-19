@@ -7,11 +7,19 @@ class EntrySearch::DateAggregator::Monthly < EntrySearch::DateAggregator::Base
     periods = []
 
     date = @start_date
-    while(date < Date.current)
-      periods << [date.strftime("%Y%m")]
+    while(date < @end_date)
+      periods << [date]
       date = date.advance(:months => 1) 
     end
 
     periods
+  end
+
+  def sphinx_format_str
+    "%Y%m" 
+  end
+
+  def name_format_str
+    "%B %Y"
   end
 end

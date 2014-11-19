@@ -123,11 +123,17 @@
   </xsl:template>
 
   <xsl:template match="AUTH">
-    <xsl:value-of disable-output-escaping="yes" select="'&lt;/div&gt;'" />
+    <xsl:if test="ancestor::REGTEXT or ancestor::PART">
+      <xsl:value-of disable-output-escaping="yes" select="'&lt;/div&gt;'" />
+    </xsl:if>
+
     <div class="body_column authority">
       <xsl:apply-templates />
     </div>
-    <xsl:value-of disable-output-escaping="yes" select="'&lt;div class=&quot;body_column&quot; &gt;'" />
+
+    <xsl:if test="ancestor::REGTEXT or ancestor::PART">
+      <xsl:value-of disable-output-escaping="yes" select="'&lt;div class=&quot;body_column&quot; &gt;'" />
+    </xsl:if>
   </xsl:template>
 
   
@@ -162,12 +168,6 @@
   
   <xsl:template match="DATE">
     <p class="date">
-      <xsl:apply-templates />
-    </p>
-  </xsl:template>
-
-  <xsl:template match="AMDPAR">
-    <p class="amendment_part">
       <xsl:apply-templates />
     </p>
   </xsl:template>
@@ -291,7 +291,9 @@
   </xsl:template>
 
   <xsl:template match="AMDPAR">
-    <xsl:value-of disable-output-escaping="yes" select="'&lt;/div&gt;'" />
+    <xsl:if test="ancestor::REGTEXT or ancestor::PART">
+      <xsl:value-of disable-output-escaping="yes" select="'&lt;/div&gt;'" />
+    </xsl:if>
 
     <p class="amendment_part">
       <xsl:attribute name="id">
@@ -305,7 +307,9 @@
       <xsl:apply-templates />
     </p>
     
-    <xsl:value-of disable-output-escaping="yes" select="'&lt;div class=&quot;contents&quot;&gt;'" />
+    <xsl:if test="ancestor::REGTEXT or ancestor::PART">
+      <xsl:value-of disable-output-escaping="yes" select="'&lt;div class=&quot;contents&quot;&gt;'" />
+    </xsl:if>
   </xsl:template>
 
   <xsl:template match="CONTENTS">
@@ -315,28 +319,35 @@
 
 
       <ul>
-        <xsl:for-each select=".//SECHD">
-          <li><xsl:value-of select="text()" /></li>
-        </xsl:for-each>
-        <xsl:for-each select=".//SECTNO">
-          <li>
-            <a>
-              <xsl:attribute name="href">
-                <xsl:value-of select="concat('#sec-', translate(text(), '.', '-'))" />
-              </xsl:attribute>
-              <span class="section_number">
-                <xsl:value-of select="text()" />
-              </span>
-
-              <xsl:text> </xsl:text>
-
-              <xsl:value-of select="following-sibling::SUBJECT[1][text()]" />
-            </a>
-          </li>
-        </xsl:for-each>
+        <xsl:apply-templates />
       </ul>
     </div>
     <xsl:value-of disable-output-escaping="yes" select="'&lt;div class=&quot;body_column&quot;&gt;'" />
+  </xsl:template>
+
+  <xsl:template match="SECHD[ancestor::CONTENTS]">
+    <li><xsl:value-of select="text()" /></li>
+  </xsl:template>
+
+  <xsl:template match="SECTNO[ancestor::CONTENTS]">
+    <li>
+      <a>
+        <xsl:attribute name="href">
+          <xsl:value-of select="concat('#sec-', translate(text(), '.', '-'))" />
+        </xsl:attribute>
+        <span class="section_number">
+          <xsl:value-of select="text()" />
+        </span>
+
+        <xsl:text> </xsl:text>
+
+        <xsl:value-of select="following-sibling::SUBJECT[1][text()]" />
+      </a>
+    </li>
+  </xsl:template>
+  <xsl:template match="SUBJECT[ancestor::CONTENTS]"></xsl:template>
+  <xsl:template match="HD[ancestor::CONTENTS]">
+    <li><strong><xsl:value-of select="text()" /></strong></li>
   </xsl:template>
 
   <xsl:template match="EXTRACT[not(ancestor::REGTEXT or ancestor::PART)]">

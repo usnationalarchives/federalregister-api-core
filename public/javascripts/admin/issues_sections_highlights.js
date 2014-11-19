@@ -15,7 +15,7 @@ $(document).ready(function(){
   $("ul#highlighted .remove").live('click', function() {
     var item = $(this).parent();
     var entry_id = item.attr('data-entry-id');
-    if (confirm('Are you sure you wish to no longer highlight this article?')) {
+    if (confirm('Are you sure you wish to no longer highlight this document?')) {
       $.ajax({
         url: base_url + '/highlights/' + entry_id,
         type: 'DELETE',

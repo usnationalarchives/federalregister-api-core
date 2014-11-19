@@ -1,11 +1,27 @@
 class EntrySearch::DateAggregator::Base
   def initialize(sphinx_search, options)
     @sphinx_search = sphinx_search
-    @start_date = options[:since].to_date
+    if options[:with] && options[:with][:publication_date]
+      @start_date = Time.at(options[:with][:publication_date].first).utc.to_date
+      @end_date = Time.at(options[:with][:publication_date].last).utc.to_date
+    else
+      @start_date = Date.new(1994,1,1)
+      @end_date = Issue.current.publication_date
+    end
+  end
+
+  def counts
+    periods.map{|sub_periods| sub_periods.map{|p| raw_results[sphinx_format(p)] || 0}.sum }
   end
 
   def results
-    periods.map{|sub_periods| sub_periods.map{|p| raw_results[p] || 0}.sum }
+    periods.each_with_object(Hash.new) do |sub_periods, hsh|
+      identifier = sub_periods.first
+      hsh[identifier.to_s(:iso)] = {
+        :count => sub_periods.map{|p| raw_results[sphinx_format(p)] || 0}.sum,
+        :name => name_format(identifier)
+      }
+    end
   end
 
   def raw_results
@@ -23,5 +39,15 @@ class EntrySearch::DateAggregator::Base
     end
 
     @raw_results
+  end
+
+  private
+
+  def sphinx_format(date)
+     date.strftime(sphinx_format_str)
+ end
+
+  def name_format(date)
+    date.strftime(name_format_str)
   end
 end

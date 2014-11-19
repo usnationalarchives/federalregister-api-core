@@ -1,8 +1,8 @@
 <ul class="tabs">
   <% if selected == :entries %>
-    <li class="on"><%= link_to 'Articles', entries_search_path(:conditions => {:term => search.term}) %></li>
+    <li class="on"><%= link_to 'Documents', entries_search_path(:conditions => {:term => search.term}) %></li>
   <% else %>
-    <li><%= link_to "Articles <span class=\"number_of_results\">#{number_with_delimiter search.entry_count}</span>", entries_search_path(:conditions => {:term => search.term}) %></li>
+    <li><%= link_to "Documents <span class=\"number_of_results\">#{number_with_delimiter search.entry_count}</span>", entries_search_path(:conditions => {:term => search.term}) %></li>
   <% end %>
 
   <% if selected == :public_inspection %>

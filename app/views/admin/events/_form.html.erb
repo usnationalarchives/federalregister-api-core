@@ -10,7 +10,7 @@
     <span id="event_place_name"><%= f.object.place.try(:name) %></span>
   </li>
   <% unless f.object.new_record? %>
-  <li><label>Article</label>
+  <li><label>Document</label>
     <%= link_to f.object.entry.document_number, entry_path(f.object.entry) %>
   </li>
   <% end %>

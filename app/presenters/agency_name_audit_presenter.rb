@@ -1,15 +1,31 @@
 class AgencyNameAuditPresenter
   delegate :publication_date, :to => :issue
-  attr_reader :issue, :interesting_remappings, :boring_remappings
+  attr_reader :issue,
+    :complex_remappings,
+    :basic_remappings
 
   def initialize(date)
     @issue = Issue.find_by_publication_date!(date)
+    @complex_remappings, @basic_remappings = remappings.partition(&:complex?)
+  end
 
-    @interesting_remappings, @boring_remappings = remappings.partition(&:interesting?)
+  def special_documents
+    @special_documents ||= issue.
+      entries.
+      select {|doc| doc.document_number.match(/^X/)}
+  end
+
+  def rules_without_dates
+    @rules_without_dates ||= issue.
+      entries.
+      select do |doc|
+        doc.granule_class == "RULE" &&
+        doc.effective_on.blank? &&
+        !doc.document_number.match(/^C-/)
+      end
   end
 
   private
-
   def remappings
     @remappings = @issue.
       entries.
@@ -38,7 +54,7 @@ class AgencyNameAuditPresenter
       agency_name.agency.try(:name)
     end
 
-    def interesting?
+    def complex?
       return false if original_name == 'Office of the Secretary'
       words(original_name) != words(remapped_name)
     end

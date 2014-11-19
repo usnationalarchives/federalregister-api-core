@@ -2,7 +2,7 @@
 <div class="embedded_search search_bar">
   <% semantic_form_for :conditions, search, :url => entries_search_path, :html => {:method => :get, :id => "entry_search_form"} do |f| %>
     <div class="simple">
-      <label>Search <%= agency_year.year %> Articles</label>
+      <label>Search <%= agency_year.year %> Documents</label>
       <%= f.text_field :term, :placeholder => 'Search term' %>
       <ul>
         <%= f.input :agency_ids, :as => :hidden, :value => agency_year.agency.id %>

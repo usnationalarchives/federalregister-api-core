@@ -5,7 +5,7 @@
       
       <p class="matching_citation_header">It looks like you were searching for the citation <strong><%= citation.name %></strong>.
         <% if citation.citation_type == 'FR' %>
-          We've found the following <%= pluralize(citation.matching_fr_entries.count, 'article') %>
+          We've found the following <%= pluralize(citation.matching_fr_entries.count, 'document') %>
           on page <%= citation.part_2 %> of volume <%= citation.part_1 %>.
         <% else %>
           We've found the following Executive Order:
@@ -23,7 +23,7 @@
     <% else %>
       <p class="matching_citation_header">
         It looks like you were searching for the citation <strong><%= citation.name %></strong>. 
-        We were unable to find any articles with that citation. FederalRegister.gov covers articles published starting in January of 1994 (volumes 59-current).
+        We were unable to find any documents with that citation. FederalRegister.gov covers documents published starting in January of 1994 (volumes 59-current).
         <br />
         Documents published before 1993 (Volumes 1-58) are available through a <a href="http://catalog.gpo.gov/fdlpdir/public.jsp" class="external">Federal Depository Library</a>.
       </p>

@@ -1,5 +1,5 @@
 <% if agency_year.respond_to?(:see_instead) %>
-  <h2><%= agency_year.name %></h2>
+  <h2 data-agency-name="<%= agency_year.name %>"><%= agency_year.name %></h2>
   <ul class="see_also">
     <li>
       <em class="see">See</em> 
@@ -7,7 +7,7 @@
     </li>
   </ul>
 <% else %>
-  <h2 id="agency_<%= agency_year.agency.id %>"><%= agency_year.name %></h2>
+  <h2 id="agency_<%= agency_year.agency.id %>" data-agency-name="<%= agency_year.name %>"><%= agency_year.name %></h2>
   <% if agency_year.children.present? %>
     <ul class="see_also">
       <% agency_year.children.each do |sub_agency| %>

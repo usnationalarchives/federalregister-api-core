@@ -23,7 +23,7 @@ class Agency < ApplicationModel
   
   # cabinet level agencies and the EPA
   # excludes things like the dept of the army, etc
-  # as they don't produce many FR articles
+  # as they don't produce many FR documents
   AGENCIES_IN_NAV_AGENCY_IDS = [12, 54, 103, 126, 136, 145, 221, 227, 228, 253, 268, 271, 476, 492, 497, 520]
 
   has_many :agency_assignments
@@ -46,7 +46,10 @@ class Agency < ApplicationModel
                     :styles => { :thumb => "100", :small => "140", :medium => "245", :large => "580", :full_size => "" },
                     :processors => [:thumbnail],
                     :storage => :s3,
-                    :s3_credentials => "#{Rails.root}/config/amazon.yml",
+                    :s3_credentials => {
+                      :access_key_id     => SECRETS['aws']['access_key_id'],
+                      :secret_access_key => SECRETS['aws']['secret_access_key']
+                    },
                     :s3_protocol => 'https',
                     :bucket => 'agency-logos.federalregister.gov',
                     :path => ":id/:style.:extension"

@@ -1,4 +1,4 @@
-<% title @search.term.blank? ? 'Article Search' : "Article Search Results for '#{h @search.term}'" %>
+<% title @search.term.blank? ? 'Document Search' : "Document Search Results for '#{h @search.term}'" %>
 <%= feed_autodiscovery entries_search_url(params.except(:action).merge(:format => :rss, :order => 'newest')), @search.summary, :search_conditions => (params[:conditions].blank? ? {} : params[:conditions]).except(:publication_date) %>
 
 <% if @search.blank? %>
@@ -10,7 +10,7 @@
 
 <% add_javascript :src => 'page_specific/search/search.js' %>
 
-<div class="title"><span>Search Articles</span></div>
+<div class="title"><span>Search Documents</span></div>
 
 <%= render :esi => entries_search_header_path(params.except(:action)) %>
 

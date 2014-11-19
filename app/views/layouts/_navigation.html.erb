@@ -48,10 +48,10 @@
       <a class="search top_nav">Search<span class="arrow"></span></a>
       <ul class="subnav search_list">
         <li id='articles-search'>
-          <%= link_to 'Article Search', entries_search_path, :class => "article-search" %>
+          <%= link_to 'Document Search', entries_search_path, :class => "article-search" %>
         </li>
         <li id='articles-adv-search'>
-          <%= link_to 'Advanced Article Search', entries_search_path(:anchor => 'advanced'), :class => "advanced-search" %>
+          <%= link_to 'Advanced Document Search', entries_search_path(:anchor => 'advanced'), :class => "advanced-search" %>
         </li>
         <li id='events-search'>
           <%= link_to 'Events Search', events_search_path, :class => "events-search" %>
@@ -83,7 +83,7 @@
     <li class="inline_search">
       <form action="<%= entries_search_path %>" method="get" class="search_form">
         <label for="term">Search the Federal Register</label>
-        <%= text_field_tag "conditions[term]", nil, :id => "term", :title => 'Search Articles', :placeholder =>  "Search Articles" %>
+        <%= text_field_tag "conditions[term]", nil, :id => "term", :title => 'Search Documents', :placeholder =>  "Search Documents" %>
         <%= submit_tag 'Go', :class => "search_btn", :title => 'Search' %>
       </form>
     </li>

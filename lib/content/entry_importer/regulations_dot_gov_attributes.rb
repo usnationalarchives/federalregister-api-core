@@ -1,4 +1,4 @@
-module Content::EntryImporter::RegulationsDotGov
+module Content::EntryImporter::RegulationsDotGovAttributes
   extend Content::EntryImporter::Utils
   extend ActiveSupport::Memoizable
   provides :checked_regulationsdotgov_at, :regulationsdotgov_url, :comment_url, :regulations_dot_gov_comments_close_on, :regulations_dot_gov_docket_id
@@ -27,8 +27,8 @@ module Content::EntryImporter::RegulationsDotGov
   
   def regulationsdotgov_document
     begin
-      Content::RegulationsDotGov.new(ENV['regulations_dot_gov_api_key']).find_by_document_number(entry.document_number)
-    rescue Content::RegulationsDotGov::ResponseError
+      RegulationsDotGov::Client.new.find_by_document_number(entry.document_number)
+    rescue RegulationsDotGov::Client::ResponseError
       nil
     end
   end

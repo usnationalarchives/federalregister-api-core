@@ -7,9 +7,14 @@ class ApplicationSearch::Facet
     @condition  = options[:condition]
     @count      = options[:count]
     @on         = options[:on]
+    @identifier = options[:identifier]
   end
   
   def on?
     @on
+  end
+
+  def identifier
+    @identifier || @value
   end
 end
