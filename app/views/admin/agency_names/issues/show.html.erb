@@ -4,10 +4,10 @@
 <%= link_to "Previous Issue", admin_agency_names_issue_path(@presenter.issue.previous.publication_date.to_s(:iso)) if @presenter.issue.previous %> |
 <%= link_to "Next Issue", admin_agency_names_issue_path(@presenter.issue.next.publication_date.to_s(:iso)) if @presenter.issue.next %>
 
-<% if @presenter.interesting_remappings.present? %>
+<% if @presenter.complex_remappings.present? %>
   <h3>Agencies of Note</h3>
-  <%= render :partial => "table", :locals => {:remappings => @presenter.interesting_remappings} %>
+  <%= render :partial => "table", :locals => {:remappings => @presenter.complex_remappings} %>
 <% end %>
 
 <h3>Other Agencies</h3>
-<%= render :partial => "table", :locals => {:remappings => @presenter.boring_remappings} %>
+<%= render :partial => "table", :locals => {:remappings => @presenter.basic_remappings} %>

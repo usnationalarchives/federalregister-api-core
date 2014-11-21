@@ -10,7 +10,7 @@ class EntryApiRepresentation < ApiRepresentation
   field(:abstract_html_url, :select => :document_file_path) {|e| entry_abstract_url(e)}
   field(:action)
   field(:agencies, :select => :id, :include => {:agency_names => :agency}) do |entry|
-    entry.agency_names.map do |agency_name|
+    entry.agency_names.compact.map do |agency_name|
       agency = agency_name.agency
       if agency
         {
@@ -28,7 +28,7 @@ class EntryApiRepresentation < ApiRepresentation
       end
     end
   end
-  field(:agency_names, :include => {:agency_names => :agency}) {|e| e.agency_names.map{|a| a.agency.try(:name) || a.name}}
+  field(:agency_names, :include => {:agency_names => :agency}) {|e| e.agency_names.compact.map{|a| a.agency.try(:name) || a.name}}
   field(:body_html_url, :select => :document_file_path) {|e| entry_full_text_url(e)}
   field(:cfr_references, :include => :entry_cfr_references) do |entry|
     entry.entry_cfr_references.map do |cfr_reference|
