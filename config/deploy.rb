@@ -16,7 +16,6 @@ require "rvm/capistrano/selector_mixed"
 #############################################################
 # Set Basics
 #############################################################
-#set :application, "fr2"
 set :application, "federalregister-api-core"
 set :user, "deploy"
 set :current_path, "/var/www/apps/#{application}"
@@ -72,9 +71,9 @@ task :production do
   role :sphinx, "sphinx.fr2.ec2.internal"
   role :worker, "worker.fr2.ec2.internal", {:primary => true} #monster image
 
-  set :github_user_repo, 'criticaljuncture'
-  set :github_project_repo, 'fr2'
-  set :github_username, 'criticaljuncture'
+  set :github_user_repo, 'usnationalarchives'
+  set :github_project_repo, 'federalregister-api-core'
+  set :github_username, 'usnationalarchives'
   set :repository, "git@github.com:#{github_user_repo}/#{github_project_repo}.git"
 end
 
@@ -149,34 +148,6 @@ after "javascript:combine_and_minify", "passenger:restart"
 after "passenger:restart",             "resque:restart_workers"
 after "resque:restart_workers",        "varnish:clear_cache"
 after "varnish:clear_cache",           "honeybadger:notify_deploy"
-
-
-#############################################################
-# Symlinks for Static Files
-#############################################################
-#set :custom_symlinks, {
-#  'config/secrets.yml'                        => 'config/secrets.yml',
-
-#  # don't symlink data directory directly!
-#  'data/bulkdata'         => 'data/bulkdata',
-#  'data/mods'             => 'data/mods',
-#  'data/regulatory_plans' => 'data/regulatory_plans',
-#  'data/text'             => 'data/text',
-#  'data/xml'              => 'data/xml',
-#  'data/raw'              => 'data/raw',
-#  'data/entries'          => 'data/entries',
-#  'data/cfr'              => 'data/cfr',
-#  'data/dict'             => 'data/dict',
-
-#  'db/sphinx'       => 'db/sphinx',
-#}
-
-#namespace :static_files do
-#  task :custom_symlinks, :roles => [:worker]  do
-#    run "ln -sf #{current_path}/index #{current_path}/public/"
-#  end
-#end
-
 
 #############################################################
 #                                                           #
