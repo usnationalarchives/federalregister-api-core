@@ -49,8 +49,11 @@ gem 'system_timer', '1.0.0'
 gem "amazon-ec2", :require => false
 
 gem "net-scp", '1.0.4'
-gem "capistrano", '2.5.19', :require => false
+
+gem "capistrano", '2.15.4', :require => false
 gem "thunder_punch", '0.0.14', :require => false
+gem "rvm-capistrano", "~> 1.5.4", :require => false
+
 gem "resque", "1.19.0"
 
 gem "httparty", "0.8.1"
@@ -75,7 +78,7 @@ end
 group :development do
   # bundler requires these gems in development
   # gem 'rails-footnotes'
-  # gem 'poolparty', '1.6.8'
+  # gem 'poolparty', '1.6.9'
   # gem "thunder_punch", '0.0.6', :require => false
 end
 
