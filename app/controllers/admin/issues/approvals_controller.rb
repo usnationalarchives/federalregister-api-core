@@ -3,7 +3,6 @@ class Admin::Issues::ApprovalsController < AdminController
     @issue_approval = IssueApproval.new(:publication_date => params[:issue_id])
 
     if @issue_approval.save!
-      Resque.enqueue(DailyIssueEmailSender, @issue_approval.publication_date.to_s(:iso))
       flash[:notice] = "Issue approved! It will appear on the public site in a few minutes"
     else
       flash[:error] = "There was a problem!"
