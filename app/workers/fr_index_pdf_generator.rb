@@ -50,7 +50,7 @@ class FrIndexPdfGenerator
         input_html.write generate_html
         input_html.close
 
-        system("/usr/local/bin/prince #{input_html.path} -o #{output_pdf.path}") or raise "Unable to generate PDF"
+        system("/usr/bin/prince #{input_html.path} -o #{output_pdf.path}") or raise "Unable to generate PDF"
 
         persist_file(output_pdf)
       end
