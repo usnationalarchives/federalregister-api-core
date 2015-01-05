@@ -5,7 +5,6 @@ ActionController::Routing::Routes.draw do |map|
     # LAYOUT
     quiet_map.layout_head_content '/layout/head_content', :controller => 'special', :action => 'layout_head_content'
     quiet_map.layout_header       '/layout/header',       :controller => 'special', :action => 'layout_header'
-    quiet_map.layout_footer       '/layout/footer',       :controller => 'special', :action => 'layout_footer'
     
     # HOMEPAGE
     quiet_map.agency_highlight '/agency_highlight', :controller => 'special', :action => 'agency_highlight'
