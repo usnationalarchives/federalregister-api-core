@@ -14,6 +14,8 @@ class ApiRepresentation
           {:host => "www.fr2.local", :port => 8081, :protocol => "http"}
         when 'staging'
           {:host => "fr2.criticaljuncture.org", :protocol => "https"}
+        when 'officialness_staging'
+          {:host => "fr-official.criticaljuncture.org", :protocol => "https"}
         else
           {:host => "www.federalregister.gov", :protocol => "https"}
         end
