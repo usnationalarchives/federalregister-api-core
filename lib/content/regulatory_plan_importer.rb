@@ -1,6 +1,6 @@
 module Content
   class RegulatoryPlanImporter
-    require 'ftools'
+    require 'fileutils'
 
     def self.recalculate_current
       ActiveRecord::Base.connection.execute("UPDATE regulatory_plans SET current = 1")

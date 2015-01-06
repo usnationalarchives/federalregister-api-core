@@ -3,7 +3,7 @@ namespace :content do
     namespace :html do
       namespace :compile do
         def compile_type(type)
-          require 'ftools'
+          require 'fileutils'
           dates = Content.parse_dates(ENV['DATE'])
 
           dates.each do |date|

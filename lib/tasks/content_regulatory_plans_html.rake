@@ -3,7 +3,7 @@ namespace :content do
     namespace :html do
       namespace :compile  do
         def compile_type_for_all(type)
-          require 'ftools'
+          require 'fileutils'
           root_dir = "#{RAILS_ROOT}/data/regulatory_plans/html/#{type}"
           File.makedirs(root_dir)
           

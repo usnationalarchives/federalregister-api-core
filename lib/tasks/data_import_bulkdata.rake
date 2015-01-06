@@ -2,7 +2,7 @@ namespace :data do
   namespace :import do
     desc "Import entries bulkdata file(s) into the database"
     task :bulkdata => :environment do
-      require 'ftools'
+      require 'fileutils'
       require 'open-uri'
       
       date = ENV['DATE'].blank? ? Time.current.to_date.to_s(:db) : ENV['DATE']
