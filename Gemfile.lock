@@ -93,6 +93,7 @@ GEM
     geokit (1.4.1)
     gherkin (2.11.5)
       json (>= 1.4.6)
+    git (1.2.8)
     haml (3.0.4)
     highline (1.6.21)
     hoe (3.6.0)
@@ -110,6 +111,11 @@ GEM
     icalendar (1.1.5)
     indefinite_article (0.2.0)
       activesupport
+    jeweler (1.8.4)
+      bundler (~> 1.0)
+      git (>= 1.2.5)
+      rake
+      rdoc
     jrails (0.6.0)
     json (1.7.7)
     juicer (1.0.6)
@@ -188,8 +194,9 @@ GEM
       activerecord (>= 1.15.6, < 3.0.0)
       after_commit (>= 1.0.7)
       riddle (>= 1.5.3)
-    thunder_punch (0.0.14)
+    thunder_punch (0.1.3)
       capistrano (>= 2.5.5)
+      jeweler
     tilt (1.3.3)
     timecop (0.6.1)
     tins (0.8.0)
@@ -266,7 +273,7 @@ DEPENDENCIES
   system_timer (= 1.2.4)
   test-unit (= 1.2.3)
   thinking-sphinx (= 1.4.13)
-  thunder_punch (= 0.0.14)
+  thunder_punch (= 0.1.3)
   timecop
   validation_reflection (= 0.3.8)
   vcr
