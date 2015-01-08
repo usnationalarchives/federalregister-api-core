@@ -22,7 +22,10 @@ gem 'json', '1.7.7'
 gem 'ym4r', '0.6.1'
 
 gem 'thinking-sphinx', '1.4.13', :require => 'thinking_sphinx'
-gem 'ffi-hunspell', :require => 'ffi/hunspell'
+gem 'ffi-hunspell',
+  :git => 'https://github.com/postmodern/ffi-hunspell.git',
+  :ref => '91516637fdff9cef9bae66aefdd89e1b4a8b5831',
+  :require => 'ffi/hunspell'
 
 gem 'honeybadger', :require => 'honeybadger/rails'
 gem 'resque-honeybadger', 
