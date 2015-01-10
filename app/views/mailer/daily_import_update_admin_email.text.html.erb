@@ -85,7 +85,7 @@
             <% document = Entry.find_by_document_number(doc_num) %>
             <tr style="<%= cycle(nil, light_gray) %>">
               <td style="width: 150px;" align="left">
-                <%= link_to doc_num, entry_path(document) %>
+                <%= link_to doc_num, short_entry_url(document) %>
               </td>
               <td style="width: 150px;" align="left"><%= document.comments_close_on %></td>
               <td style="width: 600" align="left"><%= dates %></td>
