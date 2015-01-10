@@ -61,7 +61,9 @@ class Api::V1::PublicInspectionDocumentsController < ApiController
       documents = issue.public_inspection_documents
       data = {
                 :count => documents.size,
-                :results => documents.map{|d| document_data(d,fields)}
+                :results => documents.map{|d| document_data(d,fields)},
+                :special_filings_updated_at => issue.special_filings_updated_at,
+                :regular_filings_updated_at => issue.regular_filings_updated_at
              }
     end
     render_json_or_jsonp data
