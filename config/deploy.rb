@@ -9,7 +9,7 @@ require 'thunder_punch'
 
 # rvm support
 set :rvm_ruby_string, 'ree-1.8.7-2012.02'
-set :rvm_require_role, :app
+set :rvm_require_role, :rvm
 set :rvm_type, :system
 require "rvm/capistrano/selector_mixed"
 
@@ -88,10 +88,12 @@ task :staging do
   set :gateway, 'fr2_staging'
 
   role :proxy,  "proxy.fr2.ec2.internal"
-  role :app,    "app-server-1.fr2.ec2.internal"
+  role :app,    "api-core.fr2.ec2.internal"
   role :db,     "database.fr2.ec2.internal", {:primary => true}
   role :sphinx, "sphinx.fr2.ec2.internal"
   role :worker, "worker.fr2.ec2.internal", {:primary => true}
+
+  role :rvm, "api-core.fr2.ec2.internal", "sphinx.fr2.ec2.internal", "worker.fr2.ec2.internal", "proxy.fr2.ec2.internal"
 
   set :github_user_repo, 'criticaljuncture'
   set :github_project_repo, 'federalregister-api-core'
