@@ -1,0 +1,286 @@
+Lint/AssignmentInCondition:
+  Enabled: false
+
+Lint/BlockAlignment:
+  Enabled: false
+
+Lint/Debugger:
+  Enabled: false
+
+Lint/DefEndAlignment:
+  Enabled: false
+
+Lint/DeprecatedClassMethods:
+  Enabled: false
+
+Lint/EndAlignment:
+  Enabled: false
+
+Lint/Eval:
+  Enabled: false
+
+Lint/HandleExceptions:
+  Enabled: false
+
+Lint/RescueException:
+  Enabled: false
+
+Lint/ShadowingOuterLocalVariable:
+  Enabled: false
+
+Lint/SpaceBeforeFirstArg:
+  Enabled: false
+
+Lint/StringConversionInInterpolation:
+  Enabled: false
+
+Lint/UnreachableCode:
+  Enabled: false
+
+Lint/UnusedBlockArgument:
+  Enabled: false
+
+Lint/UnusedMethodArgument:
+  Enabled: false
+
+Lint/UselessAccessModifier:
+  Enabled: false
+
+Lint/UselessAssignment:
+  Enabled: false
+
+Metrics/AbcSize:
+  Max: 69
+
+Metrics/ClassLength:
+  Max: 310
+
+Metrics/CyclomaticComplexity:
+  Max: 17
+
+Metrics/LineLength:
+  Max: 336
+
+Metrics/MethodLength:
+  Max: 46
+
+Metrics/PerceivedComplexity:
+  Max: 21
+
+Style/AccessorMethodName:
+  Enabled: false
+
+Style/Alias:
+  Enabled: false
+
+Style/AlignHash:
+  Enabled: false
+
+Style/AlignParameters:
+  Enabled: false
+
+Style/AndOr:
+  Enabled: false
+
+Style/BlockEndNewline:
+  Enabled: false
+
+Style/Blocks:
+  Enabled: false
+
+Style/BracesAroundHashParameters:
+  Enabled: false
+
+Style/ClassAndModuleChildren:
+  Enabled: false
+
+Style/ColonMethodCall:
+  Enabled: false
+
+Style/CommentIndentation:
+  Enabled: false
+
+Style/DeprecatedHashMethods:
+  Enabled: false
+
+Style/Documentation:
+  Enabled: false
+
+Style/DotPosition:
+  Enabled: false
+
+Style/EachWithObject:
+  Enabled: false
+
+Style/EmptyLineBetweenDefs:
+  Enabled: false
+
+Style/EmptyLines:
+  Enabled: false
+
+Style/EmptyLinesAroundAccessModifier:
+  Enabled: false
+
+Style/EmptyLinesAroundClassBody:
+  Enabled: false
+
+Style/EmptyLinesAroundMethodBody:
+  Enabled: false
+
+Style/EmptyLinesAroundModuleBody:
+  Enabled: false
+
+Style/GuardClause:
+  Enabled: false
+
+Style/HashSyntax:
+  Enabled: false
+
+Style/IfUnlessModifier:
+  Enabled: false
+
+Style/IndentArray:
+  Enabled: false
+
+Style/IndentHash:
+  Enabled: false
+
+Style/IndentationConsistency:
+  Enabled: false
+
+Style/IndentationWidth:
+  Enabled: false
+
+Style/Lambda:
+  Enabled: false
+
+Style/LeadingCommentSpace:
+  Enabled: false
+
+Style/MethodCallParentheses:
+  Enabled: false
+
+Style/MultilineBlockChain:
+  Enabled: false
+
+Style/MultilineBlockLayout:
+  Enabled: false
+
+Style/MultilineOperationIndentation:
+  Enabled: false
+
+Style/NegatedIf:
+  Enabled: false
+
+Style/NestedTernaryOperator:
+  Enabled: false
+
+Style/Next:
+  Enabled: false
+
+Style/NumericLiterals:
+  MinDigits: 15
+
+Style/PerlBackrefs:
+  Enabled: false
+
+Style/PredicateName:
+  Enabled: false
+
+Style/Proc:
+  Enabled: false
+
+Style/RaiseArgs:
+  Enabled: false
+
+Style/RedundantBegin:
+  Enabled: false
+
+Style/RedundantReturn:
+  Enabled: false
+
+Style/RedundantSelf:
+  Enabled: false
+
+Style/SelfAssignment:
+  Enabled: false
+
+Style/SignalException:
+  Enabled: false
+
+Style/SingleLineBlockParams:
+  Enabled: false
+
+Style/SingleSpaceBeforeFirstArg:
+  Enabled: false
+
+Style/SpaceAfterComma:
+  Enabled: false
+
+Style/SpaceAfterNot:
+  Enabled: false
+
+Style/SpaceAroundEqualsInParameterDefault:
+  Enabled: false
+
+Style/SpaceAroundOperators:
+  Enabled: false
+
+Style/SpaceBeforeBlockBraces:
+  Enabled: false
+
+Style/SpaceBeforeComma:
+  Enabled: false
+
+Style/SpaceBeforeComment:
+  Enabled: false
+
+Style/SpaceInsideBlockBraces:
+  Enabled: false
+
+Style/SpaceInsideBrackets:
+  Enabled: false
+
+Style/SpaceInsideHashLiteralBraces:
+  Enabled: false
+
+Style/SpaceInsideParens:
+  Enabled: false
+
+Style/SpaceInsideRangeLiteral:
+  Enabled: false
+
+Style/StringLiterals:
+  Enabled: false
+
+Style/StringLiteralsInInterpolation:
+  Enabled: false
+
+Style/SymbolProc:
+  Enabled: false
+
+Style/TrailingBlankLines:
+  Enabled: false
+
+Style/TrailingComma:
+  Enabled: false
+
+Style/TrailingWhitespace:
+  Enabled: true
+
+Style/TrivialAccessors:
+  Enabled: false
+
+Style/WhileUntilModifier:
+  Enabled: false
+
+Style/WordArray:
+  Description: 'Use %w or %W for arrays of words.'
+  StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#percent-w'
+  Enabled: true
+  MinSize: 23
+
+Style/BarePercentLiterals:
+  Description: 'Checks if usage of %() or %Q() matches configuration.'
+  StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#percent-q-shorthand'
+  Enabled: false
