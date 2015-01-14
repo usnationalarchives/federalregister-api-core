@@ -12,11 +12,11 @@ class Topic < ApplicationModel
   def to_param
     slug
   end
-  
+
   before_save :generate_slug
 
   def self.top_by_article_count(count)
-    scoped(:order => "topics.entries_count DESC", 
+    scoped(:order => "topics.entries_count DESC",
         :conditions => "topics.entries_count > 0",
         :limit => count)
   end
@@ -30,12 +30,12 @@ class Topic < ApplicationModel
            :group => "topics.name",
            :conditions => ["entries.publication_date > ?", Issue.current.publication_date - count.days])
   end
- 
+
   # consider using sphinx instead...
   def self.named_approximately(name)
     return [] if name.blank?
     words = name.downcase.split(/[^a-z]+/) - %w(a and & in for of on s the)
-    
+
     if words.empty?
       scoped(:conditions => {:id => nil}) # null scope
     else
@@ -54,14 +54,14 @@ class Topic < ApplicationModel
   end
 
   private
-  
+
   def generate_slug
     slug = self.name.downcase
     slug.gsub!(/[^a-z ]/,' ')
     slug.gsub!(/\b(?:and|by|the|a|an|of|in|on|to|for|s|etc|promotion)\b/, ' ')
-    
+
     slug.gsub!(/ {2,}/, ' ')
-    
+
     self.slug = slug.strip.gsub(/ /, '-')
   end
 end

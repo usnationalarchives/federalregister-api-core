@@ -22,17 +22,17 @@ module Content
       @perform_download= true
 
       @url = "http://www.gpo.gov/fdsys/bulkdata/CFR/#{@year}/CFR-#{@year}.zip"
-      
+
       @cfr_bulkdata_dir = "#{RAILS_ROOT}/data/cfr/bulkdata"
       @bulkfile_path = "#{@cfr_bulkdata_dir}/#{File.basename(@url)}"
 
       @cfr_data_dir =  "#{RAILS_ROOT}/data/cfr/#{@year}"
 
     end
-  
+
     def download
       prep_for_download
-     
+
       if perform_download
         download_zip
         extract

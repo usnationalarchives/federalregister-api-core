@@ -1,7 +1,7 @@
 class Event < ApplicationModel
   include Icalendar
   PUBLIC_MEETING_PHRASES = ["public meeting", "public hearing", "town hall meeting", "web dialogue", "webinar"]
-  
+
   EVENT_TYPES_SINGULAR = {
     'PublicMeeting' => 'Public Meeting',
     'ClosedMeeting' => 'Closed Meeting',
@@ -18,34 +18,34 @@ class Event < ApplicationModel
     'RegulationsDotGovCommentsClose' => "Regulations.gov Comment Periods Closing",
     'EffectiveDate' => 'Effective Dates'
   }
-  
+
   belongs_to :entry
   belongs_to :place
   has_many :agency_assignments, :through => :entry, :foreign_key => "entries.id"
   validates_presence_of :date, :event_type
   validates_presence_of :title, :if => Proc.new{|e| e.event_type == 'PublicMeeting' || e.event_type == 'ClosedMeeting'}
   validates_inclusion_of :event_type, :in => EVENT_TYPES_SINGULAR.keys
-  
+
   def self.public_meeting
     scoped(:conditions => {:event_type => "PublicMeeting"})
   end
-  
+
   def agencies
     agency_assignments.map(:agency)
   end
-  
+
   def type
     ::Event::EVENT_TYPES_SINGULAR[event_type]
   end
-  
+
   def title
     self['title'] || entry.title
   end
-  
+
   def entry_full_text
     entry.raw_text
   end
-  
+
   def to_ics
     ical_event = Icalendar::Event.new
     ical_event.start = self.date
@@ -55,7 +55,7 @@ class Event < ApplicationModel
     ical_event.description = self.entry.try(:abstract)
     ical_event
   end
-  
+
   define_index do
     # fields
     indexes "entries.title", :as => :title
@@ -63,12 +63,12 @@ class Event < ApplicationModel
     indexes place.name, :as => :place
     indexes event_type, :as => :type, :facet => true
     indexes "CONCAT('#{RAILS_ROOT}/data/raw/', entries.document_file_path, '.txt')", :as => :entry_full_text, :file => true
-    
+
     # attributes
     has date
     has entry.agency_assignments(:agency_id), :as => :agency_ids
     has place_id
-    
+
     set_property :field_weights => {
       "title" => 100,
       "place" => 50,
@@ -80,5 +80,5 @@ class Event < ApplicationModel
   end
   # this line must appear after the define_index block
   include ThinkingSphinx::Deltas::ManualDelta::ActiveRecord
-  
+
 end

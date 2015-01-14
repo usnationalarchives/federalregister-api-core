@@ -16,7 +16,7 @@ class PublicInspectionDocumentSearch < ApplicationSearch
                 :phrase => true,
                 :label => "Agency Docket" do |docket|
                   docket
-                end 
+                end
   define_filter(:document_numbers,
                 :sphinx_type => :with,
                 :sphinx_attribute => :document_number,
@@ -33,12 +33,12 @@ class PublicInspectionDocumentSearch < ApplicationSearch
                     'Regular Filing'
                   end
                 end
-  
+
   def agency_facets
     ApplicationSearch::FacetCalculator.new(:search => self, :model => Agency, :facet_name => :agency_ids).all
   end
   memoize :agency_facets
-  
+
   def type_facets
     ApplicationSearch::FacetCalculator.new(:search => self, :facet_name => :type, :hash => Entry::ENTRY_TYPES).all().reject do |facet|
       ["UNKNOWN", "CORRECT"].include?(facet.value)
@@ -64,18 +64,18 @@ class PublicInspectionDocumentSearch < ApplicationSearch
   def model
     PublicInspectionDocument
   end
-  
+
   def find_options
     {
       :select => "id, title, pdf_file_name, pdf_file_size, num_pages, toc_subject, toc_doc, publication_date, filed_at, document_number, granule_class, editorial_note",
       :include => :agencies,
     }
   end
-  
+
   def supported_orders
     %w(Relevant)
   end
-  
+
   def order_clause
     "@relevance DESC, filed_at DESC"
   end
@@ -86,14 +86,14 @@ class PublicInspectionDocumentSearch < ApplicationSearch
     else
       parts = filter_summary
       parts.unshift("matching '#{@term}'") if @term.present?
-      
+
       'Public Inspection Documents ' + parts.to_sentence
     end
   end
-  
+
   def filter_summary
     parts = []
-    
+
     [
       ['published', :publication_date],
       ['from', :agency_ids],
@@ -102,17 +102,17 @@ class PublicInspectionDocumentSearch < ApplicationSearch
       ['filed under agency docket', :docket_id],
     ].each do |term, filter_condition|
       relevant_filters = filters.select{|f| f.condition == filter_condition}
-    
+
       unless relevant_filters.empty?
         parts << "#{term} #{relevant_filters.map(&:name).to_sentence(:two_words_connector => ' or ', :last_word_connector => ', and ')}"
       end
     end
-    
+
     parts
   end
-  
+
   private
-  
+
   def set_defaults(options)
     @within = 25
     @order = options[:order] || 'relevant'

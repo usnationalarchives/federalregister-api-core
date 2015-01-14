@@ -10,7 +10,7 @@ class EntrySearch::Suggestor::Spelling < EntrySearch::Suggestor::Base
       end
     end
   end
-  
+
   def term
     @term
   end

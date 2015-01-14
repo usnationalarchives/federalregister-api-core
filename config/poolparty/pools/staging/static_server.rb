@@ -118,5 +118,4 @@ cloud :worker_server do
     #authorize :from_port => "8080", :to_port => "8080"
   end
   security_group "worker_staging"
-
 end

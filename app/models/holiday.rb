@@ -1,7 +1,7 @@
 class Holiday
   def self.find_by_date(date)
     @holiday_hash ||= load_file('holidays.yml').merge(load_file('holidays_ad_hoc.yml'))
-    
+
     date = date.is_a?(String) ? Date.parse(date) : date
     name = @holiday_hash[date]
     if name
@@ -10,9 +10,9 @@ class Holiday
       nil
     end
   end
-  
+
   attr_accessor :date, :name
-  
+
   def initialize(date, name)
     @date = date
     @name = name

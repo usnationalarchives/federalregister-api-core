@@ -1,7 +1,7 @@
 class Api::V1::PublicInspectionDocumentsController < ApiController
   def index
     respond_to do |wants|
-      wants.json do 
+      wants.json do
         cache_for 1.day
         if params[:conditions] && params[:conditions][:available_on]
           publication_date = Date.parse(params[:conditions][:available_on])
@@ -11,7 +11,7 @@ class Api::V1::PublicInspectionDocumentsController < ApiController
           fields = specified_fields || PublicInspectionDocumentApiRepresentation.default_index_fields_json
           render_search(search, {}, params[:metadata_only]) do |result|
             document_data(result, fields)
-          end 
+          end
         end
       end
     end
@@ -19,12 +19,12 @@ class Api::V1::PublicInspectionDocumentsController < ApiController
 
   def current
     respond_to do |wants|
-      wants.json do 
+      wants.json do
         cache_for 1.day
         publication_date = PublicInspectionIssue.latest_publication_date
         render_date(publication_date)
       end
-    end  
+    end
   end
 
   def show
@@ -44,7 +44,7 @@ class Api::V1::PublicInspectionDocumentsController < ApiController
   def document_data(document, fields)
     representation = PublicInspectionDocumentApiRepresentation.new(document)
     Hash[ fields.map do |field|
-      [field, representation.value(field)] 
+      [field, representation.value(field)]
     end]
   end
 

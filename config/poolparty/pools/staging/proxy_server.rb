@@ -36,7 +36,6 @@ cloud :proxy_server_v2 do
                   },
       :rails  => { :environment => "staging" }
       )
-
   end
 
   security_group "proxy_staging" do
@@ -45,5 +44,4 @@ cloud :proxy_server_v2 do
     authorize :from_port => "443",  :to_port => "443"
     #authorize :from_port => "4950", :to_port => "4950"
   end
-
 end

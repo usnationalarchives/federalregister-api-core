@@ -6,7 +6,7 @@ class CreatePlaceDeterminations < ActiveRecord::Migration
       t.string :string, :context
       t.integer :confidence
     end
-    
+
     add_index :place_determinations, [:entry_id, :confidence]
     add_index :place_determinations, [:place_id, :confidence]
   end

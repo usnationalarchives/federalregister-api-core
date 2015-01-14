@@ -4,7 +4,7 @@
 #       extend ActiveSupport::Memoizable
 #       extend Content::EntryImporter::Utils
 #       provides :start_page, :end_page
-#         
+#
 #       def start_page
 #         if bulkdata_node
 #           first_node_with_content = bulkdata_node.xpath("descendant::text()[normalize-space(.)]")
@@ -14,11 +14,11 @@
 #         end
 #       end
 #       memoize :start_page
-#         
+#
 #       def end_page
 #         if bulkdata_node
 #           last_page_node = bulkdata_node.xpath(".//PRTPAGE[last()]").first
-#       
+#
 #           if last_page_node
 #             last_page_node['P'].to_i
 #           else

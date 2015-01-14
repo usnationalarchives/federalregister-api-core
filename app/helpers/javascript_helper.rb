@@ -4,7 +4,7 @@ module JavascriptHelper
   def js_known_to_be_enabled?
     request.cookies["javascript_enabled"] == "1"
   end
-  
+
   def jquery_include_tag
     # if RAILS_ENV == 'development'
       javascript_include_tag 'admin/jquery-1.8.3.min.js'
@@ -12,7 +12,7 @@ module JavascriptHelper
     #   javascript_include_tag 'http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js'
     # end
   end
-  
+
   def jquery_ui_include_tag
     # if RAILS_ENV == 'development'
       javascript_include_tag 'admin/jquery-ui'
@@ -20,7 +20,7 @@ module JavascriptHelper
     #   javascript_include_tag 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.6/jquery-ui.min.js'
     # end
   end
-  
+
   def add_javascript(options={})
     partial = options.delete(:partial) || nil
     content_for :javascripts do

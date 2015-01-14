@@ -17,9 +17,9 @@ class Events::SearchController < SearchController
       end
     end
   end
-  
+
   private
-  
+
   def load_search
     @search ||= EventSearch.new(params)
   end

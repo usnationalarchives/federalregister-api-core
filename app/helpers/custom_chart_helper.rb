@@ -1,9 +1,9 @@
 module CustomChartHelper
   Infinity = 1.0/0
-  
+
   class Pie3D
     include ActionView::Helpers::TextHelper
-    
+
     def initialize(args={})
       options = args.dup
       @title           = options.delete(:title)
@@ -16,17 +16,17 @@ module CustomChartHelper
       @size            = options.delete(:size) || [500,200]
       @data            = options.delete(:data)
       @counts          = options.delete(:counts) || false
-      
+
       if options[:records]
         records = options[:records].sort_by{|r| r.send('[]', options[:value_method]).to_i}.reverse
         @data = records.map{|r| (r.respond_to?(options[:value_method]) ? r.send(options[:value_method]) : r.send('[]', options[:value_method])).to_i }
         @legend = records.map{|r| r.respond_to?(options[:legend_method]) ? r.send(options[:legend_method]) : r.send('[]', options[:legend_method]) }
-        
+
         if options[:max]
           other_data = @data.slice(options[:max] .. @data.size)
           @data = @data.slice(0..options[:max]-1)
           @legend = @legend.slice(0..options[:max]-1)
-          
+
           if other_data
             @data << other_data.sum
             @legend << 'Other'
@@ -38,39 +38,39 @@ module CustomChartHelper
     def to_s
       url = 'http://chart.apis.google.com/chart'
       url << "?chd=t:#{text_encode(@data)}"
-      
+
       if @title
         url << "&chtt=#{@title}"
       end
-      
+
       url << '&chxr=0,0,1'
-      
+
       if @color_range
         url << "&chco=#{@color_range.join(',')}"
       end
-      
+
       if @transparent_bg
         url << "&chf=bg,s,efefef00"
       end
-      
+
       if @legend
         url << "&chdl=#{prep_legend(@legend)}"
       end
-      
+
       if @legend_location
         url << "#{legend_location(@legend_location)}"
       end
-      
+
       if @labels
         url << "&chl=#{CGI::escape( @labels.join('|') )}"
       end
-      
+
       url << "&chs=#{@size.join('x')}"
       url << '&cht=p3'
-      
+
       url
     end
-    
+
     def prep_legend(legend)
       if @truncate_legend
         legend = legend.map{|l| truncate(l, :length => @truncate_legend.to_i)}
@@ -81,7 +81,7 @@ module CustomChartHelper
       end
       CGI::escape( legend.join('|') )
     end
-    
+
     def legend_location(location)
       case location.to_sym
       when :bottom
@@ -94,7 +94,7 @@ module CustomChartHelper
         '&chdlp=r'
       end
     end
-    
+
     def text_encode(data)
       max = @data.max
       encoded_data = []
@@ -104,10 +104,10 @@ module CustomChartHelper
       encoded_data.join(',')
     end
   end
-  
+
   class Sparkline
     include ActionView::Helpers::TextHelper
-    
+
     def initialize(args={})
       options = args.dup.symbolize_keys!
 
@@ -126,7 +126,7 @@ module CustomChartHelper
       url = 'http://chart.apis.google.com/chart'
       url << "?cht=ls"
       url << "&chd=t:#{text_encode(@data)}"
-      
+
       # chart background color
       url << "&chf=bg,s,#{@chart_background}"
 
@@ -134,21 +134,21 @@ module CustomChartHelper
       if @fill
         url << "&chm=B,#{@background_color},0,0,0#{build_chart_markers}"
       end
-      
+
       #line style
       url << "&chls=1,1,0"
       url << "&chco=#{@line_color}"
-      
+
       #chart size
       url << "&chs=#{@size.join('x')}"
-      
+
       #chart legend margin - used to create padding for min and max dots
       url << "&chma=5,5,5,5"
-      
+
       url
     end
-    
-    
+
+
     def text_encode(data)
     begin
       encoded_data = []
@@ -164,7 +164,7 @@ module CustomChartHelper
       raise "#{@foo.inspect}--#{@data.inspect}"
     end
     end
-    
+
     def build_chart_markers
       return '' if @min == 0 && @min == @max
       markers = []
@@ -182,11 +182,11 @@ module CustomChartHelper
       return "|" + markers.join('|')
     end
   end
-  
+
   def sparkline(options={})
     image_tag( Sparkline.new(options).to_s, :alt => options[:alt], :class => 'chart sparkline')
   end
-  
+
   def pie_3d_chart(options={})
     image_tag( Pie3D.new(options).to_s, :alt => options[:title] || options[:alt], :class => 'chart pie3d')
   end

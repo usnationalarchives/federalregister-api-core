@@ -10,7 +10,7 @@ describe TopicsTopicName do
       entry.topics.should == [topic]
     end
   end
-  
+
   describe 'destroy' do
     it "should destroy all associated topic_assignments" do
       topic_name = Factory(:topic_name)

@@ -7,5 +7,5 @@ Then /^I should get OK response code$/ do
 end
 
 Then /^I should get this content$/ do |string|
-  response_body.should == string 
+  response_body.should == string
 end

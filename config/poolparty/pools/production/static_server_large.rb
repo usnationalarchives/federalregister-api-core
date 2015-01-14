@@ -8,16 +8,16 @@ cloud :worker_server_v2 do
   instances 1
   #instance_type 'm1.small'
   instance_type 'c1.xlarge'
-  
+
   #attach the ebs volumes
   # ebs_volumes do
   #   size 80
   #   device "/dev/sdh"
   # end
-  
+
   chef :solo do
     repo File.join(File.dirname(__FILE__) ,"..", "..", "..", "..", "vendor", "plugins")
-    
+
     recipe "apt"
     recipe 's3sync'
     recipe "ubuntu"
@@ -31,13 +31,13 @@ cloud :worker_server_v2 do
     #recipe "mysql::client"
 
     #recipe "nginx"
-    
+
     #recipe "apache2"
     #recipe "php::php5"
     #recipe "passenger_enterprise::apache2"
-    
+
     #recipe 'rubygems'
-    
+
     #recipe "git"
     #recipe "capistrano"
     #recipe "rails"
@@ -45,7 +45,7 @@ cloud :worker_server_v2 do
     #recipe "resque_web"
 
     #recipe "iodocs"
-    
+
     attributes chef_cloud_attributes('production').recursive_merge(
       :chef    => {
                     :roles => ['static', 'worker', 'blog', 'my_fr2', "iodocs"]
@@ -62,7 +62,7 @@ cloud :worker_server_v2 do
       :sphinx  => {
                     :server_address => 'sphinx.fr2.ec2.internal'
                   },
-      :apache => { 
+      :apache => {
                    :server_aliases => "www.#{@app_url}",
                    :listen_ports   => ['80'],
                    :vhost_port     => '80',
@@ -70,7 +70,7 @@ cloud :worker_server_v2 do
                    :name           => 'fr2_blog',
                    :enable_mods    => ["rewrite", "deflate", "expires"]
                  },
-      :resque_web => {  
+      :resque_web => {
                       :password => @resque_web_password
                      },
       #:god => {
@@ -80,7 +80,7 @@ cloud :worker_server_v2 do
           #:email_domain => 'criticaljuncture.org',
           #:monitor => [{:name => 'resque', :options => {:queue => 'fr_index', :queue_count => 2, :interval => 1.0}}]
         #}
-      
+
       :monit => {
             :check_interval => 30,
             :mail_from_address => "monit-#{@rails_env}@federalregister.gov",
@@ -113,7 +113,7 @@ cloud :worker_server_v2 do
 
     )
   end
-  
+
   security_group "static" do
     authorize :from_port => "22", :to_port => "22"
     #authorize :from_port => "8080", :to_port => "8080"

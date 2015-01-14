@@ -1,17 +1,17 @@
 class Content::EntryImporter::ModsFile
   class DownloadError < StandardError; end
-  
+
   extend ActiveSupport::Memoizable
-  
+
   def initialize(date, force_reload_mods)
     @date = date.is_a?(String) ? Date.parse(date) : date
     @force_reload_mods = force_reload_mods
   end
-  
+
   def document_numbers
     document.xpath('//xmlns:frDocNumber').map{|n| n.content()}
   end
-  
+
   def url
     "http://www.gpo.gov:80/fdsys/pkg/FR-#{@date.to_s(:db)}/mods.xml"
   end
@@ -33,11 +33,11 @@ class Content::EntryImporter::ModsFile
       File.delete(file_path)
       raise Content::EntryImporter::ModsFile::DownloadError
     end
-    
+
     doc.root
   end
   memoize :document
-  
+
   def volume
     document.css('volume').first.try(:content)
   end
@@ -47,7 +47,7 @@ class Content::EntryImporter::ModsFile
   end
 
   memoize :volume
-  
+
   def find_entry_node_by_document_number(document_number)
     document.xpath("./xmlns:relatedItem[@ID='id-#{document_number}']").first
   end

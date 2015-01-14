@@ -20,7 +20,7 @@ class Agency < ApplicationModel
       end
     end
   end
-  
+
   # cabinet level agencies and the EPA
   # excludes things like the dept of the army, etc
   # as they don't produce many FR documents
@@ -30,18 +30,18 @@ class Agency < ApplicationModel
   has_many :agencies_sections
   has_many :sections, :through => :agencies_sections
   has_many :agency_names
-  
+
   has_many :entry_agency_assignments, :class_name => "AgencyAssignment", :conditions => "agency_assignments.assignable_type = 'Entry'"
   has_many :entries, :through => :entry_agency_assignments
-  
+
   has_many :regulatory_plan_agency_assignments, :class_name => "AgencyAssignment", :conditions => {:assignable_type => "RegulatoryPlan"}
   has_many :regulatory_plans, :through => :regulatory_plan_agency_assignments, :source => :regulatory_plan
-  
+
   has_many :children, :class_name => 'Agency', :foreign_key => 'parent_id'
   belongs_to :parent, :class_name => 'Agency'
-  
+
   named_scope :in_navigation, :conditions => ['id IN (?)', AGENCIES_IN_NAV_AGENCY_IDS]
-  
+
   has_attached_file :logo,
                     :styles => { :thumb => "100", :small => "140", :medium => "245", :large => "580", :full_size => "" },
                     :processors => [:thumbnail],
@@ -53,22 +53,22 @@ class Agency < ApplicationModel
                     :s3_protocol => 'https',
                     :bucket => 'agency-logos.federalregister.gov',
                     :path => ":id/:style.:extension"
-  
+
   validates_uniqueness_of :name
   validates_presence_of :name
-  
+
   validates_format_of :url, :with => /\Ahttps?:\/\/\S+\z/, :allow_blank => true
   serializable_column :entries_1_year_weekly, :entries_5_years_monthly, :entries_all_years_quarterly, :related_topics_cache
-  
+
   named_scope :with_logo, :conditions => "agencies.logo_file_name IS NOT NULL"
   named_scope :with_entries, :conditions => "agencies.entries_count > 0"
   named_scope :alphabetically, :order => "agencies.name"
-  
+
   # consider using sphinx instead...
   def self.named_approximately(name)
     return [] if name.blank?
     words = name.downcase.split(/[^a-z]+/) - %w(a and & in for of on s the)
-    
+
     if words.empty?
       scoped(:conditions => {:id => nil}) # null scope
     else
@@ -83,7 +83,7 @@ class Agency < ApplicationModel
       )
     end
   end
-  
+
   def to_param
     slug
   end
@@ -95,12 +95,12 @@ class Agency < ApplicationModel
       name
     end
   end
-  
+
   def sidebar_name
     # FIXME: remove downcase and capitalize_most_words - just fixing agency wierdness for now
     self.name.downcase.capitalize_most_words.gsub(/^Department of(?: the)? /,'')
   end
-  
+
   def entry_counts_since(range_type)
     date = case range_type
       when 'week'
@@ -112,7 +112,7 @@ class Agency < ApplicationModel
       when 'year'
         1.year.ago
       end
-    
+
     entries.count(:conditions => ["publication_date >= ?", date])
   end
 

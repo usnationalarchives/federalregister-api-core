@@ -4,7 +4,7 @@ class CreateSectionAssignments < ActiveRecord::Migration
       t.integer :entry_id
       t.integer :section_id
     end
-    
+
     add_index :section_assignments, [:section_id, :entry_id]
   end
 

@@ -1,7 +1,7 @@
 module Admin::EventfulEntriesHelper
   def link_events(text, dates)
     result = text.dup
-    
+
     dates.uniq.each do |date|
       result.gsub!(date) do |date_str|
         date = Date.parse(date_str)
@@ -12,10 +12,10 @@ module Admin::EventfulEntriesHelper
         end
       end
     end
-    
+
     result
   end
-  
+
   # def link_places(text, places)
   #   result = text.dup
   #   places.each do |place|
@@ -25,7 +25,7 @@ module Admin::EventfulEntriesHelper
   #   end
   #   result
   # end
-  
+
   def link_places(text, places)
     result = text.dup
     places.sort_by{|p| p.string.length }.reverse.each do |place|
@@ -44,5 +44,5 @@ module Admin::EventfulEntriesHelper
     end
     result
   end
-  
+
 end

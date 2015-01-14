@@ -42,7 +42,7 @@ class ApiRepresentation
     def find_options_for(*fields)
       selects = [:id]
       includes = []
-      
+
       fields.flatten.each do |field|
         options = @field_options[field]
         raise FieldNotFound.new("field '#{field}' not valid") unless options

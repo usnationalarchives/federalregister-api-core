@@ -8,7 +8,7 @@ class Api::V1::EntriesController < ApiController
         fields = specified_fields || EntryApiRepresentation.default_index_fields_json
         find_options = EntryApiRepresentation.find_options_for(fields)
 
-        render_search(search, find_options, params[:metadata_only]) do |result| 
+        render_search(search, find_options, params[:metadata_only]) do |result|
           entry_data(result, fields)
         end
       end
@@ -60,20 +60,20 @@ class Api::V1::EntriesController < ApiController
       render_json_or_jsonp({:errors => search.validation_errors}, :status => 400)
     end
   end
-  
+
   def show
     respond_to do |wants|
       wants.json do
         cache_for 1.day
 
-        fields = specified_fields || EntryApiRepresentation.default_show_fields_json 
+        fields = specified_fields || EntryApiRepresentation.default_show_fields_json
 
         render_one_or_more(Entry, params[:id]) do |entry|
           entry_data(entry, fields)
         end
       end
       wants.csv do
-        fields = specified_fields || CSV_FIELDS 
+        fields = specified_fields || CSV_FIELDS
         document_numbers = params[:id].split(',')
         entries = Entry.all(:conditions => {:document_number => document_numbers})
         filename = 'federal_register'
@@ -81,7 +81,7 @@ class Api::V1::EntriesController < ApiController
       end
     end
   end
- 
+
   private
 
   def render_csv(entries, fields, filename)
@@ -101,7 +101,7 @@ class Api::V1::EntriesController < ApiController
       end
     end
 
-    headers['Content-Disposition'] = "attachment; filename=\"#{filename}.csv\"" 
+    headers['Content-Disposition'] = "attachment; filename=\"#{filename}.csv\""
 
     render :text => output
   end
@@ -109,7 +109,7 @@ class Api::V1::EntriesController < ApiController
   def entry_data(entry, fields)
     representation = EntryApiRepresentation.new(entry)
     Hash[ fields.map do |field|
-      [field, representation.value(field)] 
+      [field, representation.value(field)]
     end]
   end
 

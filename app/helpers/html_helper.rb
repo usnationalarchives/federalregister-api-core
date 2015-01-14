@@ -3,9 +3,9 @@ module HtmlHelper
     doc = Nokogiri::HTML::DocumentFragment.parse('<root>' + html.strip + '</root>')
     doc.xpath(".//text()[not(ancestor::a)]").each do |text_node|
       text = text_node.text.dup
-      
+
       text = yield(h(text))
-      
+
       # FIXME: this ugliness shouldn't be necessary, but seems to be
       if text != text_node.text
         dummy = text_node.add_previous_sibling(Nokogiri::XML::Node.new("dummy", doc))
@@ -16,7 +16,7 @@ module HtmlHelper
         dummy.remove
       end
     end
-    
+
     doc.xpath('./root').inner_html
   end
 end

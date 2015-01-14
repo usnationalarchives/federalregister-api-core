@@ -5,7 +5,7 @@ module Content
     class ServerError < ResponseError; end
 
     include HTTParty
-    
+
     if RAILS_ENV == 'production'
       base_uri 'http://www.regulations.gov/api/'
     else
@@ -20,7 +20,7 @@ module Content
 
     def find_docket(docket_id)
       begin
-        response = self.class.get('/getdocket/v1.json', :query => {:api_key => @api_key, :D => docket_id}) 
+        response = self.class.get('/getdocket/v1.json', :query => {:api_key => @api_key, :D => docket_id})
         Docket.new(self, response.parsed_response["docket"])
       rescue ResponseError
       end
@@ -57,13 +57,13 @@ module Content
         begin
           fetch_by_document_number(document_number)
         rescue RecordNotFound, ServerError => e
-          revised_document_number = pad_document_number(document_number) 
+          revised_document_number = pad_document_number(document_number)
           if revised_document_number != document_number
             fetch_by_document_number(revised_document_number)
           else
             nil
           end
-        end  
+        end
       rescue ResponseError
         nil
       end

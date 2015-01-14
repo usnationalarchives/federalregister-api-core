@@ -2,7 +2,7 @@ module Content::ExecutiveOrderImporter
   def self.perform
     executive_orders = []
     FasterCSV.foreach("data/executive_orders.csv", :headers => :first_row) do |line|
-      executive_orders << line.to_hash 
+      executive_orders << line.to_hash
     end
 
     max_known_eo_number = executive_orders.map{|eo| eo['number'] }.max

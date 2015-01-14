@@ -4,10 +4,10 @@ module Content::EntryImporter::Utils
       cattr_accessor :provided
       self.provided = [] unless self.provided.present?
     end
-    
+
     klass.provided = klass.provided + @attributes
   end
-  
+
   def provides(*attributes)
     @attributes ||= []
     @attributes += attributes

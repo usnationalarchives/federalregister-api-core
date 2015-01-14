@@ -56,7 +56,6 @@ cloud :app_server_v2 do
                    :server_address => 'sphinx.fr2.ec2.internal'
                  }
       )
-
   end
 
   security_group "app_staging" do
@@ -64,5 +63,4 @@ cloud :app_server_v2 do
     #authorize :from_port => "8080", :to_port => "8080"
     #authorize :from_port => "8081", :to_port => "8081"
   end
-
 end

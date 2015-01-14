@@ -2,7 +2,7 @@ module EntryHelper
   def entry_title(entry)
     truncate_words(entry.title, :length => 100)
   end
-  
+
   def agency_names(entry, options = {})
     autolink = true unless options[:no_links]
     if entry.agencies.present?
@@ -12,7 +12,7 @@ module EntryHelper
     end
     agencies.to_sentence
   end
-  
+
   def entry_page_range(entry)
     if entry.end_page == entry.start_page
       "Page #{entry.start_page}"
@@ -20,11 +20,11 @@ module EntryHelper
       "Pages #{entry.start_page} - #{entry.end_page}"
     end
   end
-  
+
   def issue_pdf_url(date)
     "http://www.gpo.gov/fdsys/pkg/FR-#{date.to_s(:to_s)}/pdf/FR-#{date.to_s(:to_s)}.pdf"
   end
-  
+
   def days_remaining(date)
     num_days = date - Time.current.to_date
     if num_days > 0

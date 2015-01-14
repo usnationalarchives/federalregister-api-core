@@ -5,18 +5,18 @@ class Admin::TopicNamesController < AdminController
     @search = TopicName.scoped(
       :include => [:topics]
     ).searchlogic(search_options)
-    
+
     @topic_names = @search.paginate(:page => params[:page])
   end
-  
+
   def unprocessed
     @topic_names = TopicName.unprocessed.paginate(:page => params[:page])
   end
-  
+
   def edit
     @topic_name = TopicName.find(params[:id])
   end
-  
+
   def update
     @topic_name = TopicName.find(params[:id])
     if @topic_name.update_attributes(params[:topic_name])

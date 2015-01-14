@@ -2,32 +2,32 @@ module Content
   class GraphicsExtractor
     class Image
       extend ActiveSupport::Memoizable
-      
+
       def self.all_images_in_file(xml_file_path)
         doc = Nokogiri::XML(open(xml_file_path))
-        
+
         images = []
         doc.css('GID').each do |image_node|
           images << Image.new(image_node)
         end
-        
+
         images
       end
-      
+
       def initialize(image_node)
         @image_node = image_node
       end
-      
+
       def identifier
         @image_node.content()
       end
       memoize :identifier
-      
+
       def page_number
         page_node['P'].to_i
       end
       memoize :page_number
-      
+
       def document_number
         frdoc_node = entry_node.xpath(".//FRDOC").first
         if frdoc_node
@@ -37,7 +37,7 @@ module Content
         end
       end
       memoize :document_number
-      
+
       def num_prior_images_on_page
         count = 0
         page_node.xpath('following::GID').each do |img_node|
@@ -46,14 +46,14 @@ module Content
         end
         count
       end
-      
+
       private
-      
+
       def page_node
         @image_node.xpath('(preceding::PRTPAGE[count(ancestor::FTNT) = 0])[last()]').first
       end
       memoize :page_node
-      
+
       def entry_node
         @image_node.xpath("ancestor::*[name() = 'RULE' or name() = 'PRORULE' or name() = 'NOTICE' or name() = 'PRESDOCU']")
       end

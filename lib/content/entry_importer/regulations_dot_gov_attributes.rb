@@ -2,15 +2,15 @@ module Content::EntryImporter::RegulationsDotGovAttributes
   extend Content::EntryImporter::Utils
   extend ActiveSupport::Memoizable
   provides :checked_regulationsdotgov_at, :regulationsdotgov_url, :comment_url, :regulations_dot_gov_comments_close_on, :regulations_dot_gov_docket_id
-  
+
   def checked_regulationsdotgov_at
     Time.now
   end
-  
+
   def regulationsdotgov_url
     regulationsdotgov_document ? regulationsdotgov_document.try(:url) : entry.regulationsdotgov_url
   end
-  
+
   def comment_url
     regulationsdotgov_document ? regulationsdotgov_document.try(:comment_url) : entry.comment_url
   end
@@ -22,9 +22,9 @@ module Content::EntryImporter::RegulationsDotGovAttributes
   def regulations_dot_gov_docket_id
     regulationsdotgov_document ? regulationsdotgov_document.try(:docket_id) : entry.regulations_dot_gov_docket_id
   end
-  
+
   private
-  
+
   def regulationsdotgov_document
     begin
       RegulationsDotGov::Client.new.find_by_document_number(entry.document_number)

@@ -30,7 +30,7 @@ class EntrySearch::DateAggregator::Base
       client.group_function = group_function
       client.group_by = "publication_date"
       client.limit = 5000
-      
+
       query = @sphinx_search.send(:query)
       @raw_results = {}
       client.query(query, '*')[:matches].each do |match|

@@ -1,4 +1,4 @@
-# if you're adding a file to vendor - especially initial libs 
+# if you're adding a file to vendor - especially initial libs
 # then check to make sure that closure doesn't have/need an extern file
 # http://closure-compiler.googlecode.com/svn/trunk/contrib/externs/
 VENDOR_INITIAL_LIBS = ['jrails.js', 'jquery-ui-1.9.2.custom.min.js', 'jquery-ui-1.9.2.effects.min.js']

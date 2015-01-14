@@ -3,7 +3,7 @@ class FrIndexPdfGenerator
 
   def self.perform(*args)
     ActiveRecord::Base.verify_active_connections!
-    
+
     new(*args).perform
   end
 
@@ -14,7 +14,7 @@ class FrIndexPdfGenerator
   private
 
   def generate_html
-    Content.render_erb "admin/indexes/year.pdf.erb", 
+    Content.render_erb "admin/indexes/year.pdf.erb",
       :agency_years => agency_years,
       :generated_file => generated_file,
       :fr_index_presenter => fr_index_presenter

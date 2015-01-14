@@ -6,10 +6,10 @@ class CreateReferencedDates < ActiveRecord::Migration
       t.string :string
       t.string :context
       t.boolean :prospective
-      
+
       t.timestamps
     end
-    
+
     add_index :referenced_dates, [:entry_id, :date]
   end
 

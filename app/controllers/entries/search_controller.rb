@@ -19,11 +19,11 @@ class Entries::SearchController < SearchController
         render :template => 'entries/index.rss.builder'
       end
       wants.csv do
-        redirect_to api_v1_entries_url(:per_page => 1000, :conditions => params[:conditions], :fields => [:citation, :document_number, :title, :publication_date, :type, :agency_names, :html_url, :page_length], :format => :csv) 
+        redirect_to api_v1_entries_url(:per_page => 1000, :conditions => params[:conditions], :fields => [:citation, :document_number, :title, :publication_date, :type, :agency_names, :html_url, :page_length], :format => :csv)
       end
     end
   end
-  
+
   def help
     cache_for 1.day
     if params[:no_layout]
@@ -32,7 +32,7 @@ class Entries::SearchController < SearchController
       render
     end
   end
-  
+
   def suggestions
     cache_for 1.day
 
@@ -43,7 +43,7 @@ class Entries::SearchController < SearchController
     end
     render :layout => false
   end
-  
+
   def activity_sparkline
     chart_options = params.delete(:chart_options)
 
@@ -62,12 +62,12 @@ class Entries::SearchController < SearchController
     sparkline_data = chart_options.present? ? {:data => data}.merge(chart_options) : {:data => data}
     url = CustomChartHelper::Sparkline.new(sparkline_data).to_s
     c = Curl::Easy.perform(url)
-    render :text => c.body_str, :content_type => "image/png" 
+    render :text => c.body_str, :content_type => "image/png"
     cache_for 1.day
   end
 
   private
-  
+
   def load_search
     @search ||= EntrySearch.new(params)
   end

@@ -1,7 +1,7 @@
 module Content::EntryImporter::Urls
   extend Content::EntryImporter::Utils
   provides :urls
-  
+
   def urls
     urls = []
     # DISABLE, at least temporarily...
@@ -9,12 +9,12 @@ module Content::EntryImporter::Urls
     #   url = clean_url(url_ref.content)
     #   urls << Url.find_or_create_by_name(url)
     # end
-    # 
+    #
     # urls
   end
-  
+
   private
-  
+
   def clean_url(url)
     if url =~ /^[a-z]+:\/\//
       url
@@ -22,5 +22,5 @@ module Content::EntryImporter::Urls
       "http://#{url}"
     end
   end
-  
+
 end

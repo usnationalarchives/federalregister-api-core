@@ -26,21 +26,21 @@ class String
     string = self[0,1].capitalize + self[1, self.length]
     return string
   end
-  
+
   # Capitalizes the first character of all words not found in words_to_skip_capitalization_of()
   # Examples of skipped words include 'of', 'the', 'or', etc.  Also capitalizes the first character
   # of the string regardless.
   def capitalize_most_words
     self.split.collect{ |w| words_to_skip_capitalization_of.include?(w.downcase) ? w : w.capitalize_first }.join(" ").capitalize_first
   end
-  
+
   # Capitalizes the first character of all words in string
   def capitalize_words
     self.split.collect{ |s| s.capitalize_first }.join(" ")
   end
-  
+
   # If a string is longer than 'length', returns the string shortened to length, with 'suffix'
-  # appended.  Otherwise, returns the string untouched.  Default suffix of '&#8230;' (three horizontal 
+  # appended.  Otherwise, returns the string untouched.  Default suffix of '&#8230;' (three horizontal
   # elipses) is provided.
   def shorten(length, suffix="&#8230;")
     if self.length > length-1
@@ -49,9 +49,9 @@ class String
       self
     end
   end
-  
+
   # Converts a post title to its-title-using-dashes
-  # All special chars are stripped in the process  
+  # All special chars are stripped in the process
   # (partially lifted from Typo (MIT licensed))
   def slugorize
     result = self.downcase
@@ -64,13 +64,13 @@ class String
     result.gsub!(/^(-)/, '')    # trim dashes
     result
   end
-  
+
   private
-  
+
   # Defines an array of words to which capitalize_most_words() should skip over.
   # TODO: Should "it" be included in the list?
   def words_to_skip_capitalization_of
-    [ 
+    [
     'of','a','the','and','an','or','nor','but','if','then','else','when','up','at','from','by','on',
     'off','for','in','out','over','to'
     ]

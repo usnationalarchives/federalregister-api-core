@@ -3,12 +3,12 @@ class AgencyAssignment < ApplicationModel
   belongs_to :assignable, :polymorphic => true
   belongs_to :entry, :foreign_key => :assignable_id
   belongs_to :agency_name
-  
+
   after_create :increment_entry_counter_cache
   after_destroy :decrement_entry_counter_cache
-  
+
   acts_as_list :scope => 'assignable_id = #{assignable_id} AND assignable_type = \'#{assignable_type}\''
-  
+
   def self.recalculate!
     connection.execute("UPDATE agency_names
                         LEFT JOIN agencies
@@ -37,17 +37,17 @@ class AgencyAssignment < ApplicationModel
       agency_assignments_new TO agency_assignments;"
     connection.execute "DROP TABLE agency_assignments_old"
   end
-  
+
   private
-  
+
   def increment_entry_counter_cache
     Agency.increment_counter(:entries_count, agency_id) if assignable_type == 'Entry'
     true
   end
-  
+
   def decrement_entry_counter_cache
     Agency.decrement_counter(:entries_count, agency_id) if assignable_type == 'Entry'
     true
   end
-  
+
 end

@@ -1,13 +1,13 @@
 class Content::EntryImporter::BulkdataFile
   class DownloadError < StandardError; end
-  
+
   extend ActiveSupport::Memoizable
-  
+
   def initialize(date, force_reload_bulkdata)
     @force_reload_bulkdata = force_reload_bulkdata
     @date = date.is_a?(String) ? Date.parse(date) : date
   end
-  
+
   def url
     "http://www.gpo.gov:80/fdsys/bulkdata/FR/#{@date.to_s(:year_month)}/FR-#{@date.to_s(:db)}.xml"
   end
@@ -32,7 +32,7 @@ class Content::EntryImporter::BulkdataFile
     doc.root
   end
   memoize :document
-  
+
   def document_numbers
     document_numbers = []
     document.css('RULE, PRORULE, NOTICE, PRESDOCU, CORRECT').each do |entry_node|
@@ -40,15 +40,15 @@ class Content::EntryImporter::BulkdataFile
       document_number = /FR Doc.\s*([^ ;]+)/i.match(raw_frdoc).try(:[], 1)
       document_numbers << document_number unless document_number.blank?
     end
-    
+
     document_numbers
   end
-  
+
   def document_numbers_and_associated_nodes
     ret = []
     document.css('RULE, PRORULE, NOTICE, PRESDOCU, CORRECT').each do |entry_node|
       raw_frdoc = entry_node.css('FRDOC').first.try(:content)
-      
+
       if raw_frdoc.present?
         document_number = /FR Doc.\s*([^ ;]+)/i.match(raw_frdoc).try(:[], 1)
         if document_number.blank?
@@ -59,10 +59,10 @@ class Content::EntryImporter::BulkdataFile
         puts "no FRDOC in #{entry_node.name} in #{raw_frdoc}"
         next
       end
-      
+
       ret << [document_number, entry_node]
     end
-    
+
     ret
   end
 end

@@ -11,7 +11,7 @@ class EntrySearch::DateAggregator::Quarterly < EntrySearch::DateAggregator::Base
       period = []
       3.times do
         period << date
-        date = date.advance(:months => 1) 
+        date = date.advance(:months => 1)
       end
       periods << period
     end

@@ -5,12 +5,12 @@ class EventSearch < ApplicationSearch
   define_filter :type do |type|
     Event::EVENT_TYPES_PLURAL[type]
   end
-  
+
   def agency_facets
     ApplicationSearch::FacetCalculator.new(:search => self, :model => Agency, :facet_name => :agency_ids).all
   end
   memoize :agency_facets
-  
+
   def type_facets
     raw_facets = Event.facets(term,
       :with => with,
@@ -19,11 +19,11 @@ class EventSearch < ApplicationSearch
       :match_mode => :extended,
       :facets => [:type]
     )[:type]
-    
+
     search_value_for_this_facet = self.type
     facets = raw_facets.to_a.reverse.reject{|id, count| id == 0}.map do |id, count|
       ApplicationSearch::Facet.new(
-        :value      => id, 
+        :value      => id,
         :name       => Event::EVENT_TYPES_PLURAL[id],
         :count      => count,
         :on         => id.to_s == search_value_for_this_facet.to_s,
@@ -32,11 +32,11 @@ class EventSearch < ApplicationSearch
     end
   end
   memoize :type_facets
-  
+
   def supported_orders
     %w(Relevant Newest Oldest)
   end
-  
+
   def order_clause
     case @order
     when 'newest'
@@ -47,13 +47,13 @@ class EventSearch < ApplicationSearch
       "@relevance DESC, date DESC"
     end
   end
-  
+
   def model
     Event
   end
-  
+
   private
-  
+
   def set_defaults(options)
     @order = options[:order] || 'newest'
   end

@@ -27,11 +27,11 @@ class ApiController < ApplicationController
 
       if search.count > 0 && results.count > 0
         data[:total_pages] = results.total_pages
-        
+
         if results.next_page
           data[:next_page_url] = index_url(params.merge(:page => results.next_page))
         end
-        
+
         if results.previous_page
           data[:previous_page_url] = index_url(params.merge(:page => results.previous_page))
         end
@@ -49,7 +49,7 @@ class ApiController < ApplicationController
     if document_numbers =~ /,/
       document_numbers = params[:id].split(',')
       records = model.all(:conditions => {:document_number => document_numbers})
-      
+
       data = {
         :count => records.count,
         :results => records.map{|record| yield(record)}
@@ -64,7 +64,7 @@ class ApiController < ApplicationController
       data = yield(record)
     end
     render_json_or_jsonp data
-  end 
+  end
 
   def specified_fields
     if params[:fields]
@@ -87,12 +87,12 @@ class ApiController < ApplicationController
   def request_error(exception)
     render :json => {:status => 400, :message => exception.message}, :status => 400
   end
-  
+
   rescue_from ActiveRecord::RecordNotFound, :with => :record_not_found if RAILS_ENV != 'development'
   def record_not_found
     render :json => {:status => 404, :message => "Record Not Found"}, :status => 404
   end
-  
+
   rescue_from ActionController::MethodNotAllowed, :with => :method_not_allowed if RAILS_ENV != 'development'
   def method_not_allowed
     render :json => {:status => 405, :message => "Method Not Allowed"}, :status => 405

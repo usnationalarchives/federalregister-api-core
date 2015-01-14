@@ -1,6 +1,6 @@
 class RegulatoryPlansController < ApplicationController
   before_filter :load_regulatory_plan
-  
+
   def show
     cache_for 1.day
 
@@ -11,7 +11,7 @@ class RegulatoryPlansController < ApplicationController
         wants.html do
           @entry_count = EntrySearch.new(:conditions => {:regulation_id_number => @regulatory_plan.regulation_id_number}).count
         end
-      
+
         wants.rss do
           @feed_name = "Federal Register: Recent documents about RIN #{@regulatory_plan.regulation_id_number}"
           @feed_description = "Federal Register documents about RIN #{@regulatory_plan.regulation_id_number}."
@@ -21,16 +21,16 @@ class RegulatoryPlansController < ApplicationController
       end
     end
   end
-  
+
   def timeline
     cache_for 1.day
     render :layout => false
   end
-  
+
   def tiny_url
     redirect_to regulatory_plan_path(@regulatory_plan), :status=>:moved_permanently
   end
-  
+
   def json_summary
     respond_to do |wants|
       wants.js do
@@ -38,9 +38,9 @@ class RegulatoryPlansController < ApplicationController
       end
     end
   end
-  
+
   private
-  
+
   def load_regulatory_plan
     @regulatory_plan = RegulatoryPlan.find_by_regulation_id_number!(params[:regulation_id_number], :order => "issue DESC")
   end

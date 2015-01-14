@@ -4,7 +4,7 @@ namespace :content do
     task :import => :environment do
       Content::TopicImporter.new.perform
     end
-    
+
     desc "Match topic names"
     task :match_names => :environment do
       Content::NameMatcher::Topics.new.perform

@@ -2,16 +2,16 @@ module Content
   class GraphicsExtractor
     require "content/graphics_extractor/entry"
     require "content/graphics_extractor/image"
-    
+
     class MissingXML < StandardError; end
     require 'tmpdir'
-    
+
     attr_reader :date
-    
+
     def initialize(date)
       @date = date.class == String ? Date.parse(date) : date
     end
-    
+
     def perform
       if @date > Date.parse('2000-01-01')
         unless File.exists?(entry_bulkdata_path)
@@ -36,11 +36,11 @@ module Content
         end
       end
     end
-    
+
     def entry_bulkdata_path
       "#{RAILS_ROOT}/data/bulkdata/FR-#{date.to_s(:iso)}.xml"
     end
-    
+
     def images
       Image.all_images_in_file(entry_bulkdata_path)
     end

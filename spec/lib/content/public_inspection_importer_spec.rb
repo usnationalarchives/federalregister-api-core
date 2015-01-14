@@ -244,6 +244,5 @@ describe Content::PublicInspectionImporter::Parser do
       HTML
       parse_html(html).regular_filings_updated_at.should == Time.zone.parse("2011-09-30 8:15:00")
     end
-
   end
 end

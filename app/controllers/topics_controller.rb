@@ -23,7 +23,6 @@ class TopicsController < ApplicationController
           :group => 'granule_class',
           :order => 'count DESC'
         )
-        
       end
       wants.rss do
         @feed_name = "Federal Register: #{@topic.name}"
@@ -33,11 +32,11 @@ class TopicsController < ApplicationController
       end
     end
   end
-  
+
   def significant_entries
     cache_for 1.day
     @topic = Topic.find_by_slug!(params[:id])
-    
+
     respond_to do |wants|
       wants.rss do
         @feed_name = "Federal Register: Significant documents from the '#{@topic.name}' topic"
@@ -47,7 +46,7 @@ class TopicsController < ApplicationController
       end
     end
   end
-  
+
   def navigation
     cache_for 1.day
 

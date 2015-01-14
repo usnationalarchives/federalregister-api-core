@@ -5,11 +5,11 @@ class CreateEntryDetails < ActiveRecord::Migration
       t.string :full_text_raw, :limit => 16777216
     end
     add_index :entry_details, :entry_id
-    
+
     execute "INSERT INTO entry_details (entry_id, full_text_raw)
              SELECT id, full_text_raw
              FROM entries"
-    
+
     remove_column :entries, :full_text_raw
     remove_column :entries, :full_text
   end

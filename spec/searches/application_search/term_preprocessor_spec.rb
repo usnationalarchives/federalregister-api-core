@@ -28,14 +28,14 @@ describe 'ApplicationSearch::TermPreprocessor' do
       results_for('she said "afsasf').should ==
                   'she said  afsasf'
     end
-  end 
+  end
 
   describe '.fix_hyphentated_word_searches' do
     def results_for(term)
       ApplicationSearch::TermPreprocessor.fix_hypenated_word_searches(term)
     end
     it "does nothing to true negation searches" do
-      results_for('fish -man').should == 
+      results_for('fish -man').should ==
                   'fish -man'
       results_for('fish -"e p a"').should ==
                   'fish -"e p a"'
@@ -44,12 +44,12 @@ describe 'ApplicationSearch::TermPreprocessor' do
       results_for('fish-man').should ==
                   '"fish man"'
     end
- 
+
     it "puts multiple hyphenated words in a phrase, removing the hypen" do
       results_for('fish-man-cart hero-of-the-day').should ==
                   '"fish man cart" "hero of the day"'
     end
-   
+
     it "removing the hypen from hyphenated words that are inside a phrase" do
       results_for('"i told the fish-man the story"').should ==
                   '"i told the fish man the story"'

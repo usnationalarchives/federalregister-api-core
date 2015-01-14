@@ -9,7 +9,7 @@ class ApplicationSearch::Facet
     @on         = options[:on]
     @identifier = options[:identifier]
   end
-  
+
   def on?
     @on
   end

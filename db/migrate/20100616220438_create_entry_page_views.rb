@@ -5,7 +5,7 @@ class CreateEntryPageViews < ActiveRecord::Migration
       t.datetime :created_at, :nil => false
       t.string :remote_ip, :nil => false
     end
-    
+
     add_index :entry_page_views, :entry_id
   end
 

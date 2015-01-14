@@ -1,6 +1,6 @@
 class ExecutiveOrdersController < ApplicationController
   FIELDS = [:executive_order_number, :title, :publication_date, :signing_date, :citation, :document_number, :executive_order_notes, :html_url]
-  
+
   def index
     cache_for 1.day
     @orders_by_president_and_year = ExecutiveOrderPresenter.all_by_president_and_year
@@ -53,7 +53,7 @@ class ExecutiveOrdersController < ApplicationController
 
   def navigation
     cache_for 1.day
-    
+
     @orders_by_president_and_year = ExecutiveOrderPresenter.all_by_president_and_year
 
     render :partial => 'layouts/navigation/executive_orders', :layout => false

@@ -4,7 +4,7 @@ class CreateAlternativeAgencyNames < ActiveRecord::Migration
       t.integer :agency_id
       t.string :name
     end
-    
+
     add_index :alternative_agency_names, :agency_id
   end
 

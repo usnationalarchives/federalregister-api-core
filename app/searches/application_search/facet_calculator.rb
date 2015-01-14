@@ -7,7 +7,7 @@ class ApplicationSearch::FacetCalculator
     @name_attribute = options[:name_attribute] || :name
     @identifier_attribute = options[:identifier_attribute]
   end
-  
+
   def raw_facets
     @search.sphinx_search(
       @search.sphinx_term,
@@ -20,7 +20,7 @@ class ApplicationSearch::FacetCalculator
       :ids_only => true
     ).results[:matches].map{|m| [m[:attributes]["@groupby"], m[:attributes]["@count"]]}
   end
-  
+
   def all
     if @model
       id_to_name = @model.find_as_hash(:select => "id, #{@name_attribute} AS name")

@@ -9,7 +9,7 @@ describe AgencyNameAssignment do
       entry.agencies.size.should == 1
     end
   end
-  
+
   describe 'destroy' do
     it "should destroy all associated agency_assignments" do
       entry = Factory(:entry)

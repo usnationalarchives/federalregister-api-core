@@ -8,9 +8,9 @@ class CitationsController < ApplicationController
       @volume = params[:volume].to_i
       @page   = params[:page].to_i
     end
-    
+
     @entries = Entry.find_all_by_citation(@volume, @page)
-    
+
     case @entries.size
     when 1
       redirect_to entry_url(@entries.first), :status => :moved_permanently
@@ -20,7 +20,7 @@ class CitationsController < ApplicationController
       render :action => 'show_multiple'
     end
   end
-  
+
   def search
     if params[:volume].present? && params[:page].present?
       redirect_to citation_url(params[:volume].to_i, params[:page].to_i)

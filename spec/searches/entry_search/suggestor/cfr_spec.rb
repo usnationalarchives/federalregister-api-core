@@ -33,5 +33,4 @@ describe 'EntrySearch::Suggestor::Cfr' do
       suggestion.should be_nil
     end
   end
-
 end

@@ -7,10 +7,10 @@ class Citation < ApplicationModel
     'PL'  => /Pub(?:lic|\.)\s+L(?:aw|\.)\.\s+(\d+)-(\d+)/,
     'EO'  => /(?:EO|E\.O\.|Executive Order) (\d+)/
   }
-  
+
   belongs_to :source_entry, :class_name => "Entry"
   belongs_to :cited_entry,  :class_name => "Entry", :counter_cache => "citing_entries_count"
-    
+
   def url
     case citation_type
     when 'USC'
@@ -25,7 +25,7 @@ class Citation < ApplicationModel
       "http://frwebgate.access.gpo.gov/cgi-bin/getdoc.cgi?dbname=#{part_1}_cong_public_laws&docid=f:publ#{sprintf("%03d",part_2.to_i)}.#{part_1}" if part_1.to_i >= 104
     end
   end
-  
+
   def name
     case citation_type
     when 'USC'
@@ -42,7 +42,7 @@ class Citation < ApplicationModel
       "Executive Order #{part_1}"
     end
   end
-  
+
   def self.extract!(entry)
     text = entry.full_text
     return [] if text.blank?
@@ -52,12 +52,12 @@ class Citation < ApplicationModel
     CITATION_TYPES.each_pair do |citation_type, regexp|
       text.scan(regexp) do |part_1, part_2, part_3|
         attributes = {:source_entry_id => entry.id, :citation_type => citation_type, :part_1 => part_1, :part_2 => part_2, :part_3 => part_3}
-        
+
         citation = Citation.first(:conditions => attributes)
-        
+
         if citation.nil?
           citation = Citation.new(attributes)
-          
+
           if citation_type == 'FR' && part_1.to_i >= 59
             citation.matching_fr_entries(entry.agencies).each do |cited_entry|
               citation = Citation.new(attributes)

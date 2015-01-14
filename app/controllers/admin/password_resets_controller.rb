@@ -1,7 +1,7 @@
 class Admin::PasswordResetsController < AdminController
   skip_before_filter :require_user
   skip_before_filter :verify_authenticity_token
-  
+
   before_filter :require_no_user
   before_filter :load_user_using_perishable_token, :only => [:edit,:update]
 
@@ -33,7 +33,7 @@ class Admin::PasswordResetsController < AdminController
   end
 
   private
-  
+
   def load_user_using_perishable_token
     @user = User.find_using_perishable_token(params[:id])
     unless @user

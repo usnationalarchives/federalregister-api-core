@@ -4,7 +4,7 @@ module Shared::DocumentNumberNormalizationTrait
       doc = first(:conditions => {:document_number => document_number})
       if doc.nil?
         normalized_document_number = normalize_document_number(document_number)
-        if normalized_document_number != document_number 
+        if normalized_document_number != document_number
           doc = first(:conditions => {:document_number => normalized_document_number})
         end
 

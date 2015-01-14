@@ -9,11 +9,11 @@ class CfrPart < ApplicationModel
     28..41 => '07-01',
     42..50 => '10-01',
   }
-  
+
   def self.find_all_candidates(date, title, part)
     all(:conditions => {:year => candidate_years(date, title), :title => title, :part => part})
   end
-  
+
   def self.candidate_years(date, title)
    EDITION_SCHEDULE.each_pair do |title_range, month_and_day|
       if title_range.include?(title.to_i)
@@ -25,7 +25,7 @@ class CfrPart < ApplicationModel
         end
       end
     end
-    
+
     nil
   end
 end

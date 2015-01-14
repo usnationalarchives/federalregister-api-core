@@ -5,7 +5,7 @@ class EntrySearch::DateAggregator::Weekly < EntrySearch::DateAggregator::Base
 
   def periods
     periods = []
-    
+
     date = @start_date - @start_date.wday
     while(date <= @end_date)
       periods << [date]

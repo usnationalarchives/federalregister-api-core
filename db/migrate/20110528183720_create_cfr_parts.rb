@@ -7,7 +7,7 @@ class CreateCfrParts < ActiveRecord::Migration
       t.integer :volume
       t.string  :name, :length => 1000
     end
-    
+
     add_index :cfr_parts, [:year, :title, :part]
   end
 

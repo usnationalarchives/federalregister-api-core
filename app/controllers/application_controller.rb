@@ -5,13 +5,13 @@ class ApplicationController < ActionController::Base
   helper :all # include all helpers, all the time
   include RouteBuilder
   include ViewHelper
-  
+
   include Locator
 
   before_filter do
     self.request_forgery_protection_token = nil
   end
- 
+
   after_filter :log_memory_usage if Rails.env.staging? || Rails.env.production?
 
   # turn IP Spoofing detection off.
@@ -19,7 +19,7 @@ class ApplicationController < ActionController::Base
 
   # Scrub sensitive parameters from your log
   filter_parameter_logging :password, :password_confirmation
-  
+
   private
   def parse_date_from_params
     year  = params[:year]
@@ -36,7 +36,7 @@ class ApplicationController < ActionController::Base
   def server_error(exception)
     Rails.logger.error(exception)
     notify_honeybadger(exception)
-    
+
     # ESI routes should return correct status codes, but no error page
     if params[:quiet]
       render :nothing => true, :status => 500
@@ -45,7 +45,7 @@ class ApplicationController < ActionController::Base
       render :template => "errors/500.html.erb", :status => 500
     end
   end
-  
+
   rescue_from ActiveRecord::RecordNotFound, ActiveHash::RecordNotFound, ActionController::RoutingError, :with => :record_not_found if RAILS_ENV != 'development'
   def record_not_found
     # ESI routes should return correct status codes, but no error page
@@ -56,7 +56,7 @@ class ApplicationController < ActionController::Base
       render :template => "errors/404.html.erb", :status => 404
     end
   end
-  
+
   rescue_from ActionController::MethodNotAllowed, :with => :method_not_allowed
   def method_not_allowed
     if params[:quiet]
@@ -66,7 +66,7 @@ class ApplicationController < ActionController::Base
       render :template => "errors/405.html.erb", :status => 405
     end
   end
-  
+
   def cache_for(time)
     if RAILS_ENV == 'development'
       path = File.join(Rails.root, 'config', 'cache.yml')
@@ -76,13 +76,13 @@ class ApplicationController < ActionController::Base
     end
     expires_in time, :public => true
   end
-  
+
   def template_exists?(template_name = default_template_name)
     self.view_paths.find_template(template_name, response.template.template_format)
   rescue ActionView::MissingTemplate
     false
   end
-  
+
   def handle_unverified_request
     raise "Invalid Authenticity Token"
   end

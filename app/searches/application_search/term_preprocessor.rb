@@ -46,4 +46,4 @@ module ApplicationSearch::TermPreprocessor
       (?=(?:[^"]*"[^"]*")*[^"]*"[^"]*$)   (?# an odd number of quotes afterwards)
     /x, '\1=\2')
   end
-end 
+end

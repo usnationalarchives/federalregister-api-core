@@ -3,7 +3,7 @@ class PathGenerator
   include ActionController::UrlWriter
   include ApplicationHelper
   include RouteBuilder
-  
+
   def generate(grand_total_n, counts_by_type)
     paths = []
     counts_by_type.each_pair do |type, counts|
@@ -11,12 +11,12 @@ class PathGenerator
       unique_n = counts.to_a.last
       paths += massage_to_n(send("#{type}_paths", unique_n), total_n)
     end
-    
+
     massage_to_n(paths, grand_total_n)
   end
-  
+
   private
-  
+
   def root_paths(n)
     [root_path]
   end
@@ -72,7 +72,7 @@ class PathGenerator
       regulatory_plan_path(regulatory_plan)
     end
   end
-  
+
   def entries_search_paths(n)
     ret = []
     n.times do |i|
@@ -80,7 +80,7 @@ class PathGenerator
     end
     ret
   end
-  
+
   def regulatory_plans_search_paths(n)
     ret = []
     n.times do |i|
@@ -88,7 +88,7 @@ class PathGenerator
     end
     ret
   end
-  
+
   def events_search_paths(n)
     ret = []
     n.times do |i|
@@ -96,7 +96,7 @@ class PathGenerator
     end
     ret
   end
-  
+
   def massage_to_n(array,n)
     if array.size == n
       array.sort_by{rand}
@@ -106,13 +106,13 @@ class PathGenerator
       massage_to_n(array * (n.to_f / array.size).ceil,n)
     end
   end
-  
+
   private
-  
+
   def random_search_phrase
     search_phrases[rand(search_phrases.size)]
   end
-  
+
   def search_phrases
     @phrases ||= File.read("#{Rails.root}/data/search_phrases.txt").split("\n")
   end

@@ -5,8 +5,8 @@ describe 'EntrySearch::Suggestor::EntryType' do
     conditions = options.merge(:term => term)
     EntrySearch::Suggestor::EntryType.new(EntrySearch.new(:conditions => conditions))
   end
-  
-  describe "presidential documents" do 
+
+  describe "presidential documents" do
     ["president goats", "presidential goats", "goats president", "goats:president"].each do |term|
       it "should add set the type to PRESDOC and remove the term when given '#{term}'" do
         suggestion = suggestor(term).suggestion
@@ -14,25 +14,25 @@ describe 'EntrySearch::Suggestor::EntryType' do
         suggestion.type.should == 'PRESDOCU'
       end
     end
-    
+
     ["fooeo goats"].each do |term|
       it "shouldn't have a suggestion match #{term}" do
         suggestion = suggestor(term).suggestion.should be_nil
       end
     end
-    it "shouldn't match inside of a phrase" do 
+    it "shouldn't match inside of a phrase" do
       suggestor('"Cross-Media Electronic Reporting Rule"').suggestion.should be_nil
     end
 
-    it "shouldn't match exact words" do 
+    it "shouldn't match exact words" do
       suggestor('=rule').suggestion.should be_nil
     end
-    
-    it "shouldn't match negated words" do 
+
+    it "shouldn't match negated words" do
       suggestor('-rule').suggestion.should be_nil
     end
 
-    it "shouldn't match exact negated words" do 
+    it "shouldn't match exact negated words" do
       suggestor('-=rule').suggestion.should be_nil
     end
   end

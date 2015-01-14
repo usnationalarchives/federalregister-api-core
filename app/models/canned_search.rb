@@ -4,10 +4,10 @@ class CannedSearch < ApplicationModel
   belongs_to :section
   validates_presence_of :section, :title, :description, :search_conditions
 
-  acts_as_list :scope => :section_id 
+  acts_as_list :scope => :section_id
   named_scope :in_order, :order => "position"
   named_scope :inactive, :conditions => {:active => 0}
-  
+
   def new_position=(new_pos)
     insert_at(new_pos)
   end
@@ -17,11 +17,11 @@ class CannedSearch < ApplicationModel
     @search_url = search_url
     if search_url.present?
       search_parameters = search_url.sub(/.*\?/, '')
-      self.search_conditions = Rack::Utils.parse_nested_query(search_parameters)['conditions'].to_json 
+      self.search_conditions = Rack::Utils.parse_nested_query(search_parameters)['conditions'].to_json
     end
     search_url
   end
-  
+
   def search_conditions
     JSON.parse(self['search_conditions']||'{}')
   end

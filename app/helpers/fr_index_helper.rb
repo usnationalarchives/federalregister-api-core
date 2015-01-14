@@ -24,6 +24,6 @@ module FrIndexHelper
                     [date.strftime("%B"), date.to_s(:iso)]
                   },
                   index_object.max_date.end_of_month.to_s(:iso)
-                )) 
+                ))
   end
 end

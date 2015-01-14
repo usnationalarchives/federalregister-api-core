@@ -6,19 +6,19 @@ class CreateSections < ActiveRecord::Migration
       t.integer :position
       t.text :description
       t.text :relevant_cfr_sections
-      
+
       t.timestamps
       t.userstamps
     end
-    
+
     create_table :agencies_sections do |t|
       t.integer :section_id
       t.integer :agency_id
-      
+
       t.timestamps
       t.userstamps
     end
-    
+
     add_index :agencies_sections, [:agency_id, :section_id]
     add_index :agencies_sections, [:section_id, :agency_id]
   end

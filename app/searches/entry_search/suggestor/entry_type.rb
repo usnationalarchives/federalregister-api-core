@@ -9,11 +9,11 @@ class EntrySearch::Suggestor::EntryType < EntrySearch::Suggestor::Base
     'presidential' => 'PRESDOCU',
     'executive document' => 'PRESDOCU',
   }
-  
+
   def pattern
     /(#{TYPE_NAMES.keys.map{|n| "(?:^|[^a-zA-Z0-9=-])(#{n})\\b"}.join("|")})(?=(?:[^"]*"[^"]*")*[^"]*$)/i
   end
-  
+
   def handle_match(all,*type_names)
     type_name = type_names.compact.first
     entry_type = TYPE_NAMES[type_name.to_s.downcase]

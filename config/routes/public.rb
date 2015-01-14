@@ -9,12 +9,12 @@ ActionController::Routing::Routes.draw do |map|
   map.entries_search_help 'articles/search/help', :controller => 'entries/search', :action => 'help', :conditions => { :method => :get }
   map.entries_search_activity_sparkline 'articles/search/activity/sparkline/:period',
     :controller => 'entries/search',
-    :action => 'activity_sparkline', 
+    :action => 'activity_sparkline',
     :conditions => { :method => :get}
-  
+
   # ENTRY PAGE VIEW
   map.entries_page_views 'articles/views', :controller => 'entries/page_views', :action => 'create', :conditions => { :method => :post }
-  
+
   # ENTRIES
   if RAILS_ENV == 'development' || RAILS_ENV == 'test'
     map.document_abstract_text 'documents/html/abstract/:id.:format', :controller => 'entries', :action => 'abstract_text', :conditions => {:method => :get}
@@ -31,7 +31,7 @@ ActionController::Routing::Routes.draw do |map|
                                                                 :month      => /\d{1,2}/,
                                                                 :day        => /\d{1,2}/,
                                                                 :slug       => /[^\/]+/
-                                               
+
   map.entry_citation 'citations/:year/:month/:day/:document_number/:slug', :controller => 'entries',
                                                                                 :action     => 'citations',
                                                                                 :conditions => { :method => :get },
@@ -42,7 +42,7 @@ ActionController::Routing::Routes.draw do |map|
   map.entries_current_issue 'articles/current', :controller => 'entries',
                                                 :action      => 'current_issue',
                                                 :conditions => { :method => :get }
-  
+
   map.entries_by_date 'articles/:year/:month/:day', :controller => 'entries',
                                                    :action      => 'by_date',
                                                    :conditions => { :method => :get },
@@ -55,7 +55,7 @@ ActionController::Routing::Routes.draw do |map|
 
   map.random_entry 'a/random', :controller => 'entries',
                                 :action => 'random',
-                                :conditions => { :method => :get } 
+                                :conditions => { :method => :get }
   map.short_entry 'a/:document_number.:format',
                                         :controller => 'entries',
                                         :action     => 'tiny_url',
@@ -90,7 +90,7 @@ ActionController::Routing::Routes.draw do |map|
   map.citation_search 'citation/search', :controller => 'citations',
                                          :action     => 'search',
                                          :conditions => { :method => :get }
-  
+
   # ENTRY EMAILS
   map.new_entry_email 'articles/email-a-friend/:document_number', :controller => "entries/emails",
                                                                   :action => "new",
@@ -123,10 +123,10 @@ ActionController::Routing::Routes.draw do |map|
 
   # EVENT SEARCH
   map.events_search 'events/search.:format', :controller => 'events/search', :action => 'show', :conditions => { :method => :get }
-  
+
   # EVENT
   map.event 'events/:id.:format', :controller => 'events', :action => 'show', :conditions => { :method => :get }
-  
+
   # TOPICS
   map.resources :topics, :as => "topics", :only => [:index, :show], :collection => {:search => :get}
   map.significant_entries_topic 'topics/:id/significant.:format', :controller => "topics", :action => "significant_entries", :conditions => { :method => :get }
@@ -134,7 +134,7 @@ ActionController::Routing::Routes.draw do |map|
   # AGENCIES
   map.resources :agencies, :only => [:index, :show], :collection => {:search => :get}
   map.significant_entries_agency 'agencies/:id/significant.:format', :controller => "agencies", :action => "significant_entries", :conditions => { :method => :get }
-  
+
   # REGULATIONS
   map.regulatory_plans_search 'regulations/search',
                       :controller => 'regulatory_plans/search',
@@ -161,7 +161,7 @@ ActionController::Routing::Routes.draw do |map|
       external_cfr_citation.select_cfr_citation 'select-citation/:year/:month/:day/:citation', :action => :select_cfr_citation
     end
   end
-  
+
   # SECTIONS
   unless ENV["ASSUME_UNITIALIZED_DB"]
     Section.all.each do |section|
@@ -173,14 +173,13 @@ ActionController::Routing::Routes.draw do |map|
       end
     end
   end
-  
+
   # CANNED SEARCHES
   map.canned_search ":slug.:format", :controller => "canned_searches", :action => :show, :conditions => {:method => :get}
-  
+
   # SECTIONS
   map.about_section ":slug/about", :controller => "sections", :action => "about", :conditions => { :method => :get }
   map.highlighted_entries_section ":slug/featured.:format", :controller => "sections", :action => "highlighted_entries", :conditions => { :method => :get }
   map.significant_entries_section ":slug/significant.:format", :controller => "sections", :action => "significant_entries", :conditions => { :method => :get }
   map.section ':slug.:format', :controller => "sections", :action => "show", :conditions => { :method => :get }
-  
 end

@@ -30,7 +30,7 @@ class Content::EquationPageExtractor
       return unless equation_pages.present? && pdf_file_present?
 
       equation_pages.each do |page|
-        Content::PageImageExtractor.new(entry, pdf_file_path, page).extract! 
+        Content::PageImageExtractor.new(entry, pdf_file_path, page).extract!
       end
     end
 

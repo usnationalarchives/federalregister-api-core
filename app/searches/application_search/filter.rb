@@ -5,7 +5,7 @@ class ApplicationSearch::Filter
     @value              = [options[:value]].flatten
     @condition          = options[:condition]
     @sphinx_attribute   = options[:sphinx_attribute] || @condition
-    
+
     @model_class        = options[:model_class]
     @model_id_method    = options[:model_id_method] || :id
     @model_label_method = options[:model_label_method] || :name
@@ -26,7 +26,7 @@ class ApplicationSearch::Filter
 
       @name = @name_definer.call(@value)
     end
-      
+
     if options[:phrase]
       @sphinx_value = "\"#{@value.join(' ')}\""
     elsif options[:crc32_encode]
@@ -47,7 +47,7 @@ class ApplicationSearch::Filter
     @sphinx_type  = options[:sphinx_type] || :conditions
     @label        = options[:label] || @condition.to_s.singularize.humanize
   end
-  
+
   def model_class
     @model_class || @condition.
                       to_s.

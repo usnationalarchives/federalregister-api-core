@@ -10,7 +10,7 @@ class CreateEntries < ActiveRecord::Migration
       t.datetime :places_determined_at
       t.timestamps
     end
-    
+
     add_index :entries, :agency_id
     add_index :entries, :document_number
   end

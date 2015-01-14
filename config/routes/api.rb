@@ -18,7 +18,7 @@ ActionController::Routing::Routes.draw do |map|
                   :as => :documents,
                   :only => [:index, :show],
                   :controller => 'api/v1/entries'
-  
+
     api.resources :agencies,
                   :only => [:index, :show],
                   :controller => 'api/v1/agencies'

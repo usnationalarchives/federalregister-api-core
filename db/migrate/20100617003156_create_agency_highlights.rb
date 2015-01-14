@@ -9,7 +9,7 @@ class CreateAgencyHighlights < ActiveRecord::Migration
       t.string  :title
       t.string  :abstract
     end
-    
+
     add_index :agency_highlights, :highlight_until
   end
 

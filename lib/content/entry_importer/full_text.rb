@@ -1,13 +1,13 @@
 module Content::EntryImporter::FullText
   extend Content::EntryImporter::Utils
   provides :full_text
-  
+
   def full_text
     download_url_and_check_for_error(entry.source_url(:text))
   end
-  
+
   private
-  
+
   def download_url_and_check_for_error(url)
     content = ''
     15.times do

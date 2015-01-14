@@ -3,7 +3,7 @@ module Content
   class ImportDriver
     def perform
       exit unless should_run?
-    
+
       if lock_file_already_exists?
         if other_process_is_running?
           if other_process_is_old?
@@ -18,7 +18,7 @@ module Content
           remove_lock_file
         end
       end
-    
+
       create_lock_file
       begin
         run
@@ -29,7 +29,7 @@ module Content
         remove_lock_file
       end
     end
-  
+
     def lock_file_already_exists?
       File.exists?(lock_file_path)
     end
@@ -41,7 +41,7 @@ module Content
     def other_process_is_old?
       (Time.current - File.stat(lock_file_path).ctime) > 60.minutes
     end
-    
+
     def other_process_is_running?
       begin
         Process.getpgid( other_process_pid )
@@ -50,12 +50,12 @@ module Content
         return false
       end
     end
-  
+
     def create_lock_file
       # register callback to cleanup lock file on unexpected exit
       #    ...in theory, this is redundant
       at_exit{ remove_lock_file }
-      
+
       # create file if it doesn't exist; error out if it does; prevents potential race condition
       File.open(lock_file_path, File::CREAT|File::EXCL|File::RDWR) do |f|
         f.write(Process.pid)
@@ -67,17 +67,17 @@ module Content
       remove_lock_file
       sleep(10)
     end
-  
+
     def remove_lock_file
       File.delete(lock_file_path) if File.exists?(lock_file_path)
     end
-  
+
     def should_run?
       true
     end
 
     private
-  
+
     def lock_file_path
       "#{RAILS_ROOT}/tmp/#{lockfile_name}"
     end

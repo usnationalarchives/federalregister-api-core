@@ -9,7 +9,7 @@ module Content
 
     def extract!
       unless File.exists?(png_file_path)
-        FileUtils.mkdir_p(File.dirname(png_file_path)) 
+        FileUtils.mkdir_p(File.dirname(png_file_path))
         `pdftk #{pdf_file_path} cat #{page_offset} output - | gs -sDEVICE=pnggray -sOutputFile=#{png_file_path} -r300 -`
       end
     end

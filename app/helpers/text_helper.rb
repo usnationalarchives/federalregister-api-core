@@ -3,13 +3,13 @@ module TextHelper
     return if text.nil?
     length = options[:length] || 30
     omission = options[:omission] || '...'
-    
+
     if text.length <= length
       text
     else
       words = text.split(/\s+/)
       l = length - omission.length
-      
+
       words.inject('') do |str, word|
         new_str = str == '' ? word : "#{str} #{word}"
         if new_str.length > l

@@ -4,7 +4,7 @@ module MemInfo
   # You might want to move this into some kind of initializer
   # that is loaded when your app starts and not when autoload
   # loads this module.
-  KERNEL_PAGE_SIZE = `getconf PAGESIZE`.chomp.to_i rescue 4096 
+  KERNEL_PAGE_SIZE = `getconf PAGESIZE`.chomp.to_i rescue 4096
   STATM_PATH       = "/proc/#{Process.pid}/statm"
   STATM_FOUND      = File.exist?(STATM_PATH)
 

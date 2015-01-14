@@ -1,7 +1,7 @@
 module Content
   class SectionHighlightCloner
     def clone(date)
-      
+
       if SectionHighlight.find_by_publication_date(date).nil?
         prior_date = Entry.first(
           :select => "publication_date",

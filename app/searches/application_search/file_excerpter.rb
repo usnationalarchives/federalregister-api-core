@@ -11,5 +11,5 @@ class ApplicationSearch::FileExcerpter < ThinkingSphinx::Excerpter
     rescue Riddle::ResponseError
       nil
     end
-  end 
+  end
 end

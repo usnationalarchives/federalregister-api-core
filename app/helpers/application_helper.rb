@@ -6,32 +6,32 @@ module ApplicationHelper
     instance_variable_set(ivar, nil)
     content_for(name, content, &block)
   end
-  
+
   def super_title(text, options = {})
     options.symbolize_keys!
     set_content_for :super_title, text
   end
-  
+
   def title(text, options = {})
     options.symbolize_keys!
-    
+
     set_content_for :title, strip_tags(text)
     unless options[:body] == false
       set_content_for :precolumn, content_tag(:h1, text)
     end
   end
-  
+
   def description(text)
     set_content_for :description, strip_tags(text)
   end
-  
+
   def sidebar(text)
     set_content_for :sidebar, text
   end
-  
+
   def feed_autodiscovery(feed_url, title = 'RSS', options = {})
     link_html_options = {:rel => 'alternate', :type => 'application/rss+xml', :title => title, :href => feed_url, :class => 'subscription_feed'}
-    
+
     if options[:search_conditions]
       link_html_options[:'data-search-conditions'] = options[:search_conditions].to_json
       entry_search = EntrySearch.new(:conditions => options[:search_conditions])
@@ -44,7 +44,7 @@ module ApplicationHelper
 
     content_for :feeds, tag(:link, link_html_options)
   end
-  
+
   def pluralize_without_count(count, noun, text = nil)
     count == 1 ? "#{noun}#{text}" : "#{noun.pluralize}#{text}"
   end

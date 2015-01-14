@@ -4,10 +4,10 @@ namespace :data do
     task :bulkdata => :environment do
       require 'fileutils'
       require 'open-uri'
-      
+
       date = ENV['DATE'].blank? ? Time.current.to_date.to_s(:db) : ENV['DATE']
       lax_mode = ENV['LAX'].blank? ? false : true
-      
+
       url = 'http://www.gpo.gov:80/fdsys/bulkdata/FR/' + case date
           when /^\d{4}$/
             "#{date.gsub(/-/, '/')}/FR-#{date}.zip"
@@ -18,16 +18,16 @@ namespace :data do
           else
             raise "Invalid date; must be of the form 2009, 2009-12, 2009-12-31"
           end
-      
+
       xml_files_to_process = []
-      
+
       bulkdata_dir = "#{RAILS_ROOT}/data/bulkdata"
       file_path = "#{bulkdata_dir}/#{File.basename(url)}"
       if File.exists?(file_path)
         puts "skipping #{url}..."
       else
         puts "downloading #{url}..."
-        
+
         open(url) do |input|
           open(file_path, "wb") do |output|
             while (buf = input.read(8192))
@@ -36,7 +36,7 @@ namespace :data do
           end
         end
       end
-      
+
       if file_path =~ /\.zip$/
         puts "extracting #{file_path}..."
         Zip::ZipFile.open(file_path).each do |file|
@@ -47,14 +47,14 @@ namespace :data do
       else
         xml_files_to_process << file_path
       end
-      
+
       xml_files_to_process.sort.each do |file|
         puts "importing #{file}..."
         doc = Nokogiri::XML(open(file))
-      
+
         doc.css('RULE, PRORULE, NOTICE, PRESDOCU').each do |entry_node|
           raw_frdoc = entry_node.css('FRDOC').first.try(:content)
-          
+
           if raw_frdoc.present?
             document_number = /FR Doc.\s*([^ ;]+)/i.match(raw_frdoc).try(:[], 1)
             if document_number.blank?
@@ -63,7 +63,7 @@ namespace :data do
           else
             puts "no FRDOC in #{entry_node.name} in #{file}"
           end
-        
+
           entry = Entry.find_by_document_number(document_number)
           if entry.nil?
             if lax_mode
@@ -73,7 +73,7 @@ namespace :data do
               next
             end
           end
-        
+
           entry.full_xml = entry_node.to_s
           entry.save
         end

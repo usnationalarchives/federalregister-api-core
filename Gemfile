@@ -28,7 +28,7 @@ gem 'ffi-hunspell',
   :require => 'ffi/hunspell'
 
 gem 'honeybadger', :require => 'honeybadger/rails'
-gem 'resque-honeybadger', 
+gem 'resque-honeybadger',
     :git => 'git@github.com:henrik/resque-honeybadger.git',
     :ref => '832be87662840d44e73f66c006796da8ed6250e2'
 

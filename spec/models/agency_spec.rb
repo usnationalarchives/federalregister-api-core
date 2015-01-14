@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Agency do
   it { should have_many :entries }
-  
+
   describe "named_approximately" do
     before(:each) do
       @nasa = Agency.create!(:name => "National Aeronautics and Space Administration", :short_name => "NASA")
@@ -12,24 +12,24 @@ describe Agency do
       @prison = Agency.create!(:name => "Prison Department")
       @epa = Agency.create!(:name => "Environmental Protection Agency", :short_name => "EPA")
     end
-    
+
     it "matches based on partial words" do
       Agency.named_approximately("Admin").should == [@office, @nasa]
     end
-    
+
     it "ignores word order" do
       Agency.named_approximately("Administration Space").should == [@nasa]
     end
-    
+
     it "matches short_names" do
       Agency.named_approximately("NASA").should == [@nasa]
     end
-    
+
     it "ignores stop words" do
       Agency.named_approximately("National Aeronautics & Space Administration").should == [@nasa]
       Agency.named_approximately("The Administrative Office of United States Courts").should == [@office]
     end
-    
+
     it "does not error out on numbers" do
       Agency.named_approximately("2979").should == []
     end

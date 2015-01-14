@@ -5,7 +5,7 @@ module Content
       if ENV['PI_FILE']
         html = File.read(ENV['PI_FILE'])
       else
-        curl = Curl::Easy.new('http://www.ofr.gov/inspection.aspx') {|c| c.follow_location = true} 
+        curl = Curl::Easy.new('http://www.ofr.gov/inspection.aspx') {|c| c.follow_location = true}
         curl.follow_location = true
         curl.perform
         html = curl.body_str
@@ -16,7 +16,7 @@ module Content
       parser = Nokogiri::HTML::SAX::Parser.new(Parser.new)
       parser.encoding = 'utf8'
       parser.parse(html)
-      
+
       pub_date = parser.document.regular_filings_updated_at.to_date
       issue = PublicInspectionIssue.find_or_initialize_by_publication_date(pub_date)
       issue.special_filings_updated_at = parser.document.special_filings_updated_at || DateTime.current
@@ -84,7 +84,7 @@ module Content
         when /Filed: (.+)/
           begin
             date = Time.zone.parse($1)
-            self.filed_at = date 
+            self.filed_at = date
           rescue
             # don't clear this out
           end

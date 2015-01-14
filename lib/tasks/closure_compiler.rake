@@ -1,4 +1,4 @@
-namespace :closure_compiler do 
+namespace :closure_compiler do
   namespace :create do
     task :vendor_js => :environment do
       options = []
@@ -7,7 +7,7 @@ namespace :closure_compiler do
       vendor_lib_list.each do |lib|
         options << "--js public/javascripts/vendor/#{lib}"
       end
-      
+
       vendor_extern_list = Dir.entries("#{RAILS_ROOT}/public/javascripts/vendor/externs").select{|n| n =~ /\.js$/}
       vendor_extern_list.each do |lib|
         options << "--externs public/javascripts/vendor/externs/#{lib}"

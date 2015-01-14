@@ -9,8 +9,8 @@ cloud :app_server_v3 do
   availability_zones ['us-east-1d']
   instances 1
   instance_type 'm1.large'
-  
-  
+
+
   chef :solo do
     repo File.join(File.dirname(__FILE__) ,"..", "..", "..", "..", "vendor", "plugins")
 
@@ -32,7 +32,7 @@ cloud :app_server_v3 do
     recipe "rails"
     recipe "capistrano"
     recipe "nodejs"
-    
+
     attributes chef_cloud_attributes('production').recursive_merge(
       :chef => {
                  :roles => ['app']
@@ -54,13 +54,11 @@ cloud :app_server_v3 do
                    :server_address => 'sphinx.fr2.ec2.internal'
                  }
       )
-          
   end
-  
+
   security_group "app" do
     authorize :from_port => "22", :to_port => "22"
     #authorize :from_port => "8080", :to_port => "8080"
     #authorize :from_port => "8081", :to_port => "8081"
   end
-  
 end

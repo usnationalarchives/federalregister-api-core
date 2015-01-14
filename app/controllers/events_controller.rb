@@ -2,7 +2,7 @@ class EventsController < ApplicationController
   include Icalendar
   def show
     @event = ::Event.find(params[:id])
-    
+
     respond_to do |wants|
       wants.html do
         if request.xhr?

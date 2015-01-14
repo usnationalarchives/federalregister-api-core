@@ -5,13 +5,13 @@ class EntrySearch::Suggestor::Agency < EntrySearch::Suggestor::Base
       check_for_match
     end
   end
-  
+
   def term
     @term
   end
-  
+
   private
-  
+
   def check_for_match
     @term = @search.term
     agency_ids = Array(@search.conditions[:agency_ids]).map(&:to_i)
@@ -30,5 +30,5 @@ class EntrySearch::Suggestor::Agency < EntrySearch::Suggestor::Base
       @conditions[:agency_ids] = agency_ids
     end
   end
-  
+
 end

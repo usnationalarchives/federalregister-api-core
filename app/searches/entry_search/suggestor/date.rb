@@ -1,10 +1,10 @@
 class EntrySearch::Suggestor::Date < EntrySearch::Suggestor::Base
   private
-  
+
   def pattern
     /(\d\d?\/\d\d?\/\d\d(?:\d\d)?)/
   end
-  
+
   def handle_match(date_str)
     begin
       @date = parse_date(date_str)
@@ -13,7 +13,7 @@ class EntrySearch::Suggestor::Date < EntrySearch::Suggestor::Base
       @conditions = nil
     end
   end
-  
+
   def parse_date(str)
     date = Date.parse(str)
     if date.year < 100
@@ -23,7 +23,7 @@ class EntrySearch::Suggestor::Date < EntrySearch::Suggestor::Base
         date = date.change(:year => date.year + 1900)
       end
     end
-    
+
     date
   end
 end

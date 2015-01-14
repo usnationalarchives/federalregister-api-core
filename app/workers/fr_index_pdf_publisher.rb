@@ -20,7 +20,7 @@ class FrIndexPdfPublisher < FrIndexPdfGenerator
   def update_agency_status
     if agency
       FrIndexAgencyStatus.update_all(
-        "last_published = '#{max_date.to_s(:db)}'", 
+        "last_published = '#{max_date.to_s(:db)}'",
         "year = #{year} AND agency_id = #{agency.id} AND (last_published IS NULL OR last_published < '#{max_date.to_s(:db)}')")
     end
   end

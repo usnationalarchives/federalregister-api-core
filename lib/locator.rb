@@ -1,6 +1,6 @@
 module Locator
   require 'geoip'
-  
+
   def current_location(ip = request.remote_ip)
     unless @current_location
       if session[:location]
@@ -10,16 +10,16 @@ module Locator
         if ! @current_location.success?
           @current_location = default_location
         end
-        
+
         session[:location] = @current_location.to_hash
       end
     end
-    
+
     @current_location
   end
-  
+
   private
-  
+
   def default_location
     Geokit::GeoLoc.new(
       :lng   => -122.073196411133,

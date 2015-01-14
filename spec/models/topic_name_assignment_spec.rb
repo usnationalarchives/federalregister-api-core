@@ -10,7 +10,7 @@ describe TopicNameAssignment do
       entry.topics.size.should == 2
     end
   end
-  
+
   describe 'destroy' do
     it "should destroy all associated topic_assignments" do
       entry = Factory(:entry)

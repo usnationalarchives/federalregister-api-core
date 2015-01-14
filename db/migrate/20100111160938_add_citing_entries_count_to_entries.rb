@@ -10,7 +10,7 @@ class AddCitingEntriesCountToEntries < ActiveRecord::Migration
     execute 'UPDATE entries, citation_counts
              SET entries.citing_entries_count = citation_counts.count
              WHERE entries.id = citation_counts.cited_entry_id'
-      
+
     add_index :entries, :citing_entries_count
     add_index :entries, [:agency_id, :citing_entries_count]
   end

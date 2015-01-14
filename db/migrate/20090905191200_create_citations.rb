@@ -8,7 +8,7 @@ class CreateCitations < ActiveRecord::Migration
       t.string :part_2
       t.string :part_3
     end
-    
+
     add_index :citations, [:source_entry_id, :citation_type, :cited_entry_id], :name => 'source_citation_cited'
   end
 

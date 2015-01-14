@@ -8,22 +8,22 @@ cloud :fr2_database do
   availability_zones ['us-east-1d']
   instances 1
   instance_type 'm1.large'
-  
+
   #attach the ebs volumes
   # ebs_volumes do
   #   size 80
   #   device "/dev/sdh"
   #   snapshot_id "snap-74d5801f" #TODO find a way to automate this as it's new everyday...!
   # end
-  
+
   chef :solo do
     repo File.join(File.dirname(__FILE__) ,"..", "..", "..", "..", "vendor", "plugins")
-    
+
     recipe "apt"
     recipe 's3sync'
     recipe "ubuntu"
     recipe "openssl"
-    
+
     recipe "apparmor"
 
     recipe "mysql::server_ec2"
@@ -47,19 +47,18 @@ cloud :fr2_database do
                   :bind_address    => ''
                 },
       #:ubuntu => { :hostname => 'database'},
-      :sphinx => { 
+      :sphinx => {
                     :version => "2.0.1-beta",
                     :url => "http://sphinxsearch.com/files/sphinx-2.0.1-beta.tar.gz",
                     :tar_file => "/opt/src/sphinx-2.0.1-beta.tar.gz"
                  }
       )
-          
   end
-  
+
   security_group "database" do
     authorize :from_port => "22", :to_port => "22"
   end
-  
+
   security_group "sphinx"
 end
 

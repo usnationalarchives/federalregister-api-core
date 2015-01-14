@@ -10,12 +10,12 @@ SitemapGenerator::Sitemap.add_links do |sitemap|
   # Usage: sitemap.add path, options
   #        (default options are used if you don't specify)
   #
-  # Defaults: :priority => 0.5, :changefreq => 'weekly', 
+  # Defaults: :priority => 0.5, :changefreq => 'weekly',
   #           :lastmod => Time.now, :host => default_host
-  
+
   # SEARCHES
   sitemap.add entries_search_path, :priority => 1
-  sitemap.add public_inspection_search_path, :priority => 0.75 
+  sitemap.add public_inspection_search_path, :priority => 0.75
   sitemap.add events_search_path, :priority => 0.5
   sitemap.add regulatory_plans_search_path, :priority => 0.5
 
@@ -29,18 +29,18 @@ SitemapGenerator::Sitemap.add_links do |sitemap|
   CannedSearch.active.each do |canned_search|
     sitemap.add canned_search_path(canned_search), :priority => 0.75, :changefreq => 'daily'
   end
-  
+
   # ENTRIES
   Entry.scoped(:select => "entries.id, entries.document_number, entries.publication_date").find_each do |entry|
     sitemap.add entry_path(entry), :changefreq => 'monthly', :lastmod => entry.updated_at
   end
-  
+
   Issue.completed.find_each do |issue|
     sitemap.add entries_by_date_path(issue.publication_date), :priority => 0.75
   end
-  
+
   sitemap.add entries_current_issue_path, :priority => 1.0, :changefreq => 'daily'
- 
+
   PublicInspectionIssue.published.find_each do |issue|
     sitemap.add public_inspection_documents_by_date_path(issue.publication_date), :priority => 0.75
   end
@@ -56,7 +56,7 @@ SitemapGenerator::Sitemap.add_links do |sitemap|
   Topic.find_each do |topic|
     sitemap.add topic_path(topic), :changefreq => 'daily'
   end
-  
+
   # AGENCIES
   sitemap.add agencies_path
   Agency.find_each do |agency|
@@ -70,7 +70,7 @@ SitemapGenerator::Sitemap.add_links do |sitemap|
       sitemap.add executive_orders_by_president_and_year_path(president.identifier, eo_collection.year)
     end
   end
- 
+
   # REGULATIONS
   RegulatoryPlan.find_each do |regulatory_plan|
     sitemap.add regulatory_plan_path(regulatory_plan), :changefreq => 'daily'

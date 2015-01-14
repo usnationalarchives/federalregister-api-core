@@ -4,10 +4,10 @@ class EntriesController < ApplicationController
     params[:per_page] = 5
     params[:order] = :date
     @search = EntrySearch.new(params)
-    
+
     render :layout => 'widget'
   end
-  
+
   def index
     cache_for 1.day
     respond_to do |wants|
@@ -20,7 +20,7 @@ class EntriesController < ApplicationController
       end
     end
   end
-  
+
   def highlighted
     cache_for 1.day
     respond_to do |wants|
@@ -31,14 +31,14 @@ class EntriesController < ApplicationController
       end
     end
   end
-  
+
   def date_search
     begin
       date = Date.parse(params[:search] || '', :context => :past).try(:to_date )
     rescue ArgumentError
       render :text => "We couldn't understand that date.", :status => 422
     end
-    
+
     if date.present?
       if Entry.published_on(date).count > 0
         if request.xhr?
@@ -51,32 +51,32 @@ class EntriesController < ApplicationController
       end
     end
   end
-  
+
   def by_date
     cache_for 1.day
     prep_issue_view(parse_date_from_params)
   end
-  
+
   def current_issue
     cache_for 1.day
     prep_issue_view(Issue.current.publication_date)
     @faux_action = "by_date"
     render :action => "by_date"
   end
-  
+
   def by_month
     cache_for 1.day
-    
+
     begin
       @date = Date.parse("#{params[:year]}-#{params[:month]}-01")
     rescue ArgumentError
       raise ActiveRecord::RecordNotFound
     end
-    
+
     if params[:current_date]
       @current_date = Date.parse(params[:current_date])
     end
-    
+
     @entry_dates = Entry.all(
       :select => "distinct(publication_date)",
       :conditions => {:publication_date => @date .. @date.end_of_month}
@@ -93,10 +93,10 @@ class EntriesController < ApplicationController
 
     render :partial => 'layouts/navigation/dates', :layout => false
   end
-  
+
   def show
     cache_for 1.day
-    
+
     @entry = Entry.find_by_document_number(params[:document_number])
 
     if @entry
@@ -114,12 +114,12 @@ class EntriesController < ApplicationController
       end
     end
   end
-  
+
   def citations
     cache_for 1.day
     @entry = Entry.find_by_document_number!(params[:document_number])
   end
-  
+
   def tiny_url
     cache_for 1.day
     entry_or_pi = Entry.find_by_document_number(params[:document_number]) ||
@@ -169,7 +169,7 @@ class EntriesController < ApplicationController
   end
 
   private
-  
+
   def parse_date_from_params
     year  = params[:year]
     month = params[:month]
@@ -180,11 +180,11 @@ class EntriesController < ApplicationController
       raise ActiveRecord::RecordNotFound
     end
   end
-  
+
   def prep_issue_view(date)
     @publication_date = date
     @issue = Issue.completed.find_by_publication_date!(@publication_date)
-    
+
     toc = TableOfContentsPresenter.new(@issue.entries.scoped(:include => [:agencies, :agency_names]))
     @entries_without_agencies = toc.entries_without_agencies
     @agencies = toc.agencies

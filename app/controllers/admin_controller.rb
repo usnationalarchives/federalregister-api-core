@@ -1,6 +1,6 @@
 class AdminController < ApplicationController
   layout 'admin'
-  
+
   before_filter :require_user
   helper_method :current_user_session, :current_user
 
@@ -10,21 +10,21 @@ class AdminController < ApplicationController
   end
 
   private
-  
+
   include Userstamp
   def set_stamper
     User.stamper ||= current_user
   end
-  
+
   def store_location(url = request.request_uri)
     session[:return_to] = url
   end
-  
+
   def redirect_back_or_default(default)
     redirect_to(session[:return_to] || default)
     session[:return_to] = nil
   end
-  
+
   def current_user_session
     return @current_user_session if defined?(@current_user_session)
     @current_user_session = UserSession.find
@@ -34,7 +34,7 @@ class AdminController < ApplicationController
     return @current_user if defined?(@current_user)
     @current_user = current_user_session && current_user_session.user
   end
-  
+
   def require_user
     unless current_user
       if request.xhr?
@@ -54,7 +54,7 @@ class AdminController < ApplicationController
       end
     end
   end
-  
+
   def require_no_user
     if current_user
       redirect_back_or_default admin_home_url

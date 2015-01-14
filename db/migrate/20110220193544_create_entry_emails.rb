@@ -5,7 +5,7 @@ class CreateEntryEmails < ActiveRecord::Migration
       t.integer :num_recipients, :nil => false
       t.integer :entry_id,       :nil => false
       t.string  :sender_hash,    :nil => false
-      
+
       t.timestamps
     end
   end

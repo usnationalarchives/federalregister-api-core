@@ -3,16 +3,16 @@ class ApplicationSearch::DateSelector
 
   attr_accessor :is, :gte, :lte, :year
   attr_reader :sphinx_value, :filter_name
-  
+
   def initialize(hsh)
     hsh = hsh.with_indifferent_access
-    
+
     @is = hsh[:is].to_s
     @gte = hsh[:gte].to_s
     @lte = hsh[:lte].to_s
     @year = hsh[:year].to_s.to_i if hsh[:year].present?
     @valid = true
-    
+
     begin
       if @is.present?
         date = Date.parse(@is.to_s)
@@ -32,20 +32,20 @@ class ApplicationSearch::DateSelector
         else
           raise InvalidDate
         end
-      
+
         @sphinx_value = start_date.to_time.utc.beginning_of_day.to_i .. end_date.to_time.utc.end_of_day.to_i
       end
     rescue ArgumentError
       @valid = false
     end
   end
-  
+
   def valid?
     @valid
   end
-  
+
   private
-  
+
   def start_date
     if @gte.present?
       Date.parse(@gte)
@@ -53,7 +53,7 @@ class ApplicationSearch::DateSelector
       Date.parse('1994-01-01')
     end
   end
-  
+
   def end_date
     if @lte.present?
       Date.parse(@lte)

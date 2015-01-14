@@ -9,7 +9,7 @@ describe TopicName do
       topic_name.destroy
       TopicNameAssignment.count == 0
     end
-    
+
     it "deletes all associated topic_assignments" do
       topic_name = Factory(:topic_name, :topics => [Factory(:topic)])
       entry = Factory(:entry, :topic_names => [topic_name])
@@ -18,24 +18,24 @@ describe TopicName do
       TopicAssignment.count == 0
     end
   end
-  
+
   describe 'update' do
     it "modifies topic_assignments when topic_ids changes" do
       topic_name = Factory(:topic_name)
       entry = Factory(:entry, :topic_names => [topic_name])
-      
+
       topic_1 = Factory(:topic)
       topic_name.update_attributes!(:topic_ids => [topic_1.id])
       topic_name.reload
       entry.reload
       entry.topics.should == [topic_1]
-      
+
       topic_2 = Factory(:topic)
       topic_name.update_attributes(:topic_ids => [topic_2.id])
       topic_name.reload
       entry.reload
       entry.topics.should == [topic_2]
-      
+
       topic_name.update_attributes!(:topic_ids => [topic_1.id,topic_2.id])
       topic_name.reload
       entry.reload
