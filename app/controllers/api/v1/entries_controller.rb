@@ -43,6 +43,8 @@ class Api::V1::EntriesController < ApiController
           }
         end
       end
+
+      cache_for 1.day
       render_json_or_jsonp(json)
     else
       render_json_or_jsonp({:errors => search.validation_errors}, :status => 400)
