@@ -1,21 +1,7 @@
-<<<<<<< HEAD
 #############################################################
 # RVM Setup
 #############################################################
 set :rvm_ruby_string, '1.9.3-p551'
-=======
-require "bundler"
-Bundler.setup(:default, :deployment)
-
-# thinking sphinx cap tasks
-require 'thinking_sphinx/deploy/capistrano'
-
-# deploy recipes - need to do `sudo gem install thunder_punch` - these should be required last
-require 'thunder_punch'
-
-# rvm support
-set :rvm_ruby_string, 'ree-1.8.7-2012.02'
->>>>>>> master
 set :rvm_require_role, :rvm
 set :rvm_type, :system
 require "rvm/capistrano/selector_mixed"
@@ -53,9 +39,11 @@ task :production do
 
   role :proxy,  "proxy.fr2.ec2.internal"
   role :app,    "app-server-1.fr2.ec2.internal", "app-server-2.fr2.ec2.internal", "app-server-3.fr2.ec2.internal", "app-server-4.fr2.ec2.internal", "app-server-5.fr2.ec2.internal"
-  role :db,     "database.fr2.ec2.internal", {:primary => true}
+  #role :db,     "database.fr2.ec2.internal", {:primary => true}
   role :sphinx, "sphinx.fr2.ec2.internal"
   role :worker, "worker.fr2.ec2.internal", {:primary => true} #monster image
+
+  role :rvm, "app-server-1.fr2.ec2.internal", "app-server-2.fr2.ec2.internal", "app-server-3.fr2.ec2.internal", "app-server-4.fr2.ec2.internal", "app-server-5.fr2.ec2.internal"
 
   set :github_user_repo, 'usnationalarchives'
   set :github_project_repo, 'federalregister-api-core'
@@ -79,11 +67,7 @@ task :staging do
   role :sphinx, "sphinx.fr2.ec2.internal"
   role :worker, "worker.fr2.ec2.internal", {:primary => true}
 
-<<<<<<< HEAD
-  role :rvm, "api-core.fr2.ec2.internal", "sphinx.fr2.ec2.internal", "worker.fr2.ec2.internal"
-=======
   role :rvm, "api-core.fr2.ec2.internal", "sphinx.fr2.ec2.internal", "worker.fr2.ec2.internal", "proxy.fr2.ec2.internal"
->>>>>>> master
 
   set :github_user_repo, 'criticaljuncture'
   set :github_project_repo, 'federalregister-api-core'

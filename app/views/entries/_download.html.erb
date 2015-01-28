@@ -9,7 +9,7 @@
     if entry.publication_date > Date.parse('2000-01-01')
       formats << {:type => 'xml', :name => 'XML', :url => entry_xml_path(entry), :title => "Original full text XML"}
     end
-    formats << {:type => 'mods', :name => 'MODS', :url => entry.source_url(:mods), :title => "Government Printing Office metadata"}
+    formats << {:type => 'mods', :name => 'MODS', :url => entry.source_url(:mods), :title => "Government Publishing Office metadata"}
     formats << {:type => 'json', :name => 'JSON', :url => api_v1_entry_url(entry.document_number), :title => "Normalized attributes and metadata"}
   %>
   <script text="javascript">
