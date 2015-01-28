@@ -39,7 +39,6 @@ task :production do
 
   role :proxy,  "proxy.fr2.ec2.internal"
   role :app,    "app-server-1.fr2.ec2.internal", "app-server-2.fr2.ec2.internal", "app-server-3.fr2.ec2.internal", "app-server-4.fr2.ec2.internal", "app-server-5.fr2.ec2.internal"
-  #role :db,     "database.fr2.ec2.internal", {:primary => true}
   role :sphinx, "sphinx.fr2.ec2.internal"
   role :worker, "worker.fr2.ec2.internal", {:primary => true} #monster image
 
@@ -63,7 +62,6 @@ task :staging do
 
   role :proxy,  "proxy.fr2.ec2.internal"
   role :app,    "api-core.fr2.ec2.internal"
-  role :db,     "database.fr2.ec2.internal", {:primary => true}
   role :sphinx, "sphinx.fr2.ec2.internal"
   role :worker, "worker.fr2.ec2.internal", {:primary => true}
 
@@ -86,11 +84,10 @@ task :officialness do
 
   role :proxy,  "proxy.fr2.ec2.internal"
   role :app,    "api-core.fr2.ec2.internal"
-  role :db,     "database.fr2.ec2.internal", {:primary => true}
   role :sphinx, "sphinx.fr2.ec2.internal"
   role :worker, "worker.fr2.ec2.internal", {:primary => true}
 
-  role :rvm, "api-core.fr2.ec2.internal", "sphinx.fr2.ec2.internal", "worker.fr2.ec2.internal"
+  role :rvm, "api-core.fr2.ec2.internal", "sphinx.fr2.ec2.internal", "worker.fr2.ec2.internal", "proxy.fr2.ec2.internal"
 
   set :github_user_repo, 'criticaljuncture'
   set :github_project_repo, 'federalregister-api-core'
