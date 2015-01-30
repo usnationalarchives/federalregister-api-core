@@ -8,7 +8,10 @@ module Content
           :order => "publication_date DESC"
         ).publication_date
 
-        SectionHighlight.find_all_by_publication_date(prior_date, :order => "position", :limit => 6).each do |highlight|
+        SectionHighlight.all(
+          :conditions => ["publication_date = ? && position <= 6", prior_date],
+          :order => :position
+        ).each do |highlight|
           new_highlight = highlight.clone
           new_highlight.publication_date = date
           new_highlight.save!
