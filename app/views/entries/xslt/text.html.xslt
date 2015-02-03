@@ -48,9 +48,15 @@
   
   <xsl:template name="optional_following_whitespace">
     <xsl:variable name="following_text" select="following-sibling::node()[1][self::text()]" />
-    <xsl:if test="contains('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789(', substring($following_text,1,1))">
-      <xsl:text> </xsl:text>
-    </xsl:if>
+    <xsl:choose>
+      <xsl:when test="contains('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789(', substring($following_text,1,1))">
+        <xsl:text> </xsl:text>
+      </xsl:when>
+      <!-- section symbol -->
+      <xsl:when test="starts-with($following_text,'&#xA7;')">
+        <xsl:text> </xsl:text>
+      </xsl:when>
+    </xsl:choose>
   </xsl:template>
   
   <xsl:template match="STARS">
