@@ -75,7 +75,7 @@ module CitationsHelper
       if congress.to_i >= 104
         content_tag :a, str, :href => public_law_url(congress,law), :class => "publ external", :target => "_blank"
       else
-        $1
+        str
       end
     end
   end
