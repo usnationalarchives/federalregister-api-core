@@ -27,7 +27,7 @@ module Content
 
   def self.run_myfr2_command(command)
     old_gemfile = ENV['BUNDLE_GEMFILE']
-    Dir.chdir("/var/www/apps/federalregister-web") do
+    Dir.chdir("../federalregister-web") do
       ENV['BUNDLE_GEMFILE'] = nil
       puts "running MyFR command: '#{command}'"
       system(command) or raise "Error when calling '#{command}'"
