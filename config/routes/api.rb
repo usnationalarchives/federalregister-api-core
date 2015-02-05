@@ -9,6 +9,11 @@ ActionController::Routing::Routes.draw do |map|
                   :action => 'facets',
                   :conditions => {:method => :get}
 
+    api.articles_search_details 'articles/search-details',
+                  :controller => 'api/v1/entries',
+                  :action => 'search_details',
+                  :conditions => {:method => :get}
+
     api.resources :entries,
                   :as => :articles,
                   :only => [:index, :show],
