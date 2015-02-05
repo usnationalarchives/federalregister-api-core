@@ -6,21 +6,12 @@ def get_keys
   @mysql_passwords = File.open( File.join(File.dirname(__FILE__), '..', 'mysql.yml' ) ) { |yf| YAML::load( yf ) }
   @wordpress_keys = File.open( File.join(File.dirname(__FILE__), '..', '..', '..', 'fr2_blog', 'config', 'wordpress_keys.yml') ) { |yf| YAML::load( yf ) }
   @sendgrid_keys  = File.open( File.join(File.dirname(__FILE__), '..', 'sendgrid.yml') ) { |yf| YAML::load( yf ) }
-  @splunk_keys    = File.open( File.join(File.dirname(__FILE__), '..', 'splunk.yml') ) { |yf| YAML::load( yf ) }
   @secrets        = File.open( File.join(File.dirname(__FILE__), '..', 'secrets.yml' ) ) { |yf| YAML::load( yf ) }
-end
-
-def munin_host(ip_addresses)
-  result = []
-  ip_addresses.each do |ip|
-    result << {:hostname => "ip-#{ip.gsub('.', '-')}" , :ipaddress => ip }
-  end
-  return result
 end
 
 def chef_cloud_attributes(instance_type)
   get_keys
-  
+
   #users
   @deploy_credentials = File.open( File.join(File.dirname(__FILE__), '..', 'deploy_credentials.yml') ) { |yf| YAML::load( yf ) }
 
@@ -45,26 +36,24 @@ def chef_cloud_attributes(instance_type)
 
   case instance_type
   when 'staging'
-    @proxy_server_address    = '10.244.142.152'
+    @proxy_server_address    = '10.32.87.236'
     @static_server_address   = '10.85.5.241'
     @worker_server_address   = '10.85.5.241'
     @blog_server_address     = '10.85.5.241'
     @mail_server_address     = '10.85.5.241'
-    @splunk_server_address   = '10.85.5.241'
     @redis_server_address    = '10.85.5.241'
     @iodocs_server_address   = '10.85.5.241'
     @sphinx_server_address   = '10.85.5.241'
     @database_server_address = '10.101.57.196'
     @mongodb_server_address  = '10.101.57.196'
-    @app_server_address      = ['10.82.225.119']
-    @my_fr2_server_address   = ['10.82.225.119']
+    @app_server_address      = ['10.80.205.138']
+    @my_fr2_server_address   = ['10.80.205.138']
   when 'production'
     @proxy_server_address    = '10.39.115.107'
     @static_server_address   = '10.98.146.140'
     @worker_server_address   = '10.98.146.140'
     @blog_server_address     = '10.98.146.140'
     @mail_server_address     = '10.98.146.140'
-    @splunk_server_address   = '10.98.146.140'
     @redis_server_address    = '10.98.146.140'
     @iodocs_server_address   = '10.98.146.140'
     @sphinx_server_address   = '10.98.146.140'
@@ -72,8 +61,8 @@ def chef_cloud_attributes(instance_type)
     @mongodb_server_address  = '10.116.81.89'
     @app_server_address      = ['10.40.221.230', '10.116.162.47', '10.10.39.7', '10.34.50.43', '10.116.65.97' ]
     @my_fr2_server_address   = ['10.40.221.230', '10.116.162.47', '10.10.39.7', '10.34.50.43', '10.116.65.97']
-  end    
-  
+  end
+
   @rails_versions = ['2.3.11', '3.1.3']
 
   case instance_type
@@ -92,19 +81,29 @@ def chef_cloud_attributes(instance_type)
   end
 
   @resque_web_password = @secrets['resque_web_password']
-  
+
   return {
     :platform => "ubuntu",
-    :bootstrap => {:chef => {:client_version => '0.9.14'}},
+    :bootstrap => {
+      :chef => {
+        :client_version => '0.9.14'
+      },
+      :gems => [
+        ['moneta', '0.6.0'],
+        ['ohai', '0.5.8'],
+        ['bunny', '0.6.0'],
+        ['chef', '0.9.14'],
+      ]
+    },
     :chef    => {
                   :roles => []
                 },
     :lsb    => {
-                    :code_name  => 'oneiric',
+                    :code_name  => 'precise',
                     # do not put a, b, c, etc in the line below...
                     :ec2_region => 'us-east-1'
                },
-    :app => { 
+    :app => {
              :blog => {
                   :root  => '/var/www/apps/fr2_blog',
                   :repo_url => 'git@github.com:criticaljuncture/fr2_blog.git'
@@ -120,7 +119,7 @@ def chef_cloud_attributes(instance_type)
              :url        => @app_url
            },
     :apache => {
-                  :listen_ports   => [@app_server_port],
+                  :listen_ports   => [@app_server_port, @my_fr2_server_port],
                   :vhost_port     => @app_server_port,
                   :my_fr2_port    => @my_fr2_server_port,
                   :server_name    => @app_url,
@@ -128,7 +127,7 @@ def chef_cloud_attributes(instance_type)
                                         { :server_name    =>  @app_url,
                                           :server_aliases => '',
                                           :port           => @app_server_port,
-                                          :docroot        => "/var/www/apps/#{@app[:name]}/current/public",
+                                          :docroot        => "/var/www/apps/#{@app[:name]}/public",
                                           :name           => @app[:name],
                                           :rewrite_conditions => ""
                                         },
@@ -137,21 +136,21 @@ def chef_cloud_attributes(instance_type)
                                           :port           => @audit_server_port,
                                           :docroot        => "/var/www/apps/fr2_audit/public",
                                           :name           => 'fr2_audit',
-                                          :rewrite_conditions => "" 
+                                          :rewrite_conditions => ""
                                         },
                                         { :server_name    =>  "resque.#{@app_url}",
                                           :server_aliases => '',
                                           :port           => @resque_server_port,
                                           :docroot        => "/var/www/apps/resque_web/public",
                                           :name           => 'resque-web',
-                                          :rewrite_conditions => "" 
+                                          :rewrite_conditions => ""
                                         },
                                         { :server_name    =>  @app_url,
                                           :server_aliases => '',
                                           :port           => @my_fr2_server_port,
                                           :docroot        => "/var/www/apps/my_fr2/public",
                                           :name           => 'my_fr2',
-                                          :rewrite_conditions => "" 
+                                          :rewrite_conditions => ""
                                         }
                                      ],
                   :web_dir        => '/var/www',
@@ -200,7 +199,7 @@ def chef_cloud_attributes(instance_type)
                 :versions    => @rails_versions,
                 :environment => @rails_env,
                 :using_thinking_sphinx => 'true',
-                :using_mongoid => 'true'
+                :using_mongoid => 'false'
                },
     :capistrano => {
                     :deploy_user => 'deploy'
@@ -245,7 +244,6 @@ def chef_cloud_attributes(instance_type)
                                   {:ip => @database_server_address, :fqdn => 'database.fr2.ec2.internal', :alias => 'database'},
                                   {:ip => @sphinx_server_address,   :fqdn => 'sphinx.fr2.ec2.internal',   :alias => 'sphinx'},
                                   {:ip => @mail_server_address,     :fqdn => 'mail.fr2.ec2.internal',     :alias => 'mail'},
-                                  {:ip => @splunk_server_address,   :fqdn => 'splunk.fr2.ec2.internal',   :alias => 'splunk'},
                                   {:ip => @mongodb_server_address,  :fqdn => 'mongodb.fr2.ec2.internal',  :alias => 'mongodb'},
                                   {:ip => @redis_server_address,    :fqdn => 'redis.fr2.ec2.internal',    :alias => 'redis'},
                                   {:ip => @iodocs_server_address,   :fqdn => 'iodocs.fr2.ec2.internal',   :alias => 'iodocs'}
@@ -259,16 +257,11 @@ def chef_cloud_attributes(instance_type)
                     :database      => {:ip => @database_server_address},
                     :sphinx        => {:ip => @sphinx_server_address},
                     :mail          => {:ip => @mail_server_address},
-                    :splunk        => {:ip => @splunk_server_address},
                     :mongodb       => {:ip => @mongodb_server_address},
                     :redis         => {:ip => @redis_server_address},
                     :iodocs        => {:ip => @iodocs_server_address}
                    },
-    # :munin      => {
-    #                 :nodes => munin_host(@app_server_address),
-    #                 :servers => munin_host(@proxy_server_address)
-    #                },
-    :wordpress => { 
+    :wordpress => {
                   :keys              => @wordpress_keys,
                   :database_name     => 'fr2_wordpress',
                   :database_user     => 'wordpress',
@@ -295,13 +288,7 @@ def chef_cloud_attributes(instance_type)
                    #:auth     => 'true',
                    :ec2_path => '/vol/lib/mongodb'
                  },
-    :splunk => { :reciever => {
-                    :host => 'splunk.fr2.ec2.internal',
-                    :username => @splunk_keys['username'],
-                    :password => @splunk_keys['password']
-                  }
-               },
-    :iodocs => { 
+    :iodocs => {
                  :repo_url => "git://github.com/criticaljuncture/iodocs.git",
                  :address => "iodocs.fr2.ec2.internal",
                  :port => @iodocs_server_port,
@@ -311,6 +298,5 @@ def chef_cloud_attributes(instance_type)
   }
 end
 
-#require 'config/poolparty/pools/production.rb'
-require 'config/poolparty/pools/staging.rb'
-
+require 'config/poolparty/pools/production.rb'
+#require 'config/poolparty/pools/staging.rb'

@@ -1,4 +1,5 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<% light_gray = "background-color: #ddd;" %>
 <html>
   <head>
     <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
@@ -14,7 +15,6 @@
         </td>
       </tr>
     </table>
-
     <div>
       <h2 style="font-family:'Helvetica Neue',Arial,Helvetica,sans-serif;margin: 25px 0 5px;font-size: 25px;">
         FederalRegister.gov Daily Import Update for <%= @date %>
@@ -34,12 +34,13 @@
         </thead>
         <tbody>
           <% @problematic_document_presenter.special_documents.each do |document| %>
-            <tr>
+            <tr style="<%= cycle(nil, light_gray) %>">
               <td style="width: 300px;" align="left"><%= document.title %></td>
-              <td style="width: 300px;" align="center"><%= link_to document.document_number, short_entry_url(document.document_number) %></td>
-              <td style="width: 300px;" align="center"><%= document.entry_type %></td>
+              <td style="width: 300px;" align="left"><%= link_to document.document_number, short_entry_url(document.document_number) %></td>
+              <td style="width: 300px;" align="left"><%= document.entry_type %></td>
             </tr>
           <% end %>
+          <% reset_cycle %>
         </tbody>
       </table>
       <% end %>
@@ -57,11 +58,40 @@
         </thead>
         <tbody>
           <% @problematic_document_presenter.rules_without_dates.each do |document| %>
-          <tr>
+          <tr style="<%= cycle(nil, light_gray) %>">
             <td style="width: 600px;" align="left"><%= document.title %></td>
-            <td style="width: 300px;" align="center"><%= link_to document.document_number, short_entry_url(document.document_number) %></td>
+            <td style="width: 300px;" align="left"><%= link_to document.document_number, short_entry_url(document.document_number) %></td>
           </tr>
           <% end %>
+          <% reset_cycle %>
+        </tbody>
+      </table>
+      <% end %>
+
+      <% if @problematic_document_presenter.multiple_comment_dates.present? %>
+      <h3 style="font-family:'Helvetica Neue',Arial,Helvetica,sans-serif;margin: 25px 0 5px;font-size: 20px;border-bottom: 1px solid #000;">
+        Documents with Multiple Comment Dates
+      </h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Document Number</th>
+            <th>Comment Date</th>
+            <th>Dates</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @problematic_document_presenter.multiple_comment_dates.each do |doc_num, dates| %>
+            <% document = Entry.find_by_document_number(doc_num) %>
+            <tr style="<%= cycle(nil, light_gray) %>">
+              <td style="width: 150px;" align="left">
+                <%= link_to doc_num, short_entry_url(document) %>
+              </td>
+              <td style="width: 150px;" align="left"><%= document.comments_close_on %></td>
+              <td style="width: 600" align="left"><%= dates %></td>
+            </tr>
+          <% end %>
+          <% reset_cycle %>
         </tbody>
       </table>
       <% end %>
@@ -81,7 +111,7 @@
         </thead>
         <tbody>
           <% @agency_name_presenter.complex_remappings.each do |remapping| %>
-              <tr>
+              <tr style="<%= cycle(nil, light_gray) %>">
                 <td style="width: 300px;"><%= remapping.original_name %></td>
                 <td style="width: 300px;">
                   <% if remapping.agency_name.agency %>
@@ -90,9 +120,10 @@
                     <em>not remapped</em>
                   <% end %>
                 </td>
-                <td style="width: 255px;padding: 20px 0;" align="center"><%= remapping.entries.map{|e| link_to e.document_number, short_entry_url(e.document_number)}.join(', ') %>
+                <td style="width: 255px;padding: 20px 0;" align="left"><%= remapping.entries.map{|e| link_to e.document_number, short_entry_url(e.document_number)}.join(', ') %>
               </tr>
           <% end %>
+          <% reset_cycle %>
         </tbody>
       </table>
       <% end %>
@@ -111,7 +142,7 @@
         </thead>
         <tbody>
           <% @agency_name_presenter.basic_remappings.each do |remapping| %>
-            <tr>
+            <tr style="<%= cycle(nil, light_gray) %>">
               <td style="width: 300px;"><%= remapping.original_name %></td>
               <td style="width: 300px;">
                 <% if remapping.agency_name.agency %>
@@ -123,6 +154,7 @@
               <td style="width: 255px;padding: 20px 0;"><%= remapping.entries.map{|e| link_to e.document_number, short_entry_url(e.document_number)}.join(', ') %>
             </tr>
           <% end %>
+          <% reset_cycle %>
         </tbody>
       </table>
       <% end %>

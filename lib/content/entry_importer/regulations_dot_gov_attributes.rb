@@ -8,19 +8,19 @@ module Content::EntryImporter::RegulationsDotGovAttributes
   end
   
   def regulationsdotgov_url
-    regulationsdotgov_document.try(:url)
+    regulationsdotgov_document ? regulationsdotgov_document.try(:url) : entry.regulationsdotgov_url
   end
   
   def comment_url
-    regulationsdotgov_document.try(:comment_url)
+    regulationsdotgov_document ? regulationsdotgov_document.try(:comment_url) : entry.comment_url
   end
 
   def regulations_dot_gov_comments_close_on
-    regulationsdotgov_document.try(:comment_due_date)
+    regulationsdotgov_document ? regulationsdotgov_document.try(:comment_due_date) : entry.regulations_dot_gov_comments_close_on
   end
 
   def regulations_dot_gov_docket_id
-    regulationsdotgov_document.try(:docket_id)
+    regulationsdotgov_document ? regulationsdotgov_document.try(:docket_id) : entry.regulations_dot_gov_docket_id
   end
   
   private

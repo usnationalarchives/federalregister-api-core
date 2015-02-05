@@ -41,6 +41,7 @@ namespace :data do
       content:public_inspection:reindex
       content:fr_index:update_status_cache
       varnish:expire:everything
+      mailing_lists:daily_import_email:deliver
       data:daily:sleep
       mailing_lists:entries:deliver
       sitemap:refresh

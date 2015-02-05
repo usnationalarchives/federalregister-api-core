@@ -67,5 +67,15 @@ describe XsltHelper do
         p.first.inner_html.should == "Fish <i class=\"E-03\">text</i>--is not a good idea"
       end
     end
+
+    it "does include a space after it when followed by a section symbol" do
+      process <<-XML
+        <P><E T="03">See</E>&#xA7; 1026</P>
+      XML
+
+      @html.should have_tag("p") do |p|
+        p.first.inner_html.should == " <i class=\"E-03\">See</i> &sect; 1026"
+      end
+    end
   end
 end

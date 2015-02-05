@@ -11,4 +11,11 @@ namespace :mailing_lists do
       Content.run_myfr2_command "bundle exec rake mailing_lists:articles:deliver[\"#{date.to_s(:iso)}\"]"
     end
   end
+
+  namespace :daily_import_email do
+    desc "Deliver the daily import email to admins for a given day"
+    task :deliver => :environment do
+      Resque.enqueue(DailyIssueEmailSender, ENV['DATE'])
+    end
+  end
 end
