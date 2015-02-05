@@ -9,11 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-<<<<<<< HEAD
-ActiveRecord::Schema.define(:version => 20140905170653) do
-=======
 ActiveRecord::Schema.define(:version => 20141111200846) do
->>>>>>> aeb7a52dbfb99df98e88fcc4800c23bf9e6fa0bb
 
   create_table "action_names", :force => true do |t|
     t.string   "name"
