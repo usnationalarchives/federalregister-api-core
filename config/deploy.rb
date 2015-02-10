@@ -38,11 +38,11 @@ task :production do
   set :gateway, 'fr2_production'
 
   role :proxy,  "proxy.fr2.ec2.internal"
-  role :app,    "app-server-1.fr2.ec2.internal", "app-server-2.fr2.ec2.internal", "app-server-3.fr2.ec2.internal", "app-server-4.fr2.ec2.internal", "app-server-5.fr2.ec2.internal"
+  role :app,    "api-core-1.fr2.ec2.internal", "api-core-2.fr2.ec2.internal", "api-core-3.fr2.ec2.internal", "api-core-4.fr2.ec2.internal", "api-core-5.fr2.ec2.internal"
   role :sphinx, "sphinx.fr2.ec2.internal"
   role :worker, "worker.fr2.ec2.internal", {:primary => true} #monster image
 
-  role :rvm, "app-server-1.fr2.ec2.internal", "app-server-2.fr2.ec2.internal", "app-server-3.fr2.ec2.internal", "app-server-4.fr2.ec2.internal", "app-server-5.fr2.ec2.internal"
+  role :rvm, "api-core-1.fr2.ec2.internal", "api-core-2.fr2.ec2.internal", "api-core-3.fr2.ec2.internal", "api-core-4.fr2.ec2.internal", "api-core-5.fr2.ec2.internal", "worker.fr2.ec2.internal", "sphinx.fr2.ec2.internal"
 
   set :github_user_repo, 'usnationalarchives'
   set :github_project_repo, 'federalregister-api-core'
