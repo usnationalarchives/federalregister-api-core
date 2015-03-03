@@ -17,6 +17,9 @@ class Content::PublicInspectionImporter::DocumentImporter
 
     document.save!
 
+    # Note that we only save the pdf_url to the database in the background
+    #   job, and only when the PDF download, watermark, and upload
+    #   to S3 has been successful.
     if api_doc.pdf_url? && api_doc.pdf_url != document.pdf_url
       pil_importer.enqueue_job(document.document_number, api_doc.pdf_url)
     end
