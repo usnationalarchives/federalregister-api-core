@@ -23,8 +23,8 @@ class Content::PublicInspectionImporter::JobQueue
 
     timeout.to_i.times do
       if empty?
-        yield
         clear
+        yield
       else
         sleep(1)
       end
