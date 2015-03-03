@@ -42,7 +42,7 @@ class Content::PublicInspectionImporter::JobQueue
   private
 
   def redis_set
-    "pi_import:#{Process.pid}:#{SecureRandom.hex(10)}"
+    @redis_set ||= "pi_import:#{Process.pid}:#{SecureRandom.hex(10)}"
   end
 
   def redis
