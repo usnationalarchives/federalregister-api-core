@@ -35,7 +35,15 @@ class PublicInspectionDocument < ApplicationModel
 
   define_index do
     # fields
-    indexes "IF(public_inspection_documents.title = '', CONCAT(public_inspection_documents.toc_subject, ' ', public_inspection_documents.toc_doc), public_inspection_documents.title)", :as => :title
+    indexes <<-SQL, :as => :title
+      CONCAT(
+        IFNULL(public_inspection_documents.subject_1, ''),
+        ' ',
+        IFNULL(public_inspection_documents.subject_2, ''),
+        ' ',
+        IFNULL(public_inspection_documents.subject_3, '')
+      )
+    SQL
     indexes "CONCAT('#{RAILS_ROOT}/data/public_inspection/raw/', public_inspection_documents.document_file_path, '.txt')", :as => :full_text, :file => true
     indexes "GROUP_CONCAT(DISTINCT docket_numbers.number SEPARATOR ' ')", :as => :docket_id
 
@@ -85,8 +93,7 @@ class PublicInspectionDocument < ApplicationModel
   end
 
   def slug
-    base = title.present? ? title : [toc_doc, toc_subject].join(' ')
-    clean_title = base.downcase.gsub(/[^a-z0-9& -]+/,'').gsub(/&/, 'and')
+    clean_title = title.downcase.gsub(/[^a-z0-9& -]+/,'').gsub(/&/, 'and')
     slug = view_helper.truncate_words(clean_title, :length => 100, :omission => '')
     slug.gsub(/ /,'-')
   end
@@ -99,6 +106,28 @@ class PublicInspectionDocument < ApplicationModel
 
   def end_page
     0
+  end
+
+  def category
+    self['category'] || entry_type
+  end
+
+  def title
+    [subject_1, subject_2, subject_3].reject(&:blank?).join(' ')
+  end
+
+  def toc_subject
+    if subject_3.present?
+      [subject_1, subject_2].join(' ')
+    elsif subject_2.present?
+      subject_1
+    else
+      nil
+    end
+  end
+
+  def toc_doc
+    [subject_3,subject_2,subject_1].reject(&:blank?).first
   end
 
   def pdf_displayable?

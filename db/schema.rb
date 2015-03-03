@@ -431,14 +431,10 @@ ActiveRecord::Schema.define(:version => 20141111200846) do
     t.string   "granule_class"
     t.datetime "filed_at"
     t.date     "publication_date"
-    t.string   "toc_subject"
-    t.string   "toc_doc"
     t.boolean  "special_filing",                          :default => false, :null => false
     t.string   "pdf_file_name"
     t.integer  "pdf_file_size"
     t.datetime "pdf_updated_at"
-    t.string   "pdf_etag"
-    t.string   "title",                                   :default => "",    :null => false
     t.text     "editorial_note",      :limit => 16777215
     t.string   "document_file_path"
     t.datetime "raw_text_updated_at"
@@ -447,6 +443,12 @@ ActiveRecord::Schema.define(:version => 20141111200846) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "entry_id"
+    t.string   "subject_1"
+    t.string   "subject_2"
+    t.string   "subject_3"
+    t.string   "pdf_url"
+    t.string   "category"
+    t.datetime "update_pil_at"
   end
 
   add_index "public_inspection_documents", ["delta"], :name => "index_public_inspection_documents_on_delta"

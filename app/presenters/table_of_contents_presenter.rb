@@ -22,11 +22,11 @@ class TableOfContentsPresenter
     end
     
     def entries_by_type_and_toc_subject
-      entries.group_by(&:entry_type).sort_by{|type,entries| type}.reverse.map do |type, entries_by_type|
+      entries.group_by(&:category).sort_by{|category, entries| category}.reverse.map do |category, entries_by_type|
         entries_by_toc_subject = entries_by_type.group_by(&:toc_subject).map do |toc_subject, entries_by_toc_subject|
           [toc_subject, entries_by_toc_subject.sort_by{|e| [e.toc_doc.try(:downcase) || '', (e.toc_doc || e.title)]}]
         end
-        [type, entries_by_toc_subject]
+        [category, entries_by_toc_subject]
       end
     end
     
