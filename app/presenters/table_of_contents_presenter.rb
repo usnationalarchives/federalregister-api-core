@@ -22,10 +22,36 @@ class TableOfContentsPresenter
     end
     
     def entries_by_type_and_toc_subject
-      entries.group_by(&:category).sort_by{|category, entries| category}.reverse.map do |category, entries_by_type|
-        entries_by_toc_subject = entries_by_type.group_by(&:toc_subject).map do |toc_subject, entries_by_toc_subject|
-          [toc_subject, entries_by_toc_subject.sort_by{|e| [e.toc_doc.try(:downcase) || '', (e.toc_doc || e.title)]}]
-        end
+      entries.group_by(&:category).sort_by{|category, entries| category }.reverse.map do |category, entries_by_type|
+        entries_by_toc_subject = []
+
+        entries_by_type.
+          group_by(&:toc_subject).
+          each do |toc_subject, subject_entries|
+            if toc_subject.present?
+              entries_by_toc_subject << [
+                toc_subject,
+                subject_entries.sort_by{|e| [e.toc_doc.try(:downcase) || '', (e.toc_doc || e.title)]}
+              ]
+            else
+              # if an item doesn't have a toc_subject, put in own array
+              #   so can be mixed in with the TOC subjects
+              subject_entries.each do |ungrouped_entry|
+                entries_by_toc_subject << [nil, [ungrouped_entry]]
+              end
+            end
+          end
+
+        # sort all the groupings, mixing together ones with and without TOC subjects
+        entries_by_toc_subject = entries_by_toc_subject.
+          sort_by do |toc_subject, subject_entries|
+            [
+              toc_subject,
+              subject_entries.first.toc_doc,
+              subject_entries.first.title
+            ].reject(&:blank?).first
+          end
+
         [category, entries_by_toc_subject]
       end
     end
