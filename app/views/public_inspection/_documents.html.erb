@@ -20,13 +20,13 @@
         <dt><%= toc_subject %></dt>
         <% entries_by_toc_subject.each do |entry| %>
         <dd>
-        <%= render :partial => 'document', :locals => {:document => entry, :document_title => entry.toc_doc || entry.title, :date => date } %>
+          <%= render :partial => 'document', :locals => {:document => entry, :document_title => entry.toc_doc || entry.title, :date => date } %>
         </dd>
         <% end %>
       <% else %>
         <% entries_by_toc_subject.each do |entry| %>
         <dt>
-        <%= render :partial => 'document', :locals => {:document => entry, :document_title => (entry.toc_subject || entry.title), :date => date } %>
+          <%= render :partial => 'document', :locals => {:document => entry, :document_title => entry.toc_doc || entry.title, :date => date } %>
         </dt>
         <% end %>
       <% end %>
