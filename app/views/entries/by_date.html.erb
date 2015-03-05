@@ -1,7 +1,7 @@
 <% feed_autodiscovery entries_url(:format => :rss), 'All Documents from the Federal Register', :search_conditions => {} %>
 
 <% if controller.action_name == 'current_issue' %>
-  <% description "Today Federal Register issue, including notices, proposed and final rules, and presidential documents." %>
+  <% description "Today's Federal Register issue, including notices, proposed and final rules, and presidential documents." %>
 <% else %>
   <% description "Notices, proposed and final rules, and presidential documents published in the Federal Register on #{@publication_date.to_formatted_s(:pretty)}." %>
 <% end %>
