@@ -8,7 +8,7 @@ class FrIndexPresenter
 
     def initialize(parent, header, entries, fr_index_subject = nil)
       @parent = parent
-      @header = header
+      @header = header || entries.first.title
       @entries = entries
       @fr_index_subject = fr_index_subject
     end

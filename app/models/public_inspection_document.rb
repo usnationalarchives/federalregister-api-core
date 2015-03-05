@@ -122,12 +122,12 @@ class PublicInspectionDocument < ApplicationModel
     elsif subject_2.present?
       subject_1
     else
-      nil
+      ''
     end
   end
 
   def toc_doc
-    [subject_3,subject_2,subject_1].reject(&:blank?).first
+    [subject_3,subject_2,subject_1].reject(&:blank?).first || ''
   end
 
   def pdf_displayable?
