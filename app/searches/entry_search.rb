@@ -273,7 +273,17 @@ class EntrySearch < ApplicationSearch
     end
   end
   memoize :type_facets
-  
+
+  def subtype_facets
+    ApplicationSearch::FacetCalculator.new(
+      :search => self,
+      :model => PresidentialDocumentType,
+      :facet_name => :presidential_document_type_id,
+      :identifier_attribute => :identifier
+    ).all
+  end
+  memoize :subtype_facets
+
   def date_distribution(options = {})
     if options[:since]
       modified_with = with.merge(:publication_date => options[:since].to_time.to_time.to_i .. Issue.current.publication_date.to_time.to_i)

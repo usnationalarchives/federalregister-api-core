@@ -10,4 +10,9 @@ class PresidentialDocumentType < ActiveHash::Base
     {:id => 5, :name => "Proclamation",       :node_name => "PROCLA",    :identifier => "proclamation"},
     {:id => 6, :name => "Presidential Order", :node_name => "PRORDER",   :identifier => "presidential_order"},
   ]
+
+  def self.find_as_hash(options)
+    methods = options[:select].split(/\s*,\s*/)
+    Hash[data.map{|rec| methods.map{|m| rec[m.to_sym].to_s}}]
+  end
 end
