@@ -25,7 +25,7 @@ class Api::V1::EntriesController < ApiController
   end
 
   def facets
-    field_facets = %w(agency topic section type)
+    field_facets = %w(agency topic section type subtype)
     date_facets = %w(daily weekly monthly quarterly yearly)
     raise ActiveRecord::RecordNotFound unless (field_facets + date_facets).include?(params[:facet])
 
