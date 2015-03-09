@@ -17,6 +17,28 @@ class Api::V1::PublicInspectionDocumentsController < ApiController
     end
   end
 
+  def facets
+    field_facets = %w(type)
+    raise ActiveRecord::RecordNotFound unless (field_facets).include?(params[:facet])
+
+    search = PublicInspectionDocumentSearch.new(params)
+    if search.valid?
+        facets = search.send("#{params[:facet]}_facets")
+
+        json = facets.each_with_object(Hash.new) do |facet, hsh|
+          hsh[facet.identifier] = {
+            :count => facet.count,
+            :name => facet.name
+          }
+        end
+
+      cache_for 1.day
+      render_json_or_jsonp(json)
+    else
+      render_json_or_jsonp({:errors => search.validation_errors}, :status => 400)
+    end
+  end
+
   def current
     respond_to do |wants|
       wants.json do

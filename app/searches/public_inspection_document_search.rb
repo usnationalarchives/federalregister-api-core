@@ -34,13 +34,20 @@ class PublicInspectionDocumentSearch < ApplicationSearch
                   end
                 end
 
+  define_date_filter :filed_at,
+                     :label => "Filing Date"
+
   def agency_facets
     ApplicationSearch::FacetCalculator.new(:search => self, :model => Agency, :facet_name => :agency_ids).all
   end
   memoize :agency_facets
 
   def type_facets
-    ApplicationSearch::FacetCalculator.new(:search => self, :facet_name => :type, :hash => Entry::ENTRY_TYPES).all().reject do |facet|
+    ApplicationSearch::FacetCalculator.new(
+      :search => self,
+      :facet_name => :type,
+      :hash => Entry::ENTRY_TYPES
+    ).all().reject do |facet|
       ["UNKNOWN", "CORRECT"].include?(facet.value)
     end
   end
@@ -100,6 +107,7 @@ class PublicInspectionDocumentSearch < ApplicationSearch
       ['of type', :type],
       ['categorized as', :special_filing],
       ['filed under agency docket', :docket_id],
+      ['filed at', :filing_date],
     ].each do |term, filter_condition|
       relevant_filters = filters.select{|f| f.condition == filter_condition}
 
