@@ -6,7 +6,7 @@ class EntrySearch::DateAggregator::Daily < EntrySearch::DateAggregator::Base
   def periods
     periods = []
 
-    date = @start_date.beginning_of_quarter
+    date = @start_date
     while(date < @end_date)
       periods << [date]
       date = date.advance(:days => 1)
