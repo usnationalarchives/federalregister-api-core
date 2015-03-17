@@ -4,7 +4,7 @@ class EntrySearch::DateAggregator::Yearly < EntrySearch::DateAggregator::Base
   end
 
   def periods
-    (@start_date.year .. @end_date.year).map{|year| Date.new(year)}.map(&:to_a)
+    (@start_date.year .. @end_date.year).map{|year| [Date.new(year)]}
   end
 
   def sphinx_format_str
