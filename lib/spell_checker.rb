@@ -21,7 +21,7 @@ class SpellChecker
   end
 
   def highlight_corrections(text, element=:strong, html_options={})
-    correct(ERB::Util.html_escape(text)text) do |original, suggestions|
+    correct(ERB::Util.html_escape(text)) do |original, suggestions|
       if suggestions.present?
         template.content_tag(element, template.html_escape(suggestions.first), html_options)
       else
