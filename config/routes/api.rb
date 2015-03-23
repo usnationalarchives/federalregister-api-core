@@ -32,5 +32,10 @@ ActionController::Routing::Routes.draw do |map|
     api.resources :site_notifications,
                   :only => [:index, :show],
                   :controller => 'api/v1/site_notifications'
+
+    api.resources :sections,
+                  :only => [:index],
+                  :controller => 'api/v1/sections',
+                  :conditions => {:method => :get}
   end
 end
