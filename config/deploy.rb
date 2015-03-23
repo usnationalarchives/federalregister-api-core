@@ -128,6 +128,8 @@ set :honeybadger_user, `git config --global github.user`.chomp
 # Recipe role setup
 #############################################################
 
+set :deploy_roles, [:app, :worker]
+set :bundler_roles, [:app, :worker]
 set :db_migration_roles, [:worker]
 set :sass_roles, [:app, :worker]
 set :varnish_roles, [:proxy]
