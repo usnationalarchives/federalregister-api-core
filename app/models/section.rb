@@ -22,7 +22,16 @@ class Section < ApplicationModel
   end
   
   def highlighted_entries(publication_date = Issue.current.publication_date)
-    Entry.scoped(:conditions => {:section_highlights => {:publication_date => publication_date, :section_id => id}}, :joins => :section_highlights, :order => "section_highlights.position")
+    Entry.scoped(
+      :conditions => {
+        :section_highlights => {
+          :publication_date => publication_date,
+          :section_id => id
+        }
+      },
+      :joins => :section_highlights,
+      :order => "section_highlights.position"
+    )
   end
   
   def cfr_citation_ranges
