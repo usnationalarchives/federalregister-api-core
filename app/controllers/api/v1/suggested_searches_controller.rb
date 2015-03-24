@@ -10,20 +10,26 @@ class Api::V1::SuggestedSearchesController < ApiController
 
     suggested_searches = sections.inject({}) do |hsh, section|
       hsh[section.slug] = section.canned_searches.in_order.map{|search|
-        {
-          :description => view_context.add_citation_links(view_context.auto_link(view_context.simple_format(search.description))),
+        suggested_search_json(search).merge({
           :documents_in_last_year => search.documents_in_last(1.year),
-          :slug => search.slug,
-          :search_conditions => remove_blank_conditions(search.search_conditions),
-          :title => search.title,
           :position => search.position,
-        }
+        })
       }
 
       hsh
     end
 
     render_json_or_jsonp(suggested_searches)
+  end
+
+  def show
+    suggested_search = CannedSearch.find_by_slug(params[:id])
+
+    if suggested_search
+      render_json_or_jsonp( suggested_search_json(suggested_search) )
+    else
+      render :json => {:status => 404, :message => "Record Not Found"}, :status => 404 
+    end
   end
 
   private
@@ -35,6 +41,15 @@ class Api::V1::SuggestedSearchesController < ApiController
   end
 
   def remove_blank_conditions(conditions)
-    search.search_conditions.reject{|k,v| v.is_a?(String) ? v.blank? : v.all?{|k,v| v.blank?}}
+    conditions.reject{|k,v| v.is_a?(String) ? v.blank? : v.all?{|k,v| v.blank?}}
+  end
+
+  def suggested_search_json(search)
+    {
+      :description => view_context.add_citation_links(view_context.auto_link(view_context.simple_format(search.description))),
+      :slug => search.slug,
+      :search_conditions => remove_blank_conditions(search.search_conditions),
+      :title => search.title,
+    }
   end
 end
