@@ -37,5 +37,11 @@ ActionController::Routing::Routes.draw do |map|
                   :only => [:index],
                   :controller => 'api/v1/sections',
                   :conditions => {:method => :get}
+
+    api.resources :suggested_searches,
+                  :only => [:index, :show],
+                  :controller => 'api/v1/suggested_searches',
+                  :conditions => {:method => :get}
+
   end
 end
