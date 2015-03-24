@@ -14,7 +14,7 @@ class Api::V1::SectionsController < ApiController
     render_json_or_jsonp(sections)
 
   rescue ArgumentError
-    raise ActiveRecord::RecordNotFound
+    render :json => {:status => 404, :message => "Record Not Found"}, :status => 404
   end
 
   private
