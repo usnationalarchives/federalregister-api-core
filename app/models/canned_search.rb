@@ -29,4 +29,13 @@ class CannedSearch < ApplicationModel
   def search
     @search ||= EntrySearch.new(:conditions => search_conditions, :order => "newest")
   end
+
+  def documents_in_last(time_frame)
+    conditions = search_conditions.merge(
+      :publication_date => {
+        :gte => Issue.current.publication_date - time_frame
+      }
+    )
+    EntrySearch.new(:conditions => conditions, :metadata_only => true).count
+  end
 end
