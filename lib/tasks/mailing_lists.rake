@@ -8,7 +8,7 @@ namespace :mailing_lists do
         date = Date.current
       end
 
-      Content.run_myfr2_command "bundle exec rake mailing_lists:articles:deliver[\"#{date.to_s(:iso)}\"]"
+      Content.run_myfr2_command "bundle exec rake mailing_lists:documents:deliver[\"#{date.to_s(:iso)}\"]"
     end
   end
 
