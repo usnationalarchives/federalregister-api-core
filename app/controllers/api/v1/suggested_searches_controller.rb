@@ -49,6 +49,7 @@ class Api::V1::SuggestedSearchesController < ApiController
       :description => view_context.add_citation_links(view_context.auto_link(view_context.simple_format(search.description))),
       :slug => search.slug,
       :search_conditions => remove_blank_conditions(search.search_conditions),
+      :section => search.section.slug,
       :title => search.title,
     }
   end
