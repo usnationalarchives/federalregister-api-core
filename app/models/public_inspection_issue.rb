@@ -16,4 +16,26 @@ class PublicInspectionIssue < ApplicationModel
   def self.current
      published.first(:order => "publication_date DESC")
   end
+
+  def self.published_between(start_date, end_date)
+    published.all(
+      :conditions => ["publication_date >= ? && publication_date <= ?", start_date, end_date]
+    )
+  end
+
+  def special_filing_documents
+    @special_filing_documents ||= public_inspection_documents.select{|doc| doc.special_filing?}
+  end
+
+  def regular_filing_documents
+    @regular_filing_documents ||= public_inspection_documents.reject{|doc| doc.special_filing?}
+  end
+
+  def special_filing_agencies
+    @special_filing_agencies ||= special_filing_documents.map{|doc| doc.agencies.excluding_parents}.flatten.uniq
+  end
+
+  def regular_filing_agencies
+    @regular_filing_agencies ||= regular_filing_documents.map{|doc| doc.agencies.excluding_parents}.flatten.uniq
+  end
 end

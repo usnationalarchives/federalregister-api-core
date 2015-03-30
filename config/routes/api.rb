@@ -14,6 +14,11 @@ ActionController::Routing::Routes.draw do |map|
                   :action => 'facets',
                   :conditions => {:method => :get}
 
+    api.public_inspection_issues_facets 'public-inspection-issues/facets/:facet',
+                  :controller => 'api/v1/public_inspection_issues',
+                  :action => 'facets',
+                  :conditions => {:method => :get}
+
     api.articles_search_details 'articles/search-details',
                   :controller => 'api/v1/entries',
                   :action => 'search_details',
