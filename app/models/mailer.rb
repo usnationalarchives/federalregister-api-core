@@ -22,7 +22,7 @@ class Mailer < ActionMailer::Base
     sendgrid_recipients entry_email.all_recipient_emails
     sendgrid_ganalytics_options :utm_source => 'federalregister.gov', :utm_medium => 'email', :utm_campaign => 'email a friend'
 
-    subject "[FR] #{entry_email.sender} has sent you #{entry_email.entry.title}"
+    subject "[FR] #{entry_email.sender} has sent you '#{entry_email.entry.title}'"
     from entry_email.sender.split('@').first
     recipients 'email-a-friend@federalregister.gov' # should use sendgrid_recipients for actual recipient list
     reply_to entry_email.sender
