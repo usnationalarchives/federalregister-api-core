@@ -11,9 +11,8 @@ class PublicInspectionIssueApiRepresentation
   private
 
   def self.representation_for(issues)
-    issues.map do |issue|
-      {
-        :publication_date => issue.publication_date,
+    issues.inject({}) do |hsh, issue|
+      hsh[issue.publication_date.to_s(:iso)] = {
         :special_filings => {
           :last_updated_at => issue.special_filings_updated_at,
           :documents => issue.special_filing_documents.count,
@@ -25,6 +24,7 @@ class PublicInspectionIssueApiRepresentation
           :agencies => issue.regular_filing_agencies.count
         }
       }
+      hsh
     end
   end
 end
