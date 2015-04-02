@@ -1,9 +1,10 @@
 class Api::V1::PublicInspectionIssuesController < ApiController
   def facets
+    field_facets = %w(type)
     date_facets = %w(daily)
-    raise ActiveRecord::RecordNotFound unless (date_facets).include?(params[:facet])
+    raise ActiveRecord::RecordNotFound unless (field_facets + date_facets).include?(params[:facet])
 
-    if required_params?
+    if required_params?(params[:facet])
       issues = PublicInspectionIssueApiRepresentation.send(
         "#{params[:facet]}_facet",
         params[:conditions]
@@ -14,7 +15,7 @@ class Api::V1::PublicInspectionIssuesController < ApiController
     else
       render_json_or_jsonp(
         {
-          :errors => 'You must supply the proper conditions, conditions[:publication_date][:gte] is required.',
+          :errors => 'You must supply the proper conditions',
           :status => 400
         }
       )
@@ -23,7 +24,12 @@ class Api::V1::PublicInspectionIssuesController < ApiController
 
   private
 
-  def required_params?
-    params[:conditions] && params[:conditions][:publication_date] && params[:conditions][:publication_date][:gte]
+  def required_params?(facet)
+    case facet
+    when 'daily'
+      params[:conditions] && params[:conditions][:publication_date] && params[:conditions][:publication_date][:gte]
+    when 'type'
+      params[:conditions] && params[:conditions][:publication_date] && params[:conditions][:publication_date][:is]
+    end
   end
 end
