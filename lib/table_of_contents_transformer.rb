@@ -1,7 +1,9 @@
+require 'ostruct'
+
 class TableOfContentsTransformer
   attr_reader :parse_category, :parse_documents, :path_to_xml_file, :toc_hash
 
-  def initialize(path_to_xml_file='data/xml/table_of_contents/example1.xml')
+  def initialize(path_to_xml_file = 'data/xml/table_of_contents/example1.xml')
     @path_to_xml_file = path_to_xml_file
     @toc_hash = {agencies:[] }
   end
@@ -9,33 +11,41 @@ class TableOfContentsTransformer
   def process
     nokogiri_doc = Nokogiri::XML(open(path_to_xml_file))
     nokogiri_doc.css('AGCY').each do |agcy_node|
-      #agency = find_or_create_agency(agcy_node.css('HD').first.text)
+      agency_struct = create_agency_representation_struct(agcy_node.css('HD').first.text)
       toc_hash[:agencies].push({
-        name: agcy_node.css('HD').first.text, #agency.name,
-        slug: "todo", #agency.slug,
-        url: "www.TODO.com", #agency.url,
+        name: agency_struct.name,
+        slug: agency_struct.slug,
+        url: agency_struct.url,
         see_also: parse_see_also(agcy_node.css('SEE')),
         document_categories: parse_category(agcy_node.css('CAT'))
       }.delete_if{|k,v| v.nil?})
     end
 
-    save_file('brandon_test.json', toc_hash.to_json)
+    save_file('data/xml/table_of_contents', 'brandon_test.json', toc_hash.to_json)
   end
 
-  def find_or_create_agency(agency_name)
-    if agency = Agency.find_by_name(agency_name)
-      agency
+  def create_agency_representation_struct(agency_name)
+    agency = lookup_agency(agency_name)
+    if agency
+      agency_representation = OpenStruct.new(name: agency_name, slug: agency.slug, url: agency.url)
     else
-      Agency.create(name: agency_name, slug: agency_name.downcase.gsub('','-'))
+      agency_representation = OpenStruct.new(name: agency_name, slug: agency_name.downcase.gsub(' ','-'), url: '' )
     end
+    agency_representation
+  end
+
+  def lookup_agency(agency_name)
+    agency = AgencyName.find_by_name(agency_name)
+    agency.agency_name if agency
   end
 
   def parse_see_also(see_also_nodes)
     see_also = []
     see_also_nodes.each do |see_also_node|
+      agency_struct = create_agency_representation_struct(see_also_node.css('P').text)
       see_also.push({
         name: see_also_node.css('P').text,
-        slug: "todo"
+        slug: agency_struct.slug
       })
     end
     see_also.present? ? see_also : nil
@@ -52,12 +62,12 @@ class TableOfContentsTransformer
     end
   end
 
-  def save_file(filename, ruby_object)
-    Dir.chdir('data/xml/table_of_contents')
+  def save_file(path, filename, ruby_object)
+    Dir.chdir(path)
     file = File.open(filename, 'w')
     file.puts(ruby_object)
     file.close
-    Dir.chdir('../../..')
+    Dir.chdir(Rails.root)
   end
 
 
@@ -101,6 +111,7 @@ class Category
 
   def process_ssjdent_node(ssjdent_node)
     document.subject_3 = ssjdent_node.css('SUBSJDOC').text
+
     document.document_numbers = process_document_numbers(ssjdent_node.css('FRDOCBP'))
     write_document
   end
@@ -118,6 +129,7 @@ class Category
 
   def write_document
     subject_1 = document.subject_1
+    # binding.pry if name = 'NOTICES'
     documents << document.dup
     document = CategoryDocument.new
     document.subject_1 = subject_1
