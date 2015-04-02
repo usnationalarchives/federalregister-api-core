@@ -74,7 +74,7 @@ describe XsltHelper do
       XML
 
       @html.should have_tag("p") do |p|
-        p.first.inner_html.should == " <i class=\"E-03\">See</i> &sect; 1026"
+        p.first.inner_html.should == " <i class=\"E-03\">See</i> &#167; 1026"
       end
     end
   end
