@@ -1,15 +1,20 @@
 require 'ostruct'
 
 class TableOfContentsTransformer
-  attr_reader :parse_category, :parse_documents, :path_to_xml_file, :toc_hash
+  attr_reader :date, :parse_category, :parse_documents, :path_to_xml_file, :toc_hash, :input_path_with_filename, :input_location, :output_path, :output_filename
 
-  def initialize(path_to_xml_file = 'data/xml/table_of_contents/example1.xml')
-    @path_to_xml_file = path_to_xml_file
+  def initialize(doc_date)# 'data/xml/table_of_contents/example4.xml'
+    @date = doc_date.to_date
     @toc_hash = {agencies:[] }
   end
 
   def process
-    nokogiri_doc = Nokogiri::XML(open(path_to_xml_file))
+    build_table_of_contents_hash(input_location)
+    save_file(output_path, output_filename, toc_hash.to_json)
+  end
+
+  def build_table_of_contents_hash(path)
+    nokogiri_doc = Nokogiri::XML(open(path))
     nokogiri_doc.css('AGCY').each do |agcy_node|
       agency_struct = create_agency_representation_struct(agcy_node.css('HD').first.text)
       toc_hash[:agencies].push({
@@ -20,8 +25,6 @@ class TableOfContentsTransformer
         document_categories: parse_category(agcy_node.css('CAT'))
       }.delete_if{|k,v| v.nil?})
     end
-
-    save_file('data/xml/table_of_contents', 'brandon_test.json', toc_hash.to_json)
   end
 
   def create_agency_representation_struct(agency_name)
@@ -110,8 +113,8 @@ class Category
   end
 
   def process_ssjdent_node(ssjdent_node)
-    document.subject_3 = ssjdent_node.css('SUBSJDOC').text
-
+    subsjdoc_text = ssjdent_node.css('SUBSJDOC').text
+    document.subject_3 = subsjdoc_text if subsjdoc_text.present?
     document.document_numbers = process_document_numbers(ssjdent_node.css('FRDOCBP'))
     write_document
   end
@@ -129,7 +132,6 @@ class Category
 
   def write_document
     subject_1 = document.subject_1
-    # binding.pry if name = 'NOTICES'
     documents << document.dup
     document = CategoryDocument.new
     document.subject_1 = subject_1
@@ -142,5 +144,22 @@ class CategoryDocument
   attr_accessor :subject_1, :subject_2, :subject_3, :document_numbers
 end
 
+private
+
+def input_location
+  'data/bulkdata/FR-' + date.strftime('%Y-%m-%d') + '.xml'
+end
+
+def output_path
+  FileUtils.mkdir_p('data/json/document_table_of_contents/' + date.strftime('%Y') +
+    '/' + date.strftime('%m') + '/')
+  path = 'data/json/document_table_of_contents/' + date.strftime('%Y') +
+    '/' + date.strftime('%m') + '/'
+end
+
+def output_filename
+  #Formats into: '2015-04-02.json'
+  date.strftime('%Y-%m-%d') +'.json'
+end
 
 end
