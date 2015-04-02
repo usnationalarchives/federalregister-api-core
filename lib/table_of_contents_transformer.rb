@@ -21,12 +21,15 @@ class TableOfContentsTransformer
       }.delete_if{|k,v| v.nil?})
     end
 
-    #Logic for saving actual file
+    #File Saving Logic
     Dir.chdir('data/xml/table_of_contents')
     file = File.open('brandon_test.json','w')
     file.puts(toc_hash.to_json)
     file.close
     Dir.chdir('../../..')
+  end
+
+  def agency_exists(agency)
   end
 
   def parse_see_also(nodes)
@@ -40,17 +43,89 @@ class TableOfContentsTransformer
     see_also.present? ? see_also : nil
   end
 
-  def parse_category(nodes)
-    categories = []
-    nodes.each do |cat_node|
-      categories.push({
-        :name => cat_node.css('HD').text,
-        :documents => CategoryDocumentAssembler.new(cat_node).serially_process
-      })
+  def parse_category(cat_nodes) #(nodes)
+    cat_nodes.map do |cat_node|
+      category = Category.new(cat_node)
+      category.process_nodes
+      {
+        "name" => category.name,
+        "documents" => category.documents
+      }
     end
-    categories
   end
 
+class Category
+  attr_reader :document, :documents, :cat_node, :name
+
+  def initialize(cat_node)
+    @cat_node = cat_node
+    @documents = []
+    @xyz
+  end
+
+  def process_nodes
+    cat_node.children.each do |node|
+      process_hd_node(node) if node.name == 'HD'
+      process_sj_node(node) if node.name == 'SJ'
+      process_subsj_node(node) if node.name == 'SUBSJ'
+      process_sjdent_node(node) if node.name == "SJDENT"
+      process_ssjdent_node(node) if node.name == "SSJDENT"
+      process_docent_node(node) if node.name == 'DOCENT'
+    end
+  end
+
+  def process_hd_node(hd_node)
+    @name = hd_node.text
+  end
+
+
+  def process_sj_node(sj_node)
+    @document = CategoryDocument.new
+    document.subject_1 = sj_node.text
+  end
+
+  def process_subsj_node(subsj_node)
+    document.subject_2 = subsj_node.text
+  end
+
+  def process_ssjdent_node(ssjdent_node)
+    document.subject_3 = ssjdent_node.css('SUBSJDOC').text
+    document.document_numbers = process_document_numbers(ssjdent_node.css('FRDOCBP'))
+    write_document
+  end
+
+  def process_sjdent_node(sjdent_node)
+    document.subject_2 = sjdent_node.at_css('SJDOC').text
+    document.document_numbers = process_document_numbers(sjdent_node.css('FRDOCBP'))
+    write_document
+  end
+
+  def process_docent_node(docent_node)
+    @document = CategoryDocument.new
+    document.subject_1 = docent_node.at_css('DOC').text
+    document.document_numbers = process_document_numbers(docent_node.css('FRDOCBP'))
+    write_document
+  end
+
+  def write_document
+    subject_1 = document.subject_1
+    documents << document.dup
+    document = CategoryDocument.new
+    document.subject_1 = subject_1
+    #is it necessary to set subject_2/wipe it?
+  end
+
+  def process_document_numbers(doc_nodes)
+    doc_nodes.map{ |doc_node| doc_node.text }
+  end
+
+end
+
+class CategoryDocument
+  attr_accessor :subject_1, :subject_2, :subject_3, :document_numbers
+end
+
+#========================================================
   class CategoryDocumentAssembler
     attr_reader :category_node, :documents
 
@@ -61,9 +136,9 @@ class TableOfContentsTransformer
 
     def serially_process
       category_node.children.each do |node|
-        process_docent(node) if node.name == "DOCENT"
         process_ssjdent(node) if node.name == "SSJDENT"
         process_sjdent(node) if node.name == "SJDENT"
+        process_docent(node) if node.name == "DOCENT"
       end
       documents
     end
