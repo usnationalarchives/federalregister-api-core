@@ -62,7 +62,8 @@ class TableOfContentsTransformer
       category.process_nodes
       {
         name: category.name,
-        documents: category.documents
+        documents: category.documents_as_hashes
+        # documents: category.documents #This is returning actual document objects in lieu of a hash
       }
     end
   end
@@ -141,6 +142,16 @@ class Category
     document = CategoryDocument.new
     document.subject_1 = subject_1
     #TODO: Is it necessary to clear subject_2?
+  end
+
+  def documents_as_hashes
+    documents.map do |document|
+      {
+        subject_1: document.subject_1,
+        subject_2: document.subject_2,
+        document_numbers: document.document_numbers
+      }.delete_if{|k,v| v.nil?}
+    end
   end
 
 end

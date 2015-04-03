@@ -3,6 +3,11 @@ require 'spec_helper'
 describe TableOfContentsTransformer do
 attr_reader :transformer
 
+before(:each) do
+  @transformer = TableOfContentsTransformer.new('2015-01-01')
+end
+
+
   describe 'Agency-lookup and cross-referencing' do
     it "AgencyName matches an existing Agency" do
       agency = Agency.create(name: "Test Agency", slug: "test-slug", url: "http://wwww.test.com")
@@ -36,20 +41,20 @@ attr_reader :transformer
 
   end
 
-  def process(xml)
+  def make_nokogiri_doc(xml)
     @nokogiri_doc = Nokogiri::XML(xml).css('CNTNTS')
   end
 
-  # LET syntax probably does not exist.  let(:transformer) { TableOfContentsTransformer.new('2015-01-01') }
   before(:each) do
     @transformer = TableOfContentsTransformer.new('2015-01-01')
   end
 
   it "#parse_see_also collects See Also references in an array of hashes with name and slug keys" do
-    process(<<-XML)
+
+    make_nokogiri_doc(<<-XML)
       <CNTNTS>
         <AGCY>
-          <HD>Agricultural Marketing Service</HD>
+          <HD>Agriculture Department</HD>
           <SEE>
             <HD SOURCE="HED">See</HD>
             <P>Agricultural Marketing Service</P>
@@ -61,6 +66,7 @@ attr_reader :transformer
         </AGCY>
       </CNTNTS>
     XML
+
     expected =
       {
         agencies:
@@ -77,76 +83,82 @@ attr_reader :transformer
                 {
                   name: 'Food and Nutrition Service',
                   slug: 'food-and-nutrition-service'
-                },
-                {
-                  name: 'National Institute of Food and Agriculture',
-                  slug: 'national-institute-of-food-and-agriculture'
-                },
+                }
               ],
               document_categories: []
             }
           ]
       }
 
-    expected2 = {:agencies=>[
-      {:name=>"See", :slug=>"see", :url=>"", :see_also=>[{:name=>"Agricultural Marketing Service", :slug=>"agricultural-marketing-service"}, {:name=>"Food and Nutrition Service", :slug=>"food-and-nutrition-service"}], :document_categories=>[]}]}
-
-
-    # see_also_nodes = Nokogiri::XML(xml_input).css('SEE')
-    # transformer = TableOfContentsTransformer.new('2015-01-01')
-    #We'll call build TOC hash in each test
-    # transformer.parse_see_also(see_also_nodes).size.should == 3
-    # transformer.parse_see_also(see_also_nodes).should == [{:name=>"Agricultural Marketing Service", :slug=>"agricultural-marketing-service"}, {:name=>"Food and Nutrition Service", :slug=>"food-and-nutrition-service"}, {:name=>"National Institute of Food and Agriculture", :slug=>"national-institute-of-food-and-agriculture"}]
-
     transformer.build_table_of_contents_hash(@nokogiri_doc).should == expected
   end
 
   it "Identifies category type based on first <HD>" do
-    xml_input = <<-XML
-      <CAT>
-        <HD>PROPOSED RULES</HD>
-        <SJ>Increased Assessment Rates:</SJ>
-        <SJDENT>
-          <SJDOC>Grapes Grown in a Designated Area of Southeastern California,</SJDOC>
-          <PGS>16998-17000</PGS>
-          <FRDOCBP D="2" T="31MRP1.sgm">2015-07370</FRDOCBP>
-        </SJDENT>
-      </CAT>
-    XML
-    cat_nodes = Nokogiri::XML(xml_input).css('CAT')
-    transformer = TableOfContentsTransformer.new('2015-01-01')
 
-    transformer.parse_category(cat_nodes).first["name"].should == "PROPOSED RULES"
+    make_nokogiri_doc(<<-XML)
+      <CNTNTS>
+        <AGCY>
+          <HD>Agriculture Department</HD>
+        </AGCY>
+      </CNTNTS>
+    XML
+
+    expected =
+      {
+        agencies:
+          [
+            {
+              name: 'Agriculture Department',
+              slug: 'agriculture-department',
+              url: '',
+              document_categories: []
+            }
+          ]
+      }
+    transformer.build_table_of_contents_hash(@nokogiri_doc).should == expected
   end
 
   describe "Matching subject_1" do
+
     it "Identifies subject_1 for <DOCENT> properly" do
-      xml_input =  <<-XML
-      <XML>
-        <CAT>
-          <HD>PROPOSED RULES</HD>
-          <SJ>Increased Assessment Rates:</SJ>
-          <SJDENT>
-            <SJDOC>Grapes Grown in a Designated Area of Southeastern California,</SJDOC>
-            <PGS>16998-17000</PGS>
-            <FRDOCBP D="2" T="31MRP1.sgm">2015-07370</FRDOCBP>
-          </SJDENT>
-        </CAT>
-        <CAT>
-          <HD>RULES</HD>
-          <DOCENT>
-            <DOC>Resource Agency Hearings and Alternatives Development Procedures in Hydropower Licenses,</DOC>
-            <PGS>17156-17220</PGS>
-            <FRDOCBP D="64" T="31MRR2.sgm">2015-06280</FRDOCBP>
-          </DOCENT>
-        </CAT>
-      </XML>
+      make_nokogiri_doc(<<-XML)
+        <CNTNTS>
+          <AGCY>
+            <HD>Agriculture Department</HD>
+            <CAT>
+              <HD>RULES</HD>
+              <DOCENT>
+                <DOC>Resource Agency Hearings and Alternatives Development Procedures in Hydropower Licenses,</DOC>
+              </DOCENT>
+            </CAT>
+          </AGCY>
+        </CNTNTS>
       XML
-      cat_nodes = Nokogiri::XML(xml_input).css('CAT')
-      TableOfContentsTransformer.new('2015-01-01').build_table_of_contents_hash(xml_input)
-      transformer = TableOfContentsTransformer.new('2015-01-01')
-      # transformer.parse_category(cat_nodes).first[:documents].first.subject_1.should == "Resource Agency Hearings and Alternatives Development Procedures in Hydropower Licenses,"
-      transformer.parse_category(cat_nodes).should == "Resource Agency Hearings and Alternatives Development Procedures in Hydropower Licenses,"
+
+      expected =
+        {
+          agencies:
+            [
+              {
+                name: 'Agriculture Department',
+                slug: 'agriculture-department',
+                url: '',
+                document_categories: [
+                  {
+                    name: "RULES",
+                    documents: [
+                      {
+                        subject_1: 'Resource Agency Hearings and Alternatives Development Procedures in Hydropower Licenses,',
+                        document_numbers: []
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+        }
+
+      transformer.build_table_of_contents_hash(@nokogiri_doc).should == expected
     end
   end
 
