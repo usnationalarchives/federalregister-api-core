@@ -10,13 +10,12 @@ class TableOfContentsTransformer
 
   def process
     xml_input_file = File.open(input_location)
-    build_table_of_contents_hash(xml_input_file)
+    nokogiri_doc = Nokogiri::XML(xml_input_file).css('CNTNTS')
     xml_input_file.close
-    save_file(output_path, output_filename, toc_hash.to_json)
+    build_table_of_contents_hash(nokogiri_doc)
   end
 
-  def build_table_of_contents_hash(xml)
-    nokogiri_doc = Nokogiri::XML(xml)
+  def build_table_of_contents_hash(nokogiri_doc)
     nokogiri_doc.css('AGCY').each do |agcy_node|
       agency_struct = create_agency_representation_struct(agcy_node.css('HD').first.text)
       toc_hash[:agencies].push({
@@ -62,10 +61,14 @@ class TableOfContentsTransformer
       category = Category.new(cat_node)
       category.process_nodes
       {
-        "name" => category.name,
-        "documents" => category.documents
+        name: category.name,
+        documents: category.documents
       }
     end
+  end
+
+  def save_json_file
+    save_file(output_path, output_filename, toc_hash.to_json)
   end
 
   def save_file(path, filename, ruby_object)
@@ -75,7 +78,6 @@ class TableOfContentsTransformer
     file.close
     Dir.chdir(Rails.root)
   end
-
 
 class Category
   attr_reader :document, :documents, :cat_node, :name
