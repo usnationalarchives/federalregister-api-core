@@ -9,12 +9,14 @@ class TableOfContentsTransformer
   end
 
   def process
-    build_table_of_contents_hash(input_location)
+    xml_input_file = File.open(input_location)
+    build_table_of_contents_hash(xml_input_file)
+    xml_input_file.close
     save_file(output_path, output_filename, toc_hash.to_json)
   end
 
-  def build_table_of_contents_hash(path)
-    nokogiri_doc = Nokogiri::XML(open(path))
+  def build_table_of_contents_hash(xml)
+    nokogiri_doc = Nokogiri::XML(xml)
     nokogiri_doc.css('AGCY').each do |agcy_node|
       agency_struct = create_agency_representation_struct(agcy_node.css('HD').first.text)
       toc_hash[:agencies].push({
@@ -25,6 +27,7 @@ class TableOfContentsTransformer
         document_categories: parse_category(agcy_node.css('CAT'))
       }.delete_if{|k,v| v.nil?})
     end
+    toc_hash
   end
 
   def create_agency_representation_struct(agency_name)
@@ -38,8 +41,8 @@ class TableOfContentsTransformer
   end
 
   def lookup_agency(agency_name)
-    agency = AgencyName.find_by_name(agency_name)
-    agency.agency_name if agency
+    agency_alias = AgencyName.find_by_name(agency_name)
+    agency_alias.agency if agency_alias
   end
 
   def parse_see_also(see_also_nodes)
