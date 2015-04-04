@@ -149,6 +149,7 @@ class Category
       {
         subject_1: document.subject_1,
         subject_2: document.subject_2,
+        subject_3: document.subject_3,
         document_numbers: document.document_numbers
       }.delete_if{|k,v| v.nil?}
     end

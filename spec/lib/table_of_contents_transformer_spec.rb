@@ -3,16 +3,18 @@ require 'spec_helper'
 describe TableOfContentsTransformer do
 attr_reader :transformer
 
-before(:each) do
-  @transformer = TableOfContentsTransformer.new('2015-01-01')
-end
+  before(:each) do
+    @transformer = TableOfContentsTransformer.new('2015-01-01')
+  end
 
+  def make_nokogiri_doc(xml)
+    @nokogiri_doc = Nokogiri::XML(xml).css('CNTNTS')
+  end
 
   describe 'Agency-lookup and cross-referencing' do
     it "AgencyName matches an existing Agency" do
       agency = Agency.create(name: "Test Agency", slug: "test-slug", url: "http://wwww.test.com")
       agency.agency_names << AgencyName.create(name: "Agency Test")
-      transformer = TableOfContentsTransformer.new('2015-01-01')
       agency_representation = transformer.create_agency_representation_struct("Agency Test")
 
       agency_representation.name.should == "Agency Test"
@@ -22,7 +24,6 @@ end
 
     it "Provided agency name matches AgencyName but no matching Agency" do
       AgencyName.create(name: "Agency Test")
-      transformer = TableOfContentsTransformer.new('2015-01-01')
       agency_representation = transformer.create_agency_representation_struct("Agency Test")
 
       agency_representation.name.should == "Agency Test"
@@ -31,7 +32,6 @@ end
     end
 
     it "Provided agency does not match any AgencyName" do
-      transformer = TableOfContentsTransformer.new('2015-01-01')
       agency_representation = transformer.create_agency_representation_struct("Agency Test")
 
       agency_representation.name.should == "Agency Test"
@@ -41,15 +41,7 @@ end
 
   end
 
-  def make_nokogiri_doc(xml)
-    @nokogiri_doc = Nokogiri::XML(xml).css('CNTNTS')
-  end
-
-  before(:each) do
-    @transformer = TableOfContentsTransformer.new('2015-01-01')
-  end
-
-  it "#parse_see_also collects See Also references in an array of hashes with name and slug keys" do
+  it "Creates multiple 'See Also' hashes" do
 
     make_nokogiri_doc(<<-XML)
       <CNTNTS>
@@ -163,15 +155,240 @@ end
   end
 
   describe "Matching subject_2" do
-      it "returns two subjects when X"
-      it "returns two subjects when empty third node"
+    it "Identifies two subjects when <SJ> followed by <SUBSJ> and missing <SUBSJDOC> value" do
+
+      make_nokogiri_doc(<<-XML)
+        <CNTNTS>
+          <AGCY>
+            <HD>Agriculture Department</HD>
+            <CAT>
+              <HD>NOTICES</HD>
+              <SJ>Fisheries of the Exclusive Economic Zone off Alaska:</SJ>
+              <SUBSJ>Applications for Exempted Fishing Permits,</SUBSJ>
+              <SSJDENT>
+                <SUBSJDOC/>
+              </SSJDENT>
+            </CAT>
+          </AGCY>
+        </CNTNTS>
+      XML
+
+      expected =
+        {
+          agencies:
+            [
+              {
+                name: 'Agriculture Department',
+                slug: 'agriculture-department',
+                url: '',
+                document_categories: [
+                  {
+                    name: "NOTICES",
+                    documents: [
+                      {
+                        subject_1: 'Fisheries of the Exclusive Economic Zone off Alaska:',
+                        subject_2: 'Applications for Exempted Fishing Permits,',
+                        document_numbers: []
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+        }
+
+      transformer.build_table_of_contents_hash(@nokogiri_doc).should == expected
+
+    end
+
+    it "Identifies two subjects: <SJ> followed by sibling <SJDENT> and child <SJDOC>" do
+
+      make_nokogiri_doc(<<-XML)
+        <CNTNTS>
+          <AGCY>
+            <HD>Agriculture Department</HD>
+            <CAT>
+              <HD>NOTICES</HD>
+              <SJ>Atlantic Highly Migratory Species:</SJ>
+              <SJDENT>
+                <SJDOC>Atlantic Shark Management Measures; Research Fishery; Meeting,</SJDOC>
+              </SJDENT>
+            </CAT>
+          </AGCY>
+        </CNTNTS>
+      XML
+
+      expected =
+        {
+          agencies:
+            [
+              {
+                name: 'Agriculture Department',
+                slug: 'agriculture-department',
+                url: '',
+                document_categories: [
+                  {
+                    name: "NOTICES",
+                    documents: [
+                      {
+                        subject_1: 'Atlantic Highly Migratory Species:',
+                        subject_2: 'Atlantic Shark Management Measures; Research Fishery; Meeting,',
+                        document_numbers: []
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+        }
+
+      transformer.build_table_of_contents_hash(@nokogiri_doc).should == expected
+    end
+
   end
-  describe "Matchins subject_3" do
-      it "returns a third subject when subsjdoc present"
+
+  describe "Matching subject_3" do
+
+    it "Identifies subject_3 when <SJ>, sibling <SUBSJ>, sibling <SSJDENT>, child <SUBSJDOC>" do
+
+      make_nokogiri_doc(<<-XML)
+        <CNTNTS>
+          <AGCY>
+            <HD>Agriculture Department</HD>
+            <CAT>
+              <HD>PROPOSED RULES</HD>
+              <SJ>Air Quality State Implementation Plans;  Approvals and Promulgations:</SJ>
+              <SUBSJ>West Virginia; Charleston Nonattainment Area to Attainment for the 1997 Annual and 2006 24-Hour Fine Particulate Matter Standard</SUBSJ>
+              <SSJDENT>
+                <SUBSJDOC>West Virginia; Charleston,</SUBSJDOC>
+              </SSJDENT>
+            </CAT>
+          </AGCY>
+        </CNTNTS>
+      XML
+
+      expected =
+        {
+          agencies:
+            [
+              {
+                name: 'Agriculture Department',
+                slug: 'agriculture-department',
+                url: '',
+                document_categories: [
+                  {
+                    name: "PROPOSED RULES",
+                    documents: [
+                      {
+                        subject_1: 'Air Quality State Implementation Plans;  Approvals and Promulgations:',
+                        subject_2: 'West Virginia; Charleston Nonattainment Area to Attainment for the 1997 Annual and 2006 24-Hour Fine Particulate Matter Standard',
+                        subject_3: 'West Virginia; Charleston,',
+                        document_numbers: []
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+        }
+
+      transformer.build_table_of_contents_hash(@nokogiri_doc).should == expected
+      end
+
   end
+
   describe  "Generates document numbers" do
-      it "processes a single document correctly"
-      it "processes multiple documents correctly"
+    it "Adds a single document from <FRDOCBP>" do
+
+      make_nokogiri_doc(<<-XML)
+        <CNTNTS>
+          <AGCY>
+            <HD>Agriculture Department</HD>
+            <CAT>
+              <HD>PROPOSED RULES</HD>
+              <SJ>Increased Assessment Rates:</SJ>
+              <SJDENT>
+                <SJDOC>Grapes Grown in a Designated Area of Southeastern California,</SJDOC>
+                <FRDOCBP D="2" T="31MRP1.sgm">2015-07370</FRDOCBP>
+              </SJDENT>
+            </CAT>
+          </AGCY>
+        </CNTNTS>
+      XML
+
+      expected =
+        {
+          agencies:
+            [
+              {
+                name: 'Agriculture Department',
+                slug: 'agriculture-department',
+                url: '',
+                document_categories: [
+                  {
+                    name: "PROPOSED RULES",
+                    documents: [
+                      {
+                        subject_1: 'Increased Assessment Rates:',
+                        subject_2: 'Grapes Grown in a Designated Area of Southeastern California,',
+                        document_numbers: ['2015-07370']
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+        }
+
+      transformer.build_table_of_contents_hash(@nokogiri_doc).should == expected
+
+    end
+
+    it "processes multiple documents correctly" do
+
+      make_nokogiri_doc(<<-XML)
+        <CNTNTS>
+          <AGCY>
+            <HD>Agriculture Department</HD>
+            <CAT>
+              <HD>PROPOSED RULES</HD>
+              <SJ>Increased Assessment Rates:</SJ>
+              <SJDENT>
+                <SJDOC>Grapes Grown in a Designated Area of Southeastern California,</SJDOC>
+                  <FRDOCBP D="3" T="31MRP1.sgm">2015-07172</FRDOCBP>
+                  <FRDOCBP D="2" T="31MRP1.sgm">2015-07280</FRDOCBP>
+              </SJDENT>
+            </CAT>
+          </AGCY>
+        </CNTNTS>
+      XML
+
+      expected =
+        {
+          agencies:
+            [
+              {
+                name: 'Agriculture Department',
+                slug: 'agriculture-department',
+                url: '',
+                document_categories: [
+                  {
+                    name: "PROPOSED RULES",
+                    documents: [
+                      {
+                        subject_1: 'Increased Assessment Rates:',
+                        subject_2: 'Grapes Grown in a Designated Area of Southeastern California,',
+                        document_numbers: ['2015-07172', '2015-07280']
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+        }
+
+      transformer.build_table_of_contents_hash(@nokogiri_doc).should == expected
+    end
   end
 
 end
