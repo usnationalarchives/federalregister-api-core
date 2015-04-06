@@ -174,8 +174,7 @@ def output_path
 end
 
 def output_filename
-  #Formats into: '2015-04-02.json'
-  date.strftime('%Y-%m-%d') +'.json'
+  date.strftime('%d') +'.json'
 end
 
 end
