@@ -1,9 +1,9 @@
 require 'ostruct'
 
 class TableOfContentsTransformer
-  attr_reader :date, :parse_category, :parse_documents, :path_to_xml_file, :toc_hash, :input_path_with_filename, :input_location, :output_path, :output_filename
+  attr_reader :date, :toc_hash
 
-  def initialize(doc_date)# 'data/xml/table_of_contents/example4.xml'
+  def initialize(doc_date)
     @date = doc_date.to_date
     @toc_hash = {agencies:[] }
   end
@@ -63,7 +63,6 @@ class TableOfContentsTransformer
       {
         name: category.name,
         documents: category.documents_as_hashes
-        # documents: category.documents #This is returning actual document objects in lieu of a hash
       }
     end
   end
