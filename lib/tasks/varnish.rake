@@ -13,7 +13,7 @@ namespace :varnish do
 
         include CacheUtils
         purge_cache("/")
-        purge_cache("/articles/#{Time.current.to_date.strftime('%Y')}/#{Time.current.to_date.strftime('%m')}")
+        purge_cache("/documents/#{Time.current.to_date.strftime('%Y')}/#{Time.current.to_date.strftime('%m')}")
       end
     end
   end
