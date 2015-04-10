@@ -17,7 +17,11 @@ class Content::EntryImporter::ModsFile
   end
 
   def file_path
-    "#{Rails.root}/data/mods/#{@date.to_s(:db)}.xml"
+    "#{mods_path}/#{@date.to_s(:db)}.xml"
+  end
+
+  def mods_path
+    "#{Rails.root}/data/documents/mods/#{@date.to_s(:year_month)}"
   end
 
   def document
@@ -26,6 +30,8 @@ class Content::EntryImporter::ModsFile
     end
 
     begin
+      FileUtils.mkdir_p(mods_path)
+
       Curl::Easy.download(url, file_path) {|c| c.follow_location = true} unless File.exists?(file_path)
       doc = Nokogiri::XML(open(file_path))
       raise Content::EntryImporter::ModsFile::DownloadError unless doc.root.name == "mods"

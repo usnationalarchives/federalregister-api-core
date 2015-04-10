@@ -12,21 +12,27 @@ class Content::EntryImporter::BulkdataFile
     "http://www.gpo.gov:80/fdsys/bulkdata/FR/#{@date.to_s(:year_month)}/FR-#{@date.to_s(:db)}.xml"
   end
 
-  def path
-    "#{Rails.root}/data/bulkdata/FR-#{@date.to_s(:iso)}.xml"
+  def file_path
+    "#{document_issue_xml_path}/#{@date.to_s(:iso)}.xml"
+  end
+
+  def document_issue_xml_path
+    "#{Rails.root}/data/document_issues/xml/#{@date.to_s(:year_month)}"
   end
 
   def document
-    if @force_reload_bulkdata && File.exists?(path)
-      File.delete(path)
+    if @force_reload_bulkdata && File.exists?(file_path)
+      File.delete(file_path)
     end
 
     begin
-      Curl::Easy.download(url, path){|c| c.follow_location = true} unless File.exists?(path)
-      doc = Nokogiri::XML(open(path))
+      FileUtils.mkdir_p(document_issue_xml_path)
+
+      Curl::Easy.download(url, file_path){|c| c.follow_location = true} unless File.exists?(file_path)
+      doc = Nokogiri::XML(open(file_path))
       raise Content::EntryImporter::BulkdataFile::DownloadError unless doc.root.name == "FEDREG"
     rescue
-      File.delete(path)
+      File.delete(file_path)
       raise Content::EntryImporter::BulkdataFile::DownloadError
     end
     doc.root

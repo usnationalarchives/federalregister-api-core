@@ -95,9 +95,9 @@ class Entry < ApplicationModel
 
   accepts_nested_attributes_for :lede_photo, :reject_if => Proc.new{|attr| attr["url"].blank? }
 
-  file_attribute(:full_xml)  {"#{RAILS_ROOT}/data/xml/#{document_file_path}.xml"}
-  file_attribute(:full_text) {"#{RAILS_ROOT}/data/text/#{document_file_path}.txt"}
-  file_attribute(:raw_text)  {"#{RAILS_ROOT}/data/raw/#{document_file_path}.txt"}
+  file_attribute(:full_xml)  {"#{documents_path}/full_text/xml/#{document_file_path}.xml"}
+  file_attribute(:full_text) {"#{documents_path}/full_text/text/#{document_file_path}.txt"}
+  file_attribute(:raw_text)  {"#{documents_path}/full_text/raw/#{document_file_path}.txt"}
 
   has_many :entry_regulation_id_numbers
   has_many :regulatory_plans, :through => :entry_regulation_id_numbers
@@ -218,7 +218,7 @@ class Entry < ApplicationModel
     # fields
     indexes title
     indexes abstract
-    indexes "CONCAT('#{RAILS_ROOT}/data/raw/', document_file_path, '.txt')", :as => :full_text, :file => true
+    indexes "CONCAT('#{documents_path}/full_text/raw/', document_file_path, '.txt')", :as => :full_text, :file => true
     indexes "GROUP_CONCAT(DISTINCT IFNULL(`entry_regulation_id_numbers`.`regulation_id_number`, '0') SEPARATOR ' ')", :as =>  :regulation_id_number
     indexes <<-SQL, :as => :docket_id
       (
@@ -544,10 +544,16 @@ class Entry < ApplicationModel
     comment_url.present? ? comment_url.split('D=').last.split(/(_|-)/, 2).first : ''
   end
 
+  def documents_path
+    "#{Rails.root}/data/documents"
+  end
+
   private
 
   def set_document_file_path
-    self.document_file_path = document_number.sub(/-/,'').scan(/.{0,3}/).reject(&:blank?).join('/') if document_number.present?
+    if document_number.present? && publication_date.present?
+      self.document_file_path = "#{publication_date.to_s(:ymd)}/#{document_number}"
+    end
 
     true
   end

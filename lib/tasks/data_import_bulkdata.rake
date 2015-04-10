@@ -21,12 +21,15 @@ namespace :data do
 
       xml_files_to_process = []
 
-      bulkdata_dir = "#{RAILS_ROOT}/data/bulkdata"
-      file_path = "#{bulkdata_dir}/#{File.basename(url)}"
+      document_issue_xml_path = "#{Rails.root}/data/document_issues/xml/#{date.to_s(:year_month)}"
+      file_path = "#{document_issue_xml_path}/#{File.basename(url)}"
+
       if File.exists?(file_path)
         puts "skipping #{url}..."
       else
         puts "downloading #{url}..."
+
+        FileUtils.mkdir_p(document_issue_xml_path)
 
         open(url) do |input|
           open(file_path, "wb") do |output|
@@ -40,7 +43,7 @@ namespace :data do
       if file_path =~ /\.zip$/
         puts "extracting #{file_path}..."
         Zip::ZipFile.open(file_path).each do |file|
-          path_to_extract_to = "#{bulkdata_dir}/#{File.basename(file.name)}"
+          path_to_extract_to = "#{document_issue_xml_path}/#{File.basename(file.name).gsub('FR-','')}"
           file.extract(path_to_extract_to) { puts "#{path_to_extract_to} already exists..."; true }
           xml_files_to_process << path_to_extract_to
         end

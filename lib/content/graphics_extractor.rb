@@ -38,7 +38,7 @@ module Content
     end
 
     def entry_bulkdata_path
-      "#{RAILS_ROOT}/data/bulkdata/FR-#{date.to_s(:iso)}.xml"
+      "#{Rails.root}/data/document_issues/xml/#{date.to_s(:year_month)}/#{date.to_s(:iso)}.xml"
     end
 
     def images
