@@ -7,7 +7,6 @@ class EntryApiRepresentation < ApiRepresentation
   end
 
   field(:abstract)
-  field(:abstract_html_url, :select => :document_file_path) {|e| entry_abstract_url(e)}
   field(:action)
   field(:agencies, :select => :id, :include => {:agency_names => :agency}) do |entry|
     entry.agency_names.compact.map do |agency_name|
