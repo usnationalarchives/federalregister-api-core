@@ -1,13 +1,15 @@
 require 'ostruct'
 
 class LegacyTableOfContentsTransformer
-  attr_accessor :agencies, :toc_hash
+  attr_reader :date
+  attr_accessor :agencies, :toc_hash, :entries_without_agencies
 
-  def initialize(date = nil)
-    publication_date = "Fri, 10 Apr 1998".to_date
+  def initialize(date = "1999-01-04")
+    publication_date = date
     issue = Issue.completed.find_by_publication_date!(publication_date)
     toc = TableOfContentsPresenter.new(issue.entries.scoped(:include => [:agencies, :agency_names]))
 
+    @date = date.to_date
     @entries_without_agencies = toc.entries_without_agencies
     @agencies = toc.agencies
     @toc_hash = {agencies: [] }
@@ -15,19 +17,38 @@ class LegacyTableOfContentsTransformer
 
   def process
     @agencies.each do |agency|
-      agency_hash = {
-        name: agency.name,
-        slug: agency.slug,
-        url: url_lookup(agency.name),
-        see_also: (process_see_also(agency) if agency.children.present?),
-        document_categories: process_document_categories(agency)
-      }.reject{|k,v| v.nil? }
+      if agency
+        agency_hash = {
+          name: agency.name,
+          slug: agency.slug,
+          url: url_lookup(agency.name),
+          see_also: (process_see_also(agency) if agency.children.present?),
+          document_categories: process_document_categories(agency)
+        }.reject{|key,val| val.nil? }
 
-      toc_hash[:agencies] << agency_hash
+        toc_hash[:agencies] << agency_hash
+      end
     end
+
     if @entries_without_agencies.present?
-      process_entries_without_agencies(@entries_without_agencies)
+      entries_without_agencies.group_by(&:agency_names).each do |agency_names, entries| #it's been grouped
+        agency_struct = create_agency_representation_struct(agency_names.map(&:name).to_sentence)
+        agency_hash = {
+          name: agency_struct.name,
+          slug: agency_struct.name,
+          url: agency_struct.url,
+          document_categories: [
+            {
+              name: "",
+              documents: process_document_without_subject(entries)
+            }
+          ]
+        }
+
+        toc_hash[:agencies] << agency_hash
+      end
     end
+
     toc_hash
   end
 
@@ -51,10 +72,9 @@ class LegacyTableOfContentsTransformer
     agency_alias.agency if agency_alias
   end
 
-
   def save_json_file
     process
-    save_file("data/", "legacy_test_file_brandon.json", toc_hash.to_json)
+    save_file(output_path, output_filename, toc_hash.to_json)
   end
 
   def save_file(path, filename, ruby_object)
@@ -101,7 +121,7 @@ class LegacyTableOfContentsTransformer
       {
         subject_1: entry.toc_subject,
         subject_2: entry.toc_doc || entry.title,
-        document_numbers: entry.document_number
+        document_numbers: [entry.document_number]
       }
     end
   end
@@ -110,38 +130,27 @@ class LegacyTableOfContentsTransformer
     entries_by_toc_subject.map do |entry|
     {
       subject_1: entry.toc_doc || entry.title,
-      document_numbers: entry.document_number
+      document_numbers: [entry.document_number]
     }
-    end
-  end
-
-
-  def process_entries_without_agencies(entries_without_agencies)
-    #Need to test this with actual data.
-    entries_without_agencies.group_by(&:agency_names).each do |agency_names, entries|
-      agency_struct = create_agency_representation_struct
-      {
-        name: agency_struct.name,
-        slug: agency_struct.name,
-        url: agency_struct.url,
-        document_categories: process_document_without_subject(entries)
-      }
     end
   end
 
   private
 
-  def save_file(path, filename, ruby_object)
-    Dir.chdir(path)
-    file = File.open(filename, 'w')
-    file.puts(ruby_object)
-    file.close
-    Dir.chdir(Rails.root)
+  def output_path
+    FileUtils.mkdir_p('data/json/document_table_of_contents/' + date.strftime('%Y') +
+      '/' + date.strftime('%m') + '/')
+    path = 'data/json/document_table_of_contents/' + date.strftime('%Y') +
+      '/' + date.strftime('%m') + '/'
+  end
+
+  def output_filename
+    date.strftime('%d') +'.json'
   end
 
 end
 
-# presenter=LegacyTableOfContentsTransformer.new; presenter.process
+# presenter=LegacyTableOfContentsTransformer.new("1999-01-06"); presenter.save_json_file
 # presenter.save_json_file
 
 
