@@ -1,8 +1,7 @@
 require 'ostruct'
 
 class LegacyTableOfContentsTransformer
-  attr_reader :date
-  attr_accessor :agencies, :toc_hash, :entries_without_agencies
+  attr_reader :date, :agencies, :toc_hash, :entries_without_agencies
 
   def initialize(date = "1999-01-04")
     publication_date = date
@@ -16,7 +15,13 @@ class LegacyTableOfContentsTransformer
   end
 
   def process
-    @agencies.each do |agency|
+    process_agencies
+    process_entries_without_agencies if entries_without_agencies.present?
+    toc_hash
+  end
+
+  def process_agencies
+    agencies.each do |agency|
       if agency
         agency_hash = {
           name: agency.name,
@@ -29,27 +34,25 @@ class LegacyTableOfContentsTransformer
         toc_hash[:agencies] << agency_hash
       end
     end
+  end
 
-    if @entries_without_agencies.present?
-      entries_without_agencies.group_by(&:agency_names).each do |agency_names, entries| #it's been grouped
-        agency_struct = create_agency_representation_struct(agency_names.map(&:name).to_sentence)
-        agency_hash = {
-          name: agency_struct.name,
-          slug: agency_struct.name,
-          url: agency_struct.url,
-          document_categories: [
-            {
-              name: "",
-              documents: process_document_without_subject(entries)
-            }
-          ]
-        }
+  def process_entries_without_agencies
+    entries_without_agencies.group_by(&:agency_names).each do |agency_names, entries|
+      agency_struct = create_agency_representation_struct(agency_names.map(&:name).to_sentence)
+      agency_hash = {
+        name: agency_struct.name,
+        slug: agency_struct.name,
+        url: agency_struct.url,
+        document_categories: [
+          {
+            name: "",
+            documents: process_document_without_subject(entries)
+          }
+        ]
+      }
 
-        toc_hash[:agencies] << agency_hash
-      end
+      toc_hash[:agencies] << agency_hash
     end
-
-    toc_hash
   end
 
   def url_lookup(agency_name)
