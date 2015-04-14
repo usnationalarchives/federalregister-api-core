@@ -1,38 +1,73 @@
 require 'ostruct'
 
 class TableOfContentsTransformer
-  attr_reader :date, :toc_hash
+  attr_reader :date
 
-  def initialize(doc_date)
-    @date = doc_date.to_date
-    @toc_hash = {agencies:[] }
+  def initialize(date)
+    @date = date.to_date
   end
 
-  def process
-    xml_input_file = File.open(input_location)
-    nokogiri_doc = Nokogiri::XML(xml_input_file).css('CNTNTS')
-    xml_input_file.close
-    build_table_of_contents_hash(nokogiri_doc)
-  end
+  def process_agencies(agencies)
+    agencies_with_metadata = {agencies: []}
+    agencies.each do |agency|
+      if agency
+        agency_hash = {
+          name: agency.name,
+          slug: agency.slug,
+          url: url_lookup(agency.name),
+          see_also: (process_see_also(agency) if agency.children.present?),
+          document_categories: process_document_categories(agency)
+        }.reject{|key,val| val.nil? }
 
-  def build_table_of_contents_hash(nokogiri_doc)
-    nokogiri_doc.css('AGCY').each do |agcy_node|
-      agency_struct = create_agency_representation_struct(agcy_node.css('HD').first.text)
-      toc_hash[:agencies].push({
-        name: agency_struct.name,
-        slug: agency_struct.slug,
-        url: agency_struct.url,
-        see_also: parse_see_also(agcy_node.css('SEE')),
-        document_categories: parse_category(agcy_node.css('CAT'))
-      }.delete_if{|k,v| v.nil?})
+        agencies_with_metadata[:agencies] << agency_hash
+      end
     end
-    toc_hash
+    agencies_with_metadata
   end
 
-  def create_agency_representation_struct(agency_name)
+  def process_entries_without_agencies(agencies)
+    agencies_with_metadata = {agencies: []}
+    agencies.group_by(&:agency_names).each do |agency_names, entries|
+      agency_stub = create_agency_representation_stub(agency_names.map(&:name).to_sentence)
+      agency_hash = {
+        name: agency_stub.name,
+        slug: agency_stub.slug,
+        url: agency_stub.url,
+        document_categories: [
+          {
+            name: "",
+            documents: process_document_without_subject(entries)
+          }
+        ]
+      }
+      agencies_with_metadata[:agencies] << agency_hash
+    end
+    agencies_with_metadata
+  end
+
+  def agency_hash(agencies, entries_without_agencies)
+    if entries_without_agencies.present?
+      hsh = process_agencies(agencies)
+      process_entries_without_agencies(entries_without_agencies)[:agencies].each do |agency|
+        hsh[:agencies] << agency
+      end
+      hsh
+    else
+      process_agencies(agencies)
+    end
+  end
+
+  def url_lookup(agency_name)
+    agency_stub = create_agency_representation_stub(agency_name)
+    agency_stub.url
+  end
+
+  def create_agency_representation_stub(agency_name)
     agency = lookup_agency(agency_name)
     if agency
       agency_representation = OpenStruct.new(name: agency_name, slug: agency.slug, url: agency.url)
+    elsif agency_name.empty?
+      agency_representation = OpenStruct.new(name: "Other Documents", slug: "other_documents", url: "")
     else
       agency_representation = OpenStruct.new(name: agency_name, slug: agency_name.downcase.gsub(' ','-'), url: '' )
     end
@@ -44,137 +79,63 @@ class TableOfContentsTransformer
     agency_alias.agency if agency_alias
   end
 
-  def parse_see_also(see_also_nodes)
-    see_also = []
-    see_also_nodes.each do |see_also_node|
-      agency_struct = create_agency_representation_struct(see_also_node.css('P').text)
-      see_also.push({
-        name: see_also_node.css('P').text,
-        slug: agency_struct.slug
-      })
-    end
-    see_also.present? ? see_also : nil
+  def process_see_also(agency)
+    agency.children.map { |sub_agency|
+      {
+        name: sub_agency.name,
+        slug: sub_agency.slug
+      }
+    }
   end
 
-  def parse_category(cat_nodes)
-    cat_nodes.map do |cat_node|
-      category = Category.new(cat_node)
-      category.process_nodes
+  def process_document_categories(agency)
+    agency.entries_by_type_and_toc_subject.map do |type, entries_by_toc_subject|
       {
-        name: category.name,
-        documents: category.documents_as_hashes
+        name: type.pluralize,
+        documents: process_documents(entries_by_toc_subject)
       }
     end
   end
 
-  def save_json_file
-    save_file(output_path, output_filename, toc_hash.to_json)
-  end
+  def process_documents(entries_by_toc_subject)
+    documents=[]
+    entries_by_toc_subject.each do |toc_subject, entries_by_toc_subject|
+      if toc_subject.present?
+        documents << process_document_with_subject(entries_by_toc_subject)
+      else
+        documents << process_document_without_subject(entries_by_toc_subject)
+      end
 
-  def save_file(path, filename, ruby_object)
-    Dir.chdir(path)
-    file = File.open(filename, 'w')
-    file.puts(ruby_object)
-    file.close
-    Dir.chdir(Rails.root)
-  end
-
-class Category
-  attr_reader :document, :documents, :cat_node, :name
-
-  def initialize(cat_node)
-    @cat_node = cat_node
-    @documents = []
-  end
-
-  def process_nodes
-    cat_node.children.each do |node|
-      process_hd_node(node) if node.name == 'HD'
-      process_sj_node(node) if node.name == 'SJ'
-      process_subsj_node(node) if node.name == 'SUBSJ'
-      process_sjdent_node(node) if node.name == "SJDENT"
-      process_ssjdent_node(node) if node.name == "SSJDENT"
-      process_docent_node(node) if node.name == 'DOCENT'
     end
+    documents.flatten
   end
 
-  def process_hd_node(hd_node)
-    @name = hd_node.text
-  end
-
-  def process_sj_node(sj_node)
-    @document = CategoryDocument.new
-    document.subject_1 = sj_node.text
-  end
-
-  def process_subsj_node(subsj_node)
-    document.subject_2 = subsj_node.text
-  end
-
-  def process_sjdent_node(sjdent_node)
-    document.subject_2 = sjdent_node.at_css('SJDOC').text
-    document.document_numbers = process_document_numbers(sjdent_node.css('FRDOCBP'))
-    write_document
-  end
-
-  def process_ssjdent_node(ssjdent_node)
-    subsjdoc_text = ssjdent_node.css('SUBSJDOC').text
-    document.subject_3 = subsjdoc_text if subsjdoc_text.present?
-    document.document_numbers = process_document_numbers(ssjdent_node.css('FRDOCBP'))
-    write_document
-  end
-
-  def process_docent_node(docent_node)
-    @document = CategoryDocument.new
-    document.subject_1 = docent_node.at_css('DOC').text
-    document.document_numbers = process_document_numbers(docent_node.css('FRDOCBP'))
-    write_document
-  end
-
-  def process_document_numbers(doc_nodes)
-    doc_nodes.map{ |doc_node| doc_node.text }
-  end
-
-  def write_document
-    subject_1 = document.subject_1
-    documents << document.dup
-    document = CategoryDocument.new
-    document.subject_1 = subject_1
-    #TODO: Is it necessary to clear subject_2?
-  end
-
-  def documents_as_hashes
-    documents.map do |document|
+  def process_document_with_subject(entries_by_toc_subject)
+    entries_by_toc_subject.map do |entry|
       {
-        subject_1: document.subject_1,
-        subject_2: document.subject_2,
-        subject_3: document.subject_3,
-        document_numbers: document.document_numbers
-      }.delete_if{|k,v| v.nil?}
+        subject_1: entry.toc_subject,
+        subject_2: entry.toc_doc || entry.title,
+        document_numbers: [entry.document_number]
+      }
     end
   end
 
-end
+  def process_document_without_subject(entries_by_toc_subject)
+    entries_by_toc_subject.map do |entry|
+    {
+      subject_1: entry.toc_doc || entry.title,
+      document_numbers: [entry.document_number]
+    }
+    end
+  end
 
-class CategoryDocument
-  attr_accessor :subject_1, :subject_2, :subject_3, :document_numbers
-end
+  private
 
-private
-
-def input_location
-  'data/bulkdata/FR-' + date.strftime('%Y-%m-%d') + '.xml'
-end
-
-def output_path
-  FileUtils.mkdir_p('data/json/document_table_of_contents/' + date.strftime('%Y') +
-    '/' + date.strftime('%m') + '/')
-  path = 'data/json/document_table_of_contents/' + date.strftime('%Y') +
-    '/' + date.strftime('%m') + '/'
-end
-
-def output_filename
-  date.strftime('%d') +'.json'
-end
+  def save_file(path, filename, table_of_contents_hash)
+    FileUtils.mkdir_p(path)
+    File.open "#{path}/#{filename}", 'w' do |f|
+      f.write(table_of_contents_hash)
+    end
+  end
 
 end
