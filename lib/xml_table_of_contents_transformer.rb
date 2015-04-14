@@ -8,6 +8,12 @@ class XmlTableOfContentsTransformer
     @toc_hash = {agencies:[] }
   end
 
+  def self.perform(date)
+    toc_stub = new(date)
+    toc_stub.process
+    toc_stub.save_json_file
+  end
+
   def process
     xml_input_file = File.open(input_location)
     nokogiri_doc = Nokogiri::XML(xml_input_file).css('CNTNTS')
@@ -71,13 +77,13 @@ class XmlTableOfContentsTransformer
     save_file(output_path, output_filename, toc_hash.to_json)
   end
 
-  def save_file(path, filename, ruby_object)
-    Dir.chdir(path)
-    file = File.open(filename, 'w')
-    file.puts(ruby_object)
-    file.close
-    Dir.chdir(Rails.root)
+  def save_file(path, filename, table_of_contents_hash)
+    FileUtils.mkdir_p(path)
+    File.open "#{path}/#{filename}", 'w' do |f|
+      f.write(table_of_contents_hash)
+    end
   end
+
 
 class Category
   attr_reader :document, :documents, :cat_node, :name
@@ -163,14 +169,11 @@ end
 private
 
 def input_location
-  'data/bulkdata/FR-' + date.strftime('%Y-%m-%d') + '.xml'
+  "data/bulkdata/FR-#{date.strftime('%Y-%m-%d')}.xml"
 end
 
 def output_path
-  FileUtils.mkdir_p('data/json/document_table_of_contents/' + date.strftime('%Y') +
-    '/' + date.strftime('%m') + '/')
-  path = 'data/json/document_table_of_contents/' + date.strftime('%Y') +
-    '/' + date.strftime('%m') + '/'
+  "data/document_issues/json/#{date.to_s(:year_month)}/"
 end
 
 def output_filename

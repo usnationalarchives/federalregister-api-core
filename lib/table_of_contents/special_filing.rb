@@ -5,7 +5,7 @@ class TableOfContents::SpecialFiling < TableOfContentsTransformer
   end
 
   def self.perform(date)
-    toc_stub = new(date).save_public_inspection_special_filings_toc
+    new(date).save_public_inspection_special_filings_toc
   end
 
   def issue

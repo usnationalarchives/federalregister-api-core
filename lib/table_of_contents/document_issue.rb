@@ -5,7 +5,7 @@ class TableOfContents::DocumentIssue < TableOfContentsTransformer
   end
 
   def self.perform(date)
-    toc_stub = new(date).save_standard_toc
+    new(date).save_standard_toc
   end
 
   def standard_toc
