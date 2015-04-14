@@ -1,26 +1,54 @@
+# Testing Regular TOC
+# ===========================================
+# reload!; presenter=LegacyTableOfContentsTransformer.new("1999-01-06"); presenter.save_standard_doc
+# presenter.save_json_file
+
+# Testing Public Inspection
+# ===========================================
+# reload!; presenter=LegacyTableOfContentsTransformer.new("2011-10-28", {public_inspection: true}); presenter.save_public_inspection_special_filings
+# presenter.save_json_file
+
+# Testing All File Formats
+# reload!; presenter=LegacyTableOfContentsTransformer.new("2011-10-28", {public_inspection: true}); presenter.save_all_files
+
 require 'ostruct'
 
 class LegacyTableOfContentsTransformer
-  attr_reader :date, :agencies, :toc_hash, :entries_without_agencies
+  attr_reader :date,
+    :entries_without_agencies_standard, :agencies_standard,
+    :agencies_special_filings, :entries_without_agencies_special_filings,
+    :agencies_regular_filings, :entries_without_agencies_regular_filings
 
-  def initialize(date = "1999-01-04")
+  def initialize(date)# Test Date: "1999-01-04"
+    @date = date.to_date
+  end
+
+  def initialize_standard_toc
     publication_date = date
     issue = Issue.completed.find_by_publication_date!(publication_date)
     toc = TableOfContentsPresenter.new(issue.entries.scoped(:include => [:agencies, :agency_names]))
 
-    @date = date.to_date
-    @entries_without_agencies = toc.entries_without_agencies
-    @agencies = toc.agencies
-    @toc_hash = {agencies: [] }
+    @agencies_standard = toc.agencies
+    @entries_without_agencies_standard = toc.entries_without_agencies
   end
 
-  def process
-    process_agencies
-    process_entries_without_agencies if entries_without_agencies.present?
-    toc_hash
+  def initialize_public_inspection_toc
+    issue = PublicInspectionIssue.published.find_by_publication_date!(date)
+    special_documents = TableOfContentsPresenter.new(
+      issue.public_inspection_documents.special_filing.scoped(:include => :docket_numbers),
+      :always_include_parent_agencies => true
+      )
+    regular_documents = TableOfContentsPresenter.new(
+      issue.public_inspection_documents.regular_filing.scoped(:include => :docket_numbers),
+      :always_include_parent_agencies => true)
+    @agencies_special_filings = special_documents.agencies
+    @entries_without_agencies_special_filings = special_documents.entries_without_agencies
+    @agencies_regular_filings = regular_documents.agencies
+    @entries_without_agencies_regular_filings = regular_documents.entries_without_agencies
   end
 
-  def process_agencies
+  def process_agencies(agencies)
+    agencies_with_metadata = {agencies: []}
     agencies.each do |agency|
       if agency
         agency_hash = {
@@ -31,13 +59,15 @@ class LegacyTableOfContentsTransformer
           document_categories: process_document_categories(agency)
         }.reject{|key,val| val.nil? }
 
-        toc_hash[:agencies] << agency_hash
+        agencies_with_metadata[:agencies] << agency_hash
       end
     end
+    agencies_with_metadata
   end
 
-  def process_entries_without_agencies
-    entries_without_agencies.group_by(&:agency_names).each do |agency_names, entries|
+  def process_entries_without_agencies(agencies)
+    agencies_with_metadata = {agencies: []}
+    agencies.group_by(&:agency_names).each do |agency_names, entries|
       agency_struct = create_agency_representation_struct(agency_names.map(&:name).to_sentence)
       agency_hash = {
         name: agency_struct.name,
@@ -50,9 +80,54 @@ class LegacyTableOfContentsTransformer
           }
         ]
       }
-
-      toc_hash[:agencies] << agency_hash
+      agencies_with_metadata[:agencies] << agency_hash
     end
+    agencies_with_metadata
+  end
+
+  def agency_hash(agencies, entries_without_agencies)
+    if entries_without_agencies.present?
+      hsh = process_agencies(agencies)
+      process_entries_without_agencies(entries_without_agencies)[:agencies].each do |agency|
+        hsh[:agencies] << agency
+      end
+      hsh
+    else
+      process_agencies(agencies)
+    end
+  end
+
+  def standard_toc
+    initialize_standard_toc
+    agency_hash(agencies_standard, entries_without_agencies_standard)
+  end
+
+  def special_filings_toc
+    initialize_public_inspection_toc
+    agency_hash(agencies_special_filings, entries_without_agencies_special_filings)
+  end
+
+  def regular_filings_toc
+    initialize_public_inspection_toc
+    agency_hash(agencies_regular_filings, entries_without_agencies_regular_filings)
+  end
+
+  def save_standard_toc
+    save_file(standard_toc_output_path, "#{day}.json", standard_toc.to_json)
+  end
+
+  def save_public_inspection_special_filings_toc
+    save_file(public_inspection_output_path, "special_filing.json", special_filings_toc.to_json)
+  end
+
+  def save_public_inspection_regular_filings_toc
+    save_file(public_inspection_output_path, "regular_filing.json", regular_filings_toc.to_json)
+  end
+
+  def save_all_files
+    save_standard_toc
+    save_public_inspection_special_filings_toc
+    save_public_inspection_regular_filings_toc
   end
 
   def url_lookup(agency_name)
@@ -73,19 +148,6 @@ class LegacyTableOfContentsTransformer
   def lookup_agency(agency_name)
     agency_alias = AgencyName.find_by_name(agency_name)
     agency_alias.agency if agency_alias
-  end
-
-  def save_json_file
-    process
-    save_file(output_path, output_filename, toc_hash.to_json)
-  end
-
-  def save_file(path, filename, ruby_object)
-    Dir.chdir(path)
-    file = File.open(filename, 'w')
-    file.puts(ruby_object)
-    file.close
-    Dir.chdir(Rails.root)
   end
 
   def process_see_also(agency)
@@ -140,20 +202,31 @@ class LegacyTableOfContentsTransformer
 
   private
 
-  def output_path
-    FileUtils.mkdir_p('data/json/document_table_of_contents/' + date.strftime('%Y') +
-      '/' + date.strftime('%m') + '/')
-    path = 'data/json/document_table_of_contents/' + date.strftime('%Y') +
-      '/' + date.strftime('%m') + '/'
+  def save_file(path, filename, ruby_object)
+    Dir.chdir(path)
+    file = File.open(filename, 'w')
+    file.puts(ruby_object)
+    file.close
+    Dir.chdir(Rails.root)
   end
 
-  def output_filename
-    date.strftime('%d') +'.json'
+  def standard_toc_output_path
+    path = 'data/document_issues/json/' + date.strftime('%Y') +
+      '/' + date.strftime('%m') + '/'
+    FileUtils.mkdir_p(path)
+    path
+  end
+
+  def public_inspection_output_path
+    path = 'data/public_inspection_issues/json/' + date.strftime('%Y') +
+      '/' + date.strftime('%m') + '/' + date.strftime('%d') + '/'
+    FileUtils.mkdir_p(path)
+    path
+  end
+
+  def day
+    date.strftime('%d')
   end
 
 end
-
-# presenter=LegacyTableOfContentsTransformer.new("1999-01-06"); presenter.save_json_file
-# presenter.save_json_file
-
 
