@@ -1,4 +1,4 @@
-# This file is auto-generated from the current state of the database. Instead of editing this file,
+# This file is auto-generated from the current state of the database. Instead of editing this file, 
 # please use the migrations feature of Active Record to incrementally modify your database, and
 # then regenerate this schema definition.
 #
@@ -9,9 +9,10 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20141111200846) do
+ActiveRecord::Schema.define(:version => 20150415214152) do
+
   create_table "action_names", :force => true do |t|
-    t.text     "name"
+    t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -64,7 +65,8 @@ ActiveRecord::Schema.define(:version => 20141111200846) do
   add_index "agencies_sections", ["agency_id", "section_id"], :name => "index_agencies_sections_on_agency_id_and_section_id"
   add_index "agencies_sections", ["section_id", "agency_id"], :name => "index_agencies_sections_on_section_id_and_agency_id"
 
-  create_table "agency_assignments", :force => true do |t|
+  create_table "agency_assignments", :id => false, :force => true do |t|
+    t.integer "id",              :default => 0, :null => false
     t.integer "assignable_id"
     t.integer "agency_id"
     t.integer "position"
@@ -75,6 +77,18 @@ ActiveRecord::Schema.define(:version => 20141111200846) do
   add_index "agency_assignments", ["agency_id", "assignable_id"], :name => "index_agency_assignments_on_agency_id_and_entry_id"
   add_index "agency_assignments", ["agency_name_id"], :name => "index_agency_assignments_on_agency_name_id"
   add_index "agency_assignments", ["assignable_type", "assignable_id", "agency_id"], :name => "index_agency_assignments_on_assignable_and_agency_id"
+
+  create_table "agency_assignments_archive", :force => true do |t|
+    t.integer "assignable_id"
+    t.integer "agency_id"
+    t.integer "position"
+    t.string  "assignable_type"
+    t.integer "agency_name_id"
+  end
+
+  add_index "agency_assignments_archive", ["agency_id", "assignable_id"], :name => "index_agency_assignments_on_agency_id_and_entry_id"
+  add_index "agency_assignments_archive", ["agency_name_id"], :name => "index_agency_assignments_on_agency_name_id"
+  add_index "agency_assignments_archive", ["assignable_type", "assignable_id", "agency_id"], :name => "index_agency_assignments_on_assignable_and_agency_id"
 
   create_table "agency_highlights", :force => true do |t|
     t.integer "entry_id"
@@ -172,7 +186,7 @@ ActiveRecord::Schema.define(:version => 20141111200846) do
     t.string  "number"
     t.string  "assignable_type"
     t.integer "assignable_id"
-    t.integer "position",        :default => 0, :null => false
+    t.integer "position",        :default => 0
   end
 
   add_index "docket_numbers", ["assignable_type", "assignable_id"], :name => "index_docket_numbers_on_assignable_type_and_assignable_id"
@@ -663,4 +677,5 @@ ActiveRecord::Schema.define(:version => 20141111200846) do
     t.string   "last_name"
     t.boolean  "active",              :default => true
   end
+
 end

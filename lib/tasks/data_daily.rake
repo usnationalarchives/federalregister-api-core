@@ -17,7 +17,7 @@ namespace :data do
     )
 
     task :really_quick => %w(
-      content:entries:import
+      content:entries:import:except_regulations_dot_gov
       content:issues:mark_complete
     )
 
