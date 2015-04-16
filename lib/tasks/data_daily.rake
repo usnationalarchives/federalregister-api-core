@@ -2,8 +2,8 @@ namespace :data do
   task :daily => :environment do
     Content::ImportDriver::EntryDriver.new.perform
   end
-  
-  namespace :daily do 
+
+  namespace :daily do
     # used to avoid thundering herd after clearing sitewide cache
     task :sleep do
       sleep(60)
@@ -15,9 +15,9 @@ namespace :data do
       content:entries:extract_equation_pages
       data:extract:places
     )
-    
+
     task :really_quick => %w(
-      content:entries:import
+      content:entries:import:except_regulations_dot_gov
       content:issues:mark_complete
     )
 
@@ -30,7 +30,7 @@ namespace :data do
       content:entries:html:compile:all
       content:issues:mark_complete
     )
-    
+
     task :full => %w(
       content:section_highlights:clone
       data:daily:basic
