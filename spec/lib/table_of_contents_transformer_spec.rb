@@ -4,7 +4,7 @@ describe TableOfContentsTransformer do
 attr_reader :transformer
 
   before(:each) do
-    @transformer = TableOfContentsTransformer.new('2015-01-01')
+    @transformer = XmlTableOfContentsTransformer.new('2015-01-01')
   end
 
   def make_nokogiri_doc(xml)
@@ -13,18 +13,18 @@ attr_reader :transformer
 
   describe 'Agency-lookup and cross-referencing' do
     it "AgencyName matches an existing Agency" do
-      agency = Agency.create(name: "Test Agency", slug: "test-slug", url: "http://wwww.test.com")
+      agency = Agency.create(name: "Test Agency", slug: "test-agency", url: "https://wwww.example.com/agencies/test-slug")
       agency.agency_names << AgencyName.create(name: "Agency Test")
-      agency_representation = transformer.create_agency_representation_struct("Agency Test")
+      agency_representation = transformer.create_agency_representation("Agency Test")
 
       agency_representation.name.should == "Agency Test"
-      agency_representation.slug.should == "test-agency"
-      agency_representation.url.should == "http://wwww.test.com"
+      agency_representation.slug.should == "agency-test"
+      agency_representation.url.should == "https://wwww.example.com/agencies/test-slug"
     end
 
     it "Provided agency name matches AgencyName but no matching Agency" do
       AgencyName.create(name: "Agency Test")
-      agency_representation = transformer.create_agency_representation_struct("Agency Test")
+      agency_representation = transformer.create_agency_representation("Agency Test")
 
       agency_representation.name.should == "Agency Test"
       agency_representation.slug.should == "agency-test"
@@ -32,13 +32,12 @@ attr_reader :transformer
     end
 
     it "Provided agency does not match any AgencyName" do
-      agency_representation = transformer.create_agency_representation_struct("Agency Test")
+      agency_representation = transformer.create_agency_representation("Agency Test")
 
       agency_representation.name.should == "Agency Test"
       agency_representation.slug.should == "agency-test"
       agency_representation.url.should == ""
     end
-
   end
 
   it "Creates multiple 'See Also' hashes" do
@@ -82,7 +81,7 @@ attr_reader :transformer
           ]
       }
 
-    transformer.build_table_of_contents_hash(@nokogiri_doc).should == expected
+    transformer.build_table_of_contents(@nokogiri_doc).should == expected
   end
 
   it "Identifies category type based on first <HD>" do
@@ -107,7 +106,7 @@ attr_reader :transformer
             }
           ]
       }
-    transformer.build_table_of_contents_hash(@nokogiri_doc).should == expected
+    transformer.build_table_of_contents(@nokogiri_doc).should == expected
   end
 
   describe "Matching subject_1" do
@@ -150,7 +149,7 @@ attr_reader :transformer
             ]
         }
 
-      transformer.build_table_of_contents_hash(@nokogiri_doc).should == expected
+      transformer.build_table_of_contents(@nokogiri_doc).should == expected
     end
   end
 
@@ -197,7 +196,7 @@ attr_reader :transformer
             ]
         }
 
-      transformer.build_table_of_contents_hash(@nokogiri_doc).should == expected
+      transformer.build_table_of_contents(@nokogiri_doc).should == expected
 
     end
 
@@ -242,7 +241,7 @@ attr_reader :transformer
             ]
         }
 
-      transformer.build_table_of_contents_hash(@nokogiri_doc).should == expected
+      transformer.build_table_of_contents(@nokogiri_doc).should == expected
     end
 
   end
@@ -292,7 +291,7 @@ attr_reader :transformer
             ]
         }
 
-      transformer.build_table_of_contents_hash(@nokogiri_doc).should == expected
+      transformer.build_table_of_contents(@nokogiri_doc).should == expected
       end
 
   end
@@ -340,7 +339,7 @@ attr_reader :transformer
             ]
         }
 
-      transformer.build_table_of_contents_hash(@nokogiri_doc).should == expected
+      transformer.build_table_of_contents(@nokogiri_doc).should == expected
 
     end
 
@@ -387,7 +386,7 @@ attr_reader :transformer
             ]
         }
 
-      transformer.build_table_of_contents_hash(@nokogiri_doc).should == expected
+      transformer.build_table_of_contents(@nokogiri_doc).should == expected
     end
   end
 

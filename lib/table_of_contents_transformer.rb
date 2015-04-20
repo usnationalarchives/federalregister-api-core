@@ -4,7 +4,7 @@ class TableOfContentsTransformer
   attr_reader :date
 
   def initialize(date)
-    @date = date.to_date
+    @date = date.is_a?(Date) ? date : Date.parse(date)
   end
 
   def process_agencies(agencies)
