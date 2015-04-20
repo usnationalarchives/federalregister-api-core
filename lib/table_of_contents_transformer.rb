@@ -7,6 +7,18 @@ class TableOfContentsTransformer
     @date = date.is_a?(Date) ? date : Date.parse(date)
   end
 
+  def agency_hash(agencies, entries_without_agencies)
+    if entries_without_agencies.present?
+      hsh = process_agencies(agencies)
+      process_entries_without_agencies(entries_without_agencies)[:agencies].each do |agency|
+        hsh[:agencies] << agency
+      end
+      hsh
+    else
+      process_agencies(agencies)
+    end
+  end
+
   def process_agencies(agencies)
     agencies_with_metadata = {agencies: []}
     agencies.each do |agency|
@@ -28,7 +40,7 @@ class TableOfContentsTransformer
   def process_entries_without_agencies(agencies)
     agencies_with_metadata = {agencies: []}
     agencies.group_by(&:agency_names).each do |agency_names, entries|
-      agency_stub = create_agency_representation_stub(agency_names.map(&:name).to_sentence)
+      agency_stub = create_agency_representation(agency_names.map(&:name).to_sentence)
       agency_hash = {
         name: agency_stub.name,
         slug: agency_stub.slug,
@@ -45,47 +57,43 @@ class TableOfContentsTransformer
     agencies_with_metadata
   end
 
-  def agency_hash(agencies, entries_without_agencies)
-    if entries_without_agencies.present?
-      hsh = process_agencies(agencies)
-      process_entries_without_agencies(entries_without_agencies)[:agencies].each do |agency|
-        hsh[:agencies] << agency
-      end
-      hsh
-    else
-      process_agencies(agencies)
-    end
-  end
-
   def url_lookup(agency_name)
     agency_stub = create_agency_representation_stub(agency_name)
     agency_stub.url
   end
 
-  def create_agency_representation_stub(agency_name)
-    agency = lookup_agency(agency_name)
-    if agency
-      agency_representation = OpenStruct.new(name: agency_name, slug: agency.slug, url: agency.url)
-    elsif agency_name.empty?
-      agency_representation = OpenStruct.new(name: "Other Documents", slug: "other_documents", url: "")
+  def create_agency_representation(agency_name)
+    if agency_name.empty?
+      agency_representation = OpenStruct.new(
+        name: "Other Documents",
+        slug: "other-documents",
+        url: ""
+      )
     else
-      agency_representation = OpenStruct.new(name: agency_name, slug: agency_name.downcase.gsub(' ','-'), url: '' )
+      agency_representation = OpenStruct.new(
+        name: agency_name,
+        slug: agency_name.downcase.gsub(' ','-'),
+        url: ''
+      )
+
+      agency = lookup_agency(agency_name)
+      agency_representation.url = agency.url if agency
     end
+
     agency_representation
   end
 
   def lookup_agency(agency_name)
-    agency_alias = AgencyName.find_by_name(agency_name)
-    agency_alias.agency if agency_alias
+    AgencyName.find_by_name(agency_name).try(:agency)
   end
 
   def process_see_also(agency)
-    agency.children.map { |sub_agency|
+    agency.children.map do |sub_agency|
       {
         name: sub_agency.name,
         slug: sub_agency.slug
       }
-    }
+    end
   end
 
   def process_document_categories(agency)
@@ -105,8 +113,8 @@ class TableOfContentsTransformer
       else
         documents << process_document_without_subject(entries_by_toc_subject)
       end
-
     end
+
     documents.flatten
   end
 
@@ -129,13 +137,21 @@ class TableOfContentsTransformer
     end
   end
 
-  private
+  def save(table_of_contents)
+    FileUtils.mkdir_p(json_toc_dir)
 
-  def save_file(path, filename, table_of_contents_hash)
-    FileUtils.mkdir_p(path)
-    File.open "#{path}/#{filename}", 'w' do |f|
-      f.write(table_of_contents_hash)
+    File.open json_path, 'w' do |f|
+      f.write(table_of_contents.to_json)
     end
   end
 
+  private
+
+  def json_toc_dir
+    "data/document_issues/json/#{date.to_s(:year_month)}"
+  end
+
+  def json_path
+    "#{json_toc_dir}/#{date.strftime('%d')}.json"
+  end
 end
