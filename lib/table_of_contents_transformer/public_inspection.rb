@@ -6,6 +6,6 @@ class TableOfContentsTransformer::PublicInspection < TableOfContentsTransformer
   private
 
   def json_toc_dir
-    "data/public_inspection_issues/json/#{date.to_s(:year_month)}/#{date.strftime('%d')}"
+    path_manager.public_inspection_issue_json_toc_dir
   end
 end

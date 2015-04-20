@@ -2,10 +2,12 @@ require 'ostruct'
 
 class XmlTableOfContentsTransformer
   attr_reader :date, :table_of_contents
+  attr_reader :date, :path_manager, :table_of_contents
 
   def initialize(date)
     @date = date.is_a?(Date) ? date : Date.parse(date)
     @table_of_contents = {agencies:[]}
+    @path_manager = FileSystemPathManager.new(@date)
   end
 
   def self.perform(date)
@@ -13,10 +15,10 @@ class XmlTableOfContentsTransformer
   end
 
   def process
-    xml_input_file = File.open(xml_path)
-    nokogiri_doc = Nokogiri::XML(xml_input_file).css('CNTNTS')
-    xml_input_file.close
-    build_table_of_contents(nokogiri_doc)
+    contents_node = File.open(path_manager.document_issue_xml_path) do |file|
+      Nokogiri::XML(file).css('CNTNTS')
+    end
+    build_table_of_contents(contents_node)
   end
 
   def build_table_of_contents(nokogiri_doc)
@@ -75,9 +77,9 @@ class XmlTableOfContentsTransformer
   end
 
   def save(table_of_contents)
-    FileUtils.mkdir_p(json_toc_dir)
+    FileUtils.mkdir_p(path_manager.document_issue_json_toc_dir)
 
-    File.open json_path, 'w' do |f|
+    File.open path_manager.document_issue_json_toc_path, 'w' do |f|
       f.write(table_of_contents.to_json)
     end
   end
@@ -162,19 +164,5 @@ class XmlTableOfContentsTransformer
 
   class CategoryDocument
     attr_accessor :subject_1, :subject_2, :subject_3, :document_numbers
-  end
-
-  private
-
-  def xml_path
-    "data/documents/full_text/xml/#{date.to_s(:ymd)}.xml"
-  end
-
-  def json_toc_dir
-    "data/document_issues/json/#{date.to_s(:year_month)}"
-  end
-
-  def json_path
-    "#{json_toc_dir}/#{date.strftime('%d')}.json"
   end
 end

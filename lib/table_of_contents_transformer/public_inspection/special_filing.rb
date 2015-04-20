@@ -9,6 +9,6 @@ class TableOfContentsTransformer::PublicInspection::SpecialFiling < TableOfConte
   private
 
   def json_path
-    "#{json_toc_dir}/special_filing.json"
+    path_manager.public_inspection_issue_special_filing_json_toc_path
   end
 end

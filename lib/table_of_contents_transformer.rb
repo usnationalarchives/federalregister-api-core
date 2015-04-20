@@ -1,10 +1,11 @@
 require 'ostruct'
 
 class TableOfContentsTransformer
-  attr_reader :date
+  attr_reader :date, :path_manager
 
   def initialize(date)
     @date = date.is_a?(Date) ? date : Date.parse(date)
+    @path_manager = FileSystemPathManager.new(@date)
   end
 
   def self.perform(date)

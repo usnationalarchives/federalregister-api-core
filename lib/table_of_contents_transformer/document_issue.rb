@@ -12,10 +12,10 @@ class TableOfContentsTransformer::DocumentIssue < TableOfContentsTransformer
   private
 
   def json_toc_dir
-    "data/document_issues/json/#{date.to_s(:year_month)}"
+    path_manager.document_issue_json_toc_dir
   end
 
   def json_path
-    "#{json_toc_dir}/#{date.strftime('%d')}.json"
+    path_manager.document_issue_json_toc_path
   end
 end

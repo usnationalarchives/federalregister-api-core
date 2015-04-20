@@ -3,36 +3,31 @@ class Content::EntryImporter::BulkdataFile
 
   extend ActiveSupport::Memoizable
 
+  attr_reader :path_manager
+
   def initialize(date, force_reload_bulkdata)
     @force_reload_bulkdata = force_reload_bulkdata
     @date = date.is_a?(String) ? Date.parse(date) : date
+    @path_manager = FileSystemPathManager.new(@date)
   end
 
   def url
     "http://www.gpo.gov:80/fdsys/bulkdata/FR/#{@date.to_s(:year_month)}/FR-#{@date.to_s(:db)}.xml"
   end
 
-  def file_path
-    "#{document_issue_xml_path}/#{@date.to_s(:iso)}.xml"
-  end
-
-  def document_issue_xml_path
-    "#{Rails.root}/data/document_issues/xml/#{@date.to_s(:year_month)}"
-  end
-
   def document
-    if @force_reload_bulkdata && File.exists?(file_path)
-      File.delete(file_path)
+    if @force_reload_bulkdata && File.exists?(path_manager.document_issue_xml_path)
+      File.delete(path_manager.document_issue_xml_path)
     end
 
     begin
-      FileUtils.mkdir_p(document_issue_xml_path)
+      FileUtils.mkdir_p(path_manager.document_issue_xml_dir)
 
-      Curl::Easy.download(url, file_path){|c| c.follow_location = true} unless File.exists?(file_path)
-      doc = Nokogiri::XML(open(file_path))
+      Curl::Easy.download(url, path_manager.document_issue_xml_path){|c| c.follow_location = true} unless File.exists?(path_manager.document_issue_xml_path)
+      doc = Nokogiri::XML(open(path_manager.document_issue_xml_path))
       raise Content::EntryImporter::BulkdataFile::DownloadError unless doc.root.name == "FEDREG"
     rescue
-      File.delete(file_path)
+      File.delete(path_manager.document_issue_xml_path)
       raise Content::EntryImporter::BulkdataFile::DownloadError
     end
     doc.root
