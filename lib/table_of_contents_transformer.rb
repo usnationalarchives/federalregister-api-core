@@ -7,7 +7,11 @@ class TableOfContentsTransformer
     @date = date.is_a?(Date) ? date : Date.parse(date)
   end
 
-  def agency_hash(agencies, entries_without_agencies)
+  def self.perform(date)
+    new(date).save(table_of_contents)
+  end
+
+  def table_of_contents
     if entries_without_agencies.present?
       hsh = process_agencies(agencies)
       process_entries_without_agencies(entries_without_agencies)[:agencies].each do |agency|
@@ -17,6 +21,14 @@ class TableOfContentsTransformer
     else
       process_agencies(agencies)
     end
+  end
+
+  def agencies
+    toc_presenter.agencies
+  end
+
+  def entries_without_agencies
+    toc_presenter.entries_without_agencies
   end
 
   def process_agencies(agencies)
