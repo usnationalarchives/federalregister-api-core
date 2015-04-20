@@ -18,6 +18,7 @@ namespace :data do
 
     task :really_quick => %w(
       content:entries:import:except_regulations_dot_gov
+      content:entries:json:compile:daily_toc
       content:issues:mark_complete
     )
 
