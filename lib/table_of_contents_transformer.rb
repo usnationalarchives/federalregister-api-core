@@ -144,14 +144,4 @@ class TableOfContentsTransformer
       f.write(table_of_contents.to_json)
     end
   end
-
-  private
-
-  def json_toc_dir
-    "data/document_issues/json/#{date.to_s(:year_month)}"
-  end
-
-  def json_path
-    "#{json_toc_dir}/#{date.strftime('%d')}.json"
-  end
 end
