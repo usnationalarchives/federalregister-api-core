@@ -1,7 +1,6 @@
 require 'ostruct'
 
 class XmlTableOfContentsTransformer
-  attr_reader :date, :table_of_contents
   attr_reader :date, :path_manager, :table_of_contents
 
   def initialize(date)
@@ -11,7 +10,9 @@ class XmlTableOfContentsTransformer
   end
 
   def self.perform(date)
-    new(date).save(process)
+    transformer = new(date)
+    transformer.process
+    transformer.save
   end
 
   def process
@@ -21,8 +22,8 @@ class XmlTableOfContentsTransformer
     build_table_of_contents(contents_node)
   end
 
-  def build_table_of_contents(nokogiri_doc)
-    nokogiri_doc.css('AGCY').each do |agency_node|
+  def build_table_of_contents(contents_node)
+    contents_node.css('AGCY').each do |agency_node|
       agency = create_agency_representation(agency_node.css('HD').first.text)
       table_of_contents[:agencies].push({
         name: agency.name,
@@ -76,7 +77,7 @@ class XmlTableOfContentsTransformer
     end
   end
 
-  def save(table_of_contents)
+  def save
     FileUtils.mkdir_p(path_manager.document_issue_json_toc_dir)
 
     File.open path_manager.document_issue_json_toc_path, 'w' do |f|
