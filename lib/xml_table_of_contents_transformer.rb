@@ -1,15 +1,15 @@
 require 'ostruct'
 
 class XmlTableOfContentsTransformer
-  attr_reader :date, :toc_hash
+  attr_reader :date, :table_of_contents
 
   def initialize(date)
     @date = date.is_a?(Date) ? date : Date.parse(date)
-    @toc_hash = {agencies:[]}
+    @table_of_contents = {agencies:[]}
   end
 
   def self.perform(date)
-    new(date).process.save
+    new(date).save(process)
   end
 
   def process
@@ -22,7 +22,7 @@ class XmlTableOfContentsTransformer
   def build_table_of_contents(nokogiri_doc)
     nokogiri_doc.css('AGCY').each do |agency_node|
       agency = create_agency_representation(agency_node.css('HD').first.text)
-      toc_hash[:agencies].push({
+      table_of_contents[:agencies].push({
         name: agency.name,
         slug: agency.slug,
         url: agency.url,
@@ -30,24 +30,25 @@ class XmlTableOfContentsTransformer
         document_categories: parse_category(agency_node.css('CAT'))
       }.delete_if{|k,v| v.nil?})
     end
-    toc_hash
+    table_of_contents
   end
 
   def create_agency_representation(agency_name)
     agency = lookup_agency(agency_name)
-    agency_slug = agency_name.downcase.gsub(' ','-')
 
-    agency_representation = OpenStruct.new(name: agency_name, slug: agency_slug, url: '' )
+    agency_representation = OpenStruct.new(
+      name: agency_name,
+      slug: agency_name.downcase.gsub(' ','-'),
+      url: ''
+    )
 
-    if agency
-      agency_representation.url = agency.url
-    end
+    agency_representation.url = agency.url if agency
+
     agency_representation
   end
 
   def lookup_agency(agency_name)
-    agency_alias = AgencyName.find_by_name(agency_name)
-    agency_alias.try(:agency)
+    AgencyName.find_by_name(agency_name).try(:agency)
   end
 
   def parse_see_also(see_also_nodes)
@@ -77,7 +78,7 @@ class XmlTableOfContentsTransformer
     FileUtils.mkdir_p(json_toc_dir)
 
     File.open json_path, 'w' do |f|
-      f.write(table_of_contents_hash.to_json)
+      f.write(table_of_contents.to_json)
     end
   end
 
