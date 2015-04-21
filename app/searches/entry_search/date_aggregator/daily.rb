@@ -7,7 +7,7 @@ class EntrySearch::DateAggregator::Daily < EntrySearch::DateAggregator::Base
     periods = []
 
     date = @start_date
-    while(date < @end_date)
+    while(date <= @end_date)
       periods << [date]
       date = date.advance(:days => 1)
     end
