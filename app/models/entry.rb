@@ -213,12 +213,12 @@ class Entry < ApplicationModel
   end
 
   alias_method :category, :entry_type
-  
+
   define_index do
     # fields
     indexes title
     indexes abstract
-    indexes "CONCAT('#{documents_path}/full_text/raw/', document_file_path, '.txt')", :as => :full_text, :file => true
+    indexes "CONCAT('#{Rails.root}/data/documents/full_text/raw/', document_file_path, '.txt')", :as => :full_text, :file => true
     indexes "GROUP_CONCAT(DISTINCT IFNULL(`entry_regulation_id_numbers`.`regulation_id_number`, '0') SEPARATOR ' ')", :as =>  :regulation_id_number
     indexes <<-SQL, :as => :docket_id
       (
