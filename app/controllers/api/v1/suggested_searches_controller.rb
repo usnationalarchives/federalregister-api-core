@@ -12,6 +12,7 @@ class Api::V1::SuggestedSearchesController < ApiController
       hsh[section.slug] = section.canned_searches.in_order.map{|search|
         suggested_search_json(search).merge({
           :documents_in_last_year => search.documents_in_last(1.year),
+          :documents_with_open_comment_periods => search.documents_with_open_comment_periods,
           :position => search.position,
         })
       }

@@ -38,4 +38,13 @@ class CannedSearch < ApplicationModel
     )
     EntrySearch.new(:conditions => conditions, :metadata_only => true).count
   end
+
+  def documents_with_open_comment_periods
+    conditions = search_conditions.merge(
+      :comment_date => {
+        :gte => Date.today
+      }
+    )
+    EntrySearch.new(:conditions => conditions, :metadata_only => true).count
+  end
 end
