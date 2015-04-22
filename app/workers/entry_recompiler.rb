@@ -1,7 +1,7 @@
 module EntryRecompiler
   @queue = :reimport
 
-  def self.perform(type,date)
-    Content::EntryCompiler.perform(type,date)
+  def self.perform(date)
+    Content::EntryCompiler.perform(date)
   end
 end

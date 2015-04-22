@@ -17,11 +17,11 @@ namespace :content do
       end
     end
 
-    desc "Recompile pre-compiled Entry pages"
+    desc "Recompile pre-compiled Entry and ToC pages"
     task :recompile => :environment do
       Content.parse_dates(ENV['DATE']).each do |date|
-        Resque.enqueue(EntryRecompiler, :abstract, date)
-        Resque.enqueue(EntryRecompiler, :full_text, date)
+        Resque.enqueue(EntryRecompiler, date)
+        Resque.enqueue(TableOfContentsRecompiler, date)
       end
     end
 
