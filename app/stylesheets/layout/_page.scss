@@ -9,6 +9,7 @@ SETUP
 #main,
 #footer .wrapper {
   @include grid_system(16);
+  width: 970px;
   }
 
 .header_column {
