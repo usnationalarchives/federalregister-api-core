@@ -1,2 +1,79 @@
 // VENDORED BOOTSTRAP (symlinked)
 @import "bootstrap/_bootstrap";
+
+.pagination {
+  span {
+    display: block;
+    float: left;
+    padding: 0 14px;
+    line-height: 34px;
+    border: 1px solid #DDD;
+    border-left-width: 0;
+
+    &.disabled {
+      color: #666;
+    }
+  }
+
+  .prev_page {
+    border-left-width: 1px;
+    padding: 0 10px;
+  }
+}
+
+#topic_names {
+  &.edit { background-color: inherit; }
+
+  input[type=submit] {
+    background-color: #EFEFEF;
+    border: 1px solid #999;
+    padding: 10px 5px;
+  }
+
+  fieldset.buttons a {
+    padding-top: 10px;
+    display: block;
+  }
+}
+
+form.formtastic {
+  .boolean input[type=checkbox] {
+    float: left;
+    top: 3px;
+    position: relative;
+  }
+
+  .autocompleter-selected {
+    margin-top: 30px;
+
+    li {
+      padding: 5px;
+      border-radius: 6px;
+      background-color: lighten(#5697CF, 5);
+      color: #FFF;
+      font-size: 14px;
+      margin: 5px;
+      height: 20px;
+      line-height: 20px;
+
+      &:hover {
+        background-color: #5697CF;
+
+        span.remove {
+          color: red;
+          border-color: red;
+        }
+      }
+
+      span.remove {
+        float: right;
+        border: 2px solid #FFF;
+        border-radius: 20px;
+        padding: 0px 5px;
+        display: block;
+        top: -1px;
+        position: relative;
+      }
+    }
+  }
+}

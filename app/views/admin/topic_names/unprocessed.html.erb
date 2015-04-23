@@ -3,19 +3,34 @@
 
 <% sidebar(render :partial => 'nav') %>
 
+<% semantic_form_for @search do |f| %>
+  <% f.inputs do %>
+    <%= f.input :name_contains, :label => "Topic name contains" %>
+  <% end %>
+  <% f.buttons do %>
+    <%= f.commit_button 'Search' %>
+  <% end %>
+<% end %>
+
 <%= will_paginate @topic_names %>
 
 <% if @topic_names.present? %>
-  <table class='grid_10 push_2 sortable'>
+  <table class='sortable table table-bordered table-striped table-condensed' summary="Topics">
     <thead>
       <tr>
-        <th>Agency Name</th>
+        <th><%= order( @search, :by => :name) %></th>
+        <th>Processed?</th>
+        <th>Assigned Topics</th>
+        <th># Documents</th>
       </tr>
     </thead>
     <tbody>
       <% @topic_names.each do |topic_name| %>
         <tr class="<%= cycle("even", "odd") %>">
           <td><%= link_to topic_name.name, edit_admin_topic_name_path(topic_name) %></td>
+          <td><%= topic_name.processed? ? 'Yes' : 'No' %></td>
+          <td><%= topic_name.topics.map{|t| link_to t.name, topic_path(t)}.to_sentence %></td>
+          <td><%= topic_name.topic_name_assignments.size %></td>
         </tr>
       <% end %>
     </tbody>

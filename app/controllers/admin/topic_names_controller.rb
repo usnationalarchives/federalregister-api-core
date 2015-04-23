@@ -1,4 +1,6 @@
 class Admin::TopicNamesController < AdminController
+  layout 'admin_bootstrap'
+
   def index
     search_options = params[:search] || {}
     search_options['order'] ||= 'ascend_by_name'
@@ -10,7 +12,13 @@ class Admin::TopicNamesController < AdminController
   end
   
   def unprocessed
-    @topic_names = TopicName.unprocessed.paginate(:page => params[:page])
+    search_options = params[:search] || {}
+    search_options['order'] ||= 'ascend_by_name'
+    @search = TopicName.unprocessed.scoped(
+      :include => [:topics]
+    ).searchlogic(search_options)
+
+    @topic_names = @search.paginate(:page => params[:page])
   end
   
   def edit

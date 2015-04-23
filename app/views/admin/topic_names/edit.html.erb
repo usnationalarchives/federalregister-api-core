@@ -1,11 +1,16 @@
+<% super_title 'Topic Name Assignment' %>
 <% title "Processing '#{@topic_name.name}'" %>
 
+<% sidebar(render :partial => 'nav') %>
+
 <% semantic_form_for @topic_name, :url => admin_topic_name_path(@topic_name) do |f| %>
+  <%= f.semantic_errors %>
+
   <% f.inputs do %>
     <%= f.input :topics, :as => :autocomplete, :source_data_url => admin_topics_path(:format => :json) %>
-    <%= f.input :void %>
+    <%= f.input :void, :as => :boolean, :checked => @topic_name.void %>
   <% end %>
-  
+
   <% f.buttons do %>
     <%= f.commit_button %>
     <%= link_to 'Cancel', unprocessed_admin_topic_names_path %>
