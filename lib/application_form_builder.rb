@@ -9,7 +9,7 @@ class ApplicationFormBuilder < Formtastic::SemanticFormBuilder
         object.send(method).map do |obj|
           template.content_tag(:li) do
             obj.name + template.hidden_field_tag(attribute_name, obj.id) +
-              template.content_tag(:span, 'X', class: 'remove')
+              template.content_tag(:span, 'X', :class => 'remove')
           end
         end.join("\n")
       }
