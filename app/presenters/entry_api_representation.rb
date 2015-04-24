@@ -50,7 +50,7 @@ class EntryApiRepresentation < ApiRepresentation
   field(:executive_order_notes)
   field(:executive_order_number)
   field(:full_text_xml_url, :select => [:document_file_path, :full_xml_updated_at]){|e| entry_xml_url(e) if e.should_have_full_xml?}
-  field(:html_url, :select => [:publication_date, :document_number]){|e| entry_url(e)}
+  field(:html_url, :select => [:publication_date, :document_number, :title]){|e| entry_url(e)}
   field(:json_url, :select => :document_number) {|e| api_v1_entry_url(e.document_number, :format => :json)}
   field(:mods_url, :select => [:publication_date, :document_number]){|e| e.source_url(:mods)}
   field(:page_length, :select => [:start_page, :end_page]) {|e| e.human_length }
