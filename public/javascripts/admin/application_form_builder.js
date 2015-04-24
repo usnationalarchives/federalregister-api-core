@@ -35,11 +35,10 @@ $(function() {
                     .attr('name',  hidden_field.attr('name'))
                     .attr('value', ui.item.id)
                 )
-              //'<li>' + ui.item.value + '<input type="hidden" name="' + hidden_field.attr('name') + '" value="' + ui.item.id + '" /></li>'
             );
             return false;
           }
-        })
+        });
       }
     });
 
