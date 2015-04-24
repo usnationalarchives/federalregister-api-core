@@ -9,10 +9,9 @@ class TopicName < ApplicationModel
   named_scope :unprocessed, :conditions => {:void => false, :topics_count => 0}, :order => "topic_names.name"
   
   validate :does_not_have_topics_if_void
-  validate :has_at_least_on_topic_unless_void
 
   before_save :update_topics_count
-  
+
   def processed?
     void? || (topics_count > 0)
   end
@@ -22,7 +21,7 @@ class TopicName < ApplicationModel
   end
   
   def topic_ids=(ids)
-    ids = ids.map(&:to_i)
+    ids = ids.reject(&:blank?).map(&:to_i)
     ids_to_remove = topic_ids - ids
     ids_to_add = ids - topic_ids
     
@@ -41,10 +40,6 @@ class TopicName < ApplicationModel
     
     def does_not_have_topics_if_void
       errors.add_to_base("all topics must be removed if marking as void") if (void? && topic_ids.size > 0)
-    end
-
-    def has_at_least_on_topic_unless_void
-      errors.add_to_base("must choose a topic - mark as void if you do not want to associate this with a topic") if (!void && topic_ids.size == 0)
     end
     
     def update_topics_count

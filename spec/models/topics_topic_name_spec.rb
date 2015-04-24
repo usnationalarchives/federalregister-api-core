@@ -13,7 +13,7 @@ describe TopicsTopicName do
   
   describe 'destroy' do
     it "should destroy all associated topic_assignments" do
-      topic_name = Factory(:topic_name)
+      topic_name = Factory.create(:topic_name)
       entry = Factory(:entry, :topic_names => [topic_name])
       topics_topic_name = TopicsTopicName.create(:topic_name => topic_name, :topic => Factory(:topic))
       TopicAssignment.count.should == 1

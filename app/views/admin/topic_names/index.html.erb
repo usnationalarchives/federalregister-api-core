@@ -28,7 +28,7 @@
       <tr class="<%= cycle("even", "odd") %>">
         <td><%= link_to topic_name.name, edit_admin_topic_name_path(topic_name) %></td>
         <td><%= topic_name.processed? ? 'Yes' : 'No' %></td>
-        <td><%= topic_name.topics.map{|t| next unless t; link_to t.name, topic_path(t)}.to_sentence %></td>
+        <td><%= topic_name.topics.map{|t| link_to t.name, topic_path(t)}.to_sentence %></td>
         <td><%= topic_name.topic_name_assignments.size %></td>
       </tr>
     <% end %>
