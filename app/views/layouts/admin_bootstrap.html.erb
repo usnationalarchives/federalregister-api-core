@@ -3,7 +3,8 @@
 <head> 
   <title>FR2 Admin<%= " | #{yield :title}" if yield(:title) %></title>
   <meta charset="utf-8">
-  
+
+  <%= stylesheet_link_tag "jquery-ui.css",                   :media => :screen %>
   <%= stylesheet_link_tag "admin/jqModal",                   :media => :screen %>
   <%= stylesheet_link_tag "admin/formtastic",                :media => :screen %>
   <%= stylesheet_link_tag "admin/bootstrap",                 :media => :screen %>
