@@ -1,5 +1,3 @@
-# reload!; IndexCompiler.perform('2014', 2)
-
 class IndexCompiler
   attr_reader :agency_docs, :doc_data, :agency, :year
 
