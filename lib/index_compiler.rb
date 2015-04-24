@@ -1,4 +1,4 @@
-# reload!; IndexCompiler.perform('2015', 2)
+# reload!; IndexCompiler.perform('2014', 2)
 
 class IndexCompiler
   attr_reader :agency_docs, :doc_data, :agency, :year
@@ -21,8 +21,13 @@ class IndexCompiler
     stubbed_obj.save(stubbed_obj.doc_data)
   end
 
-  def child_agency_ids
-    child_agencies = []
+  def child_agency_ids(parent=agency) #TODO: Write unit test
+    descendants = []
+    parent.children.each do |child|
+      descendants << child.id
+      descendants << child_agency_ids(child) if child.children.present?
+    end
+    descendants.flatten
   end
 
   def entries
@@ -56,7 +61,7 @@ class IndexCompiler
        AND agencies.id IN(?)",
        "#{year}-01-01",
        "#{year}-12-31",
-       agency.id
+       ([agency.id] + child_agency_ids).join(",")
     ]).group_by{|e|e[1]}
   end
 
