@@ -32,4 +32,9 @@ class FileSystemPathManager
   def public_inspection_issue_special_filing_json_toc_path
     "#{public_inspection_issue_json_toc_dir}/special_filing.json"
   end
+
+  def index_json_dir
+    "data/fr_index/#{date.strftime('%Y')}/"
+  end
+
 end

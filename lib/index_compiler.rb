@@ -1,7 +1,5 @@
-#IndexCompiler.perform(2014,581)
-
 class IndexCompiler
-  attr_reader :agency_docs, :doc_data, :agency, :year
+  attr_reader :agency_docs, :doc_data, :agency, :year, :path_manager
 
   DEFAULT_SUBJECT_SQL = FrIndexPresenter::EntryPresenter::DEFAULT_SUBJECT_SQL
   SUBJECT_SQL = FrIndexPresenter::EntryPresenter::SUBJECT_SQL
@@ -10,23 +8,24 @@ class IndexCompiler
 
   def initialize(year, agency_id)
     @agency = Agency.find_by_id(agency_id)
-    @year = year #TODO: Validate user year input
+    @year = year
+    @path_manager = FileSystemPathManager.new("#{year}-01-01")
     @doc_data = {
       name: agency.try(:name),
       slug: agency.try(:slug),
       url: agency.try(:url),
       document_categories: [],
-      see_also: "Stubbed See Also"
+      see_also: process_see_also
     }
   end
 
   def self.perform(year, agency_id)
-    stubbed_obj = new(year, agency_id)
-    stubbed_obj.documents
-    stubbed_obj.save(stubbed_obj.doc_data)
+    agency_representation = new(year, agency_id)
+    agency_representation.process_entries
+    agency_representation.save(agency_representation.doc_data)
   end
 
-  def child_agency_ids(parent=agency) #TODO: Write unit test
+  def child_agency_ids(parent=agency)
     descendants = []
     parent.children.each do |child|
       descendants << child.id
@@ -61,27 +60,43 @@ class IndexCompiler
     group_by{|entry|entry[1]}
   end
 
-  def documents
-    puts "Number of doc types: #{entries.size}"
-    puts entries.keys
+  def process_see_also
+    agency.children.map do |child_agency|
+      {
+        name: child_agency.name,
+        slug: child_agency.slug
+      }
+    end
+  end
+
+  def process_entries
     entries.each do |doc_type, doc_representations|
       @doc_data[:document_categories] << {
         name: doc_type,
-        documents: process_entries(doc_representations)
+        documents: process_documents(doc_representations).
+          sort_by{|k,v|[k[:subject_1],k[:subject_2]]}
       }
     end
   end
 
-  def process_entries(entries)
-    entries.map do |doc_representation|
-      {
-        subject_1: doc_representation[2],
-        subject_2: doc_representation[3],
-        document_numbers: doc_representation[0]
-      }
+  def process_documents(doc_representations)
+    doc_representations.map do |doc_representation|
+      [document_number, granule_class , subject_1, subject_2]
+      if doc_representation[2].blank?
+        {
+          subject_1: doc_representation[3],
+          subject_2: "",
+          document_numbers: doc_representation[0]
+        }
+      else
+        {
+          subject_1: doc_representation[2],
+          subject_2: doc_representation[3],
+          document_numbers: doc_representation[0]
+        }
+      end
     end
   end
-
 
   def save(document_data)
     FileUtils.mkdir_p(json_index_dir)
@@ -94,11 +109,11 @@ class IndexCompiler
   private
 
   def json_index_path
-    "data/fr_index/2015/sample_agency.json" #TODO: Stubbed
+    "data/fr_index/2015/#{agency.slug}.json"
   end
 
   def json_index_dir
-    "data/fr_index/2015/" #TODO: Stubbed
+    path_manager.index_json_dir
   end
 
 end
