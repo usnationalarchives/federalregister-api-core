@@ -1,5 +1,12 @@
+#IndexCompiler.perform(2014,581)
+
 class IndexCompiler
   attr_reader :agency_docs, :doc_data, :agency, :year
+
+  DEFAULT_SUBJECT_SQL = FrIndexPresenter::EntryPresenter::DEFAULT_SUBJECT_SQL
+  SUBJECT_SQL = FrIndexPresenter::EntryPresenter::SUBJECT_SQL
+  DEFAULT_DOC_SQL = FrIndexPresenter::EntryPresenter::DEFAULT_DOC_SQL
+  DOC_SQL = FrIndexPresenter::EntryPresenter::DOC_SQL
 
   def initialize(year, agency_id)
     @agency = Agency.find_by_id(agency_id)
@@ -30,37 +37,28 @@ class IndexCompiler
 
   def entries
     @entries ||= Agency.find_as_arrays([
-      "SELECT entries.document_number, entries.granule_class,
-      IFNULL(entries.fr_index_subject,
-        #{FrIndexPresenter::EntryPresenter::DEFAULT_SUBJECT_SQL}
-       ) AS subject_1,
-      IFNULL(entries.fr_index_doc,
-        IF(public_inspection_documents.subject_3 IS NOT NULL AND public_inspection_documents.subject_3 != '',
-          public_inspection_documents.subject_3,
-          IF(public_inspection_documents.subject_2 IS NOT NULL AND public_inspection_documents.subject_2 != '',
-            public_inspection_documents.subject_2,
-            IF(public_inspection_documents.subject_1 IS NOT NULL AND public_inspection_documents.subject_1 != '',
-              public_inspection_documents.subject_1,
-              entries.toc_doc
-            )
-          )
-        )
-      ) AS subject_2
+     "SELECT
+        entries.document_number,
+        entries.granule_class,
+        #{SUBJECT_SQL} AS subject_1,
+        #{DOC_SQL} AS subject_2
       FROM entries
-
       JOIN public_inspection_documents
-      ON public_inspection_documents.document_number = entries.document_number
+        ON public_inspection_documents.document_number = entries.document_number
       JOIN agency_assignments
-      ON agency_assignments.assignable_id = entries.id AND agency_assignments.assignable_type = 'Entry'
+        ON agency_assignments.assignable_id = entries.id AND agency_assignments.assignable_type = 'Entry'
       JOIN agencies
-      ON agencies.id = agency_assignments.agency_id
-      WHERE entries.publication_date >= ? AND
-       entries.publication_date <= ?
-       AND agencies.id IN(?)",
-       "#{year}-01-01",
-       "#{year}-12-31",
-       ([agency.id] + child_agency_ids).join(",")
-    ]).group_by{|e|e[1]}
+        ON agencies.id = agency_assignments.agency_id
+      WHERE
+        entries.publication_date >= ? AND
+        entries.publication_date <= ? AND
+        agencies.id IN(?)",
+
+      "#{year}-01-01",
+      "#{year}-12-31",
+      ([agency.id] + child_agency_ids).join(",")
+    ]).
+    group_by{|entry|entry[1]}
   end
 
   def documents
