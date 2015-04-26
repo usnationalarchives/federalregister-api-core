@@ -1,7 +1,5 @@
-#IndexCompiler.perform(2014,581)
-
 class IndexCompiler
-  attr_reader :agency_docs, :doc_data, :agency, :year, :path_manager
+  attr_reader :doc_data, :agency, :year, :path_manager
 
   DEFAULT_SUBJECT_SQL = FrIndexPresenter::EntryPresenter::DEFAULT_SUBJECT_SQL
   SUBJECT_SQL = FrIndexPresenter::EntryPresenter::SUBJECT_SQL
@@ -9,9 +7,8 @@ class IndexCompiler
   DOC_SQL = FrIndexPresenter::EntryPresenter::DOC_SQL
 
   def initialize(year, agency_id)
-    @agency = Agency.find_by_id(agency_id)
-    @year = year #TODO: Validate user year input
-    # Date.new(year.to_i,1,1)
+    @agency = Agency.find(agency_id)
+    @year = year.to_i
     @path_manager = FileSystemPathManager.new("#{year}-01-01")
     @doc_data = {
       name: agency.try(:name),
@@ -21,16 +18,6 @@ class IndexCompiler
     }
   end
 
-  def process_see_also
-    doc_data[:see_also] = agency.children.map do |child_agency|
-      {
-        name: child_agency.name,
-        slug: child_agency.slug
-      }
-    end if agency.children.present?
-    #TODO: Should all child agencies be displayed or only agencies with associated entries?
-  end
-
   def self.perform(year, agency_id)
     agency_representation = new(year, agency_id)
     agency_representation.process_entries
@@ -38,11 +25,11 @@ class IndexCompiler
     agency_representation.save(agency_representation.doc_data)
   end
 
-  def child_agency_ids(parent=agency) #TODO: Write unit test
+  def descendant_agency_ids(parent=agency)
     descendants = []
     parent.children.each do |child|
       descendants << child.id
-      descendants << child_agency_ids(child) if child.children.present?
+      descendants << descendant_agency_ids(child) if child.children.present?
     end
     descendants.flatten
   end
@@ -68,7 +55,7 @@ class IndexCompiler
 
       "#{year}-01-01",
       "#{year}-12-31",
-      ([agency.id] + child_agency_ids).join(",")
+      ([agency.id] + descendant_agency_ids).join(",")
     ]).
     group_by{|entry|entry["granule_class"]}
   end
@@ -99,6 +86,15 @@ class IndexCompiler
     hsh.values.sort_by{|k,v|[k[:subject_1],k[:subject_2]]}
   end
 
+  def process_see_also
+    doc_data[:see_also] = agency.children.map do |child_agency|
+      {
+        name: child_agency.name,
+        slug: child_agency.slug
+      }
+    end if agency.children.present?
+  end
+
   def define_document(doc_representation)
     if doc_representation["subject_1"].blank?
       {
@@ -126,8 +122,7 @@ class IndexCompiler
   private
 
   def json_index_path
-    # "#{path_manager.index_json_path}#{agency.slug}.json" #TODO: Remove static stub
-    "data/fr_index/2015/sample_agency.json"
+    "data/fr_index/2015/#{agency.slug}.json"
   end
 
   def json_index_dir
