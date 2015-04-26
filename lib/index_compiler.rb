@@ -1,3 +1,5 @@
+#IndexCompiler.perform(2014,581)
+
 class IndexCompiler
   attr_reader :agency_docs, :doc_data, :agency, :year, :path_manager
 
@@ -8,24 +10,35 @@ class IndexCompiler
 
   def initialize(year, agency_id)
     @agency = Agency.find_by_id(agency_id)
-    @year = year
+    @year = year #TODO: Validate user year input
+    # Date.new(year.to_i,1,1)
     @path_manager = FileSystemPathManager.new("#{year}-01-01")
     @doc_data = {
       name: agency.try(:name),
       slug: agency.try(:slug),
       url: agency.try(:url),
-      document_categories: [],
-      see_also: process_see_also
+      document_categories: []
     }
+  end
+
+  def process_see_also
+    doc_data[:see_also] = agency.children.map do |child_agency|
+      {
+        name: child_agency.name,
+        slug: child_agency.slug
+      }
+    end if agency.children.present?
+    #TODO: Should all child agencies be displayed or only agencies with associated entries?
   end
 
   def self.perform(year, agency_id)
     agency_representation = new(year, agency_id)
     agency_representation.process_entries
+    agency_representation.process_see_also
     agency_representation.save(agency_representation.doc_data)
   end
 
-  def child_agency_ids(parent=agency)
+  def child_agency_ids(parent=agency) #TODO: Write unit test
     descendants = []
     parent.children.each do |child|
       descendants << child.id
@@ -35,7 +48,7 @@ class IndexCompiler
   end
 
   def entries
-    @entries ||= Agency.find_as_arrays([
+    @entries ||= Agency.find_as_hashes([
      "SELECT
         entries.document_number,
         entries.granule_class,
@@ -57,44 +70,48 @@ class IndexCompiler
       "#{year}-12-31",
       ([agency.id] + child_agency_ids).join(",")
     ]).
-    group_by{|entry|entry[1]}
-  end
-
-  def process_see_also
-    agency.children.map do |child_agency|
-      {
-        name: child_agency.name,
-        slug: child_agency.slug
-      }
-    end
+    group_by{|entry|entry["granule_class"]}
   end
 
   def process_entries
+    puts "Number of doc types: #{entries.size}"
+    puts entries.keys
     entries.each do |doc_type, doc_representations|
       @doc_data[:document_categories] << {
         name: doc_type,
-        documents: process_documents(doc_representations).
-          sort_by{|k,v|[k[:subject_1],k[:subject_2]]}
+        documents: process_documents(doc_representations)
       }
     end
   end
 
   def process_documents(doc_representations)
-    doc_representations.map do |doc_representation|
-      [document_number, granule_class , subject_1, subject_2]
-      if doc_representation[2].blank?
-        {
-          subject_1: doc_representation[3],
-          subject_2: "",
-          document_numbers: doc_representation[0]
-        }
+    hsh = {}
+    doc_representations.each do |doc_representation|
+      intermediary = define_document(doc_representation)
+
+      if hsh[subject_1: intermediary[:subject_1], subject_2: intermediary[:subject_2]]
+        hsh[subject_1: intermediary[:subject_1], subject_2: intermediary[:subject_2]][:document_numbers] << doc_representation["document_number"]
       else
-        {
-          subject_1: doc_representation[2],
-          subject_2: doc_representation[3],
-          document_numbers: doc_representation[0]
-        }
+        hsh[subject_1: intermediary[:subject_1], subject_2: intermediary[:subject_2]] = intermediary
       end
+
+    end
+    hsh.values.sort_by{|k,v|[k[:subject_1],k[:subject_2]]}
+  end
+
+  def define_document(doc_representation)
+    if doc_representation["subject_1"].blank?
+      {
+        subject_1: doc_representation["subject_2"],
+        subject_2: "",
+        document_numbers: [doc_representation["document_number"] ]
+      }
+    else
+      {
+        subject_1: doc_representation["subject_1"],
+        subject_2: doc_representation["subject_2"],
+        document_numbers: [doc_representation["document_number"] ]
+      }
     end
   end
 
@@ -109,7 +126,8 @@ class IndexCompiler
   private
 
   def json_index_path
-    "data/fr_index/2015/#{agency.slug}.json"
+    # "#{path_manager.index_json_path}#{agency.slug}.json" #TODO: Remove static stub
+    "data/fr_index/2015/sample_agency.json"
   end
 
   def json_index_dir
