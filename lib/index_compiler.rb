@@ -162,7 +162,6 @@ class IndexCompiler
   private
 
   def json_index_path
-    # "data/fr_index/2015/sample_agency.json"
     "#{path_manager.index_json_dir}#{agency.slug}.json"
   end
 
