@@ -85,8 +85,8 @@ class IndexCompiler
       formatted_doc = format_subjects(doc_representation)
 
       if hsh[subject_1: formatted_doc[:subject_1], subject_2: formatted_doc[:subject_2]]
-        hsh[subject_1: formatted_doc[:subject_1], subject_2: formatted_doc[:subject_2]]
-          [:document_numbers] << doc_representation["document_number"]
+        hsh[ subject_1: formatted_doc[:subject_1],subject_2:
+          formatted_doc[:subject_2] ][:document_numbers] << doc_representation["document_number"]
       else
         hsh[subject_1: formatted_doc[:subject_1], subject_2: formatted_doc[:subject_2]] = formatted_doc
       end
