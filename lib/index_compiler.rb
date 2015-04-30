@@ -99,7 +99,6 @@ class IndexCompiler
     if doc_representation["subject_1"].blank?
       {
         subject_1: doc_representation["subject_2"],
-        subject_2: "",
         document_numbers: [doc_representation["document_number"] ]
       }
     else
@@ -139,6 +138,11 @@ class IndexCompiler
     ordered_doc_data[:document_categories] << notices unless notices.nil?
     ordered_doc_data[:document_categories] << presdocs unless presdocs.nil?
     ordered_doc_data[:document_categories] << unknown_docs unless unknown_docs.nil?
+
+    ordered_doc_data[:document_categories].each do |category|
+      category[:documents].each { |doc| doc.delete("subject_2") if doc["subject_2"].blank? }
+    end
+
     ordered_doc_data
   end
 
