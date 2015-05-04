@@ -41,14 +41,7 @@ class SpecialController < ApplicationController
   end
 
   def layout_head_content
-    @page_to_track = params[:page_to_track]
-    cache_for 1.day
     render :layout => false
-  end
-
-  def layout_header
-    cache_for 1.day
-    render :action => "layout_header", :layout => false
   end
 
   def robots_dot_txt
