@@ -2,7 +2,13 @@ class ApiController < ApplicationController
   class RequestError < StandardError; end
   class UnknownFieldError < RequestError; end
 
+  before_filter :enforce_maximum_per_page
+  
   private
+
+  def enforce_maximum_per_page
+    params.delete(:maximum_per_page)
+  end
 
   def render_json_or_jsonp(data, options = {})
     callback = params[:callback].to_s

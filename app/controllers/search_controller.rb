@@ -1,5 +1,6 @@
 class SearchController < ApplicationController
   before_filter :load_search
+  before_filter :enforce_maximum_per_page
   
   def header
     cache_for 1.day
@@ -32,5 +33,11 @@ class SearchController < ApplicationController
       @num_facets = params[:num_facets].try(:to_i) || 5
       render :partial => "search/facets", :locals => {:facets => facets, :name => params[:facet].humanize.capitalize_first}, :layout => false
     end
+  end
+  
+  private
+
+  def enforce_maximum_per_page
+    params.delete(:maximum_per_page)
   end
 end

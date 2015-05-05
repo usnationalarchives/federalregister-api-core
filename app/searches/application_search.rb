@@ -3,11 +3,11 @@ class ApplicationSearch
   class InputError < StandardError; end
 
   attr_accessor :order
-  attr_reader :filters, :term, :per_page, :page, :conditions, :valid_conditions
+  attr_reader :filters, :term, :maximum_per_page, :per_page, :page, :conditions, :valid_conditions
   
   def per_page=(count)
     per_page = count.to_s.to_i
-    if per_page > 1 && per_page <= 2000
+    if per_page > 1 && per_page <= maximum_per_page
       @per_page = per_page
     else
       @per_page = 20
@@ -101,6 +101,8 @@ class ApplicationSearch
     @errors = {}
     @filters = []
     
+    @maximum_per_page = options[:maximum_per_page].to_i || 2000
+
     # Set some defaults...
     @page = options[:page].to_i
     if @page < 1 || @page > 50
