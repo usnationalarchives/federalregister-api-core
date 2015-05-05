@@ -135,8 +135,8 @@ class IndexCompiler
 
     ordered_doc_data[:document_categories] << rules unless rules.nil?
     ordered_doc_data[:document_categories] << prorules unless prorules.nil?
-    ordered_doc_data[:document_categories] << notices unless notices.nil?
     ordered_doc_data[:document_categories] << presdocs unless presdocs.nil?
+    ordered_doc_data[:document_categories] << notices unless notices.nil?
     ordered_doc_data[:document_categories] << unknown_docs unless unknown_docs.nil?
 
     ordered_doc_data[:document_categories].each do |category|
