@@ -23,15 +23,11 @@
       "Handlebars",
       "Dragdealer",
       "ContentFlow",
-      "tmpl",
       "iScroll",
       "_",
 
       // Some methods defined across files; should prob be refactored
       "add_date_picker",
-      "display_modal",
-      "closeOnEscape",
-      "modalOpen",
       "fr_index_popover_handler",
       "SpellChecker",
       "user_email_address",
