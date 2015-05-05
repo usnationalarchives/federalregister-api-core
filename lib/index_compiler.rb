@@ -73,7 +73,7 @@ class IndexCompiler
   def process_entries
     entries.each do |doc_type, doc_representations|
       @doc_data[:document_categories] << {
-        name: doc_type,
+        name: document_type_names.fetch(doc_type, "Unrecognized"),
         documents: process_documents(doc_representations)
       }
     end
@@ -127,17 +127,11 @@ class IndexCompiler
       document_categories: []
     }
 
-    rules = doc_data[:document_categories].find{|cat|cat[:name]=="RULE"}
-    prorules = doc_data[:document_categories].find{|cat|cat[:name]=="PRORULE"}
-    notices = doc_data[:document_categories].find{|cat|cat[:name]=="NOTICE"}
-    presdocs = doc_data[:document_categories].find{|cat|cat[:name]=="PRESDOCU"}
-    unknown_docs = doc_data[:document_categories].find{|cat|cat[:name]=="UNKNOWN"}
-
-    ordered_doc_data[:document_categories] << rules unless rules.nil?
-    ordered_doc_data[:document_categories] << prorules unless prorules.nil?
-    ordered_doc_data[:document_categories] << presdocs unless presdocs.nil?
-    ordered_doc_data[:document_categories] << notices unless notices.nil?
-    ordered_doc_data[:document_categories] << unknown_docs unless unknown_docs.nil?
+    document_type_names.each do |granule_class, formal_name|
+      doc_category_data = doc_data[:document_categories].find{|cat|cat[:name] == formal_name}
+      ordered_doc_data[:document_categories] <<
+        doc_category_data unless doc_category_data.nil?
+    end
 
     ordered_doc_data[:document_categories].each do |category|
       category[:documents].each { |doc| doc.delete("subject_2") if doc["subject_2"].blank? }
@@ -152,6 +146,18 @@ class IndexCompiler
     File.open json_index_path, 'w' do |f|
       f.write(document_data.to_json)
     end
+  end
+
+  def document_type_names
+    {
+      "RULE" => "Rules",
+      "PRORULE" => "Proposed Rules",
+      "PRESDOCU" => "Presidential Documents",
+      "NOTICE" => "Notices",
+      "CORRECT" => "Corrections",
+      "SUNSHINE" => "Sunshines",
+      "UNKNOWN" => "Unknown"
+    }
   end
 
   def any_documents?
