@@ -71,7 +71,7 @@ class XmlTableOfContentsTransformer
       category = Category.new(cat_node)
       category.process_nodes
       {
-        name: category.name,
+        type: category.name,
         documents: category.documents_as_hashes
       }
     end
@@ -106,7 +106,7 @@ class XmlTableOfContentsTransformer
     end
 
     def process_hd_node(hd_node)
-      @name = hd_node.text
+      @name = hd_node.text.singularize.titlecase
     end
 
     def process_sj_node(sj_node)
