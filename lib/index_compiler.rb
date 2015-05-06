@@ -1,5 +1,5 @@
 class IndexCompiler
-  attr_reader :doc_data, :agency, :year, :path_manager
+  attr_reader :doc_data, :agency, :year, :path_manager, :document_type_names
 
   DEFAULT_SUBJECT_SQL = FrIndexPresenter::EntryPresenter::DEFAULT_SUBJECT_SQL
   SUBJECT_SQL = FrIndexPresenter::EntryPresenter::SUBJECT_SQL
@@ -10,6 +10,7 @@ class IndexCompiler
     @agency = Agency.find(agency_id)
     @year = year.to_i
     @path_manager = FileSystemPathManager.new("#{year}-01-01")
+    @document_type_names = Entry::ENTRY_TYPES
     @doc_data = {
       name: agency.try(:name),
       slug: agency.try(:slug),
@@ -73,7 +74,7 @@ class IndexCompiler
   def process_entries
     entries.each do |doc_type, doc_representations|
       @doc_data[:document_categories] << {
-        name: document_type_names.fetch(doc_type, "Unrecognized"),
+        type: document_type_names[doc_type],
         documents: process_documents(doc_representations)
       }
     end
@@ -128,7 +129,7 @@ class IndexCompiler
     }
 
     document_type_names.each do |granule_class, formal_name|
-      doc_category_data = doc_data[:document_categories].find{|cat|cat[:name] == formal_name}
+      doc_category_data = doc_data[:document_categories].find{|cat|cat[:type] == formal_name}
       ordered_doc_data[:document_categories] <<
         doc_category_data unless doc_category_data.nil?
     end
@@ -146,18 +147,6 @@ class IndexCompiler
     File.open json_index_path, 'w' do |f|
       f.write(document_data.to_json)
     end
-  end
-
-  def document_type_names
-    {
-      "RULE" => "Rules",
-      "PRORULE" => "Proposed Rules",
-      "PRESDOCU" => "Presidential Documents",
-      "NOTICE" => "Notices",
-      "CORRECT" => "Corrections",
-      "SUNSHINE" => "Sunshines",
-      "UNKNOWN" => "Unknown"
-    }
   end
 
   def any_documents?
