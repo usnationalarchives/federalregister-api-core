@@ -25,6 +25,20 @@ namespace :content do
       end
     end
 
+    desc "Recompile all pre-compiled Entry pages for a set of dates"
+    task :recompile_all_html => :environment do
+      Content.parse_dates(ENV['DATE']).each do |date|
+        Resque.enqueue(EntryRecompiler, date)
+      end
+    end
+
+    desc "Recompile all pre-compiled ToC pages for a set of dates"
+    task :recompile_all_toc => :environment do
+      Content.parse_dates(ENV['DATE']).each do |date|
+        Resque.enqueue(TableOfContentsRecompiler, date)
+      end
+    end
+
     namespace :presidential_documents do
       desc "Reimport presidential documents"
       task :reimport => :environment do
