@@ -112,7 +112,7 @@ class TableOfContentsTransformer
   def process_document_categories(agency)
     agency.entries_by_type_and_toc_subject.map do |type, entries_by_toc_subject|
       {
-        name: type.pluralize,
+        type: type,
         documents: process_documents(entries_by_toc_subject)
       }
     end
