@@ -101,7 +101,11 @@ class ApplicationSearch
     @errors = {}
     @filters = []
     
-    @maximum_per_page = options[:maximum_per_page].to_i || 2000
+    if options[:maximum_per_page].present?
+      @maximum_per_page = options[:maximum_per_page].to_i
+    else
+      @maximum_per_page = 2000
+    end
 
     # Set some defaults...
     @page = options[:page].to_i
