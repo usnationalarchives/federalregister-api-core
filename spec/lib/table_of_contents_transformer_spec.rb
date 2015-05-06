@@ -136,7 +136,7 @@ attr_reader :transformer
                 url: '',
                 document_categories: [
                   {
-                    name: "RULES",
+                    type: "Rule",
                     documents: [
                       {
                         subject_1: 'Resource Agency Hearings and Alternatives Development Procedures in Hydropower Licenses,',
@@ -182,7 +182,7 @@ attr_reader :transformer
                 url: '',
                 document_categories: [
                   {
-                    name: "NOTICES",
+                    type: "Notice",
                     documents: [
                       {
                         subject_1: 'Fisheries of the Exclusive Economic Zone off Alaska:',
@@ -227,7 +227,7 @@ attr_reader :transformer
                 url: '',
                 document_categories: [
                   {
-                    name: "NOTICES",
+                    type: "Notice",
                     documents: [
                       {
                         subject_1: 'Atlantic Highly Migratory Species:',
@@ -276,7 +276,7 @@ attr_reader :transformer
                 url: '',
                 document_categories: [
                   {
-                    name: "PROPOSED RULES",
+                    type: "Proposed Rule",
                     documents: [
                       {
                         subject_1: 'Air Quality State Implementation Plans;  Approvals and Promulgations:',
@@ -325,7 +325,7 @@ attr_reader :transformer
                 url: '',
                 document_categories: [
                   {
-                    name: "PROPOSED RULES",
+                    type: "Proposed Rule",
                     documents: [
                       {
                         subject_1: 'Increased Assessment Rates:',
@@ -372,7 +372,7 @@ attr_reader :transformer
                 url: '',
                 document_categories: [
                   {
-                    name: "PROPOSED RULES",
+                    type: "Proposed Rule",
                     documents: [
                       {
                         subject_1: 'Increased Assessment Rates:',
