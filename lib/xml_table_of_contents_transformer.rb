@@ -89,6 +89,20 @@ class XmlTableOfContentsTransformer
   class Category
     attr_reader :document, :documents, :cat_node, :name
 
+    DOCUMENT_TYPE_MAPPINGS = {
+      'RULES' =>                  'Rule',
+      'PROPOSED RULES' =>         'Proposed Rule',
+      'NOTICES' =>                'Notice',
+      'CORRECT' =>                'Correction', #B.C. TODO: Verify
+      'UNKNOWN' =>                'Uncategorized Document', #B.C. TODO: Verify
+      'SUNSHINE' =>               'Sunshine Act Document', #B.C. TODO: Verify
+      'PROCLAMATIONS' =>          'Proclamation',
+      'MEMORANDUMS' =>            'Memorandum', #B.C. TODO: Verify
+      'PRESIDENTIAL ORDERS' =>    'Presidential Order', #B.C. TODO: Verify
+      'ADMINISTRATIVE ORDERS' =>  'Administrative Order',
+      'EXECUTIVE ORDERS' =>       'Executive Order'
+    }
+
     def initialize(cat_node)
       @cat_node = cat_node
       @documents = []
@@ -106,7 +120,7 @@ class XmlTableOfContentsTransformer
     end
 
     def process_hd_node(hd_node)
-      @name = hd_node.text.singularize.titlecase
+      @name = document_type(hd_node.text)
     end
 
     def process_sj_node(sj_node)
@@ -161,9 +175,31 @@ class XmlTableOfContentsTransformer
       end
     end
 
+    def document_type_mappings
+      DOCUMENT_TYPE_MAPPINGS
+    end
+
+    class CategoryDocument
+      attr_accessor :subject_1, :subject_2, :subject_3, :document_numbers
+    end
+
+    private
+
+    def document_type(document_type_from_xml)
+      if document_type_mappings[document_type_from_xml].present?
+        document_type_mappings[document_type_from_xml]
+      else
+        error = "'#{document_type_from_xml}' is not a recognized document_type.  
+          See DOCUMENT_TYPE_MAPPINGS in xml_table_of_contents_transformer."
+        Rails.logger.warn(error)
+        Honeybadger.notify(
+          :error_class   => "Unrecognized document type encountered in GPO XML",
+          :error_message => error
+        )
+        document_type_from_xml
+      end
+    end
+
   end
 
-  class CategoryDocument
-    attr_accessor :subject_1, :subject_2, :subject_3, :document_numbers
-  end
 end

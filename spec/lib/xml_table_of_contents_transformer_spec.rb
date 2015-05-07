@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe TableOfContentsTransformer do
+describe XmlTableOfContentsTransformer do
 attr_reader :transformer
 
   before(:each) do
@@ -378,6 +378,89 @@ attr_reader :transformer
                         subject_1: 'Increased Assessment Rates:',
                         subject_2: 'Grapes Grown in a Designated Area of Southeastern California,',
                         document_numbers: ['2015-07172', '2015-07280']
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+        }
+
+      transformer.build_table_of_contents(@nokogiri_doc).should == expected
+    end
+  end
+
+  describe  "Handles unknown document types" do
+    it "Adds unknown document types to the JSON>" do
+
+      make_nokogiri_doc(<<-XML)
+        <CNTNTS>
+          <AGCY>
+            <HD>Agriculture Department</HD>
+            <CAT>
+              <HD>TEST DOCUMENT TYPE</HD>
+            </CAT>
+          </AGCY>
+        </CNTNTS>
+      XML
+
+      expected =
+        {
+          agencies:
+            [
+              {
+                name: 'Agriculture Department',
+                slug: 'agriculture-department',
+                url: '',
+                document_categories: [
+                  {
+                    type: "TEST DOCUMENT TYPE",
+                    documents: [
+                    ]
+                  }
+                ]
+              }
+            ]
+        }
+
+      transformer.build_table_of_contents(@nokogiri_doc).should == expected
+
+    end
+
+    it "Adds presidential documents with unknown sub-types to resultant JSON" do
+
+      make_nokogiri_doc(<<-XML)
+        <CNTNTS>
+          <AGCY>
+            <HD>Presidential Documents</HD>
+            <CAT>
+              <HD>TEST SUBTYPES</HD>
+              <SJ>Special Observances:</SJ>
+              <SJDENT>
+                <SJDOC>American Red Cross Month</SJDOC>
+                <PGS>11843-11846</PGS>
+                <FRDOCBP D="3" T="04MRD0.sgm">2015-04513</FRDOCBP>
+              </SJDENT>
+            </CAT>
+          </AGCY>
+      XML
+
+      expected =
+        {
+          agencies:
+            [
+              {
+                name: 'Presidential Documents',
+                slug: 'presidential-documents',
+                url: '',
+                document_categories: [
+                  {
+                    type: "TEST SUBTYPES",
+                    documents: [
+                      {
+                        subject_1: 'Special Observances:',
+                        subject_2: 'American Red Cross Month',
+                        document_numbers: ['2015-04513']
                       }
                     ]
                   }
