@@ -37,12 +37,4 @@ class FileSystemPathManager
     "data/fr_index/#{date.strftime('%Y')}/"
   end
 
-  def master_index_json_dir
-    "data/master_fr_index/"
-  end
-
-  def master_index_json_path
-    "#{master_index_json_dir}/#{date.strftime('%Y')}.json"
-  end
-
 end

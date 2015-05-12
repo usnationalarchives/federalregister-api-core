@@ -1,4 +1,4 @@
-class IndexCompiler
+class FrIndexAgencyCompiler
   attr_reader :doc_data, :agency, :year, :path_manager, :document_type_names
 
   DEFAULT_SUBJECT_SQL = FrIndexPresenter::EntryPresenter::DEFAULT_SUBJECT_SQL

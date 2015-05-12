@@ -1,4 +1,4 @@
-class MasterIndexCompiler
+class FrIndexCompiler
   attr_reader :index, :agencies, :path_manager
 
   def initialize(year)
@@ -8,10 +8,12 @@ class MasterIndexCompiler
     @index = {agencies:[]}
   end
 
-  def self.perform(year)
-    master_index_compiler = new(year)
-    master_index_compiler.process_agencies
-    master_index_compiler.save(master_index_compiler.index)
+  def self.perform(date)
+    date = date.is_a?(Date) ? date : Date.parse(date)
+    year = date.strftime('%Y')
+    fr_index_compiler = new(year)
+    fr_index_compiler.process_agencies
+    fr_index_compiler.save(fr_index_compiler.index)
   end
 
   def process_agencies
@@ -45,9 +47,9 @@ class MasterIndexCompiler
   end
 
   def save(index)
-    FileUtils.mkdir_p(path_manager.master_index_json_dir)
+    FileUtils.mkdir_p(path_manager.index_json_dir)
 
-    File.open path_manager.master_index_json_path, 'w' do |f|
+    File.open "#{path_manager.index_json_dir}index.json", 'w' do |f|
       f.write(index.to_json)
     end
   end
