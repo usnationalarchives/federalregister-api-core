@@ -3,78 +3,8 @@
 Enhanced Fonts for elements
 
 ******************************/
-body {
-  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
-  font-weight: 300;
-  }
-.wf-active body {
-  @include gesta;
-  }
-h1.title {
-  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
-  }
-.wf-active h1,
-.wf-active h2,
-.wf-active h3,
-.wf-active h4,
-.wf-active h5,
-.wf-active h6 {
-  @include apertura-condensed; /* was gloriola */
-  font-weight: 700;
-  }
-.block {
-  background: $bookmark_red;
-  color: #fff;
-  @include apertura-condensed;
-  float: left;
-  font-size: 1.2em;
-  font-weight: 700;
-  line-height: 1;
-  margin: 0 0 1em;
-  padding: 0.3em .3em 0;
-  text-transform: uppercase;
-  }
-#entries.show h2,
-#entries.show h3,
-#entries.show h4,
-#entries.show h5,
-#entries.show h6 { clear: both; }
-a { color: $nytimes_blue; }
-a:focus,
-a:hover {
-  color: darken($dark_blue_complement, 10%);
-  text-decoration: none;
-  }
-p {
-  color: #363636;  
-  @include athelas;
-  font-size: 1.2em;
-  }  
-#entries.show .body_column > ul {
-  color: #363636;
-  @include athelas;
-  font-size: 1.2em;
-  }  
-#entries.show .body_column > ul li {
-  background-position: left 8px;
-  line-height: 1.5;
-  }
-#entries.show .body_column li p {
-  font-size: 1em;
-  line-height: 1.5;
-  }
 
-/******************************
 
-TYPE CONTROLS
-
-******************************/
-
-.sans .body_column p,
-#entries.show .sans .body_column > ul  {
-  @include gesta;
-  } 
-  
 /******************************
 
 TITLE STYLES
@@ -220,10 +150,6 @@ ARTICLES
 #entries h5,
 #entries h6 {
   margin-top: 1em;
-  }
-.metadata {
-  font-size: 1.3em;
-  @include gesta;
   }
 .articles_published_by_day h1 {
   font-size: 1.1em;
