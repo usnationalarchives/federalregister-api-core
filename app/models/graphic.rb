@@ -21,4 +21,10 @@ class Graphic < ApplicationModel
   def set_content_type
     self.graphic.instance_write(:content_type,'image/png')
   end
+
+  def base_url
+    graphic.url(:original, false).
+      gsub(identifier,':identifier').
+      gsub('original',':style')
+  end
 end

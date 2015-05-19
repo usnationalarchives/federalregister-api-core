@@ -56,6 +56,19 @@ class EntryApiRepresentation < ApiRepresentation
   field(:executive_order_number)
   field(:full_text_xml_url, :select => [:document_file_path, :full_xml_updated_at]){|e| entry_xml_url(e) if e.should_have_full_xml?}
   field(:html_url, :select => [:publication_date, :document_number, :title]){|e| entry_url(e)}
+  field(:images, :include => [:graphics]) do |entry|
+    graphics = entry.graphics.extracted
+
+    if graphics.present?
+      {
+        :styles => graphics.first.graphic.styles.map{|k,v| k},
+        :identifiers => graphics.map{|g| g.identifier},
+        :base_url => graphics.first.base_url
+      }
+    else
+      {}
+    end
+  end
   field(:json_url, :select => :document_number) {|e| api_v1_entry_url(e.document_number, :format => :json)}
   field(:mods_url, :select => [:publication_date, :document_number]){|e| e.source_url(:mods)}
   field(:page_length, :select => [:start_page, :end_page]) {|e| e.human_length }
