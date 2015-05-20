@@ -2,7 +2,7 @@ class AgencyApiRepresentation < ApiRepresentation
   field(:id)
   field(:parent_id)
   field(:name)
-  field(:short_name)
+  field(:short_name) {|agency| agency.short_name.blank? ? nil : agency.short_name}
   field(:slug)
   field(:url, :select => :slug) {|agency| agency_url(agency)}
   field(:description)
