@@ -175,7 +175,7 @@ end
 
 namespace :apache do
   desc "Restart Apache Servers"
-  task :restart, :roles => [:app] do
+  task :restart, :roles => [:app, :worker] do
     sudo '/etc/init.d/apache2 restart'
   end
 end
