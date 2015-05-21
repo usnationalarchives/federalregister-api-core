@@ -34,7 +34,7 @@ gem 'resque-honeybadger',
 
 gem 'aws-s3', '0.6.2', :require => 'aws/s3'
 gem 'paperclip', '2.3.3'
-gem 'stevedore', '0.1.0'
+gem 'stevedore', '0.2.0'
 gem 'active_hash', '0.9.5'
 gem 'bcrypt-ruby', '2.1.2', :require => 'bcrypt'
 gem 'authlogic', '2.1.3'

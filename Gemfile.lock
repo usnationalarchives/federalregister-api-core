@@ -211,7 +211,7 @@ GEM
       rack (~> 1.1)
       tilt (>= 1.2.2, < 2.0)
     slop (3.4.7)
-    stevedore (0.1.0)
+    stevedore (0.2.0)
     system_timer (1.2.4)
     test-unit (1.2.3)
       hoe (>= 1.5.1)
@@ -296,7 +296,7 @@ DEPENDENCIES
   searchlogic (= 2.4.12)
   sendgrid!
   shoulda (= 2.10.3)
-  stevedore (= 0.1.0)
+  stevedore (= 0.2.0)
   system_timer (= 1.2.4)
   test-unit (= 1.2.3)
   thinking-sphinx (= 1.4.13)

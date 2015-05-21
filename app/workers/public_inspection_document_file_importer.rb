@@ -49,6 +49,7 @@ class PublicInspectionDocumentFileImporter
 
   def extract_text
     raw_text = `pdftotext -enc UTF-8 #{pdf_path} -`
+    raw_text.force_encoding('UTF-8')
     raw_text.gsub!(/-{3,}/, '') # remove '----' etc
     raw_text.gsub!(/\.{4,}/, '') # remove '....' etc
     raw_text.gsub!(/_{2,}/, '') # remove '____' etc
