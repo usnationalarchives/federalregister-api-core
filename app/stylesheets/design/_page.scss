@@ -845,17 +845,7 @@ p:target {
 p.cfr_section {
   font-weight: bold;
 }
-// HELP-DESIGN: ideally some sort of graphical representation for the stars; again see /a/2010-15073
-p.stars {
-}
-// HELP-DESIGN: I added these and they work, but are a bit gross; see /a/2010-15021 for example
-.footnote p {
-  padding-bottom: 0;
-}
-.footnote .back {
-  display: block;
-  padding-bottom: 1em;
-}
+
 #footnotediv {
   background: #F5F8F9;
   border: 1px solid #333;
