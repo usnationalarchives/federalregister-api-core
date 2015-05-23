@@ -13,7 +13,7 @@ class Graphic < ApplicationModel
                       :secret_access_key => SECRETS['aws']['secret_access_key']
                     },
                     :s3_protocol => 'https',
-                    :bucket => Rails.env.production? ? 'graphics.federalregister.gov' : "#{Rails.env.gsub('_', '-')}.graphics.federalregister.gov",
+                    :bucket => Rails.env.production? ? 'document-graphics.federalregister.gov' : "#{Rails.env.gsub('_', '-')}.document-graphics.federalregister.gov",
                     :path => ":identifier/:style.:extension"
 
   named_scope :extracted, :conditions => "graphic_file_name IS NOT NULL"
