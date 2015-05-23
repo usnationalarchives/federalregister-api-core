@@ -9,29 +9,7 @@ body {
 .read_more {
   white-space: nowrap;
   }
-ul.bullets {
-  padding-left: 0;
-  }  
-ul.bullets  li {
-  background: image-url("bullet.png") no-repeat left 4px;
-  list-style: none;
-  line-height: 1.25;
-  margin-bottom: .75em;
-  padding-left: 1em;
-  }
-.bullets li:last-child,
-.bullets li.lastchild {
-  margin-bottom: 0;
-  }
-#entries.show .bullets li {
-  margin-left: 2em;
-}
-.bullets .citable {
-  width: auto;
-}
-.bullets .citable .trigger {
-  left: 454px;
-}
+
 ul.bold_links a {
   font-weight: 700;
   }  
