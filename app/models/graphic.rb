@@ -5,7 +5,7 @@ class Graphic < ApplicationModel
   has_many :entries, :through => :usages
 
   has_attached_file :graphic,
-                    :styles => { :large => ["460", :png], :original => ["", :png] },
+                    :styles => { :large => ["684", :png], :original => ["", :png] },
                     :processors => [:auto_inverter],
                     :storage => :s3,
                     :s3_credentials => {
@@ -13,7 +13,7 @@ class Graphic < ApplicationModel
                       :secret_access_key => SECRETS['aws']['secret_access_key']
                     },
                     :s3_protocol => 'https',
-                    :bucket => 'images.federalregister.gov',
+                    :bucket => Rails.env.production? ? 'graphics.federalregister.gov' : "#{Rails.env}.graphics.federalregister.gov",
                     :path => ":identifier/:style.:extension"
 
   named_scope :extracted, :conditions => "graphic_file_name IS NOT NULL"
