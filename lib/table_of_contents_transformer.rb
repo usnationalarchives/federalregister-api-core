@@ -9,7 +9,8 @@ class TableOfContentsTransformer
   end
 
   def self.perform(date)
-    new(date).save(table_of_contents)
+    transformer = new(date)
+    transformer.save(transformer.table_of_contents)
   end
 
   def table_of_contents

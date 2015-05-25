@@ -1,7 +1,10 @@
 class TableOfContentsTransformer::PublicInspection::SpecialFiling < TableOfContentsTransformer::PublicInspection
   def toc_presenter
     @toc_presenter ||= TableOfContentsPresenter.new(
-      issue.public_inspection_documents.special_filing.scoped(:include => :docket_numbers),
+      issue.
+        public_inspection_documents.
+        special_filing.
+        scoped(:include => :docket_numbers),
       :always_include_parent_agencies => true
     )
   end
