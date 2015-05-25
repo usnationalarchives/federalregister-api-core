@@ -72,8 +72,7 @@ class TableOfContentsTransformer
   end
 
   def url_lookup(agency_name)
-    agency_stub = create_agency_representation_stub(agency_name)
-    agency_stub.url
+    create_agency_representation(agency_name).url
   end
 
   def create_agency_representation(agency_name)
