@@ -17,7 +17,14 @@ Rails::Initializer.run do |config|
   # -- all .rb files in that directory are automatically loaded.
 
   # Add additional load paths for your own custom dirs
-  config.autoload_paths += %W( ./app/concerns ./app/observers ./app/presenters ./app/searches ./app/workers )
+  config.autoload_paths += %W(
+    ./app/concerns
+    ./app/observers
+    ./app/presenters
+    ./app/searches
+    ./app/workers
+    ./lib/table_of_contents_transformer
+  )
 
   # Gems go in RAILS_ROOT/Gemfile
 
