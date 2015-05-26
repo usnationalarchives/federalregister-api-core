@@ -54,11 +54,12 @@ module Content
         maximum(:update_pil_at) || DateTime.current
       issue.regular_filings_updated_at ||= first_posting_date
       issue.published_at ||= DateTime.current
-      issue.save!
 
       #compile json table of contents
       TableOfContentsTransformer::PublicInspection::RegularFiling.perform(issue.published_at.to_date)
       TableOfContentsTransformer::PublicInspection::SpecialFiling.perform(issue.published_at.to_date)
+
+      issue.save! #clears cache
     end
 
     def job_queue
