@@ -5,11 +5,15 @@ class Content::PublicInspectionImporter::CacheManager
   include ApplicationHelper
   include RouteBuilder
 
-  cattr_reader :issue, :pi_documents
+  attr_reader :issue, :pi_documents
 
   def self.manage_cache(importer)
+    new(importer).manage_cache
+  end
+
+  def initialize(importer)
     @issue = importer.issue
-    @pi_documents = @issue.public_inspection_documents.find(
+    @pi_documents = importer.issue.public_inspection_documents.find(
       :all,
       :include => {:entry => :agencies},
       :conditions => [
@@ -17,11 +21,13 @@ class Content::PublicInspectionImporter::CacheManager
         importer.start_time
       ]
     )
-
-    clear_cache if @pi_documents.present?
   end
 
-  def self.clear_cache
+  def manage_cache
+    clear_cache if pi_documents.present?
+  end
+
+  def clear_cache
     # purge issue cache
     purge_cache public_inspection_documents_by_date_path(issue.publication_date)
     purge_cache public_inspection_documents_path
@@ -38,7 +44,7 @@ class Content::PublicInspectionImporter::CacheManager
 
     # purge affected individual document caches
     pi_documents.each do |pi_document|
-      purge_cache entry_path(pi_document.document)
+      purge_cache entry_path(pi_document)
     end
   end
 end

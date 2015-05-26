@@ -1,12 +1,6 @@
 # encoding: utf-8
 module Content
   class PublicInspectionImporter
-    # Load up all the routing, etc needed to clear cache
-    include CacheUtils
-    include ActionController::UrlWriter
-    include ApplicationHelper
-    include RouteBuilder
-
     JOB_TIMEOUT = 10.minutes
 
     def self.perform
