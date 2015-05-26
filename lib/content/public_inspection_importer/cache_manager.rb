@@ -5,19 +5,20 @@ class Content::PublicInspectionImporter::CacheManager
   include ApplicationHelper
   include RouteBuilder
 
-  attr_reader :pi_documents
+  cattr_reader :issue, :pi_documents
 
   def self.manage_cache(importer)
-    @pi_documents = importer.issue.public_inspection_documents.find(
+    @issue = importer.issue
+    @pi_documents = @issue.public_inspection_documents.find(
       :all,
       :include => {:entry => :agencies},
       :conditions => [
         "public_inspection_documents.updated_at >= ?",
-        importer.issue.start_time
+        importer.start_time
       ]
     )
 
-    clear_cache if documents.present?
+    clear_cache if @pi_documents.present?
   end
 
   def self.clear_cache
