@@ -1,6 +1,12 @@
 # encoding: utf-8
 module Content
   class PublicInspectionImporter
+    # Load up all the routing, etc needed to clear cache
+    include CacheUtils
+    include ActionController::UrlWriter
+    include ApplicationHelper
+    include RouteBuilder
+
     JOB_TIMEOUT = 10.minutes
 
     def self.perform
@@ -54,12 +60,13 @@ module Content
         maximum(:update_pil_at) || DateTime.current
       issue.regular_filings_updated_at ||= first_posting_date
       issue.published_at ||= DateTime.current
+      issue.save!
 
       #compile json table of contents
       TableOfContentsTransformer::PublicInspection::RegularFiling.perform(issue.published_at.to_date)
       TableOfContentsTransformer::PublicInspection::SpecialFiling.perform(issue.published_at.to_date)
 
-      issue.save! #clears cache
+      Content::PublicInspectionImporter::CacheManager.manage_cache(self)
     end
 
     def job_queue
