@@ -54,6 +54,8 @@ module Content
       issue.regular_filings_updated_at ||= first_posting_date
       issue.published_at ||= DateTime.current
       issue.save!
+
+      Content::PublicInspectionImporter::CacheManager.manage_cache(self)
     end
 
     def job_queue

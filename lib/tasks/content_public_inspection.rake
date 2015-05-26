@@ -2,7 +2,7 @@ namespace :content do
   namespace :public_inspection do
     desc "Import current public inspection data"
     task :import => :environment do
-      Content::PublicInspectionImporter.perform
+      Content::PublicInspectionImporter.perform if Issue.should_have_an_issue?(Date.current)
 
       Rake::Task["content:public_inspection:reindex"].invoke unless Rails.env == 'development'
     end
