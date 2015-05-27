@@ -170,7 +170,7 @@ class XmlTableOfContentsTransformer
           subject_1: document.subject_1,
           subject_2: document.subject_2,
           subject_3: document.subject_3,
-          document_numbers: document.document_numbers.gsub(/-+/,'-')
+          document_numbers: document.document_numbers.map{|n| n.gsub(/-+/,'-')}
         }.delete_if{|k,v| v.nil?}
       end
     end
