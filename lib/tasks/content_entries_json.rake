@@ -12,21 +12,40 @@ namespace :content do
           dates = Content.parse_dates(ENV['DATE'])
 
           dates.each do |date|
+            next unless Issue.should_have_an_issue?(date)
+
             puts "compiling daily table of contents json for #{date}..."
             XmlTableOfContentsTransformer.perform(date)
           end
         end
 
         task :fr_index => :environment do
-          #BC TODO: Optimize if multiple dates passed in so index data not unnecessarily re-processed.
           dates = Content.parse_dates(ENV['DATE'])
+          years = dates.map{|d| d.split('-').first}.uniq
 
-          dates.each do |date|
-            puts "compiling fr_index json for #{date}..."
-            IndexCompiler.perform(date)
+          years.each do |year|
+            puts "compiling fr_index json for #{year}..."
+            FRIndexCompiler.perform(year)
           end
         end
 
+        task :pi_toc => :envrionment do
+          dates = Content.parse_dates(ENV['DATE'])
+
+          dates.each do |date|
+            next unless Issue.should_have_an_issue?(date)
+
+            issue = PublicInspectionIssue.find_by_publication_date(date)
+            unless issue && issue.published_at
+              puts "no published PI issue for #{date}"
+              next
+            end
+
+            puts "compiling PI table of contents json for #{date}..."
+            TableOfContentsTransformer::PublicInspection::RegularFiling.perform(issue.published_at.to_date)
+            TableOfContentsTransformer::PublicInspection::SpecialFiling.perform(issue.published_at.to_date)
+          end
+        end
       end
     end
   end
