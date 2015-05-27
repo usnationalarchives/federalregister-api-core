@@ -170,7 +170,7 @@ class XmlTableOfContentsTransformer
           subject_1: document.subject_1,
           subject_2: document.subject_2,
           subject_3: document.subject_3,
-          document_numbers: document.document_numbers
+          document_numbers: document.document_numbers.gsub(/-+/,'-')
         }.delete_if{|k,v| v.nil?}
       end
     end
@@ -189,7 +189,7 @@ class XmlTableOfContentsTransformer
       if document_type_mappings[document_type_from_xml].present?
         document_type_mappings[document_type_from_xml]
       else
-        error = "'#{document_type_from_xml}' is not a recognized document_type.  
+        error = "'#{document_type_from_xml}' is not a recognized document_type.
           See DOCUMENT_TYPE_MAPPINGS in xml_table_of_contents_transformer."
         Rails.logger.warn(error)
         Honeybadger.notify(
