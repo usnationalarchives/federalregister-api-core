@@ -6,13 +6,14 @@ namespace :content do
         task :all => %w(
                   daily_toc
                   fr_index
+                  pi_toc
                 )
 
         task :daily_toc => :environment do
           dates = Content.parse_dates(ENV['DATE'])
 
           dates.each do |date|
-            next unless Issue.should_have_an_issue?(date)
+            next unless Issue.should_have_an_issue?(Date.parse(date))
 
             puts "compiling daily table of contents json for #{date}..."
             XmlTableOfContentsTransformer.perform(date)
@@ -33,7 +34,7 @@ namespace :content do
           dates = Content.parse_dates(ENV['DATE'])
 
           dates.each do |date|
-            next unless Issue.should_have_an_issue?(date)
+            next unless Issue.should_have_an_issue?(Date.parse(date))
 
             issue = PublicInspectionIssue.find_by_publication_date(date)
             unless issue && issue.published_at
