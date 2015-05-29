@@ -1,12 +1,11 @@
 class Api::V1::SectionsController < ApiController
   def index
     publication_date = parse_pub_date(params[:conditions])
-    sections = []
+    sections = {}
 
     Section.all.each do |section|
-      sections << {
+      sections[section.slug] = {
         :name => section.title,
-        :slug => section.slug,
         :highlighted_documents => highlighted_documents(section, publication_date),
       }
     end
