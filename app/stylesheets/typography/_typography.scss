@@ -5,30 +5,6 @@ Enhanced Fonts for elements
 ******************************/
 
 
-/******************************
-
-TITLE STYLES
-
-******************************/
-
-#sections div.title, #canned_searches div.title {
-  margin-bottom: 25px;
-  }
-#sections div.title span, #canned_searches div.title span {
-  position: relative;
-  top: -12px;
-  margin: 0 5px 0 0;
-  padding: 0 10px 0 50px;  
-  }
-#canned_searches div.title span {
-  top: -17px;
-  }
-
-
-.wf-active div.title {
-  @include apertura-condensed; /* was gloriola */
-  }
-
 /* stacked left words, big right word */
 
 .title_bar,
@@ -51,7 +27,7 @@ TITLE STYLES
 #cfr_citation_modal .title_bar {
   border-top: none;
   margin: 0;
-  }  
+  }
 div.title_bar {
   font-size: 1em;
   position: relative;
@@ -61,7 +37,7 @@ div.title_bar h2 {
   }
 div.title_bar h2 a {
   color: $powder_blue;
-  }  
+  }
 .title_bar .actions {
   position: absolute;
   right: 0;
@@ -119,7 +95,7 @@ THREE COL LIST
 .comments .grouped_by_date .date {
   color: #bdbdbd;
   font-size: 1.3em;
-  font-weight: 700;  
+  font-weight: 700;
   line-height: 1.15;
   text-align: center;
 }
@@ -128,32 +104,6 @@ THREE COL LIST
   line-height: 1.5;
   }
 
-/******************************
-
-ARTICLES
-
-******************************/
-
-.article h1 {
-  font-size: 2em;
-  line-height: 1.6;
-  }
-
-.featured .article h1,
-#wordpress .blog_post_list h1 {
-  font-size: 1.4em;
-  font-weight: normal;
-  line-height: 1.4;
-  }
-#entries h3,
-#entries h4,
-#entries h5,
-#entries h6 {
-  margin-top: 1em;
-  }
-.articles_published_by_day h1 {
-  font-size: 1.1em;
-  }
 
 /******************************
 
@@ -162,7 +112,7 @@ REGULATION VIEW
 ******************************/
 
 .split_list dt {
-  text-align: right;  
+  text-align: right;
   }
 
 /******************************
@@ -175,69 +125,12 @@ CITATION LIST
   display: block;
   }
 
-/******************************
-
-BY DATE
-
-******************************/
-
-#entries.by_date h2 {
-  margin-bottom: 0;
-  margin-top: 1em;
-  }
-#entries.by_date h2:first-child,
-#entries.by_date h2.firstchild {
-  margin-top: 0;
-  }  
-#entries.by_date #main h3 {
-  font-size: 1.2em;
-  margin: .5em 0 .5em 1em;
-  text-transform: uppercase;
-  }
-#entries.by_date #content_area dl,
-#entries.by_date #content_area ul {
-  font-size: 1.1em;
-  margin-left: 2em;
-  }
-#entries.by_date ul {
-  list-style: none;
-  }
-#entries.by_date dt > a {
-  font-weight: normal;
-  }
-#entries.by_date .see {
-  font-weight: 400;
-  font-style: italic;
-  }
-#entries.by_date p.details {
-  @include gesta; 
-  font-size: .9em;
-  font-weight: normal;
-  margin-top: -.4em;
-  }  
-#entries.by_date .pages {
-  font-style: italic;
-  }
-#entries.by_date .title_bar {
-  font-size: .8em;
-  margin-bottom: 1em;
-  padding: 5px 5em 0 0;
-  position: relative;
-  text-transform: none;
-  }
-#entries.by_date .back_to_top {
-  font-size: 1em;
-  position: absolute;
-  right: 0;
-  text-transform: none;
-  top: 0;  
-  }  
 
 /******************************
 
 STATIC PAGES
 
-******************************/ 
+******************************/
 #wordpress.page #content_area h1 {
   border-top: 2px solid #464646;
   @include athelas;
@@ -247,7 +140,7 @@ STATIC PAGES
 #wordpress.page #content_area h1.firstchild {
   border-top: none;
   margin-top: 0;
-  }  
+  }
 #wordpress.page #content_area h2 {
   color: #464646;
   font-size: 1.6em;
@@ -258,7 +151,7 @@ STATIC PAGES
   }
 #wordpress.page #content_area ul.bullets li ul {
   margin-top: 0.75em;
-  }  
+  }
 #wordpress.page #content_area .aside_box {
   margin-bottom: 1em;
   }
@@ -273,8 +166,8 @@ STATIC PAGES
 #wordpress.single-post #content_area .post_content ul li,
 #wordpress #disclaimer_modal .modal_content ul li {
   background-position: left 8px;
-  line-height: 1.5;  
-  }  
+  line-height: 1.5;
+  }
 #wordpress.page #content_area.static_page .article h3,
 #wordpress.single-post #content_area .post_content h3 {
   margin-top: 1em;
