@@ -8,6 +8,7 @@ module GoogleCharts
       :fill, :line_color, :marker_color, :marker_size, :size
 
     def initialize(data, args={})
+      args ||= {} #guard against nil being passed for args
       options = args.dup.symbolize_keys!
 
       @background_color = options.fetch(:bg_color){ 'CCCCCC' }
