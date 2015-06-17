@@ -63,7 +63,7 @@ class Api::V1::EntriesController < ApiController
       wants.png do
         if date_facets.include?(params[:facet])
           redirect_to URI.encode(
-            GoogleCharts::Sparkline.new(search_result.counts).url
+            GoogleCharts::Sparkline.new(search_result.counts, params[:chart_options]).url
           )
         else
           raise ActiveRecord::RecordNotFound

@@ -13,12 +13,24 @@ module GoogleCharts
       @background_color = options.fetch(:bg_color){ 'CCCCCC' }
       @chart_background = options.fetch(:chart_bg_color){ 'FFFFFF' }
       @data             = data
+
       @data_max         = options.fetch(:max){ data.max }
+      if @data_max.is_a?(String)
+        @data_max = @data_max.to_f
+      end
+
       @fill             = options.fetch(:fill){ true }
+      if @fill.is_a?(String)
+        @fill = @fill == 'true'
+      end
+
       @line_color       = options.fetch(:line_color){ '000000' }
       @marker_color     = options.fetch(:marker_color){ 'FA6900' }
       @marker_size      = options.fetch(:marker_size){ 3.0 }
-      @size             = options.fetch(:size){ [135,25] }
+
+      height            = options.fetch(:height){ 25 }
+      width             = options.fetch(:width){ 135 }
+      @size             = [width.to_i, height.to_i]
     end
 
     def url
@@ -65,7 +77,7 @@ module GoogleCharts
 
     def build_chart_markers
       return '' if data.min == 0 && data.min == data.max
-      
+
       markers = []
       min_marked = false
       max_marked = false
