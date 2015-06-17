@@ -44,28 +44,6 @@ class Entries::SearchController < SearchController
     render :layout => false
   end
 
-  def activity_sparkline
-    chart_options = params.delete(:chart_options)
-
-    options = case params[:period]
-              when 'weekly'
-                {:period => :weekly, :since => 1.year.ago}
-              when 'monthly'
-                {:period => :monthly, :since => 5.years.ago}
-              when 'quarterly'
-                {:period => :quarterly}
-              else
-                raise ActiveRecord::RecordNotFound
-              end
-
-    data = @search.date_distribution(options).counts
-    sparkline_data = chart_options.present? ? {:data => data}.merge(chart_options) : {:data => data}
-    url = CustomChartHelper::Sparkline.new(sparkline_data).to_s
-    c = Curl::Easy.perform(url)
-    render :text => c.body_str, :content_type => "image/png"
-    cache_for 1.day
-  end
-
   private
 
   def load_search

@@ -29,25 +29,46 @@ class Api::V1::EntriesController < ApiController
     date_facets = %w(daily weekly monthly quarterly yearly)
     raise ActiveRecord::RecordNotFound unless (field_facets + date_facets).include?(params[:facet])
 
-    search = EntrySearch.new(params)
-    if search.valid?
-      if date_facets.include?(params[:facet])
-        json = search.date_distribution(:period => params[:facet].to_sym).results
-      else
-        facets = search.send("#{params[:facet]}_facets")
+    respond_to do |wants|
+      cache_for 1.day
+      search = EntrySearch.new(params)
 
-        json = facets.each_with_object(Hash.new) do |facet, hsh|
-          hsh[facet.identifier] = {
-            :count => facet.count,
-            :name => facet.name
-          }
+      if search.valid?
+        if date_facets.include?(params[:facet])
+          search_result = search.date_distribution(:period => params[:facet].to_sym)
+        else
+          search_result = search.send("#{params[:facet]}_facets")
         end
       end
 
-      cache_for 1.day
-      render_json_or_jsonp(json)
-    else
-      render_json_or_jsonp({:errors => search.validation_errors}, :status => 400)
+      wants.json do
+        if search_result
+          if date_facets.include?(params[:facet])
+            results = search_result.results
+          else
+            results = search_result.each_with_object(Hash.new) do |facet, hsh|
+              hsh[facet.identifier] = {
+                :count => facet.count,
+                :name => facet.name
+              }
+            end
+          end
+
+          render_json_or_jsonp(results)
+        else
+          render_json_or_jsonp({:errors => search.validation_errors}, :status => 400)
+        end
+      end
+
+      wants.png do
+        if date_facets.include?(params[:facet])
+          redirect_to URI.encode(
+            GoogleCharts::Sparkline.new(search_result.counts).url
+          )
+        else
+          raise ActiveRecord::RecordNotFound
+        end
+      end
     end
   end
 
