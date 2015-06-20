@@ -1,0 +1,5 @@
+{
+  "port": 3000,
+  "max_pool_size": 5,
+  "min_instances": 5
+}

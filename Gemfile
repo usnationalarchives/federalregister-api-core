@@ -97,7 +97,7 @@ group :test do
 end
 
 group :development do
-  gem 'passenger', '~> 4.0.57'
+  gem 'passenger', '~> 5.0.10'
   gem 'rubocop'
 end
 
