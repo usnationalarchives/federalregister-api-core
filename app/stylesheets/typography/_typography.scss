@@ -43,19 +43,7 @@ div.title_bar h2 a {
   right: 0;
   top: 0;
   }
-.small_stack {
-  color: $dark_blue;
-  display: inline-block;
-  font-size: .4em;
-  line-height: 1em;
-  margin-right: .5em;
-  text-align: right;
-  text-transform: uppercase;
-  font-variant: small-caps;
-  }
-.small_stack span {
-  display: block;
-  }
+
 .fr_section h1 {
   border-bottom: 2px solid $dark_grey;
   @include apertura-condensed;
