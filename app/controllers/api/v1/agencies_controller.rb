@@ -14,10 +14,14 @@ class Api::V1::AgenciesController < ApiController
   end
 
   def show
+    begin
+      agency = Agency.find(params[:id])
+    rescue
+      agency = Agency.find_by_slug(params[:id])
+    end
+
     respond_to do |wants|
       wants.json do
-        agency = Agency.find(params[:id])
-
         cache_for 1.day
         render_json_or_jsonp basic_agency_data(agency)
       end
