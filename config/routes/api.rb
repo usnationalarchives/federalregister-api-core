@@ -9,7 +9,7 @@ ActionController::Routing::Routes.draw do |map|
                   :action => 'facets',
                   :conditions => {:method => :get}
 
-    api.articles_facets 'public-inspection-documents/facets/:facet',
+    api.public_inspection_documents_facets 'public-inspection-documents/facets/:facet',
                   :controller => 'api/v1/public_inspection_documents',
                   :action => 'facets',
                   :conditions => {:method => :get}
