@@ -1,6 +1,7 @@
 class AgencyApiRepresentation < ApiRepresentation
   field(:id)
   field(:parent_id)
+  field(:child_ids){|agency| agency.children.map(&:id) || []}
   field(:name)
   field(:short_name) {|agency| agency.short_name.blank? ? nil : agency.short_name}
   field(:slug)
