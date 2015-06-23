@@ -6,6 +6,7 @@ class AgencyApiRepresentation < ApiRepresentation
   field(:short_name) {|agency| agency.short_name.blank? ? nil : agency.short_name}
   field(:slug)
   field(:url, :select => :slug) {|agency| agency_url(agency)}
+  field(:agency_url, :select => :url) {|agency| agency.url}
   field(:description)
   field(:recent_articles_url, :select => :id) {|agency| api_v1_entries_url(:conditions => {:agency_ids => [agency.id]}, :order => "newest")}
   field(:logo, :select => :logo_file_name) do |agency|
