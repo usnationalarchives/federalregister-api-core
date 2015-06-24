@@ -15,7 +15,12 @@ class Api::V1::AgenciesController < ApiController
 
   def show
     begin
-      agency = Agency.find(params[:id])
+      agency_ids = params[:id].split(',')
+      if agency_ids.size > 1
+        agency = Agency.find(:all, :conditions => {:id => agency_ids})
+      else
+        agency = Agency.find(params[:id])
+      end
     rescue
       agency = Agency.find_by_slug(params[:id])
     end
@@ -23,7 +28,8 @@ class Api::V1::AgenciesController < ApiController
     respond_to do |wants|
       wants.json do
         cache_for 1.day
-        render_json_or_jsonp basic_agency_data(agency)
+
+        render_json_or_jsonp Array(agency).map{|a| basic_agency_data(a)}
       end
     end
   end
