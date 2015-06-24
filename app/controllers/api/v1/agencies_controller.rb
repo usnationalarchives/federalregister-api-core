@@ -29,7 +29,11 @@ class Api::V1::AgenciesController < ApiController
       wants.json do
         cache_for 1.day
 
-        render_json_or_jsonp Array(agency).map{|a| basic_agency_data(a)}
+        if agency.is_a?(Array)
+          render_json_or_jsonp agency.map{|a| basic_agency_data(a)}
+        else
+          render_json_or_jsonp basic_agency_data(agency)
+        end
       end
     end
   end
