@@ -4,91 +4,9 @@ PAGE ELEMENTS
 
 ******************************/
 
-.tabs {
-  margin-bottom: 0;
-  font-size: 1.2em;
-  outline: 0;
-  }
-.tabs li {
-  list-style-image: none;
-  list-style-type: none;
-  margin-left: 0px;
-  white-space: nowrap;
-  @include inline-block;
-  }
-.tabs li a {
-  color: #666;
-  @include apertura-condensed;
-  margin-bottom: .5em;
-  padding: 1em 1em 0 1em;
-  }  
-.tabs .on {
-  background: #f1f1f1;
-  @include border-top-left-radius(5px);
-  @include border-top-right-radius(5px);
-  margin-bottom: -1em;
-  padding-bottom: 1em;
-  padding-top:0.25em;
-  }
-.tabs .on a {
-  color: #385F82;
-  font-weight: 700;
-  padding: .5em 1em 1em 1em;
-  }
-.tabs .number_of_results {
-  font-weight: normal;
-  font-size: .8em;
-  margin: -5px 0 -5px 5px;
-  }
-.search_bar {
-  background: #f1f1f1;
-  @include border-radius(5px);
-  margin-bottom: 1em;
-  padding: 1em 0;
-  overflow: hidden;
-  position: relative;  
-  }
-.search_bar .actions {
-  position: absolute;
-  right: 2em;
-  top: 1.2em;  
-  text-align: right;
-  height: 50px;
-  }
-.search_bar .actions .other_formats, .search_bar .actions .subscription {
-  font-size: 15px;
-  }
-.search_bar .actions .other_formats {
-  display: block;
-  }
-.search_bar .actions .other_formats a {
-  color: #6E6E6E;
-  }
-.search_bar .actions .other_formats a:hover {
-  color: #B88659;
-  }
-.search_bar .button {
- background-color: #fff;
-  }
-.search_bar label,
-.search_bar .label {
-  color: #777777;
-  display: block;
-  float: left;
-  @include apertura-condensed;
-  font-size: 1.5em;
-  line-height: 25px;
-  margin-left: 1em;
-  margin-top: 3px;
-  }
-.search_bar label {
-  margin-right: .5em;
-  }  
-.search_bar .label {
-  margin-left: .5em;
-  margin-right: .5em;  
-  }  
-.search_bar #conditions_term,
+
+
+
 #wordpress #blog-search-term {
   border: 1px solid #ccc;
   display: block;
@@ -99,16 +17,8 @@ PAGE ELEMENTS
   }
 #wordpress #blog-search-term {
   width: 178px;
-  }  
-.search_bar #conditions_type {
-  display: block;
-  float: left;
-  margin-top: 4px;
-  }  
-.search_bar select {
-  margin-right: 5px;
-  }  
-.search_bar #conditions_submit,
+  }
+
 #wordpress #blog-search-submit {
   background: sprite-image('icons/search_button.png') no-repeat;
   border: none;
@@ -120,23 +30,10 @@ PAGE ELEMENTS
   margin-left: -1px;
   width: image-width('icons/search_button.png');
   }
-.search_bar #conditions_submit:hover,
 #wordpress #blog-search-submit:hover {
   background: sprite-image('icons/search_button_hover.png') no-repeat;
   }
-.search_info {  
-  border-bottom: 3px solid #385F82;
-  clear: both;
-  margin-bottom: 1em;
-  position: relative;
-  overflow: hidden;
-  }
-#search .search_info .title_bar {
-  border-top: none;
-  margin-bottom: 0;
-  margin-top: 7px;
-  padding-top: 0;
-  }
+
 #citations .search_bar {
   margin-left: 0;
   }
@@ -164,14 +61,14 @@ ol.results > li.lastchild,
 ol.results > li:last-child .metadata,
 ol.results > li.lastchild .metadata {
   border: none;
-  }  
+  }
 ol.results h4,
 .matching_citation h4 {
   @include gesta;
   font-size: 16px;
   margin-bottom: 10px;
   width: 525px;
-  }  
+  }
 ol.results li .date,
 .matching_citation .date {
   font-size: 1.3em;
@@ -195,11 +92,11 @@ ol.results li .date {
   }
 .active_filter_list li + li {
   border-top: 0;
-  }  
+  }
 .active_filter_list li:first-child,
 .active_filter_list li.firstchild {
   @include border-top-left-radius(5px);
-  @include border-top-right-radius(5px);  
+  @include border-top-right-radius(5px);
   }
 .active_filter_list li:last-child,
 .active_filter_list li.lastchild {
@@ -211,20 +108,20 @@ ol.results li .date {
   font-weight: bold;
   margin-right: 1em;
   padding-left: 20px;
-  }  
+  }
 .active_filter_list li .remove,
 .bsmListItem .remove {
   background: sprite-image('icons/icon_close.png', 0, 0, 50px) no-repeat;
   @include inline-block;
   height: 14px;
-  @include hide-text;  
+  @include hide-text;
   width: 14px;
   }
 .active_filter_list li .remove {
   position: absolute;
   right: 1em;
   top: .8em;
-  }  
+  }
 .excerpts {
   margin: 0 0 1em 0;
   display: block;
@@ -243,7 +140,7 @@ ol.results li .date {
   font-size: 14px;
   margin: 0;
   overflow: hidden;
-  }  
+  }
 .results .metadata li,
 .matching_citation .metadata li {
   float: left;
@@ -275,7 +172,7 @@ ol.results li .date {
 
 /******************************
 
-RESULTS - MATCHING DOCUMENT 
+RESULTS - MATCHING DOCUMENT
 
 ******************************/
 
@@ -314,7 +211,7 @@ RESULTS - MATCHING DOCUMENT
   border: none;
   margin-top: 0;
   padding-top: 0;
-  } 
+  }
 .suggestion p {
     background: sprite-image('icons/icon_search.png', 0, 0, 100px) no-repeat;
     color: #666;
@@ -368,7 +265,7 @@ RESULTS - EVENTS & REGULATIONS
   }
 .result_set.regulations dl {
   margin-bottom: 0;
-  }  
+  }
 .result_set.events .results dt,
 .result_set.events .results dd,
 .result_set.regulations .results dt,
@@ -383,13 +280,13 @@ RESULTS - EVENTS & REGULATIONS
   }
 .result_set.regulations .results dt {
   width: auto;
-  }  
+  }
 .result_set.regulations .results dd {
   width: 480px;
-  }  
+  }
 .result_set.events .results dd.icon {
   margin-right: 0;
-  }  
+  }
 .result_set.events .results .actions {
   bottom: .5em;
   @include inline-list;
@@ -399,7 +296,7 @@ RESULTS - EVENTS & REGULATIONS
   }
 .result_set.events .results > li:hover .actions {
   @include opacity(1);
-  }    
+  }
 .result_set.regulations h5 {
   color: $bookmark_red;
   font-size:1.1em;
@@ -407,7 +304,7 @@ RESULTS - EVENTS & REGULATIONS
   }
 .article_list {
   overflow: hidden;
-  }  
+  }
 .article_list li {
   border-bottom: 1px solid #EEEEEE;
   clear: both;
@@ -421,7 +318,7 @@ RESULTS - EVENTS & REGULATIONS
   border-bottom: none;
   margin-bottom: 0;
   padding-bottom: 0;
-  }  
+  }
 .article_list li.notice {
   background: sprite-image('icons/icon_notice_50.png', 0, 4px, 100px) no-repeat;
   }
@@ -431,69 +328,9 @@ RESULTS - EVENTS & REGULATIONS
 .article_list li.rule {
   background: sprite-image('icons/icon_final_50.png', 0, 4px, 100px) no-repeat;
   }
-  
-/******************************
 
-FILTERS
 
-******************************/
 
-.filters h4 {
-  color: #585858;
-  @include apertura-condensed;
-  font-size: 1.3em;
-  line-height: 1.15;
-  text-transform: uppercase;
-  }  
-.filters ul {
-  border-bottom: 1px solid #eee;
-  list-style-type: none;
-  margin-bottom: 1em;
-  padding-bottom: 1em;
-  }
-.filters li {
-  clear: both;
-  margin-bottom: .3em;
-  position: relative;
-  overflow: hidden;
-  }
-.filters li a {
-  font-size: 1em; 
-  font-weight: 700;
-  line-height:1.25;
-  }
-.filters li.on .facet_name {
-  color: #363636;
-  padding-left: 17px;
-  width: 143px;
-  }
-.filters .count {
-  text-align: right;
-  }  
-.filters .zip {
-  border: 1px solid #ccc;
-  width: 75px;
-  }  
- 
-/******************************
-
-PAGINATION
-
-******************************/
-
-div.pagination span,
-div.pagination a {
-  border: 1px solid #CCCCCC;
-  line-height: 1;
-  padding: 5px;
-  }
-.result_set .pagination .current {
-  background-color: $golden;
-  color: #fff;
-  }
-div.pagination .disabled {
-  display: none;
-  }
 
 /******************************
 
@@ -510,27 +347,27 @@ ERRORS
   }
 .errors li {
   font-weight: bold;
-  }  
+  }
 .notice {
-  @include border-radius(5px);  
+  @include border-radius(5px);
   background: #ebd8b6 image-url("error.png") no-repeat 1em top;
   color: #777777;
   @include apertura-condensed;
   font-size: 1.5em;
-  line-height: 20px;    
+  line-height: 20px;
   list-style: none;
   margin-bottom: 1em;
-  overflow: hidden;  
-  padding: .75em 2.5em .5em;  
+  overflow: hidden;
+  padding: .75em 2.5em .5em;
   }
 .notice {
   float: left;
-  font-size: 1em;  
+  font-size: 1em;
   overflow: hidden;
   }
 #citation.search {
   margin-left: 10px;
-  }  
+  }
 .notice p {
   line-height: 30px;
   margin-left: 10px;
@@ -543,20 +380,17 @@ ADVANCED SEARCH
 
 ******************************/
 
-.simple {
-  display: block;
-  overflow: hidden;
-  }
+
 .advanced {
   margin-top: 1em;
   padding: 0 5em 0;
   }
 .has_js .advanced {
   display: none;
-  }  
+  }
 .advanced.open {
   display: block;
-  }  
+  }
 .formtastic fieldset {
   border: none;
   display: block;
@@ -590,7 +424,7 @@ ADVANCED SEARCH
 .has_js .formtastic .fallback_agency_list label {
   font-size: 1.1em;
   width: 14em;
-  }  
+  }
 .formtastic fieldset legend,
 .formtastic fieldset .label {
   margin: 0 1em 0 0;
@@ -608,7 +442,7 @@ ADVANCED SEARCH
   }
 #search.has_js .formtastic .cfr label,
 #search.has_js .formtastic .zip label,
-#search.has_js .formtastic .select label { display: none; }    
+#search.has_js .formtastic .select label { display: none; }
 .formtastic li {
   list-style: none;
   margin-bottom: .5em;
@@ -618,8 +452,8 @@ ADVANCED SEARCH
 .formtastic fieldset .type_selector li,
 .has_js .formtastic .date_options .range,
 .has_js .formtastic .cfr li,
-.has_js .formtastic .zip li { 
-  display: inline; 
+.has_js .formtastic .zip li {
+  display: inline;
   }
 .formtastic fieldset .check_boxes ol label,
 .formtastic fieldset .boolean label {
@@ -627,30 +461,30 @@ ADVANCED SEARCH
   margin-left: 0;
   }
 .formtastic fieldset .check_boxes input,
-.formtastic fieldset .boolean input { 
-  margin-left: 0; 
+.formtastic fieldset .boolean input {
+  margin-left: 0;
   }
 .formtastic .show_labels,
 .formtastic .show_labels .selected_agency_list,
 .formtastic .advanced ol,
-.formtastic .show_labels .reg_id { 
-  margin-bottom: 0; 
+.formtastic .show_labels .reg_id {
+  margin-bottom: 0;
   }
-.formtastic .show_labels li { 
+.formtastic .show_labels li {
   margin-bottom: 1em;
   }
 .formtastic .show_labels .agency {
   margin-bottom: .35em;
-  }  
-.formtastic fieldset .date input { 
-  width: 7em; 
+  }
+.formtastic fieldset .date input {
+  width: 7em;
   }
 .formtastic .inline-hints {
   clear: both;
   font-size: 1em;
   @include gesta;
-  margin-left: 13em; 
-  } 
+  margin-left: 13em;
+  }
 .formtastic .row_of_options {
   display: none;
   margin-bottom: 0;
@@ -659,7 +493,7 @@ ADVANCED SEARCH
   }
 .has_js .formtastic .row_of_options {
   display: block;
-  }  
+  }
 .date_options ol,
 .cfr ol,
 .zip ol {
@@ -669,17 +503,17 @@ ADVANCED SEARCH
 .has_js .cfr ol,
 .has_js .zip ol {
   float: none;
-  }    
+  }
 .has_js .formtastic .date_options .date {
   display: block;
   float: left;
   height: 16px;
   }
-.has_js .exact_date { 
-  margin-left: 17.5em; 
+.has_js .exact_date {
+  margin-left: 17.5em;
   }
-.has_js .exact_year { 
-  margin-left: 24.5em; 
+.has_js .exact_year {
+  margin-left: 24.5em;
   }
 .exact_year select,
 .zip select {
@@ -687,15 +521,15 @@ ADVANCED SEARCH
   float: none;
   margin: 0;
   }
-.has_js .range_start { 
-  margin-left: 30em; 
+.has_js .range_start {
+  margin-left: 30em;
   }
 .formtastic .cfr_title input {
   width: 30px;
-  }  
+  }
 .formtastic .zip input,
-.formtastic .cfr_part input { 
-  width: 50px; 
+.formtastic .cfr_part input {
+  width: 50px;
   }
 .formtastic .significant {
   clear: both;
@@ -704,15 +538,15 @@ ADVANCED SEARCH
   }
 .has_js .formtastic .significant {
   margin-left: 218px;
-  }  
-.formtastic .show_labels .reg_id input { 
-  width: 65px; 
   }
-.formtastic .show_labels .docket input { 
+.formtastic .show_labels .reg_id input {
+  width: 65px;
+  }
+.formtastic .show_labels .docket input {
   width: 160px;
    }
-.formtastic .agency input { 
-  width: 400px; 
+.formtastic .agency input {
+  width: 400px;
   }
 .formtastic .advanced #conditions_submit {
   background: url(/images/search_btn_bg.png) repeat-x;
@@ -732,12 +566,7 @@ ADVANCED SEARCH
   margin-left: 16.75em;
   margin-top: 2em;
   }
-.search_bar .options {
-  width: 410px; 
-  clear: both;
-  float: left;
-  margin-left: 5em;
-}
+
 #toggle_advanced {
   cursor: pointer;
   float: left;
@@ -752,11 +581,11 @@ ADVANCED SEARCH
 
 select.bsmSelect {
   display: none !important; /* important needed for IE */
-  } 
+  }
 .bsmList {
   margin-left: 13.25em;
   overflow: hidden;
-  }  
+  }
 .bsmList .bsmListItem,
 .inline-hints {
   background: #dfe4ea;
@@ -767,30 +596,14 @@ select.bsmSelect {
   }
 .bsmList .bsmListItem:hover {
   background: #d3dae2;
-  }  
+  }
 .bsmList .bsmListItem .remove {
   margin-left: 10px;
   }
 .formtastic .string span {
   margin: 0 3px;
   }
-#expected_result_count {
-  background: #fcfcfc;
-  border: 1px solid #ddd;
-  @include border-radius(5px);
-  color: #f77825;
-  display: none;
-  float: left;
-  @include apertura-condensed;
-  font-size: 12px;
-  font-weight: 700;  
-  height: 21px;
-  line-height: 23px;
-  margin-left: 5px;
-  padding: 3px 1em;
-  width: auto;
-  }
-#expected_result_count.loading,
+
 .inline-hints.loading {
   background-image: image-url('ajax-loader.gif');
   background-repeat: no-repeat;
@@ -799,14 +612,14 @@ select.bsmSelect {
   }
 .inline-hints.loading {
   width: 20px;
-  }  
+  }
 .formtastic .clear_form {
   display: none;
   margin-left: 5px;
   }
 .has_js .formtastic .clear_form {
   display: inline;
-  }  
+  }
 .text-placeholder {color: #AAA !important}
 
 /******************************
@@ -824,7 +637,7 @@ div.my_fr2 {
   right: 0px;
   position: absolute;
   }
-div.my_fr2 ul { 
+div.my_fr2 ul {
   list-style: none;
   margin: 0px;
   }

@@ -1,25 +1,8 @@
-.tabs,
-.search_bar {
-  @include grid(16,16);
-  }
-.result_set, .suggestions {
-  @include grid(11, 16);
-  @include grid-prefix(1, 16);
-  margin-bottom: 2em;
-  }
-.filters {
-  @include grid(4, 16);
-  }
-.facet_name {
-  @include grid(3, 16);
-  width: 150px;
-  @include alpha;
-  }
 .count {
   @include grid(1, 16);
   width: 50px;
   @include omega;
-  }  
+  }
 .events.result_set h3 {
   @include grid(2, 16);
   @include alpha;
@@ -27,12 +10,8 @@
 .events.result_set .results {
   @include grid(9, 16);
   @include omega;
-  }  
+  }
 .article_count {
   @include grid(5, 16);
   @include alpha;
   }
-
-
-
-  
