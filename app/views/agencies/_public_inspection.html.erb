@@ -1,7 +1,7 @@
 <div class="group" id="public_inspection">
   <h2 class="title_bar"><span class="small_stack">Public <span>Inspection</span></span> Documents Pending Publication</h2>
   <div class="section three_col_list">
-  <% @public_inspection_documents.group_by{|e| e.publication_date.to_s(:year_month)}.sort_by{|date,entries| date}.reverse.each do |unused, public_inspection_documents| %>
+  <% @public_inspection_documents.reject{|e| e.publication_date.nil?}.group_by{|e| e.publication_date.to_s(:year_month)}.sort_by{|date,entries| date}.reverse.each do |unused, public_inspection_documents| %>
       <h3><%= public_inspection_documents.first.publication_date.to_s(:month_year) %></h3>
       <div class="grouped_by_date">
       <% public_inspection_documents.group_by{|doc| doc.publication_date}.sort_by{|date, docs| date}.reverse.each do |pub_date, docs| %>  
