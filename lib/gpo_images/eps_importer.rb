@@ -1,9 +1,13 @@
+require 'ruby-debug'
+
 class GpoImages::EpsImporter
   require 'zlib'
-  attr_reader :filenames_to_download, :temp_images_path
+  attr_reader :filenames_to_download, :temp_images_path, :bucket_name
 
   def initialize
-    @temp_images_path = "tmp/tmp_image_files"
+    FileUtils.makedirs "tmp/gpo_images/temp_image_files"
+    @temp_images_path = "tmp/gpo_images/temp_image_files"
+    @bucket_name = 'eps.images.fr2.criticaljuncture.org.test'
   end
 
   def self.run
@@ -15,6 +19,7 @@ class GpoImages::EpsImporter
     download_eps_images
     create_zip md5(temp_images_path)
     store_image("#{md5(temp_images_path)}.zip")
+    #BC TODO: Enable removal of downloaded images for production.
   end
 
   private
@@ -77,13 +82,12 @@ class GpoImages::EpsImporter
         # Two arguments:
         # - The name of the file as it will appear in the archive
         # - The original file, including the path to find it
-        zipfile.add(filename, temp_images_path + '/' + filename)
+        zipfile.add(filename, File.join(temp_images_path, filename))
       end
     end
   end
 
   def store_image(file_name)
-    bucket_name = 'eps.images.fr2.criticaljuncture.org.test'
     bucket = fog_aws_connection.directories.new(:key => bucket_name)
     bucket.files.create(
       :key    => "#{Date.current.to_s(:ymd)}/#{file_name}",
