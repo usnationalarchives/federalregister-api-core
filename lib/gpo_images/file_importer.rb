@@ -20,8 +20,11 @@ class GpoImages::FileImporter
   private
 
   def convert_files(date)
-    unconverted_filename_list = s3_filenames_for_date(date) - already_converted_filenames(date)
-    unconverted_filename_list.each{|filename| GpoImages::FileConverter.new(filename, date).process}
+    image_packages_for_date(date).
+      reject(&:already_converted?).
+      each do |package|
+      GpoImages::FileConverter.new(package.digest, package.date).process
+    end
   end
 
   def secrets
@@ -37,17 +40,9 @@ class GpoImages::FileImporter
     })
   end
 
-  def s3_filenames_for_date(date)
+  def image_packages_for_date(date)
     fog_aws_connection.directories.get(bucket_name, :prefix => date.to_s(:ymd)).files.
-      map{|file|file.key}
+      map{|file|file.key}.
+      map{|key|GpoImages::ImagePackage.new(date, key)} #Added key
   end
-
-  def redis_set_key(date)
-    "converted_files:#{date.to_s(:ymd)}"
-  end
-
-  def already_converted_filenames(date)
-    Redis.new.smembers(redis_set_key(date))
-  end
-
 end

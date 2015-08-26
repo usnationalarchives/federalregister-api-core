@@ -1,10 +1,14 @@
 require 'ruby-debug'
 
 class GpoImages::EpsImporter
+  SLEEP_DURATION_BETWEEN_SFTP_CHECKS = 5.seconds
+
   require 'zlib'
   attr_reader :filenames_to_download, :temp_images_path, :bucket_name
 
-  def initialize
+  def initialize(options)
+    @sftp_connection ||= options.fetch(:sftp_connection) { GpoImages::Sftp.new }
+
     FileUtils.makedirs "tmp/gpo_images/temp_image_files"
     @temp_images_path = "tmp/gpo_images/temp_image_files"
     @bucket_name = 'eps.images.fr2.criticaljuncture.org.test'
@@ -16,9 +20,11 @@ class GpoImages::EpsImporter
   end
 
   def process
-    download_eps_images
+    # download_eps_images
+    @filenames_to_download = ["test_image_1.eps", "test_image_2.eps", "test_image_3.eps",]
     create_zip md5(temp_images_path)
     store_image("#{md5(temp_images_path)}.zip")
+    sftp_connection.close
     #BC TODO: Enable removal of downloaded images for production.
   end
 
@@ -29,35 +35,19 @@ class GpoImages::EpsImporter
   end
 
   def download_eps_images
-    Net::SFTP.start(
-        'ftp.gpo.gov',
-        secrets["gpo"]["username"],
-        :password => secrets["gpo"]["password"]
-      ) do |sftp_connection|
-      @filenames_to_download = unchanged_files_list(sftp_connection).map{|f|f[0]}
-      puts "Beginning download of the following files: #{filenames_to_download.to_sentence}"
-      filenames_to_download.each do |filename|
-        puts "Downloading #{filename}..."
-        data = sftp_connection.download!(filename, "#{temp_images_path}/#{filename}")
-      end
+    @filenames_to_download = unchanged_files_list.map(&:first)
+    puts "Beginning download of the following files: #{filenames_to_download.to_sentence}"
+    filenames_to_download.each do |filename|
+      puts "Downloading #{filename}..."
+      data = sftp_connection.download!(filename, "#{temp_images_path}/#{filename}")
     end
   end
 
-  def unchanged_files_list(sftp_connection)
-    initial_list = filenames_with_sizes(sftp_connection)
-    sleep 5
-    delayed_list = filenames_with_sizes(sftp_connection)
+  def unchanged_files_list
+    initial_list = sftp_connection.filenames_with_sizes
+    sleep SLEEP_DURATION_BETWEEN_SFTP_CHECKS
+    delayed_list = sftp_connection.filenames_with_sizes
     files_unchanged = initial_list & delayed_list #BC TODO: Test this logic.
-  end
-
-  def filenames_with_sizes(sftp_connection)
-    filenames_with_sizes = []
-    sftp_connection.dir.foreach("/") do |entry|
-      if entry.attributes.size > 0
-        filenames_with_sizes.push([entry.name, entry.attributes.size])
-      end
-    end
-    filenames_with_sizes
   end
 
   def fog_aws_connection
@@ -96,7 +86,8 @@ class GpoImages::EpsImporter
     )
   end
 
-  def remove_downloaded_files(sftp_connection)
+  def remove_downloaded_files
+    # BC TODO: Remove manually downloaded files in temp_images_path
     filenames_to_download.each do |filename|
       sftp_connection.remove(filename)
     end

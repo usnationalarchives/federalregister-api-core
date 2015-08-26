@@ -1,6 +1,6 @@
 module Content
   class ImportDriver
-    class EpsImageImportDriver < Content::ImportDriver
+    class EpsImportDriver < Content::ImportDriver
       def run
         load "#{Rails.root}/Rakefile"
         Rake::Task["content:eps_import:run"].invoke
