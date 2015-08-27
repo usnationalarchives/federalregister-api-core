@@ -19,12 +19,12 @@ class GpoImages::EpsImporter
   end
 
   def process
-    # download_eps_images
-    @filenames_to_download = ["test_image_1.eps", "test_image_2.eps", "test_image_3.eps",]
-    create_zip md5(temp_images_path)
-    store_image("#{md5(temp_images_path)}.zip")
+    download_eps_images
+    create_zip('tmp/gpo_images/temp_zip_files', "#{md5}.zip")
+    store_image("#{md5}.zip")
     #BC TODO: Investigate why sftp_connection.close is crashing.
-    #BC TODO: Enable removal of downloaded images for production.
+    # sftp_connection.close
+    remove_temporary_files
   end
 
   private
@@ -46,7 +46,7 @@ class GpoImages::EpsImporter
     initial_list = sftp_connection.filenames_with_sizes
     sleep SLEEP_DURATION_BETWEEN_SFTP_CHECKS
     delayed_list = sftp_connection.filenames_with_sizes
-    files_unchanged = initial_list & delayed_list #BC TODO: Test this logic.
+    files_unchanged = initial_list & delayed_list
   end
 
   def fog_aws_connection
@@ -58,19 +58,17 @@ class GpoImages::EpsImporter
     })
   end
 
-  def md5(path_to_files)
-    Digest::MD5.hexdigest(filenames_to_download.sort.map do |file_name|
-      Digest::MD5.file("#{path_to_files}/#{file_name}")
+  def md5
+    @md5 ||= Digest::MD5.hexdigest(filenames_to_download.sort.map do |file_name|
+      Digest::MD5.file("#{temp_images_path}/#{file_name}")
     end.join)
   end
 
-  def create_zip(archive_name)
-    zipfile_name = "tmp/#{archive_name}.zip"
-    Zip::ZipFile.open(zipfile_name, Zip::ZipFile::CREATE) do |zipfile|
+  def create_zip(path, filename)
+    #BC TODO: Implement mkdir_p
+    path_and_filename = File.join(path, filename)
+    Zip::ZipFile.open(path_and_filename, Zip::ZipFile::CREATE) do |zipfile|
       filenames_to_download.each do |filename|
-        # Two arguments:
-        # - The name of the file as it will appear in the archive
-        # - The original file, including the path to find it
         zipfile.add(filename, File.join(temp_images_path, filename))
       end
     end
@@ -80,16 +78,16 @@ class GpoImages::EpsImporter
     bucket = fog_aws_connection.directories.new(:key => bucket_name)
     bucket.files.create(
       :key    => "#{Date.current.to_s(:ymd)}/#{file_name}",
-      :body   => File.open("tmp/#{file_name}"),
+      :body   => File.open("tmp/gpo_images/temp_zip_files/#{file_name}"),
       :public => false
     )
   end
 
-  def remove_downloaded_files
-    # BC TODO: Remove manually downloaded files in temp_images_path
+  def remove_temporary_files
+    FileUtils.rm(File.join('tmp/gpo_images/temp_zip_files/', "#{md5}.zip"))
     filenames_to_download.each do |filename|
       FileUtils.rm(File.join(temp_images_path, filename))
-      sftp_connection.remove(filename)
+      # TODO: DO NOT IMPLEMENT UNTIL PRODUCTION READY: sftp_connection.remove(filename)
     end
   end
 
