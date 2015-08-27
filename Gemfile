@@ -17,6 +17,7 @@ gem 'fastercsv', '1.4.0'
 gem 'amatch', '0.2.11'
 gem 'indefinite_article'
 gem 'rubyzip', '0.9.1', :require => 'zip/zip'
+gem 'fog'
 gem 'formtastic', '0.9.8'
 
 gem 'json', '1.7.7'
@@ -67,6 +68,7 @@ gem "validation_reflection", "0.3.8"
 gem 'juicer', '1.0.6'
 
 gem 'rdoc'
+gem 'net-sftp'
 
 # bundler requires these gems in all environments
 # gem 'nokogiri', '1.4.2'

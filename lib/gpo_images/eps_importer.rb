@@ -1,14 +1,13 @@
 require 'ruby-debug'
 
 class GpoImages::EpsImporter
-  SLEEP_DURATION_BETWEEN_SFTP_CHECKS = 5.seconds
+  SLEEP_DURATION_BETWEEN_SFTP_CHECKS = 5
 
   require 'zlib'
-  attr_reader :filenames_to_download, :temp_images_path, :bucket_name
+  attr_reader :filenames_to_download, :temp_images_path, :bucket_name, :sftp_connection
 
-  def initialize(options)
+  def initialize(options={})
     @sftp_connection ||= options.fetch(:sftp_connection) { GpoImages::Sftp.new }
-
     FileUtils.makedirs "tmp/gpo_images/temp_image_files"
     @temp_images_path = "tmp/gpo_images/temp_image_files"
     @bucket_name = 'eps.images.fr2.criticaljuncture.org.test'
@@ -24,7 +23,7 @@ class GpoImages::EpsImporter
     @filenames_to_download = ["test_image_1.eps", "test_image_2.eps", "test_image_3.eps",]
     create_zip md5(temp_images_path)
     store_image("#{md5(temp_images_path)}.zip")
-    sftp_connection.close
+    #BC TODO: Investigate why sftp_connection.close is crashing.
     #BC TODO: Enable removal of downloaded images for production.
   end
 
@@ -89,6 +88,7 @@ class GpoImages::EpsImporter
   def remove_downloaded_files
     # BC TODO: Remove manually downloaded files in temp_images_path
     filenames_to_download.each do |filename|
+      FileUtils.rm(File.join(temp_images_path, filename))
       sftp_connection.remove(filename)
     end
   end

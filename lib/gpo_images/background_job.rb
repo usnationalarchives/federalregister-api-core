@@ -21,7 +21,7 @@ class GpoImages::BackgroundJob
   end
 
   def perform
-    image = GpoGraphic.new(:identifier => eps_filename)
+    image = GpoGraphic.new(:identifier => identifier)
     image.graphic = File.open(File.join(uncompressed_eps_images_path, eps_filename))
     if image.save
       remove_from_redis_key
@@ -36,6 +36,10 @@ class GpoImages::BackgroundJob
   end
 
   private
+
+  def identifier
+    File.basename(eps_filename, File.extname(eps_filename))
+  end
 
   def redis
     Redis.new
