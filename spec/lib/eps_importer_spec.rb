@@ -41,9 +41,25 @@ describe GpoImages::EpsImporter do
 end
 
 describe GpoImages::ImagePackage do
-  it ".already_converted? checks whether the redis set has a single entry" do
+  it ".already_converted? checks whether the redis set has a single entry"
+  it ".already_converted? return false for a new image package" do
+    image_package = GpoImages::ImagePackage.new(Date.current, "e99a18c428cb38d5f260853678922e03")
+    image_package.already_converted?.should == false
+    Redis.new.flushdb
   end
-  it "checks whether a file has been converted based on the redis_set"
+  it ".already_converted? should return true if an image package has been marked as completed" do
+    image_package = GpoImages::ImagePackage.new(Date.current, "e99a18c428cb38d5f260853678922e03")
+    image_package.mark_as_completed!
+    image_package.already_converted?.should == true
+    Redis.new.flushdb
+  end
+  it "can accumulate members in the Redis set"
+    image_package_1 = GpoImages::ImagePackage.new(Date.current, "e99a18c428cb38d5f260853678922e03")
+    image_package_1.mark_as_completed!
+    image_package_2 = GpoImages::ImagePackage.new(Date.current, "e99a18c428cb38d5f260853678922e03")
+    image_package_2.mark_as_completed!
+    Redis.new.smembers("converted_files:#{Date.current.to_s(:ymd)}").size.should == 2
+    Redis.new.flushdb
 end
 
 describe GpoImages::Sftp do

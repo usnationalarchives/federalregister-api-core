@@ -43,8 +43,7 @@ class GpoImages::FileConverter
         f_path=File.join(destination, f.name)
         FileUtils.mkdir_p(File.dirname(f_path))
         zip_file.extract(f, f_path) unless File.exist?(f_path)
-        # GpoImages::BackgroundJob.new(f.name, base_filename, date).perform
-        Resque.enqueue(GpoImages::BackgroundJob, f.name, base_filename, date)
+        Resque.enqueue(GpoImages::BackgroundJob, f.name, bucketed_zip_filename, date)
       end
     end
   end

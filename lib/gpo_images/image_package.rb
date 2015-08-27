@@ -1,5 +1,6 @@
 class GpoImages::ImagePackage
   attr_reader :date, :digest
+
   def initialize(date, digest)
     @date = date.is_a?(Date) ? date : Date.parse(date)
     @digest = digest

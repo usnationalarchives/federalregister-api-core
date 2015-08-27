@@ -5,15 +5,15 @@ class GpoImages::BackgroundJob
 
   attr_reader :eps_filename, :zipped_filename, :ftp_transfer_date,
               :compressed_image_bundles_path, :uncompressed_eps_images_path,
-              :processed_images_bucket_name, :temp_image_files_path
+              :temp_image_files_path, :bucketed_zip_filename
 
-  def initialize(eps_filename, zipped_filename, ftp_transfer_date)
+  def initialize(eps_filename, bucketed_zip_filename, ftp_transfer_date)
     @eps_filename = eps_filename
-    @zipped_filename = zipped_filename
-    @ftp_transfer_date = ftp_transfer_date
+    @bucketed_zip_filename = bucketed_zip_filename
+    @zipped_filename = File.basename(@bucketed_zip_filename) #TODO: Change this to base_filename
+    @ftp_transfer_date = ftp_transfer_date.is_a?(Date) ? ftp_transfer_date : Date.parse(ftp_transfer_date)
     @compressed_image_bundles_path = "tmp/gpo_images/compressed_image_bundles"
     @uncompressed_eps_images_path = "tmp/gpo_images/uncompressed_eps_images"
-    @processed_images_bucket_name = 'processed.images.fr2.criticaljuncture.org.test' #TODO: Make domain dynamic
   end
 
   def self.perform(eps_filename, zipped_filename, ftp_transfer_date)
@@ -50,7 +50,7 @@ class GpoImages::BackgroundJob
   end
 
   def mark_zipfile_as_converted
-    GpoImages::ImagePackage.new(ftp_transfer_date, zipped_filename).mark_as_completed!
+    GpoImages::ImagePackage.new(ftp_transfer_date, bucketed_zip_filename).mark_as_completed!
   end
 
   def redis_file_queue_empty?

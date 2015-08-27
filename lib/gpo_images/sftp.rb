@@ -1,5 +1,5 @@
 class GpoImages::Sftp
-  delegate [:remove, :close, :download!], :to => :connection
+  delegate :remove, :close, :download!, :to => :connection
 
   def filenames_with_sizes
     filenames_with_sizes = []

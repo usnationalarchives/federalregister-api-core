@@ -22,9 +22,7 @@ class GpoImages::FileImporter
   def convert_files(date)
     image_packages_for_date(date).
       reject(&:already_converted?).
-      each do |package|
-      GpoImages::FileConverter.new(package.digest, package.date).process
-    end
+      each {|package| GpoImages::FileConverter.new(package.digest, package.date).process}
   end
 
   def secrets
