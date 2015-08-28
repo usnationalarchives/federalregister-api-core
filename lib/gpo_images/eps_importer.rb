@@ -4,10 +4,12 @@ class GpoImages::EpsImporter
   SLEEP_DURATION_BETWEEN_SFTP_CHECKS = 5
 
   require 'zlib'
-  attr_reader :filenames_to_download, :temp_images_path, :bucket_name, :sftp_connection
+  attr_reader :filenames_to_download, :temp_images_path, :bucket_name, :sftp_connection,
+              :fog_aws_connection
 
   def initialize(options={})
     @sftp_connection ||= options.fetch(:sftp_connection) { GpoImages::Sftp.new }
+    @fog_aws_connection ||= options.fetch(:fog_aws_connection) { GpoImages::FogAwsConnection.new }
     FileUtils.makedirs "tmp/gpo_images/temp_image_files"
     @temp_images_path = "tmp/gpo_images/temp_image_files"
     @bucket_name = 'eps.images.fr2.criticaljuncture.org.test'
@@ -29,10 +31,6 @@ class GpoImages::EpsImporter
 
   private
 
-  def secrets
-    secrets ||= YAML::load_file File.join(Rails.root, 'config', 'secrets.yml')
-  end
-
   def download_eps_images
     @filenames_to_download = unchanged_files_list.map(&:first)
     puts "Beginning download of the following files: #{filenames_to_download.to_sentence}"
@@ -47,15 +45,6 @@ class GpoImages::EpsImporter
     sleep SLEEP_DURATION_BETWEEN_SFTP_CHECKS
     delayed_list = sftp_connection.filenames_with_sizes
     files_unchanged = initial_list & delayed_list
-  end
-
-  def fog_aws_connection
-    @connection ||= Fog::Storage.new({
-      :provider                 => 'AWS',
-      :aws_access_key_id        => secrets["s3"]["username"],
-      :aws_secret_access_key    => secrets["s3"]["password"],
-      :endpoint => 'https://s3.amazonaws.com/'
-    })
   end
 
   def md5

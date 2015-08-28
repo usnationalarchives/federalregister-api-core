@@ -3,10 +3,11 @@ require 'ruby-debug'
 class GpoImages::FileConverter
   attr_reader :bucket_name, :bucketed_zip_filename, :date,
               :processed_images_bucket_name, :base_filename,
-              :compressed_image_bundles_path
+              :compressed_image_bundles_path, :fog_aws_connection
 
-  def initialize(bucketed_zip_filename, date)
+  def initialize(bucketed_zip_filename, date, options={})
     @bucket_name = 'eps.images.fr2.criticaljuncture.org.test'
+    @fog_aws_connection ||= options.fetch(:fog_aws_connection) { GpoImages::FogAwsConnection.new }
     @bucketed_zip_filename = bucketed_zip_filename
     @base_filename = File.basename(@bucketed_zip_filename)
     @compressed_image_bundles_path = "tmp/gpo_images/compressed_image_bundles"
@@ -54,25 +55,12 @@ class GpoImages::FileConverter
     File.exist? File.join(compressed_image_bundles_path, base_filename)
   end
 
-  def secrets
-    secrets ||= YAML::load_file File.join(Rails.root, 'config', 'secrets.yml')
-  end
-
   def redis_key
     "converted_files:#{base_filename}"
   end
 
   def add_to_redis_set(filename)
     Redis.new.sadd(redis_key, filename)
-  end
-
-  def fog_aws_connection
-    @connection ||= Fog::Storage.new({
-      :provider                 => 'AWS',
-      :aws_access_key_id        => secrets["s3"]["username"],
-      :aws_secret_access_key    => secrets["s3"]["password"],
-      :endpoint => 'https://s3.amazonaws.com/'
-    })
   end
 
 end

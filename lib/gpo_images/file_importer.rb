@@ -1,10 +1,11 @@
 require 'ruby-debug'
 
 class GpoImages::FileImporter
-  attr_reader :bucket_name
+  attr_reader :bucket_name, :fog_aws_connection
 
-  def initialize
+  def initialize(options={})
     @bucket_name = 'eps.images.fr2.criticaljuncture.org.test'
+    @fog_aws_connection ||= options.fetch(:fog_aws_connection) { GpoImages::FogAwsConnection.new }
   end
 
   def self.run
@@ -23,19 +24,6 @@ class GpoImages::FileImporter
     image_packages_for_date(date).
       reject(&:already_converted?).
       each {|package| GpoImages::FileConverter.new(package.digest, package.date).process}
-  end
-
-  def secrets
-    secrets ||= YAML::load_file File.join(Rails.root, 'config', 'secrets.yml')
-  end
-
-  def fog_aws_connection
-    @connection ||= Fog::Storage.new({
-      :provider                 => 'AWS',
-      :aws_access_key_id        => secrets["s3"]["username"],
-      :aws_secret_access_key    => secrets["s3"]["password"],
-      :endpoint => 'https://s3.amazonaws.com/'
-    })
   end
 
   def image_packages_for_date(date)
