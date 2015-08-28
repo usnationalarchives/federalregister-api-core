@@ -31,7 +31,10 @@ class GpoImages::BackgroundJob
         remove_zip_file
       end
     else
-      raise "In development, problem saving image." #TODO: Remove stub.
+      Honeybadger.notify(
+        :error_class   => "GpoGraphic failed to save",
+        :error_message => image.errors.full_messages.to_sentence
+      )
     end
   end
 
@@ -46,7 +49,7 @@ class GpoImages::BackgroundJob
   end
 
   def remove_from_redis_key
-    redis.srem("converted_files:#{zipped_filename}", eps_filename)
+    redis.srem(redis_key, eps_filename)
   end
 
   def mark_zipfile_as_converted
@@ -58,7 +61,7 @@ class GpoImages::BackgroundJob
   end
 
   def redis_key
-    "converted_files:#{zipped_filename}"
+    "images_left_to_convert:#{zipped_filename}"
   end
 
   def remove_local_image

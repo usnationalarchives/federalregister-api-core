@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150415214152) do
+ActiveRecord::Schema.define(:version => 20150826181117) do
 
   create_table "action_names", :force => true do |t|
     t.string   "name"
@@ -290,7 +290,7 @@ ActiveRecord::Schema.define(:version => 20150415214152) do
     t.integer  "entry_id"
     t.datetime "created_at"
     t.string   "remote_ip"
-    t.text     "raw_referer", :limit => 16777215
+    t.text     "raw_referer", :limit => 2147483647
   end
 
   add_index "entry_page_views", ["created_at"], :name => "index_entry_page_views_on_created_at"
@@ -300,7 +300,7 @@ ActiveRecord::Schema.define(:version => 20150415214152) do
     t.integer  "entry_id"
     t.datetime "created_at"
     t.string   "remote_ip"
-    t.text     "raw_referer", :limit => 16777215
+    t.text     "raw_referer", :limit => 2147483647
   end
 
   add_index "entry_page_views_archive", ["created_at"], :name => "index_entry_page_views_on_created_at"
@@ -357,6 +357,28 @@ ActiveRecord::Schema.define(:version => 20150415214152) do
     t.integer  "processed_document_count"
   end
 
+  create_table "gpo_graphic_usages", :force => true do |t|
+    t.string   "identifier"
+    t.integer  "document_number"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "gpo_graphic_usages", ["document_number", "identifier"], :name => "index_gpo_graphic_usages_on_document_number_and_identifier"
+  add_index "gpo_graphic_usages", ["identifier", "document_number"], :name => "index_gpo_graphic_usages_on_identifier_and_document_number"
+
+  create_table "gpo_graphics", :force => true do |t|
+    t.string   "identifier"
+    t.string   "graphic_file_name"
+    t.string   "graphic_content_type"
+    t.integer  "graphic_file_size"
+    t.datetime "graphic_updated_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "gpo_graphics", ["identifier"], :name => "index_gpo_graphics_on_identifier", :unique => true
+
   create_table "graphic_usages", :force => true do |t|
     t.integer "graphic_id"
     t.integer "entry_id"
@@ -411,9 +433,9 @@ ActiveRecord::Schema.define(:version => 20150415214152) do
   end
 
   create_table "mailing_lists", :force => true do |t|
-    t.text     "search_conditions",          :limit => 16777215
+    t.text     "search_conditions",          :limit => 2147483647
     t.string   "title"
-    t.integer  "active_subscriptions_count",                     :default => 0
+    t.integer  "active_subscriptions_count",                       :default => 0
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "type"

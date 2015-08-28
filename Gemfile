@@ -8,7 +8,7 @@ gem 'mysql', '2.7'
 
 gem "jrails", "0.6.0"
 
-gem 'nokogiri', '1.3.2'
+gem 'nokogiri', '1.5.11'
 gem 'curb', '0.4.4.0'
 gem 'http_headers', '0.0.2.3'
 gem 'geokit', '1.4.1', :require => 'geokit'
@@ -49,7 +49,7 @@ gem 'klarlack', '0.0.6'
 gem 'system_timer', '1.0.0'
 gem "amazon-ec2", :require => false
 
-gem "net-scp", '1.0.4'
+gem "net-scp", '1.1.0'
 
 gem "capistrano", '2.15.4', :require => false
 gem "thunder_punch", '0.0.14', :require => false
@@ -78,6 +78,7 @@ group :deployment do
 end
 
 group :development do
+  gem 'ruby-debug'
   # bundler requires these gems in development
   # gem 'rails-footnotes'
   # gem 'poolparty', '1.6.9'
