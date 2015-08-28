@@ -1,0 +1,2 @@
+class GpoGraphicUsage < ApplicationModel
+end

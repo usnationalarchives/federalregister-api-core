@@ -21,8 +21,7 @@ class GpoImages::BackgroundJob
   end
 
   def perform
-    image = GpoGraphic.new(:identifier => identifier)
-    image.graphic = File.open(File.join(uncompressed_eps_images_path, eps_filename))
+    image = find_or_create_image
     if image.save
       remove_from_redis_key
       remove_local_image
@@ -39,6 +38,18 @@ class GpoImages::BackgroundJob
   end
 
   private
+
+  def find_or_create_image
+    if GpoGraphic.find_by_identifier(identifier)
+      image = GpoGraphic.find_by_identifier(identifier)
+      image.graphic = File.open(File.join(uncompressed_eps_images_path, eps_filename))
+    else
+      image = GpoGraphic.new(:identifier => identifier)
+      image.graphic = File.open(File.join(uncompressed_eps_images_path, eps_filename))
+      image.gpo_graphic_usages.build
+    end
+    image
+  end
 
   def identifier
     File.basename(eps_filename, File.extname(eps_filename))
