@@ -12,7 +12,7 @@ class GpoImages::EpsImporter
     @fog_aws_connection ||= options.fetch(:fog_aws_connection) { GpoImages::FogAwsConnection.new }
     FileUtils.makedirs "tmp/gpo_images/temp_image_files"
     @temp_images_path = "tmp/gpo_images/temp_image_files"
-    @bucket_name = 'eps.images.fr2.criticaljuncture.org.test'
+    @bucket_name = 'eps.images.fr2.criticaljuncture.org'
   end
 
   def self.run

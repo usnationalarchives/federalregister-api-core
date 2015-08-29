@@ -29,6 +29,6 @@ class GpoImages::ImagePackage
   end
 
   def redis_set
-    "converted_files:#{date.to_s(:ymd)}"
+    "converted_image_packages:#{date.to_s(:ymd)}"
   end
 end

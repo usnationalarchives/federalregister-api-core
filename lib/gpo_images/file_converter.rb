@@ -2,11 +2,10 @@ require 'ruby-debug'
 
 class GpoImages::FileConverter
   attr_reader :bucket_name, :bucketed_zip_filename, :date,
-              :processed_images_bucket_name, :base_filename,
-              :compressed_image_bundles_path, :fog_aws_connection
+              :base_filename, :compressed_image_bundles_path, :fog_aws_connection
 
   def initialize(bucketed_zip_filename, date, options={})
-    @bucket_name = 'eps.images.fr2.criticaljuncture.org.test'
+    @bucket_name = 'eps.images.fr2.criticaljuncture.org'
     @fog_aws_connection ||= options.fetch(:fog_aws_connection) { GpoImages::FogAwsConnection.new }
     @bucketed_zip_filename = bucketed_zip_filename
     @base_filename = File.basename(@bucketed_zip_filename)
@@ -39,7 +38,7 @@ class GpoImages::FileConverter
 
   def unzip_file (destination, file)
     Zip::ZipFile.open(file) do |zip_file|
-      zip_file.each{|file| add_to_redis_set(file.name)}
+      zip_file.each{|file| add_to_redis_set(file.name)} #BC TODO: filter for .eps only
       zip_file.each do |f|
         f_path=File.join(destination, f.name)
         FileUtils.mkdir_p(File.dirname(f_path))
@@ -56,7 +55,7 @@ class GpoImages::FileConverter
   end
 
   def redis_key
-    "converted_files:#{base_filename}"
+    "images_left_to_convert:#{base_filename}"
   end
 
   def add_to_redis_set(filename)
