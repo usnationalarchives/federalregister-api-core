@@ -49,7 +49,8 @@ describe GpoImages::ImagePackage do
     redis.flushdb
   end
 
-  it ".already_converted? checks whether the redis set has a single entry"
+  it ".already_converted? checks whether the redis set has a single entry" do
+  end
 
   it ".already_converted? return false for a new image package" do
     image_package = GpoImages::ImagePackage.new(Date.current, "e99a18c428cb38d5f260853678922e03")
@@ -62,12 +63,13 @@ describe GpoImages::ImagePackage do
     image_package.already_converted?.should == true
   end
 
-  it "can accumulate members in the Redis set"
+  it "can accumulate members in the Redis set" do
     image_package_1 = GpoImages::ImagePackage.new(Date.current, "e99a18c428cb38d5f260853678922e03")
     image_package_1.mark_as_completed!
     image_package_2 = GpoImages::ImagePackage.new(Date.current, "7694f4a66316e53c8cdd9d9954bd611d")
     image_package_2.mark_as_completed!
-    redis.smembers("converted_files:#{Date.current.to_s(:ymd)}").size.should == 2
+    redis.smembers("converted_image_packages:#{Date.current.to_s(:ymd)}").size.should == 2
+  end
 end
 
 describe GpoImages::Sftp do
@@ -78,7 +80,12 @@ describe GpoImages::FileImporter do
 end
 
 describe GpoImages::FileConverter do
-  it "queues background jobs for eps files"
+  it "queues background jobs for eps files" do
+    pending("in progress")
+    file_converter = GpoImages::FileConverter.new("9100648fdb6ea541807930d94be7c91c.zip", Date.current)
+    file_converter.send(:unzip_file, '')
+
+  end
   it "does not queue background jobs for non-eps files"
 end
 

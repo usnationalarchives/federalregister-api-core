@@ -6,7 +6,7 @@ namespace :content do
       Content::ImportDriver::EpsImportDriver.new.perform
     end
 
-    desc "Run the importer"
+    desc "Download GPO images and move them to S3."
     task :run => :environment do
       GpoImages::EpsImporter.run
     end
@@ -20,7 +20,7 @@ namespace :content do
       Content::ImportDriver::FileImportDriver.new.perform
     end
 
-    desc "Run the importer"
+    desc "Download the .eps images from S3, convert them, and upload them to FR app-specific S3 bucket."
     task :run => :environment do
       GpoImages::FileImporter.run
     end
