@@ -10,8 +10,8 @@ class GpoImages::EpsImporter
   def initialize(options={})
     @sftp_connection ||= options.fetch(:sftp_connection) { GpoImages::Sftp.new }
     @fog_aws_connection ||= options.fetch(:fog_aws_connection) { GpoImages::FogAwsConnection.new }
-    @temp_images_path = "tmp/gpo_images/temp_image_files"
-    @temp_zip_files_path = 'tmp/gpo_images/temp_zip_files'
+    @temp_images_path = GpoImages::FileLocationManager.temp_images_path
+    @temp_zip_files_path = GpoImages::FileLocationManager.temp_zip_files_path
     @bucket_name = 'eps.images.fr2.criticaljuncture.org'
   end
 
@@ -22,7 +22,7 @@ class GpoImages::EpsImporter
   def process
     download_eps_images
     create_zip(temp_zip_files_path, "#{md5}.zip")
-    store_image("#{md5}.zip")
+    upload_zip_and_manifest_to_s3("#{md5}.zip")
     remove_temporary_files
   end
 
@@ -61,11 +61,16 @@ class GpoImages::EpsImporter
     end
   end
 
-  def store_image(file_name)
+  def upload_zip_and_manifest_to_s3(file_name)
     bucket = fog_aws_connection.directories.new(:key => bucket_name)
     bucket.files.create(
       :key    => "#{Date.current.to_s(:ymd)}/#{file_name}", #BC TODO: Extract to path manager
       :body   => File.open(File.join(temp_zip_files_path, file_name)),
+      :public => false
+    )
+    bucket.files.create(
+      :key    => "#{Date.current.to_s(:ymd)}/#{file_name}.manifest.yaml",
+      :body   => filenames_to_download.to_yaml,
       :public => false
     )
   end
