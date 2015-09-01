@@ -70,6 +70,13 @@ describe GpoImages::ImagePackage do
     image_package_2.mark_as_completed!
     redis.smembers("converted_image_packages:#{Date.current.to_s(:ymd)}").size.should == 2
   end
+
+  it ".mark gracefully fails if the redis set is already empty" do
+    image_package = GpoImages::ImagePackage.new(Date.current, "e99a18c428cb38d5f260853678922e03")
+    image_package.mark_as_completed!
+    image_package.mark_as_completed!
+    image_package.already_converted?.should == true
+  end
 end
 
 describe GpoImages::Sftp do

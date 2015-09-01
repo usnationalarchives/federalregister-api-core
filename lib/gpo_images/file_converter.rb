@@ -10,8 +10,8 @@ class GpoImages::FileConverter
     @fog_aws_connection ||= options.fetch(:fog_aws_connection) { GpoImages::FogAwsConnection.new }
     @bucketed_zip_filename = bucketed_zip_filename
     @base_filename = File.basename(@bucketed_zip_filename)
-    @compressed_image_bundles_path = "tmp/gpo_images/compressed_image_bundles" #BC TODO: Make sure these paths reference the Rails root and use File.join
-    @uncompressed_eps_images_path = "tmp/gpo_images/uncompressed_eps_images"
+    @compressed_image_bundles_path = GpoImages::FileLocationManager.compressed_image_bundles_path
+    @uncompressed_eps_images_path = GpoImages::FileLocationManager.uncompressed_eps_images_path
     @date = date
     make_temp_directories
   end
@@ -40,16 +40,17 @@ class GpoImages::FileConverter
     local_file.close
   end
 
-  def unzip_file (destination, file) #BC TODO: clarify this with zip_file in lieu of 'file'
-    #BC TODO: Pull the makedirs out of the loop
-    Zip::ZipFile.open(file) do |zip_file|
-      zip_file.each{|file| add_to_redis_set(file.name) if File.extname(file.name) == ".eps"} #Add explanatory comment.
-      zip_file.each do |f|
-        if File.extname(file.name) == ".eps" #BC TODO: Fix this bug so it's actually checking the file.
-          f_path = File.join(destination, f.name)
-          FileUtils.mkdir_p(File.dirname(f_path)) #BC TODO: Clean this area up.
-          zip_file.extract(f, f_path) unless File.exist?(f_path)
-          Resque.enqueue(GpoImages::BackgroundJob, f.name, bucketed_zip_filename, date)
+  def unzip_file (destination, zip_file)
+    Zip::ZipFile.open(zip_file) do |zip_contents|
+      FileUtils.makedirs(destination)
+      # There are intentionally two zip_file.each blocks to ensure a queue is built
+      # before processing on this queue starts.
+      zip_contents.each{|file| add_to_redis_set(file.name) if File.extname(file.name) == ".eps"}
+      zip_contents.each do |file|
+        if File.extname(file.name) == ".eps"
+          path_with_file = File.join(destination, file.name)
+          zip_contents.extract(file, path_with_file) unless File.exist?(path_with_file)
+          Resque.enqueue(GpoImages::BackgroundJob, file.name, bucketed_zip_filename, date)
         end
       end
     end
