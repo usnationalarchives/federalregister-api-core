@@ -6,10 +6,6 @@ class GpoImages::ImagePackage
     @digest = digest
   end
 
-  def self.s3_bucket_name
-    'eps.images.fr2.criticaljuncture.org.test'
-  end
-
   def already_converted?
     redis.sismember(redis_set, digest)
   end
@@ -19,7 +15,7 @@ class GpoImages::ImagePackage
   end
 
   def directory
-    "tmp/gpo_images/compressed_image_bundles/#{digest}"
+    File.join(GpoImages::FileLocationManager.compressed_image_bundles_path, digest)
   end
 
   private

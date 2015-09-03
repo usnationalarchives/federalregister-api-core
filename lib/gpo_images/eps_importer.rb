@@ -12,7 +12,7 @@ class GpoImages::EpsImporter
     @fog_aws_connection ||= options.fetch(:fog_aws_connection) { GpoImages::FogAwsConnection.new }
     @temp_images_path = GpoImages::FileLocationManager.temp_images_path
     @temp_zip_files_path = GpoImages::FileLocationManager.temp_zip_files_path
-    @bucket_name = 'eps.images.fr2.criticaljuncture.org'
+    @bucket_name = SETTINGS["zipped_eps_images_s3_bucket"]
   end
 
   def self.run
@@ -32,10 +32,19 @@ class GpoImages::EpsImporter
     @filenames_to_download = unchanged_files_list.map(&:first)
     puts "Beginning download of the following files: #{filenames_to_download.to_sentence}"
     FileUtils.makedirs temp_images_path
+    begin
     filenames_to_download.each do |filename|
       puts "Downloading #{filename}..."
       data = sftp_connection.download!(filename, "#{temp_images_path}/#{filename}")
     end
+    rescue => exception
+      delete_directory_contents(temp_images_path)
+      raise "A failure occurred when downloading eps images from GPO SFTP: #{exception.backtrace}: #{exception.message} (#{exception.class})"
+    end
+  end
+
+  def delete_directory_contents(directory)
+    FileUtils.rm_rf(Dir.glob(File.join(directory, '*')))
   end
 
   def unchanged_files_list
@@ -54,11 +63,21 @@ class GpoImages::EpsImporter
   def create_zip(path, filename)
     FileUtils.makedirs path
     path_and_filename = File.join(path, filename)
-    Zip::ZipFile.open(path_and_filename, Zip::ZipFile::CREATE) do |zipfile|
-      filenames_to_download.each do |filename|
-        zipfile.add(filename, File.join(temp_images_path, filename))
+
+    begin
+      Zip::ZipFile.open(path_and_filename, Zip::ZipFile::CREATE) do |zipfile|
+        filenames_to_download.each do |filename|
+          zipfile.add(filename, File.join(temp_images_path, filename))
+        end
       end
+      delete_directory_contents(temp_images_path)
+    rescue => exception
+      delete_directory_contents(temp_images_path)
+      delete_directory_contents(temp_zip_files_path)
+      #TODO: Include Honeybadger notify.
+      raise "A failure occured when building zip file: #{exception.backtrace}: #{exception.message} (#{exception.class})"
     end
+
   end
 
   def upload_zip_and_manifest_to_s3(file_name)
@@ -78,7 +97,6 @@ class GpoImages::EpsImporter
   def remove_temporary_files
     FileUtils.rm(File.join(temp_zip_files_path, "#{md5}.zip"))
     filenames_to_download.each do |filename|
-      FileUtils.rm(File.join(temp_images_path, filename))
       #BC TODO: DO NOT IMPLEMENT UNTIL PRODUCTION READY: sftp_connection.remove(filename)
     end
   end

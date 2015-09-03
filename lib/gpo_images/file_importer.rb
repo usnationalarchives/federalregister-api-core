@@ -3,9 +3,9 @@ require 'ruby-debug'
 class GpoImages::FileImporter
   attr_reader :bucket_name, :fog_aws_connection, :custom_date
 
-  def initialize(options={}) #BC TODO: Accepts an optional date... Rake task should also accept an argument
-    @bucket_name = 'eps.images.fr2.criticaljuncture.org' #This should be eps.images.federalregister.gov
-    @fog_aws_connection ||= options.fetch(:fog_aws_connection) { GpoImages::FogAwsConnection.new } #BC TODO Load the environment in the rake task itself.
+  def initialize(options={})
+    @bucket_name = SETTINGS["zipped_eps_images_s3_bucket"]#'eps.images.fr2.criticaljuncture.org' #This should be eps.images.federalregister.gov
+    @fog_aws_connection ||= options.fetch(:fog_aws_connection) { GpoImages::FogAwsConnection.new }
     if options[:custom_date]
       @custom_date = options[:custom_date].is_a?(Date) ? options[:custom_date] : Date.parse(options[:custom_date])
     end
@@ -34,7 +34,8 @@ class GpoImages::FileImporter
 
   def image_packages_for_date(date)
     fog_aws_connection.directories.get(bucket_name, :prefix => date.to_s(:ymd)).files.
-      map{|file|file.key}.
+      map{|file| file.key}.
+      select{|key| File.extname(key) == '.zip'}.
       map{|key|GpoImages::ImagePackage.new(date, key)}
   end
 end

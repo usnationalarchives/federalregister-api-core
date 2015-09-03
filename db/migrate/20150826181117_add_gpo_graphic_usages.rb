@@ -2,7 +2,7 @@ class AddGpoGraphicUsages < ActiveRecord::Migration
   def self.up
     create_table :gpo_graphic_usages do |t|
       t.string :identifier
-      t.integer :document_number
+      t.string :document_number
 
       t.timestamps
     end

@@ -1,0 +1,4 @@
+zipped_eps_images_s3_bucket: eps.images.federalregister.gov
+private_processed_images_s3_bucket_prefix: private.processed.images
+public_processed_images_s3_bucket_prefix: processed.images
+

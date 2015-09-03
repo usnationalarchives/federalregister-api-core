@@ -13,7 +13,7 @@ class GpoGraphic < ActiveRecord::Base
                     },
                     :s3_permissions => :private,
                     :s3_protocol => 'https',
-                    :bucket => 'processed.images.fr2.criticaljuncture.org.test', #BC TODO: Make this dyanmic for the domain.
+                    :bucket => "#{SETTINGS["private_processed_images_s3_bucket_prefix"]}.fr2.criticaljuncture.org", #TODO: Make dynamic
                     :path => ":identifier/:style.:extension"
 
   def set_content_type

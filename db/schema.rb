@@ -359,7 +359,7 @@ ActiveRecord::Schema.define(:version => 20150826181117) do
 
   create_table "gpo_graphic_usages", :force => true do |t|
     t.string   "identifier"
-    t.integer  "document_number"
+    t.string   "document_number"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

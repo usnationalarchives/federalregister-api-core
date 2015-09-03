@@ -6,7 +6,7 @@ class GpoImages::FileConverter
               :uncompressed_eps_images_path
 
   def initialize(bucketed_zip_filename, date, options={})
-    @bucket_name = 'eps.images.fr2.criticaljuncture.org'
+    @bucket_name = SETTINGS["zipped_eps_images_s3_bucket"]
     @fog_aws_connection ||= options.fetch(:fog_aws_connection) { GpoImages::FogAwsConnection.new }
     @bucketed_zip_filename = bucketed_zip_filename
     @base_filename = File.basename(@bucketed_zip_filename)
