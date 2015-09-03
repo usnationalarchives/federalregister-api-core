@@ -6,14 +6,10 @@ class GpoImages::FogAwsConnection
   def connection
     @connection ||= Fog::Storage.new({
       :provider                 => 'AWS',
-      :aws_access_key_id        => secrets["s3"]["username"],
-      :aws_secret_access_key    => secrets["s3"]["password"],
+      :aws_access_key_id        => SECRETS["aws"]["access_key_id"],
+      :aws_secret_access_key    => SECRETS["aws"]["secret_access_key"],
       :endpoint => 'https://s3.amazonaws.com/'
     })
-  end
-
-  def secrets
-    secrets ||= YAML::load_file File.join(Rails.root, 'config', 'secrets.yml')
   end
 
 end

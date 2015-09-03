@@ -45,8 +45,7 @@ class GpoImages::BackgroundJob
       gpo_graphic.graphic = image
     else
       gpo_graphic = GpoGraphic.new(:identifier => identifier)
-      gpo_graphic.graphic = image
-      gpo_graphic.gpo_graphic_usages.build #BC TODO: Should be marked as public if it has been found in existence.
+      gpo_graphic.graphic = image #TODO: Should be marked as public if it has been found in existence.
     end
     gpo_graphic
   end

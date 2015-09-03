@@ -13,11 +13,7 @@ class GpoImages::Sftp
 
   private
 
-  def secrets
-    secrets ||= YAML::load_file File.join(Rails.root, 'config', 'secrets.yml')
-  end
-
   def connection
-    @connection ||= Net::SFTP.start('ftp.gpo.gov', secrets["gpo"]["username"], :password => secrets["gpo"]["password"])
+    @connection ||= Net::SFTP.start('ftp.gpo.gov', SECRETS["gpo_sftp"]["username"], :password => SECRETS["gpo_sftp"]["password"])
   end
 end
