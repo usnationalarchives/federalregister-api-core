@@ -1,5 +1,3 @@
-require 'ruby-debug'
-
 class MissingImagesPresenter
   attr_reader :graphic_usages
 
@@ -40,9 +38,3 @@ class MissingImagesPresenter
   end
 
 end
-
-# missing_images = GpoGraphic.all(:conditions=>"graphic_file_name IS NULL").map do |gpo_graphic|
-#   gpo_graphic.gpo_graphic_usages
-# end.
-# flatten.
-# group_by{|d|d.document_number}

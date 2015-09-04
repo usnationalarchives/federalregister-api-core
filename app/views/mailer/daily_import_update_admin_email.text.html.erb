@@ -96,6 +96,27 @@
       </table>
       <% end %>
 
+      <% if @problematic_document_presenter.missing_gpo_graphics.present? %>
+        <h3 style="font-family:'Helvetica Neue',Arial,Helvetica,sans-serif;margin: 25px 0 5px;font-size: 20px;border-bottom: 1px solid #000;">
+          Missing Images
+        </h3>
+        <table class="table table-bordered table-striped table-condensed">
+          <thead>
+            <th>Document</th>
+            <th>Image Identifiers</th>
+          </thead>
+          <tbody>
+            <% @problematic_document_presenter.missing_gpo_graphics.documents.each do |doc| %>
+              <tr style="<%= cycle(nil, light_gray) %>">
+                <td style="width: 300px;" align="left"><%= link_to doc.document_number, short_entry_url(doc) %></td>
+                <td style="width: 300px;" align="left"><%= doc.image_identifiers.map{|id| id}.join(', ')%></td>
+              </tr>
+            <% end %>
+            <% reset_cycle %>
+          </tbody>
+        </table>
+      <% end %>
+
       <% if @agency_name_presenter.complex_remappings.present? %>
       <h3 style="font-family:'Helvetica Neue',Arial,Helvetica,sans-serif;margin: 25px 0 5px;font-size: 20px;border-bottom: 1px solid #000;">
         Complex Agency Name Remappings
