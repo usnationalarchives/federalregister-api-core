@@ -31,6 +31,7 @@ ActionController::Routing::Routes.draw do |map|
     admin.resources :photo_candidates, :only => :show
     admin.resources :sections
     admin.resources :agency_highlights
+    admin.resources :missing_images, :only => :index
     
     admin.resources :issues, :member => {:preview => :get} do |issue|
       issue.resource :approval, :controller => "issues/approvals"

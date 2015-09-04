@@ -1,0 +1,20 @@
+<% super_title 'Missing Images' %>
+<% title 'Document Publication Dates' %>
+
+<% @presenter.missing_image_date_data.each do |date_data| %>
+  <h4><%= date_data.date %></h4>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <th>Document</th>
+      <th>Image Identifiers</th>
+    </thead>
+    <tbody>
+      <% date_data.documents.each do |doc| %>
+        <tr>
+          <td class="span2"><%= link_to doc.document_number, short_entry_url(doc) %></td>
+          <td><%= doc.image_identifiers.map{|id| id}.join(', ')%></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>
