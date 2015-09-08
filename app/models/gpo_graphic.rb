@@ -20,4 +20,15 @@ class GpoGraphic < ActiveRecord::Base
     self.graphic.instance_write(:content_type, 'image/png')
   end
 
+  def copy_to_public_bucket
+    fog_aws_connection = GpoImages::FogAwsConnection.new
+    private_bucket = "#{SETTINGS["private_processed_images_s3_bucket_prefix"]}.fr2.criticaljuncture.org"
+    public_bucket = "#{SETTINGS["public_processed_images_s3_bucket_prefix"]}.fr2.criticaljuncture.org"
+    directory = fog_aws_connection.directories.get(
+      private_bucket,
+      :prefix => identifier
+    )
+    directory.files.each {|file| file.copy(public_bucket, file.key) }
+  end
+
 end

@@ -5,7 +5,7 @@ class GpoImages::BackgroundJob
 
   attr_reader :eps_filename, :zipped_filename, :ftp_transfer_date,
               :compressed_image_bundles_path, :uncompressed_eps_images_path,
-              :temp_image_files_path, :bucketed_zip_filename
+              :temp_image_files_path, :bucketed_zip_filename, :mark_public
 
   def initialize(eps_filename, bucketed_zip_filename, ftp_transfer_date)
     @eps_filename = eps_filename
@@ -23,6 +23,7 @@ class GpoImages::BackgroundJob
   def perform
     gpo_graphic = find_or_create_gpo_graphic
     if gpo_graphic.save
+      gpo_graphic.copy_to_public_bucket if mark_public
       remove_from_redis_key
       remove_local_image
       if redis_file_queue_empty?
@@ -41,12 +42,8 @@ class GpoImages::BackgroundJob
 
   def find_or_create_gpo_graphic
     gpo_graphic = GpoGraphic.find_by_identifier(identifier)
-    if gpo_graphic
-      gpo_graphic.graphic = image
-    else
-      gpo_graphic = GpoGraphic.new(:identifier => identifier)
-      gpo_graphic.graphic = image #TODO: Should be marked as public if it has been found in existence.
-    end
+    gpo_graphic ? @mark_public = true : gpo_graphic = GpoGraphic.new(:identifier => identifier)
+    gpo_graphic.graphic = image
     gpo_graphic
   end
 

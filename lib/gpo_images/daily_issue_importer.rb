@@ -19,6 +19,7 @@ class GpoImages::DailyIssueImporter
   class DocumentGraphic
     attr_reader :image_identifier, :document_number, :fog_aws_connection,
     :private_bucket, :public_bucket
+    delegate :graphic_file_name?, :to => :gpo_graphic
 
     def initialize(image_identifier, document_number)
       @image_identifier = image_identifier
@@ -44,12 +45,12 @@ class GpoImages::DailyIssueImporter
     end
 
     def copy_to_public_bucket
-      directory = fog_aws_connection.directories.get(
-        private_bucket,
-        :prefix => image_identifier
-      )
-      directory.files.each do |file|
-        file.copy(public_bucket, file.key)
+      if graphic_file_name?
+        directory = fog_aws_connection.directories.get(
+          private_bucket,
+          :prefix => image_identifier
+        )
+        directory.files.each {|file| file.copy(public_bucket, file.key) }
       end
     end
 
@@ -65,7 +66,10 @@ class GpoImages::DailyIssueImporter
         else
           GpoGraphic.create(:identifier => document_graphic.image_identifier)
         end
-        document_graphic.create_graphic_usage
+        document_graphic.create_graphic_usage unless GpoGraphicUsage.find_by_identifier_and_document_number(
+          document_graphic.image_identifier,
+          document_graphic.document_number
+        )
       end
     end
   end
