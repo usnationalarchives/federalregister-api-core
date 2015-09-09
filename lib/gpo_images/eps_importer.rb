@@ -95,8 +95,10 @@ class GpoImages::EpsImporter
 
   def remove_temporary_files
     FileUtils.rm(File.join(temp_zip_files_path, "#{md5}.zip"))
-    filenames_to_download.each do |filename|
-      sftp_connection.remove(filename)
+    sftp_connection do
+      filenames_to_download.each do |filename|
+        # sftp_connection.remove(filename) #TODO: Enable in prod.
+      end
     end
   end
 
