@@ -1,4 +1,3 @@
-require 'ruby-debug'
 require 'zlib'
 
 class GpoImages::EpsImporter
