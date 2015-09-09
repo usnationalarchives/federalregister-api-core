@@ -1,15 +1,18 @@
-class GpoImages::DailyIssueImporter
+require 'ruby-debug'
+
+class GpoImages::DailyIssueImageProcessor
   attr_reader :date, :documents, :fog_aws_connection
 
   XML_IMAGE_TAGS = ['GID', 'MID']
 
-  def initialize(date=Date.current)
-    @date = date.is_a?(Date) ? date : Date.parse(date)
+  def initialize
+    custom_date = Date.parse ENV['DATE'] if ENV['DATE']
+    @date ||= custom_date || Issue.current.publication_date
     @documents ||= Entry.find_all_by_publication_date(@date)
   end
 
-  def self.perform(date=Date.current)
-    new(date).perform
+  def self.perform
+    new.perform
   end
 
   def perform
