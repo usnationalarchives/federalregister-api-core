@@ -1,5 +1,3 @@
-require 'ruby-debug'
-
 class GpoImages::DailyIssueImageProcessor
   attr_reader :date, :documents, :fog_aws_connection
 

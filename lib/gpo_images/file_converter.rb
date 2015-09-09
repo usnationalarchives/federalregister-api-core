@@ -1,5 +1,3 @@
-require 'ruby-debug'
-
 class GpoImages::FileConverter
   attr_reader :bucket_name, :bucketed_zip_filename, :date,
               :base_filename, :compressed_image_bundles_path, :fog_aws_connection,

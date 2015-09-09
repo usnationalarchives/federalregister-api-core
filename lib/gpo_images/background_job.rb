@@ -1,5 +1,3 @@
-require 'ruby-debug'
-
 class GpoImages::BackgroundJob
   @queue = :gpo_image_import
 

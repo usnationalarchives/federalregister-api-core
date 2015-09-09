@@ -1,5 +1,3 @@
-require 'ruby-debug'
-
 class GpoImages::FileImporter
   attr_reader :bucket_name, :fog_aws_connection, :custom_date
 

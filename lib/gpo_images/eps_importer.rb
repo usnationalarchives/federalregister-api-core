@@ -95,8 +95,10 @@ class GpoImages::EpsImporter
 
   def remove_temporary_files
     FileUtils.rm(File.join(temp_zip_files_path, "#{md5}.zip"))
-    sftp_connection do |connection|
+    #TODO: Use existent sftp object and allow it to accept an optional block.
+    Net::SFTP.start('ftp.gpo.gov', SECRETS["gpo_sftp"]["username"], :password => SECRETS["gpo_sftp"]["password"]) do |connection|
       filenames_to_download.each do |filename|
+        Rails.logger.info("Deleting #{filename} from GPO SFTP...")
         connection.remove(filename)
       end
     end
