@@ -6,7 +6,7 @@ class AddGpoGraphicUsages < ActiveRecord::Migration
 
       t.timestamps
     end
-    add_index :gpo_graphic_usages, [:document_number, :identifier]
+    add_index :gpo_graphic_usages, [:document_number, :identifier], :unique => true
     add_index :gpo_graphic_usages, [:identifier, :document_number]
 
   end

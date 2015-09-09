@@ -364,7 +364,7 @@ ActiveRecord::Schema.define(:version => 20150826181117) do
     t.datetime "updated_at"
   end
 
-  add_index "gpo_graphic_usages", ["document_number", "identifier"], :name => "index_gpo_graphic_usages_on_document_number_and_identifier"
+  add_index "gpo_graphic_usages", ["document_number", "identifier"], :name => "index_gpo_graphic_usages_on_document_number_and_identifier", :unique => true
   add_index "gpo_graphic_usages", ["identifier", "document_number"], :name => "index_gpo_graphic_usages_on_identifier_and_document_number"
 
   create_table "gpo_graphics", :force => true do |t|

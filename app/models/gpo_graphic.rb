@@ -13,7 +13,7 @@ class GpoGraphic < ActiveRecord::Base
                     },
                     :s3_permissions => :private,
                     :s3_protocol => 'https',
-                    :bucket => "#{SETTINGS["private_processed_images_s3_bucket_prefix"]}.fr2.criticaljuncture.org", #TODO: Make dynamic
+                    :bucket => proc { |attachment| attachment.instance.bucket_name },
                     :path => ":identifier/:style.:extension"
 
   def set_content_type
@@ -22,13 +22,30 @@ class GpoGraphic < ActiveRecord::Base
 
   def copy_to_public_bucket
     fog_aws_connection = GpoImages::FogAwsConnection.new
-    private_bucket = "#{SETTINGS["private_processed_images_s3_bucket_prefix"]}.fr2.criticaljuncture.org"
-    public_bucket = "#{SETTINGS["public_processed_images_s3_bucket_prefix"]}.fr2.criticaljuncture.org"
     directory = fog_aws_connection.directories.get(
       private_bucket,
       :prefix => identifier
     )
     directory.files.each {|file| file.copy(public_bucket, file.key) }
+  end
+
+  def bucket_name
+    publication_dates = gpo_graphic_usages.map{|u|u.entry.publication_date}
+    if gpo_graphic_usages.empty? || publication_dates.any?{|publication_date| Date.current >= publication_date}
+      public_bucket
+    else
+      private_bucket
+    end
+  end
+
+  private
+
+  def public_bucket
+    "#{SETTINGS["public_processed_images_s3_bucket_prefix"]}.fr2.criticaljuncture.org" #TODO: Make dynamic
+  end
+
+  def private_bucket
+   "#{SETTINGS["public_processed_images_s3_bucket_prefix"]}.fr2.criticaljuncture.org" #TODO: Make dynamic
   end
 
 end

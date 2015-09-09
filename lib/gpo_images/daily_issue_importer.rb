@@ -13,28 +13,39 @@ class GpoImages::DailyIssueImporter
   end
 
   def perform
-    process_documents
+    scan_documents_for_images
   end
 
-  class DocumentGraphic
+  class ImageUsage
     attr_reader :image_identifier, :document_number, :fog_aws_connection,
     :private_bucket, :public_bucket
-    delegate :graphic_file_name?, :to => :gpo_graphic
+    delegate :graphic_file_name?, :copy_to_public_bucket, :to => :gpo_graphic
 
     def initialize(image_identifier, document_number)
       @image_identifier = image_identifier
       @document_number = document_number
-      @fog_aws_connection ||= GpoImages::FogAwsConnection.new
-      @private_bucket = "#{SETTINGS["private_processed_images_s3_bucket_prefix"]}.fr2.criticaljuncture.org" #TODO: Change to be dynamic in prod
-      @public_bucket = "#{SETTINGS["public_processed_images_s3_bucket_prefix"]}.fr2.criticaljuncture.org" #TODO: Change to be dynamic in prod
     end
 
     def gpo_graphic
       @gpo_graphic ||= GpoGraphic.find_by_identifier(image_identifier)
     end
 
-    def gpo_graphic?
+    def gpo_graphic_exists?
       gpo_graphic.present?
+    end
+
+    def create_gpo_graphic_usage_unless_existent
+      if GpoGraphicUsage.find_by_identifier_and_document_number(
+        image_identifier,
+        document_number
+        ).nil?
+
+        create_graphic_usage
+      end
+    end
+
+    def paperclip_image?
+      graphic_file_name?
     end
 
     def create_graphic_usage
@@ -44,41 +55,31 @@ class GpoImages::DailyIssueImporter
       )
     end
 
-    def copy_to_public_bucket
-      if graphic_file_name?
-        directory = fog_aws_connection.directories.get(
-          private_bucket,
-          :prefix => image_identifier
-        )
-        directory.files.each {|file| file.copy(public_bucket, file.key) }
-      end
-    end
-
   end
 
   private
 
-  def process_documents
+  def scan_documents_for_images
     XML_IMAGE_TAGS.each do |xml_tag|
-      document_graphics(xml_tag).each do |document_graphic|
-        if document_graphic.gpo_graphic?
-          document_graphic.copy_to_public_bucket
+      image_usages(xml_tag).each do |image_usage|
+        if image_usage.gpo_graphic_exists?
+          if image_usage.paperclip_image?
+            image_usage.copy_to_public_bucket
+          end
         else
-          GpoGraphic.create(:identifier => document_graphic.image_identifier)
+          GpoGraphic.create(:identifier => image_usage.image_identifier)
         end
-        document_graphic.create_graphic_usage unless GpoGraphicUsage.find_by_identifier_and_document_number(
-          document_graphic.image_identifier,
-          document_graphic.document_number
-        )
+
+        image_usage.create_gpo_graphic_usage_unless_existent
       end
     end
   end
 
-  def document_graphics(xml_tag)
-    documents.each_with_object([]) do |document, document_graphics|
+  def image_usages(xml_tag)
+    documents.each_with_object([]) do |document, image_usages|
       xml_doc = Nokogiri::XML(document.full_xml)
       xml_doc.css(xml_tag).each do |node|
-        document_graphics << DocumentGraphic.new(node.text, document.document_number)
+        image_usages << ImageUsage.new(node.text, document.document_number)
       end
     end
   end
