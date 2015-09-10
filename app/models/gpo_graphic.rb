@@ -20,13 +20,22 @@ class GpoGraphic < ActiveRecord::Base
     self.graphic.instance_write(:content_type, 'image/png')
   end
 
-  def copy_to_public_bucket
+  def move_to_public_bucket
     fog_aws_connection = GpoImages::FogAwsConnection.new
     directory = fog_aws_connection.directories.get(
       private_bucket,
       :prefix => identifier
     )
-    directory.files.each {|file| file.copy(public_bucket, file.key) }
+    directory.files.each do |file|
+      if file.copy(public_bucket, file.key)
+        file.destroy
+      else
+        Honeybadger.notify(
+          :error_class   => "Failure moving file from public to private bucket",
+          :error_message => "Failure occurred while copying #{file.key} from the public to the private bucket."
+        )
+      end
+    end
   end
 
   def assigned_bucket

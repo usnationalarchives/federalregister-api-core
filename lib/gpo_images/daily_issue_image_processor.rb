@@ -45,10 +45,6 @@ class GpoImages::DailyIssueImageProcessor
       end
     end
 
-    def paperclip_image?
-      graphic_file_name?
-    end
-
     def create_graphic_usage
       GpoGraphicUsage.create(
         :identifier => image_identifier,
@@ -64,8 +60,8 @@ class GpoImages::DailyIssueImageProcessor
     XML_IMAGE_TAGS.each do |xml_tag|
       image_usages(xml_tag).each do |image_usage|
         if image_usage.gpo_graphic_exists?
-          if image_usage.paperclip_image?
-            image_usage.copy_to_public_bucket
+          if image_usage.graphic_file_name?
+            image_usage.move_to_public_bucket
           end
         else
           GpoGraphic.create(:identifier => image_usage.image_identifier)
@@ -80,7 +76,7 @@ class GpoImages::DailyIssueImageProcessor
     documents.each_with_object([]) do |document, image_usages|
       xml_doc = Nokogiri::XML(document.full_xml)
       xml_doc.css(xml_tag).each do |node|
-        image_usages << ImageUsage.new(node.text, document.document_number)
+        image_usages << ImageUsage.new(node.text.upcase, document.document_number)
       end
     end
   end
