@@ -1,4 +1,14 @@
-zipped_eps_images_s3_bucket: eps.images.federalregister.gov
-private_processed_images_s3_bucket_prefix: private.processed.images
-public_processed_images_s3_bucket_prefix: processed.images
+development:
+  zipped_eps_images_s3_bucket: XXXXXXXXXXXXXXX
+  private_processed_images_s3_bucket: XXXXXXXXXXXXXXX
+  public_processed_images_s3_bucket: XXXXXXXXXXXXXXX
 
+staging:
+  zipped_eps_images_s3_bucket: eps.images.federalregister.gov
+  private_processed_images_s3_bucket: private.processed.images.fr2.criticaljuncture.org
+  public_processed_images_s3_bucket: processed.images.fr2.criticaljuncture.org
+
+production:
+  zipped_eps_images_s3_bucket: eps.images.federalregister.gov
+  private_processed_images_s3_bucket: private.processed.images.federalregister.gov
+  public_processed_images_s3_bucket: processed.images.federalregister.gov

@@ -41,11 +41,11 @@ class GpoGraphic < ActiveRecord::Base
   private
 
   def public_bucket
-    "#{SETTINGS["public_processed_images_s3_bucket_prefix"]}.fr2.criticaljuncture.org" #TODO: Make dynamic
+    SETTINGS["public_processed_images_s3_bucket"]
   end
 
   def private_bucket
-   "#{SETTINGS["private_processed_images_s3_bucket_prefix"]}.fr2.criticaljuncture.org" #TODO: Make dynamic
+    SETTINGS["private_processed_images_s3_bucket"]
   end
 
 end
