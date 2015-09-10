@@ -21,8 +21,13 @@ namespace :content do
       GpoImages::FileImporter.run
     end
 
-    desc "Scan through the most recent issue's XML--noting image usages and moving images to public buckets accordingly"
+    desc "Run the process_daily_issue_images driver"
     task :process_daily_issue_images => :environment do
+      Content::ImportDriver::DailyIssueImageProcessorDriver.new.perform
+    end
+
+    desc "Scan through the most recent issue's XML--noting image usages and moving images to public buckets accordingly"
+    task :process_daily_issue_images_raw_task => :environment do
       GpoImages::DailyIssueImageProcessor.perform
     end
 

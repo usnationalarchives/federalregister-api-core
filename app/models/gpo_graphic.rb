@@ -13,7 +13,7 @@ class GpoGraphic < ActiveRecord::Base
                     },
                     :s3_permissions => :private,
                     :s3_protocol => 'https',
-                    :bucket => proc { |attachment| attachment.instance.bucket_name },
+                    :bucket => proc { |attachment| attachment.instance.assigned_bucket },
                     :path => ":identifier/:style.:extension"
 
   def set_content_type
@@ -29,9 +29,9 @@ class GpoGraphic < ActiveRecord::Base
     directory.files.each {|file| file.copy(public_bucket, file.key) }
   end
 
-  def bucket_name
+  def assigned_bucket
     publication_dates = gpo_graphic_usages.map{|u|u.entry.publication_date}
-    if gpo_graphic_usages.empty? || publication_dates.any?{|publication_date| Date.current >= publication_date}
+    if publication_dates.any?{|publication_date| publication_date <= Date.current}
       public_bucket
     else
       private_bucket
@@ -45,7 +45,7 @@ class GpoGraphic < ActiveRecord::Base
   end
 
   def private_bucket
-   "#{SETTINGS["public_processed_images_s3_bucket_prefix"]}.fr2.criticaljuncture.org" #TODO: Make dynamic
+   "#{SETTINGS["private_processed_images_s3_bucket_prefix"]}.fr2.criticaljuncture.org" #TODO: Make dynamic
   end
 
 end

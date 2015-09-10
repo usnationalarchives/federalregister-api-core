@@ -20,9 +20,11 @@ class GpoImages::EpsImporter
 
   def process
     download_eps_images
-    create_zip(temp_zip_files_path, "#{md5}.zip")
-    upload_zip_and_manifest_to_s3("#{md5}.zip")
-    remove_temporary_files
+    if filenames_to_download.size > 0
+      create_zip(temp_zip_files_path, "#{md5}.zip")
+      upload_zip_and_manifest_to_s3("#{md5}.zip")
+      remove_temporary_files
+    end
   end
 
   private
