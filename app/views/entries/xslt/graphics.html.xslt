@@ -43,27 +43,28 @@
         <xsl:with-param name="replacement" select="'%23'"/>
       </xsl:call-template>
     </xsl:variable>
-    
-    <xsl:value-of select="concat('https://s3.amazonaws.com/images.federalregister.gov/', $image_id, '/', $size, '.png')" />
+
+    <xsl:value-of select="concat('https://s3.amazonaws.com/processed.images.federalregister.gov/', $image_id, '/', $size, '.png')" />
   </xsl:template>
 
   <xsl:template name="missing_graphic">
-    <p>
-      <xsl:text>[Graphic not available; </xsl:text> 
-      <a class="missing_graphic">
+    <p class="graphic">
+      <a class="missing_graphic entry_graphic_link">
         <xsl:attribute name="href">
-          <xsl:text>/articles/page-images/</xsl:text>
-          <xsl:value-of select="$volume" />
-          <xsl:text>/</xsl:text>
-          <xsl:call-template name="current_page" />
-          <xsl:text>.png</xsl:text>
+          <xsl:value-of select="https://s3.amazonaws.com/processed.images.federalregister.gov/MissingImage/original.png" />
         </xsl:attribute>
-        <xsl:text>view image of printed page</xsl:text>
+        <img class="entry_graphic">
+          <xsl:attribute name="src">
+            <xsl:value-of select="https://s3.amazonaws.com/processed.images.federalregister.gov/MissingImage/large.png" />
+          </xsl:attribute>
+          <xsl:attribute name="width">
+            <xsl:value-of select="number(parent::GPH/@SPAN)*153" />
+          </xsl:attribute>
+        </img>
       </a>
-      <xsl:text>]</xsl:text>
     </p>
   </xsl:template>
-  
+
   <xsl:template name="table_of_graphics">
     <xsl:if test="count(//GPH/GID[descendant::text()]) > 0">
       <xsl:call-template name="manual_header">
