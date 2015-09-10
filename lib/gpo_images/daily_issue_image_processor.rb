@@ -76,7 +76,7 @@ class GpoImages::DailyIssueImageProcessor
     documents.each_with_object([]) do |document, image_usages|
       xml_doc = Nokogiri::XML(document.full_xml)
       xml_doc.css(xml_tag).each do |node|
-        image_usages << ImageUsage.new(node.text.upcase, document.document_number)
+        image_usages << ImageUsage.new(node.text, document.document_number)
       end
     end
   end

@@ -50,7 +50,7 @@ class GpoImages::BackgroundJob
   end
 
   def identifier
-    File.basename(eps_filename, File.extname(eps_filename)).upcase
+    File.basename(eps_filename, File.extname(eps_filename))
   end
 
   def redis
