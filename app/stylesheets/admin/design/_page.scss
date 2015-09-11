@@ -156,3 +156,11 @@ div#blank_flow {
 #canned_searches .active_canned_searches td.title:hover {
   cursor: pointer;
 }
+
+// Documents :: Missing Images
+.missing-images {
+  h3 {
+    border-bottom: 1px solid #000;
+    margin-top: 30px;
+  }
+}

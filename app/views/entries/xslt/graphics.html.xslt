@@ -51,11 +51,11 @@
     <p class="graphic">
       <a class="missing_graphic entry_graphic_link">
         <xsl:attribute name="href">
-          <xsl:value-of select="https://s3.amazonaws.com/processed.images.federalregister.gov/MissingImage/original.png" />
+          <xsl:text>https://s3.amazonaws.com/processed.images.federalregister.gov/MissingImage/original.png</xsl:text>
         </xsl:attribute>
         <img class="entry_graphic">
           <xsl:attribute name="src">
-            <xsl:value-of select="https://s3.amazonaws.com/processed.images.federalregister.gov/MissingImage/large.png" />
+            <xsl:text>https://s3.amazonaws.com/processed.images.federalregister.gov/MissingImage/large.png</xsl:text>
           </xsl:attribute>
           <xsl:attribute name="width">
             <xsl:value-of select="number(parent::GPH/@SPAN)*153" />

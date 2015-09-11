@@ -11,13 +11,13 @@ namespace :data do
 
     task :basic => %w(
       content:entries:import
-      content:entries:import:graphics
-      content:entries:extract_equation_pages
+      content:gpo_images:process_daily_issue_images
       data:extract:places
     )
 
     task :really_quick => %w(
       content:entries:import:except_regulations_dot_gov
+      content:gpo_images:process_daily_issue_images
       content:issues:mark_complete
     )
 
