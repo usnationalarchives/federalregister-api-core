@@ -1,6 +1,20 @@
 class GpoImages::FogAwsConnection
   delegate :directories, :to => :connection
 
+  def move_directory_files_between_buckets(directory_prefix, source_bucket, destination_bucket)
+    directory = directories.get(source_bucket, :prefix => directory_prefix)
+    directory.files.each do |file|
+      if file.copy(destination_bucket, file.key)
+        file.destroy
+      else
+        Honeybadger.notify(
+          :error_class   => "Failure moving file from public to private bucket",
+          :error_message => "Failure occurred while copying #{file.key} from the public to the private bucket."
+        )
+      end
+    end
+  end
+
   private
 
   def connection

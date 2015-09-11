@@ -3,6 +3,8 @@ class GpoImages::FileConverter
               :base_filename, :compressed_image_bundles_path, :fog_aws_connection,
               :uncompressed_eps_images_path
 
+  IMAGE_FILE_EXTENTIONS_TO_IMPORT = ["", ".eps"]
+
   def initialize(bucketed_zip_filename, date, options={})
     @bucket_name = SETTINGS["zipped_eps_images_s3_bucket"]
     @fog_aws_connection ||= options.fetch(:fog_aws_connection) { GpoImages::FogAwsConnection.new }
@@ -42,13 +44,18 @@ class GpoImages::FileConverter
   def unzip_file (destination, zip_file)
     Zip::ZipFile.open(zip_file) do |zip_contents|
       FileUtils.makedirs(destination)
-      # There are intentionally two zip_file.each blocks to ensure a queue is built
-      # before processing on this queue starts.
-      zip_contents.each{|file| add_to_redis_set(file.name) if File.extname(file.name) == ".eps"}
+      # NOTE: There are intentionally two zip_file.each blocks to ensure a queue
+      # is built before processing on this queue starts.
       zip_contents.each do |file|
-        if File.extname(file.name) == ".eps"
+        if IMAGE_FILE_EXTENTIONS_TO_IMPORT.include?(File.extname(file.name))
+          add_to_redis_set(file.name)
+        end
+      end
+      zip_contents.each do |file|
+        if IMAGE_FILE_EXTENTIONS_TO_IMPORT.include?(File.extname(file.name))
           path_with_file = File.join(destination, file.name)
           zip_contents.extract(file, path_with_file) unless File.exist?(path_with_file)
+          puts "Enqueuing GpoImages::BackgroundJob for #{file.name}..."
           Resque.enqueue(GpoImages::BackgroundJob, file.name, bucketed_zip_filename, date)
         end
       end
