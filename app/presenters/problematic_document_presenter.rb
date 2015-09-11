@@ -48,8 +48,7 @@ class ProblematicDocumentPresenter
   end
 
   def missing_gpo_graphics
-    date_data = MissingImagesPresenter.new.missing_image_date_data.find{|d|d.date == date}
-    date_data if date_data
+    MissingImagesPresenter.new.dates_missing_images.find{|d| d.date == date}
   end
 
 end
