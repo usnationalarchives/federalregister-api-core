@@ -11,6 +11,10 @@ class GpoImages::FileImporter
     new.process
   end
 
+  def self.force_eps_convert
+    new.force_eps_convert
+  end
+
   def process
     if custom_date
       convert_files(custom_date)
@@ -18,6 +22,15 @@ class GpoImages::FileImporter
       convert_files(Date.current - 1.day)
       convert_files(Date.current)
     end
+  end
+
+  def force_eps_convert
+    raise "A valid custom date must be supplied." if custom_date.nil?
+    image_packages = image_packages_for_date(custom_date)
+    image_packages.each do |image_package|
+      image_package.cleanup_in_progress_files
+    end
+    image_packages.first.delete_entire_redis_set
   end
 
   private

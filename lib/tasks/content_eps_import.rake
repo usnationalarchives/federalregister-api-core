@@ -26,6 +26,12 @@ namespace :content do
       Content::ImportDriver::DailyIssueImageProcessorDriver.new.perform
     end
 
+    desc "Delete the date's redis keys and re-execute the eps_conversion process."
+    task :force_convert_eps => :environment do
+      GpoImages::FileImporter.force_eps_convert
+      Content::ImportDriver::FileImportDriver.new.perform
+    end
+
     desc "Scan through the most recent issue's XML--noting image usages and moving images to public buckets accordingly"
     task :process_daily_issue_images_raw_task => :environment do
       GpoImages::DailyIssueImageProcessor.perform
