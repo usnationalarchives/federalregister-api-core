@@ -5,7 +5,7 @@ class Mailer < ActionMailer::Base
 
   sendgrid_enable :opentracking, :clicktracking, :ganalytics
 
-  FR_DEVELOPER_ADMINS = %w(bob@criticaljuncture.org andrew@criticaljuncture.org rich@criticaljuncture.org)
+  FR_DEVELOPER_ADMINS = %w(bob@criticaljuncture.org andrew@criticaljuncture.org rich@criticaljuncture.org brandon@criticaljuncture.org)
 
   def password_reset_instructions(user)
     sendgrid_category "Admin Password Reset"
