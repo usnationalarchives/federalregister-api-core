@@ -5,7 +5,7 @@ class GpoImages::DailyIssueImageProcessor
 
   def initialize
     custom_date = Date.parse ENV['DATE'] if ENV['DATE']
-    @date ||= custom_date || Issue.current.publication_date
+    @date ||= custom_date || DateTime.current.in_time_zone.to_date
     @documents ||= Entry.find_all_by_publication_date(@date)
   end
 
