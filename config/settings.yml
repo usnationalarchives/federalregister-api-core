@@ -3,8 +3,8 @@ test:
 
 development:
   zipped_eps_images_s3_bucket: eps.images.federalregister.gov
-  private_processed_images_s3_bucket: private.processed.images.fr2.criticaljuncture.org
-  public_processed_images_s3_bucket: processed.images.fr2.criticaljuncture.org
+  private_processed_images_s3_bucket: private.processed.images.fr2.local
+  public_processed_images_s3_bucket: processed.images.fr2.local
 
 staging:
   zipped_eps_images_s3_bucket: eps.images.federalregister.gov
