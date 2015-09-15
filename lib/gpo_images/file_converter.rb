@@ -54,7 +54,7 @@ class GpoImages::FileConverter
       zip_contents.each do |file|
         if IMAGE_FILE_EXTENTIONS_TO_IMPORT.include?(File.extname(file.name))
           path_with_file = File.join(destination, file.name)
-          zip_contents.extract(file, path_with_file) unless File.exist?(path_with_file)
+          zip_contents.extract(file, path_with_file){ true }
           puts "Enqueuing GpoImages::BackgroundJob for #{file.name}..."
           Resque.enqueue(GpoImages::BackgroundJob, file.name, bucketed_zip_filename, date)
         end
