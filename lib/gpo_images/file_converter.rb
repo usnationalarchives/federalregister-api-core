@@ -3,7 +3,7 @@ class GpoImages::FileConverter
               :base_filename, :compressed_image_bundles_path, :fog_aws_connection,
               :uncompressed_eps_images_path
 
-  IMAGE_FILE_EXTENTIONS_TO_IMPORT = ["", ".eps"]
+  IMAGE_FILE_EXTENTIONS_TO_IMPORT = ["", ".eps", ".EPS"]
 
   def initialize(bucketed_zip_filename, date, options={})
     @bucket_name = SETTINGS["zipped_eps_images_s3_bucket"]
