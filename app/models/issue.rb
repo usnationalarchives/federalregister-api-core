@@ -2,6 +2,7 @@ class Issue < ApplicationModel
   has_many :entries,
            :primary_key => :publication_date,
            :foreign_key => :publication_date
+  has_many :reprocessed_issues
   
   def self.completed
     scoped(:conditions => "completed_at IS NOT NULL")

@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150826181117) do
+ActiveRecord::Schema.define(:version => 20150915000409) do
 
   create_table "action_names", :force => true do |t|
     t.string   "name"
@@ -537,6 +537,19 @@ ActiveRecord::Schema.define(:version => 20150826181117) do
   end
 
   add_index "regulatory_plans_small_entities", ["regulatory_plan_id", "small_entity_id"], :name => "reg_then_entity"
+
+  create_table "reprocessed_issues", :force => true do |t|
+    t.integer  "issue_id"
+    t.string   "status"
+    t.string   "message"
+    t.text     "diff"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "reprocessed_issues", ["issue_id", "status"], :name => "index_reprocessed_issues_on_issue_id_and_status"
+  add_index "reprocessed_issues", ["user_id"], :name => "index_reprocessed_issues_on_user_id"
 
   create_table "section_assignments", :force => true do |t|
     t.integer "entry_id"
