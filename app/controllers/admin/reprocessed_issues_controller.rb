@@ -1,4 +1,5 @@
 class Admin::ReprocessedIssuesController < AdminController
+  layout 'admin_bootstrap'
 
   def index
   end
@@ -10,9 +11,13 @@ class Admin::ReprocessedIssuesController < AdminController
       if issue
         reprocessed_issues_in_progress = issue.reprocessed_issues.to_a.find{|i|i.status != "complete"}
         if reprocessed_issues_in_progress
+          flash[:error] = "Reprocessing for #{date} is currently underway."
           redirect_to admin_reprocessed_issue_path(reprocessed_issues_in_progress)
         else
-          reprocessed_issue = ReprocessedIssue.create(:issue_id => issue.id)
+          reprocessed_issue = ReprocessedIssue.create(
+            :issue_id => issue.id,
+            :user_id => current_user.id
+          )
           reprocessed_issue.download_mods
           redirect_to admin_reprocessed_issue_path(reprocessed_issue)
         end
@@ -30,9 +35,8 @@ class Admin::ReprocessedIssuesController < AdminController
   def show
     @reprocessed_issue = ReprocessedIssue.find_by_id(params[:id])
     if @reprocessed_issue.status == "complete"
-      flash[:notice] = "Success!"
+      flash[:notice] = "#{@reprocessed_issue.issue.publication_date}'s issue was successfully reprocessed."
       redirect_to admin_reprocessed_issues_path
-    elsif @reprocessed_issue.status == "pending_reprocess"
     end
   end
 

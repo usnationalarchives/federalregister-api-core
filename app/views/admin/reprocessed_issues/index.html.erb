@@ -1,6 +1,7 @@
-Please enter date
+<% super_title 'Reprocess' %>
+
+Please enter the issue date you would like to reprocess.
 <% form_tag(admin_reprocessed_issues_path) do %>
-  <%= text_field_tag 'date' %>
+  <%= text_field_tag 'date', nil, :placeholder => "2015-01-01" %>
   <%= submit_tag 'Reprocess' %>
 <% end %>
-

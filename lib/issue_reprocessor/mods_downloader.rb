@@ -1,12 +1,16 @@
-require 'ruby-debug'
-
 class IssueReprocessor::ModsDownloader
+  @queue = :issue_reprocessor
+
   attr_reader :reprocessed_issue, :date, :temporary_mods_path
 
   def initialize(reprocessed_issue_id)
     @reprocessed_issue = ReprocessedIssue.find_by_id(reprocessed_issue_id)
     @date = @reprocessed_issue.issue.publication_date
-    @temporary_mods_path = 'data/mods/tmp'
+    @temporary_mods_path = File.join('data','mods','tmp')
+  end
+
+  def self.perform(reprocessed_issue_id)
+    new(reprocessed_issue_id).perform
   end
 
   def perform
@@ -17,19 +21,18 @@ class IssueReprocessor::ModsDownloader
 
   def download
     File.makedirs(temporary_mods_path) #TODO: Troubleshoot permissioning failure.
-    mods_text = Net::HTTP.get('gpo.gov', "/fdsys/pkg/FR-#{date.to_s(:iso)}/mods.xml?xxxxx") #TODO: Use timestamp-based cache buster
-
-    File.open("data/mods/tmp/#{date.to_s(:iso)}.xml", 'w') {|f| f.write(mods_text) }
+    xml = Net::HTTP.get('gpo.gov', "/fdsys/pkg/FR-#{date.to_s(:iso)}/mods.xml?#{Time.now.to_i}")
+    File.open("data/mods/tmp/#{date.to_s(:iso)}.xml", 'w') {|f| f.write(xml) } #TODO: make sure this overwrites.
   end
 
   def create_diff
     Open4::popen4("sh") do |pid, stdin, stdout, stderr|
-      stdin.puts "diff data/mods/tmp/#{date.to_s(:iso)} data/mods/#{date.to_s(:iso)}"
+      stdin.puts "diff data/mods/tmp/#{date.to_s(:iso)}.xml data/mods/#{date.to_s(:iso)}.xml"
       stdin.close
       if stderr.read.empty?
         reprocessed_issue.update_attributes(:diff => stdout.read.strip)
       else
-        #TODO: Implement Honeybadger notify
+        Honeybadger.notify("Diff failed to generate")
       end
     end
   end

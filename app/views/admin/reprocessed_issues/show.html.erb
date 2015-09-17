@@ -1,15 +1,18 @@
-<% if @reprocessed_issue.status == "pending_reprocess" %>
-  Differences between mods:
-  <div>
-    <%= text_area_tag 'diff', @reprocessed_issue.diff, :rows => 10, :cols => 75, :readonly => true %>
-  </div>
-  <% form_tag(admin_reprocessed_issue_path, :method => :put) do %>
-    <%= submit_tag 'Reprocess' %>
+<div class="reprocess-issue-page" data-status=<%= @reprocessed_issue.status %> >
+  <% super_title 'Reprocess' %>
+  <% if @reprocessed_issue.status == "pending_reprocess" %>
+    Differences between mods:
+    <div>
+      <%= text_area_tag 'diff', @reprocessed_issue.diff, :rows => 10, :cols => 75, :readonly => true %>
+    </div>
+    <% form_tag(admin_reprocessed_issue_path, :method => :put) do %>
+      <%= submit_tag 'Reprocess' %>
+    <% end %>
+    <% form_tag(admin_update_mods_path(@reprocessed_issue), :method => :put) do %>
+      <%= submit_tag 'Update MODS' %>
+    <% end %>
+  <% else %>
+    Reprocessing...
+    <%= @reprocessed_issue.message %>
   <% end %>
-  <% form_tag(admin_update_mods_path(@reprocessed_issue), :method => :put) do %>
-    <%= submit_tag 'Update mods' %>
-  <% end %>
-<% else %>
-  Refreshing is in progress:
-  <%= @reprocessed_issue.message %>
-<% end %>
+</div>
