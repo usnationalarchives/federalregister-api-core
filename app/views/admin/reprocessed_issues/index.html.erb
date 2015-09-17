@@ -1,6 +1,9 @@
 <% super_title 'Reprocess' %>
+<% title 'Create a New Reprocessing' %>
 
-Please enter the issue date you would like to reprocess.
+<% sidebar(render :partial => 'reprocessed_issues_nav') %>
+
+Please enter the issue date:
 <% form_tag(admin_reprocessed_issues_path) do %>
   <%= text_field_tag 'date', nil, :placeholder => "2015-01-01" %>
   <%= submit_tag 'Reprocess' %>

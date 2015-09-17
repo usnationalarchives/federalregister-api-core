@@ -10,7 +10,11 @@ class ReprocessedIssue < ApplicationModel
   def reprocess_issue
     self.status = "in_progress"
     self.save
-    Resque.enqueue(IssueReprocessor::Reprocessor, self.id)
+    Resque.enqueue(IssueReprocessor::ReprocessorIssue, self.id)
+  end
+
+  def display_loading_message?
+    ["in_progress", "downloading_mods"].include? self.status
   end
 
 end

@@ -1,0 +1,20 @@
+<table>
+  <caption>Recently Reprocessed</caption>
+  <thead>
+    <th>Issue Date</th>
+    <th>Reprocessed At</th>
+  </thead>
+  <tbody>
+    <% @reprocessed_issues.each do |reprocessed_issue| %>
+      <tr>
+        <td><%= reprocessed_issue.issue.publication_date.to_s(:default_yy) %></td>
+        <td><%= link_to(
+            reprocessed_issue.updated_at.to_s(:short_date_then_time_yy),
+            admin_reprocessed_issue_path(reprocessed_issue)
+          )%>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<%= link_to "Create a new reprocessing", admin_reprocessed_issues_path %>

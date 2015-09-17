@@ -2,6 +2,7 @@ class Admin::ReprocessedIssuesController < AdminController
   layout 'admin_bootstrap'
 
   def index
+    load_reprocessed_issues
   end
 
   def create
@@ -33,10 +34,10 @@ class Admin::ReprocessedIssuesController < AdminController
   end
 
   def show
+    load_reprocessed_issues
     @reprocessed_issue = ReprocessedIssue.find_by_id(params[:id])
     if @reprocessed_issue.status == "complete"
       flash[:notice] = "#{@reprocessed_issue.issue.publication_date}'s issue was successfully reprocessed."
-      redirect_to admin_reprocessed_issues_path
     end
   end
 
@@ -50,6 +51,16 @@ class Admin::ReprocessedIssuesController < AdminController
     reprocessed_issue = ReprocessedIssue.find_by_id(params[:id])
     reprocessed_issue.download_mods
     redirect_to admin_reprocessed_issue_path(reprocessed_issue)
+  end
+
+  private
+
+  def load_reprocessed_issues
+    @reprocessed_issues = ReprocessedIssue.all(
+      :conditions => "status = 'complete'",
+      :order => "updated_at DESC"
+      ).
+      first(20)
   end
 
 end

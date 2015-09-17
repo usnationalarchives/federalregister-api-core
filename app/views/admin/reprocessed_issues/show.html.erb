@@ -1,18 +1,24 @@
-<div class="reprocess-issue-page" data-status=<%= @reprocessed_issue.status %> >
+<div class="reprocess-issue" data-status=<%= @reprocessed_issue.status %> >
   <% super_title 'Reprocess' %>
-  <% if @reprocessed_issue.status == "pending_reprocess" %>
+  <% title "Record of Reprocessing: #{@reprocessed_issue.updated_at.to_s(:short_date_then_time_yy)}" %>
+
+  <% if @reprocessed_issue.display_loading_message? %>
+    Reprocessing...
+    <%= @reprocessed_issue.message %>
+  <% else %>
+    <% sidebar(render :partial => 'reprocessed_issues_nav') %>
     Differences between mods:
     <div>
       <%= text_area_tag 'diff', @reprocessed_issue.diff, :rows => 10, :cols => 75, :readonly => true %>
     </div>
-    <% form_tag(admin_reprocessed_issue_path, :method => :put) do %>
-      <%= submit_tag 'Reprocess' %>
+    <% if @reprocessed_issue.status == "pending_reprocess" %>
+      <% form_tag(admin_reprocessed_issue_path, :method => :put) do %>
+        <%= submit_tag 'Reprocess' %>
+      <% end %>
+      <% form_tag(admin_update_mods_path(@reprocessed_issue), :method => :put) do %>
+        <%= submit_tag 'Update MODS' %>
+      <% end %>
     <% end %>
-    <% form_tag(admin_update_mods_path(@reprocessed_issue), :method => :put) do %>
-      <%= submit_tag 'Update MODS' %>
-    <% end %>
-  <% else %>
-    Reprocessing...
-    <%= @reprocessed_issue.message %>
   <% end %>
+
 </div>
