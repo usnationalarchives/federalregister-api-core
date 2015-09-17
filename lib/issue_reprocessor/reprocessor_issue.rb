@@ -27,26 +27,15 @@ class IssueReprocessor::ReprocessorIssue
   end
 
   def reprocess_issue
-    puts "reprocess_issue block in Reprocessor"
-    Open4::popen4("sh") do |pid, stdin, stdout, stderr|
-      # update_message("processing dates...") #TODO: Implement message updates.
-      stdin.puts "bundle exec rake content:entries:import:events DATE=#{date.to_s(:iso)}"
-      # update_message("processing agencies...")
-      stdin.puts "bundle exec rake content:entries:import:agencies DATE=#{date.to_s(:iso)}"
-      stdin.close
-
-      errors = stderr.read.strip
-      Honeybadger.notify("Errors importing issue: #{errors}") if errors.present?
-    end
+    ENV["DATE"] = date.to_s(:iso)
+    update_message("#{Time.now.to_s(:short_date_then_time)}: processing dates...")
+    %x( rake content:entries:import:events )
+    update_message("#{Time.now.to_s(:short_date_then_time)}: processing agencies...")
+    %x( bundle exec rake content:entries:import:agencies DATE=#{date.to_s(:iso)} )
   end
 
   def reindex
-    Open4::popen4("sh") do |pid, stdin, stdout, stderr|
-      stdin.puts "indexer -c config/production.sphinx.conf --rotate entry_delta"
-      stdin.close
-      errors = stderr.read.strip
-      Honeybadger.notify("Errors re-indexing #{errors}") if errors.present?
-    end
+    %x( indexer -c config/production.sphinx.conf --rotate entry_delta )
   end
 
   def clear_cache
@@ -74,8 +63,8 @@ class IssueReprocessor::ReprocessorIssue
 
   def update_message(text)
     message = reprocessed_issue.message ? reprocessed_issue.message : ""
-    message << "\n- text"
-    reprocess_issue.update_attributes(:message => message)
+    message << "\n- #{text}"
+    reprocessed_issue.update_attributes(:message => message)
   end
 
 end

@@ -1,11 +1,11 @@
 <div class="reprocess-issue" data-status=<%= @reprocessed_issue.status %> >
   <% super_title 'Reprocess' %>
-  <% title "Record of Reprocessing: #{@reprocessed_issue.updated_at.to_s(:short_date_then_time_yy)}" %>
 
   <% if @reprocessed_issue.display_loading_message? %>
     Reprocessing...
-    <%= @reprocessed_issue.message %>
+    <%= simple_format(@reprocessed_issue.message) %>
   <% else %>
+    <% title "Record of Reprocessing: #{@reprocessed_issue.updated_at.to_s(:short_date_then_time_yy)}" %>
     <% sidebar(render :partial => 'reprocessed_issues_nav') %>
     Differences between mods:
     <div>
