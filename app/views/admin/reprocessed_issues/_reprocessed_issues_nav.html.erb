@@ -4,15 +4,16 @@
     <th>Issue Date</th>
     <th>Reprocessed At</th>
   </thead>
+
   <tbody>
-    <% @reprocessed_issues.each do |reprocessed_issue| %>
+    <% @presenter.reprocessed_issues_by_date_ordered.each do |date, reprocessed_issues| %>
       <tr>
-        <td><%= reprocessed_issue.issue.publication_date.to_s(:default_yy) %></td>
         <td><%= link_to(
-            reprocessed_issue.updated_at.to_s(:short_date_then_time_yy),
-            admin_reprocessed_issue_path(reprocessed_issue)
+            date.to_s(:default_yy),
+            admin_reprocessed_issue_path(date.to_s(:iso))
           )%>
         </td>
+        <td><%= reprocessed_issues.first.updated_at.to_s(:short_date_then_time_yy) %></td>
       </tr>
     <% end %>
   </tbody>

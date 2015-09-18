@@ -64,7 +64,8 @@ class IssueReprocessor::ReprocessorIssue
   def update_message(text)
     message = reprocessed_issue.message ? reprocessed_issue.message : ""
     message << "\n- #{text}"
-    reprocessed_issue.update_attributes(:message => message)
+    reprocessed_issue.message = message
+    reprocessed_issue.save!
   end
 
 end

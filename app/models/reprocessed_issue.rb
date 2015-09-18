@@ -1,5 +1,7 @@
 class ReprocessedIssue < ApplicationModel
   belongs_to :issue
+  belongs_to :user
+  delegate :publication_date, :to => :issue
 
   def download_mods
     self.status = "downloading_mods"
