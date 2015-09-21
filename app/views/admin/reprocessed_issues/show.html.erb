@@ -1,5 +1,5 @@
 <% super_title 'Reprocess Issues' %>
-<% title "Reprocessings for #{@presenter.date}" %>
+<% title "Reprocessings for #{@presenter.date} Issue" %>
 <% sidebar(render :partial => 'reprocessed_issues_nav') %>
 
 <div class="reprocess-issue" data-status='<%= @presenter.reprocessed_issue_in_progress_status %>'>
@@ -19,16 +19,18 @@
   <% end %>
 
   <% if @presenter.show_reprocessing_buttons? %>
-    <% form_tag(admin_reprocessed_issue_path(@presenter.reprocessed_issue_in_progress), :method => :put) do %>
+    <div class ="row">
+    <% form_tag(admin_reprocessed_issue_path(@presenter.reprocessed_issue_in_progress), :method => :put, :class => "pull-right") do %>
       <%= submit_tag 'Reprocess' %>
     <% end %>
-    <% form_tag(admin_update_mods_path(@presenter.reprocessed_issue_in_progress), :method => :put) do %>
+    <% form_tag(admin_update_mods_path(@presenter.reprocessed_issue_in_progress), :method => :put, :class => "pull-right") do %>
       <%= submit_tag 'Update MODS' %>
     <% end %>
+    </div>
   <% end %>
-
+  <hr>
   <table class="table-striped table-condensed">
-    <caption>Reprocessing History</caption>
+    <h3>Reprocessing History</h3>
     <thead>
       <tr>
         <th>Initiated At</th>

@@ -1,21 +1,21 @@
 class IssueReprocessor::ReprocessorIssue
   include CacheUtils
 
-  @queue = :issue_reprocessor
+  @queue = :default
 
   attr_reader :reprocessed_issue, :date, :current_mods_path, :mods_archive_path,
               :temporary_mods_path
 
-  def initialize(reprocessed_issue_id)
+  def initialize(reprocessed_issue_id, options={})
     @reprocessed_issue = ReprocessedIssue.find_by_id(reprocessed_issue_id)
-    @date = @reprocessed_issue.issue.publication_date
-    @current_mods_path = File.join('data','mods')
-    @temporary_mods_path = File.join('data','mods','tmp')
-    @mods_archive_path = File.join('data','mods','archive')
+    @date = @reprocessed_issue.publication_date
+    @current_mods_path = options[:current_mods_path] || File.join('data','mods')
+    @temporary_mods_path = options[:temporary_mods_path] || File.join('data','mods','tmp')
+    @mods_archive_path = options[:mods_archive_path] || File.join('data','mods','archive')
   end
 
-  def self.perform(reprocessed_issue_id)
-    new(reprocessed_issue_id).perform
+  def self.perform(reprocessed_issue_id, options={})
+    new(reprocessed_issue_id, options).perform
   end
 
   def perform
@@ -27,15 +27,25 @@ class IssueReprocessor::ReprocessorIssue
   end
 
   def reprocess_issue
-    ENV["DATE"] = date.to_s(:iso)
-    update_message("#{Time.now.to_s(:short_date_then_time)}: processing dates...")
-    %x( rake content:entries:import:events )
-    update_message("#{Time.now.to_s(:short_date_then_time)}: processing agencies...")
-    %x( bundle exec rake content:entries:import:agencies DATE=#{date.to_s(:iso)} )
+    Open4::popen4("sh") do |pid, stdin, stdout, stderr|
+      update_message("#{Time.now.to_s(:short_date_then_time)}: processing dates...")
+      stdin.puts "bundle exec rake content:entries:import:events DATE=#{date.to_s(:iso)}"
+      update_message("#{Time.now.to_s(:short_date_then_time)}: processing agencies...")
+      stdin.puts "bundle exec rake content:entries:import:agencies DATE=#{date.to_s(:iso)}"
+      stdin.close
+
+      errors = stderr.read.strip
+      Honeybadger.notify("Errors importing issue: #{errors}") if errors.present?
+    end
   end
 
   def reindex
-    %x( indexer -c config/production.sphinx.conf --rotate entry_delta )
+    Open4::popen4("sh") do |pid, stdin, stdout, stderr|
+      stdin.puts "indexer -c config/#{Rails.env}.sphinx.conf --rotate entry_delta"
+      stdin.close
+      errors = stderr.read.strip
+      Honeybadger.notify("Errors re-indexing #{errors}") if errors.present?
+    end
   end
 
   def clear_cache
