@@ -14,7 +14,6 @@ describe IssueReprocessor::ModsDownloader do
     end
 
     it ".create_diff returns an empty string if the files are the same" do
-      pending("To investigate Circle not finding Open4")
       original_xml = "<XML></XML>"
       modified_xml = "<XML></XML>"
       FileUtils.makedirs(spec_current_mods_path)
@@ -33,7 +32,6 @@ describe IssueReprocessor::ModsDownloader do
     end
 
     it ".create_diff returns a diff if the files are different" do
-      pending("To investigate Circle not finding Open4")
       original_xml = "<XML></XML>"
       modified_xml = "<XML>New Stuff</XML>"
       File.open("data/mods/2099-01-01.xml", "w") { |file| file.write(original_xml) }
