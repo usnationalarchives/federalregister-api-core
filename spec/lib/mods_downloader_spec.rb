@@ -4,6 +4,10 @@ require 'spec_helper'
 describe IssueReprocessor::ModsDownloader do
 
   describe ".create_diff" do
+    let(:spec_current_mods_path) { File.join('data','mods') }
+    let(:spec_temporary_mods_path) {File.join('data','mods','tmp') }
+    let(:spec_mods_archive_path) {File.join('data','mods','archive') }
+
     after(:each) do
       FileUtils.rm_f('data/mods/2099-01-01.xml')
       FileUtils.rm_f('data/mods/tmp/2099-01-01.xml')
@@ -12,7 +16,9 @@ describe IssueReprocessor::ModsDownloader do
     it ".create_diff returns an empty string if the files are the same" do
       original_xml = "<XML></XML>"
       modified_xml = "<XML></XML>"
+      FileUtils.makedirs(spec_current_mods_path)
       File.open("data/mods/2099-01-01.xml", "w") { |file| file.write(original_xml) }
+      FileUtils.makedirs(spec_temporary_mods_path)
       File.open("data/mods/tmp/2099-01-01.xml", "w") { |file| file.write(modified_xml) }
 
       issue = Issue.create(:publication_date => "2099-01-01".to_date)
