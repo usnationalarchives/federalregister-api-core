@@ -1,0 +1,52 @@
+<% super_title 'Reprocess Issues' %>
+<% title "Reprocessings for #{@presenter.date} Issue" %>
+<% sidebar(render :partial => 'reprocessed_issues_nav') %>
+
+<div class="reprocess-issue" data-status='<%= @presenter.reprocessed_issue_in_progress_status %>'>
+
+  <% if @presenter.display_loading_message? %>
+    Reprocessing...
+    <%= simple_format(@presenter.reprocessed_issue_in_progress.message) %>
+  <% else %>
+    Most recent MODS diff:
+    <div>
+      <%= text_area_tag 'diff', @presenter.most_recent_diff,
+            :readonly => true,
+            :rows => 25,
+            :class => 'span8',
+            :placeholder => "No differences identified." %>
+    </div>
+  <% end %>
+
+  <% if @presenter.show_reprocessing_buttons? %>
+    <div class ="row">
+    <% form_tag(admin_reprocessed_issue_path(@presenter.reprocessed_issue_in_progress), :method => :put, :class => "pull-right") do %>
+      <%= submit_tag 'Reprocess' %>
+    <% end %>
+    <% form_tag(admin_update_mods_path(@presenter.reprocessed_issue_in_progress), :method => :put, :class => "pull-right") do %>
+      <%= submit_tag 'Update MODS' %>
+    <% end %>
+    </div>
+  <% end %>
+  <hr>
+  <table class="table-striped table-condensed">
+    <h3>Reprocessing History</h3>
+    <thead>
+      <tr>
+        <th>Initiated At</th>
+        <th>Completed At</th>
+        <th>User</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @presenter.reprocessed_issues.each do |reprocessed_issue| %>
+      <tr>
+        <td class="span3"><%= reprocessed_issue.created_at.to_s(:short_date_then_time_yy) %></td>
+        <td class="span3"><%= reprocessed_issue.status == "complete" ? reprocessed_issue.updated_at.to_s(:short_date_then_time_yy) : "incomplete"%></td>
+        <td class="span3"><%= reprocessed_issue.user.email %></td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+</div>
