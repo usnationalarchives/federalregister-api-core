@@ -3,8 +3,11 @@ class IssueReprocessor::ModsDownloader
 
   attr_reader :reprocessed_issue, :date, :temporary_mods_path
   DIFF_PREFIXES_TO_REJECT = [
-    "< <name"
-  ]
+    "<  <identifier type=",
+    ">  <identifier type=",
+    "<   <searchTitle>",
+    ">   <searchTitle>"
+  ].map{|prefix| prefix.delete(' ') }
 
   def initialize(reprocessed_issue_id)
     @reprocessed_issue = ReprocessedIssue.find_by_id(reprocessed_issue_id)
@@ -53,7 +56,7 @@ class IssueReprocessor::ModsDownloader
 
   def format_diff(diff)
     diff.reject do |line|
-      DIFF_PREFIXES_TO_REJECT.any?{|prefix| line.start_with? prefix}
+      DIFF_PREFIXES_TO_REJECT.any?{|prefix| line.delete(' ').start_with? prefix}
     end.
     to_s
   end

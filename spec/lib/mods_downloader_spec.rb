@@ -44,6 +44,18 @@ describe IssueReprocessor::ModsDownloader do
       @reprocessed_issue.reload.diff.should be_present
     end
 
+    it "removes lines included in the DIFF_PREFIXES TO REJECT constant" do
+      original_xml = ""
+      modified_xml = "  <identifier type="
+      create_file("data/mods/2099-01-01.xml", original_xml)
+      create_file("data/mods/tmp/2099-01-01.xml", modified_xml)
+
+      mods_downloader = IssueReprocessor::ModsDownloader.new(@reprocessed_issue)
+      mods_downloader.create_diff
+      puts @reprocessed_issue.reload.diff
+      @reprocessed_issue.reload.diff.should == "1d0\n\\ No newline at end of file"
+    end
+
   end
 
 end
