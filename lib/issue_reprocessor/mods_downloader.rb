@@ -2,6 +2,9 @@ class IssueReprocessor::ModsDownloader
   @queue = :default
 
   attr_reader :reprocessed_issue, :date, :temporary_mods_path
+  DIFF_PREFIXES_TO_REJECT = [
+    "< <name"
+  ]
 
   def initialize(reprocessed_issue_id)
     @reprocessed_issue = ReprocessedIssue.find_by_id(reprocessed_issue_id)
@@ -29,16 +32,30 @@ class IssueReprocessor::ModsDownloader
     Open4::popen4("sh") do |pid, stdin, stdout, stderr|
       stdin.puts "diff data/mods/tmp/#{date.to_s(:iso)}.xml data/mods/#{date.to_s(:iso)}.xml"
       stdin.close
-      if stderr.read.empty?
-        reprocessed_issue.update_attributes(:diff => stdout.read.strip)
+      errors = stderr.read.strip
+
+      if errors.empty?
+        reprocessed_issue.update_attributes(:diff => format_diff(stdout.read.strip) )
       else
-        Honeybadger.notify("Diff failed to generate")
+        Honeybadger.notify(
+          :error_class   => "ModsDownloader failed to generate diff.",
+          :error_message => errors
+        )
       end
     end
   end
 
   def update_status
     reprocessed_issue.update_attributes(:status => "pending_reprocess")
+  end
+
+  private
+
+  def format_diff(diff)
+    diff.reject do |line|
+      DIFF_PREFIXES_TO_REJECT.any?{|prefix| line.start_with? prefix}
+    end.
+    to_s
   end
 
 end
