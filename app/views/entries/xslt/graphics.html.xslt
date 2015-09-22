@@ -1,6 +1,32 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
+  <xsl:variable name="smallcase" select="'abcdefghijklmnopqrstuvwxyz'" />
+  <xsl:variable name="uppercase" select="'ABCDEFGHIJKLMNOPQRSTUVWXYZ'" />
+
   <xsl:template match="GPH/GID">
+    <!-- stripping .eps extension -->
+    <xsl:variable name="processed_identifier">
+      <xsl:call-template name="global_replace">
+        <xsl:with-param name="output_string" select="text()"/>
+        <xsl:with-param name="target" select="'.eps'"/>
+        <xsl:with-param name="replacement" select="''"/>
+      </xsl:call-template>
+    </xsl:variable>
+
+    <!-- stripping .EPS extension -->
+    <xsl:variable name="processed_identifier">
+      <xsl:call-template name="global_replace">
+        <xsl:with-param name="output_string" select="$processed_identifier"/>
+        <xsl:with-param name="target" select="'.EPS'"/>
+        <xsl:with-param name="replacement" select="''"/>
+      </xsl:call-template>
+    </xsl:variable>
+
+    <!-- downcasing -->
+    <xsl:variable name="processed_identifier">
+      <xsl:value-of select="translate($processed_identifier, $uppercase, $smallcase)" />
+    </xsl:variable>
+
     <xsl:choose>
       <xsl:when test="contains($extracted_graphics, concat('|', text(), '|'))">
         <p class="graphic">
@@ -27,7 +53,7 @@
           </a>
         </p>
       </xsl:when>
-      <xsl:when test="contains($processed_graphics, concat('|', text(), '|'))">
+      <xsl:when test="contains($processed_graphics, concat('|', $processed_identifier, '|'))">
         <p class="graphic">
           <a class="entry_graphic_link">
             <xsl:attribute name="id">

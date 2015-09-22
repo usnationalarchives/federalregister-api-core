@@ -290,7 +290,7 @@ ActiveRecord::Schema.define(:version => 20150915000409) do
     t.integer  "entry_id"
     t.datetime "created_at"
     t.string   "remote_ip"
-    t.text     "raw_referer", :limit => 2147483647
+    t.text     "raw_referer", :limit => 16777215
   end
 
   add_index "entry_page_views", ["created_at"], :name => "index_entry_page_views_on_created_at"
@@ -300,7 +300,7 @@ ActiveRecord::Schema.define(:version => 20150915000409) do
     t.integer  "entry_id"
     t.datetime "created_at"
     t.string   "remote_ip"
-    t.text     "raw_referer", :limit => 2147483647
+    t.text     "raw_referer", :limit => 16777215
   end
 
   add_index "entry_page_views_archive", ["created_at"], :name => "index_entry_page_views_on_created_at"
@@ -364,7 +364,7 @@ ActiveRecord::Schema.define(:version => 20150915000409) do
     t.datetime "updated_at"
   end
 
-  add_index "gpo_graphic_usages", ["document_number", "identifier"], :name => "index_gpo_graphic_usages_on_document_number_and_identifier", :unique => true
+  add_index "gpo_graphic_usages", ["document_number", "identifier"], :name => "index_gpo_graphic_usages_on_document_number_and_identifier"
   add_index "gpo_graphic_usages", ["identifier", "document_number"], :name => "index_gpo_graphic_usages_on_identifier_and_document_number"
 
   create_table "gpo_graphics", :force => true do |t|
@@ -433,9 +433,9 @@ ActiveRecord::Schema.define(:version => 20150915000409) do
   end
 
   create_table "mailing_lists", :force => true do |t|
-    t.text     "search_conditions",          :limit => 2147483647
+    t.text     "search_conditions",          :limit => 16777215
     t.string   "title"
-    t.integer  "active_subscriptions_count",                       :default => 0
+    t.integer  "active_subscriptions_count",                     :default => 0
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "type"
