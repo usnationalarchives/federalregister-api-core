@@ -1,7 +1,12 @@
 class GpoGraphic < ActiveRecord::Base
   before_save :set_content_type
 
-  has_many :gpo_graphic_usages, :foreign_key => :identifier, :primary_key => :identifier
+  has_many :gpo_graphic_usages,
+    :foreign_key => :identifier,
+    :primary_key => :identifier
+    
+  has_many :entries,
+    :through => :gpo_graphic_usages
 
   has_attached_file :graphic,
                     :styles => { :large => ["460", :png], :original => ["", :png] },
