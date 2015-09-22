@@ -3,14 +3,15 @@ require 'spec_helper'
 describe IssueReprocessor::ReprocessorIssue do
 
   describe ".archive_mods_files" do
+    include FileIoSpecHelperMethods
+
     let(:spec_current_mods_path) { File.join('tmp','data','mods') }
     let(:spec_temporary_mods_path) {File.join('tmp','data','mods','tmp') }
     let(:spec_mods_archive_path) {File.join('tmp','data','mods','archive') }
 
     before(:each) do
-      issue = Issue.create(:publication_date => "2099-01-01".to_date)
       reprocessed_issue = ReprocessedIssue.create
-      reprocessed_issue.issue = issue
+      reprocessed_issue.issue = Issue.create(:publication_date => "2099-01-01".to_date)
       reprocessed_issue.save
       mods_downloader = IssueReprocessor::ReprocessorIssue.new(
         reprocessed_issue.id,
@@ -19,10 +20,8 @@ describe IssueReprocessor::ReprocessorIssue do
         :mods_archive_path   => spec_mods_archive_path
       )
 
-      FileUtils.makedirs(spec_temporary_mods_path)
-      File.open("#{spec_temporary_mods_path}/2099-01-01.xml", "w") { |file| file.write("new_mods") }
-      FileUtils.makedirs(spec_current_mods_path)
-      File.open("#{spec_current_mods_path}/2099-01-01.xml", "w") { |file| file.write("current_mods") }
+      create_file("#{spec_temporary_mods_path}/2099-01-01.xml", "new_mods")
+      create_file("#{spec_current_mods_path}/2099-01-01.xml", "current_mods")
       mods_downloader.archive_mods_files
     end
 
