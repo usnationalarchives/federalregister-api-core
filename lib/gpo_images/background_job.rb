@@ -43,7 +43,11 @@ module GpoImages
 
     def find_or_create_gpo_graphic
       gpo_graphic = GpoGraphic.find_by_identifier(identifier)
-      gpo_graphic ? @mark_public = true : gpo_graphic = GpoGraphic.new(:identifier => identifier)
+      if gpo_graphic
+        @mark_public = true
+      else
+        gpo_graphic = GpoGraphic.new(:identifier => identifier)
+      end
       gpo_graphic.graphic = image
       gpo_graphic
     end

@@ -49,7 +49,7 @@ module GpoImages
 
       def create_graphic_usage
         GpoGraphicUsage.create(
-          :identifier => normalize_image_identifier(image_identifier),
+          :identifier => image_identifier,
           :document_number => document_number
         )
       end
@@ -78,7 +78,7 @@ module GpoImages
       documents.each_with_object([]) do |document, image_usages|
         xml_doc = Nokogiri::XML(document.full_xml)
         xml_doc.css(xml_tag).each do |node|
-          image_usages << ImageUsage.new(node.text, document.document_number)
+          image_usages << ImageUsage.new(normalize_image_identifier(node.text), document.document_number)
         end
       end
     end
