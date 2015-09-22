@@ -9,7 +9,7 @@ class MissingImagesPresenter
   end
 
   def graphic_usages
-    @graphic_usages ||= GpoGraphic.all(:conditions=>"graphic_file_name IS NULL").
+    @graphic_usages ||= GpoGraphic.unprocessed.
       map do |gpo_graphic|
         gpo_graphic.gpo_graphic_usages
       end.

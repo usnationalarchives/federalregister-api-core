@@ -16,6 +16,9 @@ class GpoGraphic < ActiveRecord::Base
                     :bucket => proc { |attachment| attachment.instance.assigned_bucket },
                     :path => ":identifier/:style.:extension"
 
+  named_scope :processed, :conditions => "graphic_file_name IS NOT NULL"
+  named_scope :unprocessed, :conditions => "graphic_file_name IS NULL"
+
   def set_content_type
     self.graphic.instance_write(:content_type, 'image/png')
   end
