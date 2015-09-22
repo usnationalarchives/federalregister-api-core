@@ -48,7 +48,7 @@ gem 'pdfkit', '0.5.2'
 gem 'klarlack', '0.0.6'
 gem 'system_timer', '1.0.0'
 gem "amazon-ec2", :require => false
-gem 'POpen4'
+gem 'popen4'
 
 gem "net-scp", '1.1.0'
 

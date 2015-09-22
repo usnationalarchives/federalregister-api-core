@@ -1,4 +1,3 @@
-require 'ruby-debug'
 class Admin::ReprocessedIssuesController < AdminController
   layout 'admin_bootstrap'
 

@@ -28,7 +28,9 @@ class GpoImages::DailyIssueImageProcessor
     end
 
     def gpo_graphic
-      @gpo_graphic ||= GpoGraphic.find_by_identifier(image_identifier)
+      @gpo_graphic ||= GpoGraphic.all(
+        :conditions => "identifier LIKE '#{image_identifier}%'"
+      ).first
     end
 
     def gpo_graphic_exists?

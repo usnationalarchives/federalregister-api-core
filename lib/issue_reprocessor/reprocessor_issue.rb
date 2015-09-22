@@ -41,10 +41,13 @@ class IssueReprocessor::ReprocessorIssue
 
   def reindex
     Open4::popen4("sh") do |pid, stdin, stdout, stderr|
-      stdin.puts "indexer -c config/#{Rails.env}.sphinx.conf --rotate entry_delta"
+      stdin.puts "/usr/local/bin/indexer -c config/staging.sphinx.conf --rotate entry_delta"
       stdin.close
       errors = stderr.read.strip
-      Honeybadger.notify("Errors re-indexing #{errors}") if errors.present?
+      Honeybadger.notify(
+        :error_class   => "Admin Issue Reprocessor errors when re-indexing Sphinx",
+        :error_message => errors
+      ) if errors.present?
     end
   end
 

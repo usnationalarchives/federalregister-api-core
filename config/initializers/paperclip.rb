@@ -27,3 +27,4 @@ Paperclip.interpolates :style_if_not_with_banner do |attachment, style|
   end
 end
 
+Paperclip.options[:command_path] = "/usr/local/bin/"

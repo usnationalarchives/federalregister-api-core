@@ -31,7 +31,8 @@ class GpoImages::BackgroundJob
     else
       Honeybadger.notify(
         :error_class   => "GpoGraphic failed to save",
-        :error_message => gpo_graphic.errors.full_messages.to_sentence
+        :error_message => gpo_graphic.errors.full_messages.to_sentence,
+        :parameters    => {:identifier => identifier}
       )
     end
   end

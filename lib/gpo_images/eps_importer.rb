@@ -31,11 +31,10 @@ class GpoImages::EpsImporter
 
   def download_eps_images
     @filenames_to_download = unchanged_files_list.map(&:first)
-    puts "Beginning download of the following files: #{filenames_to_download.to_sentence}"
+    puts "Beginning download of the following files: #{filenames_to_download.to_sentence}" if @filenames_to_download.present?
     FileUtils.makedirs temp_images_path
     begin
     filenames_to_download.each do |filename|
-      puts "Downloading #{filename}..."
       data = sftp_connection.download!(filename, "#{temp_images_path}/#{filename}")
     end
     rescue => exception
