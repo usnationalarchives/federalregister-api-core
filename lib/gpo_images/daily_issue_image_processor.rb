@@ -1,6 +1,7 @@
 module GpoImages
   class DailyIssueImageProcessor
     attr_reader :date, :documents, :fog_aws_connection
+    include ImageIdentifierNormalizer
 
     XML_IMAGE_TAGS = ['GID', 'MID']
 
@@ -22,7 +23,6 @@ module GpoImages
       attr_reader :image_identifier, :document_number, :fog_aws_connection,
       :private_bucket, :public_bucket
       delegate :graphic_file_name?, :move_to_public_bucket, :to => :gpo_graphic
-      include ImageIdentifierNormalizer
 
       def initialize(image_identifier, document_number)
         @image_identifier = image_identifier
