@@ -6,7 +6,7 @@
 <% content_for :sidebar do %>
 
   <%= render :partial => 'nav', :locals => {:sections => @sections, :publication_date => @publication_date} %>
-  
+
   <% section_tag(:class => 'module') do %>
     <div class="title">Highlight A Document</div>
     <% semantic_remote_form_for SectionHighlight.new, :url => admin_issue_section_highlights_path(@publication_date.to_s(:db), @section) do |f| %>
@@ -28,7 +28,7 @@ window.location = url'.gsub(/\s+/,' ') %></li>
 
 <div class='center_content preview'>
   <%= link_to 'Preview', preview_admin_issue_section_path(@publication_date.to_s(:db), @section), :target => "_blank", :class => 'preview button mini grey' %>
-  
+
   <h3 class='section_title'><span>Highlighted Entries</span></h3>
 
   <ul id="highlighted">
@@ -48,8 +48,8 @@ window.location = url'.gsub(/\s+/,' ') %></li>
         <% if entry.significant? %>
           <span class="significant">Economically Significant</span>
         <% end %>
-        
-        <% if entry.graphics.count > 0 %>
+
+        <% if entry.graphics.count > 0 || entry.gpo_graphics.count > 0 %>
           <span class="graphics">Contains Graphics</span>
         <% end %>
       </p>

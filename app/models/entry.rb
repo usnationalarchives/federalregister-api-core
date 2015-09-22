@@ -60,9 +60,14 @@ class Entry < ApplicationModel
            :class_name => 'Entry',
            :through => :references,
            :source => :source_entry
+
   has_many :graphic_usages
   has_many :graphics,
            :through => :graphic_usages
+
+  has_many :gpo_graphic_usages
+  has_many :gpo_graphics,
+           :through => :gpo_graphic_usages
 
   acts_as_mappable :through => :places
 
@@ -213,7 +218,7 @@ class Entry < ApplicationModel
   end
 
   alias_method :category, :entry_type
-  
+
   define_index do
     # fields
     indexes title
