@@ -28,9 +28,7 @@ class IssueReprocessor::ReprocessorIssue
 
   def reprocess_issue
     Open4::popen4("sh") do |pid, stdin, stdout, stderr|
-      update_message("#{Time.now.to_s(:short_date_then_time)}: processing dates...")
       stdin.puts "bundle exec rake content:entries:import:events DATE=#{date.to_s(:iso)}"
-      update_message("#{Time.now.to_s(:short_date_then_time)}: processing agencies...")
       stdin.puts "bundle exec rake content:entries:import:agencies DATE=#{date.to_s(:iso)}"
       stdin.close
 
