@@ -26,29 +26,17 @@ class IssueReprocessor::ReprocessorIssue
     update_status
   end
 
-  def reprocess_issue
-    Open4::popen4("sh") do |pid, stdin, stdout, stderr|
-      update_message("#{Time.now.to_s(:short_date_then_time)}: processing dates...")
-      stdin.puts "bundle exec rake content:entries:import:events DATE=#{date.to_s(:iso)}"
-      update_message("#{Time.now.to_s(:short_date_then_time)}: processing agencies...")
-      stdin.puts "bundle exec rake content:entries:import:agencies DATE=#{date.to_s(:iso)}"
-      stdin.close
 
-      errors = stderr.read.strip
-      Honeybadger.notify("Errors importing issue: #{errors}") if errors.present?
-    end
+  def reprocess_issue
+    update_message("#{Time.now.to_s(:short_date_then_time)}: processing dates...")
+    run_cmd("bundle exec rake content:entries:import:events DATE=#{date.to_s(:iso)}")
+    update_message("#{Time.now.to_s(:short_date_then_time)}: processing agencies...")
+    run_cmd("bundle exec rake content:entries:import:agencies DATE=#{date.to_s(:iso)}")
   end
 
   def reindex
-    Open4::popen4("sh") do |pid, stdin, stdout, stderr|
-      stdin.puts "/usr/local/bin/indexer -c config/staging.sphinx.conf --rotate entry_delta"
-      stdin.close
-      errors = stderr.read.strip
-      Honeybadger.notify(
-        :error_class   => "Admin Issue Reprocessor errors when re-indexing Sphinx",
-        :error_message => errors
-      ) if errors.present?
-    end
+    update_message("#{Time.now.to_s(:short_date_then_time)}: reindexing...")
+    run_cmd("/usr/local/bin/indexer -c config/#{Rails.env}.sphinx.conf --rotate entry_delta")
   end
 
   def clear_cache
@@ -74,8 +62,23 @@ class IssueReprocessor::ReprocessorIssue
 
   private
 
+  def run_cmd(shell_command)
+    errors = nil
+    shell_connection = Open4::popen4(shell_command) do |pid, stdin, stdout, stderr|
+      errors = stderr.read.strip
+    end
+    if shell_connection.exitstatus != 0
+      Honeybadger.notify("Error while reprocessing issue: #{errors}")
+      raise "Errors importing issue: #{errors}"
+    end
+  end
+
   def update_message(text)
-    message = reprocessed_issue.message ? reprocessed_issue.message : ""
+    if reprocessed_issue.message
+      message = reprocessed_issue.message
+    else
+      message = ""
+    end
     message << "\n- #{text}"
     reprocessed_issue.message = message
     reprocessed_issue.save!
