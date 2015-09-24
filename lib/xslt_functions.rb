@@ -1,11 +1,14 @@
 class XsltFunctions
+  include GpoImages::ImageIdentifierNormalizer
+
   def gpo_image(nodes, link_id, extracted_images, processed_images)
     document = blank_document
 
     extracted_images = extracted_images.split(',')
-    graphic_identifier = nodes.first.content
+    graphic_identifier = normalize_image_identifier(
+      nodes.first.content
+    )
     processed_images = processed_images.split(',')
-
 
     Nokogiri::XML::Builder.with(document) do |doc|
       doc.a(

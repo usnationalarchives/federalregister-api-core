@@ -5,9 +5,6 @@ class GpoGraphic < ActiveRecord::Base
     :foreign_key => :identifier,
     :primary_key => :identifier
 
-  has_many :entries,
-    :through => :gpo_graphic_usages
-
   has_attached_file :graphic,
                     :styles => {
                       :large => {
@@ -35,6 +32,10 @@ class GpoGraphic < ActiveRecord::Base
 
   named_scope :processed, :conditions => "graphic_file_name IS NOT NULL"
   named_scope :unprocessed, :conditions => "graphic_file_name IS NULL"
+
+  def entries
+    gpo_graphic_usages.map(&:entry)
+  end
 
   def set_content_type
     self.graphic.instance_write(:content_type, 'image/png')

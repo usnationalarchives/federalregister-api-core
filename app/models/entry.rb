@@ -69,9 +69,6 @@ class Entry < ApplicationModel
     :foreign_key => :document_number,
     :primary_key => :document_number
 
-  has_many :gpo_graphics,
-           :through => :gpo_graphic_usages
-
   acts_as_mappable :through => :places
 
   has_many :docket_numbers, :as => :assignable, :order => "docket_numbers.position", :dependent => :destroy
@@ -210,6 +207,14 @@ class Entry < ApplicationModel
 
   def self.executive_order
     scoped(:conditions => {:presidential_document_type_id => PresidentialDocumentType::EXECUTIVE_ORDER})
+  end
+
+  def gpo_graphics
+    gpo_graphic_usages.map(&:gpo_graphic)
+  end
+
+  def processed_gpo_graphics
+    gpo_graphic_usages.map(&:gpo_graphic).select{|g| g.graphic_file_name.present?}
   end
 
   def granule_class
