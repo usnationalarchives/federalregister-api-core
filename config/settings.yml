@@ -5,13 +5,16 @@ development:
   zipped_eps_images_s3_bucket: eps.images.federalregister.gov
   private_processed_images_s3_bucket: private.processed.images.fr2.local
   public_processed_images_s3_bucket: processed.images.fr2.local
+  original_images_bucket: images.federalregister.gov
 
 staging:
   zipped_eps_images_s3_bucket: eps.images.federalregister.gov
   private_processed_images_s3_bucket: private.processed.images.fr2.criticaljuncture.org
   public_processed_images_s3_bucket: processed.images.fr2.criticaljuncture.org
+  original_images_bucket: images.federalregister.gov
 
 production:
   zipped_eps_images_s3_bucket: eps.images.federalregister.gov
   private_processed_images_s3_bucket: private.processed.images.federalregister.gov
   public_processed_images_s3_bucket: processed.images.federalregister.gov
+  original_images_bucket: images.federalregister.gov

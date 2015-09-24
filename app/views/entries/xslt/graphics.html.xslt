@@ -1,132 +1,13 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
-  <xsl:variable name="smallcase" select="'abcdefghijklmnopqrstuvwxyz'" />
-  <xsl:variable name="uppercase" select="'ABCDEFGHIJKLMNOPQRSTUVWXYZ'" />
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0" xmlns:fr="http://federalregister.gov/functions" extension-element-prefixes="fr">
 
   <xsl:template match="GPH/GID">
-    <!-- stripping .eps extension -->
-    <xsl:variable name="processed_identifier">
-      <xsl:call-template name="global_replace">
-        <xsl:with-param name="output_string" select="text()"/>
-        <xsl:with-param name="target" select="'.eps'"/>
-        <xsl:with-param name="replacement" select="''"/>
-      </xsl:call-template>
+    <xsl:variable name="paragraph_id">
+      <xsl:value-of select="concat('g-', count(preceding::GPH/GID)+1)" />
     </xsl:variable>
 
-    <!-- stripping .EPS extension -->
-    <xsl:variable name="processed_identifier">
-      <xsl:call-template name="global_replace">
-        <xsl:with-param name="output_string" select="$processed_identifier"/>
-        <xsl:with-param name="target" select="'.EPS'"/>
-        <xsl:with-param name="replacement" select="''"/>
-      </xsl:call-template>
-    </xsl:variable>
-
-    <!-- downcasing -->
-    <xsl:variable name="processed_identifier">
-      <xsl:value-of select="translate($processed_identifier, $uppercase, $smallcase)" />
-    </xsl:variable>
-
-    <xsl:choose>
-      <xsl:when test="contains($extracted_graphics, concat('|', text(), '|'))">
-        <p class="graphic">
-          <a class="entry_graphic_link">
-            <xsl:attribute name="id">
-              <xsl:value-of select="concat('g-', count(preceding::GPH/GID)+1)" />
-            </xsl:attribute>
-
-            <xsl:attribute name="href">
-              <xsl:call-template name="graphic_url">
-                <xsl:with-param name="size" select="'original'" />
-              </xsl:call-template>
-            </xsl:attribute>
-            <img class="entry_graphic">
-              <xsl:attribute name="src">
-                <xsl:call-template name="graphic_url">
-                  <xsl:with-param name="size" select="'large'" />
-                </xsl:call-template>
-              </xsl:attribute>
-              <xsl:attribute name="width">
-                <xsl:value-of select="number(parent::GPH/@SPAN)*153" />
-              </xsl:attribute>
-            </img>
-          </a>
-        </p>
-      </xsl:when>
-      <xsl:when test="contains($processed_graphics, concat('|', $processed_identifier, '|'))">
-        <p class="graphic">
-          <a class="entry_graphic_link">
-            <xsl:attribute name="id">
-              <xsl:value-of select="concat('g-', count(preceding::GPH/GID)+1)" />
-            </xsl:attribute>
-
-            <xsl:attribute name="href">
-              <xsl:call-template name="gpo_graphic_url">
-                <xsl:with-param name="size" select="'original'" />
-              </xsl:call-template>
-            </xsl:attribute>
-            <img class="entry_graphic">
-              <xsl:attribute name="src">
-                <xsl:call-template name="gpo_graphic_url">
-                  <xsl:with-param name="size" select="'large'" />
-                </xsl:call-template>
-              </xsl:attribute>
-              <xsl:attribute name="width">
-                <xsl:value-of select="number(parent::GPH/@SPAN)*153" />
-              </xsl:attribute>
-            </img>
-          </a>
-        </p>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:call-template name="missing_graphic" />
-      </xsl:otherwise>
-    </xsl:choose>
-  </xsl:template>
-
-  <xsl:template name="graphic_url">
-    <xsl:param name="size" />
-
-    <xsl:variable name="image_id">
-      <xsl:call-template name="global_replace">
-        <xsl:with-param name="output_string" select="."/>
-        <xsl:with-param name="target" select="'#'"/>
-        <xsl:with-param name="replacement" select="'%23'"/>
-      </xsl:call-template>
-    </xsl:variable>
-
-    <xsl:value-of select="concat('https://s3.amazonaws.com/images.federalregister.gov/', $image_id, '/', $size, '.png')" />
-  </xsl:template>
-
-  <xsl:template name="gpo_graphic_url">
-    <xsl:param name="size" />
-
-    <xsl:variable name="image_id">
-      <xsl:call-template name="global_replace">
-        <xsl:with-param name="output_string" select="."/>
-        <xsl:with-param name="target" select="'#'"/>
-        <xsl:with-param name="replacement" select="'%23'"/>
-      </xsl:call-template>
-    </xsl:variable>
-
-    <xsl:value-of select="concat('https://s3.amazonaws.com/processed.images.federalregister.gov/', $image_id, '/', $size, '.png')" />
-  </xsl:template>
-
-  <xsl:template name="missing_graphic">
     <p class="graphic">
-      <a class="missing_graphic entry_graphic_link">
-        <xsl:attribute name="href">
-          <xsl:text>https://s3.amazonaws.com/processed.images.federalregister.gov/MissingImage/original.png</xsl:text>
-        </xsl:attribute>
-        <img class="entry_graphic">
-          <xsl:attribute name="src">
-            <xsl:text>https://s3.amazonaws.com/processed.images.federalregister.gov/MissingImage/large.png</xsl:text>
-          </xsl:attribute>
-          <xsl:attribute name="width">
-            <xsl:value-of select="number(parent::GPH/@SPAN)*153" />
-          </xsl:attribute>
-        </img>
-      </a>
+      <xsl:copy-of select="fr:gpo_image(text(),$paragraph_id,$extracted_graphics,$processed_graphics)" />
     </p>
   </xsl:template>
 

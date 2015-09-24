@@ -1,9 +1,6 @@
 module XsltHelper
-  def transform_xml(xml, stylesheet, options = {})
-    xslt  = Nokogiri::XSLT(File.read("#{RAILS_ROOT}/app/views/#{stylesheet}"))
-    xslt.transform(Nokogiri::XML(xml), options.to_a.flatten)
-  end
-
+  include XmlTransformer
+  
   def remove_empty_nodes(xml)
     doc = Nokogiri::HTML::DocumentFragment.parse(xml)
     doc.css('div').each do |div|
