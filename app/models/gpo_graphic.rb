@@ -11,6 +11,7 @@ class GpoGraphic < ActiveRecord::Base
   has_attached_file :graphic,
                     :styles => { :large => ["460", :png], :original => ["", :png] },
                     :processors => [:thumbnail],
+                    :source_file_options => ["-density 300"],
                     :storage => :s3,
                     :s3_credentials => {
                       :access_key_id     => SECRETS["aws"]["access_key_id"],
