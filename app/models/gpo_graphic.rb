@@ -9,7 +9,18 @@ class GpoGraphic < ActiveRecord::Base
     :through => :gpo_graphic_usages
 
   has_attached_file :graphic,
-                    :styles => { :large => ["460", :png], :original => ["", :png] },
+                    :styles => {
+                      :large => {
+                        :format => :png,
+                        :geometry => "460",
+                        :source_file_options => "-density 300"
+                      },
+                      :original => {
+                        :format => :png,
+                        :geometry => "",
+                        :source_file_options => "-density 300"
+                      }
+                    },
                     :processors => [:thumbnail],
                     :source_file_options => ["-density 300"],
                     :storage => :s3,
