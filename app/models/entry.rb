@@ -65,7 +65,10 @@ class Entry < ApplicationModel
   has_many :graphics,
            :through => :graphic_usages
 
-  has_many :gpo_graphic_usages
+  has_many :gpo_graphic_usages,
+    :foreign_key => :document_number,
+    :primary_key => :document_number
+
   has_many :gpo_graphics,
            :through => :gpo_graphic_usages
 

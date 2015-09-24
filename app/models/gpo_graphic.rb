@@ -4,7 +4,7 @@ class GpoGraphic < ActiveRecord::Base
   has_many :gpo_graphic_usages,
     :foreign_key => :identifier,
     :primary_key => :identifier
-    
+
   has_many :entries,
     :through => :gpo_graphic_usages
 
