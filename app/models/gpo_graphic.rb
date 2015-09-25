@@ -50,7 +50,7 @@ class GpoGraphic < ActiveRecord::Base
   end
 
   def assigned_bucket
-    publication_dates = gpo_graphic_usages.map{|u|u.entry.publication_date}
+    publication_dates = gpo_graphic_usages.map{|u| u.entry.publication_date}
     if publication_dates.any?{|publication_date| publication_date <= Date.current}
       public_bucket
     else
