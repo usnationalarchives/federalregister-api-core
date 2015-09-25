@@ -12,7 +12,7 @@ class ReprocessedIssue < ApplicationModel
   def reprocess_issue
     self.status = "in_progress"
     self.save
-    Resque.enqueue(IssueReprocessor::ReprocessorIssue, self.id)
+    IssueReprocessor::ManualReprocessorIssue.perform(self.id)
   end
 
   def display_loading_message?
