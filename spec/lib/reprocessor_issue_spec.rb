@@ -1,8 +1,7 @@
 require 'spec_helper'
 
 describe IssueReprocessor::ReprocessorIssue do
-
-  describe ".archive_mods_files" do
+  describe "#rotate_mods_files" do
     include FileIoSpecHelperMethods
 
     let(:spec_current_mods_path) { File.join('tmp','data','mods') }
@@ -22,7 +21,7 @@ describe IssueReprocessor::ReprocessorIssue do
 
       create_file("#{spec_temporary_mods_path}/2099-01-01.xml", "new_mods")
       create_file("#{spec_current_mods_path}/2099-01-01.xml", "current_mods")
-      mods_downloader.archive_mods_files
+      mods_downloader.rotate_mods_files
     end
 
     after(:each) do
@@ -37,6 +36,4 @@ describe IssueReprocessor::ReprocessorIssue do
       IO.read("#{spec_current_mods_path}/2099-01-01.xml").should == "new_mods"
     end
   end
-
-
 end
