@@ -1,0 +1,49 @@
+form.reprocess-issue {
+  font-size: 16px;
+
+  input[type=text] { height: 30px; }
+
+  .btn {
+    background-image: none;
+    border: none;
+    position: relative;
+    text-shadow: none;
+    top: -4px;
+  }
+}
+
+table.reprocessed-issues {
+  margin-bottom: 15px;
+
+  td:first-child {
+    text-align: center;
+    width: 75px;
+  }
+}
+
+.reprocess-issue-link {
+  display: block;
+  font-size: 15px;
+  text-align: center;
+}
+
+.reprocess-issue {
+  .well { height: 300px; }
+
+  .btn {
+    background-image: none;
+    border: none;
+    margin-left: 10px;
+    position: relative;
+    text-shadow: none;
+  }
+}
+
+.reprocessed_issue-history {
+  margin-top: 30px;
+
+  table {
+    font-size: 15px;
+    text-align: left;
+  }
+}

@@ -4848,3 +4848,90 @@ a.thumbnail:hover {
 .invisible {
   visibility: hidden;
 }
+
+/* line 5, ../../../app/stylesheets/admin/bootstrap.scss */
+.pagination span {
+  display: block;
+  float: left;
+  padding: 0 14px;
+  line-height: 34px;
+  border: 1px solid #DDD;
+  border-left-width: 0;
+}
+/* line 13, ../../../app/stylesheets/admin/bootstrap.scss */
+.pagination span.disabled {
+  color: #666;
+}
+/* line 18, ../../../app/stylesheets/admin/bootstrap.scss */
+.pagination .prev_page {
+  border-left-width: 1px;
+  padding: 0 10px;
+}
+
+/* line 25, ../../../app/stylesheets/admin/bootstrap.scss */
+#topic_names.edit {
+  background-color: inherit;
+}
+/* line 27, ../../../app/stylesheets/admin/bootstrap.scss */
+#topic_names input[type=submit] {
+  background-color: #EFEFEF;
+  border: 1px solid #999;
+  padding: 10px 5px;
+}
+/* line 33, ../../../app/stylesheets/admin/bootstrap.scss */
+#topic_names fieldset.buttons a {
+  padding-top: 10px;
+  display: block;
+}
+
+/* line 40, ../../../app/stylesheets/admin/bootstrap.scss */
+form.formtastic .boolean input[type=checkbox] {
+  float: left;
+  top: 3px;
+  position: relative;
+}
+/* line 46, ../../../app/stylesheets/admin/bootstrap.scss */
+form.formtastic .autocompleter-selected {
+  margin-top: 30px;
+}
+/* line 49, ../../../app/stylesheets/admin/bootstrap.scss */
+form.formtastic .autocompleter-selected li {
+  padding: 5px;
+  border-radius: 6px;
+  background-color: #6aa3d5;
+  color: #FFF;
+  font-size: 14px;
+  margin: 5px;
+  height: 20px;
+  line-height: 20px;
+}
+/* line 59, ../../../app/stylesheets/admin/bootstrap.scss */
+form.formtastic .autocompleter-selected li:hover {
+  background-color: #5697CF;
+}
+/* line 62, ../../../app/stylesheets/admin/bootstrap.scss */
+form.formtastic .autocompleter-selected li:hover span.remove {
+  color: red;
+  border-color: red;
+}
+/* line 68, ../../../app/stylesheets/admin/bootstrap.scss */
+form.formtastic .autocompleter-selected li span.remove {
+  float: right;
+  border: 2px solid #FFF;
+  border-radius: 20px;
+  padding: 0px 5px;
+  display: block;
+  top: -1px;
+  position: relative;
+}
+
+/* line 81, ../../../app/stylesheets/admin/bootstrap.scss */
+#sidebar {
+  padding: 5px;
+}
+/* line 84, ../../../app/stylesheets/admin/bootstrap.scss */
+#sidebar h4 {
+  margin: 5px 0;
+  border-bottom: 2px solid #3f5b75;
+  color: #3f5b75;
+}

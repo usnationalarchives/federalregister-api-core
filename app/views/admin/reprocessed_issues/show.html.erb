@@ -1,52 +1,71 @@
-<% super_title 'Reprocess Issues' %>
+<% super_title 'Reprocessed Issues' %>
+
 <% title "Reprocessings for #{@presenter.date} Issue" %>
 <% sidebar(render :partial => 'reprocessed_issues_nav') %>
 
-<div class="reprocess-issue" data-status='<%= @presenter.reprocessed_issue_in_progress_status %>'>
+<div class="reprocess-issue"
+  data-status='<%= @presenter.reprocessed_issue_in_progress_status %>'>
 
-  <% if @presenter.display_loading_message? %>
-    Reprocessing...
-    <%= simple_format(@presenter.reprocessed_issue_in_progress.message) %>
-  <% else %>
-    Most recent MODS diff:
-    <div>
-      <%= text_area_tag 'diff', @presenter.most_recent_diff,
-            :readonly => true,
-            :rows => 25,
-            :class => 'span8',
-            :placeholder => "No differences identified." %>
-    </div>
-  <% end %>
 
-  <% if @presenter.show_reprocessing_buttons? %>
-    <div class ="row">
-    <% form_tag(admin_reprocessed_issue_path(@presenter.reprocessed_issue_in_progress), :method => :put, :class => "pull-right") do %>
-      <%= submit_tag 'Reprocess' %>
+    <% if @presenter.display_loading_message? %>
+      <p>Reprocessing...</p>
+
+      <%= simple_format(@presenter.reprocessed_issue_in_progress.message) %>
+    <% else %>
+      <p>Most recent MODS changes:</p>
+
+      <div class="well">
+        <%= simple_format(h @presenter.most_recent_diff) ||
+          "No changes identified." %>
+      </div>
     <% end %>
-    <% form_tag(admin_update_mods_path(@presenter.reprocessed_issue_in_progress), :method => :put, :class => "pull-right") do %>
-      <%= submit_tag 'Update MODS' %>
+
+  <p>
+    <% if @presenter.show_reprocessing_buttons? %>
+      <div class="row">
+        <% form_tag(
+          admin_reprocessed_issue_path(@presenter.reprocessed_issue_in_progress),
+          :method => :put, :class => "pull-right"
+        ) do %>
+          <%= submit_tag 'Reprocess', :class => 'btn btn-primary btn-large' %>
+        <% end %>
+
+        <% form_tag(
+          admin_update_mods_path(@presenter.reprocessed_issue_in_progress),
+          :method => :put, :class => "pull-right"
+        ) do %>
+          <%= submit_tag 'Update MODS', :class => 'btn btn-info btn-large' %>
+        <% end %>
+      </div>
     <% end %>
-    </div>
-  <% end %>
-  <hr>
-  <table class="table-striped table-condensed">
+  </p>
+
+  <div class="reprocessed_issue-history">
     <h3>Reprocessing History</h3>
-    <thead>
-      <tr>
-        <th>Initiated At</th>
-        <th>Completed At</th>
-        <th>User</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @presenter.reprocessed_issues.each do |reprocessed_issue| %>
-      <tr>
-        <td class="span3"><%= reprocessed_issue.created_at.to_s(:short_date_then_time_yy) %></td>
-        <td class="span3"><%= reprocessed_issue.status == "complete" ? reprocessed_issue.updated_at.to_s(:short_date_then_time_yy) : "incomplete"%></td>
-        <td class="span3"><%= reprocessed_issue.user.email %></td>
-      </tr>
-      <% end %>
-    </tbody>
-  </table>
 
+    <table class="table-striped table-condensed">
+      <thead>
+        <tr>
+          <th>Initiated</th>
+          <th>Completed</th>
+          <th>Initiated By</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @presenter.reprocessed_issues.each do |reprocessed_issue| %>
+          <tr>
+            <td class="span3">
+              <%= reprocessed_issue.created_at.to_s(:mdy_short_year_then_time) %>
+            </td>
+            <td class="span3">
+              <%= reprocessed_issue.status == "complete" ?
+                reprocessed_issue.updated_at.to_s(:mdy_short_year_then_time) :
+                reprocessed_issue.status %>
+            </td>
+            <td class="span3"><%= reprocessed_issue.user.email %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
 </div>

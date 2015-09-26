@@ -12,31 +12,35 @@ class ReprocessedIssuePresenter
   end
 
   def reprocessed_issues
-    @reprocessed_issues ||=
-      issue.
+    @reprocessed_issues ||= issue.
       reprocessed_issues.
-      sort_by{|i|i.updated_at}.
+      sort_by(&:updated_at).
       reverse
   end
 
   def show_reprocessing_buttons?
-    reprocessed_issue_in_progress.present? && reprocessed_issue_in_progress.status == "pending_reprocess"
+    reprocessed_issue_in_progress_status == "pending_reprocess"
   end
 
   def display_loading_message?
-    reprocessed_issue_in_progress.present? && LOADING_STATUSES.include?(reprocessed_issue_in_progress.status)
+    reprocessed_issue_in_progress.present? &&
+      LOADING_STATUSES.include?(reprocessed_issue_in_progress.status)
+  end
+
+  def most_recent_reprocessed_issue
+    reprocessed_issues.first
   end
 
   def most_recent_diff
-    reprocessed_issues.first.diff
+    most_recent_reprocessed_issue.try(:diff)
   end
 
   def most_recent_diff_processed?
-    reprocessed_issues.first.status == "complete"
+    most_recent_reprocessed_issue.status == "complete"
   end
 
   def reprocessed_issue_in_progress
-    reprocessed_issues.to_a.find{|i|i.status != "complete"}
+    reprocessed_issues.to_a.find{|i| i.status != "complete"}
   end
 
   def reprocessed_issue_in_progress_status
@@ -45,16 +49,12 @@ class ReprocessedIssuePresenter
 
   def reprocessed_issues_by_date
     @reprocessed_issues_by_date ||= ReprocessedIssue.
-      all(:conditions=>"status = 'complete'").
-      group_by(&:publication_date)
+      all(
+        :conditions => "status = 'complete' || status = 'failed'",
+        :joins => :issue,
+        :order => "reprocessed_issues.created_at DESC",
+        :group => "issues.publication_date",
+        :limit => 20
+      )
   end
-
-  def reprocessed_issues_by_date_ordered
-    reprocessed_issues_by_date.
-    inject({}) do |hsh, (date, issues)|
-      hsh[date] = issues.sort_by{|i|i.publication_date}.reverse
-      hsh
-    end
-  end
-
 end
