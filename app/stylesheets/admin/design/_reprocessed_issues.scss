@@ -28,7 +28,10 @@ table.reprocessed-issues {
 }
 
 .reprocess-issue {
-  .well { height: 300px; }
+  .well {
+    height: 300px;
+    overflow: auto;
+  }
 
   .btn {
     background-image: none;
