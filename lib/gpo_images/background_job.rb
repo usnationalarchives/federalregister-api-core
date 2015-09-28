@@ -10,7 +10,7 @@ module GpoImages
     def initialize(eps_filename, bucketed_zip_filename, ftp_transfer_date)
       @eps_filename = eps_filename
       @bucketed_zip_filename = bucketed_zip_filename
-      @zipped_filename = File.basename(@bucketed_zip_filename) #BC TODO: Change this to base_filename
+      @zipped_filename = File.basename(@bucketed_zip_filename)
       @ftp_transfer_date = ftp_transfer_date.is_a?(Date) ? ftp_transfer_date : Date.parse(ftp_transfer_date)
       @compressed_image_bundles_path = GpoImages::FileLocationManager.compressed_image_bundles_path
       @uncompressed_eps_images_path = GpoImages::FileLocationManager.uncompressed_eps_images_path

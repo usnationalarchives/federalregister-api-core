@@ -17,7 +17,7 @@ class GpoImages::FileConverter
   end
 
   def process
-    if !zip_file_exists? #BC TODO: Validate bad .eps files do not blow up
+    if !zip_file_exists?
       download_eps_image_bundle
       unzip_file(uncompressed_eps_images_path, File.join(compressed_image_bundles_path, base_filename) )
     end

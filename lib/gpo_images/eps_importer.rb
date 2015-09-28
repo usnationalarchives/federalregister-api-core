@@ -74,7 +74,10 @@ class GpoImages::EpsImporter
     rescue => exception
       delete_directory_contents(temp_images_path)
       delete_directory_contents(temp_zip_files_path)
-      #TODO: Include Honeybadger notify.
+      Honeybadger.notify(
+        :error_class   => "Failure occurred while unzipping a downloaded eps image",
+        :error_message => exception
+      )
       raise "A failure occured when building zip file: #{exception.backtrace}: #{exception.message} (#{exception.class})"
     end
 
@@ -83,7 +86,7 @@ class GpoImages::EpsImporter
   def upload_zip_and_manifest_to_s3(file_name)
     bucket = fog_aws_connection.directories.new(:key => bucket_name)
     bucket.files.create(
-      :key    => "#{Date.current.to_s(:ymd)}/#{file_name}", #BC TODO: Extract to path manager
+      :key    => "#{Date.current.to_s(:ymd)}/#{file_name}",
       :body   => File.open(File.join(temp_zip_files_path, file_name)),
       :public => false
     )

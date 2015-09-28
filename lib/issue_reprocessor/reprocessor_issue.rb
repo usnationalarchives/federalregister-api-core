@@ -19,10 +19,10 @@ class IssueReprocessor::ReprocessorIssue
   end
 
   def perform
+    rotate_mods_files
     reprocess_issue
     reindex
     clear_cache
-    rotate_mods_files
     update_status("complete")
   end
 
