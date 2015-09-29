@@ -11,7 +11,7 @@ class Admin::ReprocessedIssuesController < AdminController
       issue = Issue.find_by_publication_date(date)
       if issue
         reprocessed_issues_in_progress = issue.reprocessed_issues.
-          to_a.find{|i| i.status == "in_progress"}
+          to_a.find{|i| i.status == "pending_reprocess"}
         if reprocessed_issues_in_progress
           flash[:error] = "Reprocessing for #{date} is currently underway."
           redirect_to admin_reprocessed_issue_path(reprocessed_issues_in_progress.publication_date.to_s(:iso)) #Redirect to date-based reprocessed issue path

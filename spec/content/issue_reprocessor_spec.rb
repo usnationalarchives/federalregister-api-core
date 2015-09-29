@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe IssueReprocessor::ReprocessorIssue do
+describe Content::IssueReprocessor do
   describe "#rotate_mods_files" do
     include FileIoSpecHelperMethods
 
@@ -12,7 +12,7 @@ describe IssueReprocessor::ReprocessorIssue do
       reprocessed_issue = ReprocessedIssue.create
       reprocessed_issue.issue = Issue.create(:publication_date => "2099-01-01".to_date)
       reprocessed_issue.save
-      mods_downloader = IssueReprocessor::ReprocessorIssue.new(
+      issue_reprocessor = Content::IssueReprocessor.new(
         reprocessed_issue.id,
         :current_mods_path   => spec_current_mods_path,
         :temporary_mods_path => spec_temporary_mods_path,
@@ -21,7 +21,7 @@ describe IssueReprocessor::ReprocessorIssue do
 
       create_file("#{spec_temporary_mods_path}/2099-01-01.xml", "new_mods")
       create_file("#{spec_current_mods_path}/2099-01-01.xml", "current_mods")
-      mods_downloader.rotate_mods_files
+      issue_reprocessor.send(:rotate_mods_files)
     end
 
     after(:each) do
