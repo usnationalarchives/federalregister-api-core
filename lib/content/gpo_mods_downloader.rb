@@ -40,7 +40,7 @@ module Content
           :exit_status => [0, 1]
         )
       if diff
-        reprocessed_issue.update_attribute(:diff, diff)
+        reprocessed_issue.update_attribute(:diff, format_diff(diff))
       else
         update_status("failed")
       end
