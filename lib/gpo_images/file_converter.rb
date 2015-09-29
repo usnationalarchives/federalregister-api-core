@@ -1,31 +1,47 @@
 class GpoImages::FileConverter
-  attr_reader :bucket_name, :bucketed_zip_filename, :date,
-              :base_filename, :compressed_image_bundles_path, :fog_aws_connection,
-              :uncompressed_eps_images_path
+  attr_reader :bucketed_zip_filename,
+    :date,
+    :fog_aws_connection
 
   IMAGE_FILE_EXTENTIONS_TO_IMPORT = ["", ".eps", ".EPS"]
 
   def initialize(bucketed_zip_filename, date, options={})
-    @bucket_name = SETTINGS["s3_buckets"]["zipped_eps_images"]
-    @fog_aws_connection ||= options.fetch(:fog_aws_connection) { GpoImages::FogAwsConnection.new }
     @bucketed_zip_filename = bucketed_zip_filename
-    @base_filename = File.basename(@bucketed_zip_filename)
-    @compressed_image_bundles_path = GpoImages::FileLocationManager.compressed_image_bundles_path
-    @uncompressed_eps_images_path = GpoImages::FileLocationManager.uncompressed_eps_images_path
     @date = date
-    make_temp_directories
+    @fog_aws_connection = options.fetch(:fog_aws_connection) { GpoImages::FogAwsConnection.new }
+
+    create_directories
   end
 
   def process
     if !zip_file_exists?
       download_eps_image_bundle
-      unzip_file(uncompressed_eps_images_path, File.join(compressed_image_bundles_path, base_filename) )
+      unzip_file(
+        uncompressed_eps_images_path,
+        File.join(compressed_image_bundles_path, base_filename)
+      )
     end
   end
 
   private
 
-  def make_temp_directories
+  def base_filename
+    @base_filename ||= File.basename(bucketed_zip_filename)
+  end
+
+  def bucket_name
+    SETTINGS["s3_buckets"]["zipped_eps_images"]
+  end
+
+  def compressed_image_bundles_path
+    @compressed_image_bundles_path ||= GpoImages::FileLocationManager.compressed_image_bundles_path
+  end
+
+  def uncompressed_eps_images_path
+    @uncompressed_eps_images_path ||= GpoImages::FileLocationManager.uncompressed_eps_images_path
+  end
+
+  def create_directories
     FileUtils.makedirs compressed_image_bundles_path
     FileUtils.makedirs uncompressed_eps_images_path
   end

@@ -1,8 +1,7 @@
 class GpoImages::FileImporter
-  attr_reader :bucket_name, :fog_aws_connection, :custom_date
+  attr_reader :fog_aws_connection, :custom_date
 
   def initialize(options={})
-    @bucket_name = SETTINGS["s3_buckets"]["zipped_eps_images"]
     @fog_aws_connection ||= options.fetch(:fog_aws_connection) { GpoImages::FogAwsConnection.new }
     @custom_date = Date.parse ENV['DATE'] if ENV['DATE']
   end
@@ -34,6 +33,10 @@ class GpoImages::FileImporter
   end
 
   private
+
+  def bucket_name
+    SETTINGS["s3_buckets"]["zipped_eps_images"]
+  end
 
   def convert_files(date)
     image_packages_for_date(date).
