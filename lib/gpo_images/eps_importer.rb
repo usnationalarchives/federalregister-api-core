@@ -1,7 +1,7 @@
 require 'zlib'
 
 class GpoImages::EpsImporter
-  SLEEP_DURATION_BETWEEN_SFTP_CHECKS = 5
+  SLEEP_DURATION_BETWEEN_SFTP_CHECKS = 5 #seconds
 
   attr_reader :filenames_to_download, :temp_images_path, :bucket_name, :sftp_connection,
               :fog_aws_connection, :temp_zip_files_path
@@ -11,7 +11,7 @@ class GpoImages::EpsImporter
     @fog_aws_connection ||= options.fetch(:fog_aws_connection) { GpoImages::FogAwsConnection.new }
     @temp_images_path = GpoImages::FileLocationManager.temp_images_path
     @temp_zip_files_path = GpoImages::FileLocationManager.temp_zip_files_path
-    @bucket_name = SETTINGS["zipped_eps_images_s3_bucket"]
+    @bucket_name = SETTINGS["s3_buckets"]["zipped_eps_images"]
   end
 
   def self.run
