@@ -81,6 +81,7 @@ GEM
       json (>= 1.4.6)
     curb (0.4.4.0)
     diff-lcs (1.1.3)
+    diffy (3.0.7)
     excon (0.45.4)
     factory_girl (1.2.4)
     fakeweb (1.3.0)
@@ -335,6 +336,7 @@ DEPENDENCIES
   compass-960-plugin (= 0.9.13)
   cucumber
   curb (= 0.4.4.0)
+  diffy
   factory_girl (= 1.2.4)
   fakeweb
   fastercsv (= 1.4.0)

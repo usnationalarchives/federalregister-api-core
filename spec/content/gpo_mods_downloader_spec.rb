@@ -45,6 +45,7 @@ describe Content::GpoModsDownloader do
     end
 
     it "removes lines included in the DIFF_PREFIXES TO REJECT constant" do
+      pending("To re-implement post Diffy.")
       original_xml = ""
       modified_xml = "  <identifier type="
       create_file("data/mods/2099-01-01.xml", original_xml)

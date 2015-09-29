@@ -32,7 +32,7 @@ class ReprocessedIssuePresenter
   end
 
   def most_recent_diff
-    most_recent_reprocessed_issue.try(:diff)
+    most_recent_reprocessed_issue.try(:html_diff).try(:html_safe)
   end
 
   def most_recent_diff_processed?

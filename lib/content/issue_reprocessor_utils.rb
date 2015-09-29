@@ -28,6 +28,14 @@ module Content
       end
     end
 
+    def mods_path
+      File.join(Rails.root,'data','mods')
+    end
+
+    def temporary_mods_path
+      File.join(Rails.root,'data','mods','tmp')
+    end
+
     def logger
       @logger ||= Logger.new(log_path)
     end

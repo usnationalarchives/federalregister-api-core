@@ -70,6 +70,7 @@ gem 'juicer', '1.0.6'
 
 gem 'rdoc'
 gem 'net-sftp'
+gem 'diffy'
 
 # bundler requires these gems in all environments
 # gem 'nokogiri', '1.4.2'
