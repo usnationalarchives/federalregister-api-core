@@ -52,12 +52,12 @@ module Content
     end
 
     def diff_from_diffy
-      @diff_from_diffy ||= CustomDiffy::Diff.new(
+      @diff_from_diffy ||= Diffy::Diff.new(
         File.join(mods_path, "#{date.to_s(:iso)}.xml" ),
         File.join(temporary_mods_path, "#{date.to_s(:iso)}.xml"),
         :source => 'files',
         :include_plus_and_minus_in_html => true
-      ).to_s(:html)
+      ).to_s(:html_without_unchanged_lines)
     end
 
     def filtered_diff
