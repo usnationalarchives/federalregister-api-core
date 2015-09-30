@@ -2,18 +2,15 @@ module Content
   class GpoModsDownloader
     include Content::IssueReprocessorUtils
     @queue = :default
+    attr_reader :reprocessed_issue
 
-    attr_reader :reprocessed_issue, :date
-    DIFF_PREFIXES_TO_REJECT = [
-      "<  <identifier type=",
-      ">  <identifier type=",
-      "<   <searchTitle>",
-      ">   <searchTitle>"
-    ].map{|prefix| prefix.delete(' ') }
+    STRINGS_TO_REJECT = [
+      "identifier type=",
+      "<searchTitle>",
+    ]
 
     def initialize(reprocessed_issue_id)
       @reprocessed_issue = ReprocessedIssue.find_by_id(reprocessed_issue_id)
-      @date = @reprocessed_issue.publication_date
     end
 
     def self.perform(reprocessed_issue_id)
@@ -34,14 +31,14 @@ module Content
 
     def create_diff
       diff = run_cmd(
-          "diff #{temporary_mods_path}/#{date.to_s(:iso)}.xml #{mods_path}/#{date.to_s(:iso)}.xml",
+          "diff #{mods_path}/#{date.to_s(:iso)}.xml #{temporary_mods_path}/#{date.to_s(:iso)}.xml",
           "ModsDownloader failed to generate diff.",
           :exit_status => [0, 1]
         )
       if diff && diff_from_diffy
         reprocessed_issue.update_attributes(
           :diff => diff,
-          :html_diff => diff_from_diffy
+          :html_diff => filtered_diff
         )
       else
         update_status("failed")
@@ -50,20 +47,23 @@ module Content
 
     private
 
+    def date
+      @date ||= reprocessed_issue.publication_date
+    end
+
     def diff_from_diffy
       @diff_from_diffy ||= CustomDiffy::Diff.new(
-        File.join(temporary_mods_path, "#{date.to_s(:iso)}.xml"),
         File.join(mods_path, "#{date.to_s(:iso)}.xml" ),
+        File.join(temporary_mods_path, "#{date.to_s(:iso)}.xml"),
         :source => 'files',
         :include_plus_and_minus_in_html => true
       ).to_s(:html)
     end
 
-    def format_diff(diff)
-      diff.reject do |line|
-        DIFF_PREFIXES_TO_REJECT.any?{|prefix| line.delete(' ').start_with? prefix}
-      end.
-      to_s
+    def filtered_diff
+      diff_from_diffy.reject do |line|
+        STRINGS_TO_REJECT.any?{|prefix| line =~ /#{prefix}/ }
+      end.to_s
     end
 
   end
