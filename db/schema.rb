@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150929140221) do
+ActiveRecord::Schema.define(:version => 20150930182141) do
 
   create_table "action_names", :force => true do |t|
     t.string   "name"
@@ -128,8 +128,8 @@ ActiveRecord::Schema.define(:version => 20150929140221) do
     t.integer "section_id"
     t.string  "title"
     t.string  "slug"
-    t.text    "description",       :limit => 16777215
-    t.text    "search_conditions", :limit => 16777215
+    t.text    "description",       :limit => 2147483647
+    t.text    "search_conditions", :limit => 2147483647
     t.boolean "active"
     t.integer "position"
   end
@@ -466,14 +466,14 @@ ActiveRecord::Schema.define(:version => 20150929140221) do
     t.string   "granule_class"
     t.datetime "filed_at"
     t.date     "publication_date"
-    t.boolean  "special_filing",                          :default => false, :null => false
+    t.boolean  "special_filing",                            :default => false, :null => false
     t.string   "pdf_file_name"
     t.integer  "pdf_file_size"
     t.datetime "pdf_updated_at"
-    t.text     "editorial_note",      :limit => 16777215
+    t.text     "editorial_note",      :limit => 2147483647
     t.string   "document_file_path"
     t.datetime "raw_text_updated_at"
-    t.boolean  "delta",                                   :default => true,  :null => false
+    t.boolean  "delta",                                     :default => true,  :null => false
     t.integer  "num_pages"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -519,10 +519,10 @@ ActiveRecord::Schema.define(:version => 20150929140221) do
   create_table "regulatory_plans", :force => true do |t|
     t.string  "regulation_id_number"
     t.string  "issue"
-    t.text    "title",                :limit => 16777215
-    t.text    "abstract",             :limit => 16777215
+    t.text    "title",                :limit => 2147483647
+    t.text    "abstract",             :limit => 2147483647
     t.string  "priority_category"
-    t.boolean "delta",                                    :default => true, :null => false
+    t.boolean "delta",                                      :default => true, :null => false
     t.boolean "current"
   end
 
@@ -546,7 +546,7 @@ ActiveRecord::Schema.define(:version => 20150929140221) do
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.text     "html_diff"
+    t.text     "html_diff",  :limit => 2147483647
   end
 
   add_index "reprocessed_issues", ["issue_id", "status"], :name => "index_reprocessed_issues_on_issue_id_and_status"
@@ -573,8 +573,8 @@ ActiveRecord::Schema.define(:version => 20150929140221) do
     t.string   "title"
     t.string   "slug"
     t.integer  "position"
-    t.text     "description",           :limit => 16777215
-    t.text     "relevant_cfr_sections", :limit => 16777215
+    t.text     "description",           :limit => 2147483647
+    t.text     "relevant_cfr_sections", :limit => 2147483647
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "creator_id"

@@ -1,5 +1,5 @@
-module CustomDiffy
-  class HtmlFormatter < Diffy::HtmlFormatter
+module Diffy
+  class CustomFormatter < Diffy::HtmlFormatter
     # NOTE: This Diffy class was customized by ommitting the processing of
     # <li> tag items with a ".unchanged" html class so they would not
     # appear in the generated html diff.
