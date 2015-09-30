@@ -21,9 +21,14 @@ namespace :content do
       GpoImages::FileImporter.run
     end
 
-    desc "Run the process_daily_issue_images driver"
+    desc "Scan through the most recent issue's XML -- noting image usages and moving images to public buckets accordingly"
     task :process_daily_issue_images => :environment do
-      Content::ImportDriver::DailyIssueImageProcessorDriver.new.perform
+      dates = Content.parse_dates(ENV['DATE'] || Date.current.in_time_zone)
+
+      dates.each do |date|
+        puts "linking GPO images for #{date}"
+        GpoImages::DailyIssueImageProcessor.perform(date)
+      end
     end
 
     desc "Delete the date's redis keys and re-execute the eps_conversion process."
@@ -31,11 +36,5 @@ namespace :content do
       GpoImages::FileImporter.force_eps_convert
       Content::ImportDriver::FileImportDriver.new.perform
     end
-
-    desc "Scan through the most recent issue's XML--noting image usages and moving images to public buckets accordingly"
-    task :process_daily_issue_images_raw_task => :environment do
-      GpoImages::DailyIssueImageProcessor.perform
-    end
-
   end
 end
