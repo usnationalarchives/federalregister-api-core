@@ -220,7 +220,7 @@ class Entry < ApplicationModel
   def graphic_identifiers
     if graphics.extracted.present?
       graphics.extracted.map(&:identifier).join(',')
-    elsif processed_gpo_graphics.present
+    elsif processed_gpo_graphics.present?
       processed_gpo_graphics.map(&:identifier).join(',')
     else
       []
