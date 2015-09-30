@@ -11,14 +11,19 @@ namespace :content do
       GpoImages::EpsImporter.run
     end
 
-    desc "Run the convert_eps driver"
-    task :convert_eps => :environment do
+    desc "Convert eps files to images"
+    task :convert => :environment do
       Content::ImportDriver::FileImportDriver.new.perform
     end
 
     desc "Download the .eps images from S3, convert them, and upload them to FR app-specific S3 bucket."
-    task :convert_eps_raw_task => :environment do
-      GpoImages::FileImporter.run
+    task :convert_eps => :environment do
+      dates = Content.parse_dates(ENV['DATE'] || Date.current.in_time_zone)
+
+      dates.each do |date|
+        puts "converting GPO eps files to images for #{date}"
+        GpoImages::FileImporter.run(date)
+      end
     end
 
     desc "Scan through the most recent issue's XML -- noting image usages and moving images to public buckets accordingly"
@@ -33,8 +38,12 @@ namespace :content do
 
     desc "Delete the date's redis keys and re-execute the eps_conversion process."
     task :force_convert_eps => :environment do
-      GpoImages::FileImporter.force_eps_convert
-      Content::ImportDriver::FileImportDriver.new.perform
+      dates = Content.parse_dates(ENV['DATE'] || Date.current.in_time_zone)
+
+      dates.each do |date|
+        puts "force converting GPO eps files to images for #{date}"
+        GpoImages::FileImporter.force_convert
+      end
     end
   end
 end
