@@ -61,11 +61,11 @@ class GpoGraphic < ActiveRecord::Base
   private
 
   def public_bucket
-    SETTINGS["public_processed_images_s3_bucket"]
+    SETTINGS["s3_buckets"]["public_images"]
   end
 
   def private_bucket
-    SETTINGS["private_processed_images_s3_bucket"]
+    SETTINGS["s3_buckets"]["private_images"]
   end
 
 end

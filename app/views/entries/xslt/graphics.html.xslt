@@ -7,7 +7,7 @@
     </xsl:variable>
 
     <p class="graphic">
-      <xsl:copy-of select="fr:gpo_image(text(),$paragraph_id,$extracted_graphics,$processed_graphics)" />
+      <xsl:copy-of select="fr:gpo_image(text(),$paragraph_id,$graphic_identifiers)" />
     </p>
   </xsl:template>
 

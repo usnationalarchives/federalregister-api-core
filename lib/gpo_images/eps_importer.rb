@@ -1,17 +1,13 @@
 require 'zlib'
 
 class GpoImages::EpsImporter
-  SLEEP_DURATION_BETWEEN_SFTP_CHECKS = 5
+  SLEEP_DURATION_BETWEEN_SFTP_CHECKS = 5 #seconds
 
-  attr_reader :filenames_to_download, :temp_images_path, :bucket_name, :sftp_connection,
-              :fog_aws_connection, :temp_zip_files_path
-
+  attr_reader :fog_aws_connection, :sftp_connection
+              
   def initialize(options={})
-    @sftp_connection ||= options.fetch(:sftp_connection) { GpoImages::Sftp.new }
-    @fog_aws_connection ||= options.fetch(:fog_aws_connection) { GpoImages::FogAwsConnection.new }
-    @temp_images_path = GpoImages::FileLocationManager.temp_images_path
-    @temp_zip_files_path = GpoImages::FileLocationManager.temp_zip_files_path
-    @bucket_name = SETTINGS["zipped_eps_images_s3_bucket"]
+    @sftp_connection = options.fetch(:sftp_connection) { GpoImages::Sftp.new }
+    @fog_aws_connection = options.fetch(:fog_aws_connection) { GpoImages::FogAwsConnection.new }
   end
 
   def self.run
@@ -29,9 +25,24 @@ class GpoImages::EpsImporter
 
   private
 
+  def bucket_name
+    SETTINGS["s3_buckets"]["zipped_eps_images"]
+  end
+
+  def temp_zip_files_path
+    GpoImages::FileLocationManager.temp_zip_files_path
+  end
+
+  def temp_images_path
+    GpoImages::FileLocationManager.temp_images_path
+  end
+
+  def filenames_to_download
+    @filenames_to_download ||= unchanged_files_list.map(&:first)
+  end
+
   def download_eps_images
-    @filenames_to_download = unchanged_files_list.map(&:first)
-    puts "Beginning download of the following files: #{filenames_to_download.to_sentence}" if @filenames_to_download.present?
+    puts "Beginning download of the following files: #{filenames_to_download.to_sentence}" if filenames_to_download.present?
     FileUtils.makedirs temp_images_path
     begin
     filenames_to_download.each do |filename|
@@ -101,5 +112,4 @@ class GpoImages::EpsImporter
     FileUtils.rm(File.join(temp_zip_files_path, "#{md5}.zip"))
     sftp_connection.remove_files_from_sftp_server(filenames_to_download)
   end
-
 end

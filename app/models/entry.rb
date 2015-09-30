@@ -217,6 +217,16 @@ class Entry < ApplicationModel
     gpo_graphic_usages.map(&:gpo_graphic).select{|g| g.graphic_file_name.present?}
   end
 
+  def graphic_identifiers
+    if graphics.extracted.present?
+      graphics.extracted.map(&:identifier).join(',')
+    elsif processed_gpo_graphics.present
+      processed_gpo_graphics.map(&:identifier).join(',')
+    else
+      []
+    end
+  end
+
   def granule_class
     self[:granule_class] || 'UNKNOWN'
   end

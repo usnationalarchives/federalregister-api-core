@@ -1,18 +1,17 @@
 module GpoImages
   class DailyIssueImageProcessor
-    attr_reader :date, :documents, :fog_aws_connection
+    attr_reader :date, :documents
     include ImageIdentifierNormalizer
 
     XML_IMAGE_TAGS = ['GID', 'MID']
 
-    def initialize
-      custom_date = Date.parse ENV['DATE'] if ENV['DATE']
-      @date ||= custom_date || DateTime.current.in_time_zone.to_date
-      @documents ||= Entry.find_all_by_publication_date(@date)
+    def initialize(date)
+      @date = date
+      @documents = Entry.find_all_by_publication_date(@date)
     end
 
-    def self.perform
-      new.perform
+    def self.perform(date)
+      new(date).perform
     end
 
     def perform
@@ -20,8 +19,8 @@ module GpoImages
     end
 
     class ImageUsage
-      attr_reader :image_identifier, :document_number, :fog_aws_connection,
-      :private_bucket, :public_bucket
+      attr_reader :image_identifier, :document_number
+
       delegate :graphic_file_name?, :move_to_public_bucket, :to => :gpo_graphic
 
       def initialize(image_identifier, document_number)
@@ -37,14 +36,11 @@ module GpoImages
         gpo_graphic.present?
       end
 
-      def create_gpo_graphic_usage_unless_existent
-        if GpoGraphicUsage.find_by_identifier_and_document_number(
+      def gpo_graphic_usage_exists?
+        GpoGraphicUsage.find_by_identifier_and_document_number(
           image_identifier,
           document_number
-          ).nil?
-
-          create_graphic_usage
-        end
+        ).present?
       end
 
       def create_graphic_usage
@@ -69,7 +65,7 @@ module GpoImages
             GpoGraphic.create(:identifier => image_usage.image_identifier)
           end
 
-          image_usage.create_gpo_graphic_usage_unless_existent
+          image_usage.create_graphic_usage unless image_usage.gpo_graphic_usage_exists?
         end
       end
     end
@@ -78,7 +74,10 @@ module GpoImages
       documents.each_with_object([]) do |document, image_usages|
         xml_doc = Nokogiri::XML(document.full_xml)
         xml_doc.css(xml_tag).each do |node|
-          image_usages << ImageUsage.new(normalize_image_identifier(node.text), document.document_number)
+          image_usages << ImageUsage.new(
+            normalize_image_identifier(node.text),
+            document.document_number
+          )
         end
       end
     end

@@ -1,24 +1,23 @@
 class XsltFunctions
   include GpoImages::ImageIdentifierNormalizer
 
-  def gpo_image(nodes, link_id, extracted_images, processed_images)
+  def gpo_image(nodes, link_id, identifiers)
     document = blank_document
 
-    extracted_images = extracted_images.split(',')
+    identifiers = identifiers.split(',')
     graphic_identifier = normalize_image_identifier(
       nodes.first.content
     )
-    processed_images = processed_images.split(',')
 
     Nokogiri::XML::Builder.with(document) do |doc|
       doc.a(
         :class => "entry_graphic_link",
         :id => link_id,
-        :href => graphic_url('original', graphic_identifier, extracted_images, processed_images)
+        :href => graphic_url('original', graphic_identifier, identifiers)
       ) {
         doc.img(
           :class => 'entry_graphic',
-          :src => graphic_url('large', graphic_identifier, extracted_images, processed_images)
+          :src => graphic_url('large', graphic_identifier, identifiers)
         )
       }
     end
@@ -36,13 +35,11 @@ class XsltFunctions
     Nokogiri::XML::DocumentFragment.parse ""
   end
 
-  def graphic_url(size, graphic_identifier, extracted_images, processed_images)
-    if extracted_images.include?(graphic_identifier)
-      "https://s3.amazonaws.com/#{SETTINGS["original_images_bucket"]}/#{graphic_identifier}/#{size}.png"
-    elsif processed_images.include?(graphic_identifier)
-      "https://s3.amazonaws.com/#{SETTINGS["public_processed_images_s3_bucket"]}/#{graphic_identifier}/#{size}.png"
+  def graphic_url(size, graphic_identifier, identifiers)
+    if identifiers.include?(graphic_identifier)
+      "https://s3.amazonaws.com/#{SETTINGS["s3_buckets"]["public_images"]}/#{graphic_identifier}/#{size}.png"
     else
-      "https://s3.amazonaws.com/#{SETTINGS["public_processed_images_s3_bucket"]}/missingimage/#{size}.png"
+      "https://s3.amazonaws.com/#{SETTINGS["s3_buckets"]["public_images"]}/missingimage/#{size}.png"
     end
   end
 end

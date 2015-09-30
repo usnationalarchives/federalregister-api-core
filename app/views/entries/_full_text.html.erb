@@ -9,8 +9,7 @@
       html = transform_xml(base_xml, 'entries/_full_text.html.xslt', {
         'first_page' => (entry.start_page.to_s),
         'volume' => entry.volume.to_s,
-        'extracted_graphics' => entry.graphics.extracted.present? ? "'#{entry.graphics.extracted.map(&:identifier).join(',')}'" : '""',
-        'processed_graphics' => entry.processed_gpo_graphics.present? ? "'#{entry.processed_gpo_graphics.map(&:identifier).join(',')}'" : '""'
+        'graphic_identifiers' => entry.graphic_identifiers.present? ? graphic_identifiers : '""'
       }.to_a.flatten).to_s
       html = remove_empty_nodes(html)
       html = handle_lstsub(handle_amdpar(html))
