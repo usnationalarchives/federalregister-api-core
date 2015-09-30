@@ -1,13 +1,13 @@
 namespace :content do
   namespace :gpo_images do
 
-    desc "Run the eps_import driver"
-    task :import_eps => :environment do
+    desc "Import images from the GPO FTP drive"
+    task :import => :environment do
       Content::ImportDriver::EpsImportDriver.new.perform
     end
 
     desc "Download GPO images and move them to S3."
-    task :import_eps_raw_task => :environment do
+    task :import_eps => :environment do
       GpoImages::EpsImporter.run
     end
 
