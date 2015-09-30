@@ -18,7 +18,7 @@ namespace :content do
 
     desc "Download the .eps images from S3, convert them, and upload them to FR app-specific S3 bucket."
     task :convert_eps => :environment do
-      dates = Content.parse_dates(ENV['DATE'] || Date.current.in_time_zone)
+      dates = Content.parse_dates(ENV['DATE'] || Date.current)
 
       dates.each do |date|
         puts "converting GPO eps files to images for #{date}"
@@ -28,7 +28,7 @@ namespace :content do
 
     desc "Scan through the most recent issue's XML -- noting image usages and moving images to public buckets accordingly"
     task :process_daily_issue_images => :environment do
-      dates = Content.parse_dates(ENV['DATE'] || Date.current.in_time_zone)
+      dates = Content.parse_dates(ENV['DATE'] || Date.current)
 
       dates.each do |date|
         puts "linking GPO images for #{date}"
@@ -38,7 +38,7 @@ namespace :content do
 
     desc "Delete the date's redis keys and re-execute the eps_conversion process."
     task :force_convert_eps => :environment do
-      dates = Content.parse_dates(ENV['DATE'] || Date.current.in_time_zone)
+      dates = Content.parse_dates(ENV['DATE'] || Date.current)
 
       dates.each do |date|
         puts "force converting GPO eps files to images for #{date}"
