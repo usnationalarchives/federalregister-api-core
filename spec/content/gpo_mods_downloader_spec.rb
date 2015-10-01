@@ -53,8 +53,24 @@ XML
       create_file("data/mods/tmp/2099-01-01.xml", modified_xml)
 
       mods_downloader = Content::GpoModsDownloader.new(@reprocessed_issue)
-      mods_downloader.send(:filtered_diff).should == "<div class=\"diff\">\n  <ul>\n  </ul>\n</div>\n"
+      mods_downloader.send(:html_diff).should == "<div class=\"diff\">\n  <ul>\n  </ul>\n</div>\n"
     end
+
+    it "removes lines included in the strings_to_reject option" do
+      original_xml = ""
+      modified_xml = <<-XML
+    <li class=\"del\"><del><span class=\"symbol\">-</span>&lt;identifier type=&quot;local&quot;&gt;P0b002ee18d3e<strong>0406</strong>&lt;/identifier&gt;</del></li>"
+XML
+      create_file("data/mods/2099-01-01.xml", original_xml)
+      create_file("data/mods/tmp/2099-01-01.xml", modified_xml)
+      FrDiff.new(
+        File.join(spec_current_mods_path, "2099-01-01.xml"),
+        File.join(spec_temporary_mods_path, "2099-01-01.xml"),
+        :strings_to_reject => ["identifier type="]
+      ).
+      html_diff.should == "<div class=\"diff\">\n  <ul>\n  </ul>\n</div>\n"
+    end
+
 
   end
 

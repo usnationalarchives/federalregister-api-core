@@ -7,6 +7,7 @@ module Content
     STRINGS_TO_REJECT = [
       "identifier type=",
       "<searchTitle>",
+      "<mods"
     ]
 
     def initialize(reprocessed_issue_id)
@@ -30,18 +31,25 @@ module Content
     end
 
     def create_diff
-      diff = run_cmd(
-          "diff #{mods_path}/#{date.to_s(:iso)}.xml #{temporary_mods_path}/#{date.to_s(:iso)}.xml",
-          "ModsDownloader failed to generate diff.",
-          :exit_status => [0, 1]
-        )
-      if diff && diff_from_diffy
+      begin
+        diff = FrDiff.new(
+          File.join(mods_path, "#{date.to_s(:iso)}.xml"),
+          File.join(temporary_mods_path, "#{date.to_s(:iso)}.xml")
+        ).diff
         reprocessed_issue.update_attributes(
           :diff => diff,
-          :html_diff => filtered_diff
+          :html_diff => html_diff
         )
-      else
+      rescue FrDiff::CallCommandLineError
         update_status("failed")
+        Honeybadger.notify(
+          :error_class   => "ModsDownloader failed to generate diff.",
+          :error_message => e.message,
+          :parameters => {
+            :reprocessed_issue_id => reprocessed_issue.id,
+            :date => date
+          }
+        )
       end
     end
 
@@ -51,19 +59,12 @@ module Content
       @date ||= reprocessed_issue.publication_date
     end
 
-    def diff_from_diffy
-      @diff_from_diffy ||= Diffy::Diff.new(
-        File.join(mods_path, "#{date.to_s(:iso)}.xml" ),
+    def html_diff
+      FrDiff.new(
+        File.join(mods_path, "#{date.to_s(:iso)}.xml"),
         File.join(temporary_mods_path, "#{date.to_s(:iso)}.xml"),
-        :source => 'files',
-        :include_plus_and_minus_in_html => true
-      ).to_s(:html_without_unchanged_lines)
-    end
-
-    def filtered_diff
-      diff_from_diffy.reject do |line|
-        STRINGS_TO_REJECT.any?{|prefix| line =~ /#{prefix}/ }
-      end.to_s
+        :strings_to_reject => STRINGS_TO_REJECT
+      ).html_diff
     end
 
   end

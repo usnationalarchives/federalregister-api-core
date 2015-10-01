@@ -69,6 +69,7 @@ GEM
     ci_reporter (1.6.3)
       builder (>= 2.1.2)
     cmdparse (2.0.5)
+    cocaine (0.4.2)
     columnize (0.9.0)
     compass (0.10.1)
       haml (>= 3.0.4)
@@ -332,6 +333,7 @@ DEPENDENCIES
   bcrypt-ruby (= 2.1.2)
   capistrano (= 2.15.4)
   ci_reporter (= 1.6.3)
+  cocaine
   compass (= 0.10.1)
   compass-960-plugin (= 0.9.13)
   cucumber
