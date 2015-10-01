@@ -83,7 +83,7 @@ module Content
       update_message("#{Time.now.to_s(:short_date_then_time)}: updating search index...")
       begin
         line = Cocaine::CommandLine.new(
-          "indexer",
+          "/usr/local/bin/indexer",
           "-c :sphinx_conf --rotate entry_delta",
           :environment => {'DATE' => "#{date.to_s(:iso)}"}
         )
