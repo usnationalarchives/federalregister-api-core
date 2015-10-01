@@ -10,11 +10,15 @@ class FrDiff
 
   def diff
     begin
-      Cocaine::CommandLine.new(
+      line = Cocaine::CommandLine.new(
         "diff",
-        "#{file1} #{file2}",
+        ":file1 :file2",
         :expected_outcodes => [0, 1] #TODO: BC Interpolate commands via Cocaine
-      ).run
+      )
+      line.run(
+        :file1 => file1,
+        :file2 => file2
+      )
     rescue
       Honeybadger.notify(
         :error_class   => "FrDiff failed to generate diff.",
