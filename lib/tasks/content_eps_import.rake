@@ -26,6 +26,16 @@ namespace :content do
       end
     end
 
+    desc "Delete the date's redis keys and re-execute the eps_conversion process."
+    task :force_convert_eps => :environment do
+      dates = Content.parse_dates(ENV['DATE'] || Date.current)
+
+      dates.each do |date|
+        puts "force converting GPO eps files to images for #{date}"
+        GpoImages::FileImporter.force_convert(date)
+      end
+    end
+
     desc "Scan through the most recent issue's XML -- noting image usages and moving images to public buckets accordingly"
     task :process_daily_issue_images => :environment do
       dates = Content.parse_dates(ENV['DATE'] || Date.current)
@@ -33,16 +43,6 @@ namespace :content do
       dates.each do |date|
         puts "linking GPO images for #{date}"
         GpoImages::DailyIssueImageProcessor.perform(date)
-      end
-    end
-
-    desc "Delete the date's redis keys and re-execute the eps_conversion process."
-    task :force_convert_eps => :environment do
-      dates = Content.parse_dates(ENV['DATE'] || Date.current)
-
-      dates.each do |date|
-        puts "force converting GPO eps files to images for #{date}"
-        GpoImages::FileImporter.force_convert
       end
     end
   end

@@ -210,18 +210,18 @@ class Entry < ApplicationModel
   end
 
   def gpo_graphics
-    gpo_graphic_usages.map(&:gpo_graphic)
+    gpo_graphic_usages.map(&:gpo_graphic).compact
   end
 
   def processed_gpo_graphics
-    gpo_graphic_usages.map(&:gpo_graphic).select{|g| g.graphic_file_name.present?}
+    gpo_graphics.select{|g| g.graphic_file_name.present?}
   end
 
   def graphic_identifiers
     if graphics.extracted.present?
-      graphics.extracted.map(&:identifier).join(',')
+      graphics.extracted.map(&:identifier)
     elsif processed_gpo_graphics.present?
-      processed_gpo_graphics.map(&:identifier).join(',')
+      processed_gpo_graphics.map(&:identifier)
     else
       []
     end
