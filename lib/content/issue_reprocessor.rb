@@ -37,33 +37,66 @@ module Content
 
     def reprocess_events
       update_message("#{Time.now.to_s(:short_date_then_time)}: reprocessing dates...")
-
-      unless run_cmd(
-        "bundle exec rake content:entries:import:events DATE=#{date.to_s(:iso)}",
-        "IssueReprocessor::ReprocessorIssue Error"
-      )
+      begin
+        line = Cocaine::CommandLine.new(
+          "bundle exec rake",
+          ":task",
+          :environment => {'DATE' => "#{date.to_s(:iso)}"}
+        )
+        line.run(:task => "content:entries:import:events")
+      rescue Cocaine::ExitStatusError => e
+        Honeybadger.notify(
+          :error_class   => "IssueReprocessor::ReprocessorIssue Error",
+          :error_message => e.message,
+          :parameters => {
+            :reprocessed_issue_id => reprocessed_issue.id,
+            :date => date
+          }
+        )
         update_status("failed")
       end
     end
 
     def reprocess_agencies
       update_message("#{Time.now.to_s(:short_date_then_time)}: reprocessing agencies...")
-
-      unless run_cmd(
-        "bundle exec rake content:entries:import:agencies DATE=#{date.to_s(:iso)}",
-        "IssueReprocessor::ReprocessorIssue Error"
-      )
+      begin
+        line = Cocaine::CommandLine.new(
+          "bundle exec rake",
+          ":task",
+          :environment => {'DATE' => "#{date.to_s(:iso)}"}
+        )
+        line.run(:task => "content:entries:import:agencies")
+      rescue Cocaine::ExitStatusError => e
+        Honeybadger.notify(
+          :error_class   => "IssueReprocessor::ReprocessorIssue Error",
+          :error_message => e.message,
+          :parameters => {
+            :reprocessed_issue_id => reprocessed_issue.id,
+            :date => date
+          }
+        )
         update_status("failed")
       end
     end
 
     def reindex
       update_message("#{Time.now.to_s(:short_date_then_time)}: updating search index...")
-
-      unless run_cmd(
-        "/usr/local/bin/indexer -c config/#{Rails.env}.sphinx.conf --rotate entry_delta",
-        "IssueReprocessor::ReprocessorIssue Error"
-      )
+      begin
+        line = Cocaine::CommandLine.new(
+          "indexer",
+          "-c :sphinx_conf --rotate entry_delta",
+          :environment => {'DATE' => "#{date.to_s(:iso)}"}
+        )
+        line.run(:sphinx_conf => "config/#{Rails.env}.sphinx.conf")
+      rescue Cocaine::ExitStatusError => e
+        Honeybadger.notify(
+          :error_class   => "IssueReprocessor::ReprocessorIssue Error",
+          :error_message => e.message,
+          :parameters => {
+            :reprocessed_issue_id => reprocessed_issue.id,
+            :date => date
+          }
+        )
         update_status("failed")
       end
     end
