@@ -10,7 +10,7 @@ class GpoImages::FileImporter
     new(date).process
   end
 
-  def self.force_convert
+  def self.force_convert(date)
     new(date).force_convert
   end
 
