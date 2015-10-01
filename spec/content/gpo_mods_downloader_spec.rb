@@ -56,6 +56,22 @@ XML
       mods_downloader.send(:html_diff).should == "<div class=\"diff\">\n  <ul>\n  </ul>\n</div>\n"
     end
 
+    it "removes XML metadata lines." do
+      original_xml = ""
+      modified_xml = <<-XML
+    <li class="del"><del><span class="symbol">-</span>&lt;mods xmlns=&quot;http://www.loc.gov/mods/v3&quot; xmlns:exslt=&quot;http://exslt.org/common&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:xlink=&quot;http://www.w3.org/1999/xlink&quot; xsi:schemaLocation=&quot;http://www.loc.gov/mods/v3 http://www.loc.gov/standards/mods/v3/mods-3-3.xsd&quot; version=&quot;3.3&quot; ID=&quot;P0b002ee18d3e<strong>0406</strong>&quot;&gt;</del></li>
+XML
+      create_file("data/mods/2099-01-01.xml", original_xml)
+      create_file("data/mods/tmp/2099-01-01.xml", modified_xml)
+
+      FrDiff.new(
+        File.join(spec_current_mods_path, "2099-01-01.xml"),
+        File.join(spec_temporary_mods_path, "2099-01-01.xml"),
+        :strings_to_reject => ["lt;mods xmlns"]
+      ).
+      html_diff.should == "<div class=\"diff\">\n  <ul>\n  </ul>\n</div>\n"
+    end
+
     it "removes lines included in the strings_to_reject option" do
       original_xml = ""
       modified_xml = <<-XML

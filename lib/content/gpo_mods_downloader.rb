@@ -7,7 +7,7 @@ module Content
     STRINGS_TO_REJECT = [
       "identifier type=",
       "<searchTitle>",
-      "<mods"
+      "lt;mods xmlns"
     ]
 
     def initialize(reprocessed_issue_id)
