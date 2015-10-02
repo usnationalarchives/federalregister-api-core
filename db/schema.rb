@@ -128,8 +128,8 @@ ActiveRecord::Schema.define(:version => 20150930182141) do
     t.integer "section_id"
     t.string  "title"
     t.string  "slug"
-    t.text    "description",       :limit => 2147483647
-    t.text    "search_conditions", :limit => 2147483647
+    t.text    "description",       :limit => 16777215
+    t.text    "search_conditions", :limit => 16777215
     t.boolean "active"
     t.integer "position"
   end
@@ -290,7 +290,7 @@ ActiveRecord::Schema.define(:version => 20150930182141) do
     t.integer  "entry_id"
     t.datetime "created_at"
     t.string   "remote_ip"
-    t.text     "raw_referer", :limit => 2147483647
+    t.text     "raw_referer", :limit => 16777215
   end
 
   add_index "entry_page_views", ["created_at"], :name => "index_entry_page_views_on_created_at"
@@ -300,7 +300,7 @@ ActiveRecord::Schema.define(:version => 20150930182141) do
     t.integer  "entry_id"
     t.datetime "created_at"
     t.string   "remote_ip"
-    t.text     "raw_referer", :limit => 2147483647
+    t.text     "raw_referer", :limit => 16777215
   end
 
   add_index "entry_page_views_archive", ["created_at"], :name => "index_entry_page_views_on_created_at"
@@ -364,7 +364,7 @@ ActiveRecord::Schema.define(:version => 20150930182141) do
     t.datetime "updated_at"
   end
 
-  add_index "gpo_graphic_usages", ["document_number", "identifier"], :name => "index_gpo_graphic_usages_on_document_number_and_identifier", :unique => true
+  add_index "gpo_graphic_usages", ["document_number", "identifier"], :name => "index_gpo_graphic_usages_on_document_number_and_identifier"
   add_index "gpo_graphic_usages", ["identifier", "document_number"], :name => "index_gpo_graphic_usages_on_identifier_and_document_number"
 
   create_table "gpo_graphics", :force => true do |t|
@@ -433,9 +433,9 @@ ActiveRecord::Schema.define(:version => 20150930182141) do
   end
 
   create_table "mailing_lists", :force => true do |t|
-    t.text     "search_conditions",          :limit => 2147483647
+    t.text     "search_conditions",          :limit => 16777215
     t.string   "title"
-    t.integer  "active_subscriptions_count",                       :default => 0
+    t.integer  "active_subscriptions_count",                     :default => 0
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "type"
@@ -466,14 +466,14 @@ ActiveRecord::Schema.define(:version => 20150930182141) do
     t.string   "granule_class"
     t.datetime "filed_at"
     t.date     "publication_date"
-    t.boolean  "special_filing",                            :default => false, :null => false
+    t.boolean  "special_filing",                          :default => false, :null => false
     t.string   "pdf_file_name"
     t.integer  "pdf_file_size"
     t.datetime "pdf_updated_at"
-    t.text     "editorial_note",      :limit => 2147483647
+    t.text     "editorial_note",      :limit => 16777215
     t.string   "document_file_path"
     t.datetime "raw_text_updated_at"
-    t.boolean  "delta",                                     :default => true,  :null => false
+    t.boolean  "delta",                                   :default => true,  :null => false
     t.integer  "num_pages"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -519,10 +519,10 @@ ActiveRecord::Schema.define(:version => 20150930182141) do
   create_table "regulatory_plans", :force => true do |t|
     t.string  "regulation_id_number"
     t.string  "issue"
-    t.text    "title",                :limit => 2147483647
-    t.text    "abstract",             :limit => 2147483647
+    t.text    "title",                :limit => 16777215
+    t.text    "abstract",             :limit => 16777215
     t.string  "priority_category"
-    t.boolean "delta",                                      :default => true, :null => false
+    t.boolean "delta",                                    :default => true, :null => false
     t.boolean "current"
   end
 
@@ -573,8 +573,8 @@ ActiveRecord::Schema.define(:version => 20150930182141) do
     t.string   "title"
     t.string   "slug"
     t.integer  "position"
-    t.text     "description",           :limit => 2147483647
-    t.text     "relevant_cfr_sections", :limit => 2147483647
+    t.text     "description",           :limit => 16777215
+    t.text     "relevant_cfr_sections", :limit => 16777215
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "creator_id"

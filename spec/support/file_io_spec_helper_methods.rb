@@ -1,12 +1,10 @@
 module FileIoSpecHelperMethods
-
-  def create_file(path_and_filename, contents)
-    FileUtils.makedirs(File.dirname(path_and_filename))
-    File.open(path_and_filename, "w") { |file| file.write(contents) }
+  def create_file(file, contents)
+    FileUtils.makedirs(File.dirname(file))
+    File.open(file, "w") { |f| f.write(contents) }
   end
 
-  def delete_file(path_and_filename)
-    FileUtils.rm_f(path_and_filename)
+  def delete_file(file)
+    FileUtils.rm_f(file)
   end
-
 end

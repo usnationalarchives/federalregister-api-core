@@ -4,7 +4,7 @@ module Content
     @queue = :default
     attr_reader :reprocessed_issue
 
-    STRINGS_TO_REJECT = [
+    NOISY_MODS_XML_LINES = [
       "identifier type=",
       "<searchTitle>",
       "lt;mods xmlns"
@@ -20,36 +20,33 @@ module Content
 
     def perform
       download
-      create_diff
-      update_status("pending_reprocess")
+      
+      if generate_diffs
+        update_status("pending_reprocess")
+      else
+        update_status("failed")
+      end
     end
 
     def download
       File.makedirs(temporary_mods_path)
-      xml = Net::HTTP.get('gpo.gov', "/fdsys/pkg/FR-#{date.to_s(:iso)}/mods.xml?#{Time.now.to_i}")
-      File.open("#{temporary_mods_path}/#{date.to_s(:iso)}.xml", 'w') {|f| f.write(xml) }
+      xml = Net::HTTP.get(
+        'gpo.gov',
+        "/fdsys/pkg/FR-#{date.to_s(:iso)}/mods.xml?#{Time.now.to_i}"
+      )
+      File.open("#{temporary_mods_path}/#{date.to_s(:iso)}.xml", 'w') {|f|
+        f.write(xml)
+      }
     end
 
-    def create_diff
+    def generate_diffs
       begin
-        diff = FrDiff.new(
-          File.join(mods_path, "#{date.to_s(:iso)}.xml"),
-          File.join(temporary_mods_path, "#{date.to_s(:iso)}.xml")
-        ).diff
         reprocessed_issue.update_attributes(
           :diff => diff,
           :html_diff => html_diff
         )
-      rescue FrDiff::CallCommandLineError
-        update_status("failed")
-        Honeybadger.notify(
-          :error_class   => "ModsDownloader failed to generate diff.",
-          :error_message => e.message,
-          :parameters => {
-            :reprocessed_issue_id => reprocessed_issue.id,
-            :date => date
-          }
-        )
+      rescue FrDiff::CommandLineError
+        return false
       end
     end
 
@@ -59,11 +56,22 @@ module Content
       @date ||= reprocessed_issue.publication_date
     end
 
+    def mods_file_name
+      "#{date.to_s(:iso)}.xml"
+    end
+
+    def diff
+      FrDiff.new(
+        File.join(mods_path, mods_file_name),
+        File.join(temporary_mods_path, mods_file_name)
+      ).diff
+    end
+
     def html_diff
       FrDiff.new(
-        File.join(mods_path, "#{date.to_s(:iso)}.xml"),
-        File.join(temporary_mods_path, "#{date.to_s(:iso)}.xml"),
-        :strings_to_reject => STRINGS_TO_REJECT
+        File.join(mods_path, mods_file_name),
+        File.join(temporary_mods_path, mods_file_name),
+        :ignore => NOISY_MODS_XML_LINES
       ).html_diff
     end
 
