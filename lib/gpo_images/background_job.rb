@@ -3,17 +3,16 @@ module GpoImages
     include GpoImages::ImageIdentifierNormalizer
     @queue = :gpo_image_import
 
-    attr_reader :eps_filename, :zipped_filename, :ftp_transfer_date,
-                :compressed_image_bundles_path, :uncompressed_eps_images_path,
-                :temp_image_files_path, :bucketed_zip_filename, :mark_public
+    attr_reader :bucketed_zip_filename,
+                :eps_filename,
+                :ftp_transfer_date,
+                :mark_public,
+                :temp_image_files_path
 
     def initialize(eps_filename, bucketed_zip_filename, ftp_transfer_date)
       @eps_filename = eps_filename
       @bucketed_zip_filename = bucketed_zip_filename
-      @zipped_filename = File.basename(@bucketed_zip_filename)
       @ftp_transfer_date = ftp_transfer_date.is_a?(Date) ? ftp_transfer_date : Date.parse(ftp_transfer_date)
-      @compressed_image_bundles_path = GpoImages::FileLocationManager.compressed_image_bundles_path
-      @uncompressed_eps_images_path = GpoImages::FileLocationManager.uncompressed_eps_images_path
     end
 
     def self.perform(eps_filename, zipped_filename, ftp_transfer_date)
@@ -88,5 +87,16 @@ module GpoImages
       FileUtils.rm(File.join(compressed_image_bundles_path, zipped_filename), :force => true)
     end
 
+    def zipped_filename
+      @zipped_filename ||= File.basename(bucketed_zip_filename)
+    end
+
+    def compressed_image_bundles_path
+      GpoImages::FileLocationManager.compressed_image_bundles_path
+    end
+
+    def uncompressed_eps_images_path
+      GpoImages::FileLocationManager.uncompressed_eps_images_path
+    end
   end
 end
