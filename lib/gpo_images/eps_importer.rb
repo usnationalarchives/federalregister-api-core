@@ -45,10 +45,11 @@ class GpoImages::EpsImporter
   def download_eps_images
     puts "Beginning download of the following files: #{filenames_to_download.to_sentence}" if filenames_to_download.present?
     FileUtils.makedirs temp_images_path
+
     begin
-    filenames_to_download.each do |filename|
-      data = sftp_connection.download!(filename, "#{temp_images_path}/#{filename}")
-    end
+      filenames_to_download.each do |filename|
+        data = sftp_connection.download!(filename, "#{temp_images_path}/#{filename}")
+      end
     rescue => exception
       delete_directory_contents(temp_images_path)
       raise "A failure occurred when downloading eps images from GPO SFTP: #{exception.backtrace}: #{exception.message} (#{exception.class})"
@@ -67,8 +68,8 @@ class GpoImages::EpsImporter
   end
 
   def md5
-    @md5 ||= Digest::MD5.hexdigest(filenames_to_download.sort.map do |file_name|
-      Digest::MD5.file("#{temp_images_path}/#{file_name}")
+    @md5 ||= Digest::MD5.hexdigest(filenames_to_download.sort.map do |filename|
+      Digest::MD5.file("#{temp_images_path}/#{filename}")
     end.join)
   end
 
@@ -95,13 +96,13 @@ class GpoImages::EpsImporter
 
   end
 
-  def create_manifest(file_name)
+  def create_manifest(filename)
     dir = File.join(
       GpoImages::FileLocationManager.eps_image_manifest_path,
       Date.current.to_s(:ymd)
     )
     FileUtils.mkdir_p(dir)
-    File.open(File.join(dir, manifest_filename(file_name)), 'w') do |f|
+    File.open(File.join(dir, manifest_filename(filename)), 'w') do |f|
       f.write(manifest_contents)
     end
   end
@@ -114,15 +115,15 @@ class GpoImages::EpsImporter
     "#{filename}.manifest.yaml"
   end
 
-  def upload_zip_and_manifest_to_s3(file_name)
+  def upload_zip_and_manifest_to_s3(filename)
     bucket = fog_aws_connection.directories.new(:key => bucket_name)
     bucket.files.create(
       :key    => "#{Date.current.to_s(:ymd)}/#{file_name}",
-      :body   => File.open(File.join(temp_zip_files_path, file_name)),
+      :body   => File.open(File.join(temp_zip_files_path, filename)),
       :public => false
     )
     bucket.files.create(
-      :key    => "#{Date.current.to_s(:ymd)}/#{manifest_filename(file_name)}",
+      :key    => "#{Date.current.to_s(:ymd)}/#{manifest_filename(filename)}",
       :body   => manifest_contents,
       :public => false
     )
