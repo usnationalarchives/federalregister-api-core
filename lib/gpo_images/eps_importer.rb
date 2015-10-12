@@ -4,7 +4,7 @@ class GpoImages::EpsImporter
   SLEEP_DURATION_BETWEEN_SFTP_CHECKS = 5 #seconds
 
   attr_reader :fog_aws_connection, :sftp_connection
-              
+
   def initialize(options={})
     @sftp_connection = options.fetch(:sftp_connection) { GpoImages::Sftp.new }
     @fog_aws_connection = options.fetch(:fog_aws_connection) { GpoImages::FogAwsConnection.new }
@@ -18,6 +18,7 @@ class GpoImages::EpsImporter
     download_eps_images
     if filenames_to_download.size > 0
       create_zip(temp_zip_files_path, "#{md5}.zip")
+      create_manifest("#{md5}.zip")
       upload_zip_and_manifest_to_s3("#{md5}.zip")
       remove_temporary_files
     end
@@ -94,6 +95,25 @@ class GpoImages::EpsImporter
 
   end
 
+  def create_manifest(file_name)
+    dir = File.join(
+      GpoImages::FileLocationManager.eps_image_manifest_path,
+      Date.current.to_s(:ymd)
+    )
+    FileUtils.mkdir_p(dir)
+    File.open(File.join(dir, manifest_filename(file_name)), 'w') do |f|
+      f.write(manifest_contents)
+    end
+  end
+
+  def manifest_contents
+    @manifest_contents ||= filenames_to_download.to_yaml
+  end
+
+  def manifest_filename(filename)
+    "#{filename}.manifest.yaml"
+  end
+
   def upload_zip_and_manifest_to_s3(file_name)
     bucket = fog_aws_connection.directories.new(:key => bucket_name)
     bucket.files.create(
@@ -102,8 +122,8 @@ class GpoImages::EpsImporter
       :public => false
     )
     bucket.files.create(
-      :key    => "#{Date.current.to_s(:ymd)}/#{file_name}.manifest.yaml",
-      :body   => filenames_to_download.to_yaml,
+      :key    => "#{Date.current.to_s(:ymd)}/#{manifest_filename(file_name)}",
+      :body   => manifest_contents,
       :public => false
     )
   end

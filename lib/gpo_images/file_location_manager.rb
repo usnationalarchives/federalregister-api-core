@@ -16,4 +16,7 @@ class GpoImages::FileLocationManager
     File.join(Rails.root, 'tmp', 'gpo_images', 'uncompressed_eps_images')
   end
 
+  def self.eps_image_manifest_path
+    File.join(Rails.root, 'data', 'gpo_images')
+  end
 end
