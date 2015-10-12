@@ -33,7 +33,12 @@ module GpoImages
         Honeybadger.notify(
           :error_class   => "GpoGraphic failed to save",
           :error_message => gpo_graphic.errors.full_messages.to_sentence,
-          :parameters    => {:identifier => identifier}
+          :parameters    => {
+            :bucketed_zip_filename => bucketed_zip_filename,
+            :eps_filename => eps_filename,
+            :ftp_transfer_date => ftp_transfer_date,
+            :identifier => identifier
+          }
         )
       end
     end
