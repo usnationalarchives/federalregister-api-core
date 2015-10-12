@@ -1,10 +1,10 @@
 module Shared::DocumentNumberNormalizationTrait
   as_trait do
-    def self.find_by_document_number(document_number)
+    def self.find_by_document_number(document_number, options={})
       doc = first(:conditions => {:document_number => document_number})
       if doc.nil?
         normalized_document_number = normalize_document_number(document_number)
-        if normalized_document_number != document_number 
+        if normalized_document_number != document_number
           doc = first(:conditions => {:document_number => normalized_document_number})
         end
 
@@ -17,7 +17,7 @@ module Shared::DocumentNumberNormalizationTrait
       doc
     end
 
-    def self.find_by_document_number!(document_number)
+    def self.find_by_document_number!(document_number, options={})
       find_by_document_number(document_number) or raise ActiveRecord::RecordNotFound
     end
 
