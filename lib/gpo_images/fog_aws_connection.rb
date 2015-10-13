@@ -8,8 +8,8 @@ class GpoImages::FogAwsConnection
         file.destroy
       else
         Honeybadger.notify(
-          :error_class   => "Failure moving file from public to private bucket",
-          :error_message => "Failure occurred while copying #{file.key} from the public to the private bucket."
+          :error_class   => "Failure moving file between buckets",
+          :error_message => "Failure occurred while copying '#{file.key}' from '#{source_bucket}' to '#{destination_bucket}'."
         )
       end
     end
