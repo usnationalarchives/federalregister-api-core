@@ -1,6 +1,6 @@
 <% super_title 'Reprocessed Issues' %>
 
-<% title "Reprocessings for #{@presenter.date} Issue" %>
+<% title "Reprocessing history for #{@presenter.date} Issue" %>
 <% sidebar(render :partial => 'reprocessed_issues_nav') %>
 
 <div class="reprocess-issue"
@@ -12,10 +12,11 @@
 
       <%= simple_format(@presenter.reprocessed_issue_in_progress.message) %>
     <% else %>
-      <p>Most recent MODS changes:</p>
+      <p>Most recent changes to MODS file:</p>
 
       <div class="well">
-        <%= simple_format(h @presenter.most_recent_diff) ||
+        <%= @presenter.most_recent_diff.present? ?
+          simple_format(h @presenter.most_recent_html_diff) :
           "No changes identified." %>
       </div>
     <% end %>
@@ -41,13 +42,12 @@
   </p>
 
   <div class="reprocessed_issue-history">
-    <h3>Reprocessing History</h3>
-
     <table class="table-striped table-condensed">
       <thead>
         <tr>
           <th>Initiated</th>
-          <th>Completed</th>
+          <th>Status</th>
+          <th>Completed on</th>
           <th>Initiated By</th>
         </tr>
       </thead>
@@ -58,11 +58,14 @@
               <%= reprocessed_issue.created_at.to_s(:mdy_short_year_then_time) %>
             </td>
             <td class="span3">
-              <%= reprocessed_issue.status == "complete" ?
-                reprocessed_issue.updated_at.to_s(:mdy_short_year_then_time) :
-                reprocessed_issue.status %>
+              <%= reprocessed_issue.status %>
             </td>
-            <td class="span3"><%= reprocessed_issue.user.email %></td>
+            <td class="span3">
+              <% if reprocessed_issue.status == "complete" %>
+                <%= reprocessed_issue.updated_at.to_s(:mdy_short_year_then_time) %>
+              <% end %>
+            </td>
+            <td class="span3"><%= reprocessed_issue.user.try(:full_name) || 'NA' %></td>
           </tr>
         <% end %>
       </tbody>

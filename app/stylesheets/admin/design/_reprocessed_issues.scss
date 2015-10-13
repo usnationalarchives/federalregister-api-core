@@ -25,6 +25,14 @@ table.reprocessed-issues {
   display: block;
   font-size: 15px;
   text-align: center;
+
+  &.btn {
+    background-image: none;
+    border: none;
+    position: relative;
+    text-shadow: none;
+    top: -4px;
+  }
 }
 
 .reprocess-issue {

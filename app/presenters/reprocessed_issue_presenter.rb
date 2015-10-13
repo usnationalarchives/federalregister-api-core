@@ -32,7 +32,11 @@ class ReprocessedIssuePresenter
   end
 
   def most_recent_diff
-    most_recent_reprocessed_issue.try(:html_diff).try(:html_safe)
+    most_recent_reprocessed_issue.diff
+  end
+
+  def most_recent_html_diff
+    most_recent_reprocessed_issue.html_diff.try(:html_safe)
   end
 
   def most_recent_diff_processed?
@@ -54,7 +58,7 @@ class ReprocessedIssuePresenter
         :joins => :issue,
         :order => "reprocessed_issues.created_at DESC",
         :group => "issues.publication_date",
-        :limit => 20
+        :limit => 10
       )
   end
 end
