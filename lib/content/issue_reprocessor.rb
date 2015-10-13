@@ -5,17 +5,10 @@ module Content
 
     @queue = :default
 
-    attr_reader :current_mods_path,
-      :mods_archive_path,
-      :reprocessed_issue,
-      :temporary_mods_path
+    attr_reader :reprocessed_issue
 
-    def initialize(reprocessed_issue_id, options={})
-      @reprocessed_issue = ReprocessedIssue.find_by_id(reprocessed_issue_id)
-
-      @current_mods_path = options.fetch(:current_mods_path){ mods_path }
-      @temporary_mods_path = options.fetch(:temporary_mods_path){ temporary_mods_path }
-      @mods_archive_path = options.fetch(:mods_archive_path){ archive_mods_path }
+    def initialize(reprocessed_issue_id)
+      @reprocessed_issue = ReprocessedIssue.find(reprocessed_issue_id)
     end
 
     def self.perform(reprocessed_issue_id, options={})
@@ -115,15 +108,15 @@ module Content
     end
 
     def rotate_mods_files
-      FileUtils.makedirs(mods_archive_path)
+      FileUtils.makedirs(archive_mods_path)
       FileUtils.mv(
-        File.join(current_mods_path, "#{date.to_s(:iso)}.xml"),
-        File.join(mods_archive_path, "#{date.to_s(:iso)}-#{Time.now.to_i}.xml")
+        File.join(mods_path, "#{date.to_s(:iso)}.xml"),
+        File.join(archive_mods_path, "#{date.to_s(:iso)}-#{Time.now.to_i}.xml")
       )
       FileUtils.makedirs(temporary_mods_path)
       FileUtils.mv(
         File.join(temporary_mods_path, "#{date.to_s(:iso)}.xml"),
-        File.join(current_mods_path, "#{date.to_s(:iso)}.xml")
+        File.join(mods_path, "#{date.to_s(:iso)}.xml")
       )
     end
 
