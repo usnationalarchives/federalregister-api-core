@@ -10,14 +10,16 @@ describe Content::IssueReprocessor do
 
     before(:each) do
       reprocessed_issue = ReprocessedIssue.create
-      reprocessed_issue.issue = Issue.create(:publication_date => "2099-01-01".to_date)
+      reprocessed_issue.issue = Issue.create(
+        :publication_date => "2099-01-01".to_date
+      )
       reprocessed_issue.save
       issue_reprocessor = Content::IssueReprocessor.new(
-        reprocessed_issue.id,
-        :current_mods_path   => spec_current_mods_path,
-        :temporary_mods_path => spec_temporary_mods_path,
-        :mods_archive_path   => spec_mods_archive_path
+        reprocessed_issue.id
       )
+      issue_reprocessor.stub(:archive_mods_path).and_return(spec_mods_archive_path)
+      issue_reprocessor.stub(:mods_path).and_return(spec_current_mods_path)
+      issue_reprocessor.stub(:temporary_mods_path).and_return(spec_temporary_mods_path)
 
       create_file("#{spec_temporary_mods_path}/2099-01-01.xml", "new_mods")
       create_file("#{spec_current_mods_path}/2099-01-01.xml", "current_mods")
