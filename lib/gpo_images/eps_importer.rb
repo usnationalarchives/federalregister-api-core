@@ -75,10 +75,10 @@ class GpoImages::EpsImporter
 
   def create_zip(path, filename)
     FileUtils.makedirs path
-    path_and_filename = File.join(path, filename)
+    zip_file_path = File.join(path, filename)
 
     begin
-      Zip::ZipFile.open(path_and_filename, Zip::ZipFile::CREATE) do |zipfile|
+      Zip::ZipFile.open(zip_file_path, Zip::ZipFile::CREATE) do |zipfile|
         filenames_to_download.each do |filename|
           zipfile.add(filename, File.join(temp_images_path, filename))
         end
@@ -89,7 +89,12 @@ class GpoImages::EpsImporter
       delete_directory_contents(temp_zip_files_path)
       Honeybadger.notify(
         :error_class   => "Failure occurred while unzipping a downloaded eps image",
-        :error_message => exception
+        :error_message => exception,
+        :parameters    => {
+          :filename => filename,
+          :filenames_to_download => filenames_to_download,
+          :zip_file_path => zip_file_path
+        }
       )
       raise "A failure occured when building zip file: #{exception.backtrace}: #{exception.message} (#{exception.class})"
     end
@@ -118,7 +123,7 @@ class GpoImages::EpsImporter
   def upload_zip_and_manifest_to_s3(filename)
     bucket = fog_aws_connection.directories.new(:key => bucket_name)
     bucket.files.create(
-      :key    => "#{Date.current.to_s(:ymd)}/#{file_name}",
+      :key    => "#{Date.current.to_s(:ymd)}/#{filename}",
       :body   => File.open(File.join(temp_zip_files_path, filename)),
       :public => false
     )
