@@ -11,8 +11,8 @@ module Content
       @reprocessed_issue = ReprocessedIssue.find(reprocessed_issue_id)
     end
 
-    def self.perform(reprocessed_issue_id, options={})
-      new(reprocessed_issue_id, options).perform
+    def self.perform(reprocessed_issue_id)
+      new(reprocessed_issue_id).perform
     end
 
     def perform
