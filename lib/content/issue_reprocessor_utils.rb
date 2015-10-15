@@ -21,7 +21,7 @@ module Content
     end
 
     def log_path
-      "#{Rails.root}/log/reprocessor_issue.log"
+      "#{Rails.root}/log/reprocessed_issue.log"
     end
 
     def update_status(status)
@@ -29,7 +29,7 @@ module Content
     end
 
     def update_message(text)
-      if reprocessor_issue.message.present?
+      if reprocessed_issue.message.present?
         reprocessed_issue.message += "\n #{text}"
       else
         reprocessed_issue.message = text
