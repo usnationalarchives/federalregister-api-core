@@ -69,7 +69,8 @@ class GpoImages::FileConverter
   def build_processing_queue(files)
     files.each do |file|
       unless IMAGE_FILE_EXTENTIONS_TO_IGNORE.include?(File.extname(file.name))
-        add_to_redis_set(file.name)
+        filename = cast_to_eps(file)
+        add_to_redis_set(filename)
       end
     end
   end
