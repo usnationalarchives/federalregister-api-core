@@ -42,7 +42,7 @@ module Content
         ENV['DATE'] = "#{date.to_s(:iso)}"
         Rake::Task['content:entries:import:basic_data'].invoke
       rescue Exception => error
-        handle_failure(error,"IssueReprocessor::ReprocessorIssue Reprocess Basic Data")
+        handle_failure(error,"IssueReprocessor: Reprocess Basic Data")
       end
     end
 
@@ -53,7 +53,7 @@ module Content
         ENV['DATE'] = "#{date.to_s(:iso)}"
         Rake::Task['content:entries:import:events'].invoke
       rescue Exception => error
-        handle_failure(error,"IssueReprocessor::ReprocessorIssue Reprocess Events")
+        handle_failure(error,"IssueReprocessor: Reprocess Events")
       end
     end
 
@@ -64,7 +64,7 @@ module Content
         ENV['DATE'] = "#{date.to_s(:iso)}"
         Rake::Task['content:entries:import:agencies'].invoke
       rescue Exception => error
-        handle_failure(error,"IssueReprocessor::ReprocessorIssue Reprocess Agencies")
+        handle_failure(error,"IssueReprocessor: Reprocess Agencies")
       end
     end
 
@@ -92,6 +92,7 @@ module Content
       Honeybadger.notify(
         :error_class   => error_class,
         :error_message => error.message,
+        :backtrace => error.backtrace,
         :parameters => {
           :reprocessed_issue_id => reprocessed_issue.id,
           :date => date

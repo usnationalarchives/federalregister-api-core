@@ -11,7 +11,7 @@ module Content
     include Content::EntryImporter::RawText
     include Content::EntryImporter::LedePhotoCandidates
     # include Content::EntryImporter::PageNumber
-    include Content::EntryImporter::Events
+    include Content::EntryImporter::EventDetails
     include Content::EntryImporter::Sections
     include Content::EntryImporter::TopicNames
     include Content::EntryImporter::PresidentialDocumentDetails
@@ -19,7 +19,7 @@ module Content
     include Content::EntryImporter::RegulationsDotGovAttributes
     include Content::EntryImporter::Action
     include Content::EntryImporter::TextCitations
-  
+
     def self.process_all_by_date(date, *attributes)
       AgencyObserver.disabled = true
       EntryObserver.disabled = true
@@ -28,13 +28,13 @@ module Content
 
 
       dates = Content.parse_dates(date)
-    
+
       dates.each do |date|
         begin
           puts "handling #{date}"
           if date < '2000-01-01'
             process_without_bulkdata(date, options, *attributes)
-          else  
+          else
             begin
               docs_and_nodes = BulkdataFile.new(date, options[:force_reload_bulkdata]).document_numbers_and_associated_nodes
             rescue Content::EntryImporter::BulkdataFile::DownloadError => e
@@ -56,11 +56,11 @@ module Content
               Rails.logger.warn(error)
               Honeybadger.notify(
                 :error_class   => "Missing Document Number in bulkdata",
-                :error_message => error 
+                :error_message => error
               )
 
               importer = EntryImporter.new(options.merge(:date => date, :document_number => document_number))
-              attributes = attributes.map(&:to_sym) 
+              attributes = attributes.map(&:to_sym)
               if options[:except]
                 attributes = importer.provided - options[:except].map(&:to_sym)
               end
@@ -76,7 +76,7 @@ module Content
               if mods_doc_numbers.include?(document_number)
                 importer = EntryImporter.new(options.merge(:date => date, :document_number => document_number, :bulkdata_node => bulkdata_node))
 
-                attributes = attributes.map(&:to_sym) 
+                attributes = attributes.map(&:to_sym)
                 if options[:except]
                   attributes = importer.provided - options[:except].map(&:to_sym)
                 end
@@ -91,7 +91,7 @@ module Content
                 Rails.logger.warn(error)
                 Honeybadger.notify(
                   :error_class   => "Missing Document Number in MODS",
-                  :error_message => error 
+                  :error_message => error
                 )
               end
             end
@@ -110,11 +110,11 @@ module Content
       ModsFile.new(date, options[:force_reload_mods]).document_numbers.each do |document_number|
         importer = EntryImporter.new(options.merge(:date => date, :document_number => document_number))
 
-        attributes = attributes.map(&:to_sym) 
+        attributes = attributes.map(&:to_sym)
         if options[:except]
           attributes = importer.provided - options[:except].map(&:to_sym)
         end
-        
+
         if attributes == [:all]
           importer.update_all_provided_attributes
         else
@@ -142,27 +142,27 @@ module Content
         @bulkdata_node = options[:bulkdata_node]
       end
     end
-    
+
     def mods_file
       @mods_file ||= ModsFile.new(@date, @force_reload_mods)
     end
-    
+
     def mods_node
       @mods_node ||= mods_file.find_entry_node_by_document_number(@document_number)
     end
-    
+
     def update_all_provided_attributes
       update_attributes(*self.provided)
     end
-  
+
     def verbose?
       ENV['VERBOSE'] == '1'
     end
-    
+
     def debug(text)
       puts "**** " + text if verbose?
     end
-    
+
     def update_attributes(*attribute_names)
       attribute_names.each do |attr|
         puts "handling '#{attr}' for '#{document_number}' (#{date})" if verbose?
