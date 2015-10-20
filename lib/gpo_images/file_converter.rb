@@ -16,7 +16,7 @@ class GpoImages::FileConverter
   def process
     if !zip_file_exists?
       download_eps_image_bundle
-      unzip_file(
+      unzip_file_and_process(
         uncompressed_eps_images_path,
         File.join(compressed_image_bundles_path, base_filename)
       )
@@ -57,23 +57,29 @@ class GpoImages::FileConverter
     local_file.close
   end
 
-  def unzip_file (destination, zip_file)
+  def unzip_file_and_process(destination, zip_file)
     Zip::ZipFile.open(zip_file) do |zip_contents|
       FileUtils.makedirs(destination)
-      # NOTE: There are intentionally two zip_file.each blocks to ensure a queue
-      # is built before processing on this queue starts.
-      zip_contents.each do |file|
-        if IMAGE_FILE_EXTENTIONS_TO_IMPORT.include?(File.extname(file.name))
-          add_to_redis_set(file.name)
-        end
+      build_processing_queue(zip_contents)
+      enqueue_processing_jobs(zip_cotents)
+    end
+  end
+
+  def build_processing_queue(files)
+    files.each do |file|
+      if IMAGE_FILE_EXTENTIONS_TO_IMPORT.include?(File.extname(file.name))
+        add_to_redis_set(file.name)
       end
-      zip_contents.each do |file|
-        if IMAGE_FILE_EXTENTIONS_TO_IMPORT.include?(File.extname(file.name))
-          path_with_file = File.join(destination, file.name)
-          zip_contents.extract(file, path_with_file){ true }
-          puts "Enqueuing GpoImages::BackgroundJob for #{file.name}..."
-          Resque.enqueue(GpoImages::BackgroundJob, file.name, bucketed_zip_filename, date)
-        end
+    end
+  end
+
+  def enqueue_processing_jobs(files)
+    files.each do |file|
+      if IMAGE_FILE_EXTENTIONS_TO_IMPORT.include?(File.extname(file.name))
+        file_path = File.join(destination, file.name)
+        files.extract(file, file_path){ true }
+        puts "Enqueuing GpoImages::BackgroundJob for #{file.name}..."
+        Resque.enqueue(GpoImages::BackgroundJob, file.name, bucketed_zip_filename, date)
       end
     end
   end
