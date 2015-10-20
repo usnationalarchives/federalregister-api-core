@@ -59,22 +59,22 @@ describe GpoImages::ImagePackage do
 
   it ".already_converted? should return true if an image package has been marked as completed" do
     image_package = GpoImages::ImagePackage.new(Date.current, "e99a18c428cb38d5f260853678922e03")
-    image_package.mark_as_completed!
+    image_package.mark_as_complete!
     image_package.already_converted?.should == true
   end
 
   it "can accumulate members in the Redis set" do
     image_package_1 = GpoImages::ImagePackage.new(Date.current, "e99a18c428cb38d5f260853678922e03")
-    image_package_1.mark_as_completed!
+    image_package_1.mark_as_complete!
     image_package_2 = GpoImages::ImagePackage.new(Date.current, "7694f4a66316e53c8cdd9d9954bd611d")
-    image_package_2.mark_as_completed!
+    image_package_2.mark_as_complete!
     redis.smembers("converted_image_packages:#{Date.current.to_s(:ymd)}").size.should == 2
   end
 
   it ".mark gracefully fails if the redis set is already empty" do
     image_package = GpoImages::ImagePackage.new(Date.current, "e99a18c428cb38d5f260853678922e03")
-    image_package.mark_as_completed!
-    image_package.mark_as_completed!
+    image_package.mark_as_complete!
+    image_package.mark_as_complete!
     image_package.already_converted?.should == true
   end
 end

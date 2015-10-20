@@ -33,7 +33,7 @@ class GpoImages::FileImporter
     image_packages.each do |image_package|
       image_package.cleanup_in_progress_files
     end
-    image_packages.first.delete_entire_redis_set if image_packages.present?
+    image_packages.first.delete_redis_set if image_packages.present?
   end
 
   def convert_files

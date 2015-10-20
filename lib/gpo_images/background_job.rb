@@ -77,7 +77,7 @@ module GpoImages
     end
 
     def mark_zipfile_as_converted
-      GpoImages::ImagePackage.new(ftp_transfer_date, bucketed_zip_filename).mark_as_completed!
+      GpoImages::ImagePackage.new(ftp_transfer_date, bucketed_zip_filename).mark_as_complete!
     end
 
     def redis_file_queue_empty?
