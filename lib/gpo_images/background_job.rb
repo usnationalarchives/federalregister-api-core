@@ -22,7 +22,11 @@ module GpoImages
     def perform
       gpo_graphic = find_or_create_gpo_graphic
       if gpo_graphic.save
-        gpo_graphic.move_to_public_bucket if mark_public
+        if mark_public
+          gpo_graphic.move_to_public_bucket
+          html_image_recompilation.add_date(gpo_graphic.entry.publication_date)
+        end
+
         remove_from_redis_key
         remove_local_image
         if redis_file_queue_empty?
@@ -52,7 +56,6 @@ module GpoImages
       gpo_graphic = GpoGraphic.find_by_identifier(identifier)
       if gpo_graphic
         @mark_public = true
-        html_image_recompilation.add_date(gpo_graphic.entry.publication_date)
       else
         gpo_graphic = GpoGraphic.new(:identifier => identifier)
       end
