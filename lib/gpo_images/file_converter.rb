@@ -78,12 +78,19 @@ class GpoImages::FileConverter
     puts "enqueing conversion for GPO eps files to images for #{date}"
     files.each do |file|
       unless IMAGE_FILE_EXTENTIONS_TO_IGNORE.include?(File.extname(file.name))
-        file_path = File.join(destination, file.name)
+        filename = cast_to_eps(file)
+        file_path = File.join(destination, filename)
         files.extract(file, file_path){ true }
         puts "Enqueuing GpoImages::BackgroundJob for #{file.name}..."
-        Resque.enqueue(GpoImages::BackgroundJob, file.name, bucketed_zip_filename, date)
+        Resque.enqueue(GpoImages::BackgroundJob, filename, bucketed_zip_filename, date)
       end
     end
+  end
+
+  def cast_to_eps(file)
+    IMAGE_FILE_EXTENTIONS_TO_IMPORT.include?(
+      File.extname(file.name)
+    ) ? file.name : "#{file.name}.eps"
   end
 
   def zip_file_exists?
