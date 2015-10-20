@@ -24,7 +24,9 @@ module GpoImages
       if gpo_graphic.save
         if mark_public
           gpo_graphic.move_to_public_bucket
-          html_image_recompilation.add_date(gpo_graphic.entry.publication_date)
+          gpo_graphic.entries.each do |entry|
+            html_image_recompilation.add_date(entry.publication_date)
+          end
         end
 
         remove_from_redis_key
