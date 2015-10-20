@@ -31,7 +31,7 @@ class GpoImages::FileImporter
 
   def cleanup_old_packages
     image_packages.each do |image_package|
-      image_package.cleanup_in_progress_files
+      image_package.cleanup_package
     end
     image_packages.first.delete_redis_set if image_packages.present?
   end

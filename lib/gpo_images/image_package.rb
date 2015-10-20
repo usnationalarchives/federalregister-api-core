@@ -14,12 +14,11 @@ class GpoImages::ImagePackage
     redis.sadd(redis_set, digest)
   end
 
-  def cleanup_in_progress_files
-    if !already_converted?
-      file_path = File.join(compressed_image_bundles_path, filename_without_date_prefix)
-      FileUtils.rm(file_path) if File.file?(file_path)
-      redis.del("images_left_to_convert:#{filename_without_date_prefix}")
-    end
+  def cleanup_package
+    file_path = File.join(compressed_image_bundles_path, package_name)
+    FileUtils.rm(file_path) if File.file?(file_path)
+    
+    redis.del("images_left_to_convert:#{package_name}")
   end
 
   def delete_redis_set
@@ -28,9 +27,8 @@ class GpoImages::ImagePackage
 
   private
 
-  def filename_without_date_prefix
-    num_chars_to_strip = date.to_s(:iso).size + 1
-    digest[num_chars_to_strip .. -1]
+  def package_name
+    @package_name = digest.split('/').last
   end
 
   def compressed_image_bundles_path
