@@ -21,7 +21,6 @@ namespace :content do
       dates = Content.parse_dates(ENV['DATE'] || Date.current)
 
       dates.each do |date|
-        puts "converting GPO eps files to images for #{date}"
         GpoImages::FileImporter.run(date)
       end
     end
@@ -31,7 +30,6 @@ namespace :content do
       dates = Content.parse_dates(ENV['DATE'] || Date.current)
 
       dates.each do |date|
-        puts "force converting GPO eps files to images for #{date}"
         GpoImages::FileImporter.force_convert(date)
       end
     end

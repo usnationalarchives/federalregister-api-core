@@ -75,6 +75,7 @@ class GpoImages::FileConverter
   end
 
   def enqueue_processing_jobs(files, destination)
+    puts "enqueing conversion for GPO eps files to images for #{date}"
     files.each do |file|
       unless IMAGE_FILE_EXTENTIONS_TO_IGNORE.include?(File.extname(file.name))
         file_path = File.join(destination, file.name)

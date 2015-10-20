@@ -19,6 +19,7 @@ class GpoImages::FileImporter
   end
 
   def force_convert
+    puts "force converting GPO eps files to images for #{date}"
     cleanup_old_packages
     convert_files
   end
