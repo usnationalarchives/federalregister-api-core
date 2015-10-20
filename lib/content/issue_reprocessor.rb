@@ -23,65 +23,53 @@ module Content
       update_status("complete")
     end
 
-    private
-
     def date
       @date ||= @reprocessed_issue.publication_date
     end
 
     def reprocess_issue
+      reprocess_basic_data
       reprocess_events
       reprocess_agencies
     end
 
-    def reprocess_events
-      update_message("#{Time.now.in_time_zone.to_s(:short_date_then_time)}: reprocessing dates...")
+    private
+
+    def reprocess_basic_data
+      update_reprocessing_message("reprocessing basic data")
 
       begin
-        line = Cocaine::CommandLine.new(
-          "bundle exec rake",
-          ":task",
-          :environment => {'DATE' => "#{date.to_s(:iso)}"}
-        )
-        line.run(:task => "content:entries:import:events")
-      rescue Cocaine::ExitStatusError => e
-        Honeybadger.notify(
-          :error_class   => "IssueReprocessor::ReprocessorIssue Error",
-          :error_message => e.message,
-          :parameters => {
-            :reprocessed_issue_id => reprocessed_issue.id,
-            :date => date
-          }
-        )
-        update_status("failed")
+        ENV['DATE'] = "#{date.to_s(:iso)}"
+        Rake::Task['content:entries:import:basic_data'].invoke
+      rescue Exception => error
+        handle_failure(error,"IssueReprocessor::ReprocessorIssue Reprocess Basic Data")
+      end
+    end
+
+    def reprocess_events
+      update_reprocessing_message("reprocessing dates")
+
+      begin
+        ENV['DATE'] = "#{date.to_s(:iso)}"
+        Rake::Task['content:entries:import:events'].invoke
+      rescue Exception => error
+        handle_failure(error,"IssueReprocessor::ReprocessorIssue Reprocess Events")
       end
     end
 
     def reprocess_agencies
-      update_message("#{Time.now.in_time_zone.to_s(:short_date_then_time)}: reprocessing agencies...")
+      update_reprocessing_message("reprocessing agencies")
 
       begin
-        line = Cocaine::CommandLine.new(
-          "bundle exec rake",
-          ":task",
-          :environment => {'DATE' => "#{date.to_s(:iso)}"}
-        )
-        line.run(:task => "content:entries:import:agencies")
-      rescue Cocaine::ExitStatusError => e
-        Honeybadger.notify(
-          :error_class   => "IssueReprocessor::ReprocessorIssue Error",
-          :error_message => e.message,
-          :parameters => {
-            :reprocessed_issue_id => reprocessed_issue.id,
-            :date => date
-          }
-        )
-        update_status("failed")
+        ENV['DATE'] = "#{date.to_s(:iso)}"
+        Rake::Task['content:entries:import:agencies'].invoke
+      rescue Exception => error
+        handle_failure(error,"IssueReprocessor::ReprocessorIssue Reprocess Agencies")
       end
     end
 
     def reindex
-      update_message("#{Time.now.in_time_zone.to_s(:short_date_then_time)}: updating search index...")
+      update_reprocessing_message("updating search index")
 
       begin
         line = Cocaine::CommandLine.new(
@@ -90,17 +78,26 @@ module Content
           :environment => {'DATE' => "#{date.to_s(:iso)}"}
         )
         line.run(:sphinx_conf => "config/#{Rails.env}.sphinx.conf")
-      rescue Cocaine::ExitStatusError => e
-        Honeybadger.notify(
-          :error_class   => "IssueReprocessor::ReprocessorIssue Error",
-          :error_message => e.message,
-          :parameters => {
-            :reprocessed_issue_id => reprocessed_issue.id,
-            :date => date
-          }
-        )
-        update_status("failed")
+      rescue Cocaine::ExitStatusError => error
+        handle_failure(error,"IssueReprocessor::ReprocessorIssue Reindex")
       end
+    end
+
+    def update_reprocessing_message(message)
+      time = Time.now.in_time_zone.to_s(:short_date_then_time)
+      update_message("#{time}: #{message}...")
+    end
+
+    def handle_failure(error, error_class)
+      Honeybadger.notify(
+        :error_class   => error_class,
+        :error_message => error.message,
+        :parameters => {
+          :reprocessed_issue_id => reprocessed_issue.id,
+          :date => date
+        }
+      )
+      update_status("failed")
     end
 
     def clear_cache
