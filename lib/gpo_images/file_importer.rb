@@ -30,7 +30,6 @@ class GpoImages::FileImporter
   end
 
   def cleanup_old_packages
-    image_packages = image_packages_for_date(date)
     image_packages.each do |image_package|
       image_package.cleanup_in_progress_files
     end
@@ -38,13 +37,15 @@ class GpoImages::FileImporter
   end
 
   def convert_files
-    image_packages_for_date(date).
+    image_packages.
       reject(&:already_converted?).
       each {|package| GpoImages::FileConverter.new(package.digest, package.date).process}
   end
 
-  def image_packages_for_date(date)
-    fog_aws_connection.directories.get(bucket_name, :prefix => date.to_s(:ymd)).files.
+  def image_packages
+    @image_packages ||= fog_aws_connection.directories.
+      get(bucket_name, :prefix => date.to_s(:ymd)).
+      files.
       map{|file| file.key}.
       select{|key| File.extname(key) == '.zip'}.
       map{|key| GpoImages::ImagePackage.new(date, key)}
