@@ -61,7 +61,7 @@ class GpoImages::FileConverter
     Zip::ZipFile.open(zip_file) do |zip_contents|
       FileUtils.makedirs(destination)
       build_processing_queue(zip_contents)
-      enqueue_processing_jobs(zip_cotents)
+      enqueue_processing_jobs(zip_contents, destination)
     end
   end
 
@@ -73,7 +73,7 @@ class GpoImages::FileConverter
     end
   end
 
-  def enqueue_processing_jobs(files)
+  def enqueue_processing_jobs(files, destination)
     files.each do |file|
       if IMAGE_FILE_EXTENTIONS_TO_IMPORT.include?(File.extname(file.name))
         file_path = File.join(destination, file.name)
