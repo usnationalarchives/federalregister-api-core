@@ -3,7 +3,8 @@ class GpoImages::FileConverter
     :date,
     :fog_aws_connection
 
-  IMAGE_FILE_EXTENTIONS_TO_IMPORT = ["", ".eps", ".EPS"]
+  IMAGE_FILE_EXTENTIONS_TO_IMPORT = [".eps", ".EPS"]
+  IMAGE_FILE_EXTENTIONS_TO_IGNORE = [".tiff"]
 
   def initialize(bucketed_zip_filename, date, options={})
     @bucketed_zip_filename = bucketed_zip_filename
@@ -67,7 +68,7 @@ class GpoImages::FileConverter
 
   def build_processing_queue(files)
     files.each do |file|
-      if IMAGE_FILE_EXTENTIONS_TO_IMPORT.include?(File.extname(file.name))
+      unless IMAGE_FILE_EXTENTIONS_TO_IGNORE.include?(File.extname(file.name))
         add_to_redis_set(file.name)
       end
     end
@@ -75,7 +76,7 @@ class GpoImages::FileConverter
 
   def enqueue_processing_jobs(files, destination)
     files.each do |file|
-      if IMAGE_FILE_EXTENTIONS_TO_IMPORT.include?(File.extname(file.name))
+      unless IMAGE_FILE_EXTENTIONS_TO_IGNORE.include?(File.extname(file.name))
         file_path = File.join(destination, file.name)
         files.extract(file, file_path){ true }
         puts "Enqueuing GpoImages::BackgroundJob for #{file.name}..."
