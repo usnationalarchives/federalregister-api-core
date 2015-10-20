@@ -14,10 +14,6 @@ class GpoImages::ImagePackage
     redis.sadd(redis_set, digest)
   end
 
-  def directory
-    File.join(GpoImages::FileLocationManager.compressed_image_bundles_path, digest)
-  end
-
   def cleanup_in_progress_files
     if !already_converted?
       file_path = File.join(compressed_image_bundles_path, filename_without_date_prefix)

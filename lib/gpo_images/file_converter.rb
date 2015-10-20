@@ -14,7 +14,7 @@ class GpoImages::FileConverter
   end
 
   def process
-    if !zip_file_exists?
+    unless zip_file_exists?
       download_eps_image_bundle
       unzip_file_and_process(
         uncompressed_eps_images_path,
@@ -34,11 +34,11 @@ class GpoImages::FileConverter
   end
 
   def compressed_image_bundles_path
-    @compressed_image_bundles_path ||= GpoImages::FileLocationManager.compressed_image_bundles_path
+    GpoImages::FileLocationManager.compressed_image_bundles_path
   end
 
   def uncompressed_eps_images_path
-    @uncompressed_eps_images_path ||= GpoImages::FileLocationManager.uncompressed_eps_images_path
+    GpoImages::FileLocationManager.uncompressed_eps_images_path
   end
 
   def create_directories
