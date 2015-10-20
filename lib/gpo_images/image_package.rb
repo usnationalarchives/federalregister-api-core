@@ -1,9 +1,9 @@
 class GpoImages::ImagePackage
   attr_reader :date, :digest
 
-  def initialize(date, digest)
+  def initialize(date, bucketed_zip_filename)
     @date = date.is_a?(Date) ? date : Date.parse(date)
-    @digest = digest
+    @digest = bucketed_zip_filename
   end
 
   def already_converted?
