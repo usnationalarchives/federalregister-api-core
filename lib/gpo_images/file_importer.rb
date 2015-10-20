@@ -47,6 +47,6 @@ class GpoImages::FileImporter
     fog_aws_connection.directories.get(bucket_name, :prefix => date.to_s(:ymd)).files.
       map{|file| file.key}.
       select{|key| File.extname(key) == '.zip'}.
-      map{|key|GpoImages::ImagePackage.new(date, key)}
+      map{|key| GpoImages::ImagePackage.new(date, key)}
   end
 end
