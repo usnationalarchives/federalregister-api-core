@@ -28,6 +28,9 @@ module GpoImages
         if redis_file_queue_empty?
           mark_zipfile_as_converted
           remove_zip_file
+
+          #only runs if dates have been added
+          html_image_recompilation.recompile_html
         end
       else
         Honeybadger.notify(
@@ -49,6 +52,7 @@ module GpoImages
       gpo_graphic = GpoGraphic.find_by_identifier(identifier)
       if gpo_graphic
         @mark_public = true
+        html_image_recompilation.add_date(gpo_graphic.entry.publication_date)
       else
         gpo_graphic = GpoGraphic.new(:identifier => identifier)
       end
@@ -65,7 +69,7 @@ module GpoImages
     end
 
     def redis
-      Redis.new
+      @redis ||= Redis.new
     end
 
     def remove_from_redis_key
@@ -102,6 +106,37 @@ module GpoImages
 
     def uncompressed_eps_images_path
       GpoImages::FileLocationManager.uncompressed_eps_images_path
+    end
+
+    def html_image_recompilation
+      @html_image_recompilation ||= HtmlImageRecompilation.new(zipped_filename)
+    end
+
+    class HtmlImageRecompilation
+      attr_reader :redis_key
+
+      def initialize(redis_key)
+        @redis_key = "html_image_recompilation:#{redis_key}"
+      end
+
+      def add_date(date)
+        date = date.to_s(:iso)
+
+        unless redis.sismember(redis_key, date)
+          redis.sadd(redis_key, date)
+        end
+      end
+
+      def recompile_html
+        redis.smembers(redis_key).each do |date|
+          ENV['DATE'] = date
+          Rake::Task['content:entries:html:compile:full_text']
+        end
+      end
+
+      def redis
+        @redis ||= Redis.new
+      end
     end
   end
 end
