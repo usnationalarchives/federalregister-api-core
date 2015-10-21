@@ -1,10 +1,9 @@
 class XsltFunctions
   include GpoImages::ImageIdentifierNormalizer
 
-  def gpo_image(nodes, link_id, identifiers)
+  def gpo_image(nodes, link_id)
     document = blank_document
 
-    identifiers = identifiers.split(',')
     graphic_identifier = normalize_image_identifier(
       nodes.first.content
     )
@@ -13,11 +12,11 @@ class XsltFunctions
       doc.a(
         :class => "entry_graphic_link",
         :id => link_id,
-        :href => graphic_url('original', graphic_identifier, identifiers)
+        :href => graphic_url('original', graphic_identifier)
       ) {
         doc.img(
           :class => 'entry_graphic',
-          :src => graphic_url('large', graphic_identifier, identifiers)
+          :src => graphic_url('large', graphic_identifier)
         )
       }
     end
@@ -35,11 +34,7 @@ class XsltFunctions
     Nokogiri::XML::DocumentFragment.parse ""
   end
 
-  def graphic_url(size, graphic_identifier, identifiers)
-    if identifiers.include?(graphic_identifier)
-      "https://s3.amazonaws.com/#{SETTINGS["s3_buckets"]["public_images"]}/#{graphic_identifier}/#{size}.png"
-    else
-      "https://s3.amazonaws.com/#{SETTINGS["s3_buckets"]["public_images"]}/missingimage/#{size}.png"
-    end
+  def graphic_url(size, graphic_identifier)
+    "https://s3.amazonaws.com/#{SETTINGS["s3_buckets"]["public_images"]}/#{graphic_identifier}/#{size}.png"
   end
 end
