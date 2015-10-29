@@ -1,1 +1,1 @@
-require 'lib/diffy/format'
+require "#{Rails.root}/lib/diffy/format"
