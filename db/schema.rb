@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150415214152) do
+ActiveRecord::Schema.define(:version => 20150930182141) do
 
   create_table "action_names", :force => true do |t|
     t.string   "name"
@@ -357,6 +357,28 @@ ActiveRecord::Schema.define(:version => 20150415214152) do
     t.integer  "processed_document_count"
   end
 
+  create_table "gpo_graphic_usages", :force => true do |t|
+    t.string   "identifier"
+    t.string   "document_number"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "gpo_graphic_usages", ["document_number", "identifier"], :name => "index_gpo_graphic_usages_on_document_number_and_identifier"
+  add_index "gpo_graphic_usages", ["identifier", "document_number"], :name => "index_gpo_graphic_usages_on_identifier_and_document_number"
+
+  create_table "gpo_graphics", :force => true do |t|
+    t.string   "identifier"
+    t.string   "graphic_file_name"
+    t.string   "graphic_content_type"
+    t.integer  "graphic_file_size"
+    t.datetime "graphic_updated_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "gpo_graphics", ["identifier"], :name => "index_gpo_graphics_on_identifier", :unique => true
+
   create_table "graphic_usages", :force => true do |t|
     t.integer "graphic_id"
     t.integer "entry_id"
@@ -515,6 +537,20 @@ ActiveRecord::Schema.define(:version => 20150415214152) do
   end
 
   add_index "regulatory_plans_small_entities", ["regulatory_plan_id", "small_entity_id"], :name => "reg_then_entity"
+
+  create_table "reprocessed_issues", :force => true do |t|
+    t.integer  "issue_id"
+    t.string   "status"
+    t.string   "message"
+    t.text     "diff"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.text     "html_diff",  :limit => 2147483647
+  end
+
+  add_index "reprocessed_issues", ["issue_id", "status"], :name => "index_reprocessed_issues_on_issue_id_and_status"
+  add_index "reprocessed_issues", ["user_id"], :name => "index_reprocessed_issues_on_user_id"
 
   create_table "section_assignments", :force => true do |t|
     t.integer "entry_id"

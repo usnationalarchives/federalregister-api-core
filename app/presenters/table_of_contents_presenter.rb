@@ -31,7 +31,7 @@ class TableOfContentsPresenter
             if toc_subject.present?
               entries_by_toc_subject << [
                 toc_subject,
-                subject_entries.sort_by{|e| [e.toc_doc.try(:downcase) || '', (e.toc_doc || e.title)]}
+                subject_entries.sort_by{|e| [e.toc_doc.try(:downcase) || '', (e.toc_doc || e.title).downcase]}
               ]
             else
               # if an item doesn't have a toc_subject, put in own array
@@ -49,7 +49,7 @@ class TableOfContentsPresenter
               toc_subject,
               subject_entries.first.toc_doc,
               subject_entries.first.title
-            ].reject(&:blank?).first
+            ].reject(&:blank?).first.downcase
           end
 
         [category, entries_by_toc_subject]

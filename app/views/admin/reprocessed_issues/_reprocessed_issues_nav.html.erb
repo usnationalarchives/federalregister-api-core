@@ -1,0 +1,27 @@
+<h4>Recently Reprocessed Issues</h4>
+
+<table class="reprocessed-issues">
+  <thead>
+    <th>Issue Date</th>
+    <th>Reprocessed At</th>
+  </thead>
+
+  <tbody>
+    <% @presenter.reprocessed_issues_by_date.each do |reprocessed_issue| %>
+      <tr>
+        <td>
+          <%= link_to reprocessed_issue.publication_date.to_s(:mdy_short_year),
+            admin_reprocessed_issue_path(
+              reprocessed_issue.publication_date.to_s(:iso)
+            ) %>
+        </td>
+        <td>
+          <%= reprocessed_issue.updated_at.to_s(:mdy_short_year_then_time) %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to "Reprocess another issue", admin_reprocessed_issues_path,
+  :class => 'reprocess-issue-link btn btn-primary' %>

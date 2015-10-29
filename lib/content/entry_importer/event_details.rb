@@ -1,4 +1,4 @@
-module Content::EntryImporter::Events
+module Content::EntryImporter::EventDetails
   extend Content::EntryImporter::Utils
   provides :events
 

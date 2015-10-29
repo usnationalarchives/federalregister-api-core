@@ -1,17 +1,17 @@
 <% title "Login" %>
 
 <% semantic_form_for @user_session, :url => admin_user_session_path do |f| %>
-  
+
   <% f.inputs do %>
     <%= f.input :email, :required => true %>
     <%= f.input :password, :required => true %>
     <!-- <%= f.input :remember_me, :as => :check_boxes, :collection => [["Yes", true]] %> -->
   <% end %>
-  
+
   <% f.buttons do %>
     <%= f.commit_button "Login" %>
   <% end %>
-  
+
 <% end %>
 
-<!-- <%= link_to "Forgot Password?", new_admin_password_reset_path %> -->
+<%= link_to "Forgot Password?", new_admin_password_reset_path %>

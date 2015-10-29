@@ -5,6 +5,8 @@ machine:
   environment:
     RAILS_ENV: test
     RACK_ENV: test
+  services:
+    - redis
 
 ## Customize dependencies
 dependencies:

@@ -1,0 +1,21 @@
+test:
+  s3_buckets:
+    zipped_eps_images: XXXXXXXXXXXXXXXXXXXXXXX
+
+development:
+  s3_buckets:
+    zipped_eps_images: eps.images.federalregister.gov
+    private_images: private.images.fr2.local
+    public_images: images.fr2.local
+
+staging:
+  s3_buckets:
+    zipped_eps_images: eps.images.federalregister.gov
+    private_images: private.images.fr2.criticaljuncture.org
+    public_images: images.fr2.criticaljuncture.org
+
+production:
+  s3_buckets:
+    zipped_eps_images: eps.images.federalregister.gov
+    private_images: private.images.federalregister.gov
+    public_images: images.federalregister.gov

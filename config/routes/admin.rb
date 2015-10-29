@@ -31,6 +31,9 @@ ActionController::Routing::Routes.draw do |map|
     admin.resources :photo_candidates, :only => :show
     admin.resources :sections
     admin.resources :agency_highlights
+    admin.resources :missing_images, :only => :index
+    admin.resources :reprocessed_issues, :only => [:index, :show, :create, :update]
+    admin.update_mods 'reprocessed_issues_update_mods/:id', :controller => "reprocessed_issues", :action => "update_mods", :conditions => {:method => :put}
 
     admin.resources :issues, :member => {:preview => :get} do |issue|
       issue.resource :approval, :controller => "issues/approvals"

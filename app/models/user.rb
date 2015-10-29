@@ -23,4 +23,7 @@ class User < ApplicationModel
     Mailer.deliver_password_reset_instructions(self)
   end
 
+  def full_name
+    "#{first_name} #{last_name}"
+  end
 end

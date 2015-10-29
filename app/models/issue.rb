@@ -3,6 +3,8 @@ class Issue < ApplicationModel
            :primary_key => :publication_date,
            :foreign_key => :publication_date
 
+  has_many :reprocessed_issues
+
   def self.completed
     scoped(:conditions => "completed_at IS NOT NULL")
   end
@@ -42,7 +44,7 @@ class Issue < ApplicationModel
 
   def self.next_date_to_import
     date = Date.current
-    
+
     while(true) do
       if should_have_an_issue?(date)
         return date
