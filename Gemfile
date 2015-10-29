@@ -15,7 +15,9 @@ gem 'geokit', '1.4.1', :require => 'geokit'
 gem 'will_paginate', '2.3.14', :require => 'will_paginate'
 gem 'amatch', '0.2.11'
 gem 'indefinite_article'
-gem 'rubyzip', '0.9.1', :require => 'zip/zip'
+
+gem 'rubyzip', '>= 1.1.7'
+gem 'zip-zip' # will load compatibility for old rubyzip API.
 
 gem 'fog'
 gem 'fog-google', '0.1.0'
