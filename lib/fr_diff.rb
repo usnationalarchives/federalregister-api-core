@@ -38,9 +38,9 @@ class FrDiff
     html_diff = diff_from_diffy
 
     if strings_to_ignore
-      html_diff = html_diff.reject do |line|
+      html_diff = html_diff.split("\n").reject do |line|
         strings_to_ignore.any?{|prefix| line =~ /#{prefix}/ }
-      end.to_s
+      end.join("\n") + "\n" #adding a trailing newline here as the join doesn't do so
     end
 
     html_diff
