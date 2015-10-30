@@ -22,6 +22,8 @@ class Entry < ApplicationModel
     'SUNSHINE' => 'Sunshine Act Document'
   }
 
+  after_save :calculate_agencies
+
   belongs_to :issue, :foreign_key => :publication_date, :primary_key => :publication_date
   belongs_to :presidential_document_type
   belongs_to :action_name
@@ -565,6 +567,10 @@ class Entry < ApplicationModel
 
   def regulations_dot_gov_agency_id
     comment_url.present? ? comment_url.split('D=').last.split(/(_|-)/, 2).first : ''
+  end
+
+  def calculate_agencies
+    self.agencies = agency_name_assignments.map(&:agency).compact
   end
 
   private
