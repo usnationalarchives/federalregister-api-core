@@ -30,8 +30,6 @@ class PublicInspectionDocument < ApplicationModel
   before_save :persist_document_file_path
   before_save :set_content_type
 
-  after_save :calculate_agencies
-
   named_scope :revoked, :conditions => {:publication_date => nil}
   does 'shared/document_number_normalization'
 
@@ -158,10 +156,6 @@ class PublicInspectionDocument < ApplicationModel
       obj.acl(obj.acl)
     end
     touch(:updated_at)
-  end
-
-  def calculate_agencies
-    self.agencies = agency_name_assignments.map(&:agency).compact
   end
 
   private
