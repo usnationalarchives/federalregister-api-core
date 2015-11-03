@@ -19,7 +19,7 @@ class GpoImages::FileImporter
   end
 
   def force_convert
-    puts "force converting GPO eps files to images for #{date}"
+    log "force converting GPO eps files to images for #{date}"
     cleanup_old_packages
     convert_files
   end
@@ -38,9 +38,17 @@ class GpoImages::FileImporter
   end
 
   def convert_files
-    image_packages.
-      reject(&:already_converted?).
-      each {|package| GpoImages::FileConverter.new(package.digest, package.date).process}
+    packages = image_packages.reject(&:already_converted?)
+
+    if packages.present?
+      log "Processing #{pluralize(packages.count, 'package')} for #{date}"
+      
+      packages.each do |package|
+        GpoImages::FileConverter.new(package.digest, package.date).process
+      end
+    else
+      log "No unprocessed image packages for #{date}"
+    end
   end
 
   def image_packages
@@ -50,5 +58,9 @@ class GpoImages::FileImporter
       map{|file| file.key}.
       select{|key| File.extname(key) == '.zip'}.
       map{|key| GpoImages::ImagePackage.new(date, key)}
+  end
+
+  def log(message)
+    puts "[#{Time.now}] #{message}"
   end
 end

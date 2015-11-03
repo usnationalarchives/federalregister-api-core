@@ -15,7 +15,10 @@ class GpoImages::FileConverter
   end
 
   def process
-    unless zip_file_exists?
+    if zip_file_exists?
+      puts "image package #{bucketed_zip_filename} for #{date} already exist - not processing (prior failure likely)"
+    else
+      puts "processing image package #{bucketed_zip_filename} for #{date}"
       download_eps_image_bundle
       unzip_file_and_process(
         uncompressed_eps_images_path,

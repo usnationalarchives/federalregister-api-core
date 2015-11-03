@@ -17,7 +17,7 @@ class GpoImages::ImagePackage
   def cleanup_package
     file_path = File.join(compressed_image_bundles_path, package_name)
     FileUtils.rm(file_path) if File.file?(file_path)
-    
+
     redis.del("images_left_to_convert:#{package_name}")
   end
 
