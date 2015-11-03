@@ -41,8 +41,8 @@ class GpoImages::FileImporter
     packages = image_packages.reject(&:already_converted?)
 
     if packages.present?
-      log "Processing #{pluralize(packages.count, 'package')} for #{date}"
-      
+      log "Processing #{packages.count} packages for #{date}"
+
       packages.each do |package|
         GpoImages::FileConverter.new(package.digest, package.date).process
       end
