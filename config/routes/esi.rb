@@ -41,7 +41,7 @@ ActionController::Routing::Routes.draw do |map|
     
     # PI SEARCH
     quiet_map.public_inspection_search_header 'public-inspection/search/header', :controller => 'public_inspection/search', :action => 'header'
-    quiet_map.public_inspection_search_results 'public-inspection/search/results', :controller => 'public_inspection/search', :action => 'results'
+    quiet_map.public_inspection_search_results 'public-inspection/search/results.:format', :controller => 'public_inspection/search', :action => 'results'
     quiet_map.public_inspection_search_facets 'public-inspection/search/facets/:facet', :controller => 'public_inspection/search', :action => 'facets'
 
     # EVENT SEARCH

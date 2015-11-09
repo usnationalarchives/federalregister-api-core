@@ -1,0 +1,7 @@
+<%=
+  summary = []
+
+  summary << (@search.count == 1 ? '1 search result' : "#{number_with_delimiter @search.count} search results")
+
+  summary.join(', ')
+%>
