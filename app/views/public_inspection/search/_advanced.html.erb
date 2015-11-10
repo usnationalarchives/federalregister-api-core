@@ -1,17 +1,17 @@
 <% f.inputs :class => 'show_labels' do %>
   <% if js_known_to_be_enabled? %>
     <%# put hidden fields and stub for JS-variation here %>
-    
+
     <li class="string optional agency">
       <label>Agency</label>
-      <input placeholder="Agriculture Department" data-autocomplete="autocomplete" />
+      <input placeholder="Agriculture Department" data-autocomplete="autocomplete" id="document-agency-search"/>
 
       <%= f.select :agency_ids,
                   Agency.all(:conditions => {:id => @search.agency_ids.to_a} ).map{|a| [a.name, a.id.to_s]},
                   {},
                   {:multiple => :multiple, :class => 'selected_agency_list'} %>
-    </li>  
-    
+    </li>
+
   <% else %>
     <%= f.input :agency_ids,
                 :as => :select,
@@ -19,7 +19,7 @@
                 :include_blank => false,
                 :input_html => {:multiple => true},
                 :value_method => Proc.new{|a| a.id.to_s},
-                :collection => Agency.all, 
+                :collection => Agency.all,
                 :wrapper_html => {:class => 'fallback_agency_list'} %>
   <% end %>
   <%= f.input :type,
@@ -32,7 +32,7 @@
               :collection => [['All', ''],['Regular', '0'], ['Special', '1']] %>
   <%= f.input :docket_id,
               :label => "Agency Docket",
-              :input_html => {:placeholder => "EPA-HQ-OPPT-2005-0049"}, 
+              :input_html => {:placeholder => "EPA-HQ-OPPT-2005-0049"},
               :wrapper_html => {:class => 'docket'} %>
 <% end %>
 

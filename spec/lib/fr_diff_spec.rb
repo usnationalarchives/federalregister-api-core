@@ -117,27 +117,31 @@ describe FrDiff do
       it "removes lines when when passed as the :ignore option" do
         original_xml = <<-XML
 <XML>
-  <identifier id='1234' />
-  <item>content</item>
+  <mods xmlns="http://www.loc.gov/mods/v3" ID="1234">
+    <identifier type="local">1234</identifier>
+    <item>content</item>
+  </mods>
 </XML>
         XML
         modified_xml = <<-XML
 <XML>
-  <identifier id='5678' />
-  <item>modified content</item>
+  <mods xmlns="http://www.loc.gov/mods/v3" ID="5678">
+    <identifier type="local">5678</identifier>
+    <item>modified content</item>
+  </mods>
 </XML>
         XML
 
         expected_diff = <<-HTML
 <div class="diff">
   <ul>
-    <li class="del"><del><span class="symbol">-</span>  &lt;item&gt;content&lt;/item&gt;</del></li>
-    <li class="ins"><ins><span class="symbol">+</span>  &lt;item&gt;<strong>modified </strong>content&lt;/item&gt;</ins></li>
+    <li class="del"><del><span class="symbol">-</span>    &lt;item&gt;content&lt;/item&gt;</del></li>
+    <li class="ins"><ins><span class="symbol">+</span>    &lt;item&gt;<strong>modified </strong>content&lt;/item&gt;</ins></li>
   </ul>
 </div>
         HTML
 
-        diff = generate_diff(original_xml, modified_xml, :html_diff, :ignore => ["identifier"])
+        diff = generate_diff(original_xml, modified_xml, :html_diff, :ignore => Content::GpoModsDownloader::NOISY_MODS_XML_LINES)
         diff.should == expected_diff
       end
     end

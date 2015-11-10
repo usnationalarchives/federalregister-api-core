@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0" xmlns:fr="http://federalregister.gov/functions" extension-element-prefixes="fr">
 
-  <xsl:template match="GPH/GID">
+  <xsl:template match="GPH/GID | MATH/MID">
     <xsl:variable name="paragraph_id">
-      <xsl:value-of select="concat('g-', count(preceding::GPH/GID)+1)" />
+      <xsl:value-of select="concat('g-', count(preceding::GPH/GID)+count(preceding::MATH/MID)+1)" />
     </xsl:variable>
 
     <p class="graphic">

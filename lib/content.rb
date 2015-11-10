@@ -1,4 +1,5 @@
 module Content
+  # returns only dates that have issues if using all or >
   def self.parse_dates(date)
     if date == 'all'
       dates = Entry.find_as_array(
@@ -18,6 +19,18 @@ module Content
         :conditions => {:publication_date => Date.parse("#{date}-01-01") .. Date.parse("#{date}-12-31")},
         :order => "publication_date"
       )
+    elsif date.present?
+      dates = [date.is_a?(String) ? date : date.to_s(:iso)]
+    else
+      dates = [Time.current.to_date]
+    end
+  end
+
+  # returns dates regardless of whether they have issues associated
+  def self.parse_all_dates(date)
+    if date =~ /^>/
+      date = Date.parse(date.sub(/^>/, ''))
+      dates = [date .. Time.current.to_date]
     elsif date.present?
       dates = [date.is_a?(String) ? date : date.to_s(:iso)]
     else

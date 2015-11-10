@@ -3,10 +3,9 @@ module Content
     class FileImportDriver < Content::ImportDriver
       def run
         load "#{Rails.root}/Rakefile"
-        [Date.current - 1.day, Date.current].each do |date|
-          ENV['DATE'] = date.to_s(:iso)
-          Rake::Task["content:gpo_images:convert_eps"].invoke
-        end
+
+        ENV['DATE'] = ">#{(Date.current - 1.day).to_s(:iso)}"
+        Rake::Task["content:gpo_images:convert_eps"].invoke
       end
 
       def lockfile_name

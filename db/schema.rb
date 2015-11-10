@@ -65,8 +65,7 @@ ActiveRecord::Schema.define(:version => 20150930182141) do
   add_index "agencies_sections", ["agency_id", "section_id"], :name => "index_agencies_sections_on_agency_id_and_section_id"
   add_index "agencies_sections", ["section_id", "agency_id"], :name => "index_agencies_sections_on_section_id_and_agency_id"
 
-  create_table "agency_assignments", :id => false, :force => true do |t|
-    t.integer "id",              :default => 0, :null => false
+  create_table "agency_assignments", :force => true do |t|
     t.integer "assignable_id"
     t.integer "agency_id"
     t.integer "position"

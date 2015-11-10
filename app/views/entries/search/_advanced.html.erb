@@ -5,17 +5,17 @@
 <% f.inputs :class => 'show_labels' do %>
   <% if js_known_to_be_enabled? %>
     <%# put hidden fields and stub for JS-variation here %>
-    
+
     <li class="string optional agency">
       <label>Agency</label>
-      <input placeholder="Agriculture Department" data-autocomplete="autocomplete" id="article-agency-search" />
+      <input placeholder="Agriculture Department" data-autocomplete="autocomplete" id="document-agency-search" />
 
       <%= f.select :agency_ids,
                   Agency.all(:conditions => {:id => @search.agency_ids.to_a} ).map{|a| [a.name, a.id.to_s]},
                   {},
                   {:multiple => :multiple, :class => 'selected_agency_list'} %>
-    </li>  
-    
+    </li>
+
   <% else %>
     <%= f.input :agency_ids,
                 :as => :select,
@@ -23,7 +23,7 @@
                 :include_blank => false,
                 :input_html => {:multiple => true},
                 :value_method => Proc.new{|a| a.id.to_s},
-                :collection => Agency.all, 
+                :collection => Agency.all,
                 :wrapper_html => {:class => 'fallback_agency_list'} %>
   <% end %>
   <%= f.input :type,
@@ -43,7 +43,7 @@
               :wrapper_html => {:class => "presidential_dependent"} %>
   <%= f.input :docket_id,
               :label => "Agency Docket",
-              :input_html => {:placeholder => "EPA-HQ-OPPT-2005-0049"}, 
+              :input_html => {:placeholder => "EPA-HQ-OPPT-2005-0049"},
               :wrapper_html => {:class => 'docket'} %>
   <%= f.input :regulation_id_number,
               :label => "Regulation ID Number (RIN)",
@@ -72,7 +72,7 @@
                     :wrapper_html => {:class => 'cfr_part'} %>
   <% end %>
 <% end %>
-  
+
 <% f.fields_for :near, f.object.near do |location_f| %>
   <% location_f.inputs :name => "Mentioning Locations Near", :class => 'zip' do %>
     <%= location_f.input :location,
