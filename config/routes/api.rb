@@ -19,7 +19,7 @@ ActionController::Routing::Routes.draw do |map|
                   :action => 'facets',
                   :conditions => {:method => :get}
 
-    api.articles_search_details 'articles/search-details',
+    api.articles_search_details 'documents/search-details',
                   :controller => 'api/v1/entries',
                   :action => 'search_details',
                   :conditions => {:method => :get}
@@ -28,6 +28,11 @@ ActionController::Routing::Routes.draw do |map|
                   :as => :documents,
                   :only => [:index, :show],
                   :controller => 'api/v1/entries'
+
+    api.agency_suggestions 'agencies/suggestions',
+                  :controller => 'api/v1/agencies',
+                  :action => 'suggestions',
+                  :conditions => {:method => :get}
 
     api.resources :agencies,
                   :only => [:index, :show],
