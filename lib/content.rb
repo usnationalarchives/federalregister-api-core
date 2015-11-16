@@ -30,7 +30,7 @@ module Content
   def self.parse_all_dates(date)
     if date =~ /^>/
       date = Date.parse(date.sub(/^>/, ''))
-      dates = [date .. Time.current.to_date]
+      dates = (date .. Time.current.to_date).to_a
     elsif date.present?
       dates = [date.is_a?(String) ? date : date.to_s(:iso)]
     else
