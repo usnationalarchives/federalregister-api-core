@@ -34,7 +34,7 @@ module Content::EntryImporter::BasicData
   
   def regulation_id_numbers
     regulation_id_numbers = simple_node_values('identifier[type="regulation ID number"]')
-    regulation_id_numbers.map{|rin| rin.sub(/RIN /, '')}
+    regulation_id_numbers.map{|rin| rin.sub(/RIN /, '').upcase}
   end
   
   def significant
