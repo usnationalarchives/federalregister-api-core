@@ -7,5 +7,5 @@ class EntryRegulationIdNumber < ApplicationModel
            :class_name => "RegulatoryPlan",
            :primary_key => :regulation_id_number,
            :foreign_key => :regulation_id_number,
-           :conditions => {:regulatory_plans => {:issue => RegulatoryPlan.current_issue}}
+           :conditions => {:regulatory_plans => {:current => true}}
 end
