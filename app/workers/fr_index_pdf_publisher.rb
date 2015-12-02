@@ -1,4 +1,6 @@
 class FrIndexPdfPublisher < FrIndexPdfGenerator
+  include CacheUtils
+
   @queue = :fr_index_pdf_publisher
 
   attr_reader :max_date
@@ -13,9 +15,19 @@ class FrIndexPdfPublisher < FrIndexPdfGenerator
   def perform
     super
     update_agency_status
+    clear_cache
   end
 
   private
+
+  def clear_cache
+    # only clear the cache after we've generate all the individual
+    # agency pdfs and the combined pdf (which should be enqueued last)
+    if !agency
+      purge_cache("/index/#{year}")
+      purge_cache("/index/#{year}/*")
+    end
+  end
 
   def update_agency_status
     if agency

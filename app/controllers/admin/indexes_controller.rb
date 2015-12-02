@@ -33,10 +33,10 @@ class Admin::IndexesController < AdminController
     max_date = params[:max_date]
     fr_index = FrIndexPresenter.new(year, :max_date => max_date)
 
-    Resque.enqueue FrIndexPdfPublisher, {:year => year, :max_date => max_date}
     fr_index.agencies.each do |year_agency|
       Resque.enqueue FrIndexPdfPublisher, {:year => year, :max_date => max_date, :agency_id => year_agency.agency.id}
     end
+    Resque.enqueue FrIndexPdfPublisher, {:year => year, :max_date => max_date}
 
     flash[:notice] = "#{Date.parse(max_date).to_s(:month_year)} has been queued to be published."
     redirect_to admin_index_year_path(year, :max_date => max_date)
