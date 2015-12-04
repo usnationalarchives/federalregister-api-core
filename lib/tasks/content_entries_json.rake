@@ -13,7 +13,8 @@ namespace :content do
           dates = Content.parse_dates(ENV['DATE'])
 
           dates.each do |date|
-            next unless Issue.should_have_an_issue?(Date.parse(date))
+            date = date.is_a?(String) ? Date.parse(date) : date
+            next unless Issue.should_have_an_issue?(date)
 
             puts "compiling daily table of contents json for #{date}..."
             XmlTableOfContentsTransformer.perform(date)
