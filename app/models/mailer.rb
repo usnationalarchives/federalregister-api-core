@@ -49,7 +49,7 @@ class Mailer < ActionMailer::Base
     agency_name_presenter = AgencyNameAuditPresenter.new(date)
     problematic_document_presenter = ProblematicDocumentPresenter.new(date)
 
-    subject "[FR Admin] Daily Import Update for #{date}"
+    subject "[FR Admin] Daily Import Update for #{date} (#{RAILS_ENV})"
     from       "Federal Register Admin <no-reply@mail.federalregister.gov>"
     recipients 'nobody@federalregister.gov' # should use sendgrid_recipients for actual recipient list
     sent_on    Time.current
