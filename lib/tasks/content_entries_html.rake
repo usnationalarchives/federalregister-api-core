@@ -8,7 +8,8 @@ namespace :content do
 
           dates.each do |date|
             puts "compiling all html for #{date}..."
-            Content::EntryCompiler.perform(date.to_s(:iso))
+            date = date.is_a?(String) ? date : date.to_s(:iso)
+            Content::EntryCompiler.perform(date)
           end
         end
       end
