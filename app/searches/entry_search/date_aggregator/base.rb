@@ -33,7 +33,7 @@ class EntrySearch::DateAggregator::Base
 
       query = @sphinx_search.send(:query)
       @raw_results = {}
-      client.query(query, '*')[:matches].each do |match|
+      client.query(query, @sphinx_search.indexes)[:matches].each do |match|
         datetime = Time.at(match[:attributes]["publication_date"]).utc
         @raw_results[datetime.strftime("%Y%m%d")] = match[:attributes]["@count"]
       end

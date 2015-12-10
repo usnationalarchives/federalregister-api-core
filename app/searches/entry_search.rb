@@ -290,7 +290,8 @@ class EntrySearch < ApplicationSearch
       :with_all => with_all,
       :without => without,
       :conditions => sphinx_conditions,
-      :match_mode => :extended
+      :match_mode => :extended,
+      :classes => [Entry]
     )
 
     klass = case options.delete(:period)
@@ -305,7 +306,7 @@ class EntrySearch < ApplicationSearch
             when :yearly
               EntrySearch::DateAggregator::Yearly
             else
-              raise "invalid :period specified; must be one of :weekly, :monthly, or :quarterly"
+              raise "invalid :period specified; must be one of :daily, :weekly, :monthly, :quarterly or :yearly"
             end
     klass.new(sphinx_search, :with => with)
   end
