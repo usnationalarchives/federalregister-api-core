@@ -13,7 +13,7 @@ class Content::EntryImporter::ModsFile
   end
   
   def url
-    "http://www.gpo.gov:80/fdsys/pkg/FR-#{@date.to_s(:db)}/mods.xml"
+    "https://www.gpo.gov/fdsys/pkg/FR-#{@date.to_s(:db)}/mods.xml"
   end
 
   def file_path
