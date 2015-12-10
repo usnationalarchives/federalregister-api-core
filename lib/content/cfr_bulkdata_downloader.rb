@@ -21,8 +21,8 @@ module Content
       @force_download = force_download
       @perform_download= true
 
-      @url = "http://www.gpo.gov/fdsys/bulkdata/CFR/#{@year}/CFR-#{@year}.zip"
-      
+      @url = "https://www.gpo.gov/fdsys/bulkdata/CFR/#{@year}/CFR-#{@year}.zip"
+
       @cfr_bulkdata_dir = "#{RAILS_ROOT}/data/cfr/bulkdata"
       @bulkfile_path = "#{@cfr_bulkdata_dir}/#{File.basename(@url)}"
 

@@ -17,11 +17,11 @@ module Citations::CfrHelper
   def cfr_url(year, title, volume, part, section='')
     return if year.blank?
     return if volume.blank?
-    
-    "http://www.gpo.gov/fdsys/pkg/CFR-#{year}-title#{title}-vol#{volume}/xml/CFR-#{year}-title#{title}-vol#{volume}-#{section.present? ? "sec#{part}-#{section}" : "part#{part}"}.xml"
+
+    "https://www.gpo.gov/fdsys/pkg/CFR-#{year}-title#{title}-vol#{volume}/xml/CFR-#{year}-title#{title}-vol#{volume}-#{section.present? ? "sec#{part}-#{section}" : "part#{part}"}.xml"
   end
   
   def ecfr_url(title,part)
-    "http://www.ecfr.gov/cgi-bin/searchECFR?idno=#{title}&q1=#{part}&rgn1=PARTNBR&op2=and&q2=&rgn2=Part"
+    "https://www.ecfr.gov/cgi-bin/searchECFR?idno=#{title}&q1=#{part}&rgn1=PARTNBR&op2=and&q2=&rgn2=Part"
   end
 end

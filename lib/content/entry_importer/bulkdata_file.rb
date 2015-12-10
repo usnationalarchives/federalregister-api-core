@@ -9,7 +9,7 @@ class Content::EntryImporter::BulkdataFile
   end
   
   def url
-    "http://www.gpo.gov:80/fdsys/bulkdata/FR/#{@date.to_s(:year_month)}/FR-#{@date.to_s(:db)}.xml"
+    "https://www.gpo.gov/fdsys/bulkdata/FR/#{@date.to_s(:year_month)}/FR-#{@date.to_s(:db)}.xml"
   end
 
   def path
