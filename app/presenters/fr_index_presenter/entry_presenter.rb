@@ -82,7 +82,7 @@ class FrIndexPresenter
     end
 
     def pdf_url
-      "http://www.gpo.gov/fdsys/pkg/FR-#{publication_date.to_s(:db)}/pdf/#{document_number}.pdf"
+      "https://www.gpo.gov/fdsys/pkg/FR-#{publication_date.to_s(:db)}/pdf/#{document_number}.pdf"
     end
 
     def public_path

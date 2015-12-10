@@ -20,7 +20,7 @@ module Content
 
     def perform
       download
-      
+
       if generate_diffs
         update_status("pending_reprocess")
       else
@@ -30,13 +30,11 @@ module Content
 
     def download
       File.makedirs(temporary_mods_path)
-      xml = Net::HTTP.get(
-        'gpo.gov',
-        "/fdsys/pkg/FR-#{date.to_s(:iso)}/mods.xml?#{Time.now.to_i}"
-      )
-      File.open("#{temporary_mods_path}/#{date.to_s(:iso)}.xml", 'w') {|f|
-        f.write(xml)
-      }
+
+      Curl::Easy.download(
+        "https://www.gpo.gov/fdsys/pkg/FR-#{date.to_s(:iso)}/mods.xml?#{Time.now.to_i}",
+        "#{temporary_mods_path}/#{date.to_s(:iso)}.xml"
+      ) {|c| c.follow_location = true}
     end
 
     def generate_diffs
