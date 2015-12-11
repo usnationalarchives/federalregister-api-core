@@ -58,5 +58,9 @@ ActionController::Routing::Routes.draw do |map|
                   :controller => 'api/v1/suggested_searches',
                   :conditions => {:method => :get}
 
+    api.resources :holidays,
+                  :only => [:index],
+                  :controller => 'api/v1/holidays',
+                  :conditions => {:method => :get}
   end
 end
