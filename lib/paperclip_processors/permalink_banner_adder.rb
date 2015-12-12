@@ -14,8 +14,6 @@ module Paperclip
       else
         `pdftk #{banner.path} stamp #{file.path} output #{output.path}`
       end
-
-      output.close #close the tempfile so that it can be garbage collected properly
       output
     end
   end
