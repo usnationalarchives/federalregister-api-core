@@ -7,7 +7,7 @@ module Content
       if lock_file_already_exists?
         if other_process_is_running?
           if other_process_is_old?
-            puts "Lock file exists, but other process (PID #{other_process_pid}) exists and isn't too old. Killing it now."
+            puts "Lock file exists, but other process (PID #{other_process_pid}) exists and is too old. Killing it now."
             kill_other_process
           else
             puts "Lock file exists and other process is running and not older than an hour; exiting as another process is working on the import. Exiting."

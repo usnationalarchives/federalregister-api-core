@@ -33,7 +33,8 @@ class GpoImages::Sftp
       'ftp.gpo.gov',
       SECRETS["gpo_sftp"]["username"],
       :password => SECRETS["gpo_sftp"]["password"],
-      :auth_methods => ["password"]
+      :auth_methods => ["password"],
+      :timeout => 30
     )
   end
 
