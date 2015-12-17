@@ -50,3 +50,6 @@ Rails::Initializer.run do |config|
 
   config.rails_lts_options = { :disable_xml_parsing => true }
 end
+
+# ensure /usr/local/bin is in our path
+ENV["PATH"]="#{ENV["PATH"]}:/usr/local/bin"
