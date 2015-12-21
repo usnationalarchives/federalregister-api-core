@@ -276,25 +276,29 @@ class ApplicationSearch
   
 
   def sphinx_search_count(term, options)
-    begin
-      model.search_count(term, options)
-    rescue ThinkingSphinx::SphinxError
-      model.search_count(term, options.merge(:match_mode => :all))
+    sphinx_retry do
+      begin
+        model.search_count(term, options)
+      rescue ThinkingSphinx::SphinxError
+        model.search_count(term, options.merge(:match_mode => :all))
+      end
     end
   end
 
   def sphinx_search(term, options)
-    begin
-      results = model.search(term, options)
+    sphinx_retry do
+      begin
+        results = model.search(term, options)
 
-      # force sphinx to populate the result so that if it fails due to
-      #   unescaped invalid extended mode characters we can handle the
-      #   error here
-      results.send(:populate) if results.is_a?(ThinkingSphinx::Search)
+        # force sphinx to populate the result so that if it fails due to
+        #   unescaped invalid extended mode characters we can handle the
+        #   error here
+        results.send(:populate) if results.is_a?(ThinkingSphinx::Search)
 
-      results
-    rescue ThinkingSphinx::SphinxError
-      model.search(term, options.merge(:match_mode => :all))
+        results
+      rescue ThinkingSphinx::SphinxError
+        model.search(term, options.merge(:match_mode => :all))
+      end
     end
   end
 
@@ -325,5 +329,22 @@ class ApplicationSearch
       :sort_mode => sort_mode,
       :max_matches => 10_000,
     }.merge(find_options)
+  end
+
+  def sphinx_retry
+    retry_delays = [0.1, 0.25, 0.5]
+    begin
+      yield
+    rescue Riddle::ResponseError => e
+      retry_delay = retry_delays.shift
+      if retry_delay
+        puts "sleeping for #{retry_delay}"
+        sleep(retry_delay)
+        retry
+      else
+        puts "no more attempts"
+        raise e
+      end
+    end
   end
 end
