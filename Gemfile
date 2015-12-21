@@ -9,7 +9,7 @@ gem 'mysql', '2.7'
 gem "jrails", "0.6.0"
 
 gem 'nokogiri', '1.5.11'
-gem 'curb', '0.4.4.0'
+gem 'curb', '0.9.0'
 gem 'http_headers', '0.0.2.3'
 gem 'geokit', '1.4.1', :require => 'geokit'
 gem 'will_paginate', '2.3.14', :require => 'will_paginate'
@@ -27,12 +27,12 @@ gem 'thinking-sphinx', '1.4.13', :require => 'thinking_sphinx'
 gem 'ffi-hunspell', :require => 'ffi/hunspell'
 
 gem 'honeybadger', :require => 'honeybadger/rails'
-gem 'resque-honeybadger', 
+gem 'resque-honeybadger',
     :git => 'git@github.com:henrik/resque-honeybadger.git',
     :ref => '832be87662840d44e73f66c006796da8ed6250e2'
 
 gem 'aws-s3', '0.6.2', :require => 'aws/s3'
-gem 'paperclip', '2.3.1.1'
+gem 'paperclip', '2.3.16'
 gem 'stevedore', '0.1.0'
 gem 'active_hash', '0.9.5'
 gem 'bcrypt-ruby', '2.1.2', :require => 'bcrypt'
