@@ -57,6 +57,11 @@ GEM
       builder
       mime-types
       xml-simple
+    aws-sdk (1.6.9)
+      httparty (~> 0.7)
+      json (~> 1.4)
+      nokogiri (>= 1.4.4)
+      uuidtools (~> 2.1)
     bcrypt-ruby (2.1.2)
     builder (3.1.4)
     capistrano (2.15.4)
@@ -329,6 +334,7 @@ GEM
     tilt (1.3.3)
     timecop (0.3.5)
     tins (0.8.0)
+    uuidtools (2.1.5)
     validation_reflection (0.3.8)
     vcr (2.5.0)
     vegas (0.1.8)
@@ -350,6 +356,7 @@ DEPENDENCIES
   amazon-ec2
   authlogic (= 2.1.3)
   aws-s3 (= 0.6.2)
+  aws-sdk (~> 1.6.9)
   bcrypt-ruby (= 2.1.2)
   capistrano (= 2.15.4)
   ci_reporter (= 1.6.3)
