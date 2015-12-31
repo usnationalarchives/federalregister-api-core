@@ -19,11 +19,9 @@ class FrIndexAgencyCompiler
     }
   end
 
-  def self.perform(date)
-    date = date.is_a?(Date) ? date : Date.parse(date)
-    year = date.strftime('%Y')
+  def self.perform(year)
     Agency.all.each do |agency|
-      IndexCompiler.process_agency_with_docs(year, agency.id)
+      process_agency_with_docs(year, agency.id)
     end
   end
 
