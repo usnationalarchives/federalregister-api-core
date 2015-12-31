@@ -23,11 +23,11 @@ namespace :content do
 
         task :fr_index => :environment do
           dates = Content.parse_dates(ENV['DATE'])
-          years = dates.map{|d| d.split('-').first}.uniq
+          years = dates.map{|d| d.year}.uniq
 
           years.each do |year|
             puts "compiling fr_index json for #{year}..."
-            FRIndexCompiler.perform(year)
+            FrIndexCompiler.perform(year)
           end
         end
 

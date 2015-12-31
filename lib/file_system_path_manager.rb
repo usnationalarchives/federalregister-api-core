@@ -34,7 +34,7 @@ class FileSystemPathManager
   end
 
   def index_json_dir
-    "data/fr_index/#{date.strftime('%Y')}/"
+    "#{Rails.root}/data/fr_index/#{date.strftime('%Y')}/"
   end
 
 end

@@ -8,9 +8,7 @@ class FrIndexCompiler
     @index = {agencies:[]}
   end
 
-  def self.perform(date)
-    date = date.is_a?(Date) ? date : Date.parse(date)
-    year = date.strftime('%Y')
+  def self.perform(year)
     fr_index_compiler = new(year)
     fr_index_compiler.process_agencies
     fr_index_compiler.save(fr_index_compiler.index)
