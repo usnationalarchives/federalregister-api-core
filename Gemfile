@@ -9,7 +9,7 @@ gem 'mysql', '2.8.1'
 gem "jrails", "0.6.0"
 
 gem 'nokogiri', '1.5.11'
-gem 'curb', '0.4.4.0'
+gem 'curb', '0.9.0'
 gem 'http_headers', '0.0.2.3'
 gem 'geokit', '1.4.1', :require => 'geokit'
 gem 'will_paginate', '2.3.14', :require => 'will_paginate'
@@ -39,8 +39,14 @@ gem 'resque-honeybadger',
     :ref => '832be87662840d44e73f66c006796da8ed6250e2'
 
 gem 'aws-s3', '0.6.2', :require => 'aws/s3'
-gem 'paperclip', '2.3.3'
+
+gem 'paperclip', '~> 2.8'
+ # required by paperclip but unspecified version - this ensures a comptible version
+gem 'mime-types', '~> 1.25', '>= 1.25.1'
+gem 'aws-sdk', '~> 1.6.9'
+
 gem 'stevedore', '0.2.0'
+
 gem 'active_hash', '0.9.5'
 gem 'bcrypt-ruby', '2.1.2', :require => 'bcrypt'
 gem 'authlogic', '2.1.3'
