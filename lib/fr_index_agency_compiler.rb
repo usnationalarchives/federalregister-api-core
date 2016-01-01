@@ -28,6 +28,7 @@ class FrIndexAgencyCompiler
   def self.process_agency_with_docs(year, agency_id)
     agency_representation = new(year, agency_id)
     if agency_representation.any_documents?
+      puts "Processing Agency #{agency_id} for #{year}."
       agency_representation.process_entries
       agency_representation.process_see_also
       agency_representation.save(agency_representation.ordered_json)
@@ -91,7 +92,8 @@ class FrIndexAgencyCompiler
       end
 
     end
-    hsh.values.sort_by{|k,v|[k[:subject_1],k[:subject_2]]}.each {|k,v|k[:document_numbers].sort!}
+    # force nils to be sorted first by treating them as 'AAAA'
+    hsh.values.sort_by{|k,v|[k[:subject_1],k[:subject_2] || 'AAAA']}.each {|k,v|k[:document_numbers].sort!}
   end
 
   def format_subjects(doc_representation)
