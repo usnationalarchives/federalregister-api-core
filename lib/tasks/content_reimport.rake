@@ -18,12 +18,7 @@ namespace :content do
     end
 
     desc "Recompile pre-compiled Entry and ToC pages"
-    task :recompile => :environment do
-      Content.parse_dates(ENV['DATE']).each do |date|
-        Resque.enqueue(EntryRecompiler, date)
-        Resque.enqueue(TableOfContentsRecompiler, date)
-      end
-    end
+    task :recompile => [:recompile_all_html, :recompile_all_toc]
 
     desc "Recompile all pre-compiled Entry pages for a set of dates"
     task :recompile_all_html => :environment do
@@ -40,7 +35,7 @@ namespace :content do
     end
 
     namespace :presidential_documents do
-      desc "Reimport presidential documents"
+      desc "Reimport presidential documents (adds fields that weren't originall imported)"
       task :reimport => :environment do
         Entry.scoped(:conditions => "granule_class = 'PRESDOCU' AND publication_date > '2000-01-01'").find_each do |entry|
           puts "reimporting #{entry.document_number} (#{entry.publication_date})"
