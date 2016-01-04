@@ -19,6 +19,7 @@ describe AgencyAssignment do
     end
 
     it "does not change the counter_cache when a regulation agency_assignment is created" do
+      pending("agency assignments need to be revisted")
       agency = Factory(:agency)
       regulatory_plan = Factory(:regulatory_plan)
 
