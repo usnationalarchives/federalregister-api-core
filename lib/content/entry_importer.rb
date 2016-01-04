@@ -23,79 +23,12 @@ module Content
     def self.process_all_by_date(date, *attributes)
       AgencyObserver.disabled = true
       EntryObserver.disabled = true
-      options = attributes.extract_options!
-      options.symbolize_keys!
-
 
       dates = Content.parse_dates(date)
 
       dates.each do |date|
         begin
-          puts "handling #{date}"
-          if date < '2000-01-01'
-            process_without_bulkdata(date, options, *attributes)
-          else
-            begin
-              docs_and_nodes = BulkdataFile.new(date, options[:force_reload_bulkdata]).document_numbers_and_associated_nodes
-            rescue Content::EntryImporter::BulkdataFile::DownloadError => e
-              if ENV['TOLERATE_MISSING_BULKDATA']
-                process_without_bulkdata(date, options, *attributes)
-                next
-              elsif ENV['ALLOW_DOWNLOAD_FAILURE']
-                puts "...could not download bulkdata file for #{date}"
-                next
-              else
-                raise e
-              end
-            end
-
-            mods_doc_numbers = ModsFile.new(date, options[:force_reload_mods]).document_numbers
-
-            (mods_doc_numbers - docs_and_nodes.map{|doc, node| doc}).each do |document_number|
-              error = "'#{document_number}' (#{date}) in MODS but not in bulkdata"
-              Rails.logger.warn(error)
-              Honeybadger.notify(
-                :error_class   => "Missing Document Number in bulkdata",
-                :error_message => error
-              )
-
-              importer = EntryImporter.new(options.merge(:date => date, :document_number => document_number))
-              attributes = attributes.map(&:to_sym)
-              if options[:except]
-                attributes = importer.provided - options[:except].map(&:to_sym)
-              end
-
-              if attributes == [:all]
-                importer.update_all_provided_attributes
-              else
-                importer.update_attributes(*attributes)
-              end
-            end
-
-            docs_and_nodes.each do |document_number, bulkdata_node|
-              if mods_doc_numbers.include?(document_number)
-                importer = EntryImporter.new(options.merge(:date => date, :document_number => document_number, :bulkdata_node => bulkdata_node))
-
-                attributes = attributes.map(&:to_sym)
-                if options[:except]
-                  attributes = importer.provided - options[:except].map(&:to_sym)
-                end
-
-                if attributes == [:all]
-                  importer.update_all_provided_attributes
-                else
-                  importer.update_attributes(*attributes)
-                end
-              else
-                error = "'#{document_number}' (#{date}) in bulkdata but not in MODS"
-                Rails.logger.warn(error)
-                Honeybadger.notify(
-                  :error_class   => "Missing Document Number in MODS",
-                  :error_message => error
-                )
-              end
-            end
-          end
+          process_date(date, *attributes)
         rescue Content::EntryImporter::ModsFile::DownloadError => e
           if ENV['ALLOW_DOWNLOAD_FAILURE']
             puts "...could not download MODS file for #{date}"
@@ -106,6 +39,86 @@ module Content
       end
     end
 
+    def self.process_date(date, *attributes)
+      options = attributes.extract_options!
+      options.symbolize_keys!
+
+      puts "handling #{date}"
+      if date < '2000-01-01'
+        process_without_bulkdata(date, options, *attributes)
+      else
+        begin
+          docs_and_nodes = BulkdataFile.new(date, options[:force_reload_bulkdata]).document_numbers_and_associated_nodes
+        rescue Content::EntryImporter::BulkdataFile::DownloadError => e
+          if ENV['TOLERATE_MISSING_BULKDATA']
+            process_without_bulkdata(date, options, *attributes)
+            return
+          elsif ENV['ALLOW_DOWNLOAD_FAILURE']
+            puts "...could not download bulkdata file for #{date}"
+            return
+          else
+            raise e
+          end
+        end
+
+        mods_doc_numbers = ModsFile.new(date, options[:force_reload_mods]).document_numbers
+
+        (mods_doc_numbers - docs_and_nodes.map{|doc, node| doc}).each do |document_number|
+          notify_of_missing_document(:bulkdata, date, document_number)
+
+          import_document(
+            options.merge(:date => date, :document_number => document_number),
+            attributes
+          )
+        end
+
+        docs_and_nodes.each do |document_number, bulkdata_node|
+          if mods_doc_numbers.include?(document_number)
+            import_document(
+              options.merge(
+                :date => date, :document_number => document_number,
+                :bulkdata_node => bulkdata_node
+              ),
+              attributes
+            )
+          else
+            notify_of_missing_document(:mods, date, document_number)
+          end
+        end
+      end
+    end
+
+    def log_missing_document(type, date, document_number)
+      case type
+      when :bulkdata
+        error_class = "Missing Document Number in bulkdata"
+        error = "'#{document_number}' (#{date}) in MODS but not in bulkdata"
+      when :mods
+        error_class = "Missing Document Number in MODS"
+        error = "'#{document_number}' (#{date}) in bulkdata but not in MODS"
+      end
+
+      Rails.logger.warn(error)
+      Honeybadger.notify(
+        :error_class   => error_class,
+        :error_message => error
+      )
+    end
+
+    def self.import_document(importer_options, attributes)
+      importer = EntryImporter.new(importer_options)
+      attributes = attributes.map(&:to_sym)
+
+      if importer_options[:except]
+        attributes = importer.provided - importer_options[:except].map(&:to_sym)
+      end
+
+      if attributes == [:all]
+        importer.update_all_provided_attributes
+      else
+        importer.update_attributes(*attributes)
+      end
+    end
     def self.process_without_bulkdata(date, options, *attributes)
       ModsFile.new(date, options[:force_reload_mods]).document_numbers.each do |document_number|
         importer = EntryImporter.new(options.merge(:date => date, :document_number => document_number))
