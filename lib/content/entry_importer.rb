@@ -85,6 +85,8 @@ module Content
             notify_of_missing_document(:mods, date, document_number)
           end
         end
+
+        remove_extraneous_documents(date, mods_doc_numbers)
       end
     end
 
@@ -119,6 +121,15 @@ module Content
         importer.update_attributes(*attributes)
       end
     end
+
+    def self.remove_extraneous_documents(date, mods_doc_numbers)
+      Entry.find(:all, :conditions => {:publication_date => date}).each do |entry|
+        unless mods_doc_numbers.include?(entry.document_number)
+          entry.destroy
+        end
+      end
+    end
+
     def self.process_without_bulkdata(date, options, *attributes)
       ModsFile.new(date, options[:force_reload_mods]).document_numbers.each do |document_number|
         importer = EntryImporter.new(options.merge(:date => date, :document_number => document_number))
