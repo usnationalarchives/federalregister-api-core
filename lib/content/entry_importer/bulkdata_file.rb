@@ -23,8 +23,9 @@ class Content::EntryImporter::BulkdataFile
     begin
       FileUtils.mkdir_p(path_manager.document_issue_xml_dir)
 
-      Curl::Easy.download(url, path_manager.document_issue_xml_path){|c| c.follow_location = true} unless File.exists?(path_manager.document_issue_xml_path)
+      FederalRegisterFileRetriever.download(url, path_manager.document_issue_xml_path) unless File.exists?(path_manager.document_issue_xml_path)
       doc = Nokogiri::XML(open(path_manager.document_issue_xml_path))
+
       raise Content::EntryImporter::BulkdataFile::DownloadError unless doc.root.name == "FEDREG"
     rescue
       File.delete(path_manager.document_issue_xml_path)

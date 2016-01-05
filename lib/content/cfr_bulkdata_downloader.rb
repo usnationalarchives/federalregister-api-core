@@ -56,9 +56,7 @@ module Content
     end
 
     def download_zip
-      puts "downloading #{url}..."
-
-      Curl::Easy.download(url, bulkfile_path) {|c| c.follow_location = true}
+      FederalRegisterFileRetriever.download(url, bulkfile_path)
     end
 
     def extract

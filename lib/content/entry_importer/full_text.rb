@@ -11,8 +11,8 @@ module Content::EntryImporter::FullText
   def download_url_and_check_for_error(url)
     content = ''
     15.times do
-      c = Curl::Easy.new(url)
-      c.http_get
+      c = FederalRegisterFileRetriever.http_get(url)
+
       if c.response_code == 200 && c.body_str !~ /^<html xmlns/
         content = c.body_str
         break

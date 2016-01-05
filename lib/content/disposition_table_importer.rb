@@ -8,7 +8,7 @@ module Content
     def download_if_necessary!
       unless @options[:force_download] || File.exists?(file_path)
         FileUtils.mkdir_p(File.dirname(file_path))
-        Curl::Easy.download(url, file_path) {|c| c.follow_location = true}
+        FederalRegisterFileRetriever.download(url, file_path)
       end
     end
 

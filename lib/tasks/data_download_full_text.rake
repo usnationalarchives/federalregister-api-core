@@ -10,8 +10,7 @@ namespace :data do
         puts "downloading full text for #{entry.document_number} (#{entry.publication_date})"
         full_text = nil
 
-        c = Curl::Easy.new(url)
-        c.http_get
+        c = FederalRegisterFileRetriever.http_get(url)
 
         15.times do
           if c.response_code == 200 && c.body_str !~ /^<html xmlns/

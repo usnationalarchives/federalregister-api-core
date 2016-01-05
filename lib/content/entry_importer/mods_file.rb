@@ -31,8 +31,8 @@ class Content::EntryImporter::ModsFile
 
     begin
       FileUtils.mkdir_p(mods_path)
+      FederalRegisterFileRetriever.download(url, file_path) unless File.exists?(file_path)
 
-      Curl::Easy.download(url, file_path) {|c| c.follow_location = true} unless File.exists?(file_path)
       doc = Nokogiri::XML(open(file_path))
       raise Content::EntryImporter::ModsFile::DownloadError unless doc.root.name == "mods"
     rescue

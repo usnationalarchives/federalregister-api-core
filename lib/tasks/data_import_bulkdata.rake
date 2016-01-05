@@ -27,17 +27,8 @@ namespace :data do
       if File.exists?(file_path)
         puts "skipping #{url}..."
       else
-        puts "downloading #{url}..."
-
         FileUtils.mkdir_p(document_issue_xml_path)
-
-        open(url) do |input|
-          open(file_path, "wb") do |output|
-            while (buf = input.read(8192))
-              output.write buf
-            end
-          end
-        end
+        FederalRegisterFileRetriever.download(url, file_path)
       end
 
       if file_path =~ /\.zip$/
