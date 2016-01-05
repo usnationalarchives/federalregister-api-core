@@ -11,7 +11,7 @@ module Content
       
       def pdf_file_path
         file_loc = "#{@base_dir}/#{entry.document_number}.pdf"
-        Curl::Easy.download(entry.source_url(:pdf), file_loc) {|c| c.follow_location = true} unless File.exists?(file_loc)
+        FederalRegisterFileRetriever.download(entry.source_url(:pdf), file_loc) unless File.exists?(file_loc)
         file_loc
       end
       

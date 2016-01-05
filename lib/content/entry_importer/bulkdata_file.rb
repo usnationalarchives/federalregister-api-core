@@ -22,7 +22,7 @@ class Content::EntryImporter::BulkdataFile
     end
 
     begin
-      Curl::Easy.download(url, path){|c| c.follow_location = true} unless File.exists?(path)
+      FederalRegisterFileRetriever.download(url, path) unless File.exists?(path)
       doc = Nokogiri::XML(open(path))
       raise Content::EntryImporter::BulkdataFile::DownloadError unless doc.root.name == "FEDREG"
     rescue

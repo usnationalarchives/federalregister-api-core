@@ -11,8 +11,8 @@ namespace :data do
             c.follow_location = true
             c.max_redirects = 5
             c.timeout = 5
-            # c.headers["User-Agent"] = "myapp-0.0"
-          
+            c.headers["User-Agent"] = FederalRegisterFileRetriever.user_agent
+
             c.http_head
           
             url.response_code = c.response_code

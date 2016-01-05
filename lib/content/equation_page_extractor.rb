@@ -59,7 +59,7 @@ class Content::EquationPageExtractor
     end
 
     def pdf_file_present?
-      Curl::Easy.download(pdf_url, pdf_file_path) {|c| c.follow_location = true}
+      FederalRegisterFileRetriever.download(pdf_url, pdf_file_path)
       if `file #{pdf_file_path}` =~ /PDF document/
         true
       else

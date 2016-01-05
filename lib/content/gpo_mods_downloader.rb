@@ -31,10 +31,10 @@ module Content
     def download
       File.makedirs(temporary_mods_path)
 
-      Curl::Easy.download(
-        "https://www.gpo.gov/fdsys/pkg/FR-#{date.to_s(:iso)}/mods.xml?#{Time.now.to_i}",
-        "#{temporary_mods_path}/#{date.to_s(:iso)}.xml"
-      ) {|c| c.follow_location = true}
+      url = "https://www.gpo.gov/fdsys/pkg/FR-#{date.to_s(:iso)}/mods.xml?#{Time.now.to_i}"
+      file_path = "#{temporary_mods_path}/#{date.to_s(:iso)}.xml"
+
+      FederalRegisterFileRetriever.download(url, file_path)
     end
 
     def generate_diffs

@@ -20,7 +20,7 @@ class LedePhoto < ApplicationModel
     if url.present?
       file_path = Tempfile.new('flickr.jpg').path
       Rails.logger.warn "FILE NAME => #{file_path}"
-      Curl::Easy.download(url, file_path) {|c| c.follow_location = true}
+      FederalRegisterFileRetriever.download(url, file_path)
 
       if crop_x
         dst = Tempfile.new('flickr.jpg')

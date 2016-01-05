@@ -120,8 +120,7 @@ module Content
     def self.download_url_to(url, path)
       File.makedirs(File.dirname(path))
       unless File.exists?(path)
-        puts "downloading #{url}..."
-        Curl::Easy.download(url, path) {|c| c.follow_location = true} 
+        FederalRegisterFileRetriever.download(url, path)
       end
       
     end
