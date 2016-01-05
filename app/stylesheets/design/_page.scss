@@ -12,28 +12,11 @@ body {
 
 ul.bold_links a {
   font-weight: 700;
-  }  
-.hide,  
+  }
+.hide,
 .skip_to_content { display: none; }
 
-#tender {
-  background: sprite-image("icons/tender.png", 0, 0, 100px) no-repeat;
-  display: block;
-  height: image-height("icons/tender.png");
-  @include hide-text;
-  position: absolute;
-  top: 100px;
-  right: 0;
-  width: image-width("icons/tender.png");
-  z-index: 5000;
-  }
 
-.clear { clear: both; }
-
-:invalid {
-  border-color: #e88;
-  -webkit-box-shadow: 0 0 5px rgba(255, 0, 0, .8);  
-  }
 
 #content_area a.wrap {
   -ms-word-break: break-all;
