@@ -18,8 +18,7 @@ describe AgencyAssignment do
       expect{assignment.destroy; agency.reload}.to change{agency.entries_count}.from(1).to(0)
     end
 
-    it "does not change the counter_cache when a regulation agency_assignment is created" do
-      pending("agency assignments need to be revisted")
+    it "does not change the counter_cache when a regulation agency_assignment is created" do  
       agency = Factory(:agency)
       regulatory_plan = Factory(:regulatory_plan)
 
