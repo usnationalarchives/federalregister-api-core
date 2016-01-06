@@ -24,12 +24,15 @@ module Content
       create_lock_file
       begin
         run
-      rescue Exception => e
+      rescue Exception => e # capture run failure
         Honeybadger.notify(e)
         raise e
       ensure
         remove_lock_file
       end
+    rescue Exception => e # capture import driver perform failure
+      Honeybadger.notify(e)
+      raise e
     end
   
     def lock_file_already_exists?
