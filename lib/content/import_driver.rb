@@ -1,6 +1,8 @@
 require 'fileutils'
 module Content
   class ImportDriver
+    class InvalidPid < StandardError;
+
     def perform
       exit unless should_run?
 
@@ -22,12 +24,15 @@ module Content
       create_lock_file
       begin
         run
-      rescue Exception => e
+      rescue Exception => e # capture run failure
         Honeybadger.notify(e)
         raise e
       ensure
         remove_lock_file
       end
+    rescue Exception => e # capture import driver perform failure
+      Honeybadger.notify(e)
+      raise e
     end
 
     def lock_file_already_exists?
@@ -35,7 +40,16 @@ module Content
     end
 
     def other_process_pid
-      @other_process_pid ||= IO.read(lock_file_path).try(:to_i)
+      return @other_process_pid if @other_process_pid
+
+      pid = IO.read(lock_file_path).try(:to_i)
+
+      if pid > 0
+        @other_process_pid = pid
+      else
+        puts "Invalid PID in Import Driver :: #{IO.read(lock_file_path)}"
+        raise InvalidPid
+      end
     end
 
     def other_process_is_old?
@@ -46,7 +60,7 @@ module Content
       begin
         Process.getpgid( other_process_pid )
         return true
-      rescue Errno::ESRCH
+      rescue Errno::ESRCH, InvalidPid
         return false
       end
     end

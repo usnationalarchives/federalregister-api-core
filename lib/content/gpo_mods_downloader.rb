@@ -7,7 +7,9 @@ module Content
     NOISY_MODS_XML_LINES = [
       "identifier type=",
       "<searchTitle>",
-      "lt;mods xmlns"
+      "lt;mods xmlns",
+      "url access=",
+      "relatedItem type="
     ]
 
     def initialize(reprocessed_issue_id)
