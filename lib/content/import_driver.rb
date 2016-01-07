@@ -30,6 +30,8 @@ module Content
       ensure
         remove_lock_file
       end
+    rescue SystemExit => e # don't alert on honeybadger for expected exits
+      raise e
     rescue Exception => e # capture import driver perform failure
       Honeybadger.notify(e)
       raise e
