@@ -1,7 +1,7 @@
 require 'ftools'
 module Content
   class ImportDriver
-    class InvalidPid < StandardError;
+    class InvalidPid < StandardError; end
 
     def perform
       exit unless should_run?
