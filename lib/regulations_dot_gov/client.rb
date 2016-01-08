@@ -11,6 +11,8 @@ class RegulationsDotGov::Client
   class InvalidSubmission < ResponseError; end
   class CommentPeriodClosed < ResponseError; end
   class ServerError < ResponseError; end
+  class OverRateLimit < ResponseError; end
+  class NonParticipatingAgeny < ResponseError; end
 
   include HTTMultiParty
 
@@ -58,11 +60,8 @@ class RegulationsDotGov::Client
   end
 
   def find_docket(docket_id)
-    begin
-      response = self.class.get(docket_endpoint, :query => {:docketId => docket_id})
-      RegulationsDotGov::Docket.new(self, response.parsed_response)
-    rescue ResponseError
-    end
+    response = self.class.get(docket_endpoint, :query => {:docketId => docket_id})
+    RegulationsDotGov::Docket.new(self, response.parsed_response)
   end
 
   def find_documents(args)
@@ -181,11 +180,15 @@ class RegulationsDotGov::Client
       when 400
         if response['openForComment'] && response['openForComment'] == false
           raise CommentPeriodClosed.new(stringify_response(response), 409)
+        elsif response['message'] =~ /does not participate/
+          raise NonParticipatingAgeny.new( stringify_response )
         else
           raise ResponseError.new( stringify_response(response) )
         end
       when 404
         raise RecordNotFound.new( stringify_response(response) )
+      when 429
+        raise OverRateLimit.new( stringify_response(response) )
       when 500, 502, 503
         raise ServerError.new( stringify_response(response), response.code )
       else
@@ -211,6 +214,8 @@ class RegulationsDotGov::Client
         response
       when 400, 406
         raise InvalidSubmission.new( stringify_response(response) )
+      when 429
+        raise OverRateLimit.new( stringify_response(response) )
       when 500, 502, 503
         raise ServerError.new( stringify_response(response) )
       else
