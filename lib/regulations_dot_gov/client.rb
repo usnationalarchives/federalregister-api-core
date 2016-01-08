@@ -11,6 +11,7 @@ class RegulationsDotGov::Client
   class InvalidSubmission < ResponseError; end
   class CommentPeriodClosed < ResponseError; end
   class ServerError < ResponseError; end
+  class OverRateLimit < ResponseError; end
 
   include HTTMultiParty
 
@@ -183,6 +184,8 @@ class RegulationsDotGov::Client
         end
       when 404
         raise RecordNotFound.new( stringify_response(response) )
+      when 429
+        raise OverRateLimit.new( stringify_response(response) )
       when 500, 502, 503
         raise ServerError.new( stringify_response(response), response.code )
       else
@@ -208,6 +211,8 @@ class RegulationsDotGov::Client
         response
       when 400, 406
         raise InvalidSubmission.new( stringify_response(response) )
+      when 429
+        raise OverRateLimit.new( stringify_response(response) )
       when 500, 502, 503
         raise ServerError.new( stringify_response(response) )
       else
