@@ -58,11 +58,8 @@ class RegulationsDotGov::Client
   end
 
   def find_docket(docket_id)
-    begin
-      response = self.class.get(docket_endpoint, :query => {:docketId => docket_id})
-      RegulationsDotGov::Docket.new(self, response.parsed_response)
-    rescue ResponseError
-    end
+    response = self.class.get(docket_endpoint, :query => {:docketId => docket_id})
+    RegulationsDotGov::Docket.new(self, response.parsed_response)
   end
 
   def find_documents(args)
