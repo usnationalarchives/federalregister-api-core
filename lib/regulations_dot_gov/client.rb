@@ -181,7 +181,7 @@ class RegulationsDotGov::Client
         if response['openForComment'] && response['openForComment'] == false
           raise CommentPeriodClosed.new(stringify_response(response), 409)
         elsif response['message'] =~ /does not participate/
-          raise NonParticipatingAgeny.new( stringify_response )
+          raise NonParticipatingAgeny.new( stringify_response(response) )
         else
           raise ResponseError.new( stringify_response(response) )
         end
