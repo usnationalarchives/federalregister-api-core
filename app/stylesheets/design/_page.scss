@@ -206,65 +206,7 @@ COMMENT PERIOD CLOSING
 ARTICLE VIEW 
 
 ******************************/
-#metadata_content_area {
-  margin-bottom: 2em;
-  }
-#flash_message {
-  @include border-radius(5px);  
-  background: #E6E6E6;
-  color: #6E6E6E;
-  line-height: 20px;
-  margin: 20px 0;
-  overflow: hidden;  
-  position: relative;
-  }
-#flash_message .button {
-  background: $green;
-  color: #fff;
-  font-weight: normal;
-  margin: 0;
-  padding: 0 1em;
-  position: absolute;
-  right: 0;
-  top: 0;
-  min-width: 193px;
-  text-align: center;
-  }
-#flash_message.correction .button { background: $bookmark_red; }
-#flash_message.correction_of .button { background: $golden; }
 
-#flash_message .button:hover {
-  background: $golden;
-  }  
-#flash_message p {
-  @include apertura-condensed;
-  line-height: 20px;  
-  margin: 0;
-  padding: 0;
-  line-height: 3em;
-  padding-left: 40px;
-  }
-#flash_message.pdf_only p {
-  background: sprite-image('icons/icon_errors.png', 15px, 9px, 100px) no-repeat;
-  }
-#flash_message.comment p {
-  background: sprite-image('icons/icon_comment.png', 10px, 14px, 20px) no-repeat;
-  } 
-#flash_message.correction_of p,
-#flash_message.correction p {
-  background: sprite-image('icons/disclaimer_grey.png', 12px, 12px, 50px) no-repeat;
-  }
-#comment_count {
-  width: 100%;
-  text-align: right;
-  padding-bottom: 0;
-  margin-top: -15px;
-  color: #363636;
-  font-family: gesta-1, gesta-2, 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif;
-  font-size: 14px;
-  font-weight: bold;
-
-  }
 .article .metadata_list dt {
   text-transform: none;
   }  
@@ -316,44 +258,7 @@ ARTICLE VIEW
 #regulatory_plans.show .metadata {
   font-size: 1.3em;
   }
-.metadata_share_bar {
-  border-bottom:1px solid #CCCCCC;
-  border-top:1px solid #CCCCCC;
-  margin:0.5em 0;
-  overflow:hidden;
-  padding:0.5em 0;
-  }
-.metadata_share_bar .metadata {
-  margin-bottom: 0;
-  padding-bottom: 0;
-  display: inline-block;
-  padding-left: 5px;
-  width: 90%;
-  }
-.metadata_share_bar .share {
-  position: relative;
-  display: inline-block;
-  height: 27px;
 
-  ul {
-    @include horizontal-list;
-    position: absolute;
-    right: 0;
-    top: -2px;
-    overflow:visible;
-
-    li.clip_for_later {
-      padding-right: 5px;
-
-      fieldset.inputs { display: none; }
-      fieldset.buttons {
-        margin: 0;
-
-        li { padding: 5px 0 0 0; }
-      }
-    }
-  }
-}
 
 #entries.show .back_to_top {
   color: #aaa;

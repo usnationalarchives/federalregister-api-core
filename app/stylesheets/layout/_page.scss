@@ -65,9 +65,6 @@ SECTION VIEW
 ENTRIES
 
 ******************************/
-#metadata_content_area {
-  @include grid(16, 16);
-  }
 #entries.show #content_area {
   left: -240px; /* PULL 4 */
   }  
