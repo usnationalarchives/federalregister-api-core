@@ -12,6 +12,7 @@ class RegulationsDotGov::Client
   class CommentPeriodClosed < ResponseError; end
   class ServerError < ResponseError; end
   class OverRateLimit < ResponseError; end
+  class NonParticipatingAgeny < ResponseError; end
 
   include HTTMultiParty
 
@@ -179,6 +180,8 @@ class RegulationsDotGov::Client
       when 400
         if response['openForComment'] && response['openForComment'] == false
           raise CommentPeriodClosed.new(stringify_response(response), 409)
+        elsif response['message'] =~ /does not participate/
+          raise NonParticipatingAgeny.new( stringify_response(response) )
         else
           raise ResponseError.new( stringify_response(response) )
         end
