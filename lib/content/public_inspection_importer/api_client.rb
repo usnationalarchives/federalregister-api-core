@@ -15,10 +15,11 @@ class Content::PublicInspectionImporter::ApiClient
 
   def documents(date=Date.today)
     response = get("/eDocs/PIReport/#{date.strftime("%Y%m%d")}")
-    raise ResponseError.new("Status: #{response.code}; body: #{response.body}") unless response.ok?
+    response_body = response.body.force_encoding("ISO-8859-1").encode("UTF-8")
+    raise ResponseError.new("Status: #{response.code}; body: #{response_body}") unless response.ok?
 
-    write_to_log(response)
-    document = Nokogiri::XML(response.body)
+    write_to_log(response_body)
+    document = Nokogiri::XML(response_body)
 
     document.xpath('//PublicInspectionList/Document').map do |node|
       Document.new(self, node)
@@ -38,17 +39,18 @@ class Content::PublicInspectionImporter::ApiClient
       "/authentication/login",
       :body => request_body
     )
-    raise ResponseError.new("Status: #{response.code}; body: #{response.body}") unless response.ok?
+    response_body = response.body.force_encoding("ISO-8859-1").encode("UTF-8")
+    raise ResponseError.new("Status: #{response.code}; body: #{response_body}") unless response.ok?
 
-    @session_token = JSON.parse(response.body)["SessionToken"]
+    @session_token = JSON.parse(response_body)["SessionToken"]
   end
 
   private
 
-  def write_to_log(response)
+  def write_to_log(response_body)
     dir = FileUtils.mkdir_p("#{Rails.root}/data/public_inspection/xml/#{Time.now.strftime('%Y/%m/%d')}/")
     f = File.new("#{dir.first.to_s}/#{Time.now.to_s(:HMS_Z)}.xml", "w")
-    f.write(response.body)
+    f.write(response_body)
     f.close
   end
 end
