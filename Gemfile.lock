@@ -226,9 +226,9 @@ GEM
       mimemagic
       multipart-post
     http_headers (0.0.2.3)
-    httparty (0.8.1)
-      multi_json
-      multi_xml
+    httparty (0.11.0)
+      multi_json (~> 1.0)
+      multi_xml (>= 0.5.2)
     icalendar (1.1.5)
     indefinite_article (0.2.0)
       activesupport
@@ -258,8 +258,8 @@ GEM
     mocha (0.9.8)
       rake
     modularity (0.6.1)
-    multi_json (1.0.3)
-    multi_xml (0.4.1)
+    multi_json (1.11.2)
+    multi_xml (0.5.5)
     multipart-post (2.0.0)
     mysql (2.8.1)
     net-scp (1.1.0)
@@ -391,7 +391,7 @@ DEPENDENCIES
   honeybadger
   httmultiparty (~> 0.3.13)
   http_headers (= 0.0.2.3)
-  httparty (= 0.8.1)
+  httparty
   icalendar
   indefinite_article
   jrails (= 0.6.0)

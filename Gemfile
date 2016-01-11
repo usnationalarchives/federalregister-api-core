@@ -72,7 +72,7 @@ gem "rvm-capistrano", "~> 1.5.4", :require => false
 
 gem "resque", "1.19.0"
 
-gem "httparty", "0.8.1"
+gem "httparty"
 gem "httmultiparty", '~> 0.3.13'
 
 gem "recaptcha", "0.3.1", :require => 'recaptcha/rails'
@@ -92,6 +92,11 @@ gem 'system_timer', '1.2.4', :platform => :ruby_18
 gem 'fastercsv', '1.4.0', :platform => :ruby_18
 
 gem 'american_date', :platform => :ruby_19
+
+if RUBY_VERSION =~ /1.9/
+  Encoding.default_external = Encoding::UTF_8
+  Encoding.default_internal = Encoding::UTF_8
+end
 
 group :test do
   gem 'shoulda', '2.10.3'

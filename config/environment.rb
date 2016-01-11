@@ -1,3 +1,6 @@
+Encoding.default_external = Encoding::UTF_8
+Encoding.default_internal = Encoding::UTF_8
+
 # Use deployed git commit hash as quick & easy cache busting strategy
 ENV["RAILS_ASSET_ID"] = `git log -n 1 --pretty=format:%H`
 
