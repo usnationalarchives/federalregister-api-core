@@ -62,5 +62,10 @@ ActionController::Routing::Routes.draw do |map|
                   :only => [:index],
                   :controller => 'api/v1/holidays',
                   :conditions => {:method => :get}
+
+    api.topic_suggestions 'topics/suggestions',
+                  :controller => 'api/v1/topics',
+                  :action => 'suggestions',
+                  :conditions => {:method => :get}
   end
 end
