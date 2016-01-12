@@ -29,15 +29,26 @@ class Content::EntryImporter::ModsFile
       File.delete(file_path)
     end
 
-    begin
-      FileUtils.mkdir_p(mods_path)
-      FederalRegisterFileRetriever.download(url, file_path) unless File.exists?(file_path)
+    retry_attempts = 3
+    sleep_duration = 10
 
-      doc = Nokogiri::XML(open(file_path))
-      raise Content::EntryImporter::ModsFile::DownloadError unless doc.root.name == "mods"
-    rescue
-      File.delete(file_path)
-      raise Content::EntryImporter::ModsFile::DownloadError
+    while retry_attempts > 0
+      begin
+        FileUtils.mkdir_p(mods_path)
+        FederalRegisterFileRetriever.download(url, file_path) unless File.exists?(file_path)
+
+        doc = Nokogiri::XML(open(file_path))
+        raise Content::EntryImporter::ModsFile::DownloadError unless doc.root.name == "mods"
+      rescue
+        File.delete(file_path)
+        
+        if retry_attempts > 0
+          retry_attempts = retry_attempts - 1
+          sleep sleep_duration
+        else
+          raise Content::EntryImporter::ModsFile::DownloadError
+        end
+      end
     end
 
     doc.root
