@@ -14,6 +14,9 @@ RAILS_GEM_VERSION = '2.3.18' unless defined? RAILS_GEM_VERSION
 # Bootstrap the Rails environment, frameworks, and default configuration
 require File.join(File.dirname(__FILE__), 'boot')
 
+# require our patched logger
+require File.join(RAILS_ROOT, "lib", "binary_buffered_logger")
+
 Rails::Initializer.run do |config|
   # Settings in config/environments/* take precedence over those specified here.
   # Application configuration should go into files in config/initializers
@@ -52,6 +55,9 @@ Rails::Initializer.run do |config|
   config.cache_store = :file_store, "#{RAILS_ROOT}/tmp/cache"
 
   config.rails_lts_options = { :disable_xml_parsing => true }
+
+  # use our binary logger as the application logger
+  config.logger = ActiveSupport::BinaryBufferedLogger.new( File.join(RAILS_ROOT, "log", "#{RAILS_ENV}.log") )
 end
 
 # ensure /usr/local/bin is in our path
