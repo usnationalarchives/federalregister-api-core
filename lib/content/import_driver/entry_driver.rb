@@ -7,14 +7,8 @@ module Content
       end
 
       def run
-        begin
-          load "#{Rails.root}/Rakefile"
-          Rake::Task["data:daily:full"].invoke
-        rescue Content::EntryImporter::ModsFile::DownloadError
-          raise "Problem downloading mods file"
-        rescue Content::EntryImporter::BulkdataFile::DownloadError
-          raise "Problem downloading bulkdata file"
-        end
+        load "#{Rails.root}/Rakefile"
+        Rake::Task["data:daily:full"].invoke
       end
 
       def should_run?
