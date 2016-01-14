@@ -21,6 +21,7 @@ class Content::EntryImporter::BulkdataFile
     end
 
     begin
+      retry_attempts ||= 3
       FileUtils.mkdir_p(path_manager.document_issue_xml_dir)
 
       FederalRegisterFileRetriever.download(url, path_manager.document_issue_xml_path) unless File.exists?(path_manager.document_issue_xml_path)
@@ -29,8 +30,15 @@ class Content::EntryImporter::BulkdataFile
       raise Content::EntryImporter::BulkdataFile::DownloadError unless doc.root.name == "FEDREG"
     rescue
       File.delete(path_manager.document_issue_xml_path)
-      raise Content::EntryImporter::BulkdataFile::DownloadError
+
+      if (retry_attempts -= 1) > 0
+        sleep 10
+        retry
+      else
+        raise Content::EntryImporter::BulkdataFile::DownloadError
+      end
     end
+    
     doc.root
   end
   memoize :document
