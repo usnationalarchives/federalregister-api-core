@@ -1,4 +1,6 @@
 module Content::EntryImporter::FullText
+  class DownloadError < StandardError; end
+
   extend Content::EntryImporter::Utils
   provides :full_text
 
@@ -10,16 +12,20 @@ module Content::EntryImporter::FullText
 
   def download_url_and_check_for_error(url)
     content = ''
-    15.times do
-      c = FederalRegisterFileRetriever.http_get(url)
 
-      if c.response_code == 200 && c.body_str !~ /^<html xmlns/
-        content = c.body_str
-        break
+    begin
+      retry_attempts ||= 3
+
+      content = FederalRegisterFileRetriever.http_get(url).body_str
+    rescue Curl::Err::RecvError, Curl::Err::TimeoutError
+      if (retry_attempts -= 1) > 0
+        sleep 10
+        retry
       else
-        sleep 0.5
+        raise Content::EntryImporter::FullText::DownloadError
       end
     end
+
     content
   end
 end
