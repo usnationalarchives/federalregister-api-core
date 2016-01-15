@@ -41,7 +41,7 @@ module Content
       begin
         ENV['DATE'] = "#{date.to_s(:iso)}"
         Rake::Task['content:entries:import:basic_data'].invoke
-      rescue Exception => error
+      rescue StandardError => error
         handle_failure(error,"IssueReprocessor: Reprocess Basic Data")
       end
     end
@@ -52,7 +52,7 @@ module Content
       begin
         ENV['DATE'] = "#{date.to_s(:iso)}"
         Rake::Task['content:entries:import:events'].invoke
-      rescue Exception => error
+      rescue StandardError => error
         handle_failure(error,"IssueReprocessor: Reprocess Events")
       end
     end
@@ -63,7 +63,7 @@ module Content
       begin
         ENV['DATE'] = "#{date.to_s(:iso)}"
         Rake::Task['content:entries:import:agencies'].invoke
-      rescue Exception => error
+      rescue StandardError => error
         handle_failure(error,"IssueReprocessor: Reprocess Agencies")
       end
     end

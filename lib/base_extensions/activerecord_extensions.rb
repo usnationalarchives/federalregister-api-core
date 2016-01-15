@@ -12,7 +12,7 @@ class ActiveRecord::Base
                           else
                             begin
                               ActiveSupport::JSON::encode(val)
-                            rescue Exception => e
+                            rescue StandardError => e
                               raise ActiveRecord::SerializationError.new("could not serialize object of class '#{val.class}': #{val.inspect}")
                             end
                           end

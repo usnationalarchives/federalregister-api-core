@@ -24,7 +24,7 @@ module Content
       create_lock_file
       begin
         run
-      rescue Exception => e # capture run failure
+      rescue StandardError => e # capture run failure
         Honeybadger.notify(e)
         raise e
       ensure
@@ -32,7 +32,7 @@ module Content
       end
     rescue SystemExit => e # don't alert on honeybadger for expected exits
       raise e
-    rescue Exception => e # capture import driver perform failure
+    rescue StandardError => e # capture import driver perform failure
       Honeybadger.notify(e)
       raise e
     end
