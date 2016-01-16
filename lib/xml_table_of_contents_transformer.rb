@@ -93,12 +93,12 @@ class XmlTableOfContentsTransformer
       'RULES' =>                  'Rule',
       'PROPOSED RULES' =>         'Proposed Rule',
       'NOTICES' =>                'Notice',
-      'CORRECT' =>                'Correction', #B.C. TODO: Verify
-      'UNKNOWN' =>                'Uncategorized Document', #B.C. TODO: Verify
-      'SUNSHINE' =>               'Sunshine Act Document', #B.C. TODO: Verify
+      'CORRECT' =>                'Correction',
+      'UNKNOWN' =>                'Uncategorized Document',
+      'SUNSHINE' =>               'Notice',
       'PROCLAMATIONS' =>          'Proclamation',
-      'MEMORANDUMS' =>            'Memorandum', #B.C. TODO: Verify
-      'PRESIDENTIAL ORDERS' =>    'Presidential Order', #B.C. TODO: Verify
+      'MEMORANDUMS' =>            'Memorandum',
+      'PRESIDENTIAL ORDERS' =>    'Presidential Order',
       'ADMINISTRATIVE ORDERS' =>  'Administrative Order',
       'EXECUTIVE ORDERS' =>       'Executive Order'
     }
@@ -186,8 +186,8 @@ class XmlTableOfContentsTransformer
     private
 
     def document_type(document_type_from_xml)
-      if document_type_mappings[document_type_from_xml].present?
-        document_type_mappings[document_type_from_xml]
+      if document_type_mappings[document_type_from_xml.upcase].present?
+        document_type_mappings[document_type_from_xml.upcase]
       else
         error = "'#{document_type_from_xml}' is not a recognized document_type.
           See DOCUMENT_TYPE_MAPPINGS in xml_table_of_contents_transformer."
