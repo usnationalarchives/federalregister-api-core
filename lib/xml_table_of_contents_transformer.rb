@@ -133,6 +133,11 @@ class XmlTableOfContentsTransformer
     end
 
     def process_sjdent_node(sjdent_node)
+      # occasionally there isn't a SJ node preceding a SJDENT node
+      unless document
+        @document = CategoryDocument.new
+        document.subject_1 = ""
+      end
       document.subject_2 = sjdent_node.at_css('SJDOC').text
       document.document_numbers = process_document_numbers(sjdent_node.css('FRDOCBP'))
       write_document
@@ -161,7 +166,6 @@ class XmlTableOfContentsTransformer
       documents << document.dup
       document = CategoryDocument.new
       document.subject_1 = subject_1
-      #TODO: Is it necessary to clear subject_2?
     end
 
     def documents_as_hashes

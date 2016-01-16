@@ -200,6 +200,52 @@ attr_reader :transformer
 
     end
 
+    it "Identifies handles <SJDENT> without a preceding <SJ> node" do
+      # see https://www.gpo.gov/fdsys/bulkdata/FR/2015/03/FR-2015-03-27.xml
+      make_nokogiri_doc(<<-XML)
+        <CNTNTS>
+          <AGCY>
+            <EAR>Forest</EAR>
+            <HD>Forest Service</HD>
+            <CAT>
+              <HD>NOTICES</HD>
+              <SJDENT>
+                <SJDOC>Smoky Canyon Mine, Panels F and G Lease and Mine Plan Modification Project, Caribou County, ID,</SJDOC>
+                <PGS>16422-16424</PGS>
+                <FRDOCBP D="2" T="27MRN1.sgm">2015-07012</FRDOCBP>
+              </SJDENT>
+            </CAT>
+          </AGCY>
+        </CNTNTS>
+      XML
+
+      expected =
+        {
+          agencies:
+            [
+              {
+                name: 'Forest Service',
+                slug: 'forest-service',
+                url: '',
+                document_categories: [
+                  {
+                    type: "Notice",
+                    documents: [
+                      {
+                        subject_1: '',
+                        subject_2: 'Smoky Canyon Mine, Panels F and G Lease and Mine Plan Modification Project, Caribou County, ID,',
+                        document_numbers: ['2015-07012']
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+        }
+
+      transformer.build_table_of_contents(@nokogiri_doc).should == expected
+    end
+
     it "Identifies two subjects: <SJ> followed by sibling <SJDENT> and child <SJDOC>" do
 
       make_nokogiri_doc(<<-XML)
