@@ -32,7 +32,7 @@ namespace :content do
           end
         end
 
-        task :pi_toc => :envrionment do
+        task :pi_toc => :environment do
           dates = Content.parse_dates(ENV['DATE'])
 
           dates.each do |date|
