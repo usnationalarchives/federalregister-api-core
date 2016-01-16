@@ -90,7 +90,7 @@ module Content
       end
     end
 
-    def log_missing_document(type, date, document_number)
+    def notify_of_missing_document(type, date, document_number)
       case type
       when :bulkdata
         error_class = "Missing Document Number in bulkdata"
