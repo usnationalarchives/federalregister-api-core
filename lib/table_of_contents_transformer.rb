@@ -38,7 +38,7 @@ class TableOfContentsTransformer
     agencies.each do |agency|
       if agency
         agency_hash = {
-          name: agency.name,
+          name: agency.name.downcase.titleize,
           slug: agency.slug,
           url: url_lookup(agency.name),
           see_also: (process_see_also(agency) if agency.children.present?),
@@ -56,7 +56,7 @@ class TableOfContentsTransformer
     agencies.group_by(&:agency_names).each do |agency_names, entries|
       agency_stub = create_agency_representation(agency_names.map(&:name).to_sentence)
       agency_hash = {
-        name: agency_stub.name,
+        name: agency_stub.name.downcase.titleize,
         slug: agency_stub.slug,
         url: agency_stub.url,
         document_categories: [

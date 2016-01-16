@@ -343,6 +343,7 @@ GEM
     tilt (1.3.3)
     timecop (0.6.1)
     tins (0.8.0)
+    titleize (1.3.0)
     uuidtools (2.1.5)
     validation_reflection (0.3.8)
     vcr (2.6.0)
@@ -432,6 +433,7 @@ DEPENDENCIES
   thinking-sphinx (= 1.4.13)
   thunder_punch (= 0.1.3)
   timecop
+  titleize
   validation_reflection (= 0.3.8)
   vcr
   webrat (= 0.7.1)
