@@ -1,4 +1,3 @@
-# encoding: utf-8
 module Content
   class PublicInspectionImporter
     JOB_TIMEOUT = 10.minutes

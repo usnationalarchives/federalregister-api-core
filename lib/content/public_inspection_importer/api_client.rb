@@ -13,9 +13,9 @@ class Content::PublicInspectionImporter::ApiClient
     @session_token = options[:session_token]
   end
 
-  def documents(date=Date.today)
+  def documents(date=Date.current)
     response = get("/eDocs/PIReport/#{date.strftime("%Y%m%d")}")
-    response_body = response.body.force_encoding("ISO-8859-1").encode("UTF-8")
+    response_body = response.body
     raise ResponseError.new("Status: #{response.code}; body: #{response_body}") unless response.ok?
 
     write_to_log(response_body)
