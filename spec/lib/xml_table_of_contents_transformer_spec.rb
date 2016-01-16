@@ -139,7 +139,7 @@ attr_reader :transformer
                     type: "Rule",
                     documents: [
                       {
-                        subject_1: 'Resource Agency Hearings and Alternatives Development Procedures in Hydropower Licenses,',
+                        subject_1: 'Resource Agency Hearings and Alternatives Development Procedures in Hydropower Licenses',
                         document_numbers: []
                       }
                     ]
@@ -186,7 +186,7 @@ attr_reader :transformer
                     documents: [
                       {
                         subject_1: 'Fisheries of the Exclusive Economic Zone off Alaska:',
-                        subject_2: 'Applications for Exempted Fishing Permits,',
+                        subject_2: 'Applications for Exempted Fishing Permits',
                         document_numbers: []
                       }
                     ]
@@ -233,7 +233,7 @@ attr_reader :transformer
                     documents: [
                       {
                         subject_1: '',
-                        subject_2: 'Smoky Canyon Mine, Panels F and G Lease and Mine Plan Modification Project, Caribou County, ID,',
+                        subject_2: 'Smoky Canyon Mine, Panels F and G Lease and Mine Plan Modification Project, Caribou County, ID',
                         document_numbers: ['2015-07012']
                       }
                     ]
@@ -277,7 +277,7 @@ attr_reader :transformer
                     documents: [
                       {
                         subject_1: 'Atlantic Highly Migratory Species:',
-                        subject_2: 'Atlantic Shark Management Measures; Research Fishery; Meeting,',
+                        subject_2: 'Atlantic Shark Management Measures; Research Fishery; Meeting',
                         document_numbers: []
                       }
                     ]
@@ -327,7 +327,7 @@ attr_reader :transformer
                       {
                         subject_1: 'Air Quality State Implementation Plans;  Approvals and Promulgations:',
                         subject_2: 'West Virginia; Charleston Nonattainment Area to Attainment for the 1997 Annual and 2006 24-Hour Fine Particulate Matter Standard',
-                        subject_3: 'West Virginia; Charleston,',
+                        subject_3: 'West Virginia; Charleston',
                         document_numbers: []
                       }
                     ]
@@ -375,7 +375,7 @@ attr_reader :transformer
                     documents: [
                       {
                         subject_1: 'Increased Assessment Rates:',
-                        subject_2: 'Grapes Grown in a Designated Area of Southeastern California,',
+                        subject_2: 'Grapes Grown in a Designated Area of Southeastern California',
                         document_numbers: ['2015-07370']
                       }
                     ]
@@ -422,7 +422,7 @@ attr_reader :transformer
                     documents: [
                       {
                         subject_1: 'Increased Assessment Rates:',
-                        subject_2: 'Grapes Grown in a Designated Area of Southeastern California,',
+                        subject_2: 'Grapes Grown in a Designated Area of Southeastern California',
                         document_numbers: ['2015-07172', '2015-07280']
                       }
                     ]

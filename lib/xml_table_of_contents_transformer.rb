@@ -171,9 +171,9 @@ class XmlTableOfContentsTransformer
     def documents_as_hashes
       documents.map do |document|
         {
-          subject_1: document.subject_1,
-          subject_2: document.subject_2,
-          subject_3: document.subject_3,
+          subject_1: strip_trailing_comma(document.subject_1),
+          subject_2: strip_trailing_comma(document.subject_2),
+          subject_3: strip_trailing_comma(document.subject_3),
           document_numbers: document.document_numbers.map{|n| n.gsub(/-+/,'-')}
         }.delete_if{|k,v| v.nil?}
       end
@@ -188,6 +188,10 @@ class XmlTableOfContentsTransformer
     end
 
     private
+
+    def strip_trailing_comma(text)
+      text ? text.sub(/,$/, '') : nil
+    end
 
     def document_type(document_type_from_xml)
       if document_type_mappings[document_type_from_xml.upcase].present?
