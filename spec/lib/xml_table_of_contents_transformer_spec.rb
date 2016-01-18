@@ -119,7 +119,7 @@ attr_reader :transformer
             <CAT>
               <HD>RULES</HD>
               <DOCENT>
-                <DOC>Resource Agency Hearings and Alternatives Development Procedures in Hydropower Licenses,</DOC>
+                <DOC>Resource Agency Hearings and Alternatives Development Procedures in Hydropower Licenses, </DOC>
               </DOCENT>
             </CAT>
           </AGCY>
@@ -163,7 +163,7 @@ attr_reader :transformer
             <CAT>
               <HD>NOTICES</HD>
               <SJ>Fisheries of the Exclusive Economic Zone off Alaska:</SJ>
-              <SUBSJ>Applications for Exempted Fishing Permits,</SUBSJ>
+              <SUBSJ>Applications for Exempted Fishing Permits, </SUBSJ>
               <SSJDENT>
                 <SUBSJDOC/>
               </SSJDENT>
@@ -210,7 +210,7 @@ attr_reader :transformer
             <CAT>
               <HD>NOTICES</HD>
               <SJDENT>
-                <SJDOC>Smoky Canyon Mine, Panels F and G Lease and Mine Plan Modification Project, Caribou County, ID,</SJDOC>
+                <SJDOC>Smoky Canyon Mine, Panels F and G Lease and Mine Plan Modification Project, Caribou County, ID, </SJDOC>
                 <PGS>16422-16424</PGS>
                 <FRDOCBP D="2" T="27MRN1.sgm">2015-07012</FRDOCBP>
               </SJDENT>
@@ -305,7 +305,7 @@ attr_reader :transformer
               <SJ>Air Quality State Implementation Plans;  Approvals and Promulgations:</SJ>
               <SUBSJ>West Virginia; Charleston Nonattainment Area to Attainment for the 1997 Annual and 2006 24-Hour Fine Particulate Matter Standard</SUBSJ>
               <SSJDENT>
-                <SUBSJDOC>West Virginia; Charleston,</SUBSJDOC>
+                <SUBSJDOC>West Virginia; Charleston, </SUBSJDOC>
               </SSJDENT>
             </CAT>
           </AGCY>
@@ -353,7 +353,7 @@ attr_reader :transformer
               <HD>PROPOSED RULES</HD>
               <SJ>Increased Assessment Rates:</SJ>
               <SJDENT>
-                <SJDOC>Grapes Grown in a Designated Area of Southeastern California,</SJDOC>
+                <SJDOC>Grapes Grown in a Designated Area of Southeastern California, </SJDOC>
                 <FRDOCBP D="2" T="31MRP1.sgm">2015-07370</FRDOCBP>
               </SJDENT>
             </CAT>
@@ -399,7 +399,7 @@ attr_reader :transformer
               <HD>PROPOSED RULES</HD>
               <SJ>Increased Assessment Rates:</SJ>
               <SJDENT>
-                <SJDOC>Grapes Grown in a Designated Area of Southeastern California,</SJDOC>
+                <SJDOC>Grapes Grown in a Designated Area of Southeastern California, </SJDOC>
                   <FRDOCBP D="3" T="31MRP1.sgm">2015-07172</FRDOCBP>
                   <FRDOCBP D="2" T="31MRP1.sgm">2015-07280</FRDOCBP>
               </SJDENT>

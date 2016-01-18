@@ -190,7 +190,11 @@ class XmlTableOfContentsTransformer
     private
 
     def strip_trailing_comma(text)
-      text ? text.sub(/,$/, '') : nil
+      if text
+        text.strip.sub(/,$/, '')
+      else
+        nil
+      end
     end
 
     def document_type(document_type_from_xml)
