@@ -77,6 +77,13 @@ module RouteBuilder
     }
   end
 
+  def short_document_url(document, options={})
+    host = options.fetch(:host, 'https://federalregister.gov')
+    format = options.fetch(:format, nil)
+
+    "#{host}/d/#{document.document_number}#{format ? ".#{format}" : ''}"
+  end
+
   add_route :place do |place|
     {
       :slug => place.slug,
