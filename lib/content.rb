@@ -70,6 +70,7 @@ module Content
       Citations::CfrHelper,
       XsltHelper,
       RegulatoryPlanHelper,
+      RouteBuilder,
       TextHelper
     ].each do |mod|
       view.extend mod
