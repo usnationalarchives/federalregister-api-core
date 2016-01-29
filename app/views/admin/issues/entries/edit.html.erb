@@ -1,54 +1,109 @@
-<% super_title 'Sections' %>
-<% title "#{@entry.curated_title || @entry.title}" %>
+<% super_title 'Highlighted Document' %>
 
-<% add_javascript :src => 'admin/issues_entries_lede_photos' %>
-<% add_javascript :src => 'admin/jquery.Jcrop'                     %>
-<% add_javascript :src => 'admin/jqModal'                    %>
-<% add_javascript :src => '../ContentFlow/contentflow'       %>
-<% add_javascript :src => '../ContentFlow/ContentFlowAddOn_white' %>
+<%= add_template 'admin/photo_grid', 'admin-photo-grid' %>
+<%= add_template 'admin/image_cropper', 'admin-image-cropper' %>
+<%= add_template 'admin/image_cropper_photo_info', 'admin-image-cropper-photo-info' %>
 
-<% sidebar(render :partial => 'admin/issues/sections/nav', :locals => {:sections => @sections, :publication_date => @publication_date}) %>
+<% add_javascript :src => 'admin/jqModal' %>
 
-<div class='center_content'>
-  
-  <div class='bordered_wrapper'>
-    <div id='photo_content'>
-      <div id='lede_photo_flow'>
-        <div id='blank_flow' class="ContentFlow topic_photo_flow ContentFlowAddOn_white">
-            <div class="loadIndicator"><div class="indicator"></div></div>
-        </div>
-      </div>
-      <fieldset>
-        <label class="label_like_formtastic">Tags for photo</label>
-        <input type="text" id="custom_tag">
-        <input type="submit" value="Go">
-      </fieldset>
-    </div>
-    
-    <div id='entry_content'>
-      <% semantic_form_for @entry, :url => admin_issue_entry_path(@publication_date.to_s(:db), @entry.document_number) do |f| %>
-        <%= hidden_field_tag :redirect_to, params[:redirect_to] || request.referer %>
+<% add_javascript do %>
+  Handlebars.registerHelper('times', function(n, block) {
+    var accum = '';
+    for(var i = 1; i <= n; ++i)
+      accum += block.fn(i);
+    return accum;
+  });
 
-        <% f.fields_for :lede_photo_attributes do |lede_photo| %>
-          <%= lede_photo.hidden_field :url %>
-          <%= lede_photo.hidden_field :crop_x %>
-          <%= lede_photo.hidden_field :crop_y %>
-          <%= lede_photo.hidden_field :crop_width %>
-          <%= lede_photo.hidden_field :crop_height %>
-          <%= lede_photo.hidden_field :flickr_photo_id %>
-        <% end %>
+  Handlebars.registerHelper('equal', function(a, b, options) {
+    if(Number(a, 10) === Number(b, 10)) {
+      return options.fn(this);
+    } else {
+      return options.inverse(this);
+    }
+  });
 
-        <% f.inputs do %>
-          <%= f.input :curated_title, :hint => "Original: <em>#{f.object.title}</em>" %>
-          <%= f.input :curated_abstract, :as => :text, :hint => "Original: <em>#{f.object.abstract}</em>" %>
-          <%= f.input :sections, :as => :check_boxes %>
-        <% end %>
+  $(document).ready(function(){
+    window.highlightedDocument = new FR2.HighlightedDocuments($('#photo-content'), $('#document-content'));
+  });
+<% end %>
 
-        <% f.buttons do %>
-          <%= f.commit_button 'Save' %>
-        <% end %>
+<% sidebar(render :partial => 'admin/issues/sections/nav', :locals => {
+    :sections => @sections,
+    :publication_date => @publication_date
+  }) %>
+
+<div class="page_summary">
+  <h3 class="title">
+    <%= @entry.curated_title || @entry.title %>
+  </h3>
+
+  <div class="document-details">
+    <dl>
+      <dt>Agency:</dt>
+      <dd><%= @entry.agencies.uniq.map(&:name).join(', ') %></dd>
+
+      <dt>Length:</dt>
+      <dd><%= pluralize @entry.human_length, 'page' %></dd>
+
+      <dt>Type:</dt>
+      <dd><%= @entry.entry_type %></dd>
+
+      <dt>Doc. Num.:</dt>
+      <dd><%= link_to @entry.document_number, entry_path(@entry), :target => "_blank" %></dd>
+
+      <% if @entry.significant? %>
+        <dt>Economically Significant</dt>
+        <dd></dd>
       <% end %>
-    </div>
-    
+    </dl>
   </div>
+</div>
+
+<div id='photo-content' class="photo-content">
+  <form class="photo-search">
+    <fieldset>
+      <label class="label_like_formtastic">Search Flickr</label>
+      <input type="text" id="custom_tag">
+      <input type="submit" value="Search">
+    </fieldset>
+  </form>
+</div>
+
+<div id='document-content' class="document-content">
+  <% semantic_form_for @entry, :url => admin_issue_entry_path(@publication_date.to_s(:db), @entry.document_number) do |f| %>
+    <%= hidden_field_tag :redirect_to, params[:redirect_to] || request.referer %>
+
+    <% f.fields_for :lede_photo_attributes do |lede_photo| %>
+      <%= lede_photo.hidden_field :url %>
+      <%= lede_photo.hidden_field :crop_x %>
+      <%= lede_photo.hidden_field :crop_y %>
+      <%= lede_photo.hidden_field :crop_width %>
+      <%= lede_photo.hidden_field :crop_height %>
+      <%= lede_photo.hidden_field :flickr_photo_id %>
+      <%= lede_photo.hidden_field :credit %>
+      <%= lede_photo.hidden_field :credit_url %>
+    <% end %>
+
+    <% f.inputs do %>
+      <%= f.input :curated_title,
+        :hint => "Curated title should be less than 110 characters. <span class='current-count'></span>" %>
+      <p class="original-title">
+        <strong>Original title:</strong>
+        <em><%= f.object.title %></em>
+      </p>
+
+      <%= f.input :curated_abstract, :as => :text,
+        :hint => "Curated title should be less than 215 characters. <span class='current-count'></span>" %>
+      <p class="original-title">
+        <strong>Original abstract:</strong>
+        <em><%= f.object.abstract %></em>
+      </p>
+
+      <%= f.input :sections, :as => :check_boxes %>
+    <% end %>
+
+    <% f.buttons do %>
+      <%= f.commit_button 'Save' %>
+    <% end %>
+  <% end %>
 </div>

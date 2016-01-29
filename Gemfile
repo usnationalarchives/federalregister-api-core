@@ -42,7 +42,13 @@ gem 'stevedore', '0.1.0'
 gem 'active_hash', '0.9.5'
 gem 'bcrypt-ruby', '2.1.2', :require => 'bcrypt'
 gem 'authlogic', '2.1.3'
-gem 'flickraw', '0.9.8', :require => false
+#gem 'flickraw', '0.9.8', :require => false
+
+# wrapper around http requests that supports multiple backends
+gem 'faraday', '~> 0.9.2'
+# make multiple http requests concurrently
+gem 'typhoeus', '~> 1.0', '>= 1.0.1'
+
 gem 'searchlogic', '2.4.12'
 gem 'haml', '3.0.4'
 gem 'compass', '0.10.1'

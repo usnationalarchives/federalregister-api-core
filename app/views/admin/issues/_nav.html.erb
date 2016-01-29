@@ -1,30 +1,36 @@
 <% if AgencyName.unprocessed.count > 0 %>
-  <% section_tag(:class => 'module') do %>
-    <div class="title">Agencies</div>
-    <% nav_tag do %>
-      <ul>
-        <li><%= link_to_unless_current 'Unprocessed Agency Names', unprocessed_admin_agency_names_path() %> (<%= AgencyName.unprocessed.count %>)</li>
-      </ul>
-    <% end -%>
-  <% end -%>
+  <div class="section">
+    <h4>Agencies</h4>
+
+    <ul>
+      <li>
+        <%= link_to_unless_current 'Unprocessed Agency Names',
+          unprocessed_admin_agency_names_path() %>
+        (<%= AgencyName.unprocessed.count %>)
+      </li>
+    </ul>
+  </div>
 <% end -%>
 
-<% section_tag(:class => 'module') do %>
-  <div class="title">Events</div>
-  <% nav_tag do %>
-    <ul>
-      <li><%= link_to 'Events', admin_issue_eventful_entries_path(publication_date.to_s(:mdy_dash)) %></li>
-    </ul>
-  <% end -%>
-<% end -%>
+<div class="section">
+  <h4>Events</h4>
 
-<% section_tag(:class => 'module') do %>
-  <div class="title">Sections</div>
-  <% nav_tag do %>
-    <ul>
-      <% sections.each do |section| %>
-        <li><%= link_to section.title, admin_issue_section_path(publication_date.to_s(:mdy_dash), section) %></li>
-      <% end %>
-    </ul>
-  <% end -%>
-<% end -%>
+  <ul>
+    <li><%= link_to 'Events',
+      admin_issue_eventful_entries_path(publication_date.to_s(:mdy_dash)) %>
+    </li>
+  </ul>
+</div>
+
+<div class="section">
+  <h4>Sections</h4>
+
+  <ul>
+    <% sections.each do |section| %>
+      <li>
+        <%= link_to section.title,
+          admin_issue_section_path(publication_date.to_s(:mdy_dash), section) %>
+      </li>
+    <% end %>
+  </ul>
+</div>

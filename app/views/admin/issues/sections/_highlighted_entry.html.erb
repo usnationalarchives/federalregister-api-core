@@ -1,7 +1,35 @@
 <li id="<%= dom_id(highlighted_entry) %>" class='highlighted_entry' data-entry-id="<%= highlighted_entry.id %>">
-  <%= image_tag(highlighted_entry.lede_photo.photo.url(:small)) if highlighted_entry.lede_photo %>
-  <h4><%= link_to highlighted_entry.curated_title, edit_admin_issue_entry_path(highlighted_entry.publication_date.to_s(:db), highlighted_entry.document_number), :class => 'article_title' %></h4>
-  <span class="date"><%= highlighted_entry.publication_date %></span>
-  
-  <a class="remove button grey mini">remove</a>
+  <% html5_tag('article', "data-entry-id" => highlighted_entry.id) do %>
+    <%= image_tag(highlighted_entry.lede_photo.photo.url(:small)) if highlighted_entry.lede_photo %>
+
+    <h4>
+      <%= link_to highlighted_entry.curated_title,
+        edit_admin_issue_entry_path(
+          highlighted_entry.publication_date.to_s(:db),
+          highlighted_entry.document_number
+        ),
+        :class => 'article_title' %>
+    </h4>
+
+    <dl>
+      <dt>Type:</dt>
+      <dd><%= highlighted_entry.entry_type %></dd>
+
+      <dt>Publication Date:</dt>
+      <dd><%= highlighted_entry.publication_date %></dd>
+
+      <dt>Doc. Num.:</dt>
+      <dd>
+        <%= link_to highlighted_entry.document_number,
+          entry_path(highlighted_entry), :target => "_blank" %>
+      </dd>
+
+      <% if highlighted_entry.significant? %>
+        <dt>Economically Significant</dt>
+        <dd></dd>
+      <% end %>
+    </dl>
+
+    <a class="remove button">remove</a>
+  <% end %>
 </li>

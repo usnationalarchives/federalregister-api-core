@@ -14,7 +14,6 @@ class LedePhoto < ApplicationModel
                     :path => ":id/:style.:extension"
 
   before_save :download_and_crop_file
-  before_save :get_credit_info_from_flickr
 
   def download_and_crop_file
     if url.present?
@@ -43,20 +42,4 @@ class LedePhoto < ApplicationModel
   def flickr_photo_id=(photo_id)
     @flickr_photo_id = photo_id
   end
-
-  def credit_url
-    self['credit_url'] + '/sizes/l'
-  end
-
-  private
-
-    def get_credit_info_from_flickr
-      if @flickr_photo_id.present?
-        photo = Flickr::Photo.find_by_id(@flickr_photo_id)
-        self.credit = photo.creator.real_name.present? ? photo.creator.real_name : photo.creator.user_name
-        self.credit_url = photo.url('photopage')
-      end
-
-      true
-    end
 end

@@ -27,8 +27,8 @@ ActionController::Routing::Routes.draw do |map|
 
     admin.resources :topics
     admin.resources :topic_names, :collection => {:unprocessed => :get}
-    
-    admin.resources :photo_candidates, :only => :show
+
+    admin.resources :photo_candidates, :only => [:show, :info], :member => {:info => :get}
     admin.resources :sections
     admin.resources :agency_highlights
     admin.resources :missing_images, :only => :index

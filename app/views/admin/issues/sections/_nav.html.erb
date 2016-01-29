@@ -1,10 +1,12 @@
-<% section_tag(:class => 'module') do %>
-  <div class="title">Sections</div>
-  <% nav_tag do %>
-    <ul>
-      <% sections.each do |section| %>
-        <li><%= link_to section.title, admin_issue_section_path(publication_date.to_s(:mdy_dash), section) %></li>
-      <% end %>
-    </ul>
-  <% end -%>
-<% end -%>  
+<div class="section">
+  <h4>Sections</h4>
+
+  <ul>
+    <% sections.each do |section| %>
+      <li>
+        <%= link_to section.title,
+          admin_issue_section_path(publication_date.to_s(:mdy_dash), section) %>
+      </li>
+    <% end %>
+  </ul>
+</div>

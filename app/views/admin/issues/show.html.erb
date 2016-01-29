@@ -1,60 +1,74 @@
 <% super_title "#{@publication_date} Issue" %>
-<% sidebar(render :partial => 'admin/issues/nav', :locals => {:sections => @sections, :publication_date => @publication_date}) %>
+
+<% sidebar(render :partial => 'admin/issues/nav', :locals => {
+  :sections => @sections,
+  :publication_date => @publication_date
+}) %>
 
 <% add_javascript do %>
-<script>
-  $(document).ready(function(){
-    $('input[type=checkbox]').live('click', function(){
-      // $(this)
-      var form = $($(this).closest('form'));
-      form.find('img').remove();
-      form.find('a').prepend('<img src="/images/ui/ui-anim_basic_16x16.gif">')
-      $.ajax({
-        url: form.attr('action'),
-        data: form.serialize(),
-        type: 'PUT',
-        success: function(){
-          form.find('img').remove();
-        }
-      })
+  <script>
+    $(document).ready(function(){
+      $('input[type=checkbox]').live('click', function(){
+        // $(this)
+        var form = $($(this).closest('form'));
+        form.find('img').remove();
+        form.find('a').prepend('<img src="/images/ui/ui-anim_basic_16x16.gif">')
+        $.ajax({
+          url: form.attr('action'),
+          data: form.serialize(),
+          type: 'PUT',
+          success: function(){
+            form.find('img').remove();
+          }
+        })
+      });
     });
-  });
-</script>
+  </script>
 <% end %>
 
-  <% if @issue_approval.present? %>
+<% if @issue_approval.present? %>
   <div class="notice">
     <p>Issue approved on <%= @issue_approval.created_at %>
       <% if @issue_approval.cache_manually_expired? %>
         (and manually expired at <%= @issue_approval.updated_at %>)
       <% end %>. Any changes made at this time may go live without additional approval. <%= link_to 'Expire Cache', admin_issue_approval_path(@publication_date.to_s(:iso)), :method => :put %></p>
   </div>
-    
-  <% else %>
+<% else %>
+  <div class="issue-approval page_summary">
     <%= link_to 'Publish this issue', admin_issue_approval_path(@publication_date.to_s(:iso)), :method => :post, :confirm => "Are you sure you wish to approve this issue?" %>
+    |
+    <%= link_to "Homepage Preview", preview_admin_issue_path(@publication_date.to_s(:iso)), :target => "_blank" %>
+  </div>
+<% end %>
+
+
+<h2 class="section-header">
+  Entries not assigned to a section
+</h2>
+
+<ul class="document-list">
+  <% @entries_without_sections.each do |entry| %>
+    <li>
+      <% form_for entry, :url => admin_issue_entry_path(@publication_date.to_s(:iso), entry.document_number) do |f| %>
+        <h3>
+          <%= link_to entry.title, entry_path(entry),
+            :title => entry.abstract,
+            :target => "_blank" %>
+        </h3>
+
+        <input type="hidden" name="entry[section_ids][]" value="">
+
+        <ul class="section-list">
+          <% @sections.each do |section| %>
+            <li>
+              <label>
+                <input type="checkbox" name="entry[section_ids][]" value="<%= section.id %>" />
+                <%= section.title %>
+              </label>
+            </li>
+          <% end %>
+        </ul>
+      <% end %>
+    </li>
   <% end %>
-  | <%= link_to "Homepage Preview", preview_admin_issue_path(@publication_date.to_s(:iso)), :target => "_blank" %>
-  
-  <%# TODO HELP-DESIGN figure this out %>
-  <h2>Entries not assigned to a section</h2>
-  
-  <ul class="article_list">
-    <% @entries_without_sections.each do |entry| %>
-      <li>
-        <% form_for entry, :url => admin_issue_entry_path(@publication_date.to_s(:iso), entry.document_number) do |f| %>
-          <%= link_to entry.title, entry_path(entry), :title => entry.abstract, :target => "_blank"%>
-          <input type="hidden" name="entry[section_ids][]" value="">
-          <ul class="section_list">
-            <% @sections.each do |section| %>
-              <li>
-                <label>
-                  <input type="checkbox" name="entry[section_ids][]" value="<%= section.id %>" />
-                  <%= section.title %>
-                </label>
-              </li>  
-            <% end %>
-          </ul>
-        <% end %>
-      </li>
-    <% end %>
-  </ul>    
+</ul>

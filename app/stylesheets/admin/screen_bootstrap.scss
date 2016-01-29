@@ -2,9 +2,27 @@
 @import "../library";
 @import "../patterns";
 
-
 @import "app";
 @import "design/fr_index";
 @import "design/missing_images";
 @import "design/reprocessed_issues";
 @import "design/diffy";
+@import "design/issues";
+@import "design/sections";
+@import "design/highlighted_documents";
+@import "design/modals";
+
+#entries.admin #main,
+#issues.admin #main,
+#sections.admin #main {
+  #sidebar,
+  #content_area {
+    font-size: 16px;
+  }
+
+  #sidebar {
+    .section { margin-bottom: 20px; }
+
+    h4 { font-size: 16px; }
+  }
+}
