@@ -21,10 +21,8 @@ class Section < ApplicationModel
     slug
   end
 
-  def highlighted_entries(publication_date=Issue.current.publication_date, options={})
-    limit = options.fetch(:limit, 30)
-
-    Entry.all(
+  def highlighted_entries(publication_date=Issue.current.publication_date)
+    Entry.scoped(
       :conditions => {
         :section_highlights => {
           :publication_date => publication_date,
@@ -32,8 +30,7 @@ class Section < ApplicationModel
         }
       },
       :joins => :section_highlights,
-      :order => "section_highlights.position",
-      :limit => limit
+      :order => "section_highlights.position"
     )
   end
 
