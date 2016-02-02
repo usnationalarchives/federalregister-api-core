@@ -7,6 +7,7 @@ class Flickr::Person
     :license,
     :lightbox_url,
     :location,
+    :nsid,
     :path_alias,
     :realname,
     :title,
@@ -50,11 +51,17 @@ class Flickr::Person
   end
 
   def lightbox_url
-    "https://www.flickr.com/photos/#{path_alias}/#{id}/in/photostream/lightbox/"
+    user = path_alias.present? ? path_alias : nsid
+
+    "https://www.flickr.com/photos/#{user}/#{id}/in/photostream/lightbox/"
   end
 
   def location
     attributes['owner']['location']
+  end
+
+  def nsid
+    attributes['owner']['nsid']
   end
 
   def path_alias
