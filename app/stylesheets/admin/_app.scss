@@ -5,7 +5,7 @@
 .header .nav { margin-bottom: 0px; }
 
 .header { height: 55px; }
-.header #primary.nav { 
+.header #primary.nav {
   height: 40px;
   }
 
@@ -29,11 +29,11 @@
 #utility.nav { margin-bottom: 10px; }
 
 #utility.nav p { float: right; }
-#utility.nav ul { 
+#utility.nav ul {
   list-style: none;
   float: right;
   }
-#utility.nav ul li { 
+#utility.nav ul li {
   display: inline-block;
   margin-right: 10px;
   }
@@ -50,9 +50,9 @@ div.title {
   line-height: .9;
   font-size: 2.2em;
   font-weight: 700;
-  height: 21px;
+  height: 25px;
   letter-spacing: 0px;
-  
+
   }
 div.title span {
   background: white;
@@ -100,4 +100,3 @@ div.warning {
   background: #EDD3D3;
   border: 1px solid #8A3737;
   }
-

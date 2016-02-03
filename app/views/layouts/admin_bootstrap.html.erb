@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<html lang="en"> 
-<head> 
+<html lang="en">
+<head>
   <title>FR2 Admin<%= " | #{yield :title}" if yield(:title) %></title>
   <meta charset="utf-8">
 
@@ -9,14 +9,13 @@
   <%= stylesheet_link_tag "admin/formtastic",                :media => :screen %>
   <%= stylesheet_link_tag "admin/bootstrap",                 :media => :screen %>
   <%= stylesheet_link_tag "tipsy",                           :media => :screen %>
+  <%= stylesheet_link_tag "cropper.min.css",                 :media => :screen %>
   <%= stylesheet_link_tag "admin/screen_bootstrap",          :media => :screen %>
 
   <%= csrf_meta_tag %>
 
-  <%#= javascript_include_tag "https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" %>
 
   <%= jquery_include_tag %>
-  <%#= jquery_ui_include_tag %>
 
   <%= javascript_include_tag "vendor/jquery-ui-1.9.2.custom.min.js" %>
   <%= javascript_include_tag "vendor/jquery-ui-1.9.2.effects.min.js" %>
@@ -35,6 +34,7 @@
   <%= javascript_include_tag "bootstrap/bootstrap-popover.js" %>
   <%= javascript_include_tag "bootstrap/bootstrap-typeahead.js" %>
   <%= javascript_include_tag "vendor/jquery.scrollintoview.min.js" %>
+  <%= javascript_include_tag "vendor/jquery.utilities.js" %>
 
   <%= javascript_include_tag 'admin/honeybadger.min.js' %>
   <%= javascript_include_tag 'admin/jquery.tablesorter' %>
@@ -47,7 +47,12 @@
   <%= javascript_include_tag 'admin/spell_checker' %>
   <%= javascript_include_tag 'admin/fr_index' %>
   <%= javascript_include_tag 'admin/issue_reprocessor' %>
-  
+  <%= javascript_include_tag "admin/cropper.min.js" %>
+
+  <% #from my fr but patching it in here %>
+  <%= javascript_include_tag("admin/highlighted_documents.js").gsub('/javascripts', '/my/assets') %>
+  <%= javascript_include_tag("utilities/modal.js").gsub('/javascripts', '/my/assets') %>
+
   <%= yield :javascripts %>
 
   <%= render(:partial => 'layouts/admin/google_analytics') if RAILS_ENV == 'production' %>
@@ -55,7 +60,7 @@
   <%= yield :head %>
 </head>
 <body id="<%= controller.controller_name %>" class="admin <%= controller.action_name %>">
-  
+
 
     <%= render :partial => "layouts/admin/header" %>
   <div class="container">
@@ -65,19 +70,19 @@
       <% if yield(:super_title) %>
         <div class="title"><span><%= yield(:super_title) %></span></div>
       <% end %>
-      
+
       <% if yield(:sidebar) %>
         <div id="sidebar" class="span3">
           <%= yield(:sidebar) %>
         </div>
       <% end %>
-   
+
       <div id="content_area" class="span8">
-        
+
         <% if yield(:title)%>
          <h3 class="title"><%= yield(:title) %></h3>
         <% end %>
-        
+
         <div class="wrapper">
           <% if flash[:notice] %>
           <div class="flash notice">
@@ -90,13 +95,13 @@
             <%= flash[:error]%>
           </div>
           <% end %>
-        
+
           <%= yield %>
         </div>
       </div><!-- content end -->
-        
+
     </div> <!-- MAIN end -->
-    
+
     <div class='jqmOverlay'></div>
     <div class='modal jqmWindow'>
       <div id='crop_area'>
@@ -109,13 +114,13 @@
       </div>
     </div>
 
-  </div> <!-- end .container -->  
+  </div> <!-- end .container -->
   <!-- <script>
     (function(){document.body.appendChild(document.createElement('script')).src='http://gridder.andreehansson.se/releases/latest/960.gridder.js';})();
   </script> -->
-  
+
   <script type="text/javascript" src="https://use.typekit.com/qbb7wou.js"></script>
   <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
-  <script type="text/javascript">Honeybadger.configure({api_key: "d4da564f3d569e2ce485902c42dfae50"})</script> 
+  <script type="text/javascript">Honeybadger.configure({api_key: "d4da564f3d569e2ce485902c42dfae50"})</script>
 </body>
 </html>

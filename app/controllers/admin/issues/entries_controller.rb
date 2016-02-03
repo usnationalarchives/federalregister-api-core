@@ -1,5 +1,6 @@
 class Admin::Issues::EntriesController < AdminController
   skip_before_filter :verify_authenticity_token
+  layout 'admin_bootstrap'
 
   def highlight
     @entry = Entry.find_by_document_number!(params[:id])

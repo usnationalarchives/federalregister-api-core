@@ -1,0 +1,91 @@
+#sections.admin #main {
+  #sidebar {
+    form.formtastic {
+      fieldset > ol > li {
+        margin-bottom: 5px;
+
+        &#section_highlight_entry_document_number_input {
+          margin-top: 20px;
+        }
+
+        label { width: 100%; }
+      }
+
+      .buttons {
+        padding-left: 0;
+
+        input.create {
+          background-color: $green;
+          color: #FFF;
+          padding: 5px 10px;
+
+          &:hover { background-color: darken($green, 10); }
+        }
+      }
+    }
+  }
+
+  #content_area {
+    h4 { font-size: 16px; }
+
+    .document-list {
+      .article {
+        overflow: auto;
+
+        &.highlighted { color: gray; }
+      }
+
+      li { position: relative; }
+
+      dl {
+        font-size: 16px;
+
+        dt,
+        dd {
+          float: left;
+        }
+
+        dt {
+          font-weight: normal;
+          margin-right: 5px;
+        }
+        dd {
+          font-weight: bold;
+          margin-left: 0;
+          margin-right: 10px;
+          position: relative;
+          top: -1px;
+        }
+      }
+
+      .button {
+
+        border-radius: 3px;
+        bottom: 3px;
+        color: #FFF;
+        float: right;
+        padding: 5px 10px;
+        position: absolute;
+        right: 3px;
+
+        &:hover {
+          cursor: pointer;
+          text-decoration: none;
+        }
+
+        &.add {
+          background-color: $green;
+
+          &:hover { background-color: darken($green, 10); }
+        }
+
+        $red: #8A3737;
+        &.remove {
+          background-color: $red;
+
+          &:hover { background-color: darken($red, 10); }
+        }
+      }
+    }
+  }
+}

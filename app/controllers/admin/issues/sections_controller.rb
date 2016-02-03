@@ -1,5 +1,6 @@
 class Admin::Issues::SectionsController < AdminController
   include Shared::SectionsControllerUtilities
+  layout 'admin_bootstrap'
 
   def index
     @sections = Section.all
@@ -10,7 +11,7 @@ class Admin::Issues::SectionsController < AdminController
     @sections = Section.all
     @publication_date = Date.parse(params[:issue_id])
     @section = Section.find_by_slug(params[:id])
-    @highlighted_entries = @section.highlighted_entries(@publication_date)
+    @highlighted_entries = @section.highlighted_entries(@publication_date).limit(8)
   end
 
   def preview

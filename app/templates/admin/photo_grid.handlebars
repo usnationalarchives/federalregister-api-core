@@ -1,0 +1,35 @@
+<div class="photo-grid-wrapper">
+  <h4>Page:</h4>
+  <ul class='photo-grid-pagination'>
+    {{#times pages}}
+      <li>
+        {{#equal ../currentPage this}}
+          <strong>{{this}}</strong>
+        {{else}}
+          <a data-page='{{this}}'>{{this}}</a>
+        {{/equal}}
+      </li>
+    {{/times}}
+  </ul>
+
+  <ul class='photo-grid'>
+    {{#each photos}}
+      <li>
+        <img src='{{url_sm}}' data-url-lg='{{url_lg}}' data-photo-id='{{id}}' />
+      </li>
+    {{/each}}
+  </ul>
+
+  <h4>Page:</h4>
+  <ul class='photo-grid-pagination'>
+    {{#times pages}}
+      <li>
+        {{#equal ../currentPage this}}
+          <strong>{{this}}</strong>
+        {{else}}
+          <a data-page='{{this}}'>{{this}}</a>
+        {{/equal}}
+      </li>
+    {{/times}}
+  </ul>
+</div>

@@ -21,7 +21,7 @@ class Section < ApplicationModel
     slug
   end
 
-  def highlighted_entries(publication_date = Issue.current.publication_date)
+  def highlighted_entries(publication_date=Issue.current.publication_date)
     Entry.scoped(
       :conditions => {
         :section_highlights => {

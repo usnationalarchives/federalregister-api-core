@@ -1,4 +1,6 @@
 class Admin::IssuesController < AdminController
+  layout 'admin_bootstrap'
+  
   def index
     @issues = Issue.most_recent(50)
   end

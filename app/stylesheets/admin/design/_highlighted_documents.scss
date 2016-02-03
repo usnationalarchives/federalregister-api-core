@@ -1,0 +1,381 @@
+$white: #fff;
+$black: #000;
+$red: #8a3737;
+$grey: #ccc;
+
+#entries.admin {
+  &.edit { background-color: $white; }
+
+  h3.title {
+    font-size: 22px;
+    line-height: 24px;
+    margin-bottom: 5px;
+  }
+
+  .document-details {
+    margin-bottom: 10px;
+    overflow: auto;
+
+    dl {
+      font-size: 16px;
+
+      dt,
+      dd {
+        float: left;
+      }
+
+      dt {
+        clear: both;
+        font-weight: normal;
+        margin-right: 5px;
+        width: 85px;
+      }
+      dd {
+        font-weight: bold;
+        margin-left: 0;
+        margin-right: 10px;
+        position: relative;
+        top: -1px;
+      }
+    }
+  }
+
+  form {
+    label { font-size: 16px; }
+  }
+
+  .photo-content {
+    margin-bottom: 40px;
+
+    .photo-grid-wrapper {
+      margin: 0 auto 15px;
+      overflow: auto;
+      width: 610px;
+
+      h4 {
+        float: left;
+        margin-right: 10px;
+      }
+
+      .photo-grid-pagination {
+        li {
+          display: inline-block;
+
+          a {
+            cursor: pointer;
+            text-decoration: none;
+          }
+        }
+      }
+
+      .photo-grid {
+        margin: 0 0 10px;
+        overflow: auto;
+
+        li {
+          float: left;
+          margin: 1px;
+        }
+
+        img {
+          cursor: pointer;
+          height: 150px;
+          width: 150px;
+        }
+      }
+    }
+  }
+
+  .photo-search {
+    fieldset { position: relative; }
+
+    label {
+      float: left;
+      margin-right: 10px;
+      position: relative;
+      top: 4px;
+    }
+
+    input[type=text] {
+      width: 438px;
+
+      &+ span.loading {
+        background: url('/my/assets/fr_orange_loader.svg') 0 0 no-repeat;
+        display: block;
+        height: 25px;
+        position: absolute;
+        right: 75px;
+        top: 2px;
+        width: 25px;
+      }
+    }
+
+    input[type=submit] {
+      background-color: $green;
+      color: $white;
+      font-size: inherit;
+
+      &:hover { background-color: darken($green, 10); }
+
+      &:disabled { background-color: $grey; }
+    }
+  }
+
+  .document-content {
+    #entry_curated_title_input.error,
+    #entry_curated_abstract_input.error {
+      input,
+      textarea {
+        border: 2px solid #8a3737;
+      }
+
+      label,
+      .inline-hints .current-count {
+        color: $red;
+        font-weight: bold;
+      }
+    }
+
+    input[type=text],
+    textarea {
+      margin-bottom: 9px;
+    }
+
+    input[type=text] {
+      border-radius: 3px;
+      border: 1px solid $grey;
+      color: #555;
+      display: inline-block;
+      height: 18px;
+      line-height: 18px;
+      padding: 4px;
+      width: 451px;
+    }
+
+    .original-title {
+      margin-bottom: 20px;
+      margin-left: 155px;
+      margin-top: -15px;
+
+      strong { font-weight: bold; }
+    }
+
+    p.inline-hints strong { font-weight: bold; }
+
+    $orange: #B88659;
+    #entry_curated_title_input .inline-hints,
+    #entry_curated_abstract_input .inline-hints {
+      color: $orange;
+      font-size: 14px;
+      font-weight: 400;
+      margin-top: 0;
+    }
+
+    textarea#entry_curated_abstract { height: 182px; }
+
+    #entry_sections_input {
+      li {
+        display: inline-block;
+        margin-bottom: 0;
+      }
+
+      legend { width: 100%; }
+
+      label {
+        margin-bottom: 0;
+        margin-right: 10px;
+      }
+
+      input {
+        float: left;
+        margin-right: 3px;
+        position: relative;
+        top: 2px;
+      }
+    }
+
+    .buttons input[type=submit] {
+      background-color: $green;
+      border-radius: 3px;
+      bottom: 3px;
+      color: $white;
+      padding: 10px 15px;
+
+      &:hover {
+        background-color: darken($green, 10);
+        cursor: pointer;
+        text-decoration: none;
+      }
+
+      &:disabled {
+        background-color: $grey;
+      }
+    }
+  }
+}
+
+.admin-crop-modal {
+  h2 {
+    border-bottom: 1px solid $black;
+    line-height: 20px;
+    margin-bottom: 10px;
+  }
+
+  .photo-info {
+    dl {
+      font-size: 14px;
+      margin: 0 0 15px;
+      overflow: auto;
+    }
+
+    dt,
+    dd {
+      float: left;
+      margin-left: 0;
+    }
+
+    dt {
+      font-weight: normal;
+      margin-right: 5px;
+
+      &::after { content: ':'; }
+
+      &.solo {
+        margin-right: 10px;
+
+        &::after { content: ''; }
+      }
+    }
+
+    dd {
+      font-weight: bold;
+      margin-right: 10px;
+      position: relative;
+      top: -1px;
+    }
+  }
+
+  .controls-wrapper {
+    float: left;
+    font-size: 16px;
+    overflow: hidden;
+    width: 410px;
+  }
+
+  .image-wrapper {
+    float: left;
+    height: 580px;
+    margin-right: 10px;
+    overflow: hidden;
+    width: 530px;
+
+    .error {
+      color: $red;
+      font-size: 16px;
+    }
+
+    .loader {
+      background: url('/my/assets/fr_orange_loader.svg') 0 0 no-repeat;
+      height: 50px;
+      width: 50px;
+    }
+  }
+
+  .preview-wrapper {
+    margin-bottom: 20px;
+
+    &.bounding-error {
+      .boundry-error { display: block; }
+
+      .img-preview { border: 3px solid $red; }
+    }
+
+    .boundry-error {
+      color: $red;
+      display: none;
+      font-size: 14px;
+      font-style: italic;
+      font-weight: bold;
+    }
+
+    .img-preview {
+      border: 1px solid $black;
+      display: inline-block;
+      overflow: hidden;
+
+      &.preview-lg {
+        height: 175px;
+        width: 400px;
+      }
+
+      &.preview-sm {
+        height: 61px;
+        width: 140px;
+      }
+    }
+  }
+
+  .crop-details {
+    margin-bottom: 20px;
+    overflow: auto;
+
+    dd,
+    dt {
+      float: left;
+    }
+
+    dt {
+      clear: both;
+      font-weight: normal;
+
+      &::after { content: ':'; }
+    }
+
+    dd {
+      color: $green;
+      font-weight: bold;
+
+      &.error { color: $red; }
+
+      .warning {
+        font-size: 14px;
+        font-style: italic;
+      }
+    }
+  }
+
+  .button-wrapper {
+    text-align: right;
+
+    .btn-primary,
+    .btn-cancel {
+      background-image: none;
+      border: 0;
+      color: $white;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: 500;
+      padding: 8px 15px;
+      text-shadow: none;
+    }
+
+    .btn-primary {
+      background-color: $green;
+
+      &:hover { background-color: darken($green, 10); }
+    }
+
+    .btn-cancel {
+      background-color: $red;
+
+      &:hover { background-color: darken($red, 10); }
+    }
+
+    .btn-disabled {
+      background-color: $grey;
+      cursor: auto;
+
+      &:hover { background-color: $grey; }
+    }
+  }
+}

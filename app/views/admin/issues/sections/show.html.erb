@@ -1,62 +1,93 @@
-<%# super_title 'Sections' %>
+<% super_title @section.title %>
 <%# title @section.title %>
 
 <% add_javascript :src => 'admin/issues_sections_highlights' %>
 
 <% content_for :sidebar do %>
 
-  <%= render :partial => 'nav', :locals => {:sections => @sections, :publication_date => @publication_date} %>
+  <%= render :partial => 'nav', :locals => {
+    :sections => @sections,
+    :publication_date => @publication_date
+  } %>
 
-  <% section_tag(:class => 'module') do %>
-    <div class="title">Highlight A Document</div>
+  <div class="section">
+    <h4>Highlight A Document</h4>
+
     <% semantic_remote_form_for SectionHighlight.new, :url => admin_issue_section_highlights_path(@publication_date.to_s(:db), @section) do |f| %>
       <% f.inputs do %>
-        <li><%= link_to 'Bookmarklet', 'javascript:var url = "" + window.location;
+        <li>
+          <%= link_to 'Bookmarklet', 'javascript:var url = "" + window.location;
 url = url.replace(/\/[^\/]*$/,"");
 url = url.replace(/articles\/\d{4}\/\d{2}\/\d{2}\//,"admin/entries/") + "/highlight";
-window.location = url'.gsub(/\s+/,' ') %></li>
+window.location = url'.gsub(/\s+/,' ') %>
+        </li>
+
         <%= f.input :entry_document_number %>
       <% end %>
+
       <% f.buttons do %>
         <%= f.commit_button 'Highlight' %>
       <% end %>
     <% end %>
-  <% end -%>
+  </div>
 <% end -%>
 
 
 
 <div class='center_content preview'>
-  <%= link_to 'Preview', preview_admin_issue_section_path(@publication_date.to_s(:db), @section), :target => "_blank", :class => 'preview button mini grey' %>
+  <div class="issue-approval page_summary">
+    <%= link_to 'Preview',
+      preview_admin_issue_section_path(@publication_date.to_s(:db), @section),
+      :target => "_blank",
+      :class => 'preview' %>
+  </div>
 
-  <h3 class='section_title'><span>Highlighted Entries</span></h3>
+  <h2 class="section-header">
+    Highlighted Entries
+  </h3>
 
-  <ul id="highlighted">
+  <ul id="highlighted" class='document-list'>
     <%= render :partial => "highlighted_entry", :collection => @highlighted_entries %>
   </ul>
 
-  <h3 class='section_title'><span>Entries in '<%= @section.title %>' on <span class='small text'><%= @publication_date %></span></span></h3>
+  <h2 class="section-header">
+    Entries in '<%= @section.title %>'
+    on <span class='small text'>
+    <%= @publication_date %>
+  </h2>
 
-  <div id='article_list'>
-  <% @section.entries.published_on(@publication_date).each do |entry| %>
-    <% html5_tag('article', "data-entry-id" => entry.id, :class => "#{'highlighted' if @highlighted_entries.include?(entry)}") do %>
-      <%= content_tag(:h4, entry.curated_title, :title => entry.abstract) %>
-      <p>
-        <span class="length">Length: <%= pluralize entry.human_length, 'page' %></span>
-        <span class="entry_type">Type: <%= entry.entry_type %></span>
-        <span class="document_number">Document Number: <%= link_to entry.document_number, entry_path(entry), :target => "_blank" %></span>
-        <% if entry.significant? %>
-          <span class="significant">Economically Significant</span>
-        <% end %>
+  <ul id='article_list' class='document-list'>
+    <% @section.entries.published_on(@publication_date).each do |entry| %>
+      <li>
+        <% html5_tag('article', "data-entry-id" => entry.id, :class => "#{'highlighted' if @highlighted_entries.include?(entry)}") do %>
+          <%= content_tag :h4, entry.curated_title, :title => entry.abstract %>
 
-        <% if entry.graphics.count > 0 || entry.gpo_graphics.count > 0 %>
-          <span class="graphics">Contains Graphics</span>
+          <dl>
+            <dt>Length:</dt>
+            <dd><%= pluralize entry.human_length, 'page' %></dd>
+
+            <dt>Type:</dt>
+            <dd><%= entry.entry_type %></dd>
+
+            <dt>Document Number:</dt>
+            <dd><%= link_to entry.document_number, entry_path(entry), :target => "_blank" %></dd>
+
+            <% if entry.significant? %>
+              <dt>Economically Significant</dt>
+              <dd></dd>
+            <% end %>
+
+            <% if entry.graphics.count > 0 || entry.gpo_graphics.count > 0 %>
+              <dt>Contains Graphics</dt>
+              <dd></dd>
+            <% end %>
+          </dl>
+
+          <% unless @highlighted_entries.include?(entry) %>
+            <a class="add button">highlight</a>
+          <% end %>
         <% end %>
-      </p>
-      <% unless @highlighted_entries.include?(entry) %>
-        <a class="add button grey mini">highlight</a>
-      <% end %>
+      </li>
     <% end %>
-  <% end %>
   </div>
 </div>

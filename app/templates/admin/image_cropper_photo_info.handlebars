@@ -1,0 +1,25 @@
+<dl>
+  {{#with person}}
+  <dt>Real name</dt>
+  <dd class="realname" data-value='{{realname}}'>
+    {{#if realname}}{{realname}}{{else}}NA{{/if}}
+  </dd>
+
+  <dt>Username</dt>
+  <dd class="username" data-value='{{username}}'>
+    {{#if username}}{{username}}{{else}}NA{{/if}}
+  </dd>
+
+  <dt>Photo Name</dt>
+  <dd title='{{description}}' class="tip_over">
+    {{#if name}}{{name}}{{else}}NA{{/if}}
+  </dd>
+
+  <dt class="solo lightbox_url" data-value='{{lightbox_url}}'>
+    <a href="{{{lightbox_url}}}" target="_blank">Lightbox URL</a>
+  </dt>
+
+  <dt>License</dt>
+  <dd><a href="{{{license.url}}}" target="_blank">{{license.name}}</a></dd>
+  {{/with}}
+</dl>

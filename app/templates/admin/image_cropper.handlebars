@@ -1,0 +1,56 @@
+<div class='photo-info loading-data'></div>
+
+<div class='image-wrapper'>
+  <div class="loader"></div>
+  <img onerror="window.highlightedDocument.imageLoadFallback(this)" crossOrigin src='{{imageUrl}}' class="image-original">
+</div>
+
+<div class="controls-wrapper">
+  <div class='preview-wrapper'>
+    <h2>Cropped Size Preview</h2>
+
+    <p class="boundry-error">
+      Please ensure that your crop area does not inlcude areas outside
+      of the image. There should not be white areas in the image previews
+      below.
+    </p>
+
+    <h4>Navigation Size:</h4>
+    <div class="img-preview preview-lg">
+    </div>
+
+    <h4>Homepage Size:</h4>
+    <div class="img-preview preview-sm">
+    </div>
+  </div>
+
+  <div class='crop-details'>
+    <h2>Cropped Dimensions</h2>
+
+    <p>
+      In order for images to display properly in their various contexts
+      the cropped images must be larger that 800 x 350 pixels. Your size
+      of the image that will result from your current crop settings is
+      displayed below.
+    </p>
+
+    <dl>
+      <dt>Width</dt>
+      <dd id='width'>
+        <span class='value'></span>
+        <span class='warning'>width must be greater than 800</span>
+      </dd>
+
+      <dt>Height</dt>
+      <dd id='height'>
+        <span class='value'></span>
+        <span class='warning'>height must be greater than 350</span>
+      </dd>
+    </dl>
+  </div>
+
+  <div class="button-wrapper">
+    <div class='btn btn-primary' id='crop-button' data-image-id='{{imageId}}'>Crop</div>
+    <div class='btn btn-cancel' id='cancel-button'>Cancel</div>
+  </div>
+</div>
