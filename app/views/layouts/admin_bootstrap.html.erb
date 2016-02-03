@@ -47,9 +47,10 @@
   <%= javascript_include_tag 'admin/spell_checker' %>
   <%= javascript_include_tag 'admin/fr_index' %>
   <%= javascript_include_tag 'admin/issue_reprocessor' %>
-  <%= javascript_include_tag "admin/cropper.min.js" %>
 
-  <% #from my fr but patching it in here %>
+
+  <%# from -web but patching it in here %>
+  <%= javascript_include_tag("admin/vendor.js").gsub('/javascripts', '/assets') %>
   <%= javascript_include_tag("admin/highlighted_documents.js").gsub('/javascripts', '/assets') %>
   <%= javascript_include_tag("utilities/modal.js").gsub('/javascripts', '/assets') %>
 
