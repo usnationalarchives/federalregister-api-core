@@ -100,7 +100,7 @@ $grey: #ccc;
       width: 438px;
 
       &+ span.loading {
-        background: url('/my/assets/fr_orange_loader.svg') 0 0 no-repeat;
+        background: url('/assets/fr_orange_loader.svg') 0 0 no-repeat;
         display: block;
         height: 25px;
         position: absolute;
@@ -275,7 +275,7 @@ $grey: #ccc;
     }
 
     .loader {
-      background: url('/my/assets/fr_orange_loader.svg') 0 0 no-repeat;
+      background: url('/assets/fr_orange_loader.svg') 0 0 no-repeat;
       height: 50px;
       width: 50px;
     }
