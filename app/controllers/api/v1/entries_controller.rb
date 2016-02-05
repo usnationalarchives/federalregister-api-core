@@ -59,16 +59,6 @@ class Api::V1::EntriesController < ApiController
           render_json_or_jsonp({:errors => search.validation_errors}, :status => 400)
         end
       end
-
-      wants.png do
-        if date_facets.include?(params[:facet])
-          redirect_to URI.encode(
-            GoogleCharts::Sparkline.new(search_result.counts, params[:chart_options]).url
-          )
-        else
-          raise ActiveRecord::RecordNotFound
-        end
-      end
     end
   end
 
