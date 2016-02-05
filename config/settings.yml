@@ -1,3 +1,4 @@
+# Make any updates -web also
 test:
   s3_buckets:
     zipped_eps_images: XXXXXXXXXXXXXXXXXXXXXXX
