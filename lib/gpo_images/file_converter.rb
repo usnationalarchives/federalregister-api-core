@@ -57,7 +57,7 @@ class GpoImages::FileConverter
       files.
       get(bucketed_zip_filename)
     local_file = File.open(File.join(compressed_image_bundles_path, base_filename), "w")
-    local_file.write(file.body)
+    local_file.write(file.body.force_encoding('UTF-8'))
     local_file.close
   end
 
