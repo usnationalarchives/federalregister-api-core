@@ -7,7 +7,7 @@ module Content
       # Agency.connection.execute("TRUNCATE agency_name_assignments")
 
       agencies_with_parents = {}
-      FasterCSV.foreach("data/agencies.csv", :headers => :first_row) do |line|
+      CSV.foreach("data/agencies.csv", :headers => :first_row) do |line|
         agency_data = line.to_hash
 
         puts "handing #{line['agency_name']}"

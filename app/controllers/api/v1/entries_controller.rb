@@ -98,7 +98,7 @@ class Api::V1::EntriesController < ApiController
   private
 
   def render_csv(entries, fields, filename)
-    output = FasterCSV.generate do |csv|
+    output = CSV.generate do |csv|
       csv << fields
       entries.each do |result|
         representation = EntryApiRepresentation.new(result)

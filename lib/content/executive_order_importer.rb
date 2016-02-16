@@ -1,7 +1,7 @@
 module Content::ExecutiveOrderImporter
   def self.perform
     executive_orders = []
-    FasterCSV.foreach("data/executive_orders.csv", :headers => :first_row) do |line|
+    CSV.foreach("data/executive_orders.csv", :headers => :first_row) do |line|
       executive_orders << line.to_hash
     end
 

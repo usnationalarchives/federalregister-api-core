@@ -1,3 +1,5 @@
+# make csv available to importers
+require 'csv'
 module Content
   # returns only dates that have issues if using all or >
   def self.parse_dates(date)

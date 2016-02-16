@@ -10,7 +10,7 @@ namespace :content do
         section.update_attributes!(attributes.merge(:relevant_cfr_sections => nil, :agencies => []))
       end
 
-      FasterCSV.foreach("data/sections_cfr.csv", :headers => :first_row) do |line|
+      CSV.foreach("data/sections_cfr.csv", :headers => :first_row) do |line|
         section_data = line.to_hash
         section = Section.find_by_title!(line['section_title'])
 
@@ -26,7 +26,7 @@ namespace :content do
         end
       end
 
-      FasterCSV.foreach("data/agencies_sections.csv", :headers => :first_row) do |line|
+      CSV.foreach("data/agencies_sections.csv", :headers => :first_row) do |line|
         agency = Agency.find_by_name(line['agency_name'].strip)
         unless agency
           puts "COULD NOT FIND #{line['agency_name']}"

@@ -1,3 +1,5 @@
+# allow api endpoints to serve csv if they support it
+require 'csv'
 class ApiController < ApplicationController
   class RequestError < StandardError; end
   class UnknownFieldError < RequestError; end
