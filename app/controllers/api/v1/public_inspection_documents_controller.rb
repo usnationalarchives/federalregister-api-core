@@ -17,7 +17,7 @@ class Api::V1::PublicInspectionDocumentsController < ApiController
       end
 
       wants.rss do
-        search = PublicInspectionDocumentSearch.new(params)
+        search = PublicInspectionDocumentSearch.new(params.merge(:order => 'newest'))
         fields = PublicInspectionDocumentApiRepresentation.default_index_fields_rss
         find_options = PublicInspectionDocumentApiRepresentation.find_options_for(fields)
 
