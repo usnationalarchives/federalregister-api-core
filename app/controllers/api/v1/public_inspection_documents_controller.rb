@@ -1,8 +1,9 @@
 class Api::V1::PublicInspectionDocumentsController < ApiController
   def index
     respond_to do |wants|
+      cache_for 1.day
+
       wants.json do
-        cache_for 1.day
         if params[:conditions] && params[:conditions][:available_on]
           publication_date = Date.parse(params[:conditions][:available_on])
           render_date(publication_date)
@@ -13,6 +14,15 @@ class Api::V1::PublicInspectionDocumentsController < ApiController
             document_data(result, fields)
           end
         end
+      end
+
+      wants.rss do
+        search = PublicInspectionDocumentSearch.new(params)
+        fields = PublicInspectionDocumentApiRepresentation.default_index_fields_rss
+        find_options = PublicInspectionDocumentApiRepresentation.find_options_for(fields)
+
+        documents = search.results(find_options)
+        render_rss(documents, "Federal Register #{search.summary}")
       end
     end
   end
@@ -89,5 +99,13 @@ class Api::V1::PublicInspectionDocumentsController < ApiController
              }
     end
     render_json_or_jsonp data
+  end
+
+  def render_rss(documents, title)
+    render :template => 'public_inspection/index.rss.builder', :locals => {
+      :documents => documents,
+      :feed_name => title,
+      :feed_description => "The documents in this feed originate from FederalRegister.gov which displays an unofficial web version of the daily Federal Register. Public Inspection documents originate from official copies filed at the Office of the Federal Register. For more information, please see https://www.federalregister.gov/reader-aids/using-federalregister-gov/understanding-public-inspection."
+    }
   end
 end

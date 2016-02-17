@@ -26,7 +26,7 @@ class ApiRepresentation
     include ApplicationHelper
     include RouteBuilder
 
-    attr_accessor :default_index_fields_json, :default_index_fields_csv
+    attr_accessor :default_index_fields_json, :default_index_fields_csv, :default_index_fields_rss
 
     def field(name, options = nil, &calculator)
       options ||= {:select => name}

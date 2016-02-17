@@ -21,6 +21,14 @@ class Api::V1::EntriesController < ApiController
         entries = search.results(find_options)
         render_csv(entries, fields, filename)
       end
+
+      wants.rss do
+        fields = EntryApiRepresentation.default_index_fields_rss
+        find_options = EntryApiRepresentation.find_options_for(fields)
+
+        documents = search.results(find_options)
+        render_rss(documents, "Federal Register #{search.summary}")
+      end
     end
   end
 
@@ -117,6 +125,14 @@ class Api::V1::EntriesController < ApiController
     headers['Content-Disposition'] = "attachment; filename=\"#{filename}.csv\""
 
     render :text => output
+  end
+
+  def render_rss(documents, title)
+    render :template => 'entries/index.rss.builder', :locals => {
+      :documents => documents,
+      :feed_name => title,
+      :feed_description => "The documents in this feed originate from FederalRegister.gov which displays an unofficial web version of the daily Federal Register. The official electronic version in PDF format is also available as a link from the FederalRegister.gov website. For more information, please see https://www.federalregister.gov/reader-aids/policy/legal-status."
+    }
   end
 
   def entry_data(entry, fields)
