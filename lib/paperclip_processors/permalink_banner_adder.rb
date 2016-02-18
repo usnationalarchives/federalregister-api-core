@@ -1,6 +1,8 @@
 module Paperclip
   # Handles adding the permalink banner to the
   class PermalinkBannerAdder < Paperclip::Processor
+    include RouteBuilder
+
     def make
       html = Content.render_erb('public_inspection/_pdf_banner', {:document => attachment.instance})
       kit = PDFKit.new(html, :page_size => 'Letter', :margin_top => "0in")
