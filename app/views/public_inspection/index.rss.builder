@@ -14,13 +14,14 @@ xml.rss "version" => "2.0", "xmlns:dc" => "http://purl.org/dc/elements/1.1/" do
         if document.title.present?
           xml.title   document.title
         else
-          xml.title   "#{document.toc_subject} #{document.toc_doc}"
+          xml.title   "#{[document.subject_1, document.subject_2, document.subject_3].compact.join(' ')}"
         end
 
         xml.link        entry_url(document)
 
         description = []
         description += document.docket_numbers.map(&:number)
+        description << "Editorial note: #{document.editorial_note}" if document.editorial_note
         description << "FR DOC #: #{document.document_number}" if document.document_number
         description << "Publication Date: #{document.publication_date}" if document.publication_date
         description << number_to_human_size(document.pdf_file_size)

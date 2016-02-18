@@ -37,13 +37,16 @@ class PublicInspectionDocumentApiRepresentation < ApiRepresentation
   field(:title)
   field(:toc_doc)
   field(:toc_subject)
+  field(:subject_1)
+  field(:subject_2)
+  field(:subject_3)
 
   def self.default_index_fields_json
     all_fields
   end
 
   def self.default_index_fields_rss
-    all_fields
+    [:publication_date, :subject_1, :subject_2, :subject_3, :document_number, :pdf_file_size, :num_pages, :filed_at, :agencies, :editorial_note]
   end
 
   def self.default_show_fields_json
