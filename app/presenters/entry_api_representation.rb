@@ -23,7 +23,8 @@ class EntryApiRepresentation < ApiRepresentation
           :id       => agency.id,
           :url      => agency_url(agency),
           :json_url => api_v1_agency_url(agency.id, :format => :json),
-          :parent_id => agency.parent_id
+          :parent_id => agency.parent_id,
+          :slug      => agency.slug
         }
       else
         {

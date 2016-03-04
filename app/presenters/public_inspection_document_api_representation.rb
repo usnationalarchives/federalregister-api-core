@@ -8,7 +8,8 @@ class PublicInspectionDocumentApiRepresentation < ApiRepresentation
           :name      => agency.name,
           :id        => agency.id,
           :url       => agency_url(agency),
-          :json_url  => api_v1_agency_url(agency.id, :format => :json)
+          :json_url  => api_v1_agency_url(agency.id, :format => :json),
+          :slug      => agency.slug
         }
       else
         {
