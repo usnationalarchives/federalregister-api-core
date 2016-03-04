@@ -39,7 +39,7 @@ class Mailer < ActionMailer::Base
         awoo@gpo.gov mvincent@gpo.gov mscott@gpo.gov
         kgreen@gpo.gov aotovo@gpo.gov tellis@gpo.gov
         jhemphill@gpo.gov jmarlor@gpo.gov eswidal@gpo.gov
-        ofrtechgroup@gpo.gov
+        ofrtechgroup@gpo.gov jhmartinez@gpo.gov
       )
     end
     sendgrid_recipients recipients
