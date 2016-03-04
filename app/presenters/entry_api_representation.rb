@@ -7,6 +7,10 @@ class EntryApiRepresentation < ApiRepresentation
     all_fields - [:excerpts, :agency_names, :docket_id, :president]
   end
 
+  def self.default_show_fields_csv
+    all_fields - [:excerpts, :agency_names, :docket_id, :president]
+  end
+
   field(:abstract)
   field(:action)
   field(:agencies, :select => :id, :include => {:agency_names => :agency}) do |entry|

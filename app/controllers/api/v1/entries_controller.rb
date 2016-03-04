@@ -96,7 +96,7 @@ class Api::V1::EntriesController < ApiController
         end
       end
       wants.csv do
-        fields = specified_fields || CSV_FIELDS
+        fields = specified_fields || EntryApiRepresentation.default_show_fields_csv
         document_numbers = params[:id].split(',')
         entries = Entry.all(:conditions => {:document_number => document_numbers})
         filename = 'federal_register'
