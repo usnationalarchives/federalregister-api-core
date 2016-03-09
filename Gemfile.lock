@@ -211,6 +211,8 @@ GEM
       json (>= 1.4.6)
     haml (3.0.4)
     highline (1.6.21)
+    hoe (3.14.2)
+      rake (>= 0.8, < 11.0)
     honeybadger (1.9.4)
       faraday (~> 0.7)
       json
@@ -363,6 +365,7 @@ DEPENDENCIES
   formtastic (= 0.9.8)
   geokit (= 1.4.1)
   haml (= 3.0.4)
+  hoe
   honeybadger
   httmultiparty (~> 0.3.13)
   http_headers (= 0.0.2.3)
@@ -412,3 +415,6 @@ DEPENDENCIES
   webrat (= 0.7.1)
   will_paginate (= 2.3.14)
   ym4r (= 0.6.1)
+
+BUNDLED WITH
+   1.11.2
