@@ -94,9 +94,12 @@ gem 'net-sftp'
 gem 'diffy'
 gem 'cocaine'
 
+gem 'hoe'
+
 # needed when running on ruby 1.8
 gem 'system_timer', '1.2.4', :platform => :ruby_18
 gem 'fastercsv', '1.4.0', :platform => :ruby_18
+
 
 gem 'american_date', :platform => :ruby_19
 

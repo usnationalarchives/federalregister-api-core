@@ -11,6 +11,7 @@ class EntryEmail < ApplicationModel
   validate :no_more_than_5_messages_in_a_day
 
   before_validation :calculate_num_recipients
+  before_create :set_document_number
   after_create :deliver_email
 
   attr_accessor :message, :send_me_a_copy
@@ -85,6 +86,10 @@ class EntryEmail < ApplicationModel
 
   def calculate_num_recipients
     self.num_recipients = @recipient_emails.try(:count) || 0
+  end
+
+  def set_document_number
+    self.document_number = entry.document_number
   end
 
   def deliver_email
