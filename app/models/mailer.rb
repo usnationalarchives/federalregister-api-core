@@ -17,19 +17,6 @@ class Mailer < ActionMailer::Base
     body       :user => user, :edit_password_reset_url => edit_admin_password_reset_url(user.perishable_token)
   end
 
-  def entry_email(entry_email)
-    sendgrid_category "Email a Friend"
-    sendgrid_recipients entry_email.all_recipient_emails
-    sendgrid_ganalytics_options :utm_source => 'federalregister.gov', :utm_medium => 'email', :utm_campaign => 'email a friend'
-
-    subject "[FR] #{entry_email.sender} has sent you '#{entry_email.entry.title}'"
-    from entry_email.sender.split('@').first
-    recipients 'email-a-friend@federalregister.gov' # should use sendgrid_recipients for actual recipient list
-    reply_to entry_email.sender
-    sent_on Time.current
-    body :entry => entry_email.entry, :sender => entry_email.sender, :message => entry_email.message
-  end
-
   def daily_import_update_admin_email(date)
     sendgrid_category "Daily Import Update Admin Email"
 
