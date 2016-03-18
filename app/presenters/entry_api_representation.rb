@@ -64,13 +64,24 @@ class EntryApiRepresentation < ApiRepresentation
   field(:html_url, :select => [:publication_date, :document_number, :title]){|e| entry_url(e)}
   field(:images, :include => [:graphics]) do |entry|
     graphics = entry.graphics.extracted
+    gpo_graphics = entry.processed_gpo_graphics
 
     if graphics.present?
-      {
-        :styles => graphics.first.graphic.styles.map{|k,v| k},
-        :identifiers => graphics.map{|g| g.identifier},
-        :base_url => graphics.first.base_url
-      }
+      graphics.inject({}) do |hsh, graphic|
+        hsh[graphic.identifier] = graphic.graphic.styles.inject({}) do |hsh, style|
+          hsh[style[0]] = style[1].attachment.send(:url, style[0])
+          hsh
+        end
+        hsh
+      end
+    elsif gpo_graphics.present?
+      gpo_graphics.inject({}) do |hsh, gpo_graphic|
+        hsh[gpo_graphic.identifier] = gpo_graphic.graphic.styles.inject({}) do |hsh, style|
+          hsh[style[0]] = style[1].attachment.send(:url, style[0])
+          hsh
+        end
+        hsh
+      end
     else
       {}
     end
