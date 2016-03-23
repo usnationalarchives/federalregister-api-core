@@ -63,20 +63,28 @@ module GpoImages
     def scan_documents_for_images
       XML_IMAGE_TAGS.each do |xml_tag|
         image_usages(xml_tag).each do |image_usage|
+
+          # move existing graphic to public bucket if it has an image associated
+          # or create one if it doesn't exist (ie we're missing an image)
           if image_usage.gpo_graphic_exists?
             if image_usage.graphic_file_name?
               move_to_public_bucket = true
-
-              puts "adding xml_identifier #{image_usage.xml_identifier}"
-              image_usage.gpo_graphic_usage.xml_identifier = image_usage.xml_identifier
-              image_usage.gpo_graphic_usage.save
-              image_usage.gpo_graphic_usage.reload
             end
           else
             GpoGraphic.create(:identifier => image_usage.image_identifier)
           end
 
-          image_usage.create_graphic_usage unless image_usage.gpo_graphic_usage_exists?
+          # update the xml_identifier for existing graphic usages
+          # or create one if it doesn't exist
+          if image_usage.gpo_graphic_usage_exists?
+            puts "adding xml_identifier #{image_usage.xml_identifier}"
+            image_usage.gpo_graphic_usage.xml_identifier = image_usage.xml_identifier
+            image_usage.gpo_graphic_usage.save
+            image_usage.gpo_graphic_usage.reload
+          else
+            image_usage.create_graphic_usage
+          end
+
           image_usage.move_to_public_bucket if move_to_public_bucket
         end
       end
