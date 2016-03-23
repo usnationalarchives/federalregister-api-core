@@ -43,5 +43,33 @@ namespace :content do
         GpoImages::DailyIssueImageProcessor.perform(date)
       end
     end
+
+    desc "Rename all images to use the XML identfier"
+    task :update_image_names_using_xml_identifier => :environment do
+      gpo_graphics = GpoGraphic.find(
+        :all,
+        :include => [:gpo_graphic_usages],
+        :conditions => "gpo_graphic_usages.xml_identifier IS NOT NULL && gpo_graphics.graphic_file_name IS NOT NULL"
+      )
+
+      aws_conn = GpoImages::FogAwsConnection.new
+
+      gpo_graphics.each do |gpo_graphic|
+        xml_identifier = gpo_graphic.gpo_graphic_usages.first.xml_identifier
+
+        if gpo_graphic.graphic_file_name.gsub('.eps', '') != xml_identifier
+          aws_conn.move_directory_files_between_buckets_and_rename(
+            xml_identifier,
+            gpo_graphic.identifier,
+            gpo_graphic.send(:public_bucket),
+            gpo_graphic.send(:public_bucket)
+          )
+          gpo_graphic.update_attribute(
+            :graphic_file_name,
+            gpo_graphic.graphic_file_name.gsub(gpo_graphic.identifier, xml_identifier)
+          )
+        end
+      end
+    end
   end
 end
