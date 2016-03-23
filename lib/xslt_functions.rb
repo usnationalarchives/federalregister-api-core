@@ -4,9 +4,7 @@ class XsltFunctions
   def gpo_image(nodes, link_id)
     document = blank_document
 
-    graphic_identifier = normalize_image_identifier(
-      nodes.first.content
-    )
+    graphic_identifier = URI.encode(nodes.first.content)
 
     Nokogiri::XML::Builder.with(document) do |doc|
       doc.a(

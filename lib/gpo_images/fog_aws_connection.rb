@@ -7,7 +7,7 @@ class GpoImages::FogAwsConnection
     directory.files.each do |file|
       # change the file's name to be the same as the xml_identifier
       # now that we've gotten it from the published XML
-      filename = file.key.gsub(identifier, xml_identifier)
+      filename = file.key.gsub(identifier, URI.encode(xml_identifier))
 
       if file.copy(destination_bucket, filename)
         file.destroy

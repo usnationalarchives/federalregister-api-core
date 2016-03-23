@@ -4,7 +4,7 @@ class GpoImages::FileConverter
     :fog_aws_connection
 
   IMAGE_FILE_EXTENTIONS_TO_IMPORT = [".eps", ".EPS"]
-  IMAGE_FILE_EXTENTIONS_TO_IGNORE = [".tiff"]
+  IMAGE_FILE_EXTENTIONS_TO_IGNORE = [".tiff", ".ini"]
 
   def initialize(bucketed_zip_filename, date, options={})
     @bucketed_zip_filename = bucketed_zip_filename
