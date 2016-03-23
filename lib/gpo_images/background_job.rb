@@ -58,11 +58,15 @@ module GpoImages
     end
 
     def image
-      @image ||= File.open(File.join(uncompressed_eps_images_path, eps_filename))
+      @image ||= File.open(
+        File.join(uncompressed_eps_images_path, eps_filename)
+      )
     end
 
     def identifier
-      normalize_image_identifier(File.basename(eps_filename, File.extname(eps_filename)))
+      normalize_image_identifier(
+        File.basename(eps_filename, File.extname(eps_filename))
+      )
     end
 
     def redis
