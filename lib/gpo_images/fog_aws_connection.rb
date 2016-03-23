@@ -1,10 +1,15 @@
 class GpoImages::FogAwsConnection
   delegate :directories, :to => :connection
 
-  def move_directory_files_between_buckets(directory_prefix, source_bucket, destination_bucket)
-    directory = directories.get(source_bucket, :prefix => directory_prefix)
+  def move_directory_files_between_buckets_and_rename(xml_identifier, identifier, source_bucket, destination_bucket)
+    directory = directories.get(source_bucket, :prefix => identifier)
+
     directory.files.each do |file|
-      if file.copy(destination_bucket, file.key)
+      # change the file's name to be the same as the xml_identifier
+      # now that we've gotten it from the published XML
+      filename = file.key.gsub(identifier, xml_identifier)
+
+      if file.copy(destination_bucket, filename)
         file.destroy
       else
         Honeybadger.notify(

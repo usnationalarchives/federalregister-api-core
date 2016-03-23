@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20160308193915) do
+ActiveRecord::Schema.define(:version => 20160321175701) do
 
   create_table "action_names", :force => true do |t|
     t.string   "name"
@@ -362,10 +362,13 @@ ActiveRecord::Schema.define(:version => 20160308193915) do
     t.string   "document_number"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "xml_identifier"
   end
 
   add_index "gpo_graphic_usages", ["document_number", "identifier"], :name => "index_gpo_graphic_usages_on_document_number_and_identifier", :unique => true
+  add_index "gpo_graphic_usages", ["document_number", "xml_identifier"], :name => "index_gpo_graphic_usages_on_document_number_and_xml_identifier"
   add_index "gpo_graphic_usages", ["identifier", "document_number"], :name => "index_gpo_graphic_usages_on_identifier_and_document_number"
+  add_index "gpo_graphic_usages", ["xml_identifier", "document_number"], :name => "index_gpo_graphic_usages_on_xml_identifier_and_document_number"
 
   create_table "gpo_graphics", :force => true do |t|
     t.string   "identifier"

@@ -42,11 +42,16 @@ class GpoGraphic < ActiveRecord::Base
   end
 
   def move_to_public_bucket
-    GpoImages::FogAwsConnection.new.move_directory_files_between_buckets(
+    GpoImages::FogAwsConnection.new.move_directory_files_between_buckets_and_rename(
+      xml_identifier,
       identifier,
       private_bucket,
       public_bucket
     )
+  end
+
+  def xml_identifier
+    self.gpo_graphic_usages.first.try(:xml_identifier)
   end
 
   def assigned_bucket
