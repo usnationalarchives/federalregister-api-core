@@ -5,23 +5,16 @@ class GpoImages::FogAwsConnection
     directory = directories.get(source_bucket, :prefix => identifier)
 
     directory.files.each do |file|
-      if file.key
-        # change the file's name to be the same as the xml_identifier
-        # now that we've gotten it from the published XML
-        filename = file.key.gsub(identifier, URI.encode(xml_identifier))
+      # change the file's name to be the same as the xml_identifier
+      # now that we've gotten it from the published XML
+      filename = file.key.gsub(identifier, URI.encode(xml_identifier))
 
-        if file.copy(destination_bucket, filename)
-          file.destroy
-        else
-          Honeybadger.notify(
-            :error_class   => "Failure moving file between buckets",
-            :error_message => "Failure occurred while copying '#{file.key}' from '#{source_bucket}' to '#{destination_bucket}'."
-          )
-        end
+      if file.copy(destination_bucket, filename)
+        file.destroy
       else
         Honeybadger.notify(
-          :error_class   => "Missing file key when attempting to move between buckets",
-          :error_message => "Failure occurred while copying identifier '#{identifier}' for'#{file.inspect}' from '#{source_bucket}' to '#{destination_bucket}'."
+          :error_class   => "Failure moving file between buckets",
+          :error_message => "Failure occurred while copying '#{file.key}' from '#{source_bucket}' to '#{destination_bucket}'."
         )
       end
     end
