@@ -1,6 +1,6 @@
 module Shared::SlugTrait
   as_trait do |options|
-    before_validation :slugify
+    before_validation_on_create :slugify
     validates_uniqueness_of :slug
 
     private
