@@ -158,8 +158,8 @@ class RegulationsDotGov::Client
     RegulationsDotGov::Document.new(self, response.parsed_response)
   end
 
-  def fetch_comment_form(document_number)
-    response = self.class.get(comment_endpoint, :query => {:federalRegisterNumber => document_number})
+  def fetch_comment_form(regulations_dot_gov_document_id)
+    response = self.class.get(comment_endpoint, :query => {:D => regulations_dot_gov_document_id})
     response = unwrap_response(response)
 
     comment_form = RegulationsDotGov::CommentForm.new(self, response)

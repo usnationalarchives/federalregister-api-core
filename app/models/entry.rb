@@ -567,9 +567,14 @@ class Entry < ApplicationModel
     comment_url.present? ? comment_url.split('D=').last.split(/(_|-)/, 2).first : ''
   end
 
+  def regulations_dot_gov_document_id
+    comment_url.present? ? comment_url.split('D=').last : nil
+  end
+
   def documents_path
     "#{Rails.root}/data/documents"
   end
+
 
   private
 

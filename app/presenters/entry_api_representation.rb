@@ -121,6 +121,7 @@ class EntryApiRepresentation < ApiRepresentation
     if docket
       docket_info = {
         :docket_id => docket.id,
+        :document_id => entry.regulations_dot_gov_document_id,
         :regulation_id_number => docket.regulation_id_number,
         :title => docket.title,
         :comments_count => docket.comments_count,
