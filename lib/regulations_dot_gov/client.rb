@@ -80,13 +80,11 @@ class RegulationsDotGov::Client
     end
   end
 
-  def get_comment_form(document_id)
-    begin
-      fetch_comment_form(document_number )
-    rescue RecordNotFound, ServerError => e
-      revised_document_number = pad_document_number(document_number)
-      fetch_comment_form(revised_document_number)
-    end
+  def get_comment_form(regulations_dot_gov_document_id)
+    # TODO: remove
+    # legacy - we used to use document_number and had to deal with
+    # adding leading zeros if document number wasn't found.
+    fetch_comment_form(regulations_dot_gov_document_id)
   end
 
   def get_option_elements(field_name, options={})
