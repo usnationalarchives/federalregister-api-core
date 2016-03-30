@@ -116,12 +116,18 @@ class EntryApiRepresentation < ApiRepresentation
 
     Hash[*values.flatten]
   end
+
   field(:regulations_dot_gov_info, :include => :docket, :select => :regulations_dot_gov_docket_id) do |entry|
+    vals = {}
+
+    if entry.regulations_dot_gov_document_id
+      vals.merge!(:document_id => entry.regulations_dot_gov_document_id)
+    end
+
     docket = entry.docket
     if docket
       docket_info = {
         :docket_id => docket.id,
-        :document_id => entry.regulations_dot_gov_document_id,
         :regulation_id_number => docket.regulation_id_number,
         :title => docket.title,
         :comments_count => docket.comments_count,
@@ -147,10 +153,15 @@ class EntryApiRepresentation < ApiRepresentation
           )
         end
       end
-
-      docket_info
     end
+
+    if docket_info
+      vals.deep_merge!(docket_info)
+    end
+    
+    vals.present? ? vals : nil
   end
+
   field(:regulation_id_numbers, :include => :entry_regulation_id_numbers) {|e| e.entry_regulation_id_numbers.map{|r| r.regulation_id_number}}
   field(:regulations_dot_gov_url, :select => :regulationsdotgov_url) {|e| e.regulationsdotgov_url}
   field(:start_page)
