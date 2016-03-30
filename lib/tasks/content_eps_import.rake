@@ -57,7 +57,7 @@ namespace :content do
       gpo_graphics.each do |gpo_graphic|
         xml_identifier = gpo_graphic.gpo_graphic_usages.first.xml_identifier
 
-        if gpo_graphic.graphic_file_name.gsub('.eps', '') != xml_identifier
+        if gpo_graphic.graphic_file_name.gsub(/.eps/i, '') != xml_identifier
           aws_conn.move_directory_files_between_buckets_and_rename(
             xml_identifier,
             gpo_graphic.identifier,
