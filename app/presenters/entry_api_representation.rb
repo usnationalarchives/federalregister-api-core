@@ -81,7 +81,7 @@ class EntryApiRepresentation < ApiRepresentation
     Hash[*values.flatten]
   end
 
-  field(:regulations_dot_gov_info, :include => :docket, :select => :regulations_dot_gov_docket_id) do |entry|
+  field(:regulations_dot_gov_info, :include => :docket, :select => [:regulations_dot_gov_docket_id, :comment_url]) do |entry|
     vals = {}
 
     if entry.regulations_dot_gov_document_id
