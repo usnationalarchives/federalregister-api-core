@@ -568,7 +568,9 @@ class Entry < ApplicationModel
   end
 
   def regulations_dot_gov_document_id
-    comment_url.present? ? comment_url.split('D=').last : nil
+    url = comment_url_override.present? ? comment_url_override : comment_url
+
+    url.present? ? url.split('D=').last : nil
   end
 
   private

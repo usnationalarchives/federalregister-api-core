@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20160321175701) do
+ActiveRecord::Schema.define(:version => 20160331181238) do
 
   create_table "action_names", :force => true do |t|
     t.string   "name"
@@ -247,6 +247,7 @@ ActiveRecord::Schema.define(:version => 20160321175701) do
     t.string   "fr_index_subject"
     t.string   "fr_index_doc"
     t.integer  "issue_number"
+    t.string   "comment_url_override"
   end
 
   add_index "entries", ["citation"], :name => "index_entries_on_citation"
