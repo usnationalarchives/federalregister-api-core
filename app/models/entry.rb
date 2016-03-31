@@ -568,7 +568,7 @@ class Entry < ApplicationModel
   end
 
   def regulations_dot_gov_url
-    commentcalculated_comment_url.present? ? calculated_comment_url.gsub('#!submitComment', '#!documentDetail') : nil
+    calculated_comment_url.present? ? calculated_comment_url.gsub('#!submitComment', '#!documentDetail') : nil
   end
 
   def regulations_dot_gov_document_id
