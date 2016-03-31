@@ -102,7 +102,11 @@ namespace :content do
 
           entries.find_each do |entry|
             importer = Content::EntryImporter.new(:entry => entry)
-            importer.update_attributes(:checked_regulationsdotgov_at, :regulationsdotgov_url, :comment_url, :regulations_dot_gov_comments_close_on, :regulations_dot_gov_docket_id)
+            if entry.comment_url_override?
+              importer.update_attributes(:checked_regulationsdotgov_at, :regulationsdotgov_url, :regulations_dot_gov_comments_close_on)
+            else
+              importer.update_attributes(:checked_regulationsdotgov_at, :regulationsdotgov_url, :comment_url, :regulations_dot_gov_comments_close_on, :regulations_dot_gov_docket_id)
+            end
           end
         end
         

@@ -37,7 +37,7 @@ class EntryApiRepresentation < ApiRepresentation
   end
   field(:citation)
   field(:comments_close_on, :include => :comments_close_date){|e| e.comments_close_on}
-  field(:comment_url){|e| e.comment_url}
+  field(:comment_url, :select => [:comment_url, :comment_url_override]){|e| e.calculated_comment_url}
   field(:corrections, :include => :corrections){|e| e.corrections.map{|c| api_v1_entry_url(c.document_number, :format => :json)}}
   field(:correction_of, :include => :correction_of, :select => :correction_of_id){|e| api_v1_entry_url(e.correction_of.document_number, :format => :json) if e.correction_of}
   field(:dates)
@@ -104,7 +104,7 @@ class EntryApiRepresentation < ApiRepresentation
   end
 
   field(:regulation_id_numbers, :include => :entry_regulation_id_numbers) {|e| e.entry_regulation_id_numbers.map{|r| r.regulation_id_number}}
-  field(:regulations_dot_gov_url, :select => :regulationsdotgov_url) {|e| e.regulationsdotgov_url}
+  field(:regulations_dot_gov_url, :select => [:comment_url, :comment_url_override]) {|e| e.regulations_dot_gov_url}
   field(:start_page)
   field(:significant)
   field(:signing_date)
