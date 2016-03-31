@@ -564,11 +564,19 @@ class Entry < ApplicationModel
   end
 
   def regulations_dot_gov_agency_id
-    comment_url.present? ? comment_url.split('D=').last.split(/(_|-)/, 2).first : ''
+    calculated_comment_url.present? ? calculated_comment_url.split('D=').last.split(/(_|-)/, 2).first : ''
+  end
+
+  def regulations_dot_gov_url
+    calculated_comment_url.present? ? calculated_comment_url.gsub('#!submitComment', '#!documentDetail') : nil
   end
 
   def regulations_dot_gov_document_id
-    comment_url.present? ? comment_url.split('D=').last : nil
+    calculated_comment_url.present? ? calculated_comment_url.split('D=').last : nil
+  end
+
+  def calculated_comment_url
+    comment_url_override.present? ? comment_url_override : comment_url
   end
 
   def documents_path
