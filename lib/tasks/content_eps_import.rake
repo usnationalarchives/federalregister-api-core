@@ -39,8 +39,14 @@ namespace :content do
       dates = Content.parse_all_dates(ENV['DATE'])
 
       dates.each do |date|
-        puts "linking GPO images for #{date}"
-        GpoImages::DailyIssueImageProcessor.perform(date)
+        begin
+          puts "linking GPO images for #{date}"
+          GpoImages::DailyIssueImageProcessor.perform(date)
+        rescue StandardError => e
+          puts e.message
+          puts e.backtrace.join("\n")
+          Honeybadger.notify(e)
+        end
       end
     end
 
