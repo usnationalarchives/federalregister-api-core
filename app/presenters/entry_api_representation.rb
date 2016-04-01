@@ -124,6 +124,11 @@ class EntryApiRepresentation < ApiRepresentation
       vals.merge!(:document_id => entry.regulations_dot_gov_document_id)
     end
 
+    if entry.regulations_dot_gov_agency_id
+      vals.merge!(:agency_id => entry.regulations_dot_gov_agency_id)
+    end
+
+
     docket = entry.docket
     if docket
       docket_info = {
@@ -158,7 +163,7 @@ class EntryApiRepresentation < ApiRepresentation
     if docket_info
       vals.deep_merge!(docket_info)
     end
-    
+
     vals.present? ? vals : nil
   end
 
