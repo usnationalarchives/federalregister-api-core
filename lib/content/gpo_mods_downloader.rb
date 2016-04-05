@@ -42,7 +42,7 @@ module Content
     def generate_diffs
       begin
         reprocessed_issue.update_attributes(
-          :diff => diff,
+          :diff => diff[0, 40000],
           :html_diff => html_diff
         )
       rescue FrDiff::CommandLineError
