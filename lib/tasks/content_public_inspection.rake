@@ -13,10 +13,16 @@ namespace :content do
         dates = Content.parse_dates(ENV['DATE'] || Date.current)
 
         dates.each do |date|
-          puts "linking PI for #{date}"
-          PublicInspectionDocument.find_all_by_publication_date_and_entry_id(date, nil).each do |pi_doc|
-            pi_doc.entry = Entry.find_by_document_number(pi_doc.document_number)
-            pi_doc.save(false)
+          begin
+            puts "linking PI for #{date}"
+            PublicInspectionDocument.find_all_by_publication_date_and_entry_id(date, nil).each do |pi_doc|
+              pi_doc.entry = Entry.find_by_document_number(pi_doc.document_number)
+              pi_doc.save(false)
+            end
+          rescue StandardError => e
+            puts e.message
+            puts e.backtrace.join("\n")
+            Honeybadger.notify(e)
           end
         end
       end
@@ -38,7 +44,13 @@ namespace :content do
     end
 
     task :reindex => :environment do
-      SphinxIndexer.perform('public_inspection_document_core')
+      begin
+        SphinxIndexer.perform('public_inspection_document_core')
+      rescue StandardError => e
+        puts e.message
+        puts e.backtrace.join("\n")
+        Honeybadger.notify(e)
+      end
     end
 
     task :purge_revoked_documents => :environment do

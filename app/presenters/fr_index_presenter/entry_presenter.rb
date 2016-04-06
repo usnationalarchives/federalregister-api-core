@@ -27,6 +27,7 @@ class FrIndexPresenter
       )
     SQL
     SUBJECT_SQL = "IFNULL(entries.fr_index_subject, #{DEFAULT_SUBJECT_SQL})"
+
     DEFAULT_DOC_SQL = <<-SQL
       IF(public_inspection_documents.subject_3 IS NOT NULL AND public_inspection_documents.subject_3 != '',
         public_inspection_documents.subject_3,
@@ -34,7 +35,10 @@ class FrIndexPresenter
           public_inspection_documents.subject_2,
           IF(public_inspection_documents.subject_1 IS NOT NULL AND public_inspection_documents.subject_1 != '',
             public_inspection_documents.subject_1,
-            entries.toc_doc
+            IF(entries.toc_doc IS NOT NULL AND entries.toc_doc != "",
+              entries.toc_doc,
+              entries.title
+            )
           )
         )
       )
