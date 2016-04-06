@@ -35,6 +35,7 @@ namespace :data do
       content:section_highlights:clone
       data:daily:basic
       content:entries:html:compile:all
+      content:agency_assignments:recalculate
       sphinx:rebuild_delta
       content:issues:mark_complete
       content:public_inspection:import:entry_id
