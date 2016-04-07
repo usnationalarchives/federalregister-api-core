@@ -41,6 +41,7 @@ namespace :data do
       data:daily:basic
       content:entries:html:compile:all
       content:entries:json:compile:daily_toc
+      content:agency_assignments:recalculate
       sphinx:rebuild_delta
       content:issues:mark_complete
       content:public_inspection:import:entry_id
