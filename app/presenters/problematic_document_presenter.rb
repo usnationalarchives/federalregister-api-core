@@ -13,15 +13,6 @@ class ProblematicDocumentPresenter
       select {|doc| doc.document_number.match(/^X/)}
   end
 
-  def rules_without_dates
-    @rules_without_dates ||= issue.
-      entries.
-      select do |doc|
-        doc.granule_class == "RULE" &&
-        doc.effective_on.blank? &&
-        !doc.document_number.match(/^C-/)
-      end
-  end
 
   def documents_scheduled_but_unpublished
     PublicInspectionDocument.all(
@@ -72,6 +63,28 @@ class ProblematicDocumentPresenter
     )
   end
 
+  def rules_with_date_text
+    rules.each_with_object({}) do |doc, hsh|
+
+      mods_node = Content::EntryImporter::ModsFile.new(date, false).
+        find_entry_node_by_document_number(doc.document_number)
+      date_text = mods_node.css('dates').first.try(:content)
+      extracted_dates = PotentialDateExtractor.extract(date_text)
+
+      extracted_dates.each do |extracted_date|
+        date_text.gsub!(extracted_date) do |date|
+          if date.to_date == doc.effective_on
+            "<span style='color: red; font-weight: bold'>#{date}</span>"
+          else
+            "<span style='font-weight: bold;'>#{date}</span>"
+          end
+        end
+      end
+
+      hsh[doc.document_number] = date_text
+    end
+  end
+
   def multiple_comment_dates
     issue.entries.each_with_object({}) do |doc, hsh|
       mods_node = Content::EntryImporter::ModsFile.new(date, false).
@@ -98,6 +111,17 @@ class ProblematicDocumentPresenter
 
   def missing_gpo_graphics
     MissingImagesPresenter.new.dates_missing_images.find{|d| d.date == date}
+  end
+
+  private
+
+  def rules
+    @rules_without_dates ||= issue.
+      entries.
+      select do |doc|
+        doc.granule_class == "RULE" &&
+        !doc.document_number.match(/^C-/)
+      end
   end
 
 end
