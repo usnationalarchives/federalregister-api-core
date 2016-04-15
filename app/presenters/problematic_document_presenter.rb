@@ -71,17 +71,11 @@ class ProblematicDocumentPresenter
       date_text = mods_node.css('dates').first.try(:content)
       extracted_dates = PotentialDateExtractor.extract(date_text)
 
-      extracted_dates.each do |extracted_date|
-        date_text.gsub!(extracted_date) do |date|
-          if date.to_date == doc.effective_on
-            "<span style='color: red; font-weight: bold'>#{date}</span>"
-          else
-            "<span style='font-weight: bold;'>#{date}</span>"
-          end
-        end
-      end
-
-      hsh[doc.document_number] = date_text
+      hsh[doc.document_number] = highlight_dates(
+        extracted_dates,
+        doc.effective_on,
+        date_text
+      )
     end
   end
 
@@ -94,16 +88,11 @@ class ProblematicDocumentPresenter
         date_text = mods_node.css('dates').first.try(:content)
         extracted_dates = PotentialDateExtractor.extract(date_text)
         if extracted_dates.uniq.size > 1
-          extracted_dates.each do |extracted_date|
-            date_text.gsub!(extracted_date) do |date|
-              if date.to_date == doc.comments_close_on
-                "<span style='color: red; font-weight: bold'>#{date}</span>"
-              else
-                "<span style='font-weight: bold;'>#{date}</span>"
-              end
-            end
-          end
-          hsh[doc.document_number] = date_text
+          hsh[doc.document_number] = highlight_dates(
+            extracted_dates,
+            doc.comments_close_on,
+            date_text
+          )
         end
       end
     end
@@ -122,6 +111,20 @@ class ProblematicDocumentPresenter
         doc.granule_class == "RULE" &&
         !doc.document_number.match(/^C-/)
       end
+  end
+
+  def highlight_dates(extracted_dates, date_to_highlight, date_text)
+    extracted_dates.each do |extracted_date|
+      date_text.gsub!(extracted_date) do |date|
+        if date.to_date == date_to_highlight
+          "<span style='color: red; font-weight: bold'>#{date}</span>"
+        else
+          "<span style='font-weight: bold;'>#{date}</span>"
+        end
+      end
+    end
+
+    date_text
   end
 
 end

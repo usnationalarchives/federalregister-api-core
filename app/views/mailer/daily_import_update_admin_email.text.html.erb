@@ -30,13 +30,17 @@
           <thead>
             <tr>
               <th>Document Number</th>
+              <th>Document Title</th>
             </tr>
           </thead>
           <tbody>
             <% @problematic_document_presenter.documents_scheduled_but_unpublished.each do |document| %>
               <tr style="<%= cycle(nil, light_gray) %>">
-                <td style="width: 150px;" align="left">
+                <td style="width: 300px;" align="left">
                   <%= link_to(document.document_number, short_entry_url(document)) %>
+                </td>
+                <td style="width: 600px;" align="left">
+                  <%= document.title %>
                 </td>
               </tr>
             <% end %>
