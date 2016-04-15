@@ -23,6 +23,55 @@ class ProblematicDocumentPresenter
       end
   end
 
+  def documents_scheduled_but_unpublished
+    PublicInspectionDocument.all(
+      :joins => "LEFT OUTER JOIN entries ON entries.id = public_inspection_documents.entry_id",
+      :conditions => {
+        :public_inspection_documents => {
+          :publication_date => date
+        },
+        :entries => {
+          :id => nil
+        }
+      }
+    )
+  end
+
+  def revoked_and_published_documents
+    previous_publication_date = issue.previous.publication_date
+    revoked_pi_numbers =
+      PublicInspectionIssue.
+      find_by_publication_date(previous_publication_date).
+      public_inspection_documents.
+      revoked.
+      map(&:document_number)
+    published_doc_numbers =
+      Entry.all(
+        :conditions => {
+          :publication_date => date
+        }
+      ).
+      map(&:document_number)
+
+    revoked_pi_numbers.
+      select{|doc_number| published_doc_numbers.include? doc_number}.
+      map{|doc_number| PublicInspectionDocument.find_by_document_number(doc_number) }
+  end
+
+  def documents_published_without_public_inspection
+    Entry.all(
+      :joins => "LEFT OUTER JOIN public_inspection_documents on public_inspection_documents.entry_id = entries.id",
+      :conditions => {
+        :entries => {
+          :publication_date => date
+        },
+        :public_inspection_documents => {
+          :id => nil
+        }
+      }
+    )
+  end
+
   def multiple_comment_dates
     issue.entries.each_with_object({}) do |doc, hsh|
       mods_node = Content::EntryImporter::ModsFile.new(date, false).
