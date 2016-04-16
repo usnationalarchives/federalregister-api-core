@@ -23,7 +23,7 @@
 
       <% if @problematic_document_presenter.documents_scheduled_but_unpublished.present? %>
         <h3 style="font-family:'Helvetica Neue',Arial,Helvetica,sans-serif;margin: 25px 0 5px;font-size: 20px;border-bottom: 1px solid #000;">
-          Public Inspection Documents that failed to Publish
+          Public Inspection Documents that Failed to Publish
         </h3>
 
         <table>
@@ -37,7 +37,7 @@
             <% @problematic_document_presenter.documents_scheduled_but_unpublished.each do |document| %>
               <tr style="<%= cycle(nil, light_gray) %>">
                 <td style="width: 300px;" align="left">
-                  <%= link_to(document.document_number, short_entry_url(document)) %>
+                  <%= link_to(document.document_number, short_entry_url(document.document_number)) %>
                 </td>
                 <td style="width: 600px;" align="left">
                   <%= document.title %>
@@ -64,7 +64,7 @@
         <tbody>
           <% @problematic_document_presenter.revoked_and_published_documents.each do |document| %>
             <tr style="<%= cycle(nil, light_gray) %>">
-              <td style="width: 300px;" align="left"><%= link_to document.document_number, short_entry_url(document) %></td>
+              <td style="width: 300px;" align="left"><%= link_to document.document_number, short_entry_url(document.document_number) %></td>
               <td style="width: 600px;" align="left">
                 <%= document.title %>
               </td>
@@ -91,7 +91,7 @@
           <tbody>
             <% @problematic_document_presenter.documents_published_without_public_inspection.each do |document| %>
               <tr style="<%= cycle(nil, light_gray) %>">
-                <td style="width: 300px;" align="left"><%= link_to document.document_number, short_entry_url(document) %></td>
+                <td style="width: 300px;" align="left"><%= link_to document.document_number, short_entry_url(document.document_number) %></td>
                 <td style="width: 600px;" align="left">
                   <%= document.title %>
                 </td>
@@ -145,17 +145,17 @@
           <% document = Entry.find_by_document_number(doc_num) %>
           <tr style="<%= cycle(nil, light_gray) %>">
             <td style="width: 150px;" align="left">
-              <%= link_to doc_num, short_entry_url(document) %>
+              <%= link_to doc_num, short_entry_url(document.document_number) %>
             </td>
             <% if document.effective_on %>
               <td style="width: 150px;" align="left">
             <% else %>
-              <td style="width: 150px; background-color: yellow;" align="left">
+              <td style="width: 150px; background-color: #FCC;" align="left">
             <% end %>
                 <%= document.effective_on %>
               </td>
             <td style="width: 600px;" align="left">
-              <%= date_text %>
+              <%= date_text.present? ? date_text : '<em>No date text available</em>' %>
             </td>
           </tr>
           <% end %>
@@ -181,7 +181,7 @@
             <% document = Entry.find_by_document_number(doc_num) %>
             <tr style="<%= cycle(nil, light_gray) %>">
               <td style="width: 150px;" align="left">
-                <%= link_to doc_num, short_entry_url(document) %>
+                <%= link_to doc_num, short_entry_url(document.document_number) %>
               </td>
               <td style="width: 150px;" align="left"><%= document.comments_close_on %></td>
               <td style="width: 600px" align="left"><%= dates %></td>
