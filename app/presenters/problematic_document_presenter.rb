@@ -30,12 +30,14 @@ class ProblematicDocumentPresenter
 
   def revoked_and_published_documents
     previous_publication_date = issue.previous.publication_date
+
     revoked_pi_numbers =
       PublicInspectionIssue.
       find_by_publication_date(previous_publication_date).
       public_inspection_documents.
       revoked.
       map(&:document_number)
+
     published_doc_numbers =
       Entry.all(
         :conditions => {
@@ -51,7 +53,7 @@ class ProblematicDocumentPresenter
 
   def documents_published_without_public_inspection
     Entry.all(
-      :joins => "LEFT OUTER JOIN public_inspection_documents on public_inspection_documents.entry_id = entries.id",
+      :joins => "LEFT OUTER JOIN public_inspection_documents on public_inspection_documents.document_number = entries.document_number",
       :conditions => {
         :entries => {
           :publication_date => date
