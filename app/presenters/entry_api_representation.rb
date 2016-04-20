@@ -13,8 +13,8 @@ class EntryApiRepresentation < ApiRepresentation
 
   field(:abstract)
   field(:action)
-  field(:agencies, :select => :id, :include => {:agency_names => :agency}) do |entry|
-    entry.agency_names.compact.map do |agency_name|
+  field(:agencies, :select => :id, :include => {:agency_name_assignments => {:agency_name => :agency}}) do |entry|
+    entry.agency_name_assignments.map(&:agency_name).compact.map do |agency_name|
       agency = agency_name.agency
       if agency
         {
