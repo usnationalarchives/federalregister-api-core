@@ -16,9 +16,92 @@
       </tr>
     </table>
     <div>
+
       <h2 style="font-family:'Helvetica Neue',Arial,Helvetica,sans-serif;margin: 25px 0 5px;font-size: 25px;">
         FederalRegister.gov Daily Import Update for <%= @date %>
       </h2>
+
+      <% if @problematic_document_presenter.documents_scheduled_but_unpublished.present? %>
+        <h3 style="font-family:'Helvetica Neue',Arial,Helvetica,sans-serif;margin: 25px 0 5px;font-size: 20px;border-bottom: 1px solid #000;">
+          Public Inspection Documents that Failed to Publish
+        </h3>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Document Number</th>
+              <th>Document Title</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @problematic_document_presenter.documents_scheduled_but_unpublished.each do |document| %>
+              <tr style="<%= cycle(nil, light_gray) %>">
+                <td style="width: 300px;" align="left">
+                  <%= link_to(document.document_number, short_entry_url(document.document_number)) %>
+                </td>
+                <td style="width: 600px;" align="left">
+                  <%= document.title %>
+                </td>
+              </tr>
+            <% end %>
+            <% reset_cycle %>
+          </tbody>
+        </table>
+      <% end %>
+
+      <% if @problematic_document_presenter.revoked_and_published_documents.present? %>
+      <h3 style="font-family:'Helvetica Neue',Arial,Helvetica,sans-serif;margin: 25px 0 5px;font-size: 20px;border-bottom: 1px solid #000;">
+        Revoked Public Inspection Documents that Published
+      </h3>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Document Number</th>
+            <th>Document Title</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @problematic_document_presenter.revoked_and_published_documents.each do |document| %>
+            <tr style="<%= cycle(nil, light_gray) %>">
+              <td style="width: 300px;" align="left"><%= link_to document.document_number, short_entry_url(document.document_number) %></td>
+              <td style="width: 600px;" align="left">
+                <%= document.title %>
+              </td>
+            </tr>
+          <% end %>
+          <% reset_cycle %>
+        </tbody>
+      </table>
+
+      <% end %>
+
+      <% if @problematic_document_presenter.documents_published_without_public_inspection.present? %>
+        <h3 style="font-family:'Helvetica Neue',Arial,Helvetica,sans-serif;margin: 25px 0 5px;font-size: 20px;border-bottom: 1px solid #000;">
+          Documents Published Without Appearing on Public Inspection
+        </h3>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Document Number</th>
+              <th>Document Title</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @problematic_document_presenter.documents_published_without_public_inspection.each do |document| %>
+              <tr style="<%= cycle(nil, light_gray) %>">
+                <td style="width: 300px;" align="left"><%= link_to document.document_number, short_entry_url(document.document_number) %></td>
+                <td style="width: 600px;" align="left">
+                  <%= document.title %>
+                </td>
+              </tr>
+            <% end %>
+            <% reset_cycle %>
+          </tbody>
+        </table>
+
+      <% end %>
 
       <% if @problematic_document_presenter.special_documents.present? %>
       <h3 style="font-family:'Helvetica Neue',Arial,Helvetica,sans-serif;margin: 25px 0 5px;font-size: 20px;border-bottom: 1px solid #000;">
@@ -45,22 +128,35 @@
       </table>
       <% end %>
 
-      <% if @problematic_document_presenter.rules_without_dates.present? %>
+      <% if @problematic_document_presenter.rules_with_date_text.present? %>
       <h3 style="font-family:'Helvetica Neue',Arial,Helvetica,sans-serif;margin: 25px 0 5px;font-size: 20px;border-bottom: 1px solid #000;">
-        Rules without Effective Dates
+        Rules
       </h3>
       <table>
         <thead>
           <tr>
-            <th>Title</th>
             <th>Document Number</th>
+            <th>Effective Date</th>
+            <th>Dates</th>
           </tr>
         </thead>
         <tbody>
-          <% @problematic_document_presenter.rules_without_dates.each do |document| %>
+          <% @problematic_document_presenter.rules_with_date_text.each do |doc_num, date_text| %>
+          <% document = Entry.find_by_document_number(doc_num) %>
           <tr style="<%= cycle(nil, light_gray) %>">
-            <td style="width: 600px;" align="left"><%= document.title %></td>
-            <td style="width: 300px;" align="left"><%= link_to document.document_number, short_entry_url(document.document_number) %></td>
+            <td style="width: 150px;" align="left">
+              <%= link_to doc_num, short_entry_url(document.document_number) %>
+            </td>
+            <% if document.effective_on %>
+              <td style="width: 150px;" align="left">
+            <% else %>
+              <td style="width: 150px; background-color: #FCC;" align="left">
+            <% end %>
+                <%= document.effective_on %>
+              </td>
+            <td style="width: 600px;" align="left">
+              <%= date_text.present? ? date_text : '<em>No date text available</em>' %>
+            </td>
           </tr>
           <% end %>
           <% reset_cycle %>
@@ -85,10 +181,10 @@
             <% document = Entry.find_by_document_number(doc_num) %>
             <tr style="<%= cycle(nil, light_gray) %>">
               <td style="width: 150px;" align="left">
-                <%= link_to doc_num, short_entry_url(document) %>
+                <%= link_to doc_num, short_entry_url(document.document_number) %>
               </td>
               <td style="width: 150px;" align="left"><%= document.comments_close_on %></td>
-              <td style="width: 600" align="left"><%= dates %></td>
+              <td style="width: 600px" align="left"><%= dates %></td>
             </tr>
           <% end %>
           <% reset_cycle %>
