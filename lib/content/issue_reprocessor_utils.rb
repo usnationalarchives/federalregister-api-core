@@ -1,17 +1,5 @@
 module Content
   module IssueReprocessorUtils
-    def archive_mods_path
-      File.join('data','mods','archive')
-    end
-
-    def mods_path
-      File.join(Rails.root,'data','mods')
-    end
-
-    def temporary_mods_path
-      File.join(Rails.root,'data','mods','tmp')
-    end
-
     def logger
       @logger ||= Logger.new(log_path)
     end

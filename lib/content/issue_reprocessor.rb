@@ -5,10 +5,11 @@ module Content
 
     @queue = :default
 
-    attr_reader :reprocessed_issue
+    attr_reader :path_manager, :reprocessed_issue
 
     def initialize(reprocessed_issue_id)
       @reprocessed_issue = ReprocessedIssue.find(reprocessed_issue_id)
+      @path_manager = FileSystemPathManager.new(@reprocessed_issue.issue.publication_date)
     end
 
     def self.perform(reprocessed_issue_id)
@@ -106,15 +107,16 @@ module Content
     end
 
     def rotate_mods_files
-      FileUtils.mkdir_p(archive_mods_path)
+      FileUtils.mkdir_p(path_manager.document_archive_mods_dir)
       FileUtils.mv(
-        File.join(mods_path, "#{date.to_s(:iso)}.xml"),
-        File.join(archive_mods_path, "#{date.to_s(:iso)}-#{Time.now.to_i}.xml")
+        path_manager.document_mods_path,
+        path_manager.document_archive_mods_path(Time.now.to_i)
       )
-      FileUtils.mkdir_p(temporary_mods_path)
+
+      FileUtils.mkdir_p(path_manager.document_temporary_mods_dir)
       FileUtils.mv(
-        File.join(temporary_mods_path, "#{date.to_s(:iso)}.xml"),
-        File.join(mods_path, "#{date.to_s(:iso)}.xml")
+        path_manager.document_temporary_mods_path,
+        path_manager.document_mods_path
       )
     end
 

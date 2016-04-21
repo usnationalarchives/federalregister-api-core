@@ -2,7 +2,8 @@ module Content
   class GpoModsDownloader
     include Content::IssueReprocessorUtils
     @queue = :default
-    attr_reader :reprocessed_issue
+
+    attr_reader :gpo_path_manager, :path_manager, :reprocessed_issue
 
     NOISY_MODS_XML_LINES = [
       "identifier type=",
@@ -14,6 +15,8 @@ module Content
 
     def initialize(reprocessed_issue_id)
       @reprocessed_issue = ReprocessedIssue.find_by_id(reprocessed_issue_id)
+      @path_manager = FileSystemPathManager.new(@reprocessed_issue.issue.publication_date)
+      @gpo_path_manager = GpoFilePathManager.new(@reprocessed_issue.issue.publication_date)
     end
 
     def self.perform(reprocessed_issue_id)
@@ -31,10 +34,10 @@ module Content
     end
 
     def download
-      FileUtils.mkdir_p(temporary_mods_path)
+      FileUtils.mkdir_p(path_manager.document_temporary_mods_dir)
 
-      url = "https://www.gpo.gov/fdsys/pkg/FR-#{date.to_s(:iso)}/mods.xml?#{Time.now.to_i}"
-      file_path = "#{temporary_mods_path}/#{date.to_s(:iso)}.xml"
+      url = gpo_path_manager.document_issue_mods_path
+      file_path = path_manager.document_temporary_mods_path
 
       FederalRegisterFileRetriever.download(url, file_path)
     end
@@ -52,25 +55,17 @@ module Content
 
     private
 
-    def date
-      @date ||= reprocessed_issue.publication_date
-    end
-
-    def mods_file_name
-      "#{date.to_s(:iso)}.xml"
-    end
-
     def diff
       FrDiff.new(
-        File.join(mods_path, mods_file_name),
-        File.join(temporary_mods_path, mods_file_name)
+        path_manager.document_mods_path,
+        path_manager.document_temporary_mods_path
       ).diff
     end
 
     def html_diff
       FrDiff.new(
-        File.join(mods_path, mods_file_name),
-        File.join(temporary_mods_path, mods_file_name),
+        path_manager.document_mods_path,
+        path_manager.document_temporary_mods_path,
         :ignore => NOISY_MODS_XML_LINES
       ).html_diff
     end
