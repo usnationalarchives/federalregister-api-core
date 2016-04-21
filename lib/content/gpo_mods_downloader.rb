@@ -31,7 +31,7 @@ module Content
     end
 
     def download
-      FileUtils.makedir_p(temporary_mods_path)
+      FileUtils.mkdir_p(temporary_mods_path)
 
       url = "https://www.gpo.gov/fdsys/pkg/FR-#{date.to_s(:iso)}/mods.xml?#{Time.now.to_i}"
       file_path = "#{temporary_mods_path}/#{date.to_s(:iso)}.xml"

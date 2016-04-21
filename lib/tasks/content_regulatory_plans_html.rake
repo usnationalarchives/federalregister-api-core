@@ -5,7 +5,7 @@ namespace :content do
         def compile_type_for_all(type)
           require 'fileutils'
           root_dir = "#{RAILS_ROOT}/data/regulatory_plans/html/#{type}"
-          FileUtils.makedirs(root_dir)
+          FileUtils.mkdir_p(root_dir)
 
           RegulatoryPlan.in_current_issue.find_each do |regulatory_plan|
             puts "rendering #{type} for #{regulatory_plan.regulation_id_number}"

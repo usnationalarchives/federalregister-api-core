@@ -118,7 +118,7 @@ module Content
     end
 
     def self.download_url_to(url, path)
-      FileUtils.makedirs(File.dirname(path))
+      FileUtils.mkdir_p(File.dirname(path))
       unless File.exists?(path)
         FederalRegisterFileRetriever.download(url, path)
       end

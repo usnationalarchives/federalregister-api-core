@@ -46,8 +46,8 @@ class GpoImages::FileConverter
   end
 
   def create_directories
-    FileUtils.makedirs compressed_image_bundles_path
-    FileUtils.makedirs uncompressed_eps_images_path
+    FileUtils.mkdir_p compressed_image_bundles_path
+    FileUtils.mkdir_p uncompressed_eps_images_path
   end
 
   def download_eps_image_bundle
@@ -63,7 +63,7 @@ class GpoImages::FileConverter
 
   def unzip_file_and_process(destination, zip_file)
     Zip::ZipFile.open(zip_file) do |zip_contents|
-      FileUtils.makedirs(destination)
+      FileUtils.mkdir_p(destination)
       build_processing_queue(zip_contents)
       enqueue_processing_jobs(zip_contents, destination)
     end

@@ -106,12 +106,12 @@ module Content
     end
 
     def rotate_mods_files
-      FileUtils.makedirs(archive_mods_path)
+      FileUtils.mkdir_p(archive_mods_path)
       FileUtils.mv(
         File.join(mods_path, "#{date.to_s(:iso)}.xml"),
         File.join(archive_mods_path, "#{date.to_s(:iso)}-#{Time.now.to_i}.xml")
       )
-      FileUtils.makedirs(temporary_mods_path)
+      FileUtils.mkdir_p(temporary_mods_path)
       FileUtils.mv(
         File.join(temporary_mods_path, "#{date.to_s(:iso)}.xml"),
         File.join(mods_path, "#{date.to_s(:iso)}.xml")

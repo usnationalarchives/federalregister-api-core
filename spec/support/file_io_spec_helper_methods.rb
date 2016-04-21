@@ -1,6 +1,6 @@
 module FileIoSpecHelperMethods
   def create_file(file, contents)
-    FileUtils.makedirs(File.dirname(file))
+    FileUtils.mkdir_p(File.dirname(file))
     File.open(file, "w") { |f| f.write(contents) }
   end
 

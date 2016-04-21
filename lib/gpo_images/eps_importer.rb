@@ -44,7 +44,7 @@ class GpoImages::EpsImporter
 
   def download_eps_images
     puts "Beginning download of the following files: #{filenames_to_download.to_sentence}" if filenames_to_download.present?
-    FileUtils.makedirs temp_images_path
+    FileUtils.mkdir_p temp_images_path
 
     begin
       filenames_to_download.each do |filename|
@@ -74,7 +74,7 @@ class GpoImages::EpsImporter
   end
 
   def create_zip(path, filename)
-    FileUtils.makedirs path
+    FileUtils.mkdir_p path
     zip_file_path = File.join(path, filename)
 
     begin
