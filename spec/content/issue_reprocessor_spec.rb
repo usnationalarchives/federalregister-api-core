@@ -11,10 +11,6 @@ describe Content::IssueReprocessor do
       reprocessed_issue = Factory.create(:reprocessed_issue)
       issue_reprocessor = Content::IssueReprocessor.new(reprocessed_issue.id)
 
-      # issue_reprocessor.stub(:archive_mods_path).and_return(spec_mods_archive_path)
-      # issue_reprocessor.stub(:mods_path).and_return(spec_current_mods_path)
-      # issue_reprocessor.stub(:temporary_mods_path).and_return(spec_temporary_mods_path)
-
       create_file(path_manager.document_temporary_mods_path, "new_mods")
       create_file(path_manager.document_mods_path, "current_mods")
       issue_reprocessor.send(:rotate_mods_files)
