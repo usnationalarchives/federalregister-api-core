@@ -4,38 +4,34 @@ describe Content::IssueReprocessor do
   describe "#rotate_mods_files" do
     include FileIoSpecHelperMethods
 
-    let(:spec_current_mods_path) { File.join('tmp','data','mods') }
-    let(:spec_temporary_mods_path) {File.join('tmp','data','mods','tmp') }
-    let(:spec_mods_archive_path) {File.join('tmp','data','mods','archive') }
+    let(:path_manager) { FileSystemPathManager.new( Date.parse('2099-01-01') ) }
+    let(:archive_time) { Time.now.to_i }
 
     before(:each) do
-      reprocessed_issue = ReprocessedIssue.create
-      reprocessed_issue.issue = Issue.create(
-        :publication_date => "2099-01-01".to_date
-      )
-      reprocessed_issue.save
-      issue_reprocessor = Content::IssueReprocessor.new(
-        reprocessed_issue.id
-      )
-      issue_reprocessor.stub(:archive_mods_path).and_return(spec_mods_archive_path)
-      issue_reprocessor.stub(:mods_path).and_return(spec_current_mods_path)
-      issue_reprocessor.stub(:temporary_mods_path).and_return(spec_temporary_mods_path)
+      reprocessed_issue = Factory.create(:reprocessed_issue)
+      issue_reprocessor = Content::IssueReprocessor.new(reprocessed_issue.id)
 
-      create_file("#{spec_temporary_mods_path}/2099-01-01.xml", "new_mods")
-      create_file("#{spec_current_mods_path}/2099-01-01.xml", "current_mods")
+      # issue_reprocessor.stub(:archive_mods_path).and_return(spec_mods_archive_path)
+      # issue_reprocessor.stub(:mods_path).and_return(spec_current_mods_path)
+      # issue_reprocessor.stub(:temporary_mods_path).and_return(spec_temporary_mods_path)
+
+      create_file(path_manager.document_temporary_mods_path, "new_mods")
+      create_file(path_manager.document_mods_path, "current_mods")
       issue_reprocessor.send(:rotate_mods_files)
     end
 
     after(:each) do
-      FileUtils.rm_rf(Dir.glob(File.join(spec_current_mods_path, '*')))
+      delete_file(path_manager.document_mods_path)
+      delete_file(path_manager.document_temporary_mods_path)
+      delete_file(path_manager.document_archive_mods_path(archive_time))
     end
 
-    it "Newly-archived files have the same contents as the existent file." do
-      IO.read("#{spec_mods_archive_path}/#{Dir.entries(spec_mods_archive_path).last}").should == "current_mods"
+    it "Newly-archived files have the same contents as the original file." do
+      IO.read(path_manager.document_archive_mods_path(archive_time)).should == "current_mods"
     end
 
     it "Current mods content should be replaced with the temporary file's contents" do
-      IO.read("#{spec_current_mods_path}/2099-01-01.xml").should == "new_mods"
+      IO.read(path_manager.document_mods_path).should == "new_mods"
     end
   end
 end
