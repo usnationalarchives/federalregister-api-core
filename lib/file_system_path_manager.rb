@@ -42,11 +42,11 @@ class FileSystemPathManager
 
   # DOCUMENTS
   def document_mods_dir
-    "#{Rails.root}/data/documents/mods/#{date.to_s(:year_month)}/"
+    "#{Rails.root}/data/documents/mods/#{date.to_s(:year_month)}"
   end
 
   def document_mods_path
-    "#{document_mods_dir}/#{date.strftime('%d')}.xml"
+    "#{document_mods_dir}/#{date.to_s(:db_year)}.xml"
   end
 
   def document_archive_mods_dir
@@ -54,7 +54,7 @@ class FileSystemPathManager
   end
 
   def document_archive_mods_path(time)
-    "#{document_archive_mods_dir}/#{date.strftime('%d')}-#{time}.xml"
+    "#{document_archive_mods_dir}/#{date.to_s(:db_year)}-#{time}.xml"
   end
 
   def document_temporary_mods_dir
@@ -62,6 +62,6 @@ class FileSystemPathManager
   end
 
   def document_temporary_mods_path
-    "#{document_temporary_mods_dir}/#{date.strftime('%d')}.xml"
+    "#{document_temporary_mods_dir}/#{date.to_s(:db_year)}.xml"
   end
 end
