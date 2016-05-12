@@ -164,7 +164,7 @@ class EntryApiRepresentation < ApiRepresentation
       vals.deep_merge!(docket_info)
     end
 
-    vals.present? ? vals : nil
+    vals
   end
 
   field(:regulation_id_numbers, :include => :entry_regulation_id_numbers) {|e| e.entry_regulation_id_numbers.map{|r| r.regulation_id_number}}
