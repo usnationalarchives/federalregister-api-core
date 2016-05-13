@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20160331181238) do
+ActiveRecord::Schema.define(:version => 20160513175013) do
 
   create_table "action_names", :force => true do |t|
     t.string   "name"
@@ -381,6 +381,7 @@ ActiveRecord::Schema.define(:version => 20160331181238) do
     t.datetime "updated_at"
   end
 
+  add_index "gpo_graphics", ["graphic_file_name"], :name => "index_gpo_graphics_on_graphic_file_name"
   add_index "gpo_graphics", ["identifier"], :name => "index_gpo_graphics_on_identifier", :unique => true
 
   create_table "graphic_usages", :force => true do |t|
