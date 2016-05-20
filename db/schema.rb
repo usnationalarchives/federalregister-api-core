@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20160513175013) do
+ActiveRecord::Schema.define(:version => 20160518223538) do
 
   create_table "action_names", :force => true do |t|
     t.string   "name"
@@ -358,6 +358,18 @@ ActiveRecord::Schema.define(:version => 20160513175013) do
     t.integer  "processed_document_count"
   end
 
+  create_table "gpo_graphic_packages", :force => true do |t|
+    t.string   "graphic_identifier"
+    t.string   "package_identifier"
+    t.date     "package_date"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "gpo_graphic_packages", ["graphic_identifier"], :name => "index_gpo_graphic_packages_on_graphic_identifier"
+  add_index "gpo_graphic_packages", ["package_date"], :name => "index_gpo_graphic_packages_on_package_date"
+  add_index "gpo_graphic_packages", ["package_identifier"], :name => "index_gpo_graphic_packages_on_package_identifier"
+
   create_table "gpo_graphic_usages", :force => true do |t|
     t.string   "identifier"
     t.string   "document_number"
@@ -379,6 +391,7 @@ ActiveRecord::Schema.define(:version => 20160513175013) do
     t.datetime "graphic_updated_at"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "package_identifier"
   end
 
   add_index "gpo_graphics", ["graphic_file_name"], :name => "index_gpo_graphics_on_graphic_file_name"

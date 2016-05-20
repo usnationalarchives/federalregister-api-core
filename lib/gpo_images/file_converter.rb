@@ -21,8 +21,8 @@ class GpoImages::FileConverter
       log "processing image package #{bucketed_zip_filename} for #{date}"
       download_eps_image_bundle
       unzip_file_and_process(
-        uncompressed_eps_images_path,
-        File.join(compressed_image_bundles_path, base_filename)
+        GpoImages::FileLocationManager.uncompressed_eps_images_path(package_identifier),
+        File.join(GpoImages::FileLocationManager.compressed_image_bundles_path, base_filename)
       )
     end
   end
@@ -33,21 +33,17 @@ class GpoImages::FileConverter
     @base_filename ||= File.basename(bucketed_zip_filename)
   end
 
+  def package_identifier
+    @package_identifier ||= File.basename(bucketed_zip_filename, '.zip')
+  end
+
   def bucket_name
     SETTINGS["s3_buckets"]["zipped_eps_images"]
   end
 
-  def compressed_image_bundles_path
-    GpoImages::FileLocationManager.compressed_image_bundles_path
-  end
-
-  def uncompressed_eps_images_path
-    GpoImages::FileLocationManager.uncompressed_eps_images_path
-  end
-
   def create_directories
-    FileUtils.makedirs compressed_image_bundles_path
-    FileUtils.makedirs uncompressed_eps_images_path
+    FileUtils.makedirs GpoImages::FileLocationManager.compressed_image_bundles_path
+    FileUtils.makedirs GpoImages::FileLocationManager.uncompressed_eps_images_path(package_identifier)
   end
 
   def download_eps_image_bundle
@@ -56,7 +52,7 @@ class GpoImages::FileConverter
       get(bucket_name, :prefix => date.to_s(:ymd)).
       files.
       get(bucketed_zip_filename)
-    local_file = File.open(File.join(compressed_image_bundles_path, base_filename), "w")
+    local_file = File.open(File.join(GpoImages::FileLocationManager.compressed_image_bundles_path, base_filename), "w")
     local_file.write(file.body)
     local_file.close
   end
@@ -98,7 +94,10 @@ class GpoImages::FileConverter
   end
 
   def zip_file_exists?
-    File.exist? File.join(compressed_image_bundles_path, base_filename)
+    File.exist? File.join(
+        GpoImages::FileLocationManager.compressed_image_bundles_path,
+        base_filename
+      )
   end
 
   def redis_key
