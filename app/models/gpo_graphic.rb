@@ -5,6 +5,11 @@ class GpoGraphic < ActiveRecord::Base
     :foreign_key => :identifier,
     :primary_key => :identifier
 
+  has_many :gpo_graphic_packages,
+    :foreign_key => :graphic_identifier,
+    :primary_key => :identifier,
+    :dependent => :destroy
+
   has_attached_file :graphic,
                     :styles => {
                       :large => {
@@ -12,14 +17,14 @@ class GpoGraphic < ActiveRecord::Base
                         :geometry => "460",
                         :source_file_options => "-density 300"
                       },
-                      :original => {
+                      :original_png => {
                         :format => :png,
-                        :geometry => "",
+                        :geometry => "100%",
                         :source_file_options => "-density 300"
                       }
                     },
                     :processors => [:thumbnail],
-                    :source_file_options => ["-density 300"],
+                    :convert_options => "-strip -unsharp 0",
                     :storage => :s3,
                     :s3_credentials => {
                       :access_key_id     => SECRETS["aws"]["access_key_id"],

@@ -5,9 +5,12 @@ class GpoImages::FogAwsConnection
     directory = directories.get(source_bucket, :prefix => identifier)
 
     directory.files.each do |file|
-      # change the file's name to be the same as the xml_identifier
+      # change the bucket's name to be the same as the xml_identifier
       # now that we've gotten it from the published XML
       filename = file.key.gsub(identifier, URI.encode(xml_identifier))
+
+      # rename the orginal_png style to just original
+      filename = filename.include?('original_png') ? filename.gsub('original_png', 'original') : filename
 
       if file.copy(destination_bucket, filename)
         file.destroy

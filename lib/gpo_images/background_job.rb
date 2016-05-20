@@ -21,6 +21,7 @@ module GpoImages
 
     def perform
       gpo_graphic = find_or_create_gpo_graphic
+
       if gpo_graphic.save
         gpo_graphic.move_to_public_bucket if gpo_graphic.gpo_graphic_usages.present?
         remove_from_redis_key
@@ -38,7 +39,8 @@ module GpoImages
             :bucketed_zip_filename => bucketed_zip_filename,
             :eps_filename => eps_filename,
             :ftp_transfer_date => ftp_transfer_date,
-            :identifier => identifier
+            :identifier => identifier,
+            :package_identifier => package_identifier
           }
         )
       end
@@ -46,20 +48,32 @@ module GpoImages
 
     private
 
+    def package_identifier
+      @package_identifier ||= File.basename(bucketed_zip_filename, '.zip')
+    end
+
     def find_or_create_gpo_graphic
-      gpo_graphic = GpoGraphic.find_by_identifier(identifier)
-
-      unless gpo_graphic
-        gpo_graphic = GpoGraphic.new(:identifier => identifier)
-      end
-
+      gpo_graphic = GpoGraphic.find_or_create_by_identifier(identifier)
       gpo_graphic.graphic = image
+      gpo_graphic.package_identifier = package_identifier
+
+      gpo_graphic_package = GpoGraphicPackage.
+        find_or_initialize_by_graphic_identifier_and_package_identifier(
+          gpo_graphic.identifier,
+          package_identifier
+        )
+      gpo_graphic_package.package_date = ftp_transfer_date
+
+      gpo_graphic.gpo_graphic_packages << gpo_graphic_package
       gpo_graphic
     end
 
     def image
       @image ||= File.open(
-        File.join(uncompressed_eps_images_path, eps_filename)
+        File.join(
+          GpoImages::FileLocationManager.uncompressed_eps_images_path(package_identifier),
+          eps_filename
+        )
       )
     end
 
@@ -90,23 +104,26 @@ module GpoImages
     end
 
     def remove_local_image
-      FileUtils.rm(File.join(uncompressed_eps_images_path, eps_filename))
+      FileUtils.rm(
+        File.join(
+          GpoImages::FileLocationManager.uncompressed_eps_images_path(package_identifier),
+          eps_filename
+        )
+      )
     end
 
     def remove_zip_file
-      FileUtils.rm(File.join(compressed_image_bundles_path, zipped_filename), :force => true)
+      FileUtils.rm(
+        File.join(
+          GpoImages::FileLocationManager.compressed_image_bundles_path,
+          zipped_filename
+        ),
+        :force => true
+      )
     end
 
     def zipped_filename
       @zipped_filename ||= File.basename(bucketed_zip_filename)
-    end
-
-    def compressed_image_bundles_path
-      GpoImages::FileLocationManager.compressed_image_bundles_path
-    end
-
-    def uncompressed_eps_images_path
-      GpoImages::FileLocationManager.uncompressed_eps_images_path
     end
   end
 end
