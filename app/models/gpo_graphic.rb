@@ -15,16 +15,17 @@ class GpoGraphic < ActiveRecord::Base
                       :large => {
                         :format => :png,
                         :geometry => "460",
+                        :convert_options => "-strip -unsharp 0",
                         :source_file_options => "-density 300"
                       },
                       :original_png => {
                         :format => :png,
                         :geometry => "100%",
+                        :convert_options => "-strip -unsharp 0",
                         :source_file_options => "-density 300"
                       }
                     },
                     :processors => [:thumbnail],
-                    :convert_options => "-strip -unsharp 0",
                     :storage => :s3,
                     :s3_credentials => {
                       :access_key_id     => SECRETS["aws"]["access_key_id"],
