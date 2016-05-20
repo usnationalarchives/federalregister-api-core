@@ -53,7 +53,7 @@ module GpoImages
     end
 
     def find_or_create_gpo_graphic
-      gpo_graphic = GpoGraphic.find_or_create_by_identifier(identifier)
+      gpo_graphic = GpoGraphic.find_or_initialize_by_identifier(identifier)
       gpo_graphic.graphic = image
       gpo_graphic.package_identifier = package_identifier
 
