@@ -21,7 +21,7 @@ class GpoGraphic < ActiveRecord::Base
                       :original_png => {
                         :format => :png,
                         :geometry => "100%",
-                        :convert_options => "-strip -unsharp 0",
+                        :convert_options => "-strip -unsharp 0 -fuzz 10% -transparent white",
                         :source_file_options => "-density 300"
                       }
                     },
