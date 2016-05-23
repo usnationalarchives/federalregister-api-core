@@ -20,9 +20,10 @@ module GpoImages
     end
 
     def perform
-      gpo_graphic = find_or_create_gpo_graphic
+      gpo_graphic, gpo_graphic_package = find_or_create_gpo_graphic
 
       if gpo_graphic.save
+        gpo_graphic_package.touch
         gpo_graphic.move_to_public_bucket if gpo_graphic.gpo_graphic_usages.present?
         remove_from_redis_key
         remove_local_image
@@ -59,15 +60,14 @@ module GpoImages
       gpo_graphic.graphic = image
       gpo_graphic.package_identifier = package_identifier
 
-      gpo_graphic_package = GpoGraphicPackage.
+      gpo_graphic_package = gpo_graphic.gpo_graphic_packages.
         find_or_initialize_by_graphic_identifier_and_package_identifier(
           gpo_graphic.identifier,
           package_identifier
         )
       gpo_graphic_package.package_date = ftp_transfer_date
 
-      gpo_graphic.gpo_graphic_packages << gpo_graphic_package
-      gpo_graphic
+      return gpo_graphic, gpo_graphic_package
     end
 
     def image
@@ -116,7 +116,7 @@ module GpoImages
 
     def remove_local_image_directory
       FileUtils.rm(
-        GpoImages::FileLocationManager.uncompressed_eps_images_path(package_identifier)
+        GpoImages::FileLocationManager.uncompressed_eps_images_path(package_identifier),
         :force => true
       )
     end
