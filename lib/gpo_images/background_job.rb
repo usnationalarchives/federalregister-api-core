@@ -30,6 +30,8 @@ module GpoImages
         if redis_file_queue_empty?
           mark_zipfile_as_converted
           remove_zip_file
+          remove_local_image_directory
+          remove_redis_key
         end
       else
         Honeybadger.notify(
@@ -112,6 +114,13 @@ module GpoImages
       )
     end
 
+    def remove_local_image_directory
+      FileUtils.rm(
+        GpoImages::FileLocationManager.uncompressed_eps_images_path(package_identifier)
+        :force => true
+      )
+    end
+
     def remove_zip_file
       FileUtils.rm(
         File.join(
@@ -120,6 +129,10 @@ module GpoImages
         ),
         :force => true
       )
+    end
+
+    def remove_redis_key
+      redis.del(redis_key)
     end
 
     def zipped_filename
