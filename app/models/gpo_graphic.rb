@@ -33,7 +33,7 @@ class GpoGraphic < ActiveRecord::Base
                     },
                     :s3_permissions => :private,
                     :s3_protocol => 'https',
-                    :bucket => proc { |attachment| attachment.instance.assigned_bucket },
+                    :bucket => proc { |attachment| attachment.instance.private_bucket },
                     :path => ":identifier/:style.:extension"
 
   named_scope :processed, :conditions => "graphic_file_name IS NOT NULL"
@@ -59,17 +59,6 @@ class GpoGraphic < ActiveRecord::Base
   def xml_identifier
     self.gpo_graphic_usages.first.try(:xml_identifier)
   end
-
-  def assigned_bucket
-    publication_dates = gpo_graphic_usages.map{|u| u.entry.publication_date}
-    if publication_dates.any?{|publication_date| publication_date <= Date.current}
-      public_bucket
-    else
-      private_bucket
-    end
-  end
-
-  private
 
   def public_bucket
     SETTINGS["s3_buckets"]["public_images"]
