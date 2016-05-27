@@ -583,6 +583,9 @@ class Entry < ApplicationModel
     "#{Rails.root}/data/documents"
   end
 
+  def document_file_path
+    "#{publication_date.to_s(:ymd)}/#{document_number}"
+  end
 
   private
 
