@@ -61,7 +61,7 @@ class EntrySearch < ApplicationSearch
   
   define_filter :regulation_id_number, :label => "Unified Agenda", :phrase => true do |regulation_id_number|
     reg = RegulatoryPlan.find_by_regulation_id_number(regulation_id_number)
-    ["RIN #{regulation_id_number}", reg.try(:title)].join(' - ')
+    ["RIN #{Array(regulation_id_number).first}", reg.try(:title).strip].join(' - ') 
   end
   
   def regulatory_plan_title
