@@ -5,7 +5,8 @@ class PublicInspectionDocumentSearch < ApplicationSearch
   define_filter :agencies,
                 :sphinx_attribute => :agency_ids,
                 :sphinx_type => :with,
-                :model_id_method => :slug
+                :model_id_method => :slug,
+                :model_sphinx_method => :id
 
   define_filter :type,
                 :sphinx_type => :with, :crc32_encode => true do |types|
