@@ -105,6 +105,7 @@ class PublicInspectionDocumentSearch < ApplicationSearch
     [
       ['published', :publication_date],
       ['from', :agency_ids],
+      ['from', :agencies],
       ['of type', :type],
       ['categorized as', :special_filing],
       ['filed under agency docket', :docket_id],
