@@ -105,7 +105,8 @@ class Api::V1::PublicInspectionDocumentsController < ApiController
     render :template => 'public_inspection/index.rss.builder', :locals => {
       :documents => documents,
       :feed_name => title,
-      :feed_description => "The documents in this feed originate from FederalRegister.gov which displays an unofficial web version of the daily Federal Register. Public Inspection documents originate from official copies filed at the Office of the Federal Register. For more information, please see https://www.federalregister.gov/reader-aids/using-federalregister-gov/understanding-public-inspection."
+      :feed_description => "The documents in this feed originate from FederalRegister.gov which displays an unofficial web version of the daily Federal Register. Public Inspection documents originate from official copies filed at the Office of the Federal Register. For more information, please see https://www.federalregister.gov/reader-aids/using-federalregister-gov/understanding-public-inspection.",
+      :feed_url => request.url
     }
   end
 end
