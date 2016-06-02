@@ -61,7 +61,7 @@ class EntrySearch < ApplicationSearch
   
   define_filter :regulation_id_number, :label => "Unified Agenda", :phrase => true do |regulation_id_number|
     reg = RegulatoryPlan.find_by_regulation_id_number(regulation_id_number)
-    ["RIN #{Array(regulation_id_number).first}", reg.try(:title).strip].join(' - ') 
+    ["RIN #{Array(regulation_id_number).first}", reg.try(:title).try(:strip)].join(' - ') 
   end
   
   def regulatory_plan_title
@@ -78,6 +78,7 @@ class EntrySearch < ApplicationSearch
                 :sphinx_attribute => :agency_ids,
                 :model_sphinx_method => :id,
                 :model_id_method=> :slug
+
   define_filter(:citing_document_numbers,
                 :sphinx_type => :with,
                 :sphinx_attribute => :cited_entry_ids,
