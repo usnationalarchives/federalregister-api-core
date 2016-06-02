@@ -1,0 +1,3 @@
+sphinx:
+  use_local_pil_date: false
+  pil_index_since_date: '2016-04-10'

@@ -96,6 +96,10 @@ gem 'cocaine'
 
 gem 'hoe'
 
+gem 'app_config', "=1.3.2",
+  :git => 'git@github.com:fredwu/app_config.git',
+  :branch => :master
+
 # needed when running on ruby 1.8
 gem 'system_timer', '1.2.4', :platform => :ruby_18
 gem 'fastercsv', '1.4.0', :platform => :ruby_18

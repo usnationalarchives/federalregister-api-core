@@ -64,7 +64,11 @@ class PublicInspectionDocument < ApplicationModel
       "agency_name" => 10
     }
 
-    where "public_inspection_documents.publication_date > (SELECT MAX(publication_date) FROM issues where issues.completed_at is not null)"
+    if AppConfig.sphinx.use_local_pil_date
+      where "public_inspection_documents.publication_date > #{AppConfig.sphinx.pil_index_since_date}"
+    else
+      where "public_inspection_documents.publication_date > #(SELECT MAX(publication_date) FROM issues where issues.completed_at is not null)"
+    end
   end
 
   # Note: the concept of 'unpublished' is different from that of 'pending publication'

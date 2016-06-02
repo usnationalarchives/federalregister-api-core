@@ -18,6 +18,7 @@ webrat.log
 /config/varnish.test.vcl
 /config/varnish.yml
 /config/splunk.yml
+/config/app_config/development.yml
 /data
 /db/sphinx/
 /log
