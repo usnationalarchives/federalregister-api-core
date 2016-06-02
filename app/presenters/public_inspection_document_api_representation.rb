@@ -42,6 +42,10 @@ class PublicInspectionDocumentApiRepresentation < ApiRepresentation
   field(:subject_2)
   field(:subject_3)
 
+  def self.default_index_fields_csv
+    [:agency_names, :document_number, :editorial_note, :filed_at, :filing_type, :json_url, :num_pages, :publication_date, :type]
+  end
+
   def self.default_index_fields_json
     all_fields
   end

@@ -16,6 +16,16 @@ class Api::V1::PublicInspectionDocumentsController < ApiController
         end
       end
 
+      wants.csv do
+        search = PublicInspectionDocumentSearch.new(params)
+        fields = specified_fields || PublicInspectionDocumentApiRepresentation.default_index_fields_csv
+        find_options = PublicInspectionDocumentApiRepresentation.find_options_for(fields)
+
+        filename = search.summary.gsub(/\W+/, '_').sub(/_$/,'').downcase
+        documents = search.results(find_options)
+        render_csv(documents, fields, filename)
+      end
+
       wants.rss do
         search = PublicInspectionDocumentSearch.new(params.merge(:order => 'newest'))
         fields = PublicInspectionDocumentApiRepresentation.default_index_fields_rss
@@ -99,6 +109,28 @@ class Api::V1::PublicInspectionDocumentsController < ApiController
              }
     end
     render_json_or_jsonp data
+  end
+
+  def render_csv(documents, fields, filename)
+    output = CSV.generate do |csv|
+      csv << fields
+      documents.each do |result|
+        representation = PublicInspectionDocumentApiRepresentation.new(result)
+        csv << fields.map do |field|
+          value = [*representation.value(field)].join('; ')
+
+          if field == :document_number
+            value = " #{value}"
+          else
+            value
+          end
+        end
+      end
+    end
+
+    headers['Content-Disposition'] = "attachment; filename=\"#{filename}.csv\""
+
+    render :text => output
   end
 
   def render_rss(documents, title)
