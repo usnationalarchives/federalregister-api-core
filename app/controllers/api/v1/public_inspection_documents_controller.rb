@@ -28,7 +28,7 @@ class Api::V1::PublicInspectionDocumentsController < ApiController
   end
 
   def facets
-    field_facets = %w(type agency)
+    field_facets = %w(type agency agencies)
     raise ActiveRecord::RecordNotFound unless (field_facets).include?(params[:facet])
 
     search = PublicInspectionDocumentSearch.new(params)

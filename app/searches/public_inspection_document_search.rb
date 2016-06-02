@@ -43,6 +43,16 @@ class PublicInspectionDocumentSearch < ApplicationSearch
   end
   memoize :agency_facets
 
+  def agencies_facets
+    ApplicationSearch::FacetCalculator.new(
+      :search => self,
+      :model => Agency,
+      :facet_name => :agency_ids,
+      :identifier_attribute => :slug
+    ).all
+  end
+  memoize :agencies_facets
+
   def type_facets
     ApplicationSearch::FacetCalculator.new(
       :search => self,
