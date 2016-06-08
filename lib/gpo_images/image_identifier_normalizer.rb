@@ -6,7 +6,7 @@ module GpoImages
     end
 
     def image_identifier(filename)
-      filename.gsub(/.eps/i,"")
+      filename.gsub(/\.?eps/i,"")
     end
   end
 end
