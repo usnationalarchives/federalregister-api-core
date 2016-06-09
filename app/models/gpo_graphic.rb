@@ -23,7 +23,7 @@ class GpoGraphic < ActiveRecord::Base
                         :convert_options => "-strip -unsharp 0"
                       }
                     },
-                    :processors => [:gpo_image_converter],
+                    :processors => [:gpo_image_converter, :png_crush],
                     :storage => :s3,
                     :s3_credentials => {
                       :access_key_id     => SECRETS["aws"]["access_key_id"],
