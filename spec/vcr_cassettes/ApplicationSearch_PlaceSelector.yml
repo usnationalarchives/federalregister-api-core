@@ -1,103 +1,50 @@
---- 
-recorded_with: VCR 2.5.0
-http_interactions: 
-- request: 
+---
+http_interactions:
+- request:
     method: get
-    uri: http://maps.google.com/maps/geo?q=Crazy+Unknown+Non-Existent+Place&output=xml&key=<API_KEY>&oe=utf-8
-    body: 
-      string: ""
-    headers: 
-      accept: 
-      - "*/*"
-  response: 
-    status: 
+    uri: https://maps.googleapis.com/maps/api/geocode/json?sensor=false&address=Crazy+Unknown+Non-Existent+Place&key=
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      accept:
+      - ! '*/*'
+      user-agent:
+      - Ruby
+  response:
+    status:
       code: 200
       message: OK
-    headers: 
-      server: 
+    headers:
+      content-type:
+      - application/json; charset=UTF-8
+      date:
+      - Fri, 24 Jun 2016 18:37:14 GMT
+      expires:
+      - Sat, 25 Jun 2016 18:37:14 GMT
+      cache-control:
+      - public, max-age=86400
+      access-control-allow-origin:
+      - ! '*'
+      server:
       - mafe
-      expires: 
-      - Fri, 01 Jan 1990 00:00:00 GMT
-      vary: 
-      - Accept-Language
-      x-xss-protection: 
+      x-xss-protection:
       - 1; mode=block
-      pragma: 
-      - no-cache
-      date: 
-      - Fri, 26 Jul 2013 20:12:31 GMT
-      cache-control: 
-      - no-cache, must-revalidate
-      transfer-encoding: 
-      - chunked
-      x-frame-options: 
+      x-frame-options:
       - SAMEORIGIN
-      content-type: 
-      - text/xml; charset=UTF-8
-    body: 
-      string: |
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <kml xmlns="http://earth.google.com/kml/2.0"><Response>
-          <name>Crazy Unknown Non-Existent Place</name>
-          <Status>
-            <code>602</code>
-            <request>geocode</request>
-          </Status>
-        </Response></kml>
-
-    http_version: "1.1"
-  recorded_at: Fri, 26 Jul 2013 20:12:31 GMT
-- request: 
-    method: get
-    uri: http://maps.google.com/maps/geo?q=94118&output=xml&key=<API_KEY>&oe=utf-8
-    body: 
-      string: ""
-    headers: 
-      accept: 
-      - "*/*"
-  response: 
-    status: 
-      code: 200
-      message: OK
-    headers: 
-      server: 
-      - mafe
-      expires: 
-      - Fri, 01 Jan 1990 00:00:00 GMT
-      vary: 
-      - Accept-Language
-      x-xss-protection: 
-      - 1; mode=block
-      pragma: 
-      - no-cache
-      date: 
-      - Fri, 26 Jul 2013 20:12:31 GMT
-      cache-control: 
-      - no-cache, must-revalidate
-      transfer-encoding: 
+      alternate-protocol:
+      - 443:quic
+      alt-svc:
+      - quic=":443"; ma=2592000; v="34,33,32,31,30,29,28,27,26,25"
+      accept-ranges:
+      - none
+      vary:
+      - Accept-Language,Accept-Encoding
+      transfer-encoding:
       - chunked
-      x-frame-options: 
-      - SAMEORIGIN
-      content-type: 
-      - text/xml; charset=UTF-8
-    body: 
-      string: |
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <kml xmlns="http://earth.google.com/kml/2.0"><Response>
-          <name>94118</name>
-          <Status>
-            <code>200</code>
-            <request>geocode</request>
-          </Status>
-          <Placemark id="p1">
-            <address>San Francisco, CA 94118, USA</address>
-            <AddressDetails Accuracy="5" xmlns="urn:oasis:names:tc:ciq:xsdschema:xAL:2.0"><Country><CountryNameCode>US</CountryNameCode><CountryName>USA</CountryName><AdministrativeArea><AdministrativeAreaName>CA</AdministrativeAreaName><Locality><LocalityName>San Francisco</LocalityName><PostalCode><PostalCodeNumber>94118</PostalCodeNumber></PostalCode></Locality></AdministrativeArea></Country></AddressDetails>
-            <ExtendedData>
-              <LatLonBox north="37.7916370" south="37.7660620" east="-122.4436991" west="-122.4795040" />
-            </ExtendedData>
-            <Point><coordinates>-122.4637080,37.7822891,0</coordinates></Point>
-          </Placemark>
-        </Response></kml>
-
-    http_version: "1.1"
-  recorded_at: Fri, 26 Jul 2013 20:12:31 GMT
+    body:
+      encoding: US-ASCII
+      string: ! "{\n   \"results\" : [],\n   \"status\" : \"ZERO_RESULTS\"\n}\n"
+    http_version: '1.1'
+  recorded_at: Fri, 24 Jun 2016 18:37:14 GMT
+recorded_with: VCR 2.6.0
