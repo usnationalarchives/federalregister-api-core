@@ -221,7 +221,7 @@ GEM
     formtastic (0.9.8)
       actionpack (>= 2.3.0)
       activesupport (>= 2.3.0)
-    geokit (1.4.1)
+    geokit (1.10.0)
     gherkin (2.11.5)
       json (>= 1.4.6)
     git (1.2.8)
@@ -400,7 +400,7 @@ DEPENDENCIES
   fog
   fog-google (= 0.1.0)
   formtastic (= 0.9.8)
-  geokit (= 1.4.1)
+  geokit (= 1.10.0)
   haml (= 3.0.4)
   hoe
   honeybadger
@@ -455,3 +455,6 @@ DEPENDENCIES
   will_paginate (= 2.3.14)
   ym4r (= 0.6.1)
   zip-zip
+
+BUNDLED WITH
+   1.10.6

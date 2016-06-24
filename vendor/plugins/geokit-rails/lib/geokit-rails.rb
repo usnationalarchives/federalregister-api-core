@@ -11,10 +11,10 @@ if defined? Geokit
   require 'geokit-rails/ip_geocode_lookup'
   
   # Automatically mix in distance finder support into ActiveRecord classes.
-  ActiveRecord::Base.send :include, GeoKit::ActsAsMappable
+  ActiveRecord::Base.send :include, Geokit::ActsAsMappable
   
   # Automatically mix in ip geocoding helpers into ActionController classes.
-  ActionController::Base.send :include, GeoKit::IpGeocodeLookup
+  ActionController::Base.send :include, Geokit::IpGeocodeLookup
 else
   message=%q(WARNING: geokit-rails requires the Geokit gem. You either don't have the gem installed,
 or you haven't told Rails to require it. If you're using a recent version of Rails: 

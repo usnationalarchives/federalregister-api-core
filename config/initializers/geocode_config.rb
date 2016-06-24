@@ -1,2 +1,2 @@
-Geokit::Geocoders::google = SECRETS['api_keys']['google_maps']
+Geokit::Geocoders::GoogleGeocoder.api_key = '' #Google API Key is optional
 Geokit::Geocoders::ip_provider_order = ['geoip']
