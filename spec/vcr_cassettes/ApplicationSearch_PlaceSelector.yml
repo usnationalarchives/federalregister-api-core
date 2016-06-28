@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: https://maps.googleapis.com/maps/api/geocode/json?sensor=false&address=Crazy+Unknown+Non-Existent+Place&key=
+    uri: https://maps.googleapis.com/maps/api/geocode/json?sensor=false&address=94118&key=
     body:
       encoding: US-ASCII
       string: ''
@@ -19,9 +19,9 @@ http_interactions:
       content-type:
       - application/json; charset=UTF-8
       date:
-      - Fri, 24 Jun 2016 18:37:14 GMT
+      - Tue, 28 Jun 2016 16:02:58 GMT
       expires:
-      - Sat, 25 Jun 2016 18:37:14 GMT
+      - Wed, 29 Jun 2016 16:02:58 GMT
       cache-control:
       - public, max-age=86400
       access-control-allow-origin:
@@ -44,7 +44,32 @@ http_interactions:
       - chunked
     body:
       encoding: US-ASCII
-      string: ! "{\n   \"results\" : [],\n   \"status\" : \"ZERO_RESULTS\"\n}\n"
+      string: ! "{\n   \"results\" : [\n      {\n         \"address_components\" :
+        [\n            {\n               \"long_name\" : \"94118\",\n               \"short_name\"
+        : \"94118\",\n               \"types\" : [ \"postal_code\" ]\n            },\n
+        \           {\n               \"long_name\" : \"San Francisco\",\n               \"short_name\"
+        : \"SF\",\n               \"types\" : [ \"locality\", \"political\" ]\n            },\n
+        \           {\n               \"long_name\" : \"San Francisco County\",\n
+        \              \"short_name\" : \"San Francisco County\",\n               \"types\"
+        : [ \"administrative_area_level_2\", \"political\" ]\n            },\n            {\n
+        \              \"long_name\" : \"California\",\n               \"short_name\"
+        : \"CA\",\n               \"types\" : [ \"administrative_area_level_1\", \"political\"
+        ]\n            },\n            {\n               \"long_name\" : \"United
+        States\",\n               \"short_name\" : \"US\",\n               \"types\"
+        : [ \"country\", \"political\" ]\n            }\n         ],\n         \"formatted_address\"
+        : \"San Francisco, CA 94118, USA\",\n         \"geometry\" : {\n            \"bounds\"
+        : {\n               \"northeast\" : {\n                  \"lat\" : 37.791637,\n
+        \                 \"lng\" : -122.4436991\n               },\n               \"southwest\"
+        : {\n                  \"lat\" : 37.766062,\n                  \"lng\" : -122.479504\n
+        \              }\n            },\n            \"location\" : {\n               \"lat\"
+        : 37.7822891,\n               \"lng\" : -122.463708\n            },\n            \"location_type\"
+        : \"APPROXIMATE\",\n            \"viewport\" : {\n               \"northeast\"
+        : {\n                  \"lat\" : 37.791637,\n                  \"lng\" : -122.4436991\n
+        \              },\n               \"southwest\" : {\n                  \"lat\"
+        : 37.766062,\n                  \"lng\" : -122.479504\n               }\n
+        \           }\n         },\n         \"place_id\" : \"ChIJE8NGljiHhYARnSY8nSgLJkk\",\n
+        \        \"types\" : [ \"postal_code\" ]\n      }\n   ],\n   \"status\" :
+        \"OK\"\n}\n"
     http_version: '1.1'
-  recorded_at: Fri, 24 Jun 2016 18:37:14 GMT
+  recorded_at: Tue, 28 Jun 2016 16:02:59 GMT
 recorded_with: VCR 2.6.0
