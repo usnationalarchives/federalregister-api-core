@@ -22,6 +22,15 @@ describe LocationCacher do
       result.city.should == "San Francisco"
     end
 
+    it "will replace a location value if the cached value returns nil for the lat or long" do
+      cacher = LocationCacher.new('02108')
+      redis.set(cacher.send(:redis_key), Geokit::GeoLoc.new.to_hash.to_json)
+
+      result = cacher.perform
+
+      result.city.should == "Boston"
+    end
+
   end
 
 end

@@ -13,7 +13,7 @@ class LocationCacher
 
   def perform
     if valid_string?
-      redis_result
+      geolocation
     else
       empty_geolocation
     end
@@ -27,17 +27,27 @@ class LocationCacher
     location_string =~ ZIP_CODE_REGEX
   end
 
-  def redis_result
-    value = redis.get(location_string)
+  def geolocation
+    value = redis.get(redis_key)
 
     if value
-      Geokit::GeoLoc.new(JSON.parse(value))
+      stored_location = Geokit::GeoLoc.new(JSON.parse(value))
     else
-      redis.set(redis_key, geocoder_result.to_hash.to_json)
-      redis.expire(redis_key, 1209600)
-
-      geocoder_result
+      stored_location = nil
     end
+
+    if stored_location && stored_location.lat && stored_location.long
+      stored_location
+    else
+      cache_location!
+    end
+  end
+
+  def cache_location!
+    redis.set(redis_key, geocoder_result.to_hash.to_json)
+    redis.expire(redis_key, 1209600)
+
+    geocoder_result
   end
 
   def redis_key
