@@ -123,6 +123,7 @@ group :test do
   gem 'timecop'
   gem 'cucumber'
   gem 'mechanize', '1.0.0'
+  gem 'mock_redis'
 
   gem 'vcr'
   gem 'fakeweb'

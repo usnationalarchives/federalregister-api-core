@@ -4,11 +4,8 @@ describe LocationCacher do
   include RedisSpecHelperMethods
   use_vcr_cassette
 
-  def clear_redis_cache_key(key)
-    redis.del(key) #TODO: Make sure this is clearing the correct redis test db.
-  end
-
   describe "#perform" do
+
     it "returns an empty Geokit::GeoLoc object if a zip code is not provided" do
       cacher = LocationCacher.new('bad_string')
 
@@ -23,8 +20,6 @@ describe LocationCacher do
       result = cacher.perform
 
       result.city.should == "San Francisco"
-
-      clear_redis_cache_key(cacher.send(:redis_key))
     end
 
   end
