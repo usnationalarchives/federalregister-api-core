@@ -11,3 +11,6 @@
   }
 </script>
 <script src="/javascripts/vendor/tender_widget-20130911.js"></script>
+<% if Rails.env.production? %>
+  <script async src="/my/assets/universal_federated_analytics.js"></script>
+<% end %>
