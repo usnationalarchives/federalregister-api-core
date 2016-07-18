@@ -191,6 +191,15 @@ namespace :javascript do
   end
 end
 
+#############################################################
+# Varnish Tasks (Instead of Thunderpunch)
+#############################################################
+
+namespace :varnish do
+  task :clear_cache, :roles => [:worker] do
+    run "cd #{current_path} && RAILS_ENV=#{rails_env} bundle exec rake varnish:expire:everything"
+  end
+end
 
 # deploy recipes - these should be required last
 require 'thunder_punch'
@@ -198,4 +207,3 @@ require 'thunder_punch/recipes/apache'
 require 'thunder_punch/recipes/honeybadger'
 require 'thunder_punch/recipes/passenger'
 require 'thunder_punch/recipes/sass'
-require 'thunder_punch/recipes/varnish'
