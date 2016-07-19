@@ -41,7 +41,7 @@ class ApplicationSearch
       latlong = GeoLocator.perform(location)
 
       if latlong.lat.blank? || latlong.lng.blank?
-        @validation_errors = "We could not understand your location"
+        @validation_errors = "We could not understand your location, '#{location}'. Location must be a valid zip code."
       end
 
       latlong
