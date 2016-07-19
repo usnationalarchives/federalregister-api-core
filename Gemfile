@@ -11,7 +11,7 @@ gem "jrails", "0.6.0"
 gem 'nokogiri', '1.5.11'
 gem 'curb', '0.9.0'
 gem 'http_headers', '0.0.2.3'
-gem 'geokit', '1.4.1', :require => 'geokit'
+gem 'geokit', '1.10.0', :require => 'geokit'
 gem 'will_paginate', '2.3.14', :require => 'will_paginate'
 gem 'amatch', '0.2.11'
 gem 'indefinite_article'
@@ -123,6 +123,7 @@ group :test do
   gem 'timecop'
   gem 'cucumber'
   gem 'mechanize', '1.0.0'
+  gem 'mock_redis'
 
   gem 'vcr'
   gem 'fakeweb'

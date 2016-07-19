@@ -23,4 +23,10 @@ Spec::Runner.configure do |config|
   config.use_instantiated_fixtures  = false
   config.fixture_path = RAILS_ROOT + '/spec/fixtures/'
   config.extend VCR::RSpec::Macros
+
+  config.before(:each) do
+    # If this becomes non-performant, the stub can be relocated
+    # to individual tests which use redis.
+    Redis.stub(:new).and_return(MockRedis.new)
+  end
 end

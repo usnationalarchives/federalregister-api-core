@@ -38,7 +38,7 @@ class ApplicationSearch
     private
 
     def location_latlong
-      latlong = Rails.cache.fetch("location_of: '#{location}'") { Geokit::Geocoders::GoogleGeocoder.geocode(location) }
+      latlong = GeoLocator.perform(location)
 
       if latlong.lat.blank? || latlong.lng.blank?
         @validation_errors = "We could not understand your location"
