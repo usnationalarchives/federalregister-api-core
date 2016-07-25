@@ -9,7 +9,7 @@ namespace :mailing_lists do
           date = Date.current
         end
 
-        Content.run_myfr2_command "bundle exec rake mailing_lists:documents:deliver[\"#{date.to_s(:iso)}\"]"
+        Resque.enqueue('DocumentSubscriptionQueuePopulator', date.to_s(:iso), document_numbers)
       rescue StandardError => e
         puts e.message
         puts e.backtrace.join("\n")
