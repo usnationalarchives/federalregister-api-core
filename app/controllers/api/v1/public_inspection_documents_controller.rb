@@ -4,7 +4,7 @@ class Api::V1::PublicInspectionDocumentsController < ApiController
       cache_for 1.day
 
       wants.json do
-        if params[:conditions] && params[:conditions][:available_on]
+        if params[:conditions].present? && params[:conditions][:available_on]
           publication_date = Date.parse(params[:conditions][:available_on])
           render_date(publication_date)
         else
