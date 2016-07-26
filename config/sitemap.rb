@@ -16,8 +16,8 @@ SitemapGenerator::Sitemap.add_links do |sitemap|
   # SEARCHES
   sitemap.add entries_search_path, :priority => 1
   sitemap.add public_inspection_search_path, :priority => 0.75
-  sitemap.add events_search_path, :priority => 0.5
-  sitemap.add regulatory_plans_search_path, :priority => 0.5
+  # sitemap.add events_search_path, :priority => 0.5
+  # sitemap.add regulatory_plans_search_path, :priority => 0.5
 
   # SECTIONS
   Section.find_each do |section|
@@ -72,7 +72,7 @@ SitemapGenerator::Sitemap.add_links do |sitemap|
   end
 
   # REGULATIONS
-  RegulatoryPlan.find_each do |regulatory_plan|
-    sitemap.add regulatory_plan_path(regulatory_plan), :changefreq => 'daily'
-  end
+  # RegulatoryPlan.find_each do |regulatory_plan|
+  #   sitemap.add regulatory_plan_path(regulatory_plan), :changefreq => 'daily'
+  # end
 end
