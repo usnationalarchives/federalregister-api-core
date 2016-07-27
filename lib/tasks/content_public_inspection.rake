@@ -38,8 +38,8 @@ namespace :content do
       if new_document_numbers.present?
         Rake::Task["content:public_inspection:reindex"].invoke unless Rails.env == 'development'
 
-        date = PublicInspectionDocument.find_by_document_number(document_numbers.first).filed_at.to_date
-        Resque.enqueue_to(:subscriptions, 'PublicInspectionDocumentSubscriptionQueuePopulator', date.to_s(:iso), document_numbers)
+        date = PublicInspectionDocument.find_by_document_number(new_document_numbers.first).filed_at.to_date
+        Resque.enqueue_to(:subscriptions, 'PublicInspectionDocumentSubscriptionQueuePopulator', date.to_s(:iso), new_document_numbers)
       end
     end
 
