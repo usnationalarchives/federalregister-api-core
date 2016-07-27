@@ -9,7 +9,7 @@ namespace :mailing_lists do
           date = Date.current
         end
 
-        Resque.enqueue('DocumentSubscriptionQueuePopulator', date.to_s(:iso))
+        Resque.enqueue_to(:subscriptions, 'DocumentSubscriptionQueuePopulator', date.to_s(:iso))
       rescue StandardError => e
         puts e.message
         puts e.backtrace.join("\n")
