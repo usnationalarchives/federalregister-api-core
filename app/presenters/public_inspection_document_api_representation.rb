@@ -37,6 +37,8 @@ class PublicInspectionDocumentApiRepresentation < ApiRepresentation
   field(:pdf_updated_at)
   field(:pdf_url, :select => :document_number) {|document| document.pdf.url(:with_banner, false)}
   field(:title, :select => [:subject_1, :subject_2, :subject_3]) {|document| document.title}
+  field(:toc_doc, :select => [:subject_1, :subject_2, :subject_3]) {|document| document.toc_doc}
+  field(:toc_subject, :select => [:subject_1, :subject_2, :subject_3]) {|document| document.toc_subject}
   field(:subject_1)
   field(:subject_2)
   field(:subject_3)
@@ -46,7 +48,7 @@ class PublicInspectionDocumentApiRepresentation < ApiRepresentation
   end
 
   def self.default_index_fields_json
-    all_fields
+    all_fields - [:subject_1, :subject_2, :subject_3]
   end
 
   def self.default_index_fields_rss
@@ -54,6 +56,6 @@ class PublicInspectionDocumentApiRepresentation < ApiRepresentation
   end
 
   def self.default_show_fields_json
-    all_fields - [:json_url, :excerpts]
+    all_fields - [:json_url, :excerpts, :subject_1, :subject_2, :subject_3]
   end
 end
