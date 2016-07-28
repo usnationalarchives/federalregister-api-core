@@ -3,6 +3,7 @@ module GpoImages
     attr_reader :date, :documents
     include ImageIdentifierNormalizer
 
+    GPO_IMAGE_START_DATE = Date.parse('2015-10-14')
     XML_IMAGE_TAGS = ['GID', 'MID']
 
     def initialize(date)
@@ -11,7 +12,9 @@ module GpoImages
     end
 
     def self.perform(date)
-      new(date).perform
+      if date >= GPO_IMAGE_START_DATE
+        new(date).perform
+      end
     end
 
     def perform
