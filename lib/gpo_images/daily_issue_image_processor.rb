@@ -8,10 +8,11 @@ module GpoImages
 
     def initialize(date)
       @date = date
-      @documents = Entry.find_all_by_publication_date(@date)
+      @documents = Entry.find_all_by_publication_date(@date.to_s(:iso))
     end
 
     def self.perform(date)
+      date = date.is_a?(String) ? Date.parse(date) : date
       if date >= GPO_IMAGE_START_DATE
         new(date).perform
       end
