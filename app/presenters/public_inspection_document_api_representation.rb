@@ -48,7 +48,7 @@ class PublicInspectionDocumentApiRepresentation < ApiRepresentation
   end
 
   def self.default_index_fields_json
-    all_fields - [:subject_1, :subject_2, :subject_3]
+    all_fields
   end
 
   def self.default_index_fields_rss
@@ -56,6 +56,6 @@ class PublicInspectionDocumentApiRepresentation < ApiRepresentation
   end
 
   def self.default_show_fields_json
-    all_fields - [:json_url, :excerpts, :subject_1, :subject_2, :subject_3]
+    all_fields - [:json_url, :excerpts]
   end
 end
