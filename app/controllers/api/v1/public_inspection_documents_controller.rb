@@ -10,7 +10,9 @@ class Api::V1::PublicInspectionDocumentsController < ApiController
         else
           search = PublicInspectionDocumentSearch.new(params)
           fields = specified_fields || PublicInspectionDocumentApiRepresentation.default_index_fields_json
-          render_search(search, {}, params[:metadata_only]) do |result|
+          find_options = PublicInspectionDocumentApiRepresentation.find_options_for(fields)
+
+          render_search(search, find_options, params[:metadata_only]) do |result|
             document_data(result, fields)
           end
         end
