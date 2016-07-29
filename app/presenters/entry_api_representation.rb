@@ -76,7 +76,9 @@ class EntryApiRepresentation < ApiRepresentation
       end
     elsif gpo_graphics.present?
       gpo_graphics.inject({}) do |hsh, gpo_graphic|
-        hsh[gpo_graphic.identifier] = gpo_graphic.graphic.styles.inject({}) do |hsh, style|
+        next unless gpo_graphic.xml_identifier
+
+        hsh[gpo_graphic.xml_identifier] = gpo_graphic.graphic.styles.inject({}) do |hsh, style|
           hsh[style[0]] = style[1].attachment.send(:url, style[0])
           hsh
         end
