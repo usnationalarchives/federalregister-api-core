@@ -76,7 +76,9 @@ class Api::V1::PublicInspectionDocumentsController < ApiController
       wants.json do
         cache_for 1.day
         fields = specified_fields || PublicInspectionDocumentApiRepresentation.default_show_fields_json
-        render_one_or_more(PublicInspectionDocument, params[:id]) do |document|
+        find_options = PublicInspectionDocumentApiRepresentation.find_options_for(fields)
+
+        render_one_or_more(PublicInspectionDocument, params[:id], find_options) do |document|
           document_data(document, fields)
         end
       end

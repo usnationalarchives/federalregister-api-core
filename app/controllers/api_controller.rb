@@ -53,10 +53,12 @@ class ApiController < ApplicationController
     render_json_or_jsonp(data)
   end
 
-  def render_one_or_more(model, document_numbers)
+  def render_one_or_more(model, document_numbers, find_options={})
     if document_numbers =~ /,/
       document_numbers = params[:id].split(',')
-      records = model.all(:conditions => {:document_number => document_numbers})
+      records = model.all(find_options.merge(
+        :conditions => {:document_number => document_numbers}
+      ))
 
       data = {
         :count => records.count,
