@@ -35,7 +35,7 @@ class PublicInspectionDocumentApiRepresentation < ApiRepresentation
   field(:pdf_file_name)
   field(:pdf_file_size)
   field(:pdf_updated_at)
-  field(:pdf_url, :select => :document_number) {|document| document.pdf.url(:with_banner, false)}
+  field(:pdf_url, :select => :pdf_file_name) {|document| document.pdf.url(:with_banner, false)}
   field(:title, :select => [:subject_1, :subject_2, :subject_3]) {|document| document.title}
   field(:toc_doc, :select => [:subject_1, :subject_2, :subject_3]) {|document| document.toc_doc}
   field(:toc_subject, :select => [:subject_1, :subject_2, :subject_3]) {|document| document.toc_subject}
