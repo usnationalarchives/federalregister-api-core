@@ -1,5 +1,7 @@
 class Api::V1::HolidaysController < ApiController
   def index
+    cache_for 1.day
+
     holidays = Holiday.all
 
     if holidays

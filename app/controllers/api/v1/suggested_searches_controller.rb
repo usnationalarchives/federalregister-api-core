@@ -20,6 +20,7 @@ class Api::V1::SuggestedSearchesController < ApiController
       hsh
     end
 
+    cache_for 1.day
     render_json_or_jsonp(suggested_searches)
   end
 

@@ -10,6 +10,7 @@ class Api::V1::SectionsController < ApiController
       }
     end
 
+    cache_for 1.day
     render_json_or_jsonp(sections)
 
   rescue ArgumentError

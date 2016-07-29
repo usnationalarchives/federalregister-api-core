@@ -13,6 +13,7 @@ class Api::V1::PublicInspectionIssuesController < ApiController
       cache_for 1.day
       render_json_or_jsonp(issues)
     else
+      cache_for 1.day
       render_json_or_jsonp(
         {
           :errors => 'You must supply the proper conditions',
