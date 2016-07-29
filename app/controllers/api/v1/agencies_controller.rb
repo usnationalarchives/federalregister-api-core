@@ -2,7 +2,7 @@ class Api::V1::AgenciesController < ApiController
   def index
     respond_to do |wants|
       wants.json do
-        agencies = Agency.all(:order => "name")
+        agencies = Agency.all(:order => "name", :include => :children)
         data = agencies.map do |agency|
           basic_agency_data(agency).merge(:json_url => api_v1_agency_url(agency.id, :format => :json))
         end
