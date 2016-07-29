@@ -53,6 +53,7 @@ module Content
         maximum(:update_pil_at) || DateTime.current
       issue.regular_filings_updated_at ||= first_posting_date
       issue.published_at ||= DateTime.current
+      issue.calculate_counts
       issue.save!
 
       #compile json table of contents

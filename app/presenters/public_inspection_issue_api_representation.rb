@@ -23,13 +23,13 @@ class PublicInspectionIssueApiRepresentation
       hsh[issue.publication_date.to_s(:iso)] = {
         :special_filings => {
           :last_updated_at => issue.special_filings_updated_at,
-          :documents => issue.special_filing_documents.count,
-          :agencies => issue.special_filing_agencies.count
+          :documents => issue.special_filing_documents_count,
+          :agencies => issue.special_filing_agencies_count
         },
         :regular_filings => {
           :last_updated_at => issue.regular_filings_updated_at,
-          :documents => issue.regular_filing_documents.count,
-          :agencies => issue.regular_filing_agencies.count
+          :documents => issue.regular_filing_documents_count,
+          :agencies => issue.regular_filing_agencies_count
         }
       }
       hsh

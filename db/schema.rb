@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20160518223538) do
+ActiveRecord::Schema.define(:version => 20160729211404) do
 
   create_table "action_names", :force => true do |t|
     t.string   "name"
@@ -516,6 +516,10 @@ ActiveRecord::Schema.define(:version => 20160518223538) do
     t.datetime "regular_filings_updated_at"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "special_filing_documents_count"
+    t.integer  "special_filing_agencies_count"
+    t.integer  "regular_filing_documents_count"
+    t.integer  "regular_filing_agencies_count"
   end
 
   create_table "public_inspection_postings", :id => false, :force => true do |t|

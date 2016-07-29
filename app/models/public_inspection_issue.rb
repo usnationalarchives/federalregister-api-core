@@ -38,4 +38,11 @@ class PublicInspectionIssue < ApplicationModel
   def regular_filing_agencies
     @regular_filing_agencies ||= regular_filing_documents.map{|doc| doc.agencies.excluding_parents}.flatten.uniq
   end
+
+  def calculate_counts
+    self.special_filing_documents_count = special_filing_documents.count
+    self.special_filing_agencies_count = special_filing_agencies.count
+    self.regular_filing_documents_count = regular_filing_documents.count
+    self.regular_filing_agencies_count = regular_filing_agencies.count
+  end
 end
