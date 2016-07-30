@@ -34,8 +34,8 @@ class EntryApiRepresentation < ApiRepresentation
     end
   end
   field(:agency_names, :include => {:agency_names => :agency}) {|e| e.agency_names.compact.map{|a| a.agency.try(:name) || a.name}}
-  field(:body_html_url, :select => :document_file_path) {|e| entry_full_text_url(e)}
-  field(:cfr_references, :include => :entry_cfr_references) do |entry|
+  field(:body_html_url, :select => [:document_file_path, :publication_date]) {|e| entry_full_text_url(e)}
+  field(:cfr_references, :include => :entry_cfr_references, select: [:publication_date]) do |entry|
     entry.entry_cfr_references.map do |cfr_reference|
       citation_url = cfr_reference.chapter.present? ? nil : select_cfr_citation_url(entry.publication_date, cfr_reference.title, cfr_reference.part, nil)
       {
@@ -60,10 +60,10 @@ class EntryApiRepresentation < ApiRepresentation
   field(:excerpts, :select => [:document_file_path, :abstract]) {|e| (e.excerpts.raw_text || e.excerpts.abstract) if e.respond_to?(:excerpts) && e.excerpts}
   field(:executive_order_notes)
   field(:executive_order_number)
-  field(:full_text_xml_url, :select => [:document_file_path, :full_xml_updated_at]){|e| entry_xml_url(e) if e.should_have_full_xml?}
+  field(:full_text_xml_url, :select => [:publication_date, :document_file_path, :full_xml_updated_at]){|e| entry_xml_url(e) if e.should_have_full_xml?}
   field(:html_url, :select => [:publication_date, :document_number, :title]){|e| entry_url(e)}
-  field(:images, :include => [:graphics]) do |entry|
-    graphics = entry.graphics.extracted
+  field(:images, :include => [:extracted_graphics, :gpo_graphic_usages]) do |entry|
+    graphics = entry.extracted_graphics
     gpo_graphics = entry.processed_gpo_graphics
 
     if graphics.present?
@@ -100,7 +100,7 @@ class EntryApiRepresentation < ApiRepresentation
     end
   end
   field(:publication_date)
-  field(:raw_text_url, :select => [:document_file_path]){|e| entry_raw_text_url(e)}
+  field(:raw_text_url, :select => [:publication_date, :document_file_path]){|e| entry_raw_text_url(e)}
   field(:regulation_id_number_info, :include => {:entry_regulation_id_numbers => :current_regulatory_plan}) do |entry|
     values = entry.entry_regulation_id_numbers.map do |e_rin|
       regulatory_plan = e_rin.current_regulatory_plan
