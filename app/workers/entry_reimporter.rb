@@ -5,7 +5,7 @@ module EntryReimporter
     Content::EntryImporter.process_all_by_date(*args)
     date, attributes = *args
     GpoImages::DailyIssueImageProcessor.perform(date)
-    XmlTableOfContentsTransformer.perform(date)
+    Content::TableOfContentsCompiler.perform(date)
     Content::EntryCompiler.perform(date)
   end
 end

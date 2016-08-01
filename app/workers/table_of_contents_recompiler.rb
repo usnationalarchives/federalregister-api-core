@@ -2,7 +2,6 @@ module TableOfContentsRecompiler
   @queue = :reimport
 
   def self.perform(date)
-    XmlTableOfContentsTransformer.perform(date)
+    Content::TableOfContentsCompiler.perform(date)
   end
 end
-

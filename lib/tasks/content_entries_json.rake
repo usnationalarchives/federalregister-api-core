@@ -17,7 +17,7 @@ namespace :content do
             next unless Issue.should_have_an_issue?(date)
 
             puts "compiling daily table of contents json for #{date}..."
-            XmlTableOfContentsTransformer.perform(date)
+            Content::TableOfContentsCompiler.perform(date)
           end
         end
 
