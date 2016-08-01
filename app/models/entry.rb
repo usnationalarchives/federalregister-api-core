@@ -64,6 +64,11 @@ class Entry < ApplicationModel
   has_many :graphic_usages
   has_many :graphics,
            :through => :graphic_usages
+  has_many :extracted_graphics,
+           :through => :graphic_usages,
+           :source => :graphic,
+           :class_name => "Graphic",
+           :conditions => "graphics.graphic_file_name IS NOT NULL"
 
   has_many :gpo_graphic_usages,
     :foreign_key => :document_number,
