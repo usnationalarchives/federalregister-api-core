@@ -87,6 +87,7 @@ module Content
         end
 
         remove_extraneous_documents(date, mods_doc_numbers)
+        create_issue(date)
       end
     end
 
@@ -127,6 +128,13 @@ module Content
         unless mods_doc_numbers.include?(entry.document_number)
           entry.destroy
         end
+      end
+    end
+
+    def self.create_issue(date)
+      if Entry.published_on(date).count > 0
+        issue = Issue.find_by_publication_date(date) || Issue.new(:publication_date => date)
+        issue.save!
       end
     end
 
