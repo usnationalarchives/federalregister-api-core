@@ -1,9 +1,30 @@
+require 'csv'
+
 class Content::DocketImporter
+
+  NON_PARTICIPATING_AGENCIES_FILE = 'data/regulations_dot_gov_non_participating_agencies.csv'
+
+  def self.non_participating_agency_ids
+    Rails.cache.fetch("non_participating_agency_ids", expires_in: 12.hours) do
+      Array.new.tap do |agency_ids|
+        CSV.foreach(
+          NON_PARTICIPATING_AGENCIES_FILE,
+          headers: true,
+          encoding: 'windows-1251:utf-8'
+        ) do |row|
+          agency_ids << row["Agency ID"]
+        end
+      end
+    end
+  end
+
   def initialize
     @client = RegulationsDotGov::Client.new
   end
 
   def perform(docket_number)
+    return if non_participating_agency?(docket_number)
+
     api_docket = @client.find_docket(docket_number)
     return unless api_docket
 
@@ -23,4 +44,13 @@ class Content::DocketImporter
 
     docket.save
   end
+
+  private
+
+  def non_participating_agency?(docket_number)
+    self.class.non_participating_agency_ids.none? do |str|
+      docket_number.start_with? "#{str}-", "#{str}_"
+    end
+  end
+
 end
