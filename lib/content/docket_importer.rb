@@ -48,7 +48,7 @@ class Content::DocketImporter
   private
 
   def non_participating_agency?(docket_number)
-    self.class.non_participating_agency_ids.none? do |str|
+    self.class.non_participating_agency_ids.any? do |str|
       docket_number.start_with? "#{str}-", "#{str}_"
     end
   end
