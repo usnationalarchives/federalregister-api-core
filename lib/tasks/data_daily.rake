@@ -32,7 +32,6 @@ namespace :data do
     task :catch_up => %w(
       data:daily:basic
       content:entries:html:compile:all
-      content:entries:json:compile:daily_toc
       content:issues:mark_complete
     )
 
