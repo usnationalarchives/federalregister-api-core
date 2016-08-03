@@ -50,6 +50,19 @@ namespace :content do
           end
         end
       end
+
+      namespace :recompile do
+        task :daily_toc => :environment do
+          dates = Content.parse_dates(ENV['DATE'])
+
+          dates.each do |date|
+            date = date.is_a?(String) ? Date.parse(date) : date
+            next unless Issue.should_have_an_issue?(date)
+
+            Resque.enqueue(TableOfContentsRecompiler, date)
+          end
+        end
+      end
     end
   end
 end
