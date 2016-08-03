@@ -111,19 +111,9 @@ namespace :content do
           end
 
           entries.find_each do |entry|
-            if entry.comment_url_override?
-              Resque.enqueue(
-                EntryRegulationsDotGovImporter,
-                entry.document_number,
-                comment_url_override: true
-              )
-            else
-              Resque.enqueue(
-                EntryRegulationsDotGovImporter,
-                entry.document_number
-              )
-            end
+            Resque.enqueue(EntryRegulationsDotGovImporter, entry.document_number)
           end
+
         end
 
         desc "Import regulations.gov info for entries missing it published today"

@@ -1,23 +1,24 @@
 class EntryRegulationsDotGovImporter
+  extend ActiveSupport::Memoizable
   @queue = :default
 
   def self.perform(document_number)
     new.perform(document_number)
   end
 
-  def perform(document_number, options = {})
-    entry = Entry.find_by_document_number(document_number)
+  def perform(document_number)
+    @entry = Entry.find_by_document_number!(document_number)
 
     entry.checked_regulationsdotgov_at          = checked_regulationsdotgov_at
     entry.regulationsdotgov_url                 = regulationsdotgov_url
     entry.regulations_dot_gov_comments_close_on = regulations_dot_gov_comments_close_on
 
-    unless options[:comment_url_override]
-      entry.comment_url                           = comment_url
-      entry.regulations_dot_gov_docket_id         = regulations_dot_gov_docket_id
+    unless entry.comment_url_override?
+      entry.comment_url                         = comment_url
+      entry.regulations_dot_gov_docket_id       = regulations_dot_gov_docket_id
     end
 
-    entry.save
+    entry.save!
   end
 
   def checked_regulationsdotgov_at
@@ -41,6 +42,8 @@ class EntryRegulationsDotGovImporter
   end
 
   private
+
+  attr_reader :entry
 
   def regulationsdotgov_document
     begin
