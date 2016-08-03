@@ -49,10 +49,10 @@ module Content
         begin
           docs_and_nodes = BulkdataFile.new(date, options[:force_reload_bulkdata]).document_numbers_and_associated_nodes
         rescue Content::EntryImporter::BulkdataFile::DownloadError => e
-          if ENV['TOLERATE_MISSING_BULKDATA']
+          if ENV['TOLERATE_MISSING_BULKDATA'] || options[:tolerate_missing_bulkdata]
             process_without_bulkdata(date, options, *attributes)
             return
-          elsif ENV['ALLOW_DOWNLOAD_FAILURE']
+          elsif ENV['ALLOW_DOWNLOAD_FAILURE'] || options[:allow_download_failure]
             puts "...could not download bulkdata file for #{date}"
             return
           else

@@ -3,9 +3,13 @@ namespace :content do
     desc "Reimport entry data from FDSys"
     task :reimport => :environment do
       Content.parse_dates(ENV['DATE']).each do |date|
-        Resque.enqueue(EntryReimporter, date,
-                       :force_reload_mods => true,
-                       :force_reload_bulkdata => true)
+        Resque.enqueue(
+          EntryReimporter, date,
+          :force_reload_mods => true,
+          :force_reload_bulkdata => true,
+          :allow_download_failure => ENV['ALLOW_DOWNLOAD_FAILURE'],
+          :tolerate_missing_bulkdata => ENV['TOLERATE_MISSING_BULKDATA']
+        )
       end
     end
 
