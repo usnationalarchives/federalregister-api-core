@@ -28,7 +28,6 @@ class XmlTableOfContentsTransformer
       table_of_contents[:agencies].push({
         name: agency.name,
         slug: agency.slug,
-        url: agency.url,
         see_also: parse_see_also(agency_node.css('SEE')),
         document_categories: parse_category(agency_node.css('CAT'))
       }.delete_if{|k,v| v.nil?})
@@ -39,28 +38,24 @@ class XmlTableOfContentsTransformer
   def create_agency_representation(agency_name)
     agency = lookup_agency(agency_name)
 
-    agency_representation = OpenStruct.new(
-      name: agency_name,
-      slug: agency_name.downcase.gsub(' ','-'),
-      url: ''
+    OpenStruct.new(
+      name: agency_name.strip,
+      slug: agency ? agency.slug : ''
     )
-
-    agency_representation.url = agency.url if agency
-
-    agency_representation
   end
 
   def lookup_agency(agency_name)
-    AgencyName.find_by_name(agency_name).try(:agency)
+    AgencyName.find_by_name(agency_name.strip).try(:agency)
   end
 
   def parse_see_also(see_also_nodes)
     see_also = []
     see_also_nodes.each do |see_also_node|
-      agency_struct = create_agency_representation(see_also_node.css('P').text)
+      agency_name = see_also_node.css('P').text
+      agency = create_agency_representation(agency_name)
       see_also.push({
-        name: see_also_node.css('P').text,
-        slug: agency_struct.slug
+        name: agency_name,
+        slug: agency.slug
       })
     end
     see_also.present? ? see_also : nil

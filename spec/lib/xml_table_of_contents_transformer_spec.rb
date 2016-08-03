@@ -13,34 +13,37 @@ attr_reader :transformer
 
   describe 'Agency-lookup and cross-referencing' do
     it "AgencyName matches an existing Agency" do
-      agency = Agency.create(name: "Test Agency", slug: "test-agency", url: "https://wwww.example.com/agencies/test-slug")
-      agency.agency_names << AgencyName.create(name: "Agency Test")
+      agency = Agency.create(name: "Test Agency", slug: "test-agency")
+      agency.agency_names <<  AgencyName.create(name: "Agency Test")
       agency_representation = transformer.create_agency_representation("Agency Test")
 
       agency_representation.name.should == "Agency Test"
-      agency_representation.slug.should == "agency-test"
-      agency_representation.url.should == "https://wwww.example.com/agencies/test-slug"
+      agency_representation.slug.should == "test-agency"
     end
 
-    it "Provided agency name matches AgencyName but no matching Agency" do
+    it "Provided agency name matches AgencyName but there is no matching Agency" do
       AgencyName.create(name: "Agency Test")
       agency_representation = transformer.create_agency_representation("Agency Test")
 
       agency_representation.name.should == "Agency Test"
-      agency_representation.slug.should == "agency-test"
-      agency_representation.url.should == ""
+      agency_representation.slug.should == ""
     end
 
     it "Provided agency does not match any AgencyName" do
       agency_representation = transformer.create_agency_representation("Agency Test")
 
       agency_representation.name.should == "Agency Test"
-      agency_representation.slug.should == "agency-test"
-      agency_representation.url.should == ""
+      agency_representation.slug.should == ""
     end
   end
 
   it "Creates multiple 'See Also' hashes" do
+    agency1 = Agency.create(name: "Agriculture Department", slug: "agriculture-department")
+    agency1.agency_names << AgencyName.create(name: "Agriculture Department")
+    agency2 = Agency.create(name: "Agricultural Marketing Service", slug: "agricultural-marketing-service")
+    agency2.agency_names << AgencyName.create(name: "Agricultural Marketing Service")
+    agency3 = Agency.create(name: "Food and Nutrition Service", slug: "food-and-nutrition-service")
+    agency3.agency_names << AgencyName.create(name: "Food and Nutrition Service")
 
     make_nokogiri_doc(<<-XML)
       <CNTNTS>
@@ -65,7 +68,6 @@ attr_reader :transformer
             {
               name: 'Agriculture Department',
               slug: 'agriculture-department',
-              url: '',
               see_also: [
                 {
                   name: 'Agricultural Marketing Service',
@@ -85,6 +87,8 @@ attr_reader :transformer
   end
 
   it "Identifies category type based on first <HD>" do
+    agency = Agency.create(name: "Agriculture Department", slug: "agriculture-department")
+    agency.agency_names << AgencyName.create(name: "Agriculture Department")
 
     make_nokogiri_doc(<<-XML)
       <CNTNTS>
@@ -101,7 +105,6 @@ attr_reader :transformer
             {
               name: 'Agriculture Department',
               slug: 'agriculture-department',
-              url: '',
               document_categories: []
             }
           ]
@@ -112,6 +115,9 @@ attr_reader :transformer
   describe "Matching subject_1" do
 
     it "Identifies subject_1 for <DOCENT> properly" do
+      agency = Agency.create(name: "Agriculture Department", slug: "agriculture-department")
+      agency.agency_names << AgencyName.create(name: "Agriculture Department")
+
       make_nokogiri_doc(<<-XML)
         <CNTNTS>
           <AGCY>
@@ -133,7 +139,6 @@ attr_reader :transformer
               {
                 name: 'Agriculture Department',
                 slug: 'agriculture-department',
-                url: '',
                 document_categories: [
                   {
                     type: "Rule",
@@ -155,6 +160,8 @@ attr_reader :transformer
 
   describe "Matching subject_2" do
     it "Identifies two subjects when <SJ> followed by <SUBSJ> and missing <SUBSJDOC> value" do
+      agency = Agency.create(name: "Agriculture Department", slug: "agriculture-department")
+      agency.agency_names << AgencyName.create(name: "Agriculture Department")
 
       make_nokogiri_doc(<<-XML)
         <CNTNTS>
@@ -179,7 +186,6 @@ attr_reader :transformer
               {
                 name: 'Agriculture Department',
                 slug: 'agriculture-department',
-                url: '',
                 document_categories: [
                   {
                     type: "Notice",
@@ -201,6 +207,9 @@ attr_reader :transformer
     end
 
     it "Identifies handles <SJDENT> without a preceding <SJ> node" do
+      agency = Agency.create(name: "Forest Service", slug: "forest-service")
+      agency.agency_names << AgencyName.create(name: "Forest Service")
+
       # see https://www.gpo.gov/fdsys/bulkdata/FR/2015/03/FR-2015-03-27.xml
       make_nokogiri_doc(<<-XML)
         <CNTNTS>
@@ -226,7 +235,6 @@ attr_reader :transformer
               {
                 name: 'Forest Service',
                 slug: 'forest-service',
-                url: '',
                 document_categories: [
                   {
                     type: "Notice",
@@ -247,6 +255,8 @@ attr_reader :transformer
     end
 
     it "Identifies two subjects: <SJ> followed by sibling <SJDENT> and child <SJDOC>" do
+      agency = Agency.create(name: "Agriculture Department", slug: "agriculture-department")
+      agency.agency_names << AgencyName.create(name: "Agriculture Department")
 
       make_nokogiri_doc(<<-XML)
         <CNTNTS>
@@ -270,7 +280,6 @@ attr_reader :transformer
               {
                 name: 'Agriculture Department',
                 slug: 'agriculture-department',
-                url: '',
                 document_categories: [
                   {
                     type: "Notice",
@@ -293,8 +302,9 @@ attr_reader :transformer
   end
 
   describe "Matching subject_3" do
-
     it "Identifies subject_3 when <SJ>, sibling <SUBSJ>, sibling <SSJDENT>, child <SUBSJDOC>" do
+      agency = Agency.create(name: "Agriculture Department", slug: "agriculture-department")
+      agency.agency_names << AgencyName.create(name: "Agriculture Department")
 
       make_nokogiri_doc(<<-XML)
         <CNTNTS>
@@ -319,7 +329,6 @@ attr_reader :transformer
               {
                 name: 'Agriculture Department',
                 slug: 'agriculture-department',
-                url: '',
                 document_categories: [
                   {
                     type: "Proposed Rule",
@@ -344,6 +353,8 @@ attr_reader :transformer
 
   describe  "Generates document numbers" do
     it "Adds a single document from <FRDOCBP>" do
+      agency = Agency.create(name: "Agriculture Department", slug: "agriculture-department")
+      agency.agency_names << AgencyName.create(name: "Agriculture Department")
 
       make_nokogiri_doc(<<-XML)
         <CNTNTS>
@@ -368,7 +379,6 @@ attr_reader :transformer
               {
                 name: 'Agriculture Department',
                 slug: 'agriculture-department',
-                url: '',
                 document_categories: [
                   {
                     type: "Proposed Rule",
@@ -390,6 +400,8 @@ attr_reader :transformer
     end
 
     it "processes multiple documents correctly" do
+      agency = Agency.create(name: "Agriculture Department", slug: "agriculture-department")
+      agency.agency_names << AgencyName.create(name: "Agriculture Department")
 
       make_nokogiri_doc(<<-XML)
         <CNTNTS>
@@ -415,7 +427,6 @@ attr_reader :transformer
               {
                 name: 'Agriculture Department',
                 slug: 'agriculture-department',
-                url: '',
                 document_categories: [
                   {
                     type: "Proposed Rule",
@@ -438,6 +449,8 @@ attr_reader :transformer
 
   describe  "Handles unknown document types" do
     it "Adds unknown document types to the JSON>" do
+      agency = Agency.create(name: "Agriculture Department", slug: "agriculture-department")
+      agency.agency_names << AgencyName.create(name: "Agriculture Department")
 
       make_nokogiri_doc(<<-XML)
         <CNTNTS>
@@ -457,7 +470,6 @@ attr_reader :transformer
               {
                 name: 'Agriculture Department',
                 slug: 'agriculture-department',
-                url: '',
                 document_categories: [
                   {
                     type: "TEST DOCUMENT TYPE",
@@ -473,7 +485,7 @@ attr_reader :transformer
 
     end
 
-    it "Adds presidential documents with unknown sub-types to resultant JSON" do
+    it "Adds presidential documents with unknown sub-types to the JSON" do
 
       make_nokogiri_doc(<<-XML)
         <CNTNTS>
@@ -497,8 +509,7 @@ attr_reader :transformer
             [
               {
                 name: 'Presidential Documents',
-                slug: 'presidential-documents',
-                url: '',
+                slug: '',
                 document_categories: [
                   {
                     type: "TEST SUBTYPES",
