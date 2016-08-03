@@ -54,7 +54,7 @@ class XmlTableOfContentsTransformer
       agency_name = see_also_node.css('P').text
       agency = create_agency_representation(agency_name)
       see_also.push({
-        name: agency_name,
+        name: agency.name,
         slug: agency.slug
       })
     end

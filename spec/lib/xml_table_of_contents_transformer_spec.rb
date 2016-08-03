@@ -35,6 +35,15 @@ attr_reader :transformer
       agency_representation.name.should == "Agency Test"
       agency_representation.slug.should == ""
     end
+
+    it "Provided agency has a extra whitespace" do
+      agency = Agency.create(name: "Test Agency", slug: "test-agency")
+      agency.agency_names <<  AgencyName.create(name: "Agency Test")
+      agency_representation = transformer.create_agency_representation(" Agency Test")
+
+      agency_representation.name.should == "Agency Test"
+      agency_representation.slug.should == "test-agency"
+    end
   end
 
   it "Creates multiple 'See Also' hashes" do
@@ -45,17 +54,18 @@ attr_reader :transformer
     agency3 = Agency.create(name: "Food and Nutrition Service", slug: "food-and-nutrition-service")
     agency3.agency_names << AgencyName.create(name: "Food and Nutrition Service")
 
+    # extra whitespace added
     make_nokogiri_doc(<<-XML)
       <CNTNTS>
         <AGCY>
-          <HD>Agriculture Department</HD>
+          <HD> Agriculture Department</HD>
           <SEE>
             <HD SOURCE="HED">See</HD>
             <P>Agricultural Marketing Service</P>
           </SEE>
           <SEE>
             <HD SOURCE="HED">See</HD>
-            <P>Food and Nutrition Service</P>
+            <P> Food and Nutrition Service</P>
           </SEE>
         </AGCY>
       </CNTNTS>
