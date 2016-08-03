@@ -95,7 +95,13 @@ class XmlTableOfContentsTransformer
       'MEMORANDUMS' =>            'Memorandum',
       'PRESIDENTIAL ORDERS' =>    'Presidential Order',
       'ADMINISTRATIVE ORDERS' =>  'Administrative Order',
-      'EXECUTIVE ORDERS' =>       'Executive Order'
+      'EXECUTIVE ORDERS' =>       'Executive Order',
+    }
+
+    # other mispelled, etc
+    LEGACY_DOCUMENT_TYPE_MAPPINGS = {
+      'ADMINISTRATVE ORDERS' => 'Administrative Order',
+      'EXECUTVE ORDERS' => 'Executive Order',
     }
 
     def initialize(cat_node)
@@ -175,7 +181,7 @@ class XmlTableOfContentsTransformer
     end
 
     def document_type_mappings
-      DOCUMENT_TYPE_MAPPINGS
+      DOCUMENT_TYPE_MAPPINGS.merge(LEGACY_DOCUMENT_TYPE_MAPPINGS)
     end
 
     class CategoryDocument
@@ -193,8 +199,11 @@ class XmlTableOfContentsTransformer
     end
 
     def document_type(document_type_from_xml)
-      if document_type_mappings[document_type_from_xml.upcase].present?
-        document_type_mappings[document_type_from_xml.upcase]
+      invalid_chars = /,|:/
+      clean_doc_type = document_type_from_xml.strip.gsub(invalid_chars,'')
+
+      if document_type_mappings[clean_doc_type.upcase].present?
+        document_type_mappings[clean_doc_type.upcase]
       else
         error = "'#{document_type_from_xml}' is not a recognized document_type.
           See DOCUMENT_TYPE_MAPPINGS in xml_table_of_contents_transformer."
@@ -203,6 +212,7 @@ class XmlTableOfContentsTransformer
           :error_class   => "Unrecognized document type encountered in GPO XML",
           :error_message => error
         )
+
         document_type_from_xml
       end
     end
