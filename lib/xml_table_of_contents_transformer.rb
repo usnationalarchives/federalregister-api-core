@@ -139,7 +139,7 @@ class XmlTableOfContentsTransformer
         @document = CategoryDocument.new
         document.subject_1 = ""
       end
-      document.subject_2 = sjdent_node.at_css('SJDOC').text
+      document.subject_2 = sjdent_node.at_css('SJDOC').try(:text)
       document.document_numbers = process_document_numbers(sjdent_node.css('FRDOCBP'))
       write_document
     end
