@@ -10,12 +10,22 @@ namespace :content do
       entry_importer(:all)
     end
 
-    namespace :import do
-      desc "Import all execept regulations.gov"
-      task :except_regulations_dot_gov => :environment do
-        entry_importer(:except => [:checked_regulationsdotgov_at, :regulationsdotgov_url, :comment_url, :regulations_dot_gov_comments_close_on, :regulations_dot_gov_docket_id])
-      end
+    desc "Enqueue regulations dot gov import"
+    task :enqueue_regs_dot_gov_import => :environment do
+      dates = Content.parse_all_dates(ENV['DATE'])
+      dates.each do |date|
+        entries = Entry.all(
+          select:     :document_number,
+          conditions: { publication_date: date }
+        )
 
+        entries.each do |entry|
+          Resque.enqueue(EntryRegulationsDotGovImporter, entry.document_number)
+        end
+      end
+    end
+
+    namespace :import do
       desc "Extract Basic data"
       task :basic_data => :environment do
         entry_importer(:volume, :issue_number, :title, :toc_subject, :toc_doc, :citation, :start_page, :end_page, :part_name, :granule_class, :abstract, :dates, :action, :contact, :docket_numbers, :correction_of_id)
@@ -101,11 +111,17 @@ namespace :content do
           end
 
           entries.find_each do |entry|
-            importer = Content::EntryImporter.new(:entry => entry)
             if entry.comment_url_override?
-              importer.update_attributes(:checked_regulationsdotgov_at, :regulationsdotgov_url, :regulations_dot_gov_comments_close_on)
+              Resque.enqueue(
+                EntryRegulationsDotGovImporter,
+                entry.document_number,
+                comment_url_override: true
+              )
             else
-              importer.update_attributes(:checked_regulationsdotgov_at, :regulationsdotgov_url, :comment_url, :regulations_dot_gov_comments_close_on, :regulations_dot_gov_docket_id)
+              Resque.enqueue(
+                EntryRegulationsDotGovImporter,
+                entry.document_number
+              )
             end
           end
         end

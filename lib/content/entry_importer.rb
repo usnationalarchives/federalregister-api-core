@@ -16,7 +16,6 @@ module Content
     include Content::EntryImporter::TopicNames
     include Content::EntryImporter::PresidentialDocumentDetails
     include Content::EntryImporter::Urls
-    include Content::EntryImporter::RegulationsDotGovAttributes
     include Content::EntryImporter::Action
     include Content::EntryImporter::TextCitations
 
