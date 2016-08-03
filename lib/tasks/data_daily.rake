@@ -14,10 +14,11 @@ namespace :data do
       content:gpo_images:process_daily_issue_images
       content:entries:json:compile:daily_toc
       data:extract:places
+      content:entries:enqueue_regs_dot_gov_import
     )
 
     task :really_quick => %w(
-      content:entries:import:except_regulations_dot_gov
+      content:entries:import
       content:gpo_images:process_daily_issue_images
       content:entries:html:compile:all
       content:entries:json:compile:daily_toc

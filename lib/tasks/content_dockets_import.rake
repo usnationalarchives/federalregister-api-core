@@ -8,14 +8,7 @@ namespace :content do
           FROM entries WHERE publication_date > ?
           ORDER BY publication_date DESC", 4.months.ago]
       ).compact.each do |docket_id|
-        puts "importing #{docket_id}..."
-        begin
-          importer.perform(docket_id)
-        rescue StandardError => e
-          puts e.message
-          puts e.backtrace.join("\n")
-          Honeybadger.notify(e)
-        end
+        Resque.enqueue(DocketImporter, docket_id)
       end
     end
   end
