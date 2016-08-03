@@ -1,31 +1,26 @@
 require 'csv'
 
-class Content::DocketImporter
+module DocketImporter
+  @queue = :default
 
   NON_PARTICIPATING_AGENCIES_FILE = 'data/regulations_dot_gov_non_participating_agencies.csv'
 
   def self.non_participating_agency_ids
-    Rails.cache.fetch("non_participating_agency_ids", expires_in: 12.hours) do
-      Array.new.tap do |agency_ids|
-        CSV.foreach(
-          NON_PARTICIPATING_AGENCIES_FILE,
-          headers: true,
-          encoding: 'windows-1251:utf-8'
-        ) do |row|
-          agency_ids << row["Agency ID"]
-        end
-      end
+    @non_participating_agency_ids ||= CSV.new(
+      File.open(NON_PARTICIPATING_AGENCIES_FILE),
+      :headers => :first_row,
+      :skip_blanks => true
+    ).map do |row|
+      row["Agency ID"]
     end
   end
 
-  def initialize
-    @client = RegulationsDotGov::Client.new
-  end
-
-  def perform(docket_number)
+  def self.perform(docket_number)
     return if non_participating_agency?(docket_number)
 
-    api_docket = @client.find_docket(docket_number)
+    client = RegulationsDotGov::Client.new
+    api_docket = client.find_docket(docket_number)
+
     return unless api_docket
 
     docket = Docket.find_or_initialize_by_id(docket_number)
@@ -43,14 +38,14 @@ class Content::DocketImporter
     end
 
     docket.save
+  rescue RegulationsDotGov::Client::RecordNotFound
   end
 
   private
 
-  def non_participating_agency?(docket_number)
-    self.class.non_participating_agency_ids.any? do |str|
+  def self.non_participating_agency?(docket_number)
+    non_participating_agency_ids.any? do |str|
       docket_number.start_with? "#{str}-", "#{str}_"
     end
   end
-
 end
