@@ -62,6 +62,23 @@ namespace :content do
             Resque.enqueue(TableOfContentsRecompiler, date)
           end
         end
+
+        task :pi_toc => :environment do
+          dates = Content.parse_dates(ENV['DATE'])
+
+          dates.each do |date|
+            date = date.is_a?(String) ? Date.parse(date) : date
+            next unless Issue.should_have_an_issue?(date)
+
+            issue = PublicInspectionIssue.find_by_publication_date(date)
+            unless issue && issue.published_at
+              puts "no published PI issue for #{date}"
+              next
+            end
+
+            Resque.enqueue(PublicInspectionTableOfContentsRecompiler, date)
+          end
+        end
       end
     end
   end
