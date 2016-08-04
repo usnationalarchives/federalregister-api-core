@@ -3,6 +3,10 @@ require 'ostruct'
 class XmlTableOfContentsTransformer
   attr_reader :date, :path_manager, :table_of_contents
 
+  GPO_XML_START_DATE = Date.parse('2000-01-18')
+
+  class MissingXMLError < StandardError; end
+
   def initialize(date)
     @date = date.is_a?(Date) ? date : Date.parse(date)
     @table_of_contents = {agencies:[]}
@@ -16,10 +20,22 @@ class XmlTableOfContentsTransformer
   end
 
   def process
-    contents_node = File.open(path_manager.document_issue_xml_path) do |file|
-      Nokogiri::XML(file).css('CNTNTS')
+    begin
+      contents_node = File.open(path_manager.document_issue_xml_path) do |file|
+        Nokogiri::XML(file).css('CNTNTS')
+      end
+      build_table_of_contents(contents_node)
+    rescue Errno::ENOENT => e
+      if date >= GPO_XML_START_DATE
+        Rails.logger.warn(e)
+        Honeybadger.notify(
+          :error_class   => "Missing GPO XML file",
+          :error_message => e
+        )
+      end
+
+      raise XmlTableOfContentsTransformer::MissingXMLError
     end
-    build_table_of_contents(contents_node)
   end
 
   def build_table_of_contents(contents_node)
