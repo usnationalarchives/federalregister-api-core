@@ -30,7 +30,11 @@ class XmlTableOfContentsTransformer
         Rails.logger.warn(e)
         Honeybadger.notify(
           :error_class   => "Missing GPO XML file",
-          :error_message => e
+          :error_message => e.message,
+          :backtrace => e.backtrace,
+          :parameters => {
+            :date => date
+          }
         )
       end
 
