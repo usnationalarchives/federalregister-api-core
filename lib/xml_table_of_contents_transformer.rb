@@ -121,7 +121,12 @@ class XmlTableOfContentsTransformer
     # other mispelled, etc
     LEGACY_DOCUMENT_TYPE_MAPPINGS = {
       'ADMINISTRATVE ORDERS' => 'Administrative Order',
+      'AMINISTRATIVE ORDERS' => 'Administrative Order',
       'EXECUTVE ORDERS' => 'Executive Order',
+      'EXECECUTIVE ORDERS' => 'Executive Order',
+      'NOTICE' => 'Notice',
+      'NOTICES0' => 'Notice',
+      'PROCLAMATION' => 'Proclamation',
     }
 
     def initialize(cat_node)
