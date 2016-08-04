@@ -64,8 +64,21 @@ class XmlTableOfContentsTransformer
     )
   end
 
-  def lookup_agency(agency_name)
-    AgencyName.find_by_name(agency_name.strip).try(:agency)
+  def lookup_agency(text)
+    agency_name = AgencyName.find_by_name(text.strip)
+
+    unless agency_name
+      Rails.logger.warn("Agency name in ToC but no record found: #{text.strip} for #{date}")
+      Honeybadger.notify(
+        :error_class   => "Agency name in ToC but no record found",
+        :parameters    => {
+          :agency_name => text.strip,
+          :date => date
+        }
+      )
+    end
+
+    agency_name.try(:agency)
   end
 
   def parse_see_also(see_also_nodes)
