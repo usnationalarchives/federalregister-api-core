@@ -40,7 +40,6 @@ class TableOfContentsTransformer
         agency_hash = {
           name: agency.name.downcase.titleize,
           slug: agency.slug,
-          url: url_lookup(agency.name),
           see_also: (process_see_also(agency) if agency.children.present?),
           document_categories: process_document_categories(agency)
         }.reject{|key,val| val.nil? }
@@ -58,7 +57,6 @@ class TableOfContentsTransformer
       agency_hash = {
         name: agency_stub.name.downcase.titleize,
         slug: agency_stub.slug,
-        url: agency_stub.url,
         document_categories: [
           {
             name: "",
@@ -71,26 +69,19 @@ class TableOfContentsTransformer
     agencies_with_metadata
   end
 
-  def url_lookup(agency_name)
-    create_agency_representation(agency_name).url
-  end
-
   def create_agency_representation(agency_name)
     if agency_name.empty?
       agency_representation = OpenStruct.new(
         name: "Other Documents",
         slug: "other-documents",
-        url: ""
       )
     else
       agency_representation = OpenStruct.new(
         name: agency_name,
         slug: agency_name.downcase.gsub(' ','-'),
-        url: ''
       )
 
       agency = lookup_agency(agency_name)
-      agency_representation.url = agency.url if agency
     end
 
     agency_representation
