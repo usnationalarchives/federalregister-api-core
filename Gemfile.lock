@@ -23,27 +23,32 @@ GIT
 
 GIT
   remote: https://github.com/makandra/rails.git
-  revision: 133bbcb301a2b51918d3641541f4d0aa2b086af0
+  revision: f59e93f9ba6a275c715e2ad24d100422f9aee5cf
   branch: 2-3-lts
   specs:
-    actionmailer (2.3.18)
-      actionpack (= 2.3.18)
-    actionpack (2.3.18)
-      activesupport (= 2.3.18)
-      rack (~> 1.1.0)
-    activerecord (2.3.18)
-      activesupport (= 2.3.18)
-    activeresource (2.3.18)
-      activesupport (= 2.3.18)
-    activesupport (2.3.18)
-    rails (2.3.18)
-      actionmailer (= 2.3.18)
-      actionpack (= 2.3.18)
-      activerecord (= 2.3.18)
-      activeresource (= 2.3.18)
-      activesupport (= 2.3.18)
-      railslts-version (= 2.3.18.10)
-      rake (>= 0.8.3)
+    actionmailer (2.3.18.17)
+      actionpack (= 2.3.18.17)
+    actionpack (2.3.18.17)
+      activesupport (= 2.3.18.17)
+      rack (< 1.5)
+    activerecord (2.3.18.17)
+      activesupport (= 2.3.18.17)
+    activeresource (2.3.18.17)
+      activesupport (= 2.3.18.17)
+    activesupport (2.3.18.17)
+    rails (2.3.18.17)
+      actionmailer (= 2.3.18.17)
+      actionpack (= 2.3.18.17)
+      activerecord (= 2.3.18.17)
+      activeresource (= 2.3.18.17)
+      activesupport (= 2.3.18.17)
+      railslts-version (= 2.3.18.17)
+      railties (= 2.3.18.17)
+    railslts-version (2.3.18.17)
+    railties (2.3.18.17)
+      actionpack (= 2.3.18.17)
+      activesupport (= 2.3.18.17)
+      rake (>= 0.8.3, < 11)
 
 GIT
   remote: https://github.com/postmodern/ffi-hunspell.git
@@ -302,12 +307,11 @@ GEM
       coderay (~> 1.0)
       method_source (~> 0.8)
       slop (~> 3.4)
-    rack (1.1.6)
+    rack (1.4.7)
     rack-test (0.5.6)
       rack (>= 1.0)
-    railslts-version (2.3.18.10)
     rainbow (2.0.0)
-    rake (10.4.2)
+    rake (10.5.0)
     rdoc (3.12)
       json (~> 1.4)
     recaptcha (0.3.1)
@@ -459,3 +463,6 @@ DEPENDENCIES
   will_paginate (= 2.3.14)
   ym4r (= 0.6.1)
   zip-zip
+
+BUNDLED WITH
+   1.12.5
