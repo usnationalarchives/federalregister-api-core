@@ -31,7 +31,7 @@ SitemapGenerator::Sitemap.add_links do |sitemap|
   end
 
   # ENTRIES
-  Entry.scoped(:select => "entries.id, entries.document_number, entries.publication_date").find_each do |entry|
+  Entry.scoped(:select => "entries.id, entries.document_number, entries.publication_date, entries.title").find_each do |entry|
     sitemap.add entry_path(entry), :changefreq => 'monthly', :lastmod => entry.updated_at
   end
 
