@@ -3,6 +3,8 @@ class Entry < ApplicationModel
   self.inheritance_column = nil
   include EntryViewLogic
 
+  GPO_PDF_START_DATE = Date.new(1995,1,3)
+
   DESCRIPTIONS = {
     :notice => 'This section of the Federal Register contains documents other than rules
                 or proposed rules that are applicable to the public. Notices of hearings
@@ -409,7 +411,9 @@ class Entry < ApplicationModel
     when :text
       "https://www.gpo.gov/fdsys/pkg/FR-#{publication_date.to_s(:db)}/html/#{document_number}.htm"
     when :pdf
-      "https://www.gpo.gov/fdsys/pkg/FR-#{publication_date.to_s(:db)}/pdf/#{document_number}.pdf"
+      if publication_date >= GPO_PDF_START_DATE
+        "https://www.gpo.gov/fdsys/pkg/FR-#{publication_date.to_s(:db)}/pdf/#{document_number}.pdf"
+      end
     end
   end
 
