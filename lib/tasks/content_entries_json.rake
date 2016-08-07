@@ -79,6 +79,15 @@ namespace :content do
             Resque.enqueue(PublicInspectionTableOfContentsRecompiler, date)
           end
         end
+
+        task :fr_index => :environment do
+          dates = Content.parse_dates(ENV['DATE'])
+          years = dates.map{|d| d.is_a?(String) ? Date.parse(d).year : d.year}.uniq
+
+          years.each do |year|
+            Resque.enqueue(FrIndexRecompiler, year)
+          end
+        end
       end
     end
   end
