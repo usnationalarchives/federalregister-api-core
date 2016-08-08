@@ -195,6 +195,8 @@ module Content
     end
 
     def update_attributes(*attribute_names)
+      raise "No attributes provided to import for #{date}" unless attribute_names.present?
+
       attribute_names.each do |attr|
         puts "handling '#{attr}' for '#{document_number}' (#{date})" if verbose?
         @entry.send("#{attr}=", self.send(attr))

@@ -4,7 +4,7 @@ namespace :content do
     task :reimport => :environment do
       Content.parse_dates(ENV['DATE']).each do |date|
         Resque.enqueue(
-          EntryReimporter, date,
+          EntryReimporter, date, :all,
           :force_reload_mods => true,
           :force_reload_bulkdata => true,
           :allow_download_failure => ENV['ALLOW_DOWNLOAD_FAILURE'],
