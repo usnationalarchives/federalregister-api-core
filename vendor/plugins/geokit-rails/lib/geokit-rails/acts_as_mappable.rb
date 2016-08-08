@@ -410,8 +410,8 @@ module Geokit
           lng = deg2rad(origin.lng)
           multiplier = units_sphere_multiplier(units)
           case connection.adapter_name.downcase
-          when "mysql"
-            sql=<<-SQL_END 
+          when "mysql", "mysql2"
+            sql=<<-SQL_END
                   (ACOS(least(1,COS(#{lat})*COS(#{lng})*COS(RADIANS(#{qualified_lat_column_name}))*COS(RADIANS(#{qualified_lng_column_name}))+
                   COS(#{lat})*SIN(#{lng})*COS(RADIANS(#{qualified_lat_column_name}))*SIN(RADIANS(#{qualified_lng_column_name}))+
                   SIN(#{lat})*SIN(RADIANS(#{qualified_lat_column_name}))))*#{multiplier})
@@ -433,7 +433,7 @@ module Geokit
           lat_degree_units = units_per_latitude_degree(units)
           lng_degree_units = units_per_longitude_degree(origin.lat, units)
           case connection.adapter_name.downcase
-          when "mysql"
+          when "mysql", "mysql2"
             sql=<<-SQL_END
                   SQRT(POW(#{lat_degree_units}*(#{origin.lat}-#{qualified_lat_column_name}),2)+
                   POW(#{lng_degree_units}*(#{origin.lng}-#{qualified_lng_column_name}),2))
