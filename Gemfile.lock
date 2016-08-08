@@ -278,7 +278,7 @@ GEM
     multi_json (1.12.1)
     multi_xml (0.5.5)
     multipart-post (2.0.0)
-    mysql (2.8.1)
+    mysql2 (0.2.24)
     net-scp (1.1.0)
       net-ssh (>= 2.6.5)
     net-sftp (2.1.2)
@@ -426,7 +426,7 @@ DEPENDENCIES
   mocha (= 0.9.8)
   mock_redis
   modularity (= 0.6.1)
-  mysql (= 2.8.1)
+  mysql2 (= 0.2.24)
   net-scp (= 1.1.0)
   net-sftp
   net-ssh (= 2.9.1)
@@ -463,6 +463,3 @@ DEPENDENCIES
   will_paginate (= 2.3.14)
   ym4r (= 0.6.1)
   zip-zip
-
-BUNDLED WITH
-   1.12.5

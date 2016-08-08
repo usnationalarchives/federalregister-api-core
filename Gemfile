@@ -4,7 +4,8 @@ gem 'rails',
   :git => 'https://github.com/makandra/rails.git',
   :branch => '2-3-lts'
 
-gem 'mysql', '2.8.1'
+#gem 'mysql', '2.8.1'
+gem 'mysql2', '0.2.24'
 
 gem "jrails", "0.6.0"
 
