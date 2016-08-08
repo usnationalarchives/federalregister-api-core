@@ -21,7 +21,7 @@ dependencies:
 database:
   override:
     - 'mkdir -p config'
-    - 'echo -e "test:\n  host: localhost\n  username: ubuntu\n  database: circle_ruby_test\n  adapter: mysql\n" > config/database.yml'
+    - 'echo -e "test:\n  host: localhost\n  username: ubuntu\n  database: circle_ruby_test\n  adapter: mysql2\n" > config/database.yml'
     - 'bundle exec rake db:create db:schema:load ASSUME_UNITIALIZED_DB=1'
 
 ## Customize test commands
