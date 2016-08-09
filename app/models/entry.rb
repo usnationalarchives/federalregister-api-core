@@ -245,6 +245,12 @@ class Entry < ApplicationModel
   alias_method :category, :entry_type
 
   define_index do
+    set_property "sql_query_killlist", <<-SQL.gsub(/\s+/, ' ')
+      SELECT entries.id #{ThinkingSphinx.unique_id_expression(ThinkingSphinx::MysqlAdapter.new(Entry), Entry.sphinx_offset) }
+      FROM entries
+      WHERE delta = 1
+    SQL
+
     # fields
     indexes title
     indexes abstract
