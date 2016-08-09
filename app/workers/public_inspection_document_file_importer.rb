@@ -73,6 +73,6 @@ class PublicInspectionDocumentFileImporter
   end
 
   def mark_as_complete
-    Redis.new.srem(redis_set, document_number)
+    $redis.srem(redis_set, document_number)
   end
 end

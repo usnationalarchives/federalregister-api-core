@@ -107,7 +107,7 @@ class GpoImages::FileConverter
   end
 
   def add_to_redis_set(filename)
-    Redis.new.sadd(redis_key, filename)
+    $redis.sadd(redis_key, filename)
   end
 
   def log(message)

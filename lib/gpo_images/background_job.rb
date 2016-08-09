@@ -86,7 +86,7 @@ module GpoImages
     end
 
     def redis
-      @redis ||= Redis.new
+      $redis
     end
 
     def remove_from_redis_key

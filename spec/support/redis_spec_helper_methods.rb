@@ -1,5 +1,5 @@
 module RedisSpecHelperMethods
   def redis
-    Redis.new
+    $redis
   end
 end

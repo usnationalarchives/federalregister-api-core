@@ -58,6 +58,6 @@ class GeoLocator
   end
 
   def redis
-    @redis ||= Redis.new
+    $redis
   end
 end

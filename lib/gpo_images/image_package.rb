@@ -36,7 +36,7 @@ class GpoImages::ImagePackage
   end
 
   def redis
-    @redis ||= Redis.new
+    $redis
   end
 
   def redis_set

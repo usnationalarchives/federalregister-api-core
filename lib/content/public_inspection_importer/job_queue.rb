@@ -46,6 +46,6 @@ class Content::PublicInspectionImporter::JobQueue
   end
 
   def redis
-    @redis ||= Redis.new
+    $redis
   end
 end
