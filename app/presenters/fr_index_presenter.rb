@@ -95,13 +95,13 @@ class FrIndexPresenter
     @needs_attention_counts_by_agency_id ||= Hash[FrIndexAgencyStatus.find_as_arrays(
       :select => "agency_id, needs_attention_count",
       :conditions => {:year => year}
-    ).map{|id, count| [id.to_i, count.to_i]}]
+    )]
   end
 
   def oldest_issue_needing_attention_by_agency_id
     @oldest_issue_needing_attention_by_agency_id ||= Hash[FrIndexAgencyStatus.find_as_arrays(
       :select => "agency_id, oldest_issue_needing_attention",
       :conditions => {:year => year}
-    ).map{|id, date| [id.to_i, date ? Date.parse(date) : nil]}]
+    )]
   end
 end

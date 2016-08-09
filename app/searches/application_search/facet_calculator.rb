@@ -38,10 +38,10 @@ class ApplicationSearch::FacetCalculator
         next if name.blank?
         ApplicationSearch::Facet.new(
           :value      => id,
-          :identifier => id_to_identifier[id.to_s],
+          :identifier => id_to_identifier[id],
           :name       => name,
           :count      => count,
-          :on         => search_value_for_this_facet.to_a.include?(id.to_s),
+          :on         => search_value_for_this_facet.to_a.include?(id),
           :condition  => @facet_name
         )
       end
