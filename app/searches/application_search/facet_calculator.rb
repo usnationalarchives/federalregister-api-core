@@ -33,7 +33,7 @@ class ApplicationSearch::FacetCalculator
 
       search_value_for_this_facet = @search.send(@facet_name)
       facets = raw_facets.reverse.reject{|id, count| id == 0}.map do |id, count|
-        name = id_to_name[id.to_s]
+        name = id_to_name[id]
 
         next if name.blank?
         ApplicationSearch::Facet.new(
