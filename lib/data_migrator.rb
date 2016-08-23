@@ -28,6 +28,7 @@ class DataMigrator
     copy_regulations_dot_gov_data
     copy_agencies
     copy_topics
+    copy_gpo_graphics
     copy_canned_searches
     copy_reprocessing_data
   end
@@ -82,6 +83,12 @@ class DataMigrator
       :regulations_dot_gov_docket_id,
       :comment_url_override,
     )
+  end
+
+  def copy_gpo_graphics
+    copy_table(:gpo_graphic_packages)
+    copy_table(:gpo_graphic_usages)
+    copy_table(:gpo_graphics)
   end
 
   def copy_canned_searches
