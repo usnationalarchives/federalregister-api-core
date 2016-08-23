@@ -27,7 +27,7 @@ class DataMigrator
     copy_regulatory_plan
     copy_regulations_dot_gov_data
     copy_agencies
-    # copy_topics
+    copy_topics
     copy_canned_searches
     copy_reprocessing_data
   end
@@ -102,27 +102,38 @@ class DataMigrator
     end
   end
 
-  # def copy_topics
-  #   copy_table(:topics)
-  #   execute <<-SQL
-  #     UPDATE #{destination_db}.topic_names AS destination_topic_names,
-  #       #{source_db}.topic_names AS source_topic_names
-  #     SET destination_topic_names.topic_id = source_topic_names.topic_id
-  #     WHERE destination_topic_names.name = source_topic_names.name
-  #   SQL
+  def copy_topics
+    copy_table(:topics)
 
-  #   truncate_table(:topic_assignments)
-  #   execute <<-SQL
-  #     INSERT INTO topic_assignments (topic_id, entry_id, topics_topic_name_id)
-  #     SELECT topic_names.topic_id, entries.id, topic_names.id
-  #     FROM #{destination_db}.topic_name_assignments
-  #     JOIN #{destination_db}.entries
-  #       ON entries.di = topic_name_assignments.entry_id
-  #     JOIN #{destination_db}.topic_names
-  #       ON topic_names.id = topic_name_assignments.topic_name_id
-  #     WHERE topic_names.topic_id IS NOT NULL
-  #   SQL
-  # end
+    # replace contents of topics_topic_names
+    truncate_table(:topics_topic_names)
+    execute <<-SQL
+      INSERT INTO topics_topic_names (topic_id, topic_name_id, created_at, updated_at, creator_id, updater_id)
+      SELECT topics_topic_names.topic_id,
+        destination_topic_names.id,
+        topics_topic_names.created_at,
+        topics_topic_names.updated_at,
+        topics_topic_names.creator_id,
+        topics_topic_names.updater_id
+      FROM #{source_db}.topics_topic_names
+      JOIN #{source_db}.topic_names AS source_topic_names
+        ON source_topic_names.id = topics_topic_names.topic_name_id
+      JOIN #{destination_db}.topic_names AS destination_topic_names
+        ON destination_topic_names.name = source_topic_names.name
+    SQL
+
+    # replace content of topic_assignments
+    truncate_table(:topic_assignments)
+    execute <<-SQL
+      INSERT INTO topic_assignments (topic_id, entry_id, topics_topic_name_id)
+      SELECT topics_topic_names.topic_id,
+        topic_name_assignments.entry_id,
+        topics_topic_names.id
+      FROM #{destination_db}.topic_name_assignments
+      JOIN #{destination_db}.topics_topic_names
+        ON topics_topic_names.topic_name_id = topic_name_assignments.topic_name_id
+    SQL
+  end
 
   def copy_public_inspection
     copy_table(:public_inspection_documents)
