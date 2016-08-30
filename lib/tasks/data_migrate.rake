@@ -5,7 +5,7 @@ namespace :data do
     end
 
     task :core => :environment do
-      DataMigrator.new.copy_core
+      DataMigrator.new.copy_core_data
     end
   end
 end

@@ -4,7 +4,7 @@ class DataMigrator
   end
 
   def destination_db
-    'fr2_official_staging'
+    'federal_register_api_core'
   end
 
   def copy_curated
