@@ -67,7 +67,7 @@ class PublicInspectionDocument < ApplicationModel
     if AppConfig.sphinx.use_local_pil_date
       where "public_inspection_documents.publication_date > #{AppConfig.sphinx.pil_index_since_date}"
     else
-      where "public_inspection_documents.publication_date > #(SELECT MAX(publication_date) FROM issues where issues.completed_at is not null)"
+      where "public_inspection_documents.publication_date > (SELECT MAX(publication_date) FROM issues where issues.completed_at is not null)"
     end
   end
 
