@@ -11,5 +11,10 @@ class AgencyNameObserver < ActiveRecord::Observer
     if agency_name.agency_id.present?
       purge_cache('/agencies/' + agency_name.agency.slug)
     end
+
+    purge_cache('^/api/v1/agencies')
+    
+    purge_cache('^/esi/layouts/navigation/agencies')
+    purge_cache('^/esi/home/explore_agencies')
   end
 end

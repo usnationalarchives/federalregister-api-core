@@ -9,5 +9,10 @@ class AgencyObserver < ActiveRecord::Observer
 
     purge_cache('/agencies')
     purge_cache('/agencies/' + agency.slug)
+
+    purge_cache('^/api/v1/agencies')
+
+    purge_cache('^/esi/layouts/navigation/agencies')
+    purge_cache('^/esi/home/explore_agencies')
   end
 end

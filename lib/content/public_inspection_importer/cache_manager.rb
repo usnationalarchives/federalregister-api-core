@@ -36,6 +36,11 @@ class Content::PublicInspectionImporter::CacheManager
     )
     purge_cache pi_navigation_path
 
+    purge_cache "esi/public_inspection_issues/#{issue.publication_date.strftime('%Y')}/#{issue.publication_date.strftime('%m')}"
+    purge_cache 'esi/layouts/navigation/public-inspection'
+    purge_cache 'esi/issues/summary'
+    purge_cache '^/api/v1/public-inspection'
+
     # purge affected agency cache
     agencies = pi_documents.map(&:agencies).flatten.uniq
     agencies.each do |agency|
