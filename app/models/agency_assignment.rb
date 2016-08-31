@@ -10,6 +10,7 @@ class AgencyAssignment < ApplicationModel
   acts_as_list :scope => 'assignable_id = #{assignable_id} AND assignable_type = \'#{assignable_type}\''
 
   def self.recalculate!
+    connection.execute("DROP TABLE IF EXISTS agency_assignments_new")
     connection.execute("UPDATE agency_names
                         LEFT JOIN agencies
                           ON agencies.id = agency_names.agency_id
