@@ -3,7 +3,7 @@ module Content
     def self.perform(date)
       begin
         XmlTableOfContentsTransformer.perform(date)
-      rescue XmlTableOfContentsTransformer::MissingXMLError
+      rescue XmlTableOfContentsTransformer::MissingXMLError, XmlTableOfContentsTransformer::MissingXMLCntntsError
         TableOfContentsTransformer::DocumentIssue.perform(date)
       end
     end

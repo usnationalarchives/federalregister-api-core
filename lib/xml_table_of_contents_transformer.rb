@@ -6,6 +6,7 @@ class XmlTableOfContentsTransformer
   GPO_XML_START_DATE = Date.parse('2000-01-18')
 
   class MissingXMLError < StandardError; end
+  class MissingXMLCntntsError < StandardError; end
 
   def initialize(date)
     @date = date.is_a?(Date) ? date : Date.parse(date)
@@ -24,7 +25,19 @@ class XmlTableOfContentsTransformer
       contents_node = File.open(path_manager.document_issue_xml_path) do |file|
         Nokogiri::XML(file).css('CNTNTS')
       end
-      build_table_of_contents(contents_node)
+
+      if contents_node.present?
+        build_table_of_contents(contents_node)
+      else
+        Honeybadger.notify(
+          :error_class   => "Missing CNTNTS node in GPO XML file",
+          :parameters => {
+            :date => date
+          }
+        )
+
+        raise XmlTableOfContentsTransformer::MissingXMLCntntsError
+      end
     rescue Errno::ENOENT => e
       if date >= GPO_XML_START_DATE
         Rails.logger.warn(e)
