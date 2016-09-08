@@ -1,24 +1,24 @@
---- 
-endpoints: 
+---
+endpoints:
 - name: Federal Register Documents
-  methods: 
+  methods:
   - RequiresOAuth: N
     HTTPMethod: GET
-    Synopsis: Fetch a single Federal Register article
-    URI: /articles/:document_number.:format
+    Synopsis: Fetch a single Federal Register document
+    URI: /documents/:document_number.:format
     MethodName: get
-    parameters: 
+    parameters:
     - Name: format
       Description: What format the response should be
       Required: Y
       Default: json
-      EnumeratedList: 
+      EnumeratedList:
       - json
       - csv
       Type: enumerated
     - Name: fields[]
-      Description: Which attributes of the articles to return; by default, a reasonable set is returned, but a user can customize it to return exactly what is needed.
-      EnumeratedList: 
+      Description: Which attributes of the documents to return; by default, a reasonable set is returned, but a user can customize it to return exactly what is needed.
+      EnumeratedList:
 <%= EntryApiRepresentation.all_fields.map {|f| "      - #{f}" }.join("\n") %>
       Type: multiple
     - Name: document_number
@@ -27,21 +27,21 @@ endpoints:
       Type: string
   - RequiresOAuth: N
     HTTPMethod: GET
-    Synopsis: Fetch multiple Federal Register articles
-    URI: /articles/:document_numbers.:format
+    Synopsis: Fetch multiple Federal Register documents
+    URI: /documents/:document_numbers.:format
     MethodName: multi-get
-    parameters: 
+    parameters:
     - Name: format
       Description: What format the response should be
       Required: Y
       Default: json
-      EnumeratedList: 
+      EnumeratedList:
       - json
       - csv
       Type: enumerated
     - Name: fields[]
-      Description: Which attributes of the articles to return; by default, a reasonable set is returned, but a user can customize it to return exactly what is needed.
-      EnumeratedList: 
+      Description: Which attributes of the documents to return; by default, a reasonable set is returned, but a user can customize it to return exactly what is needed.
+      EnumeratedList:
 <%= EntryApiRepresentation.all_fields.map {|f| "      - #{f}" }.join("\n") %>
       Type: multiple
     - Name: document_numbers
@@ -50,33 +50,33 @@ endpoints:
       Type: string
   - RequiresOAuth: N
     HTTPMethod: GET
-    Synopsis: Search all Federal Register articles published since 1994.
-    URI: /articles.:format
+    Synopsis: Search all Federal Register documents published since 1994.
+    URI: /documents.:format
     MethodName: search
-    parameters: 
+    parameters:
     - Name: format
       Description: What format the response should be
       Required: Y
       Default: json
-      EnumeratedList: 
+      EnumeratedList:
       - json
       - csv
       Type: enumerated
     - Name: fields[]
-      Description: Which attributes of the articles to return; by default, a reasonable set is returned, but a user can customize it to return exactly what is needed.
-      EnumeratedList: 
+      Description: Which attributes of the documents to return; by default, a reasonable set is returned, but a user can customize it to return exactly what is needed.
+      EnumeratedList:
 <%= EntryApiRepresentation.all_fields.map {|f| "      - #{f}" }.join("\n") %>
       Type: multiple
     - Name: per_page
       Default: 20
-      Description: How many articles to return at once; 1000 maximum.
+      Description: How many documents to return at once; 1000 maximum.
       Type: integer
     - Name: page
       Description: The page of the result set.
       Type: integer
     - Name: order
       Description: The order the results should be returned in.
-      EnumeratedList: 
+      EnumeratedList:
       - relevance
       - newest
       - oldest
@@ -89,39 +89,39 @@ endpoints:
       Description: Exact publication date match
       Type: date (YYYY-MM-DD)
     - Name: conditions[publication_date][year]
-      Description: Find articles published in a given year
+      Description: Find documents published in a given year
       Type: year (YYYY)
     - Name: conditions[publication_date][gte]
-      Description: Find articles published on or after a given date
+      Description: Find documents published on or after a given date
       Type: date (YYYY-MM-DD)
     - Name: conditions[publication_date][lte]
-      Description: Find articles published on or before a given date
+      Description: Find documents published on or before a given date
       Type: date (YYYY-MM-DD)
     - Name: conditions[effective_date][is]
       Description: Exact effective date match
       Type: date (YYYY-MM-DD)
     - Name: conditions[effective_date][year]
-      Description: Find articles with an effective date in a given year
+      Description: Find documents with an effective date in a given year
       Type: year (YYYY)
     - Name: conditions[effective_date][gte]
-      Description: Find articles with an effective date on or after a given date
+      Description: Find documents with an effective date on or after a given date
       Type: date (YYYY-MM-DD)
     - Name: conditions[effective_date][lte]
-      Description: Find articles with an effective date on or before a given date
+      Description: Find documents with an effective date on or before a given date
       Type: date (YYYY-MM-DD)
     - Name: conditions[agencies][]
       Description: Publishing agency
-      EnumeratedList: 
+      EnumeratedList:
 <%= Agency.alphabetically.map {|a| '      - ' + a.slug }.join("\n") %>
       Type: multiple
     - Name: conditions[type][]
-      EnumeratedDescription: 
+      EnumeratedDescription:
         PRORULE: Proposed Rule
         PRESDOCU: Presidential Document
         NOTICE: Notice
         RULE: Final Rule
       Description: Document type
-      EnumeratedList: 
+      EnumeratedList:
       - RULE
       - PRORULE
       - NOTICE
@@ -130,33 +130,33 @@ endpoints:
     - Name: conditions[presidential_document_type][]
       Description: Presidential document type; only available for Presidential Docuements
       Type: multiple
-      EnumeratedList: 
+      EnumeratedList:
 <%= PresidentialDocumentType.all.map {|a| '      - ' + a.identifier }.join("\n") %>
     - Name: conditions[president][]
       Description: Signing President; only available for Presidential Documents
       Type: multiple
-      EnumeratedList: 
+      EnumeratedList:
 <%= President.all.map {|a| '      - ' + a.identifier }.join("\n") %>
     - Name: conditions[docket_id]
-      Description: Agency docket number associated with article
+      Description: Agency docket number associated with document
       Type: string
     - Name: conditions[regulation_id_number]
-      Description: Regulation ID Number (RIN) associated with article
+      Description: Regulation ID Number (RIN) associated with document
       Type: string
     - Name: conditions[sections][]
       Type: multiple
       Description: Limit to documents that appeared within a particular section of FederalRegister.gov
-      EnumeratedList: 
+      EnumeratedList:
 <%= Section.all.map {|x| "      - #{x.slug}" }.join("\n") %>
     - Name: conditions[significant]
       Default: ""
-      EnumeratedDescription: 
+      EnumeratedDescription:
         "0": Not Deemed Significant
         "1": Deemed Significant
       Description: Deemed Significant Under EO 12866
       Type: boolean
     - Name: conditions[cfr][title]
-      Description: Articles affecting the associated CFR title
+      Description: documents affecting the associated CFR title
       Type: integer
     - Name: conditions[cfr][part]
       Description: Part or part range (eg '17' or '1-50'); requires the CFR title to be provided
@@ -167,19 +167,126 @@ endpoints:
     - Name: conditions[near][within]
       Description: Location search; maximum distance from location in miles (max 200)
       Type: integer
+  - RequiresOAuth: N
+    HTTPMethod: GET
+    Synopsis: Fetch counts of matching Federal Register Documents grouped by a facet
+    URI: /documents/facets/:facet
+    MethodName: facet
+    parameters:
+    - Name: facet
+      Description: What to group the returned documents by for counting
+      Required: Y
+      EnumeratedList:
+      - daily
+      - weekly
+      - monthly
+      - quarterly
+      - yearly
+      - agency
+      - topic
+      - section
+      - type
+      - subtype
+      Type: enumerated
+    - Name: conditions[term]
+      Description: Full text search
+      Type: string
+    - Name: conditions[publication_date][is]
+      Description: Exact publication date match
+      Type: date (YYYY-MM-DD)
+    - Name: conditions[publication_date][year]
+      Description: Find documents published in a given year
+      Type: year (YYYY)
+    - Name: conditions[publication_date][gte]
+      Description: Find documents published on or after a given date
+      Type: date (YYYY-MM-DD)
+    - Name: conditions[publication_date][lte]
+      Description: Find documents published on or before a given date
+      Type: date (YYYY-MM-DD)
+    - Name: conditions[effective_date][is]
+      Description: Exact effective date match
+      Type: date (YYYY-MM-DD)
+    - Name: conditions[effective_date][year]
+      Description: Find documents with an effective date in a given year
+      Type: year (YYYY)
+    - Name: conditions[effective_date][gte]
+      Description: Find documents with an effective date on or after a given date
+      Type: date (YYYY-MM-DD)
+    - Name: conditions[effective_date][lte]
+      Description: Find documents with an effective date on or before a given date
+      Type: date (YYYY-MM-DD)
+    - Name: conditions[agencies][]
+      Description: Publishing agency
+      EnumeratedList:
+<%= Agency.alphabetically.map {|a| '      - ' + a.slug }.join("\n") %>
+      Type: multiple
+    - Name: conditions[type][]
+      EnumeratedDescription:
+        PRORULE: Proposed Rule
+        PRESDOCU: Presidential Document
+        NOTICE: Notice
+        RULE: Final Rule
+      Description: Document type
+      EnumeratedList:
+      - RULE
+      - PRORULE
+      - NOTICE
+      - PRESDOCU
+      Type: multiple
+    - Name: conditions[presidential_document_type][]
+      Description: Presidential document type; only available for Presidential Docuements
+      Type: multiple
+      EnumeratedList:
+<%= PresidentialDocumentType.all.map {|a| '      - ' + a.identifier }.join("\n") %>
+    - Name: conditions[president][]
+      Description: Signing President; only available for Presidential Documents
+      Type: multiple
+      EnumeratedList:
+<%= President.all.map {|a| '      - ' + a.identifier }.join("\n") %>
+    - Name: conditions[docket_id]
+      Description: Agency docket number associated with document
+      Type: string
+    - Name: conditions[regulation_id_number]
+      Description: Regulation ID Number (RIN) associated with document
+      Type: string
+    - Name: conditions[sections][]
+      Type: multiple
+      Description: Limit to documents that appeared within a particular section of FederalRegister.gov
+      EnumeratedList:
+<%= Section.all.map {|x| "      - #{x.slug}" }.join("\n") %>
+    - Name: conditions[significant]
+      Default: ""
+      EnumeratedDescription:
+        "0": Not Deemed Significant
+        "1": Deemed Significant
+      Description: Deemed Significant Under EO 12866
+      Type: boolean
+    - Name: conditions[cfr][title]
+      Description: documents affecting the associated CFR title
+      Type: integer
+    - Name: conditions[cfr][part]
+      Description: Part or part range (eg '17' or '1-50'); requires the CFR title to be provided
+      Type: integer
+    - Name: conditions[near][location]
+      Description: Location search; enter zipcode or City and State
+      Type: string
+    - Name: conditions[near][within]
+      Description: Location search; maximum distance from location in miles (max 200)
+      Type: integer
+
 - name: Public Inspection Documents
-  methods: 
+  methods:
   - RequiresOAuth: N
     Synopsis: Fetch a single public inspection document.
     HTTPMethod: GET
     URI: /public-inspection-documents/:document_number.:format
     MethodName: get
-    parameters: 
+    parameters:
     - Name: format
       Description: What format the response should be
       Required: Y
       Default: json
-      EnumeratedList: 
+      EnumeratedList:
       - json
       - csv
       Type: enumerated
@@ -192,12 +299,12 @@ endpoints:
     HTTPMethod: GET
     URI: /public-inspection-documents/:document_numbers:.format
     MethodName: multi-get
-    parameters: 
+    parameters:
     - Name: format
       Description: What format the response should be
       Required: Y
       Default: json
-      EnumeratedList: 
+      EnumeratedList:
       - json
       - csv
       Type: enumerated
@@ -211,12 +318,12 @@ endpoints:
     HTTPMethod: GET
     URI: /public-inspection-documents.:format
     MethodName: by-date
-    parameters: 
+    parameters:
     - Name: format
       Description: What format the response should be
       Required: Y
       Default: json
-      EnumeratedList: 
+      EnumeratedList:
       - json
       - csv
       Type: enumerated
@@ -230,38 +337,38 @@ endpoints:
     URI: /public-inspection-documents/current.:format
     Synopsis: Fetch all the public inspection documents that are currently on public inspection.
     MethodName: current
-    parameters: 
+    parameters:
     - Name: format
       Description: What format the response should be
       Required: Y
       Default: json
-      EnumeratedList: 
+      EnumeratedList:
       - json
       - csv
       Type: enumerated
 
   - RequiresOAuth: N
     HTTPMethod: GET
-    Synopsis: Search all the public inspection documents that are currently on public inspection; use the Article search to find documents that have been published.
+    Synopsis: Search all the public inspection documents that are currently on public inspection; use the document search to find documents that have been published.
     URI: /public-inspection-documents.:format
     MethodName: search
-    parameters: 
+    parameters:
     - Name: format
       Description: What format the response should be
       Required: Y
       Default: json
-      EnumeratedList: 
+      EnumeratedList:
       - json
       - csv
       Type: enumerated
     - Name: fields[]
-      Description: Which attributes of the articles to return; by default, a reasonable set is returned, but a user can customize it to return exactly what is needed.
-      EnumeratedList: 
+      Description: Which attributes of the documents to return; by default, a reasonable set is returned, but a user can customize it to return exactly what is needed.
+      EnumeratedList:
 <%= PublicInspectionDocumentApiRepresentation.all_fields.map {|f| "      - #{f}" }.join("\n") %>
       Type: multiple
     - Name: per_page
       Default: 20
-      Description: How many articles to return at once; 1000 maximum.
+      Description: How many documents to return at once; 1000 maximum.
       Type: integer
     - Name: page
       Description: The page of the result set.
@@ -271,17 +378,17 @@ endpoints:
       Type: string
     - Name: conditions[agencies][]
       Description: Publishing agency
-      EnumeratedList: 
+      EnumeratedList:
 <%= Agency.alphabetically.map {|a| '      - ' + a.slug }.join("\n") %>
       Type: multiple
     - Name: conditions[type][]
-      EnumeratedDescription: 
+      EnumeratedDescription:
         PRORULE: Proposed Rule
         PRESDOCU: Presidential Document
         NOTICE: Notice
         RULE: Final Rule
       Description: Document type
-      EnumeratedList: 
+      EnumeratedList:
       - RULE
       - PRORULE
       - NOTICE
@@ -289,17 +396,17 @@ endpoints:
       Type: multiple
     - Name: conditions[special_filing]
       Default: ""
-      EnumeratedDescription: 
+      EnumeratedDescription:
         "0": Regular Filing
         "1": Special Filing
       Description: Filing type
       Type: boolean
     - Name: conditions[docket_id]
-      Description: Agency docket number associated with article
+      Description: Agency docket number associated with document
       Type: string
 
 - name: Agencies
-  methods: 
+  methods:
   - Synopsis: "Fetch all agency details"
     RequiresOAuth: N
     HTTPMethod: GET
@@ -310,10 +417,43 @@ endpoints:
   - Synopsis: "Fetch a particular agency's details"
     RequiresOAuth: N
     HTTPMethod: GET
-    URI: /agencies/:id
+    URI: /agencies/:slug
     MethodName: get
-    parameters: 
+    parameters:
+    - Name: slug
+      EnumeratedList:
+<%= Agency.alphabetically.map {|a| '      - ' + a.slug }.join("\n") %>
+      Description: Federal Register slug for the agency
+      Required: Y
     - Name: id
       type: integer
-      Description: Federal Register ID for the agency
+      Description: Federal Register ID for the agency (deprecated)
+      Required: N
+
+- name: Suggested Searches
+  methods:
+  - Synopsis: Fetch all suggested searches or limit by FederalRegister.gov section
+    RequiresOAuth: N
+    HTTPMethod: GET
+    URI: /suggested_searches
+    MethodName: index
+    parameters:
+    - Name: conditions[sections]
+      EnumeratedList:
+<%= Section.alphabetically.map {|a| '      - ' + a.slug }.join("\n") %>
+      Description: Federal Register slug for the section
+      Required: N
+      Type: multiple
+
+  - Synopsis: Fetch a particular suggested search
+    RequiresOAuth: N
+    HTTPMethod: GET
+    URI: /suggested_searches/:slug
+    MethodName: get
+    parameters:
+    - Name: slug
+      EnumeratedList:
+<%= CannedSearch.alphabetically.map {|a| '      - ' + a.slug }.join("\n") %>
+      Description: Federal Register slug for the suggested search
       Required: Y
+      Type: enumerated

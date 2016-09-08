@@ -7,6 +7,7 @@ class CannedSearch < ApplicationModel
   acts_as_list :scope => :section_id
   named_scope :in_order, :order => "position"
   named_scope :inactive, :conditions => {:active => 0}
+  named_scope :alphabetically, :order => "canned_searches.title"
 
   def new_position=(new_pos)
     insert_at(new_pos)
