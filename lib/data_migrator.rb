@@ -20,7 +20,7 @@ class DataMigrator
   end
 
   def copy_core_data
-    copy_page_views_archive
+    #copy_page_views_archive
     copy_eo_details
     copy_users
     copy_fr_index
