@@ -2,7 +2,12 @@ class LedePhoto < ApplicationModel
   attr_reader :flickr_photo_id
   has_many :entries
   has_attached_file :photo,
-                    :styles => { :navigation => ["400x175", :jpg], :homepage => ["100", :jpg], :small => ["140", :jpg], :medium => ["245", :jpg], :large => ["800x350", :jpg], :full_size => ["", :jpg] },
+                    :styles => {
+                      :navigation => ["393", :jpg],
+                      :homepage => ["450", :jpg],
+                      :large => ["800", :jpg],
+                      :full_size => ["", :jpg]
+                    },
                     :processors => [:thumbnail],
                     :storage => :s3,
                     :s3_credentials => {
