@@ -78,7 +78,8 @@ end
 #############################################################
 
 task :officialness do
-  set :rails_env,  "officialness_staging"
+  #set :rails_env,  "officialness_staging"
+  set :rails_env,  "production"
   set :branch, 'officialness'
   set :gateway, 'fr2_officialness'
 
