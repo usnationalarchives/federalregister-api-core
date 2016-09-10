@@ -37,7 +37,12 @@ class EntryApiRepresentation < ApiRepresentation
   field(:body_html_url, :select => [:document_file_path, :publication_date]) {|e| entry_full_text_url(e)}
   field(:cfr_references, :include => :entry_cfr_references, select: [:publication_date]) do |entry|
     entry.entry_cfr_references.map do |cfr_reference|
-      citation_url = cfr_reference.chapter.present? ? nil : select_cfr_citation_url(entry.publication_date, cfr_reference.title, cfr_reference.part, nil)
+      citation_url = if cfr_reference.chapter.present? && cfr_reference.part.present?
+        select_cfr_citation_url(entry.publication_date, cfr_reference.title, cfr_reference.part, nil)
+      else
+        nil
+      end
+
       {
         :title => cfr_reference.title,
         :part => cfr_reference.part,
