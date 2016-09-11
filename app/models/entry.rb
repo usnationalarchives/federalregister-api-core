@@ -362,11 +362,11 @@ class Entry < ApplicationModel
   end
 
   def curated_title
-    self[:curated_title] || title
+    self[:curated_title].present? ? self[:curated_title] : title
   end
 
   def curated_abstract
-    self[:curated_abstract] || abstract
+    self[:curated_abstract].present? ? self[:curated_abstract] : abstract
   end
 
   def day
