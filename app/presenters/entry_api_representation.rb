@@ -62,7 +62,7 @@ class EntryApiRepresentation < ApiRepresentation
   field(:document_number)
   field(:effective_on, :include => :effective_date)
   field(:end_page)
-  field(:excerpts, :select => [:document_file_path, :abstract]) {|e| (e.excerpts.raw_text || e.excerpts.abstract) if e.respond_to?(:excerpts) && e.excerpts}
+  field(:excerpts, :select => [:document_number, :publication_date, :document_file_path, :abstract]) {|e| (e.excerpts.raw_text || e.excerpts.abstract) if e.respond_to?(:excerpts) && e.excerpts}
   field(:executive_order_notes)
   field(:executive_order_number)
   field(:full_text_xml_url, :select => [:publication_date, :document_file_path, :full_xml_updated_at]){|e| entry_xml_url(e) if e.should_have_full_xml?}
