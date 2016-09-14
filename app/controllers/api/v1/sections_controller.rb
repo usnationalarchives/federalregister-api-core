@@ -39,8 +39,6 @@ class Api::V1::SectionsController < ApiController
             :urls => {
               :navigation => entry.lede_photo.photo.url(:navigation),
               :homepage => entry.lede_photo.photo.url(:homepage),
-              :small => entry.lede_photo.photo.url(:small),
-              :medium => entry.lede_photo.photo.url(:medium),
               :large => entry.lede_photo.photo.url(:large),
               :full_size => entry.lede_photo.photo.url(:full_size),
             },
