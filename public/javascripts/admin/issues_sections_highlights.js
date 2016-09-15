@@ -1,4 +1,6 @@
 $(document).ready(function(){
+  $('#carousel-preview-form').submit();
+
   var base_url = window.location;
   $('article a.add').live('click', function(){
     var entry = $(this).closest('div.article');

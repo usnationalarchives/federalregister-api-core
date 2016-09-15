@@ -36,8 +36,6 @@
 <% else %>
   <div class="issue-approval page_summary">
     <%= link_to 'Publish this issue', admin_issue_approval_path(@publication_date.to_s(:iso)), :method => :post, :confirm => "Are you sure you wish to approve this issue?" %>
-    |
-    <%= link_to "Homepage Preview", preview_admin_issue_path(@publication_date.to_s(:iso)), :target => "_blank" %>
   </div>
 <% end %>
 

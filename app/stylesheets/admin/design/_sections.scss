@@ -26,6 +26,18 @@
   }
 
   #content_area {
+    .carousel-preview-wrapper {
+      margin: 0 auto;
+      width: 525px;
+    }
+
+    iframe.carousel-preview {
+      border: 0;
+      height: 376px;
+      overflow: hidden;
+      width: 525px;
+    }
+
     h4 { font-size: 16px; }
 
     .document-list {

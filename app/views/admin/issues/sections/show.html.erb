@@ -35,16 +35,19 @@ window.location = url'.gsub(/\s+/,' ') %>
 
 
 <div class='center_content preview'>
-  <div class="issue-approval page_summary">
-    <%= link_to 'Preview',
-      preview_admin_issue_section_path(@publication_date.to_s(:db), @section),
-      :target => "_blank",
-      :class => 'preview' %>
-  </div>
-
   <h2 class="section-header">
     Highlighted Entries
   </h3>
+
+  <div class="page_summary">
+    <form action="/sections/carousel-preview" method="post" id="carousel-preview-form" target="carousel-preview">
+      <input type="hidden" name="slug" value="<%= @section.slug %>" />
+      <input type="hidden" name="highlighted_documents" value='<%= @highlighted_entries.map{|entry| highlighted_entry_hash(entry)}.to_json %>' />
+    </form>
+    <div class="carousel-preview-wrapper">
+      <iframe name="carousel-preview" src="" class="carousel-preview"></iframe>
+    </div>
+  </div>
 
   <ul id="highlighted" class='document-list'>
     <%= render :partial => "highlighted_entry", :collection => @highlighted_entries %>
