@@ -303,14 +303,9 @@ $grey: #ccc;
       display: inline-block;
       overflow: hidden;
 
-      &.preview-lg {
+      &.preview-nav {
         height: 175px;
-        width: 400px;
-      }
-
-      &.preview-sm {
-        height: 61px;
-        width: 140px;
+        width: 393px;
       }
     }
   }
