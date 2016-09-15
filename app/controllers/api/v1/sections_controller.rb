@@ -1,4 +1,6 @@
 class Api::V1::SectionsController < ApiController
+  include Api::ApiSectionHelper
+
   def index
     publication_date = parse_pub_date(params[:conditions])
     sections = {}
@@ -29,25 +31,6 @@ class Api::V1::SectionsController < ApiController
     section.
       highlighted_entries(publication_date).
       limit(6).
-      map do |entry|
-        {
-          :document_number => entry.document_number,
-          :html_url => entry_path(entry),
-          :curated_title => entry.curated_title,
-          :curated_abstract => entry.curated_abstract,
-          :photo => entry.lede_photo.present? ? {
-            :urls => {
-              :navigation => entry.lede_photo.photo.url(:navigation),
-              :homepage => entry.lede_photo.photo.url(:homepage),
-              :large => entry.lede_photo.photo.url(:large),
-              :full_size => entry.lede_photo.photo.url(:full_size),
-            },
-            :credit => {
-              :name => entry.lede_photo.credit,
-              :url => entry.lede_photo.credit_url,
-            }
-          } : {}
-        }
-      end
+      map{|entry| highlighted_entry_hash(entry)}
   end
 end
