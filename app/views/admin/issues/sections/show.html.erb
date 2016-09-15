@@ -40,9 +40,11 @@ window.location = url'.gsub(/\s+/,' ') %>
   </h3>
 
   <div class="page_summary">
+    <h4>Homepage Carousel Preview</h4>
+
     <form action="/sections/carousel-preview" method="post" id="carousel-preview-form" target="carousel-preview">
       <input type="hidden" name="slug" value="<%= @section.slug %>" />
-      <input type="hidden" name="highlighted_documents" value='<%= @highlighted_entries.map{|entry| highlighted_entry_hash(entry)}.to_json %>' />
+      <input type="hidden" name="highlighted_documents" value="<%= URI.escape(@highlighted_entries.map{|entry| highlighted_entry_hash(entry)}.to_json) %>" />
     </form>
     <div class="carousel-preview-wrapper">
       <iframe name="carousel-preview" src="" class="carousel-preview"></iframe>
