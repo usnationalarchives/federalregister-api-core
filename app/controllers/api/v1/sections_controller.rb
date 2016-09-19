@@ -2,7 +2,9 @@ class Api::V1::SectionsController < ApiController
   include Api::ApiSectionHelper
 
   def index
-    publication_date = parse_pub_date(params[:conditions])
+    pub_date = parse_pub_date(params[:conditions]) || IssueApproval.latest_publication_date
+    publication_date = pub_date <= IssueApproval.latest_publication_date ? pub_date : IssueApproval.latest_publication_date
+
     sections = {}
 
     Section.all.each do |section|
@@ -23,7 +25,11 @@ class Api::V1::SectionsController < ApiController
 
   def parse_pub_date(conditions)
     if conditions && conditions[:publication_date] && conditions[:publication_date][:is].present?
-      Date.parse(params[:conditions][:publication_date][:is])
+      begin
+        Date.parse(params[:conditions][:publication_date][:is])
+      rescue ArgumentError
+        nil
+      end
     end
   end
 
