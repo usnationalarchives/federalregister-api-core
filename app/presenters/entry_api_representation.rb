@@ -34,7 +34,7 @@ class EntryApiRepresentation < ApiRepresentation
     end
   end
   field(:agency_names, :include => {:agency_names => :agency}) {|e| e.agency_names.compact.map{|a| a.agency.try(:name) || a.name}}
-  field(:body_html_url, :select => [:document_file_path, :publication_date]) {|e| entry_full_text_url(e)}
+  field(:body_html_url, :select => [:document_file_path, :publication_date, :document_number]) {|e| entry_full_text_url(e)}
   field(:cfr_references, :include => :entry_cfr_references, select: [:publication_date]) do |entry|
     entry.entry_cfr_references.map do |cfr_reference|
       citation_url = if cfr_reference.chapter.present? && cfr_reference.part.present?
