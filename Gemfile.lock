@@ -22,6 +22,13 @@ GIT
       resque (>= 1.8.0)
 
 GIT
+  remote: https://github.com/criticaljuncture/klarlack.git
+  revision: f4c9706cd542046e7e37a4872b3a272b57cbb31b
+  ref: f4c9706cd542046e7e37a4872b3a272b57cbb31b
+  specs:
+    klarlack (0.0.7)
+
+GIT
   remote: https://github.com/makandra/rails.git
   revision: f59e93f9ba6a275c715e2ad24d100422f9aee5cf
   branch: 2-3-lts
@@ -261,7 +268,6 @@ GEM
       cmdparse
       nokogiri
       rubyzip
-    klarlack (0.0.6)
     lemonade (0.3.2)
       chunky_png (>= 0.7.3)
       compass (>= 0.10.0)
@@ -419,7 +425,7 @@ DEPENDENCIES
   jrails (= 0.6.0)
   json (= 1.7.7)
   juicer (= 1.0.6)
-  klarlack (= 0.0.6)
+  klarlack (= 0.0.7)!
   lemonade (= 0.3.2)
   mechanize (= 1.0.0)
   mime-types (~> 1.25, >= 1.25.1)
