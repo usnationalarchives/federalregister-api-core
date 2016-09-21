@@ -41,6 +41,9 @@ module Content
     if date =~ /^>/
       date = Date.parse(date.sub(/^>/, ''))
       dates = (date .. Time.current.to_date).to_a
+    elsif (date =~/\.{3}/) == 10 #2015-10-01...2015-11-01
+      start_date, end_date = date.split('...')
+      dates = (Date.parse(start_date) .. Date.parse(end_date)).to_a
     elsif date.present?
       dates = [date.is_a?(String) ? date : date.to_s(:iso)]
     else
