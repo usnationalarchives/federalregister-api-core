@@ -13,6 +13,7 @@ namespace :data do
       content:entries:import
       content:gpo_images:process_daily_issue_images
       content:entries:json:compile:daily_toc
+      content:entries:json:compile:fr_index
       data:extract:places
       content:entries:enqueue_regs_dot_gov_import
     )
@@ -22,6 +23,7 @@ namespace :data do
       content:gpo_images:process_daily_issue_images
       content:entries:html:compile:all
       content:entries:json:compile:daily_toc
+      content:entries:json:compile:fr_index
       sphinx:rebuild_delta
       content:issues:mark_complete
     )
@@ -42,6 +44,7 @@ namespace :data do
       content:entries:html:compile:all
       content:entries:json:compile:daily_toc
       content:agency_assignments:recalculate
+      content:entries:json:compile:fr_index
       sphinx:rebuild_delta
       content:issues:mark_complete
       content:public_inspection:import:entry_id
