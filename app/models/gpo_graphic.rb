@@ -35,7 +35,11 @@ class GpoGraphic < ActiveRecord::Base
                     :path => ":xml_identifier/:style.:extension"
 
   Paperclip.interpolates(:xml_identifier) do |attachment, style|
-    "#{attachment.instance.xml_identifier}"
+    if attachment.instance.gpo_graphic_usages.present?
+      attachment.instance.xml_identifier
+    else
+      attachment.instance.identifier
+    end
   end
 
   named_scope :processed, :conditions => "graphic_file_name IS NOT NULL"
