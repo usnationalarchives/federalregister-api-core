@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20160729211404) do
+ActiveRecord::Schema.define(:version => 20160927223048) do
 
   create_table "action_names", :force => true do |t|
     t.string   "name"
@@ -191,11 +191,13 @@ ActiveRecord::Schema.define(:version => 20160729211404) do
   add_index "docket_numbers", ["assignable_type", "assignable_id"], :name => "index_docket_numbers_on_assignable_type_and_assignable_id"
 
   create_table "dockets", :force => true do |t|
-    t.string  "regulation_id_number"
-    t.integer "comments_count"
-    t.integer "docket_documents_count"
-    t.string  "title"
-    t.text    "metadata"
+    t.string   "regulation_id_number"
+    t.integer  "comments_count"
+    t.integer  "docket_documents_count"
+    t.string   "title"
+    t.text     "metadata"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "document_subtypes", :force => true do |t|
@@ -331,12 +333,14 @@ ActiveRecord::Schema.define(:version => 20160729211404) do
   add_index "events", ["event_type", "place_id", "entry_id"], :name => "index_events_on_event_type_and_place_id_and_entry_id"
 
   create_table "fr_index_agency_statuses", :force => true do |t|
-    t.integer "year"
-    t.integer "agency_id"
-    t.date    "last_completed_issue"
-    t.integer "needs_attention_count"
-    t.date    "oldest_issue_needing_attention"
-    t.date    "last_published"
+    t.integer  "year"
+    t.integer  "agency_id"
+    t.date     "last_completed_issue"
+    t.integer  "needs_attention_count"
+    t.date     "oldest_issue_needing_attention"
+    t.date     "last_published"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "fr_index_agency_statuses", ["year", "agency_id"], :name => "index_fr_index_agency_statuses_on_year_and_agency_id"
