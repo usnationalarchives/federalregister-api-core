@@ -9,6 +9,6 @@ class FrIndexSingleAgencyCompiler
       args.fetch(:agency_id)
     )
 
-    CacheUtils::Client.instance.purge("/index/#{args.fetch(:year)}/#{args.fetch(:slug)}")
+    CacheUtils.purge_cache("/index/#{args.fetch(:year)}/#{args.fetch(:slug)}")
   end
 end

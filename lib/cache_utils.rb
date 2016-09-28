@@ -2,6 +2,7 @@ module CacheUtils
   def purge_cache(regexp)
     Client.instance.purge(regexp)
   end
+  module_function :purge_cache
 
   class Client
     include Singleton
@@ -21,6 +22,5 @@ module CacheUtils
       host = RAILS_ENV == 'development' ? '127.0.0.1:6082' : 'proxy.fr2.ec2.internal:6082'
       @client ||= Varnish::Client.new(host, :timeout => 60)
     end
-
   end
 end
