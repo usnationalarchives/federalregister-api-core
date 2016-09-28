@@ -37,7 +37,14 @@ Rails::Initializer.run do |config|
 
   # Activate observers that should always be running, expect during db:migrate and db:setup...
   unless ENV['ASSUME_UNITIALIZED_DB']
-    config.active_record.observers = [:agency_observer, :agency_name_observer, :canned_search_observer, :issue_approval_observer, :entry_observer]
+    config.active_record.observers = [
+      :agency_observer,
+      :agency_name_observer,
+      :canned_search_observer,
+      :entry_observer,
+      :fr_index_agency_status_observer,
+      :issue_approval_observer
+    ]
   end
 
   # Set Time.zone default to the specified zone and make Active Record auto-convert to this zone.
