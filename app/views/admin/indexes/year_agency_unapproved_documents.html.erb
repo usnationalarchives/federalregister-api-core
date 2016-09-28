@@ -24,7 +24,7 @@
   <hr />
 
   <div class="agency_index_actions">
-    <%= link_to 'Mark As Reviewed',
+    <%= link_to 'Mark As Reviewed and Clear Cache',
                 admin_index_year_agency_completion_path(:last_completed_issue => [Issue.current.publication_date, @agency_year.max_date].min,
                                                         :max_date => params[:max_date]),
                 :method => :put,

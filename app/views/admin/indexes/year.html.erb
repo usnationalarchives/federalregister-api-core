@@ -9,7 +9,7 @@
 
   <p id="agency-jump-nav">
     Jump to Agencies: <%= @fr_index.agencies_by_letter.map{|letter,agencies| "<a href='##{letter}' class='letter_link'>#{letter}</a>"}.join(' | ') %>
-  <p>
+  </p>
 
   <div class="agency_index_actions">
     <% form_tag(url_for(:max_date => @fr_index.last_issue_published), :method => :get, :class => 'max_date') do %>
@@ -31,12 +31,12 @@
 
     <ul>
       <% agencies.each do |agency| %>
-        <% if agency.respond_to?(:see_instead) %> 
+        <% if agency.respond_to?(:see_instead) %>
           <li>
             <%= agency.name %>
             <ul>
               <li>
-                <em class="see">see</em> 
+                <em class="see">see</em>
                 <%= link_to "#{agency.see_instead.name} ", "#agency_#{agency.see_instead.id}", :class => "agency_reference"  %>
               </li>
             </ul>
@@ -50,12 +50,12 @@
                 <% agency.children.each do |sub_agency| %>
                   <% if sub_agency.respond_to?(:see_instead) %>
                     <li>
-                      <em class="see">See</em> 
+                      <em class="see">See</em>
                       <%= link_to "#{sub_agency.see_instead.name} ", "#agency_#{sub_agency.see_instead.id}", :class => "agency_reference"  %>
                     </li>
                   <% else %>
                     <li>
-                      <span class="see">See</span> 
+                      <span class="see">See</span>
                       <%= render :partial => "agency_name", :locals => {:agency => sub_agency, :max_date => @max_date} %>
                     </li>
                   <% end %>

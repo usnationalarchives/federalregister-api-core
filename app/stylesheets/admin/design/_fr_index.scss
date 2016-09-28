@@ -65,10 +65,18 @@
   h1.agency_name { color: $dark_blue; }
   hr { margin-top: 0; }
 
+  .last_completed.all {
+    float: right;
+    margin-bottom: 5px;
+  }
+
   .agency_index_actions {
+    clear: both;
     margin-bottom: 5px;
     margin-top: 10px;
     overflow: hidden;
+
+    select { width: 200px; }
 
     .last_completed {
       float: left;
@@ -90,9 +98,23 @@
       transition: none;
     }
 
-    .mark_as_complete, .publish_pdfs {
+    .mark_as_complete,
+    .publish_pdfs {
       background: sprite-image("icons/admin/index_mark_as_done.png", 4px, 3px, 30px) no-repeat;
+    }
+
+    .publish_pdfs {
+      float: right;
+      margin-right: 18px;
+    }
+
+    .mark_as_complete {
       float: left;
+
+      &.all {
+        float: right;
+        margin-right: 10px;
+      }
     }
 
     .mark_as_complete:hover, .publish_pdfs:hover {
@@ -166,7 +188,7 @@
     float: left;
     margin-bottom: 0;
     margin-right: 0;
-    width: 400px;
+    width: 200px;
 
     #max_date {
       float: none;
