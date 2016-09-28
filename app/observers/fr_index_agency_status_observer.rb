@@ -1,7 +1,11 @@
 class FrIndexAgencyStatusObserver < ActiveRecord::Observer
   observe :fr_index_agency_status
 
+  cattr_accessor :disabled
+
   def after_save(fr_index_agency_status)
+    return if FrIndexAgencyStatusObserver.disabled
+
     Resque.enqueue(
       FrIndexSingleAgencyCompiler,
       {
