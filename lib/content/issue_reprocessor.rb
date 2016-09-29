@@ -30,6 +30,7 @@ module Content
 
     def reprocess_issue
       reprocess_basic_data
+      reprocess_rin_and_significant
       reprocess_events
       reprocess_agencies
     end
@@ -44,6 +45,16 @@ module Content
         Rake::Task['content:entries:import:basic_data'].invoke
       rescue StandardError => error
         handle_failure(error,"IssueReprocessor: Reprocess Basic Data")
+      end
+    end
+
+    def reprocess_rin_and_significant
+      update_reprocessing_message("reprocessing RIN and Significant flag")
+      begin
+        ENV['DATE'] = "#{date.to_s(:iso)}"
+        Rake::Task['content:entries:import:rin_and_significant'].invoke
+      rescue StandardError => error
+        handle_failure(error,"IssueReprocessor: Reprocess RIN and Significant")
       end
     end
 
