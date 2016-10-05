@@ -36,14 +36,19 @@ namespace :content do
         entry_importer(:full_text)
       end
 
-      desc "Extract full_xml & raw_text"
-      task :full_xml_and_raw_text => :environment do
-        entry_importer(:full_xml, :raw_text)
+      desc "Extract full_xml"
+      task :full_xml => :environment do
+        entry_importer(:full_xml)
       end
 
       desc "Extract raw_text"
       task :raw_text => :environment do
         entry_importer(:raw_text)
+      end
+
+      desc "Extract full_xml & raw_text"
+      task :full_xml_and_raw_text => :environment do
+        entry_importer(:full_xml, :raw_text)
       end
 
       desc "Citations"
