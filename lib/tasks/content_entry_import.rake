@@ -26,6 +26,14 @@ namespace :content do
     end
 
     namespace :import do
+      desc "Enqueue a rake task as a background job"
+      task :enqueue, [:task, :dates] => :environment do |t, args|
+        dates = Content.parse_dates(args[:dates])
+        dates.each do |date|
+          Resque.enqueue(RakeTaskDateEnqueuer, args[:task], date.to_s(:iso))
+        end
+      end
+
       desc "Extract Basic data"
       task :basic_data => :environment do
         entry_importer(:volume, :issue_number, :title, :toc_subject, :toc_doc, :citation, :start_page, :end_page, :part_name, :granule_class, :abstract, :dates, :action, :contact, :docket_numbers, :correction_of_id)
