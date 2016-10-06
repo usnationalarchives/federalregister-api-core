@@ -30,7 +30,7 @@ module Content
         :order => "publication_date"
       )
     elsif date.present?
-      dates = [date.is_a?(String) ? date : date.to_s(:iso)]
+      dates = [date.is_a?(String) ? Date.parse(date) : date]
     else
       dates = [Time.current.to_date]
     end
@@ -45,7 +45,7 @@ module Content
       start_date, end_date = date.split('...')
       dates = (Date.parse(start_date) .. Date.parse(end_date)).to_a
     elsif date.present?
-      dates = [date.is_a?(String) ? date : date.to_s(:iso)]
+      dates = [date.is_a?(String) ? Date.parse(date) : date]
     else
       dates = [Time.current.to_date]
     end
