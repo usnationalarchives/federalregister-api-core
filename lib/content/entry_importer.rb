@@ -43,7 +43,7 @@ module Content
       options.symbolize_keys!
 
       puts "handling #{date}"
-      if date < '2000-01-18'
+      if date < Date.parse('2000-01-18')
         process_without_bulkdata(date, options, *attributes)
       else
         begin
