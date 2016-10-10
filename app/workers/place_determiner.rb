@@ -34,6 +34,8 @@ class PlaceDeterminer
         end
       end
 
+      entry.places_determined_at = Time.now
+      entry.save
     end
   end
 end
