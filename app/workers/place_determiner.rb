@@ -20,7 +20,7 @@ class PlaceDeterminer
             )
           end
 
-          unless PlaceDetermination.all_confidences.find(
+          unless PlaceDetermination.find(
             :first,
             :conditions => {:entry_id => entry.id, :place_id => place.id}
           )
