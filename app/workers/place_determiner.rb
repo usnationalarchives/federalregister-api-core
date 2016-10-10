@@ -28,7 +28,7 @@ class PlaceDeterminer
               entry_id: entry.id,
               place_id: place.id,
               string: location[:name],
-              confidence: location[:score]
+              relevance_score: location[:score]
             )
           end
         end

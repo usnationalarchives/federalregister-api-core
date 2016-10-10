@@ -46,7 +46,7 @@ class Entry < ApplicationModel
   has_many :urls, :through => :url_references
 
   has_many :place_determinations,
-           :conditions => "place_determinations.confidence >= #{PlaceDetermination::MIN_CONFIDENCE}",
+           :conditions => "place_determinations.confidence >= #{PlaceDetermination::MIN_CONFIDENCE} OR place_determinations.relevance_score >= #{PlaceDetermination::MIN_RELEVANCE_SCORE}",
            :dependent => :destroy
   has_many :places, :through => :place_determinations
 

@@ -472,7 +472,8 @@ ActiveRecord::Schema.define(:version => 20180612005005) do
     t.integer "place_id"
     t.string  "string"
     t.string  "context"
-    t.float   "confidence"
+    t.integer "confidence"
+    t.float   "relevance_score"
   end
 
   add_index "place_determinations", ["entry_id", "confidence", "place_id"], :name => "index_place_determinations_on_entry_id_and_place_id"
