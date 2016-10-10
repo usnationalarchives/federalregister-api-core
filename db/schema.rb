@@ -1,4 +1,4 @@
-# This file is auto-generated from the current state of the database. Instead of editing this file, 
+# This file is auto-generated from the current state of the database. Instead of editing this file,
 # please use the migrations feature of Active Record to incrementally modify your database, and
 # then regenerate this schema definition.
 #
@@ -58,7 +58,8 @@ ActiveRecord::Schema.define(:version => 20180612005005) do
   add_index "agencies_sections", ["agency_id", "section_id"], :name => "index_agencies_sections_on_agency_id_and_section_id"
   add_index "agencies_sections", ["section_id", "agency_id"], :name => "index_agencies_sections_on_section_id_and_agency_id"
 
-  create_table "agency_assignments", :force => true do |t|
+  create_table "agency_assignments", :id => false, :force => true do |t|
+    t.integer "id",              :default => 0, :null => false
     t.integer "assignable_id"
     t.integer "agency_id"
     t.integer "position"
@@ -471,7 +472,7 @@ ActiveRecord::Schema.define(:version => 20180612005005) do
     t.integer "place_id"
     t.string  "string"
     t.string  "context"
-    t.integer "confidence"
+    t.float   "confidence"
   end
 
   add_index "place_determinations", ["entry_id", "confidence", "place_id"], :name => "index_place_determinations_on_entry_id_and_place_id"
@@ -484,7 +485,10 @@ ActiveRecord::Schema.define(:version => 20180612005005) do
     t.float    "longitude"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "open_calais_guid"
   end
+
+  add_index "places", ["open_calais_guid"], :name => "index_places_on_open_calais_guid", :unique => true
 
   create_table "public_inspection_documents", :force => true do |t|
     t.string   "document_number"

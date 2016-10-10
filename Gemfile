@@ -128,6 +128,9 @@ Encoding.default_internal = Encoding::UTF_8
 # TODO: BB remove after upgrade
 gem 'iconv', '~> 1.0', '>= 1.0.5'
 
+gem 'open_calais'
+
+
 group :test do
   gem 'rspec'
   gem 'rspec_candy'
