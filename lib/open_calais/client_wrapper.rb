@@ -14,7 +14,7 @@ module OpenCalais
     attr_reader :text
 
     def enriched_response
-      open_calais.enrich(text)
+      @enriched_response ||= open_calais.enrich(text)
     end
 
     def open_calais
