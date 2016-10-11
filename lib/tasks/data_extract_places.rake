@@ -11,7 +11,7 @@ namespace :data do
             # previous_date = nil
 
             next if entry.abstract.blank?
-            PlaceDeterminer.perform(entry.id)
+            Resque.enqueue(PlaceDeterminer, entry.id)
           end
         rescue StandardError => e
           puts e.message
