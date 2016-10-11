@@ -1,6 +1,6 @@
 class PlaceDeterminer
   MAX_RETRIES = 5
-  RETRY_DELAY_IN_SECONDS = 60
+  RETRY_DELAY_IN_SECONDS = 5
   @queue = :default
 
   def self.perform(entry_id)
