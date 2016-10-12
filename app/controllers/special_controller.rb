@@ -37,7 +37,8 @@ class SpecialController < ApplicationController
     end
 
     current_time_on_database = Entry.connection.select_values("SELECT NOW()").first
-    render :text => "Current time is: #{current_time_on_database}"
+    sphinx_query = EntrySearch.new.count
+    render :text => "Current time is: #{current_time_on_database}. Document count is: #{sphinx_query}."
   end
 
   def layout_head_content
