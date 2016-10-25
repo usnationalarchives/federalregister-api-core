@@ -9,9 +9,6 @@ class GpoImages::FogAwsConnection
       # now that we've gotten it from the published XML
       filename = file.key.gsub(identifier, URI.encode(xml_identifier))
 
-      # rename the orginal_png style to just original
-      filename = filename.gsub('original_png', 'original')
-
       if file.copy(destination_bucket, filename)
         file.destroy
       else
