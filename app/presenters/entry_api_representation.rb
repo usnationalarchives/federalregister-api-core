@@ -68,26 +68,30 @@ class EntryApiRepresentation < ApiRepresentation
   field(:full_text_xml_url, :select => [:publication_date, :document_file_path, :full_xml_updated_at]){|e| entry_xml_url(e) if e.should_have_full_xml?}
   field(:html_url, :select => [:publication_date, :document_number, :title]){|e| entry_url(e)}
   field(:images, :include => [:extracted_graphics, :gpo_graphic_usages]) do |entry|
-    graphics = entry.extracted_graphics
+    extracted_graphics = entry.extracted_graphics
     gpo_graphics = entry.processed_gpo_graphics
+
+    # we have two types of graphics possible, gpo_graphics being the newest
+    graphics = extracted_graphics.present? ? extracted_graphics : gpo_graphics
 
     if graphics.present?
       graphics.inject({}) do |hsh, graphic|
-        hsh[graphic.identifier] = graphic.graphic.styles.inject({}) do |hsh, style|
-          hsh[style[0]] = style[1].attachment.send(:url, style[0])
+        # gpo graphics must have an xml identifier or else we don't want to expose them via the API
+        if graphic.class == GpoGraphic && graphic.xml_identifier.blank?
           hsh
-        end
-        hsh
-      end
-    elsif gpo_graphics.present?
-      gpo_graphics.inject({}) do |hsh, gpo_graphic|
-        next unless gpo_graphic.xml_identifier
+        else
+          identifier = graphic.class == GpoGraphic ? graphic.xml_identifier : graphic.identifier
 
-        hsh[gpo_graphic.xml_identifier] = gpo_graphic.graphic.styles.inject({}) do |hsh, style|
-          hsh[style[0]] = style[1].attachment.send(:url, style[0])
+          hsh[identifier] = graphic.graphic.styles.inject({}) do |hsh, style|
+            type, paperclip_style = style
+            # expose the :original_png style as simply :original
+            renamed_type = type == :original_png ? :original : type
+            hsh[renamed_type] = paperclip_style.attachment.send(:url, type)
+            hsh
+          end
+
           hsh
         end
-        hsh
       end
     else
       {}
