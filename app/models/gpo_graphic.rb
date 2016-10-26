@@ -42,6 +42,14 @@ class GpoGraphic < ActiveRecord::Base
     end
   end
 
+  Paperclip.interpolates(:style) do |attachment, style|
+    if style == :original_png
+      :original
+    else
+      style
+    end
+  end
+
   named_scope :processed, :conditions => "graphic_file_name IS NOT NULL"
   named_scope :unprocessed, :conditions => "graphic_file_name IS NULL"
 
