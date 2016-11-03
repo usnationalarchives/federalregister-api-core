@@ -51,7 +51,7 @@ class EntryApiRepresentation < ApiRepresentation
       }
     end
   end
-  field(:citation, :select => [:start_page]){|e| e.start_page && e.start_page.to_i > 0 ? e.citation : nil}
+  field(:citation, :select => [:citation, :start_page]){|e| e.start_page && e.start_page.to_i > 0 ? e.citation : nil}
   field(:comments_close_on, :include => :comments_close_date){|e| e.comments_close_on}
   field(:comment_url, :select => [:comment_url, :comment_url_override]){|e| e.calculated_comment_url}
   field(:corrections, :include => :corrections){|e| e.corrections.map{|c| api_v1_entry_url(c.document_number, :format => :json)}}
