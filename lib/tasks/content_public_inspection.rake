@@ -33,13 +33,15 @@ namespace :content do
     end
 
     task :run => :environment do
-      new_document_numbers = Content::PublicInspectionImporter.perform
+      if Issue.should_have_an_issue?(Date.current)
+        new_document_numbers = Content::PublicInspectionImporter.perform
 
-      if new_document_numbers.present?
-        Rake::Task["content:public_inspection:reindex"].invoke unless Rails.env == 'development'
+        if new_document_numbers.present?
+          Rake::Task["content:public_inspection:reindex"].invoke unless Rails.env == 'development'
 
-        date = PublicInspectionDocument.find_by_document_number(new_document_numbers.first).filed_at.to_date
-        Resque.enqueue_to(:subscriptions, 'PublicInspectionDocumentSubscriptionQueuePopulator', date.to_s(:iso), new_document_numbers)
+          date = PublicInspectionDocument.find_by_document_number(new_document_numbers.first).filed_at.to_date
+          Resque.enqueue_to(:subscriptions, 'PublicInspectionDocumentSubscriptionQueuePopulator', date.to_s(:iso), new_document_numbers)
+        end
       end
     end
 
