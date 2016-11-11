@@ -23,7 +23,7 @@ class Mailer < ActionMailer::Base
     recipients = FR_DEVELOPER_ADMINS
     if RAILS_ENV == 'production'
       recipients += %w(
-        awoo@gpo.gov mvincent@gpo.gov mscott@gpo.gov
+        mvincent@gpo.gov mscott@gpo.gov sfrattini@gpo.gov
         kgreen@gpo.gov aotovo@gpo.gov tellis@gpo.gov
         jhemphill@gpo.gov jmarlor@gpo.gov eswidal@gpo.gov
         ofrtechgroup@gpo.gov jhmartinez@gpo.gov
