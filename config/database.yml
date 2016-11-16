@@ -1,0 +1,22 @@
+shared: &shared
+  adapter: mysql2
+  database: <%= ENV["MYSQL_DATABASE"] %>
+  username: <%= ENV["MYSQL_USERNAME"] %>
+  password: <%= ENV["MYSQL_PASSWORD"] %>
+  port: <%= ENV["MYSQL_PORT"] %>
+  host: '<%= ENV["MYSQL_ADDR"] %>'
+  reconnect: true
+  encoding: utf8
+
+development:
+  <<: *shared
+
+test:
+  <<: *shared
+  database: <%= ENV["MYSQL_DATABASE"] %>_test
+
+staging:
+  <<: *shared
+
+production:
+  <<: *shared
