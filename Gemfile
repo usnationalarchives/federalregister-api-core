@@ -1,5 +1,7 @@
 source 'https://rubygems.org'
 
+gem 'mini_portile', '~> 0.6.2' # required for docker/clean unix install
+
 gem 'rails',
   :git => 'https://github.com/makandra/rails.git',
   :branch => '2-3-lts'
@@ -9,7 +11,7 @@ gem 'mysql2', '0.2.24'
 
 gem "jrails", "0.6.0"
 
-gem 'nokogiri', '1.5.11'
+gem 'nokogiri', '1.6.0'
 gem 'curb', '0.9.0'
 gem 'http_headers', '0.0.2.3'
 gem 'geokit', '1.10.0', :require => 'geokit'
@@ -29,7 +31,7 @@ gem 'formtastic', '0.9.8'
 gem 'json', '1.7.7'
 gem 'ym4r', '0.6.1'
 
-gem 'thinking-sphinx', '1.4.13', :require => 'thinking_sphinx'
+gem 'thinking-sphinx', '1.5.0', :require => 'thinking_sphinx'
 gem 'ffi-hunspell',
   :git => 'https://github.com/postmodern/ffi-hunspell.git',
   :ref => '91516637fdff9cef9bae66aefdd89e1b4a8b5831',
@@ -37,7 +39,7 @@ gem 'ffi-hunspell',
 
 gem 'honeybadger', :require => 'honeybadger/rails'
 gem 'resque-honeybadger',
-    :git => 'git@github.com:henrik/resque-honeybadger.git',
+    :git => 'https://github.com/henrik/resque-honeybadger.git',
     :ref => '832be87662840d44e73f66c006796da8ed6250e2'
 
 gem 'aws-s3', '0.6.2', :require => 'aws/s3'
@@ -86,7 +88,7 @@ gem "httparty"
 gem "httmultiparty", '~> 0.3.13'
 
 gem "recaptcha", "0.3.1", :require => 'recaptcha/rails'
-gem 'sendgrid', :git => "git://github.com/criticaljuncture/sendgrid.git", :branch => 'master'
+gem 'sendgrid', :git => "https://github.com/criticaljuncture/sendgrid.git", :branch => 'master'
 gem 'modularity', '0.6.1'
 
 gem "validation_reflection", "0.3.8"
@@ -100,7 +102,7 @@ gem 'cocaine'
 gem 'hoe'
 
 gem 'app_config', "=1.3.2",
-  :git => 'git@github.com:fredwu/app_config.git',
+  :git => 'https://github.com/fredwu/app_config.git',
   :branch => :master
 
 # needed when running on ruby 1.8

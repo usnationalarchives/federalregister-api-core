@@ -1,47 +1,24 @@
-# Our chef setup no longer overwrites this file...
+shared: &shared
+  address: sphinx
+  compat_sphinxql_magics: 0
+  config_file: config/sphinx/sphinx.conf
+  index_exact_words: 1
+  max_matches: 10000
+  mem_limit: 528M
+  morphology: stem_en
+  port: 3312
+  version: '2.2.11'
+
 development:
-  version: '2.1.1-beta'
-  morphology: stem_en
-  index_exact_words: 1
-  mem_limit: 528M
-  listen: 127.0.0.1:9339
-  port: 9339
-  compat_sphinxql_magics: 0
-  max_matches: 10000
+  <<: *shared
+
 test:
-  version: '2.1.1-beta'
-  morphology: stem_en
-  index_exact_words: 1
-  max_matches: 10000
-  listen: 127.0.0.1:9340
-  port: 9340
-  compat_sphinxql_magics: 0
-  max_matches: 10000
+  <<: *shared
+  config_file: config/sphinx/test.sphinx.conf
   sql_range_step: 10000000
+
 staging:
-  morphology: stem_en
-  index_exact_words: 1
-  address: sphinx.fr2.ec2.internal
-  port: 3312
-  mem_limit: 528M
-  version: '2.1.1-beta'
-  compat_sphinxql_magics: 0
-  max_matches: 10000
-officialness_staging:
-  morphology: stem_en
-  index_exact_words: 1
-  address: sphinx.fr2.ec2.internal
-  port: 3312
-  mem_limit: 528M
-  version: '2.1.1-beta'
-  compat_sphinxql_magics: 0
-  max_matches: 10000
+  <<: *shared
+
 production:
-  morphology: stem_en
-  index_exact_words: 1
-  address: sphinx.fr2.ec2.internal
-  port: 3312
-  mem_limit: 528M
-  version: '2.1.1-beta'
-  compat_sphinxql_magics: 0
-  max_matches: 10000
+  <<: *shared
