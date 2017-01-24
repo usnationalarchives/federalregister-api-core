@@ -20,7 +20,14 @@ class President < ActiveHash::Base
       :full_name => "Barack Obama",
       :starts_on => Date.new(2009,1,20),
       :ends_on => Date.new(2017,1,19)
-    }
+    },
+    {
+      :id => 4,
+      :identifier => 'donald-trump',
+      :full_name => "Donald Trump",
+      :starts_on => Date.new(2017,1,20),
+      :ends_on => Date.new(2021,1,19)
+    },
   ]
 
   def year_ranges
