@@ -44,12 +44,12 @@ namespace :data do
       content:entries:html:compile:all
       content:entries:json:compile:daily_toc
       content:agency_assignments:recalculate
-      content:entries:json:compile:fr_index
       sphinx:rebuild_delta
       content:issues:mark_complete
       content:public_inspection:import:entry_id
       content:public_inspection:reindex
       content:fr_index:update_status_cache
+      content:entries:json:compile:fr_index
       varnish:expire:everything
       mailing_lists:daily_import_email:deliver
       data:daily:sleep
