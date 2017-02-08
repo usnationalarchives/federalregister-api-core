@@ -5,7 +5,7 @@ module Content::ExecutiveOrderImporter
       executive_orders << line.to_hash
     end
 
-    max_known_eo_number = executive_orders.map{|eo| eo['number'] }.max
+    max_known_eo_number = executive_orders.map{|eo| eo['executive_order_number'] }.max
     Entry.scoped(:conditions => ["executive_order_number <= ?", max_known_eo_number]).update_all(:executive_order_number => nil)
     executive_orders.each do |eo|
       document_number = eo['document_number']
@@ -15,9 +15,9 @@ module Content::ExecutiveOrderImporter
       if entry
         entry.agency_names = [AgencyName.find_by_name!('Executive Office of the President')]
         attr = {
-          :executive_order_number => eo['number'],
+          :executive_order_number => eo['executive_order_number'],
           :signing_date => eo['signing_date'],
-          :executive_order_notes => eo['notes'],
+          :executive_order_notes => eo['executive_order_notes'],
           :granule_class => "PRESDOCU",
           :presidential_document_type_id => 2
         }
