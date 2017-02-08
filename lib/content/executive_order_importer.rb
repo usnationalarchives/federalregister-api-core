@@ -11,8 +11,10 @@ module Content::ExecutiveOrderImporter
       document_number = eo['document_number']
       next if document_number.blank?
 
-      entry = Entry.find_by_document_number(document_number)
+      puts "Attempting update of #{document_number}..."
+      entry = Entry.find_by_document_number(document_number.strip)
       if entry
+        puts "Entry found..."
         entry.agency_names = [AgencyName.find_by_name!('Executive Office of the President')]
         attr = {
           :executive_order_number => eo['executive_order_number'],
@@ -25,8 +27,9 @@ module Content::ExecutiveOrderImporter
           attr[:citation] = eo['citation'].strip
         end
         entry.update_attributes(attr)
+        puts "Entry updated."
       else
-        warn "'#{document_number}' not found!"
+        puts "'#{document_number}' not found!"
       end
     end
   end
