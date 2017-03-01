@@ -28,7 +28,7 @@ module Content
     end
 
     def self.import_all_by_publication_date(issue)
-      url = "http://www.reginfo.gov/public/do/eAgendaMain?operation=OPERATION_GET_AGENCY_RULE_LIST&currentPubId=#{issue}&agencyCd=0000"
+      url = "https://www.reginfo.gov/public/do/eAgendaMain?operation=OPERATION_GET_AGENCY_RULE_LIST&currentPubId=#{issue}&agencyCd=0000"
       path = "#{Rails.root}/data/regulatory_plans/xml/#{issue}/index.html"
       download_url_to(url, path)
       doc = Nokogiri::HTML(File.read(path))
