@@ -13,6 +13,6 @@ class PresidentialDocumentType < ActiveHash::Base
 
   def self.find_as_hash(options)
     methods = options[:select].split(/\s*,\s*/)
-    Hash[data.map{|rec| methods.map{|m| rec[m.to_sym].to_s}}]
+    Hash[data.map{|rec| methods.map{|m| rec[m.to_sym]}}]
   end
 end
