@@ -56,11 +56,17 @@ module Content
       issue.calculate_counts
       issue.save!
 
-      #compile json table of contents
-      TableOfContentsTransformer::PublicInspection::RegularFiling.perform(issue.published_at.to_date)
-      TableOfContentsTransformer::PublicInspection::SpecialFiling.perform(issue.published_at.to_date)
+      updated_docs = issue.public_inspection_documents.where("updated_at >= #{@start_time.to_s(:iso)}").count
 
-      Content::PublicInspectionImporter::CacheManager.manage_cache(self)
+      if updated_docs > 0
+        SphinxIndexer.perform('public_inspection_document_core')
+
+        #compile json table of contents
+        TableOfContentsTransformer::PublicInspection::RegularFiling.perform(issue.published_at.to_date)
+        TableOfContentsTransformer::PublicInspection::SpecialFiling.perform(issue.published_at.to_date)
+
+        Content::PublicInspectionImporter::CacheManager.manage_cache(self)
+      end
     end
 
     def job_queue

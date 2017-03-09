@@ -10,7 +10,6 @@ class Content::PublicInspectionImporter::DocumentImporter
     return unless ready_to_import?
 
     persist_attributes
-
     if document.new_record?
       pil_importer.imported_document_numbers << document.document_number
     end
@@ -61,8 +60,13 @@ class Content::PublicInspectionImporter::DocumentImporter
   end
 
   def assign_agencies
-    document.agency_names = api_doc.agency_names.map{|name| AgencyName.find_or_create_by_name(name)}
-    document.agency_ids = document.agency_names.map(&:agency_id)
+    agencies_from_feed = api_doc.agency_names.map{|name| AgencyName.find_or_create_by_name(name)}
+
+    if document.agency_names.map(&:agency_id).sort != agencies_from_feed.map(&:agency_id).sort
+      document.agency_names = agencies_from_feed
+      document.agency_ids = document.agency_names.map(&:agency_id)
+      document.updated_at = Time.now
+    end
   end
 
   def assign_category
@@ -90,11 +94,16 @@ class Content::PublicInspectionImporter::DocumentImporter
     document.special_filing = api_doc.filing_section == 'Special'
     document.update_pil_at = api_doc.update_pil_at || api_doc.filed_at
   end
- 
+
   def assign_extra_info
     # TODO: killed documents
     # TODO: CFR
-    # TODO: only create new docket number records when needed
-    document.docket_numbers = api_doc.docket_numbers.map{|number| DocketNumber.new(:number => number)}
+
+    dockets_from_feed = api_doc.docket_numbers.map{|number| DocketNumber.find_or_create_by_number(number)}
+
+    if document.docket_numbers.map(&:id).sort != dockets_from_feed.map(&:id).sort
+      document.docket_numbers = dockets_from_feed
+      document.updated_at = Time.now
+    end
   end
 end
