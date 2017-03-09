@@ -8,7 +8,8 @@ class EntrySearch::DateAggregator::Weekly < EntrySearch::DateAggregator::Base
 
     date = @start_date - @start_date.wday + 1
     while(date <= @end_date)
-      periods << [date]
+      periods << (0..4).map{|i| date+i}
+
       date += 7
     end
 
