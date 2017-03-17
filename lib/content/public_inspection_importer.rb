@@ -56,9 +56,14 @@ module Content
       issue.calculate_counts
       issue.save!
 
-      updated_docs = issue.public_inspection_documents.where("updated_at >= #{@start_time.to_s(:iso)}").count
+      updated_doc_count = issue.public_inspection_documents.count(
+        conditions: [
+          "public_inspection_documents.updated_at >= ?",
+          @start_time
+        ]
+      )
 
-      if updated_docs > 0
+      if updated_doc_count > 0
         SphinxIndexer.perform('public_inspection_document_core')
 
         #compile json table of contents
