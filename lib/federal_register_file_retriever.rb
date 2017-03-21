@@ -9,7 +9,7 @@ class FederalRegisterFileRetriever
     curl.on_missing{|c, code| notify_error(c, code, url)}
     curl.on_failure{|c, code| notify_error(c, code, url)}
 
-    curl.peform
+    curl.perform
     curl
   end
 
