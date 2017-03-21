@@ -2,27 +2,21 @@ class FederalRegisterFileRetriever
   def self.download(url, path)
     puts "downloading #{url} to #{path}"
 
-    curl = Curl::Easy.download(url, path) do |c|
+    Curl::Easy.download(url, path) do |c|
       c.follow_location = follow_location
       c.headers["User-Agent"] = user_agent
+      c.on_missing{|c, code| notify_error(c, code, url)}
+      c.on_failure{|c, code| notify_error(c, code, url)}
     end
-    curl.on_missing{|c, code| notify_error(c, code, url)}
-    curl.on_failure{|c, code| notify_error(c, code, url)}
-
-    curl.perform
-    curl
   end
 
   def self.http_get(url)
-    curl = Curl::Easy.http_get(url) do |c|
+    Curl::Easy.http_get(url) do |c|
       c.follow_location = follow_location
       c.headers["User-Agent"] = user_agent
+      c.on_missing{|c, code| notify_error(c, code, url)}
+      c.on_failure{|c, code| notify_error(c, code, url)}
     end
-    curl.on_missing{|c, code| notify_error(c, code, url)}
-    curl.on_failure{|c, code| notify_error(c, code, url)}
-
-    curl.perform
-    curl
   end
 
   def self.user_agent
