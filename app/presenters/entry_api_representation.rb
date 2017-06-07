@@ -67,7 +67,7 @@ class EntryApiRepresentation < ApiRepresentation
   field(:executive_order_number)
   field(:full_text_xml_url, :select => [:publication_date, :document_file_path, :full_xml_updated_at]){|e| entry_xml_url(e) if e.should_have_full_xml?}
   field(:html_url, :select => [:publication_date, :document_number, :title]){|e| entry_url(e)}
-  field(:images, :include => [:extracted_graphics, :gpo_graphic_usages]) do |entry|
+  field(:images, :include => [:document_number, :extracted_graphics, :gpo_graphic_usages]) do |entry|
     extracted_graphics = entry.extracted_graphics
     gpo_graphics = entry.processed_gpo_graphics
 
