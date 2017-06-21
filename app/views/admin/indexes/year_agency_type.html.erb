@@ -1,10 +1,10 @@
 <div class="title_bar">
   <h3>
-    <%= @document_type.name.pluralize %>
+    <%= @document_type.name.try(:pluralize) %>
   </h3>
 </div>
 
-<ul id="<%= @document_type.name.downcase %>" class="entry_type">
+<ul id="<%= @document_type.name.try(:downcase) %>" class="entry_type">
   <% spelling_checker do |spell_checker| %>
     <% @document_type.groupings.each do |grouping| %>
       <%= case grouping
