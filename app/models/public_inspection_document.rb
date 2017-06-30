@@ -58,16 +58,49 @@ class PublicInspectionDocument < ApplicationModel
 
     join docket_numbers
 
+    join public_inspection_issues
+
     set_property :field_weights => {
       "title" => 100,
       "full_text" => 25,
       "agency_name" => 10
     }
 
+
     if AppConfig.sphinx.use_local_pil_date
-      where "public_inspection_documents.publication_date > #{AppConfig.sphinx.pil_index_since_date}"
+      where <<-SQL
+        public_inspection_postings.issue_id =
+          (
+            SELECT id
+            FROM public_inspection_issues
+            WHERE published_at >= #{AppConfig.sphinx.pil_index_since_date}
+            ORDER BY publication_date DESC
+            LIMIT 1
+          )
+        AND (
+          publication_date IS NULL
+          OR publication_date > #{AppConfig.sphinx.pil_index_since_date}
+        )
+      SQL
     else
-      where "public_inspection_documents.publication_date > (SELECT MAX(publication_date) FROM issues where issues.completed_at is not null)"
+      where <<-SQL
+        public_inspection_postings.issue_id =
+          (
+            SELECT id
+            FROM public_inspection_issues
+            WHERE published_at IS NOT NULL
+            ORDER BY publication_date DESC
+            LIMIT 1
+          )
+        AND (
+          public_inspection_documents.publication_date IS NULL
+          OR public_inspection_documents.publication_date > (
+            SELECT MAX(publication_date)
+            FROM issues
+            WHERE issues.completed_at IS NOT NULL
+          )
+        )
+      SQL
     end
   end
 
