@@ -21,7 +21,7 @@ class PublicInspectionDocumentApiRepresentation < ApiRepresentation
   field(:agency_names, :include => {:agency_names => :agency}) {|e| e.agency_names.compact.map{|a| a.agency.try(:name) || a.name}}
   field(:docket_numbers, :include => :docket_numbers) {|document| document.docket_numbers.map(&:number)}
   field(:document_number)
-  field(:filed_at)
+  field(:filed_at) { |document| document.filed_at.to_s(:short_date_then_time)}
   field(:editorial_note)
   field(:excerpts, :select => [:document_file_path]) {|document| document.excerpts.raw_text if document.respond_to?(:excerpts) && document.excerpts}
   field(:filing_type, :select => :special_filing) {|document| document.special_filing ? 'special' : 'regular'}
