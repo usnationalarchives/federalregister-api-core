@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'mini_portile', '~> 0.6.2' # required for docker/clean unix install
+gem 'mini_portile', '~> 0.5.0' # required for docker/clean unix install
 
 gem 'rails',
   :git => 'https://github.com/makandra/rails.git',
@@ -145,4 +145,5 @@ end
 
 group :development, :test do
   gem 'pry'
+  gem 'pry-remote'
 end

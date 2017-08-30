@@ -278,7 +278,7 @@ GEM
     method_source (0.8.2)
     mime-types (1.25.1)
     mimemagic (0.2.1)
-    mini_portile (0.6.2)
+    mini_portile (0.5.3)
     mocha (0.9.8)
       rake
     mock_redis (0.16.1)
@@ -315,6 +315,9 @@ GEM
       coderay (~> 1.0)
       method_source (~> 0.8)
       slop (~> 3.4)
+    pry-remote (0.1.8)
+      pry (~> 0.9)
+      slop (~> 3.0)
     rack (1.4.7)
     rack-test (0.5.6)
       rack (>= 1.0)
@@ -432,7 +435,7 @@ DEPENDENCIES
   lemonade (= 0.3.2)
   mechanize (= 1.0.0)
   mime-types (~> 1.25, >= 1.25.1)
-  mini_portile (~> 0.6.2)
+  mini_portile (~> 0.5.0)
   mocha (= 0.9.8)
   mock_redis
   modularity (= 0.6.1)
@@ -446,6 +449,7 @@ DEPENDENCIES
   pdfkit (= 0.5.2)
   popen4
   pry
+  pry-remote
   rails!
   rdoc
   recaptcha (= 0.3.1)
@@ -475,4 +479,4 @@ DEPENDENCIES
   zip-zip
 
 BUNDLED WITH
-   1.13.6
+   1.14.2
