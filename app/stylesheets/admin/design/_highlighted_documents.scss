@@ -110,6 +110,18 @@ $grey: #ccc;
       }
     }
 
+    legend {
+      border: 0;
+      display: inline-block;
+      float: left;
+      width: auto;
+    }
+
+    label input[type=radio] {
+      float: left;
+      margin-right: 5px;
+    }
+
     input[type=submit] {
       background-color: $green;
       color: $white;

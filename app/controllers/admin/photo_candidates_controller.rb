@@ -1,7 +1,9 @@
 class Admin::PhotoCandidatesController < AdminController
   def show
     search_text = params[:id]
-    photos = FrFlickrPhoto.search(search_text)
+    options = params[:search_scope] == 'ofr' ? {group_id: SETTINGS["ofr_flickr_group_id"]}: {}
+    photos = FrFlickrPhoto.search(search_text, options)
+
     i = 0
     photos = photos.select do |photo|
       if i < 144
