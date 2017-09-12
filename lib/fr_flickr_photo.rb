@@ -2,7 +2,7 @@ class FrFlickrPhoto
   def self.search(text, options={})
     conditions = {
       :text => text,
-      :license => '1,2,4,5,7,8',
+      :license => '1,2,4,5,7,8,9,10',
       :per_page => 150
     }
 
