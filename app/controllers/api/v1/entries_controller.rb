@@ -171,7 +171,15 @@ class Api::V1::EntriesController < ApiController
     if search.filters.blank? && search.term.present?
       citation = search.matching_entry_citation
       if citation && citation.matching_fr_entries
-        suggestions[:citation] = {:document_numbers => citation.matching_fr_entries.map(&:document_number)}
+        citation_attributes = {
+          document_numbers: citation.matching_fr_entries.map(&:document_number),
+        }
+        if citation.citation_type == 'FR'
+          citation_attributes[:volume] = citation.part_1
+          citation_attributes[:page] = citation.part_2
+        end
+
+        suggestions[:citation] = citation_attributes
       end
 
       if view_context.is_cfr_citation?(search.term)
