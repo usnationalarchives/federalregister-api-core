@@ -148,6 +148,11 @@ endpoints:
       Description: Limit to documents that appeared within a particular section of FederalRegister.gov
       EnumeratedList:
 <%= Section.all.map {|x| "      - #{x.slug}" }.join("\n") %>
+    - Name: conditions[topics][]
+      Type: multiple
+      Description: Limit to documents associated with a particular topic (CFR Indexing term)
+      EnumeratedList:
+<%= Topic.all.map {|x| "      - #{x.slug}" }.join("\n") %>
     - Name: conditions[significant]
       Default: ""
       EnumeratedDescription:

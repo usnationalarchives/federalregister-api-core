@@ -121,12 +121,16 @@ class Api::V1::PublicInspectionDocumentsController < ApiController
       documents.each do |result|
         representation = PublicInspectionDocumentApiRepresentation.new(result)
         csv << fields.map do |field|
-          value = [*representation.value(field)].join('; ')
-
-          if field == :document_number
-            value = " #{value}"
+          if field == :filed_at
+            value = representation.value(field).strftime("%m/%d/%Y at %I:%M %p")
           else
-            value
+            value = [*representation.value(field)].join('; ')
+
+            if field == :document_number
+              value = " #{value}"
+            else
+              value
+            end
           end
         end
       end

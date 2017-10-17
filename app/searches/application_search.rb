@@ -133,6 +133,8 @@ class ApplicationSearch
     @valid_conditions = {}
 
     Array(conditions).reverse.each do |attr, val|
+      next unless self.respond_to?("#{attr}=")
+
       response = self.send("#{attr}=", val)
       @valid_conditions[attr] = val if response.present?
     end

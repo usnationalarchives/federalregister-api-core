@@ -64,6 +64,23 @@
     <fieldset>
       <label class="label_like_formtastic">Search Flickr</label>
       <input type="text" id="custom_tag">
+    </fieldset>
+    <fieldset>
+      <legend>
+        <label for="subscription_search_type">Scope search to: </label>
+      </legend>
+
+      <label for="all_flickr_radio">
+        <input type="radio" name="search_scope" id="all_flickr_radio" value="all" checked="true">
+        All Flickr Photos
+      </label>
+
+      <label for="ofr_group_radio">
+        <input type="radio" name="search_scope" id="ofr_group_radio" value="ofr">
+        Only USA.gov Group Photos
+      </label>
+    </fieldset>
+    <fieldset>
       <input type="submit" value="Search">
     </fieldset>
   </form>

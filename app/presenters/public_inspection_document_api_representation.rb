@@ -18,6 +18,7 @@ class PublicInspectionDocumentApiRepresentation < ApiRepresentation
       end
     end
   end
+  field(:agency_names, :include => {:agency_names => :agency}) {|e| e.agency_names.compact.map{|a| a.agency.try(:name) || a.name}}
   field(:docket_numbers, :include => :docket_numbers) {|document| document.docket_numbers.map(&:number)}
   field(:document_number)
   field(:filed_at)
