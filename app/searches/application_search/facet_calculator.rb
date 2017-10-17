@@ -41,7 +41,7 @@ class ApplicationSearch::FacetCalculator
           :identifier => id_to_identifier[id],
           :name       => name,
           :count      => count,
-          :on         => search_value_for_this_facet.to_a.include?(id),
+          :on         => Array(search_value_for_this_facet).include?(id),
           :condition  => @facet_name
         )
       end
