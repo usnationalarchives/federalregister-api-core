@@ -20,6 +20,7 @@ module Content
       rotate_mods_files
       reprocess_issue
       reindex
+      regenerate_toc_json
       clear_cache
       update_status("complete")
     end
@@ -92,6 +93,15 @@ module Content
         line.run(:sphinx_conf => "config/#{Rails.env}.sphinx.conf")
       rescue Cocaine::ExitStatusError => error
         handle_failure(error,"IssueReprocessor::ReprocessorIssue Reindex")
+      end
+    end
+
+    def regenerate_toc_json
+      if date < XmlTableOfContentsTransformer::GPO_XML_START_DATE
+        update_reprocessing_message("regenerating table of contents")
+
+        clear_cache
+        Content::TableOfContentsCompiler.perform(date)
       end
     end
 

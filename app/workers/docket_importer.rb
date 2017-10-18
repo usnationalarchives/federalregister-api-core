@@ -15,8 +15,20 @@ module DocketImporter
     end
   end
 
-  def self.perform(docket_number)
-    return if non_participating_agency?(docket_number)
+  PARTICIPATING_AGENCIES_FILE = 'data/regulations_dot_gov_participating_agencies.csv'
+
+  def self.participating_agency_ids
+    @participating_agency_ids ||= CSV.new(
+      File.open(PARTICIPATING_AGENCIES_FILE),
+      :headers => :first_row,
+      :skip_blanks => true
+    ).map do |row|
+      row["Acronym"]
+    end
+  end
+
+  def self.perform(docket_number, check_participating=true)
+    return if check_participating && non_participating_agency?(docket_number)
 
     client = RegulationsDotGov::Client.new
     api_docket = client.find_docket(docket_number)
