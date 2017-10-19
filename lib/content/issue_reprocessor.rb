@@ -100,8 +100,13 @@ module Content
       if date < XmlTableOfContentsTransformer::GPO_XML_START_DATE
         update_reprocessing_message("regenerating table of contents")
 
-        clear_cache
-        Content::TableOfContentsCompiler.perform(date)
+        begin
+          purge_cache('^/api/v1/documents')
+          ENV['DATE'] = "#{date.to_s(:iso)}"
+          Rake::Task['content:entries:json:compile:daily_toc'].invoke
+        rescue StandardError => error
+          handle_failure(error,"IssueReprocessor: Regenerate ToC JSON")
+        end
       end
     end
 
