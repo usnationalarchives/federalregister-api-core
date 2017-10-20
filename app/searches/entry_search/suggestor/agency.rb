@@ -14,7 +14,7 @@ class EntrySearch::Suggestor::Agency < EntrySearch::Suggestor::Base
 
   def check_for_match
     @term = @search.term
-    agency_ids = Array(@search.conditions[:agency_ids]).map(&:to_i)
+    agency_ids = Array(@search.conditions[:agency_ids]).flatten.map(&:to_i)
 
     Agency.active.find_as_arrays(:select => "id, name, short_name, display_name").each do |id, *names|
       pattern = names.reject(&:blank?).compact.map{|n| "(^|[^a-zA-Z0-9=-])" + Regexp.escape(n) + "\\b"}.join('|')

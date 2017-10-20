@@ -1,9 +1,10 @@
 class Api::V1::TopicsController < ApiController
   def suggestions
+    term = params[:conditions][:term]
     respond_to do |wants|
       wants.json do
         cache_for 1.day
-          topics = Topic.named_approximately(params[:conditions][:term]).limit(10)
+          topics = term.present? ? Topic.named_approximately(term).limit(10) : []
           render_json_or_jsonp topics.map{|t| basic_topic_data(t)}
       end
     end

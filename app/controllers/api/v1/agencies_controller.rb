@@ -43,11 +43,12 @@ class Api::V1::AgenciesController < ApiController
   end
 
   def suggestions
+    term = params[:conditions][:term]
     respond_to do |wants|
       wants.json do
         cache_for 1.day
-          agencies = Agency.named_approximately(params[:conditions][:term]).limit(10)
-          render_json_or_jsonp agencies.map{|a| basic_agency_data(a)}
+        agencies = term.present? ? Agency.named_approximately(term).limit(10) : []
+        render_json_or_jsonp agencies.map{|a| basic_agency_data(a)}
       end
     end
   end
