@@ -25,7 +25,7 @@ class EntrySearch::Suggestor::Agency < EntrySearch::Suggestor::Base
       end
     end
 
-    if agency_ids != Array(@search.conditions[:agency_ids]).map(&:to_i)
+    if agency_ids != Array(@search.conditions[:agency_ids]).flatten.map(&:to_i)
       @conditions = @search.conditions.dup
       @conditions[:agency_ids] = agency_ids
     end
