@@ -49,7 +49,14 @@ class Content::PublicInspectionImporter::CacheManager
 
     # purge affected individual document caches
     pi_documents.each do |pi_document|
-      purge_cache entry_path(pi_document)
+      # clear the short URL cache, so redirects go to the right place
+      purge_cache "/d/#{pi_document.document_number}"
+
+      # clear the full URL cache, removing the slug first in
+      #   case the document title changed; this should clear
+      #   both the old URL and the new (assuming the publication
+      #   date didn't change)
+      purge_cache entry_path(pi_document).sub(/[^\/]+\z/, '')
     end
   end
 end
