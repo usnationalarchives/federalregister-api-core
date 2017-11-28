@@ -90,6 +90,9 @@ class Api::V1::EntriesController < ApiController
         cache_for 1.day
 
         fields = specified_fields || EntryApiRepresentation.default_show_fields_json
+        if params[:id] =~ /FR/
+          fields = fields + [:citation]
+        end
         find_options = EntryApiRepresentation.find_options_for(fields + [:document_number])
 
         render_one_or_more(Entry, params[:id], find_options) do |entry|
