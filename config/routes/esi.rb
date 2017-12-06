@@ -1,5 +1,6 @@
 ActionController::Routing::Routes.draw do |map|
   map.with_options(:quiet => "true", :conditions => {:method => :get}) do |quiet_map|
+    quiet_map.status_api_core '/status/api-core/:id', :controller => "special", :action => "status"
     quiet_map.status '/status', :controller => "special", :action => "status"
 
     # LAYOUT
