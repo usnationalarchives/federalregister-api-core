@@ -1,0 +1,6 @@
+#!/bin/bash
+
+if [ "$CONTAINER_ROLE" == "app" ]; then
+  rm -rf /etc/service/migrate
+  rm -rf /etc/service/sphinx
+fi

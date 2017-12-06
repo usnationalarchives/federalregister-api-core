@@ -1,0 +1,9 @@
+#!/bin/bash
+
+cd /home/app
+
+if [ "$RAILS_ENV" == "development" ]; then
+  rake db:create:all
+fi
+
+exec /sbin/setuser app rake db:migrate

@@ -1,0 +1,5 @@
+#!/bin/bash
+
+cd /home/app
+
+exec /sbin/setuser app bundle exec rake db:migrate
