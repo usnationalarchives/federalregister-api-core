@@ -2,5 +2,5 @@
 
 if [[ "$CONTAINER_ROLE" == "app" ]]; then
   rm -rf /etc/service/migrate
-  rm -rf /etc/service/sphinx
+  rm -rf /etc/service/sphinx_config
 fi
