@@ -1,11 +1,28 @@
+#######################
+### BASE (FIRST)
+#######################
+
 FROM quay.io/criticaljuncture/baseimage:16.04
+
+# Update apt
+RUN apt-get update && apt-get install vim curl build-essential -y
+
+
+#######################
+### RUBY
+#######################
 
 RUN apt-get install software-properties-common
 RUN apt-add-repository ppa:brightbox/ruby-ng
 RUN apt-get update && apt-get install -y ruby1.9.3 ruby1.9.1-dev
 
+
+#######################
+### VARIOUS PACKAGES
+#######################
+
 RUN apt-get update &&\
-  apt-get install -y build-essential patch libcurl4-openssl-dev libpcre3-dev git libmysqlclient-dev &&\
+  apt-get install -y patch libcurl4-openssl-dev libpcre3-dev git libmysqlclient-dev &&\
   apt-get clean &&\
   rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/
 
@@ -14,7 +31,11 @@ RUN apt-get update &&\
   apt-get clean &&\
   rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/
 
-# Install Sphinx
+
+#######################
+### SPHINX
+#######################
+
 WORKDIR /tmp
 RUN curl -O http://sphinxsearch.com/files/sphinx-2.1.2-release.tar.gz
 RUN tar xzvf sphinx-2.1.2-release.tar.gz
@@ -25,41 +46,68 @@ RUN make install
 
 WORKDIR /
 
-#RUN add-apt-repository ppa:builds/sphinxsearch-rel22
-#RUN apt-get update && apt-get install -y sphinxsearch
 
-# EBS backups
+#######################
+### EBS BACKUPS
+#######################
+
 RUN add-apt-repository ppa:alestic &&\
   apt-get update &&\
   apt-get install -y ec2-consistent-snapshot &&\
   apt-get clean &&\
   rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/
 
-# api-core rake version that is compatible with 2.3.x
-RUN gem install rake --version 10.5.0
-# rack version compatible with 1.9.3
-RUN gem install rack --version 1.6.4
-RUN gem install passenger --version 5.0.30
-RUN passenger-config install-standalone-runtime &&\
-  passenger-config build-native-support &&\
-  passenger start --runtime-check-only
 
-RUN ln -sf /usr/share/zoneinfo/US/Pacific /etc/localtime
+##################
+### TIMEZONE
+##################
+
+RUN ln -sf /usr/share/zoneinfo/US/Eastern /etc/localtime
+
+
+##################
+### SERVICES
+##################
 
 COPY docker/api/service/api/run /etc/service/api/run
 COPY docker/api/my_init.d /etc/my_init.d
 
 RUN adduser app -uid 1000 --system
+RUN usermod -a -G docker_env app
 
-RUN gem install bundler --version 1.13.6
+
+###############################
+### GEMS & PASSENGER INSTALL
+###############################
+
+RUN gem install bundler
 WORKDIR /tmp
 COPY Gemfile /tmp/Gemfile
 COPY Gemfile.lock /tmp/Gemfile.lock
-RUN bundle install --system --full-index
+RUN bundle install --system --full-index &&\
+  passenger-config install-standalone-runtime &&\
+  passenger start --runtime-check-only
+
+ENV PASSENGER_MIN_INSTANCES 1
+ENV WEB_PORT 3000
+
+
+##################
+### APP
+##################
 
 COPY . /home/app/
 
 WORKDIR /home/app
 RUN chown -R app /home/app
 
+
+##################
+### BASE (LAST)
+##################
+
+# ensure all packages are up to date
+RUN apt-get update && unattended-upgrade -d
+
+# set terminal
 ENV TERM=linux

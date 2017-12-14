@@ -1,13 +1,21 @@
 source 'https://rubygems.org'
 
-gem 'mini_portile', '~> 0.5.0' # required for docker/clean unix install
+# rake version that is compatible with 2.3.x
+gem 'rake', '10.5.0'
+
+# rack version compatible with 1.9.3
+# gem 'rack', '1.6.4'
+gem 'rack', '1.4.7'
+
+
 
 gem 'rails',
   :git => 'https://github.com/makandra/rails.git',
   :branch => '2-3-lts'
-
-#gem 'mysql', '2.8.1'
 gem 'mysql2', '0.2.24'
+
+# production app server
+gem 'passenger', '5.1.11'
 
 gem "jrails", "0.6.0"
 
@@ -31,7 +39,7 @@ gem 'formtastic', '0.9.8'
 gem 'json', '1.7.7'
 gem 'ym4r', '0.6.1'
 
-gem 'thinking-sphinx', '1.5.0', :require => 'thinking_sphinx'
+gem 'thinking-sphinx', '1.4.14', :require => 'thinking_sphinx'
 gem 'ffi-hunspell',
   :git => 'https://github.com/postmodern/ffi-hunspell.git',
   :ref => '91516637fdff9cef9bae66aefdd89e1b4a8b5831',
@@ -139,7 +147,6 @@ group :test do
 end
 
 group :development do
-  gem 'passenger', '~> 5.0.10'
   gem 'rubocop'
 end
 

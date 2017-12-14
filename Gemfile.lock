@@ -256,7 +256,6 @@ GEM
     indefinite_article (0.2.0)
       activesupport
     inflecto (0.0.2)
-    innertube (1.0.2)
     ipaddress (0.8.0)
     jeweler (1.8.4)
       bundler (~> 1.0)
@@ -295,6 +294,7 @@ GEM
     net-ssh-gateway (1.2.0)
       net-ssh (>= 2.6.5)
     nokogiri (1.6.0)
+      mini_portile (~> 0.5.0)
     open4 (1.3.4)
     paperclip (2.8.0)
       activerecord (>= 2.3.0)
@@ -303,7 +303,7 @@ GEM
       mime-types
     parser (2.2.0.2)
       ast (>= 1.1, < 3.0)
-    passenger (5.0.10)
+    passenger (5.1.11)
       rack
       rake (>= 0.8.1)
     pdfkit (0.5.2)
@@ -334,7 +334,7 @@ GEM
       redis-namespace (~> 1.0.2)
       sinatra (>= 0.9.2)
       vegas (~> 0.1.2)
-    riddle (2.0.0)
+    riddle (2.2.2)
     rspec (1.3.2)
     rspec-rails (1.3.4)
       rack (>= 1.0.0)
@@ -361,11 +361,10 @@ GEM
     system_timer (1.2.4)
     test-unit (1.2.3)
       hoe (>= 1.5.1)
-    thinking-sphinx (1.5.0)
-      activerecord (~> 2.1)
+    thinking-sphinx (1.4.14)
+      activerecord (>= 1.15.6, < 3.0.0)
       after_commit (>= 1.0.7)
-      innertube (~> 1.0.2)
-      riddle (>= 1.5.6)
+      riddle (>= 1.5.3)
     thunder_punch (0.1.3)
       capistrano (>= 2.5.5)
       jeweler
@@ -435,7 +434,6 @@ DEPENDENCIES
   lemonade (= 0.3.2)
   mechanize (= 1.0.0)
   mime-types (~> 1.25, >= 1.25.1)
-  mini_portile (~> 0.5.0)
   mocha (= 0.9.8)
   mock_redis
   modularity (= 0.6.1)
@@ -445,12 +443,14 @@ DEPENDENCIES
   net-ssh (= 2.9.1)
   nokogiri (= 1.6.0)
   paperclip (~> 2.8)
-  passenger (~> 5.0.10)
+  passenger (= 5.1.11)
   pdfkit (= 0.5.2)
   popen4
   pry
   pry-remote
+  rack (= 1.4.7)
   rails!
+  rake (= 10.5.0)
   rdoc
   recaptcha (= 0.3.1)
   resque (= 1.20.0)
@@ -466,7 +466,7 @@ DEPENDENCIES
   stevedore (= 0.2.0)
   system_timer (= 1.2.4)
   test-unit (= 1.2.3)
-  thinking-sphinx (= 1.5.0)
+  thinking-sphinx (= 1.4.14)
   thunder_punch (= 0.1.3)
   timecop
   titleize

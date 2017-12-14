@@ -1,4 +1,4 @@
 #!/bin/sh
 cd /home/app
 
-exec passenger start --user app --port $WEB_PORT --min-instances $PASSENGER_MIN_INSTANCES
+exec /sbin/setuser app passenger start --port $WEB_PORT --min-instances $PASSENGER_MIN_INSTANCES

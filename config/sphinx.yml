@@ -7,7 +7,7 @@ shared: &shared
   mem_limit: 528M
   morphology: stem_en
   port: 3312
-  version: '2.2.11'
+  version: '2.1.2'
 
 development:
   <<: *shared
