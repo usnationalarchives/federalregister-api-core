@@ -1,1 +1,7 @@
-SECRETS = File.open( File.join(File.dirname(__FILE__), '..', 'secrets.yml') ) { |yf| YAML::load( yf ) }
+SECRETS = YAML::load(
+  ERB.new(
+    File.read(
+      File.join(File.dirname(__FILE__), '..', 'secrets.yml')
+    )
+  ).result
+)

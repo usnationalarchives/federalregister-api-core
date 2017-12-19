@@ -90,7 +90,7 @@ gem "capistrano", '2.15.4', :require => false
 gem "thunder_punch", '0.1.3', :require => false
 gem "rvm-capistrano", "~> 1.5.4", :require => false
 
-gem "resque", "1.20.0"
+gem "resque"
 
 gem "httparty"
 gem "httmultiparty", '~> 0.3.13'

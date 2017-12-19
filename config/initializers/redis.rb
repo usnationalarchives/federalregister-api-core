@@ -1,9 +1,7 @@
-REDIS_CONFIG = YAML.load_file(Rails.root + 'config/redis.yml')[Rails.env].freeze
-
 REDIS_CONNECTION_SETTINGS = {
-  :db   => REDIS_CONFIG['db'],
-  :host => REDIS_CONFIG['host'],
-  :port => REDIS_CONFIG['port']
+  :db   => SECRETS['redis']['db'],
+  :host => SECRETS['redis']['host'],
+  :port => SECRETS['redis']['port']
 }
 
 $redis = Redis.new(REDIS_CONNECTION_SETTINGS)
