@@ -1,9 +1,16 @@
+shared: &shared
+  varnish:
+    host: varnish
+    port: 6082
+
 # Make any updates -web also
 test:
+  <<: *shared
   s3_buckets:
     zipped_eps_images: XXXXXXXXXXXXXXXXXXXXXXX
 
 development:
+  <<: *shared
   s3_buckets:
     zipped_eps_images: eps.images.federalregister.gov
     private_images: private.images.fr2.local
@@ -11,6 +18,7 @@ development:
   ofr_flickr_group_id: 1058319@N21
 
 staging:
+  <<: *shared
   s3_buckets:
     zipped_eps_images: eps.images.federalregister.gov
     private_images: private.images.fr2.criticaljuncture.org
@@ -18,12 +26,14 @@ staging:
   ofr_flickr_group_id: 1058319@N21
 
 officialness_staging:
+  <<: *shared
   s3_buckets:
     zipped_eps_images: eps.images.federalregister.gov
     private_images: private.images.fr-official.criticaljuncture.org
     public_images: images.fr-official.criticaljuncture.org
 
 production:
+  <<: *shared
   s3_buckets:
     zipped_eps_images: eps.images.federalregister.gov
     private_images: private.images.federalregister.gov

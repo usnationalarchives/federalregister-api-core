@@ -19,7 +19,7 @@ module CacheUtils
     private
 
     def client
-      host = RAILS_ENV == 'development' ? '127.0.0.1:6082' : 'proxy.fr2.ec2.internal:6082'
+      host = "#{SETTINGS['varnish']['host']}:#{SETTINGS['varnish']['port']}"
       @client ||= Varnish::Client.new(host, :timeout => 60)
     end
   end
