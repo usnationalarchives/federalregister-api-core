@@ -26,6 +26,9 @@ namespace :content do
           years = dates.map{|d| d.is_a?(String) ? Date.parse(d).year : d.year}.uniq
 
           years.each do |year|
+            # we don't have FR index before 2013
+            next unless year >= 2013
+
             puts "compiling fr_index json for #{year}..."
             FrIndexCompiler.perform(year)
             FrIndexAgencyCompiler.perform(year)
