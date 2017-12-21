@@ -3,7 +3,7 @@ module Content
     include CacheUtils
     include Content::IssueReprocessorUtils
 
-    @queue = :default
+    @queue = :api_core
 
     attr_reader :path_manager, :reprocessed_issue
 

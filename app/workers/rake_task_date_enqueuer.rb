@@ -1,5 +1,5 @@
 class RakeTaskDateEnqueuer
-  @queue = :default
+  @queue = :api_core
 
   def self.perform(task, date, args=nil)
     load File.join(Rails.root, 'Rakefile')

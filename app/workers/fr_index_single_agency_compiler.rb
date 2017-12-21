@@ -1,5 +1,5 @@
 class FrIndexSingleAgencyCompiler
-  @queue = :default
+  @queue = :api_core
 
   def self.perform(args)
     args.symbolize_keys!

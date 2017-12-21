@@ -1,6 +1,6 @@
 class EntryRegulationsDotGovImporter
   extend ActiveSupport::Memoizable
-  @queue = :default
+  @queue = :api_core
 
   def self.perform(document_number)
     new.perform(document_number)

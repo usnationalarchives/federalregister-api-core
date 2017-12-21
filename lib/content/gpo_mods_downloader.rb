@@ -1,7 +1,7 @@
 module Content
   class GpoModsDownloader
     include Content::IssueReprocessorUtils
-    @queue = :default
+    @queue = :api_core
 
     attr_reader :gpo_path_manager, :path_manager, :reprocessed_issue
 
