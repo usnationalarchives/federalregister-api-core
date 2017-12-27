@@ -27,9 +27,11 @@ config.log_level = :debug
 # config.action_mailer.raise_delivery_errors = false
 
 smtp_settings = {
-  :address => "mail.fr2.ec2.internal",
-  :port    => "25",
-  :domain  => "www.#{APP_HOST_NAME}",
+  :address        => "smtp.sendgrid.net",
+  :port           => "587",
+  :domain         => "www.#{APP_HOST_NAME}",
+  :user_name      => secrets['sendgrid']['username'],
+  :password       => secrets['sendgrid']['password'],
   :authentication => :plain
 }
 

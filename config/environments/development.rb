@@ -21,12 +21,12 @@ secrets  = File.open(File.join(
 sendgrid_keys = secrets['sendgrid']
 
 smtp_settings = {
- :address        => "smtp.sendgrid.net",
- :port           => "587",
- :domain         => "#{APP_HOST_NAME}",
- :user_name      => secrets['sendgrid']['username'],
- :password       => secrets['sendgrid']['password'],
- :authentication => :plain
+  :address        => "smtp.sendgrid.net",
+  :port           => "587",
+  :domain         => "#{APP_HOST_NAME}",
+  :user_name      => secrets['sendgrid']['username'],
+  :password       => secrets['sendgrid']['password'],
+  :authentication => :plain
 }
 
 config.action_mailer.delivery_method = :smtp

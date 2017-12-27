@@ -24,9 +24,11 @@ config.log_level = :debug
 # config.action_controller.asset_host = "http://assets.example.com"
 
 smtp_settings = {
-  :address => "mail.fr2.ec2.internal",
-  :port    => "25",
-  :domain  => "www.fr2.criticaljuncture.org",
+  :address        => "smtp.sendgrid.net",
+  :port           => "587",
+  :domain         => "#{APP_HOST_NAME}",
+  :user_name      => secrets['sendgrid']['username'],
+  :password       => secrets['sendgrid']['password'],
   :authentication => :plain
 }
 
