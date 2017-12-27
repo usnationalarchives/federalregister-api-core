@@ -109,6 +109,9 @@ gem 'cocaine'
 
 gem 'hoe'
 
+# cron jobs
+gem 'whenever', require: false
+
 gem 'app_config', "=1.3.2",
   :git => 'https://github.com/fredwu/app_config.git',
   :branch => :master
