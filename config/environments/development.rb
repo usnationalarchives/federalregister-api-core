@@ -15,17 +15,20 @@ config.action_controller.consider_all_requests_local = true
 config.action_view.debug_rjs                         = true
 config.action_controller.perform_caching             = false
 
-secrets  = File.open(File.join(
-  File.dirname(__FILE__), '..', 'secrets.yml'
-)) { |yf| YAML::load( yf ) }
-sendgrid_keys = secrets['sendgrid']
+SECRETS = YAML::load(
+  ERB.new(
+    File.read(
+      File.join(File.dirname(__FILE__), '..', 'secrets.yml')
+    )
+  ).result
+)
 
 smtp_settings = {
   :address        => "smtp.sendgrid.net",
   :port           => "587",
   :domain         => "#{APP_HOST_NAME}",
-  :user_name      => secrets['sendgrid']['username'],
-  :password       => secrets['sendgrid']['password'],
+  :user_name      => SECRETS['sendgrid']['username'],
+  :password       => SECRETS['sendgrid']['password'],
   :authentication => :plain
 }
 

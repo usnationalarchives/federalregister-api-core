@@ -26,12 +26,20 @@ config.log_level = :debug
 # Disable delivery errors, bad email addresses will be ignored
 # config.action_mailer.raise_delivery_errors = false
 
+SECRETS = YAML::load(
+  ERB.new(
+    File.read(
+      File.join(File.dirname(__FILE__), '..', 'secrets.yml')
+    )
+  ).result
+)
+
 smtp_settings = {
   :address        => "smtp.sendgrid.net",
   :port           => "587",
   :domain         => "www.#{APP_HOST_NAME}",
-  :user_name      => secrets['sendgrid']['username'],
-  :password       => secrets['sendgrid']['password'],
+  :user_name      => SECRETS['sendgrid']['username'],
+  :password       => SECRETS['sendgrid']['password'],
   :authentication => :plain
 }
 
