@@ -2,9 +2,11 @@
 .bundle
 
 .git*
-bin*
 
-data*
+data/
+!data/holidays.yml
+!data/holidays_ad_hoc.yml
+
 db/sphinx/*
 log*
 

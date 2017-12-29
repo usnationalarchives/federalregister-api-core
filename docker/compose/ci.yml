@@ -1,0 +1,20 @@
+web:
+  extends:
+    file: shared.yml
+    service: web
+  environment:
+    - RAILS_ENV=test
+    - DB_STRUCTURE_ACCESS_KEY
+    - DB_STRUCTURE_SECRET
+  links:
+    - mysql
+    - redis
+mysql:
+  extends:
+    file: shared.yml
+    service: mysql
+
+redis:
+  extends:
+    file: shared.yml
+    service: redis

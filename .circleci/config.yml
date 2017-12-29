@@ -1,0 +1,32 @@
+version: 2
+
+jobs:
+  build:
+    docker:
+      - image: criticaljuncture/pilot
+    steps:
+      - checkout
+      - setup_remote_docker:
+          reusable: true
+          exclusive: false
+      - run:
+          name: Authenticate to docker repository
+          command: |
+            set -x
+            eval `aws ecr --no-include-email get-login`
+            docker login -u $QUAY_USERNAME -p $QUAY_PASSWORD quay.io
+      - run:
+          name: Build container
+          command: |
+            /var/lib/pilot/bin/pilot build federalregister-api-core .
+      - run:
+          name: Start container and run tests
+          command: |
+            set -x
+            docker-compose -f docker/compose/ci.yml run web bash -c "bin/wait_for_mysql && rake db:create db:schema:load ASSUME_UNITIALIZED_DB=1 && RAILS_ENV=test rake spec && rake jshint"
+      - deploy:
+          name: Push to latest if master
+          command: |
+            if [ "${CIRCLE_BRANCH}" == "master" ]; then
+              docker push $REPO_URL:latest
+            fi

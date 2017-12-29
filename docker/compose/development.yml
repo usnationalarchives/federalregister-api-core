@@ -1,0 +1,20 @@
+web:
+  extends:
+    file: shared.yml
+    service: web
+  environment:
+    - RAILS_ENV=development
+
+mysql:
+  extends:
+    file: shared.yml
+    service: mysql
+  ports:
+    - "3306:3306"
+
+redis:
+  extends:
+    file: shared.yml
+    service: redis
+  ports:
+    - "6379:6379"

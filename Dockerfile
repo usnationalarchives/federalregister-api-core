@@ -22,7 +22,7 @@ RUN apt-get update && apt-get install -y ruby1.9.3 ruby1.9.1-dev
 #######################
 
 RUN apt-get update &&\
-  apt-get install -y patch libcurl4-openssl-dev libpcre3-dev git libmysqlclient-dev &&\
+  apt-get install -y patch libcurl4-openssl-dev libpcre3-dev git libmysqlclient-dev mysql-client &&\
   apt-get clean &&\
   rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/
 
@@ -30,6 +30,13 @@ RUN apt-get update &&\
   apt-get install -y apache2-utils fontconfig hunspell-en-us libcurl4-gnutls-dev libhunspell-1.3-0 libhunspell-dev pngcrush secure-delete xfonts-75dpi xfonts-base xpdf &&\
   apt-get clean &&\
   rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/
+
+# node js - packages are out of date
+RUN curl -sL https://deb.nodesource.com/setup_8.x | bash -
+RUN apt-get install -y nodejs
+
+# npm packages for testing
+RUN npm install -g jshint
 
 
 #######################
