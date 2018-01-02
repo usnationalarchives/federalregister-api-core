@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+function test_mysql {
+  mysqladmin -u root -h "${MYSQL_PORT_3306_TCP_ADDR}" ping
+}
+
+count=0
+until ( test_mysql )
+do
+  ((count++))
+  if [ ${count} -gt 300 ]
+  then
+    echo "MySQL didn't become ready in time"
+    exit 1
+  fi
+  sleep 0.5
+done
