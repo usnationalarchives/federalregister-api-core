@@ -109,6 +109,8 @@ ENV WEB_PORT 3000
 COPY . /home/app/
 
 WORKDIR /home/app
+RUN  mkdir -p /home/app/log
+RUN  mkdir -p /home/app/pids
 RUN chown -R app /home/app
 
 

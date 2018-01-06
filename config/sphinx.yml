@@ -2,7 +2,7 @@ shared: &shared
   address: sphinx
   compat_sphinxql_magics: 0
   config_file: config/sphinx/sphinx.conf
-  pid_file: log/searchd.pid
+  pid_file: pids/searchd.pid
   searchd_file_path: db/sphinx/
   index_exact_words: 1
   max_matches: 10000
