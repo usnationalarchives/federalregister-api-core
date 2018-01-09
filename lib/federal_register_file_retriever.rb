@@ -1,18 +1,26 @@
 class FederalRegisterFileRetriever
+  DEFAULT_TIMEOUT = 60
+
   def self.download(url, path)
     puts "downloading #{url} to #{path}"
 
-    Curl::Easy.download(url, path) do |c|
+    temp_path = Tempfile.new
+
+    Curl::Easy.download(url, temp_path) do |c|
       c.follow_location = follow_location
+      c.timeout = DEFAULT_TIMEOUT
       c.headers["User-Agent"] = user_agent
       c.on_missing{|c, code| notify_error(c, code, url)}
       c.on_failure{|c, code| notify_error(c, code, url)}
     end
+
+    FileUtils.mv temp_file, path
   end
 
   def self.http_get(url)
     Curl::Easy.http_get(url) do |c|
       c.follow_location = follow_location
+      c.timeout = DEFAULT_TIMEOUT
       c.headers["User-Agent"] = user_agent
       c.on_missing{|c, code| notify_error(c, code, url)}
       c.on_failure{|c, code| notify_error(c, code, url)}
