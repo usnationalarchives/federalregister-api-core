@@ -68,10 +68,10 @@ class FileSystemPathManager
   private
 
   def data_file_path
-    "#{Rails.root}/data"
+    "#{Rails.root}/data/efs"
   end
 
   def self.data_file_path
-    "#{Rails.root}/data"
+    "#{Rails.root}/data/efs"
   end
 end
