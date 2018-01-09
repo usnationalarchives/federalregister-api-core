@@ -29,7 +29,7 @@ class RegulatoryPlan < ApplicationModel
 
   SIGNIFICANT_PRIORITY_CATEGORIES = ['Economically Significant', 'Other Significant']
 
-  file_attribute(:full_xml)  {"#{RAILS_ROOT}/data/regulatory_plans/xml/#{issue}/#{regulation_id_number}.xml"}
+  file_attribute(:full_xml)  {"#{FileSystemPathManager.data_file_path}/regulatory_plans/xml/#{issue}/#{regulation_id_number}.xml"}
 
   has_many :events,
            :class_name => "RegulatoryPlanEvent"
@@ -55,7 +55,7 @@ class RegulatoryPlan < ApplicationModel
     # fields
     indexes title
     indexes abstract
-    indexes "CONCAT('#{RAILS_ROOT}/data/regulatory_plans/', issue, '/', regulation_id_number, '.xml')", :as => :full_text, :file => true
+    indexes "CONCAT('#{FileSystemPathManager.data_file_path}/regulatory_plans/', issue, '/', regulation_id_number, '.xml')", :as => :full_text, :file => true
     indexes priority_category, :facet => true
 
     # attributes

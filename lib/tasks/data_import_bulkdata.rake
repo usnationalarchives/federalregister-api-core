@@ -21,7 +21,7 @@ namespace :data do
 
       xml_files_to_process = []
 
-      document_issue_xml_path = "#{Rails.root}/data/document_issues/xml/#{date.to_s(:year_month)}"
+      document_issue_xml_path = "#{FileSystemPathManager.data_file_path}/document_issues/xml/#{date.to_s(:year_month)}"
       file_path = "#{document_issue_xml_path}/#{File.basename(url)}"
 
       if File.exists?(file_path)

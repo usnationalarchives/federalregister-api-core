@@ -21,7 +21,7 @@ class Content::EntryImporter::ModsFile
   end
 
   def mods_path
-    "#{Rails.root}/data/documents/mods/#{@date.to_s(:year_month)}"
+    "#{FileSystemPathManager.data_file_path}/documents/mods/#{@date.to_s(:year_month)}"
   end
 
   def document

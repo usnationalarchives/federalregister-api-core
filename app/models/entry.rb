@@ -254,7 +254,7 @@ class Entry < ApplicationModel
     # fields
     indexes title
     indexes abstract
-    indexes "CONCAT('#{Rails.root}/data/documents/full_text/raw/', document_file_path, '.txt')", :as => :full_text, :file => true
+    indexes "CONCAT('#{FileSystemPathManager.data_file_path}/documents/full_text/raw/', document_file_path, '.txt')", :as => :full_text, :file => true
     indexes "GROUP_CONCAT(DISTINCT IFNULL(`entry_regulation_id_numbers`.`regulation_id_number`, '0') SEPARATOR ' ')", :as =>  :regulation_id_number
     indexes <<-SQL, :as => :docket_id
       (
@@ -599,7 +599,7 @@ class Entry < ApplicationModel
   end
 
   def documents_path
-    "#{Rails.root}/data/documents"
+    "#{FileSystemPathManager.data_file_path}/documents"
   end
 
   def document_file_path

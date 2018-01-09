@@ -23,10 +23,10 @@ module Content
 
       @url = "https://www.gpo.gov/fdsys/bulkdata/CFR/#{@year}/CFR-#{@year}.zip"
 
-      @cfr_bulkdata_dir = "#{RAILS_ROOT}/data/cfr/bulkdata"
+      @cfr_bulkdata_dir = "#{FileSystemPathManager.data_file_path}/cfr/bulkdata"
       @bulkfile_path = "#{@cfr_bulkdata_dir}/#{File.basename(@url)}"
 
-      @cfr_data_dir =  "#{RAILS_ROOT}/data/cfr/#{@year}"
+      @cfr_data_dir =  "#{FileSystemPathManager.data_file_path}/cfr/#{@year}"
 
     end
 

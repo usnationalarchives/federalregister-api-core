@@ -7,7 +7,7 @@ class FileSystemPathManager
 
   # DOCUMENT ISSUES
   def document_issue_xml_dir
-    "#{Rails.root}/data/document_issues/xml/#{date.to_s(:year_month)}"
+    "#{data_file_path}/document_issues/xml/#{date.to_s(:year_month)}"
   end
 
   def document_issue_xml_path
@@ -15,7 +15,7 @@ class FileSystemPathManager
   end
 
   def document_issue_json_toc_dir
-    "#{Rails.root}/data/document_issues/json/#{date.to_s(:year_month)}"
+    "#{data_file_path}/document_issues/json/#{date.to_s(:year_month)}"
   end
 
   def document_issue_json_toc_path
@@ -24,7 +24,7 @@ class FileSystemPathManager
 
   # PUBLIC INSPECTION DOCUMENT ISSUES
   def public_inspection_issue_json_toc_dir
-    "#{Rails.root}/data/public_inspection_issues/json/#{date.to_s(:year_month)}/#{date.strftime('%d')}"
+    "#{data_file_path}/public_inspection_issues/json/#{date.to_s(:year_month)}/#{date.strftime('%d')}"
   end
 
   def public_inspection_issue_regular_filing_json_toc_path
@@ -37,12 +37,12 @@ class FileSystemPathManager
 
   # FR INDEX
   def index_json_dir
-    "#{Rails.root}/data/fr_index/#{date.strftime('%Y')}/"
+    "#{data_file_path}/fr_index/#{date.strftime('%Y')}/"
   end
 
   # DOCUMENTS
   def document_mods_dir
-    "#{Rails.root}/data/documents/mods/#{date.to_s(:year_month)}"
+    "#{data_file_path}/documents/mods/#{date.to_s(:year_month)}"
   end
 
   def document_mods_path
@@ -63,5 +63,15 @@ class FileSystemPathManager
 
   def document_temporary_mods_path
     "#{document_temporary_mods_dir}/#{date.to_s(:db_year)}.xml"
+  end
+
+  private
+
+  def data_file_path
+    "#{Rails.root}/data"
+  end
+
+  def self.data_file_path
+    "#{Rails.root}/data"
   end
 end

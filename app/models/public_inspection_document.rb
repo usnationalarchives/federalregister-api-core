@@ -26,7 +26,7 @@ class PublicInspectionDocument < ApplicationModel
   has_many :agencies, :through => :agency_assignments, :order => "agency_assignments.position", :extend => Agency::AssociationExtensions
   has_many :docket_numbers, :as => :assignable, :order => "docket_numbers.position", :dependent => :destroy
 
-  file_attribute(:raw_text)  {"#{RAILS_ROOT}/data/public_inspection/raw/#{document_file_path}.txt"}
+  file_attribute(:raw_text)  {"#{FileSystemPathManager.data_file_path}public_inspection/raw/#{document_file_path}.txt"}
   before_save :persist_document_file_path
   before_save :set_content_type
 
@@ -44,7 +44,7 @@ class PublicInspectionDocument < ApplicationModel
         IFNULL(public_inspection_documents.subject_3, '')
       )
     SQL
-    indexes "CONCAT('#{RAILS_ROOT}/data/public_inspection/raw/', public_inspection_documents.document_file_path, '.txt')", :as => :full_text, :file => true
+    indexes "CONCAT('#{FileSystemPathManager.data_file_path}public_inspection/raw/', public_inspection_documents.document_file_path, '.txt')", :as => :full_text, :file => true
     indexes "GROUP_CONCAT(DISTINCT docket_numbers.number SEPARATOR ' ')", :as => :docket_id
 
     # attributes

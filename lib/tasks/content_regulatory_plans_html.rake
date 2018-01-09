@@ -4,7 +4,7 @@ namespace :content do
       namespace :compile  do
         def compile_type_for_all(type)
           require 'fileutils'
-          root_dir = "#{RAILS_ROOT}/data/regulatory_plans/html/#{type}"
+          root_dir = "#{FileSystemPathManager.data_file_path}/regulatory_plans/html/#{type}"
           FileUtils.mkdir_p(root_dir)
 
           RegulatoryPlan.in_current_issue.find_each do |regulatory_plan|

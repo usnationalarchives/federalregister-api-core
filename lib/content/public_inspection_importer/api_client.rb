@@ -48,7 +48,7 @@ class Content::PublicInspectionImporter::ApiClient
   private
 
   def write_to_log(response_body)
-    dir = FileUtils.mkdir_p("#{Rails.root}/data/public_inspection/xml/#{Time.now.strftime('%Y/%m/%d')}/")
+    dir = FileUtils.mkdir_p("#{FileSystemPathManager.data_file_path}/public_inspection/xml/#{Time.now.strftime('%Y/%m/%d')}/")
     f = File.new("#{dir.first.to_s}/#{Time.now.to_s(:HMS_Z)}.xml", "w")
     f.binmode
     f.write(response_body)
