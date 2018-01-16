@@ -4,7 +4,7 @@ class FederalRegisterFileRetriever
   def self.download(url, path)
     puts "downloading #{url} to #{path}"
 
-    temp_path = Tempfile.new
+    temp_path = Tempfile.new('file_retriever_download')
 
     Curl::Easy.download(url, temp_path) do |c|
       c.follow_location = follow_location
