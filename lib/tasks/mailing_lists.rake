@@ -22,6 +22,12 @@ namespace :mailing_lists do
     desc "Deliver the daily import email to admins for a given day"
     task :deliver => :environment do
       begin
+        if ENV['DATE'].present?
+          date = Date.parse(ENV['DATE'])
+        else
+          date = Date.current
+        end
+        
         Resque.enqueue(DailyIssueEmailSender, ENV['DATE'])
       rescue StandardError => e
         puts e.message
