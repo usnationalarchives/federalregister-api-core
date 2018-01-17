@@ -29,7 +29,7 @@ class Content::EntryImporter::BulkdataFile
 
       raise Content::EntryImporter::BulkdataFile::DownloadError unless doc.root.name == "FEDREG"
     rescue
-      File.delete(path_manager.document_issue_xml_path)
+      File.delete(path_manager.document_issue_xml_path) if File.exists?(path_manager.document_issue_xml_path)
 
       if (retry_attempts -= 1) > 0
         sleep 10
@@ -38,7 +38,7 @@ class Content::EntryImporter::BulkdataFile
         raise Content::EntryImporter::BulkdataFile::DownloadError
       end
     end
-    
+
     doc.root
   end
   memoize :document

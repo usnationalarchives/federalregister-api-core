@@ -4,9 +4,9 @@ class FederalRegisterFileRetriever
   def self.download(url, path)
     puts "downloading #{url} to #{path}"
 
-    temp_path = Tempfile.new('file_retriever_download')
+    temp_file = Tempfile.new('file_retriever_download')
 
-    Curl::Easy.download(url, temp_path) do |c|
+    Curl::Easy.download(url, temp_file) do |c|
       c.follow_location = follow_location
       c.timeout = DEFAULT_TIMEOUT
       c.headers["User-Agent"] = user_agent
