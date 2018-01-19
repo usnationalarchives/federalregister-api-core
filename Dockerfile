@@ -116,7 +116,7 @@ COPY . /home/app/
 WORKDIR /home/app
 RUN mkdir -p /home/app/log
 RUN mkdir -p /home/app/pids
-RUN mkdir -p /home/app/tmp
+RUN mkdir -p /home/app/tmp/pids
 RUN chown -R app /home/app
 
 

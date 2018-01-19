@@ -24,6 +24,7 @@ namespace :sitemap do
   end
 
   task :create => [:environment] do
+    puts "generating sitemap..."
     include SitemapGenerator::Helper
     include ActionView::Helpers::NumberHelper
 
