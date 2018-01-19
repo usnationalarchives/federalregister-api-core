@@ -15,7 +15,7 @@ gem 'rails',
 gem 'mysql2', '0.2.24'
 
 # production app server
-gem 'passenger', '5.1.11'
+gem 'passenger', '5.1.12'
 
 gem "jrails", "0.6.0"
 
