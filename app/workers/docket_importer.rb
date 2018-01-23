@@ -1,7 +1,7 @@
 require 'csv'
 
 module DocketImporter
-  @queue = :default
+  @queue = :reg_gov
 
   NON_PARTICIPATING_AGENCIES_FILE = 'data/regulations_dot_gov_non_participating_agencies.csv'
 
