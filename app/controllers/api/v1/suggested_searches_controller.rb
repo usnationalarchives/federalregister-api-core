@@ -27,10 +27,11 @@ class Api::V1::SuggestedSearchesController < ApiController
   def show
     suggested_search = CannedSearch.find_by_slug(params[:id])
 
+    cache_for 1.day
     if suggested_search
       render_json_or_jsonp( suggested_search_json(suggested_search) )
     else
-      render :json => {:status => 404, :message => "Record Not Found"}, :status => 404 
+      render :json => {:status => 404, :message => "Record Not Found"}, :status => 404
     end
   end
 
