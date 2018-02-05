@@ -26,7 +26,8 @@ class Mailer < ActionMailer::Base
         mvincent@gpo.gov mscott@gpo.gov sfrattini@gpo.gov
         kgreen@gpo.gov aotovo@gpo.gov tellis@gpo.gov
         jhemphill@gpo.gov jmarlor@gpo.gov eswidal@gpo.gov
-        ofrtechgroup@gpo.gov jhmartinez@gpo.gov
+        ofrtechgroup@gpo.gov jhmartinez@gpo.gov jfrankovic@gpo.gov
+        dperrin@gpo.gov tellis@gpo.gov dzero@gpo.gov dbarfield@gpo.gov
       )
     end
     sendgrid_recipients recipients

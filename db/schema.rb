@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20160927223048) do
+ActiveRecord::Schema.define(:version => 20180205194929) do
 
   create_table "action_names", :force => true do |t|
     t.string   "name"
@@ -500,9 +500,9 @@ ActiveRecord::Schema.define(:version => 20160927223048) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "entry_id"
-    t.string   "subject_1"
-    t.string   "subject_2"
-    t.string   "subject_3"
+    t.string   "subject_1",           :limit => 1000
+    t.string   "subject_2",           :limit => 1000
+    t.string   "subject_3",           :limit => 1000
     t.string   "pdf_url"
     t.string   "category"
     t.datetime "update_pil_at"
