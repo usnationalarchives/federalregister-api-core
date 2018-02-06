@@ -95,7 +95,7 @@ class Entry < ApplicationModel
   has_many :section_assignments
   has_many :sections, :through => :section_assignments
 
-  has_many :section_highlights
+  has_many :section_highlights, dependent: :destroy
   belongs_to :lede_photo
 
   has_many :entry_page_views
