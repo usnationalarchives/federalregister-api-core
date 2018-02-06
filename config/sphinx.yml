@@ -10,6 +10,7 @@ shared: &shared
   morphology: stem_en
   port: 3312
   version: '2.1.2'
+  max_children: 10
 
 development:
   <<: *shared
