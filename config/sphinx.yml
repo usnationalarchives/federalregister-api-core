@@ -8,6 +8,7 @@ development:
   port: 9339
   compat_sphinxql_magics: 0
   max_matches: 10000
+  max_children: 10
 test:
   version: '2.1.1-beta'
   morphology: stem_en
@@ -18,6 +19,7 @@ test:
   compat_sphinxql_magics: 0
   max_matches: 10000
   sql_range_step: 10000000
+  max_children: 10
 staging:
   morphology: stem_en
   index_exact_words: 1
@@ -27,6 +29,7 @@ staging:
   version: '2.1.1-beta'
   compat_sphinxql_magics: 0
   max_matches: 10000
+  max_children: 10
 officialness_staging:
   morphology: stem_en
   index_exact_words: 1
@@ -36,6 +39,7 @@ officialness_staging:
   version: '2.1.1-beta'
   compat_sphinxql_magics: 0
   max_matches: 10000
+  max_children: 10
 production:
   morphology: stem_en
   index_exact_words: 1
@@ -45,3 +49,4 @@ production:
   version: '2.1.1-beta'
   compat_sphinxql_magics: 0
   max_matches: 10000
+  max_children: 10
