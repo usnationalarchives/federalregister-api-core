@@ -8,9 +8,10 @@ class Api::V1::PublicInspectionDocumentsController < ApiController
           publication_date = Date.parse(params[:conditions][:available_on])
           render_date(publication_date)
         else
-          search = PublicInspectionDocumentSearch.new(params)
           fields = specified_fields || PublicInspectionDocumentApiRepresentation.default_index_fields_json
           find_options = PublicInspectionDocumentApiRepresentation.find_options_for(fields)
+
+          search = public_inspection_search(params, fields)
 
           render_search(search, find_options, params[:metadata_only]) do |result|
             document_data(result, fields)
@@ -19,9 +20,10 @@ class Api::V1::PublicInspectionDocumentsController < ApiController
       end
 
       wants.csv do
-        search = PublicInspectionDocumentSearch.new(params)
         fields = specified_fields || PublicInspectionDocumentApiRepresentation.default_index_fields_csv
         find_options = PublicInspectionDocumentApiRepresentation.find_options_for(fields)
+
+        search = public_inspection_search(params, fields)
 
         filename = search.summary.gsub(/\W+/, '_').sub(/_$/,'').downcase
         documents = search.results(find_options)
@@ -29,14 +31,22 @@ class Api::V1::PublicInspectionDocumentsController < ApiController
       end
 
       wants.rss do
-        search = PublicInspectionDocumentSearch.new(params.merge(:order => 'newest'))
         fields = PublicInspectionDocumentApiRepresentation.default_index_fields_rss
         find_options = PublicInspectionDocumentApiRepresentation.find_options_for(fields)
+
+        search = public_inspection_search(params.merge(:order => 'newest'), fields)
 
         documents = search.results(find_options)
         render_rss(documents, "Federal Register #{search.summary}")
       end
     end
+  end
+
+  def public_inspection_search(params, fields=[])
+    term = params[:conditions] && params[:conditions][:term].present?
+    excerpts = fields.include?(:excerpts)
+
+    PublicInspectionDocumentSearch.new(params.merge(excerpts: term && excerpts))
   end
 
   def facets
