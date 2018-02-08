@@ -2,11 +2,12 @@ class Api::V1::EntriesController < ApiController
   def index
     respond_to do |wants|
       cache_for 1.day
-      search = EntrySearch.new(params)
 
       wants.json do
         fields = specified_fields || EntryApiRepresentation.default_index_fields_json
         find_options = EntryApiRepresentation.find_options_for(fields)
+
+        search = entry_search(params, fields)
 
         render_search(search, find_options, params[:metadata_only]) do |result|
           entry_data(result, fields)
@@ -17,6 +18,7 @@ class Api::V1::EntriesController < ApiController
         fields = specified_fields || EntryApiRepresentation.default_index_fields_csv
         find_options = EntryApiRepresentation.find_options_for(fields)
 
+        search = entry_search(params, fields)
         filename = search.summary.gsub(/\W+/, '_').sub(/_$/,'').downcase
         entries = search.results(find_options)
         render_csv(entries, fields, filename)
@@ -26,9 +28,8 @@ class Api::V1::EntriesController < ApiController
         fields = EntryApiRepresentation.default_index_fields_rss
         find_options = EntryApiRepresentation.find_options_for(fields)
 
-        documents = EntrySearch.new(
-          params.merge(:order => 'newest')
-        ).results(find_options)
+        search = entry_search(params.merge(:order => 'newest'), fields)
+        documents = entry_search.results(find_options)
         render_rss(documents, "Federal Register #{search.summary}")
       end
     end
@@ -110,6 +111,13 @@ class Api::V1::EntriesController < ApiController
   end
 
   private
+
+  def entry_search(params, fields=[])
+    term = params[:conditions] && params[:conditions][:term].present?
+    excerpts = fields.include?(:excerpts)
+
+    EntrySearch.new(params.merge(excerpts: term && excerpts))
+  end
 
   def render_csv(entries, fields, filename)
     output = CSV.generate do |csv|

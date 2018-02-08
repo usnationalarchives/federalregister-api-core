@@ -3,7 +3,7 @@ class ApplicationSearch
   class InputError < StandardError; end
 
   attr_accessor :order
-  attr_reader :filters, :term, :maximum_per_page, :per_page, :page, :conditions, :valid_conditions
+  attr_reader :filters, :term, :maximum_per_page, :per_page, :page, :conditions, :valid_conditions, :excerpts
 
   def per_page=(count)
     per_page = count.to_s.to_i
@@ -113,6 +113,8 @@ class ApplicationSearch
       @page = 1
     end
 
+    @excerpts = options.fetch(:excerpts, false)
+
     set_defaults(options)
 
     @skip_results = options[:skip_results] || false
@@ -209,9 +211,22 @@ class ApplicationSearch
       search_options.recursive_merge(args)
     )
 
-    if result_array
-      result_array.each do |result|
-        result.excerpts = ApplicationSearch::FileExcerpter.new result_array, result
+    if result_array && result_array.reject{|e| e.raw_text_updated_at.nil?}.present? && @excerpts
+      # get all excerpts at once
+      excerpts = result_array.send(:client).excerpts(
+        :docs => result_array.
+          reject{|e| e.raw_text_updated_at.nil?}.
+          map{|d| d.raw_text_file_path},
+        :load_files => true,
+        :words => result_array.args.join(' '),
+        :query_mode => :extended,
+        :index => "#{Entry.source_of_sphinx_index.sphinx_name}_core"
+      )
+
+      # merge excerpts back to their result raw text
+      result_array.reject{|e| e.raw_text_updated_at.nil?}.each_with_index do |result, index|
+        result.excerpts = ApplicationSearch::FileExcerpter.new(result_array, result)
+        result.excerpts.raw_text = excerpts[index]
       end
     end
 
