@@ -125,6 +125,14 @@ class PublicInspectionDocument < ApplicationModel
     Entry::ENTRY_TYPES[granule_class]
   end
 
+  attr_writer :excerpt
+  def excerpt
+    return @excerpt if @excerpt
+
+    # nothing to display if excerpt hasn't been set elsewhere
+    nil
+  end
+
   def document_file_path
     self['document_file_path'] || document_number.sub(/-/,'').scan(/.{0,3}/).reject(&:blank?).join('/')
   end

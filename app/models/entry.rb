@@ -3,6 +3,9 @@ class Entry < ApplicationModel
   self.inheritance_column = nil
   include EntryViewLogic
 
+  include TextHelper
+  attr_writer :excerpt
+
   GPO_PDF_START_DATE = Date.new(1995,1,3)
 
   DESCRIPTIONS = {
@@ -214,6 +217,16 @@ class Entry < ApplicationModel
 
   def self.executive_order
     scoped(:conditions => {:presidential_document_type_id => PresidentialDocumentType::EXECUTIVE_ORDER})
+  end
+
+  def excerpt
+    return @excerpt if @excerpt
+
+    if abstract.present?
+      truncate_words(abstract, length: 255)
+    else
+      nil
+    end
   end
 
   def gpo_graphics
