@@ -212,7 +212,7 @@ class ApplicationSearch
     )
 
     if result_array && result_array.reject{|e| e.raw_text_updated_at.nil?}.present? && @excerpts
-      # get all excerpts at once
+      # get all excerpts at once for results with raw text files
       excerpts = result_array.send(:client).excerpts(
         :docs => result_array.
           reject{|e| e.raw_text_updated_at.nil?}.
@@ -223,10 +223,18 @@ class ApplicationSearch
         :index => "#{Entry.source_of_sphinx_index.sphinx_name}_core"
       )
 
-      # merge excerpts back to their result raw text
+      # merge excerpts back to their result
       result_array.reject{|e| e.raw_text_updated_at.nil?}.each_with_index do |result, index|
-        result.excerpts = ApplicationSearch::FileExcerpter.new(result_array, result)
-        result.excerpts.raw_text = excerpts[index]
+        #2018-02-07 15:13:04
+        result.excerpt = excerpts[index]
+      end
+
+      # no abstracts for pil documents
+      if model == Entry
+        # missing raw text but we want the abstract term matches highlighted
+        result_array.select{|e| e.raw_text_updated_at.nil?}.each do |result|
+          result.excerpt = result.excerpts.abstract
+        end
       end
     end
 
@@ -239,7 +247,6 @@ class ApplicationSearch
 
     result_array
   end
-  # memoize :results
 
   def order_clause
     "@relevance DESC"
