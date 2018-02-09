@@ -29,7 +29,7 @@ staging:
   version: '2.1.1-beta'
   compat_sphinxql_magics: 0
   max_matches: 10000
-  max_children: 10
+  max_children: 30
 officialness_staging:
   morphology: stem_en
   index_exact_words: 1
@@ -39,7 +39,7 @@ officialness_staging:
   version: '2.1.1-beta'
   compat_sphinxql_magics: 0
   max_matches: 10000
-  max_children: 10
+  max_children: 30
 production:
   morphology: stem_en
   index_exact_words: 1
@@ -49,4 +49,4 @@ production:
   version: '2.1.1-beta'
   compat_sphinxql_magics: 0
   max_matches: 10000
-  max_children: 10
+  max_children: 30
