@@ -65,7 +65,7 @@ class EntryApiRepresentation < ApiRepresentation
   field(:excerpts, :select => [:document_number, :publication_date, :document_file_path, :abstract, :raw_text_updated_at]) {|e| e.excerpt}
   field(:executive_order_notes)
   field(:executive_order_number)
-  field(:full_text_xml_url, :select => [:publication_date, :document_file_path, :full_xml_updated_at]){|e| entry_xml_url(e) if e.should_have_full_xml?}
+  field(:full_text_xml_url, :select => [:publication_date, :document_file_path, :document_number, :full_xml_updated_at]){|e| entry_xml_url(e) if e.should_have_full_xml?}
   field(:html_url, :select => [:publication_date, :document_number, :title]){|e| entry_url(e)}
   field(:images, :select => [:document_number], :include => [:extracted_graphics, :gpo_graphic_usages]) do |entry|
     extracted_graphics = entry.extracted_graphics
