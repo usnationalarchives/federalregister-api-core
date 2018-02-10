@@ -109,7 +109,7 @@ class EntryApiRepresentation < ApiRepresentation
     end
   end
   field(:publication_date)
-  field(:raw_text_url, :select => [:publication_date, :document_file_path]){|e| entry_raw_text_url(e)}
+  field(:raw_text_url, :select => [:publication_date, :document_file_path, :document_number]){|e| entry_raw_text_url(e)}
   field(:regulation_id_number_info, :include => {:entry_regulation_id_numbers => :current_regulatory_plan}) do |entry|
     values = entry.entry_regulation_id_numbers.map do |e_rin|
       regulatory_plan = e_rin.current_regulatory_plan
