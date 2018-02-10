@@ -211,28 +211,31 @@ class ApplicationSearch
       search_options.recursive_merge(args)
     )
 
-    if result_array && result_array.reject{|e| e.raw_text_updated_at.nil?}.present? && @excerpts
-      # get all excerpts at once for results with raw text files
-      excerpts = result_array.send(:client).excerpts(
-        :docs => result_array.
-          reject{|e| e.raw_text_updated_at.nil?}.
-          map{|d| d.raw_text_file_path},
-        :load_files => true,
-        :words => result_array.args.join(' '),
-        :query_mode => :extended,
-        :index => "#{Entry.source_of_sphinx_index.sphinx_name}_core"
-      )
+    if result_array && @excerpts
+      results_with_raw_text, results_without_raw_text = result_array.partition{|e| e.raw_text_updated_at.present?}
 
-      # merge excerpts back to their result
-      result_array.reject{|e| e.raw_text_updated_at.nil?}.each_with_index do |result, index|
-        #2018-02-07 15:13:04
-        result.excerpt = excerpts[index]
+      if results_with_raw_text.present?
+        results_with_raw_text.in_groups_of(1024,false).each do |batch|
+          # get all excerpts at once for results with raw text files
+          excerpts = result_array.send(:client).excerpts(
+            :docs => batch.map{|d| d.raw_text_file_path},
+            :load_files => true,
+            :words => result_array.args.join(' '),
+            :query_mode => :extended,
+            :index => "#{Entry.source_of_sphinx_index.sphinx_name}_core"
+          )
+
+          # merge excerpts back to their result
+          batch.each_with_index do |result, index|
+            result.excerpt = excerpts[index]
+          end
+        end
       end
 
-      # no abstracts for pil documents
+      # no abstracts for pil documents so nothing to do for those
       if model == Entry
         # missing raw text but we want the abstract term matches highlighted
-        result_array.select{|e| e.raw_text_updated_at.nil?}.each do |result|
+        results_without_raw_text.each do |result|
           result.excerpt = result.excerpts.abstract
         end
       end
