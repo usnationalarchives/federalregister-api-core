@@ -23,7 +23,7 @@ class PublicInspectionDocumentApiRepresentation < ApiRepresentation
   field(:document_number)
   field(:filed_at)
   field(:editorial_note)
-  field(:excerpts, :select => [:document_file_path]) {|d| document.excerpt}
+  field(:excerpts, :select => [:document_file_path]) {|document| document.excerpt}
   field(:filing_type, :select => :special_filing) {|document| document.special_filing ? 'special' : 'regular'}
   field(:html_url, :select => [:publication_date, :filed_at, :document_number, :subject_1, :subject_2, :subject_3]) {|document| entry_url(document) }
   field(:json_url, :select => :document_number) {|document| api_v1_public_inspection_document_url(document.document_number, :format => :json) }
