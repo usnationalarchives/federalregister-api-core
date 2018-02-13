@@ -35,6 +35,8 @@ module DocketImporter
 
     return unless api_docket
 
+    EntryObserver.disabled = true
+
     docket = Docket.find_or_initialize_by_id(docket_number)
     docket.title = api_docket.title
     docket.comments_count = api_docket.comments_count

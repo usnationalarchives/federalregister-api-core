@@ -8,6 +8,7 @@ class EntryRegulationsDotGovImporter
 
   def perform(document_number)
     @entry = Entry.find_by_document_number!(document_number)
+    EntryObserver.disabled = true
 
     entry.checked_regulationsdotgov_at          = checked_regulationsdotgov_at
     entry.regulationsdotgov_url                 = regulationsdotgov_url
