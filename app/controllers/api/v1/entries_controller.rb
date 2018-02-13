@@ -113,7 +113,7 @@ class Api::V1::EntriesController < ApiController
   private
 
   def entry_search(params, fields=[])
-    term = params[:conditions] && params[:conditions][:term].present?
+    term = params[:conditions].present? && params[:conditions][:term].present?
     excerpts = fields.include?(:excerpts)
 
     EntrySearch.new(params.merge(excerpts: term && excerpts))
