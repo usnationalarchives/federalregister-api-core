@@ -41,6 +41,12 @@ every 1.day, at: ['5AM,12PM'] do
   rake 'content:entries:import:regulations_dot_gov:open_comments'
 end
 
+# Clear the document cache at a time when the regulations.gov jobs above
+# should have all completed
+every 1.day, at: ['7AM,1PM'] do
+  rake 'varnish:expire:everything'
+end
+
 # Expire pages warning of late content at 9AM/10AM
 every '0 9,10 * * 1-5' do
   set  :log, 'late_page_expiration'
