@@ -119,6 +119,8 @@ RUN mkdir -p /home/app/pids
 RUN mkdir -p /home/app/tmp/pids
 RUN chown -R app /home/app
 
+RUN whenever --update-crontab
+
 
 ##################
 ### BASE (LAST)
