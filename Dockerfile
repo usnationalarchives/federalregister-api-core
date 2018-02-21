@@ -101,11 +101,6 @@ RUN bundle install --system --full-index &&\
 ENV PASSENGER_MIN_INSTANCES 1
 ENV WEB_PORT 3000
 
-#update passenger mime types
-RUN mkdir -p /etc/nginx
-RUN mkdir -p /etc/passenger
-COPY docker/api/files/mime.types /etc/nginx/mime.types
-COPY docker/api/files/nginx.conf.erb /etc/passenger/nginx.conf.erb
 
 ##################
 ### APP
