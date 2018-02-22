@@ -12,8 +12,7 @@ module SphinxIndexer
     begin
       line = Cocaine::CommandLine.new(
         "/usr/local/bin/indexer",
-        "-c :sphinx_conf :index_names --rotate",
-        :environment => {'DATE' => "#{date.to_s(:iso)}"}
+        "-c :sphinx_conf :index_names --rotate"
       )
       line.run(
         index_names: index_names.join(' '),
