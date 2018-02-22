@@ -3,9 +3,12 @@ module SphinxIndexer
 
   def self.perform(*index_names)
     rotate_indices(index_names)
+  end
 
-    delta_indices = index_names.select{|i| i.include?('delta')}
-    purge_from_core_index(delta_indices) if delta_indices.present?
+  def self.rebuild_delta_and_purge_core(*models)
+    delta_index_names = models.map{|model| model.delta_index_names}.flatten.join(' ')
+    rotate_indices(delta_index_names)
+    purge_from_core_index(models)
   end
 
   def self.rotate_indices(index_names)
@@ -23,8 +26,8 @@ module SphinxIndexer
     end
   end
 
-  def self.purge_from_core_index(*delta_indices)
-    delta_indices.each do |model|
+  def self.purge_from_core_index(*models)
+    models.each do |model|
       model.find_each(select: "id, delta", conditions: {delta: true}) do |record|
         model.core_index_names.each do |index_name|
           model.delete_in_index(index_name, record.sphinx_document_id)

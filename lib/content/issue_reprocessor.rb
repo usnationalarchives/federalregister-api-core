@@ -86,7 +86,7 @@ module Content
       update_reprocessing_message("updating search index")
 
       begin
-        SphinxIndexer.perform('entry_delta')
+        SphinxIndexer.rebuild_delta_and_purge_core(Entry)
       rescue SphinxIndexer::SphinxIndexerError => error
         handle_failure(error,"IssueReprocessor::ReprocessorIssue Reindex")
       end
