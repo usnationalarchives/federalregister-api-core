@@ -8,6 +8,10 @@ job_type :rake, [
   ].join(' && ')
 
 
+########################
+# BULK DATA IMPORTS
+########################
+
 # Import today's content
 # retries every 5 minutes from 4AM to 5PM EDT every day
 every "*/5 4-21 * * *" do
@@ -15,18 +19,74 @@ every "*/5 4-21 * * *" do
   rake 'data:daily'
 end
 
-# # Find the matching regulations.gov URL for articles
-# # runs every hour from 7AM EDT until 5PM M-F
-every '30 7-17 * * 1-5' do
-  set :log, 'reg_gov_url_import'
-  rake 'content:entries:import:regulations_dot_gov:only_missing'
+# Expire pages warning of late content at 9AM/10AM
+every '0 9,10 * * 1-5' do
+  set  :log, 'late_page_expiration'
+  rake 'varnish:expire:pages_warning_of_late_content'
 end
+
+# Reindex the entire content (collapsing delta indexes back into main index)
+every 1.day, at: ['3AM'] do
+  set :log, 'weekly_sphinx_reindex'
+  command '/usr/local/bin/indexer --config /home/app/config/sphinx.conf --rotate --all --sighup-each'
+end
+
+
+########################
+# PUBLIC INSPECTION
+########################
+
+# Import public inspection documents
+# runs every minute from 7AM EDT until 7PM Monday-Friday
+every '* 7-19 * * 1-5' do
+  set :log, 'public_inspection_import'
+  rake 'content:public_inspection:import_and_deliver'
+end
+
+# Purge revoked PI documents at 5:15PM
+# runs at 5:15PM/6:15PM EDT M-F
+every '15 17,18 * * 1-5' do
+  set :log, 'public_inspection_import'
+  rake 'content:public_inspection:purge_revoked_documents'
+end
+
+
+########################
+# GPO IMAGE IMPORTS
+########################
+
+# Download image from FTP and place in private bucket on S3
+# destructive and should only be run in one environment
+if ENV['RAILS_ENV'] == 'production'
+  every 15.minutes do
+    set :log, 'gpo_eps_importer'
+    rake 'content:gpo_images:import'
+  end
+end
+
+# Enqueue background jobs to process any images that are new
+every 5.minutes do
+  set :log, 'gpo_eps_converter'
+  rake 'content:gpo_images:convert'
+end
+
+
+########################
+# REGULATIONS.GOV DATA
+########################
 
 # Find the matching regulations.gov URL for documents added to regs.gov
 # after our daily import
 every 1.day, at: ['6AM'] do
   set :log, 'reg_gov_url_import_tardy'
   rake 'content:entries:import:regulations_dot_gov:tardy'
+end
+
+# # Find the matching regulations.gov URL for articles
+# # runs every hour from 7AM EDT until 5PM M-F
+every '30 7-17 * * 1-5' do
+  set :log, 'reg_gov_url_import'
+  rake 'content:entries:import:regulations_dot_gov:only_missing'
 end
 
 # Download docket data
@@ -47,43 +107,19 @@ every 1.day, at: ['7AM,1PM'] do
   rake 'varnish:expire:everything'
 end
 
-# Expire pages warning of late content at 9AM/10AM
-every '0 9,10 * * 1-5' do
-  set  :log, 'late_page_expiration'
-  rake 'varnish:expire:pages_warning_of_late_content'
+
+#################################
+# REGULATIONS.GOV COMMENTS
+#################################
+
+# Refresh the regulations.gov comment form cache  
+every 6.hours do
+  set :log, 'regulations_dot_gov_comment_cache'
+  rake 'regulations_dot_gov:warm_comment_form_cache'
 end
 
-# Reindex the entire content (collapsing delta indexes back into main index)
-every 1.day, at: ['3AM'] do
-  set :log, 'weekly_sphinx_reindex'
-  command '/usr/local/bin/indexer --config /home/app/config/sphinx.conf --rotate --all --sighup-each'
-end
-
-# Import public inspection documents
-# runs every minute from 7AM EDT until 7PM Monday-Friday
-every '* 7-19 * * 1-5' do
-  set :log, 'public_inspection_import'
-  rake 'content:public_inspection:import_and_deliver'
-end
-
-# Purge revoked PI documents at 5:15PM
-# runs at 5:15PM/6:15PM EDT M-F
-every '15 17,18 * * 1-5' do
-  set :log, 'public_inspection_import'
-  rake 'content:public_inspection:purge_revoked_documents'
-end
-
-# Download image from FTP and place in private bucket on S3
-# destructive and should only be run in one environment
-if ENV['RAILS_ENV'] == 'production'
-  every 15.minutes do
-    set :log, 'gpo_eps_importer'
-    rake 'content:gpo_images:import'
-  end
-end
-
-# Enqueue background jobs to process any images that are new
-every 5.minutes do
-  set :log, 'gpo_eps_converter'
-  rake 'content:gpo_images:convert'
+# Check for newly posted comments and notify users
+every 1.day, at: ['6PM'] do
+  set :log, 'regulations_dot_gov_comments_posted'
+  rake 'regulations_dot_gov:notify_comment_publication'
 end
