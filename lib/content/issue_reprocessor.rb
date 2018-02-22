@@ -2,6 +2,7 @@ module Content
   class IssueReprocessor
     include CacheUtils
     include Content::IssueReprocessorUtils
+    include SphinxIndexer
 
     @queue = :api_core
 
@@ -85,13 +86,8 @@ module Content
       update_reprocessing_message("updating search index")
 
       begin
-        line = Cocaine::CommandLine.new(
-          "/usr/local/bin/indexer",
-          "-c :sphinx_conf --rotate entry_delta",
-          :environment => {'DATE' => "#{date.to_s(:iso)}"}
-        )
-        line.run(:sphinx_conf => "config/#{Rails.env}.sphinx.conf")
-      rescue Cocaine::ExitStatusError => error
+        SphinxIndexer.perform('entry_delta')
+      rescue SphinxIndexer::SphinxIndexerError => error
         handle_failure(error,"IssueReprocessor::ReprocessorIssue Reindex")
       end
     end
