@@ -4,10 +4,7 @@ source 'https://rubygems.org'
 gem 'rake', '10.5.0'
 
 # rack version compatible with 1.9.3
-# gem 'rack', '1.6.4'
 gem 'rack', '1.4.7'
-
-
 
 gem 'rails',
   :git => 'https://github.com/makandra/rails.git',
@@ -86,10 +83,6 @@ gem 'popen4'
 gem "net-scp", '1.1.0'
 gem "net-ssh", '2.9.1'
 
-gem "capistrano", '2.15.4', :require => false
-gem "thunder_punch", '0.1.3', :require => false
-gem "rvm-capistrano", "~> 1.5.4", :require => false
-
 gem "resque"
 
 gem "httparty"
@@ -116,12 +109,7 @@ gem 'app_config', "=1.3.2",
   :git => 'https://github.com/fredwu/app_config.git',
   :branch => :master
 
-# needed when running on ruby 1.8
-gem 'system_timer', '1.2.4', :platform => :ruby_18
-gem 'fastercsv', '1.4.0', :platform => :ruby_18
-
-
-gem 'american_date', :platform => :ruby_19
+gem 'american_date'
 
 if RUBY_VERSION =~ /1.9/
   Encoding.default_external = Encoding::UTF_8
@@ -146,7 +134,7 @@ group :test do
 
   gem 'ci_reporter', '1.6.3'
 
-  gem 'test-unit', '1.2.3', :platform => :ruby_19
+  gem 'test-unit', '1.2.3'
 end
 
 group :development do
