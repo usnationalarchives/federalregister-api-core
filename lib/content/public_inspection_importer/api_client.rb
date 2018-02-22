@@ -5,9 +5,9 @@ class Content::PublicInspectionImporter::ApiClient
   headers 'Accept-Encoding' => "UTF-8"
   debug_output
 
-  base_uri SECRETS['pil_api_base_uri']
-  USERNAME = SECRETS['pil_api_user_name']
-  PASSWORD = SECRETS['pil_api_password']
+  base_uri SECRETS['public_inspection']['api_base_uri']
+  USERNAME = SECRETS['public_inspection']['api_user_name']
+  PASSWORD = SECRETS['public_inspection']['api_password']
 
   def initialize(options={})
     @session_token = options[:session_token]
