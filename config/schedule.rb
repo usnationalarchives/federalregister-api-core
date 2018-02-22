@@ -72,3 +72,18 @@ every '15 17,18 * * 1-5' do
   set :log, 'public_inspection_import'
   rake 'content:public_inspection:purge_revoked_documents'
 end
+
+# Download image from FTP and place in private bucket on S3
+# destructive and should only be run in one environment
+if ENV['RAILS_ENV'] == 'production'
+  every 15.minutes do
+    set :log, 'gpo_eps_importer'
+    rake 'content:gpo_images:import'
+  end
+end
+
+# Enqueue background jobs to process any images that are new
+every 5.minutes do
+  set :log, 'gpo_eps_converter'
+  rake 'content:gpo_images:convert'
+end
