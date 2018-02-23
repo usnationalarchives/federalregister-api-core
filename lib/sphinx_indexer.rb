@@ -11,16 +11,24 @@ module SphinxIndexer
     purge_from_core_index(models)
   end
 
+  def self.rotate_all
+    self.rotate_indices(["--all"])
+  end
+
   def self.rotate_indices(index_names)
     begin
-      line = Cocaine::CommandLine.new(
+      Cocaine::CommandLine.new(
         "/usr/local/bin/indexer",
-        "-c :sphinx_conf :index_names --rotate"
-      )
-      line.run(
+        "-c :sphinx_conf :index_names --rotate --nohup"
+      ).run(
         index_names: index_names.join(' '),
         sphinx_conf: ThinkingSphinx::Configuration.instance.config_file
       )
+
+      Cocaine::CommandLine.new(
+        "/usr/bin/touch",
+        ThinkingSphinx::Configuration.instance.pid_file
+      ).run
     rescue Cocaine::ExitStatusError => error
       raise SphinxIndexer::SphinxIndexerError
     end

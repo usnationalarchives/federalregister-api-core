@@ -26,9 +26,9 @@ every '0 9,10 * * 1-5' do
 end
 
 # Reindex the entire content (collapsing delta indexes back into main index)
-every 1.day, at: ['3AM'] do
+every :sunday, at: '3AM' do
   set :log, 'weekly_sphinx_reindex'
-  command '/usr/local/bin/indexer --config /home/app/config/sphinx.conf --rotate --all --sighup-each'
+  rake "sphinx:rotate_all"
 end
 
 

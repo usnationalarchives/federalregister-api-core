@@ -3,4 +3,8 @@ namespace :sphinx do
   task :rebuild_delta => :environment do
     SphinxIndexer.rebuild_delta_and_purge_core(Entry)
   end
+
+  task :rotate_all => :environment do
+    SphinxIndexer.rotate_all
+  end
 end
