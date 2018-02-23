@@ -21,7 +21,7 @@ module SphinxIndexer
         "/usr/local/bin/indexer",
         "-c :sphinx_conf :index_names --rotate --nohup"
       ).run(
-        index_names: index_names.join(' '),
+        index_names: Array(index_names).join(' '),
         sphinx_conf: ThinkingSphinx::Configuration.instance.config_file
       )
 
