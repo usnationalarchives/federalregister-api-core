@@ -77,7 +77,7 @@ end
 
 # Find the matching regulations.gov URL for documents added to regs.gov
 # after our daily import
-every 1.day, at: ['6AM'] do
+every 1.day, at: '6AM' do
   set :log, 'reg_gov_url_import_tardy'
   rake 'content:entries:import:regulations_dot_gov:tardy'
 end
@@ -90,20 +90,20 @@ every '30 7-17 * * 1-5' do
 end
 
 # Download docket data
-every 1.day, at: ['12:30PM'] do
+every 1.day, at: '12:30PM' do
   set :log, 'docket_import'
   rake 'content:dockets:import'
 end
 
 # Confirm URLs and openness of comments that have a valid comment URL
-every 1.day, at: ['5AM,12PM'] do
+every 1.day, at: ['5AM', '12PM'] do
   set :log, 'reg_gov_url_import_open_comments'
   rake 'content:entries:import:regulations_dot_gov:open_comments'
 end
 
 # Clear the document cache at a time when the regulations.gov jobs above
 # should have all completed
-every 1.day, at: ['7AM,1PM'] do
+every 1.day, at: ['7AM', '1PM'] do
   rake 'varnish:expire:everything'
 end
 
@@ -112,14 +112,14 @@ end
 # REGULATIONS.GOV COMMENTS
 #################################
 
-# Refresh the regulations.gov comment form cache  
+# Refresh the regulations.gov comment form cache
 every 6.hours do
   set :log, 'regulations_dot_gov_comment_cache'
   rake 'regulations_dot_gov:warm_comment_form_cache'
 end
 
 # Check for newly posted comments and notify users
-every 1.day, at: ['6PM'] do
+every 1.day, at: '6PM' do
   set :log, 'regulations_dot_gov_comments_posted'
   rake 'regulations_dot_gov:notify_comment_publication'
 end
