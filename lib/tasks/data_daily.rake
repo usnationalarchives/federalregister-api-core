@@ -8,7 +8,7 @@ namespace :data do
       content:entries:import
       content:gpo_images:process_daily_issue_images
       content:entries:json:compile:daily_toc
-      
+
     )
 
     task :really_quick => %w(
@@ -37,7 +37,6 @@ namespace :data do
     task :full => %w(
       content:section_highlights:clone
       data:daily:basic
-      content:entries:json:compile:daily_toc
       content:agency_assignments:recalculate
       sphinx:rebuild_delta
 
