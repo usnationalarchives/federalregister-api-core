@@ -19,7 +19,7 @@ module SphinxIndexer
     begin
       Cocaine::CommandLine.new(
         "/usr/local/bin/indexer",
-        "-c :sphinx_conf :index_names --rotate --nohup"
+        "-c :sphinx_conf :index_names --rotate"
       ).run(
         index_names: Array(index_names).join(' '),
         sphinx_conf: ThinkingSphinx::Configuration.instance.config_file
