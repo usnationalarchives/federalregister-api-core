@@ -35,7 +35,7 @@ module SphinxIndexer
   end
 
   def self.purge_from_core_index(*models)
-    models.each do |model|
+    models.flatten.each do |model|
       model.find_each(select: "id, delta", conditions: {delta: true}) do |record|
         model.core_index_names.each do |index_name|
           model.delete_in_index(index_name, record.sphinx_document_id)
