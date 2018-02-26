@@ -54,17 +54,6 @@ RUN make install
 WORKDIR /
 
 
-#######################
-### EBS BACKUPS
-#######################
-
-RUN add-apt-repository ppa:alestic &&\
-  apt-get update &&\
-  apt-get install -y ec2-consistent-snapshot &&\
-  apt-get clean &&\
-  rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/
-
-
 ##################
 ### TIMEZONE
 ##################
