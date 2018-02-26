@@ -30,7 +30,7 @@ module SphinxIndexer
         "/home/app/db/sphinx/restart.txt"
       ).run
     rescue Cocaine::ExitStatusError => error
-      raise SphinxIndexer::SphinxIndexerError
+      raise SphinxIndexer::SphinxIndexerError.new(error)
     end
   end
 
