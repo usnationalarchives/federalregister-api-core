@@ -3,7 +3,6 @@ class Content::PublicInspectionImporter::ApiClient
 
   include HTTParty
   headers 'Accept-Encoding' => "UTF-8"
-  debug_output
 
   base_uri SECRETS['public_inspection']['api_base_uri']
   USERNAME = SECRETS['public_inspection']['api_user_name']
