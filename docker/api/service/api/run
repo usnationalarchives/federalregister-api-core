@@ -1,4 +1,4 @@
 #!/bin/sh
 cd /home/app
 
-exec /sbin/setuser app passenger start --nginx-config-template /etc/passenger/nginx.conf.erb --port $WEB_PORT --min-instances $PASSENGER_MIN_INSTANCES --no-friendly-error-pages
+exec /sbin/setuser app passenger start --port $WEB_PORT --min-instances $PASSENGER_MIN_INSTANCES --no-friendly-error-pages
