@@ -2,7 +2,7 @@ module Api::ApiSectionHelper
   def highlighted_entry_hash(entry)
     {
       :document_number => entry.document_number,
-      :html_url => entry_url(entry),
+      :html_url => ApiSectionHelper.entry_url(entry,),
       :curated_title => entry.curated_title,
       :curated_abstract => entry.curated_abstract,
       :photo => entry.lede_photo.present? ? {
