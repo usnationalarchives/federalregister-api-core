@@ -1,6 +1,7 @@
 #!/bin/bash
 
-if [[ "$CONTAINER_ROLE" == "app" ]]; then
+if ! [ "$CONTAINER_ROLE" = "worker" ]; then
+  rm -rf /etc/my_init.d/clear_cache
   rm -rf /etc/my_init.d/migrate
   rm -rf /etc/my_init.d/sphinx_config
   rm -rf /etc/my_init.d/whenever
