@@ -87,7 +87,7 @@ RUN tar -xzvf prince-8.1r5-ubuntu1604-amd64.tar.gz
 WORKDIR /tmp/prince-8.1r5-ubuntu1604-amd64
 RUN ./install.sh
 
-COPY docker/api/files/princexml.json.tmpl /usr/local/lib/prince/license/license.dat.tmpl
+COPY docker/api/files/princexml/license.dat.tmpl /usr/local/lib/prince/license/license.dat.tmpl
 
 # add fonts
 COPY docker/api/files/fonts/open-sans /usr/share/fonts/truetype/
