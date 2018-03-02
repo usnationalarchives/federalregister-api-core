@@ -7,6 +7,8 @@ class FrIndexPdfPreviewer < FrIndexPdfGenerator
   end
 
   def perform
+    ActiveRecord::Base.verify_active_connections!
+    
     calculate_metadata
     super
   end

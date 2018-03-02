@@ -13,6 +13,8 @@ class FrIndexPdfPublisher < FrIndexPdfGenerator
   end
 
   def perform
+    ActiveRecord::Base.verify_active_connections!
+    
     super
     update_agency_status
     clear_cache

@@ -2,6 +2,8 @@ class PublicInspectionDocumentFileImporter
   @queue = :public_inspection
 
   def self.perform(options)
+    ActiveRecord::Base.verify_active_connections!
+    
     new(options).perform
   end
 

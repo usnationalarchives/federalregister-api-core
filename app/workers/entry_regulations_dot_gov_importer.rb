@@ -3,6 +3,8 @@ class EntryRegulationsDotGovImporter
   @queue = :api_core
 
   def self.perform(document_number)
+    ActiveRecord::Base.verify_active_connections!
+    
     new.perform(document_number)
   end
 
