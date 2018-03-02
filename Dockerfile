@@ -4,8 +4,8 @@
 
 FROM quay.io/criticaljuncture/baseimage:16.04
 
-# Update apt
-RUN apt-get update && apt-get install vim curl build-essential -y
+# Update apt - add gettext for ENV var substitution in tmpl files
+RUN apt-get update && apt-get install vim curl build-essential gettext-base -y
 
 
 #######################
@@ -68,6 +68,52 @@ RUN apt-get update &&\
 RUN curl -OL https://github.com/wkhtmltopdf/wkhtmltopdf/releases/download/0.12.4/wkhtmltox-0.12.4_linux-generic-amd64.tar.xz
 RUN tar -xvf /tmp/wkhtmltox-0.12.4_linux-generic-amd64.tar.xz
 RUN cp /tmp/wkhtmltox/bin/wkhtmltopdf /usr/local/bin/
+
+
+##################
+### PRINCEXML
+##################
+
+RUN apt-get update &&\
+  apt-get install -y libc6 libtiff5 libgif7 libcurl3 libfontconfig1 libjpeg8 &&\
+  apt-get clean &&\
+  rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/
+
+WORKDIR /tmp
+
+# install prince and license template
+RUN curl -O  http://www.princexml.com/download/prince-8.1r5-ubuntu1604-amd64.tar.gz
+RUN tar -xzvf prince-8.1r5-ubuntu1604-amd64.tar.gz
+WORKDIR /tmp/prince-8.1r5-ubuntu1604-amd64
+RUN ./install.sh
+
+COPY docker/api/files/princexml.json.tmpl /usr/local/lib/prince/license/license.dat.tmpl
+
+# add fonts
+COPY docker/api/files/fonts/open-sans /usr/share/fonts/truetype/
+# update font cache
+RUN  fc-cache -f -v
+
+
+##################
+### IMAGEMAGICK
+##################
+
+RUN apt-get update &&\
+  apt-get install -y checkinstall libtiff5-dev libx11-dev libxext-dev zlib1g-dev libpng12-dev libjpeg-dev &&\
+  apt-get clean &&\
+  rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/
+
+WORKDIR /tmp
+
+#RUN apt-get build-dep imagemagick
+RUN curl -O https://www.imagemagick.org/download/ImageMagick-6.9.9-36.tar.xz
+RUN tar -xvf ImageMagick-6.9.9-36.tar.xz
+
+WORKDIR /tmp/ImageMagick-6.9.9-36
+RUN ./configure && make
+RUN make install
+RUN ldconfig /usr/local/lib
 
 
 ##################
