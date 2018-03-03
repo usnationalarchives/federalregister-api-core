@@ -6,6 +6,8 @@
 data/
 !data/holidays.yml
 !data/holidays_ad_hoc.yml
+!data/regulations_dot_gov_non_participating_agencies.csv
+!data/regulations_dot_gov_participating_agencies.csv
 
 db/sphinx/*
 log*
