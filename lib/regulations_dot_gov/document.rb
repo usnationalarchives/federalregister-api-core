@@ -19,7 +19,7 @@ class RegulationsDotGov::Document < RegulationsDotGov::GenericDocument
   end
 
   def comment_url
-    if raw_attributes['openForComment']
+    if raw_attributes['openForComment'] && !non_participating_agency?
       "http://www.regulations.gov/#!submitComment;D=#{document_id}"
     end
   end
@@ -39,6 +39,14 @@ class RegulationsDotGov::Document < RegulationsDotGov::GenericDocument
 
   def federal_register_document_number
     raw_attribute_value('federalRegisterNumber')
+  end
+
+  def agency_acronym
+    raw_attribute_value("agencyAcronym")
+  end
+
+  def non_participating_agency?
+    DocketImporter.non_participating_agency_ids.include?(agency_acronym)
   end
 
   private
