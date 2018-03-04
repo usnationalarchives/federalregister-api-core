@@ -1,21 +1,20 @@
 <!DOCTYPE html>
-<html lang="en"> 
-<head> 
+<html lang="en">
+<head>
   <title>FR2 Admin<%= " | #{yield :title}" if yield(:title) %></title>
   <meta charset="utf-8">
-  
+
   <%= stylesheet_link_tag "admin/screen",                    :media => :screen %>
   <%= stylesheet_link_tag "admin/jqModal",                   :media => :screen %>
   <%= stylesheet_link_tag "admin/formtastic",                :media => :screen %>
-  <%= stylesheet_link_tag "../ContentFlow/contentflow_src",  :media => :screen %>  
-  <%= csrf_meta_tag %>  
+  <%= csrf_meta_tag %>
 </head>
 <body>
 
 
   <% header_tag(:id => "header") do %>
     <div id="inner_header">
-      <% hgroup_tag(:id => "header_logo") do %>        
+      <% hgroup_tag(:id => "header_logo") do %>
         <h1><%= link_to 'Federal Register Admin', admin_home_path %></h1>
       <% end -%>
       <% if current_user %>
@@ -27,7 +26,7 @@
         </ul>
       </nav>
       <% end -%>
-      
+
       <% nav_tag(:id => 'primary' ) do %>
         <ul>
           <% if current_user %>
@@ -45,29 +44,29 @@
           <% end %>
         </ul>
       <% end -%>
-      
+
     </div>
   <% end -%>
-    
+
   <!-- MAIN -->
   <div id="main">
 
     <% if yield(:super_title) %>
       <h2><%= yield(:super_title) %></h2>
     <% end %>
-    
+
     <% if yield(:sidebar) %>
       <div id="sidebar">
         <%= yield(:sidebar) %>
       </div>
     <% end %>
- 
+
     <div id="content_area" class="<%= 'has_sidebar' if yield(:nav_secondary) %>">
-      
+
       <% if yield(:title)%>
        <h3 class="title"><%= yield(:title) %></h3>
       <% end %>
-      
+
       <div class="wrapper">
         <% if flash[:notice] %>
         <div class="flash notice">
@@ -80,13 +79,13 @@
           <%= flash[:error]%>
         </div>
         <% end %>
-      
+
         <%= yield %>
       </div>
     </div><!-- content end -->
-      
+
   </div> <!-- MAIN end -->
-  
+
   <div class='jqmOverlay'></div>
   <div class='modal jqmWindow'>
     <div id='crop_area'>
@@ -98,19 +97,19 @@
       </div> -->
     </div>
   </div>
-  
+
   <%= javascript_include_tag 'admin/jquery-1.7.2.min.js' %>
   <%= jquery_ui_include_tag %>
   <%= javascript_include_tag 'admin/jquery.tablesorter' %>
   <%= javascript_include_tag 'admin/application_form_builder' %>
   <%= javascript_include_tag 'admin/admin' %>
-  
+
   <%= yield :javascripts %>
-  
+
   <!-- <script>
     (function(){document.body.appendChild(document.createElement('script')).src='http://gridder.andreehansson.se/releases/latest/960.gridder.js';})();
   </script> -->
-  
+
   <script type="text/javascript" src="https://use.typekit.com/qbb7wou.js"></script>
   <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
 </body>
