@@ -106,11 +106,10 @@ RUN apt-get update &&\
 
 WORKDIR /tmp
 
-#RUN apt-get build-dep imagemagick
-RUN curl -O https://www.imagemagick.org/download/ImageMagick-6.9.9-36.tar.xz
-RUN tar -xvf ImageMagick-6.9.9-36.tar.xz
+RUN curl -O https://www.imagemagick.org/download/ImageMagick-6.9.9-37.tar.xz
+RUN tar -xvf ImageMagick-6.9.9-37.tar.xz
 
-WORKDIR /tmp/ImageMagick-6.9.9-36
+WORKDIR /tmp/ImageMagick-6.9.9-37
 RUN ./configure && make
 RUN make install
 RUN ldconfig /usr/local/lib
