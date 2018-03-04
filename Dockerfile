@@ -162,6 +162,9 @@ WORKDIR /home/app
 RUN mkdir -p /home/app/log
 RUN mkdir -p /home/app/pids
 RUN mkdir -p /home/app/tmp/pids
+
+RUN ./script/runner -e production 'Sass::Plugin.options[:always_update] = 1; Sass::Plugin.update_stylesheets'
+
 RUN chown -R app /home/app
 
 
