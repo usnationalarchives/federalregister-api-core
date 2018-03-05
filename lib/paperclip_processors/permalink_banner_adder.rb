@@ -11,11 +11,25 @@ module Paperclip
 
       output = Tempfile.new("output_pdf")
       num_pages = Stevedore::Pdf.new(file.path).num_pages
+
       if num_pages > 1
-        `pdftk #{file.path} cat 1 output - | pdftk - stamp #{banner.path} output - | pdftk A=- B=#{file.path} cat A1 B2-end output #{output.path}`
+        line = Cocaine::CommandLine.new(
+          "pdftk",
+          ":file_path cat 1 output - | pdftk - stamp :banner_path output - | pdftk A=- B=:file_path cat A1 B2-end output :output_path"
+        )
       else
-        `pdftk #{file.path} stamp #{banner.path} output #{output.path}`
+        line = Cocaine::CommandLine.new(
+          "pdftk",
+          ":file_path stamp :banner_path output :output_path"
+        )
       end
+
+      line.run(
+        file_path: file.path,
+        banner_path: banner.path
+        output_path: output.path
+      )
+
       output
     end
   end
