@@ -31,8 +31,13 @@ class PublicInspectionDocumentFileImporter
   private
 
   def download_file
-    File.open(pdf_path, 'wb') do |f|
-      f.write(api_client.get(pdf_url).body)
+    response = api_client.get(pdf_url)
+    if response.code == 200
+      File.open(pdf_path, 'wb') do |f|
+        f.write(response.body)
+      end
+    else
+      raise "invalid response (#{response.code}) when downloading PDF: #{response.body}"
     end
   end
 
