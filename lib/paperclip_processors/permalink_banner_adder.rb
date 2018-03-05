@@ -26,7 +26,7 @@ module Paperclip
 
       line.run(
         file_path: file.path,
-        banner_path: banner.path
+        banner_path: banner.path,
         output_path: output.path
       )
 
