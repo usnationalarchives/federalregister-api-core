@@ -54,7 +54,7 @@ gem 'paperclip', '~> 2.8'
 gem 'mime-types', '~> 1.25', '>= 1.25.1'
 gem 'aws-sdk', '~> 1.6.9'
 
-gem 'stevedore', '0.2.0'
+gem 'stevedore', '0.3.0'
 
 gem 'active_hash', '0.9.5'
 gem 'bcrypt-ruby', '2.1.2', :require => 'bcrypt'

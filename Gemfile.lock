@@ -95,12 +95,6 @@ GEM
       uuidtools (~> 2.1)
     bcrypt-ruby (2.1.2)
     builder (3.1.4)
-    capistrano (2.15.4)
-      highline
-      net-scp (>= 1.0.0)
-      net-sftp (>= 2.0.0)
-      net-ssh (>= 2.0.14)
-      net-ssh-gateway (>= 1.1.0)
     chronic (0.10.2)
     chunky_png (0.9.0)
     ci_reporter (1.6.3)
@@ -127,7 +121,6 @@ GEM
     fakeweb (1.3.0)
     faraday (0.9.2)
       multipart-post (>= 1.2, < 3)
-    fastercsv (1.4.0)
     ffi (1.9.6)
     fission (0.5.0)
       CFPropertyList (~> 2.2)
@@ -237,9 +230,7 @@ GEM
     geokit (1.10.0)
     gherkin (2.11.5)
       json (>= 1.4.6)
-    git (1.2.8)
     haml (3.0.4)
-    highline (1.6.21)
     hoe (3.14.2)
       rake (>= 0.8, < 11.0)
     honeybadger (1.10.1)
@@ -257,11 +248,6 @@ GEM
       activesupport
     inflecto (0.0.2)
     ipaddress (0.8.0)
-    jeweler (1.8.4)
-      bundler (~> 1.0)
-      git (>= 1.2.5)
-      rake
-      rdoc
     jrails (0.6.0)
     json (1.7.7)
     juicer (1.0.6)
@@ -292,8 +278,6 @@ GEM
     net-sftp (2.1.2)
       net-ssh (>= 2.6.5)
     net-ssh (2.9.1)
-    net-ssh-gateway (1.2.0)
-      net-ssh (>= 2.6.5)
     nokogiri (1.6.0)
       mini_portile (~> 0.5.0)
     open4 (1.3.4)
@@ -351,8 +335,6 @@ GEM
       ruby-progressbar (~> 1.4)
     ruby-progressbar (1.7.1)
     rubyzip (1.1.7)
-    rvm-capistrano (1.5.4)
-      capistrano (~> 2.15.4)
     searchlogic (2.4.12)
       activerecord (>= 2.0.0)
     shoulda (2.10.3)
@@ -361,17 +343,13 @@ GEM
       rack-protection (~> 1.4)
       tilt (>= 1.3, < 3)
     slop (3.4.7)
-    stevedore (0.2.0)
-    system_timer (1.2.4)
+    stevedore (0.3.0)
     test-unit (1.2.3)
       hoe (>= 1.5.1)
     thinking-sphinx (1.4.14)
       activerecord (>= 1.15.6, < 3.0.0)
       after_commit (>= 1.0.7)
       riddle (>= 1.5.3)
-    thunder_punch (0.1.3)
-      capistrano (>= 2.5.5)
-      jeweler
     tilt (2.0.8)
     timecop (0.6.1)
     tins (0.8.0)
@@ -408,7 +386,6 @@ DEPENDENCIES
   aws-s3 (= 0.6.2)
   aws-sdk (~> 1.6.9)
   bcrypt-ruby (= 2.1.2)
-  capistrano (= 2.15.4)
   ci_reporter (= 1.6.3)
   cocaine
   compass (= 0.10.1)
@@ -419,7 +396,6 @@ DEPENDENCIES
   factory_girl (= 1.2.4)
   fakeweb
   faraday (~> 0.9.2)
-  fastercsv (= 1.4.0)
   ffi-hunspell!
   fog
   fog-google (= 0.1.0)
@@ -465,15 +441,12 @@ DEPENDENCIES
   rspec-rails (= 1.3.4)
   rubocop
   rubyzip (>= 1.1.7)
-  rvm-capistrano (~> 1.5.4)
   searchlogic (= 2.4.12)
   sendgrid!
   shoulda (= 2.10.3)
-  stevedore (= 0.2.0)
-  system_timer (= 1.2.4)
+  stevedore (= 0.3.0)
   test-unit (= 1.2.3)
   thinking-sphinx (= 1.4.14)
-  thunder_punch (= 0.1.3)
   timecop
   titleize
   typhoeus (~> 1.0, >= 1.0.1)
