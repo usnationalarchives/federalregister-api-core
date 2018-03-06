@@ -4,12 +4,12 @@ module Paperclip
     include RouteBuilder
 
     def make
-      banner_pdf = generate_banner
-
       output = Tempfile.new("pil_doc_with_banner")
-      num_pages = Stevedore::Pdf.new(file.path).num_pages
+      pdf_info = Stevedore::Pdf.new(file.path)
 
-      if num_pages > 1
+      banner_pdf = generate_banner(pdf_info.page_size)
+
+      if pdf_info.num_pages > 1
         page_1 = Tempfile.new('pil_doc_page_1')
 
         # grab first page
@@ -55,12 +55,12 @@ module Paperclip
       output
     end
 
-    def generate_banner
+    def generate_banner(page_size)
       banner_pdf = Tempfile.new(['pil_banner', '.pdf'])
 
 
       Tempfile.open(['pil_banner', '.html']) do |input_html|
-        input_html.write generate_html
+        input_html.write generate_html(page_size)
         input_html.close
 
         Cocaine::CommandLine.new(
@@ -75,8 +75,12 @@ module Paperclip
       banner_pdf
     end
 
-    def generate_html
-      Content.render_erb 'public_inspection/_pdf_banner',
-        document: attachment.instance
+    def generate_html(page_size)
+      document_size = page_size.present? && Array(page_size)[1].to_i > 792 ? 'US-Legal': 'US-Letter'
+
+      Content.render_erb('public_inspection/_pdf_banner', {
+        document: attachment.instance,
+        document_size: document_size
+      })
     end
 end
