@@ -47,7 +47,7 @@ module Paperclip
           ":input_path stamp :banner_path output :output_path"
         ).run(
           input_path: file.path,
-          banner_path: banner.path,
+          banner_path: banner_pdf.path,
           output_path: output.path
         )
       end
