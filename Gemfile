@@ -72,7 +72,6 @@ gem 'compass', '0.10.1'
 gem 'compass-960-plugin', '0.9.13', :require => false
 gem 'lemonade', '0.3.2'
 gem 'icalendar'
-gem 'pdfkit', '0.5.2'
 gem 'klarlack', '0.0.7',
   git: 'https://github.com/criticaljuncture/klarlack.git',
   ref: 'f4c9706cd542046e7e37a4872b3a272b57cbb31b'

@@ -291,7 +291,6 @@ GEM
     passenger (5.2.0)
       rack
       rake (>= 0.8.1)
-    pdfkit (0.5.2)
     popen4 (0.1.2)
       Platform (>= 0.4.0)
       open4 (>= 0.4.0)
@@ -426,7 +425,6 @@ DEPENDENCIES
   nokogiri (= 1.6.0)
   paperclip (~> 2.8)
   passenger (= 5.2.0)
-  pdfkit (= 0.5.2)
   popen4
   pry
   pry-remote

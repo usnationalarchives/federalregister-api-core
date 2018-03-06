@@ -55,22 +55,6 @@ WORKDIR /
 
 
 ##################
-### WKHTML2PDF
-##################
-
-WORKDIR /tmp
-
-RUN apt-get update &&\
-  apt-get install -y xfonts-75dpi xfonts-base pdftk &&\
-  apt-get clean &&\
-  rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/
-
-RUN curl -OL https://github.com/wkhtmltopdf/wkhtmltopdf/releases/download/0.12.4/wkhtmltox-0.12.4_linux-generic-amd64.tar.xz
-RUN tar -xvf /tmp/wkhtmltox-0.12.4_linux-generic-amd64.tar.xz
-RUN cp /tmp/wkhtmltox/bin/wkhtmltopdf /usr/local/bin/
-
-
-##################
 ### PRINCEXML
 ##################
 
