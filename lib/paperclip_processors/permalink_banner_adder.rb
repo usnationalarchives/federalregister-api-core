@@ -83,4 +83,5 @@ module Paperclip
         document_size: document_size
       })
     end
+  end
 end
