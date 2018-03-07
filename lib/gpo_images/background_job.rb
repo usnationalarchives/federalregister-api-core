@@ -16,6 +16,8 @@ module GpoImages
     end
 
     def self.perform(eps_filename, zipped_filename, ftp_transfer_date)
+      ActiveRecord::Base.verify_active_connections!
+      
       new(eps_filename, zipped_filename, ftp_transfer_date).perform
     end
 
