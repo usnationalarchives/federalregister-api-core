@@ -12,7 +12,7 @@ RUN apt-get update && apt-get install vim curl build-essential gettext-base -y
 ### RUBY
 #######################
 
-RUN apt-get install software-properties-common
+RUN apt-get install -y software-properties-common
 RUN apt-add-repository ppa:brightbox/ruby-ng
 RUN apt-get update && apt-get install -y ruby1.9.3 ruby1.9.1-dev
 
@@ -84,20 +84,9 @@ RUN  fc-cache -f -v
 ##################
 
 RUN apt-get update &&\
-  apt-get install -y checkinstall libtiff5-dev libx11-dev libxext-dev zlib1g-dev libpng12-dev libjpeg-dev &&\
+  apt-get update && apt-get install -y checkinstall libtiff5-dev libx11-dev libxext-dev zlib1g-dev libpng12-dev libjpeg-dev ghostscript libgs-dev imagemagick &&\
   apt-get clean &&\
   rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/
-
-WORKDIR /tmp
-
-RUN curl -O https://www.imagemagick.org/download/ImageMagick-6.9.9-37.tar.xz
-RUN tar -xvf ImageMagick-6.9.9-37.tar.xz
-
-WORKDIR /tmp/ImageMagick-6.9.9-37
-RUN ./configure && make
-RUN make install
-RUN ldconfig /usr/local/lib
-
 
 ##################
 ### TIMEZONE
