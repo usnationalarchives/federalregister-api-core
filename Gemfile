@@ -92,7 +92,6 @@ gem 'sendgrid', :git => "https://github.com/criticaljuncture/sendgrid.git", :bra
 gem 'modularity', '0.6.1'
 
 gem "validation_reflection", "0.3.8"
-gem 'juicer', '1.0.6'
 
 gem 'rdoc'
 gem 'net-sftp'
