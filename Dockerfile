@@ -12,7 +12,7 @@ RUN apt-get update && apt-get install vim curl build-essential gettext-base -y
 ### RUBY
 #######################
 
-RUN apt-get install software-properties-common
+RUN apt-get install -y software-properties-common
 RUN apt-add-repository ppa:brightbox/ruby-ng
 RUN apt-get update && apt-get install -y ruby1.9.3 ruby1.9.1-dev
 
