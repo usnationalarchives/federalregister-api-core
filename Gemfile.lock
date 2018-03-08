@@ -99,7 +99,6 @@ GEM
     chunky_png (0.9.0)
     ci_reporter (1.6.3)
       builder (>= 2.1.2)
-    cmdparse (2.0.5)
     cocaine (0.4.2)
     coderay (1.1.0)
     compass (0.10.1)
@@ -250,10 +249,6 @@ GEM
     ipaddress (0.8.0)
     jrails (0.6.0)
     json (1.7.7)
-    juicer (1.0.6)
-      cmdparse
-      nokogiri
-      rubyzip
     lemonade (0.3.2)
       chunky_png (>= 0.7.3)
       compass (>= 0.10.0)
@@ -410,7 +405,6 @@ DEPENDENCIES
   indefinite_article
   jrails (= 0.6.0)
   json (= 1.7.7)
-  juicer (= 1.0.6)
   klarlack (= 0.0.7)!
   lemonade (= 0.3.2)
   mechanize (= 1.0.0)
