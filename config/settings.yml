@@ -1,6 +1,6 @@
 shared: &shared
   varnish:
-    host: varnish
+    host: <%= ENV["VARNISH_ADDR"] || 'varnish' %>
     port: 6082
 
 # Make any updates -web also
