@@ -15,7 +15,7 @@ namespace :data do
       content:entries:import
       content:gpo_images:process_daily_issue_images
       content:entries:json:compile:daily_toc
-      content:entries:json:compile:fr_index
+      
       sphinx:rebuild_delta
 
       content:issues:mark_complete
