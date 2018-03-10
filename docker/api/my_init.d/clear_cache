@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# only clear cache at container startup not on container restart
+# ensures a flapping container isn't repeatedly clearing the cache
+rm /etc/my_init.d/clear_cache
+
 cd /home/app
 
 exec /sbin/setuser app rake varnish:expire:everything
