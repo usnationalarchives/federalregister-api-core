@@ -13,6 +13,7 @@ module CacheUtils
         client.send(:cmd, "ban req.url ~ #{regexp}")
       rescue SocketError => e
         Rails.logger.warn("Couldn't connect to varnish to expire '#{regexp}'")
+        Honeybadger.notify(e)
       end
     end
 
