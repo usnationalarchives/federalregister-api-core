@@ -2,6 +2,8 @@ shared: &shared
   varnish:
     host: <%= ENV["VARNISH_ADDR"] || 'varnish' %>
     port: 6082
+  regulations_dot_gov:
+    base_uri: <%= ENV["REG_GOV_BASE_URL"] || 'http://api.data.gov/TEST/regulations/v3' %>
 
 # Make any updates -web also
 test:
@@ -39,3 +41,5 @@ production:
     private_images: private.images.federalregister.gov
     public_images: images.federalregister.gov
   ofr_flickr_group_id: 1058319@N21
+  regulations_dot_gov:
+    base_uri: <%= ENV["REG_GOV_BASE_URL"] || 'http://api.data.gov/regulations/v3' %>

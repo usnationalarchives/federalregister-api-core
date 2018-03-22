@@ -22,13 +22,7 @@ class RegulationsDotGov::Client
     debug_output $stderr
   end
 
-  if Rails.env.production?
-    base_uri('http://api.data.gov/regulations/v3/')
-  else
-    base_uri('http://api.data.gov/TEST/regulations/v3/')
-  end
-
-  base_uri 'http://api.data.gov/regulations/v3/'
+  base_uri SETTINGS["regulations_dot_gov"]["base_uri"]
   default_timeout 20
 
   DOCKET_PATH  = '/docket.json'
