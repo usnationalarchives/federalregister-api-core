@@ -1,10 +1,10 @@
 class EntryRegulationsDotGovImporter
   extend ActiveSupport::Memoizable
-  @queue = :api_core
+  @queue = :reg_gov
 
   def self.perform(document_number)
     ActiveRecord::Base.verify_active_connections!
-    
+
     new.perform(document_number)
   end
 
