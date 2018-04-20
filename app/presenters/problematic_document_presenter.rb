@@ -62,14 +62,24 @@ class ProblematicDocumentPresenter
   def rules_with_date_text
     rules.each_with_object({}) do |doc, hsh|
 
-      mods_node = Content::EntryImporter::ModsFile.new(date, false).
-        find_entry_node_by_document_number(doc.document_number)
-      date_text = mods_node.css('dates').first.try(:content)
-      extracted_dates = PotentialDateExtractor.extract(date_text)
+      date_text, extracted_dates = extract_dates(doc, date)
 
       hsh[doc.document_number] = highlight_dates(
         extracted_dates,
         doc.effective_on,
+        date_text
+      )
+    end
+  end
+
+  def proposed_rules_with_date_text
+    proposed_rules.each_with_object({}) do |doc, hsh|
+
+      date_text, extracted_dates = extract_dates(doc, date)
+
+      hsh[doc.document_number] = highlight_dates(
+        extracted_dates,
+        doc.comments_close_on,
         date_text
       )
     end
@@ -107,6 +117,24 @@ class ProblematicDocumentPresenter
         doc.granule_class == "RULE" &&
         !doc.document_number.match(/^C-/)
       end
+  end
+
+  def proposed_rules
+    @proposed_rules_without_dates ||= issue.
+      entries.
+      select do |doc|
+        doc.granule_class == "PRORULE" &&
+        !doc.document_number.match(/^C-/)
+      end
+  end
+
+  def extract_dates(doc, date)
+    mods_node = Content::EntryImporter::ModsFile.new(date, false).
+      find_entry_node_by_document_number(doc.document_number)
+    date_text = mods_node.css('dates').first.try(:content)
+    extracted_dates = PotentialDateExtractor.extract(date_text)
+
+    return date_text, extracted_dates
   end
 
   def highlight_dates(extracted_dates, date_to_highlight, date_text)

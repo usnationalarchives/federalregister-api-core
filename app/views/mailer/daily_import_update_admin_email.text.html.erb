@@ -164,6 +164,40 @@
       </table>
       <% end %>
 
+      <% if @problematic_document_presenter.proposed_rules_with_date_text.present? %>
+      <h3 style="font-family:'Helvetica Neue',Arial,Helvetica,sans-serif;margin: 25px 0 5px;font-size: 20px;border-bottom: 1px solid #000;">
+        Proposed Rules
+      </h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Document Number</th>
+            <th>Comment Date</th>
+            <th>Dates</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @problematic_document_presenter.proposed_rules_with_date_text.each do |doc_num, dates| %>
+            <% document = Entry.find_by_document_number(doc_num) %>
+            <tr style="<%= cycle(nil, light_gray) %>">
+              <td style="width: 150px;" align="left">
+                <%= link_to doc_num, short_entry_url(document.document_number) %>
+              </td>
+              <% if document.comments_close_on %>
+                <td style="width: 150px;" align="left">
+              <% else %>
+                <td style="width: 150px; background-color: #FCC;" align="left">
+              <% end %>
+                  <%= document.comments_close_on %>
+                </td>
+              <td style="width: 600px" align="left"><%= dates %></td>
+            </tr>
+          <% end %>
+          <% reset_cycle %>
+        </tbody>
+      </table>
+      <% end %>
+
       <% if @problematic_document_presenter.multiple_comment_dates.present? %>
       <h3 style="font-family:'Helvetica Neue',Arial,Helvetica,sans-serif;margin: 25px 0 5px;font-size: 20px;border-bottom: 1px solid #000;">
         Documents with Multiple Comment Dates
