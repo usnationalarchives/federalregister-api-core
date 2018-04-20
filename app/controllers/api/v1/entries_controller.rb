@@ -28,7 +28,14 @@ class Api::V1::EntriesController < ApiController
         fields = EntryApiRepresentation.default_index_fields_rss
         find_options = EntryApiRepresentation.find_options_for(fields)
 
-        search = entry_search(params.merge(:order => 'newest'), fields)
+        search = entry_search(
+          params.merge(
+            conditions: {publication_date: {is: Issue.current.publication_date}},
+            order: 'newest',
+            per_page: 200,
+          ),
+          fields
+        )
         documents = search.results(find_options)
         render_rss(documents, "Federal Register #{search.summary}")
       end

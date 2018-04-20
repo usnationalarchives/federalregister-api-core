@@ -34,8 +34,10 @@ class Api::V1::PublicInspectionDocumentsController < ApiController
         fields = PublicInspectionDocumentApiRepresentation.default_index_fields_rss
         find_options = PublicInspectionDocumentApiRepresentation.find_options_for(fields)
 
-        search = public_inspection_search(params.merge(:order => 'newest'), fields)
-
+        search = public_inspection_search(
+          params.merge(order: 'newest', per_page: 200),
+          fields
+        )
         documents = search.results(find_options)
         render_rss(documents, "Federal Register #{search.summary}")
       end
