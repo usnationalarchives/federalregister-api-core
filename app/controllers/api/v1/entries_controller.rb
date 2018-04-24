@@ -29,11 +29,7 @@ class Api::V1::EntriesController < ApiController
         find_options = EntryApiRepresentation.find_options_for(fields)
 
         search = entry_search(
-          params.to_hash.deep_merge(
-            "conditions" => {"publication_date" => {"is" => Issue.current.publication_date}},
-            order: 'newest',
-            per_page: 200,
-          ),
+          params.merge(order: 'newest', per_page: 200),
           fields
         )
         documents = search.results(find_options)
