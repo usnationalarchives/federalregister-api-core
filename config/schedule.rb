@@ -19,7 +19,7 @@ every "*/5 4-21 * * *" do
   rake 'data:daily'
 end
 
-if Rails.env != 'development'
+if ENV['RAILS_ENV'] != 'development'
 
   # Expire pages warning of late content at 9AM/10AM
   every '0 9,10 * * 1-5' do
