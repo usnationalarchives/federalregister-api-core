@@ -10,15 +10,22 @@ data/
 !data/regulations_dot_gov_participating_agencies.csv
 
 db/sphinx/*
+
 log*
+!log/.gitkeep
 
 public/images/icons.png
-public/index/pdf*
-public/generated_files*
+public/index/pdf
+public/generated_files
+
 app/stylesheets/*.css
 app/stylesheets/admin/*.css
-public/system*
-public/uploads*
-tmp*
 
-vendor/bundle*
+public/system
+public/uploads
+
+tmp*
+!tmp/.gitkeep
+!tmp/pids/.gitkeep
+
+vendor/bundle

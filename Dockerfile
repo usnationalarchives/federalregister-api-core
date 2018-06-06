@@ -4,17 +4,14 @@
 
 FROM quay.io/criticaljuncture/baseimage:16.04
 
-# Update apt - add gettext for ENV var substitution in tmpl files
-RUN apt-get update && apt-get install vim curl build-essential gettext-base -y
-
 
 #######################
 ### RUBY
 #######################
 
-RUN apt-get install -y software-properties-common
-RUN apt-add-repository ppa:brightbox/ruby-ng
-RUN apt-get update && apt-get install -y ruby1.9.3 ruby1.9.1-dev
+RUN apt-get update && apt-get install -y ruby1.9.3 ruby1.9.1-dev &&\
+  apt-get clean &&\
+  rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/
 
 
 #######################
@@ -22,18 +19,15 @@ RUN apt-get update && apt-get install -y ruby1.9.3 ruby1.9.1-dev
 #######################
 
 RUN apt-get update &&\
-  apt-get install -y patch libcurl4-openssl-dev libpcre3-dev git libmysqlclient-dev mysql-client &&\
-  apt-get clean &&\
-  rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/
-
-RUN apt-get update &&\
-  apt-get install -y apache2-utils fontconfig hunspell-en-us libcurl4-gnutls-dev libhunspell-1.3-0 libhunspell-dev pngcrush secure-delete xfonts-75dpi xfonts-base xpdf pdftk &&\
+  apt-get install -y gettext-base patch libcurl4-openssl-dev libpcre3-dev git libmysqlclient-dev mysql-client apache2-utils fontconfig hunspell-en-us libhunspell-1.3-0 libhunspell-dev pngcrush secure-delete xfonts-75dpi xfonts-base xpdf pdftk &&\
   apt-get clean &&\
   rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/
 
 # node js - packages are out of date
-RUN curl -sL https://deb.nodesource.com/setup_8.x | bash -
-RUN apt-get install -y nodejs
+RUN curl -sL https://deb.nodesource.com/setup_8.x | bash - &&\
+  apt-get install -y nodejs &&\
+  apt-get clean &&\
+  rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/
 
 # npm packages for testing
 RUN npm install -g jshint
@@ -44,14 +38,14 @@ RUN npm install -g jshint
 #######################
 
 WORKDIR /tmp
-RUN curl -O http://sphinxsearch.com/files/sphinx-2.1.2-release.tar.gz
-RUN tar xzvf sphinx-2.1.2-release.tar.gz
-WORKDIR /tmp/sphinx-2.1.2-release
-RUN ./configure
-RUN make
-RUN make install
-
-WORKDIR /
+RUN curl -O http://sphinxsearch.com/files/sphinx-2.1.2-release.tar.gz &&\
+  tar xzvf sphinx-2.1.2-release.tar.gz &&\
+  cd /tmp/sphinx-2.1.2-release &&\
+  ./configure &&\
+  make &&\
+  make install &&\
+  rm /tmp/sphinx-2.1.2-release.tar.gz &&\
+  rm -Rf /tmp/sphinx-2.1.2-release
 
 
 ##################
@@ -66,10 +60,12 @@ RUN apt-get update &&\
 WORKDIR /tmp
 
 # install prince and license template
-RUN curl -O  http://www.princexml.com/download/prince-8.1r5-ubuntu1604-amd64.tar.gz
-RUN tar -xzvf prince-8.1r5-ubuntu1604-amd64.tar.gz
-WORKDIR /tmp/prince-8.1r5-ubuntu1604-amd64
-RUN ./install.sh
+RUN curl -O https://www.princexml.com/download/prince-8.1r5-ubuntu1604-amd64.tar.gz &&\
+  tar -xzvf prince-8.1r5-ubuntu1604-amd64.tar.gz &&\
+  cd /tmp/prince-8.1r5-ubuntu1604-amd64 &&\
+  ./install.sh &&\
+  rm /tmp/prince-8.1r5-ubuntu1604-amd64.tar.gz &&\
+  rm -Rf /tmp/prince-8.1r5-ubuntu1604-amd64
 
 COPY docker/api/files/princexml/license.dat.tmpl /usr/local/lib/prince/license/license.dat.tmpl
 
@@ -88,6 +84,7 @@ RUN apt-get update &&\
   apt-get clean &&\
   rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/
 
+
 ##################
 ### TIMEZONE
 ##################
@@ -96,17 +93,11 @@ RUN ln -sf /usr/share/zoneinfo/US/Eastern /etc/localtime
 
 
 ##################
-### SERVICES
+### APP USER
 ##################
 
-COPY docker/api/service/api/run /etc/service/api/run
-COPY docker/api/my_init.d /etc/my_init.d
-COPY docker/api/service/resque_worker_1/run /etc/service/resque_worker_1/run
-COPY docker/api/service/resque_worker_2/run /etc/service/resque_worker_2/run
-COPY docker/api/service/resque_worker_3/run /etc/service/resque_worker_3/run
-
-RUN adduser app -uid 1000 --system
-RUN usermod -a -G docker_env app
+RUN adduser app -uid 1000 --system &&\
+  usermod -a -G docker_env app
 
 
 ###############################
@@ -121,31 +112,40 @@ RUN bundle install --system --full-index &&\
   passenger-config install-standalone-runtime &&\
   passenger start --runtime-check-only
 
+# docker cached layer build optimization:
+# caches the latest security upgrade versions
+# at the same time we're doing something else slow (changing the bundle)
+# but something we do often enough that the final unattended upgrade at the
+# end of this dockerfile isn't installing the entire world of security updates
+# since we set up the dockerfile for the project
+RUN apt-get update && unattended-upgrade -d
+
 ENV PASSENGER_MIN_INSTANCES 1
 ENV WEB_PORT 3000
+
+
+##################
+### SERVICES
+##################
+
+COPY docker/api/my_init.d /etc/my_init.d
+COPY docker/api/service /etc/service
 
 
 ##################
 ### APP
 ##################
 
-COPY . /home/app/
-
+COPY --chown=1000:1000 . /home/app/
 WORKDIR /home/app
-RUN mkdir -p /home/app/log
-RUN mkdir -p /home/app/pids
-RUN mkdir -p /home/app/tmp/pids
-
-#RUN RAILS_SESSION_KEY=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX ./script/runner -e production 'Sass::Plugin.options[:always_update] = 1; Sass::Plugin.update_stylesheets'
-
-RUN chown -R app /home/app
 
 
 ##################
 ### BASE (LAST)
 ##################
 
-# ensure all packages are up to date
+# ensure all packages are as up to date as possible
+# installs all updates since we last bundled
 RUN apt-get update && unattended-upgrade -d
 
 # set terminal
