@@ -57,6 +57,7 @@ class EntryApiRepresentation < ApiRepresentation
   field(:corrections, :include => :corrections){|e| e.corrections.map{|c| api_v1_entry_url(c.document_number, :format => :json)}}
   field(:correction_of, :include => :correction_of, :select => :correction_of_id){|e| api_v1_entry_url(e.correction_of.document_number, :format => :json) if e.correction_of}
   field(:dates)
+  field(:disposition_notes, :select => [:executive_order_notes]){|e| e.executive_order_notes}
   field(:docket_id, :include => :docket_numbers){|e| e.docket_numbers.first.try(:number)} # backwards compatible for now
   field(:docket_ids, :include => :docket_numbers){|e| e.docket_numbers.map(&:number)}
   field(:document_number)
