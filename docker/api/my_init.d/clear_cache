@@ -1,4 +1,5 @@
 #!/bin/bash
+set -ex
 
 # only clear cache at container startup not on container restart
 # ensures a flapping container isn't repeatedly clearing the cache

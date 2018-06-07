@@ -1,4 +1,5 @@
 #!/bin/bash
+set -ex
 
 if ! [ "$CONTAINER_ROLE" = "worker" ]; then
   rm -rf /etc/my_init.d/clear_cache

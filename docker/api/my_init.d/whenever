@@ -1,5 +1,5 @@
 #!/bin/bash
-
+set -ex
 cd /home/app
 
 exec /sbin/setuser app whenever --update-crontab
