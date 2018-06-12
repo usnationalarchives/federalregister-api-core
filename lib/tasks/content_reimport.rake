@@ -38,13 +38,24 @@ namespace :content do
     end
 
     namespace :presidential_documents do
-      desc "Reimport presidential documents (adds fields that weren't originall imported)"
+      desc "Reimport presidential documents (adds fields that weren't originally imported)"
       task :reimport => :environment do
+        # supports 'mods' or 'bulkdata'
+        import_from = ENV['IMPORT_FROM'] || 'mods'
+
         Entry.scoped(:conditions => "granule_class = 'PRESDOCU' AND publication_date > '2000-01-01'").find_each do |entry|
-          puts "reimporting #{entry.document_number} (#{entry.publication_date})"
-          next unless File.exists?(entry.full_xml_file_path)
-          bulkdata_node = Nokogiri::XML(open(entry.full_xml_file_path)).root
-          Content::EntryImporter.new(:entry => entry, :bulkdata_node => bulkdata_node).update_attributes(:presidential_document_type_id, :signing_date, :executive_order_number)
+          puts "reimporting #{entry.document_number} (#{entry.publication_date}) from #{import_from}"
+
+          case import_from
+          when 'mods'
+            options = {}
+          when 'bulkdata'
+            next unless entry.has_full_xml?
+            options = {bulkdata_node: Nokogiri::XML(open(entry.full_xml_file_path)).root}
+          end
+
+          importer_options = {entry: entry}.merge(options)
+          Content::EntryImporter.new(importer_options).update_attributes(:presidential_document_type_id, :signing_date, :executive_order_number, :proclamation_number)
         end
       end
     end

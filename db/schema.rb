@@ -9,20 +9,13 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20180205194929) do
+ActiveRecord::Schema.define(:version => 20180612005005) do
 
   create_table "action_names", :force => true do |t|
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
-
-  create_table "action_names_document_subtypes", :id => false, :force => true do |t|
-    t.integer "action_name_id"
-    t.integer "document_subtype_id"
-  end
-
-  add_index "action_names_document_subtypes", ["action_name_id", "document_subtype_id"], :name => "action_name_id"
 
   create_table "agencies", :force => true do |t|
     t.integer  "parent_id"
@@ -166,6 +159,28 @@ ActiveRecord::Schema.define(:version => 20180205194929) do
     t.datetime "updated_at"
   end
 
+  create_table "comments", :force => true do |t|
+    t.integer  "user_id"
+    t.string   "document_number"
+    t.string   "comment_tracking_number"
+    t.datetime "created_at"
+    t.boolean  "comment_publication_notification"
+    t.datetime "checked_comment_publication_at"
+    t.string   "salt"
+    t.string   "iv"
+    t.binary   "encrypted_comment_data"
+    t.string   "agency_name"
+    t.boolean  "agency_participating"
+    t.string   "comment_document_number"
+    t.string   "submission_key"
+  end
+
+  add_index "comments", ["agency_participating"], :name => "index_comments_on_agency_participating"
+  add_index "comments", ["comment_publication_notification"], :name => "index_comments_on_comment_publication_notification"
+  add_index "comments", ["comment_tracking_number"], :name => "index_comments_on_comment_tracking_number"
+  add_index "comments", ["document_number"], :name => "index_comments_on_document_number"
+  add_index "comments", ["user_id"], :name => "index_comments_on_user_id"
+
   create_table "dictionary_words", :force => true do |t|
     t.string   "word"
     t.datetime "created_at"
@@ -198,11 +213,6 @@ ActiveRecord::Schema.define(:version => 20180205194929) do
     t.text     "metadata"
     t.datetime "created_at"
     t.datetime "updated_at"
-  end
-
-  create_table "document_subtypes", :force => true do |t|
-    t.string "granule_class"
-    t.string "name"
   end
 
   create_table "entries", :force => true do |t|
@@ -250,6 +260,7 @@ ActiveRecord::Schema.define(:version => 20180205194929) do
     t.string   "fr_index_doc"
     t.integer  "issue_number"
     t.string   "comment_url_override"
+    t.string   "proclamation_number"
   end
 
   add_index "entries", ["citation"], :name => "index_entries_on_citation"
@@ -264,6 +275,7 @@ ActiveRecord::Schema.define(:version => 20180205194929) do
   add_index "entries", ["id", "publication_date"], :name => "index_entries_on_id_and_publication_date"
   add_index "entries", ["id"], :name => "index_entries_on_agency_id_and_id"
   add_index "entries", ["presidential_document_type_id", "executive_order_number"], :name => "presdocu_type_id_and_eo_number"
+  add_index "entries", ["proclamation_number"], :name => "index_entries_on_proclamation_number"
   add_index "entries", ["publication_date"], :name => "index_entries_on_agency_id_and_publication_date"
   add_index "entries", ["publication_date"], :name => "index_entries_on_publication_date_and_agency_id"
   add_index "entries", ["raw_text_updated_at"], :name => "index_entries_on_raw_text_updated_at"
@@ -293,7 +305,7 @@ ActiveRecord::Schema.define(:version => 20180205194929) do
     t.integer  "entry_id"
     t.datetime "created_at"
     t.string   "remote_ip"
-    t.text     "raw_referer", :limit => 2147483647
+    t.text     "raw_referer", :limit => 16777215
   end
 
   add_index "entry_page_views", ["created_at"], :name => "index_entry_page_views_on_created_at"
@@ -303,7 +315,7 @@ ActiveRecord::Schema.define(:version => 20180205194929) do
     t.integer  "entry_id"
     t.datetime "created_at"
     t.string   "remote_ip"
-    t.text     "raw_referer", :limit => 2147483647
+    t.text     "raw_referer", :limit => 16777215
   end
 
   add_index "entry_page_views_archive", ["created_at"], :name => "index_entry_page_views_on_created_at"
@@ -452,15 +464,6 @@ ActiveRecord::Schema.define(:version => 20180205194929) do
     t.integer  "crop_height"
     t.integer  "crop_x"
     t.integer  "crop_y"
-  end
-
-  create_table "mailing_lists", :force => true do |t|
-    t.text     "search_conditions",          :limit => 16777215
-    t.string   "title"
-    t.integer  "active_subscriptions_count",                     :default => 0
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "type"
   end
 
   create_table "place_determinations", :force => true do |t|
@@ -616,21 +619,6 @@ ActiveRecord::Schema.define(:version => 20180205194929) do
 
   create_table "small_entities", :force => true do |t|
     t.string "name"
-  end
-
-  create_table "subscriptions", :force => true do |t|
-    t.integer  "mailing_list_id"
-    t.string   "email"
-    t.string   "requesting_ip"
-    t.string   "token"
-    t.datetime "confirmed_at"
-    t.datetime "unsubscribed_at"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.datetime "last_delivered_at"
-    t.integer  "delivery_count",       :default => 0
-    t.date     "last_issue_delivered"
-    t.string   "environment"
   end
 
   create_table "topic_assignments", :force => true do |t|
