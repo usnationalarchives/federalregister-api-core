@@ -12,9 +12,9 @@ class EntryObserver < ActiveRecord::Observer
       purge_cache("^/api/v1/documents")
       purge_cache("^/esi/document")
 
-      if entry.executive_order?
-        purge_cache("^/executive-orders")
-        purge_cache("^/esi/layouts/navigation/executive-orders")
+      if entry.presidential_document?
+        purge_cache("^/presidential-documents")
+        purge_cache("^/esi/layouts/navigation/presidential-documents")
         purge_cache("^/esi/home/presidential_documents")
       end
     end

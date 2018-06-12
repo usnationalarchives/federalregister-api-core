@@ -568,6 +568,10 @@ class Entry < ApplicationModel
     executive_order_number.present?
   end
 
+  def presidential_document?
+    presidential_document_type_id.present?
+  end
+
   def previous_entry
     @previous_entry ||= Entry.first(
       :conditions => ["entries.volume <= ? AND entries.start_page <= ? AND entries.id < ?", volume, start_page, id],
