@@ -1,5 +1,4 @@
 <% super_title @section.title %>
-<%# title @section.title %>
 
 <% add_javascript :src => 'admin/issues_sections_highlights' %>
 
@@ -52,7 +51,11 @@ window.location = url'.gsub(/\s+/,' ') %>
   </div>
 
   <ul id="highlighted" class='document-list'>
-    <%= render :partial => "highlighted_entry", :collection => @highlighted_entries %>
+    <%= render partial: "highlighted_entry",
+      collection: @highlighted_entries,
+      locals: {
+        redirect_to: admin_issue_section_path(@publication_date.to_s(:mdy_dash), @section)
+      } %>
   </ul>
 
   <h2 class="section-header">
