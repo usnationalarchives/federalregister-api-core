@@ -85,13 +85,13 @@
 
         <div class="wrapper">
           <% if flash[:notice] %>
-          <div class="flash notice">
+          <div class="flash notice alert alert-success">
             <%= flash[:notice]%>
           </div>
           <% end %>
 
           <% if flash[:error] %>
-          <div class="flash error">
+          <div class="flash error alert alert-danger">
             <%= flash[:error]%>
           </div>
           <% end %>
