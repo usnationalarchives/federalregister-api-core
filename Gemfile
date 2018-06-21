@@ -81,6 +81,10 @@ gem "net-scp", '1.1.0'
 gem "net-ssh", '2.9.1'
 
 gem "resque"
+gem 'resque-throttler',
+    git: 'https://github.com/criticaljuncture/resque-throttler.git',
+    branch: 'master',
+    require: 'resque/throttler'
 
 gem "httparty"
 gem "httmultiparty", '~> 0.3.13'

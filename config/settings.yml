@@ -4,6 +4,9 @@ shared: &shared
     port: 6082
   regulations_dot_gov:
     base_uri: <%= ENV["REG_GOV_BASE_URL"] || 'http://api.data.gov/TEST/regulations/v3' %>
+    throttle:
+      at: <%= ENV["REG_GOV_JOBS_THROTTLE_AT"] || 2 %>
+      per: <%= ENV["REG_GOV_JOBS_THROTTLE_PER"] || 5 %>
 
 # Make any updates -web also
 test:
