@@ -2,8 +2,8 @@
 set -ex
 
 if ! [ "$CONTAINER_ROLE" = "worker" ]; then
-  rm -rf /etc/my_init.d/clear_cache
   rm -rf /etc/my_init.d/migrate
   rm -rf /etc/my_init.d/sphinx_config
+  rm -rf /etc/my_init.d/varnish
   rm -rf /etc/my_init.d/whenever
 fi
