@@ -9,8 +9,10 @@ class Admin::Issues::Sections::HighlightsController < AdminController
     @section_highlight.publication_date = @publication_date
     @section_highlight.save
     @section_highlight.move_to_top
+    @redirect_to = admin_issue_section_path(@publication_date.to_s(:mdy_dash), @section)
+
     unless request.xhr?
-      redirect_to admin_issue_section_path(@publication_date.to_s(:db), @section)
+      redirect_to @redirect_to
     end
   end
 
