@@ -8,14 +8,13 @@ namespace :data do
       content:entries:import
       content:gpo_images:process_daily_issue_images
       content:entries:json:compile:daily_toc
-
     )
 
     task :really_quick => %w(
       content:entries:import
       content:gpo_images:process_daily_issue_images
       content:entries:json:compile:daily_toc
-      
+
       sphinx:rebuild_delta
 
       content:issues:mark_complete
@@ -49,6 +48,26 @@ namespace :data do
       content:fr_index:update_status_cache
       content:entries:json:compile:fr_index
       mailing_lists:daily_import_email:deliver
+      sitemap:refresh
+    )
+
+    task :reimport => %w(
+      content:entries:reimport
+      content:gpo_images:process_daily_issue_images
+      content:entries:json:compile:daily_toc
+
+      content:agency_assignments:recalculate
+      sphinx:rebuild_delta
+
+      content:public_inspection:import:entry_id
+      content:public_inspection:reindex
+
+      web:notify_of_updated_issue
+
+      content:fr_index:update_status_cache
+      content:entries:json:compile:fr_index
+
+      varnish:expire:everything
       sitemap:refresh
     )
   end

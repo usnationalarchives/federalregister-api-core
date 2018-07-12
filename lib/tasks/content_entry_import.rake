@@ -10,6 +10,11 @@ namespace :content do
       entry_importer(:all)
     end
 
+    desc "Reimport all entry data, forcing bulk data download"
+    task :reimport => :environment do
+      entry_importer(:all, {force_reload_bulkdata: true, force_reload_mods: true})
+    end
+
     desc "Enqueue regulations dot gov import"
     task :enqueue_regs_dot_gov_import => :environment do
       dates = Content.parse_all_dates(ENV['DATE'])
