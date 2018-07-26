@@ -23,7 +23,10 @@ class Api::V1::PublicInspectionDocumentsController < ApiController
         fields = specified_fields || PublicInspectionDocumentApiRepresentation.default_index_fields_csv
         find_options = PublicInspectionDocumentApiRepresentation.find_options_for(fields)
 
-        search = public_inspection_search(params, fields)
+        search = public_inspection_search(
+          {order: 'newest', per_page: 200}.merge(params),
+          fields
+        )
 
         filename = search.summary.gsub(/\W+/, '_').sub(/_$/,'').downcase
         documents = search.results(find_options)
