@@ -83,6 +83,22 @@ class Api::V1::PublicInspectionDocumentsController < ApiController
         publication_date = PublicInspectionIssue.latest_publication_date
         render_date(publication_date)
       end
+
+      wants.csv do
+        cache_for 1.day
+        publication_date = PublicInspectionIssue.latest_publication_date
+        issue = PublicInspectionIssue.published.find_by_publication_date(publication_date)
+
+        if issue.nil?
+          render nothing: true, status: 404
+        else
+          fields = specified_fields || PublicInspectionDocumentApiRepresentation.default_index_fields_csv
+          documents = issue.public_inspection_documents
+
+          filename = "public_inspection_documents_on_#{publication_date}"
+          render_csv(documents, fields, filename)
+        end
+      end
     end
   end
 
