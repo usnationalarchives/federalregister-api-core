@@ -89,8 +89,8 @@ namespace :content do
         entry_importer(:events)
       end
 
-      desc "Extract Executive Order Data"
-      task :executive_order => :environment do
+      desc "Extract Presidential Document Data"
+      task :presidential_documents => :environment do
         entry_importer(:presidential_document_type_id, :signing_date, :executive_order_number, :executive_order_notes)
       end
 

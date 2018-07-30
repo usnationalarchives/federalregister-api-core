@@ -15,7 +15,7 @@ module Content
 
     def self.perform(reprocessed_issue_id)
       ActiveRecord::Base.verify_active_connections!
-      
+
       new(reprocessed_issue_id).perform
     end
 
@@ -35,6 +35,7 @@ module Content
     def reprocess_issue
       reprocess_basic_data
       reprocess_rin_and_significant
+      reprocess_presdoc_fields
       reprocess_events
       reprocess_agencies
     end
@@ -81,6 +82,17 @@ module Content
         Rake::Task['content:entries:import:agencies'].invoke
       rescue StandardError => error
         handle_failure(error,"IssueReprocessor: Reprocess Agencies")
+      end
+    end
+
+    def reprocess_presdoc_fields
+      update_reprocessing_message("reprocessing presidential document fields")
+
+      begin
+        ENV['DATE'] = "#{date.to_s(:iso)}"
+        Rake::Task['content:entries:import:presidential_documents'].invoke
+      rescue StandardError => error
+        handle_failure(error,"IssueReprocessor: Reprocess Presidential Documents")
       end
     end
 
