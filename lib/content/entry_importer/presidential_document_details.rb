@@ -9,8 +9,8 @@ module Content::EntryImporter::PresidentialDocumentDetails
 
   def presidential_document_type_id
     document_type_id = nil
-    if @mods_node
-      presdoc_node = @mods_node.css('presidentialDoc')
+    if mods_node
+      presdoc_node = mods_node.css('presidentialDoc')
       if presdoc_node.present?
         document_type_id = PresidentialDocumentType.find_by_node_name(
           presdoc_node.attr('type').try(:value)
@@ -21,8 +21,8 @@ module Content::EntryImporter::PresidentialDocumentDetails
     return document_type_id if document_type_id
 
     # fall back to bulkdata node if available (presidential orders don't have MODS node)
-    if @bulkdata_node
-      child_node = @bulkdata_node.xpath('./*').first
+    if bulkdata_node
+      child_node = bulkdata_node.xpath('./*').first
       if child_node
         return PresidentialDocumentType.find_by_node_name(child_node.name).try(:id)
       end
@@ -31,8 +31,8 @@ module Content::EntryImporter::PresidentialDocumentDetails
 
   def signing_date
     date = nil
-    if @mods_node
-      presdoc_node = @mods_node.css('presidentialDoc')
+    if mods_node
+      presdoc_node = mods_node.css('presidentialDoc')
 
       if presdoc_node.present?
         date = presdoc_node.attr('date').try(:value)
@@ -42,8 +42,8 @@ module Content::EntryImporter::PresidentialDocumentDetails
     return date if date
 
     # presidential orders only use full text for signing date
-    if @bulkdata_node
-      date_node = @bulkdata_node.css('ORDER').first
+    if bulkdata_node
+      date_node = bulkdata_node.css('ORDER').first
       if date_node && date_node.text =~ /(\w+ \d+, \d{4})/
         # eg 'January 18, 2007'
         str = $1
@@ -57,10 +57,10 @@ module Content::EntryImporter::PresidentialDocumentDetails
   end
 
   def executive_order_number
-    if @mods_node
-      presdoc_node = @mods_node.css('presidentialDoc')
+    if mods_node
+      presdoc_node = mods_node.css('presidentialDoc')
 
-      if presdoc_node.present? && presdoc_node.attr('type') == 'EXECORD'
+      if presdoc_node.present? && presdoc_node.attr('type').value == 'EXECORD'
         return presdoc_node.attr('number').try(:value)
       end
     end
@@ -76,10 +76,10 @@ module Content::EntryImporter::PresidentialDocumentDetails
   end
 
   def proclamation_number
-    if @mods_node
-      presdoc_node = @mods_node.css('presidentialDoc')
+    if mods_node
+      presdoc_node = mods_node.css('presidentialDoc')
 
-      if presdoc_node.present? && presdoc_node.attr('type') == 'PROCLA'
+      if presdoc_node.present? && presdoc_node.attr('type').value == 'PROCLA'
         return presdoc_node.attr('number').try(:value)
       end
     end
