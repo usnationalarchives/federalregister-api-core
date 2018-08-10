@@ -109,6 +109,7 @@ class EntryApiRepresentation < ApiRepresentation
       {:name => president.full_name, :identifier => president.identifier}
     end
   end
+  field(:proclamation_number)
   field(:publication_date)
   field(:raw_text_url, :select => [:publication_date, :document_file_path, :document_number]){|e| entry_raw_text_url(e)}
   field(:regulation_id_number_info, :include => {:entry_regulation_id_numbers => :current_regulatory_plan}) do |entry|
