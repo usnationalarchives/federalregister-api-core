@@ -61,7 +61,7 @@ class EntrySearch < ApplicationSearch
 
   define_filter :regulation_id_number, :label => "Unified Agenda", :phrase => true do |regulation_id_number|
     reg = RegulatoryPlan.find_by_regulation_id_number(regulation_id_number)
-    ["RIN #{Array(regulation_id_number).first}", reg.try(:title).try(:strip)].join(' - ') 
+    ["RIN #{Array(regulation_id_number).first}", reg.try(:title).try(:strip)].join(' - ')
   end
 
   def regulatory_plan_title
@@ -243,6 +243,8 @@ class EntrySearch < ApplicationSearch
       "publication_date ASC, @relevance DESC"
     when 'executive_order_number'
       "executive_order_number ASC"
+    when 'proclamation_number'
+      "proclamation_number ASC"
     else
       @sort_mode = :expr
       "@weight * 1/LOG2( (((NOW()+#{5.days}) - publication_date) / #{1.year} / 3)+2 )"

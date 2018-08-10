@@ -286,6 +286,7 @@ class Entry < ApplicationModel
     has "IF(granule_class = 'CORRECT' OR correction_of_id IS NOT NULL OR (presidential_document_type_id = 2 AND (executive_order_number = 0 or executive_order_number IS NULL)), 1, 0)", :as => :correction, :type => :boolean
     has start_page
     has executive_order_number
+    has proclamation_number
 
     has <<-SQL, :as => :cfr_affected_parts, :type => :multi
       (
