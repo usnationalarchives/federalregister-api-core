@@ -4,9 +4,14 @@ class ApiController < ApplicationController
   class RequestError < StandardError; end
   class UnknownFieldError < RequestError; end
 
+  before_filter :set_cors_headers
   before_filter :enforce_maximum_per_page
 
   private
+
+  def set_cors_headers
+    headers['Access-Control-Allow-Origin'] = '*'
+  end
 
   def enforce_maximum_per_page
     params.delete(:maximum_per_page)
