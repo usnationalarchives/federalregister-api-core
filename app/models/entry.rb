@@ -281,7 +281,10 @@ class Entry < ApplicationModel
     has "CRC32(document_number)", :as => :document_number, :type => :integer
     has "CRC32(IF(granule_class = 'SUNSHINE', 'NOTICE', granule_class))", :as => :type, :type => :integer
     has presidential_document_type_id
+
     has publication_date
+    has "IF(granule_class = 'PRESDOCU', IFNULL(signing_date, publication_date), NULL)", as: :signing_date, type: :datetime
+
     has "IF(granule_class = 'PRESDOCU', INTERVAL(DATE_FORMAT(IFNULL(signing_date,DATE_SUB(publication_date, INTERVAL 3 DAY)), '%Y%m%d'),#{President.all.map{|p| p.starts_on.strftime("%Y%m%d")}.join(', ')}), NULL)", :as => :president_id, :type => :integer
     has "IF(granule_class = 'CORRECT' OR correction_of_id IS NOT NULL OR (presidential_document_type_id = 2 AND (executive_order_number = 0 or executive_order_number IS NULL)), 1, 0)", :as => :correction, :type => :boolean
     has start_page

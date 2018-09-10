@@ -192,6 +192,9 @@ class EntrySearch < ApplicationSearch
   define_date_filter :publication_date,
                      :label => "Publication Date"
 
+  define_date_filter :signing_date,
+                     :label => "Signing Date"
+
   define_date_filter :effective_date,
                      :label => "Effective Date"
 
@@ -406,6 +409,7 @@ class EntrySearch < ApplicationSearch
 
     [
       ['published', :publication_date],
+      ['signed', :signing_date],
       ['with an effective date', :effective_date],
       ['from', :agency_ids],
       ['from', :agencies],
