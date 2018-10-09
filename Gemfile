@@ -61,7 +61,7 @@ gem 'bcrypt-ruby', '2.1.2', :require => 'bcrypt'
 gem 'authlogic', '2.1.3'
 
 # wrapper around http requests that supports multiple backends
-gem 'faraday', '~> 0.9.2'
+gem 'faraday'
 # make multiple http requests concurrently
 gem 'typhoeus', '~> 1.0', '>= 1.0.1'
 
@@ -105,6 +105,10 @@ gem 'whenever', require: false
 gem 'app_config', "=1.3.2",
   :git => 'https://github.com/fredwu/app_config.git',
   :branch => :master
+
+gem 'googleauth'
+# lock googleauth dependency to compatible version
+gem 'addressable', '2.4.0'
 
 gem 'american_date'
 
