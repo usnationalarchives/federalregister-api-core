@@ -84,6 +84,7 @@ RUN apt-get update &&\
   apt-get clean &&\
   rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/
 
+COPY docker/api/files/imagemagick/policy.xml /etc/ImageMagick-6/policy.xml
 
 ##################
 ### TIMEZONE
