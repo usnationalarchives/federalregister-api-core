@@ -110,6 +110,8 @@ gem 'googleauth'
 # lock googleauth dependency to compatible version
 gem 'addressable', '2.4.0'
 
+gem 'memoist'
+
 gem 'american_date'
 
 if RUBY_VERSION =~ /1.9/

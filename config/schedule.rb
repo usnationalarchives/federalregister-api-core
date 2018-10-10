@@ -126,4 +126,13 @@ if ENV['RAILS_ENV'] != 'development'
     rake 'regulations_dot_gov:notify_comment_publication'
   end
 
+  #################################
+  # GOOGLE ANALYTICS PAGE COUNTS
+  #################################
+
+  # runs everyday at 15 minutes past the hour
+  every '15 * * * *' do
+    set :log, 'document_page_counts'
+    rake 'documents:page_count:update_today'
+  end
 end

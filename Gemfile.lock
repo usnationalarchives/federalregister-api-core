@@ -426,6 +426,7 @@ DEPENDENCIES
   klarlack (= 0.0.7)!
   lemonade (= 0.3.2)
   mechanize (= 1.0.0)
+  memoist
   mime-types (~> 1.25, >= 1.25.1)
   mocha (= 0.9.8)
   mock_redis
