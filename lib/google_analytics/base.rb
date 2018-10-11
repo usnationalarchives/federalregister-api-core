@@ -20,5 +20,13 @@ module GoogleAnalytics
         faraday.adapter  Faraday.default_adapter
       end
     end
+
+    def log(msg)
+      logger.info("[#{Time.current}] #{msg}")
+    end
+
+    def logger
+      @logger ||= Logger.new("#{Rails.root}/log/google_analytics_api.log")
+    end
   end
 end

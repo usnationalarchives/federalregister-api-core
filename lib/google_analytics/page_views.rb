@@ -1,17 +1,47 @@
 module GoogleAnalytics
   class PageViews < GoogleAnalytics::Base
-    def counts(args = {})
-      args = default_args.deep_merge(args)
+    RETRIES = 3
+    RETRY_DELAY = 30
 
-      response = connection.post('v4/reports:batchGet') do |request|
-        request.headers = auth.apply(request.headers)
-        request.body = request_body(args)
-      end
+    def counts(args = {})
+      response = ga_api_request(
+        default_args.deep_merge(args)
+      )
 
       JSON.parse(response.body)
     end
 
     private
+
+    def ga_api_request(args)
+      retries = RETRIES
+
+      while retries > 0 do
+        request_start = Time.current
+
+        response = connection.post('v4/reports:batchGet') do |request|
+          request.headers = auth.apply(request.headers)
+          request.body = request_body(args)
+        end
+
+        request_end = Time.current
+        log("GA request took #{request_end - request_start}")
+
+        if response.status == 200
+          return response
+        else
+          retries -= 1
+
+          if retries > 0
+            log("Response status was #{response.status}, retrying in #{RETRY_DELAY} seconds. Retries left: #{retries}.")
+            sleep(RETRY_DELAY)
+          else
+            log("Unable to successfully get a response from GA. No retries left!")
+            raise "GAConnectionError"
+          end
+        end
+      end
+    end
 
     def default_args
       {

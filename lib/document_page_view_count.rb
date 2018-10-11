@@ -75,36 +75,13 @@ class DocumentPageViewCount
     while processed_results < total_results(start_date, end_date) do
       log("processed_results: #{processed_results}/#{total_results(start_date, end_date)}")
 
-      retries = 3
-      delay = 30
-      do_retry = true
-
-      while do_retry && retries > 0 do
-        # get counts
-        request_start = Time.current
-        response = page_views(
-          start_date: start_date,
-          end_date: end_date,
-          per_page: PER_PAGE,
-          page_token: processed_results
-        )
-        request_end = Time.current
-        log("GA request took #{request_end - request_start}")
-
-        if response.status == 200
-          do_retry = false
-        else
-          retries -= 1
-
-          if retries > 0
-            log("Response status was #{response.status}, retrying in #{delay} seconds. #{pluralize('retry', retries)} left.")
-            sleep(delay)
-          else
-            log("Unable to successfully get a response from GA. No retries left!")
-            raise "GAConnectionError"
-          end
-        end
-      end
+      # get counts
+      response = page_views(
+        start_date: start_date,
+        end_date: end_date,
+        per_page: PER_PAGE,
+        page_token: processed_results
+      )
 
       results = response["reports"].first["data"]["rows"]
 
@@ -138,11 +115,10 @@ class DocumentPageViewCount
 
   def log(msg)
     logger.info("[#{Time.current}] #{msg}")
-    puts msg if ENV['VERBOSE'] == "1"
   end
 
   def logger
-    @logger ||= Logger.new("#{Rails.root}/log/document_page_counts.log")
+    @logger ||= Logger.new("#{Rails.root}/log/google_analytics_api.log")
   end
 
   # convert the GA response data structure into document_number, count
@@ -181,7 +157,7 @@ class DocumentPageViewCount
 
   def default_args
     {
-      dimension_filters: dimension_filters
+      dimension_filters: dimension_filters,
     }
   end
 
