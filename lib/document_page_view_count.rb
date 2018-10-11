@@ -24,7 +24,7 @@ class DocumentPageViewCount
     # work through counts one year at a time
     # so as to keep requests reasonable (otherwise risk 503s -
     # heavy lift on the GA side to calculate these counts)
-    (2010..Date.current.year).to_a.reverse.each do |year|
+    (2010..Date.current.year).to_a.each do |year|
       start_date = Date.new(year,1,1)
       end_date = start_date.end_of_year
 
@@ -70,12 +70,15 @@ class DocumentPageViewCount
       log("processed_results: #{processed_results}/#{total_results(start_date, end_date)}")
 
       # get counts
+      request_start = Time.current
       response = page_views(
         start_date: start_date,
         end_date: end_date,
         per_page: PER_PAGE,
         page_token: processed_results
       )
+      request_end = Time.current
+      log("GA request took #{request_end - request_start}")
 
       results = response["reports"].first["data"]["rows"]
 
@@ -108,7 +111,7 @@ class DocumentPageViewCount
   private
 
   def log(msg)
-    logger.info(msg)
+    logger.info("[#{Time.current}] #{msg}")
     puts msg if ENV['VERBOSE'] == "1"
   end
 
