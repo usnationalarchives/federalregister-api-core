@@ -19,16 +19,18 @@ class DocumentPageViewCount
     $redis.get "doc_counts:current_as_of"
   end
 
-  def update_all
-    # reset all counts
-    $redis.del(HISTORICAL_SET)
+  def update_all(start_year=2010, end_year=Date.current.year, reset_counts=true)
+    if reset_counts
+      $redis.del(HISTORICAL_SET)
+    end
+
     $redis.del(TEMP_SET)
     $redis.del(TODAY_SET)
 
     # work through counts one year at a time
     # so as to keep requests reasonable (otherwise risk 503s -
     # heavy lift on the GA side to calculate these counts)
-    (2010..Date.current.year).to_a.each do |year|
+    (start_year..end_year).to_a.each do |year|
       start_date = Date.new(year,1,1)
       end_date = start_date.end_of_year
 
@@ -73,16 +75,36 @@ class DocumentPageViewCount
     while processed_results < total_results(start_date, end_date) do
       log("processed_results: #{processed_results}/#{total_results(start_date, end_date)}")
 
-      # get counts
-      request_start = Time.current
-      response = page_views(
-        start_date: start_date,
-        end_date: end_date,
-        per_page: PER_PAGE,
-        page_token: processed_results
-      )
-      request_end = Time.current
-      log("GA request took #{request_end - request_start}")
+      retries = 3
+      delay = 30
+      do_retry = true
+
+      while do_retry && retries > 0 do
+        # get counts
+        request_start = Time.current
+        response = page_views(
+          start_date: start_date,
+          end_date: end_date,
+          per_page: PER_PAGE,
+          page_token: processed_results
+        )
+        request_end = Time.current
+        log("GA request took #{request_end - request_start}")
+
+        if response.status == 200
+          do_retry = false
+        else
+          retries -= 1
+
+          if retries > 0
+            log("Response status was #{response.status}, retrying in #{delay} seconds. #{pluralize('retry', retries)} left.")
+            sleep(delay)
+          else
+            log("Unable to successfully get a response from GA. No retries left!")
+            raise "GAConnectionError"
+          end
+        end
+      end
 
       results = response["reports"].first["data"]["rows"]
 
