@@ -15,6 +15,10 @@ class DocumentPageViewCount
     end.compact.map{|count| count.to_i}.sum
   end
 
+  def self.last_updated
+    $redis.get "doc_counts:current_as_of"
+  end
+
   def update_all
     # reset all counts
     $redis.del(HISTORICAL_SET)

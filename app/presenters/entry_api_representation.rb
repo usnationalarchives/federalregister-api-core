@@ -100,6 +100,12 @@ class EntryApiRepresentation < ApiRepresentation
   end
   field(:json_url, :select => :document_number) {|e| api_v1_entry_url(e.document_number, :format => :json)}
   field(:mods_url, :select => [:publication_date, :document_number]){|e| e.source_url(:mods)}
+  field(:page_views) do |entry|
+    {
+      count: DocumentPageViewCount.count_for(entry.document_number),
+      last_updated: DocumentPageViewCount.last_updated
+    }
+  end
   field(:page_length, :select => [:start_page, :end_page]) {|e| e.human_length }
   field(:pdf_url, :select => [:publication_date, :document_number]){|e| e.source_url('pdf')}
   field(:public_inspection_pdf_url, :select => :document_number, :include => :public_inspection_document) {|e| e.public_inspection_document.try(:pdf).try(:url)}
