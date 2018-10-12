@@ -97,6 +97,8 @@ class DocumentPageViewCount
     end
 
     if set == TODAY_SET
+      # store a copy of the set each hour for internal analysis
+      $redis.zunionstore("doc_counts:#{Date.current.to_s(:iso)}:#{Time.current.hour}", [TEMP_SET])
       $redis.rename TEMP_SET, set
     else
       $redis.zunionstore(HISTORICAL_SET, [TEMP_SET, HISTORICAL_SET])
