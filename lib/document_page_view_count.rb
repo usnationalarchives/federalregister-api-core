@@ -98,7 +98,7 @@ class DocumentPageViewCount
 
     if set == TODAY_SET
       # store a copy of the set each hour for internal analysis
-      $redis.zunionstore("doc_counts:#{Date.current.to_s(:iso)}:#{Time.current.hour}", [TEMP_SET])
+      $redis.zunionstore("doc_counts:#{Date.current.to_s(:iso)}:#{Time.current.strftime("%I")}", [TEMP_SET])
       $redis.rename TEMP_SET, set
     else
       $redis.zunionstore(HISTORICAL_SET, [TEMP_SET, HISTORICAL_SET])
@@ -146,7 +146,7 @@ class DocumentPageViewCount
       page_size: 1,
       start_date: start_date,
       end_date: end_date
-    )["reports"].first["data"]["rowCount"]
+    )["reports"].first["data"]["rowCount"].to_i
   end
   memoize :total_results
 
