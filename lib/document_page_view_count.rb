@@ -7,10 +7,12 @@ class DocumentPageViewCount
   HISTORICAL_SET = "doc_counts:historical"
   TEMP_SET = "doc_counts:in_progress"
   TODAY_SET = "doc_counts:today"
+  YESTERDAY_SET = "doc_counts:yesterday"
 
   def self.count_for(document_number)
     $redis.pipelined do
       $redis.zscore HISTORICAL_SET, document_number
+      $redis.zscore YESTERDAY_SET, document_number
       $redis.zscore TODAY_SET, document_number
     end.compact.map{|count| count.to_i}.sum
   end
@@ -22,6 +24,7 @@ class DocumentPageViewCount
   def update_all(start_year=2010, end_year=Date.current.year, reset_counts=true)
     if reset_counts
       $redis.del(HISTORICAL_SET)
+      $redis.del(YESTERDAY_SET)
     end
 
     $redis.del(TEMP_SET)
@@ -47,11 +50,18 @@ class DocumentPageViewCount
   end
 
   def update_counts_for_today
-    # this is run once per hour to update the current days counts
-    # as such at midnight we want to finish calculating yesterdays count
-    # and then collapse those counts into the historical counts
+
+
     if Time.current.hour == 0
+      # this is run once every 2 hours to update the current days counts
+      # as such at midnight we want to finish calculating yesterdays count
+      # and then move those counts into yesterdays counts
       update_counts(Date.current-1.day, Date.current-1.day, TODAY_SET)
+      move_today_to_yesterday
+    elsif Time.current.hour == 6
+      # at 6 am we finalize yesterdays counts (GA applies post processing, etc)
+      # and then merge those into the historical counts
+      update_counts(Date.current-1.day, Date.current-1.day, YESTERDAY_SET)
       collapse_counts
     else
       update_counts(Date.current, Date.current, TODAY_SET)
@@ -70,6 +80,7 @@ class DocumentPageViewCount
     processed_results = 0
 
     log("processing: {start_date: #{start_date}, end_date: #{end_date}}")
+    log("#{total_results(start_date, end_date)} results need processing")
 
     # work through counts in batches of PER_PAGE
     while processed_results < total_results(start_date, end_date) do
@@ -96,21 +107,28 @@ class DocumentPageViewCount
       processed_results += PER_PAGE
     end
 
-    if set == TODAY_SET
-      # store a copy of the set each hour for internal analysis
-      $redis.zunionstore("doc_counts:#{Date.current.to_s(:iso)}:#{Time.current.strftime("%I")}", [TEMP_SET])
-      $redis.rename TEMP_SET, set
-    else
-      $redis.zunionstore(HISTORICAL_SET, [TEMP_SET, HISTORICAL_SET])
-      $redis.del(TEMP_SET)
+    if total_results(start_date, end_date) > 0
+      if set == TODAY_SET
+        # store a copy of the set each hour for internal analysis
+        $redis.zunionstore("doc_counts:#{Date.current.to_s(:iso)}:#{Time.current.hour}", [TEMP_SET])
+        $redis.rename(TEMP_SET, set)
+      else
+        $redis.zunionstore(HISTORICAL_SET, [TEMP_SET, HISTORICAL_SET])
+        $redis.del(TEMP_SET)
+      end
     end
 
     $redis.set "doc_counts:current_as_of", current_time
   end
 
-  def collapse_counts
-    $redis.zunionstore(HISTORICAL_SET, [TODAY_SET, HISTORICAL_SET])
+  def move_today_to_yesterday
+    $redis.rename(TODAY_SET, YESTERDAY_SET)
     $redis.del(TODAY_SET)
+  end
+
+  def collapse_counts
+    $redis.zunionstore(HISTORICAL_SET, [YESTERDAY_SET, HISTORICAL_SET])
+    $redis.del(YESTERDAY_SET)
   end
 
   private
