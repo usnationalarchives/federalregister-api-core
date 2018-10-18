@@ -130,8 +130,8 @@ if ENV['RAILS_ENV'] != 'development'
   # GOOGLE ANALYTICS PAGE COUNTS
   #################################
 
-  # runs everyday at 15 minutes past the hour
-  every '15 * * * *' do
+  # runs every 2 hours at 15 minutes past the hour
+  every '15 0,2,4,6,8,10,12,14,16,18,20,22 * * *' do
     set :log, 'google_analytics_api'
     rake 'documents:page_count:update_today'
   end
