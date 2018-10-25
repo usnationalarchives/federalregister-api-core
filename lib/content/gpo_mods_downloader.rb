@@ -21,7 +21,7 @@ module Content
 
     def self.perform(reprocessed_issue_id)
       ActiveRecord::Base.verify_active_connections!
-      
+
       new(reprocessed_issue_id).perform
     end
 
@@ -47,8 +47,8 @@ module Content
     def generate_diffs
       begin
         reprocessed_issue.update_attributes(
-          :diff => diff[0, 40000],
-          :html_diff => html_diff
+          diff: diff[0, 40000],
+          html_diff: html_diff[0, 40000]
         )
       rescue FrDiff::CommandLineError
         return false
