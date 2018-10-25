@@ -100,7 +100,7 @@ class EntryApiRepresentation < ApiRepresentation
   end
   field(:json_url, :select => :document_number) {|e| api_v1_entry_url(e.document_number, :format => :json)}
   field(:mods_url, :select => [:publication_date, :document_number]){|e| e.source_url(:mods)}
-  field(:page_views) do |entry|
+  field(:page_views, :select => [:document_number]) do |entry|
     {
       count: DocumentPageViewCount.count_for(entry.document_number),
       last_updated: DocumentPageViewCount.last_updated
