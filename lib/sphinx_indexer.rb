@@ -12,7 +12,7 @@ module SphinxIndexer
   end
 
   def self.rotate_all
-    self.rotate_indices(["--all"])
+    rotate_indices(["--all"])
   end
 
   def self.rotate_indices(index_names)
@@ -25,6 +25,14 @@ module SphinxIndexer
         sphinx_conf: ThinkingSphinx::Configuration.instance.config_file
       )
 
+      restart
+    rescue Cocaine::ExitStatusError => error
+      raise SphinxIndexer::SphinxIndexerError.new(error)
+    end
+  end
+
+  def self.restart
+    begin
       Cocaine::CommandLine.new(
         "/usr/bin/touch",
         "/home/app/db/sphinx/restart.txt"

@@ -7,4 +7,8 @@ namespace :sphinx do
   task :rotate_all => :environment do
     SphinxIndexer.rotate_all
   end
+
+  task :restart => :environment do
+    SphinxIndexer.restart
+  end
 end
