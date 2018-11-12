@@ -251,6 +251,7 @@ GEM
       multi_json (~> 1.0)
       multi_xml (>= 0.5.2)
     icalendar (1.1.5)
+    iconv (1.0.5)
     indefinite_article (0.2.0)
       activesupport
     inflecto (0.0.2)
@@ -420,6 +421,7 @@ DEPENDENCIES
   http_headers (= 0.0.2.3)
   httparty
   icalendar
+  iconv (~> 1.0, >= 1.0.5)
   indefinite_article
   jrails (= 0.6.0)
   json (= 1.7.7)
@@ -470,4 +472,4 @@ DEPENDENCIES
   zip-zip
 
 BUNDLED WITH
-   1.16.6
+   1.17.1

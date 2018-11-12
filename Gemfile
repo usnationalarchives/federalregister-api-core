@@ -114,10 +114,12 @@ gem 'memoist'
 
 gem 'american_date'
 
-if RUBY_VERSION =~ /1.9/
-  Encoding.default_external = Encoding::UTF_8
-  Encoding.default_internal = Encoding::UTF_8
-end
+Encoding.default_external = Encoding::UTF_8
+Encoding.default_internal = Encoding::UTF_8
+
+#needed for rail 2.x (removed in ruby 2+)
+# TODO: BB remove after upgrade
+gem 'iconv', '~> 1.0', '>= 1.0.5'
 
 group :test do
   gem 'shoulda', '2.10.3'
