@@ -9,7 +9,7 @@ FROM quay.io/criticaljuncture/baseimage:16.04
 ### RUBY
 #######################
 
-RUN apt-get update && apt-get install -y ruby2.0 ruby2.0-dev &&\
+RUN apt-get update && apt-get install -y ruby2.1 ruby2.1-dev &&\
   apt-get clean &&\
   rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/
 
