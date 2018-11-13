@@ -1,8 +1,0 @@
-<% if @entry.current_regulatory_plans.length > 0 %>
-  <div class="header_column">
-    <h1>Unified Agenda</h1>
-  </div>
-  <div class="body_column">
-    <%= render :partial => "regulatory_plan", :collection => @entry.current_regulatory_plans %>
-  </div>
-<% end %>

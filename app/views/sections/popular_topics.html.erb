@@ -1,8 +1,0 @@
-<% section_tag(:class => 'whats_hot') do %>  
-  <h1 class="title_bar">Popular Topics</h1>
-  <ol>
-    <% @topics.each do |topic| %>
-      <li><%= link_to topic.name, topic_path(topic) %></li>
-    <% end %>
-  </ol>
-<% end -%>

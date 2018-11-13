@@ -5,9 +5,3 @@
 <h2>Something went wrong!</h2>
 
 <p>We've been notified about this issue and we'll take a look at it shortly.</p>
-
-<% content_for(:page_to_track, '/500.html') %>
-
-<script type="text/javascript">
-  _gaq.push(['_trackEvent', 'errors', '500', document.location.pathname + document.location.search + "&from=" + document.referrer]);
-</script>
