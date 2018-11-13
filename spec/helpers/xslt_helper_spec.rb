@@ -70,11 +70,11 @@ describe XsltHelper do
 
     it "does include a space after it when followed by a section symbol" do
       process <<-XML
-        <P><E T="03">See</E>&#xA7; 1026</P>
+        <P><E T="03">See</E>§ 1026</P>
       XML
 
       @html.should have_tag("p") do |p|
-        p.first.inner_html.should == " <i class=\"E-03\">See</i> &#167; 1026"
+        p.first.inner_html.should == " <i class=\"E-03\">See</i> § 1026"
       end
     end
   end
