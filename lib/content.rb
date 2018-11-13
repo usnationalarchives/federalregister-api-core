@@ -73,7 +73,6 @@ module Content
       Html5Helper,
       CitationsHelper,
       Citations::CfrHelper,
-      XsltHelper,
       RegulatoryPlanHelper,
       RouteBuilder,
       TextHelper
