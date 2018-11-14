@@ -45,13 +45,6 @@ if ENV['RAILS_ENV'] != 'development'
     rake 'content:public_inspection:import_and_deliver'
   end
 
-  # Purge revoked PI documents at 5:15PM
-  # runs at 5:15PM/6:15PM EDT M-F
-  every '15 17,18 * * 1-5' do
-    set :log, 'public_inspection_import'
-    rake 'content:public_inspection:purge_revoked_documents'
-  end
-
 
   ########################
   # GPO IMAGE IMPORTS

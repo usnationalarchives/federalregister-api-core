@@ -47,8 +47,6 @@ gem 'resque-honeybadger',
     :git => 'https://github.com/henrik/resque-honeybadger.git',
     :ref => '832be87662840d44e73f66c006796da8ed6250e2'
 
-gem 'aws-s3', '0.6.2', :require => 'aws/s3'
-
 gem 'paperclip', '~> 2.8'
  # required by paperclip but unspecified version - this ensures a comptible version
 gem 'mime-types', '~> 1.25', '>= 1.25.1'

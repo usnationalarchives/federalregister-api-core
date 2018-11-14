@@ -183,26 +183,6 @@ class PublicInspectionDocument < ApplicationModel
     )
   end
 
-  def make_s3_files_private!
-    pdf.styles.each_pair do |style, options|
-      path = pdf.path(style)
-      bucket = pdf.bucket_name
-      obj = AWS::S3::S3Object.find(path, bucket)
-
-      grantee = AWS::S3::ACL::Grantee.new
-      grantee.id = obj.owner.id
-      grantee.type = 'CanonicalUser'
-
-      grant = AWS::S3::ACL::Grant.new
-      grant.permission = 'FULL_CONTROL'
-      grant.grantee = grantee
-
-      obj.acl.grants = [grant]
-      obj.acl(obj.acl)
-    end
-    touch(:updated_at)
-  end
-
   private
 
   def persist_document_file_path
