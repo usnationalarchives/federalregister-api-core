@@ -1,10 +1,8 @@
 require 'spec_helper'
 
 describe Entry do
-  it { should have_many :entry_regulation_id_numbers }
-
   describe "regulation_id_numbers=" do
-    it "should create associated entry_regulation_id_numbers when no exist" do
+    it "creates associated entry_regulation_id_numbers when no exist" do
       rins = ["ABCD-1234", "ABCD-5678"]
       e = Entry.new(:regulation_id_numbers => rins)
       e.save!
@@ -12,7 +10,7 @@ describe Entry do
       e.entry_regulation_id_numbers.map(&:regulation_id_number).should == rins
     end
 
-    it "should remove entry_regulation_id_numbers when not passed" do
+    it "removes entry_regulation_id_numbers when not passed" do
       e = Entry.new(:regulation_id_numbers => ["ABCD-1234", "ABCD-5678"])
       e.save!
       e.reload
@@ -25,19 +23,19 @@ describe Entry do
   end
 
   describe "current_regulatory_plans" do
-    it 'should find nothing when no RIN associated' do
+    it 'finds nothing when no RIN associated' do
       e = Entry.create!()
       e.current_regulatory_plans.should == []
     end
 
-    it 'should find nothing if the associated RIN is not included in the current issue' do
+    it 'finds nothing if the associated RIN is not included in the current issue' do
       something_in_current_issue = RegulatoryPlan.create!(:regulation_id_number => "ABCD-1111", :current => true)
       something_in_prior_issue = RegulatoryPlan.create!(:regulation_id_number => "ABCD-1234", :current => false)
       e = Entry.create!(:regulation_id_numbers => [something_in_prior_issue.regulation_id_number])
       e.current_regulatory_plans.should == []
     end
 
-    it 'should find the regulatory_plan if the associated RIN is included in the current issue' do
+    it 'finds the regulatory_plan if the associated RIN is included in the current issue' do
       prior = RegulatoryPlan.create!(:regulation_id_number => "ABCD-1234", :current => false)
       cur = RegulatoryPlan.create!(:regulation_id_number => "ABCD-1234", :current => true)
       e = Entry.create!(:regulation_id_numbers => [cur.regulation_id_number])
@@ -47,32 +45,32 @@ describe Entry do
 
 
   describe 'slug' do
-    it "should downcase" do
+    it "downcases" do
       Entry.new(:title => "Meeting").slug.should == 'meeting'
     end
 
-    it "should convert non-alphanumeric characters to dashes" do
+    it "converts non-alphanumeric characters to dashes" do
       Entry.new(:title => "Proposed Rule").slug.should == 'proposed-rule'
     end
 
-    it "should omit dashes at beginning and end" do
+    it "omits dashes at beginning and end" do
       Entry.new(:title => "[Amended]").slug.should == 'amended'
     end
 
-    it "should convert ampersands to 'and'" do
+    it "converts ampersands to 'and'" do
       Entry.new(:title => "Foo & Bar").slug.should == 'foo-and-bar'
     end
 
-    it "should retain dashes" do
+    it "retains dashes" do
       Entry.new(:title => "Albany-Eugene Transmission Line").slug.should == 'albany-eugene-transmission-line'
     end
 
-    it "should limit the length to 100 characters" do
+    it "limits the length to 100 characters" do
       Entry.new(:title => "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt unt labore et dolore magna aliqua.").slug.should ==
         'lorem-ipsum-dolor-sit-amet-consectetur-adipisicing-elit-sed-do-eiusmod-tempor-incididunt-unt-labore'
     end
 
-    it "should not truncate in the middle of a word" do
+    it "does not truncate in the middle of a word" do
       Entry.new(:title => "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed unt eiusmod tempor incididunt labore cumin").slug.should == 'lorem-ipsum-dolor-sit-amet-consectetur-adipisicing-elit-sed-unt-eiusmod-tempor-incididunt-labore'
     end
   end
@@ -107,28 +105,28 @@ describe Entry do
   end
 
   describe 'destroy' do
-    it "should remove all agency_name_assignments" do
+    it "removes all agency_name_assignments" do
       entry = Factory(:entry, :agency_names => [Factory(:agency_name), Factory(:agency_name)])
       AgencyNameAssignment.count.should == 2
       entry.destroy
       AgencyNameAssignment.count.should == 0
     end
 
-    it "should remove all agency_assignments" do
+    it "removes all agency_assignments" do
       entry = Factory(:entry, :agency_names => [Factory(:agency_name), Factory(:agency_name)])
       AgencyAssignment.count.should == 2
       entry.destroy
       AgencyAssignment.count.should == 0
     end
 
-    it "should remove all topic_name_assignments" do
+    it "removes all topic_name_assignments" do
       entry = Factory(:entry, :topic_names => [Factory(:topic_name), Factory(:topic_name)])
       TopicNameAssignment.count.should == 2
       entry.destroy
       TopicNameAssignment.count.should == 0
     end
 
-    it "should remove all topic_assignments" do
+    it "removes all topic_assignments" do
       entry = Factory(:entry, :topic_names => [Factory(:topic_name, :topics => [Factory(:topic)]), Factory(:topic_name, :topics => [Factory(:topic), Factory(:topic)])])
       TopicAssignment.count.should == 3
       entry.destroy

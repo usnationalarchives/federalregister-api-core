@@ -1,8 +1,6 @@
 require 'spec_helper'
 
 describe Agency do
-  it { should have_many :entries }
-
   describe "named_approximately" do
     before(:each) do
       @nasa = Agency.create!(:name => "National Aeronautics and Space Administration", :short_name => "NASA")
