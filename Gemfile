@@ -33,7 +33,7 @@ gem 'fog-google', '0.1.0'
 
 gem 'formtastic', '0.9.8'
 
-gem 'json', '1.7.7'
+gem 'json', '1.8.6'
 gem 'ym4r', '0.6.1'
 
 gem 'thinking-sphinx', '1.4.14', :require => 'thinking_sphinx'
@@ -50,7 +50,7 @@ gem 'resque-honeybadger',
 gem 'paperclip', '~> 2.8'
  # required by paperclip but unspecified version - this ensures a comptible version
 gem 'mime-types', '~> 1.25', '>= 1.25.1'
-gem 'aws-sdk', '~> 1.6.9'
+gem 'aws-sdk-v1'
 
 gem 'stevedore', '0.3.0'
 
