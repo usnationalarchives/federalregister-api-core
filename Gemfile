@@ -122,16 +122,11 @@ Encoding.default_internal = Encoding::UTF_8
 gem 'iconv', '~> 1.0', '>= 1.0.5'
 
 group :test do
-  gem 'shoulda', '2.10.3'
-
   gem 'rspec'
   gem 'mocha', '0.9.8'
   gem 'rspec-rails', '1.3.4', :require => false
-  gem 'webrat', '0.7.1'
   gem 'factory_girl', '1.2.4'
   gem 'timecop'
-  gem 'cucumber'
-  gem 'mechanize', '1.0.0'
   gem 'mock_redis'
 
   gem 'vcr'
