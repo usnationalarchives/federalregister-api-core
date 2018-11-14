@@ -10,13 +10,8 @@ module Content::EntryImporter::RawText
           <?xml version="1.0" encoding="ISO-8859-1" ?>
           <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
             <xsl:output encoding="utf-8"/>
-            <!-- ignore the same stuff the HTML view does -->
+            <!-- ignore markup we don't care to index -->
             <xsl:include href="app/views/entries/xslt/ignore.html.xslt" />
-
-            <!-- except explicitly add back the SUMmary and the ACTion-->
-            <xsl:template match="SUM | ACT">
-              <xsl:apply-templates/>
-            </xsl:template>
 
             <xsl:template match="text()">
               <xsl:value-of select="." />
