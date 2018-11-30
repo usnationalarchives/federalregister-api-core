@@ -2,7 +2,7 @@ module Paperclip
   class PngCrush < Processor
     def make
       src = @file
-      dst = Tempfile.new([@basename, @format ? ".#{@format}" : ''])
+      dst = Tempfile.new([@basename || "", @format ? ".#{@format}" : ''])
       dst.binmode
 
       begin
