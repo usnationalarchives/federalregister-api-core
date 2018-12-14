@@ -8,7 +8,7 @@ namespace :data do
       date = ENV['DATE'].blank? ? Time.current.to_date.to_s(:db) : ENV['DATE']
       lax_mode = ENV['LAX'].blank? ? false : true
 
-      url = 'https://www.gpo.gov/fdsys/bulkdata/FR/' + case date
+      url = 'https://www.govinfo.gov/bulkdata/FR/' + case date
           when /^\d{4}$/
             "#{date.gsub(/-/, '/')}/FR-#{date}.zip"
           when /^\d{4}-\d{2}$/

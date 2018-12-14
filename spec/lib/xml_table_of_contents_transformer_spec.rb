@@ -219,8 +219,8 @@ attr_reader :transformer
     it "Identifies handles <SJDENT> without a preceding <SJ> node" do
       agency = Agency.create(name: "Forest Service", slug: "forest-service")
       agency.agency_names << AgencyName.create(name: "Forest Service")
-
-      # see https://www.gpo.gov/fdsys/bulkdata/FR/2015/03/FR-2015-03-27.xml
+      
+      # see https://www.govinfo.gov/bulkdata/FR/2015/03/FR-2015-03-27.xml
       make_nokogiri_doc(<<-XML)
         <CNTNTS>
           <AGCY>

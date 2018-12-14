@@ -7,7 +7,7 @@ class GpoFilePathManager
   end
 
   def document_issue_mods_path
-    finalize_path "https://www.gpo.gov/fdsys/pkg/FR-#{date.to_s(:iso)}/mods.xml"
+    finalize_path "https://www.govinfo.gov/metadata/pkg/FR-#{@date.to_s(:db)}/mods.xml"
   end
 
   private

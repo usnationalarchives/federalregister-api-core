@@ -428,14 +428,14 @@ class Entry < ApplicationModel
   def source_url(format)
     case format.to_sym
     when :mods
-      "https://www.gpo.gov/fdsys/granule/FR-#{publication_date.to_s(:iso)}/#{document_number}/mods.xml"
+      "https://www.govinfo.gov/metadata/granule/FR-#{publication_date.to_s(:iso)}/#{document_number}/mods.xml"
     when :html
-      "https://www.gpo.gov/fdsys/granule/FR-#{publication_date.to_s(:db)}/#{document_number}"
+      "https://www.govinfo.gov/app/details/FR-#{publication_date.to_s(:db)}/#{document_number}"
     when :text
-      "https://www.gpo.gov/fdsys/pkg/FR-#{publication_date.to_s(:db)}/html/#{document_number}.htm"
+      "https://www.govinfo.gov/content/pkg/FR-#{publication_date.to_s(:db)}/html/#{document_number}.htm"
     when :pdf
       if publication_date >= GPO_PDF_START_DATE
-        "https://www.gpo.gov/fdsys/pkg/FR-#{publication_date.to_s(:db)}/pdf/#{document_number}.pdf"
+        "https://www.govinfo.gov/content/pkg/FR-#{publication_date.to_s(:iso)}/pdf/#{document_number}.pdf"
       end
     end
   end
