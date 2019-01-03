@@ -63,7 +63,7 @@ module Content
         ]
       )
 
-      if updated_doc_count > 0
+      if updated_doc_count > 0 || !toc_files_exist?(issue)
         SphinxIndexer.perform('public_inspection_document_core')
 
         #compile json table of contents
@@ -72,6 +72,11 @@ module Content
 
         Content::PublicInspectionImporter::CacheManager.manage_cache(self)
       end
+    end
+
+    def toc_files_exist?(issue)
+      TableOfContentsTransformer::PublicInspection::RegularFiling.toc_file_exists?(issue.published_at.to_date) &&
+        TableOfContentsTransformer::PublicInspection::SpecialFiling.toc_file_exists?(issue.published_at.to_date)
     end
 
     def job_queue

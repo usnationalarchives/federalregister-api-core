@@ -9,6 +9,11 @@ class TableOfContentsTransformer::PublicInspection::RegularFiling < TableOfConte
     )
   end
 
+  def self.toc_file_exists?(date)
+    path_manager = FileSystemPathManager.new(date)
+    File.exists?(path_manager.public_inspection_issue_regular_filing_json_toc_path)
+  end
+
   private
 
   def json_path
