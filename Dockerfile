@@ -105,7 +105,7 @@ RUN adduser app -uid 1000 --system &&\
 ### GEMS & PASSENGER INSTALL
 ###############################
 
-RUN gem install bundler
+RUN gem install bundler -v 1.17.3
 WORKDIR /tmp
 COPY Gemfile /tmp/Gemfile
 COPY Gemfile.lock /tmp/Gemfile.lock
