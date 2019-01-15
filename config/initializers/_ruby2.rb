@@ -32,4 +32,28 @@ if Rails::VERSION::MAJOR == 2 && RUBY_VERSION >= '2.0.0'
       end
     end
   end
+
+  # The filter_parameter_logging method, used to filter request parameters
+  # (such as passwords) from the log, defines a protected method called
+  # filter_parameter when called. Its existence is later tested using
+  # respond_to?, without the include_private parameter. Due to the respond_to?
+  # behavior change, the method existence is never detected, and parameter
+  # filtering stops working.
+  require 'action_controller'
+
+  module ParameterFilterPatch
+    def respond_to?(method, include_private = false)
+      if method.to_s == 'filter_parameters'
+        include_private = true
+      end
+
+      super(method, include_private)
+    end
+  end
+
+  module ActionController
+    class Base
+      prepend ParameterFilterPatch
+    end
+  end
 end
