@@ -55,8 +55,9 @@ gem 'aws-sdk-v1'
 gem 'stevedore', '0.3.0'
 
 gem 'active_hash', '0.9.5'
-gem 'bcrypt-ruby', '2.1.2', :require => 'bcrypt'
-gem 'authlogic', '2.1.3'
+# gem 'bcrypt-ruby', '2.1.2', :require => 'bcrypt'
+gem 'bcrypt'
+gem 'authlogic', '2.1.11'
 
 # wrapper around http requests that supports multiple backends
 gem 'faraday'
