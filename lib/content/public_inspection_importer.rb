@@ -41,6 +41,12 @@ module Content
       @issue ||= PublicInspectionIssue.find_or_create_by_publication_date(Date.current)
     end
 
+    def generate_toc(date)
+      #compile json table of contents
+      TableOfContentsTransformer::PublicInspection::RegularFiling.perform(date)
+      TableOfContentsTransformer::PublicInspection::SpecialFiling.perform(date)
+    end
+
     private
 
     def import_document(api_doc)
@@ -72,11 +78,7 @@ module Content
 
       if updated_doc_count > 0 || !toc_files_exist?(issue)
         SphinxIndexer.perform('public_inspection_document_core')
-
-        #compile json table of contents
-        TableOfContentsTransformer::PublicInspection::RegularFiling.perform(issue.published_at.to_date)
-        TableOfContentsTransformer::PublicInspection::SpecialFiling.perform(issue.published_at.to_date)
-
+        generate_toc(issue.published_at.to_date)
         Content::PublicInspectionImporter::CacheManager.manage_cache(self)
       end
     end

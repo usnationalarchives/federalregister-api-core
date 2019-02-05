@@ -68,8 +68,17 @@ namespace :content do
       end
     end
 
+    task :regenerate_toc, [:date] => :environment do |t, args|
+      if ENV['REINDEX']
+        SphinxIndexer.perform('public_inspection_document_core')
+      end
+
+      pil = Content::PublicInspectionImporter.new
+      pil.generate_toc(args[:date])
+    end
+
     namespace :blacklist do
-      task :add, [:document_number] => :environment do |t,args|
+      task :add, [:document_number] => :environment do |t, args|
         $redis.sadd(
           Content::PublicInspectionImporter::BLACKLIST_KEY,
           args[:document_number]
