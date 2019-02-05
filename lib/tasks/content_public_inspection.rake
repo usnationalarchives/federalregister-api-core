@@ -67,5 +67,25 @@ namespace :content do
         end
       end
     end
+
+    namespace :blacklist do
+      task :add, [:document_number] => :environment do |t,args|
+        $redis.sadd(
+          Content::PublicInspectionImporter::BLACKLIST_KEY,
+          args[:document_number]
+        )
+
+        puts "Current blacklist: #{$redis.smembers(Content::PublicInspectionImporter::BLACKLIST_KEY)}"
+      end
+
+      task :remove, [:document_number] => :environment do |t,args|
+        $redis.srem(
+          Content::PublicInspectionImporter::BLACKLIST_KEY,
+          args[:document_number]
+        )
+
+        puts "Current blacklist: #{$redis.smembers(Content::PublicInspectionImporter::BLACKLIST_KEY)}"
+      end
+    end
   end
 end

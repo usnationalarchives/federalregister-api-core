@@ -1,6 +1,7 @@
 module Content
   class PublicInspectionImporter
     JOB_TIMEOUT = 10.minutes
+    BLACKLIST_KEY = 'public_inspection:import:blacklist'
 
     def self.perform
       new.perform
@@ -43,7 +44,13 @@ module Content
     private
 
     def import_document(api_doc)
+      return if in_blacklist?(api_doc)
+
       DocumentImporter.new(self, api_doc).perform
+    end
+
+    def in_blacklist?(api_doc)
+      $redis.smembers(BLACKLIST_KEY).include?(api_doc.document_number)
     end
 
     def finalize_import
