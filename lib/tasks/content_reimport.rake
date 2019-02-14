@@ -26,7 +26,7 @@ namespace :content do
     desc "Recompile all pre-compiled Entry pages for a set of dates"
     task :recompile_all_html => :environment do
       Content.parse_dates(ENV['DATE']).each do |date|
-        Resque.enqueue(EntryRecompiler, date)
+        Resque.enqueue_to(:issue_reprocessor, 'IssueReprocessor', date.to_s(:iso))
       end
     end
 
