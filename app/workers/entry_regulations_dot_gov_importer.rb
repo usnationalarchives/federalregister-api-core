@@ -49,11 +49,7 @@ class EntryRegulationsDotGovImporter
   attr_reader :entry
 
   def regulationsdotgov_document
-    begin
-      RegulationsDotGov::Client.new.find_by_document_number(entry.document_number)
-    rescue RegulationsDotGov::Client::ResponseError
-      nil
-    end
+    RegulationsDotGov::Client.new.find_by_document_number(entry.document_number)
   end
   memoize :regulationsdotgov_document
 
