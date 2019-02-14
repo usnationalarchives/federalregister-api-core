@@ -139,7 +139,9 @@ module Content
 
     def self.process_without_bulkdata(date, options, *attributes)
       ModsFile.new(date, options[:force_reload_mods]).document_numbers.each do |document_number|
-        importer = EntryImporter.new(options.merge(:date => date, :document_number => document_number))
+        importer = EntryImporter.new(
+          options.except(:force_reload_mods).merge(:date => date, :document_number => document_number)
+        )
 
         attributes = attributes.map(&:to_sym)
         if options[:except]
