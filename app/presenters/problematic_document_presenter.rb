@@ -140,9 +140,13 @@ class ProblematicDocumentPresenter
   def highlight_dates(extracted_dates, date_to_highlight, date_text)
     extracted_dates.each do |extracted_date|
       date_text.gsub!(extracted_date) do |date|
-        if date.to_date == date_to_highlight
-          "<span style='color: red; font-weight: bold'>#{date}</span>"
-        else
+        begin
+          if date.to_date == date_to_highlight
+            "<span style='color: red; font-weight: bold'>#{date}</span>"
+          else
+            "<span style='font-weight: bold;'>#{date}</span>"
+          end
+        rescue #usually a string that looks like a date but isn't a valid date
           "<span style='font-weight: bold;'>#{date}</span>"
         end
       end
