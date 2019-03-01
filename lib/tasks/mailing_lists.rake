@@ -27,8 +27,8 @@ namespace :mailing_lists do
         else
           date = Date.current
         end
-        
-        Resque.enqueue(DailyIssueEmailSender, ENV['DATE'])
+
+        Resque.enqueue(DailyIssueEmailSender, date.to_s(:iso))
       rescue StandardError => e
         puts e.message
         puts e.backtrace.join("\n")
