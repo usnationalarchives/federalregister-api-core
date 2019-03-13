@@ -3,7 +3,9 @@ class EntrySearch::DateAggregator::Base
     @sphinx_search = sphinx_search
     if options[:with] && options[:with][:publication_date]
       @start_date = Time.at(options[:with][:publication_date].first).utc.to_date
-      @end_date = Time.at(options[:with][:publication_date].last).utc.to_date
+
+      end_date = Time.at(options[:with][:publication_date].last).utc.to_date
+      @end_date = end_date > Issue.current.publication_date ? Issue.current.publication_date : end_date
     else
       @start_date = Date.new(1994,1,1)
       @end_date = Issue.current.publication_date
