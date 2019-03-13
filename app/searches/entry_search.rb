@@ -411,6 +411,7 @@ class EntrySearch < ApplicationSearch
       ['published', :publication_date],
       ['signed', :signing_date],
       ['with an effective date', :effective_date],
+      ['with a comment closing date', :comment_date],
       ['from', :agency_ids],
       ['from', :agencies],
       ['signed by', :president],
