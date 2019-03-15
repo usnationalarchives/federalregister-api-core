@@ -4,6 +4,11 @@ ActionController::Routing::Routes.draw do |map|
       doc.entries_attributes ':type/attributes', :action => :attributes, :quiet => true
     end
 
+    api.resources :effective_dates,
+                  :as => 'effective-dates',
+                  :only => [:index, :show],
+                  :controller => 'api/v1/effective_dates'
+
     api.articles_facets 'documents/facets/:facet.:format',
                   :controller => 'api/v1/entries',
                   :action => 'facets',
