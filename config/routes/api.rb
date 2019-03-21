@@ -6,7 +6,7 @@ ActionController::Routing::Routes.draw do |map|
 
     api.resources :effective_dates,
                   :as => 'effective-dates',
-                  :only => [:index, :show],
+                  :only => [:index],
                   :controller => 'api/v1/effective_dates'
 
     api.articles_facets 'documents/facets/:facet.:format',
