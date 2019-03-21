@@ -1,4 +1,5 @@
 class EffectiveDateGenerator
+  class DateRangeTooLarge < StandardError; end
 
   DAY_DELAY_INTERVALS = [15, 21, 30, 35, 45, 60, 90]
   def perform(start_date, end_date)
@@ -28,7 +29,7 @@ class EffectiveDateGenerator
   MAX_DAYS_ALLOWED = 120
   def prevent_large_requests!
     if (end_date - start_date) > MAX_DAYS_ALLOWED
-      raise "Request size must be smaller than #{MAX_DAYS_ALLOWED} days"
+      raise DateRangeTooLarge, "Request size must be smaller than #{MAX_DAYS_ALLOWED} days"
     end
   end
 
