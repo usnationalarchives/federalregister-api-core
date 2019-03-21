@@ -13,6 +13,13 @@ class ProblematicDocumentPresenter
       select {|doc| doc.document_number.match(/^X/)}
   end
 
+  def documents_present_in_xml_but_not_in_toc
+    xml_document_numbers - toc_document_numbers
+  end
+
+  def documents_present_in_toc_but_not_in_xml
+    toc_document_numbers - xml_document_numbers
+  end
 
   def documents_scheduled_but_unpublished
     PublicInspectionDocument.all(
@@ -154,5 +161,32 @@ class ProblematicDocumentPresenter
 
     date_text
   end
+
+  def xml_document_numbers
+    issue.entries.map(&:document_number)
+  end
+
+  def toc_document_numbers
+    Array.new.tap do |doc_numbers|
+      toc_json['agencies'].each do |agency_hsh|
+        agency_hsh['document_categories'].each do |document_category_hsh|
+          document_category_hsh['documents'].each do |documents_hsh|
+            documents_hsh['document_numbers'].each do |document_number|
+              doc_numbers << document_number
+            end
+          end
+        end
+      end
+    end
+  end
+
+  def toc_json
+    JSON.parse(toc_json_file_contents)
+  end
+
+  def toc_json_file_contents
+    File.read(FileSystemPathManager.new(date).document_issue_json_toc_path)
+  end
+
 
 end
