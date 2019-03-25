@@ -28,6 +28,7 @@ ActionController::Routing::Routes.draw do |map|
     admin.resources :topics
     admin.resources :topic_names, :collection => {:unprocessed => :get}
 
+    admin.resources :presidential_documents,:only => [:index, :create, :show]
     admin.resources :photo_candidates, :only => [:show, :info], :member => {:info => :get}
     admin.resources :sections
     admin.resources :agency_highlights

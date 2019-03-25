@@ -18,6 +18,7 @@ ActiveSupport::CoreExtensions::Date::Conversions::DATE_FORMATS.merge!(
 )
 
 ActiveSupport::CoreExtensions::Time::Conversions::DATE_FORMATS.merge!(
+  :underscored_iso_date_then_time => '%Y_%m_%d_%H_%M_%S',
   :HMS_Z => "%H-%M-%S_%Z",
   :time_then_date => lambda { |time| time.strftime("%I:%M %p, on %A, %B #{time.day.ordinalize}, %Y") },
   :short_date_then_time => "%m/%d/%Y at %I:%M %p",

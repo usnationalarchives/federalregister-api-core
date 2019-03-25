@@ -1,0 +1,18 @@
+<% super_title 'Presidential Documents' %>
+
+<h3>Import Updates</h3>
+
+</br>
+<div>
+  <% semantic_form_for :upload, :url => admin_presidential_documents_path, :html => { :multipart => true } do |f| %>
+
+    <% f.inputs do %>
+      <%= f.input :csv_file, label: 'Executive Orders', as: :file %>
+    <% end %>
+
+    <% f.buttons do %>
+      <%= f.commit_button 'Upload' %>
+    <% end %>
+
+  <% end %>
+</div>
