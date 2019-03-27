@@ -167,8 +167,8 @@ module Content
         @date = options[:date].is_a?(String) ? Date.parse(options[:date]) : options[:date]
         raise "must provide a date if no entry" if @date.nil?
         @document_number = options[:document_number] or raise "must provide a document number if no entry"
-        @entry = Entry.find_by_document_number(@document_number) || Entry.new(:document_number => @document_number)
-        @entry.publication_date = @date
+        @entry = Entry.first(conditions: ["document_number = ? AND publication_date = ?", @document_number, @date.to_s(:iso)]) ||
+          Entry.new(:document_number => @document_number)
       end
       @force_reload_mods = options[:force_reload_mods]
 
