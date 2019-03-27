@@ -169,6 +169,7 @@ module Content
         @document_number = options[:document_number] or raise "must provide a document number if no entry"
         @entry = Entry.first(conditions: ["document_number = ? AND publication_date = ?", @document_number, @date.to_s(:iso)]) ||
           Entry.new(:document_number => @document_number)
+        @entry.publication_date = @date
       end
       @force_reload_mods = options[:force_reload_mods]
 

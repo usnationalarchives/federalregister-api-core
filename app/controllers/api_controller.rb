@@ -69,11 +69,18 @@ class ApiController < ApplicationController
   end
 
   def render_via_document_numbers(model, document_numbers, find_options={}, &block)
+    publication_date = find_options[:publication_date]
+
     if document_numbers =~ /,/
       document_numbers = document_numbers.split(',')
-      records = model.all(find_options.merge(
-        :conditions => {:document_number => document_numbers}
-      ))
+
+      conditions = {document_number: document_numbers}.tap do |hsh|
+        if publication_date
+          hsh.merge!(publication_date: publication_date)
+        end
+      end
+
+      records = model.all(find_options.except(:publication_date).merge(conditions: conditions))
 
       data = {
         :count => records.count,
@@ -85,7 +92,11 @@ class ApiController < ApplicationController
         data[:errors] = {:not_found => missing}
       end
     else
-      record = model.find_by_document_number!(document_numbers)
+      if publication_date
+        record = model.first(conditions: ["document_number = ? AND publication_date = ?", document_numbers, publication_date])
+      else
+        record = model.find_by_document_number!(document_numbers)
+      end
       data = yield(record)
     end
 
@@ -93,6 +104,8 @@ class ApiController < ApplicationController
   end
 
   def render_via_citations(model, citations, find_options={}, &block)
+    publication_date = find_options[:publication_date]
+
     if citations =~ /,/
       citations = citations.split(',')
     else
@@ -103,7 +116,7 @@ class ApiController < ApplicationController
     matched_citations = []
     citations.each do |citation|
       volume, fr_str, page = citation.split(' ')
-      matches = model.all(find_options.merge(
+      matches = model.all(find_options.except(:publication_date).merge(
         :conditions => ["volume = ? AND start_page <= ? AND end_page >= ?", volume.to_i, page.to_i, page.to_i]
       ))
 

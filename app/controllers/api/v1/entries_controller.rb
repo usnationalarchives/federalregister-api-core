@@ -100,7 +100,7 @@ class Api::V1::EntriesController < ApiController
         end
         find_options = EntryApiRepresentation.find_options_for(fields + [:document_number])
 
-        render_one_or_more(Entry, params[:id], find_options) do |entry|
+        render_one_or_more(Entry, params[:id], find_options.merge(publication_date: params[:publication_date])) do |entry|
           entry_data(entry, fields)
         end
       end
