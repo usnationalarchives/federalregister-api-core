@@ -98,7 +98,13 @@ class EntryApiRepresentation < ApiRepresentation
       {}
     end
   end
-  field(:json_url, :select => :document_number) {|e| api_v1_entry_url(e.document_number, :format => :json)}
+  field(:json_url, :select => :document_number) do |e|
+    api_v1_entry_url(
+      e.document_number,
+      :publication_date => e.publication_date.to_s(:iso),
+      :format           => :json
+    )
+  end
   field(:mods_url, :select => [:publication_date, :document_number]){|e| e.source_url(:mods)}
   field(:page_views, :select => [:document_number]) do |entry|
     {
