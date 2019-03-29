@@ -64,6 +64,19 @@ class RegulationsDotGov::Client
     RegulationsDotGov::Docket.new(self, response.parsed_response)
   end
 
+
+  def find_updated_documents_within(days, document_type_identifier)
+    response = self.class.get(
+      document_search_endpoint,
+      query: {
+        daysSinceModified: days,
+        dct:               document_type_identifier
+      }
+    )
+
+    response.parsed_response
+  end
+
   def find_documents(args)
     begin
       response = self.class.get(document_search_endpoint, :query => args)
