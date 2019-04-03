@@ -26,7 +26,11 @@ class Content::PublicInspectionImporter::ApiClient
   end
 
   def get(url)
-    self.class.get(url, :headers => {"SessionToken" => session_token})
+    self.class.get(url, headers: {"SessionToken" => session_token})
+  end
+
+  def put(url)
+    self.class.put(url, headers: {"SessionToken" => session_token})
   end
 
   def session_token
@@ -42,6 +46,10 @@ class Content::PublicInspectionImporter::ApiClient
     raise ResponseError.new("Status: #{response.code}; body: #{response_body}") unless response.ok?
 
     @session_token = JSON.parse(response_body)["SessionToken"]
+  end
+
+  def logout
+    put("https://edocs.fedreg.gov/highview/webservices/authentication/logout")
   end
 
   private
