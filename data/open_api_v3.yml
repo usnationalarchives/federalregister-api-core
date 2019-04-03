@@ -1,0 +1,709 @@
+---
+openapi: 3.0.0
+info:
+  title: FR API Documentation
+  version: ''
+servers:
+- url: "http://localhost:4002/api/v1/"
+paths:
+  "/documents/{document_number}.{format}":
+    get:
+      summary: Fetch a single Federal Register document
+      parameters:
+      - name: format
+        description: What format the response should be
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/Format'
+      - name: fields[]
+        description: Which attributes of the documents to return; by default, a reasonable set is returned, but a user can customize it to return exactly what is needed.
+        in: query
+        explode: true
+        schema:
+          $ref: '#/components/schemas/DocumentField'
+      - name: document_number
+        description: Federal Register document number
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+      tags:
+        - Federal Register Documents
+  "/documents/{document_numbers}.{format}":
+    get:
+      summary: Fetch multiple Federal Register documents
+      parameters:
+      - name: format
+        description: What format the response should be
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/Format'
+      - name: fields[]
+        description: Which attributes of the documents to return; by default, a reasonable set is returned, but a user can customize it to return exactly what is needed.
+        in: query
+        explode: true
+        schema:
+          $ref: '#/components/schemas/DocumentField'
+      - name: document_numbers
+        description: Federal Register document number
+        in: path
+        explode: false
+        required: true
+        schema:
+          type: array
+          items:
+            type: string
+      responses:
+        '200':
+          description: Success
+  "/documents/{document_numbers}.{format}":
+    get:
+      summary: Fetch multiple Federal Register documents
+      parameters:
+      - name: format
+        description: What format the response should be
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/Format'
+      - name: fields[]
+        description: Which attributes of the documents to return; by default, a reasonable set is returned, but a user can customize it to return exactly what is needed.
+        in: query
+        explode: true
+        schema:
+          $ref: '#/components/schemas/DocumentField'
+      - name: document_numbers
+        description: Federal Register document number
+        in: path
+        explode: false
+        required: true
+        schema:
+          type: array
+          items:
+            type: string
+      responses:
+        '200':
+          description: Success
+      tags:
+        - Federal Register Documents
+  "/documents.{format}":
+    get:
+      summary: Search all Federal Register documents published since 1994.
+      parameters:
+      - name: format
+        description: What format the response should be
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/Format'
+      - name: fields[]
+        description: Which attributes of the documents to return; by default, a reasonable set is returned, but a user can customize it to return exactly what is needed.
+        in: query
+        explode: true
+        schema:
+          $ref: '#/components/schemas/DocumentField'
+      - name: per_page
+        description: How many documents to return at once; 1000 maximum.
+        in: query
+        schema:
+          type: integer
+          default: 20
+          minimum: 1
+          maximum: 1000
+      - name: page
+        description: The page of the result set.
+        in: query
+        schema:
+          type: integer
+      - name: order
+        description: The order the results should be returned in.
+        in: query
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - relevance
+            - newest
+            - oldest
+            - executive_order_number
+      - name: conditions[term]
+        description: Full text search
+        in: query
+        schema:
+          type: string
+      - name: conditions[publication_date][is]
+        description: Exact publication date match
+        in: query
+        schema:
+          $ref: '#/components/schemas/FrDate'
+      - name: conditions[publication_date][year]
+        description: Find documents published in a given year
+        in: query
+        schema:
+          $ref: '#/components/schemas/FrYear'
+      - name: conditions[publication_date][gte]
+        description: Find documents published on or after a given date
+        in: query
+        schema:
+          $ref: '#/components/schemas/FrDate'
+      - name: conditions[publication_date][lte]
+        description: Find documents published on or before a given date
+        in: query
+        schema:
+          $ref: '#/components/schemas/FrDate'
+      - name: conditions[effective_date][is]
+        description: Exact effective date match
+        in: query
+        schema:
+          $ref: '#/components/schemas/FrDate'
+      - name: conditions[effective_date][year]
+        description: Find documents with an effective date in a given year
+        in: query
+        schema:
+          $ref: '#/components/schemas/FrDate'
+      - name: conditions[effective_date][gte]
+        description: Find documents with an effective date on or after a given date
+        in: query
+        schema:
+          $ref: '#/components/schemas/FrDate'
+      - name: conditions[effective_date][lte]
+        description: Find documents with an effective date on or before a given date
+        in: query
+        schema:
+          $ref: '#/components/schemas/FrDate'
+      - name: conditions[agencies][]
+        description: Publishing agency
+        in: query
+        explode: true
+        schema:
+          $ref: '#/components/schemas/Agency'
+      - name: conditions[type][]
+        description: >
+          Document Type:
+            * RULE: Final Rule
+            * PRORULE: Proposed Rule
+            * NOTICE: Notice
+            * PRESDOCU: Presidential Document
+        in: query
+        explode: true
+        schema:
+          $ref: '#/components/schemas/DocumentType'
+      - name: conditions[presidential_document_type][]
+        description: Presidential document type; only available for Presidential Docuements
+        in: query
+        explode: true
+        schema:
+          $ref: '#/components/schemas/PresidentialDocumentType'
+      - name: conditions[president][]
+        description: Signing President; only available for Presidential Documents
+        in: query
+        explode: true
+        schema:
+          $ref: '#/components/schemas/President'
+      - name: conditions[docket_id]
+        description: Agency docket number associated with document
+        in: query
+        schema:
+          type: string
+      - name: conditions[regulation_id_number]
+        description: Regulation ID Number (RIN) associated with document
+        in: query
+        schema:
+          type: string
+      - name: conditions[sections][]
+        description: Limit to documents that appeared within a particular section of FederalRegister.gov
+        in: query
+        explode: true
+        schema:
+          $ref: '#/components/schemas/Section'
+      - name: conditions[topics][]
+        description: Limit to documents associated with a particular topic (CFR Indexing term)
+        in: query
+        explode: true
+        schema:
+          $ref: '#/components/schemas/Topic'
+      - name: conditions[significant]
+        description: >
+          Deemed Significant Under EO 12866:
+            * "0": Not Deemed Significant
+            * "1": Deemed Significant
+        in: query
+        schema:
+          type: string
+          enum:
+          - 0
+          - 1
+      - name: conditions[cfr][title]
+        description: documents affecting the associated CFR title
+        in: query
+        schema:
+          type: integer
+      - name: conditions[cfr][part]
+        description: Part or part range (eg '17' or '1-50'); requires the CFR title to be provided
+        in: query
+        schema:
+          type: integer
+      - name: conditions[near][location]
+        description: Location search; enter zipcode or City and State
+        in: query
+        schema:
+          type: string
+      - name: conditions[near][within]
+        description: Location search; maximum distance from location in miles (max 200)
+        in: query
+        schema:
+          type: integer
+          maximum: 200
+      responses:
+        '200':
+          description: Success
+      tags:
+        - Federal Register Documents
+  "/documents/facets/{facet}":
+    get:
+      summary: Fetch counts of matching Federal Register Documents grouped by a facet
+      parameters:
+      - name: facet
+        description: What to group the returned documents by for counting
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/Facet'
+      - name: conditions[term]
+        description: Full text search
+        in: query
+        schema:
+          type: string
+      - name: conditions[publication_date][is]
+        description: Exact publication date match
+        in: query
+        schema:
+          $ref: '#/components/schemas/FrDate'
+      - name: conditions[publication_date][year]
+        description: Find documents published in a given year
+        in: query
+        schema:
+          $ref: '#/components/schemas/FrYear'
+      - name: conditions[publication_date][gte]
+        description: Find documents published on or after a given date
+        in: query
+        schema:
+          $ref: '#/components/schemas/FrDate'
+      - name: conditions[publication_date][lte]
+        description: Find documents published on or before a given date
+        in: query
+        schema:
+          $ref: '#/components/schemas/FrDate'
+      - name: conditions[effective_date][is]
+        description: Exact effective date match
+        in: query
+        schema:
+          $ref: '#/components/schemas/FrDate'
+      - name: conditions[effective_date][year]
+        description: Find documents with an effective date in a given year
+        in: query
+        schema:
+          $ref: '#/components/schemas/FrDate'
+      - name: conditions[effective_date][gte]
+        description: Find documents with an effective date on or after a given date
+        in: query
+        schema:
+          $ref: '#/components/schemas/FrDate'
+      - name: conditions[effective_date][lte]
+        description: Find documents with an effective date on or before a given date
+        in: query
+        schema:
+          $ref: '#/components/schemas/FrDate'
+      - name: conditions[agencies][]
+        description: Publishing agency
+        in: query
+        explode: true
+        schema:
+          $ref: '#/components/schemas/Agency'
+      - name: conditions[type][]
+        description: >
+          Document Type:
+            * RULE: Final Rule
+            * PRORULE: Proposed Rule
+            * NOTICE: Notice
+            * PRESDOCU: Presidential Document
+        in: query
+        explode: true
+        schema:
+          $ref: '#/components/schemas/DocumentType'
+      - name: conditions[presidential_document_type][]
+        description: Presidential document type; only available for Presidential Docuements
+        in: query
+        explode: true
+        schema:
+          $ref: '#/components/schemas/PresidentialDocumentType'
+      - name: conditions[president][]
+        description: Signing President; only available for Presidential Documents
+        in: query
+        explode: true
+        schema:
+          $ref: '#/components/schemas/President'
+      - name: conditions[docket_id]
+        description: Agency docket number associated with document
+        in: query
+        schema:
+          type: string
+      - name: conditions[regulation_id_number]
+        description: Regulation ID Number (RIN) associated with document
+        in: query
+        schema:
+          type: string
+      - name: conditions[sections][]
+        description: Limit to documents that appeared within a particular section of FederalRegister.gov
+        in: query
+        explode: true
+        schema:
+          $ref: '#/components/schemas/Section'
+      - name: conditions[significant]
+        description: >
+          Deemed Significant Under EO 12866:
+            * "0": Not Deemed Significant
+            * "1": Deemed Significant
+        in: query
+        schema:
+          type: string
+          enum:
+          - 0
+          - 1
+      - name: conditions[cfr][title]
+        description: documents affecting the associated CFR title
+        in: query
+        schema:
+          type: integer
+      - name: conditions[cfr][part]
+        description: Part or part range (eg '17' or '1-50'); requires the CFR title to be provided
+        in: query
+        schema:
+          type: integer
+      - name: conditions[near][location]
+        description: Location search; enter zipcode or City and State
+        in: query
+        schema:
+          type: string
+      - name: conditions[near][within]
+        description: Location search; maximum distance from location in miles (max 200)
+        in: query
+        schema:
+          type: integer
+          maximum: 200
+      responses:
+        '200':
+          description: Success
+      tags:
+        - Federal Register Documents
+  "/public-inspection-documents/{document_number}.{format}":
+    get:
+      summary: Fetch a single public inspection document.
+      parameters:
+      - name: format
+        description: What format the response should be
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/Format'
+      - name: document_number
+        description: Federal Register document number
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+      tags:
+        - Public Inspection Documents
+  "/public-inspection-documents/{document_numbers}.{format}":
+    get:
+      summary: Fetch multiple public inspection documents.
+      parameters:
+      - name: format
+        description: What format the response should be
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/Format'
+      - name: document_numbers
+        description: Federal Register document numbers, separated by a comma
+        in: path
+        explode: false
+        required: true
+        schema:
+          type: array
+          items:
+            type: string
+      responses:
+        '200':
+          description: Success
+      tags:
+        - Public Inspection Documents
+  "/public-inspection-documents.{format}":
+    get:
+      summary: Fetch all the public inspection documents that appeared on a given day.
+      parameters:
+      - name: format
+        description: What format the response should be
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/Format'
+      - name: conditions[available_on]
+        description: Public Inspection issue date
+        required: true
+        in: query
+        schema:
+          $ref: '#/components/schemas/FrDate'
+      responses:
+        '200':
+          description: Success
+      tags:
+        - Public Inspection Documents
+  "/public-inspection-documents/current.{format}":
+    get:
+      summary: Fetch all the public inspection documents that are currently on public inspection.
+      parameters:
+      - name: format
+        description: What format the response should be
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/Format'
+      responses:
+        '200':
+          description: Success
+      tags:
+        - Public Inspection Documents
+  "/public-inspection-documents.{format}":
+    get:
+      summary: Search all the public inspection documents that are currently on public inspection; use the document search to find documents that have been published.
+      parameters:
+      - name: format
+        description: What format the response should be
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/Format'
+      - name: fields[]
+        description: Which attributes of the documents to return; by default, a reasonable set is returned, but a user can customize it to return exactly what is needed.
+        in: query
+        explode: true
+        schema:
+          $ref: '#/components/schemas/PublicInspectionDocumentField'
+      - name: per_page
+        description: How many documents to return at once; 1000 maximum.
+        in: query
+        schema:
+          type: integer
+          default: 20
+          minimum: 1
+          maximum: 1000
+      - name: page
+        description: The page of the result set.
+        in: query
+        schema:
+          type: integer
+      - name: conditions[term]
+        description: Full text search
+        in: query
+        schema:
+          type: string
+      - name: conditions[agencies][]
+        description: Publishing agency
+        in: query
+        explode: true
+        schema:
+          $ref: '#/components/schemas/Agency'
+      - name: conditions[type][]
+        description: >
+          Document Type:
+            * RULE: Final Rule
+            * PRORULE: Proposed Rule
+            * NOTICE: Notice
+            * PRESDOCU: Presidential Document
+        in: query
+        explode: true
+        schema:
+          $ref: '#/components/schemas/DocumentType'
+      - name: conditions[special_filing]
+        description: >
+          Filing type:
+            * "0": Regular Filing
+            * "1": Special Filing
+        in: query
+        schema:
+          type: string
+          enum:
+          - 0
+          - 1
+      - name: conditions[docket_id]
+        description: Agency docket number associated with document
+        in: query
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+      tags:
+        - Public Inspection Documents
+  "/agencies":
+    get:
+      summary: "Fetch all agency details"
+      responses:
+        '200':
+          description: Success
+      tags:
+        - Agencies
+  "/agencies/{slug}":
+    get:
+      summary: Fetch a particular agency's details
+      parameters:
+      - name: slug
+        description: Federal Register slug for the agency
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/Agency'
+      - name: id
+        description: Federal Register ID for the agency (deprecated)
+        in: query
+        schema:
+          type: integer
+        deprecated: true
+      responses:
+        '200':
+          description: Success
+      tags:
+        - Agencies
+  "/suggested_searches":
+    get:
+      summary: Fetch all suggested searches or limit by FederalRegister.gov section
+      responses:
+        '200':
+          description: Success
+      tags:
+        - Suggested Searches
+      parameters:
+      - name: conditions[sections]
+        description: Federal Register slug for the section
+        in: query
+        schema:
+          $ref: '#/components/schemas/Section'
+      responses:
+        '200':
+          description: Success
+      tags:
+        - Suggested Searches
+  "/suggested_searches/{slug}":
+    get:
+      summary: Fetch a particular suggested search
+      parameters:
+      - name: slug
+        description: Federal Register slug for the suggested search
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/SuggestedSearch'
+      responses:
+        '200':
+          description: Success
+      tags:
+        - Suggested Searches
+
+components:
+  schemas:
+    Agency:
+      type: array
+      items:
+        type: string
+        enum: <% Agency.alphabetically.each do |a| %>
+        <%= "- #{a.slug} " %>
+        <% end %>
+    DocumentField:
+      type: array
+      items:
+        type: string
+        enum: <% EntryApiRepresentation.all_fields.each do |f| %>
+        <%= "- #{f} " %>
+        <% end %>
+    DocumentType:
+      type: array
+      items:
+        type: string
+        enum:
+        - RULE
+        - PRORULE
+        - NOTICE
+        - PRESDOCU
+    Facet:
+      type: string
+      enum:
+      - daily
+      - weekly
+      - monthly
+      - quarterly
+      - yearly
+      - agency
+      - topic
+      - section
+      - type
+      - subtype
+    PublicInspectionDocumentField:
+      type: array
+      items:
+        type: string
+        enum: <% PublicInspectionDocumentApiRepresentation.all_fields.each do |f| %>
+        <%= "- #{f} " %>
+        <% end %>
+    President:
+      type: array
+      items:
+        type: string
+        enum: <% President.all.each do |x| %>
+        <%= "- #{x.identifier} " %>
+        <% end %>
+    PresidentialDocumentType:
+      type: array
+      items:
+        type: string
+        enum: <% PresidentialDocumentType.all.each do |x| %>
+        <%= "- #{x.identifier} " %>
+        <% end %>
+    Format:
+      type: string
+      enum:
+      - json
+      - csv
+    FrDate:
+      type: string
+      format: date
+    FrYear:
+      type: string
+    Section:
+      type: array
+      items:
+        type: string
+        enum: <% Section.alphabetically.each do |x| %>
+        <%= "- #{x.slug} " %>
+        <% end %>
+    SuggestedSearch:
+      type: string
+      enum: <% CannedSearch.alphabetically.each do |x| %>
+      <%= "- #{x.slug} " %>
+      <% end %>
+    Topic:
+      type: array
+      items:
+        type: string
+        enum: <% Topic.all.each do |x| %>
+        <%= "- #{x.slug} " %>
+        <% end %>
