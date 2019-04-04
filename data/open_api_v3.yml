@@ -447,27 +447,6 @@ paths:
           description: Success
       tags:
         - Public Inspection Documents
-  "/public-inspection-documents.{format}":
-    get:
-      summary: Fetch all the public inspection documents that appeared on a given day.
-      parameters:
-      - name: format
-        description: What format the response should be
-        in: path
-        required: true
-        schema:
-          $ref: '#/components/schemas/Format'
-      - name: conditions[available_on]
-        description: Public Inspection issue date
-        required: true
-        in: query
-        schema:
-          $ref: '#/components/schemas/FrDate'
-      responses:
-        '200':
-          description: Success
-      tags:
-        - Public Inspection Documents
   "/public-inspection-documents/current.{format}":
     get:
       summary: Fetch all the public inspection documents that are currently on public inspection.
@@ -512,6 +491,12 @@ paths:
         in: query
         schema:
           type: integer
+      - name: conditions[available_on]
+        description: Public Inspection issue date
+        required: true
+        in: query
+        schema:
+          $ref: '#/components/schemas/FrDate'
       - name: conditions[term]
         description: Full text search
         in: query
