@@ -138,42 +138,42 @@ paths:
         schema:
           type: string
       - name: conditions[publication_date][is]
-        description: Exact publication date match
+        description: Exact publication date match (YYYY-MM-DD)
         in: query
         schema:
           $ref: '#/components/schemas/FrDate'
       - name: conditions[publication_date][year]
-        description: Find documents published in a given year
+        description: Find documents published in a given year (YYYY)
         in: query
         schema:
           $ref: '#/components/schemas/FrYear'
       - name: conditions[publication_date][gte]
-        description: Find documents published on or after a given date
+        description: Find documents published on or after a given date (YYYY-MM-DD)
         in: query
         schema:
           $ref: '#/components/schemas/FrDate'
       - name: conditions[publication_date][lte]
-        description: Find documents published on or before a given date
+        description: Find documents published on or before a given date (YYYY-MM-DD)
         in: query
         schema:
           $ref: '#/components/schemas/FrDate'
       - name: conditions[effective_date][is]
-        description: Exact effective date match
+        description: Exact effective date match (YYYY-MM-DD)
         in: query
         schema:
           $ref: '#/components/schemas/FrDate'
       - name: conditions[effective_date][year]
-        description: Find documents with an effective date in a given year
+        description: Find documents with an effective date in a given year (YYYY)
         in: query
         schema:
           $ref: '#/components/schemas/FrDate'
       - name: conditions[effective_date][gte]
-        description: Find documents with an effective date on or after a given date
+        description: Find documents with an effective date on or after a given date (YYYY-MM-DD)
         in: query
         schema:
           $ref: '#/components/schemas/FrDate'
       - name: conditions[effective_date][lte]
-        description: Find documents with an effective date on or before a given date
+        description: Find documents with an effective date on or before a given date (YYYY-MM-DD)
         in: query
         schema:
           $ref: '#/components/schemas/FrDate'
@@ -281,42 +281,42 @@ paths:
         schema:
           type: string
       - name: conditions[publication_date][is]
-        description: Exact publication date match
+        description: Exact publication date match (YYYY-MM-DD)
         in: query
         schema:
           $ref: '#/components/schemas/FrDate'
       - name: conditions[publication_date][year]
-        description: Find documents published in a given year
+        description: Find documents published in a given year (YYYY)
         in: query
         schema:
           $ref: '#/components/schemas/FrYear'
       - name: conditions[publication_date][gte]
-        description: Find documents published on or after a given date
+        description: Find documents published on or after a given date (YYYY-MM-DD)
         in: query
         schema:
           $ref: '#/components/schemas/FrDate'
       - name: conditions[publication_date][lte]
-        description: Find documents published on or before a given date
+        description: Find documents published on or before a given date (YYYY-MM-DD)
         in: query
         schema:
           $ref: '#/components/schemas/FrDate'
       - name: conditions[effective_date][is]
-        description: Exact effective date match
+        description: Exact effective date match (YYYY-MM-DD)
         in: query
         schema:
           $ref: '#/components/schemas/FrDate'
       - name: conditions[effective_date][year]
-        description: Find documents with an effective date in a given year
+        description: Find documents with an effective date in a given year (YYYY)
         in: query
         schema:
           $ref: '#/components/schemas/FrDate'
       - name: conditions[effective_date][gte]
-        description: Find documents with an effective date on or after a given date
+        description: Find documents with an effective date on or after a given date (YYYY-MM-DD)
         in: query
         schema:
           $ref: '#/components/schemas/FrDate'
       - name: conditions[effective_date][lte]
-        description: Find documents with an effective date on or before a given date
+        description: Find documents with an effective date on or before a given date (YYYY-MM-DD)
         in: query
         schema:
           $ref: '#/components/schemas/FrDate'
@@ -492,7 +492,7 @@ paths:
         schema:
           type: integer
       - name: conditions[available_on]
-        description: Public Inspection issue date
+        description: Public Inspection issue date (YYYY-MM-DD)
         required: true
         in: query
         schema:
