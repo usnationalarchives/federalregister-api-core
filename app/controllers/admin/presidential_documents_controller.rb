@@ -17,7 +17,10 @@ class Admin::PresidentialDocumentsController < AdminController
 
   def create
     if params[:upload].blank?
-      flash.now[:error] = "A file must be provided before uploading"
+      flash.now[:error] = "A file must be provided before uploading!"
+      render :index
+    elsif params[:upload][:csv_file].original_filename.split('.').last != "csv"
+      flash.now[:error] = "The file must be in CSV format in order to be processed!"
       render :index
     else
       save_file!
