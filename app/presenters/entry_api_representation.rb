@@ -189,7 +189,7 @@ class EntryApiRepresentation < ApiRepresentation
   field(:regulation_id_numbers, :include => :entry_regulation_id_numbers) {|e| e.entry_regulation_id_numbers.map{|r| r.regulation_id_number}}
   field(:regulations_dot_gov_url, :select => [:comment_url, :comment_url_override]) {|e| e.regulations_dot_gov_url}
   field(:start_page)
-  field(:significant, include: :entry_regulation_id_numbers) do |entry|
+  field(:significant, select: [:significant], include: :entry_regulation_id_numbers) do |entry|
     if entry.entry_regulation_id_numbers.present?
       entry.significant
     else
