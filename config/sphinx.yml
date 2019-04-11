@@ -8,7 +8,7 @@ shared: &shared
   max_matches: 10000
   mem_limit: 528M
   morphology: stem_en
-  port: 3312
+  port: <%= ENV["SPHINX_PORT_3312_TCP_PORT"] || 3312 %>
   version: '2.1.2'
   max_children: 30
 
