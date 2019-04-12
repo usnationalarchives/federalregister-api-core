@@ -12,7 +12,19 @@ module Content::ExecutiveOrderImporter
       next if document_number.blank?
 
       puts "Attempting update of #{document_number}..."
-      entry = Entry.find_by_document_number(document_number.strip)
+
+      begin
+        publication_date = Date.parse(eo['publication_date'].try(:strip))
+      rescue
+        publication_date = nil
+      end
+
+      if publication_date
+        entry = Entry.find_by_document_number_and_publication_date(document_number.strip, publication_date)
+      else
+        entry = Entry.find_by_document_number(document_number.strip)
+      end
+
       if entry
         puts "Entry found..."
         entry.agency_names = [AgencyName.find_by_name!('Executive Office of the President')]
