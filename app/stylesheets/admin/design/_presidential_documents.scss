@@ -12,9 +12,10 @@ form.presidential-documents {
   input[type=file] {
     line-height: initial !important;
     position: relative;
-    top: 11px;
+    top: 12px;
   }
   
+  form.formtastic input.btn-large { padding: 9px 14px; }
   .btn {
     background-image: none;
     border: none;
