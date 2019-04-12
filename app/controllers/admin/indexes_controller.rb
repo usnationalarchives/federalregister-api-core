@@ -65,6 +65,10 @@ class Admin::IndexesController < AdminController
     end
   end
 
+  def sgml
+    send_data FrIndexSgmlGenerator.new(params[:year]).perform, :filename => "fr_index_sgml.idx"
+  end
+
   def year_agency_type
     options = params.slice(:max_date, :unapproved_only)
     agency = Agency.find_by_slug!(params[:agency])

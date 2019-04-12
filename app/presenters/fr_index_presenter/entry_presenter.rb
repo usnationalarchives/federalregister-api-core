@@ -3,16 +3,20 @@ class FrIndexPresenter
     :id,
     :title,
     :document_number,
+    :executive_order_number,
     :publication_date,
     :original_subject,
     :modified_subject,
     :original_doc,
+    :proclamation_number,
+    :presidential_document_type_id,
     :modified_doc,
     :granule_class,
     :start_page,
     :end_page,
     :comments_close_on,
     :significant,
+    :signing_date,
     :comment_count
   )
     include EntryViewLogic

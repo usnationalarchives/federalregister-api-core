@@ -46,6 +46,13 @@
       ),
       :method => :put,
       :class => "btn mark_as_complete all" %>
+
+    <% if @agency_year.display_sgml_option? %>
+      <%= link_to 'Download SGML',
+            admin_sgml_index_path(@agency_year.year),
+            :class => "btn download_sgml",
+            :target => "_blank" %>
+    <% end %>
   </div>
 </div>
 

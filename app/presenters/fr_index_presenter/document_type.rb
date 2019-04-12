@@ -97,6 +97,10 @@ class FrIndexPresenter
           entries.granule_class,
           entries.start_page,
           entries.end_page,
+          entries.executive_order_number,
+          entries.presidential_document_type_id,
+          entries.proclamation_number,
+          entries.signing_date,
           comment_close_events.date AS comments_close_on,
           SUM(regulatory_plans.priority_category IN (#{RegulatoryPlan::SIGNIFICANT_PRIORITY_CATEGORIES.map(&:inspect).join(',')})) > 0 AS significant,
           entries.regulations_dot_gov_docket_id AS docket_id

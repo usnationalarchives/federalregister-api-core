@@ -1,6 +1,7 @@
 class FrIndexPresenter
   class DocumentGrouping
     attr_reader :parent, :header, :entries, :fr_index_subject
+    include ApplicationHelper
     delegate :last_completed_issue,
       :granule_class,
       :entry_ids_for_year,
@@ -56,5 +57,25 @@ class FrIndexPresenter
     def header_attribute
       'fr_index_doc'
     end
+
+    def cfr_index_reference
+      "(#{[eo_cfr_index_reference, proclamation_cfr_index_reference].compact.join('; ')})"
+    end
+
+    def parenthetical_citation
+      document_type_citations = []
+
+      entries.group_by(&:presidential_document_type_id).each do |id, entries|
+        presidential_document_type = PresidentialDocumentType.find(id)
+        if presidential_document_type.present?
+          document_type_citations << presidential_document_type.entry_collection_formatter.call(entries)
+        else
+          document_type_citations << "#{pluralize_without_count(entries.count, 'Presidential Document')} #{entries.map{|x| 'p. '}.join(', ')}"
+        end
+      end
+
+      document_type_citations.join('; ')
+    end
+
   end
 end

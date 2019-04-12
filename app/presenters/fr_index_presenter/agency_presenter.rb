@@ -112,6 +112,10 @@ class FrIndexPresenter
       SQL
     end
 
+    def display_sgml_option?
+      agency.short_name == 'EOP'
+    end
+
     private
 
     def agency_status
