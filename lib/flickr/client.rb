@@ -2,8 +2,11 @@ class Flickr::Client
   attr_reader :connection
 
   def initialize
+    logger = Logger.new("#{Rails.root}/log/flickr.log")
+    logger.level = Logger::DEBUG
+
     @connection = Faraday.new(:url => 'https://api.flickr.com') do |faraday|
-      faraday.response :logger                  # log requests to STDOUT
+      faraday.response :logger, logger
       faraday.adapter  Faraday.default_adapter  # make requests with Net::HTTP
     end
   end
