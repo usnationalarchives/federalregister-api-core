@@ -1,4 +1,8 @@
 #!/bin/sh
 cd /home/app
 
-exec /sbin/setuser app passenger start --port $WEB_PORT --min-instances $PASSENGER_MIN_INSTANCES --no-friendly-error-pages
+if [ "$RAILS_ENV" = "development" ]; then
+    exec /sbin/setuser app passenger start --port $WEB_PORT --min-instances $PASSENGER_MIN_INSTANCES
+else
+    exec /sbin/setuser app passenger start --port $WEB_PORT --min-instances $PASSENGER_MIN_INSTANCES --no-friendly-error-pages
+fi
