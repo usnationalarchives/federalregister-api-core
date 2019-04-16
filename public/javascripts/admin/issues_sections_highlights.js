@@ -34,9 +34,11 @@ $(document).ready(function(){
     stop: function(event, ui) {
       var entry_id = ui.item.attr('data-entry-id');
       var position = ui.item.prevAll('li').size() + 1;
+
       $.ajax({
         url: base_url + '/highlights/' + entry_id,
         type: 'PUT',
+        dataType: 'json',
         data: "section_highlight[new_position]=" + position,
         success: function() {
           $('#' + entry_id).addClass('highlighted');
