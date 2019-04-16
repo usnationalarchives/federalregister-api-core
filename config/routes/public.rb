@@ -18,6 +18,16 @@ ActionController::Routing::Routes.draw do |map|
                                                                 :month      => /\d{1,2}/,
                                                                 :day        => /\d{1,2}/,
                                                                 :slug       => /[^\/]+/
+                                                                
+  map.short_entry 'd/:document_number.:format',	
+    :controller => 'entries',	
+    :action     => 'tiny_url',	
+    :conditions => { :method => :get }
+
+  map.short_entry_with_anchor 'd/:document_number/:anchor',	
+    :controller => 'entries',	
+    :action     => 'tiny_url',	
+    :conditions => { :method => :get }
 
   map.entry_citation 'citations/:year/:month/:day/:document_number/:slug', :controller => 'entries',
                                                                                 :action     => 'citations',
