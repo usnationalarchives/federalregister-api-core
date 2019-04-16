@@ -27,12 +27,6 @@ class PathGenerator
     end
   end
 
-  def about_section_paths(n)
-    Section.all.map do |section|
-      about_section_path(section)
-    end
-  end
-
   def entry_paths(n)
     Entry.random_selection(n).map do |entry|
       entry_path(entry)

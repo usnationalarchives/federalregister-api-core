@@ -22,7 +22,6 @@ SitemapGenerator::Sitemap.add_links do |sitemap|
   # SECTIONS
   Section.find_each do |section|
     sitemap.add section_path(section), :priority => 0.75, :changefreq => 'daily'
-    sitemap.add about_section_path(section), :priority => 0.25, :changefreq => 'daily'
   end
 
   # CANNED SEARCHES
