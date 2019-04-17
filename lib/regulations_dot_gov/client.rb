@@ -66,15 +66,11 @@ class RegulationsDotGov::Client
 
 
   def find_updated_documents_within(days, document_type_identifier)
-    response = self.class.get(
-      document_search_endpoint,
-      query: {
-        daysSinceModified: days,
-        dct:               document_type_identifier
-      }
+    find_documents(
+      daysSinceModified: days,
+      dct:               document_type_identifier,
+      rpp:               1000,
     )
-
-    response.parsed_response
   end
 
   def find_documents(args)

@@ -68,13 +68,16 @@ class RegulationsDotGov::BulkModifiedDocumentUpdater
     Array.new.tap do |collection|
       DOCUMENT_TYPE_IDENTIFIERS.each do |document_type_identifier|
         client = RegulationsDotGov::Client.new
-        response = client.find_updated_documents_within(
-          days,
+
+        documents = client.find_updated_documents_within(
+          0,
           document_type_identifier
         )
-        response['documents'].each do |document_attributes|
-          collection << document_attributes
+
+        documents.each do |document|
+          collection << document.raw_attributes
         end
+
       end
     end
   end
