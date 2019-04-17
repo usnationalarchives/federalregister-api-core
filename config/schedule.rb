@@ -70,30 +70,14 @@ if ENV['RAILS_ENV'] != 'development'
   # REGULATIONS.GOV DATA
   ########################
 
-  # Find the matching regulations.gov URL for documents added to regs.gov
-  # after our daily import
-  every 1.day, at: '6AM' do
-    set :log, 'reg_gov_url_import_tardy'
-    rake 'content:entries:import:regulations_dot_gov:tardy'
-  end
-
-  # # Find the matching regulations.gov URL for articles
-  # # runs every hour from 7AM EDT until 5PM M-F
-  every '30 7-17 * * 1-5' do
-    set :log, 'reg_gov_url_import'
-    rake 'content:entries:import:regulations_dot_gov:only_missing'
+  every 30.minutes do
+    rake 'content:entries:import:regulations_dot_gov:modified_today'
   end
 
   # Download docket data
   every 1.day, at: '12:30PM' do
     set :log, 'docket_import'
     rake 'content:dockets:import'
-  end
-
-  # Confirm URLs and openness of comments that have a valid comment URL
-  every 1.day, at: ['5AM', '12PM'] do
-    set :log, 'reg_gov_url_import_open_comments'
-    rake 'content:entries:import:regulations_dot_gov:open_comments'
   end
 
   # Clear the document cache at a time when the regulations.gov jobs above

@@ -134,6 +134,12 @@ namespace :content do
 
         end
 
+        desc "Bulk update regulations.gov info for entries modified today"
+        task :modified_today => :environment do
+          puts "Updating regulations.gov info for entries modified today"
+          RegulationsDotGov::BulkModifiedDocumentUpdater.new(0).perform
+        end
+
         desc "Import regulations.gov info for entries missing it published today"
         task :only_missing => :environment do
           puts "importing today's missing regulations.gov data"

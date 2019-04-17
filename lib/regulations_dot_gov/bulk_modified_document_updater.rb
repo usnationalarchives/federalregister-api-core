@@ -1,4 +1,5 @@
 class RegulationsDotGov::BulkModifiedDocumentUpdater
+  include CacheUtils
   class NoDocumentFound < StandardError; end
 
   extend Memoist
@@ -8,7 +9,10 @@ class RegulationsDotGov::BulkModifiedDocumentUpdater
   end
 
   def perform
-    current_time = Time.current
+    ActiveRecord::Base.verify_active_connections!
+    EntryObserver.disabled = true
+    current_time           = Time.current
+    expire_cache           = false
 
     document_collection_attributes.each do |document_attributes|
       document_number = document_attributes['frNumber']
@@ -19,7 +23,6 @@ class RegulationsDotGov::BulkModifiedDocumentUpdater
         find_by_document_number(document_number) : nil
 
       if entry
-        entry.checked_regulationsdotgov_at  = current_time
         entry.regulations_dot_gov_docket_id = document_attributes['docketId']
         update_docket                       = entry.regulations_dot_gov_docket_id_changed?
 
@@ -33,6 +36,11 @@ class RegulationsDotGov::BulkModifiedDocumentUpdater
           entry.regulationsdotgov_url = "http://www.regulations.gov/#!documentDetail;D=#{document_id}"
         end
 
+        if entry.changed?
+          expire_cache = true
+        end
+        entry.checked_regulationsdotgov_at  = current_time
+
         entry.save!
 
         if update_docket
@@ -44,6 +52,10 @@ class RegulationsDotGov::BulkModifiedDocumentUpdater
           :error_message => "Regulations Dot Gov noted entry #{document_number} changed within the last #{days} days, but no entry was found.  Document details: #{document_attributes}"
         )
       end
+    end
+
+    if expire_cache
+      purge_cache("/api/v1/*")
     end
   end
 
