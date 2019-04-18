@@ -10,7 +10,7 @@ module Content
       "<searchTitle>",
       "lt;mods xmlns",
       "url access=",
-      "relatedItem type="
+      "relatedItem type=(?!&quot;isReferencedBy&quot;)", #negative look ahead, don't match those that match the look ahead
     ]
 
     def initialize(reprocessed_issue_id)

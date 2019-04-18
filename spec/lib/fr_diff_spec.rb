@@ -119,6 +119,8 @@ describe FrDiff do
 <XML>
   <mods xmlns="http://www.loc.gov/mods/v3" ID="1234">
     <identifier type="local">1234</identifier>
+    <relatedItem type="isReferencedBy">26 CFR 1</relatedItem>
+    <relatedItem type="host">govinfo.gov/1234</relatedItem>
     <item>content</item>
   </mods>
 </XML>
@@ -127,6 +129,8 @@ describe FrDiff do
 <XML>
   <mods xmlns="http://www.loc.gov/mods/v3" ID="5678">
     <identifier type="local">5678</identifier>
+    <relatedItem type="isReferencedBy">26 CFR 2</relatedItem>
+    <relatedItem type="host">govinfo.gov/5678</relatedItem>
     <item>modified content</item>
   </mods>
 </XML>
@@ -135,13 +139,15 @@ describe FrDiff do
         expected_diff = <<-HTML
 <div class="diff">
   <ul>
+    <li class="del"><del><span class="symbol">-</span>    &lt;relatedItem type=&quot;isReferencedBy&quot;&gt;26 CFR <strong>1</strong>&lt;/relatedItem&gt;</del></li>
     <li class="del"><del><span class="symbol">-</span>    &lt;item&gt;content&lt;/item&gt;</del></li>
+    <li class="ins"><ins><span class="symbol">+</span>    &lt;relatedItem type=&quot;isReferencedBy&quot;&gt;26 CFR <strong>2</strong>&lt;/relatedItem&gt;</ins></li>
     <li class="ins"><ins><span class="symbol">+</span>    &lt;item&gt;<strong>modified </strong>content&lt;/item&gt;</ins></li>
   </ul>
 </div>
         HTML
 
-        diff = generate_diff(original_xml, modified_xml, :html_diff, :ignore => Content::GpoModsDownloader::NOISY_MODS_XML_LINES)
+        diff = generate_diff(original_xml, modified_xml, :html_diff, ignore: Content::GpoModsDownloader::NOISY_MODS_XML_LINES)
         diff.should == expected_diff
       end
     end
