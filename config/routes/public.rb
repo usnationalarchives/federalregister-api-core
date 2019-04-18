@@ -104,4 +104,7 @@ ActionController::Routing::Routes.draw do |map|
   # SECTIONS
   map.highlighted_entries_section ":slug/featured.:format", :controller => "sections", :action => "highlighted_entries", :conditions => { :method => :get }
   map.section ':slug.:format', :controller => "sections", :action => "show", :conditions => { :method => :get }
+
+  # CANNED SEARCHES	
+  map.canned_search ":slug.:format", :controller => "canned_searches", :action => :show, :conditions => {:method => :get}
 end
