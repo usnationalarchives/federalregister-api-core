@@ -4,6 +4,7 @@ set -ex
 if ! [ "$RAILS_ENV" = "development" ]; then
   HOSTNAME=`hostname`
   mkdir -p /home/app/data/efs/logs/$HOSTNAME
+  chown -R app:root /home/app/data/efs/logs/$HOSTNAME
 
   if ! [[ -L "/home/app/log" && -d "/home/app/log" ]]; then
     rm -Rf /home/app/log
