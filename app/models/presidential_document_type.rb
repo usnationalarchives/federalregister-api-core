@@ -47,7 +47,7 @@ class PresidentialDocumentType < ActiveHash::Base
         end
 
         signing_dates = entries.map do |entry|
-          "#{entry.signing_date.to_s(:short_month_day)} p. "
+          "#{entry.signing_date.try(:to_s, :abbrev_month_day)} p. "
         end.join("; ")
 
         "#{pluralized_form} of #{signing_dates}"
@@ -67,7 +67,7 @@ class PresidentialDocumentType < ActiveHash::Base
         end
 
         signing_dates = entries.map do |entry|
-          "#{entry.signing_date.to_s(:short_month_day)} p. "
+          "#{entry.signing_date.try(:to_s, :abbrev_month_day)} p. "
         end.join("; ")
 
         "#{pluralized_form} of #{signing_dates}"
@@ -107,7 +107,7 @@ class PresidentialDocumentType < ActiveHash::Base
         end
 
         signing_dates = entries.map do |entry|
-          "#{entry.signing_date.to_s(:short_month_day)} p. "
+          "#{entry.signing_date.try(:to_s, :abbrev_month_day)} p. "
         end.join("; ")
 
         "#{pluralized_form} of #{signing_dates}"

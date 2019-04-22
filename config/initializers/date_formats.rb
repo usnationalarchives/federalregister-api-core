@@ -3,6 +3,7 @@ ActiveSupport::CoreExtensions::Date::Conversions::DATE_FORMATS.merge!(
   :month_year => "%B %Y",
   :day_date   => "%A %d",
   :wday_and_pretty_date => lambda { |time| time.strftime("%A, %B #{time.day.ordinalize}") },
+  :abbrev_month_day => "%b. %-d",
 
   # "Friday, April 22nd, 2011"
   :formal => lambda { |time| time.strftime("%A, %B #{time.day.ordinalize}, %Y") },
