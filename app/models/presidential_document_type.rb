@@ -9,7 +9,7 @@ class PresidentialDocumentType < ActiveHash::Base
       :node_name                  => "DETERM",
       :identifier                 => "determination",
       :entry_collection_formatter => Proc.new do |entries|
-        # Format: Presidential Determination No. 17-14, p. 490
+        # Format: Presidential Determination No. 17-14, p.
         entries.map{|x| "Presidential Determination No. , p."}
       end,
     },
@@ -59,7 +59,7 @@ class PresidentialDocumentType < ActiveHash::Base
       :node_name                  => "PRNOTICE",
       :identifier                 => "notice",
       :entry_collection_formatter => Proc.new do |entries|
-        # Format: Notices of July 19, p. 473; July 20, p. 474
+        # Format: Notices of July 19, p. ; July 20, p. 
         if entries.count > 1
           pluralized_form = "Notices"
         else
@@ -99,7 +99,7 @@ class PresidentialDocumentType < ActiveHash::Base
       :node_name                  => "PRORDER",
       :identifier                 => "presidential_order",
       :entry_collection_formatter => Proc.new do |entries|
-        # Format: Order of May 23, p. 465
+        # Format: Order of May 23, p. 
         if entries.count > 1
           pluralized_form = "Order"
         else
