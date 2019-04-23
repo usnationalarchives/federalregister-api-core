@@ -5,9 +5,7 @@ class SpecialController < ApplicationController
       return
     end
 
-    current_time_on_database = Entry.connection.select_values("SELECT NOW()").first
-    sphinx_query = EntrySearch.new.count
-    render :text => "Current time is: #{current_time_on_database}. Document count is: #{sphinx_query}."
+    render :text => "Serving requests."
   end
 
   def robots_dot_txt
