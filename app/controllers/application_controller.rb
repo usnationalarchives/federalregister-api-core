@@ -12,7 +12,7 @@ class ApplicationController < ActionController::Base
     self.request_forgery_protection_token = nil
   end
 
-  after_filter :log_memory_usage if Rails.env.staging? || Rails.env.production?
+  around_filter :log_memory_usage unless Rails.env.test?
 
   # turn IP Spoofing detection off.
   ActionController::Base.ip_spoofing_check = false
@@ -93,7 +93,13 @@ class ApplicationController < ActionController::Base
   helper_method :ab_group
 
   def log_memory_usage
-    Rails.logger.warn "[memory usage: #{MemInfo.rss}]"
+    pid = Process.pid
+
+    start_mem = Process.getrusage.maxrss
+    yield
+    end_mem = Process.getrusage.maxrss
+
+    Rails.logger.warn "[memory usage: #{pid} #{start_mem} #{end_mem} #{end_mem-start_mem}]"
   end
 
   def view_context

@@ -113,6 +113,10 @@ gem 'memoist'
 
 gem 'american_date'
 
+# add methods to the ruby Process command via C-extensions
+# (tracking memory usage)
+gem 'proc-wait3'
+
 Encoding.default_external = Encoding::UTF_8
 Encoding.default_internal = Encoding::UTF_8
 
