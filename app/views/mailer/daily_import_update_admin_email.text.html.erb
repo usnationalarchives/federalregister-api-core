@@ -100,7 +100,46 @@
             <% reset_cycle %>
           </tbody>
         </table>
+      <% end %>
 
+      <% if @problematic_document_presenter.documents_present_in_toc_but_not_in_xml.present? %>
+        <h3 style="font-family:'Helvetica Neue',Arial,Helvetica,sans-serif;margin: 25px 0 5px;font-size: 20px;border-bottom: 1px solid #000;">
+          Documents Found in Table of Contents but not in XML
+        </h3>
+        Steps to Resolution: Contact GPO to update the XML (usually this means the document was missing in the MODS file) and then reprocess the issue in the admin once the MODS file is up to date. Contact Critical Juncture via basecamp if this does not resolve it and they will reprocess the whole issue manually."
+        <table class="table table-bordered table-striped table-condensed">
+          <thead>
+            <th>Document Numbers</th>
+          </thead>
+          <tbody>
+            <% @problematic_document_presenter.documents_present_in_toc_but_not_in_xml.each do |document_number| %>
+              <tr style="<%= cycle(nil, light_gray) %>">
+                <td style="width: 300px;" align="left"><%= link_to document_number, short_entry_url(document_number) %></td>
+              </tr>
+            <% end %>
+            <% reset_cycle %>
+          </tbody>
+        </table>
+      <% end %>
+
+      <% if @problematic_document_presenter.documents_present_in_xml_but_not_in_toc.present? %>
+        <h3 style="font-family:'Helvetica Neue',Arial,Helvetica,sans-serif;margin: 25px 0 5px;font-size: 20px;border-bottom: 1px solid #000;">
+          Documents Found in XML but not in Table of Contents
+        </h3>
+        Steps to Resolution: Contact GPO to update the bulk XML table of contents and then let Critical Juncture know via Basecamp to reimport the issue once the bulk XML file has been updated."
+        <table class="table table-bordered table-striped table-condensed">
+          <thead>
+            <th>Document Numbers</th>
+          </thead>
+          <tbody>
+            <% @problematic_document_presenter.documents_present_in_xml_but_not_in_toc.each do |document_number| %>
+              <tr style="<%= cycle(nil, light_gray) %>">
+                <td style="width: 300px;" align="left"><%= link_to document_number, short_entry_url(document_number) %></td>
+              </tr>
+            <% end %>
+            <% reset_cycle %>
+          </tbody>
+        </table>
       <% end %>
 
       <% if @problematic_document_presenter.special_documents.present? %>
@@ -240,46 +279,6 @@
               <tr style="<%= cycle(nil, light_gray) %>">
                 <td style="width: 300px;" align="left"><%= link_to doc.document_number, short_entry_url(doc.document_number) %></td>
                 <td style="width: 300px;" align="left"><%= doc.image_identifiers.map{|id| id}.join(', ')%></td>
-              </tr>
-            <% end %>
-            <% reset_cycle %>
-          </tbody>
-        </table>
-      <% end %>
-
-      <% if @problematic_document_presenter.documents_present_in_toc_but_not_in_xml.present? %>
-        <h3 style="font-family:'Helvetica Neue',Arial,Helvetica,sans-serif;margin: 25px 0 5px;font-size: 20px;border-bottom: 1px solid #000;">
-          Documents Found in Table of Contents but not in XML
-        </h3>
-        Steps to Resolution: Contact GPO to update the bulk XML to fix the problem and then let Critical Juncture know via Basecamp to reimport the issue once the bulk XML file has been updated."
-        <table class="table table-bordered table-striped table-condensed">
-          <thead>
-            <th>Document Numbers</th>
-          </thead>
-          <tbody>
-            <% @problematic_document_presenter.documents_present_in_toc_but_not_in_xml.each do |document_number| %>
-              <tr style="<%= cycle(nil, light_gray) %>">
-                <td style="width: 300px;" align="left"><%= link_to document_number, short_entry_url(document_number) %></td>
-              </tr>
-            <% end %>
-            <% reset_cycle %>
-          </tbody>
-        </table>
-      <% end %>
-
-      <% if @problematic_document_presenter.documents_present_in_xml_but_not_in_toc.present? %>
-        <h3 style="font-family:'Helvetica Neue',Arial,Helvetica,sans-serif;margin: 25px 0 5px;font-size: 20px;border-bottom: 1px solid #000;">
-          Documents Found in XML but not in Table of Contents
-        </h3>
-        Steps to Resolution: Contact GPO to update the bulk XML to fix the problem and then let Critical Juncture know via Basecamp to reimport the issue once the bulk XML file has been updated."
-        <table class="table table-bordered table-striped table-condensed">
-          <thead>
-            <th>Document Numbers</th>
-          </thead>
-          <tbody>
-            <% @problematic_document_presenter.documents_present_in_xml_but_not_in_toc.each do |document_number| %>
-              <tr style="<%= cycle(nil, light_gray) %>">
-                <td style="width: 300px;" align="left"><%= link_to document_number, short_entry_url(document_number) %></td>
               </tr>
             <% end %>
             <% reset_cycle %>
