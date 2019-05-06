@@ -1,6 +1,10 @@
 require 'spec_helper'
 
 describe AgencyName do
+  before(:each) do
+    SphinxIndexer.stub(:rebuild_delta_and_purge_core)
+  end
+
   describe 'destroy' do
     it "destroys all related agency_name_assignments" do
       AgencyNameAssignment.count == 0
@@ -91,5 +95,36 @@ describe AgencyName do
       agency_1.entries_count.should == 0
       agency_2.entries_count.should == 1
     end
+
+    it "enqueues a job for recompiling the table of contents for all of the publication dates associated with corresponding entries on id change" do
+      agency = Factory(:agency)
+      agency_name = Factory(:agency_name, :agency => agency)
+      entry = Factory(:entry, :agency_names => [agency_name])
+      agency_2 = Factory(:agency)
+
+      Resque.should_receive(:enqueue).with(TableOfContentsRecompiler, entry.publication_date)
+      agency_name.update_attributes(:agency => agency_2)
+    end
+
+    it "enqueues a job for recompiling the public inspection table of contents for all of the publication dates associated with corresponding entries" do
+      agency = Factory(:agency)
+      agency_name = Factory(:agency_name, :agency => agency)
+      entry = Factory(:entry, agency_names: [agency_name])
+      agency_2 = Factory(:agency)
+
+      public_inspection_issue = PublicInspectionIssue.new(publication_date: Date.current - 1.day)
+      public_inspection_issue.public_inspection_documents << PublicInspectionDocument.new(
+        entry_id:         entry.id,
+        document_number:  entry.document_number,
+        publication_date: Date.current - 1.day
+      )
+      public_inspection_issue.save!
+      PublicInspectionDocument.first.update_attributes(agency_names: [agency_name])
+      agency_name.reload
+
+      Resque.should_receive(:enqueue).twice
+      agency_name.update_attributes(:agency => agency_2)
+    end
+
   end
 end

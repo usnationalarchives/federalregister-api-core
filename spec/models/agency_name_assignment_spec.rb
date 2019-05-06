@@ -1,6 +1,10 @@
 require 'spec_helper'
 
 describe AgencyNameAssignment do
+  before(:each) do
+    SphinxIndexer.stub(:rebuild_delta_and_purge_core)
+  end
+
   describe 'create' do
     it "creates agency_assignments if has agency_id" do
       entry = Factory(:entry)

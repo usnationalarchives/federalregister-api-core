@@ -5,6 +5,7 @@ attr_reader :transformer
 
   before(:each) do
     @transformer = XmlTableOfContentsTransformer.new('2015-01-01')
+    SphinxIndexer.stub(:rebuild_delta_and_purge_core)
   end
 
   def make_nokogiri_doc(xml)
