@@ -1,4 +1,4 @@
-<% title "Edit agency :: #{@agency.name}" %>
+<% super_title "Edit agency :: #{@agency.name}" %>
 
 <% semantic_form_for @agency, :url => admin_agency_path(@agency),:html => { :multipart => true } do |f| %>
   <%= render :partial => 'form', :locals => {f: f, display_slug_field: true} %>

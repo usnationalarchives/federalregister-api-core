@@ -1,4 +1,6 @@
 class Admin::SectionsController < AdminController
+  layout 'admin_bootstrap'
+
   def index
     @sections = Section.all
   end

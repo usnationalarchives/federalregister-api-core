@@ -1,5 +1,4 @@
-<% super_title 'Agency Names' %>
-<% title 'All Agency Names' %>
+<% super_title 'All Agency Names' %>
 
 <% sidebar(render :partial => 'nav') %>
 
@@ -14,7 +13,7 @@
 
 <%= will_paginate @agency_names %>
 
-<table class='center_content'>
+<table class='<%= table_css_class %>'>
   <thead>
     <tr>
       <th>Agency Name</th>

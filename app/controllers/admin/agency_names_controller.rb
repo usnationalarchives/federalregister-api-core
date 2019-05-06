@@ -1,4 +1,6 @@
 class Admin::AgencyNamesController < AdminController
+  layout 'admin_bootstrap'
+
   def index
     respond_to do |wants|
       wants.html do

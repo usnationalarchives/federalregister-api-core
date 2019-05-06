@@ -1,4 +1,4 @@
-<% title "Agency Remapping for #{@presenter.publication_date}" %>
+<% super_title "Agency Remapping for #{@presenter.publication_date}" %>
 <% sidebar(render :partial => 'admin/agency_names/nav') %>
 
 <%= link_to "Previous Issue", admin_agency_names_issue_path(@presenter.issue.previous.publication_date.to_s(:iso)) if @presenter.issue.previous %> |

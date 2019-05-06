@@ -1,10 +1,10 @@
-<h1><%= @section.title %></h1>
+<% super_title @section.title %>
 
 <p>
   <%= link_to 'Add a canned search', new_admin_canned_search_path(:canned_search => {:section_id => @section.id }) %>
 </p>
 
-<table id="canned_searches">
+<table id="canned_searches" class='<%= table_css_class %>'>
   <thead>
     <tr>
       <th>Title</th>

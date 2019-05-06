@@ -1,13 +1,12 @@
-<p>
-  <%= link_to 'Add an Agency', new_admin_agency_path %> <br />
-  <%= link_to 'Export All Agencies as CSV', admin_agencies_path(:format => :csv) %>
-</p>
+<% super_title 'Agencies' %>
+
+<% sidebar(render :partial => 'nav') %>
 
 <% semantic_form_for @search, :url => admin_agencies_path, :method => :get do |f| %>
   <% f.inputs do %>
     <%= f.input :name_contains %>
   <% end %>
-  
+
   <% f.buttons do %>
     <%= f.commit_button 'Search' %>
   <% end %>
@@ -15,7 +14,7 @@
 <%= page_entries_info @agencies %>
 
 <%= will_paginate @entries %>
-<table>
+<table class="<%= table_css_class %>">
   <thead>
     <tr>
       <th>Name</th>

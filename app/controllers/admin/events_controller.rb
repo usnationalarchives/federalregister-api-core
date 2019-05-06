@@ -1,4 +1,6 @@
 class Admin::EventsController < AdminController
+  layout 'admin_bootstrap'
+
   def index
     @search = Event.public_meeting.searchlogic(params[:search])
     @events = @search.paginate(:page => params[:page])

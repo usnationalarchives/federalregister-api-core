@@ -1,4 +1,6 @@
 class Admin::AgencyHighlightsController < AdminController
+  layout 'admin_bootstrap'
+
   def index
     @agency_highlights = AgencyHighlight.all
   end
