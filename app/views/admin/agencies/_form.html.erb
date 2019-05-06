@@ -2,6 +2,9 @@
   <%= f.input :name,         :hint => "should be the sortable/inverted name, eg 'Agriculture Department'" %>
   <%# f.input :display_name, :hint => "should be what the agency calls itself; eg 'Department of Agriculture'" %>
   <%= f.input :short_name,   :hint => "should be the acronym or other very short name for this agency; eg 'USDA'" %>
+  <% if local_assigns[:display_slug_field] %>
+    <%= f.input :slug,       :hint => "make sure to notify Critical Juncture if changed so the appropriate reprocessing occurs" %>
+  <% end %>
   <%= f.input :pseudonym,    :hint => "'See Also' name for FR Index" %>
   <%= f.input :parent_id, :as => :select, :collection => Agency.alphabetically, :label => "Parent Agency" %>
   <%= f.input :description %>

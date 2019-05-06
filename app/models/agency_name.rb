@@ -1,7 +1,9 @@
 class AgencyName < ApplicationModel
+  include CacheUtils
   belongs_to :agency
   has_many :agency_name_assignments
   has_many :entries, :through => :agency_name_assignments
+  has_many :public_inspection_documents, :through => :agency_name_assignments
   has_many :agency_assignments, :dependent => :destroy
 
   validates_presence_of :name
@@ -48,7 +50,27 @@ class AgencyName < ApplicationModel
                             WHERE agency_name_assignments.agency_name_id = #{id}")
         Entry.update_all({:delta => true}, {:id => self.entry_ids})
       end
+
+      recompile_associated_tables_of_contents
+      recompile_public_inspection_tables_of_contents
+
+      SphinxIndexer.rebuild_delta_and_purge_core(Entry)
+      purge_cache(".*")
     end
+  end
+
+  def recompile_public_inspection_tables_of_contents
+    public_inspection_dates.each{|date| Resque.enqueue(PublicInspectionTableOfContentsRecompiler, date) }
+  end
+
+  def public_inspection_dates
+    public_inspection_documents.map(&:public_inspection_issues).flatten.map(&:publication_date).uniq
+  end
+
+  def recompile_associated_tables_of_contents
+    entries.
+      all(:select => "DISTINCT(publication_date)").
+      each{|entry| Resque.enqueue(TableOfContentsRecompiler, entry.publication_date) }
   end
 
   def does_not_have_agency_if_void

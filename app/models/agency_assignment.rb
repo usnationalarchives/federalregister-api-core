@@ -39,6 +39,7 @@ class AgencyAssignment < ApplicationModel
     connection.execute "DROP TABLE agency_assignments_old"
   end
 
+
   private
 
   def increment_entry_counter_cache
