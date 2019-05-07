@@ -78,6 +78,7 @@ class Api::V1::EntriesController < ApiController
 
   def search_details
     search = EntrySearch.new(params)
+
     if search.valid?
       render_json_or_jsonp(
         :suggestions => search_suggestions(search),
@@ -214,11 +215,21 @@ class Api::V1::EntriesController < ApiController
   end
 
   def search_filters(search)
-    search.filters.map.each_with_object(Hash.new){|filter,hsh|
-      hsh[filter.condition] = {
-        :name => filter.name,
-        :value => filter.label
-      }
-    }
+    search.filters.map.each_with_object(Hash.new) do |filter, hsh|
+      if filter.multi
+        hsh[filter.condition] ||= []
+        hsh[filter.condition] << {
+          name: filter.name,
+          value: filter.value.first
+        }
+      else
+        hsh[filter.condition] = {
+          name: filter.name,
+          value: filter.label
+        }
+      end
+
+      hsh
+    end
   end
 end

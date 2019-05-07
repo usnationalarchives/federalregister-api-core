@@ -143,10 +143,10 @@ class ApplicationSearch
   end
 
   def add_filter(options)
-    # vals = (options[:value].is_a?(Array) ? options[:value] : [options[:value]])
-    # vals.each do |val|
-      @filters << Filter.new(options)#.merge(:value => val))
-    # end
+    vals = (options[:value].is_a?(Array) ? options[:value] : [options[:value]])
+    vals.each do |val|
+      @filters << Filter.new(options.merge(value: val, multi: options[:value].is_a?(Array)))
+    end
   end
 
   def valid?
@@ -217,19 +217,19 @@ class ApplicationSearch
       if results_with_raw_text.present?
         results_with_raw_text.in_groups_of(1024,false).each do |batch|
           begin
-          # get all excerpts at once for results with raw text files
-          excerpts = result_array.send(:client).excerpts(
-            :docs => batch.map{|d| d.raw_text_file_path},
-            :load_files => true,
-            :words => result_array.args.join(' '),
-            :query_mode => :extended,
-            :index => "#{Entry.source_of_sphinx_index.sphinx_name}_core"
-          )
+            # get all excerpts at once for results with raw text files
+            excerpts = result_array.send(:client).excerpts(
+              :docs => batch.map{|d| d.raw_text_file_path},
+              :load_files => true,
+              :words => result_array.args.join(' '),
+              :query_mode => :extended,
+              :index => "#{Entry.source_of_sphinx_index.sphinx_name}_core"
+            )
 
-          # merge excerpts back to their result
-          batch.each_with_index do |result, index|
-            result.excerpt = excerpts[index]
-          end
+            # merge excerpts back to their result
+            batch.each_with_index do |result, index|
+              result.excerpt = excerpts[index]
+            end
           rescue Riddle::ResponseError => e
             # if we can't read a file we want to still show the search results
             Rails.logger.warn(e)
