@@ -216,6 +216,7 @@ class ApplicationSearch
 
       if results_with_raw_text.present?
         results_with_raw_text.in_groups_of(1024,false).each do |batch|
+          begin
           # get all excerpts at once for results with raw text files
           excerpts = result_array.send(:client).excerpts(
             :docs => batch.map{|d| d.raw_text_file_path},
@@ -228,6 +229,11 @@ class ApplicationSearch
           # merge excerpts back to their result
           batch.each_with_index do |result, index|
             result.excerpt = excerpts[index]
+          end
+          rescue Riddle::ResponseError => e
+            # if we can't read a file we want to still show the search results
+            Rails.logger.warn(e)
+            Honeybadger.notify(e)
           end
         end
       end
