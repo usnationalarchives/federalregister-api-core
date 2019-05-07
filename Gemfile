@@ -12,7 +12,7 @@ gem 'rails',
 gem 'mysql2', '0.2.24'
 
 # production app server
-gem 'passenger', '5.3.7'
+gem 'passenger', '~> 6.0'
 
 gem "jrails", "0.6.0"
 
@@ -85,6 +85,8 @@ gem 'resque-throttler',
     git: 'https://github.com/criticaljuncture/resque-throttler.git',
     branch: 'master',
     require: 'resque/throttler'
+# gem "resque-retry", '1.5.3'
+# gem "resque-scheduler", '4.3.1'
 
 gem "httparty"
 gem "httmultiparty", '~> 0.3.13'
