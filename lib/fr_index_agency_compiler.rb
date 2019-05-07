@@ -125,7 +125,8 @@ class FrIndexAgencyCompiler
       name: agency.try(:name),
       slug: agency.try(:slug),
       url: agency.try(:url),
-      document_categories: []
+      pdf: pdf_metadata,
+      document_categories: [],
     }
 
     document_type_names.each do |granule_class, formal_name|
@@ -155,6 +156,21 @@ class FrIndexAgencyCompiler
     else
       false
     end
+  end
+
+  def pdf_metadata
+    last_published_date = FrIndexAgencyStatus.
+      scoped(
+        order: "last_published DESC",
+        conditions: ["last_published IS NOT NULL and YEAR = ?", year],
+      ).
+      first.
+      try(:last_published)
+
+    @doc_data[:pdf] = {
+      url:           last_published_date ? "#{APP_HOST_NAME}/index/pdf/#{year}/#{last_published_date.month}.pdf" : nil,
+      approval_date: last_published_date ? last_published_date.month : nil,
+    }
   end
 
 

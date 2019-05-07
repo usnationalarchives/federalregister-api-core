@@ -11,6 +11,7 @@ class FrIndexCompiler
   def self.perform(year)
     fr_index_compiler = new(year)
     fr_index_compiler.process_agencies
+    fr_index_compiler.add_pdf_metadata
     fr_index_compiler.save(fr_index_compiler.index)
   end
 
@@ -35,6 +36,21 @@ class FrIndexCompiler
     agencies
   end
 
+  def add_pdf_metadata
+    last_published_date = FrIndexAgencyStatus.
+      scoped(
+        order: "last_published DESC",
+        conditions: ["last_published IS NOT NULL and YEAR = ?", year],
+      ).
+      first.
+      try(:last_published)
+
+    index[:pdf] = {
+      url:           last_published_date ? "#{APP_HOST_NAME}/index/pdf/#{year}/#{last_published_date.month}.pdf" : nil,
+      approval_date: last_published_date ? last_published_date.month : nil,
+    }
+  end
+
   def process_see_also(child_agencies)
     child_agencies.map do |child_agency|
       {
@@ -51,5 +67,9 @@ class FrIndexCompiler
       f.write(index.to_json)
     end
   end
+
+  private
+
+  attr_reader :year
 
 end
