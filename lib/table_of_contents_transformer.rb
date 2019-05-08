@@ -1,6 +1,7 @@
 require 'ostruct'
 
 class TableOfContentsTransformer
+  extend Memoist
   attr_reader :date, :path_manager
 
   def initialize(date)
@@ -16,9 +17,11 @@ class TableOfContentsTransformer
   def table_of_contents
     if entries_without_agencies.present?
       hsh = process_agencies(agencies)
-      process_entries_without_agencies(entries_without_agencies)[:agencies].each do |agency|
-        hsh[:agencies] << agency
+
+      unrecognized_agencies.each do |agency_hsh|
+        hsh[:agencies] << agency_hsh
       end
+
       hsh
     else
       process_agencies(agencies)
@@ -50,42 +53,6 @@ class TableOfContentsTransformer
     agencies_with_metadata
   end
 
-  def process_entries_without_agencies(entries)
-    agencies_with_metadata = {agencies: []}
-    entries.group_by(&:agency_names).each do |agency_names, entries|
-      agency_stub = create_agency_representation(agency_names.map(&:name).to_sentence)
-      agency_hash = {
-        name: agency_stub.name,
-        slug: agency_stub.slug,
-        document_categories: [
-          {
-            name: "",
-            documents: process_document_without_subject(entries)
-          }
-        ]
-      }
-      agencies_with_metadata[:agencies] << agency_hash
-    end
-    agencies_with_metadata
-  end
-
-  def create_agency_representation(agency_name)
-    if agency_name.empty?
-      agency_representation = OpenStruct.new(
-        name: "Other Documents",
-        slug: "other-documents",
-      )
-    else
-      agency_representation = OpenStruct.new(
-        name: agency_name,
-        slug: agency_name.downcase.gsub(' ','-'),
-      )
-
-      agency = lookup_agency(agency_name)
-    end
-
-    agency_representation
-  end
 
   def lookup_agency(text)
     agency_name = AgencyName.find_by_name(text.strip)
@@ -161,6 +128,75 @@ class TableOfContentsTransformer
       f.write(table_of_contents.to_json)
     end
   end
+
+
+  private
+
+  def unrecognized_agencies
+    agencies_with_metadata = []
+
+    entries_by_unrecognized_agency_name.each do |name, entries|
+      if name == IDENTIFIER_FOR_AGENCIES_WITHOUT_AGENCY_NAMES
+        next
+      end
+
+      agency_representation = create_agency_representation(name)
+      agencies_with_metadata << build_agency_hash(
+        agency_representation.name,
+        agency_representation.slug,
+        entries
+      )
+    end
+
+    entries_without_agency_names = entries_by_unrecognized_agency_name[IDENTIFIER_FOR_AGENCIES_WITHOUT_AGENCY_NAMES]
+    if entries_without_agency_names.present?
+      agencies_with_metadata << build_agency_hash(
+        'Other Documents',
+        'other-documents',
+        entries_without_agency_names
+      )
+    end
+
+    agencies_with_metadata
+  end
+
+  #NOTE: This is an arbitrary identifier selected for representing entries with no associated agency names
+  IDENTIFIER_FOR_AGENCIES_WITHOUT_AGENCY_NAMES = 'no_agency_names'
+  def entries_by_unrecognized_agency_name
+    entries_without_agencies.each_with_object(Hash.new { |h, k| h[k] = [] }) do |entry, hsh|
+      if entry.agency_names.present?
+        entry.agency_names.each do |agency_name|
+          hsh[agency_name.name] << entry
+        end
+      else
+        hsh[IDENTIFIER_FOR_AGENCIES_WITHOUT_AGENCY_NAMES] << entry
+      end
+    end
+  end
+  memoize :entries_by_unrecognized_agency_name
+
+  def build_agency_hash(name, slug, entries)
+    {
+      name: name,
+      slug: slug,
+      document_categories: [
+        {
+          type: "",
+          documents: process_document_without_subject(entries)
+        }
+      ]
+    }
+  end
+
+  def create_agency_representation(agency_name)
+    lookup_agency(agency_name)
+
+    OpenStruct.new(
+      name: agency_name,
+      slug: agency_name.downcase.gsub(' ','-'),
+    )
+  end
+
 end
 
 require_dependency('./table_of_contents_transformer/document_issue')
