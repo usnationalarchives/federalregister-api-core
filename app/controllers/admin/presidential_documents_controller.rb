@@ -46,7 +46,7 @@ class Admin::PresidentialDocumentsController < AdminController
   end
 
   def file_path
-    @file_path ||= File.join(DATA_DIRECTORY, "executive_order_import_#{Time.current.to_s(:underscored_iso_date_then_time)}")
+    @file_path ||= File.join(DATA_DIRECTORY, "executive_order_import_#{Time.current.to_s(:underscored_iso_date_then_time)}.csv")
   end
 
 end
