@@ -7,8 +7,10 @@ class Admin::PresidentialDocumentsController < AdminController
 
   def show
     file_identifier = params[:id]
-    if self.class.job_is_finished?(file_identifier)
+    if self.class.job_finished?(file_identifier)
       @message = 'The file has been successfully processed.'
+    elsif self.class.job_failed?(file_identifier)
+      @message = 'File processing failed.'
     else
       @message = 'Processing file...'
       @status  = 'continue-polling'
