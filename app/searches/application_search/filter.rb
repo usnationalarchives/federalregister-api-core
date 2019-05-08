@@ -32,7 +32,7 @@ class ApplicationSearch::Filter
     if options[:phrase]
       @sphinx_value = "\"#{@value.join(' ')}\""
     elsif options[:crc32_encode]
-      @sphinx_value = @value.map{|v| v.to_s.to_crc32}
+      @sphinx_value = @value.map{|v| v.to_s.to_crc32}.first
     elsif options[:model_sphinx_method]
       @sphinx_value = @value.map{|id|
         begin
@@ -40,7 +40,7 @@ class ApplicationSearch::Filter
         rescue
           raise ApplicationSearch::InputError.new("invalid value")
         end
-      }.map{|x| x.send(options[:model_sphinx_method])}
+      }.map{|x| x.send(options[:model_sphinx_method])}.first
     elsif options[:sphinx_value_processor]
       @sphinx_value = options[:sphinx_value_processor].call(options[:value])
     else

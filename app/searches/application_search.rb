@@ -173,7 +173,12 @@ class ApplicationSearch
   def with
     with = {}
     @filters.select{|f| f.sphinx_type == :with }.each do |filter|
-      with[filter.sphinx_attribute] = filter.sphinx_value
+      if filter.multi
+        with[filter.sphinx_attribute] ||= []
+        with[filter.sphinx_attribute] << filter.sphinx_value
+      else
+        with[filter.sphinx_attribute] = filter.sphinx_value
+      end
     end
     with
   end

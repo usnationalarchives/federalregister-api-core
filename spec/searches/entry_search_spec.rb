@@ -30,6 +30,14 @@ describe EntrySearch do
     it "collapses sunlight and notices"
   end
 
+  describe 'presidential_document_type' do
+    it "populates sphinx `with`" do
+      search = EntrySearch.new
+      search.presidential_document_type = ["determination", "executive_order"]
+      search.with.should == {:presidential_document_type_id => [1,2]}
+    end
+  end
+
   describe 'cfr' do
     it "populates sphinx `with` using the custom citation format" do
       search = EntrySearch.new
