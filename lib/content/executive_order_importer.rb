@@ -1,7 +1,7 @@
 module Content::ExecutiveOrderImporter
   def self.perform(file_path)
     executive_orders = []
-    CSV.foreach(file_path, :headers => :first_row) do |line|
+    CSV.foreach(file_path, :headers => :first_row, :encoding => 'windows-1251:utf-8') do |line|
       executive_orders << line.to_hash
     end
 
