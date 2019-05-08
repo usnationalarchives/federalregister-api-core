@@ -50,9 +50,9 @@ class TableOfContentsTransformer
     agencies_with_metadata
   end
 
-  def process_entries_without_agencies(agencies)
+  def process_entries_without_agencies(entries)
     agencies_with_metadata = {agencies: []}
-    agencies.group_by(&:agency_names).each do |agency_names, entries|
+    entries.group_by(&:agency_names).each do |agency_names, entries|
       agency_stub = create_agency_representation(agency_names.map(&:name).to_sentence)
       agency_hash = {
         name: agency_stub.name,
