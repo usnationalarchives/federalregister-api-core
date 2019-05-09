@@ -4,7 +4,7 @@ set :output, lambda { "2>&1 | sed \"s/^/[$(date)] /\" >> #{path}/log/#{log}.log"
 job_type :rake, [
     'cd :path',
     'source /etc/container_environment.sh',
-    'rake :task --silent :output',
+    'rake :task --trace :output',
   ].join(' && ')
 
 
