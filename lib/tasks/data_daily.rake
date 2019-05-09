@@ -40,8 +40,11 @@ namespace :data do
       sphinx:rebuild_delta
 
       content:issues:mark_complete
-      content:public_inspection:import:entry_id
-      content:public_inspection:reindex
+      
+      if SETTINGS["public_inspection"]["import"]
+        content:public_inspection:import:entry_id
+        content:public_inspection:reindex
+      end
 
       web:notify_of_new_issue
 

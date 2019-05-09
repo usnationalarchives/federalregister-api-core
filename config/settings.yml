@@ -7,6 +7,9 @@ shared: &shared
     throttle:
       at: <%= ENV["REG_GOV_JOBS_THROTTLE_AT"] || 2 %>
       per: <%= ENV["REG_GOV_JOBS_THROTTLE_PER"] || 5 %>
+  public_inspection:
+    import: false
+
 
 # Make any updates -web also
 test:
@@ -29,6 +32,8 @@ staging:
     private_images: private.images.fr2.criticaljuncture.org
     public_images: images.fr2.criticaljuncture.org
   ofr_flickr_group_id: 1058319@N21
+  public_inspection:
+    import: true
 
 production:
   <<: *shared
@@ -37,6 +42,8 @@ production:
     private_images: private.images.federalregister.gov
     public_images: images.federalregister.gov
   ofr_flickr_group_id: 1058319@N21
+  public_inspection:
+    import: true
   regulations_dot_gov:
     base_uri: <%= ENV["REG_GOV_BASE_URL"] || 'http://api.data.gov/regulations/v3' %>
     throttle:
