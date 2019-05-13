@@ -76,6 +76,19 @@ class Api::V1::PublicInspectionDocumentsController < ApiController
     end
   end
 
+  def search_details
+    search = PublicInspectionDocumentSearch.new(params)
+
+    if search.valid?
+      render_json_or_jsonp(
+        :suggestions => {},
+        :filters => search_filters(search)
+      )
+    else
+      render_json_or_jsonp({:errors => search.validation_errors}, :status => 400)
+    end
+  end
+
   def current
     respond_to do |wants|
       wants.json do

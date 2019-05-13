@@ -133,6 +133,27 @@ class ApiController < ApplicationController
     end
   end
 
+  def search_filters(search)
+    search.filters.map.each_with_object(Hash.new) do |filter, hsh|
+      if filter.multi
+        hsh[filter.condition] ||= []
+        hsh[filter.condition] << {
+          name: filter.name,
+          value: filter.value.first,
+          label: filter.label
+        }
+      else
+        hsh[filter.condition] = {
+          name: filter.name,
+          value: filter.value.first,
+          label: filter.label
+        }
+      end
+
+      hsh
+    end
+  end
+
   rescue_from Exception, :with => :server_error if RAILS_ENV == 'production' || RAILS_ENV == 'staging'
   def server_error(exception)
     notify_honeybadger(exception)

@@ -213,23 +213,4 @@ class Api::V1::EntriesController < ApiController
 
     suggestions
   end
-
-  def search_filters(search)
-    search.filters.map.each_with_object(Hash.new) do |filter, hsh|
-      if filter.multi
-        hsh[filter.condition] ||= []
-        hsh[filter.condition] << {
-          name: filter.name,
-          value: filter.value.first
-        }
-      else
-        hsh[filter.condition] = {
-          name: filter.name,
-          value: filter.label
-        }
-      end
-
-      hsh
-    end
-  end
 end

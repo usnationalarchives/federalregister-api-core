@@ -29,6 +29,11 @@ ActionController::Routing::Routes.draw do |map|
                   :action => 'search_details',
                   :conditions => {:method => :get}
 
+    api.public_inspection_documents_search_details 'public-inspection-documents/search-details',
+                  :controller => 'api/v1/public_inspection_documents',
+                  :action => 'search_details',
+                  :conditions => {:method => :get}
+
     api.resources :entries,
                   :as => :documents,
                   :only => [:index, :show],
