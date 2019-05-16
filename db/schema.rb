@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20180612005005) do
+ActiveRecord::Schema.define(:version => 20190516164148) do
 
   create_table "action_names", :force => true do |t|
     t.string   "name"
@@ -262,6 +262,7 @@ ActiveRecord::Schema.define(:version => 20180612005005) do
     t.integer  "issue_number"
     t.string   "comment_url_override"
     t.string   "proclamation_number"
+    t.string   "presidential_document_number"
   end
 
   add_index "entries", ["citation"], :name => "index_entries_on_citation"

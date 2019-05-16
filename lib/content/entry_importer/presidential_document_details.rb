@@ -5,6 +5,7 @@ module Content::EntryImporter::PresidentialDocumentDetails
     :signing_date,
     :executive_order_number,
     :executive_order_notes,
+    :presidential_document_number,
     :proclamation_number
 
   def presidential_document_type_id
@@ -84,4 +85,15 @@ module Content::EntryImporter::PresidentialDocumentDetails
       end
     end
   end
+
+  def presidential_document_number
+    if mods_node
+      presdoc_node = mods_node.css('presidentialDoc')
+
+      if presdoc_node.present?
+        return presdoc_node.attr('number').try(:value)
+      end
+    end
+  end
+
 end

@@ -121,6 +121,7 @@ class EntryApiRepresentation < ApiRepresentation
       {:name => president.full_name, :identifier => president.identifier}
     end
   end
+  field(:presidential_document_number)
   field(:proclamation_number)
   field(:publication_date)
   field(:raw_text_url, :select => [:publication_date, :document_file_path, :document_number]){|e| entry_raw_text_url(e)}

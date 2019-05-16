@@ -30,6 +30,7 @@ module Content::ExecutiveOrderImporter
         entry.agency_names = [AgencyName.find_by_name!('Executive Office of the President')]
         attr = {
           :executive_order_number => eo['executive_order_number'],
+          :presidential_document_number => eo['executive_order_number'],
           :signing_date => eo['signing_date'].present? ? Date.parse(eo['signing_date']) : nil,
           :executive_order_notes => eo['executive_order_notes'],
           :granule_class => "PRESDOCU",
