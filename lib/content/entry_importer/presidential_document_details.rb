@@ -3,10 +3,8 @@ module Content::EntryImporter::PresidentialDocumentDetails
 
   provides :presidential_document_type_id,
     :signing_date,
-    :executive_order_number,
     :executive_order_notes,
     :presidential_document_number,
-    :proclamation_number
 
   def presidential_document_type_id
     document_type_id = nil
@@ -57,32 +55,12 @@ module Content::EntryImporter::PresidentialDocumentDetails
     end
   end
 
-  def executive_order_number
-    if mods_node
-      presdoc_node = mods_node.css('presidentialDoc')
-
-      if presdoc_node.present? && presdoc_node.attr('type').value == 'EXECORD'
-        return presdoc_node.attr('number').try(:value)
-      end
-    end
-  end
-
   def executive_order_notes
     notes_nodes = mods_node.css('noprinteonotes')
     if notes_nodes.present?
       notes_nodes.map(&:content).join("\n")
     else
       @entry.try(:executive_order_notes)
-    end
-  end
-
-  def proclamation_number
-    if mods_node
-      presdoc_node = mods_node.css('presidentialDoc')
-
-      if presdoc_node.present? && presdoc_node.attr('type').value == 'PROCLA'
-        return presdoc_node.attr('number').try(:value)
-      end
     end
   end
 

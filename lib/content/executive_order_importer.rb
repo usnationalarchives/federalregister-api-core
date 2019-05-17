@@ -6,7 +6,9 @@ module Content::ExecutiveOrderImporter
     end
 
     max_known_eo_number = executive_orders.map{|eo| eo['executive_order_number'] }.max
-    Entry.scoped(:conditions => ["executive_order_number <= ?", max_known_eo_number]).update_all(:executive_order_number => nil)
+    Entry.scoped(
+      :conditions => ["presidential_document_type_id = #{PresidentialDocumentType::EXECUTIVE_ORDER.id} AND CAST(presidential_document_number AS UNSIGNED) <= ?", max_known_eo_number]
+    ).update_all(:presidential_document_number => nil)
     executive_orders.each do |eo|
       document_number = eo['document_number']
       next if document_number.blank?
@@ -29,7 +31,6 @@ module Content::ExecutiveOrderImporter
         puts "Entry found..."
         entry.agency_names = [AgencyName.find_by_name!('Executive Office of the President')]
         attr = {
-          :executive_order_number => eo['executive_order_number'],
           :presidential_document_number => eo['executive_order_number'],
           :signing_date => eo['signing_date'].present? ? Date.parse(eo['signing_date']) : nil,
           :executive_order_notes => eo['executive_order_notes'],

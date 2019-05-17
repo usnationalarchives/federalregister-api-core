@@ -65,7 +65,7 @@ namespace :content do
         end
 
         importer_options = {entry: entry}.merge(options)
-        Content::EntryImporter.import_document(importer_options, [:presidential_document_type_id, :presidential_document_number, :signing_date, :executive_order_number, :proclamation_number])
+        Content::EntryImporter.import_document(importer_options, [:presidential_document_type_id, :presidential_document_number, :signing_date])
       end
     end
   end

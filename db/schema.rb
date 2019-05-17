@@ -222,7 +222,6 @@ ActiveRecord::Schema.define(version: 2020_03_11_175851) do
     t.boolean  "significant",                                   :default => false
     t.integer  "presidential_document_type_id"
     t.date     "signing_date"
-    t.integer  "executive_order_number"
     t.integer  "action_name_id"
     t.integer  "correction_of_id"
     t.string   "regulations_dot_gov_docket_id"
@@ -231,7 +230,6 @@ ActiveRecord::Schema.define(version: 2020_03_11_175851) do
     t.string   "fr_index_doc"
     t.integer  "issue_number"
     t.string   "comment_url_override"
-    t.string   "proclamation_number"
     t.string   "presidential_document_number"
   end
 
@@ -246,8 +244,7 @@ ActiveRecord::Schema.define(version: 2020_03_11_175851) do
   add_index "entries", ["granule_class"], :name => "index_entries_on_agency_id_and_granule_class"
   add_index "entries", ["id", "publication_date"], :name => "index_entries_on_id_and_publication_date"
   add_index "entries", ["id"], :name => "index_entries_on_agency_id_and_id"
-  add_index "entries", ["presidential_document_type_id", "executive_order_number"], :name => "presdocu_type_id_and_eo_number"
-  add_index "entries", ["proclamation_number"], :name => "index_entries_on_proclamation_number", :length => {"proclamation_number"=>191}
+  add_index "entries", ["presidential_document_type_id", "presidential_document_number"], :name => "presidential_document_type_id", :unique => true, :length => {"presidential_document_type_id"=>nil, "presidential_document_number"=>10}
   add_index "entries", ["publication_date"], :name => "index_entries_on_agency_id_and_publication_date"
   add_index "entries", ["publication_date"], :name => "index_entries_on_publication_date_and_agency_id"
   add_index "entries", ["raw_text_updated_at"], :name => "index_entries_on_raw_text_updated_at"

@@ -49,8 +49,8 @@ SGML
         publication_date: Date.new(2017,1,1),
         toc_subject:      "The Generals' Mess",
         toc_doc:          "Reserve Officers' Training",
-        executive_order_number: 13811,
-        presidential_document_type_id: PresidentialDocumentType::EXECUTIVE_ORDER.id
+        presidential_document_type_id: PresidentialDocumentType::EXECUTIVE_ORDER.id,
+        presidential_document_number: 13811
       )
       stub_sphinx_entry_ids
 
@@ -75,8 +75,8 @@ SGML
         publication_date: Date.new(2017,1,1),
         toc_subject:      'Committees; Establishment, Renewal, Termination, etc.:',
         toc_doc:          'Federal Advisory Committees; Continuance (EO 13811)',
-        executive_order_number: 13811,
-        presidential_document_type_id: PresidentialDocumentType::EXECUTIVE_ORDER.id
+        presidential_document_type_id: PresidentialDocumentType::EXECUTIVE_ORDER.id,
+        presidential_document_number: 13811
       )
       stub_sphinx_entry_ids
 

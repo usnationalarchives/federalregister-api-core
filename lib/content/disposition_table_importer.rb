@@ -67,7 +67,6 @@ module Content
           puts "updating EO #{number} -- #{entry.document_number} #{entry.publication_date}"
           entry.granule_class = 'PRESDOCU'
           entry.presidential_document_type = PresidentialDocumentType::EXECUTIVE_ORDER
-          entry.executive_order_number = number
           entry.presidential_document_number = number
           entry.signing_date = signing_date
           entry.save

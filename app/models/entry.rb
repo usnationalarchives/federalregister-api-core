@@ -535,6 +535,12 @@ class Entry < ApplicationModel
     agencies.first
   end
 
+  def executive_order_number
+    if presidential_document_type == PresidentialDocumentType::EXECUTIVE_ORDER
+      presidential_document_number
+    end
+  end
+
   def has_type?
     entry_type != 'Unknown'
   end
@@ -547,6 +553,12 @@ class Entry < ApplicationModel
 
   def lede_photo_candidates
     self[:lede_photo_candidates] ? YAML::load(self[:lede_photo_candidates]) : []
+  end
+
+  def proclamation_number
+    if presidential_document_type == PresidentialDocumentType::PROCLAMATION
+      presidential_document_number
+    end
   end
 
   def regulation_id_numbers=(rins)
@@ -570,7 +582,8 @@ class Entry < ApplicationModel
   end
 
   def executive_order?
-    executive_order_number.present?
+    (presidential_document_type == PresidentialDocumentType::EXECUTIVE_ORDER) &&
+    presidential_document_number.present?
   end
 
   def presidential_document?
