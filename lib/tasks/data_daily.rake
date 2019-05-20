@@ -6,6 +6,7 @@ namespace :data do
   namespace :daily do
     task :basic => %w(
       content:entries:import
+      data:extract:places
       content:gpo_images:process_daily_issue_images
       content:entries:json:compile:daily_toc
     )
