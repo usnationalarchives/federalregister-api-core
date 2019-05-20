@@ -144,8 +144,10 @@ class ApplicationSearch
 
   def add_filter(options)
     vals = (options[:value].is_a?(Array) ? options[:value] : [options[:value]])
+    multi = options[:condition] == :near ? false : options[:value].is_a?(Array)
+
     vals.each do |val|
-      @filters << Filter.new(options.merge(value: val, multi: options[:value].is_a?(Array)))
+      @filters << Filter.new(options.merge(value: val, multi: multi))
     end
   end
 
