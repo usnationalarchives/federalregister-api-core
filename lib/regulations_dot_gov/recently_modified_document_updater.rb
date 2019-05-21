@@ -2,6 +2,7 @@ class RegulationsDotGov::RecentlyModifiedDocumentUpdater
   extend Memoist
   include CacheUtils
   
+  class MissingDocumentNumber < StandardError; end
   class NoDocumentFound < StandardError; end
 
   DOCUMENT_TYPE_IDENTIFIERS = ['PR', 'FR', 'N']
@@ -18,32 +19,27 @@ class RegulationsDotGov::RecentlyModifiedDocumentUpdater
     current_time           = Time.current
     expire_cache           = false
 
-    document_collection_attributes.each do |document_attributes|
-      document_number = document_attributes['frNumber']
-      document_id     = document_attributes['documentId']
-
-      entry = document_number ? Entry.
-        order("ORDER BY publication_date DESC").
-        find_by_document_number(document_number) : nil
+    updated_documents.each do |updated_document|
+      if updated_document.federal_register_document_number.nil?
+        notify_missing_document_number(updated_document)
+        next 
+      end
+      
+      entry = Entry.find_by_document_number(updated_document.federal_register_document_number)
 
       if entry
-        entry.regulations_dot_gov_docket_id = document_attributes['docketId']
-        update_docket                       = entry.regulations_dot_gov_docket_id_changed?
+        entry.regulations_dot_gov_docket_id = updated_document.docket_id
+        update_docket = entry.regulations_dot_gov_docket_id_changed?
 
-        if document_id
-          if document_attributes['openForComment'] &&
-            DocketImporter.non_participating_agency_ids.exclude?(document_attributes['agencyAcronym'])
-            comment_url = "http://www.regulations.gov/#!submitComment;D=#{document_id}"
-            entry.comment_url = comment_url
-          end
-
-          entry.regulationsdotgov_url = "http://www.regulations.gov/#!documentDetail;D=#{document_id}"
+        if updated_document.document_id
+          entry.comment_url = updated_document.comment_url
+          entry.regulationsdotgov_url = updated_document.url
         end
 
         if entry.changed?
           expire_cache = true
         end
-        entry.checked_regulationsdotgov_at  = current_time
+        entry.checked_regulationsdotgov_at = current_time
 
         entry.save!
 
@@ -51,10 +47,7 @@ class RegulationsDotGov::RecentlyModifiedDocumentUpdater
           Resque.enqueue(DocketImporter, entry.regulations_dot_gov_docket_id)
         end
       else
-        Honeybadger.notify(
-          :error_class   => NoDocumentFound,
-          :error_message => "Regulations Dot Gov noted entry #{document_number} changed within the last #{days} days, but no entry was found.  Document details: #{document_attributes}"
-        )
+        notify_missing_document(updated_document)
       end
     end
 
@@ -65,24 +58,30 @@ class RegulationsDotGov::RecentlyModifiedDocumentUpdater
 
   private
 
-  def document_collection_attributes
+  def notify_missing_document(document)
+    Honeybadger.notify(
+      error_class: NoDocumentFound,
+      error_message: "Regulations Dot Gov returned document #{document.federal_register_document_number} as changed within the last #{days} days, but no document was found.  Document details: #{document.raw_attributes}"
+    )
+  end
+
+  def notify_missing_document_number(document)
+    Honeybadger.notify(
+      error_class: MissingDocumentNumber,
+      error_message: "Regulations Dot Gov returned document without a federal_register_document_number as changed within the last #{days} days.  Document details: #{document.raw_attributes}"
+    )
+  end
+
+  def updated_documents
     Array.new.tap do |collection|
       DOCUMENT_TYPE_IDENTIFIERS.each do |document_type_identifier|
         client = RegulationsDotGov::Client.new
+        documents = client.find_documents_updated_within(days, document_type_identifier)
 
-        documents = client.find_documents_updated_within(
-          0,
-          document_type_identifier
-        )
-        binding.pry
-
-        documents.each do |document|
-          collection << document.raw_attributes
-        end
-
+        collection << documents
       end
-    end
+    end.flatten
   end
-  memoize :document_collection_attributes
+  memoize :updated_documents
 
 end
