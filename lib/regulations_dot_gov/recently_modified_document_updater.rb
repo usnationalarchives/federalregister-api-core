@@ -1,9 +1,13 @@
-class RegulationsDotGov::BulkModifiedDocumentUpdater
+class RegulationsDotGov::RecentlyModifiedDocumentUpdater
+  extend Memoist
   include CacheUtils
+  
   class NoDocumentFound < StandardError; end
 
-  extend Memoist
-
+  DOCUMENT_TYPE_IDENTIFIERS = ['PR', 'FR', 'N']
+  
+  attr_reader :days
+  
   def initialize(days)
     @days = days
   end
@@ -61,18 +65,16 @@ class RegulationsDotGov::BulkModifiedDocumentUpdater
 
   private
 
-  attr_reader :days
-
-  DOCUMENT_TYPE_IDENTIFIERS = ['PR', 'FR', 'N']
   def document_collection_attributes
     Array.new.tap do |collection|
       DOCUMENT_TYPE_IDENTIFIERS.each do |document_type_identifier|
         client = RegulationsDotGov::Client.new
 
-        documents = client.find_updated_documents_within(
+        documents = client.find_documents_updated_within(
           0,
           document_type_identifier
         )
+        binding.pry
 
         documents.each do |document|
           collection << document.raw_attributes

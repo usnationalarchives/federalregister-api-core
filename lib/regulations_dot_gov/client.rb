@@ -64,12 +64,11 @@ class RegulationsDotGov::Client
     RegulationsDotGov::Docket.new(self, response.parsed_response)
   end
 
-
-  def find_updated_documents_within(days, document_type_identifier)
+  def find_documents_updated_within(days, document_type_identifier)
     find_documents(
       daysSinceModified: days,
-      dct:               document_type_identifier,
-      rpp:               1000,
+      dct: document_type_identifier,
+      rpp: 1000,
     )
   end
 
