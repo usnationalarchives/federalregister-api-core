@@ -70,7 +70,8 @@ if ENV['RAILS_ENV'] != 'development'
   # REGULATIONS.GOV DATA
   ########################
 
-  every 30.minutes do
+  # every 30 minutes from 4AM to 7PM EDT every day
+  every "*/30 4-23 * * *" do
     rake 'content:entries:import:regulations_dot_gov:modified_today'
   end
 
