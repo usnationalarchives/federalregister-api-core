@@ -39,3 +39,6 @@ production:
   ofr_flickr_group_id: 1058319@N21
   regulations_dot_gov:
     base_uri: <%= ENV["REG_GOV_BASE_URL"] || 'http://api.data.gov/regulations/v3' %>
+    throttle:
+      at: <%= ENV["REG_GOV_JOBS_THROTTLE_AT"] || 2 %>
+      per: <%= ENV["REG_GOV_JOBS_THROTTLE_PER"] || 5 %>
