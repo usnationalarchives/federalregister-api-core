@@ -38,6 +38,10 @@ class RegulationsDotGov::SearchDocument < RegulationsDotGov::Document
     raw_attributes['docketTitle']
   end
 
+  def open_for_comment?
+    raw_attributes['openForComment']
+  end
+
   def posted_date
     val = raw_attributes['postedDate']
     if val.present?

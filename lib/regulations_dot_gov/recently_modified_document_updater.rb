@@ -32,7 +32,7 @@ class RegulationsDotGov::RecentlyModifiedDocumentUpdater
         update_docket = entry.regulations_dot_gov_docket_id_changed? && entry.regulations_dot_gov_docket_id.present?
 
         if updated_document.document_id
-          entry.comment_url = updated_document.comment_url
+          entry.comment_url = updated_document.open_for_comment? ? updated_document.comment_url : nil
           entry.regulationsdotgov_url = updated_document.url
         end
 
