@@ -486,7 +486,7 @@ ActiveRecord::Schema.define(:version => 20180612005005) do
     t.float    "longitude"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "open_calais_guid"
+    t.string   "open_calais_guid", :limit => 100
   end
 
   add_index "places", ["open_calais_guid"], :name => "index_places_on_open_calais_guid", :unique => true
