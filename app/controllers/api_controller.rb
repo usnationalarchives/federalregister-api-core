@@ -145,7 +145,7 @@ class ApiController < ApplicationController
       else
         hsh[filter.condition] = {
           name: filter.name,
-          value: filter.value.first,
+          value: filter.value.first.is_a?(Range) ? nil : filter.value.first,
           label: filter.label
         }
       end
