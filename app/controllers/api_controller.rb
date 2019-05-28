@@ -135,19 +135,17 @@ class ApiController < ApplicationController
 
   def search_filters(search)
     search.filters.map.each_with_object(Hash.new) do |filter, hsh|
+      representation = {
+        name: filter.name,
+        value: filter.value.first.is_a?(Range) ? nil : filter.value.first,
+        label: filter.label
+      }
+
       if filter.multi
         hsh[filter.condition] ||= []
-        hsh[filter.condition] << {
-          name: filter.name,
-          value: filter.value.first,
-          label: filter.label
-        }
+        hsh[filter.condition] << representation
       else
-        hsh[filter.condition] = {
-          name: filter.name,
-          value: filter.value.first.is_a?(Range) ? nil : filter.value.first,
-          label: filter.label
-        }
+        hsh[filter.condition] = representation
       end
 
       hsh
