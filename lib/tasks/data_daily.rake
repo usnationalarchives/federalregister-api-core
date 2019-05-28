@@ -42,10 +42,8 @@ namespace :data do
 
       content:issues:mark_complete
       
-      if SETTINGS["public_inspection"]["import"]
-        content:public_inspection:import:entry_id
-        content:public_inspection:reindex
-      end
+      content:public_inspection:import:entry_id
+      content:public_inspection:reindex
 
       web:notify_of_new_issue
 
