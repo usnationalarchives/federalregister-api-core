@@ -7,7 +7,7 @@ class PlaceDeterminer
 
   def self.perform(entry_id)
     ActiveRecord::Base.verify_active_connections!
-    
+
     new(entry_id).perform
   end
 
@@ -48,6 +48,7 @@ class PlaceDeterminer
         end
 
         entry.places_determined_at = Time.now
+        entry.delta = true
         entry.save
       end
 
