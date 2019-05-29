@@ -72,7 +72,7 @@ if ENV['RAILS_ENV'] != 'development'
 
   # every 30 minutes from 4AM to 7PM EDT every day
   every "*/30 4-23 * * *" do
-    set :log, 'reg_gov_modifed_documents'
+    set :log, 'regulations_dot_gov_document_update'
     rake 'content:entries:import:regulations_dot_gov:modified_today'
   end
 
