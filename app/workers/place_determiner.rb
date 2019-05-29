@@ -6,6 +6,8 @@ class PlaceDeterminer
   CHARACTER_REQUEST_LIMIT = 99000
 
   def self.perform(entry_id)
+    ActiveRecord::Base.verify_active_connections!
+    
     new(entry_id).perform
   end
 
