@@ -4,6 +4,16 @@ namespace :data do
   end
 
   namespace :daily do
+    task :development => %w(
+      content:entries:import
+      content:entries:json:compile:daily_toc
+      sphinx:rebuild_delta
+      content:issues:mark_complete
+      web:notify_of_updated_issue
+      content:fr_index:update_status_cache
+      content:entries:json:compile:fr_index
+    )
+
     task :basic => %w(
       content:entries:import
       data:extract:places

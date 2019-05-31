@@ -9,6 +9,16 @@ shared: &shared
       per: <%= ENV["REG_GOV_JOBS_THROTTLE_PER"] || 5 %>
   public_inspection:
     import: false
+  cron:
+    google_analytics: true
+    gpo_images: true
+    import: true
+    public_inspection: true
+    sphinx: true
+    regulations_dot_gov:
+      comments: true
+      dockets: true
+      documents: true
 
 
 # Make any updates -web also
@@ -24,6 +34,17 @@ development:
     private_images: private.images.fr2.local
     public_images: images.fr2.local
   ofr_flickr_group_id: 1058319@N21
+  cron:
+    google_analytics: false
+    gpo_images: false
+    import: true
+    public_inspection: false
+    sphinx: true
+    regulations_dot_gov:
+      comments: false
+      dockets: false
+      documents: true
+    varnish: false
 
 staging:
   <<: *shared
