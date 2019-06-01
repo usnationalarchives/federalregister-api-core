@@ -168,7 +168,7 @@ class Api::V1::EntriesController < ApiController
   def search_suggestions(search)
     suggestions = {}
 
-    if search.suggestion
+    if search.suggestion && search.suggestion.count > 0
       suggestions[:search_refinement] = {
         :count => search.suggestion.count,
         :search_conditions => search.suggestion.conditions,
