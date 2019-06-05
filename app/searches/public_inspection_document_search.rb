@@ -16,7 +16,7 @@ class PublicInspectionDocumentSearch < ApplicationSearch
   define_filter :docket_id,
                 :phrase => true,
                 :label => "Agency Docket" do |docket|
-                  docket
+                  docket.first
                 end
   define_filter(:document_numbers,
                 :sphinx_type => :with,
