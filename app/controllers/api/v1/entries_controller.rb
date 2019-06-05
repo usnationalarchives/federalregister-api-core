@@ -77,7 +77,7 @@ class Api::V1::EntriesController < ApiController
   end
 
   def search_details
-    search = EntrySearch.new(params)
+    search = entry_search(params)
 
     if search.valid?
       render_json_or_jsonp(
