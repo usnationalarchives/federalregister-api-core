@@ -97,7 +97,7 @@ class ApplicationSearch
   end
 
   def initialize(options = {})
-    options.symbolize_keys!
+    options = options.with_indifferent_access
     @errors = {}
     @filters = []
 
@@ -125,7 +125,7 @@ class ApplicationSearch
       unless self.respond_to?("#{key}=")
         @errors[key] = "is not a valid field"
       end
-    end
+    end.with_indifferent_access
   end
 
   def conditions=(conditions)
