@@ -18,7 +18,7 @@ class EntrySearch::Suggestor::EntryType < EntrySearch::Suggestor::Base
     type_name = type_names.compact.first
     entry_type = TYPE_NAMES[type_name.to_s.downcase]
     if entry_type
-      @conditions[:type] = entry_type
+      @conditions[:type] = Array(entry_type)
     end
   end
 end

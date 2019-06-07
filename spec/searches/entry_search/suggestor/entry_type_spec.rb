@@ -11,7 +11,7 @@ describe 'EntrySearch::Suggestor::EntryType' do
       it "should add set the type to PRESDOC and remove the term when given '#{term}'" do
         suggestion = suggestor(term).suggestion
         suggestion.term.should == 'goats'
-        suggestion.type.should == 'PRESDOCU'
+        suggestion.type.should == ['PRESDOCU']
       end
     end
 
