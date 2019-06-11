@@ -31,10 +31,10 @@ class RegulationsDotGov::SearchDocument < RegulationsDotGov::Document
   end
 
   def docket_id
-    raw_attributes['docket_id']
+    raw_attributes['docketId']
   end
 
-  def docketTitle
+  def docket_title
     raw_attributes['docketTitle']
   end
 
