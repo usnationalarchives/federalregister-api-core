@@ -93,11 +93,12 @@ COPY docker/api/files/imagemagick/policy.xml /etc/ImageMagick-6/policy.xml
 RUN ln -sf /usr/share/zoneinfo/US/Eastern /etc/localtime
 
 
-##################
-### APP USER
-##################
+###############################
+### APP USER/GROUP
+###############################
 
-RUN adduser app -uid 1000 --system &&\
+RUN addgroup --gid 1000 app &&\
+  adduser app -uid 1000 --gid 1000 --system &&\
   usermod -a -G docker_env app
 
 
