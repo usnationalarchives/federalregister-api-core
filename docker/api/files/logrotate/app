@@ -1,5 +1,5 @@
 /home/app/log/*.log {
-  su app
+  su app app
   daily
   missingok
   rotate 90

@@ -8,4 +8,7 @@ else
   queues="public_inspection,fr_index_pdf_previewer,fr_index_pdf_publisher,api_core,gpo_image_import,reg_gov,reimport"
 fi
 
+touch /home/app/log/resque_worker_default.log
+chown app:app /home/app/log/resque_worker_default.log
+
 exec /sbin/setuser app rake environment resque:work RAILS_ENV=$RAILS_ENV QUEUE=$queues INTERVAL=1 VERBOSE=1 PIDFILE=/home/app/tmp/pids/resque_worker_default_1.pid >> /home/app/log/resque_worker_default.log 2>&1
