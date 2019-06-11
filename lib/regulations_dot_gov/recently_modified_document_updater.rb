@@ -58,18 +58,18 @@ class RegulationsDotGov::RecentlyModifiedDocumentUpdater
 
   private
 
+  def logger
+    @logger ||= Logger.new("#{Rails.root}/log/reg_gov_modifed_documents.log")
+  end
+
   def notify_missing_document(document)
-    Honeybadger.notify(
-      error_class: NoDocumentFound,
-      error_message: "Regulations Dot Gov returned document #{document.federal_register_document_number} as changed within the last #{days} days, but no document was found.  Document details: #{document.raw_attributes}"
-    )
+    message = "Regulations Dot Gov returned document #{document.federal_register_document_number} as changed within the last #{days} days, but no document was found.  Document details: #{document.raw_attributes}"
+    logger.warn("[NoDocumentFound] #{message}")
   end
 
   def notify_missing_document_number(document)
-    Honeybadger.notify(
-      error_class: MissingDocumentNumber,
-      error_message: "Regulations Dot Gov returned document without a federal_register_document_number as changed within the last #{days} days.  Document details: #{document.raw_attributes}"
-    )
+    message = "Regulations Dot Gov returned document without a federal_register_document_number as changed within the last #{days} days.  Document details: #{document.raw_attributes}"
+    logger.warn("[MissingDocumentNumber] #{message}")
   end
 
   def updated_documents
