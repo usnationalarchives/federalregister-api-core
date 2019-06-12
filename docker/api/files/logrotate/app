@@ -8,5 +8,5 @@
   notifempty
   copytruncate
   dateext
-  size 50M
+  minsize 50M
 }
