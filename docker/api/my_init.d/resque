@@ -2,4 +2,8 @@
 set -ex
 cd /home/app
 
-exec /sbin/setuser app rake resque:throttle
+#exec /sbin/setuser app rake resque:throttle
+if ! [ "$RAILS_ENV" = "development" ]; then
+  touch /home/app/log/resque_worker_default.log
+  chown app:app /home/app/log/resque_worker_default.log
+fi
