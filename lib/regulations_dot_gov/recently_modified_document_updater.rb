@@ -52,7 +52,8 @@ class RegulationsDotGov::RecentlyModifiedDocumentUpdater
     end
 
     if expire_cache
-      purge_cache("/api/v1/*")
+      purge_cache("^/api/v1/document")
+      purge_cache("^/document")
     end
   end
 
