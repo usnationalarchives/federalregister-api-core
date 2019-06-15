@@ -147,7 +147,7 @@ class Api::V1::EntriesController < ApiController
 
   def render_rss(documents, title)
     render :template => 'entries/index.rss.builder', :locals => {
-      :documents => documents,
+      :documents => documents.map{|d| EntryApiRepresentation.new(d)},
       :feed_name => title,
       :feed_description => "The documents in this feed originate from FederalRegister.gov which displays an unofficial web version of the daily Federal Register. The official electronic version in PDF format is also available as a link from the FederalRegister.gov website. For more information, please see https://www.federalregister.gov/reader-aids/policy/legal-status.",
       :feed_url => request.url
