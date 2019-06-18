@@ -17,7 +17,6 @@ class RegulationsDotGov::RecentlyModifiedDocumentUpdater
     ActiveRecord::Base.verify_active_connections!
     EntryObserver.disabled = true
     current_time           = Time.current
-    expire_cache           = false
 
     updated_documents.each do |updated_document|
       if updated_document.federal_register_document_number.nil?
@@ -37,7 +36,8 @@ class RegulationsDotGov::RecentlyModifiedDocumentUpdater
         end
 
         if entry.changed?
-          expire_cache = true
+          purge_cache("^/api/v1/documents/#{entry.document_number}")
+          purge_cache("^/documents/#{entry.publication_date.to_s(:ymd)}/#{entry.document_number}")
         end
         entry.checked_regulationsdotgov_at = current_time
 
@@ -49,11 +49,6 @@ class RegulationsDotGov::RecentlyModifiedDocumentUpdater
       else
         notify_missing_document(updated_document)
       end
-    end
-
-    if expire_cache
-      purge_cache("^/api/v1/document")
-      purge_cache("^/document")
     end
   end
 
