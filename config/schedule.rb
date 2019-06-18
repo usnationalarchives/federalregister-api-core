@@ -111,7 +111,7 @@ if cron_settings["regulations_dot_gov"]["dockets"]
 
   # Clear the document cache at a time when the regulations.gov jobs
   # above should have all completed
-  every 1.day, at: ['7AM', '1PM'] do
+  every 1.day, at: ['10AM', '2PM'] do
     rake 'varnish:expire:everything'
   end
 end
