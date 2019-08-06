@@ -58,7 +58,7 @@ SGML
 
   def document_grouping_text(document_grouping, tag_name)
 <<-SGML
-<#{tag_name}>#{escape(document_grouping.header)} (#{escape(document_grouping.parenthetical_citation)})
+<#{tag_name}>#{escape(document_grouping.header)}
 SGML
   end
 
