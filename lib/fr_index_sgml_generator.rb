@@ -49,18 +49,21 @@ class FrIndexSgmlGenerator
     SGML
   end
 
-
   def subject_grouping_text(grouping)
 <<-SGML
-<SUBJHED>#{CGI.escapeHTML(grouping.header)}
+<SUBJHED>#{escape(grouping.header)}
 #{grouping.document_groupings.map{|document_grouping| document_grouping_text(document_grouping, 'SUBJECT1')}.join("\n")}
 SGML
   end
 
   def document_grouping_text(document_grouping, tag_name)
 <<-SGML
-<#{tag_name}>#{CGI.escapeHTML(document_grouping.header)} (#{CGI.escapeHTML(document_grouping.parenthetical_citation)})
+<#{tag_name}>#{escape(document_grouping.header)} (#{escape(document_grouping.parenthetical_citation)})
 SGML
+  end
+
+  def escape(text)
+    CGI.escapeHTML(text).gsub("&amp;#39", "'")
   end
 
 end
