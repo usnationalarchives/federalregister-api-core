@@ -63,7 +63,7 @@ SGML
   end
 
   def escape(text)
-    CGI.escapeHTML(text).gsub("&amp;#39", "'")
+    CGI.escapeHTML(text).gsub("&#39;", "'")
   end
 
 end

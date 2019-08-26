@@ -42,13 +42,13 @@ describe FrIndexSgmlGenerator do
 SGML
     end
 
-    it "renders the &#39 encoding as an apostrophe in the subject and document contents" do
+    it "correctly renders an apostrophe in the subject and document contents (instead of an encoded version &#39)" do
       entry = Factory.create(
         :entry,
         granule_class:    'PRESDOCU',
         publication_date: Date.new(2017,1,1),
-        toc_subject:      'Test Subject Heading &#39',
-        toc_doc:          'Test Subject 1 &#39',
+        toc_subject:      "The Generals' Mess",
+        toc_doc:          "Reserve Officers' Training",
         executive_order_number: 13811,
         presidential_document_type_id: PresidentialDocumentType::EXECUTIVE_ORDER.id
       )
@@ -62,8 +62,8 @@ SGML
 <RRH>Index
 <HED>Index
 <ALPHHD>T
-<SUBJHED>Test Subject Heading '
-<SUBJECT1>Test Subject 1 '
+<SUBJHED>The Generals' Mess
+<SUBJECT1>Reserve Officers' Training
 
 SGML
     end
