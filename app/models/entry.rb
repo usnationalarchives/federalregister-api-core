@@ -493,7 +493,7 @@ class Entry < ApplicationModel
   end
 
   def self.find_best_citation_matches(volume, page, agencies = [])
-    candidates = find_all_by_starting_citation(volume, page)
+    candidates = find_all_by_citation(volume, page)
 
     if candidates.empty?
       candidates = find_all_by_citation(volume,page)
