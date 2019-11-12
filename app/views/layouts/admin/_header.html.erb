@@ -1,9 +1,11 @@
 <% header_tag(:id => "header") do %>
-    <% nav_tag(:id => 'primary' ) do %>
-      <div class="subnav subnav-fixed-top">
-        <div class="navbar-inner">
-          <div class="container">
-            <div class="brand"><%= link_to 'FR2 Admin', admin_home_path %></div>
+
+  <% nav_tag(:id => 'primary' ) do %>
+    <div class="subnav subnav-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <div class="brand"><%= link_to 'FR2 Admin', admin_home_path %></div>
+          <% if current_user %>
             <ul class="nav nav-pills">
               <li class="dropdown">
                 <a class="dropdown-toggle" data-toggle="dropdown" href="#">Sections<b class="caret"></b></a>
@@ -45,21 +47,22 @@
               <li><%= link_to 'Events', admin_events_path, :class => "" %></li>
               <li><%= link_to 'Site Notifications', admin_site_notifications_path %></li>
             </ul>
-          </div>
+          <% end %>
         </div>
       </div>
-    <% end -%>
+    </div>
+  <% end -%>
 
-    <% if current_user %>
-      <% nav_tag(:id => "utility") do %>
-        <div class="container">
-          <p>Hello, <span class="name"><%= current_user.first_name %></span>!</p>
-          <ul>
-            <li><%= link_to 'Change Password', edit_admin_user_password_path(current_user) %></li>
-            <li><%= link_to 'Logout', admin_logout_path %></li>
-          </ul>
-        </div>
-      <% end -%>
+  <% if current_user %>
+    <% nav_tag(:id => "utility") do %>
+      <div class="container">
+        <p>Hello, <span class="name"><%= current_user.first_name %></span>!</p>
+        <ul>
+          <li><%= link_to 'Change Password', edit_admin_user_password_path(current_user) %></li>
+          <li><%= link_to 'Logout', admin_logout_path %></li>
+        </ul>
+      </div>
     <% end -%>
+  <% end -%>
 
 <% end -%>
