@@ -1,4 +1,4 @@
-<% title "Change Password"  %>
+<% super_title "Change Password"  %>
 
 <% semantic_form_for @user, :url => admin_user_password_path(@user) do |f| %>
   <%= password_instructions %>
@@ -10,6 +10,6 @@
   <% end %>
   
   <% f.buttons do %>
-    <%= f.commit_button %>
+    <%= f.commit_button 'Save', :button_html => {:class => "btn btn-large btn-success"} %>
   <% end %>
 <% end %>

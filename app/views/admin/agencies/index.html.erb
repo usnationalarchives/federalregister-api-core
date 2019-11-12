@@ -8,7 +8,7 @@
   <% end %>
 
   <% f.buttons do %>
-    <%= f.commit_button 'Search' %>
+    <%= f.commit_button 'Search', :button_html => {:class => "btn btn-large btn-success"} %>
   <% end %>
 <% end %>
 <%= page_entries_info @agencies %>

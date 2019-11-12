@@ -9,6 +9,6 @@
 <%= f.hidden_field :entry_id %>
 
 <% f.buttons do %>
-  <%= f.commit_button %>
+  <%= f.commit_button 'Save', :button_html => {:class => "btn btn-large btn-success"} %>
   <%= link_to 'Cancel', unprocessed_admin_agency_names_path %>
 <% end %>

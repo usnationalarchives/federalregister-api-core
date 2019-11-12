@@ -1,4 +1,4 @@
-<% title 'Forgot Password' %>
+<% super_title 'Forgot Password' %>
 
 <p>Enter your email address below and instructions to reset your password will be emailed to you:</p>
 
@@ -8,6 +8,6 @@
   <% end %>
   
   <% f.buttons do %>
-    <%= f.commit_button "Send me a link to reset my password" %>
+    <%= f.commit_button "Send me a link to reset my password", :button_html => {:class => "btn btn-large btn-success"} %>
   <% end %>
 <% end %> 

@@ -6,7 +6,7 @@
   Are you sure you want to delete <%= @agency.name %>? This cannot be undone!
   <% semantic_form_for @agency, :url => admin_agency_path(@agency), :html => {:method => :delete} do |f| %>
     <% f.buttons do %>
-      <%= f.commit_button 'Delete Agency' %>
+      <%= f.commit_button 'Delete Agency', :button_html => {:class => "btn btn-large btn-danger"} %>
     <% end %>
   <% end %>
 <% end %>

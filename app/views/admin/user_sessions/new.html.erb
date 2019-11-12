@@ -1,4 +1,4 @@
-<% title "Login" %>
+<% super_title "Login" %>
 
 <% semantic_form_for @user_session, :url => admin_user_session_path do |f| %>
 
@@ -9,7 +9,7 @@
   <% end %>
 
   <% f.buttons do %>
-    <%= f.commit_button "Login" %>
+    <%= f.commit_button "Login", :button_html => {:class => "btn btn-large btn-success"} %>
   <% end %>
 
 <% end %>

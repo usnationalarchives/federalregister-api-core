@@ -3,7 +3,7 @@
 Are you sure you want to delete <%= @canned_search.title %>? This cannot be undone!
 <% semantic_form_for @canned_search, :url => admin_canned_search_path(@canned_search), :html => {:method => :delete} do |f| %>
 <% f.buttons do %>
-  <%= f.commit_button 'Delete canned search' %>
+  <%= f.commit_button 'Delete canned search', :button_html => {:class => "btn btn-large btn-danger"} %>
   <% end %>
 <% end %>
 

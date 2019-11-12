@@ -8,7 +8,7 @@
     <%= f.input :name_contains, :label => "Topic name contains" %>
   <% end %>
   <% f.buttons do %>
-    <%= f.commit_button 'Search' %>
+    <%= f.commit_button 'Search', :button_html => {:class => "btn btn-large btn-success"} %>
   <% end %>
 <% end %>
 
