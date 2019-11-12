@@ -1,9 +1,9 @@
 ActionController::Routing::Routes.draw do |map|
   map.with_options(:path_prefix => "api/v1", :name_prefix => "api_v1_") do |api|
-    api.with_options(:path_prefix => "api/v1/doc", :controller => "api/v1/documentation", :conditions => {:method => :get}) do |doc|
-      doc.entries_attributes ':type/attributes', :action => :attributes, :quiet => true
-      doc.entries_attributes 'documentation', :action => :show, :quiet => true
-    end
+    api.documentation 'documentation.:format',
+      :controller => 'api/v1/documentation',
+      :action => 'show',
+      :conditions => {:method => :get}
 
     api.resources :effective_dates,
                   :as => 'effective-dates',
