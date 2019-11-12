@@ -37,13 +37,13 @@ development:
   cron:
     google_analytics: false
     gpo_images: false
-    import: true
+    import: false
     public_inspection: false
     sphinx: true
     regulations_dot_gov:
       comments: false
       dockets: false
-      documents: true
+      documents: false
     varnish: false
 
 staging:
