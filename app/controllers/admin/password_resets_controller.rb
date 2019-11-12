@@ -5,6 +5,8 @@ class Admin::PasswordResetsController < AdminController
   before_filter :require_no_user
   before_filter :load_user_using_perishable_token, :only => [:edit,:update]
 
+  layout 'admin_bootstrap'
+
   def new
   end
 
