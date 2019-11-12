@@ -4,11 +4,14 @@ source 'https://rubygems.org'
 gem 'rake', '10.5.0'
 
 # rack version compatible with 1.9.3
-gem 'rack', '1.4.7'
+# gem 'rack', '1.4.7'
+gem 'rack'
+gem 'rack-cache', '1.9.0'
 
-gem 'rails',
-  :git => 'https://github.com/makandra/rails.git',
-  :branch => '2-3-lts'
+# gem 'rails',
+#   :git => 'https://github.com/makandra/rails.git',
+#   :branch => '2-3-lts'
+gem 'rails', '3.1.12'
 gem 'mysql2', '0.2.24'
 
 # production app server
@@ -28,15 +31,16 @@ gem 'titleize' #updates ActiveSupport titleize with stop word support
 gem 'rubyzip', '>= 1.1.7'
 gem 'zip-zip' # will load compatibility for old rubyzip API.
 
-gem 'fog'
-gem 'fog-google', '0.1.0'
+# gem 'fog'
+# gem 'fog-google', '0.1.0'
 
 gem 'formtastic', '0.9.8'
 
 gem 'json', '1.8.6'
 gem 'ym4r', '0.6.1'
 
-gem 'thinking-sphinx', '1.4.14', :require => 'thinking_sphinx'
+# gem 'thinking-sphinx', '1.4.14', :require => 'thinking_sphinx'
+gem 'thinking-sphinx', '2.0.14', :require => 'thinking_sphinx'
 gem 'ffi-hunspell',
   :git => 'https://github.com/postmodern/ffi-hunspell.git',
   :ref => '91516637fdff9cef9bae66aefdd89e1b4a8b5831',
@@ -57,7 +61,7 @@ gem 'stevedore', '0.3.0'
 gem 'active_hash', '0.9.5'
 # gem 'bcrypt-ruby', '2.1.2', :require => 'bcrypt'
 gem 'bcrypt'
-gem 'authlogic', '2.1.11'
+gem 'authlogic', '3.0.3'#'2.1.11'
 
 # wrapper around http requests that supports multiple backends
 gem 'faraday'
@@ -81,6 +85,7 @@ gem "net-scp", '1.1.0'
 gem "net-ssh", '2.9.1'
 
 gem "resque"
+gem 'redis', '3.3.5'
 gem 'resque-throttler',
     git: 'https://github.com/criticaljuncture/resque-throttler.git',
     branch: 'master',
@@ -121,7 +126,7 @@ gem 'american_date'
 
 # add methods to the ruby Process command via C-extensions
 # (tracking memory usage)
-gem 'proc-wait3'
+# gem 'proc-wait3'
 
 Encoding.default_external = Encoding::UTF_8
 Encoding.default_internal = Encoding::UTF_8
@@ -137,7 +142,8 @@ group :test do
   gem 'rspec'
   gem 'rspec_candy'
   gem 'mocha', '0.9.8'
-  gem 'rspec-rails', '1.3.4', :require => false
+  # gem 'rspec-rails', '1.3.4', :require => false
+  gem 'rspec-rails', '2.0.1', :require => false
   gem 'factory_girl', '1.2.4'
   gem 'timecop'
   gem 'mock_redis'
@@ -145,7 +151,7 @@ group :test do
   gem 'vcr'
   gem 'fakeweb'
 
-  gem 'ci_reporter', '1.6.3'
+  # gem 'ci_reporter', '1.6.3'
 
   gem 'test-unit', '1.2.3'
 end

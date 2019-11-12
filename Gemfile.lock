@@ -37,35 +37,6 @@ GIT
       resque (>= 1.8.0)
 
 GIT
-  remote: https://github.com/makandra/rails.git
-  revision: f59e93f9ba6a275c715e2ad24d100422f9aee5cf
-  branch: 2-3-lts
-  specs:
-    actionmailer (2.3.18.17)
-      actionpack (= 2.3.18.17)
-    actionpack (2.3.18.17)
-      activesupport (= 2.3.18.17)
-      rack (< 1.5)
-    activerecord (2.3.18.17)
-      activesupport (= 2.3.18.17)
-    activeresource (2.3.18.17)
-      activesupport (= 2.3.18.17)
-    activesupport (2.3.18.17)
-    rails (2.3.18.17)
-      actionmailer (= 2.3.18.17)
-      actionpack (= 2.3.18.17)
-      activerecord (= 2.3.18.17)
-      activeresource (= 2.3.18.17)
-      activesupport (= 2.3.18.17)
-      railslts-version (= 2.3.18.17)
-      railties (= 2.3.18.17)
-    railslts-version (2.3.18.17)
-    railties (2.3.18.17)
-      actionpack (= 2.3.18.17)
-      activesupport (= 2.3.18.17)
-      rake (>= 0.8.3, < 11)
-
-GIT
   remote: https://github.com/postmodern/ffi-hunspell.git
   revision: 91516637fdff9cef9bae66aefdd89e1b4a8b5831
   ref: 91516637fdff9cef9bae66aefdd89e1b4a8b5831
@@ -76,41 +47,67 @@ GIT
 GEM
   remote: https://rubygems.org/
   specs:
-    CFPropertyList (2.3.2)
     Platform (0.4.0)
+    actionmailer (3.1.12)
+      actionpack (= 3.1.12)
+      mail (~> 2.4.4)
+    actionpack (3.1.12)
+      activemodel (= 3.1.12)
+      activesupport (= 3.1.12)
+      builder (~> 3.0.0)
+      erubis (~> 2.7.0)
+      i18n (~> 0.6)
+      rack (~> 1.3.6)
+      rack-cache (~> 1.2)
+      rack-mount (~> 0.8.2)
+      rack-test (~> 0.6.1)
+      sprockets (~> 2.0.4)
     active_hash (0.9.5)
       activesupport (>= 2.2.2)
+    activemodel (3.1.12)
+      activesupport (= 3.1.12)
+      builder (~> 3.0.0)
+      i18n (~> 0.6)
+    activerecord (3.1.12)
+      activemodel (= 3.1.12)
+      activesupport (= 3.1.12)
+      arel (~> 2.2.3)
+      tzinfo (~> 0.3.29)
+    activeresource (3.1.12)
+      activemodel (= 3.1.12)
+      activesupport (= 3.1.12)
+    activesupport (3.1.12)
+      multi_json (~> 1.0)
     addressable (2.4.0)
-    after_commit (1.0.11)
-      activerecord (>= 1.15.6, < 3.0.0)
     amatch (0.2.11)
       tins (~> 0.3)
     amazon-ec2 (0.9.15)
       xml-simple (>= 1.0.12)
     american_date (1.1.0)
+    arel (2.2.3)
     ast (2.0.0)
     astrolabe (1.3.0)
       parser (>= 2.2.0.pre.3, < 3.0)
-    authlogic (2.1.11)
-      activerecord (~> 2.3.0)
-      activesupport (~> 2.3.0)
+    authlogic (3.0.3)
+      activerecord (>= 3.0.7)
     aws-sdk-v1 (1.67.0)
       json (~> 1.4)
       nokogiri (~> 1)
     bcrypt (3.1.12)
-    builder (3.1.4)
+    builder (3.0.4)
     chronic (0.10.2)
     chunky_png (0.9.0)
-    ci_reporter (1.6.3)
-      builder (>= 2.1.2)
     cocaine (0.4.2)
     coderay (1.1.0)
     compass (0.10.1)
       haml (>= 3.0.4)
     compass-960-plugin (0.9.13)
       compass (>= 0.10.0.rc3)
+    concurrent-ruby (1.1.5)
     curb (0.9.0)
+    diff-lcs (1.3)
     diffy (3.0.7)
+    erubis (2.7.0)
     ethon (0.8.1)
       ffi (>= 1.3.0)
     excon (0.45.4)
@@ -121,108 +118,6 @@ GEM
     faraday_middleware (0.12.2)
       faraday (>= 0.7.4, < 1.0)
     ffi (1.9.6)
-    fission (0.5.0)
-      CFPropertyList (~> 2.2)
-    fog (1.34.0)
-      fog-atmos
-      fog-aws (>= 0.6.0)
-      fog-brightbox (~> 0.4)
-      fog-core (~> 1.32)
-      fog-dynect (~> 0.0.2)
-      fog-ecloud (~> 0.1)
-      fog-google (>= 0.0.2)
-      fog-json
-      fog-local
-      fog-powerdns (>= 0.1.1)
-      fog-profitbricks
-      fog-radosgw (>= 0.0.2)
-      fog-riakcs
-      fog-sakuracloud (>= 0.0.4)
-      fog-serverlove
-      fog-softlayer
-      fog-storm_on_demand
-      fog-terremark
-      fog-vmfusion
-      fog-voxel
-      fog-xml (~> 0.1.1)
-      ipaddress (~> 0.5)
-      nokogiri (~> 1.5, >= 1.5.11)
-    fog-atmos (0.1.0)
-      fog-core
-      fog-xml
-    fog-aws (0.7.6)
-      fog-core (~> 1.27)
-      fog-json (~> 1.0)
-      fog-xml (~> 0.1)
-      ipaddress (~> 0.8)
-    fog-brightbox (0.9.0)
-      fog-core (~> 1.22)
-      fog-json
-      inflecto (~> 0.0.2)
-    fog-core (1.32.1)
-      builder
-      excon (~> 0.45)
-      formatador (~> 0.2)
-      mime-types
-      net-scp (~> 1.1)
-      net-ssh (>= 2.1.3)
-    fog-dynect (0.0.2)
-      fog-core
-      fog-json
-      fog-xml
-    fog-ecloud (0.3.0)
-      fog-core
-      fog-xml
-    fog-google (0.1.0)
-      fog-core
-      fog-json
-      fog-xml
-    fog-json (1.0.1)
-      fog-core (~> 1.0)
-      multi_json (~> 1.0)
-    fog-local (0.2.1)
-      fog-core (~> 1.27)
-    fog-powerdns (0.1.1)
-      fog-core (~> 1.27)
-      fog-json (~> 1.0)
-      fog-xml (~> 0.1)
-    fog-profitbricks (0.0.5)
-      fog-core
-      fog-xml
-      nokogiri
-    fog-radosgw (0.0.4)
-      fog-core (>= 1.21.0)
-      fog-json
-      fog-xml (>= 0.0.1)
-    fog-riakcs (0.1.0)
-      fog-core
-      fog-json
-      fog-xml
-    fog-sakuracloud (1.3.3)
-      fog-core
-      fog-json
-    fog-serverlove (0.1.2)
-      fog-core
-      fog-json
-    fog-softlayer (1.0.1)
-      fog-core
-      fog-json
-    fog-storm_on_demand (0.1.1)
-      fog-core
-      fog-json
-    fog-terremark (0.1.0)
-      fog-core
-      fog-xml
-    fog-vmfusion (0.1.0)
-      fission
-      fog-core
-    fog-voxel (0.1.0)
-      fog-core
-      fog-xml
-    fog-xml (0.1.2)
-      fog-core
-      nokogiri (~> 1.5, >= 1.5.11)
-    formatador (0.2.5)
     formtastic (0.9.8)
       actionpack (>= 2.3.0)
       activesupport (>= 2.3.0)
@@ -236,6 +131,7 @@ GEM
       signet (~> 0.7)
     haml (3.0.4)
     hashie (3.5.7)
+    hike (1.2.3)
     hoe (3.14.2)
       rake (>= 0.8, < 11.0)
     honeybadger (1.10.1)
@@ -248,12 +144,12 @@ GEM
     httparty (0.11.0)
       multi_json (~> 1.0)
       multi_xml (>= 0.5.2)
+    i18n (0.9.5)
+      concurrent-ruby (~> 1.0)
     icalendar (1.1.5)
     iconv (1.0.5)
     indefinite_article (0.2.0)
       activesupport
-    inflecto (0.0.2)
-    ipaddress (0.8.0)
     jrails (0.6.0)
     json (1.8.6)
     jwt (1.5.6)
@@ -261,6 +157,10 @@ GEM
       chunky_png (>= 0.7.3)
       compass (>= 0.10.0)
       haml (>= 3.0.0)
+    mail (2.4.4)
+      i18n (>= 0.4.0)
+      mime-types (~> 1.16)
+      treetop (~> 1.4.8)
     memoist (0.16.0)
     method_source (0.8.2)
     mime-types (1.25.1)
@@ -271,7 +171,7 @@ GEM
     mock_redis (0.16.1)
     modularity (0.6.1)
     mono_logger (1.1.0)
-    multi_json (1.13.1)
+    multi_json (1.14.1)
     multi_xml (0.5.5)
     multipart-post (2.0.0)
     mysql2 (0.2.24)
@@ -302,11 +202,11 @@ GEM
     passenger (6.0.2)
       rack
       rake (>= 0.8.1)
+    polyglot (0.3.5)
     popen4 (0.1.2)
       Platform (>= 0.4.0)
       open4 (>= 0.4.0)
     powerpack (0.0.9)
-    proc-wait3 (1.8.0)
     pry (0.9.12.4)
       coderay (~> 1.0)
       method_source (~> 0.8)
@@ -314,9 +214,32 @@ GEM
     pry-remote (0.1.8)
       pry (~> 0.9)
       slop (~> 3.0)
-    rack (1.4.7)
-    rack-protection (1.5.3)
+    rack (1.3.10)
+    rack-cache (1.9.0)
+      rack (>= 0.4)
+    rack-mount (0.8.3)
+      rack (>= 1.0.0)
+    rack-protection (1.5.5)
       rack
+    rack-ssl (1.3.4)
+      rack
+    rack-test (0.6.3)
+      rack (>= 1.0)
+    rails (3.1.12)
+      actionmailer (= 3.1.12)
+      actionpack (= 3.1.12)
+      activerecord (= 3.1.12)
+      activeresource (= 3.1.12)
+      activesupport (= 3.1.12)
+      bundler (~> 1.0)
+      railties (= 3.1.12)
+    railties (3.1.12)
+      actionpack (= 3.1.12)
+      activesupport (= 3.1.12)
+      rack-ssl (~> 1.3.2)
+      rake (>= 0.8.7)
+      rdoc (~> 3.4)
+      thor (~> 0.14.6)
     rainbow (2.0.0)
     rake (10.5.0)
     rdoc (3.12)
@@ -331,11 +254,19 @@ GEM
       redis-namespace (~> 1.3)
       sinatra (>= 0.9.2)
       vegas (~> 0.1.2)
-    riddle (2.2.2)
-    rspec (1.3.2)
-    rspec-rails (1.3.4)
-      rack (>= 1.0.0)
-      rspec (~> 1.3.1)
+    riddle (2.4.0)
+    rspec (2.0.1)
+      rspec-core (~> 2.0.1)
+      rspec-expectations (~> 2.0.1)
+      rspec-mocks (~> 2.0.1)
+    rspec-core (2.0.1)
+    rspec-expectations (2.0.1)
+      diff-lcs (>= 1.1.2)
+    rspec-mocks (2.0.1)
+      rspec-core (~> 2.0.1)
+      rspec-expectations (~> 2.0.1)
+    rspec-rails (2.0.1)
+      rspec (~> 2.0.0)
     rspec_candy (0.5.1)
       rspec
       sneaky-save
@@ -354,26 +285,35 @@ GEM
       faraday (~> 0.9)
       jwt (>= 1.5, < 3.0)
       multi_json (~> 1.10)
-    sinatra (1.4.6)
-      rack (~> 1.4)
-      rack-protection (~> 1.4)
-      tilt (>= 1.3, < 3)
+    sinatra (1.3.3)
+      rack (~> 1.3, >= 1.3.6)
+      rack-protection (~> 1.2)
+      tilt (~> 1.3, >= 1.3.3)
     slop (3.4.7)
     sneaky-save (0.0.2)
       activerecord (>= 2.3.2)
+    sprockets (2.0.5)
+      hike (~> 1.2)
+      rack (~> 1.0)
+      tilt (~> 1.1, != 1.3.0)
     stevedore (0.3.0)
     test-unit (1.2.3)
       hoe (>= 1.5.1)
-    thinking-sphinx (1.4.14)
-      activerecord (>= 1.15.6, < 3.0.0)
-      after_commit (>= 1.0.7)
+    thinking-sphinx (2.0.14)
+      activerecord (>= 3.0.3)
+      builder (>= 2.1.2)
       riddle (>= 1.5.3)
-    tilt (2.0.8)
+    thor (0.14.6)
+    tilt (1.4.1)
     timecop (0.6.1)
     tins (0.8.0)
     titleize (1.3.0)
+    treetop (1.4.15)
+      polyglot
+      polyglot (>= 0.3.1)
     typhoeus (1.0.1)
       ethon (>= 0.8.0)
+    tzinfo (0.3.56)
     validation_reflection (0.3.8)
     vcr (2.6.0)
     vegas (0.1.11)
@@ -396,10 +336,9 @@ DEPENDENCIES
   amazon-ec2
   american_date
   app_config (= 1.3.2)!
-  authlogic (= 2.1.11)
+  authlogic (= 3.0.3)
   aws-sdk-v1
   bcrypt
-  ci_reporter (= 1.6.3)
   cocaine
   compass (= 0.10.1)
   compass-960-plugin (= 0.9.13)
@@ -409,8 +348,6 @@ DEPENDENCIES
   fakeweb
   faraday
   ffi-hunspell!
-  fog
-  fog-google (= 0.1.0)
   formtastic (= 0.9.8)
   geokit (= 1.10.0)
   googleauth
@@ -441,19 +378,20 @@ DEPENDENCIES
   paperclip (~> 2.8)
   passenger (~> 6.0)
   popen4
-  proc-wait3
   pry
   pry-remote
-  rack (= 1.4.7)
-  rails!
+  rack
+  rack-cache (= 1.9.0)
+  rails (= 3.1.12)
   rake (= 10.5.0)
   rdoc
   recaptcha (= 0.3.1)
+  redis (= 3.3.5)
   resque
   resque-honeybadger!
   resque-throttler!
   rspec
-  rspec-rails (= 1.3.4)
+  rspec-rails (= 2.0.1)
   rspec_candy
   rubocop
   rubyzip (>= 1.1.7)
@@ -461,7 +399,7 @@ DEPENDENCIES
   sendgrid!
   stevedore (= 0.3.0)
   test-unit (= 1.2.3)
-  thinking-sphinx (= 1.4.14)
+  thinking-sphinx (= 2.0.14)
   timecop
   titleize
   typhoeus (~> 1.0, >= 1.0.1)
