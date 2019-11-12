@@ -1,6 +1,4 @@
 class Admin::CannedSearchesController < AdminController
-  layout 'admin_bootstrap'
-
   def section
     @section = Section.find_by_slug!(params[:slug])
     @active_canned_searches = @section.canned_searches.active.in_order

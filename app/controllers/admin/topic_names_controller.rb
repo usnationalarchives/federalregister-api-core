@@ -1,6 +1,4 @@
 class Admin::TopicNamesController < AdminController
-  layout 'admin_bootstrap'
-
   def index
     search_options = params[:search] || {}
     search_options['order'] ||= 'ascend_by_name'

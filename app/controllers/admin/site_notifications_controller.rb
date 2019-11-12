@@ -1,6 +1,4 @@
 class Admin::SiteNotificationsController < AdminController
-  layout 'admin_bootstrap'
-
   def index
     @site_notifications = SiteNotification.all
   end

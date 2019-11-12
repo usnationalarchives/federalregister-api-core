@@ -1,6 +1,4 @@
 class Admin::GeneratedFilesController < AdminController
-  layout 'admin_bootstrap'
-
   def show
     @generated_file = GeneratedFile.find(params[:id])
 

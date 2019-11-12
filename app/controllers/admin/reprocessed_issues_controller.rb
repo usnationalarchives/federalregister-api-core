@@ -1,6 +1,4 @@
 class Admin::ReprocessedIssuesController < AdminController
-  layout 'admin_bootstrap'
-
   def index
     @presenter = ReprocessedIssuePresenter.new
   end

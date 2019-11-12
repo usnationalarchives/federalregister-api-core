@@ -1,7 +1,6 @@
 class Admin::PresidentialDocumentsController < AdminController
   extend ExecutiveOrderImportUtils
-  layout 'admin_bootstrap'
-
+  
   def index
   end
 

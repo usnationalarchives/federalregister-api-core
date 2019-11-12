@@ -1,5 +1,4 @@
 class Admin::IndexesController < AdminController
-  layout 'admin_bootstrap'
   before_filter :disable_all_browser_caching
   include ActionView::Helpers::TagHelper
   include SpellingHelper

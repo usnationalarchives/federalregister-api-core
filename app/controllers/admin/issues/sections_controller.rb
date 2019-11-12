@@ -1,7 +1,6 @@
 class Admin::Issues::SectionsController < AdminController
   include Shared::SectionsControllerUtilities
-  layout 'admin_bootstrap'
-
+  
   def index
     @sections = Section.all
     @publication_date = Date.parse(params[:issue_id])

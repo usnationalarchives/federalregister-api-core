@@ -3,8 +3,6 @@ class Admin::UserSessionsController < AdminController
   before_filter :require_user, :only => :destroy
   skip_before_filter :verify_authenticity_token
 
-  layout 'admin_bootstrap'
-
   def new
     @user_session = UserSession.new
   end

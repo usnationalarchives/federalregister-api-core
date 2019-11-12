@@ -1,6 +1,4 @@
 class Admin::Users::PasswordsController < AdminController
-  layout 'admin_bootstrap'
-  
   def edit
     @user = User.find(params[:user_id])
   end
