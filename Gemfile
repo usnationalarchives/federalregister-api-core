@@ -12,18 +12,20 @@ gem 'rack-cache', '1.9.0'
 #   :git => 'https://github.com/makandra/rails.git',
 #   :branch => '2-3-lts'
 gem 'rails', '3.1.12'
-gem 'mysql2', '0.2.24'
+# gem 'mysql2', '0.2.24'
+gem 'mysql2', '0.3.21'
 
 # production app server
 gem 'passenger', '~> 6.0'
 
-gem "jrails", "0.6.0"
+# gem "jrails", "0.6.0"
 
 gem 'nokogiri'
 gem 'curb', '0.9.0'
 gem 'http_headers', '0.0.2.3'
 gem 'geokit', '1.10.0', :require => 'geokit'
-gem 'will_paginate', '2.3.14', :require => 'will_paginate'
+gem 'will_paginate', :require => 'will_paginate'
+# gem 'will_paginate', '2.3.14', :require => 'will_paginate'
 gem 'amatch', '0.2.11'
 gem 'indefinite_article'
 gem 'titleize' #updates ActiveSupport titleize with stop word support
@@ -46,7 +48,8 @@ gem 'ffi-hunspell',
   :ref => '91516637fdff9cef9bae66aefdd89e1b4a8b5831',
   :require => 'ffi/hunspell'
 
-gem 'honeybadger', :require => 'honeybadger/rails'
+gem 'honeybadger', '~> 2.0.0'#, :require => 'honeybadger/rails'
+# gem 'honeybadger', :require => 'honeybadger/rails'
 gem 'resque-honeybadger',
     :git => 'https://github.com/henrik/resque-honeybadger.git',
     :ref => '832be87662840d44e73f66c006796da8ed6250e2'
@@ -68,11 +71,12 @@ gem 'faraday'
 # make multiple http requests concurrently
 gem 'typhoeus', '~> 1.0', '>= 1.0.1'
 
-gem 'searchlogic', '2.4.12'
-gem 'haml', '3.0.4'
-gem 'compass', '0.10.1'
-gem 'compass-960-plugin', '0.9.13', :require => false
-gem 'lemonade', '0.3.2'
+# This github issue seems to be failing: https://github.com/binarylogic/searchlogic/issues/141
+# gem 'searchlogic', '2.4.12'
+# gem 'haml', '3.0.4' #HAML Doesn't seem to be used apart from lemonade and compass
+# gem 'compass', '0.10.1'
+# gem 'compass-960-plugin', '0.9.13', :require => false
+# gem 'lemonade', '0.3.2'
 gem 'icalendar'
 gem 'klarlack', '0.0.7',
   git: 'https://github.com/criticaljuncture/klarlack.git',
@@ -133,7 +137,7 @@ Encoding.default_internal = Encoding::UTF_8
 
 #needed for rail 2.x (removed in ruby 2+)
 # TODO: BB remove after upgrade
-gem 'iconv', '~> 1.0', '>= 1.0.5'
+# gem 'iconv', '~> 1.0', '>= 1.0.5'
 
 gem 'open_calais'
 
@@ -158,6 +162,8 @@ end
 
 group :development do
   gem 'rubocop'
+  # gem 'pry'
+  # gem 'byebug'
 end
 
 group :development, :test do

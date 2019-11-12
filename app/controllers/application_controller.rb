@@ -93,6 +93,7 @@ class ApplicationController < ActionController::Base
   helper_method :ab_group
 
   def log_memory_usage
+    return
     pid = Process.pid
 
     start_mem = Process.getrusage.maxrss
