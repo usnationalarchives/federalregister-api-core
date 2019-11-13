@@ -116,5 +116,10 @@ module FR2
 
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
+
+    config.action_dispatch.ip_spoofing_check = false
+
+    config.filter_parameters << :password
+    config.filter_parameters << :password_confirmation
   end
 end

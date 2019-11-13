@@ -14,13 +14,8 @@ class ApplicationController < ActionController::Base
 
   around_filter :log_memory_usage unless Rails.env.test?
 
-  # turn IP Spoofing detection off.
-  ActionController::Base.ip_spoofing_check = false
-
-  # Scrub sensitive parameters from your log
-  filter_parameter_logging :password, :password_confirmation
-
   private
+
   def parse_date_from_params
     year  = params[:year]
     month = params[:month]
