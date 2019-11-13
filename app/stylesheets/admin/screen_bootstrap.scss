@@ -1,17 +1,17 @@
-@import "../mixins/borders";
-@import "../library";
-@import "../patterns";
+@import "mixins/borders";
+@import "library";
+@import "patterns";
 
 @import "app";
-@import "design/fr_index";
-@import "design/missing_images";
-@import "design/reprocessed_issues";
-@import "design/presidential_documents";
 @import "design/diffy";
-@import "design/issues";
-@import "design/sections";
+@import "design/fr_index";
 @import "design/highlighted_documents";
+@import "design/issues";
+@import "design/missing_images";
 @import "design/modals";
+@import "design/presidential_documents";
+@import "design/reprocessed_issues";
+@import "design/sections";
 
 #entries.admin #main,
 #issues.admin #main,
