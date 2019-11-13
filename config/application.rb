@@ -121,5 +121,8 @@ module FR2
 
     config.filter_parameters << :password
     config.filter_parameters << :password_confirmation
+
+    # Turn off model-based strong parameters
+    config.active_record.whitelist_attributes = false
   end
 end
