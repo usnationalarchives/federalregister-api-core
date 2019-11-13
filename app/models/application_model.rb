@@ -3,8 +3,8 @@ class ApplicationModel < ActiveRecord::Base
   include ViewHelper
 
   class << self
-    public :preload_associations
-    public :construct_finder_sql
+    # public :preload_associations
+    # public :construct_finder_sql
   end
 
   # More performant than simply ORDER BY RAND()

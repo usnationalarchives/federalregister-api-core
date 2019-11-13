@@ -1,5 +1,5 @@
 class Agency < ApplicationModel
-  does 'shared/slug', :based_on => :name
+  # does 'shared/slug', :based_on => :name #TODO: REVISIT
 
   module AssociationExtensions
     def excluding_parents
