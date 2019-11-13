@@ -105,7 +105,7 @@ gem "recaptcha", "0.3.1", :require => 'recaptcha/rails'
 gem 'sendgrid', :git => "https://github.com/criticaljuncture/sendgrid.git", :branch => 'master'
 gem 'modularity'#, '0.6.1' (Had to get past Active Record error -BC)
 
-gem "validation_reflection", "0.3.8"
+# gem "validation_reflection"#, "0.3.8" #TODO: Address implications of removing this gem as it has gone stale
 
 gem 'rdoc'
 gem 'net-sftp'
