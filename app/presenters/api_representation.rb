@@ -20,7 +20,7 @@ class ApiRepresentation
       end
     end
 
-    include ActionController::UrlWriter
+    include Rails.application.routes.url_helpers
     include ApplicationHelper
     include RouteBuilder
 

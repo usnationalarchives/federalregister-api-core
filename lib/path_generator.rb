@@ -1,6 +1,6 @@
 class PathGenerator
   # Load up all the routing...
-  include ActionController::UrlWriter
+  include Rails.application.routes.url_helpers
   include ApplicationHelper
   include RouteBuilder
 

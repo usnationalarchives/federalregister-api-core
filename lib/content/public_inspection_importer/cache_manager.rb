@@ -1,7 +1,7 @@
 class Content::PublicInspectionImporter::CacheManager
   # Load up all the routing, etc needed to clear cache
   include CacheUtils
-  include ActionController::UrlWriter
+  include Rails.application.routes.url_helpers
   include ApplicationHelper
   include RouteBuilder
 
