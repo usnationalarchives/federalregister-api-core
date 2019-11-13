@@ -1,4 +1,3 @@
-require "./config/environment"
+require ::File.expand_path('../config/environment',  __FILE__)
+run FR2::Application
 
-use Rails::Rack::Static
-run ActionController::Dispatcher.new
