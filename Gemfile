@@ -148,8 +148,8 @@ group :test do
   gem 'rspec_candy'
   gem 'mocha', '0.9.8'
   # gem 'rspec-rails', '1.3.4', :require => false
-  gem 'rspec-rails', '2.0.1', :require => false
-  gem 'factory_girl', '1.2.4'
+  gem 'rspec-rails', '~> 3.2.3', :require => false
+  gem 'factory_girl', '~> 2.5.2'#, '1.2.4'
   gem 'timecop'
   gem 'mock_redis'
 
@@ -163,8 +163,6 @@ end
 
 group :development do
   gem 'rubocop'
-  # gem 'pry'
-  # gem 'byebug'
 end
 
 group :development, :test do
