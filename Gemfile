@@ -11,7 +11,8 @@ gem 'rack-cache', '1.9.0'
 # gem 'rails',
 #   :git => 'https://github.com/makandra/rails.git',
 #   :branch => '2-3-lts'
-gem 'rails', '3.1.12'
+# gem 'rails', '3.1.12'
+gem 'rails', '3.2.22'
 # gem 'mysql2', '0.2.24'
 gem 'mysql2', '0.3.21'
 
