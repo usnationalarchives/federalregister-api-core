@@ -1,5 +1,5 @@
 require 'spec_helper'
-describe Shared::DocumentNumberNormalizationTrait do
+describe Shared::DoesDocumentNumberNormalization do
   subject do
     klass = Class.new
     klass.include Shared::DoesDocumentNumberNormalization
