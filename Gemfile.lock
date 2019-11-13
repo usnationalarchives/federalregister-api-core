@@ -155,7 +155,7 @@ GEM
     mocha (0.9.8)
       rake
     mock_redis (0.16.1)
-    modularity (0.6.1)
+    modularity (2.0.1)
     mono_logger (1.1.0)
     multi_json (1.14.1)
     multi_xml (0.5.5)
@@ -345,7 +345,7 @@ DEPENDENCIES
   mime-types (~> 1.25, >= 1.25.1)
   mocha (= 0.9.8)
   mock_redis
-  modularity (= 0.6.1)
+  modularity
   mysql2 (= 0.3.21)
   net-scp (= 1.1.0)
   net-sftp
