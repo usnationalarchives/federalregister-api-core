@@ -3,7 +3,7 @@ class PublicInspectionIssue < ApplicationModel
                           :join_table              => :public_inspection_postings,
                           :foreign_key             => :issue_id,
                           :association_foreign_key => :document_id
-  named_scope :published, :conditions => "published_at IS NOT NULL"
+  scope :published, :conditions => "published_at IS NOT NULL"
 
   def self.earliest_publication_date
     published.first(:order => "publication_date").publication_date

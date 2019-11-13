@@ -7,7 +7,7 @@ class Place < ApplicationModel
   has_many :place_determinations, :conditions => "place_determinations.confidence >= #{PlaceDetermination::MIN_CONFIDENCE} OR place_determinations.relevance_score >= #{PlaceDetermination::MIN_RELEVANCE_SCORE}"
   has_many :entries, :through => :place_determinations
 
-  named_scope :usable, :conditions => ['places.id NOT IN (?)', UNUSABLE_PLACES]
+  scope :usable, :conditions => ['places.id NOT IN (?)', UNUSABLE_PLACES]
 
   acts_as_mappable :lat_column_name => :latitude,
                    :lng_column_name => :longitude

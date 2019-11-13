@@ -13,7 +13,7 @@ class Section < ApplicationModel
 
   validate :cfr_format_is_valid
 
-  named_scope :alphabetically, :order => "sections.title"
+  scope :alphabetically, :order => "sections.title"
 
   def entries
     Entry.scoped(:conditions => {:section_assignments => {:section_id => id}}, :joins => :section_assignments)

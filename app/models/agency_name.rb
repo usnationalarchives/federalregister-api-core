@@ -12,7 +12,7 @@ class AgencyName < ApplicationModel
   before_create :assign_agency_if_exact_match
   after_save :update_agency_assignments
   after_save :update_agency_entries_count
-  named_scope :unprocessed, :conditions => {:void => false, :agency_id => nil}, :order => "agency_names.name"
+  scope :unprocessed, :conditions => {:void => false, :agency_id => nil}, :order => "agency_names.name"
 
   def self.find_or_create_by_name(name)
     cleaned_name = name.sub(/\W+$/, '')

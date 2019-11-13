@@ -50,8 +50,8 @@ class GpoGraphic < ActiveRecord::Base
     end
   end
 
-  named_scope :processed, :conditions => "graphic_file_name IS NOT NULL"
-  named_scope :unprocessed, :conditions => "graphic_file_name IS NULL"
+  scope :processed, :conditions => "graphic_file_name IS NOT NULL"
+  scope :unprocessed, :conditions => "graphic_file_name IS NULL"
 
   def entries
     @entries ||= gpo_graphic_usages.all(:include => :entry).map(&:entry)

@@ -42,7 +42,7 @@ class Agency < ApplicationModel
   has_many :children, :class_name => 'Agency', :foreign_key => 'parent_id'
   belongs_to :parent, :class_name => 'Agency'
 
-  named_scope :in_navigation, :conditions => ['id IN (?)', AGENCIES_IN_NAV_AGENCY_IDS]
+  scope :in_navigation, :conditions => ['id IN (?)', AGENCIES_IN_NAV_AGENCY_IDS]
 
   has_attached_file :logo,
                     :styles => { :thumb => "100", :small => "140", :medium => "245", :large => "580", :full_size => "" },
@@ -62,9 +62,9 @@ class Agency < ApplicationModel
   validates_format_of :url, :with => /\Ahttps?:\/\/\S+\z/, :allow_blank => true
   serializable_column :entries_1_year_weekly, :entries_5_years_monthly, :entries_all_years_quarterly, :related_topics_cache
 
-  named_scope :with_logo, :conditions => "agencies.logo_file_name IS NOT NULL"
-  named_scope :with_entries, :conditions => "agencies.entries_count > 0"
-  named_scope :alphabetically, :order => "agencies.name"
+  scope :with_logo, :conditions => "agencies.logo_file_name IS NOT NULL"
+  scope :with_entries, :conditions => "agencies.entries_count > 0"
+  scope :alphabetically, :order => "agencies.name"
 
   # consider using sphinx instead...
   def self.named_approximately(name)

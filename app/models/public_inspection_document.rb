@@ -30,7 +30,7 @@ class PublicInspectionDocument < ApplicationModel
   before_save :persist_document_file_path
   before_save :set_content_type
 
-  named_scope :revoked, :conditions => {:publication_date => nil}
+  scope :revoked, :conditions => {:publication_date => nil}
   does 'shared/document_number_normalization'
 
   define_index do
