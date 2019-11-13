@@ -3,7 +3,7 @@
 
 require File.expand_path('../config/application', __FILE__)
 
-# FR2::Application.load_tasks
+FR2::Application.load_tasks
 # require(File.join(File.dirname(__FILE__), 'config', 'environment'))
 
 # require 'rake'
