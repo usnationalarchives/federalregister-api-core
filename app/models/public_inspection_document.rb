@@ -31,7 +31,7 @@ class PublicInspectionDocument < ApplicationModel
   before_save :set_content_type
 
   scope :revoked, :conditions => {:publication_date => nil}
-  does 'shared/document_number_normalization'
+  include Shared::DoesDocumentNumberNormalization
 
   define_index do
     # fields

@@ -127,7 +127,7 @@ class Entry < ApplicationModel
   has_many :entry_cfr_references, :dependent => :delete_all
   has_many :entry_cfr_affected_parts, :class_name => "EntryCfrReference", :conditions => "entry_cfr_references.part IS NOT NULL"
 
-  does 'shared/document_number_normalization'
+  include Shared::DoesDocumentNumberNormalization
 
   validate :curated_attributes_are_not_too_long
 

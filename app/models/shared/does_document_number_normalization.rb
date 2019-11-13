@@ -1,4 +1,4 @@
-module Shared::DocumentNumberNormalizationTrait
+module Shared::DoesDocumentNumberNormalization
   as_trait do
     def self.find_by_document_number(document_number, options={})
       doc = first(:conditions => {:document_number => document_number})

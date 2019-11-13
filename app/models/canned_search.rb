@@ -1,5 +1,5 @@
 class CannedSearch < ApplicationModel
-  does 'shared/slug', :based_on => :title
+  include Shared::DoesSlug[:based_on => :title]
 
   belongs_to :section
   validates_presence_of :section, :title, :description, :search_conditions

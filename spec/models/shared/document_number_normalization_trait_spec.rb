@@ -2,7 +2,7 @@ require 'spec_helper'
 describe Shared::DocumentNumberNormalizationTrait do
   subject do
     klass = Class.new
-    klass.does 'shared/document_number_normalization'
+    klass.include Shared::DoesDocumentNumberNormalization
     klass
   end
 

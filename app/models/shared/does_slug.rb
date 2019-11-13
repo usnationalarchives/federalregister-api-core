@@ -1,4 +1,4 @@
-module Shared::SlugTrait
+module Shared::DoesSlug
   as_trait do |options|
     before_validation :slugify, on: :create
     validates_uniqueness_of :slug
