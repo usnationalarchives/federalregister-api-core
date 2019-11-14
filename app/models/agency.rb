@@ -5,8 +5,7 @@ class Agency < ApplicationModel
     def excluding_parents
       agencies = self.compact.uniq
 
-      # proxy_owner becomes proxy_association.owner in Rails 3+
-      owner = proxy_owner
+      owner = proxy_association.owner
 
       # Public Inspection Documents only get a parent agency associated when
       #  it is a co-publication between the parent and child agencies, so the parent
