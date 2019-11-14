@@ -69,7 +69,7 @@ class ApiController < ApplicationController
   end
 
   def render_via_document_numbers(model, document_numbers, find_options={}, &block)
-    publication_date = find_options.delete(:publication_date)
+    publication_date = find_options[:publication_date]
 
     if document_numbers =~ /,/
       document_numbers = document_numbers.split(',')
@@ -80,7 +80,7 @@ class ApiController < ApplicationController
         end
       end
 
-      records = model.all(find_options.merge(conditions: conditions))
+      records = model.all(find_options.except(:publication_date).merge(conditions: conditions))
 
       data = {
         :count => records.count,
