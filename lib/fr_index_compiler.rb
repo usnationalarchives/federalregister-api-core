@@ -46,7 +46,7 @@ class FrIndexCompiler
       try(:last_published)
 
     index[:pdf] = {
-      url:           last_published_date ? "#{APP_HOST_NAME}/index/pdf/#{year}/#{last_published_date.month}.pdf" : nil,
+      url:           last_published_date ? "#{APP_HOST_NAME}/fr_index/pdf/#{year}/#{last_published_date.month}.pdf" : nil,
       approval_date: last_published_date ? last_published_date.month : nil,
     }
   end
