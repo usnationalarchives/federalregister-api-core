@@ -149,12 +149,13 @@ GEM
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
     memoist (0.16.0)
+    metaclass (0.0.4)
     method_source (0.8.2)
     mime-types (1.25.1)
     mimemagic (0.2.1)
     mini_portile2 (2.4.0)
-    mocha (0.9.8)
-      rake
+    mocha (0.13.2)
+      metaclass (~> 0.0.1)
     mock_redis (0.16.1)
     modularity (2.0.1)
     mono_logger (1.1.0)
@@ -352,7 +353,7 @@ DEPENDENCIES
   klarlack (= 0.0.7)!
   memoist
   mime-types (~> 1.25, >= 1.25.1)
-  mocha (= 0.9.8)
+  mocha (= 0.13.2)
   mock_redis
   modularity
   mysql2 (= 0.3.21)
