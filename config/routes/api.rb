@@ -11,12 +11,9 @@ FR2::Application.routes.draw do
   resources :agencies, :only => [:index, :show]
   resources :public_inspection_documents, :only => [:index, :show] do
     collection do
-  get :current
+      get :current
+    end
   end
-  
-  
-  end
-
   resources :site_notifications, :only => [:index, :show]
   resources :sections, :only => [:index]
   resources :suggested_searches, :only => [:index, :show]

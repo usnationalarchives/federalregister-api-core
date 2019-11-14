@@ -55,10 +55,8 @@ FR2::Application.routes.draw do
   match 'events/:id.:format' => 'events#show', :as => :event, :via => :get
   resources :topics, :only => [:index, :show] do
     collection do
-  get :search
-  end
-  
-  
+      get :search
+    end
   end
 
   match 'topics/:id/significant.:format' => 'topics#significant_entries', :as => :significant_entries_topic, :via => :get
