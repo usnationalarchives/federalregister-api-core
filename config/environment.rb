@@ -19,23 +19,23 @@ RAILS_GEM_VERSION = '3.1.12' unless defined? RAILS_GEM_VERSION
 
 # patch for Rails 2.x with Ruby 2+
 # TODO: BB remove after upgrade
-if Rails::VERSION::MAJOR == 2 && RUBY_VERSION >= '2.0.0'
-  module Gem
-    def self.source_index
-      sources
-    end
-    def self.cache
-      sources
-    end
-    SourceIndex = Specification
-    class SourceList
-      # If you want vendor gems, this is where to start writing code.
-      def search(*args); []; end
-      def each(&block); end
-      include Enumerable
-    end
-  end
-end
+# if Rails::VERSION::MAJOR == 2 && RUBY_VERSION >= '2.0.0'
+#   module Gem
+#     def self.source_index
+#       sources
+#     end
+#     def self.cache
+#       sources
+#     end
+#     SourceIndex = Specification
+#     class SourceList
+#       # If you want vendor gems, this is where to start writing code.
+#       def search(*args); []; end
+#       def each(&block); end
+#       include Enumerable
+#     end
+#   end
+# end
 
 # # ensure /usr/local/bin is in our path
 # ENV["PATH"]="#{ENV["PATH"]}:/usr/local/bin"
