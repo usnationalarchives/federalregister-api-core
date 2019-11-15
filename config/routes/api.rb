@@ -1,24 +1,28 @@
 FR2::Application.routes.draw do
-  match 'documentation.:format' => 'api/v1/documentation#show', :as => :documentation, :path_prefix => 'api/v1', :name_prefix => 'api_v1_', :via => :get
-  resources :effective_dates, :only => [:index]
-  match 'documents/facets/:facet.:format' => 'api/v1/entries#facets', :as => :articles_facets, :path_prefix => 'api/v1', :name_prefix => 'api_v1_', :via => :get
-  match 'public-inspection-documents/facets/:facet' => 'api/v1/public_inspection_documents#facets', :as => :public_inspection_documents_facets, :path_prefix => 'api/v1', :name_prefix => 'api_v1_', :via => :get
-  match 'public-inspection-issues/facets/:facet' => 'api/v1/public_inspection_issues#facets', :as => :public_inspection_issues_facets, :path_prefix => 'api/v1', :name_prefix => 'api_v1_', :via => :get
-  match 'documents/search-details' => 'api/v1/entries#search_details', :as => :articles_search_details, :path_prefix => 'api/v1', :name_prefix => 'api_v1_', :via => :get
-  match 'public-inspection-documents/search-details' => 'api/v1/public_inspection_documents#search_details', :as => :public_inspection_documents_search_details, :path_prefix => 'api/v1', :name_prefix => 'api_v1_', :via => :get
-  resources :entries, :only => [:index, :show]
-  match 'agencies/suggestions' => 'api/v1/agencies#suggestions', :as => :agency_suggestions, :path_prefix => 'api/v1', :name_prefix => 'api_v1_', :via => :get
-  resources :agencies, :only => [:index, :show]
-  resources :public_inspection_documents, :only => [:index, :show] do
-    collection do
-      get :current
+  namespace 'api' do
+    namespace 'v1' do
+      match 'documentation.:format' => 'api/v1/documentation#show', :as => :documentation, :path_prefix => 'api/v1', :name_prefix => 'api_v1_', :via => :get
+      resources :effective_dates, :only => [:index]
+      match 'documents/facets/:facet.:format' => 'api/v1/entries#facets', :as => :articles_facets, :path_prefix => 'api/v1', :name_prefix => 'api_v1_', :via => :get
+      match 'public-inspection-documents/facets/:facet' => 'api/v1/public_inspection_documents#facets', :as => :public_inspection_documents_facets, :path_prefix => 'api/v1', :name_prefix => 'api_v1_', :via => :get
+      match 'public-inspection-issues/facets/:facet' => 'api/v1/public_inspection_issues#facets', :as => :public_inspection_issues_facets, :path_prefix => 'api/v1', :name_prefix => 'api_v1_', :via => :get
+      match 'documents/search-details' => 'api/v1/entries#search_details', :as => :articles_search_details, :path_prefix => 'api/v1', :name_prefix => 'api_v1_', :via => :get
+      match 'public-inspection-documents/search-details' => 'api/v1/public_inspection_documents#search_details', :as => :public_inspection_documents_search_details, :path_prefix => 'api/v1', :name_prefix => 'api_v1_', :via => :get
+      resources :entries, :only => [:index, :show]
+      match 'agencies/suggestions' => 'api/v1/agencies#suggestions', :as => :agency_suggestions, :path_prefix => 'api/v1', :name_prefix => 'api_v1_', :via => :get
+      resources :agencies, :only => [:index, :show]
+      resources :public_inspection_documents, :only => [:index, :show] do
+        collection do
+          get :current
+        end
+      end
+      resources :site_notifications, :only => [:index, :show]
+      resources :sections, :only => [:index]
+      resources :suggested_searches, :only => [:index, :show]
+      resources :holidays, :only => [:index]
+      match 'topics/suggestions' => 'api/v1/topics#suggestions', :as => :topic_suggestions, :path_prefix => 'api/v1', :name_prefix => 'api_v1_', :via => :get
     end
   end
-  resources :site_notifications, :only => [:index, :show]
-  resources :sections, :only => [:index]
-  resources :suggested_searches, :only => [:index, :show]
-  resources :holidays, :only => [:index]
-  match 'topics/suggestions' => 'api/v1/topics#suggestions', :as => :topic_suggestions, :path_prefix => 'api/v1', :name_prefix => 'api_v1_', :via => :get
 end
 
 
