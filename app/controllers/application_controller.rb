@@ -12,7 +12,7 @@ class ApplicationController < ActionController::Base
     self.request_forgery_protection_token = nil
   end
 
-  around_filter :log_memory_usage unless Rails.env.test?
+  # around_filter :log_memory_usage unless Rails.env.test?
 
   private
 
@@ -88,7 +88,6 @@ class ApplicationController < ActionController::Base
   helper_method :ab_group
 
   def log_memory_usage
-    return
     pid = Process.pid
 
     start_mem = Process.getrusage.maxrss
