@@ -47,6 +47,7 @@ FR2::Application.configure do
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings   = smtp_settings
 
+  Rails.application.routes.default_url_options = {:host => "www.federalregister.gov", :protocol => "https"}
   config.action_mailer.default_url_options = {:host => "www.#{APP_HOST_NAME}"}
 
   # Enable threaded mode

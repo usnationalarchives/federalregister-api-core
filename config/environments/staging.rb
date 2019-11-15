@@ -46,6 +46,7 @@ FR2::Application.configure do
 
   # Disable delivery errors, bad email addresses will be ignored
   # config.action_mailer.raise_delivery_errors = false
+  Rails.application.routes.default_url_options = {:host => "fr2.criticaljuncture.org", :protocol => "https"}
   config.action_mailer.default_url_options = {:host => "www.#{APP_HOST_NAME}"}
 
   # Enable threaded mode

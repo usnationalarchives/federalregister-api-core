@@ -40,5 +40,6 @@ FR2::Application.configure do
   config.action_mailer.default_url_options = {:host => "#{APP_HOST_NAME}", :protocol => "http://"}
 
   # Put gems in Gemfile...
+  Rails.application.routes.default_url_options = {:host => "dev-fr2.criticaljuncture.org", :protocol => "https"}
 
 end

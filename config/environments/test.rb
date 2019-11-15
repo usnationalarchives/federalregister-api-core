@@ -27,6 +27,7 @@ FR2::Application.configure do
   # ActionMailer::Base.deliveries array.
   config.action_mailer.delivery_method = :test
 
+  Rails.application.routes.default_url_options = {:host => "www.fr2.local", :port => 8081, :protocol => "http"}
   config.action_mailer.default_url_options = {:host => "#{APP_HOST_NAME}", :protocol => "http://"}
 
   # Use SQL instead of Active Record's schema dumper when creating the test database.
