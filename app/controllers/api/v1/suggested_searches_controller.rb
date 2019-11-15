@@ -1,3 +1,5 @@
+require 'rails_autolink'
+
 class Api::V1::SuggestedSearchesController < ApiController
   def index
     sections = parse_sections(params[:conditions])

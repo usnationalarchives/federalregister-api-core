@@ -227,6 +227,8 @@ GEM
       activesupport (= 3.2.22)
       bundler (~> 1.0)
       railties (= 3.2.22)
+    rails_autolink (1.1.6)
+      rails (> 3.1)
     railties (3.2.22)
       actionpack (= 3.2.22)
       activesupport (= 3.2.22)
@@ -380,6 +382,7 @@ DEPENDENCIES
   rack
   rack-cache (= 1.9.0)
   rails (= 3.2.22)
+  rails_autolink
   rake (= 10.5.0)
   rdoc
   recaptcha (= 0.3.1)
