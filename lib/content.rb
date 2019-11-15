@@ -66,7 +66,7 @@ module Content
     view = ActionView::Base.new(Rails::Configuration.new.view_path, {})
     [
       ActionView::Helpers::UrlHelper,
-      ActionController::UrlWriter,
+      Rails.application.routes.url_helpers,
       ApplicationHelper,
       HandlebarsHelper,
       HtmlHelper,
