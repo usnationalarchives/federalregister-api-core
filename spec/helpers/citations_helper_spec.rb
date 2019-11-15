@@ -4,6 +4,8 @@ describe CitationsHelper do
   include CitationsHelper
   include Citations::CfrHelper
   include HtmlHelper
+  include ActionView::Helpers::TagHelper
+  include Rails.application.routes.url_helpers
 
   describe 'add_eo_links' do
     [
