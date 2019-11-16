@@ -17,8 +17,8 @@ describe Content::GpoModsDownloader do
     end
 
     it "saves the results of diff to the reprocessed issue" do
-      Content::GpoModsDownloader.any_instance.stubs(:diff).returns('stubbed diff')
-      Content::GpoModsDownloader.any_instance.stubs(:html_diff).returns('stubbed html_diff')
+      Content::GpoModsDownloader.any_instance.stub(:diff).and_return('stubbed diff')
+      Content::GpoModsDownloader.any_instance.stub(:html_diff).and_return('stubbed html_diff')
 
       mods_downloader.generate_diffs
       reprocessed_issue.reload

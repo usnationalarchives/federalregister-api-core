@@ -56,7 +56,7 @@ describe EntrySearch do
 
   describe 'matching_entry_citation' do
     before(:each) do
-      Issue.stubs(:current).returns(Issue.new(:publication_date => Date.today))
+      allow(Issue).to receive(:current).and_return(Issue.new(:publication_date => Date.today))
     end
 
     it "finds no match when no term" do
@@ -116,7 +116,7 @@ describe EntrySearch do
 
   describe 'entry_with_document_number' do
     before(:each) do
-      Issue.stubs(:current).returns(Issue.new(:publication_date => Date.today))
+      allow(Issue).to receive(:current).and_return(Issue.new(:publication_date => Date.today))
     end
 
     it "finds no match when no term" do

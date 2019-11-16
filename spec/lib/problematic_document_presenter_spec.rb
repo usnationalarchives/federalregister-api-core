@@ -34,7 +34,7 @@ describe ProblematicDocumentPresenter do
     date  = Date.new(2019,3,20)
     issue = Factory(:issue, publication_date: date)
     entry = Factory(:entry, document_number: '2019-05287', publication_date: date)
-    ProblematicDocumentPresenter.stub_any_instance(:toc_json_file_contents => StringIO.new(toc_json).read)
+    ProblematicDocumentPresenter.any_instance.stub(:toc_json_file_contents).and_return(StringIO.new(toc_json).read)
 
     result = ProblematicDocumentPresenter.new(date).documents_present_in_toc_but_not_in_xml
 
@@ -45,7 +45,7 @@ describe ProblematicDocumentPresenter do
     date  = Date.new(2019,3,20)
     issue = Factory(:issue, publication_date: date)
     entry = Factory(:entry, document_number: '2019-05289', publication_date: date)
-    ProblematicDocumentPresenter.stub_any_instance(:toc_json_file_contents => StringIO.new(toc_json).read)
+    ProblematicDocumentPresenter.any_instance.stub(:toc_json_file_contents).and_return(StringIO.new(toc_json).read)
 
     result = ProblematicDocumentPresenter.new(date).documents_present_in_xml_but_not_in_toc
 
