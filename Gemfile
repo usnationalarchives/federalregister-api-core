@@ -112,6 +112,7 @@ gem 'net-sftp'
 gem 'diffy'
 gem 'cocaine'
 gem 'rails_autolink' # autolink removed in Rails 3.1.  This is an extraction of the functionality.
+gem 'edge_rider'
 
 gem 'hoe'
 
