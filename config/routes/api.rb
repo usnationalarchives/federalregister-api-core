@@ -2,15 +2,30 @@ FR2::Application.routes.draw do
   namespace 'api' do
     namespace 'v1' do
       scope :defaults => { :format => 'json' } do
-        match 'documentation.:format' => 'api/v1/documentation#show', :as => :documentation, :path_prefix => 'api/v1', :name_prefix => 'api_v1_', :via => :get
-        resources :effective_dates, :only => [:index]
-        match 'documents/facets/:facet.:format' => 'api/v1/entries#facets', :as => :articles_facets, :path_prefix => 'api/v1', :name_prefix => 'api_v1_', :via => :get
-        match 'public-inspection-documents/facets/:facet' => 'api/v1/public_inspection_documents#facets', :as => :public_inspection_documents_facets, :path_prefix => 'api/v1', :name_prefix => 'api_v1_', :via => :get
-        match 'public-inspection-issues/facets/:facet' => 'api/v1/public_inspection_issues#facets', :as => :public_inspection_issues_facets, :path_prefix => 'api/v1', :name_prefix => 'api_v1_', :via => :get
-        match 'documents/search-details' => 'api/v1/entries#search_details', :as => :articles_search_details, :path_prefix => 'api/v1', :name_prefix => 'api_v1_', :via => :get
-        match 'public-inspection-documents/search-details' => 'api/v1/public_inspection_documents#search_details', :as => :public_inspection_documents_search_details, :path_prefix => 'api/v1', :name_prefix => 'api_v1_', :via => :get
+        match 'documentation.:format' => 'api/v1/documentation#show',
+          :as => :documentation,
+          :via => :get
+        resources :effective_dates,
+          :only => [:index]
+        match 'documents/facets/:facet' => 'entries#facets',
+          :as => :articles_facets,
+          :via => :get
+        match 'public-inspection-documents/facets/:facet' => 'api/v1/public_inspection_documents#facets',
+          :as => :public_inspection_documents_facets,
+          :via => :get
+        match 'public-inspection-issues/facets/:facet' => 'api/v1/public_inspection_issues#facets',
+          :as => :public_inspection_issues_facets,
+          :via => :get
+        match 'documents/search-details' => 'api/v1/entries#search_details',
+          :as => :articles_search_details,
+          :via => :get
+        match 'public-inspection-documents/search-details' => 'api/v1/public_inspection_documents#search_details',
+          :as => :public_inspection_documents_search_details,
+          :via => :get
         resources :entries, :only => [:index, :show]
-        match 'agencies/suggestions' => 'api/v1/agencies#suggestions', :as => :agency_suggestions, :path_prefix => 'api/v1', :name_prefix => 'api_v1_', :via => :get
+        match 'agencies/suggestions' => 'api/v1/agencies#suggestions',
+          :as => :agency_suggestions,
+          :via => :get
         resources :agencies, :only => [:index, :show]
         resources :public_inspection_documents, :only => [:index, :show] do
           collection do
@@ -21,7 +36,9 @@ FR2::Application.routes.draw do
         resources :sections, :only => [:index]
         resources :suggested_searches, :only => [:index, :show]
         resources :holidays, :only => [:index]
-        match 'topics/suggestions' => 'api/v1/topics#suggestions', :as => :topic_suggestions, :path_prefix => 'api/v1', :name_prefix => 'api_v1_', :via => :get
+        match 'topics/suggestions' => 'api/v1/topics#suggestions',
+          :as => :topic_suggestions,
+          :via => :get
       end
     end
   end
