@@ -98,7 +98,7 @@ class EntryApiRepresentation < ApiRepresentation
       {}
     end
   end
-  field(:json_url, :select => :document_number) do |e|
+  field(:json_url, :select => [:document_number, :publication_date]) do |e|
     api_v1_entry_url(
       e.document_number,
       :publication_date => e.publication_date.to_s(:iso),
