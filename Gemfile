@@ -34,7 +34,7 @@ gem 'titleize' #updates ActiveSupport titleize with stop word support
 gem 'rubyzip', '>= 1.1.7'
 gem 'zip-zip' # will load compatibility for old rubyzip API.
 
-# gem 'fog'
+gem 'fog', '~> 1.3'
 # gem 'fog-google', '0.1.0'
 
 gem 'formtastic', '0.9.8'
