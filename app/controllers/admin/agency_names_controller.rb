@@ -1,3 +1,5 @@
+require 'csv'
+
 class Admin::AgencyNamesController < AdminController
   def index
     respond_to do |wants|
