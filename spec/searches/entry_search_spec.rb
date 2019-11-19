@@ -138,12 +138,16 @@ describe EntrySearch do
       date = Date.parse("2010-10-10")
       search = EntrySearch.new(:conditions => {:term => "HOWDY", :significant => '1', :cfr =>{:title => '7', :part => '132'}})
 
-      Entry.should_receive(:search).with do |term, options|
-        term.should == 'HOWDY'
-        options[:with][:significant].should == '1'
-        options[:with][:publication_date].should == (date.to_time.utc.beginning_of_day.to_i .. date.to_time.utc.end_of_day.to_i)
-        options[:per_page].should == 1000
-      end
+      Entry.should_receive(:search).with(
+        'HOWDY',
+        hash_including(
+          with: hash_including(
+            significant: '1',
+            publication_date: (date.to_time.utc.beginning_of_day.to_i .. date.to_time.utc.end_of_day.to_i)
+          ),
+          per_page: 1000
+        )
+      )
       search.results_for_date(date)
     end
   end
