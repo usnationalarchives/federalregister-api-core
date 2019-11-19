@@ -179,7 +179,7 @@ class ApiController < ApplicationController
     render :json => {:status => 400, :message => exception.message}, :status => 400
   end
 
-  rescue_from ActiveRecord::RecordNotFound, :with => :record_not_found if RAILS_ENV != 'development'
+  rescue_from ActiveRecord::RecordNotFound, :with => :record_not_found
   def record_not_found
     render :json => {:status => 404, :message => "Record Not Found"}, :status => 404
   end
