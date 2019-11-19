@@ -12,7 +12,7 @@ module RouteBuilder
           options.reverse_merge!(route_params)
         end
 
-        super(options)
+        Rails.application.routes.url_helpers.public_send(new_method_name, options)
       end
     end
   end
