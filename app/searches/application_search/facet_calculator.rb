@@ -23,10 +23,12 @@ class ApplicationSearch::FacetCalculator
 
   def all
     if @model
-      id_to_name = @model.find_as_hash(:select => "id, #{@name_attribute}")
+      id_to_name_sql = @model.select("id, #{@name_attribute}").to_sql
+      id_to_name = @model.find_as_hash(id_to_name_sql)
 
       if @identifier_attribute
-        id_to_identifier = @model.find_as_hash(:select => "id, #{@identifier_attribute}")
+        id_to_identifier_sql = @model.select("id, #{@identifier_attribute}").to_sql
+        id_to_identifier = @model.find_as_hash(id_to_identifier_sql)
       else
         id_to_identifier = {}
       end

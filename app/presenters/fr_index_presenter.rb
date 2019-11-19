@@ -94,16 +94,14 @@ class FrIndexPresenter
   end
 
   def needs_attention_counts_by_agency_id
-    @needs_attention_counts_by_agency_id ||= Hash[FrIndexAgencyStatus.find_as_arrays(
-      :select => "agency_id, needs_attention_count",
-      :conditions => {:year => year}
-    )]
+    sql_array = ["SELECT agency_id, needs_attention_count FROM fr_index_agency_statuses WHERE year = ?", year]
+
+    @needs_attention_counts_by_agency_id ||= Hash[ FrIndexAgencyStatus.find_as_arrays(sql_array) ]
   end
 
   def oldest_issue_needing_attention_by_agency_id
-    @oldest_issue_needing_attention_by_agency_id ||= Hash[FrIndexAgencyStatus.find_as_arrays(
-      :select => "agency_id, oldest_issue_needing_attention",
-      :conditions => {:year => year}
-    )]
+    sql_array = ["SELECT agency_id, oldest_issue_needing_attention FROM fr_index_agency_statuses WHERE year = ?", year]
+
+    @oldest_issue_needing_attention_by_agency_id ||= Hash[ FrIndexAgencyStatus.find_as_arrays(sql_array) ]
   end
 end
