@@ -1,8 +1,6 @@
 require 'spec_helper'
-include Html5Helper
-include ActionView::Helpers::TagHelper
 
-describe Html5Helper do
+describe Html5Helper, type: :helper do
   describe "html5_tag" do
     context "with a tag name" do
       it "creates the html5 tag and child div" do

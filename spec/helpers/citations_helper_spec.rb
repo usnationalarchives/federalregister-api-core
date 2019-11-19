@@ -1,15 +1,9 @@
 require 'spec_helper'
 
-describe CitationsHelper do
-  include CitationsHelper
+describe CitationsHelper, type: :helper do
   include Citations::CfrHelper
   include HtmlHelper
-  include ActionView::Helpers::TagHelper
   include RouteBuilder
-
-  def default_url_options
-    {}
-  end
 
   describe 'add_eo_links' do
     [
