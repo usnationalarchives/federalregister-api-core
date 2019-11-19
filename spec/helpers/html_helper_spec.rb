@@ -1,9 +1,10 @@
-describe HtmlHelper do
-  include HtmlHelper
+require 'spec_helper'
+
+describe 'HtmlHelper', :type => :helper do
 
   describe "modify_text_not_inside_anchor" do
     it "replaces text" do
-      result = modify_text_not_inside_anchor('Hello world') do |text|
+      result = helper.modify_text_not_inside_anchor('Hello world') do |text|
         text.gsub(/Hello/, 'Hi')
       end
 
@@ -11,7 +12,7 @@ describe HtmlHelper do
     end
 
     it "replaces text outside of an anchor" do
-      result = modify_text_not_inside_anchor('Hello world <a>Hello you</a>') do |text|
+      result = helper.modify_text_not_inside_anchor('Hello world <a>Hello you</a>') do |text|
         text.gsub(/Hello/, 'Hi')
       end
 
@@ -19,7 +20,7 @@ describe HtmlHelper do
     end
 
     it "replaces text in a <p>" do
-      result = modify_text_not_inside_anchor('<p>Hello world</p>') do |text|
+      result = helper.modify_text_not_inside_anchor('<p>Hello world</p>') do |text|
         text.gsub(/Hello/, 'Hi')
       end
 
@@ -27,7 +28,7 @@ describe HtmlHelper do
     end
 
     it "adds anchors in a <p>" do
-      result = modify_text_not_inside_anchor('<p>Hello world</p>') do |text|
+      result = helper.modify_text_not_inside_anchor('<p>Hello world</p>') do |text|
         text.gsub(/world/, '<a href="/">world</a>')
       end
 
@@ -35,7 +36,7 @@ describe HtmlHelper do
     end
 
     it "doesn't adds anchors inside an <a>" do
-      result = modify_text_not_inside_anchor('<p>Hello <a href="#">worldly folks</a></p>') do |text|
+      result = helper.modify_text_not_inside_anchor('<p>Hello <a href="#">worldly folks</a></p>') do |text|
         text.gsub(/world/, '<a href="#">world</a>')
       end
 
@@ -43,7 +44,7 @@ describe HtmlHelper do
     end
 
     it "adds anchors outside of an <a>" do
-      result = modify_text_not_inside_anchor('<p>Hello <span>world</span> <a href="#">hello worldly folks</a> hello world</p>') do |text|
+      result = helper.modify_text_not_inside_anchor('<p>Hello <span>world</span> <a href="#">hello worldly folks</a> hello world</p>') do |text|
         text.gsub(/hello world/, '<a href="#">hello world</a>')
       end
 
@@ -51,7 +52,7 @@ describe HtmlHelper do
     end
 
     it "persists ampersands" do
-      result = modify_text_not_inside_anchor('<p>Goats &amp; stuff</p>') do |text|
+      result = helper.modify_text_not_inside_anchor('<p>Goats &amp; stuff</p>') do |text|
         text.gsub(/Goats/, 'Sheep')
       end
 
