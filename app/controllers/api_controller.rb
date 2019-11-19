@@ -94,6 +94,7 @@ class ApiController < ApplicationController
     else
       if publication_date
         record = model.first(conditions: ["document_number = ? AND publication_date = ?", document_numbers, publication_date])
+        raise ActiveRecord::RecordNotFound unless record
       else
         record = model.find_by_document_number!(document_numbers)
       end
