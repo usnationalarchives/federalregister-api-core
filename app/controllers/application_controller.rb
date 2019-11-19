@@ -97,7 +97,4 @@ class ApplicationController < ActionController::Base
     Rails.logger.warn "[memory usage: #{pid} #{start_mem} #{end_mem} #{end_mem-start_mem}]"
   end
 
-  def view_context
-    @template
-  end
 end
