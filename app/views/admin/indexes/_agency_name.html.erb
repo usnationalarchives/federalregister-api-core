@@ -5,5 +5,5 @@
 </span>
 
 <% unless max_date %>
-  <%= needs_attention_pill(agency.needs_attention_count) %>
+  <%= needs_attention_pill(agency.needs_attention_count).html_safe %>
 <% end %>
