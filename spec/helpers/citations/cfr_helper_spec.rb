@@ -2,8 +2,14 @@ require 'spec_helper'
 
 describe Citations::CfrHelper do
   include Citations::CfrHelper
+  include RouteBuilder
+  include ActionView::Helpers::TagHelper
 
   describe 'add_cfr_links' do
+    def default_url_options
+      {}
+    end
+
     it "supports '# CFR #'" do
       add_cfr_links('10 CFR 100').should == '<a class="cfr external" href="' + h(select_cfr_citation_path(Time.current.to_date,'10','100')) + '">10 CFR 100</a>'
     end
