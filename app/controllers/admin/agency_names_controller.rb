@@ -4,7 +4,7 @@ class Admin::AgencyNamesController < AdminController
       wants.html do
         search_options = params[:search] || {}
         search_options['order'] ||= 'ascend_by_name'
-        @search = AgencyName.searchlogic(search_options)
+        @search = AgencyName.scoped()#.searchlogic(search_options)
         @agency_names = @search.paginate(:page => params[:page])
       end
 

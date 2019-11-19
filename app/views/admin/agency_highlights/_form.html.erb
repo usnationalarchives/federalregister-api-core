@@ -1,4 +1,4 @@
-<% f.inputs do %>
+<%= f.inputs do %>
   <%= f.input :section_header %>
   <%= f.input :title %>
   <%= f.input :abstract, :as => :text %>
@@ -8,7 +8,7 @@
 <% end %>
 <%= f.hidden_field :entry_id %>
 
-<% f.buttons do %>
-  <%= f.commit_button 'Save', :button_html => {:class => "btn btn-large btn-success"} %>
+<%= f.actions do %>
+  <%= f.action :submit, :label => 'Save', :button_html => {:class => "btn btn-large btn-success"} %>
   <%= link_to 'Cancel', unprocessed_admin_agency_names_path %>
 <% end %>

@@ -4,7 +4,7 @@ class Admin::TopicNamesController < AdminController
     search_options['order'] ||= 'ascend_by_name'
     @search = TopicName.scoped(
       :include => [:topics]
-    ).searchlogic(search_options)
+    )#.searchlogic(search_options)
 
     @topic_names = @search.paginate(:page => params[:page])
   end

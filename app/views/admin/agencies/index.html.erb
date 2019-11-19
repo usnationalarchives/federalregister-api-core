@@ -2,13 +2,15 @@
 
 <% sidebar(render :partial => 'nav') %>
 
-<% semantic_form_for @search, :url => admin_agencies_path, :method => :get do |f| %>
-  <% f.inputs do %>
-    <%= f.input :name_contains %>
-  <% end %>
+<% if false %>
+  <% semantic_form_for @search, :url => admin_agencies_path, :method => :get do |f| %>
+    <% f.inputs do %>
+      <%= f.input :name_contains %>
+    <% end %>
 
-  <% f.buttons do %>
-    <%= f.commit_button 'Search', :button_html => {:class => "btn btn-large btn-success"} %>
+    <% f.buttons do %>
+      <%= f.commit_button 'Search', :button_html => {:class => "btn btn-large btn-success"} %>
+    <% end %>
   <% end %>
 <% end %>
 <%= page_entries_info @agencies %>

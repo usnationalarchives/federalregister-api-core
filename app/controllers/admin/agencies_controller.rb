@@ -4,8 +4,8 @@ class Admin::AgenciesController < AdminController
   def index
     respond_to do |wants|
       wants.html do
-        @search = Agency.scoped(:order => "agencies.name").search(params[:search])
-        @agencies = @search.all.paginate(:per_page => 20, :page => params[:page])
+        @search = Agency.scoped(:order => "agencies.name")#.search(params[:search])
+        @agencies = @search.paginate(:per_page => 20, :page => params[:page])
       end
 
       wants.json do

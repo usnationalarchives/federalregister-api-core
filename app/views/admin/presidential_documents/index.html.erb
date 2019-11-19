@@ -1,7 +1,7 @@
 <% super_title 'Presidential Documents' %>
 <% title 'Document Updates' %>
 
-<% semantic_form_for :upload,
+<%= semantic_form_for :upload,
   url: admin_presidential_documents_path,
   html: {
     class: 'presidential-documents',
@@ -10,11 +10,11 @@
 
   <p>Uploaded files need to be in CSV format (.csv)</p>
 
-  <% f.inputs do %>
+  <%= f.inputs do %>
     <%= f.input :csv_file, label: 'Executive Orders:', as: :file %>
   <% end %>
 
-  <% f.buttons do %>
-    <%= f.submit 'Upload', class: 'btn btn-primary btn-large' %>
+  <%= f.actions do %>
+    <%= f.action :submit, label: 'Upload', button_html: {class: 'btn btn-primary btn-large'} %>
   <% end %>
 <% end %>

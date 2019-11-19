@@ -1,5 +1,5 @@
 <% super_title "Create New Agency" %>
 
-<% semantic_form_for @agency, :url => admin_agencies_path, :html => { :multipart => true } do |f| %>
+<%= semantic_form_for @agency, :url => admin_agencies_path, :html => { :multipart => true } do |f| %>
   <%= render :partial => 'form', :locals => {:f => f} %>
 <% end %>

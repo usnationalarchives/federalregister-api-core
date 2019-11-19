@@ -2,12 +2,14 @@
 
 <% sidebar(render :partial => 'nav') %>
 
-<% semantic_form_for @search do |f| %>
-  <% f.inputs do %>
-    <%= f.input :name_contains %>
-  <% end %>
-  <% f.buttons do %>
-    <%= f.commit_button 'Search', :button_html => {:class => "btn btn-large btn-success"} %>
+<% if false #TODO: Reimplement post-Rails upgrade %>
+  <% semantic_form_for @search do |f| %>
+    <% f.inputs do %>
+      <%= f.input :name_contains %>
+    <% end %>
+    <% f.buttons do %>
+      <%= f.commit_button 'Search', :button_html => {:class => "btn btn-large btn-success"} %>
+    <% end %>
   <% end %>
 <% end %>
 

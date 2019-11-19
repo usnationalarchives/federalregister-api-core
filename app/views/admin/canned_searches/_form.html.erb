@@ -1,4 +1,4 @@
-<% f.inputs do %>
+<%= f.inputs do %>
   <%= f.input :title %>
   <%= f.input :section %>
   <%= f.input :description %>
@@ -8,6 +8,6 @@
   <%= f.input :active %>
 <% end %>
 
-<% f.buttons do %>
-  <%= f.commit_button 'Save', :button_html => {:class => "btn btn-large btn-success"} %>
+<%= f.actions do %>
+  <%= f.action :submit, :label => "Save", :button_html => { :class => "btn btn-large btn-success"} %>
 <% end %>

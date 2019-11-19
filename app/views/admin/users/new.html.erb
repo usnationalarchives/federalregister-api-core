@@ -3,6 +3,6 @@
 
 <% sidebar(render :partial => 'nav') %>
 
-<% semantic_form_for @user, :url => admin_users_path do |f| %>
+<%= semantic_form_for @user, :url => admin_users_path do |f| %>
   <%= render :partial => "form", :locals => {:f => f} %>
 <% end %>

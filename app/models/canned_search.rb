@@ -5,6 +5,7 @@ class CannedSearch < ApplicationModel
   validates_presence_of :section, :title, :description, :search_conditions
 
   acts_as_list :scope => :section_id
+  scope :active, where(active: true)
   scope :in_order, :order => "position"
   scope :inactive, :conditions => {:active => 0}
   scope :alphabetically, :order => "canned_searches.title"

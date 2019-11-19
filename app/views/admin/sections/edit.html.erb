@@ -1,5 +1,5 @@
 <% super_title "Edit Section" %>
 
-<% semantic_form_for @section, :url => admin_section_path(@section) do |f| %>
+<%= semantic_form_for @section, :url => admin_section_path(@section) do |f| %>
   <%= render :partial => "form", :locals => {:f => f} %>
 <% end %>

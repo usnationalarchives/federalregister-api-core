@@ -3,6 +3,7 @@
 
 <% sidebar(render :partial => 'nav') %>
 
+<% if false #TODO: Reimplement post Rails upgrade %>
 <% semantic_form_for @search do |f| %>
   <% f.inputs do %>
     <%= f.input :name_contains, :label => "Topic name contains" %>
@@ -11,13 +12,14 @@
     <%= f.commit_button 'Search', :button_html => {:class => "btn btn-large btn-success"} %>
   <% end %>
 <% end %>
+<% end %>
 
 <%= will_paginate @topic_names, :class => 'pagination' %>
 
 <table class='sortable table table-bordered table-striped table-condensed' summary="All Topics">
   <thead>
     <tr>
-      <th><%= order( @search, :by => :name) %></th>
+      <th><%#= order( @search, :by => :name) %></th><%# TODO: Reimplement post Rails upgrade %>
       <th>Processed?</th>
       <th>Assigned Topics</th>
       <th># Documents</th>

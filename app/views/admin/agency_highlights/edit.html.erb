@@ -1,5 +1,5 @@
 <% title "Edit agency highlight for '#{link_to @agency_highlight.entry.title, entry_path(@agency_highlight.entry)}'" %>
 
-<% semantic_form_for @agency_highlight, :url => admin_agency_highlight_path(@agency_highlight) do |f| %>
+<%= semantic_form_for @agency_highlight, :url => admin_agency_highlight_path(@agency_highlight) do |f| %>
   <%= render :partial => "form", :locals => {:f => f} %>
 <% end %>

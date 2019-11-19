@@ -1,6 +1,6 @@
 class Admin::EventsController < AdminController
   def index
-    @search = Event.public_meeting.searchlogic(params[:search])
+    @search = Event.public_meeting#.searchlogic(params[:search])
     @events = @search.paginate(:page => params[:page])
   end
 
