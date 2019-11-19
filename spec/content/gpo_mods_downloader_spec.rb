@@ -7,11 +7,11 @@ describe Content::GpoModsDownloader do
 
   describe "#generate_diffs" do
     it "calls #diff and #html_diff" do
-      FrDiff.stubs(:diff).returns("")
-      FrDiff.stubs(:html_diff).returns("")
+      FrDiff.any_instance.stub(:diff).and_return("")
+      FrDiff.any_instance.stub(:html_diff).and_return("")
 
-      Content::GpoModsDownloader.expects(:diff).once
-      Content::GpoModsDownloader.expects(:html_diff).once
+      expect(mods_downloader).to receive(:diff).once.and_call_original
+      expect(mods_downloader).to receive(:html_diff).once.and_call_original
 
       mods_downloader.generate_diffs
     end
