@@ -124,5 +124,7 @@ module FederalregisterApiCore
 
     # Turn off model-based strong parameters
     config.active_record.whitelist_attributes = false
+
+    config.active_support.deprecation = :log
   end
 end
