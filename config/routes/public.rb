@@ -1,5 +1,6 @@
 FederalregisterApiCore::Application.routes.draw do
   # SPECIAL PAGES
+  root to: 'special#home'
   match '/' => 'special#home', :via => :get
   match 'robots.txt' => 'special#robots_dot_txt', :format => :txt, :via => :get
 
@@ -22,7 +23,7 @@ FederalregisterApiCore::Application.routes.draw do
   match 'articles/search/facet' => 'entries#search_facet', :as => :entries_search_facet, :via => :get
   match 'articles/widget' => 'entries#widget', :as => :entries_widget, :via => :get
   match 'documents/:year/:month/:day/:document_number/:slug' => 'entries#show', :as => :entry, :year => /\d{4}/, :month => /\d{1,2}/, :day => /\d{1,2}/, :slug => /[^\/]+/, :via => :get
-  match 'd/:document_number.:format' => 'entries#tiny_url', :as => :short_entry, :via => :get
+  match 'd/:document_number' => 'entries#tiny_url', :as => :short_entry, :via => :get
   match 'd/:document_number/:anchor' => 'entries#tiny_url', :as => :short_entry_with_anchor, :via => :get
   match 'citations/:year/:month/:day/:document_number/:slug' => 'entries#citations', :as => :entry_citation, :year => /\d{4}/, :month => /\d{1,2}/, :day => /\d{1,2}/, :via => :get
   match 'articles/current' => 'entries#current_issue', :as => :entries_current_issue, :via => :get
@@ -33,7 +34,7 @@ FederalregisterApiCore::Application.routes.draw do
   match 'a/:document_number/:anchor' => 'entries#tiny_url', :as => :short_entry_with_anchor, :via => :get
   match 'executive-orders.:format' => 'executive_orders#index', :as => :executive_orders, :via => :get
   match 'executive-orders/:president/:year.:format' => 'executive_orders#by_president_and_year', :as => :executive_orders_by_president_and_year, :via => :get
-  match 'executive-order/:number.:format' => 'executive_orders#show', :as => :executive_order, :number => /\d+/, :via => :get
+  match 'executive-order/:number' => 'executive_orders#show', :as => :executive_order, :number => /\d+/, :via => :get
   match 'citation/:volume/:page' => 'citations#show', :volume => /\d+/, :page => /\d+/, :via => :get
   match 'citation/:fr_citation' => 'citations#show', :as => :citation, :fr_citation => /\d+-FR-\d+/, :via => :get
   match 'citation/search' => 'citations#search', :as => :citation_search, :via => :get

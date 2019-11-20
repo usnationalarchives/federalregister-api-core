@@ -24,10 +24,10 @@ FederalregisterApiCore::Application.routes.draw do
     resources :events
     resources :dictionary_words, :only => [:create]
     resources :spelling_suggestions, :only => [:index]
-    match 'index/:year.:format' => 'indexes#year', :as => :index_year, :via => :get
+    match 'index/:year' => 'indexes#year', :as => :index_year, :via => :get
     match 'index/:year/publish' => 'indexes#publish', :as => :publish_index_year, :via => :post
     match 'index/:year/sgml' => 'indexes#sgml', :as => :sgml_index, :via => :get
-    match 'index/:year/:agency.:format' => 'indexes#year_agency', :as => :index_year_agency, :via => :get
+    match 'index/:year/:agency' => 'indexes#year_agency', :as => :index_year_agency, :via => :get
     match 'index/:year/:agency' => 'indexes#update_year_agency', :as => :index_year_agency, :via => :put
     match 'index/:year/:agency/unapproved-documents' => 'indexes#year_agency_unapproved_documents', :as => :index_year_agency_unapproved_documents, :via => :get
     match 'index/:year/:agency/completion' => 'indexes#mark_complete', :as => :index_year_agency_completion, :via => :put
@@ -56,7 +56,7 @@ FederalregisterApiCore::Application.routes.draw do
         end
       resource :approval
       resources :entries
-      resources :eventful_entries do
+      resources :eventful_entries, controller: 'issues/eventful_entries' do
         resources :events
       end
 
