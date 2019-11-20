@@ -1,4 +1,4 @@
-FR2::Application.routes.draw do
+FederalregisterApiCore::Application.routes.draw do
   namespace 'api' do
     namespace 'v1' do
       scope :defaults => { :format => 'json' } do

@@ -9,7 +9,7 @@ if defined?(Bundler)
   # Bundler.require(:default, :assets, Rails.env)
 end
 
-module FR2
+module FederalregisterApiCore
   class Application < Rails::Application
 
   # These config hooks used to live in environment.rb in the Rails 2 app.

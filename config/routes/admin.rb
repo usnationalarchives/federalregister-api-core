@@ -1,4 +1,4 @@
-FR2::Application.routes.draw do
+FederalregisterApiCore::Application.routes.draw do
   namespace :admin do
     match '' => 'special#home', :as => :home, :via => :get
       resources :agencies do

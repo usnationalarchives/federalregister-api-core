@@ -1,4 +1,4 @@
-FR2::Application.routes.draw do
+FederalregisterApiCore::Application.routes.draw do
   match '/status/api-core/:id' => 'special#status', :as => :status_api_core, :quiet => 'true', :via => :get
   match '/status' => 'special#status', :as => :status, :quiet => 'true', :via => :get
 

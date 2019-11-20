@@ -1,4 +1,4 @@
-FR2::Application.routes.draw do
+FederalregisterApiCore::Application.routes.draw do
   # SPECIAL PAGES
   match '/' => 'special#home', :via => :get
   match 'robots.txt' => 'special#robots_dot_txt', :format => :txt, :via => :get
