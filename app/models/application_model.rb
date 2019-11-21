@@ -31,4 +31,8 @@ class ApplicationModel < ActiveRecord::Base
     sql.sub!(/^SELECT/, 'SELECT STRAIGHT_JOIN')
     find_by_sql(sql)
   end
+
+  def self.active_hash?
+    false
+  end
 end

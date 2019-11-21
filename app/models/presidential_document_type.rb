@@ -119,4 +119,8 @@ class PresidentialDocumentType < ActiveHash::Base
     methods = options[:select].split(/\s*,\s*/)
     Hash[data.map{|rec| methods.map{|m| rec[m.to_sym]}}]
   end
+
+  def self.active_hash?
+    true
+  end
 end
