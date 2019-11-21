@@ -166,7 +166,7 @@ class ApiController < ApplicationController
 
   rescue_from Exception, :with => :server_error if RAILS_ENV == 'production' || RAILS_ENV == 'staging'
   def server_error(exception)
-    notify_honeybadger(exception)
+    Honeybadger.notify(exception)
     render :json => {:status => 500, :message => "Internal Server Error"}, :status => 500
   end
 

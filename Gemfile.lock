@@ -244,7 +244,7 @@ GEM
     hike (1.2.3)
     hoe (3.14.2)
       rake (>= 0.8, < 11.0)
-    honeybadger (2.0.12)
+    honeybadger (2.0.0)
     httmultiparty (0.3.13)
       httparty (>= 0.7.3)
       mimemagic
@@ -460,7 +460,7 @@ DEPENDENCIES
   geokit-rails
   googleauth
   hoe
-  honeybadger (~> 2.0.0)
+  honeybadger (= 2.0.0)
   httmultiparty (~> 0.3.13)
   http_headers (= 0.0.2.3)
   httparty
