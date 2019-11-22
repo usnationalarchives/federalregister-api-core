@@ -16,7 +16,7 @@ class AdminController < ApplicationController
     User.stamper ||= current_user
   end
 
-  def store_location(url = request.request_uri)
+  def store_location(url = request.url)
     session[:return_to] = url
   end
 
