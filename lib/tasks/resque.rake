@@ -1,1 +1,1 @@
-task "resque:setup" => :environment
+require 'resque/tasks'
