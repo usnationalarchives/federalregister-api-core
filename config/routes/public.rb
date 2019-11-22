@@ -30,7 +30,7 @@ FederalregisterApiCore::Application.routes.draw do
   match 'articles/:year/:month/:day' => 'entries#by_date', :as => :entries_by_date, :year => /\d{4}/, :month => /\d{1,2}/, :day => /\d{1,2}/, :via => :get
   match 'articles/date_search' => 'entries#date_search', :as => :entries_date_search, :via => :get
   match 'a/random' => 'entries#random', :as => :random_entry, :via => :get
-  match 'a/:document_number.:format' => 'entries#tiny_url', :as => :short_entry, :via => :get
+  match 'a/:document_number' => 'entries#tiny_url', :as => :short_entry, :via => :get
   match 'a/:document_number/:anchor' => 'entries#tiny_url', :as => :short_entry_with_anchor, :via => :get
   match 'executive-orders.:format' => 'executive_orders#index', :as => :executive_orders, :via => :get
   match 'executive-orders/:president/:year.:format' => 'executive_orders#by_president_and_year', :as => :executive_orders_by_president_and_year, :via => :get
