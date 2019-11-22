@@ -25,8 +25,8 @@ FederalregisterApiCore::Application.routes.draw do
 
   # ENTRY SEARCH
   match 'articles/search/header' => 'entries/search#header', :as => :entries_search_header, :quiet => 'true', :via => :get
-  match 'articles/search/results.:format' => 'entries/search#results', :as => :entries_search_results, :quiet => 'true', :via => :get
-  match 'articles/search/suggestions.:format' => 'entries/search#suggestions', :as => :entries_search_suggestions, :quiet => 'true', :via => :get
+  match 'articles/search/results' => 'entries/search#results', :as => :entries_search_results, :quiet => 'true', :via => :get
+  match 'articles/search/suggestions' => 'entries/search#suggestions', :as => :entries_search_suggestions, :quiet => 'true', :via => :get
   match 'articles/search/facets/:facet' => 'entries/search#facets', :as => :entries_search_facets, :quiet => 'true', :via => :get
 
   # PI BY DATE
@@ -34,7 +34,7 @@ FederalregisterApiCore::Application.routes.draw do
 
   # PI SEARCH
   match 'public-inspection/search/header' => 'public_inspection/search#header', :as => :public_inspection_search_header, :quiet => 'true', :via => :get
-  match 'public-inspection/search/results.:format' => 'public_inspection/search#results', :as => :public_inspection_search_results, :quiet => 'true', :via => :get
+  match 'public-inspection/search/results' => 'public_inspection/search#results', :as => :public_inspection_search_results, :quiet => 'true', :via => :get
   match 'public-inspection/search/facets/:facet' => 'public_inspection/search#facets', :as => :public_inspection_search_facets, :quiet => 'true', :via => :get
 
   # EVENT SEARCH
@@ -51,15 +51,14 @@ FederalregisterApiCore::Application.routes.draw do
   match 'regulations/search/facets/:facet' => 'regulatory_plans/search#facets', :as => :regulatory_plan_search_facets, :quiet => 'true', :via => :get
 
   # SECTIONS
-  match ':slug/popular_entries.:format' => 'sections#popular_entries', :as => :popular_entries_section, :quiet => 'true', :via => :get
-  match ':slug/most_emailed_entries.:format' => 'sections#most_emailed_entries', :as => :most_emailed_entries_section, :quiet => 'true', :via => :get
-  match ':slug/popular_topics.:format' => 'sections#popular_topics', :as => :popular_topics_section, :quiet => 'true', :via => :get
-  match ':slug/featured_agency.:format' => 'sections#featured_agency', :as => :featured_agency_section, :quiet => 'true', :via => :get
+  match ':slug/popular_entries' => 'sections#popular_entries', :as => :popular_entries_section, :quiet => 'true', :via => :get
+  match ':slug/most_emailed_entries' => 'sections#most_emailed_entries', :as => :most_emailed_entries_section, :quiet => 'true', :via => :get
+  match ':slug/popular_topics' => 'sections#popular_topics', :as => :popular_topics_section, :quiet => 'true', :via => :get
+  match ':slug/featured_agency' => 'sections#featured_agency', :as => :featured_agency_section, :quiet => 'true', :via => :get
 
   # FR INDEX
   match 'index/:year/:agency/:type' => 'indexes#year_agency_type', :as => :index_year_agency_type, :quiet => 'true', :via => :get
 end
-
 
 # ActionController::Routing::Routes.draw do |map|
 #   map.with_options(:quiet => "true", :conditions => {:method => :get}) do |quiet_map|

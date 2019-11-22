@@ -2,7 +2,7 @@ FederalregisterApiCore::Application.routes.draw do
   namespace 'api' do
     namespace 'v1' do
       scope :defaults => { :format => 'json' } do
-        match 'documentation.:format' => 'documentation#show',
+        match 'documentation' => 'documentation#show',
           :as => :documentation,
           :via => :get
         resources :effective_dates,
