@@ -70,7 +70,11 @@ module RouteBuilder
   end
 
   add_route :short_entry do |entry|
-    host = 'federalregister.gov' if RAILS_ENV == 'production'
+    if RAILS_ENV == 'production'
+      host = 'federalregister.gov'
+    else
+      host = 'example.com'
+    end
     {
       :document_number => entry.document_number,
       :host => host
@@ -78,7 +82,11 @@ module RouteBuilder
   end
 
   def short_document_url(document, options={})
-    host = options.fetch(:host, 'https://federalregister.gov')
+    if RAILS_ENV == 'production'
+      host = 'federalregister.gov'
+    else
+      host = 'example.com'
+    end
     format = options.fetch(:format, nil)
 
     "#{host}/d/#{document.document_number}#{format ? ".#{format}" : ''}"
@@ -239,4 +247,5 @@ module RouteBuilder
       end
     end
   end
+
 end
