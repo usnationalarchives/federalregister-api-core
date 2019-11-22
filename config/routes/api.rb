@@ -29,6 +29,7 @@ FederalregisterApiCore::Application.routes.draw do
           :as => :agency_suggestions,
           :via => :get
         resources :agencies, :only => [:index, :show]
+        resources :public_inspection_documents, :only => [:index, :show]
         match 'public-inspection-documents' => 'public_inspection_documents#index',
           :via => :get
         match 'public-inspection-documents/current' => 'public_inspection_documents#current',
