@@ -4,7 +4,7 @@ module FrIndexHelper
     if count > min
       css_class = ["count_pill", options.delete(:class)].compact.join(' ')
 
-      "&nbsp;" + content_tag(:span, count, options.merge(:class => css_class))
+      ("&nbsp;" + content_tag(:span, count, options.merge(:class => css_class))).html_safe
     end
   end
 
