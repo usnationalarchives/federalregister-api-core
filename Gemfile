@@ -63,7 +63,7 @@ gem 'aws-sdk-v1'
 
 gem 'stevedore', '0.3.0'
 
-gem 'active_hash', '0.9.5'
+gem 'active_hash', '~> 2.0'
 gem 'acts_as_list'
 # gem 'bcrypt-ruby', '2.1.2', :require => 'bcrypt'
 gem 'bcrypt'

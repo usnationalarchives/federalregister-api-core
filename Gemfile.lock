@@ -62,7 +62,7 @@ GEM
       rack-cache (~> 1.2)
       rack-test (~> 0.6.1)
       sprockets (~> 2.2.1)
-    active_hash (0.9.5)
+    active_hash (2.0.0)
       activesupport (>= 2.2.2)
     activemodel (3.2.22)
       activesupport (= 3.2.22)
@@ -434,7 +434,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  active_hash (= 0.9.5)
+  active_hash (~> 2.0)
   acts_as_list
   addressable (= 2.4.0)
   amatch (= 0.2.11)

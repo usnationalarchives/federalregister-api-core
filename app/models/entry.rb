@@ -2,6 +2,7 @@
 class Entry < ApplicationModel
   self.inheritance_column = nil
   include EntryViewLogic
+  extend ActiveHash::Associations::ActiveRecordExtensions
 
   include TextHelper
   attr_writer :excerpt
