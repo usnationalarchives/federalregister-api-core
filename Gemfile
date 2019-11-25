@@ -2,48 +2,28 @@ source 'https://rubygems.org'
 
 # rake version that is compatible with 2.3.x
 gem 'rake', '10.5.0'
-
-# rack version compatible with 1.9.3
-# gem 'rack', '1.4.7'
 gem 'rack'
-gem 'rack-cache', '1.9.0'
 
-# gem 'rails',
-#   :git => 'https://github.com/makandra/rails.git',
-#   :branch => '2-3-lts'
-# gem 'rails', '3.1.12'
 gem 'rails', '3.2.22'
-# gem 'mysql2', '0.2.24'
 gem 'mysql2', '0.3.21'
 
 # production app server
 gem 'passenger', '~> 6.0'
-
-# gem "jrails", "0.6.0"
-
 gem 'nokogiri'
 gem 'curb', '0.9.0'
 gem 'http_headers', '0.0.2.3'
 gem 'geokit', '1.10.0', :require => 'geokit'
 gem 'geokit-rails'
 gem 'will_paginate', :require => 'will_paginate'
-# gem 'will_paginate', '2.3.14', :require => 'will_paginate'
 gem 'amatch', '0.2.11'
 gem 'indefinite_article'
 gem 'titleize' #updates ActiveSupport titleize with stop word support
-
 gem 'rubyzip', '>= 1.1.7'
 gem 'zip-zip' # will load compatibility for old rubyzip API.
-
 gem 'fog', '~> 1.3'
-# gem 'fog-google', '0.1.0'
-
 gem 'formtastic', "~> 2.1"
-
 gem 'json', '1.8.6'
 gem 'ym4r', '0.6.1'
-
-# gem 'thinking-sphinx', '1.4.14', :require => 'thinking_sphinx'
 gem 'thinking-sphinx', '2.0.14', :require => 'thinking_sphinx'
 gem 'ffi-hunspell',
   :git => 'https://github.com/postmodern/ffi-hunspell.git',
@@ -63,11 +43,13 @@ gem 'aws-sdk-v1'
 
 gem 'stevedore', '0.3.0'
 
+# gem 'userstamp'
+
 gem 'active_hash', '~> 2.0'
 gem 'acts_as_list'
 # gem 'bcrypt-ruby', '2.1.2', :require => 'bcrypt'
 gem 'bcrypt'
-gem 'authlogic', '3.0.3'#'2.1.11'
+gem 'authlogic', '3.0.3'
 
 # wrapper around http requests that supports multiple backends
 gem 'faraday'
@@ -76,10 +58,6 @@ gem 'typhoeus', '~> 1.0', '>= 1.0.1'
 
 # This github issue seems to be failing: https://github.com/binarylogic/searchlogic/issues/141
 # gem 'searchlogic', '2.4.12'
-# gem 'haml', '3.0.4' #HAML Doesn't seem to be used apart from lemonade and compass
-# gem 'compass', '0.10.1'
-# gem 'compass-960-plugin', '0.9.13', :require => false
-# gem 'lemonade', '0.3.2'
 gem 'icalendar'
 gem 'klarlack', '0.0.7',
   git: 'https://github.com/criticaljuncture/klarlack.git',
@@ -105,7 +83,7 @@ gem "httmultiparty", '~> 0.3.13'
 
 gem "recaptcha", "0.3.1", :require => 'recaptcha/rails'
 gem 'sendgrid', :git => "https://github.com/criticaljuncture/sendgrid.git", :branch => 'master'
-gem 'modularity'#, '0.6.1' (Had to get past Active Record error -BC)
+gem 'modularity'
 
 # gem "validation_reflection"#, "0.3.8" #TODO: Address implications of removing this gem as it has gone stale
 
@@ -155,7 +133,7 @@ group :test do
   gem 'mock_redis'
   gem 'vcr'
   gem 'fakeweb'
-  # gem 'ci_reporter', '1.6.3'
+  gem 'ci_reporter', '1.6.3'
   gem 'test-unit', '1.2.3'
 end
 
