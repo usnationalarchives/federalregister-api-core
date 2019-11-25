@@ -1,5 +1,5 @@
 <li id="<%= dom_id(highlighted_entry) %>" class='highlighted_entry' data-entry-id="<%= highlighted_entry.id %>">
-  <% html5_tag('article', "data-entry-id" => highlighted_entry.id) do %>
+  <div class="article" data-entry-id="<%= highlighted_entry.id %>">
     <%= image_tag(highlighted_entry.lede_photo.photo.url(:homepage)) if highlighted_entry.lede_photo %>
 
     <h4>
@@ -32,5 +32,5 @@
     </dl>
 
     <a class="remove button">remove</a>
-  <% end %>
+  </div>
 </li>

@@ -60,7 +60,8 @@
   <ul id='article_list' class='document-list'>
     <% @section.entries.published_on(@publication_date).each do |entry| %>
       <li>
-        <% html5_tag('article', "data-entry-id" => entry.id, :class => "#{'highlighted' if @highlighted_entries.include?(entry)}") do %>
+        <div class="article" data-entry-id="<%= entry.id %>" class="<%= 'highlighted' if @highlighted_entries.include?(entry) %>">
+
           <%= content_tag :h4, entry.curated_title, :title => entry.abstract %>
 
           <dl>
@@ -87,7 +88,7 @@
           <% unless @highlighted_entries.include?(entry) %>
             <a class="add button">highlight</a>
           <% end %>
-        <% end %>
+        </div>
       </li>
     <% end %>
   </div>
