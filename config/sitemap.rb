@@ -1,6 +1,11 @@
 # Set the host name for URL creation
 SitemapGenerator::Sitemap.default_host = "https://www.federalregister.gov"
 
+class SitemapRouteHelpers
+  include RouteBuilder
+end
+route_builder_helpers = SitemapRouteHelpers.new
+
 SitemapGenerator::Sitemap.add_links do |sitemap|
   # Put links creation logic here.
   #
@@ -31,23 +36,28 @@ SitemapGenerator::Sitemap.add_links do |sitemap|
 
   # ENTRIES
   Entry.scoped(:select => "entries.id, entries.document_number, entries.publication_date, entries.title").find_each do |entry|
-    sitemap.add entry_path(entry), :changefreq => 'monthly', :lastmod => entry.updated_at
+    options = {:changefreq => 'monthly'}.tap do |ops|
+      if entry.updated_at?
+        ops.merge!(:lastmod => entry.updated_at)
+      end
+    end
+    sitemap.add route_builder_helpers.entry_path(entry), options
   end
 
   Issue.completed.find_each do |issue|
-    sitemap.add entries_by_date_path(issue.publication_date), :priority => 0.75
+    sitemap.add route_builder_helpers.entries_by_date_path(issue.publication_date), :priority => 0.75
   end
 
   sitemap.add entries_current_issue_path, :priority => 1.0, :changefreq => 'daily'
 
   PublicInspectionIssue.published.find_each do |issue|
-    sitemap.add public_inspection_documents_by_date_path(issue.publication_date), :priority => 0.75
+    sitemap.add route_builder_helpers.public_inspection_documents_by_date_path(issue.publication_date), :priority => 0.75
   end
 
   sitemap.add public_inspection_documents_path, :priority => 1.0, :changefreq => 'hourly'
 
   PublicInspectionDocument.unpublished.find_each do |document|
-    sitemap.add entry_path(document)
+    sitemap.add route_builder_helpers.entry_path(document)
   end
 
   # TOPICS
@@ -72,6 +82,6 @@ SitemapGenerator::Sitemap.add_links do |sitemap|
 
   # REGULATIONS
   # RegulatoryPlan.find_each do |regulatory_plan|
-  #   sitemap.add regulatory_plan_path(regulatory_plan), :changefreq => 'daily'
+  #   sitemap.add route_builder_helpers.regulatory_plan_path(regulatory_plan), :changefreq => 'daily'
   # end
 end
