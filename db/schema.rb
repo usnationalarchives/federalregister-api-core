@@ -60,8 +60,7 @@ ActiveRecord::Schema.define(:version => 20190516164148) do
   add_index "agencies_sections", ["agency_id", "section_id"], :name => "index_agencies_sections_on_agency_id_and_section_id"
   add_index "agencies_sections", ["section_id", "agency_id"], :name => "index_agencies_sections_on_section_id_and_agency_id"
 
-  create_table "agency_assignments", :id => false, :force => true do |t|
-    t.integer "id",              :default => 0, :null => false
+  create_table "agency_assignments", :force => true do |t|
     t.integer "assignable_id"
     t.integer "agency_id"
     t.integer "position"
@@ -153,36 +152,6 @@ ActiveRecord::Schema.define(:version => 20190516164148) do
 
   add_index "citations", ["cited_entry_id", "citation_type", "source_entry_id"], :name => "cited_citation_source"
   add_index "citations", ["source_entry_id", "citation_type", "cited_entry_id"], :name => "source_citation_cited"
-
-  create_table "clippings", :force => true do |t|
-    t.integer  "user_id"
-    t.string   "document_number"
-    t.integer  "position"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "comments", :force => true do |t|
-    t.integer  "user_id"
-    t.string   "document_number"
-    t.string   "comment_tracking_number"
-    t.datetime "created_at"
-    t.boolean  "comment_publication_notification"
-    t.datetime "checked_comment_publication_at"
-    t.string   "salt"
-    t.string   "iv"
-    t.binary   "encrypted_comment_data"
-    t.string   "agency_name"
-    t.boolean  "agency_participating"
-    t.string   "comment_document_number"
-    t.string   "submission_key"
-  end
-
-  add_index "comments", ["agency_participating"], :name => "index_comments_on_agency_participating"
-  add_index "comments", ["comment_publication_notification"], :name => "index_comments_on_comment_publication_notification"
-  add_index "comments", ["comment_tracking_number"], :name => "index_comments_on_comment_tracking_number"
-  add_index "comments", ["document_number"], :name => "index_comments_on_document_number"
-  add_index "comments", ["user_id"], :name => "index_comments_on_user_id"
 
   create_table "dictionary_words", :force => true do |t|
     t.string   "word"
@@ -279,7 +248,7 @@ ActiveRecord::Schema.define(:version => 20190516164148) do
   add_index "entries", ["id", "publication_date"], :name => "index_entries_on_id_and_publication_date"
   add_index "entries", ["id"], :name => "index_entries_on_agency_id_and_id"
   add_index "entries", ["presidential_document_type_id", "executive_order_number"], :name => "presdocu_type_id_and_eo_number"
-  add_index "entries", ["proclamation_number"], :name => "index_entries_on_proclamation_number"
+  add_index "entries", ["proclamation_number"], :name => "index_entries_on_proclamation_number", :length => {"proclamation_number"=>191}
   add_index "entries", ["publication_date"], :name => "index_entries_on_agency_id_and_publication_date"
   add_index "entries", ["publication_date"], :name => "index_entries_on_publication_date_and_agency_id"
   add_index "entries", ["raw_text_updated_at"], :name => "index_entries_on_raw_text_updated_at"
