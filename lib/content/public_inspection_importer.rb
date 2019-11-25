@@ -62,7 +62,8 @@ module Content
     def finalize_import
       issue.special_filings_updated_at = issue.
         public_inspection_documents.
-        scoped(:conditions => {:special_filing => true}).
+        where(special_filing: true).
+        scoped.
         maximum(:update_pil_at) || first_posting_date
       issue.regular_filings_updated_at ||= first_posting_date
       issue.published_at ||= DateTime.current
