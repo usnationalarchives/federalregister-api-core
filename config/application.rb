@@ -12,62 +12,47 @@ end
 module FederalregisterApiCore
   class Application < Rails::Application
 
-  # These config hooks used to live in environment.rb in the Rails 2 app.
-  #=============================================================================
+    # These config hooks used to live in environment.rb in the Rails 2 app.
+    #=============================================================================
 
-  # Settings in config/environments/* take precedence over those specified here.
-  # Application configuration should go into files in config/initializers
-  # -- all .rb files in that directory are automatically loaded.
+    # Add additional load paths for your own custom dirs
+    config.autoload_paths += %W( ./app/concerns ./app/observers ./app/presenters ./app/searches ./app/workers ./lib )
 
-  # Add additional load paths for your own custom dirs
-  config.autoload_paths += %W( ./app/concerns ./app/observers ./app/presenters ./app/searches ./app/workers ./lib )
+    # Activate observers that should always be running, expect during db:migrate and db:setup...
+    unless ENV['ASSUME_UNITIALIZED_DB']
+      config.active_record.observers = [
+        :agency_observer,
+        :agency_name_observer,
+        :canned_search_observer,
+        :entry_observer,
+        :fr_index_agency_status_observer,
+        :issue_approval_observer
+      ]
+    end
 
-  # Gems go in RAILS_ROOT/Gemfile
+    # Set Time.zone default to the specified zone and make Active Record auto-convert to this zone.
+    # Run "rake -D time" for a list of tasks for finding time zone names.
+    config.time_zone = 'Eastern Time (US & Canada)'
 
-  # Only load the plugins named here, in the order given (default is alphabetical).
-  # :all can be used as a placeholder for all plugins not explicitly named
-  # config.plugins = [ :exception_notification, :ssl_requirement, :all ]
+    # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
+    # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}')]
+    # config.i18n.default_locale = :de
 
-  # Skip frameworks you're not going to use. To use Rails without a database,
-  # you must remove the Active Record framework.
-  # config.frameworks -= [ :active_record, :active_resource, :action_mailer ]
+    config.cache_store = :file_store, "#{RAILS_ROOT}/tmp/cache"
 
-  # Activate observers that should always be running, expect during db:migrate and db:setup...
-  unless ENV['ASSUME_UNITIALIZED_DB']
-    config.active_record.observers = [
-      :agency_observer,
-      :agency_name_observer,
-      :canned_search_observer,
-      :entry_observer,
-      :fr_index_agency_status_observer,
-      :issue_approval_observer
-    ]
-  end
+    config.rails_lts_options = { :disable_xml_parsing => true }
 
-  # Set Time.zone default to the specified zone and make Active Record auto-convert to this zone.
-  # Run "rake -D time" for a list of tasks for finding time zone names.
-  config.time_zone = 'Eastern Time (US & Canada)'
+    # use our binary logger as the application logger
+    # config.logger = ActiveSupport::BinaryBufferedLogger.new( File.join(RAILS_ROOT, "log", "#{RAILS_ENV}.log") )
+    #=============================================================================
 
-  # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
-  # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}')]
-  # config.i18n.default_locale = :de
+    config.session_store :cookie_store, {
+      :cookie_only => true,
+      :path        => '/admin',
+      :secure      => (Rails.env.production? || Rails.env.staging?)
+    }
 
-  # TODO: B.C. Investigate alternative
 
-  # config.action_controller.session = {
-  #   # :key => '_myapp_session',
-  #   # :secret => 'Abcd1234',
-  #   :cookie_only => true,
-  #   :path => '/admin',
-  # }
-
-  config.cache_store = :file_store, "#{RAILS_ROOT}/tmp/cache"
-
-  config.rails_lts_options = { :disable_xml_parsing => true }
-
-  # use our binary logger as the application logger
-  # config.logger = ActiveSupport::BinaryBufferedLogger.new( File.join(RAILS_ROOT, "log", "#{RAILS_ENV}.log") )
-  #=============================================================================
 
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
