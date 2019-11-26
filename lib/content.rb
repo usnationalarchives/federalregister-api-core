@@ -70,6 +70,7 @@ module Content
       ApplicationHelper,
       HandlebarsHelper,
       HtmlHelper,
+      Html5Helper,
       CitationsHelper,
       Citations::CfrHelper,
       RegulatoryPlanHelper,
