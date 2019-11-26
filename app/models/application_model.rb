@@ -2,11 +2,6 @@ class ApplicationModel < ActiveRecord::Base
   self.abstract_class = true
   include ViewHelper
 
-  class << self
-    # public :preload_associations
-    # public :construct_finder_sql
-  end
-
   # More performant than simply ORDER BY RAND()
   # See http://www.paperplanes.de/2008/4/24/mysql_nonos_order_by_rand.html for inspiration
   def self.random_selection(n)
