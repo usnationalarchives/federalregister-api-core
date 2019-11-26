@@ -40,6 +40,8 @@ gem 'paperclip', '~> 2.8'
  # required by paperclip but unspecified version - this ensures a comptible version
 gem 'mime-types', '~> 1.25', '>= 1.25.1'
 gem 'aws-sdk-v1'
+# add methods to the ruby Process command via C-extensions
+gem 'proc-wait3'
 
 gem 'stevedore', '0.3.0'
 
