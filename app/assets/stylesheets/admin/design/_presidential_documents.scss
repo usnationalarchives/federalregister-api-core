@@ -1,0 +1,26 @@
+form.presidential-documents {
+  font-size: 16px;
+  
+  ol { list-style: none; }
+
+  label {
+    float: left;
+    font-size: 16px !important;
+    margin: 10px 0;
+  }
+
+  input[type=file] {
+    line-height: initial !important;
+    position: relative;
+    top: 12px;
+  }
+  
+  input.btn-large { padding: 9px 14px; }
+  .btn {
+    background-image: none;
+    border: none;
+    position: relative;
+    text-shadow: none;
+    top: -4px;
+  }
+}

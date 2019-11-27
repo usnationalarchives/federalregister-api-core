@@ -126,6 +126,9 @@ Encoding.default_internal = Encoding::UTF_8
 
 gem 'open_calais'
 
+gem 'uglifier'
+gem 'sass-rails'
+
 
 group :test do
   gem 'rspec'

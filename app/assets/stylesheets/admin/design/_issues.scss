@@ -1,0 +1,41 @@
+#issues.admin #main,
+#sections.admin #main {
+  .issue-approval {
+    padding: 10px 20px 10px;
+    text-align: center;
+    margin-bottom: 40px;
+  }
+
+  h2.section-header {
+    border-bottom: 1px solid #000;
+    margin-bottom: 20px;
+  }
+
+  .document-list li {
+    background: #F1F1F1;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    padding: 5px 10px;
+
+    form {
+      margin-bottom: 0;
+
+      h3 {
+        line-height: 22px;
+        margin-bottom: 5px;
+      }
+    }
+  }
+
+  .section-list {
+    li {
+      display: inline-block;
+      margin-bottom: 0;
+      margin-right: 10px;
+      padding: 0;
+
+      label { font-size: 14px; }
+      input { display: inline-block; }
+    }
+  }
+}

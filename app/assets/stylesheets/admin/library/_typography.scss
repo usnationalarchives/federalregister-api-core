@@ -1,0 +1,15 @@
+@mixin basic_font {
+  font-family: "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+}
+
+@mixin athelas {
+  font-family: "athelas-1","athelas-2", "Georgia", serif;
+}
+
+@mixin apertura-condensed {
+  font-family: "apertura-condensed-1","apertura-condensed-2", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+}
+
+@mixin gesta {
+  font-family: "gesta-1","gesta-2", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+}

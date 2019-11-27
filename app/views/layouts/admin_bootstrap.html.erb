@@ -3,56 +3,59 @@
 <head>
   <title>FR2 Admin<%= " | #{yield :title}" if yield(:title) %></title>
   <meta charset="utf-8">
-
-  <%= stylesheet_link_tag "jquery-ui.css",                   :media => :screen %>
-  <%= stylesheet_link_tag "admin/jqModal",                   :media => :screen %>
-  <%= stylesheet_link_tag "admin/formtastic",                :media => :screen %>
-  <%= stylesheet_link_tag "admin/bootstrap",                 :media => :screen %>
-  <%= stylesheet_link_tag "tipsy",                           :media => :screen %>
-  <%= stylesheet_link_tag "cropper.min.css",                 :media => :screen %>
-  <%= stylesheet_link_tag "admin/screen_bootstrap",          :media => :screen %>
-
+  <%= stylesheet_link_tag 'application' %>
   <%= csrf_meta_tag %>
+  <%= javascript_include_tag "application" %>
 
+  <% if false # TODO: BC Remove after admin interface upgrade is complete %>
+    <%= stylesheet_link_tag "jquery-ui.css",                   :media => :screen %>
+    <%= stylesheet_link_tag "admin/jqModal",                   :media => :screen %>
+    <%= stylesheet_link_tag "admin/formtastic",                :media => :screen %>
+    <%= stylesheet_link_tag "admin/bootstrap",                 :media => :screen %>
+    <%= stylesheet_link_tag "tipsy",                           :media => :screen %>
+    <%= stylesheet_link_tag "cropper.min.css",                 :media => :screen %>
+    <%= stylesheet_link_tag "admin/screen_bootstrap",          :media => :screen %>
 
-  <%= jquery_include_tag %>
+    <%= csrf_meta_tag %>
 
-  <%= javascript_include_tag "vendor/jquery-ui-1.9.2.custom.min.js" %>
-  <%= javascript_include_tag "vendor/jquery-ui-1.9.2.effects.min.js" %>
-  <%= javascript_include_tag "admin/handlebars-1.0.rc.1.min.js" %>
+    <%= jquery_include_tag %>
 
-  <%= javascript_include_tag "bootstrap/bootstrap-transition.js" %>
-  <%= javascript_include_tag "bootstrap/bootstrap-alert.js" %>
-  <%= javascript_include_tag "bootstrap/bootstrap-button.js" %>
-  <%= javascript_include_tag "bootstrap/bootstrap-carousel.js" %>
-  <%= javascript_include_tag "bootstrap/bootstrap-collapse.js" %>
-  <%= javascript_include_tag "bootstrap/bootstrap-dropdown.js" %>
-  <%= javascript_include_tag "bootstrap/bootstrap-modal.js" %>
-  <%= javascript_include_tag "bootstrap/bootstrap-scrollspy.js" %>
-  <%= javascript_include_tag "bootstrap/bootstrap-tab.js" %>
-  <%= javascript_include_tag "bootstrap/bootstrap-tooltip.js" %>
-  <%= javascript_include_tag "bootstrap/bootstrap-popover.js" %>
-  <%= javascript_include_tag "bootstrap/bootstrap-typeahead.js" %>
-  <%= javascript_include_tag "vendor/jquery.scrollintoview.min.js" %>
+    <%= javascript_include_tag "vendor/jquery-ui-1.9.2.custom.min.js" %>
+    <%= javascript_include_tag "vendor/jquery-ui-1.9.2.effects.min.js" %>
+    <%= javascript_include_tag "admin/handlebars-1.0.rc.1.min.js" %>
 
-  <%= javascript_include_tag 'admin/honeybadger.min.js' %>
-  <%= javascript_include_tag 'admin/jquery.tablesorter' %>
-  <%= javascript_include_tag 'vendor/jquery.tipsy.js' %>
-  <%= javascript_include_tag 'vendor/underscore-1.4.3.min.js' %>
-  <%= javascript_include_tag 'admin/application_form_builder' %>
-  <%= javascript_include_tag 'admin/tipsy' %>
-  <%= javascript_include_tag 'admin/admin' %>
-  <%= javascript_include_tag 'fr_index_popover_handler' %>
-  <%= javascript_include_tag 'admin/spell_checker' %>
-  <%= javascript_include_tag 'admin/fr_index' %>
-  <%= javascript_include_tag 'admin/issue_reprocessor' %>
-  <%= javascript_include_tag 'admin/presidential_document_importer' %>
+    <%= javascript_include_tag "bootstrap/bootstrap-transition.js" %>
+    <%= javascript_include_tag "bootstrap/bootstrap-alert.js" %>
+    <%= javascript_include_tag "bootstrap/bootstrap-button.js" %>
+    <%= javascript_include_tag "bootstrap/bootstrap-carousel.js" %>
+    <%= javascript_include_tag "bootstrap/bootstrap-collapse.js" %>
+    <%= javascript_include_tag "bootstrap/bootstrap-dropdown.js" %>
+    <%= javascript_include_tag "bootstrap/bootstrap-modal.js" %>
+    <%= javascript_include_tag "bootstrap/bootstrap-scrollspy.js" %>
+    <%= javascript_include_tag "bootstrap/bootstrap-tab.js" %>
+    <%= javascript_include_tag "bootstrap/bootstrap-tooltip.js" %>
+    <%= javascript_include_tag "bootstrap/bootstrap-popover.js" %>
+    <%= javascript_include_tag "bootstrap/bootstrap-typeahead.js" %>
+    <%= javascript_include_tag "vendor/jquery.scrollintoview.min.js" %>
 
+    <%= javascript_include_tag 'admin/honeybadger.min.js' %>
+    <%= javascript_include_tag 'admin/jquery.tablesorter' %>
+    <%= javascript_include_tag 'vendor/jquery.tipsy.js' %>
+    <%= javascript_include_tag 'vendor/underscore-1.4.3.min.js' %>
+    <%= javascript_include_tag 'admin/application_form_builder' %>
+    <%= javascript_include_tag 'admin/tipsy' %>
+    <%= javascript_include_tag 'admin/admin' %>
+    <%= javascript_include_tag 'fr_index_popover_handler' %>
+    <%= javascript_include_tag 'admin/spell_checker' %>
+    <%= javascript_include_tag 'admin/fr_index' %>
+    <%= javascript_include_tag 'admin/issue_reprocessor' %>
+    <%= javascript_include_tag 'admin/presidential_document_importer' %>
 
-  <%# from -web but patching it in here %>
-  <%= javascript_include_tag("admin/vendor.js").gsub('/javascripts', '/assets') %>
-  <%= javascript_include_tag("admin/highlighted_documents.js").gsub('/javascripts', '/assets') %>
-  <%= javascript_include_tag("utilities/modal.js").gsub('/javascripts', '/assets') %>
+    <%# from -web but patching it in here %>
+    <%= javascript_include_tag("admin/vendor.js").gsub('/javascripts', '/assets') %>
+    <%= javascript_include_tag("admin/highlighted_documents.js").gsub('/javascripts', '/assets') %>
+    <%= javascript_include_tag("utilities/modal.js").gsub('/javascripts', '/assets') %>
+  <% end %>
 
   <%= yield :javascripts %>
 

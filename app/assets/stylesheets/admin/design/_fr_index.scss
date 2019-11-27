@@ -1,0 +1,341 @@
+// SIDEBAR NAV
+#indexes.admin #sidebar {
+  .section { margin-bottom: 20px; }
+
+  h4 {
+    border-bottom: 2px solid $dark_blue;
+    color: $dark_blue;
+    margin: 5px;
+  }
+}
+
+
+// YEAR
+
+#content_area ul { list-style: none; }
+
+// YEAR AGENCY
+
+.agency_index_nav_tabs {
+  border: 1px solid #CCC;
+  height: 20px;
+  margin-left: 0;
+  overflow: hidden;
+  padding: 0;
+  padding-bottom: 8px;
+  width: 617px;
+
+    &.page_summary {
+      margin-bottom: 20px;
+    }
+
+  li {
+    float: left;
+    padding: 5px 0 5px 10px;
+    text-align: center;
+    width: 286px;
+
+    &:first-child {
+      border-right: 1px solid #CCC;
+      padding-right: 10px;
+      width: 300px;
+    }
+
+    &.active {
+      background-color: #DFDFDF;
+
+      a {
+        color: $black;
+
+        &:hover {
+          cursor: default;
+          text-decoration: none;
+        }
+      }
+    }
+  }
+}
+
+.admin.year_agency .page_summary .agency_index_actions { margin-bottom: 0; }
+
+.page_summary {
+  margin-bottom: 40px;
+  overflow: hidden;
+
+  h1.agency_name { color: $dark_blue; }
+  hr { margin-top: 0; }
+
+  .last_completed.all {
+    float: right;
+    margin-bottom: 5px;
+  }
+
+  .agency_index_actions {
+    clear: both;
+    margin-bottom: 5px;
+    margin-top: 10px;
+    overflow: hidden;
+
+    select { width: 200px; }
+
+    .last_completed {
+      float: left;
+      font-size: 12px;
+      line-height: 12px;
+      margin-left: 10px;
+      margin-top: 2px;
+      width: 130px;
+    }
+
+    .mark_as_complete,
+    .publish_pdfs,
+    .pdf_preview {
+      padding-left: 26px;
+      -webkit-transition: none;
+      -moz-transition: none;
+      -ms-transition: none;
+      -o-transition: none;
+      transition: none;
+    }
+
+    .mark_as_complete,
+    .publish_pdfs {
+      background: sprite-image("icons/admin/index_mark_as_done.png", 4px, 3px, 30px) no-repeat;
+    }
+
+    .publish_pdfs {
+      float: right;
+      margin-right: 18px;
+    }
+
+    .download_sgml {
+      margin-top: 10px;
+      clear: right;
+      float: right;
+    }
+
+    .mark_as_complete {
+      float: left;
+
+      &.all {
+        float: right;
+        margin-right: 10px;
+      }
+    }
+
+    .mark_as_complete:hover, .publish_pdfs:hover {
+      background: #e6e6e6 sprite-image("icons/admin/index_mark_as_done_active.png", 4px, 3px, 30px) no-repeat;
+      border-color: $fr_green;
+      color: $fr_green;
+    }
+
+    #max_date {
+      float: left;
+      margin-left: 210px;
+    }
+
+    .pdf_preview {
+      background: sprite-image("icons/admin/index_pdf_preview.png", 5px, 4px, 30px) no-repeat;
+      float: right;
+    }
+
+    .pdf_preview:hover {
+      background: #e6e6e6 sprite-image("icons/admin/index_pdf_preview_active.png", 5px, 4px, 30px) no-repeat;
+      border-color: $fr_orange;
+      color: $fr_orange;
+    }
+  }
+}
+
+.title_bar {
+  clear: both;
+  color: #5697CF;
+  font-family: "apertura-condensed-1","apertura-condensed-2", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+  font-size: .8em;
+  margin: 1em 0 1em;
+  padding: 0;
+  position: relative;
+  text-transform: none;
+}
+
+.title_bar h3 { font-family: "apertura-condensed-1","apertura-condensed-2", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; }
+
+.title_bar h3 {
+  @extend .header_with_top_border;
+}
+
+.new_item { background-color: #FFFF99; }
+.edit,
+.edit.new_item,
+.new_item:hover {
+  background-color: #EEE;
+}
+
+.index_agencies h3 {
+  @extend .header_with_top_border;
+
+  a {
+    float: right;
+    font-size: 12px;
+    font-weight: normal;
+    text-transform: none;
+  }
+}
+
+#indexes.admin .button.format.pdf.small {
+  background-repeat: no-repeat;
+  font-weight: normal;
+  line-height: 15px;
+  margin-left: 10px;
+}
+
+#indexes.admin .page_summary .agency_index_actions {
+  form.max_date {
+    float: left;
+    margin-bottom: 0;
+    margin-right: 0;
+    width: 200px;
+
+    #max_date {
+      float: none;
+      margin-bottom: 6px;
+      margin-left: 0;
+    }
+  }
+}
+
+ul.entry_type {
+  li {
+    clear: both;
+    height: 100%;
+    margin-bottom: 5px;
+    overflow: hidden;
+    padding: 5px;
+
+    .btn { padding: 2px 10px; }
+    .btn-mini { padding: 2px 6px; }
+
+    form {
+      display: none;
+      margin-top: 10px;
+      margin: 0px;
+      overflow: hidden;
+      width: 545px;
+    }
+
+    a.wrapper {
+      display: block;
+      float: left;
+      width: 90%;
+    }
+
+    a.edit,
+    a.cancel {
+      float: right;
+      position: relative;
+      right: 5px;
+    }
+
+    a.cancel {
+      background-color: $fr_red;
+      background-image: none;
+      border: 0;
+      color: $white;
+      text-shadow: none;
+    }
+
+    ul {
+      margin-top: 15px;
+      li {
+        form { width: 545px; }
+        a.edit {
+          padding-right: 5px;
+          right: 0;
+        }
+
+        &.edit { background-color: #EEE; }
+      }
+    }
+
+    ul.entry_details {
+      display: none;
+    }
+  }
+
+  li.hover {
+    @include border-radius(3px);
+    background-color: #EEE;
+  }
+}
+
+ul.entry_type {
+  form input {
+    display: block;
+    float: left;
+    width: 50%;
+  }
+
+  form input#entry_fr_index_doc {
+    clear: both;
+    margin-left: 30px;
+    width: 75%;
+  }
+
+  form input[type="submit"] {
+    background-color: $fr_green;
+    box-shadow: none;
+    color: #FFF;
+    float: right;
+    width: 15%;
+  }
+  form input[type="submit"]:hover { background-color: $golden; }
+
+  form.disabled {
+    input[type="submit"],
+    input[type="submit"]:hover {
+      color: $black;
+      padding-left: 22px;
+      background: #CCC url(/assets/orange_loader_CCC.gif) 8px 5px no-repeat;
+    }
+  }
+}
+
+#indexes.admin.year_agency,
+#indexes.admin.year_agency_unapproved_documents {
+  // bottom padding so last popover is visible
+  #content_area > .wrapper { padding-bottom: 200px; }
+
+  // popover customizations
+  .tipsy-inner {
+    color: $black;
+    width: 580px;
+  }
+
+  .input_tipsy .tipsy-inner { color: $white; }
+
+  .popover-title {
+    border-top: none;
+    font-size: 16px;
+    margin-bottom: 0;
+   }
+
+  .popover-content dl dt {
+    text-align: right;
+    width: 100px;
+  }
+
+  .popover-content {
+    .loading {
+      background-position-x: 220px;
+      background-position-y: 1px;
+    }
+
+    dl dd { width: 420px; }
+  }
+
+  .input_tipsy {
+    z-index: 500;
+
+    .tipsy-inner { width: 100%; }
+  }
+}
