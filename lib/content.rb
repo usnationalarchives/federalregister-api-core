@@ -63,7 +63,7 @@ module Content
   end
 
   def self.render_erb(template_path, locals = {})
-    view = ActionView::Base.new(Rails::Configuration.new.view_path, {})
+    view = ActionView::Base.new("#{Rails.root}/app/views", {})
     [
       ActionView::Helpers::UrlHelper,
       Rails.application.routes.url_helpers,
