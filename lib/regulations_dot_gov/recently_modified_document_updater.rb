@@ -41,7 +41,7 @@ class RegulationsDotGov::RecentlyModifiedDocumentUpdater
         end
         entry.checked_regulationsdotgov_at = current_time
 
-        entry.save(false)
+        entry.save(validate: false)
 
         if update_docket
           Resque.enqueue(DocketImporter, entry.regulations_dot_gov_docket_id)

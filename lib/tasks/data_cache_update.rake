@@ -71,7 +71,7 @@ namespace :data do
               :joins => :agency_assignments
             ) }
           end
-          agency.save(false)
+          agency.save(validate: false)
         end
       end
     end

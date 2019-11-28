@@ -16,7 +16,7 @@ namespace :content do
             PublicInspectionDocument.find_all_by_publication_date_and_entry_id(date, nil).each do |pi_doc|
               pi_doc.entry = Entry.find_by_document_number(pi_doc.document_number)
               pi_doc.delta = true
-              pi_doc.save(false)
+              pi_doc.save(validate: false)
             end
           rescue StandardError => e
             puts e.message
