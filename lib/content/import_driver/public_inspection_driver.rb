@@ -1,8 +1,9 @@
 module Content
   class ImportDriver
     class PublicInspectionDriver < Content::ImportDriver
+      load './lib/tasks/content_public_inspection.rake'
+
       def run
-        load "#{Rails.root}/Rakefile"
         Rake::Task["content:public_inspection:run"].invoke
       end
 

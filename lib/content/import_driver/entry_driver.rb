@@ -1,13 +1,14 @@
 module Content
   class ImportDriver
     class EntryDriver < Content::ImportDriver
+      load './lib/tasks/data_daily.rake'
+
       def initialize
         super
         calculate_date_to_import!
       end
 
       def run
-        load "#{Rails.root}/Rakefile"
         Rake::Task["data:daily:full"].invoke
       end
 
