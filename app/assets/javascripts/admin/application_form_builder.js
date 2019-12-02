@@ -1,11 +1,14 @@
 function add_date_picker(){
-  $(".formtastic .calendar input").datepicker({
-    yearRange: '-10:+4',
-    dateFormat: 'mm/dd/yy',
-    showOn: 'button',
-    buttonImage: '/images/calendar.png',
-    buttonImageOnly: true
-  });
+  // TODO: The datepicker function does not exist on the jQuery object being called here and thus it breaks the asset pipeline.  Commenting out for now.
+  console.log('Re-enable once admin upgrade is complete...')
+
+  // $(".formtastic .calendar input").datepicker({
+  //   yearRange: '-10:+4',
+  //   dateFormat: 'mm/dd/yy',
+  //   showOn: 'button',
+  //   buttonImage: '/images/calendar.png',
+  //   buttonImageOnly: true
+  // });
 }
 
 $(function() {
