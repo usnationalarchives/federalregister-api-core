@@ -71,11 +71,11 @@
     <!-- MAIN -->
     <div id="main">
 
-      <% if yield(:super_title) %>
+      <% if content_for? :super_title %>
         <div class="title"><span><%= yield(:super_title) %></span></div>
       <% end %>
 
-      <% if yield(:sidebar) %>
+      <% if content_for? :sidebar %>
         <div id="sidebar" class="span3">
           <%= yield(:sidebar) %>
         </div>
@@ -83,7 +83,7 @@
 
       <div id="content_area" class="span8">
 
-        <% if yield(:title)%>
+        <% if content_for?(:title) %>
          <h3 class="title"><%= yield(:title) %></h3>
         <% end %>
 
