@@ -1,4 +1,4 @@
-require 'activesupport'
+# require 'activesupport'
 
 module ActiveSupport
   # port from Rails 3 where binmode is forced on the log stream to deal with encoding issues

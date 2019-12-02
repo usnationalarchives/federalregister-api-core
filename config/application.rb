@@ -41,9 +41,6 @@ module FederalregisterApiCore
     config.cache_store = :file_store, "#{RAILS_ROOT}/tmp/cache"
 
     config.rails_lts_options = { :disable_xml_parsing => true }
-
-    # use our binary logger as the application logger
-    # config.logger = ActiveSupport::BinaryBufferedLogger.new( File.join(RAILS_ROOT, "log", "#{RAILS_ENV}.log") )
     #=============================================================================
 
     config.session_store :cookie_store, {
