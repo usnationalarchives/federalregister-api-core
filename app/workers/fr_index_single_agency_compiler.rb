@@ -5,12 +5,12 @@ class FrIndexSingleAgencyCompiler
     ActiveRecord::Base.verify_active_connections!
     
     args.symbolize_keys!
-
-    FrIndexAgencyCompiler.process_agency_with_docs(
-      args.fetch(:year),
-      args.fetch(:agency_id)
-    )
-
-    CacheUtils.purge_cache("/index/#{args.fetch(:year)}/#{args.fetch(:slug)}")
+    
+    agency = Agency.find(args.fetch(:agency_id))
+    year = args.fetch(:year)
+    path_manager = FileSystemPathManager.new("#{year}-01-01")
+    
+    FrIndexAgencyCompiler.process_agency_with_docs(year, agency.id)
+    CacheUtils.purge_cache("#{path_manager.index_json_dir}/#{agency.slug}.json")
   end
 end
