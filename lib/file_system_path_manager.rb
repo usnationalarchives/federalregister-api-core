@@ -36,8 +36,32 @@ class FileSystemPathManager
   end
 
   # FR INDEX
+  def index_dir
+    "#{data_file_path}/fr_index"
+  end
+
   def index_json_dir
-    "#{data_file_path}/fr_index/#{date.strftime('%Y')}/"
+    "#{index_dir}/json/#{date.strftime('%Y')}"
+  end
+
+  def index_json_path
+    "#{index_json_dir}/index.json"
+  end
+
+  def index_agency_json_path(agency)
+    "#{index_json_dir}/#{agency.slug}.json"
+  end
+
+  def index_pdf_dir
+    "#{index_dir}/pdf/#{date.strftime('%Y')}"
+  end
+
+  def index_pdf_path(last_published_date)
+    "#{index_pdf_dir}/#{last_published_date.strftime("%m")}/fr-index-#{last_published_date.strftime("%B-%Y")}.pdf"
+  end
+
+  def index_agency_pdf_path(agency, last_published_date)
+    "#{index_pdf_dir}/#{last_published_date.strftime("%m")}/#{agency.slug}-#{last_published_date.strftime("%B-%Y")}.pdf"
   end
 
   # DOCUMENTS
