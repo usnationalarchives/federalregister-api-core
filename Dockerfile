@@ -19,7 +19,7 @@ RUN apt-get update && apt-get install -y ruby2.2 ruby2.2-dev &&\
 #######################
 
 RUN apt-get update &&\
-  apt-get install -y gettext-base patch libcurl4-openssl-dev libpcre3-dev git libmysqlclient-dev mysql-client apache2-utils fontconfig hunspell-en-us libhunspell-1.3-0 libhunspell-dev pngcrush secure-delete xfonts-75dpi xfonts-base xpdf pdftk tzdata &&\
+  apt-get install -y gettext-base patch libcurl4-openssl-dev libpcre3-dev git libmysqlclient-dev libssl-dev mysql-client apache2-utils fontconfig hunspell-en-us libhunspell-1.3-0 libhunspell-dev pngcrush secure-delete xfonts-75dpi xfonts-base xpdf pdftk tzdata &&\
   apt-get clean &&\
   rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/
 
