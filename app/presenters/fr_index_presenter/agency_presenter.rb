@@ -1,7 +1,7 @@
 class FrIndexPresenter
   class AgencyPresenter
     include FrIndexPresenter::Utils
-    attr_reader :agency, :year, :children, :max_date, :unapproved_only
+    attr_reader :agency, :children, :max_date, :path_manager, :unapproved_only, :year
 
     delegate :name,
       :to_param,
@@ -11,6 +11,8 @@ class FrIndexPresenter
       @agency = agency
       @year = year.to_i
       raise ActiveRecord::RecordNotFound unless FrIndexPresenter.available_years.include?(@year)
+      
+      @path_manager = FileSystemPathManager.new("#{year}-01-01")
 
       @children = options[:children] || []
       @entry_count = options[:entry_count]
@@ -88,7 +90,7 @@ class FrIndexPresenter
 
     def published_pdf_path
       if last_published
-        "/index/pdf/#{year}/#{last_published.strftime("%m")}/#{agency.slug}.pdf"
+        path_manager.index_agency_pdf_path(agency, last_published)
       end
     end
 

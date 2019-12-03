@@ -4,7 +4,7 @@ describe Content::IssueReprocessor do
   describe "#rotate_mods_files" do
     include FileIoSpecHelperMethods
 
-    let(:path_manager) { FileSystemPathManager.new( Date.parse('2099-01-01') ) }
+    let(:path_manager) { FileSystemPathManager.new('2099-01-01') }
     let(:archive_time) { Time.now.to_i }
 
     before(:each) do

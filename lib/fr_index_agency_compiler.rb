@@ -143,9 +143,9 @@ class FrIndexAgencyCompiler
   end
 
   def save(document_data)
-    FileUtils.mkdir_p(path_manager.index_json_dir)
+    FileUtils.mkdir_p(path_manager.index_json_dir, mode: 0755)
 
-    File.open json_index_path, 'w' do |f|
+    File.open(path_manager.index_agency_json_path(agency), 'w') do |f|
       f.write(document_data.to_json)
     end
   end
@@ -167,17 +167,16 @@ class FrIndexAgencyCompiler
       first.
       try(:last_published)
 
-    @doc_data[:pdf] = {
-      url:           last_published_date ? "#{APP_HOST_NAME}/index/pdf/#{year}/#{last_published_date.month}.pdf" : nil,
-      approval_date: last_published_date ? last_published_date.month : nil,
-    }
+    if last_published_date
+      @doc_data[:pdf] = {
+        url: "#{APP_HOST_NAME}#{path_manager.index_agency_pdf_path(agency, last_published_date).gsub(path_manager.send(:data_file_path),'')}",
+        approval_date: last_published_date,
+      }
+    else
+      @doc_data[:pdf] = {
+        url: nil,
+        approval_date: nil,
+      }
+    end
   end
-
-
-  private
-
-  def json_index_path
-    "#{path_manager.index_json_dir}#{agency.slug}.json"
-  end
-
 end

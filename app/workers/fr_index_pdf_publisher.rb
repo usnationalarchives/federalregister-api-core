@@ -3,40 +3,53 @@ class FrIndexPdfPublisher < FrIndexPdfGenerator
 
   @queue = :fr_index_pdf_publisher
 
-  attr_reader :max_date
+  attr_reader :max_date, :path_manager
+
   def initialize(params)
     @params = params.symbolize_keys
     @max_date = Date.parse(@params[:max_date])
 
     # override max_published so PDF paths are generated correctly
     @params[:last_published] = @max_date
+    @path_manager = FileSystemPathManager.new("#{max_date.year}-01-01")
   end
 
   def perform
     ActiveRecord::Base.verify_active_connections!
     
     super
-    update_agency_status
-    clear_cache
+
+    # this is a generic class and we run certain tasks based on the agency presence
+    if agency
+      update_agency_status
+      update_agency_fr_index_json
+    else
+      update_fr_index_json
+      clear_cache
+    end
   end
 
   private
 
+  # we only clear the cache after we've generate all the individual
+  # agency pdfs and the combined pdf (which should be enqueued last)
   def clear_cache
-    # only clear the cache after we've generate all the individual
-    # agency pdfs and the combined pdf (which should be enqueued last)
-    if !agency
-      purge_cache("/index/#{year}")
-      purge_cache("/index/#{year}/*")
-    end
+    purge_cache(path_manager.index_pdf_dir)
+    purge_cache("#{path_manager.index_pdf_dir}/*")
   end
 
   def update_agency_status
-    if agency
-      FrIndexAgencyStatus.update_all(
-        "last_published = '#{max_date.to_s(:db)}'",
-        "year = #{year} AND agency_id = #{agency.id} AND (last_published IS NULL OR last_published < '#{max_date.to_s(:db)}')")
-    end
+    FrIndexAgencyStatus.update_all(
+      "last_published = '#{max_date.to_s(:db)}'",
+      "year = #{year} AND agency_id = #{agency.id} AND (last_published IS NULL OR last_published < '#{max_date.to_s(:db)}')")
+  end
+
+  def update_fr_index_json
+    FrIndexCompiler.perform(year)
+  end
+
+  def update_agency_fr_index_json
+    Resque.enqueue(FrIndexSingleAgencyCompiler, {year: year, agency_id: agency.id})
   end
 
   def persist_file(file)
@@ -48,9 +61,9 @@ class FrIndexPdfPublisher < FrIndexPdfGenerator
 
   def destination_path
     if agency
-      'public' + agency_years.first.published_pdf_path
+      agency_years.first.published_pdf_path
     else
-      'public' + fr_index_presenter.published_pdf_path
+      fr_index_presenter.published_pdf_path
     end
   end
 end

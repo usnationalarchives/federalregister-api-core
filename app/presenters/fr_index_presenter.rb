@@ -1,7 +1,7 @@
 class FrIndexPresenter
   include FrIndexPresenter::Utils
 
-  attr_reader :year, :max_date, :unapproved_only
+  attr_reader :max_date, :path_manager, :unapproved_only, :year 
 
   def self.available_years
     min_year = Rails.env == 'development' ? 2012 : 2013
@@ -12,6 +12,8 @@ class FrIndexPresenter
     @year = year.to_i
     @max_date = parse_date(options[:max_date]) || last_issue_published
     @last_published = options[:last_published]
+
+    @path_manager = FileSystemPathManager.new("#{year}-01-01")
 
     raise ActiveRecord::RecordNotFound unless FrIndexPresenter.available_years.include?(@year)
   end
@@ -76,7 +78,7 @@ class FrIndexPresenter
 
   def published_pdf_path
     if last_published
-      "/index/pdf/#{year}/#{last_published.strftime("%m")}.pdf"
+      path_manager.index_pdf_path(last_published)
     end
   end
 

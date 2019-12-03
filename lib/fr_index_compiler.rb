@@ -1,18 +1,22 @@
 class FrIndexCompiler
-  attr_reader :index, :agencies, :path_manager
+  attr_reader :agencies, :index, :path_manager, :year
 
   def initialize(year)
     @year = year.to_i
     @agencies = FrIndexPresenter.new(@year).agencies_with_pseudonyms
-    @path_manager = FileSystemPathManager.new(Date.new(@year,01,01).to_s(:iso))
+    @path_manager = FileSystemPathManager.new("#{@year}-01-01")
     @index = {agencies:[]}
   end
 
   def self.perform(year)
-    fr_index_compiler = new(year)
-    fr_index_compiler.process_agencies
-    fr_index_compiler.add_pdf_metadata
-    fr_index_compiler.save(fr_index_compiler.index)
+    new(year).perform
+  end
+
+  def perform
+    process_agencies
+    add_pdf_metadata
+    save(index)
+    clear_cache
   end
 
   def process_agencies
@@ -45,10 +49,17 @@ class FrIndexCompiler
       first.
       try(:last_published)
 
-    index[:pdf] = {
-      url:           last_published_date ? "#{APP_HOST_NAME}/fr_index/pdf/#{year}/#{last_published_date.month}.pdf" : nil,
-      approval_date: last_published_date ? last_published_date.month : nil,
-    }
+    if last_published_date
+      index[:pdf] = {
+        url: "#{APP_HOST_NAME}#{path_manager.index_pdf_path(last_published_date).gsub(path_manager.send(:data_file_path),'')}",
+        approval_date: last_published_date,
+      }
+    else
+      index[:pdf] = {
+        url: nil,
+        approval_date: nil,
+      }
+    end
   end
 
   def process_see_also(child_agencies)
@@ -61,15 +72,15 @@ class FrIndexCompiler
   end
 
   def save(index)
-    FileUtils.mkdir_p(path_manager.index_json_dir)
+    FileUtils.mkdir_p(path_manager.index_json_dir, mode: 0755)
 
-    File.open "#{path_manager.index_json_dir}index.json", 'w' do |f|
+    File.open(path_manager.index_json_path, 'w') do |f|
       f.write(index.to_json)
     end
   end
 
-  private
-
-  attr_reader :year
+  def clear_cache
+    CacheUtils.purge_cache(path_manager.index_json_path)
+  end
 
 end
