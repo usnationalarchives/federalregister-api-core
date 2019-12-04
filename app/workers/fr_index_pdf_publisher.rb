@@ -53,10 +53,10 @@ class FrIndexPdfPublisher < FrIndexPdfGenerator
   end
 
   def persist_file(file)
-    FileUtils.mkdir_p(File.dirname(destination_path))
+    FileUtils.mkdir_p(File.dirname(destination_path), mode: 0755)
 
     FileUtils.cp(file.path, destination_path)
-    FileUtils.chmod(644, destination_path)
+    FileUtils.chmod(0644, destination_path)
   end
 
   def destination_path
