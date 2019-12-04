@@ -51,6 +51,7 @@ gem 'active_hash', '~> 2.0'
 gem 'acts_as_list'
 # gem 'bcrypt-ruby', '2.1.2', :require => 'bcrypt'
 gem 'bcrypt'
+gem 'bootstrap-sass', '2.0.2'
 gem 'authlogic', '3.0.3'
 
 # wrapper around http requests that supports multiple backends
