@@ -1,7 +1,7 @@
 class Content::EntryImporter::ModsFile
   class DownloadError < StandardError; end
 
-  extend ActiveSupport::Memoizable
+  extend Memoist
 
   def initialize(date, force_reload_mods)
     @date = date.is_a?(String) ? Date.parse(date) : date

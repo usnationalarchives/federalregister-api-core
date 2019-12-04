@@ -1,7 +1,7 @@
 # module Content
 #   class EntryImporter
 #     module PageNumber
-#       extend ActiveSupport::Memoizable
+#       extend Memoist
 #       extend Content::EntryImporter::Utils
 #       provides :start_page, :end_page
 #

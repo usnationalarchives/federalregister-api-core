@@ -1,5 +1,5 @@
 class EntryRegulationsDotGovImporter
-  extend ActiveSupport::Memoizable
+  extend Memoist
   @queue = :reg_gov
 
   def self.perform(document_number)

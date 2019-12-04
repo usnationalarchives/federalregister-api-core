@@ -1,7 +1,7 @@
 module Content
   class GraphicsExtractor
     class Entry
-      extend ActiveSupport::Memoizable
+      extend Memoist
 
       attr_reader :entry
       def initialize(document_number, options)

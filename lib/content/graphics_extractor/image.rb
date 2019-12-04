@@ -1,7 +1,7 @@
 module Content
   class GraphicsExtractor
     class Image
-      extend ActiveSupport::Memoizable
+      extend Memoist
 
       def self.all_images_in_file(xml_file_path)
         doc = Nokogiri::XML(open(xml_file_path))
