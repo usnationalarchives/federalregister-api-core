@@ -23,8 +23,8 @@ FederalregisterApiCore::Application.routes.draw do
   match 'articles/search/facet' => 'entries#search_facet', :as => :entries_search_facet, :via => :get
   match 'articles/widget' => 'entries#widget', :as => :entries_widget, :via => :get
   match 'documents/:year/:month/:day/:document_number/:slug' => 'entries#show', :as => :entry, :year => /\d{4}/, :month => /\d{1,2}/, :day => /\d{1,2}/, :slug => /[^\/]+/, :via => :get
-  match 'd/:document_number' => 'entries#tiny_url', :as => :short_entry, :via => :get
-  match 'd/:document_number/:anchor' => 'entries#tiny_url', :as => :short_entry_with_anchor, :via => :get
+  match 'd/:document_number' => 'entries#tiny_url', :via => :get
+  match 'd/:document_number/:anchor' => 'entries#tiny_url', :via => :get
   match 'citations/:year/:month/:day/:document_number/:slug' => 'entries#citations', :as => :entry_citation, :year => /\d{4}/, :month => /\d{1,2}/, :day => /\d{1,2}/, :via => :get
   match 'articles/current' => 'entries#current_issue', :as => :entries_current_issue, :via => :get
   match 'articles/:year/:month/:day' => 'entries#by_date', :as => :entries_by_date, :year => /\d{4}/, :month => /\d{1,2}/, :day => /\d{1,2}/, :via => :get
@@ -96,7 +96,4 @@ FederalregisterApiCore::Application.routes.draw do
   match ':slug/featured' => 'sections#highlighted_entries', :as => :highlighted_entries_section, :via => :get
   match ':slug/significant' => 'sections#significant_entries', :as => :significant_entries_section, :via => :get
   match ':slug' => 'sections#show', :as => :section, :via => :get
-
-  # CANNED SEARCHES
-  match ':slug' => 'canned_searches#show', :as => :canned_search, :via => :get
 end
