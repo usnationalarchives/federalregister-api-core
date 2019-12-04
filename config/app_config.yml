@@ -1,2 +1,4 @@
+app: 
+  canonical_url: "https://www.federalregister.gov"
 sphinx:
   use_local_pil_date: false

@@ -7,7 +7,6 @@
 /config/varnish.development.vcl
 /config/varnish.test.vcl
 /config/varnish.yml
-/config/app_config/development.yml
 /config/sphinx/*
 /data
 /db/sphinx/
