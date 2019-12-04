@@ -24,20 +24,12 @@ FederalregisterApiCore::Application.configure do
   # Enable serving of images, stylesheets, and javascripts from an asset server
   # config.action_controller.asset_host = "http://assets.example.com"
 
-  SECRETS = YAML::load(
-    ERB.new(
-      File.read(
-        File.join(File.dirname(__FILE__), '..', 'secrets.yml')
-      )
-    ).result
-  )
-
   smtp_settings = {
     :address        => "smtp.sendgrid.net",
     :port           => "587",
     :domain         => "#{APP_HOST_NAME}",
-    :user_name      => SECRETS['sendgrid']['username'],
-    :password       => SECRETS['sendgrid']['password'],
+    :user_name      => Rails.application.secrets['sendgrid']['username'],
+    :password       => Rails.application.secrets['sendgrid']['password'],
     :authentication => :plain
   }
 

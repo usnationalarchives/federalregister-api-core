@@ -26,8 +26,8 @@ class GpoGraphic < ActiveRecord::Base
                     :processors => [:gpo_image_converter, :png_crush],
                     :storage => :s3,
                     :s3_credentials => {
-                      :access_key_id     => SECRETS["aws"]["access_key_id"],
-                      :secret_access_key => SECRETS["aws"]["secret_access_key"]
+                      :access_key_id     => Rails.application.secrets["aws"]["access_key_id"],
+                      :secret_access_key => Rails.application.secrets["aws"]["secret_access_key"]
                     },
                     :s3_permissions => :private,
                     :s3_protocol => 'https',

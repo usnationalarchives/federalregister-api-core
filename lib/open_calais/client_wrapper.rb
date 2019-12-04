@@ -18,7 +18,7 @@ module OpenCalais
     end
 
     def open_calais
-      OpenCalais::Client.new(:api_key => SECRETS['api_keys']['open_calais'])
+      OpenCalais::Client.new(:api_key => Rails.application.secrets['api_keys']['open_calais'])
     end
 
   end

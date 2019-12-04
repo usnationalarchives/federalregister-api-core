@@ -48,8 +48,8 @@ class Agency < ApplicationModel
                     :processors => [:thumbnail],
                     :storage => :s3,
                     :s3_credentials => {
-                      :access_key_id     => SECRETS['aws']['access_key_id'],
-                      :secret_access_key => SECRETS['aws']['secret_access_key']
+                      :access_key_id     => Rails.application.secrets['aws']['access_key_id'],
+                      :secret_access_key => Rails.application.secrets['aws']['secret_access_key']
                     },
                     :s3_protocol => 'https',
                     :bucket => 'agency-logos.federalregister.gov',

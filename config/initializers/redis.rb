@@ -1,7 +1,7 @@
 REDIS_CONNECTION_SETTINGS = {
-  :db   => SECRETS['redis']['db'],
-  :host => SECRETS['redis']['host'],
-  :port => SECRETS['redis']['port']
+  :db   => Rails.application.secrets['redis']['db'],
+  :host => Rails.application.secrets['redis']['host'],
+  :port => Rails.application.secrets['redis']['port']
 }
 
 $redis = Redis.new(REDIS_CONNECTION_SETTINGS)

@@ -4,9 +4,9 @@ class Content::PublicInspectionImporter::ApiClient
   include HTTParty
   headers 'Accept-Encoding' => "UTF-8"
 
-  base_uri SECRETS['public_inspection']['api_base_uri']
-  USERNAME = SECRETS['public_inspection']['api_user_name']
-  PASSWORD = SECRETS['public_inspection']['api_password']
+  base_uri Rails.application.secrets['public_inspection']['api_base_uri']
+  USERNAME = Rails.application.secrets['public_inspection']['api_user_name']
+  PASSWORD = Rails.application.secrets['public_inspection']['api_password']
 
   def initialize(options={})
     @session_token = options[:session_token]

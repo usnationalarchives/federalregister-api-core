@@ -1,5 +1,5 @@
 ---
-api_key: <%= SECRETS['api_keys']['honeybadger'] unless Rails.env.test? %>
+api_key: <%= Rails.application.secrets['api_keys']['honeybadger'] unless Rails.env.test? %>
 debug: true
 exceptions:
   ignored_user_agents: [/ScanAlert/]
