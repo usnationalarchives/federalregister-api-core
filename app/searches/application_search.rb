@@ -1,5 +1,5 @@
 class ApplicationSearch
-  extend ActiveSupport::Memoizable
+  extend Memoist
   class InputError < StandardError; end
 
   attr_accessor :order

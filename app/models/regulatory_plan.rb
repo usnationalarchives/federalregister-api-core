@@ -25,7 +25,7 @@ class RegulatoryPlan < ApplicationModel
     end
   end
 
-  extend ActiveSupport::Memoizable
+  extend Memoist
 
   SIGNIFICANT_PRIORITY_CATEGORIES = ['Economically Significant', 'Other Significant']
 

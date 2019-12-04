@@ -11,7 +11,6 @@ class AdminController < ApplicationController
 
   private
 
-  include Userstamp
   def set_stamper
     User.stamper ||= current_user
   end

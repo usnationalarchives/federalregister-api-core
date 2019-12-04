@@ -2,7 +2,7 @@ class ApiRepresentation
   class FieldNotFound < StandardError; end
 
   class << self
-    extend ActiveSupport::Memoizable
+    extend Memoist
 
     # don't ask...
     class << self.class
