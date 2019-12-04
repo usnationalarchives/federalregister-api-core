@@ -1,6 +1,6 @@
 APP_HOST_NAME = 'www.fr2.local:8080'
 
-FederalregisterApiCore::Application.configure do
+Rails.application.configure do
   # Settings specified here will take precedence over those in config/environment.rb
 
   # In the development environment your application's code is reloaded on

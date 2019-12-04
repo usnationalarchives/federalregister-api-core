@@ -44,5 +44,5 @@ RAILS_GEM_VERSION = '3.1.12' unless defined? RAILS_GEM_VERSION
 require File.expand_path('../application', __FILE__)
 
 # Initialize the rails application
-FederalregisterApiCore::Application.initialize!
+Rails.application.initialize!
 

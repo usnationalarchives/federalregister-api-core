@@ -1,6 +1,6 @@
 APP_HOST_NAME = 'fr2.criticaljuncture.org'
 
-FederalregisterApiCore::Application.configure do
+Rails.application.configure do
   # Settings specified here will take precedence over those in config/environment.rb
 
   # The production environment is meant for finished, "live" apps.
