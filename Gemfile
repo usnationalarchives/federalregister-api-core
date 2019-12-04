@@ -4,7 +4,17 @@ source 'https://rubygems.org'
 gem 'rake', '10.5.0'
 gem 'rack'
 
-gem 'rails', '3.2.22'
+gem 'rails', '4.2.11.1'
+
+# ==============================================================================
+# gems supporting backward-compatibility with Rails 2 conventions:
+gem 'rails-observers'
+gem 'protected_attributes'
+gem 'activerecord-deprecated_finders', require: 'active_record/deprecated_finders'
+gem 'memoist'
+gem 'edge_rider'
+# ==============================================================================
+
 gem 'mysql2', '0.3.21'
 
 # production app server
@@ -24,13 +34,13 @@ gem 'fog', '~> 1.3'
 gem 'formtastic', "~> 2.1"
 gem 'json', '1.8.6'
 gem 'ym4r', '0.6.1'
-gem 'thinking-sphinx', '2.0.14', :require => 'thinking_sphinx'
+gem 'thinking-sphinx', '3.1.3', :require => 'thinking_sphinx'
 gem 'ffi-hunspell',
   :git => 'https://github.com/postmodern/ffi-hunspell.git',
   :ref => '91516637fdff9cef9bae66aefdd89e1b4a8b5831',
   :require => 'ffi/hunspell'
 
-gem 'honeybadger', '2.0.0'
+gem 'honeybadger', '~> 2.0.0'
 gem 'resque-honeybadger',
     :git => 'https://github.com/henrik/resque-honeybadger.git',
     :ref => '832be87662840d44e73f66c006796da8ed6250e2'
@@ -45,14 +55,15 @@ gem 'proc-wait3'
 
 gem 'stevedore', '0.3.0'
 
-# gem 'userstamp'
+# fork of delynn/userstamp plugin
+gem 'activerecord-userstamp', '2.1.1'
 
 gem 'active_hash', '~> 2.0'
 gem 'acts_as_list'
 # gem 'bcrypt-ruby', '2.1.2', :require => 'bcrypt'
 gem 'bcrypt'
-gem 'bootstrap-sass', '2.0.2'
-gem 'authlogic', '3.0.3'
+gem 'bootstrap-sass', '2.3.2.2'
+gem 'authlogic', '~> 3.4.0'
 
 # wrapper around http requests that supports multiple backends
 gem 'faraday'
@@ -95,7 +106,6 @@ gem 'net-sftp'
 gem 'diffy'
 gem 'cocaine'
 gem 'rails_autolink' # autolink removed in Rails 3.1.  This is an extraction of the functionality.
-gem 'edge_rider'
 
 gem 'hoe'
 
