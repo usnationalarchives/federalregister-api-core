@@ -1,6 +1,7 @@
 module Content
   class EntryImporter
     class MissingDocumentNumber < StandardError; end
+    class IssueMissingDocumentNumbers < StandardError; end
 
     # order here determines order of attributes when running :all
     include Content::EntryImporter::BasicData
@@ -61,6 +62,8 @@ module Content
         end
 
         mods_doc_numbers = ModsFile.new(date, options[:force_reload_mods]).document_numbers
+
+        raise IssueMissingDocumentNumbers, "No documents numbers present in MODS file for #{date}." unless mods_doc_numbers.present?
 
         (mods_doc_numbers - docs_and_nodes.map{|doc, node| doc}).each do |document_number|
           notify_of_missing_document(:bulkdata, date, document_number)
