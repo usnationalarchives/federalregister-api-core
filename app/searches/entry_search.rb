@@ -229,7 +229,8 @@ class EntrySearch < ApplicationSearch
 
   def find_options
     {
-      :select => "id, title, publication_date, document_number, granule_class, document_file_path, abstract, start_page, end_page, citation, signing_date, executive_order_number, presidential_document_type_id",
+      # :select => "id, title, publication_date, document_number, granule_class, document_file_path, abstract, start_page, end_page, citation, signing_date, executive_order_number, presidential_document_type_id",
+      :select => "*, weight() as w",
       :include => [:agencies, :agency_names],
     }
   end
@@ -250,8 +251,10 @@ class EntrySearch < ApplicationSearch
       "proclamation_number ASC"
     else
       @sort_mode = :expr
-      "@weight * 1/LOG2( (((NOW()+#{5.days}) - publication_date) / #{1.year} / 3)+2 )"
+      "weight() * 1/LOG2( (((NOW()+#{5.days}) - publication_date) / #{1.year} / 3)+2 )"
     end
+
+    "weight()"
   end
 
   def sort_mode
