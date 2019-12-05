@@ -7,7 +7,7 @@ namespace :content do
 
     desc "Import all entry data"
     task :import => :environment do
-      entry_importer(:all)
+      entry_importer(:all, {force_reload_bulkdata: true, force_reload_mods: true})
     end
 
     desc "Reimport all entry data, forcing bulk data download"
