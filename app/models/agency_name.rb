@@ -39,7 +39,7 @@ class AgencyName < ApplicationModel
           end
         end
       else
-        connection.execute("INSERT INTO agency_assignments
+        ActiveRecord::Base.connection.execute("INSERT INTO agency_assignments
                             (agency_id, agency_name_id, assignable_type, assignable_id, position)
                             SELECT #{agency_id} AS agency_id,
                                    agency_name_assignments.agency_name_id AS agency_name_id,
