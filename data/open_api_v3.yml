@@ -4,7 +4,7 @@ info:
   title: FR API Documentation
   version: ''
 servers:
-- url: "http://localhost:4002/api/v1/"
+  - url: "<%= AppConfig.app.canonical_url %>/api/v1/"
 paths:
   "/documents/{document_number}.{format}":
     get:
@@ -33,34 +33,6 @@ paths:
           description: Success
       tags:
         - Federal Register Documents
-  "/documents/{document_numbers}.{format}":
-    get:
-      summary: Fetch multiple Federal Register documents
-      parameters:
-      - name: format
-        description: What format the response should be
-        in: path
-        required: true
-        schema:
-          $ref: '#/components/schemas/Format'
-      - name: fields[]
-        description: Which attributes of the documents to return; by default, a reasonable set is returned, but a user can customize it to return exactly what is needed.
-        in: query
-        explode: true
-        schema:
-          $ref: '#/components/schemas/DocumentField'
-      - name: document_numbers
-        description: Federal Register document number
-        in: path
-        explode: false
-        required: true
-        schema:
-          type: array
-          items:
-            type: string
-      responses:
-        '200':
-          description: Success
   "/documents/{document_numbers}.{format}":
     get:
       summary: Fetch multiple Federal Register documents
@@ -572,11 +544,6 @@ paths:
   "/suggested_searches":
     get:
       summary: Fetch all suggested searches or limit by FederalRegister.gov section
-      responses:
-        '200':
-          description: Success
-      tags:
-        - Suggested Searches
       parameters:
       - name: conditions[sections]
         description: Federal Register slug for the section
