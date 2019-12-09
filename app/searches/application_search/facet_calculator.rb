@@ -9,16 +9,21 @@ class ApplicationSearch::FacetCalculator
   end
 
   def raw_facets
-    @search.sphinx_search(
+    results = @search.sphinx_search(
       @search.sphinx_term,
       :with => @search.with,
       :with_all => @search.with_all,
       :conditions => @search.sphinx_conditions,
       :match_mode => :extended,
       :per_page => 1000,
-      :group => @facet_name.to_s,
+      :group_by => @facet_name.to_s,
       :ids_only => true
-    ).results[:matches].map{|m| [m[:attributes]["@groupby"], m[:attributes]["@count"]]}
+    )
+    counts = []
+
+    results.each_with_group_and_count{|entry, group_id, count| counts << [group_id, count]}
+    counts
+    # .results[:matches].map{|m| [m[:attributes]["@groupby"], m[:attributes]["@count"]]}
   end
 
   def all
