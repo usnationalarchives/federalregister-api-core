@@ -9,7 +9,9 @@ ThinkingSphinx::Index.define :entry, :with => :active_record do
     indexes title
     indexes abstract
     indexes "CONCAT('#{FileSystemPathManager.data_file_path}/documents/full_text/raw/', document_file_path, '.txt')", :as => :full_text, :file => true
-    # indexes "GROUP_CONCAT(DISTINCT IFNULL(`entry_regulation_id_numbers`.`regulation_id_number`, '0') SEPARATOR ' ')", :as =>  :regulation_id_number
+    indexes "GROUP_CONCAT(DISTINCT IFNULL(`entry_regulation_id_numbers`.`regulation_id_number`, '0') SEPARATOR ' ')", :as =>  :regulation_id_number
+    join entry_regulation_id_numbers
+
     indexes <<-SQL, :as => :docket_id
       (
         SELECT GROUP_CONCAT(DISTINCT docket_numbers.number SEPARATOR ' ')
@@ -90,6 +92,10 @@ ThinkingSphinx::Index.define :entry, :with => :active_record do
     # has "SUM(IF(regulatory_plans.priority_category IN (#{RegulatoryPlan::SIGNIFICANT_PRIORITY_CATEGORIES.map{|c| "'#{c}'"}.join(',')}),1,0)) > 0",
     #   :as => :significant,
     #   :type => :boolean
+    has "SUM(IF(regulatory_plans.priority_category IN (#{RegulatoryPlan::SIGNIFICANT_PRIORITY_CATEGORIES.map{|c| "'#{c}'"}.join(',')}),1,0)) > 0",
+      :as => :significant,
+      :type => :boolean
+    join regulatory_plans
 
     set_property :field_weights => {
       "title" => 100,
