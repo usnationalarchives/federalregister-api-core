@@ -229,9 +229,9 @@ class EntrySearch < ApplicationSearch
 
   def find_options
     {
+      :select => "*, weight() as weighting, (weight() * 1/LOG2( (((NOW()+#{5.days}) - publication_date) / #{1.year} / 3)+2 ) ) as adjusted_weighting",
       :sql => {
-        :select => "id, title, publication_date, document_number, granule_class, document_file_path, abstract, start_page, end_page, citation, signing_date, executive_order_number, presidential_document_type_id",
-        :include => [:agencies, :agency_names],
+        # :include => [:agencies, :agency_names],
       }
     }
   end
@@ -243,19 +243,19 @@ class EntrySearch < ApplicationSearch
   def order_clause
     case @order
     when 'newest', 'date'
-      "publication_date DESC, @relevance DESC"
+      "publication_date DESC, weighting DESC"
     when 'oldest'
-      "publication_date ASC, @relevance DESC"
+      "publication_date ASC, weighting DESC"
     when 'executive_order_number'
       "executive_order_number ASC"
     when 'proclamation_number'
       "proclamation_number ASC"
     else
       @sort_mode = :expr
-      "weight() * 1/LOG2( (((NOW()+#{5.days}) - publication_date) / #{1.year} / 3)+2 )"
+      'adjusted_weighting DESC'
     end
 
-    "weight()"
+
   end
 
   def sort_mode

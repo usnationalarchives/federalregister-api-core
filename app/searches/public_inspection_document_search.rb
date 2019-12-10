@@ -85,7 +85,7 @@ class PublicInspectionDocumentSearch < ApplicationSearch
 
   def find_options
     {
-      :select => "id, subject_1, subject_2, subject_3, pdf_file_name, pdf_file_size, num_pages, publication_date, filed_at, document_number, granule_class, editorial_note",
+      :select => "*, weight() as weighting",
       :include => :agencies,
     }
   end
@@ -95,7 +95,7 @@ class PublicInspectionDocumentSearch < ApplicationSearch
   end
 
   def order_clause
-    "@relevance DESC, filed_at DESC"
+    "filed_at DESC"
   end
 
   def summary

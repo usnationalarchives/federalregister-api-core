@@ -364,7 +364,7 @@ class ApplicationSearch
     {
       :page => @page,
       :per_page => @per_page,
-      # :order => order_clause,
+      :order => order_clause,
       :with => with,
       :with_all => with_all,
       :without => without,
