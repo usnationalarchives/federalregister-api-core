@@ -1,4 +1,4 @@
-ThinkingSphinx::Index.define :entry, :with => :active_record do
+ThinkingSphinx::Index.define :entry, :with => :active_record, :delta => ThinkingSphinx::Deltas::ManualDelta do
     # set_property "sql_query_killlist", <<-SQL.gsub(/\s+/, ' ')
     #   SELECT entries.id #{ThinkingSphinx.unique_id_expression(ThinkingSphinx::MysqlAdapter.new(Entry), Entry.sphinx_offset) }
     #   FROM entries
@@ -104,5 +104,6 @@ ThinkingSphinx::Index.define :entry, :with => :active_record do
       "agency_name" => 10
     }
 
-    set_property :delta => ThinkingSphinx::Deltas::ManualDelta
+  # this line must appear after the define_index block
+  # include ThinkingSphinx::Deltas::ManualDelta::ActiveRecord
 end

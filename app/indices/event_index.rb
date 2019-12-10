@@ -1,4 +1,4 @@
-ThinkingSphinx::Index.define :event, :with => :active_record do
+ThinkingSphinx::Index.define :event, :with => :active_record, :delta => ThinkingSphinx::Deltas::ManualDelta do
   # fields
   indexes "entries.title", :as => :title
   indexes entry.abstract
@@ -18,7 +18,7 @@ ThinkingSphinx::Index.define :event, :with => :active_record do
     "full_text" => 25,
   }
   where "events.date BETWEEN DATE_SUB(NOW(), INTERVAL 1 MONTH) AND DATE_ADD(NOW(), INTERVAL 2 YEAR) AND event_type != 'RegulationsDotGovCommentsCloseDate'"
-#   set_property :delta => ThinkingSphinx::Deltas::ManualDelta
-#   # this line must appear after the define_index block
-#   # include ThinkingSphinx::Deltas::ManualDelta::ActiveRecord
+
+  # this line must appear after the define_index block
+  # include ThinkingSphinx::Deltas::ManualDelta::ActiveRecord
 end
