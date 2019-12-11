@@ -295,15 +295,6 @@ class EntrySearch < ApplicationSearch
   memoize :subtype_facets
 
   def date_distribution(options = {})
-    sphinx_search = ThinkingSphinx::Search.new(sphinx_term,
-      :with => with,
-      :with_all => with_all,
-      :without => without,
-      :conditions => sphinx_conditions,
-      :match_mode => :extended,
-      :classes => [Entry]
-    )
-
     klass = case options.delete(:period)
             when :daily
               EntrySearch::DateAggregator::Daily
@@ -318,6 +309,17 @@ class EntrySearch < ApplicationSearch
             else
               raise "invalid :period specified; must be one of :daily, :weekly, :monthly, :quarterly or :yearly"
             end
+
+    sphinx_search = ThinkingSphinx::Search.new(sphinx_term,
+      :with       => with,
+      :with_all   => with_all,
+      :without    => without,
+      :conditions => sphinx_conditions,
+      :match_mode => :extended,
+      :classes    => [Entry],
+      :group_by   => klass.group_by_field
+    )
+
     klass.new(sphinx_search, :with => with)
   end
 

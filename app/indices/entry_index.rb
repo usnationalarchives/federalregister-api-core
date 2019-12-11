@@ -25,6 +25,9 @@ ThinkingSphinx::Index.define :entry, :with => :active_record, :delta => Thinking
     has "CRC32(IF(granule_class = 'SUNSHINE', 'NOTICE', granule_class))", :as => :type, :type => :integer
     has presidential_document_type_id
 
+    has "DATE_ADD(publication_date, INTERVAL(-WEEKDAY(publication_date)) DAY)", as: :publication_date_week, type: :timestamp
+    has "DATE_ADD(DATE_ADD(LAST_DAY(publication_date),interval 1 DAY),interval -1 MONTH)", as: :publication_date_month, type: :timestamp
+    has "MAKEDATE(YEAR(publication_date),1)", as: :publication_date_year, type: :timestamp
     has publication_date
     has "IF(granule_class = 'PRESDOCU', IFNULL(signing_date, publication_date), NULL)", as: :signing_date, type: :timestamp
 

@@ -1,4 +1,9 @@
 class EntrySearch::DateAggregator::Yearly < EntrySearch::DateAggregator::Base
+
+  def self.group_by_field
+    :publication_date_year
+  end
+
   def group_function
     :year
   end
