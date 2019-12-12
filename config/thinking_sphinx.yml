@@ -1,5 +1,5 @@
 shared: &shared
-  address: <%= 'localhost' || ENV["SPHINX_PORT_3312_TCP_ADDR"] || 'sphinx' %>
+  address: <%= ENV["SPHINX_TCP_ADDR"] || 'sphinx' %>
   compat_sphinxql_magics: 0
   config_file: config/sphinx/sphinx.conf
   pid_file: pids/searchd.pid
