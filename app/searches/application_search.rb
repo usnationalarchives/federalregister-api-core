@@ -224,18 +224,9 @@ class ApplicationSearch
       if results_with_raw_text.present?
         results_with_raw_text.in_groups_of(1024,false).each do |batch|
           begin
-            # get all excerpts at once for results with raw text files
-            excerpts = result_array.send(:client).excerpts(
-              :docs => batch.map{|d| d.raw_text_file_path},
-              :load_files => true,
-              :words => result_array.args.join(' '),
-              :query_mode => :extended,
-              :index => "#{Entry.source_of_sphinx_index.sphinx_name}_core"
-            )
-
             # merge excerpts back to their result
             batch.each_with_index do |result, index|
-              result.excerpt = excerpts[index]
+              result.excerpt = result.excerpts.abstract
             end
           rescue Riddle::ResponseError => e
             # if we can't read a file we want to still show the search results
@@ -334,6 +325,7 @@ class ApplicationSearch
     sphinx_retry do
       begin
         results = model.search(term, options)
+        results.context[:panes] << ThinkingSphinx::Panes::ExcerptsPane
 
         # force sphinx to populate the result so that if it fails due to
         #   unescaped invalid extended mode characters we can handle the
