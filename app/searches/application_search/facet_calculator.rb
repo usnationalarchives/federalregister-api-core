@@ -20,10 +20,8 @@ class ApplicationSearch::FacetCalculator
       :ids_only => true
     )
     counts = []
-
     results.each_with_group_and_count{|entry, group_id, count| counts << [group_id, count]}
     counts
-    # .results[:matches].map{|m| [m[:attributes]["@groupby"], m[:attributes]["@count"]]}
   end
 
   def all
