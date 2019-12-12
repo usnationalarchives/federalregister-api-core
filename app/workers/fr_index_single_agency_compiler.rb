@@ -2,7 +2,7 @@ class FrIndexSingleAgencyCompiler
   @queue = :api_core
 
   def self.perform(args)
-    ActiveRecord::Base.verify_active_connections!
+    ActiveRecord::Base.clear_active_connections!
     
     args.symbolize_keys!
     

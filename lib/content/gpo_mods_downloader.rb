@@ -20,7 +20,7 @@ module Content
     end
 
     def self.perform(reprocessed_issue_id)
-      ActiveRecord::Base.verify_active_connections!
+      ActiveRecord::Base.clear_active_connections!
 
       new(reprocessed_issue_id).perform
     end

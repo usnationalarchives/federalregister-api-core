@@ -28,7 +28,7 @@ module DocketImporter
   end
 
   def self.perform(docket_number, check_participating=true)
-    ActiveRecord::Base.verify_active_connections!
+    ActiveRecord::Base.clear_active_connections!
     
     return if check_participating && non_participating_agency?(docket_number)
 

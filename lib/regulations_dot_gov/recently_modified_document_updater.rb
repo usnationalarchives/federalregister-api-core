@@ -14,7 +14,7 @@ class RegulationsDotGov::RecentlyModifiedDocumentUpdater
   end
 
   def perform
-    ActiveRecord::Base.verify_active_connections!
+    ActiveRecord::Base.clear_active_connections!
     EntryObserver.disabled = true
     current_time           = Time.current
 

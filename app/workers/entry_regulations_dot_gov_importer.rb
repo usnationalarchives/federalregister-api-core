@@ -3,7 +3,7 @@ class EntryRegulationsDotGovImporter
   @queue = :reg_gov
 
   def self.perform(document_number)
-    ActiveRecord::Base.verify_active_connections!
+    ActiveRecord::Base.clear_active_connections!
 
     new.perform(document_number)
   end
