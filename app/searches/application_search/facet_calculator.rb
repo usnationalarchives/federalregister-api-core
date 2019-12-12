@@ -59,7 +59,7 @@ class ApplicationSearch::FacetCalculator
       end
     else
       facets = raw_facets.reverse.reject{|id, count| id == 0}.map do |id, count|
-        value = @hash.keys.find{|k| k.to_crc32 == id}
+        value = @hash.keys.find{|k| Zlib.crc32(k) == id}
         next if value.blank?
         ApplicationSearch::Facet.new(
           :value      => value,
