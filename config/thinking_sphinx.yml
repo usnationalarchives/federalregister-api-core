@@ -16,6 +16,7 @@ development:
 
 test:
   <<: *shared
+  address: localhost
   config_file: config/sphinx/test.sphinx.conf
   sql_range_step: 10000000
 
