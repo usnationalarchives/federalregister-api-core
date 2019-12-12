@@ -90,11 +90,16 @@ ThinkingSphinx::Index.define :entry, :with => :active_record, :delta => Thinking
 
     has "IF(comment_url != '', 1, 0)", :as => :accepting_comments_on_regulations_dot_gov, :type => :boolean
 
-    # join small_entities_for_thinking_sphinx
-    # has "GROUP_CONCAT(DISTINCT IFNULL(regulatory_plans_small_entities.small_entity_id,0) SEPARATOR ',')", :as => :small_entity_ids, :type => :integer
-    # has "SUM(IF(regulatory_plans.priority_category IN (#{RegulatoryPlan::SIGNIFICANT_PRIORITY_CATEGORIES.map{|c| "'#{c}'"}.join(',')}),1,0)) > 0",
-    #   :as => :significant,
-    #   :type => :boolean
+    has <<-SQL, :as => :small_entity_ids, :type => :integer
+      (
+        SELECT GROUP_CONCAT(DISTINCT IFNULL(regulatory_plans_small_entities.small_entity_id,0) SEPARATOR ',')
+        FROM entry_regulation_id_numbers
+        LEFT OUTER JOIN regulatory_plans ON regulatory_plans.regulation_id_number = entry_regulation_id_numbers.regulation_id_number AND regulatory_plans.current = 1
+        LEFT OUTER JOIN regulatory_plans_small_entities ON regulatory_plans_small_entities.regulatory_plan_id = regulatory_plans.id AND 1 = 1
+        WHERE entry_id = entries.id
+      )
+    SQL
+
     has "SUM(IF(regulatory_plans.priority_category IN (#{RegulatoryPlan::SIGNIFICANT_PRIORITY_CATEGORIES.map{|c| "'#{c}'"}.join(',')}),1,0)) > 0",
       :as => :significant,
       :type => :boolean
