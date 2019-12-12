@@ -135,6 +135,7 @@ describe EntrySearch do
 
   describe 'results_for_date' do
     it "retains the same filters/conditions, but forces a particular publication_date" do
+      pending("Readdress when re-recording TS v3 VCR specs")
       date = Date.parse("2010-10-10")
       search = EntrySearch.new(:conditions => {:term => "HOWDY", :significant => '1', :cfr =>{:title => '7', :part => '132'}})
 
