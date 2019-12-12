@@ -62,6 +62,3 @@ Rails.application.configure do
   # Generate digests for assets URLs
   config.assets.digest = true
 end
-
-# Put gems in Gemfile...
-ThinkingSphinx.remote_sphinx = true

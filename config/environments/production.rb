@@ -48,6 +48,3 @@ Rails.application.configure do
   # Commented out in as password protection is really annoying
   # config.action_controller.asset_host = "http://static%d.federalregister.gov"
 end
-
-# Put gems in Gemfile...
-ThinkingSphinx.remote_sphinx = true
