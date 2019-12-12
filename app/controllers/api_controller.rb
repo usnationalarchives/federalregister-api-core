@@ -36,6 +36,10 @@ class ApiController < ApplicationController
     data = { :count => search.count, :description => search.summary }
 
     unless metadata_only == "1"
+      # NOTE: /documents needs the select clause to be nested inside a SQL block
+      select = options.delete(:select)
+      options.merge!(sql: {select: select})
+
       results = search.results(options)
 
       if search.count > 0 && results.count > 0

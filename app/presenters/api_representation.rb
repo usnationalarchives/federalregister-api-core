@@ -48,7 +48,7 @@ class ApiRepresentation
         includes << options[:include] if options[:include]
       end
 
-      {:sql => {:select => selects.flatten.uniq.join(', '), :include => includes.flatten.uniq} }
+      {:select => selects.flatten.uniq.join(', '), :include => includes.flatten.uniq}
     end
     memoize :find_options_for
 
