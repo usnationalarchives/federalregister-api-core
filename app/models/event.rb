@@ -30,6 +30,10 @@ class Event < ApplicationModel
     scoped(:conditions => {:event_type => "PublicMeeting"})
   end
 
+  def self.delta_index_names
+    ['event_delta']
+  end
+
   def agencies
     agency_assignments.map(:agency)
   end

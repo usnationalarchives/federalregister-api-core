@@ -220,6 +220,10 @@ class Entry < ApplicationModel
     scoped(:conditions => {:presidential_document_type_id => PresidentialDocumentType::EXECUTIVE_ORDER})
   end
 
+  def self.delta_index_names
+    ['entry_delta']
+  end
+
   def excerpt
     return @excerpt if @excerpt
 

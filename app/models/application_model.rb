@@ -1,4 +1,5 @@
 class ApplicationModel < ActiveRecord::Base
+
   self.abstract_class = true
   include ViewHelper
 
@@ -29,5 +30,9 @@ class ApplicationModel < ActiveRecord::Base
 
   def self.active_hash?
     false
+  end
+
+  def self.delta_index_names
+    []
   end
 end

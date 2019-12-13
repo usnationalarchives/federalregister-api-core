@@ -46,6 +46,10 @@ class RegulatoryPlan < ApplicationModel
 
   scope :current, -> { where(current: true) }
 
+  def self.delta_index_names
+    ['regulatory_plan_delta']
+  end
+
   def entries
     Entry.with_regulation_id_number(self.regulation_id_number)
   end
