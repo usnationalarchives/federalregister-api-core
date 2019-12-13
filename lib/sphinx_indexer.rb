@@ -22,7 +22,7 @@ module SphinxIndexer
         "-c :sphinx_conf :index_names --rotate"
       ).run(
         index_names: Array(index_names).join(' '),
-        sphinx_conf: ThinkingSphinx::Configuration.instance.config_file
+        sphinx_conf: ThinkingSphinx::Configuration.instance.configuration_file
       )
 
       restart
