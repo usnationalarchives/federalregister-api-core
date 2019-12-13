@@ -20,6 +20,9 @@ shared: &shared
       dockets: true
       documents: true
 
+  sphinx:
+    enable_event_index: false
+    enable_regulatory_plan_index: false
 
 # Make any updates -web also
 test:
