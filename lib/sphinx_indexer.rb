@@ -43,6 +43,9 @@ module SphinxIndexer
   end
 
   def self.purge_from_core_index(*models)
+    raise "must handle core indexing differently" if Rails.env.production?
+    return
+
     models.flatten.each do |model|
       model.find_each(select: "id, delta", conditions: {delta: true}) do |record|
         model.core_index_names.each do |index_name|
