@@ -17,6 +17,9 @@ class PublicInspectionDocumentFileImporter
   end
 
   def perform
+    start_time = Time.now
+    log("Starting import for #{document_number}")
+
     download_file
     extract_text
     set_num_pages
@@ -24,11 +27,22 @@ class PublicInspectionDocumentFileImporter
     document.save!
 
     clean_up_tempfile
+    
+    log("Finished import for #{document_number} in #{(Time.now - start_time).ceil}s")
   ensure
+    log("Marking import complete for #{document_number}")
     mark_as_complete
   end
 
   private
+
+  def log(message)
+    logger.info("[#{Time.now.strftime("%a %b %d %H:%M:%S %Z %Y")}] #{message}")
+  end
+
+  def logger
+    @logger ||= Logger.new("#{Rails.root}/log/public_inspection_import.log")
+  end
 
   def download_file
     response = api_client.get(pdf_url)
