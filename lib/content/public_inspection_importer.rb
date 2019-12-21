@@ -80,8 +80,16 @@ module Content
 
       if updated_doc_count > 0 || !toc_files_exist?(issue)
         SphinxIndexer.perform('public_inspection_document_core')
+
+        # generate toc so that it is available immediately
+        generate_toc(issue.published_at.to_date)
+        Content::PublicInspectionImporter::CacheManager.manage_cache(self)
+        
+        # ensure agency relationships are correct - this is slow
         load "#{Rails.root}/Rakefile"
         Rake::Task['content:agency_assignments:recalculate'].invoke
+        
+        # regenerate toc to ensure its correct
         generate_toc(issue.published_at.to_date)
         Content::PublicInspectionImporter::CacheManager.manage_cache(self)
       end
