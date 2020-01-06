@@ -226,7 +226,7 @@ class ApplicationSearch
           begin
             # merge excerpts back to their result
             batch.each_with_index do |result, index|
-              result.excerpt = result.excerpts.abstract
+              result.excerpt = result.excerpts.send(result.method_or_attribute_for_thinking_sphinx_excerpting)
             end
           rescue Riddle::ResponseError => e
             # if we can't read a file we want to still show the search results
