@@ -24,8 +24,18 @@ class CannedSearch < ApplicationModel
     search_url
   end
 
+  #NOTE: Thinking Sphinx v3 is much stricter about types and will throw errors if a string value like ["1"] is passed in lieu of its integer counterpart
   def search_conditions
-    JSON.parse(self['search_conditions']||'{}')
+    conditions = JSON.parse(self['search_conditions']||'{}')
+
+    EntriesController::INTEGER_PARAMS_NEEDING_DESERIALIZATION.each do |param_name|
+      ids = conditions[param_name]
+      if ids.present?
+        conditions[param_name] = Array.wrap(ids).map(&:to_i)
+      end
+    end
+
+    conditions
   end
 
   def search
