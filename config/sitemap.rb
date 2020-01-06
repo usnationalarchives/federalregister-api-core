@@ -35,7 +35,7 @@ SitemapGenerator::Sitemap.add_links do |sitemap|
   end
 
   # ENTRIES
-  Entry.scoped(:select => "entries.id, entries.document_number, entries.publication_date, entries.title").find_each do |entry|
+  Entry.scoped(:select => "entries.id, entries.document_number, entries.publication_date, entries.title, entries.updated_at").find_each do |entry|
     options = {:changefreq => 'monthly'}.tap do |ops|
       if entry.updated_at?
         ops.merge!(:lastmod => entry.updated_at)
