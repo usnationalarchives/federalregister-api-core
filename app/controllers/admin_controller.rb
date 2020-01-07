@@ -1,11 +1,11 @@
 class AdminController < ApplicationController
   layout 'admin_bootstrap'
 
-  before_filter :require_user
+  before_action :require_user
   helper_method :current_user_session, :current_user
 
   protect_from_forgery
-  before_filter do
+  before_action do
     self.request_forgery_protection_token = :authenticity_token
   end
 

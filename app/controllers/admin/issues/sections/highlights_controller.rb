@@ -1,5 +1,5 @@
 class Admin::Issues::Sections::HighlightsController < AdminController
-  skip_before_filter :verify_authenticity_token
+  skip_before_action :verify_authenticity_token
 
   def create
     @publication_date = Date.parse(params[:issue_id])

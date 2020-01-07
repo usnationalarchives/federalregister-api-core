@@ -48,7 +48,7 @@
 #       raise ActionController::InvalidByteSequenceErrorFromParams unless path_str.valid_encoding?
 #     end
 #   end
-#   before_filter :force_utf8_params
+#   before_action :force_utf8_params
 # end
 
 

@@ -4,8 +4,8 @@ class ApiController < ApplicationController
   class RequestError < StandardError; end
   class UnknownFieldError < RequestError; end
 
-  before_filter :set_cors_headers
-  before_filter :enforce_maximum_per_page
+  before_action :set_cors_headers
+  before_action :enforce_maximum_per_page
 
   private
 
