@@ -1,15 +1,11 @@
 source 'https://rubygems.org'
 
-# rake version that is compatible with 2.3.x
-gem 'rake', '10.5.0'
-gem 'rack'
-
-gem 'rails', '4.2.11.1'
+gem 'rails', '~> 5.0.0'
 
 # ==============================================================================
 # gems supporting backward-compatibility with Rails 2 conventions:
 gem 'rails-observers'
-gem 'protected_attributes'
+# gem 'protected_attributes' #TODO: Remove existing protected attributes since this gem stops at Rails 5
 gem 'activerecord-deprecated_finders', require: 'active_record/deprecated_finders'
 gem 'memoist'
 gem 'edge_rider'
@@ -85,10 +81,10 @@ gem "net-ssh", '2.9.1'
 
 gem "resque"
 gem 'redis', '3.3.5'
-gem 'resque-throttler',
-    git: 'https://github.com/criticaljuncture/resque-throttler.git',
-    branch: 'master',
-    require: 'resque/throttler'
+# gem 'resque-throttler',
+#     git: 'https://github.com/criticaljuncture/resque-throttler.git',
+#     branch: 'master',
+#     require: 'resque/throttler'
 # gem "resque-retry", '1.5.3'
 # gem "resque-scheduler", '4.3.1'
 
@@ -143,7 +139,7 @@ gem 'sass-rails'
 
 group :test do
   gem 'rspec'
-  gem 'rspec-rails', '~> 3.2.3', :require => false
+  # gem 'rspec-rails', '~> 3.2.3', :require => false
   gem 'factory_girl', '~> 2.5.2'
   gem 'timecop'
   gem 'mock_redis'
