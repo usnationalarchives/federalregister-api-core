@@ -59,7 +59,7 @@ gem 'acts_as_list'
 # gem 'bcrypt-ruby', '2.1.2', :require => 'bcrypt'
 gem 'bcrypt'
 gem 'bootstrap-sass', '2.3.2.2'
-gem 'authlogic', '~> 3.4.0'
+gem 'authlogic', '~> 3.8.0'
 
 # wrapper around http requests that supports multiple backends
 gem 'faraday'
