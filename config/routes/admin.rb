@@ -1,8 +1,5 @@
-require 'resque/server'
-
 FederalregisterApiCore::Application.routes.draw do
   namespace :admin do
-    mount Resque::Server.new, :at => "/resque"
     match '' => 'special#home', :as => :home, :via => :get
       resources :agencies do
         member do
