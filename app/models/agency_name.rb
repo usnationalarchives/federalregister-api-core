@@ -12,7 +12,7 @@ class AgencyName < ApplicationModel
   before_create :assign_agency_if_exact_match
   after_save :update_agency_assignments
   after_save :update_agency_entries_count
-  scope :unprocessed, :conditions => {:void => false, :agency_id => nil}, :order => "agency_names.name"
+  scope :unprocessed, -> { where(void: false, agency_id: nil).order("agency_names.name") }
 
   def self.find_or_create_by_name(name)
     cleaned_name = name.sub(/\W+$/, '')
@@ -48,7 +48,7 @@ class AgencyName < ApplicationModel
                                    agency_name_assignments.position
                             FROM agency_name_assignments
                             WHERE agency_name_assignments.agency_name_id = #{id}")
-        Entry.update_all({:delta => true}, {:id => self.entry_ids})
+        Entry.where(:id => self.entry_ids).update_all(:delta => true)
       end
 
       recompile_associated_tables_of_contents
@@ -69,7 +69,7 @@ class AgencyName < ApplicationModel
 
   def recompile_associated_tables_of_contents
     entries.
-      all(:select => "DISTINCT(publication_date)").
+      select("DISTINCT(publication_date)").
       each{|entry| Resque.enqueue(TableOfContentsRecompiler, entry.publication_date) }
   end
 

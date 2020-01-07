@@ -5,8 +5,8 @@ class TopicName < ApplicationModel
   has_many :topics_topic_names, :dependent => :destroy
   has_many :topics, :through => :topics_topic_names
 
-  default_scope :order => "topic_names.name"
-  scope :unprocessed, :conditions => {:void => false, :topics_count => 0}, :order => "topic_names.name"
+  default_scope { order("topic_names.name") }
+  scope :unprocessed, -> { where(:void => false, :topics_count => 0).order("topic_names.name") }
 
   validate :does_not_have_topics_if_void
 

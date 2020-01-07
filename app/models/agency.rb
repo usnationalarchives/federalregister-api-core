@@ -32,16 +32,16 @@ class Agency < ApplicationModel
 
   has_many :fr_index_agency_statuses
 
-  has_many :entry_agency_assignments, :class_name => "AgencyAssignment", :conditions => "agency_assignments.assignable_type = 'Entry'"
+  has_many :entry_agency_assignments, -> { where("agency_assignments.assignable_type = 'Entry'") }, :class_name => "AgencyAssignment"
   has_many :entries, :through => :entry_agency_assignments
 
-  has_many :regulatory_plan_agency_assignments, :class_name => "AgencyAssignment", :conditions => {:assignable_type => "RegulatoryPlan"}
+  has_many :regulatory_plan_agency_assignments, -> { where(assignable_type: "RegulatoryPlan") }, :class_name => "AgencyAssignment"
   has_many :regulatory_plans, :through => :regulatory_plan_agency_assignments, :source => :regulatory_plan
 
   has_many :children, :class_name => 'Agency', :foreign_key => 'parent_id'
   belongs_to :parent, :class_name => 'Agency'
 
-  scope :in_navigation, :conditions => ['id IN (?)', AGENCIES_IN_NAV_AGENCY_IDS]
+  scope :in_navigation, -> { where("id IN (?)", AGENCIES_IN_NAV_AGENCY_IDS) }
 
   has_attached_file :logo,
                     :styles => { :thumb => "100", :small => "140", :medium => "245", :large => "580", :full_size => "" },
@@ -61,9 +61,9 @@ class Agency < ApplicationModel
   validates_format_of :url, :with => /\Ahttps?:\/\/\S+\z/, :allow_blank => true
   serializable_column :entries_1_year_weekly, :entries_5_years_monthly, :entries_all_years_quarterly, :related_topics_cache
 
-  scope :with_logo, :conditions => "agencies.logo_file_name IS NOT NULL"
-  scope :with_entries, :conditions => "agencies.entries_count > 0"
-  scope :alphabetically, :order => "agencies.name"
+  scope :with_logo, -> { where("agencies.logo_file_name IS NOT NULL") }
+  scope :with_entries, -> { where("agencies.entries_count > 0") }
+  scope :alphabetically, -> { order("agencies.name")}
   scope :active, -> { where(active: true) }
 
   # consider using sphinx instead...

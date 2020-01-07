@@ -16,7 +16,7 @@ class Graphic < ApplicationModel
                     :bucket => SETTINGS["s3_buckets"]["public_images"],
                     :path => ":identifier/:style.:extension"
 
-  scope :extracted, :conditions => "graphic_file_name IS NOT NULL"
+  scope :extracted, -> { where("graphic_file_name IS NOT NULL") }
 
   def set_content_type
     self.graphic.instance_write(:content_type,'image/png')

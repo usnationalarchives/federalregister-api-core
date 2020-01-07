@@ -4,10 +4,11 @@ class Place < ApplicationModel
   cattr_accessor :distance_grouping_increment
   attr_accessor :distance
 
-  has_many :place_determinations, :conditions => "place_determinations.confidence >= #{PlaceDetermination::MIN_CONFIDENCE} OR place_determinations.relevance_score >= #{PlaceDetermination::MIN_RELEVANCE_SCORE}"
+  has_many :place_determinations,
+    -> { where("place_determinations.confidence >= #{PlaceDetermination::MIN_CONFIDENCE} OR place_determinations.relevance_score >= #{PlaceDetermination::MIN_RELEVANCE_SCORE}") }
   has_many :entries, :through => :place_determinations
 
-  scope :usable, :conditions => ['places.id NOT IN (?)', UNUSABLE_PLACES]
+  scope :usable, -> { where('places.id NOT IN (?)', UNUSABLE_PLACES) }
 
   acts_as_mappable :lat_column_name => :latitude,
                    :lng_column_name => :longitude

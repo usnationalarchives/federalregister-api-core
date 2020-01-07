@@ -20,17 +20,17 @@ class PublicInspectionDocument < ApplicationModel
                           :join_table              => :public_inspection_postings,
                           :foreign_key             => :document_id,
                           :association_foreign_key => :issue_id
-  has_many :agency_name_assignments, :as => :assignable, :order => "agency_name_assignments.position", :dependent => :destroy
+  has_many :agency_name_assignments, -> { order("agency_name_assignments.position") }, :as => :assignable, :dependent => :destroy
   has_many :agency_names, :through => :agency_name_assignments
-  has_many :agency_assignments, :as => :assignable, :order => "agency_assignments.position", :dependent => :destroy
-  has_many :agencies, :through => :agency_assignments, :order => "agency_assignments.position", :extend => Agency::AssociationExtensions
-  has_many :docket_numbers, :as => :assignable, :order => "docket_numbers.position", :dependent => :destroy
+  has_many :agency_assignments, -> { order("agency_assignments.position") }, :as => :assignable, :dependent => :destroy
+  has_many :agencies, -> { order("agency_assignments.position") }, :through => :agency_assignments, :extend => Agency::AssociationExtensions
+  has_many :docket_numbers, -> { order("docket_numbers.position") }, :as => :assignable, :dependent => :destroy
 
   file_attribute(:raw_text)  {"#{FileSystemPathManager.data_file_path}/public_inspection/raw/#{document_file_path}.txt"}
   before_save :persist_document_file_path
   before_save :set_content_type
 
-  scope :revoked, :conditions => {:publication_date => nil}
+  scope :revoked, -> { where(publication_date: nil) }
   include Shared::DoesDocumentNumberNormalization
 
   # define_index do

@@ -6,9 +6,9 @@ class CannedSearch < ApplicationModel
 
   acts_as_list :scope => :section_id
   scope :active, -> { where(active: true) }
-  scope :in_order, :order => "position"
-  scope :inactive, :conditions => {:active => 0}
-  scope :alphabetically, :order => "canned_searches.title"
+  scope :in_order, -> { order("position") }
+  scope :inactive, -> { where(active: 0) }
+  scope :alphabetically, -> { order("canned_searches.title") }
 
   def new_position=(new_pos)
     insert_at(new_pos)

@@ -1,16 +1,16 @@
 module Shared::DoesDocumentNumberNormalization
   as_trait do
     def self.find_by_document_number(document_number, options={})
-      doc = first(:conditions => {:document_number => document_number})
+      doc = where(:document_number => document_number).first
       if doc.nil?
         normalized_document_number = normalize_document_number(document_number)
         if normalized_document_number != document_number
-          doc = first(:conditions => {:document_number => normalized_document_number})
+          doc = where(:document_number => normalized_document_number).first
         end
 
         padded_document_number = pad_document_number(document_number)
         if padded_document_number != document_number
-          doc = first(:conditions => {:document_number => padded_document_number})
+          doc = where(:document_number => padded_document_number).first
         end
       end
 

@@ -41,13 +41,13 @@ class Entry < ApplicationModel
   has_many :topic_names, :through => :topic_name_assignments
 
   has_many :topic_assignments, :dependent => :destroy
-  has_many :topics, :through => :topic_assignments, :order => 'topics.name'
+  has_many :topics, -> { order('topics.name') }, :through => :topic_assignments
 
   has_many :url_references, :dependent => :destroy
   has_many :urls, :through => :url_references
 
   has_many :place_determinations,
-           :conditions => "place_determinations.confidence >= #{PlaceDetermination::MIN_CONFIDENCE} OR place_determinations.relevance_score >= #{PlaceDetermination::MIN_RELEVANCE_SCORE}",
+           -> { where("place_determinations.confidence >= #{PlaceDetermination::MIN_CONFIDENCE} OR place_determinations.relevance_score >= #{PlaceDetermination::MIN_RELEVANCE_SCORE}") },
            :dependent => :destroy
   has_many :places, :through => :place_determinations
 
@@ -71,10 +71,10 @@ class Entry < ApplicationModel
   has_many :graphics,
            :through => :graphic_usages
   has_many :extracted_graphics,
+           -> { where("graphics.graphic_file_name IS NOT NULL") },
            :through => :graphic_usages,
            :source => :graphic,
-           :class_name => "Graphic",
-           :conditions => "graphics.graphic_file_name IS NOT NULL"
+           :class_name => "Graphic"
 
   has_many :gpo_graphic_usages,
     :foreign_key => :document_number,
@@ -82,17 +82,17 @@ class Entry < ApplicationModel
 
   acts_as_mappable :through => :places
 
-  has_many :docket_numbers, :as => :assignable, :order => "docket_numbers.position", :dependent => :destroy
+  has_many :docket_numbers, -> { order("docket_numbers.position") }, :as => :assignable, :dependent => :destroy
 
-  has_many :agency_name_assignments, :as => :assignable, :order => "agency_name_assignments.position", :dependent => :destroy
+  has_many :agency_name_assignments, -> { order("agency_name_assignments.position") }, :as => :assignable, :dependent => :destroy
   has_many :agency_names, :through => :agency_name_assignments
-  has_many :agency_assignments, :as => :assignable, :order => "agency_assignments.position", :dependent => :destroy
+  has_many :agency_assignments, -> { order("agency_assignments.position") }, :as => :assignable, :dependent => :destroy
   has_many :agencies, :through => :agency_assignments, :extend => Agency::AssociationExtensions
 
   has_many :events, :dependent => :destroy
-  has_one :comments_close_date, :class_name => "Event", :conditions => {:event_type => 'CommentsClose'}, :autosave => true
-  has_one :effective_date, :class_name => "Event", :conditions => {:event_type => 'EffectiveDate'}, :autosave => true
-  has_one :regulations_dot_gov_comments_close_date, :class_name => "Event", :conditions => {:event_type => 'RegulationsDotGovCommentsClose'}, :autosave => true
+  has_one :comments_close_date, -> { where(:event_type => 'CommentsClose') }, :class_name => "Event", :autosave => true
+  has_one :effective_date, -> { where(event_type: 'EffectiveDate') }, :class_name => "Event", :autosave => true
+  has_one :regulations_dot_gov_comments_close_date, -> { where(event_type: 'RegulationsDotGovCommentsClose') }, :class_name => "Event", :autosave => true
 
   before_save :set_document_file_path
 
@@ -126,7 +126,7 @@ class Entry < ApplicationModel
               LEFT OUTER JOIN regulatory_plans_small_entities
                 ON regulatory_plans_small_entities.regulatory_plan_id = regulatory_plans.id"
   has_many :entry_cfr_references, :dependent => :delete_all
-  has_many :entry_cfr_affected_parts, :class_name => "EntryCfrReference", :conditions => "entry_cfr_references.part IS NOT NULL"
+  has_many :entry_cfr_affected_parts, -> { where("entry_cfr_references.part IS NOT NULL") }, :class_name => "EntryCfrReference"
 
   include Shared::DoesDocumentNumberNormalization
 
@@ -566,7 +566,7 @@ class Entry < ApplicationModel
   end
 
   def current_regulatory_plans
-    RegulatoryPlan.current.all(:conditions => {:regulation_id_number => regulation_id_numbers})
+    RegulatoryPlan.current.where(regulation_id_number: regulation_id_numbers)
   end
 
   def significant?

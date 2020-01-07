@@ -4,7 +4,7 @@ class Section < ApplicationModel
   has_many :section_highlights
 
   has_many :agencies_sections
-  has_many :agencies, :through => :agencies_sections, :order => "agencies.name"
+  has_many :agencies, -> { order("agencies.name") },  :through => :agencies_sections
   has_many :canned_searches
 
   validates_uniqueness_of :title
@@ -13,7 +13,7 @@ class Section < ApplicationModel
 
   validate :cfr_format_is_valid
 
-  scope :alphabetically, :order => "sections.title"
+  scope :alphabetically, -> { order("sections.title") }
 
   def entries
     Entry.scoped(:conditions => {:section_assignments => {:section_id => id}}, :joins => :section_assignments)
