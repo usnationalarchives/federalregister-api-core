@@ -332,6 +332,8 @@ GEM
       open4 (>= 0.4.0)
     powerpack (0.0.9)
     proc-wait3 (1.8.0)
+    protected_attributes_continued (1.5.0)
+      activemodel (>= 5.0)
     pry (0.9.12.4)
       coderay (~> 1.0)
       method_source (~> 0.8)
@@ -536,6 +538,7 @@ DEPENDENCIES
   passenger (~> 6.0)
   popen4
   proc-wait3
+  protected_attributes_continued
   pry
   pry-remote
   rails (~> 5.0.0)

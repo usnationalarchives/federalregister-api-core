@@ -5,7 +5,7 @@ gem 'rails', '~> 5.0.0'
 # ==============================================================================
 # gems supporting backward-compatibility with Rails 2 conventions:
 gem 'rails-observers'
-# gem 'protected_attributes' #TODO: Remove existing protected attributes since this gem stops at Rails 5
+gem 'protected_attributes_continued'
 # gem 'activerecord-deprecated_finders', require: 'active_record/deprecated_finders' #TODO: This gem stopped being maintained for Rails 5.  It will be necessary to change finder syntax throughout the app.
 gem 'memoist'
 gem 'edge_rider'
