@@ -138,8 +138,7 @@ gem 'sass-rails'
 
 
 group :test do
-  gem 'rspec'
-  # gem 'rspec-rails', '~> 3.2.3', :require => false
+  gem 'rspec-rails', '~> 3.6', :require => false
   gem 'factory_girl', '~> 2.5.2'
   gem 'timecop'
   gem 'mock_redis'
