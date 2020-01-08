@@ -16,7 +16,8 @@ module FederalregisterApiCore
     #=============================================================================
 
     # Add additional load paths for your own custom dirs
-    config.autoload_paths += %W( ./app/concerns ./app/observers ./app/presenters ./app/searches ./app/workers ./lib )
+    config.autoload_paths += %W(./lib )
+    config.eager_load_paths += %W(./lib )
 
     # Activate observers that should always be running, expect during db:migrate and db:setup...
     unless ENV['ASSUME_UNITIALIZED_DB']

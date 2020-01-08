@@ -3,6 +3,12 @@ APP_HOST_NAME = 'federalregister.gov'
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/environment.rb
 
+  # Eager load code on boot. This eager loads most of Rails and
+  # your application in memory, allowing both threaded web servers
+  # and those relying on copy on write to perform better.
+  # Rake tasks automatically ignore this option for performance.
+  config.eager_load = true
+
   # The production environment is meant for finished, "live" apps.
   # Code is not reloaded between requests
   config.cache_classes = true
