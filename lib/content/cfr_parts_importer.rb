@@ -58,7 +58,11 @@ module Content
         next unless match
 
         part = match[1]
-        cfr_part = CfrPart.find_or_initialize_by_year_and_title_and_part(year, title, part)
+        cfr_part = CfrPart.find_or_initialize_by(
+          year:  year,
+          title: title,
+          part:  part
+        )
         cfr_part.volume = volume
 
         raw_name = part_node.xpath('./HD[@SOURCE="HED"]').first.try(:content)

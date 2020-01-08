@@ -480,13 +480,12 @@ class Entry < ApplicationModel
   end
 
   def self.latest_publication_dates(n)
-    find(:all,
-         :select => "publication_date",
-         :conditions => ["publication_date <= ?", Issue.current.publication_date],
-         :group => "publication_date",
-         :order => "publication_date DESC",
-         :limit => n
-    ).map &:publication_date
+    select("publication_date").
+    where("publication_date <= ?", Issue.current.publication_date).
+    order("publication_date DESC").
+    group("publication_date").
+    limit(n).
+    map(&:publication_date)
   end
 
   def self.find_all_by_citation(volume, page)
@@ -582,17 +581,17 @@ class Entry < ApplicationModel
   end
 
   def previous_entry
-    @previous_entry ||= Entry.first(
-      :conditions => ["entries.volume <= ? AND entries.start_page <= ? AND entries.id < ?", volume, start_page, id],
-      :order => "entries.volume DESC, entries.start_page DESC, entries.id DESC"
-    )
+    @previous_entry ||= Entry.
+      where("entries.volume <= ? AND entries.start_page <= ? AND entries.id < ?", volume, start_page, id).
+      order("entries.volume DESC, entries.start_page DESC, entries.id DESC").
+      first
   end
 
   def next_entry
-    @next_entry ||= Entry.first(
-      :conditions => ["entries.volume >= ? AND entries.start_page >= ? AND entries.id > ?", volume, start_page, id],
-      :order => "entries.volume, entries.start_page, entries.id"
-    )
+    @next_entry ||= Entry.
+      where("entries.volume >= ? AND entries.start_page >= ? AND entries.id > ?", volume, start_page, id).
+      order("entries.volume, entries.start_page, entries.id").
+      first
   end
 
   def should_have_full_xml?

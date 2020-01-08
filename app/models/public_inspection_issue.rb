@@ -6,7 +6,7 @@ class PublicInspectionIssue < ApplicationModel
   scope :published, -> { where("published_at IS NOT NULL") }
 
   def self.earliest_publication_date
-    published.first(:order => "publication_date").publication_date
+    published.order("publication_date").first.publication_date
   end
 
   def self.latest_publication_date
@@ -14,13 +14,11 @@ class PublicInspectionIssue < ApplicationModel
   end
 
   def self.current
-     published.first(:order => "publication_date DESC")
+    published.order(publication_date: :desc).first
   end
 
   def self.published_between(start_date, end_date)
-    published.all(
-      :conditions => ["publication_date >= ? && publication_date <= ?", start_date, end_date]
-    )
+    published.where("publication_date >= ? && publication_date <= ?", start_date, end_date)
   end
 
   def special_filing_documents

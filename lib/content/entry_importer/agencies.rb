@@ -6,7 +6,7 @@ module Content::EntryImporter::Agencies
     entry.agency_name_assignments = []
     agency_name_assignments = mods_node.xpath('./xmlns:extension/xmlns:agency').map do |agency_node|
       name = agency_node.content()
-      agency_name = AgencyName.find_or_create_by_name(name)
+      agency_name = AgencyName.find_or_create_by(name: name)
 
       AgencyNameAssignment.new(:agency_name => agency_name, :position => agency_node['order'])
     end

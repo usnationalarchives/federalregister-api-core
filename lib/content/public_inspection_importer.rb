@@ -40,7 +40,7 @@ module Content
     end
 
     def issue
-      @issue ||= PublicInspectionIssue.find_or_create_by_publication_date(Date.current)
+      @issue ||= PublicInspectionIssue.find_or_create_by(publication_date: Date.current)
     end
 
     def generate_toc(date)

@@ -12,7 +12,7 @@ module Content::EntryImporter::TopicNames
 
       names.each do |name|
         next if name.length == 1 # one character topic names help no one
-        topic_names << TopicName.find_or_create_by_name(name)
+        topic_names << TopicName.find_or_create_by(name: name)
       end
     end
 

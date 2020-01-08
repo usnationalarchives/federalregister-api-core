@@ -179,7 +179,7 @@ class PublicInspectionDocument < ApplicationModel
     pdf_file_name.present? &&
     (
       publication_date.present? ||
-      Time.current < Time.zone.parse("#{public_inspection_issues.first(:order => "publication_date DESC").publication_date.to_s(:db)} 5:15PM")
+      Time.current < Time.zone.parse("#{public_inspection_issues.order("publication_date DESC").first.publication_date.to_s(:db)} 5:15PM")
     )
   end
 

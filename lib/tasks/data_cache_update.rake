@@ -48,7 +48,9 @@ namespace :data do
           map{|date| (date.beginning_of_month .. date.end_of_month) }
 
         to_summarize[:entries_all_years_quarterly] = []
-        first_entry_date = Entry.first(:order => "publication_date").
+        first_entry_date = Entry.
+          order("publication_date").
+          first.
           publication_date.
           beginning_of_quarter
         date = (Time.current.to_date.beginning_of_quarter).months_ago(3)

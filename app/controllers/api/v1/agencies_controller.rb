@@ -2,7 +2,7 @@ class Api::V1::AgenciesController < ApiController
   def index
     respond_to do |wants|
       wants.json do
-        agencies = Agency.all(:order => "name", :include => :children)
+        agencies = Agency.includes(:children).order("name")
         data = agencies.map do |agency|
           basic_agency_data(agency).merge(:json_url => api_v1_agency_url(agency.id, :format => :json))
         end
@@ -17,7 +17,7 @@ class Api::V1::AgenciesController < ApiController
     begin
       agency_ids = params[:id].split(',')
       if agency_ids.size > 1
-        agency = Agency.find(:all, :conditions => {:id => agency_ids})
+        agency = Agency.where(id: agency_ids)
       else
         agency = Agency.find(params[:id])
       end

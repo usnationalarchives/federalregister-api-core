@@ -6,8 +6,10 @@ class IssueApproval < ApplicationModel
   end
 
   def self.latest_publication_date
-    with_exclusive_scope do
-      IssueApproval.find(:first, :select => "publication_date", :order => "publication_date DESC").try(:publication_date)
-    end
+    IssueApproval.
+      select("publication_date").
+      order("publication_date DESC").
+      first.
+      try(:publication_date)
   end
 end

@@ -5,7 +5,10 @@ class FrIndexAgencyStatus < ApplicationModel
   belongs_to :agency
 
   def self.update_cache(agency_year)
-    status = FrIndexAgencyStatus.find_or_initialize_by_year_and_agency_id(agency_year.year, agency_year.agency.id)
+    status = FrIndexAgencyStatus.find_or_initialize_by(
+      year:      agency_year.year,
+      agency_id: agency_year.agency.id
+    )
     status.needs_attention_count = agency_year.calculate_needs_attention_count
     status.oldest_issue_needing_attention = agency_year.calculate_oldest_issue_needing_attention
     status.save!

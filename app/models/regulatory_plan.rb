@@ -79,7 +79,11 @@ class RegulatoryPlan < ApplicationModel
   # include ThinkingSphinx::Deltas::ManualDelta::ActiveRecord
 
   def self.current_issue
-    RegulatoryPlan.first(:select => :issue, :order => "issue DESC").try(:issue)
+    RegulatoryPlan.
+      select("issue").
+      order("issue DESC")
+      first.
+      try(:issue)
   end
 
   def self.in_current_issue

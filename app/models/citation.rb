@@ -53,7 +53,7 @@ class Citation < ApplicationModel
       text.scan(regexp) do |part_1, part_2, part_3|
         attributes = {:source_entry_id => entry.id, :citation_type => citation_type, :part_1 => part_1, :part_2 => part_2, :part_3 => part_3}
 
-        citation = Citation.first(:conditions => attributes)
+        citation = Citation.where(attributes).first
 
         if citation.nil?
           citation = Citation.new(attributes)

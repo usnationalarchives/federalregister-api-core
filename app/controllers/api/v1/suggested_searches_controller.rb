@@ -5,7 +5,7 @@ class Api::V1::SuggestedSearchesController < ApiController
     sections = parse_sections(params[:conditions])
 
     if sections
-      sections = Section.find(:all, :conditions => {:slug => sections})
+      sections = Section.where(:slug => sections)
     else
       sections = Section.all
     end

@@ -6,7 +6,7 @@ namespace :content do
 
       sections = YAML::load(File.open("#{RAILS_ROOT}/data/sections.yml"))
       sections.each do |attributes|
-        section = Section.find_or_create_by_id(attributes['id'])
+        section = Section.find_or_create_by(id: attributes['id'])
         section.update_attributes!(attributes.merge(:relevant_cfr_sections => nil, :agencies => []))
       end
 

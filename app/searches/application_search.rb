@@ -210,7 +210,9 @@ class ApplicationSearch
   end
 
   def chainable_results(args = {})
-    model.scoped({:conditions => {:id => result_ids(args)}}.recursive_merge(args.slice(:joins, :includes, :select)))
+    model.
+      where(id: result_ids(args)).
+      recursive_merge(args.slice(:joins, :includes, :select))
   end
 
   def results(args = {})

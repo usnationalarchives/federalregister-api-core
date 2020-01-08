@@ -27,7 +27,10 @@ class Admin::TopicNamesController < AdminController
     @topic_name = TopicName.find(params[:id])
     if @topic_name.update_attributes(params[:topic_name])
       flash[:notice] = 'Successfully saved'
-      next_topic_name = TopicName.unprocessed.first(:conditions => ["topic_names.name > ?", @topic_name.name])
+      next_topic_name = TopicName.
+        unprocessed.
+        where("topic_names.name > ?", @topic_name.name).
+        first
       if next_topic_name
         redirect_to edit_admin_topic_name_path(next_topic_name)
       else

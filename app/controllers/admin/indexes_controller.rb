@@ -135,7 +135,10 @@ class Admin::IndexesController < AdminController
 
   def mark_complete
     agency = Agency.find_by_slug!(params[:agency])
-    status = FrIndexAgencyStatus.find_or_initialize_by_year_and_agency_id(params[:year], agency.id)
+    status = FrIndexAgencyStatus.find_or_initialize_by(
+      year:      params[:year],
+      agency_id: agency.id
+    )
     status.last_completed_issue = params[:last_completed_issue]
     status.save
 

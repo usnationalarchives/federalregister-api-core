@@ -39,7 +39,7 @@ module DocketImporter
 
     EntryObserver.disabled = true
 
-    docket = Docket.find_or_initialize_by_id(docket_number)
+    docket = Docket.find_or_initialize_by(id: docket_number)
     docket.title = api_docket.title
     docket.comments_count = api_docket.comments_count
     docket.docket_documents_count = api_docket.supporting_documents_count
@@ -47,7 +47,7 @@ module DocketImporter
     docket.metadata = api_docket.metadata
 
     docket.docket_documents = api_docket.supporting_documents.map do |api_doc|
-      doc = DocketDocument.find_or_initialize_by_id(api_doc.document_id)
+      doc = DocketDocument.find_or_initialize_by(id: api_doc.document_id)
       doc.title = api_doc.title
       doc.metadata = api_doc.metadata
       doc

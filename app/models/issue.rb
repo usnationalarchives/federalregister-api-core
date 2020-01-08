@@ -14,7 +14,7 @@ class Issue < ApplicationModel
   end
 
   def self.current
-    Issue.completed.last(:order => "publication_date")
+    Issue.completed.order("publication_date").last
   end
 
   def self.most_recent(n = 50)
@@ -116,11 +116,17 @@ class Issue < ApplicationModel
   end
 
   def next
-    Issue.first(:conditions => ["publication_date > ?", publication_date], :order => "publication_date")
+    Issue.
+      where("publication_date > ?", publication_date).
+      order("publication_date").
+      first
   end
 
   def previous
-    Issue.first(:conditions => ["publication_date < ?", publication_date], :order => "publication_date DESC")
+    Issue.
+      where("publication_date < ?", publication_date).
+      order("publication_date DESC").
+      first
   end
 
   private

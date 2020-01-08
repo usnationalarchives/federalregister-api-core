@@ -9,13 +9,13 @@ class Admin::AgenciesController < AdminController
       end
 
       wants.json do
-        agencies = Agency.all(:order => "agencies.name")
+        agencies = Agency.order("agencies.name")
         render :json => agencies.to_json(:only => [ :id, :name ])
       end
 
       wants.csv do
         columns = %w(id name short_name url description)
-        rows = [columns.to_csv] + Agency.all(:order => "agencies.name").map{|agency| columns.map{|column| agency.send(column)}.to_csv}
+        rows = [columns.to_csv] + Agency.order("agencies.name").map{|agency| columns.map{|column| agency.send(column)}.to_csv}
         render :text => rows
       end
     end

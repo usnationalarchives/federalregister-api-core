@@ -11,7 +11,10 @@ class Admin::AgencyNamesController < AdminController
       end
 
       wants.csv do
-        agency_names = AgencyName.all(:order => "agency_names.name", :include => :agency)
+        agency_names = AgencyName.
+          includes(:agency).
+          order("agency_names.name")
+
         rows = [["agency_name", "agency"].to_csv] +
           agency_names.map{|agency_name| [agency_name.name, agency_name.void? ? 'Void' : agency_name.agency.try(:name)].to_csv}
         render :text => rows
