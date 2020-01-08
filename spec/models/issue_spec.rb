@@ -28,20 +28,24 @@ describe Issue do
   end
 
   describe "complete!" do
+    before do
+      Timecop.freeze(Date.current)
+    end
+
+    after do
+      Timecop.return
+    end
+
     it "should set completed_at to now if completed_at is nil" do
-      Timecop.freeze do
-        issue = Issue.new(:completed_at => nil)
-        issue.complete!
-        issue.completed_at.should == Time.now
-      end
+      issue = Issue.new(:completed_at => nil)
+      issue.complete!
+      issue.completed_at.should == Time.zone.now
     end
 
     it "should not modify completed_at if completed_at is set" do
-      Timecop.freeze do
-        issue = Issue.new(:completed_at => 1.hour.ago)
-        issue.complete!
-        issue.completed_at.should == 1.hour.ago
-      end
+      issue = Issue.new(:completed_at => 1.hour.ago)
+      issue.complete!
+      issue.completed_at.should == 1.hour.ago
     end
   end
 end
