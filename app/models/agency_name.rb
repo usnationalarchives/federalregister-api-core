@@ -26,8 +26,8 @@ class AgencyName < ApplicationModel
   private
 
   def update_agency_assignments
-    if agency_id_changed?
-      if agency_id_was.present?
+    if saved_change_to_agency_id?
+      if agency_id_before_last_save.present?
         if agency_id.present?
           agency_assignments.each do |agency_assignment|
             agency_assignment.agency_id = agency_id
@@ -115,9 +115,9 @@ class AgencyName < ApplicationModel
   private
 
   def update_agency_entries_count
-    if agency_id_changed?
-      if agency_id_was.present?
-        Agency.find(agency_id_was).recalculate_entries_count!
+    if saved_change_to_agency_id?
+      if agency_id_before_last_save.present?
+        Agency.find(agency_id_before_last_save).recalculate_entries_count!
       end
       if agency
         agency.recalculate_entries_count!
