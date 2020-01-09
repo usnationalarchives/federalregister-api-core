@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '~> 5.2.4'
+gem 'rails', '5.2.4'
 
 # ==============================================================================
 # gems supporting backward-compatibility with Rails 2 conventions:
@@ -11,7 +11,7 @@ gem 'memoist'
 gem 'edge_rider'
 # ==============================================================================
 
-gem 'mysql2', '0.3.21'
+gem 'mysql2'
 
 # production app server
 gem 'passenger', '~> 6.0'
