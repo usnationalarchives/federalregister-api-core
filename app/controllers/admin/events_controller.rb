@@ -58,7 +58,7 @@ class Admin::EventsController < AdminController
     @event.destroy
 
     if request.xhr?
-        render :nothing => true
+        head :ok
     else
         flash[:notice] = "Successfully removed."
         redirect_to admin_events_url

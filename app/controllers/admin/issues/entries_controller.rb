@@ -24,7 +24,7 @@ class Admin::Issues::EntriesController < AdminController
 
     if @entry.update_attributes(params[:entry])
       if request.xhr?
-        render :nothing => true
+        head :ok
       else
         flash[:notice] = 'Successfully saved.'
         if params[:redirect_to]

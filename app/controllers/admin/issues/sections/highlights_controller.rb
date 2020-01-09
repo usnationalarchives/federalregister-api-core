@@ -27,7 +27,7 @@ class Admin::Issues::Sections::HighlightsController < AdminController
           redirect_to admin_issue_section_path(@publication_date.to_s(:db), @section)
         end
         wants.js do
-          render :nothing => true
+          head :ok
         end
       end
     else
@@ -40,6 +40,6 @@ class Admin::Issues::Sections::HighlightsController < AdminController
     @section = Section.find_by_slug(params[:section_id])
     @section_highlight = SectionHighlight.find_by_publication_date_and_section_id_and_entry_id!(@publication_date, @section, params[:id])
     @section_highlight.destroy
-    render :nothing => true
+    head :ok
   end
 end

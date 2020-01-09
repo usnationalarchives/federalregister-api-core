@@ -34,7 +34,7 @@ class ApplicationController < ActionController::Base
 
     # ESI routes should return correct status codes, but no error page
     if params[:quiet]
-      render :nothing => true, :status => 500
+      head 500
     else
       request.format = :html
       render :template => "errors/500.html.erb", :status => 500
@@ -45,7 +45,7 @@ class ApplicationController < ActionController::Base
   def record_not_found
     # ESI routes should return correct status codes, but no error page
     if params[:quiet]
-      render :nothing => true, :status => 404
+      head 404
     else
       request.format = :html
       render :template => "errors/404.html.erb", :status => 404
@@ -55,7 +55,7 @@ class ApplicationController < ActionController::Base
   rescue_from ActionController::MethodNotAllowed, :with => :method_not_allowed
   def method_not_allowed
     if params[:quiet]
-      render :nothing => true, :status => 405
+      head 405
     else
       request.format = :html
       render :template => "errors/405.html.erb", :status => 405

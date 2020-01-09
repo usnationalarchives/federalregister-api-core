@@ -31,7 +31,7 @@ class Admin::CannedSearchesController < AdminController
     @canned_search = CannedSearch.find(params[:id])
     if @canned_search.update_attributes(params[:canned_search])
       if request.xhr?
-        render :nothing => true
+        head :ok
       else
         flash[:notice] = 'Record saved.'
         redirect_to admin_section_canned_searches_path(@canned_search.section.slug)
