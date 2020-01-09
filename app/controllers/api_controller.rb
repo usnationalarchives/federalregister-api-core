@@ -84,10 +84,16 @@ class ApiController < ApplicationController
         end
       end
 
-      records = model.all(find_options.except(:publication_date).merge(conditions: conditions))
+      combined_options = find_options.except(:publication_date).merge(conditions: conditions)
+
+      [{:agency_name_assignments=>{:agency_name=>:agency}}]
+      records = model.
+        includes(combined_options.fetch(:include)).
+        select(combined_options.fetch(:select)).
+        where(combined_options.fetch(:conditions))
 
       data = {
-        :count => records.count,
+        :count => records.count(:all),
         :results => records.map{|record| yield(record)}
       }
 
