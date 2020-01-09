@@ -1,9 +1,10 @@
 ThinkingSphinx::Index.define :entry, :with => :active_record, :delta => ThinkingSphinx::Deltas::ManualDelta do
-    # set_property "sql_query_killlist", <<-SQL.gsub(/\s+/, ' ')
-    #   SELECT entries.id #{ThinkingSphinx.unique_id_expression(ThinkingSphinx::MysqlAdapter.new(Entry), Entry.sphinx_offset) }
-    #   FROM entries
-    #   WHERE delta = 1
-    # SQL
+
+    set_property :sql_query_killlist => <<-SQL.gsub(/\s+/, ' ')
+      SELECT entries.id * #{ThinkingSphinx::Configuration.instance.indices.count} + #{ThinkingSphinx::Configuration.instance.indices.reject(&:delta?).find{|x| x.reference == :entry}.offset}
+      FROM entries
+      WHERE delta = 1
+    SQL
 
     # fields
     indexes title
