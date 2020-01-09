@@ -117,14 +117,6 @@ class Entry < ApplicationModel
 
   has_many :entry_regulation_id_numbers
   has_many :regulatory_plans, :through => :entry_regulation_id_numbers
-  has_many :small_entities_for_thinking_sphinx,
-           :class_name => 'EntryRegulationIdNumber',
-           :conditions => "1 = 1
-              LEFT OUTER JOIN regulatory_plans
-                ON regulatory_plans.regulation_id_number = entry_regulation_id_numbers.regulation_id_number
-                AND regulatory_plans.current = 1
-              LEFT OUTER JOIN regulatory_plans_small_entities
-                ON regulatory_plans_small_entities.regulatory_plan_id = regulatory_plans.id"
   has_many :entry_cfr_references, :dependent => :delete_all
   has_many :entry_cfr_affected_parts, -> { where("entry_cfr_references.part IS NOT NULL") }, :class_name => "EntryCfrReference"
 

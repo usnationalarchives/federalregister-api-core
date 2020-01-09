@@ -95,7 +95,7 @@ ThinkingSphinx::Index.define :entry, :with => :active_record, :delta => Thinking
         SELECT GROUP_CONCAT(DISTINCT IFNULL(regulatory_plans_small_entities.small_entity_id,0) SEPARATOR ',')
         FROM entry_regulation_id_numbers
         LEFT OUTER JOIN regulatory_plans ON regulatory_plans.regulation_id_number = entry_regulation_id_numbers.regulation_id_number AND regulatory_plans.current = 1
-        LEFT OUTER JOIN regulatory_plans_small_entities ON regulatory_plans_small_entities.regulatory_plan_id = regulatory_plans.id AND 1 = 1
+        LEFT OUTER JOIN regulatory_plans_small_entities ON regulatory_plans_small_entities.regulatory_plan_id = regulatory_plans.id
         WHERE entry_id = entries.id
       )
     SQL
