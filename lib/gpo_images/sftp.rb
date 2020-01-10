@@ -31,8 +31,8 @@ class GpoImages::Sftp
   def start_connection
     Net::SFTP.start(
       'ftp.gpo.gov',
-      Rails.application.secrets["gpo_sftp"]["username"],
-      :password => Rails.application.secrets["gpo_sftp"]["password"],
+      Rails.application.secrets[:gpo_sftp][:username],
+      :password => Rails.application.secrets[:gpo_sftp][:password],
       :auth_methods => ["password"],
       :timeout => 30
     )

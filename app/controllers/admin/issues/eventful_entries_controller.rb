@@ -11,7 +11,7 @@ class Admin::Issues::EventfulEntriesController < AdminController
 
     @dates = PotentialDateExtractor.extract(@entry_text)
 
-    placemaker = Placemaker.new(:application_id => Rails.application.secrets['api_keys']['yahoo_placemaker'])
+    placemaker = Placemaker.new(:application_id => Rails.application.secrets[:api_keys][:yahoo_placemaker])
     begin
       @places = placemaker.places(@entry_text[0,45000]) || []
     rescue Curl::Err::HostResolutionError => e

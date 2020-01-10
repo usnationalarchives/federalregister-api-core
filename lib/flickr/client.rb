@@ -24,10 +24,10 @@ class Flickr::Client
 
   def default_conditions
     {
-      :api_key => Rails.application.secrets['api_keys']['flickr'],
+      :api_key => Rails.application.secrets[:api_keys][:flickr],
       :format => 'json',
       :nojsoncallback => 1
-      #shared_secret: Rails.application.secrets['api_keys']['flickr_secret']
+      #shared_secret: Rails.application.secrets[:api_keys][:flickr_secret]
     }
   end
 end
