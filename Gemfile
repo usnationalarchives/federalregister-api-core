@@ -36,7 +36,7 @@ gem 'ffi-hunspell',
   :ref => '91516637fdff9cef9bae66aefdd89e1b4a8b5831',
   :require => 'ffi/hunspell'
 
-gem 'honeybadger', '~> 2.0.0'
+gem 'honeybadger', '~> 2.3.0'
 gem 'resque-honeybadger',
     :git => 'https://github.com/henrik/resque-honeybadger.git',
     :ref => '832be87662840d44e73f66c006796da8ed6250e2'
