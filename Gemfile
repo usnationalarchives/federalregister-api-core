@@ -134,6 +134,7 @@ gem 'open_calais'
 
 gem 'uglifier'
 gem 'sass-rails'
+gem 'xmlrpc'
 
 
 group :test do

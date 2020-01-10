@@ -501,6 +501,7 @@ GEM
       chronic (>= 0.6.3)
     will_paginate (3.2.1)
     xml-simple (1.0.12)
+    xmlrpc (0.3.0)
     ym4r (0.6.1)
     zeitwerk (2.2.2)
     zip-zip (0.3)
@@ -587,6 +588,7 @@ DEPENDENCIES
   vcr
   whenever
   will_paginate
+  xmlrpc
   ym4r (= 0.6.1)
   zip-zip
 
