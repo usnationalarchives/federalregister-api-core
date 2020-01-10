@@ -5,7 +5,6 @@ gem 'rails', '6.0.2.1'
 # ==============================================================================
 # gems supporting backward-compatibility with Rails 2 conventions:
 gem 'rails-observers'
-gem 'protected_attributes_continued'
 gem 'edge_rider'
 # ==============================================================================
 
