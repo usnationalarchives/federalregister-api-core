@@ -1,17 +1,16 @@
 source 'https://rubygems.org'
 
-gem 'rails', '5.2.4'
+gem 'rails', '6.0.2.1'
 
 # ==============================================================================
 # gems supporting backward-compatibility with Rails 2 conventions:
 gem 'rails-observers'
 gem 'protected_attributes_continued'
-# gem 'activerecord-deprecated_finders', require: 'active_record/deprecated_finders' #TODO: This gem stopped being maintained for Rails 5.  It will be necessary to change finder syntax throughout the app.
-gem 'memoist'
 gem 'edge_rider'
 # ==============================================================================
 
 gem 'mysql2'
+gem 'memoist'
 
 # production app server
 gem 'passenger', '~> 6.0'
@@ -36,7 +35,7 @@ gem 'ffi-hunspell',
   :ref => '91516637fdff9cef9bae66aefdd89e1b4a8b5831',
   :require => 'ffi/hunspell'
 
-gem 'honeybadger', '~> 2.3.0'
+gem 'honeybadger', '~> 2.3.3'
 gem 'resque-honeybadger',
     :git => 'https://github.com/henrik/resque-honeybadger.git',
     :ref => '832be87662840d44e73f66c006796da8ed6250e2'
@@ -59,7 +58,7 @@ gem 'acts_as_list'
 # gem 'bcrypt-ruby', '2.1.2', :require => 'bcrypt'
 gem 'bcrypt'
 gem 'bootstrap-sass', '2.3.2.2'
-gem 'authlogic', '~> 3.8.0'
+gem 'authlogic'
 
 # wrapper around http requests that supports multiple backends
 gem 'faraday'
