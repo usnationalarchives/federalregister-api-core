@@ -6,6 +6,14 @@ GIT
     klarlack (0.0.7)
 
 GIT
+  remote: https://github.com/criticaljuncture/resque-throttler.git
+  revision: 6b584cc134cbb3d7cefc9a4ea4f57474a033afcc
+  branch: master
+  specs:
+    resque-throttler (0.1.5)
+      resque (~> 1.25)
+
+GIT
   remote: https://github.com/criticaljuncture/sendgrid.git
   revision: 87d532bff3ab83ac5e842177a7b1fdaae39681b0
   branch: master
@@ -569,6 +577,7 @@ DEPENDENCIES
   redis (= 3.3.5)
   resque
   resque-honeybadger!
+  resque-throttler!
   rspec-rails (~> 3.6)
   rubocop
   rubyzip (>= 1.1.7)

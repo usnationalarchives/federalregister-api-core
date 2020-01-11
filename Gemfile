@@ -79,10 +79,10 @@ gem "net-ssh", '2.9.1'
 
 gem "resque"
 gem 'redis', '3.3.5'
-# gem 'resque-throttler',
-#     git: 'https://github.com/criticaljuncture/resque-throttler.git',
-#     branch: 'master',
-#     require: 'resque/throttler'
+gem 'resque-throttler',
+    git: 'https://github.com/criticaljuncture/resque-throttler.git',
+    branch: 'master',
+    require: 'resque/throttler'
 # gem "resque-retry", '1.5.3'
 # gem "resque-scheduler", '4.3.1'
 
