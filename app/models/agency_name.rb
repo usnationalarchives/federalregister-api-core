@@ -112,8 +112,6 @@ class AgencyName < ApplicationModel
     alternative_name
   end
 
-  private
-
   def update_agency_entries_count
     if saved_change_to_agency_id?
       if agency_id_before_last_save.present?
