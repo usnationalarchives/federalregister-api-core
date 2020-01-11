@@ -46,7 +46,7 @@ class ApiController < ApplicationController
         data[:total_pages] = results.total_pages
 
         if results.next_page
-          data[:next_page_url] = index_url(params.merge(:page => results.next_page))
+          data[:next_page_url] = index_url(params.merge(:page => results.next_page).permit!)
         end
 
         if results.previous_page

@@ -97,7 +97,11 @@ class ApplicationSearch
   end
 
   def initialize(options = {})
-    options = options.with_indifferent_access
+    if options.try(:permit!)
+      options = options.permit!.to_h.with_indifferent_access
+    else
+      options = options.with_indifferent_access
+    end
     @errors = {}
     @filters = []
 
