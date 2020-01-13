@@ -1,4 +1,7 @@
 shared: &shared
+  app:
+    canonical_url: "https://www.federalregister.gov"
+
   varnish:
     host: <%= ENV["VARNISH_ADDR"] || 'varnish' %>
     port: 6082
@@ -23,6 +26,7 @@ shared: &shared
   sphinx:
     enable_event_index: false
     enable_regulatory_plan_index: false
+    use_local_pil_date: false
 
 # Make any updates -web also
 test:
@@ -32,6 +36,8 @@ test:
 
 development:
   <<: *shared
+  app:
+    canonical_url: "https://dev-fr2.criticaljuncture.org"
   s3_buckets:
     zipped_eps_images: eps.images.federalregister.gov
     private_images: private.images.fr2.local
@@ -51,6 +57,8 @@ development:
 
 staging:
   <<: *shared
+  app:
+    canonical_url: "https://fr2.criticaljuncture.org"
   s3_buckets:
     zipped_eps_images: eps.images.federalregister.gov
     private_images: private.images.fr2.criticaljuncture.org

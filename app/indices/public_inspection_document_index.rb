@@ -33,19 +33,20 @@ ThinkingSphinx::Index.define :public_inspection_document, :with => :active_recor
   }
 
 
-  if AppConfig.sphinx.use_local_pil_date
+
+  if SETTINGS['sphinx']['use_local_pil_date']
     where <<-SQL
       public_inspection_postings.issue_id =
         (
           SELECT id
           FROM public_inspection_issues
-          WHERE published_at >= #{AppConfig.sphinx.pil_index_since_date}
+          WHERE published_at >= #{SETTINGS['sphinx']['pil_index_since_date']}
           ORDER BY publication_date DESC
           LIMIT 1
         )
       AND (
         publication_date IS NULL
-        OR publication_date > #{AppConfig.sphinx.pil_index_since_date}
+        OR publication_date > #{SETTINGS['sphinx']['pil_index_since_date']}
       )
     SQL
   else
