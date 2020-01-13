@@ -5,9 +5,8 @@ class User < ApplicationModel
     c.logged_in_timeout = RAILS_ENV == 'development' ? 8.hours : 2.hours
   end
 
-  # TODO: To readdress/reimplement
-  # model_stamper
-  # stampable
+  model_stamper
+  stampable
 
   attr_accessor :current_password
   attr_protected :password

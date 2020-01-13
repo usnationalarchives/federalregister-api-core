@@ -51,6 +51,7 @@ gem 'stevedore', '0.3.0'
 
 # fork of delynn/userstamp plugin
 # gem 'activerecord-userstamp', '2.1.1'#, '3.0.4'
+gem 'activerecord-userstamp', git: 'https://github.com/criticaljuncture/userstamp', branch: 'rails_six'
 
 gem 'active_hash', '~> 2.0'
 gem 'acts_as_list'
