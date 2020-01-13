@@ -1,8 +1,6 @@
 class EntryEmail < ApplicationModel
   belongs_to :entry
 
-  attr_accessible :sender, :recipients, :message, :send_me_a_copy
-
   validates_presence_of :sender
   validates_presence_of :entry, :remote_ip, :recipients
   validate :sender_email_is_valid, :if => Proc.new{|e| e.sender.present?}
