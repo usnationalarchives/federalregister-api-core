@@ -7,9 +7,6 @@ if (File.basename($0) == 'rake' && (ARGV.include?('db:migrate')|| ARGV.include?(
   ENV["ASSUME_UNITIALIZED_DB"] = '1'
 end
 
-# Bootstrap the Rails environment, frameworks, and default configuration
-# require File.join(File.dirname(__FILE__), 'boot')
-
 # ensure /usr/local/bin is in our path
 ENV["PATH"]="#{ENV["PATH"]}:/usr/local/bin"
 

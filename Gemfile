@@ -151,6 +151,7 @@ group :development do
   gem 'rubocop'
   gem 'better_errors'
   gem "binding_of_caller"
+  gem 'listen' # Used for config.file_watcher
 end
 
 group :development, :test do
