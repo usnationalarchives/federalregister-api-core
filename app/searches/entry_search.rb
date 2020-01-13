@@ -231,7 +231,7 @@ class EntrySearch < ApplicationSearch
     {
       :select => "*, weight() as weighting, (weight() * 1/LOG2( (((NOW()+#{5.days}) - publication_date) / #{1.year} / 3)+2 ) ) as adjusted_weighting",
       :sql => {
-        # :include => [:agencies, :agency_names],
+        :include => [:agencies, :agency_names],
       }
     }
   end
