@@ -72,12 +72,9 @@ module Content
       issue.calculate_counts
       issue.save!
 
-      updated_doc_count = issue.public_inspection_documents.count(
-        conditions: [
-          "public_inspection_documents.updated_at >= ?",
-          @start_time
-        ]
-      )
+      updated_doc_count = issue.public_inspection_documents.where(
+        "public_inspection_documents.updated_at >= ?", @start_time
+      ).count
 
       client.logout
 
