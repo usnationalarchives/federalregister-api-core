@@ -28,7 +28,7 @@ gem 'fog', '~> 1.3'
 gem 'formtastic', "~> 2.1"
 gem 'json', '1.8.6'
 gem 'ym4r', '0.6.1'
-gem 'thinking-sphinx', '3.1.3', :require => 'thinking_sphinx'
+gem 'thinking-sphinx', '~> 4.4.1 ', :require => 'thinking_sphinx'
 gem 'ffi-hunspell',
   :git => 'https://github.com/postmodern/ffi-hunspell.git',
   :ref => '91516637fdff9cef9bae66aefdd89e1b4a8b5831',
