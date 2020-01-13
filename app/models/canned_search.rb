@@ -28,7 +28,7 @@ class CannedSearch < ApplicationModel
   def search_conditions
     conditions = JSON.parse(self['search_conditions']||'{}')
 
-    EntriesController::INTEGER_PARAMS_NEEDING_DESERIALIZATION.each do |param_name|
+    ::Api::V1::EntriesController::INTEGER_PARAMS_NEEDING_DESERIALIZATION.each do |param_name|
       ids = conditions[param_name]
       if ids.present?
         conditions[param_name] = Array.wrap(ids).map(&:to_i)
