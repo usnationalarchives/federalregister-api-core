@@ -21,14 +21,6 @@ GIT
     sendgrid (0.1.5)
 
 GIT
-  remote: https://github.com/criticaljuncture/userstamp
-  revision: a26b361c03bbf18e6e30e39894b896e4cb17a167
-  branch: rails_six
-  specs:
-    activerecord-userstamp (3.0.5)
-      rails (>= 5.0)
-
-GIT
   remote: https://github.com/fredwu/app_config.git
   revision: efce678826ea465b30d67357b9f6562bc9a871c0
   branch: master
@@ -529,7 +521,6 @@ PLATFORMS
 
 DEPENDENCIES
   active_hash (~> 2.0)
-  activerecord-userstamp!
   acts_as_list
   addressable (= 2.4.0)
   amatch (= 0.2.11)

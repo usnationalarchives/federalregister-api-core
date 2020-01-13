@@ -91,8 +91,4 @@ class ApplicationController < ActionController::Base
     Rails.logger.warn "[memory usage: #{pid} #{start_mem} #{end_mem} #{end_mem-start_mem}]"
   end
 
-  def set_stamper
-    return
-  end
-
 end
