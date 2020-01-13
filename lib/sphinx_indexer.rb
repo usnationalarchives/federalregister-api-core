@@ -49,7 +49,7 @@ module SphinxIndexer
     models.flatten.each do |model|
       model.find_each(select: "id, delta", conditions: {delta: true}) do |record|
         model.core_index_names.each do |index_name|
-          model.delete_in_index(index_name, record.sphinx_document_id)
+          ThinkingSphinx::Deletion.perform index_name, record.sphinx_document_id
         end
       end
     end
