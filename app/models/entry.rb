@@ -216,6 +216,10 @@ class Entry < ApplicationModel
     ['entry_delta']
   end
 
+  def self.core_index_names
+    ['entry_core']
+  end
+
   def excerpt
     return @excerpt if @excerpt
 

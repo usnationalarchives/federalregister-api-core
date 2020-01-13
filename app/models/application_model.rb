@@ -35,4 +35,8 @@ class ApplicationModel < ActiveRecord::Base
   def self.delta_index_names
     []
   end
+
+  def self.core_index_names
+    raise NotImplementedError
+  end
 end
