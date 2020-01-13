@@ -77,4 +77,6 @@ Rails.application.configure do
   config.action_mailer.default_url_options = {:host => "#{APP_HOST_NAME}", :protocol => "http://"}
 
   Rails.application.routes.default_url_options = {:host => "dev-fr2.criticaljuncture.org", :protocol => "https"}
+
+  config.hosts << "docker.for.mac.host.internal"
 end
