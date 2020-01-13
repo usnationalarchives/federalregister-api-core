@@ -59,6 +59,7 @@ gem 'acts_as_list'
 gem 'bcrypt'
 gem 'bootstrap-sass', '2.3.2.2'
 gem 'authlogic'
+gem 'bootsnap'
 
 # wrapper around http requests that supports multiple backends
 gem 'faraday'
