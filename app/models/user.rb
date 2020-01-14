@@ -5,7 +5,6 @@ class User < ApplicationModel
   end
 
   attr_accessor :current_password
-  attr_protected :password
 
   validates_presence_of :first_name, :last_name, :password
 
