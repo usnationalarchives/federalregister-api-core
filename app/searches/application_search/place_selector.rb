@@ -25,7 +25,7 @@ class ApplicationSearch
 
     def place_ids
       if @validation_errors.empty? && location.present?
-        @place_ids ||= Place.select("id").where(origin: location_latlong, within:  within).map(&:id)
+        @place_ids ||= Place.select("id").within(within, origin: location_latlong).map(&:id)
 
         if @place_ids.size > 4096
           @validation_errors = 'We found too many places near your location; try limiting the radius of the search'
