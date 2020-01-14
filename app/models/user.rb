@@ -1,14 +1,13 @@
 class User < ApplicationModel
   acts_as_authentic do |c|
     c.crypto_provider = Authlogic::CryptoProviders::BCrypt
-    c.validate_password_field = false
     c.logged_in_timeout = RAILS_ENV == 'development' ? 8.hours : 2.hours
   end
 
   attr_accessor :current_password
   attr_protected :password
 
-  validates_presence_of :first_name, :last_name
+  validates_presence_of :first_name, :last_name, :password
 
   validates_confirmation_of :password
   validates_length_of :password, :minimum => 6, :allow_nil => true
