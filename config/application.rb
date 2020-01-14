@@ -13,7 +13,7 @@ module FederalregisterApiCore
 
     # Add additional load paths for your own custom dirs
     config.autoload_paths += %W(./lib )
-    config.eager_load_paths += %W(./lib )
+    config.eager_load_paths += %W(./lib)
 
     # Activate observers that should always be running, expect during db:migrate and db:setup...
     unless ENV['ASSUME_UNITIALIZED_DB']
@@ -39,6 +39,15 @@ module FederalregisterApiCore
 
     config.rails_lts_options = { :disable_xml_parsing => true }
     #=============================================================================
+
+    config.load_defaults "6.0"
+    Rails.autoloaders.main.ignore(Rails.root.join('app/indices'))
+    Rails.autoloaders.main.ignore(Rails.root.join('lib/base_extensions'))
+
+    # Enable verbose zeitwerk logging
+    # Rails.autoloaders.log!
+
+    Rails.application.config.active_record.belongs_to_required_by_default = false
 
     config.session_store :cookie_store, {
       :cookie_only => true,

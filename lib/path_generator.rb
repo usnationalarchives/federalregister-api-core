@@ -112,10 +112,10 @@ class PathGenerator
   end
 end
 
-puts PathGenerator.new.generate(10000,
-  {
-    :entries_search          => 4000,
-    :events_search           => 500,
-    :regulatory_plans_search => 500,
-  }
-)
+# puts PathGenerator.new.generate(10000,
+#   {
+#     :entries_search          => 4000,
+#     :events_search           => 500,
+#     :regulatory_plans_search => 500,
+#   }
+# )

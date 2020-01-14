@@ -1,5 +1,4 @@
 module Locator
-  require 'geoip'
 
   def current_location(ip = request.remote_ip)
     unless @current_location

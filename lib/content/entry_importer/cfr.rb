@@ -1,4 +1,4 @@
-module Content::EntryImporter::CFR
+module Content::EntryImporter::Cfr
   extend Content::EntryImporter::Utils
   provides :entry_cfr_references
 
