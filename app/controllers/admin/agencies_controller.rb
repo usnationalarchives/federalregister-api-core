@@ -16,7 +16,7 @@ class Admin::AgenciesController < AdminController
       wants.csv do
         columns = %w(id name short_name url description)
         rows = [columns.to_csv] + Agency.order("agencies.name").map{|agency| columns.map{|column| agency.send(column)}.to_csv}
-        render :text => rows
+        render plain: rows
       end
     end
   end

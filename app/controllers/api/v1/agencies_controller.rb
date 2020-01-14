@@ -36,7 +36,7 @@ class Api::V1::AgenciesController < ApiController
             render_json_or_jsonp basic_agency_data(agency)
           end
         else
-          render text: {error: 404}.to_json, status: :not_found
+          render json: {error: 404}.to_json, status: :not_found
         end
       end
     end

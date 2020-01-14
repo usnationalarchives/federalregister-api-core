@@ -175,7 +175,7 @@ class Api::V1::EntriesController < ApiController
 
     headers['Content-Disposition'] = "attachment; filename=\"#{filename}.csv\""
 
-    render :text => output
+    render plain: output
   end
 
   def render_rss(documents, title)

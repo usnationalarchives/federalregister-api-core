@@ -1,11 +1,11 @@
 class SpecialController < ApplicationController
   def status
     if File.exists?("#{RAILS_ROOT}/tmp/maintenance.txt")
-      render :text => "Down for maintenance.", :status => 503
+      render plain: "Down for maintenance.", :status => 503
       return
     end
 
-    render :text => "Serving requests."
+    render plain: "Serving requests."
   end
 
   def robots_dot_txt

@@ -17,7 +17,7 @@ class Admin::AgencyNamesController < AdminController
 
         rows = [["agency_name", "agency"].to_csv] +
           agency_names.map{|agency_name| [agency_name.name, agency_name.void? ? 'Void' : agency_name.agency.try(:name)].to_csv}
-        render :text => rows
+        render plain: rows
       end
     end
   end
