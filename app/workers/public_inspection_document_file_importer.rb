@@ -47,7 +47,7 @@ class PublicInspectionDocumentFileImporter
 
   def watermark_file_and_put_on_s3
     document.pdf_url = pdf_url
-    document.pdf = File.new(pdf_path, 'w')
+    document.pdf = pdf_path
   end
 
   def set_num_pages
