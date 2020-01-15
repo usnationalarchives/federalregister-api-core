@@ -40,7 +40,7 @@
 </div>
 
 <% @agency_year.document_types.each do |document_type| %>
-  <%= render :esi => admin_index_year_agency_type_path(@agency_year.year, @agency_year.agency, document_type.granule_class, :unapproved_only => 1) %>
+  <%= render_esi :esi => admin_index_year_agency_type_path(@agency_year.year, @agency_year.agency, document_type.granule_class, :unapproved_only => 1) %>
 <% end %>
 
 <% if @agency_year.document_types.present? %>
