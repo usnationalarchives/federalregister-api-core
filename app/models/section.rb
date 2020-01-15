@@ -7,8 +7,8 @@ class Section < ApplicationModel
   has_many :agencies, -> { order("agencies.name") },  :through => :agencies_sections
   has_many :canned_searches
 
-  validates_uniqueness_of :title
-  validates_uniqueness_of :slug
+  validates_uniqueness_of :title, case_sensitive: true
+  validates_uniqueness_of :slug, case_sensitive: true
   validates_format_of :slug, :with => /\A[a-z0-9-]+\z/
 
   validate :cfr_format_is_valid

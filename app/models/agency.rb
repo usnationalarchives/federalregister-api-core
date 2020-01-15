@@ -55,7 +55,7 @@ class Agency < ApplicationModel
                     :bucket => 'agency-logos.federalregister.gov',
                     :path => ":id/:style.:extension"
 
-  validates_uniqueness_of :name
+  validates_uniqueness_of :name, case_sensitive: true
   validates_presence_of :name
 
   validates_format_of :url, :with => /\Ahttps?:\/\/\S+\z/, :allow_blank => true
