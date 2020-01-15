@@ -54,7 +54,7 @@ class GpoGraphic < ActiveRecord::Base
   scope :unprocessed, -> {where("graphic_file_name IS NULL") }
 
   def entries
-    @entries ||= gpo_graphic_usages.all(:include => :entry).map(&:entry)
+    @entries ||= gpo_graphic_usages.includes(:entry).map(&:entry)
   end
 
   def set_content_type

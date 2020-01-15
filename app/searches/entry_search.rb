@@ -84,7 +84,7 @@ class EntrySearch < ApplicationSearch
                 :sphinx_attribute => :cited_entry_ids,
                 :label => 'Citing document',
                 :sphinx_value_processor => Proc.new { |*document_numbers|
-                  entries = Entry.all(:select => "id, document_number", :conditions => {:document_number => document_numbers.flatten})
+                  entries = Entry.select("id, document_number").where(:document_number => document_numbers.flatten)
                   missing_document_numbers = entries.map(&:document_number) - document_numbers.flatten
 
                   if missing_document_numbers.present?
@@ -93,7 +93,7 @@ class EntrySearch < ApplicationSearch
 
                   entries.map(&:id)
                 }) do |*document_numbers|
-                  entries = Entry.all(:select => "id, citation", :conditions => {:document_number => document_numbers.flatten})
+                  entries = Entry.select("id, citation").where(:document_number => document_numbers.flatten)
 
                   entries.map(&:citation).to_sentence(:two_words_connector => ' or ', :last_word_connector => ', or ')
                 end

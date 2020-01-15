@@ -25,10 +25,10 @@ class FrIndexPresenter
   def agencies
     return @agency_years if @agency_years
 
-    agencies = ::Agency.all(
-      :conditions => {:id => raw_entry_counts_by_agency_id.keys},
-      :include => :children
-    ).sort_by{|agency| agency.name.downcase}
+    agencies = ::Agency.
+      where(id: raw_entry_counts_by_agency_id.keys).
+      includes(:children).
+      sort_by{|agency| agency.name.downcase}
 
     @agency_years = agencies.map do |agency|
       children = agencies.
