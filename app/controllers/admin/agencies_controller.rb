@@ -15,8 +15,14 @@ class Admin::AgenciesController < AdminController
 
       wants.csv do
         columns = %w(id name short_name url description)
-        rows = [columns.to_csv] + Agency.order("agencies.name").map{|agency| columns.map{|column| agency.send(column)}.to_csv}
-        render plain: rows
+        csv = CSV.generate do |csv|
+          csv << columns
+          Agency.
+            order("agencies.name").
+            map{|agency| columns.map{|column| agency.send(column) }}.
+            each{|row| csv << row }
+        end
+        send_data csv
       end
     end
   end
