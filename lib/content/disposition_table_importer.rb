@@ -61,7 +61,7 @@ module Content
       end
 
       def persist!
-        entries = Entry.find_all_by_volume_and_start_page(fr_volume, fr_page)
+        entries = Entry.where(volume: fr_volume, start_page: fr_page)
         if entries.size == 1
           entry = entries.first
           puts "updating EO #{number} -- #{entry.document_number} #{entry.publication_date}"
