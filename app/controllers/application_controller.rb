@@ -8,10 +8,6 @@ class ApplicationController < ActionController::Base
 
   include Locator
 
-  before_action do
-    self.request_forgery_protection_token = nil
-  end
-
   around_action :log_memory_usage unless Rails.env.test?
 
   private

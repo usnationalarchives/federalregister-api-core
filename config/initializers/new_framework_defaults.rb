@@ -9,10 +9,10 @@
 Rails.application.config.action_controller.raise_on_unfiltered_parameters = true
 
 # Enable per-form CSRF tokens. Previous versions had false.
-Rails.application.config.action_controller.per_form_csrf_tokens = true
+Rails.application.config.action_controller.per_form_csrf_tokens = false
 
 # Enable origin-checking CSRF mitigation. Previous versions had false.
-Rails.application.config.action_controller.forgery_protection_origin_check = true
+Rails.application.config.action_controller.forgery_protection_origin_check = false
 
 # Make Ruby 2.4 preserve the timezone of the receiver when calling `to_time`.
 # Previous versions had false.

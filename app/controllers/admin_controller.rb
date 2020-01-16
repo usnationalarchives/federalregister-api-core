@@ -4,11 +4,6 @@ class AdminController < ApplicationController
   before_action :require_user
   helper_method :current_user_session, :current_user
 
-  protect_from_forgery
-  before_action do
-    self.request_forgery_protection_token = :authenticity_token
-  end
-
   private
 
   def set_stamper
