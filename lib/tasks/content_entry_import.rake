@@ -19,10 +19,7 @@ namespace :content do
     task :enqueue_regs_dot_gov_import => :environment do
       dates = Content.parse_all_dates(ENV['DATE'])
       dates.each do |date|
-        entries = Entry.all(
-          select:     :document_number,
-          conditions: { publication_date: date }
-        )
+        entries = Entry.select('document_number').where(publication_date: date)
 
         entries.each do |entry|
           Resque.enqueue(EntryRegulationsDotGovImporter, entry.document_number)

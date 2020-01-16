@@ -11,7 +11,7 @@ class CfrPart < ApplicationModel
   }
 
   def self.find_all_candidates(date, title, part)
-    all(:conditions => {:year => candidate_years(date, title), :title => title, :part => part})
+    where(:year => candidate_years(date, title), :title => title, :part => part)
   end
 
   def self.candidate_years(date, title)

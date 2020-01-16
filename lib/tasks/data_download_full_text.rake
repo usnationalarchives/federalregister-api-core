@@ -4,7 +4,7 @@ namespace :data do
     task :full_text => :environment do
       date = ENV['DATE'].blank? ? Time.current.to_date : Date.parse(ENV['DATE'])
 
-      Entry.all(:conditions => {:publication_date => date}).each do |entry|
+      Entry.where(:publication_date => date).each do |entry|
         # next if entry.full_text_updated_at.present?
         url = entry.source_url(:text)
         puts "downloading full text for #{entry.document_number} (#{entry.publication_date})"
