@@ -1,15 +1,15 @@
 <% super_title "Change Password"  %>
 
-<% semantic_form_for @user, :url => admin_user_password_path(@user) do |f| %>
+<%= semantic_form_for @user, :url => admin_user_password_path(@user) do |f| %>
   <%= password_instructions %>
-  
-  <% f.inputs do %>
-    <%= f.input :current_password %>
-    <%= f.input :password %>
-    <%= f.input :password_confirmation %>
+
+  <%= f.inputs do %>
+    <%= f.input :current_password, as: :password %>
+    <%= f.input :password, as: :password %>
+    <%= f.input :password_confirmation, as: :password %>
   <% end %>
-  
-  <% f.buttons do %>
-    <%= f.commit_button 'Save', :button_html => {:class => "btn btn-large btn-success"} %>
+
+  <%= f.actions do %>
+    <%= f.action :submit, label: 'Save', :button_html => {:class => "btn btn-large btn-success"} %>
   <% end %>
 <% end %>
