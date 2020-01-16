@@ -145,6 +145,8 @@ COPY docker/api/files/logrotate/app /etc/logrotate.d/app
 COPY --chown=1000:1000 . /home/app/
 WORKDIR /home/app
 
+RUN RAILS_ENV=production rake assets:precompile
+
 ##################
 ### BASE (LAST)
 ##################
