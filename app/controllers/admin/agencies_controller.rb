@@ -32,7 +32,7 @@ class Admin::AgenciesController < AdminController
   end
 
   def create
-    @agency = Agency.new(params[:agency])
+    @agency = Agency.new(agency_params)
 
     if @agency.save
       flash[:notice] = "Successfully created.  Please be sure to assign documents via the Agencies > Agency Names menu option"
@@ -51,7 +51,7 @@ class Admin::AgenciesController < AdminController
     @agency = Agency.find_by_slug!(params[:id])
     original_slug = @agency.slug
 
-    if @agency.update_attributes(params[:agency])
+    if @agency.update_attributes(agency_params)
       if original_slug != @agency.slug
         Honeybadger.notify(
           :error_class   => "Agency name changed",
@@ -80,5 +80,11 @@ class Admin::AgenciesController < AdminController
       @agency.destroy
     end
     redirect_to admin_agencies_url
+  end
+
+  private
+
+  def agency_params
+    params.require(:agency).permit(:name, :short_name, :slug, :pseudonym, :parent_id, :description, :url, :logo)
   end
 end

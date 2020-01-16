@@ -8,7 +8,8 @@ class Admin::UsersController < AdminController
   end
 
   def create
-    @user = User.new(params[:user])
+    @user = User.new
+    @user.attributes = user_params
 
     if @user.save
       flash[:notice] = "User created successfully. Please instruct the user to visit #{new_admin_password_reset_url} to set a password."
@@ -25,11 +26,23 @@ class Admin::UsersController < AdminController
   def update
     @user = User.find(params[:id])
 
-    if @user.update_attributes(params[:user])
+    if @user.update_attributes(user_params)
       flash[:notice] = "User updated successfully."
       redirect_to admin_users_url
     else
       render :action => :edit
+    end
+  end
+
+  private
+
+  def user_params
+    params.require(:user).permit(
+      :first_name,
+      :last_name,
+      :email,
+    ).tap do |u_params|
+      u_params.delete(:active) unless @user.new_record?
     end
   end
 end

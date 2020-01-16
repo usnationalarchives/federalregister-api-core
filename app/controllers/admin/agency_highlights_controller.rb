@@ -17,7 +17,7 @@ class Admin::AgencyHighlightsController < AdminController
   end
 
   def create
-    @agency_highlight = AgencyHighlight.new(params[:agency_highlight])
+    @agency_highlight = AgencyHighlight.new(agency_highlight_params)
 
     if @agency_highlight.save
       flash[:notice] = "Agency highlight created."
@@ -35,7 +35,7 @@ class Admin::AgencyHighlightsController < AdminController
   def update
     @agency_highlight = AgencyHighlight.find(params[:id])
 
-    if @agency_highlight.update_attributes(params[:agency_highlight])
+    if @agency_highlight.update_attributes(agency_highlight_params)
       flash[:notice] = "Agency highlight updated."
       redirect_to admin_agency_highlights_path
     else
@@ -51,5 +51,20 @@ class Admin::AgencyHighlightsController < AdminController
 
   def entry
     @entry ||= Entry.find_by_document_number(params[:document_number])
+  end
+
+  def agency_highlight_params
+    params.require(:agency_highlight).permit(
+      :section_header,
+      :title,
+      :abstract,
+      :agency_id,
+      :published,
+      #TODO: Revisit date rendering--do we need a datepicker?
+      :"highlight_until(1i)",
+      :"highlight_until(2i)",
+      :"highlight_until(3i)",
+      :entry_id
+    )
   end
 end
