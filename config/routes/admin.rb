@@ -53,7 +53,7 @@ FederalregisterApiCore::Application.routes.draw do
         member do
           get :preview
         end
-      resource :approval
+      resource :approval, controller: 'issues/approvals'
       resources :entries
       resources :eventful_entries, controller: 'issues/eventful_entries' do
         resources :events
@@ -70,7 +70,7 @@ FederalregisterApiCore::Application.routes.draw do
     match 'entries/:id/highlight' => 'issues/entries#highlight', :as => :highlight_entry, :via => :get
     resources :password_resets, :except => [:index, :show, :destroy]
     resources :users do
-      resource :password
+      resource :password, controller: 'users/passwords'
     end
     resource :user_session
     resources :site_notifications, :only => [:edit, :index, :update]
