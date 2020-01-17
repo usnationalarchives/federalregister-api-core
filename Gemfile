@@ -120,6 +120,8 @@ gem 'memoist'
 
 gem 'american_date'
 
+gem 'ransack'
+
 # add methods to the ruby Process command via C-extensions
 # (tracking memory usage)
 # gem 'proc-wait3'

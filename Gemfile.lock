@@ -363,6 +363,8 @@ GEM
     passenger (6.0.2)
       rack
       rake (>= 0.8.1)
+    polyamorous (2.3.2)
+      activerecord (>= 5.2.1)
     popen4 (0.1.2)
       Platform (>= 0.4.0)
       open4 (>= 0.4.0)
@@ -410,6 +412,11 @@ GEM
       thor (>= 0.20.3, < 2.0)
     rainbow (2.0.0)
     rake (10.5.0)
+    ransack (2.3.2)
+      activerecord (>= 5.2.1)
+      activesupport (>= 5.2.1)
+      i18n
+      polyamorous (= 2.3.2)
     rb-fsevent (0.10.3)
     rb-inotify (0.10.0)
       ffi (~> 1.0)
@@ -585,6 +592,7 @@ DEPENDENCIES
   rails (= 6.0.2.1)
   rails-observers
   rails_autolink
+  ransack
   rdoc
   recaptcha (= 0.3.1)
   redis (= 3.3.5)
