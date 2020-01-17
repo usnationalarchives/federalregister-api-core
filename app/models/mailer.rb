@@ -10,11 +10,13 @@ class Mailer < ActionMailer::Base
   def password_reset_instructions(user)
     sendgrid_category "Admin Password Reset"
 
-    subject    "FR2 Admin Password Reset"
-    from       "FR2 Admin <info@criticaljuncture.org>"
-    recipients user.email
-    sent_on    Time.current
-    body       :user => user, :edit_password_reset_url => edit_admin_password_reset_url(user.perishable_token)
+    @user = user
+    @edit_password_reset_url = edit_admin_password_reset_url(user.perishable_token)
+
+    mail  subject:    "FR2 Admin Password Reset",
+          from:       "FR2 Admin <info@criticaljuncture.org>",
+          recipients: user.email,
+          sent_on:    Time.current
   end
 
   def daily_import_update_admin_email(date)

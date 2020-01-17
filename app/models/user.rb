@@ -15,7 +15,7 @@ class User < ApplicationModel
 
   def deliver_password_reset_instructions!
     reset_perishable_token!
-    Mailer.deliver_password_reset_instructions(self)
+    Mailer.password_reset_instructions(self).deliver_now
   end
 
   def full_name

@@ -4,8 +4,8 @@
   <%= password_instructions %>
 
   <%= f.inputs do %>
-    <%= f.input :password, :required => true %>
-    <%= f.input :password_confirmation, :required => true %>
+    <%= f.input :password, :required => true, as: :password %>
+    <%= f.input :password_confirmation, :required => true, as: :password %>
   <% end %>
 
   <%= f.actions do %>
