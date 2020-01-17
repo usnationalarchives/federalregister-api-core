@@ -6,7 +6,7 @@ class User < ApplicationModel
 
   attr_accessor :current_password
 
-  validates_presence_of :first_name, :last_name, :password
+  validates_presence_of :first_name, :last_name
 
   validates_confirmation_of :password
   validates_length_of :password, :minimum => 8, :allow_nil => true
