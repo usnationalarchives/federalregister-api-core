@@ -45,7 +45,6 @@ FederalregisterApiCore::Application.routes.draw do
       end
     end
     resources :sections
-    resources :agency_highlights
     resources :missing_images, :only => :index
     resources :reprocessed_issues, :only => [:index, :show, :create, :update]
     match 'reprocessed_issues_update_mods/:id' => 'reprocessed_issues#update_mods', :as => :update_mods, :via => :put

@@ -105,8 +105,6 @@ class Entry < ApplicationModel
   has_many :entry_page_views
   has_many :entry_emails
 
-  has_one :agency_highlight
-
   has_many :events, :dependent => :destroy
 
   accepts_nested_attributes_for :lede_photo, :reject_if => Proc.new{|attr| attr["url"].blank? }

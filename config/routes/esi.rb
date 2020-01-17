@@ -8,7 +8,6 @@ FederalregisterApiCore::Application.routes.draw do
   match '/layout/header' => 'special#layout_header', :as => :layout_header, :quiet => 'true', :via => :get
 
   # HOMEPAGE
-  match '/agency_highlight' => 'special#agency_highlight', :as => :agency_highlight, :quiet => 'true', :via => :get
   match '/popular_entries' => 'special#popular_entries', :as => :popular_entries, :quiet => 'true', :via => :get
   match '/most_emailed_entries' => 'special#most_emailed_entries', :as => :most_emailed_entries, :quiet => 'true', :via => :get
 
