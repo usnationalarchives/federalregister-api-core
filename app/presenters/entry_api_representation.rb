@@ -54,8 +54,8 @@ class EntryApiRepresentation < ApiRepresentation
   field(:citation, :select => [:citation, :start_page]){|e| e.start_page && e.start_page.to_i > 0 ? e.citation : nil}
   field(:comments_close_on, :include => :comments_close_date){|e| e.comments_close_on}
   field(:comment_url, :select => [:comment_url, :comment_url_override]){|e| e.calculated_comment_url}
-  field(:corrections, :include => :corrections){|e| e.corrections.map{|c| api_v1_entry_url(c.document_number, :format => :json)}}
-  field(:correction_of, :include => :correction_of, :select => :correction_of_id){|e| api_v1_entry_url(e.correction_of.document_number, :format => :json) if e.correction_of}
+  field(:corrections, :include => :corrections){|e| e.corrections.map{|c| api_v1_document_url(c.document_number, :format => :json)}}
+  field(:correction_of, :include => :correction_of, :select => :correction_of_id){|e| api_v1_document_url(e.correction_of.document_number, :format => :json) if e.correction_of}
   field(:dates)
   field(:disposition_notes, :select => [:executive_order_notes]){|e| e.executive_order_notes}
   field(:docket_id, :include => :docket_numbers){|e| e.docket_numbers.first.try(:number)} # backwards compatible for now
@@ -99,7 +99,7 @@ class EntryApiRepresentation < ApiRepresentation
     end
   end
   field(:json_url, :select => [:document_number, :publication_date]) do |e|
-    api_v1_entry_url(
+    api_v1_document_url(
       e.document_number,
       :publication_date => e.publication_date.to_s(:iso),
       :format           => :json

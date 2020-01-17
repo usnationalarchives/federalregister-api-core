@@ -195,7 +195,7 @@ class Api::V1::EntriesController < ApiController
   end
 
   def index_url(options)
-    api_v1_entries_url(options.permit!.except(:controller, :action))
+    api_v1_documents_url(options.permit!.except(:controller, :action))
   end
 
   def search_suggestions(search)

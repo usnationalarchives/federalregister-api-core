@@ -22,7 +22,6 @@ FederalregisterApiCore::Application.routes.draw do
         match 'public-inspection-documents/search-details' => 'public_inspection_documents#search_details',
           :as => :public_inspection_documents_search_details,
           :via => :get
-        resources :entries, :only => [:index, :show]
         resources :documents, :only => [:index, :show],
           :controller => :entries
         match 'agencies/suggestions' => 'agencies#suggestions',
