@@ -4,19 +4,15 @@ class Admin::TopicNamesController < AdminController
     search_options['order'] ||= 'ascend_by_name'
     @search = TopicName.scoped(
       :include => [:topics]
-    )#.searchlogic(search_options)
+    ).ransack(params[:q])
 
-    @topic_names = @search.paginate(:page => params[:page])
+    @topic_names = @search.result.paginate(:page => params[:page])
   end
 
   def unprocessed
-    search_options = params[:search] || {}
-    search_options['order'] ||= 'ascend_by_name'
-    @search = TopicName.unprocessed.scoped(
-      :include => [:topics]
-    ).searchlogic(search_options)
+    @search = TopicName.unprocessed.order(:name).includes(:topics).ransack(params[:q])
 
-    @topic_names = @search.paginate(:page => params[:page])
+    @topic_names = @search.result.paginate(:page => params[:page])
   end
 
   def edit

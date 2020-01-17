@@ -1,6 +1,6 @@
 <% super_title "Login" %>
 
-<%= semantic_form_for @user_session, :url => admin_user_session_path do |f| %>
+<%= semantic_form_for @user_session, method: :POST, :url => admin_user_session_path do |f| %>
 
   <%= f.inputs do %>
     <%= f.input :email, :required => true %>

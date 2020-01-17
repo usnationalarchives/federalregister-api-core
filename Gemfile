@@ -65,9 +65,7 @@ gem 'jquery-rails'
 gem 'faraday'
 # make multiple http requests concurrently
 gem 'typhoeus', '~> 1.0', '>= 1.0.1'
-
-# This github issue seems to be failing: https://github.com/binarylogic/searchlogic/issues/141
-# gem 'searchlogic', '2.4.12'
+gem 'ransack'
 gem 'icalendar'
 gem 'klarlack', '0.0.7',
   git: 'https://github.com/criticaljuncture/klarlack.git',
@@ -119,8 +117,6 @@ gem 'addressable', '2.4.0'
 gem 'memoist'
 
 gem 'american_date'
-
-gem 'ransack'
 
 # add methods to the ruby Process command via C-extensions
 # (tracking memory usage)

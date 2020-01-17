@@ -4,10 +4,8 @@ class Admin::AgencyNamesController < AdminController
   def index
     respond_to do |wants|
       wants.html do
-        search_options = params[:search] || {}
-        search_options['order'] ||= 'ascend_by_name'
-        @search = AgencyName.scoped()#.searchlogic(search_options)
-        @agency_names = @search.paginate(:page => params[:page])
+        @search = AgencyName.order(:name).ransack(params[:q])
+        @agency_names = @search.result.paginate(:page => params[:page])
       end
 
       wants.csv do
