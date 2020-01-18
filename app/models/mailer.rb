@@ -36,25 +36,24 @@ class Mailer < ActionMailer::Base
 
     sendgrid_ganalytics_options :utm_source => 'federalregister.gov', :utm_medium => 'admin email', :utm_campaign => 'daily agency name mapping'
 
-    agency_name_presenter = AgencyNameAuditPresenter.new(date)
-    problematic_document_presenter = ProblematicDocumentPresenter.new(date)
+    @agency_name_presenter = AgencyNameAuditPresenter.new(date)
+    @problematic_document_presenter = ProblematicDocumentPresenter.new(date)
 
-    subject "[FR Admin] Daily Import Update for #{date} (#{RAILS_ENV})"
-    from       "Federal Register Admin <no-reply@mail.federalregister.gov>"
-    recipients 'nobody@federalregister.gov' # should use sendgrid_recipients for actual recipient list
-    sent_on    Time.current
-    body       :agency_name_presenter => agency_name_presenter, :date => date, :problematic_document_presenter => problematic_document_presenter
+    mail subject:    "[FR Admin] Daily Import Update for #{date} (#{RAILS_ENV})",
+         from:       "Federal Register Admin <no-reply@mail.federalregister.gov>",
+         recipients: 'nobody@federalregister.gov', # should use sendgrid_recipients for actual recipient list
+         sent_on:    Time.current
   end
 
   def admin_notification(message)
     sendgrid_category "Admin Notification Email"
-
     sendgrid_recipients FR_DEVELOPER_ADMINS
 
-    subject "[FR Notification] Urgent Admin Notification"
-    from       "Federal Register Admin <no-reply@mail.federalregister.gov>"
-    recipients 'nobody@federalregister.gov' # should use sendgrid_recipients for actual recipient list
-    sent_on    Time.current
-    body       :message => message
+    @message = message
+
+    mail subject:    "[FR Notification] Urgent Admin Notification",
+         from:       "Federal Register Admin <no-reply@mail.federalregister.gov>",
+         recipients: 'nobody@federalregister.gov', # should use sendgrid_recipients for actual recipient list
+         sent_on:    Time.current
   end
 end

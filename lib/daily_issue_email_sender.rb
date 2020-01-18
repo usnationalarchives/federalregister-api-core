@@ -3,7 +3,7 @@ class DailyIssueEmailSender
 
   def self.perform(date)
     ActiveRecord::Base.clear_active_connections!
-    
-    Mailer.deliver_daily_import_update_admin_email(Date.parse(date))
+
+    Mailer.daily_import_update_admin_email(Date.parse(date)).deliver_now
   end
 end
