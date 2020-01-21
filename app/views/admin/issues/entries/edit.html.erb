@@ -87,7 +87,7 @@
 </div>
 
 <div id='document-content' class="document-content">
-  <% semantic_form_for @entry, :url => admin_issue_entry_path(@publication_date.to_s(:db), @entry.document_number) do |f| %>
+  <%= semantic_form_for @entry, :url => admin_issue_entry_path(@publication_date.to_s(:db), @entry.document_number) do |f| %>
     <%= hidden_field_tag :redirect_to, params[:redirect_to] || request.referer %>
 
     <% f.fields_for :lede_photo_attributes do |lede_photo| %>
@@ -101,16 +101,16 @@
       <%= lede_photo.hidden_field :credit_url %>
     <% end %>
 
-    <% f.inputs do %>
+    <%= f.inputs do %>
       <%= f.input :curated_title,
-        :hint => "Curated title should be less than 110 characters. <span class='current-count'></span>" %>
+        :hint => "Curated title should be less than 110 characters. <span class='current-count'></span>".html_safe %>
       <p class="original-title">
         <strong>Original title:</strong>
         <em><%= f.object.title %></em>
       </p>
 
       <%= f.input :curated_abstract, :as => :text,
-        :hint => "Curated title should be less than 215 characters. <span class='current-count'></span>" %>
+        :hint => "Curated title should be less than 215 characters. <span class='current-count'></span>".html_safe %>
       <p class="original-title">
         <strong>Original abstract:</strong>
         <em><%= f.object.abstract %></em>
@@ -119,8 +119,8 @@
       <%= f.input :sections, :as => :check_boxes %>
     <% end %>
 
-    <% f.buttons do %>
-      <%= f.commit_button 'Save', :button_html => {:class => "btn btn-large btn-success"} %>
+    <%= f.actions do %>
+      <%= f.action :submit, :label => 'Save', :button_html => {:class => "btn btn-large btn-success"} %>
     <% end %>
   <% end %>
 </div>
