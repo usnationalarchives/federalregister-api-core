@@ -4,7 +4,7 @@ class Admin::Issues::Sections::HighlightsController < AdminController
   def create
     @publication_date = Date.parse(params[:issue_id])
     @section = Section.find_by_slug(params[:section_id])
-    @section_highlight = SectionHighlight.new(params[:section_highlight])
+    @section_highlight = SectionHighlight.new(section_highlight_params)
     @section_highlight.section = @section
     @section_highlight.publication_date = @publication_date
     @section_highlight.save
@@ -21,7 +21,7 @@ class Admin::Issues::Sections::HighlightsController < AdminController
     @section = Section.find_by_slug(params[:section_id])
     @section_highlight = SectionHighlight.find_by_publication_date_and_section_id_and_entry_id!(@publication_date, @section, params[:id])
 
-    if @section_highlight.update_attributes(params[:section_highlight])
+    if @section_highlight.update_attributes(section_highlight_params)
       respond_to do |wants|
         wants.html do
           redirect_to admin_issue_section_path(@publication_date.to_s(:db), @section)
@@ -41,5 +41,18 @@ class Admin::Issues::Sections::HighlightsController < AdminController
     @section_highlight = SectionHighlight.find_by_publication_date_and_section_id_and_entry_id!(@publication_date, @section, params[:id])
     @section_highlight.destroy
     head :ok
+  end
+
+  private
+
+  def section_highlight_params
+    params.require(:section_highlight).permit(
+      :entry_id,
+      :new_position
+    ).tap do |custom_params|
+      if custom_params[:new_position].present?
+        custom_params[:new_position] = custom_params[:new_position].to_i
+      end
+    end
   end
 end
