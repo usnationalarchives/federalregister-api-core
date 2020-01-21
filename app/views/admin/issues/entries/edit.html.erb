@@ -90,7 +90,7 @@
   <%= semantic_form_for @entry, :url => admin_issue_entry_path(@publication_date.to_s(:db), @entry.document_number) do |f| %>
     <%= hidden_field_tag :redirect_to, params[:redirect_to] || request.referer %>
 
-    <% f.fields_for :lede_photo_attributes do |lede_photo| %>
+    <%= f.fields_for :lede_photo_attributes do |lede_photo| %>
       <%= lede_photo.hidden_field :url %>
       <%= lede_photo.hidden_field :crop_x %>
       <%= lede_photo.hidden_field :crop_y %>

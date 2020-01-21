@@ -45,7 +45,17 @@ class Admin::Issues::EntriesController < AdminController
     params.require(:entry).permit(
       :curated_title,
       :curated_abstract,
-      :section_ids => []
+      :section_ids => [],
+      :lede_photo_attributes => [
+        :url,
+        :crop_x,
+        :crop_y,
+        :crop_width,
+        :crop_height,
+        :flickr_photo_id,
+        :credit,
+        :credit_url
+      ]
     )
   end
 end
