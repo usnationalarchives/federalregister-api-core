@@ -8,7 +8,7 @@ class Admin::Issues::Sections::HighlightsController < AdminController
     @section_highlight.section = @section
     @section_highlight.publication_date = @publication_date
     @section_highlight.save
-    @section_highlight.move_to_top
+    move_to_top
     @redirect_to = admin_issue_section_path(@publication_date.to_s(:mdy_dash), @section)
 
     unless request.xhr?
@@ -55,4 +55,19 @@ class Admin::Issues::Sections::HighlightsController < AdminController
       end
     end
   end
+
+  MAX_DEADLOCK_RETRIES = 3
+  def move_to_top
+    retry_count = 0
+    begin
+      @section_highlight.move_to_top
+    rescue #Mysql2::Error
+      if retry_count < MAX_DEADLOCK_RETRIES
+        sleep 1
+        retry_count += 1
+        retry
+      end
+    end
+  end
+
 end
