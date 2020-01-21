@@ -22,7 +22,7 @@ class Admin::Issues::EntriesController < AdminController
     @publication_date = Date.parse(params[:issue_id])
     @entry = Entry.published_on(@publication_date).find_by_document_number!(params[:id])
 
-    if @entry.update_attributes(params[:entry])
+    if @entry.update_attributes(entry_params)
       if request.xhr?
         head :ok
       else
@@ -37,5 +37,15 @@ class Admin::Issues::EntriesController < AdminController
       flash.now[:error] = 'There was a problem.'
       render :action => :edit
     end
+  end
+
+  private
+
+  def entry_params
+    params.require(:entry).permit(
+      :curated_title,
+      :curated_abstract,
+      :section_ids => []
+    )
   end
 end
