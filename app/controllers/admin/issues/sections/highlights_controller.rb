@@ -48,6 +48,7 @@ class Admin::Issues::Sections::HighlightsController < AdminController
   def section_highlight_params
     params.require(:section_highlight).permit(
       :entry_id,
+      :entry_document_number,
       :new_position
     ).tap do |custom_params|
       if custom_params[:new_position].present?

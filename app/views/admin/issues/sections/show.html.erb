@@ -13,7 +13,7 @@
   <div class="section">
     <h4>Highlight A Document</h4>
 
-    <% semantic_remote_form_for SectionHighlight.new, :url => admin_issue_section_highlights_path(@publication_date.to_s(:db), @section) do |f| %>
+    <%= semantic_form_for SectionHighlight.new, :remote => true, :url => admin_issue_section_highlights_path(@publication_date.to_s(:db), @section) do |f| %>
       <%= f.inputs do %>
         <%= f.input :entry_document_number, label: 'Document Number', as: :string %>
       <% end %>
