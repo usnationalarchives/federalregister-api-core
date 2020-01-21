@@ -106,8 +106,8 @@ GEM
       minitest (~> 5.1)
       tzinfo (~> 1.1)
       zeitwerk (~> 2.2)
-    acts_as_list (0.9.19)
-      activerecord (>= 3.0)
+    acts_as_list (1.0.0)
+      activerecord (>= 4.2)
     addressable (2.4.0)
     amatch (0.2.11)
       tins (~> 0.3)
@@ -143,6 +143,13 @@ GEM
       builder (>= 2.1.2)
     cocaine (0.4.2)
     coderay (1.1.0)
+    coffee-rails (5.0.0)
+      coffee-script (>= 2.2.0)
+      railties (>= 5.2.0)
+    coffee-script (2.4.1)
+      coffee-script-source
+      execjs
+    coffee-script-source (1.12.2)
     concurrent-ruby (1.1.5)
     crass (1.0.5)
     curb (0.9.0)
@@ -550,6 +557,7 @@ DEPENDENCIES
   bootstrap-sass (= 2.3.2.2)
   ci_reporter (= 1.6.3)
   cocaine
+  coffee-rails (~> 5.0)
   curb (= 0.9.0)
   diffy
   edge_rider
