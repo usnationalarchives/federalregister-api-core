@@ -41,6 +41,7 @@ class Admin::UsersController < AdminController
       :first_name,
       :last_name,
       :email,
+      :active,
     ).tap do |u_params|
       u_params.delete(:active) unless @user.new_record?
     end
