@@ -12,12 +12,14 @@ class LedePhoto < ApplicationModel
                     :storage => :s3,
                     :s3_credentials => {
                       :access_key_id     => Rails.application.secrets[:aws][:access_key_id],
-                      :secret_access_key => Rails.application.secrets[:aws][:secret_access_key]
+                      :secret_access_key => Rails.application.secrets[:aws][:secret_access_key],
+                      :s3_region => 'us-east-1'
                     },
                     :s3_protocol => 'https',
                     :bucket => 'lede-photos.federalregister.gov',
                     :path => ":id/:style.:extension"
 
+  validates_attachment_content_type :photo, :content_type => ["image/jpg", "image/jpeg", "image/png", "image/gif"]
   before_save :download_and_crop_file
 
   def download_and_crop_file
@@ -40,7 +42,9 @@ class LedePhoto < ApplicationModel
         file_path = dst.path
       end
 
-      self.photo = file_path
+      file = File.open(file_path)
+      self.photo = file
+      file.close
     end
   end
 
