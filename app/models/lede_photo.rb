@@ -40,7 +40,7 @@ class LedePhoto < ApplicationModel
         file_path = dst.path
       end
 
-      self.photo = File.open(file_path)
+      self.photo = file_path
     end
   end
 
