@@ -123,9 +123,22 @@ GEM
       activesupport (>= 5.2, < 6.1)
       request_store (~> 1.0)
       scrypt (>= 1.2, < 4.0)
-    aws-sdk-v1 (1.67.0)
-      json (~> 1.4)
-      nokogiri (~> 1)
+    aws-eventstream (1.0.3)
+    aws-partitions (1.267.0)
+    aws-sdk-core (3.89.1)
+      aws-eventstream (~> 1.0, >= 1.0.2)
+      aws-partitions (~> 1, >= 1.239.0)
+      aws-sigv4 (~> 1.1)
+      jmespath (~> 1.0)
+    aws-sdk-kms (1.28.0)
+      aws-sdk-core (~> 3, >= 3.71.0)
+      aws-sigv4 (~> 1.1)
+    aws-sdk-s3 (1.60.1)
+      aws-sdk-core (~> 3, >= 3.83.0)
+      aws-sdk-kms (~> 1)
+      aws-sigv4 (~> 1.1)
+    aws-sigv4 (1.1.0)
+      aws-eventstream (~> 1.0, >= 1.0.2)
     bcrypt (3.1.12)
     better_errors (2.5.1)
       coderay (>= 1.0.0)
@@ -141,22 +154,17 @@ GEM
     chronic (0.10.2)
     ci_reporter (1.6.3)
       builder (>= 2.1.2)
-    cocaine (0.4.2)
+    climate_control (0.2.0)
+    cocaine (0.6.0)
+      terrapin (= 0.6.0)
     coderay (1.1.0)
-    coffee-rails (5.0.0)
-      coffee-script (>= 2.2.0)
-      railties (>= 5.2.0)
-    coffee-script (2.4.1)
-      coffee-script-source
-      execjs
-    coffee-script-source (1.12.2)
     concurrent-ruby (1.1.5)
     crass (1.0.5)
     curb (0.9.0)
     debug_inspector (0.0.3)
     diff-lcs (1.3)
     diffy (3.0.7)
-    dry-inflector (0.1.2)
+    dry-inflector (0.2.0)
     edge_rider (1.1.0)
       activerecord (>= 3.2)
     erubi (1.9.0)
@@ -308,6 +316,7 @@ GEM
       activesupport
     innertube (1.1.0)
     ipaddress (0.8.3)
+    jmespath (1.4.0)
     joiner (0.5.0)
       activerecord (>= 6.0.0.rc2)
     jquery-rails (4.3.5)
@@ -360,11 +369,12 @@ GEM
       multi_json
       multi_xml
     os (1.0.0)
-    paperclip (2.8.0)
-      activerecord (>= 2.3.0)
-      activesupport (>= 2.3.2)
-      cocaine (>= 0.0.2)
+    paperclip (6.1.0)
+      activemodel (>= 4.2.0)
+      activesupport (>= 4.2.0)
       mime-types
+      mimemagic (~> 0.3.0)
+      terrapin (~> 0.6.0)
     parser (2.2.0.2)
       ast (>= 1.1, < 3.0)
     passenger (6.0.2)
@@ -500,6 +510,8 @@ GEM
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
     stevedore (0.3.0)
+    terrapin (0.6.0)
+      climate_control (>= 0.0.3, < 1.0)
     test-unit (1.2.3)
       hoe (>= 1.5.1)
     thinking-sphinx (4.4.1)
@@ -549,7 +561,7 @@ DEPENDENCIES
   american_date
   app_config (= 1.3.2)!
   authlogic
-  aws-sdk-v1
+  aws-sdk-s3
   bcrypt
   better_errors
   binding_of_caller
@@ -557,7 +569,6 @@ DEPENDENCIES
   bootstrap-sass (= 2.3.2.2)
   ci_reporter (= 1.6.3)
   cocaine
-  coffee-rails (~> 5.0)
   curb (= 0.9.0)
   diffy
   edge_rider
@@ -591,7 +602,7 @@ DEPENDENCIES
   net-ssh (= 2.9.1)
   nokogiri
   open_calais
-  paperclip (~> 2.8)
+  paperclip
   passenger (~> 6.0)
   popen4
   proc-wait3

@@ -40,10 +40,10 @@ gem 'resque-honeybadger',
     :ref => '832be87662840d44e73f66c006796da8ed6250e2'
 gem 'sitemap_generator', '~> 1.5.0'
 
-gem 'paperclip', '~> 2.8'
+gem 'paperclip'
  # required by paperclip but unspecified version - this ensures a comptible version
 gem 'mime-types', '~> 1.25', '>= 1.25.1'
-gem 'aws-sdk-v1'
+gem 'aws-sdk-s3'
 # add methods to the ruby Process command via C-extensions
 gem 'proc-wait3'
 
