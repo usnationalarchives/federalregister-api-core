@@ -1,4 +1,4 @@
-<% content_tag  :li,
+<%= content_tag  :li,
                 :id => document_grouping.identifier,
                 :class => "#{document_grouping.needs_attention? ? 'new_item' : ''} #{document_grouping.top_level? ? 'top_level' : ''}",
                 :"data-form-data" => { 
