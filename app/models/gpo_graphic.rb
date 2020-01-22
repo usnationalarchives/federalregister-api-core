@@ -27,12 +27,14 @@ class GpoGraphic < ActiveRecord::Base
                     :storage => :s3,
                     :s3_credentials => {
                       :access_key_id     => Rails.application.secrets[:aws][:access_key_id],
-                      :secret_access_key => Rails.application.secrets[:aws][:secret_access_key]
+                      :secret_access_key => Rails.application.secrets[:aws][:secret_access_key],
+                      :s3_region => 'us-east-1'
                     },
                     :s3_permissions => :private,
                     :s3_protocol => 'https',
                     :bucket => proc { |attachment| attachment.instance.gpo_graphic_usages.present? ? attachment.instance.public_bucket : attachment.instance.private_bucket },
                     :path => ":xml_identifier/:style.:extension"
+  do_not_validate_attachment_file_type :graphic
 
   Paperclip.interpolates(:xml_identifier) do |attachment, style|
     if attachment.instance.gpo_graphic_usages.present?

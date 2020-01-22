@@ -49,11 +49,13 @@ class Agency < ApplicationModel
                     :storage => :s3,
                     :s3_credentials => {
                       :access_key_id     => Rails.application.secrets[:aws][:access_key_id],
-                      :secret_access_key => Rails.application.secrets[:aws][:secret_access_key]
+                      :secret_access_key => Rails.application.secrets[:aws][:secret_access_key],
+                      :s3_region => 'us-east-1'
                     },
                     :s3_protocol => 'https',
                     :bucket => 'agency-logos.federalregister.gov',
                     :path => ":id/:style.:extension"
+  validates_attachment_content_type :logo, :content_type => ["image/jpg", "image/jpeg", "image/png", "image/gif"]
 
   validates_uniqueness_of :name, case_sensitive: true
   validates_presence_of :name
