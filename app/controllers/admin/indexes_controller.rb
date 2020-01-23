@@ -101,7 +101,7 @@ class Admin::IndexesController < AdminController
 
     Entry.transaction do
       entries.each do |entry|
-        entry.update_attributes!(params[:entry].merge(:fr_index_subject => subject, :fr_index_doc => doc))
+        entry.update_attributes!(entry_params.merge(:fr_index_subject => subject, :fr_index_doc => doc))
       end
     end
 
@@ -167,5 +167,12 @@ class Admin::IndexesController < AdminController
     else
       ""
     end
+  end
+
+  def entry_params
+    params.require(:entry).permit(
+      :fr_index_subject,
+      :fr_index_doc
+    )
   end
 end
