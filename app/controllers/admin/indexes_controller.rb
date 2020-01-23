@@ -145,7 +145,7 @@ class Admin::IndexesController < AdminController
     agency_year = FrIndexPresenter::AgencyPresenter.new(agency, params[:year])
     FrIndexAgencyStatus.update_cache(agency_year)
 
-    flash[:notice] = "'<a href='#{admin_index_year_agency_unapproved_documents_path}'>#{agency.name}</a>' marked complete through #{status.last_completed_issue}"
+    flash[:notice] = "'<a href='#{admin_index_year_agency_unapproved_documents_path}'>#{agency.name}</a>' marked complete through #{status.last_completed_issue}".html_safe
     redirect_to admin_index_year_path(params[:year], :max_date => params[:max_date])
   end
 
