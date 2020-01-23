@@ -16,7 +16,7 @@ class LedePhoto < ApplicationModel
                       :s3_region => 'us-east-1'
                     },
                     :s3_protocol => 'https',
-                    :bucket => 'lede-photos.federalregister.gov',
+                    :bucket =>  SETTINGS['s3_buckets']['lede_photos'],
                     :path => ":id/:style.:extension"
 
   validates_attachment_content_type :photo, :content_type => ["image/jpg", "image/jpeg", "image/png", "image/gif"]
