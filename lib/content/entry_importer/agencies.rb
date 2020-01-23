@@ -8,7 +8,7 @@ module Content::EntryImporter::Agencies
     retries = 0
     begin
       entry.agency_name_assignments = []
-    rescue ActiveRecord::LockWaitTimeout
+    rescue ActiveRecord::Deadlocked, ActiveRecord::LockWaitTimeout => e
       if retries < MAX_RETRIES
         sleep RETRY_DELAY
         retries += 1
