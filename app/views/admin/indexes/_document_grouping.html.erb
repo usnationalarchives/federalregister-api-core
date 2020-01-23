@@ -15,7 +15,7 @@
 
   <a class="wrapper" href="#">
     <span class="title" data-header-attribute="<%= document_grouping.header_attribute %>" data-original-title='<%= document_grouping.header %>'>
-      <%= spell_checker.highlight_spelling_errors(document_grouping.header) %>
+      <%= spell_checker.highlight_spelling_errors(document_grouping.header).html_safe %>
     </span><%= count_pill(document_grouping.entry_count) %>
   </a>
 
