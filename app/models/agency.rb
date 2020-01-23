@@ -55,7 +55,7 @@ class Agency < ApplicationModel
                     :s3_protocol => 'https',
                     :bucket => 'agency-logos.federalregister.gov',
                     :path => ":id/:style.:extension"
-  validates_attachment_content_type :logo, :content_type => ["image/jpg", "image/jpeg", "image/png", "image/gif"]
+  do_not_validate_attachment_file_type :logo
 
   validates_uniqueness_of :name, case_sensitive: true
   validates_presence_of :name
