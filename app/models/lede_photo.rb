@@ -19,7 +19,9 @@ class LedePhoto < ApplicationModel
                     :bucket =>  SETTINGS['s3_buckets']['lede_photos'],
                     :path => ":id/:style.:extension"
 
-  validates_attachment_content_type :photo, :content_type => ["image/jpg", "image/jpeg", "image/png", "image/gif"]
+  after_create :generate_paperclip_styles! #Paperclip doesn't seem to auto-generate styles in this model.  Ideally, we wouldn't have to call this.
+
+  do_not_validate_attachment_file_type :photo
   before_save :download_and_crop_file
 
   def download_and_crop_file
@@ -51,4 +53,11 @@ class LedePhoto < ApplicationModel
   def flickr_photo_id=(photo_id)
     @flickr_photo_id = photo_id
   end
+
+  private
+
+  def generate_paperclip_styles!
+    self.photo.reprocess!
+  end
+
 end
