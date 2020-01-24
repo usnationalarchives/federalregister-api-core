@@ -63,7 +63,8 @@ module Content
   end
 
   def self.render_erb(template_path, locals = {})
-    view = ActionView::Base.new("#{Rails.root}/app/views", {})
+    view = ActionView::Base.new(ActionController::Base.view_paths, {})
+
     [
       ActionView::Helpers::UrlHelper,
       Rails.application.routes.url_helpers,
@@ -96,8 +97,6 @@ module Content
           url_for_without_string_support(options)
         end
       end
-
-      alias_method_chain :url_for, :string_support
     end
 
     if template_path =~ /\.erb$/
@@ -106,7 +105,6 @@ module Content
       path = "#{template_path}.html.erb"
     end
 
-
-    view.render(:file => path, :locals => locals)
+    view.render(:file => path, :locals => locals)#, :locals => locals)
   end
 end
