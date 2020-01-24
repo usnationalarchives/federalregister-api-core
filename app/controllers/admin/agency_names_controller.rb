@@ -31,7 +31,7 @@ class Admin::AgencyNamesController < AdminController
   def update
     @agency_name = AgencyName.find(params[:id])
 
-    if @agency_name.update_attributes(params[:agency_name])
+    if @agency_name.update_attributes(agency_name_params)
       flash[:notice] = 'Successfully saved'
       if params[:return_to]
         redirect_to params[:return_to]
@@ -44,5 +44,15 @@ class Admin::AgencyNamesController < AdminController
       flash.now[:error] = 'There was a problem.'
       render :action => :edit
     end
+  end
+
+  private
+
+  def agency_name_params
+    params.require(:agency_name).permit(
+      :return_to,
+      :agency_id,
+      :void
+    )
   end
 end

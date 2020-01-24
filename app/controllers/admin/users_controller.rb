@@ -13,7 +13,7 @@ class Admin::UsersController < AdminController
 
     if @user.save
       flash[:notice] = "User created successfully. Please instruct the user to visit #{new_admin_password_reset_url} to set a password."
-      redirect_to admin_users_url
+      redirect_to admin_users_path
     else
       render :action => :new
     end
