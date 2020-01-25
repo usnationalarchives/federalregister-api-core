@@ -22,7 +22,7 @@ gem 'will_paginate', :require => 'will_paginate'
 gem 'amatch', '0.2.11'
 gem 'indefinite_article'
 gem 'titleize' #updates ActiveSupport titleize with stop word support
-gem 'rubyzip', '>= 1.1.7'
+gem 'rubyzip'
 gem 'zip-zip' # will load compatibility for old rubyzip API.
 gem 'fog', '~> 1.3'
 gem 'formtastic', "~> 2.1"

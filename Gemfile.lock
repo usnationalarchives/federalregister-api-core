@@ -475,7 +475,7 @@ GEM
       rainbow (>= 1.99.1, < 3.0)
       ruby-progressbar (~> 1.4)
     ruby-progressbar (1.7.1)
-    rubyzip (1.1.7)
+    rubyzip (2.0.0)
     sass (3.7.4)
       sass-listen (~> 4.0.0)
     sass-listen (4.0.0)
@@ -620,7 +620,7 @@ DEPENDENCIES
   resque-throttler!
   rspec-rails (~> 3.6)
   rubocop
-  rubyzip (>= 1.1.7)
+  rubyzip
   sass-rails
   sendgrid!
   sitemap_generator (~> 1.5.0)
