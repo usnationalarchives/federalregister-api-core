@@ -12,7 +12,7 @@
   <% end %>
 <% end %>
 
-<%= will_paginate @topic_names %>
+<%= will_paginate @topic_names, renderer: BootstrapPagination::Rails %>
 
 <% if @topic_names.present? %>
   <table class='sortable table table-bordered table-striped table-condensed' summary="Topics">
@@ -39,4 +39,4 @@
   <p>No unprocessed topic names</p>
 <% end %>
 
-<%= will_paginate @topic_names %>
+<%= will_paginate @topic_names, renderer: BootstrapPagination::Rails %>

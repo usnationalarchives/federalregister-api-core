@@ -1,7 +1,7 @@
 <% super_title 'Public Meetings' %>
 
 <%= page_entries_info @events %>
-<%= will_paginate @events %>
+<%= will_paginate @events, renderer: BootstrapPagination::Rails %>
 <table class='<%= table_css_class %>'>
   <thead>
     <tr>
@@ -27,4 +27,4 @@
     <% end %>
   </tbody>
 </table>
-<%= will_paginate @events %>
+<%= will_paginate @events, renderer: BootstrapPagination::Rails %>

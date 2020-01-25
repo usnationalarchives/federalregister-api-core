@@ -12,7 +12,7 @@
   <% end %>
 <% end %>
 
-<%= will_paginate @topic_names, :class => 'pagination' %>
+<%= will_paginate @topic_names, :class => 'pagination', renderer: BootstrapPagination::Rails %>
 
 <table class='sortable table table-bordered table-striped table-condensed' summary="All Topics">
   <thead>
@@ -35,4 +35,4 @@
   </tbody>
 </table>
 
-<%= will_paginate @topic_names %>
+<%= will_paginate @topic_names, renderer: BootstrapPagination::Rails %>

@@ -14,7 +14,7 @@
 
 <%= page_entries_info @agencies %>
 
-<%= will_paginate @entries %>
+<%= will_paginate @entries, renderer: BootstrapPagination::Rails %>
 <table class="<%= table_css_class %>">
   <thead>
     <tr>
@@ -35,4 +35,4 @@
     <% end %>
   </tbody>
 </table>
-<%= will_paginate @entries %>
+<%= will_paginate @entries, renderer: BootstrapPagination::Rails %>

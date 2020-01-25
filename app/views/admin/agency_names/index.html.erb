@@ -11,7 +11,7 @@
   <% end %>
 <% end %>
 
-<%= will_paginate @agency_names %>
+<%= will_paginate @agency_names, renderer: BootstrapPagination::Rails %>
 
 <table class='<%= table_css_class %>'>
   <thead>
@@ -34,4 +34,4 @@
   </tbody>
 </table>
 
-<%= will_paginate @agency_names %>
+<%= will_paginate @agency_names, renderer: BootstrapPagination::Rails %>

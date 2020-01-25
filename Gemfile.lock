@@ -542,6 +542,8 @@ GEM
     whenever (0.10.0)
       chronic (>= 0.6.3)
     will_paginate (3.2.1)
+    will_paginate-bootstrap (0.2.5)
+      will_paginate (>= 3.0.3)
     xml-simple (1.0.12)
     xmlrpc (0.3.0)
     ym4r (0.6.1)
@@ -634,6 +636,7 @@ DEPENDENCIES
   vcr
   whenever
   will_paginate
+  will_paginate-bootstrap (= 0.2.5)
   xmlrpc
   ym4r (= 0.6.1)
   zip-zip
