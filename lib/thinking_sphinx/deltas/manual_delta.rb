@@ -4,7 +4,7 @@ class ThinkingSphinx::Deltas::ManualDelta < ThinkingSphinx::Deltas::DefaultDelta
   # Invoked via a before_save callback. The default behaviour is to set the
   # delta column to true.
   def toggle(instance)
-    instance.new_record?
+    super
   end
 
   # Invoked via an after_commit callback. The default behaviour is to check
