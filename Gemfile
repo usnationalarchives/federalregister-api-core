@@ -6,10 +6,10 @@ gem 'rails', '6.0.2.1'
 # gems supporting backward-compatibility with Rails 2 conventions:
 gem 'rails-observers'
 gem 'edge_rider'
+gem 'rails_autolink' # autolink removed in Rails 3.1.  This is an extraction of the functionality.
 # ==============================================================================
 
 gem 'mysql2'
-gem 'memoist'
 
 # production app server
 gem 'passenger', '~> 6.0'
@@ -30,8 +30,8 @@ gem 'json', '1.8.6'
 gem 'ym4r', '0.6.1'
 gem 'thinking-sphinx', '~> 4.4.1 ', :require => 'thinking_sphinx'
 gem 'ffi-hunspell',
-  :git => 'https://github.com/postmodern/ffi-hunspell.git',
-  :ref => '91516637fdff9cef9bae66aefdd89e1b4a8b5831',
+  :git     => 'https://github.com/postmodern/ffi-hunspell.git',
+  :ref     => '91516637fdff9cef9bae66aefdd89e1b4a8b5831',
   :require => 'ffi/hunspell'
 
 gem 'honeybadger', '~> 2.3.3'
@@ -41,9 +41,6 @@ gem 'paperclip'
  # required by paperclip but unspecified version - this ensures a comptible version
 gem 'mime-types', '~> 1.25', '>= 1.25.1'
 gem 'aws-sdk-s3'
-# add methods to the ruby Process command via C-extensions
-gem 'proc-wait3'
-
 gem 'stevedore', '0.3.0'
 
 # fork of delynn/userstamp plugin
@@ -51,7 +48,6 @@ gem 'stevedore', '0.3.0'
 
 gem 'active_hash', '~> 2.0'
 gem 'acts_as_list'
-# gem 'bcrypt-ruby', '2.1.2', :require => 'bcrypt'
 gem 'bcrypt'
 gem 'bootstrap-sass', '2.3.2.2'
 gem 'will_paginate-bootstrap', '0.2.5'
@@ -90,15 +86,10 @@ gem "httmultiparty", '~> 0.3.13'
 gem "recaptcha", "0.3.1", :require => 'recaptcha/rails'
 gem 'sendgrid', :git => "https://github.com/criticaljuncture/sendgrid.git", :branch => 'master'
 gem 'modularity'
-
-# gem "validation_reflection"#, "0.3.8" #TODO: Address implications of removing this gem as it has gone stale
-
 gem 'rdoc'
 gem 'net-sftp'
 gem 'diffy'
 gem 'cocaine'
-gem 'rails_autolink' # autolink removed in Rails 3.1.  This is an extraction of the functionality.
-
 gem 'hoe'
 
 # cron jobs
@@ -118,14 +109,10 @@ gem 'american_date'
 
 # add methods to the ruby Process command via C-extensions
 # (tracking memory usage)
-# gem 'proc-wait3'
+gem 'proc-wait3'
 
 Encoding.default_external = Encoding::UTF_8
 Encoding.default_internal = Encoding::UTF_8
-
-#needed for rail 2.x (removed in ruby 2+)
-# TODO: BB remove after upgrade
-# gem 'iconv', '~> 1.0', '>= 1.0.5'
 
 gem 'open_calais'
 
