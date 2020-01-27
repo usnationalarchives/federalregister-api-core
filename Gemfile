@@ -35,9 +35,6 @@ gem 'ffi-hunspell',
   :require => 'ffi/hunspell'
 
 gem 'honeybadger', '~> 2.3.3'
-gem 'resque-honeybadger',
-    :git => 'https://github.com/henrik/resque-honeybadger.git',
-    :ref => '832be87662840d44e73f66c006796da8ed6250e2'
 gem 'sitemap_generator', '~> 1.5.0'
 
 gem 'paperclip'

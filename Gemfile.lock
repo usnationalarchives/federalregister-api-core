@@ -28,15 +28,6 @@ GIT
     app_config (1.3.2)
 
 GIT
-  remote: https://github.com/henrik/resque-honeybadger.git
-  revision: 832be87662840d44e73f66c006796da8ed6250e2
-  ref: 832be87662840d44e73f66c006796da8ed6250e2
-  specs:
-    resque-honeybadger (1.0.2)
-      honeybadger
-      resque (>= 1.8.0)
-
-GIT
   remote: https://github.com/postmodern/ffi-hunspell.git
   revision: 91516637fdff9cef9bae66aefdd89e1b4a8b5831
   ref: 91516637fdff9cef9bae66aefdd89e1b4a8b5831
@@ -618,7 +609,6 @@ DEPENDENCIES
   recaptcha (= 0.3.1)
   redis (= 3.3.5)
   resque
-  resque-honeybadger!
   resque-throttler!
   rspec-rails (~> 3.6)
   rubocop
