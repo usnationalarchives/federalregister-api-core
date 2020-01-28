@@ -13,9 +13,9 @@ class Mailer < ActionMailer::Base
     @user = user
     @edit_password_reset_url = edit_admin_password_reset_url(user.perishable_token)
 
-    mail  subject:    "FR2 Admin Password Reset",
+    mail  to:         user.email,
+          subject:    "FR2 Admin Password Reset",
           from:       "FR2 Admin <info@criticaljuncture.org>",
-          recipients: user.email,
           sent_on:    Time.current
   end
 
@@ -39,7 +39,8 @@ class Mailer < ActionMailer::Base
     @agency_name_presenter = AgencyNameAuditPresenter.new(date)
     @problematic_document_presenter = ProblematicDocumentPresenter.new(date)
 
-    mail subject:    "[FR Admin] Daily Import Update for #{date} (#{RAILS_ENV})",
+    mail to:         recipients,
+         subject:    "[FR Admin] Daily Import Update for #{date} (#{RAILS_ENV})",
          from:       "Federal Register Admin <no-reply@mail.federalregister.gov>",
          recipients: 'nobody@federalregister.gov', # should use sendgrid_recipients for actual recipient list
          sent_on:    Time.current
@@ -47,11 +48,11 @@ class Mailer < ActionMailer::Base
 
   def admin_notification(message)
     sendgrid_category "Admin Notification Email"
-    sendgrid_recipients FR_DEVELOPER_ADMINS
 
     @message = message
 
-    mail subject:    "[FR Notification] Urgent Admin Notification",
+    mail to:         FR_DEVELOPER_ADMINS,
+         subject:    "[FR Notification] Urgent Admin Notification",
          from:       "Federal Register Admin <no-reply@mail.federalregister.gov>",
          recipients: 'nobody@federalregister.gov', # should use sendgrid_recipients for actual recipient list
          sent_on:    Time.current
