@@ -71,7 +71,7 @@ Rails.application.configure do
     :authentication => :plain
   }
 
-  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.delivery_method = :letter_opener
   config.action_mailer.smtp_settings   = smtp_settings
 
   config.action_mailer.default_url_options = {:host => "#{APP_HOST_NAME}", :protocol => "http://"}

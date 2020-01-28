@@ -1,4 +1,6 @@
 FederalregisterApiCore::Application.routes.draw do
+  mount LetterOpenerWeb::Engine, at: "/letter_opener" if Rails.env.development?
+
   namespace :admin do
     match '' => 'special#home', :as => :home, :via => :get
       resources :agencies do
