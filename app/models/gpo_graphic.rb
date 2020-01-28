@@ -33,7 +33,8 @@ class GpoGraphic < ActiveRecord::Base
                     :s3_permissions => :private,
                     :s3_protocol => 'https',
                     :bucket => proc { |attachment| attachment.instance.gpo_graphic_usages.present? ? attachment.instance.public_bucket : attachment.instance.private_bucket },
-                    :path => ":xml_identifier/:style.:extension"
+                    :path => ":xml_identifier/:style.:extension",
+                    :validate_media_type => false
   do_not_validate_attachment_file_type :graphic
 
   Paperclip.interpolates(:xml_identifier) do |attachment, style|
