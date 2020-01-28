@@ -194,7 +194,7 @@
                 <%= document.effective_on %>
               </td>
             <td style="width: 600px;" align="left">
-              <%= date_text.present? ? date_text : '<em>No date text available</em>' %>
+              <%= (date_text.present? ? date_text : '<em>No date text available</em>').html_safe %>
             </td>
           </tr>
           <% end %>
@@ -229,7 +229,7 @@
               <% end %>
                   <%= document.comments_close_on %>
                 </td>
-              <td style="width: 600px" align="left"><%= dates %></td>
+              <td style="width: 600px" align="left"><%= dates.html_safe %></td>
             </tr>
           <% end %>
           <% reset_cycle %>
@@ -257,7 +257,7 @@
                 <%= link_to doc_num, short_entry_url(document.document_number) %>
               </td>
               <td style="width: 150px;" align="left"><%= document.comments_close_on %></td>
-              <td style="width: 600px" align="left"><%= dates %></td>
+              <td style="width: 600px" align="left"><%= dates.html_safe %></td>
             </tr>
           <% end %>
           <% reset_cycle %>
@@ -310,7 +310,7 @@
                     <em>not remapped</em>
                   <% end %>
                 </td>
-                <td style="width: 255px;padding: 20px 0;" align="left"><%= remapping.entries.map{|e| link_to e.document_number, short_entry_url(e.document_number)}.join(', ') %>
+                <td style="width: 255px;padding: 20px 0;" align="left"><%= remapping.entries.map{|e| link_to e.document_number, short_entry_url(e.document_number)}.join(', ').html_safe %>
               </tr>
           <% end %>
           <% reset_cycle %>
@@ -341,7 +341,7 @@
                   <em>not remapped</em>
                 <% end %>
               </td>
-              <td style="width: 255px;padding: 20px 0;"><%= remapping.entries.map{|e| link_to e.document_number, short_entry_url(e.document_number)}.join(', ') %>
+              <td style="width: 255px;padding: 20px 0;"><%= remapping.entries.map{|e| link_to e.document_number, short_entry_url(e.document_number)}.join(', ').html_safe %>
             </tr>
           <% end %>
           <% reset_cycle %>
