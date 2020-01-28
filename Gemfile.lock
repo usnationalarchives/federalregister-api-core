@@ -14,13 +14,6 @@ GIT
       resque (~> 1.25)
 
 GIT
-  remote: https://github.com/criticaljuncture/sendgrid.git
-  revision: 87d532bff3ab83ac5e842177a7b1fdaae39681b0
-  branch: master
-  specs:
-    sendgrid (0.1.5)
-
-GIT
   remote: https://github.com/fredwu/app_config.git
   revision: efce678826ea465b30d67357b9f6562bc9a871c0
   branch: master
@@ -484,6 +477,8 @@ GEM
       tilt
     scrypt (3.0.7)
       ffi-compiler (>= 1.0, < 2.0)
+    sendgrid (1.2.4)
+      json
     signet (0.10.0)
       addressable (~> 2.3)
       faraday (~> 0.9)
@@ -614,7 +609,7 @@ DEPENDENCIES
   rubocop
   rubyzip
   sass-rails
-  sendgrid!
+  sendgrid
   sitemap_generator (~> 1.5.0)
   stevedore (= 0.3.0)
   test-unit (= 1.2.3)

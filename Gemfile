@@ -84,7 +84,7 @@ gem "httparty"
 gem "httmultiparty", '~> 0.3.13'
 
 gem "recaptcha", "0.3.1", :require => 'recaptcha/rails'
-gem 'sendgrid', :git => "https://github.com/criticaljuncture/sendgrid.git", :branch => 'master'
+gem 'sendgrid'
 gem 'modularity'
 gem 'rdoc'
 gem 'net-sftp'
