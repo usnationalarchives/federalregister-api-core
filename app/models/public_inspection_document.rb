@@ -65,7 +65,7 @@ class PublicInspectionDocument < ApplicationModel
   end
 
   def document_file_path
-    self['document_file_path'] || document_number.sub(/-/,'').scan(/.{0,3}/).reject(&:blank?).join('/')
+    read_attribute(:document_file_path) || document_number.sub(/-/,'').scan(/.{0,3}/).reject(&:blank?).join('/')
   end
 
   def slug
