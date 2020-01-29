@@ -46,7 +46,17 @@ class Api::V1::SuggestedSearchesController < ApiController
   end
 
   def remove_blank_conditions(conditions)
-    conditions.reject{|k,v| v.is_a?(String) ? v.blank? : v.all?{|k,v| v.blank?}}
+    conditions.reject do |k,v|
+      if v.is_a?(String)
+        v.blank?
+      elsif v.is_a?(Array)
+        v.all?(&:blank?)
+      elsif v.is_a?(Hash)
+        v.all?{|k,v| v.blank?}
+      else
+        Honeybadger.notify("Unexpected conditions: #{conditions}")
+      end
+    end
   end
 
   def suggested_search_json(search)
