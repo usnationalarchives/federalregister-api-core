@@ -1,5 +1,4 @@
 class Event < ApplicationModel
-  include Icalendar
   PUBLIC_MEETING_PHRASES = ["public meeting", "public hearing", "town hall meeting", "web dialogue", "webinar"]
 
   EVENT_TYPES_SINGULAR = {
@@ -48,16 +47,6 @@ class Event < ApplicationModel
 
   def entry_full_text
     entry.raw_text
-  end
-
-  def to_ics
-    ical_event = Icalendar::Event.new
-    ical_event.start = self.date
-    ical_event.end = self.date
-    ical_event.summary = "#{self.type}: #{self.title}"
-    ical_event.unique_id = "https://www.federalregister.gov/events/#{self.id}"
-    ical_event.description = self.entry.try(:abstract)
-    ical_event
   end
 
   # define_index do

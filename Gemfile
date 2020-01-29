@@ -60,7 +60,6 @@ gem 'faraday'
 # make multiple http requests concurrently
 gem 'typhoeus', '~> 1.0', '>= 1.0.1'
 gem 'ransack'
-gem 'icalendar'
 gem 'klarlack', '0.0.7',
   git: 'https://github.com/criticaljuncture/klarlack.git',
   ref: 'f4c9706cd542046e7e37a4872b3a272b57cbb31b'

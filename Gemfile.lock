@@ -205,7 +205,6 @@ GEM
       multi_xml (>= 0.5.2)
     i18n (1.8.2)
       concurrent-ruby (~> 1.0)
-    icalendar (1.1.5)
     indefinite_article (0.2.0)
       activesupport
     innertube (1.1.0)
@@ -494,7 +493,6 @@ DEPENDENCIES
   httmultiparty (~> 0.3.13)
   http_headers (= 0.0.2.3)
   httparty
-  icalendar
   indefinite_article
   jquery-rails
   json (= 1.8.6)
