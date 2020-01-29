@@ -364,7 +364,7 @@ GEM
     parallel (1.19.1)
     parser (2.7.0.2)
       ast (~> 2.4.0)
-    passenger (6.0.2)
+    passenger (6.0.4)
       rack
       rake (>= 0.8.1)
     polyamorous (2.3.2)
