@@ -371,6 +371,7 @@ class ApplicationSearch
       :retry_stale => true,
       :sort_mode => sort_mode,
       :max_matches => 10_000,
+      :excerpts => {:limit => 300, :around => 150},
     }.merge(find_options)
   end
 
