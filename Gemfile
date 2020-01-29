@@ -89,7 +89,7 @@ gem 'modularity'
 gem 'rdoc'
 gem 'net-sftp'
 gem 'diffy'
-gem 'cocaine'
+gem 'terrapin'
 gem 'hoe'
 
 # cron jobs

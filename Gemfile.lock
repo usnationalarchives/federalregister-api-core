@@ -138,8 +138,6 @@ GEM
     ci_reporter (1.6.3)
       builder (>= 2.1.2)
     climate_control (0.2.0)
-    cocaine (0.6.0)
-      terrapin (= 0.6.0)
     coderay (1.1.0)
     concurrent-ruby (1.1.5)
     crass (1.0.5)
@@ -478,7 +476,6 @@ DEPENDENCIES
   bootsnap
   bootstrap-sass (= 2.3.2.2)
   ci_reporter (= 1.6.3)
-  cocaine
   curb (= 0.9.0)
   diffy
   edge_rider
@@ -535,6 +532,7 @@ DEPENDENCIES
   sendgrid
   sitemap_generator (~> 1.5.0)
   stevedore (= 0.3.0)
+  terrapin
   test-unit (= 1.2.3)
   thinking-sphinx (~> 4.4.1)
   timecop

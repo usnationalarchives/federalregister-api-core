@@ -12,7 +12,7 @@ class Paperclip::PermalinkBannerAdder < Paperclip::Processor
       page_1 = Tempfile.new('pil_doc_page_1')
 
       # grab first page
-      Cocaine::CommandLine.new(
+      Terrapin::CommandLine.new(
         "pdftk",
         ":file_path cat 1 output :page_1_path"
       ).run(
@@ -22,7 +22,7 @@ class Paperclip::PermalinkBannerAdder < Paperclip::Processor
 
       page_1_with_banner = Tempfile.new('pil_doc_page_1_with_banner')
       # stamp with banner
-      Cocaine::CommandLine.new(
+      Terrapin::CommandLine.new(
         "pdftk",
         ":page_1_path stamp :banner_path output :stamped_path"
       ).run(
@@ -32,7 +32,7 @@ class Paperclip::PermalinkBannerAdder < Paperclip::Processor
       )
 
       # re-combine first page with rest of pages
-      Cocaine::CommandLine.new(
+      Terrapin::CommandLine.new(
         "pdftk",
         "A=:page_1_with_banner_path B=:file_path cat A1 B2-end output :output_path"
       ).run(
@@ -41,7 +41,7 @@ class Paperclip::PermalinkBannerAdder < Paperclip::Processor
         output_path: output.path
       )
     else
-      Cocaine::CommandLine.new(
+      Terrapin::CommandLine.new(
         "pdftk",
         ":input_path stamp :banner_path output :output_path"
       ).run(
@@ -62,7 +62,7 @@ class Paperclip::PermalinkBannerAdder < Paperclip::Processor
       input_html.write generate_html(page_size)
       input_html.close
 
-      Cocaine::CommandLine.new(
+      Terrapin::CommandLine.new(
         '/usr/local/bin/prince',
         ':html_path -o :pdf_path'
       ).run(

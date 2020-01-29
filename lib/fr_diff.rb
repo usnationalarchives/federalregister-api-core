@@ -8,7 +8,7 @@ class FrDiff
   end
 
   def diff
-    line = Cocaine::CommandLine.new(
+    line = Terrapin::CommandLine.new(
       "diff",
       ":file1 :file2",
       :expected_outcodes => [0, 1]

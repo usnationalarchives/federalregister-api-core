@@ -17,7 +17,7 @@ module SphinxIndexer
 
   def self.rotate_indices(index_names)
     begin
-      Cocaine::CommandLine.new(
+      Terrapin::CommandLine.new(
         "/usr/local/bin/indexer",
         "-c :sphinx_conf :index_names --rotate"
       ).run(
@@ -33,7 +33,7 @@ module SphinxIndexer
 
   def self.restart
     begin
-      Cocaine::CommandLine.new(
+      Terrapin::CommandLine.new(
         "/usr/bin/touch",
         "/home/app/db/sphinx/restart.txt"
       ).run
