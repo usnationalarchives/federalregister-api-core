@@ -1,7 +1,7 @@
 module Shared::DoesSlug
   as_trait do |options|
     before_validation :slugify, on: :create
-    validates_uniqueness_of :slug
+    validates_uniqueness_of :slug, case_sensitive: true
 
     private
 
