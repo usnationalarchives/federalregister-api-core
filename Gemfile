@@ -6,7 +6,6 @@ gem 'rails', '6.0.2.1'
 # gems supporting backward-compatibility with Rails 2 conventions:
 gem 'rails-observers'
 gem 'edge_rider'
-gem 'rails_autolink' # autolink removed in Rails 3.1.  This is an extraction of the functionality.
 # ==============================================================================
 
 gem 'mysql2'
@@ -126,8 +125,6 @@ group :test do
   gem 'mock_redis'
   gem 'vcr'
   gem 'fakeweb'
-  gem 'ci_reporter', '1.6.3'
-  gem 'test-unit', '1.2.3'
 end
 
 group :development do

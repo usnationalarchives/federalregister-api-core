@@ -133,8 +133,6 @@ GEM
       sass (~> 3.2)
     builder (3.2.4)
     chronic (0.10.2)
-    ci_reporter (1.6.3)
-      builder (>= 2.1.2)
     climate_control (0.2.0)
     coderay (1.1.0)
     concurrent-ruby (1.1.5)
@@ -321,8 +319,6 @@ GEM
       loofah (~> 2.3)
     rails-observers (0.1.5)
       activemodel (>= 4.0)
-    rails_autolink (1.1.6)
-      rails (> 3.1)
     railties (6.0.2.1)
       actionpack (= 6.0.2.1)
       activesupport (= 6.0.2.1)
@@ -417,8 +413,6 @@ GEM
     stevedore (0.3.0)
     terrapin (0.6.0)
       climate_control (>= 0.0.3, < 1.0)
-    test-unit (1.2.3)
-      hoe (>= 1.5.1)
     thinking-sphinx (4.4.1)
       activerecord (>= 3.1.0)
       builder (>= 2.1.2)
@@ -475,7 +469,6 @@ DEPENDENCIES
   binding_of_caller
   bootsnap
   bootstrap-sass (= 2.3.2.2)
-  ci_reporter (= 1.6.3)
   curb (= 0.9.0)
   diffy
   edge_rider
@@ -517,7 +510,6 @@ DEPENDENCIES
   pry-remote
   rails (= 6.0.2.1)
   rails-observers
-  rails_autolink
   ransack
   rdoc
   recaptcha (= 0.3.1)
@@ -532,7 +524,6 @@ DEPENDENCIES
   sitemap_generator (~> 1.5.0)
   stevedore (= 0.3.0)
   terrapin
-  test-unit (= 1.2.3)
   thinking-sphinx (~> 4.4.1)
   timecop
   titleize
