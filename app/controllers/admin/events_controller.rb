@@ -44,7 +44,7 @@ class Admin::EventsController < AdminController
   def update
     @event = Event.find(params[:id])
 
-    if @event.update_attributes(event_params)
+    if @event.update(event_params)
       flash[:notice] = "Successfully updated."
       redirect_to admin_events_url
     else

@@ -46,7 +46,7 @@ module Content
 
     def generate_diffs
       begin
-        reprocessed_issue.update_attributes(
+        reprocessed_issue.update(
           diff: diff[0, 40000],
           html_diff: html_diff[0, 40000]
         )

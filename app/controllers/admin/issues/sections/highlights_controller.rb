@@ -21,7 +21,7 @@ class Admin::Issues::Sections::HighlightsController < AdminController
     @section = Section.find_by_slug(params[:section_id])
     @section_highlight = SectionHighlight.find_by_publication_date_and_section_id_and_entry_id!(@publication_date, @section, params[:id])
 
-    if @section_highlight.update_attributes(section_highlight_params)
+    if @section_highlight.update(section_highlight_params)
       respond_to do |wants|
         wants.html do
           redirect_to admin_issue_section_path(@publication_date.to_s(:db), @section)

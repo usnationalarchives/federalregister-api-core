@@ -9,7 +9,7 @@ class Admin::SiteNotificationsController < AdminController
 
   def update
     @site_notification = SiteNotification.find(params[:id])
-    if @site_notification.update_attributes(site_notification_params)
+    if @site_notification.update(site_notification_params)
       flash[:notice] = "Site notification updated"
       redirect_to admin_site_notifications_path
     else

@@ -31,7 +31,7 @@ class Admin::AgencyNamesController < AdminController
   def update
     @agency_name = AgencyName.find(params[:id])
 
-    if @agency_name.update_attributes(agency_name_params)
+    if @agency_name.update(agency_name_params)
       flash[:notice] = 'Successfully saved'
       if params[:return_to]
         redirect_to params[:return_to]

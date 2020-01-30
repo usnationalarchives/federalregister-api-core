@@ -29,7 +29,7 @@ class Admin::SectionsController < AdminController
   def update
     @section = Section.find_by_slug(params[:id])
 
-    if @section.update_attributes(section_params)
+    if @section.update(section_params)
       flash[:notice] = "Successfully updated."
       redirect_to admin_section_url(@section)
     else

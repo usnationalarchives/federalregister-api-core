@@ -51,7 +51,7 @@ class Admin::AgenciesController < AdminController
     @agency = Agency.find_by_slug!(params[:id])
     original_slug = @agency.slug
 
-    if @agency.update_attributes(agency_params)
+    if @agency.update(agency_params)
       if original_slug != @agency.slug
         Honeybadger.notify(
           :error_class   => "Agency name changed",

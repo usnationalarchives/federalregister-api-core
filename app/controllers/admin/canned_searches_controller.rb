@@ -29,7 +29,7 @@ class Admin::CannedSearchesController < AdminController
 
   def update
     @canned_search = CannedSearch.find(params[:id])
-    if @canned_search.update_attributes(canned_search_params)
+    if @canned_search.update(canned_search_params)
       if request.xhr?
         head :ok
       else

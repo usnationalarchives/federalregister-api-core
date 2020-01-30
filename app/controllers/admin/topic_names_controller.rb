@@ -21,7 +21,7 @@ class Admin::TopicNamesController < AdminController
 
   def update
     @topic_name = TopicName.find(params[:id])
-    if @topic_name.update_attributes(params[:topic_name])
+    if @topic_name.update(params[:topic_name])
       flash[:notice] = 'Successfully saved'
       next_topic_name = TopicName.
         unprocessed.
