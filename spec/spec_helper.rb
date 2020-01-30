@@ -28,7 +28,6 @@ RSpec.configure do |config|
   # instead of true.
   config.use_transactional_fixtures = true
   config.use_instantiated_fixtures  = false
-  config.extend VCR::RSpec::Macros
 
   config.before(:each) do
     # If this becomes non-performant, the stub can be relocated

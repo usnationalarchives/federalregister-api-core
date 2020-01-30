@@ -1,8 +1,7 @@
 require 'spec_helper'
 
-describe GeoLocator do
+describe GeoLocator, vcr: true do
   include RedisSpecHelperMethods
-  use_vcr_cassette
 
   describe ".perform" do
     it "returns an empty Geokit::GeoLoc object if a zip code is not provided" do

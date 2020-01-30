@@ -1,7 +1,6 @@
 require "spec_helper"
 
-describe EntrySearch do
-  use_vcr_cassette
+describe EntrySearch, vcr: true do
 
   describe 'agency_ids' do
     it "populates sphinx `with`" do

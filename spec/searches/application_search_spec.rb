@@ -1,7 +1,6 @@
 require "spec_helper"
 
-describe ApplicationSearch do
-  use_vcr_cassette
+describe ApplicationSearch, vcr: true do
 
   before(:each) do
     @search_class = Class.new(ApplicationSearch)
