@@ -117,6 +117,7 @@ gem 'open_calais'
 gem 'uglifier'
 gem 'sass-rails'
 gem 'xmlrpc'
+gem 'rinku'
 
 
 group :test do

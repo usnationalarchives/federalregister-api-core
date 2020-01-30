@@ -1,4 +1,4 @@
-require 'rails_autolink'
+require 'rails_rinku'
 
 class Api::V1::SuggestedSearchesController < ApiController
   def index
