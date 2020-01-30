@@ -29,7 +29,7 @@ class ApplicationSearch
     # refactor to partials...
 
     define_method "#{filter_name}=" do |val|
-      if (val.present? && (val.is_a?(String) || val.is_a?(Fixnum))) || (val.is_a?(Array) && !val.all?(&:blank?))
+      if (val.present? && (val.is_a?(String) || val.is_a?(Integer))) || (val.is_a?(Array) && !val.all?(&:blank?))
         instance_variable_set("@#{filter_name}", val)
         if val.is_a?(Array)
           val.reject!(&:blank?)

@@ -9,7 +9,7 @@ class ApplicationSearch
       @validation_errors = ''
 
       @within = DEFAULT_WITHIN
-      if within.present? && within.is_a?(String) || within.is_a?(Fixnum)
+      if within.present? && within.is_a?(String) || within.is_a?(Integer)
         if within.to_i < 1 || within.to_i > 200
           @validation_errors = "within must be between 1 and 200"
         else
