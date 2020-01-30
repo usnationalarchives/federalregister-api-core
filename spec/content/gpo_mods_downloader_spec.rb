@@ -7,8 +7,8 @@ describe Content::GpoModsDownloader do
 
   describe "#generate_diffs" do
     it "calls #diff and #html_diff" do
-      FrDiff.any_instance.stub(:diff).and_return("")
-      FrDiff.any_instance.stub(:html_diff).and_return("")
+      allow_any_instance_of(FrDiff).to receive(:diff).and_return("")
+      allow_any_instance_of(FrDiff).to receive(:html_diff).and_return("")
 
       expect(mods_downloader).to receive(:diff).once.and_call_original
       expect(mods_downloader).to receive(:html_diff).once.and_call_original
@@ -17,8 +17,8 @@ describe Content::GpoModsDownloader do
     end
 
     it "saves the results of diff to the reprocessed issue" do
-      Content::GpoModsDownloader.any_instance.stub(:diff).and_return('stubbed diff')
-      Content::GpoModsDownloader.any_instance.stub(:html_diff).and_return('stubbed html_diff')
+      allow_any_instance_of(Content::GpoModsDownloader).to receive(:diff).and_return('stubbed diff')
+      allow_any_instance_of(Content::GpoModsDownloader).to receive(:html_diff).and_return('stubbed html_diff')
 
       mods_downloader.generate_diffs
       reprocessed_issue.reload

@@ -23,6 +23,11 @@ RSpec.configure do |config|
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
 
+  config.expect_with(:rspec) { |c| c.syntax = [:should, :expect] }
+  config.mock_with :rspec do |mocks|
+    mocks.syntax = [:expect, :should]
+  end
+
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false
   # instead of true.
@@ -32,6 +37,6 @@ RSpec.configure do |config|
   config.before(:each) do
     # If this becomes non-performant, the stub can be relocated
     # to individual tests which use redis.
-    Redis.stub(:new).and_return(MockRedis.new)
+    allow(Redis).to receive(:new) { MockRedis.new }
   end
 end
