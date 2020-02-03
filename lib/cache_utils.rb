@@ -7,21 +7,36 @@ module CacheUtils
   class Client
     include Singleton
 
+    MAX_RETRIES = 1
     def purge(regexp)
       Rails.logger.info("Expiring from varnish: '#{regexp}'...")
+      retries = 0
       begin
         client.send(:cmd, "ban req.url ~ #{regexp}")
       rescue SocketError => e
         Rails.logger.warn("Couldn't connect to varnish to expire '#{regexp}'")
         Honeybadger.notify(e)
+      rescue Varnish::BrokenConnection, Errno::EPIPE, Errno::ETIMEDOUT
+        if retries < MAX_RETRIES
+          refresh_client!
+          retry
+          retries += 1
+        end
       end
     end
 
     private
 
     def client
-      host = "#{SETTINGS['varnish']['host']}:#{SETTINGS['varnish']['port']}"
       @client ||= Varnish::Client.new(host, :timeout => 60)
+    end
+
+    def refresh_client!
+      @client = Varnish::Client.new(host, :timeout => 60)
+    end
+
+    def host
+      "#{SETTINGS['varnish']['host']}:#{SETTINGS['varnish']['port']}"
     end
   end
 end
