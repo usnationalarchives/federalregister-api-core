@@ -18,7 +18,7 @@ class Api::V1::EntriesController < ApiController
         fields = specified_fields || EntryApiRepresentation.default_index_fields_csv
         find_options = EntryApiRepresentation.find_options_for(fields)
 
-        search = entry_search(params, fields)
+        search = entry_search(deserialized_params, fields)
         filename = search.summary.gsub(/\W+/, '_').sub(/_$/,'').downcase
         entries = search.results(find_options)
         render_csv(entries, fields, filename)
@@ -29,7 +29,7 @@ class Api::V1::EntriesController < ApiController
         find_options = EntryApiRepresentation.find_options_for(fields)
 
         search = entry_search(
-          params.merge(order: 'newest', per_page: 200),
+          deserialized_params.merge(order: 'newest', per_page: 200),
           fields
         )
         documents = search.results(find_options)

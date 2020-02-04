@@ -220,6 +220,9 @@ class ApplicationSearch
   end
 
   def results(args = {})
+    select = args.delete(:select)
+    args.merge!(sql: {select: select})
+
     result_array = sphinx_search(sphinx_term,
       search_options.recursive_merge(args)
     )
