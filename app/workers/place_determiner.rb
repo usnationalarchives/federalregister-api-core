@@ -3,7 +3,7 @@ class PlaceDeterminer
 
   MAX_RETRIES             = 5
   RETRY_DELAY_IN_SECONDS  = 5
-  CHARACTER_REQUEST_LIMIT = 99000
+  CHARACTER_REQUEST_LIMIT = 95000
 
   def self.perform(entry_id)
     ActiveRecord::Base.clear_active_connections!
