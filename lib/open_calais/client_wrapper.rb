@@ -14,7 +14,13 @@ module OpenCalais
     attr_reader :text
 
     def enriched_response
-      @enriched_response ||= open_calais.enrich(text)
+      begin
+        @enriched_response ||= open_calais.enrich(text)
+      rescue Faraday::ParsingError => e
+        Honeybadger.notify(error_message: "#{e.inspect}: Request Size in Bytes: #{text.bytesize}")
+      rescue StandardError => e
+        Honeybadger.notify(error_message: "Open Calais API Failure for text: #{text}. Error: #{e.inspect}")
+      end
     end
 
     def open_calais
