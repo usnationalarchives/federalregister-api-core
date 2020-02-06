@@ -1,5 +1,6 @@
 module OpenCalais
   class ClientWrapper
+    class ConcurrentRequestLimit < StandardError; end
 
     def initialize(text)
       @text = text
@@ -17,9 +18,12 @@ module OpenCalais
       begin
         @enriched_response ||= open_calais.enrich(text)
       rescue Faraday::ParsingError => e
-        Honeybadger.notify(error_message: "#{e.inspect}: Request Size in Bytes: #{text.bytesize}")
-      rescue StandardError => e
-        Honeybadger.notify(error_message: "Open Calais API Failure for text: #{text}. Error: #{e.inspect}")
+        if e.response.status == 429
+          raise ConcurrentRequestLimit.new(e.inspect)
+        else
+          Honeybadger.notify(error_message: "#{e.inspect}: Request Size in Bytes: #{text.bytesize}")
+          raise e
+        end
       end
     end
 
