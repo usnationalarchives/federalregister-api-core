@@ -79,4 +79,5 @@ Rails.application.configure do
   Rails.application.routes.default_url_options = {:host => "dev-fr2.criticaljuncture.org", :protocol => "https"}
 
   config.hosts << "docker.for.mac.host.internal"
+  config.hosts << 'host.docker.internal'
 end
