@@ -54,6 +54,8 @@ gem 'authlogic'
 gem 'bootsnap'
 gem 'jquery-rails'
 
+gem 'elasticsearch-persistence', '~> 7.0'
+
 # wrapper around http requests that supports multiple backends
 gem 'faraday'
 # make multiple http requests concurrently
