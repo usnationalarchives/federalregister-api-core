@@ -1,6 +1,5 @@
 DEFAULT_CLIENT = Elasticsearch::Client.new(
-  host: 'localhost:9200',#'https://admin:admin@localhost:9200/',#SETTINGS['elasticsearch']['host'],
-  # https://admin:admin@elasticsearch:9200
+  host: SETTINGS['elasticsearch']['host'],
   transport_options: {
     request: { timeout: 10 }
   },

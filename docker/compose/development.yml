@@ -4,6 +4,9 @@ web:
     service: web
   environment:
     - RAILS_ENV=development
+    - ELASTICSEARCH_HOST=http://admin:admin@elasticsearch:9200
+  links:
+    - elasticsearch
 
 mysql:
   extends:
@@ -18,3 +21,10 @@ redis:
     service: redis
   ports:
     - "6379:6379"
+
+elasticsearch:
+  extends:
+    file: shared.yml
+    service: elasticsearch
+  environment:
+    - opendistro_security.ssl.http.enabled=false
