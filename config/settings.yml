@@ -5,6 +5,9 @@ shared: &shared
   admin:
     basecamp_url: <%= ENV['ADMIN_BASECAMP_URL'] %>
     pager_duty_email: <%= ENV['ADMIN_PAGER_DUTY_EMAIL'] %>
+  elasticsearch:
+    host: <%= ENV['ELASTICSEARCH_HOST'] || 'admin:admin@localhost:9200/' ||'localhost' %>
+    trace: true
 
   varnish:
     host: <%= ENV["VARNISH_ADDR"] || 'varnish' %>
@@ -40,6 +43,7 @@ test:
   <<: *shared
   s3_buckets:
     zipped_eps_images: XXXXXXXXXXXXXXXXXXXXXXX
+    # lede_photos: lede-photos.example.org
 
 development:
   <<: *shared
@@ -66,7 +70,14 @@ development:
       dockets: false
       documents: false
     varnish: false
+<<<<<<< HEAD
   deliver_daily_import_email: false
+=======
+  sphinx:
+    use_local_pil_date: true
+    pil_index_since_date: '2019-04-11'
+
+>>>>>>> WIP
 
 staging:
   <<: *shared
