@@ -1,12 +1,10 @@
 shared: &shared
   address: <%= ENV["SPHINX_TCP_ADDR"] || 'sphinx' %>
-  compat_sphinxql_magics: 0
   configuration_file: config/sphinx/sphinx.conf
   pid_file: pids/searchd.pid
   indices_location: db/sphinx/
   index_exact_words: 1
   log: <%= "#{RAILS_ROOT}/log/searchd.log" %>
-  max_matches: 10000
   mem_limit: 528M
   morphology: stem_en
   version: '2.1.2'
