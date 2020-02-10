@@ -38,15 +38,10 @@ RUN npm install -g jshint
 #######################
 
 WORKDIR /tmp
-RUN curl -O http://sphinxsearch.com/files/sphinx-2.1.2-release.tar.gz &&\
-  tar xzvf sphinx-2.1.2-release.tar.gz &&\
-  cd /tmp/sphinx-2.1.2-release &&\
-  ./configure &&\
-  make &&\
-  make install &&\
-  rm /tmp/sphinx-2.1.2-release.tar.gz &&\
-  rm -Rf /tmp/sphinx-2.1.2-release
-
+RUN curl -O https://sphinxsearch.com/files/sphinx-3.2.1-f152e0b-linux-amd64.tar.gz &&\
+  tar xzvf sphinx-3.2.1-f152e0b-linux-amd64.tar.gz &&\
+  cp /tmp/sphinx-3.2.1/bin/* /usr/local/bin/
+RUN rm -Rf /tmp/sphinx-3.2.1 && rm /tmp/sphinx-3.2.1-f152e0b-linux-amd64.tar.gz
 
 ##################
 ### PRINCEXML
