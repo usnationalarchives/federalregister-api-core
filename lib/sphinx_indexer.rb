@@ -25,7 +25,7 @@ module SphinxIndexer
       )
 
       restart
-    rescue Cocaine::ExitStatusError => error
+    rescue Terrapin::ExitStatusError => error
       raise SphinxIndexer::SphinxIndexerError.new(error)
     end
   end
@@ -36,7 +36,7 @@ module SphinxIndexer
         "/usr/bin/touch",
         "/home/app/db/sphinx/restart.txt"
       ).run
-    rescue Cocaine::ExitStatusError => error
+    rescue Terrapin::ExitStatusError => error
       raise SphinxIndexer::SphinxIndexerError.new(error)
     end
   end
