@@ -1,19 +1,20 @@
 require "spec_helper"
 
-describe "ES PI Doc Search", vcr: true do
+describe "ES PI Doc Search" do
 
   before(:all) do
-    # $public_inspection_document_repository.create_index!(force: true)
+    $public_inspection_document_repository.create_index!(force: true)
   end
 
-  describe 'it does stuff' do
+  let!(:public_inspection_document) do
     Factory(:public_inspection_document, publication_date: Date.current)
-    binding.pry
-    # search = EntrySearch.new(:conditions => {:term => "HOWDY", :significant => '1', :cfr =>{:title => '7', :part => '132'}})
+  end
 
-
+  it 'it does stuff' do
     # Fab. PI docs
     #Call Index
-    search = PublicInspectionDocumentSearch.new(:conditions => {:term => "test"})
+    search = EsPublicInspectionDocumentSearch.new(:conditions => {:publication_date => Date.current.to_s(:iso) })
+
+    expect(search.results.count).to_not eq 0
   end
 end
