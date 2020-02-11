@@ -7,7 +7,7 @@ class PublicInspectionDocumentRepository
 
   mapping dynamic: 'strict' do
   #   indexes :filed_at, { type: 'date' }
-  #   indexes :title, { type: 'text'}
+    indexes :title, { type: 'text'}
   #   indexes :full_text, { type: 'text'}
   #   indexes :docket_id, { type: 'keyword'}
   #   indexes :document_number, { type: '?'}
@@ -16,9 +16,30 @@ class PublicInspectionDocumentRepository
     indexes :agency_ids, { type: 'integer' }
     indexes :publication_date, { type: 'date'}
   #   indexes :filed_at, { type: '?'}
-  #   indexes :special_filing, { type: '?'}
+    indexes :special_filing, { type: 'boolean'}
   #   indexes :docket_numbers, { type: '?'}
   #   indexes :public_inspection_issues, { type: '?'}
+  end
+
+  def search_wrapper(term, query={})
+    SearchWrapper.new(search(query))
+  end
+
+  class SearchWrapper
+    # This class is being used to imitate the Sphinx results as we set up ES
+    attr_reader :es_result
+
+    def initialize(es_result)
+      @es_result = es_result
+    end
+
+    def total_pages
+      0 # FIX
+    end
+
+    def count
+      es_result.total
+    end
   end
 
   # def serialize(document)

@@ -29,7 +29,9 @@ class ApplicationSearch::Filter
       @name = @name_definer.call(@value)
     end
 
-    if options[:phrase]
+    if options[:es_value_processor]
+      @sphinx_value = options[:es_value_processor].call(options[:value])
+    elsif options[:phrase]
       @sphinx_value = "\"#{@value.join(' ')}\""
     elsif options[:crc32_encode]
       @sphinx_value = @value.map{|v| Zlib.crc32(v.to_s) }.first
