@@ -13,7 +13,7 @@ class PublicInspectionDocumentRepository
   #   indexes :document_number, { type: '?'}
   #   indexes :public_inspection_document_id, { type: '?'}
   #   indexes :type, { type: '?'} #TODO: type may be a reserved word
-  #   indexes :agency_ids, { type: '?'}
+    indexes :agency_ids, { type: 'integer' }
     indexes :publication_date, { type: 'date'}
   #   indexes :filed_at, { type: '?'}
   #   indexes :special_filing, { type: '?'}
@@ -22,10 +22,10 @@ class PublicInspectionDocumentRepository
   end
 
   # def serialize(document)
-  #   # document.set_id
-  #   document
   # end
 
+  # def deserialize(doc)
+  # end
 end
 
 

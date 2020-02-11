@@ -1,4 +1,9 @@
 class PublicInspectionDocument < ApplicationModel
+  include ActiveModel::Serializers::JSON
+
+  # TODO: potentially refactor to decorated object
+  attr_accessor :agency_ids
+
   has_attached_file :pdf,
                     :storage => :s3,
                     :s3_credentials => {
