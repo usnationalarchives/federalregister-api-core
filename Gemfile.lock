@@ -70,6 +70,11 @@ GEM
       rails-html-sanitizer (~> 1.1, >= 1.2.0)
     active_hash (2.0.0)
       activesupport (>= 2.2.2)
+    active_model_serializers (0.10.10)
+      actionpack (>= 4.1, < 6.1)
+      activemodel (>= 4.1, < 6.1)
+      case_transform (>= 0.2)
+      jsonapi-renderer (>= 0.1.1.beta1, < 0.3)
     activejob (6.0.2.1)
       activesupport (= 6.0.2.1)
       globalid (>= 0.3.6)
@@ -132,6 +137,8 @@ GEM
     bootstrap-sass (2.3.2.2)
       sass (~> 3.2)
     builder (3.2.4)
+    case_transform (0.2)
+      activesupport
     chronic (0.10.2)
     climate_control (0.2.0)
     coderay (1.1.0)
@@ -235,6 +242,7 @@ GEM
       railties (>= 4.2.0)
       thor (>= 0.14, < 2.0)
     json (1.8.6)
+    jsonapi-renderer (0.2.2)
     jwt (1.5.6)
     launchy (2.4.3)
       addressable (~> 2.3)
@@ -476,6 +484,7 @@ PLATFORMS
 
 DEPENDENCIES
   active_hash (~> 2.0)
+  active_model_serializers
   acts_as_list
   addressable (= 2.4.0)
   amatch (= 0.2.11)
