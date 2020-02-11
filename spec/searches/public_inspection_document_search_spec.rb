@@ -7,14 +7,42 @@ describe "ES PI Doc Search" do
   end
 
   let!(:public_inspection_document) do
-    Factory(:public_inspection_document, publication_date: Date.current)
+    Factory(:public_inspection_document,
+      special_filing: 1,
+      publication_date: Date.new(2020,1,1),
+      subject_1: 'fish',
+      subject_2: 'fish',
+      subject_3: 'fish'
+    )
+  end
+
+  let!(:other_public_inspection_document) do
+    Factory(:public_inspection_document,
+      special_filing: 0,
+      publication_date: Date.new(2020,1,2),
+      subject_1: 'goats',
+      subject_2: 'goats',
+      subject_3: 'goats'
+    )
   end
 
   it 'it does stuff' do
-    # Fab. PI docs
-    #Call Index
-    search = EsPublicInspectionDocumentSearch.new(:conditions => {:publication_date => Date.current.to_s(:iso) })
+    serialized_document = PublicInspectionDocumentSerializer.new(public_inspection_document)
+    $public_inspection_document_repository.save(serialized_document)
 
-    expect(search.results.count).to_not eq 0
+    other_serialized_document = PublicInspectionDocumentSerializer.new(other_public_inspection_document)
+    $public_inspection_document_repository.save(other_serialized_document)
+
+    $public_inspection_document_repository.refresh_index!
+
+    # Fab. PI docs
+    search = EsPublicInspectionDocumentSearch.new(
+      :conditions => {
+        :term => 'fish',
+        :special_filing => 1
+      }
+    )
+
+    expect(search.results.count).to eq 1
   end
 end
