@@ -1,5 +1,5 @@
 # This file is copied to spec/ when you run 'rails generate rspec:install'
-ENV["RAILS_ENV"] ||= 'test'
+ENV["RAILS_ENV"] = 'test'
 require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
 require "factory_girl"
@@ -38,5 +38,9 @@ RSpec.configure do |config|
     # If this becomes non-performant, the stub can be relocated
     # to individual tests which use redis.
     allow(Redis).to receive(:new) { MockRedis.new }
+  end
+
+  config.before(:all) do
+    $public_inspection_document_repository.create_index!(force: true)
   end
 end
