@@ -269,7 +269,9 @@ class EsApplicationSearch
   def es_conditions
     es_conditions = {}
     @filters.select{|f| f.sphinx_type == :conditions }.each do |filter|
-      sphinx_conditions[filter.sphinx_attribute] = TermPreprocessor.process_term(filter.sphinx_value)
+      #es_conditions[filter.sphinx_attribute] = ApplicationSearch::TermPreprocessor.process_term(filter.sphinx_value)
+      es_conditions[filter.sphinx_attribute] = filter.sphinx_value
+
     end
 
     es_conditions
@@ -373,8 +375,8 @@ class EsApplicationSearch
     {
       query: {
         bool: {
-          filter: [
-          ]
+          must: [],
+          filter: []
         }
       }
     }
@@ -417,7 +419,19 @@ class EsApplicationSearch
         q[:query][:bool][:minimum_should_match] = 1
       end
 
-      # Handle 'with'
+      raise if es_conditions.present?
+      es_conditions.each do |(condition, value)|
+        q[:query][:bool][:must] << {
+          bool: {
+            must: { # Contributes to score
+              term: {
+                condition => value
+              }
+            }
+          }
+        }
+      end
+
       with.each do |(condition, value)|
         if value.kind_of?(Array) && value.present?
           q[:query][:bool][:filter] << {

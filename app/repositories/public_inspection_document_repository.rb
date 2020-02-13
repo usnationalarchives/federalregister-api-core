@@ -6,22 +6,21 @@ class PublicInspectionDocumentRepository
   klass PublicInspectionDocument
 
   mapping dynamic: 'strict' do
-  #   indexes :filed_at, { type: 'date' }
+    indexes :filed_at, { type: 'date' }
     indexes :title, { type: 'text'}
-  #   indexes :full_text, { type: 'text'}
-  #   indexes :docket_id, { type: 'keyword'}
-  #   indexes :document_number, { type: '?'}
-  #   indexes :public_inspection_document_id, { type: '?'}
-  #   indexes :type, { type: '?'} #TODO: type may be a reserved word
+    indexes :full_text, { type: 'text'}
+    indexes :docket_id, { type: 'keyword'}
+    indexes :document_number, { type: 'keyword' }
+    indexes :public_inspection_document_id, { type: 'integer' }
+    indexes :type, { type: 'keyword' } #TODO: type may be a reserved word
     indexes :agency_ids, { type: 'integer' }
     indexes :publication_date, { type: 'date'}
-  #   indexes :filed_at, { type: '?'}
     indexes :special_filing, { type: 'boolean'}
-  #   indexes :docket_numbers, { type: '?'}
-  #   indexes :public_inspection_issues, { type: '?'}
+    indexes :docket_numbers, { type: 'object' } # Maybe integer array
+    indexes :public_inspection_issues, { type: 'object' }
   end
 
-  def search_wrapper(term, query={})
+  def wrap_search(term, query={})
     SearchWrapper.new(search(query))
   end
 
@@ -46,8 +45,9 @@ class PublicInspectionDocumentRepository
   # def serialize(document)
   # end
 
-  # def deserialize(doc)
-  # end
+  def deserialize(document)
+    PublicInspectionDocumentSearchResult.new ActiveSupport::HashWithIndifferentAccess.new(document['_source']).deep_symbolize_keys
+  end
 end
 
 
