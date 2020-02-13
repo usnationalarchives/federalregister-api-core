@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+function test_es {
+  curl -s -k ${ELASTICSEARCH_HOST}
+}
+
+count=0
+until ( test_es )
+do
+  ((count++))
+  if [ ${count} -gt 300 ]
+  then
+    echo "ES didn't become ready in time"
+    exit 1
+  fi
+  sleep 0.5
+done
