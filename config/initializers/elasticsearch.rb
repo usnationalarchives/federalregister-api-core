@@ -7,3 +7,4 @@ DEFAULT_CLIENT = Elasticsearch::Client.new(
 )
 
 $public_inspection_document_repository = PublicInspectionDocumentRepository.new(client: DEFAULT_CLIENT)
+$entry_repository = EntryRepository.new(client: DEFAULT_CLIENT)

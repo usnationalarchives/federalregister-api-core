@@ -25,9 +25,10 @@ class PublicInspectionDocumentRepository
     SearchWrapper.new(search(query))
   end
 
+  #TODO: Rename to SearchCollectionWrapper to be more explicit
   class SearchWrapper
     # This class is being used to imitate the Sphinx results as we set up ES
-    attr_reader :es_result
+    attr_reader :es_result #TODO: Make private
 
     def initialize(es_result)
       @es_result = es_result

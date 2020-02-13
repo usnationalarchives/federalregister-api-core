@@ -45,4 +45,11 @@ describe "ES PI Doc Search" do
 
     expect(search.results.count).to eq 1
   end
+
+  it "applies a basic boolean filter correctly" do
+    search = EsPublicInspectionDocumentSearch.new(:conditions => {:special_filing => 1 })
+
+    expect(search.results.count).to eq 1
+  end
+
 end

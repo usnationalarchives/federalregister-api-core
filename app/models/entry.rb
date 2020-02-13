@@ -641,6 +641,10 @@ class Entry < ApplicationModel
     "#{publication_date.to_s(:ymd)}/#{document_number}"
   end
 
+  def to_hash
+    EntrySerializer.new(self).to_hash
+  end
+
   private
 
   def record_entry_change

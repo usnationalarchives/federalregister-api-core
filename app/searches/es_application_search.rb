@@ -50,13 +50,14 @@ class EsApplicationSearch
 
     define_method "#{filter_name}=" do |hsh|
       if hsh.is_a?(Hash) && hsh.values.any?(&:present?)
-        selector = DateSelector.new(hsh)
+        selector = ApplicationSearch::DateSelector.new(hsh)
         instance_variable_set("@#{filter_name}", selector)
 
         label = options[:label]
 
         if selector.valid?
           add_filter(
+            #TODO: Potentially pass in an option indicating this is an ES range query?
             :value => selector.sphinx_value,
             :name => selector.filter_name,
             :condition => condition,
@@ -363,7 +364,7 @@ class EsApplicationSearch
 
   def es_search(term, options, sql_args)
     # TODO: handle term, sql_args
-    repository.search_wrapper("", options)
+    repository.wrap_search("", options)
   end
 
   private
@@ -372,8 +373,8 @@ class EsApplicationSearch
     {
       query: {
         bool: {
-          filter: [],
-          minimum_should_match: 1,
+          filter: [
+          ]
         }
       }
     }
@@ -413,17 +414,40 @@ class EsApplicationSearch
           { term: { full_text: es_term } },
           { term: { agency_name: es_term } }
         ]
+        q[:query][:bool][:minimum_should_match] = 1
       end
 
       # Handle 'with'
       with.each do |(condition, value)|
-        q[:query][:bool][:filter] << { term:  { condition => value }}
+        if value.kind_of?(Array) && value.present?
+          q[:query][:bool][:filter] << {
+            bool: {
+              filter: {
+                terms: {
+                  condition => value
+                }
+              }
+            }
+          }
+        else
+          q[:query][:bool][:filter] << {
+            bool: {
+              filter: {
+                term: {
+                  condition => value
+                }
+              }
+            }
+          }
+        end
       end
     end
+
     query
   end
 
   def set_defaults(options)
+    raise NotImplementedError
   end
 
   def sphinx_retry
