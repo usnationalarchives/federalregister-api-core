@@ -72,18 +72,19 @@ describe "Elasticsearch Entry Search" do
     end
 
     it "handles less-than queries" do
-      pending("To handle dates")
-      search = EsEntrySearch.new(:conditions => {:publication_date => {:lte => Date.current.to_s(:iso)}})
+      search = EsEntrySearch.new(:conditions => {:publication_date => {:gte => '2000-01-01', :lte => '2049-01-01'}})
 
       expect(search.send(:search_options)).to eq(
         {
           query: {
             bool: {
+              must: [],
               filter: [
                 {
                   range: {
                     publication_date: {
-                      lte: Date.current.to_s(:iso)
+                      gte: '2000-01-01',
+                      lte: '2049-01-01',
                     }
                   }
                 }
@@ -148,6 +149,34 @@ describe "Elasticsearch Entry Search" do
       expect(search.results.count).to eq(2)
     end
 
+    context "handles date attribute queries" do
+      [
+        #gte, #lte, #is, #year, count
+        ['2000-01-01', nil, nil, nil, 1],
+        [nil, '1999-12-31', nil, nil, 1],
+        [nil, nil, '2000-01-01', nil, 1],
+        ['1970-01-01', '1999-12-31', nil, 2000, 1],
+      ].each do |gte, lte, is, year, count|
+        it "handles dates" do
+          publication_date_conditions = {
+            gte: gte,
+            lte: lte,
+            is: is,
+            year: year,
+          }.reject{|k, v| v.blank?}
+          entries = [
+            build_entry_double({publication_date: '1999-12-31' }),
+            build_entry_double({publication_date: '2000-01-01' }),
+          ]
+
+          entries.each{|entry| $entry_repository.save(entry) }
+          $entry_repository.refresh_index!
+
+          search = EsEntrySearch.new(conditions: {publication_date: publication_date_conditions} )
+          expect(search.results.count).to eq(count)
+        end
+      end
+    end
 
   end
 

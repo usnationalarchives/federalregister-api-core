@@ -63,10 +63,11 @@ class EsApplicationSearch
             :condition => condition,
             :label => label,
             :sphinx_type => :with,
-            :sphinx_attribute => options[:sphinx_attribute] || filter_name
+            :sphinx_attribute => options[:sphinx_attribute] || filter_name,
+            :date_selector => selector
           )
         else
-          @errors[filter_name.to_sym] = "#{label} is not a valid date."
+          @errors[filter_name.to_sym] = "#{label} is not a valid ."
         end
       end
     end
@@ -179,7 +180,7 @@ class EsApplicationSearch
 
   def with
     with = {}
-    @filters.select{|f| f.sphinx_type == :with }.each do |filter|
+    @filters.select{|f| (f.sphinx_type == :with) && !f.date_selector }.each do |filter|
       if filter.multi
         with[filter.sphinx_attribute] ||= []
         with[filter.sphinx_attribute] << filter.sphinx_value
@@ -455,9 +456,28 @@ class EsApplicationSearch
           }
         end
       end
+
+      with_date.each do |condition, date_conditions|
+        q[:query][:bool][:filter] <<
+        {
+          range: {
+            condition => date_conditions
+          }
+        }
+      end
     end
 
     query
+  end
+
+  def with_date
+    hsh = {}
+    @filters.
+      select{|f| f.date_selector }.
+      each do |filter|
+        hsh[filter.sphinx_attribute] = filter.date_selector.date_conditions
+      end
+    hsh
   end
 
   def set_defaults(options)

@@ -44,6 +44,28 @@ class ApplicationSearch::DateSelector
     @valid
   end
 
+  def date_conditions
+    {
+      is:  is,
+      gte: gte,
+      lte: lte,
+      year: year,
+    }.tap do |hsh|
+      is_date = hsh.delete(:is)
+      year    = hsh.delete(:year)
+      if is_date.present?
+        hsh[:lte] = is_date
+        hsh[:gte] = is_date
+      elsif year.present?
+        hsh[:lte]    = year
+        hsh[:gte]    = year
+        hsh[:format] = 'yyyy'
+      end
+
+    end.
+    select{|k,v| v.present? }
+  end
+
   private
 
   def start_date

@@ -1,5 +1,5 @@
 class ApplicationSearch::Filter
-  attr_reader :value, :condition, :label, :sphinx_type, :sphinx_attribute, :sphinx_value, :name, :multi
+  attr_reader :value, :condition, :label, :sphinx_type, :sphinx_attribute, :sphinx_value, :name, :multi, :date_selector
   def initialize(options)
     @name               = options[:name]
     @value              = [options[:value]].flatten
@@ -11,6 +11,8 @@ class ApplicationSearch::Filter
     @model_label_method = options[:model_label_method] || :name
 
     @multi              = options[:multi] || false
+
+    @date_selector      = options[:date_selector] || false
 
     unless @name
       @name_definer = options[:name_definer] ||= Proc.new do |*ids|
