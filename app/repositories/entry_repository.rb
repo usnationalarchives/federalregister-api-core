@@ -5,6 +5,7 @@ class EntryRepository
   index_name ['fr-entries', Rails.env].join('-')
 
   mapping dynamic: 'strict' do
+    indexes :id, {type: 'integer'}
     indexes :docket_id, {type: 'keyword'}
     indexes :document_number, {type: 'keyword'}
     indexes :type, {type: 'keyword'} #TODO: May be an ES keyword
@@ -45,6 +46,10 @@ class EntryRepository
 
     def count
       es_result.total
+    end
+
+    def results
+      Entry.where(id: es_results.results.map{|x| x.fetch('_id')} )
     end
 
     private

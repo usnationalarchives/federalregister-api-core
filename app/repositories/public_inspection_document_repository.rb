@@ -2,7 +2,7 @@ class PublicInspectionDocumentRepository
   include Elasticsearch::Persistence::Repository
   include Elasticsearch::Persistence::Repository::DSL
 
-  index_name ['fr-search', Rails.env].join('-') #TODO make dynamic with: Settings.deployment_environment
+  index_name ['fr-public-inspection-documents', Rails.env].join('-') #TODO make dynamic with: Settings.deployment_environment
   klass PublicInspectionDocument
 
   mapping dynamic: 'strict' do

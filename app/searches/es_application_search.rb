@@ -56,6 +56,9 @@ class EsApplicationSearch
         label = options[:label]
 
         if selector.valid?
+
+          # add_range_filter(selector)
+
           add_filter(
             #TODO: Potentially pass in an option indicating this is an ES range query?
             :value => selector.sphinx_value,
@@ -221,14 +224,46 @@ class EsApplicationSearch
       recursive_merge(args.slice(:joins, :includes, :select))
   end
 
+  class ResultArray #TODO: Change this name
+    delegate_missing_to :@active_record_collection
+
+    def initialize(active_record_collection)
+      @active_record_collection = active_record_collection
+    end
+
+    def next_page
+      #TODO
+    end
+
+    def previous_page
+      #TODO
+    end
+
+    def count
+      #TODO;
+      0
+    end
+
+    def total_pages
+      0
+      #TODO
+    end
+
+  end
+
   def results(args = {})
     select = args.delete(:select)
     args.merge!(sql: {select: select})
 
-    result_array = es_search(es_term,
-      search_options,
-      args
-    )
+    # Getting the AR ids
+    es_search_results = repository.search(search_options).results
+
+    # Get AR objects
+    active_record_collection = Entry.where(id: es_search_results.map{|x| x.fetch('_id')} )
+
+    # Provide a way for collection to respond to former TS collection args (e.g. next_page, previous_page)
+    result_array = ResultArray.new(active_record_collection)
+
 
     if result_array && @excerpts
       results_with_raw_text, results_without_raw_text = result_array.partition{|e| e.raw_text_updated_at.present?}
@@ -347,7 +382,9 @@ class EsApplicationSearch
     sphinx_retry do
       begin
         results = model.search(term, options)
-        results.context[:panes] << ThinkingSphinx::Panes::ExcerptsPane
+        #TODO: REIMPLEMENT EXCERPTING HERE
+
+        # results.context[:panes] << ThinkingSphinx::Panes::ExcerptsPane
 
         # force sphinx to populate the result so that if it fails due to
         #   unescaped invalid extended mode characters we can handle the
@@ -365,15 +402,17 @@ class EsApplicationSearch
     @es_term ||= ApplicationSearch::TermPreprocessor.process_term(@term)
   end
 
-  def es_search(term, options, sql_args)
-    # TODO: handle term, sql_args
-    repository.wrap_search("", options)
-  end
+  # def es_search(term, options, sql_args)
+  #   # TODO: handle term, sql_args
+  #   repository.wrap_search("", options)
+  # end
 
   private
 
   def es_base_query
     {
+      size: per_page,
+      from: es_from,
       query: {
         bool: {
           must: [],
@@ -381,6 +420,15 @@ class EsApplicationSearch
         }
       }
     }
+  end
+
+  def es_from
+    from = (page - 1) * per_page
+    if page != 0
+      from + 1
+    else
+      from
+    end
   end
 
   def search_options
