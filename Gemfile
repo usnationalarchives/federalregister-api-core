@@ -121,7 +121,7 @@ gem 'sass-rails'
 gem 'xmlrpc'
 gem 'rinku'
 
-gem 'active_model_serializers'
+gem 'fast_jsonapi'
 
 group :test do
   gem 'factory_girl', '~> 2.5.2'
