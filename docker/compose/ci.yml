@@ -6,7 +6,6 @@ web:
     - RAILS_ENV=test
     - DB_STRUCTURE_ACCESS_KEY
     - DB_STRUCTURE_SECRET
-    - ELASTICSEARCH_HOST=elasticsearch
   links:
     - mysql
     - redis
