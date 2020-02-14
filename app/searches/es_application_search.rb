@@ -227,8 +227,9 @@ class EsApplicationSearch
   class ResultArray #TODO: Change this name
     delegate_missing_to :@active_record_collection
 
-    def initialize(active_record_collection)
-      @active_record_collection = active_record_collection
+    def initialize(es_search_invocation, active_record_collection)
+      @es_search_invocation        = es_search_invocation
+      @active_record_collection    = active_record_collection
     end
 
     def next_page
@@ -240,14 +241,16 @@ class EsApplicationSearch
     end
 
     def count
-      #TODO;
-      0
+      es_search_invocation.total
     end
 
     def total_pages
-      0
-      #TODO
+      0 #TODO: Fix
     end
+
+    private
+
+    attr_reader :es_search_invocation
 
   end
 
@@ -255,14 +258,14 @@ class EsApplicationSearch
     select = args.delete(:select)
     args.merge!(sql: {select: select})
 
-    # Getting the AR ids
-    es_search_results = repository.search(search_options).results
+    # Retrieve AR ids from Elasticsearch
+    es_search_invocation = repository.search(search_options)
 
     # Get AR objects
-    active_record_collection = Entry.where(id: es_search_results.map{|x| x.fetch('_id')} )
+    active_record_collection = Entry.where(id: es_search_invocation.results.map{|x| x.fetch('_id')} )
 
     # Provide a way for collection to respond to former TS collection args (e.g. next_page, previous_page)
-    result_array = ResultArray.new(active_record_collection)
+    result_array = ResultArray.new(es_search_invocation, active_record_collection)
 
 
     if result_array && @excerpts
