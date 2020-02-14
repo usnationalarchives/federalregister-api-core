@@ -2,7 +2,6 @@ require 'spec_helper'
 
 describe PublicInspectionDocumentRepository do
   let(:agency) { Factory(:agency) }
-
   before(:all) do
     $public_inspection_document_repository.create_index!(force: true)
   end
@@ -12,6 +11,9 @@ describe PublicInspectionDocumentRepository do
       expected_mappings = {
         dynamic: "strict",
         properties: {
+          id: {
+            type: 'integer'
+          },
           agency_ids: {
             type: 'integer'
           },

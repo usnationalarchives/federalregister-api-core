@@ -1,17 +1,16 @@
-class PublicInspectionDocumentSerializer < ActiveModel::Serializer
+class PublicInspectionDocumentSerializer < ApplicationSerializer
   attributes :agency_ids,
-    :docket_id,
     :document_number,
     :id,
     :publication_date,
     :special_filing,
     :title
 
-  def docket_id
+  attribute :docket_id do |object|
     object.docket_numbers.pluck(:number)
   end
 
-  def title
+  attribute :title do |object|
     [
       object.subject_1,
       object.subject_2,
@@ -19,7 +18,7 @@ class PublicInspectionDocumentSerializer < ActiveModel::Serializer
     ].join(" ")
   end
 
-  def agency_ids
+  attribute :agency_ids do |object|
     object.agency_assignments.pluck(:agency_id)
   end
 end

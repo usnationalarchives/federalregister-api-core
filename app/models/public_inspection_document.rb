@@ -118,7 +118,7 @@ class PublicInspectionDocument < ApplicationModel
 
 
   def to_hash
-    PublicInspectionDocumentSerializer.new(self).to_hash
+    PublicInspectionDocumentSerializer.new(self).to_h
   end
 
   private
