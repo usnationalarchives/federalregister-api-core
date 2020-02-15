@@ -24,7 +24,7 @@ class Api::V1::PublicInspectionDocumentsController < ApiController
         find_options = PublicInspectionDocumentApiRepresentation.find_options_for(fields)
 
         search = public_inspection_search(
-          {order: 'newest', per_page: 200}.merge(deserialized_params),
+          deserialized_params.merge(order: 'newest', per_page: 200),
           fields
         )
 
