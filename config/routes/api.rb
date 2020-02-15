@@ -5,8 +5,9 @@ FederalregisterApiCore::Application.routes.draw do
         match 'documentation' => 'documentation#show',
           :as => :documentation,
           :via => :get
-        resources :effective_dates,
-          :only => [:index]
+        match 'effective-dates' => 'effective_dates#index',
+          :as => :effective_dates,
+          :via => :get
         match 'documents/facets/:facet' => 'entries#facets',
           :as => :articles_facets,
           :via => :get
