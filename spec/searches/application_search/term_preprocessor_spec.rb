@@ -30,6 +30,42 @@ describe 'ApplicationSearch::TermPreprocessor' do
     end
   end
 
+  describe '.remove_invalid_sequences' do
+    def results_for(term)
+      ApplicationSearch::TermPreprocessor.remove_invalid_sequences(term)
+    end
+
+    it "allows a slash after quotes (quorum)" do
+      results_for('"a b c"/2').should ==
+                  '"a b c"/2'
+    end
+
+    it "removes tildes elsewhere" do
+      results_for('HIV/AIDS').should ==
+                  'HIV AIDS'
+    end
+
+    it "allows a tilde after quotes (proximity)" do
+      results_for('"a b c"~2').should ==
+                  '"a b c"~2'
+    end
+
+    it "removes tildes elsewhere" do
+      results_for('~98.6').should ==
+                  ' 98.6'
+    end
+
+    it "removes @ everywhere" do
+      results_for('hello@nsa.gov').should ==
+                  'hello nsa.gov'
+    end
+
+    it "removes triple less than everywhere" do
+      results_for('a <<< b').should ==
+                  'a   b'
+    end
+  end
+
   describe '.fix_hyphentated_word_searches' do
     def results_for(term)
       ApplicationSearch::TermPreprocessor.fix_hypenated_word_searches(term)
