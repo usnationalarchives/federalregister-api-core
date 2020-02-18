@@ -24,6 +24,7 @@ class EntrySearch::Suggestor::Agency < EntrySearch::Suggestor::Base
       if @term =~ /(#{pattern})(?=(?:[^"]*"[^"]*")*[^"]*$)/i && ! agencies.include?(slug)
         agencies << slug
         @term = @term.sub(/(?:#{pattern})(?=(?:[^"]*"[^"]*")*[^"]*$)/i, '\1')
+        @term = @term.delete_prefix("-")
       end
     end
 
