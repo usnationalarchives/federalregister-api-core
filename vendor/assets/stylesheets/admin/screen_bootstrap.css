@@ -1,0 +1,1593 @@
+/*@import "library/links";
+@import "library/lists";*/
+/******************************
+POWDER BLUE:
+Used in page title headers
+******************************/
+/******************************
+DARK BLUE:
+Small stack and border color
+******************************/
+/******************************
+GOLDEN:
+Used for border of nav
+******************************/
+/* link hovers, etc */
+/******************************
+body_type_color:
+The base color for all the text
+******************************/
+/******************************
+CUSTOMIZATIONS TO TIPSY
+******************************/
+/* line 4, ../../../app/stylesheets/library/_tipsy.scss */
+.tipsy {
+  font-size: 13px;
+}
+
+/* line 1, ../../../app/stylesheets/library/_tipsy_popover.scss */
+#indexes.year_agency .tipsy.popover .tipsy-inner {
+  padding: 3px;
+  width: 580px;
+  overflow: hidden;
+  background: #000;
+  background: rgba(0, 0, 0, 0.8);
+  color: #000;
+  font-size: 1.5em;
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  border-radius: 6px;
+  -webkit-box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
+  -moz-box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
+}
+
+/* line 19, ../../../app/stylesheets/library/_tipsy_popover.scss */
+.popover-title {
+  font-size: 16px;
+  padding: 9px 15px;
+  line-height: 1;
+  background-color: whiteSmoke;
+  border-bottom: 1px solid #EEE;
+  -webkit-border-radius: 3px 3px 0 0;
+  -moz-border-radius: 3px 3px 0 0;
+  border-radius: 3px 3px 0 0;
+}
+
+/* line 29, ../../../app/stylesheets/library/_tipsy_popover.scss */
+.popover-content {
+  padding: 14px;
+  background-color: white;
+  -webkit-border-radius: 0 0 3px 3px;
+  -moz-border-radius: 0 0 3px 3px;
+  border-radius: 0 0 3px 3px;
+  -webkit-background-clip: padding-box;
+  -moz-background-clip: padding-box;
+  background-clip: padding-box;
+}
+/* line 39, ../../../app/stylesheets/library/_tipsy_popover.scss */
+.popover-content dl {
+  margin: 0;
+  font-size: 14px;
+  overflow: hidden;
+}
+/* line 44, ../../../app/stylesheets/library/_tipsy_popover.scss */
+.popover-content dl dt {
+  text-align: right;
+  width: 60px;
+  float: left;
+  clear: both;
+  margin-bottom: 10px;
+}
+/* line 51, ../../../app/stylesheets/library/_tipsy_popover.scss */
+.popover-content dl dd {
+  margin-bottom: 10px;
+  text-align: left;
+  width: 175px;
+  float: left;
+}
+/* line 59, ../../../app/stylesheets/library/_tipsy_popover.scss */
+.popover-content .loading {
+  padding-left: 20px;
+  background: white url('/images/ajax-loader.gif?1424391972') no-repeat 80px 1px;
+}
+
+/* line 65, ../../../app/stylesheets/library/_tipsy_popover.scss */
+.admin .popover-content .loading {
+  padding-left: 30px;
+  background: white url('/images/ajax-loader.gif?1424391972') no-repeat 70px 1px;
+}
+
+/* line 1, ../../../app/stylesheets/patterns/_headers.scss */
+.header_with_top_border, .title_bar h3, .index_agencies h3 {
+  text-transform: uppercase;
+  line-height: 1.7em;
+  font-size: 1.4em;
+  color: #5697cf;
+  border-top: 2px solid #3f5b75;
+}
+
+/* line 1, ../../../app/stylesheets/patterns/_count_pills.scss */
+.count_pill {
+  background: #d2dbe3;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -o-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -khtml-border-radius: 5px;
+  border-radius: 5px;
+  font-size: 11px;
+  padding: 0 .5em;
+  padding-top: 1px;
+  text-align: center;
+  width: 17px;
+}
+
+/* line 1, ../../../app/stylesheets/patterns/_page_summary.scss */
+.page_summary {
+  background: #F1F1F1;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -o-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -khtml-border-radius: 5px;
+  border-radius: 5px;
+  padding: 10px 20px 2px;
+}
+/* line 11, ../../../app/stylesheets/patterns/_page_summary.scss */
+.page_summary h1 {
+  font-size: 2.2em;
+}
+/* line 13, ../../../app/stylesheets/patterns/_page_summary.scss */
+.page_summary hr {
+  width: 100%;
+  border-bottom: 1px solid #DDD;
+  margin-bottom: 15px;
+}
+
+/* line 1, ../../../app/stylesheets/patterns/_spell_checker.scss */
+span.spelling_error {
+  border-bottom: 2px dotted red;
+}
+
+/* line 3, ../../../app/stylesheets/patterns/_spell_checker.scss */
+.spelling_error_menu {
+  position: absolute;
+  width: 200px;
+  background-color: #EEEEEE;
+  -moz-border-radius: 6px;
+  -webkit-border-radius: 6px;
+  -o-border-radius: 6px;
+  -ms-border-radius: 6px;
+  -khtml-border-radius: 6px;
+  border-radius: 6px;
+  z-index: 5500;
+}
+/* line 10, ../../../app/stylesheets/patterns/_spell_checker.scss */
+.spelling_error_menu ol.suggestions {
+  margin-left: 0;
+  list-style: none;
+  padding: 5px 10px;
+}
+/* line 15, ../../../app/stylesheets/patterns/_spell_checker.scss */
+.spelling_error_menu ol.suggestions li {
+  cursor: pointer;
+  margin: 0;
+}
+/* line 20, ../../../app/stylesheets/patterns/_spell_checker.scss */
+.spelling_error_menu ol.suggestions div.horiz-rule {
+  border-top: 1px solid #777;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+/* line 26, ../../../app/stylesheets/patterns/_spell_checker.scss */
+.spelling_error_menu ol.suggestions li.hover {
+  background-color: #DDDDDD;
+  color: #b88659;
+}
+/* line 31, ../../../app/stylesheets/patterns/_spell_checker.scss */
+.spelling_error_menu ol.suggestions li.saving {
+  background: #dddddd url(/assets/orange_loader_DDD.gif) 160px 7px no-repeat;
+}
+
+/* line 35, ../../../app/stylesheets/patterns/_spell_checker.scss */
+.spelling_error_menu.loading {
+  height: 30px;
+  text-align: center;
+  padding-top: 10px;
+  background-color: #DDDDDD;
+  z-index: 5000;
+}
+/* line 42, ../../../app/stylesheets/patterns/_spell_checker.scss */
+.spelling_error_menu.loading .loader {
+  padding-left: 20px;
+  background: #dddddd url(/assets/orange_loader_DDD.gif) 20px 0 no-repeat;
+}
+
+/*********************/
+/* HEADER            */
+/*********************/
+/* line 5, ../../../app/stylesheets/admin/_app.scss */
+.header .nav {
+  margin-bottom: 0px;
+}
+
+/* line 7, ../../../app/stylesheets/admin/_app.scss */
+.header {
+  height: 55px;
+}
+
+/* line 8, ../../../app/stylesheets/admin/_app.scss */
+.header #primary.nav {
+  height: 40px;
+}
+
+/* line 12, ../../../app/stylesheets/admin/_app.scss */
+.header .brand {
+  font-size: 24px;
+  font-weight: bold;
+  float: left;
+  top: 7px;
+  position: relative;
+  margin-right: 20px;
+}
+
+/* line 20, ../../../app/stylesheets/admin/_app.scss */
+.header .brand a:hover {
+  text-decoration: none;
+}
+
+/* line 22, ../../../app/stylesheets/admin/_app.scss */
+.header .subnav {
+  background-color: #CCC;
+}
+
+/* line 23, ../../../app/stylesheets/admin/_app.scss */
+.header .navbar-inner {
+  background: none;
+  background-color: #CCC;
+  filter: none;
+  /* get rid of bootstrap default in IE */
+}
+
+/* line 29, ../../../app/stylesheets/admin/_app.scss */
+#utility.nav {
+  margin-bottom: 10px;
+}
+
+/* line 31, ../../../app/stylesheets/admin/_app.scss */
+#utility.nav p {
+  float: right;
+}
+
+/* line 32, ../../../app/stylesheets/admin/_app.scss */
+#utility.nav ul {
+  list-style: none;
+  float: right;
+}
+
+/* line 36, ../../../app/stylesheets/admin/_app.scss */
+#utility.nav ul li {
+  display: inline-block;
+  margin-right: 10px;
+}
+
+/* line 41, ../../../app/stylesheets/admin/_app.scss */
+.wf-active div.title {
+  font-family: "apertura-condensed-1","apertura-condensed-2", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+}
+
+/* line 42, ../../../app/stylesheets/admin/_app.scss */
+div.title {
+  margin: 1em;
+  margin-left: -999px;
+  padding-left: 999px;
+  text-align: right;
+  background: url("/images/header_bg.png?1307210486") repeat-x scroll left top;
+  color: white;
+  clear: both;
+  line-height: .9;
+  font-size: 2.2em;
+  font-weight: 700;
+  height: 25px;
+  letter-spacing: 0px;
+}
+
+/* line 57, ../../../app/stylesheets/admin/_app.scss */
+div.title span {
+  background: white;
+  color: #5697CF;
+  padding: 0 10px;
+  margin: 0 25px 0 0;
+}
+
+/*********************/
+/* SIDEBAR           */
+/*********************/
+/* line 68, ../../../app/stylesheets/admin/_app.scss */
+#sidebar {
+  border-radius: 6px;
+  border: 1px solid #CCC;
+  background-color: #EEE;
+  margin-left: 0px;
+}
+
+/* line 74, ../../../app/stylesheets/admin/_app.scss */
+#sidebar ul {
+  list-style: none;
+  margin-left: 0px;
+  margin-bottom: 5px;
+}
+
+/* line 79, ../../../app/stylesheets/admin/_app.scss */
+#sidebar ul li {
+  padding: 5px 0 0 5px;
+}
+
+/*********************/
+/* FLASH MESSAGES    */
+/*********************/
+/* line 89, ../../../app/stylesheets/admin/_app.scss */
+div.notice,
+div.warning {
+  padding: .5em .5em .25em;
+  margin-bottom: 30px;
+  text-align: center;
+  float: none;
+}
+
+/* line 95, ../../../app/stylesheets/admin/_app.scss */
+div.notice {
+  background: #D7E5C2;
+  border: 1px solid #7AA13D;
+}
+
+/* line 99, ../../../app/stylesheets/admin/_app.scss */
+div.warning {
+  background: #EDD3D3;
+  border: 1px solid #8A3737;
+}
+
+/* line 3, ../../../app/stylesheets/admin/design/_fr_index.scss */
+#indexes.admin #sidebar .section {
+  margin-bottom: 20px;
+}
+/* line 5, ../../../app/stylesheets/admin/design/_fr_index.scss */
+#indexes.admin #sidebar h4 {
+  border-bottom: 2px solid #3f5b75;
+  color: #3f5b75;
+  margin: 5px;
+}
+
+/* line 15, ../../../app/stylesheets/admin/design/_fr_index.scss */
+#content_area ul {
+  list-style: none;
+}
+
+/* line 19, ../../../app/stylesheets/admin/design/_fr_index.scss */
+.agency_index_nav_tabs {
+  border: 1px solid #CCC;
+  height: 20px;
+  margin-left: 0;
+  overflow: hidden;
+  padding: 0;
+  padding-bottom: 8px;
+  width: 617px;
+}
+/* line 28, ../../../app/stylesheets/admin/design/_fr_index.scss */
+.agency_index_nav_tabs.page_summary {
+  margin-bottom: 20px;
+}
+/* line 32, ../../../app/stylesheets/admin/design/_fr_index.scss */
+.agency_index_nav_tabs li {
+  float: left;
+  padding: 5px 0 5px 10px;
+  text-align: center;
+  width: 286px;
+}
+/* line 38, ../../../app/stylesheets/admin/design/_fr_index.scss */
+.agency_index_nav_tabs li:first-child {
+  border-right: 1px solid #CCC;
+  padding-right: 10px;
+  width: 300px;
+}
+/* line 44, ../../../app/stylesheets/admin/design/_fr_index.scss */
+.agency_index_nav_tabs li.active {
+  background-color: #DFDFDF;
+}
+/* line 47, ../../../app/stylesheets/admin/design/_fr_index.scss */
+.agency_index_nav_tabs li.active a {
+  color: black;
+}
+/* line 50, ../../../app/stylesheets/admin/design/_fr_index.scss */
+.agency_index_nav_tabs li.active a:hover {
+  cursor: default;
+  text-decoration: none;
+}
+
+/* line 59, ../../../app/stylesheets/admin/design/_fr_index.scss */
+.admin.year_agency .page_summary .agency_index_actions {
+  margin-bottom: 0;
+}
+
+/* line 61, ../../../app/stylesheets/admin/design/_fr_index.scss */
+.page_summary {
+  margin-bottom: 40px;
+  overflow: hidden;
+}
+/* line 65, ../../../app/stylesheets/admin/design/_fr_index.scss */
+.page_summary h1.agency_name {
+  color: #3f5b75;
+}
+/* line 66, ../../../app/stylesheets/admin/design/_fr_index.scss */
+.page_summary hr {
+  margin-top: 0;
+}
+/* line 68, ../../../app/stylesheets/admin/design/_fr_index.scss */
+.page_summary .last_completed.all {
+  float: right;
+  margin-bottom: 5px;
+}
+/* line 73, ../../../app/stylesheets/admin/design/_fr_index.scss */
+.page_summary .agency_index_actions {
+  clear: both;
+  margin-bottom: 5px;
+  margin-top: 10px;
+  overflow: hidden;
+}
+/* line 79, ../../../app/stylesheets/admin/design/_fr_index.scss */
+.page_summary .agency_index_actions select {
+  width: 200px;
+}
+/* line 81, ../../../app/stylesheets/admin/design/_fr_index.scss */
+.page_summary .agency_index_actions .last_completed {
+  float: left;
+  font-size: 12px;
+  line-height: 12px;
+  margin-left: 10px;
+  margin-top: 2px;
+  width: 130px;
+}
+/* line 92, ../../../app/stylesheets/admin/design/_fr_index.scss */
+.page_summary .agency_index_actions .mark_as_complete,
+.page_summary .agency_index_actions .publish_pdfs,
+.page_summary .agency_index_actions .pdf_preview {
+  padding-left: 26px;
+  -webkit-transition: none;
+  -moz-transition: none;
+  -ms-transition: none;
+  -o-transition: none;
+  transition: none;
+}
+/* line 102, ../../../app/stylesheets/admin/design/_fr_index.scss */
+.page_summary .agency_index_actions .mark_as_complete,
+.page_summary .agency_index_actions .publish_pdfs {
+  background: url('/images/icons/admin.png?1558027916') 4px -27px no-repeat;
+}
+/* line 106, ../../../app/stylesheets/admin/design/_fr_index.scss */
+.page_summary .agency_index_actions .publish_pdfs {
+  float: right;
+  margin-right: 18px;
+}
+/* line 111, ../../../app/stylesheets/admin/design/_fr_index.scss */
+.page_summary .agency_index_actions .download_sgml {
+  margin-top: 10px;
+  clear: right;
+  float: right;
+}
+/* line 117, ../../../app/stylesheets/admin/design/_fr_index.scss */
+.page_summary .agency_index_actions .mark_as_complete {
+  float: left;
+}
+/* line 120, ../../../app/stylesheets/admin/design/_fr_index.scss */
+.page_summary .agency_index_actions .mark_as_complete.all {
+  float: right;
+  margin-right: 10px;
+}
+/* line 126, ../../../app/stylesheets/admin/design/_fr_index.scss */
+.page_summary .agency_index_actions .mark_as_complete:hover, .page_summary .agency_index_actions .publish_pdfs:hover {
+  background: #e6e6e6 url('/images/icons/admin.png?1558027916') 4px -75px no-repeat;
+  border-color: #7aa13d;
+  color: #7aa13d;
+}
+/* line 132, ../../../app/stylesheets/admin/design/_fr_index.scss */
+.page_summary .agency_index_actions #max_date {
+  float: left;
+  margin-left: 210px;
+}
+/* line 137, ../../../app/stylesheets/admin/design/_fr_index.scss */
+.page_summary .agency_index_actions .pdf_preview {
+  background: url('/images/icons/admin.png?1558027916') 5px -122px no-repeat;
+  float: right;
+}
+/* line 142, ../../../app/stylesheets/admin/design/_fr_index.scss */
+.page_summary .agency_index_actions .pdf_preview:hover {
+  background: #e6e6e6 url('/images/icons/admin.png?1558027916') 5px -170px no-repeat;
+  border-color: #b88659;
+  color: #b88659;
+}
+
+/* line 150, ../../../app/stylesheets/admin/design/_fr_index.scss */
+.title_bar {
+  clear: both;
+  color: #5697CF;
+  font-family: "apertura-condensed-1","apertura-condensed-2", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+  font-size: .8em;
+  margin: 1em 0 1em;
+  padding: 0;
+  position: relative;
+  text-transform: none;
+}
+
+/* line 161, ../../../app/stylesheets/admin/design/_fr_index.scss */
+.title_bar h3 {
+  font-family: "apertura-condensed-1","apertura-condensed-2", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+}
+
+/* line 167, ../../../app/stylesheets/admin/design/_fr_index.scss */
+.new_item {
+  background-color: #FFFF99;
+}
+
+/* line 170, ../../../app/stylesheets/admin/design/_fr_index.scss */
+.edit,
+.edit.new_item,
+.new_item:hover {
+  background-color: #EEE;
+}
+
+/* line 177, ../../../app/stylesheets/admin/design/_fr_index.scss */
+.index_agencies h3 a {
+  float: right;
+  font-size: 12px;
+  font-weight: normal;
+  text-transform: none;
+}
+
+/* line 185, ../../../app/stylesheets/admin/design/_fr_index.scss */
+#indexes.admin .button.format.pdf.small {
+  background-repeat: no-repeat;
+  font-weight: normal;
+  line-height: 15px;
+  margin-left: 10px;
+}
+
+/* line 193, ../../../app/stylesheets/admin/design/_fr_index.scss */
+#indexes.admin .page_summary .agency_index_actions form.max_date {
+  float: left;
+  margin-bottom: 0;
+  margin-right: 0;
+  width: 200px;
+}
+/* line 199, ../../../app/stylesheets/admin/design/_fr_index.scss */
+#indexes.admin .page_summary .agency_index_actions form.max_date #max_date {
+  float: none;
+  margin-bottom: 6px;
+  margin-left: 0;
+}
+
+/* line 208, ../../../app/stylesheets/admin/design/_fr_index.scss */
+ul.entry_type li {
+  clear: both;
+  height: 100%;
+  margin-bottom: 5px;
+  overflow: hidden;
+  padding: 5px;
+}
+/* line 215, ../../../app/stylesheets/admin/design/_fr_index.scss */
+ul.entry_type li .btn {
+  padding: 2px 10px;
+}
+/* line 216, ../../../app/stylesheets/admin/design/_fr_index.scss */
+ul.entry_type li .btn-mini {
+  padding: 2px 6px;
+}
+/* line 218, ../../../app/stylesheets/admin/design/_fr_index.scss */
+ul.entry_type li form {
+  display: none;
+  margin-top: 10px;
+  margin: 0px;
+  overflow: hidden;
+  width: 545px;
+}
+/* line 226, ../../../app/stylesheets/admin/design/_fr_index.scss */
+ul.entry_type li a.wrapper {
+  display: block;
+  float: left;
+  width: 90%;
+}
+/* line 233, ../../../app/stylesheets/admin/design/_fr_index.scss */
+ul.entry_type li a.edit,
+ul.entry_type li a.cancel {
+  float: right;
+  position: relative;
+  right: 5px;
+}
+/* line 239, ../../../app/stylesheets/admin/design/_fr_index.scss */
+ul.entry_type li a.cancel {
+  background-color: #8a3737;
+  background-image: none;
+  border: 0;
+  color: white;
+  text-shadow: none;
+}
+/* line 247, ../../../app/stylesheets/admin/design/_fr_index.scss */
+ul.entry_type li ul {
+  margin-top: 15px;
+}
+/* line 250, ../../../app/stylesheets/admin/design/_fr_index.scss */
+ul.entry_type li ul li form {
+  width: 545px;
+}
+/* line 251, ../../../app/stylesheets/admin/design/_fr_index.scss */
+ul.entry_type li ul li a.edit {
+  padding-right: 5px;
+  right: 0;
+}
+/* line 256, ../../../app/stylesheets/admin/design/_fr_index.scss */
+ul.entry_type li ul li.edit {
+  background-color: #EEE;
+}
+/* line 260, ../../../app/stylesheets/admin/design/_fr_index.scss */
+ul.entry_type li ul.entry_details {
+  display: none;
+}
+/* line 265, ../../../app/stylesheets/admin/design/_fr_index.scss */
+ul.entry_type li.hover {
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  -o-border-radius: 3px;
+  -ms-border-radius: 3px;
+  -khtml-border-radius: 3px;
+  border-radius: 3px;
+  background-color: #EEE;
+}
+
+/* line 272, ../../../app/stylesheets/admin/design/_fr_index.scss */
+ul.entry_type form input {
+  display: block;
+  float: left;
+  width: 50%;
+}
+/* line 278, ../../../app/stylesheets/admin/design/_fr_index.scss */
+ul.entry_type form input#entry_fr_index_doc {
+  clear: both;
+  margin-left: 30px;
+  width: 75%;
+}
+/* line 284, ../../../app/stylesheets/admin/design/_fr_index.scss */
+ul.entry_type form input[type="submit"] {
+  background-color: #7aa13d;
+  box-shadow: none;
+  color: #FFF;
+  float: right;
+  width: 15%;
+}
+/* line 291, ../../../app/stylesheets/admin/design/_fr_index.scss */
+ul.entry_type form input[type="submit"]:hover {
+  background-color: #e4a529;
+}
+/* line 295, ../../../app/stylesheets/admin/design/_fr_index.scss */
+ul.entry_type form.disabled input[type="submit"],
+ul.entry_type form.disabled input[type="submit"]:hover {
+  color: black;
+  padding-left: 22px;
+  background: #cccccc url(/assets/orange_loader_CCC.gif) 8px 5px no-repeat;
+}
+
+/* line 306, ../../../app/stylesheets/admin/design/_fr_index.scss */
+#indexes.admin.year_agency #content_area > .wrapper,
+#indexes.admin.year_agency_unapproved_documents #content_area > .wrapper {
+  padding-bottom: 200px;
+}
+/* line 309, ../../../app/stylesheets/admin/design/_fr_index.scss */
+#indexes.admin.year_agency .tipsy-inner,
+#indexes.admin.year_agency_unapproved_documents .tipsy-inner {
+  color: black;
+  width: 580px;
+}
+/* line 314, ../../../app/stylesheets/admin/design/_fr_index.scss */
+#indexes.admin.year_agency .input_tipsy .tipsy-inner,
+#indexes.admin.year_agency_unapproved_documents .input_tipsy .tipsy-inner {
+  color: white;
+}
+/* line 316, ../../../app/stylesheets/admin/design/_fr_index.scss */
+#indexes.admin.year_agency .popover-title,
+#indexes.admin.year_agency_unapproved_documents .popover-title {
+  border-top: none;
+  font-size: 16px;
+  margin-bottom: 0;
+}
+/* line 322, ../../../app/stylesheets/admin/design/_fr_index.scss */
+#indexes.admin.year_agency .popover-content dl dt,
+#indexes.admin.year_agency_unapproved_documents .popover-content dl dt {
+  text-align: right;
+  width: 100px;
+}
+/* line 328, ../../../app/stylesheets/admin/design/_fr_index.scss */
+#indexes.admin.year_agency .popover-content .loading,
+#indexes.admin.year_agency_unapproved_documents .popover-content .loading {
+  background-position-x: 220px;
+  background-position-y: 1px;
+}
+/* line 333, ../../../app/stylesheets/admin/design/_fr_index.scss */
+#indexes.admin.year_agency .popover-content dl dd,
+#indexes.admin.year_agency_unapproved_documents .popover-content dl dd {
+  width: 420px;
+}
+/* line 336, ../../../app/stylesheets/admin/design/_fr_index.scss */
+#indexes.admin.year_agency .input_tipsy,
+#indexes.admin.year_agency_unapproved_documents .input_tipsy {
+  z-index: 500;
+}
+/* line 339, ../../../app/stylesheets/admin/design/_fr_index.scss */
+#indexes.admin.year_agency .input_tipsy .tipsy-inner,
+#indexes.admin.year_agency_unapproved_documents .input_tipsy .tipsy-inner {
+  width: 100%;
+}
+
+/* line 3, ../../../app/stylesheets/admin/design/_missing_images.scss */
+.missing-images h3 {
+  border-bottom: 1px solid #000;
+  margin-top: 30px;
+}
+
+/* line 1, ../../../app/stylesheets/admin/design/_reprocessed_issues.scss */
+form.reprocess-issue {
+  font-size: 16px;
+}
+/* line 4, ../../../app/stylesheets/admin/design/_reprocessed_issues.scss */
+form.reprocess-issue input[type=text] {
+  height: 30px;
+}
+/* line 6, ../../../app/stylesheets/admin/design/_reprocessed_issues.scss */
+form.reprocess-issue .btn {
+  background-image: none;
+  border: none;
+  position: relative;
+  text-shadow: none;
+  top: -4px;
+}
+
+/* line 15, ../../../app/stylesheets/admin/design/_reprocessed_issues.scss */
+table.reprocessed-issues {
+  margin-bottom: 15px;
+}
+/* line 18, ../../../app/stylesheets/admin/design/_reprocessed_issues.scss */
+table.reprocessed-issues td:first-child {
+  text-align: center;
+  width: 75px;
+}
+
+/* line 24, ../../../app/stylesheets/admin/design/_reprocessed_issues.scss */
+.reprocess-issue-link {
+  display: block;
+  font-size: 15px;
+  text-align: center;
+}
+/* line 29, ../../../app/stylesheets/admin/design/_reprocessed_issues.scss */
+.reprocess-issue-link.btn {
+  background-image: none;
+  border: none;
+  position: relative;
+  text-shadow: none;
+  top: -4px;
+}
+
+/* line 39, ../../../app/stylesheets/admin/design/_reprocessed_issues.scss */
+.reprocess-issue .well {
+  height: 300px;
+  overflow: auto;
+}
+/* line 44, ../../../app/stylesheets/admin/design/_reprocessed_issues.scss */
+.reprocess-issue .btn {
+  background-image: none;
+  border: none;
+  margin-left: 10px;
+  position: relative;
+  text-shadow: none;
+}
+
+/* line 53, ../../../app/stylesheets/admin/design/_reprocessed_issues.scss */
+.reprocessed_issue-history {
+  margin-top: 30px;
+}
+/* line 56, ../../../app/stylesheets/admin/design/_reprocessed_issues.scss */
+.reprocessed_issue-history table {
+  font-size: 15px;
+  text-align: left;
+}
+
+/* line 1, ../../../app/stylesheets/admin/design/_presidential_documents.scss */
+form.presidential-documents {
+  font-size: 16px;
+}
+/* line 4, ../../../app/stylesheets/admin/design/_presidential_documents.scss */
+form.presidential-documents ol {
+  list-style: none;
+}
+/* line 6, ../../../app/stylesheets/admin/design/_presidential_documents.scss */
+form.presidential-documents label {
+  float: left;
+  font-size: 16px !important;
+  margin: 10px 0;
+}
+/* line 12, ../../../app/stylesheets/admin/design/_presidential_documents.scss */
+form.presidential-documents input[type=file] {
+  line-height: initial !important;
+  position: relative;
+  top: 12px;
+}
+/* line 18, ../../../app/stylesheets/admin/design/_presidential_documents.scss */
+form.presidential-documents input.btn-large {
+  padding: 9px 14px;
+}
+/* line 19, ../../../app/stylesheets/admin/design/_presidential_documents.scss */
+form.presidential-documents .btn {
+  background-image: none;
+  border: none;
+  position: relative;
+  text-shadow: none;
+  top: -4px;
+}
+
+/* line 2, ../../../app/stylesheets/admin/design/_diffy.scss */
+.reprocess-issue .well {
+  /* try 'whitespace:pre;' if you don't want lines to wrap */
+}
+/* line 3, ../../../app/stylesheets/admin/design/_diffy.scss */
+.reprocess-issue .well .diff {
+  overflow: auto;
+}
+/* line 4, ../../../app/stylesheets/admin/design/_diffy.scss */
+.reprocess-issue .well .diff ul {
+  background: #F5F5F5;
+  overflow: auto;
+  font-size: 13px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: table;
+  width: 100%;
+}
+/* line 5, ../../../app/stylesheets/admin/design/_diffy.scss */
+.reprocess-issue .well .diff del, .reprocess-issue .well .diff ins {
+  display: block;
+  text-decoration: none;
+}
+/* line 6, ../../../app/stylesheets/admin/design/_diffy.scss */
+.reprocess-issue .well .diff li {
+  padding: 0;
+  display: table-row;
+  margin: 0;
+  height: 1em;
+}
+/* line 7, ../../../app/stylesheets/admin/design/_diffy.scss */
+.reprocess-issue .well .diff li.ins {
+  background: #dfd;
+  color: #080;
+}
+/* line 8, ../../../app/stylesheets/admin/design/_diffy.scss */
+.reprocess-issue .well .diff li.del {
+  background: #fee;
+  color: #b00;
+}
+/* line 9, ../../../app/stylesheets/admin/design/_diffy.scss */
+.reprocess-issue .well .diff li:hover {
+  background: #ffc;
+}
+/* line 11, ../../../app/stylesheets/admin/design/_diffy.scss */
+.reprocess-issue .well .diff del, .reprocess-issue .well .diff ins, .reprocess-issue .well .diff span {
+  white-space: pre-wrap;
+  font-family: courier;
+}
+/* line 12, ../../../app/stylesheets/admin/design/_diffy.scss */
+.reprocess-issue .well .diff del strong {
+  font-weight: normal;
+  background: #fcc;
+}
+/* line 13, ../../../app/stylesheets/admin/design/_diffy.scss */
+.reprocess-issue .well .diff ins strong {
+  font-weight: normal;
+  background: #9f9;
+}
+/* line 14, ../../../app/stylesheets/admin/design/_diffy.scss */
+.reprocess-issue .well .diff li.diff-comment {
+  display: none;
+}
+/* line 15, ../../../app/stylesheets/admin/design/_diffy.scss */
+.reprocess-issue .well .diff li.diff-block-info {
+  background: none repeat scroll 0 0 gray;
+}
+
+/* line 3, ../../../app/stylesheets/admin/design/_issues.scss */
+#issues.admin #main .issue-approval,
+#sections.admin #main .issue-approval {
+  padding: 10px 20px 10px;
+  text-align: center;
+  margin-bottom: 40px;
+}
+/* line 9, ../../../app/stylesheets/admin/design/_issues.scss */
+#issues.admin #main h2.section-header,
+#sections.admin #main h2.section-header {
+  border-bottom: 1px solid #000;
+  margin-bottom: 20px;
+}
+/* line 14, ../../../app/stylesheets/admin/design/_issues.scss */
+#issues.admin #main .document-list li,
+#sections.admin #main .document-list li {
+  background: #F1F1F1;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  padding: 5px 10px;
+}
+/* line 20, ../../../app/stylesheets/admin/design/_issues.scss */
+#issues.admin #main .document-list li form,
+#sections.admin #main .document-list li form {
+  margin-bottom: 0;
+}
+/* line 23, ../../../app/stylesheets/admin/design/_issues.scss */
+#issues.admin #main .document-list li form h3,
+#sections.admin #main .document-list li form h3 {
+  line-height: 22px;
+  margin-bottom: 5px;
+}
+/* line 31, ../../../app/stylesheets/admin/design/_issues.scss */
+#issues.admin #main .section-list li,
+#sections.admin #main .section-list li {
+  display: inline-block;
+  margin-bottom: 0;
+  margin-right: 10px;
+  padding: 0;
+}
+/* line 37, ../../../app/stylesheets/admin/design/_issues.scss */
+#issues.admin #main .section-list li label,
+#sections.admin #main .section-list li label {
+  font-size: 14px;
+}
+/* line 38, ../../../app/stylesheets/admin/design/_issues.scss */
+#issues.admin #main .section-list li input,
+#sections.admin #main .section-list li input {
+  display: inline-block;
+}
+
+/* line 4, ../../../app/stylesheets/admin/design/_sections.scss */
+#sections.admin #main #sidebar form.formtastic fieldset > ol > li {
+  margin-bottom: 5px;
+}
+/* line 7, ../../../app/stylesheets/admin/design/_sections.scss */
+#sections.admin #main #sidebar form.formtastic fieldset > ol > li#section_highlight_entry_document_number_input {
+  margin-top: 20px;
+}
+/* line 11, ../../../app/stylesheets/admin/design/_sections.scss */
+#sections.admin #main #sidebar form.formtastic fieldset > ol > li label {
+  width: 100%;
+}
+/* line 14, ../../../app/stylesheets/admin/design/_sections.scss */
+#sections.admin #main #sidebar form.formtastic .buttons {
+  padding-left: 0;
+}
+/* line 17, ../../../app/stylesheets/admin/design/_sections.scss */
+#sections.admin #main #sidebar form.formtastic .buttons input.create {
+  background-color: #7aa13d;
+  color: #FFF;
+  padding: 5px 10px;
+}
+/* line 22, ../../../app/stylesheets/admin/design/_sections.scss */
+#sections.admin #main #sidebar form.formtastic .buttons input.create:hover {
+  background-color: #5e7c2f;
+}
+/* line 29, ../../../app/stylesheets/admin/design/_sections.scss */
+#sections.admin #main #content_area .carousel-preview-wrapper {
+  margin: 0 auto;
+  width: 525px;
+}
+/* line 34, ../../../app/stylesheets/admin/design/_sections.scss */
+#sections.admin #main #content_area iframe.carousel-preview {
+  border: 0;
+  height: 376px;
+  overflow: hidden;
+  width: 525px;
+}
+/* line 41, ../../../app/stylesheets/admin/design/_sections.scss */
+#sections.admin #main #content_area h4 {
+  font-size: 16px;
+}
+/* line 44, ../../../app/stylesheets/admin/design/_sections.scss */
+#sections.admin #main #content_area .document-list .article {
+  overflow: auto;
+}
+/* line 47, ../../../app/stylesheets/admin/design/_sections.scss */
+#sections.admin #main #content_area .document-list .article.highlighted {
+  color: gray;
+}
+/* line 50, ../../../app/stylesheets/admin/design/_sections.scss */
+#sections.admin #main #content_area .document-list li {
+  position: relative;
+}
+/* line 52, ../../../app/stylesheets/admin/design/_sections.scss */
+#sections.admin #main #content_area .document-list dl {
+  font-size: 16px;
+}
+/* line 56, ../../../app/stylesheets/admin/design/_sections.scss */
+#sections.admin #main #content_area .document-list dl dt,
+#sections.admin #main #content_area .document-list dl dd {
+  float: left;
+}
+/* line 60, ../../../app/stylesheets/admin/design/_sections.scss */
+#sections.admin #main #content_area .document-list dl dt {
+  font-weight: normal;
+  margin-right: 5px;
+}
+/* line 64, ../../../app/stylesheets/admin/design/_sections.scss */
+#sections.admin #main #content_area .document-list dl dd {
+  font-weight: bold;
+  margin-left: 0;
+  margin-right: 10px;
+  position: relative;
+  top: -1px;
+}
+/* line 73, ../../../app/stylesheets/admin/design/_sections.scss */
+#sections.admin #main #content_area .document-list .button {
+  border-radius: 3px;
+  bottom: 3px;
+  color: #FFF;
+  float: right;
+  padding: 5px 10px;
+  position: absolute;
+  right: 3px;
+}
+/* line 83, ../../../app/stylesheets/admin/design/_sections.scss */
+#sections.admin #main #content_area .document-list .button:hover {
+  cursor: pointer;
+  text-decoration: none;
+}
+/* line 88, ../../../app/stylesheets/admin/design/_sections.scss */
+#sections.admin #main #content_area .document-list .button.add {
+  background-color: #7aa13d;
+}
+/* line 91, ../../../app/stylesheets/admin/design/_sections.scss */
+#sections.admin #main #content_area .document-list .button.add:hover {
+  background-color: #5e7c2f;
+}
+/* line 95, ../../../app/stylesheets/admin/design/_sections.scss */
+#sections.admin #main #content_area .document-list .button.remove {
+  background-color: #8a3737;
+}
+/* line 98, ../../../app/stylesheets/admin/design/_sections.scss */
+#sections.admin #main #content_area .document-list .button.remove:hover {
+  background-color: #662828;
+}
+
+/* line 7, ../../../app/stylesheets/admin/design/_highlighted_documents.scss */
+#entries.admin.edit {
+  background-color: white;
+}
+/* line 9, ../../../app/stylesheets/admin/design/_highlighted_documents.scss */
+#entries.admin h3.title {
+  font-size: 22px;
+  line-height: 24px;
+  margin-bottom: 5px;
+}
+/* line 15, ../../../app/stylesheets/admin/design/_highlighted_documents.scss */
+#entries.admin .document-details {
+  margin-bottom: 10px;
+  overflow: auto;
+}
+/* line 19, ../../../app/stylesheets/admin/design/_highlighted_documents.scss */
+#entries.admin .document-details dl {
+  font-size: 16px;
+}
+/* line 23, ../../../app/stylesheets/admin/design/_highlighted_documents.scss */
+#entries.admin .document-details dl dt,
+#entries.admin .document-details dl dd {
+  float: left;
+}
+/* line 27, ../../../app/stylesheets/admin/design/_highlighted_documents.scss */
+#entries.admin .document-details dl dt {
+  clear: both;
+  font-weight: normal;
+  margin-right: 5px;
+  width: 85px;
+}
+/* line 33, ../../../app/stylesheets/admin/design/_highlighted_documents.scss */
+#entries.admin .document-details dl dd {
+  font-weight: bold;
+  margin-left: 0;
+  margin-right: 10px;
+  position: relative;
+  top: -1px;
+}
+/* line 44, ../../../app/stylesheets/admin/design/_highlighted_documents.scss */
+#entries.admin form label {
+  font-size: 16px;
+}
+/* line 47, ../../../app/stylesheets/admin/design/_highlighted_documents.scss */
+#entries.admin .photo-content {
+  margin-bottom: 40px;
+}
+/* line 50, ../../../app/stylesheets/admin/design/_highlighted_documents.scss */
+#entries.admin .photo-content .photo-grid-wrapper {
+  margin: 0 auto 15px;
+  overflow: auto;
+  width: 610px;
+}
+/* line 55, ../../../app/stylesheets/admin/design/_highlighted_documents.scss */
+#entries.admin .photo-content .photo-grid-wrapper h4 {
+  float: left;
+  margin-right: 10px;
+}
+/* line 60, ../../../app/stylesheets/admin/design/_highlighted_documents.scss */
+#entries.admin .photo-content .photo-grid-wrapper p.error {
+  color: #8a3737;
+  font-size: 16px;
+  font-weight: bold;
+}
+/* line 67, ../../../app/stylesheets/admin/design/_highlighted_documents.scss */
+#entries.admin .photo-content .photo-grid-wrapper .photo-grid-pagination li {
+  display: inline-block;
+}
+/* line 70, ../../../app/stylesheets/admin/design/_highlighted_documents.scss */
+#entries.admin .photo-content .photo-grid-wrapper .photo-grid-pagination li a {
+  cursor: pointer;
+  text-decoration: none;
+}
+/* line 77, ../../../app/stylesheets/admin/design/_highlighted_documents.scss */
+#entries.admin .photo-content .photo-grid-wrapper .photo-grid {
+  margin: 0 0 10px;
+  overflow: auto;
+}
+/* line 81, ../../../app/stylesheets/admin/design/_highlighted_documents.scss */
+#entries.admin .photo-content .photo-grid-wrapper .photo-grid li {
+  float: left;
+  margin: 1px;
+}
+/* line 86, ../../../app/stylesheets/admin/design/_highlighted_documents.scss */
+#entries.admin .photo-content .photo-grid-wrapper .photo-grid img {
+  cursor: pointer;
+  height: 150px;
+  width: 150px;
+}
+/* line 96, ../../../app/stylesheets/admin/design/_highlighted_documents.scss */
+#entries.admin .photo-search fieldset {
+  position: relative;
+}
+/* line 98, ../../../app/stylesheets/admin/design/_highlighted_documents.scss */
+#entries.admin .photo-search label {
+  float: left;
+  margin-right: 10px;
+  position: relative;
+  top: 4px;
+}
+/* line 105, ../../../app/stylesheets/admin/design/_highlighted_documents.scss */
+#entries.admin .photo-search input[type=text] {
+  width: 438px;
+}
+/* line 108, ../../../app/stylesheets/admin/design/_highlighted_documents.scss */
+#entries.admin .photo-search input[type=text] + span.loading {
+  background: url("/assets/fr_orange_loader.svg") 0 0 no-repeat;
+  display: block;
+  height: 25px;
+  position: absolute;
+  right: 75px;
+  top: 2px;
+  width: 25px;
+}
+/* line 119, ../../../app/stylesheets/admin/design/_highlighted_documents.scss */
+#entries.admin .photo-search legend {
+  border: 0;
+  display: inline-block;
+  float: left;
+  width: auto;
+}
+/* line 126, ../../../app/stylesheets/admin/design/_highlighted_documents.scss */
+#entries.admin .photo-search label input[type=radio] {
+  float: left;
+  margin-right: 5px;
+}
+/* line 131, ../../../app/stylesheets/admin/design/_highlighted_documents.scss */
+#entries.admin .photo-search input[type=submit] {
+  background-color: #7aa13d;
+  color: white;
+  font-size: inherit;
+}
+/* line 136, ../../../app/stylesheets/admin/design/_highlighted_documents.scss */
+#entries.admin .photo-search input[type=submit]:hover {
+  background-color: #5e7c2f;
+}
+/* line 138, ../../../app/stylesheets/admin/design/_highlighted_documents.scss */
+#entries.admin .photo-search input[type=submit]:disabled {
+  background-color: #cccccc;
+}
+/* line 146, ../../../app/stylesheets/admin/design/_highlighted_documents.scss */
+#entries.admin .document-content #entry_curated_title_input.error input,
+#entries.admin .document-content #entry_curated_title_input.error textarea,
+#entries.admin .document-content #entry_curated_abstract_input.error input,
+#entries.admin .document-content #entry_curated_abstract_input.error textarea {
+  border: 2px solid #8a3737;
+}
+/* line 151, ../../../app/stylesheets/admin/design/_highlighted_documents.scss */
+#entries.admin .document-content #entry_curated_title_input.error label,
+#entries.admin .document-content #entry_curated_title_input.error .inline-hints .current-count,
+#entries.admin .document-content #entry_curated_abstract_input.error label,
+#entries.admin .document-content #entry_curated_abstract_input.error .inline-hints .current-count {
+  color: #8a3737;
+  font-weight: bold;
+}
+/* line 158, ../../../app/stylesheets/admin/design/_highlighted_documents.scss */
+#entries.admin .document-content input[type=text],
+#entries.admin .document-content textarea {
+  margin-bottom: 9px;
+}
+/* line 162, ../../../app/stylesheets/admin/design/_highlighted_documents.scss */
+#entries.admin .document-content input[type=text] {
+  border-radius: 3px;
+  border: 1px solid #cccccc;
+  color: #555;
+  display: inline-block;
+  height: 18px;
+  line-height: 18px;
+  padding: 4px;
+  width: 451px;
+}
+/* line 173, ../../../app/stylesheets/admin/design/_highlighted_documents.scss */
+#entries.admin .document-content .original-title {
+  margin-bottom: 20px;
+  margin-left: 155px;
+  margin-top: -15px;
+}
+/* line 178, ../../../app/stylesheets/admin/design/_highlighted_documents.scss */
+#entries.admin .document-content .original-title strong {
+  font-weight: bold;
+}
+/* line 181, ../../../app/stylesheets/admin/design/_highlighted_documents.scss */
+#entries.admin .document-content p.inline-hints strong {
+  font-weight: bold;
+}
+/* line 185, ../../../app/stylesheets/admin/design/_highlighted_documents.scss */
+#entries.admin .document-content #entry_curated_title_input .inline-hints,
+#entries.admin .document-content #entry_curated_abstract_input .inline-hints {
+  color: #b88659;
+  font-size: 14px;
+  font-weight: 400;
+  margin-top: 0;
+}
+/* line 192, ../../../app/stylesheets/admin/design/_highlighted_documents.scss */
+#entries.admin .document-content textarea#entry_curated_abstract {
+  height: 182px;
+}
+/* line 195, ../../../app/stylesheets/admin/design/_highlighted_documents.scss */
+#entries.admin .document-content #entry_sections_input li {
+  display: inline-block;
+  margin-bottom: 0;
+}
+/* line 200, ../../../app/stylesheets/admin/design/_highlighted_documents.scss */
+#entries.admin .document-content #entry_sections_input legend {
+  width: 100%;
+}
+/* line 202, ../../../app/stylesheets/admin/design/_highlighted_documents.scss */
+#entries.admin .document-content #entry_sections_input label {
+  margin-bottom: 0;
+  margin-right: 10px;
+}
+/* line 207, ../../../app/stylesheets/admin/design/_highlighted_documents.scss */
+#entries.admin .document-content #entry_sections_input input {
+  float: left;
+  margin-right: 3px;
+  position: relative;
+  top: 2px;
+}
+/* line 215, ../../../app/stylesheets/admin/design/_highlighted_documents.scss */
+#entries.admin .document-content .buttons input[type=submit] {
+  background-color: #7aa13d;
+  border-radius: 3px;
+  bottom: 3px;
+  color: white;
+  padding: 10px 15px;
+}
+/* line 222, ../../../app/stylesheets/admin/design/_highlighted_documents.scss */
+#entries.admin .document-content .buttons input[type=submit]:hover {
+  background-color: #5e7c2f;
+  cursor: pointer;
+  text-decoration: none;
+}
+/* line 228, ../../../app/stylesheets/admin/design/_highlighted_documents.scss */
+#entries.admin .document-content .buttons input[type=submit]:disabled {
+  background-color: #cccccc;
+}
+
+/* line 236, ../../../app/stylesheets/admin/design/_highlighted_documents.scss */
+.admin-crop-modal h2 {
+  border-bottom: 1px solid black;
+  line-height: 20px;
+  margin-bottom: 10px;
+}
+/* line 243, ../../../app/stylesheets/admin/design/_highlighted_documents.scss */
+.admin-crop-modal .photo-info dl {
+  font-size: 14px;
+  margin: 0 0 15px;
+  overflow: auto;
+}
+/* line 250, ../../../app/stylesheets/admin/design/_highlighted_documents.scss */
+.admin-crop-modal .photo-info dt,
+.admin-crop-modal .photo-info dd {
+  float: left;
+  margin-left: 0;
+}
+/* line 255, ../../../app/stylesheets/admin/design/_highlighted_documents.scss */
+.admin-crop-modal .photo-info dt {
+  font-weight: normal;
+  margin-right: 5px;
+}
+/* line 259, ../../../app/stylesheets/admin/design/_highlighted_documents.scss */
+.admin-crop-modal .photo-info dt::after {
+  content: ':';
+}
+/* line 261, ../../../app/stylesheets/admin/design/_highlighted_documents.scss */
+.admin-crop-modal .photo-info dt.solo {
+  margin-right: 10px;
+}
+/* line 264, ../../../app/stylesheets/admin/design/_highlighted_documents.scss */
+.admin-crop-modal .photo-info dt.solo::after {
+  content: '';
+}
+/* line 268, ../../../app/stylesheets/admin/design/_highlighted_documents.scss */
+.admin-crop-modal .photo-info dd {
+  font-weight: bold;
+  margin-right: 10px;
+  position: relative;
+  top: -1px;
+}
+/* line 276, ../../../app/stylesheets/admin/design/_highlighted_documents.scss */
+.admin-crop-modal .controls-wrapper {
+  float: left;
+  font-size: 16px;
+  overflow: hidden;
+  width: 410px;
+}
+/* line 283, ../../../app/stylesheets/admin/design/_highlighted_documents.scss */
+.admin-crop-modal .image-wrapper {
+  float: left;
+  height: 580px;
+  margin-right: 10px;
+  overflow: hidden;
+  width: 530px;
+}
+/* line 290, ../../../app/stylesheets/admin/design/_highlighted_documents.scss */
+.admin-crop-modal .image-wrapper .error {
+  color: #8a3737;
+  font-size: 16px;
+}
+/* line 295, ../../../app/stylesheets/admin/design/_highlighted_documents.scss */
+.admin-crop-modal .image-wrapper .loader {
+  background: url("/assets/fr_orange_loader.svg") 0 0 no-repeat;
+  height: 50px;
+  width: 50px;
+}
+/* line 302, ../../../app/stylesheets/admin/design/_highlighted_documents.scss */
+.admin-crop-modal .preview-wrapper {
+  margin-bottom: 20px;
+}
+/* line 306, ../../../app/stylesheets/admin/design/_highlighted_documents.scss */
+.admin-crop-modal .preview-wrapper.bounding-error .boundry-error {
+  display: block;
+}
+/* line 308, ../../../app/stylesheets/admin/design/_highlighted_documents.scss */
+.admin-crop-modal .preview-wrapper.bounding-error .img-preview {
+  border: 3px solid #8a3737;
+}
+/* line 311, ../../../app/stylesheets/admin/design/_highlighted_documents.scss */
+.admin-crop-modal .preview-wrapper .boundry-error {
+  color: #8a3737;
+  display: none;
+  font-size: 14px;
+  font-style: italic;
+  font-weight: bold;
+}
+/* line 319, ../../../app/stylesheets/admin/design/_highlighted_documents.scss */
+.admin-crop-modal .preview-wrapper .img-preview {
+  border: 1px solid black;
+  display: inline-block;
+  overflow: hidden;
+}
+/* line 324, ../../../app/stylesheets/admin/design/_highlighted_documents.scss */
+.admin-crop-modal .preview-wrapper .img-preview.preview-nav {
+  height: 175px;
+  width: 393px;
+}
+/* line 331, ../../../app/stylesheets/admin/design/_highlighted_documents.scss */
+.admin-crop-modal .crop-details {
+  margin-bottom: 20px;
+  overflow: auto;
+}
+/* line 336, ../../../app/stylesheets/admin/design/_highlighted_documents.scss */
+.admin-crop-modal .crop-details dd,
+.admin-crop-modal .crop-details dt {
+  float: left;
+}
+/* line 340, ../../../app/stylesheets/admin/design/_highlighted_documents.scss */
+.admin-crop-modal .crop-details dt {
+  clear: both;
+  font-weight: normal;
+}
+/* line 344, ../../../app/stylesheets/admin/design/_highlighted_documents.scss */
+.admin-crop-modal .crop-details dt::after {
+  content: ':';
+}
+/* line 347, ../../../app/stylesheets/admin/design/_highlighted_documents.scss */
+.admin-crop-modal .crop-details dd {
+  color: #7aa13d;
+  font-weight: bold;
+}
+/* line 351, ../../../app/stylesheets/admin/design/_highlighted_documents.scss */
+.admin-crop-modal .crop-details dd.error {
+  color: #8a3737;
+}
+/* line 353, ../../../app/stylesheets/admin/design/_highlighted_documents.scss */
+.admin-crop-modal .crop-details dd .warning {
+  font-size: 14px;
+  font-style: italic;
+}
+/* line 360, ../../../app/stylesheets/admin/design/_highlighted_documents.scss */
+.admin-crop-modal .button-wrapper {
+  text-align: right;
+}
+/* line 364, ../../../app/stylesheets/admin/design/_highlighted_documents.scss */
+.admin-crop-modal .button-wrapper .btn-primary,
+.admin-crop-modal .button-wrapper .btn-cancel {
+  background-image: none;
+  border: 0;
+  color: white;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 500;
+  padding: 8px 15px;
+  text-shadow: none;
+}
+/* line 375, ../../../app/stylesheets/admin/design/_highlighted_documents.scss */
+.admin-crop-modal .button-wrapper .btn-primary {
+  background-color: #7aa13d;
+}
+/* line 378, ../../../app/stylesheets/admin/design/_highlighted_documents.scss */
+.admin-crop-modal .button-wrapper .btn-primary:hover {
+  background-color: #5e7c2f;
+}
+/* line 381, ../../../app/stylesheets/admin/design/_highlighted_documents.scss */
+.admin-crop-modal .button-wrapper .btn-cancel {
+  background-color: #8a3737;
+}
+/* line 384, ../../../app/stylesheets/admin/design/_highlighted_documents.scss */
+.admin-crop-modal .button-wrapper .btn-cancel:hover {
+  background-color: #662828;
+}
+/* line 387, ../../../app/stylesheets/admin/design/_highlighted_documents.scss */
+.admin-crop-modal .button-wrapper .btn-disabled {
+  background-color: #cccccc;
+  cursor: auto;
+}
+/* line 391, ../../../app/stylesheets/admin/design/_highlighted_documents.scss */
+.admin-crop-modal .button-wrapper .btn-disabled:hover {
+  background-color: #cccccc;
+}
+
+/* jqModal base Styling courtesy of;
+  Brice Burgess <bhb@iceburg.net> */
+/* The Window's CSS z-index value is respected (takes priority). If none is supplied,
+  the Window's z-index value will be set to 3000 by default (via jqModal.js). */
+/* line 7, ../../../app/stylesheets/admin/design/_modals.scss */
+.jqmWindow {
+  display: none;
+  position: fixed;
+  top: 17%;
+  left: 50%;
+  width: 600px;
+  background-color: #EEE;
+  color: #333;
+  border: 1px solid black;
+  padding: 12px;
+  width: 600px;
+}
+
+/* line 23, ../../../app/stylesheets/admin/design/_modals.scss */
+.jqmOverlay {
+  background-color: #000;
+}
+
+/* Background iframe styling for IE6. Prevents ActiveX bleed-through (<select> form elements, etc.) */
+/* line 26, ../../../app/stylesheets/admin/design/_modals.scss */
+* iframe.jqm {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  width: expression(this.parentNode.offsetWidth+'px');
+  height: expression(this.parentNode.offsetHeight+'px');
+}
+
+/* Fixed posistioning emulation for IE6
+     Star selector used to hide definition from browsers other than IE6
+     For valid CSS, use a conditional include instead */
+/* line 34, ../../../app/stylesheets/admin/design/_modals.scss */
+* html .jqmWindow {
+  position: absolute;
+  top: expression((document.documentElement.scrollTop || document.body.scrollTop) + Math.round(17 * (document.documentElement.offsetHeight || document.body.clientHeight) / 100) + 'px');
+}
+
+/* line 39, ../../../app/stylesheets/admin/design/_modals.scss */
+#fr_modal {
+  background-color: white;
+  border: 5px solid #3F5B75;
+  display: none;
+  padding: 1em;
+  position: fixed;
+  top: 5em;
+  width: 500px;
+}
+
+/* line 49, ../../../app/stylesheets/admin/design/_modals.scss */
+#fr_modal .jqmClose {
+  position: absolute;
+  right: .5em;
+  top: .5em;
+}
+
+/* line 56, ../../../app/stylesheets/admin/design/_modals.scss */
+.fr-modal {
+  background-color: white;
+  border: 5px solid #3F5B75;
+  display: none;
+  padding: 1em;
+  position: fixed;
+  top: 5em;
+  width: 500px;
+  max-height: 700px;
+  overflow: scroll;
+}
+/* line 67, ../../../app/stylesheets/admin/design/_modals.scss */
+.fr-modal .jqmClose {
+  position: absolute;
+  right: 1em;
+  top: 1em;
+}
+/* line 73, ../../../app/stylesheets/admin/design/_modals.scss */
+.fr-modal h3.title_bar {
+  border-top: none;
+  margin-bottom: 0.5em;
+  border-bottom: 2px solid #888;
+  margin-top: 0;
+  text-transform: uppercase;
+  font-size: 1.8em !important;
+}
+
+/* line 82, ../../../app/stylesheets/admin/design/_modals.scss */
+.fr-modal.wide {
+  width: 650px !important;
+}
+
+/* line 84, ../../../app/stylesheets/admin/design/_modals.scss */
+.fr-modal.admin-crop-modal {
+  height: 640px;
+  width: 967px !important;
+}
+
+/* line 20, ../../../app/stylesheets/admin/screen_bootstrap.scss */
+#entries.admin #main #sidebar,
+#entries.admin #main #content_area,
+#issues.admin #main #sidebar,
+#issues.admin #main #content_area,
+#sections.admin #main #sidebar,
+#sections.admin #main #content_area {
+  font-size: 16px;
+}
+/* line 25, ../../../app/stylesheets/admin/screen_bootstrap.scss */
+#entries.admin #main #sidebar .section,
+#issues.admin #main #sidebar .section,
+#sections.admin #main #sidebar .section {
+  margin-bottom: 20px;
+}
+/* line 27, ../../../app/stylesheets/admin/screen_bootstrap.scss */
+#entries.admin #main #sidebar h4,
+#issues.admin #main #sidebar h4,
+#sections.admin #main #sidebar h4 {
+  font-size: 16px;
+}

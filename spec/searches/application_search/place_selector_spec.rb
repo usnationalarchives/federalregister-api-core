@@ -1,7 +1,6 @@
 require "spec_helper"
 
-describe 'ApplicationSearch::PlaceSelector' do
-  # use_vcr_cassette
+describe 'ApplicationSearch::PlaceSelector', vcr: true do
   # it 'errors out if within is greater than 200' do
   #   place_selector = ApplicationSearch::PlaceSelector.new('94118', 250)
   #   place_selector.validation_errors.should_not be_empty

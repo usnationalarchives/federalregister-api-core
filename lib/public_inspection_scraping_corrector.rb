@@ -7,7 +7,7 @@ class PublicInspectionScrapingCorrector
         puts "cleaning up doc #{doc.document_number}..."
         if doc
           if corrected
-            doc.update_attributes(document_number: corrected)
+            doc.update(document_number: corrected)
           else
             doc.destroy
           end

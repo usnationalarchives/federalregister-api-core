@@ -1,5 +1,5 @@
 class Admin::Issues::EntriesController < AdminController
-  skip_before_filter :verify_authenticity_token
+  skip_before_action :verify_authenticity_token
   
   def highlight
     @entry = Entry.find_by_document_number!(params[:id])
@@ -22,9 +22,9 @@ class Admin::Issues::EntriesController < AdminController
     @publication_date = Date.parse(params[:issue_id])
     @entry = Entry.published_on(@publication_date).find_by_document_number!(params[:id])
 
-    if @entry.update_attributes(params[:entry])
+    if @entry.update_attributes(entry_params)
       if request.xhr?
-        render :nothing => true
+        head :ok
       else
         flash[:notice] = 'Successfully saved.'
         if params[:redirect_to]
@@ -37,5 +37,25 @@ class Admin::Issues::EntriesController < AdminController
       flash.now[:error] = 'There was a problem.'
       render :action => :edit
     end
+  end
+
+  private
+
+  def entry_params
+    params.require(:entry).permit(
+      :curated_title,
+      :curated_abstract,
+      :section_ids => [],
+      :lede_photo_attributes => [
+        :url,
+        :crop_x,
+        :crop_y,
+        :crop_width,
+        :crop_height,
+        :flickr_photo_id,
+        :credit,
+        :credit_url
+      ]
+    )
   end
 end

@@ -16,7 +16,7 @@ namespace :content do
         csv = FCSV($stdin, :headers => :first_row)
         csv.each do |line|
           agency = Agency.find(line['id'])
-          agency.update_attributes!(line.to_hash)
+          agency.update!(line.to_hash)
         end
       end
     end

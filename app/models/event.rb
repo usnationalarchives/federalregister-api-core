@@ -1,5 +1,4 @@
 class Event < ApplicationModel
-  include Icalendar
   PUBLIC_MEETING_PHRASES = ["public meeting", "public hearing", "town hall meeting", "web dialogue", "webinar"]
 
   EVENT_TYPES_SINGULAR = {
@@ -30,6 +29,10 @@ class Event < ApplicationModel
     scoped(:conditions => {:event_type => "PublicMeeting"})
   end
 
+  def self.delta_index_names
+    ['event_delta']
+  end
+
   def agencies
     agency_assignments.map(:agency)
   end
@@ -46,39 +49,29 @@ class Event < ApplicationModel
     entry.raw_text
   end
 
-  def to_ics
-    ical_event = Icalendar::Event.new
-    ical_event.start = self.date
-    ical_event.end = self.date
-    ical_event.summary = "#{self.type}: #{self.title}"
-    ical_event.unique_id = "https://www.federalregister.gov/events/#{self.id}"
-    ical_event.description = self.entry.try(:abstract)
-    ical_event
-  end
+  # define_index do
+  #   # fields
+  #   indexes "entries.title", :as => :title
+  #   indexes entry.abstract
+  #   indexes place.name, :as => :place
+  #   indexes event_type, :as => :type, :facet => true
+  #   indexes "CONCAT('#{entries.document_path}/full_text/raw/', entries.document_file_path, '.txt')", :as => :entry_full_text, :file => true
 
-  define_index do
-    # fields
-    indexes "entries.title", :as => :title
-    indexes entry.abstract
-    indexes place.name, :as => :place
-    indexes event_type, :as => :type, :facet => true
-    indexes "CONCAT('#{entries.document_path}/full_text/raw/', entries.document_file_path, '.txt')", :as => :entry_full_text, :file => true
+  #   # attributes
+  #   has date
+  #   has entry.agency_assignments(:agency_id), :as => :agency_ids
+  #   has place_id
 
-    # attributes
-    has date
-    has entry.agency_assignments(:agency_id), :as => :agency_ids
-    has place_id
-
-    set_property :field_weights => {
-      "title" => 100,
-      "place" => 50,
-      "abstract" => 50,
-      "full_text" => 25,
-    }
-    where "events.date BETWEEN DATE_SUB(NOW(), INTERVAL 1 MONTH) AND DATE_ADD(NOW(), INTERVAL 2 YEAR) AND event_type != 'RegulationsDotGovCommentsCloseDate'"
-    set_property :delta => ThinkingSphinx::Deltas::ManualDelta
-  end
-  # this line must appear after the define_index block
-  include ThinkingSphinx::Deltas::ManualDelta::ActiveRecord
+  #   set_property :field_weights => {
+  #     "title" => 100,
+  #     "place" => 50,
+  #     "abstract" => 50,
+  #     "full_text" => 25,
+  #   }
+  #   where "events.date BETWEEN DATE_SUB(NOW(), INTERVAL 1 MONTH) AND DATE_ADD(NOW(), INTERVAL 2 YEAR) AND event_type != 'RegulationsDotGovCommentsCloseDate'"
+  #   set_property :delta => ThinkingSphinx::Deltas::ManualDelta
+  # end
+  # # this line must appear after the define_index block
+  # include ThinkingSphinx::Deltas::ManualDelta::ActiveRecord
 
 end

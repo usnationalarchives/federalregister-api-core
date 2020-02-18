@@ -1,14 +1,14 @@
 <% super_title 'Public Meetings' %>
 
 <%= page_entries_info @events %>
-<%= will_paginate @events %>
+<%= will_paginate @events, renderer: BootstrapPagination::Rails %>
 <table class='<%= table_css_class %>'>
   <thead>
     <tr>
-      <th><%= order @search, :as => 'Title', :by => :title %></th>
-      <th><%= order @search, :as => 'Event Date', :by => :date %></th>
-      <th><%= order @search, :as => 'Location', :by => {:place => :name} %></th>
-      <th><%= order @search, :as => 'Document', :by => {:entry => :publication_date} %></th>
+      <th><%= sort_link(@search, :title, "Title") %></th>
+      <th><%= sort_link(@search, :date, "Event Date") %></th>
+      <th><%= sort_link(@search, :place_name, "Location") %></th>
+      <th><%= sort_link(@search, :entry_publication_date, "Document") %></th>
       <th></th>
     </tr>
   </thead>
@@ -27,4 +27,4 @@
     <% end %>
   </tbody>
 </table>
-<%= will_paginate @events %>
+<%= will_paginate @events, renderer: BootstrapPagination::Rails %>

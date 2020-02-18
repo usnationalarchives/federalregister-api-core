@@ -2,7 +2,7 @@ module FrIndexRecompiler
   @queue = :reimport
 
   def self.perform(year)
-    ActiveRecord::Base.verify_active_connections!
+    ActiveRecord::Base.clear_active_connections!
     
     FrIndexCompiler.perform(year)
     Agency.all.each do |agency|

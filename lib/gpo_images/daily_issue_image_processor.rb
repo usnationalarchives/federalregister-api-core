@@ -8,7 +8,7 @@ module GpoImages
 
     def initialize(date)
       @date = date
-      @documents = Entry.find_all_by_publication_date(@date.to_s(:iso))
+      @documents = Entry.where(publication_date: @date.to_s(:iso))
     end
 
     def self.perform(date)

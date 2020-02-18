@@ -11,7 +11,7 @@ class Api::V1::PublicInspectionDocumentsController < ApiController
           fields = specified_fields || PublicInspectionDocumentApiRepresentation.default_index_fields_json
           find_options = PublicInspectionDocumentApiRepresentation.find_options_for(fields)
 
-          search = public_inspection_search(params, fields)
+          search = public_inspection_search(deserialized_params, fields)
 
           render_search(search, find_options, params[:metadata_only]) do |result|
             document_data(result, fields)
@@ -24,7 +24,7 @@ class Api::V1::PublicInspectionDocumentsController < ApiController
         find_options = PublicInspectionDocumentApiRepresentation.find_options_for(fields)
 
         search = public_inspection_search(
-          {order: 'newest', per_page: 200}.merge(params),
+          deserialized_params.merge(order: 'newest', per_page: 200),
           fields
         )
 
@@ -38,7 +38,7 @@ class Api::V1::PublicInspectionDocumentsController < ApiController
         find_options = PublicInspectionDocumentApiRepresentation.find_options_for(fields)
 
         search = public_inspection_search(
-          params.merge(order: 'newest', per_page: 200),
+          deserialized_params.merge(order: 'newest', per_page: 200),
           fields
         )
         documents = search.results(find_options)
@@ -51,14 +51,14 @@ class Api::V1::PublicInspectionDocumentsController < ApiController
     term = params[:conditions] && params[:conditions][:term].present?
     excerpts = fields.include?(:excerpts)
 
-    PublicInspectionDocumentSearch.new(params.merge(excerpts: term && excerpts))
+    PublicInspectionDocumentSearch.new(deserialized_params.merge(excerpts: term && excerpts))
   end
 
   def facets
     field_facets = %w(type agency agencies)
     raise ActiveRecord::RecordNotFound unless (field_facets).include?(params[:facet])
 
-    search = PublicInspectionDocumentSearch.new(params)
+    search = PublicInspectionDocumentSearch.new(deserialized_params)
     if search.valid?
         facets = search.send("#{params[:facet]}_facets")
 
@@ -77,7 +77,7 @@ class Api::V1::PublicInspectionDocumentsController < ApiController
   end
 
   def search_details
-    search = PublicInspectionDocumentSearch.new(params)
+    search = PublicInspectionDocumentSearch.new(deserialized_params)
 
     if search.valid?
       render_json_or_jsonp(
@@ -131,6 +131,32 @@ class Api::V1::PublicInspectionDocumentsController < ApiController
 
   private
 
+  #NOTE: Thinking Sphinx v3 is much stricter about types and will throw errors if a string value like "1" is passed in lieu of its integer counterpart
+  BOOLEAN_PARAMS_NEEDING_DESERIALIZATION = [
+    :special_filing
+  ]
+  INTEGER_PARAMS_NEEDING_DESERIALIZATION = [
+    'agency_ids',
+  ]
+
+  def deserialized_params
+    params.tap do |modified_params|
+      BOOLEAN_PARAMS_NEEDING_DESERIALIZATION.each do |param_name|
+        param = modified_params[:conditions].try(:[], param_name)
+        if param.present?
+          modified_params[:conditions][param_name] = param.to_i
+        end
+      end
+
+      INTEGER_PARAMS_NEEDING_DESERIALIZATION.each do |param_name|
+        ids = modified_params[:conditions].try(:[], param_name)
+        if ids.present?
+          modified_params[:conditions][param_name] = Array.wrap(ids).map(&:to_i)
+        end
+      end
+    end
+  end
+
   def document_data(document, fields)
     representation = PublicInspectionDocumentApiRepresentation.new(document)
     Hash[ fields.map do |field|
@@ -182,7 +208,7 @@ class Api::V1::PublicInspectionDocumentsController < ApiController
 
     headers['Content-Disposition'] = "attachment; filename=\"#{filename}.csv\""
 
-    render :text => output
+    render plain: output
   end
 
   def render_rss(documents, title)

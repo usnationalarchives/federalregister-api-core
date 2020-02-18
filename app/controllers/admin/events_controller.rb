@@ -1,7 +1,7 @@
 class Admin::EventsController < AdminController
   def index
-    @search = Event.public_meeting.searchlogic(params[:search])
-    @events = @search.paginate(:page => params[:page])
+    @search = Event.public_meeting.includes(:entry, :place).ransack(params[:q])
+    @events = @search.result.paginate(:page => params[:page])
   end
 
   def new
@@ -12,7 +12,7 @@ class Admin::EventsController < AdminController
   end
 
   def create
-    @event = Event.new(params[:event])
+    @event = Event.new(event_params)
     @event.event_type = 'PublicMeeting'
     if params[:event][:place_id].present? && Event.find_by_id(params[:event][:place_id]).nil?
       @event.place = Place.new(
@@ -44,7 +44,7 @@ class Admin::EventsController < AdminController
   def update
     @event = Event.find(params[:id])
 
-    if @event.update_attributes(params[:event])
+    if @event.update(event_params)
       flash[:notice] = "Successfully updated."
       redirect_to admin_events_url
     else
@@ -58,10 +58,23 @@ class Admin::EventsController < AdminController
     @event.destroy
 
     if request.xhr?
-        render :nothing => true
+        head :ok
     else
         flash[:notice] = "Successfully removed."
         redirect_to admin_events_url
     end
+  end
+
+  private
+
+  def event_params
+    params.require(:event).permit(
+      :entry_id,
+      :title,
+      :date,
+      :place_id,
+      :remote_call_in_available,
+      :place => [:name, :place_type, :longitude, :latitude]
+    )
   end
 end

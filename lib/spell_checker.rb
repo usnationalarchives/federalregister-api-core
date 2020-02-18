@@ -11,7 +11,8 @@ class SpellChecker
   end
 
   def dictionary_words
-    @dictionary_words ||= DictionaryWord.find_as_hash(:select => "word, 1")
+    sql = DictionaryWord.select("word, 1").to_sql
+    @dictionary_words ||= DictionaryWord.find_as_hash(sql)
   end
 
   def highlight_spelling_errors(text)

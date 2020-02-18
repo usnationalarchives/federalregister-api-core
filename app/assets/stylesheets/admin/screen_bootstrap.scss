@@ -1,0 +1,29 @@
+@import "mixins/borders";
+@import "library";
+@import "patterns";
+
+@import "app";
+@import "design/diffy";
+@import "design/fr_index";
+@import "design/highlighted_documents";
+@import "design/issues";
+@import "design/missing_images";
+@import "design/modals";
+@import "design/presidential_documents";
+@import "design/reprocessed_issues";
+@import "design/sections";
+
+#entries.admin #main,
+#issues.admin #main,
+#sections.admin #main {
+  #sidebar,
+  #content_area {
+    font-size: 16px;
+  }
+
+  #sidebar {
+    .section { margin-bottom: 20px; }
+
+    h4 { font-size: 16px; }
+  }
+}

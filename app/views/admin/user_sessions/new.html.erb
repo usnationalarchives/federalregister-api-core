@@ -1,15 +1,15 @@
 <% super_title "Login" %>
 
-<% semantic_form_for @user_session, :url => admin_user_session_path do |f| %>
+<%= semantic_form_for @user_session, method: :POST, :url => admin_user_session_path do |f| %>
 
-  <% f.inputs do %>
+  <%= f.inputs do %>
     <%= f.input :email, :required => true %>
     <%= f.input :password, :required => true %>
     <!-- <%= f.input :remember_me, :as => :check_boxes, :collection => [["Yes", true]] %> -->
   <% end %>
 
-  <% f.buttons do %>
-    <%= f.commit_button "Login", :button_html => {:class => "btn btn-large btn-success"} %>
+  <%= f.actions do %>
+    <%= f.action :submit, :label => "Login", :button_html => {:class => "btn btn-large btn-success"} %>
   <% end %>
 
 <% end %>

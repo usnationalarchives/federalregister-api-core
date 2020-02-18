@@ -169,7 +169,7 @@ class FrIndexAgencyCompiler
 
     if last_published_date
       @doc_data[:pdf] = {
-        url: "#{AppConfig.app.canonical_url}#{path_manager.index_agency_pdf_path(agency, last_published_date).gsub(path_manager.send(:data_file_path),'')}",
+        url: "#{SETTINGS['app']['canonical_url']}#{path_manager.index_agency_pdf_path(agency, last_published_date).gsub(path_manager.send(:data_file_path),'')}",
         approval_date: last_published_date,
       }
     else

@@ -3,16 +3,17 @@
 
 <% sidebar(render :partial => 'nav') %>
 
-<% semantic_form_for @topic_name, :url => admin_topic_name_path(@topic_name) do |f| %>
+<%= semantic_form_for @topic_name, :url => admin_topic_name_path(@topic_name) do |f| %>
   <%= f.semantic_errors %>
 
-  <% f.inputs do %>
-    <%= f.input :topics, :as => :autocomplete, :source_data_url => admin_topics_path(:format => :json) %>
+  <%= f.inputs do %>
+    <%= f.input :topics %>
+    <%# :source_data_url => admin_topics_path(:format => :json) TODO: Reimplement post Rails upgrade  %>
     <%= f.input :void, :as => :boolean, :checked => @topic_name.void %>
   <% end %>
 
-  <% f.buttons do %>
-    <%= f.commit_button 'Save', :button_html => {:class => "btn btn-large btn-success"} %>
+  <%= f.actions do %>
+    <%= f.action :submit, label: 'Save', button_html: {class: "btn btn-large btn-success"} %>
     <%= link_to 'Cancel', unprocessed_admin_topic_names_path %>
   <% end %>
 <% end %>

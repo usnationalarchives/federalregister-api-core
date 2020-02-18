@@ -1,12 +1,11 @@
 class Agency < ApplicationModel
-  does 'shared/slug', :based_on => :name
+  include Shared::DoesSlug[:based_on => :name]
 
   module AssociationExtensions
     def excluding_parents
       agencies = self.compact.uniq
 
-      # proxy_owner becomes proxy_association.owner in Rails 3+
-      owner = proxy_owner
+      owner = proxy_association.owner
 
       # Public Inspection Documents only get a parent agency associated when
       #  it is a co-publication between the parent and child agencies, so the parent
@@ -33,38 +32,41 @@ class Agency < ApplicationModel
 
   has_many :fr_index_agency_statuses
 
-  has_many :entry_agency_assignments, :class_name => "AgencyAssignment", :conditions => "agency_assignments.assignable_type = 'Entry'"
+  has_many :entry_agency_assignments, -> { where("agency_assignments.assignable_type = 'Entry'") }, :class_name => "AgencyAssignment"
   has_many :entries, :through => :entry_agency_assignments
 
-  has_many :regulatory_plan_agency_assignments, :class_name => "AgencyAssignment", :conditions => {:assignable_type => "RegulatoryPlan"}
+  has_many :regulatory_plan_agency_assignments, -> { where(assignable_type: "RegulatoryPlan") }, :class_name => "AgencyAssignment"
   has_many :regulatory_plans, :through => :regulatory_plan_agency_assignments, :source => :regulatory_plan
 
   has_many :children, :class_name => 'Agency', :foreign_key => 'parent_id'
   belongs_to :parent, :class_name => 'Agency'
 
-  named_scope :in_navigation, :conditions => ['id IN (?)', AGENCIES_IN_NAV_AGENCY_IDS]
+  scope :in_navigation, -> { where("id IN (?)", AGENCIES_IN_NAV_AGENCY_IDS) }
 
   has_attached_file :logo,
                     :styles => { :thumb => "100", :small => "140", :medium => "245", :large => "580", :full_size => "" },
                     :processors => [:thumbnail],
                     :storage => :s3,
                     :s3_credentials => {
-                      :access_key_id     => SECRETS['aws']['access_key_id'],
-                      :secret_access_key => SECRETS['aws']['secret_access_key']
+                      :access_key_id     => Rails.application.secrets[:aws][:access_key_id],
+                      :secret_access_key => Rails.application.secrets[:aws][:secret_access_key],
+                      :s3_region => 'us-east-1'
                     },
                     :s3_protocol => 'https',
                     :bucket => 'agency-logos.federalregister.gov',
                     :path => ":id/:style.:extension"
+  do_not_validate_attachment_file_type :logo
 
-  validates_uniqueness_of :name
+  validates_uniqueness_of :name, case_sensitive: true
   validates_presence_of :name
 
   validates_format_of :url, :with => /\Ahttps?:\/\/\S+\z/, :allow_blank => true
   serializable_column :entries_1_year_weekly, :entries_5_years_monthly, :entries_all_years_quarterly, :related_topics_cache
 
-  named_scope :with_logo, :conditions => "agencies.logo_file_name IS NOT NULL"
-  named_scope :with_entries, :conditions => "agencies.entries_count > 0"
-  named_scope :alphabetically, :order => "agencies.name"
+  scope :with_logo, -> { where("agencies.logo_file_name IS NOT NULL") }
+  scope :with_entries, -> { where("agencies.entries_count > 0") }
+  scope :alphabetically, -> { order("agencies.name")}
+  scope :active, -> { where(active: true) }
 
   # consider using sphinx instead...
   def self.named_approximately(name)

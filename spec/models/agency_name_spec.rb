@@ -32,7 +32,7 @@ describe AgencyName do
       entry = Factory(:entry, :agency_names => [agency_name])
       entry.agencies.should == []
 
-      agency_name.update_attributes(:agency_id => agency.id)
+      agency_name.update(:agency_id => agency.id)
       entry.reload
       entry.agencies.should == [agency]
     end
@@ -46,8 +46,8 @@ describe AgencyName do
       entry = Factory(:entry, :agency_names => [agency_name_2, agency_name_1])
       entry.agencies.should == []
 
-      agency_name_1.update_attributes(:agency_id => agency_1.id)
-      agency_name_2.update_attributes(:agency_id => agency_2.id)
+      agency_name_1.update(:agency_id => agency_1.id)
+      agency_name_2.update(:agency_id => agency_2.id)
       entry.reload
       entry.agencies.should == [agency_2, agency_1]
       entry.agency_assignments.map(&:position) == [1,2]
@@ -60,7 +60,7 @@ describe AgencyName do
       entry.agencies.should == [agency_1]
 
       agency_2 = Factory(:agency)
-      agency_name.update_attributes!(:agency => agency_2)
+      agency_name.update!(:agency => agency_2)
       entry.reload
       entry.agencies.should == [agency_2]
     end
@@ -71,7 +71,7 @@ describe AgencyName do
       entry = Factory(:entry, :agency_names => [agency_name])
       entry.agencies.should == [agency_1]
 
-      agency_name.update_attributes!(:agency => nil)
+      agency_name.update!(:agency => nil)
       entry.reload
       entry.agencies.should == []
     end
@@ -89,7 +89,7 @@ describe AgencyName do
       agency_name = Factory(:agency_name, :agency => agency_1)
       entry = Factory(:entry, :agency_names => [agency_name])
       agency_2 = Factory(:agency)
-      agency_name.update_attributes(:agency => agency_2)
+      agency_name.update(:agency => agency_2)
       agency_1.reload
       agency_2.reload
       agency_1.entries_count.should == 0
@@ -103,7 +103,7 @@ describe AgencyName do
       agency_2 = Factory(:agency)
 
       Resque.should_receive(:enqueue).with(TableOfContentsRecompiler, entry.publication_date)
-      agency_name.update_attributes(:agency => agency_2)
+      agency_name.update(:agency => agency_2)
     end
 
     it "enqueues a job for recompiling the public inspection table of contents for all of the publication dates associated with corresponding entries" do
@@ -119,11 +119,11 @@ describe AgencyName do
         publication_date: Date.current - 1.day
       )
       public_inspection_issue.save!
-      PublicInspectionDocument.first.update_attributes(agency_names: [agency_name])
+      PublicInspectionDocument.first.update(agency_names: [agency_name])
       agency_name.reload
 
       Resque.should_receive(:enqueue).twice
-      agency_name.update_attributes(:agency => agency_2)
+      agency_name.update(:agency => agency_2)
     end
 
   end

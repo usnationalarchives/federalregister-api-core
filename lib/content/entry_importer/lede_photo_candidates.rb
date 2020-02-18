@@ -1,5 +1,5 @@
 module Content::EntryImporter::LedePhotoCandidates
-  extend ActiveSupport::Memoizable
+  extend Memoist
   # extend Content::EntryImporter::Utils
   # provides :lede_photo_suggestions
 

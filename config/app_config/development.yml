@@ -1,7 +1,0 @@
-app: 
-  canonical_url: "https://dev-fr2.criticaljuncture.org"
-  # canonical_url: "http://localhost:3000"
-
-# sphinx:
-#   use_local_pil_date: true
-#   pil_index_since_date: '2016-04-10'

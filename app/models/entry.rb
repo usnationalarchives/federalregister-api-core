@@ -2,6 +2,7 @@
 class Entry < ApplicationModel
   self.inheritance_column = nil
   include EntryViewLogic
+  extend ActiveHash::Associations::ActiveRecordExtensions
 
   include TextHelper
   attr_writer :excerpt
@@ -40,13 +41,13 @@ class Entry < ApplicationModel
   has_many :topic_names, :through => :topic_name_assignments
 
   has_many :topic_assignments, :dependent => :destroy
-  has_many :topics, :through => :topic_assignments, :order => 'topics.name'
+  has_many :topics, -> { order('topics.name') }, :through => :topic_assignments
 
   has_many :url_references, :dependent => :destroy
   has_many :urls, :through => :url_references
 
   has_many :place_determinations,
-           :conditions => "place_determinations.confidence >= #{PlaceDetermination::MIN_CONFIDENCE} OR place_determinations.relevance_score >= #{PlaceDetermination::MIN_RELEVANCE_SCORE}",
+           -> { where("place_determinations.confidence >= #{PlaceDetermination::MIN_CONFIDENCE} OR place_determinations.relevance_score >= #{PlaceDetermination::MIN_RELEVANCE_SCORE}") },
            :dependent => :destroy
   has_many :places, :through => :place_determinations
 
@@ -70,10 +71,10 @@ class Entry < ApplicationModel
   has_many :graphics,
            :through => :graphic_usages
   has_many :extracted_graphics,
+           -> { where("graphics.graphic_file_name IS NOT NULL") },
            :through => :graphic_usages,
            :source => :graphic,
-           :class_name => "Graphic",
-           :conditions => "graphics.graphic_file_name IS NOT NULL"
+           :class_name => "Graphic"
 
   has_many :gpo_graphic_usages,
     :foreign_key => :document_number,
@@ -81,17 +82,17 @@ class Entry < ApplicationModel
 
   acts_as_mappable :through => :places
 
-  has_many :docket_numbers, :as => :assignable, :order => "docket_numbers.position", :dependent => :destroy
+  has_many :docket_numbers, -> { order("docket_numbers.position") }, :as => :assignable, :dependent => :destroy
 
-  has_many :agency_name_assignments, :as => :assignable, :order => "agency_name_assignments.position", :dependent => :destroy
+  has_many :agency_name_assignments, -> { order("agency_name_assignments.position") }, :as => :assignable, :dependent => :destroy
   has_many :agency_names, :through => :agency_name_assignments
-  has_many :agency_assignments, :as => :assignable, :order => "agency_assignments.position", :dependent => :destroy
-  has_many :agencies, :through => :agency_assignments, :order => "agency_assignments.position", :extend => Agency::AssociationExtensions
+  has_many :agency_assignments, -> { order("agency_assignments.position") }, :as => :assignable, :dependent => :destroy
+  has_many :agencies, :through => :agency_assignments, :extend => Agency::AssociationExtensions
 
   has_many :events, :dependent => :destroy
-  has_one :comments_close_date, :class_name => "Event", :conditions => {:event_type => 'CommentsClose'}, :autosave => true
-  has_one :effective_date, :class_name => "Event", :conditions => {:event_type => 'EffectiveDate'}, :autosave => true
-  has_one :regulations_dot_gov_comments_close_date, :class_name => "Event", :conditions => {:event_type => 'RegulationsDotGovCommentsClose'}, :autosave => true
+  has_one :comments_close_date, -> { where(:event_type => 'CommentsClose') }, :class_name => "Event", :autosave => true
+  has_one :effective_date, -> { where(event_type: 'EffectiveDate') }, :class_name => "Event", :autosave => true
+  has_one :regulations_dot_gov_comments_close_date, -> { where(event_type: 'RegulationsDotGovCommentsClose') }, :class_name => "Event", :autosave => true
 
   before_save :set_document_file_path
 
@@ -104,8 +105,6 @@ class Entry < ApplicationModel
   has_many :entry_page_views
   has_many :entry_emails
 
-  has_one :agency_highlight
-
   has_many :events, :dependent => :destroy
 
   accepts_nested_attributes_for :lede_photo, :reject_if => Proc.new{|attr| attr["url"].blank? }
@@ -116,18 +115,10 @@ class Entry < ApplicationModel
 
   has_many :entry_regulation_id_numbers
   has_many :regulatory_plans, :through => :entry_regulation_id_numbers
-  has_many :small_entities_for_thinking_sphinx,
-           :class_name => 'EntryRegulationIdNumber',
-           :conditions => "1 = 1
-              LEFT OUTER JOIN regulatory_plans
-                ON regulatory_plans.regulation_id_number = entry_regulation_id_numbers.regulation_id_number
-                AND regulatory_plans.current = 1
-              LEFT OUTER JOIN regulatory_plans_small_entities
-                ON regulatory_plans_small_entities.regulatory_plan_id = regulatory_plans.id"
   has_many :entry_cfr_references, :dependent => :delete_all
-  has_many :entry_cfr_affected_parts, :class_name => "EntryCfrReference", :conditions => "entry_cfr_references.part IS NOT NULL"
+  has_many :entry_cfr_affected_parts, -> { where("entry_cfr_references.part IS NOT NULL") }, :class_name => "EntryCfrReference"
 
-  does 'shared/document_number_normalization'
+  include Shared::DoesDocumentNumberNormalization
 
   validate :curated_attributes_are_not_too_long
 
@@ -219,6 +210,14 @@ class Entry < ApplicationModel
     scoped(:conditions => {:presidential_document_type_id => PresidentialDocumentType::EXECUTIVE_ORDER})
   end
 
+  def self.delta_index_names
+    ['entry_delta']
+  end
+
+  def self.core_index_names
+    ['entry_core']
+  end
+
   def excerpt
     return @excerpt if @excerpt
 
@@ -257,110 +256,110 @@ class Entry < ApplicationModel
 
   alias_method :category, :entry_type
 
-  define_index do
-    set_property "sql_query_killlist", <<-SQL.gsub(/\s+/, ' ')
-      SELECT entries.id #{ThinkingSphinx.unique_id_expression(ThinkingSphinx::MysqlAdapter.new(Entry), Entry.sphinx_offset) }
-      FROM entries
-      WHERE delta = 1
-    SQL
+  # define_index do
+  #   set_property "sql_query_killlist", <<-SQL.gsub(/\s+/, ' ')
+  #     SELECT entries.id #{ThinkingSphinx.unique_id_expression(ThinkingSphinx::MysqlAdapter.new(Entry), Entry.sphinx_offset) }
+  #     FROM entries
+  #     WHERE delta = 1
+  #   SQL
 
-    # fields
-    indexes title
-    indexes abstract
-    indexes "CONCAT('#{FileSystemPathManager.data_file_path}/documents/full_text/raw/', document_file_path, '.txt')", :as => :full_text, :file => true
-    indexes "GROUP_CONCAT(DISTINCT IFNULL(`entry_regulation_id_numbers`.`regulation_id_number`, '0') SEPARATOR ' ')", :as =>  :regulation_id_number
-    indexes <<-SQL, :as => :docket_id
-      (
-        SELECT GROUP_CONCAT(DISTINCT docket_numbers.number SEPARATOR ' ')
-        FROM docket_numbers
-        WHERE docket_numbers.assignable_id = entries.id
-          AND docket_numbers.assignable_type = 'Entry'
-      )
-    SQL
+  #   # fields
+  #   indexes title
+  #   indexes abstract
+  #   indexes "CONCAT('#{FileSystemPathManager.data_file_path}/documents/full_text/raw/', document_file_path, '.txt')", :as => :full_text, :file => true
+  #   indexes "GROUP_CONCAT(DISTINCT IFNULL(`entry_regulation_id_numbers`.`regulation_id_number`, '0') SEPARATOR ' ')", :as =>  :regulation_id_number
+  #   indexes <<-SQL, :as => :docket_id
+  #     (
+  #       SELECT GROUP_CONCAT(DISTINCT docket_numbers.number SEPARATOR ' ')
+  #       FROM docket_numbers
+  #       WHERE docket_numbers.assignable_id = entries.id
+  #         AND docket_numbers.assignable_type = 'Entry'
+  #     )
+  #   SQL
 
-    has "CRC32(document_number)", :as => :document_number, :type => :integer
-    has "CRC32(IF(granule_class = 'SUNSHINE', 'NOTICE', granule_class))", :as => :type, :type => :integer
-    has presidential_document_type_id
+  #   has "CRC32(document_number)", :as => :document_number, :type => :integer
+  #   has "CRC32(IF(granule_class = 'SUNSHINE', 'NOTICE', granule_class))", :as => :type, :type => :integer
+  #   has presidential_document_type_id
 
-    has publication_date
-    has "IF(granule_class = 'PRESDOCU', IFNULL(signing_date, publication_date), NULL)", as: :signing_date, type: :datetime
+  #   has publication_date
+  #   has "IF(granule_class = 'PRESDOCU', IFNULL(signing_date, publication_date), NULL)", as: :signing_date, type: :datetime
 
-    has "IF(granule_class = 'PRESDOCU', INTERVAL(DATE_FORMAT(IFNULL(signing_date,DATE_SUB(publication_date, INTERVAL 3 DAY)), '%Y%m%d'),#{President.all.map{|p| p.starts_on.strftime("%Y%m%d")}.join(', ')}), NULL)", :as => :president_id, :type => :integer
-    has "IF(granule_class = 'CORRECT' OR correction_of_id IS NOT NULL OR (presidential_document_type_id = 2 AND (executive_order_number = 0 or executive_order_number IS NULL)), 1, 0)", :as => :correction, :type => :boolean
-    has start_page
-    has executive_order_number
-    has proclamation_number
+  #   has "IF(granule_class = 'PRESDOCU', INTERVAL(DATE_FORMAT(IFNULL(signing_date,DATE_SUB(publication_date, INTERVAL 3 DAY)), '%Y%m%d'),#{President.all.map{|p| p.starts_on.strftime("%Y%m%d")}.join(', ')}), NULL)", :as => :president_id, :type => :integer
+  #   has "IF(granule_class = 'CORRECT' OR correction_of_id IS NOT NULL OR (presidential_document_type_id = 2 AND (executive_order_number = 0 or executive_order_number IS NULL)), 1, 0)", :as => :correction, :type => :boolean
+  #   has start_page
+  #   has executive_order_number
+  #   has proclamation_number
 
-    has <<-SQL, :as => :cfr_affected_parts, :type => :multi
-      (
-        SELECT GROUP_CONCAT(DISTINCT title * #{EntrySearch::CFR::TITLE_MULTIPLIER} + part SEPARATOR ',')
-        FROM entry_cfr_references
-        WHERE entry_id = entries.id
-      )
-    SQL
-    has <<-SQL, :as => :agency_ids, :type => :multi
-      (
-        SELECT GROUP_CONCAT(DISTINCT agency_id SEPARATOR ',')
-        FROM agency_assignments
-        WHERE assignable_id = entries.id
-          AND assignable_type = 'Entry'
-          AND agency_id IS NOT NULL
-      )
-    SQL
-    has <<-SQL, :as => :topic_ids, :type => :multi
-      (
-        SELECT GROUP_CONCAT(DISTINCT topic_id SEPARATOR ',')
-        FROM topic_assignments
-        WHERE entry_id = entries.id
-          AND topic_id IS NOT NULL
-      )
-    SQL
-    has <<-SQL, :as => :section_ids, :type => :multi
-      (
-        SELECT GROUP_CONCAT(DISTINCT section_id SEPARATOR ',')
-        FROM section_assignments
-        WHERE entry_id = entries.id
-          AND section_id IS NOT NULL
-      )
-    SQL
-    has <<-SQL, :as => :place_ids, :type => :multi
-      (
-        SELECT GROUP_CONCAT(DISTINCT IFNULL(place_id, '0') SEPARATOR ',')
-        FROM place_determinations
-        WHERE entry_id = entries.id
-          AND place_id IS NOT NULL
-      )
-    SQL
-    has <<-SQL, :as => :cited_entry_ids, :type => :multi
-      (
-        SELECT GROUP_CONCAT(DISTINCT cited_entry_id SEPARATOR ',')
-        FROM citations
-        WHERE source_entry_id = entries.id
-          AND cited_entry_id IS NOT NULL
-      )
-    SQL
-    has effective_date(:date), :as => :effective_date
-    has comments_close_date(:date), :as => :comment_date
+  #   has <<-SQL, :as => :cfr_affected_parts, :type => :multi
+  #     (
+  #       SELECT GROUP_CONCAT(DISTINCT title * #{EntrySearch::CFR::TITLE_MULTIPLIER} + part SEPARATOR ',')
+  #       FROM entry_cfr_references
+  #       WHERE entry_id = entries.id
+  #     )
+  #   SQL
+  #   has <<-SQL, :as => :agency_ids, :type => :multi
+  #     (
+  #       SELECT GROUP_CONCAT(DISTINCT agency_id SEPARATOR ',')
+  #       FROM agency_assignments
+  #       WHERE assignable_id = entries.id
+  #         AND assignable_type = 'Entry'
+  #         AND agency_id IS NOT NULL
+  #     )
+  #   SQL
+  #   has <<-SQL, :as => :topic_ids, :type => :multi
+  #     (
+  #       SELECT GROUP_CONCAT(DISTINCT topic_id SEPARATOR ',')
+  #       FROM topic_assignments
+  #       WHERE entry_id = entries.id
+  #         AND topic_id IS NOT NULL
+  #     )
+  #   SQL
+  #   has <<-SQL, :as => :section_ids, :type => :multi
+  #     (
+  #       SELECT GROUP_CONCAT(DISTINCT section_id SEPARATOR ',')
+  #       FROM section_assignments
+  #       WHERE entry_id = entries.id
+  #         AND section_id IS NOT NULL
+  #     )
+  #   SQL
+  #   has <<-SQL, :as => :place_ids, :type => :multi
+  #     (
+  #       SELECT GROUP_CONCAT(DISTINCT IFNULL(place_id, '0') SEPARATOR ',')
+  #       FROM place_determinations
+  #       WHERE entry_id = entries.id
+  #         AND place_id IS NOT NULL
+  #     )
+  #   SQL
+  #   has <<-SQL, :as => :cited_entry_ids, :type => :multi
+  #     (
+  #       SELECT GROUP_CONCAT(DISTINCT cited_entry_id SEPARATOR ',')
+  #       FROM citations
+  #       WHERE source_entry_id = entries.id
+  #         AND cited_entry_id IS NOT NULL
+  #     )
+  #   SQL
+  #   has effective_date(:date), :as => :effective_date
+  #   has comments_close_date(:date), :as => :comment_date
 
-    has "IF(comment_url != '', 1, 0)", :as => :accepting_comments_on_regulations_dot_gov, :type => :boolean
+  #   has "IF(comment_url != '', 1, 0)", :as => :accepting_comments_on_regulations_dot_gov, :type => :boolean
 
-    join small_entities_for_thinking_sphinx
-    has "GROUP_CONCAT(DISTINCT IFNULL(regulatory_plans_small_entities.small_entity_id,0) SEPARATOR ',')", :as => :small_entity_ids, :type => :multi
-    has "SUM(IF(regulatory_plans.priority_category IN (#{RegulatoryPlan::SIGNIFICANT_PRIORITY_CATEGORIES.map{|c| "'#{c}'"}.join(',')}),1,0)) > 0",
-      :as => :significant,
-      :type => :boolean
+  #   join small_entities_for_thinking_sphinx
+  #   has "GROUP_CONCAT(DISTINCT IFNULL(regulatory_plans_small_entities.small_entity_id,0) SEPARATOR ',')", :as => :small_entity_ids, :type => :multi
+  #   has "SUM(IF(regulatory_plans.priority_category IN (#{RegulatoryPlan::SIGNIFICANT_PRIORITY_CATEGORIES.map{|c| "'#{c}'"}.join(',')}),1,0)) > 0",
+  #     :as => :significant,
+  #     :type => :boolean
 
-    set_property :field_weights => {
-      "title" => 100,
-      "abstract" => 50,
-      "full_text" => 25,
-      "agency_name" => 10
-    }
+  #   set_property :field_weights => {
+  #     "title" => 100,
+  #     "abstract" => 50,
+  #     "full_text" => 25,
+  #     "agency_name" => 10
+  #   }
 
-    set_property :delta => ThinkingSphinx::Deltas::ManualDelta
-  end
-  # this line must appear after the define_index block
-  include ThinkingSphinx::Deltas::ManualDelta::ActiveRecord
+  #   set_property :delta => ThinkingSphinx::Deltas::ManualDelta
+  # end
+  # # this line must appear after the define_index block
+  # include ThinkingSphinx::Deltas::ManualDelta::ActiveRecord
 
   def title
     if self[:title].present? && self[:title] =~ /[A-Za-z]/
@@ -475,13 +474,12 @@ class Entry < ApplicationModel
   end
 
   def self.latest_publication_dates(n)
-    find(:all,
-         :select => "publication_date",
-         :conditions => ["publication_date <= ?", Issue.current.publication_date],
-         :group => "publication_date",
-         :order => "publication_date DESC",
-         :limit => n
-    ).map &:publication_date
+    select("publication_date").
+    where("publication_date <= ?", Issue.current.publication_date).
+    order("publication_date DESC").
+    group("publication_date").
+    limit(n).
+    map(&:publication_date)
   end
 
   def self.find_all_by_citation(volume, page)
@@ -561,7 +559,7 @@ class Entry < ApplicationModel
   end
 
   def current_regulatory_plans
-    RegulatoryPlan.current.all(:conditions => {:regulation_id_number => regulation_id_numbers})
+    RegulatoryPlan.current.where(regulation_id_number: regulation_id_numbers)
   end
 
   def significant?
@@ -577,17 +575,17 @@ class Entry < ApplicationModel
   end
 
   def previous_entry
-    @previous_entry ||= Entry.first(
-      :conditions => ["entries.volume <= ? AND entries.start_page <= ? AND entries.id < ?", volume, start_page, id],
-      :order => "entries.volume DESC, entries.start_page DESC, entries.id DESC"
-    )
+    @previous_entry ||= Entry.
+      where("entries.volume <= ? AND entries.start_page <= ? AND entries.id < ?", volume, start_page, id).
+      order("entries.volume DESC, entries.start_page DESC, entries.id DESC").
+      first
   end
 
   def next_entry
-    @next_entry ||= Entry.first(
-      :conditions => ["entries.volume >= ? AND entries.start_page >= ? AND entries.id > ?", volume, start_page, id],
-      :order => "entries.volume, entries.start_page, entries.id"
-    )
+    @next_entry ||= Entry.
+      where("entries.volume >= ? AND entries.start_page >= ? AND entries.id > ?", volume, start_page, id).
+      order("entries.volume, entries.start_page, entries.id").
+      first
   end
 
   def should_have_full_xml?
@@ -625,6 +623,10 @@ class Entry < ApplicationModel
 
   def document_file_path
     "#{publication_date.to_s(:ymd)}/#{document_number}"
+  end
+
+  def method_or_attribute_for_thinking_sphinx_excerpting
+    :abstract
   end
 
   private

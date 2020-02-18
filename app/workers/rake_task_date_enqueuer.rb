@@ -2,7 +2,7 @@ class RakeTaskDateEnqueuer
   @queue = :api_core
 
   def self.perform(task, date, args=nil)
-    load File.join(Rails.root, 'Rakefile')
+    Rake.add_rakelib 'lib/tasks'
 
     ENV['DATE'] = date
     Rake::Task[task].reenable

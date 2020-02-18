@@ -2,7 +2,7 @@ class PublicInspectionDocumentFileImporter
   @queue = :public_inspection
 
   def self.perform(options)
-    ActiveRecord::Base.verify_active_connections!
+    ActiveRecord::Base.clear_active_connections!
     
     new(options).perform
   end
@@ -61,7 +61,10 @@ class PublicInspectionDocumentFileImporter
 
   def watermark_file_and_put_on_s3
     document.pdf_url = pdf_url
-    document.pdf = File.new(pdf_path)
+
+    file = File.open(pdf_path)
+    document.pdf = file
+    file.close
   end
 
   def set_num_pages

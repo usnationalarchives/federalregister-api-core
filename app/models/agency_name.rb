@@ -12,7 +12,7 @@ class AgencyName < ApplicationModel
   before_create :assign_agency_if_exact_match
   after_save :update_agency_assignments
   after_save :update_agency_entries_count
-  named_scope :unprocessed, :conditions => {:void => false, :agency_id => nil}, :order => "agency_names.name"
+  scope :unprocessed, -> { where(void: false, agency_id: nil).order("agency_names.name") }
 
   def self.find_or_create_by_name(name)
     cleaned_name = name.sub(/\W+$/, '')
@@ -26,8 +26,8 @@ class AgencyName < ApplicationModel
   private
 
   def update_agency_assignments
-    if agency_id_changed?
-      if agency_id_was.present?
+    if saved_change_to_agency_id?
+      if agency_id_before_last_save.present?
         if agency_id.present?
           agency_assignments.each do |agency_assignment|
             agency_assignment.agency_id = agency_id
@@ -39,7 +39,7 @@ class AgencyName < ApplicationModel
           end
         end
       else
-        connection.execute("INSERT INTO agency_assignments
+        ActiveRecord::Base.connection.execute("INSERT INTO agency_assignments
                             (agency_id, agency_name_id, assignable_type, assignable_id, position)
                             SELECT #{agency_id} AS agency_id,
                                    agency_name_assignments.agency_name_id AS agency_name_id,
@@ -48,7 +48,7 @@ class AgencyName < ApplicationModel
                                    agency_name_assignments.position
                             FROM agency_name_assignments
                             WHERE agency_name_assignments.agency_name_id = #{id}")
-        Entry.update_all({:delta => true}, {:id => self.entry_ids})
+        Entry.where(:id => self.entry_ids).update_all(:delta => true)
       end
 
       recompile_associated_tables_of_contents
@@ -69,7 +69,7 @@ class AgencyName < ApplicationModel
 
   def recompile_associated_tables_of_contents
     entries.
-      all(:select => "DISTINCT(publication_date)").
+      select("DISTINCT(publication_date)").
       each{|entry| Resque.enqueue(TableOfContentsRecompiler, entry.publication_date) }
   end
 
@@ -112,12 +112,10 @@ class AgencyName < ApplicationModel
     alternative_name
   end
 
-  private
-
   def update_agency_entries_count
-    if agency_id_changed?
-      if agency_id_was.present?
-        Agency.find(agency_id_was).recalculate_entries_count!
+    if saved_change_to_agency_id?
+      if agency_id_before_last_save.present?
+        Agency.find(agency_id_before_last_save).recalculate_entries_count!
       end
       if agency
         agency.recalculate_entries_count!

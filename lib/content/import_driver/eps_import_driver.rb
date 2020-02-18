@@ -1,8 +1,9 @@
 module Content
   class ImportDriver
     class EpsImportDriver < Content::ImportDriver
+      load './lib/tasks/content_eps_import.rake'
+
       def run
-        load "#{Rails.root}/Rakefile"
         Rake::Task["content:gpo_images:import_eps"].invoke
       end
 

@@ -6,7 +6,7 @@ module Content
     # order here determines order of attributes when running :all
     include Content::EntryImporter::BasicData
     include Content::EntryImporter::Agencies
-    include Content::EntryImporter::CFR
+    include Content::EntryImporter::Cfr
     include Content::EntryImporter::FullText
     include Content::EntryImporter::FullXml
     include Content::EntryImporter::RawText
@@ -126,7 +126,7 @@ module Content
     end
 
     def self.remove_extraneous_documents(date, mods_doc_numbers)
-      Entry.find(:all, :conditions => {:publication_date => date}).each do |entry|
+      Entry.where(publication_date: date).each do |entry|
         unless mods_doc_numbers.include?(entry.document_number)
           entry.destroy
         end
@@ -170,7 +170,7 @@ module Content
         @date = options[:date].is_a?(String) ? Date.parse(options[:date]) : options[:date]
         raise "must provide a date if no entry" if @date.nil?
         @document_number = options[:document_number] or raise "must provide a document number if no entry"
-        @entry = Entry.first(conditions: ["document_number = ? AND publication_date = ?", @document_number, @date.to_s(:iso)]) ||
+        @entry = Entry.where("document_number = ? AND publication_date = ?", @document_number, @date.to_s(:iso)).first ||
           Entry.new(:document_number => @document_number)
         @entry.publication_date = @date
       end

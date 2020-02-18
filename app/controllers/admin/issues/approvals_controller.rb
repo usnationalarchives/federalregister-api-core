@@ -12,7 +12,7 @@ class Admin::Issues::ApprovalsController < AdminController
 
   def update
     @issue_approval = IssueApproval.find_by_publication_date!(params[:issue_id])
-    @issue_approval.touch(:updated_at)
+    @issue_approval.update!(updated_at: Time.current)
     redirect_to admin_issue_path(params[:issue_id])
   end
 end

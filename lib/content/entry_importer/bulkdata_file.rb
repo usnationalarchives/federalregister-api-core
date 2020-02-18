@@ -1,7 +1,7 @@
 class Content::EntryImporter::BulkdataFile
   class DownloadError < StandardError; end
 
-  extend ActiveSupport::Memoizable
+  extend Memoist
 
   attr_reader :path_manager
 

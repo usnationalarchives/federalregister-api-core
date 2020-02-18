@@ -5,7 +5,11 @@ class Admin::IssuesController < AdminController
 
   def show
     @publication_date = Date.parse(params[:id])
-    @entries_without_sections = Entry.published_on(@publication_date).all(:include => :section_assignments, :conditions => "section_assignments.id IS NULL")
+    @entries_without_sections = Entry.
+      published_on(@publication_date).
+      includes(:section_assignments).
+      where("section_assignments.id IS NULL").
+      references(:section_assignments)
     @sections = Section.all
     @issue_approval = IssueApproval.find_by_publication_date(@publication_date)
   end

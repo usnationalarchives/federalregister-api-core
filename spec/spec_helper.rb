@@ -1,26 +1,42 @@
-require 'rubygems'
-
-ENV["RAILS_ENV"] = 'test'
-require File.expand_path(File.join(File.dirname(__FILE__),'..','config','environment'))
-require 'spec/autorun'
-require 'spec/rails'
+# This file is copied to spec/ when you run 'rails generate rspec:install'
+ENV["RAILS_ENV"] ||= 'test'
+require File.expand_path("../../config/environment", __FILE__)
+require 'rspec/rails'
 require "factory_girl"
-require 'rspec_candy/all'
 
-Dir[File.expand_path(File.join(File.dirname(__FILE__),'support','**','*.rb'))].each {|f| require f}
+# Requires supporting ruby files with custom matchers and macros, etc,
+# in spec/support/ and its subdirectories.
+Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
 
-Spec::Runner.configure do |config|
-  # If you're not using ActiveRecord you should remove these
-  # lines, delete config/database.yml and disable :active_record
-  # in your config/boot.rb
+include Rails3UpgradeSpecHelperMethods
+
+RSpec.configure do |config|
+  # == Mock Framework
+  #
+  # If you prefer to use mocha, flexmock or RR, uncomment the appropriate line:
+  #
+  # config.mock_with :mocha
+  # config.mock_with :flexmock
+  # config.mock_with :rr
+  config.mock_with :rspec
+
+  # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
+  config.fixture_path = "#{::Rails.root}/spec/fixtures"
+
+  config.expect_with(:rspec) { |c| c.syntax = [:should, :expect] }
+  config.mock_with :rspec do |mocks|
+    mocks.syntax = [:expect, :should]
+  end
+
+  # If you're not using ActiveRecord, or you'd prefer not to run each of your
+  # examples within a transaction, remove the following line or assign false
+  # instead of true.
   config.use_transactional_fixtures = true
   config.use_instantiated_fixtures  = false
-  config.fixture_path = RAILS_ROOT + '/spec/fixtures/'
-  config.extend VCR::RSpec::Macros
 
   config.before(:each) do
     # If this becomes non-performant, the stub can be relocated
     # to individual tests which use redis.
-    Redis.stub(:new).and_return(MockRedis.new)
+    allow(Redis).to receive(:new) { MockRedis.new }
   end
 end

@@ -2,7 +2,7 @@ class FrIndexPdfGenerator
   attr_reader :params, :generated_file
 
   def self.perform(*args)
-    ActiveRecord::Base.verify_active_connections!
+    ActiveRecord::Base.clear_active_connections!
 
     new(*args).perform
   end

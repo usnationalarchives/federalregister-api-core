@@ -14,7 +14,7 @@ class RegulationsDotGov::RecentlyModifiedDocumentUpdater
   end
 
   def perform
-    ActiveRecord::Base.verify_active_connections!
+    ActiveRecord::Base.clear_active_connections!
     EntryObserver.disabled = true
     current_time           = Time.current
 
@@ -41,7 +41,7 @@ class RegulationsDotGov::RecentlyModifiedDocumentUpdater
         end
         entry.checked_regulationsdotgov_at = current_time
 
-        entry.save(false)
+        entry.save(validate: false)
 
         if update_docket
           Resque.enqueue(DocketImporter, entry.regulations_dot_gov_docket_id)

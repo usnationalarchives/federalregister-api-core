@@ -3,6 +3,7 @@ module ApplicationSearch::TermPreprocessor
     return if term.nil?
     processed_term = term.dup
     processed_term = remove_extra_quote_mark(processed_term)
+    processed_term = remove_invalid_sequences(processed_term)
     processed_term = fix_hypenated_word_searches(processed_term)
     processed_term = use_exact_word_matching_within_phrase(processed_term)
     processed_term
@@ -14,6 +15,13 @@ module ApplicationSearch::TermPreprocessor
     else
       term.sub(/"(?=[^"]*$)/, ' ')
     end
+  end
+
+  def self.remove_invalid_sequences(term)
+    # replace slashes and tildes not immediately after a quote with a space
+    term.
+      gsub(/(?<!")(?:\/|~)/, ' ').
+      gsub(/<<<|@/, ' ') # always replace these with spaces
   end
 
   def self.fix_hypenated_word_searches(term)

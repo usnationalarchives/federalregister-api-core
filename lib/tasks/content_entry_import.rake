@@ -19,10 +19,7 @@ namespace :content do
     task :enqueue_regs_dot_gov_import => :environment do
       dates = Content.parse_all_dates(ENV['DATE'])
       dates.each do |date|
-        entries = Entry.all(
-          select:     :document_number,
-          conditions: { publication_date: date }
-        )
+        entries = Entry.select('document_number').where(publication_date: date)
 
         entries.each do |entry|
           Resque.enqueue(EntryRegulationsDotGovImporter, entry.document_number)
@@ -185,23 +182,25 @@ namespace :content do
         if date.nil?
           dates = [Time.current.to_date]
         elsif date == 'all'
-          dates = Entry.find_as_array(
-            :select => "distinct(publication_date) AS publication_date",
-            :order => "publication_date"
-          )
+          sql = Entry.select("distinct(publication_date) AS publication_date").
+            order("publication_date").
+            to_sql
+          dates = Entry.find_as_array(sql)
         elsif date =~ /^>/
           date = Date.parse(date.sub(/^>/, ''))
-          dates = Entry.find_as_array(
-            :select => "distinct(publication_date) AS publication_date",
-            :conditions => {:publication_date => date .. Time.current.to_date},
-            :order => "publication_date"
-          )
+          sql = Entry.
+            select("distinct(publication_date) AS publication_date").
+            where(:publication_date => date .. Time.current.to_date).
+            order("publication_date").
+            to_sql
+          dates = Entry.find_as_array(sql)
         elsif date =~ /^\d{4}$/
-          dates = Entry.find_as_array(
-            :select => "distinct(publication_date) AS publication_date",
-            :conditions => {:publication_date => Date.parse("#{date}-01-01") .. Date.parse("#{date}-12-31")},
-            :order => "publication_date"
-          )
+          sql = Entry.
+            select("distinct(publication_date) AS publication_date").
+            where(:publication_date => Date.parse("#{date}-01-01") .. Date.parse("#{date}-12-31")).
+            order("publication_date").
+            to_sql
+          dates = Entry.find_as_array(sql)
         elsif date =~ /^\d{4}-\d{2}-\d{2}$/
           dates = [date]
         else

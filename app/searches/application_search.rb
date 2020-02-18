@@ -1,5 +1,5 @@
 class ApplicationSearch
-  extend ActiveSupport::Memoizable
+  extend Memoist
   class InputError < StandardError; end
 
   attr_accessor :order
@@ -29,7 +29,7 @@ class ApplicationSearch
     # refactor to partials...
 
     define_method "#{filter_name}=" do |val|
-      if (val.present? && (val.is_a?(String) || val.is_a?(Fixnum))) || (val.is_a?(Array) && !val.all?(&:blank?))
+      if (val.present? && (val.is_a?(String) || val.is_a?(Integer))) || (val.is_a?(Array) && !val.all?(&:blank?))
         instance_variable_set("@#{filter_name}", val)
         if val.is_a?(Array)
           val.reject!(&:blank?)
@@ -97,7 +97,11 @@ class ApplicationSearch
   end
 
   def initialize(options = {})
-    options = options.with_indifferent_access
+    if options.try(:permit!)
+      options = options.permit!.to_h.with_indifferent_access
+    else
+      options = options.with_indifferent_access
+    end
     @errors = {}
     @filters = []
 
@@ -210,10 +214,15 @@ class ApplicationSearch
   end
 
   def chainable_results(args = {})
-    model.scoped({:conditions => {:id => result_ids(args)}}.recursive_merge(args.slice(:joins, :includes, :select)))
+    model.
+      where(id: result_ids(args)).
+      recursive_merge(args.slice(:joins, :includes, :select))
   end
 
   def results(args = {})
+    select = args.delete(:select)
+    args.merge!(sql: {select: select})
+
     result_array = sphinx_search(sphinx_term,
       search_options.recursive_merge(args)
     )
@@ -224,18 +233,9 @@ class ApplicationSearch
       if results_with_raw_text.present?
         results_with_raw_text.in_groups_of(1024,false).each do |batch|
           begin
-            # get all excerpts at once for results with raw text files
-            excerpts = result_array.send(:client).excerpts(
-              :docs => batch.map{|d| d.raw_text_file_path},
-              :load_files => true,
-              :words => result_array.args.join(' '),
-              :query_mode => :extended,
-              :index => "#{Entry.source_of_sphinx_index.sphinx_name}_core"
-            )
-
             # merge excerpts back to their result
             batch.each_with_index do |result, index|
-              result.excerpt = excerpts[index]
+              result.excerpt = result.excerpts.send(result.method_or_attribute_for_thinking_sphinx_excerpting)
             end
           rescue Riddle::ResponseError => e
             # if we can't read a file we want to still show the search results
@@ -334,6 +334,7 @@ class ApplicationSearch
     sphinx_retry do
       begin
         results = model.search(term, options)
+        results.context[:panes] << ThinkingSphinx::Panes::ExcerptsPane
 
         # force sphinx to populate the result so that if it fails due to
         #   unescaped invalid extended mode characters we can handle the
@@ -373,6 +374,7 @@ class ApplicationSearch
       :retry_stale => true,
       :sort_mode => sort_mode,
       :max_matches => 10_000,
+      :excerpts => {:limit => 300, :around => 150},
     }.merge(find_options)
   end
 

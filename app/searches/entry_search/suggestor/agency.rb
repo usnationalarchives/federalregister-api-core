@@ -16,12 +16,15 @@ class EntrySearch::Suggestor::Agency < EntrySearch::Suggestor::Base
     @term = @search.term
     agencies = Array(@search.conditions[:agencies]).flatten
 
-    Agency.active.find_as_arrays(:select => "id, slug, name, short_name, display_name").each do |id, slug, *names|
+    sql = Agency.active.select("id, slug, name, short_name, display_name").to_sql
+
+    Agency.find_as_arrays(sql).each do |id, slug, *names|
       pattern = names.reject(&:blank?).compact.map{|n| "(^|[^a-zA-Z0-9=-])" + Regexp.escape(n) + "\\b"}.join('|')
 
       if @term =~ /(#{pattern})(?=(?:[^"]*"[^"]*")*[^"]*$)/i && ! agencies.include?(slug)
         agencies << slug
         @term = @term.sub(/(?:#{pattern})(?=(?:[^"]*"[^"]*")*[^"]*$)/i, '\1')
+        @term = @term.delete_prefix("-")
       end
     end
 

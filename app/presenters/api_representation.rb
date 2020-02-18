@@ -2,7 +2,7 @@ class ApiRepresentation
   class FieldNotFound < StandardError; end
 
   class << self
-    extend ActiveSupport::Memoizable
+    extend Memoist
 
     # don't ask...
     class << self.class
@@ -20,7 +20,7 @@ class ApiRepresentation
       end
     end
 
-    include ActionController::UrlWriter
+    include Rails.application.routes.url_helpers
     include ApplicationHelper
     include RouteBuilder
 

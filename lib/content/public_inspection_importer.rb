@@ -1,5 +1,7 @@
 module Content
   class PublicInspectionImporter
+    load './lib/tasks/content_agency_assignments.rake'
+
     JOB_TIMEOUT = 10.minutes
     BLACKLIST_KEY = 'public_inspection:import:blacklist'
 
@@ -38,7 +40,7 @@ module Content
     end
 
     def issue
-      @issue ||= PublicInspectionIssue.find_or_create_by_publication_date(Date.current)
+      @issue ||= PublicInspectionIssue.find_or_create_by(publication_date: Date.current)
     end
 
     def generate_toc(date)
@@ -62,19 +64,17 @@ module Content
     def finalize_import
       issue.special_filings_updated_at = issue.
         public_inspection_documents.
-        scoped(:conditions => {:special_filing => true}).
+        where(special_filing: true).
+        scoped.
         maximum(:update_pil_at) || first_posting_date
       issue.regular_filings_updated_at ||= first_posting_date
       issue.published_at ||= DateTime.current
       issue.calculate_counts
       issue.save!
 
-      updated_doc_count = issue.public_inspection_documents.count(
-        conditions: [
-          "public_inspection_documents.updated_at >= ?",
-          @start_time
-        ]
-      )
+      updated_doc_count = issue.public_inspection_documents.where(
+        "public_inspection_documents.updated_at >= ?", @start_time
+      ).count
 
       client.logout
 

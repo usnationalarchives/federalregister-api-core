@@ -1,4 +1,9 @@
 class EntrySearch::DateAggregator::Weekly < EntrySearch::DateAggregator::Base
+
+  def self.group_by_field
+    :publication_date_week
+  end
+
   def group_function
     :week
   end

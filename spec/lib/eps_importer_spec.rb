@@ -16,6 +16,7 @@ describe GpoImages::EpsImporter do
           ["test_file_2.eps", 9000],
         ]
       )
+      stub_const("GpoImages::EpsImporter::SLEEP_DURATION_BETWEEN_SFTP_CHECKS", 0)
       GpoImages::EpsImporter.new(:sftp_connection => sftp_connection).
         send(:unchanged_files_list).
         should == [["test_file_1.eps", 1000]]
@@ -32,6 +33,7 @@ describe GpoImages::EpsImporter do
           ["test_file_2.eps", 9000],
         ]
       )
+      stub_const("GpoImages::EpsImporter::SLEEP_DURATION_BETWEEN_SFTP_CHECKS", 0)
       GpoImages::EpsImporter.new(:sftp_connection => sftp_connection).
         send(:unchanged_files_list).
         should == [["test_file_1.eps", 1000]]

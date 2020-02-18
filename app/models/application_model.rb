@@ -1,11 +1,7 @@
 class ApplicationModel < ActiveRecord::Base
+
   self.abstract_class = true
   include ViewHelper
-
-  class << self
-    public :preload_associations
-    public :construct_finder_sql
-  end
 
   # More performant than simply ORDER BY RAND()
   # See http://www.paperplanes.de/2008/4/24/mysql_nonos_order_by_rand.html for inspiration
@@ -30,5 +26,17 @@ class ApplicationModel < ActiveRecord::Base
     sql = construct_finder_sql(self.current_scoped_methods[:find])
     sql.sub!(/^SELECT/, 'SELECT STRAIGHT_JOIN')
     find_by_sql(sql)
+  end
+
+  def self.active_hash?
+    false
+  end
+
+  def self.delta_index_names
+    []
+  end
+
+  def self.core_index_names
+    raise NotImplementedError
   end
 end

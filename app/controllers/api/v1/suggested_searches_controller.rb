@@ -1,9 +1,11 @@
+require 'rails_rinku'
+
 class Api::V1::SuggestedSearchesController < ApiController
   def index
     sections = parse_sections(params[:conditions])
 
     if sections
-      sections = Section.find(:all, :conditions => {:slug => sections})
+      sections = Section.where(:slug => sections)
     else
       sections = Section.all
     end
@@ -44,7 +46,17 @@ class Api::V1::SuggestedSearchesController < ApiController
   end
 
   def remove_blank_conditions(conditions)
-    conditions.reject{|k,v| v.is_a?(String) ? v.blank? : v.all?{|k,v| v.blank?}}
+    conditions.reject do |k,v|
+      if v.is_a?(String)
+        v.blank?
+      elsif v.is_a?(Array)
+        v.all?(&:blank?)
+      elsif v.is_a?(Hash)
+        v.all?{|k,v| v.blank?}
+      else
+        Honeybadger.notify("Unexpected conditions: #{conditions}")
+      end
+    end
   end
 
   def suggested_search_json(search)

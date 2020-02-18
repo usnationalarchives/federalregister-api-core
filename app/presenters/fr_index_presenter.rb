@@ -25,10 +25,10 @@ class FrIndexPresenter
   def agencies
     return @agency_years if @agency_years
 
-    agencies = ::Agency.all(
-      :conditions => {:id => raw_entry_counts_by_agency_id.keys},
-      :include => :children
-    ).sort_by{|agency| agency.name.downcase}
+    agencies = ::Agency.
+      where(id: raw_entry_counts_by_agency_id.keys).
+      includes(:children).
+      sort_by{|agency| agency.name.downcase}
 
     @agency_years = agencies.map do |agency|
       children = agencies.
@@ -94,16 +94,14 @@ class FrIndexPresenter
   end
 
   def needs_attention_counts_by_agency_id
-    @needs_attention_counts_by_agency_id ||= Hash[FrIndexAgencyStatus.find_as_arrays(
-      :select => "agency_id, needs_attention_count",
-      :conditions => {:year => year}
-    )]
+    sql_array = ["SELECT agency_id, needs_attention_count FROM fr_index_agency_statuses WHERE year = ?", year]
+
+    @needs_attention_counts_by_agency_id ||= Hash[ FrIndexAgencyStatus.find_as_arrays(sql_array) ]
   end
 
   def oldest_issue_needing_attention_by_agency_id
-    @oldest_issue_needing_attention_by_agency_id ||= Hash[FrIndexAgencyStatus.find_as_arrays(
-      :select => "agency_id, oldest_issue_needing_attention",
-      :conditions => {:year => year}
-    )]
+    sql_array = ["SELECT agency_id, oldest_issue_needing_attention FROM fr_index_agency_statuses WHERE year = ?", year]
+
+    @oldest_issue_needing_attention_by_agency_id ||= Hash[ FrIndexAgencyStatus.find_as_arrays(sql_array) ]
   end
 end

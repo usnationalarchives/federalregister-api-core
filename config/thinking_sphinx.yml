@@ -1,0 +1,28 @@
+shared: &shared
+  address: <%= ENV["SPHINX_TCP_ADDR"] || 'sphinx' %>
+  binlog_path: <%= "#{Rails.root}/tmp/binlog" %>
+  configuration_file: config/sphinx/sphinx.conf
+  pid_file: pids/searchd.pid
+  indices_location: db/sphinx/
+  index_exact_words: 1
+  log: <%= "#{Rails.root}/log/searchd.log" %>
+  mem_limit: 528M
+  morphology: stem_en
+  version: '2.1.2'
+  max_children: 100
+  query_log: <%= "#{Rails.root}/log/searchd.query.log" %>
+
+development:
+  <<: *shared
+
+test:
+  <<: *shared
+  address: localhost
+  config_file: config/sphinx/test.sphinx.conf
+  sql_range_step: 10000000
+
+staging:
+  <<: *shared
+
+production:
+  <<: *shared

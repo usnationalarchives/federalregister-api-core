@@ -10,11 +10,13 @@ class Mailer < ActionMailer::Base
   def password_reset_instructions(user)
     sendgrid_category "Admin Password Reset"
 
-    subject    "FR2 Admin Password Reset"
-    from       "FR2 Admin <info@criticaljuncture.org>"
-    recipients user.email
-    sent_on    Time.current
-    body       :user => user, :edit_password_reset_url => edit_admin_password_reset_url(user.perishable_token)
+    @user = user
+    @edit_password_reset_url = edit_admin_password_reset_url(user.perishable_token)
+
+    mail  to:         user.email,
+          subject:    "FR2 Admin Password Reset",
+          from:       "FR2 Admin <info@criticaljuncture.org>",
+          sent_on:    Time.current
   end
 
   def daily_import_update_admin_email(date)
@@ -34,25 +36,25 @@ class Mailer < ActionMailer::Base
 
     sendgrid_ganalytics_options :utm_source => 'federalregister.gov', :utm_medium => 'admin email', :utm_campaign => 'daily agency name mapping'
 
-    agency_name_presenter = AgencyNameAuditPresenter.new(date)
-    problematic_document_presenter = ProblematicDocumentPresenter.new(date)
+    @agency_name_presenter = AgencyNameAuditPresenter.new(date)
+    @problematic_document_presenter = ProblematicDocumentPresenter.new(date)
 
-    subject "[FR Admin] Daily Import Update for #{date} (#{RAILS_ENV})"
-    from       "Federal Register Admin <no-reply@mail.federalregister.gov>"
-    recipients 'nobody@federalregister.gov' # should use sendgrid_recipients for actual recipient list
-    sent_on    Time.current
-    body       :agency_name_presenter => agency_name_presenter, :date => date, :problematic_document_presenter => problematic_document_presenter
+    mail to:         recipients,
+         subject:    "[FR Admin] Daily Import Update for #{date} (#{RAILS_ENV})",
+         from:       "Federal Register Admin <no-reply@mail.federalregister.gov>",
+         recipients: 'nobody@federalregister.gov', # should use sendgrid_recipients for actual recipient list
+         sent_on:    Time.current
   end
 
   def admin_notification(message)
     sendgrid_category "Admin Notification Email"
 
-    sendgrid_recipients FR_DEVELOPER_ADMINS
+    @message = message
 
-    subject "[FR Notification] Urgent Admin Notification"
-    from       "Federal Register Admin <no-reply@mail.federalregister.gov>"
-    recipients 'nobody@federalregister.gov' # should use sendgrid_recipients for actual recipient list
-    sent_on    Time.current
-    body       :message => message
+    mail to:         FR_DEVELOPER_ADMINS,
+         subject:    "[FR Notification] Urgent Admin Notification",
+         from:       "Federal Register Admin <no-reply@mail.federalregister.gov>",
+         recipients: 'nobody@federalregister.gov', # should use sendgrid_recipients for actual recipient list
+         sent_on:    Time.current
   end
 end

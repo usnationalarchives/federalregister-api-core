@@ -26,13 +26,16 @@ class GpoGraphic < ActiveRecord::Base
                     :processors => [:gpo_image_converter, :png_crush],
                     :storage => :s3,
                     :s3_credentials => {
-                      :access_key_id     => SECRETS["aws"]["access_key_id"],
-                      :secret_access_key => SECRETS["aws"]["secret_access_key"]
+                      :access_key_id     => Rails.application.secrets[:aws][:access_key_id],
+                      :secret_access_key => Rails.application.secrets[:aws][:secret_access_key],
+                      :s3_region => 'us-east-1'
                     },
                     :s3_permissions => :private,
                     :s3_protocol => 'https',
                     :bucket => proc { |attachment| attachment.instance.gpo_graphic_usages.present? ? attachment.instance.public_bucket : attachment.instance.private_bucket },
-                    :path => ":xml_identifier/:style.:extension"
+                    :path => ":xml_identifier/:style.:extension",
+                    :validate_media_type => false
+  do_not_validate_attachment_file_type :graphic
 
   Paperclip.interpolates(:xml_identifier) do |attachment, style|
     if attachment.instance.gpo_graphic_usages.present?
@@ -50,11 +53,11 @@ class GpoGraphic < ActiveRecord::Base
     end
   end
 
-  named_scope :processed, :conditions => "graphic_file_name IS NOT NULL"
-  named_scope :unprocessed, :conditions => "graphic_file_name IS NULL"
+  scope :processed, -> { where("graphic_file_name IS NOT NULL") }
+  scope :unprocessed, -> {where("graphic_file_name IS NULL") }
 
   def entries
-    @entries ||= gpo_graphic_usages.all(:include => :entry).map(&:entry)
+    @entries ||= gpo_graphic_usages.includes(:entry).map(&:entry)
   end
 
   def set_content_type

@@ -1,5 +1,5 @@
 class Admin::IndexesController < AdminController
-  before_filter :disable_all_browser_caching
+  before_action :disable_all_browser_caching
   include ActionView::Helpers::TagHelper
   include SpellingHelper
 
@@ -101,7 +101,7 @@ class Admin::IndexesController < AdminController
 
     Entry.transaction do
       entries.each do |entry|
-        entry.update_attributes!(params[:entry].merge(:fr_index_subject => subject, :fr_index_doc => doc))
+        entry.update_attributes!(entry_params.merge(:fr_index_subject => subject, :fr_index_doc => doc))
       end
     end
 
@@ -135,14 +135,17 @@ class Admin::IndexesController < AdminController
 
   def mark_complete
     agency = Agency.find_by_slug!(params[:agency])
-    status = FrIndexAgencyStatus.find_or_initialize_by_year_and_agency_id(params[:year], agency.id)
+    status = FrIndexAgencyStatus.find_or_initialize_by(
+      year:      params[:year],
+      agency_id: agency.id
+    )
     status.last_completed_issue = params[:last_completed_issue]
     status.save
 
     agency_year = FrIndexPresenter::AgencyPresenter.new(agency, params[:year])
     FrIndexAgencyStatus.update_cache(agency_year)
 
-    flash[:notice] = "'<a href='#{admin_index_year_agency_unapproved_documents_path}'>#{agency.name}</a>' marked complete through #{status.last_completed_issue}"
+    flash[:notice] = "'<a href='#{admin_index_year_agency_unapproved_documents_path}'>#{agency.name}</a>' marked complete through #{status.last_completed_issue}".html_safe
     redirect_to admin_index_year_path(params[:year], :max_date => params[:max_date])
   end
 
@@ -164,5 +167,12 @@ class Admin::IndexesController < AdminController
     else
       ""
     end
+  end
+
+  def entry_params
+    params.require(:entry).permit(
+      :fr_index_subject,
+      :fr_index_doc
+    )
   end
 end

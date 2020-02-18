@@ -8,7 +8,7 @@ class FrDiff
   end
 
   def diff
-    line = Cocaine::CommandLine.new(
+    line = Terrapin::CommandLine.new(
       "diff",
       ":file1 :file2",
       :expected_outcodes => [0, 1]
@@ -19,7 +19,7 @@ class FrDiff
         :file1 => file1,
         :file2 => file2
       )
-    rescue Cocaine::ExitStatusError => e
+    rescue Terrapin::ExitStatusError => e
       Honeybadger.notify(
         :error_class   => "FrDiff failed to generate diff.",
         :error_message => e.message,

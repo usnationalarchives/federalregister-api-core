@@ -53,7 +53,7 @@ class Citation < ApplicationModel
       text.scan(regexp) do |part_1, part_2, part_3|
         attributes = {:source_entry_id => entry.id, :citation_type => citation_type, :part_1 => part_1, :part_2 => part_2, :part_3 => part_3}
 
-        citation = Citation.first(:conditions => attributes)
+        citation = Citation.where(attributes).first
 
         if citation.nil?
           citation = Citation.new(attributes)
@@ -81,10 +81,7 @@ class Citation < ApplicationModel
                              when 'FR-DocNum'
                                Entry.find_by_document_number(part_1)
                              when 'EO'
-                               Entry.find_all_by_presidential_document_type_id_and_executive_order_number(
-                                 PresidentialDocumentType::EXECUTIVE_ORDER.id,
-                                 part_1
-                               )
+                               Entry.where(presidential_document_type_id: PresidentialDocumentType::EXECUTIVE_ORDER.id, executive_order_number: part_1)
                              end
   end
 end

@@ -1,4 +1,6 @@
 class EntrySearch::DateAggregator::Base
+  extend Memoist
+
   def initialize(sphinx_search, options)
     @sphinx_search = sphinx_search
     if options[:with] && options[:with][:publication_date]
@@ -27,22 +29,15 @@ class EntrySearch::DateAggregator::Base
   end
 
   def raw_results
-    if !@raw_results
-      client = @sphinx_search.send(:client)
-      client.group_function = group_function
-      client.group_by = "publication_date"
-      client.limit = 5000
-
-      query = @sphinx_search.send(:query)
-      @raw_results = {}
-      client.query(query, @sphinx_search.indexes)[:matches].each do |match|
-        datetime = Time.at(match[:attributes]["publication_date"]).utc
-        @raw_results[sphinx_format(datetime)] = match[:attributes]["@count"]
-      end
+    group_and_counts = {}
+    @sphinx_search.each_with_group_and_count do |entry, group_id, count|
+      datetime = Time.at(group_id).utc
+      group_and_counts[sphinx_format(datetime)] = count
     end
 
-    @raw_results
+    group_and_counts
   end
+  memoize :raw_results
 
   private
 

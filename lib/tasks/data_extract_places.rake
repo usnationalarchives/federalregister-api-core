@@ -6,7 +6,7 @@ namespace :data do
 
       dates.each do |date|
         begin
-          Entry.find_each(:conditions => ["publication_date = ? AND abstract IS NOT NULL", date]) do |entry|
+          Entry.where("publication_date = ? AND abstract IS NOT NULL", date).find_each do |entry|
             puts "determining places for #{entry.document_number} (#{entry.publication_date})"
             # previous_date = nil
 

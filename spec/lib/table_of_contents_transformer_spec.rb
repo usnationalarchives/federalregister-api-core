@@ -21,8 +21,8 @@ describe TableOfContentsTransformer do
         special_filing:   true,
         agency_names:     [AgencyName.new(name: 'Agency 1')]
       )
-      TableOfContentsTransformer::PublicInspection::SpecialFiling.stub_any_instance(:entries_without_agencies => [doc_1, doc_2])
       transformer = TableOfContentsTransformer::PublicInspection::SpecialFiling.new('2019-05-06')
+      transformer.stub(:entries_without_agencies).and_return([doc_1, doc_2])
 
       result = transformer.table_of_contents
 
@@ -83,8 +83,8 @@ describe TableOfContentsTransformer do
         special_filing:   true,
         agency_names:     []
       )
-      TableOfContentsTransformer::PublicInspection::SpecialFiling.stub_any_instance(:entries_without_agencies => [doc_1])
       transformer = TableOfContentsTransformer::PublicInspection::SpecialFiling.new('2019-05-06')
+      transformer.stub(:entries_without_agencies).and_return([doc_1])
 
       result = transformer.table_of_contents
 

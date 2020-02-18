@@ -10,11 +10,11 @@ class Admin::CannedSearchesController < AdminController
   end
 
   def new
-    @canned_search = CannedSearch.new({:active => 1}.merge(params[:canned_search]||{}))
+    @canned_search = CannedSearch.new(active: 1)
   end
 
   def create
-    @canned_search = CannedSearch.new(params[:canned_search])
+    @canned_search = CannedSearch.new(canned_search_params)
     if @canned_search.save
       flash[:notice] = "Record saved."
       redirect_to admin_section_canned_searches_path(@canned_search.section.slug)
@@ -29,9 +29,9 @@ class Admin::CannedSearchesController < AdminController
 
   def update
     @canned_search = CannedSearch.find(params[:id])
-    if @canned_search.update_attributes(params[:canned_search])
+    if @canned_search.update(canned_search_params)
       if request.xhr?
-        render :nothing => true
+        head :ok
       else
         flash[:notice] = 'Record saved.'
         redirect_to admin_section_canned_searches_path(@canned_search.section.slug)
@@ -50,5 +50,17 @@ class Admin::CannedSearchesController < AdminController
     @canned_search.destroy
     flash[:notice] = "Record deleted."
     redirect_to admin_section_canned_searches_path(@canned_search.section.slug)
+  end
+
+  private
+
+  def canned_search_params
+    params.require(:canned_search).permit(
+      :title,
+      :section_id,
+      :description,
+      :search_url,
+      :active
+    )
   end
 end

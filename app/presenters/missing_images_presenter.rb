@@ -9,7 +9,9 @@ class MissingImagesPresenter
   end
 
   def graphic_usages
-    @graphic_usages ||= GpoGraphic.unprocessed.all(:include => :gpo_graphic_usages).
+    @graphic_usages ||= GpoGraphic.
+      unprocessed.
+      includes(:gpo_graphic_usages).
       map do |gpo_graphic|
         gpo_graphic.gpo_graphic_usages
       end.

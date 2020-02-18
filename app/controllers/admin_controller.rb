@@ -1,22 +1,16 @@
 class AdminController < ApplicationController
   layout 'admin_bootstrap'
 
-  before_filter :require_user
+  before_action :require_user
   helper_method :current_user_session, :current_user
-
-  protect_from_forgery
-  before_filter do
-    self.request_forgery_protection_token = :authenticity_token
-  end
 
   private
 
-  include Userstamp
   def set_stamper
     User.stamper ||= current_user
   end
 
-  def store_location(url = request.request_uri)
+  def store_location(url = request.url)
     session[:return_to] = url
   end
 
@@ -39,7 +33,7 @@ class AdminController < ApplicationController
     unless current_user
       if request.xhr?
         store_location(request.referer)
-        render :nothing => true, :status => 403
+        render body: nil, status: 403
         flash[:error] = 'Your session expired, please sign in again to continue.'
         return false
       else

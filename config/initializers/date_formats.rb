@@ -1,4 +1,4 @@
-ActiveSupport::CoreExtensions::Date::Conversions::DATE_FORMATS.merge!(
+Date::DATE_FORMATS.merge!(
   :short_month_day => "%b %d",
   :month_year => "%B %Y",
   :day_date   => "%A %d",
@@ -19,7 +19,7 @@ ActiveSupport::CoreExtensions::Date::Conversions::DATE_FORMATS.merge!(
   :shorter_ordinal => lambda { |time| time.strftime("%b #{time.day.ordinalize}, %Y") }
 )
 
-ActiveSupport::CoreExtensions::Time::Conversions::DATE_FORMATS.merge!(
+Time::DATE_FORMATS.merge!(
   :underscored_iso_date_then_time => '%Y_%m_%d_%H_%M_%S',
   :HMS_Z => "%H-%M-%S_%Z",
   :time_then_date => lambda { |time| time.strftime("%I:%M %p, on %A, %B #{time.day.ordinalize}, %Y") },

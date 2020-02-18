@@ -39,7 +39,8 @@ class Content::PublicInspectionImporter::DocumentImporter
   private
 
   def document
-    @document ||= PublicInspectionDocument.find_or_initialize_by_document_number(api_doc.document_number)
+    @document ||= PublicInspectionDocument.
+      find_or_initialize_by(document_number: api_doc.document_number)
   end
 
   def persist_attributes
@@ -60,7 +61,7 @@ class Content::PublicInspectionImporter::DocumentImporter
   end
 
   def assign_agencies
-    agencies_from_feed = api_doc.agency_names.map{|name| AgencyName.find_or_create_by_name(name)}
+    agencies_from_feed = api_doc.agency_names.map{|name| AgencyName.find_or_create_by(name: name)}
 
     if document.agency_names.map(&:agency_id).sort != agencies_from_feed.map(&:agency_id).sort
       document.agency_names = agencies_from_feed
@@ -99,7 +100,7 @@ class Content::PublicInspectionImporter::DocumentImporter
     # TODO: killed documents
     # TODO: CFR
 
-    dockets_from_feed = api_doc.docket_numbers.map{|number| DocketNumber.find_or_create_by_number(number)}
+    dockets_from_feed = api_doc.docket_numbers.map{|number| DocketNumber.find_or_create_by(number: number)}
 
     if document.docket_numbers.map(&:id).sort != dockets_from_feed.map(&:id).sort
       document.docket_numbers = dockets_from_feed

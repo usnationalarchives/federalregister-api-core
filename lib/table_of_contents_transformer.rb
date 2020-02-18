@@ -198,8 +198,3 @@ class TableOfContentsTransformer
   end
 
 end
-
-require_dependency('./table_of_contents_transformer/document_issue')
-require_dependency('./table_of_contents_transformer/public_inspection')
-require_dependency('./table_of_contents_transformer/public_inspection/regular_filing')
-require_dependency('./table_of_contents_transformer/public_inspection/special_filing')

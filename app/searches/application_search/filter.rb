@@ -32,7 +32,7 @@ class ApplicationSearch::Filter
     if options[:phrase]
       @sphinx_value = "\"#{@value.join(' ')}\""
     elsif options[:crc32_encode]
-      @sphinx_value = @value.map{|v| v.to_s.to_crc32}.first
+      @sphinx_value = @value.map{|v| Zlib.crc32(v.to_s) }.first
     elsif options[:model_sphinx_method]
       @sphinx_value = @value.map{|id|
         begin

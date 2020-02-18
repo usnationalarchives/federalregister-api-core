@@ -9,7 +9,7 @@ class ApplicationSearch
       @validation_errors = ''
 
       @within = DEFAULT_WITHIN
-      if within.present? && within.is_a?(String) || within.is_a?(Fixnum)
+      if within.present? && within.is_a?(String) || within.is_a?(Integer)
         if within.to_i < 1 || within.to_i > 200
           @validation_errors = "within must be between 1 and 200"
         else
@@ -25,7 +25,7 @@ class ApplicationSearch
 
     def place_ids
       if @validation_errors.empty? && location.present?
-        @place_ids ||= Place.find(:all, :select => "id", :origin => location_latlong, :within => within).map(&:id)
+        @place_ids ||= Place.select("id").within(within, origin: location_latlong).map(&:id)
 
         if @place_ids.size > 4096
           @validation_errors = 'We found too many places near your location; try limiting the radius of the search'

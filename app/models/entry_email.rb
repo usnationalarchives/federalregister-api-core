@@ -1,8 +1,6 @@
 class EntryEmail < ApplicationModel
   belongs_to :entry
 
-  attr_accessible :sender, :recipients, :message, :send_me_a_copy
-
   validates_presence_of :sender
   validates_presence_of :entry, :remote_ip, :recipients
   validate :sender_email_is_valid, :if => Proc.new{|e| e.sender.present?}
@@ -20,7 +18,7 @@ class EntryEmail < ApplicationModel
   def sender=(sender)
     @sender = sender.to_s.strip
     if sender.present?
-      email_hash = "#{@sender}#{SECRETS['email_salt']}"
+      email_hash = "#{@sender}#{Rails.application.secrets[:email_salt]}"
       20.times { email_hash = Digest::SHA512.hexdigest(email_hash) }
       self.sender_hash = email_hash
     else

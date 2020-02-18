@@ -3,7 +3,7 @@
 
 <% sidebar(render :partial => 'nav') %>
 
-<%= will_paginate @unprocessed_agency_names %>
+<%= will_paginate @unprocessed_agency_names, renderer: BootstrapPagination::Rails %>
 
 <% if @unprocessed_agency_names.present? %>
   <table class='center_content table table-bordered table-striped table-condensed'>
@@ -24,4 +24,4 @@
   <p>No unprocessed agency names</p>
 <% end %>
 
-<%= will_paginate @unprocessed_agency_names %>
+<%= will_paginate @unprocessed_agency_names, renderer: BootstrapPagination::Rails %>

@@ -21,7 +21,7 @@ class PublicInspectionDocumentSearch < ApplicationSearch
   define_filter(:document_numbers,
                 :sphinx_type => :with,
                 :sphinx_attribute => :document_number,
-                :sphinx_value_processor => Proc.new{|*document_numbers| document_numbers.flatten.map{|x| x.to_s.to_crc32}}) do |*document_numbers|
+                :sphinx_value_processor => Proc.new{|*document_numbers| document_numbers.flatten.map{|x| Zlib.crc32(x.to_s) }}) do |*document_numbers|
                   document_numbers.flatten.map(&:inspect).to_sentence(:two_words_connector => ' or ', :last_word_connector => ', or ')
                 end
   define_filter :special_filing,
@@ -85,7 +85,7 @@ class PublicInspectionDocumentSearch < ApplicationSearch
 
   def find_options
     {
-      :select => "id, subject_1, subject_2, subject_3, pdf_file_name, pdf_file_size, num_pages, publication_date, filed_at, document_number, granule_class, editorial_note",
+      :select => "*, weight() as weighting",
       :include => :agencies,
     }
   end
@@ -95,7 +95,7 @@ class PublicInspectionDocumentSearch < ApplicationSearch
   end
 
   def order_clause
-    "@relevance DESC, filed_at DESC"
+    "filed_at DESC"
   end
 
   def summary

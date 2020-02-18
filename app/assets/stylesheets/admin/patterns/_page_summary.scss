@@ -1,0 +1,18 @@
+.page_summary {
+  background: #F1F1F1;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -o-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -khtml-border-radius: 5px;
+  border-radius: 5px;
+  padding: 10px 20px 2px;
+  
+  h1 { font-size: 2.2em; }
+
+  hr {
+    width: 100%; 
+    border-bottom: 1px solid #DDD; 
+    margin-bottom: 15px;
+    }
+}

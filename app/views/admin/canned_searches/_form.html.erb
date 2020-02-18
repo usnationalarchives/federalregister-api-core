@@ -1,13 +1,14 @@
-<% f.inputs do %>
+<%= f.inputs do %>
   <%= f.input :title %>
   <%= f.input :section %>
   <%= f.input :description %>
   <%= f.input :search_url,
+              :as => :string,
               :label => "Search URL",
               :hint => (f.object.search_conditions.present? ? "Currently: #{link_to f.object.search.summary || '', entries_search_path(:conditions => f.object.search_conditions, :order => "newest"), :target => "blank"}" : nil) %>
   <%= f.input :active %>
 <% end %>
 
-<% f.buttons do %>
-  <%= f.commit_button 'Save', :button_html => {:class => "btn btn-large btn-success"} %>
+<%= f.actions do %>
+  <%= f.action :submit, :label => "Save", :button_html => { :class => "btn btn-large btn-success"} %>
 <% end %>

@@ -1,5 +1,5 @@
 <% super_title "Create New Canned Search" %>
 
-<% semantic_form_for @canned_search, :url => admin_canned_searches_path do |f| %>
+<%= semantic_form_for @canned_search, :url => admin_canned_searches_path do |f| %>
   <%= render :partial => 'form', :locals => {:f => f} %>
 <% end %>

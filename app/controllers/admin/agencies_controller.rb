@@ -4,19 +4,25 @@ class Admin::AgenciesController < AdminController
   def index
     respond_to do |wants|
       wants.html do
-        @search = Agency.scoped(:order => "agencies.name").search(params[:search])
-        @agencies = @search.all.paginate(:per_page => 20, :page => params[:page])
+        @search = Agency.scoped(:order => "agencies.name").ransack(params[:q])
+        @agencies = @search.result.paginate(:per_page => 20, :page => params[:page])
       end
 
       wants.json do
-        agencies = Agency.all(:order => "agencies.name")
+        agencies = Agency.order("agencies.name")
         render :json => agencies.to_json(:only => [ :id, :name ])
       end
 
       wants.csv do
         columns = %w(id name short_name url description)
-        rows = [columns.to_csv] + Agency.all(:order => "agencies.name").map{|agency| columns.map{|column| agency.send(column)}.to_csv}
-        render :text => rows
+        csv = CSV.generate do |csv|
+          csv << columns
+          Agency.
+            order("agencies.name").
+            map{|agency| columns.map{|column| agency.send(column) }}.
+            each{|row| csv << row }
+        end
+        send_data csv
       end
     end
   end
@@ -26,7 +32,7 @@ class Admin::AgenciesController < AdminController
   end
 
   def create
-    @agency = Agency.new(params[:agency])
+    @agency = Agency.new(agency_params)
 
     if @agency.save
       flash[:notice] = "Successfully created.  Please be sure to assign documents via the Agencies > Agency Names menu option"
@@ -45,7 +51,7 @@ class Admin::AgenciesController < AdminController
     @agency = Agency.find_by_slug!(params[:id])
     original_slug = @agency.slug
 
-    if @agency.update_attributes(params[:agency])
+    if @agency.update(agency_params)
       if original_slug != @agency.slug
         Honeybadger.notify(
           :error_class   => "Agency name changed",
@@ -74,5 +80,11 @@ class Admin::AgenciesController < AdminController
       @agency.destroy
     end
     redirect_to admin_agencies_url
+  end
+
+  private
+
+  def agency_params
+    params.require(:agency).permit(:name, :short_name, :slug, :pseudonym, :parent_id, :description, :url, :logo)
   end
 end

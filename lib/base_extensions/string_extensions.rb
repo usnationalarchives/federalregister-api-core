@@ -39,32 +39,6 @@ class String
     self.split.collect{ |s| s.capitalize_first }.join(" ")
   end
 
-  # If a string is longer than 'length', returns the string shortened to length, with 'suffix'
-  # appended.  Otherwise, returns the string untouched.  Default suffix of '&#8230;' (three horizontal
-  # elipses) is provided.
-  def shorten(length, suffix="&#8230;")
-    if self.length > length-1
-      self.slice(0..length-1) + suffix
-    else
-      self
-    end
-  end
-
-  # Converts a post title to its-title-using-dashes
-  # All special chars are stripped in the process
-  # (partially lifted from Typo (MIT licensed))
-  def slugorize
-    result = self.downcase
-    result.gsub!(/&(\d)+;/, '') # Ditch Entities
-    result.gsub!('&', 'and')    # Replace & with 'and'
-    result.gsub!(/['"]/, '')    # replace quotes by nothing
-    result.gsub!(/\W/, ' ')     # strip all non word chars
-    result.gsub!(/\ +/, '-')    # replace all white space sections with a dash
-    result.gsub!(/(-)$/, '')    # trim dashes
-    result.gsub!(/^(-)/, '')    # trim dashes
-    result
-  end
-
   private
 
   # Defines an array of words to which capitalize_most_words() should skip over.

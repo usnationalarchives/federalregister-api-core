@@ -1,4 +1,5 @@
-require "./config/environment"
+# This file is used by Rack-based servers to start the application.
 
-use Rails::Rack::Static
-run ActionController::Dispatcher.new
+require_relative 'config/environment'
+
+run Rails.application

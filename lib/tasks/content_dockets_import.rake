@@ -4,7 +4,7 @@ namespace :content do
     task :import => :environment do
       participating_agency_ids = DocketImporter.participating_agency_ids
       participating_agencies_query = participating_agency_ids.map do |id|
-        "regulations_dot_gov_docket_id LIKE '#{id}\_%' OR regulations_dot_gov_docket_id LIKE '#{id}-%'"
+        "regulations_dot_gov_docket_id LIKE '#{id}\\_%' OR regulations_dot_gov_docket_id LIKE '#{id}-%'"
       end.join(' OR ')
 
       Entry.find_as_array(

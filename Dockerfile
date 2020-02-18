@@ -9,7 +9,7 @@ FROM quay.io/criticaljuncture/baseimage:16.04
 ### RUBY
 #######################
 
-RUN apt-get update && apt-get install -y ruby2.2 ruby2.2-dev &&\
+RUN apt-get update && apt-get install -y ruby2.5 ruby2.5-dev &&\
   apt-get clean &&\
   rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/
 
@@ -38,15 +38,10 @@ RUN npm install -g jshint
 #######################
 
 WORKDIR /tmp
-RUN curl -O http://sphinxsearch.com/files/sphinx-2.1.2-release.tar.gz &&\
-  tar xzvf sphinx-2.1.2-release.tar.gz &&\
-  cd /tmp/sphinx-2.1.2-release &&\
-  ./configure &&\
-  make &&\
-  make install &&\
-  rm /tmp/sphinx-2.1.2-release.tar.gz &&\
-  rm -Rf /tmp/sphinx-2.1.2-release
-
+RUN curl -O https://sphinxsearch.com/files/sphinx-3.2.1-f152e0b-linux-amd64.tar.gz &&\
+  tar xzvf sphinx-3.2.1-f152e0b-linux-amd64.tar.gz &&\
+  cp /tmp/sphinx-3.2.1/bin/* /usr/local/bin/
+RUN rm -Rf /tmp/sphinx-3.2.1 && rm /tmp/sphinx-3.2.1-f152e0b-linux-amd64.tar.gz
 
 ##################
 ### PRINCEXML
@@ -145,6 +140,7 @@ COPY docker/api/files/logrotate/app /etc/logrotate.d/app
 COPY --chown=1000:1000 . /home/app/
 WORKDIR /home/app
 
+RUN RAILS_ENV=production rake assets:precompile
 
 ##################
 ### BASE (LAST)

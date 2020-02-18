@@ -84,7 +84,7 @@ class EntrySearch < ApplicationSearch
                 :sphinx_attribute => :cited_entry_ids,
                 :label => 'Citing document',
                 :sphinx_value_processor => Proc.new { |*document_numbers|
-                  entries = Entry.all(:select => "id, document_number", :conditions => {:document_number => document_numbers.flatten})
+                  entries = Entry.select("id, document_number").where(:document_number => document_numbers.flatten)
                   missing_document_numbers = entries.map(&:document_number) - document_numbers.flatten
 
                   if missing_document_numbers.present?
@@ -93,7 +93,7 @@ class EntrySearch < ApplicationSearch
 
                   entries.map(&:id)
                 }) do |*document_numbers|
-                  entries = Entry.all(:select => "id, citation", :conditions => {:document_number => document_numbers.flatten})
+                  entries = Entry.select("id, citation").where(:document_number => document_numbers.flatten)
 
                   entries.map(&:citation).to_sentence(:two_words_connector => ' or ', :last_word_connector => ', or ')
                 end
@@ -101,7 +101,7 @@ class EntrySearch < ApplicationSearch
   define_filter(:document_numbers,
                 :sphinx_type => :with,
                 :sphinx_attribute => :document_number,
-                :sphinx_value_processor => Proc.new{|*document_numbers| document_numbers.flatten.map{|x| x.to_s.to_crc32}}) do |*document_numbers|
+                :sphinx_value_processor => Proc.new{|*document_numbers| document_numbers.flatten.map{|x| Zlib.crc32(x.to_s) }}) do |*document_numbers|
                   document_numbers.flatten.map(&:inspect).to_sentence(:two_words_connector => ' or ', :last_word_connector => ', or ')
                 end
   define_filter :president,
@@ -229,8 +229,10 @@ class EntrySearch < ApplicationSearch
 
   def find_options
     {
-      :select => "id, title, publication_date, document_number, granule_class, document_file_path, abstract, start_page, end_page, citation, signing_date, executive_order_number, presidential_document_type_id",
-      :include => [:agencies, :agency_names],
+      :select => "*, weight() as weighting, (weight() * 1/LOG2( (((NOW()+#{5.days}) - publication_date) / #{1.year} / 3)+2 ) ) as adjusted_weighting",
+      :sql => {
+        :include => [:agencies, :agency_names],
+      }
     }
   end
 
@@ -241,17 +243,19 @@ class EntrySearch < ApplicationSearch
   def order_clause
     case @order
     when 'newest', 'date'
-      "publication_date DESC, @relevance DESC"
+      "publication_date DESC, weighting DESC"
     when 'oldest'
-      "publication_date ASC, @relevance DESC"
+      "publication_date ASC, weighting DESC"
     when 'executive_order_number'
       "executive_order_number ASC"
     when 'proclamation_number'
       "proclamation_number ASC"
     else
       @sort_mode = :expr
-      "@weight * 1/LOG2( (((NOW()+#{5.days}) - publication_date) / #{1.year} / 3)+2 )"
+      'adjusted_weighting DESC'
     end
+
+
   end
 
   def sort_mode
@@ -291,15 +295,6 @@ class EntrySearch < ApplicationSearch
   memoize :subtype_facets
 
   def date_distribution(options = {})
-    sphinx_search = ThinkingSphinx::Search.new(sphinx_term,
-      :with => with,
-      :with_all => with_all,
-      :without => without,
-      :conditions => sphinx_conditions,
-      :match_mode => :extended,
-      :classes => [Entry]
-    )
-
     klass = case options.delete(:period)
             when :daily
               EntrySearch::DateAggregator::Daily
@@ -314,6 +309,17 @@ class EntrySearch < ApplicationSearch
             else
               raise "invalid :period specified; must be one of :daily, :weekly, :monthly, :quarterly or :yearly"
             end
+
+    sphinx_search = ThinkingSphinx::Search.new(sphinx_term,
+      :with       => with,
+      :with_all   => with_all,
+      :without    => without,
+      :conditions => sphinx_conditions,
+      :match_mode => :extended,
+      :classes    => [Entry],
+      :group_by   => klass.group_by_field
+    )
+
     klass.new(sphinx_search, :with => with)
   end
 

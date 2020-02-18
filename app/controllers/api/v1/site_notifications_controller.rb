@@ -4,7 +4,7 @@ class Api::V1::SiteNotificationsController < ApiController
     if notification.present?
       render_json_or_jsonp(notification)
     else
-      render :nothing => true, :status => 404
+      head 404
     end
   end
 end

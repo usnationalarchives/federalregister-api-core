@@ -3,6 +3,7 @@ class GeneratedFile < ApplicationModel
   has_attached_file :attachment,
     :path => "public/generated_files/fr_index/:creation_year/:creation_month/:token/file.:extension",
     :url => "/generated_files/fr_index/:creation_year/:creation_month/:token/file.:extension"
+  do_not_validate_attachment_file_type :attachment
 
   before_create :generate_token
 

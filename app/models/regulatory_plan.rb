@@ -25,7 +25,7 @@ class RegulatoryPlan < ApplicationModel
     end
   end
 
-  extend ActiveSupport::Memoizable
+  extend Memoist
 
   SIGNIFICANT_PRIORITY_CATEGORIES = ['Economically Significant', 'Other Significant']
 
@@ -44,36 +44,46 @@ class RegulatoryPlan < ApplicationModel
   has_many :agencies, :through => :agency_assignments, :extend => Agency::AssociationExtensions
   has_and_belongs_to_many :small_entities
 
+  scope :current, -> { where(current: true) }
+
+  def self.delta_index_names
+    ['regulatory_plan_delta']
+  end
+
   def entries
     Entry.with_regulation_id_number(self.regulation_id_number)
   end
 
-  define_index do
-    # Will require a index rebuild when new regulatory plan issue comes in...
-    where "regulatory_plans.issue = '#{RegulatoryPlan.current_issue}'"
+  # define_index do
+  #   # Will require a index rebuild when new regulatory plan issue comes in...
+  #   where "regulatory_plans.issue = '#{RegulatoryPlan.current_issue}'"
 
-    # fields
-    indexes title
-    indexes abstract
-    indexes "CONCAT('#{FileSystemPathManager.data_file_path}/regulatory_plans/', issue, '/', regulation_id_number, '.xml')", :as => :full_text, :file => true
-    indexes priority_category, :facet => true
+  #   # fields
+  #   indexes title
+  #   indexes abstract
+  #   indexes "CONCAT('#{FileSystemPathManager.data_file_path}/regulatory_plans/', issue, '/', regulation_id_number, '.xml')", :as => :full_text, :file => true
+  #   indexes priority_category, :facet => true
 
-    # attributes
-    has agency_assignments(:agency_id), :as => :agency_ids
+  #   # attributes
+  #   has agency_assignments(:agency_id), :as => :agency_ids
 
-    set_property :field_weights => {
-      "title" => 100,
-      "abstract" => 50,
-      "full_text" => 25,
-    }
+  #   set_property :field_weights => {
+  #     "title" => 100,
+  #     "abstract" => 50,
+  #     "full_text" => 25,
+  #   }
 
-    set_property :delta => ThinkingSphinx::Deltas::ManualDelta
-  end
-  # this line must appear after the define_index block
-  include ThinkingSphinx::Deltas::ManualDelta::ActiveRecord
+  #   set_property :delta => ThinkingSphinx::Deltas::ManualDelta
+  # end
+  # # this line must appear after the define_index block
+  # include ThinkingSphinx::Deltas::ManualDelta::ActiveRecord
 
   def self.current_issue
-    RegulatoryPlan.first(:select => :issue, :order => "issue DESC").try(:issue)
+    RegulatoryPlan.
+      select("issue").
+      order("issue DESC")
+      first.
+      try(:issue)
   end
 
   def self.in_current_issue

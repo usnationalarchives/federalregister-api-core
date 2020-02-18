@@ -8,7 +8,6 @@ module SphinxIndexer
   def self.rebuild_delta_and_purge_core(*models)
     delta_index_names = models.map{|model| model.delta_index_names}
     rotate_indices(delta_index_names)
-    purge_from_core_index(models)
   end
 
   def self.rotate_all
@@ -17,36 +16,36 @@ module SphinxIndexer
 
   def self.rotate_indices(index_names)
     begin
-      Cocaine::CommandLine.new(
+      Terrapin::CommandLine.new(
         "/usr/local/bin/indexer",
-        "-c :sphinx_conf :index_names --rotate"
+        "-c :sphinx_conf :index_names --rotate --nohup"
       ).run(
         index_names: Array(index_names).join(' '),
-        sphinx_conf: ThinkingSphinx::Configuration.instance.config_file
+        sphinx_conf: ThinkingSphinx::Configuration.instance.configuration_file
       )
 
       restart
-    rescue Cocaine::ExitStatusError => error
+    rescue Terrapin::ExitStatusError => error
       raise SphinxIndexer::SphinxIndexerError.new(error)
     end
   end
 
   def self.restart
     begin
-      Cocaine::CommandLine.new(
+      Terrapin::CommandLine.new(
         "/usr/bin/touch",
         "/home/app/db/sphinx/restart.txt"
       ).run
-    rescue Cocaine::ExitStatusError => error
+    rescue Terrapin::ExitStatusError => error
       raise SphinxIndexer::SphinxIndexerError.new(error)
     end
   end
 
   def self.purge_from_core_index(*models)
     models.flatten.each do |model|
-      model.find_each(select: "id, delta", conditions: {delta: true}) do |record|
+      model.select("id, delta").where(delta: true).find_each do |record|
         model.core_index_names.each do |index_name|
-          model.delete_in_index(index_name, record.sphinx_document_id)
+          ThinkingSphinx::Deletion.perform index_name, record.sphinx_document_id
         end
       end
     end

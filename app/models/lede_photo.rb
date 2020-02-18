@@ -11,13 +11,17 @@ class LedePhoto < ApplicationModel
                     :processors => [:thumbnail],
                     :storage => :s3,
                     :s3_credentials => {
-                      :access_key_id     => SECRETS['aws']['access_key_id'],
-                      :secret_access_key => SECRETS['aws']['secret_access_key']
+                      :access_key_id     => Rails.application.secrets[:aws][:access_key_id],
+                      :secret_access_key => Rails.application.secrets[:aws][:secret_access_key],
+                      :s3_region => 'us-east-1'
                     },
                     :s3_protocol => 'https',
-                    :bucket => 'lede-photos.federalregister.gov',
+                    :bucket =>  SETTINGS['s3_buckets']['lede_photos'],
                     :path => ":id/:style.:extension"
 
+  after_create :generate_paperclip_styles! #Paperclip doesn't seem to auto-generate styles in this model.  Ideally, we wouldn't have to call this.
+
+  do_not_validate_attachment_file_type :photo
   before_save :download_and_crop_file
 
   def download_and_crop_file
@@ -40,11 +44,20 @@ class LedePhoto < ApplicationModel
         file_path = dst.path
       end
 
-      self.photo = File.open(file_path)
+      file = File.open(file_path)
+      self.photo = file
+      file.close
     end
   end
 
   def flickr_photo_id=(photo_id)
     @flickr_photo_id = photo_id
   end
+
+  private
+
+  def generate_paperclip_styles!
+    self.photo.reprocess!
+  end
+
 end

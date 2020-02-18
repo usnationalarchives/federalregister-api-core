@@ -1,4 +1,4 @@
-class ApplicationFormBuilder < Formtastic::SemanticFormBuilder
+class ApplicationFormBuilder < Formtastic::FormBuilder
   def autocomplete_input(method, options)
     attribute_name = object_name + "[" + method.to_s.singularize + "_ids][]"
 

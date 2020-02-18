@@ -4,8 +4,8 @@ class EntryRegulationIdNumber < ApplicationModel
            :primary_key => :regulation_id_number,
            :foreign_key => :regulation_id_number
   has_one  :current_regulatory_plan,
+           -> { where(:regulatory_plans => {:current => true} ) },
            :class_name => "RegulatoryPlan",
            :primary_key => :regulation_id_number,
-           :foreign_key => :regulation_id_number,
-           :conditions => {:regulatory_plans => {:current => true}}
+           :foreign_key => :regulation_id_number
 end

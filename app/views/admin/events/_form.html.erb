@@ -1,7 +1,7 @@
 <%= f.hidden_field :entry_id %>
 <%= f.semantic_errors :place %>
 
-<% f.inputs do %>
+<%= f.inputs do %>
   <%= f.input :title, :input_html => { :size => '' } %>
   <%= f.input :date, :as => :string, :input_html => { :size => '' } %>
   <li class="location">
@@ -21,6 +21,6 @@
   <%= f.input :remote_call_in_available, :label => "Remote access available" %>
 <% end %>
 
-<% f.buttons do %>
-  <%= f.commit_button 'Save', :button_html => {:class => "btn btn-large btn-success"} %>
+<%= f.actions do %>
+  <%= f.action :submit, :label => 'Save', :button_html => {:class => "btn btn-large btn-success"} %>
 <% end %>

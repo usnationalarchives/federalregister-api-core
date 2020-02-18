@@ -1,13 +1,14 @@
 class CannedSearch < ApplicationModel
-  does 'shared/slug', :based_on => :title
+  include Shared::DoesSlug[:based_on => :title]
 
   belongs_to :section
   validates_presence_of :section, :title, :description, :search_conditions
 
   acts_as_list :scope => :section_id
-  named_scope :in_order, :order => "position"
-  named_scope :inactive, :conditions => {:active => 0}
-  named_scope :alphabetically, :order => "canned_searches.title"
+  scope :active, -> { where(active: true) }
+  scope :in_order, -> { order("position") }
+  scope :inactive, -> { where(active: 0) }
+  scope :alphabetically, -> { order("canned_searches.title") }
 
   def new_position=(new_pos)
     insert_at(new_pos)
@@ -23,8 +24,18 @@ class CannedSearch < ApplicationModel
     search_url
   end
 
+  #NOTE: Thinking Sphinx v3 is much stricter about types and will throw errors if a string value like ["1"] is passed in lieu of its integer counterpart
   def search_conditions
-    JSON.parse(self['search_conditions']||'{}')
+    conditions = JSON.parse(self['search_conditions']||'{}')
+
+    ::Api::V1::EntriesController::INTEGER_PARAMS_NEEDING_DESERIALIZATION.each do |param_name|
+      ids = conditions[param_name]
+      if ids.present?
+        conditions[param_name] = Array.wrap(ids).map(&:to_i)
+      end
+    end
+
+    conditions
   end
 
   def search

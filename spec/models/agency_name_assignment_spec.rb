@@ -10,7 +10,7 @@ describe AgencyNameAssignment do
       entry = Factory(:entry)
       entry.agencies.size.should == 0
       AgencyNameAssignment.create(:assignable => entry, :agency_name => Factory(:agency_name))
-      entry.agencies.size.should == 1
+      entry.reload.agencies.size.should == 1
     end
   end
 
@@ -22,9 +22,9 @@ describe AgencyNameAssignment do
         :assignable => entry,
         :agency_name => Factory(:agency_name)
       )
-      entry.agencies.size.should == 1
+      entry.reload.agencies.size.should == 1
       agency_name_assignment.destroy
-      entry.agencies.size.should == 0
+      entry.reload.agencies.size.should == 0
     end
   end
 end

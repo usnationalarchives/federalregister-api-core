@@ -1,4 +1,6 @@
 class Api::V1::EntriesController < ApiController
+  protect_from_forgery except: :index
+
   def index
     respond_to do |wants|
       cache_for 1.day
@@ -7,7 +9,7 @@ class Api::V1::EntriesController < ApiController
         fields = specified_fields || EntryApiRepresentation.default_index_fields_json
         find_options = EntryApiRepresentation.find_options_for(fields)
 
-        search = entry_search(params, fields)
+        search = entry_search(deserialized_params, fields)
 
         render_search(search, find_options, params[:metadata_only]) do |result|
           entry_data(result, fields)
@@ -18,7 +20,7 @@ class Api::V1::EntriesController < ApiController
         fields = specified_fields || EntryApiRepresentation.default_index_fields_csv
         find_options = EntryApiRepresentation.find_options_for(fields)
 
-        search = entry_search(params, fields)
+        search = entry_search(deserialized_params, fields)
         filename = search.summary.gsub(/\W+/, '_').sub(/_$/,'').downcase
         entries = search.results(find_options)
         render_csv(entries, fields, filename)
@@ -29,7 +31,7 @@ class Api::V1::EntriesController < ApiController
         find_options = EntryApiRepresentation.find_options_for(fields)
 
         search = entry_search(
-          params.merge(order: 'newest', per_page: 200),
+          deserialized_params.merge(order: 'newest', per_page: 200),
           fields
         )
         documents = search.results(find_options)
@@ -45,7 +47,7 @@ class Api::V1::EntriesController < ApiController
 
     respond_to do |wants|
       cache_for 1.day
-      search = EntrySearch.new(params)
+      search = EntrySearch.new(deserialized_params)
 
       if search.valid?
         if date_facets.include?(params[:facet])
@@ -77,7 +79,7 @@ class Api::V1::EntriesController < ApiController
   end
 
   def search_details
-    search = entry_search(params)
+    search = entry_search(deserialized_params)
 
     if search.valid?
       render_json_or_jsonp(
@@ -107,7 +109,7 @@ class Api::V1::EntriesController < ApiController
       wants.csv do
         fields = specified_fields || EntryApiRepresentation.default_show_fields_csv
         document_numbers = params[:id].split(',')
-        entries = Entry.all(:conditions => {:document_number => document_numbers})
+        entries = Entry.where(document_number: document_numbers)
         filename = 'federal_register'
         render_csv(entries, fields, filename)
       end
@@ -115,6 +117,40 @@ class Api::V1::EntriesController < ApiController
   end
 
   private
+
+  #NOTE: Thinking Sphinx v3 is much stricter about types and will throw errors if a string value like "1" is passed in lieu of its integer counterpart
+  BOOLEAN_PARAMS_NEEDING_DESERIALIZATION = [
+    :accepting_comments_on_regulations_dot_gov,
+    :significant,
+    :correction,
+  ]
+  INTEGER_PARAMS_NEEDING_DESERIALIZATION = [
+    'agency_ids',
+    'cited_entry_ids',
+    'section_ids',
+    'topic_ids',
+    'place_ids',
+    'small_entity_ids',
+  ]
+  def deserialized_params
+    params.tap do |modified_params|
+      if modified_params[:conditions].present?
+        BOOLEAN_PARAMS_NEEDING_DESERIALIZATION.each do |param_name|
+          param = modified_params[:conditions].try(:[], param_name)
+          if param.present?
+            modified_params[:conditions][param_name] = param.to_i
+          end
+        end
+
+        INTEGER_PARAMS_NEEDING_DESERIALIZATION.each do |param_name|
+          ids = modified_params[:conditions].try(:[], param_name)
+          if ids.present?
+            modified_params[:conditions][param_name] = Array.wrap(ids).map(&:to_i)
+          end
+        end
+      end
+    end
+  end
 
   def entry_search(params, fields=[])
     term = params[:conditions].present? && params[:conditions][:term].present?
@@ -142,7 +178,7 @@ class Api::V1::EntriesController < ApiController
 
     headers['Content-Disposition'] = "attachment; filename=\"#{filename}.csv\""
 
-    render :text => output
+    render plain: output
   end
 
   def render_rss(documents, title)
@@ -162,7 +198,7 @@ class Api::V1::EntriesController < ApiController
   end
 
   def index_url(options)
-    api_v1_entries_url(options)
+    api_v1_documents_url(options.permit!.except(:controller, :action))
   end
 
   def search_suggestions(search)

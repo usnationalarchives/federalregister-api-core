@@ -1,7 +1,9 @@
 class RegulationsDotGov::CommentForm
   attr_accessor :client, :attributes, :document_attributes
 
-  AGENCY_NAMES = YAML::load_file(Rails.root.join('data', 'regulations_dot_gov_agencies.yml'))
+  agencies_yml_path = Rails.root.join('data', 'regulations_dot_gov_agencies.yml')
+  FileUtils.touch(agencies_yml_path)
+  AGENCY_NAMES = YAML::load_file(agencies_yml_path)
 
   def initialize(client, attributes)
     @client = client

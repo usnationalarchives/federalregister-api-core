@@ -3,7 +3,7 @@ require 'spec_helper'
 describe FrIndexSgmlGenerator do
 
   def stub_sphinx_entry_ids
-    FrIndexPresenter::DocumentType.stub_any_instance(:entry_ids => Entry.all.map(&:id))
+    allow_any_instance_of(FrIndexPresenter::DocumentType).to receive(:entry_ids).and_return(Entry.all.map(&:id))
   end
 
   let(:eop_agency) { Factory.create(

@@ -21,7 +21,6 @@
                 <ul class="dropdown-menu">
                   <li><%= link_to 'Agencies', admin_agencies_path, :class => "" %></li>
                   <li><%= link_to 'Agency Names', admin_agency_names_path, :class => "" %></li>
-                  <li><%= link_to 'Agency Highlights', admin_agency_highlights_path, :class => "" %></li>
                 </ul>
                 </li>
 
@@ -43,7 +42,7 @@
               </li>
 
               <li><%= link_to 'Topic Names', admin_topic_names_path, :class => "" %></li>
-              <li><%= link_to 'Users <div class="users icon"></div>', admin_users_path, :class => "" %></li>
+              <li><%= link_to 'Users <div class="users icon"></div>'.html_safe, admin_users_path, :class => "" %></li>
               <li><%= link_to 'Events', admin_events_path, :class => "" %></li>
               <li><%= link_to 'Site Notifications', admin_site_notifications_path %></li>
             </ul>

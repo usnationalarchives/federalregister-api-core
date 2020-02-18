@@ -22,48 +22,38 @@ class ProblematicDocumentPresenter
   end
 
   def documents_scheduled_but_unpublished
-    PublicInspectionDocument.all(
-      :joins => "LEFT OUTER JOIN entries ON entries.id = public_inspection_documents.entry_id",
-      :conditions => {
+    PublicInspectionDocument.
+      joins("LEFT OUTER JOIN entries ON entries.id = public_inspection_documents.entry_id").
+      where(
         :public_inspection_documents => {
           :publication_date => date
         },
         :entries => {
           :id => nil
         }
-      }
-    )
+      )
   end
 
   def revoked_and_published_documents
-    published_doc_numbers =
-      Entry.all(
-        :conditions => {
-          :publication_date => date
-        }
-      ).
-      map(&:document_number)
+    published_doc_numbers = Entry.where(publication_date: date).map(&:document_number)
 
-    PublicInspectionDocument.all(
-      :conditions => {
-        :document_number => published_doc_numbers,
-        :publication_date => nil
-      }
+    PublicInspectionDocument.where(
+      document_number:  published_doc_numbers,
+      publication_date: nil
     )
   end
 
   def documents_published_without_public_inspection
-    Entry.all(
-      :joins => "LEFT OUTER JOIN public_inspection_documents on public_inspection_documents.document_number = entries.document_number",
-      :conditions => {
+    Entry.
+      joins("LEFT OUTER JOIN public_inspection_documents on public_inspection_documents.document_number = entries.document_number").
+      where(
         :entries => {
           :publication_date => date
         },
         :public_inspection_documents => {
           :id => nil
         }
-      }
-    )
+      )
   end
 
   def rules_with_date_text

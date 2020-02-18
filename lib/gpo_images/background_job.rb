@@ -16,7 +16,7 @@ module GpoImages
     end
 
     def self.perform(eps_filename, zipped_filename, ftp_transfer_date)
-      ActiveRecord::Base.verify_active_connections!
+      ActiveRecord::Base.clear_active_connections!
       
       new(eps_filename, zipped_filename, ftp_transfer_date).perform
     end
@@ -58,14 +58,14 @@ module GpoImages
     end
 
     def find_or_create_gpo_graphic
-      gpo_graphic = GpoGraphic.find_or_initialize_by_identifier(identifier)
+      gpo_graphic = GpoGraphic.find_or_initialize_by(identifier: identifier)
       gpo_graphic.graphic = image
       gpo_graphic.package_identifier = package_identifier
 
       gpo_graphic_package = gpo_graphic.gpo_graphic_packages.
-        find_or_initialize_by_graphic_identifier_and_package_identifier(
-          gpo_graphic.identifier,
-          package_identifier
+        find_or_initialize_by(
+          graphic_identifier: gpo_graphic.identifier,
+          package_identifier: package_identifier
         )
       gpo_graphic_package.package_date = ftp_transfer_date
 

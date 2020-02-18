@@ -1,4 +1,9 @@
 class EntrySearch::DateAggregator::Daily < EntrySearch::DateAggregator::Base
+
+  def self.group_by_field
+    :publication_date
+  end
+
   def group_function
     :day
   end

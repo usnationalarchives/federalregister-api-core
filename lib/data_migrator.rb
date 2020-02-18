@@ -160,7 +160,7 @@ class DataMigrator
 
     PublicInspectionDocument.find_each(:conditions => {:entry_id => nil}).each do |pi_doc|
       pi_doc.entry = Entry.find_by_document_number(pi_doc.document_number)
-      pi_doc.save(false)
+      pi_doc.save(validate: false)
     end
   end
 

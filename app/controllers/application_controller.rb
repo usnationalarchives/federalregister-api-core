@@ -8,19 +8,10 @@ class ApplicationController < ActionController::Base
 
   include Locator
 
-  before_filter do
-    self.request_forgery_protection_token = nil
-  end
-
-  around_filter :log_memory_usage unless Rails.env.test?
-
-  # turn IP Spoofing detection off.
-  ActionController::Base.ip_spoofing_check = false
-
-  # Scrub sensitive parameters from your log
-  filter_parameter_logging :password, :password_confirmation
+  around_action :log_memory_usage unless Rails.env.test?
 
   private
+
   def parse_date_from_params
     year  = params[:year]
     month = params[:month]
@@ -35,11 +26,11 @@ class ApplicationController < ActionController::Base
   rescue_from Exception, :with => :server_error if RAILS_ENV == 'production' || RAILS_ENV == 'staging'
   def server_error(exception)
     Rails.logger.error(exception)
-    notify_honeybadger(exception)
+    Honeybadger.notify(exception)
 
     # ESI routes should return correct status codes, but no error page
     if params[:quiet]
-      render :nothing => true, :status => 500
+      head 500
     else
       request.format = :html
       render :template => "errors/500.html.erb", :status => 500
@@ -50,7 +41,7 @@ class ApplicationController < ActionController::Base
   def record_not_found
     # ESI routes should return correct status codes, but no error page
     if params[:quiet]
-      render :nothing => true, :status => 404
+      head 404
     else
       request.format = :html
       render :template => "errors/404.html.erb", :status => 404
@@ -60,7 +51,7 @@ class ApplicationController < ActionController::Base
   rescue_from ActionController::MethodNotAllowed, :with => :method_not_allowed
   def method_not_allowed
     if params[:quiet]
-      render :nothing => true, :status => 405
+      head 405
     else
       request.format = :html
       render :template => "errors/405.html.erb", :status => 405
@@ -75,12 +66,6 @@ class ApplicationController < ActionController::Base
       end
     end
     expires_in time, :public => true
-  end
-
-  def template_exists?(template_name = default_template_name)
-    self.view_paths.find_template(template_name, response.template.template_format)
-  rescue ActionView::MissingTemplate
-    false
   end
 
   def handle_unverified_request
@@ -102,7 +87,4 @@ class ApplicationController < ActionController::Base
     Rails.logger.warn "[memory usage: #{pid} #{start_mem} #{end_mem} #{end_mem-start_mem}]"
   end
 
-  def view_context
-    @template
-  end
 end

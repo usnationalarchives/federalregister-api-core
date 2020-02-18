@@ -33,7 +33,7 @@
   <% end %>
 
   <div class="agency_index_actions">
-    <% form_tag(url_for(:max_date => @agency_year.last_issue_published), :method => :get, :class => 'max_date') do %>
+    <%= form_tag(url_for(:max_date => @agency_year.last_issue_published), :method => :get, :class => 'max_date') do %>
       <%= max_date_select(@agency_year) %>
     <% end %>
 
@@ -57,7 +57,7 @@
 </div>
 
 <% @agency_year.document_types.each do |document_type| %>
-  <%= render :esi => admin_index_year_agency_type_path(@agency_year.year, @agency_year.agency, document_type.granule_class, :max_date => @max_date) %>
+  <%= render_esi :esi => admin_index_year_agency_type_path(@agency_year.year, @agency_year.agency, document_type.granule_class, :max_date => @max_date) %>
 <% end %>
 
 <%= render :partial => "autocompleter_data", :locals => {:agency_year => @agency_year} %>

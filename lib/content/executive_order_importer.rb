@@ -39,7 +39,7 @@ module Content::ExecutiveOrderImporter
         if eo['citation'].present?
           attr[:citation] = eo['citation'].strip
         end
-        entry.update_attributes(attr)
+        entry.update(attr)
         puts "Entry updated."
       else
         puts "'#{document_number}' not found!"

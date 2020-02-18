@@ -53,12 +53,9 @@ class ReprocessedIssuePresenter
 
   def reprocessed_issues_by_date
     @reprocessed_issues_by_date ||= ReprocessedIssue.
-      all(
-        :conditions => "status = 'complete' || status = 'failed'",
-        :joins => :issue,
-        :order => "reprocessed_issues.created_at DESC",
-        :group => "issues.publication_date",
-        :limit => 10
-      )
+      where("status = 'complete' || status = 'failed'").
+      joins(:issue).
+      order("reprocessed_issues.created_at DESC").
+      limit(10)
   end
 end

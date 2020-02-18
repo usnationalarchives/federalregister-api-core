@@ -17,7 +17,7 @@ module Content
         if root_node
           small_entities = root_node.xpath('.//SMALL_ENTITY').map(&:content).map do |name|
             next if name == 'No' || name == 'Undetermined'
-            SmallEntity.find_or_initialize_by_name(name)
+            SmallEntity.find_or_initialize_by(name: name)
           end
           reg_plan.small_entities = small_entities.compact
           reg_plan.save
@@ -83,7 +83,7 @@ module Content
 
     def small_entities
       document.xpath('.//SMALL_ENTITY').map(&:content).reject{|e| e == 'No' || e == 'Undetermined'}.map do |name|
-        SmallEntity.find_or_initialize_by_name(name)
+        SmallEntity.find_or_initialize_by(name: name)
       end
     end
 
@@ -92,7 +92,7 @@ module Content
       @regulatory_plan.agency_name_assignments = []
       assignments = document.css('RIN_INFO > AGENCY NAME, RIN_INFO > PARENT_AGENCY NAME').map do |agency_node|
         name = agency_node.content()
-        agency_name = AgencyName.find_or_create_by_name(name)
+        agency_name = AgencyName.find_or_create_by(name: name)
         AgencyNameAssignment.new(:agency_name => agency_name)
       end
 

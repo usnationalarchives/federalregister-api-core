@@ -1,4 +1,9 @@
 class EntrySearch::DateAggregator::Quarterly < EntrySearch::DateAggregator::Base
+
+  def self.group_by_field
+    :publication_date_quarter
+  end
+
   def group_function
     :month
   end

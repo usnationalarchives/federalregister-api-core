@@ -14,56 +14,11 @@ GIT
       resque (~> 1.25)
 
 GIT
-  remote: https://github.com/criticaljuncture/sendgrid.git
-  revision: 87d532bff3ab83ac5e842177a7b1fdaae39681b0
-  branch: master
-  specs:
-    sendgrid (0.1.5)
-
-GIT
   remote: https://github.com/fredwu/app_config.git
   revision: efce678826ea465b30d67357b9f6562bc9a871c0
   branch: master
   specs:
     app_config (1.3.2)
-
-GIT
-  remote: https://github.com/henrik/resque-honeybadger.git
-  revision: 832be87662840d44e73f66c006796da8ed6250e2
-  ref: 832be87662840d44e73f66c006796da8ed6250e2
-  specs:
-    resque-honeybadger (1.0.2)
-      honeybadger
-      resque (>= 1.8.0)
-
-GIT
-  remote: https://github.com/makandra/rails.git
-  revision: f59e93f9ba6a275c715e2ad24d100422f9aee5cf
-  branch: 2-3-lts
-  specs:
-    actionmailer (2.3.18.17)
-      actionpack (= 2.3.18.17)
-    actionpack (2.3.18.17)
-      activesupport (= 2.3.18.17)
-      rack (< 1.5)
-    activerecord (2.3.18.17)
-      activesupport (= 2.3.18.17)
-    activeresource (2.3.18.17)
-      activesupport (= 2.3.18.17)
-    activesupport (2.3.18.17)
-    rails (2.3.18.17)
-      actionmailer (= 2.3.18.17)
-      actionpack (= 2.3.18.17)
-      activerecord (= 2.3.18.17)
-      activeresource (= 2.3.18.17)
-      activesupport (= 2.3.18.17)
-      railslts-version (= 2.3.18.17)
-      railties (= 2.3.18.17)
-    railslts-version (2.3.18.17)
-    railties (2.3.18.17)
-      actionpack (= 2.3.18.17)
-      activesupport (= 2.3.18.17)
-      rake (>= 0.8.3, < 11)
 
 GIT
   remote: https://github.com/postmodern/ffi-hunspell.git
@@ -76,51 +31,136 @@ GIT
 GEM
   remote: https://rubygems.org/
   specs:
-    CFPropertyList (2.3.2)
+    CFPropertyList (2.3.6)
     Platform (0.4.0)
-    active_hash (0.9.5)
+    actioncable (6.0.2.1)
+      actionpack (= 6.0.2.1)
+      nio4r (~> 2.0)
+      websocket-driver (>= 0.6.1)
+    actionmailbox (6.0.2.1)
+      actionpack (= 6.0.2.1)
+      activejob (= 6.0.2.1)
+      activerecord (= 6.0.2.1)
+      activestorage (= 6.0.2.1)
+      activesupport (= 6.0.2.1)
+      mail (>= 2.7.1)
+    actionmailer (6.0.2.1)
+      actionpack (= 6.0.2.1)
+      actionview (= 6.0.2.1)
+      activejob (= 6.0.2.1)
+      mail (~> 2.5, >= 2.5.4)
+      rails-dom-testing (~> 2.0)
+    actionpack (6.0.2.1)
+      actionview (= 6.0.2.1)
+      activesupport (= 6.0.2.1)
+      rack (~> 2.0, >= 2.0.8)
+      rack-test (>= 0.6.3)
+      rails-dom-testing (~> 2.0)
+      rails-html-sanitizer (~> 1.0, >= 1.2.0)
+    actiontext (6.0.2.1)
+      actionpack (= 6.0.2.1)
+      activerecord (= 6.0.2.1)
+      activestorage (= 6.0.2.1)
+      activesupport (= 6.0.2.1)
+      nokogiri (>= 1.8.5)
+    actionview (6.0.2.1)
+      activesupport (= 6.0.2.1)
+      builder (~> 3.1)
+      erubi (~> 1.4)
+      rails-dom-testing (~> 2.0)
+      rails-html-sanitizer (~> 1.1, >= 1.2.0)
+    active_hash (2.0.0)
       activesupport (>= 2.2.2)
+    activejob (6.0.2.1)
+      activesupport (= 6.0.2.1)
+      globalid (>= 0.3.6)
+    activemodel (6.0.2.1)
+      activesupport (= 6.0.2.1)
+    activerecord (6.0.2.1)
+      activemodel (= 6.0.2.1)
+      activesupport (= 6.0.2.1)
+    activestorage (6.0.2.1)
+      actionpack (= 6.0.2.1)
+      activejob (= 6.0.2.1)
+      activerecord (= 6.0.2.1)
+      marcel (~> 0.3.1)
+    activesupport (6.0.2.1)
+      concurrent-ruby (~> 1.0, >= 1.0.2)
+      i18n (>= 0.7, < 2)
+      minitest (~> 5.1)
+      tzinfo (~> 1.1)
+      zeitwerk (~> 2.2)
+    acts_as_list (1.0.0)
+      activerecord (>= 4.2)
     addressable (2.4.0)
-    after_commit (1.0.11)
-      activerecord (>= 1.15.6, < 3.0.0)
     amatch (0.2.11)
       tins (~> 0.3)
     amazon-ec2 (0.9.15)
       xml-simple (>= 1.0.12)
     american_date (1.1.0)
-    ast (2.0.0)
-    astrolabe (1.3.0)
-      parser (>= 2.2.0.pre.3, < 3.0)
-    authlogic (2.1.11)
-      activerecord (~> 2.3.0)
-      activesupport (~> 2.3.0)
-    aws-sdk-v1 (1.67.0)
-      json (~> 1.4)
-      nokogiri (~> 1)
+    ast (2.4.0)
+    authlogic (5.0.4)
+      activemodel (>= 5.2, < 6.1)
+      activerecord (>= 5.2, < 6.1)
+      activesupport (>= 5.2, < 6.1)
+      request_store (~> 1.0)
+      scrypt (>= 1.2, < 4.0)
+    aws-eventstream (1.0.3)
+    aws-partitions (1.267.0)
+    aws-sdk-core (3.89.1)
+      aws-eventstream (~> 1.0, >= 1.0.2)
+      aws-partitions (~> 1, >= 1.239.0)
+      aws-sigv4 (~> 1.1)
+      jmespath (~> 1.0)
+    aws-sdk-kms (1.28.0)
+      aws-sdk-core (~> 3, >= 3.71.0)
+      aws-sigv4 (~> 1.1)
+    aws-sdk-s3 (1.60.1)
+      aws-sdk-core (~> 3, >= 3.83.0)
+      aws-sdk-kms (~> 1)
+      aws-sigv4 (~> 1.1)
+    aws-sigv4 (1.1.0)
+      aws-eventstream (~> 1.0, >= 1.0.2)
     bcrypt (3.1.12)
-    builder (3.1.4)
+    better_errors (2.5.1)
+      coderay (>= 1.0.0)
+      erubi (>= 1.0.0)
+      rack (>= 0.9.0)
+    binding_of_caller (0.8.0)
+      debug_inspector (>= 0.0.1)
+    bootsnap (1.4.5)
+      msgpack (~> 1.0)
+    bootstrap-sass (2.3.2.2)
+      sass (~> 3.2)
+    builder (3.2.4)
     chronic (0.10.2)
-    chunky_png (0.9.0)
-    ci_reporter (1.6.3)
-      builder (>= 2.1.2)
-    cocaine (0.4.2)
+    climate_control (0.2.0)
     coderay (1.1.0)
-    compass (0.10.1)
-      haml (>= 3.0.4)
-    compass-960-plugin (0.9.13)
-      compass (>= 0.10.0.rc3)
+    concurrent-ruby (1.1.5)
+    crass (1.0.5)
     curb (0.9.0)
+    debug_inspector (0.0.3)
+    diff-lcs (1.3)
     diffy (3.0.7)
+    dry-inflector (0.2.0)
+    edge_rider (1.1.0)
+      activerecord (>= 3.2)
+    erubi (1.9.0)
     ethon (0.8.1)
       ffi (>= 1.3.0)
     excon (0.45.4)
-    factory_girl (1.2.4)
+    execjs (2.7.0)
+    factory_girl (2.5.2)
+      activesupport (>= 2.3.9)
     fakeweb (1.3.0)
     faraday (0.15.3)
       multipart-post (>= 1.2, < 3)
     faraday_middleware (0.12.2)
       faraday (>= 0.7.4, < 1.0)
-    ffi (1.9.6)
+    ffi (1.11.3)
+    ffi-compiler (1.0.1)
+      ffi (>= 1.0.0)
+      rake
     fission (0.5.0)
       CFPropertyList (~> 2.2)
     fog (1.34.0)
@@ -150,47 +190,45 @@ GEM
     fog-atmos (0.1.0)
       fog-core
       fog-xml
-    fog-aws (0.7.6)
+    fog-aws (0.9.2)
       fog-core (~> 1.27)
       fog-json (~> 1.0)
       fog-xml (~> 0.1)
       ipaddress (~> 0.8)
-    fog-brightbox (0.9.0)
-      fog-core (~> 1.22)
+    fog-brightbox (0.16.1)
+      dry-inflector
+      fog-core
       fog-json
-      inflecto (~> 0.0.2)
-    fog-core (1.32.1)
+      mime-types
+    fog-core (1.37.0)
       builder
       excon (~> 0.45)
       formatador (~> 0.2)
-      mime-types
-      net-scp (~> 1.1)
-      net-ssh (>= 2.1.3)
-    fog-dynect (0.0.2)
+    fog-dynect (0.0.3)
       fog-core
       fog-json
       fog-xml
     fog-ecloud (0.3.0)
       fog-core
       fog-xml
-    fog-google (0.1.0)
+    fog-google (0.6.0)
       fog-core
       fog-json
       fog-xml
-    fog-json (1.0.1)
-      fog-core (~> 1.0)
-      multi_json (~> 1.0)
-    fog-local (0.2.1)
-      fog-core (~> 1.27)
-    fog-powerdns (0.1.1)
-      fog-core (~> 1.27)
-      fog-json (~> 1.0)
-      fog-xml (~> 0.1)
+    fog-json (1.2.0)
+      fog-core
+      multi_json (~> 1.10)
+    fog-local (0.6.0)
+      fog-core (>= 1.27, < 3.0)
+    fog-powerdns (0.2.0)
+      fog-core
+      fog-json
+      fog-xml
     fog-profitbricks (0.0.5)
       fog-core
       fog-xml
       nokogiri
-    fog-radosgw (0.0.4)
+    fog-radosgw (0.0.5)
       fog-core (>= 1.21.0)
       fog-json
       fog-xml (>= 0.0.1)
@@ -198,13 +236,13 @@ GEM
       fog-core
       fog-json
       fog-xml
-    fog-sakuracloud (1.3.3)
+    fog-sakuracloud (1.7.5)
       fog-core
       fog-json
     fog-serverlove (0.1.2)
       fog-core
       fog-json
-    fog-softlayer (1.0.1)
+    fog-softlayer (1.1.4)
       fog-core
       fog-json
     fog-storm_on_demand (0.1.1)
@@ -219,14 +257,18 @@ GEM
     fog-voxel (0.1.0)
       fog-core
       fog-xml
-    fog-xml (0.1.2)
+    fog-xml (0.1.3)
       fog-core
-      nokogiri (~> 1.5, >= 1.5.11)
+      nokogiri (>= 1.5.11, < 2.0.0)
     formatador (0.2.5)
-    formtastic (0.9.8)
-      actionpack (>= 2.3.0)
-      activesupport (>= 2.3.0)
+    formtastic (2.3.1)
+      actionpack (>= 3.0)
     geokit (1.10.0)
+    geokit-rails (2.3.1)
+      geokit (~> 1.5)
+      rails (>= 3.0)
+    globalid (0.4.2)
+      activesupport (>= 4.2.0)
     googleauth (0.6.6)
       faraday (~> 0.12)
       jwt (>= 1.4, < 3.0)
@@ -234,53 +276,74 @@ GEM
       multi_json (~> 1.11)
       os (>= 0.9, < 2.0)
       signet (~> 0.7)
-    haml (3.0.4)
     hashie (3.5.7)
     hoe (3.14.2)
       rake (>= 0.8, < 11.0)
-    honeybadger (1.10.1)
-      json
-    httmultiparty (0.3.13)
+    honeybadger (2.3.3)
+    httmultiparty (0.3.16)
       httparty (>= 0.7.3)
       mimemagic
       multipart-post
     http_headers (0.0.2.3)
-    httparty (0.11.0)
-      multi_json (~> 1.0)
+    httparty (0.16.2)
       multi_xml (>= 0.5.2)
-    icalendar (1.1.5)
-    iconv (1.0.5)
+    i18n (1.8.2)
+      concurrent-ruby (~> 1.0)
     indefinite_article (0.2.0)
       activesupport
-    inflecto (0.0.2)
-    ipaddress (0.8.0)
-    jrails (0.6.0)
+    innertube (1.1.0)
+    ipaddress (0.8.3)
+    jaro_winkler (1.5.4)
+    jmespath (1.4.0)
+    joiner (0.5.0)
+      activerecord (>= 6.0.0.rc2)
+    jquery-rails (4.3.5)
+      rails-dom-testing (>= 1, < 3)
+      railties (>= 4.2.0)
+      thor (>= 0.14, < 2.0)
     json (1.8.6)
     jwt (1.5.6)
-    lemonade (0.3.2)
-      chunky_png (>= 0.7.3)
-      compass (>= 0.10.0)
-      haml (>= 3.0.0)
+    launchy (2.4.3)
+      addressable (~> 2.3)
+    letter_opener (1.7.0)
+      launchy (~> 2.2)
+    letter_opener_web (1.3.4)
+      actionmailer (>= 3.2)
+      letter_opener (~> 1.0)
+      railties (>= 3.2)
+    listen (3.2.1)
+      rb-fsevent (~> 0.10, >= 0.10.3)
+      rb-inotify (~> 0.9, >= 0.9.10)
+    loofah (2.4.0)
+      crass (~> 1.0.2)
+      nokogiri (>= 1.5.9)
+    mail (2.7.1)
+      mini_mime (>= 0.1.1)
+    marcel (0.3.3)
+      mimemagic (~> 0.3.2)
     memoist (0.16.0)
-    method_source (0.8.2)
+    method_source (0.9.2)
+    middleware (0.1.0)
     mime-types (1.25.1)
-    mimemagic (0.2.1)
+    mimemagic (0.3.3)
+    mini_mime (1.0.2)
     mini_portile2 (2.4.0)
-    mocha (0.9.8)
-      rake
+    minitest (5.14.0)
     mock_redis (0.16.1)
-    modularity (0.6.1)
+    modularity (2.0.1)
     mono_logger (1.1.0)
-    multi_json (1.13.1)
-    multi_xml (0.5.5)
-    multipart-post (2.0.0)
-    mysql2 (0.2.24)
+    msgpack (1.3.1)
+    multi_json (1.14.1)
+    multi_xml (0.6.0)
+    multipart-post (2.1.1)
+    mysql2 (0.5.3)
     net-scp (1.1.0)
       net-ssh (>= 2.6.5)
     net-sftp (2.1.2)
       net-ssh (>= 2.6.5)
     net-ssh (2.9.1)
-    nokogiri (1.9.1)
+    nio4r (2.5.2)
+    nokogiri (1.10.7)
       mini_portile2 (~> 2.4.0)
     open4 (1.3.4)
     open_calais (0.3.2)
@@ -292,20 +355,23 @@ GEM
       multi_json
       multi_xml
     os (1.0.0)
-    paperclip (2.8.0)
-      activerecord (>= 2.3.0)
-      activesupport (>= 2.3.2)
-      cocaine (>= 0.0.2)
+    paperclip (6.1.0)
+      activemodel (>= 4.2.0)
+      activesupport (>= 4.2.0)
       mime-types
-    parser (2.2.0.2)
-      ast (>= 1.1, < 3.0)
+      mimemagic (~> 0.3.0)
+      terrapin (~> 0.6.0)
+    parallel (1.19.1)
+    parser (2.7.0.2)
+      ast (~> 2.4.0)
     passenger (6.0.4)
       rack
       rake (>= 0.8.1)
+    polyamorous (2.3.2)
+      activerecord (>= 5.2.1)
     popen4 (0.1.2)
       Platform (>= 0.4.0)
       open4 (>= 0.4.0)
-    powerpack (0.0.9)
     proc-wait3 (1.8.0)
     pry (0.9.12.4)
       coderay (~> 1.0)
@@ -314,75 +380,161 @@ GEM
     pry-remote (0.1.8)
       pry (~> 0.9)
       slop (~> 3.0)
-    rack (1.4.7)
-    rack-protection (1.5.3)
-      rack
-    rainbow (2.0.0)
+    rack (2.1.0)
+    rack-test (1.1.0)
+      rack (>= 1.0, < 3)
+    rails (6.0.2.1)
+      actioncable (= 6.0.2.1)
+      actionmailbox (= 6.0.2.1)
+      actionmailer (= 6.0.2.1)
+      actionpack (= 6.0.2.1)
+      actiontext (= 6.0.2.1)
+      actionview (= 6.0.2.1)
+      activejob (= 6.0.2.1)
+      activemodel (= 6.0.2.1)
+      activerecord (= 6.0.2.1)
+      activestorage (= 6.0.2.1)
+      activesupport (= 6.0.2.1)
+      bundler (>= 1.3.0)
+      railties (= 6.0.2.1)
+      sprockets-rails (>= 2.0.0)
+    rails-dom-testing (2.0.3)
+      activesupport (>= 4.2.0)
+      nokogiri (>= 1.6)
+    rails-html-sanitizer (1.3.0)
+      loofah (~> 2.3)
+    rails-observers (0.1.5)
+      activemodel (>= 4.0)
+    railties (6.0.2.1)
+      actionpack (= 6.0.2.1)
+      activesupport (= 6.0.2.1)
+      method_source
+      rake (>= 0.8.7)
+      thor (>= 0.20.3, < 2.0)
+    rainbow (3.0.0)
     rake (10.5.0)
-    rdoc (3.12)
-      json (~> 1.4)
+    ransack (2.3.2)
+      activerecord (>= 5.2.1)
+      activesupport (>= 5.2.1)
+      i18n
+      polyamorous (= 2.3.2)
+    rb-fsevent (0.10.3)
+    rb-inotify (0.10.0)
+      ffi (~> 1.0)
+    rdoc (6.2.0)
     recaptcha (0.3.1)
     redis (3.3.5)
     redis-namespace (1.6.0)
       redis (>= 3.0.4)
+    request_store (1.5.0)
+      rack (>= 1.4)
     resque (1.27.4)
       mono_logger (~> 1.0)
       multi_json (~> 1.0)
       redis-namespace (~> 1.3)
       sinatra (>= 0.9.2)
       vegas (~> 0.1.2)
-    riddle (2.2.2)
-    rspec (1.3.2)
-    rspec-rails (1.3.4)
-      rack (>= 1.0.0)
-      rspec (~> 1.3.1)
-    rspec_candy (0.5.1)
-      rspec
-      sneaky-save
-    rubocop (0.28.0)
-      astrolabe (~> 1.3)
-      parser (>= 2.2.0.pre.7, < 3.0)
-      powerpack (~> 0.0.6)
-      rainbow (>= 1.99.1, < 3.0)
-      ruby-progressbar (~> 1.4)
-    ruby-progressbar (1.7.1)
-    rubyzip (1.1.7)
-    searchlogic (2.4.12)
-      activerecord (>= 2.0.0)
+    riddle (2.4.1)
+    rinku (2.0.6)
+    rspec-core (3.9.1)
+      rspec-support (~> 3.9.1)
+    rspec-expectations (3.9.0)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.9.0)
+    rspec-mocks (3.9.1)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.9.0)
+    rspec-rails (3.9.0)
+      actionpack (>= 3.0)
+      activesupport (>= 3.0)
+      railties (>= 3.0)
+      rspec-core (~> 3.9.0)
+      rspec-expectations (~> 3.9.0)
+      rspec-mocks (~> 3.9.0)
+      rspec-support (~> 3.9.0)
+    rspec-support (3.9.2)
+    rubocop (0.79.0)
+      jaro_winkler (~> 1.5.1)
+      parallel (~> 1.10)
+      parser (>= 2.7.0.1)
+      rainbow (>= 2.2.2, < 4.0)
+      ruby-progressbar (~> 1.7)
+      unicode-display_width (>= 1.4.0, < 1.7)
+    ruby-progressbar (1.10.1)
+    rubyzip (2.0.0)
+    sass (3.7.4)
+      sass-listen (~> 4.0.0)
+    sass-listen (4.0.0)
+      rb-fsevent (~> 0.9, >= 0.9.4)
+      rb-inotify (~> 0.9, >= 0.9.7)
+    sass-rails (6.0.0)
+      sassc-rails (~> 2.1, >= 2.1.1)
+    sassc (2.2.1)
+      ffi (~> 1.9)
+    sassc-rails (2.1.2)
+      railties (>= 4.0.0)
+      sassc (>= 2.0)
+      sprockets (> 3.0)
+      sprockets-rails
+      tilt
+    scrypt (3.0.7)
+      ffi-compiler (>= 1.0, < 2.0)
+    sendgrid (1.2.4)
+      json
     signet (0.10.0)
       addressable (~> 2.3)
       faraday (~> 0.9)
       jwt (>= 1.5, < 3.0)
       multi_json (~> 1.10)
-    sinatra (1.4.6)
-      rack (~> 1.4)
-      rack-protection (~> 1.4)
-      tilt (>= 1.3, < 3)
+    sinatra (1.0)
+      rack (>= 1.0)
+    sitemap_generator (1.5.2)
     slop (3.4.7)
-    sneaky-save (0.0.2)
-      activerecord (>= 2.3.2)
+    sprockets (4.0.0)
+      concurrent-ruby (~> 1.0)
+      rack (> 1, < 3)
+    sprockets-rails (3.2.1)
+      actionpack (>= 4.0)
+      activesupport (>= 4.0)
+      sprockets (>= 3.0.0)
     stevedore (0.3.0)
-    test-unit (1.2.3)
-      hoe (>= 1.5.1)
-    thinking-sphinx (1.4.14)
-      activerecord (>= 1.15.6, < 3.0.0)
-      after_commit (>= 1.0.7)
-      riddle (>= 1.5.3)
-    tilt (2.0.8)
+    terrapin (0.6.0)
+      climate_control (>= 0.0.3, < 1.0)
+    thinking-sphinx (4.4.1)
+      activerecord (>= 3.1.0)
+      builder (>= 2.1.2)
+      innertube (>= 1.0.2)
+      joiner (>= 0.2.0)
+      middleware (>= 0.1.0)
+      riddle (~> 2.3)
+    thor (1.0.1)
+    thread_safe (0.3.6)
+    tilt (1.4.1)
     timecop (0.6.1)
     tins (0.8.0)
     titleize (1.3.0)
     typhoeus (1.0.1)
       ethon (>= 0.8.0)
-    validation_reflection (0.3.8)
+    tzinfo (1.2.6)
+      thread_safe (~> 0.1)
+    uglifier (4.2.0)
+      execjs (>= 0.3.0, < 3)
+    unicode-display_width (1.6.1)
     vcr (2.6.0)
     vegas (0.1.11)
       rack (>= 1.0.0)
+    websocket-driver (0.7.1)
+      websocket-extensions (>= 0.1.0)
+    websocket-extensions (0.1.4)
     whenever (0.10.0)
       chronic (>= 0.6.3)
-    will_paginate (2.3.14)
+    will_paginate (3.2.1)
+    will_paginate-bootstrap (0.2.5)
+      will_paginate (>= 3.0.3)
     xml-simple (1.0.12)
+    xmlrpc (0.3.0)
     ym4r (0.6.1)
+    zeitwerk (2.2.2)
     zip-zip (0.3)
       rubyzip (>= 1.0.0)
 
@@ -390,85 +542,86 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  active_hash (= 0.9.5)
+  active_hash (~> 2.0)
+  acts_as_list
   addressable (= 2.4.0)
   amatch (= 0.2.11)
   amazon-ec2
   american_date
   app_config (= 1.3.2)!
-  authlogic (= 2.1.11)
-  aws-sdk-v1
+  authlogic
+  aws-sdk-s3
   bcrypt
-  ci_reporter (= 1.6.3)
-  cocaine
-  compass (= 0.10.1)
-  compass-960-plugin (= 0.9.13)
+  better_errors
+  binding_of_caller
+  bootsnap
+  bootstrap-sass (= 2.3.2.2)
   curb (= 0.9.0)
   diffy
-  factory_girl (= 1.2.4)
+  edge_rider
+  factory_girl (~> 2.5.2)
   fakeweb
   faraday
   ffi-hunspell!
-  fog
-  fog-google (= 0.1.0)
-  formtastic (= 0.9.8)
+  fog (~> 1.3)
+  formtastic (~> 2.1)
   geokit (= 1.10.0)
+  geokit-rails
   googleauth
-  haml (= 3.0.4)
   hoe
-  honeybadger
+  honeybadger (~> 2.3.3)
   httmultiparty (~> 0.3.13)
   http_headers (= 0.0.2.3)
   httparty
-  icalendar
-  iconv (~> 1.0, >= 1.0.5)
   indefinite_article
-  jrails (= 0.6.0)
+  jquery-rails
   json (= 1.8.6)
   klarlack (= 0.0.7)!
-  lemonade (= 0.3.2)
+  letter_opener_web
+  listen
   memoist
   mime-types (~> 1.25, >= 1.25.1)
-  mocha (= 0.9.8)
   mock_redis
-  modularity (= 0.6.1)
-  mysql2 (= 0.2.24)
+  modularity
+  mysql2
   net-scp (= 1.1.0)
   net-sftp
   net-ssh (= 2.9.1)
   nokogiri
   open_calais
-  paperclip (~> 2.8)
+  paperclip
   passenger (~> 6.0)
   popen4
   proc-wait3
   pry
   pry-remote
-  rack (= 1.4.7)
-  rails!
-  rake (= 10.5.0)
+  rails (= 6.0.2.1)
+  rails-observers
+  ransack
   rdoc
   recaptcha (= 0.3.1)
+  redis (= 3.3.5)
   resque
-  resque-honeybadger!
   resque-throttler!
-  rspec
-  rspec-rails (= 1.3.4)
-  rspec_candy
+  rinku
+  rspec-rails (~> 3.6)
   rubocop
-  rubyzip (>= 1.1.7)
-  searchlogic (= 2.4.12)
-  sendgrid!
+  rubyzip
+  sass-rails
+  sendgrid
+  sitemap_generator (~> 1.5.0)
   stevedore (= 0.3.0)
-  test-unit (= 1.2.3)
-  thinking-sphinx (= 1.4.14)
+  terrapin
+  thinking-sphinx (~> 4.4.1)
   timecop
   titleize
   typhoeus (~> 1.0, >= 1.0.1)
-  validation_reflection (= 0.3.8)
+  uglifier
   vcr
   whenever
-  will_paginate (= 2.3.14)
+  will_paginate
+  will_paginate-bootstrap (= 0.2.5)
+  xmlrpc
   ym4r (= 0.6.1)
   zip-zip
 

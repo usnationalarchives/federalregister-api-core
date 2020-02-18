@@ -1,4 +1,4 @@
-<% f.inputs do %>
+<%= f.inputs do %>
   <%= f.input :name,         :hint => "should be the sortable/inverted name, eg 'Agriculture Department'" %>
   <%# f.input :display_name, :hint => "should be what the agency calls itself; eg 'Department of Agriculture'" %>
   <%= f.input :short_name,   :hint => "should be the acronym or other very short name for this agency; eg 'USDA'" %>
@@ -12,6 +12,6 @@
   <%= f.input :logo %>
 <% end %>
 
-<% f.buttons do %>
-  <%= f.commit_button 'Save', :button_html => {:class => "btn btn-large btn-success"} %>
+<%= f.actions do %>
+  <%= f.action :submit, :label => "Save", :button_html => { :class => "btn btn-large btn-success"} %>
 <% end %>

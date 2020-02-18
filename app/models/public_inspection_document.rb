@@ -2,8 +2,9 @@ class PublicInspectionDocument < ApplicationModel
   has_attached_file :pdf,
                     :storage => :s3,
                     :s3_credentials => {
-                      :access_key_id     => SECRETS['aws']['access_key_id'],
-                      :secret_access_key => SECRETS['aws']['secret_access_key']
+                      :access_key_id     => Rails.application.secrets[:aws][:access_key_id],
+                      :secret_access_key => Rails.application.secrets[:aws][:secret_access_key],
+                      :s3_region => 'us-east-1'
                     },
                     :s3_protocol => 'https',
                     :bucket => "public-inspection.#{APP_HOST_NAME}",
@@ -14,95 +15,25 @@ class PublicInspectionDocument < ApplicationModel
                     },
                     :processors => [:permalink_banner_adder],
                     :default_url => "missing.pdf"
+  do_not_validate_attachment_file_type :pdf
 
   belongs_to :entry
   has_and_belongs_to_many :public_inspection_issues,
                           :join_table              => :public_inspection_postings,
                           :foreign_key             => :document_id,
                           :association_foreign_key => :issue_id
-  has_many :agency_name_assignments, :as => :assignable, :order => "agency_name_assignments.position", :dependent => :destroy
+  has_many :agency_name_assignments, -> { order("agency_name_assignments.position") }, :as => :assignable, :dependent => :destroy
   has_many :agency_names, :through => :agency_name_assignments
-  has_many :agency_assignments, :as => :assignable, :order => "agency_assignments.position", :dependent => :destroy
-  has_many :agencies, :through => :agency_assignments, :order => "agency_assignments.position", :extend => Agency::AssociationExtensions
-  has_many :docket_numbers, :as => :assignable, :order => "docket_numbers.position", :dependent => :destroy
+  has_many :agency_assignments, -> { order("agency_assignments.position") }, :as => :assignable, :dependent => :destroy
+  has_many :agencies, -> { order("agency_assignments.position") }, :through => :agency_assignments, :extend => Agency::AssociationExtensions
+  has_many :docket_numbers, -> { order("docket_numbers.position") }, :as => :assignable, :dependent => :destroy
 
   file_attribute(:raw_text)  {"#{FileSystemPathManager.data_file_path}/public_inspection/raw/#{document_file_path}.txt"}
   before_save :persist_document_file_path
   before_save :set_content_type
 
-  named_scope :revoked, :conditions => {:publication_date => nil}
-  does 'shared/document_number_normalization'
-
-  define_index do
-    # fields
-    indexes <<-SQL, :as => :title
-      CONCAT(
-        IFNULL(public_inspection_documents.subject_1, ''),
-        ' ',
-        IFNULL(public_inspection_documents.subject_2, ''),
-        ' ',
-        IFNULL(public_inspection_documents.subject_3, '')
-      )
-    SQL
-    indexes "CONCAT('#{FileSystemPathManager.data_file_path}/public_inspection/raw/', public_inspection_documents.document_file_path, '.txt')", :as => :full_text, :file => true
-    indexes "GROUP_CONCAT(DISTINCT docket_numbers.number SEPARATOR ' ')", :as => :docket_id
-
-    # attributes
-    has "CRC32(document_number)", :as => :document_number, :type => :integer
-    has "public_inspection_documents.id", :as => :public_inspection_document_id, :type => :integer
-    has "CRC32(IF(public_inspection_documents.granule_class = 'SUNSHINE', 'NOTICE', public_inspection_documents.granule_class))", :as => :type, :type => :integer
-    has agency_assignments(:agency_id), :as => :agency_ids
-    has publication_date
-    has filed_at
-    has special_filing
-
-    join docket_numbers
-
-    join public_inspection_issues
-
-    set_property :field_weights => {
-      "title" => 100,
-      "full_text" => 25,
-      "agency_name" => 10
-    }
-
-
-    if AppConfig.sphinx.use_local_pil_date
-      where <<-SQL
-        public_inspection_postings.issue_id =
-          (
-            SELECT id
-            FROM public_inspection_issues
-            WHERE published_at >= #{AppConfig.sphinx.pil_index_since_date}
-            ORDER BY publication_date DESC
-            LIMIT 1
-          )
-        AND (
-          publication_date IS NULL
-          OR publication_date > #{AppConfig.sphinx.pil_index_since_date}
-        )
-      SQL
-    else
-      where <<-SQL
-        public_inspection_postings.issue_id =
-          (
-            SELECT id
-            FROM public_inspection_issues
-            WHERE published_at IS NOT NULL
-            ORDER BY publication_date DESC
-            LIMIT 1
-          )
-        AND (
-          public_inspection_documents.publication_date IS NULL
-          OR public_inspection_documents.publication_date > (
-            SELECT MAX(publication_date)
-            FROM issues
-            WHERE issues.completed_at IS NOT NULL
-          )
-        )
-      SQL
-    end
-  end
+  scope :revoked, -> { where(publication_date: nil) }
+  include Shared::DoesDocumentNumberNormalization
 
   # Note: the concept of 'unpublished' is different from that of 'pending publication'
   def self.unpublished
@@ -134,7 +65,7 @@ class PublicInspectionDocument < ApplicationModel
   end
 
   def document_file_path
-    self['document_file_path'] || document_number.sub(/-/,'').scan(/.{0,3}/).reject(&:blank?).join('/')
+    read_attribute(:document_file_path) || document_number.sub(/-/,'').scan(/.{0,3}/).reject(&:blank?).join('/')
   end
 
   def slug
@@ -179,8 +110,12 @@ class PublicInspectionDocument < ApplicationModel
     pdf_file_name.present? &&
     (
       publication_date.present? ||
-      Time.current < Time.zone.parse("#{public_inspection_issues.first(:order => "publication_date DESC").publication_date.to_s(:db)} 5:15PM")
+      Time.current < Time.zone.parse("#{public_inspection_issues.order("publication_date DESC").first.publication_date.to_s(:db)} 5:15PM")
     )
+  end
+
+  def method_or_attribute_for_thinking_sphinx_excerpting
+    :excerpt
   end
 
   private

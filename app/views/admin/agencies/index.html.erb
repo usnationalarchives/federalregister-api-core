@@ -2,18 +2,19 @@
 
 <% sidebar(render :partial => 'nav') %>
 
-<% semantic_form_for @search, :url => admin_agencies_path, :method => :get do |f| %>
-  <% f.inputs do %>
-    <%= f.input :name_contains %>
+<%= semantic_form_for @search, :url => admin_agencies_path, :method => :get do |f| %>
+  <%= f.inputs do %>
+    <%= f.input :name_cont, label: 'Search By Name' %>
   <% end %>
 
-  <% f.buttons do %>
-    <%= f.commit_button 'Search', :button_html => {:class => "btn btn-large btn-success"} %>
+  <%= f.actions do %>
+    <%= f.action :submit, :label => 'Search', :button_html => {:class => "btn btn-large btn-success"} %>
   <% end %>
 <% end %>
+
 <%= page_entries_info @agencies %>
 
-<%= will_paginate @entries %>
+<%= will_paginate @entries, renderer: BootstrapPagination::Rails %>
 <table class="<%= table_css_class %>">
   <thead>
     <tr>
@@ -34,4 +35,4 @@
     <% end %>
   </tbody>
 </table>
-<%= will_paginate @entries %>
+<%= will_paginate @entries, renderer: BootstrapPagination::Rails %>

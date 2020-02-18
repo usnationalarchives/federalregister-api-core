@@ -23,7 +23,7 @@ jobs:
           name: Start container and run tests
           command: |
             set -x
-            docker-compose -f docker/compose/ci.yml run web bash -c "bin/wait_for_mysql && rake db:create db:schema:load ASSUME_UNITIALIZED_DB=1 && RAILS_ENV=test rake spec && rake jshint"
+            docker-compose -f docker/compose/ci.yml run web bash -c "bin/wait_for_mysql && rake db:create db:schema:load ASSUME_UNITIALIZED_DB=1 && RAILS_ENV=test rspec && rake jshint"
       - deploy:
           name: Push to latest if master
           command: |

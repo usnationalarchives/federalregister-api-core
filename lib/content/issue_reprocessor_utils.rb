@@ -13,7 +13,7 @@ module Content
     end
 
     def update_status(status)
-      reprocessed_issue.update_attributes(:status => status)
+      reprocessed_issue.update(:status => status)
     end
 
     def update_message(text)

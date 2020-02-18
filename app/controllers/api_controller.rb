@@ -4,8 +4,8 @@ class ApiController < ApplicationController
   class RequestError < StandardError; end
   class UnknownFieldError < RequestError; end
 
-  before_filter :set_cors_headers
-  before_filter :enforce_maximum_per_page
+  before_action :set_cors_headers
+  before_action :enforce_maximum_per_page
 
   private
 
@@ -20,7 +20,7 @@ class ApiController < ApplicationController
   def render_json_or_jsonp(data, options = {})
     callback = params[:callback].to_s
     if callback =~ /^[a-zA-Z0-9_\.]+$/
-      render({:text => "#{callback}(" + data.to_json + ")", :content_type => "application/javascript"}.merge(options))
+      render({plain: "#{callback}(" + data.to_json + ")", content_type: "application/javascript"}.merge(options))
     else
       render({:json => data.to_json}.merge(options))
     end
@@ -36,17 +36,21 @@ class ApiController < ApplicationController
     data = { :count => search.count, :description => search.summary }
 
     unless metadata_only == "1"
+      # NOTE: /documents needs the select clause to be nested inside a SQL block
+      select = options.delete(:select)
+      options.merge!(sql: {select: select})
+
       results = search.results(options)
 
       if search.count > 0 && results.count > 0
         data[:total_pages] = results.total_pages
 
         if results.next_page
-          data[:next_page_url] = index_url(params.merge(:page => results.next_page))
+          data[:next_page_url] = index_url(params.merge(:page => results.next_page).permit!)
         end
 
         if results.previous_page
-          data[:previous_page_url] = index_url(params.merge(:page => results.previous_page))
+          data[:previous_page_url] = index_url(params.merge(:page => results.previous_page).permit!)
         end
 
         data[:results] = results.map do |result|
@@ -80,10 +84,16 @@ class ApiController < ApplicationController
         end
       end
 
-      records = model.all(find_options.except(:publication_date).merge(conditions: conditions))
+      combined_options = find_options.except(:publication_date).merge(conditions: conditions)
+
+      [{:agency_name_assignments=>{:agency_name=>:agency}}]
+      records = model.
+        includes(combined_options.fetch(:include)).
+        select(combined_options.fetch(:select)).
+        where(combined_options.fetch(:conditions))
 
       data = {
-        :count => records.count,
+        :count => records.count(:all),
         :results => records.map{|record| yield(record)}
       }
 
@@ -93,7 +103,7 @@ class ApiController < ApplicationController
       end
     else
       if publication_date
-        record = model.first(conditions: ["document_number = ? AND publication_date = ?", document_numbers, publication_date])
+        record = model.where("document_number = ? AND publication_date = ?", document_numbers, publication_date).first
         raise ActiveRecord::RecordNotFound unless record
       else
         record = model.find_by_document_number!(document_numbers)
@@ -166,7 +176,7 @@ class ApiController < ApplicationController
 
   rescue_from Exception, :with => :server_error if RAILS_ENV == 'production' || RAILS_ENV == 'staging'
   def server_error(exception)
-    notify_honeybadger(exception)
+    Honeybadger.notify(exception)
     render :json => {:status => 500, :message => "Internal Server Error"}, :status => 500
   end
 

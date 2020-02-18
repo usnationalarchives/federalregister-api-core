@@ -9,26 +9,36 @@ class ApplicationSearch::FacetCalculator
   end
 
   def raw_facets
-    @search.sphinx_search(
+    results = @search.sphinx_search(
       @search.sphinx_term,
       :with => @search.with,
       :with_all => @search.with_all,
       :conditions => @search.sphinx_conditions,
       :match_mode => :extended,
       :per_page => 1000,
-      :group => @facet_name.to_s,
+      :group_by => @facet_name.to_s,
       :ids_only => true
-    ).results[:matches].map{|m| [m[:attributes]["@groupby"], m[:attributes]["@count"]]}
+    )
+    counts = []
+    results.each_with_group_and_count{|entry, group_id, count| counts << [group_id, count]}
+    counts
   end
 
   def all
     if @model
-      id_to_name = @model.find_as_hash(:select => "id, #{@name_attribute}")
-
-      if @identifier_attribute
+      if @model.active_hash?
+        id_to_name = @model.find_as_hash(:select => "id, #{@name_attribute}")
         id_to_identifier = @model.find_as_hash(:select => "id, #{@identifier_attribute}")
       else
-        id_to_identifier = {}
+        id_to_name_sql = @model.select("id, #{@name_attribute}").to_sql
+        id_to_name = @model.find_as_hash(id_to_name_sql)
+
+        if @identifier_attribute
+          id_to_identifier_sql = @model.select("id, #{@identifier_attribute}").to_sql
+          id_to_identifier = @model.find_as_hash(id_to_identifier_sql)
+        else
+          id_to_identifier = {}
+        end
       end
 
       search_value_for_this_facet = @search.send(@facet_name)
@@ -47,7 +57,7 @@ class ApplicationSearch::FacetCalculator
       end
     else
       facets = raw_facets.reverse.reject{|id, count| id == 0}.map do |id, count|
-        value = @hash.keys.find{|k| k.to_crc32 == id}
+        value = @hash.keys.find{|k| Zlib.crc32(k) == id}
         next if value.blank?
         ApplicationSearch::Facet.new(
           :value      => value,

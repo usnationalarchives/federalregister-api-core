@@ -1,47 +1,56 @@
 require 'spec_helper'
 
-describe Citations::CfrHelper do
-  include Citations::CfrHelper
+describe Citations::CfrHelper, type: :helper do
+  include RouteBuilder
 
   describe 'add_cfr_links' do
+
     it "supports '# CFR #'" do
-      add_cfr_links('10 CFR 100').should == '<a class="cfr external" href="' + h(select_cfr_citation_path(Time.current.to_date,'10','100')) + '">10 CFR 100</a>'
+      add_cfr_links('10 CFR 100').should == '<a href="' + h(select_cfr_citation_path(Time.current.to_date,'10','100')) + '" class="cfr external">10 CFR 100</a>'
     end
 
     it "supports '# CFR #'" do
-      add_cfr_links('10 CFR 100').should == '<a class="cfr external" href="' + h(select_cfr_citation_path(Time.current.to_date,'10','100')) + '">10 CFR 100</a>'
+      add_cfr_links('10 CFR 100').should == '<a href="' + h(select_cfr_citation_path(Time.current.to_date,'10','100')) + '" class="cfr external">10 CFR 100</a>'
     end
 
     it "supports '# CFR #.#'" do
-      add_cfr_links('10 CFR 100.1').should == '<a class="cfr external" href="' + h(select_cfr_citation_path(Time.current.to_date,'10', '100', '1')) + '">10 CFR 100.1</a>'
+      add_cfr_links('10 CFR 100.1').should == '<a href="' + h(select_cfr_citation_path(Time.current.to_date,'10', '100', '1')) + '" class="cfr external">10 CFR 100.1</a>'
     end
 
     it "supports '# C.F.R. #.#'" do
-      add_cfr_links('10 C.F.R. 100.1').should == '<a class="cfr external" href="' + h(select_cfr_citation_path(Time.current.to_date,'10','100','1')) + '">10 C.F.R. 100.1</a>'
+      add_cfr_links('10 C.F.R. 100.1').should == '<a href="' + h(select_cfr_citation_path(Time.current.to_date,'10','100','1')) + '" class="cfr external">10 C.F.R. 100.1</a>'
     end
 
     it "supports '# C.F.R. Part #.#'" do
-      add_cfr_links('10 C.F.R. Part 100.1').should == '<a class="cfr external" href="' + h(select_cfr_citation_path(Time.current.to_date,'10','100','1')) + '">10 C.F.R. Part 100.1</a>'
+      add_cfr_links('10 C.F.R. Part 100.1').should == '<a href="' + h(select_cfr_citation_path(Time.current.to_date,'10','100','1')) + '" class="cfr external">10 C.F.R. Part 100.1</a>'
     end
 
     it "supports '# C.F.R. parts #'" do
-      add_cfr_links('10 C.F.R. parts 100').should == '<a class="cfr external" href="' + h(select_cfr_citation_path(Time.current.to_date,'10', '100')) + '">10 C.F.R. parts 100</a>'
+      add_cfr_links('10 C.F.R. parts 100').should == '<a href="' + h(select_cfr_citation_path(Time.current.to_date,'10', '100')) + '" class="cfr external">10 C.F.R. parts 100</a>'
     end
 
     it "supports '# C.F.R. Sec. #'" do
-      add_cfr_links('10 C.F.R. Sec. 100').should == '<a class="cfr external" href="' + h(select_cfr_citation_path(Time.current.to_date,'10', '100')) + '">10 C.F.R. Sec. 100</a>'
+      add_cfr_links('10 C.F.R. Sec. 100').should == '<a href="' + h(select_cfr_citation_path(Time.current.to_date,'10', '100')) + '" class="cfr external">10 C.F.R. Sec. 100</a>'
     end
 
     it "supports '# C.F.R. &#xA7; #'" do
-      add_cfr_links('10 C.F.R. &#xA7; 100').should == '<a class="cfr external" href="' + h(select_cfr_citation_path(Time.current.to_date,'10', '100')) + '">10 C.F.R. &#xA7; 100</a>'
+      result = add_cfr_links('10 C.F.R. &#xA7; 100')
+
+      # expected_result_per_rails_2 = "<a class=\"cfr external\" href=\"/select-citation/2019/11/19/10-CFR-100\">10 C.F.R. &#xA7; 100</a>"
+      expected_result_per_rails_3 = '<a href="' + h(select_cfr_citation_path(Time.current.to_date,'10', '100')) + '" class="cfr external">10 C.F.R. &#xA7; 100</a>'
+      expect(result).to eq(expected_result_per_rails_3)
     end
 
     it "supports '# C.F.R. &#xA7;&#xA7; #'" do
-      add_cfr_links('10 C.F.R. &#xA7;&#xA7; 100').should == '<a class="cfr external" href="' + h(select_cfr_citation_path(Time.current.to_date,'10','100')) + '">10 C.F.R. &#xA7;&#xA7; 100</a>'
+      result = add_cfr_links('10 C.F.R. &#xA7;&#xA7; 100')
+
+      # expected_result_per_rails_2 = "<a class=\"cfr external\" href=\"/select-citation/2019/11/19/10-CFR-100\">10 C.F.R. &#xA7;&#xA7; 100</a>"
+      expected_result_per_rails_3 = '<a href="' + h(select_cfr_citation_path(Time.current.to_date,'10','100')) + '" class="cfr external">10 C.F.R. &#xA7;&#xA7; 100</a>'
+      expect(result). to eq(expected_result_per_rails_3)
     end
 
     it "supports multiple citations like '# CFR #.# and # CFR #.#'" do
-      add_cfr_links('10 CFR 660.719 and 10 CFR 665.28').should == '<a class="cfr external" href="' + h(select_cfr_citation_path(Time.current.to_date,'10','660','719')) + '">10 CFR 660.719</a> and <a class="cfr external" href="' + h(select_cfr_citation_path(Time.current.to_date,'10','665','28')) + '">10 CFR 665.28</a>'
+      add_cfr_links('10 CFR 660.719 and 10 CFR 665.28').should == '<a href="' + h(select_cfr_citation_path(Time.current.to_date,'10','660','719')) + '" class="cfr external">10 CFR 660.719</a> and <a href="' + h(select_cfr_citation_path(Time.current.to_date,'10','665','28')) + '" class="cfr external">10 CFR 665.28</a>'
     end
 
     it "supports missing the initial space: '49 CFR230.105(c)'"

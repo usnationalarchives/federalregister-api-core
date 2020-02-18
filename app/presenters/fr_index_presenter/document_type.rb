@@ -125,7 +125,8 @@ class FrIndexPresenter
       docket_ids = results.map{|r| r['docket_id']}.compact.uniq
 
       if docket_ids.present?
-        comment_counts = Docket.find_as_hash(:select => "id, comments_count", :conditions => {:id => docket_ids})
+        sql = Docket.select("id, comments_count").where(id: docket_ids).to_sql
+        comment_counts = Docket.find_as_hash(sql)
       else
         comment_counts = {}
       end
