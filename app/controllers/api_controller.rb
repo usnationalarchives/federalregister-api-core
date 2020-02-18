@@ -33,7 +33,12 @@ class ApiController < ApplicationController
       return
     end
 
-    data = { :count => search.count, :description => search.summary }
+    begin
+      data = { :count => search.count, :description => search.summary }
+    rescue ThinkingSphinx::SyntaxError
+      render_json_or_jsonp({:errors => [{invalid: "Invalid search parameters"}]}, :status => 400)
+      return
+    end
 
     unless metadata_only == "1"
       # NOTE: /documents needs the select clause to be nested inside a SQL block
