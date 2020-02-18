@@ -6,40 +6,37 @@
 <div class="reprocess-issue"
   data-status='<%= @presenter.reprocessed_issue_in_progress_status %>'>
 
+  <% if @presenter.display_loading_message? %>
+    <p>Reprocessing...</p>
 
-    <% if @presenter.display_loading_message? %>
-      <p>Reprocessing...</p>
+    <%= simple_format(@presenter.reprocessed_issue_in_progress.message) %>
+  <% else %>
+    <p>Most recent changes to MODS file:</p>
 
-      <%= simple_format(@presenter.reprocessed_issue_in_progress.message) %>
-    <% else %>
-      <p>Most recent changes to MODS file:</p>
+    <div class="well">
+      <%= @presenter.most_recent_diff.present? ?
+        simple_format(h @presenter.most_recent_html_diff) :
+        "No changes identified." %>
+    </div>
+  <% end %>
 
-      <div class="well">
-        <%= @presenter.most_recent_diff.present? ?
-          simple_format(h @presenter.most_recent_html_diff) :
-          "No changes identified." %>
-      </div>
-    <% end %>
+  <% if @presenter.show_reprocessing_buttons? %>
+    <div class="row">
+      <%= form_tag(
+        admin_reprocessed_issue_path(@presenter.reprocessed_issue_in_progress),
+        :method => :put, :class => "pull-right"
+      ) do %>
+        <%= submit_tag 'Reprocess', :class => 'btn btn-primary btn-large' %>
+      <% end %>
 
-  <p>
-    <% if @presenter.show_reprocessing_buttons? %>
-      <div class="row">
-        <% form_tag(
-          admin_reprocessed_issue_path(@presenter.reprocessed_issue_in_progress),
-          :method => :put, :class => "pull-right"
-        ) do %>
-          <%= submit_tag 'Reprocess', :class => 'btn btn-primary btn-large' %>
-        <% end %>
-
-        <% form_tag(
-          admin_update_mods_path(@presenter.reprocessed_issue_in_progress),
-          :method => :put, :class => "pull-right"
-        ) do %>
-          <%= submit_tag 'Update MODS', :class => 'btn btn-info btn-large' %>
-        <% end %>
-      </div>
-    <% end %>
-  </p>
+      <%= form_tag(
+        admin_update_mods_path(@presenter.reprocessed_issue_in_progress),
+        :method => :put, :class => "pull-right"
+      ) do %>
+        <%= submit_tag 'Update MODS', :class => 'btn btn-info btn-large' %>
+      <% end %>
+    </div>
+  <% end %>
 
   <div class="reprocessed_issue-history">
     <table class="table-striped table-condensed">
