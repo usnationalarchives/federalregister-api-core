@@ -134,20 +134,21 @@ class Api::V1::EntriesController < ApiController
   ]
   def deserialized_params
     params.tap do |modified_params|
-      BOOLEAN_PARAMS_NEEDING_DESERIALIZATION.each do |param_name|
-        param = modified_params[:conditions].try(:[], param_name)
-        if param.present?
-          modified_params[:conditions][param_name] = param.to_i
+      if modified_params[:conditions].present?
+        BOOLEAN_PARAMS_NEEDING_DESERIALIZATION.each do |param_name|
+          param = modified_params[:conditions].try(:[], param_name)
+          if param.present?
+            modified_params[:conditions][param_name] = param.to_i
+          end
+        end
+
+        INTEGER_PARAMS_NEEDING_DESERIALIZATION.each do |param_name|
+          ids = modified_params[:conditions].try(:[], param_name)
+          if ids.present?
+            modified_params[:conditions][param_name] = Array.wrap(ids).map(&:to_i)
+          end
         end
       end
-
-      INTEGER_PARAMS_NEEDING_DESERIALIZATION.each do |param_name|
-        ids = modified_params[:conditions].try(:[], param_name)
-        if ids.present?
-          modified_params[:conditions][param_name] = Array.wrap(ids).map(&:to_i)
-        end
-      end
-
     end
   end
 
