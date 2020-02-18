@@ -1,9 +1,11 @@
 class PublicInspectionDocumentSearchResult
-  attr_reader :agency_ids,
+  attr_reader :id,
+    :agency_ids,
     :special_filing,
     :title
 
   def initialize(attributes={})
+    @id = attributes.delete(:id)
     @agency_ids = attributes.delete(:agency_ids)
     @publication_date = attributes.delete(:publication_date)
     @special_filing = attributes.delete(:special_filing)

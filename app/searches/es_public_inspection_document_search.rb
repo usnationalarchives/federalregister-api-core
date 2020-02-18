@@ -9,7 +9,7 @@ class EsPublicInspectionDocumentSearch < EsApplicationSearch
                 :model_sphinx_method => :id
 
   define_filter :type,
-                :sphinx_type => :with, :crc32_encode => true do |types|
+                :sphinx_type => :with do |types|
                   types.map{|type| Entry::ENTRY_TYPES[type]}.to_sentence(:two_words_connector => ' or ', :last_word_connector => ', or ')
                 end
 

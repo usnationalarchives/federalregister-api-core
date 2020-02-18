@@ -4,7 +4,16 @@ class PublicInspectionDocumentSerializer < ApplicationSerializer
     :id,
     :publication_date,
     :special_filing,
-    :title
+    :title,
+    :type
+
+  attribute :type do |object|
+    if object.granule_class == "SUNSHINE"
+      "NOTICE"
+    else
+      object.granule_class
+    end
+  end
 
   attribute :docket_id do |object|
     object.docket_numbers.pluck(:number)
@@ -20,5 +29,9 @@ class PublicInspectionDocumentSerializer < ApplicationSerializer
 
   attribute :agency_ids do |object|
     object.agency_assignments.pluck(:agency_id)
+  end
+
+  attribute :full_text do |object|
+    File.read("#{FileSystemPathManager.data_file_path}/public_inspection/raw/#{object.document_file_path}.txt")
   end
 end
