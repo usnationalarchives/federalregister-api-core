@@ -13,14 +13,11 @@ class Content::PublicInspectionImporter::CacheManager
 
   def initialize(importer)
     @issue = importer.issue
-    @pi_documents = importer.issue.public_inspection_documents.find(
-      :all,
-      :include => {:entry => :agencies},
-      :conditions => [
-        "public_inspection_documents.updated_at >= ?",
+    @pi_documents = importer.issue.public_inspection_documents.
+      includes(:entry => :agencies).
+      where("public_inspection_documents.updated_at >= ?",
         importer.start_time
-      ]
-    )
+      )
   end
 
   def manage_cache
