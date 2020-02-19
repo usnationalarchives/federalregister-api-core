@@ -6,6 +6,7 @@ module ApplicationSearch::TermPreprocessor
     processed_term = remove_invalid_sequences(processed_term)
     processed_term = fix_hypenated_word_searches(processed_term)
     processed_term = use_exact_word_matching_within_phrase(processed_term)
+    processed_term = remove_trailing_dashes(processed_term)
     processed_term
   end
 
@@ -53,5 +54,9 @@ module ApplicationSearch::TermPreprocessor
       (\w+)                               (?# some word characters )
       (?=(?:[^"]*"[^"]*")*[^"]*"[^"]*$)   (?# an odd number of quotes afterwards)
     /x, '\1=\2')
+  end
+
+  def self.remove_trailing_dashes(term)
+    term.gsub(/\-+$/, '')
   end
 end

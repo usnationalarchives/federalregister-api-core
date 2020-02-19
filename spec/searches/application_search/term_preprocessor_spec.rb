@@ -30,6 +30,20 @@ describe 'ApplicationSearch::TermPreprocessor' do
     end
   end
 
+  describe ".remove_trailing_dashes" do
+    def results_for(term)
+      ApplicationSearch::TermPreprocessor.remove_trailing_dashes(term)
+    end
+
+    it "removes a single trailing dash" do
+      results_for('CMS-CMS-9915-').should == 'CMS-CMS-9915'
+    end
+
+    it "removes multiple trailing dashes" do
+      results_for('CMS-CMS-9915--').should == 'CMS-CMS-9915'
+    end
+  end
+
   describe '.remove_invalid_sequences' do
     def results_for(term)
       ApplicationSearch::TermPreprocessor.remove_invalid_sequences(term)
