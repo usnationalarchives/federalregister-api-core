@@ -170,8 +170,10 @@ class EntryApiRepresentation < ApiRepresentation
             :document_id => doc.id
           }
         end,
-        :metadata => docket.metadata
       }
+
+      docket_metadata = docket.metadata.except("Keyword(s)")
+      docket_info.merge!(metadata: docket_metadata)
 
       if docket.regulation_id_number.present?
         regulatory_plan = RegulatoryPlan.current.find_by_regulation_id_number(docket.regulation_id_number)
