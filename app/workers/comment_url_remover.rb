@@ -12,7 +12,7 @@ class CommentUrlRemover
   attr_accessor :entry
 
   def initialize(document_number)
-    @entry = Entry.first(document_number: document_number)
+    @entry = Entry.find_by(document_number: document_number)
   end
 
   def perform
