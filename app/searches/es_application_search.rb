@@ -262,7 +262,7 @@ class EsApplicationSearch
     es_search_invocation = repository.search(search_options)
 
     # Get AR objects
-    active_record_collection = Entry.where(id: es_search_invocation.results.map{|x| x.fetch('_id')} )
+    active_record_collection = model.where(id: es_search_invocation.results.map{|x| x.fetch('id')} )
 
     # Provide a way for collection to respond to former TS collection args (e.g. next_page, previous_page)
     result_array = ResultArray.new(es_search_invocation, active_record_collection)
