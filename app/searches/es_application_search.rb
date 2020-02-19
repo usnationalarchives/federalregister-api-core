@@ -405,10 +405,6 @@ class EsApplicationSearch
     @es_term ||= ApplicationSearch::TermPreprocessor.process_term(@term)
   end
 
-  # def es_search(term, options, sql_args)
-  #   # TODO: handle term, sql_args
-  #   repository.wrap_search("", options)
-  # end
 
   private
 
@@ -459,8 +455,8 @@ class EsApplicationSearch
       # :excerpts => {:limit => 300, :around => 150},
     # }.merge(find_options)
     #
-    # TODO: match is specific to PublicInspectionDocumentSearch
 
+    #TODO: handle term, sql_args
     query = es_base_query.tap do |q|
       # Handle term
       if es_term.present?
