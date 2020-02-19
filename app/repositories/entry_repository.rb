@@ -6,6 +6,10 @@ class EntryRepository
 
   mapping dynamic: 'strict' do
     indexes :id, {type: 'integer'}
+    indexes :title, { type: 'text'}
+    indexes :abstract, { type: 'text'}
+    indexes :full_text, { type: 'text'}
+    indexes :regulation_id_number, { type: 'keyword'}
     indexes :docket_id, {type: 'keyword'}
     indexes :document_number, {type: 'keyword'}
     indexes :type, {type: 'keyword'} #TODO: May be an ES keyword
@@ -25,37 +29,11 @@ class EntryRepository
     # Formerly Sphinx multi-value attributes
     indexes :cfr_affected_parts, {type: 'integer'}
     indexes :agency_ids, {type: 'integer'}
+    indexes :topic_ids, {type: 'integer'}
+    indexes :section_ids, {type: 'integer'}
+
+
     indexes :significant, {type: 'boolean'}
-  end
-
-  def wrap_search(term, query={})
-    SearchResultsWrapper.new( search(query) )
-  end
-
-  class SearchResultsWrapper
-    delegate_missing_to :@es_result
-
-    # This class is being used to imitate the Sphinx results as we set up ES
-    def initialize(es_result)
-      @es_result = es_result
-    end
-
-    def total_pages
-      0 #TODO: Fix
-    end
-
-    def count
-      es_result.total
-    end
-
-    def results
-      Entry.where(id: es_results.results.map{|x| x.fetch('_id')} )
-    end
-
-    private
-
-    attr_reader :es_result
-
   end
 
 end
