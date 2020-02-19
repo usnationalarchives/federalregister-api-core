@@ -35,7 +35,7 @@ class ApiController < ApplicationController
 
     begin
       data = { :count => search.count, :description => search.summary }
-    rescue ThinkingSphinx::SyntaxError
+    rescue ThinkingSphinx::SyntaxError, ThinkingSphinx::ParseError
       render_json_or_jsonp({:errors => [{invalid: "Invalid search parameters"}]}, :status => 400)
       return
     end
