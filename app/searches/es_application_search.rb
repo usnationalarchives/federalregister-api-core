@@ -427,16 +427,17 @@ class EsApplicationSearch
 
   def es_from
     from = (page - 1) * per_page
-    if page != 0
+    if from != 0
       from + 1
     else
       from
     end
   end
 
+  DEFAULT_RESULTS_PER_PAGE = 20
   def search_options
     @page ||= 1
-    @per_page ||= 20
+    @per_page ||= DEFAULT_RESULTS_PER_PAGE
 
     max_resultset = @page * @per_page
     if max_resultset > 10_000
