@@ -8,7 +8,6 @@ describe "Elasticsearch Entry Search" do
     entry
   end
 
-
   let!(:entry) do
     Factory(
       :entry,
@@ -24,8 +23,10 @@ describe "Elasticsearch Entry Search" do
 
       expect(search.send(:search_options)).to eq(
         {
+          from: 0,
           query: {
             bool: {
+              must: [],
               filter: [
                 {
                   bool: {
@@ -38,7 +39,8 @@ describe "Elasticsearch Entry Search" do
                 }
               ]
             }
-          }
+          },
+          size: EsApplicationSearch::DEFAULT_RESULTS_PER_PAGE
         }
       )
     end
@@ -54,8 +56,10 @@ describe "Elasticsearch Entry Search" do
 
       expect(search.send(:search_options)).to eq(
         {
+          from: 0,
           query: {
             bool: {
+              must: [],
               filter: [
                 {
                   bool: {
@@ -66,7 +70,8 @@ describe "Elasticsearch Entry Search" do
                 }
               ]
             }
-          }
+          },
+          size: EsApplicationSearch::DEFAULT_RESULTS_PER_PAGE
         }
       )
     end
@@ -76,6 +81,7 @@ describe "Elasticsearch Entry Search" do
 
       expect(search.send(:search_options)).to eq(
         {
+          from: 0,
           query: {
             bool: {
               must: [],
@@ -90,7 +96,8 @@ describe "Elasticsearch Entry Search" do
                 }
               ]
             }
-          }
+          },
+          size: EsApplicationSearch::DEFAULT_RESULTS_PER_PAGE
         }
       )
     end
@@ -103,7 +110,41 @@ describe "Elasticsearch Entry Search" do
       $entry_repository.create_index!(force: true)
     end
 
-    it "performs a term search" do
+    it "retrieves an Active Record-like collection" do
+      another_entry = Factory(:entry, significant: 0, title: 'fish')
+      entries = [
+        another_entry
+      ]
+
+      entries.each{|entry| $entry_repository.save(entry) }
+      $entry_repository.refresh_index!
+
+      search = EsEntrySearch.new(conditions: {significant: 0, term: 'fish'})
+      results = search.results
+
+      expect(results.count).to eq(1)
+      expect(results.first.id).to eq(another_entry.id)
+    end
+
+    it "retrieves the expected results for a term" do
+      entries = [
+        build_entry_double({title: 'fish', id: 888}),
+        build_entry_double({title: 'goat', id: 999})
+      ]
+      entries.each{|entry| $entry_repository.save(entry) }
+      $entry_repository.refresh_index!
+
+      search = EsEntrySearch.new(conditions: {term: 'fish'})
+
+      expect(search.results.count).to eq 1
+    end
+
+    it "If no entries meet the criteria, count is zero" do
+      $entry_repository.refresh_index!
+
+      search = EsEntrySearch.new(conditions: {significant: 1})
+
+      expect(search.results.count).to eq 0
     end
 
     it "applies a basic boolean filter correctly" do
@@ -137,9 +178,9 @@ describe "Elasticsearch Entry Search" do
     it "handles Sphinx multi-value attribute queries" do
       agencies = (1..2).map{ Factory.create(:agency) } #Note that actual agencies must exist in order for the search to register the filter
       entries = [
-        build_entry_double({agency_ids: agencies.first.id }),
-        build_entry_double({agency_ids: agencies.last.id }),
-        build_entry_double({agency_ids: [] })
+        build_entry_double({agency_ids: agencies.first.id, id: 111 }),
+        build_entry_double({agency_ids: agencies.last.id, id: 222 }),
+        build_entry_double({agency_ids: [], id: 333 })
       ]
       entries.each{|entry| $entry_repository.save(entry) }
       $entry_repository.refresh_index!
@@ -165,8 +206,8 @@ describe "Elasticsearch Entry Search" do
             year: year,
           }.reject{|k, v| v.blank?}
           entries = [
-            build_entry_double({publication_date: '1999-12-31' }),
-            build_entry_double({publication_date: '2000-01-01' }),
+            build_entry_double({publication_date: '1999-12-31', id: 888}),
+            build_entry_double({publication_date: '2000-01-01', id: 999}),
           ]
 
           entries.each{|entry| $entry_repository.save(entry) }
