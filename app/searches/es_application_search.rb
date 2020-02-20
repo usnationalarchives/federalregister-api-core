@@ -248,9 +248,13 @@ class EsApplicationSearch
       0 #TODO: Fix
     end
 
+    def ids
+      active_record_collection.pluck(:id)
+    end
+
     private
 
-    attr_reader :es_search_invocation
+    attr_reader :es_search_invocation, :active_record_collection
 
   end
 
@@ -263,6 +267,9 @@ class EsApplicationSearch
 
     # Get AR objects
     active_record_collection = model.where(id: es_search_invocation.results.map{|x| x.fetch('id')} )
+    # TODO: replace model?
+    # TODO: i think this needs to get pushed into the ResultArray and pagination will have to be handled there, since es_search_invocation currently deals with a single page of results
+    # active_record_collection = args[:model_scope].where(id: es_search_invocation.results.map(&:id))
 
     # Provide a way for collection to respond to former TS collection args (e.g. next_page, previous_page)
     result_array = ResultArray.new(es_search_invocation, active_record_collection)
@@ -292,6 +299,8 @@ class EsApplicationSearch
         results_without_raw_text.each do |result|
           result.excerpt = result.excerpts.abstract
         end
+      else
+        raise "#{model} not supported"
       end
     end
 
