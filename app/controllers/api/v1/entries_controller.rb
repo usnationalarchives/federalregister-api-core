@@ -130,6 +130,7 @@ class Api::V1::EntriesController < ApiController
     'section_ids',
     'topic_ids',
     'place_ids',
+    'presidential_document_type_id',
     'small_entity_ids',
   ]
   def deserialized_params
