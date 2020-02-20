@@ -134,24 +134,30 @@ class Api::V1::PublicInspectionDocumentsController < ApiController
 
   def deserialized_params
     params.tap do |modified_params|
-      BOOLEAN_PARAMS_NEEDING_DESERIALIZATION.each do |param_name|
-        param = modified_params[:conditions].try(:[], param_name)
-        if param.present?
-          modified_params[:conditions][param_name] = param.to_i
+      if modified_params[:conditions].present?
+        BOOLEAN_PARAMS_NEEDING_DESERIALIZATION.each do |param_name|
+          param = modified_params[:conditions].try(:[], param_name)
+          if param.present?
+            modified_params[:conditions][param_name] = param.to_i
+          end
         end
-      end
 
-      INTEGER_PARAMS_NEEDING_DESERIALIZATION.each do |param_name|
-        ids = modified_params[:conditions].try(:[], param_name)
-        if ids.present?
-          modified_params[:conditions][param_name] = Array.wrap(ids).map(&:to_i)
+        INTEGER_PARAMS_NEEDING_DESERIALIZATION.each do |param_name|
+          ids = modified_params[:conditions].try(:[], param_name)
+          if ids.present?
+            modified_params[:conditions][param_name] = Array.wrap(ids).map(&:to_i)
+          end
         end
       end
     end
   end
 
   def public_inspection_search(pi_params, fields=[])
-    term = pi_params[:conditions] && pi_params[:conditions][:term].present?
+    if pi_params[:conditions].present? && pi_params[:conditions][:term]
+      term = pi_params[:conditions][:term]
+    else
+      term = nil
+    end
     excerpts = fields.include?(:excerpts)
 
     PublicInspectionDocumentSearch.new(pi_params.merge(excerpts: term && excerpts))
