@@ -19,11 +19,15 @@ class EntrySearch::Suggestor::Agency < EntrySearch::Suggestor::Base
     sql = Agency.active.select("id, slug, name, short_name, display_name").to_sql
 
     Agency.find_as_arrays(sql).each do |id, slug, *names|
-      pattern = names.reject(&:blank?).compact.map{|n| "(^|[^a-zA-Z0-9=-])" + Regexp.escape(n) + "\\b"}.join('|')
+      pattern = names.reject(&:blank?).compact.map do |name|
+        '(?<=\A|[^a-zA-Z0-9=-])' +
+        Regexp.escape(name) +
+         '(?=\z|[^a-zA-Z0-9=-])'
+      end.join('|')
 
       if @term =~ /(#{pattern})(?=(?:[^"]*"[^"]*")*[^"]*$)/i && ! agencies.include?(slug)
         agencies << slug
-        @term = @term.sub(/(?:#{pattern})(?=(?:[^"]*"[^"]*")*[^"]*$)/i, '\1')
+        @term = @term.sub(/(?:#{pattern})(?=(?:[^"]*"[^"]*")*[^"]*$)/i, '')
         @term = @term.delete_prefix("-")
       end
     end
