@@ -6,6 +6,7 @@ class PublicInspectionDocumentRepository
   klass PublicInspectionDocument
 
   mapping dynamic: 'strict' do
+    indexes :id, { type: 'integer' }
     indexes :filed_at, { type: 'date' }
     indexes :title, { type: 'text'}
     indexes :full_text, { type: 'text'}

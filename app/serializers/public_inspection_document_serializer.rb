@@ -2,6 +2,7 @@ class PublicInspectionDocumentSerializer < ActiveModel::Serializer
   attributes :agency_ids,
     :docket_id,
     :document_number,
+    :id,
     :publication_date,
     :special_filing,
     :title

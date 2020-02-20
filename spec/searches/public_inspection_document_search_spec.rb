@@ -59,6 +59,7 @@ describe "ES PI Doc Search" do
 
     let!(:public_inspection_document_a) do
       Factory(:public_inspection_document,
+        id: 99,
         special_filing: 1,
         publication_date: Date.new(2020,1,1),
         subject_1: 'fish',
