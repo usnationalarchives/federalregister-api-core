@@ -31,6 +31,11 @@ describe 'EntrySearch::Suggestor::Agency' do
       suggestion.agencies.should == [@hhs.slug]
     end
 
+    it "when a double-quote is included, should suggest an agency from string outside of quotes" do
+      suggestion = suggestor('"goat" USDA').suggestion
+      suggestion.agencies.should == [@usda.slug]
+    end
+
     it "shouldn't suggest an agency who contains a short_name embedded in other words" do
       suggestion = suggestor("HHHSO Rules").suggestion
       suggestion.should be_nil
@@ -75,5 +80,11 @@ describe 'EntrySearch::Suggestor::Agency' do
       suggestion = suggestor('-=USDA').suggestion
       suggestion.should be_nil
     end
+
+    it "doesn't match an agency at the beginning of a hyphenated string" do
+      suggestion = suggestor('USDA-1234-1234').suggestion
+      suggestion.should be_nil
+    end
+
   end
 end
