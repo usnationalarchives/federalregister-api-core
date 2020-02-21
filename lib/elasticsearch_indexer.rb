@@ -9,6 +9,11 @@ module ElasticsearchIndexer
     EntryChange.insert_all(entry_change_collection)
   end
 
+  ES_TEMP_FILE = 'tmp/use_elasticsearch'
+  def self.es_enabled?
+    File.file?(ES_TEMP_FILE)
+  end
+
   def self.handle_entry_changes
     remove_deleted_entries
     reindex_modified_entries

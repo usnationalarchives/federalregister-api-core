@@ -50,6 +50,14 @@ class PublicInspectionDocument < ApplicationModel
     scoped(:conditions => {:special_filing => false})
   end
 
+  def self.search_klass
+    if ElasticsearchIndexer.es_enabled?
+      EsPublicInspectionDocumentSearch
+    else
+      PublicInspectionDocumentSearch
+    end
+  end
+
   def entry
     @entry ||= Entry.find_by_document_number(document_number)
   end

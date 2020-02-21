@@ -231,6 +231,14 @@ class Entry < ApplicationModel
     ['entry_core']
   end
 
+  def self.search_klass
+    if ElasticsearchIndexer.es_enabled?
+      EsEntrySearch
+    else
+      EntrySearch
+    end
+  end
+
   def excerpt
     return @excerpt if @excerpt
 
