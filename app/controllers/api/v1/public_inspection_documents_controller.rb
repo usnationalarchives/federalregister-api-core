@@ -138,7 +138,7 @@ class Api::V1::PublicInspectionDocumentsController < ApiController
         BOOLEAN_PARAMS_NEEDING_DESERIALIZATION.each do |param_name|
           param = modified_params[:conditions].try(:[], param_name)
           if param.present?
-            modified_params[:conditions][param_name] = param.to_i
+            modified_params[:conditions][param_name] = Array.wrap(param).first.to_i
           end
         end
 
