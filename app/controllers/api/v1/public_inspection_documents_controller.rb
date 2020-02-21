@@ -198,7 +198,7 @@ class Api::V1::PublicInspectionDocumentsController < ApiController
         representation = PublicInspectionDocumentApiRepresentation.new(result)
         csv << fields.map do |field|
           if field == :filed_at
-            value = representation.value(field).&strftime("%m/%d/%Y at %I:%M %p")
+            value = representation.value(field)&.strftime("%m/%d/%Y at %I:%M %p")
           else
             value = [*representation.value(field)].join('; ')
 
