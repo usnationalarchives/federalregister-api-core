@@ -35,6 +35,7 @@ class Entry < ApplicationModel
   belongs_to :docket, :foreign_key => :regulations_dot_gov_docket_id
 
   has_one :public_inspection_document
+  has_one :entry_change
 
   has_many :corrections, :foreign_key => "correction_of_id", :class_name => "Entry"
   has_many :topic_name_assignments, :dependent => :destroy
@@ -95,6 +96,8 @@ class Entry < ApplicationModel
   has_one :regulations_dot_gov_comments_close_date, -> { where(event_type: 'RegulationsDotGovCommentsClose') }, :class_name => "Event", :autosave => true
 
   before_save :set_document_file_path
+  before_save :record_entry_change
+  before_destroy :record_entry_change
 
   has_many :section_assignments
   has_many :sections, :through => :section_assignments
@@ -626,6 +629,12 @@ class Entry < ApplicationModel
   end
 
   private
+
+  def record_entry_change
+    if entry_change.nil?
+      build_entry_change
+    end
+  end
 
   def set_document_file_path
     if document_number.present? && publication_date.present?

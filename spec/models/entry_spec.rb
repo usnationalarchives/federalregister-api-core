@@ -135,4 +135,39 @@ describe Entry do
       TopicAssignment.count.should == 0
     end
   end
+
+  describe "recording of entry changes" do
+    it "records an entry in the entry changes table on update if one does not exist" do
+      entry = Factory(:entry)
+      entry.update!(title: 'foo')
+
+      expect(EntryChange.first.entry_id).to eq(entry.id)
+    end
+
+    it "does not create a duplicate record if an entry change record already exists" do
+      entry = Factory(:entry)
+      entry.update!(title: 'foo')
+      entry.update!(title: 'bar')
+
+      expect(EntryChange.count).to eq(1)
+    end
+
+    it "creates an entry change record if a record is deleted" do
+      entry = Factory(:entry)
+      entry.destroy!
+
+      expect(EntryChange.first.entry_id).to eq(entry.id)
+    end
+
+    it "does not create a duplicate record if an entry change record already exists" do
+      entry = Factory(:entry)
+      entry.update!(title: 'foo')
+      entry_id = entry.id
+      entry.destroy!
+
+      expect(EntryChange.count).to eq(1)
+      expect(EntryChange.first.entry_id).to eq(entry_id)
+    end
+
+  end
 end
