@@ -30,7 +30,7 @@ class Api::V1::AgenciesController < ApiController
         cache_for 1.day
 
         if agency
-          if agency.is_a?(Array)
+          if agency.is_a?(ActiveRecord::Relation)
             render_json_or_jsonp agency.map{|a| basic_agency_data(a)}
           else
             render_json_or_jsonp basic_agency_data(agency)
