@@ -126,6 +126,22 @@ describe "Elasticsearch Entry Search" do
       expect(results.first.id).to eq(another_entry.id)
     end
 
+    it "Entry.bulk_index" do
+      another_entry = Factory(:entry, significant: 0, title: 'fish')
+      entries = [
+        another_entry
+      ]
+
+      Entry.bulk_index(entries)
+      $entry_repository.refresh_index!
+
+      search = EsEntrySearch.new(conditions: {significant: 0, term: 'fish'})
+      results = search.results
+
+      expect(results.count).to eq(1)
+      expect(results.first.id).to eq(another_entry.id)
+    end
+
     it "retrieves the expected results for a term" do
       entries = [
         build_entry_double({title: 'fish', id: 888}),
