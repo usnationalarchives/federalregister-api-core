@@ -9,7 +9,7 @@ shared: &shared
   mem_limit: 528M
   morphology: stem_en
   version: '2.1.2'
-  max_children: 100
+  max_children: 256
   query_log: <%= "#{Rails.root}/log/searchd.query.log" %>
 
 development:
