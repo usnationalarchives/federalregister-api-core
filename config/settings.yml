@@ -41,6 +41,9 @@ shared: &shared
 # Make any updates -web also
 test:
   <<: *shared
+  elasticsearch:
+    host: <%= ENV['ELASTICSEARCH_HOST'] || 'admin:admin@localhost:9200/' ||'localhost' %>
+    trace: false
   s3_buckets:
     zipped_eps_images: XXXXXXXXXXXXXXXXXXXXXXX
     # lede_photos: lede-photos.example.org
