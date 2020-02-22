@@ -283,9 +283,9 @@ class EsApplicationSearch
         results_with_raw_text.in_groups_of(1024,false).each do |batch|
           begin
             # merge excerpts back to their result
-            batch.each_with_index do |result, index|
-              result.excerpt = result.excerpts.send(result.method_or_attribute_for_thinking_sphinx_excerpting)
-            end
+            # batch.each_with_index do |result, index|
+            #   result.excerpt = result.excerpts.send(result.method_or_attribute_for_thinking_sphinx_excerpting)
+            # end
           rescue Riddle::ResponseError => e
             # if we can't read a file we want to still show the search results
             Rails.logger.warn(e)
@@ -424,9 +424,19 @@ class EsApplicationSearch
       from: es_from,
       query: {
         bool: {
-          must: [],
+          must: [
+            # es_query_string_query
+          ],
           filter: []
         }
+      }
+    }
+  end
+
+  def es_query_string_query
+    {
+      "query_string": {
+        "query": "magic schoolbus"
       }
     }
   end
