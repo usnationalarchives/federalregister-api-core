@@ -3,13 +3,12 @@ require 'spec_helper'
 describe PublicInspectionDocument do
   describe "#to_hash" do
     it "serializes title" do
-      document = described_class.new(subject_1: "one", subject_2: "two", subject_3: "three")
+      document = described_class.new(subject_1: "one", subject_2: "two", subject_3: "three", document_number: '2011-27460')
       expect(document.to_hash[:title]).to eq "one two three"
     end
 
     it "serializes agency_ids" do
-      document = described_class.new
-      expect(document).to receive(:document_file_path).and_return(nil)
+      document = described_class.new(document_number: '2011-27460')
 
       agency_a = Factory(:agency)
       agency_b = Factory(:agency)

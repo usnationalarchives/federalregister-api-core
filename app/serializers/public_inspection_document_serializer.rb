@@ -32,6 +32,9 @@ class PublicInspectionDocumentSerializer < ApplicationSerializer
   end
 
   attribute :full_text do |object|
-    File.read("#{FileSystemPathManager.data_file_path}/public_inspection/raw/#{object.document_file_path}.txt")
+    path = "#{FileSystemPathManager.data_file_path}/public_inspection/raw/#{object.document_file_path}.txt"
+    if File.file?(path)
+      File.read(path)
+    end
   end
 end

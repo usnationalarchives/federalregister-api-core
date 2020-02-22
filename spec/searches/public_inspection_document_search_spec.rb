@@ -10,7 +10,7 @@ describe "ES PI Doc Search" do
     it "integrates a basic #with attribute" do
       search = EsPublicInspectionDocumentSearch.new(conditions: {special_filing: 1})
       expect(search.send(:search_options)).to eq({
-        from: 1,
+        from: 0,
         size: 20,
         query: {
           bool: {
@@ -35,7 +35,7 @@ describe "ES PI Doc Search" do
       agency = Factory(:agency)
       search = EsPublicInspectionDocumentSearch.new(conditions: {agencies: [agency.slug]})
       expect(search.send(:search_options)).to eq({
-        from: 1,
+        from: 0,
         size: 20,
         query: {
           bool: {
@@ -78,8 +78,7 @@ describe "ES PI Doc Search" do
     end
 
     it "can search full_text by term" do
-      expect(File).to receive(:read).and_return("Fish and goats")
-      allow_any_instance_of(PublicInspectionDocument).to receive(:document_file_path).and_return(nil)
+      allow_any_instance_of(PublicInspectionDocumentSerializer).to receive(:full_text).and_return("Fish and goats")
 
       $public_inspection_document_repository.save(
         FactoryGirl.build(:public_inspection_document,
@@ -234,11 +233,11 @@ describe "ES PI Doc Search" do
   end
 
   it "applies a basic boolean filter correctly" do
+    pending("This may need to be reimplemented")
     search = EsPublicInspectionDocumentSearch.new(:conditions => {:special_filing => 1 })
 
     expect(search.results.count).to eq 1
   end
 
-  pending "spec that returns an active record collection" do
-  end
+  it "spec that returns an active record collection"
 end

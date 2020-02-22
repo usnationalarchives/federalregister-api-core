@@ -266,7 +266,8 @@ class EsApplicationSearch
     es_search_invocation = repository.search(search_options)
 
     # Get AR objects
-    active_record_collection = model.where(id: es_search_invocation.results.map{|x| x.fetch('id')} )
+    active_record_collection = model.where(id: es_search_invocation.results.map{|x| x.try(:id) || x.fetch('id')} ) #TODO: Currently we're calling the safe operator on the result object because Pi results are wrapped and Entry results are not wrapped.  We'll want to standardize this interface so we're not calling it two separate ways.
+
     # TODO: replace model?
     # TODO: i think this needs to get pushed into the ResultArray and pagination will have to be handled there, since es_search_invocation currently deals with a single page of results
     # active_record_collection = args[:model_scope].where(id: es_search_invocation.results.map(&:id))
