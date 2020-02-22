@@ -6,9 +6,11 @@ web:
     - RAILS_ENV=test
     - DB_STRUCTURE_ACCESS_KEY
     - DB_STRUCTURE_SECRET
+    - ELASTICSEARCH_HOST=http://admin:admin@elasticsearch:9200
   links:
     - mysql
     - redis
+    - elasticsearch
 mysql:
   extends:
     file: shared.yml
@@ -23,4 +25,5 @@ elasticsearch:
   extends:
     file: shared.yml
     service: elasticsearch
-
+  environment:
+    - opendistro_security.ssl.http.enabled=false
