@@ -155,7 +155,6 @@ describe "ES PI Doc Search" do
 
       search = EsPublicInspectionDocumentSearch.new(per_page: 1, conditions: {})
       expect(search.valid?).to be true
-      binding.pry
       expect(search.results.ids).to eq documents.map(&:id)
     end
   end

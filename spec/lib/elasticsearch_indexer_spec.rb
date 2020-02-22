@@ -22,7 +22,6 @@ describe ElasticsearchIndexer do
     entry = Factory(:entry, significant: 0)
     $entry_repository.save(entry)
     $entry_repository.refresh_index!
-    binding.pry
     expect($entry_repository.find([entry.id]).first.fetch('significant')).to eq(false)
 
     entry.update!(significant: 1)
