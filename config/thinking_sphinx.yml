@@ -11,6 +11,8 @@ shared: &shared
   version: '2.1.2'
   max_children: 256
   query_log: <%= "#{Rails.root}/log/searchd.query.log" %>
+  port: '9312'
+  mysql41: 9306
 
 development:
   <<: *shared

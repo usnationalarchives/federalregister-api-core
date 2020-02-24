@@ -625,10 +625,6 @@ class Entry < ApplicationModel
     "#{publication_date.to_s(:ymd)}/#{document_number}"
   end
 
-  def method_or_attribute_for_thinking_sphinx_excerpting
-    :abstract
-  end
-
   private
 
   def set_document_file_path

@@ -232,15 +232,18 @@ class ApplicationSearch
 
       if results_with_raw_text.present?
         results_with_raw_text.in_groups_of(1024,false).each do |batch|
-          begin
-            # merge excerpts back to their result
-            batch.each_with_index do |result, index|
-              result.excerpt = result.excerpts.send(result.method_or_attribute_for_thinking_sphinx_excerpting)
-            end
-          rescue Riddle::ResponseError => e
-            # if we can't read a file we want to still show the search results
-            Rails.logger.warn(e)
-            Honeybadger.notify(e)
+          # get all excerpts at once for results with raw text files
+
+          excerpts = riddle_client.excerpts(
+            :docs => batch.map{|d| d.raw_text_file_path},
+            :load_files => true,
+            :words => term,
+            :index => "entry_core" # This doesn't seem to be used, but some value is needed for the excerpting call
+          )
+
+          # merge excerpts back to their result
+          batch.each_with_index do |result, index|
+            result.excerpt = excerpts[index]
           end
         end
       end
@@ -351,6 +354,13 @@ class ApplicationSearch
   private
 
   def set_defaults(options)
+  end
+
+  def riddle_client
+    Riddle::Client.new(
+      ThinkingSphinx::Configuration.instance.settings['address'],
+      9312 #Hard-coding this to the legacy Sphinx binary protocol
+    )
   end
 
   def search_options

@@ -114,9 +114,6 @@ class PublicInspectionDocument < ApplicationModel
     )
   end
 
-  def method_or_attribute_for_thinking_sphinx_excerpting
-    :excerpt
-  end
 
   private
 
