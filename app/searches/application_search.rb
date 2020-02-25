@@ -237,7 +237,7 @@ class ApplicationSearch
           excerpts = riddle_client.excerpts(
             :docs => batch.map{|d| d.raw_text_file_path},
             :load_files => true,
-            :words => term,
+            :words => sphinx_term,
             :index => "entry_core" # This doesn't seem to be used, but some value is needed for the excerpting call
           )
 
