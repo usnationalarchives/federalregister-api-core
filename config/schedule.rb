@@ -58,6 +58,7 @@ if cron_settings["sphinx"]
   every :sunday, at: '3AM' do
     set :log, 'weekly_sphinx_reindex'
     rake "sphinx:rotate_all"
+    rake "entry_delta_auditing:resync_index_auditing"
   end
 end
 
@@ -153,3 +154,14 @@ if cron_settings["google_analytics"]
     rake 'documents:page_count:update_today'
   end
 end
+
+#################################
+# ELASTICSEARCH
+#################################
+
+if cron_settings["delta_auditing"]
+  every 15.minutes do
+    rake 'entry_delta_auditing:audit'
+  end
+end
+

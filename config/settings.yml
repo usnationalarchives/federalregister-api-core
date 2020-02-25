@@ -13,6 +13,7 @@ shared: &shared
   public_inspection:
     import: false
   cron:
+    delta_auditing: true
     google_analytics: true
     gpo_images: true
     import: true
