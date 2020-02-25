@@ -132,7 +132,11 @@ class Entry < ApplicationModel
       request_body << entry.to_hash
     end
 
-    repository.client.bulk body: body
+    begin
+      repository.client.bulk body: body
+    rescue Faraday::TimeoutError
+      retry
+    end
   end
 
   def self.published_today

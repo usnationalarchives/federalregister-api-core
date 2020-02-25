@@ -14,6 +14,17 @@ module ElasticsearchIndexer
     File.file?(ES_TEMP_FILE)
   end
 
+  BATCH_SIZE = 500
+  def self.reindex_entries
+    total_entries     = Entry.count
+    entries_completed = 0
+    Entry.includes(:entry_regulation_id_numbers, :docket_numbers).find_in_batches(batch_size: BATCH_SIZE) do |entry_batch|
+      Entry.bulk_index(entry_batch)
+      entries_completed += BATCH_SIZE
+      puts "Entry Indexing #{(entries_completed.to_f/total_entries * 100).round(2)}% complete"
+    end
+  end
+
   def self.handle_entry_changes
     remove_deleted_entries
     reindex_modified_entries
