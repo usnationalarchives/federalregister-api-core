@@ -243,7 +243,15 @@ class ApplicationSearch
 
           # merge excerpts back to their result
           batch.each_with_index do |result, index|
-            result.excerpt = excerpts[index]
+            if excerpts[index]
+              # drop invalid UTF-8 characters from excerpts
+              result.excerpt = excerpts[index].encode(
+                'UTF-8',
+                invalid: :replace,
+                undef: :replace,
+                replace: ''
+              )
+            end
           end
         end
       end
