@@ -31,8 +31,12 @@ class EntryRepository
     indexes :agency_ids, {type: 'integer'}
     indexes :topic_ids, {type: 'integer'}
     indexes :section_ids, {type: 'integer'}
-
-
+    indexes :place_ids, {type: 'integer'}
+    indexes :cited_entry_ids, {type: 'integer'}
+    indexes :effective_date, {type: 'date'}
+    indexes :comment_date, {type: 'date'}
+    indexes :accepting_comments_on_regulations_dot_gov, {type: 'boolean'}
+    indexes :small_entity_ids, {type: 'integer'}
     indexes :significant, {type: 'boolean'}
   end
 

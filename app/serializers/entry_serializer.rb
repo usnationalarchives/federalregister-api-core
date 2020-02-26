@@ -1,7 +1,7 @@
 class EntrySerializer
   include FastJsonapi::ObjectSerializer
 
-  attributes :id, :title, :abstract, :publication_date, :significant, :document_number, :presidential_document_type_id, :document_number, :signing_date, :president_id, :start_page, :executive_order_number, :proclamation_number
+  attributes :id, :title, :abstract, :publication_date, :document_number, :presidential_document_type_id, :document_number, :signing_date, :president_id, :start_page, :executive_order_number, :proclamation_number
 
   attribute :full_text do |entry|
     #TODO: Consider whether line breaks should be included here
@@ -38,6 +38,7 @@ class EntrySerializer
       IF(granule_class = 'PRESDOCU', INTERVAL(DATE_FORMAT(IFNULL(signing_date,DATE_SUB(publication_date, INTERVAL 3 DAY)), '%Y%m%d'),#{President.all.map{|p| p.starts_on.strftime("%Y%m%d")}.join(', ')}), NULL) AS president_id
     SQL
 
+    #TODO: Readdress this so we're not N+1'ing
     Entry.where(id: entry.id).select(sql).first&.president_id
   end
 
@@ -49,13 +50,95 @@ class EntrySerializer
     )
   end
 
-  # attribute :cfr_affected_parts do |entry|
-  #   # entry.cfr_references.select(:title, :)
-  # end
+  #TODO: Determine whether to index publication date increemnts or use native ES date searching
 
-  #TODO: publication_date_increments
+  attribute :cfr_affected_parts do |entry|
+    #TODO: Add spec for this
+    entry.
+      entry_cfr_references.
+      map do |entry_cfr_reference|
+        entry_cfr_reference.title * EntrySearch::CFR::TITLE_MULTIPLIER + entry_cfr_reference.part
+      end.
+      uniq#.
+      # join(',')
+  end
 
-  def to_hash
+  attribute :agency_ids do |entry|
+    entry.
+      agency_assignments.
+      where("agency_id IS NOT NULL").
+      map(&:agency_id).
+      uniq#.
+      # join(',')
+  end
+
+  attribute :topic_ids do |entry|
+    entry.
+      topic_assignments.
+      where("topic_id IS NOT NULL").
+      map(&:topic_id).
+      uniq#.
+      # join(',')
+  end
+
+  attribute :section_ids do |entry|
+    entry.
+      section_assignments.
+      where("section_id IS NOT NULL").
+      map(&:section_id).
+      uniq#.
+      # join(',')
+  end
+
+  attribute :place_ids do |entry|
+    entry.
+      place_determinations.
+      where("place_id IS NOT NULL").
+      map{|place_determinations| place_determinations.place_id || '0'}.
+      uniq#.
+      # join(',')
+  end
+
+  attribute :cited_entry_ids do |entry|
+    entry.
+      citations.
+      where("cited_entry_id IS NOT NULL").
+      map(&:cited_entry_id).
+      uniq#.
+      # join(',')
+  end
+
+  attribute :effective_date do |entry|
+    entry.effective_date&.date
+  end
+
+  attribute :comment_date do |entry|
+    entry.comments_close_date&.date
+  end
+
+  attribute :accepting_comments_on_regulations_dot_gov do |entry|
+    #TODO: Mirroring the definition from entry_index, but this looks like a bug since some comment_url can be nil...
+    entry.comment_url != ''
+  end
+
+  attribute :small_entity_ids do |entry|
+    #TODO: Write spec
+    small_entity_ids = entry.
+      entry_regulation_id_numbers.
+      joins("LEFT OUTER JOIN regulatory_plans ON regulatory_plans.regulation_id_number = entry_regulation_id_numbers.regulation_id_number AND regulatory_plans.current = 1
+        LEFT OUTER JOIN regulatory_plans_small_entities ON regulatory_plans_small_entities.regulatory_plan_id = regulatory_plans.id").
+      select("regulatory_plans_small_entities.small_entity_id AS small_entity_id").
+      uniq.
+      map{|x| x.small_entity_id || 0}
+  end
+
+  attribute :significant do |entry|
+    (
+      RegulatoryPlan::SIGNIFICANT_PRIORITY_CATEGORIES & entry.regulatory_plans.map(&:priority_category)
+    ).present?
+  end
+
+  def to_hash #TODO: Extract to Base Serializer since used in Entry and PI
     data = serializable_hash
 
     if data[:data].is_a? Hash
