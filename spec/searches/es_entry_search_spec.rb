@@ -5,6 +5,7 @@ describe "Elasticsearch Entry Search" do
   def build_entry_double(hsh)
     entry = double('entry')
     allow(entry).to receive(:to_hash).and_return(hsh)
+    allow(entry).to receive(:id).and_return(hsh.fetch(:id))
     entry
   end
 
@@ -108,6 +109,23 @@ describe "Elasticsearch Entry Search" do
 
     before(:each) do
       $entry_repository.create_index!(force: true)
+    end
+
+    context "advanced search terms" do
+      it "handles a combination of advanced search syntax" do
+        entries = [
+          build_entry_double({title: 'fried eggs potato', id: 777}),
+          build_entry_double({full_text: 'fried eggs eggplant', id: 888}),
+          build_entry_double({full_text: 'fried eggs eggplant frittata', id: 888}),
+          build_entry_double({agency_name: 'frittata', id: 999}),
+        ]
+        Entry.bulk_index(entries)
+        $entry_repository.refresh_index!
+
+        search = EsEntrySearch.new(conditions: {term: '"fried eggs" +(eggplant | potato)'})
+
+        expect(search.results.es_ids).to match_array([777,888])
+      end
     end
 
     it "retrieves an Active Record-like collection" do
