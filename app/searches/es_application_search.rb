@@ -248,6 +248,10 @@ class EsApplicationSearch
       0 #TODO: Fix
     end
 
+    def es_ids
+      es_search_invocation.map{|x| x.fetch('id') }
+    end
+
     def ids
       active_record_collection.pluck(:id)
     end
