@@ -416,7 +416,7 @@ class EsApplicationSearch
   end
 
   def es_term
-    @es_term ||= ApplicationSearch::TermPreprocessor.process_term(@term)
+    @es_term ||= @term
   end
 
 
@@ -485,9 +485,13 @@ class EsApplicationSearch
       # Handle term
       if es_term.present?
         q[:query][:bool][:should] = [
-          { term: { title: es_term } },
-          { term: { full_text: es_term } },
-          { term: { agency_name: es_term } }
+          {
+            simple_query_string: {
+              query:            es_term,
+              fields:           ['title', 'full_text', 'agency_name'],
+              default_operator: 'and'
+            }
+          }
         ]
         q[:query][:bool][:minimum_should_match] = 1
       end
