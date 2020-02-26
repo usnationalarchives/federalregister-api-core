@@ -164,7 +164,10 @@ describe "Elasticsearch Entry Search" do
     end
 
     it "applies a basic boolean filter correctly" do
-      entries = [entry, Factory(:entry, significant: 0)]
+      entries = [
+        build_entry_double(significant: true, id: 888),
+        build_entry_double(significant: false, id: 999),
+      ]
       entries.each{|entry| $entry_repository.save(entry) }
       $entry_repository.refresh_index!
 

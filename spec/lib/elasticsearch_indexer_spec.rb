@@ -19,15 +19,16 @@ describe ElasticsearchIndexer do
   end
 
   it "reindexes modified entries from elasticsearch" do
-    entry = Factory(:entry, significant: 0)
+    entry = Factory(:entry, title: "Original Title")
+
     $entry_repository.save(entry)
     $entry_repository.refresh_index!
-    expect($entry_repository.find([entry.id]).first.fetch('significant')).to eq(false)
+    expect($entry_repository.find([entry.id]).first.fetch('title')).to eq('Original Title')
 
-    entry.update!(significant: 1)
+    entry.update!(title: 'New Title')
     ElasticsearchIndexer.reindex_modified_entries
 
-    expect($entry_repository.find([entry.id]).first.fetch('significant')).to eq(true)
+    expect($entry_repository.find([entry.id]).first.fetch('title')).to eq('New Title')
   end
 
 end
