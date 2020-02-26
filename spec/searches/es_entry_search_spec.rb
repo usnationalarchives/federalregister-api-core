@@ -205,7 +205,7 @@ describe "Elasticsearch Entry Search" do
       entries.each{|entry| $entry_repository.save(entry) }
       $entry_repository.refresh_index!
 
-      search = EsEntrySearch.new(conditions: {order: 'newest'})
+      search = EsEntrySearch.new(conditions: {}, order: 'newest')
 
       expect(search.results.es_ids).to eq([999,888])
     end
