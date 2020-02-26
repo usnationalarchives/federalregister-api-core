@@ -41,7 +41,8 @@ describe "Elasticsearch Entry Search" do
               ]
             }
           },
-          size: EsApplicationSearch::DEFAULT_RESULTS_PER_PAGE
+          size: EsApplicationSearch::DEFAULT_RESULTS_PER_PAGE,
+          sort: [{_score: {:order=>"desc"}}]
         }
       )
     end
@@ -72,7 +73,8 @@ describe "Elasticsearch Entry Search" do
               ]
             }
           },
-          size: EsApplicationSearch::DEFAULT_RESULTS_PER_PAGE
+          size: EsApplicationSearch::DEFAULT_RESULTS_PER_PAGE,
+          sort: [{_score: {:order=>"desc"}}]
         }
       )
     end
@@ -98,7 +100,8 @@ describe "Elasticsearch Entry Search" do
               ]
             }
           },
-          size: EsApplicationSearch::DEFAULT_RESULTS_PER_PAGE
+          size: EsApplicationSearch::DEFAULT_RESULTS_PER_PAGE,
+          sort: [{_score: {:order=>"desc"}}]
         }
       )
     end
@@ -192,6 +195,19 @@ describe "Elasticsearch Entry Search" do
       search = EsEntrySearch.new(conditions: {significant: 1})
 
       expect(search.results.count).to eq 1
+    end
+
+    it "applies basic sort order correctly" do
+      entries = [
+        build_entry_double(publication_date: '2000-01-01', id: 888),
+        build_entry_double(publication_date: '2000-12-31', id: 999),
+      ]
+      entries.each{|entry| $entry_repository.save(entry) }
+      $entry_repository.refresh_index!
+
+      search = EsEntrySearch.new(conditions: {order: 'newest'})
+
+      expect(search.results.es_ids).to eq([999,888])
     end
 
     it "handles array attributes" do

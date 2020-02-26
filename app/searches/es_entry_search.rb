@@ -461,6 +461,35 @@ class EsEntrySearch < EsApplicationSearch
 
   private
 
+  def es_sort_order
+    case @order
+    when 'newest', 'date'
+      [
+        {publication_date: {order: "desc"}},
+        {_score: {order: "desc"}}
+      ]
+    when 'oldest'
+      [
+        {publication_date: {order: "asc"}},
+        {_score: {order: "desc"}}
+      ]
+    when 'executive_order_number'
+      [
+        {executive_order_number: {order: "asc"}},
+        #TODO: Mimicking existing sphinx sort order logic, but seems like we should include _score here
+      ]
+    when 'proclamation_number'
+      [
+        {executive_order_number: {order: "asc"}},
+        #TODO: Mimicking existing sphinx sort order logic, but seems like we should include _score here
+      ]
+    else
+      [
+        {_score: {order: "desc"}}
+      ]
+    end
+  end
+
   def set_defaults(options)
     @within = 25
     @order = options[:order] || 'relevant'

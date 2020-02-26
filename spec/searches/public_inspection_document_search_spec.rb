@@ -27,7 +27,8 @@ describe "ES PI Doc Search" do
               }
             ]
           }
-        }
+        },
+        sort: [{filed_at: {order: 'desc'}}],
       })
     end
 
@@ -52,7 +53,8 @@ describe "ES PI Doc Search" do
               }
             ]
           }
-        }
+        },
+        sort: [{filed_at: {order: 'desc'}}],
       })
     end
   end

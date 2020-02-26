@@ -433,8 +433,13 @@ class EsApplicationSearch
           ],
           filter: []
         }
-      }
+      },
+      sort: es_sort_order
     }
+  end
+
+  def es_sort_order
+    raise NotImplementedError #No-op
   end
 
   def es_query_string_query

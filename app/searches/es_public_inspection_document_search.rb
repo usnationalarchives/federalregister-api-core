@@ -146,6 +146,13 @@ class EsPublicInspectionDocumentSearch < EsApplicationSearch
 
   private
 
+  def es_sort_order
+    [
+      {filed_at: {order: "desc"}}
+      #TODO: Mimicking existing sphinx sort order logic, but seems like we should include _score here
+    ]
+  end
+
   def set_defaults(options)
     @within = 25
     @order = options[:order] || 'relevant'
