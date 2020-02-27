@@ -11,6 +11,7 @@ $(document).ready(function(){
       data: "section_highlight[entry_id]=" + entry.attr('data-entry-id'),
       success: function(response) {
         entry.addClass('highlighted');
+        window.location.reload(true);
       }
     });
   });
