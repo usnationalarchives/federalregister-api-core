@@ -147,6 +147,33 @@ describe "Elasticsearch Entry Search" do
       expect(results.first.id).to eq(another_entry.id)
     end
 
+    it "performs basic excerpting" do
+      $entry_repository.create_index!(force: true)
+      another_entry = Factory(
+        :entry,
+        significant: 0,
+        abstract: 'fish are great.',
+        title: "Fish stuff",
+        raw_text: "The fish swam across the pond",
+        raw_text_updated_at: Time.current
+      )
+      entries = [
+        another_entry
+      ]
+
+      entries.each{|entry| $entry_repository.save(entry) }
+      $entry_repository.refresh_index!
+
+      search = EsEntrySearch.new(
+        excerpts: true,
+        conditions: {significant: 0, term: 'fish'}
+      )
+
+      result = search.results.first.excerpt
+
+      expect(result).to eq("The <span class=\"match\">fish</span> swam across the pond ... <span class=\"match\">fish</span> are great. ... <span class=\"match\">Fish</span> stuff")
+    end
+
     it "Entry.bulk_index" do
       another_entry = Factory(:entry, significant: 0, title: 'fish')
       entries = [

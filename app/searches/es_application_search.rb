@@ -280,7 +280,6 @@ class EsApplicationSearch
     # Provide a way for collection to respond to former TS collection args (e.g. next_page, previous_page)
     result_array = ResultArray.new(es_search_invocation, active_record_collection)
 
-
     if result_array && @excerpts
       results_with_raw_text, results_without_raw_text = result_array.partition{|e| e.raw_text_updated_at.present?}
 
@@ -288,9 +287,9 @@ class EsApplicationSearch
         results_with_raw_text.in_groups_of(1024,false).each do |batch|
           begin
             # merge excerpts back to their result
-            # batch.each_with_index do |result, index|
-            #   result.excerpt = result.excerpts.send(result.method_or_attribute_for_thinking_sphinx_excerpting)
-            # end
+            batch.each_with_index do |result, index|
+              result.excerpt = es_search_invocation.results[index].highlights
+            end
           rescue Riddle::ResponseError => e
             # if we can't read a file we want to still show the search results
             Rails.logger.warn(e)
@@ -429,26 +428,45 @@ class EsApplicationSearch
       from: es_from,
       query: {
         bool: {
-          must: [
-            # es_query_string_query
-          ],
+          must: [],
           filter: []
         }
       },
-      sort: es_sort_order
+      sort: es_sort_order,
+    }.tap do |query|
+      if excerpts
+        query.merge!(highlight: highlight_query)
+      end
+    end
+  end
+
+  def highlight_query
+    #TODO: Consider whether there's a more optimal highlight 'type' option here.
+    {
+      pre_tags: ['<span class="match">'],
+      post_tags: ["</span>"],
+      fields: {
+        abstract: {
+          fragment_size: 150,
+          number_of_fragments: 3,
+          type: 'plain'
+        },
+        title: {
+          fragment_size: 150,
+          number_of_fragments: 3,
+          type: 'plain'
+        },
+        full_text: {
+          fragment_size: 150,
+          number_of_fragments: 3,
+          type: 'plain'
+        },
+      }
     }
   end
 
   def es_sort_order
     raise NotImplementedError #No-op
-  end
-
-  def es_query_string_query
-    {
-      "query_string": {
-        "query": "magic schoolbus"
-      }
-    }
   end
 
   def es_from
@@ -494,7 +512,7 @@ class EsApplicationSearch
           {
             simple_query_string: {
               query:            es_term,
-              fields:           ['title', 'full_text', 'agency_name'],
+              fields:           ['title', 'full_text', 'agency_name', 'abstract'],
               default_operator: 'and'
             }
           }

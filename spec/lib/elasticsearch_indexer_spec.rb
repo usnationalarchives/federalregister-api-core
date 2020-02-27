@@ -23,12 +23,12 @@ describe ElasticsearchIndexer do
 
     $entry_repository.save(entry)
     $entry_repository.refresh_index!
-    expect($entry_repository.find([entry.id]).first.fetch('title')).to eq('Original Title')
+    expect($entry_repository.find([entry.id]).first.attributes.fetch(:title)).to eq('Original Title')
 
     entry.update!(title: 'New Title')
     ElasticsearchIndexer.reindex_modified_entries
 
-    expect($entry_repository.find([entry.id]).first.fetch('title')).to eq('New Title')
+    expect($entry_repository.find([entry.id]).first.attributes.fetch(:title)).to eq('New Title')
   end
 
 end
