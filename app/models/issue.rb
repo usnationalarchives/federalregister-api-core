@@ -32,9 +32,9 @@ class Issue < ApplicationModel
     issue.try(:complete?) || false
   end
 
-  def self.current_issue_is_late?
+  def self.current_issue_is_late?(time="9AM")
     !Issue.completed.find_by_publication_date(Time.current.to_date) &&
-    (Time.current > Time.zone.parse("9AM")) &&
+    (Time.current > Time.zone.parse(time)) &&
     should_have_an_issue?(Time.current.to_date)
   end
 
