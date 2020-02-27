@@ -57,4 +57,16 @@ class Mailer < ActionMailer::Base
          recipients: 'nobody@federalregister.gov', # should use sendgrid_recipients for actual recipient list
          sent_on:    Time.current
   end
+
+  def pager_duty(message)
+    sendgrid_category "Pager Duty Email"
+
+    @message = message
+
+    mail to:         ENV['PAGER_DUTY_EMAIL'],
+         subject:    "Content has not been imported!",
+         from:       "Federal Register Admin <no-reply@mail.federalregister.gov>",
+         recipients: 'nobody@federalregister.gov', # should use sendgrid_recipients for actual recipient list
+         sent_on:    Time.current
+  end
 end
