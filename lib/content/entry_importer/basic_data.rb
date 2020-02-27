@@ -74,7 +74,7 @@ module Content::EntryImporter::BasicData
   end
 
   def docket_numbers
-    simple_node_values('departmentDoc').map{|number| DocketNumber.new(:number => number)}
+    simple_node_values('departmentDoc').map{|number| DocketNumber.new(:number => number.first(255))}
   end
 
   def correction_of_id
