@@ -52,7 +52,7 @@ class Mailer < ActionMailer::Base
     @message = message
 
     mail to:         FR_DEVELOPER_ADMINS,
-         subject:    "[FR Notification] Urgent Admin Notification",
+         subject:    "[FR Notification] #{Rails.env} -- Urgent Admin Notification",
          from:       "Federal Register Admin <no-reply@mail.federalregister.gov>",
          recipients: 'nobody@federalregister.gov', # should use sendgrid_recipients for actual recipient list
          sent_on:    Time.current
