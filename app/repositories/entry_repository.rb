@@ -1,7 +1,4 @@
-class EntryRepository
-  include Elasticsearch::Persistence::Repository
-  include Elasticsearch::Persistence::Repository::DSL
-
+class EntryRepository < BaseRepository
   index_name ['fr-entries', Rails.env].join('-')
 
   mapping dynamic: 'strict' do
@@ -38,6 +35,10 @@ class EntryRepository
     indexes :accepting_comments_on_regulations_dot_gov, {type: 'boolean'}
     indexes :small_entity_ids, {type: 'integer'}
     indexes :significant, {type: 'boolean'}
+  end
+
+  def search_result_klass
+    EntrySearchResult
   end
 
 end
