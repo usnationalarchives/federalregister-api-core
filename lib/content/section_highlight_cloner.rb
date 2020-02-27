@@ -13,7 +13,7 @@ module Content
           where("publication_date = ? && position <= 6", prior_date).
           order(:position).
           each do |highlight|
-            new_highlight = highlight.clone
+            new_highlight = highlight.dup
             new_highlight.publication_date = date
             new_highlight.save!
           end
