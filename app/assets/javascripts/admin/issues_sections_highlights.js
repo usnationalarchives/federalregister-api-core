@@ -29,7 +29,7 @@ $(document).ready(function(){
         type: 'DELETE',
         data: '',
         success: function() {
-          item.remove();
+          item.closest('li').remove();
           $('article[data-entry-id=' + entry_id + '] div.article').removeClass('highlighted');
           $('article[data-entry-id=' + entry_id + '] div.article').append('<a class="add button grey mini">highlight</a>');
         }
