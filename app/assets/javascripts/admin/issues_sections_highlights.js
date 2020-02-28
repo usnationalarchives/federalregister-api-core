@@ -11,7 +11,12 @@ $(document).ready(function(){
       data: "section_highlight[entry_id]=" + entry.attr('data-entry-id'),
       success: function(response) {
         entry.addClass('highlighted');
-        window.location.reload(true);
+        if (response.error) {
+          $("#new_section_highlight").append(response.error).effect("highlight", {}, 3000)
+        }
+        else {
+          $('#highlighted').prepend(response.highlightedEntryHtml)
+        }
       }
     });
   });

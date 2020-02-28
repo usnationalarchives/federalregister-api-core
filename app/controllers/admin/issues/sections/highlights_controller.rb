@@ -11,7 +11,22 @@ class Admin::Issues::Sections::HighlightsController < AdminController
     move_to_top
     @redirect_to = admin_issue_section_path(@publication_date.to_s(:mdy_dash), @section)
 
-    unless request.xhr?
+    if request.xhr?
+      if @section_highlight.valid?
+        highlighted_entry_html = render_to_string(
+          :partial => 'admin/issues/sections/highlighted_entry',
+          locals: {
+            highlighted_entry: @section_highlight.entry, redirect_to:       @redirect_to
+          }
+        )
+        response = {highlightedEntryHtml: highlighted_entry_html}
+      else
+        response = {
+          error: "<p class=\"error\">We could not find a document with that document number or it has already been highlighted.</p>"
+        }
+      end
+      render json: response
+    else
       redirect_to @redirect_to
     end
   end
