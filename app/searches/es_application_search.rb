@@ -227,25 +227,31 @@ class EsApplicationSearch
   class ResultArray #TODO: Change this name
     delegate_missing_to :@active_record_collection
 
-    def initialize(es_search_invocation, active_record_collection)
+    def initialize(es_search_invocation, active_record_collection, page, per_page)
       @es_search_invocation        = es_search_invocation
       @active_record_collection    = active_record_collection
+      @page                        = page
+      @per_page                    = per_page
     end
 
     def next_page
-      #TODO
+      if page < total_pages
+        page + 1
+      end
     end
 
     def previous_page
-      #TODO
+      if page != 1
+        page - 1
+      end
+    end
+
+    def total_pages
+      (count.to_f / per_page).ceil
     end
 
     def count
       es_search_invocation.total
-    end
-
-    def total_pages
-      0 #TODO: Fix
     end
 
     def es_ids
@@ -258,7 +264,7 @@ class EsApplicationSearch
 
     private
 
-    attr_reader :es_search_invocation, :active_record_collection
+    attr_reader :es_search_invocation, :active_record_collection, :page, :per_page
 
   end
 
@@ -278,7 +284,7 @@ class EsApplicationSearch
     # active_record_collection = args[:model_scope].where(id: es_search_invocation.results.map(&:id))
 
     # Provide a way for collection to respond to former TS collection args (e.g. next_page, previous_page)
-    result_array = ResultArray.new(es_search_invocation, active_record_collection)
+    result_array = ResultArray.new(es_search_invocation, active_record_collection, page, per_page)
 
     if result_array && @excerpts
       results_with_raw_text, results_without_raw_text = result_array.partition{|e| e.raw_text_updated_at.present?}
@@ -310,11 +316,11 @@ class EsApplicationSearch
     end
 
     # TODO: FIXME: Ugly hack to get total pages to be within bounds
-    if result_array && result_array.total_pages > 50
-      def result_array.total_pages
-        50
-      end
-    end
+    # if result_array && result_array.total_pages > 50
+    #   def result_array.total_pages
+    #     50
+    #   end
+    # end
 
     result_array
   end
@@ -470,11 +476,10 @@ class EsApplicationSearch
   end
 
   def es_from
-    from = (page - 1) * per_page
-    if from != 0
-      from + 1
+    if page == 1
+      0
     else
-      from
+      ((page - 1) * per_page) + 1
     end
   end
 
