@@ -270,6 +270,18 @@ describe "Elasticsearch Entry Search" do
       expect(search.results.count).to eq(2)
     end
 
+    it "handles geolocation search" do
+      entries = [
+        build_entry_double({place_ids: [444,555], id: 999}),
+      ]
+      entries.each{|entry| $entry_repository.save(entry) }
+      $entry_repository.refresh_index!
+
+      search = EsEntrySearch.new(conditions: {place_ids: [444] })
+
+      expect(search.results.es_ids).to eq([999])
+    end
+
     context "handles date attribute queries" do
       [
         #gte, #lte, #is, #year, count
