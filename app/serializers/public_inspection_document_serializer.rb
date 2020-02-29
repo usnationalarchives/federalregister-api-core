@@ -1,11 +1,16 @@
 class PublicInspectionDocumentSerializer < ApplicationSerializer
   attributes :agency_ids,
     :document_number,
+    :filed_at,
     :id,
     :publication_date,
     :special_filing,
     :title,
     :type
+
+  attribute :public_inspection_document_id do |object|
+    object.id
+  end
 
   attribute :type do |object|
     if object.granule_class == "SUNSHINE"
