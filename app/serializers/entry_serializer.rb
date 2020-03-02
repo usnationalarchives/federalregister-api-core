@@ -58,8 +58,7 @@ class EntrySerializer
       map do |entry_cfr_reference|
         entry_cfr_reference.title * EntrySearch::CFR::TITLE_MULTIPLIER + entry_cfr_reference.part
       end.
-      uniq#.
-      # join(',')
+      uniq
   end
 
   attribute :agency_ids do |entry|
@@ -67,8 +66,7 @@ class EntrySerializer
       agency_assignments.
       where("agency_id IS NOT NULL").
       map(&:agency_id).
-      uniq#.
-      # join(',')
+      uniq
   end
 
   attribute :topic_ids do |entry|
@@ -76,8 +74,7 @@ class EntrySerializer
       topic_assignments.
       where("topic_id IS NOT NULL").
       map(&:topic_id).
-      uniq#.
-      # join(',')
+      uniq
   end
 
   attribute :section_ids do |entry|
@@ -85,8 +82,7 @@ class EntrySerializer
       section_assignments.
       where("section_id IS NOT NULL").
       map(&:section_id).
-      uniq#.
-      # join(',')
+      uniq
   end
 
   attribute :place_ids do |entry|
@@ -94,8 +90,7 @@ class EntrySerializer
       place_determinations.
       where("place_id IS NOT NULL").
       map{|place_determinations| place_determinations.place_id || '0'}.
-      uniq#.
-      # join(',')
+      uniq
   end
 
   attribute :cited_entry_ids do |entry|
@@ -103,8 +98,7 @@ class EntrySerializer
       citations.
       where("cited_entry_id IS NOT NULL").
       map(&:cited_entry_id).
-      uniq#.
-      # join(',')
+      uniq
   end
 
   attribute :effective_date do |entry|
