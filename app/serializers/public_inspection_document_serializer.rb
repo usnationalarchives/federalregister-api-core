@@ -5,8 +5,7 @@ class PublicInspectionDocumentSerializer < ApplicationSerializer
     :id,
     :publication_date,
     :special_filing,
-    :title,
-    :type
+    :title
 
   attribute :public_inspection_document_id do |object|
     object.id

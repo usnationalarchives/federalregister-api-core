@@ -1,7 +1,7 @@
 class EntrySerializer
   include FastJsonapi::ObjectSerializer
 
-  attributes :id, :title, :abstract, :publication_date, :document_number, :presidential_document_type_id, :document_number, :signing_date, :president_id, :start_page, :executive_order_number, :proclamation_number
+  attributes :id, :title, :abstract, :publication_date, :document_number, :presidential_document_type_id, :signing_date, :president_id, :start_page, :executive_order_number, :proclamation_number
 
   attribute :full_text do |entry|
     #TODO: Consider whether line breaks should be included here
