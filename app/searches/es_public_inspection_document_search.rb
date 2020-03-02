@@ -18,13 +18,11 @@ class EsPublicInspectionDocumentSearch < EsApplicationSearch
                 :label => "Agency Docket" do |docket|
                   docket.first
                 end
-  define_filter(:document_numbers,
+  define_filter :document_numbers,
                 :sphinx_type => :with,
-                :sphinx_attribute => :document_number)
-                #:es_value_processor => Proc.new{|*document_numbers| document_numbers})
-                #:sphinx_value_processor => Proc.new{|*document_numbers| document_numbers.flatten.map{|x| Zlib.crc32(x.to_s) }}) do |*document_numbers|
-                #  document_numbers.flatten.map(&:inspect).to_sentence(:two_words_connector => ' or ', :last_word_connector => ', or ')
-                #end
+                :sphinx_attribute => :document_number do |*document_numbers|
+                  document_numbers.flatten.map(&:inspect).to_sentence(:two_words_connector => ' or ', :last_word_connector => ', or ')
+                end
   define_filter :special_filing,
                 :sphinx_type => :with,
                 :es_value_processor => Proc.new{|value| value == 1 },

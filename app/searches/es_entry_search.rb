@@ -98,10 +98,9 @@ class EsEntrySearch < EsApplicationSearch
                   entries.map(&:citation).to_sentence(:two_words_connector => ' or ', :last_word_connector => ', or ')
                 end
 
-  define_filter(:document_numbers,
+  define_filter :document_numbers,
                 :sphinx_type => :with,
-                :sphinx_attribute => :document_number,
-                :sphinx_value_processor => Proc.new{|*document_numbers| document_numbers.flatten.map{|x| Zlib.crc32(x.to_s) }}) do |*document_numbers|
+                :sphinx_attribute => :document_number do |document_numbers|
                   document_numbers.flatten.map(&:inspect).to_sentence(:two_words_connector => ' or ', :last_word_connector => ', or ')
                 end
   define_filter :president,
@@ -133,8 +132,7 @@ class EsEntrySearch < EsApplicationSearch
                 :model_id_method => :slug
 
   define_filter :type,
-                :sphinx_type => :with,
-                :crc32_encode => true do |types|
+                :sphinx_type => :with do |types|
                   types.map{|type| Entry::ENTRY_TYPES[type]}.to_sentence(:two_words_connector => ' or ', :last_word_connector => ', or ')
                 end
 

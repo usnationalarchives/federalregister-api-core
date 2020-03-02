@@ -190,6 +190,30 @@ describe "Elasticsearch Entry Search" do
       expect(results.first.id).to eq(another_entry.id)
     end
 
+    it "handles type attribute that was formerly CRC32-processed in Sphinx" do
+      entries = [
+        build_entry_double({type: ["RULE"], id: 111}),
+      ]
+      entries.each{|entry| $entry_repository.save(entry) }
+      $entry_repository.refresh_index!
+
+      search = EsEntrySearch.new(conditions: {type: ["RULE", "NOTICE"]})
+
+      expect(search.results.es_ids).to eq [111]
+    end
+
+    it "handles document_number attribute that was formerly CRC32-processed in Sphinx" do
+      entries = [
+        build_entry_double({document_number: "93-31907", id: 111}),
+      ]
+      entries.each{|entry| $entry_repository.save(entry) }
+      $entry_repository.refresh_index!
+
+      search = EsEntrySearch.new(conditions: {document_numbers: ["93-31907"]})
+
+      expect(search.results.es_ids).to eq [111]
+    end
+
     it "retrieves the expected results for a term" do
       entries = [
         build_entry_double({title: 'fish', id: 888}),
