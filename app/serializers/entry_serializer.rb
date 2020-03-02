@@ -53,7 +53,6 @@ class EntrySerializer
   #TODO: Determine whether to index publication date increemnts or use native ES date searching
 
   attribute :cfr_affected_parts do |entry|
-    #TODO: Add spec for this
     entry.
       entry_cfr_references.
       map do |entry_cfr_reference|
