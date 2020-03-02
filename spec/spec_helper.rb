@@ -40,7 +40,4 @@ RSpec.configure do |config|
     allow(Redis).to receive(:new) { MockRedis.new }
   end
 
-  config.before(:all) do
-    $public_inspection_document_repository.create_index!(force: true)
-  end
 end
