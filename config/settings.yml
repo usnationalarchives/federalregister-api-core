@@ -42,8 +42,9 @@ development:
     zipped_eps_images: eps.images.fr2.local
     private_images: private.images.fr2.local
     public_images: images.fr2.local
-    lede_photos: lede-photos.example.org
+    lede_photos: lede-photos.fr2.local
     agency_logos: agency-logos.fr2.local
+    public_inspection: public-inspection.fr2.local
   ofr_flickr_group_id: 1058319@N21
   cron:
     google_analytics: false
@@ -67,6 +68,7 @@ staging:
     public_images: images.fr2.criticaljuncture.org
     lede_photos: lede-photos.fr2.criticaljuncture.org
     agency_logos: agency-logos.fr2.criticaljuncture.org
+    public_inspection: public-inspection.fr2.criticaljuncture.org
   ofr_flickr_group_id: 1058319@N21
   public_inspection:
     import: true
@@ -79,6 +81,7 @@ production:
     public_images: images.federalregister.gov
     lede_photos: lede-photos.federalregister.gov
     agency_logos: agency-logos.federalregister.gov
+    public_inspection: public-inspection.federalregister.gov
   ofr_flickr_group_id: 1058319@N21
   public_inspection:
     import: true

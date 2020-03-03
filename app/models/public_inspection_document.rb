@@ -7,7 +7,7 @@ class PublicInspectionDocument < ApplicationModel
                       :s3_region => 'us-east-1'
                     },
                     :s3_protocol => 'https',
-                    :bucket => "public-inspection.#{APP_HOST_NAME}",
+                    :bucket => SETTINGS['s3_buckets']['public_inspection'],
                     :path => ":style_if_not_with_banner:document_number.pdf",
                     :default_style => :with_banner,
                     :styles => {
