@@ -53,7 +53,7 @@ class Agency < ApplicationModel
                       :s3_region => 'us-east-1'
                     },
                     :s3_protocol => 'https',
-                    :bucket => 'agency-logos.federalregister.gov',
+                    :bucket => SETTINGS["s3_buckets"]["agency_logos"],
                     :path => ":id/:style.:extension"
   do_not_validate_attachment_file_type :logo
 
