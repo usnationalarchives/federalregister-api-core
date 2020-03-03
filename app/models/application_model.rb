@@ -39,4 +39,18 @@ class ApplicationModel < ActiveRecord::Base
   def self.core_index_names
     raise NotImplementedError
   end
+
+  def self.bulk_index(acive_record_collection, delete: true)
+    #TODO: Add delete option?
+    body = acive_record_collection.each_with_object(Array.new) do |instance, request_body|
+      request_body << { index: { _index: repository.index_name, _id: instance.id } }
+      request_body << instance.to_hash
+    end
+
+    begin
+      repository.client.bulk body: body
+    rescue Faraday::TimeoutError
+      retry
+    end
+  end
 end

@@ -58,6 +58,10 @@ class PublicInspectionDocument < ApplicationModel
     end
   end
 
+  def self.repository
+    $public_inspection_document_repository
+  end
+
   def entry
     @entry ||= Entry.find_by_document_number(document_number)
   end
@@ -138,4 +142,5 @@ class PublicInspectionDocument < ApplicationModel
   def set_content_type
     self.pdf.instance_write(:content_type,'application/pdf') if self.pdf.present?
   end
+
 end

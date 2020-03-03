@@ -125,20 +125,6 @@ class Entry < ApplicationModel
 
   validate :curated_attributes_are_not_too_long
 
-  def self.bulk_index(entries)
-    repository = $entry_repository
-    body = entries.each_with_object(Array.new) do |entry, request_body|
-      request_body << { index: { _index: repository.index_name, _id: entry.id } }
-      request_body << entry.to_hash
-    end
-
-    begin
-      repository.client.bulk body: body
-    rescue Faraday::TimeoutError
-      retry
-    end
-  end
-
   def self.published_today
     Issue.current.entries
   end
@@ -241,6 +227,10 @@ class Entry < ApplicationModel
     else
       EntrySearch
     end
+  end
+
+  def self.repository
+    $entry_repository
   end
 
   def excerpt
