@@ -375,9 +375,7 @@ class EsApplicationSearch
   end
 
   def count
-    @count ||= sphinx_search_count(sphinx_term,
-      search_options.except(:order, :sort_mode)
-    )
+    @count ||= repository.count(count_search_options)
   end
 
   def term_count
@@ -525,6 +523,10 @@ class EsApplicationSearch
         }
       }
     )
+  end
+
+  def count_search_options
+    search_options.except(:size, :from, :sort, :highlight)
   end
 
   DEFAULT_RESULTS_PER_PAGE = 20
