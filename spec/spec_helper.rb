@@ -8,8 +8,6 @@ require "factory_girl"
 # in spec/support/ and its subdirectories.
 Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
 
-include Rails3UpgradeSpecHelperMethods
-
 RSpec.configure do |config|
   # == Mock Framework
   #
@@ -22,6 +20,8 @@ RSpec.configure do |config|
 
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
+
+  config.include Rails3UpgradeSpecHelperMethods
 
   config.expect_with(:rspec) { |c| c.syntax = [:should, :expect] }
   config.mock_with :rspec do |mocks|
