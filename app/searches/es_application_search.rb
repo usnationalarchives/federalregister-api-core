@@ -2,7 +2,7 @@ class EsApplicationSearch
   extend Memoist
   class InputError < StandardError; end
 
-  attr_accessor :order
+  attr_accessor :order, :date_histogram_interval
   attr_reader :filters, :term, :maximum_per_page, :per_page, :page, :conditions, :valid_conditions, :excerpts
 
   def per_page=(count)
@@ -268,6 +268,14 @@ class EsApplicationSearch
 
   end
 
+  def aggregation_buckets
+    repository.
+      search(aggregation_search_options).
+      response.
+      aggregations['group_by_publication_date'].
+      buckets
+  end
+
   def results(args = {})
     select = args.delete(:select)
     args.merge!(sql: {select: select})
@@ -483,6 +491,19 @@ class EsApplicationSearch
     end
   end
 
+  def aggregation_search_options
+    search_options.merge(
+      aggregations: {
+        "group_by_publication_date": {
+          "date_histogram": {
+            "field": "publication_date",
+            "interval": date_histogram_interval
+          },
+        }
+      }
+    )
+  end
+
   DEFAULT_RESULTS_PER_PAGE = 20
   def search_options
     @page ||= 1
@@ -570,6 +591,7 @@ class EsApplicationSearch
           }
         }
       end
+
     end
 
     query

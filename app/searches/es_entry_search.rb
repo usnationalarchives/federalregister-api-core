@@ -296,30 +296,23 @@ class EsEntrySearch < EsApplicationSearch
   def date_distribution(options = {})
     klass = case options.delete(:period)
             when :daily
-              EntrySearch::DateAggregator::Daily
+              EsEntrySearch::DateAggregator::Daily
             when :weekly
-              EntrySearch::DateAggregator::Weekly
+              EsEntrySearch::DateAggregator::Weekly
             when :monthly
-              EntrySearch::DateAggregator::Monthly
+              EsEntrySearch::DateAggregator::Monthly
             when :quarterly
-              EntrySearch::DateAggregator::Quarterly
+              EsEntrySearch::DateAggregator::Quarterly
             when :yearly
-              EntrySearch::DateAggregator::Yearly
+              EsEntrySearch::DateAggregator::Yearly
             else
               raise "invalid :period specified; must be one of :daily, :weekly, :monthly, :quarterly or :yearly"
             end
 
-    sphinx_search = ThinkingSphinx::Search.new(sphinx_term,
-      :with       => with,
-      :with_all   => with_all,
-      :without    => without,
-      :conditions => sphinx_conditions,
-      :match_mode => :extended,
-      :classes    => [Entry],
-      :group_by   => klass.group_by_field
-    )
+    es_search                         = self
+    es_search.date_histogram_interval = klass.date_histogram_interval
 
-    klass.new(sphinx_search, :with => with)
+    klass.new(es_search, :with => with)
   end
 
   def count_in_last_n_days(n)
