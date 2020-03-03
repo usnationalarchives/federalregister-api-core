@@ -262,29 +262,34 @@ class EsEntrySearch < EsApplicationSearch
   end
 
   def agency_facets
-    ApplicationSearch::FacetCalculator.new(:search => self, :model => Agency, :facet_name => :agency_ids, :identifier_attribute => :slug).all
+    self.aggregation_field = 'agency_ids'
+    EsApplicationSearch::FacetCalculator.new(:search => self, :model => Agency, :facet_name => :agency_ids, :identifier_attribute => :slug).all
   end
   memoize :agency_facets
 
   def section_facets
-    ApplicationSearch::FacetCalculator.new(:search => self, :model => Section, :facet_name => :section_ids, :name_attribute => :title, :identifier_attribute => :slug).all
+    self.aggregation_field = 'section_ids'
+    EsApplicationSearch::FacetCalculator.new(:search => self, :model => Section, :facet_name => :section_ids, :name_attribute => :title, :identifier_attribute => :slug).all
   end
   memoize :section_facets
 
   def topic_facets
-    ApplicationSearch::FacetCalculator.new(:search => self, :model => Topic, :facet_name => :topic_ids, :identifier_attribute => :slug).all
+    self.aggregation_field = 'topic_ids'
+    EsApplicationSearch::FacetCalculator.new(:search => self, :model => Topic, :facet_name => :topic_ids, :identifier_attribute => :slug).all
   end
   memoize :topic_facets
 
   def type_facets
-    ApplicationSearch::FacetCalculator.new(:search => self, :facet_name => :type, :hash => Entry::ENTRY_TYPES).all().reject do |facet|
+    self.aggregation_field = 'type'
+    EsApplicationSearch::FacetCalculator.new(:search => self, :facet_name => :type, :hash => Entry::ENTRY_TYPES).all().reject do |facet|
       ["UNKNOWN", "CORRECT"].include?(facet.value)
     end
   end
   memoize :type_facets
 
   def subtype_facets
-    ApplicationSearch::FacetCalculator.new(
+    self.aggregation_field = 'presidential_document_type_id'
+    EsApplicationSearch::FacetCalculator.new(
       :search => self,
       :model => PresidentialDocumentType,
       :facet_name => :presidential_document_type_id,

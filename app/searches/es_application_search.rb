@@ -3,6 +3,7 @@ class EsApplicationSearch
   class InputError < StandardError; end
 
   attr_accessor :order, :date_histogram_interval
+  attr_writer :aggregation_field
   attr_reader :filters, :term, :maximum_per_page, :per_page, :page, :conditions, :valid_conditions, :excerpts
 
   def per_page=(count)
@@ -276,6 +277,14 @@ class EsApplicationSearch
       buckets
   end
 
+  def facet_calculator_buckets
+    repository.
+      search(facet_calculator_search_options).
+      response.
+      aggregations['group_by_facet'].
+      buckets
+  end
+
   def results(args = {})
     select = args.delete(:select)
     args.merge!(sql: {select: select})
@@ -436,6 +445,8 @@ class EsApplicationSearch
 
   private
 
+  attr_reader :aggregation_field
+
   def es_base_query
     {
       size: per_page,
@@ -499,6 +510,18 @@ class EsApplicationSearch
             "field": "publication_date",
             "interval": date_histogram_interval
           },
+        }
+      }
+    )
+  end
+
+  def facet_calculator_search_options
+    search_options.merge(
+      aggregations: {
+        "group_by_facet": {
+          "terms": {
+            "field": aggregation_field
+          }
         }
       }
     )

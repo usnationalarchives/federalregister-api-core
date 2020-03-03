@@ -39,12 +39,14 @@ class EsPublicInspectionDocumentSearch < EsApplicationSearch
                      :label => "Filing Date"
 
   def agency_facets
-    ApplicationSearch::FacetCalculator.new(:search => self, :model => Agency, :facet_name => :agency_ids).all
+    self.aggregation_field = 'agency_ids'
+    EsApplicationSearch::FacetCalculator.new(:search => self, :model => Agency, :facet_name => :agency_ids).all
   end
   memoize :agency_facets
 
   def agencies_facets
-    ApplicationSearch::FacetCalculator.new(
+    self.aggregation_field = 'agency_ids'
+    EsApplicationSearch::FacetCalculator.new(
       :search => self,
       :model => Agency,
       :facet_name => :agency_ids,
@@ -54,7 +56,8 @@ class EsPublicInspectionDocumentSearch < EsApplicationSearch
   memoize :agencies_facets
 
   def type_facets
-    ApplicationSearch::FacetCalculator.new(
+    self.aggregation_field = 'type'
+    EsApplicationSearch::FacetCalculator.new(
       :search => self,
       :facet_name => :type,
       :hash => Entry::ENTRY_TYPES
