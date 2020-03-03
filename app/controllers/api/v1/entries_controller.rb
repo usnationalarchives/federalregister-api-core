@@ -47,7 +47,7 @@ class Api::V1::EntriesController < ApiController
 
     respond_to do |wants|
       cache_for 1.day
-      search = EntrySearch.new(deserialized_params)
+      search = Entry.search_klass.new(deserialized_params)
 
       if search.valid?
         if date_facets.include?(params[:facet])
@@ -213,7 +213,7 @@ class Api::V1::EntriesController < ApiController
       }
     end
 
-    public_inspection_search = PublicInspectionDocumentSearch.new_if_possible(
+    public_inspection_search = PublicInspectionDocument.search_klass.new_if_possible(
       :conditions => search.valid_conditions
     )
     if public_inspection_search && public_inspection_search.count > 0
@@ -250,4 +250,5 @@ class Api::V1::EntriesController < ApiController
 
     suggestions
   end
+
 end

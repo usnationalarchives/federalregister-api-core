@@ -58,7 +58,7 @@ class Api::V1::PublicInspectionDocumentsController < ApiController
     field_facets = %w(type agency agencies)
     raise ActiveRecord::RecordNotFound unless (field_facets).include?(params[:facet])
 
-    search = PublicInspectionDocumentSearch.new(deserialized_params)
+    search = PublicInspectionDocument.search_klass.new(deserialized_params)
     if search.valid?
         facets = search.send("#{params[:facet]}_facets")
 
@@ -77,7 +77,7 @@ class Api::V1::PublicInspectionDocumentsController < ApiController
   end
 
   def search_details
-    search = PublicInspectionDocumentSearch.new(deserialized_params)
+    search = PublicInspectionDocument.search_klass.new(deserialized_params)
 
     if search.valid?
       render_json_or_jsonp(
