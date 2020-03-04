@@ -3,9 +3,9 @@ class EntryRepository < BaseRepository
 
   mapping dynamic: 'strict' do
     indexes :id, {type: 'integer'}
-    indexes :title, { type: 'text'}
-    indexes :abstract, { type: 'text'}
-    indexes :full_text, { type: 'text'}
+    indexes :title, { type: 'text', index_options: 'offsets'}
+    indexes :abstract, { type: 'text', index_options: 'offsets'}
+    indexes :full_text, { type: 'text', index_options: 'offsets'}
     indexes :regulation_id_number, { type: 'keyword'}
     indexes :docket_id, {type: 'keyword'}
     indexes :document_number, {type: 'keyword'}

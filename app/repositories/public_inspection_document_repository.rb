@@ -5,8 +5,8 @@ class PublicInspectionDocumentRepository < BaseRepository
   mapping dynamic: 'strict' do
     indexes :id, { type: 'integer' }
     indexes :filed_at, { type: 'date' }
-    indexes :title, { type: 'text'}
-    indexes :full_text, { type: 'text'}
+    indexes :title, { type: 'text', index_options: 'offsets'}
+    indexes :full_text, { type: 'text', index_options: 'offsets'}
     indexes :docket_id, { type: 'keyword'}
     indexes :document_number, { type: 'keyword' }
     indexes :public_inspection_document_id, { type: 'integer' }

@@ -472,17 +472,17 @@ class EsApplicationSearch
         abstract: {
           fragment_size: 150,
           number_of_fragments: 3,
-          type: 'plain'
+          type: 'unified'
         },
         title: {
           fragment_size: 150,
           number_of_fragments: 3,
-          type: 'plain'
+          type: 'unified'
         },
         full_text: {
           fragment_size: 150,
           number_of_fragments: 3,
-          type: 'plain'
+          type: 'unified'
         },
       }
     }
