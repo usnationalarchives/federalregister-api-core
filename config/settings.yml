@@ -63,7 +63,7 @@ staging:
   app:
     canonical_url: "https://fr2.criticaljuncture.org"
   s3_buckets:
-    zipped_eps_images: eps.images.federalregister.gov
+    zipped_eps_images: eps.images.fr2.criticaljuncture.org
     private_images: private.images.fr2.criticaljuncture.org
     public_images: images.fr2.criticaljuncture.org
     lede_photos: lede-photos.fr2.criticaljuncture.org
