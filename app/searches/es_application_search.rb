@@ -82,7 +82,7 @@ class EsApplicationSearch
 
     define_method "#{filter_name}=" do |hsh|
       if hsh.present? && hsh.values.any?(&:present?)
-        place_selector = PlaceSelector.new(hsh[:location], hsh[:within])
+        place_selector = ApplicationSearch::PlaceSelector.new(hsh[:location], hsh[:within])
         instance_variable_set("@#{filter_name}", place_selector)
         if place_selector.valid? && place_selector.location.present?
           add_filter(
