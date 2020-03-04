@@ -45,25 +45,31 @@ class ApplicationSearch::DateSelector
   end
 
   def date_conditions
-    {
-      is:  is,
-      gte: gte,
-      lte: lte,
-      year: year,
-    }.tap do |hsh|
-      is_date = hsh.delete(:is)
-      year    = hsh.delete(:year)
-      if is_date.present?
-        hsh[:lte] = is_date
-        hsh[:gte] = is_date
-      elsif year.present?
-        hsh[:lte]    = year
-        hsh[:gte]    = year
-        hsh[:format] = 'yyyy'
+    if @is.present?
+      date = Date.parse(@is.to_s)
+      {
+        lte: date.to_s(:iso),
+        gte: date.to_s(:iso),
+      }
+    elsif @year.present?
+      date = Date.parse("#{@year}-01-01")
+      {
+        lte: date.year,
+        gte: date.year,
+        format: 'yyyy',
+      }
+    else
+      if @gte.present? || @lte.present?
+        # no-op
+      else
+        raise InvalidDate
       end
 
-    end.
-    select{|k,v| v.present? }
+      {
+        gte: start_date.to_s(:iso),
+        lte: end_date.to_s(:iso),
+      }
+    end
   end
 
   private
