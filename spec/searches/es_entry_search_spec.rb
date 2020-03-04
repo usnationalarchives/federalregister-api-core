@@ -311,8 +311,10 @@ describe "Elasticsearch Entry Search" do
         #gte, #lte, #is, #year, count
         ['2000-01-01', nil, nil, nil, 1],
         [nil, '1999-12-31', nil, nil, 1],
+        [nil, '12/31/1999', nil, nil, 1], #e.g. Handles non-iso format
         [nil, nil, '2000-01-01', nil, 1],
         ['1970-01-01', '1999-12-31', nil, 2000, 1],
+        ['01/01/1970', '12/31/1999', nil, 2000, 1], #e.g. Handles non-iso format
       ].each do |gte, lte, is, year, count|
         it "handles dates" do
           publication_date_conditions = {
@@ -326,7 +328,7 @@ describe "Elasticsearch Entry Search" do
             build_entry_double({publication_date: '2000-01-01', id: 999}),
           ]
 
-          entries.each{|entry| $entry_repository.save(entry) }
+          Entry.bulk_index(entries)
           $entry_repository.refresh_index!
 
           search = EsEntrySearch.new(conditions: {publication_date: publication_date_conditions} )
