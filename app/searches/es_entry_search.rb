@@ -156,6 +156,7 @@ class EsEntrySearch < EsApplicationSearch
                 :label => "Small Entities Affected"
 
   define_filter :docket_id,
+                :sphinx_type => :with,
                 :phrase => true,
                 :label => "Agency Docket" do |docket|
                   docket.join(', ')

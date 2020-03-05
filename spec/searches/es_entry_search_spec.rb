@@ -294,6 +294,18 @@ describe "Elasticsearch Entry Search" do
       expect(search.results.count).to eq(2)
     end
 
+    it "docket searches succeed" do
+      #NOTE: In Sphinx, docket searches were handled without with the filter's :phrase option and without a :with option.  Hence, the need for a distinct spec.
+      entries = [
+        build_entry_double({docket_id: ["USCG-2016-0040"], id: 111}),
+      ]
+      entries.each{|entry| $entry_repository.save(entry, refresh: true) }
+
+      search = EsEntrySearch.new(conditions: {docket_id: "USCG-2016-0040"})
+
+      expect(search.results.es_ids).to eq [111]
+    end
+
     it "handles geolocation search" do
       entries = [
         build_entry_double({place_ids: [444,555], id: 999}),
