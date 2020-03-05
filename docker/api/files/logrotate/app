@@ -2,11 +2,13 @@
   su app app
   daily
   missingok
-  rotate 90
+  rotate 7
   compress
-  delaycompress
   notifempty
   copytruncate
   dateext
-  minsize 50M
+  sharedscripts
+  lastaction
+    /opt/persist_logs.sh >> /home/app/tmp/persist_logs.log 2>&1
+  endscript
 }

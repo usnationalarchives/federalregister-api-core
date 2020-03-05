@@ -19,7 +19,11 @@ RUN apt-get update && apt-get install -y ruby2.5 ruby2.5-dev &&\
 #######################
 
 RUN apt-get update &&\
-  apt-get install -y gettext-base patch libcurl4-openssl-dev libpcre3-dev git libmysqlclient-dev libssl-dev mysql-client apache2-utils fontconfig hunspell-en-us libhunspell-1.3-0 libhunspell-dev pngcrush secure-delete xfonts-75dpi xfonts-base xpdf pdftk tzdata &&\
+  apt-get install -y gettext-base patch libcurl4-openssl-dev libpcre3-dev git libmysqlclient-dev libssl-dev mysql-client \
+    apache2-utils fontconfig hunspell-en-us libhunspell-1.3-0 libhunspell-dev pngcrush secure-delete \ 
+    xfonts-75dpi xfonts-base xpdf pdftk tzdata \
+    # aws tools
+    awscli &&\
   apt-get clean &&\
   rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/
 
@@ -42,6 +46,7 @@ RUN curl -O https://sphinxsearch.com/files/sphinx-3.2.1-f152e0b-linux-amd64.tar.
   tar xzvf sphinx-3.2.1-f152e0b-linux-amd64.tar.gz &&\
   cp /tmp/sphinx-3.2.1/bin/* /usr/local/bin/
 RUN rm -Rf /tmp/sphinx-3.2.1 && rm /tmp/sphinx-3.2.1-f152e0b-linux-amd64.tar.gz
+
 
 ##################
 ### PRINCEXML
@@ -88,6 +93,14 @@ COPY docker/api/files/imagemagick/policy.xml /etc/ImageMagick-6/policy.xml
 RUN ln -sf /usr/share/zoneinfo/US/Eastern /etc/localtime
 
 
+##################
+### SERVICES
+##################
+
+COPY docker/api/my_init.d /etc/my_init.d
+COPY docker/api/service /etc/service
+
+
 ###############################
 ### APP USER/GROUP
 ###############################
@@ -96,6 +109,13 @@ RUN addgroup --gid 1000 app &&\
   adduser app -uid 1000 --gid 1000 --system &&\
   usermod -a -G docker_env app &&\
   usermod -a -G crontab app
+
+# switch to app user automatically when exec into container
+RUN echo 'su - app -s /bin/bash' | tee -a /root/.bashrc
+
+# rotate logs
+COPY docker/api/files/logrotate/app /etc/logrotate.d/app
+COPY docker/api/files/logrotate/persist_logs.sh /opt/persist_logs.sh
 
 
 ###############################
@@ -120,17 +140,6 @@ RUN apt-get update && unattended-upgrade -d
 
 ENV PASSENGER_MIN_INSTANCES 1
 ENV WEB_PORT 3000
-
-
-##################
-### SERVICES
-##################
-
-COPY docker/api/my_init.d /etc/my_init.d
-COPY docker/api/service /etc/service
-
-# rotate logs
-COPY docker/api/files/logrotate/app /etc/logrotate.d/app
 
 
 ##################
