@@ -1,6 +1,8 @@
 require "spec_helper"
 
 describe "Elasticsearch Entry Search" do
+  before(:all) { ElasticsearchIndexer.toggle_on }
+  after(:all) { ElasticsearchIndexer.toggle_off }
 
   def build_entry_double(hsh)
     entry = double('entry')
