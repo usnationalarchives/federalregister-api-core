@@ -10,13 +10,11 @@ namespace :elasticsearch do
   end
 
   task :on => :environment do
-    `touch #{ElasticsearchIndexer::ES_TEMP_FILE}`
+    ElasticsearchIndexer.toggle_on
   end
 
   task :off => :environment do
-    if ElasticsearchIndexer.es_enabled?
-      `rm #{ElasticsearchIndexer::ES_TEMP_FILE}`
-    end
+    ElasticsearchIndexer.toggle_off
   end
 
 end
