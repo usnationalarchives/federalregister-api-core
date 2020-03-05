@@ -283,7 +283,7 @@ class EsEntrySearch < EsApplicationSearch
   memoize :topic_facets
 
   def type_facets
-    self.aggregation_field = 'type'
+    self.aggregation_field = 'type.keyword'
     EsApplicationSearch::FacetCalculator.new(:search => self, :facet_name => :type, :hash => Entry::ENTRY_TYPES).all().reject do |facet|
       ["UNKNOWN", "CORRECT"].include?(facet.value)
     end

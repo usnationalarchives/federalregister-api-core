@@ -56,7 +56,7 @@ class EsPublicInspectionDocumentSearch < EsApplicationSearch
   memoize :agencies_facets
 
   def type_facets
-    self.aggregation_field = 'type'
+    self.aggregation_field = 'type.keyword'
     EsApplicationSearch::FacetCalculator.new(
       :search => self,
       :facet_name => :type,
