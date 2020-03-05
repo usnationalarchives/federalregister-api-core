@@ -306,6 +306,19 @@ describe "Elasticsearch Entry Search" do
       expect(search.results.es_ids).to eq [111]
     end
 
+    it "finds citing_document_numbers" do
+      cited_entry                        = Factory(:entry)
+      another_cited_entry                = Factory(:entry)
+      entry_with_cited_entries           = Factory(:entry, cited_entry_ids: [cited_entry.id, another_cited_entry.id])
+      another_entry_with_cited_entries   = Factory(:entry, cited_entry_ids: [cited_entry.id])
+      $entry_repository.save(entry_with_cited_entries)
+      $entry_repository.save(another_entry_with_cited_entries, refresh: true)
+
+      search = EsEntrySearch.new(conditions: {citing_document_numbers: [cited_entry.document_number, another_cited_entry.document_number]})
+
+      expect(search.results.es_ids).to match_array( [entry_with_cited_entries.id, another_entry_with_cited_entries.id])
+    end
+
     it "handles geolocation search" do
       entries = [
         build_entry_double({place_ids: [444,555], id: 999}),

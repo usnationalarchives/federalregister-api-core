@@ -79,20 +79,20 @@ class EsEntrySearch < EsApplicationSearch
                 :model_sphinx_method => :id,
                 :model_id_method=> :slug
 
-  define_filter(:citing_document_numbers,
+  define_filter :citing_document_numbers,
                 :sphinx_type => :with,
                 :sphinx_attribute => :cited_entry_ids,
                 :label => 'Citing document',
-                :sphinx_value_processor => Proc.new { |*document_numbers|
+                :es_value_processor => Proc.new { |*document_numbers|
                   entries = Entry.select("id, document_number").where(:document_number => document_numbers.flatten)
                   missing_document_numbers = entries.map(&:document_number) - document_numbers.flatten
 
                   if missing_document_numbers.present?
                     raise ApplicationSearch::InputError.new("#{missing_document_numbers.map(&:inspect).to_sentence} could not be found")
                   end
-
-                  entries.map(&:id)
-                }) do |*document_numbers|
+j
+                  entries.map(&:id).first #NOTE: It's not clear whether this filter is still being used.  The existing search infrastructure only seems to be passing in single documents here, which is why we're calling #first.  Retaining the logic of the sphinx_value_processor here, but this should probably be refactored at some point so we're not making duplicative SQL calls here.  Likely, via a new kind of #define_multi_filter macro method in EsEntrySearch
+                } do |*document_numbers|
                   entries = Entry.select("id, citation").where(:document_number => document_numbers.flatten)
 
                   entries.map(&:citation).to_sentence(:two_words_connector => ' or ', :last_word_connector => ', or ')
