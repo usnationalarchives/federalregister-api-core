@@ -37,7 +37,7 @@ class ApplicationSearch::Filter
       if ElasticsearchIndexer.es_enabled?
         @sphinx_value = options[:value]
       else
-        "\"#{@value.join(' ')}\"" # #Seems like this is here to ensure dockets are not treated as negations and are double-quoted
+        @sphinx_value = "\"#{@value.join(' ')}\"" #Seems like this is here to ensure dockets are not treated as negations and are double-quoted
       end
     elsif options[:crc32_encode] #TODO: Remove this clause when the transition to ES is complete
       @sphinx_value = @value.map{|v| Zlib.crc32(v.to_s) }.first
