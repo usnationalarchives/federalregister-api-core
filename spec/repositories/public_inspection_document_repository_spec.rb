@@ -30,7 +30,7 @@ describe PublicInspectionDocumentRepository do
             type: 'date'
           },
           full_text: {
-            type: 'text'
+            type: 'text', index_options: 'offsets'
           },
           public_inspection_document_id: {
             type: 'integer'
@@ -45,7 +45,7 @@ describe PublicInspectionDocumentRepository do
             type: 'boolean'
           },
           title: {
-            type: 'text'
+            type: 'text', index_options: 'offsets'
           },
           type: {
             type: 'keyword'
