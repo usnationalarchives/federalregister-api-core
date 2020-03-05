@@ -170,12 +170,14 @@ class EsEntrySearch < EsApplicationSearch
                 end
 
   define_filter :accepting_comments_on_regulations_dot_gov,
+                :es_value_processor => Proc.new{|value| value == 1 },
                 :sphinx_type => :with,
                 :label => "Regulations.gov" do
                   "Accepting Comments on Regulations.gov"
                 end
 
   define_filter :correction,
+                :es_value_processor => Proc.new{|value| value == 1 },
                 :sphinx_type => :with do |val|
                   case val
                   when '1', 1, true
