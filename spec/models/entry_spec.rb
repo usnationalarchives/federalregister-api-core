@@ -107,6 +107,7 @@ describe Entry do
   describe 'destroy' do
     it "removes all agency_name_assignments" do
       SphinxIndexer.stub(:rebuild_delta_and_purge_core)
+      ElasticsearchIndexer.stub(:handle_entry_changes)
       entry = Factory(:entry, :agency_names => [Factory(:agency_name), Factory(:agency_name)])
       AgencyNameAssignment.count.should == 2
       entry.destroy
@@ -115,6 +116,7 @@ describe Entry do
 
     it "removes all agency_assignments" do
       SphinxIndexer.stub(:rebuild_delta_and_purge_core)
+      ElasticsearchIndexer.stub(:handle_entry_changes)
       entry = Factory(:entry, :agency_names => [Factory(:agency_name), Factory(:agency_name)])
       AgencyAssignment.count.should == 2
       entry.destroy

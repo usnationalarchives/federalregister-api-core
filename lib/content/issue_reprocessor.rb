@@ -104,6 +104,13 @@ module Content
       rescue SphinxIndexer::SphinxIndexerError => error
         handle_failure(error,"IssueReprocessor::ReprocessorIssue Reindex")
       end
+
+      begin
+        ElasticsearchIndexer.handle_entry_changes
+      rescue StandardError => error
+        handle_failure(error, "Elasticsearch Entry Change Reindexing")
+      end
+
     end
 
     def regenerate_toc_json

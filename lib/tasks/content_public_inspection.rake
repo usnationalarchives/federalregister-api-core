@@ -75,6 +75,7 @@ namespace :content do
     task :regenerate_toc, [:date] => :environment do |t, args|
       if ENV['REINDEX']
         SphinxIndexer.perform('public_inspection_document_core')
+        ElasticsearchIndexer.reindex_pi_documents
       end
 
       pil = Content::PublicInspectionImporter.new

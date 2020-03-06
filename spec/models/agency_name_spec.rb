@@ -3,6 +3,7 @@ require 'spec_helper'
 describe AgencyName do
   before(:each) do
     SphinxIndexer.stub(:rebuild_delta_and_purge_core)
+    ElasticsearchIndexer.stub(:handle_entry_changes)
   end
 
   describe 'destroy' do
