@@ -20,11 +20,17 @@ class EntrySerializer
   end
 
   attribute :regulation_id_number do |entry|
-    entry.entry_regulation_id_numbers.pluck(:regulation_id_number).uniq
+    entry.
+      entry_regulation_id_numbers.
+      map(&:regulation_id_number).
+      uniq
   end
 
   attribute :docket_id do |entry|
-    entry.docket_numbers.pluck(:number).uniq
+    entry.
+      docket_numbers.
+      map(&:number).
+      uniq
   end
 
   attribute :signing_date do |entry|
@@ -64,7 +70,7 @@ class EntrySerializer
   attribute :agency_ids do |entry|
     entry.
       agency_assignments.
-      where("agency_id IS NOT NULL").
+      select{|x| x.agency_id != nil}.
       map(&:agency_id).
       uniq
   end
@@ -72,7 +78,7 @@ class EntrySerializer
   attribute :topic_ids do |entry|
     entry.
       topic_assignments.
-      where("topic_id IS NOT NULL").
+      select{|x| x.topic_id != nil}.
       map(&:topic_id).
       uniq
   end
@@ -80,7 +86,7 @@ class EntrySerializer
   attribute :section_ids do |entry|
     entry.
       section_assignments.
-      where("section_id IS NOT NULL").
+      select{|x| x.section_id != nil}.
       map(&:section_id).
       uniq
   end
@@ -88,7 +94,7 @@ class EntrySerializer
   attribute :place_ids do |entry|
     entry.
       place_determinations.
-      where("place_id IS NOT NULL").
+      select{|x| x.place_id != nil}.
       map{|place_determinations| place_determinations.place_id || '0'}.
       uniq
   end
@@ -96,7 +102,7 @@ class EntrySerializer
   attribute :cited_entry_ids do |entry|
     entry.
       citations.
-      where("cited_entry_id IS NOT NULL").
+      select{|x| x.cited_entry_id != nil}.
       map(&:cited_entry_id).
       uniq
   end
@@ -116,6 +122,7 @@ class EntrySerializer
 
   attribute :small_entity_ids do |entry|
     #TODO: Write spec
+    #NOTE: There's likely an indexing performance gain here since this join is expensive and also N+1'ing for each entry.  if we extract this to a custom join called #small_entity_ids and then preload it in the bulk index task.
     small_entity_ids = entry.
       entry_regulation_id_numbers.
       joins("LEFT OUTER JOIN regulatory_plans ON regulatory_plans.regulation_id_number = entry_regulation_id_numbers.regulation_id_number AND regulatory_plans.current = 1
