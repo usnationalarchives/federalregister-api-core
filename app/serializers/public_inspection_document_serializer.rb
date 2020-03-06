@@ -20,7 +20,7 @@ class PublicInspectionDocumentSerializer < ApplicationSerializer
   end
 
   attribute :docket_id do |object|
-    object.docket_numbers.pluck(:number)
+    object.docket_numbers.map(&:number)
   end
 
   attribute :title do |object|
@@ -32,7 +32,7 @@ class PublicInspectionDocumentSerializer < ApplicationSerializer
   end
 
   attribute :agency_ids do |object|
-    object.agency_assignments.pluck(:agency_id)
+    object.agency_assignments.map(&:agency_id)
   end
 
   attribute :full_text do |object|
