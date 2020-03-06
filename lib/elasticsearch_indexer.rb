@@ -29,27 +29,36 @@ module ElasticsearchIndexer
     total_entries     = Entry.count
     entries_completed = 0
     Entry.includes(:agency_assignments, :citations, :comments_close_date, :docket_numbers, :effective_date, :entry_regulation_id_numbers, :entry_cfr_references, :place_determinations, :section_assignments, :topic_assignments).find_in_batches(batch_size: BATCH_SIZE) do |entry_batch|
-      Entry.bulk_index(entry_batch)
+      Entry.bulk_index(entry_batch, refresh: false)
       entries_completed += BATCH_SIZE
       puts "Entry Indexing #{(entries_completed.to_f/total_entries * 100).round(2)}% complete"
     end
+
+    $entry_repository.refresh_index!
   end
 
   def self.handle_entry_changes
     remove_deleted_entries
     reindex_modified_entries
+    #NOTE: Once ES is deployed and Sphinx is removed, we may want to consider removing the delta flag from the entries in question after reindexing
   end
 
   def self.remove_deleted_entries
     deleted_entry_ids.each do |entry_id|
-      $entry_repository.delete(entry_id)
+      $entry_repository.delete(entry_id, refresh: false)
     end
+
+    $entry_repository.refresh_index!
   end
 
   def self.reindex_modified_entries
-    Entry.where(id: EntryChange.where.not(entry_id: deleted_entry_ids).pluck(:entry_id)).each do |entry|
-      $entry_repository.save(entry)
-    end
+    Entry.
+      where(id: EntryChange.where.not(entry_id: deleted_entry_ids).pluck(:entry_id)).
+      find_in_batches(batch_size: BATCH_SIZE) do |entry_batch|
+        Entry.bulk_index(entry_batch, refresh: false)
+      end
+
+    $entry_repository.refresh_index!
   end
 
   def self.deleted_entry_ids
