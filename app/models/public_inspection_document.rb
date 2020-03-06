@@ -62,6 +62,51 @@ class PublicInspectionDocument < ApplicationModel
     $public_inspection_document_repository
   end
 
+  def self.indexable
+    base_scope = PublicInspectionDocument.
+      joins("INNER JOIN public_inspection_postings ON public_inspection_documents.id = public_inspection_postings.document_id")
+
+    if SETTINGS['sphinx']['use_local_pil_date']
+      base_scope.
+        where(<<-SQL
+          public_inspection_postings.issue_id =
+            (
+              SELECT id
+              FROM public_inspection_issues
+              WHERE published_at >= #{SETTINGS['sphinx']['pil_index_since_date']}
+              ORDER BY publication_date DESC
+              LIMIT 1
+            )
+          AND (
+            publication_date IS NULL
+            OR publication_date > #{SETTINGS['sphinx']['pil_index_since_date']}
+          )
+        SQL
+      )
+    else
+      base_scope.
+        where(<<-SQL
+          public_inspection_postings.issue_id =
+            (
+              SELECT id
+              FROM public_inspection_issues
+              WHERE published_at IS NOT NULL
+              ORDER BY publication_date DESC
+              LIMIT 1
+            )
+          AND (
+            public_inspection_documents.publication_date IS NULL
+            OR public_inspection_documents.publication_date > (
+              SELECT MAX(publication_date)
+              FROM issues
+              WHERE issues.completed_at IS NOT NULL
+            )
+          )
+        SQL
+      )
+    end
+  end
+
   def entry
     @entry ||= Entry.find_by_document_number(document_number)
   end
