@@ -51,6 +51,10 @@ namespace :content do
       end
     end
 
+    task :reindex_elasticsearch => :environment do
+      ElasticsearchIndexer.reindex_pi_documents
+    end
+
     task :purge_revoked_documents => :environment do
       # after 5:15, purge PDFs
       if Time.current >= Time.zone.parse("5:15PM")

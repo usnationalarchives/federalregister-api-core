@@ -37,6 +37,15 @@ module ElasticsearchIndexer
     $entry_repository.refresh_index!
   end
 
+  def self.reindex_pi_documents
+    $public_inspection_document_repository.create_index!(force: true)
+    PublicInspectionDocument.bulk_index(
+      PublicInspectionDocument.indexable.includes(:agency_assignments, :docket_numbers),
+      refresh: false
+    )
+    $public_inspection_document_repository.refresh_index!
+  end
+
   def self.handle_entry_changes
     remove_deleted_entries
     reindex_modified_entries
