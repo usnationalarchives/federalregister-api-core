@@ -40,7 +40,7 @@ class ApplicationModel < ActiveRecord::Base
     raise NotImplementedError
   end
 
-  def self.bulk_index(acive_record_collection, delete: true)
+  def self.bulk_index(acive_record_collection, refresh: false)
     #TODO: Add delete option?
     body = acive_record_collection.each_with_object(Array.new) do |instance, request_body|
       request_body << { index: { _index: repository.index_name, _id: instance.id } }
@@ -48,9 +48,13 @@ class ApplicationModel < ActiveRecord::Base
     end
 
     begin
-      repository.client.bulk body: body
+      repository.client.bulk body: body, refresh: refresh
     rescue Faraday::TimeoutError
       retry
+    end
+
+    if refresh
+      repository.refresh_index!
     end
   end
 end
