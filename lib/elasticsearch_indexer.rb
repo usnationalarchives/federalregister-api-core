@@ -9,7 +9,7 @@ module ElasticsearchIndexer
     EntryChange.insert_all(entry_change_collection)
   end
 
-  ES_TEMP_FILE = 'tmp/use_elasticsearch'
+  ES_TEMP_FILE = "tmp/use_elasticsearch_#{Rails.env}"
   def self.es_enabled?
     File.file?(ES_TEMP_FILE)
   end
