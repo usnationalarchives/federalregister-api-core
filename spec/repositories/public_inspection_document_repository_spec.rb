@@ -53,7 +53,8 @@ describe PublicInspectionDocumentRepository do
         }
       }
 
-      expect($public_inspection_document_repository.mappings.to_hash).to eq expected_mappings
+      expect($public_inspection_document_repository.mappings.to_hash[:dynamic]).to eq expected_mappings[:dynamic]
+      expect($public_inspection_document_repository.mappings.to_hash[:properties]).to eq expected_mappings[:properties]
     end
   end
 
