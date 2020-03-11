@@ -222,7 +222,8 @@ class Api::V1::PublicInspectionDocumentsController < ApiController
       :documents => documents,
       :feed_name => title,
       :feed_description => "The documents in this feed originate from FederalRegister.gov which displays an unofficial web version of the daily Federal Register. Public Inspection documents originate from official copies filed at the Office of the Federal Register. For more information, please see https://www.federalregister.gov/reader-aids/using-federalregister-gov/understanding-public-inspection.",
-      :feed_url => request.url
+      :feed_url => request.url,
+      :feed_publication_date => documents.to_a.reject{|d| d.filed_at.nil? }.max_by{|d| d.filed_at}.filed_at.to_time
     }
   end
 end

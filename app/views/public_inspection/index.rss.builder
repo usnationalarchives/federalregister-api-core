@@ -6,7 +6,7 @@ xml.rss "version" => "2.0", "xmlns:dc" => "http://purl.org/dc/elements/1.1/" do
 
     xml.title       feed_name
     xml.link        feed_url
-    xml.pubDate     CGI.rfc1123_date documents.first.publication_date.to_time if documents.size > 0
+    xml.pubDate     CGI.rfc1123_date feed_publication_date
     xml.description feed_description
 
     documents.each do |document|
