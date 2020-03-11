@@ -161,6 +161,7 @@ end
 
 if cron_settings["delta_auditing"]
   every 15.minutes do
+    set :log, 'elasticsearch_delta_audit'
     rake 'entry_delta_auditing:audit'
   end
 end
