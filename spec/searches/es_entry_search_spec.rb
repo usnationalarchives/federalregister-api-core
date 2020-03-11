@@ -391,6 +391,84 @@ describe "Elasticsearch Entry Search" do
       end
     end
 
+    context "queries on former with_all sphinx attributes" do # TODO: change to 'with'
+      it "can search by section_id" do
+        section_a = Factory(:section)
+        section_b = Factory(:section)
+
+        entries = [
+          build_entry_double({section_ids: [section_a.id], id: 999}),
+          build_entry_double({section_ids: [section_b.id], id: 998}),
+          build_entry_double({section_ids: [section_a.id, section_b.id], id: 997}),
+        ]
+
+        entries.each{|entry| $entry_repository.save(entry) }
+        $entry_repository.refresh_index!
+
+        search = EsEntrySearch.new(conditions: {section_ids: [section_a.id] })
+
+        expect(search.results.es_ids).to eq([999, 997])
+      end
+
+      it "can search by section (slug)" do
+        section_a = Factory(:section)
+        section_b = Factory(:section)
+
+        entries = [
+          build_entry_double({section_ids: [section_a.id], id: 999}),
+          build_entry_double({section_ids: [section_b.id], id: 998}),
+          build_entry_double({section_ids: [section_a.id, section_b.id], id: 997}),
+        ]
+
+        entries.each{|entry| $entry_repository.save(entry) }
+        $entry_repository.refresh_index!
+
+        search = EsEntrySearch.new(conditions: {sections: [section_a.slug] })
+
+        expect(search.results.es_ids).to eq([999, 997])
+      end
+
+      it "can search by topic_ids" do
+        topic_a = Factory(:topic)
+        topic_b = Factory(:topic)
+
+        entry_a = Factory(:entry).tap do |e|
+          e.topic_assignments.create(topic: topic_a)
+        end
+        entry_b = Factory(:entry).tap do |e|
+          e.topic_assignments.create(topic: topic_b)
+        end
+
+        entries = [entry_a, entry_b]
+        entries.each{|entry| $entry_repository.save(entry) }
+        $entry_repository.refresh_index!
+
+        search = EsEntrySearch.new(conditions: {topic_ids: [topic_a.id] })
+
+        expect(search.results.es_ids).to eq([entry_a.id])
+      end
+
+      it "can search by topic (slug)" do
+        topic_a = Factory(:topic)
+        topic_b = Factory(:topic)
+
+        entry_a = Factory(:entry).tap do |e|
+          e.topic_assignments.create(topic: topic_a)
+        end
+        entry_b = Factory(:entry).tap do |e|
+          e.topic_assignments.create(topic: topic_b)
+        end
+
+        entries = [entry_a, entry_b]
+        entries.each{|entry| $entry_repository.save(entry) }
+        $entry_repository.refresh_index!
+
+        search = EsEntrySearch.new(conditions: {topics: [topic_a.slug] })
+
+        expect(search.results.es_ids).to eq([entry_a.id])
+      end
+    end
+
   end
 
 end

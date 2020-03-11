@@ -121,21 +121,21 @@ j
                 :model_label_method => :full_name
 
   define_filter :section_ids,
-                :sphinx_type => :with_all,
+                :sphinx_type => :with,
                 :model_label_method => :title
 
   define_filter :sections,
-                :sphinx_type => :with_all,
+                :sphinx_type => :with,
                 :sphinx_attribute => :section_ids,
                 :model_label_method => :title,
                 :model_sphinx_method => :id,
                 :model_id_method => :slug
 
   define_filter :topic_ids,
-                :sphinx_type => :with_all
+                :sphinx_type => :with
 
   define_filter :topics,
-                :sphinx_type => :with_all,
+                :sphinx_type => :with,
                 :sphinx_attribute => :topic_ids,
                 :model_label_method => :name,
                 :model_sphinx_method => :id,
