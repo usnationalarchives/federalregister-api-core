@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_25_012822) do
+ActiveRecord::Schema.define(version: 2020_03_11_175851) do
 
   create_table "action_names", :force => true do |t|
     t.string   "name"
@@ -264,6 +264,7 @@ ActiveRecord::Schema.define(version: 2020_02_25_012822) do
   add_index "entry_cfr_references", ["entry_id"], :name => "index_entry_cfr_affected_parts_on_entry_id"
   create_table "entry_changes", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.integer "entry_id"
+    t.index ["entry_id"], name: "index_entry_changes_on_entry_id", unique: true
   end
 
   create_table "entry_emails", :force => true do |t|
