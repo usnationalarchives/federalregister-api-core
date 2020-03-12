@@ -450,9 +450,15 @@ class EsApplicationSearch
       size: per_page,
       from: es_from,
       query: {
-        bool: {
-          must: [],
-          filter: []
+        function_score: {
+          query: {
+            bool: {
+              must: [],
+              filter: []
+            }
+          },
+          functions: es_scoring_functions,
+          boost_mode: 'multiply',
         }
       },
       sort: es_sort_order,
@@ -526,7 +532,9 @@ class EsApplicationSearch
   end
 
   def count_search_options
-    search_options.except(:size, :from, :sort, :highlight)
+    options = search_options.except(:size, :from, :sort, :highlight).dup.tap do |ops|
+      ops[:query][:function_score][:functions]= Array.new
+    end
   end
 
   DEFAULT_RESULTS_PER_PAGE = 20
@@ -559,7 +567,7 @@ class EsApplicationSearch
     query = es_base_query.tap do |q|
       # Handle term
       if es_term.present?
-        q[:query][:bool][:should] = [
+        q[:query][:function_score][:query][:bool][:should] = [
           {
             simple_query_string: {
               query:            es_term,
@@ -568,12 +576,12 @@ class EsApplicationSearch
             }
           }
         ]
-        q[:query][:bool][:minimum_should_match] = 1
+        q[:query][:function_score][:query][:bool][:minimum_should_match] = 1
       end
 
       raise if es_conditions.present?
       es_conditions.each do |(condition, value)|
-        q[:query][:bool][:must] << {
+        q[:query][:function_score][:query][:bool][:must] << {
           bool: {
             must: { # Contributes to score
               term: {
@@ -586,7 +594,7 @@ class EsApplicationSearch
 
       with.each do |(condition, value)|
         if value.kind_of?(Array) && value.present?
-          q[:query][:bool][:filter] << {
+          q[:query][:function_score][:query][:bool][:filter] << {
             bool: {
               filter: {
                 terms: {
@@ -596,7 +604,7 @@ class EsApplicationSearch
             }
           }
         else
-          q[:query][:bool][:filter] << {
+          q[:query][:function_score][:query][:bool][:filter] << {
             bool: {
               filter: {
                 term: {
@@ -609,8 +617,7 @@ class EsApplicationSearch
       end
 
       with_date.each do |condition, date_conditions|
-        q[:query][:bool][:filter] <<
-        {
+        q[:query][:function_score][:query][:bool][:filter] << {
           range: {
             condition => date_conditions
           }
@@ -618,8 +625,7 @@ class EsApplicationSearch
       end
 
       with_range.each do |condition, range_conditions|
-        q[:query][:bool][:filter] <<
-        {
+        q[:query][:function_score][:query][:bool][:filter] << {
           range: {
             condition => range_conditions
           }
@@ -629,6 +635,32 @@ class EsApplicationSearch
     end
 
     query
+  end
+
+  def es_scoring_functions
+    [
+      {
+        "weight": 5,
+        "filter": {
+          "range": {
+            "publication_date": {
+              "gt": 'now-5d'
+            }
+          }
+        }
+      },
+      {
+        "weight": 2,
+        "filter": {
+          "range": {
+            "publication_date": {
+              "lt": 'now-5d',
+              "gt": 'now-1y'
+            }
+          }
+        }
+      },
+    ]
   end
 
   def with_date
