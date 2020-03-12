@@ -2,8 +2,8 @@ class EsApplicationSearch
   extend Memoist
   class InputError < StandardError; end
 
-  attr_accessor :order, :date_histogram_interval
-  attr_writer :aggregation_field
+  attr_accessor :order
+  attr_writer :aggregation_field, :date_histogram_interval
   attr_reader :filters, :term, :maximum_per_page, :per_page, :page, :conditions, :valid_conditions, :excerpts
 
   def per_page=(count)
@@ -57,9 +57,6 @@ class EsApplicationSearch
         label = options[:label]
 
         if selector.valid?
-
-          # add_range_filter(selector)
-
           add_filter(
             #TODO: Potentially pass in an option indicating this is an ES range query?
             :value => selector.sphinx_value,
@@ -225,7 +222,8 @@ class EsApplicationSearch
       recursive_merge(args.slice(:joins, :includes, :select))
   end
 
-  class ResultArray #TODO: Change this name
+  class ActiveRecordCollectionMetadataWrapper
+    # Used to provide a way for AR collection to respond to former TS collection args (e.g. next_page, previous_page)
     delegate_missing_to :@active_record_collection
 
     def initialize(es_search_invocation, active_record_collection, page, per_page)
@@ -274,7 +272,7 @@ class EsApplicationSearch
 
   end
 
-  def aggregation_buckets
+  def date_aggregator_buckets
     repository.
       search(aggregation_search_options).
       response.
@@ -306,14 +304,10 @@ class EsApplicationSearch
       active_record_collection = active_record_collection.select(select_clause)
     end
 
-    # TODO: i think this needs to get pushed into the ResultArray and pagination will have to be handled there, since es_search_invocation currently deals with a single page of results
-    # active_record_collection = args[:model_scope].where(id: es_search_invocation.results.map(&:id))
+    ar_collection_with_metadata = ActiveRecordCollectionMetadataWrapper.new(es_search_invocation, active_record_collection, page, per_page)
 
-    # Provide a way for collection to respond to former TS collection args (e.g. next_page, previous_page)
-    result_array = ResultArray.new(es_search_invocation, active_record_collection, page, per_page)
-
-    if result_array && @excerpts
-      results_with_raw_text, results_without_raw_text = result_array.partition{|e| e.raw_text_updated_at.present?}
+    if ar_collection_with_metadata && @excerpts
+      results_with_raw_text, results_without_raw_text = ar_collection_with_metadata.partition{|e| e.raw_text_updated_at.present?}
 
       if results_with_raw_text.present?
         results_with_raw_text.in_groups_of(1024,false).each do |batch|
@@ -341,14 +335,7 @@ class EsApplicationSearch
       end
     end
 
-    # TODO: FIXME: Ugly hack to get total pages to be within bounds
-    # if result_array && result_array.total_pages > 50
-    #   def result_array.total_pages
-    #     50
-    #   end
-    # end
-
-    result_array
+    ar_collection_with_metadata
   end
 
   def es_conditions
@@ -429,7 +416,6 @@ class EsApplicationSearch
     sphinx_retry do
       begin
         results = model.search(term, options)
-        #TODO: REIMPLEMENT EXCERPTING HERE
 
         # results.context[:panes] << ThinkingSphinx::Panes::ExcerptsPane
 
@@ -452,7 +438,7 @@ class EsApplicationSearch
 
   private
 
-  attr_reader :aggregation_field
+  attr_reader :aggregation_field, :date_histogram_interval
 
   def es_base_query
     {
@@ -572,7 +558,6 @@ class EsApplicationSearch
     # }.merge(find_options)
     #
 
-    #TODO: handle term, sql_args
     query = es_base_query.tap do |q|
       # Handle term
       if es_term.present?

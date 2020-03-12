@@ -273,7 +273,7 @@ describe "Elasticsearch Entry Search" do
       ]
       entries.each{|entry| $entry_repository.save(entry) }
 
-      $entry_repository.refresh_index! #TODO: Is this refresh needed?
+      $entry_repository.refresh_index!
 
       search = EsEntrySearch.new(
         conditions: {
@@ -296,7 +296,7 @@ describe "Elasticsearch Entry Search" do
 
       search = EsEntrySearch.new(conditions: {agency_ids: agencies.map(&:id) })
 
-      expect(search.results.count).to eq(2)
+      expect(search.results.es_ids).to eq([111,222])
     end
 
     it "docket searches succeed" do
@@ -382,8 +382,7 @@ describe "Elasticsearch Entry Search" do
             build_entry_double({publication_date: '2000-01-01', id: 999}),
           ]
 
-          Entry.bulk_index(entries)
-          $entry_repository.refresh_index!
+          Entry.bulk_index(entries, refresh: true)
 
           search = EsEntrySearch.new(conditions: {publication_date: publication_date_conditions} )
           expect(search.results.count).to eq(count)

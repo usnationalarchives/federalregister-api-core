@@ -56,8 +56,6 @@ class EntrySerializer
     )
   end
 
-  #TODO: Determine whether to index publication date increemnts or use native ES date searching
-
   attribute :cfr_affected_parts do |entry|
     entry.
       entry_cfr_references.

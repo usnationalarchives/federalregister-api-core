@@ -30,7 +30,7 @@ class EsEntrySearch::DateAggregator::Base
 
   def raw_results
     group_and_counts = {}
-    es_search.aggregation_buckets.map do |term|
+    es_search.date_aggregator_buckets.map do |term|
       datetime = Date.parse(term['key_as_string']) #TODO: Do we need to handle UTC processing parallel to what's happening in the Sphinx-based base.rb class?
 
       group_and_counts[sphinx_format(datetime)] = term.doc_count
