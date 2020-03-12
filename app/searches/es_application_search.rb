@@ -248,7 +248,12 @@ class EsApplicationSearch
     end
 
     def total_pages
-      (count.to_f / per_page).ceil
+      total = (count.to_f / per_page).ceil
+      if total > 50 #NOTE: This is a carry-over from ApplicationSearch to get total pages to be within bounds.  See commit #c3f1ead6ff for original context.
+        50
+      else
+        total
+      end
     end
 
     def count
