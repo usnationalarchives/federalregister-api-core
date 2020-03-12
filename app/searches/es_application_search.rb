@@ -286,9 +286,6 @@ class EsApplicationSearch
   end
 
   def results(args = {})
-    select = args.delete(:select)
-    args.merge!(sql: {select: select})
-
     # Retrieve AR ids from Elasticsearch
     es_search_invocation = repository.search(search_options)
 
@@ -298,6 +295,12 @@ class EsApplicationSearch
     if args[:include].present?
       active_record_collection = active_record_collection.includes(args[:include])
     end
+
+    select_clause = args.dig(:sql, :select)
+    if select_clause.present?
+      active_record_collection = active_record_collection.select(select_clause)
+    end
+
     # TODO: i think this needs to get pushed into the ResultArray and pagination will have to be handled there, since es_search_invocation currently deals with a single page of results
     # active_record_collection = args[:model_scope].where(id: es_search_invocation.results.map(&:id))
 
