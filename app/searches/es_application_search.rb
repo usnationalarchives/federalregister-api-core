@@ -192,15 +192,6 @@ class EsApplicationSearch
     with
   end
 
-  def with_all
-    with = {}
-    @filters.select{|f| f.sphinx_type == :with_all }.each do |filter|
-      with[filter.sphinx_attribute] ||= []
-      with[filter.sphinx_attribute] << filter.sphinx_value
-    end
-    with
-  end
-
   def without
     without = {}
     @filters.select{|f| f.sphinx_type == :without }.each do |filter|
