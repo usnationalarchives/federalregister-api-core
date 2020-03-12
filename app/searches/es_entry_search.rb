@@ -20,14 +20,24 @@ class EsEntrySearch < EsApplicationSearch
       end
     end
 
-    def sphinx_citation
+    def range_conditions
       title_int = title.to_i * TITLE_MULTIPLIER
+
       if part.blank?
-        title_int ... title_int + TITLE_MULTIPLIER
+        {
+          gte: title_int,
+          lt:  title_int + TITLE_MULTIPLIER,
+        }
       elsif match = part.match(/(\d+)-(\d+)/)
-        title_int + match[1].to_i .. title_int + match[2].to_i
+        {
+          gte: title_int + match[1].to_i,
+          lte: title_int + match[2].to_i
+        }
       else
-        title_int + part.to_i
+        {
+          gte: title_int + part.to_i,
+          lte: title_int + part.to_i
+        }
       end
     end
 
@@ -212,12 +222,12 @@ j
 
       if @cfr.error_message.blank?
         add_filter(
-          :value => @cfr.sphinx_citation,
           :name => @cfr.citation,
           :condition => :cfr,
           :sphinx_attribute => :cfr_affected_parts,
           :label => "Affected CFR Part",
-          :sphinx_type => :with
+          :sphinx_type => :with_range,
+          :range_conditions => @cfr.range_conditions
         )
       else
         @errors[:cfr] = @cfr.error_message

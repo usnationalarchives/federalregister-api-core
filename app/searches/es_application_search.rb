@@ -617,6 +617,15 @@ class EsApplicationSearch
         }
       end
 
+      with_range.each do |condition, range_conditions|
+        q[:query][:bool][:filter] <<
+        {
+          range: {
+            condition => range_conditions
+          }
+        }
+      end
+
     end
 
     query
@@ -628,6 +637,16 @@ class EsApplicationSearch
       select{|f| f.date_selector }.
       each do |filter|
         hsh[filter.sphinx_attribute] = filter.date_selector.date_conditions
+      end
+    hsh
+  end
+
+  def with_range
+    hsh = {}
+    @filters.
+      select{|f| f.range_conditions }.
+      each do |filter|
+        hsh[filter.sphinx_attribute] = filter.range_conditions
       end
     hsh
   end

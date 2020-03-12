@@ -308,6 +308,30 @@ describe "Elasticsearch Entry Search" do
       expect(search.results.es_ids).to eq [111]
     end
 
+    it "cfr single value searches succeed" do
+      search = EsEntrySearch.new(conditions: {cfr: {title: 38}})
+      entries = [
+        build_entry_double({cfr_affected_parts: (38 * EntrySearch::CFR::TITLE_MULTIPLIER), id: 111}),
+      ]
+      entries.each{|entry| $entry_repository.save(entry, refresh: true) }
+
+      search = EsEntrySearch.new(conditions: {cfr: {title: 38}})
+
+      expect(search.results.es_ids).to eq [111]
+    end
+
+    it "cfr range searches succeed" do
+      search = EsEntrySearch.new(conditions: {cfr: {title: 38, part: '3-4'}})
+      entries = [
+        build_entry_double({cfr_affected_parts: (38 * EntrySearch::CFR::TITLE_MULTIPLIER), id: 111}),
+      ]
+      entries.each{|entry| $entry_repository.save(entry, refresh: true) }
+
+      search = EsEntrySearch.new(conditions: {cfr: {title: 38}})
+
+      expect(search.results.es_ids).to eq [111]
+    end
+
     it "finds citing_document_numbers" do
       cited_entry                        = Factory(:entry)
       another_cited_entry                = Factory(:entry)
