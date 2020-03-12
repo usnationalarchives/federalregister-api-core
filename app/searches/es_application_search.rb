@@ -293,10 +293,11 @@ class EsApplicationSearch
     es_search_invocation = repository.search(search_options)
 
     # Get AR objects
-
-    # TODO: replace model?
     active_record_collection = model.where(id: es_search_invocation.results.map(&:id))
 
+    if args[:include].present?
+      active_record_collection = active_record_collection.includes(args[:include])
+    end
     # TODO: i think this needs to get pushed into the ResultArray and pagination will have to be handled there, since es_search_invocation currently deals with a single page of results
     # active_record_collection = args[:model_scope].where(id: es_search_invocation.results.map(&:id))
 
