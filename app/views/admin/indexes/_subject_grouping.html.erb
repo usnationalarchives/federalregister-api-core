@@ -13,9 +13,10 @@
                           :unapproved_only => params[:unapproved_only].present?
                         }.to_json do %>
 
-                          <span class="title" data-header-attribute="<%= subject_grouping.header_attribute %>" data-original-title='<%= subject_grouping.header %>'>
-                            <%= spell_checker.highlight_spelling_errors subject_grouping.header.html_safe %>
-                          </span>
+  <span class="title" data-header-attribute="<%= subject_grouping.header_attribute %>" data-original-title='<%= subject_grouping.header %>'>
+    <%= spell_checker.highlight_spelling_errors(subject_grouping.header).html_safe %>
+  </span>
+  
   <% if subject_grouping.document_groupings.size > 1 %>
     <a href="#" class="edit btn">Edit</a>
   <% end %>
