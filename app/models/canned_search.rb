@@ -48,7 +48,7 @@ class CannedSearch < ApplicationModel
         :gte => Issue.current.publication_date - time_frame
       }
     )
-    EntrySearch.new(:conditions => conditions, :metadata_only => true).count
+    Entry.search_klass.new(:conditions => conditions, :metadata_only => true).count
   end
 
   def documents_with_open_comment_periods
@@ -57,6 +57,7 @@ class CannedSearch < ApplicationModel
         :gte => Date.today
       }
     )
-    EntrySearch.new(:conditions => conditions, :metadata_only => true).count
+    Entry.search_klass.new(:conditions => conditions, :metadata_only => true).count
   end
+
 end
