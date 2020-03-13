@@ -18,28 +18,6 @@ class PublicInspectionDocumentRepository < BaseRepository
     indexes :public_inspection_issues, { type: 'object' }
   end
 
-  def wrap_search(term, query={})
-    SearchWrapper.new(search(query))
-  end
-
-  #TODO: Rename to SearchCollectionWrapper to be more explicit
-  class SearchWrapper
-    # This class is being used to imitate the Sphinx results as we set up ES
-    attr_reader :es_result #TODO: Make private
-
-    def initialize(es_result)
-      @es_result = es_result
-    end
-
-    def total_pages
-      0 # FIX
-    end
-
-    def count
-      es_result.total
-    end
-  end
-
   def search_result_klass
     PublicInspectionDocumentSearchResult
   end
