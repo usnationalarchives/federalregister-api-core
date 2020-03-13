@@ -134,16 +134,16 @@ class EsPublicInspectionDocumentSearch < EsApplicationSearch
     parts
   end
 
-  def results
-    # join docket_numbers
-    # join public_inspection_issues
+  # def results
+  #   # join docket_numbers
+  #   # join public_inspection_issues
 
-    model_scope = model.
-      includes(:docket_numbers).
-      includes(:public_inspection_issues)
+  #   model_scope = model.
+  #     includes(:docket_numbers).
+  #     includes(:public_inspection_issues)
 
-    super(model_scope: model_scope)
-  end
+  #   super(model_scope: model_scope)
+  # end
 
   private
 
