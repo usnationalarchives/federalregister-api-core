@@ -324,13 +324,14 @@ describe "Elasticsearch Entry Search" do
     end
 
     it "cfr range searches succeed" do
-      search = EsEntrySearch.new(conditions: {cfr: {title: 38, part: '3-4'}})
       entries = [
-        build_entry_double({cfr_affected_parts: (38 * EntrySearch::CFR::TITLE_MULTIPLIER), id: 111}),
+        build_entry_double({cfr_affected_parts: (38 * EntrySearch::CFR::TITLE_MULTIPLIER + 3), id: 111}),
       ]
       entries.each{|entry| $entry_repository.save(entry, refresh: true) }
 
-      search = EsEntrySearch.new(conditions: {cfr: {title: 38}})
+      search = EsEntrySearch.new(conditions: {cfr: {title: 38, part: '3-4'}})
+
+      expect(search.results.es_ids).to eq [111]
     end
 
     it "RIN searches succeed" do
