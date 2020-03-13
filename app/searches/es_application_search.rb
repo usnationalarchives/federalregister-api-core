@@ -330,8 +330,6 @@ class EsApplicationSearch
         results_without_raw_text.each do |result|
           result.excerpt = result.excerpts.abstract
         end
-      else
-        raise "#{model} not supported"
       end
     end
 

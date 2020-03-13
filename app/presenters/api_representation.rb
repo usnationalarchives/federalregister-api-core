@@ -38,7 +38,7 @@ class ApiRepresentation
     end
 
     def find_options_for(*fields)
-      selects = [:id]
+      selects = [:id, :raw_text_updated_at]
       includes = []
 
       fields.flatten.each do |field|
