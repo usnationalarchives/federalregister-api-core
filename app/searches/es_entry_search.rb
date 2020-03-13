@@ -69,7 +69,7 @@ class EsEntrySearch < EsApplicationSearch
   attr_reader :type
   attr_accessor :type, :regulation_id_number, :prior_term
 
-  define_filter :regulation_id_number, :label => "Unified Agenda", :phrase => true do |regulation_id_number|
+  define_filter :regulation_id_number, :label => "Unified Agenda", :phrase => true, :sphinx_type => :with do |regulation_id_number|
     reg = RegulatoryPlan.find_by_regulation_id_number(regulation_id_number)
     ["RIN #{Array(regulation_id_number).first}", reg.try(:title).try(:strip)].join(' - ')
   end

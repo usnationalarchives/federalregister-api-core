@@ -331,6 +331,15 @@ describe "Elasticsearch Entry Search" do
       entries.each{|entry| $entry_repository.save(entry, refresh: true) }
 
       search = EsEntrySearch.new(conditions: {cfr: {title: 38}})
+    end
+
+    it "RIN searches succeed" do
+      entries = [
+        build_entry_double({regulation_id_number: '2070-AJ57', id: 111}),
+      ]
+      entries.each{|entry| $entry_repository.save(entry, refresh: true) }
+
+      search = EsEntrySearch.new(conditions: {regulation_id_number: '2070-AJ57'})
 
       expect(search.results.es_ids).to eq [111]
     end
