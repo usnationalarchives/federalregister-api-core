@@ -192,6 +192,20 @@ class EsApplicationSearch
     with
   end
 
+  def with_for_facets
+    #NOTE: .with has changed to exclude filters with a date selector--this method retains them since publication_date options are used when building facets.  At some point we may want to patch strictly the publication date with options directly to the DateAggregator constructor
+    with = {}
+    @filters.select{|f| f.sphinx_type == :with }.each do |filter|
+      if filter.multi
+        with[filter.sphinx_attribute] ||= []
+        with[filter.sphinx_attribute] << filter.sphinx_value
+      else
+        with[filter.sphinx_attribute] = filter.sphinx_value
+      end
+    end
+    with
+  end
+
   def without
     without = {}
     @filters.select{|f| f.sphinx_type == :without }.each do |filter|

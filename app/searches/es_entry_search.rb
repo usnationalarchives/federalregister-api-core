@@ -330,7 +330,7 @@ j
     es_search                         = self
     es_search.date_histogram_interval = klass.date_histogram_interval
 
-    klass.new(es_search, :with => with)
+    klass.new(es_search, :with => with_for_facets)
   end
 
   def count_in_last_n_days(n)
