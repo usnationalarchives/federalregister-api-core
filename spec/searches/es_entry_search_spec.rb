@@ -363,6 +363,7 @@ describe "Elasticsearch Entry Search" do
     context "handles date attribute queries" do
       [
         #gte, #lte, #is, #year, count
+        [nil, nil, nil, 1999, 1],
         ['2000-01-01', nil, nil, nil, 1],
         [nil, '1999-12-31', nil, nil, 1],
         [nil, '12/31/1999', nil, nil, 1], #e.g. Handles non-iso format

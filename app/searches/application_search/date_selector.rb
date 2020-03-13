@@ -54,9 +54,8 @@ class ApplicationSearch::DateSelector
     elsif @year.present?
       date = Date.parse("#{@year}-01-01")
       {
-        lte: date.year,
-        gte: date.year,
-        format: 'yyyy',
+        gte: "#{date.year}-01-01",
+        lte: "#{date.year}-12-31",
       }
     else
       if @gte.present? || @lte.present?
