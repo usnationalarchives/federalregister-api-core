@@ -469,6 +469,43 @@ describe "Elasticsearch Entry Search" do
       end
     end
 
+    context "pagination" do
+      it "can paginate through results" do
+        documents = [
+          FactoryGirl.create(:entry),
+          FactoryGirl.create(:entry),
+          FactoryGirl.create(:entry),
+          FactoryGirl.create(:entry),
+          FactoryGirl.create(:entry)
+        ].tap do |docs|
+          docs.each do |doc|
+            $entry_repository.save(doc)
+          end
+        end
+        $entry_repository.refresh_index!
+
+        search = EsEntrySearch.new(per_page: 2, conditions: {})
+        expect(search.valid?).to be true
+        expect(search.results.ids).to match_array documents.first(2).map(&:id)
+        expect(search.results.total_pages).to eq 3
+        expect(search.results.previous_page).to eq nil
+
+        # Next page
+        page_2_search = EsEntrySearch.new(per_page: 2, page: search.results.next_page, conditions: {})
+        expect(page_2_search.valid?).to be true
+        expect(page_2_search.results.ids).to match_array documents[2..3].map(&:id)
+        expect(page_2_search.results.total_pages).to eq 3
+        expect(page_2_search.results.previous_page).to eq 1
+
+        # Last page
+        page_3_search = EsEntrySearch.new(per_page: 2, page: page_2_search.results.next_page, conditions: {})
+        expect(page_3_search.valid?).to be true
+        expect(page_3_search.results.ids).to match_array [documents[4].id]
+        expect(page_3_search.results.total_pages).to eq 3
+        expect(page_3_search.results.previous_page).to eq 2
+        expect(page_3_search.results.next_page).to eq nil
+      end
+    end
   end
 
 end

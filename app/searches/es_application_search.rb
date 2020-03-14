@@ -486,7 +486,7 @@ class EsApplicationSearch
     if page == 1
       0
     else
-      ((page - 1) * per_page) + 1
+      ((page - 1) * per_page)
     end
   end
 

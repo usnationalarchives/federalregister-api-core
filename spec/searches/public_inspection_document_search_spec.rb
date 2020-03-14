@@ -162,9 +162,49 @@ describe "ES PI Doc Search" do
       expect(search.valid?).to be true
       expect(search.results.ids).to eq documents.map(&:id)
     end
+
+    it "can paginate through results" do
+      documents = [
+        FactoryGirl.create(:public_inspection_document),
+        FactoryGirl.create(:public_inspection_document),
+        FactoryGirl.create(:public_inspection_document),
+        FactoryGirl.create(:public_inspection_document),
+        FactoryGirl.create(:public_inspection_document)
+      ].tap do |docs|
+        docs.each do |doc|
+          $public_inspection_document_repository.save(doc)
+        end
+      end
+      $public_inspection_document_repository.refresh_index!
+
+      search = EsPublicInspectionDocumentSearch.new(per_page: 2, conditions: {})
+      expect(search.valid?).to be true
+      expect(search.results.ids).to match_array documents.first(2).map(&:id)
+      expect(search.results.total_pages).to eq 3
+      expect(search.results.previous_page).to eq nil
+
+      # Next page
+      page_2_search = EsPublicInspectionDocumentSearch.new(per_page: 2, page: search.results.next_page, conditions: {})
+      expect(page_2_search.valid?).to be true
+      expect(page_2_search.results.ids).to match_array documents[2..3].map(&:id)
+      expect(page_2_search.results.total_pages).to eq 3
+      expect(page_2_search.results.previous_page).to eq 1
+
+      # Last page
+      page_3_search = EsPublicInspectionDocumentSearch.new(per_page: 2, page: page_2_search.results.next_page, conditions: {})
+      expect(page_3_search.valid?).to be true
+      expect(page_3_search.results.ids).to match_array [documents[4].id]
+      expect(page_3_search.results.total_pages).to eq 3
+      expect(page_3_search.results.previous_page).to eq 2
+      expect(page_3_search.results.next_page).to eq nil
+    end
   end
 
-  context "search results" do
+  context "Elasticsearch retrieval" do
+    before(:each) do
+      $public_inspection_document_repository.create_index!(force: true)
+    end
+
     pending "limits fields if specified"
 
     let!(:agency_a) { Factory(:agency) }
@@ -244,6 +284,4 @@ describe "ES PI Doc Search" do
 
     expect(search.results.count).to eq 1
   end
-
-  it "spec that returns an active record collection"
 end
