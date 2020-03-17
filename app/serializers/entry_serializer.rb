@@ -126,8 +126,8 @@ class EntrySerializer
       joins("LEFT OUTER JOIN regulatory_plans ON regulatory_plans.regulation_id_number = entry_regulation_id_numbers.regulation_id_number AND regulatory_plans.current = 1
         LEFT OUTER JOIN regulatory_plans_small_entities ON regulatory_plans_small_entities.regulatory_plan_id = regulatory_plans.id").
       select("regulatory_plans_small_entities.small_entity_id AS small_entity_id").
-      uniq.
-      map{|x| x.small_entity_id || 0}
+      map{|x| x.small_entity_id || 0}.
+      uniq
   end
 
   attribute :significant do |entry|
