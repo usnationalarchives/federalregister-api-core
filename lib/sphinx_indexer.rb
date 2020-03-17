@@ -12,6 +12,7 @@ module SphinxIndexer
 
   def self.rotate_all
     rotate_indices(["--all"])
+    ElasticsearchIndexer.resync_index_auditing
   end
 
   def self.rotate_indices(index_names)

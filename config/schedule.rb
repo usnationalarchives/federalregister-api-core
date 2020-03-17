@@ -58,7 +58,6 @@ if cron_settings["sphinx"]
   every :sunday, at: '3AM' do
     set :log, 'weekly_sphinx_reindex'
     rake "sphinx:rotate_all"
-    rake "entry_delta_auditing:resync_index_auditing"
   end
 end
 
