@@ -92,7 +92,7 @@ ThinkingSphinx::Index.define :entry, :with => :active_record, :delta => Thinking
 
     has "IF(comment_url != '', 1, 0)", :as => :accepting_comments_on_regulations_dot_gov, :type => :boolean
 
-    has <<-SQL, :as => :small_entity_ids, :type => :integer
+    has <<-SQL, :as => :small_entity_ids, :multi => true, :type => :integer
       (
         SELECT GROUP_CONCAT(DISTINCT IFNULL(regulatory_plans_small_entities.small_entity_id,0) SEPARATOR ',')
         FROM entry_regulation_id_numbers
