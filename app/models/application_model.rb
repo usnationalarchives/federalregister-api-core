@@ -40,9 +40,8 @@ class ApplicationModel < ActiveRecord::Base
     raise NotImplementedError
   end
 
-  def self.bulk_index(acive_record_collection, refresh: false)
-    #TODO: Add delete option?
-    body = acive_record_collection.each_with_object(Array.new) do |instance, request_body|
+  def self.bulk_index(active_record_collection, refresh: false)
+    body = active_record_collection.each_with_object(Array.new) do |instance, request_body|
       request_body << { index: { _index: repository.index_name, _id: instance.id } }
       request_body << instance.to_hash
     end
