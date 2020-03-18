@@ -1,5 +1,4 @@
 class PublicInspectionDocument < ApplicationModel
-  include ActiveModel::Serializers::JSON
 
   has_attached_file :pdf,
                     :storage => :s3,
