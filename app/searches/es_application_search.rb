@@ -58,7 +58,6 @@ class EsApplicationSearch
 
         if selector.valid?
           add_filter(
-            #TODO: Potentially pass in an option indicating this is an ES range query?
             :value => selector.sphinx_value,
             :name => selector.filter_name,
             :condition => condition,
@@ -468,7 +467,6 @@ class EsApplicationSearch
   end
 
   def highlight_query
-    #TODO: Consider whether there's a more optimal highlight 'type' option here.
     {
       pre_tags: ['<span class="match">'],
       post_tags: ["</span>"],

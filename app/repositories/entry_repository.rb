@@ -9,7 +9,7 @@ class EntryRepository < BaseRepository
     indexes :regulation_id_number, { type: 'keyword'}
     indexes :docket_id, {type: 'keyword'}
     indexes :document_number, {type: 'keyword'}
-    indexes :type, {type: 'keyword'} #TODO: May be an ES keyword
+    indexes :type, {type: 'keyword'}
     indexes :presidential_document_type_id, {type: 'integer'}
     indexes :publication_date_week, {type: 'date'}
     indexes :publication_date_month, {type: 'date'}

@@ -3,7 +3,6 @@ class EntrySerializer < ApplicationSerializer
   attributes :id, :title, :abstract, :publication_date, :document_number, :presidential_document_type_id, :signing_date, :president_id, :start_page, :executive_order_number, :proclamation_number
 
   attribute :full_text do |entry|
-    #TODO: Consider whether line breaks should be included here
     path = "#{FileSystemPathManager.data_file_path}/documents/full_text/raw/#{entry.document_file_path}.txt"
     if File.file?(path)
       contents = File.read(path)
@@ -43,7 +42,7 @@ class EntrySerializer < ApplicationSerializer
       IF(granule_class = 'PRESDOCU', INTERVAL(DATE_FORMAT(IFNULL(signing_date,DATE_SUB(publication_date, INTERVAL 3 DAY)), '%Y%m%d'),#{President.all.map{|p| p.starts_on.strftime("%Y%m%d")}.join(', ')}), NULL) AS president_id
     SQL
 
-    #TODO: Readdress this so we're not N+1'ing
+    #NOTE: There's a potential performance gain here if this was translated to Ruby
     Entry.where(id: entry.id).select(sql).first&.president_id
   end
 
@@ -118,7 +117,6 @@ class EntrySerializer < ApplicationSerializer
   end
 
   attribute :small_entity_ids do |entry|
-    #TODO: Write spec
     #NOTE: There's likely an indexing performance gain here since this join is expensive and also N+1'ing for each entry.  if we extract this to a custom join called #small_entity_ids and then preload it in the bulk index task.
     small_entity_ids = entry.
       entry_regulation_id_numbers.
