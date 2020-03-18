@@ -1,5 +1,5 @@
 class EntrySearchResult
-  attr_reader :id, :attributes #TODO: possibly move :attributes to private interface
+  attr_reader :id
 
   def initialize(attributes={})
     @attributes = attributes
@@ -13,5 +13,9 @@ class EntrySearchResult
   def highlights
     attributes.dig(:highlight).values.join(' ... ')
   end
+
+  private
+
+  attr_reader :attributes
 
 end

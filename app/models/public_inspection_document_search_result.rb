@@ -2,8 +2,7 @@ class PublicInspectionDocumentSearchResult
   attr_reader :id,
     :agency_ids,
     :special_filing,
-    :title,
-    :attributes
+    :title
 
   def initialize(attributes={})
     @attributes = attributes
@@ -21,4 +20,8 @@ class PublicInspectionDocumentSearchResult
   def highlights
     attributes.dig(:highlight).values.join(' ... ')
   end
+
+  private
+
+  attr_reader :attributes
 end
