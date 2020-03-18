@@ -15,7 +15,10 @@ module ElasticsearchIndexer
   end
 
   BATCH_SIZE = 500
-  def self.reindex_entries
+  def self.reindex_entries(recreate_index: false)
+    if recreate_index
+      $entry_repository.create_index!(force: true)
+    end
     total_entries     = Entry.count
     entries_completed = 0
     Entry.includes(:agency_assignments, :citations, :comments_close_date, :docket_numbers, :effective_date, :entry_regulation_id_numbers, :entry_cfr_references, :place_determinations, :section_assignments, :topic_assignments).find_in_batches(batch_size: BATCH_SIZE) do |entry_batch|
