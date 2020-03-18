@@ -10,7 +10,7 @@ describe EntrySerializer do
       part: 625
     )
 
-    result = described_class.new(entry).to_hash.fetch(:cfr_affected_parts)
+    result = described_class.new(entry).to_h.fetch(:cfr_affected_parts)
 
     expect(result).to eq(
       [5000625]
