@@ -112,8 +112,7 @@ class EntrySerializer < ApplicationSerializer
   end
 
   attribute :accepting_comments_on_regulations_dot_gov do |entry|
-    #TODO: Mirroring the definition from entry_index, but this looks like a bug since some comment_url can be nil...
-    entry.comment_url != ''
+    entry.comment_url.present?
   end
 
   attribute :small_entity_ids do |entry|
