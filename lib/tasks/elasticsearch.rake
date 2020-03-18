@@ -9,12 +9,4 @@ namespace :elasticsearch do
     ElasticsearchIndexer.handle_entry_changes
   end
 
-  task :on => :environment do
-    ElasticsearchIndexer.toggle_on
-  end
-
-  task :off => :environment do
-    ElasticsearchIndexer.toggle_off
-  end
-
 end

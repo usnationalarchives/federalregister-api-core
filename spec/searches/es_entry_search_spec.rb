@@ -1,8 +1,7 @@
 require "spec_helper"
 
 describe "Elasticsearch Entry Search" do
-  before(:all) { ElasticsearchIndexer.toggle_on }
-  after(:all) { ElasticsearchIndexer.toggle_off }
+  before(:each) { allow(ElasticsearchIndexer).to receive(:es_enabled?).and_return(true) }
 
   def build_entry_double(hsh)
     entry = double('entry')

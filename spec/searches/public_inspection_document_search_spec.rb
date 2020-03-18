@@ -1,10 +1,8 @@
 require "spec_helper"
 
 describe "ES PI Doc Search" do
-  before(:all) { ElasticsearchIndexer.toggle_on }
-  after(:all) { ElasticsearchIndexer.toggle_off }
-
   before(:each) do
+    allow(ElasticsearchIndexer).to receive(:es_enabled?).and_return(true)
     $public_inspection_document_repository.create_index!(force: true)
   end
 

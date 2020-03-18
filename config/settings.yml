@@ -8,6 +8,7 @@ shared: &shared
   elasticsearch:
     host: <%= ENV['ELASTICSEARCH_HOST'] || 'admin:admin@localhost:9200/' ||'localhost' %>
     trace: true
+    enabled: <%= ActiveModel::Type::Boolean.new.cast(ENV['ELASTICSEARCH_ENABLED']) %>
 
   varnish:
     host: <%= ENV["VARNISH_ADDR"] || 'varnish' %>

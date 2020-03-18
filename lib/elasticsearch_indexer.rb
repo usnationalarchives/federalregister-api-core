@@ -11,17 +11,7 @@ module ElasticsearchIndexer
 
   ES_TEMP_FILE = "tmp/use_elasticsearch_#{Rails.env}"
   def self.es_enabled?
-    File.file?(ES_TEMP_FILE)
-  end
-
-  def self.toggle_on
-    `touch #{ElasticsearchIndexer::ES_TEMP_FILE}`
-  end
-
-  def self.toggle_off
-    if ElasticsearchIndexer.es_enabled?
-      `rm #{ElasticsearchIndexer::ES_TEMP_FILE}`
-    end
+    SETTINGS['elasticsearch']['enabled']
   end
 
   BATCH_SIZE = 500
