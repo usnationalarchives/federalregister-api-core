@@ -654,7 +654,7 @@ class Entry < ApplicationModel
   end
 
   def to_hash
-    EntrySerializer.new(self).to_hash
+    EntrySerializer.new(self).to_h
   end
 
   private

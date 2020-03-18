@@ -1,5 +1,4 @@
-class EntrySerializer
-  include FastJsonapi::ObjectSerializer
+class EntrySerializer < ApplicationSerializer
 
   attributes :id, :title, :abstract, :publication_date, :document_number, :presidential_document_type_id, :signing_date, :president_id, :start_page, :executive_order_number, :proclamation_number
 
@@ -134,23 +133,6 @@ class EntrySerializer
     (
       RegulatoryPlan::SIGNIFICANT_PRIORITY_CATEGORIES & entry.regulatory_plans.map(&:priority_category)
     ).present?
-  end
-
-  def to_hash #TODO: Extract to Base Serializer since used in Entry and PI
-    data = serializable_hash
-
-    if data[:data].is_a? Hash
-      data[:data][:attributes]
-
-    elsif data[:data].is_a? Array
-      data[:data].map{ |x| x[:attributes] }
-
-    elsif data[:data] == nil
-      nil
-
-    else
-      data
-    end
   end
 
 end
