@@ -8,4 +8,8 @@ class BaseRepository
     search_result_klass.new ActiveSupport::HashWithIndifferentAccess.new(attributes).deep_symbolize_keys
   end
 
+  def update_mapping!
+    client.indices.put_mapping index: index_name,
+      body: mappings.to_hash
+  end
 end

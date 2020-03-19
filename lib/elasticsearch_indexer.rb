@@ -2,11 +2,11 @@ module ElasticsearchIndexer
   INDICES = [$entry_repository, $public_inspection_document_repository]
 
   def self.create_indices
-    INDICES.each {|i| i.create_index}
+    INDICES.each {|i| i.create_index!}
   end
 
   def self.update_mapping
-    INDICES.each {|i| i.update_mapping}
+    INDICES.each {|i| i.update_mapping!}
   end
 
   def self.resync_index_auditing
