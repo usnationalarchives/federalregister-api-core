@@ -6,7 +6,10 @@ module ElasticsearchIndexer
       where(delta: true).
       pluck(:id).
       map{|entry_id| {entry_id: entry_id}}
-    EntryChange.insert_all(entry_change_collection)
+    
+    if entry_change_collection.present?
+      EntryChange.insert_all(entry_change_collection)
+    end
   end
 
   ES_TEMP_FILE = "tmp/use_elasticsearch_#{Rails.env}"
