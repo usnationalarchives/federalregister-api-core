@@ -10,7 +10,7 @@ class PublicInspectionDocumentRepository < BaseRepository
     indexes :docket_id, { type: 'keyword'}
     indexes :document_number, { type: 'keyword' }
     indexes :public_inspection_document_id, { type: 'integer' }
-    indexes :type, { type: 'keyword' } #TODO: type may be a reserved word
+    indexes :type, { type: 'keyword' }
     indexes :agency_ids, { type: 'integer' }
     indexes :publication_date, { type: 'date'}
     indexes :special_filing, { type: 'boolean'}
