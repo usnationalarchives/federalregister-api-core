@@ -92,32 +92,77 @@ describe EsPublicInspectionDocumentSearch do
           title: "llamas",
           full_text: 'goats'
         )
-        $public_inspection_document_repository.save(pi_doc)
-        $public_inspection_document_repository.refresh_index!
+        save_documents_and_refresh_index(pi_doc)
 
         expect(described_class.new(conditions: { term: 'goats' }).results.count).to eq 1
         expect(described_class.new(conditions: { term: 'boats' }).results.count).to eq 0
       end
 
-      it "can search full_text by term with negation" do
-        pi_doc_a = build_pi_doc_double(
-          id: 1,
-          title: "fish fish fish",
-          full_text: "wildlife"
-        )
-        $public_inspection_document_repository.save(pi_doc_a)
+      context "Advanced Search" do
+        context "Boolean Queries" do
+          it "respects the AND operator (&)" do
+            documents = [
+              build_pi_doc_double(id: 1, full_text: "pipes"),
+              build_pi_doc_double(id: 2, full_text: "pipelines"),
+              build_pi_doc_double(id: 3, full_text: "pipes pipelines"),
+            ]
+            save_documents_and_refresh_index(documents)
 
-        pi_doc_b = build_pi_doc_double(
-          id: 1,
-          title: "goats goats goats",
-          full_text: "wildlife"
-        )
-        $public_inspection_document_repository.save(pi_doc_b)
-        $public_inspection_document_repository.refresh_index!
+            expect(described_class.new(conditions: { term: 'pipes' }).results.count).to eq 2
+            expect(described_class.new(conditions: { term: 'pipelines' }).results.count).to eq 2
+            expect(described_class.new(conditions: { term: 'pipes & pipelines' }).results.count).to eq 1
+          end
 
-        expect(described_class.new(conditions: { term: 'goats' }).results.count).to eq 1
-        expect(described_class.new(conditions: { term: '-goats -fish' }).results.count).to eq 0
-        expect(described_class.new(conditions: { term: '-wildlife' }).results.count).to eq 0
+          it "respects the OR operator (|)" do
+            documents = [
+              build_pi_doc_double(id: 1, full_text: "pipes"),
+              build_pi_doc_double(id: 2, full_text: "pipelines"),
+              build_pi_doc_double(id: 3, full_text: "pipes pipelines"),
+            ]
+            save_documents_and_refresh_index(documents)
+
+            expect(described_class.new(conditions: { term: 'pipes' }).results.count).to eq 2
+            expect(described_class.new(conditions: { term: 'pipelines' }).results.count).to eq 2
+            expect(described_class.new(conditions: { term: 'pipes | pipelines' }).results.count).to eq 3
+          end
+
+          it "respects the NOT operator (-)" do
+            documents = [
+              build_pi_doc_double(id: 1, full_text: "pipes"),
+              build_pi_doc_double(id: 2, full_text: "pipelines"),
+              build_pi_doc_double(id: 3, full_text: "pipes pipelines"),
+            ]
+            save_documents_and_refresh_index(documents)
+
+            expect(described_class.new(conditions: { term: '-pipes' }).results.count).to eq 1
+            expect(described_class.new(conditions: { term: '-pipelines' }).results.count).to eq 1
+            expect(described_class.new(conditions: { term: '-pipe' }).results.count).to eq 3
+          end
+
+          it "respects Groupings (())" do
+            documents = [
+              build_pi_doc_double(id: 1, full_text: "pipes strength"),
+              build_pi_doc_double(id: 2, full_text: "pipeline strength"),
+              build_pi_doc_double(id: 3, full_text: "pipes pipelines"),
+            ]
+            save_documents_and_refresh_index(documents)
+
+            expect(described_class.new(conditions: { term: 'strength' }).results.count).to eq 2
+            expect(described_class.new(conditions: { term: '(pipes & strength) | (pipeline & strength)' }).results.count).to eq 2
+          end
+
+          it "searches on an exact phrase" do
+            documents = [
+              build_pi_doc_double(id: 1, full_text: "pipe strength"),
+              build_pi_doc_double(id: 2, full_text: "pipeline strength"),
+              build_pi_doc_double(id: 3, full_text: "pipe strength and pipelines"),
+            ]
+            save_documents_and_refresh_index(documents)
+
+            expect(described_class.new(conditions: { term: '\"pipe strength\"' }).results.count).to eq 2
+            expect(described_class.new(conditions: { term: '\"pipeline strength\"' }).results.count).to eq 1
+          end
+        end
       end
 
       pending "can search agency_name by term" do
