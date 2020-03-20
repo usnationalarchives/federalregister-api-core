@@ -7,6 +7,7 @@ module ApplicationSearch::TermPreprocessor
     processed_term = fix_hypenated_word_searches(processed_term)
     processed_term = use_exact_word_matching_within_phrase(processed_term)
     processed_term = remove_trailing_dashes(processed_term)
+    pp processed_term
     processed_term
   end
 

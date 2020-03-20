@@ -431,7 +431,7 @@ class EsApplicationSearch
   end
 
   def es_term
-    @es_term ||= @term
+    @es_term ||= TermPreprocessor.process_term(@term)
   end
 
 
