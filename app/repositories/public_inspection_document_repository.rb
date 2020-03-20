@@ -14,7 +14,6 @@ class PublicInspectionDocumentRepository < BaseRepository
     indexes :agency_ids, { type: 'integer' }
     indexes :publication_date, { type: 'date'}
     indexes :special_filing, { type: 'boolean'}
-    indexes :docket_numbers, { type: 'object' } # Maybe integer array
     indexes :public_inspection_issues, { type: 'object' }
   end
 
