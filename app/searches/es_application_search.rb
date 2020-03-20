@@ -191,6 +191,19 @@ class EsApplicationSearch
     with
   end
 
+  def es_match_queries
+    with = {}
+    @filters.select{|f| (f.sphinx_type == :es_match_query) && !f.date_selector }.each do |filter|
+      if filter.multi
+        with[filter.sphinx_attribute] ||= []
+        with[filter.sphinx_attribute] << filter.sphinx_value
+      else
+        with[filter.sphinx_attribute] = filter.sphinx_value
+      end
+    end
+    with
+  end
+
   def with_for_facets
     #NOTE: .with has changed to exclude filters with a date selector--this method retains them since publication_date options are used when building facets.  At some point we may want to patch strictly the publication date with options directly to the DateAggregator constructor
     with = {}
@@ -609,6 +622,18 @@ class EsApplicationSearch
             }
           }
         end
+      end
+
+      es_match_queries.each do |(condition, value)|
+        q[:query][:function_score][:query][:bool][:filter] << {
+          bool: {
+            filter: {
+              match: {
+                condition => value
+              }
+            }
+          }
+        }
       end
 
       with_date.each do |condition, date_conditions|

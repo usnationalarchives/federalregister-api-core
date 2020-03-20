@@ -6,7 +6,7 @@ describe EntryRepository do
     expected_mappings = {
       dynamic: "strict",
       properties: {
-        docket_id: {type: 'keyword'},
+        docket_id: {type: 'text', index_options: 'offsets'},
         document_number: {type: 'keyword'},
         type: {type: 'keyword'},
         presidential_document_type_id: {type: 'integer'},

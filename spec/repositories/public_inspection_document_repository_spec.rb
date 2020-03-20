@@ -18,10 +18,7 @@ describe PublicInspectionDocumentRepository do
             type: 'integer'
           },
           docket_id: {
-            type: 'keyword'
-          },
-          docket_numbers: {
-            type: 'object'
+            type: 'text', index_options: 'offsets'
           },
           document_number: {
             type: 'keyword'

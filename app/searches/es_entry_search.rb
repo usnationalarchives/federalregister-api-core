@@ -166,7 +166,7 @@ j
                 :label => "Small Entities Affected"
 
   define_filter :docket_id,
-                :sphinx_type => :with,
+                :sphinx_type => :es_match_query,
                 :phrase => true,
                 :label => "Agency Docket" do |docket|
                   docket.join(', ')

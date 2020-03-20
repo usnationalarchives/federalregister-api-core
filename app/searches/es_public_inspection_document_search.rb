@@ -14,7 +14,7 @@ class EsPublicInspectionDocumentSearch < EsApplicationSearch
                 end
 
   define_filter :docket_id,
-                :sphinx_type => :with,
+                :sphinx_type => :es_match_query,
                 :label => "Agency Docket" do |docket|
                   docket.first
                 end
