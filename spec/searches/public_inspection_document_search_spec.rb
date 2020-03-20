@@ -151,7 +151,7 @@ describe EsPublicInspectionDocumentSearch do
             expect(described_class.new(conditions: { term: '(pipes & strength) | (pipeline & strength)' }).results.count).to eq 2
           end
 
-          it "searches on an exact phrase" do
+          it "searches on an exact phrase (Phrase Search)" do
             documents = [
               build_pi_doc_double(id: 1, full_text: "pipe strength"),
               build_pi_doc_double(id: 2, full_text: "pipeline strength"),
@@ -161,6 +161,49 @@ describe EsPublicInspectionDocumentSearch do
 
             expect(described_class.new(conditions: { term: '\"pipe strength\"' }).results.count).to eq 2
             expect(described_class.new(conditions: { term: '\"pipeline strength\"' }).results.count).to eq 1
+          end
+
+          it "searches on an exact form (Exact Form Search)" do
+            documents = [
+              build_pi_doc_double(id: 1, full_text: "fisheries"),
+              build_pi_doc_double(id: 2, full_text: "fishery"),
+            ]
+            save_documents_and_refresh_index(documents)
+
+            expect(described_class.new(conditions: { term: 'fishery' }).results.count).to eq 2
+            expect(described_class.new(conditions: { term: '=fishery' }).results.count).to eq 1
+          end
+
+          it "searches on an exact phrase (Proximity Search)" do
+            documents = [
+              build_pi_doc_double(id: 1, full_text: "rebuilt vehicular parts"),
+              build_pi_doc_double(id: 2, full_text: "rebuilt foreign boat parts"),
+            ]
+            save_documents_and_refresh_index(documents)
+
+            expect(described_class.new(conditions: { term: '\"rebuilt parts\"~2' }).results.count).to eq 1
+            expect(described_class.new(conditions: { term: '\"rebuilt parts\"~3' }).results.count).to eq 2
+          end
+
+          it "searches on an exact phrase (Quorum Search)" do
+            documents = [
+              build_pi_doc_double(id: 1, full_text: "rebuilt vehicular parts"),
+              build_pi_doc_double(id: 2, full_text: "rebuilt parts"),
+            ]
+            save_documents_and_refresh_index(documents)
+
+            expect(described_class.new(conditions: { term: '\"rebuilt foreign domestic vehicular boat parts\"/3' }).results.count).to eq 1
+            expect(described_class.new(conditions: { term: '\"rebuilt foreign domestic vehicular boat parts\"/2' }).results.count).to eq 2
+          end
+
+          it "searches on an exact phrase (Precedence Search)" do
+            documents = [
+              build_pi_doc_double(id: 1, full_text: "rebuilt or reclaimed vehicular and boat parts"),
+            ]
+            save_documents_and_refresh_index(documents)
+
+            expect(described_class.new(conditions: { term: 'rebuilt << reclaimed << vehicular << parts' }).results.count).to eq 1
+            expect(described_class.new(conditions: { term: 'parts << rebuilt << reclaimed << vehicular' }).results.count).to eq 0
           end
         end
       end
