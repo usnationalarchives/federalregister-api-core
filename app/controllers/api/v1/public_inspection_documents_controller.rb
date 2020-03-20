@@ -47,12 +47,6 @@ class Api::V1::PublicInspectionDocumentsController < ApiController
     end
   end
 
-  def public_inspection_search(params, fields=[])
-    term = params[:conditions] && params[:conditions][:term].present?
-    excerpts = fields.include?(:excerpts)
-
-    PublicInspectionDocument.search_klass.new(deserialized_params.merge(excerpts: term && excerpts))
-  end
 
   def facets
     field_facets = %w(type agency agencies)
@@ -167,7 +161,7 @@ class Api::V1::PublicInspectionDocumentsController < ApiController
     end
     excerpts = fields.include?(:excerpts)
 
-    PublicInspectionDocumentSearch.new(pi_params.merge(excerpts: term && excerpts))
+    PublicInspectionDocument.search_klass.new(pi_params.merge(excerpts: term && excerpts))
   end
 
   def document_data(document, fields)
