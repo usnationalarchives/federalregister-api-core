@@ -80,9 +80,7 @@ describe EsPublicInspectionDocumentSearch do
           title: "goats goats goats",
           full_text: 'llamas'
         )
-
-        $public_inspection_document_repository.save(pi_doc)
-        $public_inspection_document_repository.refresh_index!
+        save_documents_and_refresh_index(pi_doc)
 
         expect(described_class.new(conditions: { term: 'goats' }).results.count).to eq 1
         expect(described_class.new(conditions: { term: 'boats' }).results.count).to eq 0
@@ -133,7 +131,7 @@ describe EsPublicInspectionDocumentSearch do
           id: 1,
         )
         AgencyAssignment.create(assignable: doc, agency: agency)
-        $public_inspection_document_repository.save(doc)
+        save_documents_and_refresh_index(doc)
 
         expect(described_class.new(conditions: { term: 'AgencyA' }).results.count).to eq 1
         expect(described_class.new(conditions: { term: 'AgencyB' }).results.count).to eq 0
@@ -145,12 +143,8 @@ describe EsPublicInspectionDocumentSearch do
         documents = [
           FactoryGirl.create(:public_inspection_document),
           FactoryGirl.create(:public_inspection_document)
-        ].tap do |docs|
-          docs.each do |doc|
-            $public_inspection_document_repository.save(doc)
-          end
-        end
-        $public_inspection_document_repository.refresh_index!
+        ]
+        save_documents_and_refresh_index(documents)
 
         search = described_class.new(per_page: 1, conditions: {})
         expect(search.valid?).to be true
@@ -168,12 +162,8 @@ describe EsPublicInspectionDocumentSearch do
             FactoryGirl.create(:public_inspection_document),
             FactoryGirl.create(:public_inspection_document),
             FactoryGirl.create(:public_inspection_document)
-          ].tap do |docs|
-            docs.each do |doc|
-              $public_inspection_document_repository.save(doc)
-            end
-          end
-          $public_inspection_document_repository.refresh_index!
+          ]
+          save_documents_and_refresh_index(documents)
 
           search = described_class.new(per_page: 2, conditions: {})
           expect(search.valid?).to be true
@@ -235,9 +225,7 @@ describe EsPublicInspectionDocumentSearch do
         end
 
         it 'returns appropriately filtered search results' do
-          $public_inspection_document_repository.save(public_inspection_document_a)
-          $public_inspection_document_repository.save(public_inspection_document_b)
-          $public_inspection_document_repository.refresh_index!
+          save_documents_and_refresh_index([public_inspection_document_a, public_inspection_document_b])
 
           # Fab. PI docs
           search = described_class.new(
@@ -273,4 +261,10 @@ describe EsPublicInspectionDocumentSearch do
       end
     end
   end
+
+  def save_documents_and_refresh_index(documents=[])
+    Array(documents).each{|doc| $public_inspection_document_repository.save(doc)}
+    $public_inspection_document_repository.refresh_index!
+  end
+
 end
