@@ -10,6 +10,10 @@ describe "Elasticsearch Entry Search" do
     entry
   end
 
+  def assert_valid_search(search)
+    expect(search.valid?).to eq(true)
+  end
+
   let!(:entry) do
     Factory(
       :entry,
@@ -126,11 +130,11 @@ describe "Elasticsearch Entry Search" do
           build_entry_double({full_text: 'fried eggs eggplant frittata', id: 888}),
           build_entry_double({agency_name: 'frittata', id: 999}),
         ]
-        Entry.bulk_index(entries)
-        $entry_repository.refresh_index!
+        Entry.bulk_index(entries, refresh: true)
 
         search = EsEntrySearch.new(conditions: {term: '"fried eggs" +(eggplant | potato)'})
 
+        assert_valid_search(search)
         expect(search.results.es_ids).to match_array([777,888])
       end
     end
@@ -141,12 +145,12 @@ describe "Elasticsearch Entry Search" do
         another_entry
       ]
 
-      entries.each{|entry| $entry_repository.save(entry) }
-      $entry_repository.refresh_index!
+      entries.each{|entry| $entry_repository.save(entry, refresh: true) }
 
       search = EsEntrySearch.new(conditions: {significant: 0, term: 'fish'})
       results = search.results
 
+      assert_valid_search(search)
       expect(results.count).to eq(1)
       expect(results.first.id).to eq(another_entry.id)
     end
@@ -165,16 +169,15 @@ describe "Elasticsearch Entry Search" do
         another_entry
       ]
 
-      entries.each{|entry| $entry_repository.save(entry) }
-      $entry_repository.refresh_index!
+      entries.each{|entry| $entry_repository.save(entry, refresh: true) }
 
       search = EsEntrySearch.new(
         excerpts: true,
         conditions: {significant: 0, term: 'fish'}
       )
 
+      assert_valid_search(search)
       result = search.results.first.excerpt
-
       expect(result).to eq("The <span class=\"match\">fish</span> swam across the pond ... <span class=\"match\">fish</span> are great. ... <span class=\"match\">Fish</span> stuff")
     end
 
@@ -184,25 +187,23 @@ describe "Elasticsearch Entry Search" do
         another_entry
       ]
 
-      Entry.bulk_index(entries)
-      $entry_repository.refresh_index!
+      Entry.bulk_index(entries, refresh: true)
 
       search = EsEntrySearch.new(conditions: {significant: 0, term: 'fish'})
-      results = search.results
 
-      expect(results.count).to eq(1)
-      expect(results.first.id).to eq(another_entry.id)
+      assert_valid_search(search)
+      expect(search.results.es_ids).to eq([another_entry.id])
     end
 
     it "handles type attribute that was formerly CRC32-processed in Sphinx" do
       entries = [
         build_entry_double({type: ["RULE"], id: 111}),
       ]
-      entries.each{|entry| $entry_repository.save(entry) }
-      $entry_repository.refresh_index!
+      entries.each{|entry| $entry_repository.save(entry, refresh: true) }
 
       search = EsEntrySearch.new(conditions: {type: ["RULE", "NOTICE"]})
 
+      assert_valid_search(search)
       expect(search.results.es_ids).to eq [111]
     end
 
@@ -210,11 +211,11 @@ describe "Elasticsearch Entry Search" do
       entries = [
         build_entry_double({document_number: "93-31907", id: 111}),
       ]
-      entries.each{|entry| $entry_repository.save(entry) }
-      $entry_repository.refresh_index!
+      entries.each{|entry| $entry_repository.save(entry, refresh: true) }
 
       search = EsEntrySearch.new(conditions: {document_numbers: ["93-31907"]})
 
+      assert_valid_search(search)
       expect(search.results.es_ids).to eq [111]
     end
 
@@ -223,19 +224,18 @@ describe "Elasticsearch Entry Search" do
         build_entry_double({title: 'fish', id: 888}),
         build_entry_double({title: 'goat', id: 999})
       ]
-      entries.each{|entry| $entry_repository.save(entry) }
-      $entry_repository.refresh_index!
+      Entry.bulk_index(entries, refresh: true)
 
       search = EsEntrySearch.new(conditions: {term: 'fish'})
 
-      expect(search.results.count).to eq 1
+      assert_valid_search(search)
+      expect(search.results.es_ids).to eq [888]
     end
 
     it "If no entries meet the criteria, count is zero" do
-      $entry_repository.refresh_index!
-
       search = EsEntrySearch.new(conditions: {significant: 1})
 
+      assert_valid_search(search)
       expect(search.results.count).to eq 0
     end
 
@@ -249,7 +249,8 @@ describe "Elasticsearch Entry Search" do
 
       search = EsEntrySearch.new(conditions: {significant: 1})
 
-      expect(search.results.count).to eq 1
+      assert_valid_search(search)
+      expect(search.results.es_ids).to eq [888]
     end
 
     it "applies basic sort order correctly" do
@@ -257,11 +258,11 @@ describe "Elasticsearch Entry Search" do
         build_entry_double(publication_date: '2000-01-01', id: 888),
         build_entry_double(publication_date: '2000-12-31', id: 999),
       ]
-      entries.each{|entry| $entry_repository.save(entry) }
-      $entry_repository.refresh_index!
+      Entry.bulk_index(entries, refresh: true)
 
       search = EsEntrySearch.new(conditions: {}, order: 'newest')
 
+      assert_valid_search(search)
       expect(search.results.es_ids).to eq([999,888])
     end
 
@@ -270,9 +271,7 @@ describe "Elasticsearch Entry Search" do
         entry,
         Factory(:entry, presidential_document_type_id: PresidentialDocumentType::DETERMINATION.id)
       ]
-      entries.each{|entry| $entry_repository.save(entry) }
-
-      $entry_repository.refresh_index!
+      Entry.bulk_index(entries, refresh: true)
 
       search = EsEntrySearch.new(
         conditions: {
@@ -280,21 +279,22 @@ describe "Elasticsearch Entry Search" do
         }
       )
 
+      assert_valid_search(search)
       expect(search.results.count).to eq 1
     end
 
     it "handles Sphinx multi-value attribute queries" do
       agencies = (1..2).map{ Factory.create(:agency) } #Note that actual agencies must exist in order for the search to register the filter
       entries = [
-        build_entry_double({agency_ids: agencies.first.id, id: 111 }),
+        build_entry_double({agency_ids: [agencies.first.id], id: 111 }),
         build_entry_double({agency_ids: agencies.last.id, id: 222 }),
         build_entry_double({agency_ids: [], id: 333 })
       ]
-      entries.each{|entry| $entry_repository.save(entry) }
-      $entry_repository.refresh_index!
+      Entry.bulk_index(entries, refresh: true)
 
       search = EsEntrySearch.new(conditions: {agency_ids: agencies.map(&:id) })
 
+      assert_valid_search(search)
       expect(search.results.es_ids).to eq([111,222])
     end
 
@@ -307,6 +307,7 @@ describe "Elasticsearch Entry Search" do
 
       search = EsEntrySearch.new(conditions: {docket_id: "USCG-2016"})
 
+      assert_valid_search(search)
       expect(search.results.es_ids).to eq [111]
     end
 
@@ -318,6 +319,7 @@ describe "Elasticsearch Entry Search" do
 
       search = EsEntrySearch.new(conditions: {docket_id: "EPA-HQ-OPPT-2005-0049"})
 
+      assert_valid_search(search)
       expect(search.results.es_ids).to eq []
     end
 
@@ -330,6 +332,7 @@ describe "Elasticsearch Entry Search" do
 
       search = EsEntrySearch.new(conditions: {cfr: {title: 38}})
 
+      assert_valid_search(search)
       expect(search.results.es_ids).to eq [111]
     end
 
@@ -341,6 +344,7 @@ describe "Elasticsearch Entry Search" do
 
       search = EsEntrySearch.new(conditions: {cfr: {title: 38, part: '3-4'}})
 
+      assert_valid_search(search)
       expect(search.results.es_ids).to eq [111]
     end
 
@@ -352,6 +356,7 @@ describe "Elasticsearch Entry Search" do
 
       search = EsEntrySearch.new(conditions: {regulation_id_number: '2070-AJ57'})
 
+      assert_valid_search(search)
       expect(search.results.es_ids).to eq [111]
     end
 
@@ -365,6 +370,7 @@ describe "Elasticsearch Entry Search" do
 
       search = EsEntrySearch.new(conditions: {citing_document_numbers: [cited_entry.document_number, another_cited_entry.document_number]})
 
+      assert_valid_search(search)
       expect(search.results.es_ids).to match_array( [entry_with_cited_entries.id, another_entry_with_cited_entries.id])
     end
 
@@ -373,12 +379,11 @@ describe "Elasticsearch Entry Search" do
       entries = [
         build_entry_double({place_ids: [444,555], id: 999}),
       ]
-      entries.each{|entry| $entry_repository.save(entry) }
-      $entry_repository.refresh_index!
+      entries.each{|entry| $entry_repository.save(entry, refresh: true) }
 
       search = EsEntrySearch.new(conditions: {:near => {:location => "94118", :within => 50}})
 
-      expect(search.valid?).to eq(true)
+      assert_valid_search(search)
       expect(search.results.es_ids).to eq([999])
     end
 
@@ -408,85 +413,79 @@ describe "Elasticsearch Entry Search" do
           Entry.bulk_index(entries, refresh: true)
 
           search = EsEntrySearch.new(conditions: {publication_date: publication_date_conditions} )
+
+          assert_valid_search(search)
           expect(search.results.count).to eq(count)
         end
       end
     end
 
-    context "queries on former with_all sphinx attributes" do # TODO: change to 'with'
+    context "queries on former with_all sphinx attributes" do
       it "can search by section_id" do
         section_a = Factory(:section)
         section_b = Factory(:section)
-
         entries = [
           build_entry_double({section_ids: [section_a.id], id: 999}),
           build_entry_double({section_ids: [section_b.id], id: 998}),
           build_entry_double({section_ids: [section_a.id, section_b.id], id: 997}),
         ]
-
-        entries.each{|entry| $entry_repository.save(entry) }
-        $entry_repository.refresh_index!
+        Entry.bulk_index(entries, refresh: true)
 
         search = EsEntrySearch.new(conditions: {section_ids: [section_a.id] })
 
+        assert_valid_search(search)
         expect(search.results.es_ids).to eq([999, 997])
       end
 
       it "can search by section (slug)" do
         section_a = Factory(:section)
         section_b = Factory(:section)
-
         entries = [
           build_entry_double({section_ids: [section_a.id], id: 999}),
           build_entry_double({section_ids: [section_b.id], id: 998}),
           build_entry_double({section_ids: [section_a.id, section_b.id], id: 997}),
         ]
-
-        entries.each{|entry| $entry_repository.save(entry) }
-        $entry_repository.refresh_index!
+        Entry.bulk_index(entries, refresh: true)
 
         search = EsEntrySearch.new(conditions: {sections: [section_a.slug] })
 
+        assert_valid_search(search)
         expect(search.results.es_ids).to eq([999, 997])
       end
 
       it "can search by topic_ids" do
         topic_a = Factory(:topic)
         topic_b = Factory(:topic)
-
         entry_a = Factory(:entry).tap do |e|
           e.topic_assignments.create(topic: topic_a)
         end
         entry_b = Factory(:entry).tap do |e|
           e.topic_assignments.create(topic: topic_b)
         end
-
         entries = [entry_a, entry_b]
-        entries.each{|entry| $entry_repository.save(entry) }
-        $entry_repository.refresh_index!
+        Entry.bulk_index(entries, refresh: true)
 
         search = EsEntrySearch.new(conditions: {topic_ids: [topic_a.id] })
 
+        assert_valid_search(search)
         expect(search.results.es_ids).to eq([entry_a.id])
       end
 
       it "can search by topic (slug)" do
         topic_a = Factory(:topic)
         topic_b = Factory(:topic)
-
         entry_a = Factory(:entry).tap do |e|
           e.topic_assignments.create(topic: topic_a)
         end
         entry_b = Factory(:entry).tap do |e|
           e.topic_assignments.create(topic: topic_b)
         end
-
         entries = [entry_a, entry_b]
-        entries.each{|entry| $entry_repository.save(entry) }
-        $entry_repository.refresh_index!
+        Entry.bulk_index(entries, refresh: true)
 
         search = EsEntrySearch.new(conditions: {topics: [topic_a.slug] })
 
+        assert_valid_search(search)
         expect(search.results.es_ids).to eq([entry_a.id])
       end
     end
