@@ -1,1 +1,30 @@
 <% super_title 'Admin Home' %>
+
+<h2>Non-Critical Alerting</h2>
+
+<p>
+  If any part of FederalRegister.gov is experiencing a non-critical issue - anything that effects a small number of users or can be handled in the normal course of business then use the FR2 Basecamp project to ensure that the issue gets to correct members of the development team. You may also want to check in with your department head as the issue may already have been reported.
+<p>
+
+<p>Non-critical errors encompass the majority of support requests.</p>
+
+<p>
+  Basecamp: <strong><a href="<%= SETTINGS['admin']['basecamp_url'] %>"><%= SETTINGS['admin']['basecamp_url'] %></a><strong>
+</p>
+
+<hr>
+
+<h2>Critical Issue Alerting</h2>
+
+<p>
+  If FederalRegister.gov is experiencing a critical issue (site down, data not importing, etc.), you can use the email address below to generate an emergency alert for the development team.
+</p>
+
+<p>
+  This alert will automatically generate repeating text messages and phone calls to the development team until it is acknowledged by a member of the team. This alert is set up to function 24/7.
+</p>
+
+<p>
+  Email: <strong><%= SETTINGS['admin']['pager_duty_email'] %></strong>
+</p>
+
