@@ -310,6 +310,17 @@ describe "Elasticsearch Entry Search" do
       expect(search.results.es_ids).to eq [111]
     end
 
+    it "doesn't overmatch docket ids" do
+      entries = [
+        build_entry_double({docket_id: ["OPPT-59331"], id: 111}),
+      ]
+      entries.each{|entry| $entry_repository.save(entry, refresh: true) }
+
+      search = EsEntrySearch.new(conditions: {docket_id: "EPA-HQ-OPPT-2005-0049"})
+
+      expect(search.results.es_ids).to eq []
+    end
+
     it "cfr single value searches succeed" do
       search = EsEntrySearch.new(conditions: {cfr: {title: 38}})
       entries = [

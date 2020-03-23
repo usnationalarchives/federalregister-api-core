@@ -628,8 +628,10 @@ class EsApplicationSearch
         q[:query][:function_score][:query][:bool][:filter] << {
           bool: {
             filter: {
-              match: {
-                condition => value
+              match_phrase: {
+                condition => {
+                  query: value,
+                }
               }
             }
           }
