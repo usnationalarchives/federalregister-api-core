@@ -25,7 +25,7 @@ describe EntryRepository do
         title: {type: 'text', index_options: 'offsets'},
         full_text: {type: 'text', index_options: 'offsets'},
         id: {type: 'integer'},
-        regulation_id_number: {type: 'keyword'},
+        regulation_id_number: {type: 'text', index_options: 'offsets'},
         abstract: {type: 'text', index_options: 'offsets'},
 
         # Formerly Sphinx multi-value attributes

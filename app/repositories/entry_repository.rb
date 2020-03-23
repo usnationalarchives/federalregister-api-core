@@ -6,7 +6,7 @@ class EntryRepository < BaseRepository
     indexes :title, { type: 'text', index_options: 'offsets'}
     indexes :abstract, { type: 'text', index_options: 'offsets'}
     indexes :full_text, { type: 'text', index_options: 'offsets'}
-    indexes :regulation_id_number, { type: 'keyword'}
+    indexes :regulation_id_number, { type: 'text', index_options: 'offsets'}
     indexes :docket_id, {type: 'text', index_options: 'offsets'}
     indexes :document_number, {type: 'keyword'}
     indexes :type, {type: 'keyword'}
