@@ -369,14 +369,16 @@ describe "Elasticsearch Entry Search" do
     end
 
     it "handles geolocation search" do
+      allow_any_instance_of(ApplicationSearch::PlaceSelector).to receive(:place_ids).and_return([444])
       entries = [
         build_entry_double({place_ids: [444,555], id: 999}),
       ]
       entries.each{|entry| $entry_repository.save(entry) }
       $entry_repository.refresh_index!
 
-      search = EsEntrySearch.new(conditions: {place_ids: [444] })
+      search = EsEntrySearch.new(conditions: {:near => {:location => "94118", :within => 50}})
 
+      expect(search.valid?).to eq(true)
       expect(search.results.es_ids).to eq([999])
     end
 
