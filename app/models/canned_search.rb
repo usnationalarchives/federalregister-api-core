@@ -39,7 +39,7 @@ class CannedSearch < ApplicationModel
   end
 
   def search
-    @search ||= EntrySearch.new(:conditions => search_conditions, :order => "newest")
+    @search ||= Entry.search_klass.new(:conditions => search_conditions, :order => "newest")
   end
 
   def documents_in_last(time_frame)

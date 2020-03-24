@@ -136,7 +136,7 @@ class Issue < ApplicationModel
   private
 
   def eventful_entries_search
-    EntrySearch.new(
+    Entry.search_klass.new(
       :conditions => {
         :term => "(#{Event::PUBLIC_MEETING_PHRASES.map{|phrase| "\"#{phrase}\""}.join('|')})",
         :publication_date => {:is => publication_date.to_s}

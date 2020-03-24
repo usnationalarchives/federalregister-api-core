@@ -85,7 +85,7 @@ class FrIndexPresenter
   private
 
   def raw_entry_counts_by_agency_id
-    @raw_entry_counts_by_agency_id ||= EntrySearch.new(
+    @raw_entry_counts_by_agency_id ||= Entry.search_klass.new(
       :conditions => {:publication_date => publication_date_conditions}
     ).agency_facets.inject({}) do |hsh, facet|
       hsh[facet.value] = facet.count
