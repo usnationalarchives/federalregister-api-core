@@ -528,12 +528,14 @@ class EsApplicationSearch
     )
   end
 
+  TERM_AGGREGATION_SIZE = 1000
   def facet_calculator_search_options
     search_options.merge(
       aggregations: {
         "group_by_facet": {
           "terms": {
-            "field": aggregation_field
+            "field": aggregation_field,
+            "size": TERM_AGGREGATION_SIZE,
           }
         }
       }
