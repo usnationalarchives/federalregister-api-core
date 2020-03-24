@@ -5,7 +5,7 @@ class Content::EntryImporter::BulkdataFile
 
   attr_reader :path_manager
 
-  def initialize(date, force_reload_bulkdata)
+  def initialize(date, force_reload_bulkdata=false)
     @force_reload_bulkdata = force_reload_bulkdata
     @date = date.is_a?(String) ? Date.parse(date) : date
     @path_manager = FileSystemPathManager.new(@date)

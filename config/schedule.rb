@@ -43,7 +43,7 @@ if cron_settings["import"]
   end
 
   # Warn us of late content
-  every '0 8 * * 1-5' do
+  every '0 7,8 * * 1-5' do
     set  :log, 'late_content'
     rake 'notifications:content:late'
   end

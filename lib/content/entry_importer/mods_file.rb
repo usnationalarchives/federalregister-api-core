@@ -3,7 +3,7 @@ class Content::EntryImporter::ModsFile
 
   extend Memoist
 
-  def initialize(date, force_reload_mods)
+  def initialize(date, force_reload_mods=false)
     @date = date.is_a?(String) ? Date.parse(date) : date
     @force_reload_mods = force_reload_mods
   end

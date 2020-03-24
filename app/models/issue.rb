@@ -42,6 +42,14 @@ class Issue < ApplicationModel
     !(date.wday == 0 || date.wday == 6 || Holiday.find_by_date(date))
   end
 
+  def self.bulk_data_missing?(date)
+    ! File.exists? FileSystemPathManager.new(date).document_issue_xml_path
+  end
+
+  def self.mods_missing?(date)
+    ! File.exists? FileSystemPathManager.new(date).document_mods_path
+  end
+
   def self.next_date_to_import
     date = Date.current
 

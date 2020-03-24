@@ -58,6 +58,33 @@ class Mailer < ActionMailer::Base
          sent_on:    Time.current
   end
 
+  def ofr_gpo_content_notification(message)
+    sendgrid_category "OFR/GPO Notification Email"
+
+    recipients = FR_DEVELOPER_ADMINS
+    if RAILS_ENV == 'production'
+      recipients += %w(
+        govinfo-support@gpo.gov
+        ofrtechgroup@gpo.gov
+        jhmartinez@gpo.gov
+        mvincent@gpo.gov
+        sfrattini@gpo.gov
+        mscott@gpo.gov
+        jmarlor@gpo.gov
+        ktilliman@gpo.gov
+      )
+    end
+    sendgrid_recipients recipients
+
+    @message = message
+
+    mail to:         recipients,
+         subject:    "[FederalRegister.gov Notification] #{Rails.env} -- Urgent Content Notification",
+         from:       "Federal Register Admin <no-reply@mail.federalregister.gov>",
+         recipients: 'nobody@federalregister.gov', # should use sendgrid_recipients for actual recipient list
+         sent_on:    Time.current
+  end
+
   def pager_duty(message)
     sendgrid_category "Pager Duty Email"
 
