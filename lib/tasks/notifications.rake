@@ -9,11 +9,11 @@ namespace :notifications do
         messages = []
         
         if Issue.bulk_data_missing?
-          messages << "Bulkdata XML file for #{date} is not available. It is expected to be present at #{Content::EntryImporter::BulkdataFile.new(date).url}"
+          messages << "Bulkdata XML file for #{date} appears to be unavailable. It is expected to be present at #{Content::EntryImporter::BulkdataFile.new(date).url}"
         end
 
         if Issue.mods_missing?
-          messages << "MODS XML file for #{date} is not available. It is expected to be present at #{Content::EntryImporter::ModsFile.new(date).url}"
+          messages << "MODS XML file for #{date} appears to be unavailable. It is expected to be present at #{Content::EntryImporter::ModsFile.new(date).url}"
         end
 
         Mailer.ofr_gpo_content_notification(messages.join("\n\n")).deliver_now unless messages.empty?
