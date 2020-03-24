@@ -7,7 +7,7 @@ shared: &shared
     pager_duty_email: <%= ENV['ADMIN_PAGER_DUTY_EMAIL'] %>
   elasticsearch:
     host: <%= ENV['ELASTICSEARCH_HOST'] %>
-    trace: true
+    trace: false
     enabled: <%= ActiveModel::Type::Boolean.new.cast(ENV['ELASTICSEARCH_ENABLED']) %>
 
   varnish:
