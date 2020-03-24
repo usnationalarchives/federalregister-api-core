@@ -162,4 +162,9 @@ class EsPublicInspectionDocumentSearch < EsApplicationSearch
   def repository
     $public_inspection_document_repository
   end
+
+  def es_fields_with_boosts
+    ['title^10', 'full_text^2', 'agency_name^1']
+  end
+
 end

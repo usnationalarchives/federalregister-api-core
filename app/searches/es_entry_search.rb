@@ -508,4 +508,8 @@ j
     $entry_repository
   end
 
+  def es_fields_with_boosts
+    ['title^10', 'full_text^2', 'agency_name^1', 'abstract^5']
+  end
+
 end

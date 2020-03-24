@@ -579,7 +579,7 @@ class EsApplicationSearch
           {
             simple_query_string: {
               query:            es_term,
-              fields:           ['title', 'full_text', 'agency_name', 'abstract'],
+              fields:           es_fields_with_boosts,
               default_operator: 'and'
             }
           }
@@ -725,4 +725,9 @@ class EsApplicationSearch
       end
     end
   end
+
+  def es_fields_with_boosts
+    raise NotImplementedError #no-op
+  end
+
 end
