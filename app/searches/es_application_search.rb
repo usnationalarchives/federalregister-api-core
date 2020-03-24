@@ -666,7 +666,7 @@ class EsApplicationSearch
         "filter": {
           "range": {
             "publication_date": {
-              "gt": 'now-5d'
+              "gte": 'now-5d'
             }
           }
         }
