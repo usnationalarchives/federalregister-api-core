@@ -23,7 +23,7 @@ class Mailer < ActionMailer::Base
     sendgrid_category "Daily Import Update Admin Email"
 
     recipients = FR_DEVELOPER_ADMINS
-    if RAILS_ENV == 'production'
+    if Rails.env.production?
       recipients += %w(
         mvincent@gpo.gov mscott@gpo.gov sfrattini@gpo.gov
         kgreen@gpo.gov aotovo@gpo.gov tellis@gpo.gov
@@ -40,7 +40,7 @@ class Mailer < ActionMailer::Base
     @problematic_document_presenter = ProblematicDocumentPresenter.new(date)
 
     mail to:         recipients,
-         subject:    "[FR Admin] Daily Import Update for #{date} (#{RAILS_ENV})",
+         subject:    "[FR Admin] Daily Import Update for #{date} (#{Rails.env})",
          from:       "Federal Register Admin <no-reply@mail.federalregister.gov>",
          recipients: 'nobody@federalregister.gov', # should use sendgrid_recipients for actual recipient list
          sent_on:    Time.current
@@ -62,7 +62,7 @@ class Mailer < ActionMailer::Base
     sendgrid_category "OFR/GPO Notification Email"
 
     recipients = FR_DEVELOPER_ADMINS
-    if RAILS_ENV == 'production'
+    if Rails.env.production?
       recipients += %w(
         govinfo-support@gpo.gov
         ofrtechgroup@gpo.gov
