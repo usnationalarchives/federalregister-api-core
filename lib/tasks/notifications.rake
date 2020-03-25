@@ -2,7 +2,7 @@ namespace :notifications do
   namespace :content do
     desc "Triggers emails/pager duty if content is late"
     task :late => :environment do
-      return unless Rails.env.production?
+      next unless Rails.env.production?
 
       if Issue.current_issue_is_late?("7AM")
         date = Time.current.to_date
