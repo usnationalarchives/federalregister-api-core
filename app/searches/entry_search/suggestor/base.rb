@@ -18,7 +18,7 @@ class EntrySearch::Suggestor::Base
 
   def suggestion
     @suggestion ||= if @conditions
-                      search = EntrySearch.new(:conditions => @conditions.deep_symbolize_keys.merge(:term => term))
+                      search = Entry.search_klass.new(:conditions => @conditions.deep_symbolize_keys.merge(:term => term))
                       search.prior_term = @prior_term if @prior_term
                       search
                     end

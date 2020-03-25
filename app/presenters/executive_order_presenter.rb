@@ -9,7 +9,7 @@ module ExecutiveOrderPresenter
     end
 
     def executive_orders
-      EntrySearch.new(:conditions => {
+      Entry.search_klass.new(:conditions => {
         :president => @president.identifier,
         :publication_date => {:year => @year},
         :type => "PRESDOCU",

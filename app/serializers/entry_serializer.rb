@@ -58,7 +58,7 @@ class EntrySerializer < ApplicationSerializer
     entry.
       entry_cfr_references.
       map do |entry_cfr_reference|
-        entry_cfr_reference.title * EntrySearch::CFR::TITLE_MULTIPLIER + (entry_cfr_reference.part || 0)
+        entry_cfr_reference.title * Entry.search_klass::CFR::TITLE_MULTIPLIER + (entry_cfr_reference.part || 0)
       end.
       uniq
   end

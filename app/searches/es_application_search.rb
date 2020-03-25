@@ -407,6 +407,7 @@ class EsApplicationSearch
 
   def regulatory_plan_count
     RegulatoryPlanSearch.new(:conditions => {:term => @term}).term_count
+    Entry.search_klass.new(:conditions => {:term => @term}).term_count
   end
 
   def to_json

@@ -32,7 +32,7 @@ module SearchHelper
   end
 
   def entry_count_for_search_term(search_term)
-    EntrySearch.new(:conditions => {:term => search_term}).count
+    Entry.search_klass.new(:conditions => {:term => search_term}).count
   end
 
   def conditions_for_subscription(search)

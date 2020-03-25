@@ -46,7 +46,7 @@ class FrIndexPresenter
     end
 
     def entry_ids_for_year
-      @entry_ids_for_year ||= EntrySearch.new(
+      @entry_ids_for_year ||= Entry.search_klass.new(
         :conditions => sphinx_conditions.merge(:publication_date => {:year => year}),
         :maximum_per_page => 10000,
         :per_page => 10000
@@ -60,7 +60,7 @@ class FrIndexPresenter
     private
 
     def entry_ids
-      EntrySearch.new(
+      Entry.search_klass.new(
         :conditions => sphinx_conditions,
         :maximum_per_page => 10000,
         :per_page => 10000
