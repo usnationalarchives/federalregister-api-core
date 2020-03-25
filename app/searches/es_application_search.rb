@@ -233,12 +233,6 @@ class EsApplicationSearch
     repository.search(search_options.recursive_merge(args)).results.map(&:id)
   end
 
-  def chainable_results(args = {})
-    model.
-      where(id: result_ids(args)).
-      recursive_merge(args.slice(:joins, :includes, :select))
-  end
-
   class ActiveRecordCollectionMetadataWrapper
     # Used to provide a way for AR collection to respond to former TS collection args (e.g. next_page, previous_page)
     delegate_missing_to :@active_record_collection
@@ -394,19 +388,6 @@ class EsApplicationSearch
   end
 
   def entry_count
-    EntrySearch.new(:conditions => {:term => @term}).term_count
-  end
-
-  def public_inspection_document_count
-    PublicInspectionDocumentSearch.new(:conditions => {:term => @term}).term_count
-  end
-
-  def event_count
-    EventSearch.new(:conditions => {:term => @term}).term_count
-  end
-
-  def regulatory_plan_count
-    RegulatoryPlanSearch.new(:conditions => {:term => @term}).term_count
     Entry.search_klass.new(:conditions => {:term => @term}).term_count
   end
 
