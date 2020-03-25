@@ -1,7 +1,16 @@
 namespace :notifications do
   namespace :content do
-    desc "Triggers emails/pager duty if content is late"
+    desc "Triggers pager duty if content is late"
     task :late => :environment do
+      next unless Rails.env.production?
+
+      if Issue.current_issue_is_late?("8AM")
+        Mailer.pager_duty("FR content is late!").deliver_now
+      end
+    end
+
+    desc "Triggers emails if content is late and missing"
+    task :missing => :environment do
       next unless Rails.env.production?
 
       if Issue.current_issue_is_late?("7AM")
@@ -17,10 +26,6 @@ namespace :notifications do
         end
 
         Mailer.ofr_gpo_content_notification(messages.join("\n\n")).deliver_now unless messages.empty?
-      end
-
-      if Issue.current_issue_is_late?("8AM")
-        Mailer.pager_duty("FR content is late!").deliver_now
       end
     end
   end
