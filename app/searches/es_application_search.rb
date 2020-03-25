@@ -228,9 +228,9 @@ class EsApplicationSearch
   end
 
   def result_ids(args = {})
-    sphinx_search(sphinx_term,
-      search_options.merge(:ids_only => true).recursive_merge(args)
-    )
+    Honeybadger.notify("Not expecting this method to be invoked with args.")
+
+    repository.search(search_options.recursive_merge(args)).results.map(&:id)
   end
 
   def chainable_results(args = {})
