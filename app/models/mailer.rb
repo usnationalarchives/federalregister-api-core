@@ -76,6 +76,8 @@ class Mailer < ActionMailer::Base
     end
     sendgrid_recipients recipients
 
+    sendgrid_disable :ganalytics
+
     @message = message
 
     mail to:         recipients,
