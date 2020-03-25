@@ -8,11 +8,11 @@ namespace :notifications do
         date = Time.current.to_date
         messages = []
         
-        if Issue.bulk_data_missing?
+        if Issue.bulk_data_missing?(date)
           messages << "Bulkdata XML file for #{date} appears to be unavailable. It is expected to be present at #{Content::EntryImporter::BulkdataFile.new(date).url}"
         end
 
-        if Issue.mods_missing?
+        if Issue.mods_missing?(date)
           messages << "MODS XML file for #{date} appears to be unavailable. It is expected to be present at #{Content::EntryImporter::ModsFile.new(date).url}"
         end
 
