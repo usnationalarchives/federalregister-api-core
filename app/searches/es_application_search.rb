@@ -228,7 +228,9 @@ class EsApplicationSearch
   end
 
   def result_ids(args = {})
-    Honeybadger.notify("Not expecting this method to be invoked with args.")
+    if args.present?
+      Honeybadger.notify("Not expecting this method to be invoked with args.")
+    end
 
     repository.search(search_options.recursive_merge(args)).results.map(&:id)
   end
