@@ -48,7 +48,7 @@ class EntrySerializer < ApplicationSerializer
 
   attribute :correction do |entry|
     entry.granule_class == 'CORRECT' ||
-    entry.correction_of_id ||
+    !entry.correction_of_id.nil? ||
     (
       (entry.executive_order_number == 0) || entry.executive_order_number.nil?
     )
