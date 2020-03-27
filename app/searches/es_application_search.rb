@@ -648,26 +648,15 @@ class EsApplicationSearch
   def es_scoring_functions
     [
       {
-        "weight": 5,
-        "filter": {
-          "range": {
+        "gauss": {
             "publication_date": {
-              "gte": 'now-5d'
+                "origin": "now",
+                "scale":  "365d",
+                "offset": "30d",
+                "decay":  "0.5" #0.5 is the default
             }
-          }
-        }
-      },
-      {
-        "weight": 2,
-        "filter": {
-          "range": {
-            "publication_date": {
-              "lt": 'now-5d',
-              "gt": 'now-1y'
-            }
-          }
-        }
-      },
+        },
+      }
     ]
   end
 
