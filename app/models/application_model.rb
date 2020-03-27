@@ -47,7 +47,17 @@ class ApplicationModel < ActiveRecord::Base
     end
 
     begin
-      repository.client.bulk body: body, refresh: refresh
+      response = repository.client.bulk body: body, refresh: refresh
+      if response.fetch('errors')
+        failed_items  = response.fetch('items').select{|x| x.fetch('index')['error'] }
+        failed_ids    = failed_items.map{|x| x.fetch("index").fetch("_id") }
+        error_message = "Some entries failed during the bulk index (entry_ids: #{failed_ids}).  Full errors: #{failed_items}"
+        if Rails.env.development?
+          raise error_message
+        else
+          Honeybadger.notify(error_message)
+        end
+      end
     rescue Faraday::TimeoutError
       retry
     end
