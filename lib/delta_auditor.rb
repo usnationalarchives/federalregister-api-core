@@ -1,7 +1,11 @@
 class DeltaAuditor
+  cattr_accessor :disabled
+
   class DeltaDifferenceError < StandardError; end
 
   def self.perform
+    return if disabled
+
     entry_delta_count  = Entry.where(delta: true).count
     entry_change_count = EntryChange.joins(:entry).count
 

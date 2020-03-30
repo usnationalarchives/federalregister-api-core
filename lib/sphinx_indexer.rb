@@ -11,8 +11,10 @@ module SphinxIndexer
   end
 
   def self.rotate_all
+    DeltaAuditor.disabled = true
     rotate_indices(["--all"])
     ElasticsearchIndexer.resync_index_auditing
+    DeltaAuditor.disabled = false
   end
 
   def self.rotate_indices(index_names)

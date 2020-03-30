@@ -12,4 +12,10 @@ describe DeltaAuditor do
     expect{DeltaAuditor.perform}.not_to raise_error
   end
 
+  it "does not run if disabled" do
+    DeltaAuditor.disabled = true
+    expect(Entry).not_to receive(:where)
+    DeltaAuditor.perform
+  end
+
 end
