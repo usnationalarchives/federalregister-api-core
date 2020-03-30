@@ -149,8 +149,8 @@ class EsPublicInspectionDocumentSearch < EsApplicationSearch
 
   def es_sort_order
     [
-      {filed_at: {order: "desc"}}
-      #TODO: Mimicking existing sphinx sort order logic, but seems like we should include _score here
+      {filed_at: {order: "desc"}},
+      {_score: {order: "desc"}}
     ]
   end
 

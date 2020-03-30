@@ -485,12 +485,12 @@ j
     when 'executive_order_number'
       [
         {executive_order_number: {order: "asc"}},
-        #TODO: Mimicking existing sphinx sort order logic, but seems like we should include _score here
+        {_score: {order: "desc"}}
       ]
     when 'proclamation_number'
       [
         {executive_order_number: {order: "asc"}},
-        #TODO: Mimicking existing sphinx sort order logic, but seems like we should include _score here
+        {_score: {order: "desc"}}
       ]
     else
       [
