@@ -4,7 +4,7 @@ describe EsApplicationSearch::TermPreprocessor do
   describe '.process_term' do
     it "puts it all together" do
       pending("update others first")
-      described_Class.process_term(
+      described_class.process_term(
         'a "running back" in the end-zone is awesome"').should ==
         'a "=running =back" in the "=end =zone" is awesome '
     end
@@ -39,4 +39,62 @@ describe EsApplicationSearch::TermPreprocessor do
                   '-vehicular ! parts -boats'
     end
   end
+
+  describe '.remove_extra_quote_mark' do
+    def results_for(term)
+      described_class.remove_extra_quote_mark(term)
+    end
+
+    it "doesn't change terms without quotes" do
+      results_for('some text').should ==
+                  'some text'
+    end
+
+    it "doesn't change terms with paired quotes" do
+      results_for('boat "fishing rod" near "los angeles" ca').should ==
+                  'boat "fishing rod" near "los angeles" ca'
+    end
+
+    it "removes the last quote if unpaired" do
+      results_for('she said "afsasf').should ==
+                  'she said  afsasf'
+    end
+  end
+
+  describe '.remove_invalid_sequences' do
+    def results_for(term)
+      described_class.remove_invalid_sequences(term)
+    end
+
+    it "allows a slash after quotes (quorum)" do
+      results_for('"a b c"/2').should ==
+                  '"a b c"/2'
+    end
+
+    it "removes tildes elsewhere" do
+      results_for('HIV/AIDS').should ==
+                  'HIV AIDS'
+    end
+
+    it "allows a tilde after quotes (proximity)" do
+      results_for('"a b c"~2').should ==
+                  '"a b c"~2'
+    end
+
+    it "removes tildes elsewhere" do
+      results_for('~98.6').should ==
+                  ' 98.6'
+    end
+
+    it "removes @ everywhere" do
+      results_for('hello@nsa.gov').should ==
+                  'hello nsa.gov'
+    end
+
+    it "removes triple less than everywhere" do
+      results_for('a <<< b').should ==
+                  'a   b'
+    end
+  end
+
 end
