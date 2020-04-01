@@ -566,7 +566,8 @@ class EsApplicationSearch
             simple_query_string: {
               query:            es_term,
               fields:           es_fields_with_boosts,
-              default_operator: 'and'
+              default_operator: 'and',
+              quote_field_suffix: '.exact'
             }
           }
         ]
