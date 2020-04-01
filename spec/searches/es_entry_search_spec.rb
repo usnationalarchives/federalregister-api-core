@@ -149,7 +149,7 @@ describe "Elasticsearch Entry Search" do
         assert_valid_search(search)
         expect(search.results.es_ids).to match_array([])
 
-        search = EsEntrySearch.new(conditions: {term: '"rebuilt parts"~2'})
+        search = EsEntrySearch.new(conditions: {term: '"rebuilt parts"~3'})
 
         assert_valid_search(search)
         expect(search.results.es_ids).to match_array([111])
