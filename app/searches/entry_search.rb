@@ -317,7 +317,8 @@ class EntrySearch < ApplicationSearch
       :conditions => sphinx_conditions,
       :match_mode => :extended,
       :classes    => [Entry],
-      :group_by   => klass.group_by_field
+      :group_by   => klass.group_by_field,
+      :per_page   => 10000
     )
 
     klass.new(sphinx_search, :with => with)
