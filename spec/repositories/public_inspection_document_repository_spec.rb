@@ -12,40 +12,56 @@ describe PublicInspectionDocumentRepository do
         dynamic: "strict",
         properties: {
           id: {
-            type: 'integer'
+            type: "integer"
           },
           agency_ids: {
-            type: 'integer'
+            type: "integer"
           },
           docket_id: {
-            type: 'text', index_options: 'offsets'
+            type: "text", index_options: "offsets"
           },
           document_number: {
-            type: 'keyword'
+            type: "keyword"
           },
           filed_at: {
-            type: 'date'
+            type: "date"
           },
           full_text: {
-            type: 'text', index_options: 'offsets'
+            type: "text",
+            index_options: "offsets",
+            analyzer: "english",
+            fields: {
+              exact: {
+                analyzer: "standard",
+                type: "text"
+              }
+            }
           },
           public_inspection_document_id: {
-            type: 'integer'
+            type: "integer"
           },
           public_inspection_issues: {
-            type: 'object'
+            type: "object"
           },
           publication_date: {
-            type: 'date'
+            type: "date"
           },
           special_filing: {
-            type: 'boolean'
+            type: "boolean"
           },
           title: {
-            type: 'text', index_options: 'offsets'
+            type: "text",
+            index_options: "offsets",
+            analyzer: "english",
+            fields: {
+              exact: {
+                analyzer: "standard",
+                type: "text"
+              }
+            }
           },
           type: {
-            type: 'keyword'
+            type: "keyword"
           }
         }
       }
