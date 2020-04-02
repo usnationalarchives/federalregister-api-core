@@ -1,12 +1,25 @@
 require 'spec_helper'
 
 describe EntryRepository do
+  before(:each) do
+    $entry_repository.create_index!(force: true)
+  end
+
   it "creates an index with the appropriate mappings" do
-    #pending('update mappings')
     expected_mappings = {
       dynamic: "strict",
       properties: {
-        docket_id: {type: 'text', index_options: 'offsets'},
+        docket_id: {
+          type: "text",
+          index_options: "offsets",
+          analyzer: "english",
+          fields: {
+            exact: {
+              analyzer: "standard",
+              type: "text"
+            }
+          }
+        },
         document_number: {type: 'keyword'},
         type: {type: 'keyword'},
         presidential_document_type_id: {type: 'integer'},
@@ -22,11 +35,51 @@ describe EntryRepository do
         executive_order_number: {type: 'keyword'},
         proclamation_number: {type: 'keyword'},
         small_entity_ids: {type: 'integer'},
-        title: {type: 'text', index_options: 'offsets'},
-        full_text: {type: 'text', index_options: 'offsets'},
+        title: {
+          type: "text",
+          index_options: "offsets",
+          analyzer: "english",
+          fields: {
+            exact: {
+              analyzer: "standard",
+              type: "text"
+            }
+          }
+        },
+        full_text: {
+          type: "text",
+          index_options: "offsets",
+          analyzer: "english",
+          fields: {
+            exact: {
+              analyzer: "standard",
+              type: "text"
+            }
+          }
+        },
         id: {type: 'integer'},
-        regulation_id_number: {type: 'text', index_options: 'offsets'},
-        abstract: {type: 'text', index_options: 'offsets'},
+        regulation_id_number: {
+          type: "text",
+          index_options: "offsets",
+          analyzer: "english",
+          fields: {
+            exact: {
+              analyzer: "standard",
+              type: "text"
+            }
+          }
+        },
+        abstract: {
+          type: "text",
+          index_options: "offsets",
+          analyzer: "english",
+          fields: {
+            exact: {
+              analyzer: "standard",
+              type: "text"
+            }
+          }
+        },
 
         # Formerly Sphinx multi-value attributes
         accepting_comments_on_regulations_dot_gov: {type: 'boolean'},

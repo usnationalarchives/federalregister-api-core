@@ -3,11 +3,61 @@ class EntryRepository < BaseRepository
 
   mapping dynamic: 'strict' do
     indexes :id, {type: 'integer'}
-    indexes :title, { type: 'text', index_options: 'offsets'}
-    indexes :abstract, { type: 'text', index_options: 'offsets'}
-    indexes :full_text, { type: 'text', index_options: 'offsets'}
-    indexes :regulation_id_number, { type: 'text', index_options: 'offsets'}
-    indexes :docket_id, {type: 'text', index_options: 'offsets'}
+    indexes :title, {
+      type: 'text',
+      index_options: 'offsets',
+      analyzer: 'english',
+      fields: {
+        exact: {
+          type: 'text',
+          analyzer: 'standard'
+        }
+      }
+    }
+    indexes :abstract, {
+      type: 'text',
+      index_options: 'offsets',
+      analyzer: 'english',
+      fields: {
+        exact: {
+          type: 'text',
+          analyzer: 'standard'
+        }
+      }
+    }
+    indexes :full_text, {
+      type: 'text',
+      index_options: 'offsets',
+      analyzer: 'english',
+      fields: {
+        exact: {
+          type: 'text',
+          analyzer: 'standard'
+        }
+      }
+    }
+    indexes :regulation_id_number, {
+      type: 'text',
+      index_options: 'offsets',
+      analyzer: 'english',
+      fields: {
+        exact: {
+          type: 'text',
+          analyzer: 'standard'
+        }
+      }
+    }
+    indexes :docket_id, {
+      type: 'text',
+      index_options: 'offsets',
+      analyzer: 'english',
+      fields: {
+        exact: {
+          type: 'text',
+          analyzer: 'standard'
+        }
+      }
+    }
     indexes :document_number, {type: 'keyword'}
     indexes :type, {type: 'keyword'}
     indexes :presidential_document_type_id, {type: 'integer'}

@@ -138,13 +138,13 @@ describe "Elasticsearch Entry Search" do
         expect(search.results.es_ids).to match_array([777,888])
       end
 
-      it "handles proximity searches" do
+      it "handles proximity (maximum edit distance of words per ES docs) in searches" do
         entries = [
           build_entry_double({title: 'rebuilt foreign vehicular parts', id: 111}),
         ]
         Entry.bulk_index(entries, refresh: true)
 
-        search = EsEntrySearch.new(conditions: {term: '"rebuilt parts"~1'})
+        search = EsEntrySearch.new(conditions: {term: '"rebuilt parts"~2'})
 
         assert_valid_search(search)
         expect(search.results.es_ids).to match_array([])
