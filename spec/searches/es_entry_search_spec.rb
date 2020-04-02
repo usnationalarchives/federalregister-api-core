@@ -154,6 +154,31 @@ describe "Elasticsearch Entry Search" do
         assert_valid_search(search)
         expect(search.results.es_ids).to match_array([111])
       end
+
+      it "doesn't return if a double-quoted exact phrase is supplied" do
+        entries = [
+          build_entry_double({title: 'robot arms', id: 111}),
+        ]
+        Entry.bulk_index(entries, refresh: true)
+
+        search = EsEntrySearch.new(conditions: {term: "\"arms robot\""})
+
+        assert_valid_search(search)
+        expect(search.results.es_ids).to match_array([])
+      end
+
+      it "processes negations of exact phrases correctly" do
+        entries = [
+          build_entry_double({title: 'FHMA', id: 111}),
+        ]
+        Entry.bulk_index(entries, refresh: true)
+
+        search = EsEntrySearch.new(conditions: {term: "-=FHMA"})
+
+        assert_valid_search(search)
+        expect(search.results.es_ids).to match_array([])
+      end
+
     end
 
     it "retrieves an Active Record-like collection" do
