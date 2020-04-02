@@ -174,29 +174,6 @@ describe EsPublicInspectionDocumentSearch do
             expect(described_class.new(conditions: { term: '"rebuilt parts"~2' }).results.es_ids).to match_array [1,2]
             expect(described_class.new(conditions: { term: '"rebuilt parts"~3' }).results.es_ids).to match_array [1,2,3]
           end
-
-          it "searches on an exact phrase (Quorum Search)" do
-            pending("custom analyzer configuration")
-            documents = [
-              build_pi_doc_double(id: 1, full_text: "rebuilt vehicular parts"),
-              build_pi_doc_double(id: 2, full_text: "rebuilt parts"),
-            ]
-            save_documents_and_refresh_index(documents)
-
-            expect(described_class.new(conditions: { term: '"rebuilt foreign domestic vehicular boat parts"/3' }).results.count).to eq 1
-            expect(described_class.new(conditions: { term: '"rebuilt foreign domestic vehicular boat parts"/2' }).results.count).to eq 2
-          end
-
-          it "searches on an exact phrase (Precedence Search)" do
-            pending("custom analyzer configuration")
-            documents = [
-              build_pi_doc_double(id: 1, full_text: "rebuilt or reclaimed vehicular and boat parts"),
-            ]
-            save_documents_and_refresh_index(documents)
-
-            expect(described_class.new(conditions: { term: 'rebuilt << reclaimed << vehicular << parts' }).results.count).to eq 1
-            expect(described_class.new(conditions: { term: 'parts << rebuilt << reclaimed << vehicular' }).results.count).to eq 0
-          end
         end
       end
 
