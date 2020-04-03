@@ -223,6 +223,32 @@ describe "Elasticsearch Entry Search" do
       expect(result).to eq("The <span class=\"match\">fish</span> swam across the pond ... <span class=\"match\">fish</span> are great. ... <span class=\"match\">Fish</span> stuff")
     end
 
+    it "performs excerpting when a double-quoted phrase is included" do
+      $entry_repository.create_index!(force: true)
+      another_entry = Factory(
+        :entry,
+        significant: 0,
+        abstract: 'fish are great.',
+        title: "Fish stuff",
+        raw_text: "The fish swam across the pond",
+        raw_text_updated_at: Time.current
+      )
+      entries = [
+        another_entry
+      ]
+
+      entries.each{|entry| $entry_repository.save(entry, refresh: true) }
+
+      search = EsEntrySearch.new(
+        excerpts: true,
+        conditions: {significant: 0, term: "\"fish\""}
+      )
+
+      assert_valid_search(search)
+      result = search.results.first.excerpt
+      expect(result).to eq("<span class=\"match\">fish</span> are great. ... The <span class=\"match\">fish</span> swam across the pond ... <span class=\"match\">Fish</span> stuff")
+    end
+
     it "Entry.bulk_index" do
       another_entry = Factory(:entry, significant: 0, title: 'fish')
       entries = [
