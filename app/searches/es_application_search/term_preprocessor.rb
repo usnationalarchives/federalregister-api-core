@@ -13,35 +13,66 @@ module EsApplicationSearch::TermPreprocessor
   end
 
   def self.replace_ampersand_with_plus(term)
-    term.gsub(/&(?=(?:[^"]*"[^"]*")*[^"]*$)/, "+")
+    term.
+      gsub(/
+        &                           (?# ampersands)
+        (?=                         (?# followed by)
+          (?:[^"]*"[^"]*")*[^"]*$   (?# zero or an even number of double quotes)
+        )
+      /x, "+")
   end
 
   def self.replace_exclamation_points_with_minus(term)
-    term.gsub(/!(?=(?:\w+)(?:[^"]*"[^"]*")*[^"]*$)/, "-")
+    term.
+      gsub(/
+        !                           (?# exclamation points)
+        (?=                         (?# followed by)
+          (?:\w+)                   (?# a word)
+          (?:[^"]*"[^"]*")*[^"]*$   (?# zero or an even number of double quotes)
+        )
+      /x, "-")
   end
 
   def self.remove_extra_quote_mark(term)
-    if term.scan(/"/).size.even?
-      term
-    else
-      term.sub(/"(?=[^"]*$)/, ' ')
-    end
+    return term if term.scan(/"/).size.even?
+
+    term.
+      sub(/
+        "                           (?# double quotes)
+        (?=[^"]*$)                  (?# followed by any character except a double quote until EOL)
+      /x, ' ')
   end
 
   def self.remove_invalid_sequences(term)
     # replace slashes and tildes not immediately after a quote with a space
     term.
-      gsub(/(?<!")(?:\/|~)/, ' ').
-      gsub(/<<<|@/, ' ') # always replace these with spaces
+      gsub(/
+        (?<!")                      (?# negative lookbehind for double quote)
+        (?:\/|~)                    (?# replace forward slashes and tildes)
+      /x, ' ').
+      gsub(/
+        <<<|@                       (?# always replace these with spaces)
+      /x, ' ')
   end
 
   def self.wrap_words_with_leading_equals_in_quotes(term)
-    term.gsub(/=[\w-]{1,}/){|m| m.gsub("=", "").gsub("-", " ").inspect}
+    term.gsub(/
+      =[\w-]{1,}                    (?# match any equals sign followed by a word character)
+    /x) do |match|
+      # remove the equals sign and replace hyphens with spaces, then wrap in double quotes
+      match.
+        gsub("=", "").
+        gsub("-", " ").
+        inspect
+    end
   end
 
   def self.reduce_phrase_slop_count_by_one(term)
-    term.gsub(/".*"~\d/) do |phrase_and_operator|
-      phrase_and_operator.gsub(/~(\d)/) do |operator_and_count|
+    term.gsub(/
+      ".*"~\d                       (?# match any quoted phrase followed by a tilde and a digit)
+    /x) do |match|
+      match.gsub(/~(\d)/) do |operator_and_count|
+        # Decrement the provided count by 1 unless <= 0
         count = operator_and_count.delete("~").to_i
         "~#{count <= 0 ? 0 : count - 1}"
       end
@@ -49,6 +80,8 @@ module EsApplicationSearch::TermPreprocessor
   end
 
   def self.remove_escape_sequences(term)
-    term.gsub(/[\a\b\n\r\t]/, "")
+    term.gsub(/
+      [\a\b\n\r\t]                  (?# match any occurrences of escape sequences other than \s)
+    /x, "")
   end
 end
