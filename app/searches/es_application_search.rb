@@ -464,21 +464,37 @@ class EsApplicationSearch
   end
 
   def highlight_query
+    #NOTE: It is necessary to include the .exact fields or no excerpts will be returned for queries that include double quotes.
     {
       pre_tags: ['<span class="match">'],
       post_tags: ["</span>"],
       fields: {
-        abstract: {
+        "abstract" => {
+          fragment_size: 150,
+          number_of_fragments: 3,
+          type: 'unified',
+        },
+        "abstract.exact" => {
+          fragment_size: 150,
+          number_of_fragments: 3,
+          type: 'unified',
+        },
+        "title" => {
           fragment_size: 150,
           number_of_fragments: 3,
           type: 'unified'
         },
-        title: {
+        "title.exact" => {
           fragment_size: 150,
           number_of_fragments: 3,
           type: 'unified'
         },
-        full_text: {
+        "full_text" => {
+          fragment_size: 150,
+          number_of_fragments: 3,
+          type: 'unified'
+        },
+        "full_text.exact" => {
           fragment_size: 150,
           number_of_fragments: 3,
           type: 'unified'
