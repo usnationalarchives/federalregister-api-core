@@ -15,56 +15,44 @@ describe EsPublicInspectionDocumentSearch do
 
   context "Elasticsearch query definition" do
     it "integrates a basic #with attribute" do
-      pending("Fix this spec once the query API has sufficiently hardened")
       search = described_class.new(conditions: {special_filing: 1})
-      expect(search.send(:search_options)).to eq({
-        from: 0,
-        size: 20,
-        query: {
-          bool: {
-            must: [],
-            filter: [
-              {
-                bool: {
-                  filter: {
-                    term: {
-                      special_filing: true
-                    }
-                  }
-                }
-              }
-            ]
-          }
-        },
-        sort: [{filed_at: {order: 'desc'}}],
-      })
+      expect(search.send(:search_options)).to eq(
+        {:from=>0,
+          :size=>EsApplicationSearch::DEFAULT_RESULTS_PER_PAGE,
+          :query=>
+           {:function_score=>
+             {:boost_mode=>"multiply",
+              :functions=>
+               [{:gauss=>
+                  {:publication_date=>
+                    {:decay=>"0.5", :offset=>"30d", :origin=>"now", :scale=>"365d"}}}],
+              :query=>
+               {:bool=>
+                 {:filter=>[{:bool=>{:filter=>{:term=>{:special_filing=>true}}}}],
+                  :must=>[]}}}},
+          :sort=>[{:filed_at=>{:order=>"desc"}}, {:_score=>{:order=>"desc"}}]}
+      )
     end
 
     it "builds the expected search with multiple attributes" do
-      pending("Fix this spec once the query API has sufficiently hardened")
       agency = Factory(:agency)
       search = described_class.new(conditions: {agencies: [agency.slug]})
-      expect(search.send(:search_options)).to eq({
-        from: 0,
-        size: 20,
-        query: {
-          bool: {
-            must: [],
-            filter: [
-              {
-                bool: {
-                  filter: {
-                    terms: {
-                      agency_ids: [agency.id]
-                    }
-                  }
-                }
-              }
-            ]
-          }
-        },
-        sort: [{filed_at: {order: 'desc'}}],
-      })
+      expect(search.send(:search_options)).to eq(
+        {:from=>0,
+          :size=>EsApplicationSearch::DEFAULT_RESULTS_PER_PAGE,
+          :query=>
+           {:function_score=>
+             {:boost_mode=>"multiply",
+              :functions=>
+               [{:gauss=>
+                  {:publication_date=>
+                    {:decay=>"0.5", :offset=>"30d", :origin=>"now", :scale=>"365d"}}}],
+              :query=>
+               {:bool=>
+                 {:filter=>[{:bool=>{:filter=>{:terms=>{:agency_ids=>[agency.id]}}}}],
+                  :must=>[]}}}},
+          :sort=>[{:filed_at=>{:order=>"desc"}}, {:_score=>{:order=>"desc"}}]}
+      )
     end
   end
 

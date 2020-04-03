@@ -25,36 +25,27 @@ describe "Elasticsearch Entry Search" do
   context "Elasticsearch query definition" do
 
     it "integrates a basic #with attribute" do
-      pending("Fix this spec once the query API has sufficiently hardened")
       search = EsEntrySearch.new(conditions: {significant: 1})
 
       expect(search.send(:search_options)).to eq(
-        {
-          from: 0,
-          query: {
-            bool: {
-              must: [],
-              filter: [
-                {
-                  bool: {
-                    filter: {
-                      term: {
-                        significant: true
-                      }
-                    }
-                  }
-                }
-              ]
-            }
-          },
-          size: EsApplicationSearch::DEFAULT_RESULTS_PER_PAGE,
-          sort: [{_score: {:order=>"desc"}}]
-        }
+        {:size=>EsApplicationSearch::DEFAULT_RESULTS_PER_PAGE,
+          :from=>0,
+          :query=>
+           {:function_score=>
+             {:query=>
+               {:bool=>
+                 {:must=>[],
+                  :filter=>[{:bool=>{:filter=>{:term=>{:significant=>true}}}}]}},
+              :functions=>
+               [{:gauss=>
+                  {:publication_date=>
+                    {:origin=>"now", :scale=>"365d", :offset=>"30d", :decay=>"0.5"}}}],
+              :boost_mode=>"multiply"}},
+          :sort=>[{:_score=>{:order=>"desc"}}]}
       )
     end
 
     it "builds the expected search with multiple attributes correctly" do
-      pending("Fix this spec once the query API has sufficiently hardened")
       agency = Factory(:agency, slug: 'antitrust-division')
 
       search = EsEntrySearch.new(
@@ -64,53 +55,45 @@ describe "Elasticsearch Entry Search" do
       )
 
       expect(search.send(:search_options)).to eq(
-        {
-          from: 0,
-          query: {
-            bool: {
-              must: [],
-              filter: [
-                {
-                  bool: {
-                    filter: {
-                      terms: {presidential_document_type_id: [1,2]}
-                    }
-                  }
-                }
-              ]
-            }
-          },
-          size: EsApplicationSearch::DEFAULT_RESULTS_PER_PAGE,
-          sort: [{_score: {:order=>"desc"}}]
-        }
+        {:from=>0,
+          :query=>
+           {:function_score=>
+             {:boost_mode=>"multiply",
+              :functions=>
+               [{:gauss=>
+                  {:publication_date=>
+                    {:decay=>"0.5", :offset=>"30d", :origin=>"now", :scale=>"365d"}}}],
+              :query=>
+               {:bool=>
+                 {:filter=>
+                   [{:bool=>
+                      {:filter=>{:terms=>{:presidential_document_type_id=>[1, 2]}}}}],
+                  :must=>[]}}}},
+          :size=>EsApplicationSearch::DEFAULT_RESULTS_PER_PAGE,
+          :sort=>[{:_score=>{:order=>"desc"}}]}
       )
     end
 
     it "handles less-than queries" do
-      pending("Fix this spec once the query API has sufficiently hardened")
       search = EsEntrySearch.new(:conditions => {:publication_date => {:gte => '2000-01-01', :lte => '2049-01-01'}})
 
       expect(search.send(:search_options)).to eq(
-        {
-          from: 0,
-          query: {
-            bool: {
-              must: [],
-              filter: [
-                {
-                  range: {
-                    publication_date: {
-                      gte: '2000-01-01',
-                      lte: '2049-01-01',
-                    }
-                  }
-                }
-              ]
-            }
-          },
-          size: EsApplicationSearch::DEFAULT_RESULTS_PER_PAGE,
-          sort: [{_score: {:order=>"desc"}}]
-        }
+        {:from=>0,
+          :query=>
+           {:function_score=>
+             {:boost_mode=>"multiply",
+              :functions=>
+               [{:gauss=>
+                  {:publication_date=>
+                    {:decay=>"0.5", :offset=>"30d", :origin=>"now", :scale=>"365d"}}}],
+              :query=>
+               {:bool=>
+                 {:filter=>
+                   [{:range=>
+                      {:publication_date=>{:gte=>"2000-01-01", :lte=>"2049-01-01"}}}],
+                  :must=>[]}}}},
+          :size=>20,
+          :sort=>[{:_score=>{:order=>"desc"}}]}
       )
     end
 
@@ -224,6 +207,7 @@ describe "Elasticsearch Entry Search" do
     end
 
     it "performs excerpting when a double-quoted phrase is included" do
+      #NOTE: Elasticsearch currently does not seem to have thte ability to highlight phrases as chunks per this github issue: https://github.com/elastic/elasticsearch/issues/29561
       $entry_repository.create_index!(force: true)
       another_entry = Factory(
         :entry,
