@@ -66,24 +66,24 @@ describe EsPublicInspectionDocumentSearch do
         pi_doc = build_pi_doc_double(
           id: 1,
           title: "goats goats goats",
-          full_text: 'llamas'
+          full_text: "llamas"
         )
         save_documents_and_refresh_index(pi_doc)
 
-        expect(described_class.new(conditions: { term: 'goats' }).results.count).to eq 1
-        expect(described_class.new(conditions: { term: 'boats' }).results.count).to eq 0
+        expect(described_class.new(conditions: { term: "goats" }).results.es_ids).to match_array [1]
+        expect(described_class.new(conditions: { term: "boats" }).results.es_ids).to be_empty
       end
 
       it "can search full_text by term" do
         pi_doc = build_pi_doc_double(
           id: 1,
           title: "llamas",
-          full_text: 'goats'
+          full_text: "goats"
         )
         save_documents_and_refresh_index(pi_doc)
 
-        expect(described_class.new(conditions: { term: 'goats' }).results.count).to eq 1
-        expect(described_class.new(conditions: { term: 'boats' }).results.count).to eq 0
+        expect(described_class.new(conditions: { term: "goats" }).results.es_ids).to match_array [1]
+        expect(described_class.new(conditions: { term: "boats" }).results.es_ids).to be_empty
       end
 
       context "Advanced Search" do
@@ -96,9 +96,9 @@ describe EsPublicInspectionDocumentSearch do
             ]
             save_documents_and_refresh_index(documents)
 
-            expect(described_class.new(conditions: { term: 'pipes' }).results.count).to eq 2
-            expect(described_class.new(conditions: { term: 'pipelines' }).results.count).to eq 2
-            expect(described_class.new(conditions: { term: 'pipes & pipelines' }).results.count).to eq 1
+            expect(described_class.new(conditions: { term: "pipes" }).results.es_ids).to match_array [1,3]
+            expect(described_class.new(conditions: { term: "pipelines" }).results.es_ids).to match_array [2,3]
+            expect(described_class.new(conditions: { term: "pipes & pipelines" }).results.es_ids).to match_array [3]
           end
 
           it "respects the OR operator (|)" do
@@ -109,9 +109,9 @@ describe EsPublicInspectionDocumentSearch do
             ]
             save_documents_and_refresh_index(documents)
 
-            expect(described_class.new(conditions: { term: 'pipes' }).results.count).to eq 2
-            expect(described_class.new(conditions: { term: 'pipelines' }).results.count).to eq 2
-            expect(described_class.new(conditions: { term: 'pipes | pipelines' }).results.count).to eq 3
+            expect(described_class.new(conditions: { term: "pipes" }).results.es_ids).to match_array [1,3]
+            expect(described_class.new(conditions: { term: "pipelines" }).results.es_ids).to match_array [2,3]
+            expect(described_class.new(conditions: { term: "pipes | pipelines" }).results.es_ids).to match_array [1,2,3]
           end
 
           it "respects the NOT operator (-)" do
@@ -122,10 +122,12 @@ describe EsPublicInspectionDocumentSearch do
             ]
             save_documents_and_refresh_index(documents)
 
-            expect(described_class.new(conditions: { term: '-pipes' }).results.count).to eq 1
-            expect(described_class.new(conditions: { term: '-pipelines' }).results.count).to eq 1
-            expect(described_class.new(conditions: { term: '-pipe' }).results.count).to eq 1
+            expect(described_class.new(conditions: { term: "-pipes" }).results.es_ids).to match_array [2]
+            expect(described_class.new(conditions: { term: "-pipelines" }).results.es_ids).to match_array [1]
+            expect(described_class.new(conditions: { term: "-pipe" }).results.es_ids).to match_array [2]
           end
+
+          pending "handles escape sequences"
 
           it "respects Groupings (())" do
             documents = [
@@ -135,8 +137,8 @@ describe EsPublicInspectionDocumentSearch do
             ]
             save_documents_and_refresh_index(documents)
 
-            expect(described_class.new(conditions: { term: 'strength' }).results.count).to eq 2
-            expect(described_class.new(conditions: { term: '(pipes & strength) | (pipeline & strength)' }).results.count).to eq 2
+            expect(described_class.new(conditions: { term: "strength" }).results.es_ids).to match_array [1,2]
+            expect(described_class.new(conditions: { term: "(pipes & strength) | (pipeline & strength)" }).results.es_ids).to match_array [1,2]
           end
 
           it "searches on an exact phrase (Phrase Search)" do
@@ -147,8 +149,8 @@ describe EsPublicInspectionDocumentSearch do
             ]
             save_documents_and_refresh_index(documents)
 
-            expect(described_class.new(conditions: { term: '"pipe strength"' }).results.count).to eq 2
-            expect(described_class.new(conditions: { term: '"pipeline strength"' }).results.count).to eq 1
+            expect(described_class.new(conditions: { term: "\"pipe strength\"" }).results.es_ids).to match_array [1,3]
+            expect(described_class.new(conditions: { term: "\"pipeline strength\"" }).results.es_ids).to match_array [2]
           end
 
           it "searches on an exact form (Exact Form Search)" do
@@ -158,8 +160,8 @@ describe EsPublicInspectionDocumentSearch do
             ]
             save_documents_and_refresh_index(documents)
 
-            expect(described_class.new(conditions: { term: 'fishery' }).results.count).to eq 2
-            expect(described_class.new(conditions: { term: '=fishery' }).results.count).to eq 1
+            expect(described_class.new(conditions: { term: "fishery" }).results.es_ids).to match_array [1,2]
+            expect(described_class.new(conditions: { term: "=fishery" }).results.es_ids).to match_array [2]
           end
 
           it "searches on an exact phrase (Proximity Search)" do
@@ -170,9 +172,9 @@ describe EsPublicInspectionDocumentSearch do
             ]
             save_documents_and_refresh_index(documents)
 
-            expect(described_class.new(conditions: { term: 'rebuilt parts' }).results.es_ids).to eq [1,2,3]
-            expect(described_class.new(conditions: { term: '"rebuilt parts"~2' }).results.es_ids).to match_array [1,2]
-            expect(described_class.new(conditions: { term: '"rebuilt parts"~3' }).results.es_ids).to match_array [1,2,3]
+            expect(described_class.new(conditions: { term: "rebuilt parts" }).results.es_ids).to match_array [1,2,3]
+            expect(described_class.new(conditions: { term: "\"rebuilt parts\"~2" }).results.es_ids).to match_array [1,2]
+            expect(described_class.new(conditions: { term: "\"rebuilt parts\"~3" }).results.es_ids).to match_array [1,2,3]
           end
         end
       end
