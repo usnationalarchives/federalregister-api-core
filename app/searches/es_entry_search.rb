@@ -499,6 +499,42 @@ j
     end
   end
 
+  def highlight_fields
+    #NOTE: It is necessary to include the .exact fields or no excerpts will be returned for queries that include double quotes.
+    {
+      "abstract" => {
+        fragment_size: 150,
+        number_of_fragments: 3,
+        type: 'unified',
+      },
+      "abstract.exact" => {
+        fragment_size: 150,
+        number_of_fragments: 3,
+        type: 'unified',
+      },
+      "title" => {
+        fragment_size: 150,
+        number_of_fragments: 3,
+        type: 'unified'
+      },
+      "title.exact" => {
+        fragment_size: 150,
+        number_of_fragments: 3,
+        type: 'unified'
+      },
+      "full_text" => {
+        fragment_size: 150,
+        number_of_fragments: 3,
+        type: 'unified'
+      },
+      "full_text.exact" => {
+        fragment_size: 150,
+        number_of_fragments: 3,
+        type: 'unified'
+      },
+    }
+  end
+
   def set_defaults(options)
     @within = 25
     @order = options[:order] || 'relevant'
