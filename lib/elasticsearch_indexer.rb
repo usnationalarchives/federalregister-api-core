@@ -33,7 +33,7 @@ module ElasticsearchIndexer
     end
     total_entries     = Entry.count
     entries_completed = 0
-    Entry.includes(:agency_assignments, :citations, :comments_close_date, :docket_numbers, :effective_date, :entry_regulation_id_numbers, :entry_cfr_references, :place_determinations, :section_assignments, :topic_assignments).find_in_batches(batch_size: BATCH_SIZE) do |entry_batch|
+    Entry.pre_joined_for_es_indexing.find_in_batches(batch_size: BATCH_SIZE) do |entry_batch|
       Entry.bulk_index(entry_batch, refresh: false)
       entries_completed += BATCH_SIZE
       puts "Entry Indexing #{(entries_completed.to_f/total_entries * 100).round(2)}% complete"
@@ -45,7 +45,7 @@ module ElasticsearchIndexer
   def self.reindex_pi_documents
     $public_inspection_document_repository.create_index!(force: true)
     PublicInspectionDocument.bulk_index(
-      PublicInspectionDocument.indexable.includes(:agency_assignments, :docket_numbers),
+      PublicInspectionDocument.indexable.pre_joined_for_es_indexing,
       refresh: false
     )
     $public_inspection_document_repository.refresh_index!

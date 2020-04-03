@@ -34,6 +34,8 @@ class PublicInspectionDocument < ApplicationModel
   before_save :set_content_type
 
   scope :revoked, -> { where(publication_date: nil) }
+  scope :pre_joined_for_es_indexing, -> { includes(:agency_assignments, :docket_numbers) }
+
   include Shared::DoesDocumentNumberNormalization
 
   # Note: the concept of 'unpublished' is different from that of 'pending publication'

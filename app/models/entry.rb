@@ -125,6 +125,8 @@ class Entry < ApplicationModel
 
   validate :curated_attributes_are_not_too_long
 
+  scope :pre_joined_for_es_indexing, -> { includes(:agency_assignments, :citations, :comments_close_date, :docket_numbers, :effective_date, :entry_regulation_id_numbers, :entry_cfr_references, :place_determinations, :section_assignments, :topic_assignments) }
+
   def self.published_today
     Issue.current.entries
   end
