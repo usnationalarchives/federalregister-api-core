@@ -6,7 +6,7 @@ module EsApplicationSearch::TermPreprocessor
     # processed_term = remove_invalid_sequences(processed_term)
     processed_term = replace_ampersand_with_plus(processed_term)
     processed_term = replace_exclamation_points_with_minus(processed_term)
-    processed_term = replace_exact_form_equals_with_tilde_for_slop(processed_term)
+    processed_term = wrap_words_with_leading_equals_in_quotes(processed_term)
     processed_term = reduce_phrase_slop_count_by_one(processed_term)
     processed_term
   end
@@ -34,12 +34,16 @@ module EsApplicationSearch::TermPreprocessor
       gsub(/<<<|@/, ' ') # always replace these with spaces
   end
 
-  def self.replace_exact_form_equals_with_tilde_for_slop(term)
+  def self.wrap_words_with_leading_equals_in_quotes(term)
     term.gsub(/=\w{1,}/){|m| m.gsub("=", "").inspect}
   end
 
   def self.reduce_phrase_slop_count_by_one(term)
-    # RW: counts appear to differ from guidance on Reader Aids page
-    term.gsub(/".*"~\d/) {|m| p m.gsub(/~(\d)/) {|m2| "~#{m2.delete("~").to_i - 1}"}}
+    term.gsub(/".*"~\d/) do |phrase_and_operator|
+      phrase_and_operator.gsub(/~(\d)/) do |operator_and_count|
+        count = operator_and_count.delete("~").to_i
+        "~#{count <= 0 ? 0 : count - 1}"
+      end
+    end
   end
 end
