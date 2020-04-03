@@ -3,10 +3,9 @@ require "spec_helper"
 describe EsApplicationSearch::TermPreprocessor do
   describe ".process_term" do
     it "puts it all together" do
-      pending("update others first")
       described_class.process_term(
-        "a \"running back\" in the end-zone is awesome\"").should ==
-        "a \"=running =back\" in the \"=end =zone\" is awesome "
+        "a \"running back\" in the =end-zone is awesome\"").should ==
+        "a \"running back\" in the \"end zone\" is awesome "
     end
   end
 
@@ -107,6 +106,12 @@ describe EsApplicationSearch::TermPreprocessor do
                   "\"boat\" fishing \"rod\""
     end
 
+    it "wraps hyphenated words" do
+      # default tokenizer is not hyphen-aware
+      results_for("=fish-fish").should ==
+                  "\"fish fish\""
+    end
+
     it "does not change other occurrences of '='" do
       results_for("=\"boat\" =fishing 1 + 2 = 3").should ==
                   "=\"boat\" \"fishing\" 1 + 2 = 3"
@@ -136,6 +141,20 @@ describe EsApplicationSearch::TermPreprocessor do
     it "does not modify the query if the operator is not followed by an integer" do
       results_for("\"boat fishing rod\"~").should ==
                   "\"boat fishing rod\"~"
+    end
+  end
+
+  describe ".remove escape sequences" do
+    def results_for(term)
+      described_class.remove_escape_sequences(term)
+    end
+
+    it "removes escape sequences" do
+      results_for("\n\r\b\tfish").should == "fish"
+    end
+
+    it "allows whitespace characters" do
+      results_for("\sfish").should == " fish"
     end
   end
 end
