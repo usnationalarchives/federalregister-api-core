@@ -127,8 +127,6 @@ describe EsPublicInspectionDocumentSearch do
             expect(described_class.new(conditions: { term: "-pipe" }).results.es_ids).to match_array [2]
           end
 
-          pending "handles escape sequences"
-
           it "respects Groupings (())" do
             documents = [
               build_pi_doc_double(id: 1, full_text: "pipes strength"),
@@ -176,24 +174,34 @@ describe EsPublicInspectionDocumentSearch do
             expect(described_class.new(conditions: { term: "\"rebuilt parts\"~2" }).results.es_ids).to match_array [1,2]
             expect(described_class.new(conditions: { term: "\"rebuilt parts\"~3" }).results.es_ids).to match_array [1,2,3]
           end
+
+          it "handles escape sequences" do
+            documents = [
+              build_pi_doc_double(id: 1, full_text: "pipes strength"),
+              build_pi_doc_double(id: 2, full_text: "pipeline strength"),
+              build_pi_doc_double(id: 3, full_text: "pipes pipelines"),
+            ]
+            save_documents_and_refresh_index(documents)
+
+            expect(described_class.new(conditions: { term: "\nstrength\r" }).results.es_ids).to match_array [1,2]
+            expect(described_class.new(conditions: { term: "\"\"\"(pipes & strength) | (pipeline & strength)" }).results.es_ids).to match_array [1,2]
+          end
+
         end
       end
 
-      pending "can search agency_name by term" do
-        # Not sure this is fully supported at the moment
-        # check the index- old index
-        # expect(File).to receive(:read).and_return(nil)
-        # allow_any_instance_of(PublicInspectionDocument).to receive(:document_file_path).and_return(nil)
+      it "can search by agency slugs" do
+        agency_a = FactoryGirl.create(:agency, name: "Fish Department", slug: "fish-department")
+        doc_a = build_pi_doc_double(id: 1, full_text: "Fish", agency_ids: [agency_a.id])
 
-        agency = FactoryGirl.create(:agency, name: "AgencyA")
-        doc = FactoryGirl.create(:public_inspection_document,
-          id: 1,
-        )
-        AgencyAssignment.create(assignable: doc, agency: agency)
-        save_documents_and_refresh_index(doc)
+        agency_b = FactoryGirl.create(:agency, name: "Transportation Department", slug: "transportation-department")
+        doc_b = build_pi_doc_double(id: 2, full_text: "Trains", agency_ids: [agency_b.id])
 
-        expect(described_class.new(conditions: { term: 'AgencyA' }).results.count).to eq 1
-        expect(described_class.new(conditions: { term: 'AgencyB' }).results.count).to eq 0
+        save_documents_and_refresh_index([doc_a, doc_b])
+
+        expect(described_class.new(conditions: { agencies: ["fish-department"] }).results.es_ids).to match_array [1]
+        expect(described_class.new(conditions: { agencies: ["transportation-department"] }).results.es_ids).to match_array [2]
+        expect(described_class.new(conditions: { agencies: ["fish-department", "transportation-department"] }).results.es_ids).to match_array [1,2]
       end
     end
 
