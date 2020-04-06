@@ -448,6 +448,7 @@ class EsApplicationSearch
 
   def es_base_query
     {
+      # explain: true, #NOTE: Useful for investigating relevancy calcs.
       size: per_page,
       from: es_from,
       query: {
