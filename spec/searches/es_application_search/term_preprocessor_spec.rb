@@ -142,6 +142,21 @@ describe EsApplicationSearch::TermPreprocessor do
       results_for("\"boat fishing rod\"~").should ==
                   "\"boat fishing rod\"~"
     end
+
+    it "respects quoted phrases" do
+      results_for("\"fish man\"~2").should ==
+                  "\"fish man\"~1"
+    end
+
+    it "handles values greater than 10" do
+      results_for("(\"fish man\"~10").should ==
+                  "(\"fish man\"~9"
+    end
+
+    it "handles values greater than 10" do
+      results_for("(\"fish man\"~20").should ==
+                  "(\"fish man\"~19"
+    end
   end
 
   describe ".remove escape sequences" do

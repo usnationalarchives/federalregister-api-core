@@ -69,9 +69,9 @@ module EsApplicationSearch::TermPreprocessor
 
   def self.reduce_phrase_slop_count_by_one(term)
     term.gsub(/
-      ".*"~\d                       (?# match any quoted phrase followed by a tilde and a digit)
+      ".*"~\d{1,}                   (?# match any quoted phrase followed by a tilde and digits)
     /x) do |match|
-      match.gsub(/~(\d)/) do |operator_and_count|
+      match.gsub(/~(\d{1,})/) do |operator_and_count|
         # Decrement the provided count by 1 unless <= 0
         count = operator_and_count.delete("~").to_i
         "~#{count <= 0 ? 0 : count - 1}"
