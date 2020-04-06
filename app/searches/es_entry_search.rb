@@ -545,7 +545,7 @@ j
   end
 
   def es_fields_with_boosts
-    ['title^10', 'full_text^2', 'agency_name^1', 'abstract^5']
+    ['title^2.5', 'full_text^1.25', 'agency_name^1', 'abstract^2']
   end
 
 end
