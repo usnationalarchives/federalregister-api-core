@@ -180,6 +180,24 @@ describe "Elasticsearch Entry Search" do
       expect(results.first.id).to eq(another_entry.id)
     end
 
+    it "retrieves AR objects properly in the proper sort order" do
+      entry_1 = Factory(:entry, significant: 0, publication_date: Date.new(2020,3,1) )
+      entry_2 = Factory(:entry, significant: 0, publication_date: Date.new(2020,2,1) )
+      entry_3 = Factory(:entry, significant: 0, publication_date: Date.new(2020,1,1) )
+      entries = [
+        entry_1,
+        entry_2,
+        entry_3,
+      ]
+      entries.each{|entry| $entry_repository.save(entry, refresh: true) }
+
+      search = EsEntrySearch.new(conditions: {significant: 0}, order: 'oldest', per_page: 2)
+
+      assert_valid_search(search)
+      results = search.results.map(&:id)
+      expect(results).to eq([entry_3.id, entry_2.id])
+    end
+
     it "performs basic excerpting" do
       $entry_repository.create_index!(force: true)
       another_entry = Factory(

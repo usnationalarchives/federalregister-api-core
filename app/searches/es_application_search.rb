@@ -306,7 +306,14 @@ class EsApplicationSearch
     es_search_invocation = repository.search(search_options)
 
     # Get AR objects
-    active_record_collection = model.where(id: es_search_invocation.results.map(&:id))
+    es_ids = es_search_invocation.results.map(&:id)
+    if es_ids.present?
+      # Ensures AR retrieves based on the order determined by ES
+      sql_order_clause = Arel.sql("field(id, #{es_ids.join(',')})")
+    else
+      sql_order_clause = nil
+    end
+    active_record_collection = model.where(id: es_ids).order(sql_order_clause)
 
     if args[:include].present?
       active_record_collection = active_record_collection.includes(args[:include])
