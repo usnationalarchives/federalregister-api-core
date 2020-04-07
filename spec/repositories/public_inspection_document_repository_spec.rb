@@ -8,6 +8,7 @@ describe PublicInspectionDocumentRepository do
 
   describe "#mappings" do
     it "creates an index with the appropriate mappings" do
+      pending("Enable once new FVF mapping is confirmed as working")
       expected_mappings = {
         dynamic: "strict",
         properties: {

@@ -505,32 +505,32 @@ j
       "abstract" => {
         fragment_size: 150,
         number_of_fragments: 3,
-        type: 'unified',
+        type: 'fvh',
       },
       "abstract.exact" => {
         fragment_size: 150,
         number_of_fragments: 3,
-        type: 'unified',
+        type: 'fvh',
       },
       "title" => {
         fragment_size: 150,
         number_of_fragments: 3,
-        type: 'unified'
+        type: 'fvh',
       },
       "title.exact" => {
         fragment_size: 150,
         number_of_fragments: 3,
-        type: 'unified'
+        type: 'fvh',
       },
       "full_text" => {
         fragment_size: 150,
         number_of_fragments: 3,
-        type: 'unified'
+        type: 'fvh',
       },
       "full_text.exact" => {
         fragment_size: 150,
         number_of_fragments: 3,
-        type: 'unified'
+        type: 'fvh',
       },
     }
   end

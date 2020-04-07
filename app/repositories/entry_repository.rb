@@ -4,57 +4,62 @@ class EntryRepository < BaseRepository
   mapping dynamic: 'strict' do
     indexes :id, {type: 'integer'}
     indexes :title, {
-      type: 'text',
-      index_options: 'offsets',
-      analyzer: 'english',
+      type:        'text',
+      analyzer:    'english',
+      term_vector: 'with_positions_offsets',
       fields: {
         exact: {
-          type: 'text',
-          analyzer: 'standard'
+          type:        'text',
+          analyzer:    'standard',
+          term_vector: 'with_positions_offsets'
         }
       }
     }
     indexes :abstract, {
-      type: 'text',
-      index_options: 'offsets',
-      analyzer: 'english',
+      type:        'text',
+      analyzer:    'english',
+      term_vector: 'with_positions_offsets',
       fields: {
         exact: {
-          type: 'text',
-          analyzer: 'standard'
+          type:        'text',
+          analyzer:    'standard',
+          term_vector: 'with_positions_offsets'
         }
       }
     }
     indexes :full_text, {
-      type: 'text',
-      index_options: 'offsets',
-      analyzer: 'english',
+      type:        'text',
+      analyzer:    'english',
+      term_vector: 'with_positions_offsets',
       fields: {
         exact: {
-          type: 'text',
-          analyzer: 'standard'
+          type:        'text',
+          analyzer:    'standard',
+          term_vector: 'with_positions_offsets'
         }
       }
     }
     indexes :regulation_id_number, {
-      type: 'text',
-      index_options: 'offsets',
-      analyzer: 'english',
+      type:        'text',
+      analyzer:    'english',
+      term_vector: 'with_positions_offsets',
       fields: {
         exact: {
-          type: 'text',
-          analyzer: 'standard'
+          type:        'text',
+          analyzer:    'standard',
+          term_vector: 'with_positions_offsets'
         }
       }
     }
     indexes :docket_id, {
-      type: 'text',
-      index_options: 'offsets',
-      analyzer: 'english',
+      type:        'text',
+      analyzer:    'english',
+      term_vector: 'with_positions_offsets',
       fields: {
         exact: {
-          type: 'text',
-          analyzer: 'standard'
+          type:        'text',
+          analyzer:    'standard',
+          term_vector: 'with_positions_offsets'
         }
       }
     }
