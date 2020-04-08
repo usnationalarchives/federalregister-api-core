@@ -157,7 +157,17 @@ class Api::V1::EntriesController < ApiController
     term = params[:conditions].present? && params[:conditions][:term].present?
     excerpts = fields.include?(:excerpts)
 
-    Entry.search_klass.new(params.merge(excerpts: term && excerpts))
+    infrastructure = params.delete(:infrastructure)
+    search_klass = case infrastructure
+    when 'es'
+      EsEntrySearch
+    when 'sphinx'
+      EntrySearch
+    else
+      Entry.search_klass
+    end
+
+    search_klass.new(params.merge(excerpts: term && excerpts))
   end
 
   def render_csv(entries, fields, filename)
