@@ -153,6 +153,7 @@ class EsApplicationSearch
     multi = options[:condition] == :near ? false : options[:value].is_a?(Array)
 
     vals.each do |val|
+      #NOTE: A filter is added for EACH value if it is an array
       @filters << ApplicationSearch::Filter.new(options.merge(value: val, multi: multi))
     end
   end

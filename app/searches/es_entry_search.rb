@@ -100,8 +100,9 @@ class EsEntrySearch < EsApplicationSearch
                   if missing_document_numbers.present?
                     raise ApplicationSearch::InputError.new("#{missing_document_numbers.map(&:inspect).to_sentence} could not be found")
                   end
-j
-                  entries.map(&:id).first #NOTE: It's not clear whether this filter is still being used.  The existing search infrastructure only seems to be passing in single documents here, which is why we're calling #first.  Retaining the logic of the sphinx_value_processor here, but this should probably be refactored at some point so we're not making duplicative SQL calls here.  Likely, via a new kind of #define_multi_filter macro method in EsEntrySearch
+
+                  entry_id = entries.map(&:id).first
+                  entry_id || -1 #NOTE: This filter is used when a subscription is created for a comment, though we don't publicly expose this search parameter in our API docs.  We return -1 here because elasticsearch expects an integer in the search options we build (and no entries have -1 for an id).  Returning an array here would require a significant, error-prone refactoring of the multi-value attribute handling in search infrastructure.
                 } do |*document_numbers|
                   entries = Entry.select("id, citation").where(:document_number => document_numbers.flatten)
 

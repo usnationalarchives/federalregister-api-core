@@ -679,6 +679,12 @@ describe EsEntrySearch do
       expect(search.results.es_ids).to match_array( [entry_with_cited_entries.id, another_entry_with_cited_entries.id])
     end
 
+    it "doesn't fail if no citing document number is found" do
+      search = EsEntrySearch.new(conditions: {citing_document_numbers: [entry.document_number]})
+
+      expect(search.results.count).to eq(0)
+    end
+
     it "handles geolocation search" do
       allow_any_instance_of(ApplicationSearch::PlaceSelector).to receive(:place_ids).and_return([444])
       entries = [
