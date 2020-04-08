@@ -685,6 +685,11 @@ describe EsEntrySearch do
       expect(search.results.count).to eq(0)
     end
 
+    it "is considered an invalid search if a document number that doesn't exist is provided" do
+      search = EsEntrySearch.new(conditions: {citing_document_numbers: ['bogus_document_number']})
+      expect(search.valid?).to eq(false)
+    end
+
     it "handles geolocation search" do
       allow_any_instance_of(ApplicationSearch::PlaceSelector).to receive(:place_ids).and_return([444])
       entries = [
