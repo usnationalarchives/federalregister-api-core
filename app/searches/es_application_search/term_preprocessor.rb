@@ -5,10 +5,10 @@ module EsApplicationSearch::TermPreprocessor
     processed_term = remove_escape_sequences(processed_term)
     processed_term = remove_extra_quote_mark(processed_term)
     processed_term = remove_invalid_sequences(processed_term)
+    processed_term = wrap_words_with_leading_equals_in_quotes(processed_term)
     processed_term = fix_hyphenated_word_searches(processed_term)
     processed_term = replace_ampersand_with_plus(processed_term)
     processed_term = replace_exclamation_points_with_minus(processed_term)
-    processed_term = wrap_words_with_leading_equals_in_quotes(processed_term)
     processed_term = reduce_phrase_slop_count_by_one(processed_term)
     processed_term
   end
