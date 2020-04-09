@@ -5,6 +5,7 @@ module EsApplicationSearch::TermPreprocessor
     processed_term = remove_escape_sequences(processed_term)
     processed_term = remove_extra_quote_mark(processed_term)
     processed_term = remove_invalid_sequences(processed_term)
+    processed_term = fix_hyphenated_word_searches(processed_term)
     processed_term = replace_ampersand_with_plus(processed_term)
     processed_term = replace_exclamation_points_with_minus(processed_term)
     processed_term = wrap_words_with_leading_equals_in_quotes(processed_term)
@@ -84,4 +85,28 @@ module EsApplicationSearch::TermPreprocessor
       [\a\b\n\r\t]                  (?# match any occurrences of escape sequences other than \s)
     /x, "")
   end
+
+  def self.fix_hyphenated_word_searches(term)
+    # quote hyphenated words outside phrases
+    processed_term = term.gsub(/
+      \b
+      ((?:
+        \w+                               (?#   some word characters )
+        -                                 (?#   a hyphen )
+      )+)
+      (\w+)                               (?# some word characters )
+      (?=(?:[^"]*"[^"]*")*[^"]*$)         (?# an even number of quotes afterwards )
+    /x, '"\1\2"')
+
+    # remove hyphens in identifiers inside phrases
+    processed_term.gsub(/
+      (\w+)                               (?# some word characters )
+      -                                   (?# a hyphen )
+      (?=                                 (?# looking ahead to... )
+        \w+                               (?#   another word character )
+        (?:[^"]*"[^"]*")*[^"]*"[^"]*$     (?#   an odd number of quotes afterwards )
+      )
+    /x, '\1 \2')
+  end
+
 end
