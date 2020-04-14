@@ -456,7 +456,7 @@ describe EsEntrySearch do
 
       assert_valid_search(search)
       result = search.results.first.excerpt
-      expect(result).to eq("The <span class=\"match\">fish</span> swam across the pond ... <span class=\"match\">fish</span> are great. ... <span class=\"match\">Fish</span> stuff")
+      expect(result).to eq("The <span class=\"match\">fish</span> swam across the pond … <span class=\"match\">fish</span> are great. … <span class=\"match\">Fish</span> stuff")
     end
 
     it "performs excerpting when a double-quoted phrase is included" do
@@ -483,7 +483,7 @@ describe EsEntrySearch do
 
       assert_valid_search(search)
       result = search.results.first.excerpt
-      expect(result).to eq("<span class=\"match\">fish</span> are great. ... The <span class=\"match\">fish</span> swam across the pond ... <span class=\"match\">Fish</span> stuff")
+      expect(result).to eq("<span class=\"match\">fish</span> are great. … The <span class=\"match\">fish</span> swam across the pond … <span class=\"match\">Fish</span> stuff")
     end
 
     it "Entry.bulk_index" do

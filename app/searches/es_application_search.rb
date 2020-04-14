@@ -335,7 +335,7 @@ class EsApplicationSearch
           begin
             # merge excerpts back to their result
             batch.each_with_index do |result, index|
-              result.excerpt = es_search_invocation.results[index].highlights
+              result.excerpt = es_search_invocation.results[index].highlights.gsub("...", "…")
             end
           rescue Riddle::ResponseError => e
             # if we can't read a file we want to still show the search results
