@@ -1,13 +1,43 @@
 class PublicInspectionDocumentRepository < BaseRepository
-  index_name ['fr-public-inspection-documents', Rails.env].join('-') #TODO make dynamic with: Settings.deployment_environment
+  index_name ['fr-public-inspection-documents', Rails.env].join('-')
   klass PublicInspectionDocument
+
+  # Create custom analyzer based on default english analyzer
+  # swap in KStem stemmer instead of Porter
+  settings analysis: {
+    "filter": {
+      "english_stop": {
+        "type":       "stop",
+        "stopwords":  "_english_"
+      },
+      "english_stemmer": {
+        "type":       "stemmer",
+        "language":   "light_english"
+      },
+      "english_possessive_stemmer": {
+        "type":       "stemmer",
+        "language":   "possessive_english"
+      }
+    },
+    "analyzer": {
+      "custom_english": {
+        "tokenizer":  "standard",
+        "filter": [
+          "english_possessive_stemmer",
+          "lowercase",
+          "english_stop",
+          "english_stemmer"
+        ]
+      }
+    }
+  }
 
   mapping dynamic: 'strict' do
     indexes :id, { type: 'integer' }
     indexes :filed_at, { type: 'date' }
     indexes :title, {
       type:        'text',
-      analyzer:    'english',
+      analyzer:    'custom_english',
       term_vector: 'with_positions_offsets',
       fields: {
         exact: {
@@ -19,7 +49,7 @@ class PublicInspectionDocumentRepository < BaseRepository
     }
     indexes :full_text, {
       type:        'text',
-      analyzer:    'english',
+      analyzer:    'custom_english',
       term_vector: 'with_positions_offsets',
       fields: {
         exact: {

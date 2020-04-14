@@ -2,12 +2,41 @@ class EntryRepository < BaseRepository
   index_name ['fr-entries', Rails.env].join('-')
   klass Entry
 
+  # Create custom analyzer based on default english analyzer
+  # swap in KStem stemmer instead of Porter
+  settings analysis: {
+    "filter": {
+      "english_stop": {
+        "type":       "stop",
+        "stopwords":  "_english_"
+      },
+      "english_stemmer": {
+        "type":       "stemmer",
+        "language":   "light_english"
+      },
+      "english_possessive_stemmer": {
+        "type":       "stemmer",
+        "language":   "possessive_english"
+      }
+    },
+    "analyzer": {
+      "custom_english": {
+        "tokenizer":  "standard",
+        "filter": [
+          "english_possessive_stemmer",
+          "lowercase",
+          "english_stop",
+          "english_stemmer"
+        ]
+      }
+    }
+  }
 
   mapping dynamic: 'strict' do
     indexes :id, {type: 'integer'}
     indexes :title, {
       type:        'text',
-      analyzer:    'english',
+      analyzer:    'custom_english',
       term_vector: 'with_positions_offsets',
       fields: {
         exact: {
@@ -19,7 +48,7 @@ class EntryRepository < BaseRepository
     }
     indexes :abstract, {
       type:        'text',
-      analyzer:    'english',
+      analyzer:    'custom_english',
       term_vector: 'with_positions_offsets',
       fields: {
         exact: {
@@ -31,7 +60,7 @@ class EntryRepository < BaseRepository
     }
     indexes :full_text, {
       type:        'text',
-      analyzer:    'english',
+      analyzer:    'custom_english',
       term_vector: 'with_positions_offsets',
       fields: {
         exact: {
@@ -43,7 +72,7 @@ class EntryRepository < BaseRepository
     }
     indexes :regulation_id_number, {
       type:        'text',
-      analyzer:    'english',
+      analyzer:    'custom_english',
       term_vector: 'with_positions_offsets',
       fields: {
         exact: {
@@ -55,7 +84,7 @@ class EntryRepository < BaseRepository
     }
     indexes :docket_id, {
       type:        'text',
-      analyzer:    'english',
+      analyzer:    'custom_english',
       term_vector: 'with_positions_offsets',
       fields: {
         exact: {
