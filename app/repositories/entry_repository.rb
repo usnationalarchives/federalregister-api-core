@@ -1,5 +1,7 @@
 class EntryRepository < BaseRepository
   index_name ['fr-entries', Rails.env].join('-')
+  klass Entry
+
 
   mapping dynamic: 'strict' do
     indexes :id, {type: 'integer'}
