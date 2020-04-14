@@ -804,6 +804,21 @@ describe EsEntrySearch do
         assert_valid_search(search)
         expect(search.results.es_ids).to eq([entry_a.id])
       end
+
+      context "Stemming" do
+        it "does not match on unrelated words with similar spelling" do
+          entries = [
+            build_entry_double({full_text: 'Park Statue', id: 1}),
+            build_entry_double({full_text: 'Citizenship Status', id: 2}),
+          ]
+          Entry.bulk_index(entries, refresh: true)
+
+          search = EsEntrySearch.new(conditions: {term: 'Status'})
+
+          assert_valid_search(search)
+          expect(search.results.es_ids).to match_array([2])
+        end
+      end
     end
 
     context "pagination" do
