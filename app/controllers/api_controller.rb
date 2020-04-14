@@ -130,9 +130,11 @@ class ApiController < ApplicationController
     matched_citations = []
     citations.each do |citation|
       volume, fr_str, page = citation.split(' ')
-      matches = model.all(find_options.merge(
-        :conditions => ["volume = ? AND start_page <= ? AND end_page >= ?", volume.to_i, page.to_i, page.to_i]
-      ))
+
+      matches = model.
+        includes(find_options.fetch(:include)).
+        select(find_options.fetch(:select)).
+        where("volume = ? AND start_page <= ? AND end_page >= ?", volume.to_i, page.to_i, page.to_i)
 
       if matches.present?
         matched_citations << citation
