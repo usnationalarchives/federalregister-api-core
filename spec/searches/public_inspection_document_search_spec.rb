@@ -124,7 +124,7 @@ describe EsPublicInspectionDocumentSearch do
 
             expect(described_class.new(conditions: { term: "-pipes" }).results.es_ids).to match_array [2]
             expect(described_class.new(conditions: { term: "-pipelines" }).results.es_ids).to match_array [1]
-            expect(described_class.new(conditions: { term: "-pipe" }).results.es_ids).to match_array [2]
+            expect(described_class.new(conditions: { term: "-pipe" }).results.es_ids).to match_array [1,2,3]
           end
 
           it "respects Groupings (())" do
