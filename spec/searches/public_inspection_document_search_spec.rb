@@ -127,6 +127,18 @@ describe EsPublicInspectionDocumentSearch do
             expect(described_class.new(conditions: { term: "-pipe" }).result_ids).to match_array [1,2,3]
           end
 
+          it "allows negative search on quoted phrases" do
+            documents = [
+              build_pi_doc_double(id: 1, full_text: "pipes and"),
+              build_pi_doc_double(id: 2, full_text: "pipes pipelines"),
+              build_pi_doc_double(id: 3, full_text: "pipes and pipelines"),
+            ]
+            save_documents_and_refresh_index(documents)
+
+            expect(described_class.new(conditions: { term: "-\"pipes and\"" }).result_ids).to match_array [2]
+            expect(described_class.new(conditions: { term: "-\"and pipelines\"" }).result_ids).to match_array [1,2]
+          end
+
           it "respects Groupings (())" do
             documents = [
               build_pi_doc_double(id: 1, full_text: "pipes strength"),
