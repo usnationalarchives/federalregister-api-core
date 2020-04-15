@@ -821,6 +821,22 @@ describe EsEntrySearch do
       end
     end
 
+    describe ".result_ids" do
+      it "returns result IDs from all returned pages of results" do
+        entries = []
+        (1..100).each do |i|
+          entries << build_entry_double({full_text: 'fried eggs', id: i})
+        end
+        Entry.bulk_index(entries, refresh: true)
+
+        search = EsEntrySearch.new(conditions: {term: 'fried'}, per_page: 10)
+
+        assert_valid_search(search)
+        expect(search.results.es_ids).to match_array 1..10
+        expect(search.result_ids).to match_array 1..100
+      end
+    end
+
     context "pagination" do
       it "can paginate through results" do
         documents = [
