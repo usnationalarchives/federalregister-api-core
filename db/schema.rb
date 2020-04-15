@@ -125,6 +125,7 @@ ActiveRecord::Schema.define(version: 2020_06_09_180322) do
     t.text    "search_conditions", :limit => 16777215
     t.boolean "active"
     t.integer "position"
+    t.text "sphinx_conditions", size: :medium
   end
 
   add_index "canned_searches", ["section_id", "active"], :name => "index_canned_searches_on_section_id_and_active"
