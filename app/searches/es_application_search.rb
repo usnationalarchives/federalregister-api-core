@@ -233,8 +233,18 @@ class EsApplicationSearch
       Honeybadger.notify("Not expecting this method to be invoked with args.")
     end
 
-    repository.search(search_options.recursive_merge(args)).results.map(&:id)
+    base_search_options = search_options.merge(size: INTERNAL_BATCH_SIZE)
+    search = repository.search(base_search_options)
+    total_pages = (search.total.to_f / INTERNAL_BATCH_SIZE).ceil
+
+    (0 ... total_pages).reduce([]) do |memo, current_page|
+      memo += repository.search(base_search_options.merge(from: current_page)).results.map(&:id)
+      memo
+    end
   end
+
+  INTERNAL_BATCH_SIZE = 500
+  private_constant :INTERNAL_BATCH_SIZE
 
   class ActiveRecordCollectionMetadataWrapper
     # Used to provide a way for AR collection to respond to former TS collection args (e.g. next_page, previous_page)
