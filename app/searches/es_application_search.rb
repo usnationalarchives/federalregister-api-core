@@ -233,14 +233,21 @@ class EsApplicationSearch
       Honeybadger.notify("Not expecting this method to be invoked with args.")
     end
 
-    base_search_options = search_options.merge(size: INTERNAL_BATCH_SIZE)
-    search = repository.search(base_search_options)
-    total_pages = (search.total.to_f / INTERNAL_BATCH_SIZE).ceil
-
-    (0 ... total_pages).reduce([]) do |memo, current_page|
-      memo += repository.search(base_search_options.merge(from: current_page)).results.map(&:id)
-      memo
+    ids = []
+    after = 0
+    loop do
+      base_search_options = search_options.merge(
+        size: INTERNAL_BATCH_SIZE,
+        search_after: [after],
+        sort: [ {id: 'asc'} ]
+      )
+      search_ids = repository.search(base_search_options).results.map(&:id)
+      ids_count = ids.count
+      ids += search_ids
+      after += 10000
+      break if ids_count == 0
     end
+    ids
   end
 
   INTERNAL_BATCH_SIZE = 500
