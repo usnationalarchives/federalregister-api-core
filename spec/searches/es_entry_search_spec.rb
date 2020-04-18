@@ -486,6 +486,70 @@ describe EsEntrySearch do
       expect(result).to eq("<span class=\"match\">fish</span> are great. … The <span class=\"match\">fish</span> swam across the pond … <span class=\"match\">Fish</span> stuff")
     end
 
+    context "excerpts for multi-field mappings" do
+      it "returns one excerpt for multiple hits on full_text" do
+        $entry_repository.create_index!(force: true)
+        entry = Factory(
+          :entry,
+          significant: 0,
+          raw_text_updated_at: Time.current
+        )
+
+        allow(File).to receive(:file?).and_return(true)
+        allow(File).to receive(:read).and_return("fish are great")
+        $entry_repository.save(entry, refresh: true)
+
+        search = EsEntrySearch.new(
+          excerpts: true,
+          conditions: {significant: 0, term: "\"fish\" great"}
+        )
+
+        assert_valid_search(search)
+        result = search.results.first.excerpt
+        expect(result).to eq("<span class=\"match\">fish</span> are <span class=\"match\">great</span>")
+      end
+
+      it "returns one excerpt for multiple hits on title" do
+        $entry_repository.create_index!(force: true)
+        entry = Factory(
+          :entry,
+          significant: 0,
+          title: "fish are great",
+          raw_text_updated_at: Time.current
+        )
+        $entry_repository.save(entry, refresh: true)
+
+        search = EsEntrySearch.new(
+          excerpts: true,
+          conditions: {significant: 0, term: "\"fish\" great"}
+        )
+
+        assert_valid_search(search)
+        result = search.results.first.excerpt
+        expect(result).to eq("<span class=\"match\">fish</span> are <span class=\"match\">great</span>")
+      end
+
+      it "returns one excerpt for multiple hits on abstract" do
+        $entry_repository.create_index!(force: true)
+        entry = Factory(
+          :entry,
+          significant: 0,
+          abstract: "fish are great",
+          raw_text_updated_at: Time.current
+        )
+        $entry_repository.save(entry, refresh: true)
+
+        search = EsEntrySearch.new(
+          excerpts: true,
+          conditions: {significant: 0, term: "\"fish\" great"}
+        )
+
+        assert_valid_search(search)
+        result = search.results.first.excerpt
+        expect(result).to eq("<span class=\"match\">fish</span> are <span class=\"match\">great</span>")
+      end
+    end
+
     it "Entry.bulk_index" do
       another_entry = Factory(:entry, significant: 0, title: 'fish')
       entries = [

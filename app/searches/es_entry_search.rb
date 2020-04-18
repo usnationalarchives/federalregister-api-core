@@ -501,38 +501,25 @@ class EsEntrySearch < EsApplicationSearch
   end
 
   def highlight_fields
-    #NOTE: It is necessary to include the .exact fields or no excerpts will be returned for queries that include double quotes.
     {
       "abstract" => {
-        fragment_size: 150,
-        number_of_fragments: 3,
-        type: 'fvh',
-      },
-      "abstract.exact" => {
+        matched_fields: ["abstract", "abstract.exact"],
         fragment_size: 150,
         number_of_fragments: 3,
         type: 'fvh',
       },
       "title" => {
-        fragment_size: 150,
-        number_of_fragments: 3,
-        type: 'fvh',
-      },
-      "title.exact" => {
+        matched_fields: ["title", "title.exact"],
         fragment_size: 150,
         number_of_fragments: 3,
         type: 'fvh',
       },
       "full_text" => {
+        matched_fields: ["full_text", "full_text.exact"],
         fragment_size: 150,
         number_of_fragments: 3,
         type: 'fvh',
-      },
-      "full_text.exact" => {
-        fragment_size: 150,
-        number_of_fragments: 3,
-        type: 'fvh',
-      },
+      }
     }
   end
 
