@@ -216,6 +216,42 @@ describe EsPublicInspectionDocumentSearch do
         expect(described_class.new(conditions: { agencies: ["fish-department", "transportation-department"] }).result_ids).to match_array [1,2]
       end
 
+      context "excerpts for multi-field mappings" do
+        it "returns one excerpt for multiple hits on full_text" do
+          document = FactoryGirl.create(
+            :public_inspection_document,
+            raw_text_updated_at: Time.current
+          )
+          allow(File).to receive(:file?).and_return(true)
+          allow(File).to receive(:read).and_return("goats and llamas")
+          save_documents_and_refresh_index(document)
+
+          excerpt = described_class.new(
+            excerpts: true,
+            conditions: { term: "goats \"llamas\""
+          }).results.first.excerpt
+          expect(excerpt).to eq("<span class=\"match\">goats</span> and <span class=\"match\">llamas</span>")
+        end
+
+        it "returns one excerpt for multiple hits on title" do
+          document = FactoryGirl.create(
+            :public_inspection_document,
+            raw_text_updated_at: Time.current
+          )
+          pi_doc = build_pi_doc_double(
+            id: document.id,
+            title: "goats and llamas",
+          )
+          save_documents_and_refresh_index(pi_doc)
+
+          excerpt = described_class.new(
+            excerpts: true,
+            conditions: { term: "goats \"llamas\""
+          }).results.first.excerpt
+          expect(excerpt).to eq("<span class=\"match\">goats</span> and <span class=\"match\">llamas</span>")
+        end
+      end
+
       describe ".result_ids" do
         it "returns result IDs from all returned pages of results" do
           documents = []
