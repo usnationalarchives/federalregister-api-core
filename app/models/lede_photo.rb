@@ -15,9 +15,11 @@ class LedePhoto < ApplicationModel
                       :secret_access_key => Rails.application.secrets[:aws][:secret_access_key],
                       :s3_region => 'us-east-1'
                     },
+                    :s3_host_alias => SETTINGS["s3_host_aliases"]["lede_photos"],
                     :s3_protocol => 'https',
                     :bucket =>  SETTINGS['s3_buckets']['lede_photos'],
-                    :path => ":id/:style.:extension"
+                    :path => ":id/:style.:extension",
+                    :url => ':s3_alias_url'
 
   after_create :generate_paperclip_styles! #Paperclip doesn't seem to auto-generate styles in this model.  Ideally, we wouldn't have to call this.
 

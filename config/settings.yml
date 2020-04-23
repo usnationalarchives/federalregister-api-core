@@ -38,6 +38,13 @@ shared: &shared
       documents: <%= ActiveModel::Type::Boolean.new.cast(ENV.fetch('REG_GOV_DOCUMENTS_ENABLED', true)) %>
     # base_uri: <%= 'http://api.data.gov/regulations/v3' || ENV["REG_GOV_BASE_URL"] || 'http://api.data.gov/TEST/regulations/v3' %>
   deliver_daily_import_email: <%= ActiveModel::Type::Boolean.new.cast(ENV.fetch('DELIVER_DAILY_IMPORT_EMAIL', true)) %>
+  s3_host_aliases:
+    agency_logos: agency-logos.fr2.local
+    public_images: images.fr2.local
+    lede_photos: lede-photos.fr2.local
+    private_images: private_images.fr2.local
+    public_images: images.fr2.local
+    public_inspection: public-inspection.fr2.local
 
 # Make any updates -web also
 test:
@@ -97,6 +104,13 @@ staging:
     agency_logos: agency-logos.fr2.criticaljuncture.org
     public_inspection: public-inspection.fr2.criticaljuncture.org
   ofr_flickr_group_id: 1058319@N21
+  s3_host_aliases:
+    agency_logos: agency-logos.fr2.criticaljuncture.org
+    public_images: images.fr2.criticaljuncture.org
+    lede_photos: lede-photos.fr2.criticaljuncture.org
+    private_images: private_images.fr2.criticaljuncture.org
+    public_images: images.fr2.criticaljuncture.org
+    public_inspection: public-inspection.fr2.criticaljuncture.org
 
 production:
   <<: *shared
@@ -107,6 +121,14 @@ production:
     lede_photos: lede-photos.federalregister.gov
     agency_logos: agency-logos.federalregister.gov
     public_inspection: public-inspection.federalregister.gov
+  s3_host_aliases:
+    agency_logos: agency-logos.federalregister.gov
+    public_images: images.federalregister.gov
+    lede_photos: lede-photos.federalregister.gov
+    private_images: private_images.federalregister.gov
+    public_images: images.federalregister.gov
+    public_inspection: public-inspection.federalregister.gov
+
   ofr_flickr_group_id: 1058319@N21
   regulations_dot_gov:
     base_uri: <%= ENV["REG_GOV_BASE_URL"] || 'http://api.data.gov/regulations/v3' %>
