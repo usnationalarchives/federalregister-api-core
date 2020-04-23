@@ -9,6 +9,7 @@ shared: &shared
     host: <%= ENV['ELASTICSEARCH_HOST'] %>
     trace: false
     enabled: <%= ActiveModel::Type::Boolean.new.cast(ENV['ELASTICSEARCH_ENABLED']) %>
+    notify_on_sphinx_usage: <%= ENV.fetch('NOTIFY_ON_SPHINX_USAGE', false) %>
 
   varnish:
     host: <%= ENV["VARNISH_ADDR"] || 'varnish' %>

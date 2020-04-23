@@ -97,7 +97,8 @@ class ApplicationSearch
   end
 
   def initialize(options = {})
-    if ElasticsearchIndexer.es_enabled?
+    if ElasticsearchIndexer.es_enabled? && SETTINGS['elasticsearch']['notify_on_sphinx_usage']
+      raise "We shouldn't be relying on sphinx here.  Investigate callstack"
       Honeybadger.notify("We shouldn't be relying on sphinx here.  Investigate callstack")
     end
     if options.try(:permit!)
