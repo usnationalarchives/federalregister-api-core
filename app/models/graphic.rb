@@ -5,8 +5,19 @@ class Graphic < ApplicationModel
   has_many :entries, :through => :usages
 
   has_attached_file :graphic,
-                    :styles => { :large => ["684", :png], :original => ["", :png] },
-                    :processors => [:auto_inverter],
+                    :styles => {
+                      :large => {
+                        :format => :png,
+                        :geometry => "460",
+                        :convert_options => "-strip -unsharp 0"
+                      },
+                      :original_png => {
+                        :format => :png,
+                        :geometry => "100%",
+                        :convert_options => "-strip -unsharp 0 -fuzz 10% -transparent white",
+                      }
+                    },
+                    :processors => [:auto_inverter, :png_crush],
                     :storage => :s3,
                     :s3_credentials => {
                       :access_key_id     => Rails.application.secrets[:aws][:access_key_id],
