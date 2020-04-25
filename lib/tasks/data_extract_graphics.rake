@@ -7,5 +7,9 @@ namespace :content do
         extractor.perform
       end
     end
+
+    task :reprocess_invalid => :environment do
+      Content::GraphicsExtractor::Reprocessor.perform
+    end
   end
 end
