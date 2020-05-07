@@ -23,7 +23,7 @@ gem 'indefinite_article'
 gem 'titleize' #updates ActiveSupport titleize with stop word support
 gem 'rubyzip'
 gem 'zip-zip' # will load compatibility for old rubyzip API.
-gem 'fog', '~> 1.3'
+gem 'fog-aws'
 gem 'formtastic', "~> 2.1"
 gem 'json', '1.8.6'
 gem 'ym4r', '0.6.1'
