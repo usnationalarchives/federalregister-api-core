@@ -23,7 +23,7 @@ job_type :rake, [
 ########################
 if cron_settings["import"]
   # Import today's content
-  # retries every 5 minutes from 4AM to 5PM EDT every day
+  # retries every 5 minutes from 4AM to 9PM EDT every day
   if ENV['RAILS_ENV'] == 'development'
     every "*/5 4-21 * * *" do
       set :log, 'ofr_bulkdata_import'
@@ -36,7 +36,7 @@ if cron_settings["import"]
     end
   end
 
-  # Expire pages warning of late content at 9AM/10AM
+  # Expire pages warning of late content at 9AM
   every '0 9 * * 1-5' do
     set  :log, 'late_page_expiration'
     rake 'varnish:expire:pages_warning_of_late_content'
@@ -107,7 +107,7 @@ end
 ########################
 
 if cron_settings["regulations_dot_gov"]["documents"]
-  # every 30 minutes from 4AM to 7PM EDT every day
+  # every 30 minutes from 4AM to 11PM EDT every day
   every "*/30 4-23 * * *" do
     set :log, 'regulations_dot_gov_document_update'
     rake 'content:entries:import:regulations_dot_gov:modified_today'
