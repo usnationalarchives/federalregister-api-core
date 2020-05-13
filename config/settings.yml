@@ -23,15 +23,15 @@ shared: &shared
       import_eps: <%= ActiveModel::Type::Boolean.new.cast(ENV.fetch('GPO_IMAGES_IMPORT_EPS', true)) %>
       convert_eps: <%= ActiveModel::Type::Boolean.new.cast(ENV.fetch('GPO_IMAGES_CONVERT_EPS', true)) %>
     import: true
-    late_content_notifications: <%= ENV.fetch("LATE_CONTENT_NOTIFICATIONS", true) %>
-    public_inspection: <%= ENV['CRON_PUBLIC_INSPECTION'].present? ? ActiveModel::Type::Boolean.new.cast(ENV['CRON_PUBLIC_INSPECTION']) : true %>
+    late_content_notifications: <%= ActiveModel::Type::Boolean.new.cast(ENV.fetch('LATE_CONTENT_NOTIFICATIONS', true)) %>
+    public_inspection: <%= ActiveModel::Type::Boolean.new.cast(ENV.fetch('CRON_PUBLIC_INSPECTION', true)) %>
     sphinx: true
     regulations_dot_gov:
-      comments: <%= ENV.fetch("REG_GOV_COMMENTS_ENABLED", true) %>
-      dockets: <%= ENV.fetch("REG_GOV_DOCKETS_ENABLED", true) %>
-      documents: <%= ENV.fetch("REG_GOV_DOCUMENTS_ENABLED", true) %>
+      comments: <%= ActiveModel::Type::Boolean.new.cast(ENV.fetch('REG_GOV_COMMENTS_ENABLED', true)) %>
+      dockets: <%= ActiveModel::Type::Boolean.new.cast(ENV.fetch('REG_GOV_DOCKETS_ENABLED', true)) %>
+      documents: <%= ActiveModel::Type::Boolean.new.cast(ENV.fetch('REG_GOV_DOCUMENTS_ENABLED', true)) %>
     # base_uri: <%= 'http://api.data.gov/regulations/v3' || ENV["REG_GOV_BASE_URL"] || 'http://api.data.gov/TEST/regulations/v3' %>
-  deliver_daily_import_email: <%= ENV.fetch("DELIVER_DAILY_IMPORT_EMAIL", true) %>
+  deliver_daily_import_email: <%= ActiveModel::Type::Boolean.new.cast(ENV.fetch('DELIVER_DAILY_IMPORT_EMAIL', true)) %>
   sphinx:
     enable_event_index: false
     enable_regulatory_plan_index: false
