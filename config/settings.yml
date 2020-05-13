@@ -19,7 +19,9 @@ shared: &shared
   cron:
     delta_auditing: true
     google_analytics: true
-    gpo_images: true
+    gpo_images:
+      import_eps: <%= ActiveModel::Type::Boolean.new.cast(ENV.fetch('GPO_IMAGES_IMPORT_EPS', true)) %>
+      convert_eps: <%= ActiveModel::Type::Boolean.new.cast(ENV.fetch('GPO_IMAGES_CONVERT_EPS', true)) %>
     import: true
     late_content_notifications: <%= ENV.fetch("LATE_CONTENT_NOTIFICATIONS", true) %>
     public_inspection: <%= ENV['CRON_PUBLIC_INSPECTION'].present? ? ActiveModel::Type::Boolean.new.cast(ENV['CRON_PUBLIC_INSPECTION']) : true %>

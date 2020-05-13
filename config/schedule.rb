@@ -86,16 +86,16 @@ end
 ########################
 # GPO IMAGE IMPORTS
 ########################
-if cron_settings["gpo_images"]
+if cron_settings["gpo_images"]["import_eps"]
   # Download image from FTP and place in private bucket on S3
   # destructive and should only be run in one environment
-  if ENV['RAILS_ENV'] == 'production'
-    every 15.minutes do
-      set :log, 'gpo_eps_importer'
-      rake 'content:gpo_images:import'
-    end
+  every 15.minutes do
+    set :log, 'gpo_eps_importer'
+    rake 'content:gpo_images:import'
   end
+end
 
+if cron_settings["gpo_images"]["convert_eps"]
   # Enqueue background jobs to process any images that are new
   every 5.minutes do
     set :log, 'gpo_eps_converter'
