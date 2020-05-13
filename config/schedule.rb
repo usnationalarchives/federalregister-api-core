@@ -41,7 +41,9 @@ if cron_settings["import"]
     set  :log, 'late_page_expiration'
     rake 'varnish:expire:pages_warning_of_late_content'
   end
+end
 
+if cron_settings["late_content_notifications"]
   # Warn us of late content
   every '0 8 * * 1-5' do
     set  :log, 'late_content'

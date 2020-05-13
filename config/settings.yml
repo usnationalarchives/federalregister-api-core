@@ -21,6 +21,7 @@ shared: &shared
     google_analytics: true
     gpo_images: true
     import: true
+    late_content_notifications: <%= ENV.fetch("LATE_CONTENT_NOTIFICATIONS", true) %>
     public_inspection: <%= ENV['CRON_PUBLIC_INSPECTION'].present? ? ActiveModel::Type::Boolean.new.cast(ENV['CRON_PUBLIC_INSPECTION']) : true %>
     sphinx: true
     regulations_dot_gov:
@@ -28,6 +29,7 @@ shared: &shared
       dockets: <%= ENV.fetch("REG_GOV_DOCKETS_ENABLED", true) %>
       documents: <%= ENV.fetch("REG_GOV_DOCUMENTS_ENABLED", true) %>
     # base_uri: <%= 'http://api.data.gov/regulations/v3' || ENV["REG_GOV_BASE_URL"] || 'http://api.data.gov/TEST/regulations/v3' %>
+  deliver_daily_import_email: <%= ENV.fetch("DELIVER_DAILY_IMPORT_EMAIL", true) %>
   sphinx:
     enable_event_index: false
     enable_regulatory_plan_index: false
