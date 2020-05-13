@@ -14,8 +14,6 @@ shared: &shared
     throttle:
       at: <%= ENV["REG_GOV_JOBS_THROTTLE_AT"] || 2 %>
       per: <%= ENV["REG_GOV_JOBS_THROTTLE_PER"] || 5 %>
-  public_inspection:
-    import: false
   cron:
     delta_auditing: true
     google_analytics: true
@@ -79,8 +77,6 @@ staging:
     agency_logos: agency-logos.fr2.criticaljuncture.org
     public_inspection: public-inspection.fr2.criticaljuncture.org
   ofr_flickr_group_id: 1058319@N21
-  public_inspection:
-    import: true
 
 production:
   <<: *shared
@@ -92,8 +88,6 @@ production:
     agency_logos: agency-logos.federalregister.gov
     public_inspection: public-inspection.federalregister.gov
   ofr_flickr_group_id: 1058319@N21
-  public_inspection:
-    import: true
   regulations_dot_gov:
     base_uri: <%= ENV["REG_GOV_BASE_URL"] || 'http://api.data.gov/regulations/v3' %>
     throttle:
