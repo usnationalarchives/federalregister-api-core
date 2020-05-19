@@ -105,6 +105,11 @@ if cron_settings["gpo_images"]["convert_eps"]
   end
 end
 
+if cron_settings["gpo_images"]["convert_eps"]
+  every :sunday, at: '3AM' do
+    rake 'content:gpo_images:reprocess_unlinked_gpo_images'
+  end
+end
 
 ########################
 # REGULATIONS.GOV DATA

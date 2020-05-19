@@ -6,9 +6,9 @@ module GpoImages
     GPO_IMAGE_START_DATE = Date.parse('2015-10-14')
     XML_IMAGE_TAGS = ['GID', 'MID']
 
-    def initialize(date)
+    def initialize(date, documents=nil)
       @date = date
-      @documents = Entry.where(publication_date: @date.to_s(:iso))
+      @documents = documents || Entry.where(publication_date: @date.to_s(:iso))
     end
 
     def self.perform(date)

@@ -49,5 +49,11 @@ namespace :content do
         end
       end
     end
+
+    desc "Identify unlinked GPO images where the image identifier has been found in document XML, rescan the associated documents and "
+    task :reprocess_unlinked_gpo_images => :environment do
+      GpoImages::UnlinkedImageReprocessor.perform
+    end
+
   end
 end
