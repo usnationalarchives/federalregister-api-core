@@ -1,5 +1,7 @@
 require 'yaml'
 require 'erb'
+require 'active_model'
+
 cron_settings = YAML::load(
   ERB.new(
     File.read(

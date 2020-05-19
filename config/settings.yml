@@ -55,7 +55,9 @@ development:
   ofr_flickr_group_id: 1058319@N21
   cron:
     google_analytics: false
-    gpo_images: false
+    gpo_images:
+      import_eps: false
+      convert_eps: false
     import: false
     public_inspection: false
     sphinx: true
