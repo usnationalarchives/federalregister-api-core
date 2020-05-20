@@ -66,6 +66,7 @@ development:
       dockets: false
       documents: false
     varnish: false
+  deliver_daily_import_email: false
 
 staging:
   <<: *shared
