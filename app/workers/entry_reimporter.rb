@@ -1,11 +1,12 @@
 module EntryReimporter
   @queue = :reimport
 
-  def self.perform(*args)
+  def self.perform(date, *args)
     ActiveRecord::Base.clear_active_connections!
 
-    Content::EntryImporter.process_all_by_date(*args)
-    date, attributes = *args
+    date = date.is_a?(String) ? Date.parse(date) : date
+
+    Content::EntryImporter.process_all_by_date(date, *args)
     GpoImages::DailyIssueImageProcessor.perform(date)
     Content::TableOfContentsCompiler.perform(date)
 
