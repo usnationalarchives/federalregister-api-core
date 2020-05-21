@@ -1,7 +1,7 @@
 namespace :content do
   namespace :entries do
     desc "Reimport entry data from FDSys"
-    task :reimport => :environment do
+    task :background_reimport => :environment do
       Content.parse_dates(ENV['DATE']).each do |date|
         Resque.enqueue(
           EntryReimporter, date, :all,
