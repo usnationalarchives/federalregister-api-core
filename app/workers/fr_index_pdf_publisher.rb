@@ -40,9 +40,9 @@ class FrIndexPdfPublisher < FrIndexPdfGenerator
   end
 
   def update_agency_status
-    FrIndexAgencyStatus.update_all(
-      "last_published = '#{max_date.to_s(:db)}'",
-      "year = #{year} AND agency_id = #{agency.id} AND (last_published IS NULL OR last_published < '#{max_date.to_s(:db)}')")
+    FrIndexAgencyStatus.
+      where("year = #{year} AND agency_id = #{agency.id} AND (last_published IS NULL OR last_published < '#{max_date.to_s(:db)}')").
+      update_all("last_published = '#{max_date.to_s(:db)}'")
   end
 
   def update_fr_index_json
