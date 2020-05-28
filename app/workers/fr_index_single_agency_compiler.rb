@@ -11,6 +11,8 @@ class FrIndexSingleAgencyCompiler
     path_manager = FileSystemPathManager.new("#{year}-01-01")
     
     FrIndexAgencyCompiler.process_agency_with_docs(year, agency.id)
-    CacheUtils.purge_cache("#{path_manager.index_json_dir}/#{agency.slug}.json")
+    
+    cached_path = path_manager.index_agency_json_path(agency).gsub(path_manager.data_file_path, '')
+    CacheUtils.purge_cache(cached_path)
   end
 end

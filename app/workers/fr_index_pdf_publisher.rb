@@ -34,8 +34,9 @@ class FrIndexPdfPublisher < FrIndexPdfGenerator
   # we only clear the cache after we've generate all the individual
   # agency pdfs and the combined pdf (which should be enqueued last)
   def clear_cache
-    purge_cache(path_manager.index_pdf_dir)
-    purge_cache("#{path_manager.index_pdf_dir}/*")
+    cached_path = path_manager.index_pdf_dir.gsub(path_manager.data_file_path, '')
+    purge_cache(cached_path)
+    purge_cache("#{cached_path}/*")
   end
 
   def update_agency_status

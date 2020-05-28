@@ -89,8 +89,6 @@ class FileSystemPathManager
     "#{document_temporary_mods_dir}/#{date.to_s(:db_year)}.xml"
   end
 
-  private
-
   def data_file_path
     "#{Rails.root}/data/efs"
   end

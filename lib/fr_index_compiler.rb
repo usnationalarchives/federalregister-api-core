@@ -80,7 +80,7 @@ class FrIndexCompiler
   end
 
   def clear_cache
-    CacheUtils.purge_cache(path_manager.index_json_path)
+    cached_path = path_manager.index_json_path.gsub(path_manager.data_file_path, '')
+    CacheUtils.purge_cache(cached_path)
   end
-
 end

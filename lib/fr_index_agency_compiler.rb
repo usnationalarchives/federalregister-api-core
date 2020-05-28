@@ -23,6 +23,12 @@ class FrIndexAgencyCompiler
     Agency.all.each do |agency|
       process_agency_with_docs(year, agency.id)
     end
+    clear_cache
+  end
+
+  def clear_cache
+    cached_path = path_manager.index_json_path.gsub(path_manager.data_file_path, '')
+    CacheUtils.purge_cache("#{cached_path}/*")
   end
 
   def self.process_agency_with_docs(year, agency_id)
