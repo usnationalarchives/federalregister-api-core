@@ -26,7 +26,7 @@ class FrIndexAgencyCompiler
     clear_cache
   end
 
-  def clear_cache
+  def self.clear_cache
     cached_path = path_manager.index_json_path.gsub(path_manager.data_file_path, '')
     CacheUtils.purge_cache("#{cached_path}/*")
   end
