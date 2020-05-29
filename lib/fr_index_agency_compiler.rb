@@ -28,7 +28,7 @@ class FrIndexAgencyCompiler
 
   def self.clear_cache(year)
     path_manager = FileSystemPathManager.new("#{year}-01-01")
-    cached_path = path_manager.index_json_path.gsub(path_manager.data_file_path, '')
+    cached_path = path_manager.index_json_dir.gsub(path_manager.data_file_path, '')
     CacheUtils.purge_cache("#{cached_path}/*")
   end
 
