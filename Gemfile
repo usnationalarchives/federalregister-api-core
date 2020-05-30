@@ -33,7 +33,7 @@ gem 'ffi-hunspell',
   :ref     => '91516637fdff9cef9bae66aefdd89e1b4a8b5831',
   :require => 'ffi/hunspell'
 
-gem 'honeybadger', '~> 2.3.3'
+gem 'honeybadger', '~> 2.7.2'
 gem 'sitemap_generator', '~> 1.5.0'
 
 gem 'paperclip'
