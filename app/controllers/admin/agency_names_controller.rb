@@ -13,9 +13,18 @@ class Admin::AgencyNamesController < AdminController
           includes(:agency).
           order("agency_names.name")
 
-        rows = [["agency_name", "agency"].to_csv] +
-          agency_names.map{|agency_name| [agency_name.name, agency_name.void? ? 'Void' : agency_name.agency.try(:name)].to_csv}
-        render plain: rows
+        columns = %w(agency_name agency)
+        csv = CSV.generate do |csv|
+          csv << columns
+          agency_names.each do |agency_name|
+            csv << [
+              agency_name.name,
+              (agency_name.void? ? 'Void' : agency_name.agency.try(:name))
+            ]
+          end
+        end
+
+        send_data csv
       end
     end
   end
