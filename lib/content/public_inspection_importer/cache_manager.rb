@@ -25,18 +25,26 @@ class Content::PublicInspectionImporter::CacheManager
   end
 
   def clear_cache
-    # purge issue cache
-    purge_cache public_inspection_documents_by_date_path(issue.publication_date)
-    purge_cache public_inspection_documents_path
+    # purge static json cache
+    purge_cache "public_inspection_issues/json/#{issue.publication_date.to_s(:ymd)}/special_filing.json"
+    purge_cache "public_inspection_issues/json/#{issue.publication_date.to_s(:ymd)}/regular_filing.json"
+
+    # purge api cache
     purge_cache(
       api_v1_public_inspection_documents_path + '*'
     )
-    purge_cache pi_navigation_path
-
+    purge_cache '^/api/v1/public-inspection'
+  
+    # purge issue html cache
     purge_cache "esi/public_inspection_issues/#{issue.publication_date.strftime('%Y')}/#{issue.publication_date.strftime('%m')}"
     purge_cache 'esi/layouts/navigation/public-inspection'
     purge_cache 'esi/issues/summary'
-    purge_cache '^/api/v1/public-inspection'
+    
+    purge_cache public_inspection_documents_by_date_path(issue.publication_date)
+    purge_cache public_inspection_documents_path
+    
+    purge_cache pi_navigation_path
+
 
     # purge affected agency cache
     agencies = pi_documents.map(&:agencies).flatten.uniq
