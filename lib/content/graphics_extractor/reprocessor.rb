@@ -22,9 +22,8 @@ module Content
 
             ApplicationModel.transaction do
               graphics_with_broken_links.each do |graphic|
-                  graphic.graphic.destroy
-                  graphic.save
-                end
+                graphic.graphic.destroy
+                graphic.save
               end
 
               extractor = Content::GraphicsExtractor.new(grouped_row.publication_date)
