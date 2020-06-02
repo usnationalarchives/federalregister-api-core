@@ -32,7 +32,6 @@ shared: &shared
     # base_uri: <%= 'http://api.data.gov/regulations/v3' || ENV["REG_GOV_BASE_URL"] || 'http://api.data.gov/TEST/regulations/v3' %>
   deliver_daily_import_email: <%= ActiveModel::Type::Boolean.new.cast(ENV.fetch('DELIVER_DAILY_IMPORT_EMAIL', true)) %>
   sphinx:
-    enable_event_index: false
     enable_regulatory_plan_index: false
     use_local_pil_date: false
 

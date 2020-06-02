@@ -107,14 +107,6 @@ class Issue < ApplicationModel
     end
   end
 
-  def public_meeting_count
-    Event.
-      public_meeting.
-      joins(:entry).
-      where(:entries => {:publication_date => publication_date}).
-      count
-  end
-
   def eventful_entries
     eventful_entries_search.results
   end

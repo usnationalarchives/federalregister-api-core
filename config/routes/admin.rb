@@ -23,7 +23,6 @@ FederalregisterApiCore::Application.routes.draw do
         get :delete
       end
     end
-    resources :events
     resources :dictionary_words, :only => [:create]
     resources :spelling_suggestions, :only => [:index]
     match 'index/:year' => 'indexes#year', :as => :index_year, :via => :get
@@ -57,10 +56,6 @@ FederalregisterApiCore::Application.routes.draw do
         end
       resource :approval, controller: 'issues/approvals'
       resources :entries, controller: 'issues/entries'
-      resources :eventful_entries, controller: 'issues/eventful_entries' do
-        resources :events
-      end
-
       resources :sections, controller: 'issues/sections' do
         member do
           get :preview

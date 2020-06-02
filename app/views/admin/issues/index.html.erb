@@ -2,16 +2,12 @@
   <thead>
     <tr>
       <th>Issue</th>
-      <th># Public Meetings</th>
-      <th># Entry Candidates</th>
     </tr>
   </thead>
   <tbody>
     <% @issues.each do |issue| %>
       <tr>
         <td><%= link_to issue.publication_date, admin_issue_path(issue.publication_date.to_s(:iso)) %></td>
-        <td><%= issue.public_meeting_count %></td>
-        <td><%= link_to issue.eventful_entries_count, admin_issue_eventful_entries_path(issue.publication_date.to_s(:iso)) %>
       </tr>
     <% end %>
   </tbody>

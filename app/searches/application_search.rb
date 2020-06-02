@@ -314,10 +314,6 @@ class ApplicationSearch
     PublicInspectionDocumentSearch.new(:conditions => {:term => @term}).term_count
   end
 
-  def event_count
-    EventSearch.new(:conditions => {:term => @term}).term_count
-  end
-
   def regulatory_plan_count
     RegulatoryPlanSearch.new(:conditions => {:term => @term}).term_count
   end
