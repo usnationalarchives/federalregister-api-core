@@ -631,9 +631,13 @@ class Entry < ApplicationModel
   private
 
   def record_entry_change
-    if entry_change.nil?
+    if entry_change.nil? && new_or_changed?
       build_entry_change
     end
+  end
+
+  def new_or_changed?
+    new_record? || changed?
   end
 
   def set_document_file_path
