@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_11_175851) do
+ActiveRecord::Schema.define(version: 2020_06_09_180322) do
 
   create_table "action_names", :force => true do |t|
     t.string   "name"
@@ -231,6 +231,7 @@ ActiveRecord::Schema.define(version: 2020_03_11_175851) do
     t.integer  "issue_number"
     t.string   "comment_url_override"
     t.string   "presidential_document_number"
+    t.index ["presidential_document_number", "presidential_document_type_id"], name: "pres_doc_number_pres_doc_type_id", length: { presidential_document_number: 10 }
   end
 
   add_index "entries", ["citation"], :name => "index_entries_on_citation"
