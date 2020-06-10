@@ -1,4 +1,4 @@
-class RemoveLegacyPresidentialDocColumns < ActiveRecord::Migration
+class RemoveLegacyPresidentialDocColumns < ActiveRecord::Migration[4.2]
 
   def self.up
     change_table(:entries) do |t|
@@ -11,7 +11,6 @@ class RemoveLegacyPresidentialDocColumns < ActiveRecord::Migration
     add_index "entries",
       ["presidential_document_type_id", "presidential_document_number"],
       :name   => "presidential_document_type_id",
-      :unique => true,
       :length => {
         "presidential_document_type_id" => nil,
         "presidential_document_number"  => 10 #NOTE: Mysql seems to have a limit of 767 bytes for an index, hence the need to limit the length of this text field

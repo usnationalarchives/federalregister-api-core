@@ -231,6 +231,7 @@ ActiveRecord::Schema.define(version: 2020_06_09_180322) do
     t.integer  "issue_number"
     t.string   "comment_url_override"
     t.string   "presidential_document_number"
+    t.index ["presidential_document_type_id", "presidential_document_number"], name: "presidential_document_type_id", length: { presidential_document_number: 10 }
     t.index ["presidential_document_number", "presidential_document_type_id"], name: "pres_doc_number_pres_doc_type_id", length: { presidential_document_number: 10 }
   end
 
@@ -245,7 +246,6 @@ ActiveRecord::Schema.define(version: 2020_06_09_180322) do
   add_index "entries", ["granule_class"], :name => "index_entries_on_agency_id_and_granule_class"
   add_index "entries", ["id", "publication_date"], :name => "index_entries_on_id_and_publication_date"
   add_index "entries", ["id"], :name => "index_entries_on_agency_id_and_id"
-  add_index "entries", ["presidential_document_type_id", "presidential_document_number"], :name => "presidential_document_type_id", :unique => true, :length => {"presidential_document_type_id"=>nil, "presidential_document_number"=>10}
   add_index "entries", ["publication_date"], :name => "index_entries_on_agency_id_and_publication_date"
   add_index "entries", ["publication_date"], :name => "index_entries_on_publication_date_and_agency_id"
   add_index "entries", ["raw_text_updated_at"], :name => "index_entries_on_raw_text_updated_at"
