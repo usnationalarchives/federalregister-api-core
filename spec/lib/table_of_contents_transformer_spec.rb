@@ -111,4 +111,43 @@ describe TableOfContentsTransformer do
 
   end
 
+  it "removes commas from unrecognized agency names when generating slugs" do
+    publication_date = '2019-05-06'
+    PublicInspectionIssue.create!(publication_date: publication_date, published_at: Date.current)
+
+    doc_1 = PublicInspectionDocument.new(
+      document_number:  '2019-09500',
+      publication_date: publication_date,
+      agency_names:     [],
+
+    )
+    transformer = TableOfContentsTransformer::PublicInspection::RegularFiling.new(publication_date)
+    transformer.stub(:entries_without_agencies).and_return([doc_1])
+    transformer.stub(:entries_by_unrecognized_agency_name).and_return(
+      {"Inspector General Office, Health and Human Services Department" => [doc_1]}
+    )
+
+    result = transformer.table_of_contents
+
+    result.should == {
+      :agencies => [
+        {
+          :name => "Inspector General Office, Health and Human Services Department",
+          :slug => "inspector-general-office-health-and-human-services-department",
+          :document_categories => [
+            {
+              :type => "",
+              :documents => [
+                {
+                  :subject_1 => "",
+                  :document_numbers => ["2019-09500"]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  end
+
 end

@@ -193,7 +193,7 @@ class TableOfContentsTransformer
 
     OpenStruct.new(
       name: agency_name,
-      slug: agency_name.downcase.gsub(' ','-'),
+      slug: agency_name.downcase.gsub(' ','-').gsub(',',''),
     )
   end
 
