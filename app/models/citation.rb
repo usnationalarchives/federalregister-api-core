@@ -81,7 +81,7 @@ class Citation < ApplicationModel
                              when 'FR-DocNum'
                                Entry.find_by_document_number(part_1)
                              when 'EO'
-                               Entry.where(presidential_document_type_id: PresidentialDocumentType::EXECUTIVE_ORDER.id, executive_order_number: part_1)
+                               Entry.where(presidential_document_type_id: PresidentialDocumentType::EXECUTIVE_ORDER.id, presidential_document_number: part_1)
                              end
   end
 end
