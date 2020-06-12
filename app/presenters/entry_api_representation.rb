@@ -65,7 +65,7 @@ class EntryApiRepresentation < ApiRepresentation
   field(:end_page)
   field(:excerpts, :select => [:document_number, :publication_date, :document_file_path, :abstract, :raw_text_updated_at]) {|e| e.excerpt}
   field(:executive_order_notes)
-  field(:executive_order_number) {|e| e.executive_order_number }
+  field(:executive_order_number, :select => [:presidential_document_number, :presidential_document_type_id] ) {|e| e.executive_order_number }
   field(:full_text_xml_url, :select => [:publication_date, :document_file_path, :document_number, :full_xml_updated_at]){|e| entry_xml_url(e) if e.should_have_full_xml?}
   field(:html_url, :select => [:publication_date, :document_number, :title]){|e| entry_url(e)}
   field(:images, :select => [:document_number], :include => [:extracted_graphics, :gpo_graphic_usages]) do |entry|
@@ -122,7 +122,7 @@ class EntryApiRepresentation < ApiRepresentation
     end
   end
   field(:presidential_document_number)
-  field(:proclamation_number) {|e| e.proclamation_number }
+  field(:proclamation_number, :select => [:presidential_document_number, :presidential_document_type_id]) {|e| e.proclamation_number }
   field(:publication_date)
   field(:raw_text_url, :select => [:publication_date, :document_file_path, :document_number]){|e| entry_raw_text_url(e)}
   field(:regulation_id_number_info, :include => {:entry_regulation_id_numbers => :current_regulatory_plan}) do |entry|
