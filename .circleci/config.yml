@@ -25,8 +25,8 @@ jobs:
             set -x
             docker-compose -f docker/compose/ci.yml run web bash -c "bin/wait_for_mysql && rake db:create db:schema:load ASSUME_UNITIALIZED_DB=1 && RAILS_ENV=test rspec && rake jshint"
       - deploy:
-          name: Push to latest if master
+          name: Push to latest if main
           command: |
-            if [ "${CIRCLE_BRANCH}" == "master" ]; then
+            if [ "${CIRCLE_BRANCH}" == "main" ]; then
               docker push $REPO_URL:latest
             fi
