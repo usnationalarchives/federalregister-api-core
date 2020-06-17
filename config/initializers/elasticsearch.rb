@@ -1,7 +1,7 @@
 DEFAULT_CLIENT = Elasticsearch::Client.new(
   host: SETTINGS['elasticsearch']['host'],
   transport_options: {
-    request: { timeout: 10 }
+    request: { timeout: 60 }
   },
   trace: SETTINGS['elasticsearch']['trace'],
 )
