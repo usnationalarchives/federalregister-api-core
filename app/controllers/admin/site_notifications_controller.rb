@@ -1,4 +1,6 @@
 class Admin::SiteNotificationsController < AdminController
+  include CacheUtils
+
   def index
     @site_notifications = SiteNotification.all
   end
@@ -10,6 +12,8 @@ class Admin::SiteNotificationsController < AdminController
   def update
     @site_notification = SiteNotification.find(params[:id])
     if @site_notification.update(site_notification_params)
+      purge_cache("^/api/v1/site_notifications/#{@site_notification.identifier}")
+      purge_cache("^/special/site_notifications/#{@site_notification.identifier}")
       flash[:notice] = "Site notification updated"
       redirect_to admin_site_notifications_path
     else
