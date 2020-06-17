@@ -43,6 +43,7 @@ namespace :content do
 
     task :reindex => :environment do
       begin
+        ElasticsearchIndexer.reindex_pi_documents
         SphinxIndexer.perform('public_inspection_document_core')
       rescue StandardError => e
         puts e.message
