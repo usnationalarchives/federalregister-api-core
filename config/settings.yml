@@ -6,6 +6,7 @@ shared: &shared
     basecamp_url: <%= ENV['ADMIN_BASECAMP_URL'] %>
     pager_duty_email: <%= ENV['ADMIN_PAGER_DUTY_EMAIL'] %>
   elasticsearch:
+    deployment_environment: <%= ENV['DEPLOYMENT_ENVIRONMENT'] %>
     host: <%= ENV['ELASTICSEARCH_HOST'] %>
     trace: false
     enabled: <%= ActiveModel::Type::Boolean.new.cast(ENV['ELASTICSEARCH_ENABLED']) %>
@@ -45,6 +46,7 @@ test:
   <<: *shared
   elasticsearch:
     host: <%= ENV['ELASTICSEARCH_HOST'] || 'admin:admin@localhost:9200/' ||'localhost' %>
+    deployment_environment: <%= ENV['DEPLOYMENT_ENVIRONMENT'] %>
     trace: false
   s3_buckets:
     zipped_eps_images: XXXXXXXXXXXXXXXXXXXXXXX
@@ -56,6 +58,7 @@ development:
     canonical_url: "https://dev-fr2.criticaljuncture.org"
   elasticsearch:
     host: <%= ENV['ELASTICSEARCH_HOST'] || 'admin:admin@localhost:9200/' ||'localhost' %>
+    deployment_environment: <%= ENV['DEPLOYMENT_ENVIRONMENT'] %>
   s3_buckets:
     zipped_eps_images: eps.images.fr2.local
     private_images: private.images.fr2.local

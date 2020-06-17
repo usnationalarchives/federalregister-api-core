@@ -9,9 +9,10 @@ namespace :elasticsearch do
     ElasticsearchIndexer.update_mapping
   end
 
-  desc "Build entry index"
+  desc "Delete and recreate entry deployment environment index"
   task :reindex => :environment do
-    ElasticsearchIndexer.reindex_entries
+    # Pass DEPLOYMENT_ENVIRONMENT env to change affected index
+    ElasticsearchIndexer.reindex_entries(recreate_index: true)
   end
 
   desc "Reindex delta"

@@ -1,5 +1,5 @@
 class EntryRepository < BaseRepository
-  index_name ['fr-entries', Rails.env].join('-')
+  index_name ['fr-entries', Rails.env, SETTINGS['elasticsearch']['deployment_environment']].compact.join('-')
   klass Entry
 
   # Create custom analyzer based on default english analyzer
