@@ -38,6 +38,7 @@ class Mailer < ActionMailer::Base
 
     @agency_name_presenter = AgencyNameAuditPresenter.new(date)
     @problematic_document_presenter = ProblematicDocumentPresenter.new(date)
+    @issue_page_numbering_presenter = IssuePageNumberingPresenter.new(date)
 
     mail to:         recipients,
          subject:    "[FR Admin] Daily Import Update for #{date} (#{Rails.env})",

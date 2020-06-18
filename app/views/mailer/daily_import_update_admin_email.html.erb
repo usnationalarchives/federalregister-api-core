@@ -348,6 +348,30 @@
         </tbody>
       </table>
       <% end %>
+
+      <h3 style="font-family:'Helvetica Neue',Arial,Helvetica,sans-serif;margin: 25px 0 5px;font-size: 20px;border-bottom: 1px solid #000;">
+        Page Numbering Check
+      </h3>
+      <table class="table table-bordered table-striped table-condensed">
+        <thead>
+          <th>Status</th>
+          <th><%= "#{@issue_page_numbering_presenter.previous_issue.publication_date} Issue End Page" %></th>
+          <th><%= "#{@issue_page_numbering_presenter.current_issue.publication_date} Issue Start Page" %></th>
+        </thead>
+        <tbody>
+          <tr>
+            <% if @issue_page_numbering_presenter.page_numbering_correct? %>
+              <td style="width: 300px;">
+            <% else %>
+              <td style="width: 300px; color: red; font-weight: bold;">
+            <% end %>
+              <%= @issue_page_numbering_presenter.status_message %>
+            </td>
+            <td style="width: 300px;"><%= @issue_page_numbering_presenter.previous_issue_end_page %></td>
+            <td style="width: 255px;padding: 20px 0;"><%= @issue_page_numbering_presenter.current_issue_start_page %></td>
+          </tr>
+        </tbody>
+      </table>
     </div>
 
   </body>
