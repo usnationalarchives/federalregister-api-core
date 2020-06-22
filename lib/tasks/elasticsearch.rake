@@ -19,4 +19,15 @@ namespace :elasticsearch do
   task :reindex_entry_changes => :environment do
     ElasticsearchIndexer.handle_entry_changes
   end
+
+  desc "Copy index from the other environment"
+  task :copy_primary_index => :environment do
+    primary = Settings.deployment_environment == 'green' ? 'blue' : 'green'
+
+    $entry_repository.copy_index(
+      source_index: ['fr-entries', Rails.env, primary].join('-'),
+      destination_index: ['fr-entries', Rails.env, Settings.deployment_environment].join('-')
+    )
+  end
+
 end
