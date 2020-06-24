@@ -495,7 +495,8 @@ class EsEntrySearch < EsApplicationSearch
       ]
     else
       [
-        {_score: {order: "desc"}}
+        {_score: {order: "desc"}},
+        {publication_date: {order: "desc"}},
       ]
     end
   end

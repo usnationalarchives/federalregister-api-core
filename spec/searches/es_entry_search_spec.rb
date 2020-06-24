@@ -276,7 +276,10 @@ describe EsEntrySearch do
                   {:publication_date=>
                     {:origin=>"now", :scale=>"365d", :offset=>"30d", :decay=>"0.5"}}}],
               :boost_mode=>"multiply"}},
-          :sort=>[{:_score=>{:order=>"desc"}}]}
+              :sort => [
+                {:_score=>{:order=>"desc"}},
+                {:publication_date=>{:order=>"desc"}}
+              ]}
       )
     end
 
@@ -305,7 +308,10 @@ describe EsEntrySearch do
                       {:filter=>{:terms=>{:presidential_document_type_id=>[1, 2]}}}}],
                   :must=>[]}}}},
           :size=>EsApplicationSearch::DEFAULT_RESULTS_PER_PAGE,
-          :sort=>[{:_score=>{:order=>"desc"}}]}
+          :sort => [
+            {:_score=>{:order=>"desc"}},
+            {:publication_date=>{:order=>"desc"}}
+          ]}
       )
     end
 
@@ -328,7 +334,10 @@ describe EsEntrySearch do
                       {:publication_date=>{:gte=>"2000-01-01", :lte=>"2049-01-01"}}}],
                   :must=>[]}}}},
           :size=>20,
-          :sort=>[{:_score=>{:order=>"desc"}}]}
+          :sort => [
+            {:_score=>{:order=>"desc"}},
+            {:publication_date=>{:order=>"desc"}}
+          ]}
       )
     end
 
