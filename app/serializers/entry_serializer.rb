@@ -50,7 +50,11 @@ class EntrySerializer < ApplicationSerializer
     entry.granule_class == 'CORRECT' ||
     !entry.correction_of_id.nil? ||
     (
-      (entry.executive_order_number == 0) || entry.executive_order_number.nil?
+      (entry.presidential_document_type_id == PresidentialDocumentType::EXECUTIVE_ORDER.id) &&
+      (
+        (entry.presidential_document_number == 0) ||
+        entry.presidential_document_number.nil?
+      )
     )
   end
 

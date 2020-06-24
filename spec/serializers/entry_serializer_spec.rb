@@ -17,4 +17,24 @@ describe EntrySerializer do
     )
   end
 
+  describe "corrections" do
+
+    it "does not mark standard documents as corrections" do
+      entry = Factory(:entry)
+
+      result = described_class.new(entry).to_h.fetch(:correction)
+
+      expect(result).to eq(false)
+    end
+
+    it "marks executive orders with a nil presidential document number as corrections" do
+      entry = Factory(:entry, presidential_document_type_id: PresidentialDocumentType::EXECUTIVE_ORDER.id, presidential_document_number: nil)
+
+      result = described_class.new(entry).to_h.fetch(:correction)
+
+      expect(result).to eq(true)
+    end
+
+  end
+
 end
