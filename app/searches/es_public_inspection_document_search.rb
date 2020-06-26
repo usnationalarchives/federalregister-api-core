@@ -161,12 +161,14 @@ class EsPublicInspectionDocumentSearch < EsApplicationSearch
         matched_fields: ["title", "title.exact"],
         fragment_size: 150,
         number_of_fragments: 3,
+        order: 'score',
         type: 'fvh',
       },
       "full_text" => {
         matched_fields: ["full_text", "full_text.exact"],
         fragment_size: 150,
         number_of_fragments: 3,
+        order: 'score',
         type: 'fvh',
       }
     }
