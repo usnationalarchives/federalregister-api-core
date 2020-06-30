@@ -348,7 +348,7 @@ class EsApplicationSearch
       results_with_raw_text, results_without_raw_text = ar_collection_with_metadata.partition{|e| e.raw_text_updated_at.present?}
 
       if results_with_raw_text.present?
-        results_with_raw_text.in_groups_of(1024,false).each do |batch|
+        ar_collection_with_metadata.in_groups_of(1024,false).each do |batch|
           begin
             # merge excerpts back to their result
             batch.each_with_index do |result, index|
@@ -359,14 +359,6 @@ class EsApplicationSearch
             Rails.logger.warn(e)
             Honeybadger.notify(e)
           end
-        end
-      end
-
-      # no abstracts for pil documents so nothing to do for those
-      if model == Entry
-        # missing raw text but we want the abstract term matches highlighted
-        results_without_raw_text.each do |result|
-          result.excerpt = result.excerpts.abstract
         end
       end
     end
