@@ -150,6 +150,8 @@ class Api::V1::PublicInspectionDocumentsController < ApiController
           end
         end
       end
+
+      modified_params.delete(:callback)
     end
   end
 
