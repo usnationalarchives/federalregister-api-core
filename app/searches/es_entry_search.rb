@@ -537,7 +537,7 @@ class EsEntrySearch < EsApplicationSearch
   end
 
   def es_fields_with_boosts
-    ['title^2.5', 'full_text^1.25', 'agency_name^1', 'abstract^2']
+    ['title^2.5', 'full_text^1.25', 'agency_name^1', 'abstract^2', 'docket_id^1', 'regulation_id_number^1']
   end
 
 end

@@ -631,6 +631,30 @@ describe EsEntrySearch do
       expect(search.results.es_ids).to eq [888]
     end
 
+    it "term searches return the entry if they contain the docket" do
+      entries = [
+        build_entry_double({docket_id: ['10009-69'], id: 888}),
+      ]
+      Entry.bulk_index(entries, refresh: true)
+
+      search = EsEntrySearch.new(conditions: {term: '10009-69'})
+
+      assert_valid_search(search)
+      expect(search.results.es_ids).to eq [888]
+    end
+
+    it "term searches return the entry if they contain the regulation id number" do
+      entries = [
+        build_entry_double({regulation_id_number: ["1205-AB85"], id: 888}),
+      ]
+      Entry.bulk_index(entries, refresh: true)
+
+      search = EsEntrySearch.new(conditions: {term: '1205-AB85'})
+
+      assert_valid_search(search)
+      expect(search.results.es_ids).to eq [888]
+    end
+
     it "applies basic sort order correctly" do
       entries = [
         build_entry_double(publication_date: '2000-01-01', id: 888),
