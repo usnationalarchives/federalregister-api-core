@@ -2,9 +2,9 @@ class EntryRepository < BaseRepository
   index_name ['fr-entries', Rails.env, SETTINGS['elasticsearch']['deployment_environment']].compact.join('-')
   klass Entry
 
-  # Create custom analyzer based on default english analyzer
-  # swap in KStem stemmer instead of Porter
-  settings analysis: {
+  settings number_of_shards: SETTINGS['elasticsearch']['entry_index_shards'], analysis: {
+    # Create custom analyzer based on default english analyzer
+    # swap in KStem stemmer instead of Porter
     "filter": {
       "english_stop": {
         "type":       "stop",

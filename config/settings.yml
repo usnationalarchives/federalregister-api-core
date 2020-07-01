@@ -11,6 +11,8 @@ shared: &shared
     trace: false
     enabled: <%= ActiveModel::Type::Boolean.new.cast(ENV['ELASTICSEARCH_ENABLED']) %>
     notify_on_sphinx_usage: <%= ENV.fetch('NOTIFY_ON_SPHINX_USAGE', false) %>
+    entry_index_shards: <%= ENV.fetch('ENTRY_INDEX_SHARDS', 1) %>
+    public_inspection_document_index_shards: <%= ENV.fetch('PUBLIC_INSPECTION_DOCUMENT_INDEX_SHARDS', 1) %>
 
   varnish:
     host: <%= ENV["VARNISH_ADDR"] || 'varnish' %>
@@ -48,6 +50,8 @@ test:
     host: <%= ENV['ELASTICSEARCH_HOST'] || 'admin:admin@localhost:9200/' ||'localhost' %>
     deployment_environment: <%= ENV['DEPLOYMENT_ENVIRONMENT'] %>
     trace: false
+    entry_index_shards: <%= ENV.fetch('ENTRY_INDEX_SHARDS', 1) %>
+    public_inspection_document_index_shards: <%= ENV.fetch('PUBLIC_INSPECTION_DOCUMENT_INDEX_SHARDS', 1) %>
   s3_buckets:
     zipped_eps_images: XXXXXXXXXXXXXXXXXXXXXXX
     # lede_photos: lede-photos.example.org
@@ -59,6 +63,8 @@ development:
   elasticsearch:
     host: <%= ENV['ELASTICSEARCH_HOST'] || 'admin:admin@localhost:9200/' ||'localhost' %>
     deployment_environment: <%= ENV['DEPLOYMENT_ENVIRONMENT'] %>
+    entry_index_shards: <%= ENV.fetch('ENTRY_INDEX_SHARDS', 1) %>
+    public_inspection_document_index_shards: <%= ENV.fetch('PUBLIC_INSPECTION_DOCUMENT_INDEX_SHARDS', 1) %>
   s3_buckets:
     zipped_eps_images: eps.images.fr2.local
     private_images: private.images.fr2.local
