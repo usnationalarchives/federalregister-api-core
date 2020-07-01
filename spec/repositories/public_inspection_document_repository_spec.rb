@@ -3,7 +3,7 @@ require 'spec_helper'
 describe PublicInspectionDocumentRepository do
   let(:agency) { Factory(:agency) }
   before(:all) do
-    $public_inspection_document_repository.create_index!(force: true)
+    recreate_actual_pi_index_and_assign_alias!
   end
 
   describe "#mappings" do

@@ -59,7 +59,7 @@ class PublicInspectionDocument < ApplicationModel
     end
   end
 
-  def self.repository
+  def self.default_repository
     $public_inspection_document_repository
   end
 

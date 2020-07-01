@@ -22,6 +22,7 @@ RSpec.configure do |config|
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
 
   config.include Rails3UpgradeSpecHelperMethods
+  config.include ElasticsearchSpecHelperMethods
 
   config.expect_with(:rspec) { |c| c.syntax = [:should, :expect] }
   config.mock_with :rspec do |mocks|

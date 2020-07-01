@@ -80,7 +80,7 @@ module Content
 
       if updated_doc_count > 0 || !toc_files_exist?(issue)
         SphinxIndexer.perform('public_inspection_document_core')
-        ElasticsearchIndexer.reindex_pi_documents
+        PublicInspectionIndexer.reindex!
 
         # generate toc so that it is available immediately
         generate_toc(issue.published_at.to_date)

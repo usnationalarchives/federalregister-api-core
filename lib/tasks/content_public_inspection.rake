@@ -43,7 +43,7 @@ namespace :content do
 
     task :reindex => :environment do
       begin
-        ElasticsearchIndexer.reindex_pi_documents
+        PublicInspectionIndexer.reindex!
         SphinxIndexer.perform('public_inspection_document_core')
       rescue StandardError => e
         puts e.message
@@ -53,7 +53,7 @@ namespace :content do
     end
 
     task :reindex_elasticsearch => :environment do
-      ElasticsearchIndexer.reindex_pi_documents
+      PublicInspectionIndexer.reindex!
     end
 
     task :purge_revoked_documents => :environment do
@@ -76,7 +76,7 @@ namespace :content do
     task :regenerate_toc, [:date] => :environment do |t, args|
       if ENV['REINDEX']
         SphinxIndexer.perform('public_inspection_document_core')
-        ElasticsearchIndexer.reindex_pi_documents
+        PublicInspectionIndexer.reindex!
       end
 
       pil = Content::PublicInspectionImporter.new

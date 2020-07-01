@@ -1,5 +1,11 @@
 module ElasticsearchIndexer
-  INDICES = [$entry_repository, $public_inspection_document_repository]
+  INDICES = [
+    $entry_repository,
+    PublicInspectionDocumentRepository.new(
+      index_name: PublicInspectionDocumentRepository::ACTUAL_INDEX_NAME,
+      client: DEFAULT_ES_CLIENT
+    )
+  ]
 
   def self.create_indices
     INDICES.each {|i| i.create_index!}
@@ -42,15 +48,6 @@ module ElasticsearchIndexer
     $entry_repository.refresh_index!
   end
 
-  def self.reindex_pi_documents
-    $public_inspection_document_repository.create_index!(force: true)
-    PublicInspectionDocument.bulk_index(
-      PublicInspectionDocument.indexable.pre_joined_for_es_indexing,
-      refresh: false
-    )
-    $public_inspection_document_repository.refresh_index!
-  end
-
   def self.handle_entry_changes
     remove_deleted_entries
     reindex_modified_entries
@@ -80,6 +77,19 @@ module ElasticsearchIndexer
       joins("LEFT JOIN entries on entry_changes.entry_id = entries.id").
       where("entries.id IS NULL").
       pluck(:entry_id)
+  end
+
+  def self.assign_pi_index_alias
+    if DEFAULT_ES_CLIENT.indices.exists(index: PublicInspectionDocumentRepository::ACTUAL_INDEX_NAME)
+      DEFAULT_ES_CLIENT.indices.update_aliases body: {
+        actions: [
+          { add: {
+            index: PublicInspectionDocumentRepository::ACTUAL_INDEX_NAME,
+            alias: PublicInspectionDocumentRepository::ALIAS_NAME,
+            } }
+        ]
+      }
+    end
   end
 
 end

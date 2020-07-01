@@ -2,4 +2,4 @@
 
 cd /home/app
 
-exec /sbin/setuser app bundle exec rake elasticsearch:create_indices elasticsearch:update_mapping
+exec /sbin/setuser app bundle exec rake elasticsearch:create_indices elasticsearch:assign_pi_index_alias elasticsearch:update_mapping

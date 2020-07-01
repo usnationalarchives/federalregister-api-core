@@ -2,8 +2,7 @@ require "spec_helper"
 
 describe EsPublicInspectionDocumentSearch do
   before(:each) do
-    allow(ElasticsearchIndexer).to receive(:es_enabled?).and_return(true)
-    $public_inspection_document_repository.create_index!(force: true)
+    recreate_actual_pi_index_and_assign_alias!
   end
 
   def build_pi_doc_double(hsh)
@@ -58,7 +57,7 @@ describe EsPublicInspectionDocumentSearch do
 
   context "ES Retrieval" do
     before(:each) do
-      $public_inspection_document_repository.create_index!(force: true)
+      recreate_actual_pi_index_and_assign_alias!
     end
 
     context "Searching by term" do

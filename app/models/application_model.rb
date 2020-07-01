@@ -40,7 +40,7 @@ class ApplicationModel < ActiveRecord::Base
     raise NotImplementedError
   end
 
-  def self.bulk_index(active_record_collection, refresh: false)
+  def self.bulk_index(active_record_collection, refresh: false, repository: default_repository)
     current_time = Time.current
     body = active_record_collection.each_with_object(Array.new) do |instance, request_body|
       request_body << { index: { _index: repository.index_name, _id: instance.id } }

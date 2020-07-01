@@ -231,7 +231,7 @@ class Entry < ApplicationModel
     end
   end
 
-  def self.repository
+  def self.default_repository
     $entry_repository
   end
 

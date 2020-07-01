@@ -30,4 +30,9 @@ namespace :elasticsearch do
     )
   end
 
+  desc "Ensure the PI index alias is in place since we use the alias instead of the actual index in the repository's configuration."
+  task :assign_pi_index_alias => :environment do
+    ElasticsearchIndexer.assign_pi_index_alias
+  end
+
 end

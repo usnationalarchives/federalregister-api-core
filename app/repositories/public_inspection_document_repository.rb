@@ -1,5 +1,7 @@
 class PublicInspectionDocumentRepository < BaseRepository
-  index_name ['fr-public-inspection-documents', Rails.env].join('-')
+  ACTUAL_INDEX_NAME = ['fr-public-inspection-documents', Rails.env].join('-')
+  ALIAS_NAME = ['fr-public-inspection-documents-alias', Rails.env].join('-')
+  index_name ALIAS_NAME
   klass PublicInspectionDocument
 
   settings number_of_shards: SETTINGS['elasticsearch']['public_inspection_document_index_shards'], analysis: {
