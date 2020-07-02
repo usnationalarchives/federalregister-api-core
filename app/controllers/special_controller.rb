@@ -5,7 +5,12 @@ class SpecialController < ApplicationController
       return
     end
 
-    render plain: "Serving requests."
+    begin
+      $entry_repository.count
+      render plain: "Serving requests."
+    rescue
+      render plain: 'Elasticsearch connection issue', status: 503
+    end
   end
 
   def robots_dot_txt
