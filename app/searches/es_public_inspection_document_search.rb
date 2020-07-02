@@ -184,7 +184,7 @@ class EsPublicInspectionDocumentSearch < EsApplicationSearch
   end
 
   def es_fields_with_boosts
-    ['title^2.5', 'full_text^1.25', 'agency_name^1']
+    ['title^2.5', 'full_text^1.25', 'agency_name^1','docket_id^1']
   end
 
 end
