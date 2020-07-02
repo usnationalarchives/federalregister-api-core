@@ -16,10 +16,12 @@ class ApplicationSearch::DateSelector
     begin
       if @is.present?
         date = Date.parse(@is.to_s)
+        validate_date!(date)
         @sphinx_value = date.to_time.utc.beginning_of_day.to_i .. date.to_time.utc.end_of_day.to_i
         @filter_name = "on #{date}"
       elsif @year.present?
         date = Date.parse("#{@year}-01-01")
+        validate_date!(date)
         @sphinx_value = date.to_time.utc.beginning_of_day.to_i .. date.end_of_year.to_time.utc.end_of_day.to_i
         @filter_name = "in #{@year}"
       else
@@ -73,9 +75,17 @@ class ApplicationSearch::DateSelector
 
   private
 
+  def validate_date!(date)
+    if date.year > 9999
+      raise ArgumentError
+    end
+  end
+
   def start_date
     if @gte.present?
-      Date.parse(@gte)
+      date = Date.parse(@gte)
+      validate_date!(date)
+      date
     else
       Date.parse('1994-01-01')
     end
@@ -83,7 +93,9 @@ class ApplicationSearch::DateSelector
 
   def end_date
     if @lte.present?
-      Date.parse(@lte)
+      date = Date.parse(@lte)
+      validate_date!(date)
+      date
     else
       Date.current + 10.years
     end
