@@ -1,6 +1,6 @@
 module Content::EntryImporter::Agencies
   extend Content::EntryImporter::Utils
-  provides :agency_name_assignments
+  provides :agency_name_assignments, :delta
 
   MAX_RETRIES = 1
   RETRY_DELAY = 1
@@ -22,5 +22,9 @@ module Content::EntryImporter::Agencies
 
       AgencyNameAssignment.new(:agency_name => agency_name, :position => agency_node['order'])
     end
+  end
+
+  def delta
+    true
   end
 end

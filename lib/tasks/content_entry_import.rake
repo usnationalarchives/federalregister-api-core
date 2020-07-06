@@ -172,6 +172,7 @@ namespace :content do
       desc "Extract agency information into entries"
       task :agencies => :environment do
         entry_importer(:agency_name_assignments)
+        entry_importer(:delta)
       end
 
       desc "Import graphics"
