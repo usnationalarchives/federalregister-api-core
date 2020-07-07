@@ -61,6 +61,7 @@ class PublicInspectionDocumentRepository < BaseRepository
     }
     indexes :docket_id, { type: 'text', index_options: 'offsets'}
     indexes :document_number, { type: 'keyword' }
+    indexes :indexed_at, {type: 'date'}
     indexes :public_inspection_document_id, { type: 'integer' }
     indexes :type, { type: 'keyword' }
     indexes :agency_ids, { type: 'integer' }

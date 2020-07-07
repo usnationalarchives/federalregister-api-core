@@ -41,9 +41,10 @@ class ApplicationModel < ActiveRecord::Base
   end
 
   def self.bulk_index(active_record_collection, refresh: false)
+    current_time = Time.current
     body = active_record_collection.each_with_object(Array.new) do |instance, request_body|
       request_body << { index: { _index: repository.index_name, _id: instance.id } }
-      request_body << instance.to_hash
+      request_body << instance.to_hash.merge(indexed_at: current_time)
     end
 
     begin

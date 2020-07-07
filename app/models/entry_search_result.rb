@@ -1,9 +1,10 @@
 class EntrySearchResult
-  attr_reader :id
+  attr_reader :id, :indexed_at
 
   def initialize(attributes={})
     @attributes = attributes
     @id         = attributes.delete(:id)
+    @indexed_at = attributes.delete(:indexed_at)
   end
 
   def publication_date

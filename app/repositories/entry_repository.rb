@@ -95,6 +95,7 @@ class EntryRepository < BaseRepository
       }
     }
     indexes :document_number, {type: 'keyword'}
+    indexes :indexed_at, {type: 'date'}
     indexes :type, {type: 'keyword'}
     indexes :presidential_document_type_id, {type: 'integer'}
     indexes :publication_date_week, {type: 'date'}

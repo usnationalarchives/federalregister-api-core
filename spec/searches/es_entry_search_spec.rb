@@ -631,6 +631,15 @@ describe EsEntrySearch do
       expect(search.results.es_ids).to eq [888]
     end
 
+    it ".bulk_index generates a timestamp" do
+      entries = [ build_entry_double(id: 888) ]
+      Entry.bulk_index(entries, refresh: true)
+
+      result = $entry_repository.find(888).indexed_at
+
+      expect(result).to be_present
+    end
+
     it "term searches return the entry if they contain the docket" do
       entries = [
         build_entry_double({docket_id: ['10009-69'], id: 888}),

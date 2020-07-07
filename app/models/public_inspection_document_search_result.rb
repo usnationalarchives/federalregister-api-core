@@ -1,6 +1,7 @@
 class PublicInspectionDocumentSearchResult
   attr_reader :id,
     :agency_ids,
+    :indexed_at,
     :special_filing,
     :title
 
@@ -11,6 +12,7 @@ class PublicInspectionDocumentSearchResult
     @publication_date = attributes.delete(:publication_date)
     @special_filing = attributes.delete(:special_filing)
     @title = attributes.delete(:title)
+    @indexed_at = attributes.delete(:indexed_at)
   end
 
   def publication_date
