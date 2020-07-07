@@ -48,8 +48,12 @@ namespace :content do
 
     task :reindex => :environment do
       begin
+<<<<<<< HEAD
         PublicInspectionIndexer.reindex!
         SphinxIndexer.perform('public_inspection_document_core')
+=======
+        ElasticsearchIndexer.reindex_pi_documents
+>>>>>>> Update: First pass at removing sphinx infrastructure
       rescue StandardError => e
         puts e.message
         puts e.backtrace.join("\n")
@@ -80,7 +84,6 @@ namespace :content do
 
     task :regenerate_toc, [:date] => :environment do |t, args|
       if ENV['REINDEX']
-        SphinxIndexer.perform('public_inspection_document_core')
         PublicInspectionIndexer.reindex!
       end
 

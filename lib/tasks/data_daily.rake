@@ -7,7 +7,6 @@ namespace :data do
     task :development => %w(
       content:entries:import
       content:entries:json:compile:daily_toc
-      sphinx:rebuild_delta
       elasticsearch:reindex_entry_changes
       content:issues:mark_complete
       web:notify_of_updated_issue
@@ -27,7 +26,6 @@ namespace :data do
       content:gpo_images:process_daily_issue_images
       content:entries:json:compile:daily_toc
 
-      sphinx:rebuild_delta
       elasticsearch:reindex_entry_changes
 
       content:issues:mark_complete
@@ -41,7 +39,6 @@ namespace :data do
 
     task :catch_up => %w(
       data:daily:basic
-      sphinx:rebuild_delta
       elasticsearch:reindex_entry_changes
       content:issues:mark_complete
       web:notify_of_updated_issue
@@ -51,7 +48,6 @@ namespace :data do
       content:section_highlights:clone
       data:daily:basic
       content:agency_assignments:recalculate
-      sphinx:rebuild_delta
       elasticsearch:reindex_entry_changes
 
       content:issues:mark_complete
@@ -73,7 +69,6 @@ namespace :data do
       content:entries:json:compile:daily_toc
 
       content:agency_assignments:recalculate
-      sphinx:rebuild_delta
       elasticsearch:reindex_entry_changes
 
       content:public_inspection:import:entry_id

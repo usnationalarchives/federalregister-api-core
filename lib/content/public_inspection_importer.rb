@@ -79,7 +79,6 @@ module Content
       client.logout
 
       if updated_doc_count > 0 || !toc_files_exist?(issue)
-        SphinxIndexer.perform('public_inspection_document_core')
         PublicInspectionIndexer.reindex!
 
         # generate toc so that it is available immediately

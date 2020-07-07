@@ -2,7 +2,6 @@ module Content
   class IssueReprocessor
     include CacheUtils
     include Content::IssueReprocessorUtils
-    include SphinxIndexer
 
     include Sidekiq::Worker
     include Sidekiq::Throttled::Worker
@@ -105,12 +104,6 @@ module Content
 
     def reindex
       update_reprocessing_message("updating search index")
-
-      begin
-        SphinxIndexer.rebuild_delta_and_purge_core(Entry)
-      rescue SphinxIndexer::SphinxIndexerError => error
-        handle_failure(error,"IssueReprocessor::ReprocessorIssue Reindex")
-      end
 
       begin
         ElasticsearchIndexer.handle_entry_changes

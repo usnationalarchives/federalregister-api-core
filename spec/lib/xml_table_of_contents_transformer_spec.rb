@@ -5,7 +5,6 @@ attr_reader :transformer
 
   before(:each) do
     @transformer = XmlTableOfContentsTransformer.new('2015-01-01')
-    SphinxIndexer.stub(:rebuild_delta_and_purge_core)
     ElasticsearchIndexer.stub(:handle_entry_changes)
   end
 

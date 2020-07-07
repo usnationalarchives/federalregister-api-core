@@ -1,5 +1,0 @@
-#!/bin/bash
-set -ex
-cd /home/app
-
-exec /sbin/setuser app rake ts:configure sphinx:restart
