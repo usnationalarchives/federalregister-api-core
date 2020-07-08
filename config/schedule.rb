@@ -61,19 +61,6 @@ end
 
 
 ########################
-# SPHINX
-########################
-if cron_settings["sphinx"]
-  # Reindex the entire content (collapsing delta indexes back into main index)
-  every :sunday, at: '3AM' do
-    set :log, 'weekly_sphinx_reindex'
-    rake "elasticsearch:reindex_entry_changes" #This needs to be run before sphinx:rotate_all since the entry deltas will be cleared.
-    rake "sphinx:rotate_all"
-  end
-end
-
-
-########################
 # PUBLIC INSPECTION
 ########################
 if cron_settings["public_inspection"]

@@ -32,16 +32,12 @@ shared: &shared
     import: true
     late_content_notifications: <%= ActiveModel::Type::Boolean.new.cast(ENV.fetch('LATE_CONTENT_NOTIFICATIONS', true)) %>
     public_inspection: <%= ActiveModel::Type::Boolean.new.cast(ENV.fetch('CRON_PUBLIC_INSPECTION', true)) %>
-    sphinx: true
     regulations_dot_gov:
       comments: <%= ActiveModel::Type::Boolean.new.cast(ENV.fetch('REG_GOV_COMMENTS_ENABLED', true)) %>
       dockets: <%= ActiveModel::Type::Boolean.new.cast(ENV.fetch('REG_GOV_DOCKETS_ENABLED', true)) %>
       documents: <%= ActiveModel::Type::Boolean.new.cast(ENV.fetch('REG_GOV_DOCUMENTS_ENABLED', true)) %>
     # base_uri: <%= 'http://api.data.gov/regulations/v3' || ENV["REG_GOV_BASE_URL"] || 'http://api.data.gov/TEST/regulations/v3' %>
   deliver_daily_import_email: <%= ActiveModel::Type::Boolean.new.cast(ENV.fetch('DELIVER_DAILY_IMPORT_EMAIL', true)) %>
-  sphinx:
-    enable_regulatory_plan_index: false
-    use_local_pil_date: false
 
 # Make any updates -web also
 test:
@@ -64,6 +60,7 @@ development:
     host: <%= ENV['ELASTICSEARCH_HOST'] || 'admin:admin@localhost:9200/' ||'localhost' %>
     deployment_environment: <%= ENV['DEPLOYMENT_ENVIRONMENT'] %>
     entry_index_shards: <%= ENV.fetch('ENTRY_INDEX_SHARDS', 1) %>
+    pil_index_since_date: '2019-04-11'
     public_inspection_document_index_shards: <%= ENV.fetch('PUBLIC_INSPECTION_DOCUMENT_INDEX_SHARDS', 1) %>
   s3_buckets:
     zipped_eps_images: eps.images.fr2.local
@@ -80,16 +77,12 @@ development:
       convert_eps: false
     import: false
     public_inspection: false
-    sphinx: true
     regulations_dot_gov:
       comments: false
       dockets: false
       documents: false
     varnish: false
   deliver_daily_import_email: false
-  sphinx:
-    use_local_pil_date: true
-    pil_index_since_date: '2019-04-11'
 
 
 staging:

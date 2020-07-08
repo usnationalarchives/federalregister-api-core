@@ -52,11 +52,7 @@ class PublicInspectionDocument < ApplicationModel
   end
 
   def self.search_klass
-    if ElasticsearchIndexer.es_enabled?
-      EsPublicInspectionDocumentSearch
-    else
-      PublicInspectionDocumentSearch
-    end
+    EsPublicInspectionDocumentSearch
   end
 
   def self.default_repository
@@ -67,7 +63,7 @@ class PublicInspectionDocument < ApplicationModel
     base_scope = PublicInspectionDocument.
       joins("INNER JOIN public_inspection_postings ON public_inspection_documents.id = public_inspection_postings.document_id")
 
-    if SETTINGS['sphinx']['use_local_pil_date']
+    if SETTINGS['elasticsearch']['pil_index_since_date']
       base_scope.
         where(<<-SQL
           public_inspection_postings.issue_id =

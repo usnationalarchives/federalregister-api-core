@@ -27,11 +27,6 @@ module ElasticsearchIndexer
     end
   end
 
-  ES_TEMP_FILE = "tmp/use_elasticsearch_#{Rails.env}"
-  def self.es_enabled?
-    SETTINGS['elasticsearch']['enabled']
-  end
-
   BATCH_SIZE = 500
   def self.reindex_entries(recreate_index: false)
     if recreate_index

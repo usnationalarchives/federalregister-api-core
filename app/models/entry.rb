@@ -224,11 +224,7 @@ class Entry < ApplicationModel
   end
 
   def self.search_klass
-    if ElasticsearchIndexer.es_enabled?
-      EsEntrySearch
-    else
-      EntrySearch
-    end
+    EsEntrySearch
   end
 
   def self.default_repository
