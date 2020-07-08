@@ -3,7 +3,7 @@ require "spec_helper"
 describe 'EntrySearch::Suggestor::RegulationIdNumber' do
   def suggestor(term, options = {})
     conditions = options.merge(:term => term)
-    EntrySearch::Suggestor::RegulationIdNumber.new(EntrySearch.new(:conditions => conditions))
+    EntrySearch::Suggestor::RegulationIdNumber.new(EsEntrySearch.new(:conditions => conditions))
   end
 
   describe "valid RIN in search term" do

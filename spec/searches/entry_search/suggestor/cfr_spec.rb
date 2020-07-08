@@ -3,7 +3,7 @@ require "spec_helper"
 describe 'EntrySearch::Suggestor::Cfr' do
   def suggestor(term, options = {})
     conditions = options.merge(:term => term)
-    EntrySearch::Suggestor::Cfr.new(EntrySearch.new(:conditions => conditions))
+    EntrySearch::Suggestor::Cfr.new(EsEntrySearch.new(:conditions => conditions))
   end
 
   describe "valid CFR citation in search term" do
@@ -22,7 +22,7 @@ describe 'EntrySearch::Suggestor::Cfr' do
 
       it "should add the citation condition" do
         suggestion = suggestor("#{citation} groundfish").suggestion
-        suggestion.cfr.should == EntrySearch::CFR.new("10","12345")
+        suggestion.cfr.should == EsEntrySearch::CFR.new("10","12345")
       end
     end
   end

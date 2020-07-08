@@ -3,7 +3,7 @@ require "spec_helper"
 describe 'EntrySearch::Suggestor::Agency' do
   def suggestor(term, options = {})
     conditions = options.merge(:term => term)
-    EntrySearch::Suggestor::Agency.new(EntrySearch.new(:conditions => conditions))
+    EntrySearch::Suggestor::Agency.new(EsEntrySearch.new(:conditions => conditions))
   end
 
   describe "valid agency in search term" do

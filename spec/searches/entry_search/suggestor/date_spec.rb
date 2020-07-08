@@ -3,7 +3,7 @@ require "spec_helper"
 describe 'EntrySearch::Suggestor::Date' do
   def suggestor(term, options = {})
     conditions = options.merge(:term => term)
-    EntrySearch::Suggestor::Date.new(EntrySearch.new(:conditions => conditions))
+    EntrySearch::Suggestor::Date.new(EsEntrySearch.new(:conditions => conditions))
   end
 
   describe "valid date in search term" do

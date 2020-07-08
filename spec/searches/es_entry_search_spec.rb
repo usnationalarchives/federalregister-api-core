@@ -736,7 +736,7 @@ describe EsEntrySearch do
     it "cfr single value searches succeed" do
       search = EsEntrySearch.new(conditions: {cfr: {title: 38}})
       entries = [
-        build_entry_double({cfr_affected_parts: (38 * EntrySearch::CFR::TITLE_MULTIPLIER), id: 111}),
+        build_entry_double({cfr_affected_parts: (38 * EsEntrySearch::CFR::TITLE_MULTIPLIER), id: 111}),
       ]
       entries.each{|entry| $entry_repository.save(entry, refresh: true) }
 
@@ -748,7 +748,7 @@ describe EsEntrySearch do
 
     it "cfr range searches succeed" do
       entries = [
-        build_entry_double({cfr_affected_parts: (38 * EntrySearch::CFR::TITLE_MULTIPLIER + 3), id: 111}),
+        build_entry_double({cfr_affected_parts: (38 * EsEntrySearch::CFR::TITLE_MULTIPLIER + 3), id: 111}),
       ]
       entries.each{|entry| $entry_repository.save(entry, refresh: true) }
 

@@ -3,7 +3,7 @@ require "spec_helper"
 describe 'EntrySearch::Suggestor::EntryType' do
   def suggestor(term, options = {})
     conditions = options.merge(:term => term)
-    EntrySearch::Suggestor::EntryType.new(EntrySearch.new(:conditions => conditions))
+    EntrySearch::Suggestor::EntryType.new(EsEntrySearch.new(:conditions => conditions))
   end
 
   describe "presidential documents" do

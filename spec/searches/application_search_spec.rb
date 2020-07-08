@@ -1,9 +1,10 @@
 require "spec_helper"
 
-describe ApplicationSearch, vcr: true do
+describe EsApplicationSearch, vcr: true do
 
   before(:each) do
-    @search_class = Class.new(ApplicationSearch)
+    @search_class = Class.new(EsApplicationSearch)
+    allow(@search_class)
   end
 
   describe 'define_filter' do

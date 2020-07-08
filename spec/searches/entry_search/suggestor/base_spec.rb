@@ -14,13 +14,13 @@ describe 'EntrySearch::Suggestor::Base' do
   end
   describe "term" do
     it "removes the matching pattern from the term" do
-      @class.new(EntrySearch.new(:conditions => {:term => "I love FOO because"})).suggestion.term.should == 'I love because'
+      @class.new(EsEntrySearch.new(:conditions => {:term => "I love FOO because"})).suggestion.term.should == 'I love because'
     end
 
     it "removes the matching pattern and nearby 'and' from the term" do
-      @class.new(EntrySearch.new(:conditions => {:term => "FOO and BAR"})).suggestion.term.should == 'BAR'
-      @class.new(EntrySearch.new(:conditions => {:term => "BAR and FOO"})).suggestion.term.should == 'BAR'
-      @class.new(EntrySearch.new(:conditions => {:term => "fish and FOO and BAR"})).suggestion.term.should == 'fish BAR'
+      @class.new(EsEntrySearch.new(:conditions => {:term => "FOO and BAR"})).suggestion.term.should == 'BAR'
+      @class.new(EsEntrySearch.new(:conditions => {:term => "BAR and FOO"})).suggestion.term.should == 'BAR'
+      @class.new(EsEntrySearch.new(:conditions => {:term => "fish and FOO and BAR"})).suggestion.term.should == 'fish BAR'
     end
   end
 end
