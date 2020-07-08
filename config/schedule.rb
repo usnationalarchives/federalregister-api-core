@@ -169,15 +169,3 @@ if cron_settings["google_analytics"]
     rake 'documents:page_count:update_today'
   end
 end
-
-#################################
-# ELASTICSEARCH
-#################################
-
-if cron_settings["delta_auditing"]
-  every 15.minutes do
-    set :log, 'elasticsearch_delta_audit'
-    rake 'entry_delta_auditing:audit'
-  end
-end
-
