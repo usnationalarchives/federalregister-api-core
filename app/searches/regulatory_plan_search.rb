@@ -1,4 +1,4 @@
-class RegulatoryPlanSearch < ApplicationSearch
+class RegulatoryPlanSearch < EsApplicationSearch
   define_filter :agency_ids,  :sphinx_type => :with_all
 
   def agency_facets

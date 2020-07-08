@@ -38,7 +38,7 @@ class EsApplicationSearch
 
         begin
           add_filter options.merge(:value => val, :condition => filter_name, :name_definer => name_definer)
-        rescue ApplicationSearch::InputError => e
+        rescue EsApplicationSearch::InputError => e
           @errors[filter_name] = e.message
         end
       end
@@ -689,7 +689,7 @@ class EsApplicationSearch
   end
 
   def set_defaults(options)
-    raise NotImplementedError
+    #no-op
   end
 
   def sphinx_retry

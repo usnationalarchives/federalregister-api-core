@@ -98,7 +98,7 @@ class EsEntrySearch < EsApplicationSearch
                   missing_document_numbers = document_numbers.flatten - entries.map(&:document_number)
 
                   if missing_document_numbers.present?
-                    raise ApplicationSearch::InputError.new("#{missing_document_numbers.map(&:inspect).to_sentence} could not be found")
+                    raise EsApplicationSearch::InputError.new("#{missing_document_numbers.map(&:inspect).to_sentence} could not be found")
                   end
 
                   entry_id = entries.map(&:id).first
