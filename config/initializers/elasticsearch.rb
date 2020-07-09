@@ -3,6 +3,8 @@ DEFAULT_ES_CLIENT = Elasticsearch::Client.new(
   transport_options: {
     request: { timeout: 60 }
   },
+  retry_on_failure: 1,
+  retry_on_status: [529],
   trace: SETTINGS['elasticsearch']['trace'],
 )
 
