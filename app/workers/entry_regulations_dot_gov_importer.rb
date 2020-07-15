@@ -13,8 +13,10 @@ class EntryRegulationsDotGovImporter
     EntryObserver.disabled = true
 
     entry.checked_regulationsdotgov_at          = checked_regulationsdotgov_at
+    entry.comment_count                         = regulationsdotgov_document&.comment_count
     entry.regulationsdotgov_url                 = regulationsdotgov_url
     entry.regulations_dot_gov_comments_close_on = regulations_dot_gov_comments_close_on
+    entry.regulations_dot_gov_document_id       = regulationsdotgov_document&.document_id
 
     unless entry.comment_url_override?
       entry.comment_url                         = comment_url

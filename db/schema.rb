@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_09_180322) do
+ActiveRecord::Schema.define(version: 2020_07_10_222943) do
 
   create_table "action_names", :force => true do |t|
     t.string   "name"
@@ -233,6 +233,8 @@ ActiveRecord::Schema.define(version: 2020_06_09_180322) do
     t.string   "comment_url_override"
     t.string   "presidential_document_number"
     t.index ["presidential_document_type_id", "presidential_document_number"], name: "presidential_document_type_id", length: { presidential_document_number: 10 }
+    t.string "regulations_dot_gov_document_id"
+    t.integer "comment_count"
     t.index ["presidential_document_number", "presidential_document_type_id"], name: "pres_doc_number_pres_doc_type_id", length: { presidential_document_number: 10 }
   end
 
