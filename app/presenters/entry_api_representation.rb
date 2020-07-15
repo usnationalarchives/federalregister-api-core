@@ -143,17 +143,20 @@ class EntryApiRepresentation < ApiRepresentation
     Hash[*values.flatten]
   end
 
-  field(:regulations_dot_gov_info, :include => {:docket => :docket_documents}, :select => [:regulations_dot_gov_docket_id, :comment_url, :comment_url_override]) do |entry|
+  field(:regulations_dot_gov_info, :include => {:docket => :docket_documents}, :select => [:regulations_dot_gov_docket_id, :comment_url, :comment_url_override, :regulations_dot_gov_document_id, :comment_count]) do |entry|
     vals = {}
 
     if entry.regulations_dot_gov_document_id
       vals.merge!(:document_id => entry.regulations_dot_gov_document_id)
     end
 
+    if entry.comment_count
+      vals.merge!(comments_count: entry.comment_count)
+    end
+
     if entry.regulations_dot_gov_agency_id
       vals.merge!(:agency_id => entry.regulations_dot_gov_agency_id)
     end
-
 
     docket = entry.docket
     if docket
@@ -161,7 +164,7 @@ class EntryApiRepresentation < ApiRepresentation
         :docket_id => docket.id,
         :regulation_id_number => docket.regulation_id_number,
         :title => docket.title,
-        :comments_count => docket.comments_count,
+        :docket_comments_count => docket.comments_count,
         :comments_url => regulations_dot_gov_docket_comments_url(docket.id),
         :supporting_documents_count => docket.docket_documents_count,
         :supporting_documents => docket.docket_documents.sort_by(&:id).reverse[0..9].map do |doc|

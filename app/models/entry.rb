@@ -639,10 +639,6 @@ class Entry < ApplicationModel
     calculated_comment_url.present? ? calculated_comment_url.gsub('#!submitComment', '#!documentDetail') : nil
   end
 
-  def regulations_dot_gov_document_id
-    calculated_comment_url.present? ? calculated_comment_url.split('D=').last : nil
-  end
-
   def calculated_comment_url
     comment_url_override.present? ? comment_url_override : comment_url
   end
