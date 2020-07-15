@@ -135,6 +135,8 @@ class RegulationsDotGov::Client
           nil
         end
       end
+    rescue OverRateLimit => rate_limit_error
+      raise rate_limit_error
     rescue ResponseError
       nil
     end
