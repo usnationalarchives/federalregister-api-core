@@ -11,7 +11,7 @@ class Admin::Issues::Sections::HighlightsController < AdminController
     move_to_top
     @redirect_to = admin_issue_section_path(@publication_date.to_s(:mdy_dash), @section)
 
-    if request.xhr?
+    if params[:ajax_request]
       if @section_highlight.valid?
         highlighted_entry_html = render_to_string(
           :partial => 'admin/issues/sections/highlighted_entry',

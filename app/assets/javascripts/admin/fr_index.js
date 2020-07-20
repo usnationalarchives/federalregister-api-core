@@ -114,6 +114,7 @@ var FRIndexEditorForm = (function() {
          * instance that spawned the form */
         frIndexEditorForm.editor_instance.active_form = this.form;
 
+        data.ajax_request = true
         $.ajax({
           url: path,
           data: data,
@@ -377,7 +378,7 @@ $(document).ready(function() {
       $.ajax({
         type: "POST",
         url: '/admin/dictionary_words',
-        data: {word: word_to_add},
+        data: {word: word_to_add, ajax_request: true},
         success: function(response) {
           spellChecker.remove_highlight_via_add_to_dictionary();
         }

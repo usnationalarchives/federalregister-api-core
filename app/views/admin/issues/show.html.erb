@@ -47,7 +47,7 @@
 <ul class="document-list">
   <% @entries_without_sections.each do |entry| %>
     <li>
-      <%= form_for entry, :url => admin_issue_entry_path(@publication_date.to_s(:iso), entry.document_number) do |f| %>
+      <%= form_for entry, :url => admin_issue_entry_path(@publication_date.to_s(:iso), entry.document_number, ajax_request: true) do |f| %>
         <h3>
           <%= link_to entry.title, entry_path(entry),
             :title => entry.abstract,

@@ -23,7 +23,7 @@ class Admin::Issues::EntriesController < AdminController
     @entry = Entry.published_on(@publication_date).find_by_document_number!(params[:id])
 
     if @entry.update_attributes(entry_params)
-      if request.xhr?
+      if params[:ajax_request]
         head :ok
       else
         flash[:notice] = 'Successfully saved.'

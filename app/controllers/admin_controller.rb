@@ -31,7 +31,7 @@ class AdminController < ApplicationController
 
   def require_user
     unless current_user
-      if request.xhr?
+      if params[:ajax_request]
         store_location(request.referer)
         render body: nil, status: 403
         flash[:error] = 'Your session expired, please sign in again to continue.'

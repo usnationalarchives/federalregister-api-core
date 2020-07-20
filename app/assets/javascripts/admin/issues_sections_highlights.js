@@ -8,7 +8,7 @@ $(document).ready(function(){
     $.ajax({
       url: base_url + '/highlights',
       type: 'POST',
-      data: "section_highlight[entry_id]=" + entry.attr('data-entry-id'),
+      data: "section_highlight[entry_id]=" + entry.attr('data-entry-id') + "&ajax_request=true",
       success: function(response) {
         entry.addClass('highlighted');
         if (response.error) {
@@ -45,7 +45,7 @@ $(document).ready(function(){
         url: base_url + '/highlights/' + entry_id,
         type: 'PUT',
         dataType: 'json',
-        data: "section_highlight[new_position]=" + position,
+        data: "section_highlight[new_position]=" + position + "&ajax_request=true",
         success: function() {
           $('#' + entry_id).addClass('highlighted');
         }

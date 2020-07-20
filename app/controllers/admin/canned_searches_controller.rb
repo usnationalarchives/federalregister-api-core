@@ -30,12 +30,8 @@ class Admin::CannedSearchesController < AdminController
   def update
     @canned_search = CannedSearch.find(params[:id])
     if @canned_search.update(canned_search_params)
-      if request.xhr?
-        head :ok
-      else
-        flash[:notice] = 'Record saved.'
-        redirect_to admin_section_canned_searches_path(@canned_search.section.slug)
-      end
+      flash[:notice] = 'Record saved.'
+      redirect_to admin_section_canned_searches_path(@canned_search.section.slug)
     else
       render :action => :edit
     end
