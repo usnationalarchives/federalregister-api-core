@@ -15,10 +15,10 @@ class EntryRegulationsDotGovImporter
     entry.checked_regulationsdotgov_at          = checked_regulationsdotgov_at
 
     begin
-      entry.comment_count                         = regulationsdotgov_document&.comment_count
+      entry.comment_count                         = comment_count
       entry.regulationsdotgov_url                 = regulationsdotgov_url
       entry.regulations_dot_gov_comments_close_on = regulations_dot_gov_comments_close_on
-      entry.regulations_dot_gov_document_id       = regulationsdotgov_document&.document_id
+      entry.regulations_dot_gov_document_id       = regulations_dot_gov_document_id
 
       unless entry.comment_url_override?
         entry.comment_url                         = comment_url
@@ -33,6 +33,14 @@ class EntryRegulationsDotGovImporter
 
   def checked_regulationsdotgov_at
     Time.now
+  end
+
+  def comment_count
+    regulationsdotgov_document ? regulationsdotgov_document.try(:comment_count) : entry.comment_count
+  end
+
+  def regulations_dot_gov_document_id
+    regulationsdotgov_document ? regulationsdotgov_document.try(:document_id) : entry.document_id
   end
 
   def regulationsdotgov_url
