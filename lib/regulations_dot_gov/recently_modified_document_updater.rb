@@ -28,7 +28,8 @@ class RegulationsDotGov::RecentlyModifiedDocumentUpdater
 
       if entry
         entry.regulations_dot_gov_docket_id = updated_document.docket_id
-        entry.comment_count = updated_document.comment_count
+        entry.comment_count                   = updated_document.comment_count
+        entry.regulations_dot_gov_document_id = updated_document
 
         update_docket = entry.regulations_dot_gov_docket_id_changed? && entry.regulations_dot_gov_docket_id.present?
 

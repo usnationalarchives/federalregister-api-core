@@ -15,6 +15,10 @@ class RegulationsDotGov::SearchDocument < RegulationsDotGov::Document
     raw_attributes['attachmentCount']
   end
 
+  def comment_count
+    raw_attributes['numberOfCommentsReceived']
+  end
+
   def comment_start_date
     val = raw_attributes["commentStartDate"]
     if val.present?
@@ -43,6 +47,10 @@ class RegulationsDotGov::SearchDocument < RegulationsDotGov::Document
     if val.present?
       DateTime.parse(val)
     end
+  end
+
+  def regulations_dot_gov_document_id
+    raw_attributes['documentId']
   end
 
   def title
