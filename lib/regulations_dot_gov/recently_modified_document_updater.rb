@@ -38,13 +38,16 @@ class RegulationsDotGov::RecentlyModifiedDocumentUpdater
           entry.regulationsdotgov_url = updated_document.url
         end
 
-        if entry.changed?
-          purge_cache("^/api/v1/documents/#{entry.document_number}")
-          purge_cache("^/documents/#{entry.publication_date.to_s(:ymd)}/#{entry.document_number}")
-        end
+        has_entry_change = entry.changed?
+
         entry.checked_regulationsdotgov_at = current_time
 
         entry.save(validate: false)
+
+        if has_entry_change
+          purge_cache("^/api/v1/documents/#{entry.document_number}")
+          purge_cache("^/documents/#{entry.publication_date.to_s(:ymd)}/#{entry.document_number}")
+        end
 
         if update_docket
           Resque.enqueue(DocketImporter, entry.regulations_dot_gov_docket_id)
