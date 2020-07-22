@@ -1,5 +1,4 @@
 class Api::V1::EntriesController < ApiController
-  protect_from_forgery except: :index
 
   def index
     respond_to do |wants|

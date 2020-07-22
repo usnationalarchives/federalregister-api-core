@@ -6,6 +6,7 @@ class ApiController < ApplicationController
 
   before_action :set_cors_headers
   before_action :enforce_maximum_per_page
+  skip_before_action :verify_authenticity_token
 
   private
 
