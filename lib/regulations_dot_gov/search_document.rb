@@ -39,7 +39,7 @@ class RegulationsDotGov::SearchDocument < RegulationsDotGov::Document
   end
 
   def open_for_comment?
-    raw_attributes['openForComment']
+    raw_attributes['openForComment'] && !non_participating_agency?
   end
 
   def posted_date
