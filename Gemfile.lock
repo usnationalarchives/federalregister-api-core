@@ -136,6 +136,7 @@ GEM
     climate_control (0.2.0)
     coderay (1.1.0)
     concurrent-ruby (1.1.5)
+    connection_pool (2.2.3)
     crass (1.0.5)
     curb (0.9.0)
     debug_inspector (0.0.3)
@@ -315,7 +316,9 @@ GEM
     pry-remote (0.1.8)
       pry (~> 0.9)
       slop (~> 3.0)
-    rack (2.1.0)
+    rack (2.1.4)
+    rack-protection (2.0.8.1)
+      rack
     rack-test (1.1.0)
       rack (>= 1.0, < 3)
     rails (6.0.2.1)
@@ -361,6 +364,7 @@ GEM
     redis (3.3.5)
     redis-namespace (1.6.0)
       redis (>= 3.0.4)
+    redis-prescription (1.0.0)
     request_store (1.5.0)
       rack (>= 1.4)
     resque (1.27.4)
@@ -416,6 +420,15 @@ GEM
       ffi-compiler (>= 1.0, < 2.0)
     sendgrid (1.2.4)
       json
+    sidekiq (5.2.9)
+      connection_pool (~> 2.2, >= 2.2.2)
+      rack (~> 2.0)
+      rack-protection (>= 1.5.0)
+      redis (>= 3.3.5, < 4.2)
+    sidekiq-throttled (0.12.0)
+      concurrent-ruby
+      redis-prescription
+      sidekiq
     signet (0.10.0)
       addressable (~> 2.3)
       faraday (~> 0.9)
@@ -532,12 +545,13 @@ DEPENDENCIES
   proc-wait3
   pry
   pry-remote
+  rack (~> 2.1.0)
   rails (= 6.0.2.1)
   rails-observers
   ransack
   rdoc
   recaptcha (= 0.3.1)
-  redis (= 3.3.5)
+  redis
   resque
   resque-throttler!
   rinku
@@ -546,6 +560,8 @@ DEPENDENCIES
   rubyzip
   sass-rails
   sendgrid
+  sidekiq (~> 5.2.9)
+  sidekiq-throttled
   sitemap_generator (~> 1.5.0)
   stevedore (= 0.3.0)
   terrapin

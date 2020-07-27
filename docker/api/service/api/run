@@ -4,5 +4,5 @@ cd /home/app
 if [ "$CONTAINER_PROCESS" = "rails" ]; then
   exec /sbin/setuser app passenger start --port $WEB_PORT --min-instances $PASSENGER_MIN_INSTANCES --no-friendly-error-pages
 elif [ "$CONTAINER_PROCESS" = "resque" ]; then
-  exec /sbin/setuser app rake environment resque:work RAILS_ENV=$RAILS_ENV QUEUE=$QUEUES INTERVAL=1 VERBOSE=1
+  exec /sbin/setuser app bundle exec sidekiq
 fi

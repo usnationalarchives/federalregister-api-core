@@ -72,13 +72,15 @@ gem "net-scp", '1.1.0'
 gem "net-ssh", '2.9.1'
 
 gem "resque"
-gem 'redis', '3.3.5'
+gem 'redis'
 gem 'resque-throttler',
     git: 'https://github.com/criticaljuncture/resque-throttler.git',
     branch: 'master',
     require: 'resque/throttler'
 # gem "resque-retry", '1.5.3'
 # gem "resque-scheduler", '4.3.1'
+gem 'sidekiq', '~> 5.2.9'
+gem "sidekiq-throttled"
 
 gem "httparty"
 gem "httmultiparty", '~> 0.3.13'
