@@ -118,7 +118,7 @@ module Content
         attributes = importer.provided - importer_options[:except].map(&:to_sym)
       end
 
-      if attributes == [:all]
+      if (attributes == [:all]) || (attributes == ['all'])
         importer.update_all_provided_attributes
       else
         importer.update_attributes(*attributes)
