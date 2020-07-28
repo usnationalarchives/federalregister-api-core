@@ -1,7 +1,13 @@
+require 'sidekiq/web'
+require "sidekiq/throttled/web"
+
 FederalregisterApiCore::Application.routes.draw do
   mount LetterOpenerWeb::Engine, at: "/letter_opener" if Rails.env.development?
-
   namespace :admin do
+    constraints lambda {|request| AuthConstraint.matches?(request) } do
+      mount Sidekiq::Web => 'sidekiq'
+    end
+
     match '' => 'special#home', :as => :home, :via => :get
       resources :agencies do
         member do
