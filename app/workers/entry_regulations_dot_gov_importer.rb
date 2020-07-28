@@ -13,21 +13,17 @@ class EntryRegulationsDotGovImporter
 
     entry.checked_regulationsdotgov_at          = checked_regulationsdotgov_at
 
-    begin
-      entry.comment_count                         = comment_count
-      entry.regulationsdotgov_url                 = regulationsdotgov_url
-      entry.regulations_dot_gov_comments_close_on = regulations_dot_gov_comments_close_on
-      entry.regulations_dot_gov_document_id       = regulations_dot_gov_document_id
+    entry.comment_count                         = comment_count
+    entry.regulationsdotgov_url                 = regulationsdotgov_url
+    entry.regulations_dot_gov_comments_close_on = regulations_dot_gov_comments_close_on
+    entry.regulations_dot_gov_document_id       = regulations_dot_gov_document_id
 
-      unless entry.comment_url_override?
-        entry.comment_url                         = comment_url
-        entry.regulations_dot_gov_docket_id       = regulations_dot_gov_docket_id
-      end
-
-      entry.save!
-    rescue RegulationsDotGov::Client::OverRateLimit
-      Sidekiq::Client.enqueue(self.class, document_number)
+    unless entry.comment_url_override?
+      entry.comment_url                         = comment_url
+      entry.regulations_dot_gov_docket_id       = regulations_dot_gov_docket_id
     end
+
+    entry.save!
   end
 
   def checked_regulationsdotgov_at
