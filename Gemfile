@@ -25,7 +25,7 @@ gem 'rubyzip'
 gem 'zip-zip' # will load compatibility for old rubyzip API.
 gem 'fog-aws'
 gem 'formtastic', "~> 2.1"
-gem 'json', '1.8.6'
+gem 'json', '2.3.0'
 gem 'ym4r', '0.6.1'
 gem 'thinking-sphinx', '~> 4.4.1 ', :require => 'thinking_sphinx'
 gem 'ffi-hunspell',
