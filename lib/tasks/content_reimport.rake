@@ -3,7 +3,7 @@ namespace :content do
     desc "Reimport entry data from FDSys"
     task :background_reimport => :environment do
       Content.parse_dates(ENV['DATE']).each do |date|
-        Resque.enqueue(
+        Sidekiq::Client.enqueue(
           EntryReimporter, date, :all,
           :force_reload_mods => true,
           :force_reload_bulkdata => true,
@@ -16,7 +16,7 @@ namespace :content do
     desc "Re-extract citations"
     task :reextract_citations => :environment do
       Content.parse_dates(ENV['DATE']).each do |date|
-        Resque.enqueue(EntryReimporter, date, :citations)
+        Sidekiq::Client.enqueue(EntryReimporter, date, :citations)
       end
     end
 
@@ -26,14 +26,14 @@ namespace :content do
     desc "Recompile all pre-compiled Entry pages for a set of dates"
     task :recompile_all_html => :environment do
       Content.parse_dates(ENV['DATE']).each do |date|
-        Resque.enqueue_to(:issue_reprocessor, 'IssueReprocessor', date.to_s(:iso))
+        Sidekiq::Client.enqueue_to(:issue_reprocessor, 'IssueReprocessor', date.to_s(:iso))
       end
     end
 
     desc "Recompile all pre-compiled ToC pages for a set of dates"
     task :recompile_all_toc => :environment do
       Content.parse_dates(ENV['DATE']).each do |date|
-        Resque.enqueue(TableOfContentsRecompiler, date)
+        Sidekiq::Client.enqueue(TableOfContentsRecompiler, date)
       end
     end
 

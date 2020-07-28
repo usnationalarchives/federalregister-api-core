@@ -1,8 +1,12 @@
 class Admin::ExecutiveOrderImporterEnqueuer
-  extend ExecutiveOrderImportUtils
-  @queue = :api_core
+  include ExecutiveOrderImportUtils
 
-  def self.perform(file_path, file_identifier)
+  include Sidekiq::Worker
+  include Sidekiq::Throttled::Worker
+
+  sidekiq_options :queue => :api_core, :retry => 0
+
+  def perform(file_path, file_identifier)
     begin
       Content::ExecutiveOrderImporter.perform(file_path)
       SphinxIndexer.rebuild_delta_and_purge_core(Entry)

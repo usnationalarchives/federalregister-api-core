@@ -1,23 +1,18 @@
 class FrIndexPdfPublisher < FrIndexPdfGenerator
   include CacheUtils
 
-  @queue = :fr_index_pdf_publisher
-
   attr_reader :max_date, :path_manager
 
-  def initialize(params)
-    @params = params.symbolize_keys
+  def perform(params)
+    ActiveRecord::Base.clear_active_connections!
+    @params   = params.symbolize_keys
     @max_date = Date.parse(@params[:max_date])
 
     # override max_published so PDF paths are generated correctly
     @params[:last_published] = @max_date
     @path_manager = FileSystemPathManager.new("#{max_date.year}-01-01")
-  end
 
-  def perform
-    ActiveRecord::Base.clear_active_connections!
-    
-    super
+    generate_pdf
 
     # this is a generic class and we run certain tasks based on the agency presence
     if agency
@@ -50,7 +45,7 @@ class FrIndexPdfPublisher < FrIndexPdfGenerator
   end
 
   def update_agency_fr_index_json
-    Resque.enqueue(FrIndexSingleAgencyCompiler, {year: year, agency_id: agency.id})
+    Sidekiq::Client.enqueue(FrIndexSingleAgencyCompiler, {year: year, agency_id: agency.id})
   end
 
   def persist_file(file)

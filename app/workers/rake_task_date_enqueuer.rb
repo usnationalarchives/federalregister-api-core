@@ -1,7 +1,10 @@
 class RakeTaskDateEnqueuer
-  @queue = :api_core
+  include Sidekiq::Worker
+  include Sidekiq::Throttled::Worker
 
-  def self.perform(task, date, args=nil)
+  sidekiq_options :queue => :api_core, :retry => 0
+
+  def perform(task, date, args=nil)
     Rake.add_rakelib 'lib/tasks'
 
     ENV['DATE'] = date

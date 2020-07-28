@@ -65,7 +65,7 @@ class AgencyName < ApplicationModel
   end
 
   def recompile_public_inspection_tables_of_contents
-    public_inspection_dates.each{|date| Resque.enqueue(PublicInspectionTableOfContentsRecompiler, date) }
+    public_inspection_dates.each{|date| Sidekiq::Client.enqueue(PublicInspectionTableOfContentsRecompiler, date) }
   end
 
   def public_inspection_dates
@@ -75,7 +75,7 @@ class AgencyName < ApplicationModel
   def recompile_associated_tables_of_contents
     entries.
       select("DISTINCT(publication_date)").
-      each{|entry| Resque.enqueue(TableOfContentsRecompiler, entry.publication_date) }
+      each{|entry| Sidekiq::Client.enqueue(TableOfContentsRecompiler, entry.publication_date) }
   end
 
   def does_not_have_agency_if_void

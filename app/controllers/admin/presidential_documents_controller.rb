@@ -26,7 +26,7 @@ class Admin::PresidentialDocumentsController < AdminController
     else
       save_file!
       file_identifier = Digest::SHA256.hexdigest(File.read(file_path))
-      Resque.enqueue(Admin::ExecutiveOrderImporterEnqueuer, file_path, file_identifier)
+      Sidekiq::Client.enqueue(Admin::ExecutiveOrderImporterEnqueuer, file_path, file_identifier)
       self.class.record_job_status(file_identifier, false)
 
       redirect_to admin_presidential_document_path(file_identifier)

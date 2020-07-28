@@ -1,16 +1,12 @@
 class FrIndexPdfPreviewer < FrIndexPdfGenerator
-  @queue = :fr_index_pdf_previewer
 
-  def initialize(generated_file_id)
+  def perform(generated_file_id)
+    ActiveRecord::Base.clear_active_connections!
     @generated_file = GeneratedFile.find(generated_file_id)
     @params = generated_file.parameters.symbolize_keys!
-  end
 
-  def perform
-    ActiveRecord::Base.clear_active_connections!
-    
     calculate_metadata
-    super
+    generate_pdf
   end
 
   private

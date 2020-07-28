@@ -1,7 +1,10 @@
 class DailyIssueEmailSender
-  @queue = :api_core
+  include Sidekiq::Worker
+  include Sidekiq::Throttled::Worker
 
-  def self.perform(date)
+  sidekiq_options :queue => :api_core
+
+  def perform(date)
     return unless SETTINGS["deliver_daily_import_email"]
     
     ActiveRecord::Base.clear_active_connections!

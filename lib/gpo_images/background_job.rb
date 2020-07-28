@@ -1,7 +1,11 @@
 module GpoImages
   class BackgroundJob
     include GpoImages::ImageIdentifierNormalizer
-    @queue = :gpo_image_import
+
+    include Sidekiq::Worker
+    include Sidekiq::Throttled::Worker
+
+    sidekiq_options :queue => :gpo_image_import, :retry => 0
 
     attr_reader :bucketed_zip_filename,
                 :eps_filename,
@@ -9,19 +13,11 @@ module GpoImages
                 :mark_public,
                 :temp_image_files_path
 
-    def initialize(eps_filename, bucketed_zip_filename, ftp_transfer_date)
-      @eps_filename = eps_filename
+    def perform(eps_filename, bucketed_zip_filename, ftp_transfer_date)
+      @eps_filename          = eps_filename
       @bucketed_zip_filename = bucketed_zip_filename
-      @ftp_transfer_date = ftp_transfer_date.is_a?(Date) ? ftp_transfer_date : Date.parse(ftp_transfer_date)
-    end
+      @ftp_transfer_date     = ftp_transfer_date.is_a?(Date) ? ftp_transfer_date : Date.parse(ftp_transfer_date)
 
-    def self.perform(eps_filename, zipped_filename, ftp_transfer_date)
-      ActiveRecord::Base.clear_active_connections!
-      
-      new(eps_filename, zipped_filename, ftp_transfer_date).perform
-    end
-
-    def perform
       gpo_graphic, gpo_graphic_package = find_or_create_gpo_graphic
 
       if gpo_graphic.save

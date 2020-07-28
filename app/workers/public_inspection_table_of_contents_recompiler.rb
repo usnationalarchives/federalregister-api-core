@@ -1,7 +1,10 @@
-module PublicInspectionTableOfContentsRecompiler
-  @queue = :reimport
+class PublicInspectionTableOfContentsRecompiler
+  include Sidekiq::Worker
+  include Sidekiq::Throttled::Worker
 
-  def self.perform(date)
+  sidekiq_options :queue => :reimport, :retry => 0
+
+  def perform(date)
     ActiveRecord::Base.clear_active_connections!
     
     TableOfContentsTransformer::PublicInspection::RegularFiling.perform(date)

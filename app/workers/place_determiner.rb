@@ -1,21 +1,17 @@
 class PlaceDeterminer
-  @queue = :default
+  include Sidekiq::Worker
+  include Sidekiq::Throttled::Worker
+
+  sidekiq_options :queue => :place_determiner, :retry => 0
 
   MAX_RETRIES             = 5
   RETRY_DELAY_IN_SECONDS  = 5
   CHARACTER_REQUEST_LIMIT = 95000
 
-  def self.perform(entry_id)
+  def perform(entry_id)
     ActiveRecord::Base.clear_active_connections!
-
-    new(entry_id).perform
-  end
-
-  def initialize(entry_id)
     @entry = Entry.find(entry_id)
-  end
 
-  def perform
     begin
       retries ||= 0
 

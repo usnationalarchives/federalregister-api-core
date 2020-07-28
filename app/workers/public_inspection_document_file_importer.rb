@@ -1,22 +1,18 @@
 class PublicInspectionDocumentFileImporter
-  @queue = :public_inspection
+  include Sidekiq::Worker
+  include Sidekiq::Throttled::Worker
 
-  def self.perform(options)
-    ActiveRecord::Base.clear_active_connections!
-    
-    new(options).perform
-  end
+  sidekiq_options :queue => :public_inspection, :retry => 0
 
   attr_reader :document_number, :pdf_url, :api_session_token, :redis_set
 
-  def initialize(options)
-    @document_number = options.fetch("document_number")
-    @pdf_url = options.fetch("pdf_url")
-    @api_session_token = options.fetch("api_session_token")
-    @redis_set = options.fetch("redis_set")
-  end
+  def perform(document_number, pdf_url, api_session_token, redis_set)
+    ActiveRecord::Base.clear_active_connections!
+    @document_number   = document_number
+    @pdf_url           = pdf_url
+    @api_session_token = api_session_token
+    @redis_set         = redis_set
 
-  def perform
     start_time = Time.now
     log("Starting import for #{document_number}")
 

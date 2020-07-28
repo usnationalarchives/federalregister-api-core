@@ -6,7 +6,7 @@ class FrIndexAgencyStatusObserver < ActiveRecord::Observer
   def after_save(fr_index_agency_status)
     return if FrIndexAgencyStatusObserver.disabled
 
-    Resque.enqueue(
+    Sidekiq::Client.enqueue(
       FrIndexSingleAgencyCompiler,
       {
         year: fr_index_agency_status.year,

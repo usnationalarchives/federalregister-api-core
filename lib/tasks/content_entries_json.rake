@@ -62,7 +62,7 @@ namespace :content do
             date = date.is_a?(String) ? Date.parse(date) : date
             next unless Issue.should_have_an_issue?(date)
 
-            Resque.enqueue(TableOfContentsRecompiler, date)
+            Sidekiq::Client.enqueue(TableOfContentsRecompiler, date)
           end
         end
 
@@ -79,7 +79,7 @@ namespace :content do
               next
             end
 
-            Resque.enqueue(PublicInspectionTableOfContentsRecompiler, date)
+            Sidekiq::Client.enqueue(PublicInspectionTableOfContentsRecompiler, date)
           end
         end
 
@@ -88,7 +88,7 @@ namespace :content do
           years = dates.map{|d| d.is_a?(String) ? Date.parse(d).year : d.year}.uniq
 
           years.each do |year|
-            Resque.enqueue(FrIndexRecompiler, year)
+            Sidekiq::Client.enqueue(FrIndexRecompiler, year)
           end
         end
       end

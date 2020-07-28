@@ -14,7 +14,7 @@ namespace :content do
             AND (#{participating_agencies_query})
           ORDER BY publication_date DESC", 4.months.ago]
       ).compact.each do |docket_id|
-        Resque.enqueue(DocketImporter, docket_id, false)
+        Sidekiq::Client.enqueue(DocketImporter, docket_id, false)
       end
     end
   end

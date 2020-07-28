@@ -4,6 +4,7 @@
   - api_core
   - fr_index_pdf_previewer
   - gpo_image_import
+  - issue_reprocessor
   - place_determiner
   - public_inspection
   - reg_gov

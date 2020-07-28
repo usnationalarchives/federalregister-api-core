@@ -1,14 +1,13 @@
 class EntryRegulationsDotGovImporter
   extend Memoist
-  @queue = :reg_gov
+  include Sidekiq::Worker
+  include Sidekiq::Throttled::Worker
 
-  def self.perform(document_number)
-    ActiveRecord::Base.clear_active_connections!
-
-    new.perform(document_number)
-  end
+  sidekiq_options :queue => :reg_gov
+  sidekiq_throttle_as :reg_gov_api
 
   def perform(document_number)
+    ActiveRecord::Base.clear_active_connections!
     @entry = Entry.find_by_document_number!(document_number)
     EntryObserver.disabled = true
 
@@ -27,7 +26,7 @@ class EntryRegulationsDotGovImporter
 
       entry.save!
     rescue RegulationsDotGov::Client::OverRateLimit
-      Resque.enqueue(self.class, document_number)
+      Sidekiq::Client.enqueue(self.class, document_number)
     end
   end
 

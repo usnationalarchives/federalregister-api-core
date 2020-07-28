@@ -1,15 +1,11 @@
 class FrIndexPdfGenerator
   attr_reader :params, :generated_file
 
-  def self.perform(*args)
-    ActiveRecord::Base.clear_active_connections!
+  include Sidekiq::Worker
+  include Sidekiq::Throttled::Worker
 
-    new(*args).perform
-  end
+  sidekiq_options :queue => :fr_index_pdf_previewer, :retry => 0
 
-  def perform
-    generate_pdf
-  end
 
   private
 

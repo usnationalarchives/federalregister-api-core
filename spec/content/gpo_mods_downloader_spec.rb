@@ -3,7 +3,11 @@ require 'spec_helper'
 describe Content::GpoModsDownloader do
   let(:issue) { Issue.create(:publication_date => "2099-01-01") }
   let(:reprocessed_issue) { ReprocessedIssue.create(:issue => issue) }
-  let(:mods_downloader) { Content::GpoModsDownloader.new(reprocessed_issue.id) }
+  let(:mods_downloader) { Content::GpoModsDownloader.new }
+  before(:each) do
+    allow(mods_downloader).to receive(:reprocessed_issue).and_return(reprocessed_issue)
+    allow(mods_downloader).to receive(:path_manager).and_return(FileSystemPathManager.new(reprocessed_issue.issue.publication_date))
+  end
 
   describe "#generate_diffs" do
     it "calls #diff and #html_diff" do

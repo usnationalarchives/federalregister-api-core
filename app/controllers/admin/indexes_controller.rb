@@ -33,9 +33,9 @@ class Admin::IndexesController < AdminController
     fr_index = FrIndexPresenter.new(year, :max_date => max_date)
 
     fr_index.agencies.each do |year_agency|
-      Resque.enqueue FrIndexPdfPublisher, {:year => year, :max_date => max_date, :agency_id => year_agency.agency.id}
+      Sidekiq::Client.enqueue FrIndexPdfPublisher, {:year => year, :max_date => max_date, :agency_id => year_agency.agency.id}
     end
-    Resque.enqueue FrIndexPdfPublisher, {:year => year, :max_date => max_date}
+    Sidekiq::Client.enqueue FrIndexPdfPublisher, {:year => year, :max_date => max_date}
 
     flash[:notice] = "#{Date.parse(max_date).to_s(:month_year)} has been queued to be published."
     redirect_to admin_index_year_path(year, :max_date => max_date)
@@ -157,7 +157,7 @@ class Admin::IndexesController < AdminController
 
   def queue_preview_pdf(parameters={})
     file = GeneratedFile.create(:parameters => parameters)
-    Resque.enqueue FrIndexPdfPreviewer, file.id
+    Sidekiq::Client.enqueue FrIndexPdfPreviewer, file.id
     redirect_to admin_generated_file_path(file)
   end
 

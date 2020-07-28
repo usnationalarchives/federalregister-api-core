@@ -84,7 +84,7 @@ class GpoImages::FileConverter
         file_path = File.join(destination, filename)
         files.extract(file, file_path){ true }
         log "Enqueuing GpoImages::BackgroundJob for #{file.name}..."
-        Resque.enqueue(GpoImages::BackgroundJob, filename, bucketed_zip_filename, date)
+        Sidekiq::Client.enqueue(GpoImages::BackgroundJob, filename, bucketed_zip_filename, date)
       end
     end
   end

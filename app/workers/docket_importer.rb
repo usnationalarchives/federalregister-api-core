@@ -1,7 +1,11 @@
 require 'csv'
 
-module DocketImporter
-  @queue = :reg_gov
+class DocketImporter
+  include Sidekiq::Worker
+  include Sidekiq::Throttled::Worker
+
+  sidekiq_options :queue => :reg_gov, :retry => 0
+  sidekiq_throttle_as :reg_gov_api
 
   NON_PARTICIPATING_AGENCIES_FILE = 'data/regulations_dot_gov_non_participating_agencies.csv'
 
@@ -28,7 +32,7 @@ module DocketImporter
   end
 
   TITLE_CHARACTER_LIMIT = 1000
-  def self.perform(docket_number, check_participating=true)
+  def perform(docket_number, check_participating=true)
     ActiveRecord::Base.clear_active_connections!
 
     return if check_participating && non_participating_agency?(docket_number)
@@ -60,8 +64,8 @@ module DocketImporter
 
   private
 
-  def self.non_participating_agency?(docket_number)
-    non_participating_agency_ids.any? do |str|
+  def non_participating_agency?(docket_number)
+    self.class.non_participating_agency_ids.any? do |str|
       docket_number.start_with? "#{str}-", "#{str}_"
     end
   end

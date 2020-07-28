@@ -32,6 +32,7 @@ describe AgencyName do
       agency_name = Factory(:agency_name, :agency_id => nil)
       entry = Factory(:entry, :agency_names => [agency_name])
       entry.agencies.should == []
+      expect(ElasticsearchIndexer).to receive(:handle_entry_changes)
 
       agency_name.update(:agency_id => agency.id)
       entry.reload
@@ -55,6 +56,7 @@ describe AgencyName do
     end
 
     it "modifies agency_assignments when agency_id changes" do
+      expect(ElasticsearchIndexer).to receive(:handle_entry_changes)
       agency_1 = Factory(:agency)
       agency_name = Factory(:agency_name, :agency => agency_1)
       entry = Factory(:entry, :agency_names => [agency_name])
@@ -103,7 +105,7 @@ describe AgencyName do
       entry = Factory(:entry, :agency_names => [agency_name])
       agency_2 = Factory(:agency)
 
-      Resque.should_receive(:enqueue).with(TableOfContentsRecompiler, entry.publication_date)
+      Sidekiq::Client.should_receive(:enqueue).with(TableOfContentsRecompiler, entry.publication_date)
       agency_name.update(:agency => agency_2)
     end
 
@@ -123,7 +125,7 @@ describe AgencyName do
       PublicInspectionDocument.first.update(agency_names: [agency_name])
       agency_name.reload
 
-      Resque.should_receive(:enqueue).twice
+      Sidekiq::Client.should_receive(:enqueue).twice
       agency_name.update(:agency => agency_2)
     end
 

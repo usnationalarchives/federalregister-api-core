@@ -4,22 +4,18 @@ module Content
     include Content::IssueReprocessorUtils
     include SphinxIndexer
 
-    @queue = :api_core
+    include Sidekiq::Worker
+    include Sidekiq::Throttled::Worker
+
+    sidekiq_options :queue => :api_core, :retry => 0
 
     attr_reader :path_manager, :reprocessed_issue
 
-    def initialize(reprocessed_issue_id)
-      @reprocessed_issue = ReprocessedIssue.find(reprocessed_issue_id)
-      @path_manager = FileSystemPathManager.new(@reprocessed_issue.issue.publication_date)
-    end
-
-    def self.perform(reprocessed_issue_id)
+    def perform(reprocessed_issue_id)
       ActiveRecord::Base.clear_active_connections!
+      @reprocessed_issue = ReprocessedIssue.find(reprocessed_issue_id)
+      @path_manager      = FileSystemPathManager.new(@reprocessed_issue.issue.publication_date)
 
-      new(reprocessed_issue_id).perform
-    end
-
-    def perform
       rotate_mods_files
       reprocess_issue
       reindex

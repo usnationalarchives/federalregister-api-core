@@ -22,7 +22,7 @@ namespace :content do
         entries = Entry.select('document_number').where(publication_date: date)
 
         entries.each do |entry|
-          Resque.enqueue(EntryRegulationsDotGovImporter, entry.document_number)
+          Sidekiq::Client.enqueue(EntryRegulationsDotGovImporter, entry.document_number)
         end
       end
     end
@@ -32,7 +32,7 @@ namespace :content do
       task :enqueue, [:task, :dates] => :environment do |t, args|
         dates = Content.parse_dates(args[:dates])
         dates.each do |date|
-          Resque.enqueue(RakeTaskDateEnqueuer, args[:task], date.to_s(:iso))
+          Sidekiq::Client.enqueue(RakeTaskDateEnqueuer, args[:task], date.to_s(:iso))
         end
       end
 
@@ -126,7 +126,7 @@ namespace :content do
           end
 
           entries.find_each do |entry|
-            Resque.enqueue(EntryRegulationsDotGovImporter, entry.document_number)
+            Sidekiq::Client.enqueue(EntryRegulationsDotGovImporter, entry.document_number)
           end
 
         end

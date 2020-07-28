@@ -7,11 +7,11 @@ class Content::PublicInspectionImporter::JobQueue
 
   def enqueue(document_number, pdf_url)
     redis.sadd(redis_set, document_number)
-    Resque.enqueue PublicInspectionDocumentFileImporter,
-      :document_number => document_number,
-      :pdf_url => pdf_url,
-      :api_session_token => session_token,
-      :redis_set => redis_set
+    Sidekiq::Client.enqueue PublicInspectionDocumentFileImporter,
+      document_number,
+      pdf_url,
+      session_token,
+      redis_set
   end
 
   def empty?

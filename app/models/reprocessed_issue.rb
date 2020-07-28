@@ -6,13 +6,13 @@ class ReprocessedIssue < ApplicationModel
   def download_mods
     self.status = "downloading_mods"
     self.save
-    Resque.enqueue(Content::GpoModsDownloader, self.id)
+    Sidekiq::Client.enqueue(Content::GpoModsDownloader, self.id)
   end
 
   def reprocess_issue
     self.status = "in_progress"
     self.save
-    Resque.enqueue(Content::IssueReprocessor, self.id)
+    Sidekiq::Client.enqueue(Content::IssueReprocessor, self.id)
   end
 
   def display_loading_message?

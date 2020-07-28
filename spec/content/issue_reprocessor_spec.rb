@@ -9,7 +9,9 @@ describe Content::IssueReprocessor do
 
     before(:each) do
       reprocessed_issue = Factory.create(:reprocessed_issue)
-      issue_reprocessor = Content::IssueReprocessor.new(reprocessed_issue.id)
+      issue_reprocessor = Content::IssueReprocessor.new
+      allow(issue_reprocessor).to receive(:reprocessed_issue).and_return(reprocessed_issue)
+      allow(issue_reprocessor).to receive(:path_manager).and_return(path_manager)
 
       create_file(path_manager.document_temporary_mods_path, "new_mods")
       create_file(path_manager.document_mods_path, "current_mods")

@@ -28,7 +28,7 @@ namespace :mailing_lists do
           date = Date.current
         end
 
-        Resque.enqueue(DailyIssueEmailSender, date.to_s(:iso))
+        Sidekiq::Client.enqueue(DailyIssueEmailSender, date.to_s(:iso))
       rescue StandardError => e
         puts e.message
         puts e.backtrace.join("\n")

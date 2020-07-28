@@ -1,7 +1,10 @@
-module EntryReimporter
-  @queue = :reimport
+class EntryReimporter
+  include Sidekiq::Worker
+  include Sidekiq::Throttled::Worker
 
-  def self.perform(date, *args)
+  sidekiq_options :queue => :reimport, :retry => 0
+
+  def perform(date, *args)
     ActiveRecord::Base.clear_active_connections!
 
     date = date.is_a?(String) ? Date.parse(date) : date
@@ -10,6 +13,10 @@ module EntryReimporter
     GpoImages::DailyIssueImageProcessor.perform(date)
     Content::TableOfContentsCompiler.perform(date)
 
-    Resque.enqueue_to(:issue_reprocessor, 'IssueReprocessor', date.to_s(:iso))
+    Resque.enqueue_to(
+      :issue_reprocessor,
+      IssueReprocessor,
+      date.to_s(:iso)
+    )
   end
 end

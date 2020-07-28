@@ -50,7 +50,7 @@ class RegulationsDotGov::RecentlyModifiedDocumentUpdater
         end
 
         if update_docket
-          Resque.enqueue(DocketImporter, entry.regulations_dot_gov_docket_id)
+          Sidekiq::Client.enqueue(DocketImporter, entry.regulations_dot_gov_docket_id)
         end
       else
         notify_missing_document(updated_document)

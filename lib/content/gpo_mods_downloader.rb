@@ -1,7 +1,10 @@
 module Content
   class GpoModsDownloader
     include Content::IssueReprocessorUtils
-    @queue = :api_core
+    include Sidekiq::Worker
+    include Sidekiq::Throttled::Worker
+
+    sidekiq_options :queue => :api_core
 
     attr_reader :gpo_path_manager, :path_manager, :reprocessed_issue
 
@@ -13,19 +16,12 @@ module Content
       "relatedItem type=(?!&quot;isReferencedBy&quot;)", #negative look ahead, don't match those that match the look ahead
     ]
 
-    def initialize(reprocessed_issue_id)
-      @reprocessed_issue = ReprocessedIssue.find_by_id(reprocessed_issue_id)
-      @path_manager = FileSystemPathManager.new(@reprocessed_issue.issue.publication_date)
-      @gpo_path_manager = GpoFilePathManager.new(@reprocessed_issue.issue.publication_date)
-    end
-
-    def self.perform(reprocessed_issue_id)
+    def perform(reprocessed_issue_id)
       ActiveRecord::Base.clear_active_connections!
+      @reprocessed_issue = ReprocessedIssue.find_by_id(reprocessed_issue_id)
+      @path_manager      = FileSystemPathManager.new(@reprocessed_issue.issue.publication_date)
+      @gpo_path_manager  = GpoFilePathManager.new(@reprocessed_issue.issue.publication_date)
 
-      new(reprocessed_issue_id).perform
-    end
-
-    def perform
       download
 
       if generate_diffs
