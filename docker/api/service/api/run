@@ -3,6 +3,6 @@ cd /home/app
 
 if [ "$CONTAINER_PROCESS" = "rails" ]; then
   exec /sbin/setuser app passenger start --port $WEB_PORT --min-instances $PASSENGER_MIN_INSTANCES --no-friendly-error-pages
-elif [ "$CONTAINER_PROCESS" = "resque" ]; then
-  exec /sbin/setuser app bundle exec sidekiq
+elif [ "$CONTAINER_PROCESS" = "sidekiq" ]; then
+  exec /sbin/setuser app bundle exec sidekiq $SIDEKIQ_OPTIONS
 fi
