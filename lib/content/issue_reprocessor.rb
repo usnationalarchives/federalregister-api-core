@@ -15,6 +15,7 @@ module Content
       ActiveRecord::Base.clear_active_connections!
       @reprocessed_issue = ReprocessedIssue.find(reprocessed_issue_id)
       @path_manager      = FileSystemPathManager.new(@reprocessed_issue.issue.publication_date)
+      Rails.application.load_tasks
 
       rotate_mods_files
       reprocess_issue
