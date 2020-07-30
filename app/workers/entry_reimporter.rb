@@ -2,7 +2,13 @@ class EntryReimporter
   include Sidekiq::Worker
   include Sidekiq::Throttled::Worker
 
-  sidekiq_options :queue => :reimport, :retry => 0
+  sidekiq_options :queue => :reimport, :retry => 5
+  sidekiq_retry_in do |count|
+    1
+  end
+  sidekiq_retries_exhausted do |msg, ex|
+    Honeybadger.notify(ex, force: true)
+  end
 
   def perform(date, *args)
     ActiveRecord::Base.clear_active_connections!
