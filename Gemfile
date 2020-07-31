@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '6.0.2.1'
+gem 'rails', '6.0.3.2'
 
 # ==============================================================================
 # gems supporting backward-compatibility with Rails 2 conventions:
@@ -25,7 +25,7 @@ gem 'rubyzip'
 gem 'zip-zip' # will load compatibility for old rubyzip API.
 gem 'fog-aws'
 gem 'formtastic', "~> 2.1"
-gem 'json', '1.8.6'
+gem 'json'
 gem 'ym4r', '0.6.1'
 gem 'ffi-hunspell',
   :git     => 'https://github.com/postmodern/ffi-hunspell.git',
