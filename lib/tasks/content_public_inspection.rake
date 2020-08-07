@@ -36,7 +36,12 @@ namespace :content do
         new_document_numbers = Content::PublicInspectionImporter.perform
 
         if new_document_numbers.present?
-          Resque.enqueue_to(:subscriptions, 'PublicInspectionDocumentSubscriptionQueuePopulator', new_document_numbers)
+          Sidekiq::Client.push(
+            'class' => 'PublicInspectionDocumentSubscriptionQueuePopulator',
+            'args'  => [new_document_numbers],
+            'queue' => 'subscriptions'
+          )
+
         end
       end
     end

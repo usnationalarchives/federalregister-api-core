@@ -26,7 +26,11 @@ namespace :content do
     desc "Recompile all pre-compiled Entry pages for a set of dates"
     task :recompile_all_html => :environment do
       Content.parse_dates(ENV['DATE']).each do |date|
-        Sidekiq::Client.enqueue_to(:issue_reprocessor, 'IssueReprocessor', date.to_s(:iso))
+        Sidekiq::Client.push(
+          'class' => 'IssueReprocessor',
+          'args'  => [date.to_s(:iso)],
+          'queue' => 'issue_reprocessor'
+        )
       end
     end
 

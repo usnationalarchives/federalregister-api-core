@@ -4,7 +4,11 @@ namespace :web do
     date = Content.parse_dates(ENV['DATE']).first
 
     begin
-      Resque.enqueue_to(:issue_processor, 'NewIssueProcessor', date.to_s(:iso))
+      Sidekiq::Client.push(
+        'class' => 'NewIssueProcessor',
+        'args'  => [date.to_s(:iso)],
+        'queue' => 'issue_processor'
+      )
     rescue StandardError => e
       puts e.message
       puts e.backtrace.join("\n")
@@ -18,7 +22,11 @@ namespace :web do
       dates = Content.parse_dates(ENV['DATE'])
 
       dates.each do |date|
-        Resque.enqueue_to(:issue_reprocessor, 'IssueReprocessor', date.to_s(:iso))
+        Sidekiq::Client.push(
+          'class' => 'IssueReprocessor',
+          'args'  => [date.to_s(:iso)],
+          'queue' => 'issue_reprocessor'
+        )
       end
     rescue StandardError => e
       puts e.message

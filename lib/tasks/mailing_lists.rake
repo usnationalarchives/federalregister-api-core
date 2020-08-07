@@ -9,7 +9,11 @@ namespace :mailing_lists do
           date = Date.current
         end
 
-        Resque.enqueue_to(:subscriptions, 'DocumentSubscriptionQueuePopulator', date.to_s(:iso))
+        Sidekiq::Client.push(
+          'class' => 'DocumentSubscriptionQueuePopulator',
+          'args'  => [date.to_s(:iso)],
+          'queue' => 'subscriptions'
+        )
       rescue StandardError => e
         puts e.message
         puts e.backtrace.join("\n")

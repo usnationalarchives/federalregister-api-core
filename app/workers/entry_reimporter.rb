@@ -19,10 +19,10 @@ class EntryReimporter
     GpoImages::DailyIssueImageProcessor.perform(date)
     Content::TableOfContentsCompiler.perform(date)
 
-    Resque.enqueue_to(
-      :issue_reprocessor,
-      IssueReprocessor,
-      date.to_s(:iso)
+    Sidekiq::Client.push(
+      'class' => 'IssueReprocessor',
+      'args'  => [date.to_s(:iso)],
+      'queue' => 'issue_reprocessor'
     )
   end
 end
