@@ -53,7 +53,9 @@ FederalregisterApiCore::Application.routes.draw do
     end
     resources :sections
     resources :missing_images, :only => :index
-    resources :reprocessed_issues, :only => [:index, :show, :create, :update]
+    resources :reprocessed_issues, :only => [:index, :show, :create, :update, :destroy] do
+      resources :diffs, :only => [:index], controller: 'reprocessed_issues/diffs'
+    end
     match 'reprocessed_issues_update_mods/:id' => 'reprocessed_issues#update_mods', :as => :update_mods, :via => :put
     resources :issues do
         member do

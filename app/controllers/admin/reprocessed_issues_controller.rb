@@ -53,4 +53,14 @@ class Admin::ReprocessedIssuesController < AdminController
     redirect_to admin_reprocessed_issue_path(reprocessed_issue.publication_date.to_s(:iso))
   end
 
+  def destroy
+    reprocessed_issue = ReprocessedIssue.find(params[:id])
+    date              = reprocessed_issue.publication_date
+    if reprocessed_issue.status == 'pending_reprocess'
+      reprocessed_issue.destroy!
+      flash[:notice] = "The pending reprocessing was deleted."
+    end
+    redirect_to admin_reprocessed_issues_path
+  end
+
 end

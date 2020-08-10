@@ -1,0 +1,18 @@
+<% super_title 'MODS Changes' %>
+<% title "#{@reprocessed_issue.publication_date} Issue" %>
+
+<em><%= "MODS downloaded on #{@reprocessed_issue.created_at.to_s(:mdy_short_year_then_time)}" %></em>
+<div>
+  <%= link_to "Back to Reprocessing History", admin_reprocessed_issue_path(@reprocessed_issue.publication_date.to_s(:iso))  %>
+</div>
+</br>
+
+<div class="reprocess-issue">
+  <div class="well">
+    <% if @reprocessed_issue.diff.present? %>
+      <%= simple_format(h @reprocessed_issue.html_diff.try(:html_safe)) %>
+    <% else %>
+      No changes identified.
+    <% end %>
+  </div>
+</div>

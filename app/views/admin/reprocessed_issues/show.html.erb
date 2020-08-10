@@ -11,12 +11,16 @@
 
     <%= simple_format(@presenter.reprocessed_issue_in_progress.message) %>
   <% else %>
-    <p>Most recent changes to MODS file:</p>
+    <% if @presenter.most_recent_diff.present? %>
+      MODS Changes
+    <% end %>
 
     <div class="well">
-      <%= @presenter.most_recent_diff.present? ?
-        simple_format(h @presenter.most_recent_html_diff) :
-        "No changes identified." %>
+      <% if @presenter.most_recent_diff.present? %>
+        <%= simple_format(h @presenter.most_recent_html_diff) %>
+      <% else %>
+        No MODS changes identified.
+      <% end %>
     </div>
   <% end %>
 
@@ -46,6 +50,8 @@
           <th>Status</th>
           <th>Completed on</th>
           <th>Initiated By</th>
+          <th>MODS Changes</th>
+          <th></th>
         </tr>
       </thead>
       <tbody>
@@ -54,7 +60,7 @@
             <td class="span3">
               <%= reprocessed_issue.created_at.to_s(:mdy_short_year_then_time) %>
             </td>
-            <td class="span3">
+            <td class="span2">
               <%= reprocessed_issue.status %>
             </td>
             <td class="span3">
@@ -62,7 +68,17 @@
                 <%= reprocessed_issue.updated_at.to_s(:mdy_short_year_then_time) %>
               <% end %>
             </td>
-            <td class="span3"><%= reprocessed_issue.user.try(:full_name) || 'NA' %></td>
+            <td class="span2"><%= reprocessed_issue.user.try(:full_name) || 'NA' %></td>
+            <td class="span2">
+              <% if reprocessed_issue.html_diff.present? %>
+                <%= link_to 'View', admin_reprocessed_issue_diffs_path(reprocessed_issue) %>
+              <% end %>
+            </td>
+            <td class="span2">
+              <% if reprocessed_issue.status == 'pending_reprocess' %>
+                <%= link_to 'Delete', admin_reprocessed_issue_path(reprocessed_issue.id) , method: :delete%>
+              <% end %>
+            </td>
           </tr>
         <% end %>
       </tbody>
