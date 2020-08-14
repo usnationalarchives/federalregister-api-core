@@ -1,25 +1,20 @@
 class CommentUrlRemover
   include CacheUtils
+  include Sidekiq::Worker
 
-  @queue = :document_updater
-
-  def self.perform(document_number)
-    ActiveRecord::Base.clear_active_connections!
-
-    new(document_number).perform
-  end
+  sidekiq_options :queue => :document_updater, :retry => 0
 
   attr_accessor :entry
 
-  def initialize(document_number)
+  def perform(document_number)
+    ActiveRecord::Base.clear_active_connections!
     @entry = Entry.find_by(document_number: document_number)
-  end
 
-  def perform
     entry.comment_url = nil
     entry.save(validate: false)
 
     purge_cache("^/api/v1/documents/#{entry.document_number}")
     purge_cache("^/documents/#{entry.publication_date.to_s(:ymd)}/#{entry.document_number}")
   end
+
 end
