@@ -47,6 +47,8 @@ module Content
         Rake::Task['content:entries:import:basic_data'].invoke
       rescue StandardError => error
         handle_failure(error,"IssueReprocessor: Reprocess Basic Data")
+      ensure
+        Rake::Task['content:entries:import:basic_data'].reenable
       end
     end
 
@@ -57,6 +59,8 @@ module Content
         Rake::Task['content:entries:import:rin_and_significant'].invoke
       rescue StandardError => error
         handle_failure(error,"IssueReprocessor: Reprocess RIN and Significant")
+      ensure
+        Rake::Task['content:entries:import:rin_and_significant'].reenable
       end
     end
 
@@ -68,6 +72,8 @@ module Content
         Rake::Task['content:entries:import:events'].invoke
       rescue StandardError => error
         handle_failure(error,"IssueReprocessor: Reprocess Events")
+      ensure
+        Rake::Task['content:entries:import:events'].reenable
       end
     end
 
@@ -79,6 +85,8 @@ module Content
         Rake::Task['content:entries:import:agencies'].invoke
       rescue StandardError => error
         handle_failure(error,"IssueReprocessor: Reprocess Agencies")
+      ensure
+        Rake::Task['content:entries:import:agencies'].reenable
       end
     end
 
@@ -90,6 +98,8 @@ module Content
         Rake::Task['content:entries:import:presidential_documents'].invoke
       rescue StandardError => error
         handle_failure(error,"IssueReprocessor: Reprocess Presidential Documents")
+      ensure
+        Rake::Task['content:entries:import:presidential_documents'].reenable
       end
     end
 
