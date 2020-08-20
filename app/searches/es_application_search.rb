@@ -242,10 +242,11 @@ class EsApplicationSearch
         sort: [ {id: 'asc'} ]
       )
       search_ids = repository.search(base_search_options).results.map(&:id)
-      ids_count = ids.count
+
       ids += search_ids
-      after += 10000
-      break if ids_count == 0
+      after = search_ids.last
+
+      break if search_ids.count == 0
     end
     ids
   end
