@@ -57,7 +57,6 @@ class AgencyName < ApplicationModel
       recompile_associated_tables_of_contents
       recompile_public_inspection_tables_of_contents
 
-      SphinxIndexer.rebuild_delta_and_purge_core(Entry)
       ElasticsearchIndexer.handle_entry_changes
 
       purge_cache(".*")
