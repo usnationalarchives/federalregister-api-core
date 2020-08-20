@@ -1,4 +1,11 @@
 class EntryApiRepresentation < ApiRepresentation
+  GRAPHIC_CONTENT_TYPES_FOR_COERCION = [
+    'application/x-pbm',
+    'application/x-ppm',
+    'image/gif',
+  ]
+  private_constant :GRAPHIC_CONTENT_TYPES_FOR_COERCION
+
   self.default_index_fields_json = [:title, :type, :abstract, :document_number, :html_url, :pdf_url, :public_inspection_pdf_url, :publication_date, :agencies, :excerpts]
   self.default_index_fields_csv = [:title, :type, :agency_names, :abstract, :document_number, :html_url, :pdf_url, :publication_date]
   self.default_index_fields_rss = [:title, :abstract, :document_number, :publication_date, :agencies, :topics, :html_url]
@@ -87,7 +94,14 @@ class EntryApiRepresentation < ApiRepresentation
             type, paperclip_style = style
             # expose the :original_png style as simply :original
             renamed_type = type == :original_png ? :original : type
-            hsh[renamed_type] = paperclip_style.attachment.send(:url, type)
+
+            url = paperclip_style.attachment.send(:url, type).tap do |url|
+              if GRAPHIC_CONTENT_TYPES_FOR_COERCION.include? graphic.graphic_content_type
+                url = url.gsub!(/\.png/,'.gif')
+              end
+            end
+
+            hsh[renamed_type] = url
             hsh
           end
 
