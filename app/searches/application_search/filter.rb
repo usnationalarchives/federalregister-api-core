@@ -21,7 +21,7 @@ class ApplicationSearch::Filter
           begin
             model_class.send("find_by_#{@model_id_method}!", id)
           rescue
-            raise ApplicationSearch::InputError.new("invalid value")
+            raise EsApplicationSearch::InputError.new("invalid value")
           end
         }.
         compact.
@@ -41,7 +41,7 @@ class ApplicationSearch::Filter
         begin
           model_class.send("find_by_#{@model_id_method}!", id)
         rescue
-          raise ApplicationSearch::InputError.new("invalid value")
+          raise EsApplicationSearch::InputError.new("invalid value")
         end
       }.map{|x| x.send(options[:model_sphinx_method])}.first
     elsif options[:sphinx_value_processor]
