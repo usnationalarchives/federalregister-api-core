@@ -20,7 +20,7 @@ class PublicInspectionDocumentSearchResult
   end
 
   def highlights
-    attributes.dig(:highlight).values.join(' ... ')
+    (attributes.dig(:highlight) || {}).values.join(' ... ')
   end
 
   private
