@@ -355,10 +355,10 @@ class EsApplicationSearch
             batch.each_with_index do |result, index|
               result.excerpt = es_search_invocation.results[index].highlights.gsub("...", "…")
             end
-          rescue Riddle::ResponseError => e
+          rescue StandardError => e
             # if we can't read a file we want to still show the search results
             Rails.logger.warn(e)
-            Honeybadger.notify(e)
+            Honeybadger.notify(e, context: args)
           end
         end
       end
