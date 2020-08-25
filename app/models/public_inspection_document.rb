@@ -70,13 +70,13 @@ class PublicInspectionDocument < ApplicationModel
             (
               SELECT id
               FROM public_inspection_issues
-              WHERE published_at >= #{SETTINGS['sphinx']['pil_index_since_date']}
+              WHERE published_at >= #{SETTINGS['elasticsearch']['pil_index_since_date']}
               ORDER BY publication_date DESC
               LIMIT 1
             )
           AND (
             publication_date IS NULL
-            OR publication_date > #{SETTINGS['sphinx']['pil_index_since_date']}
+            OR publication_date > #{SETTINGS['elasticsearch']['pil_index_since_date']}
           )
         SQL
       )
