@@ -51,7 +51,11 @@ module ElasticsearchIndexer
 
   def self.remove_deleted_entries
     deleted_entry_ids.each do |entry_id|
-      $entry_repository.delete(entry_id, refresh: false)
+      begin
+        $entry_repository.delete(entry_id, refresh: false)
+      rescue Elasticsearch::Transport::Transport::Errors::NotFound => e
+        Honeybadger.notify(e)
+      end
     end
 
     $entry_repository.refresh_index!

@@ -31,4 +31,11 @@ describe ElasticsearchIndexer do
     expect($entry_repository.find([entry.id]).first.send(:attributes).fetch(:title)).to eq('New Title')
   end
 
+  it "#remove_deleted_entries does not fail " do
+    entry = Factory(:entry, title: "Original Title")
+    entry.destroy!
+
+    expect{ ElasticsearchIndexer.remove_deleted_entries }.not_to raise_error
+  end
+
 end
