@@ -49,8 +49,9 @@ class AgencyName < ApplicationModel
                             FROM agency_name_assignments
                             WHERE agency_name_assignments.agency_name_id = #{id}")
         Entry.where(:id => self.entry_ids).update_all(:delta => true)
-        if self.entry_ids.present?
-          EntryChange.insert_all(self.entry_ids.map{|entry_id| {entry_id: entry_id} })
+        entry_ids_for_insertion = self.entry_ids - EntryChange.pluck(:entry_id)
+        if entry_ids_for_insertion.present?
+          EntryChange.insert_all(entry_ids_for_insertion.map{|entry_id| {entry_id: entry_id} })
         end
       end
 
