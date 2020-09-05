@@ -35,4 +35,9 @@ namespace :elasticsearch do
     ElasticsearchIndexer.assign_pi_index_alias
   end
 
+  desc "Clear entry changes"
+  task :delete_entry_changes => :environment do
+    ElasticsearchIndexer.delete_entry_changes
+  end
+
 end

@@ -15,16 +15,8 @@ module ElasticsearchIndexer
     INDICES.each {|i| i.update_mapping!}
   end
 
-  def self.resync_index_auditing
+  def self.delete_entry_changes
     EntryChange.delete_all
-    entry_change_collection = Entry.
-      where(delta: true).
-      pluck(:id).
-      map{|entry_id| {entry_id: entry_id}}
-    
-    if entry_change_collection.present?
-      EntryChange.insert_all(entry_change_collection)
-    end
   end
 
   BATCH_SIZE = 500

@@ -59,6 +59,16 @@ if cron_settings["late_content_notifications"]
   end
 end
 
+########################
+# ELASTICSEARCH
+########################
+# Reindex the entire content (collapsing delta indexes back into main index)
+every :sunday, at: '3AM' do
+  set :log, 'weekly_es_reindex'
+  rake "elasticsearch:reindex_entry_changes"
+  rake "elasticsearch:delete_entry_changes"
+end
+
 
 ########################
 # PUBLIC INSPECTION
