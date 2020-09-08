@@ -42,7 +42,8 @@ module ElasticsearchIndexer
   end
 
   def self.remove_deleted_entries
-    deleted_entry_ids.each do |entry_id|
+    entry_ids = deleted_entry_ids
+    entry_ids.each do |entry_id|
       begin
         $entry_repository.delete(entry_id, refresh: false)
       rescue Elasticsearch::Transport::Transport::Errors::NotFound => e
@@ -51,6 +52,7 @@ module ElasticsearchIndexer
     end
 
     $entry_repository.refresh_index!
+    EntryChange.where(entry_id: entry_ids).delete_all
   end
 
   def self.reindex_modified_entries
