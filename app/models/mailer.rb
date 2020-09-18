@@ -30,6 +30,7 @@ class Mailer < ActionMailer::Base
         jhemphill@gpo.gov jmarlor@gpo.gov eswidal@gpo.gov
         ofrtechgroup@gpo.gov jhmartinez@gpo.gov jfrankovic@gpo.gov
         dperrin@gpo.gov tellis@gpo.gov dzero@gpo.gov dbarfield@gpo.gov
+        katerina.horska@nara.gov
       )
     end
     sendgrid_recipients recipients
