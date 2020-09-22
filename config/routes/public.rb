@@ -46,6 +46,7 @@ FederalregisterApiCore::Application.routes.draw do
   match 'public-inspection' => 'public_inspection#index', :as => :public_inspection_documents, :via => :get
   match 'public-inspection/:year/:month/:day' => 'public_inspection#by_date', :as => :public_inspection_documents_by_date, :year => /\d{4}/, :month => /\d{1,2}/, :day => /\d{1,2}/, :via => :get
   match 'public-inspection/search' => 'public_inspection/search#show', :as => :public_inspection_search, :via => :get
+  match 'public_inspection_documents/:year/:month/:day/:document_number/:slug' => 'public_inspection_documents#show', :as => :public_inspection_document, :year => /\d{4}/, :month => /\d{1,2}/, :day => /\d{1,2}/, :slug => /[^\/]+/, :via => :get
 
   # FR Index
   match 'index' => 'indexes#select_year', :as => :index, :via => :get

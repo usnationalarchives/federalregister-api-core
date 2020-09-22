@@ -43,6 +43,16 @@ module RouteBuilder
     }
   end
 
+  add_route :public_inspection_document do |entry|
+    {
+      :year            => (entry.publication_date || (entry.filed_at || Date.current).to_date ).strftime('%Y'),
+      :month           => (entry.publication_date || (entry.filed_at || Date.current).to_date ).strftime('%m'),
+      :day             => (entry.publication_date || (entry.filed_at || Date.current).to_date ).strftime('%d'),
+      :document_number => entry.document_number,
+      :slug            => entry.slug
+    }
+  end
+
   add_static_route :entry_full_text do |entry|
     "/documents/full_text/html/#{entry.document_file_path}.html"
   end
