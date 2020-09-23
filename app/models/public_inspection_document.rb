@@ -7,6 +7,7 @@ class PublicInspectionDocument < ApplicationModel
                       :secret_access_key => Rails.application.secrets[:aws][:secret_access_key],
                       :s3_region => 'us-east-1'
                     },
+                    :s3_host_alias => SETTINGS['s3_host_aliases']['public_inspection'],
                     :s3_protocol => 'https',
                     :bucket => SETTINGS['s3_buckets']['public_inspection'],
                     :path => ":style_if_not_with_banner:document_number.pdf",
@@ -15,7 +16,8 @@ class PublicInspectionDocument < ApplicationModel
                       :with_banner => { :processors => [:permalink_banner_adder] }
                     },
                     :processors => [:permalink_banner_adder],
-                    :default_url => "missing.pdf"
+                    :default_url => "missing.pdf",
+                    :url => ':s3_alias_url'
   do_not_validate_attachment_file_type :pdf
 
   belongs_to :entry
