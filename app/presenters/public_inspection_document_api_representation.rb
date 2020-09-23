@@ -31,6 +31,12 @@ class PublicInspectionDocumentApiRepresentation < ApiRepresentation
     public_inspection_raw_text_url(document)
   }
   field(:num_pages)
+  field(:page_views, :select => [:document_number]) do |entry|
+    {
+      count:         PageViewCount.count_for(entry.document_number, PageViewType::PUBLIC_INSPECTION_DOCUMENT),
+      last_updated:  PageViewCount.last_updated(PageViewType::PUBLIC_INSPECTION_DOCUMENT),
+    }
+  end
   field(:publication_date)
   field(:type, :select => :granule_class) {|document| document.entry_type}
   field(:pdf_file_name)

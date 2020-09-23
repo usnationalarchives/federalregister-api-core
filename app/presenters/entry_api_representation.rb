@@ -122,8 +122,8 @@ class EntryApiRepresentation < ApiRepresentation
   field(:mods_url, :select => [:publication_date, :document_number]){|e| e.source_url(:mods)}
   field(:page_views, :select => [:document_number]) do |entry|
     {
-      count: DocumentPageViewCount.count_for(entry.document_number),
-      last_updated: DocumentPageViewCount.last_updated
+      count:        PageViewCount.count_for(entry.document_number, PageViewType::DOCUMENT),
+      last_updated: PageViewCount.last_updated(PageViewType::DOCUMENT)
     }
   end
   field(:page_length, :select => [:start_page, :end_page]) {|e| e.human_length }
