@@ -108,7 +108,7 @@ class PageViewCount
     if total_results(start_date, end_date) > 0
       if set == page_view_type.today_set
         # store a copy of the set each hour for internal analysis
-        $redis.zunionstore("doc_counts:#{Date.current.to_s(:iso)}:#{Time.current.hour}", [page_view_type.temp_set])
+        $redis.zunionstore("#{page_view_type.namespace}:#{Date.current.to_s(:iso)}:#{Time.current.hour}", [page_view_type.temp_set])
         $redis.rename(page_view_type.temp_set, set)
       else
         $redis.zunionstore(page_view_type.historical_set, [page_view_type.temp_set, page_view_type.historical_set])
@@ -116,7 +116,7 @@ class PageViewCount
       end
     end
 
-    $redis.set "doc_counts:current_as_of", current_time
+    $redis.set page_view_type.current_as_of, current_time
   end
 
   def move_today_to_yesterday
