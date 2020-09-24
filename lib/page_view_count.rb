@@ -149,7 +149,7 @@ class PageViewCount
 
       # ignore aggregate dimensions like "(other)"
       # and extract document_number
-      document_number = url =~ /^\/(articles|documents)\// ? url.split('/')[5] : nil
+      document_number = url =~ page_view_type.google_analytics_url_regex ? url.split('/')[5] : nil
 
       # only record page view data if we have a valid looking document number
       # (e.g. with a '-' in it)
