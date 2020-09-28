@@ -34,12 +34,7 @@ class ApiController < ApplicationController
       return
     end
 
-    begin
-      data = { :count => search.count, :description => search.summary }
-    rescue ThinkingSphinx::SyntaxError, ThinkingSphinx::ParseError
-      render_json_or_jsonp({:errors => {invalid: "Invalid search term"}}, :status => 400)
-      return
-    end
+    data = { :count => search.count, :description => search.summary }
 
     unless metadata_only == "1"
       # NOTE: /documents needs the select clause to be nested inside a SQL block
