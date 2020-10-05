@@ -21,7 +21,7 @@ class PageViewType < ActiveHash::Base
       identifier:     'public_inspection_document',
       cache_expiry_urls:  ['/api/v1/public-inspection-documents', '/public-inspection/'],
       current_as_of:  'public_inspection_doc_counts:current_as_of',
-      filter_expressions: ["^/(public_inspection_documents|public-inspection)/)"],
+      filter_expressions: ["^/(public_inspection_documents/|public-inspection/.*/.*/.*/.*/.*)"],
       google_analytics_url_regex: /^\/(public-inspection|public_inspection_documents)\/.*\/.*\/.*\/.*\/.*/,
       historical_set: "public_inspection_doc_counts:historical",
       namespace:       'public_inspection_doc_counts',
