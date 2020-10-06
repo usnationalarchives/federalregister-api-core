@@ -44,7 +44,7 @@ FederalregisterApiCore::Application.routes.draw do
   match 'articles/email-a-friend/:document_number' => 'entries/emails#create', :as => :entry_email, :via => :post
   match 'articles/email-a-friend/:document_number/delivered' => 'entries/emails#delivered', :as => :delivered_entry_email, :via => :get
   match 'public-inspection' => 'public_inspection#index', :as => :public_inspection_documents, :via => :get
-  match 'public-inspection/:year/:month/:day/:document_number/:slug' => 'public_inspection_documents#show', :as => :public_inspection_document, :year => /\d{4}/, :month => /\d{1,2}/, :day => /\d{1,2}/, :slug => /[^\/]+/, :via => :get
+  match 'public-inspection/:document_number/:slug' => 'public_inspection_documents#show', :as => :public_inspection_document, :slug => /[^\/]+/, :via => :get
   match 'public-inspection/:year/:month/:day' => 'public_inspection#by_date', :as => :public_inspection_documents_by_date, :year => /\d{4}/, :month => /\d{1,2}/, :day => /\d{1,2}/, :via => :get
   match 'public-inspection/search' => 'public_inspection/search#show', :as => :public_inspection_search, :via => :get
 

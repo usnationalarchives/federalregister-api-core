@@ -45,9 +45,6 @@ module RouteBuilder
 
   add_route :public_inspection_document do |entry|
     {
-      :year            => (entry.publication_date || (entry.filed_at || Date.current).to_date ).strftime('%Y'),
-      :month           => (entry.publication_date || (entry.filed_at || Date.current).to_date ).strftime('%m'),
-      :day             => (entry.publication_date || (entry.filed_at || Date.current).to_date ).strftime('%d'),
       :document_number => entry.document_number,
       :slug            => entry.slug
     }
