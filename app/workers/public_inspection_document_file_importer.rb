@@ -1,6 +1,7 @@
 class PublicInspectionDocumentFileImporter
   include Sidekiq::Worker
   include Sidekiq::Throttled::Worker
+  include CloudfrontUtils
 
   sidekiq_options :queue => :public_inspection, :retry => 0
 
@@ -21,6 +22,7 @@ class PublicInspectionDocumentFileImporter
     set_num_pages
     watermark_file_and_put_on_s3
     document.save!
+    send_cloudfront_invalidation
 
     clean_up_tempfile
     
@@ -94,5 +96,12 @@ class PublicInspectionDocumentFileImporter
 
   def mark_as_complete
     $redis.srem(redis_set, document_number)
+  end
+
+  def send_cloudfront_invalidation
+    create_invalidation(
+      SETTINGS['s3_buckets']['public_inspection'],
+      ["/#{document_number}.pdf"]
+    )
   end
 end

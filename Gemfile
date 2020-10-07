@@ -39,6 +39,7 @@ gem 'paperclip'
  # required by paperclip but unspecified version - this ensures a comptible version
 gem 'mime-types', '~> 1.25', '>= 1.25.1'
 gem 'aws-sdk-s3'
+gem 'aws-sdk-cloudfront'
 gem 'stevedore', '0.3.0'
 
 # fork of delynn/userstamp plugin
