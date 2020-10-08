@@ -6,19 +6,22 @@ module CloudfrontUtils
   class Client
     include Singleton
 
-    # See https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/Invalidation.html#invalidation-specifying-objects for documentation around criteria for paths
     # paths must begin with a slash and are case-sensitive
     def create_invalidation(subdomain, paths)
-      client.create_invalidation({
-        distribution_id: distribution_id(subdomain),
-        invalidation_batch: {
-          paths: { # required
-            quantity: paths.count,
-            items: paths,
+      begin
+        client.create_invalidation({
+          distribution_id: distribution_id(subdomain),
+          invalidation_batch: {
+            paths: { # required
+              quantity: paths.count,
+              items: paths,
+            },
+            caller_reference: caller_reference,
           },
-          caller_reference: caller_reference,
-        },
-      })
+        })
+      rescue StandardError => e
+        Honeybadger.notify(e, context: {subdomain: subdomain, paths: paths})
+      end
     end
 
     private
