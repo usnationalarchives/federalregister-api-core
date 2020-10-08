@@ -22,6 +22,7 @@ class Content::PublicInspectionImporter::CacheManager
 
   def manage_cache
     clear_cache if pi_documents.present?
+    purge_cloundfront
   end
 
   def clear_cache
@@ -63,5 +64,16 @@ class Content::PublicInspectionImporter::CacheManager
       #   date didn't change)
       purge_cache entry_path(pi_document).sub(/[^\/]+\z/, '')
     end
+
+  end
+
+  def purge_cloundfront
+    # purge cloudfront cache where PIL pdf changes were detected.
+    redis_set_name = "pil_document_numbers_for_cloudfront_expiry_#{issue.publication_date.to_s(:iso)}"
+    pil_doc_numbers = $redis.smembers(redis_set_name)
+    if pil_doc_numbers.present?
+      Sidekiq::Client.enqueue(CloudfrontPublicInspectionDocumentCacheInvalidator, pil_doc_numbers)
+    end
+    $redis.del(redis_set_name)
   end
 end

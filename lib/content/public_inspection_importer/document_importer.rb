@@ -21,6 +21,7 @@ class Content::PublicInspectionImporter::DocumentImporter
     #   to S3 has been successful.
     if api_doc.pdf_url? && api_doc.pdf_url != document.pdf_url
       pil_importer.enqueue_job(document.document_number, api_doc.pdf_url)
+      add_to_cloudfront_invalidation_set
     end
   end
 
@@ -37,6 +38,10 @@ class Content::PublicInspectionImporter::DocumentImporter
   end
 
   private
+
+  def add_to_cloudfront_invalidation_set
+    $redis.sadd("pil_document_numbers_for_cloudfront_expiry_#{pil_importer.issue.publication_date.to_s(:iso)}", document.document_number)
+  end
 
   def document
     @document ||= PublicInspectionDocument.
