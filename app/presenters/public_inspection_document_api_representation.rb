@@ -42,6 +42,12 @@ class PublicInspectionDocumentApiRepresentation < ApiRepresentation
     end
   end
   field(:publication_date)
+  field(:last_public_inspection_issue, :select => :public_inspection_issues) do |document|
+    issue_dates = document.public_inspection_issues.pluck(:publication_date)
+    if issue_dates.present?
+      issue_dates.sort.last.to_s(:iso)
+    end
+  end
   field(:type, :select => :granule_class) {|document| document.entry_type}
   field(:pdf_file_name)
   field(:pdf_file_size)
