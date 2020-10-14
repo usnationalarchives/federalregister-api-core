@@ -1,5 +1,6 @@
 class Admin::AgenciesController < AdminController
   layout 'admin_bootstrap'
+  include CloudfrontUtils
 
   def index
     respond_to do |wants|
@@ -61,6 +62,7 @@ class Admin::AgenciesController < AdminController
            }
         )
       end
+      send_cloudfront_invalidation!
       flash[:notice] = "Successfully saved."
       redirect_to admin_agencies_url
     else
@@ -86,5 +88,14 @@ class Admin::AgenciesController < AdminController
 
   def agency_params
     params.require(:agency).permit(:name, :short_name, :slug, :pseudonym, :parent_id, :description, :url, :logo)
+  end
+
+  def send_cloudfront_invalidation!
+    if @agency.logo.present?
+      create_invalidation(
+        SETTINGS['s3_host_aliases']['agency_logos'],
+        @agency.s3_attachment_paths
+      )
+    end
   end
 end

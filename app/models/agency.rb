@@ -126,4 +126,12 @@ class Agency < ApplicationModel
     self.entries_count = self.entries.count
     self.save
   end
+
+  def s3_attachment_paths
+    if logo.present?
+      logo.styles.map{|style_metadata| "/#{style_metadata.last.attachment.path}" }
+    else
+      []
+    end
+  end
 end
