@@ -110,6 +110,9 @@ class PageViewCount
         # store a copy of the set each hour for internal analysis
         $redis.zunionstore("#{page_view_type.namespace}:#{Date.current.to_s(:iso)}:#{Time.current.hour}", [page_view_type.temp_set])
         $redis.rename(page_view_type.temp_set, set)
+      elsif set == page_view_type.yesterday_set
+        $redis.rename(page_view_type.temp_set, set)
+        $redis.del(page_view_type.temp_set)
       else
         $redis.zunionstore(page_view_type.historical_set, [page_view_type.temp_set, page_view_type.historical_set])
         $redis.del(page_view_type.temp_set)
