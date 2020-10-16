@@ -105,5 +105,10 @@ namespace :content do
         puts "Current blacklist: #{$redis.smembers(Content::PublicInspectionImporter::BLACKLIST_KEY)}"
       end
     end
+
+    task :destroy_published_agency_letters => :environment do
+      PilAgencyLetterJanitor.new.perform
+    end
+
   end
 end

@@ -30,6 +30,7 @@ class PublicInspectionDocument < ApplicationModel
   has_many :agency_assignments, -> { order("agency_assignments.position") }, :as => :assignable, :dependent => :destroy
   has_many :agencies, -> { order("agency_assignments.position") }, :through => :agency_assignments, :extend => Agency::AssociationExtensions
   has_many :docket_numbers, -> { order("docket_numbers.position") }, :as => :assignable, :dependent => :destroy
+  has_many :pil_agency_letters, :dependent => :destroy
 
   file_attribute(:raw_text)  {"#{FileSystemPathManager.data_file_path}/public_inspection/raw/#{document_file_path}.txt"}
   before_save :persist_document_file_path

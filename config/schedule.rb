@@ -82,6 +82,10 @@ if cron_settings["public_inspection"]
   end
 end
 
+every 1.day, at: '12:01 am' do
+  rake 'content:public_inspection:destroy_published_agency_letters'
+end
+
 
 ########################
 # GPO IMAGE IMPORTS

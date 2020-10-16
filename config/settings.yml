@@ -57,8 +57,11 @@ test:
     entry_index_shards: <%= ENV.fetch('ENTRY_INDEX_SHARDS', 1) %>
     public_inspection_document_index_shards: <%= ENV.fetch('PUBLIC_INSPECTION_DOCUMENT_INDEX_SHARDS', 1) %>
   s3_buckets:
+    public_inspection: public-inspection.example.org
     zipped_eps_images: XXXXXXXXXXXXXXXXXXXXXXX
     # lede_photos: lede-photos.example.org
+  s3_host_aliases:
+    public_inspection: public-inspection.example.org
 
 development:
   <<: *shared

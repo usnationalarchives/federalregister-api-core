@@ -45,6 +45,7 @@ FederalregisterApiCore::Application.routes.draw do
         get :unprocessed
       end
     end
+    resources :pil_agency_letters, :only => [:index, :create, :destroy]
     resources :presidential_documents, :only => [:index, :create, :show]
     resources :photo_candidates, :only => [:show, :info] do
       member do

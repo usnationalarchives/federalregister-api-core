@@ -26,4 +26,20 @@ describe PublicInspectionDocumentApiRepresentation do
       expect(result).to eq(nil)
     end
   end
+  context "#agency_letters" do
+    let(:pil_agency_letter) {PilAgencyLetter.new(id: 1, file_file_name: 'test_file.pdf', title: 'Test Agency Letter')}
+    let(:public_inspection_document) { FactoryGirl.build(:public_inspection_document, publication_date: Date.new(2099,10,15), pil_agency_letters: [pil_agency_letter]) }
+
+    it "shows the agency letter if the current date is less than the publication date" do
+      representation = PublicInspectionDocumentApiRepresentation.new(public_inspection_document)
+
+      result = representation.value(:agency_letters)
+      expect(result).to eq([
+        {
+          title: 'Test Agency Letter',
+          url: "https://public-inspection.example.org/pil_agency_letters/1/original.pdf",
+        }
+      ])
+    end
+  end
 end

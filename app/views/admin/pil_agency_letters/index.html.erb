@@ -1,0 +1,51 @@
+<% super_title 'PIL Agency Letters' %>
+
+<%= semantic_form_for @pil_agency_letter, :url => admin_pil_agency_letters_path, :method => :POST, :html => { :multipart => true } do |f| %>
+  <%= f.inputs do %>
+    <%= f.input :public_inspection_document,
+          label: 'PIL Document Number',
+          collection: PublicInspectionDocument.unpublished.map{|x| [x.document_number, x.id]} %>
+    <%= f.input :title %>
+    <%= f.input :file, label: 'File' %>
+  <% end %>
+  <%= f.actions do %>
+    <%= f.action :submit, :label => "Add Agency Letter", :button_html => { :class => "btn btn-success"} %>
+  <% end %>
+<% end %>
+
+<% if @pil_docs.present? %>
+  <table class="<%= table_css_class %> pil-agency-letters">
+    <thead>
+      <tr>
+        <th>PIL Document Number</th>
+        <th>Publication Date</th>
+        <th>Agency Letters</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @pil_docs.each do |doc| %>
+      <tr>
+        <td><%= doc.document_number %></td>
+        <td><%= doc.publication_date %></td>
+        <td>
+          <ul>
+            <% doc.pil_agency_letters.each do |agency_letter| %>
+              <li><%= link_to agency_letter.title, agency_letter.file.url %></li>
+            <% end %>
+          </ul>
+        </td>
+        <td>
+          <ul>
+            <% doc.pil_agency_letters.each do |agency_letter| %>
+              <li><%= link_to 'Delete', admin_pil_agency_letter_path(agency_letter), method: :delete, confirm: 'Are you sure you wish to delete this agency letter?' %></li>
+            <% end %>
+          </ul>
+        </td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  No agency letters have been created yet.
+<% end %>

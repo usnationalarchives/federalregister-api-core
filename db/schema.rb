@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_10_222943) do
+ActiveRecord::Schema.define(version: 2020_10_19_184015) do
 
   create_table "action_names", :force => true do |t|
     t.string   "name"
@@ -439,6 +439,16 @@ ActiveRecord::Schema.define(version: 2020_07_10_222943) do
     t.integer  "crop_height"
     t.integer  "crop_x"
     t.integer  "crop_y"
+  end
+
+  create_table "pil_agency_letters", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.integer "public_inspection_document_id"
+    t.string "file_file_name"
+    t.string "file_content_type"
+    t.bigint "file_file_size"
+    t.datetime "file_updated_at"
+    t.string "title"
+    t.index ["public_inspection_document_id"], name: "index_pil_agency_letters_on_public_inspection_document_id"
   end
 
   create_table "place_determinations", :force => true do |t|
