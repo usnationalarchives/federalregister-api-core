@@ -29,17 +29,11 @@ class PageViewCount
     $redis.del(page_view_type.temp_set)
     $redis.del(page_view_type.today_set)
 
-    # work through counts one year at a time
+    # work through counts one quarter at a time
     # so as to keep requests reasonable (otherwise risk 503s -
     # heavy lift on the GA side to calculate these counts)
-    (start_year..end_year).to_a.each do |year|
-      start_date = Date.new(year,1,1)
-      end_date = start_date.end_of_year
-
-      # don't include today (it has it's own calculation)
-      end_date = end_date - 1.day if year == Date.current.year
-
-      update_counts(start_date, end_date, page_view_type.historical_set)
+    date_ranges(start_year, end_year).each do |date_range|
+      update_counts(date_range.first, date_range.last, page_view_type.historical_set)
     end
 
     # update today's counts
@@ -197,4 +191,23 @@ class PageViewCount
       }
     ]
   end
+
+  def date_ranges(start_year, end_year)
+    (start_year..end_year).each_with_object([]) do |year, date_ranges|
+      quarters = [
+        (Date.new(year,1,1)..Date.new(year,3,31)),
+        (Date.new(year,4,1)..Date.new(year,6,30)),
+        (Date.new(year,7,1)..Date.new(year,9,30)),
+        (Date.new(year,10,1)..Date.new(year,12,31)),
+      ].each do |date_range|
+        if date_range.include? Date.current
+          # don't include today (it has it's own calculation)
+          date_ranges << (date_range.first..Date.current - 1.day)
+        elsif (date_range.first < Date.current)
+          date_ranges << date_range
+        end
+      end
+    end
+  end
+
 end

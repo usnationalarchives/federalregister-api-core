@@ -72,4 +72,20 @@ describe PageViewCount do
     end
   end
 
+  it "calculates periods correctly" do
+    Timecop.freeze(Time.local(2020, 10, 15, 10, 5, 0))
+    date_ranges = PageViewCount.new(PageViewType.first).send(:date_ranges,2019,2020)
+
+    expect(date_ranges).to eq([
+      Date.new(2019,1,1)..Date.new(2019,3,31),
+      Date.new(2019,4,1)..Date.new(2019,6,30),
+      Date.new(2019,7,1)..Date.new(2019,9,30),
+      Date.new(2019,10,1)..Date.new(2019,12,31),
+      Date.new(2020,1,1)..Date.new(2020,3,31),
+      Date.new(2020,4,1)..Date.new(2020,6,30),
+      Date.new(2020,7,1)..Date.new(2020,9,30),
+      Date.new(2020,10,1)..Date.new(2020,10,14),
+    ])
+  end
+
 end
