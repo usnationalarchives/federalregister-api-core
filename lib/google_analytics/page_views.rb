@@ -22,6 +22,8 @@ module GoogleAnalytics
         response = connection.post('v4/reports:batchGet') do |request|
           request.headers = auth.apply(request.headers)
           request.body = request_body(args)
+          request.options.open_timeout = 240
+          request.options.timeout = 240
         end
 
         request_end = Time.current
