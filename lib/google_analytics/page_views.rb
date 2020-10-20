@@ -1,6 +1,6 @@
 module GoogleAnalytics
   class PageViews < GoogleAnalytics::Base
-    RETRIES = 3
+    RETRIES = 6
     RETRY_DELAY = 30
 
     def counts(args = {})
