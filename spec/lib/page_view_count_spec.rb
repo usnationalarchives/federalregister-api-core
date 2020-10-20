@@ -1,9 +1,26 @@
 require 'spec_helper'
+require 'sidekiq/testing'
 
 describe PageViewCount do
   before(:each) do
     $redis = MockRedis.new
   end
+
+  let(:total_results) { 1 }
+  let(:page_views) {
+    {"reports"=>
+      [{"columnHeader"=>
+          {"dimensions"=>["ga:pagePath"],
+          "metricHeader"=>
+            {"metricHeaderEntries"=>[{"name"=>"ga:pageviews", "type"=>"INTEGER"}]}},
+        "data"=>
+          {"rows"=>
+            [{"dimensions"=>
+              ["/articles/2015/10/16/2015-25597/2015-edition-health-information-technology-health-it-certification-criteria-2015-edition-base"],
+              "metrics"=>[{"values"=>["8"]}]}],
+          "rowCount"=>26159},
+        "nextPageToken"=>"1"}]}
+  }
 
   # Sets time in the specs ex. '2011-04-12' '2pm'
   def set_time(iso_date, time_string)
@@ -11,22 +28,30 @@ describe PageViewCount do
     allow(Time).to receive(:current).and_return(Time.find_zone('EST').parse("#{iso_date} #{time_string}"))
   end
 
+  it "the PageViewHistoricalSetUpdater updates counts as expected" do
+    page_view_type = PageViewType::DOCUMENT
+    allow_any_instance_of(PageViewHistoricalSetUpdater).to receive(:total_results).and_return(total_results)
+    allow_any_instance_of(PageViewHistoricalSetUpdater).to receive(:page_views).and_return(page_views)
+    Sidekiq::Testing.inline! do
+      PageViewHistoricalSetUpdater.perform_async(
+        (Date.new(2010,1,1)).to_s(:iso),
+        Date.new(2010,3,31).to_s(:iso),
+        page_view_type.id
+      )
+      expect(PageViewCount.count_for('2015-25597', page_view_type)).to eq(8)
+      PageViewHistoricalSetUpdater.perform_async(
+        (Date.new(2010,4,1)).to_s(:iso),
+        Date.new(2010,6,30).to_s(:iso),
+        page_view_type.id
+      )
+      expect(PageViewCount.count_for('2015-25597', page_view_type)).to eq(16)
+    end
+
+  end
+
   it "#update_all updates document counts as expected" do
-    allow_any_instance_of(PageViewCount).to receive(:total_results).and_return(1)
-    allow_any_instance_of(PageViewCount).to receive(:page_views).and_return(
-      {"reports"=>
-        [{"columnHeader"=>
-           {"dimensions"=>["ga:pagePath"],
-            "metricHeader"=>
-             {"metricHeaderEntries"=>[{"name"=>"ga:pageviews", "type"=>"INTEGER"}]}},
-          "data"=>
-           {"rows"=>
-             [{"dimensions"=>
-                ["/articles/2015/10/16/2015-25597/2015-edition-health-information-technology-health-it-certification-criteria-2015-edition-base"],
-               "metrics"=>[{"values"=>["8"]}]}],
-            "rowCount"=>26159},
-          "nextPageToken"=>"1"}]}
-    )
+    allow_any_instance_of(PageViewCount).to receive(:total_results).and_return(total_results)
+    allow_any_instance_of(PageViewCount).to receive(:page_views).and_return(page_views)
     page_view_type = PageViewType::DOCUMENT
 
     set_time('2011-04-12', '2pm')
