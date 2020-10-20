@@ -2,7 +2,7 @@ module PageViewCountUtils
   extend Memoist
   PER_PAGE = 10000
 
-  def update_counts(start_date, end_date, set)
+  def update_counts(start_date, end_date, set, temp_set = page_view_type.temp_set)
     current_time = Time.current
     processed_results = 0
 
@@ -26,7 +26,7 @@ module PageViewCountUtils
       # increment our counts hash in redis
       $redis.pipelined do
         counts_by_document_number(results) do |document_number, visits|
-          $redis.zincrby(page_view_type.temp_set, visits, document_number)
+          $redis.zincrby(temp_set, visits, document_number)
         end
       end
 
@@ -37,14 +37,14 @@ module PageViewCountUtils
     if total_results(start_date, end_date) > 0
       if set == page_view_type.today_set
         # store a copy of the set each hour for internal analysis
-        $redis.zunionstore("#{page_view_type.namespace}:#{Date.current.to_s(:iso)}:#{Time.current.hour}", [page_view_type.temp_set])
-        $redis.rename(page_view_type.temp_set, set)
+        $redis.zunionstore("#{page_view_type.namespace}:#{Date.current.to_s(:iso)}:#{Time.current.hour}", [temp_set])
+        $redis.rename(temp_set, set)
       elsif set == page_view_type.yesterday_set
-        $redis.rename(page_view_type.temp_set, set)
-        $redis.del(page_view_type.temp_set)
+        $redis.rename(temp_set, set)
+        $redis.del(temp_set)
       else
-        $redis.zunionstore(page_view_type.historical_set, [page_view_type.temp_set, page_view_type.historical_set])
-        $redis.del(page_view_type.temp_set)
+        $redis.zunionstore(page_view_type.historical_set, [temp_set, page_view_type.historical_set])
+        $redis.del(temp_set)
       end
     end
 
