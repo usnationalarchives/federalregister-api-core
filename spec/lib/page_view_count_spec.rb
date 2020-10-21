@@ -50,6 +50,21 @@ describe PageViewCount do
   end
 
   it "#update_all updates document counts as expected" do
+    Timecop.freeze(Date.new(2020,10,19) )
+    page_view_type = PageViewType::DOCUMENT
+    allow_any_instance_of(PageViewHistoricalSetUpdater).to receive(:total_results).and_return(total_results)
+    allow_any_instance_of(PageViewHistoricalSetUpdater).to receive(:page_views).and_return(page_views)
+    allow_any_instance_of(PageViewCount).to receive(:total_results).and_return(total_results)
+    allow_any_instance_of(PageViewCount).to receive(:page_views).and_return(page_views)
+
+    Sidekiq::Testing.inline! do
+      PageViewCount.new(page_view_type).update_all
+    end
+
+    expect(PageViewCount.count_for('2015-25597', page_view_type)).to eq(360)
+  end
+
+  it "#update_counts_for_today updates document counts as expected" do
     allow_any_instance_of(PageViewCount).to receive(:total_results).and_return(total_results)
     allow_any_instance_of(PageViewCount).to receive(:page_views).and_return(page_views)
     page_view_type = PageViewType::DOCUMENT

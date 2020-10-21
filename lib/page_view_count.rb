@@ -32,7 +32,11 @@ class PageViewCount
     # so as to keep requests reasonable (otherwise risk 503s -
     # heavy lift on the GA side to calculate these counts)
     date_ranges(start_year, end_year).each do |date_range|
-      update_counts(date_range.first, date_range.last, page_view_type.historical_set)
+      PageViewHistoricalSetUpdater.perform_async(
+        date_range.first.to_s(:iso),
+        date_range.last.to_s(:iso),
+        page_view_type.id
+      )
     end
 
     # update today's counts
