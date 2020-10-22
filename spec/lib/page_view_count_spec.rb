@@ -50,7 +50,7 @@ describe PageViewCount do
   end
 
   it "#update_all updates document counts as expected" do
-    Timecop.freeze(Date.new(2020,10,19) )
+    Timecop.freeze(Time.local(2020, 10, 15, 10, 5, 0))
     page_view_type = PageViewType::DOCUMENT
     allow_any_instance_of(PageViewHistoricalSetUpdater).to receive(:total_results).and_return(total_results)
     allow_any_instance_of(PageViewHistoricalSetUpdater).to receive(:page_views).and_return(page_views)
@@ -61,7 +61,7 @@ describe PageViewCount do
       PageViewCount.new(page_view_type).update_all
     end
 
-    expect(PageViewCount.count_for('2015-25597', page_view_type)).to eq(360)
+    expect(PageViewCount.count_for('2015-25597', page_view_type)).to eq(344)
   end
 
   it "#update_counts_for_today updates document counts as expected" do
@@ -112,20 +112,36 @@ describe PageViewCount do
     end
   end
 
-  it "calculates periods correctly" do
-    Timecop.freeze(Time.local(2020, 10, 15, 10, 5, 0))
-    date_ranges = PageViewCount.new(PageViewType.first).send(:date_ranges,2019,2020)
+  context "#date_ranges calculates periods correctly" do
 
-    expect(date_ranges).to eq([
-      Date.new(2019,1,1)..Date.new(2019,3,31),
-      Date.new(2019,4,1)..Date.new(2019,6,30),
-      Date.new(2019,7,1)..Date.new(2019,9,30),
-      Date.new(2019,10,1)..Date.new(2019,12,31),
-      Date.new(2020,1,1)..Date.new(2020,3,31),
-      Date.new(2020,4,1)..Date.new(2020,6,30),
-      Date.new(2020,7,1)..Date.new(2020,9,30),
-      Date.new(2020,10,1)..Date.new(2020,10,14),
-    ])
+    it "calculates periods correctly" do
+      Timecop.freeze(Time.local(2020, 10, 15, 10, 5, 0))
+      date_ranges = PageViewCount.new(PageViewType.first).send(:date_ranges,2019,2020)
+
+      expect(date_ranges).to eq([
+        Date.new(2019,1,1)..Date.new(2019,3,31),
+        Date.new(2019,4,1)..Date.new(2019,6,30),
+        Date.new(2019,7,1)..Date.new(2019,9,30),
+        Date.new(2019,10,1)..Date.new(2019,12,31),
+        Date.new(2020,1,1)..Date.new(2020,3,31),
+        Date.new(2020,4,1)..Date.new(2020,6,30),
+        Date.new(2020,7,1)..Date.new(2020,9,30),
+        Date.new(2020,10,1)..Date.new(2020,10,14),
+      ])
+    end
+
+    it "does not include the first two quarters of 2010" do
+      date_ranges = PageViewCount.new(PageViewType.first).send(:date_ranges,2010,2011)
+
+      expect(date_ranges).to eq([
+        Date.new(2010,7,1)..Date.new(2010,9,30),
+        Date.new(2010,10,1)..Date.new(2010,12,31),
+        Date.new(2011,1,1)..Date.new(2011,3,31),
+        Date.new(2011,4,1)..Date.new(2011,6,30),
+        Date.new(2011,7,1)..Date.new(2011,9,30),
+        Date.new(2011,10,1)..Date.new(2011,12,31),
+      ])
+    end
   end
 
 end

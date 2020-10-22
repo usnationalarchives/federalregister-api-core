@@ -81,6 +81,7 @@ class PageViewCount
 
   attr_reader :page_view_type
 
+  GOOGLE_ANALYTICS_START_DATE = Date.new(2010,7,1)
   def date_ranges(start_year, end_year)
     (start_year..end_year).each_with_object([]) do |year, date_ranges|
       quarters = [
@@ -92,7 +93,7 @@ class PageViewCount
         if date_range.include? Date.current
           # don't include today (it has it's own calculation)
           date_ranges << (date_range.first..Date.current - 1.day)
-        elsif (date_range.first < Date.current)
+        elsif (date_range.first < Date.current) && (date_range.first >= GOOGLE_ANALYTICS_START_DATE)
           date_ranges << date_range
         end
       end
