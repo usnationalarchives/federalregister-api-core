@@ -130,7 +130,7 @@ group :test do
   gem 'timecop'
   gem 'mock_redis'
   gem 'vcr'
-  gem 'fakeweb'
+  gem 'webmock'
 end
 
 group :development do
