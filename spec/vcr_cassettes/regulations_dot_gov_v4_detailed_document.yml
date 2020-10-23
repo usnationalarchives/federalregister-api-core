@@ -1,0 +1,202 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api.regulations.gov/v4/documents/FRTIB_FRDOC_0001-0319?api_key=<API_KEY>
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.15.3
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: ''
+    headers:
+      Date:
+      - Fri, 23 Oct 2020 19:08:32 GMT
+      Content-Type:
+      - application/vnd.api+json;charset=utf-8
+      Content-Length:
+      - '2878'
+      Connection:
+      - keep-alive
+      X-Ratelimit-Limit:
+      - '1000'
+      X-Ratelimit-Remaining:
+      - '991'
+      Age:
+      - '0'
+      Via:
+      - https/1.1 api-umbrella (ApacheTrafficServer [cMsSf ])
+      X-Cache:
+      - MISS
+      Access-Control-Allow-Origin:
+      - "*"
+      Strict-Transport-Security:
+      - max-age=31536000; preload
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "data" : {
+            "id" : "FRTIB_FRDOC_0001-0319",
+            "type" : "documents",
+            "links" : {
+              "self" : "https://api.regulations.gov/v4/documents/FRTIB_FRDOC_0001-0319"
+            },
+            "attributes" : {
+              "additionalRins" : null,
+              "allowLateComments" : false,
+              "authorDate" : null,
+              "authors" : null,
+              "cfrPart" : "5 CFR Part 1631",
+              "commentEndDate" : "2020-11-24T04:59:59Z",
+              "commentStartDate" : "2020-10-22T04:00:00Z",
+              "effectiveDate" : null,
+              "exhibitLocation" : null,
+              "exhibitType" : null,
+              "frDocNum" : "2020-22330",
+              "frVolNum" : null,
+              "implementationDate" : null,
+              "media" : null,
+              "ombApproval" : null,
+              "paperLength" : 0,
+              "paperWidth" : 0,
+              "regWriterInstruction" : null,
+              "sourceCitation" : null,
+              "startEndPage" : null,
+              "subject" : "Courts, Freedom of Information, Government Employees",
+              "topics" : [ "Courts", "Freedom of Information", "Government Employees" ],
+              "address1" : null,
+              "address2" : null,
+              "agencyId" : "FRTIB",
+              "city" : null,
+              "category" : null,
+              "comment" : null,
+              "country" : null,
+              "displayProperties" : null,
+              "docAbstract" : null,
+              "docketId" : "FRTIB_FRDOC_0001",
+              "documentType" : "Rule",
+              "email" : null,
+              "fax" : null,
+              "field1" : null,
+              "field2" : null,
+              "fileFormats" : [ {
+                "fileUrl" : "https://downloads.regulations.gov/FRTIB_FRDOC_0001-0319/content.pdf",
+                "format" : "pdf",
+                "size" : 250314
+              }, {
+                "fileUrl" : "https://downloads.regulations.gov/FRTIB_FRDOC_0001-0319/content.htm",
+                "format" : "htm",
+                "size" : 18705
+              } ],
+              "firstName" : null,
+              "govAgency" : null,
+              "govAgencyType" : null,
+              "objectId" : "0900006484925e7e",
+              "lastName" : null,
+              "legacyId" : null,
+              "modifyDate" : "2020-10-22T11:55:08Z",
+              "organization" : null,
+              "originalDocumentId" : null,
+              "pageCount" : 0,
+              "phone" : null,
+              "postedDate" : "2020-10-22T04:00:00Z",
+              "postmarkDate" : null,
+              "reasonWithdrawn" : null,
+              "receiveDate" : "2020-10-22T04:00:00Z",
+              "restrictReason" : null,
+              "restrictReasonType" : null,
+              "stateProvinceRegion" : null,
+              "submitterRep" : null,
+              "submitterRepAddress" : null,
+              "submitterRepCityState" : null,
+              "subtype" : null,
+              "title" : "Availability of Records",
+              "trackingNbr" : null,
+              "withdrawn" : false,
+              "zip" : null,
+              "openForComment" : true
+            },
+            "relationships" : {
+              "attachments" : {
+                "links" : {
+                  "self" : "https://api.regulations.gov/v4/documents/FRTIB_FRDOC_0001-0319/relationships/attachments",
+                  "related" : "https://api.regulations.gov/v4/documents/FRTIB_FRDOC_0001-0319/attachments"
+                }
+              }
+            }
+          }
+        }
+  recorded_at: Fri, 23 Oct 2020 19:08:32 GMT
+- request:
+    method: get
+    uri: https://api.regulations.gov/v4/comments?api_key=<API_KEY>&filter%5BcommentOnId%5D=0900006484925e7e
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.15.3
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: ''
+    headers:
+      Date:
+      - Fri, 23 Oct 2020 19:08:33 GMT
+      Content-Type:
+      - application/vnd.api+json;charset=utf-8
+      Content-Length:
+      - '358'
+      Connection:
+      - keep-alive
+      X-Ratelimit-Limit:
+      - '1000'
+      X-Ratelimit-Remaining:
+      - '990'
+      Age:
+      - '0'
+      Via:
+      - https/1.1 api-umbrella (ApacheTrafficServer [cMsSf ])
+      X-Cache:
+      - MISS
+      Access-Control-Allow-Origin:
+      - "*"
+      Strict-Transport-Security:
+      - max-age=31536000; preload
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "data" : [ ],
+          "meta" : {
+            "aggregations" : {
+              "agencyId" : [ ],
+              "postedDate" : [ ]
+            },
+            "filters" : { },
+            "hasNextPage" : false,
+            "hasPreviousPage" : false,
+            "numberOfElements" : 0,
+            "pageNumber" : 1,
+            "pageSize" : 25,
+            "totalElements" : 0,
+            "totalPages" : 0,
+            "firstPage" : true,
+            "lastPage" : true
+          }
+        }
+  recorded_at: Fri, 23 Oct 2020 19:08:33 GMT
+recorded_with: VCR 6.0.0

@@ -1,0 +1,419 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api.regulations.gov/v4/comments?api_key=<API_KEY>&filter%5BcommentOnId%5D=0900006483a6cba3
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.15.3
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: ''
+    headers:
+      Date:
+      - Fri, 23 Oct 2020 19:08:34 GMT
+      Content-Type:
+      - application/vnd.api+json;charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      X-Ratelimit-Limit:
+      - '1000'
+      X-Ratelimit-Remaining:
+      - '989'
+      Age:
+      - '0'
+      Via:
+      - https/1.1 api-umbrella (ApacheTrafficServer [cMsSf ])
+      X-Cache:
+      - MISS
+      Access-Control-Allow-Origin:
+      - "*"
+      Strict-Transport-Security:
+      - max-age=31536000; preload
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "data" : [ {
+            "id" : "FAA-2018-1084-0418",
+            "type" : "comments",
+            "attributes" : {
+              "documentType" : "Public Submission",
+              "highlightedContent" : null,
+              "withdrawn" : false,
+              "agencyId" : "FAA",
+              "title" : "Comment from Jeramie Scott",
+              "postedDate" : "2019-03-18T04:00:00Z"
+            },
+            "links" : {
+              "self" : "https://api.regulations.gov/v4/comments/FAA-2018-1084-0418"
+            }
+          }, {
+            "id" : "FAA-2018-1084-0208",
+            "type" : "comments",
+            "attributes" : {
+              "documentType" : "Public Submission",
+              "highlightedContent" : null,
+              "withdrawn" : false,
+              "agencyId" : "FAA",
+              "title" : "Comment from Michael Giovagnoni",
+              "postedDate" : "2019-02-19T05:00:00Z"
+            },
+            "links" : {
+              "self" : "https://api.regulations.gov/v4/comments/FAA-2018-1084-0208"
+            }
+          }, {
+            "id" : "FAA-2018-1084-0189",
+            "type" : "comments",
+            "attributes" : {
+              "documentType" : "Public Submission",
+              "highlightedContent" : null,
+              "withdrawn" : false,
+              "agencyId" : "FAA",
+              "title" : "Comment from Jack Ferland",
+              "postedDate" : "2019-02-19T05:00:00Z"
+            },
+            "links" : {
+              "self" : "https://api.regulations.gov/v4/comments/FAA-2018-1084-0189"
+            }
+          }, {
+            "id" : "FAA-2018-1084-0186",
+            "type" : "comments",
+            "attributes" : {
+              "documentType" : "Public Submission",
+              "highlightedContent" : null,
+              "withdrawn" : false,
+              "agencyId" : "FAA",
+              "title" : "Comment from James Butler",
+              "postedDate" : "2019-02-19T05:00:00Z"
+            },
+            "links" : {
+              "self" : "https://api.regulations.gov/v4/comments/FAA-2018-1084-0186"
+            }
+          }, {
+            "id" : "FAA-2018-1084-0130",
+            "type" : "comments",
+            "attributes" : {
+              "documentType" : "Public Submission",
+              "highlightedContent" : null,
+              "withdrawn" : false,
+              "agencyId" : "FAA",
+              "title" : "Comment from Hiram Roldan",
+              "postedDate" : "2019-02-19T05:00:00Z"
+            },
+            "links" : {
+              "self" : "https://api.regulations.gov/v4/comments/FAA-2018-1084-0130"
+            }
+          }, {
+            "id" : "FAA-2018-1084-0139",
+            "type" : "comments",
+            "attributes" : {
+              "documentType" : "Public Submission",
+              "highlightedContent" : null,
+              "withdrawn" : false,
+              "agencyId" : "FAA",
+              "title" : "Comment from Randy Warkentin",
+              "postedDate" : "2019-02-19T05:00:00Z"
+            },
+            "links" : {
+              "self" : "https://api.regulations.gov/v4/comments/FAA-2018-1084-0139"
+            }
+          }, {
+            "id" : "FAA-2018-1084-0227",
+            "type" : "comments",
+            "attributes" : {
+              "documentType" : "Public Submission",
+              "highlightedContent" : null,
+              "withdrawn" : false,
+              "agencyId" : "FAA",
+              "title" : "Comment from Michael Giovagnoni",
+              "postedDate" : "2019-02-19T05:00:00Z"
+            },
+            "links" : {
+              "self" : "https://api.regulations.gov/v4/comments/FAA-2018-1084-0227"
+            }
+          }, {
+            "id" : "FAA-2018-1084-0111",
+            "type" : "comments",
+            "attributes" : {
+              "documentType" : "Public Submission",
+              "highlightedContent" : null,
+              "withdrawn" : false,
+              "agencyId" : "FAA",
+              "title" : "Comment from Paul Braun",
+              "postedDate" : "2019-02-19T05:00:00Z"
+            },
+            "links" : {
+              "self" : "https://api.regulations.gov/v4/comments/FAA-2018-1084-0111"
+            }
+          }, {
+            "id" : "FAA-2018-1084-0212",
+            "type" : "comments",
+            "attributes" : {
+              "documentType" : "Public Submission",
+              "highlightedContent" : null,
+              "withdrawn" : false,
+              "agencyId" : "FAA",
+              "title" : "Comment from Ronald Gaspard",
+              "postedDate" : "2019-02-19T05:00:00Z"
+            },
+            "links" : {
+              "self" : "https://api.regulations.gov/v4/comments/FAA-2018-1084-0212"
+            }
+          }, {
+            "id" : "FAA-2018-1084-0281",
+            "type" : "comments",
+            "attributes" : {
+              "documentType" : "Public Submission",
+              "highlightedContent" : null,
+              "withdrawn" : false,
+              "agencyId" : "FAA",
+              "title" : "Comment from Al Turner",
+              "postedDate" : "2019-02-19T05:00:00Z"
+            },
+            "links" : {
+              "self" : "https://api.regulations.gov/v4/comments/FAA-2018-1084-0281"
+            }
+          }, {
+            "id" : "FAA-2018-1084-0315",
+            "type" : "comments",
+            "attributes" : {
+              "documentType" : "Public Submission",
+              "highlightedContent" : null,
+              "withdrawn" : false,
+              "agencyId" : "FAA",
+              "title" : "Comment from Gordon Mano",
+              "postedDate" : "2019-02-19T05:00:00Z"
+            },
+            "links" : {
+              "self" : "https://api.regulations.gov/v4/comments/FAA-2018-1084-0315"
+            }
+          }, {
+            "id" : "FAA-2018-1084-0310",
+            "type" : "comments",
+            "attributes" : {
+              "documentType" : "Public Submission",
+              "highlightedContent" : null,
+              "withdrawn" : false,
+              "agencyId" : "FAA",
+              "title" : "Comment from Benjamin Love",
+              "postedDate" : "2019-02-19T05:00:00Z"
+            },
+            "links" : {
+              "self" : "https://api.regulations.gov/v4/comments/FAA-2018-1084-0310"
+            }
+          }, {
+            "id" : "FAA-2018-1084-0119",
+            "type" : "comments",
+            "attributes" : {
+              "documentType" : "Public Submission",
+              "highlightedContent" : null,
+              "withdrawn" : false,
+              "agencyId" : "FAA",
+              "title" : "Comment from Nhan Phu Pham",
+              "postedDate" : "2019-02-19T05:00:00Z"
+            },
+            "links" : {
+              "self" : "https://api.regulations.gov/v4/comments/FAA-2018-1084-0119"
+            }
+          }, {
+            "id" : "FAA-2018-1084-0299",
+            "type" : "comments",
+            "attributes" : {
+              "documentType" : "Public Submission",
+              "highlightedContent" : null,
+              "withdrawn" : false,
+              "agencyId" : "FAA",
+              "title" : "Comment from Drew Kedzie",
+              "postedDate" : "2019-02-19T05:00:00Z"
+            },
+            "links" : {
+              "self" : "https://api.regulations.gov/v4/comments/FAA-2018-1084-0299"
+            }
+          }, {
+            "id" : "FAA-2018-1084-0295",
+            "type" : "comments",
+            "attributes" : {
+              "documentType" : "Public Submission",
+              "highlightedContent" : null,
+              "withdrawn" : false,
+              "agencyId" : "FAA",
+              "title" : "Comment from Matt Lee",
+              "postedDate" : "2019-02-19T05:00:00Z"
+            },
+            "links" : {
+              "self" : "https://api.regulations.gov/v4/comments/FAA-2018-1084-0295"
+            }
+          }, {
+            "id" : "FAA-2018-1084-0206",
+            "type" : "comments",
+            "attributes" : {
+              "documentType" : "Public Submission",
+              "highlightedContent" : null,
+              "withdrawn" : false,
+              "agencyId" : "FAA",
+              "title" : "Comment from Harry Anonymous",
+              "postedDate" : "2019-02-19T05:00:00Z"
+            },
+            "links" : {
+              "self" : "https://api.regulations.gov/v4/comments/FAA-2018-1084-0206"
+            }
+          }, {
+            "id" : "FAA-2018-1084-0280",
+            "type" : "comments",
+            "attributes" : {
+              "documentType" : "Public Submission",
+              "highlightedContent" : null,
+              "withdrawn" : false,
+              "agencyId" : "FAA",
+              "title" : "Comment from Shaun Hautly",
+              "postedDate" : "2019-02-19T05:00:00Z"
+            },
+            "links" : {
+              "self" : "https://api.regulations.gov/v4/comments/FAA-2018-1084-0280"
+            }
+          }, {
+            "id" : "FAA-2018-1084-0271",
+            "type" : "comments",
+            "attributes" : {
+              "documentType" : "Public Submission",
+              "highlightedContent" : null,
+              "withdrawn" : false,
+              "agencyId" : "FAA",
+              "title" : "Comment from Emilio Youmans",
+              "postedDate" : "2019-02-19T05:00:00Z"
+            },
+            "links" : {
+              "self" : "https://api.regulations.gov/v4/comments/FAA-2018-1084-0271"
+            }
+          }, {
+            "id" : "FAA-2018-1084-0243",
+            "type" : "comments",
+            "attributes" : {
+              "documentType" : "Public Submission",
+              "highlightedContent" : null,
+              "withdrawn" : false,
+              "agencyId" : "FAA",
+              "title" : "Comment from Joseph Orsolini",
+              "postedDate" : "2019-02-19T05:00:00Z"
+            },
+            "links" : {
+              "self" : "https://api.regulations.gov/v4/comments/FAA-2018-1084-0243"
+            }
+          }, {
+            "id" : "FAA-2018-1084-0156",
+            "type" : "comments",
+            "attributes" : {
+              "documentType" : "Public Submission",
+              "highlightedContent" : null,
+              "withdrawn" : false,
+              "agencyId" : "FAA",
+              "title" : "Comment from Christopher Henning",
+              "postedDate" : "2019-02-19T05:00:00Z"
+            },
+            "links" : {
+              "self" : "https://api.regulations.gov/v4/comments/FAA-2018-1084-0156"
+            }
+          }, {
+            "id" : "FAA-2018-1084-0137",
+            "type" : "comments",
+            "attributes" : {
+              "documentType" : "Public Submission",
+              "highlightedContent" : null,
+              "withdrawn" : false,
+              "agencyId" : "FAA",
+              "title" : "Comment from jun pena",
+              "postedDate" : "2019-02-19T05:00:00Z"
+            },
+            "links" : {
+              "self" : "https://api.regulations.gov/v4/comments/FAA-2018-1084-0137"
+            }
+          }, {
+            "id" : "FAA-2018-1084-0234",
+            "type" : "comments",
+            "attributes" : {
+              "documentType" : "Public Submission",
+              "highlightedContent" : null,
+              "withdrawn" : false,
+              "agencyId" : "FAA",
+              "title" : "Comment from William Hoenstine",
+              "postedDate" : "2019-02-19T05:00:00Z"
+            },
+            "links" : {
+              "self" : "https://api.regulations.gov/v4/comments/FAA-2018-1084-0234"
+            }
+          }, {
+            "id" : "FAA-2018-1084-0211",
+            "type" : "comments",
+            "attributes" : {
+              "documentType" : "Public Submission",
+              "highlightedContent" : null,
+              "withdrawn" : false,
+              "agencyId" : "FAA",
+              "title" : "Comment from David Hartwig",
+              "postedDate" : "2019-02-19T05:00:00Z"
+            },
+            "links" : {
+              "self" : "https://api.regulations.gov/v4/comments/FAA-2018-1084-0211"
+            }
+          }, {
+            "id" : "FAA-2018-1084-0217",
+            "type" : "comments",
+            "attributes" : {
+              "documentType" : "Public Submission",
+              "highlightedContent" : null,
+              "withdrawn" : false,
+              "agencyId" : "FAA",
+              "title" : "Comment from Lauren Robison",
+              "postedDate" : "2019-02-19T05:00:00Z"
+            },
+            "links" : {
+              "self" : "https://api.regulations.gov/v4/comments/FAA-2018-1084-0217"
+            }
+          }, {
+            "id" : "FAA-2018-1084-0209",
+            "type" : "comments",
+            "attributes" : {
+              "documentType" : "Public Submission",
+              "highlightedContent" : null,
+              "withdrawn" : false,
+              "agencyId" : "FAA",
+              "title" : "Comment from Ernest Vaupel",
+              "postedDate" : "2019-02-19T05:00:00Z"
+            },
+            "links" : {
+              "self" : "https://api.regulations.gov/v4/comments/FAA-2018-1084-0209"
+            }
+          } ],
+          "meta" : {
+            "aggregations" : {
+              "agencyId" : [ {
+                "docCount" : 418,
+                "value" : "FAA"
+              } ],
+              "postedDate" : [ ]
+            },
+            "filters" : { },
+            "hasNextPage" : true,
+            "hasPreviousPage" : false,
+            "numberOfElements" : 25,
+            "pageNumber" : 1,
+            "pageSize" : 25,
+            "totalElements" : 418,
+            "totalPages" : 17,
+            "firstPage" : true,
+            "lastPage" : false
+          }
+        }
+  recorded_at: Fri, 23 Oct 2020 19:08:34 GMT
+recorded_with: VCR 6.0.0
