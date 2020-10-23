@@ -460,7 +460,7 @@ GEM
     uglifier (4.2.0)
       execjs (>= 0.3.0, < 3)
     unicode-display_width (1.6.1)
-    vcr (2.6.0)
+    vcr (6.0.0)
     vegas (0.1.11)
       rack (>= 1.0.0)
     webmock (3.9.3)
