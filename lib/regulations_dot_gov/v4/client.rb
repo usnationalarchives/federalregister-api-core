@@ -34,6 +34,24 @@ class RegulationsDotGov::V4::Client
     RegulationsDotGov::V4::CommentCollection.new(data)
   end
 
+  def find_docket(docket_id)
+    response = connection.get(
+      "dockets/#{docket_id}",
+      'api_key'             => api_key
+    )
+    data = JSON.parse(response.body).fetch('data')
+    RegulationsDotGov::V4::Docket.new(data)
+  end
+
+  def find_documents_by_docket(docket_id)
+    response = connection.get(
+      'documents',
+      'filter[docketId]' => docket_id,
+      'api_key'          => api_key
+    )
+    JSON.parse(response.body)
+  end
+
   private
 
   attr_reader :logger
