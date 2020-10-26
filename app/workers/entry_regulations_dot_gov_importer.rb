@@ -35,7 +35,7 @@ class EntryRegulationsDotGovImporter
   end
 
   def regulations_dot_gov_document_id
-    regulationsdotgov_document ? regulationsdotgov_document.try(:document_id) : entry.document_id
+    regulationsdotgov_document ? regulationsdotgov_document.try(:document_id) : entry.regulations_dot_gov_document_id
   end
 
   def regulationsdotgov_url
