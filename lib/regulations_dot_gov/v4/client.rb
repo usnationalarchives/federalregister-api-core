@@ -6,7 +6,7 @@ class RegulationsDotGov::V4::Client
 
   def find_detailed_document(regulations_dot_gov_id)
     response = connection.get(
-      "v4/documents/#{regulations_dot_gov_id}",
+      "documents/#{regulations_dot_gov_id}",
       'api_key'          => api_key
     )
     data = JSON.parse(response.body).fetch('data')
@@ -15,7 +15,7 @@ class RegulationsDotGov::V4::Client
 
   def find_basic_document(document_number)
     response = connection.get(
-      'v4/documents',
+      'documents',
       'filter[frDocNum]' => document_number,
       'api_key'          => api_key
     )
@@ -26,7 +26,7 @@ class RegulationsDotGov::V4::Client
 
   def find_comments_by_comment_on_id(comment_on_id)
     response = connection.get(
-      'v4/comments',
+      'comments',
       'filter[commentOnId]' => comment_on_id,
       'api_key'             => api_key
     )
@@ -43,7 +43,7 @@ class RegulationsDotGov::V4::Client
   end
 
   def connection
-    Faraday.new(:url => 'https://api.regulations.gov') do |faraday|
+    Faraday.new(:url => 'https://api.regulations.gov/v4') do |faraday|
       faraday.response :logger, logger
       faraday.adapter  Faraday.default_adapter  # make requests with Net::HTTP
     end
