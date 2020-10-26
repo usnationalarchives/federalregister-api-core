@@ -37,7 +37,7 @@ class DocketImporter
 
     return if check_participating && non_participating_agency?(docket_number)
 
-    client = RegulationsDotGov::Client.new
+    client = regulations_dot_gov_client
     api_docket = client.find_docket(docket_number)
 
     return unless api_docket
@@ -63,6 +63,14 @@ class DocketImporter
   end
 
   private
+
+  def regulations_dot_gov_client
+    if SETTINGS['regulations_dot_gov']['use_v4_api']
+      RegulationsDotGov::V4::Client.new
+    else
+      RegulationsDotGov::Client.new
+    end
+  end
 
   def non_participating_agency?(docket_number)
     self.class.non_participating_agency_ids.any? do |str|

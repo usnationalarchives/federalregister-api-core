@@ -59,7 +59,11 @@ class EntryRegulationsDotGovImporter
   attr_reader :entry
 
   def regulationsdotgov_document
-    RegulationsDotGov::Client.new.find_by_document_number(entry.document_number)
+    if SETTINGS['regulations_dot_gov']['use_v4_api']
+      RegulationsDotGov::V4::Client.new.find_basic_document(entry.document_number)
+    else
+      RegulationsDotGov::Client.new.find_by_document_number(entry.document_number)
+    end
   end
   memoize :regulationsdotgov_document
 
