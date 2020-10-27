@@ -146,12 +146,6 @@ if cron_settings["regulations_dot_gov"]["comments"]
     set :log, 'regulations_dot_gov_comment_cache'
     rake 'regulations_dot_gov:warm_comment_form_cache'
   end
-
-  # Check for newly posted comments and notify users
-  every 1.day, at: '6PM' do
-    set :log, 'regulations_dot_gov_comments_posted'
-    rake 'regulations_dot_gov:notify_comment_publication'
-  end
 end
 
 
