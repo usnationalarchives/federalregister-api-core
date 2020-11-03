@@ -20,5 +20,6 @@ class PilAgencyLetter < ApplicationModel
     'application/pdf',
     'application/msword',
     'application/vnd.openxmlformats-officedocument.wordproces',
+    'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
   ]
 end
