@@ -36,7 +36,7 @@ describe PublicInspectionDocumentApiRepresentation do
       result = representation.value(:agency_letters)
       expect(result).to eq([
         {
-          title: 'Test Agency Letter',
+          title: 'test_file.pdf',
           url: "https://public-inspection.example.org/pil_agency_letters/1/original.pdf",
         }
       ])

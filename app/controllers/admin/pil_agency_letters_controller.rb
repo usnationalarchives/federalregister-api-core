@@ -9,6 +9,9 @@ class Admin::PilAgencyLettersController < AdminController
 
   def create
     @pil_agency_letter = PilAgencyLetter.new(pil_agency_letter_params)
+    if @pil_agency_letter.public_inspection_document.present? && pil_agency_letter_params[:file]
+      @pil_agency_letter.file.instance_write(:file_name, modified_file_name)
+    end
 
     if @pil_agency_letter.save
       load_pil_agency_letters
@@ -57,5 +60,20 @@ class Admin::PilAgencyLettersController < AdminController
     purge_cache public_inspection_document_path(@pil_agency_letter.public_inspection_document).
       sub(/[^\/]+\z/, '')
   end
+
+  def modified_file_name
+    public_inspection_document = @pil_agency_letter.public_inspection_document
+
+    if public_inspection_document.pil_agency_letters.count > 0
+      letter_suffix = public_inspection_document.pil_agency_letters.count + 1
+    end
+
+    "letter#{letter_suffix}_#{public_inspection_document.document_number}_#{public_inspection_document.agencies.map(&:short_name).join('-')}#{file_extension}"
+  end
+
+  def file_extension
+    File.extname(pil_agency_letter_params[:file].original_filename)
+  end
+
 
 end
