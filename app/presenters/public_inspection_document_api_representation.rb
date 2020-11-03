@@ -21,7 +21,7 @@ class PublicInspectionDocumentApiRepresentation < ApiRepresentation
   field(:agency_names, :include => {:agency_names => :agency}) {|e| e.agency_names.compact.map{|a| a.agency.try(:name) || a.name}}
   field(:agency_letters, :select => [:publication_date], :include => :pil_agency_letters ) do |document|
     if document.publication_date && (Date.current < document.publication_date)
-      document.pil_agency_letters.map{|x| {title: x.title, url: x.file.url} }
+      document.pil_agency_letters.map{|x| {title: x.file_file_name, url: x.file.url} }
     end
   end
   field(:docket_numbers, :include => :docket_numbers) {|document| document.docket_numbers.map(&:number)}

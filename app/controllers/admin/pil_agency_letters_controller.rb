@@ -40,7 +40,6 @@ class Admin::PilAgencyLettersController < AdminController
     params.require(:pil_agency_letter).permit(
       :file,
       :public_inspection_document_id,
-      :title
     )
   end
 

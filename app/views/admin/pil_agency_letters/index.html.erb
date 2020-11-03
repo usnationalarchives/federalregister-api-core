@@ -5,7 +5,6 @@
     <%= f.input :public_inspection_document,
           label: 'PIL Document Number',
           collection: PublicInspectionDocument.unpublished.map{|x| [x.document_number, x.id]} %>
-    <%= f.input :title %>
     <%= f.input :file, label: 'File' %>
   <% end %>
   <%= f.actions do %>
@@ -31,7 +30,7 @@
         <td>
           <ul>
             <% doc.pil_agency_letters.each do |agency_letter| %>
-              <li><%= link_to agency_letter.title, agency_letter.file.url %></li>
+              <li><%= link_to agency_letter.file_file_name, agency_letter.file.url %></li>
             <% end %>
           </ul>
         </td>

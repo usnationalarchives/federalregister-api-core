@@ -15,7 +15,7 @@ class PilAgencyLetter < ApplicationModel
                     :url => ':s3_alias_url'
 
   do_not_validate_attachment_file_type :file
-  validates_presence_of :public_inspection_document, :file, :title
+  validates_presence_of :public_inspection_document, :file
   validates_attachment_content_type :file, :content_type =>[
     'application/pdf',
     'application/msword',
