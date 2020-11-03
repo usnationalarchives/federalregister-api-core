@@ -11,7 +11,7 @@ class PilAgencyLetter < ApplicationModel
                     :s3_host_alias => SETTINGS['s3_host_aliases']['public_inspection'],
                     :s3_protocol => 'https',
                     :bucket => SETTINGS["s3_buckets"]["public_inspection"],
-                    :path => "pil_agency_letters/:id/:style.:extension",
+                    :path => "pil_agency_letters/:id/:filename",
                     :url => ':s3_alias_url'
 
   do_not_validate_attachment_file_type :file
