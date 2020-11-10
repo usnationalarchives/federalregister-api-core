@@ -421,10 +421,14 @@ ActiveRecord::Schema.define(version: 2020_10_19_184015) do
   add_index "issue_approvals", ["publication_date"], :name => "index_issue_approvals_on_publication_date"
 
   create_table "issues", :force => true do |t|
-    t.date     "publication_date"
+    t.date "publication_date"
     t.datetime "completed_at"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer "frontmatter_page_count"
+    t.integer "backmatter_page_count"
+    t.integer "volume"
+    t.integer "number"
   end
 
   create_table "lede_photos", :force => true do |t|
