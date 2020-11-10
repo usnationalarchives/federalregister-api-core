@@ -117,7 +117,7 @@ Rails.application.configure do
   smtp_settings = {
     :address        => "smtp.sendgrid.net",
     :port           => "587",
-    :domain         => "www.#{APP_HOST_NAME}",
+    :domain         => "fr2.criticaljuncture.org",
     :user_name      => Rails.application.secrets[:sendgrid][:username],
     :password       => Rails.application.secrets[:sendgrid][:password],
     :authentication => :plain
@@ -127,5 +127,5 @@ Rails.application.configure do
   config.action_mailer.smtp_settings   = smtp_settings
 
   Rails.application.routes.default_url_options = {:host => "fr2.criticaljuncture.org", :protocol => "https"}
-  config.action_mailer.default_url_options = {:host => "www.#{APP_HOST_NAME}"}
+  config.action_mailer.default_url_options = {:host => "fr2.criticaljuncture.org", :protocol => "https"}
 end
