@@ -37,17 +37,6 @@ RUN curl -sL https://deb.nodesource.com/setup_8.x | bash - &&\
 RUN npm install -g jshint
 
 
-#######################
-### SPHINX
-#######################
-
-WORKDIR /tmp
-RUN curl -O https://sphinxsearch.com/files/sphinx-3.2.1-f152e0b-linux-amd64.tar.gz &&\
-  tar xzvf sphinx-3.2.1-f152e0b-linux-amd64.tar.gz &&\
-  cp /tmp/sphinx-3.2.1/bin/* /usr/local/bin/
-RUN rm -Rf /tmp/sphinx-3.2.1 && rm /tmp/sphinx-3.2.1-f152e0b-linux-amd64.tar.gz
-
-
 ##################
 ### PRINCEXML
 ##################
