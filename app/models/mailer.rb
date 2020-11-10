@@ -14,8 +14,8 @@ class Mailer < ActionMailer::Base
     @edit_password_reset_url = edit_admin_password_reset_url(user.perishable_token)
 
     mail  to:         user.email,
-          subject:    "FR2 Admin Password Reset",
-          from:       "FR2 Admin <info@criticaljuncture.org>",
+          subject:    "Federal Register Admin Password Reset",
+          from:       "Federal Register Admin <no-reply@mail.federalregister.gov>",
           sent_on:    Time.current
   end
 
