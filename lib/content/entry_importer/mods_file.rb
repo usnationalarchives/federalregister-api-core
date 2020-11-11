@@ -67,9 +67,46 @@ class Content::EntryImporter::ModsFile
     document.css('extent[unit="pages"] end').first.try(:content)
   end
 
+  def frontmatter_page_count
+    convert_roman_to_arabic(document.css('relatedItem[type="constituent"]').first.at('extent end').try(:content))
+  end
+
+  def backmatter_page_count
+    convert_roman_to_arabic(document.css('part[type="Reader Aids"]').first.at('extent end').try(:content))
+  end
+
   memoize :volume
 
   def find_entry_node_by_document_number(document_number)
     document.xpath("./xmlns:relatedItem[@ID='id-#{document_number}']").first
+  end
+
+  def convert_roman_to_arabic(str)
+    str = str.upcase
+
+    roman_mapping = {
+      1000 => "M",
+      900 => "CM",
+      500 => "D",
+      400 => "CD",
+      100 => "C",
+      90 => "XC",
+      50 => "L",
+      40 => "XL",
+      10 => "X",
+      9 => "IX",
+      5 => "V",
+      4 => "IV",
+      1 => "I"
+    }
+
+    result = 0
+    roman_mapping.values.each do |roman|
+      while str.start_with?(roman)
+        result += roman_mapping.invert[roman]
+        str = str.slice(roman.length, str.length)
+      end
+    end
+    result
   end
 end

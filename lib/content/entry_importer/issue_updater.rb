@@ -6,8 +6,8 @@ class Content::EntryImporter::IssueUpdater
 
   def process
     @issue.update(
-      frontmatter_page_count: @modsFile.document_numbers.first.split("-")[1],
-      backmatter_page_count: @modsFile.document_numbers.last.split("-")[1],
+      frontmatter_page_count: @modsFile.frontmatter_page_count,
+      backmatter_page_count: @modsFile.backmatter_page_count,
       volume: @modsFile.volume,
       number: @modsFile.issue_number
     )
