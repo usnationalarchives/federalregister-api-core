@@ -33,6 +33,7 @@ class Entry < ApplicationModel
   belongs_to :action_name
   belongs_to :correction_of, :class_name => "Entry"
   belongs_to :docket, :foreign_key => :regulations_dot_gov_docket_id
+  belongs_to :issue_parts
 
   has_one :public_inspection_document
   has_one :entry_change
