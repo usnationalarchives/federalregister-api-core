@@ -89,7 +89,8 @@ module Content
         end
 
         remove_extraneous_documents(date, mods_doc_numbers)
-        create_issue(date)
+        issue = create_issue(date)
+        IssueUpdater.new(issue, ModsFile.new(date, options[:force_reload_mods])).process
       end
     end
 
@@ -137,6 +138,7 @@ module Content
       if Entry.published_on(date).count > 0
         issue = Issue.find_by_publication_date(date) || Issue.new(:publication_date => date)
         issue.save!
+        issue
       end
     end
 

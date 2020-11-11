@@ -59,6 +59,14 @@ class Content::EntryImporter::ModsFile
     document.css('issue').first.try(:content)
   end
 
+  def start_page
+    document.css('extent[unit="pages"] start').first.try(:content)
+  end
+
+  def end_page
+    document.css('extent[unit="pages"] end').first.try(:content)
+  end
+
   memoize :volume
 
   def find_entry_node_by_document_number(document_number)
