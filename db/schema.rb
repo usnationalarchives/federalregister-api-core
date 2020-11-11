@@ -235,23 +235,6 @@ ActiveRecord::Schema.define(version: 2020_10_19_184015) do
     t.string "regulations_dot_gov_document_id"
     t.integer "comment_count"
     t.integer "issue_part_id"
-    t.index ["citation"], name: "index_entries_on_citation"
-    t.index ["citing_entries_count"], name: "index_entries_on_citing_entries_count"
-    t.index ["correction_of_id"], name: "index_entries_on_correction_of"
-    t.index ["delta"], name: "index_entries_on_delta"
-    t.index ["document_number"], name: "index_entries_on_document_number"
-    t.index ["full_text_updated_at"], name: "index_entries_on_full_text_added_at"
-    t.index ["full_xml_updated_at"], name: "index_entries_on_full_xml_added_at"
-    t.index ["granule_class"], name: "index_entries_on_agency_id_and_granule_class"
-    t.index ["id", "publication_date"], name: "index_entries_on_id_and_publication_date"
-    t.index ["id"], name: "index_entries_on_agency_id_and_id"
-    t.index ["issue_part_id"], name: "index_entries_on_issue_part_id"
-    t.index ["presidential_document_number", "presidential_document_type_id"], name: "pres_doc_number_pres_doc_type_id", length: { presidential_document_number: 10 }
-    t.index ["presidential_document_type_id", "presidential_document_number"], name: "presidential_document_type_id", length: { presidential_document_number: 10 }
-    t.index ["publication_date"], name: "index_entries_on_agency_id_and_publication_date"
-    t.index ["raw_text_updated_at"], name: "index_entries_on_raw_text_updated_at"
-    t.index ["significant"], name: "index_entries_on_significant"
-    t.index ["volume", "start_page", "id"], name: "index_entries_on_volume_and_start_page_and_id"
   end
 
   add_index "entries", ["citation"], :name => "index_entries_on_citation"
@@ -268,6 +251,7 @@ ActiveRecord::Schema.define(version: 2020_10_19_184015) do
   add_index "entries", ["raw_text_updated_at"], :name => "index_entries_on_raw_text_updated_at"
   add_index "entries", ["significant"], :name => "index_entries_on_significant"
   add_index "entries", ["volume", "start_page", "id"], :name => "index_entries_on_volume_and_start_page_and_id"
+  add_index "entries", ["issue_part_id"], :name => "index_entries_on_issue_part_id"
 
   create_table "entry_cfr_references", :force => true do |t|
     t.integer "entry_id"
