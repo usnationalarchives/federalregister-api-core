@@ -188,54 +188,70 @@ ActiveRecord::Schema.define(version: 2020_10_19_184015) do
   end
 
   create_table "entries", :force => true do |t|
-    t.text     "title"
-    t.text     "abstract"
-    t.text     "contact"
-    t.text     "dates"
-    t.text     "action"
-    t.string   "part_name"
-    t.string   "citation"
-    t.string   "granule_class"
-    t.string   "document_number"
-    t.string   "toc_subject",                   :limit => 1000
-    t.string   "toc_doc",                       :limit => 1000
-    t.integer  "start_page"
-    t.integer  "end_page"
-    t.date     "publication_date"
+    t.text "title"
+    t.text "abstract"
+    t.text "contact"
+    t.text "dates"
+    t.text "action"
+    t.string "part_name"
+    t.string "citation"
+    t.string "granule_class"
+    t.string "document_number"
+    t.string "toc_subject", limit: 1000
+    t.string "toc_doc", limit: 1000
+    t.integer "start_page"
+    t.integer "end_page"
+    t.date "publication_date"
     t.datetime "places_determined_at"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "delta",                                         :default => true,  :null => false
-    t.string   "source_text_url"
-    t.string   "regulationsdotgov_url"
-    t.string   "comment_url"
+    t.boolean "delta", default: true, null: false
+    t.string "source_text_url"
+    t.string "regulationsdotgov_url"
+    t.string "comment_url"
     t.datetime "checked_regulationsdotgov_at"
-    t.integer  "volume"
+    t.integer "volume"
     t.datetime "full_xml_updated_at"
-    t.integer  "citing_entries_count",                          :default => 0
-    t.string   "document_file_path"
+    t.integer "citing_entries_count", default: 0
+    t.string "document_file_path"
     t.datetime "full_text_updated_at"
-    t.string   "curated_title"
-    t.string   "curated_abstract",              :limit => 500
-    t.integer  "lede_photo_id"
-    t.text     "lede_photo_candidates"
+    t.string "curated_title"
+    t.string "curated_abstract", limit: 500
+    t.integer "lede_photo_id"
+    t.text "lede_photo_candidates"
     t.datetime "raw_text_updated_at"
-    t.boolean  "significant",                                   :default => false
-    t.integer  "presidential_document_type_id"
-    t.date     "signing_date"
-    t.integer  "action_name_id"
-    t.integer  "correction_of_id"
-    t.string   "regulations_dot_gov_docket_id"
-    t.text     "executive_order_notes"
-    t.string   "fr_index_subject"
-    t.string   "fr_index_doc"
-    t.integer  "issue_number"
-    t.string   "comment_url_override"
-    t.string   "presidential_document_number"
-    t.index ["presidential_document_type_id", "presidential_document_number"], name: "presidential_document_type_id", length: { presidential_document_number: 10 }
+    t.boolean "significant", default: false
+    t.integer "presidential_document_type_id"
+    t.date "signing_date"
+    t.integer "action_name_id"
+    t.integer "correction_of_id"
+    t.string "regulations_dot_gov_docket_id"
+    t.text "executive_order_notes"
+    t.string "fr_index_subject"
+    t.string "fr_index_doc"
+    t.integer "issue_number"
+    t.string "comment_url_override"
+    t.string "presidential_document_number"
     t.string "regulations_dot_gov_document_id"
     t.integer "comment_count"
+    t.integer "issue_part_id"
+    t.index ["citation"], name: "index_entries_on_citation"
+    t.index ["citing_entries_count"], name: "index_entries_on_citing_entries_count"
+    t.index ["correction_of_id"], name: "index_entries_on_correction_of"
+    t.index ["delta"], name: "index_entries_on_delta"
+    t.index ["document_number"], name: "index_entries_on_document_number"
+    t.index ["full_text_updated_at"], name: "index_entries_on_full_text_added_at"
+    t.index ["full_xml_updated_at"], name: "index_entries_on_full_xml_added_at"
+    t.index ["granule_class"], name: "index_entries_on_agency_id_and_granule_class"
+    t.index ["id", "publication_date"], name: "index_entries_on_id_and_publication_date"
+    t.index ["id"], name: "index_entries_on_agency_id_and_id"
+    t.index ["issue_part_id"], name: "index_entries_on_issue_part_id"
     t.index ["presidential_document_number", "presidential_document_type_id"], name: "pres_doc_number_pres_doc_type_id", length: { presidential_document_number: 10 }
+    t.index ["presidential_document_type_id", "presidential_document_number"], name: "presidential_document_type_id", length: { presidential_document_number: 10 }
+    t.index ["publication_date"], name: "index_entries_on_agency_id_and_publication_date"
+    t.index ["raw_text_updated_at"], name: "index_entries_on_raw_text_updated_at"
+    t.index ["significant"], name: "index_entries_on_significant"
+    t.index ["volume", "start_page", "id"], name: "index_entries_on_volume_and_start_page_and_id"
   end
 
   add_index "entries", ["citation"], :name => "index_entries_on_citation"
@@ -419,6 +435,17 @@ ActiveRecord::Schema.define(version: 2020_10_19_184015) do
   end
 
   add_index "issue_approvals", ["publication_date"], :name => "index_issue_approvals_on_publication_date"
+
+  create_table "issue_parts", :force => true do |t|
+    t.integer "issue_id"
+    t.integer "start_page"
+    t.integer "end_page"
+    t.string "title"
+    t.string "initial_document_type"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["issue_id"], name: "index_issue_parts_on_issue_id"
+  end
 
   create_table "issues", :force => true do |t|
     t.date "publication_date"

@@ -1,0 +1,2 @@
+class IssuePart < ApplicationRecord
+end
