@@ -75,4 +75,15 @@ class Content::EntryImporter::BulkdataFile
 
     ret
   end
+
+  def issue_part_nodes
+    ret = []
+    document.css('NEWPART').each do |entry_node|
+      title = entry_node.css('PARTNO').first.try(:content)
+      start_page = entry_node.css('PRTPAGE').first.attributes["P"].value
+      last_page = entry_node.css('PRTPAGE').last.attributes["P"].value
+      ret << [title, start_page, last_page]
+    end
+    ret
+  end
 end

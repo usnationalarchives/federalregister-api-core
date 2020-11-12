@@ -90,7 +90,7 @@ module Content
 
         remove_extraneous_documents(date, mods_doc_numbers)
         issue = create_issue(date)
-        IssueUpdater.new(issue, ModsFile.new(date, options[:force_reload_mods])).process
+        IssueUpdater.new(issue, ModsFile.new(date, options[:force_reload_mods]), BulkdataFile.new(date, options[:force_reload_bulkdata])).process
       end
     end
 
