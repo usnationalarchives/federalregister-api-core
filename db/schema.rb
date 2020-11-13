@@ -440,6 +440,19 @@ ActiveRecord::Schema.define(version: 2020_10_19_184015) do
     t.integer "backmatter_page_count"
     t.integer "volume"
     t.integer "number"
+    t.integer "rule_count"
+    t.integer "proposed_rule_count"
+    t.integer "notice_count"
+    t.integer "presidential_document_count"
+    t.integer "unknown_document_count"
+    t.integer "correction_count"
+    t.integer "rule_page_count"
+    t.integer "proposed_rule_page_count"
+    t.integer "notice_page_count"
+    t.integer "presidential_document_page_count"
+    t.integer "unknown_document_page_count"
+    t.integer "correction_page_count"
+    t.integer "blank_page_count"
   end
 
   create_table "lede_photos", :force => true do |t|
