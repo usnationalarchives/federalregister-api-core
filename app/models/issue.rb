@@ -79,23 +79,27 @@ class Issue < ApplicationModel
   end
 
   def notice_count
-    entries.of_type('NOTICE').count
+    read_attribute(:notice_count) || entries.of_type('NOTICE').count
   end
 
   def proposed_rule_count
-    entries.of_type('PRORULE').count
+    read_attribute(:proposed_rule_count) || entries.of_type('PRORULE').count
   end
 
   def rule_count
-    entries.of_type('RULE').count
+    read_attribute(:rule_count) || entries.of_type('RULE').count
   end
 
   def presidential_documents_count
-    entries.of_type('PRESDOCU').count
+    read_attribute(:presidential_documents_count) || entries.of_type('PRESDOCU').count
   end
 
   def significant_entries_count
     Entry.search_klass.new(:conditions => {:publication_date => {:is => publication_date}, :significant => '1'}).count
+  end
+
+  def unknown_document_count
+    read_attribute(:unknown_documents_count) || entries.where.not(granule_class: ['NOTICE', 'PRORULE', 'RULE', 'PRESDOCU']).count
   end
 
   def total_pages

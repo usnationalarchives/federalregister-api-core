@@ -14,11 +14,17 @@ class Content::EntryImporter::IssueUpdater
   private
 
   def update_issue
+    entries = @issue.entries
     @issue.update(
       frontmatter_page_count: @modsFile.frontmatter_page_count,
       backmatter_page_count: @modsFile.backmatter_page_count,
       volume: @modsFile.volume,
-      number: @modsFile.issue_number
+      number: @modsFile.issue_number,
+      rule_count: entries.of_type('RULE').count,
+      proposed_rule_count: entries.of_type('PRORULE').count,
+      notice_count: entries.of_type('NOTICE').count,
+      presidential_document_count: entries.of_type('PRESDOCU').count,
+      unknown_document_count: entries.where.not(granule_class: ['NOTICE', 'PRORULE', 'RULE', 'PRESDOCU']).count
     )
   end
 
