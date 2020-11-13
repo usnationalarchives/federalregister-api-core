@@ -24,7 +24,8 @@ class Content::EntryImporter::IssueUpdater
       proposed_rule_count: entries.of_type('PRORULE').count,
       notice_count: entries.of_type('NOTICE').count,
       presidential_document_count: entries.of_type('PRESDOCU').count,
-      unknown_document_count: entries.where.not(granule_class: ['NOTICE', 'PRORULE', 'RULE', 'PRESDOCU']).count
+      unknown_document_count: entries.where.not(granule_class: ['NOTICE', 'PRORULE', 'RULE', 'PRESDOCU']).count,
+      correction_count: entries.select{ |x| x.document_number.start_with?('C1', 'C2', 'R1') }.length
     )
   end
 
