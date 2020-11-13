@@ -7,6 +7,7 @@ class Content::EntryImporter::IssueUpdater
 
   def process
     update_issue
+    delete_issue_parts
     create_issue_parts
   end
 
@@ -39,5 +40,9 @@ class Content::EntryImporter::IssueUpdater
     elsif entry.blank? || (entry.present? && !allowed_granule_classes.include?(entry.granule_class))
       "UNKNOWN"
     end
+  end
+
+  def delete_issue_parts
+    IssuePart.where(issue_id: @issue.id).delete_all # delete records so that they will be recreated if mods file got updated
   end
 end 
