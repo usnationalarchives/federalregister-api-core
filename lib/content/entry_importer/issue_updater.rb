@@ -21,7 +21,7 @@ class Content::EntryImporter::IssueUpdater
     entries_presidential_document = entries.select{ |x| x.granule_class == 'PRESDOCU' }
     entries_unknown = entries.select{ |x| !['NOTICE', 'PRORULE', 'RULE', 'PRESDOCU'].include?(x.granule_class) }
     entries_correction = entries.select{ |x| x.document_number.start_with?('C1', 'C2', 'R1') }
-    entries_blank_pages = @issue.page_count -
+    blank_pages = @issue.page_count -
                           @issue.entries_total_pages(entries_rule) -
                           @issue.entries_total_pages(entries_proposed_rule) -
                           @issue.entries_total_pages(entries_notice) -
@@ -48,7 +48,7 @@ class Content::EntryImporter::IssueUpdater
       presidential_document_page_count: @issue.entries_total_pages(entries_presidential_document),
       unknown_document_page_count: @issue.entries_total_pages(entries_unknown),
       correction_page_count: @issue.entries_total_pages(entries_correction),
-      blank_page_count: entries_blank_pages
+      blank_page_count: blank_pages
     )
   end
 
