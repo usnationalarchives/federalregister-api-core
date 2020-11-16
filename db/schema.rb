@@ -453,6 +453,8 @@ ActiveRecord::Schema.define(version: 2020_10_19_184015) do
     t.integer "unknown_document_page_count"
     t.integer "correction_page_count"
     t.integer "blank_page_count"
+    t.integer "start_page"
+    t.integer "end_page"
   end
 
   create_table "lede_photos", :force => true do |t|
