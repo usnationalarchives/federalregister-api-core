@@ -63,6 +63,36 @@ class Issue < ApplicationModel
     end
   end
 
+  def self.monthly_report(date=Date.today)
+    dates = (date.to_date.at_beginning_of_month..date.to_date.at_end_of_month).map{ |date| date.strftime("%F") }
+    report_name = "./tmp/issue-monthly-report-#{dates.first}.csv"
+
+    CSV.open(report_name, "wb") do |csv|
+      csv << ["Issue Number", "Issue Date", "First Page", "Last Page", "Prelim + RA", "Press Docs", "President", "Rules", "Proposed Rules", "Notices", "Skip", "Total"]
+
+      Issue.where(publication_date: dates).order(publication_date: "asc").each do |issue|
+        entries = issue.entries
+
+        csv << [
+          issue.number,
+          issue.publication_date,
+          entries.minimum(:start_page),
+          entries.maximum(:end_page),
+          issue.frontmatter_page_count.to_i + issue.backmatter_page_count.to_i,
+          issue.presidential_document_count.to_i,
+          issue.presidential_document_page_count.to_i,
+          issue.rule_page_count.to_i,
+          issue.proposed_rule_page_count.to_i,
+          issue.notice_page_count.to_i,
+          issue.unknown_document_page_count.to_i,
+          issue.frontmatter_page_count.to_i + issue.backmatter_page_count.to_i + issue.presidential_document_page_count.to_i + issue.rule_page_count.to_i + issue.notice_page_count.to_i
+        ]
+      end
+    end
+
+    created_report_file = open(report_name)
+  end
+
   def to_param
     publication_date.to_s(:db)
   end

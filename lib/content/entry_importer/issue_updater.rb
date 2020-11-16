@@ -39,7 +39,7 @@ class Content::EntryImporter::IssueUpdater
       presidential_document_page_count: @issue.entries_total_pages(entries_presidential_document).length,
       unknown_document_page_count: @issue.entries_total_pages(entries_unknown).length,
       correction_page_count: @issue.entries_total_pages(entries_correction).length,
-      blank_page_count: @issue.entries_total_pages(entries).length -
+      blank_page_count: @issue.total_pages -
                         @issue.entries_total_pages(entries_rule).length -
                         @issue.entries_total_pages(entries_proposed_rule).length -
                         @issue.entries_total_pages(entries_notice).length -
