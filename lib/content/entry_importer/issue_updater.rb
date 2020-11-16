@@ -1,4 +1,6 @@
 class Content::EntryImporter::IssueUpdater
+  ALLOWED_GRANULE_CLASSES = ['NOTICE', 'PRESDOCU', 'PRORULE', 'RULE']
+
   def initialize(issue, modsFile, bulkdataFile)
     @issue = issue
     @modsFile = modsFile
@@ -19,7 +21,7 @@ class Content::EntryImporter::IssueUpdater
     entries_proposed_rule = entries.select{ |x| x.granule_class == 'PRORULE' }
     entries_notice = entries.select{ |x| x.granule_class == 'NOTICE' }
     entries_presidential_document = entries.select{ |x| x.granule_class == 'PRESDOCU' }
-    entries_unknown = entries.select{ |x| !['NOTICE', 'PRORULE', 'RULE', 'PRESDOCU'].include?(x.granule_class) }
+    entries_unknown = entries.select{ |x| !ALLOWED_GRANULE_CLASSES.include?(x.granule_class) }
     entries_correction = entries.select{ |x| x.document_number.start_with?('C1', 'C2', 'R1') }
     blank_pages = @issue.page_count -
                           @issue.entries_total_pages(entries_rule) -
@@ -62,16 +64,14 @@ class Content::EntryImporter::IssueUpdater
   end
 
   def granule_class(entry)
-    allowed_granule_classes = ['NOTICE', 'PRESDOCU', 'PRORULE', 'RULE']
-
-    if entry.present? && allowed_granule_classes.include?(entry.granule_class)
+    if entry.present? && ALLOWED_GRANULE_CLASSES.include?(entry.granule_class)
       entry.granule_class
-    elsif entry.blank? || (entry.present? && !allowed_granule_classes.include?(entry.granule_class))
+    elsif entry.blank? || (entry.present? && !ALLOWED_GRANULE_CLASSES.include?(entry.granule_class))
       "UNKNOWN"
     end
   end
 
   def delete_issue_parts
-    IssuePart.where(issue_id: @issue.id).delete_all # delete records so that they will be recreated if mods file got updated
+    @issue.issue_parts.delete_all # delete records so that they will be recreated if mods file got updated
   end
 end 
