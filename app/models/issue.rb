@@ -107,7 +107,7 @@ class Issue < ApplicationModel
     entry_collection.each do |entry|
       array = array + (entry.start_page..entry.end_page).to_a
     end
-    array.uniq.length
+    array.uniq
   end
 
   def total_pages

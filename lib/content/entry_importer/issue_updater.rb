@@ -33,12 +33,18 @@ class Content::EntryImporter::IssueUpdater
       presidential_document_count: entries_presidential_document.length,
       unknown_document_count: entries_unknown.length,
       correction_count: entries_correction.length,
-      rule_page_count: @issue.entries_total_pages(entries_rule),
-      proposed_rule_page_count: @issue.entries_total_pages(entries_proposed_rule),
-      notice_page_count: @issue.entries_total_pages(entries_notice),
-      presidential_document_page_count: @issue.entries_total_pages(entries_presidential_document),
-      unknown_document_page_count: @issue.entries_total_pages(entries_unknown),
-      correction_page_count: @issue.entries_total_pages(entries_correction)
+      rule_page_count: @issue.entries_total_pages(entries_rule).length,
+      proposed_rule_page_count: @issue.entries_total_pages(entries_proposed_rule).length,
+      notice_page_count: @issue.entries_total_pages(entries_notice).length,
+      presidential_document_page_count: @issue.entries_total_pages(entries_presidential_document).length,
+      unknown_document_page_count: @issue.entries_total_pages(entries_unknown).length,
+      correction_page_count: @issue.entries_total_pages(entries_correction).length,
+      blank_page_count: @issue.entries_total_pages(entries).length -
+                        @issue.entries_total_pages(entries_rule).length -
+                        @issue.entries_total_pages(entries_proposed_rule).length -
+                        @issue.entries_total_pages(entries_notice).length -
+                        @issue.entries_total_pages(entries_presidential_document).length -
+                        @issue.entries_total_pages(entries_unknown).length
     )
   end
 
