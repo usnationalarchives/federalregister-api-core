@@ -21,8 +21,17 @@ class Content::EntryImporter::IssueUpdater
     entries_presidential_document = entries.select{ |x| x.granule_class == 'PRESDOCU' }
     entries_unknown = entries.select{ |x| !['NOTICE', 'PRORULE', 'RULE', 'PRESDOCU'].include?(x.granule_class) }
     entries_correction = entries.select{ |x| x.document_number.start_with?('C1', 'C2', 'R1') }
+    entries_blank_pages = @issue.total_pages -
+                          @issue.entries_total_pages(entries_rule).length -
+                          @issue.entries_total_pages(entries_proposed_rule).length -
+                          @issue.entries_total_pages(entries_notice).length -
+                          @issue.entries_total_pages(entries_presidential_document).length -
+                          @issue.entries_total_pages(entries_unknown).length
+    blank_pages = blank_pages + 1 if @modsFile.end_page.to_i.odd?
 
     @issue.update(
+      start_page: @modsFile.start_page,
+      end_page: @modsFile.end_page,
       frontmatter_page_count: @modsFile.frontmatter_page_count,
       backmatter_page_count: @modsFile.backmatter_page_count,
       volume: @modsFile.volume,
@@ -39,12 +48,7 @@ class Content::EntryImporter::IssueUpdater
       presidential_document_page_count: @issue.entries_total_pages(entries_presidential_document).length,
       unknown_document_page_count: @issue.entries_total_pages(entries_unknown).length,
       correction_page_count: @issue.entries_total_pages(entries_correction).length,
-      blank_page_count: @issue.total_pages -
-                        @issue.entries_total_pages(entries_rule).length -
-                        @issue.entries_total_pages(entries_proposed_rule).length -
-                        @issue.entries_total_pages(entries_notice).length -
-                        @issue.entries_total_pages(entries_presidential_document).length -
-                        @issue.entries_total_pages(entries_unknown).length
+      blank_page_count: entries_blank_pages
     )
   end
 
