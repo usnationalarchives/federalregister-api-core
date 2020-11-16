@@ -109,6 +109,10 @@ class Issue < ApplicationModel
     end
   end
 
+  def page_count
+    end_page - start_page + 1
+  end
+
   def notice_count
     read_attribute(:notice_count) || entries.of_type('NOTICE').count
   end
@@ -138,7 +142,7 @@ class Issue < ApplicationModel
     entry_collection.each do |entry|
       array = array + (entry.start_page..entry.end_page).to_a
     end
-    array.uniq
+    array.uniq.length
   end
 
   def total_pages
