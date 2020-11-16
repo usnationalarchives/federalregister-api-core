@@ -15,17 +15,30 @@ class Content::EntryImporter::IssueUpdater
 
   def update_issue
     entries = @issue.entries
+    entries_rule = entries.select{ |x| x.granule_class == 'RULE' }
+    entries_proposed_rule = entries.select{ |x| x.granule_class == 'PRORULE' }
+    entries_notice = entries.select{ |x| x.granule_class == 'NOTICE' }
+    entries_presidential_document = entries.select{ |x| x.granule_class == 'PRESDOCU' }
+    entries_unknown = entries.select{ |x| !['NOTICE', 'PRORULE', 'RULE', 'PRESDOCU'].include?(x.granule_class) }
+    entries_correction = entries.select{ |x| x.document_number.start_with?('C1', 'C2', 'R1') }
+
     @issue.update(
       frontmatter_page_count: @modsFile.frontmatter_page_count,
       backmatter_page_count: @modsFile.backmatter_page_count,
       volume: @modsFile.volume,
       number: @modsFile.issue_number,
-      rule_count: entries.of_type('RULE').count,
-      proposed_rule_count: entries.of_type('PRORULE').count,
-      notice_count: entries.of_type('NOTICE').count,
-      presidential_document_count: entries.of_type('PRESDOCU').count,
-      unknown_document_count: entries.where.not(granule_class: ['NOTICE', 'PRORULE', 'RULE', 'PRESDOCU']).count,
-      correction_count: entries.select{ |x| x.document_number.start_with?('C1', 'C2', 'R1') }.length
+      rule_count: entries_rule.length,
+      proposed_rule_count: entries_proposed_rule.length,
+      notice_count: entries_notice.length,
+      presidential_document_count: entries_presidential_document.length,
+      unknown_document_count: entries_unknown.length,
+      correction_count: entries_correction.length,
+      rule_page_count: @issue.entries_total_pages(entries_rule),
+      proposed_rule_page_count: @issue.entries_total_pages(entries_proposed_rule),
+      notice_page_count: @issue.entries_total_pages(entries_notice),
+      presidential_document_page_count: @issue.entries_total_pages(entries_presidential_document),
+      unknown_document_page_count: @issue.entries_total_pages(entries_unknown),
+      correction_page_count: @issue.entries_total_pages(entries_correction)
     )
   end
 

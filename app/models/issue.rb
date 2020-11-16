@@ -102,6 +102,14 @@ class Issue < ApplicationModel
     read_attribute(:unknown_documents_count) || entries.where.not(granule_class: ['NOTICE', 'PRORULE', 'RULE', 'PRESDOCU']).count
   end
 
+  def entries_total_pages(entry_collection)
+    array = Array.new
+    entry_collection.each do |entry|
+      array = array + (entry.start_page..entry.end_page).to_a
+    end
+    array.uniq.length
+  end
+
   def total_pages
     end_page = entries.maximum(:end_page)
     start_page = entries.minimum(:start_page)
