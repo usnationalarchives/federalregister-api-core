@@ -27,7 +27,6 @@ class Content::EntryImporter::IssueUpdater
                           @issue.entries_total_pages(entries_notice) -
                           @issue.entries_total_pages(entries_presidential_document) -
                           @issue.entries_total_pages(entries_unknown)
-    blank_pages = blank_pages + 1 if @modsFile.end_page.to_i.odd?
 
     @issue.update(
       start_page: @modsFile.start_page,
