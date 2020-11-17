@@ -23,7 +23,7 @@ class Content::EntryImporter::IssueUpdater
     entries_presidential_document = entries.select{ |x| x.granule_class == 'PRESDOCU' }
     entries_unknown = entries.select{ |x| !ALLOWED_GRANULE_CLASSES.include?(x.granule_class) }
     entries_correction = entries.select{ |x| x.document_number.start_with?('C1', 'C2', 'R1') }
-    blank_pages = @issue.page_count -
+    blank_pages = (@modsFile.end_page.to_i - @modsFile.start_page.to_i + 1) -
                           @issue.entries_total_pages(entries_rule) -
                           @issue.entries_total_pages(entries_proposed_rule) -
                           @issue.entries_total_pages(entries_notice) -
@@ -32,7 +32,7 @@ class Content::EntryImporter::IssueUpdater
 
     @issue.update(
       start_page: @modsFile.start_page,
-      end_page: @modsFile.end_page,
+      end_page: (@modsFile.end_page.to_i.odd? ? (@modsFile.end_page.to_i + 1) : @modsFile.end_page),
       frontmatter_page_count: @modsFile.frontmatter_page_count,
       backmatter_page_count: @modsFile.backmatter_page_count,
       volume: @modsFile.volume,
