@@ -32,7 +32,7 @@ class Content::EntryImporter::IssueUpdater
 
     @issue.update(
       start_page: @modsFile.start_page,
-      end_page: (@modsFile.end_page.to_i.odd? ? (@modsFile.end_page.to_i + 1) : @modsFile.end_page),
+      end_page: @modsFile.end_page,
       frontmatter_page_count: @modsFile.frontmatter_page_count,
       backmatter_page_count: @modsFile.backmatter_page_count,
       volume: @modsFile.volume,

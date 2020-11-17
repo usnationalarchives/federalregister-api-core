@@ -64,7 +64,8 @@ class Content::EntryImporter::ModsFile
   end
 
   def end_page
-    document.css('extent[unit="pages"] end').first.try(:content)
+    ep = document.css('extent[unit="pages"] end').first.try(:content)
+    ep.to_i.odd? ? (ep.to_i + 1).to_s : ep
   end
 
   def frontmatter_page_count

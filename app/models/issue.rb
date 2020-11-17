@@ -68,7 +68,29 @@ class Issue < ApplicationModel
     report_name = "./tmp/issue-monthly-report-#{dates.first}.csv"
 
     CSV.open(report_name, "wb") do |csv|
-      csv << ["Issue Number", "Issue Date", "First Page", "Last Page", "Prelim + RA", "Press Docs", "President", "Rules", "Proposed Rules", "Notices", "Skip", "Total"]
+      csv << [nil, nil, nil, nil, nil, "Document Counts", nil, nil, nil, nil, nil, "Page Counts"]
+      csv << [
+        "Issue Number",
+        "Issue Date",
+        "First Page",
+        "Last Page",
+        "Prelim + RA",
+        "President",
+        "Rules",
+        "Proposed Rules",
+        "Notices",
+        "Unknowns",
+        "Corrections",
+        "President",
+        "Rules",
+        "Proposed Rules",
+        "Notices",
+        "Unknowns",
+        "Skip",
+        "Total",
+        "Total Minus Skip",
+        "Corrections"
+		  ]
 
       Issue.where(publication_date: dates).order(publication_date: "asc").each do |issue|
         entries = issue.entries
@@ -80,12 +102,20 @@ class Issue < ApplicationModel
           issue.end_page,
           issue.frontmatter_page_count.to_i + issue.backmatter_page_count.to_i,
           issue.presidential_document_count.to_i,
+          issue.rule_count.to_i,
+          issue.proposed_rule_count.to_i,
+          issue.notice_count.to_i,
+          issue.unknown_document_count.to_i,
+          issue.correction_count.to_i,
           issue.presidential_document_page_count.to_i,
           issue.rule_page_count.to_i,
           issue.proposed_rule_page_count.to_i,
           issue.notice_page_count.to_i,
+          issue.unknown_document_page_count.to_i,
           issue.blank_page_count.to_i,
-          issue.presidential_document_page_count.to_i + issue.rule_page_count.to_i + issue.proposed_rule_page_count.to_i + issue.notice_page_count.to_i + issue.blank_page_count.to_i
+          issue.presidential_document_page_count.to_i + issue.rule_page_count.to_i + issue.proposed_rule_page_count.to_i + issue.notice_page_count.to_i + issue.blank_page_count.to_i,
+          issue.presidential_document_page_count.to_i + issue.rule_page_count.to_i + issue.proposed_rule_page_count.to_i + issue.notice_page_count.to_i + issue.blank_page_count.to_i - issue.blank_page_count.to_i,
+          issue.correction_page_count.to_i
         ]
       end
     end
