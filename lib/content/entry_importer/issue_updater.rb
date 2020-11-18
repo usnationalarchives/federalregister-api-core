@@ -24,11 +24,11 @@ class Content::EntryImporter::IssueUpdater
     entries_unknown = entries.select{ |x| !ALLOWED_GRANULE_CLASSES.include?(x.granule_class) }
     entries_correction = entries.select{ |x| x.document_number.start_with?('C1', 'C2', 'R1') }
     blank_pages = (@modsFile.end_page.to_i - @modsFile.start_page.to_i + 1) -
-                          @issue.entries_total_pages(entries_rule) -
-                          @issue.entries_total_pages(entries_proposed_rule) -
-                          @issue.entries_total_pages(entries_notice) -
-                          @issue.entries_total_pages(entries_presidential_document) -
-                          @issue.entries_total_pages(entries_unknown)
+                          @issue.entries_total_pages(entries_rule).length -
+                          @issue.entries_total_pages(entries_proposed_rule).length -
+                          @issue.entries_total_pages(entries_notice).length -
+                          @issue.entries_total_pages(entries_presidential_document).length -
+                          @issue.entries_total_pages(entries_unknown).length
 
     @issue.update(
       start_page: @modsFile.start_page,
@@ -43,12 +43,12 @@ class Content::EntryImporter::IssueUpdater
       presidential_document_count: entries_presidential_document.length,
       unknown_document_count: entries_unknown.length,
       correction_count: entries_correction.length,
-      rule_page_count: @issue.entries_total_pages(entries_rule),
-      proposed_rule_page_count: @issue.entries_total_pages(entries_proposed_rule),
-      notice_page_count: @issue.entries_total_pages(entries_notice),
-      presidential_document_page_count: @issue.entries_total_pages(entries_presidential_document),
-      unknown_document_page_count: @issue.entries_total_pages(entries_unknown),
-      correction_page_count: @issue.entries_total_pages(entries_correction),
+      rule_page_count: @issue.entries_total_pages(entries_rule).length,
+      proposed_rule_page_count: @issue.entries_total_pages(entries_proposed_rule).length,
+      notice_page_count: @issue.entries_total_pages(entries_notice).length,
+      presidential_document_page_count: @issue.entries_total_pages(entries_presidential_document).length,
+      unknown_document_page_count: @issue.entries_total_pages(entries_unknown).length,
+      correction_page_count: @issue.entries_total_pages(entries_correction).length,
       blank_page_count: blank_pages
     )
   end

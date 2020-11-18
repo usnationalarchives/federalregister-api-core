@@ -169,9 +169,17 @@ class Issue < ApplicationModel
   def entries_total_pages(entry_collection)
     array = Array.new
     entry_collection.each do |entry|
-      array = array + (entry.start_page..entry.end_page).to_a
+      if entry.granule_class == "PRESDOCU" && entry.end_page.to_i.odd? && !array.include?(entry.start_page) && !array.include?(entry.end_page) && entry_collection.last.id != entry.id
+        array = array + (entry.start_page..(entry.end_page.to_i + 1)).to_a
+      else
+        array = array + (entry.start_page..entry.end_page).to_a
+      end
     end
-    array.uniq.length
+    # account for title page which is seperated by a blabk page
+    if entry_collection.first.present? && entry_collection.first.granule_class == "PRESDOCU"
+      array << (array.min.to_i - 2)
+    end
+    array.uniq
   end
 
   def total_pages
