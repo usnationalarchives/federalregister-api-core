@@ -8,14 +8,16 @@ class Content::EntryImporter::IssueUpdater
   end
 
   def process
-    update_issue
     delete_issue_parts
     create_issue_parts
+    update_issue
   end
 
   private
 
   def update_issue
+    @issue.reload
+
     entries = @issue.entries
     entries_rule = entries.select{ |x| x.granule_class == 'RULE' }
     entries_proposed_rule = entries.select{ |x| x.granule_class == 'PRORULE' }
@@ -23,7 +25,7 @@ class Content::EntryImporter::IssueUpdater
     entries_presidential_document = entries.select{ |x| x.granule_class == 'PRESDOCU' }
     entries_unknown = entries.select{ |x| !ALLOWED_GRANULE_CLASSES.include?(x.granule_class) }
     entries_correction = entries.select{ |x| x.document_number.start_with?('C1', 'C2', 'R1') }
-    blank_pages = (@modsFile.end_page.to_i - @modsFile.start_page.to_i + 1) -
+    blank_pages = (issue_end_page - @modsFile.start_page.to_i + 1) -
                           @issue.entries_total_pages(entries_rule).length -
                           @issue.entries_total_pages(entries_proposed_rule).length -
                           @issue.entries_total_pages(entries_notice).length -
@@ -32,7 +34,7 @@ class Content::EntryImporter::IssueUpdater
 
     @issue.update(
       start_page: @modsFile.start_page,
-      end_page: @modsFile.end_page,
+      end_page: issue_end_page,
       frontmatter_page_count: @modsFile.frontmatter_page_count,
       backmatter_page_count: @modsFile.backmatter_page_count,
       volume: @modsFile.volume,
@@ -51,6 +53,10 @@ class Content::EntryImporter::IssueUpdater
       correction_page_count: @issue.entries_total_pages(entries_correction).length,
       blank_page_count: blank_pages
     )
+  end
+
+  def issue_end_page
+    [@modsFile.end_page.to_i, (@issue.entries.last&.end_page || 0), (@issue.issue_parts.last&.end_page || 0)].max
   end
 
   def create_issue_parts
