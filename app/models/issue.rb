@@ -63,6 +63,83 @@ class Issue < ApplicationModel
     end
   end
 
+  def self.yearly_report(year=Date.today.strftime("%Y"))
+    return "Invald Date" unless year.scan(/\D/).empty? && (1582..2500).include?(year.to_i)
+    start_of_year = (year + "-01-01").to_date
+    end_of_year = (year + "-12-31").to_date
+    dates = (start_of_year..end_of_year.to_date).map{ |date| date.strftime("%F") }
+    all_issues = Issue.where(publication_date: dates).order(publication_date: "asc")
+    report_name = "./tmp/issue-monthly-report-#{year.to_s}.csv"
+
+    fields_array = [:presidential_document_count, :rule_count, :proposed_rule_count, :notice_count, :unknown_document_count, :frontmatter_page_count, :backmatter_page_count, :correction_count, :presidential_document_page_count, 
+:rule_page_count, :proposed_rule_page_count, :notice_page_count, :unknown_document_page_count, :blank_page_count, :total_number_of_pages_minus_skips, :correction_page_count]
+
+    CSV.open(report_name, "wb") do |csv|
+      csv << [nil, nil, "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+      month_total = [nil, "Total Number of Issues"]
+
+      (1..12).each do |month|
+        month_start_date = (year + "-" + month.to_s + "-01").to_date
+        month_end_date = month_start_date.end_of_month
+        month_dates = (month_start_date..month_end_date.to_date).map{ |date| date.strftime("%F") }
+        month_total << Issue.where(publication_date: month_dates).order(publication_date: "asc").count
+      end
+
+      csv << month_total
+      csv << []
+
+			monthly_totals_hash = Hash.new
+			(1..12).each do |month|
+				monthly_start_date = (year + "-" + month.to_s + "-01").to_date
+				monthly_dates = (monthly_start_date..monthly_start_date.end_of_month).map{ |date| date.strftime("%F") }.to_a
+
+				monthly_totals_hash[month] = Hash.new
+				monthly_totals_hash[month][:presidential_document_count] = all_issues.select{ |x| monthly_dates.include?(x.publication_date.strftime("%F")) }.map{ |y| y.presidential_document_count.to_i }.reduce(:+).to_i
+				monthly_totals_hash[month][:rule_count] = all_issues.select{ |x| monthly_dates.include?(x.publication_date.strftime("%F")) }.map{ |y| y.rule_count.to_i }.reduce(:+).to_i
+				monthly_totals_hash[month][:proposed_rule_count] = all_issues.select{ |x| monthly_dates.include?(x.publication_date.strftime("%F")) }.map{ |y| y.proposed_rule_count.to_i }.reduce(:+).to_i
+				monthly_totals_hash[month][:notice_count] = all_issues.select{ |x| monthly_dates.include?(x.publication_date.strftime("%F")) }.map{ |y| y.notice_count.to_i }.reduce(:+).to_i
+				monthly_totals_hash[month][:unknown_document_count] = all_issues.select{ |x| monthly_dates.include?(x.publication_date.strftime("%F")) }.map{ |y| y.unknown_document_count.to_i }.reduce(:+).to_i
+				monthly_totals_hash[month][:frontmatter_page_count] = all_issues.select{ |x| monthly_dates.include?(x.publication_date.strftime("%F")) }.map{ |y| y.frontmatter_page_count.to_i }.reduce(:+).to_i
+				monthly_totals_hash[month][:backmatter_page_count] = all_issues.select{ |x| monthly_dates.include?(x.publication_date.strftime("%F")) }.map{ |y| y.backmatter_page_count.to_i }.reduce(:+).to_i
+				monthly_totals_hash[month][:correction_count] = all_issues.select{ |x| monthly_dates.include?(x.publication_date.strftime("%F")) }.map{ |y| y.correction_count.to_i }.reduce(:+).to_i
+
+				monthly_totals_hash[month][:presidential_document_page_count] = all_issues.select{ |x| monthly_dates.include?(x.publication_date.strftime("%F")) }.map{ |y| y.presidential_document_page_count.to_i }.reduce(:+).to_i
+				monthly_totals_hash[month][:rule_page_count] = all_issues.select{ |x| monthly_dates.include?(x.publication_date.strftime("%F")) }.map{ |y| y.rule_page_count.to_i }.reduce(:+).to_i
+				monthly_totals_hash[month][:proposed_rule_page_count] = all_issues.select{ |x| monthly_dates.include?(x.publication_date.strftime("%F")) }.map{ |y| y.proposed_rule_page_count.to_i }.reduce(:+).to_i
+				monthly_totals_hash[month][:notice_page_count] = all_issues.select{ |x| monthly_dates.include?(x.publication_date.strftime("%F")) }.map{ |y| y.notice_page_count.to_i }.reduce(:+).to_i
+				monthly_totals_hash[month][:unknown_document_page_count] = all_issues.select{ |x| monthly_dates.include?(x.publication_date.strftime("%F")) }.map{ |y| y.unknown_document_page_count.to_i }.reduce(:+).to_i
+				monthly_totals_hash[month][:blank_page_count] = all_issues.select{ |x| monthly_dates.include?(x.publication_date.strftime("%F")) }.map{ |y| y.blank_page_count.to_i }.reduce(:+).to_i
+				monthly_totals_hash[month][:total_number_of_pages] = monthly_totals_hash[month][:presidential_document_page_count] +
+																														 monthly_totals_hash[month][:rule_page_count] +
+																														 monthly_totals_hash[month][:proposed_rule_page_count] +
+																														 monthly_totals_hash[month][:notice_page_count] +
+																														 monthly_totals_hash[month][:unknown_document_page_count] +
+																														 monthly_totals_hash[month][:blank_page_count]
+				monthly_totals_hash[month][:total_number_of_pages_minus_skips] = monthly_totals_hash[month][:total_number_of_pages] - monthly_totals_hash[month][:blank_page_count]
+				monthly_totals_hash[month][:correction_page_count] = all_issues.select{ |x| monthly_dates.include?(x.publication_date.strftime("%F")) }.map{ |y| y.correction_page_count.to_i }.reduce(:+).to_i
+			end
+
+			fields_array.each do |field|
+				test = []
+				(1..12).each do |month|
+					test << monthly_totals_hash[month][field]
+				end
+
+        if field == :presidential_document_count
+				  csv << ["Page Counts", "Presidential Documents"] + test
+        elsif field == :presidential_document_page_count
+				  csv << ["Document Counts", "Presidential Documents"] + test
+        elsif field == :rule_count
+				  csv << [nil, "Rules"] + test
+        else
+          csv << [nil, nil] + test
+        end
+			end
+    end
+
+    created_report_file = open(report_name)
+  end
+
   def self.monthly_report(date=Date.today)
     dates = (date.to_date.at_beginning_of_month..date.to_date.at_end_of_month).map{ |date| date.strftime("%F") }
     report_name = "./tmp/issue-monthly-report-#{dates.first}.csv"
