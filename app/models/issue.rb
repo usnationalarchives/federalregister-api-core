@@ -179,12 +179,13 @@ class Issue < ApplicationModel
 				else
 					array = array + (entry.start_page..entry.end_page).to_a
         end
-        # account for title page which is seperated by a blabk page
-        array << (array.min.to_i - 2)
       else
         array = array + (entry.start_page..entry.end_page).to_a
       end
     end
+
+    # account for title page which is seperated by a blabk page
+    array << (array.min.to_i - 2) if entry_collection.first.present? && entry_collection.first.granule_class == "PRESDOCU" && entry_collection.length > 1
     array.uniq
   end
 
