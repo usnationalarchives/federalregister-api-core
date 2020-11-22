@@ -80,9 +80,9 @@ class Content::EntryImporter::BulkdataFile
     ret = []
     document.css('NEWPART').each do |entry_node|
       title = entry_node.css('PARTNO').first.try(:content)
-      start_page = entry_node.xpath('(//PRTPAGE[not(ancestor::FTNT)][@P])[1]').first.attributes["P"].value
-      last_page = entry_node.xpath('(//PRTPAGE[not(ancestor::FTNT)][@P])[last()]').last.attributes["P"].value
-      next unless start_page ~= /\A\d+\z/ && end_page ~= /\A\d+\z/
+      start_page = entry_node.xpath('(.//PRTPAGE[not(ancestor::FTNT)][@P])[1]').first.attributes["P"].value
+      last_page = entry_node.xpath('(.//PRTPAGE[not(ancestor::FTNT)][@P])[last()]').last.attributes["P"].value
+      next unless start_page =~ /\A\d+\z/ && last_page =~ /\A\d+\z/
       ret << [title, start_page, last_page]
     end
     ret

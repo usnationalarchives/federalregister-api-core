@@ -243,29 +243,6 @@ class Issue < ApplicationModel
     read_attribute(:unknown_documents_count) || entries.where.not(granule_class: ['NOTICE', 'PRORULE', 'RULE', 'PRESDOCU']).count
   end
 
-  def entries_total_pages(entry_collection)
-    array = Array.new
-    entry_collection.each_with_index do |entry, index|
-      if entry.granule_class == "PRESDOCU" && entry_collection.length > 1
-			  # when there are two blank pages between pres docs, we count one as that is a title page
-        if entry_collection.last.id != entry.id && entry_collection[index + 1].start_page - entry.end_page == 3
-				  array = array + ((entry.start_page..entry.end_page).to_a << (entry.end_page + 1))
-        # if entry last page is odd, AND IS NOT THE LAST ENTRY, then we add one page
-				elsif entry.end_page.to_i.odd? && !array.include?(entry.start_page) && !array.include?(entry.end_page) && entry_collection.last.id != entry.id
-					array = array + (entry.start_page..(entry.end_page.to_i + 1)).to_a
-				else
-					array = array + (entry.start_page..entry.end_page).to_a
-        end
-      else
-        array = array + (entry.start_page..entry.end_page).to_a
-      end
-    end
-
-    # account for title page which is seperated by a blabk page
-    array << (array.min.to_i - 2) if entry_collection.first.present? && entry_collection.first.granule_class == "PRESDOCU" && entry_collection.length > 1
-    array.uniq
-  end
-
   def total_pages
     end_page = entries.maximum(:end_page)
     start_page = entries.minimum(:start_page)
