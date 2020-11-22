@@ -235,7 +235,7 @@ class Issue < ApplicationModel
   end
 
   def unknown_document_count
-    read_attribute(:unknown_documents_count) || entries.where.not(granule_class: ['NOTICE', 'PRORULE', 'RULE', 'PRESDOCU']).count
+    read_attribute(:unknown_document_count) || entries.where.not(granule_class: ['NOTICE', 'PRORULE', 'RULE', 'PRESDOCU']).count
   end
 
   def total_pages
