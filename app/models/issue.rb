@@ -140,11 +140,10 @@ class Issue < ApplicationModel
     created_report_file = open(report_name)
   end
 
-  def self.monthly_report(date=Date.today)
-    dates = (date.to_date.at_beginning_of_month..date.to_date.at_end_of_month).map{ |date| date.strftime("%F") }
-    report_name = "./tmp/issue-monthly-report-#{dates.first}.csv"
+  def self.detail_report(date_range)
+    report_path = "tmp/issue_detail_report_#{date_range.first.strftime("%F")}-#{date_range.last.strftime("%F")}.csv"
 
-    CSV.open(report_name, "wb") do |csv|
+    CSV.open(report_path, "w") do |csv|
       csv << [nil, nil, nil, nil, nil, "Document Counts", nil, nil, nil, nil, nil, "Page Counts"]
       csv << [
         "Issue Number",
@@ -169,9 +168,7 @@ class Issue < ApplicationModel
         "Corrections"
 		  ]
 
-      Issue.where(publication_date: dates).order(publication_date: "asc").each do |issue|
-        entries = issue.entries
-
+      Issue.where(publication_date: date_range).order(publication_date: "asc").each do |issue|
         csv << [
           issue.number,
           issue.publication_date,
@@ -196,8 +193,6 @@ class Issue < ApplicationModel
         ]
       end
     end
-
-    created_report_file = open(report_name)
   end
 
   def to_param
