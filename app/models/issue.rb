@@ -4,7 +4,7 @@ class Issue < ApplicationModel
            :foreign_key => :publication_date
 
   has_many :reprocessed_issues
-  has_many :issue_parts
+  has_many :issue_parts, dependent: :destroy
 
   def self.completed
     scoped(:conditions => "completed_at IS NOT NULL")
