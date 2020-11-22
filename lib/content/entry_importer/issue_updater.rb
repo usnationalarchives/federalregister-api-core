@@ -60,12 +60,17 @@ class Content::EntryImporter::IssueUpdater
   end
 
   def create_issue_parts
-    nodes = @bulkdataFile.issue_part_nodes
-
-    nodes.each do |n|
-      entry = @issue.entries.where("start_page >= ? AND end_page <= ?", n[1], n[2]).order(:start_page => "asc").first
-      issue_part = IssuePart.where(issue_id: @issue.id, title: n[0], start_page: n[1], end_page: n[2], initial_document_type: granule_class(entry)).first_or_create
-      @issue.entries.where("start_page >= ? AND end_page <= ?", issue_part.start_page, issue_part.end_page).update_all(issue_part_id: issue_part.id)
+    @bulkdataFile.issue_part_nodes.each do |title, start_page, end_page|
+      scope = @issue.entries.where("start_page >= ? AND end_page <= ?", start_page, end_page)
+      entry = scope.order(:start_page => "asc").first
+      issue_part = IssuePart.create(
+        issue_id: @issue.id,
+        title: title,
+        start_page: start_page,
+        end_page: end_page,
+        initial_document_type: granule_class(entry)
+      )
+      scope.update_all(issue_part_id: issue_part.id)
     end
   end
 
