@@ -30,6 +30,7 @@
                   <li><%= link_to 'Recent Issues', admin_issues_path, :class => "" %></li>
                   <li><%= link_to 'Current Issue', admin_issue_path(Issue.current.publication_date.to_s(:mdy_dash)), :class => "" %></li>
                   <li><%= link_to 'Reprocess Issues', admin_reprocessed_issues_path, :class => "" %></li>
+                  <li><%= link_to 'Issue Reports', admin_issue_reports_path %>
                 </ul>
               </li>
 

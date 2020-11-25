@@ -140,61 +140,6 @@ class Issue < ApplicationModel
     created_report_file = open(report_name)
   end
 
-  def self.detail_report(date_range)
-    report_path = "tmp/issue_detail_report_#{date_range.first.strftime("%F")}-#{date_range.last.strftime("%F")}.csv"
-
-    CSV.open(report_path, "w") do |csv|
-      csv << [nil, nil, nil, nil, nil, "Document Counts", nil, nil, nil, nil, nil, "Page Counts"]
-      csv << [
-        "Issue Number",
-        "Issue Date",
-        "First Page",
-        "Last Page",
-        "Prelim + RA",
-        "President",
-        "Rules",
-        "Proposed Rules",
-        "Notices",
-        "Unknowns",
-        "Corrections",
-        "President",
-        "Rules",
-        "Proposed Rules",
-        "Notices",
-        "Unknowns",
-        "Skip",
-        "Total",
-        "Total Minus Skip",
-        "Corrections"
-		  ]
-
-      Issue.where(publication_date: date_range).order(publication_date: "asc").each do |issue|
-        csv << [
-          issue.number,
-          issue.publication_date,
-          issue.start_page,
-          issue.end_page,
-          issue.frontmatter_page_count.to_i + issue.backmatter_page_count.to_i,
-          issue.presidential_document_count.to_i,
-          issue.rule_count.to_i,
-          issue.proposed_rule_count.to_i,
-          issue.notice_count.to_i,
-          issue.unknown_document_count.to_i,
-          issue.correction_count.to_i,
-          issue.presidential_document_page_count.to_i,
-          issue.rule_page_count.to_i,
-          issue.proposed_rule_page_count.to_i,
-          issue.notice_page_count.to_i,
-          issue.unknown_document_page_count.to_i,
-          issue.blank_page_count.to_i,
-          issue.presidential_document_page_count.to_i + issue.rule_page_count.to_i + issue.proposed_rule_page_count.to_i + issue.notice_page_count.to_i + issue.blank_page_count.to_i,
-          issue.presidential_document_page_count.to_i + issue.rule_page_count.to_i + issue.proposed_rule_page_count.to_i + issue.notice_page_count.to_i + issue.blank_page_count.to_i - issue.blank_page_count.to_i,
-          issue.correction_page_count.to_i
-        ]
-      end
-    end
-  end
-
   def to_param
     publication_date.to_s(:db)
   end

@@ -58,6 +58,10 @@ FederalregisterApiCore::Application.routes.draw do
       resources :diffs, :only => [:index], controller: 'reprocessed_issues/diffs'
     end
     match 'reprocessed_issues_update_mods/:id' => 'reprocessed_issues#update_mods', :as => :update_mods, :via => :put
+
+    get 'issues/reports' => 'issue_reports#index', as: :issue_reports
+    get 'issues/reports/detail/:year' => 'issue_reports#detail', as: :issue_report_detail
+
     resources :issues do
         member do
           get :preview

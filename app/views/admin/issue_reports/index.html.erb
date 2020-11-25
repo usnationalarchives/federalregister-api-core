@@ -1,0 +1,9 @@
+<% super_title 'Issue Reports' %>
+
+<h4>Issue-Level Document and Page Counts:</h4>
+
+<ul>
+  <% (2020..Date.current.year).to_a.reverse.each do |year| %>
+    <li><%= link_to year, admin_issue_report_detail_path(year: year, format: :csv) %></li>
+  <% end %>
+</ul>
