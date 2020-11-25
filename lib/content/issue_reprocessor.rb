@@ -34,6 +34,7 @@ module Content
       reprocess_presdoc_fields
       reprocess_events
       reprocess_agencies
+      reprocess_issue
     end
 
     private
@@ -99,6 +100,19 @@ module Content
         handle_failure(error,"IssueReprocessor: Reprocess Presidential Documents")
       ensure
         Rake::Task['content:entries:import:presidential_documents'].reenable
+      end
+    end
+
+    def reprocess_issue
+      update_reprocessing_message("reprocessing issue page counts")
+
+      begin
+        ENV['DATE'] = "#{date.to_s(:iso)}"
+        Rake::Task['content:entries:import:issue'].invoke
+      rescue StandardError => error
+        handle_failure(error,"IssueReprocessor: Reprocess Issue")
+      ensure
+        Rake::Task['content:entries:import:issue'].reenable
       end
     end
 

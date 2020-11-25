@@ -116,6 +116,16 @@ namespace :content do
         entry_importer(:checked_regulationsdotgov_at, :regulationsdotgov_url, :comment_url, :regulations_dot_gov_comments_close_on, :regulations_dot_gov_docket_id)
       end
 
+      desc "Import Issue Data"
+      task :issue => :environment do
+        issue = Issue.find_by_publication_date!(ENV['DATE'] || Time.current.to_date)
+        Content::EntryImporter::IssueUpdater.new(
+          issue,
+          Content::EntryImporter::ModsFile.new(issue.publication_date, false),
+          Content::EntryImporter::BulkdataFile.new(issue.publication_date, false)
+       ).process
+      end
+
       namespace :regulations_dot_gov do
         def update_missing_regulationsdotgov_info(date = nil)
           entries = Entry.scoped(:conditions => ["checked_regulationsdotgov_at IS NULL or checked_regulationsdotgov_at < ?", 25.minutes.ago])
