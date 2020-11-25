@@ -7,3 +7,12 @@
     <li><%= link_to year, admin_issue_report_detail_path(year: year, format: :csv) %></li>
   <% end %>
 </ul>
+
+<br>
+<h4>Monthly/Quarterly Summary of Document and Page Counts:</h4>
+
+<ul>
+  <% (2020..Date.current.year).to_a.reverse.each do |year| %>
+    <li><%= link_to year, admin_issue_report_monthly_path(year: year, format: :csv) %></li>
+  <% end %>
+</ul>

@@ -61,6 +61,7 @@ FederalregisterApiCore::Application.routes.draw do
 
     get 'issues/reports' => 'issue_reports#index', as: :issue_reports
     get 'issues/reports/detail/:year' => 'issue_reports#detail', as: :issue_report_detail
+    get 'issues/reports/monthly/:year' => 'issue_reports#monthly', as: :issue_report_monthly
 
     resources :issues do
         member do

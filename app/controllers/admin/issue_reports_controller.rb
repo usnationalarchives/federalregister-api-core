@@ -11,4 +11,14 @@ class Admin::IssueReportsController < AdminController
       end
     end
   end
+
+  def monthly
+    respond_to do |wants|
+      wants.csv do
+        year = params[:year].to_i
+        headers['Content-Disposition'] = "attachment; filename=\"issue_monthly_#{year}.csv\""
+        render plain: IssueReportMonthlyPresenter.new(year: year).as_csv
+      end
+    end
+  end
 end
