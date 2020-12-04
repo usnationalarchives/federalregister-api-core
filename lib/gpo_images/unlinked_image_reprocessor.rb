@@ -27,7 +27,7 @@ module GpoImages
         where("gpo_graphic_usages.identifier IS NULL").
         where.not(graphic_file_name: nil).
         each_with_object(Array.new) do |gpo_graphic, documents|
-          EntrySearch.new(
+          EsEntrySearch.new(
             conditions: {
               term: gpo_graphic.identifier,
               publication_date: {
