@@ -34,7 +34,7 @@ module Content
       reprocess_presdoc_fields
       reprocess_events
       reprocess_agencies
-      reprocess_issue
+      reprocess_page_counts
     end
 
     private
@@ -103,7 +103,7 @@ module Content
       end
     end
 
-    def reprocess_issue
+    def reprocess_page_counts
       update_reprocessing_message("reprocessing issue page counts")
 
       begin
