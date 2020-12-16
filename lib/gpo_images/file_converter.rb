@@ -29,6 +29,8 @@ class GpoImages::FileConverter
 
   private
 
+  attr_reader :sourced_via_ecfr_dot_gov
+
   def base_filename
     @base_filename ||= File.basename(bucketed_zip_filename)
   end
@@ -52,6 +54,12 @@ class GpoImages::FileConverter
       get(bucket_name, :prefix => date.to_s(:ymd)).
       files.
       get(bucketed_zip_filename)
+
+    if file.metadata["x-amz-meta-public-image"] #Check S3 metadata
+      @sourced_via_ecfr_dot_gov = true
+    else
+      @sourced_via_ecfr_dot_gov = false
+    end
 
     local_file = File.open(File.join(GpoImages::FileLocationManager.compressed_image_bundles_path, base_filename), "w")
     local_file.write(file.body.force_encoding('UTF-8'))
@@ -84,7 +92,13 @@ class GpoImages::FileConverter
         file_path = File.join(destination, filename)
         files.extract(file, file_path){ true }
         log "Enqueuing GpoImages::BackgroundJob for #{file.name}..."
-        Sidekiq::Client.enqueue(GpoImages::BackgroundJob, filename, bucketed_zip_filename, date)
+        Sidekiq::Client.enqueue(
+          GpoImages::BackgroundJob,
+          filename,
+          bucketed_zip_filename,
+          date,
+          sourced_via_ecfr_dot_gov
+        )
       end
     end
   end

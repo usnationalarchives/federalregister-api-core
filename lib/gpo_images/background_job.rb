@@ -13,16 +13,19 @@ module GpoImages
                 :mark_public,
                 :temp_image_files_path
 
-    def perform(eps_filename, bucketed_zip_filename, ftp_transfer_date)
+    def perform(eps_filename, bucketed_zip_filename, ftp_transfer_date, sourced_via_ecfr_dot_gov)
       @eps_filename          = eps_filename
       @bucketed_zip_filename = bucketed_zip_filename
       @ftp_transfer_date     = ftp_transfer_date.is_a?(Date) ? ftp_transfer_date : Date.parse(ftp_transfer_date)
+      @sourced_via_ecfr_dot_gov = sourced_via_ecfr_dot_gov
 
       gpo_graphic, gpo_graphic_package = find_or_create_gpo_graphic
 
       if gpo_graphic.save
         gpo_graphic_package.touch
-        gpo_graphic.move_to_public_bucket if gpo_graphic.gpo_graphic_usages.present?
+        if gpo_graphic.gpo_graphic_usages.present? || gpo_graphic.sourced_via_ecfr_dot_gov
+          gpo_graphic.move_to_public_bucket
+        end
         remove_from_redis_key
         remove_local_image
 
@@ -49,6 +52,8 @@ module GpoImages
 
     private
 
+    attr_reader :sourced_via_ecfr_dot_gov
+
     def package_identifier
       @package_identifier ||= File.basename(bucketed_zip_filename, '.zip')
     end
@@ -57,6 +62,7 @@ module GpoImages
       gpo_graphic = GpoGraphic.find_or_initialize_by(identifier: identifier)
       gpo_graphic.graphic = image
       gpo_graphic.package_identifier = package_identifier
+      gpo_graphic.sourced_via_ecfr_dot_gov = sourced_via_ecfr_dot_gov
 
       gpo_graphic_package = gpo_graphic.gpo_graphic_packages.
         find_or_initialize_by(
