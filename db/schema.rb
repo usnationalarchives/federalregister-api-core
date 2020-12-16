@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_19_184015) do
+ActiveRecord::Schema.define(version: 2020_12_16_180016) do
 
   create_table "action_names", :force => true do |t|
     t.string   "name"
@@ -383,6 +383,7 @@ ActiveRecord::Schema.define(version: 2020_10_19_184015) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "package_identifier"
+    t.boolean "sourced_via_ecfr_dot_gov", default: false, null: false
   end
 
   add_index "gpo_graphics", ["graphic_file_name"], :name => "index_gpo_graphics_on_graphic_file_name"
