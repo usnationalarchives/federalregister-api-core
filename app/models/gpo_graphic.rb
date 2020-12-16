@@ -71,7 +71,8 @@ class GpoGraphic < ActiveRecord::Base
       xml_identifier,
       identifier,
       private_bucket,
-      public_bucket
+      public_bucket,
+      sourced_via_ecfr_dot_gov: sourced_via_ecfr_dot_gov
     )
   end
 
