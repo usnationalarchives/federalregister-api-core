@@ -6,10 +6,16 @@ class GpoImages::FogAwsConnection
 
     directory.files.each do |file|
       if options[:sourced_via_ecfr_dot_gov]
-        # images sourced from ECFR.gov are assumed to have the desired identifier
-        filename = file.key
+        # ECFR Renderer expects image identifiers to be uppercase and S3 is case-sensitive
+        # example: er30no17.024/large.png => ER30NO17.024/large.png
+        delimeter = '/'
+        filename = file.
+          key.
+          split(delimeter).
+          each_with_index.map{|x, index| index == 0 ? x.upcase : x }.
+          join(delimeter)
       else
-        # change the bucket's name to be the same as the xml_identifier
+        # change the object's name to be the same as the xml_identifier
         # now that we've gotten it from the published XML
         filename = file.key.gsub(identifier, URI.encode(xml_identifier))
       end

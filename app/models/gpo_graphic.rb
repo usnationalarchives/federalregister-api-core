@@ -42,6 +42,9 @@ class GpoGraphic < ActiveRecord::Base
   Paperclip.interpolates(:xml_identifier) do |attachment, style|
     if attachment.instance.gpo_graphic_usages.present?
       attachment.instance.xml_identifier
+    elsif attachment.instance.sourced_via_ecfr_dot_gov
+      # This logic isn't used in FR, but is useful so that the correct url is returned when using methods like `gpo_graphic.graphic.url` for troubleshooting, otherwise an invalid lowercase URL will be returned.
+      attachment.instance.identifier.upcase
     else
       attachment.instance.identifier
     end
