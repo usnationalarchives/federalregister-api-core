@@ -70,9 +70,15 @@ class GpoGraphic < ActiveRecord::Base
   end
 
   def move_to_public_bucket
+    if sourced_via_ecfr_dot_gov
+      s3_identifier = identifier.upcase
+    else
+      s3_identifier = identifier
+    end
+
     GpoImages::FogAwsConnection.new.move_directory_files_between_buckets_and_rename(
       xml_identifier,
-      identifier,
+      s3_identifier,
       private_bucket,
       public_bucket,
       sourced_via_ecfr_dot_gov: sourced_via_ecfr_dot_gov
