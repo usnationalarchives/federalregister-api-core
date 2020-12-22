@@ -22,7 +22,9 @@ module GpoImages
       gpo_graphic, gpo_graphic_package = find_or_create_gpo_graphic
 
       if gpo_graphic.save
-        gpo_graphic_package.touch
+        if gpo_graphic_package
+          gpo_graphic_package.touch
+        end
         if gpo_graphic.gpo_graphic_usages.present? || gpo_graphic.sourced_via_ecfr_dot_gov
           gpo_graphic.move_to_public_bucket
         end
@@ -60,18 +62,23 @@ module GpoImages
 
     def find_or_create_gpo_graphic
       gpo_graphic = GpoGraphic.find_or_initialize_by(identifier: identifier)
-      gpo_graphic.graphic = image
-      gpo_graphic.package_identifier = package_identifier
-      gpo_graphic.sourced_via_ecfr_dot_gov = sourced_via_ecfr_dot_gov
 
-      gpo_graphic_package = gpo_graphic.gpo_graphic_packages.
-        find_or_initialize_by(
-          graphic_identifier: gpo_graphic.identifier,
-          package_identifier: package_identifier
-        )
-      gpo_graphic_package.package_date = ftp_transfer_date
+      if sourced_via_ecfr_dot_gov.blank? || gpo_graphic.sourced_via_ecfr_dot_gov.present? || gpo_graphic.id.blank?
+      #eg only set the graphic/metadata if it's from SFTP, we're reprocessing an ECFR_sourced image, OR it's a new image
+        gpo_graphic.graphic = image
+        gpo_graphic.package_identifier = package_identifier
+        gpo_graphic.sourced_via_ecfr_dot_gov = sourced_via_ecfr_dot_gov
 
-      return gpo_graphic, gpo_graphic_package
+        gpo_graphic_package = gpo_graphic.gpo_graphic_packages.
+          find_or_initialize_by(
+            graphic_identifier: gpo_graphic.identifier,
+            package_identifier: package_identifier
+          )
+        gpo_graphic_package.package_date = ftp_transfer_date
+        return gpo_graphic, gpo_graphic_package
+      else
+        return gpo_graphic, nil
+      end
     end
 
     def image
