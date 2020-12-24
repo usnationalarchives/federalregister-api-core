@@ -52,6 +52,18 @@ class RegulationsDotGov::V4::Client
     JSON.parse(response.body)
   end
 
+  def find_documents_updated_within(days, document_type_identifier)
+    response = connection.get(
+      'documents',
+      'filter[lastUpdated][ge]' => (Date.current - days.days).to_s(:iso),
+      'filter[documentType]'    => document_type_identifier,
+      'api_key'                 => api_key
+      #TODO: V3 had an rpp argument, unclear whether needed in V4.
+    )
+    JSON.parse(response.body)
+  end
+
+
   private
 
   attr_reader :logger

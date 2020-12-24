@@ -5,8 +5,6 @@ class RegulationsDotGov::RecentlyModifiedDocumentUpdater
   class MissingDocumentNumber < StandardError; end
   class NoDocumentFound < StandardError; end
 
-  DOCUMENT_TYPE_IDENTIFIERS = ['PR', 'FR', 'N']
-  
   attr_reader :days
   
   def initialize(days)
@@ -76,8 +74,8 @@ class RegulationsDotGov::RecentlyModifiedDocumentUpdater
 
   def updated_documents
     Array.new.tap do |collection|
-      DOCUMENT_TYPE_IDENTIFIERS.each do |document_type_identifier|
-        client = RegulationsDotGov::Client.new
+      document_type_identifiers.each do |document_type_identifier|
+        client = regulations_dot_gov_client
         documents = client.find_documents_updated_within(days, document_type_identifier)
 
         collection << documents
@@ -85,5 +83,21 @@ class RegulationsDotGov::RecentlyModifiedDocumentUpdater
     end.flatten
   end
   memoize :updated_documents
+
+  def document_type_identifiers
+    if SETTINGS['regulations_dot_gov']['use_v4_api']
+      ['Proposed Rule', 'Rule', 'Notice']
+    else
+      ['PR', 'FR', 'N']
+    end
+  end
+
+  def regulations_dot_gov_client
+    if SETTINGS['regulations_dot_gov']['use_v4_api']
+      RegulationsDotGov::V4::Client.new
+    else
+      RegulationsDotGov::Client.new
+    end
+  end
 
 end
