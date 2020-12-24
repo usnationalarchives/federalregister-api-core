@@ -1,4 +1,5 @@
 module RegulationsDotGov::V4::CommonDocumentAttributes
+  extend Memoist
 
   def agency_acronym
     raw_attribute_value('agencyId')
@@ -10,6 +11,11 @@ module RegulationsDotGov::V4::CommonDocumentAttributes
       DateTime.parse(val)
     end
   end
+
+  def comment_count
+    RegulationsDotGov::V4::Client.new.find_comments_by_comment_on_id(comment_on_id).count
+  end
+  memoize :comment_count
 
   def comment_url
     if raw_attribute_value('openForComment') && !non_participating_agency?
@@ -44,6 +50,10 @@ module RegulationsDotGov::V4::CommonDocumentAttributes
 
   def raw_attribute_value(name)
     raw_attributes['attributes'][name]
+  end
+
+  def comment_on_id
+    raw_attribute_value('objectId')
   end
 
 end
