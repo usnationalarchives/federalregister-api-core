@@ -31,6 +31,10 @@ module RegulationsDotGov::V4::CommonDocumentAttributes
     raw_attribute_value('docketId')
   end
 
+  def federal_register_document_number
+    val = raw_attribute_value("frDocNum")
+  end
+
   def non_participating_agency?
     DocketImporter.non_participating_agency_ids.include?(agency_acronym)
   end
