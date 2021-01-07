@@ -57,8 +57,8 @@ class RegulationsDotGov::V4::Client
       'documents',
       'filter[lastUpdated][ge]' => (Date.current - days.days).to_s(:iso),
       'filter[documentType]'    => document_type_identifier,
-      'api_key'                 => api_key
-      #TODO: V3 had an rpp argument, unclear whether needed in V4.
+      'api_key'                 => api_key,
+      'page[size]'              => 250
     )
     JSON.parse(response.body)
   end
