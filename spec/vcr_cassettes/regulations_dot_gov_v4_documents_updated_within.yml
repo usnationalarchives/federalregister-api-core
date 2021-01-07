@@ -1,0 +1,1000 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api.regulations.gov/v4/documents?api_key=<API_KEY>&filter%5BdocumentType%5D=Proposed%20Rule&filter%5BlastUpdated%5D%5Bge%5D=2021-01-06&page%5Bsize%5D=250
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.15.3
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: ''
+    headers:
+      Date:
+      - Thu, 07 Jan 2021 04:54:30 GMT
+      Content-Type:
+      - application/vnd.api+json;charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      X-Ratelimit-Limit:
+      - '40'
+      X-Ratelimit-Remaining:
+      - '35'
+      Age:
+      - '0'
+      Via:
+      - https/1.1 api-umbrella (ApacheTrafficServer [cMsSf ])
+      X-Cache:
+      - MISS
+      Access-Control-Allow-Origin:
+      - "*"
+      Strict-Transport-Security:
+      - max-age=31536000; preload
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "data" : [ {
+            "id" : "DOD-2020-OS-0095-0001",
+            "type" : "documents",
+            "attributes" : {
+              "documentType" : "Proposed Rule",
+              "highlightedContent" : "",
+              "frDocNum" : "2020-28791",
+              "withdrawn" : false,
+              "agencyId" : "DOD",
+              "commentEndDate" : "2021-03-09T04:59:59Z",
+              "title" : "Privacy Act; Implementation",
+              "postedDate" : "2021-01-06T05:00:00Z",
+              "docketId" : "DOD-2020-OS-0095",
+              "subtype" : null,
+              "commentStartDate" : "2021-01-06T05:00:00Z",
+              "openForComment" : true,
+              "objectId" : "09000064849e08b9"
+            },
+            "links" : {
+              "self" : "https://api.regulations.gov/v4/documents/DOD-2020-OS-0095-0001"
+            }
+          }, {
+            "id" : "FDA-2014-N-0053-0137",
+            "type" : "documents",
+            "attributes" : {
+              "documentType" : "Proposed Rule",
+              "highlightedContent" : "",
+              "frDocNum" : "2020-21935",
+              "withdrawn" : false,
+              "agencyId" : "FDA",
+              "commentEndDate" : "2021-02-23T04:59:59Z",
+              "title" : "Requirements for Additional Traceability Records for Certain\nFoods; Proposed Rule; Public Meetings; Request for Comments",
+              "postedDate" : "2020-10-05T04:00:00Z",
+              "docketId" : "FDA-2014-N-0053",
+              "subtype" : "Public Meeting",
+              "commentStartDate" : "2020-10-05T04:00:00Z",
+              "openForComment" : true,
+              "objectId" : "09000064848ce431"
+            },
+            "links" : {
+              "self" : "https://api.regulations.gov/v4/documents/FDA-2014-N-0053-0137"
+            }
+          }, {
+            "id" : "FDA-2014-N-0053-0184",
+            "type" : "documents",
+            "attributes" : {
+              "documentType" : "Proposed Rule",
+              "highlightedContent" : "",
+              "frDocNum" : "2020-27829",
+              "withdrawn" : false,
+              "agencyId" : "FDA",
+              "commentEndDate" : "2021-02-23T04:59:59Z",
+              "title" : "Requirements for Additional Traceability Records for Certain Foods; Extension of Comment Period; Reopening of the Comment Period",
+              "postedDate" : "2020-12-18T05:00:00Z",
+              "docketId" : "FDA-2014-N-0053",
+              "subtype" : "Reopening of Comment Period",
+              "commentStartDate" : "2020-12-18T05:00:00Z",
+              "openForComment" : true,
+              "objectId" : "09000064849a7042"
+            },
+            "links" : {
+              "self" : "https://api.regulations.gov/v4/documents/FDA-2014-N-0053-0184"
+            }
+          }, {
+            "id" : "DEA-2021-0004-0001",
+            "type" : "documents",
+            "attributes" : {
+              "documentType" : "Proposed Rule",
+              "highlightedContent" : "",
+              "frDocNum" : "2020-26812",
+              "withdrawn" : false,
+              "agencyId" : "DEA",
+              "commentEndDate" : "2021-01-12T04:59:59Z",
+              "title" : "Schedules of Controlled Substances: Removal of Samidorphan From Control",
+              "postedDate" : "2020-12-10T05:00:00Z",
+              "docketId" : "DEA-2021-0004",
+              "subtype" : null,
+              "commentStartDate" : "2020-12-10T05:00:00Z",
+              "openForComment" : true,
+              "objectId" : "090000648499556e"
+            },
+            "links" : {
+              "self" : "https://api.regulations.gov/v4/documents/DEA-2021-0004-0001"
+            }
+          }, {
+            "id" : "FDA-2020-N-1119-0038",
+            "type" : "documents",
+            "attributes" : {
+              "documentType" : "Proposed Rule",
+              "highlightedContent" : "",
+              "frDocNum" : "2020-24806",
+              "withdrawn" : false,
+              "agencyId" : "FDA",
+              "commentEndDate" : "2021-01-09T04:59:59Z",
+              "title" : "Request for Information and Comments on Consumption of Certain\nUncommon Produce Commodities in the United States; Extension of\nComment Period",
+              "postedDate" : "2020-11-09T05:00:00Z",
+              "docketId" : "FDA-2020-N-1119",
+              "subtype" : "Extension of Comment Period",
+              "commentStartDate" : "2020-11-09T05:00:00Z",
+              "openForComment" : true,
+              "objectId" : "09000064849537fd"
+            },
+            "links" : {
+              "self" : "https://api.regulations.gov/v4/documents/FDA-2020-N-1119-0038"
+            }
+          }, {
+            "id" : "NOAA-NMFS-2016-0131-0001",
+            "type" : "documents",
+            "attributes" : {
+              "documentType" : "Proposed Rule",
+              "highlightedContent" : "",
+              "frDocNum" : "2020-21226",
+              "withdrawn" : false,
+              "agencyId" : "NOAA",
+              "commentEndDate" : "2021-02-26T04:59:59Z",
+              "title" : "Endangered and Threatened Species: Critical Habitat for the Threatened Indo-Pacific Corals",
+              "postedDate" : "2020-11-27T05:00:00Z",
+              "docketId" : "NOAA-NMFS-2016-0131",
+              "subtype" : null,
+              "commentStartDate" : "2020-11-27T05:00:00Z",
+              "openForComment" : true,
+              "objectId" : "090000648497883a"
+            },
+            "links" : {
+              "self" : "https://api.regulations.gov/v4/documents/NOAA-NMFS-2016-0131-0001"
+            }
+          }, {
+            "id" : "CISA-2020-0014-0001",
+            "type" : "documents",
+            "attributes" : {
+              "documentType" : "Proposed Rule",
+              "highlightedContent" : "",
+              "frDocNum" : "2020-27768",
+              "withdrawn" : false,
+              "agencyId" : "CISA",
+              "commentEndDate" : "2021-03-09T04:59:59Z",
+              "title" : "Removal of Certain Explosive Chemicals From the Chemical Facility Anti- Terrorism Standards",
+              "postedDate" : "2021-01-06T05:00:00Z",
+              "docketId" : "CISA-2020-0014",
+              "subtype" : null,
+              "commentStartDate" : "2021-01-06T05:00:00Z",
+              "openForComment" : true,
+              "objectId" : "09000064849e0a28"
+            },
+            "links" : {
+              "self" : "https://api.regulations.gov/v4/documents/CISA-2020-0014-0001"
+            }
+          }, {
+            "id" : "FDA-2020-N-1807-0001",
+            "type" : "documents",
+            "attributes" : {
+              "documentType" : "Proposed Rule",
+              "highlightedContent" : "",
+              "frDocNum" : "2020-27822",
+              "withdrawn" : false,
+              "agencyId" : "FDA",
+              "commentEndDate" : "2021-03-23T03:59:59Z",
+              "title" : "French Dressing; Proposed Revocation of a Standard of Identity",
+              "postedDate" : "2020-12-21T05:00:00Z",
+              "docketId" : "FDA-2020-N-1807",
+              "subtype" : "Notice of Proposed Rulemaking (NPRM)",
+              "commentStartDate" : "2020-12-21T05:00:00Z",
+              "openForComment" : true,
+              "objectId" : "09000064849aeee4"
+            },
+            "links" : {
+              "self" : "https://api.regulations.gov/v4/documents/FDA-2020-N-1807-0001"
+            }
+          }, {
+            "id" : "NHTSA-2016-0031-0003",
+            "type" : "documents",
+            "attributes" : {
+              "documentType" : "Proposed Rule",
+              "highlightedContent" : "",
+              "frDocNum" : "2020-28648",
+              "withdrawn" : false,
+              "agencyId" : "NHTSA",
+              "commentEndDate" : "2021-01-28T04:59:59Z",
+              "title" : "Make Inoperative Exemptions: Vehicle Modifications To Accommodate People With Disabilities",
+              "postedDate" : "2020-12-28T05:00:00Z",
+              "docketId" : "NHTSA-2016-0031",
+              "subtype" : "Notice of Proposed Rulemaking (NPRM)",
+              "commentStartDate" : "2020-12-28T05:00:00Z",
+              "openForComment" : true,
+              "objectId" : "09000064849cc5b0"
+            },
+            "links" : {
+              "self" : "https://api.regulations.gov/v4/documents/NHTSA-2016-0031-0003"
+            }
+          }, {
+            "id" : "NOAA-NMFS-2020-0031-0006",
+            "type" : "documents",
+            "attributes" : {
+              "documentType" : "Proposed Rule",
+              "highlightedContent" : "",
+              "frDocNum" : "2020-28775",
+              "withdrawn" : false,
+              "agencyId" : "NOAA",
+              "commentEndDate" : "2021-03-02T04:59:59Z",
+              "title" : "Taking of Marine Mammals Incidental to Commercial Fishing Operations; Atlantic Large Whale Take Reduction Plan Regulations; etc.",
+              "postedDate" : "2020-12-31T05:00:00Z",
+              "docketId" : "NOAA-NMFS-2020-0031",
+              "subtype" : null,
+              "commentStartDate" : "2020-12-31T05:00:00Z",
+              "openForComment" : true,
+              "objectId" : "09000064849d6506"
+            },
+            "links" : {
+              "self" : "https://api.regulations.gov/v4/documents/NOAA-NMFS-2020-0031-0006"
+            }
+          }, {
+            "id" : "HUD-2020-0070-0001",
+            "type" : "documents",
+            "attributes" : {
+              "documentType" : "Proposed Rule",
+              "highlightedContent" : "",
+              "frDocNum" : "2020-21400",
+              "withdrawn" : false,
+              "agencyId" : "HUD",
+              "commentEndDate" : "2021-01-07T04:59:59Z",
+              "title" : "FR-6092-P-01 Housing Opportunity through Modernization Act of 2016: Housing Choice Voucher and Project- Based Voucher Implementation; Additional Streamlining Changes",
+              "postedDate" : "2020-10-08T04:00:00Z",
+              "docketId" : "HUD-2020-0070",
+              "subtype" : null,
+              "commentStartDate" : "2020-10-08T04:00:00Z",
+              "openForComment" : true,
+              "objectId" : "09000064848ebb78"
+            },
+            "links" : {
+              "self" : "https://api.regulations.gov/v4/documents/HUD-2020-0070-0001"
+            }
+          }, {
+            "id" : "OCC-2020-0042-0001",
+            "type" : "documents",
+            "attributes" : {
+              "documentType" : "Proposed Rule",
+              "highlightedContent" : "",
+              "frDocNum" : "2020-26067",
+              "withdrawn" : false,
+              "agencyId" : "OCC",
+              "commentEndDate" : "2021-01-05T04:59:59Z",
+              "title" : "Fair Access to Financial Services",
+              "postedDate" : "2020-11-25T05:00:00Z",
+              "docketId" : "OCC-2020-0042",
+              "subtype" : null,
+              "commentStartDate" : "2020-11-25T05:00:00Z",
+              "openForComment" : false,
+              "objectId" : "0900006484975d20"
+            },
+            "links" : {
+              "self" : "https://api.regulations.gov/v4/documents/OCC-2020-0042-0001"
+            }
+          }, {
+            "id" : "NRC-2017-0021-0002",
+            "type" : "documents",
+            "attributes" : {
+              "documentType" : "Proposed Rule",
+              "highlightedContent" : "",
+              "frDocNum" : "2020-27776",
+              "withdrawn" : false,
+              "agencyId" : "NRC",
+              "commentEndDate" : "2021-03-09T04:59:59Z",
+              "title" : "Alternatives to the Use of Credit Ratings; Advance Notice of Proposed Rulemaking;  Request for Comment",
+              "postedDate" : "2020-12-21T05:00:00Z",
+              "docketId" : "NRC-2017-0021",
+              "subtype" : null,
+              "commentStartDate" : "2020-12-21T05:00:00Z",
+              "openForComment" : true,
+              "objectId" : "09000064849aee87"
+            },
+            "links" : {
+              "self" : "https://api.regulations.gov/v4/documents/NRC-2017-0021-0002"
+            }
+          }, {
+            "id" : "OPM_FRDOC_0001-2024",
+            "type" : "documents",
+            "attributes" : {
+              "documentType" : "Proposed Rule",
+              "highlightedContent" : "",
+              "frDocNum" : "2020-26347",
+              "withdrawn" : false,
+              "agencyId" : "OPM",
+              "commentEndDate" : "2021-01-20T04:59:59Z",
+              "title" : "Reduction in Force",
+              "postedDate" : "2020-12-17T05:00:00Z",
+              "docketId" : "OPM_FRDOC_0001",
+              "subtype" : null,
+              "commentStartDate" : "2020-12-17T05:00:00Z",
+              "openForComment" : true,
+              "objectId" : "09000064849a4494"
+            },
+            "links" : {
+              "self" : "https://api.regulations.gov/v4/documents/OPM_FRDOC_0001-2024"
+            }
+          }, {
+            "id" : "NOAA-NMFS-2020-0141-0001",
+            "type" : "documents",
+            "attributes" : {
+              "documentType" : "Proposed Rule",
+              "highlightedContent" : "",
+              "frDocNum" : "2020-26598",
+              "withdrawn" : false,
+              "agencyId" : "NOAA",
+              "commentEndDate" : "2021-01-05T04:59:59Z",
+              "title" : "Fisheries of the Exclusive Economic Zone off Alaska: Bering Sea and Aleutian Islands; Proposed 2021 and 2022 Harvest Specifications for Groundfish",
+              "postedDate" : "2020-12-03T05:00:00Z",
+              "docketId" : "NOAA-NMFS-2020-0141",
+              "subtype" : null,
+              "commentStartDate" : "2020-12-03T05:00:00Z",
+              "openForComment" : false,
+              "objectId" : "090000648498416f"
+            },
+            "links" : {
+              "self" : "https://api.regulations.gov/v4/documents/NOAA-NMFS-2020-0141-0001"
+            }
+          }, {
+            "id" : "HRSA-2020-0002-0001",
+            "type" : "documents",
+            "attributes" : {
+              "documentType" : "Proposed Rule",
+              "highlightedContent" : "",
+              "frDocNum" : "2020-15673",
+              "withdrawn" : false,
+              "agencyId" : "HRSA",
+              "commentEndDate" : "2021-01-13T04:59:59Z",
+              "title" : "National Vaccine Injury Compensation Program: Revisions to the Vaccine Injury Table",
+              "postedDate" : "2020-07-20T04:00:00Z",
+              "docketId" : "HRSA-2020-0002",
+              "subtype" : null,
+              "commentStartDate" : "2020-07-20T04:00:00Z",
+              "openForComment" : true,
+              "objectId" : "090000648478622d"
+            },
+            "links" : {
+              "self" : "https://api.regulations.gov/v4/documents/HRSA-2020-0002-0001"
+            }
+          }, {
+            "id" : "SBA-2020-0055-0001",
+            "type" : "documents",
+            "attributes" : {
+              "documentType" : "Proposed Rule",
+              "highlightedContent" : "",
+              "frDocNum" : "2020-24903",
+              "withdrawn" : false,
+              "agencyId" : "SBA",
+              "commentEndDate" : "2021-01-13T04:59:59Z",
+              "title" : "Small Business Size Standards: Professional, Scientific and Technical Services; Management of Companies and Enterprises; Administrative and Support and Waste Management and Remediation Services",
+              "postedDate" : "2020-11-13T05:00:00Z",
+              "docketId" : "SBA-2020-0055",
+              "subtype" : null,
+              "commentStartDate" : "2020-11-13T05:00:00Z",
+              "openForComment" : true,
+              "objectId" : "090000648495c97f"
+            },
+            "links" : {
+              "self" : "https://api.regulations.gov/v4/documents/SBA-2020-0055-0001"
+            }
+          }, {
+            "id" : "EPA-HQ-OAR-2002-0088-0453",
+            "type" : "documents",
+            "attributes" : {
+              "documentType" : "Proposed Rule",
+              "highlightedContent" : "",
+              "frDocNum" : "02-13979",
+              "withdrawn" : false,
+              "agencyId" : "EPA",
+              "commentEndDate" : "2002-08-20T03:59:59Z",
+              "title" : "National Emission Standards for Hazardous Air Pollutants for Refractory Products Manufacturing",
+              "postedDate" : "2021-01-06T05:00:00Z",
+              "docketId" : "EPA-HQ-OAR-2002-0088",
+              "subtype" : null,
+              "commentStartDate" : "2021-01-06T05:00:00Z",
+              "openForComment" : false,
+              "objectId" : "09000064849e254c"
+            },
+            "links" : {
+              "self" : "https://api.regulations.gov/v4/documents/EPA-HQ-OAR-2002-0088-0453"
+            }
+          }, {
+            "id" : "HUD-2020-0078-0001",
+            "type" : "documents",
+            "attributes" : {
+              "documentType" : "Proposed Rule",
+              "highlightedContent" : "",
+              "frDocNum" : "2020-25105",
+              "withdrawn" : false,
+              "agencyId" : "HUD",
+              "commentEndDate" : "2021-01-23T04:59:59Z",
+              "title" : "FR-6084-P-01 Acceptance of Private Flood Insurance for FHA- Insured Mortgages",
+              "postedDate" : "2020-11-23T05:00:00Z",
+              "docketId" : "HUD-2020-0078",
+              "subtype" : null,
+              "commentStartDate" : "2020-11-23T05:00:00Z",
+              "openForComment" : true,
+              "objectId" : "0900006484970632"
+            },
+            "links" : {
+              "self" : "https://api.regulations.gov/v4/documents/HUD-2020-0078-0001"
+            }
+          }, {
+            "id" : "FNS-2020-0038-0001",
+            "type" : "documents",
+            "attributes" : {
+              "documentType" : "Proposed Rule",
+              "highlightedContent" : "",
+              "frDocNum" : "2020-25761",
+              "withdrawn" : false,
+              "agencyId" : "FNS",
+              "commentEndDate" : "2020-12-29T04:59:59Z",
+              "title" : "Restoration of Milk, Whole Grains, and Sodium Flexibilities",
+              "postedDate" : "2020-11-25T05:00:00Z",
+              "docketId" : "FNS-2020-0038",
+              "subtype" : null,
+              "commentStartDate" : "2020-11-25T05:00:00Z",
+              "openForComment" : false,
+              "objectId" : "09000064849757b3"
+            },
+            "links" : {
+              "self" : "https://api.regulations.gov/v4/documents/FNS-2020-0038-0001"
+            }
+          }, {
+            "id" : "FINCEN-2020-0020-0001",
+            "type" : "documents",
+            "attributes" : {
+              "documentType" : "Proposed Rule",
+              "highlightedContent" : "",
+              "frDocNum" : "2020-28437",
+              "withdrawn" : false,
+              "agencyId" : "FINCEN",
+              "commentEndDate" : "2021-01-08T04:59:59Z",
+              "title" : "Requirements for Certain Transactions Involving Convertible Virtual Currency or Digital Assets",
+              "postedDate" : "2020-12-23T05:00:00Z",
+              "docketId" : "FINCEN-2020-0020",
+              "subtype" : "Notice of Proposed Rulemaking (NPRM)",
+              "commentStartDate" : "2020-12-23T05:00:00Z",
+              "openForComment" : true,
+              "objectId" : "09000064849c0878"
+            },
+            "links" : {
+              "self" : "https://api.regulations.gov/v4/documents/FINCEN-2020-0020-0001"
+            }
+          } ],
+          "meta" : {
+            "aggregations" : {
+              "documentType" : [ {
+                "docCount" : 226,
+                "label" : "Supporting & Related Material"
+              }, {
+                "docCount" : 114,
+                "label" : "Notice"
+              }, {
+                "docCount" : 45,
+                "label" : "Other"
+              }, {
+                "docCount" : 23,
+                "label" : "Rule"
+              }, {
+                "docCount" : 21,
+                "label" : "Proposed Rule"
+              } ],
+              "subtype" : [ {
+                "docCount" : 3,
+                "label" : "Notice of Proposed Rulemaking (NPRM)"
+              }, {
+                "docCount" : 1,
+                "label" : "Extension of Comment Period"
+              }, {
+                "docCount" : 1,
+                "label" : "Public Meeting"
+              }, {
+                "docCount" : 1,
+                "label" : "Reopening of Comment Period"
+              } ],
+              "withinCommentPeriod" : [ {
+                "docCount" : 17,
+                "label" : "true"
+              }, {
+                "docCount" : 4,
+                "label" : "false"
+              } ],
+              "agencyId" : [ {
+                "docCount" : 4,
+                "value" : "FDA"
+              }, {
+                "docCount" : 3,
+                "value" : "NOAA"
+              }, {
+                "docCount" : 2,
+                "value" : "HUD"
+              }, {
+                "docCount" : 1,
+                "value" : "CISA"
+              }, {
+                "docCount" : 1,
+                "value" : "DEA"
+              }, {
+                "docCount" : 1,
+                "value" : "DOD"
+              }, {
+                "docCount" : 1,
+                "value" : "EPA"
+              }, {
+                "docCount" : 1,
+                "value" : "FINCEN"
+              }, {
+                "docCount" : 1,
+                "value" : "FNS"
+              }, {
+                "docCount" : 1,
+                "value" : "HRSA"
+              }, {
+                "docCount" : 1,
+                "value" : "NHTSA"
+              }, {
+                "docCount" : 1,
+                "value" : "NRC"
+              }, {
+                "docCount" : 1,
+                "value" : "OCC"
+              }, {
+                "docCount" : 1,
+                "value" : "OPM"
+              }, {
+                "docCount" : 1,
+                "value" : "SBA"
+              } ],
+              "commentEndDate" : [ {
+                "docCount" : 1,
+                "label" : "Today",
+                "fromDate" : "2021-01-06 00:00:00",
+                "toDate" : "2021-01-06 23:59:59"
+              }, {
+                "docCount" : 3,
+                "label" : "Next 3 Days",
+                "fromDate" : "2021-01-06 00:00:00",
+                "toDate" : "2021-01-08 23:59:59"
+              }, {
+                "docCount" : 6,
+                "label" : "Next 7 Days",
+                "fromDate" : "2021-01-06 00:00:00",
+                "toDate" : "2021-01-12 23:59:59"
+              }, {
+                "docCount" : 7,
+                "label" : "Next 15 Days",
+                "fromDate" : "2021-01-06 00:00:00",
+                "toDate" : "2021-01-20 23:59:59"
+              }, {
+                "docCount" : 9,
+                "label" : "Next 30 Days",
+                "fromDate" : "2021-01-06 00:00:00",
+                "toDate" : "2021-02-04 23:59:59"
+              }, {
+                "docCount" : 17,
+                "label" : "Next 90 Days",
+                "fromDate" : "2021-01-06 00:00:00",
+                "toDate" : "2021-04-05 23:59:59"
+              } ],
+              "postedDate" : [ {
+                "docCount" : 3,
+                "label" : "Today",
+                "fromDate" : "2021-01-06 00:00:00",
+                "toDate" : "2021-01-06 23:59:59"
+              }, {
+                "docCount" : 3,
+                "label" : "Last 3 Days",
+                "fromDate" : "2021-01-04 00:00:00",
+                "toDate" : "2021-01-06 23:59:59"
+              }, {
+                "docCount" : 4,
+                "label" : "Last 7 Days",
+                "fromDate" : "2020-12-31 00:00:00",
+                "toDate" : "2021-01-06 23:59:59"
+              }, {
+                "docCount" : 6,
+                "label" : "Last 15 Days",
+                "fromDate" : "2020-12-23 00:00:00",
+                "toDate" : "2021-01-06 23:59:59"
+              }, {
+                "docCount" : 11,
+                "label" : "Last 30 Days",
+                "fromDate" : "2020-12-08 00:00:00",
+                "toDate" : "2021-01-06 23:59:59"
+              }, {
+                "docCount" : 18,
+                "label" : "Last 90 Days",
+                "fromDate" : "2020-10-09 00:00:00",
+                "toDate" : "2021-01-06 23:59:59"
+              } ]
+            },
+            "filters" : {
+              "lastUpdated" : {
+                "fromDate" : "2021-01-06",
+                "toDate" : null
+              },
+              "documentType" : [ {
+                "label" : "Proposed Rule",
+                "value" : "Proposed Rule"
+              } ]
+            },
+            "hasNextPage" : false,
+            "hasPreviousPage" : false,
+            "numberOfElements" : 21,
+            "pageNumber" : 1,
+            "pageSize" : 250,
+            "totalElements" : 21,
+            "totalPages" : 1,
+            "firstPage" : true,
+            "lastPage" : true
+          }
+        }
+  recorded_at: Thu, 07 Jan 2021 04:54:30 GMT
+- request:
+    method: get
+    uri: https://api.regulations.gov/v4/documents?api_key=<API_KEY>&filter%5BdocumentType%5D=Proposed%20Rule&filter%5BlastUpdated%5D%5Bge%5D=2021-01-07&page%5Bsize%5D=250
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.15.3
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: ''
+    headers:
+      Date:
+      - Thu, 07 Jan 2021 18:32:55 GMT
+      Content-Type:
+      - application/vnd.api+json;charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      X-Ratelimit-Limit:
+      - '40'
+      X-Ratelimit-Remaining:
+      - '36'
+      Age:
+      - '0'
+      Via:
+      - https/1.1 api-umbrella (ApacheTrafficServer [cMsSf ])
+      X-Cache:
+      - MISS
+      Access-Control-Allow-Origin:
+      - "*"
+      Strict-Transport-Security:
+      - max-age=31536000; preload
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "data" : [ {
+            "id" : "DEA_FRDOC_0001-0350",
+            "type" : "documents",
+            "attributes" : {
+              "documentType" : "Proposed Rule",
+              "highlightedContent" : "",
+              "frDocNum" : "2020-28532",
+              "withdrawn" : false,
+              "agencyId" : "DEA",
+              "commentEndDate" : "2021-03-09T04:59:59Z",
+              "title" : "Amending Regulations To Require Online Submission of Applications for and Renewals of Registration",
+              "postedDate" : "2021-01-07T05:00:00Z",
+              "docketId" : "DEA_FRDOC_0001",
+              "subtype" : null,
+              "commentStartDate" : "2021-01-07T05:00:00Z",
+              "openForComment" : true,
+              "objectId" : "09000064849e5644"
+            },
+            "links" : {
+              "self" : "https://api.regulations.gov/v4/documents/DEA_FRDOC_0001-0350"
+            }
+          }, {
+            "id" : "DOI_FRDOC_0001-0108",
+            "type" : "documents",
+            "attributes" : {
+              "documentType" : "Proposed Rule",
+              "highlightedContent" : "",
+              "frDocNum" : "2020-28306",
+              "withdrawn" : false,
+              "agencyId" : "DOI",
+              "commentEndDate" : "2021-02-10T04:59:59Z",
+              "title" : "American Indian Probate Regulations",
+              "postedDate" : "2021-01-07T05:00:00Z",
+              "docketId" : "DOI_FRDOC_0001",
+              "subtype" : null,
+              "commentStartDate" : "2021-01-07T05:00:00Z",
+              "openForComment" : true,
+              "objectId" : "09000064849e56da"
+            },
+            "links" : {
+              "self" : "https://api.regulations.gov/v4/documents/DOI_FRDOC_0001-0108"
+            }
+          }, {
+            "id" : "BIA_FRDOC_0001-0140",
+            "type" : "documents",
+            "attributes" : {
+              "documentType" : "Proposed Rule",
+              "highlightedContent" : "",
+              "frDocNum" : "2020-28306",
+              "withdrawn" : false,
+              "agencyId" : "BIA",
+              "commentEndDate" : "2021-02-10T04:59:59Z",
+              "title" : "American Indian Probate Regulations",
+              "postedDate" : "2021-01-07T05:00:00Z",
+              "docketId" : "BIA_FRDOC_0001",
+              "subtype" : null,
+              "commentStartDate" : "2021-01-07T05:00:00Z",
+              "openForComment" : true,
+              "objectId" : "09000064849e56df"
+            },
+            "links" : {
+              "self" : "https://api.regulations.gov/v4/documents/BIA_FRDOC_0001-0140"
+            }
+          }, {
+            "id" : "NRC-2009-0554-0070",
+            "type" : "documents",
+            "attributes" : {
+              "documentType" : "Proposed Rule",
+              "highlightedContent" : "",
+              "frDocNum" : "2020-29151",
+              "withdrawn" : false,
+              "agencyId" : "NRC",
+              "commentEndDate" : null,
+              "title" : "Calculated Maximum Fuel Element Cladding Temperature",
+              "postedDate" : "2021-01-07T05:00:00Z",
+              "docketId" : "NRC-2009-0554",
+              "subtype" : null,
+              "commentStartDate" : "2021-01-07T05:00:00Z",
+              "openForComment" : false,
+              "objectId" : "09000064849e56d8"
+            },
+            "links" : {
+              "self" : "https://api.regulations.gov/v4/documents/NRC-2009-0554-0070"
+            }
+          }, {
+            "id" : "EPA_FRDOC_0001-26309",
+            "type" : "documents",
+            "attributes" : {
+              "documentType" : "Proposed Rule",
+              "highlightedContent" : "",
+              "frDocNum" : "2020-24241",
+              "withdrawn" : false,
+              "agencyId" : "EPA",
+              "commentEndDate" : "2021-02-09T04:59:59Z",
+              "title" : "Final Approval of State Underground Storage Tank Program Revisions and Incorporation by Reference: Arkansas",
+              "postedDate" : "2021-01-07T05:00:00Z",
+              "docketId" : "EPA_FRDOC_0001",
+              "subtype" : null,
+              "commentStartDate" : "2021-01-07T05:00:00Z",
+              "openForComment" : true,
+              "objectId" : "09000064849e5766"
+            },
+            "links" : {
+              "self" : "https://api.regulations.gov/v4/documents/EPA_FRDOC_0001-26309"
+            }
+          }, {
+            "id" : "DOD-2020-OS-0015-0001",
+            "type" : "documents",
+            "attributes" : {
+              "documentType" : "Proposed Rule",
+              "highlightedContent" : "",
+              "frDocNum" : "2020-27694",
+              "withdrawn" : false,
+              "agencyId" : "DOD",
+              "commentEndDate" : "2021-03-09T04:59:59Z",
+              "title" : "Operational Contract Support Outside the United States",
+              "postedDate" : "2021-01-07T05:00:00Z",
+              "docketId" : "DOD-2020-OS-0015",
+              "subtype" : null,
+              "commentStartDate" : "2021-01-07T05:00:00Z",
+              "openForComment" : true,
+              "objectId" : "09000064849e56db"
+            },
+            "links" : {
+              "self" : "https://api.regulations.gov/v4/documents/DOD-2020-OS-0015-0001"
+            }
+          }, {
+            "id" : "USPS-2021-0013-0001",
+            "type" : "documents",
+            "attributes" : {
+              "documentType" : "Proposed Rule",
+              "highlightedContent" : "",
+              "frDocNum" : "2020-27802",
+              "withdrawn" : false,
+              "agencyId" : "USPS",
+              "commentEndDate" : "2021-02-09T04:59:59Z",
+              "title" : "Extra Services Refund Time Limit",
+              "postedDate" : "2021-01-07T05:00:00Z",
+              "docketId" : null,
+              "subtype" : null,
+              "commentStartDate" : "2021-01-07T05:00:00Z",
+              "openForComment" : true,
+              "objectId" : "09000064849e5765"
+            },
+            "links" : {
+              "self" : "https://api.regulations.gov/v4/documents/USPS-2021-0013-0001"
+            }
+          }, {
+            "id" : "TREAS-TRIP-2020-0022-0001",
+            "type" : "documents",
+            "attributes" : {
+              "documentType" : "Proposed Rule",
+              "highlightedContent" : "",
+              "frDocNum" : "2020-24522",
+              "withdrawn" : false,
+              "agencyId" : "TREAS",
+              "commentEndDate" : "2021-01-12T04:59:59Z",
+              "title" : "Terrorism Risk Insurance Program: Updated Regulations in Light of the Terrorism Risk Insurance Program Reauthorization Act, and Other Purposes",
+              "postedDate" : "2020-11-10T05:00:00Z",
+              "docketId" : "TREAS-TRIP-2020-0022",
+              "subtype" : "Notice of Proposed Rulemaking (NPRM)",
+              "commentStartDate" : "2020-11-10T05:00:00Z",
+              "openForComment" : true,
+              "objectId" : "0900006484956498"
+            },
+            "links" : {
+              "self" : "https://api.regulations.gov/v4/documents/TREAS-TRIP-2020-0022-0001"
+            }
+          } ],
+          "meta" : {
+            "aggregations" : {
+              "documentType" : [ {
+                "docCount" : 98,
+                "label" : "Notice"
+              }, {
+                "docCount" : 45,
+                "label" : "Supporting & Related Material"
+              }, {
+                "docCount" : 12,
+                "label" : "Other"
+              }, {
+                "docCount" : 10,
+                "label" : "Rule"
+              }, {
+                "docCount" : 8,
+                "label" : "Proposed Rule"
+              } ],
+              "subtype" : [ {
+                "docCount" : 1,
+                "label" : "Notice of Proposed Rulemaking (NPRM)"
+              } ],
+              "withinCommentPeriod" : [ {
+                "docCount" : 7,
+                "label" : "true"
+              }, {
+                "docCount" : 1,
+                "label" : "false"
+              } ],
+              "agencyId" : [ {
+                "docCount" : 1,
+                "value" : "BIA"
+              }, {
+                "docCount" : 1,
+                "value" : "DEA"
+              }, {
+                "docCount" : 1,
+                "value" : "DOD"
+              }, {
+                "docCount" : 1,
+                "value" : "DOI"
+              }, {
+                "docCount" : 1,
+                "value" : "EPA"
+              }, {
+                "docCount" : 1,
+                "value" : "NRC"
+              }, {
+                "docCount" : 1,
+                "value" : "TREAS"
+              }, {
+                "docCount" : 1,
+                "value" : "USPS"
+              } ],
+              "commentEndDate" : [ {
+                "docCount" : 1,
+                "label" : "Next 7 Days",
+                "fromDate" : "2021-01-07 00:00:00",
+                "toDate" : "2021-01-13 23:59:59"
+              }, {
+                "docCount" : 1,
+                "label" : "Next 15 Days",
+                "fromDate" : "2021-01-07 00:00:00",
+                "toDate" : "2021-01-21 23:59:59"
+              }, {
+                "docCount" : 1,
+                "label" : "Next 30 Days",
+                "fromDate" : "2021-01-07 00:00:00",
+                "toDate" : "2021-02-05 23:59:59"
+              }, {
+                "docCount" : 7,
+                "label" : "Next 90 Days",
+                "fromDate" : "2021-01-07 00:00:00",
+                "toDate" : "2021-04-06 23:59:59"
+              } ],
+              "postedDate" : [ {
+                "docCount" : 7,
+                "label" : "Today",
+                "fromDate" : "2021-01-07 00:00:00",
+                "toDate" : "2021-01-07 23:59:59"
+              }, {
+                "docCount" : 7,
+                "label" : "Last 3 Days",
+                "fromDate" : "2021-01-05 00:00:00",
+                "toDate" : "2021-01-07 23:59:59"
+              }, {
+                "docCount" : 7,
+                "label" : "Last 7 Days",
+                "fromDate" : "2021-01-01 00:00:00",
+                "toDate" : "2021-01-07 23:59:59"
+              }, {
+                "docCount" : 7,
+                "label" : "Last 15 Days",
+                "fromDate" : "2020-12-24 00:00:00",
+                "toDate" : "2021-01-07 23:59:59"
+              }, {
+                "docCount" : 7,
+                "label" : "Last 30 Days",
+                "fromDate" : "2020-12-09 00:00:00",
+                "toDate" : "2021-01-07 23:59:59"
+              }, {
+                "docCount" : 8,
+                "label" : "Last 90 Days",
+                "fromDate" : "2020-10-10 00:00:00",
+                "toDate" : "2021-01-07 23:59:59"
+              } ]
+            },
+            "filters" : {
+              "lastUpdated" : {
+                "fromDate" : "2021-01-07",
+                "toDate" : null
+              },
+              "documentType" : [ {
+                "label" : "Proposed Rule",
+                "value" : "Proposed Rule"
+              } ]
+            },
+            "hasNextPage" : false,
+            "hasPreviousPage" : false,
+            "numberOfElements" : 8,
+            "pageNumber" : 1,
+            "pageSize" : 250,
+            "totalElements" : 8,
+            "totalPages" : 1,
+            "firstPage" : true,
+            "lastPage" : true
+          }
+        }
+  recorded_at: Thu, 07 Jan 2021 18:32:55 GMT
+recorded_with: VCR 6.0.0

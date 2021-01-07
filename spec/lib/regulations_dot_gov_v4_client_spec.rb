@@ -66,4 +66,12 @@ describe RegulationsDotGov::V4::Client do
     end
   end
 
+  it "find_documents_updated_within" do
+    VCR.use_cassette("regulations_dot_gov_v4_documents_updated_within") do
+      result = RegulationsDotGov::V4::Client.new.find_documents_updated_within(0, 'Proposed Rule')
+
+      expect(result.map(&:class).uniq.first).to eq(RegulationsDotGov::V4::BasicDocument)
+    end
+  end
+
 end
