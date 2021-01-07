@@ -60,7 +60,16 @@ class RegulationsDotGov::V4::Client
       'api_key'                 => api_key,
       'page[size]'              => 250
     )
-    JSON.parse(response.body)
+
+    parsed_response = JSON.parse(response.body)
+
+    if parsed_response.fetch("meta").fetch("hasNextPage")
+      Honeybadger.notify("More than 250 results were returned.  Pagination should be implemented.")
+    end
+
+    parsed_response.
+      fetch("data").
+      map{|raw_attributes| RegulationsDotGov::V4::BasicDocument.new(raw_attributes) }
   end
 
 
