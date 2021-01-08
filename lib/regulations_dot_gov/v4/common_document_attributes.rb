@@ -26,6 +26,7 @@ module RegulationsDotGov::V4::CommonDocumentAttributes
   def document_id
     raw_attributes['id']
   end
+  alias_method :regulations_dot_gov_document_id, :document_id
 
   def docket_id
     raw_attribute_value('docketId')
