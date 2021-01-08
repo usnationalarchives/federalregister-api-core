@@ -1,4 +1,5 @@
 class RegulationsDotGov::V4::Client
+  class MultipleResultError < StandardError; end
 
   def initialize
     @logger = Logger.new("#{Rails.root}/log/#{Rails.env}_regulations_dot_gov_v4.log")
@@ -20,8 +21,14 @@ class RegulationsDotGov::V4::Client
       'api_key'          => api_key
     )
     data = JSON.parse(response.body).fetch('data')
-    raise if data.length != 1
-    RegulationsDotGov::V4::BasicDocument.new(data.first)
+
+    if data.length == 0
+      return nil
+    elsif data.length == 1
+      RegulationsDotGov::V4::BasicDocument.new(data.first)
+    else
+      raise MultipleResultError, "#{data.length} results found for #{document_number}"
+    end
   end
 
   def find_comments_by_comment_on_id(comment_on_id)

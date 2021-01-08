@@ -21,6 +21,13 @@ describe RegulationsDotGov::V4::Client do
     end
   end
 
+  it "#find_basic_document returns nil if no results" do
+    VCR.use_cassette("regulations_dot_gov_v4_basic_document_no_result_search") do
+      result = RegulationsDotGov::V4::Client.new.find_basic_document('invalid-doc-number')
+      expect(result).to be_nil
+    end
+  end
+
   it "find_detailed_document" do
     VCR.use_cassette("regulations_dot_gov_v4_detailed_document") do
       result = RegulationsDotGov::V4::Client.new.find_detailed_document('FRTIB_FRDOC_0001-0319')

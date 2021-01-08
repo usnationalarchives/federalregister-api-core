@@ -1,0 +1,81 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api.regulations.gov/v4/documents?api_key=<API_KEY>&filter%5BfrDocNum%5D=invalid-doc-number
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.15.3
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: ''
+    headers:
+      Date:
+      - Fri, 08 Jan 2021 17:30:01 GMT
+      Content-Type:
+      - application/vnd.api+json;charset=utf-8
+      Content-Length:
+      - '714'
+      Connection:
+      - keep-alive
+      X-Ratelimit-Limit:
+      - '40'
+      X-Ratelimit-Remaining:
+      - '39'
+      Age:
+      - '0'
+      Via:
+      - https/1.1 api-umbrella (ApacheTrafficServer [cMsSf ])
+      X-Cache:
+      - MISS
+      Access-Control-Allow-Origin:
+      - "*"
+      Strict-Transport-Security:
+      - max-age=31536000; preload
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "data" : [ ],
+          "meta" : {
+            "aggregations" : {
+              "documentType" : [ ],
+              "subtype" : [ ],
+              "withinCommentPeriod" : [ {
+                "docCount" : 0,
+                "label" : "true"
+              }, {
+                "docCount" : 0,
+                "label" : "false"
+              } ],
+              "agencyId" : [ ],
+              "commentEndDate" : [ ],
+              "postedDate" : [ ]
+            },
+            "filters" : {
+              "frDocumentNumber" : {
+                "label" : "invalid-doc-number",
+                "value" : "invalid-doc-number"
+              }
+            },
+            "hasNextPage" : false,
+            "hasPreviousPage" : false,
+            "numberOfElements" : 0,
+            "pageNumber" : 1,
+            "pageSize" : 25,
+            "totalElements" : 0,
+            "totalPages" : 0,
+            "firstPage" : true,
+            "lastPage" : true
+          }
+        }
+  recorded_at: Fri, 08 Jan 2021 17:30:02 GMT
+recorded_with: VCR 6.0.0
