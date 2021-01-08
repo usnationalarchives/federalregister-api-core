@@ -1,6 +1,8 @@
 module RegulationsDotGov::V4::CommonDocumentAttributes
   extend Memoist
 
+  attr_reader :raw_attributes
+
   def agency_acronym
     raw_attribute_value('agencyId')
   end
@@ -54,8 +56,6 @@ module RegulationsDotGov::V4::CommonDocumentAttributes
 
 
   private
-
-  attr_reader :raw_attributes
 
   def raw_attribute_value(name)
     raw_attributes['attributes'][name]
