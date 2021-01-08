@@ -26,7 +26,7 @@ module RegulationsDotGov::V4::CommonDocumentAttributes
   def document_id
     raw_attributes['id']
   end
-  alias_method :regulations_dot_gov_document_id, :document_id
+  alias_method :regulations_dot_gov_document_id, :document_id #Used in V3 client interface
 
   def docket_id
     raw_attribute_value('docketId')
@@ -38,6 +38,10 @@ module RegulationsDotGov::V4::CommonDocumentAttributes
 
   def non_participating_agency?
     DocketImporter.non_participating_agency_ids.include?(agency_acronym)
+  end
+
+  def open_for_comment?
+    raw_attribute_value('openForComment') && !non_participating_agency?
   end
 
   def title
