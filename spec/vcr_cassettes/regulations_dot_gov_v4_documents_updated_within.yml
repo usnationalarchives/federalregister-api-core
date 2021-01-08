@@ -997,4 +997,385 @@ http_interactions:
           }
         }
   recorded_at: Thu, 07 Jan 2021 18:32:55 GMT
+- request:
+    method: get
+    uri: https://api.regulations.gov/v4/documents?api_key=<API_KEY>&filter%5BdocumentType%5D=Proposed%20Rule&filter%5BlastUpdated%5D%5Bge%5D=2021-01-08&page%5Bsize%5D=250
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.15.3
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: ''
+    headers:
+      Date:
+      - Fri, 08 Jan 2021 17:34:06 GMT
+      Content-Type:
+      - application/vnd.api+json;charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      X-Ratelimit-Limit:
+      - '40'
+      X-Ratelimit-Remaining:
+      - '37'
+      Age:
+      - '0'
+      Via:
+      - https/1.1 api-umbrella (ApacheTrafficServer [cMsSf ])
+      X-Cache:
+      - MISS
+      Access-Control-Allow-Origin:
+      - "*"
+      Strict-Transport-Security:
+      - max-age=31536000; preload
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "data" : [ {
+            "id" : "FHFA-2021-0001-0001",
+            "type" : "documents",
+            "attributes" : {
+              "documentType" : "Proposed Rule",
+              "highlightedContent" : "",
+              "frDocNum" : "2020-28204",
+              "withdrawn" : false,
+              "agencyId" : "FHFA",
+              "commentEndDate" : "2021-03-10T04:59:59Z",
+              "title" : "Enterprise Liquidity Requirements",
+              "postedDate" : "2021-01-08T05:00:00Z",
+              "docketId" : null,
+              "subtype" : null,
+              "commentStartDate" : "2021-01-08T05:00:00Z",
+              "openForComment" : true,
+              "objectId" : "09000064849e8a3e"
+            },
+            "links" : {
+              "self" : "https://api.regulations.gov/v4/documents/FHFA-2021-0001-0001"
+            }
+          }, {
+            "id" : "NOAA_FRDOC_0001-5763",
+            "type" : "documents",
+            "attributes" : {
+              "documentType" : "Proposed Rule",
+              "highlightedContent" : "",
+              "frDocNum" : "2020-29008",
+              "withdrawn" : false,
+              "agencyId" : "NOAA",
+              "commentEndDate" : "2021-03-10T04:59:59Z",
+              "title" : "Endangered and Threatened Species: Designation of Critical Habitat for the Arctic Subspecies of the Ringed Seal",
+              "postedDate" : "2021-01-08T05:00:00Z",
+              "docketId" : "NOAA_FRDOC_0001",
+              "subtype" : null,
+              "commentStartDate" : "2021-01-08T05:00:00Z",
+              "openForComment" : true,
+              "objectId" : "09000064849e8b6b"
+            },
+            "links" : {
+              "self" : "https://api.regulations.gov/v4/documents/NOAA_FRDOC_0001-5763"
+            }
+          }, {
+            "id" : "FRA-2019-0071-0001",
+            "type" : "documents",
+            "attributes" : {
+              "documentType" : "Proposed Rule",
+              "highlightedContent" : "",
+              "frDocNum" : "2020-25868",
+              "withdrawn" : false,
+              "agencyId" : "FRA",
+              "commentEndDate" : "2021-03-10T04:59:59Z",
+              "title" : "Control of Alcohol and Drug Use: Coverage of Mechanical Employees and Miscellaneous Amendments",
+              "postedDate" : "2021-01-08T05:00:00Z",
+              "docketId" : "FRA-2019-0071",
+              "subtype" : "Notice of Proposed Rulemaking (NPRM)",
+              "commentStartDate" : "2021-01-08T05:00:00Z",
+              "openForComment" : true,
+              "objectId" : "09000064849e895e"
+            },
+            "links" : {
+              "self" : "https://api.regulations.gov/v4/documents/FRA-2019-0071-0001"
+            }
+          }, {
+            "id" : "EPA-HQ-OAR-2020-0560-0001",
+            "type" : "documents",
+            "attributes" : {
+              "documentType" : "Proposed Rule",
+              "highlightedContent" : "",
+              "frDocNum" : "2021-00174",
+              "withdrawn" : false,
+              "agencyId" : "EPA",
+              "commentEndDate" : "2021-02-23T04:59:59Z",
+              "title" : "National Emission Standards for Hazardous Air Pollutants: Mercury Cell Chlor-Alkali Plants Residual Risk and Technology Review",
+              "postedDate" : "2021-01-08T05:00:00Z",
+              "docketId" : "EPA-HQ-OAR-2020-0560",
+              "subtype" : null,
+              "commentStartDate" : "2021-01-08T05:00:00Z",
+              "openForComment" : true,
+              "objectId" : "09000064849e89f1"
+            },
+            "links" : {
+              "self" : "https://api.regulations.gov/v4/documents/EPA-HQ-OAR-2020-0560-0001"
+            }
+          }, {
+            "id" : "FHFA-2021-0002-0001",
+            "type" : "documents",
+            "attributes" : {
+              "documentType" : "Proposed Rule",
+              "highlightedContent" : "",
+              "frDocNum" : "2020-28812",
+              "withdrawn" : false,
+              "agencyId" : "FHFA",
+              "commentEndDate" : "2021-03-10T04:59:59Z",
+              "title" : "Resolution Planning",
+              "postedDate" : "2021-01-08T05:00:00Z",
+              "docketId" : null,
+              "subtype" : null,
+              "commentStartDate" : "2021-01-08T05:00:00Z",
+              "openForComment" : true,
+              "objectId" : "09000064849e8ad9"
+            },
+            "links" : {
+              "self" : "https://api.regulations.gov/v4/documents/FHFA-2021-0002-0001"
+            }
+          }, {
+            "id" : "NOAA_FRDOC_0001-5758",
+            "type" : "documents",
+            "attributes" : {
+              "documentType" : "Proposed Rule",
+              "highlightedContent" : "",
+              "frDocNum" : "2020-29125",
+              "withdrawn" : false,
+              "agencyId" : "NOAA",
+              "commentEndDate" : "2021-02-09T04:59:59Z",
+              "title" : "Taking and Importing Marine Mammals: Hampton Roads Bridge Tunnel Expansion Project in Norfolk, VA",
+              "postedDate" : "2021-01-08T05:00:00Z",
+              "docketId" : "NOAA_FRDOC_0001",
+              "subtype" : null,
+              "commentStartDate" : "2021-01-08T05:00:00Z",
+              "openForComment" : true,
+              "objectId" : "09000064849e8958"
+            },
+            "links" : {
+              "self" : "https://api.regulations.gov/v4/documents/NOAA_FRDOC_0001-5758"
+            }
+          }, {
+            "id" : "NOAA_FRDOC_0001-5760",
+            "type" : "documents",
+            "attributes" : {
+              "documentType" : "Proposed Rule",
+              "highlightedContent" : "",
+              "frDocNum" : "2020-29006",
+              "withdrawn" : false,
+              "agencyId" : "NOAA",
+              "commentEndDate" : "2020-03-10T03:59:59Z",
+              "title" : "Endangered and Threatened Species: Designation of Critical Habitat for the Beringia Distinct Population Segment of the Bearded Seal",
+              "postedDate" : "2021-01-08T05:00:00Z",
+              "docketId" : "NOAA_FRDOC_0001",
+              "subtype" : null,
+              "commentStartDate" : "2021-01-08T05:00:00Z",
+              "openForComment" : false,
+              "objectId" : "09000064849e8998"
+            },
+            "links" : {
+              "self" : "https://api.regulations.gov/v4/documents/NOAA_FRDOC_0001-5760"
+            }
+          }, {
+            "id" : "FRS-2021-0011-0001",
+            "type" : "documents",
+            "attributes" : {
+              "documentType" : "Proposed Rule",
+              "highlightedContent" : "",
+              "frDocNum" : "2020-28755",
+              "withdrawn" : false,
+              "agencyId" : "FRS",
+              "commentEndDate" : "2021-03-10T04:59:59Z",
+              "title" : "Reserve Requirements of Depository Institutions; Regulation D",
+              "postedDate" : "2021-01-08T05:00:00Z",
+              "docketId" : null,
+              "subtype" : null,
+              "commentStartDate" : "2021-01-08T05:00:00Z",
+              "openForComment" : true,
+              "objectId" : "09000064849e8c83"
+            },
+            "links" : {
+              "self" : "https://api.regulations.gov/v4/documents/FRS-2021-0011-0001"
+            }
+          }, {
+            "id" : "EPA-R06-UST-2018-0701-0002",
+            "type" : "documents",
+            "attributes" : {
+              "documentType" : "Proposed Rule",
+              "highlightedContent" : "",
+              "frDocNum" : "2020-24241",
+              "withdrawn" : false,
+              "agencyId" : "EPA",
+              "commentEndDate" : "2021-02-09T04:59:59Z",
+              "title" : "Final Approval of State Underground Storage Tank Program Revisions and Incorporation by Reference: Arkansas",
+              "postedDate" : "2021-01-07T05:00:00Z",
+              "docketId" : "EPA-R06-UST-2018-0701",
+              "subtype" : null,
+              "commentStartDate" : "2021-01-07T05:00:00Z",
+              "openForComment" : true,
+              "objectId" : "09000064849e5766"
+            },
+            "links" : {
+              "self" : "https://api.regulations.gov/v4/documents/EPA-R06-UST-2018-0701-0002"
+            }
+          }, {
+            "id" : "EPA-HQ-OAR-2020-0535-0001",
+            "type" : "documents",
+            "attributes" : {
+              "documentType" : "Proposed Rule",
+              "highlightedContent" : "",
+              "frDocNum" : "2021-00176",
+              "withdrawn" : false,
+              "agencyId" : "EPA",
+              "commentEndDate" : "2021-02-23T04:59:59Z",
+              "title" : "National Emission Standards for Hazardous Air Pollutants: Primary Magnesium Refining Residual Risk and Technology Review",
+              "postedDate" : "2021-01-08T05:00:00Z",
+              "docketId" : "EPA-HQ-OAR-2020-0535",
+              "subtype" : null,
+              "commentStartDate" : "2021-01-08T05:00:00Z",
+              "openForComment" : true,
+              "objectId" : "09000064849e8bc9"
+            },
+            "links" : {
+              "self" : "https://api.regulations.gov/v4/documents/EPA-HQ-OAR-2020-0535-0001"
+            }
+          }, {
+            "id" : "EPA-R09-OAR-2020-0618-0046",
+            "type" : "documents",
+            "attributes" : {
+              "documentType" : "Proposed Rule",
+              "highlightedContent" : "",
+              "frDocNum" : "2020-29092",
+              "withdrawn" : false,
+              "agencyId" : "EPA",
+              "commentEndDate" : "2021-02-09T04:59:59Z",
+              "title" : "Air Quality State Implementation Plans; Approvals and Promulgations: Arizona; West Pinal County; 1987 PM10 Nonattainment Area Requirements",
+              "postedDate" : "2021-01-08T05:00:00Z",
+              "docketId" : "EPA-R09-OAR-2020-0618",
+              "subtype" : null,
+              "commentStartDate" : "2021-01-08T05:00:00Z",
+              "openForComment" : true,
+              "objectId" : "09000064849e8a44"
+            },
+            "links" : {
+              "self" : "https://api.regulations.gov/v4/documents/EPA-R09-OAR-2020-0618-0046"
+            }
+          } ],
+          "meta" : {
+            "aggregations" : {
+              "documentType" : [ {
+                "docCount" : 168,
+                "label" : "Supporting & Related Material"
+              }, {
+                "docCount" : 83,
+                "label" : "Notice"
+              }, {
+                "docCount" : 26,
+                "label" : "Other"
+              }, {
+                "docCount" : 17,
+                "label" : "Rule"
+              }, {
+                "docCount" : 11,
+                "label" : "Proposed Rule"
+              } ],
+              "subtype" : [ {
+                "docCount" : 1,
+                "label" : "Notice of Proposed Rulemaking (NPRM)"
+              } ],
+              "withinCommentPeriod" : [ {
+                "docCount" : 10,
+                "label" : "true"
+              }, {
+                "docCount" : 1,
+                "label" : "false"
+              } ],
+              "agencyId" : [ {
+                "docCount" : 4,
+                "value" : "EPA"
+              }, {
+                "docCount" : 3,
+                "value" : "NOAA"
+              }, {
+                "docCount" : 2,
+                "value" : "FHFA"
+              }, {
+                "docCount" : 1,
+                "value" : "FRA"
+              }, {
+                "docCount" : 1,
+                "value" : "FRS"
+              } ],
+              "commentEndDate" : [ {
+                "docCount" : 10,
+                "label" : "Next 90 Days",
+                "fromDate" : "2021-01-08 00:00:00",
+                "toDate" : "2021-04-07 23:59:59"
+              } ],
+              "postedDate" : [ {
+                "docCount" : 10,
+                "label" : "Today",
+                "fromDate" : "2021-01-08 00:00:00",
+                "toDate" : "2021-01-08 23:59:59"
+              }, {
+                "docCount" : 11,
+                "label" : "Last 3 Days",
+                "fromDate" : "2021-01-06 00:00:00",
+                "toDate" : "2021-01-08 23:59:59"
+              }, {
+                "docCount" : 11,
+                "label" : "Last 7 Days",
+                "fromDate" : "2021-01-02 00:00:00",
+                "toDate" : "2021-01-08 23:59:59"
+              }, {
+                "docCount" : 11,
+                "label" : "Last 15 Days",
+                "fromDate" : "2020-12-25 00:00:00",
+                "toDate" : "2021-01-08 23:59:59"
+              }, {
+                "docCount" : 11,
+                "label" : "Last 30 Days",
+                "fromDate" : "2020-12-10 00:00:00",
+                "toDate" : "2021-01-08 23:59:59"
+              }, {
+                "docCount" : 11,
+                "label" : "Last 90 Days",
+                "fromDate" : "2020-10-11 00:00:00",
+                "toDate" : "2021-01-08 23:59:59"
+              } ]
+            },
+            "filters" : {
+              "lastUpdated" : {
+                "fromDate" : "2021-01-08",
+                "toDate" : null
+              },
+              "documentType" : [ {
+                "label" : "Proposed Rule",
+                "value" : "Proposed Rule"
+              } ]
+            },
+            "hasNextPage" : false,
+            "hasPreviousPage" : false,
+            "numberOfElements" : 11,
+            "pageNumber" : 1,
+            "pageSize" : 250,
+            "totalElements" : 11,
+            "totalPages" : 1,
+            "firstPage" : true,
+            "lastPage" : true
+          }
+        }
+  recorded_at: Fri, 08 Jan 2021 17:34:06 GMT
 recorded_with: VCR 6.0.0
