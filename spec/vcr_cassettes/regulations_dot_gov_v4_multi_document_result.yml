@@ -1,0 +1,162 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api.regulations.gov/v4/documents?api_key=<API_KEY>&filter%5BfrDocNum%5D=2020-28306
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.15.3
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: ''
+    headers:
+      Date:
+      - Sat, 09 Jan 2021 01:36:34 GMT
+      Content-Type:
+      - application/vnd.api+json;charset=utf-8
+      Content-Length:
+      - '3170'
+      Connection:
+      - keep-alive
+      X-Ratelimit-Limit:
+      - '40'
+      X-Ratelimit-Remaining:
+      - '38'
+      Age:
+      - '0'
+      Via:
+      - https/1.1 api-umbrella (ApacheTrafficServer [cMsSf ])
+      X-Cache:
+      - MISS
+      Access-Control-Allow-Origin:
+      - "*"
+      Strict-Transport-Security:
+      - max-age=31536000; preload
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "data" : [ {
+            "id" : "DOI_FRDOC_0001-0108",
+            "type" : "documents",
+            "attributes" : {
+              "documentType" : "Proposed Rule",
+              "highlightedContent" : "",
+              "frDocNum" : "2020-28306",
+              "withdrawn" : false,
+              "agencyId" : "DOI",
+              "commentEndDate" : "2021-02-10T04:59:59Z",
+              "title" : "American Indian Probate Regulations",
+              "postedDate" : "2021-01-07T05:00:00Z",
+              "docketId" : "DOI_FRDOC_0001",
+              "subtype" : null,
+              "commentStartDate" : "2021-01-07T05:00:00Z",
+              "openForComment" : true,
+              "objectId" : "09000064849e56da"
+            },
+            "links" : {
+              "self" : "https://api.regulations.gov/v4/documents/DOI_FRDOC_0001-0108"
+            }
+          }, {
+            "id" : "BIA_FRDOC_0001-0140",
+            "type" : "documents",
+            "attributes" : {
+              "documentType" : "Proposed Rule",
+              "highlightedContent" : "",
+              "frDocNum" : "2020-28306",
+              "withdrawn" : false,
+              "agencyId" : "BIA",
+              "commentEndDate" : "2021-02-10T04:59:59Z",
+              "title" : "American Indian Probate Regulations",
+              "postedDate" : "2021-01-07T05:00:00Z",
+              "docketId" : "BIA_FRDOC_0001",
+              "subtype" : null,
+              "commentStartDate" : "2021-01-07T05:00:00Z",
+              "openForComment" : true,
+              "objectId" : "09000064849e56df"
+            },
+            "links" : {
+              "self" : "https://api.regulations.gov/v4/documents/BIA_FRDOC_0001-0140"
+            }
+          } ],
+          "meta" : {
+            "aggregations" : {
+              "documentType" : [ {
+                "docCount" : 2,
+                "label" : "Proposed Rule"
+              } ],
+              "subtype" : [ ],
+              "withinCommentPeriod" : [ {
+                "docCount" : 2,
+                "label" : "true"
+              }, {
+                "docCount" : 0,
+                "label" : "false"
+              } ],
+              "agencyId" : [ {
+                "docCount" : 1,
+                "value" : "BIA"
+              }, {
+                "docCount" : 1,
+                "value" : "DOI"
+              } ],
+              "commentEndDate" : [ {
+                "docCount" : 2,
+                "label" : "Next 90 Days",
+                "fromDate" : "2021-01-08 00:00:00",
+                "toDate" : "2021-04-07 23:59:59"
+              } ],
+              "postedDate" : [ {
+                "docCount" : 2,
+                "label" : "Last 3 Days",
+                "fromDate" : "2021-01-06 00:00:00",
+                "toDate" : "2021-01-08 23:59:59"
+              }, {
+                "docCount" : 2,
+                "label" : "Last 7 Days",
+                "fromDate" : "2021-01-02 00:00:00",
+                "toDate" : "2021-01-08 23:59:59"
+              }, {
+                "docCount" : 2,
+                "label" : "Last 15 Days",
+                "fromDate" : "2020-12-25 00:00:00",
+                "toDate" : "2021-01-08 23:59:59"
+              }, {
+                "docCount" : 2,
+                "label" : "Last 30 Days",
+                "fromDate" : "2020-12-10 00:00:00",
+                "toDate" : "2021-01-08 23:59:59"
+              }, {
+                "docCount" : 2,
+                "label" : "Last 90 Days",
+                "fromDate" : "2020-10-11 00:00:00",
+                "toDate" : "2021-01-08 23:59:59"
+              } ]
+            },
+            "filters" : {
+              "frDocumentNumber" : {
+                "label" : "2020-28306",
+                "value" : "2020-28306"
+              }
+            },
+            "hasNextPage" : false,
+            "hasPreviousPage" : false,
+            "numberOfElements" : 2,
+            "pageNumber" : 1,
+            "pageSize" : 25,
+            "totalElements" : 2,
+            "totalPages" : 1,
+            "firstPage" : true,
+            "lastPage" : true
+          }
+        }
+  recorded_at: Sat, 09 Jan 2021 01:36:34 GMT
+recorded_with: VCR 6.0.0

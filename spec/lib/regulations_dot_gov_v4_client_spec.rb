@@ -21,6 +21,13 @@ describe RegulationsDotGov::V4::Client do
     end
   end
 
+  it "if multiple documents are found for a single FR document it returns the first document with an open comment period if available" do
+    VCR.use_cassette("regulations_dot_gov_v4_multi_document_result") do
+      result = RegulationsDotGov::V4::Client.new.find_basic_document('2020-28306')
+      expect(result.document_id).to eq('DOI_FRDOC_0001-0108')
+    end
+  end
+
   it "#find_basic_document returns nil if no results" do
     VCR.use_cassette("regulations_dot_gov_v4_basic_document_no_result_search") do
       result = RegulationsDotGov::V4::Client.new.find_basic_document('invalid-doc-number')

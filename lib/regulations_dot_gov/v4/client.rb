@@ -1,5 +1,4 @@
 class RegulationsDotGov::V4::Client
-  class MultipleResultError < StandardError; end
 
   def initialize
     @logger = Logger.new("#{Rails.root}/log/#{Rails.env}_regulations_dot_gov_v4.log")
@@ -27,7 +26,14 @@ class RegulationsDotGov::V4::Client
     elsif data.length == 1
       RegulationsDotGov::V4::BasicDocument.new(data.first)
     else
-      raise MultipleResultError, "#{data.length} results found for #{document_number}"
+      docs_open_for_comment = data.select{|x| x.fetch("attributes").fetch("openForComment") }
+      if docs_open_for_comment.present?
+        doc = docs_open_for_comment.first
+      else
+        doc = data.first
+      end
+
+      RegulationsDotGov::V4::BasicDocument.new(doc)
     end
   end
 
