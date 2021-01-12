@@ -1,11 +1,20 @@
 class IssueReportMonthlyPresenter
-  attr_reader :year
-  def initialize(year:)
+  attr_reader :year, :date_range_type
+
+  def initialize(year:, date_range_type:)
     @year = year
+    @date_range_type = date_range_type
   end
 
+  def date_range
+    if date_range_type == "fy"
+       (Date.new(year, 10, 1) - 1.year) .. Date.new(year, 9, 30)
+     else
+       Date.new(year, 1, 1) .. Date.new(year, 12, 31)
+     end
+   end
+
   def as_csv
-    date_range = Date.new(year, 1, 1) .. Date.new(year, 12, 31)
     CSV.generate do |csv|
       columns = data
       max_length = columns.map(&:length).max
@@ -44,7 +53,6 @@ class IssueReportMonthlyPresenter
       "Corrections"
     ]
 
-    date_range = Date.new(year, 1, 1) .. Date.new(year, 12, 31)
     results = Issue.connection.select_rows Issue.
       where(publication_date: date_range).
       select(

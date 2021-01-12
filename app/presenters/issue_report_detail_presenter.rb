@@ -1,11 +1,18 @@
 class IssueReportDetailPresenter
-  attr_reader :year
-  def initialize(year:)
+  attr_reader :year, :date_range_type
+
+  def initialize(year:, date_range_type:)
     @year = year
+    @date_range_type = date_range_type
   end
 
   def as_csv
-    date_range = Date.new(year, 1, 1) .. Date.new(year, 12, 31)
+    date_range = if date_range_type == "fy"
+                   (Date.new(year, 10, 1) - 1.year) .. Date.new(year, 9, 30)
+                 else
+                   Date.new(year, 1, 1) .. Date.new(year, 12, 31)
+                 end
+
     CSV.generate do |csv|
       csv << [nil, nil, nil, nil, nil, "Document Counts", nil, nil, nil, nil, nil, "Page Counts"]
       csv << [
@@ -29,7 +36,7 @@ class IssueReportDetailPresenter
         "Total",
         "Total Minus Skip",
         "Corrections"
-		  ]
+      ]
 
       Issue.where(publication_date: date_range).order(publication_date: "asc").each do |issue|
         csv << [
