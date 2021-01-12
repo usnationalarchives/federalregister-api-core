@@ -80,10 +80,11 @@ class IssueReportMonthlyPresenter
         "SUM(presidential_document_count)+SUM(rule_count)+SUM(proposed_rule_count)+SUM(notice_count)+SUM(unknown_document_count)",
         "SUM(correction_count)"
       ).
-      group("QUARTER(publication_date), MONTH(publication_date) WITH ROLLUP").
+      group("YEAR(publication_date), QUARTER(publication_date), MONTH(publication_date) WITH ROLLUP").
       to_sql
     
-    rows += results.map do |quarter, month, *remaining|
+    index_counter = 1
+    results.map do |quarter, month, *remaining|
       summary = if month.nil?
                   if quarter.nil?
                     "#{date_range_type.upcase} #{year}"
@@ -97,7 +98,8 @@ class IssueReportMonthlyPresenter
                 else
                   Date.new(year,month,1).strftime("%B")
                 end
-      [summary, *remaining]
+      rows << [summary, *remaining] unless date_range_type == "fy" && month.nil? && quarter.nil? && (index_counter + 1) != results.length
+      index_counter += 1
     end
     rows
   end
