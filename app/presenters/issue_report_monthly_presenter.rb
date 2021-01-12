@@ -88,7 +88,11 @@ class IssueReportMonthlyPresenter
         if quarter.nil?
           year
         else
-          "Q#{quarter}"
+          if date_range_type == "fy"
+            "#{year}Q#{quarter.to_i == 4 ? "1" : (quarter.to_i + 1).to_s}"
+          else
+            "#{year}Q#{quarter}"
+          end
         end
       else
         Date.new(year,month,1).strftime("%B")
