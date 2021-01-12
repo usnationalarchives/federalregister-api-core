@@ -85,18 +85,18 @@ class IssueReportMonthlyPresenter
     
     rows += results.map do |quarter, month, *remaining|
       summary = if month.nil?
-        if quarter.nil?
-          year
-        else
-          if date_range_type == "fy"
-            "#{year}Q#{quarter.to_i == 4 ? "1" : (quarter.to_i + 1).to_s}"
-          else
-            "#{year}Q#{quarter}"
-          end
-        end
-      else
-        Date.new(year,month,1).strftime("%B")
-      end
+                  if quarter.nil?
+                    "#{date_range_type.upcase} #{year}"
+                  else
+                    if date_range_type == "fy"
+                      "#{year}Q#{quarter.to_i == 4 ? "1" : (quarter.to_i + 1).to_s}"
+                    else
+                      "#{year}Q#{quarter}"
+                    end
+                  end
+                else
+                  Date.new(year,month,1).strftime("%B")
+                end
       [summary, *remaining]
     end
     rows
