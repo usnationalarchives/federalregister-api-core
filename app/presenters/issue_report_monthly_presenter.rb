@@ -83,7 +83,7 @@ class IssueReportMonthlyPresenter
       group("YEAR(publication_date), QUARTER(publication_date), MONTH(publication_date) WITH ROLLUP").
       to_sql
     
-    results.map do |quarter, month, *remaining|
+    results.uniq.map do |quarter, month, *remaining|
       summary = if month.nil?
                   if quarter.nil?
                     "#{date_range_type.upcase} #{year}"
@@ -97,7 +97,12 @@ class IssueReportMonthlyPresenter
                 else
                   Date.new(year,month,1).strftime("%B")
                 end
-      rows << [summary, *remaining] unless date_range_type == "fy" && month.nil? && quarter.nil? && results.last != [quarter, month, *remaining]
+
+      if date_range_type == "fy"
+        rows << [summary, *remaining] unless month.nil? && quarter.nil? && results.last != [quarter, month, *remaining]
+      else
+        rows << [summary, *remaining]
+      end
     end
     rows
   end
