@@ -83,7 +83,6 @@ class IssueReportMonthlyPresenter
       group("YEAR(publication_date), QUARTER(publication_date), MONTH(publication_date) WITH ROLLUP").
       to_sql
     
-    index_counter = 1
     results.map do |quarter, month, *remaining|
       summary = if month.nil?
                   if quarter.nil?
@@ -98,8 +97,7 @@ class IssueReportMonthlyPresenter
                 else
                   Date.new(year,month,1).strftime("%B")
                 end
-      rows << [summary, *remaining] unless date_range_type == "fy" && month.nil? && quarter.nil? && (index_counter + 1) != results.length
-      index_counter += 1
+      rows << [summary, *remaining] unless date_range_type == "fy" && month.nil? && quarter.nil? && results.last != [quarter, month, *remaining]
     end
     rows
   end
