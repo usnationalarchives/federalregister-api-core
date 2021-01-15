@@ -1,11 +1,20 @@
 class IssueReportMonthlyPresenter
-  attr_reader :year
-  def initialize(year:)
+  attr_reader :year, :date_range_type
+
+  def initialize(year:, date_range_type:)
     @year = year
+    @date_range_type = date_range_type
   end
 
+  def date_range
+    if date_range_type == "fy"
+       (Date.new(year, 10, 1) - 1.year) .. Date.new(year, 9, 30)
+     else
+       Date.new(year, 1, 1) .. Date.new(year, 12, 31)
+     end
+   end
+
   def as_csv
-    date_range = Date.new(year, 1, 1) .. Date.new(year, 12, 31)
     CSV.generate do |csv|
       columns = data
       max_length = columns.map(&:length).max
@@ -44,7 +53,6 @@ class IssueReportMonthlyPresenter
       "Corrections"
     ]
 
-    date_range = Date.new(year, 1, 1) .. Date.new(year, 12, 31)
     results = Issue.connection.select_rows Issue.
       where(publication_date: date_range).
       select(
@@ -72,20 +80,29 @@ class IssueReportMonthlyPresenter
         "SUM(presidential_document_count)+SUM(rule_count)+SUM(proposed_rule_count)+SUM(notice_count)+SUM(unknown_document_count)",
         "SUM(correction_count)"
       ).
-      group("QUARTER(publication_date), MONTH(publication_date) WITH ROLLUP").
+      group("YEAR(publication_date), QUARTER(publication_date), MONTH(publication_date) WITH ROLLUP").
       to_sql
     
-    rows += results.map do |quarter, month, *remaining|
+    results.uniq.map do |quarter, month, *remaining|
       summary = if month.nil?
-        if quarter.nil?
-          year
-        else
-          "Q#{quarter}"
-        end
+                  if quarter.nil?
+                    "#{date_range_type.upcase} #{year}"
+                  else
+                    if date_range_type == "fy"
+                      "#{year}Q#{quarter.to_i == 4 ? "1" : (quarter.to_i + 1).to_s}"
+                    else
+                      "#{year}Q#{quarter}"
+                    end
+                  end
+                else
+                  Date.new(year,month,1).strftime("%B")
+                end
+
+      if date_range_type == "fy"
+        rows << [summary, *remaining] unless month.nil? && quarter.nil? && results.last != [quarter, month, *remaining]
       else
-        Date.new(year,month,1).strftime("%B")
+        rows << [summary, *remaining]
       end
-      [summary, *remaining]
     end
     rows
   end

@@ -7,7 +7,7 @@ class Admin::IssueReportsController < AdminController
       wants.csv do
         year = params[:year].to_i
         headers['Content-Disposition'] = "attachment; filename=\"issue_detail_#{year}.csv\""
-        render plain: IssueReportDetailPresenter.new(year: year).as_csv
+        render plain: IssueReportDetailPresenter.new(year: year, date_range_type: params[:date_range_type]).as_csv
       end
     end
   end
@@ -17,7 +17,7 @@ class Admin::IssueReportsController < AdminController
       wants.csv do
         year = params[:year].to_i
         headers['Content-Disposition'] = "attachment; filename=\"issue_monthly_#{year}.csv\""
-        render plain: IssueReportMonthlyPresenter.new(year: year).as_csv
+        render plain: IssueReportMonthlyPresenter.new(year: year, date_range_type: params[:date_range_type]).as_csv
       end
     end
   end
