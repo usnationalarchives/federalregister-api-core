@@ -475,6 +475,7 @@ class EsApplicationSearch
         }
       },
       sort: es_sort_order,
+      _source: ['id'],
     }.tap do |query|
       if excerpts
         query.merge!(highlight: highlight_query)
@@ -536,6 +537,7 @@ class EsApplicationSearch
   def count_search_options
     options = search_options.except(:size, :from, :sort, :highlight).dup.tap do |ops|
       ops[:query][:function_score][:functions]= Array.new
+      ops.delete(:_source)
     end
   end
 

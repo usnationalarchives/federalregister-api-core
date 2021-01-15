@@ -29,7 +29,8 @@ describe EsPublicInspectionDocumentSearch do
                {:bool=>
                  {:filter=>[{:bool=>{:filter=>{:term=>{:special_filing=>true}}}}],
                   :must=>[]}}}},
-          :sort=>[{:filed_at=>{:order=>"desc"}}, {:_score=>{:order=>"desc"}}]}
+          :sort=>[{:filed_at=>{:order=>"desc"}}, {:_score=>{:order=>"desc"}}],
+          :_source => ['id']}
       )
     end
 
@@ -50,7 +51,8 @@ describe EsPublicInspectionDocumentSearch do
                {:bool=>
                  {:filter=>[{:bool=>{:filter=>{:terms=>{:agency_ids=>[agency.id]}}}}],
                   :must=>[]}}}},
-          :sort=>[{:filed_at=>{:order=>"desc"}}, {:_score=>{:order=>"desc"}}]}
+          :sort=>[{:filed_at=>{:order=>"desc"}}, {:_score=>{:order=>"desc"}}],
+          :_source => ['id']}
       )
     end
   end

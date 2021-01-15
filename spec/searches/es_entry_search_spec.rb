@@ -278,7 +278,8 @@ describe EsEntrySearch do
               :sort => [
                 {:_score=>{:order=>"desc"}},
                 {:publication_date=>{:order=>"desc"}}
-              ]}
+              ],
+              :_source => ['id']}
       )
     end
 
@@ -310,7 +311,8 @@ describe EsEntrySearch do
           :sort => [
             {:_score=>{:order=>"desc"}},
             {:publication_date=>{:order=>"desc"}}
-          ]}
+          ],
+          :_source => ['id']}
       )
     end
 
@@ -336,7 +338,8 @@ describe EsEntrySearch do
           :sort => [
             {:_score=>{:order=>"desc"}},
             {:publication_date=>{:order=>"desc"}}
-          ]}
+          ],
+          :_source => ['id']}
       )
     end
 
