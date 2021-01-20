@@ -28,6 +28,13 @@ class President < ActiveHash::Base
       :starts_on => Date.new(2017,1,20),
       :ends_on => Date.new(2021,1,19)
     },
+    {
+      :id => 5,
+      :identifier => 'joe-biden',
+      :full_name => "Joe Biden",
+      :starts_on => Date.new(2021,1,20),
+      :ends_on => Date.new(2025,1,19)
+    },
   ]
 
   def year_ranges
