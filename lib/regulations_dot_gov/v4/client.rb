@@ -85,10 +85,24 @@ class RegulationsDotGov::V4::Client
       map{|raw_attributes| RegulationsDotGov::V4::BasicDocument.new(raw_attributes) }
   end
 
+  def find_comments(args)
+    response = connection.get(
+      'comments',
+      standard_options.merge(args)
+    )
+    parsed_response = JSON.parse(response.body)
+    parsed_response.
+      fetch("data").
+      map{|raw_attributes| RegulationsDotGov::V4::Comment.new(raw_attributes) }
+  end
 
   private
 
   attr_reader :logger
+
+  def standard_options
+    {:api_key => api_key}
+  end
 
   def api_key
     Rails.application.secrets[:regulations_dot_gov][:v4_api_key]

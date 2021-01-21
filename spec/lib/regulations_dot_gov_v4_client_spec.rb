@@ -89,4 +89,16 @@ describe RegulationsDotGov::V4::Client do
     end
   end
 
+  context "#find_comments" do
+
+    it "finds a posted comment" do
+      VCR.use_cassette("regulations_dot_gov_v4_comments") do
+        comments = RegulationsDotGov::V4::Client.new.find_comments("filter[searchTerm]" => "1k5-9l2j-gnbc")
+
+        expect(comments.first.posted_date).to eq(Time.parse("2021-01-07T05:00:00Z"))
+      end
+    end
+
+  end
+
 end

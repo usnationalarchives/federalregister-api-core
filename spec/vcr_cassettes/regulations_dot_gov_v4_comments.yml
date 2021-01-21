@@ -416,4 +416,150 @@ http_interactions:
           }
         }
   recorded_at: Fri, 23 Oct 2020 19:08:34 GMT
+- request:
+    method: get
+    uri: https://api.regulations.gov/v4/comments?api_key=<API_KEY>&filter%5BSearchTerm%5D=1k5-9l2j-gnbc
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.15.3
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 400
+      message: ''
+    headers:
+      Date:
+      - Thu, 21 Jan 2021 17:23:32 GMT
+      Content-Type:
+      - application/vnd.api+json;charset=utf-8
+      Content-Length:
+      - '102'
+      Connection:
+      - keep-alive
+      X-Ratelimit-Limit:
+      - '40'
+      X-Ratelimit-Remaining:
+      - '39'
+      Age:
+      - '0'
+      Via:
+      - https/1.1 api-umbrella (ApacheTrafficServer [cMsSf ])
+      X-Cache:
+      - MISS
+      Access-Control-Allow-Origin:
+      - "*"
+      Strict-Transport-Security:
+      - max-age=31536000; preload
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "errors" : [ {
+            "status" : "400",
+            "title" : "Invalid filter field name: SearchTerm"
+          } ]
+        }
+  recorded_at: Thu, 21 Jan 2021 17:23:32 GMT
+- request:
+    method: get
+    uri: https://api.regulations.gov/v4/comments?api_key=<API_KEY>&filter%5BsearchTerm%5D=1k5-9l2j-gnbc
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.15.3
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: ''
+    headers:
+      Date:
+      - Thu, 21 Jan 2021 18:25:42 GMT
+      Content-Type:
+      - application/vnd.api+json;charset=utf-8
+      Content-Length:
+      - '1342'
+      Connection:
+      - keep-alive
+      X-Ratelimit-Limit:
+      - '40'
+      X-Ratelimit-Remaining:
+      - '39'
+      Age:
+      - '1'
+      Via:
+      - https/1.1 api-umbrella (ApacheTrafficServer [cMsSf ])
+      X-Cache:
+      - MISS
+      Access-Control-Allow-Origin:
+      - "*"
+      Strict-Transport-Security:
+      - max-age=31536000; preload
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "data" : [ {
+            "id" : "FINCEN-2020-0020-5871",
+            "type" : "comments",
+            "attributes" : {
+              "documentType" : "Public Submission",
+              "highlightedContent" : "",
+              "withdrawn" : false,
+              "agencyId" : "FINCEN",
+              "title" : "Comment on FR Doc # 2020-28437",
+              "objectId" : "09000064849e17d5",
+              "postedDate" : "2021-01-07T05:00:00Z"
+            },
+            "links" : {
+              "self" : "https://api.regulations.gov/v4/comments/FINCEN-2020-0020-5871"
+            }
+          } ],
+          "meta" : {
+            "aggregations" : {
+              "agencyId" : [ {
+                "docCount" : 1,
+                "value" : "FINCEN"
+              } ],
+              "postedDate" : [ {
+                "docCount" : 1,
+                "label" : "Last 15 Days",
+                "fromDate" : "2021-01-07 00:00:00",
+                "toDate" : "2021-01-21 23:59:59"
+              }, {
+                "docCount" : 1,
+                "label" : "Last 30 Days",
+                "fromDate" : "2020-12-23 00:00:00",
+                "toDate" : "2021-01-21 23:59:59"
+              }, {
+                "docCount" : 1,
+                "label" : "Last 90 Days",
+                "fromDate" : "2020-10-24 00:00:00",
+                "toDate" : "2021-01-21 23:59:59"
+              } ]
+            },
+            "filters" : { },
+            "hasNextPage" : false,
+            "hasPreviousPage" : false,
+            "numberOfElements" : 1,
+            "pageNumber" : 1,
+            "pageSize" : 25,
+            "totalElements" : 1,
+            "totalPages" : 1,
+            "firstPage" : true,
+            "lastPage" : true
+          }
+        }
+  recorded_at: Thu, 21 Jan 2021 18:25:42 GMT
 recorded_with: VCR 6.0.0
