@@ -15,5 +15,12 @@ describe GpoGraphic do
     expect(result).to start_with(host)
   end
 
+  context "specific styles based on model attributs" do
+    it "if not sourced via ecfr.gov, only creates 'large' and 'original' styles" do
+      result = GpoGraphic.new(sourced_via_ecfr_dot_gov: false ).graphic.styles.values.map(&:name)
+      expect(result).to match_array([:original_png, :large])
+    end
+  end
+
 end
 

@@ -11,18 +11,6 @@ class GpoGraphic < ActiveRecord::Base
     :dependent => :destroy
 
   has_attached_file :graphic,
-                    :styles => {
-                      :large => {
-                        :format => :png,
-                        :geometry => "460",
-                        :convert_options => "-strip -unsharp 0"
-                      },
-                      :original_png => {
-                        :format => :png,
-                        :geometry => "100%",
-                        :convert_options => "-strip -unsharp 0 -fuzz 10% -transparent white",
-                      }
-                    },
                     :processors => [:gpo_image_converter, :png_crush],
                     :storage => :s3,
                     :s3_credentials => {
@@ -37,6 +25,7 @@ class GpoGraphic < ActiveRecord::Base
                     :path => ":xml_identifier/:style.:extension",
                     :validate_media_type => false,
                     :url => ':s3_alias_url'
+                    styles: ->(file){ file.instance.paperclip_styles },
   do_not_validate_attachment_file_type :graphic
 
   Paperclip.interpolates(:xml_identifier) do |attachment, style|
@@ -95,6 +84,22 @@ class GpoGraphic < ActiveRecord::Base
 
   def private_bucket
     SETTINGS["s3_buckets"]["private_images"]
+  end
+
+
+  def paperclip_styles
+    {
+      :large => {
+        :format          => :png,
+        :geometry        => "460",
+        :convert_options => "-strip -unsharp 0"
+      },
+      :original_png => {
+        :format          => :png,
+        :geometry        => "100%",
+        :convert_options => "-strip -unsharp 0 -fuzz 10% -transparent white"
+      }
+    }
   end
 
 end
