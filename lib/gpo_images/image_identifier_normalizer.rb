@@ -2,10 +2,10 @@
 module GpoImages
   module ImageIdentifierNormalizer
     def normalize_image_identifier(filename)
-      image_identifier(filename).downcase
+      remove_extensions(filename).downcase
     end
 
-    def image_identifier(filename)
+    def remove_extensions(filename)
       filename.gsub(/\.?eps/i,"")
     end
   end

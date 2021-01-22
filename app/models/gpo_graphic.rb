@@ -24,8 +24,8 @@ class GpoGraphic < ActiveRecord::Base
                     :bucket => proc { |attachment| attachment.instance.gpo_graphic_usages.present? ? attachment.instance.public_bucket : attachment.instance.private_bucket },
                     :path => ":xml_identifier/:style.:extension",
                     :validate_media_type => false,
-                    :url => ':s3_alias_url'
-                    styles: ->(file){ file.instance.paperclip_styles },
+                    :url => ':s3_alias_url',
+                    :styles => -> (file) { file.instance.paperclip_styles }
   do_not_validate_attachment_file_type :graphic
 
   Paperclip.interpolates(:xml_identifier) do |attachment, style|
@@ -86,20 +86,27 @@ class GpoGraphic < ActiveRecord::Base
     SETTINGS["s3_buckets"]["private_images"]
   end
 
-
   def paperclip_styles
-    {
-      :large => {
-        :format          => :png,
-        :geometry        => "460",
-        :convert_options => "-strip -unsharp 0"
-      },
-      :original_png => {
-        :format          => :png,
-        :geometry        => "100%",
-        :convert_options => "-strip -unsharp 0 -fuzz 10% -transparent white"
+    if sourced_via_ecfr_dot_gov
+      {
+        :ecfr => {
+          :format          => :png,
+        },
       }
-    }
+    else
+      {
+        :large => {
+          :format          => :png,
+          :geometry        => "460",
+          :convert_options => "-strip -unsharp 0"
+        },
+        :original_png => {
+          :format          => :png,
+          :geometry        => "100%",
+          :convert_options => "-strip -unsharp 0 -fuzz 10% -transparent white"
+        }
+      }
+    end
   end
 
 end

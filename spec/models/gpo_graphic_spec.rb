@@ -20,6 +20,11 @@ describe GpoGraphic do
       result = GpoGraphic.new(sourced_via_ecfr_dot_gov: false ).graphic.styles.values.map(&:name)
       expect(result).to match_array([:original_png, :large])
     end
+
+    it "only creates 'pdf' and 'ecfr' styles" do
+      result = GpoGraphic.new(sourced_via_ecfr_dot_gov: true ).graphic.styles.values.map(&:name)
+      expect(result).to match_array([:ecfr])
+    end
   end
 
 end
