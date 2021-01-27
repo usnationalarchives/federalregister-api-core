@@ -52,8 +52,12 @@ class RegulationsDotGov::V4::Client
       "dockets/#{docket_id}",
       'api_key'             => api_key
     )
-    data = JSON.parse(response.body).fetch('data')
-    RegulationsDotGov::V4::Docket.new(data)
+    parsed_response = JSON.parse(response.body)
+    if parsed_response['errors']
+      Honeybadger.notify('Unable to locate docket at reg.gov', context: parsed_response)
+    else
+      RegulationsDotGov::V4::Docket.new(parsed_response.fetch('data'))
+    end
   end
 
   def find_documents_by_docket(docket_id)
