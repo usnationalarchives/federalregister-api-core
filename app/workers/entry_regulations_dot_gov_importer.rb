@@ -6,9 +6,16 @@ class EntryRegulationsDotGovImporter
   sidekiq_options :queue => :reg_gov
   sidekiq_throttle_as :reg_gov_api
 
-  def perform(document_number)
+  def perform(document_number, publication_date=nil)
     ActiveRecord::Base.clear_active_connections!
-    @entry = Entry.find_by_document_number!(document_number)
+    if publication_date
+      @entry = Entry.find_by_document_number_and_publication_date!(
+        document_number,
+        publication_date
+      )
+    else
+      @entry = Entry.find_by_document_number!(document_number)
+    end
     EntryObserver.disabled = true
 
     entry.checked_regulationsdotgov_at          = checked_regulationsdotgov_at

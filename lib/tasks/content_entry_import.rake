@@ -22,7 +22,11 @@ namespace :content do
         entries = Entry.select('document_number').where(publication_date: date)
 
         entries.each do |entry|
-          Sidekiq::Client.enqueue(EntryRegulationsDotGovImporter, entry.document_number)
+          Sidekiq::Client.enqueue(
+            EntryRegulationsDotGovImporter,
+            entry.document_number,
+            date.to_s(:iso)
+          )
         end
       end
     end
@@ -136,7 +140,11 @@ namespace :content do
           end
 
           entries.find_each do |entry|
-            Sidekiq::Client.enqueue(EntryRegulationsDotGovImporter, entry.document_number)
+            Sidekiq::Client.enqueue(
+              EntryRegulationsDotGovImporter,
+              entry.document_number,
+              date.try(:to_s, :iso)
+            )
           end
 
         end
