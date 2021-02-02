@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_16_180016) do
+ActiveRecord::Schema.define(version: 2021_02_02_210248) do
 
   create_table "action_names", :force => true do |t|
     t.string   "name"
@@ -456,6 +456,9 @@ ActiveRecord::Schema.define(version: 2020_12_16_180016) do
     t.integer "blank_page_count"
     t.integer "start_page"
     t.integer "end_page"
+    t.string "toc_note_title"
+    t.text "toc_note_text"
+    t.boolean "toc_note_active"
   end
 
   create_table "lede_photos", :force => true do |t|
