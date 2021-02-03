@@ -39,6 +39,18 @@
   </div>
 <% end %>
 
+<% if @current_issue.toc_note_active %>
+  <h2 class="section-header">
+    TOC Note
+  </h2>
+
+  <div class="page_summary">
+    <h4><%= @current_issue.toc_note_title %></h4>
+    <div style="margin-top: 10px; margin-bottom:10px">
+      <%= @current_issue.toc_note_text %>
+    </div>
+  </div>
+<% end %>
 
 <h2 class="section-header">
   Entries not assigned to a section

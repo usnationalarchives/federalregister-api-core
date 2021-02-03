@@ -4,6 +4,7 @@ class Admin::IssuesController < AdminController
   end
 
   def show
+    @current_issue = @approved_issue = Issue.find_by_publication_date(params[:id])
     @publication_date = Date.parse(params[:id])
     @entries_without_sections = Entry.
       published_on(@publication_date).
