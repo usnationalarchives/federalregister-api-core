@@ -1,3 +1,9 @@
+<ul>
+  <li>
+    <%= link_to 'Manage TOC Note', edit_admin_issue_note_path(@publication_date.to_s(:iso)) %>
+  </li>
+</ul>
+
 <% if AgencyName.unprocessed.count > 0 %>
   <div class="section">
     <h4>Agencies</h4>
