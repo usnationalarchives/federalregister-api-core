@@ -1,0 +1,14 @@
+<% title "Manage TOC Note for Issue #{@issue.publication_date}" %>
+
+<%= semantic_form_for @issue, :url => admin_issue_note_path(@issue) do |f| %>
+  <%= f.inputs do %>
+    <%= f.input :toc_note_title, :label => "Title" %>
+    <%= f.input :toc_note_text, :as => :text, :label => "Note" %>
+    <%= f.input :toc_note_active, :as => :boolean, :label => "Active?" %>
+  <% end %>
+
+  <%= f.actions do %>
+    <%= f.action :submit, :label => 'Save', :button_html => {:class => "btn btn-large btn-success"} %>
+    <%= link_to 'Cancel', admin_issue_path(@issue) %>
+  <% end %>
+<% end %>
