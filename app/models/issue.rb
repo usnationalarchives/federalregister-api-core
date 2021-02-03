@@ -144,6 +144,11 @@ class Issue < ApplicationModel
 
   private
 
+  validate :toc_note_active do
+    errors.add(:base, 'Title must be a present if TOC Note is active') if toc_note_active? && toc_note_title.blank?
+    errors.add(:base, 'Note must be a present if TOC Note is active') if toc_note_active? && toc_note_text.blank?
+  end
+
   def eventful_entries_search
     Entry.search_klass.new(
       :conditions => {
