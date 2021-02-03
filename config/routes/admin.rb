@@ -68,6 +68,7 @@ FederalregisterApiCore::Application.routes.draw do
           get :preview
         end
       resource :approval, controller: 'issues/approvals'
+      resource :note, controller: 'issues/notes'
       resources :entries, controller: 'issues/entries'
       resources :sections, controller: 'issues/sections' do
         member do
