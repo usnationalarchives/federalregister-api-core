@@ -2,9 +2,12 @@
 
 <%= semantic_form_for @issue, :url => admin_issue_note_path(@issue) do |f| %>
   <%= f.inputs do %>
+    <%= f.input :toc_note_active, :as => :boolean, :label => "<b>Active?</b> <small>(Only active notes will appear on the TOC)</small>".html_safe %>
+  <% end %>
+
+  <%= f.inputs do %>
     <%= f.input :toc_note_title, :label => "Title" %>
     <%= f.input :toc_note_text, :as => :text, :label => "Note" %>
-    <%= f.input :toc_note_active, :as => :boolean, :label => "Active?" %>
   <% end %>
 
   <%= f.actions do %>
