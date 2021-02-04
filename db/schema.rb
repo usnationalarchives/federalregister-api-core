@@ -458,7 +458,7 @@ ActiveRecord::Schema.define(version: 2021_02_02_210248) do
     t.integer "end_page"
     t.string "toc_note_title"
     t.text "toc_note_text"
-    t.boolean "toc_note_active", default: true
+    t.boolean "toc_note_active", default: false
   end
 
   create_table "lede_photos", :force => true do |t|
