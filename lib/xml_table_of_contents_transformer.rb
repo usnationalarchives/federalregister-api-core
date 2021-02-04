@@ -1,7 +1,7 @@
 require 'ostruct'
 
 class XmlTableOfContentsTransformer
-  attr_reader :date, :path_manager, :table_of_contents
+  attr_reader :date, :path_manager, :table_of_contents, :issue
 
   GPO_XML_START_DATE = Date.parse('2000-01-18')
 
@@ -10,6 +10,7 @@ class XmlTableOfContentsTransformer
 
   def initialize(date)
     @date = date.is_a?(Date) ? date : Date.parse(date)
+    @issue = Issue.find_by(publication_date: date.strftime("%F"))
     @table_of_contents = {agencies:[]}
     @path_manager = FileSystemPathManager.new(@date)
   end
@@ -65,6 +66,7 @@ class XmlTableOfContentsTransformer
         document_categories: parse_category(agency_node.css('CAT'))
       }.delete_if{|k,v| v.nil?})
     end
+    table_of_contents[:note] = {title: issue.toc_note_title, text: issue.toc_note_text} if issue.toc_note_active
     table_of_contents
   end
 
