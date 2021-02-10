@@ -70,9 +70,11 @@ class RegulationsDotGov::V4::Client
   end
 
   def find_documents_updated_within(days, document_type_identifier)
+    date = (Date.current - days.days)
+    time = Time.zone.local(date.year,date.month,date.day).to_s(:db)
     response = connection.get(
       'documents',
-      'filter[lastUpdated][ge]' => (Date.current - days.days).to_s(:iso),
+      'filter[lastModifiedDate][ge]' => time, #NOTE: Reg.gov calls this parameter 'lastModifiedDate', but it only accepts timestamps.
       'filter[documentType]'    => document_type_identifier,
       'api_key'                 => api_key,
       'page[size]'              => 250
