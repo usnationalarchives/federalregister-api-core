@@ -5,7 +5,12 @@ class Paperclip::GpoImageConverter < Paperclip::Thumbnail
     options = @source_file_options
     options << "-density"
     options << density
-    options << resize_options
+    if additional_options
+      options << additional_options
+    end
+    if resize_options
+      options << resize_options
+    end
     options
   end
 
@@ -20,25 +25,57 @@ class Paperclip::GpoImageConverter < Paperclip::Thumbnail
   end
   memoize :density
 
-  MAX_DESIRED_WIDTH_IN_PIXELS          = 756
-  LINEAR_UPSCALING_THRESHOLD_IN_PIXELS = 351 #NOTE: This represents the threshold at which we will no longer upscale the image linearly.
   def resize_options
-    if sourced_via_ecfr_dot_gov_options?
+    if (paperclip_style == :medium) || (paperclip_style == :large)
       dimensions    = Paperclip.run("identify -format '%wx%h' #{File.expand_path(@file.path)}")
       width, height = dimensions.split('x').map(&:to_i)
 
-      if width > LINEAR_UPSCALING_THRESHOLD_IN_PIXELS
-        scaled_dimensions = "#{MAX_DESIRED_WIDTH_IN_PIXELS}x#{(MAX_DESIRED_WIDTH_IN_PIXELS.to_f/width) * height}"
+      if width > full_page_pixel_width_in_print
+        scaled_dimensions = "#{max_desired_pixel_width}x#{((max_desired_pixel_width.to_f/width) * height).round(0)}"
       else
-        scaling_multiplier = MAX_DESIRED_WIDTH_IN_PIXELS.to_f / LINEAR_UPSCALING_THRESHOLD_IN_PIXELS
-        scaled_dimensions = "#{width * scaling_multiplier}x#{height * scaling_multiplier}"
+        scaling_multiplier = max_desired_pixel_width.to_f / full_page_pixel_width_in_print
+        scaled_dimensions = "#{(width * scaling_multiplier).round(0)}x#{(height * scaling_multiplier).round(0)}"
       end
 
-      " -resize #{scaled_dimensions}"
+      "-resize #{scaled_dimensions}"
+    end
+  end
+
+  def additional_options
+    if paperclip_style != :original_png
+      " -monochrome -transparent white"
+    end
+  end
+
+  def max_desired_pixel_width
+    case paperclip_style
+    when :medium
+      574 #FR paragraph width: 574px
+    when :large
+      823 #eCFR top-level paragraph sidebar collapsed
+    else
+      raise NotImplementedError
+    end
+  end
+
+  def full_page_pixel_width_in_print
+    #NOTE: This represents the threshold at which we will no longer upscale the image linearly.
+    case paperclip_style
+    when :medium
+      #TODO
+    when :large
+      351
+    else
+      raise NotImplementedError
     end
   end
 
   def sourced_via_ecfr_dot_gov_options?
     attachment.instance.sourced_via_ecfr_dot_gov && (options.fetch(:style) == :ecfr)
   end
+
+  def paperclip_style
+    options.fetch(:style)
+  end
+
 end
