@@ -87,26 +87,21 @@ class GpoGraphic < ActiveRecord::Base
   end
 
   def paperclip_styles
-    if sourced_via_ecfr_dot_gov
-      {
-        :ecfr => {
-          :format          => :png,
-        },
+    {
+      :medium => {
+        :format          => :png,
+        :convert_options => "-strip -unsharp 0"
+      },
+      :large => {
+        :format          => :png,
+        :convert_options => "-strip -unsharp 0"
+      },
+      :original_png => {
+        :format          => :png,
+        :geometry        => "100%",
+        :convert_options => "-strip -unsharp 0 -fuzz 10% -transparent white"
       }
-    else
-      {
-        :large => {
-          :format          => :png,
-          :geometry        => "460",
-          :convert_options => "-strip -unsharp 0"
-        },
-        :original_png => {
-          :format          => :png,
-          :geometry        => "100%",
-          :convert_options => "-strip -unsharp 0 -fuzz 10% -transparent white"
-        }
-      }
-    end
+    }
   end
 
 end

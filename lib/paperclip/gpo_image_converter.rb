@@ -79,7 +79,7 @@ class Paperclip::GpoImageConverter < Paperclip::Thumbnail
   end
 
   def sourced_via_ecfr_dot_gov_options?
-    attachment.instance.sourced_via_ecfr_dot_gov && (options.fetch(:style) == :ecfr)
+    attachment.instance.sourced_via_ecfr_dot_gov && ([:large, :medium].include? paperclip_style)
   end
 
   def paperclip_style

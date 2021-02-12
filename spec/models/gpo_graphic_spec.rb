@@ -16,14 +16,14 @@ describe GpoGraphic do
   end
 
   context "specific styles based on model attributs" do
-    it "if not sourced via ecfr.gov, only creates 'large' and 'original' styles" do
+    it "if not sourced via ecfr.gov, creates 'medium', 'large', and 'original_png' styles" do
       result = GpoGraphic.new(sourced_via_ecfr_dot_gov: false ).graphic.styles.values.map(&:name)
-      expect(result).to match_array([:original_png, :large])
+      expect(result).to match_array([:original_png, :large, :medium])
     end
 
-    it "only creates 'pdf' and 'ecfr' styles" do
+    it "creates 'medium', 'large', and 'original_png' styles" do
       result = GpoGraphic.new(sourced_via_ecfr_dot_gov: true ).graphic.styles.values.map(&:name)
-      expect(result).to match_array([:ecfr])
+      expect(result).to match_array([:original_png, :large, :medium])
     end
   end
 
