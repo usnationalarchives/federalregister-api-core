@@ -70,7 +70,7 @@ class Paperclip::GpoImageConverter < Paperclip::Thumbnail
     #NOTE: This represents the threshold at which we will no longer upscale the image linearly.
     case paperclip_style
     when :medium
-      #TODO
+      520
     when :large
       351
     else
