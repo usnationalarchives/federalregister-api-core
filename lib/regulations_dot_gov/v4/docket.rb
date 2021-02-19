@@ -35,7 +35,7 @@ class RegulationsDotGov::V4::Docket
   end
 
   def comments_count
-    # raise NotImplementedError #It may be unnecessary now to track docket-based comments
+    # We decided we won't persist this any longer becasue V4 requires additional API calls for it.
   end
 
   def metadata

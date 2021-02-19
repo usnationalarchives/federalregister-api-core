@@ -178,7 +178,6 @@ class EntryApiRepresentation < ApiRepresentation
         :docket_id => docket.id,
         :regulation_id_number => docket.regulation_id_number,
         :title => docket.title,
-        :docket_comments_count => docket.comments_count,
         :comments_url => regulations_dot_gov_docket_comments_url(docket.id),
         :supporting_documents_count => docket.docket_documents_count,
         :supporting_documents => docket.docket_documents.sort_by(&:id).reverse[0..9].map do |doc|
