@@ -140,3 +140,4 @@ production:
     throttle:
       at: <%= ENV["REG_GOV_JOBS_THROTTLE_AT"] || 2 %>
       per: <%= ENV["REG_GOV_JOBS_THROTTLE_PER"] || 5 %>
+    use_v4_api: <%= ENV.fetch("USE_REG_GOV_V4_API", false) %>
