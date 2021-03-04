@@ -37,13 +37,13 @@ class RegulationsDotGov::V4::Client
     end
   end
 
-  def find_comments_by_comment_on_id(comment_on_id)
+  def find_comments_by_regs_dot_gov_document_id(regulations_dot_gov_document_number)
+    # https://api.regulations.gov/v4/document-comments-received-counts/HHS-OCR-2021-0006-0001?api_key=DEMO_KEY
     response = connection.get(
-      'comments',
-      'filter[commentOnId]' => comment_on_id,
+      "document-comments-received-counts/#{regulations_dot_gov_document_number}",
       'api_key'             => api_key
     )
-    data = JSON.parse(response.body).fetch('meta')
+    data = JSON.parse(response.body).fetch('data')
     RegulationsDotGov::V4::CommentCollection.new(data)
   end
 

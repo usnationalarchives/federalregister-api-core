@@ -5,7 +5,7 @@ class RegulationsDotGov::V4::CommentCollection
   end
 
   def count
-    raw_attributes.fetch('totalElements')
+    raw_attributes.fetch('attributes').fetch('count')
   end
 
   private

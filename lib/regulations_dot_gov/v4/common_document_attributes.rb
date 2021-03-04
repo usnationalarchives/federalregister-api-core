@@ -15,7 +15,7 @@ module RegulationsDotGov::V4::CommonDocumentAttributes
   end
 
   def comment_count
-    RegulationsDotGov::V4::Client.new.find_comments_by_comment_on_id(comment_on_id).count
+    RegulationsDotGov::V4::Client.new.find_comments_by_regs_dot_gov_document_id(document_id).count
   end
   memoize :comment_count
 

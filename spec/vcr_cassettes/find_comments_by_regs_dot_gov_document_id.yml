@@ -1,0 +1,91 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api-staging.regulations.gov/v4/document-comments-received-counts/HHS-OCR-2021-0006-0001?api_key=COjlEHEje5dOL5upgpkEd9M7BHgdHgv01xyyJ3pJ
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.15.3
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: ''
+    headers:
+      Date:
+      - Thu, 04 Mar 2021 23:16:26 GMT
+      Content-Type:
+      - application/vnd.api+json;charset=utf-8
+      Content-Length:
+      - '225'
+      Connection:
+      - keep-alive
+      X-Ratelimit-Limit:
+      - '1000'
+      X-Ratelimit-Remaining:
+      - '936'
+      Age:
+      - '1'
+      Via:
+      - https/1.1 api-umbrella (ApacheTrafficServer [cMsSf ])
+      X-Cache:
+      - MISS
+      Access-Control-Allow-Origin:
+      - "*"
+      Strict-Transport-Security:
+      - max-age=31536000; preload
+    body:
+      encoding: UTF-8
+      string: '{"data":{"id":"HHS-OCR-2021-0006-0001","type":"document-comments-received-counts","attributes":{"count":550},"links":{"self":"https://api-staging.regulations.gov/v4/document-comments-received-counts/HHS-OCR-2021-0006-0001"}}}'
+  recorded_at: Thu, 04 Mar 2021 23:16:26 GMT
+- request:
+    method: get
+    uri: https://api.regulations.gov/v4/document-comments-received-counts/HHS-OCR-2021-0006-0001?api_key=<API_KEY>
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.15.3
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: ''
+    headers:
+      Date:
+      - Thu, 04 Mar 2021 23:19:45 GMT
+      Content-Type:
+      - application/vnd.api+json;charset=utf-8
+      Content-Length:
+      - '217'
+      Connection:
+      - keep-alive
+      X-Ratelimit-Limit:
+      - '40'
+      X-Ratelimit-Remaining:
+      - '36'
+      Age:
+      - '0'
+      Via:
+      - https/1.1 api-umbrella (ApacheTrafficServer [cMsSf ])
+      X-Cache:
+      - MISS
+      Access-Control-Allow-Origin:
+      - "*"
+      Strict-Transport-Security:
+      - max-age=31536000; preload
+    body:
+      encoding: UTF-8
+      string: '{"data":{"id":"HHS-OCR-2021-0006-0001","type":"document-comments-received-counts","attributes":{"count":550},"links":{"self":"https://api.regulations.gov/v4/document-comments-received-counts/HHS-OCR-2021-0006-0001"}}}'
+  recorded_at: Thu, 04 Mar 2021 23:19:45 GMT
+recorded_with: VCR 6.0.0

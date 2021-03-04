@@ -199,4 +199,318 @@ http_interactions:
           }
         }
   recorded_at: Fri, 23 Oct 2020 19:08:33 GMT
+- request:
+    method: get
+    uri: https://api.regulations.gov/v4/document-comments-received-counts/0900006484925e7e?api_key=<API_KEY>
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.15.3
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 400
+      message: ''
+    headers:
+      Date:
+      - Thu, 04 Mar 2021 23:21:32 GMT
+      Content-Type:
+      - application/vnd.api+json;charset=utf-8
+      Content-Length:
+      - '68'
+      Connection:
+      - keep-alive
+      X-Ratelimit-Limit:
+      - '40'
+      X-Ratelimit-Remaining:
+      - '34'
+      Age:
+      - '0'
+      Via:
+      - https/1.1 api-umbrella (ApacheTrafficServer [cMsSf ])
+      X-Cache:
+      - MISS
+      Access-Control-Allow-Origin:
+      - "*"
+      Strict-Transport-Security:
+      - max-age=31536000; preload
+    body:
+      encoding: UTF-8
+      string: '{"errors":[{"status":"400","title":"Invalid ID: 0900006484925e7e"}]}'
+  recorded_at: Thu, 04 Mar 2021 23:21:32 GMT
+- request:
+    method: get
+    uri: https://api.regulations.gov/v4/document-comments-received-counts/FRTIB_FRDOC_0001-0319?api_key=<API_KEY>
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.15.3
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 500
+      message: ''
+    headers:
+      Date:
+      - Thu, 04 Mar 2021 23:22:24 GMT
+      Content-Type:
+      - application/vnd.api+json;charset=utf-8
+      Content-Length:
+      - '116'
+      Connection:
+      - keep-alive
+      X-Ratelimit-Limit:
+      - '40'
+      X-Ratelimit-Remaining:
+      - '33'
+      Age:
+      - '0'
+      Via:
+      - https/1.1 api-umbrella (ApacheTrafficServer [cMsSf ])
+      X-Cache:
+      - MISS
+      Access-Control-Allow-Origin:
+      - "*"
+      Strict-Transport-Security:
+      - max-age=31536000; preload
+    body:
+      encoding: UTF-8
+      string: '{"errors":[{"status":"500","title":"INTERNAL_SERVER_ERROR","detail":"Incorrect
+        result size: expected 1, actual 0"}]}'
+  recorded_at: Thu, 04 Mar 2021 23:22:24 GMT
+- request:
+    method: get
+    uri: https://api.regulations.gov/v4/document-comments-received-counts/FRTIB_FRDOC_0001-0319?api_key=<API_KEY>
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.15.3
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 500
+      message: ''
+    headers:
+      Date:
+      - Thu, 04 Mar 2021 23:37:46 GMT
+      Content-Type:
+      - application/vnd.api+json;charset=utf-8
+      Content-Length:
+      - '116'
+      Connection:
+      - keep-alive
+      X-Ratelimit-Limit:
+      - '40'
+      X-Ratelimit-Remaining:
+      - '8'
+      Age:
+      - '0'
+      Via:
+      - https/1.1 api-umbrella (ApacheTrafficServer [cMsSf ])
+      X-Cache:
+      - MISS
+      Access-Control-Allow-Origin:
+      - "*"
+      Strict-Transport-Security:
+      - max-age=31536000; preload
+    body:
+      encoding: UTF-8
+      string: '{"errors":[{"status":"500","title":"INTERNAL_SERVER_ERROR","detail":"Incorrect
+        result size: expected 1, actual 0"}]}'
+  recorded_at: Thu, 04 Mar 2021 23:37:46 GMT
+- request:
+    method: get
+    uri: https://api.regulations.gov/v4/documents/NSF_FRDOC_0001-2638?api_key=<API_KEY>
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.15.3
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: ''
+    headers:
+      Date:
+      - Thu, 04 Mar 2021 23:46:58 GMT
+      Content-Type:
+      - application/vnd.api+json;charset=utf-8
+      Content-Length:
+      - '2735'
+      Connection:
+      - keep-alive
+      X-Ratelimit-Limit:
+      - '40'
+      X-Ratelimit-Remaining:
+      - '7'
+      Age:
+      - '0'
+      Via:
+      - https/1.1 api-umbrella (ApacheTrafficServer [cMsSf ])
+      X-Cache:
+      - MISS
+      Access-Control-Allow-Origin:
+      - "*"
+      Strict-Transport-Security:
+      - max-age=31536000; preload
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "data" : {
+            "id" : "NSF_FRDOC_0001-2638",
+            "type" : "documents",
+            "links" : {
+              "self" : "https://api.regulations.gov/v4/documents/NSF_FRDOC_0001-2638"
+            },
+            "attributes" : {
+              "additionalRins" : null,
+              "allowLateComments" : false,
+              "authorDate" : null,
+              "authors" : null,
+              "cfrPart" : null,
+              "commentEndDate" : null,
+              "commentStartDate" : "2021-02-26T05:00:00Z",
+              "effectiveDate" : null,
+              "exhibitLocation" : null,
+              "exhibitType" : null,
+              "frDocNum" : "2021-04117",
+              "frVolNum" : null,
+              "implementationDate" : null,
+              "media" : null,
+              "ombApproval" : null,
+              "paperLength" : 0,
+              "paperWidth" : 0,
+              "regWriterInstruction" : null,
+              "sourceCitation" : null,
+              "startEndPage" : "11803 - 11803",
+              "subject" : null,
+              "topics" : null,
+              "address1" : null,
+              "address2" : null,
+              "agencyId" : "NSF",
+              "city" : null,
+              "category" : null,
+              "comment" : null,
+              "country" : null,
+              "displayProperties" : null,
+              "docAbstract" : null,
+              "docketId" : "NSF_FRDOC_0001",
+              "documentType" : "Notice",
+              "email" : null,
+              "fax" : null,
+              "field1" : null,
+              "field2" : null,
+              "fileFormats" : [ {
+                "fileUrl" : "https://downloads.regulations.gov/NSF_FRDOC_0001-2638/content.pdf",
+                "format" : "pdf",
+                "size" : 214813
+              }, {
+                "fileUrl" : "https://downloads.regulations.gov/NSF_FRDOC_0001-2638/content.htm",
+                "format" : "htm",
+                "size" : 2121
+              } ],
+              "firstName" : null,
+              "govAgency" : null,
+              "govAgencyType" : null,
+              "objectId" : "0900006484a4fa95",
+              "lastName" : null,
+              "legacyId" : null,
+              "modifyDate" : "2021-02-26T13:18:59Z",
+              "organization" : null,
+              "originalDocumentId" : null,
+              "pageCount" : 0,
+              "phone" : null,
+              "postedDate" : "2021-02-26T05:00:00Z",
+              "postmarkDate" : null,
+              "reasonWithdrawn" : null,
+              "receiveDate" : "2021-02-26T05:00:00Z",
+              "restrictReason" : null,
+              "restrictReasonType" : null,
+              "stateProvinceRegion" : null,
+              "submitterRep" : null,
+              "submitterRepAddress" : null,
+              "submitterRepCityState" : null,
+              "subtype" : null,
+              "title" : "Meetings; Sunshine Act",
+              "trackingNbr" : null,
+              "withdrawn" : false,
+              "zip" : null,
+              "openForComment" : false
+            },
+            "relationships" : {
+              "attachments" : {
+                "links" : {
+                  "self" : "https://api.regulations.gov/v4/documents/NSF_FRDOC_0001-2638/relationships/attachments",
+                  "related" : "https://api.regulations.gov/v4/documents/NSF_FRDOC_0001-2638/attachments"
+                }
+              }
+            }
+          }
+        }
+  recorded_at: Thu, 04 Mar 2021 23:46:58 GMT
+- request:
+    method: get
+    uri: https://api.regulations.gov/v4/document-comments-received-counts/NSF_FRDOC_0001-2638?api_key=<API_KEY>
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.15.3
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: ''
+    headers:
+      Date:
+      - Thu, 04 Mar 2021 23:46:58 GMT
+      Content-Type:
+      - application/vnd.api+json;charset=utf-8
+      Content-Length:
+      - '209'
+      Connection:
+      - keep-alive
+      X-Ratelimit-Limit:
+      - '40'
+      X-Ratelimit-Remaining:
+      - '6'
+      Age:
+      - '0'
+      Via:
+      - https/1.1 api-umbrella (ApacheTrafficServer [cMsSf ])
+      X-Cache:
+      - MISS
+      Access-Control-Allow-Origin:
+      - "*"
+      Strict-Transport-Security:
+      - max-age=31536000; preload
+    body:
+      encoding: UTF-8
+      string: '{"data":{"id":"NSF_FRDOC_0001-2638","type":"document-comments-received-counts","attributes":{"count":0},"links":{"self":"https://api.regulations.gov/v4/document-comments-received-counts/NSF_FRDOC_0001-2638"}}}'
+  recorded_at: Thu, 04 Mar 2021 23:46:58 GMT
 recorded_with: VCR 6.0.0

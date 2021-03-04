@@ -37,20 +37,18 @@ describe RegulationsDotGov::V4::Client do
 
   it "find_detailed_document" do
     VCR.use_cassette("regulations_dot_gov_v4_detailed_document") do
-      result = RegulationsDotGov::V4::Client.new.find_detailed_document('FRTIB_FRDOC_0001-0319')
+      result = RegulationsDotGov::V4::Client.new.find_detailed_document('NSF_FRDOC_0001-2638')
       expect(result).to have_attributes(
-        common_attributes.merge(
-          comment_count:                    0,
-          federal_register_document_number: '2020-22330'
-        )
+        comment_count:                    0,
+        federal_register_document_number: '2021-04117'
       )
     end
   end
 
-  it "#find_comments_by_comment_on_id" do
-    VCR.use_cassette("regulations_dot_gov_v4_comments") do
-      result = RegulationsDotGov::V4::Client.new.find_comments_by_comment_on_id('0900006483a6cba3').count
-      expect(result).to eq(418)
+  it "#find_comments_by_regs_dot_gov_document_id" do
+    VCR.use_cassette("find_comments_by_regs_dot_gov_document_id") do
+      result = RegulationsDotGov::V4::Client.new.find_comments_by_regs_dot_gov_document_id("HHS-OCR-2021-0006-0001").count
+      expect(result).to eq(550)
     end
   end
 
@@ -77,6 +75,12 @@ describe RegulationsDotGov::V4::Client do
 
       expect(result.supporting_documents.count).to eq(2)
       expect(result.supporting_documents.map(&:class).uniq.first).to eq(RegulationsDotGov::V4::BasicDocument)
+    end
+  end
+
+  it "handles pagination when more than 250 results are returned" do
+    VCR.use_cassette("regulations_dot_gov_v4_dockets") do
+      result = RegulationsDotGov::V4::Client.new.find_docket('EPA-HQ-OAR-2003-0129')
     end
   end
 
