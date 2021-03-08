@@ -10,8 +10,6 @@ class TopicName < ApplicationModel
 
   validate :does_not_have_topics_if_void
 
-  before_save :update_topics_count
-
   def processed?
     void? || (topics_count > 0)
   end
@@ -33,6 +31,8 @@ class TopicName < ApplicationModel
       self.topics_topic_names.create(:topic_id => topic_id)
     end
 
+    self.topics_count = ids.size
+
     ids
   end
 
@@ -40,9 +40,5 @@ class TopicName < ApplicationModel
 
     def does_not_have_topics_if_void
       errors.add(:base, "All topics must be removed if marking as void") if (void? && topic_ids.size > 0)
-    end
-
-    def update_topics_count
-      self.topics_count = topic_ids.size
     end
 end
