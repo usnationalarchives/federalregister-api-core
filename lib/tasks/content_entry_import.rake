@@ -155,6 +155,12 @@ namespace :content do
           RegulationsDotGov::RecentlyModifiedDocumentUpdater.new(0).perform
         end
 
+        desc "Mark documents as closed for commenting if past comment close date"
+        task :mark_documents_as_closed_for_commenting => :environment do
+          puts "Reimport documents that have 'closed' per their comment close date to ensure comment url is marked as nil"
+          CommentPeriodCloser.perform
+        end
+
         desc "Import regulations.gov info for entries missing it published today"
         task :only_missing => :environment do
           puts "importing today's missing regulations.gov data"

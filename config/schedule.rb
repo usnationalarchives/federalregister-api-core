@@ -123,6 +123,10 @@ if cron_settings["regulations_dot_gov"]["documents"]
     set :log, 'regulations_dot_gov_document_update'
     rake 'content:entries:import:regulations_dot_gov:modified_today'
   end
+
+  every 1.day, at: '12:01AM' do
+    rake 'content:entries:import:regulations_dot_gov:mark_documents_as_closed_for_commenting'
+  end
 end
 
 if cron_settings["regulations_dot_gov"]["dockets"]
