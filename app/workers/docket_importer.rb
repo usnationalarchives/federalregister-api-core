@@ -59,17 +59,12 @@ class DocketImporter
     end
 
     docket.save
-  rescue RegulationsDotGov::Client::RecordNotFound
   end
 
   private
 
   def regulations_dot_gov_client
-    if SETTINGS['regulations_dot_gov']['use_v4_api']
-      RegulationsDotGov::V4::Client.new
-    else
-      RegulationsDotGov::Client.new
-    end
+    RegulationsDotGov::V4::Client.new
   end
 
   def non_participating_agency?(docket_number)

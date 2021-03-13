@@ -96,19 +96,11 @@ class RegulationsDotGov::RecentlyModifiedDocumentUpdater
   memoize :updated_documents
 
   def document_type_identifiers
-    if SETTINGS['regulations_dot_gov']['use_v4_api']
-      ['Proposed Rule', 'Rule', 'Notice']
-    else
-      ['PR', 'FR', 'N']
-    end
+    ['Proposed Rule', 'Rule', 'Notice']
   end
 
   def regulations_dot_gov_client
-    if SETTINGS['regulations_dot_gov']['use_v4_api']
-      RegulationsDotGov::V4::Client.new
-    else
-      RegulationsDotGov::Client.new
-    end
+    RegulationsDotGov::V4::Client.new
   end
 
 end
