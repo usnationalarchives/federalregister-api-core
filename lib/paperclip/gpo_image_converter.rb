@@ -11,6 +11,8 @@ class Paperclip::GpoImageConverter < Paperclip::Thumbnail
     if resize_options
       options << resize_options
     end
+
+    options << compression_options
     options
   end
 
@@ -84,6 +86,10 @@ class Paperclip::GpoImageConverter < Paperclip::Thumbnail
 
   def paperclip_style
     options.fetch(:style)
+  end
+
+  def compression_options
+    " -colors 8" #NOTE: This appears to reduce PNG size by ~65% for ecfr.gov-sourced images.
   end
 
 end
