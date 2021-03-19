@@ -1,6 +1,7 @@
 module GpoImages
   class EcfrDotGovConverter
     include GpoImages::ImageIdentifierNormalizer
+    include CloudfrontUtils
 
     include Sidekiq::Worker
     include Sidekiq::Throttled::Worker
@@ -30,6 +31,10 @@ module GpoImages
         gpo_graphic.save!
 
         gpo_graphic.move_to_public_bucket
+        paths_for_expiry = ['medium','large','original'].map{|style| "/#{image_identifier.upcase}/#{style}.png"}
+        paths_for_expiry << "/#{image_identifier.upcase}/original.pdf"
+
+        create_invalidation(SETTINGS['s3_buckets']['public_images'], paths_for_expiry)
       end
     end
 
