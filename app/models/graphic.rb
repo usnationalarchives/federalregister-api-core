@@ -5,19 +5,7 @@ class Graphic < ApplicationModel
   has_many :entries, :through => :usages
 
   has_attached_file :graphic,
-                    :styles => {
-                      :large => {
-                        :format => :png,
-                        :geometry => "460",
-                        :convert_options => "-strip -unsharp 0"
-                      },
-                      :original_png => {
-                        :format => :png,
-                        :geometry => "100%",
-                        :convert_options => "-strip -unsharp 0 -fuzz 10% -transparent white",
-                      }
-                    },
-                    :processors => [:auto_inverter, :png_crush],
+                    :processors => [:auto_inverter, :gpo_image_converter,  :png_crush],
                     :storage => :s3,
                     :s3_credentials => {
                       :access_key_id     => Rails.application.secrets[:aws][:access_key_id],
@@ -28,7 +16,8 @@ class Graphic < ApplicationModel
                     :s3_protocol => 'https',
                     :bucket => SETTINGS["s3_buckets"]["public_images"],
                     :path => ":identifier/:style.:extension",
-                    :url => ':s3_alias_url'
+                    :url => ':s3_alias_url',
+                    :styles => -> (file) { file.instance.paperclip_styles }
   do_not_validate_attachment_file_type :graphic
 
   scope :extracted, -> { where("graphic_file_name IS NOT NULL") }
@@ -42,4 +31,27 @@ class Graphic < ApplicationModel
       gsub(identifier,':identifier').
       gsub('original',':style')
   end
+
+  def paperclip_styles
+    {
+      :medium => {
+        :format          => :png,
+        :convert_options => "-strip -unsharp 0"
+      },
+      :large => {
+        :format          => :png,
+        :convert_options => "-strip -unsharp 0"
+      },
+      :original_png => {
+        :format          => :png,
+        :geometry        => "100%",
+        :convert_options => "-strip -unsharp 0 -fuzz 10% -transparent white"
+      }
+    }
+  end
+
+  def sourced_via_ecfr_dot_gov
+    false
+  end
+
 end
