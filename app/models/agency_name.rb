@@ -28,8 +28,10 @@ class AgencyName < ApplicationModel
   def update_agency_assignments
     if saved_change_to_agency_id?
       if agency_id_before_last_save.present?
+        entry_ids = agency_assignments.map(&:assignable_id)
+
         if agency_id.present?
-          agency_assignments.each do |agency_assignment|
+          agency_assignments.each do |agency_assignment|  
             agency_assignment.agency_id = agency_id
             agency_assignment.save!
           end
@@ -48,17 +50,17 @@ class AgencyName < ApplicationModel
                                    agency_name_assignments.position
                             FROM agency_name_assignments
                             WHERE agency_name_assignments.agency_name_id = #{id}")
-        Entry.where(:id => self.entry_ids).update_all(:delta => true)
-        entry_ids_for_insertion = self.entry_ids - EntryChange.pluck(:entry_id)
-        if entry_ids_for_insertion.present?
-          EntryChange.insert_all(entry_ids_for_insertion.map{|entry_id| {entry_id: entry_id} })
-        end
+        entry_ids = self.entry_ids
+      end
+
+      # mark entries as changed
+      if entry_ids.present?
+        EntryChange.upsert_all(entry_ids.map{|id| {entry_id: id} })
+        ElasticsearchIndexer.handle_entry_changes
       end
 
       recompile_associated_tables_of_contents
       recompile_public_inspection_tables_of_contents
-
-      ElasticsearchIndexer.handle_entry_changes
 
       purge_cache(".*")
     end
@@ -83,7 +85,6 @@ class AgencyName < ApplicationModel
   end
 
   def assign_agency_if_exact_match
-
     agency = Agency.find_by_name(name) || Agency.find_by_name(alternative_name)
     if agency
       self.agency = agency
