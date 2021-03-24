@@ -38,6 +38,8 @@ shared: &shared
       dockets: <%= ActiveModel::Type::Boolean.new.cast(ENV.fetch('REG_GOV_DOCKETS_ENABLED', true)) %>
       documents: <%= ActiveModel::Type::Boolean.new.cast(ENV.fetch('REG_GOV_DOCUMENTS_ENABLED', true)) %>
     # base_uri: <%= 'http://api.data.gov/regulations/v3' || ENV["REG_GOV_BASE_URL"] || 'http://api.data.gov/TEST/regulations/v3' %>
+  paperclip:
+    abort_on_s3_error: <%= ActiveModel::Type::Boolean.new.cast(ENV.fetch('ABORT_PAPERCLIP_PROCESSING_ON_S3_ERRORS', false)) %>
   deliver_daily_import_email: <%= ActiveModel::Type::Boolean.new.cast(ENV.fetch('DELIVER_DAILY_IMPORT_EMAIL', true)) %>
   public_inspection_document_page_view_start_date: <%= ENV.fetch('PUBLIC_INSPECTION_DOCUMENT_PAGE_VIEW_START_DATE', nil) %>
   s3_host_aliases:
