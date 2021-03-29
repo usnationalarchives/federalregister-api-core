@@ -7,7 +7,7 @@
   <%= f.semantic_errors %>
 
   <%= f.inputs do %>
-    <%= f.input :topics, collection: Topic.order(:name).all %>
+    <%= f.input :topics, collection: Topic.order(:name).all, hint: "Hold down the Ctrl key and click on a selected item to de-select it" %>
     <%# :source_data_url => admin_topics_path(:format => :json) TODO: Reimplement post Rails upgrade  %>
     <%= f.input :void, :as => :boolean, :checked => @topic_name.void %>
   <% end %>
