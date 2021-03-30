@@ -39,6 +39,6 @@ class TopicName < ApplicationModel
   private
 
     def does_not_have_topics_if_void
-      errors.add(:base, "All topics must be removed if marking as void") if (void? && topic_ids.size > 0)
+      errors.add(:base, "All topics must be removed if marking as void") if (void? && topics_count && topics_count > 0)
     end
 end
