@@ -527,7 +527,7 @@ DEPENDENCIES
   listen
   memoist
   mime-types (~> 1.25, >= 1.25.1)
-  mimemagic (~> 0.3.6, >= 0.3.6)
+  mimemagic (~> 0.3)
   mock_redis
   modularity
   mysql2

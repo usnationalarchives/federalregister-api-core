@@ -38,7 +38,7 @@ gem 'sitemap_generator', '~> 1.5.0'
 gem 'paperclip'
  # required by paperclip but unspecified version - this ensures a comptible version
 gem 'mime-types', '~> 1.25', '>= 1.25.1'
-gem 'mimemagic', '~> 0.3.6', '>= 0.3.6' # versions of mimemagic below 0.3.6 were yanked and are no longer available.
+gem 'mimemagic'
 gem 'aws-sdk-s3'
 gem 'aws-sdk-cloudfront'
 gem 'stevedore', '0.3.0'
