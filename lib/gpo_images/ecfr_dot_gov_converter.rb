@@ -8,12 +8,13 @@ module GpoImages
 
     sidekiq_options :queue => :gpo_image_import, :retry => 0
 
-    def perform(image_identifier)
+    def perform(image_identifier, create_new_graphics)
       #TODO: Handle deletion of existing sourced_via_ecfr_dot_gov images.
       @image_identifier = normalize_image_identifier(image_identifier)
 
       gpo_graphic       = GpoGraphic.find_or_initialize_by(
         identifier:               image_identifier,
+        sourced_via_ecfr_dot_gov: create_new_graphics
       )
 
       if gpo_graphic && (gpo_graphic.sourced_via_ecfr_dot_gov == false)
