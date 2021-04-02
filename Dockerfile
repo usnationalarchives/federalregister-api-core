@@ -23,9 +23,7 @@ RUN apt-get update &&\
     apache2-utils fontconfig hunspell-en-us libhunspell-1.3-0 libhunspell-dev pngcrush secure-delete \ 
     xfonts-75dpi xfonts-base xpdf pdftk tzdata \
     # used for mimemagic gem installation
-    shared-mime-info \
-    # aws tools
-    awscli &&\
+    shared-mime-info &&\
   apt-get clean &&\
   rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/
 
