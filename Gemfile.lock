@@ -138,6 +138,8 @@ GEM
     chronic (0.10.2)
     climate_control (0.2.0)
     coderay (1.1.0)
+    combine_pdf (1.0.21)
+      ruby-rc4 (>= 0.1.5)
     concurrent-ruby (1.1.8)
     connection_pool (2.2.3)
     crack (0.4.4)
@@ -402,6 +404,7 @@ GEM
       ruby-progressbar (~> 1.7)
       unicode-display_width (>= 1.4.0, < 1.7)
     ruby-progressbar (1.10.1)
+    ruby-rc4 (0.1.5)
     rubyzip (2.0.0)
     sass (3.7.4)
       sass-listen (~> 4.0.0)
@@ -504,6 +507,7 @@ DEPENDENCIES
   binding_of_caller
   bootsnap
   bootstrap-sass (= 2.3.2.2)
+  combine_pdf
   curb (= 0.9.0)
   diffy
   edge_rider

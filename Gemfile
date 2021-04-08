@@ -50,6 +50,8 @@ gem 'active_hash', '~> 2.0'
 gem 'acts_as_list'
 gem 'bcrypt'
 gem 'bootstrap-sass', '2.3.2.2'
+# Used for watermarking PIL documents
+gem 'combine_pdf'
 gem 'will_paginate-bootstrap', '0.2.5'
 gem 'authlogic'
 gem 'bootsnap'
