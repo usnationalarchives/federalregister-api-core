@@ -12,6 +12,7 @@ web:
     - HONEYBADGER_API_KEY=''
     - RAILS_SESSION_KEY=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
     - ELASTICSEARCH_HOST=https://admin:admin@elasticsearch:9200
+    - LD_LIBRARY_PATH=/usr/local/lib
   restart: always
 
 mysql:

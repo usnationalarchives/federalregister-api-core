@@ -22,10 +22,27 @@ RUN apt-get update &&\
   apt-get install -y gettext-base patch libcurl4-openssl-dev libpcre3-dev git libmysqlclient-dev libssl-dev mysql-client \
     apache2-utils fontconfig hunspell-en-us libhunspell-1.3-0 libhunspell-dev pngcrush secure-delete \ 
     xfonts-75dpi xfonts-base xpdf pdftk tzdata \
+    # Required to successfully compile qpdf
+    libjpeg-dev \
     # used for mimemagic gem installation
     shared-mime-info &&\
   apt-get clean &&\
   rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/
+
+##################
+### COMPILE/INSTALL QPDF
+##################
+WORKDIR /usr/local
+# qpdf commit: #8971443e4680fc1c0babe56da58cc9070a9dae2e
+RUN git clone https://github.com/qpdf/qpdf
+WORKDIR /usr/local/qpdf
+RUN ./configure && make && make install
+  # export LD_LIBRARY_PATH=/usr/local/lib
+WORKDIR /
+
+##################
+### Node JS
+##################
 
 # node js - packages are out of date
 RUN curl -sL https://deb.nodesource.com/setup_8.x | bash - &&\
