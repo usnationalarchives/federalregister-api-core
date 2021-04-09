@@ -65,6 +65,9 @@ RUN apt-get update &&\
 
 WORKDIR /tmp
 
+# Reinstall curl to work around 18.04 version convention errors
+RUN apt remove -y libcurl3 && apt-get update && apt-get install -y curl
+
 # install prince and license template
 RUN curl -O https://www.princexml.com/download/prince-8.1r5-ubuntu1604-amd64.tar.gz &&\
   tar -xzvf prince-8.1r5-ubuntu1604-amd64.tar.gz &&\
