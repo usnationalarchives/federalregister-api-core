@@ -96,6 +96,12 @@ RUN apt-get update &&\
 COPY docker/api/files/imagemagick/policy.xml /etc/ImageMagick-6/policy.xml
 
 ##################
+### CURB
+##################
+RUN apt-get update && apt-get install -y libcurl4 libcurl3-gnutls libcurl4-openssl-dev && apt-get clean
+
+
+##################
 ### TIMEZONE
 ##################
 
