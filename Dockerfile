@@ -19,9 +19,11 @@ RUN apt-get update && apt-get install -y ruby2.5 ruby2.5-dev &&\
 #######################
 
 RUN apt-get update &&\
-  apt-get install -y gettext-base patch curl libcurl4-openssl-dev libpcre3-dev git libmysqlclient-dev libssl-dev mysql-client \
+  apt-get install -y gettext-base patch libpcre3-dev git libmysqlclient-dev libssl-dev mysql-client \
     apache2-utils fontconfig hunspell-en-us libhunspell-1.6-0 libhunspell-dev pngcrush secure-delete \
     xfonts-75dpi xfonts-base xpdf tzdata \
+    # used for curb gem
+    libcurl4 libcurl3-gnutls libcurl4-openssl-dev \
     # Required to successfully compile qpdf
     libjpeg-dev \
     # used for mimemagic gem installation
@@ -65,9 +67,6 @@ RUN apt-get update &&\
 
 WORKDIR /tmp
 
-# Reinstall curl to work around 18.04 version convention errors
-RUN apt remove -y libcurl3 && apt-get update && apt-get install -y curl
-
 # install prince and license template
 RUN curl -O https://www.princexml.com/download/prince-8.1r5-ubuntu1604-amd64.tar.gz &&\
   tar -xzvf prince-8.1r5-ubuntu1604-amd64.tar.gz &&\
@@ -94,11 +93,6 @@ RUN apt-get update &&\
   rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/
 
 COPY docker/api/files/imagemagick/policy.xml /etc/ImageMagick-6/policy.xml
-
-##################
-### CURB
-##################
-RUN apt-get update && apt-get install -y libcurl4 libcurl3-gnutls libcurl4-openssl-dev && apt-get clean
 
 
 ##################
