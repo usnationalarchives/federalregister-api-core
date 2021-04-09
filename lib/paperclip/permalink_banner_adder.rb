@@ -13,12 +13,9 @@ class Paperclip::PermalinkBannerAdder < Paperclip::Processor
 
       # grab first page
       Terrapin::CommandLine.new(
-        "pdftk",
-        ":file_path cat 1 output :page_1_path"
-      ).run(
-        file_path: file.path,
-        page_1_path: page_1.path
-      )
+        "qpdf",
+        "#{file.path} --pages . #{1}-#{1} -- #{page_1.path}"
+      ).run
 
       page_1_with_banner = Tempfile.new('pil_doc_page_1_with_banner')
       # stamp with banner
@@ -29,22 +26,14 @@ class Paperclip::PermalinkBannerAdder < Paperclip::Processor
 
       # re-combine first page with rest of pages
       Terrapin::CommandLine.new(
-        "pdftk",
-        "A=:page_1_with_banner_path B=:file_path cat A1 B2-end output :output_path"
-      ).run(
-        page_1_with_banner_path: page_1_with_banner.path,
-        file_path: file.path,
-        output_path: output.path
-      )
+        "qpdf",
+        "--empty --pages #{page_1_with_banner.path} 1-1 #{file.path} 2-z -- #{output.path}"
+      ).run
     else
-      Terrapin::CommandLine.new(
-        "pdftk",
-        ":input_path stamp :banner_path output :output_path"
-      ).run(
-        input_path: file.path,
-        banner_path: banner_pdf.path,
-        output_path: output.path
-      )
+      banner = CombinePDF.load(banner_pdf.path).pages[0]
+      pdf = CombinePDF.load file.path
+      pdf.pages.each{|page| page << banner}
+      pdf.save output.path
     end
 
     output
