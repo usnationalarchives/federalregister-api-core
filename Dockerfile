@@ -61,7 +61,7 @@ RUN npm install -g jshint
 ##################
 
 RUN apt-get update &&\
-  apt-get install -y libc6 libtiff5 libgif7 libcurl3 libfontconfig1 libjpeg8 libxml2 &&\
+  apt-get install -y libc6 libtiff5 libgif7 libfontconfig1 libjpeg8 libxml2 &&\
   apt-get clean &&\
   rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/
 
