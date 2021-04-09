@@ -2,7 +2,7 @@
 ### BASE (FIRST)
 #######################
 
-FROM quay.io/criticaljuncture/baseimage:16.04
+FROM quay.io/criticaljuncture/baseimage:18.04
 
 
 #######################
