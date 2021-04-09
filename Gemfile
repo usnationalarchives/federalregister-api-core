@@ -27,11 +27,7 @@ gem 'fog-aws'
 gem 'formtastic', "~> 2.1"
 gem 'json'
 gem 'ym4r', '0.6.1'
-gem 'ffi-hunspell',
-  :git     => 'https://github.com/postmodern/ffi-hunspell.git',
-  :ref     => '91516637fdff9cef9bae66aefdd89e1b4a8b5831',
-  :require => 'ffi/hunspell'
-
+gem 'ffi-hunspell'
 gem 'honeybadger', '~> 2.7.2'
 gem 'sitemap_generator', '~> 1.5.0'
 
