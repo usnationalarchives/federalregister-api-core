@@ -89,7 +89,7 @@ RUN  fc-cache -f -v
 ##################
 
 RUN apt-get update &&\
-  apt-get update && apt-get install -y checkinstall libtiff5-dev libx11-dev libxext-dev zlib1g-dev libpng12-dev libjpeg-dev ghostscript libgs-dev imagemagick &&\
+  apt-get update && apt-get install -y checkinstall libtiff5-dev libx11-dev libxext-dev zlib1g-dev libpng-dev libjpeg-dev ghostscript libgs-dev imagemagick &&\
   apt-get clean &&\
   rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/
 
