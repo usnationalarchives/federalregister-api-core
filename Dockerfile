@@ -68,12 +68,12 @@ RUN apt-get update &&\
 WORKDIR /tmp
 
 # install prince and license template
-RUN curl -O https://www.princexml.com/download/prince-8.1r5-ubuntu1604-amd64.tar.gz &&\
-  tar -xzvf prince-8.1r5-ubuntu1604-amd64.tar.gz &&\
-  cd /tmp/prince-8.1r5-ubuntu1604-amd64 &&\
+RUN curl -O https://www.princexml.com/download/prince-11.4-ubuntu18.04-amd64.tar.gz &&\
+  tar -xzvf prince-11.4-ubuntu18.04-amd64.tar.gz &&\
+  cd /tmp/prince-11.4-ubuntu18.04-amd64 &&\
   ./install.sh &&\
-  rm /tmp/prince-8.1r5-ubuntu1604-amd64.tar.gz &&\
-  rm -Rf /tmp/prince-8.1r5-ubuntu1604-amd64
+  rm /tmp/prince-11.4-ubuntu18.04-amd64.tar.gz &&\
+  rm -Rf /tmp/prince-11.4-ubuntu18.04-amd64
 
 COPY docker/api/files/princexml/license.dat.tmpl /usr/local/lib/prince/license/license.dat.tmpl
 
