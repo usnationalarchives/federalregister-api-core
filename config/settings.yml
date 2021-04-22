@@ -40,6 +40,9 @@ shared: &shared
     # base_uri: <%= 'http://api.data.gov/regulations/v3' || ENV["REG_GOV_BASE_URL"] || 'http://api.data.gov/TEST/regulations/v3' %>
   paperclip:
     abort_on_s3_error: <%= ActiveModel::Type::Boolean.new.cast(ENV.fetch('ABORT_PAPERCLIP_PROCESSING_ON_S3_ERRORS', false)) %>
+  prince:
+    url: <%= ENV.fetch('PRINCE_XML_URL', nil) %>
+    port: <%= ENV.fetch('PRINCE_PORT', 5000) %>
   deliver_daily_import_email: <%= ActiveModel::Type::Boolean.new.cast(ENV.fetch('DELIVER_DAILY_IMPORT_EMAIL', true)) %>
   public_inspection_document_page_view_start_date: <%= ENV.fetch('PUBLIC_INSPECTION_DOCUMENT_PAGE_VIEW_START_DATE', nil) %>
   s3_host_aliases:
