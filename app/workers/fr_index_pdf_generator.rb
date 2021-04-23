@@ -46,7 +46,10 @@ class FrIndexPdfGenerator
         input_html.write generate_html
         input_html.close
 
-        system("/usr/local/bin/prince #{input_html.path} -o #{output_pdf.path}") or raise "Unable to generate PDF"
+        PrinceXmlService.html_to_pdf(
+          File.read(input_html.path),
+          output_pdf.path
+        )
 
         persist_file(output_pdf)
       end

@@ -47,12 +47,9 @@ class Paperclip::PermalinkBannerAdder < Paperclip::Processor
       input_html.write generate_html(page_size)
       input_html.close
 
-      Terrapin::CommandLine.new(
-        '/usr/local/bin/prince',
-        ':html_path -o :pdf_path'
-      ).run(
-        html_path: input_html.path,
-        pdf_path: banner_pdf.path
+      PrinceXmlService.html_to_pdf(
+        File.read(input_html.path),
+        banner_pdf.path
       )
     end
 
