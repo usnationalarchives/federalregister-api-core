@@ -1,3 +1,5 @@
+exit if ActiveModel::Type::Boolean.new.cast(ENV.fetch('SKIP_SITEMAP_GENERATION', false))
+
 # Set the host name for URL creation
 SitemapGenerator::Sitemap.default_host = "https://www.federalregister.gov"
 
