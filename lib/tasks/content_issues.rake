@@ -10,5 +10,14 @@ namespace :content do
         puts "No entries in this issue; not marking as complete"
       end
     end
+
+    task :schedule_auto_import_mods => :environment do
+      Content::ImportDriver::AutomaticModsReprocessorDriver.new.perform
+    end
+
+    task :auto_import_mods => :environment do
+      AutomaticModsReprocessor.perform
+    end
+
   end
 end

@@ -68,7 +68,13 @@
                 <%= reprocessed_issue.updated_at.to_s(:mdy_short_year_then_time) %>
               <% end %>
             </td>
-            <td class="span2"><%= reprocessed_issue.user.try(:full_name) || 'NA' %></td>
+            <td class="span2">
+              <% if reprocessed_issue.user_id == AutomaticModsReprocessor::AUTOMATED_REPROCESS_USER_ID  %>
+                Automated Reprocess (Detected change in MODS file)
+              <% else %>
+                <%= reprocessed_issue.user.try(:full_name) || 'NA' %>
+              <% end %>
+            </td>
             <td class="span2">
               <% if reprocessed_issue.html_diff.present? %>
                 <%= link_to 'View', admin_reprocessed_issue_diffs_path(reprocessed_issue) %>

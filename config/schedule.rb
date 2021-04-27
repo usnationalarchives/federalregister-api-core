@@ -60,6 +60,16 @@ if cron_settings["late_content_notifications"]
 end
 
 ########################
+# AUTOMATIC MODS REIMPORTING
+########################
+  # runs every 5th minute from 7AM EDT until 7PM Monday-Friday
+  every '*/5 7-19 * * 1-5' do
+    set :log, 'automatic_mods_reimporting'
+    rake 'content:issues:schedule_auto_import_mods'
+  end
+
+
+########################
 # ELASTICSEARCH
 ########################
 # Reindex the entire content (collapsing delta indexes back into main index)
