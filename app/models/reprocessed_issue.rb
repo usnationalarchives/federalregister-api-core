@@ -3,10 +3,14 @@ class ReprocessedIssue < ApplicationModel
   belongs_to :user
   delegate :publication_date, :to => :issue
 
-  def download_mods
+  def download_mods(async: true)
     self.status = "downloading_mods"
     self.save
-    Sidekiq::Client.enqueue(Content::GpoModsDownloader, self.id)
+    if async
+      Sidekiq::Client.enqueue(Content::GpoModsDownloader, self.id)
+    else
+      Content::GpoModsDownloader.new.perform(self.id)
+    end
   end
 
   def reprocess_issue

@@ -7,7 +7,7 @@ class AutomaticModsReprocessor
         issue_id: Issue.current.id,
         user_id:  AUTOMATED_REPROCESS_USER_ID
       )
-      reprocessed_issue.download_mods
+      reprocessed_issue.download_mods(async: false)
       reprocessed_issue.reprocess_issue
     end
   end
