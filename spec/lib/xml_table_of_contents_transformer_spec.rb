@@ -4,6 +4,9 @@ describe XmlTableOfContentsTransformer do
 attr_reader :transformer
 
   before(:each) do
+    fake_issue = double(:issue)
+    allow(fake_issue).to receive(:toc_note_active) { false }
+    Issue.stub(:find_by).and_return(fake_issue)
     @transformer = XmlTableOfContentsTransformer.new('2015-01-01')
     ElasticsearchIndexer.stub(:handle_entry_changes)
   end
