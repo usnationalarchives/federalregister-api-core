@@ -10,7 +10,7 @@ class XmlTableOfContentsTransformer
 
   def initialize(date)
     @date = date.is_a?(Date) ? date : Date.parse(date)
-    @issue = Issue.find_by(publication_date: date.strftime("%F"))
+    @issue = Issue.find_by(publication_date: date)
     @table_of_contents = {agencies:[]}
     @path_manager = FileSystemPathManager.new(@date)
   end
