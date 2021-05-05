@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '6.0.3.6'
+gem 'rails', '6.0.3.7'
 
 # ==============================================================================
 # gems supporting backward-compatibility with Rails 2 conventions:
