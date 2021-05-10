@@ -3,7 +3,7 @@ class IssueTocRegenerator
   include Sidekiq::Throttled::Worker
   include CacheUtils
 
-  sidekiq_options :queue => :issue_reprocessor, :retry => 0
+  sidekiq_options :queue => :api_core, :retry => 0
 
   def perform(date)
     ActiveRecord::Base.clear_active_connections!
