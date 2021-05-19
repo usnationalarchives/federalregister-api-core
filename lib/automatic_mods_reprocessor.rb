@@ -27,7 +27,11 @@ class AutomaticModsReprocessor
       if !FileUtils.compare_file(
         FileSystemPathManager.new(issue_date).document_mods_path,
         f.path
-      )
+      ) && FrDiff.new(
+        # Occasionally a file difference is detected but the diff is empty--adding this as additional redundancy for ensuring an actual change has been identified.
+        FileSystemPathManager.new(issue_date).document_mods_path,
+        f.path
+      ).diff.present?
         mods_differ = true
       end
     end
