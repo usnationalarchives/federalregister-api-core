@@ -34,10 +34,6 @@ class Graphic < ApplicationModel
 
   def paperclip_styles
     {
-      :medium => {
-        :format          => :png,
-        :convert_options => "-strip -unsharp 0"
-      },
       :large => {
         :format          => :png,
         :convert_options => "-strip -unsharp 0"
