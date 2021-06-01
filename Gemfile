@@ -67,8 +67,8 @@ gem 'klarlack', '0.0.7',
 gem "amazon-ec2", :require => false
 gem 'popen4'
 
-gem "net-scp", '1.1.0'
-gem "net-ssh", '2.9.1'
+gem "net-scp"
+gem "net-ssh"
 
 gem "resque"
 gem 'redis'
