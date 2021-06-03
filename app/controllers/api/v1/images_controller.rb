@@ -14,10 +14,9 @@ class Api::V1::ImagesController < ApiController
   private
 
   def image_json(graphic_styles)
-    attachment = graphic_styles.first.styleable.graphic.styles.values.first.attachment
     graphic_styles.each_with_object(Hash.new) do |graphic_style, hsh|
       hsh[graphic_style.style_name] = {
-        url:    attachment.url(graphic_style.style_name),
+        url:    graphic_style.url,
         height: graphic_style.height,
         width:  graphic_style.width
       }
