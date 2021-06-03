@@ -111,16 +111,26 @@ class GpoGraphic < ActiveRecord::Base
 
   def update_graphic_styles
     self.graphic_styles = paperclip_styles.map do |style_name, attributes|
-      height = Paperclip::Geometry.from_file(graphic.queued_for_write[style_name]).height
-      width  = Paperclip::Geometry.from_file(graphic.queued_for_write[style_name]).width
+      begin
+        geometry = paperclip_geometry(style_name)
+      rescue Paperclip::Errors::NotIdentifiedByImageMagickError #i.e. skip generating a graphic style if image url is not valid
+        next
+      end
       GraphicStyle.new(
         image_identifier: self.identifier.downcase,
         image_format:     attributes.fetch(:format),
         style_name:       style_name.to_s.gsub('_png',''),
-        height:           height,
-        width:            width
+        height:           geometry.height,
+        width:            geometry.width
       )
     end
+  end
+
+  EXPIRATION_TIME = 60
+  def paperclip_geometry(style_name)
+    # This is needed for accessing images stored in the private bucket.  Also works for public images.
+    url = graphic.graphic.expiring_url(EXPIRATION_TIME, style_name)
+    Paperclip::Geometry.from_file(url)
   end
 
 end
