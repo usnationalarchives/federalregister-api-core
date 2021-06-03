@@ -4,6 +4,7 @@ RSpec.describe "Images Endpoint", :type => :request do
   before(:each) { allow_any_instance_of(GraphicStyle).to receive(:url).and_return('http://wwww.example.com') }
 
   it "renders available styles" do
+    allow_any_instance_of(GraphicStyle).to receive(:public?).and_return('truthy')
     GraphicStyle.create!(
       graphic_id: 9999,
       graphic_type: 'GpoGraphic',
@@ -37,6 +38,22 @@ RSpec.describe "Images Endpoint", :type => :request do
         width: 1649,
       }
     }.to_json)
+  end
+
+  it "renders a 404 if the image is not public" do
+    allow_any_instance_of(GraphicStyle).to receive(:public?).and_return(false)
+    GraphicStyle.create!(
+      graphic_id: 9999,
+      graphic_type: 'GpoGraphic',
+      height: 126,
+      image_format: 'png',
+      image_identifier: 'ep13oc15.011',
+      style_name: 'medium',
+      width: 572,
+    )
+
+    get '/api/v1/images/EP13OC15.011'
+    expect(response.status).to eq(404)
   end
 
   it "renders a 404 if the image cannot be found" do
