@@ -2,9 +2,11 @@ class Api::V1::ImagesController < ApiController
 
   def show
     cache_for 1.day
-    graphic_styles = GraphicStyle.where(image_identifier: params[:id].try(:downcase)).includes(:styleable)
+    graphic_styles = GraphicStyle.
+      includes(styleable: :gpo_graphic_usages).
+      where(image_identifier: params[:id].try(:downcase))
 
-    if graphic_styles.present?
+    if graphic_styles.present? && publicly_accessible?(graphic_styles)
       render_json_or_jsonp image_json(graphic_styles)
     else
       render json: {}, status: 404
@@ -21,6 +23,10 @@ class Api::V1::ImagesController < ApiController
         width:  graphic_style.width
       }
     end
+  end
+
+  def publicly_accessible?(graphic_styles)
+    graphic_styles.first.public?
   end
 
 end

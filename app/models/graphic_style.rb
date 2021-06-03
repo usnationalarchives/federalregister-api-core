@@ -5,4 +5,8 @@ class GraphicStyle < ApplicationModel
     styleable.graphic.styles.values.first.attachment
   end
 
+  def public?
+    styleable.public?
+  end
+
 end
