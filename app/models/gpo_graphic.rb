@@ -10,6 +10,8 @@ class GpoGraphic < ActiveRecord::Base
     :primary_key => :identifier,
     :dependent => :destroy
 
+  has_many :graphic_styles, as: :styleable, foreign_type: :graphic_type, foreign_key: :graphic_id, dependent: :destroy
+
   has_attached_file :graphic,
                     :processors => [:gpo_image_converter, :png_crush],
                     :storage => :s3,
@@ -27,6 +29,7 @@ class GpoGraphic < ActiveRecord::Base
                     :url => ':s3_alias_url',
                     :styles => -> (file) { file.instance.paperclip_styles }
   do_not_validate_attachment_file_type :graphic
+  after_post_process :update_graphic_styles
 
   Paperclip.interpolates(:xml_identifier) do |attachment, style|
     if attachment.instance.gpo_graphic_usages.present?
@@ -102,6 +105,22 @@ class GpoGraphic < ActiveRecord::Base
         :convert_options => "-strip -unsharp 0 -fuzz 10% -transparent white"
       }
     }
+  end
+
+  private
+
+  def update_graphic_styles
+    self.graphic_styles = paperclip_styles.map do |style_name, attributes|
+      height = Paperclip::Geometry.from_file(graphic.queued_for_write[style_name]).height
+      width  = Paperclip::Geometry.from_file(graphic.queued_for_write[style_name]).width
+      GraphicStyle.new(
+        image_identifier: self.identifier.downcase,
+        image_format:     attributes.fetch(:format),
+        style_name:       style_name.to_s.gsub('_png',''),
+        height:           height,
+        width:            width
+      )
+    end
   end
 
 end

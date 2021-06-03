@@ -386,6 +386,18 @@ ActiveRecord::Schema.define(version: 2022_03_07_175542) do
 
   add_index "gpo_graphics", ["graphic_file_name"], :name => "index_gpo_graphics_on_graphic_file_name"
   add_index "gpo_graphics", ["identifier"], :name => "index_gpo_graphics_on_identifier", :unique => true
+  create_table "graphic_styles", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.integer "graphic_id"
+    t.integer "height"
+    t.integer "width"
+    t.string "graphic_type"
+    t.string "image_format"
+    t.string "image_identifier"
+    t.string "style_name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["graphic_id"], name: "index_graphic_styles_on_graphic_id"
+  end
 
   create_table "graphic_usages", :force => true do |t|
     t.integer "graphic_id"

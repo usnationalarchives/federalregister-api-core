@@ -2,6 +2,7 @@ require 'spec_helper'
 
 describe GpoGraphic do
   let(:attachment) { File.new(Rails.root + 'spec/fixtures/empty_example_file') }
+  before(:each) { allow_any_instance_of(GpoGraphic).to receive(:update_graphic_styles).and_return(nil) }
 
   it "returns the correct attachment url when graphic usages are not present" do
     result = GpoGraphic.new(graphic: attachment).graphic.url
