@@ -80,6 +80,7 @@ class GpoGraphic < ActiveRecord::Base
   def xml_identifier
     self.gpo_graphic_usages.first.try(:xml_identifier)
   end
+  alias_method :public?, :xml_identifier
 
   def public_bucket
     SETTINGS["s3_buckets"]["public_images"]
@@ -107,16 +108,16 @@ class GpoGraphic < ActiveRecord::Base
     }
   end
 
-  private
-
   def update_graphic_styles
-    self.graphic_styles = paperclip_styles.map do |style_name, attributes|
+    graphic_styles = []
+    paperclip_styles.each do |style_name, attributes|
       begin
         geometry = paperclip_geometry(style_name)
       rescue Paperclip::Errors::NotIdentifiedByImageMagickError #i.e. skip generating a graphic style if image url is not valid
+        puts "#{style_name} style for #{identifier} does not exist."
         next
       end
-      GraphicStyle.new(
+      graphic_styles << GraphicStyle.new(
         image_identifier: self.identifier.downcase,
         image_format:     attributes.fetch(:format),
         style_name:       style_name.to_s.gsub('_png',''),
@@ -124,12 +125,21 @@ class GpoGraphic < ActiveRecord::Base
         width:            geometry.width
       )
     end
+
+    self.graphic_styles = graphic_styles
   end
+
+
+  private
 
   EXPIRATION_TIME = 60
   def paperclip_geometry(style_name)
-    # This is needed for accessing images stored in the private bucket.  Also works for public images.
-    url = graphic.graphic.expiring_url(EXPIRATION_TIME, style_name)
+    if public?
+      url = graphic.url(style_name)
+    else
+      # This is needed for accessing images stored in the private bucket.
+      url = graphic.expiring_url(EXPIRATION_TIME, style_name)
+    end
     Paperclip::Geometry.from_file(url)
   end
 
