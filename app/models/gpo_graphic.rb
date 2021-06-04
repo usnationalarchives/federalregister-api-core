@@ -113,7 +113,7 @@ class GpoGraphic < ActiveRecord::Base
     paperclip_styles.each do |style_name, attributes|
       begin
         geometry = paperclip_geometry(style_name)
-      rescue Paperclip::Errors::NotIdentifiedByImageMagickError #i.e. skip generating a graphic style if image url is not valid
+      rescue OpenURI::HTTPError #i.e. skip generating a graphic style if image url is not valid
         puts "#{style_name} style for #{identifier} does not exist."
         next
       end
