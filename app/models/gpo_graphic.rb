@@ -20,11 +20,23 @@ class GpoGraphic < ActiveRecord::Base
                       :secret_access_key => Rails.application.secrets[:aws][:secret_access_key],
                       :s3_region => 'us-east-1'
                     },
-                    :s3_host_alias => proc { |attachment| attachment.instance.gpo_graphic_usages.present? ? SETTINGS['s3_host_aliases']['public_images'] : SETTINGS['s3_host_aliases']['private_images'] },
+                    :s3_host_alias => (proc do |attachment|
+                      if attachment.instance.sourced_via_ecfr_dot_gov || attachment.instance.gpo_graphic_usages.present?
+                        SETTINGS['s3_host_aliases']['public_images']
+                      else
+                        SETTINGS['s3_host_aliases']['private_images']
+                      end
+                    end),
                     :s3_permissions => :private,
                     :s3_protocol => 'https',
-                    :bucket => proc { |attachment| attachment.instance.gpo_graphic_usages.present? ? attachment.instance.public_bucket : attachment.instance.private_bucket },
                     :path => ":xml_identifier/:style.:extension",
+                    :bucket => (proc do |attachment|
+                      if attachment.instance.sourced_via_ecfr_dot_gov || attachment.instance.gpo_graphic_usages.present?
+                        attachment.instance.public_bucket
+                      else
+                        attachment.instance.private_bucket
+                      end
+                    end),
                     :validate_media_type => false,
                     :url => ':s3_alias_url',
                     :styles => -> (file) { file.instance.paperclip_styles }
