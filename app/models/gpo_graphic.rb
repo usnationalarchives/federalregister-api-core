@@ -140,7 +140,14 @@ class GpoGraphic < ActiveRecord::Base
       # This is needed for accessing images stored in the private bucket.
       url = graphic.expiring_url(EXPIRATION_TIME, style_name)
     end
-    Paperclip::Geometry.from_file(url)
+
+    # A bug with ImageMagick 6.9.7-4 prevents `Geometry.from_file(url)`, hence the need for a manual tempfile.  See commit notes.
+    temp_file = Tempfile.new
+    temp_file.binmode
+    temp_file << open(url).read
+    temp_file.close
+
+    Paperclip::Geometry.from_file(temp_file.path)
   end
 
 end
