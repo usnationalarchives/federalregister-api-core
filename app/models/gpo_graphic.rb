@@ -120,7 +120,7 @@ class GpoGraphic < ActiveRecord::Base
       graphic_styles << GraphicStyle.new(
         image_identifier: self.identifier.downcase,
         image_format:     attributes.fetch(:format),
-        style_name:       style_name.to_s.gsub('_png',''),
+        style_name:       style_name,
         height:           geometry.height,
         width:            geometry.width
       )
