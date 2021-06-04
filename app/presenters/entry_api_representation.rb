@@ -88,7 +88,10 @@ class EntryApiRepresentation < ApiRepresentation
           hsh
         else
           if graphic.class == GpoGraphic
-            image_urls = graphic.graphic_styles.each_with_object(Hash.new) do |graphic_style, hsh|
+            image_urls = graphic.
+              graphic_styles.
+              where(image_format: 'png').
+              each_with_object(Hash.new) do |graphic_style, hsh|
               hsh[graphic_style.style_name] = graphic_style.url
             end
 
