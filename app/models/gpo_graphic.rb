@@ -55,7 +55,7 @@ class GpoGraphic < ActiveRecord::Base
   end
 
   Paperclip.interpolates(:style) do |attachment, style|
-    if style == :original_png
+    if style.to_s == 'original_png'
       :original
     else
       style
