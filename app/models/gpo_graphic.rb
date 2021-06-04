@@ -92,7 +92,10 @@ class GpoGraphic < ActiveRecord::Base
   def xml_identifier
     self.gpo_graphic_usages.first.try(:xml_identifier)
   end
-  alias_method :public?, :xml_identifier
+
+  def public?
+    sourced_via_ecfr_dot_gov || xml_identifier
+  end
 
   def public_bucket
     SETTINGS["s3_buckets"]["public_images"]
