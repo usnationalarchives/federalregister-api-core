@@ -20,6 +20,15 @@ RSpec.describe "Images Endpoint", :type => :request do
       height: 363,
       image_format: 'png',
       image_identifier: 'ep13oc15.011',
+      style_name: 'original_png',
+      width: 1649,
+    )
+    GraphicStyle.create!(
+      graphic_id: 9999,
+      graphic_type: 'GpoGraphic',
+      height: 363,
+      image_format: 'eps',
+      image_identifier: 'ep13oc15.011',
       style_name: 'original',
       width: 1649,
     )
@@ -31,6 +40,11 @@ RSpec.describe "Images Endpoint", :type => :request do
         url: "http://wwww.example.com",
         height: 126,
         width: 572,
+      },
+      "original_png": {
+        url: "http://wwww.example.com",
+        height: 363,
+        width: 1649,
       },
       "original": {
         url: "http://wwww.example.com",

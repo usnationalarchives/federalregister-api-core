@@ -110,7 +110,7 @@ class GpoGraphic < ActiveRecord::Base
 
   def update_graphic_styles
     graphic_styles = []
-    paperclip_styles.each do |style_name, attributes|
+    paperclip_styles.merge(original_style).each do |style_name, attributes|
       begin
         geometry = paperclip_geometry(style_name)
       rescue OpenURI::HTTPError #i.e. skip generating a graphic style if image url is not valid
@@ -131,6 +131,22 @@ class GpoGraphic < ActiveRecord::Base
 
 
   private
+
+  def original_style
+    if sourced_via_ecfr_dot_gov
+      {
+        :original => {
+          :format => :pdf,
+        }
+      }
+    else
+      {
+        :original => {
+          :format => :eps,
+        }
+      }
+    end
+  end
 
   EXPIRATION_TIME = 60
   def paperclip_geometry(style_name)
