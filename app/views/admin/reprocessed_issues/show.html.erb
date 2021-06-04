@@ -19,7 +19,7 @@
       <% if @presenter.most_recent_diff.present? %>
         <%= simple_format(h @presenter.most_recent_html_diff) %>
       <% else %>
-        No MODS changes identified.
+        <%= @presenter.most_recent_no_mods_changes_message %>
       <% end %>
     </div>
   <% end %>

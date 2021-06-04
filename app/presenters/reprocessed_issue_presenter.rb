@@ -39,6 +39,10 @@ class ReprocessedIssuePresenter
     most_recent_reprocessed_issue.html_diff.try(:html_safe)
   end
 
+  def most_recent_no_mods_changes_message
+    "No MODS changes identified as of #{most_recent_reprocessed_issue.updated_at.to_s(:short_date_then_time)}"
+  end
+
   def most_recent_diff_processed?
     most_recent_reprocessed_issue.status == "complete"
   end
