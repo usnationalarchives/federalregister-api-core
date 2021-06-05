@@ -9,4 +9,12 @@ class GraphicStyle < ApplicationModel
     styleable.public?
   end
 
+  def entry_api_representation_style_name
+    if style_name == 'original_png'
+      'original'
+    else
+      style_name
+    end
+  end
+
 end

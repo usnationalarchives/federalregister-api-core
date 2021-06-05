@@ -92,8 +92,8 @@ class EntryApiRepresentation < ApiRepresentation
               graphic_styles.
               where(image_format: 'png').
               each_with_object(Hash.new) do |graphic_style, hsh|
-              hsh[graphic_style.style_name] = graphic_style.url
-            end
+                hsh[graphic_style.entry_api_representation_style_name] = graphic_style.url
+              end
 
             hsh[graphic.xml_identifier] = image_urls
           else
