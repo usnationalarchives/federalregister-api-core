@@ -2,7 +2,6 @@ FederalregisterApiCore::Application.routes.draw do
   # SPECIAL PAGES
   root to: 'special#home'
   match '/' => 'special#home', :via => :get
-  match 'robots.txt' => 'special#robots_dot_txt', :format => :txt, :via => :get
 
   # ENTRY SEARCH
   match 'articles/search' => 'entries/search#show', :as => :entries_search, :via => :get

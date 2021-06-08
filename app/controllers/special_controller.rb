@@ -13,8 +13,4 @@ class SpecialController < ApplicationController
     end
   end
 
-  def robots_dot_txt
-    cache_for 1.day
-    render 'robots_dot_txt.txt.erb', layout: false, content_type: 'text/plain'
-  end
 end
