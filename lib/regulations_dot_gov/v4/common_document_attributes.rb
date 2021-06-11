@@ -21,7 +21,7 @@ module RegulationsDotGov::V4::CommonDocumentAttributes
 
   def comment_url
     if raw_attribute_value('openForComment') && !non_participating_agency?
-      "http://www.regulations.gov/#!submitComment;D=#{document_id}"
+      "http://www.regulations.gov/commenton/#{document_id}"
     end
   end
 

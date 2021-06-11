@@ -7,7 +7,7 @@ describe RegulationsDotGov::V4::Client do
       docket_id:                        'FRTIB_FRDOC_0001',
       title:                            'Availability of Records',
       comment_due_date:                 DateTime.parse('2020-11-24T04:59:59Z'),
-      comment_url:                      "http://www.regulations.gov/#!submitComment;D=FRTIB_FRDOC_0001-0319",
+      comment_url:                      "http://www.regulations.gov/commenton/FRTIB_FRDOC_0001-0319",
       url:                              "http://www.regulations.gov/#!documentDetail;D=FRTIB_FRDOC_0001-0319",
       non_participating_agency?:        false,
       agency_acronym:                   'FRTIB'
