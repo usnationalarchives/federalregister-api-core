@@ -628,7 +628,7 @@ class Entry < ApplicationModel
   end
 
   def regulations_dot_gov_agency_id
-    calculated_comment_url.present? ? calculated_comment_url.split('D=').last.split(/(_|-)/, 2).first : nil
+    regulations_dot_gov_document_id.present? ? regulations_dot_gov_document_id.split('-').first : nil
   end
 
   def regulations_dot_gov_url
