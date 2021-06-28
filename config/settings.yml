@@ -14,7 +14,8 @@ shared: &shared
     notify_on_sphinx_usage: <%= ENV.fetch('NOTIFY_ON_SPHINX_USAGE', false) %>
     entry_index_shards: <%= ENV.fetch('ENTRY_INDEX_SHARDS', 1) %>
     public_inspection_document_index_shards: <%= ENV.fetch('PUBLIC_INSPECTION_DOCUMENT_INDEX_SHARDS', 1) %>
-
+  feature_flags:
+    use_graphic_styles_table_in_entry_api: <%= ActiveModel::Type::Boolean.new.cast(ENV.fetch('USE_GRAPHIC_STYLES_TABLE_IN_ENTRY_API', false)) %>
   varnish:
     host: <%= ENV["VARNISH_ADDR"] || 'varnish' %>
     port: 6082

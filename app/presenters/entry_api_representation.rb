@@ -86,31 +86,32 @@ class EntryApiRepresentation < ApiRepresentation
         # gpo graphics must have an xml identifier or else we don't want to expose them via the API
         if graphic.class == GpoGraphic && graphic.xml_identifier.blank?
           hsh
-        else
-          if graphic.class == GpoGraphic
-            image_urls = graphic.
-              graphic_styles.
-              where(image_format: 'png').
-              each_with_object(Hash.new) do |graphic_style, hsh|
-                hsh[graphic_style.entry_api_representation_style_name] = graphic_style.url
-              end
-
-            hsh[graphic.xml_identifier] = image_urls
-          else
-            hsh[graphic.identifier] = graphic.graphic.styles.inject({}) do |hsh, style|
-              type, paperclip_style = style
-              # expose the :original_png style as simply :original
-              renamed_type = type == :original_png ? :original : type
-
-              url = paperclip_style.attachment.send(:url, type).tap do |url|
-                if GRAPHIC_CONTENT_TYPES_FOR_COERCION.include? graphic.graphic_content_type
-                  url = url.gsub!(/\.png/,'.gif')
-                end
-              end
-
-              hsh[renamed_type] = url
-              hsh
+        elsif SETTINGS['feature_flags']['use_graphic_styles_table_in_entry_api'] && graphic.class == GpoGraphic
+          image_urls = graphic.
+            graphic_styles.
+            where(image_format: 'png').
+            each_with_object(Hash.new) do |graphic_style, hsh|
+              hsh[graphic_style.entry_api_representation_style_name] = graphic_style.url
             end
+
+          hsh[graphic.xml_identifier] = image_urls
+          hsh
+        else
+          identifier = graphic.class == GpoGraphic ? graphic.xml_identifier : graphic.identifier
+
+          hsh[identifier] = graphic.graphic.styles.inject({}) do |hsh, style|
+            type, paperclip_style = style
+            # expose the :original_png style as simply :original
+            renamed_type = type == :original_png ? :original : type
+
+            url = paperclip_style.attachment.send(:url, type).tap do |url|
+              if GRAPHIC_CONTENT_TYPES_FOR_COERCION.include? graphic.graphic_content_type
+                url = url.gsub!(/\.png/,'.gif')
+              end
+            end
+
+            hsh[renamed_type] = url
+            hsh
           end
 
           hsh
