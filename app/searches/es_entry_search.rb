@@ -380,7 +380,7 @@ class EsEntrySearch < EsApplicationSearch
         return Citation.new(:citation_type => "FR", :part_1 => volume.to_i, :part_2 => page.gsub(/,/,'').to_i)
       end
 
-      term.scan(/^\s*(?:EO|Executive Order|E\.O\.)\s+([0-9,]+)\s*$/i) do |captures|
+      term.scan(/^\s*(?:E\s*O|Executive Order|E\.O\.)\s+([0-9,]+)\s*$/i) do |captures|
         return Citation.new(:citation_type => "EO", :part_1 => captures.first.gsub(/,/,'').to_i)
       end
     end
