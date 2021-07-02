@@ -22,26 +22,26 @@ class FrIndexPresenter
     include EntryViewLogic
 
     DEFAULT_SUBJECT_SQL = <<-SQL
-      IF(public_inspection_documents.subject_3 IS NOT NULL AND public_inspection_documents.subject_3 != '',
-        CONCAT(public_inspection_documents.subject_1, ' ', public_inspection_documents.subject_2),
-        IF(public_inspection_documents.subject_2 IS NOT NULL AND public_inspection_documents.subject_2 != '',
-          public_inspection_documents.subject_1,
-          entries.toc_subject
+      IF(MAX(public_inspection_documents.subject_3) IS NOT NULL AND MAX(public_inspection_documents.subject_3) != '',
+        CONCAT(MAX(public_inspection_documents.subject_1), ' ', MAX(public_inspection_documents.subject_2)),
+        IF(MAX(public_inspection_documents.subject_2) IS NOT NULL AND MAX(public_inspection_documents.subject_2) != '',
+          MAX(public_inspection_documents.subject_1),
+          MAX(entries.toc_subject)
         )
       )
     SQL
-    SUBJECT_SQL = "IFNULL(entries.fr_index_subject, #{DEFAULT_SUBJECT_SQL})"
+    SUBJECT_SQL = "IFNULL(MAX(entries.fr_index_subject), #{DEFAULT_SUBJECT_SQL})"
 
     DEFAULT_DOC_SQL = <<-SQL
-      IF(public_inspection_documents.subject_3 IS NOT NULL AND public_inspection_documents.subject_3 != '',
-        public_inspection_documents.subject_3,
-        IF(public_inspection_documents.subject_2 IS NOT NULL AND public_inspection_documents.subject_2 != '',
-          public_inspection_documents.subject_2,
-          IF(public_inspection_documents.subject_1 IS NOT NULL AND public_inspection_documents.subject_1 != '',
-            public_inspection_documents.subject_1,
-            IF(entries.toc_doc IS NOT NULL AND entries.toc_doc != "",
-              entries.toc_doc,
-              entries.title
+      IF(MAX(public_inspection_documents.subject_3) IS NOT NULL AND MAX(public_inspection_documents.subject_3) != '',
+        MAX(public_inspection_documents.subject_3),
+        IF(MAX(public_inspection_documents.subject_2) IS NOT NULL AND MAX(public_inspection_documents.subject_2) != '',
+          MAX(public_inspection_documents.subject_2),
+          IF(MAX(public_inspection_documents.subject_1) IS NOT NULL AND MAX(public_inspection_documents.subject_1) != '',
+            MAX(public_inspection_documents.subject_1),
+            IF(MAX(entries.toc_doc) IS NOT NULL AND MAX(entries.toc_doc) != "",
+              MAX(entries.toc_doc),
+              MAX(entries.title)
             )
           )
         )

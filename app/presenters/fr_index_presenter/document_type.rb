@@ -87,29 +87,26 @@ class FrIndexPresenter
 
       results = ::Entry.connection.select_all(<<-SQL)
         SELECT entries.id,
-          entries.title,
-          entries.document_number,
-          entries.publication_date,
+          MAX(entries.title) AS title,
+          MAX(entries.document_number) AS document_number,
+          MAX(entries.publication_date) AS publication_date,
           #{FrIndexPresenter::EntryPresenter::DEFAULT_SUBJECT_SQL} AS original_subject,
           #{FrIndexPresenter::EntryPresenter::DEFAULT_DOC_SQL} AS original_doc,
-          entries.fr_index_subject AS modified_subject,
-          entries.fr_index_doc AS modified_doc,
-          entries.granule_class,
-          entries.start_page,
-          entries.end_page,
-          IF(entries.presidential_document_type_id = #{PresidentialDocumentType::EXECUTIVE_ORDER.id}, entries.presidential_document_number, NULL) AS executive_order_number,
-          entries.presidential_document_type_id,
-          IF(entries.presidential_document_type_id = #{PresidentialDocumentType::PROCLAMATION.id}, entries.presidential_document_number, NULL) AS proclamation_number,
-          entries.signing_date,
-          comment_close_events.date AS comments_close_on,
+          MAX(entries.fr_index_subject) AS modified_subject,
+          MAX(entries.fr_index_doc) AS modified_doc,
+          MAX(entries.granule_class) AS granule_class,
+          MAX(entries.start_page) AS start_page,
+          MAX(entries.end_page) AS end_page,
+          IF(MAX(entries.presidential_document_type_id) = #{PresidentialDocumentType::EXECUTIVE_ORDER.id}, MAX(entries.presidential_document_number), NULL) AS executive_order_number,
+          MAX(entries.presidential_document_type_id) AS presidential_document_type_id,
+          IF(MAX(entries.presidential_document_type_id) = #{PresidentialDocumentType::PROCLAMATION.id}, MAX(entries.presidential_document_number), NULL) AS proclamation_number,
+          MAX(entries.signing_date) AS signing_date,
+          MAX(comment_close_events.date) AS comments_close_on,
           SUM(regulatory_plans.priority_category IN (#{RegulatoryPlan::SIGNIFICANT_PRIORITY_CATEGORIES.map(&:inspect).join(',')})) > 0 AS significant,
-          entries.regulations_dot_gov_docket_id AS docket_id
-          # IFNULL(dockets.comments_count,0) AS comment_count
+          MAX(entries.regulations_dot_gov_docket_id) AS docket_id
         FROM entries
         LEFT OUTER JOIN public_inspection_documents
           ON public_inspection_documents.entry_id = entries.id
-        # LEFT OUTER JOIN dockets
-          # ON dockets.id = entries.regulations_dot_gov_docket_id
         LEFT OUTER JOIN events AS comment_close_events
           ON comment_close_events.entry_id = entries.id
           AND comment_close_events.event_type = 'CommentsClose'
