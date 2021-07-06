@@ -19,7 +19,7 @@ module Content::EntryImporter::PresidentialDocumentDetails
 
     return document_type_id if document_type_id
 
-    # fall back to bulkdata node if available (presidential orders don't have MODS node)
+    # fall back to bulkdata node if available
     if bulkdata_node
       child_node = bulkdata_node.xpath('./*').first
       if child_node
