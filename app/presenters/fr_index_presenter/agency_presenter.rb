@@ -101,6 +101,7 @@ class FrIndexPresenter
         LEFT OUTER JOIN public_inspection_documents
           ON public_inspection_documents.entry_id = entries.id
         WHERE entries.id IN (?)
+        GROUP BY entries.id
       SQL
     end
 
@@ -111,6 +112,7 @@ class FrIndexPresenter
         LEFT OUTER JOIN public_inspection_documents
           ON public_inspection_documents.entry_id = entries.id
         WHERE entries.id IN (?)
+        GROUP BY entries.id
       SQL
     end
 

@@ -47,7 +47,7 @@ class FrIndexPresenter
         )
       )
     SQL
-    DOC_SQL = "IFNULL(entries.fr_index_doc, #{DEFAULT_DOC_SQL})"
+    DOC_SQL = "IFNULL(MAX(entries.fr_index_doc), #{DEFAULT_DOC_SQL})"
 
     def initialize(options)
       # manual typecasting FTW
