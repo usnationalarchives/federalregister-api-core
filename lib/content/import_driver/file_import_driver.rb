@@ -1,8 +1,6 @@
 module Content
   class ImportDriver
     class FileImportDriver < Content::ImportDriver
-      load './lib/tasks/content_eps_import.rake'
-
       def run
         ENV['DATE'] = ">#{(Date.current - 1.day).to_s(:iso)}"
         Rake::Task["content:gpo_images:convert_eps"].invoke
