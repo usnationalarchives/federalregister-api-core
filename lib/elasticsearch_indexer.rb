@@ -60,6 +60,7 @@ module ElasticsearchIndexer
       where(id: EntryChange.where.not(entry_id: deleted_entry_ids).pluck(:entry_id)).
       find_in_batches(batch_size: BATCH_SIZE) do |entry_batch|
         Entry.bulk_index(entry_batch, refresh: false)
+        EntryChange.where(entry_id: entry_batch.map(&:id)).delete_all
       end
 
     $entry_repository.refresh_index!
