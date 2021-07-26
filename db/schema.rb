@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_06_10_170654) do
+ActiveRecord::Schema.define(version: 2021_07_26_230347) do
 
   create_table "action_names", :force => true do |t|
     t.string   "name"
@@ -205,7 +205,6 @@ ActiveRecord::Schema.define(version: 2021_06_10_170654) do
     t.datetime "places_determined_at"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean "delta", default: true, null: false
     t.string "source_text_url"
     t.string "regulationsdotgov_url"
     t.string "comment_url"
@@ -240,7 +239,6 @@ ActiveRecord::Schema.define(version: 2021_06_10_170654) do
   add_index "entries", ["citation"], :name => "index_entries_on_citation"
   add_index "entries", ["citing_entries_count"], :name => "index_entries_on_citing_entries_count"
   add_index "entries", ["correction_of_id"], :name => "index_entries_on_correction_of"
-  add_index "entries", ["delta"], :name => "index_entries_on_delta"
   add_index "entries", ["document_number"], :name => "index_entries_on_document_number"
   add_index "entries", ["full_text_updated_at"], :name => "index_entries_on_full_text_added_at"
   add_index "entries", ["full_xml_updated_at"], :name => "index_entries_on_full_xml_added_at"
@@ -521,7 +519,6 @@ ActiveRecord::Schema.define(version: 2021_06_10_170654) do
     t.text     "editorial_note",      :limit => 16777215
     t.string   "document_file_path"
     t.datetime "raw_text_updated_at"
-    t.boolean  "delta",                                   :default => true,  :null => false
     t.integer  "num_pages"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -534,7 +531,6 @@ ActiveRecord::Schema.define(version: 2021_06_10_170654) do
     t.datetime "update_pil_at"
   end
 
-  add_index "public_inspection_documents", ["delta"], :name => "index_public_inspection_documents_on_delta"
   add_index "public_inspection_documents", ["document_number"], :name => "index_public_inspection_documents_on_document_number"
   add_index "public_inspection_documents", ["entry_id"], :name => "index_public_inspection_documents_on_entry_id"
   add_index "public_inspection_documents", ["publication_date"], :name => "index_public_inspection_documents_on_publication_date"

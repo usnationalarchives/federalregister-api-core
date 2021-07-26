@@ -15,7 +15,6 @@ namespace :content do
             puts "linking PI for #{date}"
             PublicInspectionDocument.where(publication_date: date, entry_id: nil).each do |pi_doc|
               pi_doc.entry = Entry.find_by_document_number(pi_doc.document_number)
-              pi_doc.delta = true
               pi_doc.save(validate: false)
             end
           rescue StandardError => e

@@ -1,6 +1,6 @@
 module Content::EntryImporter::Agencies
   extend Content::EntryImporter::Utils
-  provides :agency_name_assignments, :delta
+  provides :agency_name_assignments, :updated_at
 
   MAX_RETRIES = 1
   RETRY_DELAY = 1
@@ -24,7 +24,8 @@ module Content::EntryImporter::Agencies
     end
   end
 
-  def delta
-    true
+  def updated_at
+    # NOTE: Entries are reindexed based on whether they have changed.  Formerly, when agency name assignments occurred, entries were not being marked as having changed.  As such, we decided to aggressively mark all imported records as having changed (and hence indicating they should all be reindexed by elasticsearch).  This was previously accomplished by always marking the Sphinx 'delta' column as true, but we removed it as a confusing legacy of Sphinx and are effectively marking all entries as having changed by touching their updated_at timestamp.
+    Time.current
   end
 end

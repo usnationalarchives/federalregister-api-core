@@ -44,7 +44,6 @@ class PlaceDeterminer
         end
 
         entry.places_determined_at = Time.now
-        entry.delta = true
         entry.save
       end
 
