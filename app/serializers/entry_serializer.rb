@@ -132,7 +132,7 @@ class EntrySerializer < ApplicationSerializer
 
   attribute :significant do |entry|
     (
-      RegulatoryPlan::SIGNIFICANT_PRIORITY_CATEGORIES & entry.regulatory_plans.map(&:priority_category)
+      RegulatoryPlan::SIGNIFICANT_PRIORITY_CATEGORIES & entry.current_regulatory_plans.map(&:priority_category)
     ).present?
   end
 
