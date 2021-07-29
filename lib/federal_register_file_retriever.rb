@@ -15,6 +15,7 @@ class FederalRegisterFileRetriever
     end
 
     FileUtils.mv temp_file, path
+    temp_file.close
   end
 
   def self.http_get(url)
