@@ -1,5 +1,10 @@
 namespace :content do
   namespace :regulatory_plans do
+    desc "Import semi-annual unified agenda"
+    task :schedule => :environment do
+      Content::RegulatoryPlanImporterScheduler.new.perform
+    end
+
     desc "import regulatory plans"
     task :import => :environment do
       Content::RegulatoryPlanImporter.import_all_by_publication_date(ENV['ISSUE_TO_IMPORT'])

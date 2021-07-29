@@ -124,6 +124,13 @@ if cron_settings["gpo_images"]["reprocess_unlinked_gpo_images"]
 end
 
 ########################
+# SEMI-ANNUAL UNIFIED AGENDA
+########################
+every 1.day, at: '3:00PM' do
+  rake 'content:regulatory_plans:schedule'
+end
+
+########################
 # REGULATIONS.GOV DATA
 ########################
 
