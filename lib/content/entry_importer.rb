@@ -65,15 +65,21 @@ module Content
 
         raise IssueMissingDocumentNumbers, "No documents numbers present in MODS file for #{date}." unless mods_doc_numbers.present?
 
-        (mods_doc_numbers - docs_and_nodes.map{|doc, node| doc}).each do |document_number|
-          notify_of_missing_document(:bulkdata, date, document_number)
-
+        document_numbers_missing_from_bulk_data = (mods_doc_numbers - docs_and_nodes.map{|doc, node| doc})
+        if document_numbers_missing_from_bulk_data.present?
+          notify_of_missing_document(:bulkdata, date, document_numbers_missing_from_bulk_data)
+        end
+        document_numbers_missing_from_bulk_data.each do |document_number|
           import_document(
             options.merge(:date => date, :document_number => document_number),
             attributes
           )
         end
 
+        document_numbers_missing_from_mods = (docs_and_nodes.map{|doc, node| doc} - mods_doc_numbers)
+        if document_numbers_missing_from_mods.present?
+          notify_of_missing_document(:mods, date, document_numbers_missing_from_mods)
+        end
         docs_and_nodes.each do |document_number, bulkdata_node|
           if mods_doc_numbers.include?(document_number)
             import_document(
@@ -83,8 +89,6 @@ module Content
               ),
               attributes
             )
-          else
-            notify_of_missing_document(:mods, date, document_number)
           end
         end
 
@@ -100,14 +104,14 @@ module Content
       end
     end
 
-    def self.notify_of_missing_document(type, date, document_number)
+    def self.notify_of_missing_document(type, date, document_numbers)
       case type
       when :bulkdata
-        error_class = "Missing Document Number in bulkdata"
-        error = "'#{document_number}' (#{date}) in MODS but not in bulkdata"
+        error_class = "Missing Document Numbers in bulkdata"
+        error = "'#{document_numbers}' (#{date}) in MODS but not in bulkdata"
       when :mods
-        error_class = "Missing Document Number in MODS"
-        error = "'#{document_number}' (#{date}) in bulkdata but not in MODS"
+        error_class = "Missing Document Numbers in MODS"
+        error = "'#{document_numbers}' (#{date}) in bulkdata but not in MODS"
       end
 
       Rails.logger.warn(error)
