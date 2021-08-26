@@ -29,7 +29,7 @@ module Content
     end
 
     def reprocess_issue
-      reprocess_basic_data
+      reimport_data
       reprocess_rin_and_significant
       reprocess_presdoc_fields
       reprocess_events
@@ -39,16 +39,16 @@ module Content
 
     private
 
-    def reprocess_basic_data
-      update_reprocessing_message("reprocessing basic data")
+    def reimport_data
+      update_reprocessing_message("reimporting all entry data")
 
       begin
         ENV['DATE'] = "#{date.to_s(:iso)}"
-        Rake::Task['content:entries:import:basic_data'].invoke
+        Rake::Task['content:entries:reimport_sans_force_reload'].invoke
       rescue StandardError => error
-        handle_failure(error,"IssueReprocessor: Reprocess Basic Data")
+        handle_failure(error,"IssueReprocessor: Reimporting all entry data")
       ensure
-        Rake::Task['content:entries:import:basic_data'].reenable
+        Rake::Task['content:entries:reimport_sans_force_reload'].reenable
       end
     end
 
