@@ -97,7 +97,7 @@ class Entry < ApplicationModel
 
   before_save :set_document_file_path
   before_save :record_entry_change
-  before_destroy :record_entry_change
+  before_destroy :record_entry_change_on_destroy
 
   has_many :section_assignments
   has_many :sections, :through => :section_assignments
@@ -652,6 +652,12 @@ class Entry < ApplicationModel
   end
 
   private
+
+  def record_entry_change_on_destroy
+    if entry_change.nil?
+      EntryChange.create!(entry_id: id)
+    end
+  end
 
   def record_entry_change
     if entry_change.nil? && new_or_changed?

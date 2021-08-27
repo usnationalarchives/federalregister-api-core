@@ -154,8 +154,10 @@ describe Entry do
 
     it "creates an entry change record if a record is deleted" do
       entry = Factory(:entry)
-      entry.destroy!
+      EntryChange.delete_all
+      entry.reload.destroy!
 
+      expect(EntryChange.count).to eq(1)
       expect(EntryChange.first.entry_id).to eq(entry.id)
     end
 
