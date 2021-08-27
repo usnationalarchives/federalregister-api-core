@@ -66,8 +66,9 @@ module GpoImages
       if sourced_via_ecfr_dot_gov.blank? || gpo_graphic.sourced_via_ecfr_dot_gov.present? || gpo_graphic.id.blank?
       #eg only set the graphic/metadata if it's from SFTP, we're reprocessing an ECFR_sourced image, OR it's a new image
         gpo_graphic.sourced_via_ecfr_dot_gov = sourced_via_ecfr_dot_gov
-        gpo_graphic.graphic = image
         gpo_graphic.package_identifier = package_identifier
+        gpo_graphic.save! # NOTE: Sometimes the paperclip image processing fails below; we want to ensure the package identifier is always saved for easier reprocessing.
+        gpo_graphic.graphic = image
 
         gpo_graphic_package = gpo_graphic.gpo_graphic_packages.
           find_or_initialize_by(
