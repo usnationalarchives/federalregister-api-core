@@ -44,7 +44,7 @@ module GpoImages
     attr_reader :image_identifier
 
     def ecfr_pdf_url
-      "https://www.ecfr.gov/graphics/pdfs/#{image_identifier}.pdf" #This url requires the downcased variant of image_identifier
+      "https://retired.ecfr.gov/graphics/pdfs/#{image_identifier}.pdf" #This url requires the downcased variant of image_identifier
     end
 
   end
