@@ -1,8 +1,18 @@
 module Content::ExecutiveOrderImporter
   def self.perform(file_path)
     executive_orders = []
-    CSV.foreach(file_path, :headers => :first_row, :encoding => 'windows-1251:utf-8') do |line|
-      executive_orders << line.to_hash
+    CSV.foreach(
+      file_path,
+      :headers => :first_row,
+      :encoding => 'windows-1251:utf-8',
+      :header_converters => lambda do |f|
+        val = f.try(:strip).try(:downcase)
+      end,
+      :skip_blanks => true
+    ) do |line|
+      if line.to_s.chomp.gsub(',','').present?
+        executive_orders << line.to_hash
+      end
     end
 
     max_known_eo_number = executive_orders.map{|eo| eo['executive_order_number'] }.max
