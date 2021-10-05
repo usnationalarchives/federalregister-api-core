@@ -32,7 +32,7 @@ module Content::ExecutiveOrderImporter
       end
 
       if publication_date
-        entry = Entry.find_by_document_number_and_publication_date(document_number.strip, publication_date)
+        entry = Entry.find_by_document_number_and_publication_date(document_number.strip, publication_date) || Entry.find_by_document_number(document_number.strip)
       else
         entry = Entry.find_by_document_number(document_number.strip)
       end
