@@ -6,7 +6,7 @@ class EntryApiRepresentation < ApiRepresentation
   ]
 
   self.default_index_fields_json = [:title, :type, :abstract, :document_number, :html_url, :pdf_url, :public_inspection_pdf_url, :publication_date, :agencies, :excerpts]
-  self.default_index_fields_csv = [:title, :type, :agency_names, :abstract, :document_number, :html_url, :pdf_url, :publication_date]
+  self.default_index_fields_csv = [:title, :type, :agency_names, :abstract, :citation, :document_number, :html_url, :pdf_url, :publication_date]
   self.default_index_fields_rss = [:title, :abstract, :document_number, :publication_date, :agencies, :topics, :html_url]
 
   def self.default_show_fields_json
