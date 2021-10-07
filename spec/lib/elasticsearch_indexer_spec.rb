@@ -23,12 +23,15 @@ describe ElasticsearchIndexer do
 
     $entry_repository.save(entry)
     $entry_repository.refresh_index!
-    expect($entry_repository.find([entry.id]).first.send(:attributes).fetch(:title)).to eq('Original Title')
+
+    result_1 = $entry_repository.find([entry.id]).first.title
+    expect(result_1).to eq('Original Title')
 
     entry.update!(title: 'New Title')
     ElasticsearchIndexer.reindex_modified_entries
 
-    expect($entry_repository.find([entry.id]).first.send(:attributes).fetch(:title)).to eq('New Title')
+    result_2 = $entry_repository.find([entry.id]).first.title
+    expect(result_2).to eq('New Title')
   end
 
   it "#remove_deleted_entries does not fail " do

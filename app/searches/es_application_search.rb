@@ -324,6 +324,9 @@ class EsApplicationSearch
     # Retrieve AR ids from Elasticsearch
     es_search_invocation = repository.search(search_options)
 
+    # Test the return of actual ES objects
+    # return es_search_invocation.results
+
     # Get AR objects
     es_ids = es_search_invocation.results.map(&:id)
     if es_ids.present?
@@ -343,9 +346,11 @@ class EsApplicationSearch
       active_record_collection = active_record_collection.select(select_clause)
     end
 
-    ar_collection_with_metadata = ActiveRecordCollectionMetadataWrapper.new(es_search_invocation, active_record_collection, page, per_page)
+    # ar_collection_with_metadata = ActiveRecordCollectionMetadataWrapper.new(es_search_invocation, active_record_collection, page, per_page)
+    ar_collection_with_metadata = ActiveRecordCollectionMetadataWrapper.new(es_search_invocation, es_search_invocation.results, page, per_page)
 
     if ar_collection_with_metadata && @excerpts
+      #NOTE: The issue here is that formerly the actual AR object was being returned and so we could query the raw_text_updated_at column, but in this new world, we're actually querying the ES document, which has yet to receive this raw_text_updated_at attribute
       results_with_raw_text, results_without_raw_text = ar_collection_with_metadata.partition{|e| e.raw_text_updated_at.present?}
 
       if results_with_raw_text.present?
@@ -356,6 +361,7 @@ class EsApplicationSearch
               result.excerpt = es_search_invocation.results[index].highlights.gsub("...", "…")
             end
           rescue StandardError => e
+            #TODO: This standard error rescuing is perhaps too aggressive--ideally we'd want to limit to the specific error in question
             # if we can't read a file we want to still show the search results
             Rails.logger.warn(e)
             Honeybadger.notify(e, context: args)

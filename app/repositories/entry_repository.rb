@@ -125,7 +125,7 @@ class EntryRepository < BaseRepository
   end
 
   def search_result_klass
-    EntrySearchResult
+    EsEntrySearchResult
   end
 
 end

@@ -5,7 +5,12 @@ class BaseRepository
   def deserialize(document)
     attributes = document['_source'].merge('highlight' => document['highlight'])
 
-    search_result_klass.new ActiveSupport::HashWithIndifferentAccess.new(attributes).deep_symbolize_keys
+    pub_date = attributes['publication_date']
+    if pub_date
+      attributes['publication_date'] = Date.parse(pub_date)
+    end
+
+    EsEntrySearchResult.new ActiveSupport::HashWithIndifferentAccess.new(attributes).deep_symbolize_keys
   end
 
   def update_mapping!

@@ -10,10 +10,11 @@ shared: &shared
 
 development:
   <<: *shared
+  database:  fr2_development
 
 test:
   <<: *shared
-  database: <%= ENV["MYSQL_DATABASE"] || 'federalregister-api-core' %>_test
+  database: <%= ENV["MYSQL_DATABASE"] || 'fr2' %>_test
 
 staging:
   <<: *shared
