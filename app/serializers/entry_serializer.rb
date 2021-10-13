@@ -1,4 +1,7 @@
 class EntrySerializer < ApplicationSerializer
+  extend Rails.application.routes.url_helpers
+  extend RouteBuilder
+  extend Routeable
 
   attributes :id, :title, :abstract, :publication_date, :document_number, :presidential_document_type_id, :signing_date, :president_id, :start_page, :executive_order_number, :proclamation_number
 
