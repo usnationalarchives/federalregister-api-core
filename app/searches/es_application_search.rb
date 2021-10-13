@@ -481,7 +481,7 @@ class EsApplicationSearch
         }
       },
       sort: es_sort_order,
-      _source: ['id'],
+      _source: true, #TODO: Possibly apply selective fetching logic for performance reasons.
     }.tap do |query|
       if excerpts
         query.merge!(highlight: highlight_query)
