@@ -426,6 +426,43 @@ describe EsEntrySearch do
       expect(results.first.id).to eq(another_entry.id)
     end
 
+    it "returns the same attributes as an active record object" do
+      #TODO: Transition to a request-like spec
+      agency = Factory(:agency)
+      agency_name = Factory(:agency_name, agency: agency)
+      another_entry = Factory(
+        :entry,
+        significant: 0,
+        title: 'fish',
+        publication_date: Date.current,
+        agencies: [agency],
+        agency_names: [agency_name]
+      )
+      entries = [
+        another_entry
+      ]
+
+      Entry.bulk_index(entries, refresh: true)
+
+      search = EsEntrySearch.new(conditions: {significant: 0, term: 'fish'})
+
+      result = search.results.first
+      expect(result).to have_attributes(
+        publication_date: Date.current,
+        agencies: [
+          {
+            "raw_name": agency_name.name,
+            "name":     agency.name,
+            "id":       agency.id,
+            "url":      "http://www.fr2.local:8081/agencies/#{agency.slug}",
+            "json_url": "http://www.fr2.local:8081/api/v1/agencies/#{agency.id}",
+            "parent_id": nil,
+            "slug":     agency.slug
+          }
+        ]
+      )
+    end
+
     it "retrieves AR objects properly in the proper sort order" do
       entry_1 = Factory(:entry, significant: 0, publication_date: Date.new(2020,3,1) )
       entry_2 = Factory(:entry, significant: 0, publication_date: Date.new(2020,2,1) )
@@ -467,6 +504,7 @@ describe EsEntrySearch do
 
       assert_valid_search(search)
       result = search.results.first.excerpt
+      # search => EsEntrySearchResult.excerpt
       expect(result).to eq("The <span class=\"match\">fish</span> swam across the pond … <span class=\"match\">fish</span> are great. … <span class=\"match\">Fish</span> stuff")
     end
 

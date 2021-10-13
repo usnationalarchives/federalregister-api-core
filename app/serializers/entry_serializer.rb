@@ -5,6 +5,27 @@ class EntrySerializer < ApplicationSerializer
 
   attributes :id, :title, :abstract, :publication_date, :document_number, :presidential_document_type_id, :signing_date, :president_id, :start_page, :executive_order_number, :proclamation_number
 
+  attribute :agencies do |entry|
+    entry.agency_name_assignments.map(&:agency_name).compact.map do |agency_name|
+      agency = agency_name.agency
+      if agency
+        {
+          :raw_name  => agency_name.name,
+          :name      => agency.name,
+          :id        => agency.id,
+          :url       => agency_url(agency),
+          :json_url  => api_v1_agency_url(agency.id, :format => :json),
+          :parent_id => agency.parent_id,
+          :slug      => agency.slug
+        }
+      else
+        {
+          :raw_name => agency_name.name
+        }
+      end
+    end
+  end
+
   attribute :full_text do |entry|
     path = "#{FileSystemPathManager.data_file_path}/documents/full_text/raw/#{entry.document_file_path}.txt"
     if File.file?(path)
