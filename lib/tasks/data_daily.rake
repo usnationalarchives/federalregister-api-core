@@ -19,6 +19,7 @@ namespace :data do
       data:extract:places
       content:gpo_images:process_daily_issue_images
       content:entries:json:compile:daily_toc
+      content:entries:enqueue_regs_dot_gov_import
     )
 
     task :really_quick => %w(
