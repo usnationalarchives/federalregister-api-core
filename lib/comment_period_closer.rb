@@ -3,15 +3,26 @@ class CommentPeriodCloser
 
   MAX_AGE = 4.months
   def self.perform
-    candidate_entries_still_open.each do |entry|
-      EntryRegulationsDotGovImporter.perform_async(entry.document_number)
+    candidate_document_numbers_still_open.each do |doc_number|
+      EntryRegulationsDotGovImporter.perform_async(doc_number)
     end
   end
 
-  def self.candidate_entries_still_open
-    Entry.
+  def self.candidate_document_numbers_still_open
+    base_scope = Entry.
+      where.not(comment_url: nil).
+      where("entries.created_at > '#{(Date.current - MAX_AGE).to_s(:iso)}'")
+
+    comments_scope = base_scope.
       joins("LEFT JOIN events ON entries.id = events.entry_id AND event_type = 'CommentsClose'").
-      where("entries.comment_url IS NOT NULL AND entries.created_at > '#{(Date.current - MAX_AGE).to_s(:iso)}' AND (date is NULL or date < '#{Date.current.to_s(:iso)}')")
+      where("date is NULL OR date < '#{Date.current.to_s(:iso)}'")
+
+    regs_scope = base_scope.
+      joins("LEFT JOIN events ON entries.id = events.entry_id AND event_type = 'RegulationsDotGovCommentsClose'").
+      where("date is NULL OR date < '#{Date.current.to_s(:iso)}'")
+
+    (comments_scope.pluck(:document_number) + regs_scope.pluck(:document_number)).uniq
   end
+
 
 end
