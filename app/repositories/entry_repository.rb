@@ -58,9 +58,29 @@ class EntryRepository < BaseRepository
         }
       }
     }
+    indexes :action, {
+      type: 'keyword',
+      index: false,
+    }
     indexes :agencies, {
       type:        'object',
       enabled:      false,
+    }
+    indexes :body_html_url, {
+      type: 'keyword',
+      index: false,
+    }
+    indexes :citation, {
+      type: 'keyword',
+      index: false,
+    }
+    indexes :comments_close_on, {
+      type: 'date',
+      index: false,
+    }
+    indexes :comment_url, {
+      type:        'keyword',
+      index:      false,
     }
     indexes :cfr_references, {
       type:        'object',
@@ -68,7 +88,31 @@ class EntryRepository < BaseRepository
     }
     indexes :agency_names, {
       type:        'keyword',
-      # enabled:      false,
+      index:       false
+    }
+    indexes :dates, {
+      type: 'text',
+      index: false
+    }
+    indexes :disposition_notes, {
+      type: 'text',
+      index: false
+    }
+    indexes :effective_on, {
+      type: 'date',
+      index: false
+    }
+    indexes :end_page, {
+      type: 'integer',
+      index: false
+    }
+    indexes :excerpts, {
+      type: 'text',
+      index: false
+    }
+    indexes :executive_order_notes, {
+      type: 'text',
+      index: false
     }
     indexes :full_text, {
       type:        'text',
@@ -82,6 +126,52 @@ class EntryRepository < BaseRepository
         }
       }
     }
+    indexes :full_text_xml_url, {
+      type: 'keyword',
+      index: false
+    }
+    indexes :html_url, {
+      type: 'keyword',
+      index: false
+    }
+    indexes :images, {
+      type: 'object',
+      enabled: false
+    }
+    indexes :json_url, {
+      type: 'keyword',
+      index: false
+    }
+    indexes :mods_url, {
+      type: 'keyword',
+      index: false
+    }
+    indexes :page_length, {
+      type: 'integer',
+      index: false
+    }
+    indexes :pdf_url, {
+      type: 'keyword',
+      index: false
+    }
+    indexes :president, {
+      type: 'object',
+      enabled: false
+    }
+    indexes :raw_text_url, {
+      type: 'keyword',
+      index: false
+    }
+    indexes :public_inspection_pdf_url, {
+      type: 'keyword',
+      index: false
+    }
+    indexes :regulations_dot_gov_info, {
+      type: 'object',
+      enabled: false
+    }
+
+
     indexes :regulation_id_number, {
       type:        'text',
       analyzer:    'custom_english',
@@ -93,6 +183,18 @@ class EntryRepository < BaseRepository
           term_vector: 'with_positions_offsets'
         }
       }
+    }
+    indexes :regulation_id_numbers, {
+      type: 'keyword',
+      index: false
+    }
+    indexes :regulation_id_number_info, {
+      type: 'object',
+      enabled: false
+    }
+    indexes :type, {
+      type: 'keyword',
+      enabled: false
     }
     indexes :docket_id, {
       type:        'text',
@@ -106,10 +208,21 @@ class EntryRepository < BaseRepository
         }
       }
     }
+    indexes :docket_ids, {
+      type: 'keyword',
+      index: false
+    }
+    indexes :regulations_dot_gov_url, {
+      type: 'keyword',
+      index: false
+    }
     indexes :document_number, {type: 'keyword'}
     indexes :indexed_at, {type: 'date'}
+    indexes :toc_doc, {type: 'text', index: false}
+    indexes :toc_subject, {type: 'text', index: false}
     indexes :type, {type: 'keyword'}
     indexes :presidential_document_type_id, {type: 'integer'}
+    indexes :presidential_document_number, {type: 'keyword', index: false}
     indexes :publication_date_week, {type: 'date'}
     indexes :publication_date_month, {type: 'date'}
     indexes :publication_date_quarter, {type: 'date'}
@@ -118,8 +231,11 @@ class EntryRepository < BaseRepository
     indexes :signing_date, {type: 'date'}
     indexes :president_id, {type: 'integer'}
     indexes :correction, {type: 'boolean'}
+    indexes :correction_of, {type: 'keyword', index: false}
     indexes :corrections, {type: 'keyword', index: true}
     indexes :start_page, {type: 'integer'}
+    indexes :topics, {type: 'keyword', index: false}
+    indexes :subtype, {type: 'keyword', index: false}
     indexes :executive_order_number, {type: 'keyword'}
     indexes :proclamation_number, {type: 'keyword'}
 
@@ -135,6 +251,7 @@ class EntryRepository < BaseRepository
     indexes :accepting_comments_on_regulations_dot_gov, {type: 'boolean'}
     indexes :small_entity_ids, {type: 'integer'}
     indexes :significant, {type: 'boolean'}
+    indexes :volume, {type: 'integer', index: false}
   end
 
   def search_result_klass

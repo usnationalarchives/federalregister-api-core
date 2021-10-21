@@ -3,7 +3,7 @@ class EntrySerializer < ApplicationSerializer
   extend RouteBuilder
   extend Routeable
 
-  attributes :id, :title, :abstract, :action, :publication_date, :document_number, :presidential_document_type_id, :signing_date, :president_id, :start_page, :executive_order_number, :proclamation_number
+  attributes :id, :title, :abstract, :action, :dates, :document_number, :effective_on, :end_page, :executive_order_notes, :executive_order_number, :presidential_document_type_id, :signing_date, :president_id, :start_page, :executive_order_number, :presidential_document_number, :proclamation_number, :publication_date, :toc_doc, :toc_subject, :volume
 
   attribute :agencies do |entry|
     entry.agency_name_assignments.map(&:agency_name).compact.map do |agency_name|
@@ -34,6 +34,18 @@ class EntrySerializer < ApplicationSerializer
     entry_full_text_url(entry)
   end
 
+  attribute :citation do |e|
+    e.start_page && e.start_page.to_i > 0 ? e.citation : nil
+  end
+
+  attribute :comments_close_on do |e|
+    e.comments_close_on
+  end
+
+  attribute :comment_url do |e|
+    e.calculated_comment_url
+  end
+
   attribute :cfr_references do |entry|
     entry.entry_cfr_references.sort_by{|x| [x.title.to_i, x.part.to_i] }.map do |cfr_reference|
       citation_url = if cfr_reference.chapter.present? && cfr_reference.part.present?
@@ -49,6 +61,14 @@ class EntrySerializer < ApplicationSerializer
         :citation_url => citation_url,
       }
     end
+  end
+
+  attribute :disposition_notes do |e|
+    e.executive_order_notes
+  end
+
+  attribute :excerpts do |e|
+    e.excerpt
   end
 
   attribute :agencies do |entry|
@@ -79,12 +99,147 @@ class EntrySerializer < ApplicationSerializer
     end
   end
 
+  attribute :full_text_xml_url do |e|
+    entry_xml_url(e) if e.should_have_full_xml?
+  end
+
+  attribute :html_url do |e|
+    entry_url(e)
+  end
+
+  attribute :images do |entry|
+    extracted_graphics = entry.extracted_graphics
+    gpo_graphics = entry.processed_gpo_graphics
+
+    # we have two types of graphics possible, gpo_graphics being the newest
+    graphics = extracted_graphics.present? ? extracted_graphics : gpo_graphics
+
+    if graphics.present?
+      graphics.inject({}) do |hsh, graphic|
+        # gpo graphics must have an xml identifier or else we don't want to expose them via the API
+        if graphic.class == GpoGraphic && graphic.xml_identifier.blank?
+          hsh
+        else
+          identifier = graphic.class == GpoGraphic ? graphic.xml_identifier : graphic.identifier
+
+          hsh[identifier] = graphic.graphic.styles.inject({}) do |hsh, style|
+            type, paperclip_style = style
+            # expose the :original_png style as simply :original
+            renamed_type = type == :original_png ? :original : type
+
+            url = paperclip_style.attachment.send(:url, type).tap do |url|
+              if GRAPHIC_CONTENT_TYPES_FOR_COERCION.include? graphic.graphic_content_type
+                url = url.gsub!(/\.png/,'.gif')
+              end
+            end
+
+            hsh[renamed_type] = url
+            hsh
+          end
+
+          hsh
+        end
+      end
+    else
+      {}
+    end
+  end
+
+  attribute :json_url do |e|
+    api_v1_document_url(
+      e.document_number,
+      :publication_date => e.publication_date.to_s(:iso),
+      :format           => :json
+    )
+  end
+
+  attribute :mods_url do |e|
+    e.source_url(:mods)
+  end
+
+  attribute :page_length do |e|
+    e.human_length
+  end
+
+  attribute :pdf_url do |e|
+    e.source_url('pdf')
+  end
+
+  attribute :public_inspection_pdf_url do |e|
+    e.public_inspection_document.try(:pdf).try(:url)
+  end
+
+  attribute :president do |entry|
+    president = entry.president
+    if president
+      {:name => president.full_name, :identifier => president.identifier}
+    end
+  end
+
+  attribute :raw_text_url do |e|
+    entry_raw_text_url(e)
+  end
+
   attribute :type do |entry|
     if entry.granule_class == 'SUNSHINE'
       'NOTICE'
     else
       entry.granule_class
     end
+  end
+
+  attribute :regulations_dot_gov_info do |entry|
+    vals = {}
+
+    if entry.regulations_dot_gov_document_id
+      vals.merge!(:document_id => entry.regulations_dot_gov_document_id)
+    end
+
+    if entry.comment_count
+      vals.merge!(comments_count: entry.comment_count)
+    end
+
+    if entry.regulations_dot_gov_agency_id
+      vals.merge!(:agency_id => entry.regulations_dot_gov_agency_id)
+    end
+
+    docket = entry.docket
+    if docket
+      docket_info = {
+        :docket_id => docket.id,
+        :regulation_id_number => docket.regulation_id_number,
+        :title => docket.title,
+        :comments_url => regulations_dot_gov_docket_comments_url(docket.id),
+        :supporting_documents_count => docket.docket_documents_count,
+        :supporting_documents => docket.docket_documents.sort_by(&:id).reverse[0..9].map do |doc|
+          {
+            :title => doc.title,
+            :document_id => doc.id
+          }
+        end,
+      }
+
+      docket_metadata = docket.metadata.except("Keyword(s)")
+      docket_info.merge!(metadata: docket_metadata)
+
+      if docket.regulation_id_number.present?
+        regulatory_plan = RegulatoryPlan.current.find_by_regulation_id_number(docket.regulation_id_number)
+        if regulatory_plan
+          docket_info.deep_merge!(
+            :regulatory_plan => {
+              html_url: regulatory_plan_url(regulatory_plan),
+              title: regulatory_plan.title
+            }
+          )
+        end
+      end
+    end
+
+    if docket_info
+      vals.deep_merge!(docket_info)
+    end
+
+    vals
   end
 
   attribute :regulation_id_number do |entry|
@@ -94,11 +249,41 @@ class EntrySerializer < ApplicationSerializer
       uniq
   end
 
+  attribute :regulation_id_numbers do |e|
+    e.entry_regulation_id_numbers.map{|r| r.regulation_id_number}
+  end
+
+  attribute :regulations_dot_gov_url do |e|
+    e.regulations_dot_gov_url
+  end
+
+  attribute :regulation_id_number_info do |entry|
+    values = entry.entry_regulation_id_numbers.map do |e_rin|
+      regulatory_plan = e_rin.current_regulatory_plan
+      if regulatory_plan
+        regulatory_plan_info = {
+          :xml_url => regulatory_plan.source_url(:xml),
+          :issue => regulatory_plan.issue,
+          :title => regulatory_plan.title,
+          :priority_category => regulatory_plan.priority_category,
+          :html_url => regulatory_plan_url(regulatory_plan)
+        }
+      end
+      [e_rin.regulation_id_number, regulatory_plan_info]
+    end
+
+    Hash[*values.flatten]
+  end
+
   attribute :docket_id do |entry|
     entry.
       docket_numbers.
       map(&:number).
       uniq
+  end
+
+  attribute :docket_ids do |e|
+    e.docket_numbers.map(&:number)
   end
 
   attribute :signing_date do |entry|
@@ -126,6 +311,10 @@ class EntrySerializer < ApplicationSerializer
         entry.presidential_document_number.nil?
       )
     )
+  end
+
+  attribute :correction_of do |e|
+    api_v1_document_url(e.correction_of.document_number, :format => :json) if e.correction_of
   end
 
   attribute :corrections do |entry|
@@ -208,6 +397,18 @@ class EntrySerializer < ApplicationSerializer
     (
       RegulatoryPlan::SIGNIFICANT_PRIORITY_CATEGORIES & entry.current_regulatory_plans.map(&:priority_category)
     ).present?
+  end
+
+  attribute :subtype do |e|
+    e.presidential_document_type.try(:name)
+  end
+
+  attribute :topics do |e|
+    e.topic_assignments.map{|x| x.topic.try(:name)}.compact
+  end
+
+  attribute :type do |e|
+    e.entry_type
   end
 
 end
