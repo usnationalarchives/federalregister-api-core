@@ -58,6 +58,18 @@ class EntryRepository < BaseRepository
         }
       }
     }
+    indexes :agencies, {
+      type:        'object',
+      enabled:      false,
+    }
+    indexes :cfr_references, {
+      type:        'object',
+      enabled:      false,
+    }
+    indexes :agency_names, {
+      type:        'keyword',
+      # enabled:      false,
+    }
     indexes :full_text, {
       type:        'text',
       analyzer:    'custom_english',
@@ -106,6 +118,7 @@ class EntryRepository < BaseRepository
     indexes :signing_date, {type: 'date'}
     indexes :president_id, {type: 'integer'}
     indexes :correction, {type: 'boolean'}
+    indexes :corrections, {type: 'keyword', index: true}
     indexes :start_page, {type: 'integer'}
     indexes :executive_order_number, {type: 'keyword'}
     indexes :proclamation_number, {type: 'keyword'}

@@ -351,6 +351,95 @@ describe EsEntrySearch do
       $entry_repository.create_index!(force: true)
     end
 
+    context "full object characteristics" do
+
+      it "retrieves corrections" do
+        entry = Factory.create(
+          :entry,
+          significant: 0,
+          title: 'fish',
+        )
+        correction = Factory.create(
+          :entry,
+          correction_of_id: entry.id
+        )
+
+        Entry.bulk_index([entry], refresh: true)
+        search = EsEntrySearch.new(conditions: {significant: 0, term: 'fish'})
+
+        result = search.results.first
+        expect(result).to have_attributes(
+          corrections: ["http://www.fr2.local:8081/api/v1/documents/#{correction.document_number}"]
+        )
+      end
+
+      it "returns the same attributes as an active record object for cfr references" do
+        another_entry = Factory.build(
+          :entry,
+          significant: 0,
+          title: 'fish',
+        )
+        entry_cfr_reference = EntryCfrReference.new(title: 14, part: 71)
+        another_entry.entry_cfr_references = [entry_cfr_reference]
+
+        entries = [
+          another_entry
+        ]
+
+        Entry.bulk_index(entries, refresh: true)
+
+        search = EsEntrySearch.new(conditions: {significant: 0, term: 'fish'})
+        result = search.results.first
+        expect(result).to have_attributes(
+          cfr_references: [{
+            :title        => entry_cfr_reference.title,
+            :part         => entry_cfr_reference.part,
+            :chapter      => entry_cfr_reference.chapter,
+            :citation_url => nil
+          }]
+        )
+      end
+
+      it "returns the same attributes as an active record object for complex agency-related attributes" do
+        #TODO: Transition to a request-like spec
+        agency = Factory(:agency)
+        agency_name = Factory(:agency_name, agency: agency)
+        another_entry = Factory(
+          :entry,
+          significant: 0,
+          title: 'fish',
+          publication_date: Date.current,
+          agencies: [agency],
+          agency_names: [agency_name]
+        )
+        entries = [
+          another_entry
+        ]
+
+        Entry.bulk_index(entries, refresh: true)
+
+        search = EsEntrySearch.new(conditions: {significant: 0, term: 'fish'})
+
+        result = search.results.first
+        expect(result).to have_attributes(
+          publication_date: Date.current,
+          agencies: [
+            {
+              "raw_name": agency_name.name,
+              "name":     agency.name,
+              "id":       agency.id,
+              "url":      "http://www.fr2.local:8081/agencies/#{agency.slug}",
+              "json_url": "http://www.fr2.local:8081/api/v1/agencies/#{agency.id}",
+              "parent_id": nil,
+              "slug":     agency.slug
+            }
+          ],
+          agency_names: [agency.name]
+        )
+      end
+
+    end
+
     context "advanced search terms" do
       it "handles a combination of advanced search syntax" do
         entries = [

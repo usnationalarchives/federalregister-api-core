@@ -3,7 +3,53 @@ class EntrySerializer < ApplicationSerializer
   extend RouteBuilder
   extend Routeable
 
-  attributes :id, :title, :abstract, :publication_date, :document_number, :presidential_document_type_id, :signing_date, :president_id, :start_page, :executive_order_number, :proclamation_number
+  attributes :id, :title, :abstract, :action, :publication_date, :document_number, :presidential_document_type_id, :signing_date, :president_id, :start_page, :executive_order_number, :proclamation_number
+
+  attribute :agencies do |entry|
+    entry.agency_name_assignments.map(&:agency_name).compact.map do |agency_name|
+      agency = agency_name.agency
+      if agency
+        {
+          :raw_name  => agency_name.name,
+          :name      => agency.name,
+          :id        => agency.id,
+          :url       => agency_url(agency),
+          :json_url  => api_v1_agency_url(agency.id, :format => :json),
+          :parent_id => agency.parent_id,
+          :slug      => agency.slug
+        }
+      else
+        {
+          :raw_name => agency_name.name
+        }
+      end
+    end
+  end
+
+  attribute :agency_names do |entry|
+    entry.agency_names.compact.map{|a| a.agency.try(:name) || a.name}
+  end
+
+  attribute :body_html_url do |entry|
+    entry_full_text_url(entry)
+  end
+
+  attribute :cfr_references do |entry|
+    entry.entry_cfr_references.sort_by{|x| [x.title.to_i, x.part.to_i] }.map do |cfr_reference|
+      citation_url = if cfr_reference.chapter.present? && cfr_reference.part.present?
+        select_cfr_citation_url(entry.publication_date, cfr_reference.title, cfr_reference.part, nil)
+      else
+        nil
+      end
+
+      {
+        :title        => cfr_reference.title,
+        :part         => cfr_reference.part,
+        :chapter      => cfr_reference.chapter,
+        :citation_url => citation_url,
+      }
+    end
+  end
 
   attribute :agencies do |entry|
     entry.agency_name_assignments.map(&:agency_name).compact.map do |agency_name|
@@ -80,6 +126,10 @@ class EntrySerializer < ApplicationSerializer
         entry.presidential_document_number.nil?
       )
     )
+  end
+
+  attribute :corrections do |entry|
+    entry.corrections.map{|c| api_v1_document_url(c.document_number, :format => :json)}
   end
 
   attribute :cfr_affected_parts do |entry|
