@@ -128,7 +128,7 @@ class EntrySerializer < ApplicationSerializer
             renamed_type = type == :original_png ? :original : type
 
             url = paperclip_style.attachment.send(:url, type).tap do |url|
-              if GRAPHIC_CONTENT_TYPES_FOR_COERCION.include? graphic.graphic_content_type
+              if EntryApiRepresentation::GRAPHIC_CONTENT_TYPES_FOR_COERCION.include? graphic.graphic_content_type
                 url = url.gsub!(/\.png/,'.gif')
               end
             end

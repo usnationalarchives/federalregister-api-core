@@ -4,7 +4,6 @@ class EntryApiRepresentation < ApiRepresentation
     'application/x-ppm',
     'image/gif',
   ]
-  private_constant :GRAPHIC_CONTENT_TYPES_FOR_COERCION
 
   self.default_index_fields_json = [:title, :type, :abstract, :document_number, :html_url, :pdf_url, :public_inspection_pdf_url, :publication_date, :agencies, :excerpts]
   self.default_index_fields_csv = [:title, :type, :agency_names, :abstract, :document_number, :html_url, :pdf_url, :publication_date]
