@@ -256,7 +256,7 @@ describe EsEntrySearch do
 
   end
 
-  context "Elasticsearch query definition" do
+  context "Elasticsearch query definition", pending: true do
 
     it "integrates a basic #with attribute" do
       search = EsEntrySearch.new(conditions: {significant: 1})
