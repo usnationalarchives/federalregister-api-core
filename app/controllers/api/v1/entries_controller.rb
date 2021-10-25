@@ -11,7 +11,7 @@ class Api::V1::EntriesController < ApiController
         search = entry_search(deserialized_params, fields)
 
         render_search(search, find_options, params[:metadata_only]) do |result|
-          entry_data(result, fields)
+          es_entry_data(result, fields)
         end
       end
 
@@ -206,6 +206,12 @@ class Api::V1::EntriesController < ApiController
     representation = EntryApiRepresentation.new(entry)
     Hash[ fields.map do |field|
       [field, representation.value(field)]
+    end]
+  end
+
+  def es_entry_data(entry, fields)
+    Hash[ fields.map do |field|
+      [field, entry.send(field)]
     end]
   end
 
