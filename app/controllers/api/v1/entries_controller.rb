@@ -210,7 +210,8 @@ class Api::V1::EntriesController < ApiController
   end
 
   def es_entry_data(entry, fields)
-    Hash[ fields.map do |field|
+    allowed_fields = (fields & EntryApiRepresentation.all_fields)
+    Hash[ allowed_fields.map do |field|
       [field, entry.send(field)]
     end]
   end
