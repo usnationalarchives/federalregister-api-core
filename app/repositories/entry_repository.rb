@@ -212,6 +212,7 @@ class EntryRepository < BaseRepository
       type: 'keyword',
       index: false
     }
+    indexes :raw_text_updated_at, {type: 'date', index: false}
     indexes :regulations_dot_gov_url, {
       type: 'keyword',
       index: false

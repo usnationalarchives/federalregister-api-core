@@ -350,7 +350,7 @@ class EsApplicationSearch
     ar_collection_with_metadata = ActiveRecordCollectionMetadataWrapper.new(es_search_invocation, es_search_invocation.results, page, per_page)
 
     if ar_collection_with_metadata && @excerpts
-      #NOTE: The issue here is that formerly the actual AR object was being returned and so we could query the raw_text_updated_at column, but in this new world, we're actually querying the ES document, which has yet to receive this raw_text_updated_at attribute
+      #NOTE: Formerly the actual AR object was being returned and so we could query the raw_text_updated_at column here, but now we're querying the actual ES document for teh raw_text_updated_at
       results_with_raw_text, results_without_raw_text = ar_collection_with_metadata.partition{|e| e.raw_text_updated_at.present?}
 
       if results_with_raw_text.present?

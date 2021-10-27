@@ -4,6 +4,7 @@ class PublicInspectionDocumentSerializer < ApplicationSerializer
     :filed_at,
     :id,
     :publication_date,
+    :raw_text_updated_at,
     :special_filing,
     :title
 

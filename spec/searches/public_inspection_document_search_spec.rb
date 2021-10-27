@@ -242,6 +242,7 @@ describe EsPublicInspectionDocumentSearch do
           pi_doc = build_pi_doc_double(
             id: document.id,
             title: "goats and llamas",
+            raw_text_updated_at: document.raw_text_updated_at
           )
           save_documents_and_refresh_index(pi_doc)
 
