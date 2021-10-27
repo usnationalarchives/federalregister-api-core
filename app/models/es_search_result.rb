@@ -1,4 +1,4 @@
-class EsEntrySearchResult < OpenStruct
+class EsSearchResult < OpenStruct
 
   def highlights
     text = highlight

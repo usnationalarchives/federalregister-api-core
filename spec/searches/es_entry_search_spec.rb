@@ -593,7 +593,6 @@ describe EsEntrySearch do
 
       assert_valid_search(search)
       result = search.results.first.excerpt
-      # search => EsEntrySearchResult.excerpt
       expect(result).to eq("The <span class=\"match\">fish</span> swam across the pond … <span class=\"match\">fish</span> are great. … <span class=\"match\">Fish</span> stuff")
     end
 

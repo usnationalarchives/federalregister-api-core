@@ -10,7 +10,7 @@ class BaseRepository
       attributes['publication_date'] = Date.parse(pub_date)
     end
 
-    EsEntrySearchResult.new ActiveSupport::HashWithIndifferentAccess.new(attributes).deep_symbolize_keys
+    EsSearchResult.new ActiveSupport::HashWithIndifferentAccess.new(attributes).deep_symbolize_keys
   end
 
   def update_mapping!
