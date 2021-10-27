@@ -20,25 +20,24 @@ class EntryApiRepresentation < ApiRepresentation
   field(:abstract)
   field(:action)
   field(:agencies, :select => :id, :include => {:agency_name_assignments => {:agency_name => :agency}}) do |entry|
-    "TODO"
-    # entry.agency_name_assignments.map(&:agency_name).compact.map do |agency_name|
-    #   agency = agency_name.agency
-    #   if agency
-    #     {
-    #       :raw_name => agency_name.name,
-    #       :name     => agency.name,
-    #       :id       => agency.id,
-    #       :url      => agency_url(agency),
-    #       :json_url => api_v1_agency_url(agency.id, :format => :json),
-    #       :parent_id => agency.parent_id,
-    #       :slug      => agency.slug
-    #     }
-    #   else
-    #     {
-    #       :raw_name => agency_name.name
-    #     }
-    #   end
-    # end
+    entry.agency_name_assignments.map(&:agency_name).compact.map do |agency_name|
+      agency = agency_name.agency
+      if agency
+        {
+          :raw_name => agency_name.name,
+          :name     => agency.name,
+          :id       => agency.id,
+          :url      => agency_url(agency),
+          :json_url => api_v1_agency_url(agency.id, :format => :json),
+          :parent_id => agency.parent_id,
+          :slug      => agency.slug
+        }
+      else
+        {
+          :raw_name => agency_name.name
+        }
+      end
+    end
   end
   field(:agency_names, :include => {:agency_names => :agency}) {|e| e.agency_names.compact.map{|a| a.agency.try(:name) || a.name}}
   field(:body_html_url, :select => [:document_file_path, :publication_date, :document_number]) {|e| entry_full_text_url(e)}
@@ -74,7 +73,7 @@ class EntryApiRepresentation < ApiRepresentation
   field(:executive_order_notes)
   field(:executive_order_number, :select => [:presidential_document_number, :presidential_document_type_id] ) {|e| e.executive_order_number }
   field(:full_text_xml_url, :select => [:publication_date, :document_file_path, :document_number, :full_xml_updated_at]){|e| entry_xml_url(e) if e.should_have_full_xml?}
-  field(:html_url, :select => [:publication_date, :document_number, :title]){|e| "TODO"} #entry_url(e)}
+  field(:html_url, :select => [:publication_date, :document_number, :title]){|e| entry_url(e)}
   field(:images, :select => [:document_number], :include => [:extracted_graphics, :gpo_graphic_usages]) do |entry|
     extracted_graphics = entry.extracted_graphics
     gpo_graphics = entry.processed_gpo_graphics
@@ -127,7 +126,7 @@ class EntryApiRepresentation < ApiRepresentation
     }
   end
   field(:page_length, :select => [:start_page, :end_page]) {|e| e.human_length }
-  field(:pdf_url, :select => [:publication_date, :document_number]){|e| 'TODO'}#e.source_url('pdf')}
+  field(:pdf_url, :select => [:publication_date, :document_number]){|e| e.source_url('pdf')}
   field(:public_inspection_pdf_url, :select => :document_number, :include => :public_inspection_document) {|e| e.public_inspection_document.try(:pdf).try(:url)}
   field(:president, :select => [:granule_class, :signing_date, :publication_date]) do |entry|
     president = entry.president
