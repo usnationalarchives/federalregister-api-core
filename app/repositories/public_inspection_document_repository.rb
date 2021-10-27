@@ -73,8 +73,4 @@ class PublicInspectionDocumentRepository < BaseRepository
     indexes :public_inspection_issues, { type: 'object' }
   end
 
-  def search_result_klass
-    PublicInspectionDocumentSearchResult
-  end
-
 end

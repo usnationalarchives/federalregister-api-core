@@ -255,8 +255,4 @@ class EntryRepository < BaseRepository
     indexes :volume, {type: 'integer', index: false}
   end
 
-  def search_result_klass
-    EsEntrySearchResult
-  end
-
 end
