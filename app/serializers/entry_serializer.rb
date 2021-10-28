@@ -92,6 +92,10 @@ class EntrySerializer < ApplicationSerializer
     end
   end
 
+  attribute :entry_type do |e|
+    e.entry_type
+  end
+
   attribute :full_text do |entry|
     path = "#{FileSystemPathManager.data_file_path}/documents/full_text/raw/#{entry.document_file_path}.txt"
     if File.file?(path)
@@ -405,10 +409,6 @@ class EntrySerializer < ApplicationSerializer
 
   attribute :topics do |e|
     e.topic_assignments.map{|x| x.topic.try(:name)}.compact
-  end
-
-  attribute :type do |e|
-    e.entry_type
   end
 
 end

@@ -2,7 +2,7 @@ require "spec_helper"
 
 RSpec.describe "Entries API", :type => :request do
 
-  it "creates a Widget and redirects to the Widget's page" do
+  it "Basic search query" do
     agency = Factory(:agency)
     agency_name = Factory(:agency_name, agency: agency)
     entry = Factory(
@@ -11,7 +11,8 @@ RSpec.describe "Entries API", :type => :request do
       title: 'goat',
       publication_date: Date.current,
       agencies: [agency],
-      agency_names: [agency_name]
+      agency_names: [agency_name],
+      granule_class: 'PRESDOCU'
     )
     ElasticsearchIndexer.reindex_entries(recreate_index: true)
 

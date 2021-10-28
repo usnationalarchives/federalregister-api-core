@@ -17,4 +17,8 @@ class EsSearchResult < OpenStruct
     }
   end
 
+  def type
+    entry_type #NOTE: The serializer/ES-stored "type" attribute is different than the "type" field returned in API requests, hence the override here.
+  end
+
 end

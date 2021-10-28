@@ -192,10 +192,6 @@ class EntryRepository < BaseRepository
       type: 'object',
       enabled: false
     }
-    indexes :type, {
-      type: 'keyword',
-      enabled: false
-    }
     indexes :docket_id, {
       type:        'text',
       analyzer:    'custom_english',
@@ -209,6 +205,10 @@ class EntryRepository < BaseRepository
       }
     }
     indexes :docket_ids, {
+      type: 'keyword',
+      index: false
+    }
+    indexes :entry_type, {
       type: 'keyword',
       index: false
     }
