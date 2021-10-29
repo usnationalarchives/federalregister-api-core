@@ -12,7 +12,8 @@ RSpec.describe "Entries API", :type => :request do
       publication_date: Date.current,
       agencies: [agency],
       agency_names: [agency_name],
-      granule_class: 'PRESDOCU'
+      granule_class: 'PRESDOCU',
+      raw_text_updated_at: Time.current
     )
     ElasticsearchIndexer.reindex_entries(recreate_index: true)
 
@@ -26,6 +27,8 @@ RSpec.describe "Entries API", :type => :request do
       'html_url' => "http://www.fr2.local:8081/documents/#{entry.publication_date.year}/#{entry.publication_date.month}/#{entry.publication_date.day}/#{entry.document_number}/#{entry.slug}",
       'pdf_url'  => "https://www.govinfo.gov/content/pkg/FR-#{entry.publication_date.to_s(:iso)}/pdf/#{entry.document_number}.pdf",
       'title'    => 'goat',
+      'type'     => 'Presidential Document',
+      'excerpts' => "<span class=\"match\">goat</span>"
     )
   end
 

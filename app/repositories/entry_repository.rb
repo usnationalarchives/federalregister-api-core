@@ -106,10 +106,6 @@ class EntryRepository < BaseRepository
       type: 'integer',
       index: false
     }
-    indexes :excerpts, {
-      type: 'text',
-      index: false
-    }
     indexes :executive_order_notes, {
       type: 'text',
       index: false

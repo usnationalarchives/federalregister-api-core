@@ -67,10 +67,6 @@ class EntrySerializer < ApplicationSerializer
     e.executive_order_notes
   end
 
-  attribute :excerpts do |e|
-    e.excerpt
-  end
-
   attribute :agencies do |entry|
     entry.agency_name_assignments.map(&:agency_name).compact.map do |agency_name|
       agency = agency_name.agency
