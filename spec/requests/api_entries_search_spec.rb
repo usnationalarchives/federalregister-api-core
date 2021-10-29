@@ -32,4 +32,70 @@ RSpec.describe "Entries API", :type => :request do
     )
   end
 
+  context "#show" do
+    it "handles single document search queries" do
+      entry = Factory(
+        :entry,
+        abstract: "Test document"
+      )
+      Factory(
+        :entry,
+        abstract: "Test document"
+      )
+      ElasticsearchIndexer.reindex_entries(recreate_index: true)
+
+      get "/api/v1/documents/#{entry.document_number}.json"
+      json_response = JSON.parse(response.body)
+      expect(json_response).to include(
+        'abstract' => entry.abstract
+      )
+    end
+
+    it "handles multiple document search queries" do
+      entry_1 = Factory(
+        :entry,
+        abstract: "Test document"
+      )
+      entry_2 = Factory(
+        :entry,
+        abstract: "Test document"
+      )
+      Factory(
+        :entry,
+        abstract: "Test document"
+      )
+      ElasticsearchIndexer.reindex_entries(recreate_index: true)
+
+      get "/api/v1/documents/#{entry_1.document_number},#{entry_2.document_number}.json"
+      json_response = JSON.parse(response.body)
+      expect(json_response.fetch("results").count).to eq(2)
+    end
+
+    it "handles citation-based searches" do
+      entry_1 = Factory(
+        :entry,
+        title: 'entry 1',
+        start_page: 59198,
+        end_page:   59199,
+        volume:     86
+      )
+      entry_2 = Factory(
+        :entry,
+        title: 'entry 2',
+        start_page: 59197,
+        end_page:   59198,
+        volume:     86
+      )
+      ElasticsearchIndexer.reindex_entries(recreate_index: true)
+      get "/api/v1/documents/86%20FR%2059199%20.json" #url-encoded version of '86 FR 59199
+      json_response = JSON.parse(response.body)
+      expect(json_response.fetch('count')).to eq(1)
+      expect(json_response.fetch('results').first).to include(
+        title: 'entry_1'
+      )
+    end
+  end
+
 end
+
+

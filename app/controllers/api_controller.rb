@@ -79,22 +79,16 @@ class ApiController < ApplicationController
     if document_numbers =~ /,/
       document_numbers = document_numbers.split(',')
 
-      conditions = {document_number: document_numbers}.tap do |hsh|
+      conditions = {document_numbers: document_numbers}.tap do |hsh|
         if publication_date
-          hsh.merge!(publication_date: publication_date)
+          hsh.merge!(publication_date: {is: publication_date})
         end
       end
 
-      combined_options = find_options.except(:publication_date).merge(conditions: conditions)
-
-      [{:agency_name_assignments=>{:agency_name=>:agency}}]
-      records = model.
-        includes(combined_options.fetch(:include)).
-        select(combined_options.fetch(:select)).
-        where(combined_options.fetch(:conditions))
+      records = model.search_klass.new(conditions: conditions).results
 
       data = {
-        :count => records.count(:all),
+        :count   => records.count,
         :results => records.map{|record| yield(record)}
       }
 
@@ -104,10 +98,17 @@ class ApiController < ApplicationController
       end
     else
       if publication_date
-        record = model.where("document_number = ? AND publication_date = ?", document_numbers, publication_date).first
+        record = model.search_klass.new(
+          conditions: {
+            document_numbers: document_numbers,
+            publication_date: {is: publication_date}
+          }
+        ).results.first
         raise ActiveRecord::RecordNotFound unless record
       else
-        record = model.find_by_document_number!(document_numbers)
+        record = model.search_klass.new(conditions: {document_numbers: document_numbers}).results.first
+
+        raise ActiveRecord::RecordNotFound unless record
       end
       data = yield(record)
     end
@@ -127,10 +128,17 @@ class ApiController < ApplicationController
     citations.each do |citation|
       volume, fr_str, page = citation.split(' ')
 
-      matches = model.
-        includes(find_options.fetch(:include)).
-        select(find_options.fetch(:select)).
-        where("volume = ? AND start_page <= ? AND end_page >= ?", volume.to_i, page.to_i, page.to_i)
+      matches = model.search_klass.new(
+        conditions: {
+          volume: volume.to_i,
+          start_page: {
+            lte: page
+          },
+          end_page: {
+            gte: page
+          }
+        }
+      ).results
 
       if matches.present?
         matched_citations << citation

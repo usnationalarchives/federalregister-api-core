@@ -102,7 +102,7 @@ class Api::V1::EntriesController < ApiController
         find_options = EntryApiRepresentation.find_options_for(fields + [:document_number])
 
         render_one_or_more(Entry, params[:id], find_options.merge(publication_date: params[:publication_date])) do |entry|
-          entry_data(entry, fields)
+          es_entry_data(entry, fields)
         end
       end
       wants.csv do
