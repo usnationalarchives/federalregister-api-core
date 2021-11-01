@@ -24,7 +24,7 @@ RSpec.describe "Entries API", :type => :request do
       'count' => 1
     )
     expect(json_response.fetch('results').first).to include(
-      'html_url' => "http://www.fr2.local:8081/documents/#{entry.publication_date.year}/#{entry.publication_date.month}/#{entry.publication_date.day}/#{entry.document_number}/#{entry.slug}",
+      'html_url' => "http://www.fr2.local:8081/documents/#{entry.publication_date.year}/#{sprintf('%02i',entry.publication_date.month)}/#{sprintf('%02i',entry.publication_date.day)}/#{entry.document_number}/#{entry.slug}",
       'pdf_url'  => "https://www.govinfo.gov/content/pkg/FR-#{entry.publication_date.to_s(:iso)}/pdf/#{entry.document_number}.pdf",
       'title'    => 'goat',
       'type'     => 'Presidential Document',
@@ -71,28 +71,30 @@ RSpec.describe "Entries API", :type => :request do
       expect(json_response.fetch("results").count).to eq(2)
     end
 
-    it "handles citation-based searches" do
-      entry_1 = Factory(
-        :entry,
-        title: 'entry 1',
-        start_page: 59198,
-        end_page:   59199,
-        volume:     86
-      )
-      entry_2 = Factory(
-        :entry,
-        title: 'entry 2',
-        start_page: 59197,
-        end_page:   59198,
-        volume:     86
-      )
-      ElasticsearchIndexer.reindex_entries(recreate_index: true)
-      get "/api/v1/documents/86%20FR%2059199%20.json" #url-encoded version of '86 FR 59199
-      json_response = JSON.parse(response.body)
-      expect(json_response.fetch('count')).to eq(1)
-      expect(json_response.fetch('results').first).to include(
-        title: 'entry_1'
-      )
+    context "render-via-citation-based searches" do
+      it "es properly applies range conditions for volume, start page, and end page" do
+        entry_1 = Factory(
+          :entry,
+          end_page:   59199,
+          start_page: 59198,
+          title:      'entry 1',
+          volume:     86
+        )
+        entry_2 = Factory(
+          :entry,
+          end_page:   59198,
+          start_page: 59197,
+          title:      'entry 2',
+          volume:     86
+        )
+        ElasticsearchIndexer.reindex_entries(recreate_index: true)
+        get "/api/v1/documents/86%20FR%2059199%20.json" #url-encoded version of '86 FR 59199
+        json_response = JSON.parse(response.body)
+        expect(json_response.fetch('count')).to eq(1)
+        expect(json_response.fetch('results').first).to include(
+          'title' => entry_1.title
+        )
+      end
     end
   end
 

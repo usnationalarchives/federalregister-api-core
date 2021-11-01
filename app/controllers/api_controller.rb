@@ -128,17 +128,10 @@ class ApiController < ApplicationController
     citations.each do |citation|
       volume, fr_str, page = citation.split(' ')
 
-      matches = model.search_klass.new(
-        conditions: {
-          volume: volume.to_i,
-          start_page: {
-            lte: page
-          },
-          end_page: {
-            gte: page
-          }
-        }
-      ).results
+      search = model.search_klass.new(conditions: {volume: volume.to_i})
+      search.start_page= ({range_conditions: {lte: page}})
+      search.end_page= ({range_conditions: {gte: page}})
+      matches = search.results
 
       if matches.present?
         matched_citations << citation

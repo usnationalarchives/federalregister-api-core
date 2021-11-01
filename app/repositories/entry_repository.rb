@@ -104,7 +104,6 @@ class EntryRepository < BaseRepository
     }
     indexes :end_page, {
       type: 'integer',
-      index: false
     }
     indexes :executive_order_notes, {
       type: 'text',
@@ -248,7 +247,7 @@ class EntryRepository < BaseRepository
     indexes :accepting_comments_on_regulations_dot_gov, {type: 'boolean'}
     indexes :small_entity_ids, {type: 'integer'}
     indexes :significant, {type: 'boolean'}
-    indexes :volume, {type: 'integer', index: false}
+    indexes :volume, {type: 'integer'}
   end
 
 end

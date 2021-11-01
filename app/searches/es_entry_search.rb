@@ -125,6 +125,10 @@ class EsEntrySearch < EsApplicationSearch
                 :sphinx_type => :with,
                 :model_label_method => :title
 
+  define_filter :volume,
+                :sphinx_type => :with,
+                :name        => :volume
+
   define_filter :sections,
                 :sphinx_type => :with,
                 :sphinx_attribute => :section_ids,
@@ -234,6 +238,30 @@ class EsEntrySearch < EsApplicationSearch
         @errors[:cfr] = @cfr.error_message
       end
     end
+  end
+
+  def start_page=(hsh)
+    #This manual setter method is used so dynamic range conditions can be passed to the filter at runtime
+    hsh = hsh.with_indifferent_access
+    add_filter(
+      :name             => "Start Page",
+      :sphinx_attribute => :start_page,
+      :label            => "Start Page",
+      :sphinx_type      => :with_range,
+      :range_conditions => hsh.fetch(:range_conditions)
+    )
+  end
+
+  def end_page=(hsh)
+    #This manual setter method is used so dynamic range conditions can be passed to the filter at runtime
+    hsh = hsh.with_indifferent_access
+    add_filter(
+      :name             => "End Page",
+      :sphinx_attribute => :end_page,
+      :label            => "End Page",
+      :sphinx_type      => :with_range,
+      :range_conditions => hsh.fetch(:range_conditions)
+    )
   end
 
   def model
