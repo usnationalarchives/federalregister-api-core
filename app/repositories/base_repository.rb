@@ -10,11 +10,12 @@ class BaseRepository
       attributes['publication_date'] = Date.parse(pub_date)
     end
 
-    EsSearchResult.new ActiveSupport::HashWithIndifferentAccess.new(attributes).deep_symbolize_keys
+    search_result_klass.new ActiveSupport::HashWithIndifferentAccess.new(attributes).deep_symbolize_keys
   end
 
   def update_mapping!
     client.indices.put_mapping index: index_name,
       body: mappings.to_hash
   end
+
 end

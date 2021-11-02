@@ -250,4 +250,12 @@ class EntryRepository < BaseRepository
     indexes :volume, {type: 'integer'}
   end
 
+  def search_result_klass
+    if SETTINGS['elasticsearch']['active_record_based_retrieval']
+      EntrySearchResult
+    else
+      EsSearchResult
+    end
+  end
+
 end

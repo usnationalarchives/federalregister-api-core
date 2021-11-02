@@ -18,6 +18,10 @@ class ApiController < ApplicationController
     params.delete(:maximum_per_page)
   end
 
+  def active_record_based_retrieval?
+    SETTINGS['elasticsearch']['active_record_based_retrieval']
+  end
+
   def render_json_or_jsonp(data, options = {})
     callback = params[:callback].to_s
     if callback =~ /^[a-zA-Z0-9_\.]+$/
@@ -79,16 +83,15 @@ class ApiController < ApplicationController
     if document_numbers =~ /,/
       document_numbers = document_numbers.split(',')
 
-      conditions = {document_numbers: document_numbers}.tap do |hsh|
-        if publication_date
-          hsh.merge!(publication_date: {is: publication_date})
-        end
-      end
-
-      records = model.search_klass.new(conditions: conditions).results
+      records = document_number_based_search_result(
+        model,
+        find_options,
+        document_numbers,
+        publication_date
+      )
 
       data = {
-        :count   => records.count,
+        :count   => (active_record_based_retrieval? ? records.count(:all) : records.count),
         :results => records.map{|record| yield(record)}
       }
 
@@ -98,22 +101,56 @@ class ApiController < ApplicationController
       end
     else
       if publication_date
-        record = model.search_klass.new(
-          conditions: {
-            document_numbers: document_numbers,
-            publication_date: {is: publication_date}
-          }
-        ).results.first
-        raise ActiveRecord::RecordNotFound unless record
-      else
-        record = model.search_klass.new(conditions: {document_numbers: document_numbers}).results.first
+        if active_record_based_retrieval?
+          record = model.where("document_number = ? AND publication_date = ?", document_numbers, publication_date).first
+        else
+          record = document_number_based_search_result(model, find_options, document_numbers, publication_date).first
+        end
 
         raise ActiveRecord::RecordNotFound unless record
+      else
+        if active_record_based_retrieval?
+          record = model.find_by_document_number!(document_numbers)
+        else
+          record = document_number_based_search_result(
+            model,
+            find_options,
+            document_numbers,
+            publication_date
+          ).first
+          raise ActiveRecord::RecordNotFound unless record
+        end
       end
       data = yield(record)
     end
 
     data
+  end
+
+  def document_number_based_search_result(model, find_options, document_numbers, publication_date)
+    if SETTINGS['elasticsearch']['active_record_based_retrieval']
+      conditions = {document_number: document_numbers}.tap do |hsh|
+        if publication_date
+          hsh.merge!(publication_date: publication_date)
+        end
+      end
+
+      combined_options = find_options.except(:publication_date).merge(conditions: conditions)
+
+      [{:agency_name_assignments=>{:agency_name=>:agency}}]
+      model.
+        includes(combined_options.fetch(:include)).
+        select(combined_options.fetch(:select)).
+        where(combined_options.fetch(:conditions))
+    else
+      conditions = {document_numbers: document_numbers}.tap do |hsh|
+        if publication_date
+          hsh.merge!(publication_date: {is: publication_date})
+        end
+      end
+
+      model.search_klass.new(conditions: conditions).results
+    end
   end
 
   def render_via_citations(model, citations, find_options={}, &block)
@@ -128,10 +165,17 @@ class ApiController < ApplicationController
     citations.each do |citation|
       volume, fr_str, page = citation.split(' ')
 
-      search = model.search_klass.new(conditions: {volume: volume.to_i})
-      search.start_page= ({range_conditions: {lte: page}})
-      search.end_page= ({range_conditions: {gte: page}})
-      matches = search.results
+      if active_record_based_retrieval?
+        matches = model.
+          includes(find_options.fetch(:include)).
+          select(find_options.fetch(:select)).
+          where("volume = ? AND start_page <= ? AND end_page >= ?", volume.to_i, page.to_i, page.to_i)
+      else
+        search = model.search_klass.new(conditions: {volume: volume.to_i})
+        search.start_page= ({range_conditions: {lte: page}})
+        search.end_page= ({range_conditions: {gte: page}})
+        matches = search.results
+      end
 
       if matches.present?
         matched_citations << citation

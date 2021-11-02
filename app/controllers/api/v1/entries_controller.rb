@@ -11,7 +11,7 @@ class Api::V1::EntriesController < ApiController
         search = entry_search(deserialized_params, fields)
 
         render_search(search, find_options, params[:metadata_only]) do |result|
-          es_entry_data(result, fields)
+          entry_data(result, fields)
         end
       end
 
@@ -102,7 +102,7 @@ class Api::V1::EntriesController < ApiController
         find_options = EntryApiRepresentation.find_options_for(fields + [:document_number])
 
         render_one_or_more(Entry, params[:id], find_options.merge(publication_date: params[:publication_date])) do |entry|
-          es_entry_data(entry, fields)
+          entry_data(entry, fields)
         end
       end
       wants.csv do
@@ -203,17 +203,17 @@ class Api::V1::EntriesController < ApiController
   end
 
   def entry_data(entry, fields)
-    representation = EntryApiRepresentation.new(entry)
-    Hash[ fields.map do |field|
-      [field, representation.value(field)]
-    end]
-  end
-
-  def es_entry_data(entry, fields)
-    allowed_fields = (fields & EntryApiRepresentation.all_fields)
-    Hash[ allowed_fields.map do |field|
-      [field, entry.send(field)]
-    end]
+    if active_record_based_retrieval?
+      representation = EntryApiRepresentation.new(entry)
+      Hash[ fields.map do |field|
+        [field, representation.value(field)]
+      end]
+    else
+      allowed_fields = (fields & EntryApiRepresentation.all_fields)
+      Hash[ allowed_fields.map do |field|
+        [field, entry.send(field)]
+      end]
+    end
   end
 
   def index_url(options)

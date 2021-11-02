@@ -14,7 +14,7 @@ class Api::V1::PublicInspectionDocumentsController < ApiController
           search = public_inspection_search(deserialized_params, fields)
 
           render_search(search, find_options, params[:metadata_only]) do |result|
-            es_document_data(result, fields)
+            document_data(result, fields)
           end
         end
       end
@@ -166,11 +166,18 @@ class Api::V1::PublicInspectionDocumentsController < ApiController
     PublicInspectionDocument.search_klass.new(pi_params.merge(excerpts: term && excerpts))
   end
 
-  def es_document_data(document, fields)
-    allowed_fields = (fields & PublicInspectionDocumentApiRepresentation.all_fields)
-    Hash[ allowed_fields.map do |field|
-      [field, document.send(field)]
-    end]
+  def document_data(document, fields)
+    if active_record_based_retrieval?
+      representation = PublicInspectionDocumentApiRepresentation.new(document)
+      Hash[ fields.map do |field|
+        [field, representation.value(field)]
+      end]
+    else
+      allowed_fields = (fields & PublicInspectionDocumentApiRepresentation.all_fields)
+      Hash[ allowed_fields.map do |field|
+        [field, document.send(field)]
+      end]
+    end
   end
 
   def index_url(options)

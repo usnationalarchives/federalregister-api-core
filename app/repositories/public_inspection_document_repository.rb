@@ -73,4 +73,12 @@ class PublicInspectionDocumentRepository < BaseRepository
     indexes :public_inspection_issues, { type: 'object' }
   end
 
+  def search_result_klass
+    if SETTINGS['elasticsearch']['active_record_based_retrieval']
+      PublicInspectionDocumentSearchResult
+    else
+      EsSearchResult
+    end
+  end
+
 end
