@@ -58,7 +58,7 @@ shared: &shared
 test:
   <<: *shared
   elasticsearch:
-    active_record_based_retrieval: true
+    active_record_based_retrieval: false
     host: <%= ENV['ELASTICSEARCH_HOST'] || 'admin:admin@localhost:9200/' ||'localhost' %>
     deployment_environment: <%= ENV['DEPLOYMENT_ENVIRONMENT'] %>
     trace: false
