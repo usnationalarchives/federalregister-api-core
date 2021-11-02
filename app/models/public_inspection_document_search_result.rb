@@ -16,7 +16,9 @@ class PublicInspectionDocumentSearchResult
   end
 
   def publication_date
-    Date.parse(@publication_date) if @publication_date
+    if @publication_date
+      @publication_date.is_a?(Date) ? @publication_date : Date.parse(@publication_date)
+    end
   end
 
   def highlights

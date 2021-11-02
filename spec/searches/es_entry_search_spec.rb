@@ -256,7 +256,7 @@ describe EsEntrySearch do
 
   end
 
-  context "Elasticsearch query definition", pending: true do
+  context "Elasticsearch query definition", pending: !SETTINGS['elasticsearch']['active_record_based_retrieval'] do
 
     it "integrates a basic #with attribute" do
       search = EsEntrySearch.new(conditions: {significant: 1})
@@ -351,7 +351,7 @@ describe EsEntrySearch do
       $entry_repository.create_index!(force: true)
     end
 
-    context "full object characteristics" do
+    context "full object characteristics", pending: SETTINGS['elasticsearch']['active_record_based_retrieval'] do
 
       it "retrieves corrections" do
         entry = Factory.create(
@@ -515,8 +515,7 @@ describe EsEntrySearch do
       expect(results.first.id).to eq(another_entry.id)
     end
 
-    it "returns the same attributes as an active record object" do
-      #TODO: Transition to a request-like spec
+    it "returns the same attributes as an active record object", pending: SETTINGS['elasticsearch']['active_record_based_retrieval'] do
       agency = Factory(:agency)
       agency_name = Factory(:agency_name, agency: agency)
       another_entry = Factory(
