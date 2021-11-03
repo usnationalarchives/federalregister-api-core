@@ -77,7 +77,7 @@ class PublicInspectionDocumentRepository < BaseRepository
     if SETTINGS['elasticsearch']['active_record_based_retrieval']
       PublicInspectionDocumentSearchResult
     else
-      EsSearchResult
+      EsPublicInspectionDocumentSearchResult
     end
   end
 

@@ -250,7 +250,7 @@ class EntryRepository < BaseRepository
     if SETTINGS['elasticsearch']['active_record_based_retrieval']
       EntrySearchResult
     else
-      EsSearchResult
+      EsEntrySearchResult
     end
   end
 
