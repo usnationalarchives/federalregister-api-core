@@ -7,7 +7,7 @@ RSpec.describe "Entries API", :type => :request do
     agency_name = Factory(:agency_name, agency: agency)
     entry = Factory(
       :entry,
-      significant: 0,
+      significant: nil,
       title: 'goat',
       publication_date: Date.current,
       agencies: [agency],

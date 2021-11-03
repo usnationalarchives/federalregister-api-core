@@ -356,7 +356,6 @@ describe EsEntrySearch do
       it "retrieves corrections" do
         entry = Factory.create(
           :entry,
-          significant: 0,
           title: 'fish',
         )
         correction = Factory.create(
@@ -365,7 +364,7 @@ describe EsEntrySearch do
         )
 
         Entry.bulk_index([entry], refresh: true)
-        search = EsEntrySearch.new(conditions: {significant: 0, term: 'fish'})
+        search = EsEntrySearch.new(conditions: {term: 'fish'})
 
         result = search.results.first
         expect(result).to have_attributes(
@@ -376,7 +375,6 @@ describe EsEntrySearch do
       it "returns the same attributes as an active record object for cfr references" do
         another_entry = Factory.build(
           :entry,
-          significant: 0,
           title: 'fish',
         )
         entry_cfr_reference = EntryCfrReference.new(title: 14, part: 71)
@@ -388,7 +386,7 @@ describe EsEntrySearch do
 
         Entry.bulk_index(entries, refresh: true)
 
-        search = EsEntrySearch.new(conditions: {significant: 0, term: 'fish'})
+        search = EsEntrySearch.new(conditions: {term: 'fish'})
         result = search.results.first
         expect(result).to have_attributes(
           cfr_references: [{
@@ -401,12 +399,10 @@ describe EsEntrySearch do
       end
 
       it "returns the same attributes as an active record object for complex agency-related attributes" do
-        #TODO: Transition to a request-like spec
         agency = Factory(:agency)
         agency_name = Factory(:agency_name, agency: agency)
         another_entry = Factory(
           :entry,
-          significant: 0,
           title: 'fish',
           publication_date: Date.current,
           agencies: [agency],
@@ -418,7 +414,7 @@ describe EsEntrySearch do
 
         Entry.bulk_index(entries, refresh: true)
 
-        search = EsEntrySearch.new(conditions: {significant: 0, term: 'fish'})
+        search = EsEntrySearch.new(conditions: {term: 'fish'})
 
         result = search.results.first
         expect(result).to have_attributes(
@@ -500,14 +496,14 @@ describe EsEntrySearch do
     end
 
     it "retrieves an Active Record-like collection" do
-      another_entry = Factory(:entry, significant: 0, title: 'fish')
+      another_entry = Factory(:entry, title: 'fish', comment_url: 'test_url')
       entries = [
         another_entry
       ]
 
       entries.each{|entry| $entry_repository.save(entry, refresh: true) }
 
-      search = EsEntrySearch.new(conditions: {significant: 0, term: 'fish'})
+      search = EsEntrySearch.new(conditions: {accepting_comments_on_regulations_dot_gov: 1, term: 'fish'})
       results = search.results
 
       assert_valid_search(search)
@@ -520,7 +516,6 @@ describe EsEntrySearch do
       agency_name = Factory(:agency_name, agency: agency)
       another_entry = Factory(
         :entry,
-        significant: 0,
         title: 'fish',
         publication_date: Date.current,
         agencies: [agency],
@@ -532,7 +527,7 @@ describe EsEntrySearch do
 
       Entry.bulk_index(entries, refresh: true)
 
-      search = EsEntrySearch.new(conditions: {significant: 0, term: 'fish'})
+      search = EsEntrySearch.new(conditions: {term: 'fish'})
 
       result = search.results.first
       expect(result).to have_attributes(
@@ -552,9 +547,9 @@ describe EsEntrySearch do
     end
 
     it "retrieves AR objects properly in the proper sort order" do
-      entry_1 = Factory(:entry, significant: 0, publication_date: Date.new(2020,3,1) )
-      entry_2 = Factory(:entry, significant: 0, publication_date: Date.new(2020,2,1) )
-      entry_3 = Factory(:entry, significant: 0, publication_date: Date.new(2020,1,1) )
+      entry_1 = build_entry_double(id: 1, significant: false, publication_date: Date.new(2020,3,1) )
+      entry_2 = build_entry_double(id: 2, significant: false, publication_date: Date.new(2020,2,1) )
+      entry_3 = build_entry_double(id: 3, significant: false, publication_date: Date.new(2020,1,1) )
       entries = [
         entry_1,
         entry_2,
@@ -573,7 +568,6 @@ describe EsEntrySearch do
       $entry_repository.create_index!(force: true)
       another_entry = Factory(
         :entry,
-        significant: 0,
         abstract: 'fish are great.',
         title: "Fish stuff",
         raw_text: "The fish swam across the pond",
@@ -587,7 +581,7 @@ describe EsEntrySearch do
 
       search = EsEntrySearch.new(
         excerpts: true,
-        conditions: {significant: 0, term: 'fish'}
+        conditions: {term: 'fish'}
       )
 
       assert_valid_search(search)
@@ -600,7 +594,6 @@ describe EsEntrySearch do
       $entry_repository.create_index!(force: true)
       another_entry = Factory(
         :entry,
-        significant: 0,
         abstract: 'fish are great.',
         title: "Fish stuff",
         raw_text: "The fish swam across the pond",
@@ -614,7 +607,7 @@ describe EsEntrySearch do
 
       search = EsEntrySearch.new(
         excerpts: true,
-        conditions: {significant: 0, term: "\"fish\""}
+        conditions: {term: "\"fish\""}
       )
 
       assert_valid_search(search)
@@ -627,7 +620,6 @@ describe EsEntrySearch do
         $entry_repository.create_index!(force: true)
         entry = Factory(
           :entry,
-          significant: 0,
           raw_text_updated_at: Time.current
         )
 
@@ -637,7 +629,7 @@ describe EsEntrySearch do
 
         search = EsEntrySearch.new(
           excerpts: true,
-          conditions: {significant: 0, term: "\"fish\" great"}
+          conditions: {term: "\"fish\" great"}
         )
 
         assert_valid_search(search)
@@ -649,7 +641,6 @@ describe EsEntrySearch do
         $entry_repository.create_index!(force: true)
         entry = Factory(
           :entry,
-          significant: 0,
           title: "fish are great",
           raw_text_updated_at: Time.current
         )
@@ -657,7 +648,7 @@ describe EsEntrySearch do
 
         search = EsEntrySearch.new(
           excerpts: true,
-          conditions: {significant: 0, term: "\"fish\" great"}
+          conditions: {term: "\"fish\" great"}
         )
 
         assert_valid_search(search)
@@ -677,7 +668,7 @@ describe EsEntrySearch do
 
         search = EsEntrySearch.new(
           excerpts: true,
-          conditions: {significant: 0, term: "\"fish\" great"}
+          conditions: {significant: nil, term: "\"fish\" great"}
         )
 
         assert_valid_search(search)
@@ -687,14 +678,14 @@ describe EsEntrySearch do
     end
 
     it "Entry.bulk_index" do
-      another_entry = Factory(:entry, significant: 0, title: 'fish')
+      another_entry = Factory(:entry, title: 'fish')
       entries = [
         another_entry
       ]
 
       Entry.bulk_index(entries, refresh: true)
 
-      search = EsEntrySearch.new(conditions: {significant: 0, term: 'fish'})
+      search = EsEntrySearch.new(conditions: {term: 'fish'})
 
       assert_valid_search(search)
       expect(search.results.es_ids).to eq([another_entry.id])
