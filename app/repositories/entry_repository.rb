@@ -199,10 +199,6 @@ class EntryRepository < BaseRepository
         }
       }
     }
-    indexes :docket_ids, {
-      type: 'keyword',
-      index: false
-    }
     indexes :entry_type, {
       type: 'keyword',
       index: false

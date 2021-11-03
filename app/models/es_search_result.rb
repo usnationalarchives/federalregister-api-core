@@ -1,6 +1,16 @@
 class EsSearchResult < OpenStruct
   include TextHelper
 
+  def docket_id
+    # Ensure interface matches with historical EntryApiRepresentation
+    self['docket_id'].uniq.first
+  end
+
+  def docket_ids
+    # Ensure interface matches with historical EntryApiRepresentation
+    self['docket_id']
+  end
+
   def highlights
     text = highlight
     if text
@@ -9,7 +19,6 @@ class EsSearchResult < OpenStruct
       ''
     end
   end
-
 
   def page_views
     {
