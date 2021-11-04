@@ -360,14 +360,20 @@ class EntrySerializer < ApplicationSerializer
   end
 
   attribute :small_entity_ids do |entry|
-    #NOTE: There's likely an indexing performance gain here since this join is expensive and also N+1'ing for each entry.  if we extract this to a custom join called #small_entity_ids and then preload it in the bulk index task.
-    small_entity_ids = entry.
-      entry_regulation_id_numbers.
-      joins("LEFT OUTER JOIN regulatory_plans ON regulatory_plans.regulation_id_number = entry_regulation_id_numbers.regulation_id_number AND regulatory_plans.current = 1
-        LEFT OUTER JOIN regulatory_plans_small_entities ON regulatory_plans_small_entities.regulatory_plan_id = regulatory_plans.id").
-      select("regulatory_plans_small_entities.small_entity_id AS small_entity_id").
-      map{|x| x.small_entity_id || 0}.
-      uniq
+    BatchLoader.for(entry.id).batch do |ids, loader|
+      EntryRegulationIdNumber.
+        where(entry_id: ids).
+        joins("LEFT OUTER JOIN regulatory_plans ON regulatory_plans.regulation_id_number = entry_regulation_id_numbers.regulation_id_number AND regulatory_plans.current = 1
+          LEFT OUTER JOIN regulatory_plans_small_entities ON regulatory_plans_small_entities.regulatory_plan_id = regulatory_plans.id").
+        pluck("distinct entry_regulation_id_numbers.entry_id, regulatory_plans_small_entities.small_entity_id AS small_entity_id").
+        each_with_object({}) do |(entry_id, small_entity_id), hsh|
+          hsh[entry_id] ||= []
+          hsh[entry_id] << small_entity_id
+        end.
+        each do |entry_id, small_entity_ids|
+          loader.call(entry_id, small_entity_ids)
+        end
+    end
   end
 
   attribute :significant do |entry|
