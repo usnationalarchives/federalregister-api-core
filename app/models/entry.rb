@@ -118,6 +118,7 @@ class Entry < ApplicationModel
 
   has_many :entry_regulation_id_numbers
   has_many :regulatory_plans, :through => :entry_regulation_id_numbers
+  has_many :current_regulatory_plans, -> {where(current: true)}, class_name: "RegulatoryPlan", :through => :entry_regulation_id_numbers
   has_many :entry_cfr_references, :dependent => :delete_all
   has_many :entry_cfr_affected_parts, -> { where("entry_cfr_references.part IS NOT NULL") }, :class_name => "EntryCfrReference"
 
@@ -132,6 +133,7 @@ class Entry < ApplicationModel
     :citations,
     :comments_close_date,
     :corrections,
+    :current_regulatory_plans,
     :docket_numbers,
     :effective_date,
     :entry_cfr_references,
@@ -599,10 +601,6 @@ class Entry < ApplicationModel
 
   def regulation_id_numbers
     @rins || self.entry_regulation_id_numbers.map(&:regulation_id_number)
-  end
-
-  def current_regulatory_plans
-    RegulatoryPlan.current.where(regulation_id_number: regulation_id_numbers)
   end
 
   def significant?
