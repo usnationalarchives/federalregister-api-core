@@ -175,9 +175,17 @@ class Api::V1::EntriesController < ApiController
     output = CSV.generate do |csv|
       csv << fields
       entries.each do |result|
-        representation = EntryApiRepresentation.new(result)
+        if active_record_based_retrieval?
+          representation = EntryApiRepresentation.new(result)
+        else
+          fields = (fields & EntryApiRepresentation.all_fields)
+        end
         csv << fields.map do |field|
-          value = [*representation.value(field)].join('; ')
+          if active_record_based_retrieval?
+            value = [*representation.value(field)].join('; ')
+          else
+            value = [*result.send(field)].join('; ')
+          end
 
           if field == :document_number
             value = " #{value}"
@@ -195,7 +203,7 @@ class Api::V1::EntriesController < ApiController
 
   def render_rss(documents, title)
     render :template => 'entries/index.rss.builder', :locals => {
-      :documents => documents.map{|d| EntryApiRepresentation.new(d)},
+      :documents => documents.map{|d| active_record_based_retrieval? ? EntryApiRepresentation.new(d) : d},
       :feed_name => title,
       :feed_description => "The documents in this feed originate from FederalRegister.gov which displays an unofficial web version of the daily Federal Register. The official electronic version in PDF format is also available as a link from the FederalRegister.gov website. For more information, please see https://www.federalregister.gov/reader-aids/policy/legal-status.",
       :feed_url => request.url

@@ -34,4 +34,8 @@ class EsSearchResult < OpenStruct
     end
   end
 
+  def value(field_name)
+    self.send(field_name)
+  end
+
 end
