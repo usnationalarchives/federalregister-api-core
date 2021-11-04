@@ -80,6 +80,8 @@ class Entry < ApplicationModel
   has_many :gpo_graphic_usages,
     :foreign_key => :document_number,
     :primary_key => :document_number
+  has_many :gpo_graphics,
+           :through => :gpo_graphic_usages
 
   acts_as_mappable :through => :places
 
@@ -139,6 +141,7 @@ class Entry < ApplicationModel
     :entry_cfr_references,
     :entry_regulation_id_numbers,
     :extracted_graphics,
+    :gpo_graphics,
     :gpo_graphic_usages,
     :place_determinations,
     :public_inspection_document,
@@ -259,10 +262,6 @@ class Entry < ApplicationModel
     else
       nil
     end
-  end
-
-  def gpo_graphics
-    gpo_graphic_usages.map(&:gpo_graphic).compact
   end
 
   def processed_gpo_graphics

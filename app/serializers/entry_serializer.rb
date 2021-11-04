@@ -88,10 +88,13 @@ class EntrySerializer < ApplicationSerializer
 
   attribute :images do |entry|
     extracted_graphics = entry.extracted_graphics
-    gpo_graphics = entry.processed_gpo_graphics
 
     # we have two types of graphics possible, gpo_graphics being the newest
-    graphics = extracted_graphics.present? ? extracted_graphics : gpo_graphics
+    if extracted_graphics.present?
+      graphics = extracted_graphics
+    else
+      graphics = entry.processed_gpo_graphics
+    end
 
     if graphics.present?
       graphics.inject({}) do |hsh, graphic|
