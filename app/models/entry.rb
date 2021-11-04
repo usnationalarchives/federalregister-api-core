@@ -138,7 +138,6 @@ class Entry < ApplicationModel
     :effective_date,
     :entry_cfr_references,
     :entry_regulation_id_numbers,
-    :entry_regulation_id_numbers,
     :extracted_graphics,
     :gpo_graphic_usages,
     :place_determinations,

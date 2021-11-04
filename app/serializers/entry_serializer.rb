@@ -3,7 +3,7 @@ class EntrySerializer < ApplicationSerializer
   extend RouteBuilder
   extend Routeable
 
-  attributes :id, :title, :abstract, :action, :dates, :document_number, :effective_on, :end_page, :executive_order_notes, :executive_order_number, :presidential_document_type_id, :signing_date, :president_id, :start_page, :executive_order_number, :presidential_document_number, :proclamation_number, :publication_date, :raw_text_updated_at, :toc_doc, :toc_subject, :volume
+  attributes :id, :title, :abstract, :action, :dates, :document_number, :effective_on, :end_page, :executive_order_notes, :executive_order_number, :presidential_document_type_id, :signing_date, :start_page, :executive_order_number, :presidential_document_number, :proclamation_number, :publication_date, :raw_text_updated_at, :toc_doc, :toc_subject, :volume
 
   attribute :agencies do |entry|
     entry.agency_name_assignments.map(&:agency_name).compact.map do |agency_name|
@@ -65,27 +65,6 @@ class EntrySerializer < ApplicationSerializer
 
   attribute :disposition_notes do |e|
     e.executive_order_notes
-  end
-
-  attribute :agencies do |entry|
-    entry.agency_name_assignments.map(&:agency_name).compact.map do |agency_name|
-      agency = agency_name.agency
-      if agency
-        {
-          :raw_name  => agency_name.name,
-          :name      => agency.name,
-          :id        => agency.id,
-          :url       => agency_url(agency),
-          :json_url  => api_v1_agency_url(agency.id, :format => :json),
-          :parent_id => agency.parent_id,
-          :slug      => agency.slug
-        }
-      else
-        {
-          :raw_name => agency_name.name
-        }
-      end
-    end
   end
 
   attribute :entry_type do |e|
