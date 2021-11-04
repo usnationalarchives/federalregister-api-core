@@ -131,7 +131,6 @@ class Entry < ApplicationModel
   scope :pre_joined_for_es_indexing, -> { includes(
     :agencies,
     :agency_assignments,
-    :agency_names,
     :citations,
     :comments_close_date,
     :corrections,
@@ -139,15 +138,17 @@ class Entry < ApplicationModel
     :docket_numbers,
     :effective_date,
     :entry_cfr_references,
-    :entry_regulation_id_numbers,
     :extracted_graphics,
-    :gpo_graphics,
-    :gpo_graphic_usages,
     :place_determinations,
     :public_inspection_document,
     :section_assignments,
     :topic_assignments,
-    :topics
+    :topics,
+    agency_names: [:agency],
+    agency_name_assignments: [:agency_name],
+    docket: [:docket_documents],
+    entry_regulation_id_numbers: [:current_regulatory_plan],
+    gpo_graphics: [:gpo_graphic_usages],
   ) }
 
   def self.published_today
