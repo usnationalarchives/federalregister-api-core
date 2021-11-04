@@ -392,7 +392,7 @@ class EntrySerializer < ApplicationSerializer
   end
 
   attribute :topics do |e|
-    e.topic_assignments.map{|x| x.topic.try(:name)}.compact
+    e.topics.map{|x| x.try(:name)}.compact
   end
 
 end

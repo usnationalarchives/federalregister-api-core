@@ -143,7 +143,8 @@ class Entry < ApplicationModel
     :place_determinations,
     :public_inspection_document,
     :section_assignments,
-    :topic_assignments
+    :topic_assignments,
+    :topics
   ) }
 
   def self.published_today
