@@ -289,12 +289,14 @@ class EntrySerializer < ApplicationSerializer
   end
 
   attribute :president_id do |entry|
-    sql = <<-SQL
-      IF(granule_class = 'PRESDOCU', INTERVAL(DATE_FORMAT(IFNULL(signing_date,DATE_SUB(publication_date, INTERVAL 3 DAY)), '%Y%m%d'),#{President.all.map{|p| p.starts_on.strftime("%Y%m%d")}.join(', ')}), NULL) AS president_id
-    SQL
+    if entry.granule_class == 'PRESDOCU'
+      #NOTE: There's a potential performance gain here if this was translated to Ruby
+      sql = <<-SQL
+        IF(granule_class = 'PRESDOCU', INTERVAL(DATE_FORMAT(IFNULL(signing_date,DATE_SUB(publication_date, INTERVAL 3 DAY)), '%Y%m%d'),#{President.all.map{|p| p.starts_on.strftime("%Y%m%d")}.join(', ')}), NULL) AS president_id
+      SQL
 
-    #NOTE: There's a potential performance gain here if this was translated to Ruby
-    Entry.where(id: entry.id).select(sql).first&.president_id
+      Entry.where(id: entry.id).select(sql).first&.president_id
+    end
   end
 
   attribute :correction do |entry|
