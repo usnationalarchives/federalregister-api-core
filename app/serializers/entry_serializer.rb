@@ -265,9 +265,7 @@ class EntrySerializer < ApplicationSerializer
   end
 
   attribute :signing_date do |entry|
-    if entry.granule_class == 'PRESDOCU'
-      entry.signing_date || entry.publication_date
-    end
+    entry.signing_date
   end
 
   attribute :president_id do |entry|
