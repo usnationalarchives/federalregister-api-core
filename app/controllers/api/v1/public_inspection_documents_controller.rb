@@ -168,16 +168,20 @@ class Api::V1::PublicInspectionDocumentsController < ApiController
 
   def document_data(document, fields)
     if active_record_based_retrieval?
-      representation = PublicInspectionDocumentApiRepresentation.new(document)
-      Hash[ fields.map do |field|
-        [field, representation.value(field)]
-      end]
+      active_record_document_data(document, fields)
     else
       allowed_fields = (fields & PublicInspectionDocumentApiRepresentation.all_fields)
       Hash[ allowed_fields.map do |field|
         [field, document.send(field)]
       end]
     end
+  end
+
+  def active_record_document_data(document, fields)
+    representation = PublicInspectionDocumentApiRepresentation.new(document)
+    Hash[ fields.map do |field|
+      [field, representation.value(field)]
+    end]
   end
 
   def index_url(options)
@@ -193,7 +197,7 @@ class Api::V1::PublicInspectionDocumentsController < ApiController
       documents = issue.public_inspection_documents
       data = {
                 :count => documents.size,
-                :results => documents.map{|d| document_data(d,fields)},
+                :results => documents.map{|d| active_record_document_data(d,fields)},
                 :special_filings_updated_at => issue.special_filings_updated_at,
                 :regular_filings_updated_at => issue.regular_filings_updated_at
              }
