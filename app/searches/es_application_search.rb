@@ -497,8 +497,7 @@ class EsApplicationSearch
     if active_record_based_retrieval?
       ['id']
     else
-      #TODO: Possibly apply selective fetching logic to improve ES performance.
-      true
+      {excludes: ["full_text"]}
     end
   end
 
