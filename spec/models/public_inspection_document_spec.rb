@@ -8,7 +8,7 @@ describe PublicInspectionDocument do
     end
 
     it "serializes agency_ids" do
-      document = described_class.new(document_number: '2011-27460')
+      document = described_class.new(document_number: '2011-27460', subject_1: "Test Subject 1")
 
       agency_a = Factory(:agency)
       agency_b = Factory(:agency)

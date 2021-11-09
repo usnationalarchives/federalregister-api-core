@@ -1,4 +1,8 @@
 class ApplicationSerializer
+  extend Rails.application.routes.url_helpers
+  extend RouteBuilder
+  extend Routeable
+
   include FastJsonapi::ObjectSerializer
   #cache_options enabled: true, cache_length: 1.hour
 

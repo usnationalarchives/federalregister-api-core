@@ -35,8 +35,59 @@ class PublicInspectionDocumentRepository < BaseRepository
   }
 
   mapping dynamic: 'strict' do
+    indexes :agencies, {
+      type:        'object',
+      enabled:      false,
+    }
+    indexes :agency_letters, {
+      type:        'object',
+      enabled:      false,
+    }
+    indexes :agency_names, {
+      type:        'keyword',
+      index:       false
+    }
+    indexes :docket_numbers, {
+      type:        'keyword',
+      index:       false
+    }
+    indexes :editorial_note, {
+      type:        'keyword',
+      index:       false
+    }
     indexes :id, { type: 'integer' }
     indexes :filed_at, { type: 'date' }
+    indexes :filing_type, {
+      type:        'keyword',
+      index:       false
+    }
+    indexes :html_url, {
+      type: 'keyword',
+      index: false
+    }
+    indexes :json_url, {
+      type: 'keyword',
+      index: false
+    }
+    indexes :last_public_inspection_issue, {
+      type: 'date',
+      index: false
+    }
+    indexes :num_pages, {type: 'integer', index: false}
+    indexes :pdf_file_name, {type: 'keyword', index: false}
+    indexes :pdf_file_size, {type: 'integer', index: false}
+    indexes :pdf_updated_at, {type: 'date', index: false}
+    indexes :pdf_url, {
+      type: 'keyword',
+      index: false
+    }
+    indexes :raw_text_url, {
+      type: 'keyword',
+      index: false
+    }
+    indexes :subject_1, { type: 'text', index: false}
+    indexes :subject_2, { type: 'text', index: false}
+    indexes :subject_3, { type: 'text', index: false}
     indexes :title, {
       type:        'text',
       analyzer:    'custom_english',
@@ -49,6 +100,8 @@ class PublicInspectionDocumentRepository < BaseRepository
         }
       }
     }
+    indexes :toc_doc, {type: 'text', index: false}
+    indexes :toc_subject, {type: 'text', index: false}
     indexes :full_text, {
       type:        'text',
       analyzer:    'custom_english',
