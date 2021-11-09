@@ -1,16 +1,6 @@
 class EsSearchResult < OpenStruct
   include TextHelper
 
-  def docket_id
-    # Ensure interface matches with historical EntryApiRepresentation
-    self['docket_id'].uniq.first
-  end
-
-  def docket_ids
-    # Ensure interface matches with historical EntryApiRepresentation
-    self['docket_id']
-  end
-
   def highlights
     text = highlight
     if text
@@ -18,10 +8,6 @@ class EsSearchResult < OpenStruct
     else
       ''
     end
-  end
-
-  def type
-    entry_type #NOTE: The serializer/ES-stored "type" attribute is different than the "type" field returned in API requests, hence the override here.
   end
 
   def excerpts
