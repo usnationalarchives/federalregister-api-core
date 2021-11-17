@@ -2,13 +2,18 @@ module Content
   class RegulatoryPlanImporterScheduler
 
     def perform
+      reindex = false
       while next_issue_available?
+        reindex = true
         Content::RegulatoryPlanImporter.import_all_by_publication_date(next_issue)
         Content::RegulatoryPlanImporter.import_all_small_entities
         Content::RegulatoryPlanImporter.recalculate_current
       end
-      Honeybadger.notify("Update: Reindexing all elasticsearch entries--detected a semi-annual Unified Agenda update.")
-      ElasticsearchIndexer.reindex_entries
+
+      if reindex
+        Honeybadger.notify("Update: Reindexing all elasticsearch entries--detected a semi-annual Unified Agenda update.")
+        ElasticsearchIndexer.reindex_entries
+      end
     end
 
     private
