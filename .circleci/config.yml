@@ -28,5 +28,5 @@ jobs:
           name: Push to latest if main
           command: |
             if [ "${CIRCLE_BRANCH}" == "main" ]; then
-              docker push $REPO_URL:latest
+              /var/lib/pilot/bin/pilot push federalregister-api-core
             fi
