@@ -69,7 +69,7 @@ class GpoImages::EpsImporter
 
   def md5
     @md5 ||= Digest::MD5.hexdigest(filenames_to_download.sort.map do |filename|
-      Digest::MD5.file("#{temp_images_path}/#{filename}") + filename
+      Digest::MD5.file("#{temp_images_path}/#{filename}").to_s + filename
     end.join)
   end
 
