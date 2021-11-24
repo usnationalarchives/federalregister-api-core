@@ -1,6 +1,7 @@
 class GpoImages::FogAwsConnection
   delegate :directories, :to => :connection
 
+  MAX_RETRIES = 1
   def move_directory_files_between_buckets_and_rename(xml_identifier, identifier, source_bucket, destination_bucket, options={})
     directory = directories.get(source_bucket, :prefix => identifier)
 
@@ -20,13 +21,24 @@ class GpoImages::FogAwsConnection
         filename = file.key.gsub(identifier, URI.encode(xml_identifier))
       end
 
-      if file.copy(destination_bucket, filename)
-        file.destroy
-      else
-        Honeybadger.notify(
-          :error_class   => "Failure moving file between buckets",
-          :error_message => "Failure occurred while copying '#{file.key}' from '#{source_bucket}' to '#{destination_bucket}'."
-        )
+      retry_count = 0
+      begin
+        if file.copy(destination_bucket, filename)
+          file.destroy
+        else
+          Honeybadger.notify(
+            :error_class   => "Failure moving file between buckets",
+            :error_message => "Failure occurred while copying '#{file.key}' from '#{source_bucket}' to '#{destination_bucket}'."
+          )
+        end
+      rescue Excon::Error::InternalServerError => error
+        if retry_count < MAX_RETRIES
+          sleep 2
+          retry_count += 1
+          retry
+        else
+          Honeybadger.notify(error.message)
+        end
       end
     end
   end
