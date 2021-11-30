@@ -17,4 +17,8 @@ class EsPublicInspectionDocumentSearchResult < EsSearchResult
     slug.gsub(/ /,'-')
   end
 
+  def type
+    Entry::ENTRY_TYPES[self['type']]
+  end
+
 end
