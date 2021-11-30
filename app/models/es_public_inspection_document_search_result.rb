@@ -10,4 +10,11 @@ class EsPublicInspectionDocumentSearchResult < EsSearchResult
       }
     end
   end
+
+  def slug
+    clean_title = title.downcase.gsub(/[^a-z0-9& -]+/,'').gsub(/&/, 'and')
+    slug = truncate_words(clean_title, :length => 100, :omission => '')
+    slug.gsub(/ /,'-')
+  end
+
 end
