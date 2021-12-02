@@ -209,18 +209,34 @@ class Api::V1::PublicInspectionDocumentsController < ApiController
     output = CSV.generate do |csv|
       csv << fields
       documents.each do |result|
-        representation = PublicInspectionDocumentApiRepresentation.new(result)
+        if active_record_based_retrieval?
+          representation = PublicInspectionDocumentApiRepresentation.new(result)
+        else
+          fields = (fields & PublicInspectionDocumentApiRepresentation.all_fields)
+        end
+  
         csv << fields.map do |field|
-          if field == :filed_at
-            value = representation.value(field)&.strftime("%m/%d/%Y at %I:%M %p")
-          else
-            value = [*representation.value(field)].join('; ')
-
-            if field == :document_number
-              value = " #{value}"
+          if active_record_based_retrieval?
+            if field == :filed_at
+              value = representation.value(field)&.strftime("%m/%d/%Y at %I:%M %p")
             else
-              value
+              value = [*representation.value(field)].join('; ')
             end
+          else
+            if field == :filed_at
+              value = result.send(field)
+              if value.present?
+                value = Time.parse(value).strftime("%m/%d/%Y at %I:%M %p")
+              end
+            else
+              value = [*result.send(field)].join('; ')
+            end
+          end
+
+          if field == :document_number
+            value = " #{value}"
+          else
+            value
           end
         end
       end
