@@ -14,6 +14,9 @@ Rails.application.configure do
   # Show full error reports.
   config.consider_all_requests_local = true
 
+  # Allow Better Errors to access IP for remote development.  Click "show env dump" on the standard better_errors error page to view IP.
+  # BetterErrors::Middleware.allow_ip! 'X.X.X.X'
+
   # Enable/disable caching. By default caching is disabled.
   # Run rails dev:cache to toggle caching.
   if Rails.root.join('tmp', 'caching-dev.txt').exist?
