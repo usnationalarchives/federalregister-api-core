@@ -108,7 +108,12 @@ class Api::V1::EntriesController < ApiController
       wants.csv do
         fields = specified_fields || EntryApiRepresentation.default_show_fields_csv
         document_numbers = params[:id].split(',')
-        entries = Entry.where(document_number: document_numbers)
+        if active_record_based_retrieval?
+          entries = Entry.where(document_number: document_numbers)
+        else
+          entries = EsEntrySearch.new(conditions: {document_numbers: document_numbers}).results
+        end
+
         filename = 'federal_register'
         render_csv(entries, fields, filename)
       end
