@@ -90,6 +90,7 @@ class Api::V1::EntriesController < ApiController
     end
   end
 
+  CSV_SEARCH_RESULT_LIMIT = 200
   def show
     respond_to do |wants|
       wants.json do
@@ -111,7 +112,7 @@ class Api::V1::EntriesController < ApiController
         if active_record_based_retrieval?
           entries = Entry.where(document_number: document_numbers)
         else
-          entries = EsEntrySearch.new(conditions: {document_numbers: document_numbers}).results
+          entries = EsEntrySearch.new(conditions: {document_numbers: document_numbers}, per_page: CSV_SEARCH_RESULT_LIMIT).results
         end
 
         filename = 'federal_register'
