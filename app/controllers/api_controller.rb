@@ -18,8 +18,8 @@ class ApiController < ApplicationController
     params.delete(:maximum_per_page)
   end
 
-  def active_record_based_retrieval?
-    SETTINGS['elasticsearch']['active_record_based_retrieval']
+  def active_record_based_retrieval?(force=false)
+    SETTINGS['elasticsearch']['active_record_based_retrieval'] || force
   end
 
   def render_json_or_jsonp(data, options = {})
@@ -91,7 +91,7 @@ class ApiController < ApplicationController
       )
 
       data = {
-        :count   => (active_record_based_retrieval? ? records.count(:all) : records.count),
+        :count   => (active_record_based_retrieval?(model.always_render_document_number_search_results_via_active_record?) ? records.count(:all) : records.count),
         :results => records.map{|record| yield(record)}
       }
 
@@ -128,7 +128,7 @@ class ApiController < ApplicationController
   end
 
   def document_number_based_search_result(model, find_options, document_numbers, publication_date)
-    if SETTINGS['elasticsearch']['active_record_based_retrieval']
+    if active_record_based_retrieval?(model.always_render_document_number_search_results_via_active_record?)
       conditions = {document_number: document_numbers}.tap do |hsh|
         if publication_date
           hsh.merge!(publication_date: publication_date)

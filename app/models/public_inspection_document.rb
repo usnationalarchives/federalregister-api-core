@@ -62,6 +62,10 @@ class PublicInspectionDocument < ApplicationModel
     $public_inspection_document_repository
   end
 
+  def self.always_render_document_number_search_results_via_active_record?
+    true
+  end
+
   def self.indexable
     base_scope = PublicInspectionDocument.
       joins("INNER JOIN public_inspection_postings ON public_inspection_documents.id = public_inspection_postings.document_id")

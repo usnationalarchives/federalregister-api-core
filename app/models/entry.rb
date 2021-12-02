@@ -255,6 +255,10 @@ class Entry < ApplicationModel
     $entry_repository
   end
 
+  def self.always_render_document_number_search_results_via_active_record?
+    false
+  end
+
   def excerpt
     return @excerpt if @excerpt
 

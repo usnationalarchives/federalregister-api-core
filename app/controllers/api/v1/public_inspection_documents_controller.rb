@@ -117,7 +117,7 @@ class Api::V1::PublicInspectionDocumentsController < ApiController
         find_options = PublicInspectionDocumentApiRepresentation.find_options_for(fields + [:document_number])
 
         render_one_or_more(PublicInspectionDocument, params[:id], find_options) do |document|
-          document_data(document, fields)
+          active_record_document_data(document, fields)
         end
       end
     end
