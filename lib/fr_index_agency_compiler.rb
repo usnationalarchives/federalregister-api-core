@@ -53,9 +53,10 @@ class FrIndexAgencyCompiler
 
   def entries
     @entries ||= Agency.find_as_hashes([
-     "SELECT
-        entries.document_number,
-        entries.granule_class,
+    "SELECT
+        entries.id,
+        MAX(entries.document_number) AS document_number,
+        MAX(entries.granule_class) AS granule_class,
         #{SUBJECT_SQL} AS subject_1,
         #{DOC_SQL} AS subject_2
       FROM entries
@@ -68,14 +69,14 @@ class FrIndexAgencyCompiler
       WHERE
         entries.publication_date >= ? AND
         entries.publication_date <= ? AND
-        agencies.id IN(?)",
-
+        agencies.id IN(?)
+    GROUP BY entries.id",
       "#{year}-01-01",
       "#{year}-12-31",
       ([agency.id] + descendant_agency_ids).join(",")
-    ]).
+    ]). 
     group_by{|entry|entry["granule_class"]}
-  end
+  end 
 
   def process_entries
     entries.each do |doc_type, doc_representations|
