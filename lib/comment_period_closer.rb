@@ -19,7 +19,7 @@ class CommentPeriodCloser
 
     regs_scope = base_scope.
       joins("LEFT JOIN events ON entries.id = events.entry_id AND event_type = 'RegulationsDotGovCommentsClose'").
-      where("date is NULL OR date < '#{Date.current.to_s(:iso)}'")
+      where("date is NULL OR date <= '#{Date.current.to_s(:iso)}'")
 
     (comments_scope.pluck(:document_number) + regs_scope.pluck(:document_number)).uniq
   end
