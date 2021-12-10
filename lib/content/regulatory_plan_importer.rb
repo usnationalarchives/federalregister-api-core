@@ -11,7 +11,7 @@ module Content
     end
 
     def self.import_all_small_entities
-      RegulatoryPlan.find_each do |reg_plan|
+      RegulatoryPlan.find_each(batch_size: 100) do |reg_plan|
         puts "#{reg_plan.issue}: #{reg_plan.regulation_id_number}"
         root_node = reg_plan.send(:root_node)
         if root_node

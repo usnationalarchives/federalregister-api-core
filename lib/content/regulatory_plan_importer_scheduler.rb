@@ -6,7 +6,6 @@ module Content
       while next_issue_available?
         reindex = true
         Content::RegulatoryPlanImporter.import_all_by_publication_date(next_issue)
-        Content::RegulatoryPlanImporter.import_all_small_entities
         Content::RegulatoryPlanImporter.recalculate_current
       end
 
