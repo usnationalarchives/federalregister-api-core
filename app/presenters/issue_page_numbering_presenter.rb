@@ -30,7 +30,13 @@ class IssuePageNumberingPresenter
   end
 
   def page_numbering_correct?
-    (previous_issue_end_page + 1) == current_issue_start_page
+    if previous_issue_end_page.odd?
+      page_gap = 2
+    else
+      page_gap = 1
+    end
+
+    ((previous_issue_end_page + page_gap) == current_issue_start_page) 
   end
 
 end
