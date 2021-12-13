@@ -172,4 +172,17 @@ describe Entry do
     end
 
   end
+
+  describe "regulations.gov attributes" do
+    it "parses regulations_dot_gov_agency_id with underscores AND hyphens" do
+      entry = Entry.new(regulations_dot_gov_document_id: 'DOE_FRDOC_0001-4278')
+      expect(entry.regulations_dot_gov_agency_id).to eq('DOE')
+
+    end
+
+    it "parses regulations_dot_gov_agency with with" do
+      entry = Entry.new(regulations_dot_gov_document_id: 'CDC-2021-0106-0048')
+      expect(entry.regulations_dot_gov_agency_id).to eq('CDC')
+    end
+  end
 end
