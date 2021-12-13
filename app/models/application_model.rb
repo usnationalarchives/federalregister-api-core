@@ -67,4 +67,8 @@ class ApplicationModel < ActiveRecord::Base
       repository.refresh_index!
     end
   end
+
+  def reindex!
+    self.class.bulk_index([self])
+  end
 end

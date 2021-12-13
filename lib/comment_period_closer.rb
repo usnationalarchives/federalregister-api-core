@@ -4,7 +4,7 @@ class CommentPeriodCloser
   MAX_AGE = 4.months
   def self.perform
     candidate_document_numbers_still_open.each do |doc_number|
-      EntryRegulationsDotGovImporter.perform_async(doc_number)
+      EntryRegulationsDotGovImporter.perform_async(doc_number, nil, true)
     end
   end
 
@@ -23,6 +23,5 @@ class CommentPeriodCloser
 
     (comments_scope.pluck(:document_number) + regs_scope.pluck(:document_number)).uniq
   end
-
 
 end

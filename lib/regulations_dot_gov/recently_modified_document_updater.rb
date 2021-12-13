@@ -54,12 +54,23 @@ class RegulationsDotGov::RecentlyModifiedDocumentUpdater
         notify_missing_document(updated_document)
       end
     end
+
+    reindex_updated_documents
   end
 
   private
 
   def logger
     @logger ||= Logger.new("#{Rails.root}/log/reg_gov_modifed_documents.log")
+  end
+
+  def reindex_updated_documents
+    Entry.
+      pre_joined_for_es_indexing.
+      where(document_number: updated_documents.map(&:federal_register_document_number)).
+      find_in_batches(batch_size: ElasticsearchIndexer::BATCH_SIZE) do |entry_batch|
+        Entry.bulk_index(entry_batch, refresh: false)
+      end
   end
 
   def notify_missing_document(document)
