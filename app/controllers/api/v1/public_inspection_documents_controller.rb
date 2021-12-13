@@ -103,7 +103,7 @@ class Api::V1::PublicInspectionDocumentsController < ApiController
           documents = issue.public_inspection_documents
 
           filename = "public_inspection_documents_on_#{publication_date}"
-          render_csv(documents, fields, filename)
+          render_csv(documents, fields, filename, force_ar_retrieval: true)
         end
       end
     end
@@ -205,18 +205,20 @@ class Api::V1::PublicInspectionDocumentsController < ApiController
     render_json_or_jsonp data
   end
 
-  def render_csv(documents, fields, filename)
+  def render_csv(documents, fields, filename, force_ar_retrieval: false)
+    ar_retrieval = force_ar_retrieval || active_record_based_retrieval?
+
     output = CSV.generate do |csv|
       csv << fields
       documents.each do |result|
-        if active_record_based_retrieval?
+        if ar_retrieval
           representation = PublicInspectionDocumentApiRepresentation.new(result)
         else
           fields = (fields & PublicInspectionDocumentApiRepresentation.all_fields)
         end
   
         csv << fields.map do |field|
-          if active_record_based_retrieval?
+          if ar_retrieval
             if field == :filed_at
               value = representation.value(field)&.strftime("%m/%d/%Y at %I:%M %p")
             else
