@@ -14,7 +14,7 @@ gem 'mysql2'
 gem 'passenger', '~> 6.0'
 gem 'nokogiri'
 gem 'batch-loader' # Minimizes N+1 queries when serializing for ES
-gem 'curb', '0.9.0'
+gem 'curb'
 gem 'http_headers', '0.0.2.3'
 gem 'geokit', '1.10.0', :require => 'geokit'
 gem 'geokit-rails'
