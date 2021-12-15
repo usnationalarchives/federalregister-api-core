@@ -33,6 +33,8 @@ RUN apt-get update &&\
     libcurl4 libcurl3-gnutls libcurl4-openssl-dev \
     # Required to successfully compile qpdf
     libjpeg-dev \
+    # Used for pdftotext call in PI importer
+    poppler-utils \
     # used for mimemagic gem installation
     shared-mime-info &&\
   apt-get clean &&\
