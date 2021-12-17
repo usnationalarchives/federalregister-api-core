@@ -366,7 +366,7 @@ class EntrySerializer < ApplicationSerializer
         where(entry_id: ids).
         joins("LEFT OUTER JOIN regulatory_plans ON regulatory_plans.regulation_id_number = entry_regulation_id_numbers.regulation_id_number AND regulatory_plans.current = 1
           LEFT OUTER JOIN regulatory_plans_small_entities ON regulatory_plans_small_entities.regulatory_plan_id = regulatory_plans.id").
-        pluck("distinct entry_regulation_id_numbers.entry_id, regulatory_plans_small_entities.small_entity_id AS small_entity_id").
+        pluck(Arel.sql("distinct entry_regulation_id_numbers.entry_id, regulatory_plans_small_entities.small_entity_id AS small_entity_id")).
         each_with_object({}) do |(entry_id, small_entity_id), hsh|
           hsh[entry_id] ||= []
           hsh[entry_id] << small_entity_id
