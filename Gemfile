@@ -83,6 +83,7 @@ gem 'resque-throttler',
     require: 'resque/throttler'
 # gem "resque-retry", '1.5.3'
 # gem "resque-scheduler", '4.3.1'
+gem 'rexml'
 gem 'sidekiq', '~> 5.2.9'
 gem "sidekiq-throttled"
 
@@ -96,6 +97,7 @@ gem 'rdoc'
 gem 'net-sftp'
 gem 'diffy'
 gem 'terrapin'
+gem 'webrick'
 gem 'hoe'
 
 # cron jobs
