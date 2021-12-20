@@ -11,7 +11,7 @@ end
 require "sidekiq/throttled"
 Sidekiq::Throttled.setup!
 
-Sidekiq::Throttled::Registry.add(:reg_gov_api, {
+Sidekiq::Throttled::Registry.add(:reg_gov_api, **{
   threshold: {
     limit:  SETTINGS['regulations_dot_gov']['throttle']['at'],
     period: SETTINGS['regulations_dot_gov']['throttle']['per'].send(:seconds)

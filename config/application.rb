@@ -49,7 +49,7 @@ module FederalregisterApiCore
 
     Rails.application.config.active_record.belongs_to_required_by_default = false
 
-    config.session_store :cookie_store, {
+    config.session_store :cookie_store, **{
       :cookie_only => true,
       :path        => '/admin',
       :secure      => (Rails.env.production? || Rails.env.staging?)
