@@ -14,5 +14,9 @@ class IssueTocRegenerator
     purge_cache("/documents/#{date.strftime("%Y/%m/%d")}")
     purge_cache("/documents/#{Time.current.to_date.strftime('%Y')}/#{Time.current.to_date.strftime('%m')}")
     purge_cache("/documents/json/#{date.strftime("%Y/%m/%d")}.json")
+
+    if Date.current == date
+      purge_cache("/documents/current")
+    end
   end
 end
