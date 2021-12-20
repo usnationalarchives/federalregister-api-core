@@ -43,7 +43,11 @@ gem 'stevedore', '0.3.0'
 # fork of delynn/userstamp plugin
 # gem 'activerecord-userstamp', git: 'https://github.com/criticaljuncture/userstamp', branch: 'rails_six'
 
-gem 'active_hash', '~> 2.0'
+gem 'active_hash',
+  # Using master branch for Ruby 3 compatibility since 3.1.0 does not have it yet
+  git:    "https://github.com/zilkey/active_hash.git",
+  branch: "master",
+  ref:    "1c95f992af3ec94c07e19846f042e12bd0b11dd1"
 gem 'acts_as_list'
 gem 'bcrypt'
 gem 'bootstrap-sass', '2.3.2.2'

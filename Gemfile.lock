@@ -20,6 +20,15 @@ GIT
   specs:
     app_config (1.3.2)
 
+GIT
+  remote: https://github.com/zilkey/active_hash.git
+  revision: 1c95f992af3ec94c07e19846f042e12bd0b11dd1
+  ref: 1c95f992af3ec94c07e19846f042e12bd0b11dd1
+  branch: master
+  specs:
+    active_hash (3.1.0)
+      activesupport (>= 5.0.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -60,8 +69,6 @@ GEM
       erubi (~> 1.4)
       rails-dom-testing (~> 2.0)
       rails-html-sanitizer (~> 1.1, >= 1.2.0)
-    active_hash (2.0.0)
-      activesupport (>= 2.2.2)
     activejob (6.0.3.7)
       activesupport (= 6.0.3.7)
       globalid (>= 0.3.6)
@@ -487,7 +494,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  active_hash (~> 2.0)
+  active_hash!
   acts_as_list
   addressable (= 2.4.0)
   amatch (= 0.2.11)
