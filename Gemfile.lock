@@ -6,14 +6,6 @@ GIT
     klarlack (0.0.7)
 
 GIT
-  remote: https://github.com/criticaljuncture/resque-throttler.git
-  revision: 6b584cc134cbb3d7cefc9a4ea4f57474a033afcc
-  branch: master
-  specs:
-    resque-throttler (0.1.5)
-      resque (~> 1.25)
-
-GIT
   remote: https://github.com/fredwu/app_config.git
   revision: efce678826ea465b30d67357b9f6562bc9a871c0
   branch: master
@@ -561,7 +553,6 @@ DEPENDENCIES
   recaptcha (= 0.3.1)
   redis
   resque
-  resque-throttler!
   rexml
   rinku
   rspec-rails (~> 3.6)

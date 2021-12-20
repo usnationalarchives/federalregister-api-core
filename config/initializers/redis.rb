@@ -5,7 +5,6 @@ REDIS_CONNECTION_SETTINGS = {
 }
 
 $redis = Redis.new(REDIS_CONNECTION_SETTINGS)
-Resque.redis = $redis
 
 if defined?(PhusionPassenger)
   PhusionPassenger.on_event(:starting_worker_process) do |forked|
@@ -13,7 +12,6 @@ if defined?(PhusionPassenger)
     if forked
       $redis.client.disconnect
       $redis = Redis.new(REDIS_CONNECTION_SETTINGS)
-      Resque.redis = $redis
     end
   end
 end
