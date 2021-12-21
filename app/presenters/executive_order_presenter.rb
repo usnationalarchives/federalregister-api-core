@@ -32,7 +32,7 @@ module ExecutiveOrderPresenter
   end
 
   def self.all_by_president_and_year
-    President.all.reverse.map do |president|
+    President.all.to_a.reverse.map do |president|
       presidential_years = president.year_ranges.map{|year_range| EoCollection.new(president, year_range.first, year_range.second)}.sort_by(&:year).reverse
       [president, presidential_years]
     end
