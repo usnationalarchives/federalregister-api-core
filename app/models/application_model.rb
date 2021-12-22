@@ -44,7 +44,7 @@ class ApplicationModel < ActiveRecord::Base
     current_time = Time.current
     body = active_record_collection.each_with_object(Array.new) do |instance, request_body|
       request_body << { index: { _index: repository.index_name, _id: instance.id } }
-      request_body << instance.to_hash.merge(indexed_at: current_time)
+      request_body << instance.to_hash.merge(indexed_at: current_time.utc.iso8601)
     end
 
     begin
