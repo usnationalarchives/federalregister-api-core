@@ -215,7 +215,7 @@ GEM
     hashie (3.5.7)
     hoe (3.23.0)
       rake (>= 0.8, < 15.0)
-    honeybadger (2.7.2)
+    honeybadger (4.9.0)
     httmultiparty (0.3.16)
       httparty (>= 0.7.3)
       mimemagic
@@ -474,7 +474,7 @@ GEM
     websocket-extensions (0.1.5)
     whenever (0.10.0)
       chronic (>= 0.6.3)
-    will_paginate (3.2.1)
+    will_paginate (3.3.1)
     will_paginate-bootstrap (0.2.5)
       will_paginate (>= 3.0.3)
     xml-simple (1.0.12)
@@ -519,7 +519,7 @@ DEPENDENCIES
   geokit-rails
   googleauth
   hoe
-  honeybadger (~> 2.7.2)
+  honeybadger
   httmultiparty (~> 0.3.13)
   http_headers (= 0.0.2.3)
   httparty

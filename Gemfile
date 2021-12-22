@@ -29,7 +29,7 @@ gem 'formtastic', "~> 2.1"
 gem 'json'
 gem 'ym4r', '0.6.1'
 gem 'ffi-hunspell'
-gem 'honeybadger', '~> 2.7.2'
+gem 'honeybadger'
 gem 'sitemap_generator', '~> 1.5.0'
 
 gem 'paperclip'
