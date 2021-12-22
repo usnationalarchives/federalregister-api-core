@@ -547,9 +547,9 @@ describe EsEntrySearch do
     end
 
     it "retrieves AR objects properly in the proper sort order" do
-      entry_1 = build_entry_double(id: 1, significant: false, publication_date: Date.new(2020,3,1) )
-      entry_2 = build_entry_double(id: 2, significant: false, publication_date: Date.new(2020,2,1) )
-      entry_3 = build_entry_double(id: 3, significant: false, publication_date: Date.new(2020,1,1) )
+      entry_1 = build_entry_double(id: 1, significant: false, publication_date: Date.new(2020,3,1).to_s(:iso) )
+      entry_2 = build_entry_double(id: 2, significant: false, publication_date: Date.new(2020,2,1).to_s(:iso) )
+      entry_3 = build_entry_double(id: 3, significant: false, publication_date: Date.new(2020,1,1).to_s(:iso) )
       entries = [
         entry_1,
         entry_2,

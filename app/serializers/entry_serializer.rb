@@ -3,7 +3,7 @@ class EntrySerializer < ApplicationSerializer
   extend RouteBuilder
   extend Routeable
 
-  attributes :id, :title, :abstract, :action, :dates, :document_number, :effective_on, :end_page, :executive_order_notes, :executive_order_number, :presidential_document_type_id, :signing_date, :start_page, :executive_order_number, :presidential_document_number, :proclamation_number, :publication_date, :raw_text_updated_at, :toc_doc, :toc_subject, :volume
+  attributes :id, :title, :abstract, :action, :dates, :document_number,  :end_page, :executive_order_notes, :executive_order_number, :presidential_document_type_id, :start_page, :executive_order_number, :presidential_document_number, :proclamation_number, :toc_doc, :toc_subject, :volume
 
   attribute :agencies do |entry|
     entry.agency_name_assignments.map(&:agency_name).compact.map do |agency_name|
@@ -39,7 +39,7 @@ class EntrySerializer < ApplicationSerializer
   end
 
   attribute :comments_close_on do |e|
-    e.comments_close_on
+    e.comments_close_on&.to_s(:iso)
   end
 
   attribute :comment_url do |e|
@@ -162,6 +162,10 @@ class EntrySerializer < ApplicationSerializer
     entry_raw_text_url(e)
   end
 
+  attribute :raw_text_updated_at do |document|
+    document.raw_text_updated_at&.utc&.iso8601
+  end
+
   attribute :type do |entry|
     if entry.granule_class == 'SUNSHINE'
       'NOTICE'
@@ -265,7 +269,7 @@ class EntrySerializer < ApplicationSerializer
   end
 
   attribute :signing_date do |entry|
-    entry.signing_date
+    entry.signing_date&.to_s(:iso) 
   end
 
   attribute :president_id do |entry|
@@ -277,6 +281,10 @@ class EntrySerializer < ApplicationSerializer
 
       Entry.where(id: entry.id).select(sql).first&.president_id
     end
+  end
+
+  attribute :publication_date  do |document|
+    document.publication_date&.to_s(:iso) 
   end
 
   attribute :correction do |entry|
@@ -348,12 +356,16 @@ class EntrySerializer < ApplicationSerializer
       uniq
   end
 
+  attribute :effective_on do |entry|
+    entry.effective_on&.to_s(:iso) 
+  end
+
   attribute :effective_date do |entry|
-    entry.effective_date&.date
+    entry.effective_date&.date&.to_s(:iso)
   end
 
   attribute :comment_date do |entry|
-    entry.comments_close_date&.date
+    entry.comments_close_date&.date&.to_s(:iso)
   end
 
   attribute :accepting_comments_on_regulations_dot_gov do |entry|
