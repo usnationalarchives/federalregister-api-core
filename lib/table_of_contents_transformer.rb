@@ -59,13 +59,13 @@ class TableOfContentsTransformer
 
     unless agency_name
       Rails.logger.warn("Agency name in ToC but no record found: #{text.strip} for #{date}")
-      Honeybadger.notify(
-        :error_class   => "Agency name in ToC but no record found",
+      Honeybadger.notify(**{
+        :error_message   => "Agency name in ToC but no record found",
         :parameters    => {
           :agency_name => text.strip,
           :date => date
         }
-      )
+      })
     end
 
     agency_name.try(:agency)

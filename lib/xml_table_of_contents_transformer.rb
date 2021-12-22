@@ -31,7 +31,7 @@ class XmlTableOfContentsTransformer
         build_table_of_contents(contents_node)
       else
         Honeybadger.notify(
-          :error_class   => "Missing CNTNTS node in GPO XML file",
+          :error_message   => "Missing CNTNTS node in GPO XML file",
           :parameters => {
             :date => date
           }
@@ -85,7 +85,7 @@ class XmlTableOfContentsTransformer
     unless agency_name
       Rails.logger.warn("Agency name in ToC but no record found: #{text.strip} for #{date}")
       Honeybadger.notify(
-        :error_class   => "Agency name in ToC but no record found",
+        :error_message => "Agency name in ToC but no record found",
         :parameters    => {
           :agency_name => text.strip,
           :date => date
