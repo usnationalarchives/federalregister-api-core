@@ -8,8 +8,6 @@ class PublicInspectionDocumentSerializer < ApplicationSerializer
     :pdf_file_name,
     :pdf_file_size,
     :pdf_updated_at,
-    :publication_date,
-    :raw_text_updated_at,
     :special_filing,
     :subject_1,
     :subject_2,
@@ -67,6 +65,10 @@ class PublicInspectionDocumentSerializer < ApplicationSerializer
     document.pdf.url(:with_banner, false)
   end
 
+  attribute :publication_date  do |document|
+    document.publication_date&.to_s(:iso) 
+  end
+
   attribute :public_inspection_document_id do |object|
     object.id
   end
@@ -81,6 +83,10 @@ class PublicInspectionDocumentSerializer < ApplicationSerializer
 
   attribute :docket_id do |object|
     object.docket_numbers.map(&:number)
+  end
+
+  attribute :raw_text_updated_at do |document|
+    document.raw_text_updated_at&.utc&.iso8601
   end
 
   attribute :raw_text_url do |document|

@@ -221,7 +221,7 @@ describe EsPublicInspectionDocumentSearch do
         it "returns one excerpt for multiple hits on full_text" do
           document = FactoryGirl.create(
             :public_inspection_document,
-            raw_text_updated_at: Time.current
+           raw_text_updated_at: Time.current
           )
           allow(File).to receive(:file?).and_return(true)
           allow(File).to receive(:read).and_return("goats and llamas")
@@ -242,7 +242,7 @@ describe EsPublicInspectionDocumentSearch do
           pi_doc = build_pi_doc_double(
             id: document.id,
             title: "goats and llamas",
-            raw_text_updated_at: document.raw_text_updated_at
+            raw_text_updated_at: document.raw_text_updated_at.utc.iso8601
           )
           save_documents_and_refresh_index(pi_doc)
 
