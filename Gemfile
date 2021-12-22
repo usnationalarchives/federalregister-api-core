@@ -32,7 +32,7 @@ gem 'ffi-hunspell'
 gem 'honeybadger'
 gem 'sitemap_generator', '~> 1.5.0'
 
-gem 'paperclip'
+gem 'kt-paperclip'
  # required by paperclip but unspecified version - this ensures a comptible version
 gem 'mime-types', '~> 1.25', '>= 1.25.1'
 gem 'mimemagic'
