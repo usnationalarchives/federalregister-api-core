@@ -18,7 +18,7 @@ class GpoImages::FogAwsConnection
       else
         # change the object's name to be the same as the xml_identifier
         # now that we've gotten it from the published XML
-        filename = file.key.gsub(identifier, URI.encode(xml_identifier))
+        filename = file.key.gsub(identifier, Addressable::URI.encode(xml_identifier))
       end
 
       retry_count = 0
