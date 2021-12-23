@@ -23,12 +23,14 @@ RSpec.describe "Entries API", :type => :request do
     expect(json_response).to include(
       'count' => 1
     )
+
     expect(json_response.fetch('results').first).to include(
       'html_url' => "http://www.fr2.local:8081/documents/#{entry.publication_date.year}/#{sprintf('%02i',entry.publication_date.month)}/#{sprintf('%02i',entry.publication_date.day)}/#{entry.document_number}/#{entry.slug}",
       'pdf_url'  => "https://www.govinfo.gov/content/pkg/FR-#{entry.publication_date.to_s(:iso)}/pdf/#{entry.document_number}.pdf",
+      'publication_date' => entry.publication_date.to_s(:iso),
       'title'    => 'goat',
       'type'     => 'Presidential Document',
-      'excerpts' => "<span class=\"match\">goat</span>"
+      'excerpts' => "<span class=\"match\">goat</span>",
     )
   end
 
