@@ -69,26 +69,41 @@ class RegulationsDotGov::V4::Client
     JSON.parse(response.body)
   end
 
+  PAGE_SIZE = 250
+  MAX_PAGES = 10
   def find_documents_updated_within(days, document_type_identifier)
     date = (Date.current - days.days)
     time = Time.zone.local(date.year,date.month,date.day).to_s(:db)
-    response = connection.get(
-      'documents',
+    documents       = []
+    page_number     = 1
+    parsed_response = nil
+
+    default_query_params = {
       'filter[lastModifiedDate][ge]' => time, #NOTE: Reg.gov calls this parameter 'lastModifiedDate', but it only accepts timestamps.
-      'filter[documentType]'    => document_type_identifier,
-      'api_key'                 => api_key,
-      'page[size]'              => 250
-    )
+      'filter[documentType]'         => document_type_identifier,
+      'api_key'                      => api_key,
+      'page[size]'                   => PAGE_SIZE,
+      'page[number]'                 => page_number
+    }
 
-    parsed_response = JSON.parse(response.body)
+    while (page_number == 1 || parsed_response.fetch("meta").fetch("hasNextPage") )
+      response = connection.get(
+        'documents',
+        **(default_query_params.merge('page[number]' => page_number))
+      )
+      parsed_response = JSON.parse(response.body)
+      parsed_response.
+        fetch("data").
+        each {|raw_attributes| documents << RegulationsDotGov::V4::BasicDocument.new(raw_attributes) }
+      page_number += 1
 
-    if parsed_response.fetch("meta").fetch("hasNextPage")
-      Honeybadger.notify("More than 250 results were returned.  Pagination should be implemented.")
+      if page_number > MAX_PAGES
+        break
+        Honeybadger.notify("More than #{MAX_PAGES} pages of results were encountered--aborted paging through results.")
+      end
     end
 
-    parsed_response.
-      fetch("data").
-      map{|raw_attributes| RegulationsDotGov::V4::BasicDocument.new(raw_attributes) }
+    documents
   end
 
   def find_comments(args)

@@ -84,12 +84,12 @@ describe RegulationsDotGov::V4::Client do
     end
   end
 
-  it "find_documents_updated_within" do
-    pending("This appears to be working but the spec is not.")
+  it "find_documents_updated_within and handles pagination" do
     VCR.use_cassette("regulations_dot_gov_v4_documents_updated_within") do
-      result = RegulationsDotGov::V4::Client.new.find_documents_updated_within(0, 'Proposed Rule')
+      result = RegulationsDotGov::V4::Client.new.find_documents_updated_within(2, 'Notice')
 
       expect(result.map(&:class).uniq.first).to eq(RegulationsDotGov::V4::BasicDocument)
+      expect(result.count).to be > RegulationsDotGov::V4::Client::PAGE_SIZE
     end
   end
 
