@@ -14,8 +14,8 @@ class PageViewHistoricalSetUpdater
     @page_view_type = PageViewType.find(page_view_type_id)
     begin
       update_counts(
-        start_date,
-        end_date,
+        Date.parse(start_date),
+        Date.parse(end_date),
         page_view_type.historical_set,
         temp_set
       )

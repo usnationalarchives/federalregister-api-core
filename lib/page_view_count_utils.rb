@@ -15,8 +15,8 @@ module PageViewCountUtils
 
       # get counts
       response = page_views(
-        start_date: start_date,
-        end_date: end_date,
+        start_date: start_date.to_s(:iso),
+        end_date: end_date.to_s(:iso),
         per_page: PER_PAGE,
         page_token: processed_results
       )
@@ -83,8 +83,8 @@ module PageViewCountUtils
   def total_results(start_date, end_date)
     page_views(
       page_size: 1,
-      start_date: start_date,
-      end_date: end_date
+      start_date: start_date.to_s(:iso),
+      end_date: end_date.to_s(:iso)
     )["reports"].first["data"]["rowCount"].to_i
   end
   memoize :total_results
