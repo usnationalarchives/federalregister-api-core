@@ -6,7 +6,6 @@ class PublicInspectionDocumentSerializer < ApplicationSerializer
     :num_pages,
     :pdf_file_name,
     :pdf_file_size,
-    :pdf_updated_at,
     :special_filing,
     :subject_1,
     :subject_2,
@@ -63,6 +62,11 @@ class PublicInspectionDocumentSerializer < ApplicationSerializer
       issue_dates.sort.last.to_s(:iso)
     end
   end
+
+  attribute :pdf_updated_at do |document|
+    document.pdf_updated_at&.utc&.iso8601
+  end
+
   attribute :pdf_url do |document|
     document.pdf.url(:with_banner, false)
   end
