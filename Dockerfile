@@ -152,7 +152,7 @@ USER root
 ### GEMS & PASSENGER INSTALL
 ###############################
 
-RUN gem install bundler -v 1.17.3
+RUN gem install bundler -v 2.2.32
 WORKDIR /tmp
 COPY Gemfile /tmp/Gemfile
 COPY Gemfile.lock /tmp/Gemfile.lock
