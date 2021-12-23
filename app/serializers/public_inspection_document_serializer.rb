@@ -2,7 +2,6 @@ class PublicInspectionDocumentSerializer < ApplicationSerializer
   attributes :agency_ids,
     :document_number,
     :editorial_note,
-    :filed_at,
     :id,
     :num_pages,
     :pdf_file_name,
@@ -45,6 +44,9 @@ class PublicInspectionDocumentSerializer < ApplicationSerializer
   end
   attribute(:docket_numbers) do |document|
     document.docket_numbers.map(&:number)
+  end
+  attribute(:filed_at) do |document|
+    document.filed_at&.utc&.iso8601
   end
   attribute(:filing_type) do |document|
     document.special_filing ? 'special' : 'regular'
