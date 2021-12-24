@@ -1,5 +1,4 @@
 require 'spec_helper'
-require 'support/redis_spec_helper_methods'
 
 describe GpoImages::EpsImporter do
   describe "#unchanged_files_list" do
@@ -44,11 +43,9 @@ describe GpoImages::EpsImporter do
 end
 
 describe GpoImages::ImagePackage do
-  include RedisSpecHelperMethods
-  extend RedisSpecHelperMethods
 
   after :each do
-    redis.flushdb
+    $redis.flushdb
   end
 
   it ".already_converted? checks whether the redis set has a single entry" do
@@ -70,7 +67,7 @@ describe GpoImages::ImagePackage do
     image_package_1.mark_as_complete!
     image_package_2 = GpoImages::ImagePackage.new(Date.current, "7694f4a66316e53c8cdd9d9954bd611d")
     image_package_2.mark_as_complete!
-    redis.smembers("converted_image_packages:#{Date.current.to_s(:ymd)}").size.should == 2
+    $redis.smembers("converted_image_packages:#{Date.current.to_s(:ymd)}").size.should == 2
   end
 
   it ".mark gracefully fails if the redis set is already empty" do

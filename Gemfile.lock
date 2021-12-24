@@ -268,7 +268,8 @@ GEM
     mini_mime (1.1.0)
     mini_portile2 (2.5.1)
     minitest (5.15.0)
-    mock_redis (0.16.1)
+    mock_redis (0.29.0)
+      ruby2_keywords
     modularity (2.0.1)
     mono_logger (1.1.0)
     msgpack (1.3.1)
@@ -400,6 +401,7 @@ GEM
       unicode-display_width (>= 1.4.0, < 1.7)
     ruby-progressbar (1.10.1)
     ruby-rc4 (0.1.5)
+    ruby2_keywords (0.0.5)
     rubyzip (2.0.0)
     sass (3.7.4)
       sass-listen (~> 4.0.0)

@@ -4,7 +4,11 @@ REDIS_CONNECTION_SETTINGS = {
   :port => Rails.application.secrets[:redis][:port]
 }
 
-$redis = Redis.new(REDIS_CONNECTION_SETTINGS)
+if Rails.env.test?
+  $redis = MockRedis.new
+else
+  $redis = Redis.new(REDIS_CONNECTION_SETTINGS)
+end
 
 if defined?(PhusionPassenger)
   PhusionPassenger.on_event(:starting_worker_process) do |forked|
