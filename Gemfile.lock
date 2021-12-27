@@ -192,8 +192,8 @@ GEM
       fog-core
       nokogiri (>= 1.5.11, < 2.0.0)
     formatador (0.2.5)
-    formtastic (2.3.1)
-      actionpack (>= 3.0)
+    formtastic (4.0.0)
+      actionpack (>= 5.2.0)
     geokit (1.10.0)
     geokit-rails (2.3.1)
       geokit (~> 1.5)
@@ -510,7 +510,7 @@ DEPENDENCIES
   fast_jsonapi
   ffi-hunspell
   fog-aws
-  formtastic (~> 2.1)
+  formtastic
   geokit (= 1.10.0)
   geokit-rails
   googleauth
