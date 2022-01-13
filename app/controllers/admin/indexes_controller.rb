@@ -101,7 +101,7 @@ class Admin::IndexesController < AdminController
 
     Entry.transaction do
       entries.each do |entry|
-        entry.update_attributes!(entry_params.merge(:fr_index_subject => subject, :fr_index_doc => doc))
+        entry.update!(entry_params.merge(:fr_index_subject => subject, :fr_index_doc => doc))
       end
     end
 

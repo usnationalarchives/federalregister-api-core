@@ -22,7 +22,7 @@ class Admin::Issues::EntriesController < AdminController
     @publication_date = Date.parse(params[:issue_id])
     @entry = Entry.published_on(@publication_date).find_by_document_number!(params[:id])
 
-    if @entry.update_attributes(entry_params)
+    if @entry.update(entry_params)
       if params[:ajax_request]
         head :ok
       else
