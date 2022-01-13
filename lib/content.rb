@@ -63,7 +63,8 @@ module Content
   end
 
   def self.render_erb(template_path, locals = {})
-    view = ActionView::Base.new(ActionController::Base.view_paths, {})
+    lookup_context = ActionView::LookupContext.new(ActionController::Base.view_paths)
+    view = ActionView::Base.new(lookup_context, {})
 
     [
       ActionView::Helpers::UrlHelper,
