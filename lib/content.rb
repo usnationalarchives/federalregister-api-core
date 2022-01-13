@@ -100,12 +100,6 @@ module Content
       end
     end
 
-    if template_path =~ /\.erb$/
-      path = template_path
-    else
-      path = "#{template_path}.html.erb"
-    end
-
-    view.render(:file => path, :locals => locals)#, :locals => locals)
+    view.render(:template => template_path, :locals => locals)
   end
 end
