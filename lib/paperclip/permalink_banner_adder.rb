@@ -59,9 +59,13 @@ class Paperclip::PermalinkBannerAdder < Paperclip::Processor
   def generate_html(page_size)
     document_size = page_size.present? && Array(page_size)[1].to_i > 792 ? 'US-Legal': 'US-Letter'
 
-    Content.render_erb('public_inspection/_pdf_banner', {
-      document: attachment.instance,
-      document_size: document_size
-    })
+    ApplicationController.render(
+      partial: 'public_inspection/pdf_banner',
+      locals: {
+        document: attachment.instance,
+        document_size: document_size
+      },
+      formats: [:html]
+    )
   end
 end
