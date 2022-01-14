@@ -10,10 +10,13 @@ class FrIndexPdfGenerator
   private
 
   def generate_html
-    Content.render_erb "admin/indexes/year.pdf.erb",
-      :agency_years => agency_years,
-      :generated_file => generated_file,
-      :fr_index_presenter => fr_index_presenter
+    ApplicationController.render "admin/indexes/year",
+      locals: {
+        :agency_years => agency_years,
+        :generated_file => generated_file,
+        :fr_index_presenter => fr_index_presenter
+      },
+      formats: [:pdf]
   end
 
   def agency_years
