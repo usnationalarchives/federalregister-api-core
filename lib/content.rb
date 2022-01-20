@@ -62,44 +62,4 @@ module Content
     ENV['BUNDLE_GEMFILE'] = old_gemfile
   end
 
-  def self.render_erb(template_path, locals = {})
-    lookup_context = ActionView::LookupContext.new(ActionController::Base.view_paths)
-    view = ActionView::Base.new(lookup_context, {})
-
-    [
-      ActionView::Helpers::UrlHelper,
-      Rails.application.routes.url_helpers,
-      ApplicationHelper,
-      HandlebarsHelper,
-      HtmlHelper,
-      Html5Helper,
-      CitationsHelper,
-      Citations::CfrHelper,
-      RegulatoryPlanHelper,
-      RouteBuilder,
-      TextHelper
-    ].each do |mod|
-      view.extend mod
-    end
-
-    class << view.class
-      def default_url_options
-        {:host => "federalregister.gov"}
-      end
-    end
-
-    # Monkeypatching url_for to deal with this issue: https://rails.lighthouseapp.com/projects/8994/tickets/1560#ticket-1560-4
-    class << view
-      include RouteBuilder
-      def url_for_with_string_support(options)
-        if String === options
-          options
-        else
-          url_for_without_string_support(options)
-        end
-      end
-    end
-
-    view.render(:template => template_path, :locals => locals)
-  end
 end
