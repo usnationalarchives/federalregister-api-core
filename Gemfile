@@ -144,5 +144,5 @@ end
 group :development, :test do
   gem 'pry'
   gem 'pry-remote'
-  gem 'rspec-rails', '~> 3.6'
+  gem 'rspec-rails'
 end
