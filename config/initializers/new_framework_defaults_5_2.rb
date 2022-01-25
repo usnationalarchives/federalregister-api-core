@@ -28,7 +28,7 @@ Rails.application.config.active_support.use_authenticated_message_encryption = t
 # Rails.application.config.action_controller.default_protect_from_forgery = true
 
 # Use SHA-1 instead of MD5 to generate non-sensitive digests, such as the ETag header.
-Rails.application.config.active_support.use_sha1_digests = true
+Rails.application.config.active_support.hash_digest_class = ::Digest::SHA1 
 
 # Make `form_with` generate id attributes for any generated HTML tags.
 Rails.application.config.action_view.form_with_generates_ids = true
