@@ -274,9 +274,9 @@
   <div id="footer_dateline" class='left'>FEDERAL REGISTER INDEX, <%= date_description %></div>
   <div id="footer_dateline" class='right'>FEDERAL REGISTER INDEX, <%= date_description %></div>
 
-  <%= render :partial => 'admin/indexes/title_page.pdf.erb', :locals => {:date_description => date_description, :fr_index_presenter => fr_index_presenter} %>
+  <%= render :partial => 'admin/indexes/title_page', :locals => {:date_description => date_description, :fr_index_presenter => fr_index_presenter}, :formats => [:pdf] %>
 
-  <%= render :partial => 'admin/indexes/front_matter.pdf.erb', :locals => {:date_description_without_year => date_description_without_year} %>
+  <%= render :partial => 'admin/indexes/front_matter', :locals => {:date_description_without_year => date_description_without_year}, :formats => [:pdf] %>
   <% end %>
 
   <div id='index_pages'>
@@ -286,7 +286,7 @@
     </h1>
 
     <div class="index">
-      <%= render :partial => "admin/indexes/agency_year.pdf.erb", :collection => agency_years, :locals => {:generated_file => generated_file} %>
+      <%= render :partial => "admin/indexes/agency_year", :collection => agency_years, :locals => {:generated_file => generated_file}, :formats => [:pdf] %>
     </div>
   </div>
 </body>
