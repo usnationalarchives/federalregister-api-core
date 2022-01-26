@@ -28,15 +28,15 @@
       <% document_type.groupings.each do |grouping| %>
         <%= case grouping
           when FrIndexPresenter::SubjectGrouping
-            render :partial => "admin/indexes/subject_grouping.pdf.erb", :locals => {
+            render :partial => "admin/indexes/subject_grouping", :locals => {
               :subject_grouping => grouping,
               :agency => agency_year
-            }
+            }, :formats => [:pdf]
           when FrIndexPresenter::DocumentGrouping
-            render :partial => "admin/indexes/document_grouping.pdf.erb", :locals => {
+            render :partial => "admin/indexes/document_grouping", :locals => {
               :document_grouping => grouping,
               :agency => agency_year
-            }
+            }, :formats => [:pdf]
           end %>
       <% end %>
     </ul>
