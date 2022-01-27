@@ -9,7 +9,6 @@ Bundler.require(*Rails.groups)
 module FederalregisterApiCore
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
-    config.load_defaults 6.0
 
     # Configuration for the application, engines, and railties goes here.
     #
@@ -58,12 +57,12 @@ module FederalregisterApiCore
     config.time_zone = 'Eastern Time (US & Canada)'
     # config.eager_load_paths << Rails.root.join("extras")
 
+    # Configure the default encoding used in templates for Ruby 1.9.
+    config.encoding = "utf-8"
 
-        # Configure the default encoding used in templates for Ruby 1.9.
-        config.encoding = "utf-8"
+    # Enable escaping HTML in JSON.
+    config.active_support.escape_html_entities_in_json = true
 
-        # Enable escaping HTML in JSON.
-        config.active_support.escape_html_entities_in_json = true
     # Enable the asset pipeline
     config.assets.enabled = true
 
