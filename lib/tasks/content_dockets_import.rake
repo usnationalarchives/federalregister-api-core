@@ -8,7 +8,7 @@ namespace :content do
       end.join(' OR ')
 
       Entry.find_as_array(
-        ["SELECT distinct(regulations_dot_gov_docket_id)
+        ["SELECT distinct(regulations_dot_gov_docket_id), publication_date
           FROM entries
           WHERE publication_date > ?
             AND (#{participating_agencies_query})
