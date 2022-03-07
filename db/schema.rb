@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_26_230347) do
+ActiveRecord::Schema.define(version: 2022_03_07_175542) do
 
   create_table "action_names", :force => true do |t|
     t.string   "name"
@@ -551,6 +551,7 @@ ActiveRecord::Schema.define(version: 2021_07_26_230347) do
   create_table "public_inspection_postings", :id => false, :force => true do |t|
     t.integer "issue_id"
     t.integer "document_id"
+    t.index ["document_id"], name: "index_public_inspection_postings_on_document_id"
   end
 
   add_index "public_inspection_postings", ["issue_id", "document_id"], :name => "index_public_inspection_postings_on_issue_id_and_document_id"
