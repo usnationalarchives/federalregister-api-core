@@ -18,6 +18,7 @@ gem 'curb'
 gem 'http_headers', '0.0.2.3'
 gem 'geokit', '1.10.0', :require => 'geokit'
 gem 'geokit-rails'
+gem 'lograge' # Structured JSON logging
 gem 'will_paginate', :require => 'will_paginate'
 gem 'amatch', '0.2.11'
 gem 'indefinite_article'
