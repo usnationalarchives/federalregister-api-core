@@ -17,7 +17,7 @@ Rails.application.configure do
       env: Rails.env,
       referrer: controller.request.referrer,
       request_uuid: controller.request.uuid,
-      status: controller.response.status,
+      status: controller.response.status.to_s,
       user_agent: controller.request.env["HTTP_USER_AGENT"]
     }
   end
