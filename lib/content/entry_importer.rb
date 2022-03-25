@@ -101,7 +101,16 @@ module Content
           puts e.backtrace.join("\n")
           Honeybadger.notify(e)
         end
+        mark_corrected_documents_for_reindex(issue)
       end
+    end
+
+    def self.mark_corrected_documents_for_reindex(issue)
+      entry_ids = issue.
+        entries.
+        where.not(correction_of_id: nil).
+        pluck(:correction_of_id)
+      EntryChange.upsert_all(entry_ids.map{|id| {entry_id: id} })
     end
 
     def self.notify_of_missing_document(type, date, document_numbers)
