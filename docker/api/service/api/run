@@ -2,7 +2,7 @@
 cd /home/app
 
 if [ "$CONTAINER_PROCESS" = "rails" ]; then
-  exec /sbin/setuser app passenger start --port $WEB_PORT --min-instances $PASSENGER_MIN_INSTANCES --no-friendly-error-pages
+  exec /sbin/setuser app passenger start --port $WEB_PORT --min-instances $PASSENGER_MIN_INSTANCES --no-friendly-error-pages --disable-log-prefix
 elif [ "$CONTAINER_PROCESS" = "sidekiq" ]; then
   exec /sbin/setuser app bundle exec sidekiq $SIDEKIQ_OPTIONS
 fi
