@@ -1,7 +1,9 @@
 Rails.application.configure do
   config.lograge.enabled                 = true
+  config.lograge.keep_original_rails_log = true
   config.lograge.base_controller_class   = 'ActionController::Base'
   config.lograge.formatter               = Lograge::Formatters::Json.new
+  config.lograge.logger                  = ActiveSupport::Logger.new(STDOUT)
 
   config.lograge.ignore_actions = [
     'SpecialController#status',
