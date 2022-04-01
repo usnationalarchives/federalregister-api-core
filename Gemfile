@@ -79,7 +79,9 @@ gem "net-ssh"
 gem "resque"
 gem 'redis'
 gem 'rexml'
-gem 'sidekiq', '~> 5.2.9'
+source "https://gems.contribsys.com/" do
+  gem 'sidekiq-pro'
+end
 gem "sidekiq-throttled"
 
 gem "httparty"
