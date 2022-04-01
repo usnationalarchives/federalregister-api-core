@@ -2,6 +2,7 @@ redis_url = "redis://#{Rails.application.secrets[:redis][:host]}:#{Rails.applica
 
 Sidekiq.configure_server do |config|
   config.redis = { url: redis_url }
+  config.log_formatter = Sidekiq::Logger::Formatters::JSON.new
 end
 
 Sidekiq.configure_client do |config|
