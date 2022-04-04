@@ -110,7 +110,9 @@ module Content
         entries.
         where.not(correction_of_id: nil).
         pluck(:correction_of_id)
-      EntryChange.upsert_all(entry_ids.map{|id| {entry_id: id} })
+      if entry_ids.present?
+        EntryChange.upsert_all(entry_ids.map{|id| {entry_id: id} })
+      end
     end
 
     def self.notify_of_missing_document(type, date, document_numbers)
