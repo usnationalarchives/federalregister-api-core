@@ -77,7 +77,7 @@ gem "net-scp"
 gem "net-ssh"
 
 gem "resque"
-gem 'redis'
+gem "redis", "~> 4.5.1" # (4.6 requires unreleased Sidekiq 6.4.1 to avoid pipelining deprecation warnings)
 gem 'rexml'
 source "https://gems.contribsys.com/" do
   gem 'sidekiq-pro'

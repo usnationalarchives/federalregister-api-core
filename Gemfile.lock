@@ -367,7 +367,7 @@ GEM
       ffi (~> 1.0)
     rdoc (6.2.0)
     recaptcha (0.3.1)
-    redis (4.6.0)
+    redis (4.5.1)
     redis-namespace (1.6.0)
       redis (>= 3.0.4)
     redis-prescription (1.0.0)
@@ -556,7 +556,7 @@ DEPENDENCIES
   ransack
   rdoc
   recaptcha (= 0.3.1)
-  redis
+  redis (~> 4.5.1)
   resque
   rexml
   rinku
