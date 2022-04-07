@@ -114,7 +114,18 @@ class PublicInspectionDocumentRepository < BaseRepository
         }
       }
     }
-    indexes :docket_id, { type: 'text', index_options: 'offsets'}
+    indexes :docket_id, {
+      type:        'text',
+      analyzer:    'custom_english',
+      term_vector: 'with_positions_offsets',
+      fields: {
+        exact: {
+          type:        'text',
+          analyzer:    'standard',
+          term_vector: 'with_positions_offsets'
+        }
+      }
+    }
     indexes :document_number, { type: 'keyword' }
     indexes :indexed_at, {type: 'date'}
     indexes :public_inspection_document_id, { type: 'integer' }
