@@ -10,7 +10,7 @@ cron_settings = YAML::load(
   ).result
 )[ENV['RAILS_ENV']]['cron']
 
-set :output, lambda { "2>&1 | sed \"s/^/[$(date)] /\" >> #{path}/log/#{log}.log" }
+set :output, lambda { "2>&1 | sed \"s/^/[$(date)] /\" | tee -a #{path}/log/#{log}.log | logger -t #{log}" }
 
 # load container environment
 job_type :rake, [
