@@ -126,7 +126,9 @@ COPY docker/api/service /etc/service
 RUN addgroup --gid 1000 app &&\
   adduser app -uid 1000 --gid 1000 --system &&\
   usermod -a -G docker_env app &&\
-  usermod -a -G crontab app
+  usermod -a -G crontab app &&\
+  # Add app user to teletypewriter group so passenger can log to stdout
+  usermod -a -G tty app
 
 RUN chown -R app /usr/lib/fullstaq-ruby
 
