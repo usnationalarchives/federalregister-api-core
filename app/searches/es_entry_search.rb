@@ -521,6 +521,10 @@ class EsEntrySearch < EsApplicationSearch
         {executive_order_number: {order: "asc"}},
         {_score: {order: "desc"}}
       ]
+    when 'id'
+      [
+        {id: {order: "asc"}},
+      ]
     else
       [
         {_score: {order: "desc"}},
