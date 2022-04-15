@@ -4,7 +4,7 @@ class GraphicStyle < ApplicationModel
   def self.recalculate_all!
     GraphicStyle.delete_all
     GpoGraphic.find_each do |gpo_graphic|
-      gpo_graphic.update_graphic_styles
+      GraphicStyleUpdater.perform_async(gpo_graphic.id)
     end
   end
 
