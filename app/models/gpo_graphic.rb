@@ -175,7 +175,7 @@ class GpoGraphic < ActiveRecord::Base
     # A bug with ImageMagick 6.9.7-4 prevents `Geometry.from_file(url)`, hence the need for a manual tempfile.  See commit notes.
     temp_file = Tempfile.new
     temp_file.binmode
-    temp_file << open(url).read
+    temp_file << URI.open(url).read
     temp_file.close
 
     Paperclip::Geometry.from_file(temp_file.path)
