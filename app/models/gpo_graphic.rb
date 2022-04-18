@@ -127,18 +127,16 @@ class GpoGraphic < ActiveRecord::Base
     graphic_styles = []
     paperclip_styles.merge(original_style).each do |style_name, attributes|
       begin
-        geometry = paperclip_geometry(style_name)
+        image_metadata = get_image_metadata(style_name)
       rescue OpenURI::HTTPError #i.e. skip generating a graphic style if image url is not valid
         puts "#{style_name} style for #{identifier} does not exist."
         next
       end
-      graphic_styles << GraphicStyle.new(
+      graphic_styles << GraphicStyle.new({
         image_identifier: self.identifier.downcase,
         image_format:     attributes.fetch(:format),
         style_name:       style_name,
-        height:           geometry.height,
-        width:            geometry.width
-      )
+      }.merge(image_metadata))
     end
 
     self.graphic_styles = graphic_styles
@@ -164,7 +162,7 @@ class GpoGraphic < ActiveRecord::Base
   end
 
   EXPIRATION_TIME = 60
-  def paperclip_geometry(style_name)
+  def get_image_metadata(style_name)
     if public?
       url = graphic.url(style_name)
     else
@@ -175,10 +173,18 @@ class GpoGraphic < ActiveRecord::Base
     # A bug with ImageMagick 6.9.7-4 prevents `Geometry.from_file(url)`, hence the need for a manual tempfile.  See commit notes.
     temp_file = Tempfile.new
     temp_file.binmode
-    temp_file << URI.open(url).read
+
+    url_contents = URI.open(url).read
+    digest = Digest::SHA256.hexdigest(url_contents)
+    temp_file << url_contents
     temp_file.close
 
-    Paperclip::Geometry.from_file(temp_file.path)
+    geometry = Paperclip::Geometry.from_file(temp_file.path)
+    {
+      digest: digest,
+      height: geometry.height,
+      width:  geometry.width,
+    }
   end
 
 end

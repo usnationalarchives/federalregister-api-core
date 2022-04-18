@@ -1,7 +1,6 @@
 class Api::V1::ImagesController < ApiController
 
   def show
-    cache_for 1.day
     graphic_styles = GraphicStyle.
       includes(styleable: :gpo_graphic_usages).
       where(image_identifier: params[:id].try(:downcase))
@@ -16,11 +15,16 @@ class Api::V1::ImagesController < ApiController
   private
 
   def image_json(graphic_styles)
+    gpo_graphic = graphic_styles.first.styleable
+    image_source = gpo_graphic.sourced_via_ecfr_dot_gov ? "Retired ECFR.gov" : "GPO SFTP"
+
     graphic_styles.each_with_object(Hash.new) do |graphic_style, hsh|
       hsh[graphic_style.style_name] = {
-        url:    graphic_style.url,
         height: graphic_style.height,
-        width:  graphic_style.width
+        image_format: graphic_style.image_format,
+        image_source: image_source,
+        url:    graphic_style.url,
+        width:  graphic_style.width,
       }
     end
   end

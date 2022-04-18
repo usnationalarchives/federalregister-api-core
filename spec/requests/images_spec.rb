@@ -5,6 +5,7 @@ RSpec.describe "Images Endpoint", :type => :request do
 
   it "renders available styles" do
     allow_any_instance_of(GraphicStyle).to receive(:public?).and_return('truthy')
+    GpoGraphic.create!(id: 9999, identifier: 'ep13oc15.011')
     GraphicStyle.create!(
       graphic_id: 9999,
       graphic_type: 'GpoGraphic',
@@ -37,18 +38,24 @@ RSpec.describe "Images Endpoint", :type => :request do
     expect(response.status).to eq(200)
     expect(response.body).to eq({
       "medium": {
-        url: "http://wwww.example.com",
         height: 126,
+        image_format: "png",
+        image_source: "GPO SFTP",
+        url: "http://wwww.example.com",
         width: 572,
       },
       "original_png": {
-        url: "http://wwww.example.com",
         height: 363,
+        image_format: "png",
+        image_source: "GPO SFTP",
+        url: "http://wwww.example.com",
         width: 1649,
       },
       "original": {
-        url: "http://wwww.example.com",
         height: 363,
+        image_format: "eps",
+        image_source: "GPO SFTP",
+        url: "http://wwww.example.com",
         width: 1649,
       }
     }.to_json)

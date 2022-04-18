@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_03_07_175542) do
+ActiveRecord::Schema.define(version: 2022_04_18_232046) do
 
   create_table "action_names", :force => true do |t|
     t.string   "name"
@@ -396,6 +396,7 @@ ActiveRecord::Schema.define(version: 2022_03_07_175542) do
     t.string "style_name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "digest"
     t.index ["graphic_id"], name: "index_graphic_styles_on_graphic_id"
   end
 
