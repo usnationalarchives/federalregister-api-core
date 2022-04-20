@@ -127,6 +127,7 @@ class ApiController < ApplicationController
     data
   end
 
+  DOCUMENT_PER_PAGE_LIMIT = 250
   def document_number_based_search_result(model, find_options, document_numbers, publication_date)
     if active_record_based_retrieval?(model.always_render_document_number_search_results_via_active_record?)
       conditions = {document_number: document_numbers}.tap do |hsh|
@@ -143,7 +144,7 @@ class ApiController < ApplicationController
         select(combined_options.fetch(:select)).
         where(combined_options.fetch(:conditions))
     else
-      conditions = {document_numbers: document_numbers}.tap do |hsh|
+      conditions = {document_numbers: document_numbers, per_page: DOCUMENT_PER_PAGE_LIMIT}.tap do |hsh|
         if publication_date
           hsh.merge!(publication_date: {is: publication_date})
         end
