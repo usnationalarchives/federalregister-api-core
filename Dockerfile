@@ -44,8 +44,7 @@ RUN apt-get update &&\
 ### COMPILE/INSTALL QPDF
 ##################
 WORKDIR /usr/local
-# qpdf commit: #8971443e4680fc1c0babe56da58cc9070a9dae2e
-RUN git clone https://github.com/qpdf/qpdf
+RUN git clone -b 10.6 --single-branch https://github.com/qpdf/qpdf
 WORKDIR /usr/local/qpdf
 RUN ./configure && make && make install
   # export LD_LIBRARY_PATH=/usr/local/lib
