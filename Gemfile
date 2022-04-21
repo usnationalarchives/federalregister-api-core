@@ -12,6 +12,7 @@ gem 'mysql2'
 
 # production app server
 gem 'passenger', '~> 6.0'
+gem 'carrierwave', '2.2.2'
 gem 'nokogiri'
 gem 'batch-loader' # Minimizes N+1 queries when serializing for ES
 gem 'curb'
@@ -105,8 +106,6 @@ gem 'app_config', "=1.3.2",
   :branch => :master
 
 gem 'googleauth'
-# lock googleauth dependency to compatible version
-gem 'addressable', '2.4.0'
 
 gem 'memoist'
 
