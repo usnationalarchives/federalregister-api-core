@@ -74,51 +74,56 @@ class EntryApiRepresentation < ApiRepresentation
   field(:executive_order_number, :select => [:presidential_document_number, :presidential_document_type_id] ) {|e| e.executive_order_number }
   field(:full_text_xml_url, :select => [:publication_date, :document_file_path, :document_number, :full_xml_updated_at]){|e| entry_xml_url(e) if e.should_have_full_xml?}
   field(:html_url, :select => [:publication_date, :document_number, :title]){|e| entry_url(e)}
-  field(:images, :select => [:document_number], :include => [:extracted_graphics, :gpo_graphic_usages]) do |entry|
-    extracted_graphics = entry.extracted_graphics
-    gpo_graphics = entry.processed_gpo_graphics
+  if SETTINGS['feature_flags']['use_carrierwave_images_in_api']
+    field(:images, :select => [:document_number], :include => [:images, :image_usages]) do |entry|
+      entry.
+      images.
+        where.not(made_public_at: nil).
+        includes(:image_variants).
+        select{|x| x.image_variants.present?}. #ie only display an image key if variants available
+        each_with_object(Hash.new) do |image, hsh|
+          hsh[image.identifier] = image.image_variants.each_with_object(Hash.new) do |image_variant, styles_hsh|
+            styles_hsh[image_variant.style] = "https://#{image_variant.image.url}"
+          end
+        end
+    end
+  else
+    field(:images, :select => [:document_number], :include => [:extracted_graphics, :gpo_graphic_usages]) do |entry|
+      extracted_graphics = entry.extracted_graphics
+      gpo_graphics = entry.processed_gpo_graphics
 
-    # we have two types of graphics possible, gpo_graphics being the newest
-    graphics = extracted_graphics.present? ? extracted_graphics : gpo_graphics
+      # we have two types of graphics possible, gpo_graphics being the newest
+      graphics = extracted_graphics.present? ? extracted_graphics : gpo_graphics
 
-    if graphics.present?
-      graphics.inject({}) do |hsh, graphic|
-        # gpo graphics must have an xml identifier or else we don't want to expose them via the API
-        if graphic.class == GpoGraphic && graphic.xml_identifier.blank?
-          hsh
-        elsif SETTINGS['feature_flags']['use_graphic_styles_table_in_entry_api'] && graphic.class == GpoGraphic
-          image_urls = graphic.
-            graphic_styles.
-            where(image_format: 'png').
-            each_with_object(Hash.new) do |graphic_style, hsh|
-              hsh[graphic_style.entry_api_representation_style_name] = graphic_style.url
-            end
+      if graphics.present?
+        graphics.inject({}) do |hsh, graphic|
+          # gpo graphics must have an xml identifier or else we don't want to expose them via the API
+          if graphic.class == GpoGraphic && graphic.xml_identifier.blank?
+            hsh
+          else
+            identifier = graphic.class == GpoGraphic ? graphic.xml_identifier : graphic.identifier
 
-          hsh[graphic.xml_identifier] = image_urls
-          hsh
-        else
-          identifier = graphic.class == GpoGraphic ? graphic.xml_identifier : graphic.identifier
+            hsh[identifier] = graphic.graphic.styles.inject({}) do |hsh, style|
+              type, paperclip_style = style
+              # expose the :original_png style as simply :original
+              renamed_type = type == :original_png ? :original : type
 
-          hsh[identifier] = graphic.graphic.styles.inject({}) do |hsh, style|
-            type, paperclip_style = style
-            # expose the :original_png style as simply :original
-            renamed_type = type == :original_png ? :original : type
-
-            url = paperclip_style.attachment.send(:url, type).tap do |url|
-              if GRAPHIC_CONTENT_TYPES_FOR_COERCION.include? graphic.graphic_content_type
-                url = url.gsub!(/\.png/,'.gif')
+              url = paperclip_style.attachment.send(:url, type).tap do |url|
+                if GRAPHIC_CONTENT_TYPES_FOR_COERCION.include? graphic.graphic_content_type
+                  url = url.gsub!(/\.png/,'.gif')
+                end
               end
+
+              hsh[renamed_type] = url
+              hsh
             end
 
-            hsh[renamed_type] = url
             hsh
           end
-
-          hsh
         end
+      else
+        {}
       end
-    else
-      {}
     end
   end
   field(:json_url, :select => [:document_number, :publication_date]) do |e|

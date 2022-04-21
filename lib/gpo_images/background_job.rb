@@ -22,12 +22,14 @@ module GpoImages
       gpo_graphic, gpo_graphic_package = find_or_create_gpo_graphic
 
       if gpo_graphic.save
+
         if gpo_graphic_package
           gpo_graphic_package.touch
         end
         if gpo_graphic.gpo_graphic_usages.present? || gpo_graphic.sourced_via_ecfr_dot_gov
           gpo_graphic.move_to_public_bucket
         end
+        GpoGraphicMigrator.perform_async(gpo_graphic.identifier, Time.current.to_s(:iso))
         remove_from_redis_key
         remove_local_image
 

@@ -2,15 +2,15 @@
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
 #
-# This file is the source Rails uses to define your schema when running `rails
-# db:schema:load`. When creating a new database, `rails db:schema:load` tends to
+# This file is the source Rails uses to define your schema when running `bin/rails
+# db:schema:load`. When creating a new database, `bin/rails db:schema:load` tends to
 # be faster and is potentially less error prone than running all of your
 # migrations from scratch. Old migrations may fail to apply correctly if those
 # migrations use external dependencies or application code.
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_04_18_232046) do
+ActiveRecord::Schema.define(version: 2022_04_29_182441) do
 
   create_table "action_names", :force => true do |t|
     t.string   "name"
@@ -417,10 +417,45 @@ ActiveRecord::Schema.define(version: 2022_04_18_232046) do
     t.datetime "graphic_updated_at"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "inverted"
   end
 
-  add_index "graphics", ["identifier"], :name => "index_graphics_on_identifier", :unique => true
+  create_table "image_usages", charset: "utf8", force: :cascade do |t|
+    t.string "identifier"
+    t.string "document_number"
+    t.string "xml_identifier"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["document_number", "identifier"], name: "index_image_usages_on_document_number_and_identifier", unique: true
+  end
+
+  create_table "image_variants", charset: "utf8", force: :cascade do |t|
+    t.string "identifier"
+    t.string "style"
+    t.string "image_file_name"
+    t.integer "image_height"
+    t.string "image_sha"
+    t.integer "image_size"
+    t.integer "image_width"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.string "image_content_type"
+    t.index ["identifier", "style"], name: "index_image_variants_on_identifier_and_style", unique: true
+  end
+
+  create_table "images", charset: "utf8", force: :cascade do |t|
+    t.string "identifier"
+    t.string "image_file_name"
+    t.integer "image_height"
+    t.string "image_sha"
+    t.integer "image_size"
+    t.integer "image_width"
+    t.datetime "made_public_at"
+    t.integer "source_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.string "image_content_type"
+    t.index ["identifier"], name: "index_images_on_identifier", unique: true
+  end
 
   create_table "issue_approvals", :force => true do |t|
     t.date     "publication_date"

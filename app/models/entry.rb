@@ -82,6 +82,11 @@ class Entry < ApplicationModel
     :primary_key => :document_number
   has_many :gpo_graphics,
            :through => :gpo_graphic_usages
+  has_many :image_usages,
+           :foreign_key => :document_number,
+           :primary_key => :document_number
+  has_many :images,
+           :through => :image_usages
 
   acts_as_mappable :through => :places
 
@@ -149,6 +154,7 @@ class Entry < ApplicationModel
     docket: [:docket_documents],
     entry_regulation_id_numbers: [:current_regulatory_plan],
     gpo_graphics: [:gpo_graphic_usages],
+    images: [:image_usages],
   ) }
 
   def self.published_today

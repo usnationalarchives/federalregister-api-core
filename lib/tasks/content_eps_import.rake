@@ -1,4 +1,46 @@
 namespace :content do
+
+  namespace :images do
+    desc "Lock-safe version of import_eps task"
+    task :lock_safe_import_eps => :environment do
+      Content::ImportDriver::EpsImportDriver.new.perform
+    end
+
+    desc "Download images from SFTP and save them to the image holding tank"
+    task :import_eps => :environment do
+      ImagePipeline::SftpDownloader.new.perform
+    end
+
+    desc "Migrate gpo_graphics table to images table"
+    task :migrate_gpo_graphics => :environment do
+      GpoGraphic.
+        find_each do |graphic|
+          GpoGraphicMigrator.perform_async(graphic.identifier)
+        end
+    end
+
+    desc "Migrate historical (pre ~2015) graphics table to images table"
+    task :migrate_historical_graphics => :environment do
+      Graphic.
+        find_each do |graphic|
+          GraphicMigrator.perform_async(graphic.id)
+        end
+    end
+
+    desc "Create image usages"
+    task :import_image_usages => :environment do
+      Entry.
+        where("publication_date >= '2000-01-01'").
+        order(publication_date: :desc).
+        select(:id,:publication_date).
+        distinct.
+        find_each do |entry|
+          DailyIssueImageUsageBuilder.perform_async(entry.publication_date.to_s(:iso))
+        end
+    end
+
+  end
+
   namespace :gpo_images do
 
     desc "Import images from the GPO FTP drive"
@@ -42,6 +84,7 @@ namespace :content do
         begin
           puts "linking GPO images for #{date}"
           GpoImages::DailyIssueImageProcessor.perform(date)
+          DailyIssueImageUsageBuilder.new.perform(date)
         rescue StandardError => e
           puts e.message
           puts e.backtrace.join("\n")

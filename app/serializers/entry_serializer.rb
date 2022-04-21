@@ -87,43 +87,56 @@ class EntrySerializer < ApplicationSerializer
   end
 
   attribute :images do |entry|
-    extracted_graphics = entry.extracted_graphics
-
-    # we have two types of graphics possible, gpo_graphics being the newest
-    if extracted_graphics.present?
-      graphics = extracted_graphics
+    if SETTINGS['feature_flags']['use_carrierwave_images_in_api']
+      entry.
+      images.
+        where.not(made_public_at: nil).
+        includes(:image_variants).
+        select{|x| x.image_variants.present?}. #ie only display an image key if variants available
+        each_with_object(Hash.new) do |image, hsh|
+          hsh[image.identifier] = image.image_variants.each_with_object(Hash.new) do |image_variant, styles_hsh|
+            styles_hsh[image_variant.style] = "https://#{image_variant.image.url}"
+          end
+        end
     else
-      graphics = entry.processed_gpo_graphics
-    end
+      extracted_graphics = entry.extracted_graphics
 
-    if graphics.present?
-      graphics.inject({}) do |hsh, graphic|
-        # gpo graphics must have an xml identifier or else we don't want to expose them via the API
-        if graphic.class == GpoGraphic && graphic.xml_identifier.blank?
-          hsh
-        else
-          identifier = graphic.class == GpoGraphic ? graphic.xml_identifier : graphic.identifier
+      # we have two types of graphics possible, gpo_graphics being the newest
+      if extracted_graphics.present?
+        graphics = extracted_graphics
+      else
+        graphics = entry.processed_gpo_graphics
+      end
 
-          hsh[identifier] = graphic.graphic.styles.inject({}) do |hsh, style|
-            type, paperclip_style = style
-            # expose the :original_png style as simply :original
-            renamed_type = type == :original_png ? :original : type
+      if graphics.present?
+        graphics.inject({}) do |hsh, graphic|
+          # gpo graphics must have an xml identifier or else we don't want to expose them via the API
+          if graphic.class == GpoGraphic && graphic.xml_identifier.blank?
+            hsh
+          else
+            identifier = graphic.class == GpoGraphic ? graphic.xml_identifier : graphic.identifier
 
-            url = paperclip_style.attachment.send(:url, type).tap do |url|
-              if EntryApiRepresentation::GRAPHIC_CONTENT_TYPES_FOR_COERCION.include? graphic.graphic_content_type
-                url = url.gsub!(/\.png/,'.gif')
+            hsh[identifier] = graphic.graphic.styles.inject({}) do |hsh, style|
+              type, paperclip_style = style
+              # expose the :original_png style as simply :original
+              renamed_type = type == :original_png ? :original : type
+
+              url = paperclip_style.attachment.send(:url, type).tap do |url|
+                if EntryApiRepresentation::GRAPHIC_CONTENT_TYPES_FOR_COERCION.include? graphic.graphic_content_type
+                  url = url.gsub!(/\.png/,'.gif')
+                end
               end
+
+              hsh[renamed_type] = url
+              hsh
             end
 
-            hsh[renamed_type] = url
             hsh
           end
-
-          hsh
         end
+      else
+        {}
       end
-    else
-      {}
     end
   end
 

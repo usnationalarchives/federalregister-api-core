@@ -15,7 +15,10 @@ shared: &shared
     entry_index_shards: <%= ENV.fetch('ENTRY_INDEX_SHARDS', 1) %>
     public_inspection_document_index_shards: <%= ENV.fetch('PUBLIC_INSPECTION_DOCUMENT_INDEX_SHARDS', 1) %>
   feature_flags:
-    use_graphic_styles_table_in_entry_api: <%= ActiveModel::Type::Boolean.new.cast(ENV.fetch('USE_GRAPHIC_STYLES_TABLE_IN_ENTRY_API', false)) %>
+    streamlined_image_pipeline: <%= ActiveModel::Type::Boolean.new.cast(ENV['STREAMLINED_IMAGE_PIPELINE']) || false %>
+    use_carrierwave_images_in_api: <%= ActiveModel::Type::Boolean.new.cast(ENV['USE_CARRIERWAVE_IMAGES_IN_API']) || false %>
+  images:
+    store_in_filesystem: true
   varnish:
     host: <%= ENV["VARNISH_ADDR"] || 'varnish' %>
     port: 6082
@@ -32,6 +35,8 @@ shared: &shared
       import_eps: <%= ActiveModel::Type::Boolean.new.cast(ENV.fetch('GPO_IMAGES_IMPORT_EPS', true)) %>
       convert_eps: <%= ActiveModel::Type::Boolean.new.cast(ENV.fetch('GPO_IMAGES_CONVERT_EPS', true)) %>
       reprocess_unlinked_gpo_images: <%= ActiveModel::Type::Boolean.new.cast(ENV.fetch('REPROCESS_UNLINKED_GPO_IMAGES', false)) %>
+    images:
+      auto_generate_image_variants: <%= ActiveModel::Type::Boolean.new.cast(ENV.fetch('AUTO_GENERATE_IMAGE_VARIANTS', false)) %>
     import: true
     late_content_notifications: <%= ActiveModel::Type::Boolean.new.cast(ENV.fetch('LATE_CONTENT_NOTIFICATIONS', true)) %>
     public_inspection: <%= ActiveModel::Type::Boolean.new.cast(ENV.fetch('CRON_PUBLIC_INSPECTION', true)) %>
@@ -66,6 +71,9 @@ test:
     trace: false
     entry_index_shards: <%= ENV.fetch('ENTRY_INDEX_SHARDS', 1) %>
     public_inspection_document_index_shards: <%= ENV.fetch('PUBLIC_INSPECTION_DOCUMENT_INDEX_SHARDS', 1) %>
+  images:
+    auto_generate_image_variants: true
+    store_in_filesystem: true
   s3_buckets:
     public_inspection: public-inspection.example.org
     zipped_eps_images: XXXXXXXXXXXXXXXXXXXXXXX
@@ -83,6 +91,10 @@ development:
     entry_index_shards: <%= ENV.fetch('ENTRY_INDEX_SHARDS', 1) %>
     pil_index_since_date: '2019-04-08'
     public_inspection_document_index_shards: <%= ENV.fetch('PUBLIC_INSPECTION_DOCUMENT_INDEX_SHARDS', 1) %>
+  feature_flags:
+    use_carrierwave_images_in_api: true
+  images:
+    store_in_filesystem: false
   s3_buckets:
     zipped_eps_images: eps.images.fr2.local
     private_images: private.images.fr2.local
@@ -110,8 +122,13 @@ staging:
   <<: *shared
   app:
     canonical_url: "https://fr2.criticaljuncture.org"
+  images:
+    store_in_filesystem: false
   s3_buckets:
+    image_holding_tank: image-holding-tank.federalregister.gov
+    image_variants: img.fr2.criticaljuncture.org
     zipped_eps_images: eps.images.federalregister.gov
+    original_images: img-orig.fr2.criticaljuncture.org
     private_images: private.images.fr2.criticaljuncture.org
     public_images: images.fr2.criticaljuncture.org
     lede_photos: lede-photos.fr2.criticaljuncture.org
@@ -120,6 +137,7 @@ staging:
   ofr_flickr_group_id: 1058319@N21
   s3_host_aliases:
     agency_logos: agency-logos.fr2.criticaljuncture.org
+    image_variants: img.fr2.criticaljuncture.org
     public_images: images.fr2.criticaljuncture.org
     lede_photos: lede-photos.fr2.criticaljuncture.org
     private_images: s3.amazonaws.com
@@ -128,8 +146,13 @@ staging:
 
 production:
   <<: *shared
+  images:
+    store_in_filesystem: false
   s3_buckets:
+    image_holding_tank: image-holding-tank.federalregister.gov
+    image_variants: img.federalregister.gov
     zipped_eps_images: eps.images.federalregister.gov
+    original_images: img-orig.federalregister.gov
     private_images: private.images.federalregister.gov
     public_images: images.federalregister.gov
     lede_photos: lede-photos.federalregister.gov
@@ -137,6 +160,7 @@ production:
     public_inspection: public-inspection.federalregister.gov
   s3_host_aliases:
     agency_logos: agency-logos.federalregister.gov
+    image_variants: img.federalregister.gov
     public_images: images.federalregister.gov
     lede_photos: lede-photos.federalregister.gov
     private_images: s3.amazonaws.com
