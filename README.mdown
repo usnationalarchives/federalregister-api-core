@@ -5,44 +5,12 @@ The Federal Register at your fingertips.
  
 https://www.federalregister.gov/
 
-* The source code is available on Github at [http://github.com/criticaljuncture/fr2](http://github.com/criticaljuncture/fr2).
-* Problems, suggestions, etc can also be filed at Tender, via [http://federalregister.tenderapp.com/discussions](http://federalregister.tenderapp.com/discussions)
-
 About
 ------------
 
 The FR 2.0 web site is similar to a daily web newspaper, with a clear layout and new tools to guide readers to the most popular topics and relevant documents. The site displays individual news sections for Money, Environment, World, Science & Technology, Business & Industry, and Health & Public Welfare. FR 2.0 has greatly improved navigation and search tools and highlights each agency's significant rules. The new web site takes advantage of social media and integrates seamlessly with Regulations.gov and the Unified Agenda to make it easy for users to submit comments directly into the official e-Rulemaking docket, and view the history of rulemaking activity through a regulatory timeline.
 
 The site was built by David Augustine, Bob Burbach, and Andrew Carpenter of Critical Juncture, using the GovPulse application as a starting point. It is released as an open source project.
-
-Installation
-------------
-
-First, you'll need Ruby, Bundler, Rails 2.3.x, the Sphinx search engine, MySQL, and the ruby MySQL bindings.
-
-    git clone git://github.com/criticaljuncture/fr2.git
-    cd fr2
-    git submodule update --init
-
-Then you'll need to create the following files based on the examples:
-* config/database.yml
-* config/secrets.yml
-
-Then:
-
-    bundle install
-    rake db:create
-    rake db:migrate
-
-To fetch data, you'll need to run
-
-    rake data:daily DATE=2010-07-26
-
-To start up the application, simply run
-
-   script/server
-
-Contact us at fr2@criticaljuncture.org if you run into any trouble; we'll revise these instructions as necessary to make it easier.
 
 License
 -------
