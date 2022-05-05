@@ -227,7 +227,7 @@ ActiveRecord::Schema.define(version: 2022_03_07_175542) do
     t.string "regulations_dot_gov_docket_id"
     t.text "executive_order_notes"
     t.string "fr_index_subject"
-    t.string "fr_index_doc"
+    t.string "fr_index_doc", limit: 1023
     t.integer "issue_number"
     t.string "comment_url_override"
     t.string "presidential_document_number"
