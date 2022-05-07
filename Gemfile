@@ -133,6 +133,8 @@ group :test do
   gem 'mock_redis'
   gem 'vcr'
   gem 'webmock'
+  gem 'spring'
+  gem 'spring-commands-rspec'
 end
 
 group :development do
