@@ -41,7 +41,6 @@ class GpoGraphic < ActiveRecord::Base
                     :url => ':s3_alias_url',
                     :styles => -> (file) { file.instance.paperclip_styles }
   do_not_validate_attachment_file_type :graphic
-  after_post_process :update_graphic_styles
 
   Paperclip.interpolates(:xml_identifier) do |attachment, style|
     if attachment.instance.gpo_graphic_usages.present?
