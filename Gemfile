@@ -106,6 +106,8 @@ gem 'app_config', "=1.3.2",
   :branch => :master
 
 gem 'googleauth'
+# lock googleauth dependency to compatible version
+gem 'addressable', '2.6.0'
 
 gem 'memoist'
 

@@ -92,8 +92,8 @@ GEM
       zeitwerk (~> 2.3)
     acts_as_list (1.0.0)
       activerecord (>= 4.2)
-    addressable (2.8.0)
-      public_suffix (>= 2.0.2, < 5.0)
+    addressable (2.6.0)
+      public_suffix (>= 2.0.2, < 4.0)
     amatch (0.2.11)
       tins (~> 0.3)
     amazon-ec2 (0.9.15)
@@ -337,7 +337,7 @@ GEM
     pry-remote (0.1.8)
       pry (~> 0.9)
       slop (~> 3.0)
-    public_suffix (4.0.7)
+    public_suffix (3.1.1)
     racc (1.6.0)
     rack (2.2.3)
     rack-test (1.1.0)
@@ -514,6 +514,7 @@ PLATFORMS
 DEPENDENCIES
   active_hash!
   acts_as_list
+  addressable (= 2.6.0)
   amatch (= 0.2.11)
   amazon-ec2
   american_date
