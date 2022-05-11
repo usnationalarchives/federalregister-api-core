@@ -17,6 +17,7 @@ class EntryReimporter
 
     Content::EntryImporter.process_all_by_date(date, *args)
     GpoImages::DailyIssueImageProcessor.perform(date)
+    DailyIssueImageUsageBuilder.new.perform(date)
     Content::TableOfContentsCompiler.perform(date)
 
     Sidekiq::Client.push(
