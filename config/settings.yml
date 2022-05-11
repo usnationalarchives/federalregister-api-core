@@ -96,6 +96,7 @@ development:
   images:
     store_in_filesystem: false
   s3_buckets:
+    image_holding_tank: image-holding-tank.federalregister.gov
     zipped_eps_images: eps.images.fr2.local
     private_images: private.images.fr2.local
     public_images: images.fr2.local

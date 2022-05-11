@@ -1,0 +1,88 @@
+# This job downloads EPS files from the image holding tank, saves the original EPS image to a long-lived S3 bucket and generates the image variants, saving them to S3 as well.
+class ImagePipeline::EnvironmentImageDownloader
+  extend Memoist
+  include Sidekiq::Worker
+  include GpoImages::ImageIdentifierNormalizer
+
+  sidekiq_options :queue => :gpo_image_import, :retry => 0
+
+  def perform(s3_key)
+    @s3_key = s3_key
+    @connection = GpoImages::FogAwsConnection.new.connection
+    if already_downloaded? #|| s3_file_already_exists?# || db_record exists?
+      return
+    end
+
+    begin
+      response = connection.get_object(image_holding_tank_s3_bucket, s3_key)
+      temp_file = File.new(s3_key, "w")
+      temp_file.binmode
+      temp_file.puts(response.body)
+      temp_file.rewind
+      
+      # Save image to S3
+      image = Image.find_or_initialize_by(
+        identifier: normalize_image_identifier(s3_key),
+      )
+      image.assign_attributes(
+        image:      temp_file,
+        source_id:  ImageSource::GPO_SFTP.id
+      )
+      image.image.fog_public = false
+      image.save!
+    rescue Excon::Error::NotFound => e
+      raise "Object not found on S3: #{} #{s3_key}" #DOC: Improve error message here
+    ensure
+      if File.exists? temp_file.path
+        File.delete(temp_file.path) 
+      end
+    end
+
+    # Update S3 object tags
+    s3_tags = get_s3_tags
+    # There is a possible race condition here--eg PROD fetches tags, staging updates tags to indicate it's downloaded the file, and then PROD updates tags and does not include the staging downloaded at tag.  In this case, staging will simply re-download.
+    put_s3_tags(
+      s3_tags.merge(downloaded_at_tag => Time.current.to_s(:iso))
+    )
+
+    # Enqueue job to check on removing from holding tank
+    ImageHoldingTankRemover.perform_in(10.minutes, image_identifier)
+  end
+
+  private
+
+  attr_reader :s3_key, :connection
+
+  def image_holding_tank_s3_bucket
+    SETTINGS['s3_buckets']['image_holding_tank']
+  end
+
+  def already_downloaded?
+    get_s3_tags[downloaded_at_tag]
+  end
+
+  def s3_file_already_exists?
+    raise "TODO"
+  end
+
+  def get_s3_tags
+    response = connection.get_object_tagging(
+      image_holding_tank_s3_bucket,
+      s3_key
+    )
+    response.body.fetch('ObjectTagging')
+  end
+
+  def put_s3_tags(tags)
+    connection.put_object_tagging(
+      image_holding_tank_s3_bucket,
+      s3_key,
+      tags
+    )
+  end
+
+  def downloaded_at_tag
+    "#{Rails.env.titleize}DownloadedAt"
+  end
+
+end

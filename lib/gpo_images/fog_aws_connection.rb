@@ -43,8 +43,6 @@ class GpoImages::FogAwsConnection
     end
   end
 
-  private
-
   def connection
     @connection ||= Fog::Storage.new({
       :provider                 => 'AWS',
