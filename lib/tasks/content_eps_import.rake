@@ -32,10 +32,10 @@ namespace :content do
       Entry.
         where("publication_date >= '2000-01-01'").
         order(publication_date: :desc).
-        select(:id,:publication_date).
-        distinct.
-        find_each do |entry|
-          DailyIssueImageUsageBuilder.perform_async(entry.publication_date.to_s(:iso))
+        pluck(:publication_date).
+        uniq.
+        each do |publication_date|
+          DailyIssueImageUsageBuilder.perform_async(publication_date.to_s(:iso))
         end
     end
 
