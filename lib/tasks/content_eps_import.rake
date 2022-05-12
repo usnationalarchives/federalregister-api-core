@@ -3,12 +3,23 @@ namespace :content do
   namespace :images do
     desc "Lock-safe version of import_eps task"
     task :lock_safe_import_eps => :environment do
-      Content::ImportDriver::EpsImportDriver.new.perform
+      Content::ImportDriver::StreamlinedEpsImportDriver.new.perform
     end
 
     desc "Download images from SFTP and save them to the image holding tank"
     task :import_eps => :environment do
       ImagePipeline::SftpDownloader.new.perform
+    end
+
+    desc "Enqueue environment-specific jobs for downloading/processing from the image holding tank"
+    task :enqueue_environment_specific_image_downloads => :environment do
+      GpoImages::FogAwsConnection.
+        new.
+        connection.
+          directories.new(:key => SETTINGS['s3_buckets']['image_holding_tank']).
+          files.each do |file|
+            ImagePipeline::EnvironmentImageDownloader.perform_async(file.key)
+          end
     end
 
     desc "Migrate gpo_graphics table to images table"

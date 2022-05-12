@@ -15,7 +15,6 @@ shared: &shared
     entry_index_shards: <%= ENV.fetch('ENTRY_INDEX_SHARDS', 1) %>
     public_inspection_document_index_shards: <%= ENV.fetch('PUBLIC_INSPECTION_DOCUMENT_INDEX_SHARDS', 1) %>
   feature_flags:
-    streamlined_image_pipeline: <%= ActiveModel::Type::Boolean.new.cast(ENV['STREAMLINED_IMAGE_PIPELINE']) || false %>
     use_carrierwave_images_in_api: <%= ActiveModel::Type::Boolean.new.cast(ENV['USE_CARRIERWAVE_IMAGES_IN_API']) || false %>
   images:
     store_in_filesystem: true
@@ -37,6 +36,7 @@ shared: &shared
       reprocess_unlinked_gpo_images: <%= ActiveModel::Type::Boolean.new.cast(ENV.fetch('REPROCESS_UNLINKED_GPO_IMAGES', false)) %>
     images:
       auto_generate_image_variants: <%= ActiveModel::Type::Boolean.new.cast(ENV.fetch('AUTO_GENERATE_IMAGE_VARIANTS', false)) %>
+      streamlined_image_pipeline: <%= ActiveModel::Type::Boolean.new.cast(ENV['STREAMLINED_IMAGE_PIPELINE']) || false %>
     import: true
     late_content_notifications: <%= ActiveModel::Type::Boolean.new.cast(ENV.fetch('LATE_CONTENT_NOTIFICATIONS', true)) %>
     public_inspection: <%= ActiveModel::Type::Boolean.new.cast(ENV.fetch('CRON_PUBLIC_INSPECTION', true)) %>
