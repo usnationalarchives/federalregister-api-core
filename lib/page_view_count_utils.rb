@@ -36,8 +36,6 @@ module PageViewCountUtils
 
     if total_results(start_date, end_date) > 0
       if set == page_view_type.today_set
-        # store a copy of the set each hour for internal analysis
-        $redis.zunionstore("#{page_view_type.namespace}:#{Date.current.to_s(:iso)}:#{Time.current.hour}", [temp_set])
         $redis.rename(temp_set, set)
       elsif set == page_view_type.yesterday_set
         $redis.rename(temp_set, set)
