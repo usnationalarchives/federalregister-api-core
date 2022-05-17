@@ -44,7 +44,7 @@ class ImageVariantUploader < CarrierWave::Uploader::Base
 
   # Process files as they are uploaded:
   process :gpo_image_convert
-  # process :png_crush
+  process :png_crush
   process :store_content_type
   process :store_dimensions
   process :store_size
@@ -66,12 +66,7 @@ class ImageVariantUploader < CarrierWave::Uploader::Base
   end
 
   def png_crush
-    # src = @file
-    # dst = Tempfile.new([@basename || "", @format ? ".#{@format}" : ''])
-    # dst.binmode
-
-    # Terrapin::CommandLine.new("pngcrush -rem alla -nofilecheck -reduce -m 7 #{File.expand_path(src.path)} #{File.expand_path(dst.path)}").run
-    Terrapin::CommandLine.new("pngcrush -rem alla -nofilecheck -reduce -m 7 #{current_path} #{current_path}").run
+    Terrapin::CommandLine.new("pngcrush -ow -rem alla -nofilecheck -reduce -m 7 #{current_path}").run
   end
 
   # Create different versions of your uploaded files:
@@ -89,7 +84,6 @@ class ImageVariantUploader < CarrierWave::Uploader::Base
   # Avoid using model.id or version_name here, see uploader/store.rb for details.
   def filename
     if original_filename
-      # TODO: We need to find a dynamic way of assigning the file extension.  Setting as static PNG right now.
       if dynamically_determine_file_extension?
         "#{model.identifier}_#{model.style}.#{file.extension}" 
       else
