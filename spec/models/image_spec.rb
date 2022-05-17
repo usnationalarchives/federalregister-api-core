@@ -4,6 +4,8 @@ describe Image do
 
   context "image saving" do
     it "creates the appropriate image variants" do
+      allow_any_instance_of(ImageVariantReprocessor).to receive(:create_invalidation)
+
       metadata_attributes = [:image_size, :image_height, :image_sha, :image_width, ]
       image = Image.create!(
         identifier: 'ER16OC15.015',

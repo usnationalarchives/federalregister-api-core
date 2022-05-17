@@ -12,7 +12,7 @@ class Image < ApplicationModel
   validate :image_source_populated
 
   if SETTINGS['images']['auto_generate_image_variants']
-    after_save :generate_variants
+    after_save :regenerate_variants!
   end
 
   attr_accessor :skip_variant_generation
@@ -31,30 +31,19 @@ class Image < ApplicationModel
     end
   end
 
-  private
-
-  def generate_variants
-    if image_file_name.blank? || skip_variant_generation
+  def regenerate_variants!(enqueue=false)
+    if skip_variant_generation
       return
     end
 
-    %w(original_size medium large).each do |style|
-      variant = image_variants.detect{|x| x.style == style} || image_variants.build(
-        style: style,
-      )
-
-      variant.identifier = self.identifier
-      variant.image = self.image.file
-      if self.made_public_at.present?
-        variant.image.fog_public = true
-      else
-        variant.image.fog_public = false
-      end
-      variant.save!
-      create_invalidation(SETTINGS['s3_buckets']['image_variants'], "#{variant.image.path}")
+    if enqueue
+      ImageVariantReprocessor.perform_async(identifier, ImageStyle.all.map(&:identifier))
+    else
+      ImageVariantReprocessor.new.perform(identifier, ImageStyle.all.map(&:identifier))
     end
-    touch(:updated_at)
   end
+
+  private
 
   def image_source_populated
     if image_file_name.present? && source_id.blank?
