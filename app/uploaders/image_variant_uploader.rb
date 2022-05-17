@@ -56,12 +56,13 @@ class ImageVariantUploader < CarrierWave::Uploader::Base
     end
 
     output_path = "#{Rails.root}/tmp/#{model.identifier}.png"
-    convert_options = ImageConversionSettingsBuilder.new(
+    image_magick_settings = ImageConversionSettingsBuilder.new(
       current_path,
       model.original_image.image_source,
       model.image_style
     ).perform
-    `convert #{convert_options} '#{current_path}' -auto-orient -strip -unsharp 0 '#{output_path}'`
+    `convert #{image_magick_settings} '#{current_path}' #{model.image_style.image_magick_operators} '#{output_path}'` #NOTE: "Generally speaking a setting should come before an image filename and an image operator after the image filename."
+  
     File.rename output_path, current_path
   end
 
