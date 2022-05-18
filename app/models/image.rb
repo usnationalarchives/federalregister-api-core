@@ -27,6 +27,14 @@ class Image < ApplicationModel
     end
   end
 
+  def regenerate_image_variants!(enqueue=false)
+    if enqueue
+      ImageVariantReprocessor.perform_async(identifier, ImageStyle.all.map(&:identifier))
+    else
+      ImageVariantReprocessor.new.perform(identifier, ImageStyle.all.map(&:identifier))
+    end
+  end
+
   private
 
   def image_source_populated
