@@ -15,7 +15,8 @@ class ImageVariantReprocessor
         style: style,
       )
 
-      image_variant.image = image_variant.original_image.image.file
+      image_variant.image = image.image.file
+  
       if image.made_public_at.present?
         image_variant.image.fog_public = true
       else

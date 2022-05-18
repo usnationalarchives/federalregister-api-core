@@ -11,10 +11,6 @@ class Image < ApplicationModel
   validates_presence_of :identifier
   validate :image_source_populated
 
-  if SETTINGS['images']['auto_generate_image_variants']
-    after_save :regenerate_variants!
-  end
-
   attr_accessor :skip_variant_generation
 
   # The intent of our db schema is that every image variant should have a corresponding original image record (though its image file name may be blank).  As such, when making image variants public, #make_public should be called on the original image, even if it's effectively a shell record.
@@ -28,18 +24,6 @@ class Image < ApplicationModel
         image_variant.image.recreate_versions!
       end
       touch(:made_public_at)
-    end
-  end
-
-  def regenerate_variants!(enqueue=false)
-    if skip_variant_generation
-      return
-    end
-
-    if enqueue
-      ImageVariantReprocessor.perform_async(identifier, ImageStyle.all.map(&:identifier))
-    else
-      ImageVariantReprocessor.new.perform(identifier, ImageStyle.all.map(&:identifier))
     end
   end
 

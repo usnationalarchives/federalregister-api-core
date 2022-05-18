@@ -2,6 +2,10 @@ class OriginalImageUploader < CarrierWave::Uploader::Base
   include CarrierWave::MiniMagick
   include UploaderUtils
 
+  if SETTINGS['images']['auto_generate_image_variants']
+    after :store, :regenerate_variants!
+  end
+
   # Choose what kind of storage to use for this uploader:
   if SETTINGS['images']['store_in_filesystem']
     storage :file
@@ -39,4 +43,15 @@ class OriginalImageUploader < CarrierWave::Uploader::Base
       "#{model.identifier}.#{file.extension}" 
     end
   end
+
+  private
+
+  def regenerate_variants!(file)
+    if model.skip_variant_generation
+      return
+    end
+
+    ImageVariantReprocessor.new.perform(model.identifier, ImageStyle.all.map(&:identifier))
+  end
+
 end
