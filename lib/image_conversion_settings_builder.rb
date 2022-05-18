@@ -11,7 +11,7 @@ class ImageConversionSettingsBuilder
   def perform
     options = "" #formerly @source_file_options
     options << "-density #{density}"
-    if image_source.monochrome_transparency
+    if image_style.apply_transparency_via_image_magick_setting
       options << " -monochrome -transparent white"
     end
     if image_style.apply_resize
