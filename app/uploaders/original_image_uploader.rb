@@ -2,7 +2,7 @@ class OriginalImageUploader < CarrierWave::Uploader::Base
   include CarrierWave::MiniMagick
   include UploaderUtils
 
-  if SETTINGS['images']['auto_generate_image_variants']
+  if SETTINGS['cron']['images']['auto_generate_image_variants']
     after :store, :regenerate_variants!
   end
 
