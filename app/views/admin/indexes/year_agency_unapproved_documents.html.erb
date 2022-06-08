@@ -24,6 +24,16 @@
   <hr />
 
   <div class="agency_index_actions">
+    <%= link_to 'Preview PDF',
+      admin_index_year_agency_path(
+        @agency_year.year, @agency_year.agency,
+        :format => :pdf,
+        :max_date => @max_date
+      ),
+      :method => :post,
+      :class => "btn pdf_preview",
+      :target => "_blank" %>
+
     <%= link_to 'Mark As Reviewed and Clear Cache',
                 admin_index_year_agency_completion_path(:last_completed_issue => [Issue.current.publication_date, @agency_year.max_date].min,
                                                         :max_date => params[:max_date]),
@@ -35,7 +45,6 @@
       </div>
     <% end %>
 
-    <%= link_to 'Preview PDF', {:action => :year_agency, :format => :pdf, :max_date => params[:max_date]}, :class => "btn pdf_preview", :target => "_blank" %>
   </div>
 </div>
 

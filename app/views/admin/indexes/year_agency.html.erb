@@ -37,7 +37,15 @@
       <%= max_date_select(@agency_year) %>
     <% end %>
 
-    <%= link_to 'Preview PDF', {:format => :pdf, :max_date => @max_date}, :class => "btn pdf_preview", :target => "_blank" %>
+    <%= link_to 'Preview PDF',
+      admin_index_year_agency_path(
+        @agency_year.year, @agency_year.agency,
+        :format => :pdf,
+        :max_date => @max_date
+      ),
+      :method => :post,
+      :class => "btn pdf_preview",
+      :target => "_blank" %>
 
     <%= link_to 'Mark As Reviewed and Clear Cache',
       admin_index_year_agency_completion_path(
