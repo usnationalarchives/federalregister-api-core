@@ -63,34 +63,6 @@ RUN curl -sL https://deb.nodesource.com/setup_16.x | bash - &&\
 # npm packages for testing
 RUN npm install -g jshint
 
-
-##################
-### PRINCEXML
-##################
-
-RUN apt-get update &&\
-  apt-get install -y libc6 libtiff5 libgif7 libfontconfig1 libjpeg8 libxml2 &&\
-  apt-get clean &&\
-  rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/
-
-WORKDIR /tmp
-
-# install prince and license template
-RUN curl -O https://www.princexml.com/download/prince-11.4-ubuntu18.04-amd64.tar.gz &&\
-  tar -xzvf prince-11.4-ubuntu18.04-amd64.tar.gz &&\
-  cd /tmp/prince-11.4-ubuntu18.04-amd64 &&\
-  ./install.sh &&\
-  rm /tmp/prince-11.4-ubuntu18.04-amd64.tar.gz &&\
-  rm -Rf /tmp/prince-11.4-ubuntu18.04-amd64
-
-COPY docker/api/files/princexml/license.dat.tmpl /usr/local/lib/prince/license/license.dat.tmpl
-
-# add fonts
-COPY docker/api/files/fonts/open-sans /usr/share/fonts/truetype/
-# update font cache
-RUN  fc-cache -f -v
-
-
 ##################
 ### IMAGEMAGICK
 ##################

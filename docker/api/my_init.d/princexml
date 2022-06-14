@@ -1,3 +1,0 @@
-#!/bin/bash
-set -ex
-envsubst '$$PRINCEXML_LICENSE' < /usr/local/lib/prince/license/license.dat.tmpl > /usr/local/lib/prince/license/license.dat
