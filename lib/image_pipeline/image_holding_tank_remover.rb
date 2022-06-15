@@ -10,9 +10,8 @@ class ImagePipeline::ImageHoldingTankRemover
     s3_tags     = get_s3_tags
     if environments_requiring_image_download.all? do |environment| 
         s3_tags["#{environment}DownloadedAt"]
-      end
-      file = connection.get_object(image_holding_tank_s3_bucket, s3_key)
-      file.destroy
+    end
+      destroy_s3_object!
     end
 
   end
@@ -20,6 +19,12 @@ class ImagePipeline::ImageHoldingTankRemover
   private
 
   attr_reader :s3_key, :connection
+
+  def destroy_s3_object!
+    directory = connection.directories.get(image_holding_tank_s3_bucket)
+    file      = directory.files.get(s3_key)
+    file.destroy
+  end
 
   def environments_requiring_image_download
     SETTINGS['cron']['images']['environments_requiring_image_download']
