@@ -35,7 +35,7 @@ shared: &shared
       convert_eps: <%= ActiveModel::Type::Boolean.new.cast(ENV.fetch('GPO_IMAGES_CONVERT_EPS', true)) %>
       reprocess_unlinked_gpo_images: <%= ActiveModel::Type::Boolean.new.cast(ENV.fetch('REPROCESS_UNLINKED_GPO_IMAGES', false)) %>
     images:
-      auto_generate_image_variants: <%= ActiveModel::Type::Boolean.new.cast(ENV.fetch('AUTO_GENERATE_IMAGE_VARIANTS', true)) %>
+      auto_generate_image_variants: <%= ActiveModel::Type::Boolean.new.cast(ENV.fetch('AUTO_GENERATE_IMAGE_VARIANTS', true)) %> 
       environments_requiring_image_download: <%= ENV['ENVIRONMENTS_REQUIRING_IMAGE_DOWNLOAD'].try(:split, ',') || ['Staging', 'Production'] %>
       streamlined_image_pipeline: <%= ActiveModel::Type::Boolean.new.cast(ENV['STREAMLINED_IMAGE_PIPELINE']) || false %>
     import: true
@@ -73,7 +73,6 @@ test:
     entry_index_shards: <%= ENV.fetch('ENTRY_INDEX_SHARDS', 1) %>
     public_inspection_document_index_shards: <%= ENV.fetch('PUBLIC_INSPECTION_DOCUMENT_INDEX_SHARDS', 1) %>
   images:
-    auto_generate_image_variants: true
     store_in_filesystem: true
   s3_buckets:
     public_inspection: public-inspection.example.org
