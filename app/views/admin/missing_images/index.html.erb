@@ -16,7 +16,15 @@
             <td class="span2">
               <%= link_to document.document_number, short_entry_url(document) %>
             </td>
-            <td><%= document.image_identifiers.map{|id| id}.join(', ')%></td>
+            <td>
+              <% if @presenter.link_images_if_original? %>
+                <% document.usages.map do |usage| %>
+                  <%= link_to_if usage.image.try(:image_file_name).present?, usage.identifier, admin_missing_image_path(usage.identifier) %>
+                <% end %>
+              <% else %>
+                <%= document.usages.map(&:identifier).map{|id| id}.join(', ') %>
+              <% end %>
+            </td>
           </tr>
         <% end %>
       </tbody>
