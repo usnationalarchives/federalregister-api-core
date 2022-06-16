@@ -53,7 +53,7 @@ FederalregisterApiCore::Application.routes.draw do
       end
     end
     resources :sections
-    resources :missing_images, :only => [:index, :show]
+    resources :missing_images, :only => [:index, :show],   :constraints => { :id => /.*/ }
     resources :reprocessed_issues, :only => [:index, :show, :create, :update, :destroy] do
       resources :diffs, :only => [:index], controller: 'reprocessed_issues/diffs'
     end

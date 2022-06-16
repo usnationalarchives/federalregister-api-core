@@ -8,9 +8,9 @@ class Admin::MissingImagesController < AdminController
     image = Image.find_by_identifier(params[:id])
     if image
       if image.made_public_at.blank?
-        image.fog_public = false #Calling fog_public = false causes image_file.url to generate a signed URL.
+        image.image.fog_public = false #Calling fog_public = false causes image_file.url to generate a signed URL.
       end
-      redirect_to image.image_file.url
+      redirect_to image.image.url
     else
       redirect_to admin_missing_images_path
     end
