@@ -1,6 +1,11 @@
 class GpoImages::FogAwsConnection
   delegate :directories, :to => :connection
 
+  def get_s3_object(key, directory=SETTINGS['s3_buckets']['original_images'])
+    directory = connection.directories.get(directory)
+    directory.files.get(key)
+  end
+
   MAX_RETRIES = 1
   def move_directory_files_between_buckets_and_rename(xml_identifier, identifier, source_bucket, destination_bucket, options={})
     directory = directories.get(source_bucket, :prefix => identifier)

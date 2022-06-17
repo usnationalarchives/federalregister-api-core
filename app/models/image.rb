@@ -14,16 +14,19 @@ class Image < ApplicationModel
   attr_accessor :skip_variant_generation
 
   # The intent of our db schema is that every image variant should have a corresponding original image record (though its image file name may be blank).  As such, when making image variants public, #make_public should be called on the original image, even if it's effectively a shell record.
-  def make_public! 
-    if made_public_at.blank?
-      self.image.fog_public = true
-      self.image.recreate_versions! # We're regenerating the image in S3 using #recreate_versions! in order to make it public.  In the future, we may want to refactor so we're making a lower-level API call to S3 to change private to public.
 
-      image_variants.each do |image_variant|
-        image_variant.image.fog_public = true
-        image_variant.image.recreate_versions!
-      end
-      touch(:made_public_at)
+  def make_public!
+    change_s3_acl('public-read')
+    image_variants.each do |image_variant|
+      image_variant.make_public!
+    end
+    touch(:made_public_at)
+  end
+
+  def make_private!
+    change_s3_acl('private')
+    image_variants.each do |image_variant|
+      image_variant.make_private!
     end
   end
 
@@ -36,6 +39,12 @@ class Image < ApplicationModel
   end
 
   private
+
+  def change_s3_acl(acl) # Common ACL options: private, public-read
+    s3_object = GpoImages::FogAwsConnection.new.get_s3_object(image_file_name, SETTINGS['s3_buckets']['original_images'])
+    s3_object.acl = acl
+    s3_object.save
+  end
 
   def image_source_populated
     if image_file_name.present? && source_id.blank?

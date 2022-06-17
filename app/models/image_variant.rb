@@ -9,4 +9,21 @@ class ImageVariant < ApplicationModel
     ImageVariantReprocessor.new.perform(identifier, style)
   end
 
+  def make_public!
+    change_s3_acl('public-read')
+  end
+
+  def make_private!
+    change_s3_acl('private')
+  end
+
+  private
+
+  def change_s3_acl(acl) # Common ACL options: private, public-read
+    key = "#{image.store_dir}/#{image_file_name}"
+    s3_object = GpoImages::FogAwsConnection.new.get_s3_object(key, SETTINGS['s3_buckets']['image_variants'])
+    s3_object.acl = acl
+    s3_object.save
+  end
+
 end
