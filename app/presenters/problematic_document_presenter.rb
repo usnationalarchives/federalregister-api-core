@@ -101,11 +101,19 @@ class ProblematicDocumentPresenter
     end
   end
 
+  def link_images_if_original?
+    missing_images_presenter.link_images_if_original?
+  end
+
   def missing_gpo_graphics
-    MissingImagesPresenter.new.dates_missing_images.find{|d| d.date == date}
+    missing_images_presenter.dates_missing_images.find{|d| d.date == date}
   end
 
   private
+
+  def missing_images_presenter
+    MissingImagesPresenter.new
+  end
 
   def rules
     @rules_without_dates ||= issue.
