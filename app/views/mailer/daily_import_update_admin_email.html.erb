@@ -203,9 +203,9 @@
             <th>Image Identifiers</th>
           </thead>
           <tbody>
-            <% @problematic_document_presenter.missing_gpo_graphics.documents.each do |doc| %>
+            <% @problematic_document_presenter.missing_gpo_graphics.documents.each do |document| %>
               <tr style="<%= cycle(nil, light_gray) %>">
-                <td style="width: 300px;" align="left"><%= link_to doc.document_number, short_entry_url(doc.document_number) %></td>
+                <td style="width: 300px;" align="left"><%= link_to document.document_number, short_entry_url(document.document_number) %></td>
                 <td style="width: 300px;" align="left">
                   <% if @problematic_document_presenter.link_images_if_original? %>
                     <% document.usages.map do |usage| %>
