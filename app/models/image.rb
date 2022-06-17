@@ -28,6 +28,7 @@ class Image < ApplicationModel
     image_variants.each do |image_variant|
       image_variant.make_private!
     end
+    update!(made_public_at: nil)
   end
 
   def regenerate_image_variants!(enqueue=false)
