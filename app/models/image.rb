@@ -44,6 +44,7 @@ class Image < ApplicationModel
     s3_object = GpoImages::FogAwsConnection.new.get_s3_object(image_file_name, SETTINGS['s3_buckets']['original_images'])
     s3_object.acl = acl
     s3_object.save
+    create_invalidation(SETTINGS['s3_buckets']['image_variants'], ["/#{image.identifier}*"]) #NOTE: Executing successive invalidation requests for the individual variants fails with a 429, hence the decision to bulk expire here
   end
 
   def image_source_populated

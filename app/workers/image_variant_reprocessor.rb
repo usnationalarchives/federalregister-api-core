@@ -23,10 +23,8 @@ class ImageVariantReprocessor
         image_variant.image.fog_public = false
       end
       image_variant.save!
-
-      # TODO: Fix Cloudfront invalidation
-      # create_invalidation(SETTINGS['s3_buckets']['image_variants'], ["#{image_variant.image.path}"]) 
     end
+    create_invalidation(SETTINGS['s3_buckets']['image_variants'], ["/#{image.identifier}*"]) 
     image.touch(:updated_at)
   end
 
