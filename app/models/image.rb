@@ -58,7 +58,7 @@ class Image < ApplicationModel
   end
 
   def invalidate_image_identifier_keyspace!
-    create_invalidation(SETTINGS['s3_buckets']['image_variants'], ["/#{image.identifier}*"]) #NOTE: Executing successive invalidation requests for the individual variants fails with a 429, hence the decision to bulk expire here
+    create_invalidation(SETTINGS['s3_buckets']['image_variants'], ["/#{identifier}*"]) #NOTE: Executing successive invalidation requests for the individual variants fails with a 429, hence the decision to bulk expire here
   end
 
   def image_source_populated
