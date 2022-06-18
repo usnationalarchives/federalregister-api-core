@@ -15,22 +15,26 @@ class Image < ApplicationModel
 
   # The intent of our db schema is that every image variant should have a corresponding original image record (though its image file name may be blank).  As such, when making image variants public, #make_public should be called on the original image, even if it's effectively a shell record.
 
-  def make_public!
+  def make_public!(invalidate_cloudfront: false)
     change_s3_acl('public-read')
     image_variants.each do |image_variant|
       image_variant.make_public!
     end
     touch(:made_public_at)
-    invalidate_image_identifier_keyspace!
+    if invalidate_cloudfront
+      invalidate_image_identifier_keyspace!
+    end
   end
 
-  def make_private!
+  def make_private!(invalidate_cloudfront: false)
     change_s3_acl('private')
     image_variants.each do |image_variant|
       image_variant.make_private!
     end
     update!(made_public_at: nil)
-    invalidate_image_identifier_keyspace!
+    if invalidate_cloudfront
+      invalidate_image_identifier_keyspace!
+    end
   end
 
   def regenerate_image_variants!(enqueue=false)
