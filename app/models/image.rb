@@ -45,6 +45,10 @@ class Image < ApplicationModel
     end
   end
 
+  def invalidate_image_identifier_keyspace!
+    create_invalidation(SETTINGS['s3_buckets']['image_variants'], ["/#{identifier}*"]) #NOTE: S3 documentation suggests * expiries only count o
+  end
+
   private
 
   def change_s3_acl(acl) # Common ACL options: private, public-read
@@ -57,9 +61,6 @@ class Image < ApplicationModel
     s3_object.save
   end
 
-  def invalidate_image_identifier_keyspace!
-    create_invalidation(SETTINGS['s3_buckets']['image_variants'], ["/#{identifier}*"]) #NOTE: Executing successive invalidation requests for the individual variants fails with a 429, hence the decision to bulk expire here
-  end
 
   def image_source_populated
     if image_file_name.present? && source_id.blank?

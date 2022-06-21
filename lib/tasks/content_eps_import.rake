@@ -50,6 +50,13 @@ namespace :content do
         end
     end
 
+    desc "Create cloudfront image invalidation"
+    task :create_cloudfront_invalidation => :environment do
+      Image.
+        find_by_identifier!(ENV['IMAGE_IDENTIFIER'].try(:upcase)).
+        invalidate_image_identifier_keyspace!
+    end
+
   end
 
   namespace :gpo_images do
