@@ -5,8 +5,8 @@ class ImageVariant < ApplicationModel
   belongs_to :original_image, class_name: "Image", foreign_key: :identifier, primary_key: :identifier
   validates_presence_of :identifier, :style
 
-  def regenerate!
-    ImageVariantReprocessor.new.perform(identifier, style)
+  def regenerate!(invalidate_cloudfront=false)
+    ImageVariantReprocessor.new.perform(identifier, style, invalidate_cloudfront)
   end
 
   def make_public!

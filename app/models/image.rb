@@ -37,11 +37,19 @@ class Image < ApplicationModel
     end
   end
 
-  def regenerate_image_variants!(enqueue=false)
+  def regenerate_image_variants!(enqueue=false, invalidate_cloudfront=false)
     if enqueue
-      ImageVariantReprocessor.perform_async(identifier, ImageStyle.all.map(&:identifier))
+      ImageVariantReprocessor.perform_async(
+        identifier,
+        ImageStyle.all.map(&:identifier),
+        invalidate_cloudfront
+      )
     else
-      ImageVariantReprocessor.new.perform(identifier, ImageStyle.all.map(&:identifier))
+      ImageVariantReprocessor.new.perform(
+        identifier,
+        ImageStyle.all.map(&:identifier),
+        invalidate_cloudfront
+      )
     end
   end
 

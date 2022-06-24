@@ -51,7 +51,11 @@ class OriginalImageUploader < CarrierWave::Uploader::Base
       return
     end
 
-    ImageVariantReprocessor.new.perform(model.identifier, ImageStyle.all.map(&:identifier))
+    ImageVariantReprocessor.new.perform(
+      model.identifier,
+      ImageStyle.all.map(&:identifier),
+      false
+    )
   end
 
 end
