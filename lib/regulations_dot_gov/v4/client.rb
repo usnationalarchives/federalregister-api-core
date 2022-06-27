@@ -56,6 +56,9 @@ class RegulationsDotGov::V4::Client
     if parsed_response['errors']
       Honeybadger.notify('Unable to locate docket at reg.gov', context: parsed_response)
     else
+      if parsed_response['data'].blank?
+        Honeybadger.notify("'data' key missing", context: parsed_response)
+      end
       RegulationsDotGov::V4::Docket.new(parsed_response.fetch('data'))
     end
   end
