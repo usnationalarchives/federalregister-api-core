@@ -1,4 +1,5 @@
 class RegulationsDotGov::V4::Client
+  class OverRateLimitError < StandardError; end
 
   def initialize
     @logger = Logger.new("#{Rails.root}/log/#{Rails.env}_regulations_dot_gov_v4.log")
@@ -55,6 +56,8 @@ class RegulationsDotGov::V4::Client
     parsed_response = JSON.parse(response.body)
     if parsed_response['errors']
       Honeybadger.notify('Unable to locate docket at reg.gov', context: parsed_response)
+    elsif parsed_response.dig('error','code') == "OVER_RATE_LIMIT"
+      raise OverRateLimitError
     else
       if parsed_response['data'].blank?
         Honeybadger.notify("'data' key missing", context: parsed_response)
@@ -95,6 +98,7 @@ class RegulationsDotGov::V4::Client
         **(default_query_params.merge('page[number]' => page_number))
       )
       parsed_response = JSON.parse(response.body)
+
       parsed_response.
         fetch("data").
         each {|raw_attributes| documents << RegulationsDotGov::V4::BasicDocument.new(raw_attributes) }
