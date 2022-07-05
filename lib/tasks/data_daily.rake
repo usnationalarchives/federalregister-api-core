@@ -49,11 +49,11 @@ namespace :data do
       content:section_highlights:clone
       data:daily:basic
       content:agency_assignments:recalculate
+      content:public_inspection:import:entry_id
       elasticsearch:reindex_entry_changes
 
       content:issues:mark_complete
       
-      content:public_inspection:import:entry_id
       content:public_inspection:reindex
 
       web:notify_of_new_issue
@@ -70,9 +70,9 @@ namespace :data do
       content:entries:json:compile:daily_toc
 
       content:agency_assignments:recalculate
+      content:public_inspection:import:entry_id
       elasticsearch:reindex_entry_changes
 
-      content:public_inspection:import:entry_id
       content:public_inspection:reindex
 
       web:notify_of_updated_issue
