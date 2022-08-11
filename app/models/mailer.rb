@@ -25,12 +25,12 @@ class Mailer < ActionMailer::Base
     recipients = FR_DEVELOPER_ADMINS
     if Rails.env.production?
       recipients += %w(
-        mvincent@gpo.gov mscott@gpo.gov sfrattini@gpo.gov
+        apokres@gpo.gov mvincent@gpo.gov mscott@gpo.gov sfrattini@gpo.gov
         kgreen@gpo.gov aotovo@gpo.gov tellis@gpo.gov
         jhemphill@gpo.gov jmarlor@gpo.gov eswidal@gpo.gov
         ofrtechgroup@gpo.gov jhmartinez@gpo.gov jfrankovic@gpo.gov
         dperrin@gpo.gov tellis@gpo.gov dzero@gpo.gov dbarfield@gpo.gov
-        khorska@gpo.gov
+        khorska@gpo.gov katerina.horska@nara.gov
       )
     end
     sendgrid_recipients recipients
