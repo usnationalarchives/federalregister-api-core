@@ -106,7 +106,7 @@ namespace :content do
         rescue StandardError => e
           puts e.message
           puts e.backtrace.join("\n")
-          Honeybadger.notify(e)
+          Honeybadger.notify(e, error_message: "An error occurred while creating image usages/marking them as public for the #{date} issue.  Make sure the DailyIssueImageUsageBuilder succeeds to ensure relevant images are made public for the issue.")
         end
       end
     end

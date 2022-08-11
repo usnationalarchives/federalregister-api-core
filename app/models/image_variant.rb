@@ -26,8 +26,12 @@ class ImageVariant < ApplicationModel
 
     key = "#{image.store_dir}/#{image_file_name}"
     s3_object = GpoImages::FogAwsConnection.new.get_s3_object(key, SETTINGS['s3_buckets']['image_variants'])
-    s3_object.acl = acl
-    s3_object.save
+    if s3_object.nil?
+      Honeybadger.notify("Unable to fetch S3 object: #{key} in #{SETTINGS['s3_buckets']['image_variants']}")
+    else
+      s3_object.acl = acl
+      s3_object.save
+    end
   end
 
 end
