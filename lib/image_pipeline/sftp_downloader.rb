@@ -71,10 +71,18 @@ class ImagePipeline::SftpDownloader
   end
 
   def unchanged_files_list
-    initial_list = sftp_connection.filenames_with_sizes
+    if !Rails.env.test? && SETTINGS['cron']['images']['streamlined_image_pipeline_sftp_path'].blank?
+      raise "An SFTP path must be explicitly specified for the streamlined image pipeline"
+    end
+
+    initial_list = sftp_connection.filenames_with_sizes(streamlined_image_pipeline_sftp_path)
     sleep SLEEP_DURATION_BETWEEN_SFTP_CHECKS
-    delayed_list = sftp_connection.filenames_with_sizes
+    delayed_list = sftp_connection.filenames_with_sizes(streamlined_image_pipeline_sftp_path)
     files_unchanged = initial_list & delayed_list
+  end
+
+  def streamlined_image_pipeline_sftp_path
+    SETTINGS['cron']['images']['streamlined_image_pipeline_sftp_path']
   end
 
   def md5
