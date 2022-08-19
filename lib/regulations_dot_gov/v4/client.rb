@@ -55,7 +55,11 @@ class RegulationsDotGov::V4::Client
     )
     parsed_response = JSON.parse(response.body)
     if parsed_response['errors']
-      Honeybadger.notify('Unable to locate docket at reg.gov', context: parsed_response)
+      Honeybadger.notify(
+        'Unable to locate docket at reg.gov',
+        context: {docket_id: docket_id, response: parsed_response}
+      )
+      nil
     elsif parsed_response.dig('error','code') == "OVER_RATE_LIMIT"
       raise OverRateLimitError
     else
