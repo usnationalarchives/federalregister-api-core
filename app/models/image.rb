@@ -65,6 +65,10 @@ class Image < ApplicationModel
     end
 
     s3_object = GpoImages::FogAwsConnection.new.get_s3_object(image_file_name, SETTINGS['s3_buckets']['original_images'])
+    if s3_object.nil?
+      Honeybadger.notify("Unable to find S3 object '#{image_file_name}' in bucket #{SETTINGS['s3_buckets']['original_images']}") 
+      return
+    end
     s3_object.acl = acl
     s3_object.save
   end
