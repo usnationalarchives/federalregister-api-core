@@ -33,7 +33,7 @@ describe EntryRepository do
         president_id: {type: 'integer'},
         correction: {type: 'boolean'},
         start_page: {type: 'integer'},
-        executive_order_number: {type: 'keyword'},
+        executive_order_number: {type: 'integer'},
         proclamation_number: {type: 'keyword'},
         small_entity_ids: {type: 'integer'},
         title: {
