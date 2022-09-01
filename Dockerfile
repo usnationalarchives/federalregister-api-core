@@ -132,7 +132,8 @@ RUN gem install bundler -v 2.3.21
 WORKDIR /tmp
 COPY Gemfile /tmp/Gemfile
 COPY Gemfile.lock /tmp/Gemfile.lock
-RUN bundle install --system --full-index &&\
+RUN bundle config set --local system 'true'
+RUN bundle install --full-index &&\
   passenger-config install-standalone-runtime &&\
   passenger start --runtime-check-only
 
