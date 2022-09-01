@@ -9,7 +9,7 @@ FROM quay.io/criticaljuncture/baseimage:20.04
 ### RUBY
 #######################
 
-ARG RUBY_VERSION=3.0-jemalloc
+ARG RUBY_VERSION=3.1-jemalloc
 
 # install ruby
 RUN apt update &&\
