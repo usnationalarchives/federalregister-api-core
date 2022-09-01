@@ -1,6 +1,11 @@
 class GpoImages::Sftp
   delegate :remove, :close, :download!, :to => :connection
 
+  def initialize(username: Rails.application.secrets[:gpo_sftp][:username], password: Rails.application.secrets[:gpo_sftp][:password])
+    @username = username
+    @password = password
+  end
+
   def filenames_with_sizes(dir="/", recursive_directory_search=false)
     sftp_directories     = [dir]
     filenames_with_sizes = []
@@ -31,6 +36,8 @@ class GpoImages::Sftp
 
   private
 
+  attr_reader :username, :password
+
   def connection
     if @connection && @connection.open?
       @connection
@@ -42,8 +49,8 @@ class GpoImages::Sftp
   def start_connection
     Net::SFTP.start(
       'ftp.gpo.gov',
-      Rails.application.secrets[:gpo_sftp][:username],
-      :password => Rails.application.secrets[:gpo_sftp][:password],
+      username,
+      :password => password,
       :auth_methods => ["password"],
       :timeout => 30
     )

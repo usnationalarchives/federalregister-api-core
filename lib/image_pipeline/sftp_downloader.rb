@@ -3,7 +3,12 @@ class ImagePipeline::SftpDownloader
   SLEEP_DURATION_BETWEEN_SFTP_CHECKS = 5 #seconds
 
   def initialize(options={})
-    @sftp_connection    = options.fetch(:sftp_connection) { GpoImages::Sftp.new }
+    @sftp_connection    = options.fetch(:sftp_connection) do
+      GpoImages::Sftp.new(
+        username: Rails.application.secrets[:gpo_historical_images_sftp][:username],
+        password: Rails.application.secrets[:gpo_historical_images_sftp][:password]
+      ) 
+    end
     @fog_aws_connection = options.fetch(:fog_aws_connection) { GpoImages::FogAwsConnection.new }
   end
 
