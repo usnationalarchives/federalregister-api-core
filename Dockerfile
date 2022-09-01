@@ -128,7 +128,7 @@ USER root
 # add env for sidekiq-pro credentials
 ARG SIDEKIQ_CREDENTIALS
 ENV BUNDLE_GEMS__CONTRIBSYS__COM=$SIDEKIQ_CREDENTIALS
-RUN gem install bundler -v 2.2.32
+RUN gem install bundler -v 2.3.21
 WORKDIR /tmp
 COPY Gemfile /tmp/Gemfile
 COPY Gemfile.lock /tmp/Gemfile.lock
