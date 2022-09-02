@@ -18,10 +18,11 @@ class ImagePipeline::SftpDownloader
       bucket_directory_connection = fog_aws_connection.directories.new(:key => bucket_name)
       begin
         filenames_to_download.each do |filename|
+          filename_without_path = File.basename(filename)
           upload_to_s3!(
             bucket_directory_connection,
-            filename,
-            File.join(temp_images_path, filename)
+            filename_without_path,
+            File.join(temp_images_path, filename_without_path)
           ) 
         end
       rescue => exception
@@ -63,7 +64,7 @@ class ImagePipeline::SftpDownloader
 
     begin
       filenames_to_download.each do |filename|
-        data = sftp_connection.download!(filename, "#{temp_images_path}/#{filename}")
+        data = sftp_connection.download!(filename, "#{temp_images_path}/#{File.basename(filename)}")
       end
     rescue => exception
       delete_directory_contents(temp_images_path)
