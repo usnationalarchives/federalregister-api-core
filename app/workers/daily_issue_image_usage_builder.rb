@@ -1,5 +1,6 @@
 class DailyIssueImageUsageBuilder
   include Sidekiq::Worker
+  include GpoImages::ImageIdentifierNormalizer
 
   sidekiq_options :queue => :gpo_image_import, :retry => 0
 
@@ -65,7 +66,7 @@ class DailyIssueImageUsageBuilder
   private
 
   def normalized_identifier(identifier)
-    identifier.gsub(/\.?eps/i,"").upcase
+    normalize_image_identifier(identifier)
   end
 
 end
