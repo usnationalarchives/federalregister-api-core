@@ -27,6 +27,6 @@ class Holiday
   end
 
   def self.load_file(file_name)
-    YAML::load(File.open("#{RAILS_ROOT}/data/#{file_name}"))
+    YAML.unsafe_load(File.open("#{RAILS_ROOT}/data/#{file_name}"))
   end
 end
