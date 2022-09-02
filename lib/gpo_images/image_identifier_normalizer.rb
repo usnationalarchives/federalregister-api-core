@@ -10,7 +10,7 @@ module GpoImages
     end
 
     def remove_extensions(filename)
-      filename.gsub(/\.?eps/i,"")
+      filename.gsub(/\.?eps/i,"").gsub(/\.?tiff/i,"")
     end
   end
 end
