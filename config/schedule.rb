@@ -2,7 +2,7 @@ require 'yaml'
 require 'erb'
 require 'active_model' # used in settings file
 
-cron_settings = YAML::load(
+cron_settings = YAML.unsafe_load(
   ERB.new(
     File.read(
       File.join(File.dirname(__FILE__), 'settings.yml')

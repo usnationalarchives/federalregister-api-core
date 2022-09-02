@@ -1,4 +1,4 @@
-SETTINGS = YAML::load(
+SETTINGS = YAML.unsafe_load(
   ERB.new(
     File.read(
       File.join(File.dirname(__FILE__), '..', 'settings.yml')
