@@ -12,25 +12,29 @@ class ImagePipeline::SftpDownloader
     @fog_aws_connection = options.fetch(:fog_aws_connection) { GpoImages::FogAwsConnection.new }
   end
 
+  FILE_BATCH_SIZE = 50
   def perform
-    download_eps_images
     if filenames_to_download.size > 0
-      bucket_directory_connection = fog_aws_connection.directories.new(:key => bucket_name)
-      begin
-        filenames_to_download.each do |filename|
-          filename_without_path = File.basename(filename)
-          upload_to_s3!(
-            bucket_directory_connection,
-            filename_without_path,
-            File.join(temp_images_path, filename_without_path)
-          ) 
+      filenames_to_download.in_groups_of(FILE_BATCH_SIZE).each do |file_batch|
+        download_eps_images(filenames)
+        bucket_directory_connection = fog_aws_connection.directories.new(:key => bucket_name)
+        begin
+          file_batch.each do |filename|
+            filename_without_path = File.basename(filename)
+            puts "Uploading #{filename_without_path} to S3..."
+            upload_to_s3!(
+              bucket_directory_connection,
+              filename_without_path,
+              File.join(temp_images_path, filename_without_path)
+            ) 
+          end
+        rescue => exception
+          raise "A failure occurred when uploading an original image file to S3: #{exception.backtrace}: #{exception.message} (#{exception.class})"
+        ensure
+          delete_directory_contents(temp_images_path)
         end
-      rescue => exception
-        raise "A failure occurred when uploading an EPS file to S3: #{exception.backtrace}: #{exception.message} (#{exception.class})"
-      ensure
-        delete_directory_contents(temp_images_path)
+        sftp_connection.remove_files_from_sftp_server(file_batch)
       end
-      sftp_connection.remove_files_from_sftp_server(filenames_to_download)
     end
   end
 
@@ -58,17 +62,16 @@ class ImagePipeline::SftpDownloader
     @filenames_to_download ||= unchanged_files_list.map(&:first)
   end
 
-  def download_eps_images
-    puts "Beginning download of the following files: #{filenames_to_download.to_sentence}" if filenames_to_download.present?
+  def download_eps_images(filenames)
     FileUtils.mkdir_p temp_images_path
 
     begin
-      filenames_to_download.each do |filename|
+      filenames.each do |filename|
         data = sftp_connection.download!(filename, "#{temp_images_path}/#{File.basename(filename)}")
       end
     rescue => exception
       delete_directory_contents(temp_images_path)
-      raise "A failure occurred when downloading eps images from GPO SFTP: #{exception.backtrace}: #{exception.message} (#{exception.class})"
+      raise "A failure occurred when downloading eps images from historical GPO SFTP: #{exception.backtrace}: #{exception.message} (#{exception.class})"
     end
   end
 
@@ -91,12 +94,4 @@ class ImagePipeline::SftpDownloader
     SETTINGS['cron']['images']['streamlined_image_pipeline_sftp_path']
   end
 
-  def md5
-    @md5 ||= Digest::MD5.hexdigest(filenames_to_download.sort.map do |filename|
-      Digest::MD5.file("#{temp_images_path}/#{filename}").to_s + filename
-    end.join)
-  end
-
 end
-
-
