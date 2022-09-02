@@ -38,6 +38,13 @@ gem 'kt-paperclip'
  # required by paperclip but unspecified version - this ensures a comptible version
 gem 'mime-types', '~> 1.25', '>= 1.25.1'
 gem 'mimemagic'
+# ==============================================================================
+# Ruby 3.1 stops including these gems by default:
+gem 'matrix'
+gem 'net-imap'
+gem 'net-pop'
+gem 'net-smtp' 
+# ==============================================================================
 gem 'aws-sdk-s3'
 gem 'aws-sdk-cloudfront'
 gem 'stevedore', '0.3.0'
