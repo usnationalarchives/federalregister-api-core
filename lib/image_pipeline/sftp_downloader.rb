@@ -80,9 +80,9 @@ class ImagePipeline::SftpDownloader
       raise "An SFTP path must be explicitly specified for the streamlined image pipeline"
     end
 
-    initial_list = sftp_connection.filenames_with_sizes(streamlined_image_pipeline_sftp_path)
+    initial_list = sftp_connection.filenames_with_sizes(streamlined_image_pipeline_sftp_path, true)
     sleep SLEEP_DURATION_BETWEEN_SFTP_CHECKS
-    delayed_list = sftp_connection.filenames_with_sizes(streamlined_image_pipeline_sftp_path)
+    delayed_list = sftp_connection.filenames_with_sizes(streamlined_image_pipeline_sftp_path, true)
     files_unchanged = initial_list & delayed_list
   end
 
