@@ -101,8 +101,6 @@ RUN addgroup --gid 1000 app &&\
   # Add app user to teletypewriter group so passenger can log to stdout
   usermod -a -G tty app
 
-RUN chown -R app /usr/lib/fullstaq-ruby
-
 # switch to app user automatically when exec into container
 RUN echo 'su - app -s /bin/bash' | tee -a /root/.bashrc
 
