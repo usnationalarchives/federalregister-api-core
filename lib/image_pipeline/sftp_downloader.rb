@@ -15,8 +15,8 @@ class ImagePipeline::SftpDownloader
   FILE_BATCH_SIZE = 50
   def perform
     if filenames_to_download.size > 0
-      filenames_to_download.in_groups_of(FILE_BATCH_SIZE).each do |file_batch|
-        download_eps_images(filenames)
+      filenames_to_download.in_groups_of(FILE_BATCH_SIZE, false).each do |file_batch|
+        download_eps_images(file_batch)
         bucket_directory_connection = fog_aws_connection.directories.new(:key => bucket_name)
         begin
           file_batch.each do |filename|
@@ -67,6 +67,7 @@ class ImagePipeline::SftpDownloader
 
     begin
       filenames.each do |filename|
+        puts "Downloading #{filename}..."
         data = sftp_connection.download!(filename, "#{temp_images_path}/#{File.basename(filename)}")
       end
     rescue => exception
