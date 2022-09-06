@@ -43,7 +43,7 @@ class Admin::AgencyNamesController < AdminController
     if @agency_name.update(agency_name_params)
       AgencyNameEntriesReindexer.perform_async(@agency_name.id)
       flash[:notice] = 'Successfully saved'
-      if params[:return_to]
+      if params[:return_to].present?
         redirect_to params[:return_to]
       elsif next_agency_name = AgencyName.unprocessed.where("agency_names.name > ?", @agency_name.name).first
         redirect_to edit_admin_agency_name_path(next_agency_name)
