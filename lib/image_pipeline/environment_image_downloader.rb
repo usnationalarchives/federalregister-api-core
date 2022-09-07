@@ -36,6 +36,11 @@ class ImagePipeline::EnvironmentImageDownloader
         image:      temp_file,
         source_id:  ImageSource::GPO_SFTP.id
       )
+      if !image.image.present?
+        # In some cases MiniMagick rescues invalid image errors.  We want to make sure we don't save the image record to the database if it is invalid.
+        raise InvalidImage.new("Invalid Image", s3_key)
+      end
+
       if image.image_usages.present?
         image.image.fog_public = true
       else
@@ -46,7 +51,7 @@ class ImagePipeline::EnvironmentImageDownloader
       raise "Object not found on S3: #{} #{s3_key}" #DOC: Improve error message here
     rescue MiniMagick::Invalid => e
       Honeybadger.notify(
-        "Invalid image: #{s3_key}.",
+        "Invalid image: #{s3_key}",
         stacktrace: e.backtrace
       )
       return 
@@ -116,5 +121,19 @@ class ImagePipeline::EnvironmentImageDownloader
   def downloaded_at_tag
     "#{Rails.env.titleize}DownloadedAt"
   end
+
+  class InvalidImage < StandardError; 
+    attr_reader :s3_key
+
+    def initialize(err, s3_key)
+      @s3_key = s3_key
+      super(err)
+    end
+
+    def to_honeybadger_context
+      {s3_key: s3_key}
+    end    
+  end
+
 
 end
