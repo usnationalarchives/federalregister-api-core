@@ -5,6 +5,8 @@ class ImageVariant < ApplicationModel
   belongs_to :original_image, class_name: "Image", foreign_key: :identifier, primary_key: :identifier
   validates_presence_of :identifier, :style
 
+  attr_accessor :skip_storing_image_specific_metadata
+
   def regenerate!(invalidate_cloudfront=false)
     ImageVariantReprocessor.new.perform(identifier, style, invalidate_cloudfront)
   end

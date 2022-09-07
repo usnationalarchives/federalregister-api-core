@@ -29,20 +29,21 @@ class ImagePipeline::EnvironmentImageDownloader
         source_id:  ImageSource::GPO_SFTP.id
       )
       if !image.image.present?
-        # In some cases MiniMagick rescues invalid image errors.  We want to make sure we don't save the image record to the database if it is invalid.
-        raise "Invalid Image"
+        # In some cases, it appears that MiniMagick may silently rescue invalid image errors.  If we hit this block, make sure to add handling that allows for saving of the invalid image.
+        raise NotImplementedError
       end
-
-      if image.image_usages.present?
-        image.image.fog_public = true
-      else
-        image.image.fog_public = false
-      end
-      image.save!
+      persist_image!(image)
     rescue Excon::Error::NotFound => e
-      raise "Object not found on S3: #{} #{s3_key}" #DOC: Improve error message here
+      raise "Object not found on S3: #{s3_key}" 
     rescue MiniMagick::Invalid => e
-      return 
+      # Resave the bad image and bypass the calculation/storage of image-specific metadata and generating variants.
+      image.skip_storing_image_specific_metadata = true
+      image.skip_variant_generation              = true
+      image.assign_attributes(
+        error:                                e.class.to_s,
+        image:                                temp_file
+      )
+      persist_image!(image)
     ensure
       if File.exists? temp_file.path
         File.delete(temp_file.path) 
@@ -63,6 +64,15 @@ class ImagePipeline::EnvironmentImageDownloader
   private
 
   attr_reader :s3_key, :connection
+
+  def persist_image!(image)
+    if image.image_usages.present?
+      image.image.fog_public = true
+    else
+      image.image.fog_public = false
+    end
+    image.save!
+  end
 
   def normalized_image_identifier
     normalize_image_identifier(s3_key)

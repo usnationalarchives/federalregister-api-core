@@ -11,7 +11,7 @@ class Image < ApplicationModel
   validates_presence_of :identifier
   validate :image_source_populated
 
-  attr_accessor :skip_variant_generation
+  attr_accessor :skip_variant_generation, :skip_storing_image_specific_metadata
 
   # The intent of our db schema is that every image variant should have a corresponding original image record (though its image file name may be blank).  As such, when making image variants public, #make_public should be called on the original image, even if it's effectively a shell record.
 

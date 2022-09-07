@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_04_29_182441) do
+ActiveRecord::Schema.define(version: 2022_09_07_201654) do
 
   create_table "action_names", :force => true do |t|
     t.string   "name"
@@ -454,6 +454,7 @@ ActiveRecord::Schema.define(version: 2022_04_29_182441) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "image_content_type"
+    t.string "error"
     t.index ["identifier"], name: "index_images_on_identifier", unique: true
   end
 
