@@ -36,7 +36,11 @@ class ImagePipeline::EnvironmentImageDownloader
         image:      temp_file,
         source_id:  ImageSource::GPO_SFTP.id
       )
-      image.image.fog_public = false
+      if image.image_usages.present?
+        image.image.fog_public = true
+      else
+        image.image.fog_public = false
+      end
       image.save!
     rescue Excon::Error::NotFound => e
       raise "Object not found on S3: #{} #{s3_key}" #DOC: Improve error message here
