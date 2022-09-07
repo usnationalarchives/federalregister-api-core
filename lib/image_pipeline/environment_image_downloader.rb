@@ -80,7 +80,10 @@ class ImagePipeline::EnvironmentImageDownloader
   end
 
   def image_record_already_exists?
-    Image.find_by(identifier: normalized_image_identifier)
+    Image.
+      where(identifier: normalized_image_identifier).
+      where.not(image_file_name: nil).
+      first
   end
 
   def s3_file_already_exists?
