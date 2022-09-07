@@ -44,6 +44,12 @@ class ImagePipeline::EnvironmentImageDownloader
       image.save!
     rescue Excon::Error::NotFound => e
       raise "Object not found on S3: #{} #{s3_key}" #DOC: Improve error message here
+    rescue MiniMagick::Invalid => e
+      Honeybadger.notify(
+        "Invalid image: #{s3_key}.",
+        stacktrace: e.backtrace
+      )
+      return 
     ensure
       if File.exists? temp_file.path
         File.delete(temp_file.path) 
