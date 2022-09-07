@@ -9,15 +9,7 @@ class ImagePipeline::EnvironmentImageDownloader
   def perform(s3_key)
     @s3_key = s3_key
     @connection = GpoImages::FogAwsConnection.new.connection
-    if already_downloaded?
-      return
-    elsif s3_file_already_exists?
-      # This scenario is unexpected, but could occur if OFR is uploading a replacement image
-      Honeybadger.notify("#{s3_key} already exists")
-      return
-    elsif image_record_already_exists?
-      # This scenario is unexpected
-      Honeybadger.notify("#{s3_key} already_exists in the database")
+    if already_downloaded? 
       return
     end
 
@@ -38,7 +30,7 @@ class ImagePipeline::EnvironmentImageDownloader
       )
       if !image.image.present?
         # In some cases MiniMagick rescues invalid image errors.  We want to make sure we don't save the image record to the database if it is invalid.
-        raise InvalidImage.new("Invalid Image", s3_key)
+        raise "Invalid Image"
       end
 
       if image.image_usages.present?
@@ -50,10 +42,6 @@ class ImagePipeline::EnvironmentImageDownloader
     rescue Excon::Error::NotFound => e
       raise "Object not found on S3: #{} #{s3_key}" #DOC: Improve error message here
     rescue MiniMagick::Invalid => e
-      Honeybadger.notify(
-        "Invalid image: #{s3_key}",
-        stacktrace: e.backtrace
-      )
       return 
     ensure
       if File.exists? temp_file.path
@@ -90,18 +78,6 @@ class ImagePipeline::EnvironmentImageDownloader
     get_s3_tags[downloaded_at_tag]
   end
 
-  def image_record_already_exists?
-    Image.
-      where(identifier: normalized_image_identifier).
-      where.not(image_file_name: nil).
-      first
-  end
-
-  def s3_file_already_exists?
-    directory = connection.directories.get(SETTINGS['s3_buckets']['original_images'])
-    directory.files.get(normalized_image_identifier)
-  end
-
   def get_s3_tags
     response = connection.get_object_tagging(
       image_holding_tank_s3_bucket,
@@ -121,19 +97,5 @@ class ImagePipeline::EnvironmentImageDownloader
   def downloaded_at_tag
     "#{Rails.env.titleize}DownloadedAt"
   end
-
-  class InvalidImage < StandardError; 
-    attr_reader :s3_key
-
-    def initialize(err, s3_key)
-      @s3_key = s3_key
-      super(err)
-    end
-
-    def to_honeybadger_context
-      {s3_key: s3_key}
-    end    
-  end
-
 
 end
