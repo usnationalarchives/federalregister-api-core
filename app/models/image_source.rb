@@ -24,5 +24,12 @@ class ImageSource < ActiveHash::Base
       monochrome_transparency: false,
       pre_assigned_density: 300,
     },
+    {
+      id: 4,
+      identifier: "gpo_sftp_historical_images",
+      description: "GPO SFTP (Historical Image Backfill)",
+      monochrome_transparency: true,
+      pre_assigned_density: false,
+    },
   ]
 end
