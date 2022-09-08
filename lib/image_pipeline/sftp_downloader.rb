@@ -28,7 +28,7 @@ class ImagePipeline::SftpDownloader
               File.join(temp_images_path, filename_without_path)
             ) 
           end
-        rescue => exception
+        rescue StandardError => exception
           raise "A failure occurred when uploading an original image file to S3: #{exception.backtrace}: #{exception.message} (#{exception.class})"
         ensure
           delete_directory_contents(temp_images_path)
@@ -70,7 +70,7 @@ class ImagePipeline::SftpDownloader
         puts "Downloading #{filename}..."
         data = sftp_connection.download!(filename, "#{temp_images_path}/#{File.basename(filename)}")
       end
-    rescue => exception
+    rescue StandardError => exception
       delete_directory_contents(temp_images_path)
       raise "A failure occurred when downloading eps images from historical GPO SFTP: #{exception.backtrace}: #{exception.message} (#{exception.class})"
     end
