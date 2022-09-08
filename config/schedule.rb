@@ -99,7 +99,7 @@ end
 ########################
 # 2022 IMAGE PIPELINE
 ########################
-if cron_settings["gpo_images"]["streamlined_image_pipeline_sftp_path"]
+if cron_settings["images"]["streamlined_image_pipeline_sftp_path"]
   # Download image from SFTP and place in image holding tank bucket on S3
   # destructive and should only be run in one environment
   every 15.minutes do
