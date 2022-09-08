@@ -72,5 +72,11 @@ module FederalregisterApiCore
     config.action_dispatch.ip_spoofing_check = false
 
     config.active_support.deprecation = :log
+
+    # Adding this to fix Psych::DisallowedClass errors when generating PDFs
+    config.active_record.yaml_column_permitted_classes = [
+      Symbol,
+    ]
+
   end
 end
