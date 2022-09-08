@@ -96,28 +96,28 @@ every 1.day, at: '12:01 am' do
   rake 'content:public_inspection:destroy_published_agency_letters'
 end
 
+########################
+# 2022 IMAGE PIPELINE
+########################
+if cron_settings["gpo_images"]["streamlined_image_pipeline_sftp_path"]
+  # Download image from SFTP and place in image holding tank bucket on S3
+  # destructive and should only be run in one environment
+  every 15.minutes do
+    set :log, 'lock_safe_import_eps'
+    rake 'content:images:lock_safe_import_eps'
+  end
+end
+
+if cron_settings["gpo_images"]["convert_eps"]
+  every 5.minutes do 
+    set :log, 'enqueue_environment_specific_image_downloads'
+    rake 'content:images:enqueue_environment_specific_image_downloads'
+  end
+end
 
 ########################
 # GPO IMAGE IMPORTS
 ########################
-if cron_settings['images']['streamlined_image_pipeline']
-  if cron_settings["gpo_images"]["streamlined_image_pipeline_sftp_path"]
-    # Download image from SFTP and place in image holding tank bucket on S3
-    # destructive and should only be run in one environment
-    every 15.minutes do
-      set :log, 'lock_safe_import_eps'
-      rake 'content:images:lock_safe_import_eps'
-    end
-  end
-
-  if cron_settings["gpo_images"]["convert_eps"]
-    every 5.minutes do 
-      set :log, 'enqueue_environment_specific_image_downloads'
-      rake 'content:images:enqueue_environment_specific_image_downloads'
-    end
-  end
-end
-
 if cron_settings["gpo_images"]["import_eps"]
   # Download image from SFTP and place in private bucket on S3
   # destructive and should only be run in one environment
