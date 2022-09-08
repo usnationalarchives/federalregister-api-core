@@ -2,7 +2,7 @@ module Content
   class ImportDriver
     class StreamlinedEpsImportDriver < Content::ImportDriver
       def run
-        rake_task_name = "content:images:import_eps_lock_safe"
+        rake_task_name = "content:images:import_eps"
 
         Rake::Task[rake_task_name].invoke
       end
