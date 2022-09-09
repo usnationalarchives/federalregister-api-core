@@ -16,7 +16,11 @@ class ImagePipeline::SftpDownloader
 
   FILE_BATCH_SIZE = 25
   def perform
-    directories_at_root = sftp_connection.list_directories(streamlined_image_pipeline_sftp_path)
+    directories_at_root = sftp_connection.
+      list_directories(streamlined_image_pipeline_sftp_path).
+      sort.
+      select{|date_string| Date.parse(date_string.gsub('FR-', "")) < GpoImages::DailyIssueImageProcessor::GPO_IMAGE_START_DATE }
+
     directories_at_root.each do |directory_name|
       puts "Processing files in #{directory_name}..."
       puts "===================================================================="
