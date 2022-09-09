@@ -34,6 +34,10 @@ class GpoImages::Sftp
     end
   end
 
+  def refresh_connection!
+    @connection = start_connection
+  end
+
   private
 
   attr_reader :username, :password
@@ -42,7 +46,7 @@ class GpoImages::Sftp
     if @connection && @connection.open?
       @connection
     else
-      @connection = start_connection
+      refresh_connection!
     end
   end
 

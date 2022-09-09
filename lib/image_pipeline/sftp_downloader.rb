@@ -18,6 +18,7 @@ class ImagePipeline::SftpDownloader
   def perform
     if filenames_to_download.size > 0
       filenames_to_download.in_groups_of(FILE_BATCH_SIZE, false).each do |file_batch|
+        sftp_connection.refresh_connection!
         begin
           download_eps_images(file_batch)
         rescue SftpDownloadFailure => e
