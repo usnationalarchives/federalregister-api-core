@@ -16,16 +16,23 @@ class ImagePipeline::SftpDownloader
 
   FILE_BATCH_SIZE = 25
   def perform
-    if filenames_to_download.size > 0
+    directories_at_root = sftp_connection.list_directories(streamlined_image_pipeline_sftp_path)
+    directories_at_root.each do |directory_name|
+      puts "Processing files in #{directory_name}..."
+      puts "===================================================================="
+      filenames_to_download = get_unchanged_files_list(directory_name)
+
       filenames_to_download.in_groups_of(FILE_BATCH_SIZE, false).each do |file_batch|
         sftp_connection.refresh_connection!
         begin
-          download_eps_images(file_batch)
+          download_files_locally!(file_batch)
         rescue SftpDownloadFailure => e
           Honeybadger.notify(e)
           next #ie skip batch
         end
+
         bucket_directory_connection = fog_aws_connection.directories.new(:key => bucket_name)
+
         begin
           file_batch.each do |filename|
             filename_without_path = File.basename(filename)
@@ -41,6 +48,7 @@ class ImagePipeline::SftpDownloader
         ensure
           delete_directory_contents(temp_images_path)
         end
+
         sftp_connection.remove_files_from_sftp_server(file_batch)
       end
     end
@@ -66,11 +74,7 @@ class ImagePipeline::SftpDownloader
     File.join(Rails.root, 'data', 'efs', 'image_pipeline','temp_image_files')
   end
 
-  def filenames_to_download
-    @filenames_to_download ||= unchanged_files_list.map(&:first)
-  end
-
-  def download_eps_images(filenames)
+  def download_files_locally!(filenames)
     FileUtils.mkdir_p temp_images_path
 
     begin
@@ -89,15 +93,16 @@ class ImagePipeline::SftpDownloader
     FileUtils.rm_rf(Dir.glob(File.join(directory, '*')))
   end
 
-  def unchanged_files_list
+  def get_unchanged_files_list(directory)
     if !Rails.env.test? && SETTINGS['cron']['images']['streamlined_image_pipeline_sftp_path'].blank?
       raise "An SFTP path must be explicitly specified for the streamlined image pipeline"
     end
 
-    initial_list = sftp_connection.filenames_with_sizes(streamlined_image_pipeline_sftp_path, true)
+    initial_list = sftp_connection.filenames_with_sizes(directory, true)
     sleep SLEEP_DURATION_BETWEEN_SFTP_CHECKS
-    delayed_list = sftp_connection.filenames_with_sizes(streamlined_image_pipeline_sftp_path, true)
+    delayed_list = sftp_connection.filenames_with_sizes(directory, true)
     files_unchanged = initial_list & delayed_list
+    files_unchanged.map(&:first)
   end
 
   def streamlined_image_pipeline_sftp_path

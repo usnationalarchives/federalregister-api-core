@@ -6,6 +6,16 @@ class GpoImages::Sftp
     @password = password
   end
 
+  def list_directories(dir)
+    directories = []
+    connection.dir.foreach('/') do |sftp_object|
+      if sftp_object.directory? && ['..','.'].exclude?(sftp_object.name)
+        directories << sftp_object.name
+      end
+    end
+    directories
+  end
+
   def filenames_with_sizes(dir="/", recursive_directory_search=false)
     sftp_directories     = [dir]
     filenames_with_sizes = []
