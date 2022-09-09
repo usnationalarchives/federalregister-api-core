@@ -2,6 +2,8 @@
 class ImagePipeline::SftpDownloader
   SLEEP_DURATION_BETWEEN_SFTP_CHECKS = 5 #seconds
 
+  class SftpDownloadFailure < StandardError; end
+
   def initialize(options={})
     @sftp_connection    = options.fetch(:sftp_connection) do
       GpoImages::Sftp.new(
@@ -12,11 +14,16 @@ class ImagePipeline::SftpDownloader
     @fog_aws_connection = options.fetch(:fog_aws_connection) { GpoImages::FogAwsConnection.new }
   end
 
-  FILE_BATCH_SIZE = 50
+  FILE_BATCH_SIZE = 25
   def perform
     if filenames_to_download.size > 0
       filenames_to_download.in_groups_of(FILE_BATCH_SIZE, false).each do |file_batch|
-        download_eps_images(file_batch)
+        begin
+          download_eps_images(file_batch)
+        rescue SftpDownloadFailure => e
+          Honeybadger.notify(e)
+          next #ie skip batch
+        end
         bucket_directory_connection = fog_aws_connection.directories.new(:key => bucket_name)
         begin
           file_batch.each do |filename|
@@ -71,8 +78,9 @@ class ImagePipeline::SftpDownloader
         data = sftp_connection.download!(filename, "#{temp_images_path}/#{File.basename(filename)}")
       end
     rescue StandardError => exception
+      #NOTE: sftp_connection#download! sometimes raises a non-specific RuntimeError due to permission denials.  Raise our custom error so we can skip to the next batch of images
       delete_directory_contents(temp_images_path)
-      raise "A failure occurred when downloading eps images from historical GPO SFTP: #{exception.backtrace}: #{exception.message} (#{exception.class})"
+      raise SftpDownloadFailure.new("A failure occurred when downloading a file from historical GPO SFTP: #{exception.backtrace}: #{exception.message} (#{exception.class})")
     end
   end
 
