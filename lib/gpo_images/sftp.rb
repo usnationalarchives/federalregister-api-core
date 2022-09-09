@@ -13,7 +13,12 @@ class GpoImages::Sftp
       sftp_directory = sftp_directories.pop
       connection.dir.foreach(sftp_directory) do |sftp_object|
         if sftp_object.file? && (sftp_object.attributes.size > 0)
-          filenames_with_sizes << ["#{sftp_directory}/#{sftp_object.name}", sftp_object.attributes.size]
+          if sftp_directory == '/'
+            path = ''
+          else
+            path = "#{sftp_directory}/"
+          end
+          filenames_with_sizes << ["#{path}#{sftp_object.name}", sftp_object.attributes.size]
         elsif recursive_directory_search && sftp_object.directory? && ['..','.'].exclude?(sftp_object.name)
           if sftp_directory == '/'
             path = '/'
