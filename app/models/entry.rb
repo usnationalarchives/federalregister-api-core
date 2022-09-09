@@ -153,7 +153,7 @@ class Entry < ApplicationModel
     agency_name_assignments: [:agency_name],
     docket: [:docket_documents],
     entry_regulation_id_numbers: [:current_regulatory_plan],
-    gpo_graphics: [:gpo_graphic_usages],
+    #gpo_graphics: [:gpo_graphic_usages], # NOTE: This should be opted back in to improve performance once issue #217 is resolved.
     images: [:image_usages],
   ) }
 
