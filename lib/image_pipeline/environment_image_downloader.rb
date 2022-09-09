@@ -37,8 +37,14 @@ class ImagePipeline::EnvironmentImageDownloader
       # Resave the bad image and bypass the calculation/storage of image-specific metadata and generating variants.
       image.skip_storing_image_specific_metadata = true
       image.skip_variant_generation              = true
+      if gpo_scrunched_image?(temp_file.path)
+        error_message = 'gpo_scrunched'
+      else
+        error_message = e.class.to_s
+      end
+
       image.assign_attributes(
-        error:                                e.class.to_s,
+        error:                                error_message,
         image:                                temp_file
       )
       persist_image!(image)
@@ -62,6 +68,12 @@ class ImagePipeline::EnvironmentImageDownloader
   private
 
   attr_reader :s3_key, :connection
+
+  def gpo_scrunched_image?(path)
+    line = Terrapin::CommandLine.new("head -c 10", ":file_path")
+    output = line.run(file_path: path)
+    output.include? 'GPO'
+  end
 
   def persist_image!(image)
     if image.image_usages.present?
