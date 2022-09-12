@@ -55,7 +55,7 @@ module Content
     end
 
     def other_process_is_old?
-      (Time.current - File.stat(lock_file_path).ctime) > 60.minutes
+      (Time.current - File.stat(lock_file_path).ctime) > timeout_length
     end
 
     def other_process_is_running?
@@ -93,6 +93,10 @@ module Content
     end
 
     private
+
+    def timeout_length
+      60.minutes
+    end
 
     def lock_file_path
       "#{RAILS_ROOT}/tmp/#{lockfile_name}"
