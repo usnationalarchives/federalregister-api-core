@@ -13,12 +13,20 @@ namespace :content do
 
     desc "Enqueue environment-specific jobs for downloading/processing from the image holding tank"
     task :enqueue_environment_specific_image_downloads => :environment do
+      enqueued_s3_keys = Set.new
+      Sidekiq::Queue.new('gpo_image_import').each do |job|
+        enqueued_s3_keys << job.args.first
+      end
+
       GpoImages::FogAwsConnection.
         new.
         connection.
           directories.new(:key => SETTINGS['s3_buckets']['image_holding_tank']).
-          files.each do |file|
-            ImagePipeline::EnvironmentImageDownloader.perform_async(file.key)
+          files.
+          map{|file| file.key}.
+          select{|s3_key| enqueued_s3_keys.exclude?(s3_key) }.
+          each do |s3_key|
+            ImagePipeline::EnvironmentImageDownloader.perform_async(s3_key)
           end
     end
 
