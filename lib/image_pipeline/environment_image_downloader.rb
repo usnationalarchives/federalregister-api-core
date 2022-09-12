@@ -9,7 +9,7 @@ class ImagePipeline::EnvironmentImageDownloader
   def perform(s3_key)
     @s3_key = s3_key
     @connection = GpoImages::FogAwsConnection.new.connection
-    if already_downloaded? 
+    if already_downloaded_or_not_found? 
       return
     end
 
@@ -93,9 +93,17 @@ class ImagePipeline::EnvironmentImageDownloader
     SETTINGS['s3_buckets']['image_holding_tank']
   end
 
-  def already_downloaded?
-    #TODO: Possibly handle situation when image doesn't exist at all so we don't hard fail
-    get_s3_tags[downloaded_at_tag]
+  def already_downloaded_or_not_found?
+    begin
+      get_s3_tags[downloaded_at_tag]
+    rescue Excon::Error::NotFound => e
+      # If the image does not exist in the holding tank and we have an image already stored in the image originals, assume the image has been downloaded and it has already been deleted from the holding tank by the ImageHoldingTankRemover
+      if Image.where.not(image_file_name: nil).find_by(identifier: normalized_image_identifier)
+        true
+      else
+        raise e
+      end
+    end
   end
 
   def get_s3_tags
