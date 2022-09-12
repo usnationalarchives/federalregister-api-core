@@ -1,5 +1,5 @@
 class GpoImages::Sftp
-  delegate :remove, :close, :download!, :to => :connection
+  delegate :remove, :close, :download!, :rmdir!, :to => :connection
 
   def initialize(username: Rails.application.secrets[:gpo_sftp][:username], password: Rails.application.secrets[:gpo_sftp][:password])
     @username = username

@@ -16,6 +16,7 @@ class ImagePipeline::SftpDownloader
 
   FILE_BATCH_SIZE = 25
   def perform
+    #TODO: Add handling for files at base directory 
     directories_at_root = sftp_connection.
       list_directories(streamlined_image_pipeline_sftp_path).
       sort.
@@ -55,6 +56,14 @@ class ImagePipeline::SftpDownloader
 
         sftp_connection.remove_files_from_sftp_server(file_batch)
       end
+
+      # Clean up directory structure
+      if get_unchanged_files_list(directory_name, sleep_duration: 0).count == 0
+        # NOTE: #rmdir! does not delete dir unless empty
+        sftp_connection.rmdir!("#{directory_name}/graphics-submitted")
+        sftp_connection.rmdir!(directory_name)
+      end
+
     end
   end
 
@@ -97,13 +106,13 @@ class ImagePipeline::SftpDownloader
     FileUtils.rm_rf(Dir.glob(File.join(directory, '*')))
   end
 
-  def get_unchanged_files_list(directory)
+  def get_unchanged_files_list(directory, sleep_duration: nil)
     if !Rails.env.test? && SETTINGS['cron']['images']['streamlined_image_pipeline_sftp_path'].blank?
       raise "An SFTP path must be explicitly specified for the streamlined image pipeline"
     end
 
     initial_list = sftp_connection.filenames_with_sizes(directory, true)
-    sleep SLEEP_DURATION_BETWEEN_SFTP_CHECKS
+    sleep sleep_duration || SLEEP_DURATION_BETWEEN_SFTP_CHECKS
     delayed_list = sftp_connection.filenames_with_sizes(directory, true)
     files_unchanged = initial_list & delayed_list
     files_unchanged.map(&:first)
