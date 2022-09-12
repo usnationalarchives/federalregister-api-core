@@ -25,6 +25,7 @@ namespace :content do
           files.
           map{|file| file.key}.
           select{|s3_key| enqueued_s3_keys.exclude?(s3_key) }.
+          select{|s3_key| s3_key.include?('.')}.
           each do |s3_key|
             ImagePipeline::EnvironmentImageDownloader.perform_async(s3_key)
           end
