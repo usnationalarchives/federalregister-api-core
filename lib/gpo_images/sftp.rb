@@ -22,7 +22,7 @@ class GpoImages::Sftp
     while sftp_directories.size > 0
       sftp_directory = sftp_directories.pop
       connection.dir.foreach(sftp_directory) do |sftp_object|
-        if sftp_object.file? && (sftp_object.attributes.size > 0)
+        if sftp_object.file? && (sftp_object.attributes.size > 0) && !sftp_object.name.start_with?('.nfs')
           if sftp_directory == '/'
             path = ''
           else
