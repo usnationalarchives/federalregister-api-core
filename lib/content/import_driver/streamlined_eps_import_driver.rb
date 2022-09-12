@@ -10,6 +10,12 @@ module Content
       def lockfile_name
         "streamlined_eps_import_driver.lock"
       end
+
+      private
+
+      def timeout_length
+        24.hours
+      end
     end
   end
 end
