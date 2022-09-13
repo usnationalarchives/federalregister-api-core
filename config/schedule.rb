@@ -102,7 +102,7 @@ end
 if cron_settings["images"]["streamlined_image_pipeline_sftp_path"]
   # Download image from SFTP and place in image holding tank bucket on S3
   # destructive and should only be run in one environment
-  every 15.minutes do
+  every 5.minutes do
     set :log, 'lock_safe_import_eps'
     rake 'content:images:lock_safe_import_eps'
   end
