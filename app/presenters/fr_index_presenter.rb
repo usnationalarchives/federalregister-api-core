@@ -65,7 +65,12 @@ class FrIndexPresenter
   end
 
   def max_page_number
-    entries_scope.maximum(:end_page)
+    max_page_number = entries_scope.maximum(:end_page)
+    if max_page_number.odd?
+      max_page_number + 1
+    else
+      max_page_number
+    end
   end
 
   def max_issue_number
