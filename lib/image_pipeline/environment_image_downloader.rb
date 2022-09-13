@@ -25,7 +25,7 @@ class ImagePipeline::EnvironmentImageDownloader
         identifier: normalized_image_identifier,
       )
       image.source_id = ImageSource::GPO_SFTP_HISTORICAL_IMAGES.id
-      image.assign_attributes(image: temp_file)
+      image.assign_attributes(image: temp_file, error: nil) # Ensure we remove existing errors
       if !image.image.present?
         # In some cases, it appears that MiniMagick may silently rescue invalid image errors.  If we hit this block, make sure to add handling that allows for saving of the invalid image.
         raise NotImplementedError
