@@ -16,13 +16,13 @@ class GpoImages::Sftp
     directories
   end
 
-  def filenames_with_sizes(dir="/", recursive_directory_search=false)
+  def filenames_with_sizes(dir="/", recursive_directory_search=false, exclude_empty_files=true)
     sftp_directories     = [dir]
     filenames_with_sizes = []
     while sftp_directories.size > 0
       sftp_directory = sftp_directories.pop
       connection.dir.foreach(sftp_directory) do |sftp_object|
-        if sftp_object.file? && (sftp_object.attributes.size > 0) && !sftp_object.name.start_with?('.nfs')
+        if sftp_object.file? && !sftp_object.name.start_with?('.nfs') && (exclude_empty_files ? (sftp_object.attributes.size > 0) : true)
           if sftp_directory == '/'
             path = ''
           else
