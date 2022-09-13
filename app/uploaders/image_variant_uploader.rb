@@ -61,9 +61,15 @@ class ImageVariantUploader < CarrierWave::Uploader::Base
       model.original_image.image_source,
       model.image_style
     ).perform
-    `convert #{image_magick_settings} '#{current_path}' #{model.image_style.image_magick_operators} '#{output_path}'` #NOTE: "Generally speaking a setting should come before an image filename and an image operator after the image filename."
-  
-    File.rename output_path, current_path
+
+    stdout, stderr, status = Open3.capture3(
+      "convert #{image_magick_settings} '#{current_path}' #{model.image_style.image_magick_operators} '#{output_path}'" #NOTE: "Generally speaking a setting should come before an image filename and an image operator after the image filename."
+    ) 
+    if status.success?
+      File.rename output_path, current_path
+    else
+      raise Honeybadger.notify("Exit Status #{status.exitstatus}: #{stderr} : #{stdout}")
+    end
   end
 
   def png_crush
