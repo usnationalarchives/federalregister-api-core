@@ -62,7 +62,7 @@ class ImagePipeline::EnvironmentImageDownloader
     )
 
     # Enqueue job to check on removing from holding tank
-    ImagePipeline::ImageHoldingTankRemover.perform_in(10.minutes, s3_key)
+    ImagePipeline::ImageHoldingTankRemover.perform_in(1.minutes, s3_key)
   end
 
   private
