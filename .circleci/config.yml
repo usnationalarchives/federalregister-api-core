@@ -1,32 +1,15 @@
-version: 2
+version: 2.1
 
-jobs:
-  build:
-    docker:
-      - image: criticaljuncture/pilot
-    steps:
-      - checkout
-      - setup_remote_docker:
-          reusable: true
-          exclusive: false
-      - run:
-          name: Authenticate to docker repository
-          command: |
-            set -x
-            eval `aws ecr --no-include-email get-login`
-            docker login -u $QUAY_USERNAME -p $QUAY_PASSWORD quay.io
-      - run:
-          name: Build container
-          command: |
-            /var/lib/pilot/bin/pilot build federalregister-api-core .
-      - run:
-          name: Start container and run tests
-          command: |
-            set -x
-            docker-compose -f docker/compose/ci.yml run web bash -c "bin/wait_for_mysql && bin/wait_for_es && rake db:create db:schema:load ASSUME_UNITIALIZED_DB=1 && RAILS_ENV=test rspec && rake jshint"
-      - deploy:
-          name: Push to latest if main
-          command: |
-            if [ "${CIRCLE_BRANCH}" == "main" ]; then
-              /var/lib/pilot/bin/pilot push federalregister-api-core
-            fi
+orbs:
+  cj: criticaljuncture/cj-orb@0.1
+
+workflows:
+  workflow:
+    jobs:
+      - cj/build_rails_image:
+          branch: << pipeline.git.branch >>
+          context: [ofr-ecr, ofr-quay, orb-slack, pilot, sidekiq-pro]
+          ecr: true
+          repo_image: federalregister-api-core 
+          skip_lint: true
+          test_command: docker-compose -f docker/compose/ci.yml run web bash -c "bin/wait_for_mysql && bin/wait_for_es && rake db:create db:schema:load ASSUME_UNITIALIZED_DB=1 && RAILS_ENV=test rspec && rake jshint"
