@@ -101,7 +101,7 @@ module GpoImages
         xml_doc = Nokogiri::XML(document.full_xml)
         xml_doc.css(xml_tag).each do |node|
           image_usages << ImageUsage.new(
-            normalize_image_identifier(node.text),
+            normalize_image_identifier(node.text).downcase,
             document.document_number,
             node.text
           )
