@@ -1,41 +1,42 @@
-web:
-  image: 264372021245.dkr.ecr.us-east-1.amazonaws.com/federalregister-api-core:latest
-  ports:
-    - "3000:3000"
-  expose:
-    - "3000"
-  environment:
-    - WEB_PORT=3000
-    - PASSENGER_MIN_INSTANCES=2
-    - MYSQL_PORT_3306_TCP_ADDR=mysql
-    - REDIS_PORT_6379_TCP_ADDR=redis
-    - HONEYBADGER_API_KEY=''
-    - RAILS_SESSION_KEY=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-    - ELASTICSEARCH_HOST=https://admin:admin@elasticsearch:9200
-    - LD_LIBRARY_PATH=/usr/local/lib
-  restart: always
+services:
+  web:
+    image: 264372021245.dkr.ecr.us-east-1.amazonaws.com/federalregister-api-core:latest
+    ports:
+      - "3000:3000"
+    expose:
+      - "3000"
+    environment:
+      - WEB_PORT=3000
+      - PASSENGER_MIN_INSTANCES=2
+      - MYSQL_PORT_3306_TCP_ADDR=mysql
+      - REDIS_PORT_6379_TCP_ADDR=redis
+      - HONEYBADGER_API_KEY=''
+      - RAILS_SESSION_KEY=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+      - ELASTICSEARCH_HOST=https://admin:admin@elasticsearch:9200
+      - LD_LIBRARY_PATH=/usr/local/lib
+    restart: always
 
-mysql:
-  image: mysql:5.6
-  expose:
-    - "3306"
-  environment:
-    - MYSQL_ALLOW_EMPTY_PASSWORD='yes'
+  mysql:
+    image: mysql:5.6
+    expose:
+      - "3306"
+    environment:
+      - MYSQL_ALLOW_EMPTY_PASSWORD='yes'
 
-redis:
-  image: redis:6-alpine
-  expose:
-    - "6379"
+  redis:
+    image: redis:6-alpine
+    expose:
+      - "6379"
 
-elasticsearch:
-  image: amazon/opendistro-for-elasticsearch:1.3.0
-  ports:
-    - "9200:9200"
-  expose:
-    - "9200"
-  environment:
-    - http.host=0.0.0.0
-    - transport.host=127.0.0.1
-    - network.host=0.0.0.0
-    - discovery.type=single-node
-    - bootstrap.memory_lock=true
+  elasticsearch:
+    image: amazon/opendistro-for-elasticsearch:1.3.0
+    ports:
+      - "9200:9200"
+    expose:
+      - "9200"
+    environment:
+      - http.host=0.0.0.0
+      - transport.host=127.0.0.1
+      - network.host=0.0.0.0
+      - discovery.type=single-node
+      - bootstrap.memory_lock=true

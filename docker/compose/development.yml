@@ -1,40 +1,41 @@
-web:
-  extends:
-    file: shared.yml
-    service: web
-  environment:
-    - RAILS_ENV=development
-    - ELASTICSEARCH_HOST=http://admin:admin@elasticsearch:9200
-  links:
-    - elasticsearch
+services:
+  web:
+    extends:
+      file: shared.yml
+      service: web
+    environment:
+      - RAILS_ENV=development
+      - ELASTICSEARCH_HOST=http://admin:admin@elasticsearch:9200
+    links:
+      - elasticsearch
 
-mysql:
-  extends:
-    file: shared.yml
-    service: mysql
-  ports:
-    - "3306:3306"
+  mysql:
+    extends:
+      file: shared.yml
+      service: mysql
+    ports:
+      - "3306:3306"
 
-redis:
-  extends:
-    file: shared.yml
-    service: redis
-  ports:
-    - "6379:6379"
+  redis:
+    extends:
+      file: shared.yml
+      service: redis
+    ports:
+      - "6379:6379"
 
-elasticsearch:
-  extends:
-    file: shared.yml
-    service: elasticsearch
-  environment:
-    - opendistro_security.ssl.http.enabled=false
+  elasticsearch:
+    extends:
+      file: shared.yml
+      service: elasticsearch
+    environment:
+      - opendistro_security.ssl.http.enabled=false
 
-kibana:
-  image: amazon/opendistro-for-elasticsearch-kibana:1.3.0
-  links:
-    - elasticsearch
-  ports:
-    - "5601:5601"
-  environment:
-    - ELASTICSEARCH_URL=http://elasticsearch:9200
-    - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+  kibana:
+    image: amazon/opendistro-for-elasticsearch-kibana:1.3.0
+    links:
+      - elasticsearch
+    ports:
+      - "5601:5601"
+    environment:
+      - ELASTICSEARCH_URL=http://elasticsearch:9200
+      - ELASTICSEARCH_HOSTS=http://elasticsearch:9200

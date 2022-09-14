@@ -1,31 +1,32 @@
-web:
-  image: $CI_IMAGE
-  extends:
-    file: shared.yml
-    service: web
-  environment:
-    - RAILS_ENV=test
-    - DB_STRUCTURE_ACCESS_KEY
-    - DB_STRUCTURE_SECRET
-    - ELASTICSEARCH_HOST=http://admin:admin@elasticsearch:9200
-    - MYSQL_57_STRICT_SETTINGS=true
-  links:
-    - mysql
-    - redis
-    - elasticsearch
-mysql:
-  extends:
-    file: shared.yml
-    service: mysql
+services:
+  web:
+    image: $CI_IMAGE
+    extends:
+      file: shared.yml
+      service: web
+    environment:
+      - RAILS_ENV=test
+      - DB_STRUCTURE_ACCESS_KEY
+      - DB_STRUCTURE_SECRET
+      - ELASTICSEARCH_HOST=http://admin:admin@elasticsearch:9200
+      - MYSQL_57_STRICT_SETTINGS=true
+    links:
+      - mysql
+      - redis
+      - elasticsearch
+  mysql:
+    extends:
+      file: shared.yml
+      service: mysql
 
-redis:
-  extends:
-    file: shared.yml
-    service: redis
+  redis:
+    extends:
+      file: shared.yml
+      service: redis
 
-elasticsearch:
-  extends:
-    file: shared.yml
-    service: elasticsearch
-  environment:
-    - opendistro_security.ssl.http.enabled=false
+  elasticsearch:
+    extends:
+      file: shared.yml
+      service: elasticsearch
+    environment:
+      - opendistro_security.ssl.http.enabled=false
