@@ -337,6 +337,8 @@ GEM
       multi_xml
     os (1.0.0)
     parallel (1.19.1)
+    parallel_tests (3.12.1)
+      parallel
     parser (2.7.0.2)
       ast (~> 2.4.0)
     passenger (6.0.4)
@@ -411,6 +413,10 @@ GEM
       vegas (~> 0.1.2)
     rexml (3.2.5)
     rinku (2.0.6)
+    rspec (3.10.0)
+      rspec-core (~> 3.10.0)
+      rspec-expectations (~> 3.10.0)
+      rspec-mocks (~> 3.10.0)
     rspec-core (3.10.1)
       rspec-support (~> 3.10.0)
     rspec-expectations (3.10.2)
@@ -428,6 +434,8 @@ GEM
       rspec-mocks (~> 3.10)
       rspec-support (~> 3.10)
     rspec-support (3.10.3)
+    rspec_junit_formatter (0.5.1)
+      rspec-core (>= 2, < 4, != 2.12.0)
     rubocop (0.79.0)
       jaro_winkler (~> 1.5.1)
       parallel (~> 1.10)
@@ -496,6 +504,10 @@ GEM
     timeout (0.3.0)
     tins (0.8.0)
     titleize (1.3.0)
+    turbo_tests (1.3.0)
+      bundler
+      parallel_tests (~> 3.3)
+      rspec (~> 3.10)
     typhoeus (1.0.1)
       ethon (>= 0.8.0)
     tzinfo (2.0.5)
@@ -589,6 +601,7 @@ DEPENDENCIES
   net-ssh
   nokogiri
   open_calais
+  parallel_tests
   passenger (~> 6.0)
   popen4
   proc-wait3
@@ -604,6 +617,7 @@ DEPENDENCIES
   rexml
   rinku
   rspec-rails
+  rspec_junit_formatter
   rubocop
   rubyzip
   sass-rails
@@ -617,6 +631,7 @@ DEPENDENCIES
   terrapin
   timecop
   titleize
+  turbo_tests
   typhoeus (~> 1.0, >= 1.0.1)
   uglifier
   vcr

@@ -1,2 +1,4 @@
---colour
+--color
+--require spec_helper
 --format progress
+--format RspecJunitFormatter --out tmp/test-results/rspec/rspec<%= ENV["TEST_ENV_NUMBER"] %>.xml

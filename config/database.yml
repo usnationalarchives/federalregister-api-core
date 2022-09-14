@@ -15,7 +15,7 @@ development:
 
 test:
   <<: *shared
-  database: <%= ENV["MYSQL_DATABASE"] || 'fr2' %>_test
+  database: <%= ENV["MYSQL_DATABASE"] || 'fr2' %>_test<%= (ENV['TEST_ENV_NUMBER'] == "1") ? "" : ENV['TEST_ENV_NUMBER'] %>
 
 staging:
   <<: *shared

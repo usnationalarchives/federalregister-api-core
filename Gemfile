@@ -155,7 +155,10 @@ group :development do
 end
 
 group :development, :test do
+  gem 'parallel_tests' # parallel rspec
   gem 'pry'
   gem 'pry-remote'
+  gem "rspec_junit_formatter" # formatting rspec results for CI
   gem 'rspec-rails'
+  gem "turbo_tests" # parallel rspec
 end
