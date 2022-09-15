@@ -33,6 +33,15 @@ class ImagePipeline::EnvironmentImageDownloader
       persist_image!(image)
     rescue Excon::Error::NotFound => e
       raise "Object not found on S3: #{s3_key}" 
+    rescue Timeout::Error
+      image.skip_storing_image_specific_metadata = true
+      image.skip_variant_generation              = true
+
+      image.assign_attributes(
+        error: 'minimagick_processing_timeout',
+        image: temp_file
+      )
+      persist_image!(image)
     rescue MiniMagick::Invalid => e
       # Resave the bad image and bypass the calculation/storage of image-specific metadata and generating variants.
       image.skip_storing_image_specific_metadata = true
