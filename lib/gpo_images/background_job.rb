@@ -96,7 +96,7 @@ module GpoImages
     def identifier
       normalize_image_identifier(
         File.basename(eps_filename, File.extname(eps_filename))
-      )
+      ).downcase
     end
 
     def redis
