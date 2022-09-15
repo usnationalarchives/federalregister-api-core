@@ -108,7 +108,7 @@ if cron_settings["images"]["streamlined_image_pipeline_sftp_path"]
   end
 end
 
-if cron_settings["gpo_images"]["convert_eps"]
+if false#cron_settings["gpo_images"]["convert_eps"]
   every 5.minutes do 
     set :log, 'enqueue_environment_specific_image_downloads'
     rake 'content:images:enqueue_environment_specific_image_downloads'
