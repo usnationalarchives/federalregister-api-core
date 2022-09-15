@@ -1,6 +1,6 @@
 require "spec_helper"
 
-RSpec.describe "Entries API", :type => :request do
+RSpec.describe "Entries API", :type => :request, :es => true do
 
   it "Basic search query" do
     agency = Factory(:agency)

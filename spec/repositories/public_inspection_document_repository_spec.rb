@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe PublicInspectionDocumentRepository do
+describe PublicInspectionDocumentRepository, :es => true do
   let(:agency) { Factory(:agency) }
   before(:all) do
     recreate_actual_pi_index_and_assign_alias!

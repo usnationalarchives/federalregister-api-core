@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe ElasticsearchIndexer do
+describe ElasticsearchIndexer, es: true do
 
   before(:each) do
     $entry_repository.create_index!(force: true)

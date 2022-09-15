@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe EsEntrySearch do
+describe EsEntrySearch, es: true do
 
   def build_entry_double(hsh)
     entry = double('entry')

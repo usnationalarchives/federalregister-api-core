@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe EntryRepository do
+describe EntryRepository, es: true do
   before(:each) do
     $entry_repository.create_index!(force: true)
   end

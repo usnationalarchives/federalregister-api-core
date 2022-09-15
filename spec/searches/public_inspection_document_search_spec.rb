@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe EsPublicInspectionDocumentSearch do
+describe EsPublicInspectionDocumentSearch, es: true do
   before(:each) do
     recreate_actual_pi_index_and_assign_alias!
   end
