@@ -1,5 +1,9 @@
 class EntryRepository < BaseRepository
-  index_name ['fr-entries', Rails.env, SETTINGS['elasticsearch']['deployment_environment']].compact.join('-')
+  index_name [
+    'fr-entries',
+    (Rails.env.test? ? "test#{((ENV['TEST_ENV_NUMBER'] == "1") ? "" : ENV['TEST_ENV_NUMBER'])}" : Rails.env),
+    SETTINGS['elasticsearch']['deployment_environment']
+  ].compact.join('-')
   klass Entry
 
   settings number_of_shards: SETTINGS['elasticsearch']['entry_index_shards'], analysis: {
