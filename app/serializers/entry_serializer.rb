@@ -202,6 +202,10 @@ class EntrySerializer < ApplicationSerializer
       vals.merge!(:agency_id => entry.regulations_dot_gov_agency_id)
     end
 
+    if entry.checked_regulationsdotgov_at
+      vals.merge!(checked_regulationsdotgov_at: entry.checked_regulationsdotgov_at&.utc&.iso8601)
+    end
+
     docket = entry.docket
     if docket
       docket_info = {
