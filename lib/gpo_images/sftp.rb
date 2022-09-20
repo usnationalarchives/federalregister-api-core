@@ -67,7 +67,7 @@ class GpoImages::Sftp
 
   def start_connection
     Net::SFTP.start(
-      'ftp.gpo.gov',
+      SETTINGS['cron']['images']['sftp_hostname'],
       username,
       :password => password,
       :auth_methods => ["password"],
