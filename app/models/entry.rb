@@ -154,7 +154,7 @@ class Entry < ApplicationModel
     docket: [:docket_documents],
     entry_regulation_id_numbers: [:current_regulatory_plan],
     gpo_graphics: [:gpo_graphic_usages],
-    images: [:image_usages],
+    images: [:image_usages, :image_variants]
   ) }
 
   def self.published_today

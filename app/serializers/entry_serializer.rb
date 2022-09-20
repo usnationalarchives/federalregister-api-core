@@ -90,9 +90,7 @@ class EntrySerializer < ApplicationSerializer
     if SETTINGS['feature_flags']['use_carrierwave_images_in_api']
       entry.
       images.
-        where.not(made_public_at: nil).
-        includes(:image_variants).
-        select{|x| x.image_variants.present?}. #ie only display an image key if variants available
+        select{|image| image.made_public_at.present? && image.image_variants.present?}.
         each_with_object(Hash.new) do |image, hsh|
           hsh[image.identifier] = image.image_variants.each_with_object(Hash.new) do |image_variant, styles_hsh|
             styles_hsh[image_variant.style] = "https://#{image_variant.image.url}"
