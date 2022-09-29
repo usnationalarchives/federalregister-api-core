@@ -1,6 +1,5 @@
 module Content
   class PublicInspectionImporter
-    load './lib/tasks/content_agency_assignments.rake'
 
     JOB_TIMEOUT = 10.minutes
     BLACKLIST_KEY = 'public_inspection:import:blacklist'
@@ -84,10 +83,6 @@ module Content
         # generate toc so that it is available immediately
         generate_toc(issue.published_at.to_date)
         Content::PublicInspectionImporter::CacheManager.manage_cache(self)
-
-        # ensure agency relationships are correct - this is slow
-        load "#{Rails.root}/Rakefile"
-        Rake::Task['content:agency_assignments:recalculate'].invoke
 
         # regenerate toc to ensure its correct
         generate_toc(issue.published_at.to_date)

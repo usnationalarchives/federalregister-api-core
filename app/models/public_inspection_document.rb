@@ -27,8 +27,7 @@ class PublicInspectionDocument < ApplicationModel
                           :association_foreign_key => :issue_id
   has_many :agency_name_assignments, -> { order("agency_name_assignments.position") }, :as => :assignable, :dependent => :destroy
   has_many :agency_names, :through => :agency_name_assignments
-  has_many :agency_assignments, -> { order("agency_assignments.position") }, :as => :assignable, :dependent => :destroy
-  has_many :agencies, -> { order("agency_assignments.position") }, :through => :agency_assignments, :extend => Agency::AssociationExtensions
+  has_many :agencies, -> { distinct}, :through => :agency_names, :extend => Agency::AssociationExtensions
   has_many :docket_numbers, -> { order("docket_numbers.position") }, :as => :assignable, :dependent => :destroy
   has_many :pil_agency_letters, :dependent => :destroy
 
@@ -37,7 +36,7 @@ class PublicInspectionDocument < ApplicationModel
   before_save :set_content_type
 
   scope :revoked, -> { where(publication_date: nil) }
-  scope :pre_joined_for_es_indexing, -> { includes(:agency_assignments, :docket_numbers) }
+  scope :pre_joined_for_es_indexing, -> { includes(:docket_numbers) }
 
   include Shared::DoesDocumentNumberNormalization
 

@@ -70,7 +70,6 @@ class Content::PublicInspectionImporter::DocumentImporter
 
     if document.agency_names.map(&:agency_id).sort != agencies_from_feed.map(&:agency_id).sort
       document.agency_names = agencies_from_feed
-      document.agency_ids = document.agency_names.map(&:agency_id)
       document.updated_at = Time.now
     end
   end

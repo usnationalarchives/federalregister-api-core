@@ -4,7 +4,6 @@ class AgencyName < ApplicationModel
   has_many :agency_name_assignments
   has_many :entries, :through => :agency_name_assignments
   has_many :public_inspection_documents, :through => :agency_name_assignments
-  has_many :agency_assignments, :dependent => :destroy
 
   validates_presence_of :name
   validate :does_not_have_agency_if_void
@@ -27,31 +26,6 @@ class AgencyName < ApplicationModel
 
   def update_agency_assignments
     if saved_change_to_agency_id?
-      if agency_id_before_last_save.present?
-        entry_ids = agency_assignments.map(&:assignable_id)
-
-        if agency_id.present?
-          agency_assignments.each do |agency_assignment|  
-            agency_assignment.agency_id = agency_id
-            agency_assignment.save!
-          end
-        else
-          agency_assignments.each do |agency_assignment|
-            agency_assignment.destroy
-          end
-        end
-      else
-        ActiveRecord::Base.connection.execute("INSERT INTO agency_assignments
-                            (agency_id, agency_name_id, assignable_type, assignable_id, position)
-                            SELECT #{agency_id} AS agency_id,
-                                   agency_name_assignments.agency_name_id AS agency_name_id,
-                                   agency_name_assignments.assignable_type,
-                                   agency_name_assignments.assignable_id,
-                                   agency_name_assignments.position
-                            FROM agency_name_assignments
-                            WHERE agency_name_assignments.agency_name_id = #{id}")
-        entry_ids = self.entry_ids
-      end
 
       # mark entries as changed
       if entry_ids.present?

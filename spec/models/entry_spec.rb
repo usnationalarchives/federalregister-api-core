@@ -113,14 +113,6 @@ describe Entry do
       AgencyNameAssignment.count.should == 0
     end
 
-    it "removes all agency_assignments" do
-      ElasticsearchIndexer.stub(:handle_entry_changes)
-      entry = Factory(:entry, :agency_names => [Factory(:agency_name), Factory(:agency_name)])
-      AgencyAssignment.count.should == 2
-      entry.destroy
-      AgencyAssignment.count.should == 0
-    end
-
     it "removes all topic_name_assignments" do
       entry = Factory(:entry, :topic_names => [Factory(:topic_name), Factory(:topic_name)])
       TopicNameAssignment.count.should == 2

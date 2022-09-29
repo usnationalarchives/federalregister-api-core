@@ -15,14 +15,6 @@ describe AgencyName do
       AgencyNameAssignment.count == 0
     end
 
-    it "destroys all related agency_assignments" do
-      AgencyAssignment.count == 0
-      agency_name = Factory(:agency_name)
-      Factory(:entry, :agency_names => [agency_name])
-      AgencyAssignment.count == 1
-      agency_name.destroy
-      AgencyAssignment.count == 0
-    end
   end
 
   describe 'update' do
@@ -31,7 +23,6 @@ describe AgencyName do
       agency_name = Factory(:agency_name, :agency_id => nil)
       entry = Factory(:entry, :agency_names => [agency_name])
       entry.agencies.should == []
-      expect(ElasticsearchIndexer).to receive(:handle_entry_changes)
 
       agency_name.update(:agency_id => agency.id)
       entry.reload
@@ -51,11 +42,9 @@ describe AgencyName do
       agency_name_2.update(:agency_id => agency_2.id)
       entry.reload
       entry.agencies.should == [agency_2, agency_1]
-      entry.agency_assignments.map(&:position) == [1,2]
     end
 
     it "modifies agency_assignments when agency_id changes" do
-      expect(ElasticsearchIndexer).to receive(:handle_entry_changes)
       agency_1 = Factory(:agency)
       agency_name = Factory(:agency_name, :agency => agency_1)
       entry = Factory(:entry, :agency_names => [agency_name])

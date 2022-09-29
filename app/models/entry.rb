@@ -94,8 +94,7 @@ class Entry < ApplicationModel
 
   has_many :agency_name_assignments, -> { order("agency_name_assignments.position") }, :as => :assignable, :dependent => :destroy
   has_many :agency_names, :through => :agency_name_assignments
-  has_many :agency_assignments, -> { order("agency_assignments.position") }, :as => :assignable, :dependent => :destroy
-  has_many :agencies, :through => :agency_assignments, :extend => Agency::AssociationExtensions
+  has_many :agencies, -> { distinct }, :through => :agency_names, :extend => Agency::AssociationExtensions
 
   has_many :events, :dependent => :destroy
   has_one :comments_close_date, -> { where(:event_type => 'CommentsClose') }, :class_name => "Event", :autosave => true
@@ -135,7 +134,6 @@ class Entry < ApplicationModel
 
   scope :pre_joined_for_es_indexing, -> { includes(
     :agencies,
-    :agency_assignments,
     :agency_names,
     :citations,
     :comments_close_date,

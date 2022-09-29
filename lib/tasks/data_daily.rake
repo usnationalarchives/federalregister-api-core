@@ -48,7 +48,6 @@ namespace :data do
     task :full => %w(
       content:section_highlights:clone
       data:daily:basic
-      content:agency_assignments:recalculate
       content:public_inspection:import:entry_id
       elasticsearch:reindex_entry_changes
 
@@ -69,7 +68,6 @@ namespace :data do
       content:gpo_images:process_daily_issue_images
       content:entries:json:compile:daily_toc
 
-      content:agency_assignments:recalculate
       content:public_inspection:import:entry_id
       elasticsearch:reindex_entry_changes
 

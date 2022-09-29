@@ -6,20 +6,14 @@ class AgencyNameAssignment < ApplicationModel
   belongs_to :entry, :foreign_key => :assignable_id
   belongs_to :public_inspection_document, :foreign_key => :assignable_id
 
-  has_one :agency_assignment, :foreign_key => :id, :dependent => :destroy
   acts_as_list :scope => 'assignable_id = #{assignable_id} AND assignable_type = \'#{assignable_type}\''
 
-  after_create :create_agency_assignments
+  after_create :recalculate_agency_entry_count
 
   private
 
-  def create_agency_assignments
-    if agency_name.agency
-      assignable.agency_assignments << AgencyAssignment.new(
-        :agency => agency_name.agency,
-        :agency_name_id => agency_name.id
-      )
-    end
-    true
+  def recalculate_agency_entry_count
+    agency.recalculate_entries_count!
   end
+
 end

@@ -14,17 +14,4 @@ describe AgencyNameAssignment do
     end
   end
 
-  describe 'destroy' do
-    it "should destroy all associated agency_assignments" do
-      pending("agency assignments need to be revisted")
-      entry = Factory(:entry)
-      agency_name_assignment = AgencyNameAssignment.create(
-        :assignable => entry,
-        :agency_name => Factory(:agency_name)
-      )
-      entry.reload.agencies.size.should == 1
-      agency_name_assignment.destroy
-      entry.reload.agencies.size.should == 0
-    end
-  end
 end
