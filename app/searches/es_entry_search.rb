@@ -81,7 +81,17 @@ class EsEntrySearch < EsApplicationSearch
   end
 
   define_filter :agency_ids,
-                :sphinx_type => :with
+                :sphinx_type => :with,
+                :sphinx_attribute => :agency_name_ids,
+                :multi => true,
+                :es_value_processor => Proc.new { |agency_ids|
+                  AgencyName.
+                    where(agency_id: agency_ids).
+                    pluck(:id)
+                } do |agency_ids|
+                  agencies = Agency.select("id, name").where(id: agency_ids)
+                  agencies.map(&:name).to_sentence(:two_words_connector => ' or ', :last_word_connector => ', or ')
+                end
 
   define_filter :agencies,
                 :sphinx_type => :with,

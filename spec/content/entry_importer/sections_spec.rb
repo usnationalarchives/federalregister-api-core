@@ -2,10 +2,18 @@ require 'spec_helper'
 
 describe Content::EntryImporter::Sections do
   before(:each) do
-    @agency_1 = Factory.create(:agency)
-    @agency_2 = Factory.create(:agency)
+    @agency_name_1 = Factory.create(:agency_name)
+    @agency_name_2 = Factory.create(:agency_name)
+    @agency_1      = @agency_name_1.agency
+    @agency_2      = @agency_name_2.agency
 
-    @entry = Factory.create(:entry, :entry_cfr_references => [EntryCfrReference.new(:title => 1, :part => 135)], :agencies => [@agency_1])
+    @entry = Factory.create(:entry, :entry_cfr_references => [EntryCfrReference.new(:title => 1, :part => 135)])
+    AgencyNameAssignment.create!(
+      agency_name_id:  @agency_name_1.id,
+      assignable_id:   @entry.id,
+      assignable_type: Entry
+    )
+    
     @importer = Content::EntryImporter.new(:entry => @entry)
   end
 

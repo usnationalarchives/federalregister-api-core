@@ -184,7 +184,9 @@ class EsApplicationSearch
     @filters.select{|f| (f.sphinx_type == :with) && !f.date_selector }.each do |filter|
       if filter.multi
         with[filter.sphinx_attribute] ||= []
-        with[filter.sphinx_attribute] << filter.sphinx_value
+        Array.wrap(filter.sphinx_value).each do |val|
+          with[filter.sphinx_attribute] << val
+        end
       else
         with[filter.sphinx_attribute] = filter.sphinx_value
       end

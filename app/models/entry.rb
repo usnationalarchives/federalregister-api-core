@@ -136,6 +136,7 @@ class Entry < ApplicationModel
   scope :pre_joined_for_es_indexing, -> { includes(
     :agencies,
     :agency_assignments,
+    :agency_names,
     :citations,
     :comments_close_date,
     :corrections,

@@ -84,6 +84,7 @@ describe EntryRepository, es: true do
 
         # Formerly Sphinx multi-value attributes
         accepting_comments_on_regulations_dot_gov: {type: 'boolean'},
+        agency_name_ids: {type: 'integer'},
         agency_ids: {type: 'integer'},
         cfr_affected_parts: {type: 'integer'},
         cited_entry_ids: {type: 'integer'},

@@ -349,11 +349,10 @@ class EntrySerializer < ApplicationSerializer
       uniq
   end
 
-  attribute :agency_ids do |entry|
+  attribute :agency_name_ids do |entry|
     entry.
-      agency_assignments.
-      select{|x| x.agency_id != nil}.
-      map(&:agency_id).
+      agency_names.
+      map(&:id).
       uniq
   end
 

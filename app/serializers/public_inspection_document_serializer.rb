@@ -2,8 +2,7 @@
 class PublicInspectionDocumentSerializer < ApplicationSerializer
   extend PublicInspectionDocumentApiConfiguration
 
-  attributes :agency_ids,
-    :document_number,
+  attributes :document_number,
     :editorial_note,
     :id,
     :num_pages,
@@ -143,8 +142,11 @@ class PublicInspectionDocumentSerializer < ApplicationSerializer
   attribute :toc_doc, :select => [:subject_1, :subject_2, :subject_3]
   attribute :toc_subject, :select => [:subject_1, :subject_2, :subject_3]
 
-  attribute :agency_ids do |object|
-    object.agency_assignments.map(&:agency_id)
+  attribute :agency_name_ids do |object|
+    object.
+      agency_names.
+      map(&:id).
+      uniq
   end
 
   attribute :agency_name_ids do |object|
