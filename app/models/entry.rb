@@ -584,12 +584,6 @@ class Entry < ApplicationModel
     entry_type != 'Unknown'
   end
 
-  def recalculate_agencies!
-    agency_name_assignments.map do |agency_name_assignment|
-      agency_name_assignment.create_agency_assignment
-    end
-  end
-
   def lede_photo_candidates
     self[:lede_photo_candidates] ? YAML::load(self[:lede_photo_candidates]) : []
   end

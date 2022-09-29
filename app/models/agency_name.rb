@@ -10,7 +10,6 @@ class AgencyName < ApplicationModel
 
   before_create :assign_agency_if_exact_match
   after_save :update_agency_assignments
-  after_save :update_agency_entries_count
   scope :unprocessed, -> { where(void: false, agency_id: nil).order("agency_names.name") }
 
   def self.find_or_create_by_name(name)
@@ -92,15 +91,4 @@ class AgencyName < ApplicationModel
     alternative_name
   end
 
-  def update_agency_entries_count
-    if saved_change_to_agency_id?
-      if agency_id_before_last_save.present?
-        Agency.find(agency_id_before_last_save).recalculate_entries_count!
-      end
-      if agency
-        agency.recalculate_entries_count!
-      end
-    end
-    true
-  end
 end

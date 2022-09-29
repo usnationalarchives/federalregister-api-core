@@ -8,12 +8,4 @@ class AgencyNameAssignment < ApplicationModel
 
   acts_as_list :scope => 'assignable_id = #{assignable_id} AND assignable_type = \'#{assignable_type}\''
 
-  after_create :recalculate_agency_entry_count
-
-  private
-
-  def recalculate_agency_entry_count
-    agency.recalculate_entries_count!
-  end
-
 end
