@@ -5,8 +5,8 @@ class Api::V1::EntriesController < ApiController
       cache_for 1.day
 
       wants.json do
-        fields = specified_fields || EntryApiRepresentation.default_index_fields_json
-        find_options = EntryApiRepresentation.find_options_for(fields)
+        fields = specified_fields || EntrySerializer.default_index_fields_json
+        find_options = EntrySerializer.find_options_for(fields)
 
         search = entry_search(deserialized_params, fields)
 
@@ -16,8 +16,8 @@ class Api::V1::EntriesController < ApiController
       end
 
       wants.csv do
-        fields = specified_fields || EntryApiRepresentation.default_index_fields_csv
-        find_options = EntryApiRepresentation.find_options_for(fields)
+        fields = specified_fields || EntrySerializer.default_index_fields_csv
+        find_options = EntrySerializer.find_options_for(fields)
 
         search = entry_search(deserialized_params, fields)
         filename = search.summary.gsub(/\W+/, '_').sub(/_$/,'').downcase
@@ -26,8 +26,8 @@ class Api::V1::EntriesController < ApiController
       end
 
       wants.rss do
-        fields = EntryApiRepresentation.default_index_fields_rss
-        find_options = EntryApiRepresentation.find_options_for(fields)
+        fields = EntrySerializer.default_index_fields_rss
+        find_options = EntrySerializer.find_options_for(fields)
 
         search = entry_search(
           deserialized_params.merge(order: 'newest', per_page: 200),
@@ -96,18 +96,18 @@ class Api::V1::EntriesController < ApiController
       wants.json do
         cache_for 1.day
 
-        fields = specified_fields || EntryApiRepresentation.default_show_fields_json
+        fields = specified_fields || EntrySerializer.default_show_fields_json
         if params[:id] =~ /FR/
           fields = fields + [:citation]
         end
-        find_options = EntryApiRepresentation.find_options_for(fields + [:document_number])
+        find_options = EntrySerializer.find_options_for(fields + [:document_number])
 
         render_one_or_more(Entry, params[:id], find_options.merge(publication_date: params[:publication_date])) do |entry|
           entry_data(entry, fields)
         end
       end
       wants.csv do
-        fields = specified_fields || EntryApiRepresentation.default_show_fields_csv
+        fields = specified_fields || EntrySerializer.default_show_fields_csv
         document_numbers = params[:id].split(',')
         entries = EsEntrySearch.new(
           conditions: {document_numbers: document_numbers},
@@ -163,24 +163,14 @@ class Api::V1::EntriesController < ApiController
     term = params[:conditions].present? && params[:conditions][:term].present?
     excerpts = fields.include?(:excerpts)
 
-    infrastructure = params.delete(:infrastructure)
-    search_klass = case infrastructure
-    when 'es'
-      EsEntrySearch
-    when 'sphinx'
-      EntrySearch
-    else
-      Entry.search_klass
-    end
-
-    search_klass.new(params.merge(excerpts: term && excerpts))
+    Entry.search_klass.new(params.merge(excerpts: term && excerpts))
   end
 
   def render_csv(entries, fields, filename)
     output = CSV.generate do |csv|
       csv << fields
       entries.each do |result|
-        fields = (fields & EntryApiRepresentation.all_fields)
+        fields = (fields & EntrySerializer.api_fields)
         csv << fields.map do |field|
           value = [*result.send(field)].join('; ')
 
@@ -208,7 +198,7 @@ class Api::V1::EntriesController < ApiController
   end
 
   def entry_data(entry, fields)
-    allowed_fields = (fields & EntryApiRepresentation.all_fields)
+    allowed_fields = (fields & EntrySerializer.api_fields)
     Hash[ allowed_fields.map do |field|
       [field, entry.send(field)]
     end]

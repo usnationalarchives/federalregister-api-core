@@ -584,7 +584,7 @@ components:
       type: array
       items:
         type: string
-        enum: <% EntryApiRepresentation.all_fields.each do |f| %>
+        enum: <% EntrySerializer.api_fields.each do |f| %>
         <%= "- #{f} " %>
         <% end %>
     DocumentType:

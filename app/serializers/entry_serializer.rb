@@ -2,6 +2,21 @@ class EntrySerializer < ApplicationSerializer
   extend Rails.application.routes.url_helpers
   extend RouteBuilder
   extend Routeable
+  extend EntryApiConfiguration
+
+  GRAPHIC_CONTENT_TYPES_FOR_COERCION = [
+    'application/x-pbm',
+    'application/x-ppm',
+    'image/gif',
+  ]
+
+  def self.find_options_for(*fields)
+    api_fields_set = api_fields.to_set
+    fields.flatten.each do |field|
+      raise FieldNotFound.new("field '#{field}' not valid") unless api_fields_set.include? field
+    end
+    {} #Returning an empty hash since this method is no longer used for supplying find options to search infrastructure (all Entry searches are now performed by ES).  This method is solely used for confirming the requested fields exist
+  end
 
   attributes :id, :title, :abstract, :action, :dates, :document_number,  :end_page, :executive_order_notes, :executive_order_number, :presidential_document_type_id, :start_page, :executive_order_number, :presidential_document_number, :proclamation_number, :toc_doc, :toc_subject, :volume
 
@@ -24,6 +39,9 @@ class EntrySerializer < ApplicationSerializer
         }
       end
     end
+  end
+  attribute :excerpts, if: Proc.new { |document, params| params[:active_record_retrieval] } do |document|
+    nil
   end
 
   attribute :agency_names do |entry|
@@ -120,7 +138,7 @@ class EntrySerializer < ApplicationSerializer
               renamed_type = type == :original_png ? :original : type
 
               url = paperclip_style.attachment.send(:url, type).tap do |url|
-                if EntryApiRepresentation::GRAPHIC_CONTENT_TYPES_FOR_COERCION.include? graphic.graphic_content_type
+                if GRAPHIC_CONTENT_TYPES_FOR_COERCION.include? graphic.graphic_content_type
                   url = url.gsub!(/\.png/,'.gif')
                 end
               end

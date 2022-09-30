@@ -4,7 +4,7 @@ class Api::V1::DocumentationController < ApiController
   def attributes
     @fields = case params[:type]
               when 'articles'
-                EntryApiRepresentation.all_fields
+                EntrySerializer.api_fields
               when 'public-inspection-documents'
                 PublicInspectionDocumentApiRepresentation.all_fields
               when 'agencies'
