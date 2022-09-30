@@ -324,30 +324,7 @@ class EsApplicationSearch
     # Retrieve AR ids from Elasticsearch
     es_search_invocation = repository.search(search_options)
 
-    if active_record_based_retrieval?
-      es_ids = es_search_invocation.results.map(&:id)
-
-      if es_ids.present?
-        # Ensures AR retrieves based on the order determined by ES
-        sql_order_clause = Arel.sql("field(id, #{es_ids.join(',')})")
-      else
-        sql_order_clause = nil
-      end
-      active_record_collection = model.where(id: es_ids).order(sql_order_clause)
-
-      if args[:include].present?
-        active_record_collection = active_record_collection.includes(args[:include])
-      end
-
-      select_clause = args.dig(:sql, :select)
-      if select_clause.present? && active_record_based_retrieval?
-        active_record_collection = active_record_collection.select(select_clause)
-      end
-
-      ar_collection_with_metadata = ActiveRecordCollectionMetadataWrapper.new(es_search_invocation, active_record_collection, page, per_page)
-    else
-      ar_collection_with_metadata = ActiveRecordCollectionMetadataWrapper.new(es_search_invocation, es_search_invocation.results, page, per_page)
-    end
+    ar_collection_with_metadata = ActiveRecordCollectionMetadataWrapper.new(es_search_invocation, es_search_invocation.results, page, per_page)
 
     if ar_collection_with_metadata && @excerpts
       #NOTE: Formerly the actual AR object was being returned and so we could query the raw_text_updated_at column here, but now we're querying the actual ES document for teh raw_text_updated_at
@@ -463,10 +440,6 @@ class EsApplicationSearch
 
   attr_reader :aggregation_field, :date_histogram_interval
 
-  def active_record_based_retrieval?
-    SETTINGS['elasticsearch']['active_record_based_retrieval']
-  end
-
   def es_base_query
     {
       # explain: true, #NOTE: Useful for investigating relevancy calcs.
@@ -494,11 +467,7 @@ class EsApplicationSearch
   end
 
   def es_source
-    if active_record_based_retrieval?
-      ['id']
-    else
-      {excludes: ["full_text"]}
-    end
+    {excludes: ["full_text"]}
   end
 
   def highlight_query

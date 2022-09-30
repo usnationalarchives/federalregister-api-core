@@ -6,7 +6,6 @@ shared: &shared
     basecamp_url: <%= ENV['ADMIN_BASECAMP_URL'] %>
     pager_duty_email: <%= ENV['ADMIN_PAGER_DUTY_EMAIL'] %>
   elasticsearch:
-    active_record_based_retrieval: <%= ENV.fetch('ACTIVE_RECORD_BASED_RETRIEVAL', true) %>
     deployment_environment: <%= ENV['DEPLOYMENT_ENVIRONMENT'] %>
     host: <%= ENV['ELASTICSEARCH_HOST'] %>
     trace: false
@@ -68,7 +67,6 @@ shared: &shared
 test:
   <<: *shared
   elasticsearch:
-    active_record_based_retrieval: false
     host: <%= ENV['ELASTICSEARCH_HOST'] || 'admin:admin@localhost:9200/' ||'localhost' %>
     deployment_environment: <%= ENV['DEPLOYMENT_ENVIRONMENT'] %>
     trace: false

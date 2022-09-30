@@ -18,10 +18,6 @@ class ApiController < ApplicationController
     params.delete(:maximum_per_page)
   end
 
-  def active_record_based_retrieval?(force=false)
-    SETTINGS['elasticsearch']['active_record_based_retrieval'] || force
-  end
-
   def render_json_or_jsonp(data, options = {})
     callback = params[:callback].to_s
     if callback =~ /^[a-zA-Z0-9_\.]+$/
@@ -91,7 +87,7 @@ class ApiController < ApplicationController
       )
 
       data = {
-        :count   => (active_record_based_retrieval?(model.always_render_document_number_search_results_via_active_record?) ? records.count(:all) : records.count),
+        :count   => (model.always_render_document_number_search_results_via_active_record? ? records.count(:all) : records.count),
         :results => records.map{|record| yield(record)}
       }
 
@@ -101,25 +97,17 @@ class ApiController < ApplicationController
       end
     else
       if publication_date
-        if active_record_based_retrieval?
-          record = model.where("document_number = ? AND publication_date = ?", document_numbers, publication_date).first
-        else
-          record = document_number_based_search_result(model, find_options, document_numbers, publication_date).first
-        end
+        record = document_number_based_search_result(model, find_options, document_numbers, publication_date).first
 
         raise ActiveRecord::RecordNotFound unless record
       else
-        if active_record_based_retrieval?
-          record = model.find_by_document_number!(document_numbers)
-        else
-          record = document_number_based_search_result(
-            model,
-            find_options,
-            document_numbers,
-            publication_date
-          ).first
-          raise ActiveRecord::RecordNotFound unless record
-        end
+        record = document_number_based_search_result(
+          model,
+          find_options,
+          document_numbers,
+          publication_date
+        ).first
+        raise ActiveRecord::RecordNotFound unless record
       end
       data = yield(record)
     end
@@ -129,7 +117,7 @@ class ApiController < ApplicationController
 
   DOCUMENT_PER_PAGE_LIMIT = 250
   def document_number_based_search_result(model, find_options, document_numbers, publication_date)
-    if active_record_based_retrieval?(model.always_render_document_number_search_results_via_active_record?)
+    if model.always_render_document_number_search_results_via_active_record?
       conditions = {document_number: document_numbers}.tap do |hsh|
         if publication_date
           hsh.merge!(publication_date: publication_date)
@@ -166,17 +154,10 @@ class ApiController < ApplicationController
     citations.each do |citation|
       volume, fr_str, page = citation.split(' ')
 
-      if active_record_based_retrieval?
-        matches = model.
-          includes(find_options.fetch(:include)).
-          select(find_options.fetch(:select)).
-          where("volume = ? AND start_page <= ? AND end_page >= ?", volume.to_i, page.to_i, page.to_i)
-      else
-        search = model.search_klass.new(conditions: {volume: volume.to_i})
-        search.start_page= ({range_conditions: {lte: page}})
-        search.end_page= ({range_conditions: {gte: page}})
-        matches = search.results
-      end
+      search = model.search_klass.new(conditions: {volume: volume.to_i})
+      search.start_page= ({range_conditions: {lte: page}})
+      search.end_page= ({range_conditions: {gte: page}})
+      matches = search.results
 
       if matches.present?
         matched_citations << citation

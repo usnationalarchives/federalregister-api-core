@@ -138,11 +138,7 @@ class PublicInspectionDocumentRepository < BaseRepository
   end
 
   def search_result_klass
-    if SETTINGS['elasticsearch']['active_record_based_retrieval']
-      PublicInspectionDocumentSearchResult
-    else
-      EsPublicInspectionDocumentSearchResult
-    end
+    EsPublicInspectionDocumentSearchResult
   end
 
 end

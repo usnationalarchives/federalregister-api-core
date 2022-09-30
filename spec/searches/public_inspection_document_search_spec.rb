@@ -12,7 +12,7 @@ describe EsPublicInspectionDocumentSearch, es: true do
     pi_doc
   end
 
-  context "Elasticsearch query definition", pending: !SETTINGS['elasticsearch']['active_record_based_retrieval'] do
+  context "Elasticsearch query definition", pending: true do
     it "integrates a basic #with attribute" do
       search = described_class.new(conditions: {special_filing: 1})
       expect(search.send(:search_options)).to eq(

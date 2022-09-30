@@ -19,32 +19,19 @@ describe ElasticsearchIndexer, es: true do
   end
 
   it "reindexes modified entries from elasticsearch" do
-    if SETTINGS['elasticsearch']['active_record_based_retrieval']
-      entry = Factory(:entry, title: "Original Title")
+    entry = Factory(:entry, title: "Original Title")
 
-      $entry_repository.save(entry)
-      $entry_repository.refresh_index!
-      expect($entry_repository.find([entry.id]).first.send(:attributes).fetch(:title)).to eq('Original Title')
+    $entry_repository.save(entry)
+    $entry_repository.refresh_index!
 
-      entry.update!(title: 'New Title')
-      ElasticsearchIndexer.reindex_modified_entries
+    result_1 = $entry_repository.find([entry.id]).first.title
+    expect(result_1).to eq('Original Title')
 
-      expect($entry_repository.find([entry.id]).first.send(:attributes).fetch(:title)).to eq('New Title')
-    else
-      entry = Factory(:entry, title: "Original Title")
+    entry.update!(title: 'New Title')
+    ElasticsearchIndexer.reindex_modified_entries
 
-      $entry_repository.save(entry)
-      $entry_repository.refresh_index!
-
-      result_1 = $entry_repository.find([entry.id]).first.title
-      expect(result_1).to eq('Original Title')
-
-      entry.update!(title: 'New Title')
-      ElasticsearchIndexer.reindex_modified_entries
-
-      result_2 = $entry_repository.find([entry.id]).first.title
-      expect(result_2).to eq('New Title')
-    end
+    result_2 = $entry_repository.find([entry.id]).first.title
+    expect(result_2).to eq('New Title')
   end
 
   it "#remove_deleted_entries does not fail " do

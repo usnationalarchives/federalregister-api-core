@@ -167,14 +167,10 @@ class Api::V1::PublicInspectionDocumentsController < ApiController
   end
 
   def document_data(document, fields)
-    if active_record_based_retrieval?
-      active_record_document_data(document, fields)
-    else
-      allowed_fields = (fields & PublicInspectionDocumentApiRepresentation.all_fields)
-      Hash[ allowed_fields.map do |field|
-        [field, document.send(field)]
-      end]
-    end
+    allowed_fields = (fields & PublicInspectionDocumentApiRepresentation.all_fields)
+    Hash[ allowed_fields.map do |field|
+      [field, document.send(field)]
+    end]
   end
 
   def active_record_document_data(document, fields)
@@ -206,7 +202,7 @@ class Api::V1::PublicInspectionDocumentsController < ApiController
   end
 
   def render_csv(documents, fields, filename, force_ar_retrieval: false)
-    ar_retrieval = force_ar_retrieval || active_record_based_retrieval?
+    ar_retrieval = force_ar_retrieval
 
     output = CSV.generate do |csv|
       csv << fields

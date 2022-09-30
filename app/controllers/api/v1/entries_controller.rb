@@ -109,11 +109,10 @@ class Api::V1::EntriesController < ApiController
       wants.csv do
         fields = specified_fields || EntryApiRepresentation.default_show_fields_csv
         document_numbers = params[:id].split(',')
-        if active_record_based_retrieval?
-          entries = Entry.where(document_number: document_numbers)
-        else
-          entries = EsEntrySearch.new(conditions: {document_numbers: document_numbers}, per_page: CSV_SEARCH_RESULT_LIMIT).results
-        end
+        entries = EsEntrySearch.new(
+          conditions: {document_numbers: document_numbers},
+          per_page: CSV_SEARCH_RESULT_LIMIT
+        ).results
 
         filename = 'federal_register'
         render_csv(entries, fields, filename)
@@ -181,17 +180,9 @@ class Api::V1::EntriesController < ApiController
     output = CSV.generate do |csv|
       csv << fields
       entries.each do |result|
-        if active_record_based_retrieval?
-          representation = EntryApiRepresentation.new(result)
-        else
-          fields = (fields & EntryApiRepresentation.all_fields)
-        end
+        fields = (fields & EntryApiRepresentation.all_fields)
         csv << fields.map do |field|
-          if active_record_based_retrieval?
-            value = [*representation.value(field)].join('; ')
-          else
-            value = [*result.send(field)].join('; ')
-          end
+          value = [*result.send(field)].join('; ')
 
           if field == :document_number
             value = " #{value}"
@@ -209,7 +200,7 @@ class Api::V1::EntriesController < ApiController
 
   def render_rss(documents, title)
     render :template => 'entries/index.rss.builder', :locals => {
-      :documents => documents.map{|d| active_record_based_retrieval? ? EntryApiRepresentation.new(d) : d},
+      :documents => documents,
       :feed_name => title,
       :feed_description => "The documents in this feed originate from FederalRegister.gov which displays an unofficial web version of the daily Federal Register. The official electronic version in PDF format is also available as a link from the FederalRegister.gov website. For more information, please see https://www.federalregister.gov/reader-aids/policy/legal-status.",
       :feed_url => request.url
@@ -217,17 +208,10 @@ class Api::V1::EntriesController < ApiController
   end
 
   def entry_data(entry, fields)
-    if active_record_based_retrieval?
-      representation = EntryApiRepresentation.new(entry)
-      Hash[ fields.map do |field|
-        [field, representation.value(field)]
-      end]
-    else
-      allowed_fields = (fields & EntryApiRepresentation.all_fields)
-      Hash[ allowed_fields.map do |field|
-        [field, entry.send(field)]
-      end]
-    end
+    allowed_fields = (fields & EntryApiRepresentation.all_fields)
+    Hash[ allowed_fields.map do |field|
+      [field, entry.send(field)]
+    end]
   end
 
   def index_url(options)
