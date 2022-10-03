@@ -1,4 +1,6 @@
 class Api::V1::PublicInspectionDocumentsController < ApiController
+  extend Memoist
+
   def index
     respond_to do |wants|
       cache_for 1.day
@@ -8,8 +10,8 @@ class Api::V1::PublicInspectionDocumentsController < ApiController
           publication_date = Date.parse(params[:conditions][:available_on])
           render_date(publication_date)
         else
-          fields = specified_fields || PublicInspectionDocumentApiRepresentation.default_index_fields_json
-          find_options = PublicInspectionDocumentApiRepresentation.find_options_for(fields)
+          fields = specified_fields || PublicInspectionDocumentSerializer.default_index_fields_json
+          find_options = PublicInspectionDocumentSerializer.find_options_for(fields)
 
           search = public_inspection_search(deserialized_params, fields)
 
@@ -20,8 +22,8 @@ class Api::V1::PublicInspectionDocumentsController < ApiController
       end
 
       wants.csv do
-        fields = specified_fields || PublicInspectionDocumentApiRepresentation.default_index_fields_csv
-        find_options = PublicInspectionDocumentApiRepresentation.find_options_for(fields)
+        fields = specified_fields || PublicInspectionDocumentSerializer.default_index_fields_csv
+        find_options = PublicInspectionDocumentSerializer.find_options_for(fields)
 
         search = public_inspection_search(
           deserialized_params.merge(order: 'newest', per_page: 200),
@@ -34,8 +36,8 @@ class Api::V1::PublicInspectionDocumentsController < ApiController
       end
 
       wants.rss do
-        fields = PublicInspectionDocumentApiRepresentation.default_index_fields_rss
-        find_options = PublicInspectionDocumentApiRepresentation.find_options_for(fields)
+        fields = PublicInspectionDocumentSerializer.default_index_fields_rss
+        find_options = PublicInspectionDocumentSerializer.find_options_for(fields)
 
         search = public_inspection_search(
           deserialized_params.merge(order: 'newest', per_page: 200),
@@ -99,7 +101,7 @@ class Api::V1::PublicInspectionDocumentsController < ApiController
         if issue.nil?
           render nothing: true, status: 404
         else
-          fields = specified_fields || PublicInspectionDocumentApiRepresentation.default_index_fields_csv
+          fields = specified_fields || PublicInspectionDocumentSerializer.default_index_fields_csv
           documents = issue.public_inspection_documents
 
           filename = "public_inspection_documents_on_#{publication_date}"
@@ -113,8 +115,8 @@ class Api::V1::PublicInspectionDocumentsController < ApiController
     respond_to do |wants|
       wants.json do
         cache_for 1.day
-        fields = specified_fields || PublicInspectionDocumentApiRepresentation.default_show_fields_json
-        find_options = PublicInspectionDocumentApiRepresentation.find_options_for(fields + [:document_number])
+        fields = specified_fields || PublicInspectionDocumentSerializer.default_show_fields_json
+        find_options = PublicInspectionDocumentSerializer.find_options_for(fields + [:document_number])
 
         render_one_or_more(PublicInspectionDocument, params[:id], find_options) do |document|
           active_record_document_data(document, fields)
@@ -167,18 +169,40 @@ class Api::V1::PublicInspectionDocumentsController < ApiController
   end
 
   def document_data(document, fields)
-    allowed_fields = (fields & PublicInspectionDocumentApiRepresentation.all_fields)
+    allowed_fields = (fields & PublicInspectionDocumentSerializer.api_fields)
     Hash[ allowed_fields.map do |field|
       [field, document.send(field)]
     end]
   end
 
-  def active_record_document_data(document, fields)
-    representation = PublicInspectionDocumentApiRepresentation.new(document)
-    Hash[ fields.map do |field|
-      [field, representation.value(field)]
+  def active_record_document_data(pi_doc, attribute_names)
+    Hash[ attribute_names.map do |attribute_name|
+      [attribute_name, get_attribute_value(pi_doc, attribute_name)]
     end]
   end
+
+  def get_attribute_value(pi_doc, attribute_name)
+    attribute = get_attribute(attribute_name)
+
+    case attribute.method
+    when Symbol
+      pi_doc.public_send(attribute.method)
+    when Proc
+      attribute.method.call(pi_doc, {active_record_retrieval: true})
+    else
+      raise NotImplementedError
+    end
+  end
+
+  def get_attribute(attribute_name)
+    attributes_to_serialize.find{|key, attribute| key == attribute_name}.last
+  end
+  memoize :get_attribute
+
+  def attributes_to_serialize
+    PublicInspectionDocumentSerializer.attributes_to_serialize
+  end
+  memoize :attributes_to_serialize
 
   def index_url(options)
     api_v1_public_inspection_documents_url(options)
@@ -189,7 +213,7 @@ class Api::V1::PublicInspectionDocumentsController < ApiController
     if issue.nil?
       data = {:count => 0, :results => []}
     else
-      fields = specified_fields || PublicInspectionDocumentApiRepresentation.default_index_fields_json
+      fields = specified_fields || PublicInspectionDocumentSerializer.default_index_fields_json
       documents = issue.public_inspection_documents
       data = {
                 :count => documents.size,
@@ -207,18 +231,14 @@ class Api::V1::PublicInspectionDocumentsController < ApiController
     output = CSV.generate do |csv|
       csv << fields
       documents.each do |result|
-        if ar_retrieval
-          representation = PublicInspectionDocumentApiRepresentation.new(result)
-        else
-          fields = (fields & PublicInspectionDocumentApiRepresentation.all_fields)
-        end
+        fields = (fields & PublicInspectionDocumentSerializer.api_fields)
   
         csv << fields.map do |field|
           if ar_retrieval
             if field == :filed_at
-              value = representation.value(field)&.strftime("%m/%d/%Y at %I:%M %p")
+              value = get_attribute_value(result, field)&.strftime("%m/%d/%Y at %I:%M %p")
             else
-              value = [*representation.value(field)].join('; ')
+              value = [*get_attribute_value(result, field)].join('; ')
             end
           else
             if field == :filed_at

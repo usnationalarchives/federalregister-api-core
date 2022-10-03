@@ -613,7 +613,7 @@ components:
       type: array
       items:
         type: string
-        enum: <% PublicInspectionDocumentApiRepresentation.all_fields.each do |f| %>
+        enum: <% PublicInspectionDocumentSerializer.api_fields.each do |f| %>
         <%= "- #{f} " %>
         <% end %>
     President:

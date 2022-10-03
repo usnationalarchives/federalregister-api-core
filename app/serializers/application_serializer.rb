@@ -23,6 +23,27 @@ class ApplicationSerializer
     end
   end
 
+  def self.find_options_for(*fields)
+    selects = [:id, :raw_text_updated_at]
+    includes = []
+
+    api_fields_set = api_fields.to_set
+    attributes_by_name = self.attributes_to_serialize
+
+    fields.flatten.each do |field|
+      raise FieldNotFound.new("field '#{field}' not valid") unless api_fields_set.include? field
+      options = attributes_by_name[field].options
+      if options.blank?
+        options = {:select => field}
+      end
+        
+      selects  << options[:select]  if options[:select]
+      includes << options[:include] if options[:include]
+    end
+
+    {:select => selects.flatten.uniq.join(', '), :include => includes.flatten.uniq}
+  end
+
   class << self
     def has_one resource, options={}
       serializer = options[:serializer] || "#{resource.to_s.classify}Serializer".constantize

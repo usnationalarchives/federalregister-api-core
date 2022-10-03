@@ -369,7 +369,7 @@ endpoints:
     - Name: fields[]
       Description: Which attributes of the documents to return; by default, a reasonable set is returned, but a user can customize it to return exactly what is needed.
       EnumeratedList:
-<%= PublicInspectionDocumentApiRepresentation.all_fields.map {|f| "      - #{f}" }.join("\n") %>
+<%= PublicInspectionDocumentSerializer.api_fields.map {|f| "      - #{f}" }.join("\n") %>
       Type: multiple
     - Name: per_page
       Default: 20

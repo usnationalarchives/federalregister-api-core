@@ -1,10 +1,14 @@
 require 'spec_helper'
 
-describe PublicInspectionDocumentApiRepresentation do
+def serializer_value(field_name, pi_doc)
+  PublicInspectionDocumentSerializer.attributes_to_serialize.find{|key, attribute| key == field_name}.last.method.call(pi_doc)
+end
+
+describe PublicInspectionDocumentSerializer do
   it "#html_url" do
     public_inspection_document = Factory(:public_inspection_document, subject_1: 'test', publication_date: Date.new(2020,9,22))
-    representation = PublicInspectionDocumentApiRepresentation.new(public_inspection_document)
-    result = representation.value(:html_url)
+    result = serializer_value(:html_url, public_inspection_document)
+
     expect(result).to eq("http://www.fr2.local:8081/public-inspection/#{public_inspection_document.document_number}/test")
   end
 
@@ -13,16 +17,13 @@ describe PublicInspectionDocumentApiRepresentation do
 
     it "returns page views " do
       allow(SETTINGS).to receive(:[]).with("public_inspection_document_page_view_start_date").and_return(Date.parse("2020-09-21"))
-      representation = PublicInspectionDocumentApiRepresentation.new(public_inspection_document)
-
-      result = representation.value(:page_views)
+      result = serializer_value(:page_views, public_inspection_document)
       expect(result).to eq({count: 0, last_updated: nil})
     end
 
     it "returns nil when a public_inspection_document_page_view_start_date isn't set" do
-      representation = PublicInspectionDocumentApiRepresentation.new(public_inspection_document)
+      result = serializer_value(:page_views, public_inspection_document)
 
-      result = representation.value(:page_views)
       expect(result).to eq(nil)
     end
   end
@@ -31,9 +32,8 @@ describe PublicInspectionDocumentApiRepresentation do
     let(:public_inspection_document) { FactoryGirl.build(:public_inspection_document, publication_date: Date.new(2099,10,15), pil_agency_letters: [pil_agency_letter]) }
 
     it "shows the agency letter if the current date is less than the publication date" do
-      representation = PublicInspectionDocumentApiRepresentation.new(public_inspection_document)
+      result = serializer_value(:agency_letters, public_inspection_document)
 
-      result = representation.value(:agency_letters)
       expect(result).to eq([
         {
           title: 'letter_2019-07119_USGS.pdf',

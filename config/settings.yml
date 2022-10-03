@@ -74,6 +74,7 @@ test:
     public_inspection_document_index_shards: <%= ENV.fetch('PUBLIC_INSPECTION_DOCUMENT_INDEX_SHARDS', 1) %>
   images:
     store_in_filesystem: true
+  public_inspection_document_page_view_start_date: <%= Date.new(2020,10,2) %>
   s3_buckets:
     public_inspection: public-inspection.example.org
     zipped_eps_images: XXXXXXXXXXXXXXXXXXXXXXX

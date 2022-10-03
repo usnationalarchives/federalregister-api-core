@@ -6,7 +6,7 @@ class Api::V1::DocumentationController < ApiController
               when 'articles'
                 EntrySerializer.api_fields
               when 'public-inspection-documents'
-                PublicInspectionDocumentApiRepresentation.all_fields
+                PublicInspectionDocumentSerializer.api_fields
               when 'agencies'
                 AgencyApiRepresentation.all_fields
               else
