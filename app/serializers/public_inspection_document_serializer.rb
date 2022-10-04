@@ -46,6 +46,11 @@ class PublicInspectionDocumentSerializer < ApplicationSerializer
   attribute(:docket_numbers, :include => :docket_numbers) do |document|
     document.docket_numbers.map(&:number)
   end
+
+  attribute :excerpts, if: Proc.new { |document, params| params[:active_record_retrieval] } do |document|
+    nil
+  end
+
   attribute(:filed_at) do |document, params|
     if params[:active_record_retrieval]
       document.filed_at
