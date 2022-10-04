@@ -38,6 +38,8 @@ class PublicInspectionDocumentSerializer < ApplicationSerializer
   attribute(:agency_letters, :select => [:publication_date], :include => :pil_agency_letters) do |document|
     if document.publication_date && (Date.current < document.publication_date)
       document.pil_agency_letters.map{|x| {title: x.file_file_name, url: x.file.url} }
+    else
+      []
     end
   end
   attribute(:agency_names, :include => {:agency_names => :agency}) do |e|
