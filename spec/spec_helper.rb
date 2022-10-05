@@ -39,6 +39,7 @@ RSpec.configure do |config|
     # If this becomes non-performant, the stub can be relocated
     # to individual tests which use redis.
     allow(Redis).to receive(:new) { MockRedis.new }
+    allow_any_instance_of(CacheUtils::Client).to receive(:purge)
   end
 
 end
