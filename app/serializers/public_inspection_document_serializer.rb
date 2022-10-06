@@ -13,9 +13,9 @@ class PublicInspectionDocumentSerializer < ApplicationSerializer
     :subject_2,
     :subject_3,
     :title
-
-
-  attribute(:agencies, :include => {:agency_names => :agency}) do |document|
+ 
+  # NOTE: We still need to support AR-based serialization for agencies
+  attribute(:agencies, :include => {:agency_names => :agency}, if: Proc.new { |document, params| params[:active_record_retrieval] }) do |document| 
     document.agency_names.map do |agency_name|
       agency = agency_name.agency
       if agency
@@ -25,6 +25,7 @@ class PublicInspectionDocumentSerializer < ApplicationSerializer
           :id        => agency.id,
           :url       => agency_url(agency),
           :json_url  => api_v1_agency_url(agency.id, :format => :json),
+          :parent_id => agency.parent_id,
           :slug      => agency.slug
         }
       else
@@ -34,6 +35,7 @@ class PublicInspectionDocumentSerializer < ApplicationSerializer
       end
     end
   end
+
   attribute(:agency_letters, :select => [:publication_date], :include => :pil_agency_letters) do |document|
     if document.publication_date && (Date.current < document.publication_date)
       document.pil_agency_letters.map{|x| {title: x.file_file_name, url: x.file.url} }
@@ -41,7 +43,8 @@ class PublicInspectionDocumentSerializer < ApplicationSerializer
       []
     end
   end
-  attribute(:agency_names, :include => {:agency_names => :agency}) do |e|
+  # NOTE: We still need to support AR-based serialization for agency names
+  attribute(:agency_names, :include => {:agency_names => :agency}, if: Proc.new { |document, params| params[:active_record_retrieval] }) do |e|
     e.agency_names.compact.map{|a| a.agency.try(:name) || a.name}
   end
   attribute(:docket_numbers, :include => :docket_numbers) do |document|

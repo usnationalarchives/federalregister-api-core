@@ -6,11 +6,6 @@ RSpec.describe "Public Inspection API", :type => :request, :es => true do
     expect(response).to have_http_status(200)
   end
 
-  it "sends a 200 for basic endpoint" do
-    get "/api/v1/public-inspection-documents.json?metadata_only=1"
-    expect(response).to have_http_status(200)
-  end
-
   context "#show" do
     it "serialized attributes as expected" do
       current_time = Time.current

@@ -71,6 +71,7 @@ test:
     deployment_environment: <%= ENV['DEPLOYMENT_ENVIRONMENT'] %>
     trace: false
     entry_index_shards: <%= ENV.fetch('ENTRY_INDEX_SHARDS', 1) %>
+    pil_index_since_date: '2019-04-08'
     public_inspection_document_index_shards: <%= ENV.fetch('PUBLIC_INSPECTION_DOCUMENT_INDEX_SHARDS', 1) %>
   images:
     store_in_filesystem: true

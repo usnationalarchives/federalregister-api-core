@@ -7,6 +7,27 @@ class PageViewCount
     @page_view_type = page_view_type
   end
 
+  def self.batch_count_for(document_numbers, page_view_type)
+    results = $redis.pipelined do
+      document_numbers.each do |document_number|
+        $redis.zscore page_view_type.historical_set, document_number
+        $redis.zscore page_view_type.yesterday_set, document_number
+        $redis.zscore page_view_type.today_set, document_number
+        $redis.get page_view_type.current_as_of
+      end
+    end
+
+    results.
+      in_groups_of(4).
+      zip(document_numbers).
+      each_with_object({}) do |((zscore_historical_set, zscore_yesterday_set, zscore_today_set, current_as_of), document_number), hsh|
+        hsh[document_number] = {
+          count:      [zscore_historical_set, zscore_yesterday_set, zscore_today_set].compact.sum,
+          updated_at: current_as_of
+        }
+      end
+  end
+
   def self.count_for(document_number, page_view_type)
     $redis.pipelined do
       $redis.zscore page_view_type.historical_set, document_number

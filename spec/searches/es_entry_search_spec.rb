@@ -405,7 +405,6 @@ describe EsEntrySearch, es: true do
           :entry,
           title: 'fish',
           publication_date: Date.current,
-          agencies: [agency],
           agency_names: [agency_name]
         )
         entries = [
@@ -518,7 +517,6 @@ describe EsEntrySearch, es: true do
         :entry,
         title: 'fish',
         publication_date: Date.current,
-        agencies: [agency],
         agency_names: [agency_name]
       )
       entries = [

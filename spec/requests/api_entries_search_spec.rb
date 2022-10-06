@@ -10,7 +10,6 @@ RSpec.describe "Entries API", :type => :request, :es => true do
       significant: nil,
       title: 'goat',
       publication_date: Date.current,
-      agencies: [agency],
       agency_names: [agency_name],
       granule_class: 'PRESDOCU',
       raw_text_updated_at: Time.current

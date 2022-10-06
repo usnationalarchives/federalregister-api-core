@@ -204,17 +204,32 @@ describe EsPublicInspectionDocumentSearch, es: true do
       end
 
       it "can search by agency slugs" do
+        #TODO: FIX
         agency_a = FactoryGirl.create(:agency, name: "Fish Department", slug: "fish-department")
-        doc_a = build_pi_doc_double(id: 1, full_text: "Fish", agency_ids: [agency_a.id])
+        agency_name_a = FactoryGirl.create(:agency_name, agency: agency_a)
+        doc_a = build_pi_doc_double(id: 1, full_text: "Fish", agency_name_ids: [agency_name_a.id])
 
         agency_b = FactoryGirl.create(:agency, name: "Transportation Department", slug: "transportation-department")
-        doc_b = build_pi_doc_double(id: 2, full_text: "Trains", agency_ids: [agency_b.id])
+        agency_name_b = FactoryGirl.create(:agency_name, agency: agency_b)
+        doc_b = build_pi_doc_double(id: 2, full_text: "Trains", agency_name_ids: [agency_name_b.id])
 
         save_documents_and_refresh_index([doc_a, doc_b])
 
         expect(described_class.new(conditions: { agencies: ["fish-department"] }).result_ids).to match_array [1]
         expect(described_class.new(conditions: { agencies: ["transportation-department"] }).result_ids).to match_array [2]
         expect(described_class.new(conditions: { agencies: ["fish-department", "transportation-department"] }).result_ids).to match_array [1,2]
+      end
+
+      it "ES search serializes agencies in the same way as a direct call to the PI Serializer" do
+        agency_name = FactoryGirl.create(:agency_name)
+        agency      = agency_name.agency
+        pi_doc      = FactoryGirl.create(:public_inspection_document, agency_names: [agency_name])
+        save_documents_and_refresh_index([pi_doc])
+
+        es_result = described_class.new(conditions: { agencies: [agency.slug] }).results.first.agencies
+        serializer_result = PublicInspectionDocumentSerializer.new(pi_doc, params: {active_record_retrieval: true}).to_h.fetch(:agencies)
+
+        expect(es_result).to eq(serializer_result)
       end
 
       context "excerpts for multi-field mappings" do
@@ -322,8 +337,10 @@ describe EsPublicInspectionDocumentSearch, es: true do
 
       pending "limits fields if specified"
       context "Agency associations" do
-        let!(:agency_a) { Factory(:agency) }
-        let!(:agency_b) { Factory(:agency) }
+        let!(:agency_name_a) { Factory(:agency_name)}
+        let!(:agency_name_b) { Factory(:agency_name)}
+        let!(:agency_a) { agency_name_a.agency }
+        let!(:agency_b) { agency_name_b.agency }
 
         let!(:public_inspection_document_a) do
           Factory(:public_inspection_document,
@@ -335,7 +352,7 @@ describe EsPublicInspectionDocumentSearch, es: true do
             subject_3: 'fish',
             document_number: 'abc-1'
           ).tap do |doc|
-            AgencyAssignment.create(assignable: doc, agency: agency_a)
+            AgencyNameAssignment.create!(assignable: doc, agency_name: agency_name_a)
 
             # create docket numbers
             doc.docket_numbers.create(number: 1)
@@ -352,7 +369,7 @@ describe EsPublicInspectionDocumentSearch, es: true do
             subject_3: 'goats',
             document_number: 'abc-2'
           ).tap do |doc|
-            AgencyAssignment.create(assignable: doc, agency: agency_b)
+            AgencyNameAssignment.create!(assignable: doc, agency_name: agency_name_b)
           end
         end
 
@@ -375,7 +392,6 @@ describe EsPublicInspectionDocumentSearch, es: true do
               # title: "fish fish fish",
               # full_text: TBD
               # document_numbers: [public_inspection_document_a.document_number],
-              #agency_ids: [agency_a.id]
             }
           )
           expect(search.validation_errors).to be_empty

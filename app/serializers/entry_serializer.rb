@@ -20,26 +20,6 @@ class EntrySerializer < ApplicationSerializer
 
   attributes :id, :title, :abstract, :action, :dates, :document_number,  :end_page, :executive_order_notes, :executive_order_number, :presidential_document_type_id, :start_page, :executive_order_number, :presidential_document_number, :proclamation_number, :toc_doc, :toc_subject, :volume
 
-  attribute :agencies do |entry|
-    entry.agency_name_assignments.map(&:agency_name).compact.map do |agency_name|
-      agency = agency_name.agency
-      if agency
-        {
-          :raw_name  => agency_name.name,
-          :name      => agency.name,
-          :id        => agency.id,
-          :url       => agency_url(agency),
-          :json_url  => api_v1_agency_url(agency.id, :format => :json),
-          :parent_id => agency.parent_id,
-          :slug      => agency.slug
-        }
-      else
-        {
-          :raw_name => agency_name.name
-        }
-      end
-    end
-  end
   attribute :excerpts, if: Proc.new { |document, params| params[:active_record_retrieval] } do |document|
     nil
   end

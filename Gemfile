@@ -14,7 +14,6 @@ gem 'mysql2'
 gem 'passenger', '~> 6.0'
 gem 'carrierwave', '2.2.2'
 gem 'nokogiri'
-gem 'batch-loader' # Minimizes N+1 queries when serializing for ES
 gem 'curb'
 gem 'http_headers', '0.0.2.3'
 gem 'geokit', '1.10.0', :require => 'geokit'
@@ -58,6 +57,7 @@ gem 'active_hash',
   branch: "master",
   ref:    "1c95f992af3ec94c07e19846f042e12bd0b11dd1"
 gem 'acts_as_list'
+gem 'batch-loader' # Minimizes N+1 queries when serializing for ES
 gem 'bcrypt'
 gem 'bootstrap-sass', '2.3.2.2'
 # Used for watermarking PIL documents

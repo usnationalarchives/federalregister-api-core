@@ -1,12 +1,32 @@
 class EsPublicInspectionDocumentSearch < EsApplicationSearch
-  define_filter :agency_ids,
-                :sphinx_type => :with
 
-  define_filter :agencies,
-                :sphinx_attribute => :agency_ids,
+  define_filter :agency_ids,
                 :sphinx_type => :with,
-                :model_id_method => :slug,
-                :model_sphinx_method => :id
+                :sphinx_attribute => :agency_name_ids,
+                :multi => true,
+                :es_value_processor => Proc.new { |agency_ids|
+                  AgencyName.
+                    where(agency_id: agency_ids).
+                    pluck(:id)
+                } do |agency_ids|
+                  agencies = Agency.where(id: agency_ids).select("id, name")
+                  agencies.map(&:name).to_sentence(:two_words_connector => ' or ', :last_word_connector => ', or ')
+                end
+
+  define_filter :agencies, #ie slug-based search
+                :sphinx_attribute => :agency_name_ids,
+                :sphinx_type => :with,
+                :multi => true,
+                :es_value_processor => Proc.new { |agency_slugs|
+                  agency_ids = Agency.where(slug: agency_slugs)
+
+                  AgencyName.
+                    where(agency_id: agency_ids).
+                    pluck(:id)
+                } do |agency_slugs|
+                  agencies = Agency.where(slug: agency_slugs).select("id, name")
+                  agencies.map(&:name).to_sentence(:two_words_connector => ' or ', :last_word_connector => ', or ')
+                end
 
   define_filter :type,
                 :sphinx_type => :with do |types|

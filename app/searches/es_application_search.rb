@@ -1,4 +1,5 @@
 class EsApplicationSearch
+  include Rails.application.routes.url_helpers
   extend Memoist
   class InputError < StandardError; end
 
@@ -325,8 +326,9 @@ class EsApplicationSearch
   def results(args = {})
     # Retrieve AR ids from Elasticsearch
     es_search_invocation = repository.search(search_options)
+    results = es_search_invocation.results
 
-    ar_collection_with_metadata = ActiveRecordCollectionMetadataWrapper.new(es_search_invocation, es_search_invocation.results, page, per_page)
+    ar_collection_with_metadata = ActiveRecordCollectionMetadataWrapper.new(es_search_invocation, results, page, per_page)
 
     if ar_collection_with_metadata && @excerpts
       #NOTE: Formerly the actual AR object was being returned and so we could query the raw_text_updated_at column here, but now we're querying the actual ES document for teh raw_text_updated_at
@@ -441,6 +443,19 @@ class EsApplicationSearch
   private
 
   attr_reader :aggregation_field, :date_histogram_interval
+
+  def add_agency_information_at_runtime!(results)
+    # Augment ES results with lazy-loaded objects using batch-loader gem.  These lazy-loaded objects will be called when the API results are transformed into JSON so we're not N+1'ing when serializing.
+    results.each do |result|
+      result.agencies
+    end
+  end
+
+  def batch_load_agency_name(agency_name_id)
+    BatchLoader.for(agency_name_id).batch do |agency_name_ids, loader|
+      AgencyName.where(id: agency_name_ids).each { |agency_name| loader.call(agency_name.id, agency_name) }
+    end
+  end
 
   def es_base_query
     {

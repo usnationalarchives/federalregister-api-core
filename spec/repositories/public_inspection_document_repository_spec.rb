@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe PublicInspectionDocumentRepository, :es => true do
-  let(:agency) { Factory(:agency) }
+  let(:agency_name) { Factory(:agency_name) }
   before(:all) do
     recreate_actual_pi_index_and_assign_alias!
   end
@@ -76,7 +76,10 @@ describe PublicInspectionDocumentRepository, :es => true do
     let(:public_inspection_document) do
       Factory(:public_inspection_document, publication_date: Date.new(2020,1,1)).tap do |document|
         # set up associations in factories
-        document.agency_assignments.create(agency: agency)
+        AgencyNameAssignment.create!(
+          assignable:  document,
+          agency_name: agency_name
+        )
       end
     end
 
@@ -86,7 +89,6 @@ describe PublicInspectionDocumentRepository, :es => true do
 
       search = $public_inspection_document_repository.search("2020-01-01")
       result = search.results.first
-      expect(result.agency_ids).to eq [agency.id]
       expect(result.publication_date).to eq Date.new(2020,1,1)
     end
   end

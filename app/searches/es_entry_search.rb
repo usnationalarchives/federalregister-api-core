@@ -89,15 +89,24 @@ class EsEntrySearch < EsApplicationSearch
                     where(agency_id: agency_ids).
                     pluck(:id)
                 } do |agency_ids|
-                  agencies = Agency.select("id, name").where(id: agency_ids)
+                  agencies = Agency.where(id: agency_ids).select("id, name")
                   agencies.map(&:name).to_sentence(:two_words_connector => ' or ', :last_word_connector => ', or ')
                 end
 
-  define_filter :agencies,
+  define_filter :agencies, #ie slug-based search
+                :sphinx_attribute => :agency_name_ids,
                 :sphinx_type => :with,
-                :sphinx_attribute => :agency_ids,
-                :model_sphinx_method => :id,
-                :model_id_method=> :slug
+                :multi => true,
+                :es_value_processor => Proc.new { |agency_slugs|
+                  agency_ids = Agency.where(slug: agency_slugs)
+
+                  AgencyName.
+                    where(agency_id: agency_ids).
+                    pluck(:id)
+                } do |agency_slugs|
+                  agencies = Agency.where(slug: agency_slugs).select("id, name")
+                  agencies.map(&:name).to_sentence(:two_words_connector => ' or ', :last_word_connector => ', or ')
+                end
 
   define_filter :citing_document_numbers,
                 :sphinx_type => :with,

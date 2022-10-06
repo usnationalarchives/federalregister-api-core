@@ -11,10 +11,11 @@ class EsEntrySearchResult < EsSearchResult
   end
 
   def page_views
-    {
-      count:        PageViewCount.count_for(document_number, PageViewType::DOCUMENT),
-      last_updated: PageViewCount.last_updated(PageViewType::DOCUMENT)
-    }
+    BatchLoader.for(document_number).batch do |document_numbers, loader|
+      PageViewCount.batch_count_for(document_numbers, PageViewType::DOCUMENT).each do |document_number, details|
+        loader.call(document_number, details) 
+      end
+    end
   end
 
   def type
