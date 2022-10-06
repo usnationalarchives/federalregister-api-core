@@ -68,7 +68,34 @@ class ApplicationModel < ActiveRecord::Base
     end
   end
 
+  def self.bulk_update(active_record_collection, refresh: false, repository: default_repository, attribute:)
+    current_time = Time.current
+    body = active_record_collection.each_with_object(Array.new) do |instance, request_body|
+      request_body << { update: { _index: repository.index_name, _id: instance.id } }
+      request_body << {:doc => {attribute.key => attribute.method.call(instance)}}
+    end
+  
+    begin
+      response = repository.client.bulk body: body, refresh: refresh
+      puts response
+      if response.fetch('errors')
+        if Rails.env.development?
+          raise error_message
+        else
+          Honeybadger.notify(error_message)
+        end
+      end
+    rescue Faraday::TimeoutError
+      retry
+    end
+  
+    if refresh
+      repository.refresh_index!
+    end
+  end
+
   def reindex!
     self.class.bulk_index([self])
   end
+
 end
