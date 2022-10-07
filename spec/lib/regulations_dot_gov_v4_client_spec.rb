@@ -85,6 +85,7 @@ describe RegulationsDotGov::V4::Client do
   end
 
   it "find_documents_updated_within and handles pagination" do
+    allow(Date).to receive(:current).and_return(Date.new(2022,10,6))
     VCR.use_cassette("regulations_dot_gov_v4_documents_updated_within") do
       result = RegulationsDotGov::V4::Client.new.find_documents_updated_within(2, 'Notice')
 
