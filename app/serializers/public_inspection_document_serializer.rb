@@ -147,8 +147,7 @@ class PublicInspectionDocumentSerializer < ApplicationSerializer
 
   attribute :agency_name_ids do |object|
     object.
-      agency_names.
-      map(&:id).
+      agency_name_ids.
       uniq
   end
 

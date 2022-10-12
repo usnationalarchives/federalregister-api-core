@@ -331,8 +331,7 @@ class EntrySerializer < ApplicationSerializer
 
   attribute :agency_name_ids do |entry|
     entry.
-      agency_names.
-      map(&:id).
+      agency_name_ids.
       uniq
   end
 
