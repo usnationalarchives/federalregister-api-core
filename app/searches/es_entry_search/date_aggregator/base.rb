@@ -15,14 +15,14 @@ class EsEntrySearch::DateAggregator::Base
   end
 
   def counts
-    periods.map{|sub_periods| sub_periods.map{|p| raw_results[sphinx_format(p)] || 0}.sum }
+    periods.map{|sub_periods| sub_periods.map{|p| raw_results[es_format(p)] || 0}.sum }
   end
 
   def results
     periods.each_with_object(Hash.new) do |sub_periods, hsh|
       identifier = sub_periods.first
       hsh[identifier.to_s(:iso)] = {
-        :count => sub_periods.map{|p| raw_results[sphinx_format(p)] || 0}.sum,
+        :count => sub_periods.map{|p| raw_results[es_format(p)] || 0}.sum,
         :name => name_format(identifier)
       }
     end
@@ -33,7 +33,7 @@ class EsEntrySearch::DateAggregator::Base
     es_search.date_aggregator_buckets.map do |term|
       datetime = Date.parse(term['key_as_string']) #TODO: Do we need to handle UTC processing parallel to what's happening in the Sphinx-based base.rb class?
 
-      group_and_counts[sphinx_format(datetime)] = term.doc_count
+      group_and_counts[es_format(datetime)] = term.doc_count
     end
 
     group_and_counts
@@ -44,8 +44,8 @@ class EsEntrySearch::DateAggregator::Base
 
   attr_reader :es_search
 
-  def sphinx_format(date)
-    date.strftime(sphinx_format_str)
+  def es_format(date)
+    date.strftime(es_format_str)
   end
 
   def name_format(date)

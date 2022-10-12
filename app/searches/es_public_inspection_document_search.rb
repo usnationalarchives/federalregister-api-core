@@ -1,32 +1,32 @@
 class EsPublicInspectionDocumentSearch < EsApplicationSearch
 
   define_filter :agency_ids,
-                :sphinx_type => :with
+                :es_type => :with
 
   define_filter :agencies, #ie slug-based search
-                :sphinx_attribute => :agency_ids,
-                :sphinx_type => :with,
+                :es_attribute => :agency_ids,
+                :es_type => :with,
                 :model_id_method => :slug,
-                :model_sphinx_method => :id
+                :model_es_method => :id
 
 
   define_filter :type,
-                :sphinx_type => :with do |types|
+                :es_type => :with do |types|
                   types.map{|type| Entry::ENTRY_TYPES[type]}.to_sentence(:two_words_connector => ' or ', :last_word_connector => ', or ')
                 end
 
   define_filter :docket_id,
-                :sphinx_type => :es_match_query,
+                :es_type => :es_match_query,
                 :label => "Agency Docket" do |docket|
                   docket.first
                 end
   define_filter :document_numbers,
-                :sphinx_type => :with,
-                :sphinx_attribute => :document_number do |*document_numbers|
+                :es_type => :with,
+                :es_attribute => :document_number do |*document_numbers|
                   document_numbers.flatten.map(&:inspect).to_sentence(:two_words_connector => ' or ', :last_word_connector => ', or ')
                 end
   define_filter :special_filing,
-                :sphinx_type => :with,
+                :es_type => :with,
                 :es_value_processor => Proc.new{|value| value == 1 },
                 :label => "Filing Type" do |type|
                   case type

@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe FrIndexSgmlGenerator do
 
-  def stub_sphinx_entry_ids
+  def stub_es_entry_ids
     allow_any_instance_of(FrIndexPresenter::DocumentType).to receive(:entry_ids).and_return(Entry.all.map(&:id))
   end
 
@@ -28,7 +28,7 @@ describe FrIndexSgmlGenerator do
         toc_doc:          'Defense Production Act of 1950; Determination (Presidential Determination No. 201709 of June 13, 2017)',
         presidential_document_type_id: 1
       )
-      stub_sphinx_entry_ids
+      stub_es_entry_ids
 
       result = FrIndexSgmlGenerator.new(2017).perform
       result.should == <<-SGML
@@ -52,7 +52,7 @@ SGML
         presidential_document_type_id: PresidentialDocumentType::EXECUTIVE_ORDER.id,
         presidential_document_number: 13811
       )
-      stub_sphinx_entry_ids
+      stub_es_entry_ids
 
       result = FrIndexSgmlGenerator.new(2017).perform
       result.should == <<-SGML
@@ -78,7 +78,7 @@ SGML
         presidential_document_type_id: PresidentialDocumentType::EXECUTIVE_ORDER.id,
         presidential_document_number: 13811
       )
-      stub_sphinx_entry_ids
+      stub_es_entry_ids
 
       result = FrIndexSgmlGenerator.new(2017).perform
       result.should == <<-SGML

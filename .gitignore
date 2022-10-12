@@ -2,9 +2,7 @@
 .bundle
 /bin
 /config/varnish*
-/config/sphinx/*
 /data
-/db/sphinx/
 /log
 /public/images/icons.png
 /public/index/pdf

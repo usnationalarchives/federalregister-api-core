@@ -20,7 +20,7 @@ class EsEntrySearch::DateAggregator::Quarterly < EsEntrySearch::DateAggregator::
     periods
   end
 
-  def sphinx_format_str
+  def es_format_str
     "%Y%m"
   end
 

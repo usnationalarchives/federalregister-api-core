@@ -69,7 +69,7 @@ class EsEntrySearch < EsApplicationSearch
   attr_reader :type
   attr_accessor :type, :regulation_id_number, :prior_term
 
-  define_filter :regulation_id_number, :label => "Unified Agenda", :phrase => true, :sphinx_type => :es_match_query do |regulation_id_number|
+  define_filter :regulation_id_number, :label => "Unified Agenda", :phrase => true, :es_type => :es_match_query do |regulation_id_number|
     reg = RegulatoryPlan.find_by_regulation_id_number(regulation_id_number)
     ["RIN #{Array(regulation_id_number).first}", reg.try(:title).try(:strip)].join(' - ')
   end
@@ -81,17 +81,17 @@ class EsEntrySearch < EsApplicationSearch
   end
 
   define_filter :agency_ids,
-                :sphinx_type => :with
+                :es_type => :with
 
   define_filter :agencies,
-                :sphinx_type => :with,
-                :sphinx_attribute => :agency_ids,
-                :model_sphinx_method => :id,
+                :es_type => :with,
+                :es_attribute => :agency_ids,
+                :model_es_method => :id,
                 :model_id_method=> :slug
 
   define_filter :citing_document_numbers,
-                :sphinx_type => :with,
-                :sphinx_attribute => :cited_entry_ids,
+                :es_type => :with,
+                :es_attribute => :cited_entry_ids,
                 :label => 'Citing document',
                 :es_value_processor => Proc.new { |*document_numbers|
                   entries = Entry.select("id, document_number").where(:document_number => document_numbers.flatten)
@@ -110,75 +110,75 @@ class EsEntrySearch < EsApplicationSearch
                 end
 
   define_filter :document_numbers,
-                :sphinx_type => :with,
-                :sphinx_attribute => :document_number do |document_numbers|
+                :es_type => :with,
+                :es_attribute => :document_number do |document_numbers|
                   document_numbers.flatten.map(&:inspect).to_sentence(:two_words_connector => ' or ', :last_word_connector => ', or ')
                 end
   define_filter :president,
-                :sphinx_type => :with,
-                :sphinx_attribute => :president_id,
+                :es_type => :with,
+                :es_attribute => :president_id,
                 :model_id_method=> :identifier,
-                :model_sphinx_method => :id,
+                :model_es_method => :id,
                 :model_label_method => :full_name
 
   define_filter :section_ids,
-                :sphinx_type => :with,
+                :es_type => :with,
                 :model_label_method => :title
 
   define_filter :volume,
-                :sphinx_type => :with,
+                :es_type => :with,
                 :name        => :volume
 
   define_filter :sections,
-                :sphinx_type => :with,
-                :sphinx_attribute => :section_ids,
+                :es_type => :with,
+                :es_attribute => :section_ids,
                 :model_label_method => :title,
-                :model_sphinx_method => :id,
+                :model_es_method => :id,
                 :model_id_method => :slug
 
   define_filter :topic_ids,
-                :sphinx_type => :with
+                :es_type => :with
 
   define_filter :topics,
-                :sphinx_type => :with,
-                :sphinx_attribute => :topic_ids,
+                :es_type => :with,
+                :es_attribute => :topic_ids,
                 :model_label_method => :name,
-                :model_sphinx_method => :id,
+                :model_es_method => :id,
                 :model_id_method => :slug
 
   define_filter :type,
-                :sphinx_type => :with do |types|
+                :es_type => :with do |types|
                   types.map{|type| Entry::ENTRY_TYPES[type]}.to_sentence(:two_words_connector => ' or ', :last_word_connector => ', or ')
                 end
 
   define_filter :presidential_document_type_id,
-                :sphinx_type => :with
+                :es_type => :with
 
   define_filter :presidential_document_type,
-                :sphinx_type => :with,
-                :sphinx_attribute => :presidential_document_type_id,
-                :model_sphinx_method => :id,
+                :es_type => :with,
+                :es_attribute => :presidential_document_type_id,
+                :model_es_method => :id,
                 :model_id_method => :identifier
 
   define_filter :small_entity_ids,
-                :sphinx_type => :with,
+                :es_type => :with,
                 :label => "Small Entities Affected"
 
   define_filter :small_entities,
-                :sphinx_type => :with,
+                :es_type => :with,
                 :model_id_method => :identifier,
-                :model_sphinx_method => :id,
+                :model_es_method => :id,
                 :label => "Small Entities Affected"
 
   define_filter :docket_id,
-                :sphinx_type => :es_match_query,
+                :es_type => :es_match_query,
                 :phrase => true,
                 :label => "Agency Docket" do |docket|
                   docket.join(', ')
                 end
 
   define_filter :significant,
-                :sphinx_type => :with,
+                :es_type => :with,
                 :es_value_processor => Proc.new{|value| value == 1 },
                 :label => "Significance" do
                   "Associated Unified Agenda Deemed Significant Under EO 12866"
@@ -186,14 +186,14 @@ class EsEntrySearch < EsApplicationSearch
 
   define_filter :accepting_comments_on_regulations_dot_gov,
                 :es_value_processor => Proc.new{|value| value == 1 },
-                :sphinx_type => :with,
+                :es_type => :with,
                 :label => "Regulations.gov" do
                   "Accepting Comments on Regulations.gov"
                 end
 
   define_filter :correction,
                 :es_value_processor => Proc.new{|value| value == 1 },
-                :sphinx_type => :with do |val|
+                :es_type => :with do |val|
                   case val
                   when '1', 1, true
                     "Original Document"
@@ -204,7 +204,7 @@ class EsEntrySearch < EsApplicationSearch
 
 
   define_place_filter :near,
-                      :sphinx_attribute => :place_ids
+                      :es_attribute => :place_ids
 
   define_date_filter :publication_date,
                      :label => "Publication Date"
@@ -229,9 +229,9 @@ class EsEntrySearch < EsApplicationSearch
         add_filter(
           :name => @cfr.citation,
           :condition => :cfr,
-          :sphinx_attribute => :cfr_affected_parts,
+          :es_attribute => :cfr_affected_parts,
           :label => "Affected CFR Part",
-          :sphinx_type => :with_range,
+          :es_type => :with_range,
           :range_conditions => @cfr.range_conditions
         )
       else
@@ -245,9 +245,9 @@ class EsEntrySearch < EsApplicationSearch
     hsh = hsh.with_indifferent_access
     add_filter(
       :name             => "Start Page",
-      :sphinx_attribute => :start_page,
+      :es_attribute => :start_page,
       :label            => "Start Page",
-      :sphinx_type      => :with_range,
+      :es_type      => :with_range,
       :range_conditions => hsh.fetch(:range_conditions)
     )
   end
@@ -257,9 +257,9 @@ class EsEntrySearch < EsApplicationSearch
     hsh = hsh.with_indifferent_access
     add_filter(
       :name             => "End Page",
-      :sphinx_attribute => :end_page,
+      :es_attribute => :end_page,
       :label            => "End Page",
-      :sphinx_type      => :with_range,
+      :es_type      => :with_range,
       :range_conditions => hsh.fetch(:range_conditions)
     )
   end
@@ -363,11 +363,11 @@ class EsEntrySearch < EsApplicationSearch
   end
 
   def count_in_last_n_days(n)
-    sphinx_search_count(sphinx_term,
+    es_search_count(es_term,
       :with => with.merge(:publication_date => n.days.ago.to_time.midnight .. Time.current.midnight),
       :with_all => with_all,
       :without => without,
-      :conditions => sphinx_conditions,
+      :conditions => es_conditions,
       :match_mode => :extended
     )
   end
@@ -488,7 +488,7 @@ class EsEntrySearch < EsApplicationSearch
 
   def results_for_date(date, args = {})
     date = ApplicationSearch::DateSelector.new(:is => date)
-    results({:with => {:publication_date => date.sphinx_value}, :per_page => 1000}.merge(args))
+    results({:with => {:publication_date => date.es_value}, :per_page => 1000}.merge(args))
   end
 
   def public_inspection_search_possible?

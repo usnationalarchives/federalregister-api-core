@@ -16,7 +16,7 @@ class EsEntrySearch::DateAggregator::Daily < EsEntrySearch::DateAggregator::Base
     periods
   end
 
-  def sphinx_format_str
+  def es_format_str
     "%Y%m%d"
   end
 

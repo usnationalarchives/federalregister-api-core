@@ -11,7 +11,6 @@ shared: &shared
     host: <%= ENV['ELASTICSEARCH_HOST'] %>
     trace: false
     enabled: <%= ActiveModel::Type::Boolean.new.cast(ENV['ELASTICSEARCH_ENABLED']) %>
-    notify_on_sphinx_usage: <%= ENV.fetch('NOTIFY_ON_SPHINX_USAGE', false) %>
     entry_index_shards: <%= ENV.fetch('ENTRY_INDEX_SHARDS', 1) %>
     public_inspection_document_index_shards: <%= ENV.fetch('PUBLIC_INSPECTION_DOCUMENT_INDEX_SHARDS', 1) %>
   feature_flags:

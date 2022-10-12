@@ -59,12 +59,12 @@ class EsApplicationSearch
 
         if selector.valid?
           add_filter(
-            :value => selector.sphinx_value,
+            :value => selector.es_value,
             :name => selector.filter_name,
             :condition => condition,
             :label => label,
-            :sphinx_type => :with,
-            :sphinx_attribute => options[:sphinx_attribute] || filter_name,
+            :es_type => :with,
+            :es_attribute => options[:es_attribute] || filter_name,
             :date_selector => selector
           )
         else
@@ -86,9 +86,9 @@ class EsApplicationSearch
             :value => [place_selector.place_ids], # deeply nested array keeps places together to avoid duplicate filters
             :name => "within #{place_selector.within} miles of #{place_selector.location}",
             :condition => filter_name,
-            :sphinx_attribute => options[:sphinx_attribute],
+            :es_attribute => options[:es_attribute],
             :label => "Located",
-            :sphinx_type => :with
+            :es_type => :with
           )
         else
           unless place_selector.valid?
@@ -164,30 +164,30 @@ class EsApplicationSearch
   end
 
   def blank?
-    [with, with_all, without, sphinx_conditions, term].all?(&:blank?) || skip_results?
+    [with, with_all, without, es_conditions, term].all?(&:blank?) || skip_results?
   end
 
   def skip_results?
     @skip_results
   end
 
-  def sphinx_conditions
-    sphinx_conditions = {}
-    @filters.select{|f| f.sphinx_type == :conditions }.each do |filter|
-      sphinx_conditions[filter.sphinx_attribute] = ApplicationSearch::TermPreprocessor.process_term(filter.sphinx_value)
+  def es_conditions
+    es_conditions = {}
+    @filters.select{|f| f.es_type == :conditions }.each do |filter|
+      es_conditions[filter.es_attribute] = ApplicationSearch::TermPreprocessor.process_term(filter.es_value)
     end
 
-    sphinx_conditions
+    es_conditions
   end
 
   def with
     with = {}
-    @filters.select{|f| (f.sphinx_type == :with) && !f.date_selector }.each do |filter|
+    @filters.select{|f| (f.es_type == :with) && !f.date_selector }.each do |filter|
       if filter.multi
-        with[filter.sphinx_attribute] ||= []
-        with[filter.sphinx_attribute] << filter.sphinx_value
+        with[filter.es_attribute] ||= []
+        with[filter.es_attribute] << filter.es_value
       else
-        with[filter.sphinx_attribute] = filter.sphinx_value
+        with[filter.es_attribute] = filter.es_value
       end
     end
     with
@@ -195,12 +195,12 @@ class EsApplicationSearch
 
   def es_match_queries
     with = {}
-    @filters.select{|f| (f.sphinx_type == :es_match_query) && !f.date_selector }.each do |filter|
+    @filters.select{|f| (f.es_type == :es_match_query) && !f.date_selector }.each do |filter|
       if filter.multi
-        with[filter.sphinx_attribute] ||= []
-        with[filter.sphinx_attribute] << filter.sphinx_value
+        with[filter.es_attribute] ||= []
+        with[filter.es_attribute] << filter.es_value
       else
-        with[filter.sphinx_attribute] = filter.sphinx_value
+        with[filter.es_attribute] = filter.es_value
       end
     end
     with
@@ -209,12 +209,12 @@ class EsApplicationSearch
   def with_for_facets
     #NOTE: .with has changed to exclude filters with a date selector--this method retains them since publication_date options are used when building facets.  At some point we may want to patch strictly the publication date with options directly to the DateAggregator constructor
     with = {}
-    @filters.select{|f| f.sphinx_type == :with }.each do |filter|
+    @filters.select{|f| f.es_type == :with }.each do |filter|
       if filter.multi
-        with[filter.sphinx_attribute] ||= []
-        with[filter.sphinx_attribute] << filter.sphinx_value
+        with[filter.es_attribute] ||= []
+        with[filter.es_attribute] << filter.es_value
       else
-        with[filter.sphinx_attribute] = filter.sphinx_value
+        with[filter.es_attribute] = filter.es_value
       end
     end
     with
@@ -222,9 +222,9 @@ class EsApplicationSearch
 
   def without
     without = {}
-    @filters.select{|f| f.sphinx_type == :without }.each do |filter|
-      without[filter.sphinx_attribute] ||= []
-      without[filter.sphinx_attribute] << filter.sphinx_value
+    @filters.select{|f| f.es_type == :without }.each do |filter|
+      without[filter.es_attribute] ||= []
+      without[filter.es_attribute] << filter.es_value
     end
     without
   end
@@ -354,9 +354,9 @@ class EsApplicationSearch
 
   def es_conditions
     es_conditions = {}
-    @filters.select{|f| f.sphinx_type == :conditions }.each do |filter|
+    @filters.select{|f| f.es_type == :conditions }.each do |filter|
       #es_conditions[filter.sphinx_attribute] = ApplicationSearch::TermPreprocessor.process_term(filter.sphinx_value)
-      es_conditions[filter.sphinx_attribute] = filter.sphinx_value
+      es_conditions[filter.es_attribute] = filter.es_value
 
     end
 
@@ -389,7 +389,7 @@ class EsApplicationSearch
   end
 
   def term_count
-    sphinx_search_count(sphinx_term, :match_mode => :extended)
+    es_search_count(es_term, :match_mode => :extended)
   end
 
   def entry_count
@@ -400,12 +400,12 @@ class EsApplicationSearch
     @conditions.to_json
   end
 
-  def sphinx_term
-    @sphinx_term ||= ApplicationSearch::TermPreprocessor.process_term(@term)
+  def es_term
+    @es_term ||= ApplicationSearch::TermPreprocessor.process_term(@term)
   end
 
-  def sphinx_search_count(term, options)
-    sphinx_retry do
+  def es_search_count(term, options)
+    es_retry do
       begin
         model.search_count(term, options)
       rescue ThinkingSphinx::SphinxError
@@ -414,8 +414,8 @@ class EsApplicationSearch
     end
   end
 
-  def sphinx_search(term, options)
-    sphinx_retry do
+  def es_search(term, options)
+    es_retry do
       begin
         results = model.search(term, options)
 
@@ -547,7 +547,7 @@ class EsApplicationSearch
       # :with => with,
       # :with_all => with_all,
       # :without => without,
-      # :conditions => sphinx_conditions,
+      # :conditions => es_conditions,
       # :match_mode => :extended,
       # :retry_stale => true,
       # :sort_mode => sort_mode,
@@ -664,7 +664,7 @@ class EsApplicationSearch
     @filters.
       select{|f| f.date_selector }.
       each do |filter|
-        hsh[filter.sphinx_attribute] = filter.date_selector.date_conditions
+        hsh[filter.es_attribute] = filter.date_selector.date_conditions
       end
     hsh
   end
@@ -674,7 +674,7 @@ class EsApplicationSearch
     @filters.
       select{|f| f.range_conditions }.
       each do |filter|
-        hsh[filter.sphinx_attribute] = filter.range_conditions
+        hsh[filter.es_attribute] = filter.range_conditions
       end
     hsh
   end
@@ -683,7 +683,7 @@ class EsApplicationSearch
     #no-op
   end
 
-  def sphinx_retry
+  def es_retry
     retry_delays = [0.1, 0.25, 0.5]
     begin
       yield

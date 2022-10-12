@@ -1,5 +1,5 @@
 class RegulatoryPlanSearch < EsApplicationSearch
-  define_filter :agency_ids,  :sphinx_type => :with_all
+  define_filter :agency_ids,  :es_type => :with_all
 
   def agency_facets
     ApplicationSearch::FacetCalculator.new(:search => self, :model => Agency, :facet_name => :agency_ids).all
@@ -14,7 +14,7 @@ class RegulatoryPlanSearch < EsApplicationSearch
     raw_facets = RegulatoryPlan.facets(term,
       :with => with,
       :with_all => with_all,
-      :conditions => sphinx_conditions,
+      :conditions => es_conditions,
       :match_mode => :extended,
       :facets => [:priority_category]
     )[:priority_category]

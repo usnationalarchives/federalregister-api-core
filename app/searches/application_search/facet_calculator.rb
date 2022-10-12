@@ -9,11 +9,11 @@ class ApplicationSearch::FacetCalculator
   end
 
   def raw_facets
-    results = @search.sphinx_search(
-      @search.sphinx_term,
+    results = @search.es_search(
+      @search.es_term,
       :with => @search.with,
       :with_all => @search.with_all,
-      :conditions => @search.sphinx_conditions,
+      :conditions => @search.es_conditions,
       :match_mode => :extended,
       :per_page => 1000,
       :group_by => @facet_name.to_s,

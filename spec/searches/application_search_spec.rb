@@ -29,7 +29,7 @@ describe EsApplicationSearch, vcr: true do
 
   describe 'define_place_filter' do
     before(:each) do
-      @search_class.define_place_filter :near, :sphinx_attribute => :place_ids
+      @search_class.define_place_filter :near, :es_attribute => :place_ids
     end
 
     it "creates an instance setter method" do

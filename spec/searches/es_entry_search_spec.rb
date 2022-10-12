@@ -73,7 +73,7 @@ describe EsEntrySearch, es: true do
         pending("May not be needed")
         search = described_class.new()
         search.regulation_id_number = "ABCD-1234"
-        search.sphinx_conditions.should == {:regulation_id_number => '"=ABCD =1234"'}
+        search.es_conditions.should == {:regulation_id_number => '"=ABCD =1234"'}
       end
     end
 

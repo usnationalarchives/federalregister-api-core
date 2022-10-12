@@ -8,7 +8,7 @@ class EsEntrySearch::DateAggregator::Yearly < EsEntrySearch::DateAggregator::Bas
     (@start_date.year .. @end_date.year).map{|year| [Date.new(year)]}
   end
 
-  def sphinx_format_str
+  def es_format_str
     "%Y"
   end
 

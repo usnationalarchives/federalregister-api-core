@@ -48,13 +48,13 @@ class FrIndexPresenter
 
     def entry_count
       @entry_count ||= Entry.search_klass.new(
-        :conditions => sphinx_conditions
+        :conditions => es_conditions
       ).count
     end
 
     def document_types
       @document_types ||= Entry.search_klass.new(
-        :conditions => sphinx_conditions
+        :conditions => es_conditions
       ).type_facets.map{|f| DocumentType.new(agency, year, f.value, :max_date => max_date)}.sort_by(&:name).reverse
     end
 
@@ -128,13 +128,13 @@ class FrIndexPresenter
 
     def entry_ids_for_year
       @entry_ids_for_year ||= Entry.search_klass.new(
-        :conditions => sphinx_conditions.merge(:publication_date => {:year => year}),
+        :conditions => es_conditions.merge(:publication_date => {:year => year}),
         :maximum_per_page => 10000,
         :per_page => 10000
       ).result_ids
     end
 
-    def sphinx_conditions
+    def es_conditions
       {
         :agency_ids => [agency.id],
         :without_agency_ids => agency.children.map(&:id),

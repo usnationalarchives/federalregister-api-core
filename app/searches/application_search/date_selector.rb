@@ -2,7 +2,7 @@ class ApplicationSearch::DateSelector
   class InvalidDate < ArgumentError; end
 
   attr_accessor :is, :gte, :lte, :year
-  attr_reader :sphinx_value, :filter_name
+  attr_reader :es_value, :filter_name
 
   def initialize(hsh)
     hsh = hsh.with_indifferent_access
@@ -17,12 +17,12 @@ class ApplicationSearch::DateSelector
       if @is.present?
         date = Date.parse(@is.to_s)
         validate_date!(date)
-        @sphinx_value = date.to_time.utc.beginning_of_day.to_i .. date.to_time.utc.end_of_day.to_i
+        @es_value = date.to_time.utc.beginning_of_day.to_i .. date.to_time.utc.end_of_day.to_i
         @filter_name = "on #{date}"
       elsif @year.present?
         date = Date.parse("#{@year}-01-01")
         validate_date!(date)
-        @sphinx_value = date.to_time.utc.beginning_of_day.to_i .. date.end_of_year.to_time.utc.end_of_day.to_i
+        @es_value = date.to_time.utc.beginning_of_day.to_i .. date.end_of_year.to_time.utc.end_of_day.to_i
         @filter_name = "in #{@year}"
       else
         if @gte.present? && @lte.present?
@@ -35,7 +35,7 @@ class ApplicationSearch::DateSelector
           raise InvalidDate
         end
 
-        @sphinx_value = start_date.to_time.utc.beginning_of_day.to_i .. end_date.to_time.utc.end_of_day.to_i
+        @es_value = start_date.to_time.utc.beginning_of_day.to_i .. end_date.to_time.utc.end_of_day.to_i
       end
     rescue ArgumentError
       @valid = false

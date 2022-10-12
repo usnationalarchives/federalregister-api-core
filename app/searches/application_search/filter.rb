@@ -1,10 +1,10 @@
 class ApplicationSearch::Filter
-  attr_reader :value, :condition, :label, :sphinx_type, :sphinx_attribute, :sphinx_value, :name, :multi, :date_selector, :range_conditions
+  attr_reader :value, :condition, :label, :es_type, :es_attribute, :es_value, :name, :multi, :date_selector, :range_conditions
   def initialize(options)
     @name               = options[:name]
     @value              = [options[:value]].flatten
     @condition          = options[:condition]
-    @sphinx_attribute   = options[:sphinx_attribute] || @condition
+    @es_attribute   = options[:es_attribute] || @condition
 
     @model_class        = options[:model_class]
     @model_id_method    = options[:model_id_method] || :id
@@ -33,23 +33,23 @@ class ApplicationSearch::Filter
     end
 
     if options[:es_value_processor]
-      @sphinx_value = options[:es_value_processor].call(options[:value])
+      @es_value = options[:es_value_processor].call(options[:value])
     elsif options[:phrase]
-      @sphinx_value = options[:value]
-    elsif options[:model_sphinx_method]
-      @sphinx_value = @value.map{|id|
+      @es_value = options[:value]
+    elsif options[:model_es_method]
+      @es_value = @value.map{|id|
         begin
           model_class.send("find_by_#{@model_id_method}!", id)
         rescue
           raise EsApplicationSearch::InputError.new("invalid value")
         end
-      }.map{|x| x.send(options[:model_sphinx_method])}.first
-    elsif options[:sphinx_value_processor]
-      @sphinx_value = options[:sphinx_value_processor].call(options[:value])
+      }.map{|x| x.send(options[:model_es_method])}.first
+    elsif options[:es_value_processor]
+      @es_value = options[:es_value_processor].call(options[:value])
     else
-      @sphinx_value = options[:value]
+      @es_value = options[:value]
     end
-    @sphinx_type  = options[:sphinx_type] || :conditions
+    @es_type  = options[:es_type] || :conditions
     @label        = options[:label] || @condition.to_s.singularize.humanize
   end
 

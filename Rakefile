@@ -14,9 +14,3 @@ FederalregisterApiCore::Application.load_tasks
 # require 'tasks/rails'
 # require 'honeybadger/tasks'
 # require 'resque/tasks'
-
-# begin
-#   require 'thinking_sphinx/tasks'
-# rescue LoadError
-# end
-

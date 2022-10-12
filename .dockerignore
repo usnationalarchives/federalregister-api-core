@@ -10,8 +10,6 @@ data/
 !data/regulations_dot_gov_participating_agencies.csv
 !data/open_api_v3.yml
 
-db/sphinx/*
-
 log*
 !log/.gitkeep
 
