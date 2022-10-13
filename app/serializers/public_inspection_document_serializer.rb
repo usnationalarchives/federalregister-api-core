@@ -1,4 +1,4 @@
-# Used to serialize pi docs for storing in elasticsearch 2. creating API results when AR is used in lieu of ES for retrieval
+# Used to serialize pi docs for storing in elasticsearch and creating API results when AR is used in lieu of ES for retrieval
 class PublicInspectionDocumentSerializer < ApplicationSerializer
   extend PublicInspectionDocumentApiConfiguration
 

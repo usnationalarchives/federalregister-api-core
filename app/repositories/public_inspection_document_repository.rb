@@ -35,10 +35,6 @@ class PublicInspectionDocumentRepository < BaseRepository
   }
 
   mapping dynamic: 'strict' do
-    indexes :agencies, {
-      type:        'object',
-      enabled:      false,
-    }
     indexes :agency_letters, {
       type:        'object',
       enabled:      false,

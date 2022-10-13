@@ -66,10 +66,6 @@ class EntryRepository < BaseRepository
       type: 'keyword',
       index: false,
     }
-    indexes :agencies, {
-      type:        'object',
-      enabled:      false,
-    }
     indexes :body_html_url, {
       type: 'keyword',
       index: false,
