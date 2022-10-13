@@ -130,6 +130,7 @@ class PublicInspectionDocumentRepository < BaseRepository
     indexes :indexed_at, {type: 'date'}
     indexes :public_inspection_document_id, { type: 'integer' }
     indexes :type, { type: 'keyword' }
+    indexes :agency_name_ids, { type: 'integer' }
     indexes :agency_ids, { type: 'integer' }
     indexes :publication_date, { type: 'date'}
     indexes :raw_text_updated_at, {type: 'date', index: false}

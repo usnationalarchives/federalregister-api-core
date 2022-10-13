@@ -147,6 +147,12 @@ class PublicInspectionDocumentSerializer < ApplicationSerializer
     object.agency_assignments.map(&:agency_id)
   end
 
+  attribute :agency_name_ids do |object|
+    object.
+      agency_name_ids.
+      uniq
+  end
+
   attribute :full_text do |object|
     path = "#{FileSystemPathManager.data_file_path}/public_inspection/raw/#{object.document_file_path}.txt"
     if File.file?(path)

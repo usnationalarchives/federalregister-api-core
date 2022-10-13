@@ -357,6 +357,12 @@ class EntrySerializer < ApplicationSerializer
       uniq
   end
 
+  attribute :agency_name_ids do |entry|
+    entry.
+      agency_name_ids.
+      uniq
+  end
+
   attribute :topic_ids do |entry|
     entry.
       topic_assignments.

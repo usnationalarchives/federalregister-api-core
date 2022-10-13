@@ -237,6 +237,7 @@ class EntryRepository < BaseRepository
 
     # Formerly Sphinx multi-value attributes
     indexes :cfr_affected_parts, {type: 'integer'}
+    indexes :agency_name_ids, {type: 'integer'}
     indexes :agency_ids, {type: 'integer'}
     indexes :topic_ids, {type: 'integer'}
     indexes :section_ids, {type: 'integer'}
