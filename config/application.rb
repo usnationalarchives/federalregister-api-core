@@ -78,5 +78,8 @@ module FederalregisterApiCore
       Symbol,
     ]
 
+    # Ensure the batch-loader gem cache is purged between requests
+    config.middleware.use BatchLoader::Middleware
+
   end
 end
