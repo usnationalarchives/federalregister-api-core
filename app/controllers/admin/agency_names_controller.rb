@@ -41,7 +41,6 @@ class Admin::AgencyNamesController < AdminController
     @agency_name = AgencyName.find(params[:id])
 
     if @agency_name.update(agency_name_params)
-      AgencyNameEntriesReindexer.perform_async(@agency_name.id)
       flash[:notice] = 'Successfully saved'
       if params[:return_to].present?
         redirect_to params[:return_to]

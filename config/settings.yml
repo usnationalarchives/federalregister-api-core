@@ -15,6 +15,7 @@ shared: &shared
     public_inspection_document_index_shards: <%= ENV.fetch('PUBLIC_INSPECTION_DOCUMENT_INDEX_SHARDS', 1) %>
   feature_flags:
     use_carrierwave_images_in_api: <%= ActiveModel::Type::Boolean.new.cast(ENV['USE_CARRIERWAVE_IMAGES_IN_API']) || false %>
+    reindex_all_agency_name_entries: <%= ActiveModel::Type::Boolean.new.cast(ENV['REINDEX_ALL_AGENCY_NAME_ENTRIES']) || false %>
   images:
     store_in_filesystem: true
   varnish:

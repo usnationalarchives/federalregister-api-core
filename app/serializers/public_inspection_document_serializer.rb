@@ -2,7 +2,8 @@
 class PublicInspectionDocumentSerializer < ApplicationSerializer
   extend PublicInspectionDocumentApiConfiguration
 
-  attributes :document_number,
+  attributes :agency_ids,
+    :document_number,
     :editorial_note,
     :id,
     :num_pages,

@@ -37,7 +37,8 @@ RSpec.describe "Entries API", :type => :request, :es => true do
     agency_name_1 = Factory.create(:agency_name)
     agency_name_2 = Factory.create(:agency_name)
     agency_name_3 = Factory.create(:agency_name, agency: nil)
-    entry_1       = Factory(:entry, agency_name_ids: [agency_name_1.id]),
+    agency_name_4 = Factory.create(:agency_name, agency: agency_name_1.agency)
+    entry_1       = Factory(:entry, agency_name_ids: [agency_name_1.id, agency_name_4.id]), #ie ensure we don't double-count agency_name ids
     entry_2       = Factory(:entry, agency_name_ids: [agency_name_2.id]),
     entry_3       = Factory(:entry, agency_name_ids: [agency_name_2.id])
     entry_4       = Factory(:entry, agency_name_ids: [agency_name_3.id]) #ie doesn't break for entries with agency names not assigned to an agency

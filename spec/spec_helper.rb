@@ -40,6 +40,7 @@ RSpec.configure do |config|
     # to individual tests which use redis.
     allow(Redis).to receive(:new) { MockRedis.new }
     allow_any_instance_of(CacheUtils::Client).to receive(:purge)
+    allow(AgencyNameChangeReindexer).to receive(:perform_async)
   end
 
 end

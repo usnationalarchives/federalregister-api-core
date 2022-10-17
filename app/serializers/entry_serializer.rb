@@ -24,6 +24,11 @@ class EntrySerializer < ApplicationSerializer
     nil
   end
 
+  attribute :agency_ids do |entry|
+    #NOTE: This must remain in a separate #attribute block to support bulk ES update calls
+    entry.agency_ids
+  end
+
   attribute :agency_names do |entry|
     entry.agency_names.compact.map{|a| a.agency.try(:name) || a.name}
   end

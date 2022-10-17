@@ -25,11 +25,11 @@ describe EsEntrySearch, es: true do
     #NOTE: These specs were used for testing search before the ES upgrade.
 
     describe 'agency_ids' do
-      it "`with` method uses agency_name_ids behind the scenes to perform the search" do
-        agency_names = (1..2).map{ Factory.create(:agency_name) }
+      it "populates es `with`" do
+        agencies = (1..2).map{ Factory.create(:agency) }
         search = described_class.new()
-        search.agency_ids = agency_names.map(&:agency).map(&:id)
-        search.with.should == {:agency_name_ids => agency_names.map(&:id)}
+        search.agency_ids = agencies.map(&:id)
+        search.with.should == {:agency_ids => agencies.map(&:id)}
       end
     end
 
@@ -810,13 +810,12 @@ describe EsEntrySearch, es: true do
       expect(search.results.count).to eq 1
     end
 
-    it "handles agency searches using agency_name_ids using a multi-value attribute query" do
-      agency_names = (1..2).map{Factory.create(:agency_name)} #Note that actual agencies must exist in order for the search to register the filter
-      agencies = agency_names.map(&:agency)
+    it "handles es multi-value attribute queries" do
+      agencies = (1..2).map{ Factory.create(:agency) } #Note that actual agencies must exist in order for the search to register the filter
       entries = [
-        build_entry_double({agency_name_ids: [agency_names.first.id], id: 111 }),
-        build_entry_double({agency_name_ids: agency_names.last.id, id: 222 }),
-        build_entry_double({agency_name_ids: [], id: 333 })
+        build_entry_double({agency_ids: [agencies.first.id], id: 111 }),
+        build_entry_double({agency_ids: agencies.last.id, id: 222 }),
+        build_entry_double({agency_ids: [], id: 333 })
       ]
       Entry.bulk_index(entries, refresh: true)
 

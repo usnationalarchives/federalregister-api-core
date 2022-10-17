@@ -5,6 +5,16 @@ describe AgencyName do
     ElasticsearchIndexer.stub(:handle_entry_changes)
   end
 
+  it "calls the AgencyNameChangeReindexer with the correct dirty attribute values on create/update" do
+    agency_1 = Factory(:agency, name: "Agency 1")
+    expect(AgencyNameChangeReindexer).to receive(:perform_async).with(9999, nil)
+    agency_name = Factory(:agency_name, id: 9999, agency: agency_1)
+
+    expect(AgencyNameChangeReindexer).to receive(:perform_async).with(agency_name.id, agency_name.agency.id)
+    agency_2 = Factory(:agency, name: "Agency 2")
+    agency_name.update!(agency_id: agency_2.id)
+  end
+
   describe 'destroy' do
     it "destroys all related agency_name_assignments" do
       AgencyNameAssignment.count == 0

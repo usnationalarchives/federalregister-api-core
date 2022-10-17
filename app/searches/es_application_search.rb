@@ -185,9 +185,7 @@ class EsApplicationSearch
     @filters.select{|f| (f.sphinx_type == :with) && !f.date_selector }.each do |filter|
       if filter.multi
         with[filter.sphinx_attribute] ||= []
-        Array.wrap(filter.sphinx_value).each do |val|
-          with[filter.sphinx_attribute] << val
-        end
+        with[filter.sphinx_attribute] << filter.sphinx_value
       else
         with[filter.sphinx_attribute] = filter.sphinx_value
       end
@@ -443,19 +441,6 @@ class EsApplicationSearch
   private
 
   attr_reader :aggregation_field, :date_histogram_interval
-
-  def add_agency_information_at_runtime!(results)
-    # Augment ES results with lazy-loaded objects using batch-loader gem.  These lazy-loaded objects will be called when the API results are transformed into JSON so we're not N+1'ing when serializing.
-    results.each do |result|
-      result.agencies
-    end
-  end
-
-  def batch_load_agency_name(agency_name_id)
-    BatchLoader.for(agency_name_id).batch do |agency_name_ids, loader|
-      AgencyName.where(id: agency_name_ids).each { |agency_name| loader.call(agency_name.id, agency_name) }
-    end
-  end
 
   def es_base_query
     {

@@ -25,13 +25,10 @@ class AgencyName < ApplicationModel
 
   def update_agency_assignments
     if saved_change_to_agency_id?
-
-      # mark entries as changed
-      if entry_ids.present?
-        EntryChange.upsert_all(entry_ids.map{|id| {entry_id: id} })
-        ElasticsearchIndexer.handle_entry_changes
-      end
-
+      AgencyNameChangeReindexer.perform_async(
+        id,
+        attribute_before_last_save(:agency_id)
+      )
       recompile_associated_tables_of_contents
       recompile_public_inspection_tables_of_contents
 

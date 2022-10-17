@@ -204,14 +204,11 @@ describe EsPublicInspectionDocumentSearch, es: true do
       end
 
       it "can search by agency slugs" do
-        #TODO: FIX
         agency_a = FactoryGirl.create(:agency, name: "Fish Department", slug: "fish-department")
-        agency_name_a = FactoryGirl.create(:agency_name, agency: agency_a)
-        doc_a = build_pi_doc_double(id: 1, full_text: "Fish", agency_name_ids: [agency_name_a.id])
+        doc_a = build_pi_doc_double(id: 1, full_text: "Fish", agency_ids: [agency_a.id])
 
         agency_b = FactoryGirl.create(:agency, name: "Transportation Department", slug: "transportation-department")
-        agency_name_b = FactoryGirl.create(:agency_name, agency: agency_b)
-        doc_b = build_pi_doc_double(id: 2, full_text: "Trains", agency_name_ids: [agency_name_b.id])
+        doc_b = build_pi_doc_double(id: 2, full_text: "Trains", agency_ids: [agency_b.id])
 
         save_documents_and_refresh_index([doc_a, doc_b])
 
