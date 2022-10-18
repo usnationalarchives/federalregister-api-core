@@ -38,7 +38,8 @@ namespace :content do
           Sidekiq::Client.push(
             'class' => 'PublicInspectionDocumentSubscriptionQueuePopulator',
             'args'  => [new_document_numbers],
-            'queue' => 'subscriptions'
+            'queue' => 'subscriptions',
+            'retry' => 0
           )
 
         end

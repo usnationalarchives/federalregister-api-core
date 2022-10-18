@@ -7,7 +7,8 @@ namespace :web do
       Sidekiq::Client.push(
         'class' => 'NewIssueProcessor',
         'args'  => [date.to_s(:iso)],
-        'queue' => 'issue_processor'
+        'queue' => 'issue_processor',
+        'retry' => 0
       )
     rescue StandardError => e
       puts e.message
@@ -25,7 +26,8 @@ namespace :web do
         Sidekiq::Client.push(
           'class' => 'IssueReprocessor',
           'args'  => [date.to_s(:iso)],
-          'queue' => 'issue_reprocessor'
+          'queue' => 'issue_reprocessor',
+          'retry' => 0
         )
       end
     rescue StandardError => e

@@ -12,7 +12,8 @@ namespace :mailing_lists do
         Sidekiq::Client.push(
           'class' => 'DocumentSubscriptionQueuePopulator',
           'args'  => [date.to_s(:iso)],
-          'queue' => 'subscriptions'
+          'queue' => 'subscriptions',
+          'retry' => 0
         )
       rescue StandardError => e
         puts e.message
