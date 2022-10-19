@@ -31,8 +31,6 @@ class AgencyName < ApplicationModel
       )
       recompile_associated_tables_of_contents
       recompile_public_inspection_tables_of_contents
-
-      purge_cache(".*")
     end
   end
 
