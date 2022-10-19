@@ -1,5 +1,6 @@
 class AgencyNameChangeReindexer
   include Sidekiq::Worker
+  include CacheUtils
 
   sidekiq_options :queue => :api_core, :retry => 0
 
@@ -23,7 +24,7 @@ class AgencyNameChangeReindexer
 
       entry_ids = (agency_name.entry_ids - entry_ids_associated_with_prior_agency_via_other_agency_name_ids)
     elsif current_agency && prior_agency.blank?
-      other_agency_name_ids = current_agency.agency_name_ids - agency_name.id
+      other_agency_name_ids = current_agency.agency_name_ids - [agency_name.id]
       entry_ids_already_associated_with_current_agency_via_other_agency_name_ids = current_agency.agency_name_assignments.where(
         assignable_type: 'Entry',
         assignable_id:   agency_name.entry_ids,
@@ -32,7 +33,7 @@ class AgencyNameChangeReindexer
 
       entry_ids = (agency_name.entry_ids - entry_ids_already_associated_with_current_agency_via_other_agency_name_ids)
     elsif current_agency && prior_agency
-      other_agency_name_ids = current_agency.agency_name_ids - agency_name.id
+      other_agency_name_ids = current_agency.agency_name_ids - [agency_name.id]
       entry_ids_already_associated_with_current_agency_via_other_agency_name_ids = current_agency.agency_name_assignments.where(
         assignable_type: 'Entry',
         assignable_id:   agency_name.entry_ids,
@@ -55,6 +56,8 @@ class AgencyNameChangeReindexer
       Entry.where(id: entry_ids).includes(:agencies).find_in_batches(batch_size: 10000) do |entry_batch|
         Entry.bulk_update(entry_batch, refresh: false, attribute: attribute)
       end
+
+      purge_cache(".*")
     end
   end
 
