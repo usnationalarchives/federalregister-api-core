@@ -9,7 +9,7 @@ class AgencyName < ApplicationModel
   validate :does_not_have_agency_if_void
 
   before_create :assign_agency_if_exact_match
-  after_save :update_agency_assignments
+  after_commit :update_agency_assignments
   scope :unprocessed, -> { where(void: false, agency_id: nil).order("agency_names.name") }
 
   def self.find_or_create_by_name(name)
