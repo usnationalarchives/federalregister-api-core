@@ -59,7 +59,7 @@ class Citation < ApplicationModel
           citation = Citation.new(attributes)
 
           if citation_type == 'FR' && part_1.to_i >= 59
-            citation.matching_fr_entries(entry.agencies).each do |cited_entry|
+            citation.matching_fr_entries(entry.agencies.uniq).each do |cited_entry|
               citation = Citation.new(attributes)
               citation.cited_entry = cited_entry
               citations << citation

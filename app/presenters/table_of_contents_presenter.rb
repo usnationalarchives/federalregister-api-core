@@ -66,7 +66,7 @@ class TableOfContentsPresenter
     agencies_hsh = {}
     @entries_with_agencies.each do |entry|
       # create entry views for all associated agencies, powering the 'See XXX'
-      entry.agencies.each do |agency|
+      entry.agencies.uniq.each do |agency|
         agencies_hsh[agency.id] ||= AgencyPresenter.new(self, agency)
         if options[:always_include_parent_agencies] && agency.parent.present?
           agencies_hsh[agency.parent_id] ||= AgencyPresenter.new(self, agency.parent)

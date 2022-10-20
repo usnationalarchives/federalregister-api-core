@@ -27,7 +27,7 @@ class PublicInspectionDocument < ApplicationModel
                           :association_foreign_key => :issue_id
   has_many :agency_name_assignments, -> { order("agency_name_assignments.position") }, :as => :assignable, :dependent => :destroy
   has_many :agency_names, :through => :agency_name_assignments
-  has_many :agencies, -> { distinct}, :through => :agency_names, :extend => Agency::AssociationExtensions
+  has_many :agencies, :through => :agency_names, :extend => Agency::AssociationExtensions
   has_many :docket_numbers, -> { order("docket_numbers.position") }, :as => :assignable, :dependent => :destroy
   has_many :pil_agency_letters, :dependent => :destroy
 

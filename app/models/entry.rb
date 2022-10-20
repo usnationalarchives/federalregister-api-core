@@ -94,7 +94,7 @@ class Entry < ApplicationModel
 
   has_many :agency_name_assignments, -> { order("agency_name_assignments.position") }, :as => :assignable, :dependent => :destroy
   has_many :agency_names, :through => :agency_name_assignments
-  has_many :agencies, -> { distinct }, :through => :agency_names, :extend => Agency::AssociationExtensions
+  has_many :agencies, :through => :agency_names, :extend => Agency::AssociationExtensions
 
   has_many :events, :dependent => :destroy
   has_one :comments_close_date, -> { where(:event_type => 'CommentsClose') }, :class_name => "Event", :autosave => true
