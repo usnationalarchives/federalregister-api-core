@@ -5,6 +5,7 @@ shared: &shared
   admin:
     basecamp_url: <%= ENV['ADMIN_BASECAMP_URL'] %>
     pager_duty_email: <%= ENV['ADMIN_PAGER_DUTY_EMAIL'] %>
+    documentation_url: <%= ENV['DOCUMENTATION_URL'] %>
   elasticsearch:
     deployment_environment: <%= ENV['DEPLOYMENT_ENVIRONMENT'] %>
     host: <%= ENV['ELASTICSEARCH_HOST'] %>
