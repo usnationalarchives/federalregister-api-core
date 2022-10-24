@@ -9,7 +9,6 @@ services:
       - DB_STRUCTURE_ACCESS_KEY
       - DB_STRUCTURE_SECRET
       - ELASTICSEARCH_HOST=http://admin:admin@elasticsearch:9200
-      - MYSQL_57_STRICT_SETTINGS=true
     links:
       - mysql
       - redis
