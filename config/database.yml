@@ -7,11 +7,11 @@ shared: &shared
   host: '<%= ENV["MYSQL_PORT_3306_TCP_ADDR"] || '127.0.0.1' %>'
   reconnect: true
   encoding: utf8
-  init_command: <%= (ActiveModel::Type::Boolean.new.cast(ENV["MYSQL_57_STRICT_SETTINGS"]) ? "SET @@SESSION.sql_mode = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION'" : "SELECT 1") %>
 
 development:
   <<: *shared
   database:  fr2_development
+  init_command: <%= (ActiveModel::Type::Boolean.new.cast(ENV["MYSQL_57_STRICT_SETTINGS"]) ? "SET @@SESSION.sql_mode = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION'" : "SELECT 1") %>
 
 test:
   <<: *shared
