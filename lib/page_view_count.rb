@@ -22,7 +22,7 @@ class PageViewCount
       zip(document_numbers).
       each_with_object({}) do |((zscore_historical_set, zscore_yesterday_set, zscore_today_set, current_as_of), document_number), hsh|
         hsh[document_number] = {
-          count:      [zscore_historical_set, zscore_yesterday_set, zscore_today_set].compact.sum,
+          count:      [zscore_historical_set, zscore_yesterday_set, zscore_today_set].compact.sum.to_i,
           last_updated: current_as_of
         }
       end
