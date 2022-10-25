@@ -15,7 +15,7 @@ RSpec.describe "Images Endpoint", :type => :request do
       image_width: 572,
     )
 
-    get '/api/v1/images/EP13OC15.011'
+    get '/api/v1/images/EP13OC15.011.json'
     expect(response.status).to eq(200)
     expect(response.body).to eq({
       "medium": {

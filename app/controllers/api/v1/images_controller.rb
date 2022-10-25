@@ -4,7 +4,7 @@ class Api::V1::ImagesController < ApiController
     respond_to do |wants|
       wants.json do
         image = Image.
-          find_by(identifier: params[:id].try(:upcase))
+          find_by(identifier: image_identifier)
         image_variants = image.try(:image_variants)
 
         if image_variants.present? && image.made_public_at?
@@ -17,6 +17,10 @@ class Api::V1::ImagesController < ApiController
   end
 
   private
+
+  def image_identifier
+    params[:id].try(:upcase).gsub(".JSON","")
+  end
 
   def image_json(image_variants)
     image = image_variants.first.original_image
