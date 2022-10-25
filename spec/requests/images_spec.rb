@@ -1,7 +1,7 @@
 require "spec_helper"
 
 RSpec.describe "Images Endpoint", :type => :request do
-  before(:each) { allow_any_instance_of(GraphicStyle).to receive(:url).and_return('http://wwww.example.com') }
+  before(:each) { allow_any_instance_of(ImageVariantUploader).to receive(:url).and_return("img.federalregister.gov/EN28OC22.000/EN28OC22.000_large.png") }
 
   it "renders available styles" do
     image = Image.create!(id: 9999, identifier: 'ep13oc15.011', made_public_at: Time.current, source_id: ImageSource::GPO_SFTP.id)
@@ -21,10 +21,11 @@ RSpec.describe "Images Endpoint", :type => :request do
       "medium": {
         content_type: 'png',
         height:       126,
+        identifier:   'ep13oc15.011',
         image_source: 'gpo_sftp',
         sha:          '0beec7b5ea3f0fdbc95d0dd47f3c5bc275da8a33',
         size:         999,
-        url:          nil,
+        url:          "https://img.federalregister.gov/EN28OC22.000/EN28OC22.000_large.png",
         width:        572,
       },
     }.to_json)
