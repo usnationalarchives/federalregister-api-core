@@ -16,7 +16,7 @@ describe ImagePipeline::SftpDownloader do
         ]
       )
       stub_const("GpoImages::EpsImporter::SLEEP_DURATION_BETWEEN_SFTP_CHECKS", 0)
-      described_class.new(:sftp_connection => sftp_connection).
+      described_class.new(:sftp_connection => sftp_connection, :image_source_id => ImageSource::GPO_SFTP.id).
         send(:get_unchanged_files_list, 'arbitrary_directory_name').
         should == ["test_file_1.eps"]
     end
@@ -33,7 +33,7 @@ describe ImagePipeline::SftpDownloader do
         ]
       )
       stub_const("GpoImages::EpsImporter::SLEEP_DURATION_BETWEEN_SFTP_CHECKS", 0)
-      described_class.new(:sftp_connection => sftp_connection).
+      described_class.new(:sftp_connection => sftp_connection, :image_source_id => ImageSource::GPO_SFTP.id).
         send(:get_unchanged_files_list, 'arbitrary_directory_name').
         should == ["test_file_1.eps"]
     end

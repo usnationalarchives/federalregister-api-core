@@ -12,6 +12,7 @@ class ImagePipeline::SftpDownloader
       ) 
     end
     @fog_aws_connection = options.fetch(:fog_aws_connection) { GpoImages::FogAwsConnection.new }
+    @image_source_id    = options.fetch(:image_source_id)
   end
 
   FILE_BATCH_SIZE = 25
@@ -77,13 +78,14 @@ class ImagePipeline::SftpDownloader
 
   private
 
-  attr_reader :fog_aws_connection, :sftp_connection
+  attr_reader :fog_aws_connection, :image_source_id, :sftp_connection
 
   def upload_to_s3!(bucket_directory_connection, key, file_path)
     bucket_directory_connection.files.create(
       :key    => key,
       :body   => File.open(File.join(file_path)),
-      :public => false
+      :public => false,
+      :tags   => "image_source_id=#{image_source_id}"
     )
   end
 

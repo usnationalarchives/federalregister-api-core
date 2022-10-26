@@ -8,7 +8,7 @@ namespace :content do
 
     desc "Download images from SFTP and save them to the image holding tank"
     task :import_eps => :environment do
-      ImagePipeline::SftpDownloader.new.perform
+      ImagePipeline::SftpDownloader.new(image_source_id: ImageSource::GPO_SFTP_HISTORICAL_IMAGES.id).perform
     end
 
     desc "Enqueue environment-specific jobs for downloading/processing from the image holding tank"
