@@ -12,18 +12,12 @@ class ImagePipeline::SftpDownloader
       ) 
     end
     @fog_aws_connection = options.fetch(:fog_aws_connection) { GpoImages::FogAwsConnection.new }
-    @image_source_id    = options.fetch(:image_source_id)
+    @image_source       = ImageSource.find_by_id!(options.fetch(:image_source_id))
   end
 
   FILE_BATCH_SIZE = 25
   def perform
-    #TODO: Add handling for files at base directory 
-    directories_at_root = sftp_connection.
-      list_directories(streamlined_image_pipeline_sftp_path).
-      sort.
-      select{|date_string| Date.parse(date_string.gsub('FR-', "")) < GpoImages::DailyIssueImageProcessor::GPO_IMAGE_START_DATE }
-
-    directories_at_root.each do |directory_name|
+    directories.each do |directory_name|
       puts "Processing files in #{directory_name}..."
       puts "===================================================================="
       filenames_to_download = get_unchanged_files_list(directory_name)
@@ -59,7 +53,7 @@ class ImagePipeline::SftpDownloader
       end
 
       # Clean up directory structure
-      if get_unchanged_files_list(directory_name, sleep_duration: 0).count == 0
+      if (directory_name != '/') && get_unchanged_files_list(directory_name, sleep_duration: 0).count == 0
         # NOTE: #rmdir! does not delete dir unless empty
         begin
           sftp_connection.rmdir!("#{directory_name}/graphics-submitted")
@@ -78,14 +72,27 @@ class ImagePipeline::SftpDownloader
 
   private
 
-  attr_reader :fog_aws_connection, :image_source_id, :sftp_connection
+  attr_reader :fog_aws_connection, :image_source, :sftp_connection
+
+  def directories
+    if image_source.batch_download_from_sftp_by_subdirectory
+      # Handle an SFTP directory structure like: FR-2014-01-01/graphics-submitted/test_image.eps (batch handle directories for performance/fault-tolerance)
+      sftp_connection.
+        list_directories('/').
+        sort.
+        select{|date_string| Date.parse(date_string.gsub('FR-', "")) < GpoImages::DailyIssueImageProcessor::GPO_IMAGE_START_DATE }
+    else
+      # Handle an SFTP directory structure like /test_image.eps
+      ['/']
+    end
+  end
 
   def upload_to_s3!(bucket_directory_connection, key, file_path)
     bucket_directory_connection.files.create(
       :key    => key,
       :body   => File.open(File.join(file_path)),
       :public => false,
-      :tags   => "image_source_id=#{image_source_id}"
+      :tags   => "image_source_id=#{image_source.id}"
     )
   end
 
@@ -117,19 +124,11 @@ class ImagePipeline::SftpDownloader
   end
 
   def get_unchanged_files_list(directory, sleep_duration: nil)
-    if !Rails.env.test? && SETTINGS['cron']['images']['streamlined_image_pipeline_sftp_path'].blank?
-      raise "An SFTP path must be explicitly specified for the streamlined image pipeline"
-    end
-
     initial_list = sftp_connection.filenames_with_sizes(directory, true, false)
     sleep sleep_duration || SLEEP_DURATION_BETWEEN_SFTP_CHECKS
     delayed_list = sftp_connection.filenames_with_sizes(directory, true, false)
     files_unchanged = initial_list & delayed_list
     files_unchanged.map(&:first)
-  end
-
-  def streamlined_image_pipeline_sftp_path
-    SETTINGS['cron']['images']['streamlined_image_pipeline_sftp_path']
   end
 
 end

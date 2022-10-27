@@ -37,8 +37,9 @@ shared: &shared
     images:
       auto_generate_image_variants: <%= ActiveModel::Type::Boolean.new.cast(ENV.fetch('AUTO_GENERATE_IMAGE_VARIANTS', true)) %> 
       environments_requiring_image_download: <%= ENV['ENVIRONMENTS_REQUIRING_IMAGE_DOWNLOAD'].try(:split, ',') || ['Staging', 'Production'] %>
+      download_ongoing_images: <%= ActiveModel::Type::Boolean.new.cast(ENV['DOWNLOAD_ONGOING_IMAGES']) || false %>
+      download_historical_images: <%= ActiveModel::Type::Boolean.new.cast(ENV['DOWNLOAD_HISTORICAL_IMAGES']) || false %>
       streamlined_image_pipeline: <%= ActiveModel::Type::Boolean.new.cast(ENV['STREAMLINED_IMAGE_PIPELINE']) || false %>
-      streamlined_image_pipeline_sftp_path: <%= ENV['STREAMLINED_IMAGE_PIPELINE_SFTP_PATH'] %>
       sftp_hostname: <%= ENV['SFTP_HOSTNAME'] %>
     import: true
     late_content_notifications: <%= ActiveModel::Type::Boolean.new.cast(ENV.fetch('LATE_CONTENT_NOTIFICATIONS', true)) %>

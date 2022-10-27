@@ -99,12 +99,21 @@ end
 ########################
 # 2022 IMAGE PIPELINE
 ########################
-if cron_settings["images"]["streamlined_image_pipeline_sftp_path"]
+if cron_settings["images"]["download_ongoing_images"]
   # Download image from SFTP and place in image holding tank bucket on S3
   # destructive and should only be run in one environment
   every 5.minutes do
-    set :log, 'lock_safe_import_eps'
-    rake 'content:images:lock_safe_import_eps'
+    set :log, 'lock_safe_download_ongoing_images'
+    rake 'content:images:lock_safe_download_ongoing_images'
+  end
+end
+
+if cron_settings["images"]["download_historical_images"]
+  # Download image from SFTP (uses alternate credentials) and place in image holding tank bucket on S3
+  # destructive and should only be run in one environment
+  every 5.minutes do
+    set :log, 'lock_safe_download_historical_images'
+    rake 'content:images:lock_safe_download_historical_images'
   end
 end
 

@@ -1,14 +1,38 @@
 namespace :content do
 
   namespace :images do
-    desc "Lock-safe version of import_eps task"
-    task :lock_safe_import_eps => :environment do
-      Content::ImportDriver::StreamlinedEpsImportDriver.new.perform
+    desc "Lock-safe download of ongoing images"
+    task :lock_safe_download_ongoing_images => :environment do
+      Content::ImportDriver::OngoingImageImportDriver.new.perform
+    end
+
+    desc "Lock-safe download of historical images (uses different credentials)"
+    task :lock_safe_download_historical_images => :environment do
+      Content::ImportDriver::HistoricalImageImportDriver.new.perform
     end
 
     desc "Download images from SFTP and save them to the image holding tank"
-    task :import_eps => :environment do
-      ImagePipeline::SftpDownloader.new(image_source_id: ImageSource::GPO_SFTP_HISTORICAL_IMAGES.id).perform
+    task :download_originals_to_holding_tank => :environment do
+      image_source_id = ENV['IMAGE_SOURCE_ID']
+      sftp_connection = case image_source_id 
+      when ImageSource::GPO_SFTP_HISTORICAL_IMAGES.id.to_s
+        GpoImages::Sftp.new(
+          username: Rails.application.secrets[:gpo_historical_images_sftp][:username],
+          password: Rails.application.secrets[:gpo_historical_images_sftp][:password]
+        ) 
+      when ImageSource::GPO_SFTP.id.to_s
+        GpoImages::Sftp.new(
+          username: Rails.application.secrets[:gpo_sftp][:username],
+          password: Rails.application.secrets[:gpo_sftp][:password]
+        ) 
+      else
+        raise NotImplementedError
+      end
+
+      ImagePipeline::SftpDownloader.new(
+        sftp_connection: sftp_connection,
+        image_source_id: image_source_id
+      ).perform
     end
 
     desc "Enqueue environment-specific jobs for downloading/processing from the image holding tank"
