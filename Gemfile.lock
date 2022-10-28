@@ -6,13 +6,6 @@ GIT
     klarlack (0.0.7)
 
 GIT
-  remote: https://github.com/fredwu/app_config.git
-  revision: efce678826ea465b30d67357b9f6562bc9a871c0
-  branch: master
-  specs:
-    app_config (1.3.2)
-
-GIT
   remote: https://github.com/zilkey/active_hash.git
   revision: 1c95f992af3ec94c07e19846f042e12bd0b11dd1
   ref: 1c95f992af3ec94c07e19846f042e12bd0b11dd1
@@ -548,7 +541,6 @@ DEPENDENCIES
   amatch (= 0.2.11)
   amazon-ec2
   american_date
-  app_config (= 1.3.2)!
   authlogic
   aws-sdk-cloudfront
   aws-sdk-s3
