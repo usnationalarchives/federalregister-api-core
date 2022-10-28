@@ -3,7 +3,7 @@ require 'sidekiq/testing'
 
 describe AgencyNameChangeReindexer do
 
-  it "reindexes as expected when assigning an agency to an agency name that lacks one" do
+  it "reindexes as expected when assigning an agency to an agency name that lacks one", es: true do
     allow_any_instance_of(AgencyName).to receive(:recompile_associated_tables_of_contents)
 
     Sidekiq::Testing.inline! do
@@ -23,7 +23,7 @@ describe AgencyNameChangeReindexer do
     end
   end
 
-  it "reindexes as expected when changing an agency assignment's ageny to a different agency" do
+  it "reindexes as expected when changing an agency assignment's ageny to a different agency", es: true do
     allow_any_instance_of(AgencyName).to receive(:recompile_associated_tables_of_contents)
 
     Sidekiq::Testing.inline! do
