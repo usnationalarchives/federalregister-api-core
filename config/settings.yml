@@ -1,181 +1,64 @@
-shared: &shared
-  app:
-    canonical_url: "https://www.federalregister.gov"
-
-  admin:
-    basecamp_url: <%= ENV['ADMIN_BASECAMP_URL'] %>
-    pager_duty_email: <%= ENV['ADMIN_PAGER_DUTY_EMAIL'] %>
-    documentation_url: <%= ENV['DOCUMENTATION_URL'] %>
-  elasticsearch:
-    deployment_environment: <%= ENV['DEPLOYMENT_ENVIRONMENT'] %>
-    host: <%= ENV['ELASTICSEARCH_HOST'] %>
-    trace: false
-    enabled: <%= ActiveModel::Type::Boolean.new.cast(ENV['ELASTICSEARCH_ENABLED']) %>
-    entry_index_shards: <%= ENV.fetch('ENTRY_INDEX_SHARDS', 1) %>
-    public_inspection_document_index_shards: <%= ENV.fetch('PUBLIC_INSPECTION_DOCUMENT_INDEX_SHARDS', 1) %>
-  feature_flags:
-    use_carrierwave_images_in_api: <%= ActiveModel::Type::Boolean.new.cast(ENV['USE_CARRIERWAVE_IMAGES_IN_API']) || false %>
-    reindex_all_agency_name_entries: <%= ActiveModel::Type::Boolean.new.cast(ENV['REINDEX_ALL_AGENCY_NAME_ENTRIES']) || false %>
+app:
+  canonical_url: "https://www.federalregister.gov"
+admin:
+  basecamp_url: <%= ENV['ADMIN_BASECAMP_URL'] %>
+  pager_duty_email: <%= ENV['ADMIN_PAGER_DUTY_EMAIL'] %>
+  documentation_url: <%= ENV['DOCUMENTATION_URL'] %>
+elasticsearch:
+  deployment_environment: <%= ENV['DEPLOYMENT_ENVIRONMENT'] %>
+  host: <%= ENV['ELASTICSEARCH_HOST'] %>
+  trace: false
+  enabled: <%= ActiveModel::Type::Boolean.new.cast(ENV['ELASTICSEARCH_ENABLED']) %>
+  entry_index_shards: <%= ENV.fetch('ENTRY_INDEX_SHARDS', 1) %>
+  public_inspection_document_index_shards: <%= ENV.fetch('PUBLIC_INSPECTION_DOCUMENT_INDEX_SHARDS', 1) %>
+feature_flags:
+  use_carrierwave_images_in_api: <%= ActiveModel::Type::Boolean.new.cast(ENV['USE_CARRIERWAVE_IMAGES_IN_API']) || false %>
+  reindex_all_agency_name_entries: <%= ActiveModel::Type::Boolean.new.cast(ENV['REINDEX_ALL_AGENCY_NAME_ENTRIES']) || false %>
+images:
+  store_in_filesystem: true
+varnish:
+  host: <%= ENV["VARNISH_ADDR"] || 'varnish' %>
+  port: 6082
+regulations_dot_gov:
+  base_uri: <%= ENV["REG_GOV_BASE_URL"] || 'http://api.data.gov/TEST/regulations/v3' %>
+  throttle:
+    at: <%= ENV["REG_GOV_JOBS_THROTTLE_AT"] || 2 %>
+    per: <%= ENV["REG_GOV_JOBS_THROTTLE_PER"] || 5 %>
+  use_v4_api: <%= ENV.fetch("USE_REG_GOV_V4_API", false) %>
+cron:
+  delta_auditing: true
+  google_analytics: true
+  gpo_images:
+    import_eps: <%= ActiveModel::Type::Boolean.new.cast(ENV.fetch('GPO_IMAGES_IMPORT_EPS', true)) %>
+    convert_eps: <%= ActiveModel::Type::Boolean.new.cast(ENV.fetch('GPO_IMAGES_CONVERT_EPS', true)) %>
+    reprocess_unlinked_gpo_images: <%= ActiveModel::Type::Boolean.new.cast(ENV.fetch('REPROCESS_UNLINKED_GPO_IMAGES', false)) %>
   images:
-    store_in_filesystem: true
-  varnish:
-    host: <%= ENV["VARNISH_ADDR"] || 'varnish' %>
-    port: 6082
+    auto_generate_image_variants: <%= ActiveModel::Type::Boolean.new.cast(ENV.fetch('AUTO_GENERATE_IMAGE_VARIANTS', true)) %> 
+    download_historical_images: <%= ActiveModel::Type::Boolean.new.cast(ENV['DOWNLOAD_HISTORICAL_IMAGES']) || false %>
+    download_ongoing_images: <%= ActiveModel::Type::Boolean.new.cast(ENV['DOWNLOAD_ONGOING_IMAGES']) || false %>
+    environments_requiring_image_download: <%= ENV['ENVIRONMENTS_REQUIRING_IMAGE_DOWNLOAD'].try(:split, ',') || ['Staging', 'Production'] %>
+    sftp_hostname: <%= ENV['SFTP_HOSTNAME'] %>
+    streamlined_image_pipeline: <%= ActiveModel::Type::Boolean.new.cast(ENV['STREAMLINED_IMAGE_PIPELINE']) || false %>
+  import: true
+  late_content_notifications: <%= ActiveModel::Type::Boolean.new.cast(ENV.fetch('LATE_CONTENT_NOTIFICATIONS', true)) %>
+  public_inspection: <%= ActiveModel::Type::Boolean.new.cast(ENV.fetch('CRON_PUBLIC_INSPECTION', true)) %>
   regulations_dot_gov:
-    base_uri: <%= ENV["REG_GOV_BASE_URL"] || 'http://api.data.gov/TEST/regulations/v3' %>
-    throttle:
-      at: <%= ENV["REG_GOV_JOBS_THROTTLE_AT"] || 2 %>
-      per: <%= ENV["REG_GOV_JOBS_THROTTLE_PER"] || 5 %>
-    use_v4_api: <%= ENV.fetch("USE_REG_GOV_V4_API", false) %>
-  cron:
-    delta_auditing: true
-    google_analytics: true
-    gpo_images:
-      import_eps: <%= ActiveModel::Type::Boolean.new.cast(ENV.fetch('GPO_IMAGES_IMPORT_EPS', true)) %>
-      convert_eps: <%= ActiveModel::Type::Boolean.new.cast(ENV.fetch('GPO_IMAGES_CONVERT_EPS', true)) %>
-      reprocess_unlinked_gpo_images: <%= ActiveModel::Type::Boolean.new.cast(ENV.fetch('REPROCESS_UNLINKED_GPO_IMAGES', false)) %>
-    images:
-      auto_generate_image_variants: <%= ActiveModel::Type::Boolean.new.cast(ENV.fetch('AUTO_GENERATE_IMAGE_VARIANTS', true)) %> 
-      environments_requiring_image_download: <%= ENV['ENVIRONMENTS_REQUIRING_IMAGE_DOWNLOAD'].try(:split, ',') || ['Staging', 'Production'] %>
-      download_ongoing_images: <%= ActiveModel::Type::Boolean.new.cast(ENV['DOWNLOAD_ONGOING_IMAGES']) || false %>
-      download_historical_images: <%= ActiveModel::Type::Boolean.new.cast(ENV['DOWNLOAD_HISTORICAL_IMAGES']) || false %>
-      streamlined_image_pipeline: <%= ActiveModel::Type::Boolean.new.cast(ENV['STREAMLINED_IMAGE_PIPELINE']) || false %>
-      sftp_hostname: <%= ENV['SFTP_HOSTNAME'] %>
-    import: true
-    late_content_notifications: <%= ActiveModel::Type::Boolean.new.cast(ENV.fetch('LATE_CONTENT_NOTIFICATIONS', true)) %>
-    public_inspection: <%= ActiveModel::Type::Boolean.new.cast(ENV.fetch('CRON_PUBLIC_INSPECTION', true)) %>
-    regulations_dot_gov:
-      comments: <%= ActiveModel::Type::Boolean.new.cast(ENV.fetch('REG_GOV_COMMENTS_ENABLED', true)) %>
-      dockets: <%= ActiveModel::Type::Boolean.new.cast(ENV.fetch('REG_GOV_DOCKETS_ENABLED', true)) %>
-      documents: <%= ActiveModel::Type::Boolean.new.cast(ENV.fetch('REG_GOV_DOCUMENTS_ENABLED', true)) %>
-    # base_uri: <%= 'http://api.data.gov/regulations/v3' || ENV["REG_GOV_BASE_URL"] || 'http://api.data.gov/TEST/regulations/v3' %>
-  paperclip:
-    abort_on_s3_error: <%= ActiveModel::Type::Boolean.new.cast(ENV.fetch('ABORT_PAPERCLIP_PROCESSING_ON_S3_ERRORS', false)) %>
-  prince:
-    url: <%= ENV.fetch('PRINCE_XML_URL', nil) %>
-    port: <%= ENV.fetch('PRINCE_PORT', 5000) %>
-  deliver_daily_import_email: <%= ActiveModel::Type::Boolean.new.cast(ENV.fetch('DELIVER_DAILY_IMPORT_EMAIL', true)) %>
-  public_inspection_document_page_view_start_date: <%= ENV.fetch('PUBLIC_INSPECTION_DOCUMENT_PAGE_VIEW_START_DATE', nil) %>
-  report_deprecations: <%= ActiveModel::Type::Boolean.new.cast( ENV.fetch("REPORT_DEPRECATIONS", false) ) %> 
-  s3_host_aliases:
-    agency_logos: agency-logos.fr2.local
-    public_images: images.fr2.local
-    lede_photos: lede-photos.fr2.local
-    private_images: s3.amazonaws.com
-    public_images: images.fr2.local
-    public_inspection: public-inspection.fr2.local
-
-# Make any updates -web also
-test:
-  <<: *shared
-  elasticsearch:
-    host: <%= ENV['ELASTICSEARCH_HOST'] || 'admin:admin@localhost:9200/' ||'localhost' %>
-    deployment_environment: <%= ENV['DEPLOYMENT_ENVIRONMENT'] %>
-    trace: false
-    entry_index_shards: <%= ENV.fetch('ENTRY_INDEX_SHARDS', 1) %>
-    pil_index_since_date: '2019-04-08'
-    public_inspection_document_index_shards: <%= ENV.fetch('PUBLIC_INSPECTION_DOCUMENT_INDEX_SHARDS', 1) %>
-  images:
-    store_in_filesystem: true
-  public_inspection_document_page_view_start_date: <%= Date.new(2020,10,2) %>
-  s3_buckets:
-    public_inspection: public-inspection.example.org
-    zipped_eps_images: XXXXXXXXXXXXXXXXXXXXXXX
-    # lede_photos: lede-photos.example.org
-  s3_host_aliases:
-    public_inspection: public-inspection.example.org
-
-development:
-  <<: *shared
-  app:
-    canonical_url: "https://dev-fr2.criticaljuncture.org"
-  elasticsearch:
-    host: <%= ENV['ELASTICSEARCH_HOST'] || 'admin:admin@localhost:9200/' ||'localhost' %>
-    deployment_environment: <%= ENV['DEPLOYMENT_ENVIRONMENT'] %>
-    entry_index_shards: <%= ENV.fetch('ENTRY_INDEX_SHARDS', 1) %>
-    pil_index_since_date: '2019-04-08'
-    public_inspection_document_index_shards: <%= ENV.fetch('PUBLIC_INSPECTION_DOCUMENT_INDEX_SHARDS', 1) %>
-  feature_flags:
-    use_carrierwave_images_in_api: true
-  images:
-    store_in_filesystem: false
-  s3_buckets:
-    image_holding_tank: image-holding-tank.federalregister.gov
-    zipped_eps_images: eps.images.fr2.local
-    private_images: private.images.fr2.local
-    public_images: images.fr2.local
-    lede_photos: lede-photos.fr2.local
-    agency_logos: agency-logos.fr2.local
-    public_inspection: public-inspection.fr2.local
-  ofr_flickr_group_id: 1058319@N21
-  cron:
-    google_analytics: false
-    gpo_images:
-      import_eps: false
-      convert_eps: false
-    import: false
-    public_inspection: false
-    regulations_dot_gov:
-      comments: false
-      dockets: false
-      documents: false
-    varnish: false
-  deliver_daily_import_email: false
-
-
-staging:
-  <<: *shared
-  app:
-    canonical_url: "https://fr2.criticaljuncture.org"
-  images:
-    store_in_filesystem: false
-  s3_buckets:
-    image_holding_tank: image-holding-tank.federalregister.gov
-    image_variants: img.fr2.criticaljuncture.org
-    zipped_eps_images: eps.images.federalregister.gov
-    original_images: img-orig.fr2.criticaljuncture.org
-    private_images: private.images.fr2.criticaljuncture.org
-    public_images: images.fr2.criticaljuncture.org
-    lede_photos: lede-photos.fr2.criticaljuncture.org
-    agency_logos: agency-logos.fr2.criticaljuncture.org
-    public_inspection: public-inspection.fr2.criticaljuncture.org
-  ofr_flickr_group_id: 1058319@N21
-  s3_host_aliases:
-    agency_logos: agency-logos.fr2.criticaljuncture.org
-    image_variants: img.fr2.criticaljuncture.org
-    public_images: images.fr2.criticaljuncture.org
-    lede_photos: lede-photos.fr2.criticaljuncture.org
-    private_images: s3.amazonaws.com
-    public_images: images.fr2.criticaljuncture.org
-    public_inspection: public-inspection.fr2.criticaljuncture.org
-
-production:
-  <<: *shared
-  images:
-    store_in_filesystem: false
-  s3_buckets:
-    image_holding_tank: image-holding-tank.federalregister.gov
-    image_variants: img.federalregister.gov
-    zipped_eps_images: eps.images.federalregister.gov
-    original_images: img-orig.federalregister.gov
-    private_images: private.images.federalregister.gov
-    public_images: images.federalregister.gov
-    lede_photos: lede-photos.federalregister.gov
-    agency_logos: agency-logos.federalregister.gov
-    public_inspection: public-inspection.federalregister.gov
-  s3_host_aliases:
-    agency_logos: agency-logos.federalregister.gov
-    image_variants: img.federalregister.gov
-    public_images: images.federalregister.gov
-    lede_photos: lede-photos.federalregister.gov
-    private_images: s3.amazonaws.com
-    public_images: images.federalregister.gov
-    public_inspection: public-inspection.federalregister.gov
-
-  ofr_flickr_group_id: 1058319@N21
-  regulations_dot_gov:
-    base_uri: <%= ENV["REG_GOV_BASE_URL"] || 'http://api.data.gov/regulations/v3' %>
-    throttle:
-      at: <%= ENV["REG_GOV_JOBS_THROTTLE_AT"] || 2 %>
-      per: <%= ENV["REG_GOV_JOBS_THROTTLE_PER"] || 5 %>
-    use_v4_api: <%= ENV.fetch("USE_REG_GOV_V4_API", false) %>
+    comments: <%= ActiveModel::Type::Boolean.new.cast(ENV.fetch('REG_GOV_COMMENTS_ENABLED', true)) %>
+    dockets: <%= ActiveModel::Type::Boolean.new.cast(ENV.fetch('REG_GOV_DOCKETS_ENABLED', true)) %>
+    documents: <%= ActiveModel::Type::Boolean.new.cast(ENV.fetch('REG_GOV_DOCUMENTS_ENABLED', true)) %>
+  # base_uri: <%= 'http://api.data.gov/regulations/v3' || ENV["REG_GOV_BASE_URL"] || 'http://api.data.gov/TEST/regulations/v3' %>
+paperclip:
+  abort_on_s3_error: <%= ActiveModel::Type::Boolean.new.cast(ENV.fetch('ABORT_PAPERCLIP_PROCESSING_ON_S3_ERRORS', false)) %>
+prince:
+  url: <%= ENV.fetch('PRINCE_XML_URL', nil) %>
+  port: <%= ENV.fetch('PRINCE_PORT', 5000) %>
+deliver_daily_import_email: <%= ActiveModel::Type::Boolean.new.cast(ENV.fetch('DELIVER_DAILY_IMPORT_EMAIL', true)) %>
+public_inspection_document_page_view_start_date: <%= ENV.fetch('PUBLIC_INSPECTION_DOCUMENT_PAGE_VIEW_START_DATE', nil) %>
+report_deprecations: <%= ActiveModel::Type::Boolean.new.cast( ENV.fetch("REPORT_DEPRECATIONS", false) ) %> 
+s3_host_aliases:
+  agency_logos: agency-logos.fr2.local
+  public_images: images.fr2.local
+  lede_photos: lede-photos.fr2.local
+  private_images: s3.amazonaws.com
+  public_images: images.fr2.local
+  public_inspection: public-inspection.fr2.local

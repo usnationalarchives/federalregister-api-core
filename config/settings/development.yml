@@ -1,0 +1,31 @@
+app:
+  canonical_url: "https://dev-fr2.criticaljuncture.org"
+elasticsearch:
+  host: <%= ENV['ELASTICSEARCH_HOST'] || 'admin:admin@localhost:9200/' ||'localhost' %>
+  pil_index_since_date: '2019-04-08'
+feature_flags:
+  use_carrierwave_images_in_api: true
+images:
+  store_in_filesystem: false
+s3_buckets:
+  image_holding_tank: image-holding-tank.federalregister.gov
+  zipped_eps_images: eps.images.fr2.local
+  private_images: private.images.fr2.local
+  public_images: images.fr2.local
+  lede_photos: lede-photos.fr2.local
+  agency_logos: agency-logos.fr2.local
+  public_inspection: public-inspection.fr2.local
+ofr_flickr_group_id: 1058319@N21
+cron:
+  google_analytics: false
+  gpo_images:
+    import_eps: false
+    convert_eps: false
+  import: false
+  public_inspection: false
+  regulations_dot_gov:
+    comments: false
+    dockets: false
+    documents: false
+  varnish: false
+deliver_daily_import_email: false

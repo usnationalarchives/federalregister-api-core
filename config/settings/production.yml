@@ -1,0 +1,24 @@
+images:
+  store_in_filesystem: false
+s3_buckets:
+  image_holding_tank: image-holding-tank.federalregister.gov
+  image_variants: img.federalregister.gov
+  zipped_eps_images: eps.images.federalregister.gov
+  original_images: img-orig.federalregister.gov
+  private_images: private.images.federalregister.gov
+  public_images: images.federalregister.gov
+  lede_photos: lede-photos.federalregister.gov
+  agency_logos: agency-logos.federalregister.gov
+  public_inspection: public-inspection.federalregister.gov
+s3_host_aliases:
+  agency_logos: agency-logos.federalregister.gov
+  image_variants: img.federalregister.gov
+  public_images: images.federalregister.gov
+  lede_photos: lede-photos.federalregister.gov
+  private_images: s3.amazonaws.com
+  public_images: images.federalregister.gov
+  public_inspection: public-inspection.federalregister.gov
+
+ofr_flickr_group_id: 1058319@N21
+regulations_dot_gov:
+  base_uri: <%= ENV["REG_GOV_BASE_URL"] || 'http://api.data.gov/regulations/v3' %>

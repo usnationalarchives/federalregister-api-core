@@ -1,0 +1,23 @@
+app:
+  canonical_url: "https://fr2.criticaljuncture.org"
+images:
+  store_in_filesystem: false
+s3_buckets:
+  image_holding_tank: image-holding-tank.federalregister.gov
+  image_variants: img.fr2.criticaljuncture.org
+  zipped_eps_images: eps.images.federalregister.gov
+  original_images: img-orig.fr2.criticaljuncture.org
+  private_images: private.images.fr2.criticaljuncture.org
+  public_images: images.fr2.criticaljuncture.org
+  lede_photos: lede-photos.fr2.criticaljuncture.org
+  agency_logos: agency-logos.fr2.criticaljuncture.org
+  public_inspection: public-inspection.fr2.criticaljuncture.org
+ofr_flickr_group_id: 1058319@N21
+s3_host_aliases:
+  agency_logos: agency-logos.fr2.criticaljuncture.org
+  image_variants: img.fr2.criticaljuncture.org
+  public_images: images.fr2.criticaljuncture.org
+  lede_photos: lede-photos.fr2.criticaljuncture.org
+  private_images: s3.amazonaws.com
+  public_images: images.fr2.criticaljuncture.org
+  public_inspection: public-inspection.fr2.criticaljuncture.org

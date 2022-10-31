@@ -15,6 +15,8 @@ gem 'passenger', '~> 6.0'
 gem 'carrierwave', '2.2.2'
 gem 'nokogiri'
 gem 'curb'
+# app wide settings
+gem 'config'
 gem 'http_headers', '0.0.2.3'
 gem 'geokit', '1.10.0', :require => 'geokit'
 gem 'geokit-rails'
