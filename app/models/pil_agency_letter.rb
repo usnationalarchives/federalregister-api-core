@@ -8,9 +8,9 @@ class PilAgencyLetter < ApplicationModel
                       :secret_access_key => Rails.application.secrets[:aws][:secret_access_key],
                       :s3_region => 'us-east-1'
                     },
-                    :s3_host_alias => SETTINGS['s3_host_aliases']['public_inspection'],
+                    :s3_host_alias => Settings.s3_host_aliases.public_inspection,
                     :s3_protocol => 'https',
-                    :bucket => SETTINGS["s3_buckets"]["public_inspection"],
+                    :bucket => Settings.s3_buckets.public_inspection,
                     :path => "pil_agency_letters/:id/:filename",
                     :url => ':s3_alias_url'
 

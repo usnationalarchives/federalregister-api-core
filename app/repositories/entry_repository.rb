@@ -2,11 +2,11 @@ class EntryRepository < BaseRepository
   index_name [
     'fr-entries',
     (Rails.env.test? ? "test#{((ENV['TEST_ENV_NUMBER'] == "1") ? "" : ENV['TEST_ENV_NUMBER'])}" : Rails.env),
-    SETTINGS['elasticsearch']['deployment_environment']
+    Settings.elasticsearch.deployment_environment
   ].compact.join('-')
   klass Entry
 
-  settings number_of_shards: SETTINGS['elasticsearch']['entry_index_shards'], analysis: {
+  settings number_of_shards: Settings.elasticsearch.entry_index_shards, analysis: {
     # Create custom analyzer based on default english analyzer
     # swap in KStem stemmer instead of Porter
     "filter": {

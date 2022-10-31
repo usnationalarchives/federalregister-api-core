@@ -13,7 +13,7 @@ describe PublicInspectionDocument do
     skip "pending"
     attachment = File.new(Rails.root + 'spec/fixtures/empty_example_file')
     result PublicInspectionDocument.new(logo: attachment).pdf.url
-    host = "https://#{SETTINGS['s3_host_aliases']['public_inspection']}"
+    host = "https://#{Settings.s3_host_aliases.public_inspection}"
     expect(result).to start_with(host)
   end
 

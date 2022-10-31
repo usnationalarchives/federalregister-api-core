@@ -58,7 +58,7 @@
       <div class="container">
         <p>Hello, <span class="name"><%= current_user.first_name %></span>!</p>
         <ul>
-          <li><%= link_to 'Docs', SETTINGS['admin']['documentation_url'] %></li>
+          <li><%= link_to 'Docs', Settings.admin.documentation_url %></li>
           <li><%= link_to 'Change Password', edit_admin_user_password_path(current_user) %></li>
           <li><%= link_to 'Logout', admin_logout_path %></li>
         </ul>

@@ -4,7 +4,7 @@ info:
   title: FR API Documentation
   version: ''
 servers:
-  - url: "<%= SETTINGS['app']['canonical_url'] %>/api/v1/"
+  - url: "<%= Settings.app.canonical_url %>/api/v1/"
 paths:
   "/documents/{document_number}.{format}":
     get:

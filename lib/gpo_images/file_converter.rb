@@ -40,7 +40,7 @@ class GpoImages::FileConverter
   end
 
   def bucket_name
-    SETTINGS["s3_buckets"]["zipped_eps_images"]
+    Settings.s3_buckets.zipped_eps_images
   end
 
   def create_directories

@@ -36,7 +36,7 @@ module CacheUtils
     end
 
     def host
-      "#{SETTINGS['varnish']['host']}:#{SETTINGS['varnish']['port']}"
+      "#{Settings.varnish.host}:#{Settings.varnish.port}"
     end
   end
 end

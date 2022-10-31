@@ -3,7 +3,7 @@ class ImageVariantUploader < CarrierWave::Uploader::Base
   include UploaderUtils
 
   # Choose what kind of storage to use for this uploader:
-  if SETTINGS['images']['store_in_filesystem']
+  if Settings.images.store_in_filesystem
     storage :file
   else
     storage :fog
@@ -20,14 +20,14 @@ class ImageVariantUploader < CarrierWave::Uploader::Base
       :aws_secret_access_key  => Rails.application.secrets[:aws][:secret_access_key], # required
       :region => 'us-east-1'
     }
-    self.fog_directory = SETTINGS['s3_buckets']['image_variants']
-    self.asset_host = SETTINGS['s3_host_aliases']['image_variants'] #eg Cloudfront
+    self.fog_directory = Settings.s3_buckets.image_variants
+    self.asset_host = Settings.s3_host_aliases.image_variants #eg Cloudfront
   end
 
   # Override the directory where uploaded files will be stored.
   # This is a sensible default for uploaders that are meant to be mounted:
   def store_dir
-    if SETTINGS['images']['store_in_filesystem']
+    if Settings.images.store_in_filesystem
       "#{Rails.root}/data/#{model.class.to_s.underscore}/#{model.identifier}"
     else
       "#{model.identifier}"

@@ -12,7 +12,7 @@ class PilAgencyLetterJanitor
     if paths_for_expiry.present?
       # Deleting from S3 doesn't appear to automatically expire Cloudfront.
       create_invalidation(
-        SETTINGS['s3_buckets']['public_inspection'],
+        Settings.s3_buckets.public_inspection,
         paths_for_expiry
       )
     end

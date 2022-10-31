@@ -90,7 +90,7 @@ class EntrySerializer < ApplicationSerializer
   end
 
   attribute :images do |entry|
-    if SETTINGS['feature_flags']['use_carrierwave_images_in_api']
+    if Settings.feature_flags.use_carrierwave_images_in_api
       entry.
       images.
         select{|image| image.made_public_at.present? && image.image_variants.present?}.

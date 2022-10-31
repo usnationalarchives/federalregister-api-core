@@ -2,7 +2,7 @@
 module GpoImages
   module ImageIdentifierNormalizer
     def normalize_image_identifier(filename)
-      if SETTINGS['feature_flags']['use_carrierwave_images_in_api']
+      if Settings.feature_flags.use_carrierwave_images_in_api
         remove_extensions(filename).upcase.strip
       else
         remove_extensions(filename).downcase

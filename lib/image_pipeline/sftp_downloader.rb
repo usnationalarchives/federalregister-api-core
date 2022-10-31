@@ -97,7 +97,7 @@ class ImagePipeline::SftpDownloader
   end
 
   def bucket_name
-    SETTINGS["s3_buckets"]["image_holding_tank"]
+    Settings.s3_buckets.image_holding_tank
   end
 
   def temp_images_path

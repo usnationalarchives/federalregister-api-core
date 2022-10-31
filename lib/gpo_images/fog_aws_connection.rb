@@ -1,7 +1,7 @@
 class GpoImages::FogAwsConnection
   delegate :directories, :to => :connection
 
-  def get_s3_object(key, directory=SETTINGS['s3_buckets']['original_images'])
+  def get_s3_object(key, directory=Settings.s3_buckets.original_images)
     directory = connection.directories.get(directory)
     directory.files.get(key)
   end

@@ -29,7 +29,7 @@ end
 
 Paperclip.options[:command_path] = "/usr/local/bin/"
 
-if SETTINGS['paperclip']['abort_on_s3_error']
+if Settings.paperclip.abort_on_s3_error
   module Paperclip
     module Storage
       module S3

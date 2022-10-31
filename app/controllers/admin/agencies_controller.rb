@@ -93,7 +93,7 @@ class Admin::AgenciesController < AdminController
   def send_cloudfront_invalidation!
     if @agency.logo.present?
       create_invalidation(
-        SETTINGS['s3_host_aliases']['agency_logos'],
+        Settings.s3_host_aliases.agency_logos,
         @agency.s3_attachment_paths
       )
     end

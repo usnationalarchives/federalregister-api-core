@@ -81,7 +81,7 @@ class PublicInspectionDocumentSerializer < ApplicationSerializer
 
   attribute :page_views, if: Proc.new { |document, params| params[:active_record_retrieval] },
     :select => [:document_number, :filed_at] do |document|
-    start_date = SETTINGS['public_inspection_document_page_view_start_date']
+    start_date = Settings.public_inspection_document_page_view_start_date
 
     if document.filed_at && start_date && (document.filed_at.to_date >= start_date)
       {

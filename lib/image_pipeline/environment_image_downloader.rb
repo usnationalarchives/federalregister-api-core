@@ -101,7 +101,7 @@ class ImagePipeline::EnvironmentImageDownloader
   memoize :normalize_image_identifier
 
   def image_holding_tank_s3_bucket
-    SETTINGS['s3_buckets']['image_holding_tank']
+    Settings.s3_buckets.image_holding_tank
   end
 
   def already_downloaded_or_not_found?

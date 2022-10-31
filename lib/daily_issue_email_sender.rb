@@ -5,7 +5,7 @@ class DailyIssueEmailSender
   sidekiq_options :queue => :api_core
 
   def perform(date)
-    return unless SETTINGS["deliver_daily_import_email"]
+    return unless Settings.deliver_daily_import_email
     
     ActiveRecord::Base.clear_active_connections!
 

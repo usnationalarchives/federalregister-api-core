@@ -22,9 +22,9 @@ class GpoGraphic < ActiveRecord::Base
                     },
                     :s3_host_alias => (proc do |attachment|
                       if attachment.instance.sourced_via_ecfr_dot_gov || attachment.instance.gpo_graphic_usages.present?
-                        SETTINGS['s3_host_aliases']['public_images']
+                        Settings.s3_host_aliases.public_images
                       else
-                        SETTINGS['s3_host_aliases']['private_images']
+                        Settings.s3_host_aliases.private_images
                       end
                     end),
                     :s3_permissions => :private,
@@ -97,11 +97,11 @@ class GpoGraphic < ActiveRecord::Base
   end
 
   def public_bucket
-    SETTINGS["s3_buckets"]["public_images"]
+    Settings.s3_buckets.public_images
   end
 
   def private_bucket
-    SETTINGS["s3_buckets"]["private_images"]
+    Settings.s3_buckets.private_images
   end
 
   def paperclip_styles

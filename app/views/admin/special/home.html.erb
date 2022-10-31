@@ -9,7 +9,7 @@
 <p>Non-critical errors encompass the majority of support requests.</p>
 
 <p>
-  Basecamp: <strong><a href="<%= SETTINGS['admin']['basecamp_url'] %>"><%= SETTINGS['admin']['basecamp_url'] %></a></strong>
+  Basecamp: <strong><a href="<%= Settings.admin.basecamp_url %>"><%= Settings.admin.basecamp_url %></a></strong>
 </p>
 
 <hr>
@@ -29,11 +29,11 @@
 </p>
 
 <p>
-  Email: <strong><%= SETTINGS['admin']['pager_duty_email'] %></strong>
+  Email: <strong><%= Settings.admin.pager_duty_email %></strong>
 </p>
 
 <h2>Documentation</h2>
 
 <p>
-  Documentation for this admin interface is available <%= link_to "here", SETTINGS['admin']['documentation_url'] %>.
+  Documentation for this admin interface is available <%= link_to "here", Settings.admin.documentation_url %>.
 <p>

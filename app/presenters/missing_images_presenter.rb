@@ -25,7 +25,7 @@ class MissingImagesPresenter
   private
 
   def streamlined_image_pipeline?
-    SETTINGS['cron']['images']['streamlined_image_pipeline']
+    Settings.cron.images.streamlined_image_pipeline
   end
 
   def gpo_graphic_usages

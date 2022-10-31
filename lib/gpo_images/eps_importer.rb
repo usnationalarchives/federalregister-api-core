@@ -27,7 +27,7 @@ class GpoImages::EpsImporter
   private
 
   def bucket_name
-    SETTINGS["s3_buckets"]["zipped_eps_images"]
+    Settings.s3_buckets.zipped_eps_images
   end
 
   def temp_zip_files_path

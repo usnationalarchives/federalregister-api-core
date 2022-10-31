@@ -44,7 +44,7 @@ describe Agency do
   it "returns the correct attachment url" do
     attachment = File.new(Rails.root + 'spec/fixtures/empty_example_file')
     result = Agency.new(logo: attachment).logo.url
-    host = "https://#{SETTINGS['s3_host_aliases']['agency_logos']}"
+    host = "https://#{Settings.s3_host_aliases.agency_logos}"
     expect(result).to start_with(host)
   end
 

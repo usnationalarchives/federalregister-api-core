@@ -25,7 +25,7 @@ class ImageVariantReprocessor
       image_variant.save!
     end
     if invalidate_cloudfront
-      create_invalidation(SETTINGS['s3_buckets']['image_variants'], ["/#{image.identifier}*"]) 
+      create_invalidation(Settings.s3_buckets.image_variants, ["/#{image.identifier}*"]) 
     end
     image.touch(:updated_at)
   end

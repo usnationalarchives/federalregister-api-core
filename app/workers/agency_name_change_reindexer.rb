@@ -12,7 +12,7 @@ class AgencyNameChangeReindexer
     if current_agency.blank? && prior_agency_id.blank?
       # No need to reindex anything
       entry_ids = []
-    elsif SETTINGS['feature_flags']['reindex_all_agency_name_entries']
+    elsif Settings.feature_flags.reindex_all_agency_name_entries
       # This setting can be toggled as a means for aggressively reindexing all associated entries
       entry_ids = agency_name.entry_ids
     elsif current_agency.blank? && prior_agency

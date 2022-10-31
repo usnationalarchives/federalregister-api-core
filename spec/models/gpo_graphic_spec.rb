@@ -6,13 +6,13 @@ describe GpoGraphic do
 
   it "returns the correct attachment url when graphic usages are not present" do
     result = GpoGraphic.new(graphic: attachment).graphic.url
-    host = "https://#{SETTINGS['s3_host_aliases']['private_images']}"
+    host = "https://#{Settings.s3_host_aliases.private_images}"
     expect(result).to start_with(host)
   end
 
   it "returns the correct attachment url when graphic usages are" do
     result = GpoGraphic.new(graphic: attachment, gpo_graphic_usages: [GpoGraphicUsage.new]).graphic.url
-    host = "https://#{SETTINGS['s3_host_aliases']['public_images']}"
+    host = "https://#{Settings.s3_host_aliases.public_images}"
     expect(result).to start_with(host)
   end
 

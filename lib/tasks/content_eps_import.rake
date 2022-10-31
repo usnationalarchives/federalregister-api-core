@@ -45,7 +45,7 @@ namespace :content do
       GpoImages::FogAwsConnection.
         new.
         connection.
-          directories.new(:key => SETTINGS['s3_buckets']['image_holding_tank']).
+        directories.new(:key => Settings.s3_buckets.image_holding_tank).
           files.
           map{|file| file.key}.
           select{|s3_key| enqueued_s3_keys.exclude?(s3_key) }.

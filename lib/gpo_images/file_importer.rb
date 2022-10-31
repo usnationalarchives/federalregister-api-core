@@ -27,7 +27,7 @@ class GpoImages::FileImporter
   private
 
   def bucket_name
-    SETTINGS["s3_buckets"]["zipped_eps_images"]
+    Settings.s3_buckets.zipped_eps_images
   end
 
   def cleanup_old_packages

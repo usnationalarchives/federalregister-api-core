@@ -27,11 +27,11 @@ class ImagePipeline::ImageHoldingTankRemover
   end
 
   def environments_requiring_image_download
-    SETTINGS['cron']['images']['environments_requiring_image_download']
+    Settings.cron.images.environments_requiring_image_download
   end
 
   def image_holding_tank_s3_bucket
-    SETTINGS['s3_buckets']['image_holding_tank']
+    Settings.s3_buckets.image_holding_tank
   end
 
   def get_s3_tags

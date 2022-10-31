@@ -4,7 +4,7 @@ class PublicInspectionDocumentRepository < BaseRepository
   index_name ALIAS_NAME
   klass PublicInspectionDocument
 
-  settings number_of_shards: SETTINGS['elasticsearch']['public_inspection_document_index_shards'], analysis: {
+  settings number_of_shards: Settings.elasticsearch.public_inspection_document_index_shards, analysis: {
     # Create custom analyzer based on default english analyzer
     # swap in KStem stemmer instead of Porter
     "filter": {

@@ -1,5 +1,5 @@
 ActiveSupport::Notifications.subscribe('deprecation.rails') do |name, start, finish, id, payload|
-  if SETTINGS['report_deprecations']
+  if Settings.report_deprecations
     Honeybadger.notify(
       error_class:   "deprecation_warning",
       error_message: payload[:message],

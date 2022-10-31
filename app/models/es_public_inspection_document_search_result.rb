@@ -1,7 +1,7 @@
 class EsPublicInspectionDocumentSearchResult < EsSearchResult
 
   def page_views
-    start_date = SETTINGS['public_inspection_document_page_view_start_date']
+    start_date = Settings.public_inspection_document_page_view_start_date
 
     if filed_at && start_date && (filed_at.to_date >= start_date)
       BatchLoader.for(document_number).batch do |document_numbers, loader|

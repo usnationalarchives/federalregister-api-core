@@ -16,7 +16,7 @@ describe PublicInspectionDocumentSerializer do
     let(:public_inspection_document) { Factory(:public_inspection_document, filed_at: Date.new(2020,9,22)) }
 
     it "returns page views " do
-      allow(SETTINGS).to receive(:[]).with("public_inspection_document_page_view_start_date").and_return(Date.parse("2020-09-21"))
+      allow(Settings).to receive(:public_inspection_document_page_view_start_date).and_return(Date.parse("2020-09-21"))
       result = serializer_value(:page_views, public_inspection_document)
       expect(result).to eq({count: 0, last_updated: nil})
     end
