@@ -1,14 +1,9 @@
 require 'yaml'
 require 'erb'
 require 'active_model' # used in settings file
+require 'config'
 
-cron_settings = YAML.unsafe_load(
-  ERB.new(
-    File.read(
-      File.join(File.dirname(__FILE__), 'settings.yml')
-    )
-  ).result
-)[ENV['RAILS_ENV']]['cron']
+Config.load_and_set_settings(Config.setting_files('/home/app/config/', ENV['RAILS_ENV']))
 
 set :output, lambda { "2>&1 | sed \"s/^/[$(date)] /\" | tee -a #{path}/log/#{log}.log | logger -t #{log}" }
 
@@ -23,7 +18,7 @@ job_type :rake, [
 ########################
 # BULK DATA IMPORTS
 ########################
-if cron_settings["import"]
+if Settings.cron.import
   # Import today's content
   # retries every 5 minutes from 4AM to 9PM EDT every day
   if ENV['RAILS_ENV'] == 'development'
@@ -45,7 +40,7 @@ if cron_settings["import"]
   end
 end
 
-if cron_settings["late_content_notifications"]
+if Settings.cron.late_content_notifications
   # Warn us of late content
   every '0 8 * * 1-5' do
     set  :log, 'late_content'
@@ -83,7 +78,7 @@ end
 ########################
 # PUBLIC INSPECTION
 ########################
-if cron_settings["public_inspection"]
+if Settings.cron.public_inspection
   # Import public inspection documents
   # runs every minute from 7AM EDT until 7PM Monday-Friday
   every '* 7-19 * * 1-5' do
@@ -99,7 +94,7 @@ end
 ########################
 # 2022 IMAGE PIPELINE
 ########################
-if cron_settings["images"]["download_ongoing_images"]
+if Settings.cron.images.download_ongoing_images
   # Download image from SFTP and place in image holding tank bucket on S3
   # destructive and should only be run in one environment
   every 5.minutes do
@@ -108,7 +103,7 @@ if cron_settings["images"]["download_ongoing_images"]
   end
 end
 
-if cron_settings["images"]["download_historical_images"]
+if Settings.cron.images.download_historical_images
   # Download image from SFTP (uses alternate credentials) and place in image holding tank bucket on S3
   # destructive and should only be run in one environment
   every 5.minutes do
@@ -117,7 +112,7 @@ if cron_settings["images"]["download_historical_images"]
   end
 end
 
-if cron_settings["gpo_images"]["convert_eps"]
+if Settings.cron.gpo_images.convert_eps
   every 5.minutes do 
     set :log, 'enqueue_environment_specific_image_downloads'
     rake 'content:images:enqueue_environment_specific_image_downloads'
@@ -127,7 +122,7 @@ end
 ########################
 # GPO IMAGE IMPORTS
 ########################
-if cron_settings["gpo_images"]["import_eps"]
+if Settings.cron.gpo_images.import_eps
   # Download image from SFTP and place in private bucket on S3
   # destructive and should only be run in one environment
   every 15.minutes do
@@ -136,7 +131,7 @@ if cron_settings["gpo_images"]["import_eps"]
   end
 end
 
-if cron_settings["gpo_images"]["convert_eps"]
+if Settings.cron.gpo_images.convert_eps
   # Enqueue background jobs to process any images that are new
   every 5.minutes do
     set :log, 'gpo_eps_converter'
@@ -144,7 +139,7 @@ if cron_settings["gpo_images"]["convert_eps"]
   end
 end
 
-if cron_settings["gpo_images"]["reprocess_unlinked_gpo_images"]
+if Settings.cron.gpo_images.reprocess_unlinked_gpo_images
   every :sunday, at: '3AM' do
     rake 'content:gpo_images:reprocess_unlinked_gpo_images'
   end
@@ -161,7 +156,7 @@ end
 # REGULATIONS.GOV DATA
 ########################
 
-if cron_settings["regulations_dot_gov"]["documents"]
+if Settings.cron.regulations_dot_gov.documents
   # every 30 minutes from 4AM to 11PM EDT every day
   every "*/30 4-23 * * *" do
     set :log, 'regulations_dot_gov_document_update'
@@ -173,7 +168,7 @@ if cron_settings["regulations_dot_gov"]["documents"]
   end
 end
 
-if cron_settings["regulations_dot_gov"]["dockets"]
+if Settings.cron.regulations_dot_gov.dockets
   # Download docket data
   every 1.day, at: '12:30PM' do
     set :log, 'docket_import'
@@ -192,7 +187,7 @@ end
 # REGULATIONS.GOV COMMENTS
 #################################
 
-if cron_settings["regulations_dot_gov"]["comments"]
+if Settings.cron.regulations_dot_gov.comments
   # Refresh the regulations.gov comment form cache
   every 6.hours do
     set :log, 'regulations_dot_gov_comment_cache'
@@ -205,7 +200,7 @@ end
 # GOOGLE ANALYTICS PAGE COUNTS
 #################################
 
-if cron_settings["google_analytics"]
+if Settings.cron.google_analytics
   # runs every 2 hours at 15 minutes past the hour
   every '15 0,2,4,6,8,10,12,14,16,18,20,22 * * *' do
     set :log, 'google_analytics_api'
