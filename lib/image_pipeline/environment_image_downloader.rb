@@ -3,6 +3,7 @@ class ImagePipeline::EnvironmentImageDownloader
   extend Memoist
   include Sidekiq::Worker
   include GpoImages::ImageIdentifierNormalizer
+  include ImagePipeline::ImageDescrunching
 
   sidekiq_options :queue => :gpo_image_import, :retry => 0
 
@@ -19,6 +20,10 @@ class ImagePipeline::EnvironmentImageDownloader
       temp_file.binmode
       temp_file.puts(response.body)
       temp_file.rewind
+
+      if gpo_scrunched_image?(temp_file.path)
+        descrunch!(temp_file.path)
+      end
       
       # Save image to S3
       image = Image.find_or_initialize_by(
@@ -42,19 +47,22 @@ class ImagePipeline::EnvironmentImageDownloader
         image: temp_file
       )
       persist_image!(image)
+    rescue DescrunchFailure => e
+      # Resave the bad image and bypass the calculation/storage of image-specific metadata and generating variants.
+      image.skip_storing_image_specific_metadata = true
+      image.skip_variant_generation              = true
+      image.assign_attributes(
+        error: 'descrunch_failure',
+        image: temp_file
+      )
+      persist_image!(image)
     rescue MiniMagick::Invalid => e
       # Resave the bad image and bypass the calculation/storage of image-specific metadata and generating variants.
       image.skip_storing_image_specific_metadata = true
       image.skip_variant_generation              = true
-      if gpo_scrunched_image?(temp_file.path)
-        error_message = 'gpo_scrunched'
-      else
-        error_message = e.class.to_s
-      end
-
       image.assign_attributes(
-        error:                                error_message,
-        image:                                temp_file
+        error: e.class.to_s,
+        image: temp_file
       )
       persist_image!(image)
     ensure
@@ -77,12 +85,6 @@ class ImagePipeline::EnvironmentImageDownloader
   private
 
   attr_reader :s3_key, :connection
-
-  def gpo_scrunched_image?(path)
-    line = Terrapin::CommandLine.new("head -c 10", ":file_path")
-    output = line.run(file_path: path)
-    output.include? 'GPO'
-  end
 
   def persist_image!(image)
     if image.image_usages.present?

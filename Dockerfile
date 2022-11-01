@@ -29,6 +29,8 @@ RUN apt-get update &&\
   apt-get install -y gettext-base patch libpcre3-dev git libmysqlclient-dev libssl-dev mysql-client \
     apache2-utils fontconfig hunspell-en-us libhunspell-1.7-0 libhunspell-dev pngcrush secure-delete \
     xfonts-75dpi xfonts-base tzdata \
+    # used for de-scrunching GPO images
+    dynamite \
     # used for curb gem
     libcurl4 libcurl3-gnutls libcurl4-openssl-dev \
     # Required to successfully compile qpdf
