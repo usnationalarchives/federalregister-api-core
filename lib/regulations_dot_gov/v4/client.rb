@@ -1,5 +1,7 @@
 class RegulationsDotGov::V4::Client
   class OverRateLimitError < StandardError; end
+  class BadGateway < StandardError; end
+  class UnhandledConnectionError < StandardError; end
 
   def initialize
     @logger = Logger.new("#{Rails.root}/log/#{Rails.env}_regulations_dot_gov_v4.log")
@@ -70,13 +72,32 @@ class RegulationsDotGov::V4::Client
     end
   end
 
+  RETRY_LIMIT = 1
   def find_documents_by_docket(docket_id)
-    response = connection.get(
-      'documents',
-      'filter[docketId]' => docket_id,
-      'api_key'          => api_key
-    )
-    JSON.parse(response.body)
+    retries = 0
+
+    begin
+      response = connection.get(
+        'documents',
+        'filter[docketId]' => docket_id,
+        'api_key'          => api_key
+      )
+      case response.status
+      when 200
+        JSON.parse(response.body)
+      when 502
+        raise BadGateway
+      else
+        raise UnhandledConnectionError.new("#{response.status}/#{response.reason_phrase}/#{docket_id}")
+      end
+    rescue Faraday::ConnectionFailed, BadGateway => e
+      if retries < RETRY_LIMIT
+        retries += 1
+        retry
+      else
+        raise e
+      end
+    end
   end
 
   PAGE_SIZE = 250

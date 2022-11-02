@@ -48,7 +48,6 @@ class RegulationsDotGov::V4::Docket
   attr_reader :raw_attributes
 
   def docket_documents_raw_response
-    "foo".to_s
     RegulationsDotGov::V4::Client.new.find_documents_by_docket(docket_id)
   end
   memoize :docket_documents_raw_response
