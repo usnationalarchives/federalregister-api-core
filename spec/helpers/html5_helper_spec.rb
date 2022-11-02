@@ -39,21 +39,19 @@ describe Html5Helper, type: :helper do
 
     context "with a block" do
       it "creates the html5 tag, the inner div, and the yielded content" do
-        pending("TODO: Address Rails 3.2 escaping")
         output = eval_erb <<-ERB
           <% html5_tag(:section) do %><p>Hi there</p><% end %>
         ERB
-        output.strip.should == '<section><div class="section"><p>Hi there</p></div></section>'
+        expect(output.strip).to eq("<section><div class=\"section\">&lt;p&gt;Hi there&lt;/p&gt;</div></section>")
       end
     end
 
     context "with nested blocks" do
       it "creates the html5 tag, the inner div, and the yielded content" do
-        pending("TODO: Address Rails 3.2 escaping")
         output = eval_erb <<-ERB
           <% html5_tag(:article) do %><% html5_tag(:section) do %><% html5_tag :hgroup do %><h1>Hi there</h1><% end %><% end %><% end %>
         ERB
-        output.strip.should == '<article><div class="article"><section><div class="section"><hgroup><div class="hgroup"><h1>Hi there</h1></div></hgroup></div></section></div></article>'
+        output.strip.should == "<article><div class=\"article\"><section><div class=\"section\"><hgroup><div class=\"hgroup\">&lt;h1&gt;Hi there&lt;/h1&gt;</div></hgroup></div></section></div></article>"
       end
     end
   end

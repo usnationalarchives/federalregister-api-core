@@ -28,8 +28,8 @@ describe CitationsHelper, type: :helper do
       add_usc_links('10 U.S.C. 1').should == '<a href="' + h(usc_url('10', '1')) + '" class="usc external" target="_blank">10 U.S.C. 1</a>'
     end
 
-    it "supports '39 U.S.C. 3632, 3633, or 3642'"
-    it "supports '39 U.S.C. 3632, 3633, or 3642 and 39 CFR part 3015'"
+    # it "supports '39 U.S.C. 3632, 3633, or 3642'"
+    # it "supports '39 U.S.C. 3632, 3633, or 3642 and 39 CFR part 3015'"
   end
 
   describe 'add_regulatory_plan_links' do
@@ -71,12 +71,12 @@ describe CitationsHelper, type: :helper do
       add_patent_links('Patent Number 4,954,320').should == '<a href="' + h(patent_url('4,954,320')) + '" class="patent external" target="_blank">Patent Number 4,954,320</a>'
     end
 
-    it "supports 'Patent Application Number 08/331,554'"
+    # it "supports 'Patent Application Number 08/331,554'"
   end
 
-  describe 'add_navy_case_links' do
-    it "supports 'Navy Case Number 97567'"
-  end
+  # describe 'add_navy_case_links' do
+  #   it "supports 'Navy Case Number 97567'"
+  # end
 
   describe 'adding links to HTML' do
     it 'should not interfere with existing links' do

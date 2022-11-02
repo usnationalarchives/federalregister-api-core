@@ -38,6 +38,5 @@ describe ImagePipeline::SftpDownloader do
         should == ["test_file_1.eps"]
     end
 
-    it "deletes the downloaded files after uploading to s3"
   end
 end

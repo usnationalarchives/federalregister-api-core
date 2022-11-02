@@ -53,10 +53,10 @@ describe Citations::CfrHelper, type: :helper do
       add_cfr_links('10 CFR 660.719 and 10 CFR 665.28').should == '<a href="' + h(select_cfr_citation_path(Time.current.to_date,'10','660','719')) + '" class="cfr external">10 CFR 660.719</a> and <a href="' + h(select_cfr_citation_path(Time.current.to_date,'10','665','28')) + '" class="cfr external">10 CFR 665.28</a>'
     end
 
-    it "supports missing the initial space: '49 CFR230.105(c)'"
-    it "supports '15 CFR parts 4 and 903'"
-    it "supports '33 CFR Parts 160, 161, 164, and 165'"
-    it "supports '18 CFR 385.214 or 385.211'"
-    it "supports '7 CFR 2.22, 2.80, and 371.3'"
+    # it "supports missing the initial space: '49 CFR230.105(c)'"
+    # it "supports '15 CFR parts 4 and 903'"
+    # it "supports '33 CFR Parts 160, 161, 164, and 165'"
+    # it "supports '18 CFR 385.214 or 385.211'"
+    # it "supports '7 CFR 2.22, 2.80, and 371.3'"
   end
 end
