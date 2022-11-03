@@ -32,16 +32,23 @@ namespace :content do
 
     task :run => :environment do
       if Issue.should_have_an_issue?(Date.current)
-        new_document_numbers = Content::PublicInspectionImporter.perform
+        Content::PublicInspectionImporter.perform
 
-        if new_document_numbers.present?
+        new_documents = PublicInspectionDocument.
+          where("DATE(filed_at) = '#{Date.current.to_s(:iso)}'").
+          where(subscriptions_enqueued_at: nil).
+          where.not(pdf_file_name: nil)
+
+        if new_documents.present?
           Sidekiq::Client.push(
             'class' => 'PublicInspectionDocumentSubscriptionQueuePopulator',
-            'args'  => [new_document_numbers],
+            'args'  => [new_documents.pluck(:document_number)],
             'queue' => 'subscriptions',
             'retry' => 0
           )
 
+          current_time = Time.current
+          new_documents.update_all(subscriptions_enqueued_at: current_time)
         end
       end
     end

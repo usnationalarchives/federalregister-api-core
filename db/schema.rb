@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_09_07_201654) do
+ActiveRecord::Schema.define(version: 2022_11_03_181304) do
 
   create_table "action_names", :force => true do |t|
     t.string   "name"
@@ -578,6 +578,7 @@ ActiveRecord::Schema.define(version: 2022_09_07_201654) do
     t.string   "pdf_url"
     t.string   "category"
     t.datetime "update_pil_at"
+    t.datetime "subscriptions_enqueued_at"
   end
 
   add_index "public_inspection_documents", ["document_number"], :name => "index_public_inspection_documents_on_document_number"
