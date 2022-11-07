@@ -1,4 +1,4 @@
-require 'sidekiq/web'
+require 'sidekiq/pro/web'
 require "sidekiq/throttled/web"
 
 FederalregisterApiCore::Application.routes.draw do
