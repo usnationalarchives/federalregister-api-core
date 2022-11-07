@@ -2,7 +2,6 @@ require 'sidekiq/web'
 require "sidekiq/throttled/web"
 
 FederalregisterApiCore::Application.routes.draw do
-  Sidekiq::Web.set :session_secret, Rails.application.secrets[:secret_key_base]
   mount LetterOpenerWeb::Engine, at: "/letter_opener" if Rails.env.development?
   namespace :admin do
     mount Sidekiq::Web => 'sidekiq'
