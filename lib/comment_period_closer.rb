@@ -1,22 +1,20 @@
 # When a document with an open comment period closes, we need a way of ensuring the comment url is automatically deleted if it has indeed closed per Regulations.gov (so it no longer appears as commentable in FR Web).
 class CommentPeriodCloser
-  extend CacheUtils
 
   MAX_AGE = 4.months
   def self.perform
     # Immediately remove comment url from documents we anticipate are closing based on the regulations.gov metadata we've previously imported, but also enqueue a job that re-adds the comment url if the regs.gov API indicates it's still open for comment.  The regulations.gov jobs are throttled (and so it takes time to process through them)--we want to present a better UI by not displaying the document as being open for comment once midnight has elapsed so late-night users don't receive an error message about the document not being open for comment when submission is attempted.
-    purge_varnish = false
-    daily_entries_anticipated_for_closing.each do |entry|
-      purge_varnish = true
-      entry.update!(comment_url: nil)
-      EntryRegulationsDotGovImporter.perform_async(entry.document_number, nil, true)
-    end
-    if purge_varnish
-      purge_cache("/")
-    end
-
-    candidate_document_numbers_still_open.each do |doc_number|
-      EntryRegulationsDotGovImporter.perform_async(doc_number, nil, true)
+    batch = Sidekiq::Batch.new
+    batch.description = "Reimport of regulations.gov metadata for anticipated document closings"
+    batch.on(:complete, CachePurger, paths: "/")
+    batch.jobs do
+      daily_entries_anticipated_for_closing.each do |entry|
+        entry.update!(comment_url: nil)
+        EntryRegulationsDotGovImporter.perform_async(entry.document_number, nil, true)
+      end
+      candidate_document_numbers_still_open.each do |doc_number|
+        EntryRegulationsDotGovImporter.perform_async(doc_number, nil, true)
+      end
     end
   end
 
