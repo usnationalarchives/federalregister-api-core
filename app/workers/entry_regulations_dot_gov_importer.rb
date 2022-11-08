@@ -1,5 +1,6 @@
 class EntryRegulationsDotGovImporter
   extend Memoist
+  include CacheUtils
   include Sidekiq::Worker
   include Sidekiq::Throttled::Worker
 
@@ -30,10 +31,15 @@ class EntryRegulationsDotGovImporter
       entry.regulations_dot_gov_docket_id       = regulations_dot_gov_docket_id
     end
 
+    purge_varnish = entry.changed?
     entry.save!
 
     if reindex
       entry.reindex!
+    end
+
+    if purge_varnish
+      purge_document_paths
     end
   end
 
@@ -68,6 +74,19 @@ class EntryRegulationsDotGovImporter
   private
 
   attr_reader :entry
+
+  def purge_document_paths
+    document_paths.each do |path|
+      purge_cache(path)
+    end
+  end
+  
+  def document_paths
+    [
+      "/api/v1/documents/#{entry.document_number}*",
+      "/documents/#{entry.publication_date.to_s(:ymd)}/#{entry.document_number}/*",
+    ]
+  end
 
   def regulationsdotgov_document
     RegulationsDotGov::V4::Client.new.find_basic_document(entry.document_number)
