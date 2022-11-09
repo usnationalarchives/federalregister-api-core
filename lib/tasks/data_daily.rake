@@ -60,7 +60,6 @@ namespace :data do
       content:fr_index:update_status_cache
       content:entries:json:compile:fr_index
       mailing_lists:daily_import_email:deliver
-      sitemap:refresh
     )
 
     task :reimport => %w(
@@ -79,7 +78,6 @@ namespace :data do
       content:entries:json:compile:fr_index
 
       varnish:expire:everything
-      sitemap:refresh
     )
   end
 end

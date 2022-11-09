@@ -514,7 +514,6 @@ GEM
       multi_json (~> 1.10)
     sinatra (1.0)
       rack (>= 1.0)
-    sitemap_generator (1.5.2)
     slop (3.6.0)
     spring (4.1.0)
     spring-commands-rspec (1.0.4)
@@ -657,7 +656,6 @@ DEPENDENCIES
   sendgrid
   sidekiq-pro!
   sidekiq-throttled
-  sitemap_generator (~> 1.5.0)
   spring
   spring-commands-rspec
   stevedore (= 0.3.0)

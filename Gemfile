@@ -33,7 +33,6 @@ gem 'json'
 gem 'ym4r', '0.6.1'
 gem 'ffi-hunspell'
 gem 'honeybadger'
-gem 'sitemap_generator', '~> 1.5.0'
 
 gem 'kt-paperclip'
  # required by paperclip but unspecified version - this ensures a comptible version
