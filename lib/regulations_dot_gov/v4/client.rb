@@ -2,6 +2,7 @@ class RegulationsDotGov::V4::Client
   class OverRateLimitError < StandardError; end
   class BadGateway < StandardError; end
   class UnhandledConnectionError < StandardError; end
+  class NotFoundError < StandardError; end
 
   def initialize
     @logger = Logger.new("#{Rails.root}/log/#{Rails.env}_regulations_dot_gov_v4.log")
@@ -146,6 +147,8 @@ class RegulationsDotGov::V4::Client
       case response.status
       when 200
         JSON.parse(response.body)
+      when 404
+        raise NotFoundError
       when 502
         raise BadGateway
       else
