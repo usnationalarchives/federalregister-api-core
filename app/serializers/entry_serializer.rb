@@ -13,7 +13,7 @@ class EntrySerializer < ApplicationSerializer
   def self.find_options_for(*fields)
     api_fields_set = api_fields.to_set
     fields.flatten.each do |field|
-      raise FieldNotFound.new("field '#{field}' not valid") unless api_fields_set.include? field
+      raise ApiRepresentation::FieldNotFound.new("field '#{field}' not valid") unless api_fields_set.include? field
     end
     {} #Returning an empty hash since this method is no longer used for supplying find options to search infrastructure (all Entry searches are now performed by ES).  This method is solely used for confirming the requested fields exist
   end
