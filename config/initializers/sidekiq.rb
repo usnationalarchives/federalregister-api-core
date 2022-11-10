@@ -18,3 +18,5 @@ Sidekiq::Throttled::Registry.add(:reg_gov_api, **{
     period: Settings.regulations_dot_gov.throttle.per.send(:seconds)
   }
 })
+
+Sidekiq.strict_args!

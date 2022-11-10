@@ -7,7 +7,7 @@ class Admin::Issues::NotesController < AdminController
 
   def update
     if @issue.update(issue_params)
-      Sidekiq::Client.enqueue(IssueTocRegenerator, @issue.publication_date)
+      Sidekiq::Client.enqueue(IssueTocRegenerator, @issue.publication_date.to_s(:iso))
       redirect_to admin_issue_path(@issue), :flash => { :notice => "Note successfully updated" }
     else
       flash.now[:error] = @issue.errors.full_messages.to_sentence

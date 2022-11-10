@@ -62,7 +62,7 @@ namespace :content do
             date = date.is_a?(String) ? Date.parse(date) : date
             next unless Issue.should_have_an_issue?(date)
 
-            Sidekiq::Client.enqueue(TableOfContentsRecompiler, date)
+            Sidekiq::Client.enqueue(TableOfContentsRecompiler, date.to_s(:iso))
           end
         end
 
@@ -79,7 +79,7 @@ namespace :content do
               next
             end
 
-            Sidekiq::Client.enqueue(PublicInspectionTableOfContentsRecompiler, date)
+            Sidekiq::Client.enqueue(PublicInspectionTableOfContentsRecompiler, date.to_s(:iso))
           end
         end
 

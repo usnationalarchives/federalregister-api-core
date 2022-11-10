@@ -4,7 +4,7 @@ namespace :content do
     task :background_reimport => :environment do
       Content.parse_dates(ENV['DATE']).each do |date|
         Sidekiq::Client.enqueue(
-          EntryReimporter, date, :all,
+          EntryReimporter, date.to_s(:iso), :all,
           :force_reload_mods => true,
           :force_reload_bulkdata => true,
           :allow_download_failure => ENV['ALLOW_DOWNLOAD_FAILURE'],
@@ -16,7 +16,7 @@ namespace :content do
     desc "Re-extract citations"
     task :reextract_citations => :environment do
       Content.parse_dates(ENV['DATE']).each do |date|
-        Sidekiq::Client.enqueue(EntryReimporter, date, :citations)
+        Sidekiq::Client.enqueue(EntryReimporter, date.to_s(:iso), :citations)
       end
     end
 
@@ -37,7 +37,7 @@ namespace :content do
     desc "Recompile all pre-compiled ToC pages for a set of dates"
     task :recompile_all_toc => :environment do
       Content.parse_dates(ENV['DATE']).each do |date|
-        Sidekiq::Client.enqueue(TableOfContentsRecompiler, date)
+        Sidekiq::Client.enqueue(TableOfContentsRecompiler, date.to_s(:iso))
       end
     end
 

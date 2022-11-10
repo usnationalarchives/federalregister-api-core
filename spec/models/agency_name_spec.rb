@@ -83,7 +83,7 @@ describe AgencyName do
       entry = Factory(:entry, :agency_names => [agency_name])
       agency_2 = Factory(:agency)
 
-      Sidekiq::Client.should_receive(:enqueue).with(TableOfContentsRecompiler, entry.publication_date)
+      Sidekiq::Client.should_receive(:enqueue).with(TableOfContentsRecompiler, entry.publication_date.to_s(:iso))
       agency_name.update(:agency => agency_2)
     end
 
