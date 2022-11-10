@@ -1,0 +1,99 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api.regulations.gov/v4/document-comments-received-counts/INVALID-DOCUMENT-ID?api_key=<API_KEY>
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.17.4
+  response:
+    status:
+      code: 403
+      message: Forbidden
+    headers:
+      date:
+      - Wed, 09 Nov 2022 06:43:36 GMT
+      content-type:
+      - application/json
+      transfer-encoding:
+      - chunked
+      connection:
+      - close
+      access-control-allow-origin:
+      - "*"
+      strict-transport-security:
+      - max-age=31536000; preload
+      vary:
+      - Accept-Encoding
+      x-cache:
+      - MISS
+      x-content-type-options:
+      - nosniff
+      x-vcap-request-id:
+      - ea535eb9-d6ce-4886-4bd5-5183317883e9
+      x-xss-protection:
+      - 1; mode=block
+      x-frame-options:
+      - DENY
+    body:
+      encoding: ASCII-8BIT
+      string: |-
+        {
+          "error": {
+            "code": "API_KEY_INVALID",
+            "message": "An invalid api_key was supplied. Get one at https://api.regulations.gov:443"
+          }
+        }
+  recorded_at: Wed, 09 Nov 2022 06:43:36 GMT
+- request:
+    method: get
+    uri: https://api.regulations.gov/v4/document-comments-received-counts/INVALID-DOCUMENT-ID?api_key=DEMO_KEY
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.17.4
+  response:
+    status:
+      code: 400
+      message: Bad Request
+    headers:
+      date:
+      - Wed, 09 Nov 2022 06:47:19 GMT
+      content-type:
+      - application/vnd.api+json;charset=utf-8
+      content-length:
+      - '71'
+      connection:
+      - close
+      access-control-allow-origin:
+      - "*"
+      age:
+      - '0'
+      strict-transport-security:
+      - max-age=31536000; preload
+      via:
+      - http/1.1 api-umbrella (ApacheTrafficServer [cMsSf ])
+      x-cache:
+      - MISS
+      x-ratelimit-limit:
+      - '40'
+      x-ratelimit-remaining:
+      - '35'
+      x-vcap-request-id:
+      - 9cbeda5d-9ad5-4dc3-627c-00e68fb1891b
+      x-frame-options:
+      - DENY
+      x-content-type-options:
+      - nosniff
+      x-xss-protection:
+      - 1; mode=block
+    body:
+      encoding: UTF-8
+      string: '{"errors":[{"status":"400","title":"Invalid ID: INVALID-DOCUMENT-ID"}]}'
+  recorded_at: Wed, 09 Nov 2022 06:47:19 GMT
+recorded_with: VCR 6.0.0

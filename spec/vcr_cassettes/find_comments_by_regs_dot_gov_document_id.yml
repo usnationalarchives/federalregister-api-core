@@ -88,4 +88,196 @@ http_interactions:
       encoding: UTF-8
       string: '{"data":{"id":"HHS-OCR-2021-0006-0001","type":"document-comments-received-counts","attributes":{"count":550},"links":{"self":"https://api.regulations.gov/v4/document-comments-received-counts/HHS-OCR-2021-0006-0001"}}}'
   recorded_at: Thu, 04 Mar 2021 23:19:45 GMT
+- request:
+    method: get
+    uri: https://api.regulations.gov/v4/document-comments-received-counts/HHS-OCR-2021-0006-0001?api_key=<API_KEY>
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.17.4
+  response:
+    status:
+      code: 403
+      message: Forbidden
+    headers:
+      date:
+      - Wed, 09 Nov 2022 06:32:05 GMT
+      content-type:
+      - application/json
+      transfer-encoding:
+      - chunked
+      connection:
+      - close
+      access-control-allow-origin:
+      - "*"
+      strict-transport-security:
+      - max-age=31536000; preload
+      vary:
+      - Accept-Encoding
+      x-cache:
+      - MISS
+      x-content-type-options:
+      - nosniff
+      x-vcap-request-id:
+      - 9c3fbafa-28ce-46cd-6169-142987821268
+      x-xss-protection:
+      - 1; mode=block
+      x-frame-options:
+      - DENY
+    body:
+      encoding: ASCII-8BIT
+      string: |-
+        {
+          "error": {
+            "code": "API_KEY_INVALID",
+            "message": "An invalid api_key was supplied. Get one at https://api.regulations.gov:443"
+          }
+        }
+  recorded_at: Wed, 09 Nov 2022 06:32:05 GMT
+- request:
+    method: get
+    uri: https://api.regulations.gov/v4/document-comments-received-counts/HHS-OCR-2021-0006-0001?api_key=DEMO_KEY
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.17.4
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      date:
+      - Wed, 09 Nov 2022 06:32:36 GMT
+      content-type:
+      - application/vnd.api+json;charset=utf-8
+      content-length:
+      - '218'
+      connection:
+      - close
+      access-control-allow-origin:
+      - "*"
+      age:
+      - '0'
+      strict-transport-security:
+      - max-age=31536000; preload
+      via:
+      - http/1.1 api-umbrella (ApacheTrafficServer [cMsSf ])
+      x-cache:
+      - MISS
+      x-ratelimit-limit:
+      - '40'
+      x-ratelimit-remaining:
+      - '38'
+      x-vcap-request-id:
+      - a68e5ac1-56da-4432-71f4-a61fe4939ba0
+      x-frame-options:
+      - DENY
+      x-content-type-options:
+      - nosniff
+      x-xss-protection:
+      - 1; mode=block
+    body:
+      encoding: UTF-8
+      string: '{"data":{"id":"HHS-OCR-2021-0006-0001","type":"document-comments-received-counts","attributes":{"count":1436},"links":{"self":"https://api.regulations.gov/v4/document-comments-received-counts/HHS-OCR-2021-0006-0001"}}}'
+  recorded_at: Wed, 09 Nov 2022 06:32:36 GMT
+- request:
+    method: get
+    uri: https://api.regulations.gov/v4/document-comments-received-counts/HHS-OCR-2021-0006-0001?api_key=DEMO_KEY
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.17.4
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      date:
+      - Wed, 09 Nov 2022 06:32:53 GMT
+      content-type:
+      - application/vnd.api+json;charset=utf-8
+      content-length:
+      - '218'
+      connection:
+      - close
+      access-control-allow-origin:
+      - "*"
+      age:
+      - '0'
+      strict-transport-security:
+      - max-age=31536000; preload
+      via:
+      - http/1.1 api-umbrella (ApacheTrafficServer [cMsSf ])
+      x-cache:
+      - MISS
+      x-ratelimit-limit:
+      - '40'
+      x-ratelimit-remaining:
+      - '37'
+      x-vcap-request-id:
+      - dcf4941d-7d73-43d8-4ac9-12b090862154
+      x-frame-options:
+      - DENY
+      x-content-type-options:
+      - nosniff
+      x-xss-protection:
+      - 1; mode=block
+    body:
+      encoding: UTF-8
+      string: '{"data":{"id":"HHS-OCR-2021-0006-0001","type":"document-comments-received-counts","attributes":{"count":1436},"links":{"self":"https://api.regulations.gov/v4/document-comments-received-counts/HHS-OCR-2021-0006-0001"}}}'
+  recorded_at: Wed, 09 Nov 2022 06:32:53 GMT
+- request:
+    method: get
+    uri: https://api.regulations.gov/v4/document-comments-received-counts/HHS-OCR-2021-0006-0001?api_key=DEMO_KEY
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.17.4
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      date:
+      - Wed, 09 Nov 2022 06:34:15 GMT
+      content-type:
+      - application/vnd.api+json;charset=utf-8
+      content-length:
+      - '218'
+      connection:
+      - close
+      access-control-allow-origin:
+      - "*"
+      age:
+      - '0'
+      strict-transport-security:
+      - max-age=31536000; preload
+      via:
+      - http/1.1 api-umbrella (ApacheTrafficServer [cMsSf ])
+      x-cache:
+      - MISS
+      x-ratelimit-limit:
+      - '40'
+      x-ratelimit-remaining:
+      - '36'
+      x-vcap-request-id:
+      - 5b6c123c-6000-4461-531a-9fe23c78ce78
+      x-frame-options:
+      - DENY
+      x-content-type-options:
+      - nosniff
+      x-xss-protection:
+      - 1; mode=block
+    body:
+      encoding: UTF-8
+      string: '{"data":{"id":"HHS-OCR-2021-0006-0001","type":"document-comments-received-counts","attributes":{"count":1436},"links":{"self":"https://api.regulations.gov/v4/document-comments-received-counts/HHS-OCR-2021-0006-0001"}}}'
+  recorded_at: Wed, 09 Nov 2022 06:34:15 GMT
 recorded_with: VCR 6.0.0

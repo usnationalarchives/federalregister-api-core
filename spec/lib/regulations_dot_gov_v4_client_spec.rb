@@ -52,6 +52,13 @@ describe RegulationsDotGov::V4::Client do
     end
   end
 
+  it "#find_comments_by_regs_dot_gov_document_id throws an error if an invalid document id is provided" do
+    VCR.use_cassette("find_comments_by_regs_dot_gov_document_id_invalid_doc_id") do
+      allow_any_instance_of(RegulationsDotGov::V4::Client).to receive(:api_key).and_return("DEMO_KEY")
+      expect { RegulationsDotGov::V4::Client.new.find_comments_by_regs_dot_gov_document_id("INVALID-DOCUMENT-ID") }.to raise_error(RegulationsDotGov::V4::Client::UnhandledConnectionError)
+    end
+  end
+
   it "#find_docket" do
     VCR.use_cassette("regulations_dot_gov_v4_dockets") do
       result = RegulationsDotGov::V4::Client.new.find_docket('EPA-HQ-OAR-2003-0129')

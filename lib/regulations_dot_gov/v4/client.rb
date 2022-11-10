@@ -42,11 +42,12 @@ class RegulationsDotGov::V4::Client
 
   def find_comments_by_regs_dot_gov_document_id(regulations_dot_gov_document_number)
     # https://api.regulations.gov/v4/document-comments-received-counts/HHS-OCR-2021-0006-0001?api_key=DEMO_KEY
-    response = connection.get(
-      "document-comments-received-counts/#{regulations_dot_gov_document_number}",
-      'api_key'             => api_key
-    )
-    data = JSON.parse(response.body).fetch('data')
+    data = request_with_retry do
+      connection.get(
+        "document-comments-received-counts/#{regulations_dot_gov_document_number}",
+        'api_key'             => api_key
+      )
+    end.fetch('data')
     RegulationsDotGov::V4::CommentCollection.new(data)
   end
 
@@ -72,33 +73,16 @@ class RegulationsDotGov::V4::Client
     end
   end
 
-  RETRY_LIMIT = 1
   def find_documents_by_docket(docket_id)
-    retries = 0
-
-    begin
-      response = connection.get(
+    request_with_retry do
+      connection.get(
         'documents',
         'filter[docketId]' => docket_id,
         'api_key'          => api_key
       )
-      case response.status
-      when 200
-        JSON.parse(response.body)
-      when 502
-        raise BadGateway
-      else
-        raise UnhandledConnectionError.new("#{response.status}/#{response.reason_phrase}/#{docket_id}")
-      end
-    rescue Faraday::ConnectionFailed, BadGateway => e
-      if retries < RETRY_LIMIT
-        retries += 1
-        retry
-      else
-        raise e
-      end
     end
   end
+
 
   PAGE_SIZE = 250
   MAX_PAGES = 10
@@ -152,6 +136,30 @@ class RegulationsDotGov::V4::Client
   private
 
   attr_reader :logger
+
+  RETRY_LIMIT = 1
+  def request_with_retry
+    retries = 0
+
+    begin
+      response = yield
+      case response.status
+      when 200
+        JSON.parse(response.body)
+      when 502
+        raise BadGateway
+      else
+        raise UnhandledConnectionError.new("#{response.status}/#{response.reason_phrase}")
+      end
+    rescue Faraday::ConnectionFailed, BadGateway => e
+      if retries < RETRY_LIMIT
+        retries += 1
+        retry
+      else
+        raise e
+      end
+    end
+  end
 
   def standard_options
     {:api_key => api_key}
