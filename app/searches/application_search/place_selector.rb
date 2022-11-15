@@ -1,5 +1,6 @@
 class ApplicationSearch
   class PlaceSelector
+    extend Memoist
     DEFAULT_WITHIN = 25
     attr_accessor :location, :within
     attr_reader :validation_errors
@@ -38,13 +39,20 @@ class ApplicationSearch
     private
 
     def location_latlong
-      latlong = GeoLocator.perform(location)
-
-      if latlong.lat.blank? || latlong.lng.blank?
-        @validation_errors = "We could not understand your location, '#{location}'. Location must be a valid zip code."
+      if geoapify_location
+        geoapify_location.coordinates
+      else
+        @validation_errors = "We could not understand your location, '#{location}'. Location must be a valid postal code."
       end
-
-      latlong
     end
+
+    def geoapify_location
+      Geocoder.
+        search(location).
+        sort_by{|x| x.country == "United States" ? 0 : 1}. #ie prioritize US postal codes.  Geoapify supports postal countries from other countries as well
+        first
+    end
+    memoize :geoapify_location
+
   end
 end

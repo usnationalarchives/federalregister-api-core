@@ -16,6 +16,12 @@ feature_flags:
   reindex_all_agency_name_entries: <%= ActiveModel::Type::Boolean.new.cast(ENV['REINDEX_ALL_AGENCY_NAME_ENTRIES']) || false %>
 images:
   store_in_filesystem: true
+open_calais:
+  daily_api_call_limit: <%= ENV["OPEN_CALAIS_DAILY_API_CALL_LIMIT"] || 500 %>
+  throttle:
+    concurrency: <%= ENV["OPEN_CALAIS_JOBS_CONCURRENCY"] || 1 %>
+    at: <%= ENV["OPEN_CALAIS_JOBS_THROTTLE_AT"] || 1 %>
+    per: <%= (ENV["OPEN_CALAIS_JOBS_THROTTLE_PER"] || 1).send(:seconds) %>
 varnish:
   host: <%= ENV["VARNISH_ADDR"] || 'varnish' %>
   port: 6082

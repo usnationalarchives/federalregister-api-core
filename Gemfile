@@ -18,8 +18,13 @@ gem 'curb'
 # app wide settings
 gem 'config'
 gem 'http_headers', '0.0.2.3'
+# used by geokit-rails
 gem 'geokit', '1.10.0', :require => 'geokit'
+# supplies additional geolocation-based scopes for searches
 gem 'geokit-rails'
+
+# acquires lat/long coordinates for postal codes provided in search
+gem 'geocoder'
 gem 'lograge' # Structured JSON logging
 gem 'will_paginate', :require => 'will_paginate'
 gem 'amatch', '0.2.11'

@@ -146,6 +146,13 @@ if Settings.cron.gpo_images.reprocess_unlinked_gpo_images
 end
 
 ########################
+# PLACE DETERMINATIONS FOR HISTORICAL IMAGES
+########################
+every [:sunday, :monday], at: '4:00AM' do
+  rake 'data:extract:places_for_historical_documents'
+end
+
+########################
 # SEMI-ANNUAL UNIFIED AGENDA
 ########################
 every 1.day, at: '3:00PM' do

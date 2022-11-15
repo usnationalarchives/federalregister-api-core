@@ -1,6 +1,8 @@
 module OpenCalais
   class ClientWrapper
-    class ConcurrentRequestLimit < StandardError; end
+    class RequestLimit < StandardError; end
+    class OpenCalaisRequestFailure < StandardError; end
+    class RequestSizeTooLarge < StandardError; end
 
     def initialize(text)
       @text = text
@@ -17,11 +19,19 @@ module OpenCalais
     def enriched_response
       begin
         @enriched_response ||= open_calais.enrich(text)
-      rescue Faraday::ParsingError => e
-        if e.response.status == 429
-          raise ConcurrentRequestLimit.new(e.inspect)
+        raw_response = @enriched_response.raw
+        if raw_response.status != 200
+          raise OpenCalaisRequestFailure.new("#{raw_response.status}: #{raw_response.reason_phrase}")
+        end
+        @enriched_response
+      rescue Faraday::ClientError => e
+        case e.response.fetch(:status)
+        when 413
+          raise RequestSizeTooLarge.new("Request Size Too Large: #{text.bytesize/1024.to_f}KB")
+        when 429
+          # "An HTTP 429 error is generated in when the daily request quota, or the per-second request quota is exceeded. "
+          raise RequestLimit.new(e.inspect)
         else
-          Honeybadger.notify(error_message: "#{e.inspect}: Request Size in Bytes: #{text.bytesize}")
           raise e
         end
       end
