@@ -30,7 +30,7 @@ class EsPublicInspectionDocumentSearch < EsApplicationSearch
                 :es_value_processor => Proc.new{|value| value == 1 },
                 :label => "Filing Type" do |type|
                   case type
-                  when 1, '1', ['1']
+                  when 1, [1], '1', ['1']
                     'Special Filing'
                   else
                     'Regular Filing'
