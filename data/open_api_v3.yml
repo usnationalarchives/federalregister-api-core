@@ -374,6 +374,29 @@ paths:
           description: Success
       tags:
         - Federal Register Documents
+  "/issues/{publication_date}.{format}":
+    get:
+      summary: Fetch document table of contents based on the print edition.
+      parameters:
+      - name: format
+        description: What format the response should be
+        in: path
+        required: true
+        schema:
+          type: string
+          enum:
+          - json
+      - name: publication_date
+        description: Exact publication date match (YYYY-MM-DD)
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+      tags:
+        - Federal Register Documents
   "/public-inspection-documents/{document_number}.{format}":
     get:
       summary: Fetch a single public inspection document.
