@@ -13,6 +13,7 @@ class TableOfContentsRecompiler
     # Clear caching
     date = date.is_a?(Date) ? date : Date.parse(date)
     purge_cache("^/documents/#{date.strftime("%Y/%m/%d")}")
+    purge_cache("^/api/v1/issues/#{date.strftime("%Y/%m/%d")}*")
     if date == Date.current
       purge_cache("^/documents/current")
     end

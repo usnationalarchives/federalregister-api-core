@@ -143,6 +143,7 @@ module Content
           purge_cache('^/api/v1/documents')
           ENV['DATE'] = "#{date.to_s(:iso)}"
           Rake::Task['content:entries:json:compile:daily_toc'].invoke
+          purge_cache("^/api/v1/issues/#{date.strftime("%Y/%m/%d")}*")
         rescue StandardError => error
           handle_failure(error,"IssueReprocessor: Regenerate ToC JSON")
         end
