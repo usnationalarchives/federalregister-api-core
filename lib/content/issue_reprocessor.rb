@@ -124,15 +124,6 @@ module Content
       rescue StandardError => error
         handle_failure(error, "Elasticsearch Entry Change Reindexing")
       end
-
-      begin
-        #NOTE: We're deliberately choosing to aggressively reindex all of the issue's documents to ensure any changes to an entry's associations (eg agency_assignments, agency_ids) are captured in the ES index
-        Entry.where(publication_date: reprocessed_issue.publication_date).pre_joined_for_es_indexing.find_in_batches(batch_size: 500) do |entry_batch|
-          Entry.bulk_index(entry_batch, refresh: false)
-        end
-      rescue StandardError => error
-        handle_failure(error, "Elasticsearch Entry Change Reindexing")
-      end
     end
 
     def regenerate_toc_json
