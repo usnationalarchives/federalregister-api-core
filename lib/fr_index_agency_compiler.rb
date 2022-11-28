@@ -53,27 +53,14 @@ class FrIndexAgencyCompiler
 
   def entries
     @entries ||= Agency.find_as_hashes([
-    "SELECT
-        entries.id,
-        MAX(entries.document_number) AS document_number,
-        MAX(entries.granule_class) AS granule_class,
-        #{SUBJECT_SQL} AS subject_1,
-        #{DOC_SQL} AS subject_2
-      FROM entries
-      JOIN public_inspection_documents
-        ON public_inspection_documents.document_number = entries.document_number
-      JOIN agency_assignments
-        ON agency_assignments.assignable_id = entries.id AND agency_assignments.assignable_type = 'Entry'
-      JOIN agencies
-        ON agencies.id = agency_assignments.agency_id
-      WHERE
-        entries.publication_date >= ? AND
-        entries.publication_date <= ? AND
-        agencies.id IN(?)
-    GROUP BY entries.id",
-      "#{year}-01-01",
-      "#{year}-12-31",
-      ([agency.id] + descendant_agency_ids).join(",")
+      Entry.
+        select("entries.id, MAX(entries.document_number) AS document_number, MAX(entries.granule_class) AS granule_class, #{SUBJECT_SQL} AS subject_1, #{DOC_SQL} AS subject_2").
+        joins(:agencies, :public_inspection_document).
+        where(agencies: [agency.id] + descendant_agency_ids(agency)).
+        where("entries.publication_date >= ?", "#{year}-01-01").
+        where("entries.publication_date <= ?", "#{year}-12-31").
+        group("entries.id").
+        to_sql
     ]). 
     group_by{|entry|entry["granule_class"]}
   end 
