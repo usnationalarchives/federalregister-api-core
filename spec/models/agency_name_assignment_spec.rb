@@ -6,7 +6,7 @@ describe AgencyNameAssignment do
   end
 
   describe 'create' do
-    it "creates agency_assignments if has agency_id" do
+    it "Agencies are implicitly associated with entries via agency name assignments" do
       entry = Factory(:entry)
       entry.agencies.size.should == 0
       AgencyNameAssignment.create(:assignable => entry, :agency_name => Factory(:agency_name))
