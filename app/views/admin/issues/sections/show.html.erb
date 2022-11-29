@@ -57,7 +57,17 @@
   </h2>
 
   <ul id='article_list' class='document-list'>
-    <% @section.entries.published_on(@publication_date).each do |entry| %>
+    <% @section.
+         entries.
+         published_on(@publication_date).
+         sort_by{|x|
+           [
+             -ActiveRecord::Type::Integer.new.cast(x.significant),
+             -( (x.start_page && x.end_page?) ? (x.end_page - x.start_page) : 9999999 ),
+             x.start_page,
+           ]
+         }.
+         each do |entry| %>
       <li>
         <% html5_tag('article', "data-entry-id" => entry.id, :class => "#{'highlighted' if @highlighted_entries.include?(entry)}") do %>
           <%= content_tag :h4, entry.curated_title, :title => entry.abstract %>
