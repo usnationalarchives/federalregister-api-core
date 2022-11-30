@@ -14,13 +14,23 @@ module Content
       @imported_document_numbers ||= []
     end
 
+    REDIS_PUBLIC_INSPECTION_API_FAILURE_NOTIFICATION_KEY = 'public_inspection_api_failure_notification'
+    MAX_EMAIL_SENDING_FREQUENCY = 1.hour
     def perform
       return if DateTime.current < first_posting_date
 
       @start_time = Time.current
 
-      client.documents.each do |api_document|
-        import_document(api_document)
+      begin
+        client.documents.each do |api_document|
+          import_document(api_document)
+        end
+      rescue Content::PublicInspectionImporter::ApiClient::NotifiableResponseError => error
+        if $redis.get(REDIS_PUBLIC_INSPECTION_API_FAILURE_NOTIFICATION_KEY).nil?
+          Mailer.public_inspection_api_failure(error).deliver_now
+          $redis.set(REDIS_PUBLIC_INSPECTION_API_FAILURE_NOTIFICATION_KEY, 'arbitrary_value', ex: MAX_EMAIL_SENDING_FREQUENCY)
+        end
+        raise error
       end
 
       job_queue.poll_until_complete(:timeout => JOB_TIMEOUT) do

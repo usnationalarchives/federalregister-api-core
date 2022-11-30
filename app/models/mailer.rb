@@ -60,6 +60,20 @@ class Mailer < ActionMailer::Base
          sent_on:    Time.current
   end
 
+  def public_inspection_api_failure(error)
+    @error = error
+    sendgrid_category "Admin Notification Email"
+
+    attachments[File.basename(error.response_path)] = File.read(error.response_path)
+    @api_url = "#{Rails.application.secrets[:public_inspection][:api_base_uri]}/eDocs/PIReport/#{Date.current.strftime("%Y%m%d")}"
+
+    mail to:         Settings.public_inspection.failure_notification_recipients,
+         subject:    "[FR Notification] #{Rails.env} -- Unexpected Public Inspection API Results",
+         from:       "Federal Register Admin <no-reply@mail.federalregister.gov>",
+         recipients: 'nobody@federalregister.gov', # should use sendgrid_recipients for actual recipient list
+         sent_on:    Time.current
+  end
+
   def ofr_gpo_content_notification(message)
     sendgrid_category "OFR/GPO Notification Email"
 

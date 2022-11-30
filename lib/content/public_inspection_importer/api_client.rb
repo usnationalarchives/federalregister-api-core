@@ -1,5 +1,13 @@
 class Content::PublicInspectionImporter::ApiClient
-  class ResponseError < StandardError; end
+  class ResponseError < StandardError
+    attr_reader :response_path
+
+    def initialize(error_message, response_path)
+      @response_path = response_path
+      super(error_message)
+    end
+  end
+  class NotifiableResponseError < ResponseError; end
 
   include HTTParty
   headers 'Accept-Encoding' => "UTF-8"
@@ -15,14 +23,29 @@ class Content::PublicInspectionImporter::ApiClient
   def documents(date=Date.current)
     response = get("/eDocs/PIReport/#{date.strftime("%Y%m%d")}")
     response_body = response.body
-    raise ResponseError.new("Status: #{response.code}; body: #{response_body}") unless response.ok?
 
-    write_to_log(response_body)
+    if parsed_json(response_body)
+      file_path = write_to_log(response_body)
+      raise NotifiableResponseError.new("JSON was found in the API response, when XML was expected", file_path)
+    end
+
+    if !response.ok?
+      file_path = write_to_log(response_body)
+      raise NotifiableResponseError.new("Status: #{response.code}; body: #{response_body}", file_path)
+    end
+
+    file_path = write_to_log(response_body)
     document = Nokogiri::XML(response_body)
 
-    document.xpath('//PublicInspectionList/Document').map do |node|
+    pi_docs = document.xpath('//PublicInspectionList/Document').map do |node|
       Document.new(self, node)
     end
+
+    if pi_docs.blank?
+      raise NotifiableResponseError.new("No public inspection documents found in API response", file_path)
+    end
+
+    pi_docs
   end
 
   def get(url)
@@ -43,7 +66,8 @@ class Content::PublicInspectionImporter::ApiClient
       :body => request_body
     )
     response_body = response.body.force_encoding("ISO-8859-1").encode("UTF-8")
-    raise ResponseError.new("Status: #{response.code}; body: #{response_body}") unless response.ok?
+    file_path = write_to_log(response_body)
+    raise ResponseError.new("Status: #{response.code}; body: #{response_body}", file_path) unless response.ok?
 
     @session_token = JSON.parse(response_body)["SessionToken"]
   end
@@ -54,11 +78,20 @@ class Content::PublicInspectionImporter::ApiClient
 
   private
 
+  def parsed_json(string)
+    begin
+      JSON.parse(string) 
+    rescue JSON::ParserError
+    end
+  end
+
   def write_to_log(response_body)
     dir = FileUtils.mkdir_p("#{FileSystemPathManager.data_file_path}/public_inspection/xml/#{Time.now.strftime('%Y/%m/%d')}/")
-    f = File.new("#{dir.first.to_s}/#{Time.now.to_s(:HMS_Z)}.xml", "w")
+    path = "#{dir.first.to_s}/#{Time.now.to_s(:HMS_Z)}.xml"
+    f = File.new(path, "w")
     f.binmode
     f.write(response_body)
     f.close
+    path
   end
 end

@@ -22,6 +22,8 @@ open_calais:
     concurrency: <%= ENV["OPEN_CALAIS_JOBS_CONCURRENCY"] || 1 %>
     at: <%= ENV["OPEN_CALAIS_JOBS_THROTTLE_AT"] || 1 %>
     per: <%= (ENV["OPEN_CALAIS_JOBS_THROTTLE_PER"] || 1).send(:seconds) %>
+public_inspection:
+  failure_notification_recipients:  <%= ENV['FAILURE_NOTIFICATION_RECIPIENTS']&.split(",") || [] %>
 varnish:
   host: <%= ENV["VARNISH_ADDR"] || 'varnish' %>
   port: 6082
