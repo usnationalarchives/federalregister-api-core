@@ -564,6 +564,23 @@ paths:
           description: Success
       tags:
         - Agencies
+  "/images/{identifier}":
+    get:
+      summary: Fetch the available image variants and their metadata for a single image identifier
+      parameters:
+      - name: identifier
+        description: Federal Register image identifier
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+        '404':
+          description: Not Found
+      tags:
+        - Images
   "/suggested_searches":
     get:
       summary: Fetch all suggested searches or limit by FederalRegister.gov section
