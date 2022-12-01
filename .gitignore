@@ -12,4 +12,5 @@
 /tmp
 
 # Leave last
+!data/open_api_v3.yml
 !/**/.gitkeep
