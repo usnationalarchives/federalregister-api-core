@@ -14,8 +14,7 @@ module Content
       @imported_document_numbers ||= []
     end
 
-    REDIS_PUBLIC_INSPECTION_API_FAILURE_NOTIFICATION_KEY = 'public_inspection_api_failure_notification'
-    MAX_EMAIL_SENDING_FREQUENCY = 1.hour
+    HOURLY_FAILURE_EMAIL_REPORTING_THRESHOLD = "5"
     def perform
       return if DateTime.current < first_posting_date
 
@@ -26,9 +25,10 @@ module Content
           import_document(api_document)
         end
       rescue Content::PublicInspectionImporter::ApiClient::NotifiableResponseError => error
-        if $redis.get(REDIS_PUBLIC_INSPECTION_API_FAILURE_NOTIFICATION_KEY).nil?
+        increment_hourly_failure_count!
+
+        if hourly_failure_count == HOURLY_FAILURE_EMAIL_REPORTING_THRESHOLD
           Mailer.public_inspection_api_failure(error).deliver_now
-          $redis.set(REDIS_PUBLIC_INSPECTION_API_FAILURE_NOTIFICATION_KEY, 'arbitrary_value', ex: MAX_EMAIL_SENDING_FREQUENCY)
         end
         raise error
       end
@@ -59,6 +59,22 @@ module Content
     end
 
     private
+
+    def hourly_failure_count
+      $redis.get(redis_key)
+    end
+
+    def increment_hourly_failure_count!
+      if hourly_failure_count
+        $redis.incr(redis_key)
+      else
+        $redis.set(redis_key, 1, ex: 1.hour)
+      end
+    end
+
+    def redis_key
+      "public_inspection_api_failure_count_hour_#{Time.current.hour}"
+    end
 
     def import_document(api_doc)
       return if in_blacklist?(api_doc)
