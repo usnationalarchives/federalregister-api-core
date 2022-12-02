@@ -133,6 +133,10 @@ class EntryRepository < BaseRepository
       type: 'object',
       enabled: false
     }
+    indexes :images_metadata, {
+      type: 'object',
+      enabled: false
+    }
     indexes :json_url, {
       type: 'keyword',
       index: false

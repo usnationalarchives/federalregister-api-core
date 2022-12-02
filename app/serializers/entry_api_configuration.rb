@@ -26,6 +26,7 @@ module EntryApiConfiguration
       :full_text_xml_url,
       :html_url,
       :images,
+      :images_metadata,
       :json_url,
       :mods_url,
       :page_length,

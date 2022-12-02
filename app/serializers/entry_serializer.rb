@@ -89,6 +89,26 @@ class EntrySerializer < ApplicationSerializer
     entry_url(e)
   end
 
+  attribute :images_metadata do |entry|
+    entry.
+    images.
+      select{|image| image.made_public_at.present? && image.image_variants.present?}.
+      each_with_object(Hash.new) do |image, hsh|
+        hsh[image.identifier] = image.image_variants.each_with_object(Hash.new) do |image_variant, styles_hsh|
+          styles_hsh[image_variant.style] = {
+            content_type: image_variant.image_content_type,
+            height:       image_variant.image_height,
+            identifier:   image_variant.identifier,
+            image_source: image.image_source.try(:identifier) || 'Unknown',
+            sha:          image_variant.image_sha,
+            size:         image_variant.image_size,
+            url:          "https://#{image_variant.image.url}",
+            width:        image_variant.image_width,
+          }
+        end
+      end
+  end
+
   attribute :images do |entry|
     if Settings.feature_flags.use_carrierwave_images_in_api
       entry.
