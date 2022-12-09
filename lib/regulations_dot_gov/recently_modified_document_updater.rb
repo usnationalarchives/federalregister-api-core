@@ -26,10 +26,12 @@ class RegulationsDotGov::RecentlyModifiedDocumentUpdater
 
       if entry
         entry.regulations_dot_gov_docket_id = updated_document.docket_id
-        begin
-          entry.comment_count                   = updated_document.comment_count
-        rescue RegulationsDotGov::V4::Client::NotFoundError => e
-          Honeybadger.notify("Unable to retrieve comment count for #{entry.document_number}")
+        if updated_document.comment_start_date
+          begin
+            entry.comment_count                   = updated_document.comment_count
+          rescue RegulationsDotGov::V4::Client::NotFoundError => e
+            Honeybadger.notify("Unable to retrieve comment count for #{entry.document_number}")
+          end
         end
         entry.regulations_dot_gov_document_id = updated_document.regulations_dot_gov_document_id
 

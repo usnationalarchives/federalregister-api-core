@@ -19,6 +19,10 @@ module RegulationsDotGov::V4::CommonDocumentAttributes
   end
   memoize :comment_count
 
+  def comment_start_date
+    raw_attributes["commentStartDate"]
+  end
+
   def comment_url
     if raw_attribute_value('openForComment') && !non_participating_agency?
       "http://www.regulations.gov/commenton/#{document_id}"
