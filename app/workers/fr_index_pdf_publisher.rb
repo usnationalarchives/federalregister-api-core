@@ -3,6 +3,10 @@ class FrIndexPdfPublisher < FrIndexPdfGenerator
 
   attr_reader :max_date, :path_manager
 
+  def agency_batch_on_complete(status, params)
+    perform(params)
+  end
+
   def perform(params)
     ActiveRecord::Base.clear_active_connections!
     @params   = params.symbolize_keys
