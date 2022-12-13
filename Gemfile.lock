@@ -382,6 +382,7 @@ GEM
     popen4 (0.1.2)
       Platform (>= 0.4.0)
       open4 (>= 0.4.0)
+    posix-spawn (0.3.15)
     proc-wait3 (1.8.0)
     pry (0.14.1)
       coderay (~> 1.1)
@@ -638,6 +639,7 @@ DEPENDENCIES
   parallel_tests
   passenger (~> 6.0)
   popen4
+  posix-spawn
   proc-wait3
   pry
   pry-remote

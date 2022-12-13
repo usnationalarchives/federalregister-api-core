@@ -1,5 +1,7 @@
 module ImagePipeline::ImageDescrunching
   class DescrunchFailure < StandardError; end
+  class DescrunchTimeoutFailure < DescrunchFailure; end
+  class DescrunchHardTimeoutFailure < DescrunchFailure; end
 
   def gpo_scrunched_image?(path)
     line = Terrapin::CommandLine.new("head -c #{possible_offsets[-1]}", ":file_path")
@@ -8,7 +10,10 @@ module ImagePipeline::ImageDescrunching
   end
 
   def descrunch!(input_path)
-    line = Terrapin::CommandLine.new("dynamite", ":input_path :output_path :offset")
+    # SIGTERM after 10s, SIGKILL after an additional 5s
+    timeout_cmd = "timeout -k 5 10"
+
+    line = Terrapin::CommandLine.new("#{timeout_cmd} dynamite", ":input_path :output_path :offset")
     possible_offsets.each do |offset|
       begin
         Tempfile.create do |tempfile|
@@ -23,11 +28,14 @@ module ImagePipeline::ImageDescrunching
 
         break
       rescue Terrapin::ExitStatusError => e
-        if offset == possible_offsets[-1]
-          raise DescrunchFailure
-        else
-          next
-        end
+        # SIGTERM from timeout cmd
+        raise DescrunchTimeoutFailure if e.message.include?("returned 124")
+        # SIGKILL from timeout cmd
+        raise DescrunchHardTimeoutFailure if e.message.include?("returned 137")
+
+        raise DescrunchFailure if offset == possible_offsets[-1]
+
+        next
       end
     end
   end

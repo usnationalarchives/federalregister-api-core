@@ -48,7 +48,7 @@ gem 'mimemagic'
 gem 'matrix'
 gem 'net-imap'
 gem 'net-pop'
-gem 'net-smtp' 
+gem 'net-smtp'
 # ==============================================================================
 gem 'aws-sdk-s3'
 gem 'aws-sdk-cloudfront'
@@ -107,7 +107,12 @@ gem 'modularity'
 gem 'rdoc'
 gem 'net-sftp'
 gem 'diffy'
+
 gem 'terrapin'
+# support timeouts in terrapin
+# https://github.com/thoughtbot/terrapin#posix-spawn
+gem 'posix-spawn'
+
 gem 'webrick'
 gem 'hoe'
 
