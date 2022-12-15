@@ -40,11 +40,23 @@ class OriginalImageUploader < CarrierWave::Uploader::Base
 
   def filename
     if original_filename
-      "#{model.identifier}.#{file.extension}" 
+      "#{model.identifier}#{file_extension}" 
     end
   end
 
   private
+
+  def file_extension
+    # This is needed because image formats typically contain periods (eg ER11AU04.555) whose suffixes will be treated as file extensions if simply calling file#extension
+    case model.image_content_type
+    when "image/ps", "image/eps"
+      ".eps"
+    when "image/tiff"
+      ".tiff"
+    when "image/png"
+      ".png"
+    end
+  end
 
   def regenerate_variants!(file)
     if model.skip_variant_generation
