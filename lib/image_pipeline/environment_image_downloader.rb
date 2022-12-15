@@ -21,15 +21,16 @@ class ImagePipeline::EnvironmentImageDownloader
       temp_file.puts(response.body)
       temp_file.rewind
 
-      if gpo_scrunched_image?(temp_file.path)
-        descrunch!(temp_file.path)
-      end
-      
-      # Save image to S3
       image = Image.find_or_initialize_by(
         identifier: normalized_image_identifier,
       )
       image.source_id = get_s3_tags.fetch('image_source_id')
+
+      # Attempt descrunch if needed
+      if gpo_scrunched_image?(temp_file.path)
+        descrunch!(temp_file.path)
+      end
+
       image.assign_attributes(image: temp_file, error: nil) # Ensure we remove existing errors
       if !image.image.present?
         # In some cases, it appears that MiniMagick may silently rescue invalid image errors.  If we hit this block, make sure to add handling that allows for saving of the invalid image.
