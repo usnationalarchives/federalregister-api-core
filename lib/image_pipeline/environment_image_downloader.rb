@@ -49,14 +49,18 @@ class ImagePipeline::EnvironmentImageDownloader
       )
       persist_image!(image)
     rescue DescrunchFailure, DescrunchTimeoutFailure, DescrunchHardTimeoutFailure => e
-      # Resave the bad image and bypass the calculation/storage of image-specific metadata and generating variants.
-      image.skip_storing_image_specific_metadata = true
-      image.skip_variant_generation              = true
-      image.assign_attributes(
-        error: e.class.name.demodulize,
-        image: temp_file
-      )
-      persist_image!(image)
+      if image.image.present? && image.error.blank?
+        # no-op: Don't overwrite valid images with invalid images
+      else
+        # Resave the bad image and bypass the calculation/storage of image-specific metadata and generating variants.
+        image.skip_storing_image_specific_metadata = true
+        image.skip_variant_generation              = true
+        image.assign_attributes(
+          error: e.class.name.demodulize,
+          image: temp_file
+        )
+        persist_image!(image)
+      end
     rescue MiniMagick::Invalid => e
       # Resave the bad image and bypass the calculation/storage of image-specific metadata and generating variants.
       image.skip_storing_image_specific_metadata = true
