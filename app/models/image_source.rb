@@ -28,7 +28,7 @@ class ImageSource < ActiveHash::Base
     {
       id: 4,
       identifier: "gpo_sftp_historical_images",
-      batch_download_from_sftp_by_subdirectory: false,
+      batch_download_from_sftp_by_subdirectory: true,
       description: "GPO SFTP (Historical Image Backfill)",
       monochrome_transparency: true,
       pre_assigned_density: false,
