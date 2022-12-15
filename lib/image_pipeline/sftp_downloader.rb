@@ -61,6 +61,8 @@ class ImagePipeline::SftpDownloader
         rescue Net::SFTP::StatusException => error
           if error.code == 3 #  error code 3 is permission denied.  This can sometimes occur if partially-completed files are left behind (eg files prefixed with 'nfs')
             Honeybadger.notify(error)
+          elsif error.code == 2 # error code 2 is no such file (eg /FR-2000-04-07 missing graphics-submitted folder)
+            # no-op
           else
             raise error
           end
