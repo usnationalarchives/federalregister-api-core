@@ -48,12 +48,12 @@ class ImagePipeline::EnvironmentImageDownloader
         image: temp_file
       )
       persist_image!(image)
-    rescue DescrunchFailure => e
+    rescue DescrunchFailure, DescrunchTimeoutFailure, DescrunchHardTimeoutFailure => e
       # Resave the bad image and bypass the calculation/storage of image-specific metadata and generating variants.
       image.skip_storing_image_specific_metadata = true
       image.skip_variant_generation              = true
       image.assign_attributes(
-        error: 'descrunch_failure',
+        error: e.class.name.demodulize,
         image: temp_file
       )
       persist_image!(image)
