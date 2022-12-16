@@ -4,7 +4,7 @@ class DocketImporter
   include Sidekiq::Worker
   include Sidekiq::Throttled::Worker
 
-  sidekiq_options :queue => :reg_gov, :retry => 0
+  sidekiq_options :queue => :reg_gov_dockets, :retry => 0
   sidekiq_throttle_as :reg_gov_api
 
   NON_PARTICIPATING_AGENCIES_FILE = 'data/regulations_dot_gov_non_participating_agencies.csv'
