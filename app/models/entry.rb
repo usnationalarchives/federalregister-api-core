@@ -2,6 +2,7 @@
 class Entry < ApplicationModel
   self.inheritance_column = nil
   include EntryViewLogic
+  include CacheUtils
   extend ActiveHash::Associations::ActiveRecordExtensions
 
   include TextHelper
@@ -441,6 +442,21 @@ class Entry < ApplicationModel
     slug = view_helper.truncate_words(clean_title, :length => 100, :omission => '')
     slug.gsub(/ /,'-')
   end
+
+  def clear_varnish!
+    paths = [
+      "^/api/v1/documents/#{document_number}",
+      "^/documents/#{publication_date.to_s(:ymd)}/#{document_number}"
+    ]
+    if presidential_document?
+      paths << "^/presidential-documents"
+      paths << "^/esi/layouts/navigation/presidential-documents"
+      paths << "^/esi/home/presidential_documents"
+    end
+
+    paths.each {|path| purge_cache(path) }
+  end
+
 
   def comments_close_on
     comments_close_date.try(:date)
