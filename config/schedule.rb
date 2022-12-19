@@ -80,8 +80,8 @@ end
 ########################
 if Settings.cron.public_inspection
   # Import public inspection documents
-  # runs every minute from 7AM EDT until 7PM Monday-Friday
-  every '* 7-19 * * 1-5' do
+  # runs every minute from 8AM EDT until 7PM Monday-Friday
+  every '* 8-19 * * 1-5' do
     set :log, 'public_inspection_import'
     rake 'content:public_inspection:import_and_deliver'
   end
