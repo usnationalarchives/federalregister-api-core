@@ -3,6 +3,7 @@ app:
 admin:
   basecamp_url: <%= ENV['ADMIN_BASECAMP_URL'] %>
   pager_duty_email: <%= ENV['ADMIN_PAGER_DUTY_EMAIL'] %>
+  pil_documentation_url: <%= ENV['PIL_DOCUMENTATION_URL'] || "/" %>
   documentation_url: <%= ENV['DOCUMENTATION_URL'] %>
 elasticsearch:
   deployment_environment: <%= ENV['DEPLOYMENT_ENVIRONMENT'] %>
