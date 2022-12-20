@@ -11,6 +11,16 @@
     margin-right: 0.63in; 
     margin-bottom: 0.83in;
     margin-top: 0.613in;
+    <% if is_preview %> 
+    @prince-overlay { 
+      font-family: 'Open Sans';  
+      font-weight: bold;  
+      content: "Preview";  
+      font-size: 80pt;  
+      color: rgba(255,192,203,50%); 
+      transform: rotate(-45deg); 
+    } 
+    <% end %> 
   }
   @page :left {
     @top-left {

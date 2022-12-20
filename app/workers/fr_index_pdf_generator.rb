@@ -14,9 +14,14 @@ class FrIndexPdfGenerator
       locals: {
         :agency_years => agency_years,
         :generated_file => generated_file,
-        :fr_index_presenter => fr_index_presenter
+        :fr_index_presenter => fr_index_presenter,
+        :is_preview => preview?
       },
       formats: [:pdf]
+  end
+
+  def preview?
+    false
   end
 
   def agency_years

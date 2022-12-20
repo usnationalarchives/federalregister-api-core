@@ -11,6 +11,10 @@ class FrIndexPdfPreviewer < FrIndexPdfGenerator
 
   private
 
+  def preview?
+    true
+  end
+
   def calculate_metadata
     generated_file.processing_began_at = Time.now
     generated_file.processing_completed_at = nil
