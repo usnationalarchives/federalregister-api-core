@@ -13,7 +13,7 @@ class ImageSource < ActiveHash::Base
     {
       id: 2,
       identifier: "gpo_sftp",
-      batch_download_from_sftp_by_subdirectory: true,
+      batch_download_from_sftp_by_subdirectory: false,
       description: "GPO SFTP",
       monochrome_transparency: true,
       pre_assigned_density: false,
