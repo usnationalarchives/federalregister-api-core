@@ -113,6 +113,12 @@ class PresidentialDocumentType < ActiveHash::Base
         "#{pluralized_form} of #{signing_dates}"
       end
     },
+    {
+      :id                         => 7,
+      :name                       => "Other",
+      :node_name                  => "OTHER",
+      :identifier                 => "other",
+    },
   ]
 
   def self.find_as_hash(options)
