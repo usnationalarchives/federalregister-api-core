@@ -56,7 +56,7 @@ class FrIndexAgencyCompiler
       Entry.
         select("entries.id, MAX(entries.document_number) AS document_number, MAX(entries.granule_class) AS granule_class, #{SUBJECT_SQL} AS subject_1, #{DOC_SQL} AS subject_2").
         joins(:agencies, :public_inspection_document).
-        where(agencies: [agency.id] + descendant_agency_ids(agency)).
+        where(agencies: agency.id).
         where("entries.publication_date >= ?", "#{year}-01-01").
         where("entries.publication_date <= ?", "#{year}-12-31").
         group("entries.id").
