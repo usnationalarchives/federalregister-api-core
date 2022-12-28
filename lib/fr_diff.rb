@@ -7,22 +7,18 @@ class FrDiff
     @file2 = file2
   end
 
+  EXPECTED_EXIT_CODES = [0,1]
   def diff
-    line = Terrapin::CommandLine.new(
-      "diff",
-      ":file1 :file2",
-      :expected_outcodes => [0, 1]
-    )
+    stdout, stderr, status = Open3.capture3(
+      "diff #{file1} #{file2}"
+    ) 
 
-    begin
-      line.run(
-        :file1 => file1,
-        :file2 => file2
-      )
-    rescue Terrapin::ExitStatusError => e
+    if EXPECTED_EXIT_CODES.include? status.exitstatus
+      stdout
+    else
       Honeybadger.notify(
         :error_class   => "FrDiff failed to generate diff.",
-        :error_message => e.message,
+        :error_message => stderr,
         :parameters => {
           :file1 => file1,
           :file2 => file2
