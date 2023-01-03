@@ -5,7 +5,15 @@ class FrIndexPresenter
 
   def self.available_years
     min_year = Rails.env == 'development' ? 2012 : 2013
-    (min_year..Date.today.year).to_a.uniq.reverse
+
+    year = Issue.
+      order(publication_date: :desc).
+      limit(1).
+      pluck(:publication_date).
+      first.
+      year
+
+    (min_year..year).to_a.uniq.reverse
   end
 
   def initialize(year, options = {})
