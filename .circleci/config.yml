@@ -8,7 +8,7 @@ workflows:
     jobs:
       - cj/build_rails_image:
           branch: << pipeline.git.branch >>
-          context: [ofr-ecr, ofr-quay, orb-slack, pilot, sidekiq-pro]
+          context: [ofr-ecr, cj-quay-base, orb-slack, pilot, sidekiq-pro]
           ecr: true
           repo_image: federalregister-api-core 
           skip_lint: true
