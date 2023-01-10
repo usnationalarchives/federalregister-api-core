@@ -1,6 +1,12 @@
 class PublicInspectionDocumentRepository < BaseRepository
-  ACTUAL_INDEX_NAME = ['fr-public-inspection-documents', Rails.env].join('-')
-  ALIAS_NAME = ['fr-public-inspection-documents-alias', Rails.env].join('-')
+  ACTUAL_INDEX_NAME = [
+    'fr-public-inspection-documents',
+    (Rails.env.test? ? "test#{((ENV['TEST_ENV_NUMBER'] == "1") ? "" : ENV['TEST_ENV_NUMBER'])}" : Rails.env),
+  ].join('-')
+  ALIAS_NAME = [
+    'fr-public-inspection-documents-alias',
+    (Rails.env.test? ? "test#{((ENV['TEST_ENV_NUMBER'] == "1") ? "" : ENV['TEST_ENV_NUMBER'])}" : Rails.env),
+  ].join('-')
   index_name ALIAS_NAME
   klass PublicInspectionDocument
 
