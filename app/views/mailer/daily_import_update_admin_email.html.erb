@@ -384,7 +384,51 @@
       </table>
       <% end %>
 
+      <% if @problematic_document_presenter.missing_executive_orders.present? %>
+        <h3 style="font-family:'Helvetica Neue',Arial,Helvetica,sans-serif;margin: 25px 0 5px;font-size: 20px;border-bottom: 1px solid #000;">
+          Missing Executive Orders
+        </h3>
+        These documents may already exist, but lack an executive order number in our system.  The hyperlinks below lead to corresponding document searches that may help with verifying this.
+        <table>
+          <thead>
+            <tr>
+              <th>Executive Order Number</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @problematic_document_presenter.missing_executive_orders.each do |eo_number| %>
+              <tr style="<%= cycle(nil, light_gray) %>">
+                <td style="width: 150px;" align="left">
+                  <%= link_to eo_number, "https://www.federalregister.gov/documents/search?conditions%5Bterm%5D=#{eo_number}&conditions%5Btype%5D%5B%5D=PRESDOCU#" %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      <% end %>
 
+      <% if @problematic_document_presenter.missing_presidential_proclamations.present? %>
+        <h3 style="font-family:'Helvetica Neue',Arial,Helvetica,sans-serif;margin: 25px 0 5px;font-size: 20px;border-bottom: 1px solid #000;">
+          Missing Presidential Proclamations
+        </h3>
+        These documents may already exist, but lack a proclamation number in our system.  The hyperlinks below lead to corresponding document searches that may help with verifying this.
+        <table>
+          <thead>
+            <tr>
+              <th>Proclamation Number</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @problematic_document_presenter.missing_presidential_proclamations.each do |proclamation_number| %>
+              <tr style="<%= cycle(nil, light_gray) %>">
+                <td style="width: 150px;" align="left">
+                  <%= link_to proclamation_number, "https://www.federalregister.gov/documents/search?conditions%5Bterm%5D=#{proclamation_number}&conditions%5Btype%5D%5B%5D=PRESDOCU#" %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      <% end %>
 
     </div>
 

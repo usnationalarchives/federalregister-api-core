@@ -52,4 +52,23 @@ describe ProblematicDocumentPresenter do
     result.should == ['2019-05289']
   end
 
+  context "#missing_executive_orders" do
+    let!(:date) { Date.new(2022,12,30) }
+    let!(:issue) { Factory(:issue, publication_date: date) }
+
+    it "flags missing sequential EOs" do
+      entry = Factory(:entry, publication_date: '2022-12-19', presidential_document_type_id: PresidentialDocumentType::EXECUTIVE_ORDER.id, presidential_document_number: '14089')
+      entry = Factory(:entry, publication_date: '2022-10-19', presidential_document_type_id: PresidentialDocumentType::EXECUTIVE_ORDER.id, presidential_document_number: '14087')
+
+      result = ProblematicDocumentPresenter.new(date).missing_executive_orders
+      expect(result).to eq([14088])
+    end
+
+    it "returns empty array if EO is missing" do
+      entry = Factory(:entry, publication_date: '2022-12-19', presidential_document_type_id: PresidentialDocumentType::EXECUTIVE_ORDER.id, presidential_document_number: nil)
+      result = ProblematicDocumentPresenter.new(date).missing_executive_orders
+      expect(result).to eq([])
+    end
+  end
+
 end

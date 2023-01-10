@@ -1,6 +1,7 @@
 class ProblematicDocumentPresenter
   delegate :publication_date, :to => :issue
   attr_reader :issue, :date
+  extend Memoist
 
   def initialize(date)
     @issue = Issue.find_by_publication_date!(date)
@@ -109,7 +110,37 @@ class ProblematicDocumentPresenter
     missing_images_presenter.dates_missing_images.find{|d| d.date == date}
   end
 
+  def missing_executive_orders
+    missing_presidential_documents(PresidentialDocumentType::EXECUTIVE_ORDER)
+  end
+  memoize :missing_executive_orders
+
+  def missing_presidential_proclamations
+    missing_presidential_documents(PresidentialDocumentType::PROCLAMATION)
+  end
+  memoize :missing_presidential_proclamations
+
   private
+
+  def missing_presidential_documents(presidential_document_type)
+    expected_presidential_document_numbers = presidential_document_numbers(presidential_document_type)
+
+    if expected_presidential_document_numbers.blank?
+      return []
+    else
+      ((expected_presidential_document_numbers.min..expected_presidential_document_numbers.max).to_a - expected_presidential_document_numbers).reverse
+    end
+  end
+
+  def presidential_document_numbers(presidential_document_type)
+    Entry.
+      where(presidential_document_type_id: presidential_document_type.id).
+      where.not(presidential_document_number: nil).
+      where("publication_date > '1995-01-01'"). #This clause can be deleted if historical docs are populated
+      select("CAST(presidential_document_number AS UNSIGNED) AS pres_doc_number").
+      map(&:pres_doc_number)
+  end
+  memoize :presidential_document_numbers
 
   def missing_images_presenter
     MissingImagesPresenter.new
