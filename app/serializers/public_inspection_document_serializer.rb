@@ -38,11 +38,7 @@ class PublicInspectionDocumentSerializer < ApplicationSerializer
   end
 
   attribute(:agency_letters, :select => [:publication_date], :include => :pil_agency_letters) do |document|
-    if document.publication_date && (Date.current < document.publication_date)
-      document.pil_agency_letters.map{|x| {title: x.file_file_name, url: x.file.url} }
-    else
-      []
-    end
+    document.pil_agency_letters.map{|x| {title: x.file_file_name, url: x.file.url} }
   end
   # NOTE: We still need to support AR-based serialization for agency names
   attribute(:agency_names, :include => {:agency_names => :agency}, if: Proc.new { |document, params| params[:active_record_retrieval] }) do |e|
