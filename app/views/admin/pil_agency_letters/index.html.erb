@@ -4,7 +4,7 @@
   <%= f.inputs do %>
     <%= f.input :public_inspection_document,
           label: 'PIL Document Number',
-          collection: PublicInspectionDocument.unpublished.map{|x| [x.document_number, x.id]} %>
+          collection: PublicInspectionIssue.current.public_inspection_documents.map{|x| [x.document_number, x.id]} %>
     <%= f.input :file, label: 'File' %>
   <% end %>
   <%= f.actions do %>

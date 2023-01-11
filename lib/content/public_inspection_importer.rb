@@ -104,6 +104,9 @@ module Content
       client.logout
 
       if updated_doc_count > 0 || !toc_files_exist?(issue)
+        # Remove old agency letters
+        PilAgencyLetterJanitor.new.perform
+
         PublicInspectionIndexer.reindex!
 
         # generate toc so that it is available immediately
