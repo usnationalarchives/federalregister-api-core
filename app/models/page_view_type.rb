@@ -31,6 +31,21 @@ class PageViewType < ActiveHash::Base
       today_set:       "public_inspection_doc_counts:today",
       yesterday_set:  "public_inspection_doc_counts:yesterday",
     },
+    {
+      #NOTE: This page view type is solely used for backfilling soon-to-be-deprecated Google Universal Analytics data.  It is not used for any other reason.
+      id: 3,
+      identifier:         'ua_document',
+      cache_expiry_urls:  [],
+      current_as_of:      'ua_doc_counts:current_as_of',
+      document_number_position_index: 5,
+      filter_expressions: ["^/(documents/|articles/)"],
+      google_analytics_url_regex: /^\/(articles|documents)\//,
+      historical_set:     "ua_doc_counts:historical",
+      namespace:          'ua_doc_counts',
+      temp_set:            "ua_doc_counts:in_progress",
+      today_set:           "ua_doc_counts:today",
+      yesterday_set:      "ua_doc_counts:yesterday",
+    },
   ]
 
 end
