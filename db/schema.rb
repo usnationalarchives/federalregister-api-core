@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_11_03_181304) do
+ActiveRecord::Schema.define(version: 2023_01_13_041949) do
 
   create_table "action_names", :force => true do |t|
     t.string   "name"
@@ -234,6 +234,7 @@ ActiveRecord::Schema.define(version: 2022_11_03_181304) do
     t.string "regulations_dot_gov_document_id"
     t.integer "comment_count"
     t.integer "issue_part_id"
+    t.integer "universal_analytics_page_views"
   end
 
   add_index "entries", ["citation"], :name => "index_entries_on_citation"
