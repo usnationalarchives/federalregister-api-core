@@ -88,8 +88,12 @@ class RegulationsDotGov::V4::Client
   PAGE_SIZE = 250
   MAX_PAGES = 10
   def find_documents_updated_within(days, document_type_identifier)
-    date = (Date.current - days.days)
-    time = Time.zone.local(date.year,date.month,date.day).to_s(:db)
+    hour_count = if days == 0 #The concept of 0 days is an artifact of the way the V3 API was queried where 0 days used to indicate the last 24 hours.
+      24
+    else
+      days * 24
+    end
+    time = (Time.now - hour_count.hours).to_s(:db)
     documents       = []
     page_number     = 1
     parsed_response = nil
