@@ -25,6 +25,9 @@ class RegulationsDotGov::RecentlyModifiedDocumentUpdater
       entry = Entry.find_by_document_number(updated_document.federal_register_document_number)
 
       if entry
+        if entry.comment_url_override.present? && entry.comment_url_override != updated_document.comment_url #NOTE: This is an abort clause that prevents the docket from being set to a different docket in the case where an FR document number is associated with multiple regulations.gov document ids/docket numbers.
+          next
+        end
         entry.regulations_dot_gov_docket_id = updated_document.docket_id
         if updated_document.comment_start_date
           begin
