@@ -11,11 +11,20 @@ class Content::EntryImporter::IssueUpdater
 
   def process
     delete_issue_parts
-    create_issue_parts
+    if create_issue_parts?
+      create_issue_parts
+    end
     update_issue
   end
 
   private
+
+  attr_reader :issue
+
+  BULK_DATA_AVAILABILITY_STARTS_ON = Date.new(2000,1,1)
+  def create_issue_parts?
+    issue.publication_date > BULK_DATA_AVAILABILITY_STARTS_ON
+  end
 
   def update_issue
     @issue.reload
