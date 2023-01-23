@@ -9,6 +9,7 @@ data/
 !data/regulations_dot_gov_non_participating_agencies.csv
 !data/regulations_dot_gov_participating_agencies.csv
 !data/open_api_v3.yml
+!data/fr_xml_corrections
 
 log*
 !log/.gitkeep

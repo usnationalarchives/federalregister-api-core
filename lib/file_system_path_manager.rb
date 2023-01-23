@@ -14,6 +14,10 @@ class FileSystemPathManager
     "#{data_file_path}/document_issues/xml/#{date.to_s(:year_month)}"
   end
 
+  def document_issue_xml_corrections_path
+    "#{Rails.root}/data/fr_xml_corrections/#{date.to_s(:iso)}/"
+  end
+
   def document_issue_xml_path
     "#{document_issue_xml_dir}/#{date.to_s(:iso)}.xml"
   end

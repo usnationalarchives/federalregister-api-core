@@ -3,7 +3,7 @@
 .irb_history
 /bin
 /config/varnish*
-/data
+**/data/*
 /log
 /public/images/icons.png
 /public/index/pdf
@@ -13,4 +13,5 @@
 
 # Leave last
 !data/open_api_v3.yml
+!**data/fr_xml_corrections
 !/**/.gitkeep

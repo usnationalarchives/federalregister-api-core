@@ -24,7 +24,10 @@ class Content::EntryImporter::BulkdataFile
       retry_attempts ||= 3
       FileUtils.mkdir_p(path_manager.document_issue_xml_dir)
 
-      FederalRegisterFileRetriever.download(url, path_manager.document_issue_xml_path) unless File.exists?(path_manager.document_issue_xml_path)
+      if !File.exists?(path_manager.document_issue_xml_path)
+        FederalRegisterFileRetriever.download(url, path_manager.document_issue_xml_path)
+        apply_patching!
+      end
       doc = Nokogiri::XML(open(path_manager.document_issue_xml_path))
 
       raise Content::EntryImporter::BulkdataFile::DownloadError unless doc.root.name == "FEDREG"
@@ -86,5 +89,11 @@ class Content::EntryImporter::BulkdataFile
       ret << [title, start_page, last_page]
     end
     ret
+  end
+
+  private
+
+  def apply_patching!
+    XmlCorrection.new(@date).apply
   end
 end

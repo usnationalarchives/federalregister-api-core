@@ -1,0 +1,29 @@
+--- /home/app/data/efs/document_issues/xml/2016/04/2016-04-15.xml	2023-01-20 19:57:13.571413019 -0500
++++ tmp/2016-04-15_modified_tmp.xml	2023-01-20 19:58:04.236004965 -0500
+@@ -10113,7 +10113,7 @@
+         <DATES>
+           <HD SOURCE="HED">DATES:</HD>
+ 
+-          <P>To ensure consideration, please submit your comments on or before July 14, 2016. The Service will host two online webinars during the public comment period. The webinar dates have not been determined at this time. Information on how to participate in the webinars will be provided on the Internet at <E T="03">http://www.midwestwindenergyhcpeis.org.</E>
++          <P>To ensure consideration, please submit your comments on or before July 14, 2016. The Service will host two online webinars during the public comment period. The webinar dates have not been determined at this time. Information on how to participate in the webinars will be provided on the Internet at <E T="03">http://www.midwestwindenergyhcpeis. org.</E>
+           </P>
+         </DATES>
+         <ADD>
+@@ -10123,7 +10123,7 @@
+           </P>
+         </ADD>
+         <HD SOURCE="HD2">Document Availability</HD>
+-        <P>• <E T="03">Internet:</E> You may obtain copies of the documents on the Internet at the Federal eRulemaking Portal at: <E T="03">http://www.regulations.gov/</E> (Docket Number FWS-R3-ES-2015-0033) or on the project Web site, at <E T="03">http://www.midwestwindenergyhcpeis.org.</E>
++        <P>• <E T="03">Internet:</E> You may obtain copies of the documents on the Internet at the Federal eRulemaking Portal at: <E T="03">http://www.regulations.gov/</E> (Docket Number FWS-R3-ES-2015-0033) or on the project Web site, at <E T="03">http://www.midwestwindenergyhcpeis. org.</E>
+         </P>
+         <P>• <E T="03">In-Person:</E> Hard copies of the documents will be available for public inspection by appointment, during normal business hours, at the Service's Midwest Regional Office, U.S. Fish and Wildlife Service, 5600 American Blvd. West, Suite 990, Bloomington, MN 55437-1458.</P>
+         <P>
+@@ -10178,7 +10178,7 @@
+         </P>
+         <P>If you submit a comment via <E T="03">http://www.regulations.gov</E>, your entire comment—including any personal identifying information—will be posted on the Web site. We will post all hardcopy comments on <E T="03">http://www.regulations.gov</E> as well. If you submit a hardcopy comment that includes personal identifying information, you may request at the top of your document that we withhold this information from public review. However, we cannot guarantee that we will be able to do so.</P>
+ 
+-        <P>Comments and materials we receive, as well as documents associated with the notice, will be available for public inspection on <E T="03">http://www.regulations.gov</E> at Docket No. FWS-R3-ES-2015-0033, or by appointment, during normal business hours, at the Service's Midwest Regional Office in Bloomington, Minnesota. You may obtain copies of the documents on the Internet at: <E T="03">http://www.midwestwindenergyhcpeis.org</E>, or from the Midwest Regional Office.</P>
++        <P>Comments and materials we receive, as well as documents associated with the notice, will be available for public inspection on <E T="03">http://www.regulations.gov</E> at Docket No. FWS-R3-ES-2015-0033, or by appointment, during normal business hours, at the Service's Midwest Regional Office in Bloomington, Minnesota. You may obtain copies of the documents on the Internet at: <E T="03">http://www.midwestwindenergyhcpeis. org</E>, or from the Midwest Regional Office.</P>
+         <HD SOURCE="HD1">Authority</HD>
+ 
+         <P>We provide this notice under section 10(c) of the ESA (16 U.S.C. 1531 <E T="03">et seq.</E>) and it's implementing regulations (50 CFR 17.22), and NEPA (42 U.S.C. 4371 <E T="03">et seq.</E>) and it's implementing regulations (40 CFR 1506.6; 43 CFR part 46).</P>
