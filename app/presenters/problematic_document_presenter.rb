@@ -136,7 +136,7 @@ class ProblematicDocumentPresenter
     Entry.
       where(presidential_document_type_id: presidential_document_type.id).
       where.not(presidential_document_number: nil).
-      where("publication_date > '1995-01-01'"). #This clause can be deleted if historical docs are populated
+      where("publication_date >= '1994-01-01'"). #This clause can be deleted if historical docs are populated
       select("CAST(presidential_document_number AS UNSIGNED) AS pres_doc_number").
       map(&:pres_doc_number)
   end
