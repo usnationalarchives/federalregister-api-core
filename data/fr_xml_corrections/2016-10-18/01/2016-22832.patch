@@ -1,0 +1,11 @@
+--- /home/app/data/efs/document_issues/xml/2016/10/2016-10-18.xml	2023-01-23 19:52:45.369620362 -0500
++++ tmp/2016-10-18_modified_tmp.xml	2023-01-23 20:00:17.178912962 -0500
+@@ -2050,6 +2050,8 @@
+                 <ENT>M5103 or M5386</ENT>
+                 <ENT>Not applicable.<PRTPAGE P="71588"/>
+                 </ENT>
++              </ROW>
++              <ROW>
+                 <ENT I="01">Dassault Aviation Model FALCON 2000 airplanes</ENT>
+                 <ENT>M331 has been embodied in production or in service through Dassault Service Bulletin F2000-44</ENT>
+                 <ENT>M810 or M1061 or M2778</ENT>
