@@ -1,0 +1,11 @@
+--- /home/app/data/efs/document_issues/xml/2018/11/2018-11-07.xml	2023-01-23 20:07:08.662809584 -0500
++++ tmp/2018-11-07_modified_tmp.xml	2023-01-23 20:12:46.418289812 -0500
+@@ -6792,7 +6792,7 @@
+         <ADD>
+           <HD SOURCE="HED">ADDRESSES:</HD>
+ 
+-          <P>Written comments on the application should be addressed to NMFS West Coast Region, California Coastal Office, 1655 Heindon Road, Arcata, CA 95521, or faxed to (707) 825-4840. Comments may be submitted by email to: <E T="03">TrinityRiverHatchery Plan.wcr@noaa.gov.</E> Include in the subject line of the email comment the following identifier: Comments on the Trinity River Hatchery plan.</P>
++          <P>Written comments on the application should be addressed to NMFS West Coast Region, California Coastal Office, 1655 Heindon Road, Arcata, CA 95521, or faxed to (707) 825-4840. Comments may be submitted by email to: <E T="03">TrinityRiverHatcheryPlan.wcr@noaa.gov.</E> Include in the subject line of the email comment the following identifier: Comments on the Trinity River Hatchery plan.</P>
+         </ADD>
+         <FURINF>
+           <HD SOURCE="HED">FOR FURTHER INFORMATION CONTACT:</HD>
