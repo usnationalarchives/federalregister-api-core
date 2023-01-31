@@ -5,6 +5,10 @@ class RegulationsDotGov::V4::Docket
     @raw_attributes = raw_attributes
   end
 
+  def agency_id
+    raw_attribute_value('agencyId')
+  end
+
   def title
     raw_attribute_value('title')
   end

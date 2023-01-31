@@ -64,10 +64,51 @@ class RegulationsDotGov::RecentlyModifiedDocumentUpdater
       end
     end
 
+    resync_regulations_dot_gov_documents_and_dockets!
     reindex_updated_documents
   end
 
   private
+
+  def resync_regulations_dot_gov_documents_and_dockets!
+    already_reprocessed_document_numbers = Set.new
+    updated_documents.each do |api_doc|
+      existing_doc = RegsDotGovDocument.find_by_regulations_dot_gov_document_id(api_doc.document_id)
+
+      if api_doc.federal_register_document_number.blank?
+        if existing_doc && existing_doc.entry.present?
+          # Handle deletions explicitly
+          Honeybadger.notify("Encountered a deletion #{api_doc.document_id} used to be associated with #{existing_doc.entry.document_number}") #NOTE: This honeybadger notification only exists on a temporary basis, if we ever encounter this badger since we can confirm we better understand the meaning of updated documents without federal register document numbers
+          EntryRegulationsDotGovImporter.perform_async(existing_doc.entry.document_number, nil, true)
+        else
+          # Resync the document based on the API attributes--this operation should never result in a deletion
+          EntryRegulationsDotGovImporter.resync_regulations_dot_gov_document!(
+            api_doc,
+            existing_doc
+          )
+        end
+      elsif existing_doc && (existing_doc.federal_register_document_number == api_doc.federal_register_document_number)
+        # Resync the document based on the API attributes--this operation should never result in a deletion
+        EntryRegulationsDotGovImporter.resync_regulations_dot_gov_document!(
+          api_doc,
+          existing_doc
+        )
+      else 
+        # Resync all associated regulations.gov documents if the regs.gov document number is unrecognized or we have detected an FR doc number change
+        [api_doc.federal_register_document_number].tap do |doc_numbers|
+          if existing_doc && existing_doc.federal_register_document_number
+            doc_numbers << existing_doc.federal_register_document_number
+          end
+        end.each do |document_number|
+          if already_reprocessed_document_numbers.exclude? api_doc.federal_register_document_number # Don't re-enqueue a global update for the same FR doc numbers unnecessarily to conserve API calls
+            EntryRegulationsDotGovImporter.perform_async(document_number, nil, true) #Someday: We may want to include a publication date for greater specificity
+            already_reprocessed_document_numbers << document_number
+          end
+        end
+
+      end
+    end
+  end
 
   def logger
     @logger ||= Logger.new("#{Rails.root}/log/reg_gov_modifed_documents.log")

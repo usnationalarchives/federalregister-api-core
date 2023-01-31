@@ -98,6 +98,10 @@ class EntryRepository < BaseRepository
       type: 'text',
       index: false
     }
+    indexes :dockets, {
+      type: 'object',
+      enabled: false
+    }
     indexes :effective_on, {
       type: 'date',
       index: false

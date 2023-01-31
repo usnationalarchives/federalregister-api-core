@@ -39,6 +39,8 @@ class Entry < ApplicationModel
   has_one :entry_change
 
   has_many :corrections, :foreign_key => "correction_of_id", :class_name => "Entry"
+  has_many :regs_dot_gov_documents, -> { active }, primary_key: :document_number, foreign_key: :federal_register_document_number
+  has_many :regs_dot_gov_dockets, through: :regs_dot_gov_documents
   has_many :topic_name_assignments, :dependent => :destroy
   has_many :topic_names, :through => :topic_name_assignments
 
@@ -155,6 +157,7 @@ class Entry < ApplicationModel
     regs_dot_gov_docket: [:regs_dot_gov_supporting_documents],
     entry_regulation_id_numbers: [:current_regulatory_plan],
     gpo_graphics: [:gpo_graphic_usages],
+    regs_dot_gov_documents: [:regs_dot_gov_docket],
     images: [:image_usages, :image_variants]
   ) }
 

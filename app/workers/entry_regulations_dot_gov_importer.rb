@@ -7,6 +7,45 @@ class EntryRegulationsDotGovImporter
   sidekiq_options :queue => :reg_gov
   sidekiq_throttle_as :reg_gov_api
 
+  def self.resync_regulations_dot_gov_document!(api_doc, existing_doc)
+    base_attributes = {
+      # allow_late_comments:                     TODO: When reg.gov changes their API, make sure we set this attribute
+      comment_end_date:                          api_doc.comment_due_date,
+      comment_start_date:                        api_doc.comment_start_date,
+      deleted_at:                                nil,
+      docket_id:                                 api_doc.docket_id,
+      regulations_dot_gov_document_id:           api_doc.document_id,
+      federal_register_document_number:          api_doc.federal_register_document_number,
+      original_federal_register_document_number: api_doc.federal_register_document_number,
+      regulations_dot_gov_object_id:             api_doc.regulations_dot_gov_object_id,
+      regulations_dot_gov_open_for_comment:      api_doc.regulations_dot_gov_open_for_comment
+    }.tap do |attrs|
+      if api_doc.comment_start_date
+        attrs.merge!(comment_count: api_doc.comment_count)
+      end
+    end
+
+    if existing_doc
+      if existing_doc.federal_register_document_number != api_doc.federal_register_document_number
+        # Ensure we retain the original FR doc num
+        base_attributes.merge!(original_federal_register_document_number: existing_doc.federal_register_document_number)
+      end
+      existing_doc.update!(base_attributes)
+    else
+      RegsDotGovDocument.create!(base_attributes)
+     
+      if api_doc.docket_id.present?
+        docket = RegsDotGovDocket.find_or_initialize_by(
+          id:                     api_doc.docket_id,
+        )
+        if docket.new_record?
+          docket.save!
+          DocketImporter.new.perform(docket.id) # immediately download docket metadata if new docket
+        end
+      end
+    end
+  end
+
   def perform(document_number, publication_date=nil, reindex=false)
     ActiveRecord::Base.clear_active_connections!
     if publication_date
@@ -15,7 +54,7 @@ class EntryRegulationsDotGovImporter
         publication_date
       )
     else
-      @entry = Entry.find_by_document_number!(document_number)
+      @entry = Entry.includes(:regs_dot_gov_documents).find_by_document_number!(document_number)
     end
     EntryObserver.disabled = true
 
@@ -31,6 +70,7 @@ class EntryRegulationsDotGovImporter
       entry.regulations_dot_gov_docket_id       = regulations_dot_gov_docket_id
     end
 
+    resync_regulations_dot_gov_documents_and_dockets!
     purge_varnish = entry.changed?
     entry.save!
 
@@ -75,6 +115,34 @@ class EntryRegulationsDotGovImporter
 
   attr_reader :entry
 
+  def resync_regulations_dot_gov_documents_and_dockets!
+    existing_docs = entry.regs_dot_gov_documents
+
+    ApplicationModel.transaction do
+      # Mark existing regs.gov docs no longer returned in API as deletions
+      doc_ids = (regulations_dot_gov_documents.map(&:regulations_dot_gov_document_id))
+      existing_docs.
+        select{|x| doc_ids.exclude? x.regulations_dot_gov_document_id }.
+        each{|x| x.update!(deleted_at: current_time)}
+
+      # Add or resync other documents
+      regulations_dot_gov_documents.each do |api_doc|
+        # NOTE: We can't assume the existing doc can only be associated with the same FR document
+        existing_doc = RegsDotGovDocument.find_by(
+          regulations_dot_gov_document_id: api_doc.regulations_dot_gov_document_id,
+          deleted_at:                      nil
+        )
+        self.class.resync_regulations_dot_gov_document!(api_doc, existing_doc)
+      end
+
+    end
+  end
+
+  def current_time
+    Time.current
+  end
+  memoize :current_time
+
   def purge_document_paths
     document_paths.each do |path|
       purge_cache(path)
@@ -88,8 +156,13 @@ class EntryRegulationsDotGovImporter
     ]
   end
 
+  def regulations_dot_gov_documents
+    RegulationsDotGov::V4::Client.new.find_documents(entry.document_number)
+  end
+  memoize :regulations_dot_gov_documents
+
   def regulationsdotgov_document
-    RegulationsDotGov::V4::Client.new.find_basic_document(entry.document_number)
+    RegulationsDotGov::V4::Client.new.find_basic_document(entry.document_number, regulations_dot_gov_documents)
   end
   memoize :regulationsdotgov_document
 

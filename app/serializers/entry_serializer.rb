@@ -303,6 +303,42 @@ class EntrySerializer < ApplicationSerializer
       uniq
   end
 
+  attribute :dockets do |entry|
+    result = []
+    entry.
+      regs_dot_gov_documents.
+      select{|doc| doc.docket_id.present? }.
+      sort_by(&:docket_id).
+      group_by(&:regs_dot_gov_docket).
+      each do |docket, docs|
+       result << {
+         agency_name: docket.agency_id,
+         id: docket.id,
+         title: docket.title,
+         supporting_documents: docket.regs_dot_gov_supporting_documents.sort_by(&:id).reverse[0..9].map do |doc|
+          {
+            :title => doc.title,
+            :document_id => doc.id
+          }
+        end,
+         supporting_documents_count: docket.docket_documents_count,
+         documents: docs.map do |doc|
+          {
+            allow_late_comments: doc.allow_late_comments,
+            comment_count: doc.comment_count,
+            comment_end_date: doc.comment_end_date,
+            comment_start_date: doc.comment_start_date,
+            comment_url: doc.comment_url,
+            id: doc.regulations_dot_gov_document_id,
+            regulations_dot_gov_open_for_comment: doc.regulations_dot_gov_open_for_comment,
+            updated_at: doc.updated_at,
+          }
+         end
+       }
+    end
+    result
+  end
+
   attribute :signing_date do |entry|
     entry.signing_date&.to_s(:iso) 
   end

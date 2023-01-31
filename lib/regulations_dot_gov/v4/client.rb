@@ -17,28 +17,24 @@ class RegulationsDotGov::V4::Client
     RegulationsDotGov::V4::DetailedDocument.new(data)
   end
 
-  def find_basic_document(document_number)
+  def find_basic_document(document_number, pre_loaded_docs=nil)
+    docs                  = pre_loaded_docs || find_documents(document_number)
+    docs_open_for_comment = docs.select(&:open_for_comment?)
+    if docs_open_for_comment.present?
+      docs_open_for_comment.first
+    else
+      docs.first
+    end
+  end
+
+  def find_documents(document_number)
     response = connection.get(
       'documents',
       'filter[frDocNum]' => document_number,
       'api_key'          => api_key
     )
     data = JSON.parse(response.body).fetch('data')
-
-    if data.length == 0
-      return nil
-    elsif data.length == 1
-      RegulationsDotGov::V4::BasicDocument.new(data.first)
-    else
-      docs_open_for_comment = data.select{|x| x.fetch("attributes").fetch("openForComment") }
-      if docs_open_for_comment.present?
-        doc = docs_open_for_comment.first
-      else
-        doc = data.first
-      end
-
-      RegulationsDotGov::V4::BasicDocument.new(doc)
-    end
+    data.map{|x| RegulationsDotGov::V4::BasicDocument.new(x) }
   end
 
   def find_comments_by_regs_dot_gov_document_id(regulations_dot_gov_document_number)

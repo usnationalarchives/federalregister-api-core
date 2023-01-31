@@ -1,0 +1,1085 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api.regulations.gov/v4/documents?api_key=DEMO_KEY&filter%5BfrDocNum%5D=2022-28376
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.17.6
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      date:
+      - Tue, 31 Jan 2023 01:18:24 GMT
+      content-type:
+      - application/vnd.api+json;charset=utf-8
+      transfer-encoding:
+      - chunked
+      connection:
+      - close
+      access-control-allow-origin:
+      - "*"
+      age:
+      - '0'
+      strict-transport-security:
+      - max-age=31536000; preload
+      via:
+      - http/1.1 api-umbrella (ApacheTrafficServer [cMsSf ])
+      x-cache:
+      - MISS
+      x-ratelimit-limit:
+      - '40'
+      x-ratelimit-remaining:
+      - '39'
+      x-vcap-request-id:
+      - 8719e784-6dd8-45e7-73a1-31bb72d62604
+      x-frame-options:
+      - DENY
+      x-content-type-options:
+      - nosniff
+      x-xss-protection:
+      - 1; mode=block
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "data" : [ {
+            "id" : "HHS_FRDOC_0001-0882",
+            "type" : "documents",
+            "attributes" : {
+              "documentType" : "Proposed Rule",
+              "lastModifiedDate" : "2023-01-17T02:00:09Z",
+              "highlightedContent" : "",
+              "frDocNum" : "2022-28376",
+              "withdrawn" : false,
+              "agencyId" : "HHS",
+              "commentEndDate" : "2023-03-15T03:59:59Z",
+              "title" : "Partnerships With Faith-Based and Neighborhood Organizations",
+              "postedDate" : "2023-01-13T05:00:00Z",
+              "docketId" : "HHS_FRDOC_0001",
+              "subtype" : null,
+              "commentStartDate" : "2023-01-13T05:00:00Z",
+              "openForComment" : true,
+              "objectId" : "09000064855eb9c5"
+            },
+            "links" : {
+              "self" : "https://api.regulations.gov/v4/documents/HHS_FRDOC_0001-0882"
+            }
+          }, {
+            "id" : "AID_FRDOC_0001-0412",
+            "type" : "documents",
+            "attributes" : {
+              "documentType" : "Proposed Rule",
+              "lastModifiedDate" : "2023-01-22T02:00:25Z",
+              "highlightedContent" : "",
+              "frDocNum" : "2022-28376",
+              "withdrawn" : false,
+              "agencyId" : "AID",
+              "commentEndDate" : "2023-03-15T03:59:59Z",
+              "title" : "Partnerships With Faith-Based and Neighborhood Organizations",
+              "postedDate" : "2023-01-13T05:00:00Z",
+              "docketId" : "AID_FRDOC_0001",
+              "subtype" : null,
+              "commentStartDate" : "2023-01-13T05:00:00Z",
+              "openForComment" : true,
+              "objectId" : "09000064855eba04"
+            },
+            "links" : {
+              "self" : "https://api.regulations.gov/v4/documents/AID_FRDOC_0001-0412"
+            }
+          }, {
+            "id" : "USDA_FRDOC_0001-2761",
+            "type" : "documents",
+            "attributes" : {
+              "documentType" : "Proposed Rule",
+              "lastModifiedDate" : "2023-01-29T00:54:15Z",
+              "highlightedContent" : "",
+              "frDocNum" : "2022-28376",
+              "withdrawn" : false,
+              "agencyId" : "USDA",
+              "commentEndDate" : "2023-03-15T03:59:59Z",
+              "title" : "Partnerships With Faith-Based and Neighborhood Organizations",
+              "postedDate" : "2023-01-13T05:00:00Z",
+              "docketId" : "USDA_FRDOC_0001",
+              "subtype" : null,
+              "commentStartDate" : "2023-01-13T05:00:00Z",
+              "openForComment" : true,
+              "objectId" : "09000064855eba43"
+            },
+            "links" : {
+              "self" : "https://api.regulations.gov/v4/documents/USDA_FRDOC_0001-2761"
+            }
+          }, {
+            "id" : "DOJ_FRDOC_0001-0271",
+            "type" : "documents",
+            "attributes" : {
+              "documentType" : "Proposed Rule",
+              "lastModifiedDate" : "2023-01-13T12:46:41Z",
+              "highlightedContent" : "",
+              "frDocNum" : "2022-28376",
+              "withdrawn" : false,
+              "agencyId" : "DOJ",
+              "commentEndDate" : "2023-03-15T03:59:59Z",
+              "title" : "Partnerships With Faith-Based and Neighborhood Organizations",
+              "postedDate" : "2023-01-13T05:00:00Z",
+              "docketId" : "DOJ_FRDOC_0001",
+              "subtype" : null,
+              "commentStartDate" : "2023-01-13T05:00:00Z",
+              "openForComment" : true,
+              "objectId" : "09000064855eb8ca"
+            },
+            "links" : {
+              "self" : "https://api.regulations.gov/v4/documents/DOJ_FRDOC_0001-0271"
+            }
+          }, {
+            "id" : "DHS-2023-0006-0002",
+            "type" : "documents",
+            "attributes" : {
+              "documentType" : "Proposed Rule",
+              "lastModifiedDate" : "2023-01-17T14:16:36Z",
+              "highlightedContent" : "",
+              "frDocNum" : "2022-28376",
+              "withdrawn" : false,
+              "agencyId" : "DHS",
+              "commentEndDate" : "2023-03-15T03:59:59Z",
+              "title" : "Partnerships With Faith-Based and Neighborhood Organizations",
+              "postedDate" : "2023-01-13T05:00:00Z",
+              "docketId" : "DHS-2023-0006",
+              "subtype" : null,
+              "commentStartDate" : "2023-01-13T05:00:00Z",
+              "openForComment" : true,
+              "objectId" : "09000064855eb8fb"
+            },
+            "links" : {
+              "self" : "https://api.regulations.gov/v4/documents/DHS-2023-0006-0002"
+            }
+          }, {
+            "id" : "DOL_FRDOC_0001-2038",
+            "type" : "documents",
+            "attributes" : {
+              "documentType" : "Proposed Rule",
+              "lastModifiedDate" : "2023-01-22T02:00:22Z",
+              "highlightedContent" : "",
+              "frDocNum" : "2022-28376",
+              "withdrawn" : false,
+              "agencyId" : "DOL",
+              "commentEndDate" : "2023-03-15T03:59:59Z",
+              "title" : "Partnerships With Faith-Based and Neighborhood Organizations",
+              "postedDate" : "2023-01-13T05:00:00Z",
+              "docketId" : "DOL_FRDOC_0001",
+              "subtype" : null,
+              "commentStartDate" : "2023-01-13T05:00:00Z",
+              "openForComment" : true,
+              "objectId" : "09000064855eb8c9"
+            },
+            "links" : {
+              "self" : "https://api.regulations.gov/v4/documents/DOL_FRDOC_0001-2038"
+            }
+          }, {
+            "id" : "ED_FRDOC_0001-1011",
+            "type" : "documents",
+            "attributes" : {
+              "documentType" : "Proposed Rule",
+              "lastModifiedDate" : "2023-01-30T02:00:31Z",
+              "highlightedContent" : "",
+              "frDocNum" : "2022-28376",
+              "withdrawn" : false,
+              "agencyId" : "ED",
+              "commentEndDate" : "2023-03-15T03:59:59Z",
+              "title" : "Partnerships With Faith-Based and Neighborhood Organizations",
+              "postedDate" : "2023-01-13T05:00:00Z",
+              "docketId" : "ED_FRDOC_0001",
+              "subtype" : null,
+              "commentStartDate" : "2023-01-13T05:00:00Z",
+              "openForComment" : true,
+              "objectId" : "09000064855eb8fd"
+            },
+            "links" : {
+              "self" : "https://api.regulations.gov/v4/documents/ED_FRDOC_0001-1011"
+            }
+          }, {
+            "id" : "HUD-2023-0003-0001",
+            "type" : "documents",
+            "attributes" : {
+              "documentType" : "Proposed Rule",
+              "lastModifiedDate" : "2023-01-13T15:00:01Z",
+              "highlightedContent" : "",
+              "frDocNum" : "2022-28376",
+              "withdrawn" : false,
+              "agencyId" : "HUD",
+              "commentEndDate" : "2023-03-15T03:59:59Z",
+              "title" : "Partnerships With Faith-Based and Neighborhood Organizations",
+              "postedDate" : "2023-01-13T05:00:00Z",
+              "docketId" : "HUD-2023-0003",
+              "subtype" : null,
+              "commentStartDate" : "2023-01-13T05:00:00Z",
+              "openForComment" : true,
+              "objectId" : "09000064855eb87b"
+            },
+            "links" : {
+              "self" : "https://api.regulations.gov/v4/documents/HUD-2023-0003-0001"
+            }
+          }, {
+            "id" : "VA-2023-VACO-0006-0001",
+            "type" : "documents",
+            "attributes" : {
+              "documentType" : "Proposed Rule",
+              "lastModifiedDate" : "2023-01-13T13:17:58Z",
+              "highlightedContent" : "",
+              "frDocNum" : "2022-28376",
+              "withdrawn" : false,
+              "agencyId" : "VA",
+              "commentEndDate" : "2023-03-15T03:59:59Z",
+              "title" : "AR23-Joint Proposed Rule-Partnerships With Faith-Based and Neighborhood Organizations",
+              "postedDate" : "2023-01-13T05:00:00Z",
+              "docketId" : "VA-2023-VACO-0006",
+              "subtype" : null,
+              "commentStartDate" : "2023-01-13T05:00:00Z",
+              "openForComment" : true,
+              "objectId" : "09000064855eb9c8"
+            },
+            "links" : {
+              "self" : "https://api.regulations.gov/v4/documents/VA-2023-VACO-0006-0001"
+            }
+          } ],
+          "meta" : {
+            "aggregations" : {
+              "documentType" : [ {
+                "docCount" : 9,
+                "label" : "Proposed Rule"
+              } ],
+              "subtype" : [ ],
+              "withinCommentPeriod" : [ {
+                "docCount" : 9,
+                "label" : "true"
+              }, {
+                "docCount" : 0,
+                "label" : "false"
+              } ],
+              "agencyId" : [ {
+                "docCount" : 1,
+                "value" : "AID"
+              }, {
+                "docCount" : 1,
+                "value" : "DHS"
+              }, {
+                "docCount" : 1,
+                "value" : "DOJ"
+              }, {
+                "docCount" : 1,
+                "value" : "DOL"
+              }, {
+                "docCount" : 1,
+                "value" : "ED"
+              }, {
+                "docCount" : 1,
+                "value" : "HHS"
+              }, {
+                "docCount" : 1,
+                "value" : "HUD"
+              }, {
+                "docCount" : 1,
+                "value" : "USDA"
+              }, {
+                "docCount" : 1,
+                "value" : "VA"
+              } ],
+              "commentEndDate" : [ {
+                "docCount" : 9,
+                "label" : "Next 90 Days",
+                "fromDate" : "2023-01-30 00:00:00",
+                "toDate" : "2023-04-29 23:59:59"
+              } ],
+              "postedDate" : [ {
+                "docCount" : 9,
+                "label" : "Last 30 Days",
+                "fromDate" : "2023-01-01 00:00:00",
+                "toDate" : "2023-01-30 23:59:59"
+              }, {
+                "docCount" : 9,
+                "label" : "Last 90 Days",
+                "fromDate" : "2022-11-02 00:00:00",
+                "toDate" : "2023-01-30 23:59:59"
+              } ]
+            },
+            "filters" : {
+              "frDocumentNumber" : {
+                "label" : "2022-28376",
+                "value" : "2022-28376"
+              }
+            },
+            "hasNextPage" : false,
+            "hasPreviousPage" : false,
+            "numberOfElements" : 9,
+            "pageNumber" : 1,
+            "pageSize" : 25,
+            "totalElements" : 9,
+            "totalPages" : 1,
+            "lastPage" : true,
+            "firstPage" : true
+          }
+        }
+  recorded_at: Tue, 31 Jan 2023 01:18:24 GMT
+- request:
+    method: get
+    uri: https://api.regulations.gov/v4/document-comments-received-counts/HHS_FRDOC_0001-0882?api_key=DEMO_KEY
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.17.6
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      date:
+      - Tue, 31 Jan 2023 01:18:24 GMT
+      content-type:
+      - application/vnd.api+json;charset=utf-8
+      content-length:
+      - '209'
+      connection:
+      - close
+      access-control-allow-origin:
+      - "*"
+      age:
+      - '0'
+      strict-transport-security:
+      - max-age=31536000; preload
+      via:
+      - http/1.1 api-umbrella (ApacheTrafficServer [cMsSf ])
+      x-cache:
+      - MISS
+      x-ratelimit-limit:
+      - '40'
+      x-ratelimit-remaining:
+      - '39'
+      x-vcap-request-id:
+      - 4c182b0b-77f5-4c7f-4c71-7e349f539aa9
+      x-frame-options:
+      - DENY
+      x-content-type-options:
+      - nosniff
+      x-xss-protection:
+      - 1; mode=block
+    body:
+      encoding: UTF-8
+      string: '{"data":{"id":"HHS_FRDOC_0001-0882","type":"document-comments-received-counts","attributes":{"count":3},"links":{"self":"https://api.regulations.gov/v4/document-comments-received-counts/HHS_FRDOC_0001-0882"}}}'
+  recorded_at: Tue, 31 Jan 2023 01:18:24 GMT
+- request:
+    method: get
+    uri: https://api.regulations.gov/v4/documents?api_key=DEMO_KEY&filter%5BfrDocNum%5D=2022-28376
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.17.6
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      date:
+      - Tue, 31 Jan 2023 17:00:47 GMT
+      content-type:
+      - application/vnd.api+json;charset=utf-8
+      transfer-encoding:
+      - chunked
+      connection:
+      - close
+      access-control-allow-origin:
+      - "*"
+      age:
+      - '0'
+      strict-transport-security:
+      - max-age=31536000; preload
+      via:
+      - http/1.1 api-umbrella (ApacheTrafficServer [cMsSf ])
+      x-cache:
+      - MISS
+      x-ratelimit-limit:
+      - '40'
+      x-ratelimit-remaining:
+      - '39'
+      x-vcap-request-id:
+      - e8563856-cc41-4223-5c00-5680876f176a
+      x-frame-options:
+      - DENY
+      x-content-type-options:
+      - nosniff
+      x-xss-protection:
+      - 1; mode=block
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "data" : [ {
+            "id" : "HHS_FRDOC_0001-0882",
+            "type" : "documents",
+            "attributes" : {
+              "documentType" : "Proposed Rule",
+              "lastModifiedDate" : "2023-01-17T02:00:09Z",
+              "highlightedContent" : "",
+              "frDocNum" : "2022-28376",
+              "withdrawn" : false,
+              "agencyId" : "HHS",
+              "commentEndDate" : "2023-03-15T03:59:59Z",
+              "title" : "Partnerships With Faith-Based and Neighborhood Organizations",
+              "postedDate" : "2023-01-13T05:00:00Z",
+              "docketId" : "HHS_FRDOC_0001",
+              "subtype" : null,
+              "commentStartDate" : "2023-01-13T05:00:00Z",
+              "openForComment" : true,
+              "objectId" : "09000064855eb9c5"
+            },
+            "links" : {
+              "self" : "https://api.regulations.gov/v4/documents/HHS_FRDOC_0001-0882"
+            }
+          }, {
+            "id" : "AID_FRDOC_0001-0412",
+            "type" : "documents",
+            "attributes" : {
+              "documentType" : "Proposed Rule",
+              "lastModifiedDate" : "2023-01-22T02:00:25Z",
+              "highlightedContent" : "",
+              "frDocNum" : "2022-28376",
+              "withdrawn" : false,
+              "agencyId" : "AID",
+              "commentEndDate" : "2023-03-15T03:59:59Z",
+              "title" : "Partnerships With Faith-Based and Neighborhood Organizations",
+              "postedDate" : "2023-01-13T05:00:00Z",
+              "docketId" : "AID_FRDOC_0001",
+              "subtype" : null,
+              "commentStartDate" : "2023-01-13T05:00:00Z",
+              "openForComment" : true,
+              "objectId" : "09000064855eba04"
+            },
+            "links" : {
+              "self" : "https://api.regulations.gov/v4/documents/AID_FRDOC_0001-0412"
+            }
+          }, {
+            "id" : "USDA_FRDOC_0001-2761",
+            "type" : "documents",
+            "attributes" : {
+              "documentType" : "Proposed Rule",
+              "lastModifiedDate" : "2023-01-29T00:54:15Z",
+              "highlightedContent" : "",
+              "frDocNum" : "2022-28376",
+              "withdrawn" : false,
+              "agencyId" : "USDA",
+              "commentEndDate" : "2023-03-15T03:59:59Z",
+              "title" : "Partnerships With Faith-Based and Neighborhood Organizations",
+              "postedDate" : "2023-01-13T05:00:00Z",
+              "docketId" : "USDA_FRDOC_0001",
+              "subtype" : null,
+              "commentStartDate" : "2023-01-13T05:00:00Z",
+              "openForComment" : true,
+              "objectId" : "09000064855eba43"
+            },
+            "links" : {
+              "self" : "https://api.regulations.gov/v4/documents/USDA_FRDOC_0001-2761"
+            }
+          }, {
+            "id" : "DOJ_FRDOC_0001-0271",
+            "type" : "documents",
+            "attributes" : {
+              "documentType" : "Proposed Rule",
+              "lastModifiedDate" : "2023-01-13T12:46:41Z",
+              "highlightedContent" : "",
+              "frDocNum" : "2022-28376",
+              "withdrawn" : false,
+              "agencyId" : "DOJ",
+              "commentEndDate" : "2023-03-15T03:59:59Z",
+              "title" : "Partnerships With Faith-Based and Neighborhood Organizations",
+              "postedDate" : "2023-01-13T05:00:00Z",
+              "docketId" : "DOJ_FRDOC_0001",
+              "subtype" : null,
+              "commentStartDate" : "2023-01-13T05:00:00Z",
+              "openForComment" : true,
+              "objectId" : "09000064855eb8ca"
+            },
+            "links" : {
+              "self" : "https://api.regulations.gov/v4/documents/DOJ_FRDOC_0001-0271"
+            }
+          }, {
+            "id" : "DHS-2023-0006-0002",
+            "type" : "documents",
+            "attributes" : {
+              "documentType" : "Proposed Rule",
+              "lastModifiedDate" : "2023-01-17T14:16:36Z",
+              "highlightedContent" : "",
+              "frDocNum" : "2022-28376",
+              "withdrawn" : false,
+              "agencyId" : "DHS",
+              "commentEndDate" : "2023-03-15T03:59:59Z",
+              "title" : "Partnerships With Faith-Based and Neighborhood Organizations",
+              "postedDate" : "2023-01-13T05:00:00Z",
+              "docketId" : "DHS-2023-0006",
+              "subtype" : null,
+              "commentStartDate" : "2023-01-13T05:00:00Z",
+              "openForComment" : true,
+              "objectId" : "09000064855eb8fb"
+            },
+            "links" : {
+              "self" : "https://api.regulations.gov/v4/documents/DHS-2023-0006-0002"
+            }
+          }, {
+            "id" : "DOL_FRDOC_0001-2038",
+            "type" : "documents",
+            "attributes" : {
+              "documentType" : "Proposed Rule",
+              "lastModifiedDate" : "2023-01-22T02:00:22Z",
+              "highlightedContent" : "",
+              "frDocNum" : "2022-28376",
+              "withdrawn" : false,
+              "agencyId" : "DOL",
+              "commentEndDate" : "2023-03-15T03:59:59Z",
+              "title" : "Partnerships With Faith-Based and Neighborhood Organizations",
+              "postedDate" : "2023-01-13T05:00:00Z",
+              "docketId" : "DOL_FRDOC_0001",
+              "subtype" : null,
+              "commentStartDate" : "2023-01-13T05:00:00Z",
+              "openForComment" : true,
+              "objectId" : "09000064855eb8c9"
+            },
+            "links" : {
+              "self" : "https://api.regulations.gov/v4/documents/DOL_FRDOC_0001-2038"
+            }
+          }, {
+            "id" : "ED_FRDOC_0001-1011",
+            "type" : "documents",
+            "attributes" : {
+              "documentType" : "Proposed Rule",
+              "lastModifiedDate" : "2023-01-30T02:00:31Z",
+              "highlightedContent" : "",
+              "frDocNum" : "2022-28376",
+              "withdrawn" : false,
+              "agencyId" : "ED",
+              "commentEndDate" : "2023-03-15T03:59:59Z",
+              "title" : "Partnerships With Faith-Based and Neighborhood Organizations",
+              "postedDate" : "2023-01-13T05:00:00Z",
+              "docketId" : "ED_FRDOC_0001",
+              "subtype" : null,
+              "commentStartDate" : "2023-01-13T05:00:00Z",
+              "openForComment" : true,
+              "objectId" : "09000064855eb8fd"
+            },
+            "links" : {
+              "self" : "https://api.regulations.gov/v4/documents/ED_FRDOC_0001-1011"
+            }
+          }, {
+            "id" : "HUD-2023-0003-0001",
+            "type" : "documents",
+            "attributes" : {
+              "documentType" : "Proposed Rule",
+              "lastModifiedDate" : "2023-01-13T15:00:01Z",
+              "highlightedContent" : "",
+              "frDocNum" : "2022-28376",
+              "withdrawn" : false,
+              "agencyId" : "HUD",
+              "commentEndDate" : "2023-03-15T03:59:59Z",
+              "title" : "Partnerships With Faith-Based and Neighborhood Organizations",
+              "postedDate" : "2023-01-13T05:00:00Z",
+              "docketId" : "HUD-2023-0003",
+              "subtype" : null,
+              "commentStartDate" : "2023-01-13T05:00:00Z",
+              "openForComment" : true,
+              "objectId" : "09000064855eb87b"
+            },
+            "links" : {
+              "self" : "https://api.regulations.gov/v4/documents/HUD-2023-0003-0001"
+            }
+          }, {
+            "id" : "VA-2023-VACO-0006-0001",
+            "type" : "documents",
+            "attributes" : {
+              "documentType" : "Proposed Rule",
+              "lastModifiedDate" : "2023-01-13T13:17:58Z",
+              "highlightedContent" : "",
+              "frDocNum" : "2022-28376",
+              "withdrawn" : false,
+              "agencyId" : "VA",
+              "commentEndDate" : "2023-03-15T03:59:59Z",
+              "title" : "AR23-Joint Proposed Rule-Partnerships With Faith-Based and Neighborhood Organizations",
+              "postedDate" : "2023-01-13T05:00:00Z",
+              "docketId" : "VA-2023-VACO-0006",
+              "subtype" : null,
+              "commentStartDate" : "2023-01-13T05:00:00Z",
+              "openForComment" : true,
+              "objectId" : "09000064855eb9c8"
+            },
+            "links" : {
+              "self" : "https://api.regulations.gov/v4/documents/VA-2023-VACO-0006-0001"
+            }
+          } ],
+          "meta" : {
+            "aggregations" : {
+              "documentType" : [ {
+                "docCount" : 9,
+                "label" : "Proposed Rule"
+              } ],
+              "subtype" : [ ],
+              "withinCommentPeriod" : [ {
+                "docCount" : 9,
+                "label" : "true"
+              }, {
+                "docCount" : 0,
+                "label" : "false"
+              } ],
+              "agencyId" : [ {
+                "docCount" : 1,
+                "value" : "AID"
+              }, {
+                "docCount" : 1,
+                "value" : "DHS"
+              }, {
+                "docCount" : 1,
+                "value" : "DOJ"
+              }, {
+                "docCount" : 1,
+                "value" : "DOL"
+              }, {
+                "docCount" : 1,
+                "value" : "ED"
+              }, {
+                "docCount" : 1,
+                "value" : "HHS"
+              }, {
+                "docCount" : 1,
+                "value" : "HUD"
+              }, {
+                "docCount" : 1,
+                "value" : "USDA"
+              }, {
+                "docCount" : 1,
+                "value" : "VA"
+              } ],
+              "commentEndDate" : [ {
+                "docCount" : 9,
+                "label" : "Next 90 Days",
+                "fromDate" : "2023-01-31 00:00:00",
+                "toDate" : "2023-04-30 23:59:59"
+              } ],
+              "postedDate" : [ {
+                "docCount" : 9,
+                "label" : "Last 30 Days",
+                "fromDate" : "2023-01-02 00:00:00",
+                "toDate" : "2023-01-31 23:59:59"
+              }, {
+                "docCount" : 9,
+                "label" : "Last 90 Days",
+                "fromDate" : "2022-11-03 00:00:00",
+                "toDate" : "2023-01-31 23:59:59"
+              } ]
+            },
+            "filters" : {
+              "frDocumentNumber" : {
+                "label" : "2022-28376",
+                "value" : "2022-28376"
+              }
+            },
+            "hasNextPage" : false,
+            "hasPreviousPage" : false,
+            "numberOfElements" : 9,
+            "pageNumber" : 1,
+            "pageSize" : 25,
+            "totalElements" : 9,
+            "totalPages" : 1,
+            "lastPage" : true,
+            "firstPage" : true
+          }
+        }
+  recorded_at: Tue, 31 Jan 2023 17:00:47 GMT
+- request:
+    method: get
+    uri: https://api.regulations.gov/v4/document-comments-received-counts/AID_FRDOC_0001-0412?api_key=DEMO_KEY
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.17.6
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      date:
+      - Tue, 31 Jan 2023 18:15:32 GMT
+      content-type:
+      - application/vnd.api+json;charset=utf-8
+      content-length:
+      - '209'
+      connection:
+      - close
+      access-control-allow-origin:
+      - "*"
+      age:
+      - '0'
+      strict-transport-security:
+      - max-age=31536000; preload
+      via:
+      - http/1.1 api-umbrella (ApacheTrafficServer [cMsSf ])
+      x-cache:
+      - MISS
+      x-ratelimit-limit:
+      - '40'
+      x-ratelimit-remaining:
+      - '39'
+      x-vcap-request-id:
+      - cd855f07-3391-4a6e-4461-2389af75bf41
+      x-frame-options:
+      - DENY
+      x-content-type-options:
+      - nosniff
+      x-xss-protection:
+      - 1; mode=block
+    body:
+      encoding: UTF-8
+      string: '{"data":{"id":"AID_FRDOC_0001-0412","type":"document-comments-received-counts","attributes":{"count":2},"links":{"self":"https://api.regulations.gov/v4/document-comments-received-counts/AID_FRDOC_0001-0412"}}}'
+  recorded_at: Tue, 31 Jan 2023 18:15:32 GMT
+- request:
+    method: get
+    uri: https://api.regulations.gov/v4/document-comments-received-counts/USDA_FRDOC_0001-2761?api_key=DEMO_KEY
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.17.6
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      date:
+      - Tue, 31 Jan 2023 18:15:55 GMT
+      content-type:
+      - application/vnd.api+json;charset=utf-8
+      content-length:
+      - '211'
+      connection:
+      - close
+      access-control-allow-origin:
+      - "*"
+      age:
+      - '0'
+      strict-transport-security:
+      - max-age=31536000; preload
+      via:
+      - http/1.1 api-umbrella (ApacheTrafficServer [cMsSf ])
+      x-cache:
+      - MISS
+      x-ratelimit-limit:
+      - '40'
+      x-ratelimit-remaining:
+      - '39'
+      x-vcap-request-id:
+      - 13158528-ee50-442c-6cee-73b4cfb8b821
+      x-frame-options:
+      - DENY
+      x-content-type-options:
+      - nosniff
+      x-xss-protection:
+      - 1; mode=block
+    body:
+      encoding: UTF-8
+      string: '{"data":{"id":"USDA_FRDOC_0001-2761","type":"document-comments-received-counts","attributes":{"count":3},"links":{"self":"https://api.regulations.gov/v4/document-comments-received-counts/USDA_FRDOC_0001-2761"}}}'
+  recorded_at: Tue, 31 Jan 2023 18:15:55 GMT
+- request:
+    method: get
+    uri: https://api.regulations.gov/v4/document-comments-received-counts/DOJ_FRDOC_0001-0271?api_key=DEMO_KEY
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.17.6
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      date:
+      - Tue, 31 Jan 2023 18:15:55 GMT
+      content-type:
+      - application/vnd.api+json;charset=utf-8
+      content-length:
+      - '209'
+      connection:
+      - close
+      access-control-allow-origin:
+      - "*"
+      age:
+      - '0'
+      strict-transport-security:
+      - max-age=31536000; preload
+      via:
+      - http/1.1 api-umbrella (ApacheTrafficServer [cMsSf ])
+      x-cache:
+      - MISS
+      x-ratelimit-limit:
+      - '40'
+      x-ratelimit-remaining:
+      - '38'
+      x-vcap-request-id:
+      - '09c79572-8e50-4873-7d33-9825a8be2e62'
+      x-frame-options:
+      - DENY
+      x-content-type-options:
+      - nosniff
+      x-xss-protection:
+      - 1; mode=block
+    body:
+      encoding: UTF-8
+      string: '{"data":{"id":"DOJ_FRDOC_0001-0271","type":"document-comments-received-counts","attributes":{"count":0},"links":{"self":"https://api.regulations.gov/v4/document-comments-received-counts/DOJ_FRDOC_0001-0271"}}}'
+  recorded_at: Tue, 31 Jan 2023 18:15:55 GMT
+- request:
+    method: get
+    uri: https://api.regulations.gov/v4/document-comments-received-counts/DHS-2023-0006-0002?api_key=DEMO_KEY
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.17.6
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      date:
+      - Tue, 31 Jan 2023 18:15:55 GMT
+      content-type:
+      - application/vnd.api+json;charset=utf-8
+      content-length:
+      - '207'
+      connection:
+      - close
+      access-control-allow-origin:
+      - "*"
+      age:
+      - '0'
+      strict-transport-security:
+      - max-age=31536000; preload
+      via:
+      - http/1.1 api-umbrella (ApacheTrafficServer [cMsSf ])
+      x-cache:
+      - MISS
+      x-ratelimit-limit:
+      - '40'
+      x-ratelimit-remaining:
+      - '39'
+      x-vcap-request-id:
+      - 0d439ae0-0ac9-46ee-7799-20a618bccfd5
+      x-frame-options:
+      - DENY
+      x-content-type-options:
+      - nosniff
+      x-xss-protection:
+      - 1; mode=block
+    body:
+      encoding: UTF-8
+      string: '{"data":{"id":"DHS-2023-0006-0002","type":"document-comments-received-counts","attributes":{"count":0},"links":{"self":"https://api.regulations.gov/v4/document-comments-received-counts/DHS-2023-0006-0002"}}}'
+  recorded_at: Tue, 31 Jan 2023 18:15:55 GMT
+- request:
+    method: get
+    uri: https://api.regulations.gov/v4/document-comments-received-counts/DOL_FRDOC_0001-2038?api_key=DEMO_KEY
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.17.6
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      date:
+      - Tue, 31 Jan 2023 18:15:56 GMT
+      content-type:
+      - application/vnd.api+json;charset=utf-8
+      content-length:
+      - '209'
+      connection:
+      - close
+      access-control-allow-origin:
+      - "*"
+      age:
+      - '2'
+      strict-transport-security:
+      - max-age=31536000; preload
+      via:
+      - http/1.1 api-umbrella (ApacheTrafficServer [cMsSf ])
+      x-cache:
+      - MISS
+      x-ratelimit-limit:
+      - '40'
+      x-ratelimit-remaining:
+      - '38'
+      x-vcap-request-id:
+      - baf849f6-cc11-4357-7048-7b8d0214f13f
+      x-frame-options:
+      - DENY
+      x-content-type-options:
+      - nosniff
+      x-xss-protection:
+      - 1; mode=block
+    body:
+      encoding: UTF-8
+      string: '{"data":{"id":"DOL_FRDOC_0001-2038","type":"document-comments-received-counts","attributes":{"count":1},"links":{"self":"https://api.regulations.gov/v4/document-comments-received-counts/DOL_FRDOC_0001-2038"}}}'
+  recorded_at: Tue, 31 Jan 2023 18:15:56 GMT
+- request:
+    method: get
+    uri: https://api.regulations.gov/v4/document-comments-received-counts/ED_FRDOC_0001-1011?api_key=DEMO_KEY
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.17.6
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      date:
+      - Tue, 31 Jan 2023 18:15:56 GMT
+      content-type:
+      - application/vnd.api+json;charset=utf-8
+      content-length:
+      - '207'
+      connection:
+      - close
+      access-control-allow-origin:
+      - "*"
+      age:
+      - '0'
+      strict-transport-security:
+      - max-age=31536000; preload
+      via:
+      - http/1.1 api-umbrella (ApacheTrafficServer [cMsSf ])
+      x-cache:
+      - MISS
+      x-ratelimit-limit:
+      - '40'
+      x-ratelimit-remaining:
+      - '37'
+      x-vcap-request-id:
+      - 24683931-7d35-4908-521d-750b48680f6a
+      x-frame-options:
+      - DENY
+      x-content-type-options:
+      - nosniff
+      x-xss-protection:
+      - 1; mode=block
+    body:
+      encoding: UTF-8
+      string: '{"data":{"id":"ED_FRDOC_0001-1011","type":"document-comments-received-counts","attributes":{"count":1},"links":{"self":"https://api.regulations.gov/v4/document-comments-received-counts/ED_FRDOC_0001-1011"}}}'
+  recorded_at: Tue, 31 Jan 2023 18:15:56 GMT
+- request:
+    method: get
+    uri: https://api.regulations.gov/v4/document-comments-received-counts/HUD-2023-0003-0001?api_key=DEMO_KEY
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.17.6
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      date:
+      - Tue, 31 Jan 2023 18:15:56 GMT
+      content-type:
+      - application/vnd.api+json;charset=utf-8
+      content-length:
+      - '207'
+      connection:
+      - close
+      access-control-allow-origin:
+      - "*"
+      age:
+      - '0'
+      strict-transport-security:
+      - max-age=31536000; preload
+      via:
+      - http/1.1 api-umbrella (ApacheTrafficServer [cMsSf ])
+      x-cache:
+      - MISS
+      x-ratelimit-limit:
+      - '40'
+      x-ratelimit-remaining:
+      - '38'
+      x-vcap-request-id:
+      - 0463e742-ccbd-4ace-58c5-11860e8121d1
+      x-frame-options:
+      - DENY
+      x-content-type-options:
+      - nosniff
+      x-xss-protection:
+      - 1; mode=block
+    body:
+      encoding: UTF-8
+      string: '{"data":{"id":"HUD-2023-0003-0001","type":"document-comments-received-counts","attributes":{"count":0},"links":{"self":"https://api.regulations.gov/v4/document-comments-received-counts/HUD-2023-0003-0001"}}}'
+  recorded_at: Tue, 31 Jan 2023 18:15:56 GMT
+- request:
+    method: get
+    uri: https://api.regulations.gov/v4/document-comments-received-counts/VA-2023-VACO-0006-0001?api_key=DEMO_KEY
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.17.6
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      date:
+      - Tue, 31 Jan 2023 18:15:56 GMT
+      content-type:
+      - application/vnd.api+json;charset=utf-8
+      content-length:
+      - '215'
+      connection:
+      - close
+      access-control-allow-origin:
+      - "*"
+      age:
+      - '0'
+      strict-transport-security:
+      - max-age=31536000; preload
+      via:
+      - http/1.1 api-umbrella (ApacheTrafficServer [cMsSf ])
+      x-cache:
+      - MISS
+      x-ratelimit-limit:
+      - '40'
+      x-ratelimit-remaining:
+      - '36'
+      x-vcap-request-id:
+      - 8bcde899-5b5e-46c3-4eee-51819f000730
+      x-frame-options:
+      - DENY
+      x-content-type-options:
+      - nosniff
+      x-xss-protection:
+      - 1; mode=block
+    body:
+      encoding: UTF-8
+      string: '{"data":{"id":"VA-2023-VACO-0006-0001","type":"document-comments-received-counts","attributes":{"count":0},"links":{"self":"https://api.regulations.gov/v4/document-comments-received-counts/VA-2023-VACO-0006-0001"}}}'
+  recorded_at: Tue, 31 Jan 2023 18:15:56 GMT
+recorded_with: VCR 6.0.0

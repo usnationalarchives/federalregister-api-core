@@ -17,6 +17,7 @@ module EntryApiConfiguration
       :disposition_notes,
       :docket_id,
       :docket_ids,
+      :dockets,
       :document_number,
       :effective_on,
       :end_page,

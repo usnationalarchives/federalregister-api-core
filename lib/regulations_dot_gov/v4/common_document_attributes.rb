@@ -61,6 +61,14 @@ module RegulationsDotGov::V4::CommonDocumentAttributes
     "http://www.regulations.gov/#!documentDetail;D=#{document_id}"
   end
 
+  def regulations_dot_gov_object_id
+    raw_attribute_value('objectId')
+  end
+
+  def regulations_dot_gov_open_for_comment
+    raw_attribute_value('openForComment')
+  end
+
 
   private
 
