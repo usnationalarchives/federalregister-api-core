@@ -20,7 +20,10 @@ module RegulationsDotGov::V4::CommonDocumentAttributes
   memoize :comment_count
 
   def comment_start_date
-    raw_attributes["commentStartDate"]
+    val = raw_attribute_value("commentStartDate")
+    if val.present?
+      DateTime.parse(val)
+    end
   end
 
   def comment_url
