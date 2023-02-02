@@ -48,7 +48,7 @@ class RegulationsDotGov::V4::Docket
   attr_reader :raw_attributes
 
   def docket_documents_raw_response
-    RegulationsDotGov::V4::Client.new.find_documents_by_docket(docket_id)
+    RegulationsDotGov::V4::Client.new.find_documents_by_docket(docket_id, {'filter[documentType]' => "Supporting & Related Material"})
   end
   memoize :docket_documents_raw_response
 

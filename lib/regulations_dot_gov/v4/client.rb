@@ -74,12 +74,13 @@ class RegulationsDotGov::V4::Client
     end
   end
 
-  def find_documents_by_docket(docket_id)
+  def find_documents_by_docket(docket_id, options={})
     request_with_retry do
       connection.get(
         'documents',
-        'filter[docketId]' => docket_id,
+        {'filter[docketId]' => docket_id,
         'api_key'          => api_key
+        }.merge(options)
       )
     end
   end

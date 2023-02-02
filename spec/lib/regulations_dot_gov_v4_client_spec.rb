@@ -60,7 +60,8 @@ describe RegulationsDotGov::V4::Client do
   end
 
   it "#find_docket" do
-    VCR.use_cassette("regulations_dot_gov_v4_dockets") do
+    VCR.use_cassette("regulations_dot_gov_v4_supporting_documents") do
+      allow_any_instance_of(RegulationsDotGov::V4::Client).to receive(:api_key).and_return("DEMO_KEY")
       result = RegulationsDotGov::V4::Client.new.find_docket('EPA-HQ-OAR-2003-0129')
       expect(result).to have_attributes(
         title: 'Registration of Fuels and Fuels Additives (Application for Registration of Manufacturers) (ICR # 0309.10, OMB Control # 2060-0150)',
@@ -77,7 +78,8 @@ describe RegulationsDotGov::V4::Client do
   end
 
   it "find_documents_by_docket" do
-    VCR.use_cassette("regulations_dot_gov_v4_dockets") do
+    VCR.use_cassette("regulations_dot_gov_v4_supporting_documents") do
+      allow_any_instance_of(RegulationsDotGov::V4::Client).to receive(:api_key).and_return("DEMO_KEY")
       result = RegulationsDotGov::V4::Client.new.find_docket('EPA-HQ-OAR-2003-0129')
 
       expect(result.supporting_documents.count).to eq(2)
