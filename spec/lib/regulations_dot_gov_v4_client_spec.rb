@@ -68,7 +68,6 @@ describe RegulationsDotGov::V4::Client do
         regulation_id_number: nil,
         docket_id: 'EPA-HQ-OAR-2003-0129',
         supporting_documents_count: 2,
-        metadata: nil,
       )
 
       # TODO: This appears to be working, but this spec is not.

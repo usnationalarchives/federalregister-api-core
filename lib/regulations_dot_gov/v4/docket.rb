@@ -38,11 +38,6 @@ class RegulationsDotGov::V4::Docket
     # We decided we won't persist this any longer becasue V4 requires additional API calls for it.
   end
 
-  def metadata
-    # Called in DocketImporter interface, but this attribute was used for backwards compatibility and is no-longer needed.  Keeping it here for now so the DocketImporter code can run without errors, but we probably want to stop setting the metadata attribute in the DocketImporter long-term.
-    nil
-  end
-
   private
 
   attr_reader :raw_attributes

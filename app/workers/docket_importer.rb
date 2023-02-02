@@ -49,7 +49,6 @@ class DocketImporter
     docket.comments_count = api_docket.comments_count
     docket.docket_documents_count = api_docket.supporting_documents_count
     docket.regulation_id_number = api_docket.regulation_id_number
-    docket.metadata = api_docket.metadata
 
     docket.regs_dot_gov_supporting_documents = api_docket.supporting_documents.map do |api_doc|
       doc = RegsDotGovSupportingDocument.find_or_initialize_by(id: api_doc.document_id)
