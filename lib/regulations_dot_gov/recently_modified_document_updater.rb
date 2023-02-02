@@ -93,14 +93,8 @@ class RegulationsDotGov::RecentlyModifiedDocumentUpdater
   end
 
   def updated_documents
-    Array.new.tap do |collection|
-      document_type_identifiers.each do |document_type_identifier|
-        client = regulations_dot_gov_client
-        documents = client.find_documents_updated_within(days, document_type_identifier)
-
-        collection << documents
-      end
-    end.flatten
+    regulations_dot_gov_client.
+      find_documents_updated_within(days, document_type_identifiers.join(","))
   end
   memoize :updated_documents
 
