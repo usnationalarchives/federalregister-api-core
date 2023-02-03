@@ -73,7 +73,11 @@ class Content::EntryImporter::ModsFile
   end
 
   def backmatter_page_count
-    convert_roman_to_arabic(document.css('part[type="Reader Aids"]').first.at('extent end').try(:content))
+    reader_aids_node = document.css('part[type="Reader Aids"]').first
+
+    if reader_aids_node
+      convert_roman_to_arabic(reader_aids_node.at('extent end').try(:content))
+    end
   end
 
   memoize :volume
