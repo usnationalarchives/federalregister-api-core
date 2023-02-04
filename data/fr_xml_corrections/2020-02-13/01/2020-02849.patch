@@ -1,0 +1,50 @@
+--- /home/app/data/efs/document_issues/xml/2020/02/2020-02-13.xml	2023-02-03 19:28:27.921231198 -0500
++++ tmp/2020-02-13_modified_tmp.xml	2023-02-03 19:31:47.659445758 -0500
+@@ -17317,7 +17317,7 @@
+             <P>(h) <E T="03">Applicability date.</E> The provisions of paragraph (g) of this section apply on February 13, 2020. For rules that apply under paragraph (g) before February 13, 2020, see 26 CFR part 31, revised as of March 14, 2019. The provisions of paragraphs (a) through (f) of this section apply on and after [DATE OF PUBLICATION OF FINAL REGULATIONS IN THE <E T="04">FEDERAL REGISTER</E>]. For rules that apply before [DATE OF PUBLICATION OF FINAL REGULATIONS IN THE <E T="04">FEDERAL REGISTER</E>], see 26 CFR part 31, revised as of March 14, 2019. Under section 7805(b)(7) a taxpayer may choose to <PRTPAGE P="8367"/>apply paragraphs (a) through (g) of this section on and after January 1, 2020.</P>
+           </SECTION>
+           <AMDPAR>
+-            <E T="04">Par. 8.</E> Section 31.3402(f)(3)-1 is revised to read as follows:' TAG FOUND; PLEASE REVIEW ALL <E>TAGGING IN PREVIOUS PARAGRAPH --&gt;</E>
++            <E T="04">Par. 8.</E> Section 31.3402(f)(3)-1 is revised to read as follows:
+           </AMDPAR>
+           <SECTION>
+             <SECTNO>§ 31.3402(f)(3)-1</SECTNO>
+@@ -17332,17 +17332,17 @@
+             <SUBJECT> [Removed]</SUBJECT>
+           </SECTION>
+           <AMDPAR>
+-            <E T="04">Par. 9.</E> Section 31.3402(f)(4)-1 is removed.' TAG FOUND; PLEASE REVIEW ALL <E>TAGGING IN PREVIOUS PARAGRAPH --&gt;</E>
++            <E T="04">Par. 9.</E> Section 31.3402(f)(4)-1 is removed.
+           </AMDPAR>
+           <SECTION>
+             <SECTNO>§ 31.3402(f)(4)-2</SECTNO>
+             <SUBJECT> [Redesignated as § 31.3402(f)(4)-1]</SUBJECT>
+           </SECTION>
+           <AMDPAR>
+-            <E T="04">Par. 10.</E> Section 31.3402(f)(4)-2 is redesignated as § 31.3402(f)(4)-1.' TAG FOUND; PLEASE REVIEW ALL <E>TAGGING IN PREVIOUS PARAGRAPH --&gt;</E>
++            <E T="04">Par. 10.</E> Section 31.3402(f)(4)-2 is redesignated as § 31.3402(f)(4)-1.
+           </AMDPAR>
+           <AMDPAR>
+-            <E T="04">Par. 11.</E> Newly redesignated § 31.3402(f)(4)-1 is revised to read as follows:' TAG FOUND; PLEASE REVIEW ALL <E>TAGGING IN PREVIOUS PARAGRAPH --&gt;</E>
++            <E T="04">Par. 11.</E> Newly redesignated § 31.3402(f)(4)-1 is revised to read as follows:
+           </AMDPAR>
+           <SECTION>
+             <SECTNO>§ 31.3402(f)(4)-1</SECTNO>
+@@ -17356,7 +17356,7 @@
+             <P>(e) <E T="03">Applicability date.</E> The provisions of this section apply on and after [DATE OF PUBLICATION OF FINAL REGULATIONS IN THE <E T="04">Federal Register</E>]. For rules that apply before [DATE OF PUBLICATION OF FINAL REGULATIONS IN THE <E T="04">Federal Register</E>], see 26 CFR part 31, revised as of March 14, 2019. Under section 7805(b)(7) a taxpayer may choose to apply this section on and after January 1, 2020.</P>
+           </SECTION>
+           <AMDPAR>
+-            <E T="04">Par. 12.</E> Section 31.3402(f)(5)-1 is revised to read as follows:' TAG FOUND; PLEASE REVIEW ALL <E>TAGGING IN PREVIOUS PARAGRAPH --&gt;</E>
++            <E T="04">Par. 12.</E> Section 31.3402(f)(5)-1 is revised to read as follows:
+           </AMDPAR>
+           <SECTION>
+             <SECTNO>§ 31.3402(f)(5)-1</SECTNO>
+@@ -17386,7 +17386,7 @@
+             <P>(d) <E T="03">Applicability date.</E> The provisions of this section apply on and after [DATE OF PUBLICATION OF FINAL REGULATIONS IN THE <E T="04">Federal Register</E>], except that paragraph (a)(3) of this section applies on and March 16, 2020. For rules that apply before [DATE OF PUBLICATION OF FINAL REGULATIONS IN THE <E T="04">Federal Register</E>], see 26 CFR part 31, revised as of March 14, 2019. Under section 7805(b)(7) a taxpayer may choose to apply this section on and after January 1, 2020.</P>
+           </SECTION>
+           <AMDPAR>
+-            <E T="04">Par. 13.</E> Section 31.3402(f)(6)-1 is revised to read as follows:' TAG FOUND; PLEASE REVIEW ALL <E>TAGGING IN PREVIOUS PARAGRAPH --&gt;</E>
++            <E T="04">Par. 13.</E> Section 31.3402(f)(6)-1 is revised to read as follows:
+           </AMDPAR>
+           <SECTION>
+             <SECTNO>§ 31.3402(f)(6)-1</SECTNO>
