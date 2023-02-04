@@ -1,0 +1,12 @@
+--- /home/app/data/efs/document_issues/xml/2013/04/2013-04-25.xml	2023-02-03 19:52:12.577064237 -0500
++++ tmp/2013-04-25_modified_tmp.xml	2023-02-03 19:53:02.645616668 -0500
+@@ -17403,8 +17403,7 @@
+                             <E T="02">ADDRESSES</E>
+                              below) must be received by 11:59 p.m. Eastern Time on the closing date. We must receive requests for public hearings, in writing, at the address shown in the 
+                             <E T="02">FOR FURTHER INFORMATION CONTACT</E>
+-                             section by June 10, 2013.' TAG FOUND; PLEASE REVIEW ALL 
+-                            <E>TAGGING IN PREVIOUS PARAGRAPH --&gt;</E>
++                             section by June 10, 2013.
+                         </P>
+                     </DATES>
+                     <ADD>
