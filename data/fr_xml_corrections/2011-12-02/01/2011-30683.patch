@@ -1,0 +1,11 @@
+--- /home/app/data/efs/document_issues/xml/2011/12/2011-12-02.xml	2023-02-03 19:57:03.284273895 -0500
++++ tmp/2011-12-02_modified_tmp.xml	2023-02-03 19:58:17.917098718 -0500
+@@ -13559,7 +13559,7 @@
+           <P>In the NPRM, and in accordance with section 441 of the General Education Provisions Act, 20 U.S.C. 1221e-4, we requested comments on whether the proposed regulations would require transmission of information that any other agency or authority of the United States gathers or makes available.</P>
+           <P>Based on the response to the NPRM and on our review, we have determined that these final regulations do not require transmission of information that any other agency or authority of the United States gathers or makes available.</P>
+           <P>
+-            <E T="03">Accessible Format:</E> Individuals with disabilities can obtain this document in an accessible format (<E T="03">e.g.,</E> braille, large print, audiotape, or compact disc) on request to the program contact person listed under <E T="02">FOR FURTHER INFORMATION CONTACT</E>.' TAG FOUND; PLEASE REVIEW ALL <E>TAGGING IN PREVIOUS PARAGRAPH --&gt;</E>
++            <E T="03">Accessible Format:</E> Individuals with disabilities can obtain this document in an accessible format (<E T="03">e.g.,</E> braille, large print, audiotape, or compact disc) on request to the program contact person listed under <E T="02">FOR FURTHER INFORMATION CONTACT</E>.
+           </P>
+           <P>
+             <E T="03">Electronic Access to This Document:</E> The official version of this document is the document published in the <E T="04">Federal Register.</E> Free Internet access to the official edition of the <E T="04">Federal Register</E> and the Code of Federal Regulations is available via the Federal Digital System at: <E T="03">http://www.gpo.gov/fdsys.</E> At this site you can view this document, as well as all other documents of this Department published in the <E T="04">Federal Register,</E> in text or Adobe Portable Document Format (PDF). To use PDF you must have Adobe Acrobat Reader, which is available free at the site.</P>
