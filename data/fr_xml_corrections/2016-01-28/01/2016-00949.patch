@@ -1,0 +1,11 @@
+--- /home/app/data/efs/document_issues/xml/2016/01/2016-01-28.xml	2023-02-03 19:40:46.097431343 -0500
++++ tmp/2016-01-28_modified_tmp.xml	2023-02-03 19:41:22.697838998 -0500
+@@ -634,7 +634,7 @@
+         <P>Airbus has issued Service Bulletin A320-57-1028, Revision 1, dated April 19, 1996; and Revision 02, dated June 3, 2013. The service information describes procedures for an inspection to detect cracks of the pressurized floor fittings at frame 36, renewal of the zone protective finish, and replacement of fittings with new fittings.</P>
+         <P>Airbus has also issued Service Bulletin A320-57-1029, Revision 02, dated June 16, 1999. The service information describes procedures for modification of the pressurized floor fittings at frame 36.</P>
+ 
+-        <P>This service information is reasonably available because the interested parties have access to it through their normal course of business or by the means identified in the <E T="02">ADDRESSES</E> section.' TAG FOUND; PLEASE REVIEW ALL <E>TAGGING IN PREVIOUS PARAGRAPH --&gt;</E>
++        <P>This service information is reasonably available because the interested parties have access to it through their normal course of business or by the means identified in the <E T="02">ADDRESSES</E> section.
+         </P>
+         <HD SOURCE="HD1">Costs of Compliance</HD>
+         <P>We estimate that this AD affects 13 airplanes of U.S. registry.</P>
