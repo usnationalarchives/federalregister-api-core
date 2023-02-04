@@ -1,0 +1,11 @@
+--- /home/app/data/efs/document_issues/xml/2013/12/2013-12-04.xml	2023-02-03 19:50:08.683697939 -0500
++++ tmp/2013-12-04_modified_tmp.xml	2023-02-03 19:51:01.968285443 -0500
+@@ -3861,7 +3861,7 @@
+         <HD SOURCE="HED">SUPPLEMENTARY INFORMATION:</HD>
+         <HD SOURCE="HD1">Comments Invited </HD>
+ 
+-        <P>We invite you to send any written relevant data, views, or arguments about this proposal. Send your comments to an address listed under the <E T="02">ADDRESSES</E> section. Include “Docket No. FAA-2013-0977; Directorate Identifier 2013-NM-190-AD” at the beginning of your comments. We specifically invite comments on the overall regulatory, economic, environmental, and energy aspects of this proposed AD. We will consider all comments received by the closing date and may amend this proposed AD because of those comments. ' TAG FOUND; PLEASE REVIEW ALL <E>TAGGING IN PREVIOUS PARAGRAPH --&gt;</E>
++        <P>We invite you to send any written relevant data, views, or arguments about this proposal. Send your comments to an address listed under the <E T="02">ADDRESSES</E> section. Include “Docket No. FAA-2013-0977; Directorate Identifier 2013-NM-190-AD” at the beginning of your comments. We specifically invite comments on the overall regulatory, economic, environmental, and energy aspects of this proposed AD. We will consider all comments received by the closing date and may amend this proposed AD because of those comments.
+         </P>
+         <P>We will post all comments we receive, without change, to <E T="03">http://www.regulations.gov</E>, including any personal information you provide. We will also post a report summarizing each substantive verbal contact we receive about this proposed AD. </P>
+         <HD SOURCE="HD1">Discussion </HD>
