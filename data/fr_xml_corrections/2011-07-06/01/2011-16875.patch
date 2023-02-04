@@ -1,0 +1,11 @@
+--- /home/app/data/efs/document_issues/xml/2011/07/2011-07-06.xml	2023-02-03 19:01:10.351036093 -0500
++++ tmp/2011-07-06_modified_tmp.xml	2023-02-03 19:04:23.873195368 -0500
+@@ -1449,7 +1449,7 @@
+         <SUM>
+           <HD SOURCE="HED">SUMMARY:</HD>
+ 
+-          <P>The Dodd-Frank Wall Street Reform and Consumer Protection Act (Act), transfers to the OCC the functions of the Office of Thrift Supervision (OTS) relating to Federal savings associations and also transfers to the OCC rulemaking authority of the OTS and the Director of the OTS, respectively, relating to all savings associations. Functions of the OTS relating to State savings associations are transferred to the FDIC. Section 316(c) of the Act requires the OCC and the FDIC, after consultation with one another, to identify those regulations of the OTS that are continued under Section 316(b) of the Act that the OCC, with respect to Federal savings associations, and the FDIC, with respect to State savings associations, will enforce, and to publish a list of those regulations in the <E T="04">Federal Register</E>. This joint notice sets out the required lists of both the OCC and the FDIC.' TAG FOUND; PLEASE REVIEW ALL <E>TAGGING IN PREVIOUS PARAGRAPH --&gt;</E>
++          <P>The Dodd-Frank Wall Street Reform and Consumer Protection Act (Act), transfers to the OCC the functions of the Office of Thrift Supervision (OTS) relating to Federal savings associations and also transfers to the OCC rulemaking authority of the OTS and the Director of the OTS, respectively, relating to all savings associations. Functions of the OTS relating to State savings associations are transferred to the FDIC. Section 316(c) of the Act requires the OCC and the FDIC, after consultation with one another, to identify those regulations of the OTS that are continued under Section 316(b) of the Act that the OCC, with respect to Federal savings associations, and the FDIC, with respect to State savings associations, will enforce, and to publish a list of those regulations in the <E T="04">Federal Register</E>. This joint notice sets out the required lists of both the OCC and the FDIC.
+           </P>
+         </SUM>
+         <FURINF>
