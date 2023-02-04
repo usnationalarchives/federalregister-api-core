@@ -1,0 +1,11 @@
+--- /home/app/data/efs/document_issues/xml/2015/03/2015-03-30.xml	2023-02-03 19:43:09.635030600 -0500
++++ tmp/2015-03-30_modified_tmp.xml	2023-02-03 19:44:50.860159280 -0500
+@@ -13798,7 +13798,7 @@
+         <P>(1) through (4) No Change.</P>
+         <P>(d) through (i) No Change.</P>
+         <STARS/>
+-        <HD SOURCE="HD1">II. Self-Regulatory Organization's Statement of the Purpose of, and Statutory Basis for, the Proposed Rule Change' TAG FOUND; PLEASE REVIEW ALL <E>TAGGING IN PREVIOUS PARAGRAPH --&gt;</E>
++        <HD SOURCE="HD1">II. Self-Regulatory Organization's Statement of the Purpose of, and Statutory Basis for, the Proposed Rule Change
+         </HD>
+         <P>In its filing with the Commission, FINRA included statements concerning the purpose of and basis for the proposed rule change and discussed any comments it received on the proposed rule change. The text of these statements may be examined at the places specified in Item IV below. FINRA has prepared summaries, set forth in sections A, B, and C below, of the most significant aspects of such statements.</P>
+         <HD SOURCE="HD2">A. Self-Regulatory Organization's Statement of the Purpose of, and Statutory Basis for, the Proposed Rule Change</HD>
