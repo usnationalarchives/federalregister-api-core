@@ -1,0 +1,11 @@
+--- /home/app/data/efs/document_issues/xml/2014/08/2014-08-18.xml	2023-02-03 19:48:13.398419673 -0500
++++ tmp/2014-08-18_modified_tmp.xml	2023-02-03 19:49:07.035018445 -0500
+@@ -8720,7 +8720,7 @@
+           <FP SOURCE="FP-1">I. Introduction</FP>
+           <FP SOURCE="FP-1">II. Notice of Commission Action</FP>
+           <FP SOURCE="FP-1">III. Ordering Paragraphs</FP>
+-        </EXTRACT>' TAG FOUND; PLEASE REVIEW ALL <E>TAGGING IN PREVIOUS PARAGRAPH --&gt;</E>
++        </EXTRACT>
+         <HD SOURCE="HD1">I. Introduction</HD>
+         <P>On August 8, 2014, the Postal Service filed notice that it has entered into an additional Global Expedited Package Services 3 (GEPS 3) negotiated service agreement (Agreement).<SU>1</SU>
+           <FTREF/>
