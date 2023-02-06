@@ -1,6 +1,6 @@
-class Docket < ApplicationModel
+class RegsDotGovDocket < ApplicationModel
   serialize :metadata, Hash
-  has_many :docket_documents
+  has_many :regs_dot_gov_supporting_documents, foreign_key: :docket_id
 
   def placeholder?
     id =~ /.*_FRDOC_0001$/

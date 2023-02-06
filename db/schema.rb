@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_01_13_041949) do
+ActiveRecord::Schema.define(version: 2023_02_06_171728) do
 
   create_table "action_names", id: :integer, charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "name", collation: "utf8_general_ci"
@@ -149,29 +149,12 @@ ActiveRecord::Schema.define(version: 2023_01_13_041949) do
     t.integer "creator_id"
   end
 
-  create_table "docket_documents", id: { type: :string, default: "", collation: "latin1_swedish_ci" }, charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
-    t.string "docket_id", collation: "latin1_swedish_ci"
-    t.string "title", limit: 1000
-    t.text "metadata", collation: "latin1_swedish_ci"
-    t.index ["docket_id"], name: "index_docket_documents_on_docket_id"
-  end
-
-  create_table "docket_numbers", id: :integer, charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
-    t.string "number", collation: "utf8_general_ci"
-    t.string "assignable_type", collation: "utf8_general_ci"
+  create_table "docket_numbers", id: :integer, charset: "utf8", force: :cascade do |t|
+    t.string "number"
+    t.string "assignable_type"
     t.integer "assignable_id"
     t.integer "position", default: 0
     t.index ["assignable_type", "assignable_id"], name: "index_docket_numbers_on_assignable_type_and_assignable_id"
-  end
-
-  create_table "dockets", id: { type: :string, default: "", collation: "latin1_swedish_ci" }, charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
-    t.string "regulation_id_number", collation: "latin1_swedish_ci"
-    t.integer "comments_count"
-    t.integer "docket_documents_count"
-    t.string "title", limit: 1000
-    t.text "metadata", collation: "latin1_swedish_ci"
-    t.datetime "created_at"
-    t.datetime "updated_at"
   end
 
   create_table "entries", id: :integer, charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
@@ -584,7 +567,40 @@ ActiveRecord::Schema.define(version: 2023_01_13_041949) do
     t.index ["issue_id", "document_id"], name: "index_public_inspection_postings_on_issue_id_and_document_id"
   end
 
-  create_table "regulatory_plan_events", id: :integer, charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
+  create_table "regs_dot_gov_dockets", id: :string, default: "", charset: "latin1", force: :cascade do |t|
+    t.string "regulation_id_number"
+    t.integer "comments_count"
+    t.integer "docket_documents_count"
+    t.string "title", limit: 1000
+    t.text "metadata"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "regs_dot_gov_documents", charset: "utf8", force: :cascade do |t|
+    t.boolean "allow_late_comments"
+    t.integer "comment_count"
+    t.date "comment_end_date"
+    t.date "comment_start_date"
+    t.string "deleted_at"
+    t.string "docket_id"
+    t.string "regulations_dot_gov_document_id"
+    t.string "federal_register_document_number"
+    t.string "original_federal_register_document_number"
+    t.string "regulations_dot_gov_object_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["federal_register_document_number", "deleted_at"], name: "[:document_number_deleted_at]"
+  end
+
+  create_table "regs_dot_gov_supporting_documents", id: :string, charset: "latin1", force: :cascade do |t|
+    t.string "docket_id"
+    t.string "title", limit: 1000
+    t.text "metadata"
+    t.index ["docket_id"], name: "index_regs_dot_gov_supporting_documents_on_docket_id"
+  end
+
+  create_table "regulatory_plan_events", id: :integer, charset: "utf8", force: :cascade do |t|
     t.integer "regulatory_plan_id"
     t.string "date", collation: "utf8_general_ci"
     t.string "action", collation: "utf8_general_ci"
@@ -761,3 +777,5 @@ ActiveRecord::Schema.define(version: 2023_01_13_041949) do
     t.string "last_name", collation: "utf8_general_ci"
     t.boolean "active", default: true
   end
+
+end

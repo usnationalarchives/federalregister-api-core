@@ -227,7 +227,7 @@ class EntrySerializer < ApplicationSerializer
       vals.merge!(checked_regulationsdotgov_at: entry.checked_regulationsdotgov_at&.utc&.iso8601)
     end
 
-    docket = entry.docket
+    docket = entry.regs_dot_gov_docket
     if docket
       docket_info = {
         :docket_id => docket.id,
@@ -235,7 +235,7 @@ class EntrySerializer < ApplicationSerializer
         :title => docket.title,
         :comments_url => regulations_dot_gov_docket_comments_url(docket.id),
         :supporting_documents_count => docket.docket_documents_count,
-        :supporting_documents => docket.docket_documents.sort_by(&:id).reverse[0..9].map do |doc|
+        :supporting_documents => docket.regs_dot_gov_supporting_documents.sort_by(&:id).reverse[0..9].map do |doc|
           {
             :title => doc.title,
             :document_id => doc.id

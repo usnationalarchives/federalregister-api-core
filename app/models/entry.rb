@@ -33,7 +33,7 @@ class Entry < ApplicationModel
   belongs_to :presidential_document_type
   belongs_to :action_name
   belongs_to :correction_of, :class_name => "Entry"
-  belongs_to :docket, :foreign_key => :regulations_dot_gov_docket_id
+  belongs_to :regs_dot_gov_docket, :foreign_key => :regulations_dot_gov_docket_id
 
   has_one :public_inspection_document
   has_one :entry_change
@@ -152,7 +152,7 @@ class Entry < ApplicationModel
     :topics,
     agency_names: [:agency],
     agency_name_assignments: [:agency_name],
-    docket: [:docket_documents],
+    regs_dot_gov_docket: [:regs_dot_gov_supporting_documents],
     entry_regulation_id_numbers: [:current_regulatory_plan],
     gpo_graphics: [:gpo_graphic_usages],
     images: [:image_usages, :image_variants]
