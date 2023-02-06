@@ -8,8 +8,12 @@ class PatchCreator
       end
     end
     @description = description
-    @entry = Entry.find_by!(entry_attributes)
+    @entry = Entry.find_by(entry_attributes) || OpenStruct.new(
+      document_number: document_number,
+      publication_date: publication_date
+    )
     @publication_date = publication_date.is_a?(Date) ? publication_date : Date.parse(publication_date)
+    @reference = reference
   end
 
   def perform
