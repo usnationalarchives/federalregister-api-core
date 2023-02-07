@@ -164,8 +164,8 @@ end
 ########################
 
 if Settings.cron.regulations_dot_gov.documents
-  # At every 30th minute past every hour from 4:30AM through 11:30PM every day
-  every "*/30 4-23 * * *" do
+  # At every 55th minute past every hour
+  every "*/55 * * * *" do
     set :log, 'regulations_dot_gov_document_update'
     rake 'content:entries:import:regulations_dot_gov:modified_today'
   end
