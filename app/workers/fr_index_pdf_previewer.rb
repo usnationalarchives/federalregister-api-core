@@ -12,7 +12,7 @@ class FrIndexPdfPreviewer < FrIndexPdfGenerator
   private
 
   def preview?
-    true
+    false
   end
 
   def calculate_metadata
