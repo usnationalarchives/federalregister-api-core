@@ -16,7 +16,8 @@
       <%= max_date_select(@fr_index) %>
     <% end %>
 
-    <%= link_to 'Preview PDF',
+    <% is_current_month = @max_date.nil? || (@max_date >= Date.current) %>
+    <%= link_to is_current_month ? 'Preview PDF' : 'Generate PDF for Print',
       admin_index_year_path(
         @fr_index.year,
         :format => :pdf,
@@ -27,7 +28,7 @@
       :target => "_blank" %>
 
     <% if @max_date.present? %>
-      <%= link_to "(Re)generate PDFs for Public Site", admin_publish_index_year_path(:max_date => @max_date), :class => "btn publish_pdfs", :confirm => "Are you sure you wish to (re)publish the #{@fr_index.max_date.to_s(:month_year)} issue to the public site?", :method => :post %>
+      <%= link_to "Generate PDF and update Public Site", admin_publish_index_year_path(:max_date => @max_date), :class => "btn publish_pdfs", :confirm => "Are you sure you wish to (re)publish the #{@fr_index.max_date.to_s(:month_year)} issue to the public site?", :method => :post %>
     <% end %>
   </div>
 </div>
