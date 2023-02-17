@@ -13,8 +13,8 @@ namespace :content do
           WHERE publication_date > ?
             AND (#{participating_agencies_query})
           ORDER BY publication_date DESC", 4.months.ago]
-      ).compact.each do |docket_id|
-        Sidekiq::Client.enqueue(DocketImporter, docket_id, false)
+      ).compact.uniq.each do |docket_id|
+        Sidekiq::Client.enqueue(DocketImporter, docket_id)
       end
     end
   end
