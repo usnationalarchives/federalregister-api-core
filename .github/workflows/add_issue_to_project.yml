@@ -1,0 +1,11 @@
+name: Add start date to issue
+on:
+  issues:
+    types:
+      - opened
+jobs:
+  add-to-project:
+    uses: criticaljuncture/ofr-images/.github/workflows/add_issue_to_project.yml@main
+    with:
+      project_name: 'FR'
+    secrets: inherit
