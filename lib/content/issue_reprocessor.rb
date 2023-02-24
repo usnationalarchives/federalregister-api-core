@@ -20,6 +20,7 @@ module Content
       reprocess_issue
       reindex
       regenerate_toc_json
+      notify_of_updated_issue
       clear_cache
       update_status("complete")
     end
@@ -38,6 +39,19 @@ module Content
     end
 
     private
+
+    def notify_of_updated_issue
+      update_reprocessing_message("enqueuing recompilation of HTML")
+
+      begin
+        ENV['DATE'] = "#{date.to_s(:iso)}"
+        Rake::Task['web:notify_of_updated_issue'].invoke
+      rescue StandardError => error
+        handle_failure(error,"IssueReprocessor: enqueuing recompilation of HTML")
+      ensure
+        Rake::Task['web:notify_of_updated_issue'].reenable
+      end
+    end
 
     def reimport_data
       update_reprocessing_message("reimporting all entry data")
