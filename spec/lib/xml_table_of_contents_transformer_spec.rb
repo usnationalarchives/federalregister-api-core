@@ -8,6 +8,7 @@ attr_reader :transformer
     allow(fake_issue).to receive(:toc_note_active) { false }
     Issue.stub(:find_by).and_return(fake_issue)
     @transformer = XmlTableOfContentsTransformer.new('2015-01-01')
+    allow(@transformer).to receive(:republication_substitutions).and_return({'2015-00001' => 'R1-2015-00001'})
     ElasticsearchIndexer.stub(:handle_entry_changes)
   end
 
@@ -410,7 +411,52 @@ attr_reader :transformer
         }
 
       transformer.build_table_of_contents(@nokogiri_doc).should == expected
+    end
 
+    it "adds the requisite R1 or R2 prefix if republications are detected.  Currently, the plant appears to be dropping the R1/R2 prefixes from the XML" do
+      agency = Agency.create(name: "Agriculture Department", slug: "agriculture-department")
+      agency.agency_names << AgencyName.create(name: "Agriculture Department")
+
+      make_nokogiri_doc(<<-XML)
+        <CNTNTS>
+          <AGCY>
+            <HD>Agriculture Department</HD>
+            <CAT>
+              <HD>PROPOSED RULES</HD>
+              <SJ>Increased Assessment Rates:</SJ>
+              <SJDENT>
+                <SJDOC>Grapes Grown in a Designated Area of Southeastern California, </SJDOC>
+                <FRDOCBP D="2" T="31MRP1.sgm">2015-00001</FRDOCBP>
+              </SJDENT>
+            </CAT>
+          </AGCY>
+        </CNTNTS>
+      XML
+
+      expected =
+        {
+          agencies:
+            [
+              {
+                name: 'Agriculture Department',
+                slug: 'agriculture-department',
+                document_categories: [
+                  {
+                    type: "Proposed Rule",
+                    documents: [
+                      {
+                        subject_1: 'Increased Assessment Rates:',
+                        subject_2: 'Grapes Grown in a Designated Area of Southeastern California',
+                        document_numbers: ['R1-2015-00001']
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+        }
+
+      transformer.build_table_of_contents(@nokogiri_doc).should == expected
     end
 
     it "processes multiple documents correctly" do

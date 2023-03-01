@@ -1,6 +1,7 @@
 require 'ostruct'
 
 class XmlTableOfContentsTransformer
+  extend Memoist
   attr_reader :date, :path_manager, :table_of_contents, :issue
 
   GPO_XML_START_DATE = Date.parse('2000-01-18')
@@ -111,7 +112,7 @@ class XmlTableOfContentsTransformer
 
   def parse_category(cat_nodes)
     cat_nodes.map do |cat_node|
-      category = Category.new(cat_node)
+      category = Category.new(cat_node, republication_substitutions)
       category.process_nodes
       {
         type: category.name,
@@ -128,6 +129,22 @@ class XmlTableOfContentsTransformer
     end
   end
 
+  private
+
+  def republication_substitutions
+    republications.each_with_object({}) do |entry, hsh|
+      doc_number_sans_republication_prefix = entry.
+        document_number.
+        gsub("R1-","").
+        gsub("R2-","")
+      hsh[doc_number_sans_republication_prefix] = entry.document_number
+    end
+  end
+  memoize :republication_substitutions
+
+  def republications
+    issue.entries.where("document_number LIKE 'R%'")
+  end
 
   class Category
     attr_reader :document, :documents, :cat_node, :name
@@ -157,8 +174,9 @@ class XmlTableOfContentsTransformer
       'PROCLAMATION' => 'Proclamation',
     }
 
-    def initialize(cat_node)
+    def initialize(cat_node, republication_substitutions={})
       @cat_node = cat_node
+      @republication_substitutions = republication_substitutions
       @documents = []
     end
 
@@ -212,7 +230,14 @@ class XmlTableOfContentsTransformer
     end
 
     def process_document_numbers(doc_nodes)
-      doc_nodes.map{ |doc_node| doc_node.text }
+      doc_nodes.map do |doc_node|
+
+        if republication_substitutions[doc_node.text]
+          republication_substitutions[doc_node.text]
+        else
+          doc_node.text 
+        end
+      end
     end
 
     def write_document
@@ -242,6 +267,8 @@ class XmlTableOfContentsTransformer
     end
 
     private
+
+    attr_reader :republication_substitutions
 
     def strip_trailing_comma(text)
       if text
