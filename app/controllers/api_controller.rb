@@ -1,6 +1,7 @@
 # allow api endpoints to serve csv if they support it
 require 'csv'
 class ApiController < ApplicationController
+  include Shared::DoesDocumentNumberNormalization
   class RequestError < StandardError; end
   class UnknownFieldError < RequestError; end
 
@@ -117,8 +118,14 @@ class ApiController < ApplicationController
 
   DOCUMENT_PER_PAGE_LIMIT = 250
   def document_number_based_search_result(model, find_options, document_numbers, publication_date)
+    # NOTE: There is not always parity between PI docs and their published equivalents (eg PI doc is 2012-07333 and Entry is 2012-7333).  Thus we need to automatically search for their 0 padded and unpadded equivalents
+    document_number_variants = Array.
+      wrap(document_numbers).
+      map {|doc_num| self.class.document_number_variants(doc_num)}.
+      flatten
+
     if model.always_render_document_number_search_results_via_active_record?
-      conditions = {document_number: document_numbers}.tap do |hsh|
+      conditions = {document_number: document_number_variants}.tap do |hsh|
         if publication_date
           hsh.merge!(publication_date: publication_date)
         end
@@ -132,7 +139,7 @@ class ApiController < ApplicationController
         select(combined_options.fetch(:select)).
         where(combined_options.fetch(:conditions))
     else
-      conditions = {document_numbers: document_numbers, per_page: DOCUMENT_PER_PAGE_LIMIT}.tap do |hsh|
+      conditions = {document_numbers: document_number_variants, per_page: DOCUMENT_PER_PAGE_LIMIT}.tap do |hsh|
         if publication_date
           hsh.merge!(publication_date: {is: publication_date})
         end

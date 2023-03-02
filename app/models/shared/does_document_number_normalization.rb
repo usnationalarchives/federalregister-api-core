@@ -33,5 +33,14 @@ module Shared::DoesDocumentNumberNormalization
       part_1, part_2 = document_number.split(/-/, 2)
       sprintf("%s-%05d", part_1, part_2.to_i)
     end
+
+    def self.document_number_variants(document_number)
+      [
+        document_number,
+        pad_document_number(document_number),
+        normalize_document_number(document_number)
+      ].uniq
+    end
+
   end
 end

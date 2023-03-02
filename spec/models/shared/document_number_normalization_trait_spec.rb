@@ -19,4 +19,21 @@ describe Shared::DoesDocumentNumberNormalization do
       subject.normalize_document_number('02-001234').should == '02-1234'
     end
   end
+
+  describe ".document_number_variants" do
+    it "generates the zero-padded variants" do
+      expect(subject.document_number_variants('2012-7333')).to match_array([
+        '2012-7333',
+        '2012-07333',
+      ])
+    end
+
+    it "it generates the non-padded variants" do
+      expect(subject.document_number_variants('2012-07333')).to match_array([
+        '2012-7333',
+        '2012-07333',
+      ])
+    end
+
+  end
 end
