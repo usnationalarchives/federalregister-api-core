@@ -77,8 +77,7 @@ class RegulationsDotGov::RecentlyModifiedDocumentUpdater
 
       if api_doc.federal_register_document_number.blank?
         if existing_doc && existing_doc.entry.present?
-          # Handle deletions explicitly
-          Honeybadger.notify("Encountered a deletion #{api_doc.document_id} used to be associated with #{existing_doc.entry.document_number}") #NOTE: This honeybadger notification only exists on a temporary basis, if we ever encounter this badger since we can confirm we better understand the meaning of updated documents without federal register document numbers
+          # Handle deletions explicitly (eg doc moved to a different docket)
           EntryRegulationsDotGovImporter.perform_async(existing_doc.entry.document_number, nil, true)
         else
           # Resync the document based on the API attributes--this operation should never result in a deletion
