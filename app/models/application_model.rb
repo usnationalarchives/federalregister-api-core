@@ -80,9 +80,9 @@ class ApplicationModel < ActiveRecord::Base
       puts response
       if response.fetch('errors')
         if Rails.env.development?
-          raise error_message
+          raise response.fetch('errors')
         else
-          Honeybadger.notify(error_message)
+          Honeybadger.notify(response.fetch('errors'))
         end
       end
     rescue Faraday::TimeoutError
