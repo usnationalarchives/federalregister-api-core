@@ -231,11 +231,12 @@ class XmlTableOfContentsTransformer
 
     def process_document_numbers(doc_nodes)
       doc_nodes.map do |doc_node|
+        number = doc_node.text.tr("–", "-")
 
-        if republication_substitutions[doc_node.text]
-          republication_substitutions[doc_node.text]
+        if republication_substitutions[number]
+          republication_substitutions[number]
         else
-          doc_node.text 
+          number
         end
       end
     end
