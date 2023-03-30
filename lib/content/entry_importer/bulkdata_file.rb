@@ -49,7 +49,7 @@ class Content::EntryImporter::BulkdataFile
   def document_numbers
     document_numbers = []
     document.css('RULE, PRORULE, NOTICE, PRESDOCU, CORRECT').each do |entry_node|
-      raw_frdoc = entry_node.css('FRDOC').first.try(:content)
+      raw_frdoc = entry_node.css('FRDOC').first.try(:content).try(:tr, "–", "-")
       document_number = /FR Doc.\s*([^ ;]+)/i.match(raw_frdoc).try(:[], 1)
       document_numbers << document_number unless document_number.blank?
     end
@@ -60,7 +60,7 @@ class Content::EntryImporter::BulkdataFile
   def document_numbers_and_associated_nodes
     ret = []
     document.css('RULE, PRORULE, NOTICE, PRESDOCU, CORRECT').each do |entry_node|
-      raw_frdoc = entry_node.css('FRDOC').first.try(:content)
+      raw_frdoc = entry_node.css('FRDOC').first.try(:content).try(:tr, "–", "-")
 
       if raw_frdoc.present?
         document_number = /FR Doc.\s*([^ ;]+)/i.match(raw_frdoc).try(:[], 1)
