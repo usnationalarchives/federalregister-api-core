@@ -12,7 +12,7 @@ FROM quay.io/criticaljuncture/baseimage:20.04
 ARG RUBY_VERSION=3.1-jemalloc
 
 # install ruby
-RUN apt update && \
+RUN apt update &&\
   apt install -y \
     # ruby
     fullstaq-ruby-common fullstaq-ruby-${RUBY_VERSION} &&\

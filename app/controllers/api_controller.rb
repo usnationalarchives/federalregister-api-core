@@ -78,7 +78,9 @@ class ApiController < ApplicationController
     publication_date = find_options[:publication_date]
 
     if document_numbers =~ /,/
-      document_numbers = document_numbers.split(',')
+      document_numbers = document_numbers.
+        split(',').
+        map{|doc_num| normalized_doc_num(doc_num)}
 
       records = document_number_based_search_result(
         model,
@@ -121,6 +123,7 @@ class ApiController < ApplicationController
     # NOTE: There is not always parity between PI docs and their published equivalents (eg PI doc is 2012-07333 and Entry is 2012-7333).  Thus we need to automatically search for their 0 padded and unpadded equivalents
     document_number_variants = Array.
       wrap(document_numbers).
+      map{|doc_num| normalized_doc_num(doc_num)}.
       map {|doc_num| self.class.document_number_variants(doc_num)}.
       flatten
 
@@ -147,6 +150,12 @@ class ApiController < ApplicationController
 
       model.search_klass.new(conditions: conditions).results
     end
+  end
+
+  def normalized_doc_num(doc_num)
+    # replace endash, emdash with hyphen
+    hyphen, en_dash, em_dash = "-", "–", "—"
+    doc_num.gsub(/[#{en_dash}#{em_dash}]/, hyphen)
   end
 
   def render_via_citations(model, citations, find_options={}, &block)
