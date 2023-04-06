@@ -4,7 +4,7 @@ class EntryRegulationsDotGovImporter
   include Sidekiq::Worker
   include Sidekiq::Throttled::Worker
 
-  sidekiq_options :queue => :reg_gov
+  sidekiq_options :queue => :reg_gov, :retry => 1, retry_in: 120
   sidekiq_throttle_as :reg_gov_api
 
   def self.resync_regulations_dot_gov_document!(api_doc, existing_doc)
