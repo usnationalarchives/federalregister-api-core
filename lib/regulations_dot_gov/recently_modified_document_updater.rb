@@ -88,10 +88,14 @@ class RegulationsDotGov::RecentlyModifiedDocumentUpdater
         end
       elsif existing_doc && (existing_doc.federal_register_document_number == api_doc.federal_register_document_number)
         # Resync the document based on the API attributes--this operation should never result in a deletion
-        EntryRegulationsDotGovImporter.resync_regulations_dot_gov_document!(
-          api_doc,
-          existing_doc
-        )
+        begin
+          EntryRegulationsDotGovImporter.resync_regulations_dot_gov_document!(
+            api_doc,
+            existing_doc
+          )
+        rescue ActiveRecord::RecordInvalid => e
+          Honeybadger.notify(e, context: {updated_document: api_doc.to_s})
+        end
       else 
         # Resync all associated regulations.gov documents if the regs.gov document number is unrecognized or we have detected an FR doc number change
         [api_doc.federal_register_document_number].tap do |doc_numbers|
