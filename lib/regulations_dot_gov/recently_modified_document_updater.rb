@@ -94,7 +94,7 @@ class RegulationsDotGov::RecentlyModifiedDocumentUpdater
             existing_doc
           )
         rescue ActiveRecord::RecordInvalid => e
-          Honeybadger.notify(e, context: {updated_document: api_doc.to_s})
+          Honeybadger.notify(e, context: {updated_document: api_doc.inspect})
         end
       else 
         # Resync all associated regulations.gov documents if the regs.gov document number is unrecognized or we have detected an FR doc number change
