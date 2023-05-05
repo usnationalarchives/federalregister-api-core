@@ -61,7 +61,8 @@ module Content
           end
         end
 
-        mods_doc_numbers = ModsFile.new(date, options[:force_reload_mods]).document_numbers
+        mods_file = ModsFile.new(date, options[:force_reload_mods])
+        mods_doc_numbers = mods_file.document_numbers
 
         raise IssueMissingDocumentNumbers, "No documents numbers present in MODS file for #{date}." unless mods_doc_numbers.present?
 
@@ -71,7 +72,7 @@ module Content
         end
         document_numbers_missing_from_bulk_data.each do |document_number|
           import_document(
-            options.merge(:date => date, :document_number => document_number),
+            options.merge(:date => date, :document_number => document_number, :mods_file => mods_file),
             attributes
           )
         end
@@ -80,12 +81,13 @@ module Content
         if document_numbers_missing_from_mods.present?
           notify_of_missing_document(:mods, date, document_numbers_missing_from_mods)
         end
-        docs_and_nodes.each do |document_number, bulkdata_node|
+        docs_and_nodes.each do |document_number, bulkdata_node| 
           if mods_doc_numbers.include?(document_number)
             import_document(
               options.merge(
                 :date => date, :document_number => document_number,
-                :bulkdata_node => bulkdata_node
+                :bulkdata_node => bulkdata_node,
+                :mods_file => mods_file
               ),
               attributes
             )
@@ -183,6 +185,8 @@ module Content
     end
 
     attr_accessor :date, :document_number, :bulkdata_node, :entry
+    attr_reader :mods_file
+
     def initialize(options = {})
       options.symbolize_keys!
       if options[:entry]
@@ -198,14 +202,11 @@ module Content
         @entry.publication_date = @date
       end
       @force_reload_mods = options[:force_reload_mods]
+      @mods_file = options[:mods_file] || get_mods_file #Used so mods isn't downloaded repetitively
 
       if options[:bulkdata_node]
         @bulkdata_node = options[:bulkdata_node]
       end
-    end
-
-    def mods_file
-      @mods_file ||= ModsFile.new(@date, @force_reload_mods)
     end
 
     def mods_node
@@ -233,5 +234,12 @@ module Content
       end
       @entry.save!
     end
+
+    private
+
+    def get_mods_file
+      ModsFile.new(@date, @force_reload_mods)
+    end
+
   end
 end

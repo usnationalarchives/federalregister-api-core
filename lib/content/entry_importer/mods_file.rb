@@ -11,6 +11,7 @@ class Content::EntryImporter::ModsFile
   def document_numbers
     document.xpath('//xmlns:frDocNumber').map{|n| n.content()}
   end
+  memoize :document_numbers
 
   def url
     "https://www.govinfo.gov/metadata/pkg/FR-#{@date.to_s(:db)}/mods.xml"
@@ -54,10 +55,12 @@ class Content::EntryImporter::ModsFile
   def volume
     document.css('volume').first.try(:content)
   end
+  memoize :volume
 
   def issue_number
     document.css('issue').first.try(:content)
   end
+  memoize :issue_number
 
   def start_page
     document.css('extent[unit="pages"] start').first.try(:content)
@@ -79,8 +82,6 @@ class Content::EntryImporter::ModsFile
       convert_roman_to_arabic(reader_aids_node.at('extent end').try(:content))
     end
   end
-
-  memoize :volume
 
   def find_entry_node_by_document_number(document_number)
     document.xpath("./xmlns:relatedItem[@ID='id-#{document_number}']").first
