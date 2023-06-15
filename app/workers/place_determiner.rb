@@ -18,7 +18,6 @@ class PlaceDeterminer
   def perform(entry_id)
     ActiveRecord::Base.clear_active_connections!
     @entry = Entry.find(entry_id)
-
     begin
       retries ||= 0
 
@@ -53,6 +52,8 @@ class PlaceDeterminer
         entry.places_determined_at = Time.now
         entry.save
       end
+    rescue OpenCalais::ClientWrapper::RequestLimit
+      # Don't send failures to dead jobs queue since these jobs regularly fail
     end
   end
 
