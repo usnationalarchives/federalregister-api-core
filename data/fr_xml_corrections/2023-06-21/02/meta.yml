@@ -1,0 +1,2 @@
+reference: not basecamp-initiated
+description: Fix emdash escaping causing greater than symbols to be dropped from equations

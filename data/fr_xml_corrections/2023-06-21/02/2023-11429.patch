@@ -1,0 +1,11 @@
+--- /home/app/data/efs/document_issues/xml/2023/06/2023-06-21.xml	2023-07-19 16:51:28.622310071 -0400
++++ tmp/2023-06-21_modified_tmp.xml	2023-07-19 17:09:38.217004804 -0400
+@@ -36153,7 +36153,7 @@
+                         For manufacturers of consumer water heaters and residential-duty commercial water heaters, the Small Business Administration (SBA) has set a size threshold, which defines those entities classified as “small businesses” for the purposes of the statute. DOE used the SBA's small business size standards to determine whether any small entities would be subject to the requirements of the rule. (
+                         <E T="03">See</E>
+                          13 CFR part 121.) The size standards are listed by North American Industry Classification System (NAICS) code and industry description and are available at: 
+-                        <E T="03">www.sba.gov/document/support—table-size-standards.</E>
++                        <E T="03">www.sba.gov/document/support-table-size-standards.</E>
+                          Manufacturing of consumer water heaters and residential-duty commercial water heaters is classified under NAICS 335220, “Major Household Appliance Manufacturing.” The SBA sets a threshold of 1,500 employees or fewer for an entity to be considered as a small business for this category. DOE used available public information to identify potential small manufacturers. DOE accessed CCMS,
+                         <SU>79</SU>
+                         <FTREF/>
