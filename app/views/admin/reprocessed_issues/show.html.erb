@@ -70,7 +70,7 @@
             </td>
             <td class="span2">
               <% if reprocessed_issue.user_id == AutomaticModsReprocessor::AUTOMATED_REPROCESS_USER_ID  %>
-                Automated Reprocess (Detected change in MODS file)
+                Automated Reprocess
               <% else %>
                 <%= reprocessed_issue.user.try(:full_name) || 'NA' %>
               <% end %>

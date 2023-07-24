@@ -60,7 +60,15 @@ end
   # runs every 5th minute from 7AM EDT until 7PM Monday-Friday
   every '*/5 7-19 * * 1-5' do
     set :log, 'automatic_mods_reimporting'
-    rake 'content:issues:schedule_auto_import_mods'
+    rake 'content:issues:enqueue_reimports_of_current_issue'
+  end
+
+########################
+# AUTOMATIC REIMPORT OF CHANGED ISSUES
+########################
+  every 1.day, at: '2:00 pm' do
+    set :log, 'enqueue_reimports_of_modified_issues'
+    rake 'content:issues:enqueue_reimports_of_modified_issues'
   end
 
 

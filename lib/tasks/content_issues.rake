@@ -19,5 +19,13 @@ namespace :content do
       AutomaticModsReprocessor.perform
     end
 
+    task :enqueue_reimports_of_current_issue => :environment do
+      ReprocessedIssueRunnerEnqueuer.new(current_issue_only: true).perform
+    end
+
+    task :enqueue_reimports_of_modified_issues => :environment do
+      ReprocessedIssueRunnerEnqueuer.new.perform
+    end
+
   end
 end
