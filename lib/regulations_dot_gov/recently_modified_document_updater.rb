@@ -11,6 +11,7 @@ class RegulationsDotGov::RecentlyModifiedDocumentUpdater
     @days = days
   end
 
+  EMDASH_CHARACTER = "–"
   def perform
     ActiveRecord::Base.clear_active_connections!
     EntryObserver.disabled = true
@@ -20,6 +21,10 @@ class RegulationsDotGov::RecentlyModifiedDocumentUpdater
       if updated_document.federal_register_document_number.nil?
         notify_missing_document_number(updated_document)
         next 
+      end
+
+      if updated_document.federal_register_document_number.include?(EMDASH_CHARACTER)
+        Honeybadger.notify("Emdash #{EMDASH_CHARACTER} detected in recently modified documents: #{updated_document.federal_register_document_number}")
       end
       
       entry = Entry.find_by_document_number(updated_document.federal_register_document_number)
