@@ -17,6 +17,8 @@ feature_flags:
   reindex_all_agency_name_entries: <%= ActiveModel::Type::Boolean.new.cast(ENV['REINDEX_ALL_AGENCY_NAME_ENTRIES']) || false %>
 images:
   store_in_filesystem: true
+lograge:
+  enabled: true
 open_calais:
   daily_api_call_limit: <%= ENV["OPEN_CALAIS_DAILY_API_CALL_LIMIT"] || 500 %>
   throttle:
@@ -42,7 +44,7 @@ cron:
     convert_eps: <%= ActiveModel::Type::Boolean.new.cast(ENV.fetch('GPO_IMAGES_CONVERT_EPS', true)) %>
     reprocess_unlinked_gpo_images: <%= ActiveModel::Type::Boolean.new.cast(ENV.fetch('REPROCESS_UNLINKED_GPO_IMAGES', false)) %>
   images:
-    auto_generate_image_variants: <%= ActiveModel::Type::Boolean.new.cast(ENV.fetch('AUTO_GENERATE_IMAGE_VARIANTS', true)) %> 
+    auto_generate_image_variants: <%= ActiveModel::Type::Boolean.new.cast(ENV.fetch('AUTO_GENERATE_IMAGE_VARIANTS', true)) %>
     download_historical_images: <%= ActiveModel::Type::Boolean.new.cast(ENV['DOWNLOAD_HISTORICAL_IMAGES']) || false %>
     download_ongoing_images: <%= ActiveModel::Type::Boolean.new.cast(ENV['DOWNLOAD_ONGOING_IMAGES']) || false %>
     environments_requiring_image_download: <%= ENV['ENVIRONMENTS_REQUIRING_IMAGE_DOWNLOAD'].try(:split, ',') || ['Staging', 'Production'] %>
@@ -63,7 +65,7 @@ prince:
   port: <%= ENV.fetch('PRINCE_PORT', 5000) %>
 deliver_daily_import_email: <%= ActiveModel::Type::Boolean.new.cast(ENV.fetch('DELIVER_DAILY_IMPORT_EMAIL', true)) %>
 public_inspection_document_page_view_start_date: <%= ENV.fetch('PUBLIC_INSPECTION_DOCUMENT_PAGE_VIEW_START_DATE', nil) %>
-report_deprecations: <%= ActiveModel::Type::Boolean.new.cast( ENV.fetch("REPORT_DEPRECATIONS", false) ) %> 
+report_deprecations: <%= ActiveModel::Type::Boolean.new.cast( ENV.fetch("REPORT_DEPRECATIONS", false) ) %>
 s3_host_aliases:
   agency_logos: agency-logos.fr2.local
   public_images: images.fr2.local

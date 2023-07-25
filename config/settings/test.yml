@@ -1,6 +1,8 @@
 elasticsearch:
   host: <%= ENV['ELASTICSEARCH_HOST'] || 'admin:admin@localhost:9200/' ||'localhost' %>
   pil_index_since_date: '2019-04-08'
+lograge:
+  enabled: false
 public_inspection_document_page_view_start_date: <%= Date.new(2020,10,2) %>
 s3_buckets:
   public_inspection: public-inspection.example.org

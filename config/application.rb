@@ -6,6 +6,9 @@ require "rails/all"
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
+require_relative "../lib/ofr/rack/request_queue_tracker_middleware"
+require_relative "../lib/ofr/rack/memory_usage_tracker_middleware"
+
 module FederalregisterApiCore
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
@@ -16,8 +19,10 @@ module FederalregisterApiCore
     # in config/environments, which are processed later.
 
     # Add additional load paths for your own custom dirs
-    config.autoload_paths += %W(./lib )
-    config.eager_load_paths += %W(./lib)
+    %w[lib lib/concerns].each do |path|
+      config.autoload_paths << Rails.root.join(path)
+      config.eager_load_paths << Rails.root.join(path)
+    end
 
     # Activate observers that should always be running, expect during db:migrate and db:setup...
     unless ENV['ASSUME_UNITIALIZED_DB']
@@ -81,5 +86,7 @@ module FederalregisterApiCore
     # Ensure the batch-loader gem cache is purged between requests
     config.middleware.use BatchLoader::Middleware
 
+    config.middleware.use ::Ofr::Rack::RequestQueueTrackerMiddleware
+    config.middleware.use ::Ofr::Rack::MemoryUsageTrackerMiddleware
   end
 end

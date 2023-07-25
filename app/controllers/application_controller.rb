@@ -8,8 +8,6 @@ class ApplicationController < ActionController::Base
 
   include Locator
 
-  around_action :log_memory_usage unless Rails.env.test?
-
   private
 
   def parse_date_from_params
@@ -76,15 +74,4 @@ class ApplicationController < ActionController::Base
     cookies[:ab_group]
   end
   helper_method :ab_group
-
-  def log_memory_usage
-    pid = Process.pid
-
-    start_mem = Process.getrusage.maxrss
-    yield
-    end_mem = Process.getrusage.maxrss
-
-    Rails.logger.warn "[memory usage: #{pid} #{start_mem} #{end_mem} #{end_mem-start_mem}]"
-  end
-
 end

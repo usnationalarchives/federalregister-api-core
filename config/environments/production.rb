@@ -1,4 +1,5 @@
 require "active_support/core_ext/integer/time"
+require_relative "../../lib/json_logger"
 APP_HOST_NAME = 'federalregister.gov'
 
 Rails.application.configure do
@@ -52,6 +53,11 @@ Rails.application.configure do
   # Include generic and useful information about system operation, but avoid logging too much
   # information to avoid inadvertent exposure of personally identifiable information (PII).
   config.log_level = :debug
+
+  # override default tagged logging
+  logger = ActiveSupport::Logger.new($stdout)
+  logger.formatter = JsonLogger.new
+  config.logger = logger
 
   # Use a different cache store in production.
   # config.cache_store = :mem_cache_store

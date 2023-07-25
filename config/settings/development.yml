@@ -7,6 +7,8 @@ feature_flags:
   use_carrierwave_images_in_api: true
 images:
   store_in_filesystem: false
+lograge:
+  enabled: false
 s3_buckets:
   image_holding_tank: image-holding-tank.federalregister.gov
   zipped_eps_images: eps.images.fr2.local

@@ -25,7 +25,13 @@ gem 'geokit-rails'
 
 # acquires lat/long coordinates for postal codes provided in search
 gem 'geocoder'
-gem 'lograge' # Structured JSON logging
+
+# log formatting
+gem "lograge"
+gem "lograge-sql"
+
+gem "request_store"
+
 gem 'will_paginate', :require => 'will_paginate'
 gem 'amatch', '0.2.11'
 gem 'indefinite_article'
