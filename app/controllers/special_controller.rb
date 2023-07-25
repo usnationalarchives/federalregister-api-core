@@ -13,4 +13,9 @@ class SpecialController < ApplicationController
     end
   end
 
+  # used by k8s probe to know when container
+  # is ready / able to receive request
+  def alive
+    render json: {}.to_json, status: :ok
+  end
 end
