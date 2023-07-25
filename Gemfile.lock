@@ -379,7 +379,7 @@ GEM
       parallel
     parser (2.7.0.2)
       ast (~> 2.4.0)
-    passenger (6.0.4)
+    passenger (6.0.18)
       rack
       rake (>= 0.8.1)
     popen4 (0.1.2)
