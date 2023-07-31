@@ -21,7 +21,11 @@ class EntryRegulationsDotGovImporter
       regulations_dot_gov_open_for_comment:      api_doc.regulations_dot_gov_open_for_comment
     }.tap do |attrs|
       if api_doc.comment_start_date
-        attrs.merge!(comment_count: api_doc.comment_count)
+        begin
+          attrs.merge!(comment_count: api_doc.comment_count)
+        rescue RegulationsDotGov::V4::Client::NotFoundError
+          # NOTE: Some documents (2023-11654, 2023-12012) are open per the API but return a 404 when attempting to fetch the comment count.  eg https://api.regulations.gov/v4/document-comments-received-counts/MARAD_FRDOC_0001-2795?api_key=DEMO_KEY
+        end
       end
     end
 
@@ -88,7 +92,11 @@ class EntryRegulationsDotGovImporter
   end
 
   def comment_count
-    regulationsdotgov_document ? regulationsdotgov_document.try(:comment_count) : entry.comment_count
+    begin
+      regulationsdotgov_document ? regulationsdotgov_document.try(:comment_count) : entry.comment_count
+    rescue RegulationsDotGov::V4::Client::NotFoundError
+      # NOTE: Some documents (2023-11654, 2023-12012) are open per the API but return a 404 when attempting to fetch the comment count.  eg https://api.regulations.gov/v4/document-comments-received-counts/MARAD_FRDOC_0001-2795?api_key=DEMO_KEY    
+    end
   end
 
   def regulations_dot_gov_document_id
