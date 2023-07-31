@@ -141,9 +141,11 @@ class RegulationsDotGov::RecentlyModifiedDocumentUpdater
     logger.warn("[MissingDocumentNumber] #{message}")
   end
 
+  DIGITS_ONLY_REGEX = /\A\d+\z/ 
   def updated_documents
     regulations_dot_gov_client.
-      find_documents_updated_within(days, document_type_identifiers.join(","))
+      find_documents_updated_within(days, document_type_identifiers.join(",")).
+      reject{|doc| DIGITS_ONLY_REGEX.match?(doc.federal_register_document_number) } #filter out document numbers like like "88" or "7486"
   end
   memoize :updated_documents
 
