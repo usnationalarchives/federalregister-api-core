@@ -1,5 +1,5 @@
 FederalregisterApiCore::Application.routes.draw do
-  match '/status/api-core/:id' => 'special#status', :as => :status_api_core, :quiet => 'true', :via => :get
+  match '/alive' => 'special#alive', :as => :alive, :quiet => 'true', :via => :get
   match '/status/api-core/' => 'special#status', :quiet => 'true', :via => :get
   match '/status' => 'special#status', :as => :status, :quiet => 'true', :via => :get
 
