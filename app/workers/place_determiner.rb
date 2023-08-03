@@ -54,6 +54,8 @@ class PlaceDeterminer
       end
     rescue OpenCalais::ClientWrapper::RequestLimit
       # Don't send failures to dead jobs queue since these jobs regularly fail
+    rescue OpenCalais::ClientWrapper::InternalServerError
+      PlaceDeterminer.perform_in(5.minutes, entry_id)
     end
   end
 

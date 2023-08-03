@@ -3,6 +3,7 @@ module OpenCalais
     class RequestLimit < StandardError; end
     class OpenCalaisRequestFailure < StandardError; end
     class RequestSizeTooLarge < StandardError; end
+    class InternalServerError < StandardError; end
 
     def initialize(text)
       @text = text
@@ -31,6 +32,8 @@ module OpenCalais
         when 429
           # "An HTTP 429 error is generated in when the daily request quota, or the per-second request quota is exceeded. "
           raise RequestLimit.new(e.inspect)
+        when 500
+          raise InternalServerError.new(e.inspect)
         else
           raise e
         end
