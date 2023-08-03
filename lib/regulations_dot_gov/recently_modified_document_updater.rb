@@ -145,7 +145,8 @@ class RegulationsDotGov::RecentlyModifiedDocumentUpdater
   def updated_documents
     regulations_dot_gov_client.
       find_documents_updated_within(days, document_type_identifiers.join(",")).
-      reject{|doc| DIGITS_ONLY_REGEX.match?(doc.federal_register_document_number) } #filter out document numbers like like "88" or "7486"
+      reject{|doc| DIGITS_ONLY_REGEX.match?(doc.federal_register_document_number) }. #filter out document numbers like like "88" or "7486"
+      reject{|doc| /^93/.match?(doc.federal_register_document_number) }
   end
   memoize :updated_documents
 
