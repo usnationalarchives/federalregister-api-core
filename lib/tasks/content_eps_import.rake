@@ -42,6 +42,8 @@ namespace :content do
         enqueued_s3_keys << job.args.first
       end
 
+      invalid_filenames = [".BridgeSort"]
+
       GpoImages::FogAwsConnection.
         new.
         connection.
@@ -51,7 +53,11 @@ namespace :content do
           select{|s3_key| enqueued_s3_keys.exclude?(s3_key) }.
           select{|s3_key| s3_key.include?('.')}.
           each do |s3_key|
-            ImagePipeline::EnvironmentImageDownloader.perform_async(s3_key)
+            if invalid_filenames.include?(s3_key)
+              ImagePipeline::ImageHoldingTankRemover.perform_async(s3_key, true)
+            else
+              ImagePipeline::EnvironmentImageDownloader.perform_async(s3_key)
+            end
           end
     end
 

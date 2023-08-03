@@ -4,9 +4,14 @@ class ImagePipeline::ImageHoldingTankRemover
 
   sidekiq_options :queue => :gpo_image_import, :retry => 0
 
-  def perform(s3_key)
+  def perform(s3_key, force_destroy = nil )
     @s3_key     = s3_key
     @connection = GpoImages::FogAwsConnection.new.connection
+    if force_destroy
+      destroy_s3_object!
+      return
+    end
+
     s3_tags     = get_s3_tags
     if environments_requiring_image_download.all? do |environment| 
         s3_tags["#{environment}DownloadedAt"]
