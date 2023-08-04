@@ -2,7 +2,7 @@ class DailyIssueEmailSender
   include Sidekiq::Worker
   include Sidekiq::Throttled::Worker
 
-  sidekiq_options :queue => :api_core
+  sidekiq_options :queue => :high_priority
 
   def perform(date)
     return unless Settings.deliver_daily_import_email

@@ -21,7 +21,18 @@ class ReprocessedIssueRunnerEnqueuer
           next
         else
           puts "reprocessing #{package.dateIssued}"
-          ReprocessedIssueRunner.perform_async(issue_date.to_s(:iso))
+          if issue_date == current_issue.publication_date
+            queue = 'high_priority'
+          else
+            queue = 'reimport'
+          end
+
+          Sidekiq::Client.push(
+            'args'  => [issue_date.to_s(:iso)],
+            'class' => ReprocessedIssueRunner,
+            'queue' => queue,
+            'retry' => false
+          )
         end
       end
   end

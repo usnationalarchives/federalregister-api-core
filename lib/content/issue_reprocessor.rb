@@ -6,7 +6,7 @@ module Content
     include Sidekiq::Worker
     include Sidekiq::Throttled::Worker
 
-    sidekiq_options :queue => :api_core, :retry => 0
+    sidekiq_options :queue => :reimport, :retry => 0
 
     attr_reader :path_manager, :reprocessed_issue
 

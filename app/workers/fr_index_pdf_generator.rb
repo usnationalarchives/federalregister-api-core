@@ -4,7 +4,7 @@ class FrIndexPdfGenerator
   include Sidekiq::Worker
   include Sidekiq::Throttled::Worker
 
-  sidekiq_options :queue => :fr_index_pdf_previewer, :retry => 0
+  sidekiq_options :queue => :high_priority, :retry => 0
 
 
   private

@@ -2,7 +2,7 @@ class CommentUrlRemover
   include CacheUtils
   include Sidekiq::Worker
 
-  sidekiq_options :queue => :document_updater, :retry => 0
+  sidekiq_options :queue => :high_priority, :retry => 0
 
   attr_accessor :entry
 
