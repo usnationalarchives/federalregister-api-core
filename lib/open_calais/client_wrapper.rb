@@ -32,7 +32,7 @@ module OpenCalais
         when 429
           # "An HTTP 429 error is generated in when the daily request quota, or the per-second request quota is exceeded. "
           raise RequestLimit.new(e.inspect)
-        when 500
+        when 500, 504
           raise InternalServerError.new(e.inspect)
         else
           raise e
