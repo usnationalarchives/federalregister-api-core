@@ -42,6 +42,7 @@ module Content
 
     def generate_diffs
       begin
+        create_blank_mods_file_if_non_existent!
         reprocessed_issue.update(
           diff: diff[0, 40000],
           html_diff: html_diff[0, 40000]
@@ -52,6 +53,16 @@ module Content
     end
 
     private
+
+    def create_blank_mods_file_if_non_existent!
+      # Create a blank file if no MODS file exists so a diff can be calculated
+      FileUtils.mkdir_p(File.dirname(path_manager.document_mods_path))
+      if !File.exist?(path_manager.document_mods_path)
+        File.open(path_manager.document_mods_path, 'w') do |file|
+          # no-op
+        end
+      end
+    end
 
     def diff
       FrDiff.new(
