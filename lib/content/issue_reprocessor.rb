@@ -8,12 +8,13 @@ module Content
 
     sidekiq_options :queue => :reimport, :retry => 0
 
-    attr_reader :path_manager, :reprocessed_issue
+    attr_reader :path_manager, :reprocessed_issue, :force_reload_bulkdata
 
-    def perform(reprocessed_issue_id)
+    def perform(reprocessed_issue_id, force_reload_bulkdata = false)
       ActiveRecord::Base.clear_active_connections!
       @reprocessed_issue = ReprocessedIssue.find(reprocessed_issue_id)
       @path_manager      = FileSystemPathManager.new(@reprocessed_issue.issue.publication_date)
+      @force_reload_bulkdata = force_reload_bulkdata
       Rails.application.load_tasks
 
       rotate_mods_files
@@ -61,11 +62,19 @@ module Content
 
       begin
         ENV['DATE'] = "#{date.to_s(:iso)}"
-        Rake::Task['content:entries:reimport_sans_force_reload'].invoke
+        if force_reload_bulkdata
+          Rake::Task['content:entries:reimport'].invoke
+        else
+          Rake::Task['content:entries:reimport_sans_force_reload'].invoke
+        end
       rescue StandardError => error
         handle_failure(error,"IssueReprocessor: Reimporting all entry data")
       ensure
-        Rake::Task['content:entries:reimport_sans_force_reload'].reenable
+        if force_reload_bulkdata
+          Rake::Task['content:entries:reimport'].reenable
+        else
+          Rake::Task['content:entries:reimport_sans_force_reload'].reenable
+        end
       end
     end
 

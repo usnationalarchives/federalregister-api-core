@@ -13,10 +13,14 @@ class ReprocessedIssue < ApplicationModel
     end
   end
 
-  def reprocess_issue
+  def reprocess_issue(force_reload_bulkdata = false)
     self.status = "in_progress"
     self.save
-    Sidekiq::Client.enqueue(Content::IssueReprocessor, self.id)
+    if force_reload_bulkdata
+      Sidekiq::Client.enqueue(Content::IssueReprocessor, self.id, true)
+    else
+      Sidekiq::Client.enqueue(Content::IssueReprocessor, self.id)
+    end
   end
 
   def display_loading_message?

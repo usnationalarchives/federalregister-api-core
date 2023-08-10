@@ -15,7 +15,7 @@ class ReprocessedIssueRunner
       # Try to reimport MODS only if MODS greater than 2000 since MODS in the 1994-2000 eras are missing information
       reprocessed_issue.download_mods(async: false)
     end
-    reprocessed_issue.reprocess_issue
+    reprocessed_issue.reprocess_issue(true)
   end
 
 end
