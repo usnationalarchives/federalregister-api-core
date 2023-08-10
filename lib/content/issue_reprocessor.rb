@@ -22,7 +22,10 @@ module Content
       regenerate_toc_json
       notify_of_updated_issue
       clear_cache
-      update_status("complete")
+
+      if reprocessed_issue.status != 'failed' # ie Don't mark a reprocessing as "complete" if rescues occurred in #handle_failures
+        update_status("complete")
+      end
     end
 
     def date
