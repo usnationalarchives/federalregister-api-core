@@ -7,16 +7,16 @@ class Content::PublicInspectionImporter::CacheManager
 
   attr_reader :issue, :pi_documents
 
-  def self.manage_cache(importer)
-    new(importer).manage_cache
+  def self.manage_cache(issue_id, start_time)
+    new(issue_id, start_time).manage_cache
   end
 
-  def initialize(importer)
-    @issue = importer.issue
-    @pi_documents = importer.issue.public_inspection_documents.
+  def initialize(issue_id, start_time)
+    @issue = PublicInspectionIssue.find(issue_id)
+    @pi_documents = issue.public_inspection_documents.
       includes(:entry => :agencies).
       where("public_inspection_documents.updated_at >= ?",
-        importer.start_time
+        start_time
       )
   end
 

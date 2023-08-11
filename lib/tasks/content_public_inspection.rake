@@ -1,9 +1,6 @@
 namespace :content do
   namespace :public_inspection do
     desc "Import current public inspection data"
-    task :import => :environment do
-      Content::PublicInspectionImporter.perform if Issue.should_have_an_issue?(Date.current)
-    end
 
     namespace :import do
       desc "Link public inspection documents to their entries based on publication date"
@@ -27,29 +24,8 @@ namespace :content do
     end
 
     task :import_and_deliver => :environment do
-      Content::ImportDriver::PublicInspectionDriver.new.perform
-    end
-
-    task :run => :environment do
       if Issue.should_have_an_issue?(Date.current)
-        Content::PublicInspectionImporter.perform
-
-        new_documents = PublicInspectionDocument.
-          where("DATE(filed_at) = '#{Date.current.to_s(:iso)}'").
-          where(subscriptions_enqueued_at: nil).
-          where.not(pdf_file_name: nil)
-
-        if new_documents.present?
-          Sidekiq::Client.push(
-            'class' => 'PublicInspectionDocumentSubscriptionQueuePopulator',
-            'args'  => [new_documents.pluck(:document_number)],
-            'queue' => 'subscriptions',
-            'retry' => 0
-          )
-
-          current_time = Time.current
-          new_documents.update_all(subscriptions_enqueued_at: current_time)
-        end
+        Content::BatchedPublicInspectionImporter.perform
       end
     end
 
@@ -89,27 +65,26 @@ namespace :content do
         PublicInspectionIndexer.reindex!
       end
 
-      pil = Content::PublicInspectionImporter.new
-      pil.generate_toc(args[:date])
+      Content::PublicInspectionImporter::BatchedPublicInspectionImporterFinisher.new.generate_toc(args[:date])
     end
 
     namespace :blacklist do
       task :add, [:document_number] => :environment do |t, args|
         $redis.sadd(
-          Content::PublicInspectionImporter::BLACKLIST_KEY,
+          Content::BatchedPublicInspectionImporter::BLACKLIST_KEY,
           args[:document_number]
         )
 
-        puts "Current blacklist: #{$redis.smembers(Content::PublicInspectionImporter::BLACKLIST_KEY)}"
+        puts "Current blacklist: #{$redis.smembers(Content::BatchedPublicInspectionImporter::BLACKLIST_KEY)}"
       end
 
       task :remove, [:document_number] => :environment do |t,args|
         $redis.srem(
-          Content::PublicInspectionImporter::BLACKLIST_KEY,
+          Content::BatchedPublicInspectionImporter::BLACKLIST_KEY,
           args[:document_number]
         )
 
-        puts "Current blacklist: #{$redis.smembers(Content::PublicInspectionImporter::BLACKLIST_KEY)}"
+        puts "Current blacklist: #{$redis.smembers(Content::BatchedPublicInspectionImporter::BLACKLIST_KEY)}"
       end
     end
 

@@ -75,3 +75,4 @@ s3_host_aliases:
 sidekiq:
   # kilobytes (integer) like 1048576 (1GB)
   memory_threshold: '<%= ENV["SIDEKIQ_MEMORY_THRESHOLD"] %>'
+slack_webhook_url: <%= ENV["SLACK_WEBHOOK_URL"] || 'https://hooks.slack.com/services/abc/123' %>

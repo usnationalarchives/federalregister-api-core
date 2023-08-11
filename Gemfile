@@ -59,6 +59,7 @@ gem 'net-smtp'
 gem 'aws-sdk-s3'
 gem 'aws-sdk-cloudfront'
 gem 'stevedore', '0.3.0'
+gem "slack-notifier"
 
 # fork of delynn/userstamp plugin
 # gem 'activerecord-userstamp', git: 'https://github.com/criticaljuncture/userstamp', branch: 'rails_six'

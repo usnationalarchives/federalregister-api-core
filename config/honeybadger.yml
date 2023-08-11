@@ -2,5 +2,7 @@
 api_key: <%= Rails.application.secrets[:api_keys][:honeybadger] unless Rails.env.test? %>
 debug: true
 exceptions:
+  ignore:
+    - 'Content::PublicInspectionImporter::BatchedDocumentImporter::BatchTimeoutError'
   ignored_user_agents: [/ScanAlert/]
 

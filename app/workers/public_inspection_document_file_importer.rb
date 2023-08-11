@@ -4,14 +4,13 @@ class PublicInspectionDocumentFileImporter
 
   sidekiq_options :queue => :public_inspection, :retry => 0
 
-  attr_reader :document_number, :pdf_url, :api_session_token, :redis_set
+  attr_reader :document_number, :pdf_url, :api_session_token
 
-  def perform(document_number, pdf_url, api_session_token, redis_set)
+  def perform(document_number, pdf_url, api_session_token)
     ActiveRecord::Base.clear_active_connections!
     @document_number   = document_number
     @pdf_url           = pdf_url
     @api_session_token = api_session_token
-    @redis_set         = redis_set
 
     start_time = Time.now
     log("Starting import for #{document_number}")
@@ -25,9 +24,6 @@ class PublicInspectionDocumentFileImporter
     clean_up_tempfile
     
     log("Finished import for #{document_number} in #{(Time.now - start_time).ceil}s")
-  ensure
-    log("Marking import complete for #{document_number}")
-    mark_as_complete
   end
 
   private
@@ -90,10 +86,6 @@ class PublicInspectionDocumentFileImporter
 
   def clean_up_tempfile
     File.delete(pdf_path)
-  end
-
-  def mark_as_complete
-    $redis.srem(redis_set, document_number)
   end
 
 end

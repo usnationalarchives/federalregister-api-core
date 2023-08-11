@@ -521,6 +521,7 @@ GEM
       multi_json (~> 1.10)
     sinatra (1.0)
       rack (>= 1.0)
+    slack-notifier (2.4.0)
     slop (3.6.0)
     spring (4.1.0)
     spring-commands-rspec (1.0.4)
@@ -667,6 +668,7 @@ DEPENDENCIES
   sendgrid
   sidekiq-pro!
   sidekiq-throttled
+  slack-notifier
   spring
   spring-commands-rspec
   stevedore (= 0.3.0)
