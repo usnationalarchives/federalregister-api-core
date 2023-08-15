@@ -1,0 +1,45 @@
+--- /home/app/data/efs/document_issues/xml/2023/04/2023-04-27.xml	2023-08-14 15:42:20.530526740 -0400
++++ tmp/2023-04-27_modified_tmp.xml	2023-08-15 12:36:22.747433947 -0400
+@@ -10374,7 +10374,7 @@
+                     <HD SOURCE="HED">DATES:</HD>
+                     <P>
+                         A hybrid public hearing will be held on Monday, June 5, 2023, from 1–3 p.m. ET. The USPTO will publish a proposed trademark fee schedule and related supplementary information for public viewing no later than May 19, 2023, on the fee setting and adjusting section of the USPTO website, 
+-                        <E T="03">www.uspto.gov/FeeSettingAnd Adjusting.</E>
++                        <E T="03">www.uspto.gov/FeeSettingAndAdjusting.</E>
+                          Anyone wishing to present oral testimony at the hearing must submit a written request for an opportunity to do so no later than May 26, 2023. Written comments on proposed trademark fees will be accepted until June 12, 2023.
+                     </P>
+                 </DATES>
+@@ -10400,7 +10400,7 @@
+                 </P>
+                 <P>
+                     An agenda for witness testimony will be sent to testifying requesters and posted on the fee setting and adjusting section of the USPTO website, 
+-                    <E T="03">www.uspto.gov/FeeSettingAnd Adjusting.</E>
++                    <E T="03">www.uspto.gov/FeeSettingAndAdjusting.</E>
+                      If time permits, the TPAC may permit unscheduled testimony as well.
+                 </P>
+                 <P>
+@@ -10422,13 +10422,13 @@
+                 <HD SOURCE="HD1">Recordings</HD>
+                 <P>
+                     A recording of the public hearing will be posted on the fee setting and adjusting section of the USPTO website, 
+-                    <E T="03">www.uspto.gov/FeeSettingAnd Adjusting,</E>
++                    <E T="03">www.uspto.gov/FeeSettingAndAdjusting,</E>
+                      shortly after the hearing.
+                 </P>
+                 <HD SOURCE="HD1">Transcripts</HD>
+                 <P>
+                     A transcript of the hearing will be available on the fee setting and adjusting section of the USPTO website, 
+-                    <E T="03">www.uspto.gov/FeeSettingAnd Adjusting,</E>
++                    <E T="03">www.uspto.gov/FeeSettingAndAdjusting,</E>
+                      shortly after the hearing.
+                 </P>
+                 <FURINF>
+@@ -10450,7 +10450,7 @@
+                 </P>
+                 <P>
+                     The USPTO is planning to exercise its fee setting authority to set or adjust trademark fees. The USPTO will publish a proposed trademark fee schedule and related supplementary information for public viewing no later than May 19, 2023, on the fee setting and adjusting section of the USPTO website, 
+-                    <E T="03">www.uspto.gov/FeeSettingAnd Adjusting.</E>
++                    <E T="03">www.uspto.gov/FeeSettingAndAdjusting.</E>
+                      The TPAC will hold a public hearing regarding the proposed trademark fee schedule on the date indicated in this notice. The USPTO will assist the TPAC in holding the hearing by providing resources to organize the hearing and notifying the public. Following the TPAC public hearing and considering all comments, advice, and recommendations, the USPTO, if it continues with the fee setting process, will publish a Notice of Proposed Rulemaking in the 
+                     <E T="04">Federal Register</E>
+                     , setting forth its proposed trademark fees.
