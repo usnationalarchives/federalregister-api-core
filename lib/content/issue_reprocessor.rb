@@ -56,12 +56,14 @@ module Content
       update_reprocessing_message("enqueuing recompilation of HTML")
 
       begin
-        ENV['DATE'] = "#{date.to_s(:iso)}"
-        Rake::Task['web:notify_of_updated_issue'].invoke
+        Sidekiq::Client.push(
+          'class' => 'IssueReprocessor',
+          'args'  => [date.to_s(:iso)],
+          'queue' => 'issue_reprocessor',
+          'retry' => 0
+        )
       rescue StandardError => error
         handle_failure(error,"IssueReprocessor: enqueuing recompilation of HTML")
-      ensure
-        Rake::Task['web:notify_of_updated_issue'].reenable
       end
     end
 
@@ -69,32 +71,22 @@ module Content
       update_reprocessing_message("reimporting all entry data")
 
       begin
-        ENV['DATE'] = "#{date.to_s(:iso)}"
         if force_reload_bulkdata
-          Rake::Task['content:entries:reimport'].invoke
+          entry_importer(:all, {force_reload_bulkdata: true, force_reload_mods: true})
         else
-          Rake::Task['content:entries:reimport_sans_force_reload'].invoke
+          entry_importer(:all, {force_reload_bulkdata: false, force_reload_mods: false})
         end
       rescue StandardError => error
         handle_failure(error,"IssueReprocessor: Reimporting all entry data")
-      ensure
-        if force_reload_bulkdata
-          Rake::Task['content:entries:reimport'].reenable
-        else
-          Rake::Task['content:entries:reimport_sans_force_reload'].reenable
-        end
       end
     end
 
     def reprocess_rin_and_significant
       update_reprocessing_message("reprocessing RIN and Significant flag")
       begin
-        ENV['DATE'] = "#{date.to_s(:iso)}"
-        Rake::Task['content:entries:import:rin_and_significant'].invoke
+        entry_importer(:regulation_id_numbers, :significant)
       rescue StandardError => error
         handle_failure(error,"IssueReprocessor: Reprocess RIN and Significant")
-      ensure
-        Rake::Task['content:entries:import:rin_and_significant'].reenable
       end
     end
 
@@ -102,12 +94,9 @@ module Content
       update_reprocessing_message("reprocessing dates")
 
       begin
-        ENV['DATE'] = "#{date.to_s(:iso)}"
-        Rake::Task['content:entries:import:events'].invoke
+        entry_importer(:events)
       rescue StandardError => error
         handle_failure(error,"IssueReprocessor: Reprocess Events")
-      ensure
-        Rake::Task['content:entries:import:events'].reenable
       end
     end
 
@@ -115,12 +104,9 @@ module Content
       update_reprocessing_message("reprocessing agencies")
 
       begin
-        ENV['DATE'] = "#{date.to_s(:iso)}"
-        Rake::Task['content:entries:import:agencies'].invoke
+        entry_importer(:agency_name_assignments)
       rescue StandardError => error
         handle_failure(error,"IssueReprocessor: Reprocess Agencies")
-      ensure
-        Rake::Task['content:entries:import:agencies'].reenable
       end
     end
 
@@ -128,12 +114,9 @@ module Content
       update_reprocessing_message("reprocessing presidential document fields")
 
       begin
-        ENV['DATE'] = "#{date.to_s(:iso)}"
-        Rake::Task['content:entries:import:presidential_documents'].invoke
+        entry_importer(:presidential_document_type_id, :signing_date, :executive_order_notes, :presidential_document_number)
       rescue StandardError => error
         handle_failure(error,"IssueReprocessor: Reprocess Presidential Documents")
-      ensure
-        Rake::Task['content:entries:import:presidential_documents'].reenable
       end
     end
 
@@ -141,13 +124,19 @@ module Content
       update_reprocessing_message("reprocessing issue page counts")
 
       begin
-        ENV['DATE'] = "#{date.to_s(:iso)}"
-        Rake::Task['content:entries:import:issue'].invoke
+        import_issue!
       rescue StandardError => error
         handle_failure(error,"IssueReprocessor: Reprocess Issue")
-      ensure
-        Rake::Task['content:entries:import:issue'].reenable
       end
+    end
+
+    def import_issue!
+      issue = Issue.find_by_publication_date!(date)
+      Content::EntryImporter::IssueUpdater.new(
+        issue,
+        Content::EntryImporter::ModsFile.new(issue.publication_date, false),
+        Content::EntryImporter::BulkdataFile.new(issue.publication_date, false)
+      ).process
     end
 
     def reindex
@@ -166,8 +155,7 @@ module Content
 
         begin
           purge_cache('^/api/v1/documents')
-          ENV['DATE'] = "#{date.to_s(:iso)}"
-          Rake::Task['content:entries:json:compile:daily_toc'].invoke
+          compile_toc_json!
           purge_cache("^/api/v1/issues/#{date.strftime("%Y/%m/%d")}*")
         rescue StandardError => error
           handle_failure(error,"IssueReprocessor: Regenerate ToC JSON")
@@ -206,9 +194,19 @@ module Content
 
       FileUtils.mkdir_p(path_manager.document_temporary_mods_dir)
       FileUtils.mv(
-        path_manager.document_temporary_mods_path,
-        path_manager.document_mods_path
+        path_manager.document_temporary_mods_path,        path_manager.document_mods_path
       )
+    end
+
+    def entry_importer(*attributes)
+      Content::EntryImporter.process_all_by_date(date, *attributes)
+    end
+
+    def compile_toc_json!
+      return unless Issue.should_have_an_issue?(date)
+
+      puts "compiling daily table of contents json for #{date}..."
+      Content::TableOfContentsCompiler.perform(date)
     end
 
   end
