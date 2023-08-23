@@ -256,7 +256,7 @@ describe EsEntrySearch, es: true do
 
   end
 
-  context "Elasticsearch query definition", pending: true do
+  context "Elasticsearch query definition" do
 
     it "integrates a basic #with attribute" do
       search = EsEntrySearch.new(conditions: {significant: 1})
@@ -279,7 +279,7 @@ describe EsEntrySearch, es: true do
                 {:_score=>{:order=>"desc"}},
                 {:publication_date=>{:order=>"desc"}}
               ],
-              :_source => ['id']}
+              :_source => {excludes: ["full_text"]}}
       )
     end
 
@@ -312,7 +312,7 @@ describe EsEntrySearch, es: true do
             {:_score=>{:order=>"desc"}},
             {:publication_date=>{:order=>"desc"}}
           ],
-          :_source => ['id']}
+          :_source => {excludes: ["full_text"]}}
       )
     end
 
@@ -339,7 +339,7 @@ describe EsEntrySearch, es: true do
             {:_score=>{:order=>"desc"}},
             {:publication_date=>{:order=>"desc"}}
           ],
-          :_source => ['id']}
+          :_source => {excludes: ["full_text"]}}
       )
     end
 
