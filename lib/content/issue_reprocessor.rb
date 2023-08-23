@@ -13,6 +13,7 @@ module Content
     def perform(reprocessed_issue_id, force_reload_bulkdata = false)
       ActiveRecord::Base.clear_active_connections!
       @reprocessed_issue = ReprocessedIssue.find(reprocessed_issue_id)
+      update_created_at!
       @path_manager      = FileSystemPathManager.new(@reprocessed_issue.issue.publication_date)
       @force_reload_bulkdata = force_reload_bulkdata
       Rails.application.load_tasks
@@ -43,6 +44,13 @@ module Content
     end
 
     private
+
+    def update_created_at!
+      if reprocessed_issue.user_id == AutomaticModsReprocessor::AUTOMATED_REPROCESS_USER_ID &&
+        date != Issue.current.publication_date
+        reprocessed_issue.update!(created_at: Time.current)
+      end
+    end
 
     def notify_of_updated_issue
       update_reprocessing_message("enqueuing recompilation of HTML")
