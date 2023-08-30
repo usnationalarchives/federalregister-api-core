@@ -6,4 +6,8 @@ module ProcessConcerns
       Process.getrusage.maxrss # linux returns kilobytes
     end
   end
+
+  def pid
+    Process.pid
+  end
 end

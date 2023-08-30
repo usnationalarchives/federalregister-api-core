@@ -68,8 +68,10 @@ public_inspection_document_page_view_start_date: <%= ENV.fetch('PUBLIC_INSPECTIO
 report_deprecations: <%= ActiveModel::Type::Boolean.new.cast( ENV.fetch("REPORT_DEPRECATIONS", false) ) %>
 s3_host_aliases:
   agency_logos: agency-logos.fr2.local
-  public_images: images.fr2.local
   lede_photos: lede-photos.fr2.local
   private_images: s3.amazonaws.com
   public_images: images.fr2.local
   public_inspection: public-inspection.fr2.local
+sidekiq:
+  # kilobytes (integer) like 1048576 (1GB)
+  memory_threshold: '<%= ENV["SIDEKIQ_MEMORY_THRESHOLD"] %>'
