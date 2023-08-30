@@ -83,7 +83,7 @@ class EntryRegulationsDotGovImporter
     end
 
     if purge_varnish
-      purge_document_paths
+      enqueue_delayed_varnish_purge
     end
   end
 
@@ -151,10 +151,9 @@ class EntryRegulationsDotGovImporter
   end
   memoize :current_time
 
-  def purge_document_paths
-    document_paths.each do |path|
-      purge_cache(path)
-    end
+  def enqueue_delayed_varnish_purge
+    # NOTE: We're enqueuing on a delay to avoid an ES/Varnish race condition where varnish caches the old page before the ES index refreshes
+    CacheClearer.perform_in(5.seconds, document_paths)
   end
   
   def document_paths
