@@ -90,9 +90,9 @@ module RouteBuilder
 
   def short_document_url(document, options={})
     if RAILS_ENV == 'production'
-      host = 'federalregister.gov'
+      host = 'https://federalregister.gov'
     else
-      host = 'example.com'
+      host = 'https://www.example.com'
     end
     format = options.fetch(:format, nil)
 
