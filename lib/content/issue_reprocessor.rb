@@ -16,7 +16,6 @@ module Content
       update_created_at!
       @path_manager      = FileSystemPathManager.new(@reprocessed_issue.issue.publication_date)
       @force_reload_bulkdata = force_reload_bulkdata
-      Rails.application.load_tasks
 
       remaining_retries = 1
       begin
