@@ -18,7 +18,20 @@ module Content
       @force_reload_bulkdata = force_reload_bulkdata
       Rails.application.load_tasks
 
-      rotate_mods_files
+      remaining_retries = 1
+      begin
+        rotate_mods_files
+      rescue Errno::ENOENT => error
+        # Attempt to re-download mods if they are absent from the temp mods directory
+        if remaining_retries > 0
+          reprocessed_issue.download_mods(async: false)
+          remaining_retries -= 1
+          retry
+        else
+          raise error
+        end
+      end
+
       reprocess_issue
       reindex
       regenerate_toc_json
@@ -187,10 +200,13 @@ module Content
 
     def rotate_mods_files
       FileUtils.mkdir_p(path_manager.document_archive_mods_dir)
-      FileUtils.mv(
-        path_manager.document_mods_path,
-        path_manager.document_archive_mods_path(Time.now.to_i)
-      )
+
+      if File.exist?(path_manager.document_mods_path) #ie don't assume MODS exist
+        FileUtils.mv(
+          path_manager.document_mods_path,
+          path_manager.document_archive_mods_path(Time.now.to_i)
+        )
+      end
 
       FileUtils.mkdir_p(path_manager.document_temporary_mods_dir)
       FileUtils.mv(
