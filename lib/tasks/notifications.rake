@@ -3,8 +3,9 @@ namespace :notifications do
     desc "Triggers pager duty if content is late"
     task :late => :environment do
       next unless Rails.env.production?
+      date = Date.current
 
-      if Issue.current_issue_is_late?("8AM")
+      if Issue.current_issue_is_late?("8AM") && !Issue.bulk_data_missing?(date) && !Issue.mods_missing?(date)
         Mailer.pager_duty("FR content is late!").deliver_now
       end
     end
