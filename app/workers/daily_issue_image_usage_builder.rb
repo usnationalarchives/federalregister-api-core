@@ -14,6 +14,8 @@ class DailyIssueImageUsageBuilder
 
   attr_reader :date, :documents
 
+  IMAGE_RETRY_LIMIT = 10
+  IMAGE_RETRY_SLEEP = 3
   def scan_documents_for_images
     entry_ids_for_reindexing = []
     GpoImages::DailyIssueImageProcessor::XML_IMAGE_TAGS.each do |xml_tag|
@@ -27,7 +29,19 @@ class DailyIssueImageUsageBuilder
         image_usage.save!
         image = image_usage.image
         if image.present?
-          image.make_public!
+          remaining_retries = IMAGE_RETRY_LIMIT
+          begin
+            image.make_public!
+          rescue StandardError => e
+            if remaining_retries > 0
+              remaining_retries -= 1
+              sleep IMAGE_RETRY_SLEEP
+              puts "retrying #{image.identifier}.  #{remaining_retries} retries remaining..."
+              retry
+            else
+              raise e
+            end
+          end
         else
           Image.create!(
             created_at:       image_usage.updated_at,
