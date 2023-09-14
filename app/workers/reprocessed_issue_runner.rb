@@ -11,10 +11,7 @@ class ReprocessedIssueRunner
       issue_id: issue.id,
       user_id:  AutomaticModsReprocessor::AUTOMATED_REPROCESS_USER_ID
     )
-    if date >= Date.new(2000,1,1)
-      # Try to reimport MODS only if MODS greater than 2000 since MODS in the 1994-2000 eras are missing information
-      reprocessed_issue.download_mods(async: false)
-    end
+    reprocessed_issue.download_mods(async: false) #NOTE: Some MODS in the 1994-2000 eras are likely missing information so we may see some reprocessing errors here
     reprocessed_issue.reprocess_issue(true)
   end
 
