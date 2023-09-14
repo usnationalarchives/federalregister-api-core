@@ -57,6 +57,7 @@ module ElasticsearchIndexer
 
   def self.reindex_modified_entries
     Entry.
+      pre_joined_for_es_indexing.
       where(id: EntryChange.where.not(entry_id: deleted_entry_ids).pluck(:entry_id)).
       find_in_batches(batch_size: BATCH_SIZE) do |entry_batch|
         Entry.bulk_index(entry_batch, refresh: false)
