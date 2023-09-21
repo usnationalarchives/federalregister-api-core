@@ -37,7 +37,7 @@ class Content::PublicInspectionImporter::BatchedPublicInspectionImporterFinisher
   def issue
     @issue ||= PublicInspectionIssue.find_or_create_by(publication_date: Date.current)
   end
-
+  ES_RETRY_ATTEMPTS = 2
   def finalize_import
     issue.special_filings_updated_at = issue.
       public_inspection_documents.
@@ -59,7 +59,20 @@ class Content::PublicInspectionImporter::BatchedPublicInspectionImporterFinisher
       # Remove old agency letters
       PilAgencyLetterJanitor.new.perform
 
-      PublicInspectionIndexer.reindex!
+      remaining_retries = ES_RETRY_ATTEMPTS 
+      begin
+        PublicInspectionIndexer.reindex!
+      rescue StandardError => e
+        if remaining_retries > 0
+          sleep 5
+          remaining_retries -= 1
+          retry
+        else
+          Honeybadger.notify(e)
+          unlock_pil_import!
+          return
+        end
+      end
 
       # generate toc so that it is available immediately
       generate_toc(issue.published_at.to_date)

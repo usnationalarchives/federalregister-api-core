@@ -4,6 +4,7 @@ class PublicInspectionIndexer
     new.reindex!
   end
 
+  RETRY_LIMIT = 3
   def reindex!
     # Define repositories so we can specify custom index names
     default_repository = PublicInspectionDocumentRepository.new(
@@ -26,7 +27,20 @@ class PublicInspectionIndexer
     assign_index_to_alias(default_repository.index_name, temporary_repository.index_name)
 
     # Reindex the default index
-    default_repository.delete_index!
+    remaining_retries = RETRY_LIMIT
+    begin
+      default_repository.delete_index!
+    rescue Elasticsearch::Transport::Transport::Errors::BadRequest => e #eg if AWS is taking a snapshot of the index, this request will fail
+      if remaining_retries > 0
+        puts "Elasticsearch index deletion failure.  Retrying..."
+        remaining_retries -= 1
+        sleep 5
+        retry
+      else
+        raise e
+      end
+    end
+    
     default_repository.create_index!
     PublicInspectionDocument.bulk_index(
       PublicInspectionDocument.indexable.pre_joined_for_es_indexing,
