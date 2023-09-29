@@ -57,7 +57,7 @@ class Content::PublicInspectionImporter::BatchedDocumentImporter
   end
 
   def add_to_cloudfront_invalidation_set
-    $redis.sadd("pil_document_numbers_for_cloudfront_expiry_#{api_doc.publication_date.to_s(:iso)}", document.document_number)
+    $redis.sadd("pil_document_numbers_for_cloudfront_expiry_#{issue.publication_date.to_s(:iso)}", document.document_number)
   end
 
   def document
