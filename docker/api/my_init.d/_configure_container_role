@@ -7,3 +7,8 @@ if ! [ "$CONTAINER_ROLE" = "worker" ]; then
   rm -rf /etc/my_init.d/varnish
   rm -rf /etc/my_init.d/whenever
 fi
+
+### Development Environment
+if ! [ "$RAILS_ENV" = "development" ]; then
+  rm -rf /etc/my_init.d/bundle
+fi
