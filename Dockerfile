@@ -106,9 +106,6 @@ RUN addgroup --gid 1000 app &&\
 # switch to app user automatically when exec into container
 RUN echo 'su - app -s /bin/bash' | tee -a /root/.bashrc
 
-# rotate logs
-COPY docker/api/files/logrotate/app /etc/logrotate.d/app
-COPY docker/api/files/logrotate/persist_logs.sh /opt/persist_logs.sh
 
 ###############################
 ### ADDITIONAL RUBY SETUP

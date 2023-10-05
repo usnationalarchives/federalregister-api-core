@@ -7,8 +7,3 @@ if ! [ "$CONTAINER_ROLE" = "worker" ]; then
   rm -rf /etc/my_init.d/varnish
   rm -rf /etc/my_init.d/whenever
 fi
-
-# logs are rotated with a sidecar in k8s
-if [ "$K8S" = "true" ]; then
-  rm -f /etc/logrotate.d/app
-fi
