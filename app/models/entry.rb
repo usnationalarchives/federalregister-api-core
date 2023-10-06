@@ -262,7 +262,7 @@ class Entry < ApplicationModel
   end
 
   def self.default_repository
-    $entry_repository
+    $extended_timeout_entry_repository
   end
 
   def self.always_render_document_number_search_results_via_active_record?
