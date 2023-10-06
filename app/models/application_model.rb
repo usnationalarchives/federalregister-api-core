@@ -40,6 +40,7 @@ class ApplicationModel < ActiveRecord::Base
     raise NotImplementedError
   end
 
+  ES_INDEXING_RETRY_LIMIT = 1
   def self.bulk_index(active_record_collection, refresh: false, repository: default_repository)
     current_time = Time.current
     body = active_record_collection.each_with_object(Array.new) do |instance, request_body|
@@ -47,6 +48,7 @@ class ApplicationModel < ActiveRecord::Base
       request_body << instance.to_hash.merge(indexed_at: current_time.utc.iso8601)
     end
 
+    remaining_retries = ES_INDEXING_RETRY_LIMIT
     begin
       response = repository.client.bulk body: body, refresh: refresh
       if response.fetch('errors')
@@ -59,8 +61,14 @@ class ApplicationModel < ActiveRecord::Base
           Honeybadger.notify(error_message)
         end
       end
-    rescue Faraday::TimeoutError
-      retry
+    rescue Faraday::TimeoutError => e
+      if remaining_retries > 0
+        remaining_retries -= 1
+        sleep 5 # Account for network blips since ES client auto-retries
+        retry
+      else
+        raise e
+      end
     end
 
     if refresh
@@ -74,7 +82,8 @@ class ApplicationModel < ActiveRecord::Base
       request_body << { update: { _index: repository.index_name, _id: instance.id } }
       request_body << {:doc => {attribute.key => attribute.method.call(instance)}}
     end
-  
+ 
+    remaining_retries = ES_INDEXING_RETRY_LIMIT
     begin
       response = repository.client.bulk body: body, refresh: refresh
       puts response
@@ -85,8 +94,14 @@ class ApplicationModel < ActiveRecord::Base
           Honeybadger.notify(response.fetch('errors'))
         end
       end
-    rescue Faraday::TimeoutError
-      retry
+    rescue Faraday::TimeoutError => e
+      if remaining_retries > 0
+        remaining_retries -= 1
+        sleep 5 # Account for network blips since ES client auto-retries
+        retry
+      else
+        raise e
+      end
     end
   
     if refresh
