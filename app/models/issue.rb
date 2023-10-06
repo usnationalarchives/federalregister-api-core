@@ -44,11 +44,15 @@ class Issue < ApplicationModel
   end
 
   def self.bulk_data_missing?(date)
-    ! File.exists? FileSystemPathManager.new(date).document_issue_xml_path
+    url = Content::EntryImporter::BulkdataFile.new(date).url
+    response = Faraday.new(url: url).head
+    !response.success?
   end
 
   def self.mods_missing?(date)
-    ! File.exists? FileSystemPathManager.new(date).document_mods_path
+    url = Content::EntryImporter::ModsFile.new(date).url
+    response = Faraday.new(url: url).head
+    !response.success?
   end
 
   def self.next_date_to_import
