@@ -42,7 +42,7 @@ end
 
 if Settings.cron.late_content_notifications
   # Warn us of late content
-  every '0 8 * * 1-5' do
+  every '4,19,34,49 8-11 * * 1-5' do
     set  :log, 'late_content'
     rake 'notifications:content:late'
   end
