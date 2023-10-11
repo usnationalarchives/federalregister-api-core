@@ -67,18 +67,17 @@ class PageViewCount
   end
 
   def update_counts_for_today
-
+    # At a high-level, every two hours, the today set is updated with the most recent info.  At 12am, the today set is archived to the yesterday set and at 6am the yesterday set is collapsed into the historical set.
 
     if Time.current.hour == 0
-      # this is run once every 2 hours to update the current days counts
-      # as such at midnight we want to finish calculating yesterdays count
+      # at midnight, we want to finish calculating yesterday's count
       # and then move those counts into yesterdays counts
-      update_counts(Date.current-1.day, Date.current-1.day, page_view_type.today_set)
+      update_counts(Date.yesterday, Date.yesterday, page_view_type.today_set)
       move_today_to_yesterday
     elsif Time.current.hour == 6
       # at 6 am we finalize yesterdays counts (GA applies post processing, etc)
       # and then merge those into the historical counts
-      update_counts(Date.current-1.day, Date.current-1.day, page_view_type.yesterday_set)
+      update_counts(Date.yesterday, Date.yesterday, page_view_type.yesterday_set)
       collapse_counts
     else
       update_counts(Date.current, Date.current, page_view_type.today_set)

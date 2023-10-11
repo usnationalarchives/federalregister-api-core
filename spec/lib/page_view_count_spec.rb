@@ -7,19 +7,33 @@ describe PageViewCount do
   end
 
   let(:total_results) { 1 }
+  # let(:ua_page_views) {
+  #   {"reports"=>
+  #     [{"columnHeader"=>
+  #         {"dimensions"=>["ga:pagePath"],
+  #         "metricHeader"=>
+  #           {"metricHeaderEntries"=>[{"name"=>"ga:pageviews", "type"=>"INTEGER"}]}},
+  #       "data"=>
+  #         {"rows"=>
+  #           [{"dimensions"=>
+  #             ["/articles/2015/10/16/2015-25597/2015-edition-health-information-technology-health-it-certification-criteria-2015-edition-base"],
+  #             "metrics"=>[{"values"=>["8"]}]}],
+  #         "rowCount"=>26159},
+  #       "nextPageToken"=>"1"}]}
+  # }
   let(:page_views) {
-    {"reports"=>
-      [{"columnHeader"=>
-          {"dimensions"=>["ga:pagePath"],
-          "metricHeader"=>
-            {"metricHeaderEntries"=>[{"name"=>"ga:pageviews", "type"=>"INTEGER"}]}},
-        "data"=>
-          {"rows"=>
-            [{"dimensions"=>
-              ["/articles/2015/10/16/2015-25597/2015-edition-health-information-technology-health-it-certification-criteria-2015-edition-base"],
-              "metrics"=>[{"values"=>["8"]}]}],
-          "rowCount"=>26159},
-        "nextPageToken"=>"1"}]}
+    OpenStruct.new(
+      reports: [
+        OpenStruct.new(
+          rows: [
+            OpenStruct.new(
+              dimension_values: [OpenStruct.new(value: "/articles/2015/10/16/2015-25597/2015-edition-health-information-technology-health-it-certification-criteria-2015-edition-base")],
+              metric_values: [OpenStruct.new(value: "8")]
+            )
+          ]
+        )
+      ]
+    )
   }
 
   # Sets time in the specs ex. '2011-04-12' '2pm'

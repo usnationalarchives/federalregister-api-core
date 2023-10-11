@@ -14,14 +14,27 @@ module PageViewCountUtils
       log("processed_results: #{processed_results}/#{total_results(start_date, end_date)}")
 
       # get counts
-      response = page_views(
-        start_date: start_date.to_s(:iso),
-        end_date: end_date.to_s(:iso),
-        per_page: PER_PAGE,
-        page_token: processed_results
-      )
+      if use_ga4?
+        response = page_views(
+          start_date: start_date.to_s(:iso),
+          end_date: end_date.to_s(:iso),
+          limit: PER_PAGE,
+          offset: processed_results
+        )
+      else
+        response = page_views(
+          start_date: start_date.to_s(:iso),
+          end_date: end_date.to_s(:iso),
+          per_page: PER_PAGE,
+          page_token: processed_results
+        )
+      end
 
-      results = response["reports"].first["data"]["rows"]
+      if use_ga4?
+        results = response.reports.first.rows
+      else
+        results = response["reports"].first["data"]["rows"]
+      end
 
       # increment our counts hash in redis
       $redis.pipelined do
@@ -63,8 +76,15 @@ module PageViewCountUtils
   # convert the GA response data structure into document_number, count
   def counts_by_document_number(rows)
     rows.each do |row|
-      url = row["dimensions"][0]
-      count = row["metrics"][0]["values"][0].to_i
+      url = row
+
+      if use_ga4?
+        url = row.dimension_values.first.value
+        count = row.metric_values.first.value.to_i
+      else
+        url = row["dimensions"][0]
+        count = row["metrics"][0]["values"][0].to_i
+      end
 
       # ignore aggregate dimensions like "(other)"
       # and extract document_number
@@ -79,25 +99,48 @@ module PageViewCountUtils
   end
 
   def total_results(start_date, end_date)
-    page_views(
-      page_size: 1,
-      start_date: start_date.to_s(:iso),
-      end_date: end_date.to_s(:iso)
-    )["reports"].first["data"]["rowCount"].to_i
+    if use_ga4?
+      page_views(
+        limit: 1,
+        start_date: start_date.to_s(:iso),
+        end_date: end_date.to_s(:iso)
+      ).reports.first.row_count.to_i
+    else
+      page_views(
+        page_size: 1,
+        start_date: start_date.to_s(:iso),
+        end_date: end_date.to_s(:iso)
+      )["reports"].first["data"]["rowCount"].to_i
+    end
   end
   memoize :total_results
 
+  def use_ga4?
+    true
+  end
 
   def page_views(args={})
-    GoogleAnalytics::PageViews.new.counts(
-      default_args.merge(args)
-    )
+    if use_ga4?
+      Ga4Client.new.counts(
+        default_args.merge(args)
+      )
+    else
+      GoogleAnalytics::PageViews.new.counts(
+        default_args.merge(args)
+      )
+    end
   end
 
   def default_args
-    {
-      dimension_filters: dimension_filters,
-    }
+    if use_ga4?
+      {
+        ga4_url_regex: page_view_type.ga4_url_regex
+      }
+    else
+      {
+        dimension_filters: dimension_filters,
+      }
+    end
   end
 
   def dimension_filters

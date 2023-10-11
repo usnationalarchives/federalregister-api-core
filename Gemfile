@@ -128,6 +128,8 @@ gem 'whenever', require: false
 
 gem 'googleauth'
 # lock googleauth dependency to compatible version
+
+gem 'google-apis-analyticsdata_v1beta'
 gem 'addressable', '2.6.0'
 
 gem 'memoist'

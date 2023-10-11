@@ -5,6 +5,7 @@
 /config/varnish*
 **/data/*
 /log
+/config/google_analytics_4_credentials.json
 /public/images/icons.png
 /public/index/pdf
 /public/stylesheets/*
